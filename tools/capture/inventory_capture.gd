@@ -173,4 +173,18 @@ func capture_shots(tool: Node, out: String) -> void:
 					if up != null:
 						(up as ScrollContainer).scroll_vertical = int((l as Label).global_position.y - (up as ScrollContainer).global_position.y) - 20
 			await _shoot(tool, "%s_level_up_%s.png" % [out, party[i].name.get_slice(" ", 0).to_lower()])
+			# The picks open blank (owner, 2026-10-07); Use Recommended fills them.
+			for bt in screen.find_children("*", "Button", true, false):
+				if (bt as Button).text == "Use Recommended" and not (bt as Button).disabled:
+					(bt as Button).pressed.emit()
+					await tool.call("wait_frames", 4)
+					for l in screen.find_children("*", "Label", true, false):
+						if (l as Label).text.begins_with("4 · Choices") and not (l as Node).is_queued_for_deletion():
+							var up2 := (l as Node).get_parent()
+							while up2 != null and not up2 is ScrollContainer:
+								up2 = up2.get_parent()
+							if up2 != null:
+								(up2 as ScrollContainer).scroll_vertical = int((l as Label).global_position.y - (up2 as ScrollContainer).global_position.y) - 20
+					await _shoot(tool, "%s_level_up_%s_used.png" % [out, party[i].name.get_slice(" ", 0).to_lower()])
+					break
 			root.call("close_screen")

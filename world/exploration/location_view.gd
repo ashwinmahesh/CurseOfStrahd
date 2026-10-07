@@ -10,8 +10,9 @@ extends Node3D
 ##
 ## The view holds the location's state. Its jobs live in helpers that take it as their first argument, a file each:
 ## LocationBuilder (the board's pieces and the time of day), LocationParty (the party's figures), LocationWalk
-## (walking and what a step sets off), LocationNpcs (the people here), LocationStealth (sneaking), LocationInteraction
-## (clicks, the right-click menu, containers and props), LocationLocks (doors and locks), LocationTraps (traps and
+## (walking and what a step sets off), LocationNpcs (the people here), LocationStealth (sneaking, foes waiting in
+## plain view and who notices whom), LocationPlan (turn-based exploring), LocationInteraction (clicks, the
+## right-click menu, containers and props), LocationLocks (doors and locks), LocationTraps (traps and
 ## searching), LocationCare (a party member down outside a fight), LocationMagic (exploring spells and items) and
 ## LocationFights (fights on this grid). The forwarding functions below are the view's interface for the game root,
 ## the HUD and the tests.
@@ -19,6 +20,8 @@ extends Node3D
 signal exit_requested(location_id: String, spawn: String)
 signal dialogue_requested(ref: String, npc_id: String)
 signal narration(text: String)
+## A place's cutscene (story/cutscenes.gd `trigger`): its picture, with the narrator's line as the caption.
+signal cutscene_requested(id: String, caption: String)
 signal toast(text: String)
 signal loot_opened(container_id: String, items: Array, gold: float)
 signal combat_started(view: CombatView)
@@ -66,6 +69,19 @@ var trap_marks: Dictionary = {}
 var lantern: OmniLight3D
 
 var sneaking := false
+## Sneaking and foes in plain view (LocationStealth, F7): each member's Stealth total while sneaking, and the foes of
+## `waiting` fights standing where their fight puts them [{encounter, foe: Combatant, token, low}].
+var sneak_totals: Dictionary = {}    ## Creature -> int
+var waiting: Array[Dictionary] = []
+var _waiting_key := ""                ## what the party could see from when the waiting foes were last looked for
+## A foe noticed the party: the fight it starts surprises no one (LocationStealth).
+var _foes_alerted := false
+## Turn-based exploring (LocationPlan, F7): rounds of six seconds, each member moving up to their Speed.
+var planning := false
+var plan_round := 0
+var plan_left: Dictionary = {}       ## combatant id -> feet of movement left this round
+var _plan_seconds := 0
+var _solo_before := false
 var solo := false                    ## move only the leader (split the party)
 var busy := false                    ## walking, talking or fighting
 var in_combat := false
@@ -136,7 +152,11 @@ func _ready() -> void:
 	if first and str(loc.get("text", "")) != "":
 		narration.emit(str(loc["text"]))
 	add_child(HiddenAreas.create(self))   # rooms behind undiscovered secret doors stay out of sight
+	add_child(SightOverlay.create(self))   # who can see the party while it sneaks or plans (U10)
 	LocationWalk._check_areas(self)
+	if LocationPlan.wanted() and not in_combat:
+		LocationPlan.start(self)
+	LocationStealth.refresh_waiting(self)
 
 
 func _process(delta: float) -> void:
@@ -145,6 +165,7 @@ func _process(delta: float) -> void:
 	if _exit_check <= 0.0:
 		_exit_check = 0.25
 		refresh_exits()
+		LocationStealth.refresh_waiting(self)   # a door opened, a lamp lit: foes come into view
 	if board != null and rig != null and rig.camera != null and not members.is_empty() and (not board.occluders.is_empty() or not board.mesh_occluders.is_empty() or not board.buildings.is_empty()):
 		var focus := (tokens[leader().id] as Node3D).global_position if tokens.has(leader().id) else Vector3.ZERO
 		board.fade_occluders(rig.camera.global_position, focus, delta)
@@ -163,7 +184,11 @@ func _say(key: String, actor: Character = null, fallback: String = "") -> bool:
 	if text == "":
 		text = fallback
 	if text != "":
-		narration.emit(text)
+		var cut := Cutscenes.for_trigger(key, st) if not cutscene_requested.get_connections().is_empty() else ""
+		if cut != "":
+			cutscene_requested.emit(cut, text)
+		else:
+			narration.emit(text)
 		return true
 	return false
 
@@ -241,6 +266,26 @@ func step(dir: Vector2i) -> void:
 
 static func _in_area(area: Dictionary, c: Vector2i) -> bool:
 	return LocationWalk._in_area(area, c)
+
+
+# --- Sneaking (LocationStealth) and turn-based exploring (LocationPlan) -------------------------------
+
+func set_sneaking(on: bool) -> void:
+	LocationStealth.set_sneaking(self, on)
+
+
+func toggle_plan() -> void:
+	LocationPlan.toggle(self)
+
+
+func next_round() -> void:
+	LocationPlan.next_round(self)
+
+
+## Opens the fight with foes the party can see (the nearest, or `encounter_id`). True if it started.
+func strike(encounter_id: String = "") -> bool:
+	var id := encounter_id if encounter_id != "" else LocationStealth.nearest_waiting(self)
+	return id != "" and LocationStealth.strike(self, id)
 
 
 # --- Using things (LocationInteraction), doors and locks (LocationLocks) -----------------------------

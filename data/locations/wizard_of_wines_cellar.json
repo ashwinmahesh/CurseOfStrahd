@@ -231,6 +231,7 @@
     {
       "id": "cellar_dig",
       "trigger": "enter_area:the_dig",
+      "waiting": true,
       "when": "not flag.cellar_dig_cleared and flag.gulthias_tree_burned",
       "text": "The blights lie where they fell, dead brush in heaps around their holes. Only the druid with the lantern is still digging, and he has a spade now, and opinions about who should use it.",
       "monsters": [
@@ -250,6 +251,7 @@
     {
       "id": "cellar_dig",
       "trigger": "enter_area:the_dig",
+      "waiting": true,
       "when": "not flag.cellar_dig_cleared and level >= 7",
       "text": "Needle blights are scraping at the earth floor with their claws, and a druid with a lantern is telling them where.",
       "monsters": [
@@ -338,6 +340,7 @@
     {
       "id": "cellar_dig",
       "trigger": "enter_area:the_dig",
+      "waiting": true,
       "when": "not flag.cellar_dig_cleared and level >= 6",
       "text": "Needle blights are scraping at the earth floor with their claws, and a druid with a lantern is telling them where.",
       "monsters": [
@@ -405,6 +408,7 @@
     {
       "id": "cellar_dig",
       "trigger": "enter_area:the_dig",
+      "waiting": true,
       "when": "not flag.cellar_dig_cleared",
       "text": "Needle blights are scraping at the earth floor with their claws, and a druid with a lantern is telling them where.",
       "monsters": [

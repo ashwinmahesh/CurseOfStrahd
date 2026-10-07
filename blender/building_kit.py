@@ -61,9 +61,15 @@ def rise_of(style, w):
 
 # --- Shared shapes ----------------------------------------------------------------------------------------------
 
+def _grain(mat, dx, dz):
+    """Oak runs its grain along the timber: a timber nearer upright than level takes the turned oak."""
+    return OAK_V if mat == OAK and abs(dz) > abs(dx) else mat
+
+
 def beam(p, a, b, w, mat, d=0.055, y=0.0, jitter=0.0):
     """A squared timber on the face from a to b (x, z), w wide, standing d proud of the wall (to y - d)."""
     (x0, z0), (x1, z1) = a, b
+    mat = _grain(mat, x1 - x0, z1 - z0)
     if jitter:
         x0 += p.rng.uniform(-jitter, jitter)
         x1 += p.rng.uniform(-jitter, jitter)
@@ -77,6 +83,7 @@ def beam(p, a, b, w, mat, d=0.055, y=0.0, jitter=0.0):
 def brace(p, x0, z0, x1, z1, w, mat, d=0.05):
     """A diagonal brace between two rails: a parallelogram with level ends, so it meets the rails cleanly."""
     h = w / max(0.2, math.cos(math.atan2(abs(z1 - z0), abs(x1 - x0))))   # keep its true width as it tilts
+    mat = _grain(mat, x1 - x0, z1 - z0)
     poly = [(x0 - h / 2, z0), (x0 + h / 2, z0), (x1 + h / 2, z1), (x1 - h / 2, z1)]
     p.prism(poly, d + 0.012, (0, -d / 2 + 0.006, 0), mat)
 
@@ -108,7 +115,8 @@ def stones(p, x0, x1, z0, z1, mats, proud, course=0.12, joint=0.014, mortar="pal
 
 # --- Timber (Barovia) -------------------------------------------------------------------------------------------
 
-OAK = "pal_peat"
+OAK = "tex_kit__oak"          # the kit's painted oak (W4), its grain along the tile; posts take OAK_V, grain up
+OAK_V = "tex_kit__oak_v"
 OAK_LIGHT = "pal_umber"
 FIELD = ["pal_stone", "pal_slate", "pal_stone", "pal_bone_dark", "pal_slate"]
 TW = 0.12      # a timber's width on the face
@@ -188,7 +196,7 @@ def kit_timber_door_top(p):
 @kit("kit_timber_corner", part="corner")
 def kit_timber_corner(p):
     """A corner post standing on a quoin of the footing (origin on the corner; it reaches 0.09 out on both faces)."""
-    p.box((0.18, 0.18, H), (0.02, 0.02, H / 2), OAK)
+    p.box((0.18, 0.18, H), (0.02, 0.02, H / 2), OAK_V)
     p.box((0.22, 0.22, FOOT + 0.02), (0.04, 0.04, (FOOT + 0.02) / 2), "pal_slate", soft=0.02)
 
 
@@ -337,7 +345,7 @@ kit("kit_clap_window_shut", part="window", paint=PAINT)(lambda p: _clap_window(p
 
 # --- Stone (Krezk, the Abbey, manors) ---------------------------------------------------------------------------
 
-DRESSED = "pal_pewter"
+DRESSED = "tex_kit__dressed_stone"
 DRESSED_DARK = "pal_slate"
 
 
@@ -881,7 +889,7 @@ def kit_pillar_dungeon(p):
 def kit_pillar_timber(p):
     """A wooden post on a stone pad, its top braced out four ways under a cross of beams."""
     p.box((0.42, 0.42, 0.14), (0, 0, 0.07), "pal_slate", soft=0.02, segs=1)
-    p.box((0.24, 0.24, 2.0), (0, 0, 1.14), OAK, soft=0.02, segs=1)
+    p.box((0.24, 0.24, 2.0), (0, 0, 1.14), OAK_V, soft=0.02, segs=1)
     for k in range(4):
         a = math.radians(k * 90)
         ux, uy = math.cos(a), math.sin(a)
@@ -944,6 +952,96 @@ kit("kit_manor_coping", part="coping")(lambda p: _coping(p, "pal_peat", "pal_umb
 kit("kit_timber_coping", part="coping")(lambda p: beam(p, (-0.5, CUT - 0.06), (0.5, CUT - 0.06), 0.12, OAK, d=0.07))
 kit("kit_dungeon_coping", part="coping")(lambda p: stones(p, -0.5, 0.5, CUT - 0.14, CUT + 0.01, ["pal_stone", "pal_slate"], 0.06,
                                                           course=0.15, mortar="", soft=0.0, lengths=(0.22, 0.4), rough=4.0))
+
+
+# --- Scatter (W10) ----------------------------------------------------------------------------------------------
+# Small things strewn by rule over a board's ground (world/look/clutter.gd): they never block a square. Origin at the
+# middle of the patch, on the ground; each is about a third of a square across.
+
+@kit("kit_scatter_pebbles", part="scatter")
+def kit_scatter_pebbles(p):
+    """A loose spray of pebbles and grit."""
+    rng = p.rng
+    for _ in range(9):
+        r = rng.uniform(0.025, 0.06)
+        p.rock((rng.uniform(-0.17, 0.17), rng.uniform(-0.17, 0.17), 0), (r * 2.2, r * 1.8, r * 1.2),
+               rng.choice(["pal_stone", "pal_slate", "pal_bone_dark"]), rough=0.25, subdiv=1, bury=0.3)
+
+
+@kit("kit_scatter_stones", part="scatter")
+def kit_scatter_stones(p):
+    """Two or three fist-to-head-sized stones half sunk in the ground, one mossy."""
+    rng = p.rng
+    for k in range(3):
+        r = rng.uniform(0.07, 0.13)
+        p.rock((rng.uniform(-0.14, 0.14), rng.uniform(-0.14, 0.14), 0), (r * 2.1, r * 1.7, r * 1.3), "pal_slate",
+               top="pal_moss" if k == 0 else None, rough=0.2, subdiv=1, bury=0.25, rot_z=rng.uniform(0, 180))
+
+
+@kit("kit_scatter_roots", part="scatter")
+def kit_scatter_roots(p):
+    """Gnarled roots arching out of the ground and back in."""
+    rng = p.rng
+    for k in range(3):
+        a = rng.uniform(0, 2 * math.pi)
+        ux, uy = math.cos(a), math.sin(a)
+        ln = rng.uniform(0.22, 0.36)
+        h = rng.uniform(0.04, 0.08)
+        pts = [(ux * (t - 0.5) * ln + rng.uniform(-0.01, 0.01), uy * (t - 0.5) * ln + rng.uniform(-0.01, 0.01),
+                -0.02 + h * math.sin(math.pi * t)) for t in (i / 6 for i in range(7))]
+        p.tube(pts, 0.022, "pal_peat", segs=6, radii=[0.026 - 0.002 * i for i in range(7)])
+
+
+@kit("kit_scatter_bones", part="scatter")
+def kit_scatter_bones(p):
+    """A few old bones and a cracked skull."""
+    rng = p.rng
+    for k in range(3):
+        a = rng.uniform(0, 180)
+        x, y = rng.uniform(-0.14, 0.14), rng.uniform(-0.14, 0.14)
+        p.cyl(0.012, 0.2, (x, y, 0.012), "pal_bone", rot=(90, 0, a), segs=6)
+        for e in (-0.1, 0.1):
+            ex, ey = x + math.cos(math.radians(a + 90)) * e, y + math.sin(math.radians(a + 90)) * e
+            p.box((0.04, 0.03, 0.025), (ex, ey, 0.013), "pal_bone", soft=0.01, rot=(0, 0, a))
+    p.lathe([(0.0, 0.0), (0.05, 0.01), (0.065, 0.05), (0.055, 0.09), (0.0, 0.1)], (0.06, -0.08, 0), "pal_bone", segs=10)
+    for sx in (-1, 1):
+        p.cyl(0.013, 0.02, (0.06 + sx * 0.022, -0.13, 0.055), "pal_void", rot=(90, 0, 0), segs=6)
+
+
+@kit("kit_scatter_debris", part="scatter")
+def kit_scatter_debris(p):
+    """Broken boards and splinters, a bent nail."""
+    rng = p.rng
+    for k in range(3):
+        p.box((rng.uniform(0.18, 0.3), 0.06, 0.015), (rng.uniform(-0.1, 0.1), rng.uniform(-0.12, 0.12), 0.008 + 0.016 * k),
+              "tex_interior__wood_planks", rot=(0, rng.uniform(-6, 6), rng.uniform(0, 180)))
+    for k in range(5):
+        p.box((rng.uniform(0.05, 0.1), 0.012, 0.008), (rng.uniform(-0.15, 0.15), rng.uniform(-0.15, 0.15), 0.004),
+              "pal_umber", rot=(0, 0, rng.uniform(0, 180)))
+
+
+@kit("kit_scatter_twigs", part="scatter")
+def kit_scatter_twigs(p):
+    """A fallen branch with a few twigs off it."""
+    rng = p.rng
+    a = rng.uniform(0, math.pi)
+    pts = [(math.cos(a) * (t - 0.5) * 0.4, math.sin(a) * (t - 0.5) * 0.4 + 0.02 * math.sin(t * 7), 0.012) for t in (i / 5 for i in range(6))]
+    p.tube(pts, 0.012, "pal_umber", segs=5)
+    for k in range(4):
+        x, y, z = pts[1 + k]
+        b = a + rng.choice([-1, 1]) * rng.uniform(0.5, 1.0)
+        p.tube([(x, y, z), (x + math.cos(b) * 0.08, y + math.sin(b) * 0.08, z + 0.01)], 0.005, "pal_umber", segs=4)
+
+
+@kit("kit_scatter_mushrooms", part="scatter")
+def kit_scatter_mushrooms(p):
+    """A cluster of small pale toadstools."""
+    rng = p.rng
+    for k in range(6):
+        x, y = rng.uniform(-0.08, 0.08), rng.uniform(-0.08, 0.08)
+        h = rng.uniform(0.03, 0.07)
+        p.cyl(0.006, h, (x, y, 0), "pal_bone", segs=6)
+        p.lathe([(0.0, 0.0), (0.026, 0.0), (0.02, 0.012), (0.0, 0.02)], (x, y, h - 0.004), "pal_bone_dark" if k % 2 else "pal_tan", segs=8)
 
 
 # --- Build and export --------------------------------------------------------------------------------------------

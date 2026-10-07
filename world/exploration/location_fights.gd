@@ -81,14 +81,11 @@ static func ward_for(data: Dictionary, location: Dictionary, state: StoryState) 
 
 
 ## The fight happens here, on the same grid: the party where it stands, the monsters where the data puts them.
-## Surprise: a sneaking party whose every Stealth check beats a monster's passive Perception surprises it.
+## Surprise (2024, LocationStealth): a sneaking party surprises each foe that hasn't noticed any of them.
 static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 	# Several entries may share an id with different `when` conditions (e.g. a lighter version for a lower-level
 	# party): the first whose condition holds is the fight.
-	var spec := {}
-	for en: Variant in view.loc.get("encounters", []):
-		if str((en as Dictionary)["id"]) == encounter_id and (spec.is_empty() or not StoryConditions.check(StoryConditions.encounter_when(spec), view.st)):
-			spec = en as Dictionary
+	var spec := spec_for(view, encounter_id)
 	if spec.is_empty() or view.in_combat:
 		return false
 	if view._pending_final == encounter_id:
@@ -120,6 +117,38 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 	for g in view.guest_members:
 		if not g.creature.dead:
 			e.add(g.creature, &"guest", g.cell).controller = &"player"
+	for mo: Dictionary in monsters_for(view, spec):
+		e.add(mo["creature"] as Monster, mo["side"] as StringName, mo["cell"] as Vector2i)
+	EncounterSetup.bring_familiars(e, party_cbs)
+	_light_the_fight(view, e)
+	var surprised: Array[String] = []
+	var who := str(spec.get("surprise", ""))
+	for c in e.combatants:
+		if (who == "party" and c.side == &"party") or (who == "enemies" and c.side == &"enemy"):
+			surprised.append(c.id)
+	# Who the party's sneaking catches unawares, and who starts the fight hidden (LocationStealth, F7).
+	if who == "":
+		surprised.append_array(LocationStealth.surprised_at_start(view, e))
+	LocationStealth.hide_at_start(view, e)
+	LocationPlan.stop(view)
+	(view.st.loc_state(view.loc_id)["encounters"] as Dictionary)[encounter_id] = "started"
+	var ctokens := _fight_tokens(view, e)
+	LocationStealth.clear_waiting(view, encounter_id)
+	view.combat_view = CombatView.new()
+	view.combat_view.input_locked = view.input_locked
+	view.combat_view.narrator = view.narrator
+	view.combat_view.story = view.st
+	view.add_child(view.combat_view)
+	view._say("combat:start")
+	_run_combat(view, encounter_id, spec, e, ctokens, surprised)
+	return true
+
+
+## The encounter's monsters as the fight places them: [{creature: Monster, side, cell}], with this fight's tuned
+## Hit Points, a boss's ward, and numbers on repeated names ("Wolf 2"). Foes waiting in plain view before the fight
+## (LocationStealth) are built the same way.
+static func monsters_for(view: LocationView, spec: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
 	var counts := {}
 	for mo: Variant in spec["monsters"]:
 		var mid := str((mo as Dictionary)["monster"])
@@ -139,26 +168,18 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 		elif int(counts[str(md["monster"])]) > 1:
 			numbered[str(md["monster"])] = int(numbered.get(str(md["monster"]), 0)) + 1
 			mon.name = "%s %d" % [mon.name, numbered[str(md["monster"])]]
-		e.add(mon, StringName(str(md.get("side", "enemy"))), LocationView._cell(md["cell"]))
-	EncounterSetup.bring_familiars(e, party_cbs)
-	_light_the_fight(view, e)
-	var surprised: Array[String] = []
-	var who := str(spec.get("surprise", ""))
-	for c in e.combatants:
-		if (who == "party" and c.side == &"party") or (who == "enemies" and c.side == &"enemy"):
-			surprised.append(c.id)
-	if view.sneaking and who == "":
-		surprised.append_array(LocationStealth._stealth_surprise(view, e))
-	(view.st.loc_state(view.loc_id)["encounters"] as Dictionary)[encounter_id] = "started"
-	var ctokens := _fight_tokens(view, e)
-	view.combat_view = CombatView.new()
-	view.combat_view.input_locked = view.input_locked
-	view.combat_view.narrator = view.narrator
-	view.combat_view.story = view.st
-	view.add_child(view.combat_view)
-	view._say("combat:start")
-	_run_combat(view, encounter_id, spec, e, ctokens, surprised)
-	return true
+		out.append({"creature": mon, "side": StringName(str(md.get("side", "enemy"))), "cell": LocationView._cell(md["cell"])})
+	return out
+
+
+## The encounter entry a fight with `encounter_id` uses now: of the entries sharing the id, the first whose `when`
+## holds (else the last). {} if there's none.
+static func spec_for(view: LocationView, encounter_id: String) -> Dictionary:
+	var spec := {}
+	for en: Variant in view.loc.get("encounters", []):
+		if str((en as Dictionary)["id"]) == encounter_id and (spec.is_empty() or not StoryConditions.check(StoryConditions.encounter_when(spec), view.st)):
+			spec = en as Dictionary
+	return spec
 
 
 static func _run_combat(view: LocationView, encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, surprised: Array[String]) -> void:
@@ -224,10 +245,17 @@ static func _fight_tokens(view: LocationView, e: Encounter) -> Dictionary:
 			(view.tokens[m.id] as Node3D).visible = false
 	party_mid /= maxf(1.0, float(ours.size()))
 	var foes: Array[CombatToken] = []
+	var standing: Array[CombatToken] = []
 	for c in e.combatants:
 		if ctokens.has(c.id):
 			continue
-		var t := _combat_token(c)
+		# A foe the party could already see waiting there keeps its figure (LocationStealth).
+		var t := LocationStealth.claim_token(view, c)
+		if t != null:
+			ctokens[c.id] = t
+			standing.append(t)
+			continue
+		t = _combat_token(c)
 		t.position = view.board.cell_center(c.cell, c.size_cells)
 		var look := party_mid - t.position
 		t.face(Vector2(look.x, look.z), false)
@@ -239,7 +267,11 @@ static func _fight_tokens(view: LocationView, e: Encounter) -> Dictionary:
 		foes[i].emerge(0.1 + 0.5 * i / maxf(1.0, foes.size() - 1.0), 0.6)
 	var turn := view.create_tween()
 	turn.tween_interval(LocationView.STEP_TIME + 0.05)
-	turn.tween_callback(func() -> void: _face_nearest_foe(ours, foes))
+	var every_foe: Array[CombatToken] = foes.duplicate()
+	every_foe.append_array(standing)
+	turn.tween_callback(func() -> void:
+		_face_nearest_foe(ours, every_foe)
+		_face_nearest_foe(standing, ours))
 	return ctokens
 
 
@@ -337,6 +369,8 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 		if m.creature.hp > 0:
 			m.creature.remove_condition(&"grappled")
 			m.creature.remove_condition(&"prone")
+	LocationStealth.after_fight(view, e)
+	LocationPlan.resume(view)
 	for m: Combatant in view.members + view.guest_members:
 		var tok := view.tokens[m.id] as CombatToken
 		tok.combatant = m

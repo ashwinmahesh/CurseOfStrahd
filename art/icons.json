@@ -45,7 +45,8 @@
     "pink": {"face": ["lilac", "rose", "vampire_red"]}
   },
   "ui": {
-    "create": "lorc/quill-ink"
+    "create": "lorc/quill-ink",
+    "plan": "lorc/hourglass"
   },
   "spells": {
     "acid_splash": "lorc/acid-blob@acid",
