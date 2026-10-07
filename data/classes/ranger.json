@@ -218,6 +218,14 @@
       "stealth",
       "survival"
     ],
+    "subclass": "gloom_stalker",
+    "feats": [
+      "sharpshooter",
+      "crossbow_expert",
+      "alert",
+      "war_caster",
+      "resilient"
+    ],
     "note": "Dexterity first for bows and finesse blades, then Wisdom for spells."
   },
   "levels": [

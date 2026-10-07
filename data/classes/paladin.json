@@ -222,6 +222,14 @@
       "athletics",
       "persuasion"
     ],
+    "subclass": "oath_of_devotion",
+    "feats": [
+      "great_weapon_master",
+      "sentinel",
+      "war_caster",
+      "polearm_master",
+      "tough"
+    ],
     "note": "Strength and Charisma first; heavy armor means Dexterity can wait."
   },
   "levels": [
