@@ -20,6 +20,10 @@
     "region": {
       "$ref": "common.schema.json#/$defs/id"
     },
+    "watch": {
+      "type": "string",
+      "description": "F8: the guard who answers a crime here (an npc id), or \"\" for nobody. Unset: the region's watch (story/crime.gd WATCH)."
+    },
     "summary": {
       "type": "string"
     },
@@ -100,6 +104,14 @@
             "type": "string",
             "pattern": "^[a-z_]+/[a-z_]+$",
             "description": "The room's walls: a texture surface, theme/surface in art/textures/manifest.json. Optional."
+          },
+          "private": {
+            "$ref": "common.schema.json#/$defs/id",
+            "description": "F8: the npc whose private room this is. Seen inside, the party is told to leave; seen again, it's trespass."
+          },
+          "open": {
+            "type": "string",
+            "description": "F8: when a private room may be entered (a condition, docs/contracts/dialogue.md), e.g. \"day\"."
           }
         }
       }
@@ -305,6 +317,10 @@
           },
           "flag": {
             "type": "string"
+          },
+          "owner": {
+            "$ref": "common.schema.json#/$defs/id",
+            "description": "F8: the npc who owns it. Taking anything from it is stealing if somebody sees (docs/rules/stealth.md)."
           }
         }
       }

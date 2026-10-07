@@ -2141,6 +2141,30 @@
         "id": "izek_obsession",
         "stage": "izek_slain"
       }
+    },
+    {
+      "id": "watch_arrest",
+      "trigger": "dialogue",
+      "text": "The watch closes in, spears levelled.",
+      "monsters": [
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            45,
+            19
+          ],
+          "name": "Watchman 1"
+        },
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            46,
+            19
+          ],
+          "name": "Watchman 2"
+        }
+      ],
+      "surprise": ""
     }
   ],
   "narration": {

@@ -2,6 +2,7 @@
   "id": "vallaki_vistani_camp",
   "name": "The Vistani Camp",
   "region": "vallaki",
+  "watch": "",
   "summary": "A ring of painted Vistani wagons outside Vallaki's west gate, between the road and the black water of Lake Zarovich. Music by night, horses by day, and one wagon with its lamp unlit.",
   "text": "Wagons in a ring around a fire, horses on a line, the lake at the camp's back with a rotten jetty and reeds. The road runs back east to Vallaki's gate.",
   "map": {
@@ -226,7 +227,8 @@
           "qty": 1
         }
       ],
-      "flag": "arrigal_chest_opened"
+      "flag": "arrigal_chest_opened",
+      "owner": "arrigal"
     },
     {
       "id": "camp_edge_cache",
@@ -248,7 +250,8 @@
       "label": "Luvash's chest",
       "model": "chest",
       "items": [],
-      "gold": 0
+      "gold": 0,
+      "owner": "luvash"
     }
   ],
   "lights": [
