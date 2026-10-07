@@ -28,6 +28,11 @@ uniform float dither_strength : hint_range(0.0, 0.2) = 0.045;
 uniform float pixel_size : hint_range(1.0, 6.0) = 2.0;
 uniform bool outlines = true;
 uniform float outline_width : hint_range(0.5, 4.0) = 1.5;
+// The Modern finish (Improvement Ideas W15) keeps the world's ink lines to silhouettes against what's behind them, and
+// lighter, or leaves them off, so the 2D characters' ink stands apart from the lit 3D world: no lines where faces
+// meet at an angle, and the lines' strength.
+uniform bool outline_creases = true;
+uniform float outline_strength : hint_range(0.0, 1.0) = 1.0;
 uniform float depth_threshold = 0.06;
 uniform float normal_threshold = 0.55;
 uniform vec3 outline_color : source_color = vec3(0.051, 0.039, 0.071);
@@ -197,11 +202,11 @@ void fragment() {
 			if ((d - d0) / max(d0, 0.001) > depth_threshold) {
 				edge = 1.0;
 			}
-			if (dot(n0, normal_at(uv + offs[i])) < normal_threshold && d0 < 60.0) {
+			if (outline_creases && dot(n0, normal_at(uv + offs[i])) < normal_threshold && d0 < 60.0) {
 				edge = max(edge, 0.85);
 			}
 		}
-		col = mix(col, to_srgb(outline_color), edge);
+		col = mix(col, to_srgb(outline_color), edge * outline_strength);
 	}
 
 	// The world point behind this pixel, and the camera.

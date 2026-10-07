@@ -13,10 +13,11 @@ const UI_PALETTE_JSON := "res://art/palette/ui_palette.json"
 static var _palette: Dictionary = {}
 static var _colours: Dictionary = {}
 
-## The world's finish (docs/plans/ui_polish.md), the player's choice (GameSettings, user://settings.cfg):
-## "classic" is the 1990s cartoon pass (every pixel snapped to the palette, light in hard bands); "modern" keeps the
-## ink lines and the same art but lights it smoothly, with filmic tone, bloom on flames and lanterns, deeper contact
-## shadows and soft mist. Places built after a change use it.
+## The world's finish (docs/plans/ui_polish.md, docs/art/style_bible.md), the player's choice (GameSettings,
+## user://settings.cfg): "classic" is the 1990s cartoon pass (every pixel snapped to the palette, light in hard bands,
+## frozen as it was on 2026-10-07); "modern" is the HD-2D look: the same art, the characters inked, the world lit like
+## painted 3D without ink lines, with filmic tone, bloom on flames and lanterns, soft shadows and haze. Places built
+## after a change use it.
 const STYLES: Array[String] = ["modern", "classic"]
 ## The owner picked Modern as the default (2026-10-07); Classic stays in Settings.
 const DEFAULT_STYLE := "modern"
@@ -293,9 +294,13 @@ static func make_post_process() -> MeshInstance3D:
 
 
 ## The post pass for the current style: the palette snap and flat bands for classic, smooth and HDR for modern.
+## Modern draws no ink lines on the world (Improvement Ideas W15, the approved target frames): only the 2D characters
+## keep their ink (their own shader), so they stand apart from the lit 3D world. The post shader can still draw light
+## silhouettes only (`outline_creases` off, `outline_strength` under 1) should the world want a little line back.
 static func style_post(mat: ShaderMaterial) -> void:
 	var m := modern()
 	mat.set_shader_parameter("quantize", not m)
 	mat.set_shader_parameter("soft_bands", m)
 	mat.set_shader_parameter("keep_hdr", m)
+	mat.set_shader_parameter("outlines", not m)
 	mat.set_shader_parameter("outline_width", 1.2 if m else 1.5)

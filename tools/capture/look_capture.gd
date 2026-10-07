@@ -7,7 +7,8 @@ extends Node
 ##   make capture SCENE=res://tools/capture/look_capture.tscn NAME=look/before FRAMES=10
 ## Environment: LOOK_SHOTS=village_dusk,castle_hall (default: every shot), LOOK_STYLE=classic|modern and
 ## LOOK_GRAPHICS=low|medium|high (this run only), LOOK_OFF=msaa,pcss,lamps,filter,splits,ssr (turn one thing off to see
-## what it costs), LOOK_AA=msaa2|fxaa|smaa (another anti-aliasing in its place). LOOK_BENCH=1 times each part of
+## what it costs), LOOK_AA=msaa2|fxaa|smaa (another anti-aliasing in its place), LOOK_OUTLINE=off|silhouette|full
+## (the world's ink lines). LOOK_BENCH=1 times each part of
 ## the renderer in turn instead (_bench), and LOOK_BENCH=presets the graphics presets, several rounds over, since
 ## other work on the machine makes one reading noisy.
 
@@ -89,6 +90,17 @@ func _build(shot: Dictionary) -> void:
 	view.update_daylight()
 	view.atmosphere.settle()
 	view.rig.snap_to_target()
+	var post := (view.post.mesh as QuadMesh).material as ShaderMaterial
+	match OS.get_environment("LOOK_OUTLINE"):
+		"off":
+			post.set_shader_parameter("outlines", false)
+		"silhouette":
+			post.set_shader_parameter("outline_creases", false)
+			post.set_shader_parameter("outline_strength", 0.55)
+		"full":
+			post.set_shader_parameter("outlines", true)
+			post.set_shader_parameter("outline_creases", true)
+			post.set_shader_parameter("outline_strength", 1.0)
 	var off := OS.get_environment("LOOK_OFF").split(",", false)
 	if "msaa" in off:
 		get_viewport().msaa_3d = Viewport.MSAA_DISABLED

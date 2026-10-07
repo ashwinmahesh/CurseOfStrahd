@@ -1,7 +1,7 @@
 extends TestCase
 ## How the world's surfaces take the light (Improvement Ideas W3, docs/art/textures.md): the Modern finish lights them
-## like painted 3D with a roughness and metal per surface, Classic keeps its cel bands, and whatever darkens a piece
-## finds its colour either way.
+## like painted 3D with a roughness and metal per surface and without ink lines (W15), Classic keeps its cel bands and
+## lines, and whatever darkens a piece finds its colour either way.
 
 var _was := ""
 
@@ -48,3 +48,15 @@ func test_the_colour_key_is_found_in_either_finish() -> void:
 		Look.set_style(s, false)
 		assert_eq(Look.tint_key(Look.cel("walnut")), "albedo", "%s flat colour" % s)
 		assert_eq(Look.tint_key(Look.cel_textured("village/cobbles")), "tint", "%s texture" % s)
+
+
+## The world's ink lines (W15): Classic keeps them; Modern leaves them to the characters.
+func test_world_ink_lines_only_in_classic() -> void:
+	var mat := ShaderMaterial.new()
+	mat.shader = Look.POST_SHADER
+	Look.set_style("modern", false)
+	Look.style_post(mat)
+	assert_false(bool(mat.get_shader_parameter("outlines")), "no ink lines on the Modern world")
+	Look.set_style("classic", false)
+	Look.style_post(mat)
+	assert_true(bool(mat.get_shader_parameter("outlines")), "Classic keeps them")
