@@ -356,6 +356,67 @@ func _build_npcs() -> void:
 		grid.set_flag(cb.cell, CombatGrid.LOW, true)   # an NPC blocks the square while standing there
 
 
+
+# --- People who step into a scene (the dialogue statements `appear <npc> [at <id>]` and `vanish <npc>`) --------------
+
+## Figures a conversation brought on: npc id -> token. Gone when the conversation ends (or at `vanish`).
+var _staged: Dictionary = {}
+
+
+## Owner report (2026-10-07): Strahd spoke at the funeral but wasn't there. A scene puts a speaker on the map for as
+## long as it lasts: beside a door, prop, container or exit named `at`, or a few squares from the party.
+func stage_npc(npc_id: String, at: String = "") -> void:
+	if npc_tokens.has(npc_id) or _staged.has(npc_id) or members.is_empty():
+		return
+	var near := leader().cell
+	var found := false
+	if at != "":
+		for list: String in ["doors", "props", "containers", "exits"]:
+			for t: Variant in loc.get(list, []):
+				var spec := t as Dictionary
+				if str(spec.get("id", "")) == at and spec.has("cell"):
+					near = _cell(spec["cell"])
+					found = true
+	var taken := {}
+	for m in members + guest_members:
+		taken[m.cell] = true
+	var cell := Vector2i(-1, -1)
+	for c in _cells_around(near, 16 if found else 24):
+		if taken.has(c) or grid.is_solid(c) or npc_tokens.values().any(func(t: Node) -> bool: return grid.cell_at((t as Node3D).position) == c):
+			continue
+		if not found and c.distance_to(near) < 3.0:
+			continue   # beside the party, not on top of it
+		cell = c
+		break
+	if cell == Vector2i(-1, -1):
+		return
+	var npc := Compendium.shared().get_entry("npcs", npc_id)
+	var data := Compendium.shared().monster_data(str(npc.get("monster", "commoner")))
+	if data.is_empty():
+		data = Compendium.shared().monster_data("commoner")
+	var m := Monster.from_data(data)
+	m.name = str(npc.get("name", npc_id))
+	var cb := Combatant.new(m, &"neutral", cell)
+	cb.id = "npc_" + npc_id
+	var tok := _npc_token(cb, str(npc.get("sprite", npc_id)))
+	tok.position = board.cell_center(cell)
+	add_child(tok)
+	if leader() != null:
+		var to_party := Vector2(leader().cell - cell)
+		tok.face(to_party, false)
+	_staged[npc_id] = tok
+
+
+func unstage_npc(npc_id: String) -> void:
+	if _staged.has(npc_id):
+		(_staged[npc_id] as Node).queue_free()
+		_staged.erase(npc_id)
+
+
+func clear_staged() -> void:
+	for id: String in _staged.keys():
+		unstage_npc(id)
+
 func _npc_token(cb: Combatant, art: String) -> CombatToken:
 	return CombatToken.create(cb, art)
 

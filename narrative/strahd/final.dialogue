@@ -4,6 +4,7 @@
 # party or he already holds her. Nothing here depends on one social check.
 
 ~ parley
+appear strahd
 Narrator: He is waiting for you, as he said he would be, hands folded behind his back like a host at the top of his own stair.
 Strahd: My guests. You came. I did wonder whether you would, and I am so rarely made to wonder.
 if item:sunsword
