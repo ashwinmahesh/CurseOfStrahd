@@ -329,7 +329,33 @@ func _focus_dof() -> void:
 
 const MODERN_TONEMAP := Environment.TONE_MAPPER_AGX
 const MODERN_EXPOSURE := 1.35
-const MODERN_GRADE := 0.4
+## The Modern finish's grade, one per mood (Improvement Ideas W16; the screen pass's tone_split), in place of the
+## gradient map Classic keeps: the shade takes the place's cool `shade` colour by `amount` and keeps only some of its
+## colour (`shade_saturation`), its blacks sink (`black`), `pivot` is the brightness where shade turns to light, and
+## `ambient` is how much of the mood's ambient light fills the shade. Lamplight keeps its own warm colour, so it pools
+## warm against cool, dark shade (direction B's tone). A mood's "tone" changes any of them, a time of day's "tone"
+## within it changes them again: Berez and the larders take a sick green shade, the brides' court crimson, a tavern
+## warm peat.
+const MODERN_TONE := {"shade": "night", "amount": 0.55, "shade_saturation": 0.6, "black": 0.03, "pivot": 0.36,
+	"ambient": 0.8}
+## An overcast day is still day: blue-grey shade, more of the ground counts as lit, the shade keeps more colour and
+## all its fill.
+const DAY_TONE := {"shade": "slate", "amount": 0.45, "pivot": 0.24, "shade_saturation": 0.8, "ambient": 1.0}
+## Indoors the shade is the deep night blue of a dark house.
+const INDOOR_TONE := {"shade": "night_deep"}
+
+
+## The Modern grade for a time of day: MODERN_TONE, a day's DAY_TONE or an indoor INDOOR_TONE, then the mood's own
+## "tone", then the time's.
+func _tone(p: String) -> Dictionary:
+	var t := MODERN_TONE.duplicate()
+	if p == "day":
+		t.merge(DAY_TONE, true)
+	elif p == "any":
+		t.merge(INDOOR_TONE, true)
+	t.merge(mood.get("tone", {}) as Dictionary, true)
+	t.merge(((mood.get("times", {}) as Dictionary).get(p, {}) as Dictionary).get("tone", {}) as Dictionary, true)
+	return t
 
 
 ## The board's water squares get the moving water (one material for the whole place, the land's lakes included).
@@ -541,6 +567,7 @@ func _target(p: String) -> Dictionary:
 	var grade := t.get("grade", {}) as Dictionary
 	var level := float(LEVELS.get(light_level, 1.0))
 	var angle := _vec2(t.get("key_angle", mood.get("key_angle", [-40, 30])))
+	var tone := _tone(p)
 	return {
 		"sky": Look.color(str(t.get("sky", "grave"))),
 		"fog": Look.color(str(t.get("fog", t.get("sky", "grave")))),
@@ -558,6 +585,12 @@ func _target(p: String) -> Dictionary:
 		"grade_shadows": Look.color(str(grade.get("shadows", "pewter"))) if not grade.is_empty() else Color(0.5, 0.5, 0.5),
 		"grade_lights": Look.color(str(grade.get("lights", "pewter"))) if not grade.is_empty() else Color(0.5, 0.5, 0.5),
 		"grade_amount": float(grade.get("amount", 0.0)),
+		"tone_shade": Look.color(str(tone["shade"])),
+		"tone_amount": float(tone["amount"]),
+		"tone_sat": float(tone["shade_saturation"]),
+		"tone_black": float(tone["black"]),
+		"tone_pivot": float(tone["pivot"]),
+		"tone_ambient": float(tone["ambient"]),
 	}
 
 
@@ -579,7 +612,8 @@ func _apply(k: float) -> void:
 	if env.volumetric_fog_enabled:
 		env.volumetric_fog_albedo = v["fog"] as Color
 	env.ambient_light_color = v["ambient"] as Color
-	env.ambient_light_energy = float(v["ambient_energy"]) * (1.0 + _flash * 2.5)
+	var fill := float(v["tone_ambient"]) if Look.modern() else 1.0
+	env.ambient_light_energy = float(v["ambient_energy"]) * fill * (1.0 + _flash * 2.5)
 	sun.light_color = (v["key"] as Color).lerp(Look.color("frost"), _flash)
 	sun.light_energy = float(v["key_energy"]) * (1.0 + _flash * 3.0)
 	sun.rotation_degrees = v["key_angle"] as Vector3
@@ -596,9 +630,14 @@ func _apply(k: float) -> void:
 	_post.set_shader_parameter("saturation", float(v["saturation"]))
 	_post.set_shader_parameter("grade_shadows", v["grade_shadows"] as Color)
 	_post.set_shader_parameter("grade_lights", v["grade_lights"] as Color)
-	# Without the palette snap pulling colours back to the palette, the full gradient map tints too hard (grass
-	# turns pink); the modern finish uses less of it.
-	_post.set_shader_parameter("grade_amount", float(v["grade_amount"]) * (MODERN_GRADE if Look.modern() else 1.0))
+	# The Modern finish tints only the shade (tone_split), by MODERN_TONE's share of the mood's amount.
+	_post.set_shader_parameter("grade_amount", float(v["grade_amount"]))
+	if Look.modern():
+		_post.set_shader_parameter("tone_shade", v["tone_shade"] as Color)
+		_post.set_shader_parameter("tone_amount", float(v["tone_amount"]))
+		_post.set_shader_parameter("tone_shade_saturation", float(v["tone_sat"]))
+		_post.set_shader_parameter("tone_black", float(v["tone_black"]))
+		_post.set_shader_parameter("tone_pivot", float(v["tone_pivot"]))
 
 
 # --- Every frame ----------------------------------------------------------------------------------

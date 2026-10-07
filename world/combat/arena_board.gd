@@ -434,6 +434,16 @@ func clear_cell(c: Vector2i) -> void:
 		_cleared[c] = _box("Floor", Vector3(1, 0.2 + h, 1), Vector3(c.x + 0.5, (h - 0.2) / 2.0, c.y + 0.5), _floor_mat)
 
 
+## The flat floor box on square `c` (null if none), and the material plain floors are drawn in: the Modern look's
+## shaped ground draws the wild ground itself and lowers these under it (GroundRelief, Improvement Ideas W11).
+func floor_box(c: Vector2i) -> MeshInstance3D:
+	return _floors.get(c) as MeshInstance3D
+
+
+func floor_material() -> Material:
+	return _floor_mat
+
+
 ## A stairwell down opens the floor of its square (and shows it again when it goes).
 func hide_floor(c: Vector2i) -> void:
 	for d: Dictionary in [_floors, _cleared]:

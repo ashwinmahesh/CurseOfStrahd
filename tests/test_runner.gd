@@ -34,6 +34,7 @@ func _ready() -> void:
 				continue   # another runner has it
 			print("@@ start ", f)
 		var started := Time.get_ticks_msec()
+		var data_before := _data_ids()
 		var script := load(path) as GDScript
 		if script == null or not script.can_instantiate():
 			total += 1
@@ -64,6 +65,7 @@ func _ready() -> void:
 					failed.append(tc.current_test)
 				tc.queue_free()
 				await get_tree().process_frame
+		_drop_added_data(data_before)
 		if claim_dir != "":
 			print("@@ done %s %d" % [f, Time.get_ticks_msec() - started])
 	Creature.clear_caches()
@@ -95,6 +97,37 @@ func _test_files(files_only: PackedStringArray) -> Array[String]:
 			if found.has(f):
 				out.append(found[f])
 	return out
+
+
+## Every id in the shared Compendium's tables, so what a test file adds there (fixture places, made-up monsters) can
+## be taken out after it. Files share a process, so a fixture left behind turned up in later files' loops over every
+## place (test_skirmish's every-map test, 2026-10-07).
+func _data_ids() -> Dictionary:
+	var comp := Compendium.shared()
+	var tables := {}
+	for t: String in comp.tables:
+		var ids := {}
+		for id: Variant in (comp.tables[t] as Dictionary):
+			ids[id] = true
+		tables[t] = ids
+	return {"compendium": comp, "tables": tables}
+
+
+## Takes out of the Compendium every table and id a test file added (`before` is _data_ids() from before it ran). A
+## file that reloaded the Compendium left nothing of its own in it.
+func _drop_added_data(before: Dictionary) -> void:
+	var comp := Compendium.shared()
+	if comp != before["compendium"]:
+		return
+	var had := before["tables"] as Dictionary
+	for t: String in comp.tables.keys():
+		if not had.has(t):
+			comp.tables.erase(t)
+			continue
+		var table := comp.tables[t] as Dictionary
+		for id: Variant in table.keys():
+			if not (had[t] as Dictionary).has(id):
+				table.erase(id)
 
 
 ## Removes this run's save folder.

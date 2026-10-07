@@ -71,3 +71,17 @@ slicks on the floor (shaders/fx/fx_slick.gdshader). `VFX_SET=zones` captures the
 - `python3 tools/capture/vfx_sheet.py captures/vfx/vfx` joins them into side-by-side GIFs, stills at the moment the
   two differ most, and `vfx_overview.png`.
 - `tests/unit/test_spell_fx.gd` checks the data (picks, families, palette colours) and that effects clean up.
+
+## Sounds
+
+Every effect sounds the way it looks (world/combat/fx/combat_sfx.gd, `combat` in art/audio.json). A family names the
+sounds of its moments: `cast` (the effect begins), `launch` (a missile leaves the hand), `impact` (it lands or bursts),
+`arrive` (a jump's far end). An entry starting with `@` is the flavour's own sound for that moment, so Fire Bolt and a
+flameskull's Fire Ray share fire's launch and burst, and Fireball layers a rumble under the same burst. `keys` gives a
+spell or ability its own sounds (Hold Person's chains); a family with no entry plays the plain spell sound.
+
+A blow (a weapon, claw or bite) sounds by what struck and how hard it landed: `hits` has blade (slashing), blunt
+(bludgeoning, cracking bone on heavy and critical hits), point (a melee pierce) and shot (an arrow, bolt or throw),
+each light, heavy (a quarter of the target's Hit Point maximum, or 15 damage) or critical. A spell's missile or a
+magic touch sounds through its flavour instead. Levels in art/audio.json `levels` set each sound's volume; the owner
+picked the sounds by ear (2026-10-07, three rounds of samples).

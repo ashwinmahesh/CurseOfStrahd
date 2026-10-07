@@ -15,6 +15,9 @@ grade.
 | Each place's mood: light per time of day, mist, clouds, grade, water, weather, land around the map | `art/atmosphere/moods.json` |
 | Builds the mood for a location and runs it (sun, sky, contact shadows, water, time-of-day blends, lightning) | `world/look/atmosphere.gd` (`Atmosphere`) |
 | The land around the map and over its empty squares: hills, forest, roads and lakes running on | `world/look/atmosphere_land.gd` (`AtmosphereLand`) |
+| The Modern look's trees and plants (docs/art/plants.md) | `world/look/flora.gd` (`Flora`), `art/plants/` |
+| The Modern look's shaped ground: the walked ground's hollows and ruts, banks under the woods | `world/look/ground_relief.gd` (`GroundRelief`) |
+| The land lane's before-and-after shots: trees and plants, ground, vistas | `tools/capture/land_capture.tscn` |
 | Weather: leaves, rain, snow, wisps, dust, crows, chimney smoke, embers, lit windows | `world/look/atmosphere_weather.gd` (`AtmosphereWeather`) |
 | Mist, the Mists' wall, cloud shadows, ground patches, grade, vignette, then outlines and the palette snap | `shaders/post/strahd_post.gdshader` |
 | Water, forest trees (one MultiMesh), leaves, rain, splashes, motes, crows, smoke | `shaders/atmosphere/` |
@@ -77,7 +80,13 @@ anyone touching this file.
   in a blizzard; will-o'-wisps and fireflies after dark; dust hanging in shut-up rooms; crows circling overhead;
   chimney smoke bent by the wind; sparks over open fires; candlelight spilling from lit windows after dark;
   lightning flashes in a storm (and through the castle's spire windows).
-- **Grade.** Each time of day maps brightness through its own shadow and light colours, so a scene keeps to one
+- **Grade.** In the Modern finish (W16) the shade takes the place's own cool colour and loses some of its colour while
+  lamplight keeps its warm one, so light pools warm against cool, dark shade (the chosen direction: A's effects in
+  B's tone): night blue by default, blue-grey on an overcast day, deep night blue indoors; a mood's `tone` gives
+  its own (Berez, Yester Hill, crypts and the castle larders sick green, the brides' court crimson, the castle's
+  storm bruise purple, a tavern warm peat, the snows moon blue) and can change how much colour the shade keeps, how
+  deep its blacks go and how much ambient light fills it (`Atmosphere.MODERN_TONE`, `DAY_TONE`, `INDOOR_TONE`). In
+  Classic each time of day maps brightness through its own shadow and light colours, so a scene keeps to one
   family of hues; strongly coloured light (a lantern, a fire) keeps more of its own colour. Greys stay on the grey
   ramp in the palette snap where the mood asks (`keep_greys`), so a pale grey fades without a muddy brown ring. A
   vignette sinks the screen's edges towards `void`.
@@ -86,6 +95,25 @@ All of it happens before the palette snap, so it comes out in palette colours wi
 is an opaque, hard-edged shape for the same reason. Character sprites draw after the screen pass, so mist never covers
 them and they stay crisp. On this Mac, Vallaki in the rain, the castle's storm and the Tsolenka blizzard all hold the capture's 120 fps cap at
 1600 x 900 with it on, the same as with it off (`--uncapped --compare`).
+
+## Ground with shape in the Modern finish
+
+Improvement Ideas W11. On an outdoor wild map (ArenaBoard.WILD) the ground people walk on is drawn as one shaped
+skin instead of flat squares: shallow hollows, a fine unevenness, and two wheel ruts along the shortest walk between
+each two ways out on the map's edge. The skin never rises above the squares' floor level and is never deeper than
+`GroundRelief.DEEPEST`, so tokens, grid overlays and spell templates still stand on the same 5 ft grid
+(`floor_y`/`cell_center` are untouched; real heights are F4's), and it settles flat round any square drawn flat (a
+prop's, a door's, an exit's, a raised one, water). The board's own floor boxes there are lowered out of sight under it
+(`ArenaBoard.floor_box`, `floor_material`). Under the map's woods (tree squares) the ground rises into banks with
+mounds on them, and the land past the edge starts on the banks and settles into its hills; the roads out of the map
+carry the same crown, ruts and verges. The trees and plants stand on all of it. Towns keep their streets, rooms and
+yards their floors, and Classic stays flat.
+
+    make capture SCENE=res://tools/capture/land_capture.tscn NAME=land/clay FRAMES=10 \
+      LAND_SHOTS=crossroads LAND_CLAY=1     # the shaped ground in plain clay; LAND_NO_RELIEF=1 for without
+
+The shape is gentle: on today's busy ground textures it shows most in low light, and wheel-rut decals (W10) can follow
+`GroundRelief`'s roads. Not done: a hidden area's ground outdoors stays drawn (HiddenAreas hides the lowered boxes).
 
 ## Edges and shadows in the Modern finish
 
