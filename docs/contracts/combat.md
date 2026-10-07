@@ -2,6 +2,38 @@
 
 How the scene, the HUD and tests talk to a fight. Everything here lives in `combat/` and is pure logic.
 
+## Where the code lives
+
+`Encounter` and `SpellCaster` hold the fight's state. Each job is a helper in a file of its own, which the owner makes
+in `_init` and forwards its commands to, so the calls below don't change and a lane can own a whole file. New code goes
+in the helper whose job it is; a function other files call gets a one-line forwarder on the owner.
+
+| Job | File (`e.<var>` / `e.spells.<var>`) |
+|---|---|
+| Initiative, turns and rounds, the end of the fight, AI turns, the action economy's checks | `encounter_turns.gd` (`turns`) |
+| Sight, light, obscurement, invisibility, cover | `encounter_sight.gd` (`sight`) |
+| Reachable squares, moving and what each step sets off, forced movement, Jump | `encounter_movement.gd` (`movement`) |
+| Mounted combat | `encounter_mounts.gd` (`mounts`) |
+| Grapple and Shove | `encounter_grapples.gd` (`grappling`) |
+| Attack options, legality, ammunition, thrown weapons | `encounter_weapons.gd` (`weapons`) |
+| Attacks: Advantage and cover, the roll and its stages, hits and misses, Opportunity and readied attacks | `encounter_attacks.gd` (`attacks`) |
+| Damage and healing dice, dealing damage, Death Saving Throws, stabilizing | `encounter_damage.gd` (`damage`) |
+| Reaction decisions and answers, the queued reactions | `encounter_reactions.gd` (`reaction_flow`) |
+| Standard actions, hiding, effects' actions (escape, douse, wake), Haste's action | `encounter_actions.gd` (`actions`) |
+| Casting: paying, checking targets, resolving the recipe | `spell_casting.gd` (`casting`) |
+| What can be cast, casting numbers, Metamagic | `spell_options.gd` (`options`) |
+| Reaction spells, releasing a readied spell | `spell_reactions.gd` (`reaction_spells`) |
+| Range, target counts, areas | `spell_targeting.gd` (`targeting`) |
+| Spell attacks | `spell_attacks.gd` (`attacks`) |
+| Spell damage, healing, Temporary Hit Points | `spell_damage.gd` (`damage`) |
+| Saving throws against spells, repeated saves, pushes | `spell_saves.gd` (`saves`) |
+| Effects from the data recipe | `spell_effects.gd` (`effects`) |
+| Spells with handlers of their own (`SpellCaster.SPECIAL`) | `spell_handlers.gd` (`handlers`) |
+| Zones, walls and spell objects | `spell_placement.gd` (`placement`) |
+| Sustained actions | `spell_sustained.gd` (`sustain`) |
+| Summons | `spell_summons.gd` (`summons`) |
+| Turn, damage and movement hooks | `spell_turns.gd` (`turn_hooks`) |
+
 ## Building a fight
 
 - `EncounterSetup.load_id(id, dice)` reads `data/encounters/<id>.json` (schema: `data/schemas/encounter.schema.json`):

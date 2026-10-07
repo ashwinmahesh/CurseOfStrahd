@@ -13,7 +13,8 @@ art/prompts/<kind>_keyframes.txt plus the character's entry. Strips that already
 --retry N (attack): after generating, blender/render_attack.py --check reads every strip of the characters touched and
 the views it flags (figures merged or clipped, frame 1 not the standing view) are drawn again, up to N more times.
 --recheck checks every existing strip of the chosen characters first, too.
-GEMINI_BUDGET=<counter file>:<max> caps the calls (tools/art/gemini_budget.py).
+GEMINI_BUDGET=<counter file>:<max> caps the calls, and each pass first checks the art spend ledger
+(tools/art/gemini_budget.py): it stops before starting if it would pass the key's stop point or today's requests.
 
 kind attack: every character (wind-up, strike). kind walk: four-legged bodies only (BODY=quadruped in their
 art/manifest.json sprite_flags: two strides, profile and three-quarter views; head-on views walk with the rig).
@@ -297,6 +298,7 @@ def main():
             if not jobs:
                 break
             print(f"{len(jobs)} strips to generate" + (f" (retry {attempt})" if attempt else ""), flush=True)
+            gemini_budget.preflight(len(jobs), "2K" if a.kind in V2_KINDS else "", f"{a.kind} strips", model())
             with ThreadPoolExecutor(max_workers=a.jobs) as pool:
                 results = list(pool.map(generate, jobs))
             failed = results.count(False)

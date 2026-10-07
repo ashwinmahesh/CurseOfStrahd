@@ -21,6 +21,9 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gemini_budget  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
 BLENDER = "/Applications/Blender.app/Contents/MacOS/Blender"
 RECIPES = ROOT / "tools" / "art" / "prop_recipes.json"
@@ -79,6 +82,7 @@ def main():
     failed = {}
     if a.generate:
         todo = [n for n in sheets if a.only or not source(n).exists()]
+        gemini_budget.preflight(len(todo), "", "prop sheets")   # the art spend ledger: stops before a batch it can't finish
         stop = []
         with ThreadPoolExecutor(max_workers=a.jobs) as pool:
             for n, err in zip(todo, pool.map(lambda n: generate(rec, n, sheets[n], stop), todo)):

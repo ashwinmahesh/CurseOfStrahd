@@ -269,6 +269,21 @@ static func _way_through(v: LocationView, cell: Vector2i) -> String:
 	return ""
 
 
+## Searches from where the leader stands (a minute each) until something shows at `cell`, the way a player keeps
+## looking where they know a secret is. Thirty tries, so even a leader with no Perception bonus finds a DC 14 seam
+## whatever the dice (each try fails 65% of the time; twelve tries failed on one seed). True once it's there.
+func search_for(cell: Vector2i, tries: int = 30) -> bool:
+	for i in tries:
+		if not view().thing_at(cell).is_empty():
+			return true
+		view().search()
+		await frames(2)
+	if view().thing_at(cell).is_empty():
+		note("searched %d times and found nothing at %s" % [tries, cell])
+		return false
+	return true
+
+
 ## Walks next to a person, prop or container and uses it (talks, examines, opens, searches for it first). A walk cut
 ## short (a trap spotted on the way) is walked again.
 func use(cell: Vector2i) -> bool:
