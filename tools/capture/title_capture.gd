@@ -1,14 +1,15 @@
 extends Node
-## The animated title screen for captures: a full-size still, then FRAMES small frames of the castle and sky, 1/20 s
-## apart, across a burst of bats from the towers, a flyby and a flash of lightning (the ambience is stepped by hand, so
+## The animated title screen for captures: a full-size still, then FRAMES small frames of the right of the screen, 1/20 s
+## apart, across a burst of bats from the towers, crows lifting from the pines, a flyby and a flash of lightning (the ambience is stepped by hand, so
 ## the frames are evenly spaced however long a shot takes). tools/capture/apng.py joins them into an animated PNG.
 ## make capture SCENE=res://tools/capture/title_capture.tscn NAME=title_anim FRAMES=10
 
 const STEP := 0.05
 const FRAMES := 48
-## The frames show the castle and sky (the moving part), small, to keep the animated PNG light.
-const CROP := Rect2i(640, 0, 960, 540)
-const SMALL := Vector2i(560, 315)
+## The frames show the right of the screen (castle, sky, road and pines: the moving part), small, to keep the animated
+## PNG light.
+const CROP := Rect2i(640, 0, 960, 900)
+const SMALL := Vector2i(512, 480)
 
 var menu: Control
 
@@ -24,6 +25,7 @@ func capture_shots(tool: Node, out: String) -> void:
 	amb.set("_next_flyby", 7.6)
 	amb.set("_next_burst", 8.0)
 	amb.set("_next_flash", 9.6)
+	amb.set("_next_crows", 8.2)
 	while amb.time < 8.4:
 		amb.call("_process", STEP)
 	await tool.call("wait_frames", 2)

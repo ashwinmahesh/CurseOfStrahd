@@ -23,6 +23,7 @@ var rng: RandomNumberGenerator
 var root: Node3D
 var water_material: ShaderMaterial = null
 var occluders: Array[Sprite3D] = []
+var mesh_occluders: Array[Node3D] = []   ## 3D trees (ModelPiece) in the first rows
 var _edge: Dictionary = {}      ## border cell -> Edge
 var _w := 0
 var _d := 0
@@ -337,6 +338,12 @@ func _trees() -> void:
 			var size := rng.randf_range(0.5, 0.75)
 			var at := Vector3(p.x, height(p) - 0.05, p.y)
 			if out < NEAR_RING:
+				var pick := ModelPiece.hash_cell(Vector2i(floori(p.x * 3.0), floori(p.y * 3.0)))
+				var tree := ModelPiece.tree(board, kind, at, size, pick, float(pick % 360) * PI / 180.0)
+				if tree != null:
+					root.add_child(tree)   # 3D trees (docs/art/models.md), as tall as the billboards were
+					mesh_occluders.append(tree)
+					continue
 				var sp := board.prop_sprite(kind, at, size)
 				if sp != null:
 					sp.get_parent().remove_child(sp)
@@ -352,6 +359,8 @@ func _trees() -> void:
 func _tree_multimesh(kind: String, items: Array) -> void:
 	var info := SetDressing.manifest().get(kind, {}) as Dictionary
 	if items.is_empty() or info.is_empty():
+		return
+	if _tree_models(kind, items):
 		return
 	var px := float(info.get("pixel_size", 0.01))
 	var quad := QuadMesh.new()
@@ -376,6 +385,45 @@ func _tree_multimesh(kind: String, items: Array) -> void:
 	mmi.name = "Trees_" + kind
 	mmi.multimesh = mm
 	root.add_child(mmi)
+
+
+## The far trees as 3D models (docs/art/models.md) where the place has them: one MultiMesh per variant, each tree as
+## tall as its billboard was, turned its own way, darker further out as before. False if there's no model.
+func _tree_models(kind: String, items: Array) -> bool:
+	var variants: Array[String] = []
+	for k in 8:
+		var id := ModelPiece.for_art(board, kind, k)
+		if id != "" and not id in variants:
+			variants.append(id)
+	if variants.is_empty():
+		return false
+	for v in variants.size():
+		var id := variants[v]
+		var mesh := ModelPiece.tree_mesh(id)
+		if mesh == null:
+			return false
+		var mine: Array = []
+		for i in items.size():
+			if i % variants.size() == v:
+				mine.append(items[i])
+		var mm := MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.use_colors = true
+		mm.mesh = mesh
+		mm.instance_count = mine.size()
+		for i in mine.size():
+			var it := mine[i] as Array
+			var at := it[0] as Vector3
+			var s := ModelPiece.tree_scale(kind, id, float(it[1]))
+			var yaw := float(ModelPiece.hash_cell(Vector2i(floori(at.x * 3.0), floori(at.z * 3.0))) % 360) * PI / 180.0
+			mm.set_instance_transform(i, Transform3D(Basis(Vector3.UP, yaw).scaled(Vector3(s, s, s)), at))
+			var shade := float(it[2])
+			mm.set_instance_color(i, Color(shade, shade, shade))
+		var mmi := MultiMeshInstance3D.new()
+		mmi.name = "Trees_" + id
+		mmi.multimesh = mm
+		root.add_child(mmi)
+	return true
 
 
 ## Where the map's water is, for the water's shore and depth: one texel per square, 0 on land rising to 1 four

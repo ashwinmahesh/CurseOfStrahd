@@ -50,7 +50,10 @@ func test_catalog_models_exist() -> void:
 	for art: String in cfg.get("art", {}):
 		assert_true(SetDressing.has_art(art), "it stands in for art that exists: " + art)
 		var entry: Variant = (cfg["art"] as Dictionary)[art]
-		for id: Variant in ((entry as Dictionary).values() if entry is Dictionary else [entry]):
+		var ids: Array = []
+		for v: Variant in ((entry as Dictionary).values() if entry is Dictionary else [entry]):
+			ids.append_array(v as Array if v is Array else [v])
+		for id: Variant in ids:
 			assert_true(ModelPiece.has_model(str(id)), "model %s built for %s" % [id, art])
 	for surface: String in cfg.get("walls", {}):
 		assert_true(Look.cel_textured(surface) != null, "wall surface exists: " + surface)
@@ -117,7 +120,12 @@ func test_models_stay_in_their_square() -> void:
 			if not m.is_visible_in_tree():
 				continue
 			var box := _bounds(m)
-			var mount := str((ModelPiece.manifest()[str(m.get_meta("model"))] as Dictionary)["mount"])
+			var info := ModelPiece.manifest()[str(m.get_meta("model"))] as Dictionary
+			if bool(info.get("turns", false)):
+				continue   # nature (trees, brambles, boulders) grows over its square's edges, as the 2D pieces did
+			if bool(info.get("big", false)):
+				continue   # building-sized pieces (a wagon) stand over several squares, clearing trees as the 2D ones do
+			var mount := str(info["mount"])
 			var cell := v.grid.cell_at(m.global_position)
 			var room := Rect2(cell.x - 0.03, cell.y - 0.03, 1.06, 1.06)
 			if mount == "wall" or m.has_meta("hung"):
@@ -144,6 +152,26 @@ func test_a_place_left_out_keeps_its_2d_pieces() -> void:
 	assert_eq(_models(v.board).size(), 0, "no models on the ground floor")
 	for n in v.board.get_children():
 		assert_false(n.has_meta("wall_modules"), "no 3D panelling")
+	v.queue_free()
+
+
+## Owner request (2026-10-07): everything but the characters in 3D. The woods are 3D trees, as tall as the 2D ones
+## were, in the map and in the land around it, and they fade when they stand between the camera and the party.
+func test_the_woods_are_3d_trees() -> void:
+	var v := _view("into_the_mists_road")
+	await _frames(2)
+	assert_eq(v.board.occluders.size(), 0, "no billboard trees left")
+	assert_true(v.board.mesh_occluders.size() > 50, "3D trees in and around the map (%d)" % v.board.mesh_occluders.size())
+	var tree := v.board.mesh_occluders[0]
+	var box := AABB()
+	for n in tree.find_children("*", "MeshInstance3D", true, false):
+		box = box.merge((n as MeshInstance3D).global_transform * (n as MeshInstance3D).mesh.get_aabb())
+	assert_true(box.size.y > 2.0 and box.size.y < 4.0, "a tree 10 to 20 ft tall (%.2f)" % box.size.y)
+	var far := 0
+	for n in v.find_children("Trees_*", "MultiMeshInstance3D", true, false):
+		far += (n as MultiMeshInstance3D).multimesh.instance_count
+		assert_true((n as MultiMeshInstance3D).multimesh.mesh is ArrayMesh, "the far trees are 3D meshes")
+	assert_true(far > 0, "the forest beyond the edge is there")
 	v.queue_free()
 
 

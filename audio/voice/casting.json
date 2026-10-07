@@ -70,7 +70,8 @@
       "voice_id": "oXIJMW5UjOOMx1NJehjt",
       "name": "Barovia Exethanter",
       "description": "A very old man with a thin, dry, papery voice and a faded English accent, an ancient lich who keeps forgetting. Wandering, polite and confused, trailing off mid-sentence, occasionally sharp and grand for a moment before it slips away.",
-      "settings": {}
+      "settings": {},
+      "released": true
     },
     "vladimir_horngaard": {
       "voice_id": "rsvRsXb5tBuGivd20vw8",
@@ -142,7 +143,8 @@
       "voice_id": "T9b79HXLiVAfoDftSrr2",
       "name": "Barovia Master Vosk",
       "description": "A man with a mild, precise, soft-spoken English accent, a scholar with impeccable manners: dry, reasonable and pleasant, like a solicitor explaining a contract. A faint purr of hunger beneath the politeness.",
-      "settings": {}
+      "settings": {},
+      "released": true
     },
     "ilinca_vrana": {
       "voice_id": "OeKBZ4fy2kWOIj9a3sqa",
@@ -199,11 +201,11 @@
       "released": true
     },
     "kasimir_velikov": {
-      "voice_id": "OAGLshU8IvbaS0EBzMlk",
-      "name": "Barovia kasimir_velikov",
+      "voice_id": "O9XgmQnaZveORWl6mTHm",
+      "name": "Tomislav - Calm, Clear and Narrative",
       "description": "A man with a soft, melancholy, refined voice, an ageless dusk elf with a strong, clearly audible Eastern European (Romanian) accent. Quiet, sorrowful and ashamed; speaks slowly, as if every word costs him.",
       "settings": {},
-      "released": true
+      "library": true
     },
     "victor_vallakovich": {
       "voice_id": "s903300eS0sy5bfR0CMf",
@@ -344,11 +346,11 @@
       "released": true
     },
     "mad_mary": {
-      "voice_id": "XmyT1xoDzzyQpzWdsMAS",
-      "name": "Barovia mad_mary",
+      "voice_id": "fhLywKvvSBS2FpHCxymW",
+      "name": "Ella - Warm, Articulate and Motherly",
       "description": "A middle-aged woman with a wet, weeping, cracked voice and a strong, clearly audible Eastern European (Romanian) accent. Grief-stricken and frightened, sobbing, then suddenly painfully clear.",
       "settings": {},
-      "released": true
+      "library": true
     },
     "henrik": {
       "voice_id": "CxRgTPwsgblZ76mbQb75",
@@ -365,11 +367,11 @@
       "released": true
     },
     "arrigal": {
-      "voice_id": "W9ErdqMvnAScxiStV9IS",
-      "name": "Barovia arrigal",
+      "voice_id": "adxhr4Ei7ASJ3Cz7fxwX",
+      "name": "Slobodan - Persuasive, Narrative",
       "description": "A lean man in his forties with a cool, smooth, courteous voice and a strong, clearly audible Eastern European (Romanian) accent. Polite, controlled and quietly threatening; never raises his voice.",
       "settings": {},
-      "released": true
+      "library": true
     },
     "mirela": {
       "voice_id": "MkTSSXNgnBULS6ek4pon",
@@ -379,11 +381,11 @@
       "library": true
     },
     "doru": {
-      "voice_id": "heHnsCzJSk7m5p4ToCkS",
-      "name": "Barovia doru",
+      "voice_id": "Ntd0iVwICtUtA6Fvx27M",
+      "name": "Evgeniy Shevchenko - Vibrant and Rich",
       "description": "A young man of twenty with a hungry, hissing, broken voice and a strong, clearly audible Eastern European (Romanian) accent, a starving vampire spawn. Wavers between a snarl and a frightened boy begging his father.",
       "settings": {},
-      "released": true
+      "library": true
     },
     "parriwimple": {
       "voice_id": "ug5kYtNNBMvMbMUkBYhs",
@@ -659,11 +661,11 @@
       "released": true
     },
     "sergei_von_zarovich": {
-      "voice_id": "kw4nisGtLbSnDE0dyGPq",
-      "name": "Barovia sergei_von_zarovich",
+      "voice_id": "WczBIOau2qV9z7nLeDqq",
+      "name": "Nikolay Ivanov - Warm, Joyful, and Rich",
       "description": "A young man with a gentle, clear, noble voice and a noticeable old-world Eastern European accent, heard as if through water: kind, calm and full of longing.",
       "settings": {},
-      "released": true
+      "library": true
     },
     "mirabel": {
       "voice_id": "ykvcQN1LRAKj8zcEZ09L",
@@ -711,25 +713,33 @@
       "voice_id": "mPCUUqqWPQ7K5a7esk7T",
       "name": "Barovia hedda_ironvow",
       "settings": {},
-      "description": "A dwarven woman in her middle years with a low, warm, earthy alto and a soft Scottish lilt. Slow, measured and unhurried, letting pauses do the work; dry humour and quiet kindness, weary contempt for the undead, loud and resonant only when she prays."
+      "description": "A dwarven woman in her middle years with a low, warm, earthy alto and a soft Scottish lilt. Slow, measured and unhurried, letting pauses do the work; dry humour and quiet kindness, weary contempt for the undead, loud and resonant only when she prays.",
+      "released": true,
+      "retired": true
     },
     "ilse_varga": {
       "voice_id": "YPY0thqwMO67APQMfXLM",
       "name": "Barovia ilse_varga",
       "settings": {},
-      "description": "A woman in her late thirties with a husky, clipped, no-nonsense voice and a light German accent, a veteran mercenary sergeant. Short declarative sentences in a military rhythm, counting things out loud; blunt and calm, quieter and more precise when afraid."
+      "description": "A woman in her late thirties with a husky, clipped, no-nonsense voice and a light German accent, a veteran mercenary sergeant. Short declarative sentences in a military rhythm, counting things out loud; blunt and calm, quieter and more precise when afraid.",
+      "released": true,
+      "retired": true
     },
     "silvain_aster": {
       "voice_id": "6fePJyZv0Z6hegs501OU",
       "name": "Barovia silvain_aster",
       "settings": {},
-      "description": "An ageless, androgynous elven scholar with a light, precise, crisp voice between tenor and alto and a refined English accent. Elaborate, formal, complete sentences; pedantic, always correcting, dryly witty; more exact and faster when frightened."
+      "description": "An ageless, androgynous elven scholar with a light, precise, crisp voice between tenor and alto and a refined English accent. Elaborate, formal, complete sentences; pedantic, always correcting, dryly witty; more exact and faster when frightened.",
+      "released": true,
+      "retired": true
     },
     "tamsin_tealeaf": {
       "voice_id": "ZzT6eu8pQejVKY0r9YP6",
       "name": "Barovia tamsin_tealeaf",
       "settings": {},
-      "description": "A small, cheerful halfling man with a quick, bright, chatty tenor and a light Irish lilt. Long sentences that run downhill to a punchline; warm, mischievous and charming, talks to locks; goes suddenly silent when truly frightened."
+      "description": "A small, cheerful halfling man with a quick, bright, chatty tenor and a light Irish lilt. Long sentences that run downhill to a punchline; warm, mischievous and charming, talks to locks; goes suddenly silent when truly frightened.",
+      "released": true,
+      "retired": true
     },
     "hero_female": {
       "voice_id": "GPTk4QbvF7snDhImF5UF",
@@ -744,6 +754,113 @@
       "library": true,
       "settings": {},
       "description": "A warm adult man's voice with a neutral English accent for a custom player hero: resonant, grounded and expressive, able to carry any class or temperament."
+    },
+    "rahadin": {
+      "settings": {},
+      "description": "Library voice chosen for Rahadin: Maksim - Deep Calm.",
+      "voice_id": "e5A3tSm7sjA7Sbiz2Qac",
+      "name": "Maksim - Deep Calm",
+      "library": true
+    },
+    "escher": {
+      "settings": {},
+      "description": "Library voice chosen for Escher: Dmitry - Clear and Energetic.",
+      "voice_id": "kwajW3Xh5svCeKU5ky2S",
+      "name": "Dmitry - Clear and Energetic",
+      "library": true
+    },
+    "cyrus_belview": {
+      "settings": {},
+      "description": "Library voice chosen for Cyrus Belview: Viktor - Bold, Slavic and Impatient.",
+      "voice_id": "Xh5OictnmgRO4dff7pLm",
+      "name": "Viktor - Bold, Slavic and Impatient",
+      "library": true
+    },
+    "pidlwick_ii": {
+      "settings": {},
+      "description": "Library voice chosen for Pidlwick Ii: Gert - High and Childlike Clown.",
+      "voice_id": "PtJWpiWfVrCfOmNdkFpr",
+      "name": "Gert - High and Childlike Clown",
+      "library": true
+    },
+    "lief_lipsiege": {
+      "settings": {},
+      "description": "Library voice chosen for Lief Lipsiege: Alexei – Eastern European Business Voice.",
+      "voice_id": "NQJnREzQtnAHHZnia0tY",
+      "name": "Alexei – Eastern European Business Voice",
+      "library": true
+    },
+    "gertruda": {
+      "settings": {},
+      "description": "Library voice chosen for Gertruda: Alice - Soothing, Calm and Youthful.",
+      "voice_id": "54YYBuRuAG6KJooiOhFI",
+      "name": "Alice - Soothing, Calm and Youthful",
+      "library": true
+    },
+    "nadia_boteanu": {
+      "settings": {},
+      "description": "Library voice chosen for Nadia Boteanu: Kate - English Female Voice With Soft Accent.",
+      "voice_id": "xVQH621DS3eyBYrseRt5",
+      "name": "Kate - English Female Voice With Soft Accent",
+      "library": true
+    },
+    "brother_anatol": {
+      "settings": {},
+      "description": "Library voice chosen for Brother Anatol: Andrei - Clear, Gentle and Warm.",
+      "voice_id": "pvY1pikBdoI4SB62vEVo",
+      "name": "Andrei - Clear, Gentle and Warm",
+      "library": true
+    },
+    "ludmilla_vilisevic": {
+      "settings": {},
+      "description": "Library voice chosen for Ludmilla Vilisevic: Sarah - Calm, Clear and Warm.",
+      "voice_id": "jmuki9rdPecaWw4g7Exe",
+      "name": "Sarah - Calm, Clear and Warm",
+      "library": true
+    },
+    "anastrasya_karelova": {
+      "settings": {},
+      "description": "Library voice chosen for Anastrasya Karelova: Dasha - Warm, Serious, and Smooth.",
+      "voice_id": "8HSRAwEWAAa6wv9cdi5S",
+      "name": "Dasha - Warm, Serious, and Smooth",
+      "library": true
+    },
+    "volenta_popofsky": {
+      "settings": {},
+      "description": "Library voice chosen for Volenta Popofsky: Nadya - Energetic and Clear.",
+      "voice_id": "GCPLhb1XrVwcoKUJYcvz",
+      "name": "Nadya - Energetic and Clear",
+      "library": true
+    },
+    "kip_smudgewick": {
+      "voice_id": "oCHQAjcoZiUR4mk6bigI",
+      "name": "Barovia Kip Smudgewick",
+      "description": "A friendly, anxious tiefling man in his early thirties with a warm, quick, slightly breathless baritone and a soft West Country English accent. A fast-talking market-stall salesman, polite and eager to please, apologising and selling at once; slow, careful and hard as nails when he is cornered."
+    },
+    "liriel_dawnsong": {
+      "voice_id": "I9Au5cFrwupn8JvYBp61",
+      "name": "Barovia Liriel Dawnsong",
+      "description": "A slight elven woman, ageless but young, with a soft, clear, bell-like soprano and a gentle Welsh lilt. Serene, musical and formal, unhurried and kind; a quiet steel underneath, and rare moments of dry wit. Becomes very still and precise when her faith is tested."
+    },
+    "ratatoille": {
+      "voice_id": "ozdh3TOFkOj4aavMcQpz",
+      "name": "Barovia Ratatoille",
+      "description": "A young elven man with a light, quick, slightly nasal tenor and a French accent. Fussy, precise and eager, talking fast and rising in pitch when excited, voice occasionally cracking; pompous on purpose, warm by accident, and very quiet and proud when someone loves his food."
+    },
+    "thistle": {
+      "voice_id": "FSY8XsIBUNaLJ1nyCSXE",
+      "name": "Barovia Thistle",
+      "description": "A young woman in her early twenties with a loud, raspy, earthy alto and a broad rural Scottish accent. Boisterous and blunt, laughing big and talking short, a wild woodswoman with no manners and a huge heart; goes completely quiet and low when she is grieving."
+    },
+    "wren_featherfoot": {
+      "voice_id": "7m6tmMjM3T3ImDhTm1Cc",
+      "name": "Barovia Wren Featherfoot",
+      "description": "A small, quick halfling man in his late twenties with a bright, wry, nimble tenor and a London accent. Fast-talking, cheeky and light, always ready with a comeback, laughing at his own jokes; very calm, quiet and short when he is angry or grieving."
+    },
+    "godrick_pendlebrook": {
+      "voice_id": "WnWkMUJG5Rah5H4tplqk",
+      "name": "Barovia Godrick Pendlebrook",
+      "description": "A golden, handsome young knight with a rich, velvety baritone and a polished English accent. Arrogant charm and wry humour, relaxed and teasing, a sardonic half-smile in every line; brave and sincere when it counts, never shouting."
     }
   }
 }

@@ -333,7 +333,19 @@ func test_trees_fade_and_come_back_without_a_box() -> void:
 	root.call("enter_location", "into_the_mists_road", "")
 	await _frames(3)
 	var board := _view().board
-	assert_false(board.occluders.is_empty(), "the road has billboard trees")
+	if board.occluders.is_empty():
+		# 3D trees (docs/art/models.md, owner request 2026-10-07): they fade through their meshes' transparency.
+		assert_false(board.mesh_occluders.is_empty(), "the road has trees")
+		var t3 := board.mesh_occluders[0]
+		var at := t3.global_position + Vector3(-1.5, 0, 0)
+		for i in 10:
+			board.fade_occluders(at + Vector3(10, 10, 0), at, 0.5)
+		var mesh := t3.find_children("*", "GeometryInstance3D", true, false)[0] as GeometryInstance3D
+		assert_true(mesh.transparency > 0.5, "the tree between the camera and the party fades")
+		for i in 10:
+			board.fade_occluders(at + Vector3(-10, 10, 0), at, 0.5)
+		assert_eq(mesh.transparency, 0.0, "back, solid, when the camera moves")
+		return
 	var tree := board.occluders[0]
 	var focus := tree.position + Vector3(-1.5, 0, 0)
 	for i in 10:

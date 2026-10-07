@@ -258,6 +258,32 @@ func test_sneak_attack_with_an_ally_next_to_the_target() -> void:
 	assert_true(ilse.is_alive())
 
 
+func test_sneak_attack_rules_disadvantage_weapon_and_reaction_turns() -> void:
+	var e := TestCombat.open_field()
+	var t := TestCombat.hero(e, "tamsin_tealeaf", Vector2i(2, 2))
+	TestCombat.hero(e, "ilse_varga", Vector2i(4, 2))
+	var w := TestCombat.foe(e, "dire_wolf", Vector2i(3, 2))
+	w.creature.hp = 300
+	TestCombat.start_with(e, t)
+	var opt := e.option_by_id(t, "weapon:shortsword")
+	var adv := D20Test.new()
+	adv.advantage = true
+	var dis := D20Test.new()
+	dis.disadvantage = true
+	var plain := D20Test.new()
+	assert_eq(e.features.sneak_attack_dice(t, w, opt, dis), "", "Disadvantage blocks it, even with an ally beside the target")
+	var club := e.option_by_id(t, "unarmed")
+	if not club.is_empty():
+		assert_eq(e.features.sneak_attack_dice(t, w, club, adv), "", "not with a weapon that's neither Finesse nor ranged")
+	assert_eq(e.features.sneak_attack_dice(t, w, opt, plain), "2d6", "an ally within 5 ft of the target is enough")
+	assert_eq(e.features.sneak_attack_dice(t, w, opt, adv), "", "once per turn")
+	# The wolf's turn: an Opportunity Attack on someone else's turn can Sneak Attack again.
+	e.end_turn()
+	while e.current() != w:
+		e.end_turn()
+	assert_eq(e.features.sneak_attack_dice(t, w, opt, plain), "2d6", "again on another creature's turn (a Reaction attack)")
+
+
 func test_nick_offhand_attack_is_part_of_the_attack_action() -> void:
 	var e := TestCombat.open_field()
 	var t := TestCombat.hero(e, "tamsin_tealeaf", Vector2i(2, 2))
