@@ -88,6 +88,23 @@ def remove_background(arr, tolerance=0.12):
     return out
 
 
+def downsample(arr, k):
+    """Area-average an RGBA frame by an integer factor `k` (premultiplied, so edges don't pick up the background):
+    a frame rendered at k times the size comes out with smooth, correctly placed edges instead of nearest-pixel steps."""
+    if k <= 1:
+        return arr
+    h, w = arr.shape[:2]
+    h2, w2 = h // k, w // k
+    a = arr[:h2 * k, :w2 * k]
+    alpha = a[..., 3:4]
+    pre = np.concatenate([a[..., :3] * alpha, alpha], axis=2)
+    pre = pre.reshape(h2, k, w2, k, 4).mean(axis=(1, 3))
+    out = pre.copy()
+    al = pre[..., 3:4]
+    out[..., :3] = np.where(al > 1e-6, pre[..., :3] / np.maximum(al, 1e-6), 0.0)
+    return out
+
+
 def binarize_alpha(arr, threshold=0.5):
     out = arr.copy()
     out[..., 3] = (out[..., 3] >= threshold).astype(np.float32)
