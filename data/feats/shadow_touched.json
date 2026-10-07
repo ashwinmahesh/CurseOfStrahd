@@ -30,6 +30,7 @@
       "choice": {
         "id": "shadow_spell",
         "kind": "spell",
+        "label": "Shadow Magic: your level 1 Illusion or Necromancy spell (Invisibility comes with the feat)",
         "count": 1,
         "filter": {
           "level": 1,
