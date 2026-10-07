@@ -133,4 +133,8 @@ func _redraw() -> void:
 func _confirm() -> void:
 	Audio.sfx("level_up")
 	if ctl.confirm():
-		root.call("close_screen")
+		# Levels missed at camp wait (owner, 2026-10-07): the next one opens straight away, in order.
+		if st.can_level_up(ch):
+			root.call("open_screen", "level_up", st.party.find(ch))
+		else:
+			root.call("close_screen")

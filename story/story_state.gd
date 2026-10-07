@@ -7,8 +7,9 @@ extends RefCounted
 
 var party: Array[Character] = []
 ## Roster members at camp: the rest of the company, out of the party for now (owner, 2026-10-06: the player swaps
-## who travels, up to PARTY_CAP at once, outside fights and conversations). They don't speak in the story; they level
-## with the party (Pregens.catch_up when they rejoin).
+## who travels, up to PARTY_CAP at once, outside fights and conversations). They don't speak in the story, and they
+## don't level while they're away (owner, 2026-10-07): they keep their level, and when they rejoin, the player takes
+## each level they missed in turn on the level-up screen (levels_waiting).
 var bench: Array[Character] = []
 ## Index into party of the character leading in exploration and speaking in dialogue.
 var leader: int = 0
@@ -235,6 +236,11 @@ func can_level_up(ch: Character) -> bool:
 	return ch.character_level() < target_level()
 
 
+## How many levels `ch` has to take to reach the party's milestone: one level-up screen each, in order.
+func levels_waiting(ch: Character) -> int:
+	return maxi(0, target_level() - ch.character_level())
+
+
 # --- The roster -----------------------------------------------------------------------------------
 
 ## Most characters travelling at once.
@@ -256,7 +262,6 @@ func swap_members(outgoing: Character, incoming: Character) -> bool:
 		return false
 	party[i] = incoming
 	bench[j] = outgoing
-	Pregens.catch_up(incoming, target_level())
 	return true
 
 
@@ -267,7 +272,6 @@ func bring_along(ch: Character) -> bool:
 		return false
 	bench.remove_at(j)
 	party.append(ch)
-	Pregens.catch_up(ch, target_level())
 	return true
 
 

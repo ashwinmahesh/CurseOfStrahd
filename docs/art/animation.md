@@ -62,6 +62,40 @@ of the reference (arms barely move). 21:9 leaves room for a swung weapon.
   **slither** (grick), **lumber** (shambling mound), **swarm** (rats): squash, stretch and rock the one plane.
 - Frame 0 of every cycle is the rest pose: it is also the idle frame.
 
+## Animation set v2 (the six heroes; owner 2026-10-07)
+
+The owner asked for fluid, expressive animation like a modern 2D game, and poses for riding, hiding and casting. The
+six pre-made heroes get a fuller set, drawn rather than rigged: `tools/art/anim_keyframes.py --kind <kind>` draws one
+strip per view at 2K (frame 1 the turnaround view redrawn, then the poses), and `blender/render_keys.py --kind <kind>`
+turns the strips into sheets, adding in-between frames (squash, stretch, lean, a small step) and the timing.
+
+| Kind | Drawn poses | Sheet and animations |
+|---|---|---|
+| `walk4` | contact, passing, contact, passing | `walk`: walk_ (8 frames with the body's rise and fall), idle_ (breathing) |
+| `attack5` | ready, anticipation, wind-up, strike with a motion smear, follow-through | `attack`: 8 frames, the blow on frame 4 |
+| `hurt` | flinch, stagger, collapse to the knees, lying | `hurt`: hurt_ (flinch and recover), die_ (the fall), down_ (lying) |
+| `ride` | seated astride (the horse drawn flat magenta and keyed out), weapon raised, striking down | `ride`: ride_idle_, ride_attack_ |
+| `sneak` | crouched, two crouched steps | `sneak`: sneak_idle_, sneak_walk_ |
+| `cast` | gathering, releasing | `cast`: cast_ (the release lands on frame 3) |
+
+About 30 strips a hero (6 kinds, 5 views; the other 3 directions are mirrors), plus redraws. `--check` (as for
+attacks) flags merged, clipped or mis-scaled strips, and panel borders Gemini sometimes draws are dropped.
+
+In game, `DirectionalSprite.frames_for` merges every sheet a sprite folder has (walk, attack, hurt, ride, sneak,
+cast) and picks the loop from its `pose`: "" (on foot), "sneak", "ride" or "down". `CombatToken` sets the pose from
+the fight (riding when `Encounter.mount_of` has a mount, crouched when hidden or when the party sneaks while
+exploring, lying at 0 Hit Points or Prone), flinches on damage (`hurt()`), plays the drawn fall when a creature drops
+(`fall()`, `fall_if_drawn()`), and plays the spell gesture for spells (`start_cast`). Sprites without these sheets
+keep the earlier behaviour (the lunge, the flattened fall, the attack used as a spell gesture).
+
+`tools/art/preview/anim_showcase.tscn` plays a before/after of one hero (old sheets copied to
+`art/sprites/<id>_before`, not committed) for review; recorded with Godot's movie writer through `tools/godot`.
+
+**TODO (owner 2026-10-07): custom heroes.** Heroes made in the creator are paper dolls (`HeroLook`, docs/art/creator.md)
+and keep the earlier walk and attack until the v2 set is worked out for parts; each needs about 35 images, so it waits
+for a decision on cost. Also still to do: a pose for riding an ally (the riding pose is used as it is), and monsters'
+hit and fall (about 15 images each; they keep the flash and the flattened fall).
+
 ## In game
 
 `DirectionalSprite.frames_for(id)` merges `attack.tres` into the walk frames. `CombatToken.start_attack(dir)` plays

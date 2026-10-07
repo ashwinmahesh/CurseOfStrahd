@@ -67,6 +67,10 @@ const ART_ALIASES := {"strahd_von_zarovich": "strahd", "izek_strazni": "izek", "
 
 var combatant: Combatant
 var art_override := ""
+## Riding a mount (CombatView sets it from Encounter.mount_of) and sneaking (exploration's sneak mode): with the
+## fuller animation set they show the riding or crouched pose.
+var mounted := false
+var sneaking := false
 var sprite: DirectionalSprite
 ## The figure lying on the ground (Prone, or at 0 Hit Points): the front view laid flat.
 var _lying: Sprite3D
@@ -271,8 +275,17 @@ func refresh() -> void:
 		_base_modulate = Color(0.6, 0.55, 0.6, 0.85)
 	if sprite != null:
 		var down := not cr.dead and (cr.hp <= 0 or cr.has_condition(&"prone"))
-		sprite.visible = not down
-		_lying.visible = down
+		if DirectionalSprite.has_anim(sprite.sprite_frames, "down"):
+			# Drawn falls and a drawn lying pose: the figure itself lies down (fall() plays the fall).
+			sprite.visible = true
+			_lying.visible = false
+			if (down or cr.dead) and sprite.pose != "down" and not sprite.is_dying():
+				sprite.pose = "down"
+			elif not down and not cr.dead:
+				sprite.pose = _standing_pose()
+		else:
+			sprite.visible = not down
+			_lying.visible = down
 		if cr.dead and sprite.modulate.a > 0.01 and is_inside_tree():
 			var tw := create_tween()
 			tw.tween_property(sprite, "modulate", _base_modulate, 0.7)
@@ -282,9 +295,32 @@ func refresh() -> void:
 
 
 
-## The fall to the ground at 0 Hit Points or death: the standing figure crumples and the body drops into place with a
-## red flash (procedural, no drawn frames).
+## The pose standing up: astride a mount, crouched when hidden or sneaking, else on foot.
+func _standing_pose() -> String:
+	if mounted:
+		return "ride"
+	if sneaking or combatant.hidden:
+		return "sneak"
+	return ""
+
+
+## Plays the drawn fall when the sprite has one (an enemy's death; a hero's fall goes through fall()).
+func fall_if_drawn() -> void:
+	if sprite != null and DirectionalSprite.has_anim(sprite.sprite_frames, "die"):
+		sprite.die()
+
+
+## A flinch when struck (sprites with the fuller animation set).
+func hurt() -> void:
+	if sprite != null and combatant.is_alive() and combatant.creature.hp > 0:
+		sprite.hurt()
+
+
+## The fall to the ground at 0 Hit Points or death: the drawn fall when the sprite has one; otherwise the standing
+## figure crumples and the body drops into place with a red flash (procedural, no drawn frames).
 func fall() -> void:
+	if sprite != null and sprite.die():
+		return
 	if sprite == null or _lying == null or not is_inside_tree():
 		return
 	var lie_y := _lying.position.y
@@ -393,6 +429,14 @@ func start_attack(dir: Vector2) -> bool:
 		return false
 	face(dir, false)
 	return sprite.attack()
+
+
+## Turns toward `dir` (x, z) and starts the drawn spell gesture. False when the sprite has none.
+func start_cast(dir: Vector2) -> bool:
+	if sprite == null or not sprite.visible:
+		return false
+	face(dir, false)
+	return sprite.cast()
 
 
 ## Whether this creature's attack animation is a spell gesture, played when it casts at something too.

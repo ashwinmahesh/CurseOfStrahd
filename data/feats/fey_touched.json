@@ -30,6 +30,7 @@
       "choice": {
         "id": "fey_spell",
         "kind": "spell",
+        "label": "Fey Magic: your level 1 Divination or Enchantment spell (Misty Step comes with the feat)",
         "count": 1,
         "filter": {
           "level": 1,
