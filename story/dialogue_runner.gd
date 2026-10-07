@@ -256,6 +256,18 @@ func next() -> Dictionary:
 					_picking = true
 					_pick_purpose = "respec"
 					return _pick_beat()
+			"approve", "inspire":
+				# Companion approval (story/approval.gd) and Heroic Inspiration for playing in character
+				# (story/in_character.gd). Each statement counts once a playthrough, however often its node runs.
+				pc += 1
+				var once := "_%s/%s:%s:%d" % [str(s["t"]), file.key, node, int(s["n"])]
+				if st.flags.has(once):
+					continue
+				st.flags[once] = true
+				var said := Approval.react(st, s["changes"] as Array, str(s["why"])) if str(s["t"]) == "approve" \
+					else InCharacter.award(st, str(s["selector"]), str(s["why"]))
+				if said != "":
+					return {"kind": "notice", "text": said, "approval": str(s["t"]) == "approve"}
 			"narrate":
 				pc += 1
 				if narrator != null:

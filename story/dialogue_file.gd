@@ -8,6 +8,7 @@ extends RefCounted
 ##   if {cond} · elif {cond} · else · endif · set {flag, op, value} · quest {id, stage} · give/take {item, qty}
 ##   gold {amount} · attitude {npc, value} · xp · check {skill, dc, ok, fail} · interject {selector, text}
 ##   combat {encounter} · narrate {key} · variant {cond, text} · cooldown {n} · once · end_game (ADR 0014)
+##   approve {changes: [[companion id, delta]], why} · inspire {selector, why} (story/approval.gd, story/in_character.gd)
 
 const ROOT := "res://narrative/"
 const CLASS_TAGS := ["fighter", "rogue", "cleric", "wizard", "barbarian", "bard", "druid", "monk", "paladin", "ranger",
@@ -76,6 +77,27 @@ static func parse(text: String, file_key: String = "") -> DialogueFile:
 		st["n"] = n
 		list.append(st)
 	return f
+
+
+## `approve godrick_pendlebrook +2 kip_smudgewick -1: You paid the widow's debt` (story/approval.gd): pairs of a
+## companion id and a signed change, then an optional reason after a colon. {} if it doesn't read.
+static func _approve(line: String) -> Dictionary:
+	var body := line.substr(8)
+	var why := ""
+	var colon := body.find(":")
+	if colon >= 0:
+		why = body.substr(colon + 1).strip_edges()
+		body = body.substr(0, colon)
+	var words := body.split(" ", false)
+	if words.is_empty() or words.size() % 2 != 0:
+		return {}
+	var changes: Array = []
+	for i in range(0, words.size(), 2):
+		var amount := words[i + 1]
+		if not (amount.begins_with("+") or amount.begins_with("-")) or not amount.substr(1).is_valid_int():
+			return {}
+		changes.append([words[i], int(amount)])
+	return {"t": "approve", "changes": changes, "why": why}
 
 
 static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: RegEx, re_check_tag: RegEx, re_set: RegEx,
@@ -180,6 +202,12 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 		"combat":
 			if parts.size() == 2:
 				return {"t": "combat", "encounter": parts[1]}
+		"approve":
+			return _approve(line)
+		"inspire":
+			var mi2 := RegEx.create_from_string("^inspire\\s+([a-z]+:[a-z0-9_]+)(?::\\s*(.+))?$").search(line)
+			if mi2 != null:
+				return {"t": "inspire", "selector": mi2.get_string(1), "why": mi2.get_string(2).strip_edges()}
 		"narrate":
 			if parts.size() == 2:
 				return {"t": "narrate", "key": parts[1]}
