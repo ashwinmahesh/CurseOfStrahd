@@ -170,8 +170,76 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 		m.set_shader_parameter("roughness", float(spec.get("roughness", 0.8)))
 		m.set_shader_parameter("metallic", float(spec.get("metallic", 0.0)))
 		m.set_shader_parameter("roughness_spread", float(spec.get("spread", 0.35)))
+		_set_variants(m, info, path)
+		var macro := str(textures().get("macro_file", ""))
+		if macro != "" and ResourceLoader.exists("res://" + macro) and float(spec.get("macro", MACRO_STRENGTH)) > 0.0:
+			m.set_shader_parameter("macro_tex", load("res://" + macro) as Texture2D)
+			m.set_shader_parameter("macro_strength", float(spec.get("macro", MACRO_STRENGTH)))
 	_textured[key] = m
 	return m
+
+
+## How strongly broad light and dark patches break up a surface in the Modern finish (W4), unless its material says.
+const MACRO_STRENGTH := 0.35
+
+
+## A surface's edge-matched variants (W4: the manifest entry's "variants", each {"file", "normal_file", "orm_file"}):
+## one is picked per tile. Layer 0 is the surface's own tile. Normal maps a layer lacks are made from its tile; ORM
+## layers only when every layer has one. Variants that don't match the first tile's size and format are left out.
+static func _set_variants(m: ShaderMaterial, info: Dictionary, path: String) -> void:
+	var variants := info.get("variants", []) as Array
+	if variants.is_empty():
+		return
+	var albedo: Array[Image] = []
+	var normal: Array[Image] = []
+	var orm: Array[Image] = []
+	var all_orm := true
+	var layers: Array[Dictionary] = [{"file": path.trim_prefix("res://"), "normal_file": info.get("normal_file", ""),
+		"orm_file": info.get("orm_file", "")}]
+	for v: Variant in variants:
+		layers.append(v as Dictionary)
+	for layer: Dictionary in layers:
+		var a := _layer_image("res://" + str(layer.get("file", "")))
+		if a == null or (not albedo.is_empty() and not _same_shape(a, albedo[0])):
+			continue
+		var n := _layer_image("res://" + str(layer.get("normal_file", "")))
+		if n == null:
+			var made := normal_map("res://" + str(layer.get("file", "")))
+			n = made.get_image() if made != null else null
+		if n == null or (not normal.is_empty() and not _same_shape(n, normal[0])):
+			continue
+		var o := _layer_image("res://" + str(layer.get("orm_file", "")))
+		if o == null or (not orm.is_empty() and not _same_shape(o, orm[0])):
+			all_orm = false
+		albedo.append(a)
+		normal.append(n)
+		if o != null:
+			orm.append(o)
+	if albedo.size() < 2:
+		return
+	var a_arr := Texture2DArray.new()
+	var n_arr := Texture2DArray.new()
+	if a_arr.create_from_images(albedo) != OK or n_arr.create_from_images(normal) != OK:
+		return
+	m.set_shader_parameter("albedo_layers", a_arr)
+	m.set_shader_parameter("normal_layers", n_arr)
+	m.set_shader_parameter("layer_count", albedo.size())
+	if all_orm and orm.size() == albedo.size():
+		var o_arr := Texture2DArray.new()
+		if o_arr.create_from_images(orm) == OK:
+			m.set_shader_parameter("orm_layers", o_arr)
+			m.set_shader_parameter("use_orm", true)
+
+
+static func _layer_image(res: String) -> Image:
+	if res == "res://" or not ResourceLoader.exists(res):
+		return null
+	var tex := load(res) as Texture2D
+	return tex.get_image() if tex != null else null
+
+
+static func _same_shape(a: Image, b: Image) -> bool:
+	return a.get_size() == b.get_size() and a.get_format() == b.get_format() and a.has_mipmaps() == b.has_mipmaps()
 
 
 ## How deep the modern finish's relief reads (lit_world.gdshader normal_strength, times the surface's `relief`).
@@ -179,8 +247,9 @@ const MODERN_RELIEF := 0.9
 
 ## How each world surface takes the light in the Modern finish (W3), by the first word of this list its name holds
 ## ("interior/marble_floor" is marble): roughness (0 a mirror, 1 chalk), how much rougher its dark is than its light
-## (`spread`), how deep its relief reads (`relief`) and metal. A surface's own "material" in art/textures/manifest.json
-## wins over this, and its own "normal_file" and "orm_file" (occlusion, roughness, metal) over both.
+## (`spread`), how deep its relief reads (`relief`) and metal; `macro` (W4) is how strongly broad patches break it up
+## (MACRO_STRENGTH unless set). A surface's own "material" in art/textures/manifest.json wins over this, and its own
+## "normal_file" and "orm_file" (occlusion, roughness, metal) over both.
 const MATERIALS: Array[Array] = [
 	["marble", {"roughness": 0.15, "spread": 0.3, "relief": 0.5}],
 	["black_stone", {"roughness": 0.25, "spread": 0.4, "relief": 0.6}],
