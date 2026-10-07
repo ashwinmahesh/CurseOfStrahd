@@ -6,17 +6,18 @@ extends RefCounted
 ## to count for it.
 
 const KEYS: Array[String] = ["damage_dealt", "damage_taken", "kills", "crits", "nat20", "nat1", "hits", "misses", "downs",
-	"died"]
+	"died", "best_hit", "death_save_20"]
 
 
-## {combatant id: {name, side, damage_dealt, damage_taken, kills, crits, nat20, nat1, hits, misses, downs, died}}.
-## A kill goes to whoever dealt the blow that killed (the last hit logged before the death).
+## {combatant id: {name, side, damage_dealt, damage_taken, kills, crits, nat20, nat1, hits, misses, downs, died,
+## best_hit (the most damage in one blow), death_save_20, killed_by (the killer's id, or "")}}. A kill goes to whoever
+## dealt the blow that killed (the last hit logged before the death).
 static func tally(e: Encounter) -> Dictionary:
 	var out := {}
 	var by_name := {}
 	for c in e.combatants:
 		by_name[c.name()] = c.id
-		var row := {"name": c.name(), "side": str(c.side)}
+		var row := {"name": c.name(), "side": str(c.side), "killed_by": ""}
 		for k in KEYS:
 			row[k] = 0
 		out[c.id] = row
@@ -34,6 +35,8 @@ static func tally(e: Encounter) -> Dictionary:
 			match int(r["natural"]):
 				20:
 					row["nat20"] = int(row["nat20"]) + 1
+					if str(d).begins_with("Death save"):
+						row["death_save_20"] = int(row["death_save_20"]) + 1
 				1:
 					row["nat1"] = int(row["nat1"]) + 1
 			match str(r["outcome"]):
@@ -54,6 +57,7 @@ static func tally(e: Encounter) -> Dictionary:
 					continue
 				if out.has(actor) and actor != target:
 					out[actor]["damage_dealt"] = int(out[actor]["damage_dealt"]) + amount
+					out[actor]["best_hit"] = maxi(int(out[actor]["best_hit"]), amount)
 				if out.has(target):
 					out[target]["damage_taken"] = int(out[target]["damage_taken"]) + amount
 			"death":
@@ -64,6 +68,7 @@ static func tally(e: Encounter) -> Dictionary:
 					out[actor]["downs"] = int(out[actor]["downs"]) + 1
 				elif not text.contains(" changes into ") and out.has(last_hitter) and last_hitter != actor:
 					out[last_hitter]["kills"] = int(out[last_hitter]["kills"]) + 1
+					out[actor]["killed_by"] = last_hitter
 	for c in e.combatants:
 		if c.creature.dead and not e.legendary.departed.has(c.id):
 			out[c.id]["died"] = 1
