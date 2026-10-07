@@ -1,6 +1,7 @@
 extends Node
 ## Stealing and crime (F8) and the town watch for captures, in Vallaki's Blue Water Inn: Rictavio's lockbox marked as
-## his, picking Urwin's pocket from his right-click menu, and the Town Guard who comes when Urwin catches the hand.
+## his, picking Urwin's pocket from his right-click menu, what the people here can see while the party sneaks, and the
+## Town Guard who comes when Urwin catches the hand.
 ## make capture SCENE=res://tools/capture/crime_capture.tscn NAME=crime FRAMES=40
 
 var root: Node
@@ -46,6 +47,16 @@ func capture_shots(tool: Node, out: String) -> void:
 	root.call("open_world_menu", urwin, at)
 	await _shoot(tool, out + "_1_pickpocket_menu.png")
 	(root.get("menu") as ContextMenu).hide()
+	# Sneaking (badly): the people here show what they can see, cones the way they face and a ring they hear.
+	view.set_sneaking(true)
+	for m: Combatant in view.members:
+		view.sneak_totals[m.creature] = 6
+	root.call("_refresh")
+	view.rig.distance = 17.0
+	await tool.call("wait_frames", 30)
+	await _shoot(tool, out + "_1b_townsfolk_sight.png")
+	view.set_sneaking(false)
+	view.rig.distance = 13.0
 	# Urwin is sharper than he looks.
 	(view.npc_tokens["urwin_martikov"] as CombatToken).combatant.set_meta("passive_perception", 30)
 	LocationCrime.pickpocket(view, "urwin_martikov")
