@@ -170,7 +170,7 @@ models:
 plants:
 	python3 tools/art/plant_cards.py
 	$(BLENDER) -b --python blender/plants_3d.py -- $(if $(ONLY),--only $(ONLY),)
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 
 ## Menu ornaments and icons (black-on-white Gemini art -> white shapes with alpha, tinted in game): make ui_art
 ui_art:
