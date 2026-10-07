@@ -69,6 +69,16 @@ func capture_shots(tool: Node, out: String) -> void:
 		(root.get("view") as LocationView).start_encounter("passage_ghouls")
 		await _shoot(tool, "%s_look_%s_fight.png" % [out, _look], 200)
 		return
+	if _wants("hud"):
+		# The command bar's keys, Sneak lit, the objective under the time, and two toasts in a row.
+		GameState.story.set_quest_stage("death_house", "plea")
+		root.call("_command", "sneak")
+		hud.toast("Sneaking")
+		hud.toast("Thistle found 3 gp")
+		await _shoot(tool, out + "_hud.png")
+		await tool.call("wait_frames", 140)
+		await _shoot(tool, out + "_hud_second_toast.png", 2)
+		root.call("_command", "sneak")
 	if _wants("alt"):
 		hud.thing_labels.pinned = true
 		await _shoot(tool, out + "_alt_village.png")
@@ -81,6 +91,12 @@ func capture_shots(tool: Node, out: String) -> void:
 	if _wants("saved"):
 		hud.saved_note()
 		await _shoot(tool, out + "_autosaved.png", 4)
+	if _wants("settings"):
+		root.call("open_screen", "menu", 0)
+		await _shoot(tool, out + "_menu.png")
+		(root.get("screen") as PauseMenu).call("_show_settings")
+		await _shoot(tool, out + "_settings.png")
+		root.call("close_screen")
 	if _wants("over"):
 		# Saves of the capture's own, so the owner's never show (or change).
 		var real := SaveSystem.save_dir

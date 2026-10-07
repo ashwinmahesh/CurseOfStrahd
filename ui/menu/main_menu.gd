@@ -17,6 +17,10 @@ func _ready() -> void:
 	# The title never starts paused: a menu opened in a fight pauses the tree, and a scene change keeps it paused.
 	get_tree().paused = false
 	InputActions.ensure()
+	# The window the player picked in Settings, only when this is the game's own title (never a capture inside it).
+	(func() -> void:
+		if is_inside_tree() and get_tree().current_scene == self:
+			GameSettings.apply_display()).call_deferred()
 	Audio.play_music("title")
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	var bg := ColorRect.new()

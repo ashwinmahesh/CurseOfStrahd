@@ -13,21 +13,19 @@ const UI_PALETTE_JSON := "res://art/palette/ui_palette.json"
 static var _palette: Dictionary = {}
 static var _colours: Dictionary = {}
 
-## The world's finish (docs/plans/ui_polish.md), the player's choice kept in user://settings.cfg:
+## The world's finish (docs/plans/ui_polish.md), the player's choice (GameSettings, user://settings.cfg):
 ## "classic" is the 1990s cartoon pass (every pixel snapped to the palette, light in hard bands); "modern" keeps the
 ## ink lines and the same art but lights it smoothly, with filmic tone, bloom on flames and lanterns, deeper contact
 ## shadows and soft mist. Places built after a change use it.
 const STYLES: Array[String] = ["modern", "classic"]
 ## Until the owner picks (docs/plans/ui_polish.md), a player who hasn't chosen keeps the look the game had.
 const DEFAULT_STYLE := "classic"
-const SETTINGS := "user://settings.cfg"
 static var _style := ""
 
 
 static func style() -> String:
 	if _style == "":
-		var cfg := ConfigFile.new()
-		var saved := str(cfg.get_value("look", "style", DEFAULT_STYLE)) if cfg.load(SETTINGS) == OK else DEFAULT_STYLE
+		var saved := str(GameSettings.value("look", DEFAULT_STYLE))
 		_style = saved if saved in STYLES else DEFAULT_STYLE
 		_publish()
 	return _style
@@ -43,10 +41,7 @@ static func set_style(s: String, save: bool = true) -> void:
 	_style = s
 	_publish()
 	if save:
-		var cfg := ConfigFile.new()
-		cfg.load(SETTINGS)
-		cfg.set_value("look", "style", s)
-		cfg.save(SETTINGS)
+		GameSettings.set_value("look", s)
 
 
 ## The cel shaders read the style through a global uniform (look_soft, project.godot [shader_globals]).

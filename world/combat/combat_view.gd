@@ -221,7 +221,7 @@ func _advance() -> void:
 		mode = Mode.BUSY
 		overlay.clear_all()
 		hud.hide_tooltip()
-		await get_tree().create_timer(AI_PAUSE).timeout
+		await get_tree().create_timer(AI_PAUSE * GameSettings.combat_pace()).timeout
 		if e.state != Encounter.State.ACTIVE or e.current() != c or e.pending != null:
 			_advance()
 			return
@@ -982,10 +982,11 @@ func _play_events() -> void:
 					continue
 				var from: Vector2i = ev["from"]
 				var to: Vector2i = ev["to"]
-				tok.face(Vector2(to - from), not bool(ev.get("forced", false)), STEP_TIME)
+				var step := STEP_TIME * GameSettings.combat_pace()   # the fast combat speed (Settings)
+				tok.face(Vector2(to - from), not bool(ev.get("forced", false)), step)
 				walking[tok] = true
 				var tw := create_tween()
-				tw.tween_property(tok, "position", _token_spot(tok.combatant, to), STEP_TIME)
+				tw.tween_property(tok, "position", _token_spot(tok.combatant, to), step)
 				if bool(ev.get("mounted", false)):
 					continue
 				await tw.finished
@@ -1027,7 +1028,7 @@ func _play_events() -> void:
 					t.flash(Look.color("vampire_red"))
 					_float(t, ("CRIT %d" if bool(ev.get("critical", false)) else "-%d") % int(ev["amount"]), "vampire_red", 64)
 					t.refresh()
-					await get_tree().create_timer(0.35).timeout
+					await get_tree().create_timer(0.35 * GameSettings.combat_pace()).timeout
 			"heal":
 				var th := _tok(str(ev["id"]))
 				if th != null:
@@ -1068,7 +1069,7 @@ func _play_events() -> void:
 				var cells := ev.get("cells", []) as Array
 				if not cells.is_empty():
 					overlay.show_cells("area", cells)
-					await get_tree().create_timer(0.45).timeout
+					await get_tree().create_timer(0.45 * GameSettings.combat_pace()).timeout
 					overlay.clear("area")
 			"summon", "object", "object_gone":
 				_show_weapons()
@@ -1081,7 +1082,7 @@ func _play_events() -> void:
 						tt.scale = Vector3.ONE * (float(tt.combatant.size_cells) if tt.combatant.size_cells > 1 else 1.0)
 					tt.flash(Look.color("lilac"), 0.3)
 					tt.position = _token_spot(tt.combatant, ev["to"] as Vector2i)
-					await get_tree().create_timer(0.2).timeout
+					await get_tree().create_timer(0.2 * GameSettings.combat_pace()).timeout
 			"summon_creature":
 				var sc := e.get_c(str(ev["id"]))
 				if sc != null and not tokens.has(sc.id):
@@ -1096,7 +1097,7 @@ func _play_events() -> void:
 				if trt != null:
 					trt.refresh()
 					_float(trt, str(ev["name"]), "bone", 34)
-					await get_tree().create_timer(0.35).timeout
+					await get_tree().create_timer(0.35 * GameSettings.combat_pace()).timeout
 			"legendary", "lair":
 				# A boss acting between turns (ADR 0014): its name over the field, and a flash on the boss.
 				_stop_walking(walking)
@@ -1104,7 +1105,7 @@ func _play_events() -> void:
 				if lt != null:
 					lt.flash(Look.color("vampire_red"), 0.3)
 				hud.banner(("Lair action: %s" if kind == "lair" else "Legendary action: %s") % str(ev["name"]), 1.1)
-				await get_tree().create_timer(0.35).timeout
+				await get_tree().create_timer(0.35 * GameSettings.combat_pace()).timeout
 			"form":
 				_swap_form_art(str(ev["id"]), str(ev.get("art", "")))
 			"vanish":

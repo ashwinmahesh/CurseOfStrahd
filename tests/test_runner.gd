@@ -9,6 +9,7 @@ func _ready() -> void:
 	# Saves go to a folder of this run's own: every checkout of the project shares one user:// folder, so test runs in
 	# two worktrees at once would load each other's round-start saves.
 	SaveSystem.save_dir = "user://test_saves/%d/" % OS.get_process_id()
+	GameSettings.path = SaveSystem.save_dir.path_join("settings.cfg")   # never the player's own settings
 	var only := ""
 	var files_only := PackedStringArray()
 	for arg in OS.get_cmdline_user_args():
