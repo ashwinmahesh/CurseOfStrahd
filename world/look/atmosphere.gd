@@ -351,13 +351,14 @@ static var dof_strength := "light"
 var _dof: CameraAttributesPractical = null
 
 
-## The sharp band follows the camera's zoom.
+## The sharp band follows the camera's zoom. Tilted toward the horizon (W13), the far blur eases off so the sky and
+## the vistas past the map stay clear.
 func _focus_dof() -> void:
 	if _dof == null or _rig == null:
 		return
 	var d := _rig.distance
 	var k := DOF_STRENGTHS[dof_strength] as Dictionary
-	_dof.dof_blur_amount = float(k["amount"])
+	_dof.dof_blur_amount = float(k["amount"]) * (1.0 - smoothstep(0.0, 0.6, _rig.horizon_shown))
 	_dof.dof_blur_near_enabled = bool(k["near"])
 	_dof.dof_blur_far_distance = d + float(k["start"]) + d * float(k["per_zoom"])
 	_dof.dof_blur_far_transition = float(k["transition"]) + d * float(k["transition_per_zoom"])
@@ -581,6 +582,7 @@ const MOON_SHOWS := {"night": 1.0, "dusk": 0.45, "dawn": 0.45, "day": 0.12}
 const MOON_HEIGHT := 14.0
 ## Barovia is never clear: the cloud covers at least this much of the sky.
 const MIN_COVER := 0.6
+var _tilt_shown := 0.0
 
 
 ## Barovia's sky in the screen pass (strahd_post.gdshader sky_on): outdoors in the Modern finish, coloured by the time
@@ -941,6 +943,11 @@ func _process(delta: float) -> void:
 	if _post == null:
 		return
 	_post.set_shader_parameter("atmo_time", _time)
+	# Looking out to the horizon, the vignette lets the sky band be (W13).
+	var tilt := _rig.horizon_shown
+	if not is_equal_approx(tilt, _tilt_shown):
+		_tilt_shown = tilt
+		_post.set_shader_parameter("vignette", float(mood.get("vignette", 0.0)) * (1.0 - 0.6 * tilt))
 	_light_scan -= delta
 	if _light_scan <= 0.0:
 		_light_scan = 1.0

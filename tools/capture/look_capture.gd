@@ -153,11 +153,10 @@ func _build(shot: Dictionary) -> void:
 				ModelPiece.set_fade(t, 0.72)
 		view.set_process(false)
 	if OS.get_environment("LOOK_TILT") != "":
-		# Looking out to the horizon as the tilted camera does (CameraRig.horizon), set by hand here.
-		view.rig.set_process(false)
-		view.rig.camera.far = 900.0
-		view.rig.camera.position = Vector3(0.0, 9.0, 25.0)
-		view.rig.camera.rotation = Vector3(deg_to_rad(-8.0), 0.0, 0.0)
+		# Looking out to the horizon: the camera tilted all the way past its farthest zoom (CameraRig.horizon).
+		view.rig.distance = view.rig.zoom_max
+		view.rig.horizon = 1.0
+		view.rig.snap_to_target()
 	if OS.get_environment("LOOK_SDFGI") != "":
 		var env := view.atmosphere.env
 		env.sdfgi_enabled = true
@@ -184,6 +183,17 @@ func _build(shot: Dictionary) -> void:
 	if "filter" in off:
 		RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
 		RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
+	if "post" in off:
+		view.post.visible = false
+	if "weather" in off and view.atmosphere.weather != null:
+		for w in view.atmosphere.weather.follow:
+			w.visible = false
+	if "vista" in off:
+		for v in view.find_children("Vista*", "Node3D", true, false):
+			(v as Node3D).visible = false
+	if "sky" in off:
+		view.atmosphere.set_process(false)
+		post.set_shader_parameter("sky_on", false)
 	if "ssr" in off:
 		view.atmosphere.env.ssr_enabled = false
 	if "splits" in off:
