@@ -497,8 +497,8 @@ func _light(ctx: Dictionary, t: Combatant, params: Dictionary) -> void:
 
 # --- Spells with handlers of their own (SpellHandlers) --------------------------------------------
 
-func _command(ctx: Dictionary, t: Combatant, word: String, r: CombatResult) -> void:
-	handlers._command(ctx, t, word, r)
+func _command(ctx: Dictionary, t: Combatant, word: String, r: CombatResult, pausable: bool = false) -> CombatResult:
+	return handlers._command(ctx, t, word, r, pausable)
 
 
 func end_sanctuary(t: Combatant, why: String) -> void:

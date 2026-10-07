@@ -32,22 +32,24 @@ const BANISHED_CELL := Vector2i(-1000, -1000)
 const HANDLED := ["polymorph", "banishment", "otilukes_resilient_sphere", "dimension_door", "heat_metal"]
 
 
-func resolve(ctx: Dictionary, tgt: Array[Combatant], _cells: Array[Vector2i], r: CombatResult) -> bool:
+## Spells with code of their own. True when `ctx`'s spell is one of them (it's resolved). `pausable`: their targets'
+## saves stop for the choices after each roll (Polymorph, Banishment, Resilient Sphere); a pause leaves `pending` set
+## for the caller's Encounter.then.
+func resolve(ctx: Dictionary, tgt: Array[Combatant], _cells: Array[Vector2i], r: CombatResult, pausable: bool = false) -> bool:
 	if high.resolve(ctx, tgt, _cells, r) or mid.resolve(ctx, tgt, _cells, r):
 		return true
 	var s := ctx["s"] as Dictionary
+	var none := func() -> CombatResult: return r
 	match str(s["id"]):
 		"polymorph":
-			for t in tgt:
-				polymorph(ctx, t, r)
+			enc().each(tgt, func(t: Variant) -> CombatResult: return polymorph(ctx, t as Combatant, r, pausable), none)
 			return true
 		"banishment":
-			for t in tgt:
-				banish(ctx, t, r)
+			enc().each(tgt, func(t: Variant) -> CombatResult: return banish(ctx, t as Combatant, r, pausable), none)
 			return true
 		"otilukes_resilient_sphere":
 			if not tgt.is_empty():
-				resilient_sphere(ctx, tgt[0], r)
+				resilient_sphere(ctx, tgt[0], r, pausable)
 			return true
 		"dimension_door":
 			if not high.teleport_blocked(ctx, ctx["c"] as Combatant):
@@ -66,11 +68,21 @@ func resolve(ctx: Dictionary, tgt: Array[Combatant], _cells: Array[Vector2i], r:
 ## One creature's save against a spell with the usual Advantage sources (Magic Resistance, "you're fighting it"),
 ## or no save for a willing ally. True if it resisted.
 func _resists(ctx: Dictionary, t: Combatant, ab: StringName, extra_keys: Array[String] = []) -> bool:
+	var out := {"resisted": false}
+	_resist_then(ctx, t, ab, func(resisted: bool) -> CombatResult:
+		out["resisted"] = resisted
+		return CombatResult.new(), CombatResult.new(), false, extra_keys)
+	return bool(out["resisted"])
+
+
+## The same save, then `after` (resisted: bool -> CombatResult). `pausable`: the save stops for the choices after its
+## roll (Heroic Inspiration, Indomitable...) and `after` runs once they're answered.
+func _resist_then(ctx: Dictionary, t: Combatant, ab: StringName, after: Callable, r: CombatResult, pausable: bool, extra_keys: Array[String] = []) -> CombatResult:
 	var c := ctx["c"] as Combatant
 	var s := ctx["s"] as Dictionary
 	var e := enc()
 	if c.allied_with(t):
-		return false
+		return after.call(false) as CombatResult
 	var dc := (ctx["nums"]["dc"] as Breakdown).total()
 	var keys := t.creature.save_keys(ab)
 	keys.append_array(SpellCaster.spell_save_keys(c.id))
@@ -80,10 +92,15 @@ func _resists(ctx: Dictionary, t: Combatant, ab: StringName, extra_keys: Array[S
 	var adv: Array[String] = []
 	if bool(s.get("save_advantage_if_fighting", false)) and c.hostile_to(t):
 		adv.append("you're fighting it")
-	var test := t.creature.roll_d20(e.dice, D20Test.Kind.SAVING_THROW, t.creature.save_bonus(ab), dc, keys, adv, [] as Array[String],
-		"%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], s["name"], t.name()])
-	e.log.add("info", "%s %s the %s save" % [t.name(), "succeeds on" if test.success else "fails", s["name"]], t.id, [test.describe()])
-	return test.success
+	var roll := func() -> D20Test:
+		return t.creature.roll_d20(e.dice, D20Test.Kind.SAVING_THROW, t.creature.save_bonus(ab), dc, keys, adv, [] as Array[String],
+			"%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], s["name"], t.name()])
+	var settled := func(test: D20Test) -> CombatResult:
+		e.log.add("info", "%s %s the %s save" % [t.name(), "succeeds on" if test.success else "fails", s["name"]], t.id, [test.describe()])
+		return after.call(test.success) as CombatResult
+	if pausable:
+		return e.d20.then_after(t, roll, settled, r)
+	return settled.call(roll.call() as D20Test) as CombatResult
 
 
 ## A plain save against the spell with any ability (allies don't resist). True if it resisted.
@@ -119,14 +136,20 @@ func _attach(ctx: Dictionary, t: Combatant, fx: Effect) -> bool:
 ## the target becomes a Beast of Challenge Rating up to its own (or its level): `opts.choice` names the form, else
 ## the strongest one for an ally and the weakest for a foe. It gains the Beast's Hit Points as Temporary Hit Points;
 ## the spell ends on it when they run out.
-func polymorph(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
-	var c := ctx["c"] as Combatant
+func polymorph(ctx: Dictionary, t: Combatant, r: CombatResult, pausable: bool = false) -> CombatResult:
 	var e := enc()
 	if t.creature.hp <= 0 or t.creature.has_flag("shapechanger"):
 		r.lines.append(e.log.add("info", "Polymorph has no effect on %s" % t.name(), t.id))
-		return
-	if _resists(ctx, t, &"wis"):
-		return
+		return r
+	return _resist_then(ctx, t, &"wis", func(resisted: bool) -> CombatResult:
+		if not resisted:
+			_polymorphed(ctx, t, r)
+		return r, r, pausable)
+
+
+func _polymorphed(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
+	var c := ctx["c"] as Combatant
+	var e := enc()
 	var limit := float(t.creature.character_level()) if t.creature is Character else (t.creature as Monster).cr
 	var forms := ShapeChange.beast_forms(limit)
 	if forms.is_empty():
@@ -158,10 +181,15 @@ func polymorph(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 ## Banishment: a Charisma save or the target leaves the fight for a harmless demiplane (Incapacitated, off the grid)
 ## until the spell ends; it then returns to its space or the nearest free one. An Aberration, Celestial, Elemental,
 ## Fey or Fiend banished for the full minute doesn't come back.
-func banish(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
+func banish(ctx: Dictionary, t: Combatant, r: CombatResult, pausable: bool = false) -> CombatResult:
+	return _resist_then(ctx, t, &"cha", func(resisted: bool) -> CombatResult:
+		if not resisted:
+			_banished(ctx, t, r)
+		return r, r, pausable)
+
+
+func _banished(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	var e := enc()
-	if _resists(ctx, t, &"cha"):
-		return
 	var fx := _marker(ctx, t, "Banished", ["banished", "ethereal"], "unbanish", {"cell": [t.cell.x, t.cell.y], "round": e.round_no})
 	fx.conditions.append(&"incapacitated")
 	if not _attach(ctx, t, fx):
@@ -202,13 +230,19 @@ func unbanish(tid: String, cast_round: int) -> void:
 
 ## A globe of force around a Large or smaller creature (a Dexterity save if unwilling): nothing passes in or out, so
 ## it can't be hurt from outside or hurt anything outside, and it can't move except by rolling the sphere.
-func resilient_sphere(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
+func resilient_sphere(ctx: Dictionary, t: Combatant, r: CombatResult, pausable: bool = false) -> CombatResult:
 	var e := enc()
 	if Creature.SIZES.find(t.creature.size) > Creature.SIZES.find(&"large"):
 		r.lines.append(e.log.add("info", "%s is too big for the sphere" % t.name(), t.id))
-		return
-	if _resists(ctx, t, &"dex"):
-		return
+		return r
+	return _resist_then(ctx, t, &"dex", func(resisted: bool) -> CombatResult:
+		if not resisted:
+			_sphered(ctx, t, r)
+		return r, r, pausable)
+
+
+func _sphered(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
+	var e := enc()
 	var fx := _marker(ctx, t, "Resilient Sphere", ["sphered"], "none")
 	fx.modifiers.append(Modifier.of("speed_percent", {"value": 50}, "Resilient Sphere", &"spell"))
 	if _attach(ctx, t, fx):

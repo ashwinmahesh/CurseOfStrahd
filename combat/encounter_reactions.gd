@@ -191,6 +191,11 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 		# A roll's choices that waited for this moment (a Concentration save): asked in turn, then the roll is settled.
 		if q.has("offers"):
 			var settle := q["settle"] as Callable
+			# Once the fight is over nobody is asked: each choice follows its rule.
+			if e.state != Encounter.State.ACTIVE:
+				e.d20.run_now(q["offers"] as Array)
+				settle.call()
+				continue
 			return e.reactions.offer((q["offers"] as Array).duplicate(), func() -> CombatResult:
 				settle.call()
 				return run_reaction_queue(r), r)
