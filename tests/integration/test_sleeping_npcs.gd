@@ -82,7 +82,7 @@ func _assert_asleep_on_the_floor() -> void:
 		assert_true(cr.has_condition(cond), "asleep means %s (got %s)" % [cond, cr.active_conditions()])
 	assert_true(_lying(tok), "her figure is drawn lying down")
 	var chips := (tok.get("_status") as Label3D).text
-	assert_true(chips.contains("Prone") and chips.contains("Unconscious"), "her conditions show over her (got %s)" % chips)
+	assert_true(chips.contains("Prone") and chips.contains("Asleep"), "her conditions show over her as Asleep, not Unconscious (got %s)" % chips)
 	assert_true(LocationNpcs.is_asleep(_view(), OFFALIA))
 	assert_eq(LocationNpcs.state_words(_view(), OFFALIA), "asleep, prone")
 	var thing := _view().thing_at(FLOOR)

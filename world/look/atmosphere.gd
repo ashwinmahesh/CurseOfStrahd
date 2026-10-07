@@ -1068,7 +1068,12 @@ func _on_node_added(n: Node) -> void:
 
 ## Lights that have left the place drop out.
 func _prune_lights() -> void:
-	_lights = _lights.filter(func(l: OmniLight3D) -> bool: return is_instance_valid(l) and l.is_inside_tree())
+	# A plain loop: filter() hands back an untyped Array, and its typed lambda can't take a freed light.
+	var kept: Array[OmniLight3D] = []
+	for l: Variant in _lights:
+		if is_instance_valid(l) and (l as OmniLight3D).is_inside_tree():
+			kept.append(l as OmniLight3D)
+	_lights = kept
 
 
 ## Every light in the place that can light the mist: the location's lamps and fires, the party's lantern, windows.
