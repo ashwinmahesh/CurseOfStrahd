@@ -211,6 +211,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Frightened: can't willingly move closer to a visible source | encounter.gd reachable_for | tested (strict reading, deviations) | test_combat_encounter |
 | Flying creatures move at their Fly Speed | combatant.gd speed | implemented (no altitude, deviations) | test_phase3_exit |
 | Heroic Inspiration and Tactical Mind after a failed check (conversations) | story/check_aids.gd | tested; exploration checks and saves outside combat [Phase 5] | test_story |
+| Heroic Inspiration awarded for playing in character (the DM's award; F15) | story/in_character.gd, `inspire` in dialogue | tested: by name, class or background, the whole party, and passing it on when already held | test_approval |
 | Light, Darkvision and obscurement affecting checks and attacks | combat (audit); location_view.gd passes the hour, map light, lamps and lantern into fights | tested | test_exploration |
 | Exploring spells (Light, Detect Magic, Find Traps, others as `spell:` conditions); Ritual casting (+10 minutes, no slot) | story/field_casting.gd, location_view.gd apply_spell_effect | tested (Light, Find Traps); the rest record their duration for the story to read | test_exploration |
 | Arcane Recovery | rest_screen.gd | tested | test_party_screens |

@@ -28,6 +28,7 @@ Narrator: {name}'s voice cracks across the narrows like a whip. The lead wolf ho
 
 ~ cowed_gentle
 Narrator: {name} walks into the narrows with eyes lowered and hands open. The lead wolf sniffs once, steps aside like a doorman, and the pack melts into the trees.
+approve thistle +2: You walked through the wolves with your eyes down, the way you'd pass a strange dog
 -> resolved
 
 ~ cowed_sentries

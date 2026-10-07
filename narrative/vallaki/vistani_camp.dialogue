@@ -91,6 +91,7 @@ Luvash [angry]: Go away! Unless you've come to find my girl. Have you come to fi
 ~ promise
 attitude luvash friendly
 Luvash: You will? Strangers? None of my own people will, because Arrigal says not to. Find her and I'll owe you more than I have. Ask at the fire. Somebody saw something. Somebody always sees something.
+approve kip_smudgewick +2 godrick_pendlebrook +2 thistle +1: You promised Luvash you'd find his daughter
 -> END
 
 ~ what
@@ -117,6 +118,7 @@ endif
 
 ~ arabelle_stays
 Arabelle: All right. But you'll want me later, at the end. You'll see.
+approve kip_smudgewick +1: You left Arabelle with her father
 -> END
 
 ~ arabelle_joins
@@ -199,6 +201,7 @@ else
 interject tag:cheerful: Hello. We're very glad you're not drowned.
 endif
 Arabelle: So am I. Take me to my father. He'll be drinking. He drinks when he's frightened.
+approve kip_smudgewick +3 godrick_pendlebrook +2 liriel_dawnsong +2 thistle +2 wren_featherfoot +1 ratatoille +1: You pulled Arabelle out of the lake
 -> END
 
 ~ lost

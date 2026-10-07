@@ -71,6 +71,7 @@ Narrator: Rose listens all the way through. When it's over she looks down at her
 Rose [sad]: Oh. That's why we're never hungry anymore.
 Thorn: Are we in trouble?
 Rose: No, Thorn. I think everyone else is.
+approve liriel_dawnsong +2 godrick_pendlebrook +2 kip_smudgewick +1: You told the Durst children the truth, gently
 -> truth_learned
 
 ~ truth_learned
@@ -115,11 +116,13 @@ Thorn: Sorry first.
 Narrator: Two cold presences step inside two of you and settle, the way children settle in the back of a cart. Someone is humming now, and none of you started it.
 set death_house_children_riding
 interject name:godrick_pendlebrook: Two more for the party, then. Welcome, both of you. Hold on tight; I'm very tall.
+approve godrick_pendlebrook +2 wren_featherfoot +1 thistle +1: You let two dead children ride along with you
 -> END
 
 ~ promise_bones
 Rose [smile]: You'll have to undo the knot. Thorn tied it. It's a bad knot.
 Thorn: It's a good knot.
+approve godrick_pendlebrook +2 liriel_dawnsong +2: You promised to carry the children's bones to their crypt
 -> END
 
 ~ leaving

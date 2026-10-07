@@ -80,8 +80,9 @@ static func instance(id: String) -> Node3D:
 
 ## The game material for a model surface named in Blender.
 static func material(name: String) -> Material:
-	if _materials.has(name):
-		return _materials[name] as Material
+	var key := name + "|" + Look.style()   # a change of look gets fresh materials
+	if _materials.has(key):
+		return _materials[key] as Material
 	var m: Material = null
 	if name.begins_with("pal_"):
 		m = Look.cel(name.trim_prefix("pal_"))
@@ -99,7 +100,7 @@ static func material(name: String) -> Material:
 		m = sm
 	if m == null:
 		m = Look.cel("pewter")
-	_materials[name] = m
+	_materials[key] = m
 	return m
 
 
@@ -339,34 +340,62 @@ static func door_leaf(id: String, width: float, height: float) -> Node3D:
 
 ## The board's panelled-wall modules: on each open face of wall square `c` painted with a surface that has a model
 ## (catalog models3d "walls"), a module standing on the face. A doorway's sides are left plain (the frame is there).
-## Added under one holder on the wall square, so it hides and shows with the wall.
+## Then the building kit's own (docs/art/building_kit.md): the place's interior style puts a face module (the castle's
+## blind arcade, a church's plinth and string course) where no panelling does, and a moulded coping along the cut top
+## of every open face; those are merged into one mesh. Added under one holder on the wall square, so it hides and
+## shows with the wall.
 static func dress_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> void:
-	if not in_use(board) or wall_mat == null:
+	if wall_mat == null or not in_use(board):
 		return
 	var id := ""
 	for surface: String in settings().get("walls", {}):
 		if Look.cel_textured(surface) == wall_mat:
 			id = str((settings()["walls"] as Dictionary)[surface])
 	if not has_model(id):
-		return
+		id = ""
+	var style := BuildingKit.interior_style(board)
+	var face_id := "kit_%s_face" % style
+	var coping := "kit_%s_coping" % style
+	var kit_parts: Array = []
 	var holder: Node3D = null
 	for d: Vector2i in BACKS:
 		var n := c + d
 		if not board.grid.in_bounds(n) or board.grid.has_flag(n, CombatGrid.WALL) or board.grid.has_flag(n, CombatGrid.VOID):
 			continue
+		var dir := Vector3(d.x, 0, d.y)
+		var foot := dir * (0.5 + GAP * 0.5) + Vector3(0, board.floor_y(n), 0)
+		var yaw := atan2(dir.x, dir.z)
+		if BuildingKit.has(coping):
+			kit_parts.append([coping, Transform3D(Basis(Vector3.UP, yaw), foot)])
 		if board.grid.in_bounds(n + d) and board.grid.has_flag(n + d, CombatGrid.WALL):
 			continue   # a one-square gap in the wall: a doorway
+		if id == "":
+			if BuildingKit.has(face_id):
+				kit_parts.append([face_id, Transform3D(Basis(Vector3.UP, yaw), foot)])
+			continue
 		if holder == null:
-			holder = Node3D.new()
-			holder.name = "WallModules"
-			holder.set_meta("wall_modules", id)
-			holder.position = board.cell_center(c)
-			board.add_child(holder)
+			holder = _wall_holder(board, c, id)
 		var face := instance(id)
-		var dir := Vector3(d.x, 0, d.y)
-		face.position = dir * (0.5 + GAP * 0.5) + Vector3(0, board.floor_y(n), 0)
-		face.rotation.y = atan2(dir.x, dir.z)
+		face.position = foot
+		face.rotation.y = yaw
 		holder.add_child(face)
+	if kit_parts.is_empty():
+		return
+	if holder == null:
+		holder = _wall_holder(board, c, "")
+	var mi := BuildingKit.merge(kit_parts)
+	if mi != null:
+		mi.name = "KitFaces"
+		holder.add_child(mi)
+
+
+static func _wall_holder(board: ArenaBoard, c: Vector2i, id: String) -> Node3D:
+	var holder := Node3D.new()
+	holder.name = "WallModules"
+	holder.set_meta("wall_modules", id)
+	holder.position = board.cell_center(c)
+	board.add_child(holder)
+	return holder
 
 
 ## The side of `cell` with a wall or a door next to it, that furniture backs onto (Vector2i.ZERO if none).
@@ -473,7 +502,7 @@ static func dim(node: Node3D) -> void:
 			if m == null:
 				continue
 			# A flat colour's albedo, or a texture's tint, darkened.
-			var key := "albedo" if m.shader == Look.CEL_SHADER else ("tint" if m.shader in [Look.CEL_WORLD_SHADER, SPRITE_SHADER] else "")
+			var key := "tint" if m.shader == SPRITE_SHADER else Look.tint_key(m)
 			if key == "":
 				continue
 			var d := m.duplicate() as ShaderMaterial

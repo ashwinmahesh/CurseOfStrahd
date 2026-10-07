@@ -9,6 +9,11 @@ model, estimated cost) to audio/voice/generation_log.jsonl. Lines already voiced
 --max-usd stops a run whose estimate is higher (default 5); --recast regenerates a speaker's clips made with another
 voice, model or settings; --prune deletes clips no line uses any more (an edited or deleted line).
 
+Each clip's model is recorded in the manifest. A speaker who moved to a new model keeps their older clips (owner,
+2026-10-07: v3 for new lines of every non-minor character, the old v4 lines kept for now): casting.json names the
+model they came from as `earlier_model`, --models counts every speaker's clips by model, and
+`make voice SPEAKER=<id> RECAST=1` re-voices a speaker's older clips on their current model.
+
 A speaker cast with "sfx": true (a creature's noises in fights, noise_<kind>) has no voice: each of its lines is a
 prompt for ElevenLabs' sound effects, made at the line's length in seconds and billed by the second (casting.json
 "sfx" holds the model and rates).
@@ -82,15 +87,44 @@ def cost(c, line):
     return len(line["text"]) / 1000 * price(c, line["speaker"])
 
 
-def recipe(c, speaker):
-    """What makes a clip: a change here means the speaker's clips are out of date (--recast)."""
+def recipe(c, speaker, model=None):
+    """What makes a clip: a change here means the speaker's clips are out of date (--recast). `model` asks what the
+    recipe was on another model (a speaker's earlier one)."""
     if is_sfx(c, speaker):
-        blob = [model_for(c, speaker), c["output_format"], c["sfx"]["prompt_influence"]]
+        blob = [model or model_for(c, speaker), c["output_format"], c["sfx"]["prompt_influence"]]
         return hashlib.sha1(json.dumps(blob, sort_keys=True).encode()).hexdigest()[:10]
-    blob = [voice_id(c, speaker), model_for(c, speaker), c["output_format"], settings_for(c, speaker)]
+    blob = [voice_id(c, speaker), model or model_for(c, speaker), c["output_format"], settings_for(c, speaker)]
     if accent_tag(c, speaker):
         blob.append(accent_tag(c, speaker))
     return hashlib.sha1(json.dumps(blob, sort_keys=True).encode()).hexdigest()[:10]
+
+
+def clip_model(c, speaker, entry):
+    """The model a manifest entry's clip was made on: as recorded, else read from its recipe (the current model's or
+    the speaker's earlier one), else "unknown"."""
+    if entry.get("model"):
+        return entry["model"]
+    for m in (model_for(c, speaker), c["voices"].get(speaker, {}).get("earlier_model")):
+        if m and entry.get("recipe") == recipe(c, speaker, m):
+            return m
+    return "unknown"
+
+
+def report_models(c, manifest, speakers):
+    """Each speaker's clips by model, flagging those not on the speaker's current model (what --recast would redo)."""
+    counts = {}
+    for k, entry in manifest.items():
+        speaker = k.split("/")[0]
+        if speakers and speaker not in speakers or speaker not in c["voices"]:
+            continue
+        m = clip_model(c, speaker, entry)
+        counts.setdefault(speaker, {}).setdefault(m, [0, 0])
+        counts[speaker][m][0] += 1
+        counts[speaker][m][1] += int(entry.get("chars", 0))
+    for speaker in sorted(counts):
+        now = model_for(c, speaker)
+        parts = [f"{m} {n:,} clips ({ch:,} chars)" + ("" if m == now else " <- older") for m, (n, ch) in sorted(counts[speaker].items())]
+        print(f"{speaker:28} now {now}: " + "; ".join(parts))
 
 
 def main():
@@ -102,11 +136,16 @@ def main():
     p.add_argument("--workers", type=int, default=4)
     p.add_argument("--recast", action="store_true")
     p.add_argument("--prune", action="store_true")
+    p.add_argument("--models", action="store_true", help="count each speaker's clips by the model that made them")
     a = p.parse_args()
 
     c = el.casting()
     manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
     every = voice_lines.lines()
+
+    if a.models:
+        report_models(c, manifest, a.speaker)
+        return
 
     if a.prune:
         live = {f"{s}/{k}" for s, k in every}
@@ -161,8 +200,8 @@ def main():
         billed = headers.get("character-cost") or headers.get("x-character-count")
         with lock:
             manifest[f"{speaker}/{key}"] = {"text": text, "recipe": recipe(c, speaker), "chars": len(text),
-                                            "model": model_for(c, speaker),
-                                            **({"seconds": float(line["seconds"])} if is_sfx(c, speaker) else {})}
+                                             "model": model_for(c, speaker),
+                                             **({"seconds": float(line["seconds"])} if is_sfx(c, speaker) else {})}
             el.log({"speaker": speaker, "key": key, "chars": len(text), "voice_id": vid, "model": model_for(c, speaker),
                     "format": c["output_format"], **({"accent_tag": accent_tag(c, speaker)} if accent_tag(c, speaker) else {}),
                     **({"seconds": float(line["seconds"])} if is_sfx(c, speaker) else {}),

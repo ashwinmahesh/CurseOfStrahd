@@ -66,6 +66,7 @@ Cyrus Belview: Good. Good! Tell him Cyrus has a whole cellar. Tell him Cyrus is 
 
 ~ family_love
 Cyrus Belview [sad]: He never sent love in his life. You are a kind liar. Cyrus likes kind liars.
+approve kip_smudgewick +1 wren_featherfoot +1: You told Cyrus his family sends their love
 -> family_gift
 
 ~ family_gift
@@ -163,6 +164,7 @@ Cyrus Belview: Words are cheap. Cyrus knows cheap. It will cost more than words 
 
 ~ help_scared
 Cyrus Belview [afraid]: Not the pot! Cyrus will help. Cyrus always helps. Please put that down.
+approve godrick_pendlebrook -1: You threatened to put a cook in his own pot
 -> help_yes
 
 ~ help_alarm
@@ -187,6 +189,7 @@ Cyrus Belview: Bring her to the kitchen with her chain off. She goes down with t
 
 ~ attack
 Cyrus Belview [afraid]: No! Not in the kitchen! Never in the kitchen!
+approve ratatoille -3 godrick_pendlebrook -2 kip_smudgewick -1: You drew steel on a cook in his own kitchen
 combat larders_cyrus_fight
 
 ~ bye

@@ -1,0 +1,109 @@
+# Thistle and Wren, a romance between two of the six (story/approval.gd ROMANCES, docs/story/approval.md). Camp talks
+# (story/camp_talk.gd), each offered once: the spark, the courting, and together. Flag romance_thistle_wren: "spark",
+# "courting", "together", or "over" when the party steered them apart. Thistle walks one road at a time: this one or
+# Godrick's (camp/romance_godrick_thistle).
+
+~ talk_spark
+if name:thistle and name:wren_featherfoot and not flag.romance_thistle_wren and (not flag.romance_godrick_thistle or flag.romance_godrick_thistle == "over") and approval.thistle >= warm and approval.wren_featherfoot >= warm and level >= 3
+-> spark
+endif
+-> END
+
+~ spark
+Narrator: It starts, as most things between them start, with Wren saying something he shouldn't.
+interject name:wren_featherfoot: All I'm saying is, I won. Once. Fairly. In front of witnesses. History will record it.
+interject name:thistle: You tripped me.
+interject name:wren_featherfoot: I did not trip you. Your foot met my foot. Feet meet. It's very natural.
+interject name:thistle: Rematch. Now. To the dead tree and back. In the dark.
+Narrator: They're off before anyone can say it's a terrible idea. You hear them crashing through the bracken, swearing at each other and laughing; then a thump; then a long silence; then both of them laughing so hard they can't breathe.
+Narrator: They come back to the fire covered in mud and leaves, still arguing about who touched the tree first. Neither of them has let go of the other's sleeve.
+interject name:thistle: Draw. It was a draw. He's lying if he says different.
+interject name:wren_featherfoot: It was a draw. ...She won. Don't tell her I said.
+* You two should race more often. -> spark_nudge
+* (Say nothing, and hide a smile.) -> spark_quiet
+* Can you two keep it down? Some of us sleep. -> spark_away
+
+~ spark_nudge
+interject name:thistle: Every night. Every night till I win proper.
+interject name:wren_featherfoot: Every night it is, then. I'll need new knees. Worth it.
+Narrator: Neither of them seems to notice they're still holding each other's sleeves.
+set romance_thistle_wren = "spark"
+approve thistle +1 wren_featherfoot +1: You said we should race more often
+-> END
+
+~ spark_quiet
+Narrator: You say nothing. Thistle notices her hand on his sleeve and takes it away, and then, after a moment, puts it back.
+set romance_thistle_wren = "spark"
+-> END
+
+~ spark_away
+interject name:wren_featherfoot: Sorry. Sorry. We'll be quiet. We're very quiet people.
+Narrator: They are quiet. They sit at opposite ends of the log for the rest of the night and don't look at each other once, which is somehow worse.
+set romance_thistle_wren = "over"
+-> END
+
+~ talk_courting
+if name:thistle and name:wren_featherfoot and flag.romance_thistle_wren == "spark" and approval.thistle >= warm and approval.wren_featherfoot >= warm and level >= 5
+-> courting
+endif
+-> END
+
+~ courting
+Narrator: Wren finds you on watch, which is not where Wren ever wants to be. He sits down, gets up, and sits down again.
+interject name:wren_featherfoot: Hypothetically. Purely hypothetically, for a friend. If a quick and handsome person wanted to tell a loud and frankly terrifying person something, how would he go about it without getting bitten?
+interject name:wren_featherfoot: Because Master Sorrel never covered this. Fourteen years and not one lesson on it. I think he did it on purpose. I think this was meant to be the funny one.
+* Just tell her. She'll respect that. -> courting_tell
+* Race her for it. -> courting_race
+* Maybe leave it, Wren. -> courting_leave
+
+~ courting_tell
+interject name:wren_featherfoot: Just tell her. Plainly. Like an idiot. ...She does like plain. She hates it when people go round the houses.
+interject name:wren_featherfoot: Right. I'll do it. Tomorrow. Or the day after. Soon. Before I lose my nerve, which I've already lost, so it's more about finding it again.
+set romance_thistle_wren = "courting"
+approve wren_featherfoot +2: You told me to just tell her
+-> END
+
+~ courting_race
+interject name:wren_featherfoot: Race her for it. Winner says the thing. ...That's either genius or how I die. I'll take it.
+set romance_thistle_wren = "courting"
+approve wren_featherfoot +2: You told me to race her for it
+-> END
+
+~ courting_leave
+interject name:wren_featherfoot: Yeah. Yeah, you're right. Probably for the best. Bad time. Vampires. Very busy.
+Narrator: He makes a joke about the weather, and then another one, and goes back to his bedroll, and doesn't do a handstand in the morning.
+set romance_thistle_wren = "over"
+approve wren_featherfoot -1: You told me to leave it
+-> END
+
+~ talk_together
+if name:thistle and name:wren_featherfoot and flag.romance_thistle_wren == "courting" and approval.thistle >= close and approval.wren_featherfoot >= close and level >= 7
+-> together
+endif
+-> END
+
+~ together
+Narrator: There's no warning, the way there's never any warning with Thistle. One moment she's sharpening her knife; the next she's standing over Wren with her hands on her hips.
+interject name:thistle: You. Race. To the dead tree.
+interject name:wren_featherfoot: It's raining.
+interject name:thistle: Good. Slippy. More fair.
+Narrator: They're gone into the rain. This time there's no crashing and no swearing. It goes very quiet out there for a long while.
+Narrator: When they come back, they come back slowly, side by side, soaked through, and they don't say who won. Thistle sits down next to Wren on the log, closer than she needs to, and leans on him, hard, the way she leans on people she trusts.
+interject name:thistle: He's mine now. That's decided. Nobody argue.
+interject name:wren_featherfoot: I let her win. ...I didn't. She won. I'd have let her, though. That's the bit that's new.
+* (Leave them to it.) -> together_leave
+* About time. -> together_time
+
+~ together_leave
+Narrator: You find a reason to check the far side of the camp, and take your time about it. Behind you, someone laughs, and someone else tells them to shut up, and then they're both laughing.
+-> together_end
+
+~ together_time
+interject name:thistle: Shut up. ...Yes. It was.
+interject name:wren_featherfoot: We were waiting for the right moment. In a valley full of vampires. Turns out there isn't one, so we made one.
+-> together_end
+
+~ together_end
+set romance_thistle_wren = "together"
+approve thistle +3 wren_featherfoot +3: You were there the night we stopped racing
+-> END

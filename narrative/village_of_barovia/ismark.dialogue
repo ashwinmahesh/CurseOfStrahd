@@ -86,6 +86,7 @@ Ismark [sly]: Father kept a strongbox in his study. Take what's in it. Oh. You'v
 else
 Ismark: Fair. Father kept a strongbox in his study. Whatever's left in it is yours once he's in the ground. It isn't much. Nothing is, here.
 endif
+approve kip_smudgewick +1 godrick_pendlebrook -2 liriel_dawnsong -1: You asked a grieving son what he'd pay you
 -> ask_again
 
 ~ pay_fail
@@ -109,12 +110,14 @@ if night
   Ismark [weary]: One more thing. After dark the square isn't ours. If you can wait for morning, wait. If you can't, keep together.
 endif
 interject class:cleric: We'll see him buried right. You have my word on it.
+approve godrick_pendlebrook +2 liriel_dawnsong +1 kip_smudgewick +1: You agreed to help Ismark bury his father
 -> END
 
 ~ refuse
 set ismark_met
 quest escort_ireena asked
 Ismark [weary]: No. Of course not. Why would you. If you change your minds, I'll be at the house, waiting for something to come through the door. It may as well be you.
+approve godrick_pendlebrook -2 liriel_dawnsong -1: You told Ismark you couldn't help him
 -> END
 
 ~ leave
@@ -150,6 +153,7 @@ endif
 set burial_agreed
 quest bury_the_burgomaster asked
 Ismark [smile]: Changed your minds. Good. I'd stopped hoping, which in Barovia is usually when things happen. Talk to Ireena; she has opinions about how it's done.
+approve godrick_pendlebrook +1: You came back to help bury Kolyan after all
 -> mansion_menu
 
 ~ attacks

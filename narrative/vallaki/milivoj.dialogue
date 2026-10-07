@@ -45,6 +45,7 @@ Milivoj [sad]: Henrik. Of course Henrik. He couldn't keep a secret in a coffin.
 ~ bought
 gold -20
 Milivoj: ...Twenty. Same as him. Funny how that's what everything in this town costs.
+approve kip_smudgewick +1: You matched Henrik's price for the truth
 -> confess
 
 ~ insight_ok
@@ -58,6 +59,7 @@ Narrator: He glares at you over the spade, and either he's honest or he's angrie
 
 ~ scare_ok
 Milivoj [afraid]: All right! All right. Let go. I'll tell you.
+approve thistle +1 liriel_dawnsong -1: You took a frightened gravedigger by the collar
 -> confess
 
 ~ scare_fail
@@ -91,16 +93,19 @@ attitude milivoj friendly
 Milivoj: You'd do that? Why?
 interject tag:cheerful: Because you'll put it right yourself, one day. Won't you?
 Milivoj: ...Yeah. Yeah, I will.
+approve wren_featherfoot +2 kip_smudgewick +1 liriel_dawnsong -1: You kept Milivoj's secret from Father Lucian
 -> END
 
 ~ no_shield
 Milivoj [sad]: He does. He always does. Tell him I'm sorry. Tell him I'll dig for nothing till it's paid back.
+approve liriel_dawnsong +1 godrick_pendlebrook +1 wren_featherfoot -1: You told Milivoj that Father Lucian deserves the truth
 -> END
 
 ~ kindness
 gold -10
 attitude milivoj friendly
 Milivoj: I don't... nobody gives anybody anything here. Thanks. Go and see Henrik. Go in daylight. Whatever's in his shop, it doesn't like daylight.
+approve kip_smudgewick +2 godrick_pendlebrook +1 liriel_dawnsong +1 wren_featherfoot +1: You gave Milivoj gold for his brothers and sister
 -> END
 
 ~ after

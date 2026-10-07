@@ -103,6 +103,7 @@ Narrator: Offalia snores on the bakery floor with crumbs on her chin, smiling at
 set offalia_slain
 Narrator: It takes longer than it should, and all of you together, and she never once stops smiling. Nobody speaks afterwards. There isn't anything that would help.
 interject tag:pious: That was necessary. I'll pray about whether it was right.
+approve godrick_pendlebrook -1 liriel_dawnsong -1 thistle +1: You killed Offalia in her sleep
 if flag.morgantha_slain
 -> old_bonegrinder/aftermath:reckon
 endif

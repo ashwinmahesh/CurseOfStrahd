@@ -46,6 +46,7 @@ endif
 ~ befriend_ok
 set parriwimple_befriended
 Parriwimple [smile]: Nobody says that. Uncle says I'm a good lifter. That's nearly the same. Thank you. I'll remember you.
+approve godrick_pendlebrook +1 wren_featherfoot +1 kip_smudgewick +1: You were kind to Parriwimple
 -> menu
 
 ~ befriend_fail
@@ -56,6 +57,8 @@ Parriwimple: Thank you? I think? Uncle says people say nice things when they wan
 set parriwimple_befriended
 Narrator: A spark, a puff of colored light, a floating flour-dust star. Parriwimple watches it with his whole face.
 Parriwimple [smile]: Again. No. Don't, Uncle will charge you for the flour. But that was the best thing I ever saw. I'll remember you.
+inspire class:wizard: made a flour-dust star for Parriwimple
+approve ratatoille +1 wren_featherfoot +1: You showed Parriwimple a little magic
 -> menu
 
 ~ ally

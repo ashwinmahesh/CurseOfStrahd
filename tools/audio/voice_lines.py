@@ -36,7 +36,7 @@ RE_VARIANT = re.compile(r"^\|\s*(?:\[([^\]]+)\]\s*)?(.+)$")
 RE_SET = re.compile(r"^set\s+[a-z][a-z0-9_]*")
 RE_CHECK = re.compile(r"^check\s+[A-Za-z][A-Za-z ]*?\s+DC\s+\d+\s*->")
 COMMANDS = ("quest", "give", "take", "gold", "attitude", "xp", "sacrifice", "tarokka", "dark_gift", "shop", "respec",
-            "time", "join", "leave", "combat", "narrate")
+            "time", "join", "leave", "combat", "narrate", "approve", "inspire")
 
 
 def key(text):
