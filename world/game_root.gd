@@ -694,7 +694,11 @@ func open_screen(kind: String, index: int) -> void:
 func close_screen() -> void:
 	get_tree().paused = false
 	if screen != null:
-		screen.queue_free()
+		# A framed screen sinks away (G9); anything else is freed at once.
+		if screen is CanvasLayer:
+			UiMotion.dismiss(screen as CanvasLayer)
+		else:
+			screen.queue_free()
 		screen = null
 	_refresh()
 

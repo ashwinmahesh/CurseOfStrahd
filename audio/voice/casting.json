@@ -978,6 +978,272 @@
       "description": "A slim, ageless gentleman with a soft, smooth, precise tenor and a crisp, upper-class English accent, a devil playing a solicitor. Courteous, patient and faintly amused, never raising his voice; thin and very quiet when cornered.",
       "settings": {},
       "released": true
+    },
+    "bark_bandit": {
+      "voice_id": "Xh5OictnmgRO4dff7pLm",
+      "name": "Viktor - Bold, Slavic and Impatient",
+      "description": "A Barovian highwayman: a rough, impatient man with a strong Eastern European accent, sneering and greedy.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
+    },
+    "bark_bandit_captain": {
+      "voice_id": "BDqe1qZiwPi7xspRxTgh",
+      "name": "Roderich - Crude & Ruthless",
+      "description": "A bandit captain: an older, crude, ruthless man who barks orders and enjoys it.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
+    },
+    "bark_guard": {
+      "voice_id": "6sXsAlJKKBf265ucBSRt",
+      "name": "Maksim - Raw Unpolished Deep",
+      "description": "A Vallaki guard: a deep, blunt, tired Barovian voice with an Eastern European accent.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
+    },
+    "bark_berserker": {
+      "voice_id": "uq0HIbNZKn11Hs5ifEdd",
+      "name": "Harry - Fierce Warrior",
+      "description": "A berserker: a wild young man shouting with bloodlust.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
+    },
+    "bark_cultist": {
+      "voice_id": "um6p7QUWG1g5HBE5RxEo",
+      "name": "Valerian | The Nihilist Evil",
+      "description": "A cultist of the night: intense, fervent and unhinged.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
+    },
+    "bark_witch": {
+      "voice_id": "upV1WVQQOkwfYxJITYqG",
+      "name": "Horpyna - Village Witch & Trickster",
+      "description": "A Barovian witch: a cackling, mocking woman with an Eastern European accent.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
+    },
+    "bark_druid": {
+      "voice_id": "gDQfVolj9RbmXgumLcOq",
+      "name": "Elinor | The Gruff Aunt",
+      "description": "A Yester Hill druid: a gruff, old woman, fierce and earthy.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
+    },
+    "bark_mongrelfolk": {
+      "voice_id": "zauh4pbY6h1ZRErsRiAJ",
+      "name": "Valf - Goblin, Raspy, Fantasy Monster",
+      "description": "A mongrelfolk: a raspy, broken, creature-like voice, eager and childish.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
+    },
+    "bark_vampire_spawn": {
+      "voice_id": "FcZStbCG9g9QxDlJioSD",
+      "name": "Ilinca | The Vampire Countess",
+      "description": "A vampire spawn: a hungry, silky woman's voice with a Russian accent, hissing at the edges.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
+    },
+    "bark_hag": {
+      "voice_id": "xBIfEFAROTtux2FvqTLj",
+      "name": "Nadine – Whispering Witch of the Black Forest",
+      "description": "A night hag: a whispering, sinister old woman, sweet and poisonous.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
+    },
+    "bark_revenant": {
+      "voice_id": "AocjYzHzWRalprWmBG9m",
+      "name": "Greg - Ghostly, Gritty, Brave and Raspy",
+      "description": "A revenant: a gritty, raspy, ghostly man driven only by vengeance.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
+    },
+    "bark_wight": {
+      "voice_id": "M5E055lOUxMi0kJpGyE9",
+      "name": "Gravel Midnight – Deep Grit Character Voice",
+      "description": "A wight: an old, cold, commanding undead lord with a dry, rasping, grave-dust voice, contemptuous of the living.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
+    },
+    "bark_ogre": {
+      "voice_id": "3VkFsBHdRPqWKsitgYhJ",
+      "name": "Azgar - Indimidating Orc Troll",
+      "description": "An ogre: a huge, deep, slow and stupid brute.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
+    },
+    "bark_werewolf": {
+      "voice_id": "A921zklid24OpyVy1Elb",
+      "name": "Dracon - Feral, Demonic & Dangerous",
+      "description": "A werewolf: a feral, snarling, raspy man halfway to a beast.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
+    },
+    "bark_phantom_knight": {
+      "voice_id": "YRJMFMoNhLEYl3Nae0G6",
+      "name": "Xavier - Big, Deep & Powerful narrator",
+      "description": "A phantom knight of the Order of the Silver Dragon: big, deep and noble, sworn to an old oath.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
+    },
+    "bark_arcanaloth": {
+      "voice_id": "vfaqCOvlrKi4Zp7C2IAm",
+      "name": "Malyx - Echoey, Menacing and Deep Demon",
+      "description": "An arcanaloth: an echoing, menacing, deep fiend with a lawyer's patience.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
+    },
+    "noise_wolf": {
+      "sfx": true,
+      "name": "Sound effects: wolf",
+      "description": "Noises for wolf, dire_wolf in fights."
+    },
+    "noise_bats": {
+      "sfx": true,
+      "name": "Sound effects: bats",
+      "description": "Noises for swarm_of_bats in fights."
+    },
+    "noise_rats": {
+      "sfx": true,
+      "name": "Sound effects: rats",
+      "description": "Noises for swarm_of_rats in fights."
+    },
+    "noise_ravens": {
+      "sfx": true,
+      "name": "Sound effects: ravens",
+      "description": "Noises for swarm_of_ravens in fights."
+    },
+    "noise_insects": {
+      "sfx": true,
+      "name": "Sound effects: insects",
+      "description": "Noises for swarm_of_insects in fights."
+    },
+    "noise_zombie": {
+      "sfx": true,
+      "name": "Sound effects: zombie",
+      "description": "Noises for zombie, strahd_zombie, flesh_golem in fights."
+    },
+    "noise_ghoul": {
+      "sfx": true,
+      "name": "Sound effects: ghoul",
+      "description": "Noises for ghoul, ghast in fights."
+    },
+    "noise_skeleton": {
+      "sfx": true,
+      "name": "Sound effects: skeleton",
+      "description": "Noises for skeleton in fights."
+    },
+    "noise_spirit": {
+      "sfx": true,
+      "name": "Sound effects: spirit",
+      "description": "Noises for shadow, specter, wraith, banshee, guardian_portrait, will_o_wisp in fights."
+    },
+    "noise_blight": {
+      "sfx": true,
+      "name": "Sound effects: blight",
+      "description": "Noises for twig_blight, needle_blight, vine_blight, tree_blight, scarecrow, shambling_mound, baba_lysagas_creeping_hut in fights."
+    },
+    "noise_spider": {
+      "sfx": true,
+      "name": "Sound effects: spider",
+      "description": "Noises for giant_spider in fights."
+    },
+    "noise_construct": {
+      "sfx": true,
+      "name": "Sound effects: construct",
+      "description": "Noises for animated_armor, strahds_animated_armor, helmed_horror, animated_flying_sword, broom_of_animated_attack, amber_golem in fights."
+    },
+    "noise_stone": {
+      "sfx": true,
+      "name": "Sound effects: stone",
+      "description": "Noises for gargoyle in fights."
+    },
+    "noise_ooze": {
+      "sfx": true,
+      "name": "Sound effects: ooze",
+      "description": "Noises for black_pudding, mimic, grick, nothic, rug_of_smothering in fights."
+    },
+    "noise_flame": {
+      "sfx": true,
+      "name": "Sound effects: flame",
+      "description": "Noises for flameskull, fire_elemental in fights."
+    },
+    "noise_nightmare": {
+      "sfx": true,
+      "name": "Sound effects: nightmare",
+      "description": "Noises for nightmare in fights."
+    },
+    "noise_roc": {
+      "sfx": true,
+      "name": "Sound effects: roc",
+      "description": "Noises for roc in fights."
+    },
+    "noise_claw": {
+      "sfx": true,
+      "name": "Sound effects: claw",
+      "description": "Noises for crawling_claw in fights."
     }
+  },
+  "sfx": {
+    "model": "eleven_text_to_sound_v2",
+    "prompt_influence": 0.4,
+    "credits_per_second": 20,
+    "usd_per_credit": 0.00022,
+    "note": "Creature noises in fights (noise_<kind>, narrative/combat/barks.json) are ElevenLabs sound effects, billed 20 credits a second at a set length; usd_per_credit is the Creator plan's $22 per 100,000 credits."
   }
 }

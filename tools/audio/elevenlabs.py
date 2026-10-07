@@ -71,6 +71,12 @@ def tts(voice_id, text, model, output_format, settings, seed=None):
     return request("POST", f"/v1/text-to-speech/{voice_id}", body, f"output_format={output_format}", "audio/mpeg")
 
 
+def sound(text, seconds, output_format, prompt_influence=0.4, model="eleven_text_to_sound_v2"):
+    """A sound effect from a prompt (a creature's growl, a swarm's buzz): (mp3 bytes, headers). Billed by length."""
+    body = {"text": text, "model_id": model, "duration_seconds": seconds, "prompt_influence": prompt_influence}
+    return request("POST", "/v1/sound-generation", body, f"output_format={output_format}", "audio/mpeg")
+
+
 def casting():
     return json.loads(CASTING.read_text())
 

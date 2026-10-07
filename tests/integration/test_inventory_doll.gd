@@ -24,6 +24,9 @@ func before_each() -> void:
 
 func after_each() -> void:
 	GameSettings.set_value("inventory_view", "doll")
+	# The fixture places leave the shared Compendium with the test (Skirmish lists every location as a map).
+	for id: String in ["doll_inn", "doll_road"]:
+		Compendium.shared().tables["locations"].erase(id)
 	if root != null:
 		root.queue_free()
 		root = null
