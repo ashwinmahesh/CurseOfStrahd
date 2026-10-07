@@ -120,13 +120,14 @@ class Piece:
             self.mats.append(mat)
         return self.mats.index(mat)
 
-    def box(self, size, at, mat, rot=(0, 0, 0), soft=0.0):
-        """A box `size` (x, y, z) centred on `at`, turned by `rot` degrees; `soft` rounds its edges (cushions)."""
+    def box(self, size, at, mat, rot=(0, 0, 0), soft=0.0, segs=2):
+        """A box `size` (x, y, z) centred on `at`, turned by `rot` degrees; `soft` rounds its edges (cushions) in
+        `segs` steps (1 is a plain chamfer, for small things there are many of: the stones of a wall)."""
         t = bmesh.new()
         bmesh.ops.create_cube(t, size=1.0)
         bmesh.ops.scale(t, vec=Vector(size), verts=t.verts)
         if soft > 0.0:
-            bmesh.ops.bevel(t, geom=list(t.edges), offset=min(soft, min(size) * 0.45), segments=2, affect="EDGES",
+            bmesh.ops.bevel(t, geom=list(t.edges), offset=min(soft, min(size) * 0.45), segments=segs, affect="EDGES",
                             profile=0.6)
         bmesh.ops.transform(t, matrix=Matrix.Translation(Vector(at)) @ _rot(rot), verts=t.verts)
         self._append(t, mat, soft > 0.0)
@@ -3989,9 +3990,12 @@ def build(ids):
     return built
 
 
-def export(built):
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    path = OUT_DIR / "manifest.json"
+def export(built, subdir="", extra_keys=()):
+    """Writes each piece to art/models[/subdir]/<id>.glb and its entry in the manifest; `extra_keys` are spec fields
+    copied into the entry where set (the building kit's part, span, rise and paint). A subfolder keeps its own
+    manifest.json."""
+    (OUT_DIR / subdir).mkdir(parents=True, exist_ok=True)
+    path = OUT_DIR / subdir / "manifest.json"
     data = json.loads(path.read_text()) if path.exists() else {}
     data["about"] = ("3D set pieces from blender/models_3d.py (docs/art/models.md). size is [width, height, depth] in "
                      "world units; sockets are in Godot axes (x, y up, z toward the front).")
@@ -4000,12 +4004,13 @@ def export(built):
         bpy.ops.object.select_all(action="DESELECT")
         ob.select_set(True)
         bpy.context.view_layer.objects.active = ob
-        out = OUT_DIR / (id_ + ".glb")
+        out = OUT_DIR / subdir / (id_ + ".glb")
         bpy.ops.export_scene.gltf(filepath=str(out), export_format="GLB", use_selection=True, export_yup=True,
                                   export_apply=True, export_texcoords=True, export_materials="EXPORT")
         lo, hi = bounds(ob)
         spec = MODELS[id_]
-        entry = {"file": "art/models/%s.glb" % id_, "mount": spec["mount"], "stands_for": spec["stands_for"],
+        entry = {"file": "art/models/%s%s.glb" % (subdir + "/" if subdir else "", id_), "mount": spec["mount"],
+                 "stands_for": spec["stands_for"],
                  "size": [round(hi.x - lo.x, 3), round(hi.z - lo.z, 3), round(hi.y - lo.y, 3)],
                  "materials": sorted({m.name for m in ob.data.materials}),
                  "triangles": sum(len(f.vertices) - 2 for f in ob.data.polygons)}
@@ -4021,6 +4026,9 @@ def export(built):
             entry["turns"] = True
         if spec.get("sculpted"):
             entry["sculpted"] = True
+        for k in extra_keys:
+            if spec.get(k) is not None:
+                entry[k] = spec[k]
         models[id_] = entry
         print("model %s: %s, %d triangles" % (id_, entry["size"], entry["triangles"]))
     path.write_text(json.dumps(data, indent=2) + "\n")
@@ -4096,4 +4104,5 @@ def main():
         preview(built, a.preview, a.yaw)
 
 
-main()
+if __name__ == "__main__":   # blender/building_kit.py imports the pieces and export without running this
+    main()
