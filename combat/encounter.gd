@@ -2118,7 +2118,7 @@ func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: 
 	if not bool(option["melee"]) and str(option.get("kind", "")) in ["weapon", "thrown", "monster"] and spells.zones.deflects_between(c, target):
 		if c.creature is Character and str(option.get("kind", "")) == "weapon":
 			_spend_ammo(c, option["profile"] as WeaponProfile)
-		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false})
+		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false, "action": str(option.get("id", ""))})
 		r.lines.append(log.add("miss", "The Wind Wall deflects %s's shot at %s" % [c.name(), target.name()], c.id))
 		return r
 	var sit := attack_situation(c, target, option)
@@ -2216,13 +2216,13 @@ func _attack_outcome(st: Dictionary) -> CombatResult:
 		return _attack_missed(st)
 	var miss := func() -> CombatResult:
 		r.lines.append(log.add("miss", "%s's attack on %s is turned aside (%d vs AC %d)" % [c.name(), target.name(), t.total, int(st["ac"])], target.id, details))
-		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false, "edge": attack_edge(st["t"] as D20Test)})
+		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false, "edge": attack_edge(st["t"] as D20Test), "action": str(option.get("id", ""))})
 		features.after_miss(c, target, option, r)
 		return r
 	var hit_offers := reactions.after_hit_target(st, miss)
 	hit_offers.append_array(monster_actions.parry_offer(st, miss))
 	return reactions.offer(hit_offers, func() -> CombatResult:
-		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": true, "critical": critical, "edge": attack_edge(st["t"] as D20Test)})
+		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": true, "critical": critical, "edge": attack_edge(st["t"] as D20Test), "action": str(option.get("id", ""))})
 		return _after_hit(st), r)
 
 
@@ -2243,7 +2243,7 @@ func _attack_missed(st: Dictionary) -> CombatResult:
 	var option := st["option"] as Dictionary
 	var r := st["r"] as CombatResult
 	var t := st["t"] as D20Test
-	events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false, "edge": attack_edge(st["t"] as D20Test)})
+	events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false, "edge": attack_edge(st["t"] as D20Test), "action": str(option.get("id", ""))})
 	r.lines.append(log.add("miss", "%s misses %s (%d vs AC %d)" % [c.name(), target.name(), t.total, int(st["ac"])], c.id, st["details"] as Array))
 	_on_miss(c, target, option, r)
 	features.after_miss(c, target, option, r)

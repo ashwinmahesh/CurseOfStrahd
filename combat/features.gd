@@ -606,6 +606,7 @@ func hit_damage_dice(c: Combatant, target: Combatant, option: Dictionary, st: Di
 	# An armed smite spell: cast now (a Bonus Action and a slot); its dice join the hit's.
 	var sctx := cast_armed_smite(c, melee, false)
 	if not sctx.is_empty():
+		e.events.append({"type": "smite", "caster": c.id, "spell": str((sctx["s"] as Dictionary)["id"]), "target": target.id})
 		st["smite_ctx"] = sctx
 		var sd := sctx["s"] as Dictionary
 		# Lightning Arrow: the bolt replaces the attack's own damage.
@@ -743,6 +744,7 @@ func after_miss(c: Combatant, target: Combatant, option: Dictionary, r: CombatRe
 	if str(option.get("kind", "")) in ["weapon", "thrown"] and not bool(option.get("melee", true)):
 		var sctx := cast_armed_smite(c, false, true)
 		if not sctx.is_empty():
+			e.events.append({"type": "smite", "caster": c.id, "spell": str((sctx["s"] as Dictionary)["id"]), "target": target.id})
 			var total := 0
 			var texts: Array[String] = []
 			var ty := "lightning"

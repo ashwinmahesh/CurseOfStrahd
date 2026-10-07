@@ -618,7 +618,13 @@ func lair_turn() -> void:
 	var act := plan["action"] as Dictionary
 	last_lair = str(act["id"])
 	_log("spell", "Initiative 20, the lair acts: %s" % act.get("name", ""), m, [str(act.get("summary", ""))])
-	e.events.append({"type": "lair", "id": m.id, "action": last_lair, "name": str(act.get("name", ""))})
+	# `targets` is for the view's effect only (emit-only): who the lair turns on.
+	var aimed: Array = []
+	if plan.get("target") is Combatant:
+		aimed.append((plan["target"] as Combatant).id)
+	for tv: Variant in plan.get("targets", []):
+		aimed.append((tv as Combatant).id)
+	e.events.append({"type": "lair", "id": m.id, "action": last_lair, "name": str(act.get("name", "")), "targets": aimed})
 	match str(act.get("kind", "text")):
 		"self":
 			var fx := Effect.new(str(act.get("name", "Lair")), &"monster", "lair:%s" % last_lair)
