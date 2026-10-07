@@ -888,6 +888,95 @@
         "source": "art/generated/textures/marsh_marsh_mud.png",
         "hd_file": "art/textures/marsh/marsh_mud_hd.png"
       }
+    },
+    "castle": {
+      "flagstones": {
+        "file": "art/textures/castle/flagstones.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "slate",
+          "stone",
+          "void",
+          "pewter",
+          "stone_deep",
+          "ink",
+          "mist_blue",
+          "ash_violet"
+        ],
+        "source": "art/generated/textures/castle_flagstones.png"
+      },
+      "ashlar": {
+        "file": "art/textures/castle/ashlar.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "stone",
+          "void",
+          "slate",
+          "stone_deep",
+          "grave",
+          "ash_violet",
+          "ink",
+          "mist_blue"
+        ],
+        "source": "art/generated/textures/castle_ashlar.png"
+      },
+      "black_marble": {
+        "file": "art/textures/castle/black_marble.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "ink",
+          "stone",
+          "void",
+          "ash_violet",
+          "bone_dark",
+          "ember_deep",
+          "slate",
+          "blood"
+        ],
+        "source": "art/generated/textures/castle_black_marble.png",
+        "saturate": 1.15
+      },
+      "red_damask": {
+        "file": "art/textures/castle/red_damask.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "rust",
+          "void",
+          "slate",
+          "ink",
+          "moon_blue",
+          "bone",
+          "stone",
+          "umber"
+        ],
+        "source": "art/generated/textures/castle_red_damask.png",
+        "saturate": 1.2
+      },
+      "courtyard": {
+        "file": "art/textures/castle/courtyard.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "stone",
+          "slate",
+          "void",
+          "stone_deep",
+          "bone",
+          "ink",
+          "umber",
+          "bone_dark"
+        ],
+        "source": "art/generated/textures/castle_courtyard.png"
+      }
     }
   }
 }

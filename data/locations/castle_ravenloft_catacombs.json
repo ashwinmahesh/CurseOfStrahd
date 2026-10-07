@@ -55,7 +55,7 @@
           4
         ]
       ],
-      "floor": "church/stone_flags",
+      "floor": "castle/flagstones",
       "walls": "dungeon/stone_wall"
     },
     {
@@ -71,7 +71,7 @@
           29
         ]
       ],
-      "floor": "church/stone_flags",
+      "floor": "castle/flagstones",
       "walls": "dungeon/stone_wall"
     },
     {
@@ -159,7 +159,7 @@
         ]
       ],
       "light": "dim",
-      "floor": "church/stone_flags",
+      "floor": "castle/flagstones",
       "walls": "dungeon/stone_wall"
     },
     {

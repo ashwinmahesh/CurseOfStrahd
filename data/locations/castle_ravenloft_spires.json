@@ -74,8 +74,8 @@
           19
         ]
       ],
-      "floor": "church/stone_flags",
-      "walls": "church/stone_wall"
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar"
     },
     {
       "id": "spires_grand_landing",
@@ -105,8 +105,8 @@
           16
         ]
       ],
-      "floor": "church/stone_flags",
-      "walls": "church/stone_wall"
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar"
     },
     {
       "id": "spires_high_landing",

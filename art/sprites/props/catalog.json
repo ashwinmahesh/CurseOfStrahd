@@ -1,5 +1,5 @@
 {
-  "about": "Which prop art (manifest.json in this folder) dresses each thing in data/locations, read by world/look/set_dressing.gd (docs/art/set_dressing.md). A location prop or container is looked up by its id in `ids` first, then by its `model` in `models`; with neither it uses the art of the same name as its model, else `container_default` for containers. A value is an art id, or {art, mount, scale} to override how it hangs, or null for an invisible spot (something already drawn, or a view). `on_wall` is the art used when the thing stands on a wall square (shelves against a wall). Doors take the first `doors.rules` entry whose words are in their id or label. `floors` gives a place its own ground texture; `low_cover.<place>` and `<place>_run` dress its '=' squares. An entry with `building: true` stands in for the whole house on its square (a windmill, a bell tower); `fade: true` fades a tall piece like the trees. `scales` sizes a piece wherever it stands (stairs fill their square); `fronts` gives furniture a front view that stands flat against a wall beside it. `rooms` gives a location's areas their own floor and wall by words in the area's name (a bathroom's tiles); `place_looks` overrides a whole place's floor, wall, difficult ground and `rock_walls` (cliffs instead of trees). `feet` is each standing piece's real height (a person is 6 ft; 1 unit = 5 ft): the piece is drawn at that size, and `feet` is the height of its picture at real size (low, deep things such as beds include the top you see from above). A piece wider than `big_width` units at that size (a cottage, a tent, a wagon) keeps its size whatever the room and clears the trees and the board's own scenery around it. `rooms` applies to interiors and dungeons only; `outdoor_rooms` are the few rules for outdoor maps (jetties are planks).",
+  "about": "Which prop art (manifest.json in this folder) dresses each thing in data/locations, read by world/look/set_dressing.gd (docs/art/set_dressing.md). A location prop or container is looked up by its id in `ids` first, then by its `model` in `models`; with neither it uses the art of the same name as its model, else `container_default` for containers. A value is an art id, or {art, mount, scale} to override how it hangs, or null for an invisible spot (something already drawn, or a view). `on_wall` is the art used when the thing stands on a wall square (shelves against a wall). Doors take the first `doors.rules` entry whose words are in their id or label. `floors` gives a place its own ground texture; `low_cover.<place>` and `<place>_run` dress its '=' squares. An entry with `building: true` stands in for the whole house on its square (a windmill, a bell tower); `fade: true` fades a tall piece like the trees. `scales` sizes a piece wherever it stands (stairs fill their square); `fronts` gives furniture a front view that stands flat against a wall beside it. `rooms` gives a location's areas their own floor and wall by words in the area's name (a bathroom's tiles); `place_looks` overrides a whole place's floor, wall, difficult ground and `rock_walls` (cliffs instead of trees). `feet` is each standing piece's real height (a person is 6 ft; 1 unit = 5 ft): the piece is drawn at that size, and `feet` is the height of its picture at real size (low, deep things such as beds include the top you see from above). A piece wider than `big_width` units at that size (a cottage, a tent, a wagon) keeps its size whatever the room and clears the trees and the board's own scenery around it. `glows` are pieces drawn unshaded, giving light rather than taking it. `double_doors` are exit art drawn once across a doorway two squares wide (outside interiors: the keep's great doors). `rooms` applies to interiors and dungeons only; `outdoor_rooms` are the few rules for outdoor maps (jetties are planks).",
   "container_default": "chest",
   "models": {
     "hearth": "fireplace",
@@ -265,7 +265,66 @@
     "den_silver_chains": "wall_chains",
     "exethanter_notes": "notes_wall",
     "bonegrinder_brake": "gear_brake",
-    "baratok_glass_ring": "glass_ring"
+    "baratok_glass_ring": "glass_ring",
+    "court_dragon_skull": "dragon_skull",
+    "court_lady_portrait": "portrait_tatyana",
+    "crg_dining_portrait": "portrait_tatyana",
+    "court_bedside_portrait": "portrait_tatyana",
+    "court_study_portrait": "portrait_tatyana",
+    "court_strahd_portrait": "portrait_strahd",
+    "crg_faces_portrait": "portrait_strahd",
+    "spires_jester_portrait": "portrait_jester",
+    "cat_names_wall": "names_wall",
+    "cat_champion_plaque": "bronze_plaque",
+    "cat_mad_dog_banners": "banner_regiment",
+    "larders_key_board": "key_board",
+    "larders_bricked_rack": "wine_rack_bricked",
+    "crg_drawbridge_chains": "drawbridge",
+    "court_treasury_heaps": "gold_heap",
+    "court_treasury_hoard": "gold_spill",
+    "spires_heart_drip": "blood_pool",
+    "larders_bone_lamp": "skull_chandelier",
+    "larders_lift_cage": "lift_cage",
+    "larders_lift_cage_foot": "lift_cage",
+    "spires_heart_of_sorrow": "heart_of_sorrow",
+    "spires_cauldron": "cauldron",
+    "larders_cauldron": "cauldron",
+    "cat_sergei_font": "stone_font",
+    "spires_four_vessels": "glass_vessels",
+    "spires_bat_perches": "bat_perch",
+    "spires_bat_perches_b": "bat_perch",
+    "spires_guardian_a": "gargoyle",
+    "spires_guardian_b": "gargoyle",
+    "spires_guardian_c": "gargoyle",
+    "spires_hollow_guardian": "gargoyle",
+    "court_throne": "throne",
+    "crg_black_carriage": "black_carriage",
+    "crg_black_carriage_waiting": "black_carriage",
+    "crg_carriage_horse": "black_horse",
+    "crg_carriage_horse_waiting": "black_horse",
+    "crg_chapel_saint": "saint_defaced",
+    "larders_bone_throne": "bone_throne",
+    "larders_bone_table": "bone_table",
+    "larders_iron_case": "iron_maiden",
+    "cat_conjurer_reliquary": "reliquary_sealed",
+    "cat_strahds_coffin": "coffin_plinth",
+    "cat_tomb_statue": "statue_young_strahd",
+    "court_general_statue": "statue_young_strahd",
+    "crg_faces_relief_1": "stone_faces",
+    "larders_bone_table_1": "bone_table",
+    "larders_bone_chair_1": "bone_chair",
+    "crg_faces_relief_2": "stone_faces",
+    "larders_bone_table_2": "bone_table",
+    "larders_bone_chair_2": "bone_chair",
+    "crg_faces_relief_3": "stone_faces",
+    "larders_bone_table_3": "bone_table",
+    "larders_bone_chair_3": "bone_chair",
+    "crg_faces_relief_4": "stone_faces",
+    "larders_bone_table_4": "bone_table",
+    "larders_bone_chair_4": "bone_chair",
+    "crg_faces_relief_5": "stone_faces",
+    "larders_bone_table_5": "bone_table",
+    "larders_bone_chair_5": "bone_chair"
   },
   "low_cover": {
     "wild": [
@@ -486,6 +545,26 @@
     "rules": [
       [
         [
+          "great doors",
+          "keep doors",
+          "castle doors"
+        ],
+        "great_doors"
+      ],
+      [
+        [
+          "lift cage"
+        ],
+        null
+      ],
+      [
+        [
+          "hatch"
+        ],
+        "roof_hatch"
+      ],
+      [
+        [
           "stairs down",
           "stair down",
           "down to",
@@ -611,6 +690,52 @@
     "krezk": 2.6
   },
   "rooms": [
+    [
+      [
+        "audience hall",
+        "throne",
+        "king's hall"
+      ],
+      {
+        "floor": "castle/black_marble",
+        "wall": "castle/red_damask"
+      }
+    ],
+    [
+      [
+        "hall of faces",
+        "great entry",
+        "guests' hall",
+        "portrait gallery",
+        "hall of weeping"
+      ],
+      {
+        "floor": "interior/marble_floor",
+        "wall": "castle/ashlar"
+      }
+    ],
+    [
+      [
+        "the count's bedroom",
+        "ludmilla's room",
+        "anastrasya's room",
+        "volenta's room"
+      ],
+      {
+        "floor": "interior/carpet",
+        "wall": "castle/red_damask"
+      }
+    ],
+    [
+      [
+        "treasury",
+        "hoard"
+      ],
+      {
+        "floor": "dungeon/stone_floor",
+        "wall": "dungeon/stone_wall"
+      }
+    ],
     [
       [
         "bath"
@@ -831,6 +956,42 @@
     },
     "mount_baratok_hut": {
       "wall": "interior/wood_panel"
+    },
+    "castle_ravenloft_main_floor": {
+      "floor": "castle/flagstones",
+      "wall": "castle/ashlar"
+    },
+    "castle_ravenloft_court": {
+      "floor": "castle/flagstones",
+      "wall": "castle/ashlar"
+    },
+    "castle_ravenloft_court_weeping": {
+      "floor": "castle/flagstones",
+      "wall": "castle/ashlar"
+    },
+    "castle_ravenloft_court_treasury": {
+      "floor": "castle/flagstones",
+      "wall": "castle/ashlar"
+    },
+    "castle_ravenloft_spires_rooms": {
+      "floor": "castle/flagstones",
+      "wall": "castle/ashlar"
+    },
+    "castle_ravenloft_gates": {
+      "floor": "castle/courtyard",
+      "rock_walls": "mountain/cliff"
+    },
+    "castle_ravenloft_overlook": {
+      "floor": "castle/flagstones",
+      "rock_walls": "mountain/cliff"
+    },
+    "castle_ravenloft_spires": {
+      "floor": "castle/flagstones",
+      "wall": "castle/ashlar"
+    },
+    "castle_ravenloft_spires_heart": {
+      "floor": "castle/flagstones",
+      "wall": "castle/ashlar"
     }
   },
   "feet": {
@@ -1002,12 +1163,34 @@
     "wine_vat": 5,
     "woodpile": 4,
     "workbench": 4.5,
-    "workbench_front": 3.5
+    "workbench_front": 3.5,
+    "black_carriage": 9,
+    "black_horse": 7,
+    "bone_chair": 4.5,
+    "bone_throne": 6.5,
+    "bone_table": 3.5,
+    "coffin_plinth": 4,
+    "gargoyle": 5,
+    "glass_vessels": 6,
+    "gold_heap": 3,
+    "heart_of_sorrow": 10,
+    "iron_maiden": 7,
+    "lift_cage": 8,
+    "reliquary_sealed": 2.5,
+    "saint_defaced": 8,
+    "skull_chandelier": 5,
+    "statue_young_strahd": 8,
+    "stone_font": 3.5,
+    "throne": 7,
+    "cauldron": 3.5,
+    "bat_perch": 6
   },
   "big_width": 1.6,
   "models3d": {
     "about": "3D pieces from art/models (blender/models_3d.py, docs/art/models.md) that stand in for 2D art, by art id; a value can be {board theme: model, \"*\": model} (wooden stairs indoors, stone ones elsewhere) or a list of variants the board picks from by square (pines, boulders). Only the places listed use them (\"*\": everywhere, owner sign-off 2026-10-06). walls: a wall surface whose painted panelling gets 3D panels on every open face.",
-    "places": ["*"],
+    "places": [
+      "*"
+    ],
     "art": {
       "book_shelf": "bookcase",
       "book_shelf_front": "bookcase",
@@ -1023,8 +1206,28 @@
       "fireplace": "fireplace",
       "fireplace_windmill": "fireplace_windmill",
       "fireplace_dancers": "fireplace_dancers",
-      "stair_riser": {"*": "stairs_up_stone", "manor": "stairs_up", "townhouse": "stairs_up", "house": "stairs_up", "attic": "stairs_up", "tavern": "stairs_up", "inn": "stairs_up", "shop": "stairs_up", "tent": "stairs_up"},
-      "stair_down": {"*": "stairs_down_stone", "manor": "stairs_down", "townhouse": "stairs_down", "house": "stairs_down", "attic": "stairs_down", "tavern": "stairs_down", "inn": "stairs_down", "shop": "stairs_down", "tent": "stairs_down"},
+      "stair_riser": {
+        "*": "stairs_up_stone",
+        "manor": "stairs_up",
+        "townhouse": "stairs_up",
+        "house": "stairs_up",
+        "attic": "stairs_up",
+        "tavern": "stairs_up",
+        "inn": "stairs_up",
+        "shop": "stairs_up",
+        "tent": "stairs_up"
+      },
+      "stair_down": {
+        "*": "stairs_down_stone",
+        "manor": "stairs_down",
+        "townhouse": "stairs_down",
+        "house": "stairs_down",
+        "attic": "stairs_down",
+        "tavern": "stairs_down",
+        "inn": "stairs_down",
+        "shop": "stairs_down",
+        "tent": "stairs_down"
+      },
       "door_wood": "door_wood",
       "barrel": "barrel",
       "crate": "crate",
@@ -1077,12 +1280,22 @@
       "bridge_parapet": "bridge_parapet",
       "signpost": "signpost",
       "cart_broken": "cart_broken",
-      "pine": ["pine_a", "pine_b", "pine_c"],
+      "pine": [
+        "pine_a",
+        "pine_b",
+        "pine_c"
+      ],
       "pine_clawed": "pine_clawed",
-      "dead_tree": ["dead_tree_a", "dead_tree_b"],
+      "dead_tree": [
+        "dead_tree_a",
+        "dead_tree_b"
+      ],
       "bramble_a": "bramble_a",
       "bramble_b": "bramble_b",
-      "boulder": ["boulder_a", "boulder_b"],
+      "boulder": [
+        "boulder_a",
+        "boulder_b"
+      ],
       "log": "log",
       "stump": "stump",
       "rubble": "rubble",
@@ -1282,5 +1495,11 @@
         "floor": "interior/wood_planks"
       }
     ]
+  ],
+  "double_doors": [
+    "great_doors"
+  ],
+  "glows": [
+    "heart_of_sorrow"
   ]
 }
