@@ -20,13 +20,17 @@ uniform float roughness : hint_range(0.1, 1.0) = 0.8;
 // Snow lying on the upward faces (0 none, 1 the tops all white).
 uniform float snow : hint_range(0.0, 1.0) = 0.0;
 uniform vec3 snow_colour : source_color = vec3(0.82, 0.85, 0.9);
+// Leaves this close to the camera thin away (world units), so a camera tilted down near the trees sees past them.
+uniform float near_fade = 5.0;
 
 varying float up;
+varying vec3 wpos;
 
 void vertex() {
 	vec3 root = MODEL_MATRIX[3].xyz;
 	VERTEX += wind_offset(root, VERTEX - root, UV2.x, UV2.y, TIME);
 	up = NORMAL.y;
+	wpos = VERTEX;
 }
 
 void fragment() {
@@ -37,7 +41,7 @@ void fragment() {
 	vec2 dx = dFdx(px);
 	vec2 dy = dFdy(px);
 	float mip = max(0.0, 0.5 * log2(max(dot(dx, dx), dot(dy, dy))));
-	ALPHA = clamp(t.a * (1.0 + mip * 0.22), 0.0, 1.0);
+	ALPHA = clamp(t.a * (1.0 + mip * 0.22), 0.0, 1.0) * smoothstep(near_fade * 0.55, near_fade, distance(wpos, CAMERA_POSITION_WORLD));
 	ALPHA_SCISSOR_THRESHOLD = alpha_cut;
 	vec3 c = t.rgb * tint * COLOR.rgb * mix(shade_floor, 1.0, COLOR.a);
 	if (snow > 0.0) {
