@@ -89,7 +89,8 @@ static func dismiss(layer: CanvasLayer) -> void:
 			var ci := ch as CanvasItem
 			if ci != null and ci.visible:
 				tw.tween_property(ci, "modulate:a", 0.0, 0.16)
-		var panel := layer.get_meta(&"frame_panel", null) as Control
+		# A null default still counts as none, so get_meta would raise an error for a screen without a frame.
+		var panel := layer.get_meta(&"frame_panel") as Control if layer.has_meta(&"frame_panel") else null
 		if panel != null and is_instance_valid(panel):
 			panel.pivot_offset = panel.size / 2.0
 			tw.tween_property(panel, "scale", Vector2(0.975, 0.975), 0.16)

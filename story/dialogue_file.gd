@@ -216,6 +216,9 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 		"narrate":
 			if parts.size() == 2:
 				return {"t": "narrate", "key": parts[1]}
+		"cutscene":
+			if parts.size() == 2:
+				return {"t": "cutscene", "id": parts[1]}
 	var mc2 := re_check.search(line)
 	if mc2 != null:
 		return {"t": "check", "skill": mc2.get_string(1).strip_edges().to_lower().replace(" ", "_"), "dc": int(mc2.get_string(2)),
