@@ -44,5 +44,5 @@
     "reroll_advantage": true,
     "success_temp_hp": "6d10"
   },
-  "playable": false
+  "playable": true
 }

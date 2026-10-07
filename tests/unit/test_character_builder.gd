@@ -19,7 +19,9 @@ func test_lists_the_phase_1_classes() -> void:
 	for c: String in ["cleric", "fighter", "rogue", "wizard"]:
 		assert_true(c in ids, c)
 	var preview := CharacterBuilder.new().class_preview("cleric")
-	assert_eq((preview["subclasses"] as Array).size(), 5, "four PHB domains and Grave; gated Knowledge and Arcana remain hidden")
+	# The four PHB domains and Grave, plus the book domains once they're playable (Knowledge is; Arcana isn't yet).
+	assert_eq((preview["subclasses"] as Array).size(), Compendium.shared().subclasses_of("cleric").size(), "every playable domain")
+	assert_true((preview["subclasses"] as Array).size() >= 5, "four PHB domains and Grave at least")
 	assert_eq(int(preview["hit_die"]), 8)
 
 

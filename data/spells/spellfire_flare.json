@@ -49,5 +49,5 @@
     "targets": 1
   },
   "repeat_targets": true,
-  "playable": false
+  "playable": true
 }

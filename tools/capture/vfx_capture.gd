@@ -3,7 +3,7 @@ extends Node
 ## of Barovia at night, played once with the effects off (what combat showed before) and once with them on, as frame
 ## sequences that tools/capture/vfx_sheet.py joins into side-by-side GIFs and stills.
 ## make capture SCENE=res://tools/capture/vfx_capture.tscn NAME=vfx/vfx FRAMES=30 [VFX_ONLY=fire_bolt,fireball]
-## [VFX_SIDES=after] [VFX_LOOK=classic]
+## [VFX_SIDES=after] [VFX_LOOK=classic] [VFX_SET=gallery|zones|faerun]
 
 const PARTY: Array[String] = ["silvain_aster", "hedda_ironvow", "kip_smudgewick", "godrick_pendlebrook"]
 const LOCATION := "village_of_barovia"
@@ -91,6 +91,20 @@ const ZONES := {
 	"thunderwave": {"caster": "Silvain", "targets": [[1, 0], [1, 1]], "cast": "thunderwave"},
 }
 
+## VFX_SET=faerun: the Faerûn and Arcana Unleashed spells and features switched on, one of each family they use.
+const FAERUN := {
+	"spellfire_flare": {"caster": "Silvain", "targets": [[3, 0]], "cast": "spellfire_flare"},
+	"laerals_silver_lance": {"caster": "Silvain", "targets": [[3, 0], [5, 0]], "cast": "laerals_silver_lance"},
+	"detonate": {"caster": "Silvain", "targets": [[4, 0], [5, 1], [4, -1]], "cast": "detonate"},
+	"wail_of_the_banshee": {"caster": "Kip", "targets": [[2, 0], [2, 1]], "cast": "wail_of_the_banshee"},
+	"cacophonic_shield": {"caster": "Hedda", "targets": [[1, 0]], "cast": "cacophonic_shield"},
+	"entrancing_mirrors": {"caster": "Kip", "targets": [[3, 0], [3, 1]], "cast": "entrancing_mirrors"},
+	"enervation": {"caster": "Kip", "targets": [[3, 0]], "cast": "enervation"},
+	"iron_body": {"caster": "Silvain", "targets": [[1, 0]], "ally": "Godrick", "cast": "iron_body"},
+	"summon_dinosaur": {"caster": "Silvain", "targets": [[2, 0]], "ally": "Godrick", "cast": "summon_dinosaur", "summoned": true},
+	"fortifying_soul": {"caster": "Hedda", "targets": [[1, 0]], "ally": "Godrick", "ability": "feature:fortifying_soul"},
+}
+
 var root: Node
 var cv: CombatView
 ## The zone the stage being recorded put on the board (taken off again after each side).
@@ -133,8 +147,10 @@ func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 60)
 	var meta := {}
 	var set_name := OS.get_environment("VFX_SET")
-	var stages: Dictionary = GALLERY if set_name == "gallery" else (ZONES if set_name == "zones" else STAGES)
-	if stages == GALLERY:
+	var sets := {"gallery": GALLERY, "zones": ZONES, "faerun": FAERUN}
+	var stages: Dictionary = sets.get(set_name, STAGES)
+	# The gallery and the Faerûn set show the effects only; the zones are recorded before and after.
+	if set_name in ["gallery", "faerun"]:
 		_sides = [true]
 	for key: String in stages:
 		if not _only.is_empty() and not key in _only:

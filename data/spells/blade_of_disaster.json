@@ -72,5 +72,5 @@
       "help": "Choose up to two creatures within 5 feet of the rift. Each hit deals 10d6 Force; critical hits on 18–20."
     }
   ],
-  "playable": false
+  "playable": true
 }

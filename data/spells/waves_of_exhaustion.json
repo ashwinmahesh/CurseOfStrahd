@@ -61,5 +61,5 @@
       "help": "Magic action: each failed save adds 1 Exhaustion, up to a total level of 4. These levels end with the spell."
     }
   ],
-  "playable": false
+  "playable": true
 }

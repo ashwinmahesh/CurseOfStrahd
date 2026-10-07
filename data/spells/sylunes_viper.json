@@ -97,5 +97,5 @@
       "help": "Magic action: a ranged spell attack. A hit deals Force damage and poisons and incapacitates the target until your next turn starts."
     }
   ],
-  "playable": false
+  "playable": true
 }
