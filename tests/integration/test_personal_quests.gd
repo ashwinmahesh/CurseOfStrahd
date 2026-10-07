@@ -168,13 +168,19 @@ func test_every_camp_talk_opens_with_a_condition() -> void:
 		assert_true(talks >= 2, "%s has talks" % f)
 
 
-func test_an_old_save_keeps_its_journal_without_the_retired_quests() -> void:
-	# A save from before the six (owner, 2026-10-06) still names the first four's quests; the journal skips them.
-	var st := _party()
-	st.quests["kestrel_company"] = {"stage": "the_letter", "history": ["the_letter"]}
-	st.set_quest_stage("the_ladle", "the_errand")
+func test_an_old_save_keeps_the_first_fours_quests() -> void:
+	# Owner (2026-10-06): the first four's data stays so saves from before the six still play; a quest whose data is
+	# gone altogether is skipped rather than breaking the journal.
+	var st := StoryState.new()
+	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
+		st.party.append(Pregens.build(id, 3))
+	_run(st, "into_the_mists/arrival:hooks", 99)
+	st.quests["a_quest_nobody_wrote"] = {"stage": "begun", "history": ["begun"]}
 	var back := StoryState.from_dict(st.to_dict())
 	var ids: Array[String] = []
 	for q in QuestLog.journal(back):
 		ids.append(str(q["id"]))
-	assert_eq(ids, ["the_ladle"] as Array[String])
+	for q: String in ["kestrel_company", "the_locket", "cold_prayers", "aurels_last_chapter"]:
+		assert_true(q in ids, q + " is still in the journal")
+	assert_false("a_quest_nobody_wrote" in ids)
+	assert_false(StoryConditions.check("name:thistle", back), "none of the six joins an old party")
