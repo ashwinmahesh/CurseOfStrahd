@@ -9,6 +9,8 @@ var _creation: CreationScreen = null
 var _picked: Array[String] = []
 var _hero: Character = null
 var _box: VBoxContainer
+## Which page of the title is showing ("title", "new_game", "load"): Escape steps back from the last two.
+var _view := "title"
 
 
 func _ready() -> void:
@@ -57,6 +59,7 @@ func _ready() -> void:
 
 
 func _title() -> void:
+	_view = "title"
 	for c in _box.get_children():
 		c.queue_free()
 	var t := UiKit.label("Curse of Strahd", 72, "vampire_red")
@@ -120,6 +123,7 @@ func _gap(h: float) -> Control:
 
 
 func _new_game() -> void:
+	_view = "new_game"
 	for c in _box.get_children():
 		c.queue_free()
 	var roster := Pregens.roster_ids()
@@ -128,28 +132,58 @@ func _new_game() -> void:
 			if _picked.size() < StoryState.PARTY_CAP:
 				_picked.append(id)
 	_box.add_child(UiKit.title("Who goes into the mists?"))
-	_box.add_child(UiKit.label("Choose up to four to travel. The rest wait at camp, and you can swap them in on the road.", 15, "parchment", 560))
+	_box.add_child(UiKit.label("Choose up to four to travel. The rest wait at camp, and you can swap them in on the road. Or make a hero of your own.", 15, "parchment", 560))
 	var grid := GridContainer.new()
 	grid.columns = 4
 	grid.add_theme_constant_override("h_separation", 8)
 	grid.add_theme_constant_override("v_separation", 8)
 	for id in roster:
 		var data := Compendium.shared().get_entry("pregens", id)
-		grid.add_child(_roster_card(id, id, str(data.get("name", id)), str(data.get("summary", "")), str(data.get("hook", ""))))
+		grid.add_child(_roster_card(id, id, str(data.get("name", id)), _class_line(str(data.get("summary", ""))),
+			"%s\n\n%s" % [str(data.get("summary", "")), str(data.get("hook", ""))]))
 	if _hero != null:
 		grid.add_child(_roster_card("hero", CombatToken.art_for(_hero), _hero.name, _hero.class_summary(), "Your own hero."))
+	else:
+		grid.add_child(_make_hero_card())
 	_box.add_child(grid)
 	var total := roster.size() + (1 if _hero != null else 0)
 	var want := mini(StoryState.PARTY_CAP, total)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	var back := UiParts.primary_button("Back", _title)
+	back.tooltip_text = "Back to the title (Esc)"
+	row.add_child(back)
+	if _hero != null:
+		var own := UiKit.button("Change your hero", _open_hero, 16)
+		own.tooltip_text = "Make changes to your own hero: looks, voice, class and the rest."
+		row.add_child(own)
+	row.add_child(UiParts.gap())
 	var go := UiParts.primary_button("Begin with these %d" % _picked.size() if _picked.size() != 1 else "Begin alone", _begin)
-	go.size_flags_horizontal = Control.SIZE_FILL
 	go.disabled = _picked.size() != want
 	go.tooltip_text = "" if not go.disabled else "Choose %d to travel." % want
-	_box.add_child(go)
-	var own := UiKit.button("Change your hero" if _hero != null else "Bring your own hero", _open_hero, 18)
-	own.tooltip_text = "Make a character of your own, from looks and voice to class. They join the roster like anyone else."
-	_box.add_child(own)
-	_box.add_child(UiKit.button("Back", _title, 16))
+	row.add_child(go)
+	_box.add_child(row)
+
+
+## The first sentence of a pregen's summary: species, class and background ("Goliath Paladin (Oath of Devotion), Noble.").
+static func _class_line(summary: String) -> String:
+	var i := summary.find(". ")
+	return summary.substr(0, i + 1) if i >= 0 else summary
+
+
+## The card that opens the hero creator, shown until a hero is made.
+func _make_hero_card() -> Control:
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 3)
+	col.add_child(UiParts.framed_portrait("hero_01", 110.0))
+	var n := UiKit.label("Your own hero", 15, "gilt_light", 118)
+	n.add_theme_font_override("font", UiKit.display_font())
+	col.add_child(n)
+	col.add_child(UiKit.label("Make a character of your own: looks, voice, class.", 11, "parchment", 118))
+	var card := UiParts.click_row(col, _open_hero, false, func() -> Control: return UiParts.rules_tip("Your own hero",
+		"Create", "Make a character of your own, from looks and voice to class. They join the roster like anyone else."))
+	card.custom_minimum_size = Vector2(132, 0)
+	return card
 
 
 ## One roster member as a card the player clicks to choose (lit) or leave at camp.
@@ -235,6 +269,7 @@ func _start(party: Array[Character], bench: Array[Character] = []) -> void:
 
 
 func _show_loads() -> void:
+	_view = "load"
 	for c in _box.get_children():
 		c.queue_free()
 	_box.add_child(UiKit.title("Load"))
@@ -245,6 +280,13 @@ func _show_loads() -> void:
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		_box.add_child(b)
 	_box.add_child(UiKit.button("Back", _title, 16))
+
+
+## Escape steps back to the title from the party pick and the load list (the hero creator handles its own).
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel") and _creation == null and _view != "title":
+		get_viewport().set_input_as_handled()
+		_title()
 
 
 func _load(slot: String) -> void:

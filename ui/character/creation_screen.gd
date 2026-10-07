@@ -130,7 +130,9 @@ func _draw_strip() -> void:
 		with.add_child(cap)
 		_strip.add_child(with)
 	_strip.add_child(UiParts.gap())
-	_strip.add_child(UiParts.small_button("Back to title", func() -> void: cancelled.emit()))
+	var leave := UiParts.small_button("Back", func() -> void: cancelled.emit())
+	leave.tooltip_text = "Leave the creator without keeping this character (Esc on the first step)"
+	_strip.add_child(leave)
 	var all_done := not confirmed.has(false)
 	var go := UiParts.primary_button("Begin the adventure" if builders.size() > 1 or hero_mode else "Done", _finish)
 	go.disabled = not all_done
@@ -200,6 +202,19 @@ func _draw_rest() -> void:
 func _changed() -> void:
 	confirmed[slot] = false
 	_draw()
+
+
+## Escape steps back one creation step, and from the first step leaves the creator (as its Back button does). A text
+## field being typed in keeps Escape for itself.
+func _unhandled_input(event: InputEvent) -> void:
+	if not event.is_action_pressed("ui_cancel"):
+		return
+	get_viewport().set_input_as_handled()
+	if step > 0:
+		step -= 1
+		_draw()
+	else:
+		cancelled.emit()
 
 
 func _class_step() -> void:
