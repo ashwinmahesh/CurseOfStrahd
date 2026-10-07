@@ -19,6 +19,7 @@ var _dialogue_ref := ""
 var menu: ContextMenu                ## the right-click menu on things in the world
 var _menu_cell := Vector2i(-1, -1)
 var ending: EndingScreen = null      ## the campaign's last screen, once the game has ended (ADR 0014)
+var glow := HoverGlow.new()          ## the rim on whatever the mouse is over
 
 
 func _ready() -> void:
@@ -83,6 +84,7 @@ func _new_pregen_party() -> void:
 
 func enter_location(location_id: String, spawn: String) -> void:
 	_fade_from_black()
+	glow.clear()
 	if view != null:
 		view.queue_free()
 		view = null
@@ -111,6 +113,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
 		Cursors.show("pointer")
+		glow.clear()
 		LayerFade.fade(self, hud, false, 0.25)   # the combat HUD fades up in its place
 		Audio.play_music("combat")
 		_boss_music.call_deferred(cv)   # the fight is set up just after this signal
@@ -155,6 +158,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var thing := view.thing_at(pick) if pick.x >= 0 else {}
 		hud.hint(str(thing.get("label", "")), (event as InputEventMouseMotion).position)
 		Cursors.show(Cursors.for_thing(thing))
+		glow.show(view, pick, thing)
 	elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
 		var cell := view.pick_cell(view.rig.camera, (event as InputEventMouseButton).position)
 		if cell.x >= 0:
@@ -349,6 +353,7 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 		return
 	ModeController.force(ModeController.Mode.DIALOGUE)
 	Cursors.show("pointer")
+	glow.clear()
 	_dialogue_ref = ref
 	hud.visible = false
 	dialogue = DialogueUI.new()
@@ -642,6 +647,7 @@ func _place_mood() -> String:
 func open_screen(kind: String, index: int) -> void:
 	close_screen()
 	Cursors.show("pointer")
+	glow.clear()
 	if kind in ["sheet", "inventory", "journal", "party", "level_up"]:
 		Audio.sfx("page")
 	match kind:
