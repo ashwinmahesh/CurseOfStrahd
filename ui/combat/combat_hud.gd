@@ -74,6 +74,7 @@ var _slot_row: HBoxContainer
 var _menu: ContextMenu
 var _menu_action: Dictionary = {}
 var _death_button: Button
+var _slot_scroll: ScrollContainer
 var radial: RadialMenu
 var _portraits: Dictionary = {}
 ## The log panel can be minimized to its title bar; the choice lasts for the session.
@@ -316,6 +317,7 @@ func _build_hotbar() -> void:
 	scroll.custom_minimum_size = Vector2(980, 112)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	mid.add_child(scroll)
+	_slot_scroll = scroll
 	_slots = GridContainer.new()
 	_slots.columns = 7
 	_slots.add_theme_constant_override("h_separation", 6)
@@ -631,7 +633,12 @@ func _refresh_hotbar() -> void:
 			_turn_note.text = "%d attack%s left in this Attack action" % [c.attacks_left, "" if c.attacks_left == 1 else "s"]
 	_refresh_slot_pips(c)
 	_end_turn.disabled = not mine or e.pending != null
-	_death_button.visible = mine and e.needs_death_save(c)
+	# A dying hero has nothing else to do: the Death Saving Throw takes the action slots' place inside the bar (owner
+	# report 2026-10-07: added under them, it pushed the bar past the bottom of the screen).
+	var dying := mine and e.needs_death_save(c)
+	_death_button.visible = dying
+	_tabs.visible = not dying
+	_slot_scroll.visible = not dying
 	# Tabs.
 	for ch in _tabs.get_children():
 		ch.queue_free()
