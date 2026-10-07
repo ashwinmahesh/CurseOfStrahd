@@ -67,7 +67,8 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
 - Git LFS (owner decision 2026-10-07; .gitattributes): new or changed images under art/generated, art/sprites,
   art/portraits, art/creator and art/textures, and voice mp3s, are stored in LFS. Older files stay plain blobs until
   they change: never `git lfs migrate` or `git add --renormalize`, and stage only files you changed (an old image whose
-  timestamp moved shows as modified and would be uploaded to LFS). A new clone or worktree needs `git lfs install`.
+  timestamp moved shows as modified and would be uploaded to LFS). This repo's worktrees share its LFS setup; a
+  separate clone needs `git lfs install` (art/generated isn't used at run time, so `lfs.fetchexclude` can skip it).
 
 ## Voice (ADR 0013)
 - Spoken lines: ElevenLabs (eleven_v4, owner decision 2026-10-06) via `make voice` only; model, format and each
