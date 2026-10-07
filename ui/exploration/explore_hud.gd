@@ -44,7 +44,7 @@ var thing_labels: ThingLabels
 ## The exploring controls card (F1), like the one in fights. {action} reads as the player's key for it (InputActions.fill).
 const CONTROLS: Array[String] = [
 	"Mouse: click the floor to walk there; click a person, door, chest or thing to use it (the hint says what a click will do); right-click it for everything you can do; the mouse wheel zooms.",
-	"Hold {show_names} to see the names of everything you can use nearby.",
+	"Hold {show_names} to see the names of everything you can use nearby. Hold {show_sight} to see what each foe in sight can see (always shown while sneaking).",
 	"Keyboard: {walk} walk · {camera_rotate_left} / {camera_rotate_right} turn the camera · {select_member_1}-{select_member_4} or {cycle_leader} pick who leads · {open_sheet} character · {open_inventory} inventory · {open_journal} journal · {open_party} party · {open_map} map · {rest} rest · {search} search · {sneak} sneak · {split} split the party · {plan_mode} turn-based ({plan_round} ends the round) · {quick_save} quicksave · {quick_load} load it · Esc menu. Settings, Keys changes them.",
 	"In conversations: 1-9 pick an answer · Space, Enter or a click goes on · H shows what's been said.",
 	"Controller: left stick walks · A uses what's beside you · Back opens its menu · X searches · Y journal · LB / RB character and inventory · Start menu.",

@@ -4,9 +4,10 @@ extends CanvasLayer
 ## Points (roll on screen or take the fixed value), the new features (summary on the page, full text on hover), every
 ## choice the level grants (the same widgets as creation, picked by kind), then a before/after summary and Confirm,
 ## with the live sheet beside it marking what changes. Nothing changes until Confirm. Milestone levelling: available
-## when the story has reached the next milestone. Recommended picks (Q10) are filled in when it opens, from a
-## companion's own level plan or LevelUpController.recommend(); a card says what they are, every one can be changed, and
-## the Recommended button puts them back.
+## when the story has reached the next milestone. The picks start blank (owner, 2026-10-07); Use Recommended (Q10)
+## fills the ones still blank, from a companion's own level plan or LevelUpController.recommend(), keeping any already
+## made (a different subclass stays, and its own picks are filled for it). A card says what it filled; every pick can
+## still be changed.
 
 var root: Node
 var st: StoryState
@@ -35,7 +36,6 @@ func open(root_: Node, state: StoryState, index: int) -> void:
 	ctl = LevelUpController.new(ch)
 	var main_class := ch.class_order[0] if not ch.class_order.is_empty() else ""
 	ctl.choose_class(main_class)
-	_recommended = ctl.recommend()
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 18)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -77,7 +77,7 @@ func _redraw() -> void:
 		var why := "" if o.legal else "Can't: " + o.reason
 		var b := UiParts.tip_button(o.label, func() -> void:
 			ctl.choose_class(o.id)
-			_recommended = ctl.recommend()
+			_recommended = []
 			_hp_note = ""
 			_redraw(), func() -> Control: return UiParts.rules_tip(label, "", summary, [], why), o.id == ctl.chosen_class, 15)
 		b.disabled = not o.legal
@@ -110,14 +110,20 @@ func _redraw() -> void:
 	# 4. Choices
 	var choices := ctl.level_choices()
 	if not choices.is_empty():
-		var again := UiParts.small_button("Recommended", func() -> void:
-			ctl.reset_picks()
+		var blank := choices.filter(func(c: Choice) -> bool: return not c.is_complete()).size()
+		var use := UiParts.small_button("Use Recommended", func() -> void:
 			_recommended = ctl.recommend()
 			_redraw(), "create")
-		again.tooltip_text = "Put back the recommended picks for this level"
-		_body.add_child(UiParts.section("4 · Choices", again))
+		use.disabled = blank == 0
+		use.tooltip_text = "Fill in the picks you haven't made with recommended ones; the ones you've made stay" if blank > 0 \
+			else "Every pick is made"
+		if blank > 0:
+			UiParts.light_up(use)
+		_body.add_child(UiParts.section("4 · Choices", use))
 		if not _recommended.is_empty():
 			_body.add_child(_recommended_card())
+		elif blank > 0:
+			_body.add_child(UiKit.label("Make each pick below, or press Use Recommended to fill in the ones you haven't made.", 14, "parchment", 1000))
 	for c in choices:
 		var w := ChoiceWidget.create(c)
 		w.picks_changed.connect(func(key: String, picks: Array) -> void:

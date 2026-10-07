@@ -35,6 +35,8 @@ const BINDINGS := {
 	&"show_names": [KEY_ALT],
 	&"plan_mode": [KEY_T],
 	&"plan_round": [KEY_SPACE],
+	# Hold to see what each foe in plain view can see (U10; always shown while sneaking).
+	&"show_sight": [KEY_L],
 	# Combat (docs/ui/combat_view.md).
 	&"combat_end_turn": [KEY_SPACE],
 	&"combat_cancel": [KEY_ESCAPE],
@@ -81,6 +83,7 @@ const COMMANDS := [
 	[&"sneak", "Sneak", "explore"],
 	[&"split", "Split the party", "explore"],
 	[&"show_names", "Show names (hold)", "explore"],
+	[&"show_sight", "Show what foes see (hold)", "explore"],
 	[&"plan_mode", "Turn-based exploring", "explore"],
 	[&"plan_round", "End the round (turn-based)", "explore"],
 	[&"quick_save", "Quicksave", "explore"],

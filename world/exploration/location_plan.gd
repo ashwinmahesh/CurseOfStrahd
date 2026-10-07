@@ -145,13 +145,14 @@ static func hover_text(view: LocationView, cell: Vector2i) -> String:
 	if path.is_empty():
 		return ""
 	var why := why_not(view, path)
-	if why != "":
-		return why
-	return "Walk here: %d of %d ft" % [path_ft(view, view.leader(), path), left_ft(view, view.leader())]
+	var text := why if why != "" else "Walk here: %d of %d ft" % [path_ft(view, view.leader(), path), left_ft(view, view.leader())]
+	var seen := LocationStealth.hover_warning(view, cell)   # who can see you (U10)
+	return text + ("\n" + seen if seen != "" else "")
 
 
 ## Shows the walk to the hovered square on the ground, as in fights: a dotted trail to a ring, red when it's beyond
-## this round's movement. Off the floor (or out of turn-based mode) it clears.
+## this round's movement or a foe in plain view would see the walker there. Off the floor (or out of turn-based mode)
+## it clears.
 static func preview(view: LocationView, cell: Vector2i) -> void:
 	var overlay := view.get_node_or_null("PlanOverlay") as GridOverlay
 	if not view.planning or cell.x < 0 or view.members.is_empty() or cell == view.leader().cell:
@@ -167,4 +168,5 @@ static func preview(view: LocationView, cell: Vector2i) -> void:
 	if path.is_empty():
 		return
 	overlay.show_trail("path", path)
-	overlay.show_cells("danger" if why_not(view, path) != "" else "goal", [cell])
+	var risky := why_not(view, path) != "" or LocationStealth.hover_warning(view, cell) != ""
+	overlay.show_cells("danger" if risky else "goal", [cell])
