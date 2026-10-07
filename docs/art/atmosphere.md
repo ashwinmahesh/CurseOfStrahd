@@ -200,6 +200,13 @@ casting a shadow was a third of the village's frame (they no longer do: nothing 
 their shadows, the screen pass (its mist noise now comes from a texture, 1 to 2 ms cheaper outdoors), MSAA, light
 bounced off walls and the depth of field. Contact shadows, reflections, glow, haze and SMAA are cheap.
 
+**Bounce light outdoors (W18, tried and left off).** Godot's real-time global illumination (SDFGI, the only kind that
+needs no baking) was tried in place of the screen-space bounce (SSIL) on outdoor maps, 2026-10-07: in the village it
+cost about 4.7 ms a frame more at 1080p (paired timing) and on the forest road about the same as SSIL, and the
+pictures showed little difference beyond darker tree interiors and eaves. It stays off; `LOOK_SDFGI=1` in
+look_capture turns it on to try again (after W17's 60 fps check, or if the land gets big open slopes the screen
+can't see round).
+
 **The frame meter.** F3 shows frames a second, the average and slowest frame of the last half second and the preset
 in the top left corner, orange when over the 60 fps budget (`FrameMeter`, GameSettings `frame_meter`; Graphics puts
 it on the window).
@@ -221,6 +228,15 @@ it on the window).
   their shadows are (a candle's crisp, a hearth's soft) and how strongly they light the haze; magic lights and windows
   hold steady. The nearest few flames that cast shadows sway a little with their flicker, so their shadows stir
   (`CandleFlicker`, meta `sway`; 2 on High and Medium).
+- **Strength by kind** (Modern): hearths throw half again as much light and reach further, candles, lamps and
+  torches a little more, and the party's lantern less, so a room's own lights lead (the target frames).
+- **Kit and prop flames**: candles and flames modelled into the building kit's pieces (the castle piers' sconces)
+  light the room around them; the flames are found in the piece's own mesh (`Atmosphere._light_kit_flames`), and
+  floor-level stubs and flames beside the location's own lights are left alone. Likewise the 3D props' fires and
+  candles (hearths, braziers, campfires, torches, candelabras: their `flame` and `candle` sockets in
+  art/models/manifest.json; `_light_model_flames`), unless the location's own light stands within a square.
+- **Indoor shade** (Modern) is filled a little by cool moonlight from unseen windows, readable blue-grey rather than
+  black (`INDOOR_TONE`: the ambient leans to moon blue and the moon key light is stronger).
 - **Windows indoors** are the moon or the day coming in: the key light's colour, steady, with a spot light over the
   wall beside the window down across the room (casting shadows) and a glowing cone of dusty haze along it
   (`shaders/world/light_shaft.gdshader`), hung on the window's light so they hide with it.
