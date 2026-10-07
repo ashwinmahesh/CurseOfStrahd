@@ -1,0 +1,149 @@
+{
+  "id": "wren_featherfoot",
+  "name": "Wren Featherfoot",
+  "pronouns": "he/him",
+  "summary": "Halfling Monk (Warrior of the Open Hand), Entertainer. Fast hands, faster feet and the last word in every argument.",
+  "hook": "His old master, a dusk elf who never spoke of where he came from, died last winter and left Wren one errand: a letter for a brother named Kasimir, in the valley where the sun doesn't rise.",
+  "roster": false,
+  "build": {
+    "name": "Wren Featherfoot",
+    "species": "halfling",
+    "background": "entertainer",
+    "ability_method": "standard_array",
+    "base_scores": {
+      "str": 12,
+      "dex": 15,
+      "con": 13,
+      "int": 8,
+      "wis": 14,
+      "cha": 10
+    },
+    "levels": [
+      {
+        "class": "monk",
+        "hp": 0
+      }
+    ],
+    "choices": {
+      "background.abilities": [
+        "dex",
+        "dex",
+        "str"
+      ],
+      "background.tool": [
+        "flute"
+      ],
+      "background.feat.instrument_training": [
+        "lute",
+        "drum",
+        "pan_flute"
+      ],
+      "origin.languages": [
+        "halfling",
+        "elvish"
+      ],
+      "monk.1.skills": [
+        "athletics",
+        "insight"
+      ],
+      "monk.1.tools": [
+        "calligraphers_supplies"
+      ]
+    },
+    "equipment": {
+      "class": "a",
+      "background": "a"
+    },
+    "identity": {
+      "pronouns": "he/him",
+      "tags": [
+        "quick",
+        "cheeky",
+        "restless"
+      ]
+    },
+    "appearance": {}
+  },
+  "level_plan": [
+    {
+      "level": 2,
+      "class": "monk",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 3,
+      "class": "monk",
+      "hp": 0,
+      "choices": {
+        "monk.3.monk_subclass": [
+          "warrior_of_the_open_hand"
+        ]
+      }
+    },
+    {
+      "level": 4,
+      "class": "monk",
+      "hp": 0,
+      "choices": {
+        "monk.4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "monk.4.ability_score_improvement/ability_score_improvement.abilities": [
+          "dex",
+          "wis"
+        ]
+      }
+    },
+    {
+      "level": 5,
+      "class": "monk",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 6,
+      "class": "monk",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 7,
+      "class": "monk",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 8,
+      "class": "monk",
+      "hp": 0,
+      "choices": {
+        "monk.8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "monk.8.ability_score_improvement/ability_score_improvement.abilities": [
+          "dex",
+          "wis"
+        ]
+      }
+    },
+    {
+      "level": 9,
+      "class": "monk",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 10,
+      "class": "monk",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 11,
+      "class": "monk",
+      "hp": 0,
+      "choices": {}
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "id": "thistle",
+  "name": "Thistle",
+  "pronouns": "she/her",
+  "summary": "Human Ranger (Hunter), Guide. A longbow, a loud laugh and no idea what a fork is for.",
+  "hook": "The old trapper who raised her in the deep woods followed a wolf the size of a pony into a wall of fog and didn't come back. She has followed his trail blazes ever since, and they lead here.",
+  "roster": false,
+  "build": {
+    "name": "Thistle",
+    "species": "human",
+    "background": "guide",
+    "ability_method": "standard_array",
+    "base_scores": {
+      "str": 12,
+      "dex": 15,
+      "con": 13,
+      "int": 8,
+      "wis": 14,
+      "cha": 10
+    },
+    "levels": [
+      {
+        "class": "ranger",
+        "hp": 0
+      }
+    ],
+    "choices": {
+      "species.size": [
+        "medium"
+      ],
+      "species.skillful": [
+        "intimidation"
+      ],
+      "species.versatile": [
+        "alert"
+      ],
+      "background.abilities": [
+        "dex",
+        "dex",
+        "wis"
+      ],
+      "background.feat.two_cantrips.cantrips": [
+        "druidcraft",
+        "thorn_whip"
+      ],
+      "background.feat.two_cantrips.spellcasting_ability": [
+        "wis"
+      ],
+      "background.feat.level_1_spell": [
+        "goodberry"
+      ],
+      "origin.languages": [
+        "elvish",
+        "goblin"
+      ],
+      "ranger.1.skills": [
+        "animal_handling",
+        "athletics",
+        "perception"
+      ],
+      "ranger.1.weapon_mastery": [
+        "longbow",
+        "scimitar"
+      ],
+      "ranger.prepared": [
+        "speak_with_animals",
+        "ensnaring_strike"
+      ]
+    },
+    "equipment": {
+      "class": "a",
+      "background": "a"
+    },
+    "identity": {
+      "pronouns": "she/her",
+      "tags": [
+        "boisterous",
+        "wild",
+        "fierce"
+      ]
+    },
+    "appearance": {}
+  },
+  "level_plan": [
+    {
+      "level": 2,
+      "class": "ranger",
+      "hp": 0,
+      "choices": {
+        "ranger.2.deft_explorer.expertise": [
+          "survival"
+        ],
+        "ranger.2.deft_explorer.languages": [
+          "sylvan",
+          "druidic"
+        ],
+        "ranger.2.fighting_style": [
+          "archery"
+        ],
+        "ranger.prepared": [
+          "speak_with_animals",
+          "ensnaring_strike",
+          "cure_wounds"
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "class": "ranger",
+      "hp": 0,
+      "choices": {
+        "ranger.3.ranger_subclass": [
+          "hunter"
+        ],
+        "hunter.3.hunters_prey": [
+          "colossus_slayer"
+        ],
+        "ranger.prepared": [
+          "speak_with_animals",
+          "ensnaring_strike",
+          "cure_wounds",
+          "hail_of_thorns"
+        ]
+      }
+    },
+    {
+      "level": 4,
+      "class": "ranger",
+      "hp": 0,
+      "choices": {
+        "ranger.4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ranger.4.ability_score_improvement/ability_score_improvement.abilities": [
+          "dex",
+          "wis"
+        ],
+        "ranger.prepared": [
+          "speak_with_animals",
+          "ensnaring_strike",
+          "cure_wounds",
+          "hail_of_thorns",
+          "entangle"
+        ]
+      }
+    },
+    {
+      "level": 5,
+      "class": "ranger",
+      "hp": 0,
+      "choices": {
+        "ranger.prepared": [
+          "speak_with_animals",
+          "ensnaring_strike",
+          "cure_wounds",
+          "hail_of_thorns",
+          "entangle",
+          "pass_without_trace"
+        ]
+      }
+    },
+    {
+      "level": 6,
+      "class": "ranger",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 7,
+      "class": "ranger",
+      "hp": 0,
+      "choices": {
+        "hunter.7.defensive_tactics": [
+          "escape_the_horde"
+        ],
+        "ranger.prepared": [
+          "speak_with_animals",
+          "ensnaring_strike",
+          "cure_wounds",
+          "hail_of_thorns",
+          "entangle",
+          "pass_without_trace",
+          "spike_growth"
+        ]
+      }
+    },
+    {
+      "level": 8,
+      "class": "ranger",
+      "hp": 0,
+      "choices": {
+        "ranger.8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ranger.8.ability_score_improvement/ability_score_improvement.abilities": [
+          "dex",
+          "dex"
+        ]
+      }
+    },
+    {
+      "level": 9,
+      "class": "ranger",
+      "hp": 0,
+      "choices": {
+        "ranger.9.expertise": [
+          "perception",
+          "stealth"
+        ],
+        "ranger.prepared": [
+          "speak_with_animals",
+          "ensnaring_strike",
+          "cure_wounds",
+          "hail_of_thorns",
+          "entangle",
+          "pass_without_trace",
+          "spike_growth",
+          "lightning_arrow",
+          "conjure_barrage"
+        ]
+      }
+    },
+    {
+      "level": 10,
+      "class": "ranger",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 11,
+      "class": "ranger",
+      "hp": 0,
+      "choices": {
+        "ranger.prepared": [
+          "speak_with_animals",
+          "ensnaring_strike",
+          "cure_wounds",
+          "hail_of_thorns",
+          "entangle",
+          "pass_without_trace",
+          "spike_growth",
+          "lightning_arrow",
+          "conjure_barrage",
+          "conjure_animals"
+        ]
+      }
+    }
+  ]
+}

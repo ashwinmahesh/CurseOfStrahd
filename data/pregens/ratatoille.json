@@ -1,0 +1,528 @@
+{
+  "id": "ratatoille",
+  "name": "Ratatoille",
+  "pronouns": "he/him",
+  "summary": "High Elf Wizard (Diviner), Artisan. A spellbook, a skillet and an urgent need to be taken seriously.",
+  "hook": "Nobody sat with him at the academy until he learned to throw fire. Then he heard of a great Wizard of Wines beyond the mists, a master of magic and the table both, and set out to become his apprentice.",
+  "roster": false,
+  "build": {
+    "name": "Ratatoille",
+    "species": "elf",
+    "background": "artisan",
+    "ability_method": "standard_array",
+    "base_scores": {
+      "str": 8,
+      "dex": 14,
+      "con": 13,
+      "int": 15,
+      "wis": 12,
+      "cha": 10
+    },
+    "levels": [
+      {
+        "class": "wizard",
+        "hp": 0
+      }
+    ],
+    "choices": {
+      "species.spellcasting_ability": [
+        "int"
+      ],
+      "species.elven_lineage": [
+        "high_elf"
+      ],
+      "species.keen_senses": [
+        "perception"
+      ],
+      "background.abilities": [
+        "int",
+        "int",
+        "dex"
+      ],
+      "background.tool": [
+        "cooks_utensils"
+      ],
+      "background.feat.crafter_tool_proficiency": [
+        "potters_tools",
+        "tinkers_tools",
+        "smiths_tools"
+      ],
+      "origin.languages": [
+        "elvish",
+        "draconic"
+      ],
+      "wizard.1.skills": [
+        "arcana",
+        "history"
+      ],
+      "wizard.cantrips": [
+        "fire_bolt",
+        "mage_hand",
+        "ray_of_frost"
+      ],
+      "wizard.spellbook": [
+        "shield",
+        "magic_missile",
+        "mage_armor",
+        "burning_hands",
+        "grease",
+        "detect_magic"
+      ],
+      "wizard.prepared": [
+        "shield",
+        "magic_missile",
+        "mage_armor",
+        "burning_hands"
+      ]
+    },
+    "equipment": {
+      "class": "a",
+      "background": "a"
+    },
+    "identity": {
+      "pronouns": "he/him",
+      "tags": [
+        "eager",
+        "fussy",
+        "gourmet"
+      ]
+    },
+    "appearance": {}
+  },
+  "level_plan": [
+    {
+      "level": 2,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "wizard.2.scholar": [
+          "arcana"
+        ],
+        "wizard.spellbook": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "detect_magic",
+          "sleep",
+          "unseen_servant"
+        ],
+        "wizard.prepared": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease"
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "wizard.3.wizard_subclass": [
+          "diviner"
+        ],
+        "diviner.3.divination_savant": [
+          "detect_thoughts",
+          "see_invisibility"
+        ],
+        "wizard.spellbook": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "detect_magic",
+          "sleep",
+          "unseen_servant",
+          "misty_step",
+          "web"
+        ],
+        "wizard.prepared": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "misty_step"
+        ]
+      }
+    },
+    {
+      "level": 4,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "wizard.4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "wizard.4.ability_score_improvement/ability_score_improvement.abilities": [
+          "int",
+          "dex"
+        ],
+        "wizard.cantrips": [
+          "fire_bolt",
+          "mage_hand",
+          "ray_of_frost",
+          "minor_illusion"
+        ],
+        "wizard.spellbook": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "detect_magic",
+          "sleep",
+          "unseen_servant",
+          "misty_step",
+          "web",
+          "scorching_ray",
+          "hold_person"
+        ],
+        "wizard.prepared": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "misty_step",
+          "web"
+        ]
+      }
+    },
+    {
+      "level": 5,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "diviner.5.divination_savant": [
+          "clairvoyance"
+        ],
+        "wizard.spellbook": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "detect_magic",
+          "sleep",
+          "unseen_servant",
+          "misty_step",
+          "web",
+          "scorching_ray",
+          "hold_person",
+          "fireball",
+          "counterspell"
+        ],
+        "wizard.prepared": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "misty_step",
+          "web",
+          "fireball",
+          "counterspell"
+        ]
+      }
+    },
+    {
+      "level": 6,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "wizard.spellbook": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "detect_magic",
+          "sleep",
+          "unseen_servant",
+          "misty_step",
+          "web",
+          "scorching_ray",
+          "hold_person",
+          "fireball",
+          "counterspell",
+          "haste",
+          "fly"
+        ],
+        "wizard.prepared": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "misty_step",
+          "web",
+          "fireball",
+          "counterspell",
+          "haste"
+        ]
+      }
+    },
+    {
+      "level": 7,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "diviner.7.divination_savant": [
+          "tongues"
+        ],
+        "wizard.spellbook": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "detect_magic",
+          "sleep",
+          "unseen_servant",
+          "misty_step",
+          "web",
+          "scorching_ray",
+          "hold_person",
+          "fireball",
+          "counterspell",
+          "haste",
+          "fly",
+          "dimension_door",
+          "polymorph"
+        ],
+        "wizard.prepared": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "misty_step",
+          "web",
+          "fireball",
+          "counterspell",
+          "haste",
+          "dimension_door"
+        ]
+      }
+    },
+    {
+      "level": 8,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "wizard.8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "wizard.8.ability_score_improvement/ability_score_improvement.abilities": [
+          "int",
+          "int"
+        ],
+        "wizard.spellbook": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "detect_magic",
+          "sleep",
+          "unseen_servant",
+          "misty_step",
+          "web",
+          "scorching_ray",
+          "hold_person",
+          "fireball",
+          "counterspell",
+          "haste",
+          "fly",
+          "dimension_door",
+          "polymorph",
+          "greater_invisibility",
+          "fire_shield"
+        ],
+        "wizard.prepared": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "misty_step",
+          "web",
+          "fireball",
+          "counterspell",
+          "haste",
+          "dimension_door",
+          "polymorph"
+        ]
+      }
+    },
+    {
+      "level": 9,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "diviner.9.divination_savant": [
+          "arcane_eye"
+        ],
+        "wizard.spellbook": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "detect_magic",
+          "sleep",
+          "unseen_servant",
+          "misty_step",
+          "web",
+          "scorching_ray",
+          "hold_person",
+          "fireball",
+          "counterspell",
+          "haste",
+          "fly",
+          "dimension_door",
+          "polymorph",
+          "greater_invisibility",
+          "fire_shield",
+          "cone_of_cold",
+          "wall_of_force"
+        ],
+        "wizard.prepared": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "misty_step",
+          "web",
+          "fireball",
+          "counterspell",
+          "haste",
+          "dimension_door",
+          "polymorph",
+          "cone_of_cold",
+          "wall_of_force"
+        ]
+      }
+    },
+    {
+      "level": 10,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "wizard.cantrips": [
+          "fire_bolt",
+          "mage_hand",
+          "ray_of_frost",
+          "minor_illusion",
+          "toll_the_dead"
+        ],
+        "wizard.spellbook": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "detect_magic",
+          "sleep",
+          "unseen_servant",
+          "misty_step",
+          "web",
+          "scorching_ray",
+          "hold_person",
+          "fireball",
+          "counterspell",
+          "haste",
+          "fly",
+          "dimension_door",
+          "polymorph",
+          "greater_invisibility",
+          "fire_shield",
+          "cone_of_cold",
+          "wall_of_force",
+          "bigbys_hand",
+          "tensers_floating_disk"
+        ],
+        "wizard.prepared": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "misty_step",
+          "web",
+          "fireball",
+          "counterspell",
+          "haste",
+          "dimension_door",
+          "polymorph",
+          "cone_of_cold",
+          "wall_of_force",
+          "greater_invisibility"
+        ]
+      }
+    },
+    {
+      "level": 11,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "diviner.11.divination_savant": [
+          "divination"
+        ],
+        "wizard.spellbook": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "detect_magic",
+          "sleep",
+          "unseen_servant",
+          "misty_step",
+          "web",
+          "scorching_ray",
+          "hold_person",
+          "fireball",
+          "counterspell",
+          "haste",
+          "fly",
+          "dimension_door",
+          "polymorph",
+          "greater_invisibility",
+          "fire_shield",
+          "cone_of_cold",
+          "wall_of_force",
+          "bigbys_hand",
+          "tensers_floating_disk",
+          "otilukes_freezing_sphere",
+          "tashas_bubbling_cauldron"
+        ],
+        "wizard.prepared": [
+          "shield",
+          "magic_missile",
+          "mage_armor",
+          "burning_hands",
+          "grease",
+          "misty_step",
+          "web",
+          "fireball",
+          "counterspell",
+          "haste",
+          "dimension_door",
+          "polymorph",
+          "cone_of_cold",
+          "wall_of_force",
+          "greater_invisibility",
+          "tashas_bubbling_cauldron"
+        ]
+      }
+    }
+  ]
+}
