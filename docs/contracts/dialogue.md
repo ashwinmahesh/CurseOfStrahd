@@ -71,6 +71,10 @@ interject <selector>: Text         A party member matching the selector says Tex
                                    pregen's own voice.
 combat encounter_id                Ends the conversation and starts a fight from the location's encounters.
 narrate trigger_key                Plays a Narrator trigger (below) inline.
+cutscene cutscene_id               A full-screen picture (data/cutscenes/<id>.json, docs/ui/cutscenes.md) under the
+                                   lines that follow, which read as captions on it; the box comes back over it for
+                                   options and notices. Skipped when none of its pictures' conditions hold.
+                                   "cutscene end" takes it away (so does the conversation's end).
 end_game                           Ends the campaign (ADR 0014): the ending whose condition holds is played
                                    when the conversation closes (docs/contracts/campaign.md Endings).
 approve thistle +3 kip_smudgewick -2: You freed the wolves

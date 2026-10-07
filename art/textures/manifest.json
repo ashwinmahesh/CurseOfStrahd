@@ -78,7 +78,22 @@
           "moss"
         ],
         "source": "art/generated/textures/village_cobbles.png",
-        "hd_file": "art/textures/village/cobbles_hd.png"
+        "hd_file": "art/textures/village/cobbles_2k.webp",
+        "normal_file": "art/textures/village/cobbles_2k_n.webp",
+        "orm_file": "art/textures/village/cobbles_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/village_cobbles.webp",
+        "variants": [
+          {
+            "file": "art/textures/village/cobbles_2k_b.webp",
+            "normal_file": "art/textures/village/cobbles_2k_b_n.webp",
+            "orm_file": "art/textures/village/cobbles_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/village/cobbles_2k_c.webp",
+            "normal_file": "art/textures/village/cobbles_2k_c_n.webp",
+            "orm_file": "art/textures/village/cobbles_2k_c_orm.webp"
+          }
+        ]
       },
       "mud_road": {
         "file": "art/textures/village/mud_road.png",
@@ -96,7 +111,22 @@
           "grave"
         ],
         "source": "art/generated/textures/village_mud_road.png",
-        "hd_file": "art/textures/village/mud_road_hd.png"
+        "hd_file": "art/textures/village/mud_road_2k.webp",
+        "normal_file": "art/textures/village/mud_road_2k_n.webp",
+        "orm_file": "art/textures/village/mud_road_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/village_mud_road.webp",
+        "variants": [
+          {
+            "file": "art/textures/village/mud_road_2k_b.webp",
+            "normal_file": "art/textures/village/mud_road_2k_b_n.webp",
+            "orm_file": "art/textures/village/mud_road_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/village/mud_road_2k_c.webp",
+            "normal_file": "art/textures/village/mud_road_2k_c_n.webp",
+            "orm_file": "art/textures/village/mud_road_2k_c_orm.webp"
+          }
+        ]
       },
       "grass": {
         "file": "art/textures/village/grass.png",
@@ -114,7 +144,22 @@
         ],
         "source": "art/generated/textures/village_grass.png",
         "saturate": 1.3,
-        "hd_file": "art/textures/village/grass_hd.png"
+        "hd_file": "art/textures/village/grass_2k.webp",
+        "normal_file": "art/textures/village/grass_2k_n.webp",
+        "orm_file": "art/textures/village/grass_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/village_grass.webp",
+        "variants": [
+          {
+            "file": "art/textures/village/grass_2k_b.webp",
+            "normal_file": "art/textures/village/grass_2k_b_n.webp",
+            "orm_file": "art/textures/village/grass_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/village/grass_2k_c.webp",
+            "normal_file": "art/textures/village/grass_2k_c_n.webp",
+            "orm_file": "art/textures/village/grass_2k_c_orm.webp"
+          }
+        ]
       },
       "house_wall": {
         "file": "art/textures/village/house_wall.png",
@@ -149,7 +194,10 @@
           "moon_blue"
         ],
         "source": "art/generated/textures/village_roof_slate.png",
-        "hd_file": "art/textures/village/roof_slate_hd.png"
+        "hd_file": "art/textures/village/roof_slate_2k.webp",
+        "normal_file": "art/textures/village/roof_slate_2k_n.webp",
+        "orm_file": "art/textures/village/roof_slate_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/village_roof_slate.webp"
       },
       "roof_thatch": {
         "file": "art/textures/village/roof_thatch.png",
@@ -167,7 +215,22 @@
           "bog"
         ],
         "source": "art/generated/textures/village_roof_thatch.png",
-        "hd_file": "art/textures/village/roof_thatch_hd.png"
+        "hd_file": "art/textures/village/roof_thatch_2k.webp",
+        "normal_file": "art/textures/village/roof_thatch_2k_n.webp",
+        "orm_file": "art/textures/village/roof_thatch_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/village_roof_thatch.webp",
+        "variants": [
+          {
+            "file": "art/textures/village/roof_thatch_2k_b.webp",
+            "normal_file": "art/textures/village/roof_thatch_2k_b_n.webp",
+            "orm_file": "art/textures/village/roof_thatch_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/village/roof_thatch_2k_c.webp",
+            "normal_file": "art/textures/village/roof_thatch_2k_c_n.webp",
+            "orm_file": "art/textures/village/roof_thatch_2k_c_orm.webp"
+          }
+        ]
       }
     },
     "interior": {
@@ -186,7 +249,10 @@
           "rust"
         ],
         "source": "art/generated/textures/interior_wood_planks.png",
-        "hd_file": "art/textures/interior/wood_planks_hd.png"
+        "hd_file": "art/textures/interior/wood_planks_2k.webp",
+        "normal_file": "art/textures/interior/wood_planks_2k_n.webp",
+        "orm_file": "art/textures/interior/wood_planks_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_wood_planks.webp"
       },
       "rug": {
         "file": "art/textures/interior/rug.png",
@@ -204,7 +270,13 @@
           "umber"
         ],
         "source": "art/generated/textures/interior_rug.png",
-        "hd_file": "art/textures/interior/rug_hd.png"
+        "hd_file": "art/textures/interior/rug_2k.webp",
+        "normal_file": "art/textures/interior/rug_2k_n.webp",
+        "orm_file": "art/textures/interior/rug_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_rug.webp",
+        "material": {
+          "macro": 0.0
+        }
       },
       "plaster_wall": {
         "file": "art/textures/interior/plaster_wall.png",
@@ -222,7 +294,22 @@
           "blood"
         ],
         "source": "art/generated/textures/interior_plaster_wall.png",
-        "hd_file": "art/textures/interior/plaster_wall_hd.png"
+        "hd_file": "art/textures/interior/plaster_wall_2k.webp",
+        "normal_file": "art/textures/interior/plaster_wall_2k_n.webp",
+        "orm_file": "art/textures/interior/plaster_wall_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_plaster_wall.webp",
+        "variants": [
+          {
+            "file": "art/textures/interior/plaster_wall_2k_b.webp",
+            "normal_file": "art/textures/interior/plaster_wall_2k_b_n.webp",
+            "orm_file": "art/textures/interior/plaster_wall_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/interior/plaster_wall_2k_c.webp",
+            "normal_file": "art/textures/interior/plaster_wall_2k_c_n.webp",
+            "orm_file": "art/textures/interior/plaster_wall_2k_c_orm.webp"
+          }
+        ]
       },
       "wainscot_wall": {
         "file": "art/textures/interior/wainscot_wall.png",
@@ -241,7 +328,10 @@
         ],
         "source": "art/generated/textures/interior_wainscot_wall.png",
         "note": "Wraps in x only: map V from 0 at the top of the wall to 1 at the floor, one tile per wall height.",
-        "hd_file": "art/textures/interior/wainscot_wall_hd.png"
+        "hd_file": "art/textures/interior/wainscot_wall_2k.webp",
+        "normal_file": "art/textures/interior/wainscot_wall_2k_n.webp",
+        "orm_file": "art/textures/interior/wainscot_wall_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_wainscot_wall.webp"
       },
       "tile_floor": {
         "file": "art/textures/interior/tile_floor.png",
@@ -259,7 +349,14 @@
           "slate"
         ],
         "source": "art/generated/textures/interior_tile_floor.png",
-        "hd_file": "art/textures/interior/tile_floor_hd.png"
+        "hd_file": "art/textures/interior/tile_floor_2k.webp",
+        "normal_file": "art/textures/interior/tile_floor_2k_n.webp",
+        "orm_file": "art/textures/interior/tile_floor_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_tile_floor.webp",
+        "material": {
+          "roughness": 0.25,
+          "macro": 0.2
+        }
       },
       "tile_wall": {
         "file": "art/textures/interior/tile_wall.png",
@@ -277,7 +374,10 @@
           "bone"
         ],
         "source": "art/generated/textures/interior_tile_wall.png",
-        "hd_file": "art/textures/interior/tile_wall_hd.png"
+        "hd_file": "art/textures/interior/tile_wall_2k.webp",
+        "normal_file": "art/textures/interior/tile_wall_2k_n.webp",
+        "orm_file": "art/textures/interior/tile_wall_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_tile_wall.webp"
       },
       "kitchen_flags": {
         "file": "art/textures/interior/kitchen_flags.png",
@@ -294,7 +394,17 @@
           "peat"
         ],
         "source": "art/generated/textures/interior_kitchen_flags.png",
-        "hd_file": "art/textures/interior/kitchen_flags_hd.png"
+        "hd_file": "art/textures/interior/kitchen_flags_2k.webp",
+        "normal_file": "art/textures/interior/kitchen_flags_2k_n.webp",
+        "orm_file": "art/textures/interior/kitchen_flags_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_kitchen_flags.webp",
+        "variants": [
+          {
+            "file": "art/textures/interior/kitchen_flags_2k_b.webp",
+            "normal_file": "art/textures/interior/kitchen_flags_2k_b_n.webp",
+            "orm_file": "art/textures/interior/kitchen_flags_2k_b_orm.webp"
+          }
+        ]
       },
       "kitchen_wall": {
         "file": "art/textures/interior/kitchen_wall.png",
@@ -312,7 +422,17 @@
           "peat"
         ],
         "source": "art/generated/textures/interior_kitchen_wall.png",
-        "hd_file": "art/textures/interior/kitchen_wall_hd.png"
+        "hd_file": "art/textures/interior/kitchen_wall_2k.webp",
+        "normal_file": "art/textures/interior/kitchen_wall_2k_n.webp",
+        "orm_file": "art/textures/interior/kitchen_wall_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_kitchen_wall.webp",
+        "variants": [
+          {
+            "file": "art/textures/interior/kitchen_wall_2k_b.webp",
+            "normal_file": "art/textures/interior/kitchen_wall_2k_b_n.webp",
+            "orm_file": "art/textures/interior/kitchen_wall_2k_b_orm.webp"
+          }
+        ]
       },
       "parquet": {
         "file": "art/textures/interior/parquet.png",
@@ -330,7 +450,10 @@
           "grave"
         ],
         "source": "art/generated/textures/interior_parquet.png",
-        "hd_file": "art/textures/interior/parquet_hd.png"
+        "hd_file": "art/textures/interior/parquet_2k.webp",
+        "normal_file": "art/textures/interior/parquet_2k_n.webp",
+        "orm_file": "art/textures/interior/parquet_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_parquet.webp"
       },
       "wood_panel": {
         "file": "art/textures/interior/wood_panel.png",
@@ -348,7 +471,10 @@
           "bone_dark"
         ],
         "source": "art/generated/textures/interior_wood_panel.png",
-        "hd_file": "art/textures/interior/wood_panel_hd.png"
+        "hd_file": "art/textures/interior/wood_panel_2k.webp",
+        "normal_file": "art/textures/interior/wood_panel_2k_n.webp",
+        "orm_file": "art/textures/interior/wood_panel_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_wood_panel.webp"
       },
       "carpet": {
         "file": "art/textures/interior/carpet.png",
@@ -367,7 +493,13 @@
         ],
         "source": "art/generated/textures/interior_carpet.png",
         "saturate": 1.25,
-        "hd_file": "art/textures/interior/carpet_hd.png"
+        "hd_file": "art/textures/interior/carpet_2k.webp",
+        "normal_file": "art/textures/interior/carpet_2k_n.webp",
+        "orm_file": "art/textures/interior/carpet_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_carpet.webp",
+        "material": {
+          "macro": 0.0
+        }
       },
       "wallpaper_nursery": {
         "file": "art/textures/interior/wallpaper_nursery.png",
@@ -386,7 +518,10 @@
         ],
         "source": "art/generated/textures/interior_wallpaper_nursery.png",
         "saturate": 1.2,
-        "hd_file": "art/textures/interior/wallpaper_nursery_hd.png"
+        "hd_file": "art/textures/interior/wallpaper_nursery_2k.webp",
+        "normal_file": "art/textures/interior/wallpaper_nursery_2k_n.webp",
+        "orm_file": "art/textures/interior/wallpaper_nursery_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_wallpaper_nursery.webp"
       },
       "wallpaper_green": {
         "file": "art/textures/interior/wallpaper_green.png",
@@ -405,7 +540,10 @@
         ],
         "source": "art/generated/textures/interior_wallpaper_green.png",
         "saturate": 1.2,
-        "hd_file": "art/textures/interior/wallpaper_green_hd.png"
+        "hd_file": "art/textures/interior/wallpaper_green_2k.webp",
+        "normal_file": "art/textures/interior/wallpaper_green_2k_n.webp",
+        "orm_file": "art/textures/interior/wallpaper_green_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_wallpaper_green.webp"
       },
       "marble_floor": {
         "file": "art/textures/interior/marble_floor.png",
@@ -423,7 +561,10 @@
           "stone_deep"
         ],
         "source": "art/generated/textures/interior_marble_floor.png",
-        "hd_file": "art/textures/interior/marble_floor_hd.png"
+        "hd_file": "art/textures/interior/marble_floor_2k.webp",
+        "normal_file": "art/textures/interior/marble_floor_2k_n.webp",
+        "orm_file": "art/textures/interior/marble_floor_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_marble_floor.webp"
       },
       "whitewash": {
         "file": "art/textures/interior/whitewash.png",
@@ -441,7 +582,17 @@
           "bone"
         ],
         "source": "art/generated/textures/interior_whitewash.png",
-        "hd_file": "art/textures/interior/whitewash_hd.png"
+        "hd_file": "art/textures/interior/whitewash_2k.webp",
+        "normal_file": "art/textures/interior/whitewash_2k_n.webp",
+        "orm_file": "art/textures/interior/whitewash_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_whitewash.webp",
+        "variants": [
+          {
+            "file": "art/textures/interior/whitewash_2k_b.webp",
+            "normal_file": "art/textures/interior/whitewash_2k_b_n.webp",
+            "orm_file": "art/textures/interior/whitewash_2k_b_orm.webp"
+          }
+        ]
       },
       "workshop_boards": {
         "file": "art/textures/interior/workshop_boards.png",
@@ -459,7 +610,10 @@
           "skin_shadow"
         ],
         "source": "art/generated/textures/interior_workshop_boards.png",
-        "hd_file": "art/textures/interior/workshop_boards_hd.png"
+        "hd_file": "art/textures/interior/workshop_boards_2k.webp",
+        "normal_file": "art/textures/interior/workshop_boards_2k_n.webp",
+        "orm_file": "art/textures/interior/workshop_boards_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_workshop_boards.webp"
       },
       "carved_panel": {
         "file": "art/textures/interior/carved_panel.png",
@@ -477,7 +631,10 @@
           "peat"
         ],
         "source": "art/generated/textures/interior_carved_panel.png",
-        "hd_file": "art/textures/interior/carved_panel_hd.png"
+        "hd_file": "art/textures/interior/carved_panel_2k.webp",
+        "normal_file": "art/textures/interior/carved_panel_2k_n.webp",
+        "orm_file": "art/textures/interior/carved_panel_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_carved_panel.webp"
       },
       "damp_plaster": {
         "file": "art/textures/interior/damp_plaster.png",
@@ -495,7 +652,17 @@
           "stone_deep"
         ],
         "source": "art/generated/textures/interior_damp_plaster.png",
-        "hd_file": "art/textures/interior/damp_plaster_hd.png"
+        "hd_file": "art/textures/interior/damp_plaster_2k.webp",
+        "normal_file": "art/textures/interior/damp_plaster_2k_n.webp",
+        "orm_file": "art/textures/interior/damp_plaster_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_damp_plaster.webp",
+        "variants": [
+          {
+            "file": "art/textures/interior/damp_plaster_2k_b.webp",
+            "normal_file": "art/textures/interior/damp_plaster_2k_b_n.webp",
+            "orm_file": "art/textures/interior/damp_plaster_2k_b_orm.webp"
+          }
+        ]
       },
       "attic_boards": {
         "file": "art/textures/interior/attic_boards.png",
@@ -513,7 +680,10 @@
           "grave"
         ],
         "source": "art/generated/textures/interior_attic_boards.png",
-        "hd_file": "art/textures/interior/attic_boards_hd.png"
+        "hd_file": "art/textures/interior/attic_boards_2k.webp",
+        "normal_file": "art/textures/interior/attic_boards_2k_n.webp",
+        "orm_file": "art/textures/interior/attic_boards_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_attic_boards.webp"
       },
       "terracotta": {
         "file": "art/textures/interior/terracotta.png",
@@ -532,7 +702,10 @@
         ],
         "source": "art/generated/textures/interior_terracotta.png",
         "saturate": 1.1,
-        "hd_file": "art/textures/interior/terracotta_hd.png"
+        "hd_file": "art/textures/interior/terracotta_2k.webp",
+        "normal_file": "art/textures/interior/terracotta_2k_n.webp",
+        "orm_file": "art/textures/interior/terracotta_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_terracotta.webp"
       }
     },
     "church": {
@@ -550,7 +723,22 @@
           "pewter"
         ],
         "source": "art/generated/textures/church_stone_flags.png",
-        "hd_file": "art/textures/church/stone_flags_hd.png"
+        "hd_file": "art/textures/church/stone_flags_2k.webp",
+        "normal_file": "art/textures/church/stone_flags_2k_n.webp",
+        "orm_file": "art/textures/church/stone_flags_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/church_stone_flags.webp",
+        "variants": [
+          {
+            "file": "art/textures/church/stone_flags_2k_b.webp",
+            "normal_file": "art/textures/church/stone_flags_2k_b_n.webp",
+            "orm_file": "art/textures/church/stone_flags_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/church/stone_flags_2k_c.webp",
+            "normal_file": "art/textures/church/stone_flags_2k_c_n.webp",
+            "orm_file": "art/textures/church/stone_flags_2k_c_orm.webp"
+          }
+        ]
       },
       "stone_wall": {
         "file": "art/textures/church/stone_wall.png",
@@ -568,7 +756,10 @@
           "night"
         ],
         "source": "art/generated/textures/church_stone_wall.png",
-        "hd_file": "art/textures/church/stone_wall_hd.png"
+        "hd_file": "art/textures/church/stone_wall_2k.webp",
+        "normal_file": "art/textures/church/stone_wall_2k_n.webp",
+        "orm_file": "art/textures/church/stone_wall_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/church_stone_wall.webp"
       }
     },
     "vallaki": {
@@ -585,7 +776,10 @@
           "ink"
         ],
         "source": "art/generated/textures/vallaki_cobbled_square.png",
-        "hd_file": "art/textures/vallaki/cobbled_square_hd.png"
+        "hd_file": "art/textures/vallaki/cobbled_square_2k.webp",
+        "normal_file": "art/textures/vallaki/cobbled_square_2k_n.webp",
+        "orm_file": "art/textures/vallaki/cobbled_square_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/vallaki_cobbled_square.webp"
       },
       "palisade_logs": {
         "file": "art/textures/vallaki/palisade_logs.png",
@@ -640,7 +834,22 @@
           "bog_deep"
         ],
         "source": "art/generated/textures/dungeon_stone_floor.png",
-        "hd_file": "art/textures/dungeon/stone_floor_hd.png"
+        "hd_file": "art/textures/dungeon/stone_floor_2k.webp",
+        "normal_file": "art/textures/dungeon/stone_floor_2k_n.webp",
+        "orm_file": "art/textures/dungeon/stone_floor_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/dungeon_stone_floor.webp",
+        "variants": [
+          {
+            "file": "art/textures/dungeon/stone_floor_2k_b.webp",
+            "normal_file": "art/textures/dungeon/stone_floor_2k_b_n.webp",
+            "orm_file": "art/textures/dungeon/stone_floor_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/dungeon/stone_floor_2k_c.webp",
+            "normal_file": "art/textures/dungeon/stone_floor_2k_c_n.webp",
+            "orm_file": "art/textures/dungeon/stone_floor_2k_c_orm.webp"
+          }
+        ]
       },
       "stone_wall": {
         "file": "art/textures/dungeon/stone_wall.png",
@@ -658,7 +867,10 @@
           "bog_deep"
         ],
         "source": "art/generated/textures/dungeon_stone_wall.png",
-        "hd_file": "art/textures/dungeon/stone_wall_hd.png"
+        "hd_file": "art/textures/dungeon/stone_wall_2k.webp",
+        "normal_file": "art/textures/dungeon/stone_wall_2k_n.webp",
+        "orm_file": "art/textures/dungeon/stone_wall_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/dungeon_stone_wall.webp"
       },
       "damp_brick": {
         "file": "art/textures/dungeon/damp_brick.png",
@@ -677,7 +889,10 @@
         ],
         "source": "art/generated/textures/dungeon_damp_brick.png",
         "saturate": 1.2,
-        "hd_file": "art/textures/dungeon/damp_brick_hd.png"
+        "hd_file": "art/textures/dungeon/damp_brick_2k.webp",
+        "normal_file": "art/textures/dungeon/damp_brick_2k_n.webp",
+        "orm_file": "art/textures/dungeon/damp_brick_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/dungeon_damp_brick.webp"
       },
       "earth_braced": {
         "file": "art/textures/dungeon/earth_braced.png",
@@ -695,7 +910,10 @@
           "crimson"
         ],
         "source": "art/generated/textures/dungeon_earth_braced.png",
-        "hd_file": "art/textures/dungeon/earth_braced_hd.png"
+        "hd_file": "art/textures/dungeon/earth_braced_2k.webp",
+        "normal_file": "art/textures/dungeon/earth_braced_2k_n.webp",
+        "orm_file": "art/textures/dungeon/earth_braced_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/dungeon_earth_braced.webp"
       },
       "packed_earth": {
         "file": "art/textures/dungeon/packed_earth.png",
@@ -713,7 +931,22 @@
           "ink"
         ],
         "source": "art/generated/textures/dungeon_packed_earth.png",
-        "hd_file": "art/textures/dungeon/packed_earth_hd.png"
+        "hd_file": "art/textures/dungeon/packed_earth_2k.webp",
+        "normal_file": "art/textures/dungeon/packed_earth_2k_n.webp",
+        "orm_file": "art/textures/dungeon/packed_earth_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/dungeon_packed_earth.webp",
+        "variants": [
+          {
+            "file": "art/textures/dungeon/packed_earth_2k_b.webp",
+            "normal_file": "art/textures/dungeon/packed_earth_2k_b_n.webp",
+            "orm_file": "art/textures/dungeon/packed_earth_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/dungeon/packed_earth_2k_c.webp",
+            "normal_file": "art/textures/dungeon/packed_earth_2k_c_n.webp",
+            "orm_file": "art/textures/dungeon/packed_earth_2k_c_orm.webp"
+          }
+        ]
       }
     },
     "wild": {
@@ -752,7 +985,22 @@
           "bone"
         ],
         "source": "art/generated/textures/cave_rock_floor.png",
-        "hd_file": "art/textures/cave/rock_floor_hd.png"
+        "hd_file": "art/textures/cave/rock_floor_2k.webp",
+        "normal_file": "art/textures/cave/rock_floor_2k_n.webp",
+        "orm_file": "art/textures/cave/rock_floor_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/cave_rock_floor.webp",
+        "variants": [
+          {
+            "file": "art/textures/cave/rock_floor_2k_b.webp",
+            "normal_file": "art/textures/cave/rock_floor_2k_b_n.webp",
+            "orm_file": "art/textures/cave/rock_floor_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/cave/rock_floor_2k_c.webp",
+            "normal_file": "art/textures/cave/rock_floor_2k_c_n.webp",
+            "orm_file": "art/textures/cave/rock_floor_2k_c_orm.webp"
+          }
+        ]
       },
       "rock_wall": {
         "file": "art/textures/cave/rock_wall.png",
@@ -770,7 +1018,22 @@
           "bone"
         ],
         "source": "art/generated/textures/cave_rock_wall.png",
-        "hd_file": "art/textures/cave/rock_wall_hd.png"
+        "hd_file": "art/textures/cave/rock_wall_2k.webp",
+        "normal_file": "art/textures/cave/rock_wall_2k_n.webp",
+        "orm_file": "art/textures/cave/rock_wall_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/cave_rock_wall.webp",
+        "variants": [
+          {
+            "file": "art/textures/cave/rock_wall_2k_b.webp",
+            "normal_file": "art/textures/cave/rock_wall_2k_b_n.webp",
+            "orm_file": "art/textures/cave/rock_wall_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/cave/rock_wall_2k_c.webp",
+            "normal_file": "art/textures/cave/rock_wall_2k_c_n.webp",
+            "orm_file": "art/textures/cave/rock_wall_2k_c_orm.webp"
+          }
+        ]
       }
     },
     "amber": {
@@ -791,7 +1054,17 @@
         ],
         "source": "art/generated/textures/amber_black_stone.png",
         "saturate": 1.2,
-        "hd_file": "art/textures/amber/black_stone_hd.png"
+        "hd_file": "art/textures/amber/black_stone_2k.webp",
+        "normal_file": "art/textures/amber/black_stone_2k_n.webp",
+        "orm_file": "art/textures/amber/black_stone_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/amber_black_stone.webp",
+        "variants": [
+          {
+            "file": "art/textures/amber/black_stone_2k_b.webp",
+            "normal_file": "art/textures/amber/black_stone_2k_b_n.webp",
+            "orm_file": "art/textures/amber/black_stone_2k_b_orm.webp"
+          }
+        ]
       },
       "amber_wall": {
         "file": "art/textures/amber/amber_wall.png",
@@ -810,7 +1083,10 @@
         ],
         "source": "art/generated/textures/amber_amber_wall.png",
         "saturate": 1.2,
-        "hd_file": "art/textures/amber/amber_wall_hd.png"
+        "hd_file": "art/textures/amber/amber_wall_2k.webp",
+        "normal_file": "art/textures/amber/amber_wall_2k_n.webp",
+        "orm_file": "art/textures/amber/amber_wall_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/amber_amber_wall.webp"
       }
     },
     "mountain": {
@@ -830,7 +1106,22 @@
           "ivory"
         ],
         "source": "art/generated/textures/mountain_snow.png",
-        "hd_file": "art/textures/mountain/snow_hd.png"
+        "hd_file": "art/textures/mountain/snow_2k.webp",
+        "normal_file": "art/textures/mountain/snow_2k_n.webp",
+        "orm_file": "art/textures/mountain/snow_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/mountain_snow.webp",
+        "variants": [
+          {
+            "file": "art/textures/mountain/snow_2k_b.webp",
+            "normal_file": "art/textures/mountain/snow_2k_b_n.webp",
+            "orm_file": "art/textures/mountain/snow_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/mountain/snow_2k_c.webp",
+            "normal_file": "art/textures/mountain/snow_2k_c_n.webp",
+            "orm_file": "art/textures/mountain/snow_2k_c_orm.webp"
+          }
+        ]
       },
       "cliff": {
         "file": "art/textures/mountain/cliff.png",
@@ -848,7 +1139,17 @@
           "ink"
         ],
         "source": "art/generated/textures/mountain_cliff.png",
-        "hd_file": "art/textures/mountain/cliff_hd.png"
+        "hd_file": "art/textures/mountain/cliff_2k.webp",
+        "normal_file": "art/textures/mountain/cliff_2k_n.webp",
+        "orm_file": "art/textures/mountain/cliff_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/mountain_cliff.webp",
+        "variants": [
+          {
+            "file": "art/textures/mountain/cliff_2k_b.webp",
+            "normal_file": "art/textures/mountain/cliff_2k_b_n.webp",
+            "orm_file": "art/textures/mountain/cliff_2k_b_orm.webp"
+          }
+        ]
       },
       "scree": {
         "file": "art/textures/mountain/scree.png",
@@ -866,7 +1167,22 @@
           "parchment"
         ],
         "source": "art/generated/textures/mountain_scree.png",
-        "hd_file": "art/textures/mountain/scree_hd.png"
+        "hd_file": "art/textures/mountain/scree_2k.webp",
+        "normal_file": "art/textures/mountain/scree_2k_n.webp",
+        "orm_file": "art/textures/mountain/scree_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/mountain_scree.webp",
+        "variants": [
+          {
+            "file": "art/textures/mountain/scree_2k_b.webp",
+            "normal_file": "art/textures/mountain/scree_2k_b_n.webp",
+            "orm_file": "art/textures/mountain/scree_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/mountain/scree_2k_c.webp",
+            "normal_file": "art/textures/mountain/scree_2k_c_n.webp",
+            "orm_file": "art/textures/mountain/scree_2k_c_orm.webp"
+          }
+        ]
       }
     },
     "marsh": {
@@ -886,7 +1202,22 @@
           "peat"
         ],
         "source": "art/generated/textures/marsh_marsh_mud.png",
-        "hd_file": "art/textures/marsh/marsh_mud_hd.png"
+        "hd_file": "art/textures/marsh/marsh_mud_2k.webp",
+        "normal_file": "art/textures/marsh/marsh_mud_2k_n.webp",
+        "orm_file": "art/textures/marsh/marsh_mud_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/marsh_marsh_mud.webp",
+        "variants": [
+          {
+            "file": "art/textures/marsh/marsh_mud_2k_b.webp",
+            "normal_file": "art/textures/marsh/marsh_mud_2k_b_n.webp",
+            "orm_file": "art/textures/marsh/marsh_mud_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/marsh/marsh_mud_2k_c.webp",
+            "normal_file": "art/textures/marsh/marsh_mud_2k_c_n.webp",
+            "orm_file": "art/textures/marsh/marsh_mud_2k_c_orm.webp"
+          }
+        ]
       }
     },
     "castle": {
@@ -905,7 +1236,23 @@
           "mist_blue",
           "ash_violet"
         ],
-        "source": "art/generated/textures/castle_flagstones.png"
+        "source": "art/generated/textures/castle_flagstones.png",
+        "hd_file": "art/textures/castle/flagstones_2k.webp",
+        "normal_file": "art/textures/castle/flagstones_2k_n.webp",
+        "orm_file": "art/textures/castle/flagstones_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/castle_flagstones.webp",
+        "variants": [
+          {
+            "file": "art/textures/castle/flagstones_2k_b.webp",
+            "normal_file": "art/textures/castle/flagstones_2k_b_n.webp",
+            "orm_file": "art/textures/castle/flagstones_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/castle/flagstones_2k_c.webp",
+            "normal_file": "art/textures/castle/flagstones_2k_c_n.webp",
+            "orm_file": "art/textures/castle/flagstones_2k_c_orm.webp"
+          }
+        ]
       },
       "ashlar": {
         "file": "art/textures/castle/ashlar.png",
@@ -922,7 +1269,11 @@
           "ink",
           "mist_blue"
         ],
-        "source": "art/generated/textures/castle_ashlar.png"
+        "source": "art/generated/textures/castle_ashlar.png",
+        "hd_file": "art/textures/castle/ashlar_2k.webp",
+        "normal_file": "art/textures/castle/ashlar_2k_n.webp",
+        "orm_file": "art/textures/castle/ashlar_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/castle_ashlar.webp"
       },
       "black_marble": {
         "file": "art/textures/castle/black_marble.png",
@@ -940,7 +1291,23 @@
           "blood"
         ],
         "source": "art/generated/textures/castle_black_marble.png",
-        "saturate": 1.15
+        "saturate": 1.15,
+        "hd_file": "art/textures/castle/black_marble_2k.webp",
+        "normal_file": "art/textures/castle/black_marble_2k_n.webp",
+        "orm_file": "art/textures/castle/black_marble_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/castle_black_marble.webp",
+        "variants": [
+          {
+            "file": "art/textures/castle/black_marble_2k_b.webp",
+            "normal_file": "art/textures/castle/black_marble_2k_b_n.webp",
+            "orm_file": "art/textures/castle/black_marble_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/castle/black_marble_2k_c.webp",
+            "normal_file": "art/textures/castle/black_marble_2k_c_n.webp",
+            "orm_file": "art/textures/castle/black_marble_2k_c_orm.webp"
+          }
+        ]
       },
       "red_damask": {
         "file": "art/textures/castle/red_damask.png",
@@ -958,7 +1325,11 @@
           "umber"
         ],
         "source": "art/generated/textures/castle_red_damask.png",
-        "saturate": 1.2
+        "saturate": 1.2,
+        "hd_file": "art/textures/castle/red_damask_2k.webp",
+        "normal_file": "art/textures/castle/red_damask_2k_n.webp",
+        "orm_file": "art/textures/castle/red_damask_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/castle_red_damask.webp"
       },
       "courtyard": {
         "file": "art/textures/castle/courtyard.png",
@@ -975,8 +1346,123 @@
           "umber",
           "bone_dark"
         ],
-        "source": "art/generated/textures/castle_courtyard.png"
+        "source": "art/generated/textures/castle_courtyard.png",
+        "hd_file": "art/textures/castle/courtyard_2k.webp",
+        "normal_file": "art/textures/castle/courtyard_2k_n.webp",
+        "orm_file": "art/textures/castle/courtyard_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/castle_courtyard.webp",
+        "variants": [
+          {
+            "file": "art/textures/castle/courtyard_2k_b.webp",
+            "normal_file": "art/textures/castle/courtyard_2k_b_n.webp",
+            "orm_file": "art/textures/castle/courtyard_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/castle/courtyard_2k_c.webp",
+            "normal_file": "art/textures/castle/courtyard_2k_c_n.webp",
+            "orm_file": "art/textures/castle/courtyard_2k_c_orm.webp"
+          }
+        ]
+      }
+    },
+    "kit": {
+      "painted_wood": {
+        "file": "art/textures/kit/painted_wood_2k.webp",
+        "size": 1536,
+        "wrap": "xy",
+        "tile_world_units": 1.5,
+        "palette": [],
+        "hd_file": "art/textures/kit/painted_wood_2k.webp",
+        "normal_file": "art/textures/kit/painted_wood_2k_n.webp",
+        "orm_file": "art/textures/kit/painted_wood_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/kit_painted_wood.webp",
+        "variants": [
+          {
+            "file": "art/textures/kit/painted_wood_2k_b.webp",
+            "normal_file": "art/textures/kit/painted_wood_2k_b_n.webp",
+            "orm_file": "art/textures/kit/painted_wood_2k_b_orm.webp"
+          }
+        ]
+      },
+      "oak": {
+        "file": "art/textures/kit/oak_2k.webp",
+        "size": 1536,
+        "wrap": "xy",
+        "tile_world_units": 1.0,
+        "palette": [],
+        "hd_file": "art/textures/kit/oak_2k.webp",
+        "normal_file": "art/textures/kit/oak_2k_n.webp",
+        "orm_file": "art/textures/kit/oak_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/kit_oak.webp",
+        "variants": [
+          {
+            "file": "art/textures/kit/oak_2k_b.webp",
+            "normal_file": "art/textures/kit/oak_2k_b_n.webp",
+            "orm_file": "art/textures/kit/oak_2k_b_orm.webp"
+          }
+        ]
+      },
+      "dressed_stone": {
+        "file": "art/textures/kit/dressed_stone_2k.webp",
+        "size": 1536,
+        "wrap": "xy",
+        "tile_world_units": 1.5,
+        "palette": [],
+        "hd_file": "art/textures/kit/dressed_stone_2k.webp",
+        "normal_file": "art/textures/kit/dressed_stone_2k_n.webp",
+        "orm_file": "art/textures/kit/dressed_stone_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/kit_dressed_stone.webp",
+        "variants": [
+          {
+            "file": "art/textures/kit/dressed_stone_2k_b.webp",
+            "normal_file": "art/textures/kit/dressed_stone_2k_b_n.webp",
+            "orm_file": "art/textures/kit/dressed_stone_2k_b_orm.webp"
+          }
+        ]
+      },
+      "oak_v": {
+        "size": 1536,
+        "wrap": "xy",
+        "tile_world_units": 1.0,
+        "palette": [],
+        "file": "art/textures/kit/oak_v_2k.webp",
+        "hd_file": "art/textures/kit/oak_v_2k.webp",
+        "normal_file": "art/textures/kit/oak_v_2k_n.webp",
+        "orm_file": "art/textures/kit/oak_v_2k_orm.webp",
+        "derived_from": "kit/oak",
+        "turned": 90,
+        "variants": [
+          {
+            "file": "art/textures/kit/oak_v_2k_b.webp",
+            "normal_file": "art/textures/kit/oak_v_2k_b_n.webp",
+            "orm_file": "art/textures/kit/oak_v_2k_b_orm.webp"
+          }
+        ]
+      },
+      "plaster": {
+        "file": "art/textures/kit/plaster_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/kit/plaster_2k.webp",
+        "normal_file": "art/textures/kit/plaster_2k_n.webp",
+        "orm_file": "art/textures/kit/plaster_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/kit_plaster.webp",
+        "variants": [
+          {
+            "file": "art/textures/kit/plaster_2k_b.webp",
+            "normal_file": "art/textures/kit/plaster_2k_b_n.webp",
+            "orm_file": "art/textures/kit/plaster_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/kit/plaster_2k_c.webp",
+            "normal_file": "art/textures/kit/plaster_2k_c_n.webp",
+            "orm_file": "art/textures/kit/plaster_2k_c_orm.webp"
+          }
+        ]
       }
     }
-  }
+  },
+  "macro_file": "art/textures/macro_noise.png"
 }

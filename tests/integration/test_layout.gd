@@ -26,7 +26,6 @@ const ARENA := {
 ## words in the problem, why]. They print as known instead of failing, and an entry fails once its spill is gone, so
 ## the list only shrinks.
 const KNOWN := [
-	["a conversation", "past the window's edge", "the longest options widen the conversation past the right edge instead of wrapping (ui/dialogue/dialogue_ui.gd, lane 20)"],
 	["the title screen (show_loads)", "reaches past the window's edge", "the Load list doesn't scroll: with many saves it runs off the bottom (ui/menu/main_menu.gd, lane 16's Q9)"],
 ]
 
@@ -371,6 +370,30 @@ func test_the_ending() -> void:
 		await _check("the ending", func() -> Variant: return root.get("ending"))
 
 
+## A story cutscene (docs/ui/cutscenes.md) with the longest caption a line may have (60 words), and its pause card.
+func test_a_cutscene_with_the_longest_caption() -> void:
+	if not await _game(LATE):
+		return
+	Cutscenes.register({"id": "test_layout_cut", "title": "Test", "summary": "A fixture.",
+		"images": [{"image": "strahd_watcher", "when": ""}]})
+	var words: Array[String] = []
+	for i in 60:
+		words.append(["ridge", "lantern", "Barovia", "unhurried", "watching"][i % 5])
+	var caption := " ".join(words) + "."
+	for paused: bool in [false, true]:
+		await _check("a cutscene%s" % (" paused" if paused else ""), func() -> Variant:
+			var p := CutscenePlayer.new()
+			root.add_child(p)
+			p.play("test_layout_cut", [caption] as Array[String], GameState.story)
+			p.view.set_paused(paused)
+			await _frames(2)
+			return p,
+			func() -> void:
+				for p in root.find_children("*", "CutscenePlayer", false, false):
+					p.queue_free())
+	Cutscenes.clear_cache()
+
+
 func test_the_title_screen() -> void:
 	# The Load list as full as a player's: every golden save in this run's save folder.
 	DirAccess.make_dir_recursive_absolute(SaveSystem.save_dir)
@@ -381,7 +404,7 @@ func test_the_title_screen() -> void:
 		out.store_string(FileAccess.get_file_as_string(GoldenSaves.DIR + f))
 		out.close()
 	var menu: Node = null
-	for step: String in ["_title", "_new_game", "_show_loads", "_open_hero"]:
+	for step: String in ["_title", "_new_game", "_pick_difficulty", "_show_loads", "_open_hero"]:
 		await _check("the title screen (%s)" % step.trim_prefix("_"), func() -> Variant:
 			if menu != null:
 				menu.queue_free()
