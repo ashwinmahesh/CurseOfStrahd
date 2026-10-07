@@ -101,6 +101,7 @@ static func frames_for(art_id: String) -> SpriteFrames:
 		frames = SpriteFrames.new()
 		frames.remove_animation(&"default")
 		var hits := {}
+		var mirrored := {}
 		for source in sources:
 			for anim in source.get_animation_names():
 				if anim == &"default":
@@ -113,12 +114,26 @@ static func frames_for(art_id: String) -> SpriteFrames:
 				for i in source.get_frame_count(anim):
 					frames.add_frame(anim, source.get_frame_texture(anim, i), source.get_frame_duration(anim, i))
 			hits.merge(source.get_meta("hit_frames", {}) as Dictionary, true)
+			mirrored.merge(source.get_meta("mirrored", {}) as Dictionary, true)
 			if source.has_meta("hit_frame"):
 				frames.set_meta("hit_frame", int(source.get_meta("hit_frame")))
 				frames.set_meta("casts", bool(source.get_meta("casts", false)))
 		frames.set_meta("hit_frames", hits)
+		if not mirrored.is_empty():
+			frames.set_meta("mirrored", mirrored)
 	_frames_cache[art_id] = frames
 	return frames
+
+
+## The animation that shows `base` facing `dir`, and whether it plays flipped: HD sheets (render_keys.py) leave out the
+## directions that are mirror images of others (metadata "mirrored", e.g. {"w": "e"}), shown flipped instead.
+static func anim_for(frames: SpriteFrames, base: String, dir: String) -> Array:
+	var anim := StringName(base + "_" + dir)
+	if frames != null and not frames.has_animation(anim):
+		var m := frames.get_meta("mirrored", {}) as Dictionary
+		if m.has(dir):
+			return [StringName(base + "_" + str(m[dir])), true]
+	return [anim, false]
 
 
 ## Whether the frames have animation `base` (in every direction when in one).
@@ -240,7 +255,9 @@ func _play_once(base: String, lands_a_blow: bool) -> bool:
 		sprite_frames.get_meta("hit_frame", 2) if base == "attack" else 1))
 	moving = false
 	speed_scale = 1.0
-	play(StringName(base + "_" + dir))
+	var shown := anim_for(sprite_frames, base, dir)
+	flip_h = bool(shown[1])
+	play(shown[0] as StringName)
 	return true
 
 
@@ -291,7 +308,9 @@ func _process(delta: float) -> void:
 	finish_stride = false
 	_stride_t = 0.0
 	speed_scale = walk_speed if base in ["walk", "sneak_walk"] else 1.0
-	var anim := StringName(base + "_" + direction_for(facing, cam.global_basis))
+	var shown := anim_for(sprite_frames, base, direction_for(facing, cam.global_basis))
+	var anim := shown[0] as StringName
+	flip_h = bool(shown[1])
 	if animation != anim:
 		var f := frame
 		play(anim)

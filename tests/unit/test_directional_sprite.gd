@@ -49,8 +49,9 @@ func test_every_sprite_walks_in_every_direction() -> void:
 	for id in ids:
 		var frames := DirectionalSprite.frames_for(id)
 		for d in DirectionalSprite.DIRECTIONS:
-			assert_true(frames.get_frame_count(StringName("walk_" + d)) >= 4, "%s walk_%s has a cycle" % [id, d])
-			assert_true(frames.get_animation_loop(StringName("walk_" + d)), "%s walk_%s loops" % [id, d])
+			var walk := DirectionalSprite.anim_for(frames, "walk", d)[0] as StringName
+			assert_true(frames.get_frame_count(walk) >= 4, "%s walk_%s has a cycle" % [id, d])
+			assert_true(frames.get_animation_loop(walk), "%s walk_%s loops" % [id, d])
 
 
 func test_every_sprite_attacks_in_every_direction() -> void:
@@ -62,7 +63,7 @@ func test_every_sprite_attacks_in_every_direction() -> void:
 			continue
 		var hit := int(frames.get_meta("hit_frame", -1))
 		for d in DirectionalSprite.DIRECTIONS:
-			var anim := StringName("attack_" + d)
+			var anim := DirectionalSprite.anim_for(frames, "attack", d)[0] as StringName
 			var n := frames.get_frame_count(anim)
 			assert_true(n >= 4, "%s %s has frames" % [id, anim])
 			assert_false(frames.get_animation_loop(anim), "%s %s plays once" % [id, anim])
@@ -151,7 +152,8 @@ func test_full_animation_set_poses_and_one_shots() -> void:
 	for base: String in ["walk", "idle", "attack", "hurt", "die", "down", "ride_idle", "ride_attack", "sneak_idle", "sneak_walk",
 			"cast"]:
 		for d in DirectionalSprite.DIRECTIONS:
-			assert_true(frames.get_frame_count(StringName(base + "_" + d)) >= 1, "godrick %s_%s" % [base, d])
+			var anim := DirectionalSprite.anim_for(frames, base, d)[0] as StringName
+			assert_true(frames.get_frame_count(anim) >= 1, "godrick %s_%s" % [base, d])
 	assert_true(frames.get_frame_count(&"idle_s") >= 2, "idle breathes")
 	assert_false(frames.get_animation_loop(&"die_s"), "the fall plays once")
 	assert_true(frames.get_animation_loop(&"down_s"), "lying holds")
@@ -207,3 +209,18 @@ func test_the_crisp_shader_billboards_only_billboarded_sprites() -> void:
 	assert_false(bool((lying.material_override as ShaderMaterial).get_shader_parameter("billboard")), "the lying view stays flat")
 	s.free()
 	lying.free()
+
+
+## HD sheets leave out the mirror-image directions; the sprite shows the twin flipped (render_keys.py "mirrored").
+func test_mirrored_directions_show_their_twin_flipped() -> void:
+	var frames := SpriteFrames.new()
+	for d: String in ["s", "se", "e", "ne", "n"]:
+		frames.add_animation(StringName("idle_" + d))
+		frames.add_frame(StringName("idle_" + d), PlaceholderTexture2D.new())
+	frames.set_meta("mirrored", {"nw": "ne", "w": "e", "sw": "se"})
+	assert_eq(DirectionalSprite.anim_for(frames, "idle", "w"), [&"idle_e", true], "west shows east flipped")
+	assert_eq(DirectionalSprite.anim_for(frames, "idle", "sw"), [&"idle_se", true])
+	assert_eq(DirectionalSprite.anim_for(frames, "idle", "e"), [&"idle_e", false], "drawn directions play as they are")
+	var full := SpriteFrames.new()
+	full.add_animation(&"idle_w")
+	assert_eq(DirectionalSprite.anim_for(full, "idle", "w"), [&"idle_w", false], "a sheet with every direction")

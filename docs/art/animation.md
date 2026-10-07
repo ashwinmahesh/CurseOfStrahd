@@ -71,15 +71,34 @@ turns the strips into sheets, adding in-between frames (squash, stretch, lean, a
 
 | Kind | Drawn poses | Sheet and animations |
 |---|---|---|
-| `walk4` | contact, passing, contact, passing | `walk`: walk_ (8 frames with the body's rise and fall), idle_ (breathing) |
-| `attack5` | ready, anticipation, wind-up, strike with a motion smear, follow-through | `attack`: 8 frames, the blow on frame 4 |
+| `walk8` (strips `walk8a`, `walk8b`) | contact, down, passing, up for each foot (four poses a strip) | `walk`: walk_ (16 frames at 20 fps with the body's rise and fall), idle_ (breathing, 6 frames) |
+| `attack10` (strips `attack10a`, `attack10b`) | ready, settling, anticipation, coiling, wind-up; the strike starting and landing (motion smears), follow-through, recovering, back to ready | `attack`: 11 frames, the blow on frame 6 |
 | `hurt` | flinch, stagger, collapse to the knees, lying | `hurt`: hurt_ (flinch and recover), die_ (the fall), down_ (lying) |
 | `ride` | seated astride (the horse drawn flat magenta and keyed out), weapon raised, striking down | `ride`: ride_idle_, ride_attack_ |
 | `sneak` | crouched, two crouched steps | `sneak`: sneak_idle_, sneak_walk_ |
 | `cast` | gathering, releasing | `cast`: cast_ (the release lands on frame 3) |
 
-About 30 strips a hero (6 kinds, 5 views; the other 3 directions are mirrors), plus redraws. `--check` (as for
+(Doubled frames, owner 2026-10-07: `walk4` and `attack5`, one strip of four or five poses, came first and still
+render.) About 40 strips a hero (8 strips for 6 kinds, 5 views; the other 3 directions are mirrors), plus redraws;
+poses keep the reference's colours and gear, and the check flags a recoloured pose. Strips are still worth a look
+by eye: Gemini sometimes drops a hat or hands a bare-handed hero a staff (`"unarmed": true` in animations.json tells the
+prompt there is no weapon); redraw one view with `tools/art/anim_keyframes.py --only <id> --kind <kind> --views <view>`.
+Touching poses (a beam reaching the next figure) are cut apart at even spacing (`anim.split_even`). `--check` (as for
 attacks) flags merged, clipped or mis-scaled strips, and panel borders Gemini sometimes draws are dropped.
+
+**HD sheets (owner 2026-10-07: "crystal clear, and higher-res when zoomed in").** The heroes' cells are 768 px
+(twice the earlier 384). Each hero's turnaround is redrawn at 2K, faithful to the original with sharper line art
+(`<id>_turnaround_hd.png`, used for the standing frames and as the colour reference; `blender/hd_colour.py` gives the
+redraw the original's colours where Gemini drifted, since the strips were drawn from the original), and frames render
+at twice the
+cell and are area-averaged down, so lines stay clean instead of dropping pixels. Each frame is trimmed to its figure
+plus a 12 px border (room for the shader's outline) and the frames are packed into one atlas; each AtlasTexture's
+margin restores the full cell, so the game sizes and places frames as before. The mirror-image directions (nw, w, sw
+with five views) are not stored: the sheet's metadata `mirrored` names each one's twin and `DirectionalSprite.anim_for`
+shows the twin flipped (frames are trimmed symmetrically about the centre, so the flip lines up). Sheets import as
+VRAM-compressed without mipmaps (`tools/art/set_import.py --sheets`; the crisp shader never reads mipmaps).
+`make keys [ONLY="id ..."] [KINDS="walk8 ..."]` renders them (`make anims` leaves the heroes alone);
+`tools/art/preview/hd_compare.tscn` shows sheets side by side at any zoom.
 
 In game, `DirectionalSprite.frames_for` merges every sheet a sprite folder has (walk, attack, hurt, ride, sneak,
 cast) and picks the loop from its `pose`: "" (on foot), "sneak", "ride" or "down". `CombatToken` sets the pose from

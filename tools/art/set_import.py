@@ -2,7 +2,10 @@
 """Sets 3D-friendly import settings on images Godot has already imported: VRAM compression (BPTC/S3TC) with
 mipmaps, the same as the character walk sheets. Used for art/textures, art/sprites/props and new walk sheets.
 
-Usage: tools/art/set_import.py <png> [<png> ...]      then: make import
+Usage: tools/art/set_import.py [--sheets] <png> [<png> ...]      then: make import
+
+--sheets: character sheets drawn through the crisp sprite shader (shaders/world/sprite_crisp.gdshader), which samples
+the full-size sheet and never its mipmaps: VRAM compression without mipmaps (a quarter less memory).
 
 Edits each <png>.import [params] and removes the cached .md5 under .godot/imported so the next import redoes it
 (Godot does not notice a params change by itself). Stdlib only.
@@ -17,14 +20,19 @@ SETTINGS = {"compress/mode": "2", "compress/high_quality": "true", "mipmaps/gene
 
 def main():
     changed = 0
-    for arg in sys.argv[1:]:
+    args = sys.argv[1:]
+    settings = dict(SETTINGS)
+    if "--sheets" in args:
+        args.remove("--sheets")
+        settings["mipmaps/generate"] = "false"
+    for arg in args:
         imp = Path(arg + ".import") if not arg.endswith(".import") else Path(arg)
         if not imp.exists():
             print(f"no import file yet (run make import first): {imp}", file=sys.stderr)
             continue
         text = imp.read_text()
         new = text
-        for key, val in SETTINGS.items():
+        for key, val in settings.items():
             new = re.sub(rf"^{re.escape(key)}=.*$", f"{key}={val}", new, flags=re.M)
         if new == text:
             continue
@@ -34,7 +42,7 @@ def main():
             for f in (ROOT / stem).parent.glob(Path(stem).name + "*.md5"):
                 f.unlink()
         changed += 1
-    print(f"{changed} import files set to VRAM + mipmaps")
+    print(f"{changed} import files set to VRAM" + ("" if settings["mipmaps/generate"] == "false" else " + mipmaps"))
 
 
 if __name__ == "__main__":

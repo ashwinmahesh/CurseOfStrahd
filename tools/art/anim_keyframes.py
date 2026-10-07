@@ -159,11 +159,20 @@ def prompt(kind, spec, view):
     if kind in V2_KINDS:
         action, frames = V2_KINDS[kind]
         gather, release = spec.get("cast_gather", CAST_DEFAULTS[0]), spec.get("cast_release", CAST_DEFAULTS[1])
+        if spec.get("unarmed"):
+            # A hero who fights bare-handed or with magic (a monk, a warlock): Gemini otherwise hands them a weapon.
+            frames = [f.replace("raising the weapon high", "drawing back a fist or a hand gathering a spell")
+                      .replace("weapon held close", "hands held close") for f in frames]
         lines = " ".join(f"Frame {i + 2}: {f}." for i, f in enumerate(frames))
         text = (ROOT / "art" / "prompts" / "keyframes_v2.txt").read_text().strip()
-        if kind.startswith("walk") or kind == "sneak":
+        if kind.startswith("walk") or kind in ("sneak", "hurt"):
             text += (" Weapons and gear stay carried exactly as in the reference (a sheathed sword stays in its sheath,"
-                     " a shield stays on the arm).")
+                     " a shield stays on the arm). No magic: no glow, sparks, flames or spell effects.")
+        if spec.get("unarmed"):
+            text += f" {spec['who'].split(',')[0]} carries no weapon: the hands stay empty."
+        if spec.get("gear") and (kind.startswith("walk") or kind == "sneak"):
+            # What Gemini tends to drop from a pose or two (a staff), named for every frame.
+            text += f" In every frame {spec['gear']}."
         if kind == "ride":
             # A rider can't be drawn seated on nothing: the horse is drawn as a flat magenta silhouette that
             # blender/render_keys.py keys out, leaving the rider astride (the far leg hidden, as on any mount).
