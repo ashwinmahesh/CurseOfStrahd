@@ -430,6 +430,11 @@
       "id": "vallaki_watch_wary",
       "type": "bool",
       "summary": "The party failed to bully their way past the east gate (gate). The watch has their faces chalked on the gatepost: the gate guard says so, and the lockup warden's bribe goes up from 15 to 25 gp."
+    },
+    {
+      "id": "crime_vallaki",
+      "type": "int",
+      "summary": "F8: crimes somebody saw in Vallaki that the watch hasn't settled (story/crime.gd counts them; narrative/watch/vallaki.dialogue fines the party and clears it)."
     }
   ]
 }

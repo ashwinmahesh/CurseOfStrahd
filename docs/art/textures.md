@@ -86,7 +86,8 @@ and wall set (49, `tools/art/surface_recipes.json`) was repainted for the Modern
 2. **Seamless** by quilting along minimum-error cuts (`blender/make_surface.py`, reusing make_texture's seams), low
    light flattened, cut from the swatch at up to 1536 px and stored at 1024 px (`crop` in a recipe takes less of the
    swatch where Gemini drew the pieces too small: the checker and marble floors). Each tile is brought to the old
-   tile's average brightness (between 0.85x and 1.8x), since the scenes' light was set by the old tiles.
+   tile's average brightness (between 0.85x and 1.8x), since the scenes' light was set by the old tiles. A recipe's
+   `lift` raises the darkest parts (the checker floor's black tiles keep their veins in a dim hall).
 3. **Variants** (organic surfaces: cobbles, mud, grass, thatch, plaster, flagstones, rock, snow ...): two more tiles
    quilted from the first tile's own content, so they keep its pieces, scale and colours in a different layout; the
    first tile's border band is cut into each along seams that follow the dark joints, so variants sit side by side in
@@ -130,8 +131,8 @@ At the top level of the manifest, `macro_file` names a tileable soft noise (W4):
 lightened, and its roughness nudged, by it over about nine squares (`macro_units`), `Look.MACRO_STRENGTH` (0.35)
 unless the surface's `macro` says otherwise.
 
-Without any of these a surface takes the row of `Look.MATERIALS` whose word its name holds (marble 0.15, tile and
-parquet 0.3, cobbles 0.4 with a wide spread so the stone tops glint, flagstones 0.5, stone 0.65, plaster 0.9,
+Without any of these a surface takes the row of `Look.MATERIALS` whose word its name holds (marble 0.3, tile
+parquet 0.36 and 0.3, cobbles 0.4 with a wide spread so the stone tops glint, flagstones 0.5, stone 0.65, plaster 0.9,
 rugs and thatch 1.0), else roughness 0.8. Flat colours: `Look.COLOUR_MATERIALS` (pewter and silver are metal,
 ivory, bone and polished walnut take a soft highlight, cloth colours stay dull), else 0.75. Roughness never goes
 below 0.1, which the screen pass keeps for water.

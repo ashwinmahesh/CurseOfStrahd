@@ -293,7 +293,8 @@
           "qty": 2
         }
       ],
-      "gold": 25
+      "gold": 25,
+      "owner": "rictavio"
     }
   ],
   "lights": [
