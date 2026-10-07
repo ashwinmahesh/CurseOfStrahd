@@ -25,7 +25,10 @@ func show_loot(state: StoryState, cid: String, its: Array, g: float, v: Location
 	items = its
 	gold = g
 	view = v
-	var box := UiKit.screen_frame(self, "Loot", Vector2(760, 560))
+	# As tall as what's inside (owner, docs/plans/ui_polish.md: a purse of coins sat in a frame built for twenty
+	# items), from a small box for a few things up to the old size for a full chest.
+	var lines := its.size() + (1 if g > 0.0 else 0)
+	var box := UiKit.screen_frame(self, "Loot", Vector2(760, clampf(250.0 + 58.0 * maxf(1.0, lines), 330.0, 560.0)))
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
 	row.add_child(UiParts.caption("Give to", 12))
@@ -46,7 +49,9 @@ func show_loot(state: StoryState, cid: String, its: Array, g: float, v: Location
 	buttons.add_child(UiKit.button("Send to who can carry", _send_all, 15))
 	buttons.add_child(UiKit.button("Close", _close, 15))
 	buttons.add_child(UiParts.gap())
-	buttons.add_child(UiParts.primary_button("Take all", _take_all, "inventory"))
+	var all := UiParts.primary_button("Take all (Space)", _take_all, "inventory")
+	all.tooltip_text = "Everything here to the character chosen above, and the coins to the purse."
+	buttons.add_child(all)
 	box.add_child(buttons)
 	_redraw()
 
@@ -180,3 +185,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"combat_cancel"):
 		get_viewport().set_input_as_handled()
 		_close()
+	elif event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo \
+			and (event as InputEventKey).physical_keycode == KEY_SPACE:
+		get_viewport().set_input_as_handled()
+		_take_all()

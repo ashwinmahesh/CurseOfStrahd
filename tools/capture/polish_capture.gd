@@ -79,6 +79,21 @@ func capture_shots(tool: Node, out: String) -> void:
 		await tool.call("wait_frames", 140)
 		await _shoot(tool, out + "_hud_second_toast.png", 2)
 		root.call("_command", "sneak")
+	if _wants("small"):
+		# The F1 controls card, a small loot window with coins and a single item, and Heal up on the rest screen.
+		hud.toggle_controls()
+		await _shoot(tool, out + "_controls.png")
+		hud.toggle_controls()
+		root.call("_open_loot", "capture_purse", [{"id": "dagger", "qty": 1}], 7.0)
+		await _shoot(tool, out + "_loot_small.png")
+		(root.get("loot") as LootWindow).call("_close")
+		GameState.story.party[0].hp = 4
+		GameState.story.party[2].hp = 9
+		root.call("open_screen", "rest", 0)
+		await _shoot(tool, out + "_rest.png")
+		(root.get("screen") as RestScreen).heal_up()
+		await _shoot(tool, out + "_rest_healed.png")
+		root.call("close_screen")
 	if _wants("talk"):
 		# Morgantha: one question asked, her options again with it dimmed, and the scroll-back.
 		root.call("start_dialogue", "village_of_barovia/morgantha:start", "morgantha")
