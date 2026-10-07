@@ -410,7 +410,7 @@ const HIT_MANEUVERS := {
 	"pushing_attack": ["Pushing Attack", "Str save or pushed 15 ft"],
 	"trip_attack": ["Trip Attack", "Str save or Prone"],
 	"sweeping_attack": ["Sweeping Attack", "the die hits a second foe"],
-	"maneuvering_attack": ["Maneuvering Attack", "an ally moves without Opportunity Attacks"],
+	"maneuvering_attack": ["Maneuvering Attack", "an ally moves clear of the target"],
 	"lunging_attack": ["Lunging Attack", "after moving 5 ft: +die"],
 	"feinting_attack": ["Feinting Attack", "+die (after a feint)"],
 }
