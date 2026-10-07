@@ -2766,6 +2766,27 @@ def rowboat(p):
 PROPS = json.loads((ROOT / "art" / "sprites" / "props" / "manifest.json").read_text())["props"]
 
 
+def _rim_colour(px):
+    """The palette colour nearest the sprite's average painted colour, for the sides of a piece sculpted from it."""
+    tot, n = [0.0, 0.0, 0.0], 0
+    for i in range(0, len(px), 16):
+        if px[i + 3] > 0.5:
+            for k in range(3):
+                tot[k] += px[i + k]
+            n += 1
+    if n == 0:
+        return "pal_ink"
+    avg = [t / n for t in tot]
+    avg = [(x * 0.85) for x in avg]   # the sides a shade darker than the face
+    best, dist = "ink", 9.0
+    for name, hexstr in PALETTE.items():
+        c = [int(hexstr.lstrip("#")[i:i + 2], 16) / 255.0 for i in (0, 2, 4)]
+        d = sum((a - b) ** 2 for a, b in zip(avg, c))
+        if d < dist:
+            best, dist = name, d
+    return "pal_" + best
+
+
 def _alpha_grid(art, rows):
     """The sprite's coverage on a grid `rows` tall: grid[r][c] True where it's painted (r from the bottom)."""
     info = PROPS[art]
@@ -2773,6 +2794,7 @@ def _alpha_grid(art, rows):
     w, h = img.size
     px = img.pixels[:]
     bpy.data.images.remove(img)
+    _RIMS[art] = _rim_colour(px)
     cols = max(2, round(rows * w / h))
     grid = []
     for r in range(rows):
@@ -2803,10 +2825,14 @@ def _distance(grid, rows, cols):
     return d
 
 
-def inflate(p, art, height, depth=0.3, rows=56, back=None, at=(0.0, 0.0, 0.0), rim="pal_ink"):
+_RIMS = {}
+
+
+def inflate(p, art, height, depth=0.3, rows=56, back=None, at=(0.0, 0.0, 0.0), rim=None):
     """A solid `height` tall sculpted from 2D `art` (its silhouette, swelling to `depth` thick at its widest part),
     standing on `at` and facing -y; the front painted with the sprite, the back with `back` (or the front mirrored)."""
     grid, cols = _alpha_grid(art, rows)
+    rim = rim or _RIMS.get(art, "pal_ink")
     d = _distance(grid, rows, cols)
     dmax = max(max(row) for row in d) or 1
     cell = height / rows
@@ -3825,22 +3851,34 @@ def bat_perch(p):
 
 @model("gold_heap", "free", ["gold_heap"], turns=True)
 def gold_heap(p):
-    """The 2D hoard: a mound of gold coins, goblets, a crown and a sword or two."""
+    """The 2D hoard: a heap of gold coins, goblets, a crown, jewels and a sword or two."""
     rng = p.rng
-    p.rock((0, 0, 0), (1.1, 0.8, 0.45), "pal_candle", top="pal_flame", rough=0.08, subdiv=2, bury=0.3, smooth=True, top_z=0.7, top_p=0.6)
-    for _ in range(22):
-        p.cyl(0.035, 0.008, (rng.uniform(-0.55, 0.55), rng.uniform(-0.4, 0.4), rng.uniform(0.0, 0.12)), "pal_flame",
-              rot=(rng.uniform(-40, 40), rng.uniform(-40, 40), 0), segs=8)
-    p.lathe([(0.0, 0.0), (0.05, 0.0), (0.012, 0.04), (0.012, 0.1), (0.06, 0.16), (0.0, 0.14)], (0.2, -0.1, 0.22), "pal_candle", segs=8)
-    p.lathe([(0.1, 0.0), (0.1, 0.06), (0.0, 0.06)], (-0.15, 0.05, 0.28), "pal_candle", segs=10)
+    A, B, Hh = 0.5, 0.36, 0.38
+    p.rock((0, 0, 0), (2 * A, 2 * B, Hh), "pal_candle", top="pal_flame", rough=0.05, subdiv=2, bury=0.0, top_z=0.6, top_p=0.5,
+           smooth=True)
+
+    def surf(x, y):
+        q = 1 - (x / A) ** 2 - (y / B) ** 2
+        return Hh * math.sqrt(q) if q > 0 else 0.0
+    for _ in range(70):
+        x, y = rng.uniform(-A * 1.05, A * 1.05), rng.uniform(-B * 1.05, B * 1.05)
+        p.cyl(0.03, 0.007, (x, y, surf(x, y) * 1.04 + 0.004), rng.choice(["pal_flame", "pal_wick", "pal_tan"]),
+              rot=(rng.uniform(-35, 35), rng.uniform(-35, 35), 0), segs=8, smooth=False)
+    p.lathe([(0.0, 0.0), (0.05, 0.0), (0.012, 0.04), (0.012, 0.1), (0.06, 0.16), (0.0, 0.14)], (0.22, -0.12, surf(0.22, -0.12) - 0.02),
+            "pal_flame", segs=8)
+    cx, cy = -0.12, 0.04
+    cz = surf(cx, cy) - 0.03
+    p.lathe([(0.09, 0.0), (0.09, 0.05), (0.0, 0.05)], (cx, cy, cz), "pal_flame", segs=10)
+    p.cyl(0.07, 0.03, (cx, cy, cz + 0.015), "pal_blood", segs=10)
     for k in range(6):
         a = 2 * math.pi * k / 6
-        p.lathe([(0.0, 0.0), (0.015, 0.0), (0.0, 0.05)], (-0.15 + 0.09 * math.cos(a), 0.05 + 0.09 * math.sin(a), 0.34), "pal_candle",
-                segs=4)
-    p.box((0.04, 0.5, 0.012), (0.35, 0.05, 0.25), "pal_silver", rot=(30, 0, 20))
-    for _ in range(5):
-        p.box((0.04, 0.04, 0.04), (rng.uniform(-0.4, 0.4), rng.uniform(-0.3, 0.3), rng.uniform(0.1, 0.25)),
-              rng.choice(["pal_crimson", "pal_moss", "pal_mist_blue"]), rot=(45, 0, 45))
+        p.lathe([(0.0, 0.0), (0.016, 0.0), (0.0, 0.06)], (cx + 0.085 * math.cos(a), cy + 0.085 * math.sin(a), cz + 0.05), "pal_flame",
+                segs=4, smooth=False)
+    p.box((0.04, 0.55, 0.012), (0.33, 0.06, 0.2), "pal_silver", rot=(35, 0, 20))
+    p.box((0.14, 0.03, 0.02), (0.31, -0.15, 0.06), "pal_umber", rot=(35, 0, 20))
+    for _ in range(6):
+        x, y = rng.uniform(-0.35, 0.35), rng.uniform(-0.25, 0.25)
+        p.box((0.04, 0.04, 0.04), (x, y, surf(x, y)), rng.choice(["pal_crimson", "pal_moss", "pal_mist_blue", "pal_plum"]), rot=(45, 0, 45))
 
 
 @model("gold_spill", "free", ["gold_spill"], turns=True)

@@ -1933,7 +1933,7 @@
         0.304
       ],
       "materials": [
-        "pal_ink",
+        "pal_slate",
         "spr_statue_knight",
         "spr_statue_knight_back"
       ],
@@ -1953,7 +1953,7 @@
         0.229
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_armor_stand",
         "spr_armor_stand_back"
       ],
@@ -1973,7 +1973,7 @@
         0.345
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone",
         "spr_armor_wolf_helm",
         "spr_armor_wolf_helm_back"
       ],
@@ -1993,7 +1993,7 @@
         0.309
       ],
       "materials": [
-        "pal_ink",
+        "pal_slate",
         "spr_statue_saint",
         "spr_statue_saint_back"
       ],
@@ -2013,7 +2013,7 @@
         0.392
       ],
       "materials": [
-        "pal_ink",
+        "pal_ash_violet",
         "spr_statue_strahd",
         "spr_statue_strahd_back"
       ],
@@ -2032,7 +2032,7 @@
         0.35
       ],
       "materials": [
-        "pal_ink",
+        "pal_slate",
         "spr_statue_head"
       ],
       "triangles": 7044,
@@ -2050,7 +2050,7 @@
         0.392
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone",
         "spr_statue_mother_night"
       ],
       "triangles": 3588,
@@ -2069,7 +2069,7 @@
         0.279
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_scarecrow",
         "spr_scarecrow_back"
       ],
@@ -2089,7 +2089,7 @@
         0.291
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_scarecrow_stitched",
         "spr_scarecrow_stitched_back"
       ],
@@ -2109,7 +2109,7 @@
         0.421
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_stuffed_wolf",
         "spr_stuffed_wolf_back"
       ],
@@ -2129,7 +2129,7 @@
         0.495
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_horse",
         "spr_horse_back"
       ],
@@ -2150,7 +2150,7 @@
         0.49
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_carcass",
         "spr_carcass_back"
       ],
@@ -2170,7 +2170,7 @@
         0.221
       ],
       "materials": [
-        "pal_ink",
+        "pal_ash_violet",
         "spr_skeleton_leather",
         "spr_skeleton_leather_back"
       ],
@@ -2189,7 +2189,7 @@
         0.096
       ],
       "materials": [
-        "pal_ink",
+        "pal_grave",
         "spr_doll"
       ],
       "triangles": 3520,
@@ -2208,7 +2208,7 @@
         0.111
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone",
         "spr_doll_yellow",
         "spr_doll_yellow_back"
       ],
@@ -2227,7 +2227,7 @@
         0.086
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_poppet"
       ],
       "triangles": 3080,
@@ -2246,7 +2246,7 @@
         0.295
       ],
       "materials": [
-        "pal_ink",
+        "pal_ash_violet",
         "spr_crow_barrel",
         "spr_crow_barrel_back"
       ],
@@ -2265,7 +2265,7 @@
         0.147
       ],
       "materials": [
-        "pal_ink",
+        "pal_grave",
         "spr_charms"
       ],
       "triangles": 5296,
@@ -2283,7 +2283,7 @@
         0.294
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone",
         "spr_soul_bags"
       ],
       "triangles": 5964,
@@ -2301,7 +2301,7 @@
         0.365
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone",
         "spr_frozen_traveller"
       ],
       "triangles": 5620,
@@ -2319,7 +2319,7 @@
         0.16
       ],
       "materials": [
-        "pal_ink",
+        "pal_slate",
         "spr_frozen_birds"
       ],
       "triangles": 4016,
@@ -2337,7 +2337,7 @@
         0.749
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_roc_nest"
       ],
       "triangles": 7216,
@@ -2355,7 +2355,7 @@
         1.237
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_dragon_bones"
       ],
       "triangles": 6516,
@@ -2374,7 +2374,7 @@
         0.118
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone_deep",
         "spr_mobile"
       ],
       "triangles": 2024,
@@ -2393,7 +2393,7 @@
         0.137
       ],
       "materials": [
-        "pal_ink",
+        "pal_grave",
         "spr_coats",
         "spr_coats_back"
       ],
@@ -2413,7 +2413,7 @@
         0.588
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone",
         "spr_sheeted_furniture",
         "spr_sheeted_furniture_back"
       ],
@@ -2432,7 +2432,7 @@
         0.784
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone",
         "spr_refuse_mound"
       ],
       "triangles": 6532,
@@ -2450,7 +2450,7 @@
         0.348
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone",
         "spr_bones"
       ],
       "triangles": 5448,
@@ -2469,7 +2469,7 @@
         0.074
       ],
       "materials": [
-        "pal_ink",
+        "pal_peat",
         "spr_sword_leaning",
         "spr_sword_leaning_back"
       ],
@@ -2488,7 +2488,7 @@
         0.311
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_jewel_box"
       ],
       "triangles": 3676,
@@ -2506,7 +2506,7 @@
         0.244
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_music_box"
       ],
       "triangles": 2500,
@@ -2524,7 +2524,7 @@
         0.517
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone",
         "spr_cage_hanging"
       ],
       "triangles": 4764,
@@ -2542,7 +2542,7 @@
         0.408
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone",
         "spr_wicker_cage"
       ],
       "triangles": 3852,
@@ -3264,7 +3264,7 @@
         0.22
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_stag_head"
       ],
       "triangles": 2784,
@@ -3282,7 +3282,7 @@
         0.22
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone",
         "spr_trophy_wolf"
       ],
       "triangles": 9636,
@@ -3300,7 +3300,7 @@
         0.196
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone",
         "spr_skeleton_shackles"
       ],
       "triangles": 3524,
@@ -3318,7 +3318,7 @@
         0.22
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone",
         "spr_wall_chains"
       ],
       "triangles": 5696,
@@ -3336,7 +3336,7 @@
         0.22
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_jars"
       ],
       "triangles": 7032,
@@ -3354,7 +3354,7 @@
         0.22
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_gear_brake"
       ],
       "triangles": 5384,
@@ -3372,7 +3372,7 @@
         0.22
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone_deep",
         "spr_winch"
       ],
       "triangles": 6892,
@@ -3390,7 +3390,7 @@
         0.22
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_dumbwaiter"
       ],
       "triangles": 7984,
@@ -3426,7 +3426,7 @@
         0.22
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone",
         "spr_uniforms"
       ],
       "triangles": 5852,
@@ -3444,7 +3444,7 @@
         0.161
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_crest"
       ],
       "triangles": 4496,
@@ -3462,7 +3462,7 @@
         0.22
       ],
       "materials": [
-        "pal_ink",
+        "pal_peat",
         "spr_shelves_wall"
       ],
       "triangles": 5036,
@@ -4242,7 +4242,7 @@
         0.44
       ],
       "materials": [
-        "pal_ink",
+        "pal_ash_violet",
         "spr_dollhouse",
         "spr_dollhouse_back"
       ],
@@ -4262,7 +4262,7 @@
         0.392
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_puppet_theatre",
         "spr_puppet_theatre_back"
       ],
@@ -4282,7 +4282,7 @@
         0.165
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_harp",
         "spr_harp_back"
       ],
@@ -4302,7 +4302,7 @@
         0.192
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_rocking_horse",
         "spr_rocking_horse_back"
       ],
@@ -4322,7 +4322,7 @@
         0.336
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone_deep",
         "spr_spinning_wheel",
         "spr_spinning_wheel_back"
       ],
@@ -4342,7 +4342,7 @@
         0.774
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone_deep",
         "spr_cage_covered",
         "spr_cage_covered_back"
       ],
@@ -4362,7 +4362,7 @@
         0.503
       ],
       "materials": [
-        "pal_ink",
+        "pal_grave",
         "spr_crib_shroud",
         "spr_crib_shroud_back"
       ],
@@ -4382,7 +4382,7 @@
         0.343
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_fishing_nets",
         "spr_fishing_nets_back"
       ],
@@ -4402,7 +4402,7 @@
         0.139
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_signpost_broken",
         "spr_signpost_broken_back"
       ],
@@ -4421,7 +4421,7 @@
         0.351
       ],
       "materials": [
-        "pal_ink",
+        "pal_peat",
         "spr_stocks_broken"
       ],
       "triangles": 6652,
@@ -4439,7 +4439,7 @@
         0.244
       ],
       "materials": [
-        "pal_ink",
+        "pal_walnut",
         "spr_oil_lamp"
       ],
       "triangles": 2824,
@@ -5107,7 +5107,7 @@
         1.148
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_colossus",
         "spr_colossus_back"
       ],
@@ -5128,7 +5128,7 @@
         0.97
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_statue_faceless",
         "spr_statue_faceless_back"
       ],
@@ -5149,7 +5149,7 @@
         0.664
       ],
       "materials": [
-        "pal_ink",
+        "pal_peat",
         "spr_strahd_effigy",
         "spr_strahd_effigy_back"
       ],
@@ -5169,7 +5169,7 @@
         0.312
       ],
       "materials": [
-        "pal_ink",
+        "pal_umber",
         "spr_wicker_sun"
       ],
       "triangles": 2396,
@@ -5188,7 +5188,7 @@
         0.614
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_gate_pillar"
       ],
       "triangles": 3140,
@@ -5653,7 +5653,7 @@
         0.423
       ],
       "materials": [
-        "pal_ink",
+        "pal_stone",
         "spr_gargoyle",
         "spr_gargoyle_back"
       ],
@@ -5694,7 +5694,7 @@
         0.25
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_saint_defaced",
         "spr_saint_defaced_back"
       ],
@@ -5714,7 +5714,7 @@
         0.501
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_bone_throne",
         "spr_bone_throne_back"
       ],
@@ -5734,7 +5734,7 @@
         0.284
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_bone_chair",
         "spr_bone_chair_back"
       ],
@@ -5754,7 +5754,7 @@
         0.279
       ],
       "materials": [
-        "pal_ink",
+        "pal_slate",
         "spr_statue_young_strahd",
         "spr_statue_young_strahd_back"
       ],
@@ -5887,7 +5887,7 @@
         0.22
       ],
       "materials": [
-        "pal_ink",
+        "pal_bone_dark",
         "spr_dragon_skull"
       ],
       "triangles": 7004,
@@ -6361,18 +6361,23 @@
         "gold_heap"
       ],
       "size": [
-        1.088,
-        0.525,
-        0.858
+        1.086,
+        0.471,
+        0.781
       ],
       "materials": [
+        "pal_blood",
         "pal_candle",
-        "pal_crimson",
         "pal_flame",
         "pal_mist_blue",
-        "pal_silver"
+        "pal_moss",
+        "pal_plum",
+        "pal_silver",
+        "pal_tan",
+        "pal_umber",
+        "pal_wick"
       ],
-      "triangles": 918,
+      "triangles": 2322,
       "turns": true
     },
     "gold_spill": {
