@@ -78,6 +78,7 @@ static func burst(fx: SpellFx, cue: Dictionary, caster: CombatToken, cells: Arra
 
 ## The explosion: a churning ball the size of the area, a shockwave along the floor, flames, sparks, smoke, light.
 static func explode(fx: SpellFx, cue: Dictionary, centre: Vector3, floor_y: float, radius: float) -> void:
+	CombatSfx.impact(cue)
 	var cols := cue["colours"] as Dictionary
 	var ball := FxKit.blast(fx, centre, cols, 2.4)
 	ball.scale = Vector3.ONE * radius * 0.1
