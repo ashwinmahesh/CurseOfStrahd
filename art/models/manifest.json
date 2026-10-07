@@ -5521,6 +5521,122 @@
       ],
       "triangles": 2376,
       "big": true
+    },
+    "door_bookcase": {
+      "file": "art/models/door_bookcase.glb",
+      "mount": "door",
+      "stands_for": [
+        "door_bookcase"
+      ],
+      "size": [
+        0.98,
+        1.39,
+        0.34
+      ],
+      "materials": [
+        "pal_ash_violet",
+        "pal_blood",
+        "pal_blood_deep",
+        "pal_bog",
+        "pal_bone_dark",
+        "pal_leather",
+        "pal_moon_blue",
+        "pal_night",
+        "pal_parchment",
+        "pal_peat",
+        "pal_rust",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 1824
+    },
+    "clock_tall": {
+      "file": "art/models/clock_tall.glb",
+      "mount": "wall",
+      "stands_for": [
+        "clock_tall"
+      ],
+      "size": [
+        0.46,
+        1.67,
+        0.3
+      ],
+      "materials": [
+        "pal_grave",
+        "pal_night",
+        "pal_peat",
+        "pal_tan",
+        "pal_vellum",
+        "pal_void",
+        "pal_walnut"
+      ],
+      "triangles": 240
+    },
+    "torch": {
+      "file": "art/models/torch.glb",
+      "mount": "free",
+      "stands_for": [
+        "torch"
+      ],
+      "size": [
+        0.16,
+        1.3,
+        0.16
+      ],
+      "materials": [
+        "glow_ember",
+        "pal_ink",
+        "pal_peat",
+        "pal_umber"
+      ],
+      "triangles": 138,
+      "sockets": {
+        "flame": [
+          0.0,
+          1.27,
+          -0.0
+        ]
+      }
+    },
+    "crater": {
+      "file": "art/models/crater.glb",
+      "mount": "free",
+      "stands_for": [
+        "crater"
+      ],
+      "size": [
+        1.191,
+        0.193,
+        1.122
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_rust",
+        "pal_slate",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 440,
+      "turns": true
+    },
+    "bones_water": {
+      "file": "art/models/bones_water.glb",
+      "mount": "free",
+      "stands_for": [
+        "bones_water"
+      ],
+      "size": [
+        0.856,
+        0.115,
+        0.766
+      ],
+      "materials": [
+        "pal_moon_blue",
+        "pal_vellum"
+      ],
+      "triangles": 476,
+      "turns": true
     }
   }
 }

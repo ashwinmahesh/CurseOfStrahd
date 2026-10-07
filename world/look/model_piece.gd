@@ -244,6 +244,27 @@ static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall:
 	return holder
 
 
+## Wall piece `art` as a model for a house wall (TownBuilder's windows): its lowest point at the node, facing +z,
+## its foot where the 2D piece's would be; null if there's no model.
+static func wall_model(board: ArenaBoard, art: String) -> Node3D:
+	var id := for_art(board, art)
+	if id == "":
+		return null
+	var holder := Node3D.new()
+	holder.name = "Model_" + id
+	holder.set_meta("model", id)
+	var model := instance(id)
+	holder.add_child(model)
+	_extras(model, manifest()[id] as Dictionary)
+	var low := INF
+	for n in model.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		low = minf(low, (mi.transform * mi.mesh.get_aabb()).position.y)
+	if low < INF:
+		model.position.y = -low
+	return holder
+
+
 ## A door leaf as a model (SetDressing.door), sized to the opening; named "Leaf" so opening and finding it work as
 ## for the 2D leaf.
 static func door_leaf(id: String, width: float, height: float) -> Node3D:

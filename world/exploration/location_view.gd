@@ -264,7 +264,10 @@ func _build_lights() -> void:
 		omni.base_energy = 1.4 if str(li["kind"]) in ["candle", "lamp"] else 2.2
 		omni.position = board.cell_center(_cell(li["cell"])) + Vector3(0, 1.2, 0)
 		add_child(omni)
-		if str(li.get("kind", "")) == "torch" and SetDressing.has_art("torch"):
+		if str(li.get("kind", "")) == "torch" and ModelPiece.for_art(board, "torch") != "":
+			ModelPiece.stand(board, board, ModelPiece.for_art(board, "torch"), "torch", _cell(li["cell"]))   # 3D (docs/art/models.md)
+			omni.position.y = 1.9
+		elif str(li.get("kind", "")) == "torch" and SetDressing.has_art("torch"):
 			board.prop_sprite("torch", board.cell_center(_cell(li["cell"])))
 			omni.position.y = 1.9
 		elif str(li.get("kind", "")) in ["fire", "bonfire", "brazier", "torch"]:

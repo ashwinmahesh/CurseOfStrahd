@@ -1250,7 +1250,12 @@
       "wicker_sun": "wicker_sun",
       "ribbon_tree": "ribbon_tree",
       "gulthias_tree": "gulthias_tree",
-      "gate_pillar": "gate_pillar"
+      "gate_pillar": "gate_pillar",
+      "door_bookcase": "door_bookcase",
+      "clock_tall": "clock_tall",
+      "torch": "torch",
+      "crater": "crater",
+      "bones_water": "bones_water"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",
