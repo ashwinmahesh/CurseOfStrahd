@@ -116,7 +116,7 @@ Narrator: He holds out Sir Aldric's sword, hilt first. It seems heavier than it 
 Sir Godfrey Gwilym: Keep it. It has a knight again, and a fellowship. That's all a sword was ever for.
 give weapon_plus_2 to name:godrick_pendlebrook
 quest the_ladle knighted
-inspire party: knelt as Sir Godrick's fellowship
+inspire party: stood as Sir Godrick's fellowship
 approve godrick_pendlebrook +8: You stood with me while I was knighted, and I named you my fellowship
 -> END
 

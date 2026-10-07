@@ -134,7 +134,7 @@ Fen Burley: Aye. I know. I'm only telling you it's allowed.
 ~ cure_refused
 Narrator: Thistle is between you and him before the first word, low and fast, the way she goes between a hound and a snare.
 interject name:thistle: Don't. Don't touch him. Not you lot. Not the way you've been.
-Fen Burley: Easy, lass. Easy.
+Narrator: Fen growls something low at her back, gentle, the way you'd settle a dog. She doesn't move an inch.
 interject name:thistle: No. I'll find someone else. Someone I trust.
 -> menu
 
@@ -151,11 +151,9 @@ interject name:thistle: You smell like a dog, Grandda. You smell like a wet dog.
 Fen Burley: Aye. Well. You smell like a town.
 Fen Burley: I'll go down to Krezk. They've walls there, but you can climb them, and they keep goats. I'll wait. You come and find me after. You're good at that.
 if approval.thistle >= close
-Fen Burley: These your pack, lass?
-interject name:thistle: Mine. All of them. Even the loud ones.
-Fen Burley: Good. Took me sixty years to find folk worth the noise.
-Narrator: He shrugs out of the ragged trapper's cloak the wolf never quite tore off him and drops it round her shoulders. It smells of pine and wet dog and woodsmoke, and she pulls it closed with both fists.
-Fen Burley: Keep it. Keeps you hid in the trees, that does. I'll not need hiding any more.
+Narrator: Fen looks past her at the rest of you for a long moment, the way he'd size up a strange dog: slowly, and all the way to the bottom.
+interject name:thistle: My pack, Grandda. All of them. Even the loud ones.
+Narrator: He nods once, as if that settles something. Then he shrugs out of the ragged trapper's cloak the wolf never quite tore off him and drops it round her shoulders. It has hidden him in the trees through forty winters, and he won't need hiding any more. It smells of pine and wet dog and woodsmoke, and she pulls it closed with both fists.
 give cloak_of_elvenkind to name:thistle
 endif
 set fen_fate = "cured"
