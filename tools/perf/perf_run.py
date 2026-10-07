@@ -221,7 +221,7 @@ class Profiler:
             for line in (data[0] if data and isinstance(data[0], list) else []):
                 for part in str(line).splitlines():
                     if part.startswith("PERF phase "):
-                        self.phase = part[len("PERF phase "):].strip()
+                        self.phase = part[len("PERF phase "):].replace("\x00", "").strip()
         elif name == "servers:function_signature":
             # [name, id]
             if len(data) >= 2:
@@ -293,6 +293,7 @@ def main():
     ap.add_argument("--size", default="1920x1080")
     ap.add_argument("--profile", action="store_true")
     ap.add_argument("--preload", default="")
+    ap.add_argument("--pairs", type=int, default=0)
     ap.add_argument("--port", type=int, default=0)
     ap.add_argument("--timeout", type=int, default=1800)
     args = ap.parse_args()
@@ -307,6 +308,8 @@ def main():
         user.append("--places=" + args.places)
     if args.preload:
         user.append("--preload=" + args.preload)
+    if args.pairs:
+        user.append("--pairs=%d" % args.pairs)
     cmd = [os.path.join(ROOT, "tools", "godot"), "--path", ROOT, "--resolution", "1x1", "--position", "100000,100000",
            "--audio-driver", "Dummy"]
     prof = None

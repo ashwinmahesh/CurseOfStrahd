@@ -14,13 +14,15 @@ const FIGHT := "vineyard_ambush"
 const NIGHT := 22 * 60
 ## The effects phase: each of the Modern finish's costs switched off in turn, in a few heavy places (for W17's presets).
 const EFFECT_PLACES := ["village_of_barovia@night", "vallaki@day", "castle_ravenloft_main_floor@day"]
-const EFFECTS := ["ssao", "ssil", "volumetric_fog", "glow", "dof", "sun_shadows", "screen_pass", "lamps", "half_res", "all"]
+const EFFECTS := ["msaa", "edge_aa", "ssr", "ssao", "ssil", "volumetric_fog", "glow", "dof", "sun_shadows", "lamp_shadows",
+	"screen_pass", "lamps", "half_res", "metalfx_75", "all"]
 const DAY := 12 * 60
 
 var frames := 240                    ## measured frames per sample
 var warm := 90                       ## frames let pass before measuring (shaders compile, tweens settle)
 var passes := 2
-var report := {"samples": [], "loads": [], "meta": {}}
+var pairs := 3                       ## on/off pairs per effect in the effects phase
+var report := {"samples": [], "loads": [], "memory": [], "meta": {}}
 var _last_usec := 0
 var _draw_start := 0
 var _draw_ms := 0.0                 ## ms drawing since the last frame began
@@ -37,6 +39,7 @@ func _ready() -> void:
 	frames = int(args.get("frames", frames))
 	warm = int(args.get("warm", warm))
 	passes = int(args.get("passes", passes))
+	pairs = int(args.get("pairs", pairs))
 	var only := str(args.get("only", "title,newgame,places,saveload,combat,effects")).split(",")
 	var places: Array = PLACES if str(args.get("places", "")) == "" else Array(str(args["places"]).split(","))
 	var out := str(args.get("out", "user://perf_report.json"))
@@ -76,6 +79,10 @@ func _ready() -> void:
 			await _combat(p)
 		if "effects" in only:
 			await _effects(p)
+		if "presets" in only:
+			await _presets(p)
+	if "memory" in only:
+		await _memory(places)
 	var f := FileAccess.open(out, FileAccess.WRITE)
 	f.store_string(JSON.stringify(report, "\t"))
 	f.close()
@@ -243,20 +250,46 @@ func _combat(p: int) -> void:
 	var limit := frames * 8
 	var n := 0
 	var t0 := Time.get_ticks_usec()
+	var slow: Array[Dictionary] = []   ## frames over 100 ms, with whose turn it was
 	while n < limit and is_instance_valid(cv) and int(e.get("state")) != Encounter.State.OVER:
 		await get_tree().process_frame
 		n += 1
+		if not _rec.is_empty() and float(_rec[_rec.size() - 1]["ms"]) > 100.0:
+			var cur := e.call("current") as Object
+			slow.append({"ms": _rec[_rec.size() - 1]["ms"], "draw": _rec[_rec.size() - 1]["draw"],
+				"turn": str(cur.call("name")) if cur != null else ""})
 	_recording = false
 	var s := _summarise("combat", "%s (%d combatants, round %d)" % [FIGHT, row["combatants"], int(e.get("round_no"))], p, _rec)
 	s["wall_s"] = (Time.get_ticks_usec() - t0) / 1e6
 	s["over"] = int(e.get("state")) == Encounter.State.OVER
+	s["slow_frames"] = slow
+	for f in slow:
+		print("PERF slow frame %.0f ms, %.0f drawing (%s)" % [f["ms"], f["draw"], f["turn"]])
 	report["samples"].append(s)
 	root.queue_free()
 	await _wait(2)
 
 
-## Each effect off in turn (and all of them at once), between samples with everything on, so drift from the rest of
-## the Mac's load shows up as a difference between the "all on" rows.
+## The three graphics presets (Graphics, W17) in the same places, each place built again under each.
+func _presets(p: int) -> void:
+	var root := await _story_root(5)
+	for spec: String in EFFECT_PLACES:
+		var where := spec.get_slice("@", 0)
+		for preset: String in ["high", "medium", "low", "high"]:
+			Graphics.set_preset(preset, false)
+			GameState.story.minute_of_day = NIGHT if spec.ends_with("night") else DAY
+			_phase("move: " + where)
+			root.call("enter_location", where, "default")
+			_close_popups(root)
+			root.call("_refresh")
+			await _sample("preset", "%s %s" % [spec, preset], p)
+	Graphics.set_preset("high", false)
+	root.queue_free()
+	await _wait(2)
+
+
+## Each effect off in turn, in pairs with everything on just before it (`pairs` times), so the Mac's changing load
+## weighs on both halves of a pair alike; tools/perf/perf_effects.py turns the pairs into a cost per effect.
 func _effects(p: int) -> void:
 	var root := await _story_root(5)
 	for spec: String in EFFECT_PLACES:
@@ -266,15 +299,14 @@ func _effects(p: int) -> void:
 		root.call("enter_location", where, "default")
 		_close_popups(root)
 		root.call("_refresh")
-		await _wait(warm)
+		await _wait(warm * 2)
 		var view := root.get("view") as Node
-		await _sample("effects", "%s all on" % spec, p)
 		for fx: String in EFFECTS:
-			var undo := _effect_off(view, fx)
-			await _sample("effects", "%s without %s" % [spec, fx], p)
-			undo.call()
-			if fx in ["lamps", "half_res", "all"]:
-				await _sample("effects", "%s all on" % spec, p)
+			for k in pairs:
+				await _sample("effects", "%s all on|%s" % [spec, fx], p)
+				var undo := _effect_off(view, fx)
+				await _sample("effects", "%s without|%s" % [spec, fx], p)
+				undo.call()
 	root.queue_free()
 	await _wait(2)
 
@@ -285,6 +317,29 @@ func _effect_off(view: Node, fx: String) -> Callable:
 	var env := atmo.env
 	var cam := (view.get("rig") as CameraRig).camera
 	match fx:
+		"msaa":
+			var was := get_viewport().msaa_3d
+			get_viewport().msaa_3d = Viewport.MSAA_DISABLED
+			return func() -> void: get_viewport().msaa_3d = was
+		"edge_aa":
+			var was := get_viewport().screen_space_aa
+			get_viewport().screen_space_aa = Viewport.SCREEN_SPACE_AA_DISABLED
+			return func() -> void: get_viewport().screen_space_aa = was
+		"ssr":
+			var was := env.ssr_enabled
+			env.ssr_enabled = false
+			return func() -> void: env.ssr_enabled = was
+		"lamp_shadows":
+			var shadowed: Array[Light3D] = []
+			for n in view.find_children("*", "OmniLight3D", true, false) + view.find_children("*", "SpotLight3D", true, false):
+				var l := n as Light3D
+				if l.shadow_enabled:
+					shadowed.append(l)
+					l.shadow_enabled = false
+			return func() -> void:
+				for l in shadowed:
+					if is_instance_valid(l):
+						l.shadow_enabled = true
 		"ssao":
 			var was := env.ssao_enabled
 			env.ssao_enabled = false
@@ -327,15 +382,75 @@ func _effect_off(view: Node, fx: String) -> Callable:
 		"half_res":
 			get_viewport().scaling_3d_scale = 0.5
 			return func() -> void: get_viewport().scaling_3d_scale = 1.0
+		"metalfx_75":
+			# Not an effect switched off: the 3D drawn at 75% and scaled up by MetalFX (Apple's upscaler).
+			var mode := get_viewport().scaling_3d_mode
+			get_viewport().scaling_3d_mode = Viewport.SCALING_3D_MODE_METALFX_SPATIAL
+			get_viewport().scaling_3d_scale = 0.75
+			return func() -> void:
+				get_viewport().scaling_3d_mode = mode
+				get_viewport().scaling_3d_scale = 1.0
 		"all":
 			var undos: Array[Callable] = []
 			for each: String in EFFECTS:
-				if each not in ["all", "half_res"]:
+				if each not in ["all", "half_res", "lamps", "metalfx_75"]:
 					undos.append(_effect_off(view, each))
 			return func() -> void:
 				for u in undos:
 					u.call()
 	return func() -> void: pass
+
+
+## Where the video memory goes: a new game, every place visited, back to the title, then each session-long cache
+## emptied in turn (they keep every sprite sheet, texture and material ever shown until the game quits).
+func _memory(places: Array) -> void:
+	_phase("memory")
+	await _wait(10)
+	_mem("before a game")
+	var root := await _story_root(5)
+	await _wait(warm)
+	_mem("new game, first place")
+	for id: Variant in places:
+		if not Compendium.shared().has("locations", str(id)):
+			continue
+		root.call("enter_location", str(id), "default")
+		_close_popups(root)
+		await _wait(30)
+	_mem("after %d places" % places.size())
+	root.queue_free()
+	await _wait(10)
+	_mem("back at the title (game freed)")
+	var caches := [["DirectionalSprite._frames_cache (sprite sheets)", func() -> void: DirectionalSprite._frames_cache.clear()],
+		["HeroLook caches (custom heroes)", func() -> void:
+			HeroLook._frames.clear()
+			HeroLook._images.clear()],
+		["Look._textured/_textures/_normals (surface textures)", func() -> void:
+			Look._textured.clear()
+			Look._textures.clear()
+			Look._normals.clear()],
+		["ModelPiece._materials/_tree_meshes (3D pieces)", func() -> void:
+			ModelPiece._materials.clear()
+			ModelPiece._tree_meshes.clear()],
+		["ArenaBoard._props (prop art)", func() -> void: ArenaBoard._props.clear()],
+		["Icons._cache", func() -> void: Icons._cache.clear()]]
+	for c: Variant in caches:
+		var pair := c as Array
+		(pair[1] as Callable).call()
+		await _wait(10)
+		_mem("after emptying " + str(pair[0]))
+
+
+func _mem(what: String) -> void:
+	var row := {"kind": "memory", "what": what,
+		"video_mb": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0,
+		"texture_mb": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TEXTURE_MEM_USED) / 1048576.0,
+		"buffer_mb": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0,
+		"static_mb": Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0,
+		"objects": Performance.get_monitor(Performance.OBJECT_COUNT),
+		"resources": Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT)}
+	report["memory"].append(row)
+	print("PERF memory %-60s video %5.0f MB (textures %5.0f) | static %5.0f MB | %d resources" % [what, row["video_mb"],
+		row["texture_mb"], row["static_mb"], row["resources"]])
 
 
 # --- Helpers --------------------------------------------------------------------------------------
