@@ -28,6 +28,11 @@ var mesh_occluders: Array[Node3D] = []   ## 3D trees (ModelPiece, or Flora's) in
 var flora: Flora = null
 ## The Modern look's shaped ground under the map's woods (GroundRelief, W11); null in Classic, which stays flat.
 var relief: GroundRelief = null
+## What lies past the edge, seen when the camera tilts toward the horizon (Vista, W13); null in Classic.
+var vista: Vista = null
+var _woods_material: Material = null
+var _banks: MeshInstance3D = null
+var _map_plants: Array[Node] = []
 ## The roads out of the map (W11): each edge square of a way out -> Vector2(the middle of its run of open squares
 ## along that edge, half the run's width).
 var _roads: Dictionary = {}
@@ -70,13 +75,17 @@ static func build(board_: ArenaBoard, mood: Dictionary, rng_: RandomNumberGenera
 		l._find_roads()
 	l._terrain()
 	if l.relief != null:
-		var shaped := l.relief.meshes(Look.cel_textured(str(l.spec.get("ground", "village/grass"))))
-		if shaped != null:
-			l.root.add_child(shaped)
+		l.relief.dress_floors()
+		l._woods_material = Look.cel_textured(str(l.spec.get("ground", "village/grass")))
+		l._banks = l.relief.woods_mesh(l._woods_material)
+		if l._banks != null:
+			l.root.add_child(l._banks)
+	var mood_id := Atmosphere.mood_for(board_.place, loc) if not loc.is_empty() else ""
 	if Flora.enabled():
-		l.flora = Flora.for_place(board_, Atmosphere.mood_for(board_.place, loc) if not loc.is_empty() else "", mood)
+		l.flora = Flora.for_place(board_, mood_id, mood)
 		l._flora_board_trees()
-		l.flora.dress_map(board_, l.root, l.map_y)
+		l.flora.dress_map(board_, l.map_y, _trap_cells(loc))
+		l._map_plants = l.flora.plant_map(l.root)
 	if float(l.spec.get("trees", 0.0)) > 0.0:
 		if l.flora != null:
 			l._flora_trees()
@@ -84,6 +93,13 @@ static func build(board_: ArenaBoard, mood: Dictionary, rng_: RandomNumberGenera
 			l._trees()
 	if l.flora != null:
 		l._flora_ground()
+	if l.relief != null or l.flora != null:
+		l.root.add_child(HiddenWatch.new(l))
+	if Look.modern():
+		# The mountains, Castle Ravenloft and the lake past the edge, seen when the camera tilts up (W13).
+		l.vista = Vista.build(board_, Flora.set_for(mood_id))
+		if l.vista != null:
+			l.root.add_child(l.vista)
 	return l
 
 
@@ -528,10 +544,79 @@ func map_y(p: Vector2) -> float:
 	return relief.height(p) if relief != null else 0.0
 
 
+## Squares a location's traps lie on (a pit opens there): no plant grows on them.
+static func _trap_cells(loc: Dictionary) -> Dictionary:
+	var out := {}
+	for t: Variant in loc.get("traps", []) as Array:
+		var trap := t as Dictionary
+		var cells := trap.get("cells", []) as Array
+		if trap.has("cell"):
+			cells = cells + [trap["cell"]]
+		for c: Variant in cells:
+			var a := c as Array
+			if a.size() >= 2:
+				out[Vector2i(int(a[0]), int(a[1]))] = true
+	return out
+
+
+## Redraws what the land puts on the map's own squares (the woods' banks, the ground plants), leaving out the squares
+## HiddenAreas hides. The walked ground hangs on the board's floor boxes, which HiddenAreas hides itself.
+func respect_hidden(hidden: Dictionary) -> void:
+	if relief != null:
+		if _banks != null:
+			root.remove_child(_banks)
+			_banks.queue_free()
+		_banks = relief.woods_mesh(_woods_material, hidden)
+		if _banks != null:
+			root.add_child(_banks)
+	if flora != null:
+		for n in _map_plants:
+			if is_instance_valid(n):
+				root.remove_child(n)
+				n.queue_free()
+		_map_plants = flora.plant_map(root, hidden)
+
+
+## Watches the place's hidden areas (rooms behind secret doors nobody has found, "hidden until found") and keeps the
+## land's own pieces on those squares out of sight, as HiddenAreas does the board's.
+class HiddenWatch extends Node:
+	var land: AtmosphereLand
+	var _seen := 0
+	var _wait := 0.0
+
+	func _init(l: AtmosphereLand) -> void:
+		land = l
+		name = "HiddenWatch"
+		_seen = hash([])
+
+	func _process(delta: float) -> void:
+		_wait -= delta
+		if _wait > 0.0:
+			return
+		_wait = HiddenAreas.CHECK_EVERY
+		var atmo := land.root.get_parent()
+		var view := atmo.get_parent() as LocationView if atmo != null else null
+		var areas := HiddenAreas.of(view)
+		var hidden := areas.hidden if areas != null else {}
+		var seen := hash(hidden.keys())
+		if seen != _seen:
+			_seen = seen
+			land.respect_hidden(hidden)
+
+
 # --- The Modern look's trees and plants (Flora, Improvement Ideas W9) -----------------------------------------------
 
-## Beyond this many squares from the map the land's trees are their lighter far copies and cast no shadow.
+## Beyond this many squares from the map the land's trees are their lighter far copies.
 const FAR_DETAIL := 9.0
+## Only trees within this many squares of where people walk cast the sun's shadow: the rest are too far out to shade
+## anything anyone looks at, and every shadow split draws every tree that casts (lane 6's frame budget, W17).
+const SHADOW_REACH := 3.0
+
+
+## How far a point is from the squares people walk on (squares).
+func walk_distance(p: Vector2) -> float:
+	var k := _cell(p)
+	return REACH if k < 0 else _walk[k]
 
 
 ## The ground's height at a point exactly as the land mesh has it (its corners, each square split as the mesh splits
@@ -582,7 +667,10 @@ func _flora_board_trees() -> void:
 		for c in holder.get_children():
 			holder.remove_child(c)
 			c.queue_free()
-		holder.add_child(Flora.instance(id, flora.tree_scale(id, "map", pick)))
+		var tree := Flora.instance(id, flora.tree_scale(id, "map", pick))
+		if walk_distance(Vector2(holder.position.x, holder.position.z)) > SHADOW_REACH:
+			tree.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		holder.add_child(tree)
 		holder.set_meta("model", id)
 		# Up on the bank under the woods (W11), a little sunk so its foot never shows a gap.
 		holder.position.y = map_y(Vector2(holder.position.x, holder.position.z)) - 0.05
@@ -635,6 +723,8 @@ func _flora_trees() -> void:
 			var at := Vector3(p.x, surface_y(p) - 0.05, p.y)
 			if out < NEAR_RING:
 				var tree := flora.node(id, at, s, yaw)
+				if _walk[k] > SHADOW_REACH:
+					(tree.get_child(0) as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 				root.add_child(tree)
 				mesh_occluders.append(tree)
 				continue
@@ -648,7 +738,8 @@ func _flora_trees() -> void:
 				bucket[id] = []
 			(bucket[id] as Array).append([Transform3D(Basis(Vector3.UP, yaw).scaled(Vector3.ONE * s), at), Color(v, v, v)])
 		y += step
-	Flora.plant_all(root, near, true, "Trees")
+	# Every tree drawn many at once stands at least NEAR_RING squares out, past SHADOW_REACH: none casts.
+	Flora.plant_all(root, near, false, "Trees")
 	Flora.plant_all(root, far, false, "FarTrees")
 
 

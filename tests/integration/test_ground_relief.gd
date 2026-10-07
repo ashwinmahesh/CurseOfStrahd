@@ -41,7 +41,8 @@ func test_the_walked_ground_is_shaped_but_stays_on_the_grid() -> void:
 				continue
 			skinned += 1
 			var box := v.board.floor_box(c)
-			assert_true(box.position.y + 0.1 < -GroundRelief.DEEPEST, "%s's flat box sits under the skin" % c)
+			assert_eq(box.layers, 0, "%s's flat box no longer draws itself" % c)
+			assert_true(box.get_node_or_null("Shaped") != null, "%s's ground hangs on its floor box" % c)
 			for k in 9:
 				var p := Vector2(x + (k % 3) * 0.5, z + (k / 3) * 0.5)
 				var h := relief.height(p)
@@ -49,7 +50,7 @@ func test_the_walked_ground_is_shaped_but_stays_on_the_grid() -> void:
 				rut = rut or relief._road_distance(p) < 0.3
 	assert_true(skinned > 100, "the walked ground is drawn by the skin (%d squares)" % skinned)
 	assert_true(rut, "wheel ruts run between the ways out")
-	assert_true(v.atmosphere.land.root.find_child("Relief", true, false) != null, "the shaped ground is drawn")
+	assert_true(v.atmosphere.land.root.find_child("Banks", true, false) != null, "the woods' banks are drawn")
 	v.queue_free()
 
 
@@ -88,5 +89,49 @@ func test_towns_and_classic_stay_flat() -> void:
 	Look.set_style("classic", false)
 	var r := _view("svalich_crossroads")
 	assert_true(r.atmosphere.land.relief == null, "no shaped ground in Classic")
-	assert_true(absf(r.board.floor_box(Vector2i(10, 12)).position.y + 0.1) < 0.001, "Classic's floor boxes stay where the board put them")
+	assert_eq(r.board.floor_box(Vector2i(10, 12)).layers, 1, "Classic's floor boxes draw themselves")
+	assert_true(r.board.floor_box(Vector2i(10, 12)).get_child_count() == 0, "with no shaped ground on them")
 	r.queue_free()
+
+
+## Hidden until found: what hides a square's floor box (HiddenAreas, a pit, a stairwell) hides its shaped ground, and
+## the land's banks and plants leave out squares that are hidden. No plant grows on a trap's square.
+func test_hidden_squares_stay_hidden() -> void:
+	Look.set_style("modern", false)
+	var v := _view("into_the_mists_road")
+	var land := v.atmosphere.land
+	var relief := land.relief
+	var walked := Vector2i(-1, -1)
+	var tree := Vector2i(-1, -1)
+	for z in v.grid.depth:
+		for x in v.grid.width:
+			var c := Vector2i(x, z)
+			if relief.skinned(c) and walked.x < 0:
+				walked = c
+			if v.board.is_tree(c) and tree.x < 0 and z > 2 and x > 2:
+				tree = c
+	var box := v.board.floor_box(walked)
+	box.visible = false
+	assert_false((box.get_node("Shaped") as Node3D).is_visible_in_tree(), "hiding the floor box hides its ground")
+	box.visible = true
+	# Hide a block of squares round a tree square and a walked one, as HiddenAreas would.
+	var hidden := {}
+	for c: Vector2i in [walked, tree]:
+		for dz in range(-1, 2):
+			for dx in range(-1, 2):
+				hidden[c + Vector2i(dx, dz)] = true
+	land.respect_hidden(hidden)
+	var banks := land.root.find_child("Banks", true, false) as MeshInstance3D
+	var faces := banks.mesh.get_faces()
+	for i in range(0, faces.size(), 3):
+		var mid := (faces[i] + faces[i + 1] + faces[i + 2]) / 3.0
+		assert_false(Vector2i(floori(mid.x), floori(mid.z)) == tree, "no bank drawn on hidden square %s" % tree)
+	for n in land.root.find_children("MapPlants_*", "MultiMeshInstance3D", true, false):
+		if not is_instance_valid(n) or n.is_queued_for_deletion():
+			continue
+		for p: Vector3 in n.get_meta("origins", PackedVector3Array()) as PackedVector3Array:
+			assert_false(hidden.has(Vector2i(floori(p.x), floori(p.z))), "no plant on hidden square at %s" % p)
+	var loc := Compendium.shared().get_entry("locations", "into_the_mists_road")
+	for c: Vector2i in AtmosphereLand._trap_cells(loc):
+		assert_false(land.flora.map_items.has(c), "no plant grows on the trap at %s" % c)
+	v.queue_free()

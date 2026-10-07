@@ -3,9 +3,10 @@ extends RefCounted
 ## Ground with shape in the Modern look (Improvement Ideas W11, docs/art/atmosphere.md "Ground with shape"). On an
 ## outdoor wild map the ground people walk on is drawn as one shaped skin: shallow hollows, and wheel ruts along the
 ## way between its ways out. It never rises above the squares' floor level, so tokens, grid overlays and spell
-## templates still stand on the same 5 ft grid (real heights are F4's); the board's own flat floor boxes are lowered
-## out of sight under it (ArenaBoard.floor_box). Under the map's woods the ground rises into banks with mounds and
-## hollows, and the land past the edge carries on from both. Cosmetic only: the rules grid never sees any of it.
+## templates still stand on the same 5 ft grid (real heights are F4's); each square's piece hangs on the board's own
+## floor box (ArenaBoard.floor_box), which stops drawing itself, so hiding the box hides the ground. Under the map's
+## woods the ground rises into banks with mounds and hollows, and the land past the edge carries on from both.
+## Cosmetic only: the rules grid never sees any of it.
 
 ## Samples of the distance fields per square, and quads a side of the woods' mesh per square; the walked ground's
 ## skin has twice as many, so the wheel ruts have a shape.
@@ -24,8 +25,6 @@ const HOLLOW := 0.08
 const RUT := 0.09
 const DEEPEST := 0.12
 const SETTLE := 0.7
-## How far the board's flat floor boxes are lowered under the skin.
-const SINK := 0.15
 ## Set by art QA tools only, to shoot a place as it was before (tools/capture/land_capture.gd LAND_NO_RELIEF).
 static var off := false
 
@@ -285,53 +284,92 @@ static func _hash(p: Vector2) -> float:
 	return fposmod(sin(p.x * 127.1 + p.y * 311.7) * 43758.5453, 1.0)
 
 
-## The shaped ground: the woods' banks over the map's tree squares in `woods` (tucked just under the board's own
-## ground where they meet the clearing, so the two never flicker), and the skin over the walked squares in their own
-## floor's material, with the board's flat boxes there lowered out of sight. Null when there's nothing to shape.
-func meshes(woods: Material) -> Node3D:
-	var surfaces := {}   # material -> SurfaceTool
+## The walked ground's skin, square by square: each skinned square's floor box gets its shaped piece as a child and
+## stops drawing itself (render layers 0), so whatever hides or shows the box (HiddenAreas, a pit opening, a stairwell)
+## hides or shows its piece of ground too.
+func dress_floors() -> void:
+	for c: Vector2i in _skin:
+		var box := board.floor_box(c)
+		if box == null:
+			continue
+		var st := SurfaceTool.new()
+		st.begin(Mesh.PRIMITIVE_TRIANGLES)
+		_square(st, c, 0.0, SKIN_RES, box.position)
+		_skirts(st, c, box.position)
+		var mi := MeshInstance3D.new()
+		mi.name = "Shaped"
+		mi.mesh = st.commit()
+		mi.material_override = box.material_override
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		box.add_child(mi)
+		box.layers = 0
+
+
+## The banks over the map's tree squares, leaving out the `hidden` ones, in `material`; null if there are none. Where
+## they meet the clearing they tuck just under the board's own ground so the two never flicker.
+func woods_mesh(material: Material, hidden: Dictionary = {}) -> MeshInstance3D:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var any := false
 	for z in _d:
 		for x in _w:
 			var c := Vector2i(x, z)
-			var mat: Material = null
-			var lift := 0.0
-			if _skin.has(c):
-				mat = _skin[c] as Material
-				var box := board.floor_box(c)
-				box.position.y -= SINK
-			elif board.is_tree(c):
-				mat = woods
-				lift = -0.012
-			else:
-				continue
-			if not surfaces.has(mat):
-				var st := SurfaceTool.new()
-				st.begin(Mesh.PRIMITIVE_TRIANGLES)
-				surfaces[mat] = st
-			_square(surfaces[mat] as SurfaceTool, c, lift, SKIN_RES if _skin.has(c) else RES)
-	if surfaces.is_empty():
+			if board.is_tree(c) and not hidden.has(c):
+				_square(st, c, -0.012, RES, Vector3.ZERO)
+				any = true
+	if not any:
 		return null
-	var root := Node3D.new()
-	root.name = "Relief"
-	for mat: Material in surfaces:
-		var st := surfaces[mat] as SurfaceTool
-		st.generate_normals()
-		var mi := MeshInstance3D.new()
-		mi.name = "Ground%d" % root.get_child_count()
-		mi.mesh = st.commit()
-		mi.material_override = mat
-		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		root.add_child(mi)
-	return root
+	var mi := MeshInstance3D.new()
+	mi.name = "Banks"
+	mi.mesh = st.commit()
+	mi.material_override = material
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	return mi
 
 
-func _square(st: SurfaceTool, c: Vector2i, lift: float, res: int) -> void:
+## The ground's slope at a point, as a normal, from the height either side, so neighbouring pieces meet smoothly.
+func normal_at(p: Vector2) -> Vector3:
+	var e := 0.04
+	var dx := height(p + Vector2(e, 0)) - height(p - Vector2(e, 0))
+	var dz := height(p + Vector2(0, e)) - height(p - Vector2(0, e))
+	return Vector3(-dx, 2.0 * e, -dz).normalized()
+
+
+## Square `c` cut into res x res quads on the ground's height (plus `lift`), less `origin` (the node it hangs on).
+func _square(st: SurfaceTool, c: Vector2i, lift: float, res: int, origin: Vector3) -> void:
 	var q := 1.0 / res
 	for sj in res:
 		for si in res:
 			var p0 := Vector2(c.x + si * q, c.y + sj * q)
-			var v: Array[Vector3] = []
-			for p: Vector2 in [p0, p0 + Vector2(q, 0), p0 + Vector2(0, q), p0 + Vector2(q, q)]:
-				v.append(Vector3(p.x, height(p) + lift, p.y))
-			for t: Vector3 in [v[0], v[1], v[2], v[1], v[3], v[2]]:
-				st.add_vertex(t)
+			var corners: Array[Vector2] = [p0, p0 + Vector2(q, 0), p0 + Vector2(0, q), p0 + Vector2(q, q)]
+			for k: int in [0, 1, 2, 1, 3, 2]:
+				var p := corners[k]
+				st.set_normal(normal_at(p))
+				st.add_vertex(Vector3(p.x, height(p) + lift, p.y) - origin)
+
+
+## Walls of earth down the sides of square `c` facing a square the skin doesn't draw (the shore of the water beside
+## it), as the floor box's sides were; drawn both ways round, so they show from either side.
+func _skirts(st: SurfaceTool, c: Vector2i, origin: Vector3) -> void:
+	var x := float(c.x)
+	var z := float(c.y)
+	var sides := {Vector2i(0, -1): [Vector2(x, z), Vector2(x + 1, z)], Vector2i(1, 0): [Vector2(x + 1, z), Vector2(x + 1, z + 1)],
+		Vector2i(0, 1): [Vector2(x, z + 1), Vector2(x + 1, z + 1)], Vector2i(-1, 0): [Vector2(x, z), Vector2(x, z + 1)]}
+	for side: Vector2i in sides:
+		if _skin.has(c + side):
+			continue
+		var ends := sides[side] as Array
+		var n := Vector3(side.x, 0, side.y)
+		for k in SKIN_RES:
+			var p0 := (ends[0] as Vector2).lerp(ends[1] as Vector2, float(k) / SKIN_RES)
+			var p1 := (ends[0] as Vector2).lerp(ends[1] as Vector2, float(k + 1) / SKIN_RES)
+			var t0 := Vector3(p0.x, height(p0), p0.y) - origin
+			var t1 := Vector3(p1.x, height(p1), p1.y) - origin
+			var b0 := Vector3(p0.x, -0.2, p0.y) - origin
+			var b1 := Vector3(p1.x, -0.2, p1.y) - origin
+			for v: Vector3 in [t0, t1, b0, t1, b1, b0]:
+				st.set_normal(n)
+				st.add_vertex(v)
+			for v: Vector3 in [t0, b0, t1, t1, b0, b1]:
+				st.set_normal(n)
+				st.add_vertex(v)

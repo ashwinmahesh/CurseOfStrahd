@@ -8,12 +8,14 @@ extends Node
 ## screen pass: no outlines, mist, land fade or grade, to see the plants' own colours), LAND_BENCH=1 (time the
 ## place with each group of plants hidden in turn, round after round, instead of shooting it), LAND_NO_FLORA=1 (the
 ## Modern look without its trees and plants: the old trees, for before-and-after pairs), LAND_NO_RELIEF=1 (without
-## the shaped ground), LAND_CLAY=1 (the shaped ground in plain clay), LAND_GIF=n (n frames a
+## the shaped ground), LAND_CLAY=1 (the shaped ground in plain clay), LAND_NO_DOF=1 (no depth of field, to judge the
+## vistas without the far blur), LAND_GIF=n (n frames a
 ## tenth of a second apart, numbered, to show the wind).
 ## The road and village shots stand the party where the light lane's look_capture does, so frames compare across lanes.
 
 ## Each shot: the place, the hour, where the party stands (empty: the place's own spawn), and optionally the camera's
-## distance (7 to 22 in play), its quarter turns, and a point to look at instead of the party (`look`, x and z).
+## distance (7 to 30 in play), its quarter turns, how far it tilts toward the horizon past its farthest zoom (`tilt`, 0
+## to 1, CameraRig.horizon) and a point to look at instead of the party (`look`, x and z).
 const SHOTS := {
 	"road_day": {"loc": "into_the_mists_road", "hour": 12, "cells": [[12, 15], [13, 15], [12, 16], [13, 14]]},
 	"road_dusk": {"loc": "into_the_mists_road", "hour": 18, "cells": [[12, 15], [13, 15], [12, 16], [13, 14]]},
@@ -28,6 +30,18 @@ const SHOTS := {
 	"road_ruts": {"loc": "into_the_mists_road", "hour": 12, "cells": [[2, 15], [3, 15], [2, 16], [3, 14]],
 		"zoom": 8.0, "look": [-4.0, 15.5]},
 	"crossroads_dusk": {"loc": "svalich_crossroads", "hour": 18, "zoom": 11.0},
+	"village_tilt": {"loc": "village_of_barovia", "hour": 12, "zoom": 30.0, "tilt": 1.0, "face": "castle"},
+	"village_tilt_dusk": {"loc": "village_of_barovia", "hour": 18, "zoom": 30.0, "tilt": 1.0, "face": "castle"},
+	"road_tilt": {"loc": "into_the_mists_road", "hour": 12, "cells": [[12, 15], [13, 15], [12, 16], [13, 14]],
+		"zoom": 30.0, "tilt": 1.0, "face": "castle"},
+	"crossroads_tilt": {"loc": "svalich_crossroads", "hour": 16, "zoom": 30.0, "tilt": 1.0},
+	"vallaki_tilt": {"loc": "vallaki", "hour": 12, "zoom": 30.0, "tilt": 1.0},
+	"krezk_tilt": {"loc": "krezk", "hour": 12, "zoom": 30.0, "tilt": 1.0},
+	"village_untilted": {"loc": "village_of_barovia", "hour": 12, "zoom": 30.0, "tilt": 0.0, "face": "castle"},
+	"road_untilted": {"loc": "into_the_mists_road", "hour": 12, "cells": [[12, 15], [13, 15], [12, 16], [13, 14]],
+		"zoom": 30.0, "tilt": 0.0, "face": "castle"},
+	"lake_tilt": {"loc": "lake_zarovich", "hour": 12, "zoom": 30.0, "tilt": 1.0},
+	"tilt_half": {"loc": "village_of_barovia", "hour": 12, "zoom": 30.0, "tilt": 0.5, "turns": 1},
 	"road_fade": {"loc": "into_the_mists_road", "hour": 12, "cells": [[15, 17], [14, 17], [15, 16], [14, 16]]},
 	"village_dusk": {"loc": "village_of_barovia", "hour": 18},
 	"village_far": {"loc": "village_of_barovia", "hour": 12, "zoom": 22.0},
@@ -110,13 +124,18 @@ func _build(shot: Dictionary) -> void:
 	view.rig.zoom_max = maxf(view.rig.zoom_max, zoom)
 	view.rig.distance = zoom
 	view.rig.rotate_step(int(shot.get("turns", 0)))
+	view.rig.horizon = float(shot.get("tilt", 0.0))
 	view.rig.snap_to_target()
+	if str(shot.get("face", "")) == "castle":
+		_face_castle(loc_id)
 	if shot.has("look"):
 		var at := shot["look"] as Array
 		view.rig.follow = null
 		view.rig.global_position = Vector3(float(at[0]), 0.0, float(at[1]))
 	if OS.get_environment("LAND_RAW") != "":
 		view.post.visible = false
+	if OS.get_environment("LAND_NO_DOF") != "" and view.rig.camera.attributes is CameraAttributesPractical:
+		(view.rig.camera.attributes as CameraAttributesPractical).dof_blur_far_enabled = false
 	if OS.get_environment("LAND_CLAY") != "" and view.atmosphere.land != null:
 		# The shaped ground in plain clay, to see its shape without the texture.
 		var clay := Look.cel("stone")
@@ -184,3 +203,24 @@ func _bench(tool: Node, id: String) -> void:
 		(n as Node3D).visible = true
 	Engine.max_fps = 60
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+
+
+## Turns the camera the quarter turns that best face Castle Ravenloft from this place (Vista's travel positions).
+func _face_castle(loc_id: String) -> void:
+	var here: Variant = Vista.place_at(loc_id)
+	var castle := (Vista.config().get("castle", {}) as Dictionary).get("at", [0.5, 0.5]) as Array
+	if here == null:
+		return
+	var want := (Vector2(float(castle[0]), float(castle[1])) - (here as Vector2)).normalized()
+	var best := 0
+	var best_dot := -2.0
+	for k in 4:
+		var fwd := view.rig.ground_basis()[0]
+		var d := Vector2(fwd.x, fwd.z).dot(want)
+		if d > best_dot:
+			best_dot = d
+			best = k
+		view.rig.rotate_step(1)
+		view.rig.snap_to_target()
+	view.rig.rotate_step(best)
+	view.rig.snap_to_target()

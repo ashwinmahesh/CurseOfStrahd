@@ -27,6 +27,8 @@ static var _materials: Dictionary = {}    ## "<material>|<kind>" -> ShaderMateri
 var set_id := "forest"
 var spec: Dictionary = {}
 var rng := RandomNumberGenerator.new()
+## The map's own ground plants by square (dress_map): cell -> {plant id: [[Transform3D, Color], ...]}.
+var map_items: Dictionary = {}
 ## Set by art QA tools only, to shoot a place as it was before (tools/capture/land_capture.gd LAND_NO_FLORA).
 static var off := false
 
@@ -283,9 +285,10 @@ func ground_item(at: Vector3, s: float) -> Array:
 ## Ground plants on the map's own squares: thick under its trees, ferns and undergrowth spilling out of the woods
 ## onto the side of a square that faces them, short and sparse grass elsewhere where people walk on wild ground
 ## (never in the middle of a square, so feet and the selection rings stay clear), reeds on the shore. Squares a
-## location's things stand on, buildings and furniture are left bare.
-## `ground_y` gives the ground's height at a point (the banks under the woods, W11).
-func dress_map(board: ArenaBoard, parent: Node3D, ground_y: Callable) -> void:
+## location's things stand on, buildings, furniture and traps are left bare. `ground_y` gives the ground's height at
+## a point (the shaped ground, W11). The plants are kept by square (map_items), so plant_map can leave out squares
+## that are hidden.
+func dress_map(board: ArenaBoard, ground_y: Callable, bare: Dictionary = {}) -> void:
 	var g := board.grid
 	var under := spec.get("under", []) as Array
 	var open := spec.get("open", []) as Array
@@ -293,43 +296,64 @@ func dress_map(board: ArenaBoard, parent: Node3D, ground_y: Callable) -> void:
 	var edge := spec.get("edge", []) as Array
 	var wild := board.theme in ArenaBoard.WILD
 	var open_scale := float(spec.get("open_scale", 0.6))
-	var items := {}
+	map_items.clear()
 	for z in g.depth:
 		for x in g.width:
 			var c := Vector2i(x, z)
-			if board.occupied.has(c) or board.house_cells.has(c) or board.door_cells.has(c):
+			if board.occupied.has(c) or board.house_cells.has(c) or board.door_cells.has(c) or bare.has(c):
 				continue
 			var f := g.flags(c)
 			if (f & (CombatGrid.WATER | CombatGrid.VOID)) != 0:
 				continue
+			var items := {}
 			if board.is_tree(c):
 				_scatter_square(items, c, under, 1.0, 0.0, 0.0)
+			elif (f & CombatGrid.WALL) != 0 or not wild or board.floor_y(c) > 0.0:
 				continue
-			if (f & CombatGrid.WALL) != 0 or not wild or board.floor_y(c) > 0.0:
+			elif board.dressing.has(c) and not (board.dressing[c] as Array).is_empty():
 				continue
-			if board.dressing.has(c) and not (board.dressing[c] as Array).is_empty():
-				continue
-			var by_water := false
-			for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
-				if g.in_bounds(c + d) and g.has_flag(c + d, CombatGrid.WATER):
-					by_water = true
-			var woods := Vector2.ZERO
-			for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 1),
-					Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)]:
-				if g.in_bounds(c + d) and board.is_tree(c + d):
-					woods += Vector2(d)
-			if by_water and not shore.is_empty():
-				_scatter_square(items, c, shore, 0.8, 0.3, 0.0)
-			elif woods != Vector2.ZERO and not edge.is_empty():
-				_scatter_edge(items, c, edge, woods.normalized())
 			else:
-				_scatter_square(items, c, open, open_scale, 0.32, 0.0)
-	for id: String in items:
-		for it: Array in items[id] as Array:
-			var t := it[0] as Transform3D
-			t.origin.y = float(ground_y.call(Vector2(t.origin.x, t.origin.z))) - 0.02
-			it[0] = t
+				var by_water := false
+				for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+					if g.in_bounds(c + d) and g.has_flag(c + d, CombatGrid.WATER):
+						by_water = true
+				var woods := Vector2.ZERO
+				for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 1),
+						Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)]:
+					if g.in_bounds(c + d) and board.is_tree(c + d):
+						woods += Vector2(d)
+				if by_water and not shore.is_empty():
+					_scatter_square(items, c, shore, 0.8, 0.3, 0.0)
+				elif woods != Vector2.ZERO and not edge.is_empty():
+					_scatter_edge(items, c, edge, woods.normalized())
+				else:
+					_scatter_square(items, c, open, open_scale, 0.32, 0.0)
+			for id: String in items:
+				for it: Array in items[id] as Array:
+					var t := it[0] as Transform3D
+					t.origin.y = float(ground_y.call(Vector2(t.origin.x, t.origin.z))) - 0.02
+					it[0] = t
+			if not items.is_empty():
+				map_items[c] = items
+
+
+## Draws the map's ground plants (dress_map) under `parent`, leaving out the `hidden` squares; returns the nodes made.
+func plant_map(parent: Node3D, hidden: Dictionary = {}) -> Array[Node]:
+	var items := {}
+	for c: Vector2i in map_items:
+		if hidden.has(c):
+			continue
+		var per := map_items[c] as Dictionary
+		for id: String in per:
+			if not items.has(id):
+				items[id] = []
+			(items[id] as Array).append_array(per[id] as Array)
+	var before := parent.get_child_count()
 	plant_all(parent, items, false, "MapPlants")
+	var made: Array[Node] = []
+	for i in range(before, parent.get_child_count()):
+		made.append(parent.get_child(i))
+	return made
 
 
 ## Scatters `choices` along the side of square `c` toward `toward` (the woods beside it), in a band from 0.3 to 0.5

@@ -17,6 +17,7 @@ grade.
 | The land around the map and over its empty squares: hills, forest, roads and lakes running on | `world/look/atmosphere_land.gd` (`AtmosphereLand`) |
 | The Modern look's trees and plants (docs/art/plants.md) | `world/look/flora.gd` (`Flora`), `art/plants/` |
 | The Modern look's shaped ground: the walked ground's hollows and ruts, banks under the woods | `world/look/ground_relief.gd` (`GroundRelief`) |
+| What lies past the edge when the camera tilts up: the mountains, Castle Ravenloft on its crag, Lake Zarovich | `world/look/vista.gd` (`Vista`), `art/vistas/`, `shaders/atmosphere/vista*.gdshader` |
 | The land lane's before-and-after shots: trees and plants, ground, vistas | `tools/capture/land_capture.tscn` |
 | Weather: leaves, rain, snow, wisps, dust, crows, chimney smoke, embers, lit windows | `world/look/atmosphere_weather.gd` (`AtmosphereWeather`) |
 | Mist, the Mists' wall, cloud shadows, ground patches, grade, vignette, then outlines and the palette snap | `shaders/post/strahd_post.gdshader` |
@@ -114,6 +115,39 @@ yards their floors, and Classic stays flat.
 
 The shape is gentle: on today's busy ground textures it shows most in low light, and wheel-rut decals (W10) can follow
 `GroundRelief`'s roads. Not done: a hidden area's ground outdoors stays drawn (HiddenAreas hides the lowered boxes).
+
+## Vistas in the Modern finish
+
+Improvement Ideas W13, the vista half (owner pick, 2026-10-07: "tilt up when zoomed out"). At its fixed 40° the play
+camera never sees the horizon, so past its farthest zoom the wheel tilts it toward the horizon over four more steps
+(`CameraRig.horizon`, eased by `horizon_shown`): it comes down to just over the treetops and roofs and its pitch rises
+to -8°, so it looks out over the party, low in the frame, to what lies past the map's edge across the top. Zooming
+back in undoes the tilt first. Play zoom is unchanged, a distance a tool sets never tilts it, and Classic (frozen)
+never tilts.
+
+What it sees (`Vista`, built with the land in the Modern finish, placed from `art/vistas/vistas.json`):
+- **The mountains round the valley**: a ring far past the map painted as four ridges by `vista.gdshader`, the
+  farthest palest, with light along the crests, snow on the high peaks and a fringe of spruce on the nearer ridges.
+  Each set of plants (`art/plants/flora.json`) has its own range: rounded forested hills round the Svalich woods,
+  tall snowy peaks at Krezk and the Abbey, white ones by Mount Baratok, low hills over the marsh at Berez.
+- **Castle Ravenloft on its crag**, a painted backdrop (`art/vistas/castle_ravenloft.png`, Gemini with
+  `art/prompts/vista_preamble.txt`, cut out by `tools/art/build_vistas.py`) at its true bearing from each place on
+  the travel art, smaller and deeper in the haze the farther off, its foot sunk in the mist, its lit windows warm.
+  Never seen from the castle's own maps.
+- **Lake Zarovich** stretching away from the places near it (Vallaki, the lake shore, Van Richten's tower, the
+  werewolf den, the Wizard of Wines).
+
+They draw after the screen pass, in a blended pass (`Look.POST_PRIORITY` draws first), so the land's fade into the
+haze doesn't swallow them while nearer land, trees and houses still hide them; each frame they take the haze colour the
+screen pass gives the far land (`land_color`), so they sit in the same air at every hour. In play they lie past the
+camera's far plane and cost nothing; the far plane opens out as the camera tilts. While tilted, leaves and wood within
+`near_fade` units of the camera thin away (`foliage.gdshader`, `bark.gdshader`).
+
+    make capture SCENE=res://tools/capture/land_capture.tscn NAME=land/tilt FRAMES=10 \
+      LAND_SHOTS=village_tilt,road_tilt,crossroads_tilt,vallaki_tilt,krezk_tilt   # LAND_NO_DOF=1: without the far blur
+
+Not done: the sky above the ridges is the screen pass's haze until the sky half of W13 (lane 6); the far blur of the
+depth of field softens the vistas when tilted.
 
 ## Edges and shadows in the Modern finish
 
