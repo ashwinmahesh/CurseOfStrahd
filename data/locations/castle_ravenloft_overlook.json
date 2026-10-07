@@ -38,7 +38,7 @@
           6
         ]
       ],
-      "floor": "church/stone_flags"
+      "floor": "castle/flagstones"
     },
     {
       "id": "crg_overlook",
@@ -53,7 +53,7 @@
           7
         ]
       ],
-      "floor": "church/stone_flags"
+      "floor": "castle/flagstones"
     }
   ],
   "spawns": {

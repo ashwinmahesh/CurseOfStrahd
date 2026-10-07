@@ -51,8 +51,8 @@
           23
         ]
       ],
-      "floor": "church/stone_flags",
-      "walls": "church/stone_wall"
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar"
     },
     {
       "id": "spires_walkway",
@@ -67,7 +67,7 @@
           15
         ]
       ],
-      "floor": "church/stone_flags"
+      "floor": "castle/flagstones"
     },
     {
       "id": "spires_keep_roof",
@@ -83,7 +83,7 @@
         ]
       ],
       "floor": "village/roof_slate",
-      "walls": "church/stone_wall"
+      "walls": "castle/ashlar"
     },
     {
       "id": "spires_bridge",
@@ -98,7 +98,7 @@
           6
         ]
       ],
-      "floor": "church/stone_flags"
+      "floor": "castle/flagstones"
     },
     {
       "id": "spires_north_peak",
@@ -113,8 +113,8 @@
           10
         ]
       ],
-      "floor": "church/stone_flags",
-      "walls": "church/stone_wall"
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar"
     }
   ],
   "spawns": {

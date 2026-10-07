@@ -188,6 +188,21 @@ god, Baba Lysaga's hut on its stump, Van Richten's tower, a rowboat, net racks a
 sheds and shrines built as houses. The region docs ask for further themes (marsh, mountain, cave, vineyard, tower
 interiors); those are still to do.
 
+## Castle Ravenloft
+
+The castle's floors are its own flagstones and its walls gothic ashlar (`castle/*` textures, by place and on the areas
+that named church stone); the courtyard is broken cobbles; the audience hall and King's Hall are black marble under
+red bat damask, as are Strahd's and the brides' rooms. Its signature pieces have their own art (snake_case art ids,
+the names the 3D pieces take in `models3d`): `throne`, `gargoyle` (the roof guardians), `black_carriage` and
+`black_horse`, `saint_defaced`, `bone_throne`, `bone_chair` and `bone_table` (the hall of bones), `iron_maiden`,
+`reliquary_sealed`, `coffin_plinth` (Strahd's coffin), `statue_young_strahd`, `heart_of_sorrow`, `lift_cage`,
+`cauldron`, `stone_font`, `glass_vessels`, `bat_perch`, `gold_heap` and `skull_chandelier` standing;
+`portrait_tatyana`, `portrait_strahd`, `portrait_jester`, `dragon_skull` (Argynvost's), `stone_faces`, `names_wall`,
+`bronze_plaque`, `banner_regiment`, `key_board`, `wine_rack_bricked`, `great_doors` and `cobwebs` on walls;
+`drawbridge`, `roof_hatch`, `gold_spill` and `blood_pool` on the floor. Exits named "great doors" draw the keep's
+doors, one pair across the two squares of its doorway (catalog `double_doors`; inside the keep that doorway stays
+open), a hatch is a hatch in the floor, and the lift cage's exit draws nothing (the cage beside it is the way down).
+
 ## Not right yet
 
 - A long piece (a bar, a pew) drawn on each square of a run reads as a row of pieces rather than one long one.

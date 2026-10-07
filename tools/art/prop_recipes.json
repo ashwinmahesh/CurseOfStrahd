@@ -1054,6 +1054,9 @@
         "portrait_strahd",
         "portrait_jester",
         "dragon_skull"
+      ],
+      "redone": [
+        "dragon_skull"
       ]
     },
     "castle_wall_b": {
@@ -1072,6 +1075,9 @@
         "key_board",
         "wine_rack_bricked",
         "great_doors"
+      ],
+      "redone": [
+        "names_wall"
       ]
     },
     "castle_floor": {
@@ -1080,6 +1086,9 @@
         "drawbridge",
         "roof_hatch",
         "gold_spill",
+        "blood_pool"
+      ],
+      "redone": [
         "blood_pool"
       ]
     },
@@ -1154,6 +1163,27 @@
         "statue_young_strahd",
         "statue_young_strahd_back"
       ]
+    },
+    "dragon_skull": {
+      "view": "wall",
+      "items": [
+        "dragon_skull"
+      ],
+      "aspect": "4:3"
+    },
+    "names_wall": {
+      "view": "wall",
+      "items": [
+        "names_wall"
+      ],
+      "aspect": "3:2"
+    },
+    "blood_pool": {
+      "view": "floor",
+      "items": [
+        "blood_pool"
+      ],
+      "aspect": "1:1"
     }
   },
   "props": {
@@ -2678,7 +2708,7 @@
       "saturate": 1.15
     },
     "dragon_skull": {
-      "subject": "a huge horned dragon skull mounted on a dark stone wall plaque",
+      "subject": "the bare bleached-bone skull of a great dragon with empty eye sockets and no flesh, long snout full of fangs, swept-back horns and a bony frill, mounted on a dark stone wall plaque",
       "height": 0.9
     },
     "cobwebs": {
@@ -2699,7 +2729,7 @@
       "height": 0.6
     },
     "names_wall": {
-      "subject": "a stone wall carved with long rows of names in tiny unreadable script",
+      "subject": "a section of grey stone crypt wall whose whole face is carved with many rows of names in deep-cut capital letters, the letters clearly visible",
       "height": 1.0
     },
     "key_board": {
@@ -2730,7 +2760,7 @@
       "mount": "floor"
     },
     "blood_pool": {
-      "subject": "a dark pool of spilled blood",
+      "subject": "a dark red pool of spilled blood with a few splashes, on its own with nothing under it",
       "width": 0.9,
       "mount": "floor",
       "saturate": 1.2
