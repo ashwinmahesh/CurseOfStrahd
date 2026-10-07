@@ -8,7 +8,7 @@ extends Node
 ## screen pass: no outlines, mist, land fade or grade, to see the plants' own colours), LAND_BENCH=1 (time the
 ## place with each group of plants hidden in turn, round after round, instead of shooting it), LAND_NO_FLORA=1 (the
 ## Modern look without its trees and plants: the old trees, for before-and-after pairs), LAND_NO_RELIEF=1 (without
-## the shaped ground), LAND_GIF=n (n frames a
+## the shaped ground), LAND_CLAY=1 (the shaped ground in plain clay), LAND_GIF=n (n frames a
 ## tenth of a second apart, numbered, to show the wind).
 ## The road and village shots stand the party where the light lane's look_capture does, so frames compare across lanes.
 
@@ -27,6 +27,7 @@ const SHOTS := {
 		"zoom": 26.0},
 	"road_ruts": {"loc": "into_the_mists_road", "hour": 12, "cells": [[2, 15], [3, 15], [2, 16], [3, 14]],
 		"zoom": 8.0, "look": [-4.0, 15.5]},
+	"crossroads_dusk": {"loc": "svalich_crossroads", "hour": 18, "zoom": 11.0},
 	"road_fade": {"loc": "into_the_mists_road", "hour": 12, "cells": [[15, 17], [14, 17], [15, 16], [14, 16]]},
 	"village_dusk": {"loc": "village_of_barovia", "hour": 18},
 	"village_far": {"loc": "village_of_barovia", "hour": 12, "zoom": 22.0},
@@ -116,6 +117,11 @@ func _build(shot: Dictionary) -> void:
 		view.rig.global_position = Vector3(float(at[0]), 0.0, float(at[1]))
 	if OS.get_environment("LAND_RAW") != "":
 		view.post.visible = false
+	if OS.get_environment("LAND_CLAY") != "" and view.atmosphere.land != null:
+		# The shaped ground in plain clay, to see its shape without the texture.
+		var clay := Look.cel("stone")
+		for n in view.atmosphere.land.root.find_children("Ground*", "MeshInstance3D", true, false):
+			(n as MeshInstance3D).material_override = clay
 
 
 ## Times the place with each group of the land's plants hidden in turn, over several rounds, and prints the quickest

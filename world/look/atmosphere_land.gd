@@ -63,17 +63,17 @@ static func build(board_: ArenaBoard, mood: Dictionary, rng_: RandomNumberGenera
 	l._void_land = str(l.spec.get("void", "land")) == "land"
 	l._classify()
 	l._distances()
+	var loc := Compendium.shared().get_entry("locations", board_.place) if board_.place != "" \
+		and Compendium.shared().has("locations", board_.place) else {}
 	if GroundRelief.enabled():
-		l.relief = GroundRelief.build(board_)
+		l.relief = GroundRelief.build(board_, loc)
 		l._find_roads()
 	l._terrain()
 	if l.relief != null:
-		var shaped := l.relief.mesh(Look.cel_textured(str(l.spec.get("ground", "village/grass"))))
+		var shaped := l.relief.meshes(Look.cel_textured(str(l.spec.get("ground", "village/grass"))))
 		if shaped != null:
 			l.root.add_child(shaped)
 	if Flora.enabled():
-		var loc := Compendium.shared().get_entry("locations", board_.place) if board_.place != "" \
-			and Compendium.shared().has("locations", board_.place) else {}
 		l.flora = Flora.for_place(board_, Atmosphere.mood_for(board_.place, loc) if not loc.is_empty() else "", mood)
 		l._flora_board_trees()
 		l.flora.dress_map(board_, l.root, l.map_y)
