@@ -31,6 +31,9 @@ func _strahd(c: Combatant) -> bool:
 func target_bonus(c: Combatant, t: Combatant) -> float:
 	if not _strahd(c):
 		return 0.0
+	# He knows an Echo Knight's echo for the image it is.
+	if EchoKnight.is_echo(t):
+		return -3.0
 	var bonus := clampf((40.0 - float(t.creature.hp)) / 10.0, 0.0, 3.0)
 	if carries_treasure(t):
 		bonus += 4.0

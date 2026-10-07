@@ -12,7 +12,7 @@ signal round_started(round: int)
 signal menu_requested
 
 ## Seconds per square for a token moving on the board (owner 2026-10-06: half the old speed, it read unnaturally fast).
-const STEP_TIME := 0.26
+const STEP_TIME := 0.37   # seconds a square (owner 2026-10-07: about 30% slower than 0.26)
 const AI_PAUSE := 0.35
 ## How long damage and healing numbers stay over a creature.
 const FLOAT_TIME := 2.4
@@ -32,6 +32,8 @@ var overlay: GridOverlay
 var field: FieldView
 ## Spell and ability effects (world/combat/fx/spell_fx.gd).
 var fx: SpellFx
+## What enemies shout and creatures sound like (world/combat/combat_barks.gd).
+var barks: CombatBarks
 var rig: CameraRig
 var hud: CombatHud
 var tokens: Dictionary = {}
@@ -81,6 +83,8 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	add_child(field)
 	fx = SpellFx.new()
 	add_child(fx)
+	barks = CombatBarks.new()
+	add_child(barks)
 	hud = CombatHud.new()
 	add_child(hud)
 	hud.build(e, catalog)
@@ -950,7 +954,11 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		return
 	if kind == "place" and (t == null or not c.hostile_to(t.combatant)):
 		var rng := int(selected.get("range", 0))
-		var ok := hover_cell.x >= 0 and e.grid.distance_ft(c.cell, c.size_cells, hover_cell, 1) <= rng
+		# Measured from an Echo Knight's echo when the action moves it.
+		var src := e.get_c(str(selected.get("from", "")))
+		if src == null:
+			src = c
+		var ok := hover_cell.x >= 0 and e.grid.distance_ft(src.cell, src.size_cells, hover_cell, 1) <= rng
 		overlay.show_cells("area", [hover_cell] if hover_cell.x >= 0 else [])
 		hud.show_tooltip(str(selected["label"]), ["Click a square to place it (or an enemy to put it beside them)" if ok else "Out of range (%d ft)" % rng], [], at)
 		return
@@ -1003,6 +1011,18 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 
 # --- Playing events -------------------------------------------------------------------------------
 
+## The damage `id` takes from the event at `at` (an attack's blow), or -1 when none follows before the next action.
+static func _damage_after(events: Array, at: int, id: String) -> int:
+	for i in range(at + 1, events.size()):
+		var ev := events[i] as Dictionary
+		var kind := str(ev["type"])
+		if kind == "damage" and str(ev["id"]) == id:
+			return int(ev["amount"])
+		if kind in ["attack", "spell", "ability", "move", "turn"]:
+			break
+	return -1
+
+
 ## Where a token stands: its square's centre, raised onto the mount's back for a rider.
 func _token_spot(c: Combatant, cell: Vector2i) -> Vector3:
 	var p := board.cell_center(cell, c.size_cells)
@@ -1018,7 +1038,9 @@ func _play_events() -> void:
 	var walking: Dictionary = {}
 	# Who just played their attack as a spell gesture: the spell's own attack rolls that follow don't replay it.
 	var cast_by := ""
+	var ev_at := -1   # where `ev` is in `events`, for what follows it
 	for ev in events:
+		ev_at += 1
 		if _closed:
 			return   # the story took the fight back mid-way: its tokens may be gone
 		var kind := str(ev["type"])
@@ -1041,7 +1063,10 @@ func _play_events() -> void:
 				await tw.finished
 			"attack":
 				_stop_walking(walking)
-				var a := _tok(str(ev["attacker"]))
+				# An Echo Knight's blow struck from its echo plays on the echo.
+				var a := _tok(str(ev.get("from", ev["attacker"])))
+				if a == null:
+					a = _tok(str(ev["attacker"]))
 				var d := _tok(str(ev["target"]))
 				if a != null and d != null:
 					# Advantage or Disadvantage on the roll shows over the attacker, with its reason.
@@ -1077,7 +1102,15 @@ func _play_events() -> void:
 						await tw2.finished
 						if not acue.is_empty() and bool(ev["hit"]):
 							fx.on_hit(acue, a, d, bool(ev.get("critical", false)))
-					Audio.sfx(("crit" if bool(ev.get("critical", false)) else "hit") if bool(ev["hit"]) else "swing")
+					# A blow sounds by what struck and how hard it landed (CombatSfx); a spell's missile or a magic touch
+					# already sounded as its effect landed.
+					if not bool(ev["hit"]):
+						Audio.sfx("swing")
+					elif not flew and not str(ev.get("action", "")).begins_with("spell:") and (acue.is_empty() or str(acue["flavour"]) == "steel"):
+						CombatSfx.hit(CombatSfx.hit_kind(a.combatant, str(ev.get("action", ""))), _damage_after(events, ev_at, d.combatant.id),
+							d.combatant, bool(ev.get("critical", false)))
+					if bool(ev["hit"]):
+						barks.bark(a.combatant, "strike")
 					if not bool(ev["hit"]):
 						_float(d, "miss", "parchment")
 					elif bool(ev.get("critical", false)):
@@ -1089,6 +1122,8 @@ func _play_events() -> void:
 					t.hurt()
 					_float(t, ("CRIT %d" if bool(ev.get("critical", false)) else "-%d") % int(ev["amount"]), "vampire_red", 64)
 					t.refresh()
+					if t.combatant.creature.hp > 0 and CombatSfx.heavy(int(ev["amount"]), t.combatant.creature.max_hp()):
+						barks.bark(t.combatant, "hurt")
 					await get_tree().create_timer(0.35 * GameSettings.combat_pace()).timeout
 			"heal":
 				var th := _tok(str(ev["id"]))
@@ -1113,6 +1148,7 @@ func _play_events() -> void:
 					if kind == "death" and tc.combatant.side == &"enemy":
 						Audio.sfx("enemy_death")
 						Audio.sfx("thud")
+						barks.bark(tc.combatant, "death")
 						_narrate("combat:kill", null, tc.combatant)
 					elif kind == "death" and tc.combatant.side == &"party":
 						_narrate("death:" + tc.combatant.id, tc.combatant, null)
@@ -1120,12 +1156,14 @@ func _play_events() -> void:
 						_float(tc, "✓" if bool(ev["success"]) else "✗", "bile" if bool(ev["success"]) else "vampire_red")
 			"spell":
 				_stop_walking(walking)
-				Audio.sfx("spell")
 				var caster := _tok(str(ev["caster"]))
 				cast_by = ""
 				fx.end_volley()
-				# How the spell looks (art/vfx/effects.json); {} plays only the flash and the floor marks.
+				# How the spell looks (art/vfx/effects.json); {} plays only the flash and the floor marks. A cue's sounds
+				# play with its effect (CombatSfx); without one, the plain spell sound.
 				var cue := SpellFx.spell_cue(str(ev["spell"])) if SpellFx.enabled else {}
+				if cue.is_empty() or caster == null:
+					Audio.sfx("spell")
 				if caster != null:
 					caster.flash((cue["colours"] as Dictionary)["glow"] if not cue.is_empty() else Look.color("lilac"), 0.3)
 					var aim := _spell_aim(ev, caster)
@@ -1245,6 +1283,9 @@ func _play_events() -> void:
 				fx.end_volley()
 				_stop_walking(walking)
 				_refresh_all()
+				var tn := _tok(str(ev["id"]))
+				if tn != null:
+					barks.bark(tn.combatant, "battle")   # a kind of enemy cries out the first time one acts
 			"round":
 				if not _opening:   # the opening beat shows "Roll Initiative", then round 1
 					hud.banner("Round %d" % int(ev["round"]), 1.0)
@@ -1306,7 +1347,8 @@ func _narrate(key: String, actor: Combatant, target: Combatant) -> void:
 	if text != "":
 		e.log.add("narr", text, "")
 		hud.refresh_log()
-		VoiceOver.say(VoiceOver.NARRATOR, text)
+		if VoiceOver.say(VoiceOver.NARRATOR, text) > 0.0:
+			barks.hush()   # the Narrator speaks over no one
 
 
 func _stop_walking(walking: Dictionary) -> void:

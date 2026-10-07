@@ -1,0 +1,47 @@
+{
+  "id": "booming_blade",
+  "name": "Booming Blade",
+  "source": {
+    "book": "TCoE",
+    "edition": "2014",
+    "note": "Entered from knowledge of Tasha's Cauldron of Everything (first printed in Sword Coast Adventurer's Guide), a 2014-rules spell the owner added on 2026-10-07; no 2024 book reprints it. Check every number against the owner's copy."
+  },
+  "level": 0,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "s": true,
+    "m": "a melee weapon worth at least 1 SP",
+    "m_cost_gp": 0.1
+  },
+  "duration": {
+    "kind": "rounds",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "enemy",
+    "count": 1,
+    "within": 5,
+    "description": "One creature within 5 feet, struck with the component weapon."
+  },
+  "cantrip_scaling": {
+    "damage": "1d8",
+    "text": "Extra Thunder damage on a hit, none before level 5: 1d8 at level 5, 2d8 at 11, 3d8 at 17. The damage for moving grows with it: 1d8, then 2d8, 3d8 and 4d8."
+  },
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "A melee weapon attack that wraps the target in thunder: if it moves of its own will before your next turn, it takes Thunder damage.",
+  "text": "Make one melee weapon attack against a creature within 5 feet, with the weapon you're casting through (it's the spell's material component) and that weapon's usual attack roll and damage. If it hits, thunder clings to the target until your next turn starts; should the target choose to move 5 feet or more in that time, the thunder bursts for 1d8 Thunder damage and the spell is over. At character level 5 the hit adds 1d8 Thunder damage and the burst becomes 2d8; at level 11 these are 2d8 and 3d8, and at level 17 3d8 and 4d8."
+}

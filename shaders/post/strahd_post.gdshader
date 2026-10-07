@@ -28,6 +28,11 @@ uniform float dither_strength : hint_range(0.0, 0.2) = 0.045;
 uniform float pixel_size : hint_range(1.0, 6.0) = 2.0;
 uniform bool outlines = true;
 uniform float outline_width : hint_range(0.5, 4.0) = 1.5;
+// The Modern finish (Improvement Ideas W15) keeps the world's ink lines to silhouettes against what's behind them, and
+// lighter, or leaves them off, so the 2D characters' ink stands apart from the lit 3D world: no lines where faces
+// meet at an angle, and the lines' strength.
+uniform bool outline_creases = true;
+uniform float outline_strength : hint_range(0.0, 1.0) = 1.0;
 uniform float depth_threshold = 0.06;
 uniform float normal_threshold = 0.55;
 uniform vec3 outline_color : source_color = vec3(0.051, 0.039, 0.071);
@@ -82,6 +87,18 @@ uniform float saturation = 1.0;
 uniform vec3 grade_shadows : source_color = vec3(0.5);
 uniform vec3 grade_lights : source_color = vec3(0.5);
 uniform float grade_amount : hint_range(0.0, 1.0) = 0.0;
+// The Modern finish's grade (Improvement Ideas W16) in place of the gradient map: the shade is pulled towards the
+// place's shadow colour and drained of colour and its blacks deepened, while lit ground keeps the colour of what
+// lights it, so lamplight pools warm against cool shade instead of one hue washing over the whole scene.
+uniform bool tone_split = false;
+// The colour the shade takes (the place's own, Atmosphere.MODERN_TONE and the mood's "tone"), and how strongly.
+uniform vec3 tone_shade : source_color = vec3(0.11, 0.18, 0.3);
+uniform float tone_amount : hint_range(0.0, 1.0) = 0.55;
+// How much colour the shade keeps (lit ground keeps all of its), how deep the blacks sink, and the brightness where
+// shade turns into light.
+uniform float tone_shade_saturation : hint_range(0.0, 1.5) = 0.6;
+uniform float tone_black : hint_range(0.0, 0.2) = 0.03;
+uniform float tone_pivot : hint_range(0.05, 1.0) = 0.42;
 // The screen's edges sink towards this colour.
 uniform float vignette : hint_range(0.0, 1.0) = 0.0;
 uniform vec3 vignette_color : source_color = vec3(0.051, 0.039, 0.071);
@@ -124,11 +141,22 @@ float hash(vec2 p) {
 	return fract(p.x * p.y);
 }
 
+// The Modern finish's noise (Improvement Ideas W17): the same smooth value noise read from a tile of random values
+// (Look.noise_texture) in one filtered fetch instead of four hashes, which made the mist, cloud shadows and ground
+// patches a fifth of the frame. Classic keeps the hashes (frozen).
+uniform sampler2D noise_tex : filter_linear, repeat_enable;
+uniform bool fast_noise = false;
+const float NOISE_SIZE = 256.0;
+
 // Smooth value noise in 0..1.
 float vnoise(vec2 p) {
 	vec2 i = floor(p);
 	vec2 f = fract(p);
 	vec2 u = f * f * (3.0 - 2.0 * f);
+	if (fast_noise) {
+		// Bilinear filtering between the lattice values at the smoothstepped position is the same smooth interpolation.
+		return texture(noise_tex, (i + u + 0.5) / NOISE_SIZE).r;
+	}
 	float a = hash(i);
 	float b = hash(i + vec2(1.0, 0.0));
 	float c = hash(i + vec2(0.0, 1.0));
@@ -197,11 +225,11 @@ void fragment() {
 			if ((d - d0) / max(d0, 0.001) > depth_threshold) {
 				edge = 1.0;
 			}
-			if (dot(n0, normal_at(uv + offs[i])) < normal_threshold && d0 < 60.0) {
+			if (outline_creases && dot(n0, normal_at(uv + offs[i])) < normal_threshold && d0 < 60.0) {
 				edge = max(edge, 0.85);
 			}
 		}
-		col = mix(col, to_srgb(outline_color), edge);
+		col = mix(col, to_srgb(outline_color), edge * outline_strength);
 	}
 
 	// The world point behind this pixel, and the camera.
@@ -244,7 +272,21 @@ void fragment() {
 	col = (col - 0.5) * contrast + 0.5;
 	float l = dot(col, vec3(0.299, 0.587, 0.114));
 	col = mix(vec3(l), col, saturation);
-	if (grade_amount > 0.0) {
+	if (tone_split) {
+		col = max(col - tone_black, vec3(0.0)) / (1.0 - tone_black);
+		float lum = dot(col, vec3(0.299, 0.587, 0.114));
+		float lit = smoothstep(tone_pivot * 0.3, tone_pivot * 1.6, lum);
+		float chroma = max(col.r, max(col.g, col.b)) - min(col.r, min(col.g, col.b));
+		// Warm light (a lantern's pool, a fire, a lit window) keeps its own colour, as does anything strongly
+		// coloured and water: only the cool shade takes the place's shadow colour.
+		float warm = smoothstep(0.015, 0.09, col.r - col.b);
+		float keep = max(max(smoothstep(0.12, 0.35, chroma), warm), own_colour * 0.8);
+		vec3 sh = to_srgb(tone_shade);
+		vec3 tint = sh / max(dot(sh, vec3(0.299, 0.587, 0.114)), 0.05);
+		col = mix(col, col * tint, clamp(tone_amount * (1.0 - lit) * (1.0 - keep * 0.75), 0.0, 1.0));
+		float l2 = dot(col, vec3(0.299, 0.587, 0.114));
+		col = mix(vec3(l2), col, mix(tone_shade_saturation, 1.0, max(lit, keep)));
+	} else if (grade_amount > 0.0) {
 		// A gradient map: brightness runs from the vignette's near-black through the place's shadow colour to its
 		// light colour, so a scene keeps to one family of hues. Strongly coloured light (a lantern, a fire) keeps
 		// more of its own colour.

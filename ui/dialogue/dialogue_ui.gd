@@ -4,7 +4,9 @@ extends CanvasLayer
 ## their skill checks (who rolls, the bonus and the chance), the roll shown in the open, notices (journal, items,
 ## money, milestones), and the Narrator in italics with their own portrait. It plays a DialogueRunner and never
 ## decides anything itself. Keys 1-9 pick options; Continue, a click anywhere, Space, Enter or Escape continues (the
-## last line ends it); controller: d-pad and A.
+## last line ends it); controller: d-pad and A. A `cutscene` fills the screen with its picture (ui/cutscene/cutscene_view.gd):
+## the lines that follow read as captions on it, with Skip and Esc to pause, and the box comes back over the picture
+## for anything to choose or note.
 
 signal ended(combat: String)
 ## A `shop` line: the game opens the shop for `npc` and calls resume() when it closes.
@@ -38,6 +40,8 @@ var _frame_art: Control
 var _options_scroll: ScrollContainer
 ## The options never take more than this share of the screen's height; past it they scroll.
 const OPTIONS_SHARE := 0.45
+## The cutscene's picture behind the conversation, while one is up (`cutscene <id>` until `cutscene end`).
+var cutscene: CutsceneView = null
 
 
 func _init() -> void:
@@ -298,6 +302,11 @@ func _show(beat: Dictionary) -> void:
 		VoiceOver.say(VoiceOver.beat_voice(beat), str(beat["text"]))
 	else:
 		VoiceOver.stop()
+	if cutscene != null and str(beat["kind"]) in ["line", "notice", "check", "options", "pick_member"]:
+		# Over a cutscene a line is a caption on the picture; anything to choose or note comes up in the box.
+		var captioned := str(beat["kind"]) == "line"
+		_panel.visible = not captioned
+		cutscene.show_caption(captioned)
 	match str(beat["kind"]):
 		"end":
 			ended.emit(str(beat.get("combat", "")))
@@ -311,7 +320,9 @@ func _show(beat: Dictionary) -> void:
 			_waiting_continue = true
 			if beat.has("card"):
 				Audio.sfx("card")
-				_spread.add_child(_tarokka_card(str(beat["card"]), str(beat.get("slot", ""))))
+				var card := _tarokka_card(str(beat["card"]), str(beat.get("slot", "")))
+				_spread.add_child(card)
+				UiMotion.flip_in(card)
 		"check":
 			var colour := "bile" if bool(beat["success"]) else "vampire_red"
 			var said := str(beat.get("said", ""))
@@ -342,6 +353,10 @@ func _show(beat: Dictionary) -> void:
 			stage_requested.emit(str(beat["what"]), str(beat["npc"]), str(beat["at"]))
 			_show(runner.next())
 			return
+		"cutscene":
+			_cutscene_beat(beat)
+			_show(runner.next())
+			return
 		"shop":
 			visible = false
 			shop_requested.emit(str(beat["npc"]))
@@ -367,12 +382,16 @@ func _line(beat: Dictionary) -> void:
 		_name.text = "Narrator"
 		_text.text = "[i][color=#%s]%s[/color][/i]" % [Look.color("parchment").to_html(false), _esc(str(beat["text"]))]
 		_remember(_text.text)
+		if cutscene != null:
+			cutscene.caption("", _text.text)
 		return
 	_name.text = str(beat["name"])
 	_show_portrait(str(beat["portrait"]))
 	var colour := "moonlight" if bool(beat["party"]) else "vellum"
 	_text.text = "[color=#%s]%s[/color]" % [Look.color(colour).to_html(false), _esc(str(beat["text"]))]
 	_remember("[color=#%s]%s:[/color] %s" % [Look.color("gilt_light").to_html(false), _esc(str(beat["name"])), _text.text])
+	if cutscene != null:
+		cutscene.caption(str(beat["name"]), _text.text)
 
 
 ## The speaker's portrait (art/portraits/<id>.png) in the gilt frame; none if there's no such art.
@@ -392,6 +411,8 @@ func _show_options(options: Array) -> void:
 		var opt := o as Dictionary
 		var b := Button.new()
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		# A long option wraps onto more lines inside the box instead of widening it past the screen's edge.
+		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		b.add_theme_font_size_override("font_size", 17)
 		var label := str(opt["label"])
 		var check := opt["check"] as Dictionary
@@ -515,6 +536,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event is InputEventKey or event is InputEventMouseButton:
 			get_viewport().set_input_as_handled()
 		return
+	if cutscene != null and cutscene.captioning:
+		# A cutscene's caption: Esc pauses it (Resume, Skip); nothing else moves on while it's paused.
+		if event.is_action_pressed(&"combat_cancel"):
+			get_viewport().set_input_as_handled()
+			cutscene.set_paused(not cutscene.paused)
+			return
+		if cutscene.paused:
+			if event is InputEventKey or event is InputEventMouseButton:
+				get_viewport().set_input_as_handled()
+			return
 	if _waiting_continue:
 		# A click that no part of the screen took (the Tarokka cards) continues too.
 		var go := event.is_action_pressed(&"combat_confirm") or event.is_action_pressed(&"combat_end_turn") \
@@ -531,6 +562,46 @@ func _unhandled_input(event: InputEvent) -> void:
 			if idx < _option_buttons.size():
 				get_viewport().set_input_as_handled()
 				_choose(idx)
+
+
+## A `cutscene` beat: its picture fills the screen under the box (fading over any picture before it); an empty image
+## (`cutscene end`) fades it away and the box is back.
+func _cutscene_beat(beat: Dictionary) -> void:
+	var path := str(beat.get("image", ""))
+	if path == "":
+		if cutscene != null:
+			var old := cutscene
+			cutscene = null
+			_panel.visible = true
+			old.fade_out(old.queue_free)
+		return
+	if cutscene == null:
+		cutscene = CutsceneView.new()
+		add_child(cutscene)
+		move_child(cutscene, _panel.get_index())   # over the scene's dim, under the box and the History
+		cutscene.clicked.connect(func() -> void:
+			if _waiting_continue and not history_open() and not cutscene.paused:
+				_advance())
+		cutscene.skip_requested.connect(skip_cutscene)
+	cutscene.show_image(path, beat.get("focus", Vector2(0.5, 0.5)) as Vector2)
+
+
+## Skip: the cutscene's lines go by unread (they stay in the History) up to the next choice, note or the end.
+func skip_cutscene() -> void:
+	VoiceOver.stop()
+	var beat := runner.next()
+	for i in 500:
+		match str(beat["kind"]):
+			"line":
+				_line(beat)
+			"stage":
+				stage_requested.emit(str(beat["what"]), str(beat["npc"]), str(beat["at"]))
+			"cutscene":
+				_cutscene_beat(beat)
+			_:
+				break
+		beat = runner.next()
+	_show(beat)
 
 
 func _label(text: String, size: int, colour: String) -> Label:

@@ -1,7 +1,7 @@
 extends Control
 ## The title screen (plan §5.6 Start step): New game (choose up to four from the roster to travel, the rest wait at camp;
-## one custom hero the player makes joins the roster: owner, 2026-10-06), Continue (the newest save), Load, the
-## Phase 2 combat arena, and Quit.
+## one custom hero the player makes joins the roster: owner, 2026-10-06), Continue (the newest save), Load, Skirmish
+## and the Character Lab (ui/skirmish/, with the achievements), the Phase 2 combat arena, and Quit.
 
 
 var _creation: CreationScreen = null
@@ -13,6 +13,10 @@ var _box: VBoxContainer
 var _view := "title"
 
 
+const GAME_SCENE := "res://scenes/game.tscn"
+var _preloading := false           ## the game scene is loading on a worker thread (see _ready)
+
+
 func _ready() -> void:
 	# The title never starts paused: a menu opened in a fight pauses the tree, and a scene change keeps it paused.
 	get_tree().paused = false
@@ -20,9 +24,12 @@ func _ready() -> void:
 	Cursors.install()
 	Cursors.show("pointer")
 	# The window the player picked in Settings, only when this is the game's own title (never a capture inside it).
+	# Also then: the game scene and the scripts it needs (over a second to compile on the Mac Mini) load on a worker
+	# thread while the title is up, so New game and Continue start that much sooner (P3).
 	(func() -> void:
 		if is_inside_tree() and get_tree().current_scene == self:
-			GameSettings.apply_display()).call_deferred()
+			GameSettings.apply_display()
+			_preloading = ResourceLoader.load_threaded_request(GAME_SCENE, "", true) == OK).call_deferred()
 	Audio.play_music("title")
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	var bg := ColorRect.new()
@@ -62,6 +69,7 @@ func _ready() -> void:
 	_box.add_theme_constant_override("separation", 12)
 	add_child(_box)
 	_title()
+	(func() -> void: WhatsNew.show_if_new(self)).call_deferred()   # what changed since the last play (Q2)
 
 
 func _title() -> void:
@@ -93,7 +101,10 @@ func _title() -> void:
 	var load := UiKit.button("Load", _show_loads, 24)
 	load.disabled = slots.is_empty()
 	_box.add_child(load)
+	_box.add_child(UiKit.button("Skirmish and Character Lab", func() -> void: get_tree().change_scene_to_file("res://scenes/skirmish.tscn"), 18))
 	_box.add_child(UiKit.button("Combat arena (Phase 2)", func() -> void: get_tree().change_scene_to_file("res://scenes/combat/arena.tscn"), 18))
+	if WhatsNew.available():
+		_box.add_child(UiKit.button("What's new", func() -> void: WhatsNew.open(self), 18))
 	_box.add_child(UiKit.button("Credits", _credits, 18))
 	_box.add_child(UiKit.button("Quit", func() -> void: get_tree().quit(), 18))
 
@@ -295,6 +306,11 @@ func _show_loads() -> void:
 
 func _exit_tree() -> void:
 	Cursors.uninstall()
+	# The game scene loading in the background is taken in before the title goes, whether for the game (which needs
+	# it anyway) or for quitting (a load the engine's shutdown cuts off reports errors).
+	if _preloading:
+		_preloading = false
+		ResourceLoader.load_threaded_get(GAME_SCENE)
 
 
 ## Escape steps back to the title from the party pick and the load list (the hero creator handles its own).

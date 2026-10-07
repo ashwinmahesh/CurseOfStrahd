@@ -119,6 +119,13 @@ func _card(ch: Character, travelling: bool) -> Control:
 	return card
 
 
+## Picks someone at camp to take a party member's place (a character just made with the party full).
+func pick(ch: Character) -> void:
+	if ch in st.bench and not ch.dead:
+		_picked = ch
+		_draw()
+
+
 ## The party changed: the world swaps the figures, and the screen redraws.
 func _changed() -> void:
 	Audio.sfx("click")

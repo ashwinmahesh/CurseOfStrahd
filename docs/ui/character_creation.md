@@ -53,6 +53,11 @@ to travel ("Travelling with Godrick, Liriel and Thistle"); the **Appearance** st
 Review's party composition counts the companions. A hero can't take any pregen's name, the old four's included
 (`CharacterBuilder.name_problems`). Madam Eva's respec of a custom hero opens the same Appearance step.
 
+The party overview's **Create a character** (owner, 2026-10-07; party_management.md) opens hero mode in a game: the
+strip shows the party they'll join, a name the company has is taken (`CharacterBuilder.taken_names`), portraits other
+custom characters wear are dimmed with their name, Review says where they'll go and the levels waiting, and **Join the
+company** finishes.
+
 ### 2. Class (`cc_02_class`)
 ![Class](wireframes/cc_02_class.svg)
 
@@ -151,7 +156,8 @@ advice, never enforced.
 - Every number opens its breakdown on hover or focus: the engine's `Breakdown.describe()` parts, e.g. "AC 17 =
   Chain Mail 16 + Defense 1", with things that don't count named ("Dexterity: heavy armor").
 - Rule terms (Advantage, Concentration, Weapon Mastery, Heroic Inspiration, Bloodied ...) are links that open
-  nested tooltips; Y twice or right-click pins one; pinned tooltips stack until closed.
+  nested tooltips; clicking a term, right-clicking a card or middle-clicking pins one; pinned tooltips stack until
+  closed (docs/ui/rules_cards.md).
 - Unavailable options stay visible with the reason from `ChoiceOption.reason`; soft warnings show
   `ChoiceOption.warning` with a ~ icon.
 - Controller and keyboard map as in the wireframe. Focus is a thick candle frame plus a ▸ marker. Text scales

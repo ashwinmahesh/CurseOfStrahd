@@ -1,6 +1,9 @@
 extends Node
 ## Runs every tests/unit/test_*.gd and tests/integration/test_*.gd headless. Exits non-zero on any
 ## failure or if no tests ran. Use: make test   (optionally -- --only=<substring> --files=test_a.gd,test_b.gd)
+## make test starts several of these at once (tools/run_tests.py) with --claim=<folder>: each takes the files in
+## --files order, skips any another runner has claimed (a folder per file there, made atomically), and marks where
+## each file starts and ends ("@@ start <file>", "@@ done <file> <ms>") so the driver can keep a file's lines together.
 
 const DIRS := ["res://tests/unit/", "res://tests/integration/"]
 
@@ -14,30 +17,30 @@ func _ready() -> void:
 	GameSettings.path = SaveSystem.save_dir.path_join("settings.cfg")   # never the player's own settings
 	var only := ""
 	var files_only := PackedStringArray()
+	var claim_dir := ""
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--only="):
 			only = arg.get_slice("=", 1)
 		elif arg.begins_with("--files="):
 			files_only = arg.get_slice("=", 1).split(",", false)
+		elif arg.begins_with("--claim="):
+			claim_dir = arg.substr(arg.find("=") + 1)
 	var total := 0
 	var failed: Array[String] = []
-	for dir_path: String in DIRS:
-		var dir := DirAccess.open(dir_path)
-		if dir == null:
-			continue
-		var files := dir.get_files()
-		files.sort()
-		for f in files:
-			if not f.begins_with("test_") or not f.ends_with(".gd"):
-				continue
-			if not files_only.is_empty() and not files_only.has(f):
-				continue
-			var script := load(dir_path + f) as GDScript
-			if script == null or not script.can_instantiate():
-				total += 1
-				failed.append(f)
-				print("  FAIL  ", f, ": script failed to load")
-				continue
+	for path: String in _test_files(files_only):
+		var f := path.get_file()
+		if claim_dir != "":
+			if DirAccess.make_dir_absolute(claim_dir.path_join(f)) != OK:
+				continue   # another runner has it
+			print("@@ start ", f)
+		var started := Time.get_ticks_msec()
+		var data_before := _data_ids()
+		var script := load(path) as GDScript
+		if script == null or not script.can_instantiate():
+			total += 1
+			failed.append(f)
+			print("  FAIL  ", f, ": script failed to load")
+		else:
 			for m in script.get_script_method_list():
 				var method := str(m["name"])
 				if not method.begins_with("test_"):
@@ -47,6 +50,8 @@ func _ready() -> void:
 				total += 1
 				var tc := script.new() as TestCase
 				tc.current_test = "%s:%s" % [f.get_basename(), method]
+				# Each test starts from dice of its own, so it rolls the same whichever process runs it and after what.
+				Dice.reseed(hash(tc.current_test))
 				add_child(tc)
 				await tc.before_each()
 				await tc.call(method)
@@ -60,12 +65,69 @@ func _ready() -> void:
 					failed.append(tc.current_test)
 				tc.queue_free()
 				await get_tree().process_frame
+		_drop_added_data(data_before)
+		if claim_dir != "":
+			print("@@ done %s %d" % [f, Time.get_ticks_msec() - started])
 	Creature.clear_caches()
 	Compendium.release()
 	print("")
 	print("%d tests, %d passed, %d failed" % [total, total - failed.size(), failed.size()])
 	_clear_saves()
-	get_tree().quit(1 if not failed.is_empty() or total == 0 else 0)
+	# One of several runners may find nothing left to claim; the driver checks that the run as a whole ran tests.
+	get_tree().quit(1 if not failed.is_empty() or (total == 0 and claim_dir == "") else 0)
+
+
+## The test files to run: every test_*.gd under DIRS, or those named in `files_only`, in the order given there.
+func _test_files(files_only: PackedStringArray) -> Array[String]:
+	var found := {}
+	for dir_path: String in DIRS:
+		var dir := DirAccess.open(dir_path)
+		if dir == null:
+			continue
+		var files := dir.get_files()
+		files.sort()
+		for f in files:
+			if f.begins_with("test_") and f.ends_with(".gd"):
+				found[f] = dir_path + f
+	var out: Array[String] = []
+	if files_only.is_empty():
+		out.assign(found.values())
+	else:
+		for f in files_only:
+			if found.has(f):
+				out.append(found[f])
+	return out
+
+
+## Every id in the shared Compendium's tables, so what a test file adds there (fixture places, made-up monsters) can
+## be taken out after it. Files share a process, so a fixture left behind turned up in later files' loops over every
+## place (test_skirmish's every-map test, 2026-10-07).
+func _data_ids() -> Dictionary:
+	var comp := Compendium.shared()
+	var tables := {}
+	for t: String in comp.tables:
+		var ids := {}
+		for id: Variant in (comp.tables[t] as Dictionary):
+			ids[id] = true
+		tables[t] = ids
+	return {"compendium": comp, "tables": tables}
+
+
+## Takes out of the Compendium every table and id a test file added (`before` is _data_ids() from before it ran). A
+## file that reloaded the Compendium left nothing of its own in it.
+func _drop_added_data(before: Dictionary) -> void:
+	var comp := Compendium.shared()
+	if comp != before["compendium"]:
+		return
+	var had := before["tables"] as Dictionary
+	for t: String in comp.tables.keys():
+		if not had.has(t):
+			comp.tables.erase(t)
+			continue
+		var table := comp.tables[t] as Dictionary
+		for id: Variant in table.keys():
+			if not (had[t] as Dictionary).has(id):
+				table.erase(id)
 
 
 ## Removes this run's save folder.

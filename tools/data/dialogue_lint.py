@@ -6,6 +6,8 @@ parse_file(path) -> {"nodes": {id: line_no}, "jumps": [(target, line)], "flags_r
                      "flags_set": {id: [where]}, "speakers": [(id, line)], "items": [...], "quests": [...],
                      "skills": [...], "encounters": [...], "selectors": [...], "errors": [str]}
                      (+ "end_games": [where] for each `end_game`, when a file has one)
+                     (+ "approvals": [(companion id, delta, where)] for `approve`, "inspires": [(selector, where)] for
+                     `inspire`, and "approval_terms": [(companion id, rhs or "", where)] for `approval.<id>` in conditions)
 """
 import re
 from pathlib import Path
@@ -25,13 +27,14 @@ RE_CHECK_TAG = re.compile(r"^([A-Za-z][A-Za-z ]*?)\s+DC\s+(\d+)$")
 RE_JUMP = re.compile(r"^->\s*([A-Za-z0-9_:/]+|END)$")
 RE_SET = re.compile(rf"^set\s+({ID})(?:\s*(=|\+=|-=)\s*(.+))?$")
 RE_QUEST = re.compile(rf"^quest\s+({ID})\s+({ID})$")
-RE_GIVE = re.compile(rf"^(give|take)\s+({ID})(?:\s+(\d+))?$")
+RE_GIVE = re.compile(rf"^(give|take)\s+({ID})(?:\s+(\d+))?(?:\s+to\s+([a-z]+:[a-z0-9_]+))?$")
 RE_GOLD = re.compile(r"^gold\s+([+-]\d+)$")
 RE_ATT = re.compile(rf"^attitude\s+({ID})\s+(hostile|indifferent|friendly)$")
 RE_CHECK = re.compile(r"^check\s+([A-Za-z][A-Za-z ]*?)\s+DC\s+(\d+)\s*->\s*([A-Za-z0-9_:/]+|END)(?:\s*\|\s*([A-Za-z0-9_:/]+|END))?$")
 RE_INTERJECT = re.compile(r"^interject\s+([a-z]+:[a-z0-9_]+):\s+(.+)$")
 RE_COMBAT = re.compile(rf"^combat\s+({ID})$")
 RE_NARRATE = re.compile(r"^narrate\s+([a-z0-9_:]+)$")
+RE_CUTSCENE = re.compile(r"^cutscene\s+([a-z][a-z0-9_]*)$")
 RE_IF = re.compile(r"^(if|elif)\s+(.+)$")
 RE_VARIANT = re.compile(r"^\|\s*(?:\[([^\]]+)\]\s*)?(.+)$")
 RE_COOLDOWN = re.compile(r"^(cooldown\s+\d+|once)$")
@@ -46,6 +49,9 @@ RE_END_GAME = re.compile(r"^end_game$")
 RE_GUEST = re.compile(rf"^(join|leave)\s+({ID})$")
 RE_STAGE = re.compile(rf"^(appear\s+({ID})(?:\s+at\s+({ID}))?|vanish\s+({ID}))$")
 RE_FLAG_REF = re.compile(rf"\bflag\.({ID})")
+RE_APPROVE = re.compile(r"^approve\s+((?:[a-z][a-z0-9_]*\s+[+-]\d+\s*)+)(?::\s*(.*))?$")
+RE_INSPIRE = re.compile(r"^inspire\s+(party|[a-z]+:[a-z0-9_]+)(?::\s*(.+))?$")
+RE_APPROVAL_REF = re.compile(r"\bapproval\.([a-z][a-z0-9_]*)(?:\s*(==|!=|>=|<=|>|<)\s*([a-z0-9_+-]+))?")
 CLASS_TAGS = {"fighter", "rogue", "cleric", "wizard", "barbarian", "bard", "druid", "monk", "paladin", "ranger",
               "sorcerer", "warlock"}
 
@@ -58,17 +64,25 @@ def conditions_flags(expr):
     return RE_FLAG_REF.findall(expr)
 
 
+def conditions_approval(expr):
+    """[(companion id, rhs)] for each `approval.<id> [op rhs]` term (rhs "" when there's no operator)."""
+    return [(m.group(1), m.group(3) or "") for m in RE_APPROVAL_REF.finditer(expr)]
+
+
 def parse_file(path):
     text = Path(path).read_text()
     out = {"nodes": {}, "jumps": [], "flags_read": {}, "flags_set": {}, "speakers": [], "items": [], "quests": [],
-           "skills": [], "encounters": [], "selectors": [], "narrates": [], "errors": []}
+           "skills": [], "encounters": [], "selectors": [], "narrates": [], "cutscenes": [], "errors": []}
     node = None
     depth = 0
     narrator_file = "/narrator/" in str(path).replace("\\", "/")
 
-    def read(flags, where):
+    def read(flags, where, expr=None):
         for f in flags:
             out["flags_read"].setdefault(f, []).append(where)
+        if expr:
+            for cid, rhs in conditions_approval(expr):
+                out.setdefault("approval_terms", []).append((cid, rhs, where))
 
     for n, raw in enumerate(text.splitlines(), 1):
         line = raw.strip()
@@ -93,7 +107,7 @@ def parse_file(path):
         m = RE_VARIANT.match(line)
         if m and narrator_file:
             if m.group(1):
-                read(conditions_flags(m.group(1)), where)
+                read(conditions_flags(m.group(1)), where, m.group(1))
             continue
         m = RE_OPTION.match(line)
         if m:
@@ -111,7 +125,7 @@ def parse_file(path):
                     if sk not in SKILLS:
                         out["errors"].append(f"{where}: unknown skill '{cm.group(1)}'")
                 elif tag.startswith("if "):
-                    read(conditions_flags(tag[3:]), where)
+                    read(conditions_flags(tag[3:]), where, tag[3:])
                 elif ":" in tag:
                     out["selectors"].append((tag, where))
                 elif tag.lower() in CLASS_TAGS:
@@ -137,7 +151,7 @@ def parse_file(path):
                 depth += 1
             elif depth == 0:
                 out["errors"].append(f"{where}: elif without if")
-            read(conditions_flags(m.group(2)), where)
+            read(conditions_flags(m.group(2)), where, m.group(2))
             continue
         if line == "else":
             if depth == 0:
@@ -162,6 +176,8 @@ def parse_file(path):
         m = RE_GIVE.match(line)
         if m:
             out["items"].append((m.group(2), where))
+            if m.group(4):
+                out["selectors"].append((m.group(4), where))
             continue
         m = RE_TAROKKA_GIVE.match(line)
         if m:
@@ -202,6 +218,25 @@ def parse_file(path):
         if m:
             out["selectors"].append((m.group(1), where))
             continue
+        if line.startswith("approve"):
+            m = RE_APPROVE.match(line)
+            if not m:
+                out["errors"].append(f"{where}: approve needs companion ids with signed changes, then an optional"
+                                     f" ': reason' (approve thistle +2 kip_smudgewick -1: You freed the wolves): {line}")
+                continue
+            for cid, delta in re.findall(r"([a-z][a-z0-9_]*)\s+([+-]\d+)", m.group(1)):
+                out.setdefault("approvals", []).append((cid, int(delta), where))
+            continue
+        if line.startswith("inspire"):
+            m = RE_INSPIRE.match(line)
+            if not m:
+                out["errors"].append(f"{where}: inspire needs a selector and an optional ': reason'"
+                                     f" (inspire name:thistle: spoke her mind): {line}")
+                continue
+            out.setdefault("inspires", []).append((m.group(1), where))
+            if m.group(1) != "party":
+                out["selectors"].append((m.group(1), where))
+            continue
         m = RE_COMBAT.match(line)
         if m:
             out["encounters"].append((m.group(1), where))
@@ -209,6 +244,10 @@ def parse_file(path):
         m = RE_NARRATE.match(line)
         if m:
             out["narrates"].append((m.group(1), where))
+            continue
+        m = RE_CUTSCENE.match(line)
+        if m:
+            out["cutscenes"].append((m.group(1), where))
             continue
         m = RE_LINE.match(line)
         if m:

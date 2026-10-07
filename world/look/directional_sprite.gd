@@ -33,9 +33,37 @@ var _hit_frame := 2
 ## The one-shot animation playing ("attack", "cast", "hurt", "die"...), "" when none.
 var _one_shot := ""
 
+## Motion between frames (Improvement Ideas G12; the crisp shader applies it): breathing while standing, a lean into the
+## direction of travel and into turns, a bob in the walk, squash and stretch when a walk ends, and a recoil when struck,
+## for every sprite, so the many creatures with only walk and attack frames feel alive. Springs, in the figure's plane.
+const BREATH_PERIOD := 3.4      # seconds a breath
+const BREATH := 0.012           # how much taller at the top of a breath
+const LEAN_PER_SPEED := 0.018   # shear per world unit a second across the screen
+const MAX_LEAN := 0.07
+const TURN_LEAN := 0.5          # lean velocity per unit of turn across the screen
+const BOB := 0.007              # a walk's rise at the passing step, as a share of the height
+const SPRING := 70.0
+const DAMP := 9.0
+## Cosmetic randomness (each figure breathes in its own rhythm).
+static var _rng := RandomNumberGenerator.new()
+var _height := 1.5
+var _time := 0.0
+var _breath_phase := 0.0
+var _lean := 0.0
+var _lean_v := 0.0
+var _squash := Vector2.ONE
+var _squash_v := Vector2.ZERO
+var _push := 0.0
+var _push_v := 0.0
+var _last_pos := Vector3.INF
+var _face_x := 0.0
+var _was_moving := false
+
 ## The sheets a sprite folder may hold, merged in this order (a later sheet's animation replaces an earlier one).
 const SHEETS: Array[String] = ["walk", "attack", "hurt", "ride", "sneak", "cast"]
-## Merged frames per sprite id (frames_for).
+## Merged frames per sprite id (frames_for), held weakly: a character's sheets stay in video memory only while
+## something shows it (Performance pass 2026-10-07: holding every sheet seen made video memory climb from 1.15 GB to
+## 1.84 GB over 12 places and stay there at the title). Leaving a place frees the sheets of everyone no longer shown.
 static var _frames_cache: Dictionary = {}
 
 
@@ -61,6 +89,8 @@ static func create(frames: SpriteFrames, height_units: float, cell_px: int = -1)
 	if cell_px <= 0:
 		cell_px = cell_size(frames)
 	s.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
+	s._height = height_units
+	s._breath_phase = _rng.randf() * TAU
 	setup_material(s)
 	# The figure fills about 89% of its cell (render_walk.py frames it at 1.12x figure height).
 	s.pixel_size = height_units / (cell_px / 1.12)
@@ -86,7 +116,10 @@ static func frames_for(art_id: String) -> SpriteFrames:
 	if HeroLook.known(art_id):
 		return HeroLook.frames_for_art(art_id)
 	if _frames_cache.has(art_id):
-		return _frames_cache[art_id] as SpriteFrames
+		var kept := (_frames_cache[art_id] as WeakRef).get_ref() as SpriteFrames
+		if kept != null:
+			return kept
+		_frames_cache.erase(art_id)
 	var walk_path := "res://art/sprites/%s/walk.tres" % art_id
 	if not ResourceLoader.exists(walk_path):
 		return null
@@ -121,7 +154,8 @@ static func frames_for(art_id: String) -> SpriteFrames:
 		frames.set_meta("hit_frames", hits)
 		if not mirrored.is_empty():
 			frames.set_meta("mirrored", mirrored)
-	_frames_cache[art_id] = frames
+	if frames != null:
+		_frames_cache[art_id] = weakref(frames)
 	return frames
 
 
@@ -165,6 +199,11 @@ static func setup_material(s: SpriteBase3D) -> void:
 	m.set_shader_parameter("ink", Look.color("void"))
 	# A sprite laid flat (the lying view) keeps its rotation; the walking figures billboard round the Y axis.
 	m.set_shader_parameter("billboard", s.billboard != BaseMaterial3D.BILLBOARD_DISABLED)
+	# The Modern finish lights figures by the scene and lets them cast shadows (Improvement Ideas W6) where the
+	# graphics preset has them (not on Low, W17); Classic is frozen as it was.
+	m.set_shader_parameter("lit", Look.modern())
+	if Look.modern() and Graphics.sprite_shadows():
+		s.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	s.material_override = m
 	if s is Sprite3D:
 		bind_sheet(s, (s as Sprite3D).texture)
@@ -211,7 +250,7 @@ func set_step_time(seconds: float) -> void:
 	if seconds <= 0.0 or sprite_frames == null or not sprite_frames.has_animation(&"walk_s"):
 		return
 	var cycle := float(sprite_frames.get_frame_count(&"walk_s")) / maxf(1.0, sprite_frames.get_animation_speed(&"walk_s"))
-	walk_speed = clampf(cycle / (CELLS_PER_CYCLE * seconds), 0.5, 2.5)
+	walk_speed = clampf(cycle / (CELLS_PER_CYCLE * seconds), 0.3, 2.5)
 
 
 ## Plays the attack once toward `facing` (from the saddle when riding and the sheet has it): `struck` fires on the hit
@@ -232,6 +271,7 @@ func cast() -> bool:
 
 ## Flinches from a blow and recovers (no hit frame). False when the sheet has no flinch or the figure is lying down.
 func hurt() -> bool:
+	recoil()
 	if not has_anim(sprite_frames, "hurt") or pose == "down" or _attacking or _one_shot == "die":
 		return false
 	return _play_once("hurt", false)
@@ -297,6 +337,7 @@ func _process(delta: float) -> void:
 	var cam := get_viewport().get_camera_3d()
 	if cam == null:
 		return
+	_move_between_frames(delta, cam)
 	if _one_shot != "":
 		if not moving or _one_shot == "die":
 			return
@@ -340,3 +381,63 @@ func _loop_for() -> String:
 			if has_anim(sprite_frames, "sneak_walk"):
 				return "sneak_walk" if moving else "sneak_idle"
 	return "walk" if moving else "idle"
+
+
+## A recoil when struck: knocked back away from where the figure faces (across the screen) and squashed, springing back.
+## Every sprite (DirectionalSprite.hurt, which CombatToken calls on a hit), with or without drawn flinch frames.
+func recoil() -> void:
+	if pose == "down":
+		return
+	var back := -signf(_face_x) if absf(_face_x) > 0.3 else (1.0 if _rng.randf() < 0.5 else -1.0)
+	_push_v += back * 1.6 * _height
+	_squash_v += Vector2(0.9, -1.4)
+	_lean_v += back * 0.8
+
+
+## The figure's motion between its drawn frames this frame, sent to the crisp shader.
+func _move_between_frames(delta: float, cam: Camera3D) -> void:
+	var dt := clampf(delta, 0.0, 0.05)
+	_time += dt
+	var right := cam.global_basis.x
+	right.y = 0.0
+	right = right.normalized()
+	var pos := global_position
+	var vx := 0.0 if _last_pos == Vector3.INF or dt <= 0.0 else (pos - _last_pos).dot(right) / dt
+	_last_pos = pos
+	# A lean into the way it travels across the screen, and into a turn when it changes facing.
+	var fx := facing.normalized().dot(right) if facing.length_squared() > 0.0001 else 0.0
+	_lean_v += (fx - _face_x) * TURN_LEAN
+	_face_x = fx
+	var lean_to := clampf(vx * LEAN_PER_SPEED, -MAX_LEAN, MAX_LEAN) if pose != "down" else 0.0
+	_lean_v += (-SPRING * (_lean - lean_to) - DAMP * _lean_v) * dt
+	_lean += _lean_v * dt
+	# A walk ends: the weight settles (squash, then back).
+	if _was_moving and not moving and _one_shot == "":
+		_squash_v += Vector2(0.35, -0.6)
+	_was_moving = moving
+	_squash_v += (-SPRING * (_squash - Vector2.ONE) - DAMP * _squash_v) * dt
+	_squash += _squash_v * dt
+	_push_v += (-SPRING * _push - DAMP * _push_v) * dt
+	_push += _push_v * dt
+	var sq := _squash
+	var lift_by := 0.0
+	var anim := str(animation)
+	if not moving and _one_shot == "" and pose != "down" and sprite_frames.get_frame_count(animation) <= 1:
+		# Breathing, for figures whose standing pose is one drawn frame.
+		var b := sin(_time * TAU / BREATH_PERIOD + _breath_phase)
+		sq *= Vector2(1.0 - BREATH * 0.5 * b, 1.0 + BREATH * b)
+	elif moving and anim.begins_with("walk_") and int(sprite_frames.get_meta("anim_set", 1)) < 2:
+		# A bob in the walk, for sheets without one drawn: highest as the legs pass, on the ground at each step.
+		var n := maxf(1.0, float(sprite_frames.get_frame_count(animation)))
+		var phase := TAU * (float(frame) + frame_progress) / n
+		lift_by = BOB * _height * (1.0 + cos(2.0 * phase)) * 0.5
+	var m := material_override as ShaderMaterial
+	if m == null:
+		return
+	var face := cam.global_basis.z
+	face.y = 0.0
+	m.set_shader_parameter("face", face.normalized() if Look.modern() else Vector3.ZERO)
+	m.set_shader_parameter("squash", sq)
+	m.set_shader_parameter("lean", _lean)
+	m.set_shader_parameter("lift", lift_by)
+	m.set_shader_parameter("push", _push)

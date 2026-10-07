@@ -1,21 +1,32 @@
 #!/usr/bin/env python3
-"""make check: the quick check for a branch. CLAUDE.md says when it is enough; make ci still runs before a merge.
+"""make check: the check a lane hands off with; the build thread runs the full suite once per batch of hand-offs.
 
-Reads the files changed since the branch left main (committed, staged, unstaged and untracked) and runs only what
-covers them:
-  docs (*.md, docs/)                       nothing
-  art and audio files, their pipelines     make import
-  data/, narrative/                        make validate, test_data_integrity and the tests that quote a changed id
-  scripts, scenes, shaders, art JSON       make validate, make lint when rules/, combat/ or story/ changed, and the
-                                           tests that use a changed file directly or through one other script
-                                           (a scene in between is free)
-  Makefile targets other than ci's            make -n of the targets the change reaches (a recipe or a variable they
+Reads the files changed since the branch left main (committed, staged, unstaged and untracked) and runs what covers
+them:
+  docs (*.md, docs/)                       nothing, but docs/rules/ and docs/tasks/ run make validate (rules docs)
+  art and audio files, their pipelines     make import, and the tests that name the file, its folder or its art
+                                           collection (art/sprites/, art/portraits/ ...)
+  data/, narrative/                        make validate, test_data_integrity, the tests that quote a changed id and
+                                           the tests that read the changed table ("spells", "locations" ...)
+  tests/saves/ (golden saves)              test_golden_saves
+  scripts, scenes, shaders, art JSON       make validate, make lint, test_scripts_compile (every script compiles, so a
+                                           parse error anywhere fails however far its users are), and the tests up to
+                                           DEPTH scripts away from the change: a test that uses it (1), uses a script
+                                           that does (2), and so on; scenes and resources in between are free.
+                                           Autoload scripts load in every run, so a change to one runs everything
+  Makefile targets other than ci's         make -n of the targets the change reaches (a recipe or a variable they
                                            use); a change to import, validate, lint, test, ci or a variable they
                                            use runs make ci
   project.godot, the test runner, anything not listed: make ci
+DEPTH is 1 by default: the tests that use what changed. Every script compiles whatever the depth, and what a change
+breaks further away is the batch run's to catch. On the 40 merges before 2026-10-07 the median hand-off ran 48% of the
+suite's test time at depth 1, 97% at depth 2 and all of it at 3: the playthrough tests and the spell sweep sit a few
+scripts downstream of nearly everything. DEPTH=all follows every user.
 Lint and tests skip the import (make check has already imported if anything changed since the last one).
-make check [BASE=<branch>] [DRY=1]  (DRY prints the plan only). Stdlib only.
+make check [BASE=<branch>] [DEPTH=n|all] [DRY=1]  (DRY prints the plan only). Stdlib only.
 """
+from __future__ import annotations
+
 import argparse
 import os
 import re
@@ -29,10 +40,14 @@ DOCS = ("docs/", ".gitignore", "skills/")
 ASSET_EXT = {".png", ".jpg", ".jpeg", ".webp", ".svg", ".ogg", ".wav", ".mp3", ".glb", ".gltf", ".blend", ".import",
              ".gpl", ".jsonl", ".gdignore", ".ttf", ".otf"}
 ASSET_DIRS = ("blender/", "tools/art/", "tools/audio/", "tools/ui/", "art/generated/", "art/sourced/")
-CODE_EXT = {".gd", ".tscn", ".tres", ".gdshader"}
-EVERYTHING = ("Makefile", "project.godot", "addons/", "tests/test_runner.", "tools/logcheck.sh", "tools/lint_gd.sh")
+CODE_EXT = {".gd", ".tscn", ".tres", ".gdshader", ".gdshaderinc"}
+EVERYTHING = ("Makefile", "project.godot", "addons/", "tests/test_runner.", "tools/run_tests.py", "tools/logcheck.sh",
+              "tools/lint_gd.sh")
 LINTED = ("rules/", "combat/", "story/")
-MAX_COST = 2  # a test that uses the change (1) or uses a script that does (2); scenes and resources cost nothing
+GOLDEN = "tests/saves/"  # the golden saves: test_golden_saves loads them all (P4)
+RULES_DOCS = ("docs/rules/", "docs/tasks/")  # make validate checks them against the plan and the data (P12)
+DEPTH = 1  # how many scripts away a test may use a change from (see above); None follows every user
+COMPILE_TEST = "tests/unit/test_scripts_compile.gd"
 CI_TARGETS = {"import", "validate", "lint", "test", "ci", "check"}
 
 
@@ -165,12 +180,32 @@ class Index:
                 found.add(p)
         return found
 
+    def mentioning(self, needles: list[str], under: tuple[str, ...] = ("tests/",)) -> set[str]:
+        """Files under `under` whose text contains any of `needles`."""
+        return {p for p in self.files if p.startswith(under) and any(n in self.text[p] for n in needles)}
+
 
 def is_test(path: str) -> bool:
     return path.startswith(TEST_DIRS) and os.path.basename(path).startswith("test_") and path.endswith(".gd")
 
 
-def plan(files: list[str], fork: str) -> dict:
+def reach(index: Index, start: dict[str, int], fork: str, depth: int | None) -> set[str]:
+    """Every file within `depth` scripts of the files in `start` (file -> its cost so far); scenes cost nothing."""
+    cost = dict(start)
+    frontier = list(start)
+    while frontier:
+        nxt = []
+        for p in frontier:
+            for user in index.users(p, read(p, fork)):
+                c = cost[p] + (1 if user.endswith(".gd") else 0)
+                if (depth is None or c <= depth) and c < cost.get(user, 1 << 30):
+                    cost[user] = c
+                    nxt.append(user)
+        frontier = nxt
+    return set(cost)
+
+
+def plan(files: list[str], fork: str, depth: int | None = DEPTH) -> dict:
     kinds = {p: kind(p) for p in files}
     out = {"validate": False, "lint": False, "import": False, "tests": [], "why": [], "dry": []}
     if "Makefile" in kinds:
@@ -183,38 +218,47 @@ def plan(files: list[str], fork: str) -> dict:
         if touches_ci:
             out["why"].append("Makefile (%s)" % ", ".join(names))
         out["dry"] = [] if touches_ci else names
-    if any(k == "everything" for k in kinds.values()):
-        out["tests"] = "all"
-        out["why"] += [p for p, k in kinds.items() if k == "everything" and p != "Makefile"]
-        return out
-    out["import"] = any(k == "asset" for k in kinds.values())
-    out["validate"] = any(k in ("data", "code", "tool") for k in kinds.values())
-    out["lint"] = any(p.endswith(".gd") and p.startswith(LINTED) for p in files)
-    tests: set[str] = set()
     data = [p for p, k in kinds.items() if k == "data"]
     code = [p for p, k in kinds.items() if k == "code"]
-    if data or code:
-        index = Index()
+    assets = [p for p, k in kinds.items() if k == "asset" and p.startswith(("art/", "audio/"))]
+    index = Index() if data or code or assets else None
+    if index is not None:
+        for p in code:
+            if p in index.autoloads:
+                kinds[p] = "autoload"   # it loads in every run, before any test
+    if any(k in ("everything", "autoload") for k in kinds.values()):
+        out["tests"] = "all"
+        out["why"] += [p if k == "everything" else "%s (the autoload %s)" % (p, index.autoloads[p])
+                       for p, k in kinds.items() if k in ("everything", "autoload") and p != "Makefile"]
+        return out
+    out["import"] = any(k == "asset" for k in kinds.values())
+    out["validate"] = any(k in ("data", "code", "tool") for k in kinds.values()) or any(p.startswith(RULES_DOCS) for p in files)
+    out["lint"] = any(p.endswith(".gd") for p in files)
+    tests: set[str] = set()
+    if index is not None:
         tests_all = [p for p in index.files if is_test(p)]
+        start: dict[str, int] = {p: 0 for p in code}
+        if code:
+            tests.add(COMPILE_TEST)
         if data:
             tests.update(p for p in tests_all if p.endswith("/test_data_integrity.gd"))
             for p in data:
                 stem = os.path.splitext(os.path.basename(p))[0]
-                quoted = re.compile(r'["/]%s["./]' % re.escape(stem))
+                quoted = re.compile(r'["/]%s["./:]' % re.escape(stem))
                 tests.update(t for t in tests_all if quoted.search(index.text[t]))
-        # Cheapest way to reach each file from a change: a script costs 1, a scene or resource nothing.
-        cost = {p: 0 for p in code}
-        frontier = list(code)
-        while frontier:
-            nxt = []
-            for p in frontier:
-                for user in index.users(p, read(p, fork)):
-                    c = cost[p] + (1 if user.endswith(".gd") else 0)
-                    if c <= MAX_COST and c < cost.get(user, MAX_COST + 1):
-                        cost[user] = c
-                        nxt.append(user)
-            frontier = nxt
-        tests.update(p for p in cost if is_test(p))
+                if p.startswith("data/"):
+                    # A test (or a test's helper) that reads the whole table: Compendium.all("spells"), table("spells").
+                    for helper in index.mentioning(['"%s"' % p.split("/")[1]]):
+                        start.setdefault(helper, 1)
+        for p in assets:
+            # Tests that check art by its path, its folder or its collection (every sprite walks, every icon credited).
+            parts = p.split("/")
+            needles = ["res://" + p, os.path.basename(p), os.path.dirname(p) + "/", "/".join(parts[:2]) + "/"]
+            for helper in index.mentioning(needles):
+                start.setdefault(helper, 1)
+        tests.update(p for p in reach(index, start, fork, depth) if is_test(p))
+    if any(p.startswith(GOLDEN) for p in files):
+        tests.add("tests/integration/test_golden_saves.gd")
     out["tests"] = sorted(os.path.basename(t) for t in tests if os.path.exists(os.path.join(ROOT, t)))
     return out
 
@@ -225,7 +269,9 @@ def main() -> int:
     ap.add_argument("--base", default="main")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--files", nargs="*", help="check these paths instead of the branch's changes")
+    ap.add_argument("--depth", default=str(DEPTH), help="how many scripts away a test may use a change from, or all")
     a = ap.parse_args()
+    depth = None if a.depth == "all" else int(a.depth)
     if a.files is not None:
         fork, files = "HEAD", a.files
     else:
@@ -233,7 +279,7 @@ def main() -> int:
     if not files:
         print("make check: nothing changed since %s" % a.base)
         return 0
-    p = plan(files, fork)
+    p = plan(files, fork, depth)
     print("make check: %d changed file%s since %s" % (len(files), "" if len(files) == 1 else "s", a.base))
     steps: list[list[str]] = []
     if p["tests"] == "all":

@@ -49,6 +49,10 @@ var miles_since_long_rest: float = 0.0
 var options: Dictionary = {"respec": true}
 ## Exploring spells still running: spell id -> {until: total minute, caster} (Light, Detect Magic, Speak with Dead).
 var active_spells: Dictionary = {}
+## How each of the six companions feels about the party's choices (story/approval.gd): id -> {score, memories}.
+var approval: Dictionary = {}
+## The run's record for the ending (RunStats): each hero's kills, crits, natural 20s and 1s and more, and the gold.
+var run_stats: Dictionary = {}
 
 
 # --- Flags, quests, attitudes ---------------------------------------------------------------------
@@ -172,28 +176,40 @@ func give_item(item_id: String, qty: int, ch: Character = null) -> void:
 	stash.append({"id": item_id, "qty": qty})
 
 
-## Moves one `item_id` from `ch`'s pack to the party stash (kept at safe places: inns, a home base).
-func stash_put(item_id: String, ch: Character) -> bool:
-	for e in ch.inventory:
-		if str(e["id"]) == item_id and int(e["qty"]) > 0:
-			if str(e.get("slot", "")) != "" and int(e["qty"]) <= 1:
-				ch.unequip(str(e["slot"]))
-			e["qty"] = int(e["qty"]) - 1
-			if int(e["qty"]) <= 0:
-				ch.inventory.erase(e)
-			give_item(item_id, 1)
-			return true
-	return false
+## Moves one `item_id` from `ch`'s pack to the party stash (from anywhere; things come out again at safe places, which
+## the inventory screen checks). A magic item keeps its own state there (charges, identified, a lifted curse), and an
+## attunement to it ends.
+func stash_put(item_id: String, ch: Character, entry: Dictionary = {}) -> bool:
+	if not ch.inventory.any(func(e: Dictionary) -> bool: return str(e["id"]) == item_id and int(e["qty"]) > 0 \
+			and (entry.is_empty() or is_same(e, entry))):
+		return false
+	stash_add(item_id, 1, ch.remove_one(item_id, entry))
+	return true
 
 
-## Moves one `item_id` from the stash to `ch`.
-func stash_take(item_id: String, ch: Character) -> bool:
+## Puts `qty` of an item in the party stash; `state` is its own state (an inventory entry or a loot window's find), kept
+## for an item that has any (charges, identified, a junk mark).
+func stash_add(item_id: String, qty: int, state: Dictionary = {}) -> void:
+	var keep := Character.entry_state(state)
+	keep.erase("new")
+	if keep.is_empty() or bool(Compendium.shared().item_data(item_id).get("stackable", false)) or MagicItems.GENERIC_SCROLLS.has(item_id):
+		give_item(item_id, qty)
+		return
+	for i in qty:
+		var e := keep.duplicate(true)
+		e["id"] = item_id
+		e["qty"] = 1
+		stash.append(e)
+
+
+## Moves one `item_id` from the stash to `ch` (from stash entry `entry` when given), with the state it was stashed with.
+func stash_take(item_id: String, ch: Character, entry: Dictionary = {}) -> bool:
 	for e in stash:
-		if str(e["id"]) == item_id and int(e["qty"]) > 0:
+		if str(e["id"]) == item_id and int(e["qty"]) > 0 and (entry.is_empty() or is_same(e, entry)):
 			e["qty"] = int(e["qty"]) - 1
 			if int(e["qty"]) <= 0:
 				stash.erase(e)
-			ch.add_item(item_id, 1)
+			ch.add_item(item_id, 1, Character.entry_state(e))
 			return true
 	return false
 
@@ -273,6 +289,49 @@ func bring_along(ch: Character) -> bool:
 	bench.remove_at(j)
 	party.append(ch)
 	return true
+
+
+## Most custom characters a game has at once (owner, 2026-10-07), the hero made at the start among them.
+const CUSTOM_CAP := 4
+
+
+## The custom characters in the roster (made in the creator: the starting hero and those made from the party screen).
+func custom_members() -> Array[Character]:
+	var out: Array[Character] = []
+	for ch in roster():
+		if bool((ch.build.get("appearance", {}) as Dictionary).get("custom", false)):
+			out.append(ch)
+	return out
+
+
+## Why no more custom characters can be made in this game, or "".
+func create_blocker() -> String:
+	if custom_members().size() >= CUSTOM_CAP:
+		return "This company has %d custom characters, the most one game can have." % CUSTOM_CAP
+	return ""
+
+
+## A character made during the game (the party screen's creator, owner 2026-10-07) joins the roster: the party while
+## there's room, else camp. They start at level 1 and take the levels the party has reached on the level-up screen
+## (levels_waiting). Their id is one nobody in the company has. Returns whether they joined the party.
+func recruit(ch: Character) -> bool:
+	var taken := {}
+	for other in roster():
+		taken[other.id] = true
+	for f in fallen:
+		taken[str(f["id"])] = true
+	var base := ch.id if ch.id != "" else ch.name.to_snake_case()
+	var id := base
+	var n := 2
+	while taken.has(id) or not Compendium.shared().get_entry("pregens", id).is_empty():
+		id = "%s_%d" % [base, n]
+		n += 1
+	ch.id = id
+	if party.size() < PARTY_CAP:
+		party.append(ch)
+		return true
+	bench.append(ch)
+	return false
 
 
 ## A party member goes to camp; the party never goes below one.
@@ -435,13 +494,14 @@ func shop_buy(npc_id: String, item_id: String, ch: Character) -> String:
 	return "Not for sale"
 
 
-## Sells one `item_id` from `ch` to `npc_id`. Returns "" or why not.
-func shop_sell(npc_id: String, item_id: String, ch: Character) -> String:
+## Sells one `item_id` from `ch` to `npc_id`, from `entry` when given (a particular one of several: Sell all junk
+## leaves an equipped one of the same kind alone). Returns "" or why not.
+func shop_sell(npc_id: String, item_id: String, ch: Character, entry: Dictionary = {}) -> String:
 	var offer := shop_offer(npc_id, item_id)
 	if offer < 0.0:
 		return "They don't buy that"
 	for e in ch.inventory:
-		if str(e["id"]) == item_id and int(e["qty"]) > 0:
+		if str(e["id"]) == item_id and int(e["qty"]) > 0 and (entry.is_empty() or is_same(e, entry)):
 			if str(e.get("slot", "")) != "" and int(e["qty"]) <= 1:
 				ch.unequip(str(e["slot"]))
 			e["qty"] = int(e["qty"]) - 1
@@ -522,7 +582,28 @@ func to_dict() -> Dictionary:
 		"location_states": location_states.duplicate(true), "last_check": last_check, "fallen": fallen.duplicate(true),
 		"seed": playthrough_seed, "tarokka": tarokka.duplicate(), "guests": _guests_to_dict(), "shops": shops.duplicate(true),
 		"travel_resume": travel_resume.duplicate(), "active_spells": active_spells.duplicate(true),
-		"options": options.duplicate(), "miles_since_long_rest": miles_since_long_rest}
+		"options": options.duplicate(), "miles_since_long_rest": miles_since_long_rest,
+		"approval": approval.duplicate(true), "run_stats": run_stats.duplicate(true)}
+
+
+## A pregen loaded from a save wears its look as data/pregens has it now. The six on the roster borrowed other
+## characters' art until their own was drawn, and a save made then kept the borrowed `art` (owner report 2026-10-07:
+## Kip in Gunther Arasek's portrait, Thistle in Mirabel's). Only the look changes: the build, levels and choices stay
+## as saved. A custom hero keeps the look the player made.
+static func current_look(ch: Character) -> void:
+	var app := (ch.build.get("appearance", {}) as Dictionary).duplicate()
+	if bool(app.get("custom", false)):
+		return
+	var data := Compendium.shared().get_entry("pregens", ch.id)
+	if data.is_empty():
+		return
+	var now := ((data.get("build", {}) as Dictionary).get("appearance", {}) as Dictionary)
+	for key: String in ["art", "portrait"]:
+		if now.has(key):
+			app[key] = now[key]
+		else:
+			app.erase(key)
+	ch.build["appearance"] = app
 
 
 static func from_dict(d: Dictionary) -> StoryState:
@@ -540,6 +621,8 @@ static func from_dict(d: Dictionary) -> StoryState:
 		var ch := Character.from_dict(m as Dictionary)
 		if ch != null:
 			st.bench.append(ch)
+	for ch in st.roster():
+		current_look(ch)
 	st.leader = int(d.get("leader", 0))
 	st.gold = float(d.get("gold", 0.0))
 	for e: Variant in d.get("stash", []):
@@ -569,7 +652,9 @@ static func from_dict(d: Dictionary) -> StoryState:
 	st.shops = (d.get("shops", {}) as Dictionary).duplicate(true)
 	st.travel_resume = (d.get("travel_resume", {}) as Dictionary).duplicate()
 	st.active_spells = (d.get("active_spells", {}) as Dictionary).duplicate(true)
+	st.run_stats = (d.get("run_stats", {}) as Dictionary).duplicate(true)
 	st.options.merge(d.get("options", {}) as Dictionary, true)
+	st.approval = Approval.from_save(d.get("approval", {}))
 	for g: Variant in d.get("guests", []):
 		var gd := g as Dictionary
 		var cr := StoryState.make_guest(str(gd["npc"]))

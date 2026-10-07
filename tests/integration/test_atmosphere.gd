@@ -46,7 +46,7 @@ func test_mood_names_resolve() -> void:
 func test_moods_use_palette_colours_and_known_weather() -> void:
 	var palette := JSON.parse_string(FileAccess.get_file_as_string("res://art/palette/palette.json")) as Dictionary
 	var colour_keys := ["sky", "ambient", "key", "mist", "mists", "fog", "shadows", "lights", "deep", "shallow", "foam",
-		"glint", "core", "rim", "colour", "splash_colour"]
+		"glint", "core", "rim", "colour", "splash_colour", "shade"]
 	var bad: Array[String] = []
 	for id: String in Atmosphere.moods()["moods"] as Dictionary:
 		var mood := Atmosphere.resolve(id)
@@ -162,3 +162,173 @@ func test_indoors_stays_indoors() -> void:
 	var v := _view("blood_of_the_vine")
 	assert_true(v.atmosphere.land == null, "no land around a room")
 	assert_true(v.atmosphere.weather.follow.is_empty(), "no weather indoors")
+
+
+## The renderer for each finish (Improvement Ideas W2): Classic keeps the renderer it was frozen with whatever the
+## preset, and Modern's presets step up in how many lamps cast shadows.
+func test_graphics_presets() -> void:
+	var was := Look.style()
+	Look.set_style("classic", false)
+	Graphics.set_preset("high", false)
+	assert_eq(Graphics.spec(), Graphics.CLASSIC, "Classic keeps its frozen renderer")
+	assert_eq(Graphics.lamp_shadows(), 0, "no lamp shadows in Classic")
+	Look.set_style("modern", false)
+	var budgets: Array[int] = []
+	for p: String in Graphics.PRESETS:
+		Graphics.set_preset(p, false)
+		budgets.append(Graphics.lamp_shadows())
+	assert_true(budgets[0] < budgets[1] and budgets[1] < budgets[2], "more lamps cast shadows as the preset rises")
+	Graphics.set_preset(Graphics.DEFAULT_PRESET, false)
+	Look.set_style(was, false)
+
+
+## In the Modern finish the lights nearest the party cast shadows, up to the preset's budget, and no others.
+func test_lamps_nearest_the_party_cast_shadows() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	Graphics.set_preset("medium", false)
+	var v := _view("death_house_ground")
+	v.atmosphere.call("_update_lamp_shadows")
+	var focus := v.rig.global_position
+	var shadowed: Array[float] = []
+	var plain: Array[float] = []
+	for n in v.find_children("*", "OmniLight3D", true, false):
+		var l := n as OmniLight3D
+		if not l.is_visible_in_tree() or l.light_energy <= 0.01:
+			continue
+		(shadowed if l.shadow_enabled else plain).append(l.global_position.distance_to(focus))
+	assert_false(shadowed.is_empty(), "the house's lamps cast shadows")
+	assert_eq(shadowed.size(), mini(Graphics.lamp_shadows(), shadowed.size() + plain.size()), "the budget is filled")
+	if not plain.is_empty():
+		assert_true(shadowed.max() <= plain.min(), "the shadows go to the nearest lights")
+	v.queue_free()
+	Graphics.set_preset(Graphics.DEFAULT_PRESET, false)
+	Look.set_style(was, false)
+
+
+## The Modern sun's shadows reach only as far as the camera sees, so they follow the zoom, in the preset's splits.
+func test_sun_shadows_follow_the_zoom() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	Graphics.set_preset("high", false)
+	var v := _view("village_of_barovia")
+	v.rig.distance = 10.0
+	v.atmosphere.call("_fit_sun_shadows")
+	var close := v.atmosphere.sun.directional_shadow_max_distance
+	v.rig.distance = 25.0
+	v.atmosphere.call("_fit_sun_shadows")
+	assert_true(v.atmosphere.sun.directional_shadow_max_distance > close, "zoomed out, the shadows reach further")
+	var splits := DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS if Graphics.sun_splits() == 4 \
+		else DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
+	assert_eq(v.atmosphere.sun.directional_shadow_mode, splits, "the preset's splits")
+	var flat := 0
+	for n in v.board.get_children():
+		if n is MeshInstance3D and str(n.name).begins_with("Floor") and (n as MeshInstance3D).position.y < 0.0 \
+				and (n as MeshInstance3D).cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF:
+			flat += 1
+	assert_true(flat > 0, "level floor squares cast no shadow")
+	v.queue_free()
+	Look.set_style(was, false)
+
+
+## In the Modern finish each light takes its kind (W5): soft or crisp shadows by its size, and a window indoors is the
+## key light coming in, steady, with a shaft of light through the haze.
+func test_lights_take_their_kind() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var v := _view("death_house_ground")
+	var kinds := {}
+	var shafts := 0
+	for n in v.find_children("*", "OmniLight3D", true, false):
+		var l := n as OmniLight3D
+		var kind := str(l.get_meta("light_kind", ""))
+		kinds[kind] = true
+		if kind == "window":
+			if l is CandleFlicker:
+				assert_eq((l as CandleFlicker).flicker, 0.0, "a window's light is steady")
+			if l.find_child("WindowBeam", false, false) != null:
+				shafts += 1
+	for k: String in ["lamp", "window", "lantern"]:
+		assert_true(kinds.has(k), "Death House's %s is dressed as one" % k)
+	assert_true(shafts >= 1, "a window indoors lets a shaft of light in")
+	v.queue_free()
+	Look.set_style(was, false)
+
+
+## A swaying flame drifts a little from where it stands, and comes back to rest when it stops (W5).
+func test_a_swaying_flame_comes_back_to_rest() -> void:
+	var f := CandleFlicker.new()
+	f.position = Vector3(2, 1, 3)
+	add_child(f)
+	f.set_meta("sway", true)
+	var moved := false
+	for i in 40:
+		f._process(0.05)
+		moved = moved or not f.position.is_equal_approx(Vector3(2, 1, 3))
+	assert_true(moved, "it sways while asked")
+	assert_true(f.position.distance_to(Vector3(2, 1, 3)) <= f.sway * 1.5, "but only a little")
+	f.set_meta("sway", false)
+	for i in 80:
+		f._process(0.05)
+	assert_true(f.position.is_equal_approx(Vector3(2, 1, 3)), "and it comes back to rest")
+	f.queue_free()
+
+
+
+## The Modern grade (W16) is the place's own: cool shade by default, a mood's colour where it has one, and every time
+## of day resolves to palette colours.
+func test_each_mood_has_its_own_grade() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var village := _view("village_of_barovia")
+	var night := village.atmosphere._tone("night")
+	var day := village.atmosphere._tone("day")
+	assert_eq(str(night["shade"]), "night", "the village's night shade is night blue")
+	assert_eq(str(day["shade"]), "slate", "and its overcast day blue-grey")
+	village.queue_free()
+	var berez := _view("berez")
+	assert_eq(str(berez.atmosphere._tone("night")["shade"]), "bog_deep", "Berez keeps its sick green")
+	berez.queue_free()
+	for id: String in Atmosphere.moods()["moods"] as Dictionary:
+		var a := Atmosphere.new()
+		a.mood = Atmosphere.resolve(id)
+		for t: String in ["day", "dusk", "night", "dawn", "any"]:
+			assert_true(Look.color(str(a._tone(t)["shade"])) is Color, "%s %s" % [id, t])
+		a.free()
+	Look.set_style(was, false)
+
+
+## The presets step down the heavy effects (W17): Low draws the world smaller and drops the haze and bounced light,
+## and a change of preset reaches the place on screen at once.
+func test_presets_reach_the_place_on_screen() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	Graphics.set_preset("high", false)
+	var v := _view("village_of_barovia")
+	await get_tree().process_frame
+	assert_true(v.atmosphere.env.volumetric_fog_enabled and v.atmosphere.env.ssil_enabled, "High: haze and bounce")
+	Graphics.set_preset("low", false)
+	assert_false(v.atmosphere.env.volumetric_fog_enabled, "Low drops the haze at once")
+	assert_false(v.atmosphere.env.ssil_enabled, "and the bounced light")
+	assert_true(get_viewport().scaling_3d_scale < 1.0, "and draws the world smaller")
+	assert_eq(v.atmosphere.sun.light_angular_distance, 0.0, "with plain sun shadows")
+	Graphics.set_preset(Graphics.DEFAULT_PRESET, false)
+	assert_true(is_equal_approx(get_viewport().scaling_3d_scale, 1.0), "High draws it full size again")
+	v.queue_free()
+	Look.set_style(was, false)
+
+
+## The frame-time meter (W17) sits on the window, hidden until F3.
+func test_the_frame_meter_waits_for_f3() -> void:
+	var v := _view("village_of_barovia")
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var meter := get_tree().root.get_node_or_null(FrameMeter.NODE_NAME) as FrameMeter
+	assert_true(meter != null, "on the window")
+	var meters := 0
+	for n in get_tree().root.get_children():
+		if n is FrameMeter:
+			meters += 1
+	assert_eq(meters, 1, "just one, however many places open")
+	assert_eq(meter.visible, FrameMeter.shown(), "shown as the setting says")
+	v.queue_free()

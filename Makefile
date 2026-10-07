@@ -10,20 +10,29 @@ NOFOCUS := env __CFBundleIdentifier=org.godotengine.godot $(G)
 ## Agent runs that open a window go through tools/godot, which keeps Godot from ever taking focus (CLAUDE.md).
 UNSEEN  := GODOT=$(GODOT) tools/godot --path . --resolution 1x1 --position 100000,100000 --max-fps 60 --audio-driver Dummy
 LOGCHK  := tools/logcheck.sh
+## Imports with the editor's window kept off screen, so textures import several at once (tools/import.sh: about twice
+## as fast; headless outside a desktop session or with IMPORT_HEADLESS=1).
+IMPORT  := GODOT=$(GODOT) tools/import.sh
 STAMP   := .godot/.last_import
 FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./captures -o -path ./builds \) -prune -o \
              \( -name '*.gd' -o -name '*.tscn' -o -name '*.tres' -o -name '*.png' -o -name '*.ogg' -o -name '*.wav' \
              -o -name '*.mp3' -o -name '*.glb' \) -newer $(STAMP) -print -quit)" ]; then \
-             echo "Files changed since the last import: importing first."; $(G) --headless --import > /dev/null 2>&1; \
+             echo "Files changed since the last import: importing first."; $(IMPORT) > /dev/null 2>&1; \
              touch $(STAMP); fi
 
-.PHONY: run arena smoke import test lint validate ci check palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens
+.PHONY: run arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens plants
 
 ## Imports first when scripts or assets changed since the last import (a merge can add a class_name or images that
 ## the editor cache doesn't know yet, and the game then stops at a parse error).
 run:
 	@$(FRESH)
 	$(NOFOCUS) < /dev/null
+
+## The owner's stable copy (P1, tools/play/play.sh): ~/Documents/CurseOfStrahdGame-play moves forward to the newest
+## main that passed make ci (refs/play/green), imports what changed, then starts. PLAY_NO_RUN=1 only updates it.
+.PHONY: play
+play:
+	@tools/play/play.sh
 
 ## Phase 2 exit: the combat arena (party of four level 3 pregens vs wolves and zombies).
 arena:
@@ -36,15 +45,28 @@ smoke:
 	$(G) --headless --quit-after $(or $(FRAMES),600) $(SCENE) 2>&1 | $(LOGCHK)
 
 import:
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 	@touch $(STAMP)
 
+## The test files share several headless Godot processes (tools/run_tests.py); JOBS=n sets how many, JOBS=1 is one.
 test: import
-	$(G) --headless --quit-after 100000 res://tests/test_runner.tscn -- $(if $(ONLY),--only=$(ONLY),) $(if $(FILES),--files=$(FILES),) 2>&1 | $(LOGCHK)
+	python3 tools/run_tests.py --godot $(GODOT) $(if $(JOBS),--jobs $(JOBS),) $(if $(ONLY),--only=$(ONLY),) $(if $(FILES),--files=$(FILES),) 2>&1 | $(LOGCHK)
+
+## Golden saves (P4): the playthrough tests keep a save at the start of each chapter in tests/saves
+## (v<save version>_<chapter>.json, tests/support/golden_saves.gd); one already there is never made again.
+.PHONY: golden-saves
+golden-saves:
+	GOLDEN_SAVES=$$(git rev-parse --short HEAD) $(MAKE) test FILES=test_golden_saves.gd,test_phase3_exit.gd,test_phase4_exit.gd,test_phase5_exit.gd,test_phase6_exit.gd
+
+
+## Git LFS noise: old art and clips that only changed timestamp stop showing as modified (tools/lfs_quiet.sh).
+lfs-quiet:
+	@sh tools/lfs_quiet.sh
 
 validate:
 	python3 tools/data/validate_data.py
 	python3 tools/data/check_implemented.py
+	python3 tools/data/check_rules_docs.py
 
 ## Compiles every rules/ script standalone (no autoloads allowed there).
 lint: import
@@ -54,19 +76,24 @@ lint: import
 ci: validate lint test
 
 ## The quick check while working (CLAUDE.md says when it is enough): only what covers the files changed since main,
-## from validate to the tests that use them (tools/check.py). make check [BASE=<branch>] [DRY=1]
+## from validate to the tests that use them (tools/check.py). make check [BASE=<branch>] [DEPTH=n|all] [DRY=1]
 check:
 	@$(FRESH)
-	python3 tools/check.py $(if $(BASE),--base $(BASE),) $(if $(DRY),--dry-run,)
+	python3 tools/check.py $(if $(BASE),--base $(BASE),) $(if $(DEPTH),--depth $(DEPTH),) $(if $(DRY),--dry-run,)
 
 palette:
 	python3 tools/art/build_palette.py
+
+## Gemini spend (tools/art/gemini_budget.py): each key's credit and today's requests, then spend per day and thread.
+## make art-spend [DAYS=n] · after a top-up: make art-spend [KEY=backup] BALANCE=<usd> KEEP=<usd to leave untouched>
+art-spend:
+	python3 tools/art/gemini_budget.py $(if $(DAYS),--days $(DAYS),) $(if $(KEY),--key $(KEY),) $(if $(BALANCE),--balance $(BALANCE),) $(if $(KEEP),--keep $(KEEP),)
 
 ## Spoken lines (ADR 0013): generates the clips that are missing with the pinned ElevenLabs model (audio/voice/casting.json).
 ## make voice [SPEAKER="narrator madam_eva"] [LIMIT=n] [DRY=1] [MAX_USD=5] [RECAST=1] [PRUNE=1]
 voice:
 	python3 tools/audio/generate_voice.py $(if $(SPEAKER),--speaker $(SPEAKER),) $(if $(LIMIT),--limit $(LIMIT),) $(if $(DRY),--dry-run,) $(if $(MAX_USD),--max-usd $(MAX_USD),) $(if $(RECAST),--recast,) $(if $(PRUNE),--prune,)
-	$(if $(DRY),,$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null)
+	$(if $(DRY),,$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null)
 
 ## Writes screenshots to captures/ from a window that never takes focus or shows: it opens 1 px wide in a corner, moves
 ## off screen and is drawn by tools/capture (silent, 60 fps). LOCATION=<id> starts the story game there.
@@ -88,16 +115,16 @@ sprite:
 anims:
 	$(if $(GENERATE),python3 tools/art/anim_keyframes.py --retry 2 $(if $(ONLY),--only $(ONLY),) && python3 tools/art/anim_keyframes.py --kind walk $(if $(ONLY),--only $(ONLY),),true)
 	python3 tools/art/build_anims.py $(if $(ONLY),--only $(ONLY),)
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 	python3 tools/art/set_import.py --sheets $(wildcard art/sprites/*/walk.png) $(wildcard art/sprites/*/attack.png)
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 
 ## The six heroes' HD animation sheets (set v2) from their strips: make keys [ONLY="id ..."] [KINDS="walk8 ..."]
 keys:
 	python3 tools/art/build_keys.py $(if $(ONLY),--only $(ONLY),) $(if $(KINDS),--kinds $(KINDS),)
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 	python3 tools/art/set_import.py --sheets $(foreach id,$(or $(ONLY),godrick_pendlebrook kip_smudgewick liriel_dawnsong ratatoille thistle wren_featherfoot),$(wildcard art/sprites/$(id)/*.png))
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 
 ## Re-render every character walk sheet from its turnaround with the current cutter and its recorded flags
 ## (art/manifest.json sprite_flags): make sprites [ONLY="id ..."]
@@ -136,7 +163,14 @@ props:
 ## [PREVIEW=captures/models.png] writes art/models/*.glb and manifest.json, then imports them.
 models:
 	$(BLENDER) -b --python blender/models_3d.py -- $(if $(ONLY),--only $(ONLY),) $(if $(PREVIEW),--preview $(abspath $(PREVIEW)),)
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
+
+## The Modern look's trees and plants (docs/art/plants.md): paints the leaf cards, builds art/plants/*.glb and
+## manifest.json, then imports them. make plants [ONLY="spruce_a fern_a"] (rebuilds only those models).
+plants:
+	python3 tools/art/plant_cards.py
+	$(BLENDER) -b --python blender/plants_3d.py -- $(if $(ONLY),--only $(ONLY),)
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 
 ## Menu ornaments and icons (black-on-white Gemini art -> white shapes with alpha, tinted in game): make ui_art
 ui_art:

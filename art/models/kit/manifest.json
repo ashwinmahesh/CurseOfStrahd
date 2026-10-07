@@ -1,0 +1,4708 @@
+{
+  "about": "The building kit from blender/building_kit.py (docs/art/building_kit.md): modules TownBuilder builds houses from. size is [width, height, depth] in world units; part says where a module goes; span and rise are a roof's; paint is the colour each house repaints.",
+  "models": {
+    "kit_timber_low_a": {
+      "file": "art/models/kit/kit_timber_low_a.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.06,
+        1.09,
+        0.098
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep",
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 688,
+      "part": "low"
+    },
+    "kit_timber_low_b": {
+      "file": "art/models/kit/kit_timber_low_b.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.06,
+        1.09,
+        0.098
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep",
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 732,
+      "part": "low"
+    },
+    "kit_timber_low_c": {
+      "file": "art/models/kit/kit_timber_low_c.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.06,
+        1.09,
+        0.098
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep",
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 688,
+      "part": "low"
+    },
+    "kit_timber_low_d": {
+      "file": "art/models/kit/kit_timber_low_d.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.06,
+        1.09,
+        0.098
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep",
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 788,
+      "part": "low"
+    },
+    "kit_timber_up_a": {
+      "file": "art/models/kit/kit_timber_up_a.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.06,
+        1.11,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 36,
+      "part": "up"
+    },
+    "kit_timber_up_b": {
+      "file": "art/models/kit/kit_timber_up_b.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.06,
+        1.11,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 48,
+      "part": "up"
+    },
+    "kit_timber_up_c": {
+      "file": "art/models/kit/kit_timber_up_c.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.071,
+        1.11,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 60,
+      "part": "up"
+    },
+    "kit_timber_up_d": {
+      "file": "art/models/kit/kit_timber_up_d.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.06,
+        1.11,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 60,
+      "part": "up"
+    },
+    "kit_timber_up_win": {
+      "file": "art/models/kit/kit_timber_up_win.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.06,
+        1.11,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 60,
+      "part": "up"
+    },
+    "kit_timber_door": {
+      "file": "art/models/kit/kit_timber_door.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.06,
+        2.05,
+        0.232
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep",
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 520,
+      "part": "door"
+    },
+    "kit_timber_door_top": {
+      "file": "art/models/kit/kit_timber_door_top.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.06,
+        0.16,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 36,
+      "part": "door_top"
+    },
+    "kit_timber_corner": {
+      "file": "art/models/kit/kit_timber_corner.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        2.2,
+        0.22
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 120,
+      "part": "corner"
+    },
+    "kit_timber_window": {
+      "file": "art/models/kit/kit_timber_window.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.092,
+        0.69,
+        0.15
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_night_deep",
+        "pal_umber",
+        "tex_interior__wood_planks",
+        "tex_kit__oak"
+      ],
+      "triangles": 228,
+      "sockets": {
+        "glass": [
+          0,
+          1.49,
+          0.03
+        ]
+      },
+      "part": "window"
+    },
+    "kit_timber_window_lit": {
+      "file": "art/models/kit/kit_timber_window_lit.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.092,
+        0.69,
+        0.15
+      ],
+      "materials": [
+        "glow_candle",
+        "pal_ink",
+        "pal_umber",
+        "tex_interior__wood_planks",
+        "tex_kit__oak"
+      ],
+      "triangles": 228,
+      "sockets": {
+        "glass": [
+          0,
+          1.49,
+          0.03
+        ]
+      },
+      "part": "window"
+    },
+    "kit_timber_window_shut": {
+      "file": "art/models/kit/kit_timber_window_shut.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.68,
+        0.69,
+        0.124
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_night_deep",
+        "pal_umber",
+        "tex_interior__wood_planks",
+        "tex_kit__oak"
+      ],
+      "triangles": 228,
+      "sockets": {
+        "glass": [
+          0,
+          1.49,
+          0.03
+        ]
+      },
+      "part": "window"
+    },
+    "kit_clap_low_a": {
+      "file": "art/models/kit/kit_clap_low_a.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.102,
+        0.08
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_pewter",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep"
+      ],
+      "triangles": 908,
+      "part": "low",
+      "paint": "pal_moon_blue"
+    },
+    "kit_clap_low_b": {
+      "file": "art/models/kit/kit_clap_low_b.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.102,
+        0.085
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_ink",
+        "pal_moon_blue",
+        "pal_pewter",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep",
+        "pal_void"
+      ],
+      "triangles": 836,
+      "part": "low",
+      "paint": "pal_moon_blue"
+    },
+    "kit_clap_up_a": {
+      "file": "art/models/kit/kit_clap_up_a.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.112,
+        0.074
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_stone_deep"
+      ],
+      "triangles": 240,
+      "part": "up",
+      "paint": "pal_moon_blue"
+    },
+    "kit_clap_up_win": {
+      "file": "art/models/kit/kit_clap_up_win.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.112,
+        0.074
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_stone_deep"
+      ],
+      "triangles": 240,
+      "part": "up",
+      "paint": "pal_moon_blue"
+    },
+    "kit_clap_door": {
+      "file": "art/models/kit/kit_clap_door.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.16,
+        0.244
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep"
+      ],
+      "triangles": 520,
+      "part": "door",
+      "paint": "pal_moon_blue"
+    },
+    "kit_clap_door_top": {
+      "file": "art/models/kit/kit_clap_door_top.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.168,
+        0.054
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_stone_deep"
+      ],
+      "triangles": 36,
+      "part": "door_top",
+      "paint": "pal_moon_blue"
+    },
+    "kit_clap_corner": {
+      "file": "art/models/kit/kit_clap_corner.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.21,
+        2.2,
+        0.21
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate"
+      ],
+      "triangles": 132,
+      "part": "corner"
+    },
+    "kit_clap_window": {
+      "file": "art/models/kit/kit_clap_window.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.014,
+        0.95,
+        0.144
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_ink",
+        "pal_moon_blue",
+        "pal_night_deep"
+      ],
+      "triangles": 248,
+      "sockets": {
+        "glass": [
+          0,
+          1.51,
+          0.03
+        ]
+      },
+      "part": "window",
+      "paint": "pal_moon_blue"
+    },
+    "kit_clap_window_lit": {
+      "file": "art/models/kit/kit_clap_window_lit.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.014,
+        0.95,
+        0.144
+      ],
+      "materials": [
+        "glow_candle",
+        "pal_bone",
+        "pal_ink",
+        "pal_moon_blue"
+      ],
+      "triangles": 248,
+      "sockets": {
+        "glass": [
+          0,
+          1.51,
+          0.03
+        ]
+      },
+      "part": "window",
+      "paint": "pal_moon_blue"
+    },
+    "kit_clap_window_shut": {
+      "file": "art/models/kit/kit_clap_window_shut.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.014,
+        0.95,
+        0.144
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_ink",
+        "pal_moon_blue",
+        "pal_night_deep"
+      ],
+      "triangles": 248,
+      "sockets": {
+        "glass": [
+          0,
+          1.51,
+          0.03
+        ]
+      },
+      "part": "window",
+      "paint": "pal_moon_blue"
+    },
+    "kit_stone_low_a": {
+      "file": "art/models/kit/kit_stone_low_a.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.384,
+        0.099
+      ],
+      "materials": [
+        "pal_slate"
+      ],
+      "triangles": 24,
+      "part": "low"
+    },
+    "kit_stone_low_b": {
+      "file": "art/models/kit/kit_stone_low_b.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.09,
+        0.099
+      ],
+      "materials": [
+        "pal_slate"
+      ],
+      "triangles": 36,
+      "part": "low"
+    },
+    "kit_stone_up_a": {
+      "file": "art/models/kit/kit_stone_up_a.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.11,
+        0.14
+      ],
+      "materials": [
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 36,
+      "part": "up"
+    },
+    "kit_stone_up_win": {
+      "file": "art/models/kit/kit_stone_up_win.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.11,
+        0.14
+      ],
+      "materials": [
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 36,
+      "part": "up"
+    },
+    "kit_stone_door": {
+      "file": "art/models/kit/kit_stone_door.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.12,
+        2.07,
+        0.264
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 1528,
+      "part": "door"
+    },
+    "kit_stone_door_top": {
+      "file": "art/models/kit/kit_stone_door_top.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.145,
+        0.14
+      ],
+      "materials": [
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 24,
+      "part": "door_top"
+    },
+    "kit_stone_corner": {
+      "file": "art/models/kit/kit_stone_corner.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.345,
+        2.193,
+        0.345
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 408,
+      "part": "corner"
+    },
+    "kit_stone_window": {
+      "file": "art/models/kit/kit_stone_window.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.7,
+        0.825,
+        0.19
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_night_deep",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 480,
+      "sockets": {
+        "glass": [
+          0,
+          1.51,
+          0.02
+        ]
+      },
+      "part": "window"
+    },
+    "kit_stone_window_lit": {
+      "file": "art/models/kit/kit_stone_window_lit.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.7,
+        0.825,
+        0.19
+      ],
+      "materials": [
+        "glow_candle",
+        "pal_ink",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 480,
+      "sockets": {
+        "glass": [
+          0,
+          1.51,
+          0.02
+        ]
+      },
+      "part": "window"
+    },
+    "kit_stone_window_shut": {
+      "file": "art/models/kit/kit_stone_window_shut.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.7,
+        0.825,
+        0.19
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_night_deep",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 480,
+      "sockets": {
+        "glass": [
+          0,
+          1.51,
+          0.02
+        ]
+      },
+      "part": "window"
+    },
+    "kit_timber_thatch_w1": {
+      "file": "art/models/kit/kit_timber_thatch_w1.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.316,
+        1.955
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 164,
+      "part": "roof",
+      "span": 1,
+      "rise": 0.55
+    },
+    "kit_timber_thatch_w1_end": {
+      "file": "art/models/kit/kit_timber_thatch_w1_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        1.338,
+        1.955
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_kit__oak",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 186,
+      "part": "roof_end",
+      "span": 1,
+      "rise": 0.55
+    },
+    "kit_timber_thatch_w2": {
+      "file": "art/models/kit/kit_timber_thatch_w2.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.606,
+        2.921
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 164,
+      "part": "roof",
+      "span": 2,
+      "rise": 0.9
+    },
+    "kit_timber_thatch_w2_end": {
+      "file": "art/models/kit/kit_timber_thatch_w2_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        1.628,
+        2.921
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_kit__oak",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 186,
+      "part": "roof_end",
+      "span": 2,
+      "rise": 0.9
+    },
+    "kit_timber_thatch_w3": {
+      "file": "art/models/kit/kit_timber_thatch_w3.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.056,
+        3.921
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 164,
+      "part": "roof",
+      "span": 3,
+      "rise": 1.35
+    },
+    "kit_timber_thatch_w3_end": {
+      "file": "art/models/kit/kit_timber_thatch_w3_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        2.078,
+        3.921
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_kit__oak",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 186,
+      "part": "roof_end",
+      "span": 3,
+      "rise": 1.35
+    },
+    "kit_timber_thatch_w4": {
+      "file": "art/models/kit/kit_timber_thatch_w4.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.506,
+        4.921
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 164,
+      "part": "roof",
+      "span": 4,
+      "rise": 1.8
+    },
+    "kit_timber_thatch_w4_end": {
+      "file": "art/models/kit/kit_timber_thatch_w4_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        2.528,
+        4.921
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_kit__oak",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 186,
+      "part": "roof_end",
+      "span": 4,
+      "rise": 1.8
+    },
+    "kit_timber_thatch_w5": {
+      "file": "art/models/kit/kit_timber_thatch_w5.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.956,
+        5.921
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 164,
+      "part": "roof",
+      "span": 5,
+      "rise": 2.25
+    },
+    "kit_timber_thatch_w5_end": {
+      "file": "art/models/kit/kit_timber_thatch_w5_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        2.978,
+        5.921
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_kit__oak",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 186,
+      "part": "roof_end",
+      "span": 5,
+      "rise": 2.25
+    },
+    "kit_timber_thatch_w6": {
+      "file": "art/models/kit/kit_timber_thatch_w6.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.406,
+        6.921
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 164,
+      "part": "roof",
+      "span": 6,
+      "rise": 2.7
+    },
+    "kit_timber_thatch_w6_end": {
+      "file": "art/models/kit/kit_timber_thatch_w6_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.428,
+        6.921
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_kit__oak",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 186,
+      "part": "roof_end",
+      "span": 6,
+      "rise": 2.7
+    },
+    "kit_timber_thatch_w7": {
+      "file": "art/models/kit/kit_timber_thatch_w7.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.856,
+        7.921
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 164,
+      "part": "roof",
+      "span": 7,
+      "rise": 3.15
+    },
+    "kit_timber_thatch_w7_end": {
+      "file": "art/models/kit/kit_timber_thatch_w7_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.878,
+        7.921
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_kit__oak",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 186,
+      "part": "roof_end",
+      "span": 7,
+      "rise": 3.15
+    },
+    "kit_timber_thatch_w8": {
+      "file": "art/models/kit/kit_timber_thatch_w8.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.876,
+        8.9
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 164,
+      "part": "roof",
+      "span": 8,
+      "rise": 3.2
+    },
+    "kit_timber_thatch_w8_end": {
+      "file": "art/models/kit/kit_timber_thatch_w8_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.898,
+        8.9
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_kit__oak",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 186,
+      "part": "roof_end",
+      "span": 8,
+      "rise": 3.2
+    },
+    "kit_timber_thatch_w9": {
+      "file": "art/models/kit/kit_timber_thatch_w9.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.849,
+        9.878
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 164,
+      "part": "roof",
+      "span": 9,
+      "rise": 3.2
+    },
+    "kit_timber_thatch_w9_end": {
+      "file": "art/models/kit/kit_timber_thatch_w9_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.871,
+        9.878
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_kit__oak",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 186,
+      "part": "roof_end",
+      "span": 9,
+      "rise": 3.2
+    },
+    "kit_timber_thatch_w10": {
+      "file": "art/models/kit/kit_timber_thatch_w10.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.828,
+        10.859
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 164,
+      "part": "roof",
+      "span": 10,
+      "rise": 3.2
+    },
+    "kit_timber_thatch_w10_end": {
+      "file": "art/models/kit/kit_timber_thatch_w10_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.85,
+        10.859
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_kit__oak",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 186,
+      "part": "roof_end",
+      "span": 10,
+      "rise": 3.2
+    },
+    "kit_timber_thatch_w11": {
+      "file": "art/models/kit/kit_timber_thatch_w11.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.81,
+        11.841
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 164,
+      "part": "roof",
+      "span": 11,
+      "rise": 3.2
+    },
+    "kit_timber_thatch_w11_end": {
+      "file": "art/models/kit/kit_timber_thatch_w11_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.833,
+        11.841
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_kit__oak",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 186,
+      "part": "roof_end",
+      "span": 11,
+      "rise": 3.2
+    },
+    "kit_timber_thatch_w12": {
+      "file": "art/models/kit/kit_timber_thatch_w12.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.796,
+        12.826
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 164,
+      "part": "roof",
+      "span": 12,
+      "rise": 3.2
+    },
+    "kit_timber_thatch_w12_end": {
+      "file": "art/models/kit/kit_timber_thatch_w12_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.818,
+        12.826
+      ],
+      "materials": [
+        "pal_peat",
+        "tex_kit__oak",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 186,
+      "part": "roof_end",
+      "span": 12,
+      "rise": 3.2
+    },
+    "kit_timber_slate_w1": {
+      "file": "art/models/kit/kit_timber_slate_w1.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.1,
+        1.733
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 1,
+      "rise": 0.55
+    },
+    "kit_timber_slate_w1_end": {
+      "file": "art/models/kit/kit_timber_slate_w1_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        1.173,
+        1.733
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 1,
+      "rise": 0.55
+    },
+    "kit_timber_slate_w2": {
+      "file": "art/models/kit/kit_timber_slate_w2.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.39,
+        2.72
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 2,
+      "rise": 0.9
+    },
+    "kit_timber_slate_w2_end": {
+      "file": "art/models/kit/kit_timber_slate_w2_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        1.463,
+        2.72
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 2,
+      "rise": 0.9
+    },
+    "kit_timber_slate_w3": {
+      "file": "art/models/kit/kit_timber_slate_w3.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.84,
+        3.72
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 3,
+      "rise": 1.35
+    },
+    "kit_timber_slate_w3_end": {
+      "file": "art/models/kit/kit_timber_slate_w3_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        1.913,
+        3.72
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 3,
+      "rise": 1.35
+    },
+    "kit_timber_slate_w4": {
+      "file": "art/models/kit/kit_timber_slate_w4.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.29,
+        4.72
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 4,
+      "rise": 1.8
+    },
+    "kit_timber_slate_w4_end": {
+      "file": "art/models/kit/kit_timber_slate_w4_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        2.363,
+        4.72
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 4,
+      "rise": 1.8
+    },
+    "kit_timber_slate_w5": {
+      "file": "art/models/kit/kit_timber_slate_w5.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.74,
+        5.72
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 5,
+      "rise": 2.25
+    },
+    "kit_timber_slate_w5_end": {
+      "file": "art/models/kit/kit_timber_slate_w5_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        2.813,
+        5.72
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 5,
+      "rise": 2.25
+    },
+    "kit_timber_slate_w6": {
+      "file": "art/models/kit/kit_timber_slate_w6.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.19,
+        6.72
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 6,
+      "rise": 2.7
+    },
+    "kit_timber_slate_w6_end": {
+      "file": "art/models/kit/kit_timber_slate_w6_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.263,
+        6.72
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 6,
+      "rise": 2.7
+    },
+    "kit_timber_slate_w7": {
+      "file": "art/models/kit/kit_timber_slate_w7.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.64,
+        7.72
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 7,
+      "rise": 3.15
+    },
+    "kit_timber_slate_w7_end": {
+      "file": "art/models/kit/kit_timber_slate_w7_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.713,
+        7.72
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 7,
+      "rise": 3.15
+    },
+    "kit_timber_slate_w8": {
+      "file": "art/models/kit/kit_timber_slate_w8.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.66,
+        8.712
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 8,
+      "rise": 3.2
+    },
+    "kit_timber_slate_w8_end": {
+      "file": "art/models/kit/kit_timber_slate_w8_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.733,
+        8.712
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 8,
+      "rise": 3.2
+    },
+    "kit_timber_slate_w9": {
+      "file": "art/models/kit/kit_timber_slate_w9.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.633,
+        9.704
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 9,
+      "rise": 3.2
+    },
+    "kit_timber_slate_w9_end": {
+      "file": "art/models/kit/kit_timber_slate_w9_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.706,
+        9.704
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 9,
+      "rise": 3.2
+    },
+    "kit_timber_slate_w10": {
+      "file": "art/models/kit/kit_timber_slate_w10.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.612,
+        10.697
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 10,
+      "rise": 3.2
+    },
+    "kit_timber_slate_w10_end": {
+      "file": "art/models/kit/kit_timber_slate_w10_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.685,
+        10.697
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 10,
+      "rise": 3.2
+    },
+    "kit_timber_slate_w11": {
+      "file": "art/models/kit/kit_timber_slate_w11.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.598,
+        11.691
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 11,
+      "rise": 3.2
+    },
+    "kit_timber_slate_w11_end": {
+      "file": "art/models/kit/kit_timber_slate_w11_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.668,
+        11.691
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 11,
+      "rise": 3.2
+    },
+    "kit_timber_slate_w12": {
+      "file": "art/models/kit/kit_timber_slate_w12.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.586,
+        12.685
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 12,
+      "rise": 3.2
+    },
+    "kit_timber_slate_w12_end": {
+      "file": "art/models/kit/kit_timber_slate_w12_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.653,
+        12.685
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 12,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w1": {
+      "file": "art/models/kit/kit_clapboard_slate_w1.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.14,
+        1.736
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 1,
+      "rise": 0.575
+    },
+    "kit_clapboard_slate_w1_end": {
+      "file": "art/models/kit/kit_clapboard_slate_w1_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        1.213,
+        1.736
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 218,
+      "part": "roof_end",
+      "span": 1,
+      "rise": 0.575
+    },
+    "kit_clapboard_slate_w2": {
+      "file": "art/models/kit/kit_clapboard_slate_w2.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.715,
+        2.736
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 2,
+      "rise": 1.15
+    },
+    "kit_clapboard_slate_w2_end": {
+      "file": "art/models/kit/kit_clapboard_slate_w2_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        1.788,
+        2.736
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 218,
+      "part": "roof_end",
+      "span": 2,
+      "rise": 1.15
+    },
+    "kit_clapboard_slate_w3": {
+      "file": "art/models/kit/kit_clapboard_slate_w3.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.29,
+        3.736
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 3,
+      "rise": 1.725
+    },
+    "kit_clapboard_slate_w3_end": {
+      "file": "art/models/kit/kit_clapboard_slate_w3_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        2.363,
+        3.736
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 218,
+      "part": "roof_end",
+      "span": 3,
+      "rise": 1.725
+    },
+    "kit_clapboard_slate_w4": {
+      "file": "art/models/kit/kit_clapboard_slate_w4.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.865,
+        4.736
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 4,
+      "rise": 2.3
+    },
+    "kit_clapboard_slate_w4_end": {
+      "file": "art/models/kit/kit_clapboard_slate_w4_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        2.938,
+        4.736
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 218,
+      "part": "roof_end",
+      "span": 4,
+      "rise": 2.3
+    },
+    "kit_clapboard_slate_w5": {
+      "file": "art/models/kit/kit_clapboard_slate_w5.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.44,
+        5.736
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 5,
+      "rise": 2.875
+    },
+    "kit_clapboard_slate_w5_end": {
+      "file": "art/models/kit/kit_clapboard_slate_w5_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.513,
+        5.736
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 218,
+      "part": "roof_end",
+      "span": 5,
+      "rise": 2.875
+    },
+    "kit_clapboard_slate_w6": {
+      "file": "art/models/kit/kit_clapboard_slate_w6.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.74,
+        6.731
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 6,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w6_end": {
+      "file": "art/models/kit/kit_clapboard_slate_w6_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.813,
+        6.731
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 218,
+      "part": "roof_end",
+      "span": 6,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w7": {
+      "file": "art/models/kit/kit_clapboard_slate_w7.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.694,
+        7.721
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 7,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w7_end": {
+      "file": "art/models/kit/kit_clapboard_slate_w7_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.767,
+        7.721
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 218,
+      "part": "roof_end",
+      "span": 7,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w8": {
+      "file": "art/models/kit/kit_clapboard_slate_w8.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.66,
+        8.712
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 8,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w8_end": {
+      "file": "art/models/kit/kit_clapboard_slate_w8_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.733,
+        8.712
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 218,
+      "part": "roof_end",
+      "span": 8,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w9": {
+      "file": "art/models/kit/kit_clapboard_slate_w9.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.633,
+        9.704
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 9,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w9_end": {
+      "file": "art/models/kit/kit_clapboard_slate_w9_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.706,
+        9.704
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 218,
+      "part": "roof_end",
+      "span": 9,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w10": {
+      "file": "art/models/kit/kit_clapboard_slate_w10.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.612,
+        10.697
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 10,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w10_end": {
+      "file": "art/models/kit/kit_clapboard_slate_w10_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.685,
+        10.697
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 218,
+      "part": "roof_end",
+      "span": 10,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w11": {
+      "file": "art/models/kit/kit_clapboard_slate_w11.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.598,
+        11.691
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 11,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w11_end": {
+      "file": "art/models/kit/kit_clapboard_slate_w11_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.668,
+        11.691
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 218,
+      "part": "roof_end",
+      "span": 11,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w12": {
+      "file": "art/models/kit/kit_clapboard_slate_w12.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.586,
+        12.685
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 12,
+      "rise": 3.2
+    },
+    "kit_clapboard_slate_w12_end": {
+      "file": "art/models/kit/kit_clapboard_slate_w12_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.653,
+        12.685
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 218,
+      "part": "roof_end",
+      "span": 12,
+      "rise": 3.2
+    },
+    "kit_stone_slate_w1": {
+      "file": "art/models/kit/kit_stone_slate_w1.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.1,
+        1.733
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 1,
+      "rise": 0.55
+    },
+    "kit_stone_slate_w1_end": {
+      "file": "art/models/kit/kit_stone_slate_w1_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        1.173,
+        1.733
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 1,
+      "rise": 0.55
+    },
+    "kit_stone_slate_w2": {
+      "file": "art/models/kit/kit_stone_slate_w2.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.52,
+        2.727
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 2,
+      "rise": 1.0
+    },
+    "kit_stone_slate_w2_end": {
+      "file": "art/models/kit/kit_stone_slate_w2_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        1.593,
+        2.727
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 2,
+      "rise": 1.0
+    },
+    "kit_stone_slate_w3": {
+      "file": "art/models/kit/kit_stone_slate_w3.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.02,
+        3.727
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 3,
+      "rise": 1.5
+    },
+    "kit_stone_slate_w3_end": {
+      "file": "art/models/kit/kit_stone_slate_w3_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        2.093,
+        3.727
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 3,
+      "rise": 1.5
+    },
+    "kit_stone_slate_w4": {
+      "file": "art/models/kit/kit_stone_slate_w4.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.52,
+        4.727
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 4,
+      "rise": 2.0
+    },
+    "kit_stone_slate_w4_end": {
+      "file": "art/models/kit/kit_stone_slate_w4_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        2.593,
+        4.727
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 4,
+      "rise": 2.0
+    },
+    "kit_stone_slate_w5": {
+      "file": "art/models/kit/kit_stone_slate_w5.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.02,
+        5.727
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 5,
+      "rise": 2.5
+    },
+    "kit_stone_slate_w5_end": {
+      "file": "art/models/kit/kit_stone_slate_w5_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.093,
+        5.727
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 5,
+      "rise": 2.5
+    },
+    "kit_stone_slate_w6": {
+      "file": "art/models/kit/kit_stone_slate_w6.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.52,
+        6.727
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 6,
+      "rise": 3.0
+    },
+    "kit_stone_slate_w6_end": {
+      "file": "art/models/kit/kit_stone_slate_w6_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.593,
+        6.727
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 6,
+      "rise": 3.0
+    },
+    "kit_stone_slate_w7": {
+      "file": "art/models/kit/kit_stone_slate_w7.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.694,
+        7.721
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 7,
+      "rise": 3.2
+    },
+    "kit_stone_slate_w7_end": {
+      "file": "art/models/kit/kit_stone_slate_w7_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.767,
+        7.721
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 7,
+      "rise": 3.2
+    },
+    "kit_stone_slate_w8": {
+      "file": "art/models/kit/kit_stone_slate_w8.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.66,
+        8.712
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 8,
+      "rise": 3.2
+    },
+    "kit_stone_slate_w8_end": {
+      "file": "art/models/kit/kit_stone_slate_w8_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.733,
+        8.712
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 8,
+      "rise": 3.2
+    },
+    "kit_stone_slate_w9": {
+      "file": "art/models/kit/kit_stone_slate_w9.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.633,
+        9.704
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 9,
+      "rise": 3.2
+    },
+    "kit_stone_slate_w9_end": {
+      "file": "art/models/kit/kit_stone_slate_w9_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.706,
+        9.704
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 9,
+      "rise": 3.2
+    },
+    "kit_stone_slate_w10": {
+      "file": "art/models/kit/kit_stone_slate_w10.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.612,
+        10.697
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 10,
+      "rise": 3.2
+    },
+    "kit_stone_slate_w10_end": {
+      "file": "art/models/kit/kit_stone_slate_w10_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.685,
+        10.697
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 10,
+      "rise": 3.2
+    },
+    "kit_stone_slate_w11": {
+      "file": "art/models/kit/kit_stone_slate_w11.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.598,
+        11.691
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 11,
+      "rise": 3.2
+    },
+    "kit_stone_slate_w11_end": {
+      "file": "art/models/kit/kit_stone_slate_w11_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.668,
+        11.691
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 11,
+      "rise": 3.2
+    },
+    "kit_stone_slate_w12": {
+      "file": "art/models/kit/kit_stone_slate_w12.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.586,
+        12.685
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 12,
+      "rise": 3.2
+    },
+    "kit_stone_slate_w12_end": {
+      "file": "art/models/kit/kit_stone_slate_w12_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.653,
+        12.685
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 12,
+      "rise": 3.2
+    },
+    "kit_timber_gable_w1": {
+      "file": "art/models/kit/kit_timber_gable_w1.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.081,
+        0.624,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 48,
+      "part": "gable",
+      "span": 1
+    },
+    "kit_timber_gable_w2": {
+      "file": "art/models/kit/kit_timber_gable_w2.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        2.074,
+        0.982,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 48,
+      "part": "gable",
+      "span": 2
+    },
+    "kit_timber_gable_w3": {
+      "file": "art/models/kit/kit_timber_gable_w3.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        3.074,
+        1.432,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 72,
+      "part": "gable",
+      "span": 3
+    },
+    "kit_timber_gable_w4": {
+      "file": "art/models/kit/kit_timber_gable_w4.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        4.074,
+        1.882,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 72,
+      "part": "gable",
+      "span": 4
+    },
+    "kit_timber_gable_w5": {
+      "file": "art/models/kit/kit_timber_gable_w5.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        5.074,
+        2.332,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 96,
+      "part": "gable",
+      "span": 5
+    },
+    "kit_timber_gable_w6": {
+      "file": "art/models/kit/kit_timber_gable_w6.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        6.074,
+        2.782,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 96,
+      "part": "gable",
+      "span": 6
+    },
+    "kit_timber_gable_w7": {
+      "file": "art/models/kit/kit_timber_gable_w7.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        7.074,
+        3.232,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 96,
+      "part": "gable",
+      "span": 7
+    },
+    "kit_timber_gable_w8": {
+      "file": "art/models/kit/kit_timber_gable_w8.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        8.069,
+        3.286,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 96,
+      "part": "gable",
+      "span": 8
+    },
+    "kit_timber_gable_w9": {
+      "file": "art/models/kit/kit_timber_gable_w9.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        9.064,
+        3.29,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 96,
+      "part": "gable",
+      "span": 9
+    },
+    "kit_timber_gable_w10": {
+      "file": "art/models/kit/kit_timber_gable_w10.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        10.059,
+        3.293,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 96,
+      "part": "gable",
+      "span": 10
+    },
+    "kit_timber_gable_w11": {
+      "file": "art/models/kit/kit_timber_gable_w11.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        11.055,
+        3.295,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 96,
+      "part": "gable",
+      "span": 11
+    },
+    "kit_timber_gable_w12": {
+      "file": "art/models/kit/kit_timber_gable_w12.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        12.052,
+        3.297,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 96,
+      "part": "gable",
+      "span": 12
+    },
+    "kit_clapboard_gable_w1": {
+      "file": "art/models/kit/kit_clapboard_gable_w1.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.9,
+        0.586,
+        0.037
+      ],
+      "materials": [
+        "pal_moon_blue"
+      ],
+      "triangles": 60,
+      "part": "gable",
+      "span": 1,
+      "paint": "pal_moon_blue"
+    },
+    "kit_clapboard_gable_w2": {
+      "file": "art/models/kit/kit_clapboard_gable_w2.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.9,
+        1.161,
+        0.082
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_night_deep"
+      ],
+      "triangles": 240,
+      "part": "gable",
+      "span": 2,
+      "paint": "pal_moon_blue"
+    },
+    "kit_clapboard_gable_w3": {
+      "file": "art/models/kit/kit_clapboard_gable_w3.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        2.906,
+        1.736,
+        0.082
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_night_deep"
+      ],
+      "triangles": 312,
+      "part": "gable",
+      "span": 3,
+      "paint": "pal_moon_blue"
+    },
+    "kit_clapboard_gable_w4": {
+      "file": "art/models/kit/kit_clapboard_gable_w4.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        3.905,
+        2.311,
+        0.082
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_night_deep"
+      ],
+      "triangles": 372,
+      "part": "gable",
+      "span": 4,
+      "paint": "pal_moon_blue"
+    },
+    "kit_clapboard_gable_w5": {
+      "file": "art/models/kit/kit_clapboard_gable_w5.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        4.907,
+        2.886,
+        0.082
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_night_deep"
+      ],
+      "triangles": 444,
+      "part": "gable",
+      "span": 5,
+      "paint": "pal_moon_blue"
+    },
+    "kit_clapboard_gable_w6": {
+      "file": "art/models/kit/kit_clapboard_gable_w6.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        5.9,
+        3.211,
+        0.082
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_night_deep"
+      ],
+      "triangles": 480,
+      "part": "gable",
+      "span": 6,
+      "paint": "pal_moon_blue"
+    },
+    "kit_clapboard_gable_w7": {
+      "file": "art/models/kit/kit_clapboard_gable_w7.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        6.883,
+        3.211,
+        0.082
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_night_deep"
+      ],
+      "triangles": 480,
+      "part": "gable",
+      "span": 7,
+      "paint": "pal_moon_blue"
+    },
+    "kit_clapboard_gable_w8": {
+      "file": "art/models/kit/kit_clapboard_gable_w8.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        7.867,
+        3.211,
+        0.082
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_night_deep"
+      ],
+      "triangles": 480,
+      "part": "gable",
+      "span": 8,
+      "paint": "pal_moon_blue"
+    },
+    "kit_clapboard_gable_w9": {
+      "file": "art/models/kit/kit_clapboard_gable_w9.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        8.85,
+        3.211,
+        0.082
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_night_deep"
+      ],
+      "triangles": 480,
+      "part": "gable",
+      "span": 9,
+      "paint": "pal_moon_blue"
+    },
+    "kit_clapboard_gable_w10": {
+      "file": "art/models/kit/kit_clapboard_gable_w10.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        9.833,
+        3.211,
+        0.082
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_night_deep"
+      ],
+      "triangles": 480,
+      "part": "gable",
+      "span": 10,
+      "paint": "pal_moon_blue"
+    },
+    "kit_clapboard_gable_w11": {
+      "file": "art/models/kit/kit_clapboard_gable_w11.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        10.817,
+        3.211,
+        0.082
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_night_deep"
+      ],
+      "triangles": 480,
+      "part": "gable",
+      "span": 11,
+      "paint": "pal_moon_blue"
+    },
+    "kit_clapboard_gable_w12": {
+      "file": "art/models/kit/kit_clapboard_gable_w12.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        11.8,
+        3.211,
+        0.082
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_night_deep"
+      ],
+      "triangles": 480,
+      "part": "gable",
+      "span": 12,
+      "paint": "pal_moon_blue"
+    },
+    "kit_stone_gable_w1": {
+      "file": "art/models/kit/kit_stone_gable_w1.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.09,
+        0.07
+      ],
+      "materials": [
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 12,
+      "part": "gable",
+      "span": 1
+    },
+    "kit_stone_gable_w2": {
+      "file": "art/models/kit/kit_stone_gable_w2.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        2.0,
+        0.61,
+        0.1
+      ],
+      "materials": [
+        "pal_void",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 132,
+      "part": "gable",
+      "span": 2
+    },
+    "kit_stone_gable_w3": {
+      "file": "art/models/kit/kit_stone_gable_w3.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        3.0,
+        0.81,
+        0.1
+      ],
+      "materials": [
+        "pal_void",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 132,
+      "part": "gable",
+      "span": 3
+    },
+    "kit_stone_gable_w4": {
+      "file": "art/models/kit/kit_stone_gable_w4.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        4.0,
+        1.01,
+        0.1
+      ],
+      "materials": [
+        "pal_void",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 132,
+      "part": "gable",
+      "span": 4
+    },
+    "kit_stone_gable_w5": {
+      "file": "art/models/kit/kit_stone_gable_w5.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        5.0,
+        1.21,
+        0.1
+      ],
+      "materials": [
+        "pal_void",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 132,
+      "part": "gable",
+      "span": 5
+    },
+    "kit_stone_gable_w6": {
+      "file": "art/models/kit/kit_stone_gable_w6.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        6.0,
+        1.41,
+        0.1
+      ],
+      "materials": [
+        "pal_void",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 132,
+      "part": "gable",
+      "span": 6
+    },
+    "kit_stone_gable_w7": {
+      "file": "art/models/kit/kit_stone_gable_w7.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        7.0,
+        1.49,
+        0.1
+      ],
+      "materials": [
+        "pal_void",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 132,
+      "part": "gable",
+      "span": 7
+    },
+    "kit_stone_gable_w8": {
+      "file": "art/models/kit/kit_stone_gable_w8.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        8.0,
+        1.49,
+        0.1
+      ],
+      "materials": [
+        "pal_void",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 132,
+      "part": "gable",
+      "span": 8
+    },
+    "kit_stone_gable_w9": {
+      "file": "art/models/kit/kit_stone_gable_w9.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        9.0,
+        1.49,
+        0.1
+      ],
+      "materials": [
+        "pal_void",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 132,
+      "part": "gable",
+      "span": 9
+    },
+    "kit_stone_gable_w10": {
+      "file": "art/models/kit/kit_stone_gable_w10.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        10.0,
+        1.49,
+        0.1
+      ],
+      "materials": [
+        "pal_void",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 132,
+      "part": "gable",
+      "span": 10
+    },
+    "kit_stone_gable_w11": {
+      "file": "art/models/kit/kit_stone_gable_w11.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        11.0,
+        1.49,
+        0.1
+      ],
+      "materials": [
+        "pal_void",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 132,
+      "part": "gable",
+      "span": 11
+    },
+    "kit_stone_gable_w12": {
+      "file": "art/models/kit/kit_stone_gable_w12.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        12.0,
+        1.49,
+        0.1
+      ],
+      "materials": [
+        "pal_void",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 132,
+      "part": "gable",
+      "span": 12
+    },
+    "kit_timber_foot": {
+      "file": "art/models/kit/kit_timber_foot.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.343,
+        0.09
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep"
+      ],
+      "triangles": 684,
+      "part": "foot"
+    },
+    "kit_clap_foot": {
+      "file": "art/models/kit/kit_clap_foot.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.343,
+        0.08
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep"
+      ],
+      "triangles": 596,
+      "part": "foot"
+    },
+    "kit_stone_foot": {
+      "file": "art/models/kit/kit_stone_foot.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.384,
+        0.099
+      ],
+      "materials": [
+        "pal_slate"
+      ],
+      "triangles": 24,
+      "part": "foot"
+    },
+    "kit_chimney_cap": {
+      "file": "art/models/kit/kit_chimney_cap.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.5,
+        0.4,
+        0.5
+      ],
+      "materials": [
+        "pal_rust",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep"
+      ],
+      "triangles": 308,
+      "sockets": {
+        "smoke": [
+          0,
+          0.42,
+          0
+        ]
+      },
+      "part": "chimney"
+    },
+    "kit_timber_yard_arm": {
+      "file": "art/models/kit/kit_timber_yard_arm.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.503,
+        1.08,
+        0.48
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep"
+      ],
+      "triangles": 520,
+      "part": "yard_arm",
+      "height": 1.0
+    },
+    "kit_timber_yard_pier": {
+      "file": "art/models/kit/kit_timber_yard_pier.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.66,
+        1.28,
+        0.66
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep"
+      ],
+      "triangles": 516,
+      "part": "yard_pier",
+      "height": 1.0
+    },
+    "kit_clap_yard_arm": {
+      "file": "art/models/kit/kit_clap_yard_arm.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.5,
+        1.08,
+        0.481
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep"
+      ],
+      "triangles": 520,
+      "part": "yard_arm",
+      "height": 1.0
+    },
+    "kit_clap_yard_pier": {
+      "file": "art/models/kit/kit_clap_yard_pier.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.66,
+        1.28,
+        0.66
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep"
+      ],
+      "triangles": 516,
+      "part": "yard_pier",
+      "height": 1.0
+    },
+    "kit_stone_yard_arm": {
+      "file": "art/models/kit/kit_stone_yard_arm.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.5,
+        1.085,
+        0.54
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone_deep",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 336,
+      "part": "yard_arm",
+      "height": 1.0
+    },
+    "kit_stone_yard_pier": {
+      "file": "art/models/kit/kit_stone_yard_pier.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.66,
+        1.28,
+        0.66
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone_deep",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 516,
+      "part": "yard_pier",
+      "height": 1.0
+    },
+    "kit_town_wall_arm": {
+      "file": "art/models/kit/kit_town_wall_arm.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.5,
+        2.98,
+        0.52
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone_deep",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 1032,
+      "part": "yard_arm",
+      "height": 2.6
+    },
+    "kit_town_wall_pier": {
+      "file": "art/models/kit/kit_town_wall_pier.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.66,
+        3.222,
+        0.66
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone_deep",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 852,
+      "part": "yard_pier",
+      "height": 2.6
+    },
+    "kit_palisade": {
+      "file": "art/models/kit/kit_palisade.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.587,
+        0.316
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_peat",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 298,
+      "part": "palisade"
+    },
+    "kit_church_low_b": {
+      "file": "art/models/kit/kit_church_low_b.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.09,
+        0.5
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 48,
+      "part": "low"
+    },
+    "kit_church_up_b": {
+      "file": "art/models/kit/kit_church_up_b.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.09,
+        0.34
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 104,
+      "part": "up"
+    },
+    "kit_church_window": {
+      "file": "art/models/kit/kit_church_window.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.58,
+        1.24,
+        0.182
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_moon_blue",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 338,
+      "sockets": {
+        "glass": [
+          0,
+          1.3475,
+          0.02
+        ]
+      },
+      "part": "window"
+    },
+    "kit_church_door": {
+      "file": "art/models/kit/kit_church_door.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.24,
+        2.07,
+        0.284
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 376,
+      "part": "door"
+    },
+    "kit_church_corner": {
+      "file": "art/models/kit/kit_church_corner.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.95,
+        2.2,
+        0.95
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 84,
+      "part": "corner"
+    },
+    "kit_church_tower": {
+      "file": "art/models/kit/kit_church_tower.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.86,
+        7.14,
+        1.86
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_umber",
+        "pal_void",
+        "tex_church__stone_wall",
+        "tex_kit__dressed_stone",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 1104,
+      "part": "tower"
+    },
+    "kit_church_gable_w6": {
+      "file": "art/models/kit/kit_church_gable_w6.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        6.42,
+        3.958,
+        0.24
+      ],
+      "materials": [
+        "pal_plum",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 392,
+      "part": "gable",
+      "span": 6
+    },
+    "kit_church_gable_w4": {
+      "file": "art/models/kit/kit_church_gable_w4.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        4.42,
+        3.548,
+        0.24
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_night_deep",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 474,
+      "sockets": {
+        "glass": [
+          0,
+          1.0785,
+          0.02
+        ]
+      },
+      "part": "gable",
+      "span": 4
+    },
+    "kit_church_slate_w6": {
+      "file": "art/models/kit/kit_church_slate_w6.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.74,
+        6.731
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 6,
+      "rise": 3.2
+    },
+    "kit_church_low_a": {
+      "file": "art/models/kit/kit_church_low_a.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.494,
+        0.138
+      ],
+      "materials": [
+        "pal_slate"
+      ],
+      "triangles": 24,
+      "part": "low"
+    },
+    "kit_church_up_a": {
+      "file": "art/models/kit/kit_church_up_a.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.09,
+        0.13
+      ],
+      "materials": [
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 72,
+      "part": "up"
+    },
+    "kit_church_up_win": {
+      "file": "art/models/kit/kit_church_up_win.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.09,
+        0.13
+      ],
+      "materials": [
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 72,
+      "part": "up"
+    },
+    "kit_church_window_lit": {
+      "file": "art/models/kit/kit_church_window_lit.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.58,
+        1.24,
+        0.182
+      ],
+      "materials": [
+        "glow_candle",
+        "pal_ink",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 338,
+      "sockets": {
+        "glass": [
+          0,
+          1.3475,
+          0.02
+        ]
+      },
+      "part": "window"
+    },
+    "kit_church_window_shut": {
+      "file": "art/models/kit/kit_church_window_shut.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.58,
+        1.24,
+        0.182
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_plum",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 338,
+      "sockets": {
+        "glass": [
+          0,
+          1.3475,
+          0.02
+        ]
+      },
+      "part": "window"
+    },
+    "kit_church_foot": {
+      "file": "art/models/kit/kit_church_foot.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.494,
+        0.138
+      ],
+      "materials": [
+        "pal_slate"
+      ],
+      "triangles": 24,
+      "part": "foot"
+    },
+    "kit_church_door_top": {
+      "file": "art/models/kit/kit_church_door_top.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.23,
+        0.13
+      ],
+      "materials": [
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 60,
+      "part": "door_top"
+    },
+    "kit_church_slate_w1": {
+      "file": "art/models/kit/kit_church_slate_w1.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.34,
+        1.746
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 1,
+      "rise": 0.7
+    },
+    "kit_church_slate_w1_end": {
+      "file": "art/models/kit/kit_church_slate_w1_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        1.413,
+        1.746
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 1,
+      "rise": 0.7
+    },
+    "kit_church_slate_w2": {
+      "file": "art/models/kit/kit_church_slate_w2.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.04,
+        2.746
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 2,
+      "rise": 1.4
+    },
+    "kit_church_slate_w2_end": {
+      "file": "art/models/kit/kit_church_slate_w2_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        2.113,
+        2.746
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 2,
+      "rise": 1.4
+    },
+    "kit_church_slate_w3": {
+      "file": "art/models/kit/kit_church_slate_w3.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.74,
+        3.746
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 3,
+      "rise": 2.1
+    },
+    "kit_church_slate_w3_end": {
+      "file": "art/models/kit/kit_church_slate_w3_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        2.813,
+        3.746
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 3,
+      "rise": 2.1
+    },
+    "kit_church_slate_w4": {
+      "file": "art/models/kit/kit_church_slate_w4.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.44,
+        4.746
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 4,
+      "rise": 2.8
+    },
+    "kit_church_slate_w4_end": {
+      "file": "art/models/kit/kit_church_slate_w4_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.513,
+        4.746
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 4,
+      "rise": 2.8
+    },
+    "kit_church_slate_w5": {
+      "file": "art/models/kit/kit_church_slate_w5.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.804,
+        5.742
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 5,
+      "rise": 3.2
+    },
+    "kit_church_slate_w5_end": {
+      "file": "art/models/kit/kit_church_slate_w5_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.877,
+        5.742
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 5,
+      "rise": 3.2
+    },
+    "kit_church_slate_w6_end": {
+      "file": "art/models/kit/kit_church_slate_w6_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.813,
+        6.731
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 6,
+      "rise": 3.2
+    },
+    "kit_church_slate_w7": {
+      "file": "art/models/kit/kit_church_slate_w7.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.694,
+        7.721
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 7,
+      "rise": 3.2
+    },
+    "kit_church_slate_w7_end": {
+      "file": "art/models/kit/kit_church_slate_w7_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.767,
+        7.721
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 7,
+      "rise": 3.2
+    },
+    "kit_church_slate_w8": {
+      "file": "art/models/kit/kit_church_slate_w8.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.66,
+        8.712
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 8,
+      "rise": 3.2
+    },
+    "kit_church_slate_w8_end": {
+      "file": "art/models/kit/kit_church_slate_w8_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.733,
+        8.712
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 8,
+      "rise": 3.2
+    },
+    "kit_church_slate_w9": {
+      "file": "art/models/kit/kit_church_slate_w9.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.633,
+        9.704
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 9,
+      "rise": 3.2
+    },
+    "kit_church_slate_w9_end": {
+      "file": "art/models/kit/kit_church_slate_w9_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.706,
+        9.704
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 9,
+      "rise": 3.2
+    },
+    "kit_church_slate_w10": {
+      "file": "art/models/kit/kit_church_slate_w10.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.612,
+        10.697
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 10,
+      "rise": 3.2
+    },
+    "kit_church_slate_w10_end": {
+      "file": "art/models/kit/kit_church_slate_w10_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.685,
+        10.697
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 10,
+      "rise": 3.2
+    },
+    "kit_church_slate_w11": {
+      "file": "art/models/kit/kit_church_slate_w11.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.598,
+        11.691
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 11,
+      "rise": 3.2
+    },
+    "kit_church_slate_w11_end": {
+      "file": "art/models/kit/kit_church_slate_w11_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.668,
+        11.691
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 11,
+      "rise": 3.2
+    },
+    "kit_church_slate_w12": {
+      "file": "art/models/kit/kit_church_slate_w12.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        3.586,
+        12.685
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 124,
+      "part": "roof",
+      "span": 12,
+      "rise": 3.2
+    },
+    "kit_church_slate_w12_end": {
+      "file": "art/models/kit/kit_church_slate_w12_end.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.22,
+        3.653,
+        12.685
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_umber",
+        "tex_kit__oak",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 98,
+      "part": "roof_end",
+      "span": 12,
+      "rise": 3.2
+    },
+    "kit_church_gable_w1": {
+      "file": "art/models/kit/kit_church_gable_w1.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.42,
+        1.448,
+        0.24
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 136,
+      "part": "gable",
+      "span": 1
+    },
+    "kit_church_gable_w2": {
+      "file": "art/models/kit/kit_church_gable_w2.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        2.42,
+        2.148,
+        0.24
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_night_deep",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 474,
+      "sockets": {
+        "glass": [
+          0,
+          0.4905,
+          0.02
+        ]
+      },
+      "part": "gable",
+      "span": 2
+    },
+    "kit_church_gable_w3": {
+      "file": "art/models/kit/kit_church_gable_w3.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        3.42,
+        2.848,
+        0.24
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_night_deep",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 474,
+      "sockets": {
+        "glass": [
+          0,
+          0.7845,
+          0.02
+        ]
+      },
+      "part": "gable",
+      "span": 3
+    },
+    "kit_church_gable_w5": {
+      "file": "art/models/kit/kit_church_gable_w5.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        5.42,
+        3.951,
+        0.24
+      ],
+      "materials": [
+        "pal_plum",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 392,
+      "part": "gable",
+      "span": 5
+    },
+    "kit_church_gable_w7": {
+      "file": "art/models/kit/kit_church_gable_w7.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        7.42,
+        3.963,
+        0.24
+      ],
+      "materials": [
+        "pal_plum",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 392,
+      "part": "gable",
+      "span": 7
+    },
+    "kit_church_gable_w8": {
+      "file": "art/models/kit/kit_church_gable_w8.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        8.42,
+        3.967,
+        0.24
+      ],
+      "materials": [
+        "pal_plum",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 392,
+      "part": "gable",
+      "span": 8
+    },
+    "kit_church_gable_w9": {
+      "file": "art/models/kit/kit_church_gable_w9.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        9.42,
+        3.971,
+        0.24
+      ],
+      "materials": [
+        "pal_plum",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 392,
+      "part": "gable",
+      "span": 9
+    },
+    "kit_church_gable_w10": {
+      "file": "art/models/kit/kit_church_gable_w10.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        10.42,
+        3.973,
+        0.24
+      ],
+      "materials": [
+        "pal_plum",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 392,
+      "part": "gable",
+      "span": 10
+    },
+    "kit_church_gable_w11": {
+      "file": "art/models/kit/kit_church_gable_w11.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        11.42,
+        3.976,
+        0.24
+      ],
+      "materials": [
+        "pal_plum",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 392,
+      "part": "gable",
+      "span": 11
+    },
+    "kit_church_gable_w12": {
+      "file": "art/models/kit/kit_church_gable_w12.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        12.42,
+        3.978,
+        0.24
+      ],
+      "materials": [
+        "pal_plum",
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 392,
+      "part": "gable",
+      "span": 12
+    },
+    "kit_pillar_castle": {
+      "file": "art/models/kit/kit_pillar_castle.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.186,
+        2.5,
+        1.2
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_bone",
+        "pal_ink",
+        "pal_ivory",
+        "pal_slate",
+        "pal_void",
+        "tex_castle__ashlar",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 1932,
+      "part": "pillar"
+    },
+    "kit_pillar_church": {
+      "file": "art/models/kit/kit_pillar_church.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.72,
+        2.3,
+        0.72
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 372,
+      "part": "pillar"
+    },
+    "kit_pillar_dungeon": {
+      "file": "art/models/kit/kit_pillar_dungeon.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.86,
+        2.254,
+        0.86
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep"
+      ],
+      "triangles": 352,
+      "part": "pillar"
+    },
+    "kit_pillar_timber": {
+      "file": "art/models/kit/kit_pillar_timber.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.36,
+        1.0
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__oak",
+        "tex_kit__oak_v"
+      ],
+      "triangles": 288,
+      "part": "pillar"
+    },
+    "kit_pillar_amber": {
+      "file": "art/models/kit/kit_pillar_amber.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.86,
+        2.28,
+        0.86
+      ],
+      "materials": [
+        "glow_candle",
+        "glow_ember",
+        "pal_ink",
+        "pal_void",
+        "tex_amber__black_stone"
+      ],
+      "triangles": 268,
+      "part": "pillar"
+    },
+    "kit_castle_face": {
+      "file": "art/models/kit/kit_castle_face.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.09,
+        0.072
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 192,
+      "part": "face"
+    },
+    "kit_church_face": {
+      "file": "art/models/kit/kit_church_face.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.75,
+        0.075
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 36,
+      "part": "face"
+    },
+    "kit_castle_coping": {
+      "file": "art/models/kit/kit_castle_coping.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.13,
+        0.09
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 24,
+      "part": "coping"
+    },
+    "kit_church_coping": {
+      "file": "art/models/kit/kit_church_coping.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.11,
+        0.08
+      ],
+      "materials": [
+        "pal_slate",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 24,
+      "part": "coping"
+    },
+    "kit_amber_coping": {
+      "file": "art/models/kit/kit_amber_coping.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.11,
+        0.07
+      ],
+      "materials": [
+        "glow_ember",
+        "pal_ink"
+      ],
+      "triangles": 24,
+      "part": "coping"
+    },
+    "kit_manor_coping": {
+      "file": "art/models/kit/kit_manor_coping.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.1,
+        0.07
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_umber"
+      ],
+      "triangles": 24,
+      "part": "coping"
+    },
+    "kit_timber_coping": {
+      "file": "art/models/kit/kit_timber_coping.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.12,
+        0.082
+      ],
+      "materials": [
+        "tex_kit__oak"
+      ],
+      "triangles": 12,
+      "part": "coping"
+    },
+    "kit_dungeon_coping": {
+      "file": "art/models/kit/kit_dungeon_coping.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.987,
+        0.137,
+        0.08
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 48,
+      "part": "coping"
+    },
+    "kit_scatter_pebbles": {
+      "file": "art/models/kit/kit_scatter_pebbles.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.391,
+        0.065,
+        0.388
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 180,
+      "part": "scatter"
+    },
+    "kit_scatter_stones": {
+      "file": "art/models/kit/kit_scatter_stones.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.276,
+        0.132,
+        0.407
+      ],
+      "materials": [
+        "pal_moss",
+        "pal_slate"
+      ],
+      "triangles": 60,
+      "part": "scatter"
+    },
+    "kit_scatter_roots": {
+      "file": "art/models/kit/kit_scatter_roots.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.319,
+        0.116,
+        0.318
+      ],
+      "materials": [
+        "pal_peat"
+      ],
+      "triangles": 240,
+      "part": "scatter"
+    },
+    "kit_scatter_bones": {
+      "file": "art/models/kit/kit_scatter_bones.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.381,
+        0.1,
+        0.312
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_void"
+      ],
+      "triangles": 808,
+      "part": "scatter"
+    },
+    "kit_scatter_debris": {
+      "file": "art/models/kit/kit_scatter_debris.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.288,
+        0.057,
+        0.294
+      ],
+      "materials": [
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 96,
+      "part": "scatter"
+    },
+    "kit_scatter_twigs": {
+      "file": "art/models/kit/kit_scatter_twigs.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.197,
+        0.026,
+        0.394
+      ],
+      "materials": [
+        "pal_umber"
+      ],
+      "triangles": 104,
+      "part": "scatter"
+    },
+    "kit_scatter_mushrooms": {
+      "file": "art/models/kit/kit_scatter_mushrooms.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.178,
+        0.082,
+        0.162
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_bone_dark",
+        "pal_tan"
+      ],
+      "triangles": 312,
+      "part": "scatter"
+    }
+  },
+  "constants": {
+    "H": 2.2,
+    "LOW_TOP": 1.09,
+    "FOOT": 0.34,
+    "EAVE": 0.3,
+    "VERGE": 0.22,
+    "pitch": {
+      "timber": 0.9,
+      "clapboard": 1.15,
+      "stone": 1.0,
+      "church": 1.4
+    },
+    "spans": [
+      1,
+      12
+    ]
+  }
+}

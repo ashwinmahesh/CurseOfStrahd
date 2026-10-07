@@ -139,3 +139,20 @@ it facing the target, `wait_for_strike()` waits for the hit frame, and the comba
 with a short step toward the target. Without an attack sheet the old lunge plays. Walking is paced to the step time
 (`set_step_time`): one cycle covers four squares in exploration and combat alike (about 0.7 s a cycle exploring,
 1 s in combat, where tokens move at half the exploration speed).
+
+**Lit by the scene (Improvement Ideas W6, the Modern finish).** `sprite_crisp.gdshader` (`lit`, set from
+`Look.modern()`) lights each figure by the lamps near it, the sun or moon and the sky, so a figure takes a lantern's
+warmth, the time of day and a storm's lightning; a light behind it draws a thin rim along the edge it shines past, and
+the figure casts its shadow on the ground (it faces the camera in the shadow pass too, so the shadow is the figure the
+player sees). A painted figure isn't shaded across its body: each light lights it evenly (less from behind), no more
+than `light_cap` so a carried lantern warms it without washing it out, and `light_floor` keeps it readable in the
+dark. The ink outline and the crisp sampling are unchanged. Classic draws figures at their own colours, as before.
+`tools/art/preview/lit_lab.tscn` shows figures at night with a torch behind one and a lamp by another (`--day`,
+`--flash`, `--classic`).
+
+**Motion between frames (G12).** Every DirectionalSprite, drawn frames or not, moves between them: it breathes while
+standing on a single frame (each figure in its own rhythm), leans into the way it travels across the screen and into a
+turn, bobs in the walk when the sheet has no drawn bob (the earlier walk sheets), settles with a squash when it
+stops, and recoils from a hit (`hurt()` calls `recoil()`: knocked back away from where it faces and squashed). Springs
+drive it; the shader applies it to the flat figure with its feet as the pivot, so its shadow moves with it.
+`lit_lab.tscn -- --motion` records it.

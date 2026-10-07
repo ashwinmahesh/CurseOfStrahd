@@ -59,6 +59,7 @@ attitude escher friendly
 Escher: A promise. How quaint. Nobody has made me one of those in a hundred years. Here, something to remember it by.
 Narrator: He twists a heavy ring off his finger and tosses it to you. It's worth more than most houses in the valley.
 gold +150
+approve wren_featherfoot +1 godrick_pendlebrook +1: You promised Escher you'd leave his door open
 -> heart_tell
 
 ~ pay
@@ -86,6 +87,7 @@ Escher: Oh, don't. Flattery from the living. It smells of soup. Now it will cost
 set escher_threatened
 attitude escher hostile
 Escher [afraid]: You wouldn't. ...You would. Fine. Fine!
+approve thistle +1 godrick_pendlebrook -1: You threatened to open Escher's curtains at dawn
 -> heart_tell
 
 ~ scare_fail

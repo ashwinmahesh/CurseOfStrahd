@@ -12,6 +12,8 @@ const STEP_NAMES: Array[String] = ["Class", "Origin", "Ability Scores", "Class C
 
 var compendium: Compendium
 var build: Dictionary
+## Names the company already has: a character made mid-game can't take one (name_problems).
+var taken_names: Array[String] = []
 var _preview: Character = null
 
 
@@ -191,10 +193,13 @@ func pending_choices() -> Array[Choice]:
 	return out
 
 
-## Choices that belong to a step: ORIGIN (background, species, languages), CHOICES (class and its feats).
+## Choices that belong to a step: ORIGIN (background, species, languages), CHOICES (class and its feats). A pick only
+## a rest changes stays at its default here.
 func choices_for_step(step: Step) -> Array[Choice]:
 	var out: Array[Choice] = []
 	for c in all_choices():
+		if not c.at_creation:
+			continue
 		var origin := c.key.begins_with("background.") or c.key.begins_with("species.") or c.key.begins_with("origin.")
 		if (step == Step.ORIGIN and origin) or (step == Step.CHOICES and not origin):
 			out.append(c)
@@ -309,6 +314,11 @@ func name_problems() -> Array[String]:
 	var key := str(build.get("name", "")).to_snake_case()
 	if bool(app.get("custom", false)) and key != "" and not compendium.get_entry("pregens", key).is_empty():
 		out.append("%s is one of your companions' names; choose another for your hero." % str(build["name"]))
+	elif key != "":
+		for t in taken_names:
+			if t.to_snake_case() == key:
+				out.append("Someone in your company is already called %s; choose another name." % t)
+				break
 	return out
 
 

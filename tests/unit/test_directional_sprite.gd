@@ -224,3 +224,64 @@ func test_mirrored_directions_show_their_twin_flipped() -> void:
 	var full := SpriteFrames.new()
 	full.add_animation(&"idle_w")
 	assert_eq(DirectionalSprite.anim_for(full, "idle", "w"), [&"idle_w", false], "a sheet with every direction")
+
+
+## Motion between frames (G12): the shader's squash, lean, lift and push the sprite sends every frame.
+func _motion_sprite(id: String) -> Array:
+	var root := Node3D.new()
+	get_tree().root.add_child(root)
+	var cam := Camera3D.new()
+	root.add_child(cam)
+	cam.position = Vector3(0, 2, 6)
+	cam.make_current()
+	var s := DirectionalSprite.create(DirectionalSprite.frames_for(id), 1.5)
+	root.add_child(s)
+	return [root, s, cam]
+
+
+func _param(s: DirectionalSprite, name: String) -> Variant:
+	return (s.material_override as ShaderMaterial).get_shader_parameter(name)
+
+
+func test_motion_between_frames_breathing_lean_and_recoil() -> void:
+	var made := _motion_sprite("villager")
+	var root := made[0] as Node3D
+	var s := made[1] as DirectionalSprite
+	var cam := made[2] as Camera3D
+	var heights: Array[float] = []
+	for i in 60:
+		s._move_between_frames(0.05, cam)
+		heights.append((_param(s, "squash") as Vector2).y)
+	assert_true(heights.max() - heights.min() > 0.01, "a standing figure breathes")
+	# Walking across the screen leans the figure into its travel.
+	s.moving = true
+	for i in 20:
+		s.position.x += 0.2
+		s._move_between_frames(0.05, cam)
+	assert_true(float(_param(s, "lean")) > 0.02, "leans into the way it travels")
+	assert_true(float(_param(s, "lift")) >= 0.0, "the walk bobs up, never into the ground")
+	# Struck: knocked back and squashed, then springs back.
+	s.moving = false
+	for i in 40:
+		s._move_between_frames(0.05, cam)
+	s.facing = Vector3.RIGHT
+	s._move_between_frames(0.05, cam)
+	s.recoil()
+	s._move_between_frames(0.05, cam)
+	assert_true(absf(float(_param(s, "push"))) > 0.01, "a recoil pushes the figure back")
+	for i in 80:
+		s._move_between_frames(0.05, cam)
+	assert_true(absf(float(_param(s, "push"))) < 0.01, "and it springs back")
+	root.queue_free()
+
+
+## Sheets stay loaded only while something shows them (Performance pass: video memory climbed over a session).
+func test_frames_are_shared_while_shown_and_freed_after() -> void:
+	var a := DirectionalSprite.frames_for("villager")
+	var b := DirectionalSprite.frames_for("villager")
+	assert_true(a == b, "the same frames while in use")
+	var id := a.get_instance_id()
+	a = null
+	b = null
+	assert_false(is_instance_id_valid(id), "freed once nothing holds them")
+	assert_true(DirectionalSprite.frames_for("villager") != null, "and loaded again when needed")

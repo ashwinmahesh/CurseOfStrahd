@@ -7,6 +7,7 @@ extends RefCounted
 
 ## Sends `family`'s missile from `from` to `to`; the signal fires when it lands (or flies past on a miss).
 static func fly(fx: SpellFx, family: String, cue: Dictionary, from: Vector3, to: Vector3, hit: bool) -> Signal:
+	CombatSfx.launch(cue)
 	match family:
 		"beam":
 			return beam(fx, cue, from, to, hit, false)
@@ -22,7 +23,7 @@ static func fly(fx: SpellFx, family: String, cue: Dictionary, from: Vector3, to:
 
 
 static func _fiery(cue: Dictionary) -> bool:
-	return str(cue["flavour"]) in ["fire", "radiant", "necrotic", "acid", "poison", "nature", "earth", "blood"]
+	return str(cue["flavour"]) in ["fire", "greenfire", "radiant", "necrotic", "acid", "poison", "nature", "earth", "blood"]
 
 
 ## Where a missed missile ends: past the target and a little to one side.
@@ -204,6 +205,7 @@ static func drain(fx: SpellFx, cue: Dictionary, from: Vector3, to: Vector3, hit:
 
 ## A missile lands: a flash of the flavour's light, a puff of its fire, sparks and a glint.
 static func impact(fx: SpellFx, cue: Dictionary, at: Vector3, size: float) -> void:
+	CombatSfx.impact(cue)
 	var cols := cue["colours"] as Dictionary
 	var fiery := _fiery(cue)
 	FxKit.flash(fx, at, cols["light"], 4.5 * size, 4.0 * size, 0.03, 0.55)

@@ -27,6 +27,9 @@ import tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gemini_budget  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "art" / "generated" / "creator"
 CATALOG = ROOT / "art" / "creator" / "catalog.json"
@@ -234,6 +237,7 @@ def main():
                 continue
             if a.budget:
                 todo = todo[: max(0, a.budget - spent)]
+            gemini_budget.preflight(len(todo), "", f"creator {kind}", model)   # stops before a batch it can't finish
             try:
                 with ThreadPoolExecutor(max_workers=a.jobs) as pool:
                     for j in todo:

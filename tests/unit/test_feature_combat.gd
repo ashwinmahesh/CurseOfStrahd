@@ -110,6 +110,28 @@ func test_warding_flare_gives_an_attack_disadvantage() -> void:
 	assert_false(c.reaction_available)
 
 
+func test_warding_flare_pauses_a_spell_attack_roll_too() -> void:
+	var e := _field(4)
+	var c := _add(e, TestChars.custom("cleric", "human", 3, {"cleric_subclass": ["light_domain"]}), Vector2i(2, 3))
+	c.reaction_rules["warding_flare"] = "ask"
+	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(5, 3))
+	var mage := TestCombat.caster_with(e, ["fire_bolt"], Vector2i(7, 3))
+	mage.side = &"enemy"
+	mage.controller = &"ai"
+	TestCombat.start_with(e, mage)
+	var left := (c.creature as Character).resource_left("warding_flare")
+	var r := e.spells.cast(mage, "fire_bolt", 0, [ally])
+	assert_true(r.is_paused() and r.pending.kind == "warding_flare", "asked before the Fire Bolt's roll")
+	if not r.is_paused():
+		return
+	e.drain_events()
+	e.answer_reaction(true)
+	assert_eq((c.creature as Character).resource_left("warding_flare"), left - 1)
+	var atk := e.drain_events().filter(func(x: Dictionary) -> bool: return str(x["type"]) == "attack")
+	assert_false(atk.is_empty(), "the spell rolled after the answer")
+	assert_true(str(((atk[0] as Dictionary).get("edge", {}) as Dictionary).get("why", [])).contains("Warding Flare"), "with Disadvantage from the flare: %s" % str(atk[0]))
+
+
 func test_breath_weapon_replaces_an_attack() -> void:
 	var e := _field(2)
 	var d := _add(e, TestChars.custom("fighter", "dragonborn", 1, {"draconic_ancestry": ["red_dragon"]}), Vector2i(2, 3))

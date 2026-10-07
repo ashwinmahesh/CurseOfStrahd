@@ -6,7 +6,7 @@ Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log 
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
 ## Commands (add new ones to the Makefile)
-make run | arena | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd] | validate | lint | check [DRY=1] | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
+make run | arena | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd JOBS=n] | golden-saves | validate | lint | check [DRY=1] | ci | lfs-quiet | art-spend | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
 make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | keys [ONLY="id …"] [KINDS=…] | creator [GENERATE=1] | pregens [ONLY="id …"] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
@@ -18,7 +18,12 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
   screen. Batch screenshots into few runs.
 - Any other Godot run that opens a window goes through `tools/godot` (same arguments as Godot), never the Godot.app
   path: it loads tools/macos/nofocus.m so Godot can't activate itself (owner decision 2026-10-06).
-- `make run` and `make arena` are for the owner to play: run them only when asked.
+- `make import` (and every target that imports) runs the editor through tools/import.sh with its window never on
+  screen (NOFOCUS_HIDE=1 in tools/godot): textures import about twice as fast as headless, and the project.godot the
+  editor rewrites is put back. IMPORT_HEADLESS=1 imports headless.
+- `make run` and `make arena` are for the owner to play: run them only when asked. `make play` is his stable copy
+  (~/Documents/CurseOfStrahdGame-play, tools/play/play.sh): it only moves to a main the build thread marked after a
+  clean `make ci` (refs/play/green). Never edit or check out anything in it; PLAY_NO_RUN=1 updates it without a window.
 
 ## Code
 - Static types everywhere; `untyped_declaration` is an error.
@@ -29,6 +34,11 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 - The player controls every party member and guest; AI only drives enemies and neutrals.
 - Scenes are built in code; .tscn files are thin roots. 1 world unit = one 5 ft square.
 - After adding a class_name, `make import` before `make test`.
+- A change to what a save holds bumps `GameState.SAVE_VERSION` and adds a `SaveSystem.upgrade` step; then
+  `make golden-saves` adds the new version's saves beside the old ones in tests/saves, which every test run loads.
+- A new git worktree: before its first `make import`, seed the import cache from the main checkout as an APFS clone,
+  which takes almost no disk: `mkdir -p <worktree>/.godot && cp -Rc ~/Documents/CurseOfStrahdGame/.godot/imported
+  <worktree>/.godot/`. Never rsync or plain-copy it (about 8 GB per worktree on a nearly full disk).
 
 ## Rules engine (ADR 0003, 0005, 0006)
 - Data is read through `Compendium.shared()`; modifiers follow docs/contracts/modifiers.md (add a stat to the contract
@@ -39,7 +49,8 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 
 ## Rules source
 Full 2024 PHB (owner decision 2026-10-05, personal use only). SRD 5.2 is the import starting point.
-Rule deviations go in docs/rules/deviations.md; a rule is "done" only when coverage.md says so.
+Rule deviations go in docs/rules/deviations.md; a rule is "done" only when coverage.md says so. Close or update
+the rows your change touches: `make validate` checks both docs against the built phases and the data.
 Data `text` and `summary` are our own words, never copied. Set `source.checked_against` only after comparing every
 number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribution: docs/assets/LICENSES.md.
 
@@ -54,6 +65,10 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   provider and model pinned in art/manifest.json. Key: GEMINI_API_KEY, sent as a header. Gemini gives opaque
   images, so ask for a plain flat white background; the pipeline removes it. OpenAI is a fallback
   (tools/art/generate_openai.sh); never use OpenAI models with a shutdown date.
+- Gemini spend (tools/art/gemini_budget.py): every call is counted in one ledger shared by all worktrees, per key
+  (primary GEMINI_API_KEY, backup GEMINI_BACKUP_API_KEY) and thread. `make art-spend` shows what's left. Batch tools
+  call `gemini_budget.preflight(calls, size, what)` before their first call and stop if the batch would pass the key's
+  stop point; when a tool says it stopped there, report to the coordinator instead of overriding (GEMINI_OVERRUN=1).
 - Asset packs from the internet are allowed (owner, 2026-10-06): CC0 or clearly free licences only. Keep
   downloads untouched with their licence in art/sourced/<pack>/ and list each in docs/assets/LICENSES.md.
   Characters come from the Gemini pipeline so the style stays consistent.
@@ -65,10 +80,11 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   heroes have the fuller HD set instead: `make keys [ONLY=<id>]` (docs/art/animation.md).
 - UI draws on CanvasLayers so the palette pass never touches it.
 - Git LFS (owner decision 2026-10-07; .gitattributes): new or changed images under art/generated, art/sprites,
-  art/portraits, art/creator and art/textures, and voice mp3s, are stored in LFS. Older files stay plain blobs until
-  they change: never `git lfs migrate` or `git add --renormalize`, and stage only files you changed (an old image whose
-  timestamp moved shows as modified and would be uploaded to LFS). This repo's worktrees share its LFS setup; a
-  separate clone needs `git lfs install` (art/generated isn't used at run time, so `lfs.fetchexclude` can skip it).
+  art/portraits, art/creator and art/textures, voice mp3s, and sound clips under art/sourced, are stored in LFS. Older
+  files stay plain blobs until they change: never `git lfs migrate` or `git add --renormalize`, and stage only files
+  you changed (an old image whose timestamp moved shows as modified and would be uploaded to LFS; `make lfs-quiet`
+  clears that noise without converting anything). This repo's worktrees share its LFS setup; a separate clone needs
+  `git lfs install` (art/generated isn't used at run time, so `lfs.fetchexclude` can skip it).
 
 ## Voice (ADR 0013)
 - Spoken lines: ElevenLabs (eleven_v4, owner decision 2026-10-06) via `make voice` only; model, format and each
@@ -79,11 +95,11 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   options and books are never voiced.
 
 ## Done means
-- `make check` while working: it runs only what covers the files changed since main (tools/check.py, `DRY=1` shows
-  the plan). Docs alone run nothing; art and audio files only re-import; data and dialogue run the validators and
-  the tests that name the changed ids; scripts and scenes run lint and the tests that use them.
-- `make check` green is enough to hand over docs, art, audio, data, dialogue, captures, tools, Makefile targets
-  outside `make ci` (it dry-runs them), and ui/ or world/ scripts. Changes to rules/, combat/, story/, core/,
-  tests/support or the ci targets need `make ci` green with a clean log.
-  The build thread runs `make ci` before every merge to main either way.
+- Hand off with `make check` green and a clean log (owner, 2026-10-07): it runs what covers the files changed since
+  main (tools/check.py, `DRY=1` shows the plan). Docs alone run nothing; art and audio re-import and run the tests
+  that check that art; data and dialogue run the validators and the tests that quote the ids or read the table;
+  scripts and scenes run lint, a compile of every script, and the tests that use them (`DEPTH=2` or `DEPTH=all`
+  reaches further). Changes to project.godot, an autoload, the test runner or the ci targets run `make ci`.
+  The build thread runs the full suite once for each batch of hand-offs before it merges them.
+- A new screen or panel goes into tests/integration/test_layout.gd, which fails on text or buttons spilling out.
 - A capture for anything visual. Never weaken tests to pass. Never mark an owner sign-off as passed.

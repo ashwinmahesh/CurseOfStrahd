@@ -25,6 +25,7 @@ var _rim: Control
 var _hidden: Dictionary = {}
 var _hidden_sig := ""
 var _check := 0.0
+var _drawn_sig := 0                ## _content_signature() when the content was last drawn
 
 
 func _init() -> void:
@@ -169,8 +170,41 @@ func _process(delta: float) -> void:
 		_check = HiddenAreas.CHECK_EVERY
 		if HiddenAreas.signature(view) != _hidden_sig:
 			_redo_hidden()   # a secret door was found: the room behind it comes onto the map
-	_content.queue_redraw()
-	_rim.queue_redraw()
+	# Drawn again only when something on it moved or changed (it was redrawn every frame, about a third of the
+	# exploration HUD's script time); the rim never changes.
+	var sig := _content_signature()
+	if sig != _drawn_sig:
+		_drawn_sig = sig
+		_content.queue_redraw()
+
+
+## Everything the map's content shows that can change while it's up: where the middle is, the zoom, the camera's
+## heading, the people and the party, doors, noticed traps and hidden rooms.
+func _content_signature() -> int:
+	var parts: Array = [_centre, cell_px, size, _hidden_sig]
+	if view.rig != null:
+		parts.append(view.rig.ground_basis()[0])
+	for npc: Variant in view.npc_tokens.values():
+		if is_instance_valid(npc):
+			parts.append((npc as Node3D).global_position)
+			parts.append((npc as Node3D).visible)
+	for group: Array[Combatant] in [view.members, view.guest_members]:
+		for m in group:
+			var tok: Variant = view.tokens.get(m.id)
+			if is_instance_valid(tok):
+				parts.append((tok as Node3D).global_position)
+	for id: String in view.door_nodes:
+		var door: Variant = view.door_nodes[id]
+		parts.append(is_instance_valid(door) and (door as Node3D).visible)
+	var state := view.st.loc_state(view.loc_id)
+	parts.append(state["found"])
+	parts.append(state["traps"])
+	return parts.hash()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED and _rim != null:
+		_rim.queue_redraw()
 
 
 func _draw_content() -> void:

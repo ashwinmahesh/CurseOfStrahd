@@ -236,6 +236,14 @@
       "insight",
       "medicine"
     ],
+    "subclass": "life_domain",
+    "feats": [
+      "war_caster",
+      "resilient",
+      "fey_touched",
+      "alert",
+      "tough"
+    ],
     "note": "Wisdom first; Protector if you want heavy armor and martial weapons."
   },
   "levels": [

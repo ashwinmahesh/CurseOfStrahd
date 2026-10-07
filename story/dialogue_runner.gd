@@ -9,6 +9,7 @@ extends RefCounted
 ##        {kind: "options", options: [{text, label, check: {skill, dc, bonus, chance, who}, enabled}]}
 ##        {kind: "check", who, portrait, skill, dc, total, success, detail, said}
 ##        {kind: "notice", text}
+##        {kind: "cutscene", id, image, focus}: a full-screen picture under what follows (id "" takes it away)
 ##        {kind: "end", combat: encounter id or "", end_game: the conversation ended the campaign (`end_game`)}
 
 ## The Narrator's portrait (art/portraits/narrator.png), on their lines here and in the exploration box.
@@ -152,8 +153,11 @@ func next() -> Dictionary:
 					return {"kind": "notice", "text": "Journal updated: %s" % Compendium.shared().display_name("quests", str(s["id"]))}
 			"give":
 				pc += 1
-				st.give_item(str(s["item"]), int(s["qty"]), speaker)
-				return {"kind": "notice", "text": "%s receives %s%s" % [_first(speaker), Compendium.shared().display_name("items", str(s["item"])),
+				var taker := speaker
+				if str(s.get("to", "")) != "" and st.find_member(str(s["to"])) != null:
+					taker = st.find_member(str(s["to"]))
+				st.give_item(str(s["item"]), int(s["qty"]), taker)
+				return {"kind": "notice", "text": "%s receives %s%s" % [_first(taker), Compendium.shared().display_name("items", str(s["item"])),
 					" ×%d" % int(s["qty"]) if int(s["qty"]) > 1 else ""]}
 			"take":
 				pc += 1
@@ -256,12 +260,31 @@ func next() -> Dictionary:
 					_picking = true
 					_pick_purpose = "respec"
 					return _pick_beat()
+			"approve", "inspire":
+				# Companion approval (story/approval.gd) and Heroic Inspiration for playing in character
+				# (story/in_character.gd). Each statement counts once a playthrough, however often its node runs.
+				pc += 1
+				var once := "_%s/%s:%s:%d" % [str(s["t"]), file.key, node, int(s["n"])]
+				if st.flags.has(once):
+					continue
+				st.flags[once] = true
+				var said := Approval.react(st, s["changes"] as Array, str(s["why"])) if str(s["t"]) == "approve" \
+					else InCharacter.award(st, str(s["selector"]), str(s["why"]))
+				if said != "":
+					return {"kind": "notice", "text": said, "approval": str(s["t"]) == "approve"}
 			"narrate":
 				pc += 1
 				if narrator != null:
 					var text := narrator.line(str(s["key"]), st, speaker)
 					if text != "":
 						return _line_beat("Narrator", "", text)
+			"cutscene":
+				# A full-screen picture behind the lines that follow (story/cutscenes.gd); `cutscene end` takes it away.
+				pc += 1
+				var cut := "" if str(s["id"]) == "end" else str(s["id"])
+				var img := Cutscenes.image(cut, st) if cut != "" else ""
+				if cut == "" or img != "":
+					return {"kind": "cutscene", "id": cut, "image": img, "focus": Cutscenes.focus(cut)}
 			"end_game":
 				# The campaign ends here (ADR 0014): the ending that holds now is recorded; the game plays it when the
 				# conversation closes.

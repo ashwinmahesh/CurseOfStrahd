@@ -46,6 +46,7 @@ func actions_for(c: Combatant) -> Array[Dictionary]:
 	_spells(c, out)
 	_sustained(c, out)
 	_items(c, out)
+	_quick(c, out)
 	_passives(c, out)
 	return out
 
@@ -174,6 +175,10 @@ func _feature_entries(c: Combatant, out: Array[Dictionary], tab: String) -> void
 			en["choices"] = fa["choices"]
 			en["choice_label"] = str(fa.get("choice_label", "Choose"))
 		en["count"] = int(fa.get("count", 1))
+		# Aimed from an Echo Knight's echo ("from": that echo; "from_echo": whichever echo reaches).
+		for k: String in ["from", "from_echo"]:
+			if fa.has(k):
+				en[k] = fa[k]
 		out.append(en)
 
 
@@ -537,6 +542,20 @@ func _items(c: Combatant, out: Array[Dictionary]) -> void:
 		out.append(kit)
 
 
+## Quick slots (plan §5.6, the inventory's paper doll): the consumables a character keeps to hand are on the Common tab
+## too.
+func _quick(c: Combatant, out: Array[Dictionary]) -> void:
+	if not c.creature is Character or (c.creature as Character).quick_slots.is_empty():
+		return
+	var quick := (c.creature as Character).quick_slots
+	for a: Dictionary in out.duplicate():
+		var iid := str(a.get("item_id", str(a["id"]).get_slice(":", 1) if str(a["id"]).begins_with("item:") else ""))
+		if str(a["tab"]) == ITEMS and iid in quick:
+			var q: Dictionary = a.duplicate()
+			q["tab"] = COMMON
+			out.append(q)
+
+
 func _passives(c: Combatant, out: Array[Dictionary]) -> void:
 	if not c.creature is Character:
 		return
@@ -867,7 +886,7 @@ static func ability_key(action: Dictionary) -> String:
 	var id := str(action.get("id", ""))
 	if str(action.get("kind", "")) == "feat":
 		var key := id.substr(5)
-		for pre: String in ["cf:", "rh:", "fr:"]:
+		for pre: String in ["cf:", "rh:", "fr:", "ek:"]:
 			if key.begins_with(pre):
 				key = key.substr(pre.length())
 		# A data-defined activation (FeatureRecipes) shows as its feature; ending one shows nothing.
@@ -1042,11 +1061,15 @@ func target_why(c: Combatant, action: Dictionary, t: Combatant) -> String:
 			return charm
 	match str(action["kind"]):
 		"attack", "offhand":
+			# An Echo Knight's Attack action (and a Nick attack, which costs nothing) can come from its echo.
 			var o := e.option_by_id(c, str(action["option_id"]))
-			return e.attack_legal(c, t, o)
+			return e.echo_knight.attack_why(c, t, o, str(action["kind"]) == "attack" or str(action["cost"]) == "free")
 		"haste":
 			if str(action["option_id"]) != "":
-				return e.attack_legal(c, t, e.option_by_id(c, str(action["option_id"])))
+				return e.echo_knight.attack_why(c, t, e.option_by_id(c, str(action["option_id"])), true)
+	var from_echo: Variant = e.echo_knight.range_why(c, action, t, rng) if rng > 0 else null
+	if from_echo != null:
+		return str(from_echo)
 	if rng > 0 and t != c and e.distance(c, t) > rng:
 		return "Out of range (%d ft, range %d ft)" % [e.distance(c, t), rng]
 	if t != c and int(e.cover(c, t)["cover"]) == CombatGrid.Cover.TOTAL:
@@ -1083,9 +1106,11 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 		return out
 	var o := e.option_by_id(c, str(action["option_id"]))
 	var p := o["profile"] as WeaponProfile
-	var hc := e.hit_chance(c, t, o)
+	var hc := e.echo_knight.hit_chance(c, t, o, str(action["kind"]) == "attack" or str(action["cost"]) == "free")
 	out["chance"] = float(hc["chance"])
 	lines.append("%s: hit %d%% (needs %d+ on the d20)" % [p.name, roundi(float(hc["chance"]) * 100.0), int(hc["needs"])])
+	if hc.has("from"):
+		lines.append("From %s's space" % str(hc["from"]))
 	var bonus := p.damage_bonus.total() if str(action["kind"]) == "attack" else mini(0, p.damage_bonus.total())
 	lines.append("Damage %s%s %s (avg %.0f)%s" % [p.damage_dice, ("%+d" % bonus) if bonus != 0 else "", str(p.damage_type).capitalize(),
 		p.average_damage() - (p.damage_bonus.total() - bonus), (" · %s" % p.mastery.capitalize()) if p.mastery != "" else ""])

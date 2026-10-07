@@ -10,6 +10,7 @@ var narrator: Narrator
 var banter: Banter
 var view: LocationView
 var hud: ExploreHud
+var plan_bar: PlanBar                ## turn-based exploring's panel (F7)
 var screen: Node = null              ## the open full-screen panel (sheet, inventory ...), if any
 var dialogue: DialogueUI = null
 var loot: LootWindow = null
@@ -44,6 +45,10 @@ func _ready() -> void:
 		_refresh())
 	hud.sheet_requested.connect(func(i: int) -> void: open_screen("sheet", i))
 	hud.command.connect(_command)
+	plan_bar = PlanBar.new()
+	plan_bar.hud = hud
+	plan_bar.command.connect(_command)
+	add_child(plan_bar)
 	var menu_layer := CanvasLayer.new()
 	menu_layer.layer = 25
 	add_child(menu_layer)
@@ -107,6 +112,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.travel_requested.connect(func() -> void: open_travel.call_deferred(true))
 	view.dialogue_requested.connect(start_dialogue)
 	view.narration.connect(func(t: String) -> void: hud.narrate(t))
+	view.cutscene_requested.connect(play_cutscene)
 	view.toast.connect(func(t: String) -> void: hud.toast(t))
 	view.check_rolled.connect(func(t: String) -> void: hud.roll(t))
 	view.party_tended.connect(_refresh)
@@ -117,6 +123,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 		LayerFade.fade(self, hud, false, 0.25)   # the combat HUD fades up in its place
 		Audio.play_music("combat")
 		_boss_music.call_deferred(cv)   # the fight is set up just after this signal
+		Achievements.watch(cv, st, hud.toast)   # the run's record for the ending, and achievements (N8)
 		cv.menu_requested.connect(func() -> void:
 			if screen is PauseMenu:
 				close_screen()
@@ -124,6 +131,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 				open_screen("menu", 0)))
 	view.combat_ended.connect(_after_combat)
 	add_child(view)
+	plan_bar.view = view
 	hud.show_location(view)
 	_refresh()
 	if spawn != "":
@@ -137,7 +145,7 @@ func _refresh() -> void:
 	view.update_daylight()
 	if not view.in_combat:
 		view.refresh_party()   # healed outside a fight: back on their feet, chips up to date
-	hud.refresh(str(view.loc.get("name", "")), view.sneaking, view.solo)
+	hud.refresh(str(view.loc.get("name", "")), view.sneaking, view.solo and not view.planning, view.planning)
 
 
 # --- Input ----------------------------------------------------------------------------------------
@@ -156,7 +164,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		var pick := view.pick_cell(view.rig.camera, (event as InputEventMouseMotion).position)
 		_hover = pick
 		var thing := view.thing_at(pick) if pick.x >= 0 else {}
-		hud.hint(str(thing.get("label", "")), (event as InputEventMouseMotion).position)
+		# Turn-based: the floor's hint is the walk's cost against this round's movement, its trail drawn on the ground.
+		var label := str(thing.get("label", ""))
+		if thing.is_empty() and view.planning:
+			label = LocationPlan.hover_text(view, pick)
+		elif thing.is_empty() and view.sneaking and pick.x >= 0:
+			label = LocationStealth.hover_warning(view, pick)   # who can see you (U10)
+		LocationPlan.preview(view, pick if thing.is_empty() else Vector2i(-1, -1))
+		hud.hint(label, (event as InputEventMouseMotion).position)
 		Cursors.show(Cursors.for_thing(thing))
 		glow.show(view, pick, thing)
 	elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
@@ -182,6 +197,11 @@ func _unhandled_input(event: InputEvent) -> void:
 				view.search()
 			KEY_V:
 				_command("sneak")
+			KEY_T:
+				_command("plan")
+			KEY_SPACE:
+				if view.planning:
+					_command("plan_round")
 			KEY_G:
 				_command("split")
 			KEY_ESCAPE:
@@ -298,11 +318,22 @@ func world_action(cell: Vector2i, id: String) -> void:
 func _command(name_: String) -> void:
 	match name_:
 		"sneak":
-			view.sneaking = not view.sneaking
-			hud.toast("Sneaking" if view.sneaking else "Walking normally")
+			view.set_sneaking(not view.sneaking)
+			if not view.in_combat:
+				hud.toast("Sneaking" if view.sneaking else "Walking normally")
+		"plan":
+			view.toggle_plan()
+		"plan_round":
+			view.next_round()
+		"strike":
+			if not view.strike():
+				hud.toast("No foes in sight")
 		"split":
-			view.solo = not view.solo
-			hud.toast("Only %s moves" % st.party[0].name if view.solo else "The party moves together")
+			if view.planning:
+				hud.toast("Turn-based already moves one of you at a time")
+			else:
+				view.solo = not view.solo
+				hud.toast("Only %s moves" % st.party[0].name if view.solo else "The party moves together")
 		"search":
 			view.search()
 		"map":
@@ -657,7 +688,7 @@ func open_screen(kind: String, index: int) -> void:
 	close_screen()
 	Cursors.show("pointer")
 	glow.clear()
-	if kind in ["sheet", "inventory", "journal", "party", "level_up"]:
+	if kind in ["sheet", "inventory", "journal", "party", "level_up", "create"]:
 		Audio.sfx("page")
 	match kind:
 		"sheet":
@@ -670,6 +701,8 @@ func open_screen(kind: String, index: int) -> void:
 			screen = PartyScreen.new()
 		"roster":
 			screen = RosterScreen.new()
+		"create":
+			screen = CreationScreen.new()
 		"rest":
 			screen = RestScreen.new()
 		"menu":
@@ -692,9 +725,30 @@ func open_screen(kind: String, index: int) -> void:
 func close_screen() -> void:
 	get_tree().paused = false
 	if screen != null:
-		screen.queue_free()
+		# A framed screen sinks away (G9); anything else is freed at once.
+		if screen is CanvasLayer:
+			UiMotion.dismiss(screen as CanvasLayer)
+		else:
+			screen.queue_free()
 		screen = null
 	_refresh()
+
+
+## A place's cutscene (story/cutscenes.gd): its picture over everything with the narrator's line as the caption. It
+## stands in for a full-screen panel until it closes, so nothing in the world moves under it.
+func play_cutscene(id: String, caption: String) -> void:
+	close_screen()
+	var player := CutscenePlayer.new()
+	add_child(player)
+	if not player.play(id, [caption] as Array[String], st):
+		player.queue_free()
+		hud.narrate(caption)
+		return
+	screen = player
+	player.finished.connect(func() -> void:
+		if screen == player:
+			screen = null
+		_refresh())
 
 
 ## Plays a Narrator trigger here (rests, dreams). Returns the line, or "".

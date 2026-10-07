@@ -4,7 +4,10 @@ extends CanvasLayer
 ## Points (roll on screen or take the fixed value), the new features (summary on the page, full text on hover), every
 ## choice the level grants (the same widgets as creation, picked by kind), then a before/after summary and Confirm,
 ## with the live sheet beside it marking what changes. Nothing changes until Confirm. Milestone levelling: available
-## when the story has reached the next milestone.
+## when the story has reached the next milestone. The picks start blank (owner, 2026-10-07); Use Recommended (Q10)
+## fills the ones still blank, from a companion's own level plan or LevelUpController.recommend(), keeping any already
+## made (a different subclass stays, and its own picks are filled for it). A card says what it filled; every pick can
+## still be changed.
 
 var root: Node
 var st: StoryState
@@ -13,6 +16,8 @@ var ctl: LevelUpController
 var _body: VBoxContainer
 var _sheet: VBoxContainer
 var _hp_note := ""
+## What recommend() filled in ([{key, label, names, plan}]), for the card over the choices.
+var _recommended: Array[Dictionary] = []
 
 
 func _init() -> void:
@@ -55,6 +60,12 @@ func _redraw() -> void:
 	for c in _sheet.get_children():
 		c.queue_free()
 	_sheet.add_child(LiveSheet.build(ctl.preview(), ch))
+	# Several levels waiting (back from camp, or made after the party had levelled): which one this is.
+	var waiting := st.levels_waiting(ch)
+	if waiting > 1:
+		var more := "%d more wait" % (waiting - 1) if waiting > 2 else "1 more waits"
+		_body.add_child(UiParts.row(UiKit.label("Level %d for %s; %s after it, up to the party's level %d." % [ch.character_level() + 1,
+			ch.name.get_slice(" ", 0), more, st.target_level()], 15, "gilt_light", 1000)))
 	# 1. Class
 	_body.add_child(UiParts.section("1 · Class to advance"))
 	var classes := HFlowContainer.new()
@@ -66,6 +77,7 @@ func _redraw() -> void:
 		var why := "" if o.legal else "Can't: " + o.reason
 		var b := UiParts.tip_button(o.label, func() -> void:
 			ctl.choose_class(o.id)
+			_recommended = []
 			_hp_note = ""
 			_redraw(), func() -> Control: return UiParts.rules_tip(label, "", summary, [], why), o.id == ctl.chosen_class, 15)
 		b.disabled = not o.legal
@@ -98,7 +110,20 @@ func _redraw() -> void:
 	# 4. Choices
 	var choices := ctl.level_choices()
 	if not choices.is_empty():
-		_body.add_child(UiParts.section("4 · Choices"))
+		var blank := choices.filter(func(c: Choice) -> bool: return not c.is_complete()).size()
+		var use := UiParts.small_button("Use Recommended", func() -> void:
+			_recommended = ctl.recommend()
+			_redraw(), "create")
+		use.disabled = blank == 0
+		use.tooltip_text = "Fill in the picks you haven't made with recommended ones; the ones you've made stay" if blank > 0 \
+			else "Every pick is made"
+		if blank > 0:
+			UiParts.light_up(use)
+		_body.add_child(UiParts.section("4 · Choices", use))
+		if not _recommended.is_empty():
+			_body.add_child(_recommended_card())
+		elif blank > 0:
+			_body.add_child(UiKit.label("Make each pick below, or press Use Recommended to fill in the ones you haven't made.", 14, "parchment", 1000))
 	for c in choices:
 		var w := ChoiceWidget.create(c)
 		w.picks_changed.connect(func(key: String, picks: Array) -> void:
@@ -128,6 +153,35 @@ func _redraw() -> void:
 	var confirm := UiParts.primary_button("Confirm level %d" % (ch.character_level() + 1), _confirm)
 	confirm.disabled = not errs.is_empty()
 	_body.add_child(confirm)
+
+
+## The recommended picks as a card over the choices: where they come from, then each choice and what was picked.
+func _recommended_card() -> Control:
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 3)
+	var first := ch.name.get_slice(" ", 0)
+	var planned := false
+	for r in _recommended:
+		planned = planned or bool(r["plan"])
+	var head := "Filled in from %s's own plan for level %d. Change anything below." % [first, ch.character_level() + 1] if planned \
+		else "Filled in with recommended picks for a %s. Change anything below." % ch.compendium.display_name("classes", ctl.chosen_class)
+	col.add_child(UiKit.label(head, 15, "gilt_light", 960))
+	for r in _recommended:
+		var line := HBoxContainer.new()
+		line.add_theme_constant_override("separation", 8)
+		line.add_child(UiParts.drawn(Vector2(12, 20), func(c: Control) -> void:
+			UiParts.diamond(c, Vector2(6, c.size.y / 2.0), 4.0, Look.color("gilt"), true)))
+		var what := UiKit.label("%s: %s" % [r["label"], ", ".join(r["names"] as Array)], 14, "vellum", 930)
+		line.add_child(what)
+		col.add_child(line)
+	var card := UiParts.card("ui_wine", "gilt", 0.45, 10)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	# A crest at the card's head, as on the screen's title arch.
+	row.add_child(UiParts.drawn(Vector2(30, 30), func(c: Control) -> void: UiParts.crest(c, Vector2(15, 15), 12.0)))
+	row.add_child(col)
+	card.add_child(row)
+	return card
 
 
 func _confirm() -> void:

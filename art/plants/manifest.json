@@ -1,0 +1,290 @@
+{
+  "about": "3D trees and plants from blender/plants_3d.py (docs/art/plants.md). size is [width, height, depth] in world units; far is the lighter copy for the land far from the map.",
+  "plants": {
+    "spruce_a": {
+      "file": "art/plants/spruce_a.glb",
+      "kind": "tree",
+      "size": [
+        2.252,
+        4.603,
+        2.419
+      ],
+      "triangles": 870,
+      "stands_for": [
+        "pine"
+      ],
+      "far": "spruce_a_far"
+    },
+    "spruce_b": {
+      "file": "art/plants/spruce_b.glb",
+      "kind": "tree",
+      "size": [
+        2.72,
+        5.403,
+        2.679
+      ],
+      "triangles": 906,
+      "stands_for": [
+        "pine"
+      ],
+      "far": "spruce_b_far"
+    },
+    "spruce_c": {
+      "file": "art/plants/spruce_c.glb",
+      "kind": "tree",
+      "size": [
+        2.251,
+        4.217,
+        2.324
+      ],
+      "triangles": 750,
+      "stands_for": [
+        "pine"
+      ],
+      "far": "spruce_c_far"
+    },
+    "spruce_young": {
+      "file": "art/plants/spruce_young.glb",
+      "kind": "tree",
+      "size": [
+        1.522,
+        2.754,
+        1.505
+      ],
+      "triangles": 498,
+      "stands_for": [
+        "pine"
+      ],
+      "far": "spruce_young_far"
+    },
+    "spruce_a_far": {
+      "file": "art/plants/spruce_a_far.glb",
+      "kind": "tree",
+      "size": [
+        2.324,
+        4.605,
+        2.362
+      ],
+      "triangles": 184,
+      "far_of": "spruce_a"
+    },
+    "spruce_b_far": {
+      "file": "art/plants/spruce_b_far.glb",
+      "kind": "tree",
+      "size": [
+        2.658,
+        5.337,
+        2.653
+      ],
+      "triangles": 192,
+      "far_of": "spruce_b"
+    },
+    "spruce_c_far": {
+      "file": "art/plants/spruce_c_far.glb",
+      "kind": "tree",
+      "size": [
+        2.25,
+        4.294,
+        2.377
+      ],
+      "triangles": 152,
+      "far_of": "spruce_c"
+    },
+    "spruce_young_far": {
+      "file": "art/plants/spruce_young_far.glb",
+      "kind": "tree",
+      "size": [
+        1.38,
+        2.64,
+        1.513
+      ],
+      "triangles": 120,
+      "far_of": "spruce_young"
+    },
+    "dead_a": {
+      "file": "art/plants/dead_a.glb",
+      "kind": "dead",
+      "size": [
+        2.772,
+        4.04,
+        2.676
+      ],
+      "triangles": 1785,
+      "stands_for": [
+        "dead_tree"
+      ],
+      "far": "dead_a_far"
+    },
+    "dead_b": {
+      "file": "art/plants/dead_b.glb",
+      "kind": "dead",
+      "size": [
+        2.846,
+        5.014,
+        2.924
+      ],
+      "triangles": 2239,
+      "stands_for": [
+        "dead_tree"
+      ],
+      "far": "dead_b_far"
+    },
+    "dead_c": {
+      "file": "art/plants/dead_c.glb",
+      "kind": "dead",
+      "size": [
+        1.855,
+        3.22,
+        1.547
+      ],
+      "triangles": 1618,
+      "stands_for": [
+        "dead_tree"
+      ],
+      "far": "dead_c_far"
+    },
+    "dead_a_far": {
+      "file": "art/plants/dead_a_far.glb",
+      "kind": "dead",
+      "size": [
+        2.577,
+        3.829,
+        2.195
+      ],
+      "triangles": 498,
+      "far_of": "dead_a"
+    },
+    "dead_b_far": {
+      "file": "art/plants/dead_b_far.glb",
+      "kind": "dead",
+      "size": [
+        2.498,
+        4.639,
+        3.128
+      ],
+      "triangles": 573,
+      "far_of": "dead_b"
+    },
+    "dead_c_far": {
+      "file": "art/plants/dead_c_far.glb",
+      "kind": "dead",
+      "size": [
+        2.094,
+        2.889,
+        2.131
+      ],
+      "triangles": 423,
+      "far_of": "dead_c"
+    },
+    "fern_a": {
+      "file": "art/plants/fern_a.glb",
+      "kind": "fern",
+      "size": [
+        1.111,
+        0.232,
+        1.137
+      ],
+      "triangles": 144
+    },
+    "fern_b": {
+      "file": "art/plants/fern_b.glb",
+      "kind": "fern",
+      "size": [
+        0.947,
+        0.193,
+        0.87
+      ],
+      "triangles": 112
+    },
+    "fern_small": {
+      "file": "art/plants/fern_small.glb",
+      "kind": "fern",
+      "size": [
+        0.6,
+        0.122,
+        0.571
+      ],
+      "triangles": 72
+    },
+    "bracken": {
+      "file": "art/plants/bracken.glb",
+      "kind": "fern",
+      "size": [
+        1.624,
+        0.337,
+        1.436
+      ],
+      "triangles": 96
+    },
+    "grass_a": {
+      "file": "art/plants/grass_a.glb",
+      "kind": "grass",
+      "size": [
+        0.475,
+        0.314,
+        0.524
+      ],
+      "triangles": 24
+    },
+    "grass_b": {
+      "file": "art/plants/grass_b.glb",
+      "kind": "grass",
+      "size": [
+        0.418,
+        0.207,
+        0.389
+      ],
+      "triangles": 24
+    },
+    "grass_dry": {
+      "file": "art/plants/grass_dry.glb",
+      "kind": "grass",
+      "size": [
+        0.509,
+        0.38,
+        0.603
+      ],
+      "triangles": 24
+    },
+    "sedge": {
+      "file": "art/plants/sedge.glb",
+      "kind": "grass",
+      "size": [
+        0.462,
+        0.379,
+        0.466
+      ],
+      "triangles": 24
+    },
+    "reeds": {
+      "file": "art/plants/reeds.glb",
+      "kind": "reeds",
+      "size": [
+        0.728,
+        0.936,
+        0.676
+      ],
+      "triangles": 32
+    },
+    "bush_a": {
+      "file": "art/plants/bush_a.glb",
+      "kind": "bush",
+      "size": [
+        0.841,
+        0.671,
+        0.838
+      ],
+      "triangles": 56
+    },
+    "bush_b": {
+      "file": "art/plants/bush_b.glb",
+      "kind": "bush",
+      "size": [
+        0.704,
+        0.577,
+        0.702
+      ],
+      "triangles": 44
+    }
+  }
+}

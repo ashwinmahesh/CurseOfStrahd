@@ -137,7 +137,9 @@
             "RtHW",
             "FRHoF",
             "FRAiF",
-            "AU"
+            "AU",
+            "TCoE",
+            "EGtW"
           ]
         },
         "page": {
@@ -164,7 +166,7 @@
             "2024",
             "2014"
           ],
-          "description": "Monsters: which rules edition the stat block follows. 2024 = the 2025 Monster Manual (preferred); 2014 = the older block, used only where no 2024 version exists (CoS-only creatures and NPCs)."
+          "description": "Monsters: which rules edition the stat block follows. 2024 = the 2025 Monster Manual (preferred); 2014 = the older block, used only where no 2024 version exists (CoS-only creatures and NPCs). Spells: 2014 = a spell no 2024 book reprints, added by the owner (TCoE = Tasha's Cauldron of Everything: Booming Blade, Green-Flame Blade)."
         },
         "note": {
           "type": "string"
@@ -558,10 +560,22 @@
         },
         "policy": {
           "enum": [
+            "ask",
             "auto",
             "never"
           ],
-          "description": "The feature acts on its own; the class tab offers Automatic and Off, starting at this value."
+          "description": "The feature acts on its own; the class tab offers Automatic and Off (or `policy_modes`), starting at this value."
+        },
+        "policy_modes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "ask",
+              "auto",
+              "never"
+            ]
+          },
+          "description": "The class tab's choices for a `policy` feature when they aren't Automatic and Off (a Reaction that can ask first)."
         },
         "policy_cost": {
           "type": "string",

@@ -1,0 +1,345 @@
+{
+  "about": "HD surface sets (Improvement Ideas W4, docs/art/textures.md): one Gemini swatch per surface at 2K with art/prompts/surface_preamble.txt and a look target frame as the style reference (ref: art/generated/look_targets/<ref>.png), made seamless by blender/make_surface.py (tools/art/build_surfaces.py), with a normal map and an occlusion-roughness-metal map. variants: how many edge-matched variants the surface has in all; the further ones are quilted from the first tile's own content (organic surfaces only: a quilt would break the lines of boards, tiles and courses). view: floor (top-down), wall (elevation) or roof. material: overrides written to the manifest entry's material. new: a surface the kit adds (no Classic tile). A recipe may give pieces (how many stones or boards across one tile) to cut the tile from as much of the swatch as holds that many, for a swatch Gemini drew at the wrong scale; the spectral count it relies on can mistake mortar lines for pieces, so check its printed count. grade: a colour multiplier on the painted tile. derived: surfaces made from another's set, turned a quarter. crop: the share of the swatch's width one tile takes, for pieces that came out too small. brightness: a fixed gain instead of matching the old tile's average brightness.",
+  "prompt_template": "Seamless tileable texture of {subject}, {view}, filling the whole square edge to edge, painted in the style of the reference picture's world (ignore its layout and characters).",
+  "views": {
+    "floor": "seen straight from above (orthographic top-down, no perspective)",
+    "wall": "seen straight on as a flat elevation (orthographic, no perspective)",
+    "roof": "seen straight onto the roof plane (orthographic, no perspective)"
+  },
+  "surfaces": {
+    "village/cobbles": {
+      "subject": "an old village street of rough rounded cobblestones set in dark gritty earth, worn smooth on top, cold grey and slate-blue stones with damp, mossy joints. About a dozen cobblestones fit across the whole width of the picture",
+      "view": "floor",
+      "variants": 3,
+      "ref": "village_dusk_ab"
+    },
+    "village/mud_road": {
+      "subject": "a churned muddy village road: lumpy dark brown mud with cart ruts, small stones, shallow puddles of standing water and trampled straw",
+      "view": "floor",
+      "variants": 3,
+      "ref": "road_day_ab"
+    },
+    "village/grass": {
+      "subject": "rough, dying grass over dark earth: tufts of dark green and dead brown grass, moss, a few fallen leaves and small stones",
+      "view": "floor",
+      "variants": 3,
+      "ref": "road_day_ab"
+    },
+    "village/roof_slate": {
+      "subject": "a roof of overlapping rough-cut slate tiles in staggered rows, dark grey-blue and charcoal, some chipped, cracked or slipped, with patches of pale lichen. Only about ten rows of tiles fit from top to bottom of the picture",
+      "view": "roof",
+      "variants": 1,
+      "ref": "village_dusk_ab"
+    },
+    "village/roof_thatch": {
+      "subject": "an old straw thatch roof: dense, matted reed straw combed in one direction, dull tan greyed and darkened with damp and soot, with patches of green moss",
+      "view": "roof",
+      "variants": 3,
+      "ref": "village_dusk_ab"
+    },
+    "interior/plaster_wall": {
+      "subject": "an old wall of cracked lime plaster, dirty off-white and grey-beige, stained and sooty, with a few patches where it has fallen away to show old red-brown brick",
+      "view": "wall",
+      "variants": 3,
+      "ref": "village_dusk_ab"
+    },
+    "vallaki/cobbled_square": {
+      "subject": "a town square paved with squarish cobblestones laid in overlapping fan-shaped arcs, cold greys and slate, worn smooth, dark grit in the joints. About twenty stones fit across the whole width of the picture",
+      "view": "floor",
+      "variants": 1,
+      "ref": "village_dusk_ab"
+    },
+    "interior/wood_planks": {
+      "subject": "a floor of old wide oak floorboards running vertically, dark brown, worn paler along the middle, with knots, nail heads and dark gaps between the boards. Exactly six boards fill the whole width of the picture",
+      "view": "floor",
+      "variants": 1,
+      "ref": "death_house_hall_ab"
+    },
+    "interior/tile_floor": {
+      "subject": "a floor of square black and cream-grey marble tiles in a checkerboard, worn, scratched and cracked, with dark grout lines. Exactly four tiles fill the whole width of the picture",
+      "view": "floor",
+      "variants": 1,
+      "ref": "death_house_hall_ab",
+      "material": {
+        "roughness": 0.25,
+        "macro": 0.2
+      },
+      "crop": 0.5
+    },
+    "interior/marble_floor": {
+      "subject": "a grand hall floor of grey and white veined marble slabs laid in a diamond pattern, polished but cracked and dulled with age",
+      "view": "floor",
+      "variants": 1,
+      "ref": "death_house_hall_ab",
+      "crop": 0.36
+    },
+    "interior/kitchen_flags": {
+      "subject": "a kitchen floor of large worn grey-brown flagstones, uneven, stained with soot and grease, with dark joints",
+      "view": "floor",
+      "variants": 2,
+      "ref": "death_house_hall_ab"
+    },
+    "church/stone_flags": {
+      "subject": "a church floor of large worn rectangular grey flagstones of irregular sizes, smoothed by feet, a few cracked, with dust in the joints",
+      "view": "floor",
+      "variants": 3,
+      "ref": "castle_hall_ab"
+    },
+    "church/stone_wall": {
+      "subject": "a church wall of large cut grey limestone blocks in even courses, weathered, with thin mortar lines, a few cracks and old water stains",
+      "view": "wall",
+      "variants": 1,
+      "ref": "castle_hall_ab"
+    },
+    "castle/flagstones": {
+      "subject": "a castle hall floor of large dark grey-violet flagstones, worn smooth, with fine cracks and dark joints",
+      "view": "floor",
+      "variants": 3,
+      "ref": "castle_hall_ab",
+      "crop": 0.45
+    },
+    "castle/ashlar": {
+      "subject": "a gothic castle wall of dark grey ashlar blocks in even courses, cold and damp, with thin mortar lines and soot stains",
+      "view": "wall",
+      "variants": 1,
+      "ref": "castle_hall_ab"
+    },
+    "castle/black_marble": {
+      "subject": "a floor of polished black marble slabs veined with dark red, a few cracked",
+      "view": "floor",
+      "variants": 3,
+      "ref": "castle_hall_ab",
+      "crop": 0.5
+    },
+    "castle/courtyard": {
+      "subject": "a castle courtyard of worn irregular grey flagstones with weeds and moss in the cracks and damp patches",
+      "view": "floor",
+      "variants": 3,
+      "ref": "road_day_ab"
+    },
+    "dungeon/stone_floor": {
+      "subject": "a dungeon floor of rough uneven dark grey stone slabs, cold and damp, with cracks, grit and a little moss",
+      "view": "floor",
+      "variants": 3,
+      "ref": "castle_hall_ab"
+    },
+    "dungeon/stone_wall": {
+      "subject": "a dungeon wall of rough-hewn dark grey stone blocks in uneven courses, damp, with dark mortar and water stains",
+      "view": "wall",
+      "variants": 1,
+      "ref": "castle_hall_ab"
+    },
+    "interior/wainscot_wall": {
+      "subject": "an interior wall seen from the floor up to the ceiling: dark walnut wainscot panelling on the lower half with raised panels and a moulded top rail, faded dark green damask wallpaper above it",
+      "view": "wall",
+      "variants": 1,
+      "ref": "death_house_hall_ab"
+    },
+    "interior/rug": {
+      "subject": "an old hand-woven rug with a repeating folk pattern of diamonds and crosses in faded crimson, wine red, ochre and black, worn thin in places",
+      "view": "floor",
+      "variants": 1,
+      "ref": "death_house_hall_ab",
+      "material": {
+        "macro": 0.0
+      }
+    },
+    "interior/carpet": {
+      "subject": "a deep crimson carpet with a faded gold and black gothic medallion pattern, worn and dusty",
+      "view": "floor",
+      "variants": 1,
+      "ref": "death_house_hall_ab",
+      "material": {
+        "macro": 0.0
+      }
+    },
+    "interior/parquet": {
+      "subject": "a dark polished oak parquet floor laid in a herringbone pattern, scuffed and dull",
+      "view": "floor",
+      "variants": 1,
+      "ref": "death_house_hall_ab"
+    },
+    "interior/kitchen_wall": {
+      "subject": "a kitchen wall of sooty whitewashed plaster, cracked, with patches of exposed red-brown brick and smoke stains",
+      "view": "wall",
+      "variants": 2,
+      "ref": "death_house_hall_ab"
+    },
+    "interior/whitewash": {
+      "subject": "a cold whitewashed stone wall, the lime wash flaking off grey rubble stone, stained",
+      "view": "wall",
+      "variants": 2,
+      "ref": "death_house_hall_ab"
+    },
+    "interior/damp_plaster": {
+      "subject": "a damp grey plaster wall with mould blooms, water streaks and peeling patches",
+      "view": "wall",
+      "variants": 2,
+      "ref": "death_house_hall_ab"
+    },
+    "interior/wallpaper_green": {
+      "subject": "dark green damask wallpaper with a faded gold fleur pattern, stained and peeling at the seams",
+      "view": "wall",
+      "variants": 1,
+      "ref": "death_house_hall_ab"
+    },
+    "interior/wallpaper_nursery": {
+      "subject": "faded pale blue nursery wallpaper printed with small birds and vines, peeling and water stained",
+      "view": "wall",
+      "variants": 1,
+      "ref": "death_house_hall_ab"
+    },
+    "interior/terracotta": {
+      "subject": "a floor of worn square terracotta tiles in dull red-brown, chipped, with dark grout. Exactly five tiles fill the whole width of the picture",
+      "view": "floor",
+      "variants": 1,
+      "ref": "death_house_hall_ab"
+    },
+    "interior/attic_boards": {
+      "subject": "a wall of bare rough vertical pine boards, grey and dusty, with dark gaps and cobwebs",
+      "view": "wall",
+      "variants": 1,
+      "ref": "death_house_hall_ab"
+    },
+    "interior/workshop_boards": {
+      "subject": "rough wide floorboards scattered with sawdust, wood shavings and bent nails",
+      "view": "floor",
+      "variants": 1,
+      "ref": "death_house_hall_ab"
+    },
+    "interior/tile_wall": {
+      "subject": "a bathroom wall of small glazed pale green-grey ceramic tiles with dark grout, some cracked and stained",
+      "view": "wall",
+      "variants": 1,
+      "ref": "death_house_hall_ab"
+    },
+    "interior/carved_panel": {
+      "subject": "dark oak wall panelling carved with twisting vines and leaves in tall rectangular panels with moulded frames, almost black with age",
+      "view": "wall",
+      "variants": 1,
+      "ref": "death_house_hall_ab"
+    },
+    "interior/wood_panel": {
+      "subject": "dark oak wall panelling of plain tall rectangular raised panels in moulded frames, aged nearly black, with a dull sheen",
+      "view": "wall",
+      "variants": 1,
+      "ref": "death_house_hall_ab"
+    },
+    "castle/red_damask": {
+      "subject": "deep blood-red damask wall covering with a black bat-and-vine pattern, faded and worn",
+      "view": "wall",
+      "variants": 1,
+      "ref": "castle_hall_ab"
+    },
+    "dungeon/damp_brick": {
+      "subject": "a damp cellar wall of old dark red-brown bricks with crumbling mortar, wet patches and streaks of green slime",
+      "view": "wall",
+      "variants": 1,
+      "ref": "castle_hall_ab"
+    },
+    "dungeon/packed_earth": {
+      "subject": "a cellar floor of packed dark earth with small stones, old straw and damp patches",
+      "view": "floor",
+      "variants": 3,
+      "ref": "castle_hall_ab"
+    },
+    "dungeon/earth_braced": {
+      "subject": "a rough cellar wall of stone and red clay held up by dark timber posts and cross beams",
+      "view": "wall",
+      "variants": 1,
+      "ref": "castle_hall_ab"
+    },
+    "cave/rock_floor": {
+      "subject": "the uneven rocky floor of a cave: dark grey-brown rock, gravel, small stones and damp patches",
+      "view": "floor",
+      "variants": 3,
+      "ref": "road_day_ab"
+    },
+    "cave/rock_wall": {
+      "subject": "a rough natural cave wall of dark craggy grey-brown rock with cracks and ledges",
+      "view": "wall",
+      "variants": 3,
+      "ref": "road_day_ab"
+    },
+    "amber/black_stone": {
+      "subject": "a temple floor of black polished stone slabs veined with faintly glowing gold-orange amber, with frost in the joints",
+      "view": "floor",
+      "variants": 2,
+      "ref": "castle_hall_ab"
+    },
+    "amber/amber_wall": {
+      "subject": "a temple wall of huge black stone blocks veined with faintly glowing gold-orange amber, rimed with frost",
+      "view": "wall",
+      "variants": 1,
+      "ref": "castle_hall_ab"
+    },
+    "mountain/snow": {
+      "subject": "deep snow on the ground with wind-blown ripples, a few rocks and frozen grass poking through, cold blue-white",
+      "view": "floor",
+      "variants": 3,
+      "ref": "road_day_ab"
+    },
+    "mountain/cliff": {
+      "subject": "a sheer cliff face of grey granite with cracks, ledges and a little snow on the ledges",
+      "view": "wall",
+      "variants": 2,
+      "ref": "road_day_ab"
+    },
+    "mountain/scree": {
+      "subject": "loose grey mountain scree and gravel with tufts of dead grass",
+      "view": "floor",
+      "variants": 3,
+      "ref": "road_day_ab"
+    },
+    "marsh/marsh_mud": {
+      "subject": "dark wet marsh mud with shallow puddles, rotting reeds and floating weed, murky green-brown",
+      "view": "floor",
+      "variants": 3,
+      "ref": "road_day_ab"
+    },
+    "kit/painted_wood": {
+      "subject": "weathered painted wood with no seams or board edges: pale grey-white paint worn thin over the wood grain, flaking, streaked with dirt and damp",
+      "view": "wall",
+      "variants": 2,
+      "ref": "village_dusk_ab",
+      "tile_world_units": 1.5,
+      "new": true
+    },
+    "kit/oak": {
+      "subject": "the face of an old squared oak beam with no edges: dark brown, deeply grained along its length, cracked along the grain, with adze marks, greyed by weather",
+      "view": "wall",
+      "variants": 2,
+      "ref": "village_dusk_ab",
+      "tile_world_units": 1.0,
+      "new": true,
+      "grade": [
+        0.62,
+        0.55,
+        0.5
+      ]
+    },
+    "kit/dressed_stone": {
+      "subject": "smooth dressed grey stone with no joints: finely tooled, weathered and lightly stained",
+      "view": "wall",
+      "variants": 2,
+      "ref": "castle_hall_ab",
+      "tile_world_units": 1.5,
+      "new": true
+    },
+    "kit/plaster": {
+      "subject": "an old exterior wall of lime plaster between timbers: rough off-white and pale ochre plaster, cracked, stained and weathered, with a few patches where it has fallen away to show old red-brown brick",
+      "view": "wall",
+      "variants": 3,
+      "ref": "village_dusk_ab",
+      "tile_world_units": 2.0,
+      "new": true,
+      "brightness": 1.0
+    }
+  },
+  "derived": {
+    "kit/oak_v": {
+      "from": "kit/oak",
+      "note": "the oak with its grain running up the tile, for posts"
+    }
+  }
+}

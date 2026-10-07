@@ -9,6 +9,8 @@ extends RefCounted
 ## so it takes the scene's lights and shadows, and the screen pass outlines it and snaps it to the palette.
 
 const MANIFEST_JSON := "res://art/models/manifest.json"
+## A cut-away interior wall's height (ArenaBoard's interior walls, and what the kit's copings are made for).
+const CUT_TOP := 1.15
 const SPRITE_SHADER := preload("res://shaders/cel_sprite.gdshader")
 ## How far a piece standing against a wall keeps off the wall face.
 const GAP := 0.004
@@ -64,24 +66,56 @@ static func hash_cell(cell: Vector2i) -> int:
 
 
 ## A new copy of model `id` with its surfaces in the game's materials (by material name: pal_<colour>,
-## glow_<colour>, tex_<theme>__<surface>).
+## glow_<colour>, tex_<theme>__<surface>). The model's file is opened once: after that a copy is its meshes in new
+## MeshInstance3Ds (a place's 900-odd pieces cost a fifth of what opening the scene each time did; perf pass).
 static func instance(id: String) -> Node3D:
-	var info := manifest()[id] as Dictionary
-	var root := (load("res://" + str(info["file"])) as PackedScene).instantiate() as Node3D
+	var key := id + "|" + Look.style()
+	if not _parts.has(key):
+		_parts[key] = _read_parts(id)
+	var root := Node3D.new()
 	root.name = "Model_" + id
-	for n in root.find_children("*", "MeshInstance3D", true, false):
-		var mi := n as MeshInstance3D
-		for i in mi.mesh.get_surface_count():
-			var src := mi.mesh.surface_get_material(i)
-			mi.set_surface_override_material(i, material(src.resource_name if src != null else ""))
+	for part: Array in _parts[key]:
+		var mi := MeshInstance3D.new()
+		mi.name = str(part[3])
+		mi.mesh = part[0] as Mesh
+		mi.transform = part[1] as Transform3D
+		var mats := part[2] as Array
+		for i in mats.size():
+			mi.set_surface_override_material(i, mats[i] as Material)
+		root.add_child(mi)
 	root.set_meta("model", id)
 	return root
 
 
+static var _parts: Dictionary = {}
+
+
+## Model `id`'s meshes as [mesh, transform under the model's root, the game's material per surface, node name].
+static func _read_parts(id: String) -> Array:
+	var info := manifest()[id] as Dictionary
+	var scene := (load("res://" + str(info["file"])) as PackedScene).instantiate() as Node3D
+	var out: Array = []
+	for n in scene.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		var xf := mi.transform
+		var p := mi.get_parent()
+		while p != scene and p is Node3D:
+			xf = (p as Node3D).transform * xf
+			p = p.get_parent()
+		var mats: Array = []
+		for i in mi.mesh.get_surface_count():
+			var src := mi.mesh.surface_get_material(i)
+			mats.append(material(src.resource_name if src != null else ""))
+		out.append([mi.mesh, xf, mats, mi.name])
+	scene.free()
+	return out
+
+
 ## The game material for a model surface named in Blender.
 static func material(name: String) -> Material:
-	if _materials.has(name):
-		return _materials[name] as Material
+	var key := name + "|" + Look.style()   # a change of look gets fresh materials
+	if _materials.has(key):
+		return _materials[key] as Material
 	var m: Material = null
 	if name.begins_with("pal_"):
 		m = Look.cel(name.trim_prefix("pal_"))
@@ -99,7 +133,7 @@ static func material(name: String) -> Material:
 		m = sm
 	if m == null:
 		m = Look.cel("pewter")
-	_materials[name] = m
+	_materials[key] = m
 	return m
 
 
@@ -167,6 +201,13 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 ## of its art, turned by `yaw`; null when this place has no model for it. The board's trees and the land around a map
 ## use it; the caller fades it (ArenaBoard.mesh_occluders).
 static func tree(board: ArenaBoard, kind: String, at: Vector3, size: float, pick: int, yaw: float) -> Node3D:
+	if Flora.enabled():
+		# The Modern look's trees (W9, Flora) where the place's set of plants has one for this kind: so a tree put
+		# back on its square (ArenaBoard.restore_cell, after a building-sized piece leaves) is the new tree too.
+		var f := _flora(board)
+		var fid := f.tree_for(kind, pick)
+		if fid != "":
+			return f.node(fid, at, f.tree_scale(fid, "map", pick), yaw)
 	var id := for_art(board, kind, pick)
 	if id == "":
 		return null
@@ -180,6 +221,19 @@ static func tree(board: ArenaBoard, kind: String, at: Vector3, size: float, pick
 	model.scale = Vector3.ONE * tree_scale(kind, id, size)
 	holder.add_child(model)
 	return holder
+
+
+## The place's set of plants (Flora), made once per board: only which plants it has, not its wind (the land sets that).
+static func _flora(board: ArenaBoard) -> Flora:
+	if board.has_meta("flora"):
+		return board.get_meta("flora") as Flora
+	var loc := Compendium.shared().get_entry("locations", board.place) if board.place != "" \
+		and Compendium.shared().has("locations", board.place) else {}
+	var f := Flora.new()
+	f.set_id = Flora.set_for(Atmosphere.mood_for(board.place, loc) if not loc.is_empty() else "")
+	f.spec = Flora.resolve(f.set_id)
+	board.set_meta("flora", f)
+	return f
 
 
 ## How much to scale model `id` so it stands as tall as 2D tree art `kind` drawn at `size`.
@@ -339,34 +393,68 @@ static func door_leaf(id: String, width: float, height: float) -> Node3D:
 
 ## The board's panelled-wall modules: on each open face of wall square `c` painted with a surface that has a model
 ## (catalog models3d "walls"), a module standing on the face. A doorway's sides are left plain (the frame is there).
-## Added under one holder on the wall square, so it hides and shows with the wall.
-static func dress_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> void:
-	if not in_use(board) or wall_mat == null:
+## Then the building kit's own (docs/art/building_kit.md): the place's interior style puts a face module (the castle's
+## blind arcade, a church's plinth and string course) where no panelling does, and a moulded coping along the cut top
+## of every open face; those are merged into one mesh. Added under one holder on the wall square, so it hides and
+## shows with the wall.
+## `top` is how high the wall stands (the coping goes along it): the cut-away height, or a full storey's (W8,
+## InteriorWalls); `parent` takes the holder instead of the board (InteriorWalls keeps a wall's full and cut versions
+## under one node on its square).
+static func dress_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material, top: float = CUT_TOP, parent: Node3D = null) -> void:
+	if wall_mat == null or not in_use(board):
 		return
 	var id := ""
 	for surface: String in settings().get("walls", {}):
 		if Look.cel_textured(surface) == wall_mat:
 			id = str((settings()["walls"] as Dictionary)[surface])
 	if not has_model(id):
-		return
+		id = ""
+	var style := BuildingKit.interior_style(board)
+	var face_id := "kit_%s_face" % style
+	var coping := "kit_%s_coping" % style
+	var kit_parts: Array = []
 	var holder: Node3D = null
 	for d: Vector2i in BACKS:
 		var n := c + d
 		if not board.grid.in_bounds(n) or board.grid.has_flag(n, CombatGrid.WALL) or board.grid.has_flag(n, CombatGrid.VOID):
 			continue
+		var dir := Vector3(d.x, 0, d.y)
+		var foot := dir * (0.5 + GAP * 0.5) + Vector3(0, board.floor_y(n), 0)
+		var yaw := atan2(dir.x, dir.z)
+		if BuildingKit.has(coping):
+			kit_parts.append([coping, Transform3D(Basis(Vector3.UP, yaw), foot + Vector3(0, top - CUT_TOP, 0))])
 		if board.grid.in_bounds(n + d) and board.grid.has_flag(n + d, CombatGrid.WALL):
 			continue   # a one-square gap in the wall: a doorway
+		if id == "":
+			if BuildingKit.has(face_id):
+				kit_parts.append([face_id, Transform3D(Basis(Vector3.UP, yaw), foot)])
+			continue
 		if holder == null:
-			holder = Node3D.new()
-			holder.name = "WallModules"
-			holder.set_meta("wall_modules", id)
-			holder.position = board.cell_center(c)
-			board.add_child(holder)
+			holder = _wall_holder(board, c, id, parent)
 		var face := instance(id)
-		var dir := Vector3(d.x, 0, d.y)
-		face.position = dir * (0.5 + GAP * 0.5) + Vector3(0, board.floor_y(n), 0)
-		face.rotation.y = atan2(dir.x, dir.z)
+		face.position = foot
+		face.rotation.y = yaw
 		holder.add_child(face)
+	if kit_parts.is_empty():
+		return
+	if holder == null:
+		holder = _wall_holder(board, c, "", parent)
+	var mi := BuildingKit.merge(kit_parts)
+	if mi != null:
+		mi.name = "KitFaces"
+		holder.add_child(mi)
+
+
+static func _wall_holder(board: ArenaBoard, c: Vector2i, id: String, parent: Node3D = null) -> Node3D:
+	var holder := Node3D.new()
+	holder.name = "WallModules"
+	holder.set_meta("wall_modules", id)
+	if parent != null:
+		parent.add_child(holder)   # the parent stands on the square
+	else:
+		holder.position = board.cell_center(c)
+		board.add_child(holder)
+	return holder
 
 
 ## The side of `cell` with a wall or a door next to it, that furniture backs onto (Vector2i.ZERO if none).
@@ -473,7 +561,7 @@ static func dim(node: Node3D) -> void:
 			if m == null:
 				continue
 			# A flat colour's albedo, or a texture's tint, darkened.
-			var key := "albedo" if m.shader == Look.CEL_SHADER else ("tint" if m.shader in [Look.CEL_WORLD_SHADER, SPRITE_SHADER] else "")
+			var key := "tint" if m.shader == SPRITE_SHADER else Look.tint_key(m)
 			if key == "":
 				continue
 			var d := m.duplicate() as ShaderMaterial

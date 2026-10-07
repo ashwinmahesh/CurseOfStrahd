@@ -502,9 +502,12 @@ func refresh() -> void:
 				shown = c
 				break
 	_round_label.text = "Round %d" % maxi(1, e.round_no)
+	# Every card, bar and button reads the same unchanged creatures: one read (Creature.begin_read).
+	Creature.begin_read()
 	_refresh_strip()
 	_refresh_party()
 	_refresh_hotbar()
+	Creature.end_read()
 	refresh_log()
 
 
@@ -562,7 +565,8 @@ func _refresh_party() -> void:
 	for ch in _party_box.get_children():
 		ch.queue_free()
 	for c in e.combatants:
-		if c.side not in [&"party", &"guest"]:
+		# An Echo Knight's echo is an image on the board, not a member of the party.
+		if c.side not in [&"party", &"guest"] or EchoKnight.is_echo(c):
 			continue
 		var on := c == shown
 		var alarm := int(_down_alarm.get(c.id, 0)) > Time.get_ticks_msec()

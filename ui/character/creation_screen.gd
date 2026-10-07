@@ -8,6 +8,11 @@ extends CanvasLayer
 ##
 ## Hero mode (open_hero): one custom character for the roster. Its Appearance step is the paper doll (AppearancePanel:
 ## body, head, hair, beard, skin, outfit, portrait and voice), and Review weighs the party it will travel with.
+##
+## In a game (open, from the party screen's "Create a character", owner 2026-10-07): hero mode for one more custom
+## character, up to StoryState.CUSTOM_CAP in a game. Names and portraits the company already has are taken. The new
+## character starts at level 1 and joins the party if there's room (else camp, with the roster screen open to swap them
+## in); the party screen then offers the levels the party has reached on the level-up screen. Back returns to the party.
 
 signal finished(party: Array[Character])
 signal cancelled
@@ -33,6 +38,12 @@ var companions: Array[String] = []
 var _appearance_tab := "Body"
 ## The player picked an outfit themselves, so a class change no longer picks one for them.
 var _outfit_chosen := false
+## In a game: the world's root and the playthrough the new character joins, and the company already in it.
+var root: Node = null
+var st: StoryState = null
+var mates: Array[Character] = []
+## Portraits the company's other custom characters wear: portrait id -> name (AppearancePanel.taken).
+var taken_portraits: Dictionary = {}
 
 
 func _init() -> void:
@@ -58,6 +69,87 @@ func open_hero(others: Array[String]) -> void:
 	builders.append(CharacterBuilder.new(null, {"appearance": app, "identity": {"pronouns": "she/her", "tags": []}}))
 	confirmed.append(false)
 	_build_frame("Create your hero")
+
+
+## The world's screen entry (game_root.open_screen "create"): one more custom character for this game's roster.
+func open(root_: Node, state: StoryState, _index: int) -> void:
+	root = root_
+	st = state
+	hero_mode = true
+	mates = state.party.duplicate()
+	var names: Array[String] = []
+	for ch in state.roster():
+		names.append(ch.name)
+		if HeroLook.is_custom(ch):
+			var worn := str((ch.build.get("appearance", {}) as Dictionary).get("portrait", ""))
+			if worn != "":
+				taken_portraits[worn] = ch.name
+	var app := _free_portrait(HeroLook.default_appearance("female"))
+	var bb := CharacterBuilder.new(null, {"appearance": app, "identity": {"pronouns": "she/her", "tags": []}})
+	bb.taken_names = names
+	builders.append(bb)
+	confirmed.append(false)
+	finished.connect(_joined)
+	cancelled.connect(func() -> void: root.call("open_screen", "party", 0))
+	_build_frame("Create a character")
+
+
+## The new character joins the company; the party screen (or, with the party full, the roster screen with them picked
+## to swap in) shows the levels waiting for them.
+func _joined(made: Array[Character]) -> void:
+	var ch := made[0]
+	var travelling := st.recruit(ch)
+	var view: Variant = root.get("view")
+	if travelling and view != null and (view as Object).has_method("rebuild_party"):
+		(view as Object).call("rebuild_party")
+	if travelling:
+		root.call("open_screen", "party", 0)
+	else:
+		root.call("open_screen", "roster", 0)
+		var roster := root.get("screen") as RosterScreen
+		if roster != null:
+			roster.pick(ch)
+
+
+## Beside the new character's chip: the party they'll join, or that it's full and they'll wait at camp.
+func _company_strip() -> Control:
+	var with := HBoxContainer.new()
+	with.add_theme_constant_override("separation", 4)
+	var names: Array[String] = []
+	for ch in mates:
+		with.add_child(UiParts.framed_portrait(CombatToken.art_for(ch), 42.0, ch.hp <= 0, ch.dead))
+		names.append(ch.name.get_slice(" ", 0))
+	var text := "Joins %s on the road" % _and_list(names)
+	if mates.size() >= StoryState.PARTY_CAP:
+		text = "Waits at camp: the party is full"
+	with.add_child(UiKit.label(text, 13, "parchment", 220))
+	return with
+
+
+## Review's word on where the new character goes and the levels waiting for them.
+func _joining_note() -> String:
+	var who := str(b().build.get("name", "")).get_slice(" ", 0)
+	who = who if who != "" else "They"
+	var text := "%s joins the party on the road." % who
+	if mates.size() >= StoryState.PARTY_CAP:
+		text = "The party is full, so %s waits at camp; the roster screen opens to swap them in." % who
+	var level := st.target_level()
+	if level > 1:
+		text += " They start at level 1, and the level-up screen then takes them to the party's level %d, one level at a time." % level
+	return text
+
+
+## The look moved off a portrait another custom character in the company wears, onto the first free one.
+func _free_portrait(app: Dictionary) -> Dictionary:
+	if not taken_portraits.has(str(app.get("portrait", ""))):
+		return app
+	var out := app.duplicate()
+	for id in HeroLook.offered_ids(app, "portraits"):
+		if not taken_portraits.has(id):
+			out["portrait"] = id
+			out["art"] = id
+			break
+	return out
 
 
 func _build_frame(title: String) -> void:
@@ -101,7 +193,7 @@ func _draw_strip() -> void:
 		c.queue_free()
 	for i in builders.size():
 		var name_text := str(builders[i].build.get("name", ""))
-		var blank := "Your hero" if hero_mode else "Character %d" % (i + 1)
+		var blank := ("New character" if st != null else "Your hero") if hero_mode else "Character %d" % (i + 1)
 		var chip := UiKit.button("%s%s" % ["✓ " if confirmed[i] else "", name_text if name_text != "" else blank], func() -> void:
 			slot = i
 			_draw(), 16)
@@ -129,12 +221,18 @@ func _draw_strip() -> void:
 		var cap := UiKit.label("Travelling with %s" % _and_list(names) if not names.is_empty() else "", 14, "parchment")
 		with.add_child(cap)
 		_strip.add_child(with)
+	if st != null:
+		_strip.add_child(_company_strip())
 	_strip.add_child(UiParts.gap())
 	var leave := UiParts.small_button("Back", func() -> void: cancelled.emit())
-	leave.tooltip_text = "Leave the creator without keeping this character (Esc on the first step)"
+	leave.tooltip_text = ("Back to the party without keeping this character (Esc on the first step)" if st != null
+		else "Leave the creator without keeping this character (Esc on the first step)")
 	_strip.add_child(leave)
 	var all_done := not confirmed.has(false)
-	var go := UiParts.primary_button("Begin the adventure" if builders.size() > 1 or hero_mode else "Done", _finish)
+	var finish_text := "Begin the adventure" if builders.size() > 1 or hero_mode else "Done"
+	if st != null:
+		finish_text = "Join the company"
+	var go := UiParts.primary_button(finish_text, _finish)
 	go.disabled = not all_done
 	go.tooltip_text = "" if all_done else "Confirm every character on their Review step first."
 	_strip.add_child(go)
@@ -465,7 +563,8 @@ func _appearance_step() -> void:
 			b().set_appearance(settled)
 			app = settled
 		_body.add_child(UiParts.section("Appearance"))
-		var panel := AppearancePanel.create(app, str(b().build.get("species", "human")), b().class_id(), _appearance_tab)
+		var panel := AppearancePanel.create(app, str(b().build.get("species", "human")), b().class_id(), _appearance_tab,
+			taken_portraits)
 		panel.tab_changed.connect(func(t: String) -> void: _appearance_tab = t)
 		panel.changed.connect(func(a: Dictionary) -> void:
 			var before := b().build.get("appearance", {}) as Dictionary
@@ -586,6 +685,8 @@ func _review_step() -> void:
 		_body.add_child(UiParts.caption("Warnings (never blocking)", 12, "gilt"))
 		for w in warns:
 			_body.add_child(UiParts.row(UiKit.label("~ " + w, 14, "gilt", BODY_W)))
+	if st != null:
+		_body.add_child(UiParts.row(UiKit.label(_joining_note(), 15, "gilt_light", BODY_W)))
 	var confirm := UiParts.primary_button("Confirm %s" % str(b().build.get("name", "this character")), func() -> void:
 		confirmed[slot] = true
 		var next := confirmed.find(false)
@@ -603,6 +704,7 @@ func _review_step() -> void:
 		var mate := Pregens.build(id, 1)
 		if mate != null:
 			built.append(mate)
+	built.append_array(mates)
 	if built.size() >= 2:
 		var cov := PartyCoverage.analyze(built)
 		_body.add_child(UiParts.section("Party composition"))

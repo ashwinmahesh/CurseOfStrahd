@@ -55,6 +55,11 @@ var _resource_defs: Array[Dictionary] = []
 # --- Runtime state (saved) ---
 ## {id, qty, slot}  slot = "" or one of EQUIP_SLOTS
 var inventory: Array[Dictionary] = []
+## The second weapon set (plan §5.6 "weapon sets with a quick swap"): what's held when the sets are swapped,
+## {main_hand: item id, off_hand: item id}. Those items stay in the pack meanwhile.
+var weapon_set_2: Dictionary = {}
+## Consumables kept to hand (plan §5.6 "quick slots"): item ids the fight's hotbar also shows on its Common tab.
+var quick_slots: Array[String] = []
 var currency: Dictionary = {"cp": 0, "sp": 0, "ep": 0, "gp": 0, "pp": 0}
 ## die size (as String) -> spent count
 var hit_dice_spent: Dictionary = {}
@@ -701,6 +706,9 @@ func _walk_feature(f: Dictionary, key: String, src: Dictionary, scope: Dictionar
 	for policy_key: String in ["policy", "policy_cost"]:
 		if f.has(policy_key):
 			features[-1][policy_key] = str(f[policy_key])
+	# Its class-tab choices when they aren't Automatic and Off (Shadow Martyr can also Ask).
+	if f.has("policy_modes"):
+		features[-1]["policy_modes"] = (f["policy_modes"] as Array).duplicate()
 	if f.has("choice"):
 		var c := f["choice"] as Dictionary
 		var picks := _register_choice(c, key, src, str(c.get("label", f.get("name", ""))), scope)
@@ -848,6 +856,7 @@ func _register_choice(def: Dictionary, key: String, src: Dictionary, label: Stri
 	c.replaceable = str(def.get("replaceable", ""))
 	c.replace_max = int(def.get("replace_max", -1))
 	c.replace_group = str(def.get("replace_group", ""))
+	c.at_creation = bool(def.get("creation", true))
 	c.per_ability = int(def.get("per_ability", 1))
 	c.max_score = int(def.get("max", 20))
 	for v: Variant in def.get("from", []):
@@ -1694,6 +1703,9 @@ func apply_starting_equipment() -> void:
 	var bg := compendium.background_data(str(build.get("background", "")))
 	if not bg.is_empty():
 		_take_option(bg.get("equipment", []) as Array, str(eq.get("background", "a")))
+	# Starting gear isn't news: only what the party finds, buys or is given is marked new.
+	for e in inventory:
+		e.erase("new")
 	auto_equip()
 
 
@@ -1710,6 +1722,7 @@ func _take_option(options: Array, pick: String) -> void:
 
 ## Adds `qty` of an item. `state` carries an item's own state when it moves (charges, uses, a lifted curse, what a
 ## Bag of Holding holds); a new magic item with charges starts with its full count (MagicItems.starting_charges).
+## The entry is marked `new` until the inventory screen shows it (its New filter); a player's `junk` mark travels with it.
 func add_item(item_id: String, qty: int = 1, state: Dictionary = {}) -> void:
 	# A scroll that only says its level becomes a particular spell (each one picked on its own).
 	if MagicItems.GENERIC_SCROLLS.has(item_id):
@@ -1721,11 +1734,12 @@ func add_item(item_id: String, qty: int = 1, state: Dictionary = {}) -> void:
 		for entry in inventory:
 			if str(entry["id"]) == item_id:
 				entry["qty"] = int(entry["qty"]) + qty
+				entry["new"] = true
 				return
-		inventory.append({"id": item_id, "qty": qty, "slot": ""})
+		inventory.append({"id": item_id, "qty": qty, "slot": "", "new": true})
 	else:
 		for i in qty:
-			var entry := {"id": item_id, "qty": 1, "slot": ""}
+			var entry := {"id": item_id, "qty": 1, "slot": "", "new": true}
 			for k: String in state:
 				if not k in ["id", "qty", "slot"]:
 					entry[k] = (state[k] as Variant) if not (state[k] is Dictionary or state[k] is Array) else state[k].duplicate(true)
@@ -1750,10 +1764,11 @@ static func entry_state(entry: Dictionary) -> Dictionary:
 	return out.duplicate(true)
 
 
-## Removes one `item_id` from the pack and returns its entry state (for giving it to someone else); {} if not carried.
-func remove_one(item_id: String) -> Dictionary:
+## Removes one `item_id` from the pack (from `entry` when given: that wand of two, that stack) and returns its entry
+## state (for giving it to someone else); {} if not carried.
+func remove_one(item_id: String, entry: Dictionary = {}) -> Dictionary:
 	for e: Dictionary in inventory.duplicate():
-		if str(e["id"]) == item_id and int(e["qty"]) > 0:
+		if str(e["id"]) == item_id and int(e["qty"]) > 0 and (entry.is_empty() or is_same(e, entry)):
 			var state := entry_state(e)
 			if str(e.get("slot", "")) != "" and int(e["qty"]) <= 1:
 				e["slot"] = ""
@@ -1817,6 +1832,23 @@ func unequip(slot: String) -> void:
 		if str(entry["slot"]) == slot:
 			entry["slot"] = ""
 	_item_mods_key = ""
+
+
+## Swaps the weapons in hand for the second set: what's held now becomes set 2, and set 2's items, if still carried,
+## are taken in hand.
+func swap_weapon_sets() -> void:
+	var held := {}
+	for slot: String in ["main_hand", "off_hand"]:
+		held[slot] = str(equipped(slot).get("id", ""))
+		unequip(slot)
+	for slot: String in ["main_hand", "off_hand"]:
+		var id := str(weapon_set_2.get(slot, ""))
+		if id != "" and not entry_of(id).is_empty():
+			equip(id, slot)
+	weapon_set_2 = {}
+	for slot: String in held:
+		if str(held[slot]) != "":
+			weapon_set_2[slot] = held[slot]
 
 
 ## Takes off one particular item wherever it's worn or held.
@@ -2093,7 +2125,8 @@ func to_dict() -> Dictionary:
 	return {"build": build.duplicate(true), "state": state_to_dict(), "inventory": inventory.duplicate(true),
 		"currency": currency.duplicate(), "hit_dice_spent": hit_dice_spent.duplicate(),
 		"slots_used": slots_used.duplicate(), "pact_slots_used": pact_slots_used,
-		"heroic_inspiration": heroic_inspiration, "id": id, "attuned": attuned.duplicate(), "familiar": familiar}
+		"heroic_inspiration": heroic_inspiration, "id": id, "attuned": attuned.duplicate(), "familiar": familiar,
+		"weapon_set_2": weapon_set_2.duplicate(), "quick_slots": quick_slots.duplicate()}
 
 
 static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Character:
@@ -2118,6 +2151,9 @@ static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Characte
 	c.familiar = str(d.get("familiar", ""))
 	for a: Variant in d.get("attuned", []):
 		c.attuned.append(str(a))
+	c.weapon_set_2 = (d.get("weapon_set_2", {}) as Dictionary).duplicate()
+	for q: Variant in d.get("quick_slots", []):
+		c.quick_slots.append(str(q))
 	return c
 
 

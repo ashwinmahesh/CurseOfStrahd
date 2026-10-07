@@ -1,5 +1,5 @@
 {
-  "about": "Each place's atmosphere (world/look/atmosphere.gd, docs/art/atmosphere.md): its light by time of day, the mist and cloud shadows of the screen pass, the colour grade, weather, water, and the land drawn around the map. Colours are palette names. A location takes its mood from `places` (its id), else the longest of `prefixes` its id starts with, else `regions` (\"<region>\", or \"<region>/indoors\" for its indoor maps), else `themes` (\"<theme>\" or \"<theme>/indoors\"), else `outdoors` or `indoors`. A mood can be `like` another and change only what differs.",
+  "about": "Each place's atmosphere (world/look/atmosphere.gd, docs/art/atmosphere.md): its light by time of day, the mist and cloud shadows of the screen pass, the colour grade, weather, water, and the land drawn around the map. Colours are palette names. A location takes its mood from `places` (its id), else the longest of `prefixes` its id starts with, else `regions` (\"<region>\", or \"<region>/indoors\" for its indoor maps), else `themes` (\"<theme>\" or \"<theme>/indoors\"), else `outdoors` or `indoors`. A mood can be `like` another and change only what differs. In the Modern finish a mood's `tone` sets its grade (the shade's colour and how much colour it keeps; world/look/atmosphere.gd MODERN_TONE), which Classic doesn't use.",
   "places": {
     "into_the_mists_road": "svalich_road",
     "svalich_crossroads": "crossroads",
@@ -541,6 +541,9 @@
     },
     "berez": {
       "like": "svalich_woods",
+      "tone": {
+        "shade": "bog_deep"
+      },
       "mist": {
         "height": 1.7,
         "cover": 0.62,
@@ -613,6 +616,9 @@
     },
     "high_snow": {
       "like": "svalich_woods",
+      "tone": {
+        "shade": "moon_blue"
+      },
       "mist": {
         "height": 1.1,
         "cover": 0.45,
@@ -720,6 +726,9 @@
     },
     "yester_hill": {
       "like": "svalich_woods",
+      "tone": {
+        "shade": "bog_deep"
+      },
       "surround": {
         "trees": 0.5,
         "dead": 0.7,
@@ -763,6 +772,9 @@
     },
     "ravenloft": {
       "like": "svalich_woods",
+      "tone": {
+        "shade": "bruise_deep"
+      },
       "lightning": true,
       "mist": {
         "height": 1.5,
@@ -849,6 +861,11 @@
     },
     "tavern": {
       "like": "indoors",
+      "tone": {
+        "shade": "peat",
+        "amount": 0.4,
+        "shade_saturation": 0.75
+      },
       "times": {
         "any": {
           "ambient": "ember_deep",
@@ -863,6 +880,9 @@
     },
     "eva_tent": {
       "like": "indoors",
+      "tone": {
+        "shade": "bruise_deep"
+      },
       "times": {
         "any": {
           "ambient": "plum",
@@ -897,6 +917,10 @@
     },
     "crypt": {
       "like": "indoors",
+      "tone": {
+        "shade": "bog_deep",
+        "amount": 0.45
+      },
       "mist": {
         "height": 0.6,
         "cover": 0.6,
@@ -987,6 +1011,9 @@
     },
     "ravenloft_crypt": {
       "like": "crypt",
+      "tone": {
+        "shade": "night_deep"
+      },
       "times": {
         "any": {
           "ambient": "night",
@@ -1056,6 +1083,10 @@
     },
     "ravenloft_court": {
       "like": "indoors",
+      "tone": {
+        "shade": "blood_deep",
+        "amount": 0.6
+      },
       "weather": [
         {
           "kind": "dust",
@@ -1099,6 +1130,9 @@
     },
     "ravenloft_larders": {
       "like": "crypt",
+      "tone": {
+        "shade": "bog_deep"
+      },
       "times": {
         "any": {
           "ambient": "bog_deep",

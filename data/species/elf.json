@@ -156,10 +156,26 @@
           "summary": "Prestidigitation (swap for another Wizard cantrip each Long Rest); Detect Magic at 3, Misty Step at 5.",
           "text": "You know the Prestidigitation cantrip. Whenever you finish a Long Rest, you can replace that cantrip with a different cantrip from the Wizard spell list. At character level 3 you learn Detect Magic and at level 5 you learn Misty Step; for each, you always have that spell prepared, can cast it once without a spell slot (regaining that use when you finish a Long Rest), and can also cast it with any spell slots of the appropriate level.",
           "action": "passive",
+          "choices": [
+            {
+              "id": "cantrip",
+              "label": "High Elf cantrip",
+              "kind": "cantrip",
+              "count": 1,
+              "filter": {
+                "list": "wizard",
+                "level": 0
+              },
+              "default": "prestidigitation",
+              "creation": false,
+              "replaceable": "long_rest",
+              "replace_max": 1
+            }
+          ],
           "modifiers": [
             {
               "stat": "spell",
-              "value": "prestidigitation",
+              "value": "@cantrip",
               "ability": "choice"
             },
             {
@@ -185,7 +201,7 @@
               "at_level": 5
             }
           ],
-          "implemented": "text"
+          "implemented": "data"
         }
       ]
     },

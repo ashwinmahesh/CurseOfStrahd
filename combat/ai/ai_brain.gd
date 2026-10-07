@@ -170,7 +170,10 @@ func play_turn(c: Combatant) -> CombatResult:
 		if near != null:
 			last_plan = {"kind": "flee", "why": "Bloodied coward"}
 			return _flee(c, near, true)
+	# Weighing every square and target asks the same creatures thousands of questions: one read (Creature.begin_read).
+	Creature.begin_read()
 	var plan := plan_turn(c)
+	Creature.end_read()
 	last_plan = plan
 	match str(plan["kind"]):
 		"attack":
@@ -489,10 +492,14 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 		return -1e9
 	var avg := _avg(c, o)
 	var expected := float(hc["chance"]) * avg
+	# An Echo Knight's echo is only an image (its knight calls another with a Bonus Action): worth little.
+	var echo := EchoKnight.is_echo(t)
+	if echo:
+		expected *= 0.3
 	var score := expected
 	# Finishing a foe ends its turns for good.
 	var hp_left := t.creature.hp + t.creature.temp_hp
-	if avg >= hp_left:
+	if avg >= hp_left and not echo:
 		score += float(prof["finish"]) * 3.0 * float(hc["chance"])
 	# Concentrating casters are worth breaking.
 	if t.creature.concentration != null:

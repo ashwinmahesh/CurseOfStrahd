@@ -314,6 +314,12 @@ static func _pillar(board: ArenaBoard, cell: Vector2i, h: float, statue: String)
 
 
 static func _frame(board: ArenaBoard, base: Vector3, along_x: bool, h: float, span: float = 1.0) -> void:
+	if board.theme in ArenaBoard.TOWNS and BuildingKit.style_for(board) != "" and span <= 1.0:
+		# A gate in a kit town's yard wall hangs between the piers the wall puts at its ends (TownBuilder._kit_yard).
+		var c := board.grid.cell_at(base)
+		var side := Vector2i(1, 0) if along_x else Vector2i(0, 1)
+		if _yard_at(board, c + side) and _yard_at(board, c - side):
+			return
 	var mat := board.wall_material()
 	var post := Vector3(0.12, h, 0.34) if along_x else Vector3(0.34, h, 0.12)
 	var side := span / 2.0 - 0.03
@@ -322,6 +328,10 @@ static func _frame(board: ArenaBoard, base: Vector3, along_x: bool, h: float, sp
 		_frame_box(board, post, base + off, mat)
 	_frame_box(board, Vector3(span, 0.12, 0.34) if along_x else Vector3(0.34, 0.12, span), base + Vector3(0, h + 0.06, 0),
 		Look.cel("bone_dark" if board.theme in ArenaBoard.TOWNS else ArenaBoard.CUT_FACE))
+
+
+static func _yard_at(board: ArenaBoard, c: Vector2i) -> bool:
+	return _wall_at(board, c) and not board.house_cells.has(c)
 
 
 static func _frame_box(board: ArenaBoard, size: Vector3, pos: Vector3, mat: Material) -> void:
@@ -687,8 +697,9 @@ static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, 
 	board.used_faces[key] = true
 	var model := ModelPiece.for_art(board, art)
 	if model != "":
-		ModelPiece.hang(board, root, model, art, wall, normal, cell)
+		var held := ModelPiece.hang(board, root, model, art, wall, normal, cell)
 		board.attach_to_building(wall, root)
+		TownBuilder.face_taken(board, wall, normal, held, art)   # a house's window goes; a door makes a door bay
 		return true
 	var info := manifest()[art] as Dictionary
 	var sp := _sprite(art)
@@ -707,9 +718,7 @@ static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, 
 	sp.rotation.y = atan2(n.x, n.z)
 	root.add_child(sp)
 	board.attach_to_building(wall, root)
-	var window := board.windows.get("%d,%d,%d,%d" % [wall.x, wall.y, normal.x, normal.y], null) as Node3D
-	if window != null and is_instance_valid(window):
-		window.visible = false   # this piece hangs where a house had a window
+	TownBuilder.face_taken(board, wall, normal, sp, art)   # this piece hangs where a house had a window
 	return true
 
 

@@ -441,7 +441,7 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 		if f.has("policy") and not seen.has(str(f["id"])):
 			seen[str(f["id"])] = true
 			out.append({"id": str(f["id"]), "name": str(f["name"]), "cost": str(f.get("policy_cost", "Uses the feature")),
-				"modes": ["auto", "never"], "default": str(f["policy"])})
+				"modes": f.get("policy_modes", ["auto", "never"]), "default": str(f["policy"])})
 			continue
 		var response := f.get("roll_response", {}) as Dictionary
 		if not f.has("hit_response") and (response.is_empty() or str(response.get("cost", "free")) != "reaction"):
@@ -460,7 +460,7 @@ func list_policies(c: Combatant, out: Array[Dictionary]) -> void:
 				"label": "%s: %s" % [policy["name"], {"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]],
 				"sub": str({"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]) + (" · selected" if current == mode else ""),
 				"cost": "free", "why": enc()._turn_check(c), "targeting": "none", "range": 0,
-				"help": ("%s. Automatic: it happens whenever it can. Off: never." % policy["cost"]) if policy.has("default") else \
+				"help": ("%s. Automatic: it happens whenever it can. Off: never." % policy["cost"]) if policy.has("default") and not "ask" in (policy.get("modes", []) as Array) else \
 					("%s. Automatic permits spending whenever eligible. Ask prompts where supported; synchronous rolls/spell hits do not spend until you choose Automatic. Off never spends." % policy["cost"])})
 
 func set_policy(c: Combatant, id: String, mode: String) -> CombatResult:

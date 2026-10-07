@@ -3,7 +3,7 @@ extends Node
 ## of Barovia at night, played once with the effects off (what combat showed before) and once with them on, as frame
 ## sequences that tools/capture/vfx_sheet.py joins into side-by-side GIFs and stills.
 ## make capture SCENE=res://tools/capture/vfx_capture.tscn NAME=vfx/vfx FRAMES=30 [VFX_ONLY=fire_bolt,fireball]
-## [VFX_SIDES=after] [VFX_LOOK=classic] [VFX_SET=gallery|zones|faerun]
+## [VFX_SIDES=after] [VFX_LOOK=classic] [VFX_SET=gallery|zones|faerun|blades]
 
 const PARTY: Array[String] = ["silvain_aster", "hedda_ironvow", "kip_smudgewick", "godrick_pendlebrook"]
 const LOCATION := "village_of_barovia"
@@ -112,6 +112,21 @@ const FAERUN := {
 	"transfix": {"caster": "Kip", "targets": [[3, 0]], "cast": "transfix"},
 }
 
+## VFX_SET=blades: Booming Blade (the cast, the blow, then the thunder going off as the target walks away) and
+## Green-Flame Blade (the blow, then the fire leaping to the creature beside the target).
+const BLADES := {
+	"booming_blade": {"caster": "Silvain", "targets": [[1, 0]],
+		"events": [{"type": "spell", "spell": "booming_blade", "caster": "caster", "targets": ["t0"]},
+			{"type": "attack", "attacker": "caster", "target": "t0", "hit": true}, {"type": "damage", "id": "t0", "amount": 4},
+			{"type": "ability", "source": "feature", "by": "t0", "key": "booming_blade_burst", "targets": ["t0"]},
+			{"type": "damage", "id": "t0", "amount": 9}]},
+	"green_flame_blade": {"caster": "Silvain", "targets": [[1, 0], [2, 1]],
+		"events": [{"type": "spell", "spell": "green_flame_blade", "caster": "caster", "targets": ["t0"]},
+			{"type": "attack", "attacker": "caster", "target": "t0", "hit": true}, {"type": "damage", "id": "t0", "amount": 8},
+			{"type": "ability", "source": "feature", "by": "t0", "key": "green_flame_blade_leap", "targets": ["t1"]},
+			{"type": "damage", "id": "t1", "amount": 7}]},
+}
+
 var root: Node
 var cv: CombatView
 ## The zone the stage being recorded put on the board (taken off again after each side).
@@ -154,10 +169,10 @@ func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 60)
 	var meta := {}
 	var set_name := OS.get_environment("VFX_SET")
-	var sets := {"gallery": GALLERY, "zones": ZONES, "faerun": FAERUN}
+	var sets := {"gallery": GALLERY, "zones": ZONES, "faerun": FAERUN, "blades": BLADES}
 	var stages: Dictionary = sets.get(set_name, STAGES)
 	# The gallery and the Faerûn set show the effects only; the zones are recorded before and after.
-	if set_name in ["gallery", "faerun"]:
+	if set_name in ["gallery", "faerun", "blades"]:
 		_sides = [true]
 	for key: String in stages:
 		if not _only.is_empty() and not key in _only:

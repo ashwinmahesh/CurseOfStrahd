@@ -1,0 +1,66 @@
+{
+  "$id": "cutscene.schema.json",
+  "title": "A story cutscene: a full-screen illustration of a moment the game's own views can't show faithfully (story/cutscenes.gd, docs/ui/cutscenes.md)",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "summary",
+    "images"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A name for the moment (journal, galleries, tests)."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "What the picture shows and when it plays, in our own words."
+    },
+    "images": {
+      "type": "array",
+      "minItems": 1,
+      "description": "The picture's takes, first match wins: a take whose `when` holds is shown; none holding skips the cutscene.",
+      "items": {
+        "type": "object",
+        "required": [
+          "image",
+          "when"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "image": {
+            "$ref": "common.schema.json#/$defs/id",
+            "description": "art/cutscenes/<image>.png"
+          },
+          "when": {
+            "type": "string",
+            "description": "A dialogue condition (docs/contracts/dialogue.md); empty is always."
+          }
+        }
+      }
+    },
+    "focus": {
+      "type": "array",
+      "items": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "Where the picture's slow push-in closes on, as a share of its width and height (default the centre)."
+    },
+    "trigger": {
+      "type": "string",
+      "pattern": "^(enter|examine|search):[a-z0-9_]+$",
+      "description": "A Narrator trigger that plays it while exploring (examine:bonegrinder_lookout): the narrator's line becomes its caption. Conversations play cutscenes with the `cutscene <id>` statement instead."
+    }
+  }
+}

@@ -4,7 +4,7 @@ extends Node3D
 ## (world/combat/combat_view.gd) owns one and calls it as it plays the encounter's events: `cast` once a caster's
 ## gesture lands (a spell, a class feature, a monster's save action), `volley` on each attack roll a missile makes,
 ## `smite` when a smite spell rides a hit, `on_hit` when a blow lands, `summoned` and `jumped` for creatures that
-## appear or teleport.
+## appear or teleport. Each effect's sound is picked the same way, by family and flavour (CombatSfx).
 ##
 ## Spells and abilities that look alike share a family (bolt, beam, burst, heal, smite...); art/vfx/effects.json picks
 ## each one's family and flavour, and the flavour's palette colours tint it. The families are built from FxKit's parts
@@ -225,7 +225,7 @@ static func has_family(family: String) -> bool:
 
 ## Flavours whose particles burn (ragged flame puffs) rather than glow.
 static func fiery(flavour: String) -> bool:
-	return flavour in ["fire", "radiant", "necrotic", "acid", "poison", "nature", "earth", "blood"]
+	return flavour in ["fire", "greenfire", "radiant", "necrotic", "acid", "poison", "nature", "earth", "blood"]
 
 
 func _init() -> void:
@@ -240,6 +240,7 @@ func _init() -> void:
 ## have landed, the blast is at its height).
 func cast(cue: Dictionary, caster: CombatToken, targets: Array[CombatToken], cells: Array, board: ArenaBoard, attacks: bool) -> void:
 	last_cue = cue
+	CombatSfx.cast(cue)
 	var family := str(cue["family"])
 	var others: Array[CombatToken] = []
 	for t in targets:
@@ -336,11 +337,11 @@ func _missiles(family: String, cue: Dictionary, caster: CombatToken, others: Arr
 		var start := SpellFx.hand(from, to) if from == caster else SpellFx.chest(from)
 		last = FxMissiles.fly(self, family, cue, start, to, true)
 		if bool(cue.get("chain", false)):
-			await last
+			await until(last)
 			from = t
 		else:
 			await wait(0.09)
-	await last
+	await until(last)
 
 
 func _spread(count: int) -> Vector3:
@@ -385,6 +386,7 @@ func smite(spell_id: String, caster: CombatToken, target: CombatToken) -> void:
 	if cue.is_empty() or target == null:
 		return
 	FxBodies.smite(self, cue, caster, target)
+	CombatSfx.impact(cue)
 	await wait(0.18)
 
 
@@ -407,6 +409,7 @@ func jumped(from: Vector3, to: Vector3) -> void:
 	var cue := last_cue if str(last_cue.get("family", "")) == "teleport" else _finish({"family": "teleport", "flavour": "arcane"}, "teleport")
 	FxBodies.blink(self, cue, from, false)
 	FxBodies.blink(self, cue, to, true)
+	CombatSfx.arrive(cue)
 
 
 # --- Helpers the families share -----------------------------------------------------------------------
@@ -430,6 +433,17 @@ static func chest(t: CombatToken) -> Vector3:
 ## The combat speed setting: effects play faster in fast combat.
 func pace() -> float:
 	return GameSettings.combat_pace()
+
+
+## Waits for a missile's flight (its tween's or timer's signal) unless it has already landed. A slow frame can land
+## the last of a volley before the pauses between shots are over, and a finished tween or timer is freed at once, so
+## awaiting it then was a script error ("Error connecting to signal: finished during await", seen in a busy test run).
+func until(landed: Signal) -> void:
+	var o := landed.get_object()
+	if o == null or not is_instance_valid(o) or (o is Tween and not (o as Tween).is_running()) \
+			or (o is SceneTreeTimer and (o as SceneTreeTimer).time_left <= 0.0):
+		return
+	await landed
 
 
 ## A timer's signal `seconds` (at the combat speed) from now.

@@ -532,7 +532,7 @@ func _move(c: Combatant, cell: Vector2i) -> CombatResult:
 	var keep_moved := c.moved
 	c.movement_left = c.speed()
 	c.disengaged = true
-	var r := e._walk(c, path, 1, CombatResult.new(), {})
+	var r := e._walk(c, path, 1, CombatResult.new(), {"willing": true})
 	c.movement_left = keep_move
 	c.disengaged = keep_dis
 	c.moved = keep_moved

@@ -206,12 +206,14 @@ func _build() -> void:
 			_dress(c, dressed)
 	if theme == "shrine_yard" and place == "":
 		_lanterns()   # the arena's lit pillars
+	Clutter.dress(self)   # decals: cracks, stains, moss, mud fringes ... (docs/art/decals.md)
 
 
 ## Tall billboards (trees) that fade when they stand between the camera and the party.
 var occluders: Array[Sprite3D] = []
 ## 3D trees (ModelPiece) that fade the same way.
 var mesh_occluders: Array[Node3D] = []
+var _faded_for: Array = []           ## fade_occluders' camera, focus and counts once every tree had settled
 ## The scenery the board put on each square (a tree, a wall block, furniture on a '=' square, brambles), so a
 ## location's own prop can take the square's place (SetDressing): cell -> Array of nodes. Ground boxes aren't in it.
 var dressing: Dictionary = {}
@@ -434,6 +436,16 @@ func clear_cell(c: Vector2i) -> void:
 		_cleared[c] = _box("Floor", Vector3(1, 0.2 + h, 1), Vector3(c.x + 0.5, (h - 0.2) / 2.0, c.y + 0.5), _floor_mat)
 
 
+## The flat floor box on square `c` (null if none), and the material plain floors are drawn in: the Modern look's
+## shaped ground draws the wild ground itself and lowers these under it (GroundRelief, Improvement Ideas W11).
+func floor_box(c: Vector2i) -> MeshInstance3D:
+	return _floors.get(c) as MeshInstance3D
+
+
+func floor_material() -> Material:
+	return _floor_mat
+
+
 ## A stairwell down opens the floor of its square (and shows it again when it goes).
 func hide_floor(c: Vector2i) -> void:
 	for d: Dictionary in [_floors, _cleared]:
@@ -522,6 +534,9 @@ func _wall(c: Vector2i) -> void:
 		var h := 1.15
 		var room_wall := _wall_room(c)
 		var wall_mat: Material = room_wall["wall"] as Material if room_wall.has("wall") else (_wall_tex if _wall_tex != null else Look.cel(colour))
+		# The building kit's interiors: pillars, and full-height walls that cut away (docs/art/building_kit.md).
+		if BuildingKit.interior_wall(self, c, wall_mat):
+			return
 		_box("Wall", Vector3(1, h, 1), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), wall_mat)
 		# The cut face reads as the dark inside of the wall, so rooms stand out of the dark rather than out of a slab.
 		_box("WallCap", Vector3(1.02, 0.1, 1.02), Vector3(c.x + 0.5, h + 0.05, c.y + 0.5), Look.cel(CUT_FACE))
@@ -533,7 +548,9 @@ func _wall(c: Vector2i) -> void:
 			_tree(c)   # the village thins into forest at the map's edge
 			return
 		if border and _outer_tex != null:
-			# A town's palisade.
+			# A town's palisade: the building kit's logs (docs/art/building_kit.md), else a textured box.
+			if TownBuilder.palisade(self, c, _floor_mat):
+				return
 			var ph := 2.2
 			_box("Palisade", Vector3(1, ph, 1), Vector3(c.x + 0.5, ph / 2.0, c.y + 0.5), _outer_tex)
 			return
@@ -799,12 +816,19 @@ func _box(n: String, size: Vector3, pos: Vector3, mat: Material) -> MeshInstance
 
 ## Fades the trees standing between the camera and `focus` (the party's leader), and brings back the rest.
 func fade_occluders(camera_pos: Vector3, focus: Vector3, delta: float) -> void:
+	# Once every tree has reached its fade, nothing changes until the camera or the party moves (or trees come and
+	# go): the walk over every tree each frame is skipped while the view stands still.
+	var key := [camera_pos, focus, occluders.size(), mesh_occluders.size()]
+	if key == _faded_for:
+		return
+	var changing := false
 	var to_cam := Vector2(camera_pos.x - focus.x, camera_pos.z - focus.z).normalized()
 	for t in occluders:
 		var rel := Vector2(t.position.x - focus.x, t.position.z - focus.z)
 		var between := rel.length() < 4.0 and rel.normalized().dot(to_cam) > 0.35
 		var target := 0.28 if between else 1.0
 		var a := move_toward(t.modulate.a, target, delta * 4.0)
+		changing = changing or not is_equal_approx(a, target)
 		if not is_equal_approx(a, t.modulate.a):
 			t.modulate.a = a
 			# The texture's own alpha always counts (switching `transparent` off drew the whole quad: the black box
@@ -819,7 +843,10 @@ func fade_occluders(camera_pos: Vector3, focus: Vector3, delta: float) -> void:
 		var rel := Vector2(t.global_position.x - focus.x, t.global_position.z - focus.z)
 		var between := rel.length() < 4.0 and rel.normalized().dot(to_cam) > 0.35
 		var was := float(t.get_meta("fade", 0.0))
-		var f := move_toward(was, 0.72 if between else 0.0, delta * 4.0)
+		var goal := 0.72 if between else 0.0
+		var f := move_toward(was, goal, delta * 4.0)
+		changing = changing or not is_equal_approx(f, goal)
 		if not is_equal_approx(f, was):
 			t.set_meta("fade", f)
 			ModelPiece.set_fade(t, f)
+	_faded_for = [] if changing else key

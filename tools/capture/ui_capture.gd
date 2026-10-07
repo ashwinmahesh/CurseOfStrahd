@@ -1,8 +1,9 @@
 extends Node
 ## Every party screen for captures: the four pregens at level 5 with some wear on them (a Bloodied cleric, a spent
 ## Second Wind and spell slot, Shield of Faith, Poisoned), then the sheet's tabs, party, inventory, level up, rests,
-## spell preparation, journal, loot, shop, pause menu and character creation, one shot each, plus sample tooltips and
-## the sheet for a level 7 warlock, monk and druid.
+## spell preparation (after a rest and after an item's Long Rest), journal, loot, shop, pause menu and character creation,
+## one shot each, plus sample tooltips, the sheet for a level 7 warlock, monk and druid, and creating a character from the
+## party screen (UI_ONLY=create).
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -126,6 +127,29 @@ func capture_shots(tool: Node, out: String) -> void:
 			(sc as ScrollContainer).scroll_vertical = 100000
 		await _shoot(tool, "%s_prepare_swapped.png" % out)
 		ps2.queue_free()
+	if _wants("item_rest"):
+		# Daern's Instant Fortress gives a Long Rest from the inventory, which then offers Change prepared spells.
+		ilse.add_item("daerns_instant_fortress")
+		root.call("open_screen", "inventory", 0)
+		var inv := root.get("screen") as InventoryScreen
+		inv.selected = "daerns_instant_fortress"
+		inv.call("_use_power", "fortress", {})
+		await tool.call("wait_frames", 150)   # the "8 hours later" fade
+		await _shoot(tool, "%s_item_rest.png" % out)
+		inv.call("_open_prepare")
+		await tool.call("wait_frames", 4)
+		# Ratatoille's cantrips, the Wizard's one Long Rest swap.
+		for l in inv.find_children("*", "Label", true, false):
+			if (l as Label).text.contains("Wizard cantrips") or (l as Label).text.contains("Wizard Cantrips"):
+				for sc in inv.find_children("*", "ScrollContainer", true, false):
+					var scroll := sc as ScrollContainer
+					scroll.scroll_vertical = int((l as Label).global_position.y - scroll.global_position.y) - 60
+		await _shoot(tool, "%s_item_rest_prepare.png" % out)
+		# Below it, his High Elf cantrip (Prestidigitation until he swaps it).
+		for sc in inv.find_children("*", "ScrollContainer", true, false):
+			(sc as ScrollContainer).scroll_vertical = 100000
+		await _shoot(tool, "%s_item_rest_high_elf.png" % out)
+		root.call("close_screen")
 	if _wants("level_up"):
 		GameState.story.milestones = 10
 		root.call("open_screen", "level_up", 2)
@@ -194,6 +218,8 @@ func capture_shots(tool: Node, out: String) -> void:
 			await _shoot(tool, "%s_dialogue_%d_options.png" % [out, n_opts])
 			d.queue_free()
 			await tool.call("wait_frames", 2)
+	if _wants("create"):
+		await _create_shots(tool, out)
 	# Last: the Long Rest fades to black for a while.
 	if _wants("rest"):
 		root.call("open_screen", "rest", 0)
@@ -201,6 +227,65 @@ func capture_shots(tool: Node, out: String) -> void:
 		(root.get("screen") as RestScreen).call("_long_rest", "safe")
 		await _shoot(tool, "%s_rest_after.png" % out)
 		root.call("close_screen")
+
+
+## Creating a character from the party screen (owner, 2026-10-07): the party at level 5 with Ratatoille and the
+## starting hero at camp; the creator with the hero's portrait worn, the new character's Review, the party screen with
+## her four level-ups waiting, her level-up screen, and the create option once four custom characters are made.
+func _create_shots(tool: Node, out: String) -> void:
+	var st := GameState.story
+	st.milestones = 4
+	st.send_to_camp(st.party[st.party.size() - 1])
+	var vasha := TestChars.custom("fighter", "human", 5)
+	vasha.name = "Vasha Dunmere"
+	vasha.build["name"] = "Vasha Dunmere"
+	vasha.build["appearance"] = HeroLook.default_appearance("female", "fighter")
+	vasha.id = "vasha_dunmere"
+	st.bench.append(vasha)
+	root.call("open_screen", "party", 0)
+	await _shoot(tool, "%s_create_1_party.png" % out)
+	root.call("open_screen", "create", 0)
+	var cs := root.get("screen") as CreationScreen
+	var b := cs.b()
+	b.set_class("ranger")
+	b.set_background("guide")
+	b.set_species("elf")
+	TestChars.auto_pick(func() -> Array[Choice]: return b.pending_choices(),
+		func(key: String, chosen: Array) -> void: b.choose(key, chosen))
+	b.set_name("Mira Vell")
+	cs.call("_suit_outfit")
+	var app := (b.build["appearance"] as Dictionary).duplicate()
+	app.merge({"head": "elfin", "hair": "wavy", "hair_colour": "auburn", "skin": "olive"}, true)
+	b.set_appearance(HeroLook.settle(app))
+	cs.step = CharacterBuilder.Step.APPEARANCE
+	cs.set("_appearance_tab", "Portrait & voice")
+	cs.call("_draw")
+	await _shoot(tool, "%s_create_2_portraits.png" % out)
+	cs.set("_appearance_tab", "Body")
+	cs.call("_draw")
+	await _shoot(tool, "%s_create_3_appearance.png" % out)
+	cs.confirmed[0] = true
+	cs.step = CharacterBuilder.Step.REVIEW
+	cs.call("_draw")
+	await _shoot(tool, "%s_create_4_review.png" % out)
+	cs.call("_finish")
+	await tool.call("wait_frames", 2)
+	await _shoot(tool, "%s_create_5_joined.png" % out)
+	root.call("open_screen", "level_up", st.party.size() - 1)
+	await _shoot(tool, "%s_create_6_level_up.png" % out)
+	for n: Array in [["Oskar Brann", "hero_02", "rogue"], ["Dorota Kask", "hero_03", "wizard"]]:
+		var ch := TestChars.custom(str(n[2]), "human", 1)
+		ch.name = str(n[0])
+		ch.build["name"] = str(n[0])
+		var look := HeroLook.default_appearance("female", str(n[2]))
+		look["portrait"] = str(n[1])
+		look["art"] = str(n[1])
+		ch.build["appearance"] = look
+		ch.id = ""
+		st.recruit(ch)
+	root.call("open_screen", "party", 0)
+	await _shoot(tool, "%s_create_7_four_made.png" % out)
+	root.call("close_screen")
 
 
 ## Tooltips as the engine shows them (the theme's tooltip panel around each custom tooltip), over the sheet.

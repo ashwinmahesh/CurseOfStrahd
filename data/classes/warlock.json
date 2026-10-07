@@ -258,6 +258,14 @@
       "arcana",
       "deception"
     ],
+    "subclass": "fiend_patron",
+    "feats": [
+      "war_caster",
+      "resilient",
+      "fey_touched",
+      "alert",
+      "spell_sniper"
+    ],
     "note": "Charisma first, then Dexterity for Armor Class and Constitution for Concentration."
   },
   "levels": [
