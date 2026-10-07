@@ -13,6 +13,46 @@ const UI_PALETTE_JSON := "res://art/palette/ui_palette.json"
 static var _palette: Dictionary = {}
 static var _colours: Dictionary = {}
 
+## The world's finish (docs/plans/ui_polish.md), the player's choice kept in user://settings.cfg:
+## "classic" is the 1990s cartoon pass (every pixel snapped to the palette, light in hard bands); "modern" keeps the
+## ink lines and the same art but lights it smoothly, with filmic tone, bloom on flames and lanterns, deeper contact
+## shadows and soft mist. Places built after a change use it.
+const STYLES: Array[String] = ["modern", "classic"]
+## Until the owner picks (docs/plans/ui_polish.md), a player who hasn't chosen keeps the look the game had.
+const DEFAULT_STYLE := "classic"
+const SETTINGS := "user://settings.cfg"
+static var _style := ""
+
+
+static func style() -> String:
+	if _style == "":
+		var cfg := ConfigFile.new()
+		var saved := str(cfg.get_value("look", "style", DEFAULT_STYLE)) if cfg.load(SETTINGS) == OK else DEFAULT_STYLE
+		_style = saved if saved in STYLES else DEFAULT_STYLE
+		_publish()
+	return _style
+
+
+static func modern() -> bool:
+	return style() == "modern"
+
+
+static func set_style(s: String, save: bool = true) -> void:
+	if not s in STYLES:
+		return
+	_style = s
+	_publish()
+	if save:
+		var cfg := ConfigFile.new()
+		cfg.load(SETTINGS)
+		cfg.set_value("look", "style", s)
+		cfg.save(SETTINGS)
+
+
+## The cel shaders read the style through a global uniform (look_soft, project.godot [shader_globals]).
+static func _publish() -> void:
+	RenderingServer.global_shader_parameter_set(&"look_soft", 1.0 if _style == "modern" else 0.0)
+
 
 static func color(name: String) -> Color:
 	if _palette.is_empty():
@@ -74,8 +114,46 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 	m.set_shader_parameter("wall_band", str(info.get("wrap", "xy")) == "x")
 	m.set_shader_parameter("grid_strength", grid)
 	m.set_shader_parameter("grid_line", color("ink"))
+	if modern():
+		var nm := normal_map(path)
+		if nm != null:
+			m.set_shader_parameter("normal_tex", nm)
+			m.set_shader_parameter("normal_strength", MODERN_RELIEF)
 	_textured[key] = m
 	return m
+
+
+## How deep the modern finish's relief reads (cel_world.gdshader normal_strength).
+const MODERN_RELIEF := 0.9
+static var _normals: Dictionary = {}
+
+
+## A normal map made from a texture's own brightness (dark ink lines and mortar read as grooves), softened first so
+## it gives bevels rather than noise; made once per texture and kept. Null if the image can't be read.
+static func normal_map(path: String) -> Texture2D:
+	if _normals.has(path):
+		return _normals[path] as Texture2D
+	var tex := load(path) as Texture2D
+	var img := tex.get_image() if tex != null else null
+	if img == null:
+		_normals[path] = null
+		return null
+	img = img.duplicate() as Image
+	if img.is_compressed() and img.decompress() != OK:
+		_normals[path] = null
+		return null
+	img.clear_mipmaps()
+	var w := img.get_width()
+	var h := img.get_height()
+	img.convert(Image.FORMAT_L8)
+	# A cheap blur: down to a quarter and back up, so lines become soft grooves.
+	img.resize(maxi(8, w / 3), maxi(8, h / 3), Image.INTERPOLATE_BILINEAR)
+	img.resize(w, h, Image.INTERPOLATE_CUBIC)
+	img.bump_map_to_normal_map(6.0)
+	img.generate_mipmaps()
+	var out := ImageTexture.create_from_image(img)
+	_normals[path] = out
+	return out
 
 
 static func cel_checker(a: String, b: String, line: String) -> ShaderMaterial:
@@ -99,6 +177,7 @@ static func make_post_process() -> MeshInstance3D:
 	# outlines stay; every pixel is its own and no dither pattern is added.
 	mat.set_shader_parameter("pixel_size", 1.0)
 	mat.set_shader_parameter("dither_strength", 0.0)
+	style_post(mat)
 	quad.material = mat
 	var mi := MeshInstance3D.new()
 	mi.name = "PostProcess"
@@ -106,3 +185,12 @@ static func make_post_process() -> MeshInstance3D:
 	mi.extra_cull_margin = 16384.0
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	return mi
+
+
+## The post pass for the current style: the palette snap and flat bands for classic, smooth and HDR for modern.
+static func style_post(mat: ShaderMaterial) -> void:
+	var m := modern()
+	mat.set_shader_parameter("quantize", not m)
+	mat.set_shader_parameter("soft_bands", m)
+	mat.set_shader_parameter("keep_hdr", m)
+	mat.set_shader_parameter("outline_width", 1.2 if m else 1.5)

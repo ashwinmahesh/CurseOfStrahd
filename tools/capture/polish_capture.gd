@@ -7,9 +7,16 @@ var root: Node
 var _only: Array[String] = []
 
 
+## POLISH_LOOK=classic|modern picks the world's finish for the run (not saved), for before-and-after shots.
+var _look := ""
+
+
 func _ready() -> void:
 	for s in OS.get_environment("POLISH_ONLY").split(",", false):
 		_only.append(s.strip_edges())
+	_look = OS.get_environment("POLISH_LOOK")
+	if _look != "":
+		Look.set_style(_look, false)
 	GameState.reset()
 	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]:
 		var ch := Pregens.build(id, 3)
@@ -32,6 +39,36 @@ func _shoot(tool: Node, path: String, frames: int = 10) -> void:
 func capture_shots(tool: Node, out: String) -> void:
 	var hud := root.get("hud") as ExploreHud
 	hud.close_narration()
+	if _wants("perf"):
+		# How long the GPU takes per frame in the village and the cellar, for the finish this run uses.
+		var vp := get_viewport().get_viewport_rid()
+		RenderingServer.viewport_set_measure_render_time(vp, true)
+		for where: String in ["village_of_barovia", "death_house_dungeon_1", "tser_pool"]:
+			root.call("enter_location", where, "default")
+			await tool.call("wait_frames", 60)
+			var gpu := 0.0
+			var cpu := 0.0
+			var t0 := Time.get_ticks_usec()
+			for i in 120:
+				await tool.call("wait_frames", 1)
+				gpu += RenderingServer.viewport_get_measured_render_time_gpu(vp)
+				cpu += RenderingServer.viewport_get_measured_render_time_cpu(vp)
+			var wall := float(Time.get_ticks_usec() - t0) / 1000.0 / 120.0
+			print("perf %s %s: frame %.2f ms (60 fps cap), gpu %.2f ms, cpu %.2f ms" % [_look, where, wall, gpu / 120.0, cpu / 120.0])
+		return
+	if _wants("look"):
+		# The same places in either finish: the village at dusk, Death House's hall, its cellar, the misty road and a
+		# fight in the cellar.
+		for where: String in ["village_of_barovia", "death_house_ground", "death_house_dungeon_1", "into_the_mists_road", "tser_pool"]:
+			root.call("enter_location", where, "default")
+			await tool.call("wait_frames", 40)
+			hud.close_narration()
+			await _shoot(tool, "%s_look_%s_%s.png" % [out, _look, where], 20)
+		root.call("enter_location", "death_house_dungeon_1", "default")
+		await tool.call("wait_frames", 20)
+		(root.get("view") as LocationView).start_encounter("passage_ghouls")
+		await _shoot(tool, "%s_look_%s_fight.png" % [out, _look], 200)
+		return
 	if _wants("alt"):
 		hud.thing_labels.pinned = true
 		await _shoot(tool, out + "_alt_village.png")
