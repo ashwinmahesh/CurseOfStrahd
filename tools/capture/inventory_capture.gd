@@ -106,8 +106,25 @@ func capture_shots(tool: Node, out: String) -> void:
 		await _shoot(tool, "%s_loot.png" % out)
 		lw.queue_free()
 	if _wants("level_up"):
+		# Q10: a companion at an Ability Score Improvement (filled from their own level plan), and a new hero choosing a
+		# subclass (filled with the class's recommended picks). Each shot scrolls to the picks.
 		GameState.story.milestones = 10
-		for i: int in [0, 2]:
+		var party := GameState.story.party
+		party[0] = Pregens.build("godrick_pendlebrook", 3)
+		var hero := TestChars.custom("cleric", "human", 2)
+		hero.name = "Mirela Vasquez"
+		hero.build["name"] = hero.name
+		party[3] = hero
+		for i: int in [0, 3]:
 			root.call("open_screen", "level_up", i)
-			await _shoot(tool, "%s_level_up_%s.png" % [out, GameState.story.party[i].name.get_slice(" ", 0).to_lower()])
+			await tool.call("wait_frames", 4)
+			var screen := root.get("screen") as Node
+			for l in screen.find_children("*", "Label", true, false):
+				if (l as Label).text.begins_with("4 · Choices"):
+					var up := (l as Node).get_parent()
+					while up != null and not up is ScrollContainer:
+						up = up.get_parent()
+					if up != null:
+						(up as ScrollContainer).scroll_vertical = int((l as Label).global_position.y - (up as ScrollContainer).global_position.y) - 20
+			await _shoot(tool, "%s_level_up_%s.png" % [out, party[i].name.get_slice(" ", 0).to_lower()])
 			root.call("close_screen")

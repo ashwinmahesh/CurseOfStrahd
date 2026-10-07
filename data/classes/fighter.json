@@ -277,6 +277,15 @@
       "athletics",
       "perception"
     ],
+    "subclass": "battle_master",
+    "feats": [
+      "great_weapon_master",
+      "sentinel",
+      "polearm_master",
+      "sharpshooter",
+      "tough",
+      "alert"
+    ],
     "note": "Strength build for heavy armor and big weapons; swap Strength and Dexterity for an archer."
   },
   "levels": [
