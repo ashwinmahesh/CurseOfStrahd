@@ -1,0 +1,37 @@
+{
+  "id": "wither_and_bloom",
+  "name": "Wither and Bloom",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 2,
+  "school": "necromancy",
+  "classes": [
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a withered vine twisted into a loop"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "summary": "Reference-only: Chosen creatures in a 10-foot-radius Sphere save Constitution against 3d6 Necrotic, half on success; ordinary plants wither. One chosen creature there may spend one Hit Die, healing its roll + your spellcasting modifier. Each slot above 2 adds 1d6 damage and one available Hit Die; add the modifier only once.",
+  "text": "Reference-only: Chosen creatures in a 10-foot-radius Sphere save Constitution against 3d6 Necrotic, half on success; ordinary plants wither. One chosen creature there may spend one Hit Die, healing its roll + your spellcasting modifier. Each slot above 2 adds 1d6 damage and one available Hit Die; add the modifier only once.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile"
+}

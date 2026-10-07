@@ -1,0 +1,41 @@
+{
+  "id": "necromancy_adept",
+  "name": "Necromancy Adept",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "category": "general",
+  "repeatable": false,
+  "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Inflict Wounds; Ray of Enfeeblement; Vampiric Touch; Blight; Raise Dead. Reference-only: After a slotted Necromancy, roll and spend up to two unused Hit Dice to heal their total plus slot level.",
+  "benefits": [
+    {
+      "id": "necromancy_adept_spells",
+      "name": "Additional Spells",
+      "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Inflict Wounds; Ray of Enfeeblement; Vampiric Touch; Blight; Raise Dead.",
+      "text": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Inflict Wounds; Ray of Enfeeblement; Vampiric Touch; Blight; Raise Dead.",
+      "implemented": "text"
+    },
+    {
+      "id": "necromancy_adept_benefit",
+      "name": "School Benefit",
+      "summary": "Reference-only: After a slotted Necromancy, roll and spend up to two unused Hit Dice to heal their total plus slot level.",
+      "text": "Reference-only: After a slotted Necromancy, roll and spend up to two unused Hit Dice to heal their total plus slot level.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 4,
+    "spellcasting": true
+  },
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  }
+}

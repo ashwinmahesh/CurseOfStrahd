@@ -1,0 +1,242 @@
+{
+  "id": "enchanter",
+  "name": "Enchanter",
+  "class": "wizard",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "summary": "A wizard specializing in influencing minds. Some features are reference-only; see each feature’s implementation status.",
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "enchantment_savant",
+        "name": "Enchantment Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 2,
+          "filter": {
+            "list": "wizard",
+            "school": "enchantment",
+            "min_level": 1,
+            "max_level": 2
+          }
+        }
+      }
+    },
+    {
+      "level": 5,
+      "feature": {
+        "id": "enchantment_savant",
+        "name": "Enchantment Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "enchantment",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "enchantment_savant",
+        "name": "Enchantment Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "enchantment",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 9,
+      "feature": {
+        "id": "enchantment_savant",
+        "name": "Enchantment Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "enchantment",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "enchantment_savant",
+        "name": "Enchantment Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "enchantment",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 13,
+      "feature": {
+        "id": "enchantment_savant",
+        "name": "Enchantment Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "enchantment",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "enchantment_savant",
+        "name": "Enchantment Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "enchantment",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "enchantment_savant",
+        "name": "Enchantment Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "enchantment",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "enchanting_skill",
+        "name": "Enchanting Conversationalist: Proficiency",
+        "summary": "Choose Deception, Intimidation, or Persuasion proficiency.",
+        "text": "Choose Deception, Intimidation, or Persuasion proficiency.",
+        "implemented": "data",
+        "choice": {
+          "kind": "skill",
+          "count": 1,
+          "from": [
+            "deception",
+            "intimidation",
+            "persuasion"
+          ]
+        }
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "enchanting_bonus",
+        "name": "Enchanting Conversationalist: Bonus",
+        "summary": "Checks using the selected skill add your Intelligence modifier, minimum +1. This additional bonus is reference-only.",
+        "text": "Checks using the selected skill add your Intelligence modifier, minimum +1. This additional bonus is reference-only.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "hypnotic_presence",
+        "name": "Hypnotic Presence",
+        "summary": "Magic action: one visible creature within 10 feet that sees or hears you makes a Wisdom save against your spell DC. Failure Charms and Incapacitates it with Speed 0 for 1 minute, ending if it takes damage, leaves 10 feet, or can neither see nor hear you. Uses equal Intelligence modifier (minimum 1) per Long Rest.",
+        "text": "Magic action: one visible creature within 10 feet that sees or hears you makes a Wisdom save against your spell DC. Failure Charms and Incapacitates it with Speed 0 for 1 minute, ending if it takes damage, leaves 10 feet, or can neither see nor hear you. Uses equal Intelligence modifier (minimum 1) per Long Rest.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "split_enchantment",
+        "name": "Split Enchantment",
+        "summary": "When casting an Enchantment spell with a slot that can add a target by upcasting, increase its effective level by 1. Uses equal Intelligence modifier per Long Rest.",
+        "text": "When casting an Enchantment spell with a slot that can add a target by upcasting, increase its effective level by 1. Uses equal Intelligence modifier per Long Rest.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "instinctive_charm",
+        "name": "Instinctive Charm",
+        "summary": "Reaction when a visible attacker within 30 feet hits you: Wisdom save against your spell DC. Failure makes the attack miss you and redirect, with the same roll, to another creature in its reach other than the attacker; you choose if several qualify. Once per Long Rest; casting an Enchantment spell with a slot restores use.",
+        "text": "Reaction when a visible attacker within 30 feet hits you: Wisdom save against your spell DC. Failure makes the attack miss you and redirect, with the same roll, to another creature in its reach other than the attacker; you choose if several qualify. Once per Long Rest; casting an Enchantment spell with a slot restores use.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "alter_memories",
+        "name": "Alter Memories",
+        "summary": "When casting a slotted Enchantment that Charms, choose one target to remain unaware of your influence. Once before the spell ends, a Magic action forces an Intelligence save; failure erases up to 1 + Intelligence modifier hours (minimum 1), capped by the spell duration.",
+        "text": "When casting a slotted Enchantment that Charms, choose one target to remain unaware of your influence. Once before the spell ends, a Magic action forces an Intelligence save; failure erases up to 1 + Intelligence modifier hours (minimum 1), capped by the spell duration.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

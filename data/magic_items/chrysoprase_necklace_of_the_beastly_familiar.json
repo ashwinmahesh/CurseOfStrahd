@@ -1,0 +1,21 @@
+{
+  "id": "chrysoprase_necklace_of_the_beastly_familiar",
+  "name": "Chrysoprase Necklace of the Beastly Familiar",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Spellcaster"
+  },
+  "theme": "arcana",
+  "icon": "amulet",
+  "summary": "Reference-only: while worn, cast Find Familiar once per dawn.",
+  "text": "Reference-only: while worn, cast Find Familiar once per dawn. A Magic action transforms your familiar within 60 feet into a Giant Scorpion for 10 minutes. Retain alignment, personality, creature type, HP, and Hit Dice; other statistics use the Beast form. Equipment does not transform; unusable equipment drops. Gain the Beast’s HP as Temporary HP, which vanish on reverting; transformation ends early when these Temporary HP run out.",
+  "worn": "neck"
+}

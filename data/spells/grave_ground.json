@@ -1,0 +1,39 @@
+{
+  "id": "grave_ground",
+  "name": "Grave Ground",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 5,
+  "school": "necromancy",
+  "classes": [
+    "cleric",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a handful of grave dirt"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "summary": "Reference-only: Arrange up to four contiguous 10-foot squares of skeletal hands within range; enemies treat them as Difficult Terrain. Enemies present at casting, entering, or ending a turn there save Strength once per turn: failure deals 6d6 Necrotic and subtracts 1d6 from damage rolls until their next turn ends. Add 1d6 damage per slot above 5.",
+  "text": "Reference-only: Arrange up to four contiguous 10-foot squares of skeletal hands within range; enemies treat them as Difficult Terrain. Enemies present at casting, entering, or ending a turn there save Strength once per turn: failure deals 6d6 Necrotic and subtracts 1d6 from damage rolls until their next turn ends. Add 1d6 damage per slot above 5.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile"
+}

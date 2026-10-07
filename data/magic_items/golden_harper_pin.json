@@ -1,0 +1,21 @@
+{
+  "id": "golden_harper_pin",
+  "name": "Golden Harper Pin",
+  "source": {
+    "book": "FRAiF",
+    "page": 244,
+    "checked_against": "FRAiF",
+    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/11054448-golden-harper-pin. Prices use the existing rarity convention; unspecified weight is 0. Reference-only properties require manual adjudication."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "amulet",
+  "summary": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type.",
+  "text": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type. While worn, magic identifying your type, alignment, or location reports that persona. While worn, cast Nondetection on yourself. It lasts until you freely end it, remove the pin, or end attunement."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "potion_of_tirelessness",
+  "name": "Potion of Tirelessness",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "potion",
+  "weight_lb": 0,
+  "cost_gp": 200,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "potion_orange",
+  "summary": "Reference-only: drinking removes the need for sleep and prevents magical sleep for 24 hours.",
+  "text": "Reference-only: drinking removes the need for sleep and prevents magical sleep for 24 hours. During this time, a Long Rest takes 4 hours of conscious, quiet focus."
+}

@@ -1,0 +1,28 @@
+{
+  "id": "zhentarim_ruffian",
+  "name": "Zhentarim Ruffian",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Roll the damage dice for your Opportunity Attack twice and choose which result to use. When rolling Initiative, spend your Heroic Inspiration to give yourself and your allies Advantage on that Initiative roll.",
+  "benefits": [
+    {
+      "id": "exploit_opening",
+      "name": "Exploit Opening",
+      "summary": "Roll the damage dice for your Opportunity Attack twice and choose which result to use.",
+      "text": "Roll the damage dice for your Opportunity Attack twice and choose which result to use.",
+      "implemented": "text"
+    },
+    {
+      "id": "family_first",
+      "name": "Family First",
+      "summary": "When rolling Initiative, spend your Heroic Inspiration to give yourself and your allies Advantage on that Initiative roll.",
+      "text": "When rolling Initiative, spend your Heroic Inspiration to give yourself and your allies Advantage on that Initiative roll.",
+      "implemented": "text"
+    }
+  ]
+}

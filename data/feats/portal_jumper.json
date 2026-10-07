@@ -1,0 +1,44 @@
+{
+  "id": "portal_jumper",
+  "name": "Portal Jumper",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Choose Necrotic, Psychic, or Radiant Resistance. Once per turn, spend 15 feet of movement to teleport to a visible empty space within 15 feet. Uses equal Proficiency Bonus per Long Rest.",
+  "benefits": [
+    {
+      "id": "otherworldly_resilience",
+      "name": "Otherworldly Resilience",
+      "summary": "Choose Necrotic, Psychic, or Radiant Resistance.",
+      "text": "Choose Necrotic, Psychic, or Radiant Resistance.",
+      "implemented": "data",
+      "choice": {
+        "id": "resistance",
+        "kind": "damage_type",
+        "count": 1,
+        "from": [
+          "necrotic",
+          "psychic",
+          "radiant"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "resistance",
+          "value": "@resistance"
+        }
+      ]
+    },
+    {
+      "id": "portal_step",
+      "name": "Portal Step",
+      "summary": "Once per turn, spend 15 feet of movement to teleport to a visible empty space within 15 feet. Uses equal Proficiency Bonus per Long Rest.",
+      "text": "Once per turn, spend 15 feet of movement to teleport to a visible empty space within 15 feet. Uses equal Proficiency Bonus per Long Rest.",
+      "implemented": "text"
+    }
+  ]
+}

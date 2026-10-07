@@ -1,0 +1,37 @@
+{
+  "id": "purple_dragon_rook",
+  "name": "Purple Dragon Rook",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Choose proficiency in Insight, Performance, or Persuasion. When rolling Initiative while not Incapacitated, grant Heroic Inspiration to up to Proficiency Bonus visible creatures within 30 feet. Once per Long Rest.",
+  "benefits": [
+    {
+      "id": "rook_entreat",
+      "name": "Entreat",
+      "summary": "Choose proficiency in Insight, Performance, or Persuasion.",
+      "text": "Choose proficiency in Insight, Performance, or Persuasion.",
+      "implemented": "data",
+      "choice": {
+        "kind": "skill",
+        "count": 1,
+        "from": [
+          "insight",
+          "performance",
+          "persuasion"
+        ]
+      }
+    },
+    {
+      "id": "rook_rallying_cry",
+      "name": "Rallying Cry",
+      "summary": "When rolling Initiative while not Incapacitated, grant Heroic Inspiration to up to Proficiency Bonus visible creatures within 30 feet. Once per Long Rest.",
+      "text": "When rolling Initiative while not Incapacitated, grant Heroic Inspiration to up to Proficiency Bonus visible creatures within 30 feet. Once per Long Rest.",
+      "implemented": "text"
+    }
+  ]
+}
