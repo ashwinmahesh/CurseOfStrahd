@@ -115,7 +115,10 @@ func _skirmish_over(_outcome: String) -> void:
 		return
 	results = SkirmishResults.new()
 	add_child(results)
-	results.show_for(e, played.title)
+	var earned: Array[String] = []
+	for id in Achievements.grant(Achievements.for_skirmish(played, e, FightTally.tally(e))):
+		earned.append(Achievements.name_of(id))
+	results.show_for(e, played.title, earned)
 	results.again.connect(func() -> void:
 		skirmish = played
 		Dice.reseed_random()

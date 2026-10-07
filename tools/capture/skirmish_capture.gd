@@ -2,7 +2,7 @@ extends Node
 ## make capture SCENE=res://tools/capture/skirmish_capture.tscn NAME=skirmish FRAMES=10
 ## Skirmish and the Character Lab (N1): the Add a hero page, the Lab with a level 14 hero and the item list, the foes,
 ## the field's map, the encounter editor placing vampire spawn, the saved setups, then the fight on Vallaki's square at
-## night and its results.
+## night and its results, and the achievements list (N8).
 
 var screen: SkirmishScreen
 var arena: CombatArena
@@ -78,5 +78,13 @@ func capture_shots(tool: Node, out: String) -> void:
 	arena.view.finished.emit(arena.e.outcome)
 	await tool.call("wait_frames", 20)
 	tool.call("_shot", out + "_7_results.png")
+	arena.queue_free()
+	await tool.call("wait_frames", 2)
+	screen = (load("res://scenes/skirmish.tscn") as PackedScene).instantiate() as SkirmishScreen
+	add_child(screen)
+	await tool.call("wait_frames", 10)
+	screen.open_achievements()
+	await tool.call("wait_frames", 20)
+	tool.call("_shot", out + "_8_achievements.png")
 	for f in SkirmishLibrary.list():
 		SkirmishLibrary.delete(str(f["file"]))
