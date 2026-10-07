@@ -4,7 +4,7 @@ extends Node3D
 ## (world/combat/combat_view.gd) owns one and calls it as it plays the encounter's events: `cast` once a caster's
 ## gesture lands (a spell, a class feature, a monster's save action), `volley` on each attack roll a missile makes,
 ## `smite` when a smite spell rides a hit, `on_hit` when a blow lands, `summoned` and `jumped` for creatures that
-## appear or teleport.
+## appear or teleport. Each effect's sound is picked the same way, by family and flavour (CombatSfx).
 ##
 ## Spells and abilities that look alike share a family (bolt, beam, burst, heal, smite...); art/vfx/effects.json picks
 ## each one's family and flavour, and the flavour's palette colours tint it. The families are built from FxKit's parts
@@ -240,6 +240,7 @@ func _init() -> void:
 ## have landed, the blast is at its height).
 func cast(cue: Dictionary, caster: CombatToken, targets: Array[CombatToken], cells: Array, board: ArenaBoard, attacks: bool) -> void:
 	last_cue = cue
+	CombatSfx.cast(cue)
 	var family := str(cue["family"])
 	var others: Array[CombatToken] = []
 	for t in targets:
@@ -385,6 +386,7 @@ func smite(spell_id: String, caster: CombatToken, target: CombatToken) -> void:
 	if cue.is_empty() or target == null:
 		return
 	FxBodies.smite(self, cue, caster, target)
+	CombatSfx.impact(cue)
 	await wait(0.18)
 
 
@@ -407,6 +409,7 @@ func jumped(from: Vector3, to: Vector3) -> void:
 	var cue := last_cue if str(last_cue.get("family", "")) == "teleport" else _finish({"family": "teleport", "flavour": "arcane"}, "teleport")
 	FxBodies.blink(self, cue, from, false)
 	FxBodies.blink(self, cue, to, true)
+	CombatSfx.arrive(cue)
 
 
 # --- Helpers the families share -----------------------------------------------------------------------
