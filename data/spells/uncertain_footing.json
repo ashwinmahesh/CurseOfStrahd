@@ -60,5 +60,5 @@
     }
   ],
   "requires_sight": true,
-  "playable": false
+  "playable": true
 }

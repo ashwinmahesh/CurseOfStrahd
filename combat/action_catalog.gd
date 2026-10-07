@@ -853,6 +853,9 @@ static func ability_key(action: Dictionary) -> String:
 		for pre: String in ["cf:", "rh:"]:
 			if key.begins_with(pre):
 				key = key.substr(pre.length())
+		# A data-defined activation (FeatureRecipes) shows as its feature; ending one shows nothing.
+		if key.begins_with("recipe:"):
+			key = "" if key.ends_with(":dismiss") else key.substr(7)
 		return key
 	if id in FEATURE_ACTIONS:
 		return id

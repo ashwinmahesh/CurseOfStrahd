@@ -62,5 +62,5 @@
     "damages_objects": true,
     "ignites_objects": true
   },
-  "playable": false
+  "playable": true
 }

@@ -247,7 +247,8 @@ func cast(cue: Dictionary, caster: CombatToken, targets: Array[CombatToken], cel
 		"bolt", "beam", "ray", "touch", "drain", "shot":
 			await _missiles(family, cue, caster, others)
 		"burst":
-			await FxAreas.burst(self, cue, caster, cells, board)
+			# A spell with no area of its own that bursts round its target (Detonate) blows up where the targets stand.
+			await FxAreas.burst(self, cue, caster, cells if not cells.is_empty() else _cells_at(others), board)
 		"cone":
 			await FxAreas.cone(self, cue, caster, cells if not cells.is_empty() else _cells_at(others), board)
 		"line":

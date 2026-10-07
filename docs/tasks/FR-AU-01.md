@@ -2,13 +2,16 @@
 id: FR-AU-01
 title: Player content from Heroes of Faerûn, Adventures in Faerûn and Arcana Unleashed
 owner: Rules Engine
-status: todo
+status: in_progress
 depends_on: []
 ---
 
-Owner decision 2026-10-06: skipped for now. Nothing is built; this file keeps the groundwork for later.
+Owner decision 2026-10-06: skipped for now. Since 2026-10-07 the owner wants every entry made game-ready here
+(Codex's PR #2 built the first engine pieces; this project's thread does the rest, Bladesinger included), in batches
+that switch entries on as they fully work. What is on and what remains: docs/rules/coverage.md (Faerûn and Arcana
+Unleashed gameplay audit). The data came in with PR #1 and is the rules source: don't read D&D Beyond.
 
-**Where the rules text comes from is still open**, and the owner picks it before any building starts:
+**Where the rules text comes from** was open until PR #1 brought the data (2026-10-07); the options were:
 1. text the owner pastes for the options they want;
 2. the free Unearthed Arcana playtests (mark `source.note` as playtest; subclasses only, see below);
 3. general knowledge (mark unverified). This can't work for Arcana Unleashed: it came out 2026-09-15.

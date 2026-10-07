@@ -64,5 +64,5 @@
     "control"
   ],
   "icon": "lightning_bolt",
-  "playable": false
+  "playable": true
 }

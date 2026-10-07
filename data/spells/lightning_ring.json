@@ -96,5 +96,5 @@
       "help": "Magic action: aim a 60-foot line, Dexterity save for half damage."
     }
   ],
-  "playable": false
+  "playable": true
 }

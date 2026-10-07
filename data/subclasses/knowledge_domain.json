@@ -7,7 +7,7 @@
     "checked_against": "FRHoF",
     "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
   },
-  "summary": "Devotees of knowledge pursue hidden truths and wield divination magic. Some features are reference-only; see each feature’s implementation status.",
+  "summary": "Devotees of knowledge pursue hidden truths and wield divination magic.",
   "features": [
     {
       "level": 3,
@@ -69,9 +69,93 @@
       "feature": {
         "id": "unfettered_mind",
         "name": "Unfettered Mind",
-        "summary": "Gain telepathy to 60 feet, contacting up to Wisdom modifier creatures simultaneously (minimum 1). Gain Intelligence saving throw proficiency, or another saving throw proficiency you lack if already proficient. These benefits are reference-only.",
-        "text": "Gain telepathy to 60 feet, contacting up to Wisdom modifier creatures simultaneously (minimum 1). Gain Intelligence saving throw proficiency, or another saving throw proficiency you lack if already proficient. These benefits are reference-only.",
-        "implemented": "text"
+        "summary": "Telepathy with up to your Wisdom modifier creatures within 60 feet; proficiency in Intelligence saving throws, or in another save if you already have it.",
+        "text": "Your mind reaches out unaided: you can speak telepathically with up to a number of creatures within 60 feet equal to your Wisdom modifier (minimum one) at once, which plays out in conversation rather than in a fight. You also gain proficiency in Intelligence saving throws; if you already have it, choose another saving throw you aren't proficient in.",
+        "implemented": "data",
+        "choice": {
+          "kind": "option",
+          "count": 1,
+          "options": [
+            {
+              "id": "intelligence",
+              "name": "Intelligence saving throws",
+              "summary": "Take this unless you already have it.",
+              "modifiers": [
+                {
+                  "stat": "proficiency",
+                  "kind": "save",
+                  "value": "int"
+                }
+              ],
+              "implemented": "data"
+            },
+            {
+              "id": "strength",
+              "name": "Strength saving throws",
+              "summary": "Only if you already have Intelligence saving throws.",
+              "modifiers": [
+                {
+                  "stat": "proficiency",
+                  "kind": "save",
+                  "value": "str"
+                }
+              ],
+              "implemented": "data"
+            },
+            {
+              "id": "dexterity",
+              "name": "Dexterity saving throws",
+              "summary": "Only if you already have Intelligence saving throws.",
+              "modifiers": [
+                {
+                  "stat": "proficiency",
+                  "kind": "save",
+                  "value": "dex"
+                }
+              ],
+              "implemented": "data"
+            },
+            {
+              "id": "constitution",
+              "name": "Constitution saving throws",
+              "summary": "Only if you already have Intelligence saving throws.",
+              "modifiers": [
+                {
+                  "stat": "proficiency",
+                  "kind": "save",
+                  "value": "con"
+                }
+              ],
+              "implemented": "data"
+            },
+            {
+              "id": "wisdom",
+              "name": "Wisdom saving throws",
+              "summary": "Only if you already have Intelligence saving throws.",
+              "modifiers": [
+                {
+                  "stat": "proficiency",
+                  "kind": "save",
+                  "value": "wis"
+                }
+              ],
+              "implemented": "data"
+            },
+            {
+              "id": "charisma",
+              "name": "Charisma saving throws",
+              "summary": "Only if you already have Intelligence saving throws.",
+              "modifiers": [
+                {
+                  "stat": "proficiency",
+                  "kind": "save",
+                  "value": "cha"
+                }
+              ],
+              "implemented": "data"
+            }
+          ]
+        }
       }
     },
     {
@@ -143,5 +227,5 @@
       "synaptic_static"
     ]
   },
-  "playable": false
+  "playable": true
 }
