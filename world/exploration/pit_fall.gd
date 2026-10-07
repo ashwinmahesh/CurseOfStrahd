@@ -126,7 +126,7 @@ static func climb_out(view: LocationView, cell: Vector2i) -> bool:
 			view.toast.emit("%s can't climb while down: the party needs a rope." % first)
 			return false
 		var ch := m.creature as Character
-		var t := ch.roll_check(view.dice, &"athletics", CLIMB_DC, [], [], "%s climbs the pit wall" % first)
+		var t := ch.roll_check(view.dice, &"athletics", CLIMB_DC, CheckAids.before_check(ch, &"athletics"), [], "%s climbs the pit wall" % first)
 		view.check_rolled.emit(t.describe())
 		if not t.success:
 			view.narration.emit("%s gets halfway up the slick stone and slides back down. (A rope would help.)" % first)

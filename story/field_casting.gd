@@ -6,8 +6,9 @@ extends RefCounted
 ## summon wait for a fight.
 
 const MAX_TARGETS := 8
-## Spells that also work in a fight but are worth casting while exploring (their light lasts).
-const EXPLORING_TOO: Array[String] = ["light", "dancing_lights", "continual_flame", "daylight"]
+## Spells that also work in a fight but are worth casting while exploring (their light lasts; Find Familiar's familiar
+## stays with its caster and joins the next fights).
+const EXPLORING_TOO: Array[String] = ["light", "dancing_lights", "continual_flame", "daylight", "find_familiar"]
 
 
 ## What `caster` can cast right now outside combat: [{id, name, level, slots: Array[int], free, count, self_only,
@@ -187,6 +188,11 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 	if not payment.is_empty():
 		caster.spend_resource(str(payment["resource"]), int(payment["cost"]))
 	var minutes := 10 if as_ritual else 1
+	# A casting time of minutes or hours takes that long (a Ritual adds its 10 minutes): Find Familiar's hour. A
+	# feature that casts the spell with its Magic action keeps the minute.
+	var ct := data.get("casting_time", {}) as Dictionary
+	if payment.is_empty() and str(ct.get("unit", "")) in ["minute", "hour"]:
+		minutes = int(ct.get("amount", 1)) * (60 if str(ct["unit"]) == "hour" else 1) + (10 if as_ritual else 0)
 	var dur := data.get("duration", {}) as Dictionary
 	var lasting := 0
 	match str(dur.get("kind", "")):
@@ -204,5 +210,8 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 				lasting = maxi(lasting, m.number("value"))
 	if lasting > 0:
 		st.active_spells[spell_id] = {"until": st.total_minutes() + lasting, "caster": caster.id}
+	# Find Familiar: the familiar is with the caster from now on (it joins fights until it's lost or dismissed).
+	if spell_id == "find_familiar":
+		caster.familiar = "here"
 	return {"ok": true, "effect": spell_id, "text": "%s casts %s%s." % [caster.name.get_slice(" ", 0), data["name"],
 		" as a Ritual" if as_ritual else ""]}

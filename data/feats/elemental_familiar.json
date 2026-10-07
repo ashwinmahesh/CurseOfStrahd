@@ -8,14 +8,34 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: When casting Find Familiar, choose Acid, Cold, Fire, Lightning, or Thunder Resistance for it until recast. Bonus Action commands it within 120 feet to spend a Reaction: creatures in its 5-foot Emanation save Dexterity against 8 + your familiar casting modifier + PB or take 2d4 of that type; Medium-or-smaller failures also fall Prone.",
+  "summary": "Your familiar resists Acid, Cold, Fire, Lightning or Thunder (your pick), and as a Bonus Action you can have it spend its Reaction to burst with that energy, hurting and toppling the creatures beside it.",
   "benefits": [
     {
-      "id": "elemental_familiar_benefit",
-      "name": "Familiar Benefit",
-      "summary": "Reference-only: When casting Find Familiar, choose Acid, Cold, Fire, Lightning, or Thunder Resistance for it until recast. Bonus Action commands it within 120 feet to spend a Reaction: creatures in its 5-foot Emanation save Dexterity against 8 + your familiar casting modifier + PB or take 2d4 of that type; Medium-or-smaller failures also fall Prone.",
-      "text": "Reference-only: When casting Find Familiar, choose Acid, Cold, Fire, Lightning, or Thunder Resistance for it until recast. Bonus Action commands it within 120 feet to spend a Reaction: creatures in its 5-foot Emanation save Dexterity against 8 + your familiar casting modifier + PB or take 2d4 of that type; Medium-or-smaller failures also fall Prone.",
-      "implemented": "text"
+      "id": "elemental_familiar_resistance",
+      "name": "Elemental Nature",
+      "summary": "Your familiar has Resistance to Acid, Cold, Fire, Lightning or Thunder damage (your pick).",
+      "text": "Pick Acid, Cold, Fire, Lightning or Thunder: your familiar has Resistance to that damage. The book has you pick each time you cast Find Familiar; the game lets you change the pick after a Long Rest.",
+      "implemented": "engine",
+      "choice": {
+        "id": "element",
+        "kind": "damage_type",
+        "count": 1,
+        "from": [
+          "acid",
+          "cold",
+          "fire",
+          "lightning",
+          "thunder"
+        ],
+        "replaceable": "long_rest"
+      }
+    },
+    {
+      "id": "elemental_familiar_burst",
+      "name": "Elemental Burst",
+      "summary": "Bonus Action: your familiar within 120 feet spends its Reaction; each creature within 5 feet of it makes a Dexterity save or takes 2d4 damage of the picked type, and a Medium or smaller one falls Prone.",
+      "text": "As a Bonus Action you can command your familiar, if it's within 120 feet of you, to spend its Reaction releasing a surge of its element. Each other creature within 5 feet of the familiar makes a Dexterity saving throw against 8 + the spellcasting modifier you use for Find Familiar + your Proficiency Bonus. On a failed save it takes 2d4 damage of the type you picked, and if it's Medium or smaller it also falls Prone.",
+      "implemented": "engine"
     }
   ],
   "prerequisites": {
@@ -35,5 +55,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

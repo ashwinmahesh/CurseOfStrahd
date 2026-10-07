@@ -304,7 +304,7 @@ func _perform_creature(c: Combatant, act_id: String, t: Combatant, cell: Vector2
 	elif act.has("heal"):
 		if t == null:
 			t = c
-		var rolled := e._roll_damage_dice(str(act["heal"]), false, 0, str(act["name"]))
+		var rolled := e.heal_roll(str(act["heal"]), t, str(act["name"]))
 		var healed := t.creature.heal(int(rolled["total"]), str(act["name"]))
 		e.log.add("heal", "%s: %s regains %d Hit Points" % [act["name"], t.name(), healed], c.id, [str(rolled["text"])])
 		e.events.append({"type": "heal", "id": t.id, "amount": healed})
@@ -588,7 +588,7 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 			ch.spend_resource("healing_hands")
 			e.spend_action(c)
 			c.magic_action_used = true
-			var rolled := e._roll_damage_dice("%dd4" % c.creature.proficiency_bonus(), false, 0, "Healing Hands")
+			var rolled := e.heal_roll("%dd4" % c.creature.proficiency_bonus(), t, "Healing Hands")
 			var healed := t.creature.heal(int(rolled["total"]), "Healing Hands")
 			e.log.add("heal", "%s's Healing Hands restore %d Hit Points to %s" % [c.name(), healed, t.name()], c.id, [str(rolled["text"])])
 			e.events.append({"type": "heal", "id": t.id, "amount": healed})
@@ -658,7 +658,7 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 			if t == null or e.distance(c, t) > 5:
 				return CombatResult.fail("Choose a creature within 5 ft")
 			e.spend_action(c)
-			var hd := e.dice.roll_one(8, "Battle Medic") + c.creature.proficiency_bonus()
+			var hd := maxi(e.dice.roll_one(8, "Battle Medic"), e.heal_floor(t)) + c.creature.proficiency_bonus()
 			var healed2 := t.creature.heal(hd, "Battle Medic")
 			e.log.add("heal", "%s patches up %s: %d Hit Points (Battle Medic)" % [c.name(), t.name(), healed2], c.id)
 			e.events.append({"type": "heal", "id": t.id, "amount": healed2})
@@ -727,7 +727,7 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 			c.bonus_available = false
 			var n2 := mini(5, ch.resource_left("recover_vitality"))
 			ch.spend_resource("recover_vitality", n2)
-			var roll := int(e._roll_damage_dice("%dd10" % n2, false, 0, "Recover Vitality")["total"])
+			var roll := int(e.heal_roll("%dd10" % n2, c, "Recover Vitality")["total"])
 			c.creature.heal(roll, "Recover Vitality")
 	e.events.append({"type": "condition", "id": c.id})
 	return r

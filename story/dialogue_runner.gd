@@ -562,7 +562,7 @@ func _roll(who: Character, skill: String, dc: int, said: String) -> Dictionary:
 	if who == null:
 		st.last_check = false
 		return {"kind": "check", "who": "Nobody", "skill": skill, "dc": dc, "total": 0, "success": false, "detail": "", "said": said}
-	var test := who.roll_check(dice, _skill_key(skill), dc)
+	var test := who.roll_check(dice, _skill_key(skill), dc, CheckAids.before_check(who, _skill_key(skill)))
 	st.last_check = test.success
 	_last_check = {"who": who, "test": test, "skill": skill, "said": said}
 	return _check_beat()

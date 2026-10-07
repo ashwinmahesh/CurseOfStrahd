@@ -603,7 +603,7 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 			var missing := c.creature.max_hp() - c.creature.hp
 			var n := clampi(ceili(missing / 6.5), 1, ch.resource_left("warrior_of_the_gods"))
 			ch.spend_resource("warrior_of_the_gods", n)
-			var rolled := e._roll_damage_dice("%dd12" % n, false, 0, "Warrior of the Gods")
+			var rolled := e.heal_roll("%dd12" % n, c, "Warrior of the Gods")
 			_heal(c, c, int(rolled["total"]), "Warrior of the Gods")
 		"martial_arts_strike":
 			return _unarmed(c, t, "Martial Arts", true)
@@ -643,7 +643,7 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 		"wholeness_of_body":
 			c.bonus_available = false
 			ch.spend_resource("wholeness_of_body")
-			_heal(c, c, e.dice.roll_one(martial_die(c), "Wholeness of Body") + c.creature.ability_mod(&"wis"), "Wholeness of Body")
+			_heal(c, c, maxi(e.dice.roll_one(martial_die(c), "Wholeness of Body"), e.heal_floor(c)) + c.creature.ability_mod(&"wis"), "Wholeness of Body")
 		"shadow_arts":
 			ch.spend_resource("focus_points")
 			c.action_available = false
@@ -674,7 +674,7 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 			ch.spend_resource("focus_points")
 			e.spend_action(c)
 			c.magic_action_used = true
-			_heal(c, t, e.dice.roll_one(martial_die(c), "Hand of Healing") + c.creature.ability_mod(&"wis"), "Hand of Healing")
+			_heal(c, t, maxi(e.dice.roll_one(martial_die(c), "Hand of Healing"), e.heal_floor(t)) + c.creature.ability_mod(&"wis"), "Hand of Healing")
 			if has(c, "physicians_touch"):
 				for cond: StringName in [&"poisoned", &"blinded", &"deafened", &"paralyzed", &"stunned"]:
 					if t.creature.has_condition(cond):
@@ -874,7 +874,7 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 			ch.spend_resource("flurry_of_healing_and_harm")
 			c.bonus_available = false
 			for i in (3 if has(c, "heightened_focus") else 2):
-				_heal(c, t, e.dice.roll_one(martial_die(c), "Hand of Healing") + c.creature.ability_mod(&"wis"), "Flurry of Healing")
+				_heal(c, t, maxi(e.dice.roll_one(martial_die(c), "Hand of Healing"), e.heal_floor(t)) + c.creature.ability_mod(&"wis"), "Flurry of Healing")
 		"tides_of_chaos":
 			ch.spend_resource("tides_of_chaos")
 			c.armed.append("tides_of_chaos")
@@ -1018,7 +1018,7 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 			var missing := t.creature.max_hp() - t.creature.hp
 			var n4 := clampi(ceili(missing / 3.5), 1, mini(maxi(1, c.creature.ability_mod(&"cha")), ch.resource_left("healing_light")))
 			ch.spend_resource("healing_light", n4)
-			var rolled3 := e._roll_damage_dice("%dd6" % n4, false, 0, "Healing Light")
+			var rolled3 := e.heal_roll("%dd6" % n4, t, "Healing Light")
 			_heal(c, t, int(rolled3["total"]), "Healing Light")
 		_:
 			return CombatResult.fail("Not available")
@@ -1271,7 +1271,7 @@ func _lands_aid(c: Combatant, point: Vector2) -> CombatResult:
 		elif friend == null or o.creature.hp < friend.creature.hp:
 			friend = o
 	if friend != null:
-		_heal(c, friend, int(e._roll_damage_dice("2d6", false, 0, "Land's Aid healing")["total"]), "Land's Aid")
+		_heal(c, friend, int(e.heal_roll("2d6", friend, "Land's Aid healing")["total"]), "Land's Aid")
 	return CombatResult.new()
 
 
@@ -1920,7 +1920,7 @@ func turn_start(c: Combatant) -> void:
 		ch.spend_resource("uncanny_metabolism")
 		if ch.resources.has("focus_points"):
 			(ch.resources["focus_points"] as Dictionary)["used"] = 0
-		_heal(c, c, e.dice.roll_one(martial_die(c), "Uncanny Metabolism") + level_of(c, "monk"), "Uncanny Metabolism")
+		_heal(c, c, maxi(e.dice.roll_one(martial_die(c), "Uncanny Metabolism"), e.heal_floor(c)) + level_of(c, "monk"), "Uncanny Metabolism")
 		e.feature_recipes.offer_slot_recovery(c, "uncanny_metabolism")
 	# Guarded Mind (Psi Warrior 10): start the turn Charmed or Frightened, spend a Psionic Energy Die to end it.
 	if has(c, "guarded_mind") and (c.creature.has_condition(&"charmed") or c.creature.has_condition(&"frightened")) and ch.resource_left("psionic_energy") > 0:
@@ -2256,7 +2256,7 @@ func _surge(c: Combatant) -> void:
 			fx.ends_on.append("cast_spell")
 			c.creature.add_effect(fx)
 		4:
-			_heal(c, c, int(e._roll_damage_dice("2d10", false, 0, "Surge")["total"]), "Wild Magic Surge")
+			_heal(c, c, int(e.heal_roll("2d10", c, "Surge")["total"]), "Wild Magic Surge")
 		5:
 			var foe := _nearest_foe(c, 60)
 			if foe != null:

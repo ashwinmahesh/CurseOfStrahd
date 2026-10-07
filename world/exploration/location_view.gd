@@ -1240,7 +1240,7 @@ func _tend(cell: Vector2i, action_id: String) -> void:
 		var medic := _best(&"medicine")
 		if medic == null or target.stable:
 			return
-		var t := medic.roll_check(dice, &"medicine", 10)
+		var t := medic.roll_check(dice, &"medicine", 10, CheckAids.before_check(medic, &"medicine"))
 		check_rolled.emit(t.describe())
 		if t.success:
 			target.stabilize()
@@ -1491,7 +1491,7 @@ func _unlock(spec: Dictionary, method: String = "auto") -> bool:
 		t = picker.roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, dc, picker.check_keys(&"dex"), adv, [], "%s picks the lock" % picker.name)
 	else:
 		who = _best(&"athletics")
-		t = who.roll_check(dice, &"athletics", dc + 2, [], [], "%s forces it" % who.name)
+		t = who.roll_check(dice, &"athletics", dc + 2, CheckAids.before_check(who, &"athletics"), [], "%s forces it" % who.name)
 	check_rolled.emit(t.describe())
 	st.last_check = t.success
 	if t.success:
@@ -1725,8 +1725,9 @@ func search() -> void:
 	if who.feats_taken.any(func(f: Dictionary) -> bool: return str(f["id"]) == "sharp_eye") and who.resource_left("sharp_eye") > 0:
 		who.spend_resource("sharp_eye")
 		adv.append("Sharp Eye")
-	var t := who.roll_check(dice, &"perception", 0, adv, [], "%s searches" % who.name, ["search"])
 	var sharp_eye := not adv.is_empty()
+	adv.append_array(CheckAids.before_check(who, &"perception"))
+	var t := who.roll_check(dice, &"perception", 0, adv, [], "%s searches" % who.name, ["search"])
 	check_rolled.emit(t.describe())
 	st.advance_minutes(1)
 	var found: Array[String] = []
@@ -2058,6 +2059,7 @@ func start_encounter(encounter_id: String) -> bool:
 			numbered[str(md["monster"])] = int(numbered.get(str(md["monster"]), 0)) + 1
 			mon.name = "%s %d" % [mon.name, numbered[str(md["monster"])]]
 		e.add(mon, StringName(str(md.get("side", "enemy"))), _cell(md["cell"]))
+	EncounterSetup.bring_familiars(e, party_cbs)
 	_light_the_fight(e)
 	var surprised: Array[String] = []
 	var who := str(spec.get("surprise", ""))
@@ -2211,7 +2213,7 @@ func _stealth_surprise(e: Encounter) -> Array[String]:
 	var lowest := 1000
 	for m in members:
 		if m.creature.hp > 0:
-			var t := m.creature.roll_check(dice, &"stealth", 0)
+			var t := m.creature.roll_check(dice, &"stealth", 0, CheckAids.before_check(m.creature, &"stealth"))
 			lowest = mini(lowest, t.total)
 			check_rolled.emit(t.describe())
 	var out: Array[String] = []

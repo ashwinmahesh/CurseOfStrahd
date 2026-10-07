@@ -8,14 +8,34 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: When casting Find Familiar, choose Necrotic, Poison, Psychic, Radiant, or Thunder Resistance for it until recast. It may pass through creatures and objects as Difficult Terrain; ending a turn inside an object moves it to its last empty space.",
+  "summary": "Your familiar resists Necrotic, Poison, Psychic, Radiant or Thunder (your pick) and can drift through creatures and objects.",
   "benefits": [
     {
-      "id": "otherworldly_familiar_benefit",
-      "name": "Familiar Benefit",
-      "summary": "Reference-only: When casting Find Familiar, choose Necrotic, Poison, Psychic, Radiant, or Thunder Resistance for it until recast. It may pass through creatures and objects as Difficult Terrain; ending a turn inside an object moves it to its last empty space.",
-      "text": "Reference-only: When casting Find Familiar, choose Necrotic, Poison, Psychic, Radiant, or Thunder Resistance for it until recast. It may pass through creatures and objects as Difficult Terrain; ending a turn inside an object moves it to its last empty space.",
-      "implemented": "text"
+      "id": "otherworldly_familiar_resistance",
+      "name": "Otherworldly Nature",
+      "summary": "Your familiar has Resistance to Necrotic, Poison, Psychic, Radiant or Thunder damage (your pick).",
+      "text": "Pick Necrotic, Poison, Psychic, Radiant or Thunder: your familiar has Resistance to that damage. The book has you pick each time you cast Find Familiar; the game lets you change the pick after a Long Rest.",
+      "implemented": "engine",
+      "choice": {
+        "id": "element",
+        "kind": "damage_type",
+        "count": 1,
+        "from": [
+          "necrotic",
+          "poison",
+          "psychic",
+          "radiant",
+          "thunder"
+        ],
+        "replaceable": "long_rest"
+      }
+    },
+    {
+      "id": "otherworldly_familiar_passage",
+      "name": "Otherworldly Passage",
+      "summary": "Your familiar moves through creatures and objects as if they were Difficult Terrain; ending its turn inside an object returns it to the last open space it left.",
+      "text": "Your familiar can move through other creatures and through objects as if they were Difficult Terrain. If it ends its turn inside an object, it's moved to the last unoccupied space it was in.",
+      "implemented": "engine"
     }
   ],
   "prerequisites": {
@@ -35,5 +55,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }
