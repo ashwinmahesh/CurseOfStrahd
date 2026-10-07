@@ -65,9 +65,9 @@ func test_every_class_and_subclass_builds_and_levels_to_11() -> void:
 
 func test_every_species_and_background_builds() -> void:
 	var c := Compendium.shared()
-	var backgrounds := c.all("backgrounds")
+	var backgrounds := c.all_playable("backgrounds")   # the ones a player can pick (docs/tasks/FR-AU-01.md)
 	var i := 0
-	for sp in c.all("species"):
+	for sp in c.all_playable("species"):
 		var bg := backgrounds[i % backgrounds.size()]
 		i += 1
 		var b := CharacterBuilder.new()
