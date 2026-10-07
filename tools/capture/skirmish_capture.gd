@@ -80,7 +80,10 @@ func capture_shots(tool: Node, out: String) -> void:
 	tool.call("_shot", out + "_7_results.png")
 	arena.queue_free()
 	await tool.call("wait_frames", 2)
-	AchievementsPanel.open(self)
+	screen = (load("res://scenes/skirmish.tscn") as PackedScene).instantiate() as SkirmishScreen
+	add_child(screen)
+	await tool.call("wait_frames", 10)
+	screen.open_achievements()
 	await tool.call("wait_frames", 20)
 	tool.call("_shot", out + "_8_achievements.png")
 	for f in SkirmishLibrary.list():

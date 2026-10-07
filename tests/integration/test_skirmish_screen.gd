@@ -132,6 +132,13 @@ func test_tabs_draw_and_setups_save_and_load() -> void:
 	assert_true(SkirmishScreen.current == screen.setup)
 	var fight := screen.find_child("Fight", true, false) as Button
 	assert_true(fight != null and not fight.disabled)
+	# The achievements open from above Back to the title, and Esc closes them before it leaves the screen.
+	(screen.find_child("Achievements", true, false) as Button).pressed.emit()
+	await frames(2)
+	assert_true(screen.achievements != null, "the achievements panel")
+	screen.achievements.close()
+	await frames(1)
+	assert_true(screen.achievements == null)
 
 
 func test_a_skirmish_is_fought_on_its_map_and_ends_on_the_results() -> void:

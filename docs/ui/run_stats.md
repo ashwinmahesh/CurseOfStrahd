@@ -4,7 +4,7 @@ Status: built 2026-10-07 (lane 18 of Improvement Ideas.md) · not yet seen by th
 Code: `story/fight_tally.gd` (one fight, from its combat log), `story/run_stats.gd` (the run, kept in
 `StoryState.run_stats` and saved with the game), `story/achievements.gd`, `ui/screens/achievements_panel.gd`, and the
 tally on `ui/screens/ending_screen.gd`. Hooks: `world/game_root.gd` (each story fight, `RunStats.watch`),
-`ui/menu/main_menu.gd` (Achievements on the title), `world/combat/combat_arena.gd` (Skirmish results).
+`world/combat/combat_arena.gd` (Skirmish results), `ui/skirmish/skirmish_screen.gd` (the achievements button).
 Capture: `make capture SCENE=res://scenes/game.tscn NAME=ending ARGS="--ending=strahd_destroyed"` (shots 6 and 7).
 
 ## What's counted
@@ -21,7 +21,8 @@ counts as found, what went out as spent (a new game's 10 gp is the first reading
 - **The End** lists the achievements the run earned and has **The company's tally**: a row per hero (the party, those
   at camp, and anyone lost for good) with every count, then the road (fights won and rounds, gold found, spent and
   left, the hardest blow, the foes defeated most, the fallen) and every achievement.
-- **The title's Achievements** lists all of them, earned ones lit with their date.
+- **The achievements button** on the Skirmish screen (above Back to the title) lists all of them, earned ones lit
+  with their date. The title has no row of its own for them (it's full).
 - A story fight's achievements are toasted as they're earned; a Skirmish fight's show on its results.
 
 ## Achievements
