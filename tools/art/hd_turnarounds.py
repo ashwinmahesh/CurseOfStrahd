@@ -29,8 +29,9 @@ ASPECTS = {"16:9": 16 / 9, "21:9": 21 / 9, "3:2": 3 / 2, "4:3": 4 / 3, "1:1": 1.
 PROMPT = ("Character turnaround sheet of {who}, the same character as in the reference turnaround sheet: redraw the "
           "identical sheet at high resolution, with every view, pose, proportion, colour, piece of clothing, gear and "
           "detail exactly as in the reference, the same views in one row in the same order, positions and spacing, but "
-          "drawn with crisp, clean, bold black ink outlines, sharp detailed features and clean flat cel shading. Plain "
-          "flat white background, no ground shadow, no text.")
+          "drawn with crisp, clean, bold black ink outlines, sharp detailed features and clean flat cel shading. Change "
+          "nothing else: no new colours, markings, text, armour or features, and faint or see-through parts stay just "
+          "as faint. Plain flat white background, no ground shadow, no text.")
 BACKOFF = (60, 120, 240, 480)
 _stop = False
 
@@ -60,7 +61,8 @@ def generate(asset_id, src, who):
             print(f"STOP {asset_id}: the Gemini call budget is spent ({gemini_budget.used()})", flush=True)
             _stop = True
             return False
-        r = subprocess.run([sys.executable, str(ROOT / "tools" / "art" / "generate_gemini.py"), f"{asset_id}_turnaround_hd",
+        # Named after the turnaround file (<stem>_hd.png: some are <id>_turnaround_v2.png), where the renderers look.
+        r = subprocess.run([sys.executable, str(ROOT / "tools" / "art" / "generate_gemini.py"), f"{src.stem}_hd",
                             "characters", PROMPT.format(who=who), "--aspect", aspect(src), "--size", "2K",
                             "--ref", str(src)], capture_output=True, text=True)
         out = r.stderr + r.stdout

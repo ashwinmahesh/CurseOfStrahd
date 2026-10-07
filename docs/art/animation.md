@@ -102,7 +102,14 @@ VRAM-compressed without mipmaps (`tools/art/set_import.py --sheets`; the crisp s
 
 **Everyone else in HD (owner 2026-10-07: "lets do it").** `tools/art/hd_turnarounds.py` asks Gemini to redraw each
 character's turnaround at 2K, then `blender/hd_colour.py` gives the redraw the original's colours and rejects it (to
-be drawn again) if the views, their sizes or the picture itself differ. `render_walk.py` and `render_attack.py` cut
+be drawn again) if the views, their sizes or the picture itself differ. The colours are matched region by region
+(each area between the redraw's ink lines shifts by the median difference from the original under it), so a garment
+Gemini recoloured gets its colour back and no line moves; the faint lavender backgrounds Gemini's 2K images often have
+become white. (The first match added a blurred difference, which left soft halos round the figures;
+`blender/hd_restore.py` recovered the raw redraws from it.) Redraws still need a look by eye: a few changed a design
+(a skull made solid, text on an apron, an added helmet) and were drawn again or dropped. Characters without an
+`_hd.png` (the elephant, the will-o'-wisp, the air elemental, the saber-toothed tiger and the djinni, which Gemini
+won't draw) keep their original art at 384 px, packed the same way. `render_walk.py` and `render_attack.py` cut
 the HD turnaround when there is one: 768 px cells rendered at twice the size, frames trimmed and packed, mirror-image
 directions shown flipped, exactly as the heroes' sheets. The attack's wind-up and strike still come from the 1K
 strips, which are drawn at about the size they're shown. Packing alone makes a walk sheet several times smaller (the
