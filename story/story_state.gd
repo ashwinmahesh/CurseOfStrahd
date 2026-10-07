@@ -275,6 +275,49 @@ func bring_along(ch: Character) -> bool:
 	return true
 
 
+## Most custom characters a game has at once (owner, 2026-10-07), the hero made at the start among them.
+const CUSTOM_CAP := 4
+
+
+## The custom characters in the roster (made in the creator: the starting hero and those made from the party screen).
+func custom_members() -> Array[Character]:
+	var out: Array[Character] = []
+	for ch in roster():
+		if bool((ch.build.get("appearance", {}) as Dictionary).get("custom", false)):
+			out.append(ch)
+	return out
+
+
+## Why no more custom characters can be made in this game, or "".
+func create_blocker() -> String:
+	if custom_members().size() >= CUSTOM_CAP:
+		return "This company has %d custom characters, the most one game can have." % CUSTOM_CAP
+	return ""
+
+
+## A character made during the game (the party screen's creator, owner 2026-10-07) joins the roster: the party while
+## there's room, else camp. They start at level 1 and take the levels the party has reached on the level-up screen
+## (levels_waiting). Their id is one nobody in the company has. Returns whether they joined the party.
+func recruit(ch: Character) -> bool:
+	var taken := {}
+	for other in roster():
+		taken[other.id] = true
+	for f in fallen:
+		taken[str(f["id"])] = true
+	var base := ch.id if ch.id != "" else ch.name.to_snake_case()
+	var id := base
+	var n := 2
+	while taken.has(id) or not Compendium.shared().get_entry("pregens", id).is_empty():
+		id = "%s_%d" % [base, n]
+		n += 1
+	ch.id = id
+	if party.size() < PARTY_CAP:
+		party.append(ch)
+		return true
+	bench.append(ch)
+	return false
+
+
 ## A party member goes to camp; the party never goes below one.
 func send_to_camp(ch: Character) -> bool:
 	var i := party.find(ch)

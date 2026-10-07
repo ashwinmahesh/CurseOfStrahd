@@ -4,7 +4,9 @@ extends CanvasLayer
 ## portrait, Hit Points bar (Bloodied in words), Armor Class, Initiative, Speed and passive Perception, Hit Point
 ## Dice, spell slots and resources as lozenges, conditions as tags and the level-up badge; the marching order (the
 ## leader walks first; order matters for traps) with each member's passive Perception, Stealth and darkvision; and the
-## party skill table (best character per skill) and gaps from PartyCoverage.
+## party skill table (best character per skill) and gaps from PartyCoverage. Above the cards: change who travels (the
+## roster screen) and create a character (owner, 2026-10-07: a custom character made at any time outside fights and
+## conversations, up to StoryState.CUSTOM_CAP in a game; they start at level 1 and take the party's level here).
 
 var root: Node
 var st: StoryState
@@ -30,16 +32,7 @@ func _draw() -> void:
 		c.queue_free()
 	var page := VBoxContainer.new()
 	page.add_theme_constant_override("separation", 12)
-	if not st.bench.is_empty() or st.party.size() < StoryState.PARTY_CAP:
-		# Who travels is chosen outside fights and conversations (the roster screen).
-		var top := HBoxContainer.new()
-		top.add_child(UiParts.gap())
-		var roster := UiParts.small_button("Change who travels", func() -> void: root.call("open_screen", "roster", 0))
-		var calm := ModeController.mode == ModeController.Mode.EXPLORATION
-		roster.disabled = not calm
-		roster.tooltip_text = "" if calm else "Not in the middle of a fight or a conversation."
-		top.add_child(roster)
-		_frame.add_child(top)
+	_frame.add_child(_top_bar())
 	_frame.add_child(UiParts.fill_scroll(page))
 	var cols := HBoxContainer.new()
 	cols.add_theme_constant_override("separation", 12)
@@ -58,6 +51,39 @@ func _draw() -> void:
 	lower.add_child(_skill_table())
 
 
+## Who travels and a new custom character, both chosen outside fights and conversations. Whatever stops the create
+## button is said beside it.
+func _top_bar() -> Control:
+	var top := HBoxContainer.new()
+	top.add_theme_constant_override("separation", 10)
+	var calm := ModeController.mode == ModeController.Mode.EXPLORATION
+	var custom := st.custom_members().size()
+	var count := UiParts.pill("Custom characters %d of %d" % [custom, StoryState.CUSTOM_CAP], "gilt" if custom < StoryState.CUSTOM_CAP else "rose")
+	count.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	count.tooltip_text = "A game can have up to %d characters you made yourself, the hero you began with among them." % StoryState.CUSTOM_CAP
+	top.add_child(count)
+	var why := st.create_blocker()
+	if why == "" and not calm:
+		why = "Not in the middle of a fight or a conversation."
+	top.add_child(UiParts.gap())
+	# The reason sits beside the button it stops, clear of the title's arch.
+	var note := UiKit.label(why, 13, "rose", 330)
+	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	note.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	note.visible = why != ""
+	top.add_child(note)
+	var create := UiParts.small_button("Create a character", func() -> void: root.call("open_screen", "create", 0), "create")
+	create.disabled = why != ""
+	create.tooltip_text = why if why != "" else "Make a character of your own. They start at level 1, then take the party's level on the level-up screen."
+	top.add_child(create)
+	if not st.bench.is_empty() or st.party.size() < StoryState.PARTY_CAP:
+		var roster := UiParts.small_button("Change who travels", func() -> void: root.call("open_screen", "roster", 0), "party")
+		roster.disabled = not calm
+		roster.tooltip_text = "" if calm else "Not in the middle of a fight or a conversation."
+		top.add_child(roster)
+	return top
+
+
 func _column(ch: Character, i: int) -> Control:
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 7)
@@ -71,9 +97,11 @@ func _column(ch: Character, i: int) -> Control:
 	n.add_theme_font_size_override("font_size", 22)
 	who.add_child(n)
 	who.add_child(UiKit.label(ch.class_summary(), 14, "gilt", 220))
-	if st.can_level_up(ch):
-		var badge := UiParts.pill("▲ Level up ready", "bile")
+	var waiting := st.levels_waiting(ch)
+	if waiting > 0:
+		var badge := UiParts.pill("▲ Level up ready" if waiting == 1 else "▲ %d level ups waiting" % waiting, "bile")
 		badge.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		badge.tooltip_text = "Taken on the level-up screen, one level at a time, up to the party's level %d." % st.target_level()
 		who.add_child(badge)
 	head.add_child(who)
 	col.add_child(head)

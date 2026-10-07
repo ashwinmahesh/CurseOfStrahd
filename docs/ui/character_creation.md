@@ -53,6 +53,11 @@ to travel ("Travelling with Godrick, Liriel and Thistle"); the **Appearance** st
 Review's party composition counts the companions. A hero can't take any pregen's name, the old four's included
 (`CharacterBuilder.name_problems`). Madam Eva's respec of a custom hero opens the same Appearance step.
 
+The party overview's **Create a character** (owner, 2026-10-07; party_management.md) opens hero mode in a game: the
+strip shows the party they'll join, a name the company has is taken (`CharacterBuilder.taken_names`), portraits other
+custom characters wear are dimmed with their name, Review says where they'll go and the levels waiting, and **Join the
+company** finishes.
+
 ### 2. Class (`cc_02_class`)
 ![Class](wireframes/cc_02_class.svg)
 

@@ -657,7 +657,7 @@ func open_screen(kind: String, index: int) -> void:
 	close_screen()
 	Cursors.show("pointer")
 	glow.clear()
-	if kind in ["sheet", "inventory", "journal", "party", "level_up"]:
+	if kind in ["sheet", "inventory", "journal", "party", "level_up", "create"]:
 		Audio.sfx("page")
 	match kind:
 		"sheet":
@@ -670,6 +670,8 @@ func open_screen(kind: String, index: int) -> void:
 			screen = PartyScreen.new()
 		"roster":
 			screen = RosterScreen.new()
+		"create":
+			screen = CreationScreen.new()
 		"rest":
 			screen = RestScreen.new()
 		"menu":
