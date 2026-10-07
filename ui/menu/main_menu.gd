@@ -17,6 +17,8 @@ func _ready() -> void:
 	# The title never starts paused: a menu opened in a fight pauses the tree, and a scene change keeps it paused.
 	get_tree().paused = false
 	InputActions.ensure()
+	Cursors.install()
+	Cursors.show("pointer")
 	# The window the player picked in Settings, only when this is the game's own title (never a capture inside it).
 	(func() -> void:
 		if is_inside_tree() and get_tree().current_scene == self:
@@ -289,6 +291,10 @@ func _show_loads() -> void:
 		b.custom_minimum_size = Vector2(1, b.custom_minimum_size.y)
 		_box.add_child(b)
 	_box.add_child(UiKit.button("Back", _title, 16))
+
+
+func _exit_tree() -> void:
+	Cursors.uninstall()
 
 
 ## Escape steps back to the title from the party pick and the load list (the hero creator handles its own).

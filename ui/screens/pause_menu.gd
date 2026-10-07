@@ -235,7 +235,7 @@ func _show_menu() -> void:
 
 
 ## Settings (docs/plans/ui_polish.md): the world's look, the window, how fast fights play, how long the Narrator's box
-## stays up, and the respec option, each a choice the player flips with a click; kept in user://settings.cfg.
+## stays up, the Modern look's depth blur, and the respec option, each a choice the player flips with a click; kept in user://settings.cfg.
 func _show_settings() -> void:
 	_clear()
 	_on_settings = true
@@ -249,6 +249,10 @@ func _show_settings() -> void:
 		GameSettings.set_fast_combat(i == 1), "Fast plays moves and the pauses between turns at twice the speed.")
 	_choice_row(266.0, "Narration", ["Fades", "Stays"], 1 if GameSettings.narration_stays() else 0, func(i: int) -> void:
 		GameSettings.set_narration_stays(i == 1), "Whether the Narrator's box fades on its own or stays until you close it.")
+	_choice_row(303.0, "Depth blur", ["On", "Off"], 0 if GameSettings.depth_blur() else 1, func(i: int) -> void:
+		GameSettings.set_depth_blur(i == 0)
+		_note.text = "From the next place you go.",
+		"Modern look: the far distance softens a little. People and things you can click always stay sharp.")
 	var respec := CheckBox.new()
 	respec.text = "Allow rebuilding a character at Madam Eva"
 	respec.add_theme_font_override("font", serif())
@@ -263,11 +267,11 @@ func _show_settings() -> void:
 	respec.focus_mode = Control.FOCUS_NONE
 	_place(respec)
 	respec.reset_size()
-	respec.position = Vector2((_u(W_U, 0).x - respec.size.x) / 2.0, _u(0, 303.0).y - respec.size.y / 2.0)
+	respec.position = Vector2((_u(W_U, 0).x - respec.size.x) / 2.0, _u(0, 338.0).y - respec.size.y / 2.0)
 	_note = _text("", 9.5, _c("arch_gold_light"))
 	_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_note.position = _u(24, 330)
+	_note.position = _u(24, 356)
 	_note.size = _u(W_U - 48.0, 30)
 	_place(_note)
 	_button(3, "Back", _show_menu)

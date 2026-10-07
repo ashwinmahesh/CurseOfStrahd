@@ -29,9 +29,12 @@ static func value(key: String, default: Variant) -> Variant:
 	return _cache.get(key, default)
 
 
-static func set_value(key: String, v: Variant) -> void:
+## `save` false changes it for this run only (captures).
+static func set_value(key: String, v: Variant, save: bool = true) -> void:
 	value(key, null)
 	_cache[key] = v
+	if not save:
+		return
 	var cfg := ConfigFile.new()
 	cfg.load(path)
 	cfg.set_value(SECTION, key, v)
@@ -75,3 +78,12 @@ static func narration_stays() -> bool:
 
 static func set_narration_stays(on: bool) -> void:
 	set_value("narration_stays", on)
+
+
+## The Modern look's depth of field (on by default; it only ever softens the far distance).
+static func depth_blur() -> bool:
+	return bool(value("depth_blur", true))
+
+
+static func set_depth_blur(on: bool) -> void:
+	set_value("depth_blur", on)

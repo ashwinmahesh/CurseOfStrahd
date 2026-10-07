@@ -1,5 +1,8 @@
 # UI polish and quality of life (2026-10-07)
 
+Status: items 1 to 8 are built (all on the polish branch, most on main). The owner then asked for a more modern
+look as well (2026-10-07), which became the second wave at the end of this file.
+
 Ranked from a capture play-through of main at 055db1a3 (title, the opening road, the village and Morgantha, the Death
 House attic and its locked door, a ghoul fight in the dungeon, the arena from first move to a wipe, the travel map and
 every party screen) and the owner's playtest notes since Phase 3. Rule changes stay with their owners; this is
@@ -50,3 +53,13 @@ Walking through an exit or arriving from the road fades to black and back instea
 Pause menu, title and screen frames are the Crimson scheme already (the sheet layout thread). The minimap, travel
 map and traps (map thread), the party picker and creator (creator thread), combat rules, cover and Advantage display
 (audit thread). Walls already fade in front of the party.
+
+## Second wave: a more modern look (owner, 2026-10-07)
+- A Modern finish beside Classic, Modern by default (owner's pick): smooth light, no palette snap, relief from
+  normal maps, AgX tone mapping with bloom on flames, deeper contact shadows and bounced light, a thin haze, a
+  diorama's depth of field (docs/art/style_bible.md "Two finishes").
+- Smooth 768 px tiles for all 45 world textures, made from their own swatches (docs/art/textures.md).
+- Gothic cursors that say what a click will do (use, talk, attack, locked, look), from the game-icons silhouettes.
+- A gilt glow on whatever the mouse is over while exploring.
+- Save names that never leave their box (owner report), Heal up on the rest screen.
+
