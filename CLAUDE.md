@@ -29,6 +29,9 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 - The player controls every party member and guest; AI only drives enemies and neutrals.
 - Scenes are built in code; .tscn files are thin roots. 1 world unit = one 5 ft square.
 - After adding a class_name, `make import` before `make test`.
+- A new git worktree: before its first `make import`, seed the import cache from the main checkout as an APFS clone,
+  which takes almost no disk: `mkdir -p <worktree>/.godot && cp -Rc ~/Documents/CurseOfStrahdGame/.godot/imported
+  <worktree>/.godot/`. Never rsync or plain-copy it (about 8 GB per worktree on a nearly full disk).
 
 ## Rules engine (ADR 0003, 0005, 0006)
 - Data is read through `Compendium.shared()`; modifiers follow docs/contracts/modifiers.md (add a stat to the contract
