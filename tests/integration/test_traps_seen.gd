@@ -1,7 +1,8 @@
 extends TestCase
 ## Traps the party can and can't see (owner playtest 2026-10-06): a noticed trap shows its own piece with a red border
 ## that doesn't cover it (no red box); passive Perception notices any trap in sight whose DC it meets, the moment the
-## party arrives; a trap above it, or out of sight, stays hidden until a Search finds it.
+## party arrives; a trap above it, or out of sight, stays hidden until a Search finds it. A pit is a real hole: the one
+## who springs it falls in and climbs out with a rope (or an Athletics check).
 
 var root: Node
 
@@ -66,3 +67,57 @@ func test_a_search_finds_what_passive_perception_missed() -> void:
 	assert_eq(_state("walled_pit"), "found", "the Search's Perception check meets the pit's DC")
 	assert_true(view.trap_marks.has("walled_pit"))
 	assert_eq(_state("subtle_tripwire"), "", "no roll finds a DC 40 tripwire")
+
+
+func _pit_hall() -> void:
+	root.queue_free()
+	await get_tree().process_frame
+	var hall := Compendium.shared().get_entry("locations", "test_trap_hall").duplicate(true)
+	hall["traps"] = [{"id": "hall_pit", "label": "a covered spiked pit", "cells": [[4, 2]], "pit_ft": 10, "detect_dc": 40,
+		"disarm_dc": 15, "save": {"ability": "dex", "dc": 40}, "damage": "1d4", "damage_type": "piercing", "text": "Down you go."}]
+	Compendium.shared().tables["locations"]["test_trap_hall"] = hall
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	for i in 4:
+		await get_tree().process_frame
+
+
+func test_a_pit_drops_whoever_springs_it_and_shows_the_hole() -> void:
+	await _pit_hall()
+	var view := root.get("view") as LocationView
+	var victim := view.leader()
+	var hp := victim.creature.hp
+	view.walk_to(Vector2i(4, 2))
+	for i in 200:
+		if _state("hall_pit") == "triggered":
+			break
+		await get_tree().process_frame
+	await get_tree().process_frame
+	assert_eq(_state("hall_pit"), "triggered", "unnoticed, stepped on: it opens")
+	assert_true(PitFall.holds(view, victim), "a DC 40 save fails: in the pit")
+	assert_true(victim.creature.hp < hp, "the fall and the stakes hurt")
+	assert_true(victim.creature.has_condition(&"prone"), "and they land Prone")
+	var tok := view.tokens[victim.id] as CombatToken
+	assert_true(tok.sprite.global_position.y < -1.5, "the figure is at the bottom, ten feet down")
+	var marks := view.trap_marks.get("hall_pit", []) as Array
+	assert_true(marks.any(func(n: Node3D) -> bool: return str(n.name) == "Pit_hall_pit"), "the hole is on the board")
+	var acts: Array = (view.actions_at(victim.cell)["actions"] as Array).map(func(a: Dictionary) -> String: return str(a["id"]))
+	assert_true(acts.has("climb"), "right-click offers the climb")
+
+
+func test_a_rope_gets_them_out() -> void:
+	await _pit_hall()
+	var view := root.get("view") as LocationView
+	var victim := view.leader()
+	view.walk_to(Vector2i(4, 2))
+	for i in 200:
+		if PitFall.holds(view, victim):
+			break
+		await get_tree().process_frame
+	assert_true(PitFall.holds(view, victim))
+	GameState.story.give_item("rope", 1, GameState.story.party[1])
+	view.act(victim.cell, "climb")
+	assert_false(PitFall.holds(view, victim), "out on the rope, no check")
+	assert_ne(victim.cell, Vector2i(4, 2), "standing beside the pit")
+	assert_false(victim.creature.has_condition(&"prone"))
+	assert_true((view.tokens[victim.id] as CombatToken).sprite.global_position.y > -0.1, "back at floor level")

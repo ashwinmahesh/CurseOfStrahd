@@ -26,6 +26,18 @@ const LINE := 0.06
 const INSET := 0.05
 
 static var _line_mat: StandardMaterial3D
+static var _xray: ShaderMaterial
+const XRAY_SHADER := preload("res://shaders/world/xray_mark.gdshader")
+
+
+## Red hatching drawn only where a wall in front hides the mark (a trap in a one-square passage).
+static func xray() -> ShaderMaterial:
+	if _xray == null:
+		_xray = ShaderMaterial.new()
+		_xray.shader = XRAY_SHADER
+		_xray.set_shader_parameter("tint", Look.color("vampire_red"))
+		_xray.render_priority = 2
+	return _xray
 
 
 ## The prop art a trap shows, or "" for a border alone (a statue's gaze, a chandelier overhead).
@@ -71,10 +83,12 @@ static func notice(view: LocationView, trap: Dictionary) -> bool:
 	return false
 
 
-## On arriving: every trap the party can already see and whose DC its passive Perception meets.
+## On arriving: open pits put back (and anyone in them), then every trap the party can already see and whose DC its
+## passive Perception meets.
 static func notice_all(view: LocationView) -> void:
 	if view == null or not is_instance_valid(view) or view.in_combat:
 		return
+	PitFall.restore(view)
 	var states := view.st.loc_state(view.loc_id)["traps"] as Dictionary
 	for t: Variant in view.loc.get("traps", []):
 		var trap := t as Dictionary
@@ -95,6 +109,11 @@ static func dress(view: LocationView, trap: Dictionary) -> Array[Node3D]:
 			var a := (e as Dictionary)["cell"] as Array
 			taken[Vector2i(int(a[0]), int(a[1]))] = true
 	var art := look_for(trap)
+	if PitFall.is_pit(trap):
+		# A real hole in 3D, its cover tipped (found) or swung down (sprung).
+		var state := str((view.st.loc_state(view.loc_id)["traps"] as Dictionary).get(str(trap["id"]), ""))
+		out.append(PitFall.build(view, trap, state == "triggered"))
+		art = ""
 	if art != "":
 		for i in cells.size():
 			if taken.has(cells[i]):
@@ -102,16 +121,18 @@ static func dress(view: LocationView, trap: Dictionary) -> Array[Node3D]:
 			var piece := SetDressing.place(view.board, {"id": "trap_%s_%d" % [trap["id"], i], "cell": [cells[i].x, cells[i].y], "model": art})
 			if piece != null:
 				out.append(piece)
-	out.append(_border(view, cells))
+	# A pit's border runs just outside its pale lip; any other trap's just inside its squares.
+	out.append(_border(view, cells, -0.07 if PitFall.is_pit(trap) else INSET))
 	return out
 
 
 ## A red dashed line round the outside of the trap's squares, just off the ground.
-static func _border(view: LocationView, cells: Array[Vector2i]) -> Node3D:
+static func _border(view: LocationView, cells: Array[Vector2i], inset: float = INSET) -> Node3D:
 	if _line_mat == null:
 		_line_mat = StandardMaterial3D.new()
 		_line_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 		_line_mat.albedo_color = Look.color("vampire_red")
+		_line_mat.next_pass = xray()   # the dashes show through a wall in front, hatched
 	var root := Node3D.new()
 	root.name = "TrapBorder"
 	view.board.add_child(root)
@@ -124,9 +145,9 @@ static func _border(view: LocationView, cells: Array[Vector2i]) -> Node3D:
 			if inside.has(c + dir):
 				continue
 			# The edge on that side, inset so the line sits just inside the square.
-			var mid := Vector2(c) + Vector2(0.5, 0.5) + Vector2(dir) * (0.5 - INSET)
+			var mid := Vector2(c) + Vector2(0.5, 0.5) + Vector2(dir) * (0.5 - inset)
 			var along := Vector2(dir).orthogonal()
-			var length := 1.0 - INSET * 2.0
+			var length := 1.0 - inset * 2.0
 			var t := -length / 2.0
 			while t < length / 2.0 - 0.01:
 				var d := minf(DASH, length / 2.0 - t)
