@@ -4,18 +4,48 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wand",
   "weight_lb": 0,
   "cost_gp": 4000,
   "magic": {
     "rarity": "rare",
-    "attunement": false
+    "attunement": false,
+    "charges": {
+      "max": 10,
+      "regain": "1d10",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed"
+      }
+    }
   },
   "theme": "arcana",
   "icon": "wand",
-  "summary": "Reference-only: Magic action while held spends 1–3 of 10 charges for a 30-foot Cone.",
-  "text": "Reference-only: Magic action while held spends 1–3 of 10 charges for a 30-foot Cone. DC 15 Dexterity: 1d8 Piercing per charge and Poisoned until your next turn starts on failure; half damage only on success. Regain 1d10 charges each dawn; spending the last destroys it on a d20 result of 1.",
-  "playable": false
+  "summary": "Ten charges (1d10 back at dawn): 1 to 3 charges spray a 30-ft Cone of teeth, 1d8 Piercing per charge and Poisoned.",
+  "text": "This wand has 10 charges and regains 1d10 expended charges each dawn; when you spend the last one, roll a d20 and on a 1 it crumbles. While holding it, as a Magic action you can spend 1 to 3 charges to spray teeth in a 30-foot Cone: each creature there makes a DC 15 Dexterity saving throw, taking 1d8 Piercing damage per charge and having the Poisoned condition until the start of your next turn on a failure, or half the damage on a success.",
+  "playable": true,
+  "held": true,
+  "powers": [
+    {
+      "id": "teeth",
+      "name": "Spray of Teeth",
+      "cost": "magic",
+      "custom": "fr_teeth",
+      "targeting": "direction",
+      "range": 30,
+      "choice": {
+        "label": "Charges",
+        "from": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "text": "1 to 3 charges: a 30-ft Cone, Dex DC 15, 1d8 Piercing per charge and Poisoned (half on a success)."
+    }
+  ]
 }

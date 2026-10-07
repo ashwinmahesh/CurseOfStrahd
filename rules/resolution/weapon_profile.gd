@@ -34,6 +34,8 @@ var notes: Array[String] = []
 static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_main_hand: bool = true,
 		ammo: Dictionary = {}) -> WeaponProfile:
 	var p := WeaponProfile.new()
+	item = reshaped(c, item)
+	var either := bool(item.get("_either_ability", false))
 	var w := item.get("weapon", {}) as Dictionary
 	p.item_id = str(item.get("id", ""))
 	p.name = str(item.get("name", p.item_id)) + (" (thrown)" if as_thrown else "")
@@ -68,7 +70,7 @@ static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_mai
 	var dex_mod := c.ability_mod(&"dex")
 	var is_ranged_weapon := str(w.get("kind", "")).ends_with("ranged")
 	p.ability = &"dex" if is_ranged_weapon else &"str"
-	if "finesse" in p.properties and dex_mod > str_mod:
+	if ("finesse" in p.properties or either) and dex_mod > str_mod:
 		p.ability = &"dex"
 	# Martial Arts (Monk): Dexterity and the Martial Arts die for Monk weapons, unarmored and without a Shield.
 	var martial := ch.martial_arts_die() if ch != null else ""
@@ -101,6 +103,34 @@ static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_mai
 	p._apply_overrides(c)
 	p._compute(c)
 	return p
+
+
+## `item` as `weapon_form` modifiers reshape it: the Keyholes daggers take another weapon's statistics (`form`), with
+## Strength or Dexterity, whichever is better (`either_ability`); the Martialist's Quarterstaff gains the Thrown
+## property and a range (`add_properties`, `range`).
+static func reshaped(c: Creature, item: Dictionary) -> Dictionary:
+	var out := item
+	for m in c.modifiers_for(&"weapon_form"):
+		if not str(item.get("id", "")) in (m.data.get("items", []) as Array):
+			continue
+		out = out.duplicate(true)
+		var form := Compendium.shared().item_data(m.text("form")) if m.text("form") != "" else {}
+		if not form.is_empty():
+			out["weapon"] = (form.get("weapon", {}) as Dictionary).duplicate(true)
+			out["base_item"] = str(form["id"])
+			out["name"] = "%s (as %s)" % [item.get("name", ""), form.get("name", "")]
+		var w := out.get("weapon", {}) as Dictionary
+		var props := (w.get("properties", []) as Array).duplicate()
+		for prop: Variant in m.data.get("add_properties", []):
+			if not prop in props:
+				props.append(prop)
+		w["properties"] = props
+		if m.data.has("range"):
+			w["range"] = (m.data["range"] as Array).duplicate()
+		out["weapon"] = w
+		if bool(m.data.get("either_ability", false)):
+			out["_either_ability"] = true
+	return out
 
 
 ## Spells that reshape a weapon or an Unarmed Strike while they last (Shillelagh, Alter Self's Natural Weapons):

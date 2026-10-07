@@ -68,4 +68,10 @@ for its `duration`); a Spell Scroll an implicit "Read".
 - Encounter hooks (combat/combat_items.gd): `hit_damage_dice`, `after_hit`, `after_miss`, `before_roll`,
   `against_damage`, `adjust_incoming`, `on_damaged`, `before_d20`, `after_d20`, `crit_allowed`, `attack_blocked`,
   `spell_blocked`, `absorbs_spell`, `turns_spell`, `filter_magic_effect`, `reveals_invisible`, `initiative_advantage`,
-  `initiative_bonus`, `surprise_filter`, `healing_bonus`, `turn_start`, `turn_end`, `combat_started`.
+  `initiative_bonus`, `surprise_filter`, `healing_bonus`, `turn_start`, `turn_end`, `combat_started`, `makes_crit`
+  (a hit turned into a Critical Hit: Namer's Needle).
+- Heroes of Faerûn and Arcana Unleashed items live in combat/faerun_items.gd (`ItemSpecials.fr`): custom powers named
+  `fr_<id>` (and `after: "fr_<id>"`), the weapon specials `mage_breaker`, `namers_needle`, `dispelling`, `goading`, the
+  Keyholes daggers' second try (an after-miss offer), the Staffs of Skulls' and Martialist's before-roll offers, and
+  Dissuader's push (`after_step`, called as any creature takes a step). A power's `count` is how many creatures a
+  multi-target power picks.

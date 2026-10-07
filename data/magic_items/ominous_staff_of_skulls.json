@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "staff",
   "weight_lb": 0,
@@ -15,8 +15,8 @@
   },
   "theme": "arcana",
   "icon": "staff",
-  "summary": "While held, cast Chill Touch with your spell attack bonus and gain Advantage on Intimidation.",
-  "text": "While held, cast Chill Touch with your spell attack bonus and gain Advantage on Intimidation. Reference-only: sheds Dim Light 5 feet.",
+  "summary": "Chill Touch with your spell attack, Advantage on Intimidation, and a dim glow.",
+  "text": "While holding this staff you can cast Chill Touch with it using your spell attack bonus, you have Advantage on Charisma (Intimidation) checks, and it sheds Dim Light in a 5-foot radius.",
   "held": true,
   "powers": [
     {
@@ -32,5 +32,9 @@
       "on": "check:intimidation"
     }
   ],
-  "playable": false
+  "playable": true,
+  "light": {
+    "bright": 0,
+    "dim": 5
+  }
 }

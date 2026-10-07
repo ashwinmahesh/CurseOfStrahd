@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wand",
   "weight_lb": 0,
@@ -20,16 +20,21 @@
   },
   "theme": "arcana",
   "icon": "wand",
-  "summary": "Four charges; cast Purify Food and Drink for 1 charge.",
-  "text": "Four charges; cast Purify Food and Drink for 1 charge. Regain 1d4+1 charges each dawn.",
+  "summary": "Four charges (1d4 + 1 back at dawn): a charge purifies food and drink.",
+  "text": "This wand has 4 charges and regains 1d4 + 1 expended charges each dawn. While holding it you can spend 1 charge to cast Purify Food and Drink.",
   "powers": [
     {
-      "id": "purify_food_and_drink",
-      "name": "Purify Food And Drink",
-      "spell": "purify_food_and_drink",
-      "dc": "wielder",
-      "charges": 1
+      "id": "purify",
+      "name": "Purify Food and Drink",
+      "cost": "magic",
+      "custom": "flavour",
+      "charges": 1,
+      "field": true,
+      "params": {
+        "text": "makes the food and drink within 5 feet safe and fresh"
+      },
+      "text": "1 charge: Purify Food and Drink. (No other effect in the game.)"
     }
   ],
-  "playable": false
+  "playable": true
 }

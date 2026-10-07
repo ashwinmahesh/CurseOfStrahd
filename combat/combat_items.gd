@@ -342,7 +342,7 @@ func list(c: Combatant) -> Array[Dictionary]:
 			targeting = "none"
 		var a := {"id": "item:%s:%s" % [iid, power.get("id", "use")], "tab": TAB, "label": label, "sub": sub,
 			"cost": "action" if cost in ["magic", "utilize"] else cost, "legal": why == "", "reason": why,
-			"targeting": targeting, "count": 1, "repeat": false, "range": int(power.get("range", 0)), "spell_id": "", "slot": 0,
+			"targeting": targeting, "count": int(power.get("count", 1)), "repeat": false, "range": int(power.get("range", 0)), "spell_id": "", "slot": 0,
 			"option_id": "", "kind": "item", "help": str(power.get("text", data.get("summary", ""))),
 			"item_id": iid, "power_id": str(power.get("id", "use"))}
 		if not spell.is_empty():
@@ -945,6 +945,11 @@ func _on_hit_rule(c: Combatant, target: Combatant, data: Dictionary, rule: Dicti
 		var fx := toggle_effect(c, str(data.get("id", "")), str(rule["ends_toggle"]))
 		if fx != null:
 			c.creature.remove_effect(fx)
+
+
+## A hit an item turns into a Critical Hit (Namer's Needle).
+func makes_crit(c: Combatant, target: Combatant, option: Dictionary, details: Array[String]) -> bool:
+	return specials.fr.makes_crit(c, target, option, details)
 
 
 ## Critical Hits that armor turns into ordinary hits (Adamantine Armor; Armor of Invulnerability doesn't).

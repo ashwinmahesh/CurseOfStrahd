@@ -7,11 +7,14 @@ extends RefCounted
 var _items: WeakRef
 ## The rest of the custom powers (wondrous items and artifacts): combat/item_powers.gd.
 var more: ItemPowers
+## Heroes of Faerûn and Arcana Unleashed items: combat/faerun_items.gd.
+var fr: FaerunItems
 
 
 func _init(items: CombatItems) -> void:
 	_items = weakref(items)
 	more = ItemPowers.new(self)
+	fr = FaerunItems.new(self)
 
 
 func items() -> CombatItems:
@@ -35,6 +38,8 @@ func has(c: Combatant, item_or_template: String) -> bool:
 
 ## "" if a custom power can be used now, else why not.
 func why(c: Combatant, p: Dictionary) -> String:
+	if str((p["power"] as Dictionary).get("custom", "")).begins_with("fr_"):
+		return fr.why(c, p)
 	var w := _weapon_why(c, p)
 	return w if w != "" else _arcana_why(c, p)
 
@@ -49,6 +54,8 @@ func use(c: Combatant, p: Dictionary, targets: Array, point: Vector2, dir: Vecto
 			return _drink(c, p, t, id)
 		"end_granted_effect":
 			return _end_granted(c, p)
+	if id.begins_with("fr_"):
+		return fr.use(c, p, targets, point, dir, level, opts)
 	return _use_more(c, p, targets, point, dir, level, opts)
 
 
@@ -153,7 +160,7 @@ static func _living(t: Combatant) -> bool:
 
 ## Extra dice a weapon's special rules add on a hit (Mace of Smiting's 20, Sword of Sharpness's 20).
 func hit_dice(c: Combatant, target: Combatant, option: Dictionary, st: Dictionary, it: Dictionary) -> Array[Dictionary]:
-	var out: Array[Dictionary] = []
+	var out: Array[Dictionary] = fr.hit_dice(c, target, option, st, it)
 	var label := str((it["data"] as Dictionary).get("name", ""))
 	var p := option["profile"] as WeaponProfile
 	for sp: Variant in _specials(it):
@@ -188,6 +195,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 	var data := it["data"] as Dictionary
 	var label := str(data.get("name", ""))
 	var iid := str(it["id"])
+	fr.after_hit(c, target, option, dr, st, r, it)
 	for sp: Variant in _specials(it):
 		if str(sp) == "blackrazor" and not target.is_alive() and _living(target) and not target.has_meta("soul_devoured"):
 			target.set_meta("soul_devoured", true)
@@ -320,6 +328,7 @@ func _spent_ammo_on_hit(_c: Combatant, _option: Dictionary) -> void:
 ## sworn enemy, the Berserker Axe's curse on other weapons, an Arrow-Catching Shield or Shield of Missile Attraction
 ## pulling a shot onto its bearer.
 func before_roll(st: Dictionary, out: Array) -> void:
+	fr.before_roll(st, out)
 	var e := enc()
 	var c := st["c"] as Combatant
 	var target := st["target"] as Combatant

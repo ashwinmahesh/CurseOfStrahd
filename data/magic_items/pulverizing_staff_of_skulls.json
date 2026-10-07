@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "staff",
   "weight_lb": 0,
@@ -15,8 +15,8 @@
   },
   "theme": "arcana",
   "icon": "staff",
-  "summary": "While held, cast Chill Touch with your spell attack bonus and gain Advantage on Intimidation.",
-  "text": "While held, cast Chill Touch with your spell attack bonus and gain Advantage on Intimidation. Reference-only: sheds Dim Light 5 feet. Reaction imposes Disadvantage on an attack by a visible creature within 30 feet. Once per dawn, Magic action targets a visible Humanoid: DC 17 Constitution against 10d8 Necrotic and Prone; success takes half damage only.",
+  "summary": "Chill Touch, Intimidation, a dim glow, a Reaction against attacks, and once a day 10d8 Necrotic that topples a Humanoid.",
+  "text": "While holding this staff you can cast Chill Touch with it using your spell attack bonus, you have Advantage on Charisma (Intimidation) checks, and it sheds Dim Light in a 5-foot radius. When a creature you can see within 30 feet makes an attack roll, you can take a Reaction to make the skulls shriek: the attack has Disadvantage. Once per dawn, as a Magic action you can point it at a Humanoid you can see: it makes a DC 17 Constitution saving throw, taking 10d8 Necrotic damage and falling Prone on a failure, or half the damage on a success.",
   "held": true,
   "powers": [
     {
@@ -24,6 +24,19 @@
       "name": "Chill Touch",
       "spell": "chill_touch",
       "dc": "wielder"
+    },
+    {
+      "id": "pulverize",
+      "name": "Pulverize",
+      "cost": "magic",
+      "custom": "fr_pulverize",
+      "targeting": "enemy",
+      "range": 120,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once a day: a Humanoid makes a DC 17 Con save, 10d8 Necrotic and Prone (half and standing on a success)."
     }
   ],
   "modifiers": [
@@ -32,5 +45,9 @@
       "on": "check:intimidation"
     }
   ],
-  "playable": false
+  "playable": true,
+  "light": {
+    "bright": 0,
+    "dim": 5
+  }
 }

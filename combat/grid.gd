@@ -171,6 +171,8 @@ const MOVE_CLIMB := 2
 const MOVE_INCORPOREAL := 4
 ## Difficult Terrain doesn't hinder it (Freedom of Movement).
 const MOVE_UNHINDERED := 8
+## The map's own Difficult Terrain costs nothing extra (Tramontane Armor: snow, ice, rubble, undergrowth).
+const MOVE_TERRAIN := 16
 
 
 func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable, slowed: Callable, mode: int = 0) -> int:
@@ -187,7 +189,7 @@ func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable,
 			if is_solid(c) or bool(blocked.call(c)):
 				mult = maxi(mult, 2)
 			if (mode & MOVE_UNHINDERED) == 0:
-				if has_flag(c, DIFFICULT) and (mode & MOVE_FLY) == 0:
+				if has_flag(c, DIFFICULT) and (mode & (MOVE_FLY | MOVE_TERRAIN)) == 0:
 					mult = maxi(mult, 2)
 				var incorporeal_slow: Variant = slowed.call(c)
 				if incorporeal_slow is int and int(incorporeal_slow) > 1:
@@ -199,7 +201,7 @@ func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable,
 			return -1
 		if (mode & MOVE_UNHINDERED) != 0:
 			continue
-		if has_flag(c, DIFFICULT) and (mode & MOVE_FLY) == 0:
+		if has_flag(c, DIFFICULT) and (mode & (MOVE_FLY | MOVE_TERRAIN)) == 0:
 			mult = maxi(mult, 2)
 		var sv: Variant = slowed.call(c)
 		if sv is int and int(sv) > 1:

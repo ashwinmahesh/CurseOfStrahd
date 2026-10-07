@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "weapon",
   "weight_lb": 0,
@@ -15,8 +15,8 @@
   },
   "theme": "arcana",
   "icon": "longsword",
-  "summary": "+1 to this weapon’s attack and damage rolls.",
-  "text": "+1 to this weapon’s attack and damage rolls. Reference-only: a Magic action salts up to a gallon of touched liquid.",
+  "summary": "+1 to attack and damage rolls; it can salt water.",
+  "text": "You have a +1 bonus to attack and damage rolls made with this weapon. As a Magic action you can touch it to up to a gallon of liquid and make it as salty as seawater.",
   "held": true,
   "template": {
     "on": "weapon",
@@ -46,5 +46,18 @@
       }
     }
   ],
-  "playable": false
+  "playable": true,
+  "powers": [
+    {
+      "id": "salt",
+      "name": "Salt Water",
+      "cost": "magic",
+      "custom": "flavour",
+      "field": true,
+      "params": {
+        "text": "turns up to a gallon of touched water as briny as the sea"
+      },
+      "text": "Magic action: up to a gallon of liquid you touch with it turns salty. (No other effect in the game.)"
+    }
+  ]
 }

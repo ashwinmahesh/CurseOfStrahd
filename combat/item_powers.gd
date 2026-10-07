@@ -487,6 +487,9 @@ func _sphere(c: Combatant, point: Vector2, label: String) -> CombatResult:
 func after_power(c: Combatant, p: Dictionary) -> void:
 	var e := enc()
 	var power := p["power"] as Dictionary
+	if str(power.get("after", "")).begins_with("fr_"):
+		sp().fr.after_power(c, p)
+		return
 	var ch := CombatItems.ch_of(c)
 	var iid := str(p["item_id"])
 	match str(power.get("after", "")):

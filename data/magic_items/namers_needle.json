@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "weapon",
   "weight_lb": 0,
@@ -15,8 +15,8 @@
   },
   "theme": "arcana",
   "icon": "dagger",
-  "summary": "+1 to this weapon’s attack and damage rolls.",
-  "text": "+1 to this weapon’s attack and damage rolls. Reference-only: on a hit, DC 15 Wisdom or the target speaks/signs its name; success grants immunity for 24 hours, and creatures without language automatically succeed. Once per dawn, speaking/signing the target’s name turns a hit into a Critical Hit.",
+  "summary": "+1 to attack and damage rolls; a creature it hits may blurt out its name, and once a day its name turns a hit into a Critical Hit.",
+  "text": "You have a +1 bonus to attack and damage rolls made with this dagger. When you hit a creature that knows a language with it, the creature makes a DC 15 Wisdom saving throw or speaks its true name aloud; on a success it can't be affected this way again for 24 hours. Once per dawn, after a creature has spoken its name to the needle, you can speak that name (no action) so that your next hit against it with the needle is a Critical Hit.",
   "template": {
     "on": "weapon",
     "items": [
@@ -41,5 +41,23 @@
       }
     }
   ],
-  "playable": false
+  "playable": true,
+  "weapon_rules": {
+    "special": [
+      "namers_needle"
+    ]
+  },
+  "powers": [
+    {
+      "id": "speak_name",
+      "name": "Speak Its Name",
+      "cost": "free",
+      "custom": "fr_speak_name",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Speak a name the needle has heard: your next hit with it against that creature is a Critical Hit."
+    }
+  ]
 }

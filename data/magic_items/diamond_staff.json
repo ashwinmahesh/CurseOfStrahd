@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "staff",
   "weight_lb": 0,
@@ -25,8 +25,8 @@
   },
   "theme": "arcana",
   "icon": "staff",
-  "summary": "+3 to weapon attack and damage; while held, Advantage on Arcana.",
-  "text": "+3 to weapon attack and damage; while held, Advantage on Arcana. Twenty charges; regain 1d6+4 at dawn. Last charge destroys the staff on a d20 roll of 1. Spells use your DC: Detect Magic and Light at will; Identify 1, Knock 2, True Seeing 3, Legend Lore 5, Maze 8 charges. Reference-only: Tongues at will on yourself; 1 charge creates Bright Light 40 feet and Dim Light 40 more for 1 minute or until commanded off; on a melee hit, spend 2 charges for DC 17 Constitution against Stunned until your next turn ends.",
+  "summary": "+3 quarterstaff with Advantage on Arcana; 20 charges for spells from Detect Magic to Maze, a 40-ft light and a stunning blow; Tongues at will.",
+  "text": "You have a +3 bonus to attack and damage rolls made with this staff, and while holding it you have Advantage on Intelligence (Arcana) checks. It has 20 charges and regains 1d6 + 4 expended charges each dawn; when you spend the last one, roll a d20 and on a 1 the staff shatters. While holding it you can cast Detect Magic and Light at will, Identify (1 charge), Knock (2), True Seeing (3), Legend Lore (5) or Maze (8), using your own spell save DC, and Tongues on yourself at will. As a Magic action you can spend 1 charge to make it shed Bright Light 40 feet and Dim Light 40 feet more for 1 minute or until you end it. When you hit with a melee attack using it, you can spend 2 charges: the target makes a DC 17 Constitution saving throw or has the Stunned condition until the end of your next turn.",
   "held": true,
   "template": {
     "on": "weapon",
@@ -103,7 +103,38 @@
       "spell": "maze",
       "dc": "wielder",
       "charges": 8
+    },
+    {
+      "id": "tongues",
+      "name": "Tongues",
+      "cost": "free",
+      "custom": "flavour",
+      "field": true,
+      "params": {
+        "text": "lets you understand and be understood in any language"
+      }
+    },
+    {
+      "id": "radiance",
+      "name": "Diamond Light",
+      "cost": "magic",
+      "toggle": true,
+      "off_cost": "free",
+      "charges": 1,
+      "minutes": 1,
+      "custom_light": {
+        "bright": 40,
+        "dim": 40
+      },
+      "text": "1 charge: Bright Light 40 ft and Dim Light 40 ft more for 1 minute (end it freely)."
+    },
+    {
+      "id": "stun",
+      "name": "Stunning Blow",
+      "cost": "free",
+      "custom": "fr_diamond_stun",
+      "text": "Ready it: your next melee hit with the staff spends 2 charges, and the target makes a DC 17 Constitution save or is Stunned until the end of your next turn."
     }
   ],
-  "playable": false
+  "playable": true
 }

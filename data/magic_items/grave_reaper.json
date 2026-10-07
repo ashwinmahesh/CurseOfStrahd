@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "weapon",
   "weight_lb": 0,
@@ -15,8 +15,8 @@
   },
   "theme": "arcana",
   "icon": "sickle",
-  "summary": "+2 to this weapon’s attack and damage rolls; hits add 2d8 Necrotic.",
-  "text": "+2 to this weapon’s attack and damage rolls; hits add 2d8 Necrotic. Reference-only: while held, cast Spirit Lantern once per dawn (DC 17), with capacity for five soul fragments.",
+  "summary": "+2 to attack and damage rolls, 2d8 Necrotic on a hit; once a day it casts Spirit Lantern (DC 17) holding five fragments.",
+  "text": "You have a +2 bonus to attack and damage rolls made with this sickle, and a hit with it deals an extra 2d8 Necrotic damage. While holding it you can cast Spirit Lantern (save DC 17) from it once per dawn; that lantern can hold up to five spirit fragments.",
   "template": {
     "on": "weapon",
     "items": [
@@ -49,5 +49,18 @@
       }
     ]
   },
-  "playable": false
+  "playable": true,
+  "powers": [
+    {
+      "id": "spirit_lantern",
+      "name": "Spirit Lantern",
+      "spell": "spirit_lantern",
+      "dc": 17,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "after": "fr_lantern_capacity"
+    }
+  ]
 }

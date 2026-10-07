@@ -465,6 +465,8 @@ func move_mode(c: Combatant) -> int:
 		mode |= CombatGrid.MOVE_INCORPOREAL
 	if c.creature.has_flag("freedom_of_movement") or c.creature.has_flag("ignore_difficult_terrain"):
 		mode |= CombatGrid.MOVE_UNHINDERED
+	if c.creature.has_flag("ignore_natural_difficult"):
+		mode |= CombatGrid.MOVE_TERRAIN
 	return mode
 
 
@@ -1250,6 +1252,7 @@ func answer_reaction(use: bool) -> CombatResult:
 
 
 func _after_step(c: Combatant, from: Vector2i) -> void:
+	items.specials.fr.after_step(c, from)
 	spells.specials.mid.shell_moved(c)
 	monster_actions.entered_space(c)
 	spells.on_enter_cell(c, from)
@@ -2236,6 +2239,8 @@ func _attack_outcome(st: Dictionary) -> CombatResult:
 	if t.success and not critical and distance(c, target) <= 5 and target.creature.has_flag("auto_crit_within_5ft"):
 		critical = true
 		details.append("Automatic Critical Hit: the target can't defend itself within 5 ft")
+	if t.success and not critical and items.makes_crit(c, target, option, details):
+		critical = true
 	critical = items.crit_allowed(c, target, critical, details)
 	var success := t.success
 	if success and mirror_image_takes(target, c, t.total):

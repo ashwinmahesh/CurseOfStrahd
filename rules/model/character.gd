@@ -2073,7 +2073,9 @@ func attacks() -> Array[WeaponProfile]:
 				if int(a["qty"]) > 0 and MagicItems.is_magic(ad) and Gear.ammo_matches(ad, kind) and not shot.has(str(ad["id"])):
 					shot[str(ad["id"])] = true
 					out.append(WeaponProfile.build(self, item, false, true, ad))
-		if "thrown" in Gear.weapon_props(item) and not Gear.is_ranged_weapon(item):
+		# A reshaped weapon may be thrown (a Keyholes dagger as a Handaxe, the Martialist's Quarterstaff).
+		var shown := WeaponProfile.reshaped(self, item)
+		if "thrown" in Gear.weapon_props(shown) and not Gear.is_ranged_weapon(shown):
 			out.append(WeaponProfile.build(self, item, true, false))
 	out.append(WeaponProfile.unarmed(self))
 	return out
