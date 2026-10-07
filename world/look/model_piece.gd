@@ -119,6 +119,7 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 	holder.rotation.y = atan2(float(faces.x), float(faces.y))
 	if mount == "against_wall":
 		var depth := float((info.get("size", [1, 1, 0.3]) as Array)[2])
+		holder.set_meta("against_wall", true)
 		if back != Vector2i.ZERO:
 			model.position = Vector3(0, 0, -0.5 + GAP)
 			board.used_faces["%d,%d,%d,%d" % [cell.x + back.x, cell.y + back.y, -back.x, -back.y]] = true   # no portrait behind it

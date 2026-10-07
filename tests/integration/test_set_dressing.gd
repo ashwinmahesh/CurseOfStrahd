@@ -341,8 +341,10 @@ func test_wall_pieces_sit_flush_with_their_wall() -> void:
 		var board := v.board
 		for n in board.find_children("*", "Node3D", true, false):
 			var node := n as Node3D
+			if node is Sprite3D and _in_model(node):
+				continue   # a 3D piece's painted part (docs/art/models.md): the piece itself is checked through its holder
 			var against := node.has_meta("against_wall")
-			if against or (node is Sprite3D and (node as Sprite3D).billboard == BaseMaterial3D.BILLBOARD_DISABLED \
+			if against or node.has_meta("hung") or (node is Sprite3D and (node as Sprite3D).billboard == BaseMaterial3D.BILLBOARD_DISABLED \
 					and (node as Sprite3D).axis == Vector3.AXIS_Z and node.name != "Leaf" and not node.get_parent().has_meta("against_wall") \
 					and not node.get_parent().has_meta("door") and not node.get_parent().name == "Upper"):
 				var yaw := node.global_rotation.y
@@ -365,24 +367,56 @@ func test_wall_pieces_sit_flush_with_their_wall() -> void:
 	assert_eq(problems, [] as Array[String], "not flush")
 
 
+## Is this node part of a 3D model (ModelPiece)?
+func _in_model(node: Node) -> bool:
+	var p := node.get_parent()
+	while p != null:
+		if p.has_meta("model"):
+			return true
+		p = p.get_parent()
+	return false
+
+
 ## Owner report (2026-10-06): stairs looked too small and the stairwell down like an odd icon. Stairs are steps now:
 ## a flight up climbs most of a storey, a stairwell down opens the floor.
 func test_stairs_are_steps_at_full_size() -> void:
 	var v := _view("death_house_ground")
 	await _frames(2)
-	var up := (v.exit_nodes["stairs_up"] as Node3D).find_children("StairsUp", "Node3D", true, false)
-	assert_false(up.is_empty(), "the stairs up are a flight of steps")
-	var top := 0.0
-	for m in (up[0] as Node3D).find_children("*", "MeshInstance3D", true, false):
-		var mi := m as MeshInstance3D
-		top = maxf(top, mi.position.y + mi.get_aabb().size.y / 2.0)
+	# Built steps (Stairs) or a 3D stair model (ModelPiece, docs/art/models.md): either way, real steps at full size.
+	var up := _stair_piece(v.exit_nodes["stairs_up"] as Node3D, "StairsUp")
+	assert_true(up != null, "the stairs up are a flight of steps")
+	var top := _world_box(up).end.y - v.board.floor_y(v.grid.cell_at(up.global_position))
 	assert_true(top >= 1.4, "about 7 ft high or more (%.2f)" % top)
 	v.queue_free()
 	var low := _view("death_house_dungeon_1")
 	await _frames(2)
-	var down := (low.exit_nodes["stairs_down"] as Node3D).find_children("StairsDown", "Node3D", true, false)
-	assert_false(down.is_empty(), "the stairs down are a stairwell")
+	var down := _stair_piece(low.exit_nodes["stairs_down"] as Node3D, "StairsDown")
+	assert_true(down != null, "the stairs down are a stairwell")
+	var depth := low.board.floor_y(low.grid.cell_at(down.global_position)) - _world_box(down).position.y
+	assert_true(depth >= 1.3, "about 7 ft deep (%.2f)" % depth)
 	low.queue_free()
+
+
+## The built steps named `built`, or a 3D stair model, under an exit's piece; null if neither.
+func _stair_piece(root: Node3D, built: String) -> Node3D:
+	var found := root.find_children(built, "Node3D", true, false)
+	if not found.is_empty():
+		return found[0] as Node3D
+	for n in root.find_children("Model_*", "Node3D", true, false):
+		if n.has_meta("art") and str(n.get_meta("model", "")).begins_with("stairs"):
+			return n as Node3D
+	return null
+
+
+func _world_box(n: Node3D) -> AABB:
+	var box := AABB()
+	var first := true
+	for c in n.find_children("*", "MeshInstance3D", true, false):
+		var mi := c as MeshInstance3D
+		var b := mi.global_transform * mi.get_aabb()
+		box = b if first else box.merge(b)
+		first = false
+	return box
 
 
 ## Owner report (2026-10-06): thin brown boards lay on the carpet among the party: their health bars. Out of a fight
