@@ -114,6 +114,14 @@ GameSettings `graphics`, High by default), applied as each place opens. Classic 
   cast shadows; every quarter second the nearest to the party get the preset's budget. A light already casting keeps
   its shadow until another is clearly nearer, so shadows don't blink as the party walks, and shadows fade out a
   little past the party. A light with the meta `no_shadow` never casts one.
+- **Each light by its kind** (W5, `Atmosphere.LIGHT_KINDS`): a location's lights by their `kind` in its data, lit
+  windows from the weather, the party's lantern, flames and spell lights by what they are. Their size sets how soft
+  their shadows are (a candle's crisp, a hearth's soft) and how strongly they light the haze; magic lights and windows
+  hold steady. The nearest few flames that cast shadows sway a little with their flicker, so their shadows stir
+  (`CandleFlicker`, meta `sway`; 4 on High, 2 on Medium).
+- **Windows indoors** are the moon or the day coming in: the key light's colour, steady, with a spot light over the
+  wall beside the window down across the room (casting shadows) and a glowing cone of dusty haze along it
+  (`shaders/world/light_shaft.gdshader`), hung on the window's light so they hide with it.
 
 ## Rules for new places
 
