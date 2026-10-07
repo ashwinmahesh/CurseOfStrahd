@@ -137,5 +137,5 @@ The 19 still hidden wait for the owner:
   Damara's adult chromatic dragons and the Tome of the Dragon's Dracolich.
 - Systems the game lacks: Teleport to a place on the world map (Traveler's Pearl) and vehicles (Windskiff,
   Mechanical Wonder (Gyrocopter)).
-- An open choice: Bladesinger's free-hand rule (dropped by default).
+- Settled: the owner dropped Bladesinger's free-hand rule (2026-10-07), as built.
 
