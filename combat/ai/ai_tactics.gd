@@ -185,15 +185,18 @@ func drink(c: Combatant) -> void:
 	e.events.append({"type": "heal", "id": c.id, "amount": healed})
 
 
-## What the fallen foes still carried when the fight ended, for the spoils: [{id, qty}].
+## What the fallen foes still carried when the fight ended, for the spoils: [{id, qty}] (potions, and scrolls as
+## "spell_scroll__<spell>").
 static func leftovers(e: Encounter) -> Array[Dictionary]:
 	var n := 0
+	var out: Array[Dictionary] = []
 	for c in e.combatants:
 		if c.side == &"enemy" and c.creature.dead and not e.legendary.departed.has(c.id):
 			n += potions(c)
-	var out: Array[Dictionary] = []
+			if AiSpells.scroll_of(c) != "":
+				out.append({"id": "spell_scroll__%s" % AiSpells.scroll_of(c), "qty": 1})
 	if n > 0:
-		out.append({"id": POTION, "qty": n})
+		out.push_front({"id": POTION, "qty": n})
 	return out
 
 

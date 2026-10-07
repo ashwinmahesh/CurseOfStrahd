@@ -553,7 +553,7 @@ func spells_now(c: Combatant) -> Array[Dictionary]:
 
 ## Casts a stat-block spell with the monster's DC and attack bonus, at the level the block gives (Magic Missile
 ## at level 4 for the Night Hag) or the spell's own level.
-func cast(c: Combatant, spell_id: String, targets: Array, point: Vector2 = Vector2.INF, slot: int = 0) -> CombatResult:
+func cast(c: Combatant, spell_id: String, targets: Array, point: Vector2 = Vector2.INF, slot: int = 0, opts: Dictionary = {}) -> CombatResult:
 	var e := enc()
 	var sc := data_of(c).get("spellcasting", {}) as Dictionary
 	var s := Compendium.shared().spell_data(spell_id)
@@ -574,7 +574,7 @@ func cast(c: Combatant, spell_id: String, targets: Array, point: Vector2 = Vecto
 		dc.add_nonzero(m.source_name, c.creature.mod_value(m, ctx))
 	for m2 in c.creature.modifiers_for(&"spell_attack"):
 		atk.add_nonzero(m2.source_name, c.creature.mod_value(m2, ctx))
-	return e.spells.cast_with_numbers(c, spell_id, level, targets, point, {"dc": dc, "attack": atk, "mod": c.creature.ability_mod(ab), "ability": ab})
+	return e.spells.cast_with_numbers(c, spell_id, level, targets, point, {"dc": dc, "attack": atk, "mod": c.creature.ability_mod(ab), "ability": ab}, opts)
 
 
 # --- Turn hooks -----------------------------------------------------------------------------------

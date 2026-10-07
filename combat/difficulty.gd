@@ -22,7 +22,8 @@ const BOSS_CR := 5.0
 ##   enemy_bonus:   added to enemies' attack rolls (weapons and spells) and the DCs of their spells and actions.
 ##   tactics:       kind (spread blows, no killing blow), standard (as before the modes), sharp (focus fire on the
 ##                  hurt and on healers and casters), ruthless (sharp, and cruel foes strike heroes at 0 HP).
-##   kit:           armed humanoid foes carry a Potion of Healing (drunk when Bloodied; looted if not).
+##   kit:           armed humanoid foes carry a Potion of Healing (drunk when Bloodied), casters a scroll of their
+##                  strongest spell; what isn't used is looted.
 ##   morale:        when its side breaks, a foe that isn't mindless or a boss flees the field.
 ##   full_bosses:   a fight's lighter version of a boss (for a lower-level party) is put back to its stat block.
 ##   spared:        a party member who would die is left Unconscious and Stable instead.
@@ -214,8 +215,10 @@ func fit_party(cr: Creature) -> void:
 
 
 ## This mode's numbers for an enemy, as one effect under the mode's name: its Hit Points, and Tactician's +2 to its
-## attack rolls and DCs. They show in its Breakdowns ("Stat block (17d8+68) 144, Tactician +29").
-func toughen(c: Combatant) -> void:
+## attack rolls and DCs. They show in its Breakdowns ("Stat block (17d8+68) 144, Tactician +29"). Before a fight it
+## starts unhurt; one joining mid-fight keeps what it came with, moved by the same number (a werewolf risen from a
+## cursed hero has 10).
+func toughen(c: Combatant, fresh: bool = true) -> void:
 	var m := c.creature as Monster
 	if m == null or m.effects.any(func(fx: Effect) -> bool: return fx.source_id == "difficulty"):
 		return
@@ -235,12 +238,17 @@ func toughen(c: Combatant) -> void:
 	if not fx.modifiers.is_empty():
 		fx.ends = Effect.Ends.NEVER
 		m.add_effect(fx)
-	m.hp = m.max_hp()
+	m.hp = m.max_hp() if fresh else clampi(m.hp + want - base, mini(1, m.hp), m.max_hp())
 
 
-## Armed humanoid foes (a stat block with gear) carry a Potion of Healing.
+## What foes carry: armed humanoids (a stat block with gear) a Potion of Healing, casters a scroll of their strongest
+## spell that harms or hinders (combat/ai/ai_spells.gd).
 func equip(c: Combatant) -> void:
 	var m := c.creature as Monster
-	if m == null or m.creature_type != &"humanoid" or not m.data.has("gear"):
+	if m == null:
 		return
-	c.set_meta("potions", 1)
+	if m.creature_type == &"humanoid" and m.data.has("gear"):
+		c.set_meta("potions", 1)
+	var scroll := AiSpells.scroll_pick(m)
+	if scroll != "":
+		c.set_meta("scroll", scroll)

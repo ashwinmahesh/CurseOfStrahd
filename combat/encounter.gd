@@ -141,6 +141,9 @@ func add(creature: Creature, side: StringName, cell: Vector2i) -> Combatant:
 	creature.d20_after = feature_actions.after_d20
 	creature.effect_added = _effect_added
 	combatants.append(c)
+	# A foe that joins mid-fight (Children of the Night) comes at the difficulty's Hit Points and +2s too.
+	if state == State.ACTIVE and side == &"enemy" and creature is Monster:
+		difficulty.toughen(c, false)
 	return c
 
 

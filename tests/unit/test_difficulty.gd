@@ -283,3 +283,61 @@ func test_switching_rules() -> void:
 	assert_eq(Difficulty.switch_warning("story", "balanced"), "")
 	for id in Difficulty.IDS:
 		assert_false(Difficulty.named(id).describe().is_empty())
+
+
+func test_a_foe_joining_mid_fight_gets_the_mode_too() -> void:
+	var e := TestCombat.open_field()
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(2, 3))
+	Difficulty.named("tactician").prepare(e)
+	TestCombat.start_with(e, h)
+	var late := TestCombat.foe(e, "wolf", Vector2i(9, 3))
+	assert_eq(late.creature.max_hp(), 13, "Children of the Night arrive at Tactician's Hit Points")
+	var pup := e.add(TestCombat.monster("wolf"), &"party", Vector2i(9, 5))
+	assert_eq(pup.creature.max_hp(), 11, "the party's own summons are left alone")
+
+
+# --- Spells and scrolls (Tactician and Honour) --------------------------------------------------------------------
+
+func _witch_fight(mode: String) -> Array[Combatant]:
+	var e := TestCombat.open_field(4)
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(2, 3))
+	var w := TestCombat.foe(e, "barovian_witch", Vector2i(9, 3))
+	_encounters.append(e)
+	Difficulty.named(mode).prepare(e)
+	TestCombat.start_with(e, w)
+	return [w, h]
+
+
+func test_tactician_casters_cast_from_their_whole_list() -> void:
+	var sharp := _witch_fight("tactician")
+	var e := _encounter_of(sharp[0])
+	e.run_ai_turn()
+	while e.pending != null:
+		e.answer_reaction(false)
+	assert_eq(str(e.ai.last_plan.get("kind", "")), "cast", "a Barovian witch casts rather than stabbing with her dagger")
+	assert_true(e.log.texts().any(func(t: String) -> bool: return "casts" in t))
+	var calm := _witch_fight("balanced")
+	var e2 := _encounter_of(calm[0])
+	e2.run_ai_turn()
+	while e2.pending != null:
+		e2.answer_reaction(false)
+	assert_ne(str(e2.ai.last_plan.get("kind", "")), "cast", "Balanced keeps the old caster AI")
+
+
+func test_a_caster_reads_its_scroll_when_its_spells_are_spent() -> void:
+	var f := _witch_fight("honour")
+	var w := f[0]
+	var e := _encounter_of(w)
+	assert_eq(AiSpells.scroll_of(w), "ray_of_sickness", "its strongest daily spell that harms")
+	for sid: String in ["ray_of_sickness", "sleep", "tashas_hideous_laughter"]:
+		w.set_meta("cast_%s" % sid, 4)
+	var p := e.ai.spells.plan(w, 0.0)
+	assert_eq(str(p.get("spell", "")), "ray_of_sickness")
+	assert_true(bool(p.get("scroll", false)), "read from the scroll")
+	e.ai.spells.cast(w, p)
+	assert_eq(AiSpells.scroll_of(w), "", "the scroll crumbles")
+	assert_eq(int(w.get_meta("cast_ray_of_sickness")), 4, "and the daily uses stay spent")
+	var w2 := _witch_fight("tactician")[0]
+	w2.creature.dead = true
+	var left := AiTactics.leftovers(_encounter_of(w2))
+	assert_true(left.any(func(it: Dictionary) -> bool: return str(it["id"]) == "spell_scroll__ray_of_sickness"), "an unread scroll is loot")

@@ -39,8 +39,10 @@ var _enc: WeakRef
 var last_plan: Dictionary = {}
 ## Legendary and lair choices, and the strahd profile (combat/ai/boss_brain.gd).
 var boss: BossBrain
-## How it fights at the playthrough's difficulty (combat/ai/ai_tactics.gd).
+## How it fights at the playthrough's difficulty (combat/ai/ai_tactics.gd), and its casters' spells at Tactician
+## and Honour (combat/ai/ai_spells.gd).
 var tactics: AiTactics
+var spells: AiSpells
 ## The fallen hero this turn's plan strikes (Honour), whom the attack steps keep at although they're down.
 var _finishing: Combatant = null
 
@@ -49,6 +51,7 @@ func _init(encounter: Encounter) -> void:
 	_enc = weakref(encounter)
 	boss = BossBrain.new(encounter)
 	tactics = AiTactics.new(encounter)
+	spells = AiSpells.new(encounter)
 
 
 func enc() -> Encounter:
@@ -151,6 +154,16 @@ func play_turn(c: Combatant) -> CombatResult:
 		var control := ma.bonus_action(c, "control")
 		if control.is_paused():
 			return control
+		# Tactician and Honour: the best spell of its whole list, or its scroll, when it beats the weapon.
+		if e.difficulty.tactics in ["sharp", "ruthless"] and c.action_available and AiSpells.casts(c):
+			Creature.begin_read()
+			var cast_plan := spells.plan(c, action_worth(c, plan_turn(c)))
+			Creature.end_read()
+			if not cast_plan.is_empty():
+				last_plan = cast_plan
+				var cr := spells.cast(c, cast_plan)
+				if cr.ok or cr.is_paused():
+					return e.then(cr, func() -> CombatResult: return _after_main(c))
 		var spell_plan := _spell_plan(c, prof)
 		if not spell_plan.is_empty():
 			last_plan = spell_plan
@@ -536,6 +549,21 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 		score -= float(prof["oa_fear"]) * _oa_risk(c, CombatGrid.path_to(reach, cell), threats)
 	score -= cost * 0.01
 	return score
+
+
+## What a weapon plan is worth for the whole action: its score for each attack the action makes (Multiattack, Extra
+## Attack). Nothing when it can't attack this turn.
+func action_worth(c: Combatant, weapon: Dictionary) -> float:
+	if str(weapon.get("kind", "")) != "attack":
+		return 0.0
+	var n := maxi(1, enc().attacks_per_action(c))
+	if c.creature is Monster:
+		var multi := (c.creature as Monster).action("multiattack")
+		var count := 0
+		for entry: Variant in multi.get("multiattack", []):
+			count += int((entry as Dictionary).get("count", 1))
+		n = maxi(n, count)
+	return float(weapon["score"]) * n
 
 
 ## Average damage of an attack option, counting a monster's extra dice and a little for its riders.
