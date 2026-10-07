@@ -1,5 +1,71 @@
 # Ratatoille's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each plays
-# once. Quest: A Seat at the Table (narrative/companions/table.dialogue). The last talk is the quest's ending.
+# once. Quest: A Seat at the Table (narrative/companions/table.dialogue). The table talk is the quest's ending. The
+# file offers its first talk that holds: when he's Strained or Doubtful (story/approval.gd), those first; then the
+# quest's; then Warm, Close and Devoted.
+
+# --- When he's lost faith in the party (approval) ----------------------------------------------------------------
+
+~ talk_strained
+if name:ratatoille and approval.ratatoille <= strained
+-> strained
+endif
+-> END
+
+~ strained
+Narrator: There's no supper tonight. Ratatoille hands round the rations cold, still in their paper, and sits apart with his spellbook shut on his knees.
+interject name:ratatoille: I'm not cooking. Don't ask me to. I can't cook for people when it doesn't taste right in my mouth to do it.
+interject name:ratatoille: I learned magic so people would sit with me. Then I found people who would. And now I look at the table and I don't know whether I want to sit at it.
+* Then help us set it right. -> strained_right
+* We're sorry, Ratatoille. -> strained_sorry
+* Suit yourself. -> strained_cold
+
+~ strained_right
+interject name:ratatoille: Kindness first. Then cleverness. Then fire. That's the correct order of operations. You've been doing it backwards.
+interject name:ratatoille: Tomorrow I'll cook. Something simple. Bread. You can't lie with bread.
+approve ratatoille +10: You asked me to help set it right
+-> END
+
+~ strained_sorry
+interject name:ratatoille: Thank you. I accept. Provisionally. Like a soufflé: we'll see if it rises.
+approve ratatoille +5: You told me you were sorry
+-> END
+
+~ strained_cold
+Narrator: He nods without looking up and opens his spellbook to a page he obviously isn't reading.
+approve ratatoille -6: You told me to suit myself
+-> END
+
+~ talk_doubt
+if name:ratatoille and approval.ratatoille == doubtful
+-> doubt
+endif
+-> END
+
+~ doubt
+Narrator: Ratatoille is cooking tonight, which is normal. He's cooking badly, which isn't. The stew has caught on the bottom and he hasn't noticed.
+interject name:ratatoille: Non, it's fine. I'm distracted. A chef is permitted to be distracted once a century.
+interject name:ratatoille: May I say something without anyone putting a frog in my soup? Lately I don't like who we're being. It's like a sauce that's split. You keep stirring, and you can't tell when it went wrong, and then it's just wrong.
+interject name:ratatoille: At the academy I kept my head down and agreed with whoever was loudest. I came here to stop doing that. So. I'm not agreeing.
+* Good. Tell us when we're wrong. -> doubt_good
+* What would you do differently? -> doubt_what
+* Keep stirring, Rat. -> doubt_stir
+
+~ doubt_good
+interject name:ratatoille: Oh. I... yes. I will. I'll be insufferable. I'll be extremely insufferable. Thank you.
+approve ratatoille +6: You asked me to tell you when we're wrong
+-> END
+
+~ doubt_what
+interject name:ratatoille: Think first. Be kind second. Fireball third. In that order, always. Nobody listens to the order.
+approve ratatoille +3: You asked me what I'd do differently
+-> END
+
+~ doubt_stir
+interject name:ratatoille: Of course. Stirring. I'm very good at stirring and keeping quiet. I'd hoped to stop.
+approve ratatoille -4: You told me to keep stirring and keep quiet
+-> END
+
+# --- His quest ---------------------------------------------------------------------------------------------------
 
 ~ talk_refectory
 if name:ratatoille and quest.a_seat_at_the_table
@@ -35,6 +101,7 @@ elif name:godrick_pendlebrook
 interject name:godrick_pendlebrook: Oh. Oh, that's lovely. That's the best thing I've had since the mutton soup at the Wheatsheaf, and I cried at the Wheatsheaf.
 endif
 interject name:ratatoille: It's nothing. It's rations. Anybody could do it. Nobody's going to do it, but anybody could.
+approve ratatoille +2: You sat with me while I cooked
 -> END
 
 ~ talk_recipes
@@ -54,14 +121,18 @@ interject name:ratatoille: That's a terrible thing for a wizard to say. Don't te
 
 ~ recipes_both
 interject name:ratatoille: That's what I wanted. That's the whole reason I came. And it turned out to be a farm. A very good farm. I'm not bitter. I'm a little bitter. It's good wine.
+approve ratatoille +2: You told me I could be a wizard and a cook both
 -> END
 
 ~ recipes_safe
 interject name:ratatoille: Thank you. Not that it's a secret. It's just private. There's a difference. One's for hiding, and one's for keeping.
+approve ratatoille +2: You kept my spellbook's secret
 -> END
 
 ~ talk_table
-if name:ratatoille and quest.a_seat_at_the_table >= the_wizard_found and not (quest.a_seat_at_the_table >= his_own_table)
+# Approval (story/approval.gd): Strained or worse, and he doesn't lay the cloth until it's mended; Close or better, and
+# the supper is a feast that stays with everyone.
+if name:ratatoille and quest.a_seat_at_the_table >= the_wizard_found and not (quest.a_seat_at_the_table >= his_own_table) and not (approval.ratatoille <= strained)
 -> table
 endif
 -> END
@@ -86,10 +157,108 @@ endif
 Narrator: He stands up. He looks round at all of you, and visibly loses his nerve, and visibly gets it back.
 interject name:ratatoille: Ratatoille. Cook. And wizard. In that order.
 Narrator: He sits down again, very fast, and goes very pink, and starts serving before anyone can say anything.
+if approval.ratatoille >= close
+Narrator: There's a name piped on each pastry in burnt sugar, one per person, spelled wrong only once. Nobody mentions which. The supper sits warm in all of you right through the next day, like a hand on the back.
+interject name:ratatoille: I cooked for the Martikovs because they let me. I used to cook so that people would sit with me. This one I cooked because you're mine. That's different. I didn't know it was different.
+inspire party: ate Ratatoille's supper at his own table
+endif
 quest a_seat_at_the_table his_own_table
+approve ratatoille +8: You sat at my table
 interject name:godrick_pendlebrook: Hear, hear!
 interject name:thistle: COOK!
 interject name:liriel_dawnsong: Bless this table, and the one who made it.
 interject name:wren_featherfoot: In that order. I'll allow it.
 interject name:kip_smudgewick: Can I sell these? I'm not going to. I just want to know if I can.
+-> END
+
+# --- As he comes to trust the party (approval) --------------------------------------------------------------------
+
+~ talk_warm
+if name:ratatoille and approval.ratatoille >= warm and level >= 3
+-> warm
+endif
+-> END
+
+~ warm
+Narrator: Ratatoille has drawn three circles in the dirt with a stick and is standing in the middle one, looking very pleased with himself.
+interject name:ratatoille: The Circles. First Circle: cantrips. Second Circle: anything that explodes. Third Circle: me. I'm establishing them. Somebody has to.
+interject name:ratatoille: You may join, if you like. The entrance requirement is that you eat whatever I cook without asking what's in it.
+* What's in it? -> warm_what
+* (Step into the circle.) -> warm_join
+* Can I be in a Fourth Circle? -> warm_fourth
+
+~ warm_what
+interject name:ratatoille: You've failed the entrance examination. Wonderful. Nobody's ever failed before. It's very prestigious.
+approve ratatoille +1: You asked what's in it, which nobody ever does
+-> END
+
+~ warm_join
+interject name:ratatoille: Welcome to the Third Circle. You're the first member who isn't me. ...It's mushrooms. It's always mushrooms. Don't tell anyone.
+approve ratatoille +3: You joined the Third Circle
+-> END
+
+~ warm_fourth
+interject name:ratatoille: There is no Fourth Circle. ...There is now. You're it. It's above mine. Don't let it go to your head.
+approve ratatoille +2: You asked to join a circle above mine
+-> END
+
+~ talk_close
+if name:ratatoille and approval.ratatoille >= close and level >= 5
+-> close
+endif
+-> END
+
+~ close
+Narrator: Ratatoille is making a tart tonight, and making it badly: doing a step wrong, stopping, doing it right, as if he were arguing with somebody who isn't there.
+interject name:ratatoille: It's my grandmother's. She makes it every feast day, and every feast day she tells me I'm doing the crust wrong. I'm doing it her way tonight. I wanted to see if I could stand it.
+interject name:ratatoille: Before I left, I told my whole family I was going to be apprenticed to the greatest wizard of the age. My brothers laughed. My grandmother said, "He'll be back in the kitchen by spring," and they all laughed harder.
+interject name:ratatoille: And the thing is, I want to go back to the kitchen. I want to go home and cook. And I'm terrified that means she was right, and I'll only ever be the boy under the pastry table.
+* The kitchen's where you're best. That isn't small. -> close_best
+* You can go home a wizard and a cook. -> close_both
+* Your grandmother doesn't get to decide that. -> close_decide
+
+~ close_best
+interject name:ratatoille: Isn't it? No. No, it isn't. Nobody ever says that. Everybody says "only" a cook.
+approve ratatoille +3: You told me the kitchen isn't small
+-> close_end
+
+~ close_both
+interject name:ratatoille: Both. Yes. Ratatoille, Diviner of the... no. Just both. Both is enough. Both is a lot, actually.
+approve ratatoille +3: You told me I can go home a wizard and a cook
+-> close_end
+
+~ close_decide
+interject name:ratatoille: She does, though. She decides everything. She decided what I'd be called. ...But not this. You're right. Not this.
+approve ratatoille +2: You told me my grandmother doesn't get to decide
+-> close_end
+
+~ close_end
+interject name:ratatoille: Tomorrow I'll do the crust my way. I think I know which way is mine now.
+-> END
+
+~ talk_devoted
+if name:ratatoille and approval.ratatoille >= devoted and level >= 8
+-> devoted
+endif
+-> END
+
+~ devoted
+Narrator: Ratatoille has been unusually quiet for an hour, which means he's planning something. Eventually he presents you, very formally, with a page torn out of his spellbook.
+interject name:ratatoille: A recipe. My best one. My grandmother's, actually, with improvements. Many improvements. She'd be furious. It's the bread.
+interject name:ratatoille: I've never given anyone a recipe. In my family you inherit them; you don't hand them out. I'm handing it out. To you. Because if anything happens up at that castle, somebody should still be able to make it.
+* Nothing's going to happen. -> devoted_nothing
+* We'll make it together, after. -> devoted_after
+
+~ devoted_nothing
+interject name:ratatoille: Technically, something always happens. But I appreciate the optimism. It's very undercooked. I like it anyway.
+approve ratatoille +3: You promised nothing's going to happen to me
+-> devoted_end
+
+~ devoted_after
+interject name:ratatoille: After. Yes. In a proper kitchen, with a proper oven, and you'll all do it wrong and I'll fix it. That's a deal.
+approve ratatoille +3: You promised we'd make the bread together, after
+-> devoted_end
+
+~ devoted_end
+inspire name:ratatoille: gave away his family's bread
 -> END

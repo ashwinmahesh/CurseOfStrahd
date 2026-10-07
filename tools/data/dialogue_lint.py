@@ -27,7 +27,7 @@ RE_CHECK_TAG = re.compile(r"^([A-Za-z][A-Za-z ]*?)\s+DC\s+(\d+)$")
 RE_JUMP = re.compile(r"^->\s*([A-Za-z0-9_:/]+|END)$")
 RE_SET = re.compile(rf"^set\s+({ID})(?:\s*(=|\+=|-=)\s*(.+))?$")
 RE_QUEST = re.compile(rf"^quest\s+({ID})\s+({ID})$")
-RE_GIVE = re.compile(rf"^(give|take)\s+({ID})(?:\s+(\d+))?$")
+RE_GIVE = re.compile(rf"^(give|take)\s+({ID})(?:\s+(\d+))?(?:\s+to\s+([a-z]+:[a-z0-9_]+))?$")
 RE_GOLD = re.compile(r"^gold\s+([+-]\d+)$")
 RE_ATT = re.compile(rf"^attitude\s+({ID})\s+(hostile|indifferent|friendly)$")
 RE_CHECK = re.compile(r"^check\s+([A-Za-z][A-Za-z ]*?)\s+DC\s+(\d+)\s*->\s*([A-Za-z0-9_:/]+|END)(?:\s*\|\s*([A-Za-z0-9_:/]+|END))?$")
@@ -49,7 +49,7 @@ RE_GUEST = re.compile(rf"^(join|leave)\s+({ID})$")
 RE_STAGE = re.compile(rf"^(appear\s+({ID})(?:\s+at\s+({ID}))?|vanish\s+({ID}))$")
 RE_FLAG_REF = re.compile(rf"\bflag\.({ID})")
 RE_APPROVE = re.compile(r"^approve\s+((?:[a-z][a-z0-9_]*\s+[+-]\d+\s*)+)(?::\s*(.*))?$")
-RE_INSPIRE = re.compile(r"^inspire\s+([a-z]+:[a-z0-9_]+)(?::\s*(.+))?$")
+RE_INSPIRE = re.compile(r"^inspire\s+(party|[a-z]+:[a-z0-9_]+)(?::\s*(.+))?$")
 RE_APPROVAL_REF = re.compile(r"\bapproval\.([a-z][a-z0-9_]*)(?:\s*(==|!=|>=|<=|>|<)\s*([a-z0-9_+-]+))?")
 CLASS_TAGS = {"fighter", "rogue", "cleric", "wizard", "barbarian", "bard", "druid", "monk", "paladin", "ranger",
               "sorcerer", "warlock"}
@@ -175,6 +175,8 @@ def parse_file(path):
         m = RE_GIVE.match(line)
         if m:
             out["items"].append((m.group(2), where))
+            if m.group(4):
+                out["selectors"].append((m.group(4), where))
             continue
         m = RE_TAROKKA_GIVE.match(line)
         if m:
@@ -231,7 +233,8 @@ def parse_file(path):
                                      f" (inspire name:thistle: spoke her mind): {line}")
                 continue
             out.setdefault("inspires", []).append((m.group(1), where))
-            out["selectors"].append((m.group(1), where))
+            if m.group(1) != "party":
+                out["selectors"].append((m.group(1), where))
             continue
         m = RE_COMBAT.match(line)
         if m:

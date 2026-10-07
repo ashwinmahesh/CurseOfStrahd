@@ -54,6 +54,8 @@ endif
 if not (quest.a_seat_at_the_table >= the_kitchen)
 quest a_seat_at_the_table the_kitchen
 endif
+inspire name:ratatoille: cooked supper for nine Martikovs
+approve ratatoille +5: You let me cook for the Martikovs
 -> wizard_of_wines/davian:menu
 
 # --- Asking the master (mount_baratok/mordenkainen:restored_menu) --------------------------------------------------
@@ -75,6 +77,7 @@ endif
 if not (quest.a_seat_at_the_table >= the_masters_word)
 quest a_seat_at_the_table the_masters_word
 endif
+approve ratatoille +5: You took me up the mountain to ask Mordenkainen myself
 -> mount_baratok/mordenkainen:restored_menu
 
 # --- Zantras offers an audience (amber_temple/vestiges) --------------------------------------------------------------
@@ -90,12 +93,15 @@ Narrator: For a moment he leans toward the amber. You see exactly how much he wa
 set ratatoille_zantras_refused
 interject name:ratatoille: No. Thank you. I mean, no. People already sit with me. Some of them eat with their hands, but they sit with me.
 vestige_zantras: Furniture. You'll be furniture again by morning.
+inspire name:ratatoille: stepped back from Zantras's amber on his own
+approve ratatoille +4: You trusted me to step back from the amber myself
 -> amber_temple/vestiges:zantras_menu
 
 ~ zantras_pulled
 set ratatoille_zantras_refused
 Narrator: Somebody's hand closes on his collar and pulls, and he comes away from the amber blinking, as if out of a warm bath into the cold.
 interject name:ratatoille: I was going to step back. I was about to. Thank you. Let's never mention it.
+approve ratatoille +2: You pulled me back from the amber
 -> amber_temple/vestiges:zantras_menu
 
 # --- Strahd's offer (castle_ravenloft/gates_dinner) ---------------------------------------------------------------------
@@ -112,9 +118,12 @@ Strahd: Stay. Cook for me, or conjure for me, as you prefer. I will give you a t
 set ratatoille_refused_strahd
 interject name:ratatoille: No, thank you, Your Excellency. I already have a table. They're sitting at it.
 Strahd: Pity. You would have made a very good monster. You have the attention to detail.
+inspire name:ratatoille: turned down a tower at Strahd's own table
+approve ratatoille +4: You let me tell Strahd I already have a table
 -> castle_ravenloft/gates_dinner:table
 
 ~ dinner_quiet
 Narrator: Ratatoille butters his bread very carefully and eats it. Strahd watches him do it with every appearance of delight.
 Strahd: The offer stands until you leave my house. Then it falls, like everything else.
+approve ratatoille -1: You left Strahd's offer lying on the table between us
 -> castle_ravenloft/gates_dinner:table

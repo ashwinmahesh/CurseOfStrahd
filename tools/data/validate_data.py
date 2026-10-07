@@ -523,6 +523,8 @@ def approval_checks(data, p, errors):
         if rhs and rhs not in tiers and not re.fullmatch(r"[+-]?\d+", rhs):
             errors.append(f"narrative/{where}: approval.{cid}: compare with a tier ({', '.join(sorted(tiers))}) or a number, not '{rhs}'")
     for sel, where in p.get("inspires", []):
+        if sel == "party":
+            continue
         kind = sel.split(":", 1)[0]
         if kind not in ("name", "class", "species", "background", "tag", "knows"):
             errors.append(f"narrative/{where}: inspire {sel}: use name:, class:, species:, background:, tag: or knows:")

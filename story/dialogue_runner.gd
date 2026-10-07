@@ -152,8 +152,11 @@ func next() -> Dictionary:
 					return {"kind": "notice", "text": "Journal updated: %s" % Compendium.shared().display_name("quests", str(s["id"]))}
 			"give":
 				pc += 1
-				st.give_item(str(s["item"]), int(s["qty"]), speaker)
-				return {"kind": "notice", "text": "%s receives %s%s" % [_first(speaker), Compendium.shared().display_name("items", str(s["item"])),
+				var taker := speaker
+				if str(s.get("to", "")) != "" and st.find_member(str(s["to"])) != null:
+					taker = st.find_member(str(s["to"]))
+				st.give_item(str(s["item"]), int(s["qty"]), taker)
+				return {"kind": "notice", "text": "%s receives %s%s" % [_first(taker), Compendium.shared().display_name("items", str(s["item"])),
 					" ×%d" % int(s["qty"]) if int(s["qty"]) > 1 else ""]}
 			"take":
 				pc += 1

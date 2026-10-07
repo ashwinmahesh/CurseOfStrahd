@@ -5,7 +5,7 @@ extends RefCounted
 ##
 ## Statement dictionaries ({"t": type, ...}):
 ##   line {speaker, mood, text} · option {text, ok, fail, cond, check: {skill, dc}, selector} · jump {to}
-##   if {cond} · elif {cond} · else · endif · set {flag, op, value} · quest {id, stage} · give/take {item, qty}
+##   if {cond} · elif {cond} · else · endif · set {flag, op, value} · quest {id, stage} · give/take {item, qty, to}
 ##   gold {amount} · attitude {npc, value} · xp · check {skill, dc, ok, fail} · interject {selector, text}
 ##   combat {encounter} · narrate {key} · variant {cond, text} · cooldown {n} · once · end_game (ADR 0014)
 ##   approve {changes: [[companion id, delta]], why} · inspire {selector, why} (story/approval.gd, story/in_character.gd)
@@ -155,7 +155,12 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 				return {"t": "quest", "id": parts[1], "stage": parts[2]}
 		"give", "take":
 			if parts.size() >= 2:
-				return {"t": parts[0], "item": parts[1], "qty": int(parts[2]) if parts.size() > 2 else 1}
+				# `give item [qty] to name:thistle`: into that party member's pack rather than the speaker's.
+				var to := ""
+				if parts.size() >= 4 and parts[parts.size() - 2] == "to":
+					to = parts[parts.size() - 1]
+					parts = parts.slice(0, parts.size() - 2)
+				return {"t": parts[0], "item": parts[1], "qty": int(parts[2]) if parts.size() > 2 else 1, "to": to}
 		"gold":
 			if parts.size() == 2:
 				return {"t": "gold", "amount": float(parts[1])}
@@ -205,7 +210,7 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 		"approve":
 			return _approve(line)
 		"inspire":
-			var mi2 := RegEx.create_from_string("^inspire\\s+([a-z]+:[a-z0-9_]+)(?::\\s*(.+))?$").search(line)
+			var mi2 := RegEx.create_from_string("^inspire\\s+(party|[a-z]+:[a-z0-9_]+)(?::\\s*(.+))?$").search(line)
 			if mi2 != null:
 				return {"t": "inspire", "selector": mi2.get_string(1), "why": mi2.get_string(2).strip_edges()}
 		"narrate":
