@@ -262,7 +262,8 @@
           "qty": 1
         }
       ],
-      "flag": "wachter_desk_robbed"
+      "flag": "wachter_desk_robbed",
+      "owner": "lady_wachter"
     }
   ],
   "lights": [

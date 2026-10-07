@@ -207,6 +207,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Hide's Invisible condition carried into a fight: a sneaking member nobody noticed, Stealth 15+ (Hide's DC) and Three-Quarters Cover from every foe, starts hidden; it ends with the fight | location_stealth.gd hide_at_start, after_fight | tested (deviations) | test_plan_before_the_fight |
 | Foes in plain view notice the party (passive Perception against Stealth while sneaking, at once otherwise), and that fight surprises no one | location_stealth.gd after_step | tested (30 ft reach: deviations) | test_plan_before_the_fight |
 | Turn-based exploring (F7): rounds of six seconds, each member moving up to their Speed; a companion's square costs double and can't be stopped on | location_plan.gd | tested | test_plan_before_the_fight |
+| Sleight of Hand to pick a pocket; stealing from what someone owns; witnesses; private rooms; the town watch's fine (F8) | story/crime.gd, location_crime.gd, narrative/watch/ | tested (DC, witnesses and trespass: deviations) | test_stealing_and_crime |
 | Short Rest: spend Hit Point Dice (roll + Con, minimum 1), short-rest features | rest_screen.gd, character.gd | tested | test_party_screens |
 | Long Rest: all Hit Points, Hit Point Dice, slots and features; interruption | rest_screen.gd | implemented (interruption: deviations) | — |
 | Ability checks in conversation (any skill or ability, the speaking character's bonus, Advantage sources) | story/dialogue_runner.gd | tested | test_story |

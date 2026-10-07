@@ -52,3 +52,27 @@ When the party opens a fight (an attack on a waiting foe, or stepping into the f
   Three-Quarters Cover from every foe, starts the fight hidden, with the Invisible condition from Hide: attacks
   against them have Disadvantage and theirs have Advantage, until they attack, cast a spell aloud, or a foe gets a
   clear view of them. Hiding ends with the fight.
+
+## Stealing and crime (F8) and the town watch (F2)
+
+Code: `story/crime.gd` (the record), `world/exploration/location_crime.gd` (the scene), the watch's dialogue in
+`narrative/watch/`.
+
+- **Who sees a crime:** anyone standing in the location who would notice the thief as a waiting foe would: within
+  30 ft, in sight without Three-Quarters Cover, and, while the party sneaks, with a passive Perception at least the
+  thief's Stealth total. A crime nobody sees costs nothing (the hint says "Nobody saw").
+- **Owned things:** a container with an `owner` says so on its hover hint and when opened. Looking is free; taking
+  anything from it while somebody sees is stealing.
+- **Picking a pocket:** on a person's right-click menu. The leader makes a Dexterity (Sleight of Hand) check against
+  the target's passive Perception (the 2024 rules leave the DC to the DM). Success lifts the coins their station
+  gives (a noble's purse holds more than a farmer's) and anything their data puts in the pocket, once; anyone else who
+  sees it makes it a crime. Failure, and the target catches the hand. The dead, spirits, Strahd's own and anyone
+  hostile have no pocket to pick.
+- **Private rooms:** an area with `private` (and optionally `open`, a condition such as `day`). Seen inside, the party
+  is told to leave and has three more steps to do it; seen there after that, or after coming back, it's trespass.
+- **Caught:** the victim's attitude drops a step (friendly, indifferent, hostile). In a town that keeps a watch
+  (Vallaki and Krezk, `story/crime.gd` WATCH; a location may name another guard or none with `watch`), the offence
+  counts in `crime_<region>` and a watchman comes at once: pay the fine (Vallaki 25 gp, then 50; Krezk 10, then 25),
+  hand over what's in the purse, talk your way out (Persuasion or Deception DC 15 in Vallaki, Persuasion DC 15 or
+  Intimidation DC 17 in Krezk; a failed check can't be tried again), or refuse and fight two of the watch. Paying,
+  talking or the purse clears the count.
