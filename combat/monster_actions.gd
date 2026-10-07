@@ -434,9 +434,18 @@ func save_action(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult) -
 	spend(c, act)
 	var victims := save_victims(c, act, t)
 	e.log.add("info", "%s uses %s%s" % [c.name(), act.get("name", ""), (" on %s" % t.name()) if victims.size() == 1 and victims[0] == t else ""], c.id)
+	# For the view's effect (emit-only): which action, on whom.
+	e.events.append({"type": "ability", "source": "monster", "by": c.id, "key": action_key(c, act),
+		"targets": victims.map(func(v: Combatant) -> String: return v.id), "cells": []})
 	var rolled_once := {}
 	for v in victims:
 		_save_one(c, act, v, r, rolled_once)
+
+
+## A stat-block action's key for the view's effects: "<monster id>.<action id>" (art/vfx/effects.json).
+static func action_key(c: Combatant, act: Dictionary) -> String:
+	var mid := str((c.creature as Monster).data.get("id", "")) if c.creature is Monster else ""
+	return "%s.%s" % [mid, str(act.get("id", ""))]
 
 
 func _save_one(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult, rolled_once: Dictionary) -> void:

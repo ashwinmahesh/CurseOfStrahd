@@ -30,6 +30,8 @@ var catalog: ActionCatalog
 var board: ArenaBoard
 var overlay: GridOverlay
 var field: FieldView
+## Spell and ability effects (world/combat/fx/spell_fx.gd).
+var fx: SpellFx
 var rig: CameraRig
 var hud: CombatHud
 var tokens: Dictionary = {}
@@ -76,6 +78,8 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	add_child(overlay)
 	field = FieldView.create(board)
 	add_child(field)
+	fx = SpellFx.new()
+	add_child(fx)
 	hud = CombatHud.new()
 	add_child(hud)
 	hud.build(e, catalog)
@@ -977,6 +981,7 @@ func _play_events() -> void:
 		match kind:
 			"move":
 				cast_by = ""
+				fx.end_volley()
 				var tok := _tok(str(ev["id"]))
 				if tok == null:
 					continue
@@ -1003,20 +1008,31 @@ func _play_events() -> void:
 						_float(a, ("ADVANTAGE" if adv else "DISADVANTAGE") + (("\n" + why) if why != "" else ""), "candle" if adv else "mist_blue", 34)
 					var dir := (d.position - a.position)
 					var home := a.position
+					# A spell that rolls to hit (Fire Bolt, Eldritch Blast) sends its missile instead of a lunge.
+					var flew: bool = await fx.volley(a, d, bool(ev["hit"]), str(ev.get("action", "")))
+					# How the attack itself looks (art/vfx/effects.json): a monster's Fire Ray or an arrow flies, a claw
+					# or a blade leaves a slash on the hit.
+					var acue := SpellFx.attack_cue(a.combatant, str(ev.get("action", ""))) if SpellFx.enabled and not flew else {}
+					var shoots := not acue.is_empty() and str(acue["family"]) in SpellFx.MISSILES and str(acue["family"]) != "touch"
 					# The drawn attack winds up, then the token steps in on the blow; without one, just the step.
-					var drawn := str(ev["attacker"]) != cast_by and a.start_attack(Vector2(dir.x, dir.z))
+					var drawn := not flew and str(ev["attacker"]) != cast_by and a.start_attack(Vector2(dir.x, dir.z))
 					if drawn:
 						await a.wait_for_strike()
 						if _cap_tool != null and not _cap_swing_done:
 							# Capture: the first drawn attack at the moment its blow lands.
 							_cap_swing_done = true
 							_cap_tool.call("_shot", _cap_out + "_8_swing.png")
-					else:
+					elif not flew:
 						a.face(Vector2(dir.x, dir.z), false)
-					var tw2 := create_tween()
-					tw2.tween_property(a, "position", home + dir.normalized() * (0.15 if drawn else 0.3), 0.1)
-					tw2.tween_property(a, "position", home, 0.12)
-					await tw2.finished
+					if shoots:
+						await fx.missile(acue, a, d, bool(ev["hit"]))
+					elif not flew:
+						var tw2 := create_tween()
+						tw2.tween_property(a, "position", home + dir.normalized() * (0.15 if drawn else 0.3), 0.1)
+						tw2.tween_property(a, "position", home, 0.12)
+						await tw2.finished
+						if not acue.is_empty() and bool(ev["hit"]):
+							fx.on_hit(acue, a, d, bool(ev.get("critical", false)))
 					Audio.sfx(("crit" if bool(ev.get("critical", false)) else "hit") if bool(ev["hit"]) else "swing")
 					if not bool(ev["hit"]):
 						_float(d, "miss", "parchment")
@@ -1060,17 +1076,51 @@ func _play_events() -> void:
 				Audio.sfx("spell")
 				var caster := _tok(str(ev["caster"]))
 				cast_by = ""
+				fx.end_volley()
+				# How the spell looks (art/vfx/effects.json); {} plays only the flash and the floor marks.
+				var cue := SpellFx.spell_cue(str(ev["spell"])) if SpellFx.enabled else {}
 				if caster != null:
-					caster.flash(Look.color("lilac"), 0.3)
+					caster.flash((cue["colours"] as Dictionary)["glow"] if not cue.is_empty() else Look.color("lilac"), 0.3)
 					var aim := _spell_aim(ev, caster)
 					if caster.casts_with_attack() and aim != Vector2.ZERO and caster.start_attack(aim):
 						cast_by = caster.combatant.id
 						await caster.wait_for_strike()
+					if not cue.is_empty():
+						var at: Array[CombatToken] = []
+						for id: Variant in ev.get("targets", []) as Array:
+							var tt0 := _tok(str(id))
+							if tt0 != null:
+								at.append(tt0)
+						var rolls := str(Compendium.shared().spell_data(str(ev["spell"])).get("attack", "")) != ""
+						await fx.cast(cue, caster, at, ev.get("cells", []) as Array, board, rolls)
 				var cells := ev.get("cells", []) as Array
 				if not cells.is_empty():
 					overlay.show_cells("area", cells)
 					await get_tree().create_timer(0.45 * GameSettings.combat_pace()).timeout
 					overlay.clear("area")
+			"ability":
+				# A class feature or a monster's save action (Second Wind, a breath, a wail): its effect, if it has one.
+				_stop_walking(walking)
+				var ab := _tok(str(ev["by"]))
+				var acu := SpellFx.ability_cue(str(ev.get("source", "")), str(ev["key"]), ab.combatant) if SpellFx.enabled and ab != null else {}
+				if not acu.is_empty():
+					ab.flash((acu["colours"] as Dictionary)["glow"], 0.3)
+					var on: Array[CombatToken] = []
+					for id: Variant in ev.get("targets", []) as Array:
+						var ot := _tok(str(id))
+						if ot != null:
+							on.append(ot)
+					if str(ev.get("source", "")) == "monster" and not on.is_empty() and on[0] != ab:
+						var to := on[0].position - ab.position
+						if ab.start_attack(Vector2(to.x, to.z)):
+							await ab.wait_for_strike()
+					await fx.cast(acu, ab, on, ev.get("cells", []) as Array, board, false)
+			"smite":
+				# A smite spell rides the hit that just landed (Divine Smite, Searing Smite...).
+				var sk := _tok(str(ev["caster"]))
+				var sv := _tok(str(ev["target"]))
+				if SpellFx.enabled and sv != null:
+					await fx.smite(str(ev["spell"]), sk, sv)
 			"summon", "object", "object_gone":
 				_show_weapons()
 			"teleport":
@@ -1081,7 +1131,10 @@ func _play_events() -> void:
 						tt.show()
 						tt.scale = Vector3.ONE * (float(tt.combatant.size_cells) if tt.combatant.size_cells > 1 else 1.0)
 					tt.flash(Look.color("lilac"), 0.3)
+					var was := tt.global_position
 					tt.position = _token_spot(tt.combatant, ev["to"] as Vector2i)
+					if SpellFx.enabled and was.distance_to(tt.global_position) > 0.5:
+						fx.jumped(was, tt.global_position)
 					await get_tree().create_timer(0.2 * GameSettings.combat_pace()).timeout
 			"summon_creature":
 				var sc := e.get_c(str(ev["id"]))
@@ -1091,6 +1144,8 @@ func _play_events() -> void:
 					add_child(nt)
 					tokens[sc.id] = nt
 					nt.flash(Look.color("lilac"), 0.5)
+					if SpellFx.enabled:
+						fx.summoned(nt)
 			"trait":
 				# A monster trait that just saved it or changed the fight (Undead Fortitude): its name over the token.
 				var trt := _tok(str(ev["id"]))
@@ -1125,6 +1180,7 @@ func _play_events() -> void:
 					rt.position = board.cell_center(rt.combatant.cell, rt.combatant.size_cells)
 			"turn":
 				cast_by = ""
+				fx.end_volley()
 				_stop_walking(walking)
 				_refresh_all()
 			"round":

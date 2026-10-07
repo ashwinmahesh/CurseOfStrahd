@@ -53,11 +53,13 @@ illusory_self, riposte, parry, stones_endurance, interception, protective_field,
 | type | fields |
 |---|---|
 | move | id, from, to, forced |
-| attack | attacker, target, hit, critical |
+| attack | attacker, target, hit, critical, action (the attack option's id: `weapon:longsword`, `monster:claw`; `spell:fire_bolt` for a spell attack) |
 | damage / heal | id, amount (critical) |
 | condition / down / death | id |
 | death_save | id, success |
 | spell | caster, spell, cells, targets |
+| ability | source (feature, monster), by, key, targets, cells: a class feature used from the hotbar (key: its id, e.g. `second_wind`, `rage`) or a monster's saving-throw action (key: `<monster>.<action>`, e.g. `swarm_of_ravens.cacophony`), ahead of the events it caused |
+| smite | caster, spell, target: a smite spell (Divine Smite, Searing Smite...) rides the hit that just landed (the view's effect, world/combat/fx/spell_fx.gd) |
 | summon | caster, cell (Spiritual Weapon) |
 | object / object_gone | id, kind, cell: a spell object or lingering area appeared, moved or ended (`spells.zones.objects`) |
 | teleport | id, from, to (Misty Step, Bait and Switch, Engulf) |
@@ -66,6 +68,9 @@ illusory_self, riposte, parry, stones_endurance, interception, protective_field,
 | turn | id, round |
 | round | round |
 | over | outcome (victory, defeat) |
+
+`action`, `ability` and `smite` are for the view's effects only (world/combat/fx/spell_fx.gd, docs/art/spell_effects.md):
+nothing in the rules reads them, and emitting them changes no roll, order or state.
 
 ## The hotbar (`ActionCatalog`)
 

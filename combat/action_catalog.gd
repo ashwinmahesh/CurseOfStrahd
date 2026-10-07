@@ -774,6 +774,43 @@ static func _ordinal(n: int) -> String:
 ## Carries out `action` with the chosen targets / point / direction. `slot` upcasts spells (0 = lowest).
 func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vector2 = Vector2.INF,
 		dir: Vector2 = Vector2.ZERO, slot: int = 0, opts: Dictionary = {}) -> CombatResult:
+	var mark := e.events.size()
+	var r := _perform(c, action, targets, point, dir, slot, opts)
+	# A class feature in use: an `ability` event ahead of what it did, for the view's effect (emit-only).
+	var key := ability_key(action)
+	var source := "feature"
+	if key.begins_with("creature:"):
+		# A stat-block action the player runs (a summoned or shaped creature's): keyed like the monster's own.
+		source = "monster"
+		key = MonsterActions.action_key(c, {"id": key.substr(9)})
+	var told := e.events.slice(mark).any(func(ev: Variant) -> bool: return str((ev as Dictionary).get("type", "")) == "ability")
+	if key != "" and r.ok and mark <= e.events.size() and not told:
+		e.events.insert(mark, {"type": "ability", "source": source, "by": c.id, "key": key,
+			"targets": targets.map(func(x: Variant) -> String: return (x as Combatant).id), "cells": []})
+	return r
+
+
+## Class features used from the hotbar that the view shows (Second Wind, Rage, Lay On Hands...): the feature's id
+## for an `ability` event, or "" for anything else (attacks, spells, items and the common actions show themselves).
+static func ability_key(action: Dictionary) -> String:
+	var id := str(action.get("id", ""))
+	if str(action.get("kind", "")) == "feat":
+		var key := id.substr(5)
+		for pre: String in ["cf:", "rh:"]:
+			if key.begins_with(pre):
+				key = key.substr(pre.length())
+		return key
+	if id in FEATURE_ACTIONS:
+		return id
+	return ""
+
+
+const FEATURE_ACTIONS: Array[String] = ["second_wind", "action_surge", "steady_aim", "divine_spark_heal", "divine_spark_harm",
+	"turn_undead", "preserve_life"]
+
+
+func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, dir: Vector2, slot: int,
+		opts: Dictionary) -> CombatResult:
 	var t: Combatant = targets[0] as Combatant if not targets.is_empty() else null
 	var id := str(action["id"])
 	match str(action["kind"]):

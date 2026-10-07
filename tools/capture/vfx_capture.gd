@@ -1,0 +1,217 @@
+extends Node
+## Before-and-after shots of the spell effects (docs/art/spell_effects.md): the same moment of a fight in the Village
+## of Barovia at night, played once with the effects off (what combat showed before) and once with them on, as frame
+## sequences that tools/capture/vfx_sheet.py joins into side-by-side GIFs and stills.
+## make capture SCENE=res://tools/capture/vfx_capture.tscn NAME=vfx/vfx FRAMES=30 [VFX_ONLY=fire_bolt,fireball]
+## [VFX_SIDES=after] [VFX_LOOK=classic]
+
+const PARTY: Array[String] = ["silvain_aster", "hedda_ironvow", "kip_smudgewick", "godrick_pendlebrook"]
+const LOCATION := "village_of_barovia"
+const ENCOUNTER := "night_streets_dead"
+## Frames recorded per clip, and every how many frames one is kept (60 fps / 2 = 30 fps clips).
+const CLIP_FRAMES := 130
+const EVERY := 2
+
+## Each stage: who casts, where the targets stand (cells along the camera's right, forward), and the events played.
+## The events name "caster" and "t0", "t1"... and are filled in with the staged creatures' ids.
+const STAGES := {
+	"fire_bolt": {"caster": "Silvain", "targets": [[3, 0]],
+		"events": [{"type": "spell", "spell": "fire_bolt", "caster": "caster", "targets": ["t0"]},
+			{"type": "attack", "attacker": "caster", "target": "t0", "hit": true}, {"type": "damage", "id": "t0", "amount": 9}]},
+	"fireball": {"caster": "Silvain", "targets": [[4, 0], [5, 1], [4, -1], [5, -1]], "area_at": [5, 0],
+		"events": [{"type": "spell", "spell": "fireball", "caster": "caster", "targets": []},
+			{"type": "damage", "id": "t0", "amount": 27}, {"type": "damage", "id": "t1", "amount": 27},
+			{"type": "damage", "id": "t2", "amount": 13}, {"type": "damage", "id": "t3", "amount": 27}]},
+	"cure_wounds": {"caster": "Hedda", "targets": [[1, 0]], "ally": "Godrick",
+		"events": [{"type": "spell", "spell": "cure_wounds", "caster": "caster", "targets": ["t0"]}, {"type": "heal", "id": "t0", "amount": 14}]},
+	"eldritch_blast": {"caster": "Kip", "targets": [[3, 0]],
+		"events": [{"type": "spell", "spell": "eldritch_blast", "caster": "caster", "targets": ["t0", "t0"]},
+			{"type": "attack", "attacker": "caster", "target": "t0", "hit": true}, {"type": "damage", "id": "t0", "amount": 8},
+			{"type": "attack", "attacker": "caster", "target": "t0", "hit": true}, {"type": "damage", "id": "t0", "amount": 6}]},
+	"divine_smite": {"caster": "Godrick", "targets": [[1, 0]],
+		"events": [{"type": "attack", "attacker": "caster", "target": "t0", "hit": true},
+			{"type": "smite", "caster": "caster", "spell": "divine_smite", "target": "t0"}, {"type": "damage", "id": "t0", "amount": 23}]},
+}
+
+var root: Node
+var cv: CombatView
+var _only: Array[String] = []
+var _sides: Array[bool] = [false, true]
+
+
+func _ready() -> void:
+	for s in OS.get_environment("VFX_ONLY").split(",", false):
+		_only.append(s.strip_edges())
+	if OS.get_environment("VFX_SIDES") == "after":
+		_sides = [true]
+	if OS.get_environment("VFX_LOOK") != "":
+		Look.set_style(OS.get_environment("VFX_LOOK"), false)
+	GameState.reset()
+	for id in PARTY:
+		var ch := Pregens.build(id, 5)
+		ch.finish_long_rest()
+		GameState.story.party.append(ch)
+	GameState.story.location = LOCATION
+	Dice.reseed(3)
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+
+
+func capture_shots(tool: Node, out: String) -> void:
+	root.call("enter_location", LOCATION, "default")
+	await tool.call("wait_frames", 40)
+	(root.get("hud") as ExploreHud).close_narration()
+	var view := root.get("view") as LocationView
+	view.start_encounter(ENCOUNTER)
+	cv = view.combat_view
+	cv.input_locked = true
+	# Wait for a party member's turn, so nothing else moves while the stages play.
+	for i in 2400:
+		await tool.call("wait_frames", 1)
+		if cv.mode == CombatView.Mode.IDLE:
+			break
+	await tool.call("wait_frames", 60)
+	var meta := {}
+	for key: String in STAGES:
+		if not _only.is_empty() and not key in _only:
+			continue
+		var ids := _stage(STAGES[key] as Dictionary)
+		await tool.call("wait_frames", 30)
+		meta[key] = _frame_box(ids)
+		for on in _sides:
+			SpellFx.enabled = on
+			await _record(STAGES[key] as Dictionary, ids, "%s_%s_%s" % [out, key, "after" if on else "before"])
+	SpellFx.enabled = true
+	var f := FileAccess.open(out + "_meta.json", FileAccess.WRITE)
+	f.store_string(JSON.stringify(meta))
+	f.close()
+
+
+## Places the stage's caster in the open and its targets along the camera's right; frames the camera on them.
+## Returns the event names' ids: {"caster": id, "t0": id, ...}.
+func _stage(st: Dictionary) -> Dictionary:
+	var e := cv.e
+	var caster := _find(str(st["caster"]))
+	var cam := cv.rig.camera
+	var right3 := cam.global_transform.basis.x
+	var fwd3 := -cam.global_transform.basis.z
+	var right := Vector2i(roundi(right3.x), roundi(right3.z))
+	var fwd := Vector2i(roundi(fwd3.x), roundi(fwd3.z))
+	if right == Vector2i.ZERO:
+		right = Vector2i(1, 0)
+	if fwd == Vector2i.ZERO or fwd == right or fwd == -right:
+		fwd = Vector2i(-right.y, right.x)
+	var spot := _open_spot(e, right, (st["targets"] as Array).map(func(t: Variant) -> Vector2i:
+		return Vector2i(int((t as Array)[0]), int((t as Array)[1]))), fwd)
+	_put(caster, spot)
+	var ids := {"caster": caster.id}
+	var foes := e.combatants.filter(func(c: Combatant) -> bool: return c.side == &"enemy" and c.is_alive())
+	var i := 0
+	for t: Variant in st["targets"]:
+		var off := Vector2i(int((t as Array)[0]), int((t as Array)[1]))
+		var who: Combatant = _find(str(st["ally"])) if st.has("ally") else foes[i % foes.size()] as Combatant
+		_put(who, spot + right * off.x + fwd * off.y)
+		ids["t%d" % i] = who.id
+		i += 1
+	if st.has("area_at"):
+		var a := st["area_at"] as Array
+		var at := spot + right * int(a[0]) + fwd * int(a[1])
+		ids["area"] = e.spells.area_for(caster, Compendium.shared().spell_data("fireball"), Vector2(at.x + 0.5, at.y + 0.5), Vector2.ZERO, 3)
+	var mid := Vector3.ZERO
+	var n := 0
+	for k: String in ids:
+		if k == "area":
+			continue
+		mid += (cv.tokens[ids[k]] as Node3D).global_position
+		n += 1
+	mid /= float(n)
+	cv.rig.follow = null
+	cv.rig.global_position = mid + Vector3(0, 0.3, 0)
+	cv.rig.distance = 11.0 if st.has("area_at") else 8.5
+	cv.overlay.clear_all()
+	for id: String in cv.tokens:
+		(cv.tokens[id] as CombatToken).set_active(false)
+	return ids
+
+
+## A spot for the caster with room for every target offset (cells free and standing ground), in the most open part
+## of the map (no walls or houses between the camera and the stage).
+func _open_spot(e: Encounter, right: Vector2i, offsets: Array, fwd: Vector2i) -> Vector2i:
+	var best := Vector2i(-1, -1)
+	var best_score := -1
+	for y in range(2, e.grid.depth - 2):
+		for x in range(2, e.grid.width - 2):
+			var c := Vector2i(x, y)
+			var ok := _free(e, c)
+			for off: Variant in offsets:
+				var o := off as Vector2i
+				ok = ok and _free(e, c + right * o.x + fwd * o.y)
+			if not ok:
+				continue
+			var mid := c + right * 2
+			var score := 0
+			for dy in range(-5, 6):
+				for dx in range(-5, 6):
+					var n := mid + Vector2i(dx, dy)
+					if e.grid.in_bounds(n) and not e.grid.is_solid(n) and e.grid.height(n) == 0:
+						score += 1
+			if score > best_score:
+				best_score = score
+				best = c
+	return best
+
+
+func _free(e: Encounter, c: Vector2i) -> bool:
+	return e.grid.in_bounds(c) and not e.grid.is_solid(c) and e.occupant_at(c) == null and e.grid.height(c) == 0
+
+
+func _put(c: Combatant, cell: Vector2i) -> void:
+	c.cell = cell
+	var t := cv.tokens[c.id] as CombatToken
+	t.position = cv.board.cell_center(cell, c.size_cells)
+
+
+func _find(name_part: String) -> Combatant:
+	for c in cv.e.combatants:
+		if c.name().contains(name_part):
+			return c
+	return null
+
+
+## Plays the stage's events (ids filled in) and keeps every EVERY-th frame as a JPEG.
+func _record(st: Dictionary, ids: Dictionary, prefix: String) -> void:
+	var events: Array = []
+	for ev: Variant in st["events"]:
+		var d := (ev as Dictionary).duplicate(true)
+		for k: String in ["caster", "attacker", "target", "id"]:
+			if d.has(k):
+				d[k] = ids[str(d[k])]
+		if d.has("targets"):
+			d["targets"] = (d["targets"] as Array).map(func(x: Variant) -> String: return str(ids[str(x)]))
+		if str(d["type"]) == "spell":
+			d["cells"] = ids.get("area", [])
+		events.append(d)
+	cv.e.events.append_array(events)
+	cv.call("_play_events")
+	DirAccess.make_dir_recursive_absolute(prefix.get_base_dir())
+	for i in CLIP_FRAMES:
+		await get_tree().process_frame
+		if i % EVERY == 0:
+			get_viewport().get_texture().get_image().save_jpg("%s_%03d.jpg" % [prefix, i / EVERY], 0.92)
+	await get_tree().create_timer(1.5).timeout
+
+
+## The part of the screen the stage happens in (pixels: x, y, w, h), for cropping.
+func _frame_box(ids: Dictionary) -> Array:
+	var cam := cv.rig.camera
+	var lo := Vector2(INF, INF)
+	var hi := Vector2(-INF, -INF)
+	for k: String in ids:
+		if k == "area":
+			continue
+		var t := cv.tokens[ids[k]] as Node3D
+		for y: float in [0.0, 1.8]:
+			var p := cam.unproject_position(t.global_position + Vector3(0, y, 0))
+			lo = lo.min(p)
+			hi = hi.max(p)
+	return [lo.x, lo.y, hi.x - lo.x, hi.y - lo.y]
