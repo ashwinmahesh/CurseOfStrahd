@@ -12,6 +12,9 @@ var arena: CombatArena
 
 
 func before_each() -> void:
+	# Achievements of this test's own: other tests in the same process may have earned them already.
+	Achievements.path = "user://test_achievements_skirmish_%d.json" % OS.get_process_id()
+	DirAccess.remove_absolute(Achievements.path)
 	SkirmishLibrary.dir = "user://test_skirmish_screen_%d/" % OS.get_process_id()
 	SkirmishScreen.current = null
 	SkirmishScreen.kept_tab = "Party"
@@ -27,6 +30,8 @@ func after_each() -> void:
 	for f in SkirmishLibrary.list():
 		SkirmishLibrary.delete(str(f["file"]))
 	SkirmishLibrary.dir = "user://skirmish/"
+	DirAccess.remove_absolute(Achievements.path)
+	Achievements.path = ""
 	SkirmishScreen.current = null
 	CombatArena.skirmish = null
 	get_tree().paused = false
@@ -132,6 +137,13 @@ func test_tabs_draw_and_setups_save_and_load() -> void:
 	assert_true(SkirmishScreen.current == screen.setup)
 	var fight := screen.find_child("Fight", true, false) as Button
 	assert_true(fight != null and not fight.disabled)
+	# The achievements open from above Back to the title, and Esc closes them before it leaves the screen.
+	(screen.find_child("Achievements", true, false) as Button).pressed.emit()
+	await frames(2)
+	assert_true(screen.achievements != null, "the achievements panel")
+	screen.achievements.close()
+	await frames(1)
+	assert_true(screen.achievements == null)
 
 
 func test_a_skirmish_is_fought_on_its_map_and_ends_on_the_results() -> void:
@@ -166,6 +178,10 @@ func test_a_skirmish_is_fought_on_its_map_and_ends_on_the_results() -> void:
 	var row := FightTally.side_rows(arena.e, arena.results.tally, "party")[0]
 	assert_eq(int(row["kills"]), 2, "both ghouls are Wren's")
 	assert_true(arena.results.find_child("FightAgain", true, false) != null)
+	var earned := arena.results.find_child("Earned", true, false) as Label
+	assert_true(earned != null and earned.text.contains("Proving Grounds") and earned.text.contains("Overwhelming Force"),
+		"achievements the fight earned: %s" % (earned.text if earned != null else "none"))
+	assert_true(Achievements.has("skirmish_win"), "kept")
 
 
 func test_the_encounter_editor_works_on_the_sketch() -> void:

@@ -4,7 +4,8 @@ extends Control
 ## (the pregens, a quick hero of any class, or one made in the hero creator; levelled with sensible picks or by hand
 ## on the level-up screen; given any item), choose foes from the stat blocks and a map (the arena or any location),
 ## save the setup, and fight it in the combat arena (CombatArena.skirmish). The setup outlives the fight, so Change
-## the setup comes back here. Drawn in the Crimson scheme (UiKit, UiParts).
+## the setup comes back here. The achievements (N8) open from above Back to the title. Drawn in the Crimson scheme
+## (UiKit, UiParts).
 
 const TITLE_SCENE := "res://scenes/main_menu.tscn"
 const ARENA_SCENE := "res://scenes/combat/arena.tscn"
@@ -40,6 +41,8 @@ var brush: Dictionary = {}
 var field_list := "Maps"
 var _hint: Label = null
 var _strip_box: VBoxContainer = null
+## The achievements panel while it's open.
+var achievements: AchievementsPanel = null
 
 var layer: CanvasLayer
 var _frame: VBoxContainer
@@ -194,6 +197,10 @@ func _draw_side() -> void:
 	fight.tooltip_text = setup.problem()
 	fight.size_flags_horizontal = Control.SIZE_FILL
 	_side.add_child(fight)
+	var feats := UiKit.button("Achievements", open_achievements, 15, "journal")
+	feats.name = "Achievements"
+	feats.tooltip_text = "Every achievement, from the story and from Skirmish"
+	_side.add_child(feats)
 	var back := UiKit.button("Back to the title", _to_title, 15)
 	back.tooltip_text = "Esc. The setup stays as it is for next time."
 	_side.add_child(back)
@@ -1113,13 +1120,20 @@ func _fight() -> void:
 	get_tree().change_scene_to_file(ARENA_SCENE)
 
 
+## The achievements (N8), over the Skirmish frame.
+func open_achievements() -> void:
+	if achievements == null:
+		achievements = AchievementsPanel.open(self)
+		achievements.closed.connect(func() -> void: achievements = null)
+
+
 func _to_title() -> void:
 	current = setup
 	get_tree().change_scene_to_file(TITLE_SCENE)
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if creation != null:
+	if creation != null or achievements != null:
 		return
 	if event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()

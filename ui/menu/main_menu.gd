@@ -1,7 +1,7 @@
 extends Control
 ## The title screen (plan §5.6 Start step): New game (choose up to four from the roster to travel, the rest wait at camp;
 ## one custom hero the player makes joins the roster: owner, 2026-10-06), Continue (the newest save), Load, Skirmish
-## and the Character Lab (ui/skirmish/), the Phase 2 combat arena, and Quit.
+## and the Character Lab (ui/skirmish/, with the achievements), the Phase 2 combat arena, and Quit.
 
 
 var _creation: CreationScreen = null
