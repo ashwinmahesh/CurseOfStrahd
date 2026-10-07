@@ -27,7 +27,7 @@ FOLDERS = {
     "random_encounters": "random_table", "dark_gifts": "dark_gift",
     "endings": "ending",
     "cutscenes": "cutscene",
-    "strahd": {"visits": "strahd_visits"},
+    "strahd": {"visits": "strahd_visits", "attention": "strahd_attention"},
     "schedule": "schedule",
 }
 
@@ -764,6 +764,14 @@ def story_checks(data, errors, need):
     cutscene_checks(data, parsed, errors)
     castle_checks(data, parsed, errors, cond, flags_set, dialogue_refs)
     schedule_checks(data, errors, cond, flags_set, dialogue_refs)
+    attention = data.get("strahd", {}).get("attention", {})
+    for m in attention.get("marks", []):
+        cond(m["when"], f"strahd/attention.json {m['id']}")
+        if re.search(r"\battention\b", m["when"]):
+            errors.append(f"strahd/attention.json {m['id']}: a mark can't read attention itself")
+    tier_ids = [t["id"] for t in attention.get("tiers", [])]
+    if attention and sorted(t["min"] for t in attention["tiers"]) != [t["min"] for t in attention["tiers"]]:
+        errors.append("strahd/attention.json: tiers go from the lowest min to the highest")
     for ref, w in dialogue_refs:
         fkey, _, node = ref.rpartition(":")
         if fkey not in parsed:

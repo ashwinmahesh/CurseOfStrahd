@@ -97,7 +97,8 @@ inspire name:thistle: spoke her mind
 `spell:speak_with_dead` (an exploring spell the party cast is still running), `at:vallaki_st_andrals` (where the party is), `option:respec` (the owner's
 switch), and `interject guest:ireena: Text` for a story ally travelling with the party,
 `approval.thistle >= close` (a companion's approval tier, compared by rank, so `<= strained` is Strained or worse;
-or a number), `gold >= 25` (the party's purse), `level >= 3`
+or a number), `attention >= marked` (Strahd's attention: a number or a tier from data/strahd/attention.json, F9),
+`gold >= 25` (the party's purse), `level >= 3`
 (the lowest character level in the party), `check.last` (the last check succeeded), joined with `and`, `or`, `not`
 and parentheses.
 
