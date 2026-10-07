@@ -3894,6 +3894,556 @@
         "pal_walnut"
       ],
       "triangles": 208
+    },
+    "harpsichord": {
+      "file": "art/models/harpsichord.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "harpsichord",
+        "harpsichord_back"
+      ],
+      "size": [
+        0.9,
+        0.973,
+        0.45
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_ivory",
+        "pal_tan",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 536
+    },
+    "bathtub": {
+      "file": "art/models/bathtub.glb",
+      "mount": "free",
+      "stands_for": [
+        "bathtub",
+        "bathtub_back"
+      ],
+      "size": [
+        0.874,
+        0.458,
+        0.518
+      ],
+      "materials": [
+        "pal_ivory",
+        "pal_mist_blue",
+        "pal_pewter",
+        "pal_vellum"
+      ],
+      "triangles": 404
+    },
+    "crib": {
+      "file": "art/models/crib.glb",
+      "mount": "free",
+      "stands_for": [
+        "crib",
+        "crib_back"
+      ],
+      "size": [
+        0.927,
+        0.709,
+        0.457
+      ],
+      "materials": [
+        "pal_mist_blue",
+        "pal_tan",
+        "pal_walnut"
+      ],
+      "triangles": 612
+    },
+    "stocks": {
+      "file": "art/models/stocks.glb",
+      "mount": "free",
+      "stands_for": [
+        "stocks",
+        "stocks_back"
+      ],
+      "size": [
+        0.96,
+        1.01,
+        0.36
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_umber",
+        "pal_void",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 216
+    },
+    "fence": {
+      "file": "art/models/fence.glb",
+      "mount": "free",
+      "stands_for": [
+        "fence",
+        "fence_back"
+      ],
+      "size": [
+        0.993,
+        0.753,
+        0.11
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_rust"
+      ],
+      "triangles": 48
+    },
+    "pipe_organ": {
+      "file": "art/models/pipe_organ.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "pipe_organ",
+        "pipe_organ_front"
+      ],
+      "size": [
+        0.98,
+        2.12,
+        0.65
+      ],
+      "materials": [
+        "pal_ivory",
+        "pal_peat",
+        "pal_pewter",
+        "pal_silver",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 966
+    },
+    "surgery_table": {
+      "file": "art/models/surgery_table.glb",
+      "mount": "free",
+      "stands_for": [
+        "surgery_table",
+        "surgery_table_back"
+      ],
+      "size": [
+        0.95,
+        0.57,
+        0.595
+      ],
+      "materials": [
+        "pal_blood_deep",
+        "pal_bone",
+        "pal_leather",
+        "pal_pewter",
+        "pal_silver",
+        "pal_stone_deep",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 288
+    },
+    "wine_vat": {
+      "file": "art/models/wine_vat.glb",
+      "mount": "free",
+      "stands_for": [
+        "wine_vat"
+      ],
+      "size": [
+        0.891,
+        0.7,
+        0.877
+      ],
+      "materials": [
+        "pal_bruise_deep",
+        "pal_stone_deep",
+        "pal_walnut"
+      ],
+      "triangles": 632
+    },
+    "tub_wooden": {
+      "file": "art/models/tub_wooden.glb",
+      "mount": "free",
+      "stands_for": [
+        "tub_wooden",
+        "tub_wooden_back"
+      ],
+      "size": [
+        0.687,
+        0.493,
+        0.687
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone_deep",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 384
+    },
+    "barrel_spigot": {
+      "file": "art/models/barrel_spigot.glb",
+      "mount": "free",
+      "stands_for": [
+        "barrel_spigot",
+        "barrel_spigot_back"
+      ],
+      "size": [
+        0.72,
+        0.78,
+        0.9
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 400
+    },
+    "bier": {
+      "file": "art/models/bier.glb",
+      "mount": "free",
+      "stands_for": [
+        "bier"
+      ],
+      "size": [
+        0.95,
+        0.69,
+        0.45
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 252
+    },
+    "wine_press": {
+      "file": "art/models/wine_press.glb",
+      "mount": "free",
+      "stands_for": [
+        "wine_press",
+        "wine_press_back"
+      ],
+      "size": [
+        1.3,
+        1.69,
+        1.0
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_bruise",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 492,
+      "big": true
+    },
+    "millstone": {
+      "file": "art/models/millstone.glb",
+      "mount": "free",
+      "stands_for": [
+        "millstone"
+      ],
+      "size": [
+        0.551,
+        0.57,
+        0.2
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_slate",
+        "pal_stone_deep"
+      ],
+      "triangles": 188
+    },
+    "receipt_table": {
+      "file": "art/models/receipt_table.glb",
+      "mount": "free",
+      "stands_for": [
+        "receipt_table"
+      ],
+      "size": [
+        0.62,
+        0.555,
+        0.48
+      ],
+      "materials": [
+        "pal_blood_deep",
+        "pal_umber",
+        "pal_vellum",
+        "pal_void",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 228
+    },
+    "stone_bench": {
+      "file": "art/models/stone_bench.glb",
+      "mount": "free",
+      "stands_for": [
+        "stone_bench",
+        "stone_bench_back"
+      ],
+      "size": [
+        0.7,
+        0.723,
+        0.347
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_slate"
+      ],
+      "triangles": 48
+    },
+    "lantern_post": {
+      "file": "art/models/lantern_post.glb",
+      "mount": "free",
+      "stands_for": [
+        "lantern_post"
+      ],
+      "size": [
+        0.52,
+        1.9,
+        0.2
+      ],
+      "materials": [
+        "glow_candle",
+        "pal_ink"
+      ],
+      "triangles": 232
+    },
+    "rowboat": {
+      "file": "art/models/rowboat.glb",
+      "mount": "free",
+      "stands_for": [
+        "rowboat",
+        "rowboat_back"
+      ],
+      "size": [
+        0.949,
+        0.285,
+        0.416
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 124
+    },
+    "dollhouse": {
+      "file": "art/models/dollhouse.glb",
+      "mount": "free",
+      "stands_for": [
+        "dollhouse",
+        "dollhouse_back"
+      ],
+      "size": [
+        0.623,
+        0.883,
+        0.44
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_dollhouse",
+        "spr_dollhouse_back"
+      ],
+      "triangles": 4740,
+      "sculpted": true
+    },
+    "puppet_theatre": {
+      "file": "art/models/puppet_theatre.glb",
+      "mount": "free",
+      "stands_for": [
+        "puppet_theatre",
+        "puppet_theatre_back"
+      ],
+      "size": [
+        0.973,
+        1.034,
+        0.392
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_puppet_theatre",
+        "spr_puppet_theatre_back"
+      ],
+      "triangles": 8396,
+      "sculpted": true
+    },
+    "harp": {
+      "file": "art/models/harp.glb",
+      "mount": "free",
+      "stands_for": [
+        "harp",
+        "harp_back"
+      ],
+      "size": [
+        0.646,
+        1.177,
+        0.165
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_harp",
+        "spr_harp_back"
+      ],
+      "triangles": 3756,
+      "sculpted": true
+    },
+    "rocking_horse": {
+      "file": "art/models/rocking_horse.glb",
+      "mount": "free",
+      "stands_for": [
+        "rocking_horse",
+        "rocking_horse_back"
+      ],
+      "size": [
+        0.619,
+        0.687,
+        0.192
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_rocking_horse",
+        "spr_rocking_horse_back"
+      ],
+      "triangles": 5236,
+      "sculpted": true
+    },
+    "spinning_wheel": {
+      "file": "art/models/spinning_wheel.glb",
+      "mount": "free",
+      "stands_for": [
+        "spinning_wheel",
+        "spinning_wheel_back"
+      ],
+      "size": [
+        0.738,
+        0.785,
+        0.336
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_spinning_wheel",
+        "spr_spinning_wheel_back"
+      ],
+      "triangles": 6008,
+      "sculpted": true
+    },
+    "cage_covered": {
+      "file": "art/models/cage_covered.glb",
+      "mount": "free",
+      "stands_for": [
+        "cage_covered",
+        "cage_covered_back"
+      ],
+      "size": [
+        0.942,
+        0.981,
+        0.774
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_cage_covered",
+        "spr_cage_covered_back"
+      ],
+      "triangles": 8036,
+      "sculpted": true
+    },
+    "crib_shroud": {
+      "file": "art/models/crib_shroud.glb",
+      "mount": "free",
+      "stands_for": [
+        "crib_shroud",
+        "crib_shroud_back"
+      ],
+      "size": [
+        0.606,
+        0.687,
+        0.503
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_crib_shroud",
+        "spr_crib_shroud_back"
+      ],
+      "triangles": 5820,
+      "sculpted": true
+    },
+    "fishing_nets": {
+      "file": "art/models/fishing_nets.glb",
+      "mount": "free",
+      "stands_for": [
+        "fishing_nets",
+        "fishing_nets_back"
+      ],
+      "size": [
+        0.969,
+        1.009,
+        0.343
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_fishing_nets",
+        "spr_fishing_nets_back"
+      ],
+      "triangles": 5704,
+      "sculpted": true
+    },
+    "signpost_broken": {
+      "file": "art/models/signpost_broken.glb",
+      "mount": "free",
+      "stands_for": [
+        "signpost_broken",
+        "signpost_broken_back"
+      ],
+      "size": [
+        0.692,
+        1.177,
+        0.139
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_signpost_broken",
+        "spr_signpost_broken_back"
+      ],
+      "triangles": 3224,
+      "sculpted": true
+    },
+    "stocks_broken": {
+      "file": "art/models/stocks_broken.glb",
+      "mount": "free",
+      "stands_for": [
+        "stocks_broken"
+      ],
+      "size": [
+        0.771,
+        0.686,
+        0.351
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_stocks_broken"
+      ],
+      "triangles": 6652,
+      "sculpted": true
+    },
+    "oil_lamp": {
+      "file": "art/models/oil_lamp.glb",
+      "mount": "free",
+      "stands_for": [
+        "oil_lamp"
+      ],
+      "size": [
+        0.477,
+        0.785,
+        0.244
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_oil_lamp"
+      ],
+      "triangles": 2824,
+      "sculpted": true
     }
   }
 }

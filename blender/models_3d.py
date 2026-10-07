@@ -2516,6 +2516,246 @@ def toy_chest(p):
             segs=8)
 
 
+# --- The remaining objects (rollout batch 6c) ------------------------------------------------------------------
+
+@model("harpsichord", "against_wall", ["harpsichord", "harpsichord_back"])
+def harpsichord(p):
+    """The 2D harpsichord: a long wing-shaped case on turned legs, its lid propped open over the strings."""
+    yc = -0.3
+    case = [(-0.45, -0.18), (0.45, -0.18), (0.45, 0.02), (0.25, 0.14), (-0.1, 0.18), (-0.45, 0.18)]
+    p.prism(case, 0.2, (0, yc, 0.55), "pal_ink", rot=(90, 0, 0))
+    p.prism([(x * 0.94, z * 0.9) for x, z in case], 0.01, (0, yc, 0.655), "pal_tan", rot=(90, 0, 0))
+    p.box((0.7, 0.12, 0.03), (-0.05, yc - 0.21, 0.56), "pal_ivory")
+    for k in range(12):
+        p.box((0.025, 0.06, 0.012), (-0.36 + k * 0.06, yc - 0.19, 0.58), "pal_void")
+    p.prism([(x * 0.98, z * 0.98) for x, z in case], 0.012, (0, yc - 0.02, 0.86), "pal_ink", rot=(90 - 38, 0, 0))
+    p.cyl(0.008, 0.3, (0.3, yc + 0.08, 0.66), "pal_umber", segs=5, rot=(-15, 0, 0))
+    for x, y in ((-0.4, -0.12), (0.4, -0.12), (-0.4, 0.12), (0.1, 0.12)):
+        p.lathe([(0.025, 0.0), (0.03, 0.1), (0.02, 0.25), (0.035, 0.4), (0.03, 0.45)], (x, yc + y, 0), "pal_ink", segs=8)
+
+
+@model("bathtub", "free", ["bathtub", "bathtub_back"])
+def bathtub(p):
+    """The 2D bathtub: a copper-coloured roll-top tub on clawed feet, grey water inside."""
+    oval = [(0.42 * math.cos(a), 0.24 * math.sin(a)) for a in (2 * math.pi * k / 24 for k in range(24))]
+    p.prism(oval, 0.36, (0, 0, 0.08 + 0.18), "pal_vellum", rot=(90, 0, 0))
+    p.prism([(x * 1.04, y * 1.08) for x, y in oval], 0.035, (0, 0, 0.44), "pal_ivory", rot=(90, 0, 0))
+    p.prism([(x * 0.88, y * 0.8) for x, y in oval], 0.012, (0, 0, 0.452), "pal_mist_blue", rot=(90, 0, 0))
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.lathe([(0.035, 0.0), (0.02, 0.05), (0.035, 0.09)], (sx * 0.3, sy * 0.15, 0), "pal_pewter", segs=6)
+
+
+@model("crib", "free", ["crib", "crib_back"])
+def crib(p):
+    """The 2D crib: a slatted wooden cot on rockers, a little blanket inside."""
+    W, D = 0.8, 0.45
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((0.04, 0.04, 0.7), (sx * (W / 2 - 0.02), sy * (D / 2 - 0.02), 0.35), "pal_walnut")
+        p.tube(curve((sx * (W / 2 + 0.05), -D / 2, 0.04), (sx * (W / 2 + 0.05), 0.0, -0.03), (sx * (W / 2 + 0.05), D / 2, 0.04), n=6),
+               0.015, "pal_walnut", segs=5)
+    for z in (0.18, 0.62):
+        for s in (-1, 1):
+            p.box((W, 0.03, 0.03), (0, s * (D / 2 - 0.02), z), "pal_walnut")
+            p.box((0.03, D, 0.03), (s * (W / 2 - 0.02), 0, z), "pal_walnut")
+    for k in range(9):
+        x = -W / 2 + 0.06 + k * (W - 0.12) / 8
+        for s in (-1, 1):
+            p.cyl(0.008, 0.44, (x, s * (D / 2 - 0.02), 0.18), "pal_walnut", segs=4)
+    p.box((W - 0.06, D - 0.06, 0.03), (0, 0, 0.2), "pal_tan")
+    p.box((W * 0.5, D - 0.1, 0.04), (0.08, 0, 0.23), "pal_mist_blue", soft=0.015)
+
+
+@model("stocks", "free", ["stocks", "stocks_back"])
+def stocks(p):
+    """The 2D stocks: two heavy posts and a hinged board with holes for head and hands."""
+    for s in (-1, 1):
+        p.box((0.1, 0.12, 0.95), (s * 0.4, 0, 0.475), "pal_umber")
+    p.box((0.9, 0.1, 0.28), (0, 0, 0.7), WOOD)
+    for s in (-1, 1):
+        p.box((0.08, 0.12, 0.88), (s * 0.4, -0.001, 0.45), WOOD)
+    p.box((0.9, 0.11, 0.02), (0, 0, 0.7), "pal_peat")
+    for x, r in ((-0.25, 0.04), (0.0, 0.07), (0.25, 0.04)):
+        p.cyl(r, 0.115, (x, -0.06, 0.7), "pal_void", rot=(-90, 0, 0), segs=10)
+    p.box((0.96, 0.16, 0.06), (0, 0, 0.98), "pal_umber")
+    for s in (-1, 1):
+        p.box((0.14, 0.36, 0.05), (s * 0.4, 0, 0.025), "pal_peat")
+
+
+@model("fence", "free", ["fence", "fence_back"])
+def fence(p):
+    """The 2D fence: split rails between weathered posts."""
+    rng = p.rng
+    for x in (-0.44, 0.44):
+        p.box((0.08, 0.08, 0.75), (x, 0, 0.375), "pal_peat", rot=(0, rng.uniform(-3, 3), 0))
+    for z in (0.25, 0.55):
+        p.box((0.98, 0.04, 0.09), (0, -0.05, z + rng.uniform(-0.02, 0.02)), "pal_rust", rot=(0, rng.uniform(-2, 2), 0))
+
+
+@model("pipe_organ", "against_wall", ["pipe_organ", "pipe_organ_front"])
+def pipe_organ(p):
+    """The 2D pipe organ: a carved case with tiers of tin pipes, a keyboard and bench."""
+    W, D = 0.98, 0.5
+    yc = -D / 2
+    p.box((W, D, 0.9), (0, yc, 0.45), "pal_peat")
+    p.box((W - 0.1, 0.2, 0.06), (0, yc - D / 2 - 0.05, 0.62), "pal_ivory")
+    for k in range(14):
+        p.box((0.04, 0.12, 0.015), (-0.4 + k * 0.062, yc - D / 2 - 0.04, 0.655), "pal_void")
+    p.box((W - 0.1, 0.06, 0.12), (0, yc - D / 2 - 0.02, 0.72), "pal_umber")
+    p.box((W, 0.2, 0.9), (0, -0.1, 1.35), "pal_peat")
+    n = 11
+    for k in range(n):
+        x = -W / 2 + 0.06 + k * (W - 0.12) / (n - 1)
+        h = 0.5 + 0.55 * (1 - abs(k - (n - 1) / 2) / ((n - 1) / 2))
+        p.cyl(0.034, h, (x, -0.24, 0.92), "pal_silver", segs=10)
+        p.lathe([(0.034, 0.0), (0.0, 0.05)], (x, -0.24, 0.92 + h), "pal_pewter", segs=10)
+        p.box((0.03, 0.012, 0.02), (x, -0.273, 0.98), "pal_void")
+    crest = [(-W / 2, 0.0), (W / 2, 0.0), (W / 2, 0.1), (0.2, 0.18), (0.0, 0.32), (-0.2, 0.18), (-W / 2, 0.1)]
+    p.prism(crest, 0.06, (0, -0.06, 1.8), "pal_umber")
+
+
+@model("surgery_table", "free", ["surgery_table", "surgery_table_back"])
+def surgery_table(p):
+    """The 2D surgery table: a stained slab on an iron frame, straps and a tray of instruments."""
+    p.box((0.95, 0.45, 0.06), (0, 0, 0.52), WOOD)
+    p.box((0.4, 0.46, 0.02), (0.05, 0, 0.56), "pal_bone", soft=0.008)
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((0.04, 0.04, 0.5), (sx * 0.42, sy * 0.18, 0.25), "pal_stone_deep")
+    for x in (-0.2, 0.2):
+        p.box((0.06, 0.47, 0.02), (x, 0, 0.555), "pal_leather")
+    for _ in range(4):
+        p.box((p.rng.uniform(0.1, 0.25), p.rng.uniform(0.08, 0.2), 0.005), (p.rng.uniform(-0.3, 0.3), p.rng.uniform(-0.12, 0.12), 0.553),
+              "pal_blood_deep")
+    p.box((0.2, 0.12, 0.02), (0.36, -0.3, 0.42), "pal_pewter")
+    for k in range(3):
+        p.box((0.12, 0.01, 0.01), (0.36, -0.33 + k * 0.03, 0.435), "pal_silver")
+
+
+@model("wine_vat", "free", ["wine_vat"])
+def wine_vat(p):
+    """The 2D wine vat: a great open-topped staved tub of dark wine, iron-hooped."""
+    prof = [(0.0, 0.0), (0.4, 0.0), (0.44, 0.7), (0.4, 0.7), (0.36, 0.08), (0.0, 0.08)]
+    p.lathe(prof, (0, 0, 0), "pal_walnut", segs=18, smooth=False)
+    for z in (0.12, 0.4, 0.62):
+        r = 0.4 + 0.04 * z / 0.7
+        p.lathe([(r, -0.02), (r + 0.01, -0.02), (r + 0.01, 0.02), (r, 0.02)], (0, 0, z), "pal_stone_deep", segs=18, smooth=False)
+    p.cyl(0.39, 0.01, (0, 0, 0.6), "pal_bruise_deep", segs=18)
+
+
+@model("tub_wooden", "free", ["tub_wooden", "tub_wooden_back"])
+def tub_wooden(p):
+    """The 2D wooden washtub: a low staved tub with grey water and a scrubbing board."""
+    p.lathe([(0.0, 0.0), (0.3, 0.0), (0.34, 0.36), (0.31, 0.36), (0.27, 0.05), (0.0, 0.05)], (0, 0, 0), "pal_walnut", segs=16,
+            smooth=False)
+    for z in (0.08, 0.3):
+        p.lathe([(0.3 + 0.04 * z / 0.36, -0.015), (0.31 + 0.04 * z / 0.36, 0.0), (0.3 + 0.04 * z / 0.36, 0.015)], (0, 0, z),
+                "pal_stone_deep", segs=16, smooth=False)
+    p.cyl(0.3, 0.01, (0, 0, 0.26), "pal_slate", segs=16)
+    p.box((0.2, 0.03, 0.4), (0.15, 0.05, 0.3), WOOD, rot=(20, 0, 30))
+
+
+@model("barrel_spigot", "free", ["barrel_spigot", "barrel_spigot_back"])
+def barrel_spigot(p):
+    """The 2D tapped barrel: a big cask on its side on a cradle, a brass spigot in its head."""
+    prof = [(0.0, 0.0), (0.3, 0.0), (0.34, 0.12), (0.35, 0.4), (0.34, 0.68), (0.3, 0.8), (0.0, 0.8)]
+    p.lathe(prof, (0, 0.4, 0.42), "pal_walnut", rot=(90, 0, 0), segs=16, smooth=False)
+    for y in (0.3, -0.3):
+        p.lathe([(0.35, -0.02), (0.36, 0.0), (0.35, 0.02)], (0, y, 0.42), "pal_stone_deep", rot=(90, 0, 0), segs=16, smooth=False)
+    for x in (-0.25, 0.25):
+        p.box((0.08, 0.7, 0.12), (x, 0, 0.06), "pal_umber")
+    p.cyl(0.02, 0.1, (0, -0.4, 0.3), "pal_tan", rot=(90, 0, 0), segs=6)
+    p.box((0.02, 0.02, 0.05), (0, -0.48, 0.32), "pal_tan")
+
+
+@model("bier", "free", ["bier"])
+def bier(p):
+    """The 2D bier: a stone slab on carved supports, a shroud over the shape laid on it."""
+    p.box((0.95, 0.45, 0.08), (0, 0, 0.5), "pal_slate")
+    for x in (-0.35, 0.35):
+        p.box((0.16, 0.38, 0.46), (x, 0, 0.23), "pal_stone")
+    p.box((0.75, 0.3, 0.12), (0.02, 0, 0.6), "pal_bone", soft=0.05)
+    p.box((0.22, 0.22, 0.14), (-0.3, 0, 0.62), "pal_bone", soft=0.07)
+
+
+@model("wine_press", "free", ["wine_press", "wine_press_back"], big=True)
+def wine_press(p):
+    """The 2D wine press: a heavy timber frame over a slatted basket, a great screw and a turning bar."""
+    for s in (-1, 1):
+        p.box((0.12, 0.12, 1.6), (s * 0.55, 0, 0.8), "pal_blood")
+        p.box((0.12, 0.6, 0.1), (s * 0.55, 0, 0.05), "pal_blood")
+    p.box((1.3, 0.16, 0.18), (0, 0, 1.6), "pal_blood")
+    p.box((1.24, 0.14, 0.12), (0, 0, 1.05), "pal_blood")
+    p.cyl(0.07, 0.75, (0, 0, 0.85), "pal_walnut", segs=10)
+    p.cyl(0.03, 0.9, (-0.45, 0, 1.2), "pal_walnut", rot=(0, 90, 0), segs=6)
+    p.cyl(0.36, 0.1, (0, 0, 0.75), "pal_walnut", segs=14)
+    for k in range(16):
+        a = 2 * math.pi * k / 16
+        p.box((0.05, 0.03, 0.5), (0.36 * math.cos(a), 0.36 * math.sin(a), 0.35), "pal_walnut", rot=(0, 0, math.degrees(a)))
+    p.cyl(0.5, 0.12, (0, 0, 0.0), "pal_umber", segs=16)
+    p.cyl(0.34, 0.01, (0, 0, 0.12), "pal_bruise", segs=16)
+
+
+@model("millstone", "free", ["millstone"])
+def millstone(p):
+    """The 2D millstone: a round dressed stone with a squared eye, standing on its edge."""
+    p.cyl(0.28, 0.14, (0, -0.07, 0.29), "pal_pewter", rot=(-90, 0, 0), segs=18, smooth=False)
+    p.box((0.08, 0.16, 0.08), (0, 0, 0.29), "pal_stone_deep")
+    for k in range(8):
+        a = math.radians(k * 45)
+        p.box((0.2, 0.004, 0.012), (0.12 * math.cos(a), -0.072, 0.29 + 0.12 * math.sin(a)), "pal_slate", rot=(0, -k * 45, 0))
+    p.box((0.4, 0.2, 0.04), (0, 0, 0.02), "pal_slate")
+
+
+@model("receipt_table", "free", ["receipt_table"])
+def receipt_table(p):
+    """The 2D receipt table: a small table piled with ledgers, papers and a quill."""
+    _table_frame(p, 0.62, 0.48, 0.5, WOOD, "pal_umber")
+    rng = p.rng
+    for k in range(5):
+        p.box((0.15, 0.2, 0.003), (rng.uniform(-0.15, 0.15), rng.uniform(-0.1, 0.1), 0.502 + k * 0.003), "pal_vellum",
+              rot=(0, 0, rng.uniform(-30, 30)))
+    p.box((0.18, 0.24, 0.05), (0.15, 0.05, 0.53), "pal_blood_deep", rot=(0, 0, 10))
+    p.lathe([(0.0, 0.0), (0.025, 0.0), (0.028, 0.04), (0.01, 0.05), (0.0, 0.05)], (-0.2, 0.12, 0.5), "pal_void", segs=8)
+
+
+@model("stone_bench", "free", ["stone_bench", "stone_bench_back"])
+def stone_bench(p):
+    """The 2D stone bench: a slab seat on two blocks."""
+    p.box((0.7, 0.32, 0.08), (0, 0, 0.36), "pal_pewter")
+    p.box((0.7, 0.08, 0.32), (0, 0.13, 0.56), "pal_pewter", rot=(-6, 0, 0))
+    for x in (-0.25, 0.25):
+        p.box((0.14, 0.26, 0.32), (x, 0, 0.16), "pal_slate")
+
+
+@model("lantern_post", "free", ["lantern_post"])
+def lantern_post(p):
+    """A street lantern: an iron post with a scrolled arm and a glazed lantern, its candle lit."""
+    p.cyl(0.04, 1.9, (0, 0, 0.0), "pal_ink", segs=8)
+    p.lathe([(0.1, 0.0), (0.07, 0.1), (0.045, 0.2), (0.0, 0.2)], (0, 0, 0), "pal_ink", segs=8)
+    p.tube(curve((0.0, 0.0, 1.8), (0.25, 0.0, 1.95), (0.32, 0.0, 1.8), n=6), 0.016, "pal_ink")
+    p.box((0.14, 0.14, 0.2), (0.32, 0, 1.62), "glow_candle")
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((0.015, 0.015, 0.22), (0.32 + sx * 0.075, sy * 0.075, 1.62), "pal_ink")
+    p.lathe([(0.1, 0.0), (0.0, 0.08)], (0.32, 0, 1.72), "pal_ink", segs=4, smooth=False)
+    p.cyl(0.012, 0.06, (0.32, 0, 1.78), "pal_ink", segs=4)
+
+
+@model("rowboat", "free", ["rowboat", "rowboat_back"])
+def rowboat(p):
+    """The 2D rowboat: a plank skiff drawn up on the shore, thwarts across it, an oar inside."""
+    outline = [(-0.45, -0.17), (0.2, -0.2), (0.4, -0.12), (0.48, 0.0), (0.4, 0.12), (0.2, 0.2), (-0.45, 0.17)]
+    p.prism(outline, 0.24, (0, 0, 0.14), WOOD, rot=(90, 0, 0))
+    p.prism([(x * 0.86, y * 0.78) for x, y in outline], 0.012, (0, 0, 0.255), "pal_peat", rot=(90, 0, 0))
+    p.prism([(x * 1.02, y * 1.04) for x, y in outline], 0.02, (0, 0, 0.26), "pal_umber", rot=(90, 0, 0))
+    for x in (-0.2, 0.15):
+        p.box((0.07, 0.34, 0.025), (x, 0, 0.24), "pal_walnut")
+    p.cyl(0.014, 0.8, (-0.4, -0.05, 0.27), "pal_tan", rot=(0, 90, 4), segs=5)
+    p.box((0.1, 0.03, 0.01), (0.42, -0.05, 0.3), "pal_tan")
+
+
 # --- Depth from the 2D art (rollout batch 6) -------------------------------------------------------------------
 # Figurative pieces (statues, stuffed animals, skeletons, dolls) are sculpted from their own 2D art: the sprite's
 # silhouette becomes a solid whose front swells toward its middle, painted with the sprite (its back with the 2D back
@@ -2625,7 +2865,9 @@ SCULPTED = {
     "frozen_birds": (0.6, 0.35), "roc_nest": (0.7, 0.8), "dragon_bones": (1.6, 0.5), "mobile": (1.2, 0.15),
     "coats": (1.2, 0.25), "sheeted_furniture": (1.1, 0.6), "refuse_mound": (0.6, 0.8), "bones": (0.4, 0.6),
     "sword_leaning": (0.8, 0.15), "jewel_box": (0.7, 0.7), "music_box": (0.7, 0.7), "cage_hanging": (1.4, 0.6),
-    "wicker_cage": (1.4, 0.6),
+    "wicker_cage": (1.4, 0.6), "dollhouse": (0.9, 0.7), "puppet_theatre": (1.2, 0.4), "harp": (1.2, 0.25),
+    "rocking_horse": (0.7, 0.3), "spinning_wheel": (0.8, 0.45), "cage_covered": (1.0, 0.8), "crib_shroud": (0.7, 0.8),
+    "fishing_nets": (1.2, 0.35), "signpost_broken": (1.2, 0.2), "stocks_broken": (0.7, 0.45), "oil_lamp": (0.8, 0.5),
 }
 BIG_SCULPTED = {"horse", "dragon_bones"}
 
