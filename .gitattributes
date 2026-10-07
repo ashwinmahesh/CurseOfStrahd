@@ -15,5 +15,3 @@ art/sourced/**/*.ogg filter=lfs diff=lfs merge=lfs -text
 art/sourced/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
 # The Modern look's leaf cards (tools/art/plant_cards.py, docs/art/plants.md).
 art/plants/**/*.png filter=lfs diff=lfs merge=lfs -text
-# The painted backdrops past a map's edge (tools/art/build_vistas.py, docs/art/atmosphere.md "Vistas").
-art/vistas/**/*.png filter=lfs diff=lfs merge=lfs -text
