@@ -527,16 +527,15 @@ func _wall(c: Vector2i) -> void:
 		_tree(c)
 		return
 	if theme in INTERIORS or theme == "dungeon":
-		# A lone wall square in a room is a pillar in the place's style (BuildingKit, docs/art/building_kit.md).
-		var room := _room_at(c)
-		if BuildingKit.pillar(self, c, room["floor"] as Material if room.has("floor") else _floor_mat):
-			return
 		# Cut-away walls (low enough to see over from the camera), capped with a darker band.
 		var colour := {"manor": "umber", "tavern": "walnut", "shop": "walnut", "townhouse": "umber", "church": "slate",
 			"attic": "peat"}.get(theme, "stone_deep") as String
 		var h := 1.15
 		var room_wall := _wall_room(c)
 		var wall_mat: Material = room_wall["wall"] as Material if room_wall.has("wall") else (_wall_tex if _wall_tex != null else Look.cel(colour))
+		# The building kit's interiors: pillars, and full-height walls that cut away (docs/art/building_kit.md).
+		if BuildingKit.interior_wall(self, c, wall_mat):
+			return
 		_box("Wall", Vector3(1, h, 1), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), wall_mat)
 		# The cut face reads as the dark inside of the wall, so rooms stand out of the dark rather than out of a slab.
 		_box("WallCap", Vector3(1.02, 0.1, 1.02), Vector3(c.x + 0.5, h + 0.05, c.y + 0.5), Look.cel(CUT_FACE))

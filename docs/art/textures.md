@@ -84,7 +84,9 @@ and wall set (49, `tools/art/surface_recipes.json`) was repainted for the Modern
    (`art/generated/look_targets/*_ab.png`, at 1376 px) as the style reference. Swatches are kept as WebP in
    `art/generated/surfaces/` (ignored by Godot).
 2. **Seamless** by quilting along minimum-error cuts (`blender/make_surface.py`, reusing make_texture's seams), low
-   light flattened, a 1536 px tile.
+   light flattened, cut from the swatch at up to 1536 px and stored at 1024 px (`crop` in a recipe takes less of the
+   swatch where Gemini drew the pieces too small: the checker and marble floors). Each tile is brought to the old
+   tile's average brightness (between 0.85x and 1.8x), since the scenes' light was set by the old tiles.
 3. **Variants** (organic surfaces: cobbles, mud, grass, thatch, plaster, flagstones, rock, snow ...): two more tiles
    quilted from the first tile's own content, so they keep its pieces, scale and colours in a different layout; the
    first tile's border band is cut into each along seams that follow the dark joints, so variants sit side by side in
@@ -94,14 +96,17 @@ and wall set (49, `tools/art/surface_recipes.json`) was repainted for the Modern
    at half size.
 5. Written as WebP (albedo q92, normal q95, ORM q90) as `art/textures/<theme>/<surface>_2k[_b|_c][_n|_orm].webp`; the
    manifest entry's `hd_file`, `normal_file`, `orm_file`, `variants` and `hd_source` point at them.
-   `art/textures/macro_noise.png` is the macro noise (`macro_file`). Imports: VRAM with mipmaps, normal maps
-   compressed as normal maps (`tools/art/set_import.py [--normal]`).
+   `art/textures/macro_noise.png` is the macro noise (`macro_file`). Imports: VRAM with mipmaps, S3TC rather than
+   BPTC (BPTC took about an hour for the sets on the busy Mac; S3TC under a minute), normal maps compressed as normal
+   maps (`tools/art/set_import.py --fast [--normal]`).
 
     python3 tools/art/build_surfaces.py [--generate] [--only village/cobbles ...] [--jobs 4] [--macro]
-    make import && python3 tools/art/set_import.py <the new albedo and ORM files> && python3 tools/art/set_import.py --normal <the _n files> && make import
+    make import && python3 tools/art/set_import.py --fast <the new albedo and ORM files> && python3 tools/art/set_import.py --fast --normal <the _n files> && make import
 
-The kit's own surfaces are new sets here too: `kit/oak` (beams), `kit/painted_wood` (weathered paint with no board
-seams, for tinting) and `kit/dressed_stone` (trims). Gemini draws at its own scale: check a new swatch's pieces against
+The kit's own surfaces are new sets here too: `kit/oak` (beams, darkened by the recipe's `grade`; `kit/oak_v` is it
+turned a quarter so posts have their grain running up, `derived` in the recipes), `kit/plaster` (the timber houses'
+lime plaster), `kit/painted_wood` (weathered paint with no board seams, tinted per Vallaki house by
+`BuildingKit.painted`) and `kit/dressed_stone` (trims). Gemini draws at its own scale: check a new swatch's pieces against
 the old tile's (a recipe's `pieces` can recut it, but its spectral count mistakes mortar lines for pieces, so check).
 
 ## How a surface takes the light (the Modern finish, Improvement Ideas W3)

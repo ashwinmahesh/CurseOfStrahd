@@ -41,8 +41,15 @@ the place and the square, so a place looks the same every time. Decals are Godot
 Checks: `tests/integration/test_hd_surfaces.gd` (every decal loads; the village, a dungeon and a castle hall are
 dressed in the Modern look, with marks on walls; Classic has none).
 
+A rule's `tint` darkens or colours its marks and `gloss` makes them wet (puddles get an ORM that's almost
+mirror-smooth, so lamps glint off them).
+
+## Scattered things
+
+A rule with `scatter` instead of `decals` strews small kit models (`blender/building_kit.py` `kit_scatter_*`:
+pebbles, stones, roots, bones, debris, twigs, toadstools) the same way: on squares nothing stands on, turned and sized
+by the square, one small node each so a hidden room's things hide with it. They never block a square.
+
 ## Not done yet
 
-- Scattered small 3D things (stones, roots, bones, debris) by the same rules.
 - Wheel ruts along the roads lane 8's shaped ground carves (`GroundRelief.roads()`).
-- Puddles that reflect (a decal ORM with low roughness).
