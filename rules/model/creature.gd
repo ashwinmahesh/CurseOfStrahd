@@ -137,7 +137,43 @@ func gear_d20_sources(_keys: Array[String]) -> Dictionary:
 
 # --- Modifiers -----------------------------------------------------------------------------------
 
+## A read (begin_read ... end_read): the AI weighing every square and target of a turn, or the combat HUD redrawn,
+## asks the same unchanged creatures thousands of questions. While one is open each creature gathers its modifiers
+## once and answers every question from them. Nothing may change a creature (gear, conditions, effects, level)
+## inside a read; keep it around pure lookups, and end it in the same function that began it.
+static var _reading := 0
+static var _read_serial := 0
+var _read_at := -1
+var _read_all: Array[Modifier] = []
+var _read_by_stat: Dictionary = {}
+var _read_ctx: Dictionary = {}
+
+
+static func begin_read() -> void:
+	if _reading == 0:
+		_read_serial += 1
+	_reading += 1
+
+
+static func end_read() -> void:
+	_reading = maxi(0, _reading - 1)
+	if _reading == 0:
+		_read_serial += 1   # what this read gathered is never used again
+
+
 func all_modifiers() -> Array[Modifier]:
+	if _reading > 0 and _read_at == _read_serial:
+		return _read_all
+	var out := _gather_modifiers()
+	if _reading > 0:
+		_read_at = _read_serial
+		_read_all = out
+		_read_by_stat = {}
+		_read_ctx = {}
+	return out
+
+
+func _gather_modifiers() -> Array[Modifier]:
 	var out: Array[Modifier] = []
 	var level := character_level()
 	for m in intrinsic_modifiers():
@@ -162,10 +198,15 @@ func all_modifiers() -> Array[Modifier]:
 
 
 func modifiers_for(stat: StringName) -> Array[Modifier]:
+	var all := all_modifiers()
+	if _reading > 0 and _read_by_stat.has(stat):
+		return _read_by_stat[stat] as Array[Modifier]
 	var out: Array[Modifier] = []
-	for m in all_modifiers():
+	for m in all:
 		if m.stat == stat:
 			out.append(m)
+	if _reading > 0:
+		_read_by_stat[stat] = out
 	return out
 
 
@@ -183,6 +224,18 @@ func _base_ctx() -> Dictionary:
 
 
 func formula_context(slot_level: int = 0) -> Dictionary:
+	if _reading > 0:
+		all_modifiers()   # starts this creature's read if it hasn't yet (which empties what it held)
+		var held: Variant = _read_ctx.get(slot_level)
+		if held != null:
+			return (held as Dictionary).duplicate()
+		var made := _formula_context(slot_level)
+		_read_ctx[slot_level] = made.duplicate()
+		return made
+	return _formula_context(slot_level)
+
+
+func _formula_context(slot_level: int) -> Dictionary:
 	var ctx := _base_ctx()
 	# All six scores from one pass over the modifiers (an attack's numbers ask for this context many times a turn).
 	var raises := _ability_modifiers()

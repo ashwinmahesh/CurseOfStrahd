@@ -502,9 +502,12 @@ func refresh() -> void:
 				shown = c
 				break
 	_round_label.text = "Round %d" % maxi(1, e.round_no)
+	# Every card, bar and button reads the same unchanged creatures: one read (Creature.begin_read).
+	Creature.begin_read()
 	_refresh_strip()
 	_refresh_party()
 	_refresh_hotbar()
+	Creature.end_read()
 	refresh_log()
 
 
