@@ -1,6 +1,7 @@
 extends TestCase
 ## The roster (owner, 2026-10-06): up to four travel, the rest wait at camp, and the player swaps them outside fights
-## and conversations; those at camp are saved, level with the party, and the world swaps the figures.
+## and conversations; those at camp are saved, keep their level until they rejoin (owner, 2026-10-07), and the world
+## swaps the figures.
 
 const LOC := {
 	"id": "test_camp", "name": "Test Camp", "region": "test", "summary": "A fixture.",
@@ -71,13 +72,23 @@ func test_camp_is_saved_and_loaded() -> void:
 	assert_eq(StoryState.from_dict(old).bench.size(), 0, "a save from before the roster has nobody at camp")
 
 
-func test_someone_at_camp_catches_up_on_rejoining() -> void:
+func test_someone_at_camp_keeps_their_level_and_takes_the_missed_ones_on_return() -> void:
+	# Owner, 2026-10-07: no levelling at camp; the levels missed wait, and the player takes each one on rejoining.
 	var st := _story(["ilse_varga", "tamsin_tealeaf", "hedda_ironvow"], ["silvain_aster"])
-	st.milestones = 3
+	st.milestones = 2
 	var silvain := st.bench[0]
-	assert_eq(silvain.character_level(), 1)
+	assert_eq(st.levels_waiting(silvain), 2)
 	assert_true(st.swap_members(st.party[2], silvain))
-	assert_eq(silvain.character_level(), st.target_level(), "levelled to the party's milestone by their plan")
+	assert_eq(silvain.character_level(), 1, "rejoining doesn't level them by itself")
+	assert_true(st.can_level_up(silvain), "the level-up screen offers it")
+	for i in 2:
+		var up := LevelUpController.new(silvain)
+		up.choose_class("wizard")
+		up.take_fixed_hit_points()
+		TestChars.auto_pick(up.pending_choices, up.choose)
+		assert_true(up.confirm(), str(up.errors()))
+	assert_eq(silvain.character_level(), st.target_level(), "two level-ups, one after the other")
+	assert_eq(st.levels_waiting(silvain), 0)
 
 
 func test_the_roster_screen_and_the_world_follow_the_party() -> void:
@@ -111,3 +122,40 @@ func test_the_roster_screen_and_the_world_follow_the_party() -> void:
 	for cb in view.members:
 		assert_ne(cb.creature, tamsin)
 	root.call("close_screen")
+
+
+func test_the_level_up_screen_walks_through_each_waiting_level() -> void:
+	Compendium.shared().tables["locations"]["test_camp"] = LOC.duplicate(true)
+	GameState.reset()
+	var st := GameState.story
+	for id: String in ["ilse_varga", "tamsin_tealeaf"]:
+		var ch := Pregens.build(id, 1)
+		ch.finish_long_rest()
+		st.party.append(ch)
+	st.milestones = 2
+	st.location = "test_camp"
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	for i in 3:
+		await get_tree().process_frame
+	root.call("open_screen", "roster", 0)
+	await get_tree().process_frame
+	var labels: Array[String] = []
+	for l in (root.get("screen") as Node).find_children("*", "Label", true, false):
+		labels.append((l as Label).text)
+	assert_true("▲ 2 level ups waiting" in labels, "the roster card says what's waiting")
+	root.call("open_screen", "level_up", 0)
+	await get_tree().process_frame
+	var ilse := st.party[0]
+	var screen := root.get("screen") as LevelUpScreen
+	TestChars.auto_pick(screen.ctl.pending_choices, screen.ctl.choose)
+	screen.call("_confirm")
+	await get_tree().process_frame
+	assert_eq(ilse.character_level(), 2)
+	assert_true(root.get("screen") is LevelUpScreen, "the next waiting level opens straight away")
+	var next := root.get("screen") as LevelUpScreen
+	TestChars.auto_pick(next.ctl.pending_choices, next.ctl.choose)
+	next.call("_confirm")
+	await get_tree().process_frame
+	assert_eq(ilse.character_level(), 3)
+	assert_true(root.get("screen") == null, "and the screen closes once they're caught up")

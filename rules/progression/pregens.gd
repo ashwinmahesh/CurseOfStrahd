@@ -46,29 +46,3 @@ static func roster_ids() -> Array[String]:
 			names[str(d["id"])] = str(d.get("name", d["id"]))
 	out.sort_custom(func(a: String, b: String) -> bool: return str(names[a]) < str(names[b]))
 	return out
-
-
-## Brings a pregen who sat out some milestones up to `level` by their level plan (roster members level with the
-## party). Returns false for a character without a plan (a custom hero levels up from the sheet instead).
-static func catch_up(ch: Character, level: int) -> bool:
-	var data := Compendium.shared().get_entry("pregens", ch.id)
-	if data.is_empty() or bool((ch.build.get("appearance", {}) as Dictionary).get("custom", false)):
-		return false
-	for step: Variant in data.get("level_plan", []):
-		var plan := step as Dictionary
-		var at := int(plan["level"])
-		if at <= ch.character_level():
-			continue
-		if at > level:
-			break
-		var up := LevelUpController.new(ch)
-		up.choose_class(str(plan["class"]))
-		if int(plan.get("hp", 0)) > 0:
-			((up.build["levels"] as Array).back() as Dictionary)["hp"] = int(plan["hp"])
-		var choices := plan.get("choices", {}) as Dictionary
-		for key: String in choices:
-			up.choose(key, choices[key] as Array)
-		if not up.confirm():
-			return false
-	return true
-
