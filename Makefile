@@ -17,7 +17,7 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              echo "Files changed since the last import: importing first."; $(G) --headless --import > /dev/null 2>&1; \
              touch $(STAMP); fi
 
-.PHONY: run arena smoke import test lint validate ci check palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens
+.PHONY: run arena smoke import test lint validate ci check lfs-quiet palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens
 
 ## Imports first when scripts or assets changed since the last import (a merge can add a class_name or images that
 ## the editor cache doesn't know yet, and the game then stops at a parse error).
@@ -41,6 +41,11 @@ import:
 
 test: import
 	$(G) --headless --quit-after 100000 res://tests/test_runner.tscn -- $(if $(ONLY),--only=$(ONLY),) $(if $(FILES),--files=$(FILES),) 2>&1 | $(LOGCHK)
+
+
+## Git LFS noise: old art and clips that only changed timestamp stop showing as modified (tools/lfs_quiet.sh).
+lfs-quiet:
+	@sh tools/lfs_quiet.sh
 
 validate:
 	python3 tools/data/validate_data.py

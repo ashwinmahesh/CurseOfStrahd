@@ -6,7 +6,7 @@ Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log 
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
 ## Commands (add new ones to the Makefile)
-make run | arena | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd] | validate | lint | check [DRY=1] | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
+make run | arena | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd] | validate | lint | check [DRY=1] | ci | lfs-quiet | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
 make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | keys [ONLY="id …"] [KINDS=…] | creator [GENERATE=1] | pregens [ONLY="id …"] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
@@ -67,9 +67,9 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
 - Git LFS (owner decision 2026-10-07; .gitattributes): new or changed images under art/generated, art/sprites,
   art/portraits, art/creator and art/textures, voice mp3s, and sound clips under art/sourced, are stored in LFS. Older
   files stay plain blobs until they change: never `git lfs migrate` or `git add --renormalize`, and stage only files
-  you changed (an old image whose timestamp moved shows as modified and would be uploaded to LFS). This repo's
-  worktrees share its LFS setup; a separate clone needs `git lfs install` (art/generated isn't used at run time, so
-  `lfs.fetchexclude` can skip it).
+  you changed (an old image whose timestamp moved shows as modified and would be uploaded to LFS; `make lfs-quiet`
+  clears that noise without converting anything). This repo's worktrees share its LFS setup; a separate clone needs
+  `git lfs install` (art/generated isn't used at run time, so `lfs.fetchexclude` can skip it).
 
 ## Voice (ADR 0013)
 - Spoken lines: ElevenLabs (eleven_v4, owner decision 2026-10-06) via `make voice` only; model, format and each
