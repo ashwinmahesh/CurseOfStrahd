@@ -164,7 +164,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		_hover = pick
 		var thing := view.thing_at(pick) if pick.x >= 0 else {}
 		# Turn-based: the floor's hint is the walk's cost against this round's movement, its trail drawn on the ground.
-		var label := str(thing.get("label", "")) if not thing.is_empty() or not view.planning else LocationPlan.hover_text(view, pick)
+		var label := str(thing.get("label", ""))
+		if thing.is_empty() and view.planning:
+			label = LocationPlan.hover_text(view, pick)
+		elif thing.is_empty() and view.sneaking and pick.x >= 0:
+			label = LocationStealth.hover_warning(view, pick)   # who can see you (U10)
 		LocationPlan.preview(view, pick if thing.is_empty() else Vector2i(-1, -1))
 		hud.hint(label, (event as InputEventMouseMotion).position)
 		Cursors.show(Cursors.for_thing(thing))

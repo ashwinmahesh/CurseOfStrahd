@@ -292,6 +292,27 @@ static func after_step(view: LocationView) -> bool:
 	return false
 
 
+## Who can see you (U10): what a foe in plain view would make of the leader standing on `cell` now ("<foe> would
+## see <name> there"), or "". The lantern goes with them, and a foe asleep (`surprise: enemies`) sees nobody.
+static func hover_warning(view: LocationView, cell: Vector2i) -> String:
+	if view.in_combat or view.members.is_empty() or view.waiting.is_empty() or not view.grid.in_bounds(cell):
+		return ""
+	var who := view.leader()
+	var was := who.cell
+	who.cell = cell
+	var e := watch(view)
+	var out := ""
+	for w in view.waiting:
+		if not is_shown(w) or str(LocationFights.spec_for(view, str(w["encounter"])).get("surprise", "")) == "enemies":
+			continue
+		var foe := w["foe"] as Combatant
+		if notices(e, foe, who, view.sneaking, total_for(view, who.creature) if view.sneaking else 0):
+			out = "%s would see %s there" % [foe.name(), who.name().get_slice(" ", 0)]
+			break
+	who.cell = was
+	return out
+
+
 ## The party opens the fight with this waiting foe (a strike from plan mode or the right-click menu).
 static func strike(view: LocationView, encounter_id: String) -> bool:
 	if view.in_combat:
