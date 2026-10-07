@@ -480,6 +480,7 @@
     {
       "id": "den_guards",
       "trigger": "enter_area:den_mouth_cave",
+      "waiting": true,
       "when": "not flag.zuleika_vouched and not flag.den_guards_cleared and not flag.emil_freed and not flag.pack_resolved and level >= 8",
       "text": "Shapes uncurl from the straw along the walls, and the cave is suddenly full of yellow eyes. Nobody told them you were coming. They are taking it personally.",
       "monsters": [
@@ -539,6 +540,7 @@
     {
       "id": "den_guards",
       "trigger": "enter_area:den_mouth_cave",
+      "waiting": true,
       "when": "not flag.zuleika_vouched and not flag.den_guards_cleared and not flag.emil_freed and not flag.pack_resolved and level >= 7",
       "text": "Shapes uncurl from the straw along the walls, and the cave is suddenly full of yellow eyes. Nobody told them you were coming. They are taking it personally.",
       "monsters": [
@@ -591,6 +593,7 @@
     {
       "id": "den_guards",
       "trigger": "enter_area:den_mouth_cave",
+      "waiting": true,
       "when": "not flag.zuleika_vouched and not flag.den_guards_cleared and not flag.emil_freed and not flag.pack_resolved",
       "text": "Shapes uncurl from the straw along the walls, and the cave is suddenly full of yellow eyes. Nobody told them you were coming. They are taking it personally.",
       "monsters": [

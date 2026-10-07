@@ -73,10 +73,10 @@ lint: import
 ci: validate lint test
 
 ## The quick check while working (CLAUDE.md says when it is enough): only what covers the files changed since main,
-## from validate to the tests that use them (tools/check.py). make check [BASE=<branch>] [DRY=1]
+## from validate to the tests that use them (tools/check.py). make check [BASE=<branch>] [DEPTH=n|all] [DRY=1]
 check:
 	@$(FRESH)
-	python3 tools/check.py $(if $(BASE),--base $(BASE),) $(if $(DRY),--dry-run,)
+	python3 tools/check.py $(if $(BASE),--base $(BASE),) $(if $(DEPTH),--depth $(DEPTH),) $(if $(DRY),--dry-run,)
 
 palette:
 	python3 tools/art/build_palette.py

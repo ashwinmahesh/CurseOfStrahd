@@ -203,7 +203,10 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Thieves' Tools (2024): Dexterity check + Proficiency Bonus with the tools, Advantage with Sleight of Hand too; pick a lock or disarm a trap | location_view.gd _unlock, _disarm | implemented | test_exploration |
 | Forcing a lock: Strength (Athletics) | location_view.gd _unlock | deviated (DC + 2, see deviations) | test_exploration |
 | Traps: save, damage (half on a success), condition | location_view.gd _spring_trap | implemented | — |
-| Stealth and surprise: a sneaking party's lowest Stealth against each enemy's passive Perception | location_view.gd _stealth_surprise | implemented | — |
+| Surprise (2024): a creature caught unawares as a fight starts has Disadvantage on Initiative; a sneaking party surprises each foe that noticed none of them (passive Perception against each member's Stealth, 5 lower in dim light; out of sight or behind Three-Quarters Cover goes unnoticed) | location_stealth.gd surprised_at_start, notices | tested (sneaking: deviations) | test_plan_before_the_fight |
+| Hide's Invisible condition carried into a fight: a sneaking member nobody noticed, Stealth 15+ (Hide's DC) and Three-Quarters Cover from every foe, starts hidden; it ends with the fight | location_stealth.gd hide_at_start, after_fight | tested (deviations) | test_plan_before_the_fight |
+| Foes in plain view notice the party (passive Perception against Stealth while sneaking, at once otherwise), and that fight surprises no one | location_stealth.gd after_step | tested (30 ft reach: deviations) | test_plan_before_the_fight |
+| Turn-based exploring (F7): rounds of six seconds, each member moving up to their Speed; a companion's square costs double and can't be stopped on | location_plan.gd | tested | test_plan_before_the_fight |
 | Short Rest: spend Hit Point Dice (roll + Con, minimum 1), short-rest features | rest_screen.gd, character.gd | tested | test_party_screens |
 | Long Rest: all Hit Points, Hit Point Dice, slots and features; interruption | rest_screen.gd | implemented (interruption: deviations) | — |
 | Ability checks in conversation (any skill or ability, the speaking character's bonus, Advantage sources) | story/dialogue_runner.gd | tested | test_story |
