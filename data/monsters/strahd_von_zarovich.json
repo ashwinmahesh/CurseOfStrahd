@@ -496,6 +496,7 @@
           "hover": true
         },
         "actions": [],
+        "art": "strahd_mist",
         "save_advantage": [
           "str",
           "dex",

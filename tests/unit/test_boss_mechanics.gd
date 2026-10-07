@@ -588,14 +588,15 @@ func test_the_heart_of_sorrow_wards_strahd_in_his_castle_until_it_breaks() -> vo
 	assert_eq(s.creature.ward_hp, 20)
 
 
-## Strahd's bat and wolf shapes wear the bat and wolf sprites when he changes (combat_view swaps the token's art);
-## a shape without its own art keeps his.
-func test_strahds_bat_and_wolf_shapes_wear_their_sprites() -> void:
+## Strahd's shapes wear their own sprites when he changes (combat_view swaps the token's art): the bat's and the
+## wolf's, and his own drifting mist (strahd_mist).
+func test_strahds_shapes_wear_their_sprites() -> void:
 	var data := Compendium.shared().monster_data("strahd_von_zarovich")
 	var art := {}
 	for shape: Variant in (data["forms"] as Dictionary)["shapes"] as Array:
 		art[str((shape as Dictionary)["id"])] = str((shape as Dictionary).get("art", ""))
 	assert_eq(art.get("bat"), "bat")
 	assert_eq(art.get("wolf"), "wolf")
-	for id: String in ["bat", "wolf"]:
+	assert_eq(art.get("mist"), "strahd_mist")
+	for id: String in ["bat", "wolf", "mist"]:
 		assert_true(DirectionalSprite.has_attack(DirectionalSprite.frames_for(str(art[id]))), "%s has a sheet" % id)
