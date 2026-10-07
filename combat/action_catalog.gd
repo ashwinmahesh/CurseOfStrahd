@@ -1139,6 +1139,8 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 		lines.append("Disadvantage: %s" % s)
 	if int(sit["cover"]) > 0:
 		lines.append("%s (+%d AC) from %s" % [CombatGrid.COVER_NAMES[int(sit["cover"])], int(sit["cover_bonus"]), sit["cover_by"]])
+	if int(sit.get("height_bonus", 0)) != 0:
+		lines.append(EncounterAttacks.height_line(int(sit.get("height_bonus", 0))))
 	lines.append("AC %d%s" % [int(hc["ac"]), _known_defenses(t)])
 	for fxm: Effect in t.creature.effects:
 		if fxm.data.has("mark_by"):

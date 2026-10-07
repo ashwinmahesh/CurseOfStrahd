@@ -983,8 +983,11 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			var opt := {"melee": str(data["attack"]) == "melee", "profile": WeaponProfile.new()}
 			var sit := e.attack_situation(c, o, opt)
 			var ac := o.creature.ac_value() + int(sit["cover_bonus"])
-			var needs := clampi(ac - (prev["attack"] as Breakdown).total(), 2, 20)
-			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [(prev["attack"] as Breakdown).total(), ac, needs])
+			var to_hit := (prev["attack"] as Breakdown).total() + int(sit.get("height_bonus", 0))
+			var needs := clampi(ac - to_hit, 2, 20)
+			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [to_hit, ac, needs])
+			if int(sit.get("height_bonus", 0)) != 0:
+				lines2.append(EncounterAttacks.height_line(int(sit.get("height_bonus", 0))))
 			var sa := sit["advantage"] as Array
 			var sd := sit["disadvantage"] as Array
 			if not sa.is_empty() and sd.is_empty():
