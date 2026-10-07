@@ -17,6 +17,9 @@ var tags: Array[Label3D] = []
 var _lying: Sprite3D
 var _id := "godrick_pendlebrook"
 var _mount_id := "otherworldly_steed"
+## --labels=Before,After names the two figures; --short stops after walking and attacking (a frames comparison).
+var _labels: Array[String] = ["Before", "After"]
+var _short := false
 
 
 func _ready() -> void:
@@ -25,6 +28,10 @@ func _ready() -> void:
 			_id = a.substr(5)
 		elif a.begins_with("--mount="):
 			_mount_id = a.substr(8)
+		elif a.begins_with("--labels="):
+			_labels.assign(a.substr(9).split(","))
+		elif a == "--short":
+			_short = true
 	var env := WorldEnvironment.new()
 	env.environment = Environment.new()
 	env.environment.background_mode = Environment.BG_COLOR
@@ -49,8 +56,8 @@ func _ready() -> void:
 	_lying.position = before.position + Vector3(0, 0.03, 0)
 	_lying.visible = false
 	line.add_child(_lying)
-	tags.append(_tag("Before", before.position, line))
-	tags.append(_tag("After", after.position, line))
+	tags.append(_tag(_labels[0], before.position, line))
+	tags.append(_tag(_labels[1], after.position, line))
 	rig = CameraRig.new()
 	add_child(rig)
 	rig.distance = 6.5
@@ -82,7 +89,7 @@ func _sprite(id: String, at: Vector3, parent: Node3D) -> DirectionalSprite:
 func _tag(text: String, at: Vector3, parent: Node3D) -> Label3D:
 	var l := Label3D.new()
 	l.text = text
-	l.font_size = 40
+	l.font_size = 28 if _short else 40
 	l.pixel_size = 0.006
 	l.position = at + Vector3(0, 0.02, 0.9)
 	l.rotation_degrees = Vector3(-90, 0, 0)
@@ -128,6 +135,25 @@ func _run() -> void:
 		before.attack()
 		after.attack()
 		await _wait(1.4)
+	if _short:
+		title.text = "Walking, up close"
+		rig.distance = 4.5
+		for steps: int in [2, 1]:
+			_face(steps)
+			before.moving = true
+			after.moving = true
+			await _wait(2.5)
+		before.moving = false
+		after.moving = false
+		title.text = "Attacking, up close"
+		for steps: int in [2, 1]:
+			_face(steps)
+			await _wait(0.4)
+			before.attack()
+			after.attack()
+			await _wait(1.4)
+		get_tree().quit()
+		return
 	title.text = "Taking a hit"
 	_face(1)
 	for i in 2:

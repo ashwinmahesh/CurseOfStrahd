@@ -82,6 +82,7 @@ def args():
     p.add_argument("--views", type=int, choices=[3, 5], help="views on the sheet (default: detect)")
     p.add_argument("--saturate", type=float, default=1.0, help="chroma boost before quantizing (cutout.saturate)")
     p.add_argument("--no-clean", action="store_true", help="skip the smoothing and island merge (comparison only)")
+    p.add_argument("--ss", type=int, default=1, help="render at this many times the cell and area-average down")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
 
@@ -360,7 +361,7 @@ def main():
     # A trotting wolf at full stretch is longer than the square cell: four-legged sheets get wider cells (the
     # height, and so the size in game, is the same).
     cell_w = int(round(a.cell * 1.5)) if a.body == "quadruped" and not a.static else a.cell
-    scene = cutout.reset_scene(cell_w, a.cell)
+    scene = cutout.reset_scene(cell_w * a.ss, a.cell * a.ss)
     cam = cutout.ortho_camera(scene, (0, -10, FIGURE_HEIGHT * 0.52), (math.radians(90), 0, 0), FIGURE_HEIGHT * 1.12)
     cam.data.sensor_fit = "VERTICAL"
     views = {}
@@ -400,7 +401,7 @@ def main():
             path = tmp / f"{d}_{f}.png"
             scene.render.filepath = str(path)
             bpy.ops.render.render(write_still=True)
-            frames.append(cutout.load_rgba(path))
+            frames.append(cutout.downsample(cutout.load_rgba(path), a.ss))
     walk = cutout.pack_grid(frames, frames_per_dir)
     walk = cutout.saturate(cutout.binarize_alpha(walk), a.saturate)
     walk = cutout.quantize(walk, neutral_area=0.0 if a.no_clean else 0.5)

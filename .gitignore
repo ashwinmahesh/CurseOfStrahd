@@ -14,6 +14,10 @@ __pycache__/
 # Sprite sheets keep their import settings (mipmaps, VRAM compression) in the repo.
 !art/sprites/**/walk.png.import
 !art/sprites/**/attack.png.import
+!art/sprites/**/hurt.png.import
+!art/sprites/**/ride.png.import
+!art/sprites/**/sneak.png.import
+!art/sprites/**/cast.png.import
 # So do the environment textures and billboard props (tools/art/set_import.py, docs/art/textures.md).
 !art/textures/**/*.png.import
 !art/sprites/props/*.png.import

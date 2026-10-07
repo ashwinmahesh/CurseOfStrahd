@@ -92,6 +92,38 @@ V2_KINDS = {
         "strike: {STRIKE}, with a short curved pale motion smear trailing the weapon or hand and touching it",
         "follow-through: just after the blow, the weapon or hands carried on past the target, the body twisted, the "
         "weight on the front foot"]),
+    # Doubled keys (owner 2026-10-07: "double the frames for even smoother animation"): eight walk poses and ten attack
+    # poses, two strips per view so each pose keeps its detail.
+    "walk8a": ("walk cycle, first step", [
+        "contact: the right leg forward with its heel just touching the ground, the left leg back on its toes, the left "
+        "arm swinging forward and the right arm back",
+        "down: the weight dropping onto the bent right leg, the body at its lowest, the left foot lifting off behind",
+        "passing: the weight on the straightening right leg, the left leg bent and swinging forward under the body, arms "
+        "passing the hips",
+        "up: pushing off the right toes, the body at its highest, the left leg reaching forward, the right arm swinging "
+        "forward"]),
+    "walk8b": ("walk cycle, second step", [
+        "contact: the left leg forward with its heel just touching the ground, the right leg back on its toes, the right "
+        "arm swinging forward and the left arm back",
+        "down: the weight dropping onto the bent left leg, the body at its lowest, the right foot lifting off behind",
+        "passing: the weight on the straightening left leg, the right leg bent and swinging forward under the body, arms "
+        "passing the hips",
+        "up: pushing off the left toes, the body at its highest, the right leg reaching forward, the left arm swinging "
+        "forward"]),
+    "attack10a": ("{ATTACK}, first half: getting ready and winding up", [
+        "ready: a fighting stance, knees bent, weight balanced, weapon or hands up and ready",
+        "settling: the weight shifting onto the back foot, eyes on the enemy",
+        "anticipation: crouching lower and pulling back, coiling the body, a third of the way to the wind-up",
+        "coiling: pulled back further, two thirds of the way to the wind-up, the body twisting",
+        "wind-up at its peak: {WINDUP}"]),
+    "attack10b": ("{ATTACK}, second half: the blow and the recovery", [
+        "the strike beginning: whipping forward out of the wind-up, the weapon or hand halfway to the target, a long "
+        "curved pale motion smear behind it",
+        "the strike landing: {STRIKE}, with a short curved pale motion smear trailing the weapon or hand and touching it",
+        "follow-through: just after the blow, the weapon or hands carried on past the target, the body twisted, the "
+        "weight on the front foot",
+        "recovering: pulling the weapon or hands back, the body straightening",
+        "back on guard: a fighting stance, knees bent, weapon or hands up and ready"]),
     "hurt": ("hit, fall and collapse", [
         "hit and flinching: recoiling backward from a blow, head snapped back, grimacing, one arm raised to guard, knees "
         "bent",
@@ -127,8 +159,20 @@ def prompt(kind, spec, view):
     if kind in V2_KINDS:
         action, frames = V2_KINDS[kind]
         gather, release = spec.get("cast_gather", CAST_DEFAULTS[0]), spec.get("cast_release", CAST_DEFAULTS[1])
+        if spec.get("unarmed"):
+            # A hero who fights bare-handed or with magic (a monk, a warlock): Gemini otherwise hands them a weapon.
+            frames = [f.replace("raising the weapon high", "drawing back a fist or a hand gathering a spell")
+                      .replace("weapon held close", "hands held close") for f in frames]
         lines = " ".join(f"Frame {i + 2}: {f}." for i, f in enumerate(frames))
         text = (ROOT / "art" / "prompts" / "keyframes_v2.txt").read_text().strip()
+        if kind.startswith("walk") or kind in ("sneak", "hurt"):
+            text += (" Weapons and gear stay carried exactly as in the reference (a sheathed sword stays in its sheath,"
+                     " a shield stays on the arm). No magic: no glow, sparks, flames or spell effects.")
+        if spec.get("unarmed"):
+            text += f" {spec['who'].split(',')[0]} carries no weapon: the hands stay empty."
+        if spec.get("gear") and (kind.startswith("walk") or kind == "sneak"):
+            # What Gemini tends to drop from a pose or two (a staff), named for every frame.
+            text += f" In every frame {spec['gear']}."
         if kind == "ride":
             # A rider can't be drawn seated on nothing: the horse is drawn as a flat magenta silhouette that
             # blender/render_keys.py keys out, leaving the rider astride (the far leg hidden, as on any mount).

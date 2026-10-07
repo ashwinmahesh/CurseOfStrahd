@@ -14,6 +14,9 @@ uniform float footprint = 0.6;
 // Outline width in screen pixels, and its colour (the palette's ink).
 uniform float outline_px = 1.4;
 uniform vec4 ink : source_color = vec4(0.071, 0.055, 0.094, 1.0);
+// Local contrast (unsharp mask in screen space): lines and features drawn thinner than a screen pixel at the usual zoom
+// keep their darkness instead of averaging into the colours round them (owner 2026-10-07: "even more sharp"). 0 is off.
+uniform float sharpen = 0.9;
 // Off for a sprite that keeps its own orientation (DirectionalSprite.setup_material reads the node's billboard mode).
 uniform bool billboard = true;
 
@@ -46,6 +49,20 @@ void fragment() {
 		}
 	}
 	acc /= 16.0;
+	if (sharpen > 0.0) {
+		// The same footprint's surroundings: eight samples a screen pixel out. Pushing the pixel away from them
+		// restores the contrast the averaging took (colour only; the figure's edge stays as it is).
+		vec4 ring = vec4(0.0);
+		for (int k = 0; k < 8; k++) {
+			float ang = float(k) * 0.785398 + 0.3927;
+			vec4 s = texture(texture_albedo, UV + dx * cos(ang) + dy * sin(ang));
+			ring += vec4(s.rgb * s.a, s.a);
+		}
+		ring /= 8.0;
+		vec3 here = acc.a > 0.0 ? acc.rgb / acc.a : vec3(0.0);
+		vec3 round_ = ring.a > 0.0 ? ring.rgb / ring.a : here;
+		acc.rgb = clamp(here + sharpen * (here - round_), 0.0, 1.0) * acc.a;
+	}
 	vec3 rgb = acc.a > 0.0 ? acc.rgb / acc.a : ink.rgb;
 	// The outline: the most covered of eight samples `outline_px` screen pixels away.
 	float near = 0.0;

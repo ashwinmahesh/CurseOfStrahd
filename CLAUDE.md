@@ -7,7 +7,7 @@ Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverag
 
 ## Commands (add new ones to the Makefile)
 make run | arena | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd] | validate | lint | check [DRY=1] | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
-make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | creator [GENERATE=1] | pregens [ONLY="id …"] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
+make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | keys [ONLY="id …"] [KINDS=…] | creator [GENERATE=1] | pregens [ONLY="id …"] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
 make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines, ADR 0013)
@@ -61,7 +61,8 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   art/sprites/props/catalog.json by `model` or id; a new model needs art there (test_set_dressing checks). Towns are
   built by TownBuilder (houses, roofs, yard walls). Never fall back to plain boxes for new content.
 - Every character sprite walks and attacks in 8 directions (docs/art/animation.md; a test checks): after
-  `make sprite`, add the character to art/anim/animations.json and run `make anims ONLY=<id> GENERATE=1`.
+  `make sprite`, add the character to art/anim/animations.json and run `make anims ONLY=<id> GENERATE=1`. The six
+  heroes have the fuller HD set instead: `make keys [ONLY=<id>]` (docs/art/animation.md).
 - UI draws on CanvasLayers so the palette pass never touches it.
 
 ## Voice (ADR 0013)

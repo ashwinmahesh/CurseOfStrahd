@@ -29,13 +29,16 @@ def spec(asset_id):
 
 def walk_flags(asset_id):
     """How the character's walk sheet is made, from its art/manifest.json "sprite_flags" (the same flags
-    tools/art/rerender_sprites.py passes to `make sprite`): turnaround, body, saturate, side_faces, views, static."""
+    tools/art/rerender_sprites.py passes to `make sprite`): turnaround, body, saturate, side_faces, views, static.
+    turnaround_hd: the same sheet redrawn at twice the resolution (<turnaround>_hd.png) when there is one."""
     manifest = json.loads((ROOT / "art" / "manifest.json").read_text())
     for a in manifest["assets"]:
         sp = a.get("sprites")
         if isinstance(sp, str) and sp.endswith("/walk.tres") and Path(sp).parent.name == asset_id:
             flags = dict(f.split("=", 1) for f in a.get("sprite_flags", []) if "=" in f)
-            return {"turnaround": a.get("source", f"art/generated/characters/{asset_id}_turnaround.png"),
+            source = a.get("source", f"art/generated/characters/{asset_id}_turnaround.png")
+            hd = Path(source).with_name(Path(source).stem + "_hd.png")
+            return {"turnaround": source, "turnaround_hd": str(hd) if (ROOT / hd).exists() else None,
                     "body": flags.get("BODY", "humanoid"), "saturate": float(flags.get("SAT", 1.0)),
                     "side_faces": flags.get("SIDE", "right"), "views": int(flags["VIEWS"]) if "VIEWS" in flags else None,
                     "static": flags.get("STATIC") == "1"}
@@ -184,9 +187,33 @@ def key_out_magenta(arr):
         near[:, 1:] |= gone[:, :-1]
         near[:, :-1] |= gone[:, 1:]
         gone |= near & (r > g + 0.08) & (b > g + 0.05) & (dist < 0.55)
+    gone |= horse_outline(arr, gone)
     out = arr.copy()
     out[gone] = 0.0
     return out
+
+
+def horse_outline(arr, gone, thick=12):
+    """The ink line Gemini sometimes draws round the magenta horse anyway: dark pixels by the cleared horse that aren't
+    part of the rider (the rider's own lines lie in or beside the rider's colours; the horse's border magenta on one
+    side and background on the other). Grown along the dark line from the horse's edge, `thick` pixels at most."""
+    opaque = arr[..., 3] > 0.5
+    rgb = arr[..., :3]
+    ink = opaque & ~gone & (rgb.max(axis=2) < 0.35)
+    # Rider colour: plenty of non-ink, non-horse pixels round about (a thin grey fringe on an outline doesn't count).
+    body = (opaque & ~gone & ~ink).astype(bool)
+    window = (2 * thick + 1) ** 2
+    near_rider = cutout._box_sum(body, thick) > 0.2 * window
+    line = ink & ~near_rider
+    found = line & (cutout._box_sum(gone, 3) > 0)
+    for _ in range(thick):
+        grow = line & (cutout._box_sum(found, 1) > 0) & ~found
+        if not grow.any():
+            break
+        found |= grow
+    # The fringe of the removed line (anti-aliased greys between it and the background).
+    fringe = opaque & ~gone & ~found & ~near_rider & (cutout._box_sum(found, 2) > 0) & (rgb.max(axis=2) < 0.8)
+    return found | fringe
 
 
 def load_strip(path, expect=3, key_magenta=False):
@@ -200,8 +227,77 @@ def load_strip(path, expect=3, key_magenta=False):
     if alpha[:, :2].any() or alpha[:, -2:].any() or alpha[:2, :].any() or alpha[-2:, :].any():
         problems.append("a figure touches the edge of the picture (clipped)")
     crops, more = split_strip(arr, expect)
+    if any(m.startswith(("figures are merged", "figures are unevenly", "found ")) for m in more):
+        # A beam or a smear bridging two poses: cut at the emptiest columns near even spacing instead.
+        even = split_even(arr, expect)
+        if even is not None:
+            crops, more = even, []
     problems += more
     return ([Keyframe(c) for c in crops] if crops else None), problems
+
+
+def split_even(arr, count):
+    """The `count` figures of a strip whose figures touch (an effect reaching into the next pose), cut apart at the
+    emptiest column near each even-spacing boundary; each slot keeps its largest shape and the pieces by it (an effect
+    is cut at the boundary). None when the slots don't hold figures of about one height."""
+    cols = (arr[..., 3] > 0.5).sum(axis=0).astype(float)
+    xs = np.nonzero(cols)[0]
+    if not len(xs):
+        return None
+    x_lo, x_hi = int(xs.min()), int(xs.max()) + 1
+    slot = (x_hi - x_lo) / float(count)
+    cuts = [x_lo]
+    for i in range(1, count):
+        guess = int(x_lo + i * slot)
+        lo, hi = int(guess - 0.2 * slot), int(guess + 0.2 * slot)
+        cuts.append(lo + int(np.argmin(cols[lo:hi])))
+    cuts.append(x_hi)
+    crops = []
+    for a, b in zip(cuts[:-1], cuts[1:]):
+        sub = arr.copy()
+        sub[:, :a] = 0.0
+        sub[:, b:] = 0.0
+        got, _ = split_strip(sub, 1)
+        if not got:
+            return None
+        crops.append(got[0])
+    heights = [c.shape[0] for c in crops]
+    if min(heights) < 0.75 * max(heights):
+        return None
+    return crops
+
+
+def colour_profile(crop, palette=None):
+    """The share of a figure's pixels in each palette colour (crop sampled every third pixel)."""
+    pal = cutout.load_palette() if palette is None else palette
+    q = cutout.quantize(crop[::3, ::3], pal)
+    rgb = q[q[..., 3] > 0.5][:, :3]
+    if len(rgb) == 0:
+        return np.zeros(len(pal))
+    idx = np.argmin(((rgb[:, None, :] - pal[None]) ** 2).sum(-1), axis=1)
+    h = np.bincount(idx, minlength=len(pal)).astype(float)
+    return h / h.sum()
+
+
+# Owner 2026-10-07 ("colour glitching in the walk"): a pose Gemini recoloured (a green tabard, dark armour) pops when
+# the poses play in turn. Shares of palette colours that overlap less than this with the reference pose's mean a
+# recolour; ordinary pose changes (a raised arm, a motion smear) stay above about 0.78.
+COLOUR_MATCH = 0.72
+
+
+def colour_drift(keyframes, skip=()):
+    """Problems for poses whose colours differ from frame 1's (the reference pose redrawn). `skip`: frame numbers that
+    rightly show other colours (lying on the back shows the front of a figure seen from behind)."""
+    pal = cutout.load_palette()
+    ref = colour_profile(keyframes[0].crop, pal)
+    out = []
+    for i, kf in enumerate(keyframes[1:], start=2):
+        if i in skip:
+            continue
+        overlap = float(np.minimum(ref, colour_profile(kf.crop, pal)).sum())
+        if overlap < COLOUR_MATCH:
+            out.append(f"frame {i} is recoloured (colours {overlap:.2f} like the reference)")
+    return out
 
 
 def match_colours(frames, first, ref):
@@ -232,7 +328,7 @@ def strip_scale(ref_h, ref_w, first):
     k = ref_h / float(first.h)
     problems = []
     ratio_ref, ratio_first = ref_w / float(ref_h), first.w / float(first.h)
-    if abs(ratio_first - ratio_ref) > 0.3 * ratio_ref:
+    if abs(ratio_first - ratio_ref) > 0.4 * ratio_ref:
         problems.append(f"frame 1 is shaped unlike the turnaround view (w/h {ratio_first:.2f} vs {ratio_ref:.2f})")
     return k, problems
 
@@ -260,11 +356,11 @@ def write_frames_tres(tres_path, texture_res_path, cell, directions, durations, 
 
 
 def finish_sheet(sheet, saturate=1.0):
-    """The same palette snap and cleanup the walk sheets get."""
-    sheet = cutout.despeckle(cutout.quantize(cutout.saturate(cutout.binarize_alpha(sheet), saturate)))
-    if hasattr(cutout, "merge_islands"):
-        sheet = cutout.merge_islands(sheet)
-    return sheet
+    """The same palette snap and cleanup the walk sheets get (render_walk.py): grey lines on skin snap to the warm
+    shades round them, outlines drawn in two dark shades survive the despeckle (eyes, brows and lips at HD sizes),
+    small clumps merge into their surroundings."""
+    sheet = cutout.quantize(cutout.saturate(cutout.binarize_alpha(sheet), saturate), neutral_area=0.5)
+    return cutout.merge_islands(cutout.despeckle(sheet, near=0.3, ring=True))
 
 
 def crop_even(frames, cell, min_wide, margin):
@@ -290,3 +386,76 @@ def edge_touch(frame, margin=1):
     a = frame[..., 3] > 0.5
     return "".join(e for e, hit in (("left ", a[:, :margin].any()), ("right ", a[:, -margin:].any()),
                                      ("top ", a[:margin, :].any())) if hit).strip()
+
+
+# ---------- HD sheets: trimmed frames in a packed atlas (docs/art/animation.md) ----------
+
+def trim(frame, pad):
+    """A rendered frame cut down to its opaque pixels plus `pad`: symmetrically about the frame's centre column (so
+    a frame shown mirrored still lines up) and tightly above and below. Returns (crop, (x0, y0)), the crop's corner in
+    the frame; an empty frame keeps a pad-sized transparent square at its foot."""
+    h, w = frame.shape[:2]
+    ys, xs = np.nonzero(frame[..., 3] > 0.5)
+    if not len(xs):
+        x0, y0 = w // 2 - pad, h - 2 * pad
+        return frame[y0:y0 + 2 * pad, x0:x0 + 2 * pad].copy(), (x0, y0)
+    cx = w / 2.0
+    half = max(cx - xs.min(), xs.max() + 1 - cx) + pad
+    x0, x1 = max(0, int(math.floor(cx - half))), min(w, int(math.ceil(cx + half)))
+    y0, y1 = max(0, ys.min() - pad), min(h, ys.max() + 1 + pad)
+    return frame[y0:y1, x0:x1].copy(), (x0, y0)
+
+
+def even_cell(trimmed, size, cell, min_wide, margin):
+    """crop_even for trimmed frames: the logical cell (the frame size the game sees) that holds every frame's opaque
+    pixels plus `margin`, centred on the render like crop_even's. `trimmed`: [(crop, (x0, y0))] from trim() of frames
+    `size` (w, h). Returns ((nw, nh), [(crop, (left, top))]) with each crop clipped to the cell and placed in it."""
+    w, h = size
+    cy, cx = h / 2.0, w / 2.0
+    half_w, half_h = cell * min_wide / 2.0, cell / 2.0
+    for crop, (x0, y0) in trimmed:
+        ys, xs = np.nonzero(crop[..., 3] > 0.5)
+        if len(xs):
+            half_w = max(half_w, cx - (x0 + xs.min()) + margin, x0 + xs.max() + 1 - cx + margin)
+            half_h = max(half_h, cy - (y0 + ys.min()) + margin, y0 + ys.max() + 1 - cy + margin)
+    nw = min(w, 2 * int(math.ceil(half_w)))
+    nh = min(h, 2 * int(math.ceil(half_h)))
+    X0, Y0 = (w - nw) // 2, (h - nh) // 2
+    placed = []
+    for crop, (x0, y0) in trimmed:
+        l, t = max(0, X0 - x0), max(0, Y0 - y0)
+        r = max(0, (x0 + crop.shape[1]) - (X0 + nw))
+        b = max(0, (y0 + crop.shape[0]) - (Y0 + nh))
+        crop = crop[t:crop.shape[0] - b, l:crop.shape[1] - r]
+        placed.append((crop, (x0 + l - X0, y0 + t - Y0)))
+    return (nw, nh), placed
+
+
+def pack_atlas(crops):
+    """Shelf-packs crops (identical ones once) into one atlas with sides in multiples of 4 (VRAM compression works in
+    4x4 blocks), roughly square. Returns (atlas, [(x, y, w, h)] per crop)."""
+    keys, unique, index = {}, [], []
+    for c in crops:
+        k = (c.shape, hash(c.tobytes()))
+        if k not in keys:
+            keys[k] = len(unique)
+            unique.append(c)
+        index.append(keys[k])
+    area = sum(c.shape[0] * c.shape[1] for c in unique)
+    width = max(max(c.shape[1] for c in unique), int(math.sqrt(area) * 1.08))
+    width = (width + 3) // 4 * 4
+    order = sorted(range(len(unique)), key=lambda i: -unique[i].shape[0])
+    spots, x, y, shelf = {}, 0, 0, 0
+    for i in order:
+        ch, cw = unique[i].shape[:2]
+        if x + cw > width:
+            x, y, shelf = 0, y + shelf, 0
+        spots[i] = (x, y)
+        x += cw
+        shelf = max(shelf, ch)
+    height = (y + shelf + 3) // 4 * 4
+    atlas = np.zeros((height, width, 4), np.float32)
+    for i, (x, y) in spots.items():
+        c = unique[i]
+        atlas[y:y + c.shape[0], x:x + c.shape[1]] = c
+    return atlas, [(*spots[i], unique[i].shape[1], unique[i].shape[0]) for i in index]

@@ -1,0 +1,259 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://art/sprites/ratatoille/sneak.png" id="1"]
+
+[sub_resource type="AtlasTexture" id="s_0"]
+atlas = ExtResource("1")
+region = Rect2(864, 663, 392, 641)
+margin = Rect2(188, 111, 376, 127)
+
+[sub_resource type="AtlasTexture" id="s_1"]
+atlas = ExtResource("1")
+region = Rect2(0, 663, 390, 646)
+margin = Rect2(189, 106, 378, 122)
+
+[sub_resource type="AtlasTexture" id="s_2"]
+atlas = ExtResource("1")
+region = Rect2(2066, 0, 390, 649)
+margin = Rect2(189, 103, 378, 119)
+
+[sub_resource type="AtlasTexture" id="s_3"]
+atlas = ExtResource("1")
+region = Rect2(0, 663, 390, 646)
+margin = Rect2(189, 106, 378, 122)
+
+[sub_resource type="AtlasTexture" id="s_4"]
+atlas = ExtResource("1")
+region = Rect2(2600, 663, 450, 637)
+margin = Rect2(159, 118, 318, 131)
+
+[sub_resource type="AtlasTexture" id="s_5"]
+atlas = ExtResource("1")
+region = Rect2(1358, 1309, 454, 628)
+margin = Rect2(157, 131, 314, 140)
+
+[sub_resource type="AtlasTexture" id="s_6"]
+atlas = ExtResource("1")
+region = Rect2(1256, 663, 512, 641)
+margin = Rect2(128, 114, 256, 127)
+
+[sub_resource type="AtlasTexture" id="s_7"]
+atlas = ExtResource("1")
+region = Rect2(0, 1309, 518, 632)
+margin = Rect2(125, 127, 250, 136)
+
+[sub_resource type="AtlasTexture" id="se_0"]
+atlas = ExtResource("1")
+region = Rect2(434, 1941, 392, 599)
+margin = Rect2(188, 153, 376, 169)
+
+[sub_resource type="AtlasTexture" id="se_1"]
+atlas = ExtResource("1")
+region = Rect2(2204, 1309, 392, 603)
+margin = Rect2(188, 149, 376, 165)
+
+[sub_resource type="AtlasTexture" id="se_2"]
+atlas = ExtResource("1")
+region = Rect2(1812, 1309, 392, 606)
+margin = Rect2(188, 146, 376, 162)
+
+[sub_resource type="AtlasTexture" id="se_3"]
+atlas = ExtResource("1")
+region = Rect2(2204, 1309, 392, 603)
+margin = Rect2(188, 149, 376, 165)
+
+[sub_resource type="AtlasTexture" id="se_4"]
+atlas = ExtResource("1")
+region = Rect2(874, 2541, 364, 589)
+margin = Rect2(202, 167, 404, 179)
+
+[sub_resource type="AtlasTexture" id="se_5"]
+atlas = ExtResource("1")
+region = Rect2(1676, 2541, 366, 581)
+margin = Rect2(201, 180, 402, 187)
+
+[sub_resource type="AtlasTexture" id="se_6"]
+atlas = ExtResource("1")
+region = Rect2(1618, 1941, 434, 594)
+margin = Rect2(167, 160, 334, 174)
+
+[sub_resource type="AtlasTexture" id="se_7"]
+atlas = ExtResource("1")
+region = Rect2(1238, 2541, 438, 585)
+margin = Rect2(165, 173, 330, 183)
+
+[sub_resource type="AtlasTexture" id="e_0"]
+atlas = ExtResource("1")
+region = Rect2(438, 2541, 436, 590)
+margin = Rect2(166, 162, 332, 178)
+
+[sub_resource type="AtlasTexture" id="e_1"]
+atlas = ExtResource("1")
+region = Rect2(2052, 1941, 434, 594)
+margin = Rect2(167, 158, 334, 174)
+
+[sub_resource type="AtlasTexture" id="e_2"]
+atlas = ExtResource("1")
+region = Rect2(1184, 1941, 434, 597)
+margin = Rect2(167, 155, 334, 171)
+
+[sub_resource type="AtlasTexture" id="e_3"]
+atlas = ExtResource("1")
+region = Rect2(2052, 1941, 434, 594)
+margin = Rect2(167, 158, 334, 174)
+
+[sub_resource type="AtlasTexture" id="e_4"]
+atlas = ExtResource("1")
+region = Rect2(2042, 2541, 446, 581)
+margin = Rect2(161, 173, 322, 187)
+
+[sub_resource type="AtlasTexture" id="e_5"]
+atlas = ExtResource("1")
+region = Rect2(2488, 2541, 450, 572)
+margin = Rect2(159, 186, 318, 196)
+
+[sub_resource type="AtlasTexture" id="e_6"]
+atlas = ExtResource("1")
+region = Rect2(0, 1941, 434, 600)
+margin = Rect2(167, 154, 334, 168)
+
+[sub_resource type="AtlasTexture" id="e_7"]
+atlas = ExtResource("1")
+region = Rect2(0, 2541, 438, 592)
+margin = Rect2(165, 167, 330, 176)
+
+[sub_resource type="AtlasTexture" id="ne_0"]
+atlas = ExtResource("1")
+region = Rect2(1216, 0, 380, 655)
+margin = Rect2(194, 97, 388, 113)
+
+[sub_resource type="AtlasTexture" id="ne_1"]
+atlas = ExtResource("1")
+region = Rect2(378, 0, 380, 660)
+margin = Rect2(194, 92, 388, 108)
+
+[sub_resource type="AtlasTexture" id="ne_2"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 378, 663)
+margin = Rect2(195, 89, 390, 105)
+
+[sub_resource type="AtlasTexture" id="ne_3"]
+atlas = ExtResource("1")
+region = Rect2(378, 0, 380, 660)
+margin = Rect2(194, 92, 388, 108)
+
+[sub_resource type="AtlasTexture" id="ne_4"]
+atlas = ExtResource("1")
+region = Rect2(758, 0, 458, 657)
+margin = Rect2(155, 99, 310, 111)
+
+[sub_resource type="AtlasTexture" id="ne_5"]
+atlas = ExtResource("1")
+region = Rect2(2456, 0, 462, 648)
+margin = Rect2(153, 112, 306, 120)
+
+[sub_resource type="AtlasTexture" id="ne_6"]
+atlas = ExtResource("1")
+region = Rect2(1596, 0, 470, 654)
+margin = Rect2(149, 102, 298, 114)
+
+[sub_resource type="AtlasTexture" id="ne_7"]
+atlas = ExtResource("1")
+region = Rect2(390, 663, 474, 644)
+margin = Rect2(147, 116, 294, 124)
+
+[sub_resource type="AtlasTexture" id="n_0"]
+atlas = ExtResource("1")
+region = Rect2(2486, 1941, 358, 594)
+margin = Rect2(205, 158, 410, 174)
+
+[sub_resource type="AtlasTexture" id="n_1"]
+atlas = ExtResource("1")
+region = Rect2(826, 1941, 358, 598)
+margin = Rect2(205, 154, 410, 170)
+
+[sub_resource type="AtlasTexture" id="n_2"]
+atlas = ExtResource("1")
+region = Rect2(2596, 1309, 356, 601)
+margin = Rect2(206, 151, 412, 167)
+
+[sub_resource type="AtlasTexture" id="n_3"]
+atlas = ExtResource("1")
+region = Rect2(826, 1941, 358, 598)
+margin = Rect2(205, 154, 410, 170)
+
+[sub_resource type="AtlasTexture" id="n_4"]
+atlas = ExtResource("1")
+region = Rect2(1768, 663, 394, 639)
+margin = Rect2(187, 116, 374, 129)
+
+[sub_resource type="AtlasTexture" id="n_5"]
+atlas = ExtResource("1")
+region = Rect2(960, 1309, 398, 629)
+margin = Rect2(185, 130, 370, 139)
+
+[sub_resource type="AtlasTexture" id="n_6"]
+atlas = ExtResource("1")
+region = Rect2(2162, 663, 438, 639)
+margin = Rect2(165, 116, 330, 129)
+
+[sub_resource type="AtlasTexture" id="n_7"]
+atlas = ExtResource("1")
+region = Rect2(518, 1309, 442, 630)
+margin = Rect2(163, 129, 326, 138)
+
+[resource]
+animations = [{
+"frames": [{"duration": 1.0, "texture": SubResource("s_0")}, {"duration": 1.0, "texture": SubResource("s_1")}, {"duration": 1.0, "texture": SubResource("s_2")}, {"duration": 1.0, "texture": SubResource("s_3")}],
+"loop": true,
+"name": &"sneak_idle_s",
+"speed": 4.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("s_4")}, {"duration": 1.0, "texture": SubResource("s_5")}, {"duration": 1.0, "texture": SubResource("s_0")}, {"duration": 1.0, "texture": SubResource("s_6")}, {"duration": 1.0, "texture": SubResource("s_7")}, {"duration": 1.0, "texture": SubResource("s_0")}],
+"loop": true,
+"name": &"sneak_walk_s",
+"speed": 8.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("se_0")}, {"duration": 1.0, "texture": SubResource("se_1")}, {"duration": 1.0, "texture": SubResource("se_2")}, {"duration": 1.0, "texture": SubResource("se_3")}],
+"loop": true,
+"name": &"sneak_idle_se",
+"speed": 4.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("se_4")}, {"duration": 1.0, "texture": SubResource("se_5")}, {"duration": 1.0, "texture": SubResource("se_0")}, {"duration": 1.0, "texture": SubResource("se_6")}, {"duration": 1.0, "texture": SubResource("se_7")}, {"duration": 1.0, "texture": SubResource("se_0")}],
+"loop": true,
+"name": &"sneak_walk_se",
+"speed": 8.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("e_0")}, {"duration": 1.0, "texture": SubResource("e_1")}, {"duration": 1.0, "texture": SubResource("e_2")}, {"duration": 1.0, "texture": SubResource("e_3")}],
+"loop": true,
+"name": &"sneak_idle_e",
+"speed": 4.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("e_4")}, {"duration": 1.0, "texture": SubResource("e_5")}, {"duration": 1.0, "texture": SubResource("e_0")}, {"duration": 1.0, "texture": SubResource("e_6")}, {"duration": 1.0, "texture": SubResource("e_7")}, {"duration": 1.0, "texture": SubResource("e_0")}],
+"loop": true,
+"name": &"sneak_walk_e",
+"speed": 8.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("ne_0")}, {"duration": 1.0, "texture": SubResource("ne_1")}, {"duration": 1.0, "texture": SubResource("ne_2")}, {"duration": 1.0, "texture": SubResource("ne_3")}],
+"loop": true,
+"name": &"sneak_idle_ne",
+"speed": 4.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("ne_4")}, {"duration": 1.0, "texture": SubResource("ne_5")}, {"duration": 1.0, "texture": SubResource("ne_0")}, {"duration": 1.0, "texture": SubResource("ne_6")}, {"duration": 1.0, "texture": SubResource("ne_7")}, {"duration": 1.0, "texture": SubResource("ne_0")}],
+"loop": true,
+"name": &"sneak_walk_ne",
+"speed": 8.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("n_0")}, {"duration": 1.0, "texture": SubResource("n_1")}, {"duration": 1.0, "texture": SubResource("n_2")}, {"duration": 1.0, "texture": SubResource("n_3")}],
+"loop": true,
+"name": &"sneak_idle_n",
+"speed": 4.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("n_4")}, {"duration": 1.0, "texture": SubResource("n_5")}, {"duration": 1.0, "texture": SubResource("n_0")}, {"duration": 1.0, "texture": SubResource("n_6")}, {"duration": 1.0, "texture": SubResource("n_7")}, {"duration": 1.0, "texture": SubResource("n_0")}],
+"loop": true,
+"name": &"sneak_walk_n",
+"speed": 8.0
+}]
+metadata/hit_frames = {}
+metadata/anim_set = 2
+metadata/mirrored = {"nw": "ne", "w": "e", "sw": "se"}

@@ -1,6 +1,7 @@
 """Animation set v2 (docs/art/animation.md): drawn keyframe strips -> 8-direction sheets with several animations each.
 
-blender -b --python blender/render_keys.py -- --id <asset_id> --kind walk4|attack5|hurt|ride|sneak|cast [--cell 384] [--check]
+blender -b --python blender/render_keys.py -- --id <asset_id> --kind walk8|attack10|hurt|ride|sneak|cast [--cell 768]
+    [--ss 2] [--grid] [--check]
 
 Each kind reads one strip per view, art/generated/anim/<id>/<kind>_<view>.png (tools/art/anim_keyframes.py --kind <kind>):
 frame 1 redraws the turnaround view and sets the strip's scale and colours, the rest are drawn poses. A plan below
@@ -18,6 +19,14 @@ the frames into animations:
   cast     cast.png/.tres     cast_<dir>: gather, release (the hit), settle
 
 Every sheet's .tres carries metadata hit_frames ({animation: frame}) for the one-shots that land a blow.
+
+HD (owner 2026-10-07: "crystal clear, higher-res when zoomed in"): cells are 768 px tall, cut from the turnaround
+redrawn at twice the resolution (<turnaround>_hd.png) when there is one, rendered at --ss times the size and
+area-averaged down (even, sharp edges). Each frame is trimmed to its figure and the trimmed frames are packed into one
+atlas; each frame's AtlasTexture margin restores the full cell, so the game sees whole cells and the sheet holds only
+the figures (--grid writes the plain row-per-direction grid instead). The directions drawn as mirror images of others
+(w of e and so on, render_walk.DIR_VIEW*) are left out: metadata "mirrored" names each one's twin and the game shows
+the twin flipped (DirectionalSprite.anim_for), which is the same picture.
 """
 import argparse
 import json
@@ -55,6 +64,28 @@ PLANS = {
                    (2, 0.99, 1.012, 1, 0, 0.012), (3, 1.0, 1.0, 1, 0, -0.004), (3, 1.015, 0.98, 1, 0, -0.014),
                    (4, 1.0, 1.0, 1, 0, 0.006), (4, 0.99, 1.012, 1, 0, 0.012)] + breathing("base"),
         "anims": [("walk", list(range(8)), [1] * 8, 10.0, True), ("idle", [8, 9, 10, 11], [1] * 4, 4.0, True)],
+    },
+    # Doubled keys: two strips each ("strips"); poses named <strip letter><n> (a1 = the first strip's first pose).
+    "walk8": {
+        "file": "walk", "fixed_height": True, "strips": ["walk8a", "walk8b"],
+        "frames": [("a1", 1.0, 1.0, 1, 0, 0), ("a1", 1.01, 0.99, 1, 0, -0.004), ("a2", 1.015, 0.98, 1, 0, -0.012),
+                   ("a2", 1.01, 0.99, 1, 0, -0.008), ("a3", 1.0, 1.0, 1, 0, 0.004), ("a3", 0.995, 1.006, 1, 0, 0.008),
+                   ("a4", 0.99, 1.012, 1, 0, 0.012), ("a4", 0.995, 1.006, 1, 0, 0.006),
+                   ("b1", 1.0, 1.0, 1, 0, 0), ("b1", 1.01, 0.99, 1, 0, -0.004), ("b2", 1.015, 0.98, 1, 0, -0.012),
+                   ("b2", 1.01, 0.99, 1, 0, -0.008), ("b3", 1.0, 1.0, 1, 0, 0.004), ("b3", 0.995, 1.006, 1, 0, 0.008),
+                   ("b4", 0.99, 1.012, 1, 0, 0.012), ("b4", 0.995, 1.006, 1, 0, 0.006)]
+        + [("base", 1.0, 1.0, 0, 0, 0), ("base", 0.998, 1.004, 0, 0, 0), ("base", 0.997, 1.007, 0, 0, 0),
+           ("base", 0.995, 1.012, 0, 0, 0), ("base", 0.997, 1.007, 0, 0, 0), ("base", 0.998, 1.004, 0, 0, 0)],
+        "anims": [("walk", list(range(16)), [1] * 16, 20.0, True), ("idle", list(range(16, 22)), [1] * 6, 6.0, True)],
+    },
+    "attack10": {
+        "file": "attack", "strips": ["attack10a", "attack10b"],
+        "frames": [("a1", 1.0, 1.0, 0, 0, 0), ("a2", 1.0, 1.0, -1, -0.005, 0), ("a3", 1.02, 0.98, -2, -0.01, 0),
+                   ("a4", 1.02, 0.98, -3, -0.012, 0), ("a5", 0.98, 1.03, -4, -0.015, 0), ("b1", 1.05, 0.97, 4, 0.025, 0),
+                   ("b2", 1.07, 0.96, 6, 0.04, 0), ("b3", 1.02, 0.99, 4, 0.03, 0), ("b4", 1.0, 1.0, 2, 0.015, 0),
+                   ("b5", 1.0, 1.0, 1, 0.005, 0), ("base", 1.0, 1.0, 0, 0, 0)],
+        "anims": [("attack", list(range(11)), [1, 1, 1, 1, 1.75, 0.6, 0.75, 1.5, 1, 1, 1], 16.0, False)],
+        "hits": {"attack": 6},
     },
     "attack5": {
         "file": "attack",
@@ -98,30 +129,54 @@ PLANS = {
 # how much bigger or smaller "forward" makes the figure head-on.
 LEAN = {"front": 0.0, "front34": 0.6, "side": 1.0, "back34": 0.6, "back": 0.0}
 DEPTH = {"front": 0.6, "back": -0.6}
-MAX_WIDE, MAX_TALL, MIN_WIDE, MARGIN = 3.0, 1.8, 1.0, 6
+MAX_WIDE, MAX_TALL, MIN_WIDE, MARGIN = 3.0, 1.8, 1.0, 6   # MARGIN: pixels at a 384 cell (scaled with the cell)
 
 
 def args():
     p = argparse.ArgumentParser()
     p.add_argument("--id", required=True)
-    p.add_argument("--kind", required=True, choices=list(PLANS))
-    p.add_argument("--cell", type=int, default=384)
+    p.add_argument("--kind", required=True, choices=list(PLANS) + [k for pl in PLANS.values() for k in pl.get("strips", [])])
+    p.add_argument("--cell", type=int, default=768)
+    p.add_argument("--ss", type=int, default=2, help="render at this many times the size and area-average down")
+    p.add_argument("--grid", action="store_true", help="a plain grid sheet instead of the packed atlas")
     p.add_argument("--check", action="store_true")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
 
-def strip_count(kind):
-    return 1 + max(p for p, *_ in PLANS[kind]["frames"] if isinstance(p, int))
+def mirror_twins(dir_view):
+    """{direction: the direction it mirrors}: each mirrored direction's twin shows the same view, unmirrored, turned the
+    other way, so its frames are the twin's flipped left to right."""
+    return {d: e for d, (v, m, turn) in dir_view.items() if m
+            for e, (v2, m2, turn2) in dir_view.items() if v2 == v and not m2 and turn2 == -turn}
 
 
-def write_tres(path, texture, cell, directions, cols, anims, meta):
-    """SpriteFrames with several animations per direction: row = direction, column = rendered frame."""
+def strip_count(kind, strip=None):
+    """Figures on one strip of `kind` (the reference redraw included); `strip` picks one of a multi-strip kind."""
+    plan = PLANS[kind]
+    if "strips" in plan:
+        letter = "ab"[plan["strips"].index(strip)]
+        return 1 + max(int(p[1:]) for p, *_ in plan["frames"] if isinstance(p, str) and p[0] == letter and p != "base")
+    return 1 + max(p for p, *_ in plan["frames"] if isinstance(p, int))
+
+
+# Strip kinds that feed a multi-strip plan, so --check and anim_keyframes.py can ask about one strip.
+STRIP_OF = {k: (plan_name, k) for plan_name, plan in PLANS.items() for k in plan.get("strips", [])}
+
+
+def write_tres(path, texture, cell, directions, cols, anims, meta, rects=None):
+    """SpriteFrames with several animations per direction: row = direction, column = rendered frame. `rects`
+    (packed sheets): per frame, row by row, (x, y, w, h) on the atlas and (left, top), where it sits in its cell."""
     w, h = cell
     subs, out = [], []
     for row, d in enumerate(directions):
         for c in range(cols):
-            subs.append(f'[sub_resource type="AtlasTexture" id="{d}_{c}"]\natlas = ExtResource("1")\n'
-                        f"region = Rect2({c * w}, {row * h}, {w}, {h})\n")
+            if rects is None:
+                region = f"region = Rect2({c * w}, {row * h}, {w}, {h})\n"
+            else:
+                (x, y, rw_, rh), (left, top) = rects[row * cols + c]
+                region = (f"region = Rect2({x}, {y}, {rw_}, {rh})\n"
+                          f"margin = Rect2({left}, {top}, {w - rw_}, {h - rh})\n")
+            subs.append(f'[sub_resource type="AtlasTexture" id="{d}_{c}"]\natlas = ExtResource("1")\n' + region)
         for name, idx, durs, fps, loop in anims:
             entries = ", ".join(f'{{"duration": {float(du)}, "texture": SubResource("{d}_{i}")}}' for i, du in zip(idx, durs))
             out.append(f'{{\n"frames": [{entries}],\n"loop": {"true" if loop else "false"},\n'
@@ -134,9 +189,16 @@ def write_tres(path, texture, cell, directions, cols, anims, meta):
 
 def main():
     a = args()
+    only_strip = None
+    if a.kind in STRIP_OF:
+        # One strip of a two-strip plan: checked on its own (rendering takes the plan's name).
+        a.kind, only_strip = STRIP_OF[a.kind]
     plan = PLANS[a.kind]
+    strip_kinds = plan.get("strips", [a.kind])
+    if only_strip:
+        strip_kinds = [only_strip]
     flags = anim.walk_flags(a.id)
-    sheet = anim.clean_source(cutout.load_rgba(cutout.ROOT / flags["turnaround"]))
+    sheet = anim.clean_source(cutout.load_rgba(cutout.ROOT / (flags["turnaround_hd"] or flags["turnaround"])))
     figures = cutout.find_figures(sheet, flags["views"] or rw.view_count(sheet))
     names, dir_view = (rw.VIEWS5, rw.DIR_VIEW5) if len(figures) == 5 else (rw.VIEWS3, rw.DIR_VIEW3)
     if flags["side_faces"] == "left":
@@ -146,20 +208,25 @@ def main():
     if flags["body"] != "humanoid" or flags["static"]:
         ppu = max(ppu, max(f.shape[1] for f in figures) / (rw.FIGURE_HEIGHT * 1.12 * 0.94))
 
-    count = strip_count(a.kind)
     problems, strips = {}, {}
     for name, fig in zip(names, figures):
-        path = anim.strip_path(a.id, a.kind, name)
-        if not path.exists():
-            problems[name] = ["missing"]
-            continue
-        kfs, found = anim.load_strip(path, count, key_magenta=(a.kind == "ride"))
-        if kfs is not None:
-            k, more = anim.strip_scale(fig.shape[0], fig.shape[1], kfs[0])
-            found += more
-            strips[name] = (kfs, k)
-        if found:
-            problems[name] = found
+        got = []
+        for si, sk in enumerate(strip_kinds):
+            count = strip_count(a.kind, sk if "strips" in plan else None)
+            path = anim.strip_path(a.id, sk, name)
+            if not path.exists():
+                problems.setdefault(name, []).append(f"{sk} missing" if len(strip_kinds) > 1 else "missing")
+                continue
+            kfs, found = anim.load_strip(path, count, key_magenta=(a.kind == "ride"))
+            if kfs is not None:
+                k, more = anim.strip_scale(fig.shape[0], fig.shape[1], kfs[0])
+                found += more + anim.colour_drift(kfs, skip=(count,) if a.kind == "hurt" else ())
+                letter = "ab"[plan["strips"].index(sk)] if "strips" in plan else ""
+                got.append((letter, kfs, k))
+            if found:
+                problems.setdefault(name, []).extend(f"{sk}: {w}" if len(strip_kinds) > 1 else w for w in found)
+        if len(got) == len(strip_kinds):
+            strips[name] = got
     if a.check:
         print("CHECK " + json.dumps(problems))
         return
@@ -169,27 +236,32 @@ def main():
     fixed = plan.get("fixed_height", False)
     ch = a.cell if fixed else 2 * int(round(a.cell * MAX_TALL / 2))
     cw = 2 * int(round(a.cell * MAX_WIDE / 2))
-    scene = cutout.reset_scene(cw, ch)
+    margin = int(round(MARGIN * a.cell / 384))
+    scene = cutout.reset_scene(cw * a.ss, ch * a.ss)
     cam = cutout.ortho_camera(scene, (0, -10, rw.FIGURE_HEIGHT * 0.52), (math.radians(90), 0, 0),
                               rw.FIGURE_HEIGHT * 1.12 * ch / a.cell)
     cam.data.sensor_fit = "VERTICAL"
     views = {}
     for name, fig in zip(names, figures):
         base = anim.Keyframe(fig)
-        kfs, k = strips[name]
-        for kf, crop in zip(kfs, anim.match_colours([kf.crop for kf in kfs], kfs[0].crop, fig)):
-            kf.crop = crop
         stand_x = (base.anchor - base.w / 2.0) / ppu
         root = bpy.data.objects.new(name, None)
         scene.collection.objects.link(root)
         planes = {"base": rw.make_plane(f"{name}_base", base.crop, ppu, (base.anchor, base.h), (stand_x, 0.0), 0.0, root)}
-        for i, kf in enumerate(kfs[1:], start=1):
-            planes[i] = rw.make_plane(f"{name}_{i}", kf.crop, ppu / k, (kf.anchor, kf.h), (stand_x, 0.0), 0.0, root)
+        for letter, kfs, k in strips[name]:
+            for kf, crop in zip(kfs, anim.match_colours([kf.crop for kf in kfs], kfs[0].crop, fig)):
+                kf.crop = crop
+            for i, kf in enumerate(kfs[1:], start=1):
+                key = f"{letter}{i}" if letter else i
+                planes[key] = rw.make_plane(f"{name}_{key}", kf.crop, ppu / k, (kf.anchor, kf.h), (stand_x, 0.0), 0.0,
+                                            root)
         views[name] = (root, planes)
 
+    twins = {} if a.grid else mirror_twins(dir_view)
+    directions = [d for d in rw.DIRECTIONS if d not in twins]
     tmp = Path(tempfile.mkdtemp(prefix=f"{a.kind}_{a.id}_"))
     frames, clipped = [], set()
-    for d in rw.DIRECTIONS:
+    for d in directions:
         view, mirrored, turn = dir_view[d]
         for name, (root, planes) in views.items():
             for p in planes.values():
@@ -210,34 +282,42 @@ def main():
             path = tmp / f"{d}_{i}.png"
             scene.render.filepath = str(path)
             bpy.ops.render.render(write_still=True)
-            frame = cutout.load_rgba(path)
+            frame = cutout.downsample(cutout.load_rgba(path), a.ss)
             edges = anim.edge_touch(frame)
             if edges:
                 clipped.add(f"{d} ({edges})")
-            frames.append(frame)
-    if fixed:
-        frames, (cw, _h) = anim.crop_even([f for f in frames], a.cell, MIN_WIDE, MARGIN)
-        ch = frames[0].shape[0]
-    else:
-        frames, (cw, ch) = anim.crop_even(frames, a.cell, MIN_WIDE, MARGIN)
+            # Packed sheets keep only the trimmed figure (a whole 768 render is ~30 MB of floats per frame).
+            frames.append(frame if a.grid else anim.trim(frame, margin))
     cols = len(plan["frames"])
     out_dir = cutout.ROOT / "art" / "sprites" / a.id
     out_dir.mkdir(parents=True, exist_ok=True)
     stem = plan["file"]
-    cutout.save_rgba(anim.finish_sheet(cutout.pack_grid(frames, cols), flags["saturate"]), out_dir / f"{stem}.png")
+    rects = None
+    if a.grid:
+        frames, (cw, ch) = anim.crop_even(frames, a.cell, MIN_WIDE, margin)
+        sheet_out = anim.finish_sheet(cutout.pack_grid(frames, cols), flags["saturate"])
+    else:
+        (cw, ch), placed = anim.even_cell(frames, (cw, ch), a.cell, MIN_WIDE, margin)
+        crops = [anim.finish_sheet(crop, flags["saturate"]) for crop, _ in placed]
+        sheet_out, spots = anim.pack_atlas(crops)
+        rects = [(spot, at) for spot, (_crop, at) in zip(spots, placed)]
+    cutout.save_rgba(sheet_out, out_dir / f"{stem}.png")
     s = anim.spec(a.id)
     meta = {"hit_frames": plan.get("hits", {}), "anim_set": 2}
-    if a.kind == "attack5":
+    if twins:
+        meta["mirrored"] = twins
+    if a.kind in ("attack5", "attack10"):
         meta.update(hit_frame=plan["hits"]["attack"], casts=bool(s.get("casts", False)))
-    write_tres(out_dir / f"{stem}.tres", f"res://art/sprites/{a.id}/{stem}.png", (cw, ch), rw.DIRECTIONS, cols,
-               plan["anims"], meta)
+    write_tres(out_dir / f"{stem}.tres", f"res://art/sprites/{a.id}/{stem}.png", (cw, ch), directions, cols,
+               plan["anims"], meta, rects)
     shutil.rmtree(tmp, ignore_errors=True)
     for v, ws in problems.items():
         for w in ws:
             print(f"WARNING {a.id} {a.kind}: {v}: {w}")
     if clipped:
         print(f"WARNING {a.id} {a.kind}: frames reach the render's edge in {', '.join(sorted(clipped))}")
-    print(f"{a.kind} sheet: {out_dir / (stem + '.png')} ({len(names)} views, {cols} frames a direction, {cw}x{ch} cells)")
+    print(f"{a.kind} sheet: {out_dir / (stem + '.png')} ({len(names)} views, {len(directions)} directions, {cols} frames each, {cw}x{ch} cells, "
+          f"{sheet_out.shape[1]}x{sheet_out.shape[0]} sheet)")
 
 
 if __name__ == "__main__":
