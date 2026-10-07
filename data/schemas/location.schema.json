@@ -443,7 +443,9 @@
             "type": "string"
           },
           "facing": {
-            "type": "string"
+            "type": "string",
+            "enum": ["north", "south", "east", "west", "northeast", "northwest", "southeast", "southwest"],
+            "description": "Which way the NPC looks while standing (north is up the map)."
           },
           "approach": {
             "type": "integer",
@@ -473,6 +475,17 @@
             "type": "number",
             "minimum": 0,
             "description": "Seconds the NPC stands at each waypoint of its path (default 3)."
+          },
+          "hours": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 24
+            },
+            "description": "[from, to]: the NPC is here only between these hours (to may be past midnight, [19, 6]); with `when`, both must hold."
           }
         }
       }

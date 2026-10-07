@@ -28,6 +28,7 @@ FOLDERS = {
     "endings": "ending",
     "cutscenes": "cutscene",
     "strahd": {"visits": "strahd_visits"},
+    "schedule": "schedule",
 }
 
 TYPES = {
@@ -525,6 +526,25 @@ def castle_checks(data, parsed, errors, cond, flags_set, dialogue_refs):
                 dialogue_refs.append((step["dialogue"], w))
 
 
+def schedule_checks(data, errors, cond, flags_set, dialogue_refs):
+    """Things that happen on a day and an hour (story/schedule.gd, F2): their conditions and places, the
+    conversations they start and the flags they set."""
+    ids = set()
+    for sid, sch in data.get("schedule", {}).items():
+        for e in sch.get("events", []):
+            w = f"schedule/{sid}.json {e['id']}"
+            if e["id"] in ids:
+                errors.append(f"{w}: another schedule event has this id")
+            ids.add(e["id"])
+            cond(e.get("when", ""), w)
+            if e.get("location") and e["location"] not in data["locations"]:
+                errors.append(f"{w}: unknown location '{e['location']}'")
+            if e.get("dialogue"):
+                dialogue_refs.append((e["dialogue"], w))
+            for fid in e.get("set", {}):
+                flags_set.setdefault(fid, []).append(w)
+
+
 def cutscene_checks(data, parsed, errors):
     """Story cutscenes (story/cutscenes.gd, docs/ui/cutscenes.md): every picture is in art/cutscenes, every trigger is a
     Narrator key some narrator file has, and every `cutscene <id>` in a conversation names one (or is `end`)."""
@@ -743,6 +763,7 @@ def story_checks(data, errors, need):
     treasure_checks(data, parsed, errors, pending_list)
     cutscene_checks(data, parsed, errors)
     castle_checks(data, parsed, errors, cond, flags_set, dialogue_refs)
+    schedule_checks(data, errors, cond, flags_set, dialogue_refs)
     for ref, w in dialogue_refs:
         fkey, _, node = ref.rpartition(":")
         if fkey not in parsed:
