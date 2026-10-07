@@ -5,7 +5,8 @@ extends RefCounted
 ## record itself (fines, attitudes, pockets) is Crime's.
 ##
 ## Somebody sees a crime when they would notice the thief as a foe would (LocationStealth.notices: within 30 ft, in
-## sight without Three-Quarters Cover, and, while the party sneaks, passive Perception against the thief's Stealth).
+## their sight cone without Three-Quarters Cover or within earshot, and, while the party sneaks, passive Perception
+## against the thief's Stealth). Behind someone's back and out of earshot, nobody sees a thing.
 
 ## Steps a party member may still be seen in a private room after being told to leave, before it's a crime.
 const TRESPASS_GRACE := 3
@@ -18,17 +19,16 @@ static func witnesses(view: LocationView, thief: Combatant, skip: Array[String] 
 		return out
 	var e := LocationStealth.watch(view)
 	var total := LocationStealth.total_for(view, thief.creature) if view.sneaking else 0
-	for npc_id: String in _people(view):
+	for npc_id: String in people(view):
 		if npc_id in skip or npc_id in view.st.guest_ids:
 			continue
-		var who := (_token(view, npc_id) as CombatToken).combatant
-		if LocationStealth.notices(e, who, thief, view.sneaking, total):
+		if LocationStealth.notices(e, person(view, npc_id), thief, view.sneaking, total):
 			out.append(npc_id)
 	return out
 
 
 ## The people standing here (the location's and any a scene brought on) whose figures show.
-static func _people(view: LocationView) -> Array[String]:
+static func people(view: LocationView) -> Array[String]:
 	var out: Array[String] = []
 	for npc_id: String in view.npc_tokens:
 		var tok := view.npc_tokens[npc_id] as CombatToken
@@ -40,7 +40,15 @@ static func _people(view: LocationView) -> Array[String]:
 	return out
 
 
-static func _token(view: LocationView, npc_id: String) -> CombatToken:
+## Someone standing here, as the notice rules see them: their figure's combatant, with a sight cone the way the
+## figure faces (so it turns when they turn, or walk a route).
+static func person(view: LocationView, npc_id: String) -> Combatant:
+	var tok := token(view, npc_id)
+	LocationStealth.set_cone(tok.combatant, LocationStealth.token_facing(tok))
+	return tok.combatant
+
+
+static func token(view: LocationView, npc_id: String) -> CombatToken:
 	return (view.npc_tokens.get(npc_id, view._staged.get(npc_id, null))) as CombatToken
 
 
@@ -107,7 +115,7 @@ static func _possessive(npc_id: String) -> String:
 ## it a crime; failure, and they catch the hand.
 static func pickpocket(view: LocationView, npc_id: String) -> void:
 	var why := Crime.why_no_pocket(view.st, npc_id, _picked(view, npc_id))
-	var tok := _token(view, npc_id)
+	var tok := token(view, npc_id)
 	if why != "" or tok == null:
 		view.toast.emit(why if why != "" else "Nobody there")
 		return

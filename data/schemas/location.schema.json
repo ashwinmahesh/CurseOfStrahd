@@ -521,6 +521,20 @@
                   "type": "integer",
                   "minimum": 1,
                   "description": "Overrides the stat block's Hit Points for this fight."
+                },
+                "facing": {
+                  "type": "string",
+                  "enum": [
+                    "north",
+                    "south",
+                    "east",
+                    "west",
+                    "northeast",
+                    "northwest",
+                    "southeast",
+                    "southwest"
+                  ],
+                  "description": "F7: which way this foe faces while it waits in plain view before its fight (its sight cone points there). Unset: toward the middle of its group, else of its fight's area."
                 }
               }
             }
