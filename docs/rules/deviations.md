@@ -15,7 +15,7 @@ started" in coverage.md, not a deviation.
 | Study DC | 10 + the monster's CR | The rules leave the DC to the DM | — |
 | Grappling | A grappled creature can't move and escapes as the rules say; the grappler can't drag it | Dragging needs movement-cost plumbing; nobody grapples in the arena | Phase 3 |
 | Weapon juggling | A character can attack with any weapon it carries (drawing it as part of the attack) and the previous one is assumed dropped or stowed | The 2024 free equip/unequip per attack covers most cases; tracking hands comes with the inventory UI | Phase 4 |
-| Material components and focuses | Assumed carried (every pregen has a focus or pouch) | Inventory checks for costly components arrive with magic items | Phase 4 |
+| Material component inventory | Components are assumed carried; equipped-hand access and eligible held focuses are checked by SpellComponents | Costly-component inventory and consumption still need a shared system | Component inventory pass |
 | Monster Hit Points | Average from the stat block | The 2024 default | — |
 | Divine Spark (harm) | Always Radiant | Radiant is never worse than Necrotic against the Phase 2 enemies | Phase 3 |
 | After a won fight | Dying party members are stabilized at 0 Hit Points (their friends tend them) | Rolling death saves every 6 seconds out of combat with nobody hostile adds nothing; the rules let anyone stabilize them with a DC 10 Medicine check | — |

@@ -178,3 +178,31 @@ resolver. They use the ordinary `Encounter._reaction_decision`: Ask and Off do n
 The class abilities tab exposes Ask / Automatic / Off preferences for known response spells and feature recipes,
 including exhausted ones. Preferences take no action or resource, and forged ids/modes are rejected.
 Free D20 responses retain their prior automatic default. Full manual synchronous continuations remain pending.
+
+### Slot-funded damage responses and component hands
+
+`feature.damage_response` declares `reduction_per_slot` and an optional `requires_flag`. `DamageResponses`
+feeds the existing attack-reaction pipeline and `Encounter.deal_damage` for spells, zones, retaliation, and
+other encounter damage. It spends one Reaction and one slot of the selected level (including Pact Magic),
+reduces one damage instance across its component types, then leaves Resistance, Temporary Hit Points,
+Concentration, and death to the ordinary damage engine. Spending a slot this way is not casting a spell.
+The damage packet passed by the caller is unchanged. `Creature.preview_damage_parts` shares the existing
+Immunity/Resistance/Vulnerability calculation without changing HP or rolling saves.
+
+Reaction offers may supply `target_choices`, `selected_ids`, `min_targets`, `max_targets`, `validate_selected`,
+and `select`. A bounded single selection uses radio behavior in the HUD. The encounter validates again before
+clearing `pending`; an invalid or exhausted selection costs nothing and leaves the decision open.
+
+Weapon attacks offer a slot-selection prompt. Synchronous damage cannot pause yet: its default Ask policy
+spends nothing. The class abilities tab provides Ask, Off, and Auto at an **exact slot level**. Only explicit Auto
+spends against synchronous damage, and it never substitutes another slot level if that pool is exhausted.
+A declined/handled attack response is recorded on that attack so the central damage path cannot try it again.
+This is a remaining prompt limitation, not complete coverage of the book's optional reaction timing.
+
+`SpellComponents` handles equipped-hand access and focus eligibility for the casting class. A
+`spellcasting_focus` modifier with `class`, `weapon_kind`, and `proficient` allows a qualifying held weapon to
+replace unpriced, unconsumed Material components; that same hand supplies Somatic components for that spell.
+A focus does not cover a Somatic-only spell or priced/consumed materials. War Caster covers Somatic components
+with occupied hands. Component omission and metamagic are applied before final validation; rejection spends
+neither the action nor payment. On the caster’s turn, a needed free hand can be obtained by stowing one ordinary held item with its available free object interaction (after target validation); a Shield cannot be stowed this way. A qualifying weapon focus avoids that interaction. Reaction casting cannot stow an item. Exploration casting stows an item when necessary. A Two-Handed weapon can be held in one hand while casting. Material inventory
+and consumption are still the existing project assumption, recorded in deviations.md.

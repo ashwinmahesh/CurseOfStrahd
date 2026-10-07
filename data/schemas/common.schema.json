@@ -243,7 +243,8 @@
             "concentration_save_bonus",
             "after_cast_speed",
             "weapon_ability",
-            "resource_restore"
+            "resource_restore",
+            "spellcasting_focus"
           ]
         },
         "value": {
@@ -1016,6 +1017,22 @@
             },
             "omit_material": {
               "const": true
+            }
+          }
+        },
+        "damage_response": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reduction_per_slot"
+          ],
+          "properties": {
+            "requires_flag": {
+              "type": "string"
+            },
+            "reduction_per_slot": {
+              "type": "integer",
+              "minimum": 1
             }
           }
         }

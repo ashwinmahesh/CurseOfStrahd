@@ -46,9 +46,18 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 		req.text = str(o["text"])
 		req.cost = str(o.get("cost", "Reaction"))
 		req.spends_reaction = bool(o.get("spends_reaction", true))
+		req.target_choices.assign(o.get("target_choices", []))
+		req.selected_ids.assign(o.get("selected_ids", []))
+		req.min_targets = int(o.get("min_targets", 0))
+		req.max_targets = int(o.get("max_targets", 0))
+		req.validate_selected = o.get("validate_selected", Callable())
+		var request_ref: WeakRef = weakref(req)
 		var rest := chain.duplicate()
 		req.continuation = func(use: bool) -> CombatResult:
 			if use:
+				if o.has("select"):
+					var request := request_ref.get_ref() as ReactionRequest
+					(o["select"] as Callable).call(request.selected_ids)
 				(o["use"] as Callable).call()
 				if o.has("stop") and (not o.has("stop_if") or (o["stop_if"] as Callable).call()):
 					return (o["stop"] as Callable).call() as CombatResult
@@ -382,6 +391,14 @@ func against_damage(st: Dictionary, parts: Dictionary, notes: Array[String]) -> 
 					var soak := mini(pw.creature.ward_hp, int(total.call()))
 					pw.creature.ward_hp -= soak
 					cut.call(soak, "Projected Ward (%s)" % pw.name())})
+	var responded: Array = []
+	var incoming := func() -> int:
+		var packet: Array = []
+		for type: String in parts:
+			packet.append({"amount": int(parts[type]), "type": type})
+		return int(total.call()) if target.creature.preview_damage_parts(packet).final > 0 else 0
+	out.append_array(e.damage_responses.offers(target, incoming, cut, responded))
+	st["damage_responses"] = responded
 	# Psi Warrior protecting itself.
 	if target.creature is Character:
 		var tc := target.creature as Character

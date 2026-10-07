@@ -156,6 +156,9 @@ func _why_not(c: Combatant, s: Dictionary, entry: Dictionary) -> String:
 				any = true
 		if not any:
 			return "No spell slots of level %d or higher left" % level
+	var hand_why := str(component_plan(c, s.get("components", {}) as Dictionary, str(entry.get("class_id", "")))["reason"])
+	if hand_why != "":
+		return hand_why
 	if str(s["id"]) == "spiritual_weapon" and zones.object_of(c.id, "spiritual_weapon") != null:
 		return ""
 	return ""
@@ -298,6 +301,8 @@ func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
 				return false
 	var armor := ch.equipped("armor")
 	if not armor.is_empty() and not ch.trained_for(armor):
+		return false
+	if SpellComponents.known_hand_reason(ch, s, s.get("components", {}) as Dictionary) != "":
 		return false
 	var level := int(s.get("level", 1))
 	for l in range(level, 10):
@@ -658,6 +663,7 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	var meta_why := _metamagic_check(c, _comp().spell_data(spell_id), meta)
 	if meta_why != "":
 		return CombatResult.fail(meta_why)
+	var hand_blocked := str(entry["reason"]).begins_with("Components:")
 	# Quickened Spell turns a one-action spell into a Bonus Action; Subtle Spell needs no voice.
 	if "quickened" in meta and str(entry["casting"]) == "action":
 		entry["casting"] = "bonus_action"
@@ -676,8 +682,16 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		entry["reason"] = ""
 	if war_magic and str(entry["reason"]) in ["Action already used", ""] and e.features_attack_why(c) == "" and int(_comp().spell_data(spell_id).get("level", 0)) == 0:
 		entry["legal"] = true
+	var effective_components := SpellComponents.effective(_comp().spell_data(spell_id), meta, bool(resource_recipe.get("omit_material", false)))
+	var hands := component_plan(c, effective_components, str(entry.get("class_id", "")))
+	var hand_why := str(hands["reason"])
+	if hand_blocked and (str(entry["reason"]).begins_with("Components:") or str(entry["reason"]) == "") and hand_why == "":
+		entry["legal"] = true
+		entry["reason"] = ""
 	if not bool(entry["legal"]):
 		return CombatResult.fail(str(entry["reason"]))
+	if hand_why != "":
+		return CombatResult.fail(hand_why)
 	var s := _comp().spell_data(spell_id)
 	if not resource_recipe.is_empty() and bool(resource_recipe.get("omit_material", false)):
 		s = s.duplicate(true)
@@ -732,6 +746,10 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		return CombatResult.fail(str(check["why"]))
 	var tgt := check["targets"] as Array[Combatant]
 	var cell: Vector2i = check["cell"]
+	if str(hands["stow"]) != "":
+		ch.unequip(str(hands["stow"]))
+		c.free_interaction_available = false
+		e.log.add("info", "%s stows %s to provide spell components" % [c.name(), hands["item"]], c.id)
 	if not meta.is_empty():
 		_pay_metamagic(c, meta)
 	# Pay for it.
@@ -4015,10 +4033,17 @@ func resource_cast_entry(c: Combatant, spell: Dictionary, feature_id: String) ->
 		var entry := {"id": str(spell["id"]), "name": str(spell["name"]), "level": int(spell["level"]),
 			"class_id": str(feature["class_id"]), "ability": str(feature["ability"]), "free": true,
 			"casting": str(rule["casting"]), "resource_cast": feature}
-		var reason := _why_not(c, spell, entry)
+		var effective_spell := spell.duplicate(true)
+		effective_spell["components"] = SpellComponents.effective(spell, [], bool(rule.get("omit_material", false)))
+		var reason := _why_not(c, effective_spell, entry)
 		if reason == "" and ch.resource_left(str(rule["resource"])) < int(rule["cost"]):
 			reason = "No %s uses left" % str((ch.resources.get(str(rule["resource"]), {}) as Dictionary).get("name", rule["resource"]))
 		entry["legal"] = reason == ""
 		entry["reason"] = reason
 		return entry
 	return {}
+
+
+func component_plan(c: Combatant, components: Dictionary, class_id: String) -> Dictionary:
+	return SpellComponents.plan(caster_char(c), components, class_id,
+		enc().current() == c and c.free_interaction_available)

@@ -574,11 +574,8 @@ func take_damage(amount: int, damage_type: StringName, critical: bool = false, d
 
 ## One instance of damage made of several types (a Ghoul's Bite: Piercing plus Necrotic). Each type meets
 ## the target's defenses on its own; the total is lost at once and forces one Concentration save.
-func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = null,
-		source: String = "") -> DamageResult:
+func preview_damage_parts(parts: Array) -> DamageResult:
 	var r := DamageResult.new()
-	r.critical = critical
-	r.source = source
 	if dead:
 		return r
 	var dmg := 0
@@ -612,6 +609,17 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 			r.notes.append("Vulnerability to %s: %s" % [damage_type, vul])
 		dmg += amount
 	r.final = dmg
+	return r
+
+
+func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = null,
+		source: String = "") -> DamageResult:
+	var r := preview_damage_parts(parts)
+	r.critical = critical
+	r.source = source
+	if dead:
+		return r
+	var dmg := r.final
 	if dmg <= 0:
 		_log_damage(r)
 		return r

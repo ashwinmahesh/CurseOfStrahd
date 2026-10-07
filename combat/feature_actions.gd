@@ -327,6 +327,8 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 		return CombatResult.fail(str(entry["why"]))
 	if id.begins_with("reaction_policy:"):
 		return e.reactions.set_policy(c, id.get_slice(":", 1), id.get_slice(":", 2))
+	if id.begins_with("damage_policy:"):
+		return e.damage_responses.set_policy(c, id.get_slice(":", 1), id.get_slice(":", 2))
 	var ch := _ch(c)
 	var cell := Vector2i(floori(point.x), floori(point.y)) if point != Vector2.INF else Vector2i(-1, -1)
 	var r := CombatResult.new()

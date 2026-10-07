@@ -148,7 +148,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Cantrip scaling at 5/11/17; upcasting | magic/spellcasting.gd | tested (11 in test_levels_8_to_11) | test_spellcasting, test_levels_8_to_11 |
 | Prepared spells, always-prepared spells, spellbook | character.gd | tested | test_reference_party |
 | Ritual casting | data (ritual flags) | data | [Phase 3] |
-| Components and focuses | spell_caster.gd | partial: Verbal (can't speak, reveals the hidden), armor training; Material and focuses assumed carried | test_combat_spells |
+| Components and focuses | spell_caster.gd, SpellComponents | partial: Verbal, armor training, equipped-hand access, class-specific held focuses and component omissions; Material inventory/consumption still assumed | test_combat_spells, test_bladesinger |
 | Areas of effect | grid.gd area_cells, spell_caster.gd | tested (sphere, cube, cone, line, emanation from a creature or a placed object, wall; walls block) | test_combat_grid, test_combat_spells, test_new_spells |
 | 256 spells (every 2024 PHB spell of levels 0-4 on the eight caster lists, plus Etherealness and Plane Shift for the Night Hag) | data/spells, spell_caster.gd, spell_zones.gd, spell_specials.gd, summon_blocks.gd, shape_change.gd | tested: every spell of levels 0-4 with combat rules is cast (smites on a weapon hit) and must change the fight; the rest are exploration (detection, communication, rituals, travel) and say so on the hotbar | test_spell_sweep, test_spell_recipes, test_combat_spells, test_new_spells |
 
@@ -264,7 +264,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Passive features | Adept slot-threshold preparation, Conjuration concentration bonus, Transmutation turn Speed, Vestige domain spells, Bountiful Health, Desperate Resilience, Iron Mind and Focused Conjuration; `test_faerun_features` | Remaining school benefits, subclass mechanics and concentration callers |
 | Knowledge Domain Mind Magic | Shared `resource_cast` recipe, base-level casting with Channel Divinity, prepared-domain filtering, class provenance and exploration controls; `test_resource_casting` | Existing exploration-only spell handlers still need their own effect audit; Unfettered Mind remains pending |
 | Warrior of the Mystic Arts | Existing third-caster progression, Wisdom casting, cantrip substitution, Focus/slot exchange windows, Focused Strike and Flurry spell substitution; `test_mystic_arts` | Rest and combat recovery UI captured; caster-specific initial/repeated saves and Pact slot recovery tested. Multiclass duplicate-spell sources use the eligible casting class; 13 focused tests cover these paths and the level-2 cap on the actual Flurry casting; full CI checkpoint recorded below |
-| Bladesinger | Bladesong activation, bonuses, weapon ability/grip, equipment/incapacitation ending, dismissal, Arcane Recovery restoration, cantrip substitution and Song of Victory; `test_faerun_features` | Weapon focus and Song of Defense |
+| Bladesinger | Bladesong activation, bonuses, weapon ability/grip, equipment/incapacitation ending, dismissal, Arcane Recovery restoration, cantrip substitution and Song of Victory; Weapon Focus through shared component-hand checks; Song of Defense with attack slot choices and explicit exact-level automatic policy for other encounter damage; `test_faerun_features`, `test_bladesinger` | Manual Song of Defense prompts for synchronous spell/hazard damage and out-of-encounter damage; project-wide component inventory assumption. **Still gated, not complete.** |
 | Transmuter | Empowered Transmutation distinguishes effective spell level from actual slot costs and rejects attacks/saves; `test_faerun_features` | Stone, enhanced forms and Master Transmuter |
 | Enchanter | Chosen-skill Intelligence bonus; Hypnotic Presence with save, sensory/range tether, immunity and damage ending; Split Enchantment effective upcasting; `test_faerun_features` | Instinctive Charm, Alter Memories and all sensory-change callers |
 | Winter Walker | Frigid Explorer, Hunter’s Rime, Fortifying Soul, Chilling Retribution and Frozen Haunt; `test_faerun_features` | All Ranger cold spell paths, synchronous spell-attack response choice; Frozen Haunt uses shared casting-form/pulse recipes; targeting, movement and alternate recipe values have focused tests |
@@ -288,3 +288,12 @@ Review regression coverage: `test_review_regressions.gd` checks incorporeal flig
 Terrain, Freedom of Movement and numeric slowing, angled monster charges and broken approaches, plus
 safe default reaction policies and the player-accessible opt-in controls. Existing free responses retain
 their prior policy. These changes do not enable any gated book entries.
+
+#### Bladesinger review batch
+
+The separate Bladesinger batch builds on the first gameplay MR. Its two remaining feature definitions now
+have executable data consumers: class-restricted weapon focus access, and slot-funded damage reduction.
+The damage response does not default to spending slots without permission: Ask pauses weapon attacks;
+synchronous damage requires an explicit Auto policy selecting an exact level. A full manual damage
+continuation is still needed before Bladesinger is ready to enable. `playable: false` is retained.
+Offscreen verification fixture: `tools/capture/bladesinger_capture.tscn`.

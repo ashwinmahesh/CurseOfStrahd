@@ -141,6 +141,10 @@ static func utility_options(party: Array[Character], caster: Character, dice: Di
 		if level > 0 and slots.is_empty() and not ritual:
 			entry["legal"] = false
 			entry["reason"] = "No spell slots left"
+		var hand_why := str(SpellComponents.plan(caster, data.get("components", {}) as Dictionary, str(k.get("class_id", "")), true)["reason"])
+		if hand_why != "":
+			entry["legal"] = false
+			entry["reason"] = hand_why
 		if caster.hp <= 0 or caster.dead:
 			entry["legal"] = false
 			entry["reason"] = "%s can't act" % caster.name
@@ -175,6 +179,10 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 			return {"ok": false, "text": "This feature cannot cast that spell"}
 		if caster.resource_left(str(payment["resource"])) < int(payment["cost"]):
 			return {"ok": false, "text": "No uses left"}
+	var hands := SpellComponents.known_plan(caster, data, SpellComponents.effective(data, [], bool(payment.get("omit_material", false))), true)
+	var hand_why := str(hands["reason"])
+	if hand_why != "":
+		return {"ok": false, "text": hand_why}
 	var level := int(data.get("level", 0))
 	if as_ritual and not bool(data.get("ritual", false)):
 		return {"ok": false, "text": "%s isn't a Ritual" % data["name"]}
@@ -184,6 +192,8 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 			return {"ok": false, "text": "No spell slots left"}
 		if not caster.expend_slot(slot if slot in slots else slots[0]):
 			return {"ok": false, "text": "No spell slots left"}
+	if str(hands["stow"]) != "":
+		caster.unequip(str(hands["stow"]))
 	if not payment.is_empty():
 		caster.spend_resource(str(payment["resource"]), int(payment["cost"]))
 	var minutes := 10 if as_ritual else 1

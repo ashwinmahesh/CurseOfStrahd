@@ -34,6 +34,7 @@ var spells: SpellCaster
 var features: CombatFeatures
 var reactions: Reactions
 var feature_actions: FeatureActions
+var damage_responses: DamageResponses
 var feature_recipes: FeatureRecipes
 var monster_actions: MonsterActions
 var ai: AiBrain
@@ -78,6 +79,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	reactions = Reactions.new(self)
 	feature_actions = FeatureActions.new(self)
 	feature_recipes = FeatureRecipes.new(self)
+	damage_responses = DamageResponses.new(self)
 	monster_actions = MonsterActions.new(self)
 	ai = AiBrain.new(self)
 	shapes = ShapeChange.new(self)
@@ -1215,6 +1217,12 @@ func answer_reaction(use: bool) -> CombatResult:
 	if pending == null:
 		return CombatResult.fail("No reaction is waiting")
 	var req := pending
+	if use:
+		var reason := req.selection_error()
+		if reason != "":
+			var invalid := CombatResult.fail(reason)
+			invalid.pending = req
+			return invalid
 	pending = null
 	var verbs := ["spends Heroic Inspiration", "keeps Heroic Inspiration"] if req.kind == "heroic_inspiration" else ["uses its Reaction", "holds its Reaction"]
 	if not req.spends_reaction:
@@ -2364,7 +2372,7 @@ func _apply_hit(st: Dictionary, parts: Dictionary, details: Array[String], dmg_t
 	# Rampage (giant hyena) answers a hit on a creature that was already Bloodied.
 	if c.creature is Monster and target.creature.is_bloodied():
 		c.set_meta("hit_bloodied", "%d:%d" % [round_no, turn_index])
-	var dr := deal_damage(c, target, arr, critical, (option["profile"] as WeaponProfile).name, all_details, true)
+	var dr := deal_damage(c, target, arr, critical, (option["profile"] as WeaponProfile).name, all_details, true, st.get("damage_responses", []))
 	r.damage = dr.final
 	if target.is_down():
 		r.killed.append(target.id)
@@ -2431,7 +2439,7 @@ func _roll_damage_dice(expr: String, critical: bool, minimum: int, reason: Strin
 ## Deals damage through the target's defenses with the Concentration save, Undead Fortitude, effects that end on
 ## damage, death and the log. Returns the DamageResult.
 func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: bool, label: String,
-		details: Array = [], log_it: bool = true) -> DamageResult:
+		details: Array = [], log_it: bool = true, responses_resolved: Array = []) -> DamageResult:
 	target = monster_actions.redirect_shared(target)
 	# Time Stop ends when the caster affects anyone else.
 	if source != null and source != target:
@@ -2453,6 +2461,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		for part: Dictionary in parts:
 			part["amount"] = int(part["amount"]) * 2
 		details.append("Siege Monster: double damage to objects")
+	parts = damage_responses.synchronous(target, parts, details, responses_resolved)
 	parts = _reduce_by_dice(target, parts, details)
 	parts = _bastion(target, parts, details)
 	feature_actions.adjust_incoming(source, target, parts)

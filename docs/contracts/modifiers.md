@@ -172,3 +172,8 @@ A modifier’s `skill` may resolve a feature-local pick such as `@choice`, just 
 `weapon_ability` offers a proficient one-handed weapon an alternate ability for attack and damage when its modifier is higher; Unarmed Strikes are excluded. `prefer_one_handed` keeps Versatile weapons in a one-handed grip when the other hand is free. Bladesong uses these alongside its AC/Speed/check and concentration-save modifiers; its effect’s `ends_on_two_handed_attack` parameter ends it before a two-handed attack resolves.
 
 `resource_restore` restores `value` uses of `resource` after a successful positive expenditure of `when_spent`. Failed or zero expenditures do not trigger it, and the destination resource’s normal maximum applies. Bladesong uses this to regain a use when Arcane Recovery is spent.
+
+
+`spellcasting_focus`: `class` restricts the casting source; `weapon_kind` matches the weapon's melee/ranged
+kind suffix; `proficient: true` requires the character's proficiency with that item. `SpellComponents` uses
+these modifiers when checking held focuses. They never substitute for costly or consumed Material components.
