@@ -142,6 +142,47 @@ func test_models_stay_in_their_square() -> void:
 	assert_eq(problems, [] as Array[String], "models in their squares")
 
 
+## Owner report (2026-10-06): "ensure we are sizing resources according to how big they should be." Every 3D piece
+## stands at about its real height (catalog "feet": a person is 6 ft, 1.2 units), its flames and pictures included.
+## The feet of low, deep things (beds, tables) count their top seen from above, so a piece may stand down to half of
+## it; nothing may be bigger than a third over.
+func test_models_are_their_real_size() -> void:
+	var feet := SetDressing.catalog().get("feet", {}) as Dictionary
+	var problems: Array[String] = []
+	for loc_id: String in ["death_house_upper", "death_house_ground", "village_of_barovia", "vallaki", "tser_pool",
+			"castle_ravenloft_chapel", "old_bonegrinder", "krezk", "berez_baba_lysagas_hut", "yester_hill"]:
+		var v := _view(loc_id)
+		await _frames(1)
+		for m in _models(v.board):
+			var art := str(m.get_meta("art"))
+			var mount := str((ModelPiece.manifest()[str(m.get_meta("model"))] as Dictionary).get("mount", ""))
+			if not feet.has(art) or mount.begins_with("stairs") or not m.is_visible_in_tree():
+				continue   # stairs climb a full 7.5 ft storey (test_set_dressing checks them)
+			var tall := _bounds_all(m).size.y
+			var real := float(feet[art]) / 5.0
+			if tall < real * 0.5 or tall > real * 1.35:
+				var msg := "%s: %s %.2f units tall, really %.2f" % [loc_id, art, tall, real]
+				if not msg in problems:
+					problems.append(msg)
+		v.queue_free()
+		await _frames(1)
+	assert_eq(problems, [] as Array[String], "off scale")
+
+
+## The world box round everything a piece draws, its meshes and its sprites.
+func _bounds_all(n: Node3D) -> AABB:
+	var box := AABB()
+	var first := true
+	for c in n.find_children("*", "VisualInstance3D", true, false):
+		var vi := c as VisualInstance3D
+		if not vi.is_visible_in_tree() or vi is Light3D:
+			continue
+		var b := vi.global_transform * vi.get_aabb()
+		box = b if first else box.merge(b)
+		first = false
+	return box
+
+
 ## A place left out of the catalog's models3d places keeps its 2D pieces (how the pilot was shown, and how a place
 ## can stay 2D).
 func test_a_place_left_out_keeps_its_2d_pieces() -> void:

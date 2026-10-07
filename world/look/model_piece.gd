@@ -179,6 +179,14 @@ static func tree_scale(kind: String, id: String, size: float) -> float:
 	return art_h / maxf(model_h, 0.01)
 
 
+## A tall 3D piece (a tower, the Gulthias Tree) fades like the trees when it stands between the camera and the party.
+static func fade_with_trees(board: ArenaBoard, piece: Node3D) -> void:
+	board.mesh_occluders.append(piece)
+	piece.tree_exiting.connect(func() -> void:
+		if is_instance_valid(board):
+			board.mesh_occluders.erase(piece))
+
+
 ## Fades a 3D piece standing between the camera and the party (0 drawn solid, 1 gone), as the trees' billboards fade.
 static func set_fade(node: Node3D, amount: float) -> void:
 	for n in node.find_children("*", "GeometryInstance3D", true, false):

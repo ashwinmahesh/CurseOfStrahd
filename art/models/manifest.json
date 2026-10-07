@@ -1367,8 +1367,8 @@
         "gravestone_back"
       ],
       "size": [
-        0.62,
-        0.83,
+        0.56,
+        0.7,
         0.26
       ],
       "materials": [
@@ -3580,9 +3580,9 @@
         "brazier"
       ],
       "size": [
-        0.721,
-        0.714,
-        0.74
+        0.677,
+        0.573,
+        0.694
       ],
       "materials": [
         "glow_ember",
@@ -3592,7 +3592,7 @@
       "sockets": {
         "flame": [
           0.0,
-          0.6336,
+          0.5104,
           -0.0
         ]
       }
@@ -3604,9 +3604,9 @@
         "brazier_green"
       ],
       "size": [
-        0.461,
-        0.714,
-        0.467
+        0.439,
+        0.573,
+        0.444
       ],
       "materials": [
         "glow_bile",
@@ -3616,7 +3616,7 @@
       "sockets": {
         "flame": [
           0.0,
-          0.6336,
+          0.5104,
           -0.0
         ]
       }
@@ -5093,6 +5093,429 @@
           "lie": true
         }
       ]
+    },
+    "colossus": {
+      "file": "art/models/colossus.glb",
+      "mount": "free",
+      "stands_for": [
+        "colossus",
+        "colossus_back"
+      ],
+      "size": [
+        2.885,
+        6.0,
+        1.148
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_colossus",
+        "spr_colossus_back"
+      ],
+      "triangles": 3232,
+      "big": true,
+      "sculpted": true
+    },
+    "statue_faceless": {
+      "file": "art/models/statue_faceless.glb",
+      "mount": "free",
+      "stands_for": [
+        "statue_faceless",
+        "statue_faceless_back"
+      ],
+      "size": [
+        2.692,
+        5.0,
+        0.97
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_statue_faceless",
+        "spr_statue_faceless_back"
+      ],
+      "triangles": 3764,
+      "big": true,
+      "sculpted": true
+    },
+    "strahd_effigy": {
+      "file": "art/models/strahd_effigy.glb",
+      "mount": "free",
+      "stands_for": [
+        "strahd_effigy",
+        "strahd_effigy_back"
+      ],
+      "size": [
+        2.231,
+        4.0,
+        0.664
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_strahd_effigy",
+        "spr_strahd_effigy_back"
+      ],
+      "triangles": 4204,
+      "big": true,
+      "sculpted": true
+    },
+    "wicker_sun": {
+      "file": "art/models/wicker_sun.glb",
+      "mount": "free",
+      "stands_for": [
+        "wicker_sun"
+      ],
+      "size": [
+        2.077,
+        3.531,
+        0.312
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_wicker_sun"
+      ],
+      "triangles": 2396,
+      "big": true,
+      "sculpted": true
+    },
+    "gate_pillar": {
+      "file": "art/models/gate_pillar.glb",
+      "mount": "free",
+      "stands_for": [
+        "gate_pillar"
+      ],
+      "size": [
+        1.777,
+        4.2,
+        0.614
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_gate_pillar"
+      ],
+      "triangles": 3140,
+      "big": true,
+      "sculpted": true
+    },
+    "cottage": {
+      "file": "art/models/cottage.glb",
+      "mount": "free",
+      "stands_for": [
+        "cottage",
+        "cottage_back"
+      ],
+      "size": [
+        2.76,
+        3.194,
+        2.259
+      ],
+      "materials": [
+        "glow_candle",
+        "pal_bone_dark",
+        "pal_night",
+        "pal_peat",
+        "pal_umber",
+        "tex_church__stone_wall",
+        "tex_village__house_wall",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 304,
+      "big": true
+    },
+    "tent": {
+      "file": "art/models/tent.glb",
+      "mount": "free",
+      "stands_for": [
+        "tent",
+        "tent_back"
+      ],
+      "size": [
+        2.1,
+        3.02,
+        2.1
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_bruise",
+        "pal_bruise_deep",
+        "pal_candle",
+        "pal_crimson",
+        "pal_plum",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 76,
+      "big": true
+    },
+    "barn_collapsed": {
+      "file": "art/models/barn_collapsed.glb",
+      "mount": "free",
+      "stands_for": [
+        "barn_collapsed",
+        "barn_collapsed_back"
+      ],
+      "size": [
+        2.345,
+        2.304,
+        1.869
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_peat",
+        "pal_umber"
+      ],
+      "triangles": 354,
+      "big": true
+    },
+    "vardo": {
+      "file": "art/models/vardo.glb",
+      "mount": "free",
+      "stands_for": [
+        "vardo",
+        "vardo_back"
+      ],
+      "size": [
+        2.15,
+        1.831,
+        1.933
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_bog",
+        "pal_candle",
+        "pal_parchment",
+        "pal_peat",
+        "pal_stone_deep",
+        "pal_umber"
+      ],
+      "triangles": 2716,
+      "big": true
+    },
+    "windmill": {
+      "file": "art/models/windmill.glb",
+      "mount": "free",
+      "stands_for": [
+        "windmill"
+      ],
+      "size": [
+        3.973,
+        6.287,
+        1.9
+      ],
+      "materials": [
+        "pal_ash_violet",
+        "pal_bone_dark",
+        "pal_peat",
+        "pal_slate",
+        "pal_umber",
+        "tex_church__stone_wall"
+      ],
+      "triangles": 338,
+      "big": true
+    },
+    "bell_tower": {
+      "file": "art/models/bell_tower.glb",
+      "mount": "free",
+      "stands_for": [
+        "bell_tower"
+      ],
+      "size": [
+        1.4,
+        7.1,
+        1.4
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_ink",
+        "pal_night",
+        "pal_slate",
+        "pal_tan",
+        "pal_umber",
+        "tex_church__stone_wall"
+      ],
+      "triangles": 240,
+      "big": true
+    },
+    "tower_vr": {
+      "file": "art/models/tower_vr.glb",
+      "mount": "free",
+      "stands_for": [
+        "tower_vr"
+      ],
+      "size": [
+        2.085,
+        6.6,
+        2.06
+      ],
+      "materials": [
+        "pal_night",
+        "pal_slate",
+        "pal_umber",
+        "tex_church__stone_wall"
+      ],
+      "triangles": 260,
+      "big": true
+    },
+    "hut_lysaga": {
+      "file": "art/models/hut_lysaga.glb",
+      "mount": "free",
+      "stands_for": [
+        "hut_lysaga",
+        "hut_lysaga_back"
+      ],
+      "size": [
+        3.093,
+        4.066,
+        3.109
+      ],
+      "materials": [
+        "glow_bile",
+        "pal_bone_dark",
+        "pal_peat",
+        "pal_stone",
+        "pal_umber",
+        "tex_village__roof_thatch"
+      ],
+      "triangles": 858,
+      "big": true
+    },
+    "standing_stones": {
+      "file": "art/models/standing_stones.glb",
+      "mount": "free",
+      "stands_for": [
+        "standing_stones"
+      ],
+      "size": [
+        1.89,
+        2.264,
+        0.834
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_stone_deep"
+      ],
+      "triangles": 540,
+      "big": true,
+      "turns": true
+    },
+    "gallows": {
+      "file": "art/models/gallows.glb",
+      "mount": "free",
+      "stands_for": [
+        "gallows",
+        "gallows_back"
+      ],
+      "size": [
+        1.96,
+        3.01,
+        1.1
+      ],
+      "materials": [
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 204,
+      "big": true
+    },
+    "barrow": {
+      "file": "art/models/barrow.glb",
+      "mount": "free",
+      "stands_for": [
+        "barrow",
+        "barrow_back"
+      ],
+      "size": [
+        1.882,
+        1.34,
+        1.558
+      ],
+      "materials": [
+        "pal_moss",
+        "pal_slate",
+        "pal_stone",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 116,
+      "big": true
+    },
+    "beacon_cradle": {
+      "file": "art/models/beacon_cradle.glb",
+      "mount": "free",
+      "stands_for": [
+        "beacon_cradle"
+      ],
+      "size": [
+        0.975,
+        1.402,
+        1.0
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_slate",
+        "tex_church__stone_wall"
+      ],
+      "triangles": 1228
+    },
+    "glass_ring": {
+      "file": "art/models/glass_ring.glb",
+      "mount": "free",
+      "stands_for": [
+        "glass_ring"
+      ],
+      "size": [
+        0.988,
+        0.348,
+        0.957
+      ],
+      "materials": [
+        "pal_frost",
+        "pal_moonlight"
+      ],
+      "triangles": 280,
+      "turns": true
+    },
+    "gulthias_tree": {
+      "file": "art/models/gulthias_tree.glb",
+      "mount": "free",
+      "stands_for": [
+        "gulthias_tree"
+      ],
+      "size": [
+        6.95,
+        7.184,
+        6.596
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_bruise",
+        "pal_moon_blue"
+      ],
+      "triangles": 2320,
+      "big": true
+    },
+    "ribbon_tree": {
+      "file": "art/models/ribbon_tree.glb",
+      "mount": "free",
+      "stands_for": [
+        "ribbon_tree"
+      ],
+      "size": [
+        3.244,
+        4.252,
+        3.615
+      ],
+      "materials": [
+        "pal_candle",
+        "pal_crimson",
+        "pal_moon_blue",
+        "pal_moss",
+        "pal_plum",
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 2348,
+      "big": true
     }
   }
 }
