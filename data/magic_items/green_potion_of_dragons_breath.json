@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "potion",
   "weight_lb": 0,
@@ -15,7 +15,63 @@
   },
   "theme": "arcana",
   "icon": "potion_orange",
-  "summary": "Reference-only: drinking grants Dragon’s Breath for 1 minute, DC 13, without Concentration.",
-  "text": "Reference-only: drinking grants Dragon’s Breath for 1 minute, DC 13, without Concentration. The breath deals Poison damage.",
-  "playable": false
+  "summary": "For 1 minute, a Magic action breathes a 15-ft Cone of Poison (Dex DC 13, 3d6, half on a success).",
+  "text": "When you drink this potion you gain the benefit of Dragon's Breath for 1 minute without needing Concentration: as a Magic action you exhale a 15-foot Cone, and each creature in it makes a DC 13 Dexterity saving throw, taking 3d6 Poison damage on a failure or half as much on a success.",
+  "playable": true,
+  "stackable": true,
+  "effects": [],
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "recipes": {
+    "breath": {
+      "name": "Dragon's Breath",
+      "level": 0,
+      "school": "transmutation",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "cone",
+        "size": 15
+      },
+      "save": "dex",
+      "save_success": "half",
+      "damage": [
+        {
+          "dice": "3d6",
+          "type": "poison"
+        }
+      ],
+      "duration": {
+        "kind": "instantaneous"
+      },
+      "components": {},
+      "tags": [
+        "damage"
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "drink",
+      "name": "Drink",
+      "cost": "bonus",
+      "consume": true,
+      "custom": "drink_grant",
+      "grants": {
+        "minutes": 1,
+        "powers": [
+          {
+            "id": "breath",
+            "name": "Dragon's Breath",
+            "recipe": "breath",
+            "dc": 13,
+            "cost": "magic"
+          }
+        ]
+      }
+    }
+  ]
 }

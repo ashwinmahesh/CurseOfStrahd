@@ -842,6 +842,9 @@ func after_disengage(c: Combatant) -> void:
 func before_d20(c: Combatant, kind: D20Test.Kind, keys: Array[String]) -> Dictionary:
 	var e := enc()
 	var out := {}
+	# Mage Breaker: the Concentration save after its hit has Disadvantage.
+	if kind == D20Test.Kind.SAVING_THROW and "concentration" in keys and c.has_meta("mage_broken"):
+		out["disadvantage"] = ["Mage Breaker"]
 	if kind == D20Test.Kind.ABILITY_CHECK and _helpful_friend(c, keys):
 		out["advantage"] = ["Helpful Friend"]
 	if kind != D20Test.Kind.SAVING_THROW:
@@ -1288,7 +1291,8 @@ func _lantern_catch(dead: Combatant) -> void:
 	for h in e.combatants:
 		if not h.creature.has_flag("spirit_lantern") or not h.hostile_to(dead) or e.distance(h, dead) > 60:
 			continue
-		var cap := maxi(1, _caster_mod(h.id, "spirit_lantern"))
+		# Grave Reaper's lantern holds five.
+		var cap := int(h.get_meta("lantern_capacity", maxi(1, _caster_mod(h.id, "spirit_lantern"))))
 		var n := int(h.get_meta("lantern_fragments", 0))
 		if n < cap:
 			h.set_meta("lantern_fragments", n + 1)

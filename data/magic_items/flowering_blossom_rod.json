@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "rod",
   "weight_lb": 0,
@@ -15,8 +15,8 @@
   },
   "theme": "arcana",
   "icon": "staff",
-  "summary": "While held, cast Druidcraft at will.",
-  "text": "While held, cast Druidcraft at will. Reference-only: Plant Growth (Overgrowth only) once per dawn; Magic action restores nonmagical plants in a visible 5-foot Cube within 15 feet for 1d4 days. Cast Insect Plague once per dawn using your spell DC.",
+  "summary": "Druidcraft at will, Overgrowth and Insect Plague once a day each, and it mends plants.",
+  "text": "While holding this rod you can cast Druidcraft at will and, once per dawn, Plant Growth (its Overgrowth only). As a Magic action you can restore the ordinary plants in a 5-foot cube you can see within 15 feet to full health for 1d4 days. Once per dawn you can also cast Insect Plague from it, using your spell save DC.",
   "held": true,
   "powers": [
     {
@@ -34,7 +34,29 @@
         "count": 1,
         "per": "dawn"
       }
+    },
+    {
+      "id": "plant_growth",
+      "name": "Overgrowth",
+      "spell": "plant_growth",
+      "dc": "wielder",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once a day: Plant Growth's Overgrowth."
+    },
+    {
+      "id": "restore_plants",
+      "name": "Restore Plants",
+      "cost": "magic",
+      "custom": "flavour",
+      "field": true,
+      "params": {
+        "text": "brings the ordinary plants in a 5-foot cube back to health for a few days"
+      },
+      "combat": false
     }
   ],
-  "playable": false
+  "playable": true
 }

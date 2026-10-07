@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "weapon",
   "weight_lb": 0,
@@ -15,8 +15,8 @@
   },
   "theme": "arcana",
   "icon": "longsword",
-  "summary": "+3 to this weapon’s attack and damage rolls.",
-  "text": "+3 to this weapon’s attack and damage rolls. While held, breathe underwater and Swim 30 feet. While held, Fly 30 feet. Reference-only: a Magic action salts up to a gallon of touched liquid. Emits Bright Light 5 feet and Dim Light 5 feet more.",
+  "summary": "+3 to attack and damage rolls; while held you breathe water, swim and fly 30 feet, and it glows like a lantern.",
+  "text": "You have a +3 bonus to attack and damage rolls made with this weapon. While you hold it you can breathe underwater and have Swim and Fly Speeds of 30 feet, and it sheds Bright Light in a 5-foot radius and Dim Light for 5 feet beyond. As a Magic action you can make up to a gallon of liquid it touches as salty as seawater.",
   "held": true,
   "template": {
     "on": "weapon",
@@ -60,5 +60,22 @@
       "value": 30
     }
   ],
-  "playable": false
+  "playable": true,
+  "powers": [
+    {
+      "id": "salt",
+      "name": "Salt Water",
+      "cost": "magic",
+      "custom": "flavour",
+      "field": true,
+      "params": {
+        "text": "turns up to a gallon of touched water as briny as the sea"
+      },
+      "text": "Magic action: up to a gallon of liquid you touch with it turns salty. (No other effect in the game.)"
+    }
+  ],
+  "light": {
+    "bright": 5,
+    "dim": 5
+  }
 }

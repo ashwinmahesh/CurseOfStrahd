@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wand",
   "weight_lb": 0,
@@ -25,8 +25,8 @@
   },
   "theme": "arcana",
   "icon": "wand",
-  "summary": "Seven charges; regain 1d6+1 at dawn.",
-  "text": "Seven charges; regain 1d6+1 at dawn. Cast Sleep (DC 15) for 1 charge. Last charge destroys it on a d20 roll of 1. Reference-only: Catnap costs 3 charges and requires manual rest resolution.",
+  "summary": "Seven charges (1d6 + 1 back at dawn): Sleep (DC 15) for one, Catnap for three.",
+  "text": "This wand has 7 charges and regains 1d6 + 1 expended charges each dawn; when you spend the last one, roll a d20 and on a 1 the wand crumbles. While holding it you can spend 1 charge to cast Sleep (save DC 15) or 3 charges to cast Catnap.",
   "held": true,
   "powers": [
     {
@@ -35,7 +35,15 @@
       "spell": "sleep",
       "dc": 15,
       "charges": 1
+    },
+    {
+      "id": "catnap",
+      "name": "Catnap",
+      "spell": "catnap",
+      "dc": 15,
+      "charges": 3,
+      "text": "3 charges: Catnap."
     }
   ],
-  "playable": false
+  "playable": true
 }

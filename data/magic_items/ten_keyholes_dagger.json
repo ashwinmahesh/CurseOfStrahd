@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "weapon",
   "weight_lb": 0,
@@ -15,8 +15,8 @@
   },
   "theme": "arcana",
   "icon": "dagger",
-  "summary": "+2 to this weapon’s attack and damage rolls.",
-  "text": "+2 to this weapon’s attack and damage rolls. Reference-only: on an Attack action, transform it into any Simple Melee weapon until your next turn starts. Choose Strength or Dexterity for both attack and damage in any form.",
+  "summary": "+2 to attack and damage rolls; as you attack it can become any Simple Melee weapon until your next turn.",
+  "text": "You have a +2 bonus to attack and damage rolls made with this weapon. When you take the Attack action you can turn it into any Simple Melee weapon until the start of your next turn. Choose Strength or Dexterity for its attack and damage rolls in any shape (the game uses the better).",
   "template": {
     "on": "weapon",
     "items": [
@@ -41,5 +41,29 @@
       }
     }
   ],
-  "playable": false
+  "playable": true,
+  "powers": [
+    {
+      "id": "reshape",
+      "name": "Reshape",
+      "cost": "free",
+      "custom": "fr_reshape",
+      "choice": {
+        "label": "Shape",
+        "from": [
+          "club",
+          "dagger",
+          "greatclub",
+          "handaxe",
+          "javelin",
+          "light_hammer",
+          "mace",
+          "quarterstaff",
+          "sickle",
+          "spear"
+        ]
+      },
+      "text": "As you attack: it becomes a Simple Melee weapon until the start of your next turn."
+    }
+  ]
 }

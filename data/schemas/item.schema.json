@@ -632,6 +632,10 @@
           "targeting": {
             "type": "string"
           },
+          "count": {
+            "type": "integer",
+            "description": "How many creatures a multi-target power picks (Tramontane Armor's grip)."
+          },
           "range": {
             "type": "integer"
           },

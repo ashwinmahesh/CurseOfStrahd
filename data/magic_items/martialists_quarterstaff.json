@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "staff",
   "weight_lb": 0,
@@ -20,8 +20,8 @@
   },
   "theme": "arcana",
   "icon": "staff",
-  "summary": "Four charges, regaining 1d4 at dawn; Searing Smite costs 2 (DC 13).",
-  "text": "Four charges, regaining 1d4 at dawn; Searing Smite costs 2 (DC 13). Reference-only: Attack action spends 1 charge for Thrown 20/60 with automatic return until your next turn ends; a melee attack can spend 1 charge for Advantage and DC 13 Strength against Prone on hit.",
+  "summary": "Four charges (1d4 back at dawn): Searing Smite (2 charges, DC 13), a charge to throw it and have it fly back, or a charge for Advantage and a shove Prone.",
+  "text": "This quarterstaff has 4 charges and regains 1d4 expended charges each dawn. While holding it you can spend 2 charges to cast Searing Smite (save DC 13). When you take the Attack action you can spend 1 charge: until the end of your next turn the staff has the Thrown property (range 20/60 feet) and flies back to your hand after each throw. When you make a melee attack with it you can spend 1 charge to have Advantage on the roll; if it hits, the target makes a DC 13 Strength saving throw or has the Prone condition.",
   "template": {
     "on": "weapon",
     "items": [
@@ -37,7 +37,18 @@
       "spell": "searing_smite",
       "dc": 13,
       "charges": 2
+    },
+    {
+      "id": "throw",
+      "name": "Throwing Grip",
+      "cost": "free",
+      "custom": "fr_martial_throw",
+      "charges": 1,
+      "text": "1 charge as you attack: until the end of your next turn it can be thrown (20/60 ft) and flies back."
     }
   ],
-  "playable": false
+  "playable": true,
+  "weapon_rules": {
+    "returns": true
+  }
 }

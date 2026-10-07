@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "rod",
   "weight_lb": 0,
@@ -15,8 +15,8 @@
   },
   "theme": "arcana",
   "icon": "staff",
-  "summary": "While held, cast Druidcraft at will.",
-  "text": "While held, cast Druidcraft at will. Reference-only: Plant Growth (Overgrowth only) once per dawn; Magic action restores nonmagical plants in a visible 5-foot Cube within 15 feet for 1d4 days. Cast Insect Plague once per dawn using your spell DC. Reference-only, once per dawn: Magic action, chosen creatures in 30-foot Emanation save DC 17 Constitution or fall Unconscious for 1 hour; damage or an action to wake within 5 feet ends it. Creatures that do not sleep or are immune to Exhaustion automatically succeed.",
+  "summary": "Druidcraft, Overgrowth and Insect Plague, plant mending, and once a day a 30-ft wave of sleep.",
+  "text": "While holding this rod you can cast Druidcraft at will and, once per dawn, Plant Growth (its Overgrowth only). As a Magic action you can restore the ordinary plants in a 5-foot cube you can see within 15 feet to full health for 1d4 days. Once per dawn you can also cast Insect Plague from it, using your spell save DC. Once per dawn, as a Magic action, creatures of your choice within 30 feet of you make a DC 17 Constitution saving throw or fall Unconscious for 1 hour; taking damage, or someone within 5 feet using an action to shake them, wakes them. Creatures that don't sleep, or are immune to Exhaustion, succeed automatically.",
   "held": true,
   "powers": [
     {
@@ -34,7 +34,40 @@
         "count": 1,
         "per": "dawn"
       }
+    },
+    {
+      "id": "plant_growth",
+      "name": "Overgrowth",
+      "spell": "plant_growth",
+      "dc": "wielder",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once a day: Plant Growth's Overgrowth."
+    },
+    {
+      "id": "restore_plants",
+      "name": "Restore Plants",
+      "cost": "magic",
+      "custom": "flavour",
+      "field": true,
+      "params": {
+        "text": "brings the ordinary plants in a 5-foot cube back to health for a few days"
+      },
+      "combat": false
+    },
+    {
+      "id": "slumber",
+      "name": "Wave of Sleep",
+      "cost": "magic",
+      "custom": "fr_slumber_aura",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once a day: enemies within 30 ft make a DC 17 Con save or sleep for an hour (damage or a shake wakes them)."
     }
   ],
-  "playable": false
+  "playable": true
 }

@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "ammunition",
   "weight_lb": 0,
@@ -15,7 +15,19 @@
   },
   "theme": "arcana",
   "icon": "arrow",
-  "summary": "Reference-only: A creature damaged by this ammunition saves DC 13 Charisma or loses Reactions until its next turn starts.",
-  "text": "Reference-only: A creature damaged by this ammunition saves DC 13 Charisma or loses Reactions until its next turn starts. The ammunition becomes mundane after hitting.",
-  "playable": false
+  "summary": "A creature it damages makes a DC 13 Charisma save or can't take Reactions until its next turn; then it's ordinary.",
+  "text": "A creature damaged by this ammunition makes a DC 13 Charisma saving throw or can't take Reactions until the start of its next turn. The ammunition then loses its magic.",
+  "playable": true,
+  "template": {
+    "on": "ammunition",
+    "name": "Goading {base}",
+    "default": "arrow"
+  },
+  "consumable": false,
+  "weapon_rules": {
+    "special": [
+      "goading"
+    ],
+    "spent_on_hit": true
+  }
 }

@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "focus",
   "weight_lb": 0,
@@ -15,9 +15,22 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Sorcerer focus.",
-  "text": "Sorcerer focus. Reference-only: a Magic action while holding it restores up to 2 spent Sorcery Points, once per dawn.",
+  "summary": "A Sorcerer's focus; once a day a Magic action restores up to 2 spent Sorcery Points.",
+  "text": "A Sorcerer can use this orb as a Spellcasting Focus. Once per dawn, while holding it, you can take a Magic action to regain up to 2 spent Sorcery Points.",
   "focus": "arcane",
   "held": true,
-  "playable": false
+  "playable": true,
+  "powers": [
+    {
+      "id": "restore",
+      "name": "Draw on the Orb",
+      "cost": "magic",
+      "custom": "fr_orb_sorcery",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once a day: regain up to 2 spent Sorcery Points."
+    }
+  ]
 }

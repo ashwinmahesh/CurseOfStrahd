@@ -139,6 +139,7 @@ func after_miss_attacker(st: Dictionary) -> Array:
 	var out: Array = []
 	if t.natural_one:
 		return out
+	out.append_array(e.items.specials.fr.after_miss_offers(st))
 	if c.creature is Character:
 		var ch := c.creature as Character
 		var die := feats().superiority_die(c)

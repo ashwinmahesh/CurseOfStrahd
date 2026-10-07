@@ -66,6 +66,7 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 | `condition_immunity_by_type` | conditions, types | can't be given these conditions by creatures of these types |
 | `damage_reduction_die` | dice, type, once_per_turn | damage of that type is reduced by the die (Resistance cantrip) |
 | `weapon_override` | items, die, ability, damage_type | reshapes a weapon or Unarmed Strike (Shillelagh, Alter Self) |
+| `weapon_form` | items, form, either_ability, add_properties, range | a weapon taking another weapon's statistics (`form`, an item id), using the better of Strength and Dexterity, or gaining properties and a range (the Keyholes daggers, the Martialist's Quarterstaff); `WeaponProfile.reshaped` applies it |
 | `speed_percent` | value | Speed × value / 100 (Haste 200, Slow 50) |
 | `size_step` | value | one size up or down while it lasts (Enlarge/Reduce, Large Form) |
 | `inspiration_die` | die, on | a die the creature may add to one failed roll (Bardic Inspiration) |
