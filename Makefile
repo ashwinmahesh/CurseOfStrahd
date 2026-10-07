@@ -17,7 +17,7 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              echo "Files changed since the last import: importing first."; $(G) --headless --import > /dev/null 2>&1; \
              touch $(STAMP); fi
 
-.PHONY: run arena smoke import test lint validate ci check lfs-quiet palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens
+.PHONY: run arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens
 
 ## Imports first when scripts or assets changed since the last import (a merge can add a class_name or images that
 ## the editor cache doesn't know yet, and the game then stops at a parse error).
@@ -73,6 +73,11 @@ check:
 
 palette:
 	python3 tools/art/build_palette.py
+
+## Gemini spend (tools/art/gemini_budget.py): each key's credit and today's requests, then spend per day and thread.
+## make art-spend [DAYS=n] · after a top-up: make art-spend [KEY=backup] BALANCE=<usd> KEEP=<usd to leave untouched>
+art-spend:
+	python3 tools/art/gemini_budget.py $(if $(DAYS),--days $(DAYS),) $(if $(KEY),--key $(KEY),) $(if $(BALANCE),--balance $(BALANCE),) $(if $(KEEP),--keep $(KEEP),)
 
 ## Spoken lines (ADR 0013): generates the clips that are missing with the pinned ElevenLabs model (audio/voice/casting.json).
 ## make voice [SPEAKER="narrator madam_eva"] [LIMIT=n] [DRY=1] [MAX_USD=5] [RECAST=1] [PRUNE=1]

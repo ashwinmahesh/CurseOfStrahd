@@ -6,7 +6,7 @@ Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log 
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
 ## Commands (add new ones to the Makefile)
-make run | arena | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd JOBS=n] | golden-saves | validate | lint | check [DRY=1] | ci | lfs-quiet | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
+make run | arena | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd JOBS=n] | golden-saves | validate | lint | check [DRY=1] | ci | lfs-quiet | art-spend | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
 make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | keys [ONLY="id …"] [KINDS=…] | creator [GENERATE=1] | pregens [ONLY="id …"] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
@@ -59,6 +59,10 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   provider and model pinned in art/manifest.json. Key: GEMINI_API_KEY, sent as a header. Gemini gives opaque
   images, so ask for a plain flat white background; the pipeline removes it. OpenAI is a fallback
   (tools/art/generate_openai.sh); never use OpenAI models with a shutdown date.
+- Gemini spend (tools/art/gemini_budget.py): every call is counted in one ledger shared by all worktrees, per key
+  (primary GEMINI_API_KEY, backup GEMINI_BACKUP_API_KEY) and thread. `make art-spend` shows what's left. Batch tools
+  call `gemini_budget.preflight(calls, size, what)` before their first call and stop if the batch would pass the key's
+  stop point; when a tool says it stopped there, report to the coordinator instead of overriding (GEMINI_OVERRUN=1).
 - Asset packs from the internet are allowed (owner, 2026-10-06): CC0 or clearly free licences only. Keep
   downloads untouched with their licence in art/sourced/<pack>/ and list each in docs/assets/LICENSES.md.
   Characters come from the Gemini pipeline so the style stays consistent.
