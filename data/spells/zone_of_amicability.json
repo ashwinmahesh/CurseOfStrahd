@@ -1,0 +1,35 @@
+{
+  "id": "zone_of_amicability",
+  "name": "Zone of Amicability",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 4,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "warlock"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10
+  },
+  "summary": "Reference-only: When making an ability check to influence a creature within your 60-foot Emanation, treat a natural result of 9 or lower as 10.",
+  "text": "Reference-only: When making an ability check to influence a creature within your 60-foot Emanation, treat a natural result of 9 or lower as 10.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile"
+}

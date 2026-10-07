@@ -1,0 +1,79 @@
+{
+  "id": "chondathan_freebooter",
+  "name": "Chondathan Freebooter",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "summary": "You left compulsory service in Chondath for a life aboard ships of the Vilhon Reach.",
+  "ability_scores": [
+    "str",
+    "dex",
+    "wis"
+  ],
+  "feat": "skilled",
+  "skills": [
+    "athletics",
+    "sleight_of_hand"
+  ],
+  "tool": {
+    "id": "weavers_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 1
+        },
+        {
+          "id": "weavers_tools",
+          "qty": 1
+        },
+        {
+          "id": "backpack",
+          "qty": 1
+        },
+        {
+          "id": "ball_bearings",
+          "qty": 1
+        },
+        {
+          "id": "basket",
+          "qty": 1
+        },
+        {
+          "id": "bedroll",
+          "qty": 1
+        },
+        {
+          "id": "bucket",
+          "qty": 1
+        },
+        {
+          "id": "ration",
+          "qty": 3
+        },
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "signal_whistle",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 38
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

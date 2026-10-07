@@ -1,0 +1,20 @@
+{
+  "id": "arcanists_bestiary",
+  "name": "Arcanist’s Bestiary",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "amulet",
+  "summary": "Reference-only: held book casts Charm Monster once per dawn (DC 15; non-Humanoids save with Disadvantage).",
+  "text": "Reference-only: held book casts Charm Monster once per dawn (DC 15; non-Humanoids save with Disadvantage). Attunement grants Arcana, History, Nature, or Religion proficiency, changeable on a Long Rest. Carrying it, a successful Study/Arcana check on a visible Aberration, Construct, Elemental, Fey, or Monstrosity also reveals its damage defenses."
+}

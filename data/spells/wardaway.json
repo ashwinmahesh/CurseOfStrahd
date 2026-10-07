@@ -1,0 +1,38 @@
+{
+  "id": "wardaway",
+  "name": "Wardaway",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 1,
+  "school": "abjuration",
+  "classes": [
+    "bard",
+    "cleric",
+    "paladin",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a miniature clay hand"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "summary": "Reference-only: One creature makes a Constitution save; Constructs and Undead automatically succeed. Failure deals 2d4 Force, halves Speed until your next turn starts, and restricts its next turn to an action or Bonus Action, not both. Success takes half damage only. Add 2d4 per slot above 1.",
+  "text": "Reference-only: One creature makes a Constitution save; Constructs and Undead automatically succeed. Failure deals 2d4 Force, halves Speed until your next turn starts, and restricts its next turn to an action or Bonus Action, not both. Success takes half damage only. Add 2d4 per slot above 1.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile"
+}

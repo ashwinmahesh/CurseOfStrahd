@@ -1,0 +1,90 @@
+{
+  "id": "spellfire_sorcery",
+  "name": "Spellfire Sorcery",
+  "class": "sorcerer",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "summary": "Raw power from the Weave becomes protective light and searing spellfire. Some features are reference-only; see each feature’s implementation status.",
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "spellfire_burst",
+        "name": "Spellfire Burst",
+        "summary": "Once per turn after spending at least one Sorcery Point as part of a Magic or Bonus Action on your turn, choose one burst. Bolstering Flames grants you or a visible creature within 30 feet 1d4 + Charisma modifier Temporary Hit Points. Radiant Fire deals 1d4 Fire or Radiant to one visible creature within 30 feet.",
+        "text": "Once per turn after spending at least one Sorcery Point as part of a Magic or Bonus Action on your turn, choose one burst. Bolstering Flames grants you or a visible creature within 30 feet 1d4 + Charisma modifier Temporary Hit Points. Radiant Fire deals 1d4 Fire or Radiant to one visible creature within 30 feet.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "absorb_spells_prepared",
+        "name": "Counterspell",
+        "summary": "Counterspell is always prepared.",
+        "text": "Counterspell is always prepared.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "counterspell",
+            "always_prepared": true
+          }
+        ]
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "spellfire_absorb_spells",
+        "name": "Absorb Spells",
+        "summary": "When a target fails its save against your Counterspell, recover 1d4 Sorcery Points.",
+        "text": "When a target fails its save against your Counterspell, recover 1d4 Sorcery Points.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "honed_spellfire",
+        "name": "Honed Spellfire",
+        "summary": "Bolstering Flames adds Sorcerer level to its Temporary Hit Points. Radiant Fire deals 1d8 damage.",
+        "text": "Bolstering Flames adds Sorcerer level to its Temporary Hit Points. Radiant Fire deals 1d8 damage.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "crown_of_spellfire",
+        "name": "Crown of Spellfire",
+        "summary": "Once per Long Rest, enhance an activation of Innate Sorcery until it ends; spend 5 Sorcery Points freely to restore use. Gain hovering Fly Speed 60 feet. Once per turn when hit by an attack roll, spend and roll up to Charisma modifier Hit Point Dice (minimum 1) to reduce that attack’s damage by their total. While not Incapacitated, a spell or magical effect allowing a save for half instead deals no damage on success and half on failure.",
+        "text": "Once per Long Rest, enhance an activation of Innate Sorcery until it ends; spend 5 Sorcery Points freely to restore use. Gain hovering Fly Speed 60 feet. Once per turn when hit by an attack roll, spend and roll up to Charisma modifier Hit Point Dice (minimum 1) to reduce that attack’s damage by their total. While not Incapacitated, a spell or magical effect allowing a save for half instead deals no damage on success and half on failure.",
+        "implemented": "text"
+      }
+    }
+  ],
+  "always_prepared": {
+    "3": [
+      "cure_wounds",
+      "guiding_bolt",
+      "lesser_restoration",
+      "scorching_ray"
+    ],
+    "5": [
+      "aura_of_vitality",
+      "dispel_magic"
+    ],
+    "7": [
+      "fire_shield",
+      "wall_of_fire"
+    ],
+    "9": [
+      "greater_restoration",
+      "flame_strike"
+    ]
+  }
+}

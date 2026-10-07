@@ -1,0 +1,33 @@
+{
+  "id": "zhentarim_tactics",
+  "name": "Zhentarim Tactics",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "category": "general",
+  "repeatable": false,
+  "summary": "Reference-only: After a creature within 5 feet hits you with a melee attack, you may make an Opportunity Attack against it. After each Long Rest, choose a proficient skill to have Expertise until your next Long Rest.",
+  "benefits": [
+    {
+      "id": "zhentarim_tactics_benefit",
+      "name": "Benefits",
+      "summary": "Reference-only: After a creature within 5 feet hits you with a melee attack, you may make an Opportunity Attack against it. After each Long Rest, choose a proficient skill to have Expertise until your next Long Rest.",
+      "text": "Reference-only: After a creature within 5 feet hits you with a melee attack, you may make an Opportunity Attack against it. After each Long Rest, choose a proficient skill to have Expertise until your next Long Rest.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 4,
+    "feature": "exploit_opening"
+  },
+  "ability_increase": {
+    "from": [
+      "dex",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  }
+}

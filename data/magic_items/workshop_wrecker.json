@@ -1,0 +1,20 @@
+{
+  "id": "workshop_wrecker",
+  "name": "Workshop Wrecker",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "amulet",
+  "summary": "Reference-only: Magic action activates for 1 minute, damaging creatures and unattended nonmagical objects on activation and your turn starts.",
+  "text": "Reference-only: Magic action activates for 1 minute, damaging creatures and unattended nonmagical objects on activation and your turn starts. Confined Cube sizes 15/30/50/100 feet use Dexterity DC 18/17/15/14 for 6d6+5/4d6+4/2d6+2/1d6+1 Bludgeoning on failure. Larger rooms suffer negligible damage; outdoors it escapes at 300 feet per round. Freely stop by command within 30 feet. Once per dawn."
+}

@@ -1,0 +1,115 @@
+{
+  "id": "iron_body",
+  "name": "Iron Body",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells. "
+  },
+  "level": 8,
+  "school": "transmutation",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "diamond dust worth 250 GP, consumed",
+    "m_cost_gp": 250,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "summary": "A willing touched creature cannot gain Exhaustion and resists Bludgeoning, Fire, Piercing, and Slashing. It is immune to Poison damage and Paralyzed, Petrified, and Poisoned; those three conditions end immediately on casting.",
+  "text": "A willing touched creature cannot gain Exhaustion and resists Bludgeoning, Fire, Piercing, and Slashing. It is immune to Poison damage and Paralyzed, Petrified, and Poisoned; those three conditions end immediately on casting.",
+  "tags": [
+    "defense",
+    "restoration"
+  ],
+  "icon": "stoneskin",
+  "targets": {
+    "kind": "ally",
+    "count": 1,
+    "description": "one willing creature you touch"
+  },
+  "effects": [
+    {
+      "effect": "end_condition",
+      "params": {
+        "conditions": [
+          "paralyzed"
+        ]
+      }
+    },
+    {
+      "effect": "end_condition",
+      "params": {
+        "conditions": [
+          "petrified"
+        ]
+      }
+    },
+    {
+      "effect": "end_condition",
+      "params": {
+        "conditions": [
+          "poisoned"
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "bludgeoning"
+          },
+          {
+            "stat": "resistance",
+            "value": "fire"
+          },
+          {
+            "stat": "resistance",
+            "value": "piercing"
+          },
+          {
+            "stat": "resistance",
+            "value": "slashing"
+          },
+          {
+            "stat": "immunity",
+            "value": "poison"
+          },
+          {
+            "stat": "condition_immunity",
+            "value": "exhaustion"
+          },
+          {
+            "stat": "condition_immunity",
+            "value": "paralyzed"
+          },
+          {
+            "stat": "condition_immunity",
+            "value": "petrified"
+          },
+          {
+            "stat": "condition_immunity",
+            "value": "poisoned"
+          }
+        ]
+      }
+    }
+  ]
+}

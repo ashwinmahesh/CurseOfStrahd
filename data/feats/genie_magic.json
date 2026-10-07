@@ -1,0 +1,33 @@
+{
+  "id": "genie_magic",
+  "name": "Genie Magic",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "category": "general",
+  "repeatable": false,
+  "summary": "Once per Long Rest, use a Magic action to cast a chosen level 1 Sorcerer spell with an action casting time. Use the ability raised by this feat. Treat it as cast with a level 2 slot at character level 11, or level 3 slot at level 17.",
+  "benefits": [
+    {
+      "id": "wish_magic",
+      "name": "Wish Magic",
+      "summary": "Once per Long Rest, use a Magic action to cast a chosen level 1 Sorcerer spell with an action casting time. Use the ability raised by this feat. Treat it as cast with a level 2 slot at character level 11, or level 3 slot at level 17.",
+      "text": "Once per Long Rest, use a Magic action to cast a chosen level 1 Sorcerer spell with an action casting time. Use the ability raised by this feat. Treat it as cast with a level 2 slot at character level 11, or level 3 slot at level 17.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 4
+  },
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  }
+}

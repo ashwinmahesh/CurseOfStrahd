@@ -1,0 +1,32 @@
+{
+  "id": "crown_of_horns",
+  "name": "Crown of Horns",
+  "source": {
+    "book": "FRAiF",
+    "page": 243,
+    "checked_against": "FRAiF",
+    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/10771761-crown-of-horns. Prices use the existing rarity convention; unspecified weight is 0. Reference-only properties require manual adjudication."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 0,
+  "magic": {
+    "rarity": "artifact",
+    "attunement": true,
+    "cursed": true
+  },
+  "theme": "relics",
+  "icon": "amulet",
+  "summary": "While worn, gain immunity to Necrotic damage.",
+  "text": "While worn, gain immunity to Necrotic damage. Reference-only: a Magic action creates a 60-foot Cone, DC 18 Constitution for 4d8 Necrotic, half on success; a Humanoid killed becomes an obedient Specter at your next turn. Cast Power Word Kill once per dawn; a Humanoid it kills becomes an obedient Wraith at your next turn. Teleport moves you or the crown once per 7 days, shared. While you are not Incapacitated, a 60-foot fear aura forces entrants (first entry per turn) and creatures starting their turns there to save DC 16 Wisdom or be Frightened and flee by the safest route. Repeat the save when you damage the creature or it ends its turn over 120 feet away; success grants 1 minute of immunity. A Bonus Action toggles the aura. Curse: you cannot willingly part with or end attunement to the crown, become Neutral Evil, and transform into a DM-controlled lich after 365 days. Each use of its cone or killing hand adds a cumulative 10 percent chance of immediate transformation. Only Wish or Myrkul removes the curse; ending attunement before transformation reverses the physical changes over time. Roll one minor beneficial, one minor detrimental, and one major detrimental artifact property. The crown is sentient (Int 10, Wis 16, Cha 19), hears and has Darkvision 120 feet, and telepathically speaks Common to its wearer on behalf of Myrkul. Kelemvor must wear it on the Bone Castle throne to destroy it.",
+  "worn": "head",
+  "modifiers": [
+    {
+      "stat": "immunity",
+      "value": "necrotic"
+    }
+  ],
+  "treasure": {
+    "random": false
+  }
+}

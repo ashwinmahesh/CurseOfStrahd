@@ -1,0 +1,156 @@
+{
+  "id": "bladesinger",
+  "name": "Bladesinger",
+  "class": "wizard",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "summary": "An elven tradition joins wizardry, swordplay, and dance. Some features are reference-only; see each feature’s implementation status.",
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "bladesong",
+        "name": "Bladesong",
+        "summary": "Bonus Action while wearing no armor or Shield: Bladesong for 1 minute. It ends if Incapacitated, you don armor or a Shield, or you use two hands for a weapon attack; end it freely. Uses equal Intelligence modifier (minimum 1) per Long Rest; Arcane Recovery restores one. While active, add Intelligence modifier to AC (minimum +1), gain 10 feet of Speed and Advantage on Acrobatics, use Intelligence for proficient weapon attack and damage rolls, and add Intelligence modifier to Concentration saves. Activation and these temporary benefits are reference-only.",
+        "text": "Bonus Action while wearing no armor or Shield: Bladesong for 1 minute. It ends if Incapacitated, you don armor or a Shield, or you use two hands for a weapon attack; end it freely. Uses equal Intelligence modifier (minimum 1) per Long Rest; Arcane Recovery restores one. While active, add Intelligence modifier to AC (minimum +1), gain 10 feet of Speed and Advantage on Acrobatics, use Intelligence for proficient weapon attack and damage rolls, and add Intelligence modifier to Concentration saves. Activation and these temporary benefits are reference-only.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "training_in_war_and_song",
+        "name": "Training in War and Song",
+        "summary": "Gain proficiency with Melee Martial weapons without Heavy or Two-Handed, and choose one listed skill.",
+        "text": "Gain proficiency with Melee Martial weapons without Heavy or Two-Handed, and choose one listed skill.",
+        "implemented": "data",
+        "choice": {
+          "kind": "skill",
+          "count": 1,
+          "from": [
+            "acrobatics",
+            "athletics",
+            "performance",
+            "persuasion"
+          ]
+        },
+        "modifiers": [
+          {
+            "stat": "proficiency",
+            "kind": "weapon",
+            "value": "battleaxe"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "weapon",
+            "value": "flail"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "weapon",
+            "value": "longsword"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "weapon",
+            "value": "morningstar"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "weapon",
+            "value": "rapier"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "weapon",
+            "value": "scimitar"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "weapon",
+            "value": "shortsword"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "weapon",
+            "value": "trident"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "weapon",
+            "value": "warhammer"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "weapon",
+            "value": "war_pick"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "weapon",
+            "value": "whip"
+          }
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "bladesinger_weapon_focus",
+        "name": "Weapon Focus",
+        "summary": "A proficient Melee weapon may serve as your Wizard Spellcasting Focus.",
+        "text": "A proficient Melee weapon may serve as your Wizard Spellcasting Focus.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "bladesinger_extra_attack",
+        "name": "Extra Attack",
+        "summary": "Two attacks per Attack action.",
+        "text": "Two attacks per Attack action.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "attacks_per_action",
+            "value": 2
+          }
+        ]
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "bladesinger_cantrip_attack",
+        "name": "Cantrip Substitution",
+        "summary": "One attack in your Attack action may be replaced by a Wizard cantrip with an action casting time. This substitution is not automated.",
+        "text": "One attack in your Attack action may be replaced by a Wizard cantrip with an action casting time. This substitution is not automated.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "song_of_defense",
+        "name": "Song of Defense",
+        "summary": "Reaction when taking damage with Bladesong active: spend a spell slot to reduce the damage by five times its level.",
+        "text": "Reaction when taking damage with Bladesong active: spend a spell slot to reduce the damage by five times its level.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "song_of_victory",
+        "name": "Song of Victory",
+        "summary": "After casting a spell with an action casting time, you may make one weapon attack as a Bonus Action.",
+        "text": "After casting a spell with an action casting time, you may make one weapon attack as a Bonus Action.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

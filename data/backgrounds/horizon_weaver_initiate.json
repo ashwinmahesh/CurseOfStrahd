@@ -1,0 +1,63 @@
+{
+  "id": "horizon_weaver_initiate",
+  "name": "Horizon Weaver Initiate",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "summary": "Your travels led to the Horizon Weavers and lessons in crossing magical distances.",
+  "ability_scores": [
+    "dex",
+    "con",
+    "wis"
+  ],
+  "feat": "portal_jumper",
+  "skills": [
+    "acrobatics",
+    "survival"
+  ],
+  "tool": {
+    "id": "weavers_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "shortbow",
+          "qty": 1
+        },
+        {
+          "id": "arrow",
+          "qty": 20
+        },
+        {
+          "id": "weavers_tools",
+          "qty": 1
+        },
+        {
+          "id": "map",
+          "qty": 1
+        },
+        {
+          "id": "quiver",
+          "qty": 1
+        },
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 18
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

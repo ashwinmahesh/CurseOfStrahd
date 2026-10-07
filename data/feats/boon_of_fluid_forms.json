@@ -1,0 +1,33 @@
+{
+  "id": "boon_of_fluid_forms",
+  "name": "Boon of Fluid Forms",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "category": "epic_boon",
+  "repeatable": false,
+  "summary": "Reference-only: Once per Long Rest, Magic action transforms you for 1 hour into a Beast, Humanoid, or Monstrosity of CR 10 or less, with Temporary HP equal to its HP. Ends early when these run out or a Magic action restores your form. Retain type, alignment, personality, mental scores, HP, Hit Dice, proficiencies, communication, and Spellcasting/Pact Magic; choose whether equipment drops or adapts. All shape-shifting Temporary HP gains increase by 20.",
+  "benefits": [
+    {
+      "id": "boon_of_fluid_forms_benefit",
+      "name": "Epic Benefit",
+      "summary": "Reference-only: Once per Long Rest, Magic action transforms you for 1 hour into a Beast, Humanoid, or Monstrosity of CR 10 or less, with Temporary HP equal to its HP. Ends early when these run out or a Magic action restores your form. Retain type, alignment, personality, mental scores, HP, Hit Dice, proficiencies, communication, and Spellcasting/Pact Magic; choose whether equipment drops or adapts. All shape-shifting Temporary HP gains increase by 20.",
+      "text": "Reference-only: Once per Long Rest, Magic action transforms you for 1 hour into a Beast, Humanoid, or Monstrosity of CR 10 or less, with Temporary HP equal to its HP. Ends early when these run out or a Magic action restores your form. Retain type, alignment, personality, mental scores, HP, Hit Dice, proficiencies, communication, and Spellcasting/Pact Magic; choose whether equipment drops or adapts. All shape-shifting Temporary HP gains increase by 20.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 19
+  },
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  }
+}

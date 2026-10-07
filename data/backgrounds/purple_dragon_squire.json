@@ -1,0 +1,47 @@
+{
+  "id": "purple_dragon_squire",
+  "name": "Purple Dragon Squire",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "summary": "You serve a Purple Dragon Knight while learning the discipline and duties of Cormyr’s protectors.",
+  "ability_scores": [
+    "str",
+    "wis",
+    "cha"
+  ],
+  "feat": "purple_dragon_rook",
+  "skills": [
+    "animal_handling",
+    "insight"
+  ],
+  "tool": {
+    "id": "navigators_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "spear",
+          "qty": 1
+        },
+        {
+          "id": "navigators_tools",
+          "qty": 1
+        },
+        {
+          "id": "fine_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 9
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

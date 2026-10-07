@@ -1,0 +1,35 @@
+{
+  "id": "tramontane_armor",
+  "name": "Tramontane Armor",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "leather_armor",
+  "summary": "+1 AC.",
+  "text": "+1 AC. Reference-only: ignore extra movement from snow, ice, rubble, and undergrowth. Once per dawn, a Magic action activates for 1 minute; Bonus Actions force chosen creatures in a 20-foot Emanation to save DC 15 Strength or be Grappled (escape 15) and pulled up to 20 feet toward you. Magic action ends it early.",
+  "template": {
+    "on": "armor",
+    "kinds": [
+      "light",
+      "medium"
+    ],
+    "name": "Tramontane {base}",
+    "default": "leather_armor"
+  },
+  "modifiers": [
+    {
+      "stat": "ac",
+      "value": 1
+    }
+  ]
+}
