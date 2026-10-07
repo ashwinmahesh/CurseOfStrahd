@@ -20,6 +20,8 @@ signal hover_changed(text: String)
 signal banter(lines: Array)
 ## The party reached a road out of here (an exit to "travel"): the game opens the map.
 signal travel_requested
+## A party member down outside a fight was stabilized or healed from the right-click menu.
+signal party_tended
 
 const STEP_TIME := 0.18
 const SNEAK_STEP_TIME := 0.32
@@ -899,6 +901,8 @@ func actions_at(cell: Vector2i) -> Dictionary:
 			out.append({"id": "inventory:%d" % i, "label": "Inventory"})
 			out.append({"id": "spells:%d" % i, "label": "Cast a spell...", "enabled": not ch.known_spells().is_empty(),
 				"why": "" if not ch.known_spells().is_empty() else "No spells"})
+			if ch.hp <= 0 and not ch.dead:
+				out.append_array(_tend_actions(ch))
 			return {"title": ch.name, "actions": out}
 	var thing := thing_at(cell)
 	if thing.is_empty():
@@ -955,6 +959,9 @@ func actions_at(cell: Vector2i) -> Dictionary:
 func act(cell: Vector2i, action_id: String) -> void:
 	if busy or in_combat or members.is_empty():
 		return
+	if action_id in ["stabilize", "kit"] or action_id.begins_with("potion:"):
+		_tend(cell, action_id)
+		return
 	var thing := thing_at(cell)
 	match action_id:
 		"walk":
@@ -993,6 +1000,112 @@ func act(cell: Vector2i, action_id: String) -> void:
 	else:
 		walk_to(stand, then)
 
+
+
+# --- A party member down outside a fight (owner ask, 2026-10-07) --------------------------------------------
+
+## What the others can do for `ch` at 0 Hit Points (2024 rules, as in a fight): a DC 10 Wisdom (Medicine) check by
+## the best of them, a Healer's Kit (no check), or a healing potion given to them.
+func _tend_actions(ch: Character) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var medic := _best(&"medicine")
+	if ch.stable:
+		out.append({"id": "stabilize", "label": "Stabilize", "enabled": false, "why": "Already stable"})
+	elif medic == null:
+		out.append({"id": "stabilize", "label": "Stabilize", "enabled": false, "why": "Nobody is on their feet"})
+	else:
+		out.append({"id": "stabilize", "label": "Stabilize: %s, Medicine %+d vs DC 10" % [medic.name.get_slice(" ", 0),
+			medic.skill_bonus(&"medicine").total()]})
+		var kit := _holder_of("healers_kit")
+		if kit != null:
+			out.append({"id": "kit", "label": "Stabilize with %s's Healer's Kit" % kit.name.get_slice(" ", 0)})
+	var seen := {}
+	for m in st.party:
+		if m.hp <= 0:
+			continue
+		for e: Dictionary in m.inventory:
+			var id := str(e["id"])
+			if seen.has(id) or int(e["qty"]) <= 0 or _potion_heal(id).is_empty():
+				continue
+			seen[id] = true
+			out.append({"id": "potion:" + id, "label": "Give %s (%s's)" % [Compendium.shared().item_data(id).get("name", id),
+				m.name.get_slice(" ", 0)]})
+	return out
+
+
+
+## Outside a fight, a party member with Hit Points again gets up (Prone ends: there's no turn to spend standing) and
+## every party token shows its current state (owner report 2026-10-07: healed outside combat but still "Prone · Dying").
+func refresh_party() -> void:
+	if in_combat:
+		return
+	for m in members + guest_members:
+		var cr := m.creature
+		if cr.hp > 0 and not cr.dead and cr.has_condition(&"prone"):
+			cr.remove_condition(&"prone")
+		if tokens.has(m.id):
+			(tokens[m.id] as CombatToken).refresh()
+
+## A conscious party member carrying `item_id`, or null.
+func _holder_of(item_id: String) -> Character:
+	for m in st.party:
+		if m.hp > 0 and m.inventory.any(func(e: Dictionary) -> bool: return str(e["id"]) == item_id and int(e["qty"]) > 0):
+			return m
+	return null
+
+
+## A potion's healing ({dice, flat}), or {} if it isn't a healing potion.
+static func _potion_heal(item_id: String) -> Dictionary:
+	var data := Compendium.shared().item_data(item_id)
+	if str(data.get("category", "")) != "potion":
+		return {}
+	for fx: Variant in data.get("effects", []):
+		if str((fx as Dictionary).get("effect", "")) == "heal":
+			return (fx as Dictionary).get("params", {}) as Dictionary
+	return {}
+
+
+## Stabilizes or heals the party member at `cell` (the menu's stabilize, kit and potion:<id>).
+func _tend(cell: Vector2i, action_id: String) -> void:
+	var target: Character = null
+	for m in members:
+		if m.cell == cell:
+			target = m.creature as Character
+	if target == null or target.dead or target.hp > 0:
+		return
+	var who := target.name.get_slice(" ", 0)
+	if action_id == "stabilize":
+		var medic := _best(&"medicine")
+		if medic == null or target.stable:
+			return
+		var t := medic.roll_check(dice, &"medicine", 10)
+		check_rolled.emit(t.describe())
+		if t.success:
+			target.stabilize()
+			toast.emit("%s stops %s's bleeding: Stable" % [medic.name.get_slice(" ", 0), who])
+		else:
+			toast.emit("%s can't stop %s's bleeding (try again)" % [medic.name.get_slice(" ", 0), who])
+	elif action_id == "kit":
+		var holder := _holder_of("healers_kit")
+		if holder == null or target.stable:
+			return
+		target.stabilize()
+		toast.emit("%s binds %s's wounds with a Healer's Kit: Stable" % [holder.name.get_slice(" ", 0), who])
+	else:
+		var item_id := action_id.get_slice(":", 1)
+		var holder := _holder_of(item_id)
+		var heal := _potion_heal(item_id)
+		if holder == null or heal.is_empty():
+			return
+		var name := str(Compendium.shared().item_data(item_id).get("name", item_id))
+		var amount := int(heal.get("flat", 0))
+		if heal.has("dice"):
+			amount += int(dice.roll_expr(str(heal["dice"]), "%s gives %s %s" % [holder.name, target.name, name])["total"])
+		var healed := target.heal(amount, name)
+		holder.remove_one(item_id)
+		toast.emit("%s gives %s a %s: %d Hit Points" % [holder.name.get_slice(" ", 0), who, name, healed])
+	refresh_party()
+	party_tended.emit()
 
 ## "Look": what the party can tell at a glance, without walking over.
 func _look(cell: Vector2i, thing: Dictionary) -> void:
