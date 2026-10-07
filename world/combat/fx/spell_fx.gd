@@ -16,7 +16,7 @@ const MISSILES: Array[String] = ["bolt", "beam", "ray", "touch", "drain", "shot"
 ## Every family with an effect.
 const FAMILIES: Array[String] = ["bolt", "beam", "ray", "touch", "drain", "shot", "burst", "cone", "line", "nova", "strike",
 	"cloud", "wall", "ground", "aura", "heal", "buff", "debuff", "psychic", "ward", "smite", "summon", "teleport", "transform",
-	"glimmer", "slash"]
+	"glimmer", "slash", "pattern"]
 ## Damage types that take a magical look on a monster's attack (a Fire Ray is a bolt of fire; a Claw is a slash).
 const MAGIC_TYPES: Array[String] = ["fire", "cold", "lightning", "thunder", "acid", "poison", "necrotic", "radiant", "force", "psychic"]
 
@@ -214,6 +214,11 @@ static func colours(flavour: String) -> Dictionary:
 	return out
 
 
+## A flavour's palette colour names (for materials that take a name, like Look.cel).
+static func colour_names(flavour: String) -> Dictionary:
+	return ((data()["flavours"] as Dictionary).get(flavour, (data()["flavours"] as Dictionary)["arcane"]) as Dictionary).duplicate()
+
+
 static func has_family(family: String) -> bool:
 	return family in FAMILIES
 
@@ -260,6 +265,8 @@ func cast(cue: Dictionary, caster: CombatToken, targets: Array[CombatToken], cel
 			await FxAreas.strike(self, cue, caster, others, cells, board)
 		"cloud":
 			await FxAreas.cloud(self, cue, caster, cells, board)
+		"pattern":
+			await FxAreas.pattern(self, cue, caster, cells, board)
 		"wall":
 			await FxAreas.wall(self, cue, caster, cells, board)
 		"ground":

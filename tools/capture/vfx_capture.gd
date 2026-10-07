@@ -71,8 +71,30 @@ const GALLERY := {
 	"arrow": {"caster": "Silvain", "targets": [[4, 0]], "attack": "weapon:longbow@arrow"},
 }
 
+## VFX_SET=zones: spells whose area stays on the board, before and after (the spell is cast, then its zone sits there),
+## and the area spells Ashwin asked about.
+const ZONES := {
+	"darkness": {"caster": "Silvain", "targets": [[4, 0]], "cast": "darkness", "zone": true},
+	"wall_of_fire": {"caster": "Silvain", "targets": [[4, 0]], "cast": "wall_of_fire", "zone": true},
+	"web": {"caster": "Silvain", "targets": [[4, 0]], "cast": "web", "zone": true},
+	"grease": {"caster": "Silvain", "targets": [[3, 0]], "cast": "grease", "zone": true},
+	"spike_growth": {"caster": "Hedda", "targets": [[4, 0]], "cast": "spike_growth", "zone": true},
+	"entangle": {"caster": "Hedda", "targets": [[4, 0]], "cast": "entangle", "zone": true},
+	"evards_black_tentacles": {"caster": "Silvain", "targets": [[4, 0]], "cast": "evards_black_tentacles", "zone": true},
+	"cloudkill": {"caster": "Silvain", "targets": [[4, 0]], "cast": "cloudkill", "zone": true},
+	"fog_cloud": {"caster": "Silvain", "targets": [[4, 0]], "cast": "fog_cloud", "zone": true},
+	"spirit_guardians": {"caster": "Hedda", "targets": [[2, 0]], "cast": "spirit_guardians", "zone": true},
+	"moonbeam": {"caster": "Hedda", "targets": [[3, 0]], "cast": "moonbeam", "zone": true},
+	"hypnotic_pattern": {"caster": "Kip", "targets": [[4, 0], [5, 1]], "cast": "hypnotic_pattern"},
+	"lightning_bolt": {"caster": "Silvain", "targets": [[3, 0], [5, 0]], "cast": "lightning_bolt"},
+	"cone_of_cold": {"caster": "Silvain", "targets": [[3, 0], [4, 1]], "cast": "cone_of_cold"},
+	"thunderwave": {"caster": "Silvain", "targets": [[1, 0], [1, 1]], "cast": "thunderwave"},
+}
+
 var root: Node
 var cv: CombatView
+## The zone the stage being recorded put on the board (taken off again after each side).
+var _zone: FieldObject = null
 var _only: Array[String] = []
 var _sides: Array[bool] = [false, true]
 
@@ -110,7 +132,8 @@ func capture_shots(tool: Node, out: String) -> void:
 			break
 	await tool.call("wait_frames", 60)
 	var meta := {}
-	var stages: Dictionary = GALLERY if OS.get_environment("VFX_SET") == "gallery" else STAGES
+	var set_name := OS.get_environment("VFX_SET")
+	var stages: Dictionary = GALLERY if set_name == "gallery" else (ZONES if set_name == "zones" else STAGES)
 	if stages == GALLERY:
 		_sides = [true]
 	for key: String in stages:
@@ -120,6 +143,8 @@ func capture_shots(tool: Node, out: String) -> void:
 		var ids := _stage(st)
 		if not st.has("events"):
 			st["events"] = _auto_events(st, ids)
+		if not (ids.get("area", []) as Array).is_empty() and stages != STAGES:
+			_frame_area(ids)
 		await tool.call("wait_frames", 30)
 		meta[key] = _frame_box(ids)
 		for on in _sides:
@@ -278,17 +303,43 @@ func _record(st: Dictionary, ids: Dictionary, prefix: String) -> void:
 		if str(d["type"]) == "spell":
 			d["cells"] = ids.get("area", [])
 		events.append(d)
+	if bool(st.get("zone", false)):
+		# The spell's lingering area, as the rules would leave it: the view draws it on the "object" event.
+		var sd := Compendium.shared().spell_data(str(st["cast"]))
+		_zone = FieldObject.new(FieldObject.Kind.ZONE, str(st["cast"]), str(sd.get("name", "")))
+		_zone.caster_id = str(ids["caster"])
+		_zone.cells.assign(ids.get("area", []) as Array)
+		_zone.rules = (sd.get("zone", {}) as Dictionary).duplicate(true)
+		_zone.rounds_left = 1000
+		_zone.follows_caster = str((sd.get("area", {}) as Dictionary).get("shape", "")) == "emanation"
+		cv.e.spells.zones.objects.append(_zone)
+		events.append({"type": "object", "id": _zone.id, "kind": "zone", "cell": Vector2i.ZERO})
 	cv.e.events.append_array(events)
 	cv.call("_play_events")
 	if bool(st.get("summoned", false)) and SpellFx.enabled:
 		# What a summoning's creature arriving looks like (the real event makes a new token).
 		get_tree().create_timer(0.5).timeout.connect(func() -> void: cv.fx.summoned(cv.tokens[ids["t0"]] as CombatToken))
 	DirAccess.make_dir_recursive_absolute(prefix.get_base_dir())
-	for i in CLIP_FRAMES:
+	var frames := CLIP_FRAMES * (2 if _zone != null else 1)
+	for i in frames:
 		await get_tree().process_frame
 		if i % EVERY == 0:
 			get_viewport().get_texture().get_image().save_jpg("%s_%03d.jpg" % [prefix, i / EVERY], 0.92)
+	if _zone != null:
+		_zone.ended = true
+		cv.e.spells.zones.objects.erase(_zone)
+		cv.field.sync(cv.e.spells.zones.objects)
+		_zone = null
 	await get_tree().create_timer(1.5).timeout
+
+
+## Centres the camera between the caster and the spell's squares, pulled back far enough to take the area in.
+func _frame_area(ids: Dictionary) -> void:
+	var ex := FxAreas.extent(ids["area"] as Array, cv.board)
+	var caster := (cv.tokens[ids["caster"]] as Node3D).global_position
+	var mid := (ex["mid"] as Vector3).lerp(caster, 0.3)
+	cv.rig.global_position = mid + Vector3(0, 0.3, 0)
+	cv.rig.distance = clampf(8.0 + float(ex["radius"]) * 1.2 + caster.distance_to(ex["mid"] as Vector3) * 0.4, 8.5, 16.0)
 
 
 ## The part of the screen the stage happens in (pixels: x, y, w, h), for cropping.
@@ -304,4 +355,9 @@ func _frame_box(ids: Dictionary) -> Array:
 			var p := cam.unproject_position(t.global_position + Vector3(0, y, 0))
 			lo = lo.min(p)
 			hi = hi.max(p)
+	# The spell's squares too, so a cloud or a wall sits inside the frame.
+	for c: Variant in ids.get("area", []) as Array:
+		var q := cam.unproject_position(cv.board.cell_center(c as Vector2i) + Vector3(0, 0.5, 0))
+		lo = lo.min(q)
+		hi = hi.max(q)
 	return [lo.x, lo.y, hi.x - lo.x, hi.y - lo.y]

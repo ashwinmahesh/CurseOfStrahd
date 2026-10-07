@@ -42,6 +42,8 @@ func sync(objects: Array) -> void:
 			add_child(n)
 			_nodes[f.id] = n
 			n.position = _anchor(f)
+			if f.kind == FieldObject.Kind.ZONE:
+				_paint_zone(n, f)
 			n.set_meta("cell", f.cell)
 			n.set_meta("cells", f.cells.duplicate())
 			continue
@@ -86,7 +88,6 @@ func _make(f: FieldObject) -> Node3D:
 			return _vine()
 	var zone := Node3D.new()
 	zone.name = "Zone_" + f.spell_id
-	_paint_zone(zone, f)
 	return zone
 
 
@@ -234,10 +235,12 @@ func _vine() -> Node3D:
 	return root
 
 
-## The area's squares as a translucent tint just above the floor.
+## The area's squares as a translucent tint just above the floor, under the spell's own lasting look (fog, flames,
+## thorns, webs... world/combat/fx/fx_zones.gd) when it has one.
 func _paint_zone(zone: Node3D, f: FieldObject) -> void:
 	for ch in zone.get_children():
 		ch.queue_free()
+	var look := FxZones.pick(f.spell_id) if SpellFx.enabled else {}
 	var colour := str(ZONE_COLOURS.get(f.spell_id, f.rule("colour", "lilac")))
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
@@ -257,7 +260,8 @@ func _paint_zone(zone: Node3D, f: FieldObject) -> void:
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	var heavy := str(f.rule("obscured", "")) == "heavy"
-	mat.albedo_color = Color(Look.color(colour), 0.62 if heavy else 0.3)
+	# With a look of its own the tint only marks the squares (the rules still need them clear); without, it's the look.
+	mat.albedo_color = Color(Look.color(colour), (0.62 if heavy else 0.3) if look.is_empty() else 0.16)
 	mat.depth_draw_mode = BaseMaterial3D.DEPTH_DRAW_DISABLED
 	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	mat.render_priority = 5
@@ -265,6 +269,9 @@ func _paint_zone(zone: Node3D, f: FieldObject) -> void:
 	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	zone.add_child(mmi)
 	# Heavily Obscured areas (fog, darkness, stinking cloud) get a low wall of haze so they read as blocking sight.
+	if not look.is_empty():
+		FxZones.dress(zone, f, board, look)
+		return
 	if heavy:
 		var bm := BoxMesh.new()
 		bm.size = Vector3(0.98, 1.4, 0.98)
