@@ -3,7 +3,8 @@ extends RefCounted
 ## The drawn pieces every screen and HUD shares, first made for the character sheet (docs/ui/party_management.md
 ## pm_02): ability medallions, the Armor Class shield and stat plaques, Hit Points and load bars, pips for slots and
 ## resources, tags, section rules, row cards, framed portraits, party chips, tab strips, compact and primary buttons,
-## and tooltips that wrap long rules text and lay a Breakdown out line by line. UiKit holds the theme, screen frames,
+## and tooltips that gild the rules words in long rules text and lay a Breakdown out line by line. A rich tooltip opens
+## as a card on the TipCards layer, which the pointer can cross onto and pin (U1). UiKit holds the theme, screen frames,
 ## labels and buttons these build on. Colours come from Look (the palette plus the UI-only crimson and gilt).
 
 const TIP_WIDTH := 400.0
@@ -46,7 +47,7 @@ static func caps_font() -> Font:
 
 # --- Controls with their own drawing and rich tooltips -------------------------------------------
 
-## A control painted by `painter(self)`, with `tip()` building its tooltip.
+## A control painted by `painter(self)`, with `tip()` building its tooltip (a card on the TipCards layer).
 class Drawn extends Control:
 	var painter: Callable
 	var tip: Callable
@@ -55,24 +56,15 @@ class Drawn extends Control:
 		if painter.is_valid():
 			painter.call(self)
 
-	func _make_custom_tooltip(_for_text: String) -> Object:
-		return tip.call() as Control if tip.is_valid() else null
-
 
 ## Any content with a rich tooltip: the panel is invisible and passes the mouse on so scrolling still works.
 class Tipped extends PanelContainer:
 	var tip: Callable
 
-	func _make_custom_tooltip(_for_text: String) -> Object:
-		return tip.call() as Control if tip.is_valid() else null
-
 
 ## A button with a rich tooltip (an option's rules text, a class's summary).
 class TipButton extends Button:
 	var tip: Callable
-
-	func _make_custom_tooltip(_for_text: String) -> Object:
-		return tip.call() as Control if tip.is_valid() else null
 
 
 ## A themed button whose hover shows `tip()`; `lit` gives it the chosen look.
@@ -84,8 +76,6 @@ static func tip_button(text: String, on_press: Callable, tip: Callable, lit: boo
 	b.pressed.connect(func() -> void: Audio.sfx("click"))
 	b.pressed.connect(on_press)
 	b.tip = tip
-	if tip.is_valid():
-		b.tooltip_text = "·"
 	if lit:
 		light_up(b)
 	return b
@@ -108,10 +98,12 @@ static func tipped(content: Control, tip: Callable, plain: String = "") -> Tippe
 	return t
 
 
+## `plain` is the tip in a few words (a bar's "16 / 39"), kept as the "plain_tip" meta for tests and tools; the card
+## itself comes from `tip`.
 static func _set_tip(c: Control, tip: Callable, plain: String) -> void:
 	if tip.is_valid():
-		# The engine only asks for a custom tooltip when the plain one isn't empty.
-		c.tooltip_text = plain if plain != "" else "·"
+		if plain != "":
+			c.set_meta(&"plain_tip", plain)
 		c.mouse_filter = Control.MOUSE_FILTER_PASS
 	else:
 		c.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -198,7 +190,7 @@ static func section(title_text: String, right: Control = null) -> HBoxContainer:
 	return row
 
 
-## A small rounded tag ("Bonus Action", "Concentration", "Short Rest").
+## A small rounded tag ("Bonus Action", "Concentration", "Short Rest"); a rules term's tag opens its glossary card.
 static func pill(text: String, colour: String = "gilt", size: int = 12) -> PanelContainer:
 	var p := PanelContainer.new()
 	var s := StyleBoxFlat.new()
@@ -216,6 +208,11 @@ static func pill(text: String, colour: String = "gilt", size: int = 12) -> Panel
 	p.add_child(l)
 	p.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# A tag that names a rules term ("Bloodied", "Concentration", "Bonus Action") opens its glossary card.
+	var term := Glossary.id_for(text)
+	if term != "":
+		p.mouse_filter = Control.MOUSE_FILTER_PASS
+		p.set_meta(&"tip_card", func() -> Control: return TipCard.term_content(term))
 	return p
 
 
@@ -356,7 +353,8 @@ static func plaque(value: String, caption: String, tip: Callable, small: String 
 
 
 ## A gilt-framed bar: Hit Points (crimson, with temporary Hit Points in moonlight) or a load (gilt). Thin bars
-## (under 16 px, for HUD cards) drop the inner rule and the text.
+## (under 16 px, for HUD cards) drop the inner rule and the text. While rolling (roll_bar) a gain fills up to the new
+## value and a loss drops at once, the lost part lingering pale and draining away.
 static func bar(value: float, maximum: float, extra: float, text: String, fill: String, tip: Callable,
 		width: float = 300.0, height: float = 26.0) -> Drawn:
 	return drawn(Vector2(width, height), func(c: Control) -> void:
@@ -368,7 +366,23 @@ static func bar(value: float, maximum: float, extra: float, text: String, fill: 
 		c.draw_colored_polygon(outer, Look.color("void"))
 		var inner := r.grow(-2.0 if thin else -3.0)
 		var span := maxf(maximum + extra, 1.0)
-		var f := clampf(value / span, 0.0, 1.0)
+		var shown := value
+		var lost := value
+		var label := text
+		if c.has_meta(&"roll_from"):
+			var from := float(c.get_meta(&"roll_from"))
+			var t := float(c.get_meta(&"roll_t", 1.0))
+			if from > value:
+				lost = lerpf(from, value, t)
+			else:
+				shown = lerpf(from, value, t)
+				lost = shown
+			if text != "" and c.has_meta(&"roll_text"):
+				label = str((c.get_meta(&"roll_text") as Callable).call(lerpf(from, value, t)))
+		var f := clampf(shown / span, 0.0, 1.0)
+		if lost > shown:
+			var gone := Rect2(inner.position + Vector2(inner.size.x * f, 0), Vector2(inner.size.x * clampf((lost - shown) / span, 0.0, 1.0 - f), inner.size.y))
+			_fill(c, _clip_hex(gone, inner, tip_w - 2.0), Color(Look.color("rose"), 0.8))
 		if f > 0.0:
 			var fr := Rect2(inner.position, Vector2(inner.size.x * f, inner.size.y))
 			_fill(c, _clip_hex(fr, inner, tip_w - 2.0), Look.color(fill))
@@ -378,9 +392,33 @@ static func bar(value: float, maximum: float, extra: float, text: String, fill: 
 			var ex := Rect2(inner.position + Vector2(inner.size.x * f, 0), Vector2(inner.size.x * clampf(extra / span, 0.0, 1.0 - f), inner.size.y))
 			_fill(c, _clip_hex(ex, inner, tip_w - 2.0), Look.color("moonlight"))
 		closed_line(c, outer, Look.color("gilt" if not thin else "gilt_dark"), 1.5 if not thin else 1.0)
-		if text != "" and not thin:
-			centred_text(c, figure_font(), text, r.get_center() + Vector2(0, 1), clampi(int(c.size.y * 0.66), 12, 17), Look.color("ivory")),
+		if label != "" and not thin:
+			centred_text(c, figure_font(), label, r.get_center() + Vector2(0, 1), clampi(int(c.size.y * 0.66), 12, 17), Look.color("ivory")),
 		tip, text)
+
+
+## Rolls a bar (from bar()) to `value` from the value last shown under `key`: the bar and its text (`fmt(v)`, if
+## given) move instead of jumping (G9). Nothing moves without motion or when the value hasn't changed.
+static func roll_bar(d: Drawn, key: String, value: float, fmt: Callable = Callable()) -> void:
+	var from := UiMotion.last_shown(key, value)
+	if not UiMotion.on() or is_equal_approx(from, value):
+		return
+	d.set_meta(&"roll_from", from)
+	d.set_meta(&"roll_t", 0.0)
+	if fmt.is_valid():
+		d.set_meta(&"roll_text", fmt)
+	var start := func() -> void:
+		UiMotion.soon(d, func() -> void:
+			var tw := UiMotion.tween_for(d)
+			# A loss shows for a moment before it drains.
+			tw.tween_interval(0.2 if from > value else 0.0)
+			tw.tween_method(func(t: float) -> void:
+				d.set_meta(&"roll_t", t)
+				d.queue_redraw(), 0.0, 1.0, UiMotion.roll_seconds(from, value)).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC))
+	if d.is_inside_tree():
+		start.call()
+	else:
+		d.tree_entered.connect(start, CONNECT_ONE_SHOT)
 
 
 ## A rectangle with its two ends drawn to points `tip` wide.
@@ -408,10 +446,15 @@ static func _fill(c: CanvasItem, poly: PackedVector2Array, colour: Color) -> voi
 static func hp_bar(cr: Creature, width: float = 300.0, height: float = 26.0, with_text: bool = true) -> Drawn:
 	var fill := "pewter" if cr.hp <= 0 else ("vampire_red" if cr.is_bloodied() else "crimson")
 	var text := "%d / %d" % [cr.hp, cr.max_hp()] if with_text else ""
-	return bar(cr.hp, cr.max_hp(), cr.temp_hp, text, fill, func() -> Control:
+	var most := cr.max_hp()
+	var d := bar(cr.hp, most, cr.temp_hp, text, fill, func() -> Control:
 		return breakdown_tip(cr.max_hp_breakdown(), "Hit Point maximum", str(cr.max_hp()),
 			"%d of %d now%s.%s" % [cr.hp, cr.max_hp(), ", plus %d temporary" % cr.temp_hp if cr.temp_hp > 0 else "",
 				" Bloodied." if cr.is_bloodied() and cr.hp > 0 else ""]), width, height)
+	# Each place a creature's bar appears rolls from what that place last showed.
+	roll_bar(d, "hp:%d:%dx%d" % [cr.get_instance_id(), int(width), int(height)], cr.hp, func(v: float) -> String:
+		return "%d / %d" % [roundi(v), most])
+	return d
 
 
 # --- Icons ----------------------------------------------------------------------------------------
@@ -546,7 +589,7 @@ static func feature_row(f: Dictionary, source_text: String, width: float) -> Con
 	if summary == "":
 		summary = text if text.length() <= 160 else text.left(157) + "..."
 	if summary != "":
-		col.add_child(UiKit.label(summary, 14, "vellum", width - 20.0))
+		col.add_child(TermText.make(summary, 14, "vellum", width - 20.0))
 	return row(col, func() -> Control:
 		return rules_tip(str(f.get("name", "")), str(f.get("source", "")), text, [],
 			"Rules text only for now: the game doesn't apply this one for you yet." if text_only else ""))
@@ -573,8 +616,6 @@ static func click_row(content: Control, on_press: Callable, lit: bool = false, t
 	b.pressed.connect(func() -> void: Audio.sfx("click"))
 	b.pressed.connect(on_press)
 	b.tip = tip
-	if tip.is_valid():
-		b.tooltip_text = "·"
 	c.add_child(b)
 	return c
 
@@ -852,6 +893,7 @@ static func mark_ends(b: Control, outside: bool = true) -> void:
 static func _tip_box() -> VBoxContainer:
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 4)
+	box.mouse_filter = Control.MOUSE_FILTER_PASS
 	return box
 
 
@@ -874,24 +916,28 @@ static func _tip_head(box: VBoxContainer, title_text: String, subtitle: String, 
 	box.add_child(rule)
 
 
-## Rules text: a title, a subtitle ("Level 3 Evocation"), facts as label/value rows, then the text wrapped.
+## Rules text: a title, a subtitle ("Level 3 Evocation"), facts as label/value rows, then the text wrapped, with its
+## rules words gilded (a condition's own name stays plain on its own tip).
 static func rules_tip(title_text: String, subtitle: String, body: String, facts: Array = [], foot: String = "") -> Control:
 	var box := _tip_box()
 	_tip_head(box, title_text, subtitle)
+	var own := Glossary.id_for(title_text)
+	var skip := [own] if own != "" else []
 	if not facts.is_empty():
 		var grid := GridContainer.new()
 		grid.columns = 2
 		grid.add_theme_constant_override("h_separation", 12)
 		grid.add_theme_constant_override("v_separation", 0)
+		grid.mouse_filter = Control.MOUSE_FILTER_PASS
 		for f: Variant in facts:
 			var pair := f as Array
 			grid.add_child(label(str(pair[0]), 13, "parchment"))
-			grid.add_child(wrapped(str(pair[1]), 13, "vellum", TIP_WIDTH - 120.0))
+			grid.add_child(TermText.make(str(pair[1]), 13, "vellum", TIP_WIDTH - 120.0, skip))
 		box.add_child(grid)
 	if body != "":
-		box.add_child(wrapped(body, 14, "vellum", TIP_WIDTH))
+		box.add_child(TermText.make(body, 14, "vellum", TIP_WIDTH, skip))
 	if foot != "":
-		box.add_child(wrapped(foot, 13, "moonlight", TIP_WIDTH))
+		box.add_child(TermText.make(foot, 13, "moonlight", TIP_WIDTH, skip))
 	return box
 
 
@@ -919,7 +965,7 @@ static func breakdown_tip(b: Breakdown, title_text: String = "", shown: String =
 		if b.floor_value > b.sum():
 			box.add_child(wrapped("Raised to %d by %s" % [b.floor_value, b.floor_label], 13, "gilt", TIP_WIDTH))
 	for n in b.notes:
-		box.add_child(wrapped(n, 13, "moonlight", TIP_WIDTH))
+		box.add_child(TermText.make(n, 13, "moonlight", TIP_WIDTH))
 	if foot != "":
-		box.add_child(wrapped(foot, 13, "parchment", TIP_WIDTH))
+		box.add_child(TermText.make(foot, 13, "parchment", TIP_WIDTH))
 	return box
