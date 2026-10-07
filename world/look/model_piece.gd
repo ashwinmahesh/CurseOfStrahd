@@ -132,14 +132,16 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 		if mount == "stairs_down":
 			_open_floor(board, holder, cell)
 		return holder
-	if bool(info.get("big", false)) and at_override == null:
-		# Building-sized (a wagon, a market stall): it keeps its size and clears the trees it stands among, as the
-		# 2D big pieces do.
-		var size := info.get("size", [1, 1, 1]) as Array
-		SetDressing._clear_trees_around(board, parent, cell, maxf(float(size[0]), float(size[2])))
 	var back := backing_side(board, cell)
 	var faces := Vector2i(0, 1) if back == Vector2i.ZERO else -back
 	holder.rotation.y = atan2(float(faces.x), float(faces.y))
+	if bool(info.get("big", false)) and at_override == null:
+		# Building-sized (a wagon, a market stall): it keeps its size and clears the trees it stands among, as the
+		# 2D big pieces do, but shrinks where it would reach something else standing near it (no overlaps).
+		var size := info.get("size", [1, 1, 1]) as Array
+		var fit := big_fit(board, cell, Vector2(float(size[0]), float(size[2])), faces.x != 0)
+		model.scale *= fit
+		SetDressing._clear_trees_around(board, parent, cell, maxf(float(size[0]), float(size[2])) * fit)
 	if mount == "against_wall" or mount == "wall":
 		# A wall piece with no wall face free beside it stands on its square like furniture against a wall.
 		var depth := float((info.get("size", [1, 1, 0.3]) as Array)[2])
@@ -222,8 +224,34 @@ static func tree_mesh(id: String) -> Mesh:
 	return mesh
 
 
-## A wall piece (a fireplace) on the face of wall square `wall` looking along `normal`, under `root`.
-static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall: Vector2i, normal: Vector2i) -> Node3D:
+## How much a building-sized piece `size` (x, z) on `cell` must shrink so its footprint keeps clear of the location's
+## other things standing near it: 1 where there's room.
+static func big_fit(board: ArenaBoard, cell: Vector2i, size: Vector2, turned: bool) -> float:
+	var foot := Vector2(size.y, size.x) if turned else size
+	var centre := Vector2(cell.x + 0.5, cell.y + 0.5)
+	var s := 1.0
+	while s > 0.4:
+		var half := foot * s / 2.0
+		var rect := Rect2(centre - half, half * 2.0)
+		var clear := true
+		for dx in range(-3, 4):
+			for dz in range(-3, 4):
+				var c := cell + Vector2i(dx, dz)
+				if c == cell or not board.grid.in_bounds(c):
+					continue
+				# The location's own things; the board's furniture, stumps and brambles under it are cleared away.
+				if board.occupied.has(c) and rect.intersects(Rect2(c.x, c.y, 1, 1).grow(-0.12)):
+					clear = false
+		if clear:
+			return s
+		s -= 0.05
+	return 0.4
+
+
+## A wall piece (a fireplace) on the face of wall square `wall` looking along `normal`, under `root`. Where the square
+## in front of it holds something else (a table, a brazier), a deep piece is flattened to keep clear of it.
+static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall: Vector2i, normal: Vector2i,
+		own := Vector2i(-9999, -9999)) -> Node3D:
 	var info := manifest()[id] as Dictionary
 	var holder := Node3D.new()
 	holder.name = "Model_" + id
@@ -237,10 +265,36 @@ static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall:
 	root.add_child(holder)
 	var model := instance(id)
 	holder.add_child(model)
+	var depth := float((info.get("size", [1, 1, 0.1]) as Array)[2])
+	var front := wall + normal
+	if depth > 0.2 and (board.grid.has_flag(front, CombatGrid.LOW) or (board.occupied.has(front) and front != own)):
+		model.scale.z = 0.2 / depth
+		depth = 0.2
 	if str(info.get("mount", "wall")) != "wall":
 		# A piece modelled round its middle (a door leaf hung as a picture) stands just in front of the face.
-		model.position = Vector3(0, 0, float((info.get("size", [1, 1, 0.1]) as Array)[2]) / 2.0)
+		model.position = Vector3(0, 0, depth / 2.0)
 	_extras(model, info)
+	return holder
+
+
+## Wall piece `art` as a model for a house wall (TownBuilder's windows): its lowest point at the node, facing +z,
+## its foot where the 2D piece's would be; null if there's no model.
+static func wall_model(board: ArenaBoard, art: String) -> Node3D:
+	var id := for_art(board, art)
+	if id == "":
+		return null
+	var holder := Node3D.new()
+	holder.name = "Model_" + id
+	holder.set_meta("model", id)
+	var model := instance(id)
+	holder.add_child(model)
+	_extras(model, manifest()[id] as Dictionary)
+	var low := INF
+	for n in model.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		low = minf(low, (mi.transform * mi.mesh.get_aabb()).position.y)
+	if low < INF:
+		model.position.y = -low
 	return holder
 
 

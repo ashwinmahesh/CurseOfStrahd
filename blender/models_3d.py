@@ -1947,7 +1947,7 @@ def pine_clawed(p):
         p.box((0.02, 0.012, 0.5), (-0.05 + k * 0.035, -0.19, 1.0), "pal_parchment", rot=(0, 12, 0))
 
 
-def _dead_tree(p, H, lean, bark="pal_ash_violet", girth=1.0, streak="pal_blood", spread=1.0):
+def _dead_tree(p, H, lean, bark="pal_ash_violet", girth=1.0, streak="pal_blood", spread=1.0, trunk=None):
     rng = p.rng
     pts, radii = [], []
     n = 7
@@ -1955,7 +1955,7 @@ def _dead_tree(p, H, lean, bark="pal_ash_violet", girth=1.0, streak="pal_blood",
         f = i / (n - 1)
         pts.append((lean * math.sin(f * math.pi * 1.2) + rng.uniform(-0.04, 0.04) * f, rng.uniform(-0.05, 0.05) * f, f * H))
         radii.append((0.2 * (1 - f) ** 1.3 + 0.025) * girth)
-    p.tube(pts, 0.1, bark, segs=7, radii=radii, smooth=False)
+    p.tube(pts, 0.1, trunk or bark, segs=9, radii=radii, smooth=False)
     for k in range(3):
         a = rng.uniform(0, 2 * math.pi)
         p.tube([(0.05 * math.cos(a) * girth, 0.05 * math.sin(a) * girth, 0.15 * girth),
@@ -2916,7 +2916,7 @@ def _wall_fit(art):
     ones hang at about eye level (SetDressing._hang's rule)."""
     info = PROPS[art]
     w, h = float(info.get("world_width", 1.0)), float(info.get("world_height", 1.0))
-    fit = min(1.0, 0.92 / w)
+    fit = min(1.0, 0.84 / w)
     w, h = w * fit, h * fit
     bottom = 0.0 if h >= 0.85 else max(0.0, 0.7 - h / 2)
     return w, h, bottom
@@ -2947,9 +2947,9 @@ def _wall_art_builder(art, style):
             p.box((w + 0.08, 0.06, 0.04), (0, -0.03, zc + h / 2 + 0.02), "pal_stone")
             lift = 0.052
         elif style == "cloth":
-            p.cyl(0.014, w + 0.12, (-w / 2 - 0.06, -0.04, zc + h / 2 + 0.015), "pal_umber", rot=(0, 90, 0), segs=8)
+            p.cyl(0.014, w + 0.08, (-w / 2 - 0.04, -0.04, zc + h / 2 + 0.015), "pal_umber", rot=(0, 90, 0), segs=8)
             for s in (-1, 1):
-                p.lathe([(0.0, 0.0), (0.02, 0.0), (0.025, 0.015), (0.0, 0.035)], (s * (w / 2 + 0.06), -0.04, zc + h / 2 + 0.015),
+                p.lathe([(0.0, 0.0), (0.02, 0.0), (0.025, 0.015), (0.0, 0.035)], (s * (w / 2 + 0.04), -0.04, zc + h / 2 + 0.015),
                         "pal_tan", rot=(0, s * 90, 0), segs=8)
                 p.box((0.02, 0.04, 0.03), (s * (w / 2 - 0.05), -0.02, zc + h / 2 + 0.015), "pal_umber")
             lift = 0.03
@@ -3346,23 +3346,33 @@ def vardo(p):
 
 @model("windmill", "free", ["windmill"], big=True)
 def windmill(p):
-    """Old Bonegrinder (2D windmill): a tapering dark timber tower on a stone base, a cap, four ragged sails."""
+    """Old Bonegrinder (2D windmill): a tapering timber-framed tower on a stone base, a shingled cap, four ragged
+    cloth sails on lattice frames."""
     p.lathe([(0.9, 0.0), (0.88, 0.8), (0.0, 0.8)], (0, 0, 0), "tex_church__stone_wall", segs=8, smooth=False)
-    p.lathe([(0.82, 0.0), (0.6, 3.6), (0.0, 3.6)], (0, 0, 0.8), "pal_ash_violet", segs=8, smooth=False)
+    p.lathe([(0.82, 0.0), (0.6, 3.6), (0.0, 3.6)], (0, 0, 0.8), "tex_village__house_wall", segs=8, smooth=False)
     for k in range(8):
         a = 2 * math.pi * (k + 0.5) / 8
-        p.box((0.04, 0.04, 3.6), (0.72 * math.cos(a), 0.72 * math.sin(a), 0.8 + 1.8), "pal_peat",
-              rot=(math.degrees(math.atan2(0.22, 3.6)) * math.sin(a), -math.degrees(math.atan2(0.22, 3.6)) * math.cos(a), 0))
-    p.lathe([(0.7, 0.0), (0.5, 0.5), (0.0, 0.8)], (0, 0, 4.4), "pal_slate", segs=8, smooth=False)
-    p.box((0.3, 0.06, 0.6), (0, -0.62, 1.1), "pal_umber")
-    hub = (0, -0.7, 4.3)
-    p.cyl(0.1, 0.3, hub, "pal_peat", rot=(90, 0, 0), segs=8)
+        p.tube([(0.84 * math.cos(a), 0.84 * math.sin(a), 0.8), (0.62 * math.cos(a), 0.62 * math.sin(a), 4.4)], 0.04, "pal_peat",
+               segs=4, smooth=False)
+    for z, r in ((1.6, 0.79), (2.6, 0.73), (3.6, 0.67)):
+        p.lathe([(r, -0.04), (r + 0.03, -0.04), (r + 0.03, 0.04), (r, 0.04)], (0, 0, z), "pal_peat", segs=8, smooth=False)
+    p.lathe([(0.72, 0.0), (0.5, 0.5), (0.0, 0.85)], (0, 0, 4.4), "pal_rust", segs=8, smooth=False)
+    p.box((0.32, 0.06, 0.62), (0, -0.84, 1.11), "pal_umber")
+    p.box((0.2, 0.05, 0.28), (0.0, -0.76, 2.4), "pal_night")
+    hub = (0, -0.75, 4.3)
+    p.cyl(0.12, 0.3, (0, -0.55, 4.3), "pal_peat", rot=(90, 0, 0), segs=8)
     for k in range(4):
         a = math.radians(20 + k * 90)
-        tip = (2.1 * math.cos(a), -0.82, 4.3 + 2.1 * math.sin(a))
-        p.tube([hub, tip], 0.04, "pal_umber", segs=5)
-        mid = (1.2 * math.cos(a), -0.84, 4.3 + 1.2 * math.sin(a))
-        p.box((0.36, 0.02, 1.6), mid, "pal_bone_dark", rot=(0, -math.degrees(a) + 90, 0))
+        c, s_ = math.cos(a), math.sin(a)
+        p.tube([hub, (2.1 * c, -0.8, 4.3 + 2.1 * s_)], 0.035, "pal_umber", segs=5)
+        perp = (-s_, c)
+        for j in range(5):
+            d = 0.5 + j * 0.38
+            p.tube([(d * c, -0.82, 4.3 + d * s_), (d * c + 0.36 * perp[0], -0.82, 4.3 + d * s_ + 0.36 * perp[1])], 0.012,
+                   "pal_umber", segs=4)
+        sail = [(0.45, 0.02), (2.05, 0.02), (2.05, 0.34), (1.6, 0.3), (1.3, 0.36), (0.45, 0.34)]
+        pts = [(x * c + y * perp[0], x * s_ + y * perp[1]) for x, y in sail]
+        p.prism(pts, 0.01, (0, -0.84, 4.3), "pal_parchment", rot=(90, 0, 0))
 
 
 @model("bell_tower", "free", ["bell_tower"], big=True)
@@ -3425,8 +3435,13 @@ def hut_lysaga(p):
 @model("standing_stones", "free", ["standing_stones"], big=True, turns=True)
 def standing_stones(p):
     """The 2D standing stones: three tall grey menhirs carved with spirals."""
-    for (x, y, h, w) in ((-0.7, 0.1, 1.9, 0.5), (0.0, 0.4, 2.2, 0.55), (0.7, -0.1, 1.7, 0.48)):
-        p.rock((x, y, 0), (w, w * 0.6, h), "pal_pewter", top="pal_silver", rough=0.07, subdiv=2, bury=0.03, top_z=0.6, top_p=0.5)
+    rng = p.rng
+    for (x, y, h, w) in ((-0.7, 0.1, 1.9, 0.55), (0.0, 0.4, 2.2, 0.6), (0.7, -0.1, 1.7, 0.52)):
+        outline = [(-w / 2, 0.0), (w / 2, 0.0), (w * 0.44, h * 0.75), (w * 0.22, h), (-w * 0.2, h * 0.96), (-w * 0.46, h * 0.72)]
+        outline = [(px + rng.uniform(-0.03, 0.03), pz) for px, pz in outline]
+        p.prism(outline, w * 0.5, (x, y, -0.05), "pal_pewter", rot=(0, 0, rng.uniform(-15, 15)))
+        p.prism([(px * 0.8, pz * 0.97 + h * 0.02) for px, pz in outline[2:]] + [(-w * 0.36, h * 0.72)], w * 0.52, (x, y, -0.05),
+                "pal_silver", rot=(0, 0, rng.uniform(-15, 15)))
         ring = [(x + 0.1 * math.cos(a) * (a / 6), y - w * 0.31, h * 0.55 + 0.1 * math.sin(a) * (a / 6)) for a in (k * 0.5 for k in range(13))]
         p.tube(ring, 0.012, "pal_stone_deep", segs=4)
 
@@ -3480,20 +3495,31 @@ def glass_ring(p):
                rough=0.25, subdiv=0, rot_z=math.degrees(a), bury=0.02, top_z=0.3, top_p=0.6)
 
 
-@model("gulthias_tree", "free", ["gulthias_tree"], big=True)
+@model("gulthias_tree", "free", ["gulthias_tree"], big=True, turns=True)
 def gulthias_tree(p):
-    """The Gulthias Tree (2D gulthias_tree): a huge twisted tree, its bark streaked blue and bleeding red sap."""
-    pts = _dead_tree(p, 5.0, 0.5, bark="pal_bruise", girth=3.2, streak="pal_blood", spread=1.5)
+    """The Gulthias Tree (2D gulthias_tree): a huge twisted tree, pale limbs, its trunk wound with strands of blue and
+    blood-red bark, great roots gripping the hill, red sap pooling at its foot."""
     rng = p.rng
-    for _ in range(10):
-        z = rng.uniform(0.2, 2.5)
-        a = rng.uniform(-1.2, 1.2)
-        p.box((0.12, 0.03, rng.uniform(0.3, 0.8)), (0.6 * math.sin(a), -0.6 * math.cos(a), z), rng.choice(["pal_blood", "pal_moon_blue"]),
-              rot=(0, rng.uniform(-8, 8), math.degrees(a)))
-    p.rock((0.3, -0.7, 0), (0.6, 0.5, 0.04), "pal_blood", rough=0.2, bury=0.5)
+    pts = _dead_tree(p, 5.0, 0.4, bark="pal_bone", girth=4.0, streak="pal_blood", spread=1.25, trunk="pal_moon_blue")
+    for k, col in enumerate(("pal_blood", "pal_moon_blue", "pal_bone", "pal_blood_deep")):
+        strand, radii = [], []
+        for i, (x, y, z) in enumerate(pts[:5]):
+            f = i / 4
+            r = (0.2 * (1 - f) ** 1.3 + 0.025) * 4.0
+            a = k * math.pi / 2 + f * math.pi * 1.3
+            strand.append((x + r * math.cos(a), y + r * math.sin(a), z))
+            radii.append(r * 0.4)
+        p.tube(strand, 0.1, col, segs=6, radii=radii, smooth=False)
+    for k in range(8):
+        a = 2 * math.pi * k / 8 + rng.uniform(-0.2, 0.2)
+        reach = rng.uniform(1.2, 1.8)
+        p.tube(curve((0.35 * math.cos(a), 0.35 * math.sin(a), 0.7), (0.9 * math.cos(a), 0.9 * math.sin(a), 0.25),
+                     (reach * math.cos(a), reach * math.sin(a), -0.02), n=6), 0.1, rng.choice(["pal_bone_dark", "pal_ash_violet", "pal_bone"]),
+               segs=6, radii=[0.3, 0.24, 0.18, 0.13, 0.09, 0.05, 0.02], smooth=False)
+    p.rock((0.4, -0.8, 0), (0.9, 0.6, 0.04), "pal_blood", rough=0.2, bury=0.5)
 
 
-@model("ribbon_tree", "free", ["ribbon_tree"], big=True)
+@model("ribbon_tree", "free", ["ribbon_tree"], big=True, turns=True)
 def ribbon_tree(p):
     """The 2D ribbon tree: a bare grey tree with strips of coloured cloth tied to its branches."""
     _dead_tree(p, 3.2, 0.2, bark="pal_slate", girth=1.6, streak="pal_stone", spread=1.3)
@@ -3503,6 +3529,93 @@ def ribbon_tree(p):
         r = rng.uniform(0.4, 1.1)
         p.box((0.04, 0.008, 0.22), (r * math.cos(a), r * math.sin(a), rng.uniform(1.6, 3.0)),
               rng.choice(["pal_crimson", "pal_candle", "pal_moon_blue", "pal_moss", "pal_plum"]), rot=(0, rng.uniform(-15, 15), math.degrees(a)))
+
+
+# --- The last pieces (rollout batch 8) -------------------------------------------------------------------------
+
+def _sub(p, builder, matrix):
+    """Builds another model's pieces into `p`, moved by `matrix` (a bookcase made into a door)."""
+    sub = Piece(p.id + "_sub", seed=sum(ord(c) for c in builder.__name__))
+    builder(sub)
+    sub.bm.transform(matrix)
+    tmp = bpy.data.meshes.new("_sub")
+    sub.bm.to_mesh(tmp)
+    sub.bm.free()
+    remap = [p._slot(m) for m in sub.mats]
+    tb = bmesh.new()
+    tb.from_mesh(tmp)
+    for f in tb.faces:
+        f.material_index = remap[f.material_index]
+    tb.to_mesh(tmp)
+    tb.free()
+    p.bm.from_mesh(tmp)
+    bpy.data.meshes.remove(tmp)
+    bpy.data.meshes.remove(sub._scratch)
+    p.sockets.update(sub.sockets)
+
+
+@model("door_bookcase", "door", ["door_bookcase"])
+def door_bookcase(p):
+    """The Death House's swinging bookcase: the library bookcase as a door leaf, centred in the wall's thickness."""
+    _sub(p, bookcase, Matrix.Translation((0, 0.15, 0)))
+
+
+@model("clock_tall", "wall", ["clock_tall"])
+def clock_tall(p):
+    """The 2D grandfather clock: a tall walnut case, a pale face with black hands, a glazed door over the pendulum,
+    a carved hood, standing against the wall."""
+    W, D = 0.42, 0.26
+    yc = -D / 2 - 0.01
+    p.box((W + 0.04, D + 0.04, 0.12), (0, yc, 0.06), "pal_peat")
+    p.box((W - 0.06, D - 0.04, 0.95), (0, yc, 0.12 + 0.475), "pal_walnut")
+    p.box((W, D, 0.4), (0, yc, 1.07 + 0.2), "pal_walnut")
+    p.prism([(-W / 2 - 0.02, 0.0), (W / 2 + 0.02, 0.0), (W / 2 + 0.02, 0.06), (0.06, 0.16), (0.0, 0.2), (-0.06, 0.16),
+             (-W / 2 - 0.02, 0.06)], D + 0.02, (0, yc, 1.47), "pal_peat")
+    front = yc - D / 2
+    p.cyl(0.15, 0.012, (0, front - 0.006, 1.27), "pal_vellum", rot=(90, 0, 0), segs=20)
+    for a, ln in ((40, 0.1), (130, 0.07)):
+        r = math.radians(a)
+        p.box((0.01, 0.006, ln), (ln / 2 * math.sin(r), front - 0.014, 1.27 + ln / 2 * math.cos(r)), "pal_void", rot=(0, a, 0))
+    p.box((W - 0.16, 0.01, 0.62), (0, front + 0.016, 0.66), "pal_grave")
+    p.box((W - 0.2, 0.006, 0.56), (0, front + 0.012, 0.66), "pal_night")
+    p.cyl(0.006, 0.4, (0, front + 0.03, 0.5), "pal_tan", segs=4)
+    p.cyl(0.05, 0.01, (0, front + 0.025, 0.48), "pal_tan", rot=(90, 0, 0), segs=12)
+
+
+@model("torch", "free", ["torch"])
+def torch(p):
+    """The 2D torch: an iron-banded pole in the ground, a pitch-soaked head burning at the top."""
+    p.cyl(0.03, 1.15, (0, 0, 0), "pal_umber", segs=6)
+    for z in (0.3, 0.8):
+        p.cyl(0.034, 0.03, (0, 0, z), "pal_ink", segs=6)
+    p.lathe([(0.03, 0.0), (0.07, 0.05), (0.08, 0.18), (0.0, 0.2)], (0, 0, 1.1), "pal_peat", segs=8)
+    p.lathe([(0.0, 0.0), (0.06, 0.0), (0.06, 0.04), (0.0, 0.05)], (0, 0, 1.25), "glow_ember", segs=8)
+    p.socket("flame", (0.0, 0.0, 1.27))
+
+
+@model("crater", "free", ["crater"], turns=True)
+def crater(p):
+    """The 2D crater: a blast pit torn in the ground, a raised rim of broken earth and stones round a dark hollow."""
+    rng = p.rng
+    p.cyl(0.42, 0.01, (0, 0, 0.005), "pal_void", segs=16)
+    for k in range(14):
+        a = 2 * math.pi * k / 14
+        p.rock((0.46 * math.cos(a), 0.46 * math.sin(a), 0), (0.24, 0.18, rng.uniform(0.1, 0.18)), rng.choice(["pal_umber", "pal_peat", "pal_rust"]),
+               rough=0.2, subdiv=1, rot_z=math.degrees(a), bury=0.2)
+    for _ in range(5):
+        a = rng.uniform(0, 2 * math.pi)
+        p.rock((0.62 * math.cos(a), 0.62 * math.sin(a), 0), (0.1, 0.08, 0.07), "pal_slate", rough=0.25, subdiv=0)
+
+
+@model("bones_water", "free", ["bones_water"], turns=True)
+def bones_water(p):
+    """The 2D bones in water: a shallow pool, a skull and long bones lying half sunk in it."""
+    outline = [((0.44 + p.rng.uniform(-0.05, 0.02)) * math.cos(a), (0.4 + p.rng.uniform(-0.05, 0.02)) * math.sin(a))
+               for a in (2 * math.pi * k / 16 for k in range(16))]
+    p.prism(outline, 0.012, (0, 0, 0.006), "pal_moon_blue", rot=(90, 0, 0))
+    for (x0, y0, x1, y1) in ((-0.25, -0.1, 0.05, 0.08), (0.1, -0.2, 0.3, 0.1), (-0.1, 0.18, 0.2, 0.25)):
+        _bone(p, (x0, y0, 0.012), (x1, y1, 0.012), 0.014)
+    p.rock((-0.18, 0.12, 0), (0.15, 0.18, 0.12), "pal_vellum", rough=0.06, subdiv=2, smooth=True, bury=0.2)
 
 
 # --- Export and preview ----------------------------------------------------------------------------------------

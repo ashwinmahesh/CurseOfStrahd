@@ -158,10 +158,12 @@ static func _windows(board: ArenaBoard, r: Rect2i, upper: Node3D, h: float, seed
 				if (n + seed) % 3 != 0:
 					continue
 				var art := "window_lit" if (n * 7 + seed) % 5 == 0 else "window_shuttered"
-				var sp := SetDressing.wall_sprite(art)
+				var nv := Vector3(d.x, 0, d.y)
+				var sp: Node3D = ModelPiece.wall_model(board, art)   # 3D where there's a model (docs/art/models.md)
+				if sp == null:
+					sp = SetDressing.wall_sprite(art)
 				if sp == null:
 					return
-				var nv := Vector3(d.x, 0, d.y)
 				sp.position = Vector3(c.x + 0.5, minf(0.85, h - 1.0), c.y + 0.5) + nv * (0.5 + SetDressing.WALL_GAP)
 				sp.rotation.y = atan2(nv.x, nv.z)
 				upper.add_child(sp)

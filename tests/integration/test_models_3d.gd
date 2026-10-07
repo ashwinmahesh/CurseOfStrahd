@@ -183,6 +183,80 @@ func _bounds_all(n: Node3D) -> AABB:
 	return box
 
 
+## Owner reports (2026-10-06): no piece overlaps another or a wall. In every location, by their real footprints: no
+## two 3D pieces overlap, no 3D piece overlaps a standing 2D piece, and no 3D piece reaches into a wall or tree beside
+## it (furniture against a wall and wall pieces touch its face; building-sized pieces clear the trees they stand
+## among, as the 2D ones do). Nature (trees, brambles, boulders) may grow into each other, as it did in 2D.
+func test_3d_pieces_dont_overlap() -> void:
+	var problems: Array[String] = []
+	var locs := Compendium.shared().tables["locations"] as Dictionary
+	for loc_id: String in locs:
+		var v := _view(loc_id)
+		await _frames(1)
+		var board := v.board
+		var rects: Array[Array] = []   # [model id, cell, footprint, big]
+		for m in _models(board):
+			if not m.is_visible_in_tree() or m.has_meta("nature") or m.has_meta("ground_cover"):
+				continue
+			var info := ModelPiece.manifest()[str(m.get_meta("model"))] as Dictionary
+			if str(info.get("mount", "")).begins_with("stairs") or str(info.get("mount", "")) == "door":
+				continue   # stairs and door leaves fill their own square in the wall line
+			var b := _bounds(m)
+			rects.append([str(m.get_meta("model")), board.grid.cell_at(m.global_position), Rect2(b.position.x, b.position.z, b.size.x, b.size.z),
+				bool(info.get("big", false))])
+		for i in rects.size():
+			var a := _shrink(rects[i][2] as Rect2)
+			for j in range(i + 1, rects.size()):
+				if a.intersects(_shrink(rects[j][2] as Rect2)):
+					problems.append("%s: %s at %s overlaps %s at %s" % [loc_id, rects[i][0], rects[i][1], rects[j][0], rects[j][1]])
+			if bool(rects[i][3]):
+				continue
+			for dx: int in [-1, 0, 1]:
+				for dz: int in [-1, 0, 1]:
+					var c := (rects[i][1] as Vector2i) + Vector2i(dx, dz)
+					if (dx != 0 or dz != 0) and board.grid.in_bounds(c) and board.grid.has_flag(c, CombatGrid.WALL) \
+							and not board.door_cells.has(c) and _drawn(board, c) and a.intersects(Rect2(c.x, c.y, 1, 1)):
+						problems.append("%s: %s at %s reaches into the wall at %s" % [loc_id, rects[i][0], rects[i][1], c])
+		for n in board.find_children("*", "Sprite3D", true, false):
+			var sp := n as Sprite3D
+			if not sp.is_visible_in_tree() or sp.has_meta("ground_cover") or sp in board.occluders or sp.axis != Vector3.AXIS_Z \
+					or sp.billboard == BaseMaterial3D.BILLBOARD_DISABLED or _in_model(sp):
+				continue
+			var r := sp.texture.get_width() * sp.pixel_size * sp.global_basis.x.length() / 2.0 * 0.8
+			var at := Vector2(sp.global_position.x, sp.global_position.z)
+			for rect: Array in rects:
+				var f := rect[2] as Rect2
+				var near := Vector2(clampf(at.x, f.position.x, f.end.x), clampf(at.y, f.position.y, f.end.y))
+				if near.distance_to(at) < r - 0.05:
+					problems.append("%s: %s at %s overlaps the 2D %s" % [loc_id, rect[0], rect[1], sp.texture.resource_path.get_file()])
+		v.queue_free()
+		await _frames(1)
+	assert_eq(problems, [] as Array[String], "overlaps")
+
+
+## A footprint less 0.03 all round (touching isn't overlapping), never below a sliver.
+func _shrink(r: Rect2) -> Rect2:
+	var dx := minf(0.03, r.size.x / 2.0 - 0.001)
+	var dz := minf(0.03, r.size.y / 2.0 - 0.001)
+	return r.grow_individual(-dx, -dz, -dx, -dz)
+
+
+func _drawn(board: ArenaBoard, c: Vector2i) -> bool:
+	for n: Node3D in board.dressing.get(c, []):
+		if n.visible:
+			return true
+	return false
+
+
+func _in_model(node: Node) -> bool:
+	var p := node.get_parent()
+	while p != null:
+		if p.has_meta("model"):
+			return true
+		p = p.get_parent()
+	return false
+
+
 ## A place left out of the catalog's models3d places keeps its 2D pieces (how the pilot was shown, and how a place
 ## can stay 2D).
 func test_a_place_left_out_keeps_its_2d_pieces() -> void:
