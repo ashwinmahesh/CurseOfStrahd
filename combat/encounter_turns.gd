@@ -130,9 +130,6 @@ func _begin_turn() -> void:
 	if c.creature.has_flag("dazed"):
 		c.bonus_available = false
 		e.log.add("info", "%s is Dazed: it can move or act this turn, not both" % c.name(), c.id)
-	if c.has_meta("disarmed"):
-		c.remove_meta("disarmed")
-		e.log.add("info", "%s picks up what it dropped" % c.name(), c.id)
 	if c.creature.has_flag("no_action_or_bonus"):
 		c.action_available = false
 		c.bonus_available = false
@@ -266,6 +263,8 @@ func _check_over() -> void:
 		e.state = Encounter.State.OVER
 		e.outcome = "defeat"
 	if e.state == Encounter.State.OVER:
+		# The party gathers what it dropped or threw; the foes' weapons left lying are loot.
+		e.ground.fight_over()
 		# An Antimagic Field doesn't outlast the fight: magic items wake up again.
 		for c in e.combatants:
 			for who: Creature in [c.creature, e.shapes.original(c)]:

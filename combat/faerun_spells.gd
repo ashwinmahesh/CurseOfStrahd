@@ -427,7 +427,7 @@ func _illusory_dragon(ctx: Dictionary, r: CombatResult) -> void:
 		else:
 			t.creature.add_effect(fx)
 		if t.creature.has_condition(&"frightened"):
-			t.set_meta("dropped_weapon", true)
+			e.ground.drop_held(t, "Illusory Dragon")
 			e.log.add("condition", "%s drops what it holds and cowers before the dragon" % t.name(), t.id, [sv.describe()])
 			e.events.append({"type": "condition", "id": t.id})
 	if s.has("sustain"):

@@ -30,6 +30,8 @@ var catalog: ActionCatalog
 var board: ArenaBoard
 var overlay: GridOverlay
 var field: FieldView
+## What lies on the ground (world/combat/ground_view.gd).
+var ground_view: GroundView
 ## Spell and ability effects (world/combat/fx/spell_fx.gd).
 var fx: SpellFx
 ## What enemies shout and creatures sound like (world/combat/combat_barks.gd).
@@ -81,6 +83,8 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	add_child(overlay)
 	field = FieldView.create(board)
 	add_child(field)
+	ground_view = GroundView.create(board)
+	add_child(ground_view)
 	fx = SpellFx.new()
 	add_child(fx)
 	barks = CombatBarks.new()
@@ -269,6 +273,7 @@ func _refresh_all() -> void:
 ## Spell objects and lingering areas on the field (Spiritual Weapon, Flaming Sphere, Spirit Guardians, Web...).
 func _show_weapons() -> void:
 	field.sync(e.spells.zones.objects)
+	ground_view.sync(e.ground.items)
 
 
 func _player() -> Combatant:
@@ -518,8 +523,9 @@ func _square_picked(id: String) -> void:
 			hud.show_details(o.name(), ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)])
 		return
 	for it in _menu_items:
-		if str(it["id"]) == id and it.has("action") and o != null:
-			_perform(it["action"] as Dictionary, [o], Vector2.INF, Vector2.ZERO)
+		# Picking something up needs no one standing there.
+		if str(it["id"]) == id and it.has("action") and (o != null or str((it["action"] as Dictionary)["targeting"]) == "none"):
+			_perform(it["action"] as Dictionary, [o] if o != null else [], Vector2.INF, Vector2.ZERO)
 			return
 
 
@@ -912,10 +918,19 @@ func _update_hover() -> void:
 				var pv := catalog.attack_preview(c, a, o)
 				hud.show_tooltip(str(pv["title"]), pv["lines"] as Array, [], at)
 		else:
-			hud.show_tooltip(o.name(), ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)], [], at)
+			var about: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)]
+			about.append_array(e.ground.describe_at(o.cell))
+			hud.show_tooltip(o.name(), about, [], at)
 		return
+	# What lies on the square (GroundItems) is named under whatever else the tooltip says.
+	var lying: Array = []
+	if hover_cell.x >= 0:
+		lying.append_array(e.ground.describe_at(hover_cell))
 	if hover_cell.x < 0 or hover_cell == c.cell:
-		hud.hide_tooltip()
+		if lying.is_empty():
+			hud.hide_tooltip()
+		else:
+			hud.show_tooltip("Here", lying, [], at)
 		return
 	var mp := catalog.move_preview(c, hover_cell, _reach)
 	if bool(mp["ok"]):
@@ -926,9 +941,9 @@ func _update_hover() -> void:
 			provokes = provokes or w.contains("Opportunity")
 		overlay.clear("cursor")
 		overlay.show_cells("danger" if provokes else "goal", [hover_cell])
-		hud.show_tooltip("Move %d ft · %d ft left after" % [int(mp["cost"]), int(mp["left"])], [], mp["warnings"] as Array, at)
+		hud.show_tooltip("Move %d ft · %d ft left after" % [int(mp["cost"]), int(mp["left"])], lying, mp["warnings"] as Array, at)
 	else:
-		hud.show_tooltip(str(mp["reason"]), [], [], at)
+		hud.show_tooltip(str(mp["reason"]), lying, [], at)
 
 
 func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
