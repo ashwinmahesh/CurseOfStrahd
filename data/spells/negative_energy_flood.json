@@ -29,8 +29,9 @@
   "summary": "Reference-only: A visible non-Undead creature saves Constitution against 3d10 + 25 Necrotic, half on success. A Humanoid killed rises at your next turn start as a Zombie obeying verbal orders for 24 hours, then acting independently. An Undead target instead gains 3d10 Temporary HP. Damage gains 1d10 per slot above 5.",
   "text": "Reference-only: A visible non-Undead creature saves Constitution against 3d10 + 25 Necrotic, half on success. A Humanoid killed rises at your next turn start as a Zombie obeying verbal orders for 24 hours, then acting independently. An Undead target instead gains 3d10 Temporary HP. Damage gains 1d10 per slot above 5.",
   "tags": [
-    "utility"
+    "damage"
   ],
   "icon": "magic_missile",
+  "automation": "reference",
   "playable": false
 }

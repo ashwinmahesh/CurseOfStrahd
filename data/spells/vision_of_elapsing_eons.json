@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 9,
   "school": "illusion",
@@ -29,11 +29,35 @@
     "kind": "minutes",
     "amount": 1
   },
-  "summary": "Reference-only: One visible creature saves Intelligence or takes 10d12 Psychic and becomes Paralyzed. Repeat at turn end: failure adds 1 Exhaustion; success ends the spell. Another creature within 5 feet can end it with an action to shake the target awake.",
-  "text": "Reference-only: One visible creature saves Intelligence or takes 10d12 Psychic and becomes Paralyzed. Repeat at turn end: failure adds 1 Exhaustion; success ends the spell. Another creature within 5 feet can end it with an action to shake the target awake.",
+  "summary": "One visible creature saves Intelligence or takes 10d12 Psychic and becomes Paralyzed. Repeat at turn end: failure adds 1 Exhaustion; success ends the spell. Another creature within 5 feet can end it with an action to shake the target awake.",
+  "text": "One visible creature saves Intelligence or takes 10d12 Psychic and becomes Paralyzed. Repeat at turn end: failure adds 1 Exhaustion; success ends the spell. Another creature within 5 feet can end it with an action to shake the target awake.",
   "tags": [
-    "utility"
+    "damage",
+    "control"
   ],
   "icon": "magic_missile",
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "save": "int",
+  "damage": [
+    {
+      "dice": "10d12",
+      "type": "psychic"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "paralyzed",
+        "repeat_save": "end_of_turn",
+        "repeat_fail_exhaustion": 1,
+        "wakeable": true
+      }
+    }
+  ],
+  "requires_sight": true,
   "playable": false
 }

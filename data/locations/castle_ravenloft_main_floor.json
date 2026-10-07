@@ -83,7 +83,7 @@
         ]
       ],
       "floor": "interior/carpet",
-      "walls": "church/stone_wall"
+      "walls": "castle/ashlar"
     },
     {
       "id": "crg_great_entry",
@@ -99,7 +99,7 @@
         ]
       ],
       "floor": "interior/marble_floor",
-      "walls": "church/stone_wall"
+      "walls": "castle/ashlar"
     },
     {
       "id": "crg_tower_stair_foot",
@@ -114,8 +114,8 @@
           4
         ]
       ],
-      "floor": "church/stone_flags",
-      "walls": "church/stone_wall"
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar"
     },
     {
       "id": "crg_hidden_hoard",
@@ -147,7 +147,7 @@
         ]
       ],
       "floor": "interior/marble_floor",
-      "walls": "church/stone_wall"
+      "walls": "castle/ashlar"
     },
     {
       "id": "crg_chapel_access",
@@ -162,8 +162,8 @@
           23
         ]
       ],
-      "floor": "church/stone_flags",
-      "walls": "church/stone_wall"
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar"
     },
     {
       "id": "crg_turret_post_east",
@@ -179,7 +179,7 @@
         ]
       ],
       "floor": "dungeon/stone_floor",
-      "walls": "church/stone_wall"
+      "walls": "castle/ashlar"
     },
     {
       "id": "crg_turret_post_west",
@@ -195,7 +195,7 @@
         ]
       ],
       "floor": "dungeon/stone_floor",
-      "walls": "church/stone_wall"
+      "walls": "castle/ashlar"
     },
     {
       "id": "crg_entry",
@@ -211,7 +211,7 @@
         ]
       ],
       "floor": "interior/marble_floor",
-      "walls": "church/stone_wall"
+      "walls": "castle/ashlar"
     }
   ],
   "spawns": {

@@ -34,7 +34,8 @@ Settings (`Look.style`, kept in user://settings.cfg by `GameSettings`). The art 
   `<surface>_hd.png` tiles (docs/art/textures.md) with relief from a normal map made from the tile itself
   (`Look.normal_map`), AgX tone mapping with glow on anything brighter than white (flames, lanterns), deeper contact
   shadows with bounced light, a thin volumetric haze, smooth mist and cloud shadows, a lighter colour grade, and a
-  diorama's depth of field that follows the zoom (`Atmosphere._modern_finish`, `_focus_dof`).
+  light depth of field far behind the party that follows the zoom, never near the lens
+  (`Atmosphere._modern_finish`, `_focus_dof`, strengths in `Atmosphere.DOF_STRENGTHS`, "light" by default).
 - Anything new must read in both: check a place with `make capture SCENE=res://tools/capture/polish_capture.tscn`
   and `POLISH_LOOK=classic|modern POLISH_ONLY=look`.
 

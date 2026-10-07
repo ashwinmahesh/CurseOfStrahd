@@ -17,7 +17,7 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              echo "Files changed since the last import: importing first."; $(G) --headless --import > /dev/null 2>&1; \
              touch $(STAMP); fi
 
-.PHONY: run arena smoke import test lint validate ci check palette capture standin sprite sprites anims portrait wireframes textures prop props models ui_art icons voice creator pregens
+.PHONY: run arena smoke import test lint validate ci check palette capture standin sprite sprites anims portrait wireframes textures prop props models ui_art icons cursors voice creator pregens
 
 ## Imports first when scripts or assets changed since the last import (a merge can add a class_name or images that
 ## the editor cache doesn't know yet, and the game then stops at a parse error).
@@ -138,6 +138,11 @@ ui_art:
 ## Spell and item icons (game-icons.net silhouettes framed in the menu colours; keys in art/icons.json): make icons
 icons:
 	$(G) --headless --script res://tools/art/build_icons.gd 2>&1 | $(LOGCHK)
+	$(MAKE) import
+
+## Mouse cursors from the game-icons silhouettes (tools/art/build_cursors.gd -> art/ui/cursors).
+cursors:
+	$(G) --headless --script res://tools/art/build_cursors.gd 2>&1 | $(LOGCHK)
 	$(MAKE) import
 
 ## UI flow wireframes (docs/ui/wireframes/*.svg) from tools/ui/wireframes.py.

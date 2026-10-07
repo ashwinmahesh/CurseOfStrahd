@@ -446,14 +446,19 @@ func _spellbook_card(book: Array) -> void:
 	if wizards.is_empty():
 		_card.add_child(UiKit.label("Nobody in the party keeps a spellbook. A Wizard could copy these into theirs.", 13, "parchment", 420))
 	var calm := ModeController.mode == ModeController.Mode.EXPLORATION
-	for sp: Variant in book:
+	var last_level := -1
+	# By spell level, alphabetical within (SpellGroups), a small heading over each level.
+	for sp: Variant in SpellGroups.sorted(book, func(x: Variant) -> String: return str(x)):
 		var sid := str(sp)
 		var s := Compendium.shared().spell_data(sid)
 		var lv := int(s.get("level", 0))
+		if lv != last_level:
+			last_level = lv
+			_card.add_child(UiParts.caption(SpellGroups.heading(lv).to_upper(), 11, "gilt"))
 		var head := HBoxContainer.new()
 		head.add_theme_constant_override("separation", 6)
 		UiParts.add_icon(head, "spell", sid, 24.0)
-		var name := UiKit.label("%s (%s)" % [str(s.get("name", sid)), "cantrip" if lv == 0 else "level %d" % lv], 14, "vellum", 380)
+		var name := UiKit.label(str(s.get("name", sid)), 14, "vellum", 380)
 		name.tooltip_text = str(s.get("summary", ""))
 		name.mouse_filter = Control.MOUSE_FILTER_PASS
 		head.add_child(name)

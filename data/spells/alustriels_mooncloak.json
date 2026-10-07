@@ -34,8 +34,9 @@
   "summary": "Reference-only: Moonlight in a 20-foot Emanation gives you and allies Half Cover and resistance to Cold, Lightning, and Radiant. End the spell either as a Reaction to succeed on a failed save against Frightened, Grappled, or Restrained, or as a Magic action to heal yourself or an ally in the area for 4d10 + your spellcasting modifier.",
   "text": "Reference-only: Moonlight in a 20-foot Emanation gives you and allies Half Cover and resistance to Cold, Lightning, and Radiant. End the spell either as a Reaction to succeed on a failed save against Frightened, Grappled, or Restrained, or as a Magic action to heal yourself or an ally in the area for 4d10 + your spellcasting modifier.",
   "tags": [
-    "utility"
+    "damage"
   ],
   "icon": "magic_missile",
+  "automation": "reference",
   "playable": false
 }

@@ -94,6 +94,13 @@ func _try(spell_id: String, seed_value: int) -> Dictionary:
 		ally.creature.add_condition(&"charmed", "test")
 	if spell_id == "divine_word":
 		f1.creature.hp = 30
+	# A recovery spell needs expended slots, and its benefit must be measured separately from casting costs.
+	var recovery_before := 0
+	if spell_id == "mordenkainens_lucubration":
+		var ch := c.creature as Character
+		ch.expend_slot(2)
+		ch.expend_slot(2)
+		recovery_before = ch.expended_slots(2)
 	var before := _snapshot(e)
 	var targets: Array = []
 	var point := Vector2.INF
@@ -128,6 +135,8 @@ func _try(spell_id: String, seed_value: int) -> Dictionary:
 		return {"fail": r.reason}
 	# Later turns: lingering areas, sustained actions and timed effects get their chance.
 	var after := _snapshot(e)
+	if spell_id == "mordenkainens_lucubration":
+		return {"changed": recovery_before - (c.creature as Character).expended_slots(2) == 2}
 	return {"changed": before != after}
 
 

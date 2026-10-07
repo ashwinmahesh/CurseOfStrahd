@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 5,
   "school": "necromancy",
@@ -29,11 +29,48 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: A visible creature makes a Dexterity save against 6d8 Necrotic, half on success. Success ends the spell. After failure, later Bonus Actions deal 2d8 Necrotic automatically. Every damage instance heals you for half damage dealt. Ends if target leaves range or gains Total Cover. Initial damage gains 1d8 per slot above 5.",
-  "text": "Reference-only: A visible creature makes a Dexterity save against 6d8 Necrotic, half on success. Success ends the spell. After failure, later Bonus Actions deal 2d8 Necrotic automatically. Every damage instance heals you for half damage dealt. Ends if target leaves range or gains Total Cover. Initial damage gains 1d8 per slot above 5.",
+  "summary": "A visible creature makes a Dexterity save against 6d8 Necrotic, half on success. Success ends the spell. After failure, later Bonus Actions deal 2d8 Necrotic automatically. Every damage instance heals you for half damage dealt. Ends if target leaves range or gains Total Cover. Initial damage gains 1d8 per slot above 5.",
+  "text": "A visible creature makes a Dexterity save against 6d8 Necrotic, half on success. Success ends the spell. After failure, later Bonus Actions deal 2d8 Necrotic automatically. Every damage instance heals you for half damage dealt. Ends if target leaves range or gains Total Cover. Initial damage gains 1d8 per slot above 5.",
   "tags": [
-    "utility"
+    "damage",
+    "healing"
   ],
   "icon": "magic_missile",
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "save": "dex",
+  "save_success": "half",
+  "ends_on_save": true,
+  "damage": [
+    {
+      "dice": "6d8",
+      "type": "necrotic"
+    }
+  ],
+  "upcast": {
+    "damage": "1d8"
+  },
+  "drain": true,
+  "sustain": [
+    {
+      "do": "damage",
+      "cost": "bonus_action",
+      "range": 60,
+      "tether": true,
+      "damage": [
+        {
+          "dice": "2d8",
+          "type": "necrotic",
+          "scales": false
+        }
+      ],
+      "label": "Enervation: drain",
+      "sub": "2d8 Necrotic + heal",
+      "help": "On a later turn, drain the original target with a Bonus Action."
+    }
+  ],
+  "requires_sight": true,
   "playable": false
 }

@@ -74,8 +74,8 @@ func roll_recharges(c: Combatant) -> void:
 
 # --- Riders on a hit or a failed save -------------------------------------------------------------
 
-## The action's `charge` block when `c` ran at least its `feet` straight at `target` this turn before the hit (the
-## distance closed since the turn began stands in for the straight line), else {}.
+## The action's charge when the trailing voluntary steps each closed distance to this target.
+## Grid approximations of an angled approach may change direction; sideways/retreating steps break it.
 func charge_of(c: Combatant, target: Combatant, option: Dictionary) -> Dictionary:
 	if c.has_meta("charged_vs"):
 		c.remove_meta("charged_vs")
@@ -86,10 +86,20 @@ func charge_of(c: Combatant, target: Combatant, option: Dictionary) -> Dictionar
 		return {}
 	var ch := act["charge"] as Dictionary
 	var e := enc()
-	var before := e.grid.distance_ft(c.turn_start_cell, c.size_cells, target.cell, target.size_cells)
-	if before - e.distance(c, target) < int(ch.get("feet", 20)):
+	if c.approach_path.size() < 2 or c.approach_path[-1] != c.cell:
 		return {}
-	return ch
+	var feet := 0
+	for i in range(c.approach_path.size() - 1, 0, -1):
+		var to := c.approach_path[i]
+		var from := c.approach_path[i - 1]
+		var before := e.grid.distance_ft(from, c.size_cells, target.cell, target.size_cells)
+		var after := e.grid.distance_ft(to, c.size_cells, target.cell, target.size_cells)
+		if after >= before:
+			break
+		feet += e.grid.distance_ft(from, 1, to, 1)
+		if feet >= int(ch.get("feet", 20)):
+			return ch
+	return {}
 
 
 ## Applies `riders` from `src` to `t` after damage `by_type` ({type: amount taken}).
@@ -99,6 +109,8 @@ func apply_riders(src: Combatant, t: Combatant, riders: Array, by_type: Dictiona
 		var rd := raw as Dictionary
 		if not t.is_alive():
 			return
+		if rd.has("unless_condition") and t.creature.has_condition(StringName(str(rd["unless_condition"]))):
+			continue
 		if rd.has("not_types") and str(t.creature.creature_type) in (rd["not_types"] as Array):
 			continue
 		if rd.has("only_types") and not str(t.creature.creature_type) in (rd["only_types"] as Array):
@@ -448,7 +460,10 @@ func _save_one(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult, rol
 	if t.has_meta(immune_key):
 		e.log.add("info", "%s is unmoved by %s" % [t.name(), act.get("name", "")], t.id)
 		return
-	var test := t.creature.roll_save(e.dice, ab, int(sv["dc"]), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], act.get("name", ""), t.name()])
+	var keys: Array[String] = []
+	if bool(act.get("magical", false)):
+		keys.append("save_vs:magic")
+	var test := t.creature.roll_save(e.dice, ab, int(sv["dc"]), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], act.get("name", ""), t.name()], keys)
 	var by_type := {}
 	var parts: Array = []
 	var texts: Array[String] = [test.describe()]
@@ -462,8 +477,7 @@ func _save_one(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult, rol
 			rolled_once[i] = e._roll_damage_dice(str(dd["dice"]), false, 0, str(act.get("name", "")))
 		var rolled := rolled_once[i] as Dictionary
 		var amount := int(rolled["total"])
-		if test.success:
-			amount = amount / 2 if str(sv.get("success", "none")) == "half" else 0
+		amount = t.creature.damage_after_save(amount, ab, test.success, str(sv.get("success", "none")) == "half", bool(act.get("magical", false)))
 		parts.append({"amount": amount, "type": str(dd["type"])})
 		texts.append(str(rolled["text"]))
 	if not parts.is_empty() and parts.any(func(p: Dictionary) -> bool: return int(p["amount"]) > 0):
@@ -860,6 +874,8 @@ func bonus_action(c: Combatant, plan: String = "") -> CombatResult:
 		match str(act.get("do", act.get("id", ""))):
 			"dash_or_disengage":
 				if not plan in ["dash", "retreat"]:
+					continue
+				if (plan == "dash" and c.creature.has_flag("cannot_dash")) or (plan == "retreat" and not e.can_disengage(c)):
 					continue
 				c.bonus_available = false
 				if plan == "retreat":

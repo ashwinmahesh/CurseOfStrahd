@@ -8,14 +8,20 @@
   },
   "category": "epic_boon",
   "repeatable": false,
-  "summary": "Reference-only: Concentration ends only when you begin another Concentration effect, become Petrified or Unconscious, or die.",
+  "summary": "Concentration ends only when you begin another Concentration effect, become Petrified or Unconscious, or die.",
   "benefits": [
     {
       "id": "boon_of_the_iron_mind_benefit",
       "name": "Epic Benefit",
-      "summary": "Reference-only: Concentration ends only when you begin another Concentration effect, become Petrified or Unconscious, or die.",
-      "text": "Reference-only: Concentration ends only when you begin another Concentration effect, become Petrified or Unconscious, or die.",
-      "implemented": "text"
+      "summary": "Concentration ends only when you begin another Concentration effect, become Petrified or Unconscious, or die.",
+      "text": "Concentration ends only when you begin another Concentration effect, become Petrified or Unconscious, or die.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "concentration_iron_mind"
+        }
+      ]
     }
   ],
   "prerequisites": {

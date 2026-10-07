@@ -173,7 +173,11 @@ static func mark_looted(node: Node3D) -> void:
 ## The art for a door: catalog ids, then the first rule whose words are in its id or label.
 static func door_look(spec: Dictionary) -> Dictionary:
 	if spec.has("art"):
-		return {"art": str(spec["art"])}
+		var out := {"art": str(spec["art"])}
+		for k: String in ["width", "height"]:
+			if spec.has(k):
+				out[k] = spec[k]
+		return out
 	var doors := catalog().get("doors", {}) as Dictionary
 	var id := str(spec.get("id", ""))
 	var by_id := doors.get("ids", {}) as Dictionary
@@ -202,6 +206,11 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 	var h := float(look.get("height", OUTDOOR_DOOR_H if outdoors else INTERIOR_DOOR_H))
 	var w := float(look.get("width", DOOR_WIDTH))
 	var base := board.cell_center(cell)
+	var pair := spec.get("pair", Vector2i.ZERO) as Vector2i
+	if pair != Vector2i.ZERO:
+		# A doorway two squares wide (exit_piece): the leaf spans both.
+		board.door_cells[cell + pair] = true
+		base += Vector3(pair.x, 0, pair.y) * 0.5
 	var yaw := 0.0 if along_x else PI / 2.0   # the leaf's face looks along z when the wall runs along x
 	var leaf := Node3D.new()
 	leaf.name = "Door_" + str(spec.get("id", ""))
@@ -235,7 +244,7 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 			if board.grid.in_bounds(pc):
 				_pillar(board, pc, h + 0.1, statue)
 	elif not secret:
-		_frame(board, base, along_x, h)
+		_frame(board, base, along_x, h, 2.0 if pair != Vector2i.ZERO else 1.0)
 	if secret:
 		# Hidden: a block of wall (the bookcase door shows its shelves on the wall faces) until it is found.
 		if sp != null:
@@ -304,13 +313,14 @@ static func _pillar(board: ArenaBoard, cell: Vector2i, h: float, statue: String)
 		board.add_child(sp)
 
 
-static func _frame(board: ArenaBoard, base: Vector3, along_x: bool, h: float) -> void:
+static func _frame(board: ArenaBoard, base: Vector3, along_x: bool, h: float, span: float = 1.0) -> void:
 	var mat := board.wall_material()
 	var post := Vector3(0.12, h, 0.34) if along_x else Vector3(0.34, h, 0.12)
+	var side := span / 2.0 - 0.03
 	for s: float in [-1.0, 1.0]:
-		var off := Vector3(s * 0.47, h / 2.0, 0) if along_x else Vector3(0, h / 2.0, s * 0.47)
+		var off := Vector3(s * side, h / 2.0, 0) if along_x else Vector3(0, h / 2.0, s * side)
 		_frame_box(board, post, base + off, mat)
-	_frame_box(board, Vector3(1.0, 0.12, 0.34) if along_x else Vector3(0.34, 0.12, 1.0), base + Vector3(0, h + 0.06, 0),
+	_frame_box(board, Vector3(span, 0.12, 0.34) if along_x else Vector3(0.34, 0.12, span), base + Vector3(0, h + 0.06, 0),
 		Look.cel("bone_dark" if board.theme in ArenaBoard.TOWNS else ArenaBoard.CUT_FACE))
 
 
@@ -353,8 +363,8 @@ static func exit_piece(board: ArenaBoard, spec: Dictionary) -> Node3D:
 	# Stairs are the way itself, so they show only while the way is open (LocationView keeps them hidden while the
 	# exit's `when` is false: a secret stair nobody has found). A door stays drawn even when it's barred.
 	var model := ModelPiece.for_art(board, art)
-	if model != "" and str((ModelPiece.manifest()[model] as Dictionary).get("mount", "")).begins_with("stairs"):
-		ModelPiece.stand(board, root, model, art, cell)
+	if model != "" and (str((ModelPiece.manifest()[model] as Dictionary).get("mount", "")).begins_with("stairs") or mount == "floor"):
+		ModelPiece.stand(board, root, model, art, cell)   # 3D stairs, a hatch (docs/art/models.md)
 		root.set_meta("only_when_open", true)
 		return root
 	if _stairs(board, root, art, cell):
@@ -368,6 +378,17 @@ static func exit_piece(board: ArenaBoard, spec: Dictionary) -> Node3D:
 		_stand(board, root, art, cell, 1.0)
 		root.set_meta("only_when_open", true)
 		return root
+	var pair := _double_doorway(board, cell)
+	if pair != Vector2i.ZERO and art in (catalog().get("double_doors", []) as Array) and not board.theme in ArenaBoard.INTERIORS:
+		# Great doors across a doorway two squares wide (the keep's), drawn once, from its west or north square.
+		if pair.x < 0 or pair.y < 0:
+			root.queue_free()
+			return null
+		var great := door(board, {"id": spec.get("id", ""), "cell": spec["cell"], "art": art, "pair": pair,
+			"width": 1.0 + DOOR_WIDTH, "height": OUTDOOR_DOOR_H}, false)
+		if great != null:
+			great.reparent(root)
+			return root
 	if _wall_at(board, cell):
 		if _hang(board, root, art, cell, 1.0):
 			return root
@@ -470,6 +491,8 @@ static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Ve
 	else:
 		piece = _sprite(art)
 		piece.pixel_size *= scale_
+	if art in (catalog().get("glows", []) as Array):
+		piece.shaded = false   # it gives light rather than taking it (the Heart of Sorrow)
 	piece.position = at
 	piece.set_meta("art", art)
 	parent.add_child(piece)
@@ -719,6 +742,16 @@ static func _same_area(board: ArenaBoard, a: Vector2i, b: Vector2i) -> bool:
 		if r.has_point(a) and r.has_point(b):
 			return true
 	return false
+
+
+## Which way the other half of a doorway two squares wide lies from `cell` (wall, two open squares, wall), or ZERO.
+static func _double_doorway(board: ArenaBoard, cell: Vector2i) -> Vector2i:
+	for d: Vector2i in [Vector2i(1, 0), Vector2i(0, 1)]:
+		if _wall_at(board, cell - d) and _open_at(board, cell + d) and _wall_at(board, cell + d * 2):
+			return d
+		if _wall_at(board, cell + d) and _open_at(board, cell - d) and _wall_at(board, cell - d * 2):
+			return -d
+	return Vector2i.ZERO
 
 
 static func _wall_at(board: ArenaBoard, c: Vector2i) -> bool:

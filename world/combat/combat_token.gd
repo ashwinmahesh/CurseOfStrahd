@@ -44,7 +44,23 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 	"giant_owl": 1.6, "giant_rat": 0.5, "giant_weasel": 0.6, "goat": 0.8, "griffon": 1.7, "jackal": 0.55,
 	"lion": 1.1, "mastiff": 0.75, "nightmare": 1.7, "owl": 0.35, "panther": 0.8, "rat": 0.25, "rhinoceros": 1.5,
 	"saber_toothed_tiger": 1.2, "tiger": 1.1, "water_elemental": 2.0, "weasel": 0.25,
-	"mimic": 0.9}
+	"mimic": 0.9,
+	"apprentice_wizard": 1.2, "bandit": 1.25, "bandit_captain": 1.3, "druid": 1.25, "knight": 1.35, "mage": 1.25,
+	"priest": 1.25, "priest_acolyte": 1.2, "scout": 1.25, "tough": 1.3, "warrior_veteran": 1.3,
+	"severed_arm": 0.35, "severed_head": 0.35, "crawling_claw": 0.3, "skeleton": 1.25, "vampire": 1.35,
+	"barovian_witch": 1.15, "black_pudding": 1.0, "guardian_portrait": 1.4, "helmed_horror": 1.35,
+	"rug_of_smothering": 0.4, "strahds_animated_armor": 1.4, "illusion": 1.3, "bigbys_hand": 1.6,
+	"animated_object": 0.8, "giant_insect": 1.2, "aberrant_spirit": 1.3, "bestial_spirit": 0.8,
+	"celestial_spirit": 1.45, "construct_spirit": 1.4, "draconic_spirit": 1.6, "elemental_spirit": 1.4,
+	"fey_spirit": 0.8, "fiendish_spirit": 1.5, "undead_spirit": 1.25, "otherworldly_steed": 1.7,
+	"primal_beast": 0.9, "imp_familiar": 0.4, "pseudodragon_familiar": 0.45, "quasit_familiar": 0.4,
+	"slaad_tadpole_familiar": 0.3, "sphinx_familiar": 0.45, "sprite_familiar": 0.35,
+	"venomous_snake_familiar": 0.3}
+
+## Stat blocks that wear another creature's sprite: a named villain's block and the person drawn for them, or a
+## familiar and the animal it looks like.
+const ART_ALIASES := {"strahd_von_zarovich": "strahd", "izek_strazni": "izek", "ezmerelda_davenir": "ezmerelda",
+	"owl_familiar": "owl", "skeleton_familiar": "skeleton"}
 
 var combatant: Combatant
 var art_override := ""
@@ -77,7 +93,8 @@ static func art_id(c: Combatant) -> String:
 static func art_for(cr: Creature) -> String:
 	if cr is Monster:
 		var data := (cr as Monster).data
-		return str(data.get("art", data.get("id", "")))
+		var id := str(data.get("id", ""))
+		return str(data.get("art", ART_ALIASES.get(id, id)))
 	if cr is Character:
 		if HeroLook.is_custom(cr as Character):
 			return HeroLook.register(cr as Character)
@@ -235,6 +252,10 @@ func refresh() -> void:
 		chips.append("◎ " + cr.concentration.name)
 	if combatant.hidden:
 		chips.append("Hidden")
+	# Hex, Hunter's Mark: who marked it.
+	for fx in cr.effects:
+		if fx.data.has("mark_by"):
+			chips.append(fx.name)
 	if cr.hp <= 0 and not cr.dead and cr.uses_death_saves:
 		chips.append("Stable" if cr.stable else "Dying %d✓ %d✗" % [cr.death_successes, cr.death_failures])
 	_status.text = " · ".join(chips)

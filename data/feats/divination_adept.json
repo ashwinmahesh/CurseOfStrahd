@@ -8,14 +8,46 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying. Reference-only: Reaction when a visible creature within 60 feet makes a D20 Test: grant Advantage or Disadvantage. Once per Long Rest; a slotted Divination restores use.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying. Reference-only: Reaction when a visible creature within 60 feet makes a D20 Test: grant Advantage or Disadvantage. Once per Long Rest; a slotted Divination restores use.",
   "benefits": [
     {
       "id": "divination_adept_spells",
       "name": "Additional Spells",
-      "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying.",
-      "text": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying.",
-      "implemented": "text"
+      "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying.",
+      "text": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "detect_evil_and_good",
+          "at_slot_level": 1,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "mind_spike",
+          "at_slot_level": 2,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "clairvoyance",
+          "at_slot_level": 3,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "divination",
+          "at_slot_level": 4,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "scrying",
+          "at_slot_level": 5,
+          "prepared_for_classes": true
+        }
+      ]
     },
     {
       "id": "divination_adept_benefit",

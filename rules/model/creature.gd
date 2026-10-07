@@ -145,6 +145,8 @@ func all_modifiers() -> Array[Modifier]:
 		out.append_array(_modifiers_of_condition(c))
 	var best := {}
 	for e in effects:
+		if bool(e.data.get("await_owner_start", false)):
+			continue
 		var k := e.key()
 		if not best.has(k):
 			best[k] = e
@@ -441,6 +443,12 @@ func roll_d20(dice: DiceRoller, kind: D20Test.Kind, bonus: Breakdown, target: in
 			var failed := D20Test.automatic_failure(kind, target, label, m.source_name)
 			failed.breakdown = bonus
 			return failed
+	if kind == D20Test.Kind.SAVING_THROW and "save:con" in keys and "concentration" in keys and concentration != null:
+		var school := str(compendium.spell_data(concentration.source_id).get("school", ""))
+		for m in modifiers_for(&"concentration_save_bonus"):
+			if m.text("school", school) == school:
+				var amount := ability_mod(StringName(m.text("ability"))) if m.text("ability") in Abilities.ALL else mod_value(m, formula_context())
+				bonus.add_nonzero(m.source_name, amount)
 	var src := d20_sources(keys)
 	var adv: Array[String] = []
 	var dis: Array[String] = []
@@ -530,7 +538,13 @@ func is_conscious() -> bool:
 func defense_source(stat: StringName, base: Array[String], damage_type: StringName) -> String:
 	if str(damage_type) in base or "all" in base:
 		return base_label
+	var situation := armor_situation()
+	situation["bloodied"] = is_bloodied()
+	situation["temporary_hp"] = temp_hp > 0
+	situation["incapacitated"] = has_condition(&"incapacitated")
 	for m in modifiers_for(stat):
+		if not m.applies_when(situation):
+			continue
 		var v := m.text("value")
 		if v == damage_type or v == "all":
 			return m.source_name
@@ -645,7 +659,7 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 			else:
 				_die("0 Hit Points")
 			r.died = dead
-	if concentration != null and not dead and hp > 0:
+	if concentration != null and not dead and hp > 0 and not concentration_damage_protected():
 		r.concentration_dc = Concentration.save_dc(r.final)
 		if dice != null:
 			var t := roll_save(dice, &"con", r.concentration_dc, [], [], "Concentration (%s)" % name, ["concentration"])
@@ -655,6 +669,22 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 				concentration.end("failed a Concentration save")
 	_log_damage(r)
 	return r
+
+
+## Some features protect a particular school or spell, while Iron Mind protects all damage saves.
+func concentration_damage_protected() -> bool:
+	if concentration == null:
+		return false
+	if has_flag("concentration_iron_mind"):
+		return true
+	var spell := compendium.spell_data(concentration.source_id)
+	for m in modifiers_for(&"concentration_damage_immunity"):
+		if m.data.has("school") and m.text("school") != str(spell.get("school", "")):
+			continue
+		if m.data.has("spell_id") and m.text("spell_id") != concentration.source_id:
+			continue
+		return true
+	return false
 
 
 func _log_damage(r: DamageResult) -> void:
@@ -678,8 +708,15 @@ func heal(amount: int, source: String = "") -> int:
 
 ## Temporary Hit Points don't stack: the higher amount is kept (the player may choose in the UI).
 func add_temp_hp(amount: int, source: String = "") -> bool:
+	if amount <= 0:
+		return false
+	for m in modifiers_for(&"temp_hp_bonus"):
+		amount += mod_value(m, formula_context())
 	if amount <= temp_hp:
 		return false
+	for fx: Effect in effects.duplicate():
+		if bool(fx.data.get("temp_hp_bound", false)):
+			remove_effect(fx)
 	temp_hp = amount
 	log_event({"type": "temp_hp", "creature": id, "amount": amount, "source": source})
 	return true
@@ -860,7 +897,7 @@ func _modifiers_of_condition(c: StringName) -> Array[Modifier]:
 func _after_conditions_changed() -> void:
 	if not has_flag("no_concentration"):
 		return
-	if concentration != null:
+	if concentration != null and (not has_flag("concentration_iron_mind") or has_condition(&"petrified") or has_condition(&"unconscious")):
 		concentration.end("Incapacitated")
 	for e: Effect in effects.duplicate():
 		if e.ends_when_incapacitated:
@@ -878,6 +915,8 @@ func add_effect(e: Effect) -> bool:
 		else:
 			kept.append(c)
 	e.conditions = kept
+	if e.data.has("primary_condition") and not StringName(str(e.data["primary_condition"])) in kept:
+		return false
 	if had_conditions and kept.is_empty() and e.modifiers.is_empty():
 		return false
 	effects.append(e)
@@ -889,7 +928,14 @@ func add_effect(e: Effect) -> bool:
 func remove_effect(e: Effect) -> void:
 	if e in effects:
 		effects.erase(e)
+		if e.data.has("temporary_exhaustion"):
+			exhaustion = maxi(0, exhaustion - int(e.data["temporary_exhaustion"]))
 		log_event({"type": "effect_removed", "creature": id, "effect": e.name})
+		if bool(e.data.get("short_rest_on_expiry", false)) and e.ends == Effect.Ends.ROUNDS and e.rounds_left <= 0 and &"unconscious" in e.conditions and not dead and not has_flag("catnap_rested"):
+			finish_short_rest()
+			var rested := Effect.new("Rested by Catnap", &"spell", "catnap_rested").with_modifier("flag", {"value": "catnap_rested"})
+			rested.ends = Effect.Ends.LONG_REST
+			add_effect(rested)
 		if e.on_end.is_valid():
 			var f := e.on_end
 			e.on_end = Callable()
@@ -906,6 +952,11 @@ func remove_effects_named(effect_name: String) -> void:
 func begin_concentration(source_id: String, label: String) -> Concentration:
 	var old := concentration
 	var conc := Concentration.new(self, source_id, label)
+	# A spell's Concentration lasts no longer than the spell (Protection from Evil and Good: 10 minutes).
+	if compendium != null:
+		var sd := compendium.spell_data(source_id)
+		if not sd.is_empty():
+			conc.set_duration(sd.get("duration", {}) as Dictionary)
 	concentration = conc
 	# Ended after the new one is in place, so whatever the old spell's end does (Shapechange's caster changing back)
 	# sees the new Concentration.
@@ -919,9 +970,16 @@ func begin_concentration(source_id: String, label: String) -> Concentration:
 
 ## Turn bookkeeping: call for every creature when anyone's turn starts or ends.
 func on_turn_start(active_creature_id: String) -> void:
+	if active_creature_id == id:
+		for resource: Dictionary in resources.values():
+			if str(resource.get("recharge", "")) == "turn":
+				resource["used"] = 0
 	for e: Effect in effects.duplicate():
 		if (e as Effect).on_turn_start(active_creature_id):
 			remove_effect(e as Effect)
+	# A round of the caster's Concentration passes at the start of each of its turns.
+	if active_creature_id == id and concentration != null:
+		concentration.spend_rounds(1)
 
 
 func on_turn_end(active_creature_id: String) -> void:
@@ -934,6 +992,8 @@ func advance_minutes(minutes: int) -> void:
 	for e: Effect in effects.duplicate():
 		if (e as Effect).advance_minutes(minutes):
 			remove_effect(e as Effect)
+	if concentration != null:
+		concentration.spend_rounds(minutes * Effect.ROUNDS_PER_MINUTE)
 
 
 # --- Resources and rests -------------------------------------------------------------------------
@@ -1039,6 +1099,9 @@ func speed(kind: String = "walk") -> Breakdown:
 	for m in modifiers_for(&"speed_set"):
 		if m.text("kind", "walk") == kind and _speed_set_value(m, ctx, kind) == 0:
 			b.set_override(0, m.source_name)
+	for m in modifiers_for(&"speed_cap"):
+		if m.text("kind", "all") in ["all", kind] and b.total() > mod_value(m, ctx):
+			b.set_override(mod_value(m, ctx), m.source_name)
 	if b.sum() < 0:
 		b.set_floor(0, "minimum 0")
 	return b
@@ -1170,3 +1233,14 @@ static func relink_concentration(creatures: Array[Creature], saved: Dictionary) 
 			var caster := by_id[caster_id] as Creature
 			if caster.concentration != null and caster.concentration.source_id == str(info.get("source", "")):
 				caster.concentration.relink(c, c.effects[i])
+
+
+## Save-for-half defenses apply equally to spells, zones, and monster abilities.
+func damage_after_save(amount: int, ability: StringName, success: bool, half: bool, magical: bool = false) -> int:
+	if half and ability == &"dex" and has_flag("evasion") and not has_condition(&"incapacitated"):
+		return 0 if success else amount / 2
+	if success:
+		if half and magical and has_flag("circle_of_power"):
+			return 0
+		return amount / 2 if half else 0
+	return amount

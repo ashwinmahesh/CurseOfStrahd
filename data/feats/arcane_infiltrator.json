@@ -40,7 +40,19 @@
       "name": "Cunning Diversion",
       "summary": "Dodge as a Bonus Action, up to Proficiency Bonus times per Long Rest.",
       "text": "Dodge as a Bonus Action, up to Proficiency Bonus times per Long Rest.",
-      "implemented": "text"
+      "implemented": "data",
+      "activation": {
+        "cost": "bonus",
+        "resource": "arcane_infiltrator",
+        "do": "dodge"
+      },
+      "action": "bonus_action",
+      "resource": {
+        "id": "arcane_infiltrator",
+        "name": "Cunning Diversion",
+        "max": "pb",
+        "recharge": "long"
+      }
     }
   ],
   "playable": false

@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 2,
   "school": "abjuration",
@@ -29,11 +29,36 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: Creatures in a 20-foot-radius Sphere make Constitution saves. Failure immediately breaks Concentration and gives Disadvantage on saves to maintain Concentration for this spell’s duration.",
-  "text": "Reference-only: Creatures in a 20-foot-radius Sphere make Constitution saves. Failure immediately breaks Concentration and gives Disadvantage on saves to maintain Concentration for this spell’s duration.",
+  "summary": "Creatures in a 20-foot-radius Sphere make Constitution saves. Failure immediately breaks Concentration and gives Disadvantage on saves to maintain Concentration for this spell’s duration.",
+  "text": "Creatures in a 20-foot-radius Sphere make Constitution saves. Failure immediately breaks Concentration and gives Disadvantage on saves to maintain Concentration for this spell’s duration.",
   "tags": [
-    "utility"
+    "debuff"
   ],
   "icon": "magic_missile",
+  "targets": {
+    "kind": "area"
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 20
+  },
+  "save": "con",
+  "effects": [
+    {
+      "effect": "end_concentration",
+      "params": {}
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "disadvantage",
+            "on": "concentration"
+          }
+        ]
+      }
+    }
+  ],
   "playable": false
 }

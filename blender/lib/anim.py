@@ -112,6 +112,11 @@ def split_strip(arr, count=3):
             continue
         x0 = min(r[1] for r in c)
         x1 = max(r[2] for r in c)
+        y0 = min(r[0] for r in c)
+        y1 = max(r[0] for r in c) + 1
+        # A panel border Gemini sometimes rules around a frame: a big, nearly empty outline. Not a figure.
+        if (y1 - y0) > 0.3 * arr.shape[0] and area < 0.05 * (y1 - y0) * (x1 - x0):
+            continue
         info.append((area, x0, x1, c))
     info.sort(key=lambda t: t[0], reverse=True)
     problems = []

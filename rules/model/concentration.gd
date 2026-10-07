@@ -9,12 +9,37 @@ var name: String
 var _caster: WeakRef
 var _links: Array[Dictionary] = []   ## {creature: WeakRef, effect: Effect}
 var ended: bool = false
+## Rounds left before the spell's duration runs out (10 a minute); -1 = no limit kept here.
+var rounds_left: int = -1
 
 
 func _init(caster: Creature, source_id_: String, name_: String) -> void:
 	_caster = weakref(caster)
 	source_id = source_id_
 	name = name_
+
+
+## Sets the time limit from a spell's duration ({kind: rounds|minutes|hours|days, amount}).
+func set_duration(duration: Dictionary) -> void:
+	var amount := int(duration.get("amount", 1))
+	match str(duration.get("kind", "")):
+		"rounds":
+			rounds_left = amount
+		"minutes":
+			rounds_left = amount * Effect.ROUNDS_PER_MINUTE
+		"hours":
+			rounds_left = amount * 60 * Effect.ROUNDS_PER_MINUTE
+		"days":
+			rounds_left = amount * 24 * 60 * Effect.ROUNDS_PER_MINUTE
+
+
+## Time passing (a turn: 1 round; a rest or a walk: minutes * 10). Ends it when the duration runs out.
+func spend_rounds(n: int) -> void:
+	if ended or rounds_left < 0:
+		return
+	rounds_left -= n
+	if rounds_left <= 0:
+		end("its duration ran out")
 
 
 func caster() -> Creature:

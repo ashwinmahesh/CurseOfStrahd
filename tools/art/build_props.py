@@ -5,7 +5,8 @@ Usage: tools/art/build_props.py [--generate] [--only sheet ...] [--jobs N]
 
 With --generate, asks Gemini (through tools/art/generate.sh, so the model is pinned and every call is logged) for
 each sheet's source: four objects in a 2 x 2 grid, or one object, saved as art/generated/props/sheet_<name>.png.
-Sheets that already have a source are skipped unless named in --only. At most --jobs calls run at once (default 2:
+Sheets that already have a source are skipped unless named in --only. A sheet's `redone` ids are not cut from it
+(they came out wrong there and have a sheet of their own). At most --jobs calls run at once (default 2:
 the Gemini account is shared), and a rate-limit or server error is retried with backoff; out of credits (402)
 stops the run. Then blender/prop_sheets.py cuts every source into art/sprites/props/<id>.png and records each in
 art/sprites/props/manifest.json. After a first build of new props: make import, then tools/art/set_import.py on them.
@@ -93,6 +94,8 @@ def main():
         layout = "1x1" if len(s["items"]) == 1 else "2x2"
         items = []
         for slot, pid in enumerate(s["items"]):
+            if pid in s.get("redone", []):
+                continue   # this slot came out wrong and was drawn again as its own sheet
             r = rec["props"][pid]
             item = {"id": pid, "slot": slot, "mount": r.get("mount", "stand" if s["view"] == "pair" else s["view"])}
             for k in ("height", "width", "saturate", "max"):

@@ -5170,6 +5170,817 @@
       "sprites": "art/portraits/mister_quillon.png",
       "model": "gemini-3.1-flash-image",
       "notes": "Bust portrait of Mister Quillon, the devil holding Kip's contract (owner's new companions, 2026-10-07), text prompt only (no turnaround: the map figure borrows another sprite). make portrait BG=ash_violet."
+    },
+    {
+      "id": "giant_hyena",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/giant_hyena_turnaround.png",
+      "sprites": "art/sprites/giant_hyena/walk.tres",
+      "portrait": "art/portraits/giant_hyena.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a giant hyena, a huge spotted tan and dark brown hyena with a sloping back, a bristly mane and powerful jaws. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "giant_owl",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/giant_owl_turnaround.png",
+      "sprites": "art/sprites/giant_owl/walk.tres",
+      "portrait": "art/portraits/giant_owl.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a giant owl, a huge brown and cream barred owl with tufted ears, big round golden eyes and sharp talons. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on its two feet with wings folded, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=hop -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=hop"
+      ]
+    },
+    {
+      "id": "giant_rat",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/giant_rat_turnaround.png",
+      "sprites": "art/sprites/giant_rat/walk.tres",
+      "portrait": "art/portraits/giant_rat.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a giant rat, a big mangy grey-brown rat with red eyes, yellow teeth and a long pink tail. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "giant_weasel",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/giant_weasel_turnaround.png",
+      "sprites": "art/sprites/giant_weasel/walk.tres",
+      "portrait": "art/portraits/giant_weasel.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a giant weasel, a long sleek brown weasel with a cream belly, beady black eyes and sharp teeth. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "goat",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/goat_turnaround.png",
+      "sprites": "art/sprites/goat/walk.tres",
+      "portrait": "art/portraits/goat.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a goat, a scruffy grey-brown goat with short curved horns and a beard. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "griffon",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/griffon_turnaround.png",
+      "sprites": "art/sprites/griffon/walk.tres",
+      "portrait": "art/portraits/griffon.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a griffon, a creature with the head, front talons and wings of a golden-brown eagle and the body, hind legs and tail of a tawny lion. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs with its wings folded, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "jackal",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/jackal_turnaround.png",
+      "sprites": "art/sprites/jackal/walk.tres",
+      "portrait": "art/portraits/jackal.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a jackal, a lean sandy-brown jackal with big ears, a long muzzle and a bushy black-tipped tail. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "lion",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/lion_turnaround.png",
+      "sprites": "art/sprites/lion/walk.tres",
+      "portrait": "art/portraits/lion.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a lion, a powerful tawny male lion with a thick dark brown mane. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "mastiff",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/mastiff_turnaround.png",
+      "sprites": "art/sprites/mastiff/walk.tres",
+      "portrait": "art/portraits/mastiff.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a mastiff, a big heavy brindle mastiff dog with a broad black muzzle, droopy jowls and a studded leather collar. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "nightmare",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/nightmare_turnaround.png",
+      "sprites": "art/sprites/nightmare/walk.tres",
+      "portrait": "art/portraits/nightmare.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a nightmare, a fiendish jet-black horse with a mane and tail of orange flame, burning red eyes and hooves wreathed in fire. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "owl",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/owl_turnaround.png",
+      "sprites": "art/sprites/owl/walk.tres",
+      "portrait": "art/portraits/owl.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of an owl, a small brown and cream barred owl with big round yellow eyes and sharp talons. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on its two feet with wings folded, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=hop -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=hop"
+      ]
+    },
+    {
+      "id": "panther",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/panther_turnaround.png",
+      "sprites": "art/sprites/panther/walk.tres",
+      "portrait": "art/portraits/panther.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a panther, a sleek black panther with glowing green eyes. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "rat",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/rat_turnaround.png",
+      "sprites": "art/sprites/rat/walk.tres",
+      "portrait": "art/portraits/rat.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a rat, a scrawny grey-brown rat with red eyes and a long pink tail. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "rhinoceros",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/rhinoceros_turnaround.png",
+      "sprites": "art/sprites/rhinoceros/walk.tres",
+      "portrait": "art/portraits/rhinoceros.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a rhinoceros, a huge grey rhinoceros with thick folded armoured skin and a long horn on its snout. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "saber_toothed_tiger",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/saber_toothed_tiger_turnaround.png",
+      "sprites": "art/sprites/saber_toothed_tiger/walk.tres",
+      "portrait": "art/portraits/saber_toothed_tiger.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a saber-toothed tiger, a huge muscular tawny cat with faint dark stripes and two enormous curved saber fangs. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "tiger",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/tiger_turnaround.png",
+      "sprites": "art/sprites/tiger/walk.tres",
+      "portrait": "art/portraits/tiger.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a tiger, a powerful orange tiger with black stripes and a white muzzle. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "water_elemental",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/water_elemental_turnaround.png",
+      "sprites": "art/sprites/water_elemental/walk.tres",
+      "portrait": "art/portraits/water_elemental.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a water elemental, a towering surging wave of deep blue and sea-green water with white foam crests, a vague face with two glowing pale eyes and two watery arms, its base a swirling pool, flat cartoon colours. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Rising up from the ground like a wave, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=slither -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=slither"
+      ]
+    },
+    {
+      "id": "weasel",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/weasel_turnaround.png",
+      "sprites": "art/sprites/weasel/walk.tres",
+      "portrait": "art/portraits/weasel.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a weasel, a small sleek brown weasel with a cream belly and beady black eyes. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "apprentice_wizard",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/apprentice_wizard_turnaround.png",
+      "sprites": "art/sprites/apprentice_wizard/walk.tres",
+      "portrait": "art/portraits/apprentice_wizard.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of an apprentice wizard, a thin young human in a plain dark grey-blue hooded robe with a rope belt, ink-stained fingers, a small spellbook hanging from the belt and a short wooden wand. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "bandit",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/bandit_turnaround.png",
+      "sprites": "art/sprites/bandit/walk.tres",
+      "portrait": "art/portraits/bandit.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a Barovian bandit, a lean scruffy human man with stubble and a dark hood, a patched brown leather jerkin over a grimy shirt, a dark scarf over the lower face, dark trousers and boots, a curved scimitar at the belt. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "bandit_captain",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/bandit_captain_turnaround.png",
+      "sprites": "art/sprites/bandit_captain/walk.tres",
+      "portrait": "art/portraits/bandit_captain.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a bandit captain, a swaggering human man with a trimmed black beard and a scar, a wide-brimmed dark hat, a long dark red coat over a black leather vest, a sash with a pistol tucked in it, dark trousers and tall boots, a scimitar at the hip. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "druid",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/druid_turnaround.png",
+      "sprites": "art/sprites/druid/walk.tres",
+      "portrait": "art/portraits/druid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a Barovian druid, a wild-haired human woman with leaves and twigs in her long dark hair, green face paint, a rough moss-green and brown hide robe with fur at the shoulders and a gnarled wooden staff. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "knight",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/knight_turnaround.png",
+      "sprites": "art/sprites/knight/walk.tres",
+      "portrait": "art/portraits/knight.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a knight, a tall human warrior in full steel plate armour with a dark blue tabard bearing a silver dragon, an open-faced helm, a long cloak and a greatsword. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "mage",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/mage_turnaround.png",
+      "sprites": "art/sprites/mage/walk.tres",
+      "portrait": "art/portraits/mage.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a mage, a gaunt middle-aged human spellcaster with a pointed grey beard, a deep purple robe with silver embroidery and a high collar, rings on the fingers and a spellbook on a chain at the belt. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "priest",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/priest_turnaround.png",
+      "sprites": "art/sprites/priest/walk.tres",
+      "portrait": "art/portraits/priest.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a priest of the Morninglord, a stern middle-aged human man in long white and gold vestments with a sunburst embroidered on the chest, a gold sunburst holy symbol on a chain and a flanged mace at the belt. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "priest_acolyte",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/priest_acolyte_turnaround.png",
+      "sprites": "art/sprites/priest_acolyte/walk.tres",
+      "portrait": "art/portraits/priest_acolyte.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a young acolyte of the Morninglord, a human in a plain cream robe with a small orange sunburst embroidered on the chest, a wooden sunburst holy symbol on a cord and a small mace at the belt. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "scout",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/scout_turnaround.png",
+      "sprites": "art/sprites/scout/walk.tres",
+      "portrait": "art/portraits/scout.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a scout, a lean weathered human ranger in a dark green hooded cloak, a brown leather jerkin, a quiver of arrows on the back, a longbow in hand and a shortsword at the hip. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "tough",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/tough_turnaround.png",
+      "sprites": "art/sprites/tough/walk.tres",
+      "portrait": "art/portraits/tough.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a tough, a broad brawny human thug with a shaved head, a broken nose and stubble, a studded leather vest over a stained shirt, rough trousers and boots, a heavy mace in hand. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "warrior_veteran",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/warrior_veteran_turnaround.png",
+      "sprites": "art/sprites/warrior_veteran/walk.tres",
+      "portrait": "art/portraits/warrior_veteran.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a veteran warrior, a grizzled human soldier with grey stubble and a scarred face, a dented steel breastplate over a padded dark red gambeson, an iron half-helm, a greatsword in hand. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "severed_arm",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/severed_arm_turnaround.png",
+      "sprites": "art/sprites/severed_arm/walk.tres",
+      "portrait": "art/portraits/severed_arm.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a severed undead arm of a Strahd zombie: a rotting grey-green forearm and hand with long dirty clawed fingernails and a torn faded blood-red sleeve cuff at the stump, crawling on its own fingers. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Lying flat on the ground, crawling on its fingers, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=slither -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=slither"
+      ]
+    },
+    {
+      "id": "severed_head",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/severed_head_turnaround.png",
+      "sprites": "art/sprites/severed_head/walk.tres",
+      "portrait": "art/portraits/severed_head.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a severed undead head of a Strahd zombie: a rotting grey-green head with sunken glowing eyes, a slack jaw of broken teeth and a dented tarnished open-faced steel helmet, a ragged stump at the neck, resting on the ground. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Resting on the ground, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=hop -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=hop"
+      ]
+    },
+    {
+      "id": "crawling_claw",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/crawling_claw_turnaround.png",
+      "sprites": "art/sprites/crawling_claw/walk.tres",
+      "portrait": "art/portraits/crawling_claw.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a crawling claw, a severed grey-skinned human hand with long black fingernails and a ragged stump at the wrist, scuttling on its fingers like a spider. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Crawling on its fingers, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=slither -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=slither"
+      ]
+    },
+    {
+      "id": "skeleton",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/skeleton_turnaround.png",
+      "sprites": "art/sprites/skeleton/walk.tres",
+      "portrait": "art/portraits/skeleton.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a skeleton warrior, old yellowed human bones held together by dark magic, two pinpoint red lights in its eye sockets, a rusted dented iron helmet and a tattered dark leather jerkin, a notched shortsword in hand. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "vampire",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/vampire_turnaround.png",
+      "sprites": "art/sprites/vampire/walk.tres",
+      "portrait": "art/portraits/vampire.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a vampire, a pale gaunt aristocratic undead woman with long black hair, red eyes and fangs, an elegant black and blood-red gown with a high collar and a short dark cape, long clawed fingernails. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "barovian_witch",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/barovian_witch_turnaround.png",
+      "sprites": "art/sprites/barovian_witch/walk.tres",
+      "portrait": "art/portraits/barovian_witch.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a Barovian witch, a gaunt middle-aged human woman with stringy black hair, a hooked nose and dark eyes, a ragged black dress and shawl, a necklace of small bones and a crooked wooden wand. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "black_pudding",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/black_pudding_turnaround.png",
+      "sprites": "art/sprites/black_pudding/walk.tres",
+      "portrait": "art/portraits/black_pudding.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a black pudding, a large low glistening blob of thick black ooze with a few oily purple highlights, bubbling and dripping, no face. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Spread low on the ground, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=slither -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=slither"
+      ]
+    },
+    {
+      "id": "guardian_portrait",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/guardian_portrait_turnaround.png",
+      "sprites": "art/sprites/guardian_portrait/walk.tres",
+      "portrait": "art/portraits/guardian_portrait.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a guardian portrait, a large ornate gilded picture frame standing upright on its own, holding an oil painting of a stern dark-haired nobleman whose painted eyes glow faintly red. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing upright as a painting on an easel-less wall, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=hop -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=hop"
+      ]
+    },
+    {
+      "id": "helmed_horror",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/helmed_horror_turnaround.png",
+      "sprites": "art/sprites/helmed_horror/walk.tres",
+      "portrait": "art/portraits/helmed_horror.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a helmed horror, an empty suit of dark blackened plate armour floating a little above the ground with no one inside, a closed horned great helm with two glowing blue points of light in the visor, a tattered dark purple cape and a longsword. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Floating a little above the ground, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=float -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=float"
+      ]
+    },
+    {
+      "id": "rug_of_smothering",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/rug_of_smothering_turnaround.png",
+      "sprites": "art/sprites/rug_of_smothering/walk.tres",
+      "portrait": "art/portraits/rug_of_smothering.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a rug of smothering, a fine old Barovian carpet with a deep crimson and gold pattern and tasselled ends, lying flat on the ground but rippling like a living thing. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Lying flat on the ground, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=slither -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=slither"
+      ]
+    },
+    {
+      "id": "strahds_animated_armor",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/strahds_animated_armor_turnaround.png",
+      "sprites": "art/sprites/strahds_animated_armor/walk.tres",
+      "portrait": "art/portraits/strahds_animated_armor.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Strahd's animated armor, an empty suit of ornate black plate armour trimmed with blood-red and silver, a closed great helm with a dark slit and red points of light, crackling with small blue lightning sparks, a greatsword in hand. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "illusion",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/illusion_turnaround.png",
+      "sprites": "art/sprites/illusion/walk.tres",
+      "portrait": "art/portraits/illusion.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of an illusion, a shimmering see-through figure of a cloaked warrior made of pale lilac and silver light with faint wavering edges, flat cartoon colours, fully opaque flat colours. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing upright, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=float -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=float"
+      ]
+    },
+    {
+      "id": "bigbys_hand",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/bigbys_hand_turnaround.png",
+      "sprites": "art/sprites/bigbys_hand/walk.tres",
+      "portrait": "art/portraits/bigbys_hand.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Bigby's hand, a huge glowing translucent blue magical hand made of force, open with fingers spread, floating above the ground, flat cartoon colours. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Floating a little above the ground, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=float -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=float"
+      ]
+    },
+    {
+      "id": "animated_object",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/animated_object_turnaround.png",
+      "sprites": "art/sprites/animated_object/walk.tres",
+      "portrait": "art/portraits/animated_object.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of an animated object, a heavy old oak table come to life, standing on its four carved legs and walking on its own, with a cracked top. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on the ground, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=hop -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=hop"
+      ]
+    },
+    {
+      "id": "giant_insect",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/giant_insect_turnaround.png",
+      "sprites": "art/sprites/giant_insect/walk.tres",
+      "portrait": "art/portraits/giant_insect.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a giant insect, a huge glossy dark purple and green beetle-like centipede with segmented armour, many legs, long antennae and big snapping mandibles. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on its legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "aberrant_spirit",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/aberrant_spirit_turnaround.png",
+      "sprites": "art/sprites/aberrant_spirit/walk.tres",
+      "portrait": "art/portraits/aberrant_spirit.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of an aberrant spirit, a floating alien creature with a bulbous grey-purple head, a crown of writhing tentacles where its mouth should be, glowing violet eyes and a ragged robe fading into mist. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Floating a little above the ground, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=float -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=float"
+      ]
+    },
+    {
+      "id": "bestial_spirit",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/bestial_spirit_turnaround.png",
+      "sprites": "art/sprites/bestial_spirit/walk.tres",
+      "portrait": "art/portraits/bestial_spirit.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a bestial spirit, a wolf-like animal made of glowing pale green spirit light and swirling leaves, with bright eyes and bared fangs, flat cartoon colours. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "celestial_spirit",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/celestial_spirit_turnaround.png",
+      "sprites": "art/sprites/celestial_spirit/walk.tres",
+      "portrait": "art/portraits/celestial_spirit.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a celestial spirit, a tall glowing angelic warrior of golden light with feathered white wings, a calm radiant face, silver armour and a shining mace. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "construct_spirit",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/construct_spirit_turnaround.png",
+      "sprites": "art/sprites/construct_spirit/walk.tres",
+      "portrait": "art/portraits/construct_spirit.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a construct spirit, a blocky clockwork golem of riveted bronze and iron plates with glowing blue gem eyes, visible gears at its joints and heavy fists. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "draconic_spirit",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/draconic_spirit_turnaround.png",
+      "sprites": "art/sprites/draconic_spirit/walk.tres",
+      "portrait": "art/portraits/draconic_spirit.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a draconic spirit, a young dragon made of shimmering crimson and gold spirit light, with horns, a long tail and folded wings, flat cartoon colours. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs with wings folded, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "elemental_spirit",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/elemental_spirit_turnaround.png",
+      "sprites": "art/sprites/elemental_spirit/walk.tres",
+      "portrait": "art/portraits/elemental_spirit.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of an elemental spirit, a swirling humanoid shape of mixed fire, water, earth and wind, a rocky core with flames and water flowing around it and a glowing face, flat cartoon colours. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Hovering above the ground, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=float -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=float"
+      ]
+    },
+    {
+      "id": "fey_spirit",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/fey_spirit_turnaround.png",
+      "sprites": "art/sprites/fey_spirit/walk.tres",
+      "portrait": "art/portraits/fey_spirit.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a fey spirit, a small slender elf-like figure with pale green skin, pointed ears, leafy hair and a cloak of autumn leaves, holding a thin silver short blade. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "fiendish_spirit",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/fiendish_spirit_turnaround.png",
+      "sprites": "art/sprites/fiendish_spirit/walk.tres",
+      "portrait": "art/portraits/fiendish_spirit.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a fiendish spirit, a tall horned red-skinned demon with black horns, burning yellow eyes, leathery bat wings, a spiked tail and long claws. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "undead_spirit",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/undead_spirit_turnaround.png",
+      "sprites": "art/sprites/undead_spirit/walk.tres",
+      "portrait": "art/portraits/undead_spirit.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of an undead spirit, a floating ghostly skeletal figure in a tattered grey shroud with hollow glowing green eyes and long bony hands, its lower body a ragged wisp, in pale grey-green tones. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Floating a little above the ground, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=float -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=float"
+      ]
+    },
+    {
+      "id": "otherworldly_steed",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/otherworldly_steed_turnaround.png",
+      "sprites": "art/sprites/otherworldly_steed/walk.tres",
+      "portrait": "art/portraits/otherworldly_steed.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of an otherworldly steed, a tall ghostly horse with a coat of shimmering pale blue-white light, a flowing silver mane and tail and glowing eyes, flat cartoon colours. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "primal_beast",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/primal_beast_turnaround.png",
+      "sprites": "art/sprites/primal_beast/walk.tres",
+      "portrait": "art/portraits/primal_beast.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a primal beast, a sturdy wild animal companion like a large lynx with tawny fur striped with faint glowing green markings, tufted ears and bright eyes. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on all four legs in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "imp_familiar",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/imp_familiar_turnaround.png",
+      "sprites": "art/sprites/imp_familiar/walk.tres",
+      "portrait": "art/portraits/imp_familiar.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of an imp, a tiny red-skinned devil with small bat wings, little horns, a pointed barbed tail and a wicked grin. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Hovering with small wings spread, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=float -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=float"
+      ]
+    },
+    {
+      "id": "pseudodragon_familiar",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/pseudodragon_familiar_turnaround.png",
+      "sprites": "art/sprites/pseudodragon_familiar/walk.tres",
+      "portrait": "art/portraits/pseudodragon_familiar.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a pseudodragon, a tiny cat-sized red-brown dragon with small wings, little horns, big golden eyes and a long barbed tail. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on four legs with wings folded, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "quasit_familiar",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/quasit_familiar_turnaround.png",
+      "sprites": "art/sprites/quasit_familiar/walk.tres",
+      "portrait": "art/portraits/quasit_familiar.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a quasit, a tiny green-skinned demon with knobbly skin, little horns, long claws and a sly sneering face. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Crouching on two legs, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=hop -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=hop"
+      ]
+    },
+    {
+      "id": "sphinx_familiar",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/sphinx_familiar_turnaround.png",
+      "sprites": "art/sprites/sphinx_familiar/walk.tres",
+      "portrait": "art/portraits/sphinx_familiar.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a sphinx of wonder, a tiny winged lion with a golden coat, feathered golden wings and a wise human-like face. Exactly five full-body views of the same animal in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing on four legs with wings folded, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=quadruped -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=quadruped"
+      ]
+    },
+    {
+      "id": "sprite_familiar",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/sprite_familiar_turnaround.png",
+      "sprites": "art/sprites/sprite_familiar/walk.tres",
+      "portrait": "art/portraits/sprite_familiar.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a sprite, a tiny fey warrior with blue skin, pointed ears, translucent dragonfly wings and leaf armour, holding a tiny longsword. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Hovering with dragonfly wings spread, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=float -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=float"
+      ]
+    },
+    {
+      "id": "venomous_snake_familiar",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/venomous_snake_familiar_turnaround.png",
+      "sprites": "art/sprites/venomous_snake_familiar/walk.tres",
+      "portrait": "art/portraits/venomous_snake_familiar.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a venomous snake, a small bright green snake with black bands, a raised head and dripping fangs. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Coiled on the ground with its head raised, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=slither -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=slither"
+      ]
+    },
+    {
+      "id": "slaad_tadpole_familiar",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/slaad_tadpole_familiar_turnaround.png",
+      "sprites": "art/sprites/slaad_tadpole_familiar/walk.tres",
+      "portrait": "art/portraits/slaad_tadpole_familiar.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a slaad tadpole, a tiny red-orange frog-like tadpole with a big toothy mouth, beady eyes and a long tail. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Lying on the ground, each view drawn large so it fills most of the picture's height, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=slither -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=slither"
+      ]
     }
   ],
   "image_provider": "gemini"

@@ -4,7 +4,7 @@
   "source": {
     "book": "FRHoF",
     "checked_against": "FRHoF",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 9,
   "school": "conjuration",
@@ -29,11 +29,48 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: Create a rift within 60 feet; immediately make two melee spell attacks against creatures or objects within 5 feet of it. Each hit deals 10d6 Force, with critical hits on 18–20. Later Bonus Actions move the rift up to 60 feet and repeat both attacks. The rift passes through barriers, including Wall of Force.",
-  "text": "Reference-only: Create a rift within 60 feet; immediately make two melee spell attacks against creatures or objects within 5 feet of it. Each hit deals 10d6 Force, with critical hits on 18–20. Later Bonus Actions move the rift up to 60 feet and repeat both attacks. The rift passes through barriers, including Wall of Force.",
+  "summary": "Create a rift within 60 feet; immediately make two melee spell attacks against creatures or objects within 5 feet of it. Each hit deals 10d6 Force, with critical hits on 18–20. Later Bonus Actions move the rift up to 60 feet and repeat both attacks. The rift passes through barriers, including Wall of Force.",
+  "text": "Create a rift within 60 feet; immediately make two melee spell attacks against creatures or objects within 5 feet of it. Each hit deals 10d6 Force, with critical hits on 18–20. Later Bonus Actions move the rift up to 60 feet and repeat both attacks. The rift passes through barriers, including Wall of Force.",
   "tags": [
-    "utility"
+    "damage",
+    "summon"
   ],
   "icon": "magic_missile",
+  "targets": {
+    "kind": "creature",
+    "count": 2
+  },
+  "attack": "melee",
+  "crit_range": 18,
+  "repeat_targets": true,
+  "damage": [
+    {
+      "dice": "10d6",
+      "type": "force"
+    }
+  ],
+  "object": {
+    "kind": "weapon",
+    "range": 60,
+    "reach": 5,
+    "on_appear": "attack",
+    "attacks": 2,
+    "pick_attack_targets": true,
+    "rules": {
+      "passes_barriers": true
+    }
+  },
+  "sustain": [
+    {
+      "do": "attack",
+      "cost": "bonus_action",
+      "attacks": 2,
+      "move": 60,
+      "reach": 5,
+      "label": "Blade of Disaster: strike twice",
+      "sub": "Move 60 ft + two attacks",
+      "help": "Choose up to two creatures within 5 feet of the rift. Each hit deals 10d6 Force; critical hits on 18–20."
+    }
+  ],
   "playable": false
 }

@@ -111,3 +111,35 @@ func test_walk_cycle_paced_to_the_step_time() -> void:
 	assert_true(s.walk_speed < fast, "sneaking walks slower")
 	assert_between(fast, 0.5, 2.5)
 	s.free()
+
+
+## Every creature that can turn up in a fight has a sprite with a walk and an attack: each stat block in data/monsters,
+## every creature the combat code makes on the spot (summons, familiars, severed limbs), each under the art id the
+## combat token looks up (CombatToken.ART_ALIASES). A block that is also a person in data/npcs (Rahadin) wears that
+## person's sprite, which the people's art pass draws and tools/art/check_npc_art.py tracks, so it isn't counted here.
+func test_every_fighting_creature_has_a_sprite() -> void:
+	var people := {}
+	for f in DirAccess.get_files_at("res://data/npcs"):
+		if f.ends_with(".json"):
+			var n: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/npcs/" + f))
+			if n is Dictionary:
+				people[str((n as Dictionary).get("sprite", (n as Dictionary).get("id", "")))] = true
+	var ids: Array[String] = []
+	for f in DirAccess.get_files_at("res://data/monsters"):
+		if f.ends_with(".json"):
+			var d: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/monsters/" + f))
+			if d is Dictionary:
+				var id := str((d as Dictionary).get("art", (d as Dictionary).get("id", "")))
+				if not people.has(id):
+					ids.append(id)
+	ids.append_array(["severed_arm", "severed_head", "illusion", "bigbys_hand", "animated_object", "giant_insect",
+		"aberrant_spirit", "bestial_spirit", "celestial_spirit", "construct_spirit", "draconic_spirit", "elemental_spirit",
+		"fey_spirit", "fiendish_spirit", "undead_spirit", "otherworldly_steed", "primal_beast", "imp_familiar",
+		"pseudodragon_familiar", "quasit_familiar", "slaad_tadpole_familiar", "sphinx_familiar", "sprite_familiar",
+		"venomous_snake_familiar", "owl_familiar", "skeleton_familiar"])
+	var missing: Array[String] = []
+	for id in ids:
+		var aid := str(CombatToken.ART_ALIASES.get(id, id))
+		if not DirectionalSprite.has_attack(DirectionalSprite.frames_for(aid)):
+			missing.append(id)
+	assert_eq(missing, [] as Array[String], "creatures without a walk and attack sheet")

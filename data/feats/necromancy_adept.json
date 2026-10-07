@@ -8,14 +8,46 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Inflict Wounds; Ray of Enfeeblement; Vampiric Touch; Blight; Raise Dead. Reference-only: After a slotted Necromancy, roll and spend up to two unused Hit Dice to heal their total plus slot level.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Inflict Wounds; Ray of Enfeeblement; Vampiric Touch; Blight; Raise Dead. Reference-only: After a slotted Necromancy, roll and spend up to two unused Hit Dice to heal their total plus slot level.",
   "benefits": [
     {
       "id": "necromancy_adept_spells",
       "name": "Additional Spells",
-      "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Inflict Wounds; Ray of Enfeeblement; Vampiric Touch; Blight; Raise Dead.",
-      "text": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Inflict Wounds; Ray of Enfeeblement; Vampiric Touch; Blight; Raise Dead.",
-      "implemented": "text"
+      "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Inflict Wounds; Ray of Enfeeblement; Vampiric Touch; Blight; Raise Dead.",
+      "text": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Inflict Wounds; Ray of Enfeeblement; Vampiric Touch; Blight; Raise Dead.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "inflict_wounds",
+          "at_slot_level": 1,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "ray_of_enfeeblement",
+          "at_slot_level": 2,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "vampiric_touch",
+          "at_slot_level": 3,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "blight",
+          "at_slot_level": 4,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "raise_dead",
+          "at_slot_level": 5,
+          "prepared_for_classes": true
+        }
+      ]
     },
     {
       "id": "necromancy_adept_benefit",

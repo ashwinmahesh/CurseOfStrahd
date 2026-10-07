@@ -213,7 +213,19 @@
         "name": "Empowered Transmutation",
         "summary": "When casting a Transmutation spell with a slot that makes no attack roll and forces no save, increase its effective level by 1. Uses equal Intelligence modifier (minimum 1) per Long Rest.",
         "text": "When casting a Transmutation spell with a slot that makes no attack roll and forces no save, increase its effective level by 1. Uses equal Intelligence modifier (minimum 1) per Long Rest.",
-        "implemented": "text"
+        "implemented": "data",
+        "resource": {
+          "id": "empowered_transmutation",
+          "name": "Empowered Transmutation",
+          "max": "mod:int",
+          "recharge": "long",
+          "min": 1
+        },
+        "cast_level_boost": {
+          "no_attack_or_save": true,
+          "school": "transmutation",
+          "resource": "empowered_transmutation"
+        }
       }
     },
     {
