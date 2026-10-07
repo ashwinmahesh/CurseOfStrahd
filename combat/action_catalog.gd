@@ -386,6 +386,10 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 			a["choices"] = ff
 			a["choice_label"] = "Familiar"
 			a["opts"] = {"choice": "imp"}
+		elif str(s["id"]) == "find_familiar" and CombatFeatures.has_feature(c, "necromancy_familiar"):
+			a["choices"] = [{"value": "skeleton", "label": "Skeleton"}, {"value": "zombie", "label": "Zombie"}, {"value": "owl", "label": "Undead owl"}]
+			a["choice_label"] = "Familiar"
+			a["opts"] = {"choice": "skeleton"}
 		# Polymorph and the higher shape spells: the form (it must not out-rank its limit; "Best fit" picks for you).
 		if str(s["id"]) in ["polymorph", "true_polymorph", "shapechange", "animal_shapes"]:
 			var forms: Array = [{"value": "", "label": "Best fit"}]

@@ -21,6 +21,11 @@ static func for_spell(spell_id: String, slot: int, option: String, nums: Diction
 		"summon_undead":
 			return undead_spirit(slot, option if option != "" else "skeletal", atk, dc)
 		"find_familiar":
+			# Necromancy Familiar's Zombie form.
+			if option == "zombie":
+				var z := Compendium.shared().monster_data("zombie").duplicate(true)
+				z["familiar"] = true
+				return z
 			return chain_form(option, dc) if option in CHAIN_FORMS else owl()
 		"find_steed":
 			return otherworldly_steed(slot, option if option != "" else "celestial", atk, dc)

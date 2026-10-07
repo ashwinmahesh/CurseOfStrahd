@@ -140,7 +140,9 @@ func polymorph(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	if pick != "" and str(form.get("id", "")) != pick:
 		e.log.add("info", "That Beast out-ranks %s; Polymorph picks %s instead" % [t.name(), form.get("name", "")], t.id)
 	var beast_hp := int((form.get("hp", {}) as Dictionary).get("average", 1))
-	var m := e.shapes.transform(t, form, {"temp_hp": beast_hp, "ends_without_temp_hp": true, "label": "Polymorph"})
+	# Shape Shifter (Transmuter 10): polymorphing yourself once per Long Rest keeps your mind.
+	var keep := t == c and e.faerun.shape_shifter_keeps_mind(c)
+	var m := e.shapes.transform(t, form, {"temp_hp": beast_hp, "ends_without_temp_hp": true, "label": "Polymorph", "keep_mind": keep})
 	var fx := _marker(ctx, t, "Polymorph", ["polymorphed"], "revert_shape")
 	var conc := ctx["conc"] as Concentration
 	if conc != null:

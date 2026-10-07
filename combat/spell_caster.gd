@@ -421,7 +421,11 @@ func precast(c: Combatant, spell_id: String) -> bool:
 		return false
 	var level := int(s.get("level", 0))
 	var slot := 0
-	if level > 0:
+	# Undead Thralls: a free casting of Animate Dead before the fight comes first.
+	if level > 0 and ch.resource_left("spell:%s" % spell_id) > 0:
+		ch.spend_resource("spell:%s" % spell_id)
+		slot = level
+	elif level > 0:
 		slot = _lowest_slot(ch, level)
 		if slot == 0:
 			return false
@@ -432,6 +436,9 @@ func precast(c: Combatant, spell_id: String) -> bool:
 	enc().log.add("spell", "%s cast %s before the fight%s" % [c.name(), s["name"], " (level %d slot)" % slot if slot > 0 else ""], c.id)
 	var ctx := {"c": c, "s": s, "slot": slot, "nums": numbers(c, entry), "conc": conc, "opts": {}, "precast": true,
 		"choice": str(c.get_meta("chain_form", "imp")) if spell_id == "find_familiar" and ClassFeatures.knows_invocation(c, "pact_of_the_chain") else ""}
+	# Necromancy Familiar: the form chosen for it (a Skeleton unless set).
+	if spell_id == "find_familiar" and CombatFeatures.has_feature(c, "necromancy_familiar"):
+		ctx["choice"] = str(c.get_meta("familiar_form", "skeleton"))
 	var r := CombatResult.new()
 	match spell_id:
 		"find_familiar", "animate_dead":
@@ -1234,6 +1241,10 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 			if ClassFeatures.knows_invocation(c, "pact_of_the_chain"):
 				var form := str((ctx["opts"] as Dictionary).get("choice", "imp"))
 				ctx["choice"] = form if form in SummonBlocks.CHAIN_FORMS else "imp"
+			elif CombatFeatures.has_feature(c, "necromancy_familiar"):
+				# Necromancy Familiar: a Skeleton, a Zombie or an Undead owl.
+				var nform := str((ctx["opts"] as Dictionary).get("choice", "skeleton"))
+				ctx["choice"] = nform if nform in ["skeleton", "zombie", "owl"] else "skeleton"
 			for old_id: Variant in summoned.get(c.id, []):
 				var oldf := enc().get_c(str(old_id))
 				if oldf != null and oldf.is_alive() and oldf.creature is Monster and bool((oldf.creature as Monster).data.get("familiar", false)):
@@ -3571,6 +3582,7 @@ func _summon(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
 	var m := Monster.from_data(block, e.dice)
 	m.name = str(block["name"])
 	e.feature_recipes.after_summon(ctx, m)
+	e.faerun.after_summon(ctx, m)
 	# A new Otherworldly Steed replaces the old one.
 	if bool(block.get("steed", false)):
 		for old_id: Variant in summoned.get(c.id, []):
