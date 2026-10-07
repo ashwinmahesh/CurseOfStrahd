@@ -685,7 +685,7 @@ func _walk_feature(f: Dictionary, key: String, src: Dictionary, scope: Dictionar
 		"text": str(f.get("text", "")), "source": src["label"], "source_kind": src["kind"],
 		"class_id": src["class_id"], "level": src["level"], "action": str(f.get("action", "passive")),
 		"implemented": str(f.get("implemented", "data")), "key": key})
-	for recipe_key: String in ["activation", "roll_response", "summon_effect", "hit_response", "cast_level_boost", "cast_form", "attack_cantrip", "after_cast_attack", "slot_exchange", "on_feature_target", "spell_sequence", "resource_cast"]:
+	for recipe_key: String in ["activation", "roll_response", "summon_effect", "hit_response", "cast_level_boost", "cast_form", "attack_cantrip", "after_cast_attack", "slot_exchange", "on_feature_target", "spell_sequence", "resource_cast", "damage_response"]:
 		if f.has(recipe_key):
 			features[-1][recipe_key] = (f[recipe_key] as Dictionary).duplicate(true)
 	if f.has("choice"):

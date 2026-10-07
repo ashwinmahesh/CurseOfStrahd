@@ -20,6 +20,23 @@ var continuation: Callable
 var target_choices: Array[Dictionary] = []
 var selected_ids: Array[String] = []
 var spends_reaction: bool = true
+var min_targets: int = 0
+var max_targets: int = 0
+var validate_selected: Callable
+
+
+func selection_error() -> String:
+	if selected_ids.size() < min_targets or (max_targets > 0 and selected_ids.size() > max_targets):
+		return "Choose exactly %d option%s" % [min_targets, "" if min_targets == 1 else "s"]
+	if max_targets > 0:
+		var seen: Array[String] = []
+		for selected in selected_ids:
+			if selected in seen or not target_choices.any(func(t: Dictionary) -> bool: return str(t["id"]) == selected):
+				return "Choose a listed option"
+			seen.append(selected)
+	if validate_selected.is_valid():
+		return str(validate_selected.call(selected_ids))
+	return ""
 
 
 func _init(kind_: String, reactor: String, trigger: String) -> void:

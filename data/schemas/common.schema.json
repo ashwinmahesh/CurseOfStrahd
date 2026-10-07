@@ -1018,6 +1018,22 @@
               "const": true
             }
           }
+        },
+        "damage_response": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reduction_per_slot"
+          ],
+          "properties": {
+            "requires_flag": {
+              "type": "string"
+            },
+            "reduction_per_slot": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
         }
       }
     },
