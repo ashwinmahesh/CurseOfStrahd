@@ -849,6 +849,659 @@
         "tex_dungeon__stone_wall"
       ],
       "triangles": 288
+    },
+    "door_house": {
+      "file": "art/models/door_house.glb",
+      "mount": "door",
+      "stands_for": [
+        "door_house"
+      ],
+      "size": [
+        0.854,
+        1.148,
+        0.12
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_bone_dark",
+        "pal_ink",
+        "pal_stone_deep",
+        "pal_umber"
+      ],
+      "triangles": 132
+    },
+    "door_double": {
+      "file": "art/models/door_double.glb",
+      "mount": "door",
+      "stands_for": [
+        "door_double"
+      ],
+      "size": [
+        0.852,
+        1.15,
+        0.1
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_tan",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 1048
+    },
+    "door_carved": {
+      "file": "art/models/door_carved.glb",
+      "mount": "door",
+      "stands_for": [
+        "door_carved"
+      ],
+      "size": [
+        0.86,
+        1.15,
+        0.08
+      ],
+      "materials": [
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 84,
+      "sockets": {
+        "hand": [
+          0,
+          0.62,
+          0.034
+        ]
+      },
+      "decals": [
+        {
+          "art": "door_carved",
+          "region": [
+            40,
+            65,
+            120,
+            185
+          ],
+          "socket": "hand",
+          "width": 0.46
+        }
+      ]
+    },
+    "church_doors": {
+      "file": "art/models/church_doors.glb",
+      "mount": "wall",
+      "stands_for": [
+        "church_doors"
+      ],
+      "size": [
+        1.06,
+        1.9,
+        0.3
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_ink",
+        "pal_parchment",
+        "pal_stone_deep",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 404,
+      "sockets": {
+        "tympanum": [
+          0,
+          1.5,
+          0.035
+        ]
+      },
+      "decals": [
+        {
+          "art": "church_doors",
+          "region": [
+            65,
+            40,
+            245,
+            180
+          ],
+          "socket": "tympanum",
+          "width": 0.6
+        }
+      ]
+    },
+    "gate_iron": {
+      "file": "art/models/gate_iron.glb",
+      "mount": "door",
+      "stands_for": [
+        "gate_iron"
+      ],
+      "size": [
+        0.85,
+        1.177,
+        0.067
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_stone_deep"
+      ],
+      "triangles": 1268
+    },
+    "crypt_gate": {
+      "file": "art/models/crypt_gate.glb",
+      "mount": "door",
+      "stands_for": [
+        "crypt_gate"
+      ],
+      "size": [
+        0.86,
+        1.15,
+        0.09
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_stone_deep"
+      ],
+      "triangles": 312
+    },
+    "portcullis": {
+      "file": "art/models/portcullis.glb",
+      "mount": "door",
+      "stands_for": [
+        "portcullis"
+      ],
+      "size": [
+        0.86,
+        1.15,
+        0.086
+      ],
+      "materials": [
+        "pal_rust",
+        "pal_stone_deep"
+      ],
+      "triangles": 900
+    },
+    "curtain": {
+      "file": "art/models/curtain.glb",
+      "mount": "door",
+      "stands_for": [
+        "curtain"
+      ],
+      "size": [
+        1.02,
+        1.138,
+        0.109
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_blood_deep",
+        "pal_umber"
+      ],
+      "triangles": 332
+    },
+    "window_tall": {
+      "file": "art/models/window_tall.glb",
+      "mount": "wall",
+      "stands_for": [
+        "window_tall"
+      ],
+      "size": [
+        0.5,
+        0.8,
+        0.13
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 136,
+      "sockets": {
+        "glass": [
+          0,
+          0.645,
+          0.012
+        ]
+      },
+      "decals": [
+        {
+          "art": "window_tall",
+          "region": [
+            0,
+            0,
+            136,
+            276
+          ],
+          "socket": "glass",
+          "width": 0.34
+        }
+      ]
+    },
+    "window_stained": {
+      "file": "art/models/window_stained.glb",
+      "mount": "wall",
+      "stands_for": [
+        "window_stained"
+      ],
+      "size": [
+        0.5,
+        0.772,
+        0.13
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_parchment"
+      ],
+      "triangles": 136,
+      "sockets": {
+        "glass": [
+          0,
+          0.6308,
+          0.012
+        ]
+      },
+      "decals": [
+        {
+          "art": "window_stained",
+          "region": [
+            0,
+            0,
+            148,
+            288
+          ],
+          "socket": "glass",
+          "width": 0.34
+        }
+      ]
+    },
+    "window_shuttered": {
+      "file": "art/models/window_shuttered.glb",
+      "mount": "wall",
+      "stands_for": [
+        "window_shuttered"
+      ],
+      "size": [
+        0.78,
+        0.72,
+        0.1
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 168
+    },
+    "panelling": {
+      "file": "art/models/panelling.glb",
+      "mount": "wall_face",
+      "stands_for": [
+        "interior/wood_panel",
+        "interior/carved_panel"
+      ],
+      "size": [
+        1.0,
+        1.12,
+        0.04
+      ],
+      "materials": [
+        "pal_stone_deep"
+      ],
+      "triangles": 72
+    },
+    "wall_trim": {
+      "file": "art/models/wall_trim.glb",
+      "mount": "wall_face",
+      "stands_for": [
+        "interior/plaster_wall",
+        "interior/wallpaper_green",
+        "interior/wallpaper_nursery",
+        "interior/damp_plaster",
+        "interior/whitewash",
+        "interior/kitchen_wall"
+      ],
+      "size": [
+        1.0,
+        0.946,
+        0.038
+      ],
+      "materials": [
+        "pal_umber"
+      ],
+      "triangles": 48
+    },
+    "wagon": {
+      "file": "art/models/wagon.glb",
+      "mount": "free",
+      "stands_for": [
+        "wagon",
+        "wagon_back"
+      ],
+      "size": [
+        2.206,
+        1.236,
+        1.703
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_stone_deep",
+        "pal_umber",
+        "pal_vellum",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 3370,
+      "big": true
+    },
+    "market_stall": {
+      "file": "art/models/market_stall.glb",
+      "mount": "free",
+      "stands_for": [
+        "market_stall",
+        "market_stall_back"
+      ],
+      "size": [
+        1.4,
+        1.653,
+        1.005
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_crimson",
+        "pal_ivory",
+        "pal_moon_blue",
+        "pal_rust",
+        "pal_tan",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 988,
+      "big": true
+    },
+    "shop_counter": {
+      "file": "art/models/shop_counter.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "shop_counter",
+        "shop_counter_back",
+        "counter_front"
+      ],
+      "size": [
+        1.01,
+        0.836,
+        0.53
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_blood_deep",
+        "pal_peat",
+        "pal_tan",
+        "pal_umber",
+        "pal_vellum",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 300
+    },
+    "bar_counter": {
+      "file": "art/models/bar_counter.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "bar_counter",
+        "bar_counter_back"
+      ],
+      "size": [
+        1.0,
+        0.72,
+        0.54
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 200
+    },
+    "woodpile": {
+      "file": "art/models/woodpile.glb",
+      "mount": "free",
+      "stands_for": [
+        "woodpile"
+      ],
+      "size": [
+        0.93,
+        0.45,
+        0.598
+      ],
+      "materials": [
+        "pal_rust",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 672
+    },
+    "workbench": {
+      "file": "art/models/workbench.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "workbench",
+        "workbench_back",
+        "workbench_front"
+      ],
+      "size": [
+        0.98,
+        0.6,
+        0.72
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_slate",
+        "pal_stone_deep",
+        "pal_tan",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 284
+    },
+    "notice_board": {
+      "file": "art/models/notice_board.glb",
+      "mount": "free",
+      "stands_for": [
+        "notice_board",
+        "notice_board_back"
+      ],
+      "size": [
+        0.94,
+        1.655,
+        0.4
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_parchment",
+        "pal_slate",
+        "pal_umber",
+        "pal_vellum",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 168
+    },
+    "crypt_small": {
+      "file": "art/models/crypt_small.glb",
+      "mount": "free",
+      "stands_for": [
+        "crypt_small",
+        "crypt_small_back"
+      ],
+      "size": [
+        0.92,
+        0.55,
+        0.56
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_parchment"
+      ],
+      "triangles": 84
+    },
+    "crypt": {
+      "file": "art/models/crypt.glb",
+      "mount": "free",
+      "stands_for": [
+        "crypt",
+        "crypt_back"
+      ],
+      "size": [
+        1.02,
+        0.725,
+        0.64
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_pewter",
+        "pal_silver",
+        "pal_slate"
+      ],
+      "triangles": 372
+    },
+    "gravestone": {
+      "file": "art/models/gravestone.glb",
+      "mount": "free",
+      "stands_for": [
+        "gravestone",
+        "gravestone_back"
+      ],
+      "size": [
+        0.62,
+        0.83,
+        0.26
+      ],
+      "materials": [
+        "pal_moss",
+        "pal_pewter",
+        "pal_slate"
+      ],
+      "triangles": 512
+    },
+    "cask_rack": {
+      "file": "art/models/cask_rack.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "cask_rack",
+        "cask_rack_front"
+      ],
+      "size": [
+        0.98,
+        0.78,
+        0.5
+      ],
+      "materials": [
+        "pal_stone_deep",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 2256
+    },
+    "well_stone": {
+      "file": "art/models/well_stone.glb",
+      "mount": "free",
+      "stands_for": [
+        "well_stone"
+      ],
+      "size": [
+        0.891,
+        0.914,
+        0.825
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep",
+        "pal_tan",
+        "pal_umber",
+        "pal_void",
+        "pal_walnut"
+      ],
+      "triangles": 634
+    },
+    "well": {
+      "file": "art/models/well.glb",
+      "mount": "free",
+      "stands_for": [
+        "well"
+      ],
+      "size": [
+        0.954,
+        1.687,
+        0.825
+      ],
+      "materials": [
+        "pal_blood_deep",
+        "pal_slate",
+        "pal_stone",
+        "pal_tan",
+        "pal_umber",
+        "pal_void",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 632
+    },
+    "bridge_parapet": {
+      "file": "art/models/bridge_parapet.glb",
+      "mount": "free",
+      "stands_for": [
+        "bridge_parapet",
+        "bridge_parapet_back"
+      ],
+      "size": [
+        1.02,
+        0.725,
+        0.36
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_bone",
+        "pal_parchment"
+      ],
+      "triangles": 180
+    },
+    "signpost": {
+      "file": "art/models/signpost.glb",
+      "mount": "free",
+      "stands_for": [
+        "signpost",
+        "signpost_back"
+      ],
+      "size": [
+        1.014,
+        1.502,
+        0.231
+      ],
+      "materials": [
+        "pal_stone",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 56
+    },
+    "cart_broken": {
+      "file": "art/models/cart_broken.glb",
+      "mount": "free",
+      "stands_for": [
+        "cart_broken",
+        "cart_broken_back"
+      ],
+      "size": [
+        1.421,
+        0.663,
+        0.991
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_stone_deep",
+        "pal_tan",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 826,
+      "big": true
     }
   }
 }

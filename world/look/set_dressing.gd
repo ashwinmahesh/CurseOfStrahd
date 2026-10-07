@@ -195,6 +195,8 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 	leaf.rotation.y = yaw
 	board.add_child(leaf)
 	var model := "" if secret else ModelPiece.for_art(board, art)
+	if model != "" and str((ModelPiece.manifest()[model] as Dictionary).get("mount", "")) != "door":
+		model = ""   # a facade (church doors) hangs on a wall; as a leaf in an opening it stays 2D
 	var sp: Sprite3D = null
 	if model != "":
 		leaf.add_child(ModelPiece.door_leaf(model, w, h))   # a 3D leaf (docs/art/models.md)

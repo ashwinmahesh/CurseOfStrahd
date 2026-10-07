@@ -39,6 +39,15 @@ without a model is drawn as before.
 | bed, bed_small | bed, bed_small | against the wall (headboard on it), a square long |
 | wardrobe, sideboard, shelves | the same and their `_front` views | against the wall |
 | pew, lectern, table_set, letters_table, coffin | the same | free-standing |
+| door_house, door_double, door_carved, gate_iron, crypt_gate, portcullis, curtain | the same leaves (the carved door keeps its 2D hand) | door: modelled at the 2D leaf's 0.86 x 1.15 and scaled to the opening; never for secret doors |
+| church_doors | church_doors (exits) | on the wall face: a stone arch, 3D leaves, the 2D rose window as a decal |
+| window_tall, window_stained | the same | on the wall face: a deep pointed-arch reveal and sill round the 2D window, kept whole as a decal |
+| window_shuttered | the same | on the wall face |
+| panelling | the `interior/wood_panel` and `interior/carved_panel` surfaces | wall modules: stiles, skirting and a top rail |
+| wall_trim | papered and plastered surfaces (plaster, green and nursery papers, damp plaster, whitewash, kitchen) | wall modules: a skirting board and a picture rail |
+| wagon, market_stall, cart_broken | the same | free-standing, building-sized (`big`): they keep their size and clear the trees around them |
+| shop_counter, bar_counter, workbench, cask_rack | the same and their `_front` views | against the wall |
+| woodpile, notice_board, crypt_small, crypt, gravestone, well, well_stone, bridge_parapet, signpost | the same | free-standing |
 
 ## How a piece finds its place (`world/look/model_piece.gd`, `ModelPiece`)
 
@@ -95,8 +104,8 @@ location each model stays in its square, a place left out keeps its 2D pieces, p
 
 ## Not done yet
 
-- Batches 2 to 4 (above). Until then doors other than plain wooden ones, windows, statues, counters, stalls,
-  wagons, crypts and the castle's own pieces are 2D.
+- Batch 4, Castle Ravenloft's own pieces, once the world assets work there has chosen them.
+- Figurative pieces stay 2D on purpose: statues, suits of armour, bones, effigies, plants and trees.
 - Long runs of pews or tables are one model per square, so a long table shows its seams.
 - No lights of their own: candles and the hearth glow but don't light the room (lighting belongs to the world look).
 - The secret bookcase door keeps its 2D disguise.

@@ -117,7 +117,10 @@ func test_models_stay_in_their_square() -> void:
 			if not m.is_visible_in_tree():
 				continue
 			var box := _bounds(m)
-			var mount := str((ModelPiece.manifest()[str(m.get_meta("model"))] as Dictionary)["mount"])
+			var info := ModelPiece.manifest()[str(m.get_meta("model"))] as Dictionary
+			if bool(info.get("big", false)):
+				continue   # building-sized pieces (a wagon) stand over several squares, clearing trees as the 2D ones do
+			var mount := str(info["mount"])
 			var cell := v.grid.cell_at(m.global_position)
 			var room := Rect2(cell.x - 0.03, cell.y - 0.03, 1.06, 1.06)
 			if mount == "wall" or m.has_meta("hung"):

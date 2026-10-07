@@ -109,11 +109,17 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 		if mount == "stairs_down":
 			_open_floor(board, holder, cell)
 		return holder
+	if bool(info.get("big", false)) and at_override == null:
+		# Building-sized (a wagon, a market stall): it keeps its size and clears the trees it stands among, as the
+		# 2D big pieces do.
+		var size := info.get("size", [1, 1, 1]) as Array
+		SetDressing._clear_trees_around(board, parent, cell, maxf(float(size[0]), float(size[2])))
 	var back := backing_side(board, cell)
 	var faces := Vector2i(0, 1) if back == Vector2i.ZERO else -back
 	holder.rotation.y = atan2(float(faces.x), float(faces.y))
 	if mount == "against_wall":
 		var depth := float((info.get("size", [1, 1, 0.3]) as Array)[2])
+		holder.set_meta("against_wall", true)
 		if back != Vector2i.ZERO:
 			model.position = Vector3(0, 0, -0.5 + GAP)
 			board.used_faces["%d,%d,%d,%d" % [cell.x + back.x, cell.y + back.y, -back.x, -back.y]] = true   # no portrait behind it
