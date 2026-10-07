@@ -251,3 +251,28 @@ func test_arcane_ward_soaks_damage() -> void:
 	var hp := w.creature.hp
 	e.deal_damage(null, w, [{"amount": 3, "type": "fire"}], false, "test")
 	assert_eq(w.creature.hp, hp, "the ward took it")
+
+
+func test_fey_touched_grants_misty_step_and_names_it_in_the_spell_choice() -> void:
+	var ch := TestChars.custom("cleric", "human", 4, {"ability_score_improvement": ["fey_touched"]})
+	var misty := ch.known_spells().filter(func(k: Dictionary) -> bool: return str(k["id"]) == "misty_step")
+	assert_false(misty.is_empty(), "Fey Touched gives Misty Step")
+	assert_eq(ch.resource_left("spell:misty_step"), 1, "free once per Long Rest")
+	var labelled := ch.choice_defs.filter(func(c: Choice) -> bool: return c.label.contains("Misty Step comes with the feat"))
+	assert_eq(labelled.size(), 1, "the spell choice says Misty Step is already included")
+	var e := TestCombat.open_field()
+	var c := e.add(ch, &"party", Vector2i(2, 2))
+	TestCombat.foe(e, "zombie", Vector2i(9, 5))
+	TestCombat.start_with(e, c)
+	var entry := {}
+	for k in e.spells.castable(c):
+		if str(k["id"]) == "misty_step":
+			entry = k
+	assert_true(bool(entry.get("legal", false)) and bool(entry.get("free", false)), "castable for free")
+	assert_true(e.spells.cast(c, "misty_step", 2, [], Vector2(5.5, 2.5)).ok)
+	assert_eq(ch.resource_left("spell:misty_step"), 0)
+	c.bonus_available = true
+	c.cast_slot_spell_this_turn = false
+	var slots := ch.slots_left(2)
+	assert_true(e.spells.cast(c, "misty_step", 2, [], Vector2(4.5, 4.5)).ok, "and again with a slot")
+	assert_eq(ch.slots_left(2), slots - 1)

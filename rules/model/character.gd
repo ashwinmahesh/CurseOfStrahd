@@ -687,12 +687,12 @@ func _walk_feature(f: Dictionary, key: String, src: Dictionary, scope: Dictionar
 		"implemented": str(f.get("implemented", "data")), "key": key})
 	if f.has("choice"):
 		var c := f["choice"] as Dictionary
-		var picks := _register_choice(c, key, src, str(f.get("name", "")), scope)
+		var picks := _register_choice(c, key, src, str(c.get("label", f.get("name", ""))), scope)
 		scope[str(c.get("id", "choice"))] = picks
 	for c2: Variant in f.get("choices", []):
 		var cd := c2 as Dictionary
 		var sub_key := "%s.%s" % [key, cd.get("id", "choice")]
-		var picks2 := _register_choice(cd, sub_key, src, str(f.get("name", "")), scope)
+		var picks2 := _register_choice(cd, sub_key, src, str(cd.get("label", f.get("name", ""))), scope)
 		scope[str(cd.get("id", "choice"))] = picks2
 	for md: Variant in f.get("modifiers", []):
 		_add_modifier(md as Dictionary, str(f.get("name", "")), src, scope)
