@@ -1007,6 +1007,18 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 
 # --- Playing events -------------------------------------------------------------------------------
 
+## The damage `id` takes from the event at `at` (an attack's blow), or -1 when none follows before the next action.
+static func _damage_after(events: Array, at: int, id: String) -> int:
+	for i in range(at + 1, events.size()):
+		var ev := events[i] as Dictionary
+		var kind := str(ev["type"])
+		if kind == "damage" and str(ev["id"]) == id:
+			return int(ev["amount"])
+		if kind in ["attack", "spell", "ability", "move", "turn"]:
+			break
+	return -1
+
+
 ## Where a token stands: its square's centre, raised onto the mount's back for a rider.
 func _token_spot(c: Combatant, cell: Vector2i) -> Vector3:
 	var p := board.cell_center(cell, c.size_cells)
@@ -1022,7 +1034,9 @@ func _play_events() -> void:
 	var walking: Dictionary = {}
 	# Who just played their attack as a spell gesture: the spell's own attack rolls that follow don't replay it.
 	var cast_by := ""
+	var ev_at := -1   # where `ev` is in `events`, for what follows it
 	for ev in events:
+		ev_at += 1
 		if _closed:
 			return   # the story took the fight back mid-way: its tokens may be gone
 		var kind := str(ev["type"])
@@ -1084,7 +1098,13 @@ func _play_events() -> void:
 						await tw2.finished
 						if not acue.is_empty() and bool(ev["hit"]):
 							fx.on_hit(acue, a, d, bool(ev.get("critical", false)))
-					Audio.sfx(("crit" if bool(ev.get("critical", false)) else "hit") if bool(ev["hit"]) else "swing")
+					# A blow sounds by what struck and how hard it landed (CombatSfx); a spell's missile or a magic touch
+					# already sounded as its effect landed.
+					if not bool(ev["hit"]):
+						Audio.sfx("swing")
+					elif not flew and not str(ev.get("action", "")).begins_with("spell:") and (acue.is_empty() or str(acue["flavour"]) == "steel"):
+						CombatSfx.hit(CombatSfx.hit_kind(a.combatant, str(ev.get("action", ""))), _damage_after(events, ev_at, d.combatant.id),
+							d.combatant, bool(ev.get("critical", false)))
 					if not bool(ev["hit"]):
 						_float(d, "miss", "parchment")
 					elif bool(ev.get("critical", false)):
@@ -1127,12 +1147,14 @@ func _play_events() -> void:
 						_float(tc, "✓" if bool(ev["success"]) else "✗", "bile" if bool(ev["success"]) else "vampire_red")
 			"spell":
 				_stop_walking(walking)
-				Audio.sfx("spell")
 				var caster := _tok(str(ev["caster"]))
 				cast_by = ""
 				fx.end_volley()
-				# How the spell looks (art/vfx/effects.json); {} plays only the flash and the floor marks.
+				# How the spell looks (art/vfx/effects.json); {} plays only the flash and the floor marks. A cue's sounds
+				# play with its effect (CombatSfx); without one, the plain spell sound.
 				var cue := SpellFx.spell_cue(str(ev["spell"])) if SpellFx.enabled else {}
+				if cue.is_empty() or caster == null:
+					Audio.sfx("spell")
 				if caster != null:
 					caster.flash((cue["colours"] as Dictionary)["glow"] if not cue.is_empty() else Look.color("lilac"), 0.3)
 					var aim := _spell_aim(ev, caster)
