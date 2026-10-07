@@ -101,6 +101,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.narration.connect(func(t: String) -> void: hud.narrate(t))
 	view.toast.connect(func(t: String) -> void: hud.toast(t))
 	view.check_rolled.connect(func(t: String) -> void: hud.roll(t))
+	view.party_tended.connect(_refresh)
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
 		LayerFade.fade(self, hud, false, 0.25)   # the combat HUD fades up in its place
@@ -123,6 +124,8 @@ func _refresh() -> void:
 	if view == null:
 		return
 	view.update_daylight()
+	if not view.in_combat:
+		view.refresh_party()   # healed outside a fight: back on their feet, chips up to date
 	hud.refresh(str(view.loc.get("name", "")), view.sneaking, view.solo)
 
 
