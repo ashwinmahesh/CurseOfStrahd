@@ -2231,12 +2231,12 @@ def amber_sarcophagus(p):
 @model("satchel", "free", ["satchel"])
 def satchel(p):
     """The 2D satchel: a battered leather bag with a flap, a buckle and papers poking out."""
-    p.box((0.4, 0.16, 0.26), (0, 0, 0.13), "pal_leather", soft=0.04)
-    p.box((0.4, 0.17, 0.12), (0, -0.01, 0.22), "pal_rust", soft=0.03, rot=(-10, 0, 0))
-    p.box((0.05, 0.01, 0.06), (0, -0.095, 0.16), "pal_tan")
-    p.tube(curve((-0.18, 0, 0.24), (0.0, 0.0, 0.62), (0.18, 0, 0.24), n=8), 0.012, "pal_umber", segs=4)
+    p.box((0.3, 0.12, 0.18), (0, 0, 0.09), "pal_leather", soft=0.03)
+    p.box((0.3, 0.13, 0.08), (0, -0.01, 0.15), "pal_rust", soft=0.02, rot=(-10, 0, 0))
+    p.box((0.04, 0.01, 0.04), (0, -0.07, 0.11), "pal_tan")
+    p.tube(curve((-0.13, 0, 0.16), (0.0, 0.0, 0.32), (0.13, 0, 0.16), n=8), 0.01, "pal_umber", segs=4)
     for k, a in enumerate((-12, 8)):
-        p.box((0.12, 0.004, 0.16), (-0.06 + k * 0.1, 0.02, 0.3), "pal_vellum", rot=(0, a, 0))
+        p.box((0.09, 0.004, 0.1), (-0.04 + k * 0.08, 0.02, 0.2), "pal_vellum", rot=(0, a, 0))
 
 
 @model("sack", "free", ["sack"])
@@ -2726,7 +2726,7 @@ def receipt_table(p):
 def stone_bench(p):
     """The 2D stone bench: a slab seat on two blocks."""
     p.box((0.7, 0.32, 0.08), (0, 0, 0.36), "pal_pewter")
-    p.box((0.7, 0.08, 0.32), (0, 0.13, 0.56), "pal_pewter", rot=(-6, 0, 0))
+    p.box((0.7, 0.08, 0.16), (0, 0.13, 0.47), "pal_pewter", rot=(-6, 0, 0))
     for x in (-0.25, 0.25):
         p.box((0.14, 0.26, 0.32), (x, 0, 0.16), "pal_slate")
 
@@ -3652,7 +3652,12 @@ def bones_water(p):
 
 @model("throne", "against_wall", ["throne", "throne_back"])
 def throne(p):
-    """The 2D throne: a tall gothic chair of black wood, blood-red velvet, a spired back, on a stone dais."""
+    """The 2D throne: a tall gothic chair of black wood, blood-red velvet, a spired back, on a stone dais; 6 ft to the
+    tips of its spires (catalog feet), so the crest over it stays clear."""
+    _sub(p, _throne_parts, Matrix.Scale(0.76, 4))
+
+
+def _throne_parts(p):
     W, D = 0.74, 0.56
     yc = -D / 2 - 0.2
     p.box((W + 0.2, D + 0.2, 0.1), (0, yc, 0.05), "pal_pewter")
