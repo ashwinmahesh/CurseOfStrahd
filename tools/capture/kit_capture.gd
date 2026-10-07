@@ -40,12 +40,14 @@ const SHOTS := {
 	"death_house_upper": {"loc": "death_house_upper"},
 	"dungeon": {"loc": "death_house_dungeon_2"},
 	"church": {"loc": "village_church", "cells": [[10, 14], [11, 14], [10, 15], [11, 15]]},
-	"castle_gates": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 27], [20, 27], [19, 28], [20, 28]],
-		"look": [19, 16], "dist": 22.0},
+	"castle_gates": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 29], [20, 29], [19, 30], [20, 30]],
+		"dist": 20.0},
+	"castle_court": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 19], [20, 19], [19, 20], [20, 20]],
+		"dist": 16.0, "flags": {"strahd_invitation": "accepted"}},
+	"castle_court_turned": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 19], [20, 19], [19, 20], [20, 20]],
+		"dist": 16.0, "yaw": 2, "flags": {"strahd_invitation": "accepted"}},
 	"castle_bridge": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 26], [20, 26], [19, 27], [20, 27]],
 		"dist": 12.0, "yaw": 1},
-	"castle_yard": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[15, 14], [16, 14], [15, 15], [16, 15]],
-		"look": [18, 8], "dist": 16.0},
 	"castle_overlook": {"loc": "castle_ravenloft_overlook", "hour": 21, "cells": [[10, 3], [11, 3], [10, 4], [11, 4]],
 		"dist": 14.0},
 	"castle_roofs": {"loc": "castle_ravenloft_spires_roofs", "hour": 21, "cells": [[8, 6], [9, 6], [8, 7], [9, 7]],
@@ -92,6 +94,9 @@ func _build(shot: Dictionary) -> void:
 		GameState.story.party.append(ch)
 	var st := GameState.story
 	st.minute_of_day = int(shot.get("hour", 12)) * 60
+	var flags := shot.get("flags", {}) as Dictionary
+	for k: String in flags:
+		st.flags[k] = flags[k]   # (a fight that would start on arrival, kept off for the shot)
 	var loc_id := str(shot["loc"])
 	var cells := shot.get("cells", []) as Array
 	if not cells.is_empty():

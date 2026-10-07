@@ -4686,6 +4686,321 @@
       ],
       "triangles": 312,
       "part": "scatter"
+    },
+    "kit_castle_wall_foot": {
+      "file": "art/models/kit/kit_castle_wall_foot.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.23,
+        0.4
+      ],
+      "materials": [
+        "tex_castle__ashlar",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 28,
+      "part": "castle_foot"
+    },
+    "kit_castle_wall_top_a": {
+      "file": "art/models/kit/kit_castle_wall_top_a.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.95,
+        0.34
+      ],
+      "materials": [
+        "pal_void",
+        "tex_castle__ashlar",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 380,
+      "part": "castle_top"
+    },
+    "kit_castle_wall_top_b": {
+      "file": "art/models/kit/kit_castle_wall_top_b.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.95,
+        0.34
+      ],
+      "materials": [
+        "pal_void",
+        "tex_castle__ashlar",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 404,
+      "part": "castle_top"
+    },
+    "kit_castle_slit": {
+      "file": "art/models/kit/kit_castle_slit.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.28,
+        1.0,
+        0.075
+      ],
+      "materials": [
+        "pal_void",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 68,
+      "part": "castle_slit"
+    },
+    "kit_castle_buttress": {
+      "file": "art/models/kit/kit_castle_buttress.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.66,
+        5.334,
+        0.68
+      ],
+      "materials": [
+        "tex_castle__ashlar",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 60,
+      "part": "castle_buttress",
+      "height": 5.1
+    },
+    "kit_castle_window": {
+      "file": "art/models/kit/kit_castle_window.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.872,
+        2.014,
+        0.14
+      ],
+      "materials": [
+        "pal_void",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 350,
+      "sockets": {
+        "glass": [
+          0,
+          0.9,
+          0.08
+        ]
+      },
+      "part": "castle_window"
+    },
+    "kit_castle_window_lit": {
+      "file": "art/models/kit/kit_castle_window_lit.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.872,
+        2.014,
+        0.14
+      ],
+      "materials": [
+        "glow_candle",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 350,
+      "sockets": {
+        "glass": [
+          0,
+          0.9,
+          0.08
+        ]
+      },
+      "part": "castle_window"
+    },
+    "kit_castle_tower_foot": {
+      "file": "art/models/kit/kit_castle_tower_foot.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        2.8,
+        1.23,
+        2.8
+      ],
+      "materials": [
+        "tex_castle__ashlar",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 200,
+      "part": "castle_tower"
+    },
+    "kit_castle_tower_top": {
+      "file": "art/models/kit/kit_castle_tower_top.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        2.647,
+        1.95,
+        2.64
+      ],
+      "materials": [
+        "tex_castle__ashlar",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 2032,
+      "part": "castle_tower"
+    },
+    "kit_castle_spire": {
+      "file": "art/models/kit/kit_castle_spire.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        2.24,
+        5.68,
+        2.24
+      ],
+      "materials": [
+        "pal_ink",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 278,
+      "part": "castle_spire",
+      "height": 4.4
+    },
+    "kit_castle_spire_needle": {
+      "file": "art/models/kit/kit_castle_spire_needle.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        2.0,
+        7.48,
+        2.0
+      ],
+      "materials": [
+        "pal_ink",
+        "tex_village__roof_slate"
+      ],
+      "triangles": 278,
+      "part": "castle_spire",
+      "height": 6.2
+    },
+    "kit_castle_gate_w1_d1": {
+      "file": "art/models/kit/kit_castle_gate_w1_d1.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.44,
+        2.82,
+        1.2
+      ],
+      "materials": [
+        "pal_void",
+        "tex_castle__ashlar",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 468,
+      "sockets": {
+        "top": [
+          0,
+          2.82,
+          0
+        ]
+      },
+      "part": "castle_gate",
+      "span": 1
+    },
+    "kit_castle_gate_w2_d1": {
+      "file": "art/models/kit/kit_castle_gate_w2_d1.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        2.44,
+        3.8,
+        1.2
+      ],
+      "materials": [
+        "pal_void",
+        "tex_castle__ashlar",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 468,
+      "sockets": {
+        "top": [
+          0,
+          3.8,
+          0
+        ]
+      },
+      "part": "castle_gate",
+      "span": 2
+    },
+    "kit_castle_gate_w2_d2": {
+      "file": "art/models/kit/kit_castle_gate_w2_d2.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        2.44,
+        3.8,
+        2.2
+      ],
+      "materials": [
+        "pal_void",
+        "tex_castle__ashlar",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 468,
+      "sockets": {
+        "top": [
+          0,
+          3.8,
+          0
+        ]
+      },
+      "part": "castle_gate",
+      "span": 2
+    },
+    "kit_cliff_a": {
+      "file": "art/models/kit/kit_cliff_a.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.271,
+        3.741,
+        0.762
+      ],
+      "materials": [
+        "tex_cave__rock_wall"
+      ],
+      "triangles": 180,
+      "part": "cliff"
+    },
+    "kit_cliff_b": {
+      "file": "art/models/kit/kit_cliff_b.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.213,
+        3.391,
+        0.88
+      ],
+      "materials": [
+        "tex_cave__rock_wall"
+      ],
+      "triangles": 220,
+      "part": "cliff"
+    },
+    "kit_cliff_c": {
+      "file": "art/models/kit/kit_cliff_c.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.362,
+        3.639,
+        0.793
+      ],
+      "materials": [
+        "tex_cave__rock_wall"
+      ],
+      "triangles": 200,
+      "part": "cliff"
     }
   },
   "constants": {

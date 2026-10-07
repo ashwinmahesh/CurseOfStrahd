@@ -1645,6 +1645,267 @@
           "ground": "castle/courtyard"
         }
       }
+    },
+    "castle": {
+      "about": "Castle Ravenloft from outside (W19, CastleBuilder, Modern look only), by place: rect is the castle's part of the map [x, z, w, d] (its wall squares are the castle; walls outside it stay as they were); wall and keep are the curtain walls' and the keep's heights; keeps are rects of keep squares; blocks are more of the castle past the map's edge [x, z, w, d, height]; towers are round towers {at: [x, z] in squares, r, h, from (a turret rising out of the keep), spire: cone, needle or none}; parapets are rects whose wall squares are a low wall (the cliff road's edge); bridges are rects of the squares that span the chasm (timbers under them, no cliffs).",
+      "places": {
+        "castle_ravenloft_gates": {
+          "rect": [
+            0,
+            0,
+            39,
+            34
+          ],
+          "wall": 6.0,
+          "keep": 10.5,
+          "keeps": [
+            [
+              7,
+              0,
+              26,
+              9
+            ]
+          ],
+          "bridges": [
+            [
+              18,
+              24,
+              4,
+              6
+            ]
+          ],
+          "towers": [
+            {
+              "at": [
+                1.0,
+                23.0
+              ],
+              "r": 1.0,
+              "h": 8.5
+            },
+            {
+              "at": [
+                38.0,
+                23.0
+              ],
+              "r": 1.0,
+              "h": 8.5
+            },
+            {
+              "at": [
+                17.9,
+                23.25
+              ],
+              "r": 1.05,
+              "h": 8.2
+            },
+            {
+              "at": [
+                22.1,
+                23.25
+              ],
+              "r": 1.05,
+              "h": 8.2
+            },
+            {
+              "at": [
+                10.0,
+                23.3
+              ],
+              "r": 0.95,
+              "h": 7.6
+            },
+            {
+              "at": [
+                30.0,
+                23.3
+              ],
+              "r": 0.95,
+              "h": 7.6
+            },
+            {
+              "at": [
+                7.5,
+                22.9
+              ],
+              "r": 0.85,
+              "h": 7.4
+            },
+            {
+              "at": [
+                32.5,
+                22.9
+              ],
+              "r": 0.85,
+              "h": 7.4
+            },
+            {
+              "at": [
+                0.55,
+                0.55
+              ],
+              "r": 0.85,
+              "h": 8.0
+            },
+            {
+              "at": [
+                38.45,
+                0.55
+              ],
+              "r": 0.85,
+              "h": 8.0
+            },
+            {
+              "at": [
+                18.0,
+                8.0
+              ],
+              "r": 0.85,
+              "h": 12.6,
+              "spire": "needle"
+            },
+            {
+              "at": [
+                22.0,
+                8.0
+              ],
+              "r": 0.85,
+              "h": 12.6,
+              "spire": "needle"
+            },
+            {
+              "at": [
+                8.0,
+                8.0
+              ],
+              "r": 0.8,
+              "h": 12.4,
+              "from": 10.0,
+              "spire": "needle"
+            },
+            {
+              "at": [
+                32.0,
+                8.0
+              ],
+              "r": 0.8,
+              "h": 12.4,
+              "from": 10.0,
+              "spire": "needle"
+            },
+            {
+              "at": [
+                12.0,
+                3.5
+              ],
+              "r": 1.6,
+              "h": 15.0,
+              "from": 10.0
+            },
+            {
+              "at": [
+                27.5,
+                3.5
+              ],
+              "r": 1.6,
+              "h": 14.0,
+              "from": 10.0
+            },
+            {
+              "at": [
+                20.0,
+                2.5
+              ],
+              "r": 1.3,
+              "h": 19.0,
+              "from": 10.0,
+              "spire": "needle"
+            }
+          ],
+          "parapets": [
+            [
+              0,
+              24,
+              39,
+              10
+            ]
+          ]
+        },
+        "castle_ravenloft_overlook": {
+          "rect": [
+            0,
+            0,
+            26,
+            7
+          ],
+          "wall": 6.0,
+          "keep": 10.5,
+          "keeps": [
+            [
+              0,
+              0,
+              26,
+              2
+            ]
+          ],
+          "blocks": [
+            [
+              -4,
+              -7,
+              34,
+              7,
+              12.5
+            ]
+          ],
+          "towers": [
+            {
+              "at": [
+                25.7,
+                6.2
+              ],
+              "r": 0.8,
+              "h": 7.4
+            },
+            {
+              "at": [
+                0.3,
+                6.2
+              ],
+              "r": 0.8,
+              "h": 7.4
+            },
+            {
+              "at": [
+                5.0,
+                -3.0
+              ],
+              "r": 1.7,
+              "h": 17.0,
+              "from": 12.0
+            },
+            {
+              "at": [
+                19.0,
+                -3.5
+              ],
+              "r": 1.5,
+              "h": 21.0,
+              "from": 12.0,
+              "spire": "needle"
+            },
+            {
+              "at": [
+                12.0,
+                -1.0
+              ],
+              "r": 0.8,
+              "h": 15.0,
+              "from": 12.0,
+              "spire": "needle"
+            }
+          ]
+        }
+      }
     }
   },
   "clutter": {
