@@ -983,6 +983,9 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 	if int(sit["cover"]) > 0:
 		lines.append("%s (+%d AC) from %s" % [CombatGrid.COVER_NAMES[int(sit["cover"])], int(sit["cover_bonus"]), sit["cover_by"]])
 	lines.append("AC %d%s" % [int(hc["ac"]), _known_defenses(t)])
+	for fxm: Effect in t.creature.effects:
+		if fxm.data.has("mark_by"):
+			lines.append(fxm.name + (": your extra damage on a hit" if str(fxm.data["mark_by"]) == c.id else ""))
 	if e.features.sneak_attack_ready(c) and ("finesse" in p.properties or not p.melee):
 		lines.append("Sneak Attack if you hit with Advantage or an ally beside it")
 	if why != "":
