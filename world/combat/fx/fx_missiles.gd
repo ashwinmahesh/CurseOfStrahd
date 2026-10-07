@@ -22,7 +22,7 @@ static func fly(fx: SpellFx, family: String, cue: Dictionary, from: Vector3, to:
 
 
 static func _fiery(cue: Dictionary) -> bool:
-	return str(cue["flavour"]) in ["fire", "radiant", "necrotic", "acid", "poison", "nature", "earth", "blood"]
+	return str(cue["flavour"]) in ["fire", "greenfire", "radiant", "necrotic", "acid", "poison", "nature", "earth", "blood"]
 
 
 ## Where a missed missile ends: past the target and a little to one side.

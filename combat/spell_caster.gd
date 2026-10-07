@@ -17,7 +17,11 @@ const SPECIAL := ["heat_metal", "eldritch_blast", "sorcerous_burst", "magic_miss
 	"true_strike", "shillelagh", "enlarge_reduce", "vampiric_touch", "lesser_restoration", "protection_from_poison",
 	"expeditious_retreat", "summon_fey", "summon_undead", "goodberry", "jump", "alter_self", "beacon_of_hope",
 	"resistance", "blade_ward", "protection_from_evil_and_good", "crown_of_madness", "bestow_curse", "fear",
-	"calm_emotions", "fly", "levitate", "gaseous_form", "spider_climb", "animate_dead", "find_familiar", "etherealness", "plane_shift", "remove_curse"]
+	"calm_emotions", "fly", "levitate", "gaseous_form", "spider_climb", "animate_dead", "find_familiar", "etherealness", "plane_shift", "remove_curse",
+	"booming_blade", "green_flame_blade"]
+## Cantrips cast as a melee weapon attack against a creature within 5 ft (Tasha's Cauldron, added by the owner): the
+## spell fails without one, so the cast is refused before anything is spent.
+const BLADE_CANTRIPS := ["booming_blade", "green_flame_blade"]
 ## Command's words (2024): all five.
 const COMMAND_WORDS := ["approach", "drop", "flee", "grovel", "halt"]
 ## Effect kinds the engine resolves in a fight (anything else is narrative or exploration).
@@ -750,6 +754,8 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		return CombatResult.fail(str(check["why"]))
 	var tgt := check["targets"] as Array[Combatant]
 	var cell: Vector2i = check["cell"]
+	if spell_id in BLADE_CANTRIPS and not tgt.is_empty() and blade_option(c, tgt[0]).is_empty():
+		return CombatResult.fail("Needs a melee weapon that can strike %s" % tgt[0].name())
 	if not meta.is_empty():
 		_pay_metamagic(c, meta)
 	# Pay for it.
@@ -1264,6 +1270,9 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 			return
 		"true_strike":
 			_true_strike(ctx, tgt[0], r)
+			return
+		"booming_blade", "green_flame_blade":
+			_blade_cantrip(ctx, tgt[0], r)
 			return
 		"remove_curse":
 			var t0 := tgt[0]
@@ -2898,6 +2907,93 @@ func _true_strike(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	var sub := e._resolve_attack(c, t, opt, {"extra_dice": [{"dice": "%dd6" % tier, "type": "radiant", "label": "True Strike"}] if tier > 0 else []})
 	r.hit = sub.hit
 	r.damage += sub.damage
+
+
+## The melee weapon attack a blade cantrip makes against `t`: the first melee weapon option that can strike it
+## (Psychic Blades and Unarmed Strikes aren't weapons), or {}.
+func blade_option(c: Combatant, t: Combatant) -> Dictionary:
+	var e := enc()
+	if e.distance(c, t) > 5:
+		return {}
+	for o in e.attack_options(c):
+		if str(o["kind"]) == "weapon" and bool(o["melee"]) and e.attack_legal(c, t, o) == "":
+			return o
+	return {}
+
+
+## Booming Blade and Green-Flame Blade (Tasha's Cauldron): one melee attack with a weapon, using the weapon's own
+## numbers; from level 5 a hit adds 1d8 of the spell's type per tier. Booming Blade then wraps the target in thunder
+## until the start of the caster's next turn (booming_moved); Green-Flame Blade's fire leaps to another enemy the caster
+## can see within 5 ft of the target, for the tier's d8s + the spellcasting modifier. The game picks the creature the
+## fire leaps to: the enemy nearest to dropping (deviations.md).
+func _blade_cantrip(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
+	var c := ctx["c"] as Combatant
+	var s := ctx["s"] as Dictionary
+	var e := enc()
+	var opt := blade_option(c, t)
+	if opt.is_empty():
+		r.lines.append(e.log.add("info", "%s: no melee weapon can strike %s" % [s["name"], t.name()], c.id))
+		return
+	var tier := Spellcasting.cantrip_tier(c.creature.character_level())
+	var booming := str(s["id"]) == "booming_blade"
+	var kind := "thunder" if booming else "fire"
+	var sub := e._resolve_attack(c, t, opt, {"extra_dice": [{"dice": "%dd8" % tier, "type": kind, "label": str(s["name"])}] if tier > 0 else []})
+	r.hit = sub.hit
+	r.damage += sub.damage
+	if not sub.hit:
+		return
+	if booming:
+		if t.is_down():
+			return
+		var fx := Effect.new("Booming energy (Booming Blade)", &"spell", "booming_blade")
+		fx.caster_id = c.id
+		fx.ends = Effect.Ends.START_OF_TURN
+		fx.turn_owner_id = c.id
+		fx.data["booming_dice"] = "%dd8" % (tier + 1)
+		t.creature.add_effect(fx)
+		e.events.append({"type": "condition", "id": t.id})
+		r.lines.append(e.log.add("spell", "%s is wrapped in booming energy: moving before %s's next turn costs %dd8 Thunder damage" % [t.name(), c.name(), tier + 1], t.id))
+		return
+	var mod := int((ctx["nums"] as Dictionary)["mod"])
+	var next: Combatant = null
+	for o in e.hostiles_of(c):
+		if o != t and not o.is_down() and e.distance(o, t) <= 5 and e.can_see(c, o) and (next == null or o.creature.hp < next.creature.hp):
+			next = o
+	if next == null:
+		return
+	var rolled := {"total": 0, "text": ""}
+	if tier > 0:
+		rolled = e._max_damage_dice("%dd8" % tier, false) if e.faerun.maximized(c, "fire") else e._roll_damage_dice("%dd8" % tier, false, 0, str(s["name"]))
+	var amount := int(rolled["total"]) + mod
+	if amount <= 0:
+		return
+	e.events.append({"type": "ability", "source": "feature", "by": t.id, "key": "green_flame_blade_leap", "targets": [next.id], "cells": []})
+	r.lines.append(e.log.add("spell", "Green fire leaps from %s to %s" % [t.name(), next.name()], c.id))
+	var details: Array = ["%s + %d (spellcasting modifier)" % [str(rolled["text"]), mod] if tier > 0 else "%d (spellcasting modifier)" % mod]
+	var dr := e.deal_damage(c, next, [{"amount": amount, "type": "fire"}], false, str(s["name"]), details)
+	r.damage += dr.final if dr != null else 0
+
+
+## Booming Blade: a creature wrapped in its energy moved 5 ft or more of its own will (Encounter._walk), so it takes the
+## Thunder damage and the spell ends. Two casters' don't add up (2024 "Combining Game Effects"): the strongest goes off
+## and both end.
+func booming_moved(c: Combatant) -> void:
+	var e := enc()
+	var best: Effect = null
+	for fx: Effect in c.creature.effects.duplicate():
+		if fx.source_id != "booming_blade" or not fx.data.has("booming_dice"):
+			continue
+		if best == null or int(DiceRoller.parse_expr(str(fx.data["booming_dice"]))["count"]) > int(DiceRoller.parse_expr(str(best.data["booming_dice"]))["count"]):
+			best = fx
+		c.creature.remove_effect(fx)
+	if best == null:
+		return
+	var src := e.get_c(best.caster_id)
+	var dice := str(best.data["booming_dice"])
+	var rolled := e._max_damage_dice(dice, false) if src != null and e.faerun.maximized(src, "thunder") else e._roll_damage_dice(dice, false, 0, "Booming Blade")
+	e.events.append({"type": "ability", "source": "feature", "by": c.id, "key": "booming_blade_burst", "targets": [c.id], "cells": []})
+	e.log.add("spell", "The booming energy around %s bursts as it moves (Booming Blade)" % c.name(), c.id)
+	e.deal_damage(src, c, [{"amount": int(rolled["total"]), "type": "thunder"}], false, "Booming Blade", [str(rolled["text"])])
 
 
 # --- Spell objects, zones and sustained actions -----------------------------------------------------

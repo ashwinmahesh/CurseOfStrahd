@@ -225,7 +225,7 @@ static func has_family(family: String) -> bool:
 
 ## Flavours whose particles burn (ragged flame puffs) rather than glow.
 static func fiery(flavour: String) -> bool:
-	return flavour in ["fire", "radiant", "necrotic", "acid", "poison", "nature", "earth", "blood"]
+	return flavour in ["fire", "greenfire", "radiant", "necrotic", "acid", "poison", "nature", "earth", "blood"]
 
 
 func _init() -> void:
