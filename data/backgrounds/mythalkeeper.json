@@ -1,0 +1,67 @@
+{
+  "id": "mythalkeeper",
+  "name": "Mythalkeeper",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "summary": "You study damaged mythals and search ruined places for ways to understand and restore them.",
+  "ability_scores": [
+    "int",
+    "wis",
+    "cha"
+  ],
+  "feat": "crafter",
+  "skills": [
+    "arcana",
+    "history"
+  ],
+  "tool": {
+    "id": "jewelers_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "quarterstaff",
+          "qty": 1
+        },
+        {
+          "id": "jewelers_tools",
+          "qty": 1
+        },
+        {
+          "id": "perfume",
+          "qty": 1
+        },
+        {
+          "id": "pouch",
+          "qty": 1
+        },
+        {
+          "id": "robe",
+          "qty": 1
+        },
+        {
+          "id": "shovel",
+          "qty": 1
+        },
+        {
+          "id": "string",
+          "qty": 1
+        },
+        {
+          "id": "waterskin",
+          "qty": 1
+        }
+      ],
+      "gp": 16
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

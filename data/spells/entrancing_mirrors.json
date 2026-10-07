@@ -1,0 +1,75 @@
+{
+  "id": "entrancing_mirrors",
+  "name": "Entrancing Mirrors",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells. "
+  },
+  "level": 8,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 90
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a mirror shard"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "summary": "Up to three visible creatures save Intelligence against 7d6 Psychic and Stunned; while so Stunned, Speed is halved. Success takes half damage only. Each affected creature repeats the save at turn end to end the spell on itself.",
+  "text": "Up to three visible creatures save Intelligence against 7d6 Psychic and Stunned; while so Stunned, Speed is halved. Success takes half damage only. Each affected creature repeats the save at turn end to end the spell on itself.",
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "icon": "hypnotic_pattern",
+  "targets": {
+    "kind": "creature",
+    "count": 3,
+    "description": "up to three visible creatures"
+  },
+  "save": "int",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "7d6",
+      "type": "psychic"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "stunned",
+        "repeat_save": "end_of_turn"
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "repeat_save": "end_of_turn",
+        "modifiers": [
+          {
+            "stat": "speed_percent",
+            "value": 50
+          }
+        ]
+      }
+    }
+  ]
+}

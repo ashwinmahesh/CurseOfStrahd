@@ -1,0 +1,35 @@
+{
+  "id": "spellfire_flare",
+  "name": "Spellfire Flare",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 1,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "summary": "Reference-only: Ranged spell attack that ignores Half and Three-Quarters Cover; hit deals 2d10 Radiant. Each slot above 1 adds one separately targeted blast with its own attack roll.",
+  "text": "Reference-only: Ranged spell attack that ignores Half and Three-Quarters Cover; hit deals 2d10 Radiant. Each slot above 1 adds one separately targeted blast with its own attack roll.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile"
+}

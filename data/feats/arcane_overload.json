@@ -1,0 +1,46 @@
+{
+  "id": "arcane_overload",
+  "name": "Arcane Overload",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Always prepared: Fire Bolt; choose Intelligence, Wisdom, or Charisma for casting. When an Evocation spell you cast deals damage, add Proficiency Bonus to one of its damage rolls. Once per Long Rest.",
+  "benefits": [
+    {
+      "id": "arcane_overload_cantrip",
+      "name": "Fire Bolt",
+      "summary": "Always prepared: Fire Bolt; choose Intelligence, Wisdom, or Charisma for casting.",
+      "text": "Always prepared: Fire Bolt; choose Intelligence, Wisdom, or Charisma for casting.",
+      "implemented": "data",
+      "choice": {
+        "id": "casting_ability",
+        "kind": "spellcasting_ability",
+        "count": 1,
+        "from": [
+          "int",
+          "wis",
+          "cha"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "fire_bolt",
+          "ability": "@casting_ability",
+          "always_prepared": true
+        }
+      ]
+    },
+    {
+      "id": "arcane_overload_benefit",
+      "name": "Power Surge",
+      "summary": "When an Evocation spell you cast deals damage, add Proficiency Bonus to one of its damage rolls. Once per Long Rest.",
+      "text": "When an Evocation spell you cast deals damage, add Proficiency Bonus to one of its damage rolls. Once per Long Rest.",
+      "implemented": "text"
+    }
+  ]
+}

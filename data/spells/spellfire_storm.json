@@ -1,0 +1,37 @@
+{
+  "id": "spellfire_storm",
+  "name": "Spellfire Storm",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 4,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "summary": "Reference-only: Create a 20-foot-radius, 20-foot-high brightly lit Cylinder. Appearance, first entry on a turn, or end of turn prompts Constitution against 4d10 Radiant (half on success), once per turn. Spellcasting inside also requires Constitution: failure wastes the casting action but no spell slot. Designate exempt creatures on casting. Add 1d10 damage per slot above 4. Circle variant consumes a 25,000 GP blue star sapphire; range 1 mile, no Concentration, each secondary caster spends a level 3+ slot. With 1–3/4–6/7+ secondary casters, radius and height are 40/60/100 feet and duration is 1/8/24 hours. Ends if any participant joins another Circle casting of Spellfire Storm.",
+  "text": "Reference-only: Create a 20-foot-radius, 20-foot-high brightly lit Cylinder. Appearance, first entry on a turn, or end of turn prompts Constitution against 4d10 Radiant (half on success), once per turn. Spellcasting inside also requires Constitution: failure wastes the casting action but no spell slot. Designate exempt creatures on casting. Add 1d10 damage per slot above 4. Circle variant consumes a 25,000 GP blue star sapphire; range 1 mile, no Concentration, each secondary caster spends a level 3+ slot. With 1–3/4–6/7+ secondary casters, radius and height are 40/60/100 feet and duration is 1/8/24 hours. Ends if any participant joins another Circle casting of Spellfire Storm.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile"
+}

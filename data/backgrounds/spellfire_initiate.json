@@ -1,0 +1,52 @@
+{
+  "id": "spellfire_initiate",
+  "name": "Spellfire Initiate",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. Equipment A uses Dice Set and Crystal as fixed defaults; the book permits any gaming set and Crystal or Wand. The existing background equipment schema cannot express those equipment choices."
+  },
+  "summary": "You have trained to endure and direct the rare spellfire power awakening within you.",
+  "ability_scores": [
+    "con",
+    "int",
+    "cha"
+  ],
+  "feat": "spellfire_spark",
+  "skills": [
+    "arcana",
+    "perception"
+  ],
+  "tool": {
+    "id": "dice_set",
+    "choice": "gaming_set"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "dice_set",
+          "qty": 1
+        },
+        {
+          "id": "arcane_focus_crystal",
+          "qty": 1
+        },
+        {
+          "id": "pouch",
+          "qty": 2
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 36
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

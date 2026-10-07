@@ -1,0 +1,39 @@
+{
+  "id": "lightning_ring",
+  "name": "Lightning Ring",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 8,
+  "school": "evocation",
+  "classes": [
+    "druid",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a bit of fur and a glass ring"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "summary": "Reference-only: Chosen creatures entering, ending a turn in, or swept into your 10-foot Emanation save Constitution: 3d6 Lightning + 3d6 Thunder and Deafened for 1 minute on failure, half damage only on success. While active, a Magic action emits a 60-foot-long, 5-foot-wide Line: Dexterity save against 6d6 Lightning, half on success.",
+  "text": "Reference-only: Chosen creatures entering, ending a turn in, or swept into your 10-foot Emanation save Constitution: 3d6 Lightning + 3d6 Thunder and Deafened for 1 minute on failure, half damage only on success. While active, a Magic action emits a 60-foot-long, 5-foot-wide Line: Dexterity save against 6d6 Lightning, half on success.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile"
+}

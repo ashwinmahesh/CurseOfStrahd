@@ -1,0 +1,113 @@
+{
+  "id": "banneret",
+  "name": "Banneret",
+  "class": "fighter",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "summary": "A knight whose leadership helps companions recover and seize opportunities. Some features are reference-only; see each feature’s implementation status.",
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "banneret_well_spoken",
+        "name": "Well Spoken",
+        "summary": "Choose proficiency in Insight, Intimidation, Persuasion, or Performance.",
+        "text": "Choose proficiency in Insight, Intimidation, Persuasion, or Performance.",
+        "implemented": "data",
+        "choice": {
+          "kind": "skill",
+          "count": 1,
+          "from": [
+            "insight",
+            "intimidation",
+            "persuasion",
+            "performance"
+          ]
+        }
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "knightly_envoy",
+        "name": "Knightly Envoy",
+        "summary": "Cast Comprehend Languages as a Ritual only, using Charisma. Learn one PHB or Heroes of Faerûn language; after a Long Rest, it may change to a language heard, read, or seen signed in the previous 24 hours. Ritual-only casting and the language swap are reference-only.",
+        "text": "Cast Comprehend Languages as a Ritual only, using Charisma. Learn one PHB or Heroes of Faerûn language; after a Long Rest, it may change to a language heard, read, or seen signed in the previous 24 hours. Ritual-only casting and the language swap are reference-only.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "banneret_group_recovery",
+        "name": "Group Recovery",
+        "summary": "When Second Wind heals you, also heal up to Charisma modifier allies (minimum 1) within a 30-foot Emanation for 1d4 + Fighter level each. Once per Short or Long Rest.",
+        "text": "When Second Wind heals you, also heal up to Charisma modifier allies (minimum 1) within a 30-foot Emanation for 1d4 + Fighter level each. Once per Short or Long Rest.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "banneret_team_tactics",
+        "name": "Team Tactics",
+        "summary": "Allies chosen for Group Recovery also gain Advantage on D20 Tests until your next turn starts.",
+        "text": "Allies chosen for Group Recovery also gain Advantage on D20 Tests until your next turn starts.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "banneret_rallying_surge",
+        "name": "Rallying Surge",
+        "summary": "When using Action Surge, choose up to Charisma modifier allies (minimum 1) within a 30-foot Emanation. Each can immediately spend a Reaction to make a weapon or Unarmed Strike attack, or move half its Speed without Opportunity Attacks.",
+        "text": "When using Action Surge, choose up to Charisma modifier allies (minimum 1) within a 30-foot Emanation. Each can immediately spend a Reaction to make a weapon or Unarmed Strike attack, or move half its Speed without Opportunity Attacks.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "banneret_shared_resilience",
+        "name": "Shared Resilience",
+        "summary": "Reaction when a visible ally within 60 feet fails a save: spend Indomitable to let the ally reroll with a bonus equal to your Fighter level; it must keep the new roll.",
+        "text": "Reaction when a visible ally within 60 feet fails a save: spend Indomitable to let the ally reroll with a bonus equal to your Fighter level; it must keep the new roll.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "banneret_unshakable_bravery",
+        "name": "Unshakable Bravery",
+        "summary": "You are immune to Charmed and Frightened.",
+        "text": "You are immune to Charmed and Frightened.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "condition_immunity",
+            "value": "charmed"
+          },
+          {
+            "stat": "condition_immunity",
+            "value": "frightened"
+          }
+        ]
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "banneret_bolstered_rally",
+        "name": "Bolstered Rally",
+        "summary": "Group Recovery and Rallying Surge now reach a 60-foot Emanation.",
+        "text": "Group Recovery and Rallying Surge now reach a 60-foot Emanation.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

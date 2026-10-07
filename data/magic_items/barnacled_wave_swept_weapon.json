@@ -1,0 +1,49 @@
+{
+  "id": "barnacled_wave_swept_weapon",
+  "name": "Barnacled Wave-Swept Weapon",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "longsword",
+  "summary": "+1 to this weapon’s attack and damage rolls.",
+  "text": "+1 to this weapon’s attack and damage rolls. Reference-only: a Magic action salts up to a gallon of touched liquid.",
+  "held": true,
+  "template": {
+    "on": "weapon",
+    "items": [
+      "greatsword",
+      "longsword",
+      "rapier",
+      "scimitar",
+      "shortsword"
+    ],
+    "default": "longsword",
+    "name": "Barnacled Wave-Swept {base}"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ]
+}

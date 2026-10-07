@@ -1,0 +1,37 @@
+{
+  "id": "backlash",
+  "name": "Backlash",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 4,
+  "school": "abjuration",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "reaction",
+    "trigger": "when you take damage"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "summary": "Reference-only: When damaged, reduce it by 4d6 + your spellcasting modifier. If the damaging creature is within 60 feet, it makes a Constitution save against 4d6 Force, half on success. Both dice totals gain 1d6 per slot above 4.",
+  "text": "Reference-only: When damaged, reduce it by 4d6 + your spellcasting modifier. If the damaging creature is within 60 feet, it makes a Constitution save against 4d6 Force, half on success. Both dice totals gain 1d6 per slot above 4.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile"
+}

@@ -1,0 +1,54 @@
+{
+  "id": "boon_of_the_soul_drinker",
+  "name": "Boon of the Soul Drinker",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "category": "epic_boon",
+  "repeatable": false,
+  "summary": "Resistance to Cold and Necrotic damage. When an enemy within 120 feet drops to 0 Hit Points, use a Reaction to heal yourself for 50 Hit Points. Once per Short or Long Rest.",
+  "benefits": [
+    {
+      "id": "grave_resistance",
+      "name": "Grave Resistance",
+      "summary": "Resistance to Cold and Necrotic damage.",
+      "text": "Resistance to Cold and Necrotic damage.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "resistance",
+          "value": "cold"
+        },
+        {
+          "stat": "resistance",
+          "value": "necrotic"
+        }
+      ]
+    },
+    {
+      "id": "siphon_life",
+      "name": "Siphon Life",
+      "summary": "When an enemy within 120 feet drops to 0 Hit Points, use a Reaction to heal yourself for 50 Hit Points. Once per Short or Long Rest.",
+      "text": "When an enemy within 120 feet drops to 0 Hit Points, use a Reaction to heal yourself for 50 Hit Points. Once per Short or Long Rest.",
+      "implemented": "text",
+      "action": "reaction"
+    }
+  ],
+  "prerequisites": {
+    "level": 19
+  },
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  }
+}
