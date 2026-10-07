@@ -676,32 +676,23 @@ func _spells(ch: Character) -> VBoxContainer:
 	var utility := {}
 	for o in FieldCasting.utility_options(st.party, ch, Dice.roller):
 		utility[str(o["id"])] = o
-	var by_level := {}
+	var unique: Array = []
 	var seen := {}
 	for k in known:
-		var id := str(k["id"])
-		if seen.has(id):
-			continue
-		seen[id] = true
-		var s := Compendium.shared().spell_data(id)
-		var lvl := int(s.get("level", 0))
-		if not by_level.has(lvl):
-			by_level[lvl] = []
-		(by_level[lvl] as Array).append({"k": k, "s": s})
-	var levels: Array = by_level.keys()
-	levels.sort()
+		if not seen.has(str(k["id"])):
+			seen[str(k["id"])] = true
+			unique.append(k)
 	var slots := ch.spell_slots()
-	for lvl: int in levels:
+	# By spell level under a heading each, alphabetical within (SpellGroups, the order every spell list uses).
+	for g in SpellGroups.groups(unique, func(k: Dictionary) -> String: return str(k["id"])):
+		var lvl := int(g["level"])
 		var right: Control = null
 		if lvl > 0 and lvl <= slots.size() and slots[lvl - 1] > 0:
 			right = UiParts.pips(slots[lvl - 1], ch.slots_left(lvl), "moonlight")
-		box.add_child(UiParts.section("Cantrips" if lvl == 0 else "Level %d" % lvl, right))
-		var list := by_level[lvl] as Array
-		list.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
-			return str((a["s"] as Dictionary).get("name", "")) < str((b["s"] as Dictionary).get("name", "")))
-		for entry: Variant in list:
-			var k := (entry as Dictionary)["k"] as Dictionary
-			var s := (entry as Dictionary)["s"] as Dictionary
+		box.add_child(UiParts.section(str(g["heading"]), right))
+		for kv: Variant in g["items"]:
+			var k := kv as Dictionary
+			var s := Compendium.shared().spell_data(str(k["id"]))
 			box.add_child(_spell_row(ch, k, s, casts.get(str(k["id"]), {}) as Dictionary, utility.get(str(k["id"]), {}) as Dictionary))
 	return box
 

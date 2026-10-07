@@ -83,6 +83,67 @@ func capture_shots(tool: Node, out: String) -> void:
 		await tool.call("wait_frames", 140)
 		await _shoot(tool, out + "_hud_second_toast.png", 2)
 		root.call("_command", "sneak")
+	if _wants("spells"):
+		# Every kind of spell list: preparing spells, the wizard's sheet, a found spellbook and the combat Spells tab.
+		var ps := PrepareScreen.new()
+		add_child(ps)
+		ps.open(root, GameState.story, 0)
+		await tool.call("wait_frames", 4)
+		# Scrolled to Liriel's prepared spells.
+		for l in ps.find_children("*", "Label", true, false):
+			if (l as Label).text.begins_with("Liriel") and (l as Label).text.contains("Cleric"):
+				for sc in ps.find_children("*", "ScrollContainer", true, false):
+					var scroll := sc as ScrollContainer
+					scroll.scroll_vertical = int((l as Label).global_position.y - scroll.global_position.y) - 8
+				break
+		await _shoot(tool, out + "_spells_prepare.png")
+		ps.free()
+		root.call("open_screen", "sheet", 3)
+		(root.get("screen") as CharacterSheetScreen).show_tab("Spells")
+		await _shoot(tool, out + "_spells_sheet.png")
+		root.call("close_screen")
+		GameState.story.party[0].add_item("durst_spellbook", 1)
+		root.call("open_screen", "inventory", 0)
+		(root.get("screen") as InventoryScreen).selected = "durst_spellbook"
+		root.get("screen").call("_draw")
+		await _shoot(tool, out + "_spells_book.png")
+		root.call("close_screen")
+		root.call("enter_location", "death_house_dungeon_1", "default")
+		await tool.call("wait_frames", 20)
+		hud.close_narration()
+		var view := root.get("view") as LocationView
+		view.start_encounter("passage_ghouls")
+		await tool.call("wait_frames", 120)
+		var chud := view.combat_view.get("hud") as CombatHud if view.combat_view != null else null
+		if chud != null:
+			for c in view.combat_view.e.combatants:
+				if c.name().begins_with("Liriel"):
+					chud.shown = c
+			chud.set_tab(ActionCatalog.SPELLS)
+			await _shoot(tool, out + "_spells_combat.png")
+	if _wants("feat"):
+		# Level 4's feat on the level-up screen (Godrick from level 3), scrolled to the choice, with a feat hovered.
+		var godrick := Pregens.build("godrick_pendlebrook", 3)
+		godrick.finish_long_rest()
+		GameState.story.party[0] = godrick
+		GameState.story.milestones = 10
+		root.call("open_screen", "level_up", 0)
+		await tool.call("wait_frames", 4)
+		var screen := root.get("screen") as Node
+		for l in screen.find_children("*", "Label", true, false):
+			if (l as Label).text.contains("Choices"):
+				for sc in screen.find_children("*", "ScrollContainer", true, false):
+					var scroll := sc as ScrollContainer
+					if scroll.get_parent() is PanelContainer:
+						scroll.scroll_vertical = int((l as Label).global_position.y - scroll.global_position.y) - 8
+		await tool.call("wait_frames", 4)
+		# Hover the longest-text feat in the list, as the mouse would.
+		for b in screen.find_children("*", "Button", true, false):
+			if (b as Button).text.contains("Great Weapon Master"):
+				(b as Button).mouse_entered.emit()
+				break
+		await _shoot(tool, out + "_feat_level_up.png")
+		root.call("close_screen")
 	if _wants("small"):
 		# The F1 controls card, a small loot window with coins and a single item, and Heal up on the rest screen.
 		hud.toggle_controls()

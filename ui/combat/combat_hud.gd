@@ -52,7 +52,8 @@ var _economy: EconomyShapes
 var _move_bar: ProgressBar
 var _move_label: Label
 var _tabs: HBoxContainer
-var _slots: GridContainer
+## The slot rows: one grid, or on the Spells tab a row of grids by spell level (SpellGroups) with the level beside each.
+var _slots: VBoxContainer
 var _slot_buttons: Array[Button] = []
 var _slot_actions: Array[Dictionary] = []
 var _end_turn: Button
@@ -339,10 +340,8 @@ func _build_hotbar() -> void:
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	mid.add_child(scroll)
 	_slot_scroll = scroll
-	_slots = GridContainer.new()
-	_slots.columns = 7
-	_slots.add_theme_constant_override("h_separation", 6)
-	_slots.add_theme_constant_override("v_separation", 6)
+	_slots = VBoxContainer.new()
+	_slots.add_theme_constant_override("separation", 6)
 	scroll.add_child(_slots)
 	_end_turn = Button.new()
 	_end_turn.text = "End\nTurn"
@@ -725,45 +724,77 @@ func _refresh_hotbar() -> void:
 		ch.queue_free()
 	_slot_buttons.clear()
 	_slot_actions.clear()
-	var i := 0
+	var acts: Array = []
 	for a in catalog.actions_for(c):
-		if str(a["tab"]) != tab:
-			continue
-		var usable := bool(a["legal"]) and mine
-		var b := Button.new()
-		b.custom_minimum_size = SLOT_SIZE
-		# A dark face like every other button, its cost told by the colour of its top edge (and the word in the tooltip).
-		var colour := str(COST_COLOURS.get(str(a["cost"]), "slate"))
-		var focused := i == focus_slot
-		b.add_theme_stylebox_override("normal", _slot_style("ui_oxblood", "gilt_light" if focused else "gilt_dark", focused))
-		b.add_theme_stylebox_override("hover", _slot_style("ui_wine", "gilt_light", true))
-		b.add_theme_stylebox_override("pressed", _slot_style("blood", "gilt_light", true))
-		b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
-		b.add_theme_stylebox_override("disabled", _slot_style("ui_black", "gilt_light" if focused else "ui_oxblood", focused))
-		var stripe := ColorRect.new()
-		stripe.color = Look.color(colour) if usable else Color(Look.color(colour), 0.35)
-		stripe.anchor_right = 1.0
-		stripe.offset_left = 17
-		stripe.offset_right = -17
-		stripe.offset_top = 2
-		stripe.offset_bottom = 5
-		stripe.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		b.add_child(stripe)
-		_slot_face(b, a, i, usable)
-		b.disabled = not usable
-		var reason := str(a["reason"]) if not bool(a["legal"]) else ""
-		if not mine and reason == "":
-			reason = "Not %s's turn" % c.name()
-		b.tooltip_text = "%s (%s)%s%s\nRight-click for more%s" % [a["label"], _cost_word(str(a["cost"])), ("\n" + str(a["help"])) if str(a["help"]) != "" else "", ("\nCan't: " + reason) if reason != "" else "", (" (choose the %s)" % str(a.get("choice_label", "")).to_lower()) if a.has("choices") else ""]
-		var act := a
-		b.pressed.connect(func() -> void: action_chosen.emit(act))
-		b.gui_input.connect(func(ev: InputEvent) -> void:
-			if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
-				open_slot_menu(act, b.get_screen_position() + (ev as InputEventMouseButton).position))
-		_slots.add_child(b)
-		_slot_buttons.append(b)
-		_slot_actions.append(a)
-		i += 1
+		if str(a["tab"]) == tab:
+			acts.append(a)
+	var groups: Array[Dictionary] = [{"heading": "", "items": acts}]
+	if tab == ActionCatalog.SPELLS:
+		# By spell level, alphabetical within, like every other spell list (SpellGroups).
+		groups = SpellGroups.groups(acts, func(a: Dictionary) -> String: return str(a.get("spell_id", "")),
+			func(a: Dictionary) -> int: return int(a.get("slot", 0)))
+	var i := 0
+	var grid: GridContainer = null
+	for g in groups:
+		grid = GridContainer.new()
+		grid.add_theme_constant_override("h_separation", 6)
+		grid.add_theme_constant_override("v_separation", 6)
+		if str(g["heading"]) == "":
+			grid.columns = 7
+			_slots.add_child(grid)
+		else:
+			grid.columns = 6
+			var row := HBoxContainer.new()
+			row.add_theme_constant_override("separation", 8)
+			var cap := _label(str(g["heading"]), 13, "gilt")
+			cap.custom_minimum_size = Vector2(70, SLOT_SIZE.y)
+			cap.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			cap.size_flags_vertical = Control.SIZE_SHRINK_BEGIN   # beside the level's first row
+			cap.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			row.add_child(cap)
+			row.add_child(grid)
+			_slots.add_child(row)
+		for av: Variant in g["items"]:
+			i = _add_slot(grid, av as Dictionary, i, c, mine)
+
+
+## One hotbar slot for action `a` in `grid`, numbered `i`; returns the next number.
+func _add_slot(grid: GridContainer, a: Dictionary, i: int, c: Combatant, mine: bool) -> int:
+	var usable := bool(a["legal"]) and mine
+	var b := Button.new()
+	b.custom_minimum_size = SLOT_SIZE
+	# A dark face like every other button, its cost told by the colour of its top edge (and the word in the tooltip).
+	var colour := str(COST_COLOURS.get(str(a["cost"]), "slate"))
+	var focused := i == focus_slot
+	b.add_theme_stylebox_override("normal", _slot_style("ui_oxblood", "gilt_light" if focused else "gilt_dark", focused))
+	b.add_theme_stylebox_override("hover", _slot_style("ui_wine", "gilt_light", true))
+	b.add_theme_stylebox_override("pressed", _slot_style("blood", "gilt_light", true))
+	b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	b.add_theme_stylebox_override("disabled", _slot_style("ui_black", "gilt_light" if focused else "ui_oxblood", focused))
+	var stripe := ColorRect.new()
+	stripe.color = Look.color(colour) if usable else Color(Look.color(colour), 0.35)
+	stripe.anchor_right = 1.0
+	stripe.offset_left = 17
+	stripe.offset_right = -17
+	stripe.offset_top = 2
+	stripe.offset_bottom = 5
+	stripe.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	b.add_child(stripe)
+	_slot_face(b, a, i, usable)
+	b.disabled = not usable
+	var reason := str(a["reason"]) if not bool(a["legal"]) else ""
+	if not mine and reason == "":
+		reason = "Not %s's turn" % c.name()
+	b.tooltip_text = "%s (%s)%s%s\nRight-click for more%s" % [a["label"], _cost_word(str(a["cost"])), ("\n" + str(a["help"])) if str(a["help"]) != "" else "", ("\nCan't: " + reason) if reason != "" else "", (" (choose the %s)" % str(a.get("choice_label", "")).to_lower()) if a.has("choices") else ""]
+	var act := a
+	b.pressed.connect(func() -> void: action_chosen.emit(act))
+	b.gui_input.connect(func(ev: InputEvent) -> void:
+		if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
+			open_slot_menu(act, b.get_screen_position() + (ev as InputEventMouseButton).position))
+	grid.add_child(b)
+	_slot_buttons.append(b)
+	_slot_actions.append(a)
+	return i + 1
 
 
 ## A hotbar slot's face: the icon at the left with its hotkey on its corner, then the name and the line under it,
