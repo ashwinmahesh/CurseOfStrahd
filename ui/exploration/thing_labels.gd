@@ -2,9 +2,9 @@ class_name ThingLabels
 extends Control
 ## Hold Alt (the "show_names" key, Settings, Keys) while exploring to see what can be used (docs/plans/ui_polish.md, like BG3's highlight key): every person,
 ## door, container, thing to examine and way out in view gets its name on a small dark plate above it, in screen
-## space so it stays sharp. A locked door or chest says so and an emptied one reads "empty". Nothing in an area the
-## party hasn't found, no unfound secret door and no unsearched hiding place is shown (they go through
-## LocationView.thing_at, which already hides them).
+## space so it stays sharp. A locked door or chest says so, an emptied one reads "empty", and a sleeper "asleep, prone".
+## Nothing in an area the party hasn't found, no unfound secret door and no unsearched hiding place is shown (they go
+## through LocationView.thing_at, which already hides them).
 
 var view: LocationView
 ## Ways out that already carry a sign of their own (ExitSigns), so they get no second plate.
@@ -79,7 +79,8 @@ func _name(thing: Dictionary) -> Array:
 	var spec := thing.get("spec", {}) as Dictionary
 	match str(thing["kind"]):
 		"npc":
-			return [str(Compendium.shared().get_entry("npcs", str(thing["id"])).get("name", thing["id"])), false]
+			var state := LocationNpcs.state_words(view, str(thing["id"]))
+			return [str(Compendium.shared().get_entry("npcs", str(thing["id"])).get("name", thing["id"])) + (" · " + state if state != "" else ""), false]
 		"door":
 			var door := _first_up(str(spec.get("label", "door")).trim_prefix("the "))
 			return [door + (" · locked" if bool(view.call("_locked", spec)) else ""), false]

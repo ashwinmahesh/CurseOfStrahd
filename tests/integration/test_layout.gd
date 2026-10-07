@@ -470,7 +470,7 @@ func test_the_title_screen() -> void:
 		out.store_string(FileAccess.get_file_as_string(GoldenSaves.DIR + f))
 		out.close()
 	var menu: Node = null
-	for step: String in ["_title", "_new_game", "_show_loads", "_open_hero"]:
+	for step: String in ["_title", "_new_game", "_pick_difficulty", "_show_loads", "_open_hero"]:
 		await _check("the title screen (%s)" % step.trim_prefix("_"), func() -> Variant:
 			if menu != null:
 				menu.queue_free()
