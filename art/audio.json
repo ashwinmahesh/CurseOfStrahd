@@ -55,6 +55,11 @@
     "wilds": -2.0,
     "combat": -4.0,
     "click": -12.0,
+    "hover": -18.0,
+    "close": -9.0,
+    "quill": -6.0,
+    "pin": -10.0,
+    "unpin": -12.0,
     "page": -6.0,
     "swing": -8.0,
     "wind": -14.0,
@@ -157,6 +162,24 @@
       "res://art/sourced/kenney_interface_sounds/Audio/click_002.ogg",
       "res://art/sourced/kenney_interface_sounds/Audio/click_003.ogg"
     ],
+    "hover": [
+      "res://art/sourced/kenney_interface_sounds/Audio/tick_001.ogg",
+      "res://art/sourced/kenney_interface_sounds/Audio/tick_002.ogg",
+      "res://art/sourced/kenney_interface_sounds/Audio/tick_004.ogg"
+    ],
+    "close": [
+      "res://art/sourced/kenney_rpg_audio/Audio/bookClose.ogg"
+    ],
+    "quill": [
+      "res://art/sourced/kenney_interface_sounds/Audio/scratch_004.ogg",
+      "res://art/sourced/kenney_interface_sounds/Audio/scratch_005.ogg"
+    ],
+    "pin": [
+      "res://art/sourced/kenney_rpg_audio/Audio/metalLatch.ogg"
+    ],
+    "unpin": [
+      "res://art/sourced/kenney_rpg_audio/Audio/metalClick.ogg"
+    ],
     "page": [
       "res://art/sourced/kenney_rpg_audio/Audio/bookFlip1.ogg",
       "res://art/sourced/kenney_rpg_audio/Audio/bookFlip2.ogg",
@@ -178,7 +201,10 @@
     ],
     "coins": [
       "res://art/sourced/kenney_rpg_audio/Audio/handleCoins.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/handleCoins2.ogg"
+      "res://art/sourced/kenney_rpg_audio/Audio/handleCoins2.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/item_coins_01.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/item_coins_02.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/item_coins_03.ogg"
     ],
     "card": [
       "res://art/sourced/kenney_rpg_audio/Audio/bookPlace1.ogg",
