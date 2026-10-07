@@ -3,7 +3,9 @@
 This matrix, not anyone's impression, decides whether a rule is done (plan §3). Statuses:
 **tested** (engine + unit test) · **implemented** (engine, not yet under test) · **data** (content entered, its
 system arrives later) · **partial** (the non-positional part is tested; the rest needs the combat grid) ·
-**deviated** (see deviations.md) · **not started**. Phase in brackets = where the rest lands.
+**deviated** (see deviations.md) · **not started**. Brackets say where the rest lands: a plan phase, or an item in
+the Improvement Ideas note (F4, F10 ...). `make validate` fails on a row still waiting on a phase that's built, and on
+a "not started" or "data" row naming something the data marks `implemented: engine` (tools/data/check_rules_docs.py).
 
 Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 
@@ -21,7 +23,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Saving throw proficiency | character.gd | tested | test_reference_party |
 | Passive scores (+5/−5) | creature.gd passive_score | tested | test_abilities, test_reference_party |
 | Initiative = Dexterity check, Alert adds PB | creature.gd initiative_bonus | tested | test_reference_party |
-| Heroic Inspiration | character.gd (Resourceful); encounter.gd reroll | partial: reroll offered on a missed attack roll; saves and checks [Phase 3] | test_combat_encounter |
+| Heroic Inspiration | character.gd (Resourceful); encounter.gd reroll | partial: a reroll offered on a missed attack roll and after a failed check in conversation (story/check_aids.gd); on saves it is used automatically (deviations) [F6] | test_combat_encounter |
 | Bonus/penalty dice on D20 Tests (Bless, Bane) | creature.gd roll_d20 | tested | test_effects |
 | Automatic failure (Paralyzed etc.) | creature.gd roll_d20 | tested | test_conditions |
 
@@ -41,7 +43,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Death Saving Throws (10+, nat 1, nat 20, 3/3) | creature.gd roll_death_save | tested | test_death_saves |
 | Damage at 0 HP = failure (crit = 2) | creature.gd | tested | test_damage |
 | Stabilizing, Stable creatures | creature.gd stabilize | tested | test_death_saves |
-| Knocking a creature out | — | not started | [Phase 3] |
+| Knocking a creature out | — | not started | — (no Improvement Ideas item yet) |
 | Critical Hits: roll damage dice twice | resolution/attack_resolver.gd | tested | test_attacks |
 
 ## Rules Glossary: conditions (data/conditions)
@@ -89,8 +91,8 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Multiclass spell slots; third casters alone round up | magic/spellcasting.gd | tested | test_spellcasting, test_level_up |
 | Extra Attack doesn't stack across classes | encounter.gd attacks_per_action (highest wins) | implemented | — |
 | Unarmored Defense from two classes: pick one | character.gd armor_class (best formula) | implemented | — |
-| Epic Boons, levels 19-20 | data | data | [Phase 5] |
-| Respec at Madam Eva | — | not started | [Phase 4] |
+| Epic Boons, levels 19-20 | data/feats; combat/faerun_features.gd | tested: every boon offered, and their combat parts | test_faerun_epic_boons |
+| Respec at Madam Eva | story/story_state.gd respec_member; world/game_root.gd respec; the `respec` dialogue command | tested: rebuilt from level 1, belongings kept | test_story |
 
 ## Classes (Phase 1: Fighter, Rogue, Cleric, Wizard; Phase 4: the other eight; all 48 PHB subclasses)
 
@@ -115,7 +117,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Mystic Arcanum (Warlock 11, 13, 15, 17): a level 6-9 Warlock spell cast once per Long Rest without a slot, never prepared | character.gd (`granted` spell choices), spell_caster.gd free casts | tested (see deviations) | test_levels_8_to_11 |
 | Contact Patron (Warlock 9), Fey Reinforcements' free Summon Fey (Ranger 11) | data (spell grants and their uses) | implemented (Contact Other Plane's automatic success is narrative). In a fight a spell both prepared and granted is offered as the prepared one, so Summon Fey's free casting waits for the audit | test_levels_8_to_11 |
 | Nature's Ward (Land 10: Poisoned immunity, Resistance by land), Aura of Courage (the paladin's own Frightened immunity), Fiendish Resilience (a Resistance chosen after rests), Beguiling Defenses' Charmed immunity, Thought Shield's Psychic Resistance, Guarded Mind's Psychic Resistance | data (modifiers, `at_class_level`) | tested | test_levels_8_to_11 |
-| Tireless (Ranger 10): uses, a Short Rest removes a level of Exhaustion; Celestial Resilience (Warlock 10): Temporary Hit Points after a rest | character.gd finish_short_rest, _rest_temp_hp; combat/class_features.gd (the Magic action) | tested; Celestial Resilience's share for five others and the Magical Cunning trigger are the rest screen's [Phase 5] | test_levels_8_to_11 |
+| Tireless (Ranger 10): uses, a Short Rest removes a level of Exhaustion; Celestial Resilience (Warlock 10): Temporary Hit Points after a rest | character.gd finish_short_rest, _rest_temp_hp; combat/class_features.gd (the Magic action) | tested; Celestial Resilience's share for five others and the Magical Cunning trigger are the rest screen's (no Improvement Ideas item yet) | test_levels_8_to_11 |
 | Unarmored Defense (Barbarian, Monk, Dance, Draconic), Fast Movement, Unarmored Movement, Roving, Danger Sense, Feral Instinct, Aura of Protection (own saves) | data + creature.gd (speed and Advantage `when`) | tested | test_classes |
 | Jack of All Trades | creature.gd skill_bonus | tested | test_classes |
 | Martial Arts die and Dexterity for Unarmed Strikes and Monk weapons | weapon_profile.gd, character.gd martial_arts_die | tested (the Bonus Action strike: combat side of the new classes) | test_classes |
@@ -127,7 +129,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Multiclassing into every class: prerequisites, proficiencies (skills, instruments), Hit Points | level_up_controller.gd, character.gd | tested | test_classes, test_reference_party |
 | The eight new classes in combat to level 7: Rage (Resistance, Rage Damage, Advantage, no spells or Concentration, lasting while you attack or force saves), Reckless Attack, Instinctive Pounce; Martial Arts strike, Flurry of Blows, Patient Defense, Step of the Wind, Uncanny Metabolism, Deflect Attacks, Stunning Strike, Empowered Strikes; Lay On Hands, Channel Divinity, Aura of Protection; Bardic Inspiration, Font of Inspiration, Countercharm; Wild Shape (keeping the druid's mind and Hit Points), Wild Companion, Wild Resurgence, Primal Strike; Innate Sorcery, Font of Magic, Metamagic, Sorcery Incarnate; Tireless, Roving; invocations (at-will spells, Pact of the Blade, Thirsting Blade, Eldritch Smite, Lifedrinker, Repelling Blast, Eldritch Spear, Devil's Sight, Fiendish Vigor) | combat/class_features.gd, shape_change.gd, features.gd, reactions.gd | tested: Rage, Reckless Attack, Flurry of Blows, Stunning Strike, Patient Defense, Step of the Wind, Deflect Attacks, Lay On Hands, Aura of Protection, Bardic Inspiration, Wild Shape, Innate Sorcery, Font of Magic, invocations | test_class_combat |
 | Their 32 subclasses to level 7: Berserker (Frenzy, Mindless Rage), Wild Heart (Bear, Eagle, Wolf; Aspect of the Wilds), World Tree (Vitality of the Tree, Branches of the Tree), Zealot (Divine Fury, Warrior of the Gods, Fanatical Focus); Lore (Cutting Words), Valor (Combat Inspiration, Extra Attack), Glamour (Mantle of Inspiration, Beguiling Magic, Mantle of Majesty), Dance (Agile Strikes, Inspiring Movement, Tandem Footwork); Land (Land's Aid), Moon (Circle Forms, Improved Circle Forms), Sea (Wrath of the Sea), Stars (Starry Form, Cosmic Omen); Open Hand, Shadow, Elements, Mercy; Devotion, Glory, Ancients, Vengeance (Channel Divinity options and level 7 auras, Inspiring Smite, Smite of Protection, Relentless Avenger); Hunter, Beast Master (Primal Companion), Gloom Stalker, Fey Wanderer; Draconic, Wild Magic (condensed surge table), Aberrant, Clockwork (Restore Balance, Bastion of Law); Fiend, Archfey (Steps of the Fey, Misty Escape), Celestial (Healing Light, Radiant Soul), Great Old One | combat/class_features.gd | implemented, with Psionic Sorcery, Psychic Spells, Awakened Mind and Clairvoyant Combatant, Pact of the Chain's familiars (Familiar Strike, Investment of the Chain Master), Gift of the Protectors and Gaze of Two Minds; tested: Colossus Slayer, Cutting Words, Psionic Sorcery, Psychic Spells, Pact of the Chain. Natural Recovery is rest-time | test_class_combat |
-| The new classes' level 8-11 features in combat: Brutal Strike, Relentless Rage; Abjure Foes; Acrobatic Movement (no walls or liquids to run on yet); Celestial Resilience's share for others; Retaliation, Battering Roots, Zealous Presence, Moonlight Step, Stormborn, Flurry of Healing and Harm, Improved Shadow Step, Stride of the Elements, Fleet Step, Bestial Fury, Fey Reinforcements without Concentration, Superior Hunter's Prey, Stalker's Flurry's Sudden Strike and Mass Fear, Roving Aim, Beguiling Defenses' Reaction, Eldritch Hex, Thought Shield's reflected damage, Guarded Mind's ending of Charmed and Frightened, Spell Breaker's Bonus Action Dispel Magic | data (`implemented: text`; resources for their uses are in the data) | not started [the spell and ability audit] | — |
+| The new classes' level 8-11 features in combat: Brutal Strike, Relentless Rage; Abjure Foes; Acrobatic Movement; Retaliation, Battering Roots, Zealous Presence, Moonlight Step, Stormborn, Flurry of Healing and Harm, Improved Shadow Step, Stride of the Elements, Fleet Step, Bestial Fury, Fey Reinforcements without Concentration, Superior Hunter's Prey, Stalker's Flurry, Roving Aim, Beguiling Defenses' Reaction, Eldritch Hex, Thought Shield's reflected damage, Guarded Mind, Spell Breaker's Bonus Action Dispel Magic | combat/class_features.gd, features.gd, encounter_reactions.gd, encounter_damage.gd, spell_casting.gd, spell_handlers.gd, feature_actions.gd | implemented (refreshed 2026-10-07: the data marks each `engine`); tested: Brutal Strike, Relentless Rage, Abjure Foes, Acrobatic Movement, Retaliation, Zealous Presence, Moonlight Step, Fleet Step, Superior Hunter's Prey, Beguiling Defenses, Thought Shield, Spell Breaker. Not yet: Acrobatic Movement's running on walls and liquids [F4, F5]; sharing Celestial Resilience (row above) | test_levels_8_to_11, test_class_combat |
 | Already in combat at 8-11: Indomitable, Tactical Master, Two Extra Attacks, Divine Intervention, Heightened Focus, Self-Restoration, Aura of Courage, Radiant Strikes, Tireless, Improved Cunning Strike, Heroic Warrior, Eldritch Strike, Twinkling Constellations, Magical Ambush, Soul Blades, Supreme Sneak, The Third Eye, Illusory Self, Stalker's Flurry (2d8), Dreadful Strikes (1d6 at 11), Lifedrinker | combat/ | implemented (the Phase 1 classes' since Phase 2; tested where the rows above say) | — |
 
 ## Feats, equipment, spells
@@ -147,7 +149,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Spell save DC and spell attack | character.gd | tested | test_reference_party |
 | Cantrip scaling at 5/11/17; upcasting | magic/spellcasting.gd | tested (11 in test_levels_8_to_11) | test_spellcasting, test_levels_8_to_11 |
 | Prepared spells, always-prepared spells, spellbook | character.gd | tested | test_reference_party |
-| Ritual casting | data (ritual flags) | data | [Phase 3] |
+| Ritual casting | story/field_casting.gd cast_utility (10 more minutes, no slot); combat/spell_options.gd precast (a Ritual cast before the fight carries in) | tested | test_faerun_familiars, test_faerun_origin_feats |
 | Booming Blade and Green-Flame Blade (Tasha's Cauldron, 2014 rules; added by the owner 2026-10-07, entered from knowledge): a melee weapon attack with a carried weapon against a creature within 5 ft, refused without one; +1d8 per tier on a hit. Booming Blade's thunder ((tier + 1)d8) goes off when the target moves of its own will (its move, a free move, Jump, a legendary move) before the caster's next turn, not when shoved or compelled; Green-Flame Blade's fire (tier d8 + spellcasting modifier) leaps to an enemy the caster can see within 5 ft of the target. Both work as a Bladesinger's or War Magic's attack cantrip | spell_caster.gd `_blade_cantrip`, `booming_moved`; encounter.gd `_walk` | tested | test_blade_cantrips |
 | Components and focuses | spell_caster.gd | partial: Verbal (can't speak, reveals the hidden), armor training; Material and focuses assumed carried | test_combat_spells |
 | Areas of effect | grid.gd area_cells, spell_caster.gd | tested (sphere, cube, cone, line, emanation from a creature or a placed object, wall; walls block) | test_combat_grid, test_combat_spells, test_new_spells |
@@ -210,7 +212,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Casting outside combat: healing and helpful spells, slots, lasting effects and Concentration | story/field_casting.gd (through SpellCaster) | tested | test_party_screens |
 | Frightened: can't willingly move closer to a visible source | encounter.gd reachable_for | tested (strict reading, deviations) | test_combat_encounter |
 | Flying creatures move at their Fly Speed | combatant.gd speed | implemented (no altitude, deviations) | test_phase3_exit |
-| Heroic Inspiration and Tactical Mind after a failed check (conversations) | story/check_aids.gd | tested; exploration checks and saves outside combat [Phase 5] | test_story |
+| Heroic Inspiration and Tactical Mind after a failed check (conversations) | story/check_aids.gd | tested; exploration checks take the aids that come before a roll (Advantage) but offer no reroll after a failure, and saves outside combat neither (no Improvement Ideas item yet) | test_story |
 | Light, Darkvision and obscurement affecting checks and attacks | combat (audit); location_view.gd passes the hour, map light, lamps and lantern into fights | tested | test_exploration |
 | Exploring spells (Light, Detect Magic, Find Traps, others as `spell:` conditions); Ritual casting (+10 minutes, no slot) | story/field_casting.gd, location_view.gd apply_spell_effect | tested (Light, Find Traps); the rest record their duration for the story to read | test_exploration |
 | Arcane Recovery | rest_screen.gd | tested | test_party_screens |
