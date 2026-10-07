@@ -80,6 +80,17 @@ func capture_shots(tool: Node, out: String) -> void:
 				root.get("screen").call("_draw")
 			await _shoot(tool, "%s_%s.png" % [out, kind])
 			root.call("close_screen")
+	if _wants("roster"):
+		# Tamsin waits at camp and is picked to swap in: the screen shows whose place she can take.
+		var tamsin := GameState.story.party[1]
+		GameState.story.send_to_camp(tamsin)
+		root.call("open_screen", "roster", 0)
+		var rs := root.get("screen") as RosterScreen
+		rs.set("_picked", tamsin)
+		rs.call("_draw")
+		await _shoot(tool, "%s_roster.png" % out)
+		root.call("close_screen")
+		GameState.story.bring_along(tamsin)
 	if _wants("prepare"):
 		var ps := PrepareScreen.new()
 		add_child(ps)

@@ -605,6 +605,8 @@ func open_screen(kind: String, index: int) -> void:
 			screen = JournalScreen.new()
 		"party":
 			screen = PartyScreen.new()
+		"roster":
+			screen = RosterScreen.new()
 		"rest":
 			screen = RestScreen.new()
 		"menu":

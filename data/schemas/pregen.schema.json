@@ -69,6 +69,10 @@
           }
         }
       }
+    },
+    "roster": {
+      "type": "boolean",
+      "description": "Offered in the roster the player picks the party from (owner, 2026-10-06)."
     }
   }
 }

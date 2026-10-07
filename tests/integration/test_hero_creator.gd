@@ -3,14 +3,14 @@ extends TestCase
 ## place, with the paper-doll Appearance step.
 
 
-func _hero_screen(replacing: String = "ilse_varga") -> CreationScreen:
+func _hero_screen(leaving: String = "ilse_varga") -> CreationScreen:
 	var cs := CreationScreen.new()
 	add_child(cs)
 	var others: Array[String] = []
-	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
-		if id != replacing:
+	for id in Pregens.roster_ids():
+		if id != leaving and others.size() < 3:
 			others.append(id)
-	cs.open_hero(replacing, others)
+	cs.open_hero(others)
 	return cs
 
 
