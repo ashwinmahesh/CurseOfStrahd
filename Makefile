@@ -17,7 +17,7 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              echo "Files changed since the last import: importing first."; $(G) --headless --import > /dev/null 2>&1; \
              touch $(STAMP); fi
 
-.PHONY: run arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens
+.PHONY: run arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens plants
 
 ## Imports first when scripts or assets changed since the last import (a merge can add a class_name or images that
 ## the editor cache doesn't know yet, and the game then stops at a parse error).
@@ -159,6 +159,13 @@ props:
 ## [PREVIEW=captures/models.png] writes art/models/*.glb and manifest.json, then imports them.
 models:
 	$(BLENDER) -b --python blender/models_3d.py -- $(if $(ONLY),--only $(ONLY),) $(if $(PREVIEW),--preview $(abspath $(PREVIEW)),)
+	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+
+## The Modern look's trees and plants (docs/art/plants.md): paints the leaf cards, builds art/plants/*.glb and
+## manifest.json, then imports them. make plants [ONLY="spruce_a fern_a"] (rebuilds only those models).
+plants:
+	python3 tools/art/plant_cards.py
+	$(BLENDER) -b --python blender/plants_3d.py -- $(if $(ONLY),--only $(ONLY),)
 	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
 
 ## Menu ornaments and icons (black-on-white Gemini art -> white shapes with alpha, tinted in game): make ui_art
