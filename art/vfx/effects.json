@@ -16,6 +16,13 @@
       "smoke": "peat",
       "light": "candle"
     },
+    "greenfire": {
+      "core": "bile",
+      "glow": "sickly",
+      "edge": "moss",
+      "smoke": "bog",
+      "light": "bile"
+    },
     "cold": {
       "core": "ivory",
       "glow": "frost",
@@ -245,6 +252,7 @@
     "blindness_deafness": "debuff",
     "blink": "teleport",
     "blur": "transform@illusion",
+    "booming_blade": "smite@thunder",
     "burning_hands": "cone",
     "cacophonic_shield": "aura@thunder",
     "call_lightning": "strike",
@@ -395,6 +403,7 @@
     "grease": "ground",
     "greater_invisibility": "transform@illusion",
     "greater_restoration": "heal",
+    "green_flame_blade": "smite@greenfire",
     "guardian_of_faith": "summon",
     "guards_and_wards": "ward",
     "guidance": "buff",
@@ -795,7 +804,17 @@
     "radiance_arm": "glimmer@radiant",
     "fluid_forms": "transform@nature",
     "fluid_forms_end": "transform@nature",
-    "bright_sun": "aura@radiant"
+    "bright_sun": "aura@radiant",
+    "booming_blade_burst": {
+      "family": "nova",
+      "flavour": "thunder",
+      "size": 0.6
+    },
+    "green_flame_blade_leap": {
+      "family": "bolt",
+      "flavour": "greenfire",
+      "size": 0.7
+    }
   },
   "_monsters": "A monster's own actions by \"<monster>.<action>\". With no pick, a ranged attack is a bolt (magic damage) or a shot, a melee attack a touch (magic) or a slash, and a save action takes its area's shape (cone, line, nova) or a curse or psychic look, all in its damage type's colours. Lair actions use the same keys (\"strahd_von_zarovich.shadow_thief\").",
   "monsters": {

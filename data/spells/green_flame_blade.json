@@ -1,0 +1,45 @@
+{
+  "id": "green_flame_blade",
+  "name": "Green-Flame Blade",
+  "source": {
+    "book": "TCoE",
+    "edition": "2014",
+    "note": "Entered from knowledge of Tasha's Cauldron of Everything (first printed in Sword Coast Adventurer's Guide), a 2014-rules spell the owner added on 2026-10-07; no 2024 book reprints it. Check every number against the owner's copy."
+  },
+  "level": 0,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "s": true,
+    "m": "a melee weapon worth at least 1 SP",
+    "m_cost_gp": 0.1
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "enemy",
+    "count": 1,
+    "within": 5,
+    "description": "One creature within 5 feet, struck with the component weapon; the fire may leap to a second creature within 5 feet of it."
+  },
+  "cantrip_scaling": {
+    "damage": "1d8",
+    "text": "Extra Fire damage on a hit, none before level 5: 1d8 at level 5, 2d8 at 11, 3d8 at 17. The leaping fire adds the same dice to your spellcasting ability modifier."
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "A melee weapon attack whose green fire leaps from the target to a second creature beside it.",
+  "text": "You brandish the weapon that is the spell's material component and make one melee attack with it against a creature within 5 feet of you, using the weapon's usual attack and damage. On a hit, the target suffers the attack's normal effects, and you can make green fire leap from it to a different creature you can see within 5 feet of it, which takes Fire damage equal to your spellcasting ability modifier. From character level 5 the hit also deals 1d8 extra Fire damage and the leaping fire deals 1d8 + your spellcasting ability modifier; both grow by 1d8 at level 11 (2d8, and 2d8 + the modifier) and again at level 17 (3d8, and 3d8 + the modifier)."
+}
