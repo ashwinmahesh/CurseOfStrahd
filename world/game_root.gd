@@ -81,6 +81,7 @@ func _new_pregen_party() -> void:
 
 
 func enter_location(location_id: String, spawn: String) -> void:
+	_fade_from_black()
 	if view != null:
 		view.queue_free()
 		view = null
@@ -177,10 +178,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_G:
 				_command("split")
 			KEY_ESCAPE:
-				if hud.narration_showing():
+				if hud.controls_showing():
+					hud.toggle_controls()
+				elif hud.narration_showing():
 					hud.close_narration()
 				else:
 					open_screen("menu", 0)
+			KEY_F1:
+				hud.toggle_controls()
 			KEY_M:
 				open_travel(false)
 			KEY_F5:
@@ -565,6 +570,32 @@ func _strahd_step(step: Dictionary) -> void:
 
 var _fade: ColorRect = null
 var _fade_label: Label = null
+var _place_fade: ColorRect = null
+
+
+## A new place comes up out of black instead of cutting to it (docs/plans/ui_polish.md): the screen goes dark at once
+## and the place fades in. The change itself isn't delayed, so nothing that waits on it notices.
+func _fade_from_black() -> void:
+	if not is_inside_tree():
+		return
+	if _place_fade == null:
+		var layer := CanvasLayer.new()
+		layer.layer = 39   # over the HUDs, under the time-passing fade and the menus
+		add_child(layer)
+		_place_fade = ColorRect.new()
+		_place_fade.color = Color(Look.color("void"), 0.0)
+		_place_fade.set_anchors_preset(Control.PRESET_FULL_RECT)
+		_place_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		layer.add_child(_place_fade)
+	if _place_fade.has_meta(&"tween"):
+		var old := _place_fade.get_meta(&"tween") as Tween
+		if old != null and old.is_valid():
+			old.kill()
+	_place_fade.color.a = 1.0
+	var tw := create_tween()
+	tw.tween_interval(0.12)
+	tw.tween_property(_place_fade, "color:a", 0.0, 0.6).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+	_place_fade.set_meta(&"tween", tw)
 
 
 ## A fade to black and back when time passes (rests, journeys, waiting for noon), with how long it was.

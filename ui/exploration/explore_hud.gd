@@ -41,6 +41,16 @@ var exit_signs: ExitSigns
 ## Names over everything usable while Alt is held (ui/exploration/thing_labels.gd).
 var thing_labels: ThingLabels
 
+## The exploring controls card (F1), like the one in fights.
+const CONTROLS: Array[String] = [
+	"Mouse: click the floor to walk there; click a person, door, chest or thing to use it (the hint says what a click will do); right-click it for everything you can do; the mouse wheel zooms.",
+	"Hold Alt to see the names of everything you can use nearby.",
+	"Keyboard: WASD or the arrows walk · Q / E turn the camera · 1-4 or Tab pick who leads · C character · I inventory · J journal · P party · M map · R rest · F search · V sneak · G split the party · F5 quicksave · F9 load it · Esc menu.",
+	"In conversations: 1-9 pick an answer · Space, Enter or a click goes on · H shows what's been said.",
+	"Controller: left stick walks · A uses what's beside you · Back opens its menu · X searches · Y journal · LB / RB character and inventory · Start menu.",
+]
+var _controls: PanelContainer
+
 ## [label, key, command, icon (art/ui/icons)]
 const BUTTONS := [["Character", "C", "sheet", "character"], ["Inventory", "I", "inventory", "inventory"],
 	["Journal", "J", "journal", "journal"], ["Party", "P", "party", "party"], ["Map", "M", "map", "map"],
@@ -174,6 +184,36 @@ func build(state: StoryState) -> void:
 	_roll_panel.offset_bottom = -78
 	_roll_panel.visible = false
 	add_child(_roll_panel)
+	_controls = UiKit.panel("ui_black", "gilt_dark")
+	var cs := _controls.get_theme_stylebox("panel") as StyleBoxFlat
+	cs.set_corner_radius_all(10)
+	cs.corner_detail = 1
+	cs.set_content_margin_all(22)
+	UiKit.trim(_controls, 56.0)
+	_controls.anchor_left = 0.5
+	_controls.anchor_right = 0.5
+	_controls.offset_left = -440
+	_controls.offset_right = 440
+	_controls.offset_top = 140
+	_controls.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_controls.visible = false
+	var cbox := VBoxContainer.new()
+	cbox.add_theme_constant_override("separation", 8)
+	cbox.add_child(_label("Controls (F1 to close)", 20, "gilt_light"))
+	for line: String in CONTROLS:
+		var l := _label(line, 15, "vellum")
+		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		l.custom_minimum_size = Vector2(820, 0)
+		cbox.add_child(l)
+	_controls.add_child(cbox)
+	add_child(_controls)
+	var f1 := _label("F1: controls", 12, "gilt_dark")
+	f1.anchor_top = 1.0
+	f1.anchor_bottom = 1.0
+	f1.offset_left = 16
+	f1.offset_top = -30
+	f1.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(f1)
 	# A quiet "Autosaved" at the bottom right when the game saves itself.
 	_saved = _label("◆ Autosaved", 14, "gilt")
 	_saved.anchor_left = 1.0
@@ -436,6 +476,14 @@ func toast(text: String) -> void:
 	_toast_panel.reset_size()
 	_toast_panel.offset_left = -_toast_panel.size.x / 2.0
 	_toast_panel.offset_right = _toast_panel.size.x / 2.0
+
+
+func toggle_controls() -> void:
+	_controls.visible = not _controls.visible
+
+
+func controls_showing() -> bool:
+	return _controls.visible
 
 
 ## The game just saved itself: a note at the bottom right that fades.
