@@ -29,12 +29,14 @@ endif
 set ireena_door_opened
 Narrator: There's a long silence, and then the bolts, one after another.
 Ireena [sad]: A priest. Father wanted a priest at the end, and there wasn't one. Come in.
+inspire class:cleric: offered to pray over a dead man at a barred door
 -> END
 
 ~ door_forced
 set ireena_door_opened
 Narrator: The bolts slide back. The door opens a hand's width, and the point of a sword comes through it first.
 Ireena [angry]: Fine. Come in. Slowly, and with your hands where I can see them. I've opened this door to worse than you, and I'm still standing.
+approve godrick_pendlebrook -2 liriel_dawnsong -2 kip_smudgewick -1: You threatened your way through a frightened woman's door
 -> END
 
 ~ door_shut
@@ -131,6 +133,7 @@ set burial_agreed
 quest bury_the_burgomaster find_a_priest
 quest escort_ireena asked
 Ireena: Thank you. Then he needs a priest. Father Donavich, at the church on the hill. Ask him to say the words. Then we carry Father over together, before dark.
+approve godrick_pendlebrook +2 liriel_dawnsong +2: You promised Ireena a proper burial for her father
 -> menu
 
 ~ procession_check
@@ -163,6 +166,7 @@ Ireena: You'd do that? Then listen: the parlor window is the weakest, the front 
 ~ vigil_start
 set mansion_vigil
 Narrator: You bar the door and wait while the fire burns down to embers. Then, all at once, every board on every window begins to creak.
+approve godrick_pendlebrook +2 thistle +2 wren_featherfoot +1: You barred the door and held the house with Ireena
 -> END
 
 ~ siege_after
@@ -174,6 +178,8 @@ Ireena [smile]: Last night you stood in my father's house, and nobody ran. I've 
 attitude ireena friendly
 Narrator: You lay a hand on the coffin lid and speak the old words. Ireena stands very straight and doesn't cry, though it costs her something.
 Ireena [sad]: Thank you. He'd have liked you. He'd have argued with you about everything, and liked you.
+inspire class:cleric: blessed a father's coffin for his daughter
+approve liriel_dawnsong +1: You blessed Kolyan's coffin
 -> menu
 
 # --- After the burial: the escort choice ---
@@ -234,6 +240,7 @@ quest escort_ireena accepted
 attitude ireena friendly
 Ireena: Then I'll fetch my sword and my good boots. I'm not made of glass; I'll walk, I'll fight, and I'll take a watch. Don't argue about the watch.
 Ismark: I'm coming too. Don't argue either. It's the only family business I have left.
+approve godrick_pendlebrook +4 liriel_dawnsong +2 wren_featherfoot +2 thistle +1 kip_smudgewick +1 ratatoille +1: You took Ireena out of the village, away from him
 * Glad to have you, Ismark. -> ismark_joins
 * Someone should stay and keep the house standing. -> ismark_stays
 
@@ -260,6 +267,7 @@ quest escort_ireena declined
 attitude ireena indifferent
 Ireena [weary]: I see. No, I do. It's a long road, and he's very patient. Go on, then.
 Ismark: We'll manage. We always do. Badly, mostly, but we manage.
+approve godrick_pendlebrook -4 liriel_dawnsong -2 wren_featherfoot -2 kip_smudgewick -1: You wouldn't take Ireena away from the village
 -> END
 
 ~ declined

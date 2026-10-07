@@ -1,5 +1,79 @@
 # Liriel Dawnsong's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each
-# plays once. Quest: Carry the Dawn (narrative/companions/dawn.dialogue).
+# plays once. Quest: Carry the Dawn (narrative/companions/dawn.dialogue). The file offers its first talk that holds:
+# when she's Strained or Doubtful (story/approval.gd), those first; then the quest's; then Warm, Close and Devoted.
+
+# --- When she's lost faith in the party (approval) ----------------------------------------------------------------
+
+~ talk_strained
+if name:liriel_dawnsong and approval.liriel_dawnsong <= strained
+-> strained
+endif
+-> END
+
+~ strained
+Narrator: Liriel doesn't kneel at the edge of the camp tonight. She sits in the middle of it, close to the fire, with her little light cupped in her hands, and looks at each of you in turn as if she were counting.
+interject name:liriel_dawnsong: I've tried to find a kind way to say this, and there isn't one, so I'll say it as plainly as Thistle would.
+interject name:liriel_dawnsong: I can't hear Him here. I told you that. And now I can't hear the dawn in any of you, either. I look at what we've done, and I can't find it.
+if flag.dark_gifts_taken >= 1
+interject name:liriel_dawnsong: We let a thing in the amber put its gift into one of us. It's still there. I feel it when I pray, like a draught under a door.
+elif flag.abbot_fate == "wedding"
+interject name:liriel_dawnsong: We stood and watched an angel give a dead girl to the devil. I keep seeing the dress.
+endif
+interject name:liriel_dawnsong: I'll heal you. I'll stand with you. But I won't sing in his chapel with you behind me like this. It would be a lie, and He would know, and so would the dawn.
+* Then show us the way back. -> strained_way
+* We hear you. We'll mend it. -> strained_mend
+* We don't need your hymn. -> strained_cold
+
+~ strained_way
+interject name:liriel_dawnsong: Be kind on purpose. That's the whole of it. It isn't easy; it's only simple, which people mistake for easy.
+interject name:liriel_dawnsong: Thank you for asking. Asking is the first step of every road I know.
+approve liriel_dawnsong +10: You asked me to show you the way back
+-> END
+
+~ strained_mend
+interject name:liriel_dawnsong: Then let it be so. I'll watch, and I'll hope. I'm very good at both; I've had practice.
+approve liriel_dawnsong +6: You told me you'd mend it
+-> END
+
+~ strained_cold
+Narrator: She doesn't answer. She cups the little light closer, and turns her face away from all of you, toward the place where the east ought to be.
+approve liriel_dawnsong -5: You told me you don't need my hymn
+-> END
+
+~ talk_doubt
+if name:liriel_dawnsong and approval.liriel_dawnsong == doubtful
+-> doubt
+endif
+-> END
+
+~ doubt
+Narrator: Liriel says the evening prayer in a whisper tonight, and when it's done she doesn't put her holy symbol away. She sits turning it in her fingers.
+interject name:liriel_dawnsong: May I ask you something? You needn't answer tonight.
+interject name:liriel_dawnsong: When we came into this valley I thought we were carrying the dawn together. Lately I'm not certain we're walking toward it.
+if flag.bella_pact
+interject name:liriel_dawnsong: We shook hands with a fiend at that mill. I said it aloud so none of us would forget. I haven't.
+endif
+interject name:liriel_dawnsong: I'm not angry. I'm frightened, a little, and I'd rather be frightened out loud than in the dark. You know how I feel about the dark.
+* You're right to ask. We've lost our way a little. -> doubt_lost
+* The dawn won't come by being gentle, Liriel. -> doubt_gentle
+* Your god isn't in charge of us. -> doubt_god
+
+~ doubt_lost
+interject name:liriel_dawnsong: A little is a good word. A little can be walked back. Thank you. Be at peace.
+approve liriel_dawnsong +6: You admitted we'd lost our way a little
+-> END
+
+~ doubt_gentle
+interject name:liriel_dawnsong: Perhaps not. But it won't come by being cruel, either. I've looked. It isn't down that road.
+approve liriel_dawnsong +1: You told me the dawn won't come by being gentle
+-> END
+
+~ doubt_god
+interject name:liriel_dawnsong: No. He isn't in charge of anyone. That was never the point of Him. ...I thought you knew that.
+approve liriel_dawnsong -4: You told me my god isn't in charge of you
+-> END
+
+# --- Her quest ---------------------------------------------------------------------------------------------------
 
 ~ talk_silence
 if name:liriel_dawnsong and quest.carry_the_dawn == the_vision
@@ -15,6 +89,7 @@ interject name:liriel_dawnsong: Morning's grace. I'm sorry. I didn't mean to wak
 
 ~ silence_kneel
 Narrator: You kneel beside her in the wet grass. She doesn't look round, but she moves over a little, to make room.
+approve liriel_dawnsong +1: You knelt beside me in the wet grass
 -> silence_wrong
 
 ~ silence_wrong
@@ -28,14 +103,17 @@ interject name:liriel_dawnsong: I've never prayed into a silence before. It's ve
 ~ silence_sent
 interject name:liriel_dawnsong: ...Oh.
 interject name:liriel_dawnsong: That's either very wise or very silly, and I can't tell which, and I think that means it's wise. Thank you.
+approve liriel_dawnsong +2: You told me I might be the next room
 -> silence_end
 
 ~ silence_knew
 interject name:liriel_dawnsong: Yes. He always knows. That's the comfort of him. It's also, I'm learning, the difficulty.
+approve liriel_dawnsong +1: You reminded me He knew what He was sending me into
 -> silence_end
 
 ~ silence_stop
 interject name:liriel_dawnsong: Stop? No. Oh, no. You don't stop talking to someone you love because they've gone quiet. That's when you talk more.
+approve liriel_dawnsong -1: You asked me whether I wanted to stop praying
 -> silence_end
 
 ~ silence_end
@@ -72,6 +150,7 @@ else
 Narrator: Someone sits down beside her and stays until morning, and nobody mentions it the next day.
 endif
 interject name:liriel_dawnsong: Being brave isn't not being afraid. I know that. I've told it to a hundred novices. It turns out it's much easier to say.
+approve liriel_dawnsong +3: You saw through my devotional light, and sat with me anyway
 -> END
 
 ~ dark_leave
@@ -110,6 +189,106 @@ interject name:liriel_dawnsong: So I'll carry it. All the way up to the castle, 
 if not (quest.carry_the_dawn >= faith_kept)
 quest carry_the_dawn faith_kept
 endif
+approve liriel_dawnsong +2: You told me the rest is up to us
 interject name:wren_featherfoot: You're scarier than you look, you know that?
 interject name:liriel_dawnsong: Everyone says that. I've never understood why it surprises them.
+-> END
+
+# --- As she comes to trust the party (approval) -------------------------------------------------------------------
+
+~ talk_warm
+if name:liriel_dawnsong and approval.liriel_dawnsong >= warm and level >= 3
+-> warm
+endif
+-> END
+
+~ warm
+Narrator: Liriel is teaching the morning hymn to whoever will hold still. So far that is nobody, but she's undeterred.
+interject name:liriel_dawnsong: It's only four lines. The novices learn it at six years old. Some of them learn it at five and are insufferable about it.
+interject name:liriel_dawnsong: You sing it facing east, even when there's no east to speak of. Especially then. That's the point of it, I think. I didn't understand that until I came here.
+* (Learn the hymn.) -> warm_learn
+* Sing it for us. -> warm_sing
+* There's no east in Barovia, Liriel. -> warm_east
+
+~ warm_learn
+Narrator: You get the first line wrong, and the second line very wrong, and she corrects you both times without a flicker of impatience. The third line comes out right. She looks as proud as if you'd raised the dead.
+interject name:liriel_dawnsong: There. Now there are two of us facing east. That's a congregation, technically.
+if name:thistle
+interject name:thistle: I'll whistle it. Through my fingers. Sunbeam taught me. No, I taught her. We taught each other.
+endif
+approve liriel_dawnsong +3: You learned the morning hymn with me
+-> END
+
+~ warm_sing
+Narrator: She sings it softly, so as not to wake the others, and the fire seems to lean toward her to listen.
+interject name:liriel_dawnsong: It sounds better at dawn. Everything does. That's rather the point of dawn.
+approve liriel_dawnsong +2: You asked me to sing the morning hymn
+-> END
+
+~ warm_east
+interject name:liriel_dawnsong: There's always an east. It's only very shy here. You have to be patient with shy things.
+approve liriel_dawnsong +1: You argued with me about the east, which nobody's done since I was six
+-> END
+
+~ talk_close
+if name:liriel_dawnsong and approval.liriel_dawnsong >= close and level >= 5
+-> close
+endif
+-> END
+
+~ close
+Narrator: It's very late. Liriel is awake, which isn't unusual. What's unusual is that she comes and sits beside you, and doesn't pretend she's praying.
+interject name:liriel_dawnsong: I've never told anyone this. Not my abbess. Not the Morninglord, though He knows, of course. He knows everything. It's very inconvenient.
+interject name:liriel_dawnsong: I'm afraid the vision was only a dream I wanted. A girl who'd sung the sun up every morning of her life, dreaming she was important enough to be sent somewhere.
+interject name:liriel_dawnsong: If it was only a dream, then I brought you all here for nothing. I brought myself here for nothing.
+* Dream or not, you came. That's what matters. -> close_came
+* We'd have come anyway. -> close_anyway
+* We've seen what you've done here. That's no dream. -> close_seen
+
+~ close_came
+interject name:liriel_dawnsong: That's very nearly a sermon. I'll steal it for the novices, if I ever see them again. I'll say a wise friend told me.
+approve liriel_dawnsong +3: You told me it matters that I came
+-> close_end
+
+~ close_anyway
+interject name:liriel_dawnsong: Would you? Into this? ...Yes. I think you would. That's either very brave or very foolish, and I find I don't mind which.
+approve liriel_dawnsong +2: You told me you'd have come anyway
+-> close_end
+
+~ close_seen
+interject name:liriel_dawnsong: The bones. The children in the house. The little lights. ...Yes. Those weren't dreams. I was there for those. So were you.
+approve liriel_dawnsong +3: You reminded me what we've done here isn't a dream
+-> close_end
+
+~ close_end
+interject name:liriel_dawnsong: Morning's grace. ...It's still dark. I'll say it anyway. That's rather the point of me.
+-> END
+
+~ talk_devoted
+if name:liriel_dawnsong and approval.liriel_dawnsong >= devoted and level >= 8
+-> devoted
+endif
+-> END
+
+~ devoted
+Narrator: Liriel has been writing something in the back of her prayer book, very small. When she sees you looking, she turns the book round so you can read it. It's a list of your names.
+interject name:liriel_dawnsong: The novices write down whoever they pray for, so nobody is forgotten at the morning hymn. I started this in Death House. I've never had to cross anyone out. I mean to keep it that way.
+interject name:liriel_dawnsong: When I came here I thought I was carrying the dawn alone. My errand, and mine only, and you were kind people walking the same road.
+interject name:liriel_dawnsong: I was wrong. It isn't something one person carries. It's heavier than that, and lighter. Do you understand? I'm not certain I do.
+* We understand. -> devoted_understand
+* Put yourself on the list, Liriel. -> devoted_list
+
+~ devoted_understand
+interject name:liriel_dawnsong: Good. Then one of us does. That's enough for a congregation.
+approve liriel_dawnsong +3: You understood what I meant about carrying the dawn
+-> devoted_end
+
+~ devoted_list
+Narrator: She looks at the page a long moment. Then, at the very bottom, she writes her own name, in a hand much less steady than the others.
+interject name:liriel_dawnsong: I've never done that. It feels terribly vain. ...It feels rather nice. Don't tell the Morninglord.
+approve liriel_dawnsong +3: You told me to put myself on my own prayer list
+-> devoted_end
+
+~ devoted_end
+inspire name:liriel_dawnsong: knew the dawn isn't carried alone
 -> END

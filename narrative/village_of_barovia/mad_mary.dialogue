@@ -57,6 +57,7 @@ Mad Mary [sad]: From the inside. Then nobody took her. She went to him. Whoever 
 attitude mad_mary friendly
 Narrator: The rocking slows. For the first time since you came in, she looks at you and not past you.
 Mad Mary: Sixteen years. Yes. That's something. That's something, isn't it. Thank you.
+approve kip_smudgewick +1 liriel_dawnsong +1: You told Mary that keeping her girl safe wasn't a crime
 -> menu
 
 ~ comfort_fail
@@ -69,15 +70,18 @@ quest find_gertruda promised
 attitude mad_mary friendly
 Mad Mary [afraid]: You will? You'll look? Dark hair, a blue dress with a mended hem, she hums when she's afraid. She'll be afraid. Tell her I'm not angry. Tell her the door is unlocked now. All three locks.
 interject name:thistle: Grandda says nobody's lost. Just not found yet. I'll find her.
+approve godrick_pendlebrook +2 kip_smudgewick +2 thistle +1 liriel_dawnsong +1: You promised Mad Mary you'd look for her daughter
 -> menu
 
 ~ refuse
 quest find_gertruda refused
 Mad Mary: Of course. Of course you can't. Thank you for listening. Nobody listens. Mind the step on your way out; it sticks.
 Narrator: Before you reach the door, the weeping starts again, exactly where it left off.
+approve godrick_pendlebrook -2 kip_smudgewick -2 liriel_dawnsong -1: You told Mad Mary you couldn't look for her daughter
 -> END
 
 ~ pray
 Narrator: You pray aloud for a girl you have never met. Mary doesn't close her eyes; she watches your lips, as if checking the words.
 Mad Mary: Do they work, here? Prayers? No, don't answer. Say another one.
+inspire class:cleric: prayed with a mother for her lost girl
 -> menu

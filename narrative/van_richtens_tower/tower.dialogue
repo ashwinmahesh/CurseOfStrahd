@@ -33,6 +33,7 @@ interject name:ratatoille: Khazan! An archmage of the old kingdom. I'll have you
 else
 interject tag:scholarly: Khazan. An archmage of the old kingdom. Every history names him, and none of them says much more.
 endif
+approve ratatoille +2: You read Khazan's name on the lintel
 -> door_menu
 
 ~ read_fail
@@ -43,6 +44,7 @@ Narrator: The letters are worn soft and written in a script that went out of fas
 ~ arcana_ok
 set tower_ward_known
 Narrator: Two wards, one nested inside the other. The outer one is ancient and simple: it is waiting to hear a name. The inner one is new, neat and spiteful, and it is listening for one particular person. It isn't listening for you.
+approve ratatoille +1: You studied the wards on Van Richten's door
 -> door_menu
 
 ~ arcana_fail

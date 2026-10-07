@@ -47,10 +47,12 @@ Narrator: A dead young man and a cheap rope. If there is more to read in him, th
 set nicu_token_taken
 Narrator: You work the earring free. It is a little silver horse's head, warm from nothing at all.
 interject name:wren_featherfoot: Not keeping it, before anyone asks. Old hands, new habits. It's going home.
+approve wren_featherfoot +1 liriel_dawnsong +1: You took the hanged Vistana's earring home for his people
 -> gallows_menu
 
 ~ leave
 Narrator: You leave him turning. Behind you, the rope creaks once, as if he has shifted his weight.
+approve liriel_dawnsong -1 godrick_pendlebrook -1: You left a hanged man turning on the gallows
 -> END
 
 ~ cut_down
@@ -62,6 +64,7 @@ set nicu_token_taken
 Narrator: Before the earth goes over him, someone thinks to take the silver earring. His people will want it.
 endif
 interject tag:veteran: Not my first roadside grave. Shallow is fine. Straight matters.
+approve liriel_dawnsong +2 godrick_pendlebrook +1 wren_featherfoot +1 kip_smudgewick +1: You cut down the hanged Vistana and gave him a grave
 * [Cleric] Say the rites over him. -> rites
 * [Religion DC 12] Say what words you can remember. -> rites | rites_fumbled
 * Fill in the grave. -> buried
@@ -97,6 +100,7 @@ if not flag.nicu_token_taken
 set nicu_token_taken
 Narrator: Someone keeps the silver earring back from the grave. His people will want it.
 endif
+approve liriel_dawnsong +2 godrick_pendlebrook +1: You buried the hanged Vistana by the road
 -> END
 
 ~ signpost

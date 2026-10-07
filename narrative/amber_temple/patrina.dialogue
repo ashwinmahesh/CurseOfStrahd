@@ -71,6 +71,7 @@ Patrina: Sorry. He's sorry. Three hundred years, and he sends strangers up a mou
 
 ~ brother_ok
 Patrina: ...Afraid. Yes. He always was. And he admits it now? That's new. That's very nearly brave.
+approve wren_featherfoot +2: You told Patrina her brother admits he was afraid
 -> at_rest
 
 ~ brother_fail
@@ -87,6 +88,7 @@ Patrina: No. I've done my living. If Kasimir wants to do something for me, he ca
 ~ rest_prayer
 Narrator: You speak the old words for the dead, the ones every faith in the valley shares: rest, and be remembered, and let the living go.
 Patrina: Rest. Everyone always wants me to rest. ...Perhaps I'm tired. Perhaps I've been tired for a long time.
+approve liriel_dawnsong +2 wren_featherfoot +1: You prayed Patrina toward rest
 -> at_rest
 
 ~ rest_prayer_fail
@@ -148,4 +150,5 @@ Patrina: Go home, little brother. Don't bring me back. Don't make bargains. Be b
 Patrina [angry]: Don't you dare. Don't you dare buy me back from a thing in a box, like a coat out of pawn.
 Kasimir: ...She's right. She was always right. That was the whole trouble with her.
 set kasimir_bargain = "refused"
+approve wren_featherfoot -3 liriel_dawnsong -2 kip_smudgewick -2: You told Kasimir about the vestige that could buy his sister back
 -> kasimir_alone
