@@ -66,6 +66,7 @@ func _ready() -> void:
 				tc.queue_free()
 				await get_tree().process_frame
 		_drop_added_data(data_before)
+		_reset_globals()
 		if claim_dir != "":
 			print("@@ done %s %d" % [f, Time.get_ticks_msec() - started])
 	Creature.clear_caches()
@@ -97,6 +98,18 @@ func _test_files(files_only: PackedStringArray) -> Array[String]:
 			if found.has(f):
 				out.append(found[f])
 	return out
+
+
+## Puts back the game's global state a test file may leave behind, before the next file in the same process: a scene
+## that started a fight left ModeController in COMBAT, and every later save in that process was refused
+## (test_settings_page before test_fresh_dice, 2026-10-07). Also the tree's pause, the time scale, the save slot and
+## GameState, as a fresh process has them.
+func _reset_globals() -> void:
+	ModeController.force(ModeController.Mode.EXPLORATION)
+	get_tree().paused = false
+	Engine.time_scale = 1.0
+	SaveSystem.current_slot = ""
+	GameState.reset()
 
 
 ## Every id in the shared Compendium's tables, so what a test file adds there (fixture places, made-up monsters) can
