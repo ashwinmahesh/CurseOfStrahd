@@ -16,6 +16,9 @@ var sort_by := "name"
 var selected := ""
 var _frame: VBoxContainer
 var _card: VBoxContainer
+## PrepareScreen.snapshot() as an item's Long Rest ended (Daern's Instant Fortress, Rod of Security): while this screen
+## stays open it offers the chance to change prepared spells the rest screen gives, counted from that list.
+var _prepared_before: Dictionary = {}
 
 
 func _init() -> void:
@@ -46,6 +49,11 @@ func _draw() -> void:
 		selected = ""
 		_draw())
 	strip.add_child(UiParts.gap())
+	if not _prepared_before.is_empty():
+		var prep := UiKit.button("Change prepared spells", _open_prepare, 15, "spells")
+		UiParts.light_up(prep)
+		prep.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		strip.add_child(prep)
 	var purse := HBoxContainer.new()
 	purse.add_theme_constant_override("separation", 6)
 	purse.add_child(UiParts.caption("Purse", 12))
@@ -689,10 +697,20 @@ func _identify_caster() -> Character:
 	return null
 
 
+## Changing prepared spells (and a Wizard's cantrip) after an item's Long Rest, as the rest screen offers.
+func _open_prepare() -> void:
+	var ps := PrepareScreen.new()
+	ps.earlier = _prepared_before
+	add_child(ps)
+	ps.open(root, st, 0)
+
+
 ## Uses a magic item's power outside a fight (story/field_items.gd) and shows what happened.
 func _use_power(power_id: String, opts: Dictionary) -> void:
 	var ch := _ch()
 	var res := FieldItems.use(st, ch, selected, power_id, ch, Dice.roller, opts)
+	if bool(res.get("ok", false)) and str(res.get("effect", "")) == "long_rest":
+		_prepared_before = PrepareScreen.snapshot(st)
 	# What it does to the place the party is in (a Wand of Secrets' pointing, a Wand of Magic Detection's Detect Magic).
 	if bool(res.get("ok", false)) and str(res.get("effect", "")) != "" and root != null and root.get("view") != null:
 		(root.get("view") as LocationView).apply_spell_effect(str(res["effect"]))

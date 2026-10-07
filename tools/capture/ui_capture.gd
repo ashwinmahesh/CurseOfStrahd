@@ -1,8 +1,8 @@
 extends Node
 ## Every party screen for captures: the four pregens at level 5 with some wear on them (a Bloodied cleric, a spent
 ## Second Wind and spell slot, Shield of Faith, Poisoned), then the sheet's tabs, party, inventory, level up, rests,
-## spell preparation, journal, loot, shop, pause menu and character creation, one shot each, plus sample tooltips and
-## the sheet for a level 7 warlock, monk and druid.
+## spell preparation (after a rest and after an item's Long Rest), journal, loot, shop, pause menu and character creation,
+## one shot each, plus sample tooltips and the sheet for a level 7 warlock, monk and druid.
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -126,6 +126,25 @@ func capture_shots(tool: Node, out: String) -> void:
 			(sc as ScrollContainer).scroll_vertical = 100000
 		await _shoot(tool, "%s_prepare_swapped.png" % out)
 		ps2.queue_free()
+	if _wants("item_rest"):
+		# Daern's Instant Fortress gives a Long Rest from the inventory, which then offers Change prepared spells.
+		ilse.add_item("daerns_instant_fortress")
+		root.call("open_screen", "inventory", 0)
+		var inv := root.get("screen") as InventoryScreen
+		inv.selected = "daerns_instant_fortress"
+		inv.call("_use_power", "fortress", {})
+		await tool.call("wait_frames", 150)   # the "8 hours later" fade
+		await _shoot(tool, "%s_item_rest.png" % out)
+		inv.call("_open_prepare")
+		await tool.call("wait_frames", 4)
+		# Ratatoille's cantrips, the Wizard's one Long Rest swap.
+		for l in inv.find_children("*", "Label", true, false):
+			if (l as Label).text.contains("Wizard cantrips") or (l as Label).text.contains("Wizard Cantrips"):
+				for sc in inv.find_children("*", "ScrollContainer", true, false):
+					var scroll := sc as ScrollContainer
+					scroll.scroll_vertical = int((l as Label).global_position.y - scroll.global_position.y) - 60
+		await _shoot(tool, "%s_item_rest_prepare.png" % out)
+		root.call("close_screen")
 	if _wants("level_up"):
 		GameState.story.milestones = 10
 		root.call("open_screen", "level_up", 2)

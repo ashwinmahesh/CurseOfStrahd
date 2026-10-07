@@ -25,6 +25,10 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	root = root_
 	st = state
 	var frame := UiKit.screen_frame(self, "Prepare Spells", Vector2(1300, 820))
+	# The intro runs the frame's full width, so it starts below the crest hanging under the title.
+	var clear := Control.new()
+	clear.custom_minimum_size = Vector2(0, 8)
+	frame.add_child(clear)
 	frame.add_child(UiKit.label("After a Long Rest, choose which spells each caster has ready: Clerics, Druids and Wizards can change any of theirs, Paladins and Rangers one, and Wizards one cantrip too. Barbarians and Fighters swap one Weapon Mastery; Paladins, Rangers and Rogues any. Druids swap one Wild Shape form. Always-prepared spells (a domain's, an oath's) don't count. Hover a spell for what it does.", 15, "parchment", 1220))
 	_box = VBoxContainer.new()
 	_box.add_theme_constant_override("separation", 14)
