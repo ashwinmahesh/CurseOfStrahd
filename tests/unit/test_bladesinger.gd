@@ -194,6 +194,10 @@ func test_focus_supplies_material_and_somatic_together_but_not_somatic_only() ->
 	assert_eq(SpellComponents.hand_reason(ch, sm, "wizard"), "")
 	assert_true(SpellComponents.hand_reason(ch, {"s": true}, "wizard") != "")
 	assert_true(SpellComponents.hand_reason(ch, {"s": true, "m": "a pearl", "m_cost_gp": 100}, "wizard") != "")
+	assert_false(SpellComponents.can_replace_material({"m": "copper pieces", "m_cost_gp": 0.02}), "fractional gold prices are still priced components")
+	assert_true(SpellComponents.hand_reason(ch, {"m": "copper pieces", "m_cost_gp": 0.02}, "wizard") != "")
+	var priced := {"components": {"s": true, "m": "a weapon", "m_cost_gp": 0.01}}
+	assert_eq(float(SpellComponents.effective(priced, ["subtle"]).get("m_cost_gp", 0.0)), 0.01, "Subtle Spell retains even a one-copper Material requirement")
 	assert_true(SpellComponents.hand_reason(ch, {"m": "incense", "m_consumed": true}, "wizard") != "")
 	ch.add_effect(Effect.new("War Caster").with_modifier("flag", {"value": "war_caster_somatic_components"}))
 	assert_eq(SpellComponents.hand_reason(ch, {"s": true}, "wizard"), "")

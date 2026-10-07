@@ -26,7 +26,7 @@ static func focus_source(ch: Character, item: Dictionary, class_id: String) -> S
 	return ""
 
 static func can_replace_material(components: Dictionary) -> bool:
-	return str(components.get("m", "")) != "" and int(components.get("m_cost_gp", 0)) == 0 and not bool(components.get("m_consumed", false))
+	return str(components.get("m", "")) != "" and float(components.get("m_cost_gp", 0.0)) == 0.0 and not bool(components.get("m_consumed", false))
 
 static func effective(spell: Dictionary, metamagic: Array = [], omit_material: bool = false) -> Dictionary:
 	var out := (spell.get("components", {}) as Dictionary).duplicate(true)
