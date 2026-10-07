@@ -67,6 +67,7 @@ static func build(board_: ArenaBoard, mood: Dictionary, rng_: RandomNumberGenera
 		and Compendium.shared().has("locations", board_.place) else {}
 	if GroundRelief.enabled():
 		l.relief = GroundRelief.build(board_, loc)
+		Clutter.ruts(board_, l.relief.roads())   # wheel-rut decals along its roads (lane 7's W10)
 		l._find_roads()
 	l._terrain()
 	if l.relief != null:

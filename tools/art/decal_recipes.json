@@ -1,0 +1,151 @@
+{
+  "about": "Decals (Improvement Ideas W10, docs/art/decals.md): sheets of four marks on white painted by Gemini (2K, art/prompts/decal_preamble.txt, a look target frame as the style reference) and cut apart by blender/make_decals.py into art/textures/decals/<sheet>_<n>.webp with soft alpha and a normal map. view: floor (seen from above) or wall (seen straight on, its bottom edge at the foot of the wall). along: marks that run on (ruts): cut to their straight middle with long soft ends, for laying end to end.",
+  "prompt": "A 2 x 2 grid of four separate {what} marks, each centred alone in its own quarter of the picture with wide plain white all round it, none touching the edges or each other: top left, {a}; top right, {b}; bottom left, {c}; bottom right, {d}. {view} Draw only the four marks on white, not a scene, a floor or a place.",
+  "views": {
+    "floor": "Each is seen straight from above, as if lying on a floor (orthographic, no perspective).",
+    "wall": "Each is seen straight on, as if on a wall, with its bottom at the bottom of its quarter (orthographic, no perspective)."
+  },
+  "sheets": {
+    "floor_cracks": {
+      "view": "floor",
+      "ref": "village_dusk_ab",
+      "subjects": [
+        "a branching network of thin dark cracks in stone, with a few chipped flakes along them",
+        "a single long jagged crack with smaller cracks splitting off it",
+        "a cluster of short hairline cracks round a chipped, broken spot",
+        "a star of cracks spreading from a small impact hole"
+      ]
+    },
+    "floor_stains": {
+      "view": "floor",
+      "ref": "death_house_hall_ab",
+      "subjects": [
+        "an old dark water stain with a paler tide-mark ring",
+        "a dark greasy oil stain, roughly round, soaked in",
+        "a smudge of black soot and ash with faint swirls",
+        "a faded rust-red stain spreading in a blotch"
+      ]
+    },
+    "floor_moss": {
+      "view": "floor",
+      "ref": "castle_hall_ab",
+      "subjects": [
+        "a patch of dark green moss with soft ragged edges",
+        "a ring of pale grey-green lichen spots",
+        "a clump of moss with tiny dark ferns",
+        "faint green algae streaks of damp"
+      ]
+    },
+    "floor_blood": {
+      "view": "floor",
+      "ref": "castle_hall_ab",
+      "subjects": [
+        "an old pool of dried dark blood, almost black at its heart",
+        "a smeared trail where something bloody was dragged",
+        "a spray of dark red blood drops and splatter",
+        "a line of dark blood drips"
+      ]
+    },
+    "floor_puddles": {
+      "view": "floor",
+      "ref": "castle_hall_ab",
+      "subjects": [
+        "a shallow puddle of dark still water, blue-grey, with a pale reflection and a wet dark rim",
+        "a long thin puddle of dark water with faint ripples",
+        "two small dark puddles side by side with wet rims",
+        "a muddy brown puddle with a dark rim of wet mud"
+      ]
+    },
+    "floor_leaves": {
+      "view": "floor",
+      "ref": "road_day_ab",
+      "subjects": [
+        "a loose scatter of a dozen dead brown and ochre leaves",
+        "a small drift of dark wet fallen leaves",
+        "a few scattered dark red and brown leaves with a twig",
+        "a thin scatter of dry curled leaves and pine needles"
+      ]
+    },
+    "floor_mud": {
+      "view": "floor",
+      "ref": "road_day_ab",
+      "subjects": [
+        "an irregular splash of wet dark brown mud with soft ragged edges",
+        "a muddy patch with boot prints in it",
+        "a fringe of mud spattered outward from one side",
+        "a smear of mud with small stones pressed in it"
+      ]
+    },
+    "floor_straw": {
+      "view": "floor",
+      "ref": "death_house_hall_ab",
+      "subjects": [
+        "a loose scatter of pale dry straw stalks",
+        "a flattened little heap of old hay",
+        "straw mixed with dirt, trodden down",
+        "a few stray stalks of straw"
+      ]
+    },
+    "floor_dust": {
+      "view": "floor",
+      "ref": "death_house_hall_ab",
+      "subjects": [
+        "a drift of grey dust and grit gathered in a corner, triangular, fading out",
+        "scattered small pebbles and grit",
+        "crumbled plaster chips and dust",
+        "a faint grey film of dust with footprints through it"
+      ]
+    },
+    "wall_damp": {
+      "view": "wall",
+      "ref": "castle_hall_ab",
+      "subjects": [
+        "dark damp streaks running straight down a wall from the top",
+        "a blotch of grey-green mould with damp around it",
+        "a tide-mark of rising damp along the bottom, wavy",
+        "long thin rust-brown water stains dripping down"
+      ]
+    },
+    "wall_soot": {
+      "view": "wall",
+      "ref": "death_house_hall_ab",
+      "subjects": [
+        "a plume of black soot rising and spreading upward, fading at the top",
+        "a narrow smudge of torch soot rising upward",
+        "a broad scorch mark, black at its heart",
+        "faint grey smoke staining spreading upward"
+      ]
+    },
+    "wall_cracks": {
+      "view": "wall",
+      "ref": "village_dusk_ab",
+      "subjects": [
+        "a long jagged crack running down a wall with small branches",
+        "a web of fine cracks round a broken patch",
+        "a stepped crack zig-zagging down",
+        "a few short hairline cracks"
+      ]
+    },
+    "wall_moss": {
+      "view": "wall",
+      "ref": "road_day_ab",
+      "subjects": [
+        "dark green moss creeping up from the bottom edge, thinning upward",
+        "sprigs of dark ivy climbing from the bottom edge",
+        "patches of lichen in grey-green spots",
+        "a fringe of moss and small weeds along the bottom edge"
+      ]
+    },
+    "floor_ruts": {
+      "view": "floor",
+      "ref": "road_day_ab",
+      "subjects": [
+        "a straight stretch of two parallel wheel ruts running from left to right, dark wet churned mud in the two grooves with a little standing water, fading away at both ends",
+        "a straight stretch of two parallel wheel ruts running from left to right, drier, cracked brown mud with small stones pressed in, fading away at both ends",
+        "a straight stretch of two parallel wheel ruts running from left to right, muddy, with hoof prints between them, fading away at both ends",
+        "a straight stretch of two parallel wheel ruts running from left to right, shallow and grassy at the edges, fading away at both ends"
+      ],
+      "along": true
+    }
+  }
+}
