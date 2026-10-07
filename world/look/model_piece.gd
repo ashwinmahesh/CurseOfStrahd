@@ -364,6 +364,9 @@ static func _extras(model: Node3D, info: Dictionary) -> void:
 			sp.shaded = true
 			if str(decal.get("anchor", "center")) == "bottom":
 				sp.offset = Vector2(0, float(r[3]) / 2.0)
+			if bool(decal.get("lie", false)):
+				sp.axis = Vector3.AXIS_Y   # lying on the floor (a rug)
+			sp.rotation.y = deg_to_rad(float(decal.get("turn", 0.0)))   # 180: the back face of a door
 			sp.position = Vector3(float(at[0]) + ((x0 + x1) / 2.0 - middle) * px, float(at[1]), float(at[2]))
 			model.add_child(sp)
 

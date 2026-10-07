@@ -2963,6 +2963,286 @@ for _art, _style in WALL_ART.items():
                                                    "socket": "art", "width": round(_w, 4)}])(_wall_art_builder(_art, _style))
 
 
+# --- Stoves, hearths, entrances, doors, windows, floor pieces (rollout batch 6d) --------------------------------
+
+@model("stove", "wall", ["stove"])
+def stove(p):
+    """The 2D kitchen range: a black iron stove on legs, an oven door, pots on top, its pipe up the wall."""
+    W, D = 0.7, 0.42
+    yc = -D / 2 - 0.02
+    p.box((W, D, 0.42), (0, yc, 0.1 + 0.21), "pal_ink")
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((0.04, 0.04, 0.1), (sx * (W / 2 - 0.04), yc + sy * (D / 2 - 0.04), 0.05), "pal_void")
+    p.box((W + 0.02, D + 0.02, 0.03), (0, yc, 0.535), "pal_stone_deep")
+    p.box((0.3, 0.01, 0.2), (-0.12, yc - D / 2 - 0.005, 0.3), "pal_stone_deep")
+    p.box((0.1, 0.012, 0.02), (-0.12, yc - D / 2 - 0.012, 0.38), "pal_silver")
+    p.box((0.18, 0.012, 0.08), (0.2, yc - D / 2 - 0.005, 0.36), "glow_ember")
+    for x in (-0.15, 0.15):
+        p.lathe([(0.0, 0.0), (0.1, 0.0), (0.11, 0.1), (0.0, 0.1)], (x, yc, 0.55), "pal_stone", segs=12)
+        p.lathe([(0.0, 0.0), (0.03, 0.0), (0.0, 0.02)], (x, yc, 0.65), "pal_slate", segs=8)
+    p.cyl(0.05, 0.7, (0.25, -0.08, 0.55), "pal_ink", segs=10)
+
+
+@model("oven_brick", "wall", ["oven_brick"])
+def oven_brick(p):
+    """The 2D bread oven: a brick dome on a brick base, its arched mouth glowing."""
+    p.box((0.96, 0.6, 0.4), (0, -0.3, 0.2), "pal_rust")
+    for z in (0.1, 0.2, 0.3):
+        p.box((0.97, 0.605, 0.008), (0, -0.3, z), "pal_ember_deep")
+    p.rock((0, -0.3, 0.4), (0.9, 0.6, 0.55), "pal_rust", top="pal_ember", rough=0.03, subdiv=2, bury=0.5, smooth=True, top_z=0.9,
+           top_p=0.3)
+    mouth = [(-0.16, 0.0), (0.16, 0.0)] + list(reversed(arch(-0.16, 0.16, 0.12, 0.12, n=10, pointed=False)))
+    p.prism(mouth, 0.02, (0, -0.6, 0.42), "glow_candle")
+    ring = arch(-0.2, 0.2, 0.12, 0.16, n=10, pointed=False)
+    p.tube([(x, -0.61, 0.42 + z) for x, z in ring], 0.025, "pal_ember_deep", segs=5)
+
+
+def _marble_hearth(p, H=0.8):
+    """The marble surround of the conservatory hearth (fireplace_dancers), with a fire."""
+    W, D = 0.96, 0.26
+    marble, panel, deep = "pal_pewter", "pal_slate", "pal_stone"
+    front = -D
+    pw = 0.16
+    for s in (-1, 1):
+        x = s * (W / 2 - pw / 2)
+        p.box((pw, D, H - 0.27), (x, -D / 2, 0.08 + (H - 0.27) / 2), marble)
+        p.box((pw + 0.02, D + 0.02, 0.08), (x, -D / 2 - 0.01, 0.04), marble)
+        p.box((pw - 0.06, 0.01, H - 0.45), (x, front - 0.004, 0.12 + (H - 0.45) / 2), panel)
+    inner = W / 2 - pw
+    p.box((2 * inner + 0.002, D - 0.02, 0.15), (0, -(D - 0.02) / 2, H - 0.19 + 0.075), marble)
+    ow, oh = 2 * inner - 0.1, 0.42
+    for s in (-1, 1):
+        p.box((0.05, D - 0.02, oh), (s * (ow / 2 + 0.025), -(D - 0.02) / 2, oh / 2), marble)
+    p.box((2 * inner, D - 0.02, H - 0.19 - oh), (0, -(D - 0.02) / 2, oh + (H - 0.19 - oh) / 2), marble)
+    p.box((ow, 0.03, oh), (0, -0.015, oh / 2), "pal_ink")
+    p.box((W + 0.04, D + 0.04, 0.03), (0, -(D + 0.04) / 2, H - 0.04), panel)
+    p.box((W + 0.06, D + 0.07, 0.04), (0, -(D + 0.07) / 2, H - 0.02), marble)
+    p.box((W + 0.04, 0.2, 0.025), (0, front - 0.1, 0.0125), marble)
+    _fire(p, ow, front)
+    return H
+
+
+@model("fireplace_sword", "wall", ["fireplace_sword"],
+       decals=[{"art": "fireplace_sword", "region": [20, 0, 259, 70], "socket": "sword", "width": 0.8}])
+def fireplace_sword(p):
+    """The Death House hall hearth (2D fireplace_sword): a white marble surround, the sword from the 2D art over it."""
+    H = _marble_hearth(p)
+    p.socket("sword", (0, -0.02, H + 0.17))
+
+
+@model("fireplace_valley", "wall", ["fireplace_valley"],
+       decals=[{"art": "fireplace_valley", "region": [34, 0, 176, 132], "socket": "picture", "width": 0.5}])
+def fireplace_valley(p):
+    """The Death House dining hearth (2D fireplace_valley): marble, and the valley painting over it in a frame."""
+    H = _marble_hearth(p, 0.72)
+    w, h = 0.5, 0.5 * 132 / 176
+    z = H + 0.05 + h / 2
+    for s in (-1, 1):
+        p.box((w + 0.06, 0.04, 0.03), (0, -0.02, z + s * (h / 2 + 0.015)), "pal_umber")
+        p.box((0.03, 0.04, h + 0.06), (s * (w / 2 + 0.015), -0.02, z), "pal_umber")
+    p.socket("picture", (0, -0.012, z))
+
+
+@model("manor_door", "wall", ["manor_door"])
+def manor_door(p):
+    """The 2D manor entrance: stone pilasters and a lintel round tall double doors, a lamp, steps up to them."""
+    W, H = 0.88, 1.9
+    stone = "pal_parchment"
+    for s in (-1, 1):
+        p.box((0.14, 0.14, 1.5), (s * (W / 2 - 0.07), -0.07, 0.18 + 0.75), stone)
+        p.box((0.18, 0.18, 0.08), (s * (W / 2 - 0.07), -0.08, 1.72), "pal_bone")
+        p.box((0.17, 0.17, 0.06), (s * (W / 2 - 0.07), -0.08, 0.21), "pal_bone")
+    p.box((W + 0.04, 0.2, 0.16), (0, -0.1, 1.84), stone)
+    p.box((W + 0.08, 0.24, 0.05), (0, -0.12, 1.94), "pal_bone")
+    p.box((W - 0.28, 0.02, 0.06), (0, -0.2, 1.84), "pal_plum")
+    lw = (W - 0.28) / 2
+    for s in (-1, 1):
+        cx = s * (lw / 2 + 0.002)
+        p.box((lw - 0.006, 0.05, 1.5), (cx, -0.035, 0.18 + 0.75), "pal_grave")
+        for z0, h in ((0.3, 0.5), (0.9, 0.6)):
+            p.box((lw - 0.1, 0.012, h), (cx, -0.065, 0.18 + z0 + h / 2 - 0.12), "pal_ink")
+        p.cyl(0.012, 0.012, (s * 0.04, -0.07, 0.95), "pal_tan", rot=(90, 0, 0), segs=6)
+    for k in range(3):
+        p.box((W + 0.06 - k * 0.04, 0.12, 0.06), (0, -0.25 + k * 0.08, 0.03 + k * 0.06), "pal_bone")
+    p.box((0.08, 0.06, 0.14), (-W / 2 + 0.07, -0.2, 1.3), "glow_candle")
+
+
+def _slab_door(p, art, T, mat):
+    """A door leaf as a solid slab painted on both faces with its 2D door (decals `front` and `back`)."""
+    W, H = 0.86, 1.15
+    p.box((W, T, H), (0, 0, H / 2), mat)
+    p.socket("front", (0, -T / 2 - 0.003, H / 2))
+    p.socket("back", (0, T / 2 + 0.003, H / 2))
+
+
+def _door_decals(art):
+    info = PROPS[art]
+    region = [0, 0, info["width_px"], info["height_px"]]
+    return [{"art": art, "region": region, "socket": "front", "width": 0.86},
+            {"art": art, "region": region, "socket": "back", "width": 0.86, "turn": 180}]
+
+
+for _art, _mat in (("door_barred", "pal_blood"), ("door_clawed", "pal_umber"), ("amber_doors", "pal_slate")):
+    model(_art, "door", [_art], decals=_door_decals(_art))((lambda a, m: lambda p: _slab_door(p, a, 0.06, m))(_art, _mat))
+
+
+@model("gate_wooden", "door", ["gate_wooden"])
+def gate_wooden(p):
+    """The 2D wooden gate: two leaves of heavy vertical planks, iron straps and studs, an arched top."""
+    W, H, T = 0.86, 1.15, 0.07
+    rng = p.rng
+    n = 8
+    for k in range(n):
+        x = -W / 2 + W / n * (k + 0.5)
+        top = H - 0.08 + 0.08 * math.cos((x / (W / 2)) * math.pi / 2)
+        p.box((W / n - 0.008, T, top), (x, 0, top / 2), WOOD)
+    for z in (0.2, 0.55, 0.9):
+        p.box((W - 0.02, 0.014, 0.05), (0, -T / 2 - 0.007, z), "pal_ink")
+        for k in range(6):
+            p.cyl(0.01, 0.01, (-W / 2 + 0.08 + k * 0.14, -T / 2 - 0.014, z), "pal_pewter", rot=(90, 0, 0), segs=6)
+    p.box((0.03, 0.02, H), (0, -T / 2 - 0.01, H / 2), "pal_ink")
+
+
+def _window_box(p, art, W, H, bottom, frame="pal_umber"):
+    """A window set in a wall face: a wooden frame and sill round the 2D window (decal `glass`)."""
+    t, d = 0.05, 0.07
+    zc = bottom + H / 2
+    for s in (-1, 1):
+        p.box((t, d, H + 2 * t), (s * (W / 2 + t / 2), -d / 2, zc), frame)
+        p.box((W + 2 * t, d, t), (0, -d / 2, zc + s * (H / 2 + t / 2)), frame)
+    p.box((W + 2 * t + 0.06, d + 0.05, 0.04), (0, -(d + 0.05) / 2, bottom - t - 0.02), frame)
+    p.socket("glass", (0, -0.01, zc))
+    return zc
+
+
+def _window_decal(art, W):
+    info = PROPS[art]
+    return [{"art": art, "region": [0, 0, info["width_px"], info["height_px"]], "socket": "glass", "width": W}]
+
+
+@model("boarded_window", "wall", ["boarded_window"], decals=_window_decal("boarded_window", 0.6))
+def boarded_window(p):
+    """The 2D boarded window: the window in its frame, planks nailed across it standing out from the wall."""
+    W = 0.6
+    H = W * PROPS["boarded_window"]["height_px"] / PROPS["boarded_window"]["width_px"]
+    zc = _window_box(p, "boarded_window", W, H, 0.35)
+    for k, (a, dz) in enumerate(((14, 0.12), (-10, -0.02), (6, -0.16))):
+        p.box((W + 0.16, 0.025, 0.08), (0, -0.09, zc + dz), WOOD, rot=(0, a, 0))
+
+
+@model("shop_window", "wall", ["shop_window"], decals=_window_decal("shop_window", 0.62))
+def shop_window(p):
+    """The 2D shop window: the toys behind the glass kept from the 2D art, in a deep wooden frame with a sill."""
+    W = 0.62
+    _window_box(p, "shop_window", W, W * PROPS["shop_window"]["height_px"] / PROPS["shop_window"]["width_px"], 0.3)
+
+
+@model("window_lit", "wall", ["window_lit"], decals=[{"art": "window_lit", "region": [
+    int(PROPS["window_lit"]["width_px"] * 0.25), 0, int(PROPS["window_lit"]["width_px"] * 0.5), PROPS["window_lit"]["height_px"]],
+    "socket": "glass", "width": 0.4}])
+def window_lit(p):
+    """The 2D lit window: candlelit panes from the 2D art in a frame, its shutters swung open on the wall."""
+    W = 0.4
+    H = 0.4 * PROPS["window_lit"]["height_px"] / (PROPS["window_lit"]["width_px"] * 0.5)
+    zc = _window_box(p, "window_lit", W, H, 0.45)
+    for s in (-1, 1):
+        for k in range(3):
+            p.box((W / 2 / 3 - 0.004, 0.025, H), (s * (W / 2 + 0.05 + W / 12 + k * W / 6), -0.02, zc), WOOD)
+
+
+@model("straw_pallet", "free", ["straw_pallet"])
+def straw_pallet(p):
+    """The 2D straw pallet: a grey ticking mattress stuffed with straw, a lumpy pillow, straw poking out round it."""
+    p.box((0.62, 0.95, 0.1), (0, 0, 0.05), "pal_slate", soft=0.04)
+    p.box((0.4, 0.2, 0.08), (0, 0.33, 0.12), "pal_pewter", soft=0.035)
+    rng = p.rng
+    for _ in range(26):
+        a = rng.uniform(0, 2 * math.pi)
+        p.box((0.12, 0.008, 0.006), (0.3 * math.cos(a) * rng.uniform(0.85, 1.02), 0.44 * math.sin(a) * rng.uniform(0.85, 1.0), 0.01),
+              "pal_tan", rot=(0, 0, rng.uniform(0, 180)))
+
+
+@model("straw", "free", ["straw"], turns=True)
+def straw(p):
+    """The 2D straw: loose stalks scattered thick over the floor."""
+    rng = p.rng
+    for _ in range(70):
+        r = rng.uniform(0, 0.42)
+        a = rng.uniform(0, 2 * math.pi)
+        p.box((rng.uniform(0.1, 0.22), 0.01, 0.008), (r * math.cos(a), r * math.sin(a), rng.uniform(0.004, 0.05)),
+              rng.choice(["pal_tan", "pal_parchment", "pal_candle"]), rot=(rng.uniform(-10, 10), rng.uniform(-10, 10), rng.uniform(0, 180)))
+
+
+def _bone(p, a, b, r, mat="pal_vellum"):
+    p.tube([a, b], r, mat, segs=5)
+    for e in (a, b):
+        for k in (-1, 1):
+            p.lathe([(0.0, 0.0), (r * 1.4, r * 0.6), (r * 1.2, r * 1.8), (0.0, r * 2.2)], (e[0] + k * r * 0.8, e[1], e[2] - r), mat,
+                    segs=6)
+
+
+@model("bone_scatter", "free", ["bone_scatter"], turns=True)
+def bone_scatter(p):
+    """The 2D scattered bones: long bones, a few ribs and a skull among guttered candles."""
+    rng = p.rng
+    for _ in range(9):
+        x, y = rng.uniform(-0.35, 0.35), rng.uniform(-0.35, 0.35)
+        a = rng.uniform(0, math.pi)
+        L = rng.uniform(0.12, 0.26)
+        _bone(p, (x - L / 2 * math.cos(a), y - L / 2 * math.sin(a), 0.016), (x + L / 2 * math.cos(a), y + L / 2 * math.sin(a), 0.016),
+              0.012)
+    p.rock((0.18, 0.12, 0), (0.14, 0.17, 0.12), "pal_vellum", rough=0.06, subdiv=2, smooth=True, bury=0.0)
+    for x, y in ((0.14, 0.04), (0.22, 0.04)):
+        p.cyl(0.018, 0.01, (x, y + 0.02, 0.05), "pal_void", rot=(90, 0, 0), segs=6)
+    for x, y in ((-0.3, 0.2), (0.3, -0.25)):
+        p.cyl(0.016, rng.uniform(0.04, 0.08), (x, y, 0.0), "pal_ivory", segs=8)
+
+
+@model("grave_open", "free", ["grave_open"])
+def grave_open(p):
+    """The 2D open grave: a dark pit cut into the ground, a heap of earth beside it with a shovel stuck in it."""
+    p.box((0.42, 0.8, 0.02), (-0.15, 0, 0.004), "pal_void")
+    for s in (-1, 1):
+        p.box((0.44, 0.03, 0.05), (-0.15, s * 0.41, 0.02), "pal_umber")
+        p.box((0.03, 0.82, 0.05), (-0.15 + s * 0.22, 0, 0.02), "pal_umber")
+    p.rock((0.28, 0.0, 0), (0.32, 0.6, 0.3), "pal_umber", top="pal_peat", rough=0.12, subdiv=2, bury=0.2)
+    p.box((0.03, 0.03, 0.5), (0.3, 0.1, 0.42), "pal_walnut", rot=(12, -10, 0))
+    p.box((0.12, 0.02, 0.15), (0.32, 0.12, 0.18), "pal_slate", rot=(12, -10, 0))
+
+
+@model("jetty", "free", ["jetty"])
+def jetty(p):
+    """The 2D jetty: grey planks laid across stringers on posts, a few boards missing."""
+    rng = p.rng
+    for x in (-0.38, 0.38):
+        p.box((0.06, 0.98, 0.06), (x, 0, 0.0), "pal_umber")
+        for y in (-0.42, 0.42):
+            p.cyl(0.05, 0.5, (x, y, -0.4), "pal_peat", segs=8)
+    for k in range(9):
+        if k in (3,):
+            continue
+        y = -0.44 + k * 0.11
+        p.box((0.92 + rng.uniform(-0.04, 0.04), 0.1, 0.03), (rng.uniform(-0.02, 0.02), y, 0.045), "pal_bone_dark",
+              rot=(0, 0, rng.uniform(-2, 2)))
+
+
+def _rug(art, W):
+    info = PROPS[art]
+    return [{"art": art, "region": [0, 0, info["width_px"], info["height_px"]], "socket": "top", "width": W, "lie": True}]
+
+
+for _art, _w in (("rug_wolf", 0.95), ("tiger_rug", 0.95), ("rug_runner", 0.6)):
+    def _rug_builder(a=_art, w=_w):
+        def build(p):
+            info = PROPS[a]
+            h = w * info["height_px"] / info["width_px"]
+            p.socket("top", (0.0, 0.0, 0.012))
+            p.box((w * 0.5, h * 0.5, 0.008), (0, 0, 0.004), "pal_void")
+        return build
+    model(_art, "free", [_art], decals=_rug(_art, _w))(_rug_builder())
+
+
 # --- Export and preview ----------------------------------------------------------------------------------------
 
 def bounds(ob):

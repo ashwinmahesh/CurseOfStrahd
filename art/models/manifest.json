@@ -4444,6 +4444,655 @@
       ],
       "triangles": 2824,
       "sculpted": true
+    },
+    "stove": {
+      "file": "art/models/stove.glb",
+      "mount": "wall",
+      "stands_for": [
+        "stove"
+      ],
+      "size": [
+        0.72,
+        1.25,
+        0.448
+      ],
+      "materials": [
+        "glow_ember",
+        "pal_ink",
+        "pal_silver",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep",
+        "pal_void"
+      ],
+      "triangles": 272
+    },
+    "oven_brick": {
+      "file": "art/models/oven_brick.glb",
+      "mount": "wall",
+      "stands_for": [
+        "oven_brick"
+      ],
+      "size": [
+        0.97,
+        0.724,
+        0.637
+      ],
+      "materials": [
+        "glow_candle",
+        "pal_ember",
+        "pal_ember_deep",
+        "pal_rust"
+      ],
+      "triangles": 282
+    },
+    "fireplace_sword": {
+      "file": "art/models/fireplace_sword.glb",
+      "mount": "wall",
+      "stands_for": [
+        "fireplace_sword"
+      ],
+      "size": [
+        1.02,
+        0.8,
+        0.46
+      ],
+      "materials": [
+        "glow_candle",
+        "glow_ember",
+        "pal_ink",
+        "pal_pewter",
+        "pal_slate",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 500,
+      "sockets": {
+        "flame": [
+          0.0,
+          0.07,
+          0.12
+        ],
+        "sword": [
+          0,
+          0.97,
+          0.02
+        ]
+      },
+      "decals": [
+        {
+          "art": "fireplace_sword",
+          "region": [
+            20,
+            0,
+            259,
+            70
+          ],
+          "socket": "sword",
+          "width": 0.8
+        }
+      ]
+    },
+    "fireplace_valley": {
+      "file": "art/models/fireplace_valley.glb",
+      "mount": "wall",
+      "stands_for": [
+        "fireplace_valley"
+      ],
+      "size": [
+        1.02,
+        1.175,
+        0.46
+      ],
+      "materials": [
+        "glow_candle",
+        "glow_ember",
+        "pal_ink",
+        "pal_pewter",
+        "pal_slate",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 548,
+      "sockets": {
+        "flame": [
+          0.0,
+          0.07,
+          0.12
+        ],
+        "picture": [
+          0,
+          0.9575,
+          0.012
+        ]
+      },
+      "decals": [
+        {
+          "art": "fireplace_valley",
+          "region": [
+            34,
+            0,
+            176,
+            132
+          ],
+          "socket": "picture",
+          "width": 0.5
+        }
+      ]
+    },
+    "manor_door": {
+      "file": "art/models/manor_door.glb",
+      "mount": "wall",
+      "stands_for": [
+        "manor_door"
+      ],
+      "size": [
+        0.96,
+        1.965,
+        0.32
+      ],
+      "materials": [
+        "glow_candle",
+        "pal_bone",
+        "pal_grave",
+        "pal_ink",
+        "pal_parchment",
+        "pal_plum",
+        "pal_tan"
+      ],
+      "triangles": 268
+    },
+    "door_barred": {
+      "file": "art/models/door_barred.glb",
+      "mount": "door",
+      "stands_for": [
+        "door_barred"
+      ],
+      "size": [
+        0.86,
+        1.15,
+        0.06
+      ],
+      "materials": [
+        "pal_blood"
+      ],
+      "triangles": 12,
+      "sockets": {
+        "front": [
+          0,
+          0.575,
+          0.033
+        ],
+        "back": [
+          0,
+          0.575,
+          -0.033
+        ]
+      },
+      "decals": [
+        {
+          "art": "door_barred",
+          "region": [
+            0,
+            0,
+            200,
+            300
+          ],
+          "socket": "front",
+          "width": 0.86
+        },
+        {
+          "art": "door_barred",
+          "region": [
+            0,
+            0,
+            200,
+            300
+          ],
+          "socket": "back",
+          "width": 0.86,
+          "turn": 180
+        }
+      ]
+    },
+    "door_clawed": {
+      "file": "art/models/door_clawed.glb",
+      "mount": "door",
+      "stands_for": [
+        "door_clawed"
+      ],
+      "size": [
+        0.86,
+        1.15,
+        0.06
+      ],
+      "materials": [
+        "pal_umber"
+      ],
+      "triangles": 12,
+      "sockets": {
+        "front": [
+          0,
+          0.575,
+          0.033
+        ],
+        "back": [
+          0,
+          0.575,
+          -0.033
+        ]
+      },
+      "decals": [
+        {
+          "art": "door_clawed",
+          "region": [
+            0,
+            0,
+            184,
+            300
+          ],
+          "socket": "front",
+          "width": 0.86
+        },
+        {
+          "art": "door_clawed",
+          "region": [
+            0,
+            0,
+            184,
+            300
+          ],
+          "socket": "back",
+          "width": 0.86,
+          "turn": 180
+        }
+      ]
+    },
+    "amber_doors": {
+      "file": "art/models/amber_doors.glb",
+      "mount": "door",
+      "stands_for": [
+        "amber_doors"
+      ],
+      "size": [
+        0.86,
+        1.15,
+        0.06
+      ],
+      "materials": [
+        "pal_slate"
+      ],
+      "triangles": 12,
+      "sockets": {
+        "front": [
+          0,
+          0.575,
+          0.033
+        ],
+        "back": [
+          0,
+          0.575,
+          -0.033
+        ]
+      },
+      "decals": [
+        {
+          "art": "amber_doors",
+          "region": [
+            0,
+            0,
+            236,
+            300
+          ],
+          "socket": "front",
+          "width": 0.86
+        },
+        {
+          "art": "amber_doors",
+          "region": [
+            0,
+            0,
+            236,
+            300
+          ],
+          "socket": "back",
+          "width": 0.86,
+          "turn": 180
+        }
+      ]
+    },
+    "gate_wooden": {
+      "file": "art/models/gate_wooden.glb",
+      "mount": "door",
+      "stands_for": [
+        "gate_wooden"
+      ],
+      "size": [
+        0.852,
+        1.15,
+        0.094
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_pewter",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 504
+    },
+    "boarded_window": {
+      "file": "art/models/boarded_window.glb",
+      "mount": "wall",
+      "stands_for": [
+        "boarded_window"
+      ],
+      "size": [
+        0.764,
+        0.729,
+        0.12
+      ],
+      "materials": [
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 96,
+      "sockets": {
+        "glass": [
+          0,
+          0.6444,
+          0.01
+        ]
+      },
+      "decals": [
+        {
+          "art": "boarded_window",
+          "region": [
+            0,
+            0,
+            216,
+            212
+          ],
+          "socket": "glass",
+          "width": 0.6
+        }
+      ]
+    },
+    "shop_window": {
+      "file": "art/models/shop_window.glb",
+      "mount": "wall",
+      "stands_for": [
+        "shop_window"
+      ],
+      "size": [
+        0.78,
+        0.843,
+        0.12
+      ],
+      "materials": [
+        "pal_umber"
+      ],
+      "triangles": 60,
+      "sockets": {
+        "glass": [
+          0,
+          0.6517,
+          0.01
+        ]
+      },
+      "decals": [
+        {
+          "art": "shop_window",
+          "region": [
+            0,
+            0,
+            208,
+            236
+          ],
+          "socket": "glass",
+          "width": 0.62
+        }
+      ]
+    },
+    "window_lit": {
+      "file": "art/models/window_lit.glb",
+      "mount": "wall",
+      "stands_for": [
+        "window_lit"
+      ],
+      "size": [
+        0.896,
+        0.729,
+        0.12
+      ],
+      "materials": [
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 132,
+      "sockets": {
+        "glass": [
+          0,
+          0.7444,
+          0.01
+        ]
+      },
+      "decals": [
+        {
+          "art": "window_lit",
+          "region": [
+            72,
+            0,
+            144,
+            212
+          ],
+          "socket": "glass",
+          "width": 0.4
+        }
+      ]
+    },
+    "straw_pallet": {
+      "file": "art/models/straw_pallet.glb",
+      "mount": "free",
+      "stands_for": [
+        "straw_pallet"
+      ],
+      "size": [
+        0.666,
+        0.16,
+        0.95
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_slate",
+        "pal_tan"
+      ],
+      "triangles": 528
+    },
+    "straw": {
+      "file": "art/models/straw.glb",
+      "mount": "free",
+      "stands_for": [
+        "straw"
+      ],
+      "size": [
+        0.853,
+        0.074,
+        0.921
+      ],
+      "materials": [
+        "pal_candle",
+        "pal_parchment",
+        "pal_tan"
+      ],
+      "triangles": 840,
+      "turns": true
+    },
+    "bone_scatter": {
+      "file": "art/models/bone_scatter.glb",
+      "mount": "free",
+      "stands_for": [
+        "bone_scatter"
+      ],
+      "size": [
+        0.822,
+        0.114,
+        0.613
+      ],
+      "materials": [
+        "pal_ivory",
+        "pal_vellum",
+        "pal_void"
+      ],
+      "triangles": 1184,
+      "turns": true
+    },
+    "grave_open": {
+      "file": "art/models/grave_open.glb",
+      "mount": "free",
+      "stands_for": [
+        "grave_open"
+      ],
+      "size": [
+        0.827,
+        0.726,
+        0.85
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_slate",
+        "pal_umber",
+        "pal_void",
+        "pal_walnut"
+      ],
+      "triangles": 164
+    },
+    "jetty": {
+      "file": "art/models/jetty.glb",
+      "mount": "free",
+      "stands_for": [
+        "jetty"
+      ],
+      "size": [
+        0.987,
+        0.5,
+        1.002
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_peat",
+        "pal_umber"
+      ],
+      "triangles": 232
+    },
+    "rug_wolf": {
+      "file": "art/models/rug_wolf.glb",
+      "mount": "free",
+      "stands_for": [
+        "rug_wolf"
+      ],
+      "size": [
+        0.475,
+        0.008,
+        0.539
+      ],
+      "materials": [
+        "pal_void"
+      ],
+      "triangles": 12,
+      "sockets": {
+        "top": [
+          0.0,
+          0.012,
+          -0.0
+        ]
+      },
+      "decals": [
+        {
+          "art": "rug_wolf",
+          "region": [
+            0,
+            0,
+            416,
+            472
+          ],
+          "socket": "top",
+          "width": 0.95,
+          "lie": true
+        }
+      ]
+    },
+    "tiger_rug": {
+      "file": "art/models/tiger_rug.glb",
+      "mount": "free",
+      "stands_for": [
+        "tiger_rug"
+      ],
+      "size": [
+        0.475,
+        0.008,
+        0.566
+      ],
+      "materials": [
+        "pal_void"
+      ],
+      "triangles": 12,
+      "sockets": {
+        "top": [
+          0.0,
+          0.012,
+          -0.0
+        ]
+      },
+      "decals": [
+        {
+          "art": "tiger_rug",
+          "region": [
+            0,
+            0,
+            396,
+            472
+          ],
+          "socket": "top",
+          "width": 0.95,
+          "lie": true
+        }
+      ]
+    },
+    "rug_runner": {
+      "file": "art/models/rug_runner.glb",
+      "mount": "free",
+      "stands_for": [
+        "rug_runner"
+      ],
+      "size": [
+        0.3,
+        0.008,
+        0.644
+      ],
+      "materials": [
+        "pal_void"
+      ],
+      "triangles": 12,
+      "sockets": {
+        "top": [
+          0.0,
+          0.012,
+          -0.0
+        ]
+      },
+      "decals": [
+        {
+          "art": "rug_runner",
+          "region": [
+            0,
+            0,
+            216,
+            464
+          ],
+          "socket": "top",
+          "width": 0.6,
+          "lie": true
+        }
+      ]
     }
   }
 }
