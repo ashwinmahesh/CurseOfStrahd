@@ -3,7 +3,7 @@ extends Node3D
 ## real location walks a few short legs with stops, a corner and a turn back, under the game's camera. Recorded with
 ## Godot's movie writer:
 ##   tools/godot --path . --write-movie out.avi --fixed-fps 30 --resolution 1280x720 \
-##     res://tools/art/preview/walk_clip.tscn -- --location=village_of_barovia
+##     res://tools/art/preview/walk_clip.tscn -- --location=village_of_barovia [--hour=21]
 
 var view: LocationView
 var _title: Label
@@ -11,16 +11,19 @@ var _title: Label
 
 func _ready() -> void:
 	var loc_id := "village_of_barovia"
+	var hour := 12
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--location="):
 			loc_id = a.get_slice("=", 1)
+		elif a.begins_with("--hour="):
+			hour = int(a.get_slice("=", 1))
 	InputActions.ensure()
 	GameState.reset()
 	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]:
 		var ch := Pregens.build(id, 1)
 		ch.finish_long_rest()
 		GameState.story.party.append(ch)
-	GameState.story.minute_of_day = 12 * 60
+	GameState.story.minute_of_day = hour * 60
 	view = LocationView.create(loc_id, GameState.story, Narrator.new(), Dice.roller, "default")
 	add_child(view)
 	var ui := CanvasLayer.new()

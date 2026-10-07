@@ -23,7 +23,9 @@ var rng: RandomNumberGenerator
 var root: Node3D
 var water_material: ShaderMaterial = null
 var occluders: Array[Sprite3D] = []
-var mesh_occluders: Array[Node3D] = []   ## 3D trees (ModelPiece) in the first rows
+var mesh_occluders: Array[Node3D] = []   ## 3D trees (ModelPiece, or Flora's) in the first rows
+## The Modern look's trees and plants (Flora, Improvement Ideas W9); null in Classic, which keeps the old trees.
+var flora: Flora = null
 var _edge: Dictionary = {}      ## border cell -> Edge
 var _w := 0
 var _d := 0
@@ -36,6 +38,8 @@ var _dist := PackedFloat32Array()
 var _walk := PackedFloat32Array()
 var _nx := 0
 var _nz := 0
+## The land mesh's corner heights ((_nx + 1) x (_nz + 1), from (-REACH, -REACH)), so plants stand on it exactly.
+var _corner_h := PackedFloat32Array()
 
 
 ## Builds the land for `board` from a mood's `surround` (ground, road, trees, dead, rise, hills, void) and its
@@ -55,8 +59,19 @@ static func build(board_: ArenaBoard, mood: Dictionary, rng_: RandomNumberGenera
 	l._classify()
 	l._distances()
 	l._terrain()
+	if Flora.enabled():
+		var loc := Compendium.shared().get_entry("locations", board_.place) if board_.place != "" \
+			and Compendium.shared().has("locations", board_.place) else {}
+		l.flora = Flora.for_place(board_, Atmosphere.mood_for(board_.place, loc) if not loc.is_empty() else "", mood)
+		l._flora_board_trees()
+		l.flora.dress_map(board_, l.root)
 	if float(l.spec.get("trees", 0.0)) > 0.0:
-		l._trees()
+		if l.flora != null:
+			l._flora_trees()
+		else:
+			l._trees()
+	if l.flora != null:
+		l._flora_ground()
 	return l
 
 
@@ -261,6 +276,7 @@ func _terrain() -> void:
 			elif road > 0:
 				h *= 1.0 - 0.8 * float(road) / 4.0
 			heights[j * (nx + 1) + i] = h
+	_corner_h = heights
 	var tools := {Edge.FOREST: SurfaceTool.new(), Edge.OPEN: SurfaceTool.new(), Edge.WATER: SurfaceTool.new()}
 	var used := {}
 	for st: SurfaceTool in tools.values():
@@ -424,6 +440,148 @@ func _tree_models(kind: String, items: Array) -> bool:
 		mmi.multimesh = mm
 		root.add_child(mmi)
 	return true
+
+
+# --- The Modern look's trees and plants (Flora, Improvement Ideas W9) -----------------------------------------------
+
+## Beyond this many squares from the map the land's trees are their lighter far copies and cast no shadow.
+const FAR_DETAIL := 9.0
+
+
+## The ground's height at a point exactly as the land mesh has it (its corners, each square split as the mesh splits
+## it), so plants stand on it rather than float or sink.
+func surface_y(p: Vector2) -> float:
+	if _corner_h.is_empty():
+		return height(p)
+	var fi := p.x + REACH
+	var fj := p.y + REACH
+	var i := clampi(floori(fi), 0, _nx - 1)
+	var j := clampi(floori(fj), 0, _nz - 1)
+	var fx := clampf(fi - i, 0.0, 1.0)
+	var fz := clampf(fj - j, 0.0, 1.0)
+	var w := _nx + 1
+	var y00 := _corner_h[j * w + i]
+	var y10 := _corner_h[j * w + i + 1]
+	var y01 := _corner_h[(j + 1) * w + i]
+	var y11 := _corner_h[(j + 1) * w + i + 1]
+	if fx + fz <= 1.0:
+		return y00 + (y10 - y00) * fx + (y01 - y00) * fz
+	return y11 + (y01 - y11) * (1.0 - fx) + (y10 - y11) * (1.0 - fz)
+
+
+## What the land is at a point: one of Edge, or -1 on the map's own squares.
+func _land_kind(p: Vector2) -> int:
+	var c := Vector2i(floori(p.x), floori(p.y))
+	if board.grid.in_bounds(c):
+		if _is_void(c):
+			return Edge.FOREST if _void_land else Edge.DROP
+		return -1
+	return edge_at(p)
+
+
+## The map's own woods (ArenaBoard's trees on its wall squares) become the Modern look's trees: each keeps its square,
+## heading and fading; only the tree in it changes.
+func _flora_board_trees() -> void:
+	for holder in board.mesh_occluders:
+		if not is_instance_valid(holder) or not holder.has_meta("nature"):
+			continue
+		var info := ModelPiece.manifest().get(str(holder.get_meta("model", "")), {}) as Dictionary
+		var stands := info.get("stands_for", []) as Array
+		if stands.is_empty():
+			continue
+		var pick := ModelPiece.hash_cell(Vector2i(floori(holder.position.x * 3.0), floori(holder.position.z * 3.0)))
+		var id := flora.tree_for(str(stands[0]), pick)
+		if id == "":
+			continue
+		for c in holder.get_children():
+			holder.remove_child(c)
+			c.queue_free()
+		holder.add_child(Flora.instance(id, flora.tree_scale(id, "map", pick)))
+		holder.set_meta("model", id)
+
+
+## The land's trees as _trees() places them, from Flora: the first rows each a node of its own that fades like the
+## map's trees, the rest drawn many at once (the furthest as their lighter copies), darker further out as before.
+## Flora's trees are fuller than the old ones, so they stand further apart (the set's tree_density).
+func _flora_trees() -> void:
+	var density := float(spec.get("trees", 0.8)) * float(flora.spec.get("tree_density", 0.45))
+	var dead := float(spec.get("dead", 0.2))
+	var kinds := spec.get("tree_kinds", ["pine", "dead_tree"]) as Array
+	var step := 1.0 / sqrt(density)
+	var near := {}
+	var far := {}
+	var y := -REACH
+	while y < _d + REACH:
+		var x := -REACH
+		while x < _w + REACH:
+			var p := Vector2(x + rng.randf_range(0.0, step), y + rng.randf_range(0.0, step))
+			x += step
+			var k := _cell(p)
+			if k < 0:
+				continue
+			var out := _dist[k]
+			if out < 0.5 or _walk[k] < 2.0 or out > REACH - 1.0 or _land_kind(p) != Edge.FOREST:
+				continue
+			if mists != "" and _beyond(p, mists):
+				continue
+			var kind := str(kinds[1 if kinds.size() > 1 and rng.randf() < dead else 0])
+			var pick := ModelPiece.hash_cell(Vector2i(floori(p.x * 3.0), floori(p.y * 3.0)))
+			var id := flora.tree_for(kind, pick)
+			if id == "":
+				continue
+			var s := flora.tree_scale(id, "land", pick)
+			var yaw := float(pick % 360) * PI / 180.0
+			var at := Vector3(p.x, surface_y(p) - 0.05, p.y)
+			if out < NEAR_RING:
+				var tree := flora.node(id, at, s, yaw)
+				root.add_child(tree)
+				mesh_occluders.append(tree)
+				continue
+			var shade := clampf(1.0 - (out - NEAR_RING) / (REACH - NEAR_RING) * 0.45, 0.5, 1.0)
+			var v := shade * (0.9 + float(pick % 17) / 80.0)
+			var bucket := near
+			if out >= FAR_DETAIL:
+				bucket = far
+				id = str((Flora.manifest().get(id, {}) as Dictionary).get("far", id))
+			if not bucket.has(id):
+				bucket[id] = []
+			(bucket[id] as Array).append([Transform3D(Basis(Vector3.UP, yaw).scaled(Vector3.ONE * s), at), Color(v, v, v)])
+		y += step
+	Flora.plant_all(root, near, true, "Trees")
+	Flora.plant_all(root, far, false, "FarTrees")
+
+
+## Ground plants over the land near the map: ferns, grass and undergrowth on the forest ground, thinning out to the
+## set's land_reach, reeds and sedge along the shores, nothing on the roads.
+func _flora_ground() -> void:
+	var land := flora.spec.get("land", []) as Array
+	var shore := flora.spec.get("shore", []) as Array
+	var reach := float(flora.spec.get("land_reach", 14.0))
+	var items := {}
+	for j in _nz:
+		for i in _nx:
+			var out := _dist[j * _nx + i]
+			if out <= 0.0 or out > reach:
+				continue
+			var p := Vector2(i - REACH + 0.5, j - REACH + 0.5)
+			if _land_kind(p) != Edge.FOREST or (mists != "" and _beyond(p, mists)):
+				continue
+			var by_water := false
+			for d: Vector2 in [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1)]:
+				if _land_kind(p + d) == Edge.WATER:
+					by_water = true
+			var list := shore if by_water and not shore.is_empty() else land
+			var n := Flora.density(list) * lerpf(1.0, 0.35, out / reach)
+			var count := floori(n) + (1 if flora.rng.randf() < n - floorf(n) else 0)
+			for q in count:
+				var id := flora.pick_from(list)
+				if id == "":
+					continue
+				var at := p + Vector2(flora.rng.randf_range(-0.5, 0.5), flora.rng.randf_range(-0.5, 0.5))
+				if not items.has(id):
+					items[id] = []
+				(items[id] as Array).append(flora.ground_item(Vector3(at.x, surface_y(at) - 0.02, at.y), 1.0))
+	Flora.plant_all(root, items, false, "Plants")
 
 
 ## Where the map's water is, for the water's shore and depth: one texel per square, 0 on land rising to 1 four

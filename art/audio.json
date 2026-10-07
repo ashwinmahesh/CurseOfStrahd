@@ -67,7 +67,52 @@
     "thunder": -10.0,
     "crow": -14.0,
     "rest": -4.0,
-    "coins": -4.0
+    "coins": -4.0,
+    "acid_splash": -4.0,
+    "air_rush": -4.0,
+    "arcane_glint": -8.0,
+    "blade_flesh": -0.2,
+    "blade_flesh_light": -4.2,
+    "blessing": -2.0,
+    "blood_wet": -4.0,
+    "body_blow": -4.0,
+    "body_blow_hard": -1.2,
+    "body_blow_light": -8.1,
+    "bone_crack": -5.0,
+    "bone_crunch": -6.0,
+    "bone_crunch_hard": -2.0,
+    "bone_snap": -7.0,
+    "bow": -6.8,
+    "cold_impact": -2.6,
+    "curse": -1.7,
+    "fire_cast": -2.0,
+    "fire_impact": -0.1,
+    "fire_whoosh": -2.4,
+    "flesh_wet": -6.0,
+    "flesh_wet_hard": -2.0,
+    "force_thump": -4.0,
+    "gore_splat": -4.0,
+    "hold_chains": -2.0,
+    "mind_shimmer": -6.0,
+    "necrotic_pull": 2.3,
+    "point_flesh": 4.3,
+    "radiant_burst": -2.1,
+    "radiant_chime": 6.9,
+    "rumble": -8.0,
+    "slime_hiss": -8.0,
+    "smite_thump": -4.0,
+    "stone_hit": -2.0,
+    "teleport_in": 2.5,
+    "teleport_out": -4.0,
+    "thud_heavy": -6.0,
+    "thump_blunt": -2.0,
+    "thump_heavy": -4.0,
+    "thunder_boom": 0.7,
+    "touch_hit": -8.0,
+    "ward": -7.6,
+    "wood_knock": -8.0,
+    "zap_hit": -1.3,
+    "zap_launch": 1.6
   },
   "music": {
     "title": [
@@ -257,6 +302,241 @@
       "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_medium_002.ogg",
       "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_medium_003.ogg",
       "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_medium_004.ogg"
+    ],
+    "acid_splash": [
+      "res://art/sourced/oga_squish_ezduzziteh/squish_01_0.mp3",
+      "res://art/sourced/oga_squish_ezduzziteh/squish_02.mp3",
+      "res://art/sourced/oga_squish_ezduzziteh/squish_03.mp3",
+      "res://art/sourced/oga_squish_ezduzziteh/squish_04.mp3",
+      "res://art/sourced/oga_squish_ezduzziteh/squish_05.mp3",
+      "res://art/sourced/oga_squish_ezduzziteh/squish_06.mp3"
+    ],
+    "air_rush": [
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_01.ogg",
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_02.ogg",
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_03.ogg"
+    ],
+    "arcane_glint": [
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_1_0.ogg"
+    ],
+    "blade_flesh": [
+      "res://art/sourced/oga_fleshy_fight_leamon/sword-1a.wav",
+      "res://art/sourced/oga_fleshy_fight_leamon/sword-1b.wav"
+    ],
+    "blade_flesh_light": [
+      "res://art/sourced/oga_fleshy_fight_leamon/sword-1a.wav",
+      "res://art/sourced/oga_fleshy_fight_leamon/sword-1b.wav"
+    ],
+    "blessing": [
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_4.ogg"
+    ],
+    "blood_wet": [
+      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat01.ogg",
+      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat02.ogg"
+    ],
+    "body_blow": [
+      "res://art/sourced/oga_fleshy_fight_leamon/punch_1a.wav",
+      "res://art/sourced/oga_fleshy_fight_leamon/punch_1b.wav"
+    ],
+    "body_blow_hard": [
+      "res://art/sourced/oga_fleshy_fight_leamon/punch_alt-2a.wav",
+      "res://art/sourced/oga_fleshy_fight_leamon/punch_alt-2b.wav"
+    ],
+    "body_blow_light": [
+      "res://art/sourced/oga_fleshy_fight_leamon/punch_1a.wav",
+      "res://art/sourced/oga_fleshy_fight_leamon/punch_1b.wav"
+    ],
+    "bone_crack": [
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 1.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 2.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 3.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 4.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 5.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 6.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 7.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 8.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 9.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 10.wav"
+    ],
+    "bone_crunch": [
+      "res://art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_01.ogg",
+      "res://art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_02.ogg"
+    ],
+    "bone_crunch_hard": [
+      "res://art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_01.ogg",
+      "res://art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_02.ogg"
+    ],
+    "bone_snap": [
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 1.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 2.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 3.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 4.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 5.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 6.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 7.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 8.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 9.wav",
+      "res://art/sourced/oga_deep_bone_breaks/Deep Break 10.wav"
+    ],
+    "bow": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Bow_Arrow_Shoot_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Bow_Arrow_Shoot_02.wav"
+    ],
+    "cold_impact": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Ice Shard  Projectile_Impact_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Ice Shard  Projectile_Impact_02.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Ice Shard  Projectile_Impact_03.wav"
+    ],
+    "curse": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Seq_Fantasy SFX Pack Vol 1_Mana Drain_Start.wav"
+    ],
+    "fire_cast": [
+      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_01.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_02.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_03.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_04.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_05.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_06.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_fire_07.ogg"
+    ],
+    "fire_impact": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_02.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_03.wav"
+    ],
+    "fire_whoosh": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_02.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_03.wav"
+    ],
+    "flesh_wet": [
+      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat01.ogg",
+      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat02.ogg"
+    ],
+    "flesh_wet_hard": [
+      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat01.ogg",
+      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat02.ogg"
+    ],
+    "force_thump": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_004.ogg"
+    ],
+    "gore_splat": [
+      "res://art/sourced/oga_squish_ezduzziteh/squishsplat_impact.mp3"
+    ],
+    "hold_chains": [
+      "res://art/sourced/oga_80_cc0_rpg_sfx/chain_01.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/chain_02.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/chain_03.ogg"
+    ],
+    "mind_shimmer": [
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_3.ogg"
+    ],
+    "necrotic_pull": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Seq_Fantasy SFX Pack Vol 1_Mana Drain_Start.wav"
+    ],
+    "point_flesh": [
+      "res://art/sourced/oga_fleshy_fight_leamon/piercing-1a.wav",
+      "res://art/sourced/oga_fleshy_fight_leamon/piercing-1b.wav"
+    ],
+    "radiant_burst": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_02.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_03.wav"
+    ],
+    "radiant_chime": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_02.wav"
+    ],
+    "rumble": [
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_thunder_01.ogg"
+    ],
+    "slime_hiss": [
+      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_slime_01.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_slime_02.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_slime_03.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_slime_04.ogg"
+    ],
+    "smite_thump": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_004.ogg"
+    ],
+    "stone_hit": [
+      "res://art/sourced/oga_impact_qubodup/qubodupImpactStone.ogg"
+    ],
+    "teleport_in": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Teleport_In.wav"
+    ],
+    "teleport_out": [
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_01.ogg",
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_02.ogg",
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_03.ogg"
+    ],
+    "thud_heavy": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_004.ogg"
+    ],
+    "thump_blunt": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_004.ogg"
+    ],
+    "thump_heavy": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_004.ogg"
+    ],
+    "thunder_boom": [
+      "res://art/sourced/oga_boom_pack_dklon/boom1.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom2.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom3.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom4.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom5.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom6.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom7.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom8.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom9.wav"
+    ],
+    "touch_hit": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_004.ogg"
+    ],
+    "ward": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Magic Shield_Activation_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Magic Shield_Activation_02.wav"
+    ],
+    "wood_knock": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_004.ogg"
+    ],
+    "zap_hit": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Hit_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Hit_02.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Hit_03.wav"
+    ],
+    "zap_launch": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Launch_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Launch_02.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Launch_03.wav"
     ]
   },
   "ambient": {
@@ -283,60 +563,312 @@
   },
   "combat": {
     "_note": "What a fight sounds like (world/combat/fx/combat_sfx.gd, docs/art/spell_effects.md). Each entry names effects in sfx. families: a spell or ability's sounds by its look's family (art/vfx/effects.json), at each moment its effect shows: cast (the effect begins), launch (a missile leaves the hand), impact (it lands or bursts), arrive (a jump's far end); an entry starting with @ is the flavour's sound for that moment (flavours). keys: a spell's, feature's or monster action's own sounds, over its family's. A family with no entry plays the plain spell sound. hits: a weapon, claw or bite landing, by what struck (blade: slashing, blunt: bludgeoning, point: a melee pierce, shot: an arrow, bolt or throw) and how hard (light, heavy, critical).",
-    "families": {},
-    "flavours": {},
-    "keys": {},
+    "families": {
+      "bolt": {
+        "launch": [
+          "@launch"
+        ],
+        "impact": [
+          "@impact"
+        ]
+      },
+      "ray": {
+        "launch": [
+          "@launch"
+        ],
+        "impact": [
+          "@impact"
+        ]
+      },
+      "beam": {
+        "launch": [
+          "@launch"
+        ],
+        "impact": [
+          "@impact"
+        ]
+      },
+      "touch": {
+        "launch": [
+          "@launch"
+        ],
+        "impact": [
+          "@impact"
+        ]
+      },
+      "drain": {
+        "launch": [
+          "@launch"
+        ],
+        "impact": [
+          "@impact"
+        ]
+      },
+      "shot": {
+        "launch": [
+          "bow"
+        ]
+      },
+      "burst": {
+        "cast": [
+          "@whoosh"
+        ],
+        "impact": [
+          "@impact",
+          "rumble"
+        ]
+      },
+      "cone": {
+        "cast": [
+          "@whoosh",
+          "@launch",
+          "@impact"
+        ]
+      },
+      "line": {
+        "cast": [
+          "@launch",
+          "@impact"
+        ]
+      },
+      "nova": {
+        "cast": [
+          "@impact",
+          "rumble"
+        ]
+      },
+      "strike": {
+        "cast": [
+          "@impact"
+        ]
+      },
+      "cloud": {
+        "cast": [
+          "air_rush"
+        ]
+      },
+      "wall": {
+        "cast": [
+          "@whoosh",
+          "@impact"
+        ]
+      },
+      "ground": {
+        "cast": [
+          "stone_hit",
+          "thud_heavy"
+        ]
+      },
+      "aura": {
+        "cast": [
+          "ward"
+        ]
+      },
+      "heal": {},
+      "buff": {
+        "cast": [
+          "blessing"
+        ]
+      },
+      "debuff": {
+        "cast": [
+          "curse"
+        ]
+      },
+      "psychic": {
+        "cast": [
+          "mind_shimmer"
+        ]
+      },
+      "ward": {
+        "cast": [
+          "ward"
+        ]
+      },
+      "smite": {
+        "impact": [
+          "smite_thump",
+          "@impact"
+        ]
+      },
+      "summon": {
+        "cast": [
+          "spell"
+        ]
+      },
+      "teleport": {
+        "cast": [
+          "teleport_out"
+        ],
+        "arrive": [
+          "teleport_in"
+        ]
+      },
+      "transform": {
+        "cast": [
+          "spell"
+        ]
+      },
+      "glimmer": {
+        "cast": [
+          "spell"
+        ]
+      },
+      "slash": {},
+      "pattern": {
+        "cast": [
+          "mind_shimmer"
+        ]
+      }
+    },
+    "flavours": {
+      "fire": {
+        "launch": "fire_cast",
+        "impact": "fire_impact",
+        "whoosh": "fire_whoosh"
+      },
+      "lightning": {
+        "launch": "zap_launch",
+        "impact": "zap_hit"
+      },
+      "necrotic": {
+        "launch": "necrotic_pull",
+        "impact": "touch_hit"
+      },
+      "radiant": {
+        "launch": "radiant_chime",
+        "impact": "radiant_burst"
+      },
+      "force": {
+        "impact": [
+          "force_thump",
+          "arcane_glint"
+        ]
+      },
+      "acid": {
+        "impact": [
+          "acid_splash",
+          "slime_hiss"
+        ]
+      },
+      "poison": {
+        "impact": [
+          "slime_hiss",
+          "acid_splash"
+        ]
+      },
+      "mind": {
+        "impact": "mind_shimmer"
+      },
+      "illusion": {
+        "impact": "mind_shimmer"
+      },
+      "moon": {
+        "impact": "radiant_chime"
+      },
+      "shadow": {
+        "launch": "necrotic_pull",
+        "impact": "touch_hit"
+      },
+      "blood": {
+        "launch": "necrotic_pull",
+        "impact": "blood_wet"
+      },
+      "ward": {
+        "impact": "ward"
+      },
+      "earth": {
+        "impact": [
+          "stone_hit",
+          "thud_heavy"
+        ]
+      },
+      "nature": {
+        "impact": "stone_hit"
+      },
+      "water": {
+        "impact": "acid_splash"
+      },
+      "cold": {
+        "impact": [
+          "cold_impact",
+          "thump_heavy"
+        ]
+      },
+      "thunder": {
+        "impact": [
+          "thunder_boom",
+          "rumble"
+        ]
+      }
+    },
+    "keys": {
+      "hold_person": {
+        "cast": [
+          "hold_chains",
+          "mind_shimmer"
+        ]
+      }
+    },
     "hits": {
       "blade": {
         "light": [
-          "hit"
+          "blade_flesh_light",
+          "body_blow_light"
         ],
         "heavy": [
-          "hit",
-          "thud"
+          "blade_flesh",
+          "body_blow",
+          "flesh_wet"
         ],
         "critical": [
-          "hit",
-          "crit"
-        ]
-      },
-      "point": {
-        "light": [
-          "hit"
-        ],
-        "heavy": [
-          "hit",
-          "thud"
-        ],
-        "critical": [
-          "hit",
-          "crit"
+          "blade_flesh",
+          "gore_splat",
+          "bone_snap",
+          "body_blow_hard"
         ]
       },
       "blunt": {
         "light": [
-          "thud"
+          "thump_blunt",
+          "wood_knock"
         ],
         "heavy": [
-          "thud",
-          "fall"
+          "thump_blunt",
+          "bone_crunch"
         ],
         "critical": [
-          "fall",
-          "crit"
+          "thump_blunt",
+          "bone_crunch_hard",
+          "bone_crack"
+        ]
+      },
+      "point": {
+        "light": [
+          "point_flesh"
+        ],
+        "heavy": [
+          "point_flesh",
+          "flesh_wet"
+        ],
+        "critical": [
+          "point_flesh",
+          "flesh_wet_hard",
+          "bone_snap"
         ]
       },
       "shot": {
         "light": [
-          "thud"
+          "point_flesh"
         ],
         "heavy": [
-          "thud",
-          "hit"
+          "point_flesh",
+          "flesh_wet"
         ],
         "critical": [
-          "hit",
-          "crit"
+          "point_flesh",
+          "flesh_wet_hard",
+          "bone_snap"
         ]
       }
     }

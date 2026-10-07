@@ -72,9 +72,14 @@ func test_the_equipped_list_has_take_off() -> void:
 	var ch := GameState.story.party[0]
 	var main := ch.equipped("main_hand")
 	var inv := await _open(0, "")
-	var offs := inv.find_children("*", "Button", true, false).filter(func(n: Node) -> bool: return (n as Button).text == "Take off")
+	# The paper doll (U11): every armor and hand slot that holds something offers Take off first (its right-click menu,
+	# or a double-click).
+	var offs := inv.find_children("*", "ItemTile", true, false).filter(func(n: Node) -> bool:
+		return str((n as ItemTile).payload.get("from", "")) == "slot" and str((n as ItemTile).payload.get("slot", "")) in Character.EQUIP_SLOTS)
 	assert_true(offs.size() >= 1, "each equipped slot has Take off")
-	(offs[0] as Button).pressed.emit()
+	for t: Variant in offs:
+		assert_eq(str(inv.actions_for((t as ItemTile).payload["entry"] as Dictionary)[0]["label"]), "Take off")
+	(inv.actions_for((offs[0] as ItemTile).payload["entry"] as Dictionary)[0]["call"] as Callable).call()
 	await _frames(1)
 	var still := 0
 	for slot in Character.EQUIP_SLOTS:
