@@ -141,11 +141,22 @@ float hash(vec2 p) {
 	return fract(p.x * p.y);
 }
 
+// The Modern finish's noise (Improvement Ideas W17): the same smooth value noise read from a tile of random values
+// (Look.noise_texture) in one filtered fetch instead of four hashes, which made the mist, cloud shadows and ground
+// patches a fifth of the frame. Classic keeps the hashes (frozen).
+uniform sampler2D noise_tex : filter_linear, repeat_enable;
+uniform bool fast_noise = false;
+const float NOISE_SIZE = 256.0;
+
 // Smooth value noise in 0..1.
 float vnoise(vec2 p) {
 	vec2 i = floor(p);
 	vec2 f = fract(p);
 	vec2 u = f * f * (3.0 - 2.0 * f);
+	if (fast_noise) {
+		// Bilinear filtering between the lattice values at the smoothstepped position is the same smooth interpolation.
+		return texture(noise_tex, (i + u + 0.5) / NOISE_SIZE).r;
+	}
 	float a = hash(i);
 	float b = hash(i + vec2(1.0, 0.0));
 	float c = hash(i + vec2(0.0, 1.0));
