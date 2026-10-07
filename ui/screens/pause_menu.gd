@@ -347,7 +347,7 @@ func _link(text: String, on_press: Callable) -> Button:
 func _show_saves() -> void:
 	_clear()
 	_title("The party has fallen" if game_over else "Load a Save")
-	var top := 124.0
+	var top := 132.0
 	if game_over:
 		var lost := _text("Barovia keeps what it takes. Load a save to try again.", 10.0, _c("arch_text"))
 		lost.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -365,6 +365,9 @@ func _show_saves() -> void:
 	scroll.position = _u(26, top)
 	var last := FIRST_BUTTON_Y + BUTTON_PITCH * 3.0 - 30.0
 	scroll.size = _u(W_U - 52.0, last - top)
+	# The rows are exactly as wide as the arch's inside; nothing in them can make the list wider.
+	scroll.clip_contents = true
+	_list_box.custom_minimum_size = Vector2(_u(W_U - 52.0, 0).x - 12.0, 0)
 	_place(scroll)
 	_list()
 	if not game_over:
@@ -563,21 +566,33 @@ func _list() -> void:
 		var info := VBoxContainer.new()
 		info.add_theme_constant_override("separation", 0)
 		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		var where := "This game · %s" % s["location"] if str(s["slot"]) == SaveSystem.current_slot else str(s["location"])
+		# The place on the first line and what kind of save it is, the day and when on the second; both cut with an
+		# ellipsis at the row's edge so a long place name never pushes past the box or its buttons (owner report
+		# 2026-10-07: the name ran out of the box under the game-over screen's Load). The full text is in the tooltip.
 		var kind := str(s.get("kind", ""))
-		if kind == "autosave":
-			where = "Autosave · %s" % s["location"]
-		elif kind == "round":
-			where = "Fight, round start · %s" % s["location"]
-		info.add_child(_text("%s · Day %d" % [where, int(s["day"])], 10.0, _c("arch_text")))
-		info.add_child(_text(str(s["saved_at"]).replace("T", " "), 8.0, Color(_c("arch_text"), 0.55)))
+		var what := {"autosave": "Autosave", "round": "Fight, round start"}.get(kind, "This game" if str(s["slot"]) == SaveSystem.current_slot else "Save") as String
+		var place := _fit_line(str(s["location"]), 10.0, _c("arch_text"))
+		info.add_child(place)
+		var when := str(s["saved_at"]).replace("T", " ")
+		when = when.substr(0, 16) if when.length() >= 16 else when
+		info.add_child(_fit_line("%s · Day %d · %s" % [what, int(s["day"]), when], 8.0, Color(_c("arch_text"), 0.6)))
 		row.add_child(info)
 		var slot := str(s["slot"])
 		row.add_child(UiParts.small_button("Load", func() -> void: _load(slot)))
 		if not game_over and kind == "":
 			row.add_child(UiParts.small_button("Overwrite", func() -> void: _save(slot)))
-		var party_text := "%s\n%s" % [slot, s["party"]]
-		_list_box.add_child(UiParts.row(row, func() -> Control: return UiParts.rules_tip("Party", "", party_text)))
+		var party_text := "%s · Day %d\n%s\n%s" % [s["location"], int(s["day"]), s["party"], slot]
+		_list_box.add_child(UiParts.row(row, func() -> Control: return UiParts.rules_tip(what, "", party_text)))
+
+
+## A line of the saves list that takes no width of its own (its row decides) and ends in an ellipsis if it's too long.
+func _fit_line(text: String, size_u: float, colour: Color) -> Label:
+	var l := _text(text, size_u, colour)
+	l.clip_text = true
+	l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	l.custom_minimum_size = Vector2(1, 0)
+	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	return l
 
 
 ## F5 and the Quicksave button: over the game's current slot (a new one the first time), as the exploring F5 does.
