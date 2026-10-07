@@ -1789,6 +1789,9 @@ func apply_effect_entries(ctx: Dictionary, t: Combatant, entries: Array, when: S
 		if str(params.get("target", "")) == "caster_vs":
 			who = c
 			ctx["vs_target"] = t.id
+			if not ctx.has("mark_badge"):
+				ctx["mark_badge"] = true
+				mark_badge(c, t, str(s["id"]), str(s["name"]), ctx["conc"] as Concentration)
 		var kind := str(fx.get("effect", ""))
 		match kind:
 			"push", "pull":
@@ -2109,6 +2112,26 @@ func _set_duration(fxo: Effect, ctx: Dictionary, t: Combatant, until: String) ->
 			else:
 				fxo.lasting(s.get("duration", {}) as Dictionary)
 				fxo.turn_owner_id = c.id
+
+
+## A visible tag on a creature the caster has marked (Hex, Hunter's Mark): "Hexed by Silvain". It carries no rules
+## (the caster's own effect does the work), ends with the spell, and moves when the mark moves.
+func mark_badge(c: Combatant, t: Combatant, spell_id: String, spell_name: String, conc: Concentration) -> void:
+	for o in enc().combatants:
+		for fx: Effect in o.creature.effects.duplicate():
+			if fx.source_id == spell_id + ":mark" and fx.caster_id == c.id:
+				o.creature.remove_effect(fx)
+	var label := ("Hexed by %s" if spell_id == "hex" else ("Marked by %s (%s)" % ["%s", spell_name])) % c.name()
+	var badge := Effect.new(label, &"spell", spell_id + ":mark")
+	badge.caster_id = c.id
+	badge.ends = Effect.Ends.NEVER
+	badge.data["mark_by"] = c.id
+	badge.data["mark_of"] = spell_id
+	if conc != null and not conc.ended:
+		conc.attach(t.creature, badge)
+	else:
+		t.creature.add_effect(badge)
+	enc().events.append({"type": "condition", "id": t.id})
 
 
 ## Lesser Restoration, Protection from Poison: ends one of the listed conditions on the target (the cast-time
@@ -3018,6 +3041,8 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 					for m in fx.modifiers:
 						if m.data.has("vs"):
 							m.data["vs"] = t.id
+			var sd0 := _comp().spell_data(str(a["spell_id"]))
+			mark_badge(c, t, str(a["spell_id"]), str(sd0.get("name", a["spell_id"])), c.creature.concentration)
 			for x in sustained:
 				if str(x["id"]) == str(a["id"]):
 					x["target_id"] = t.id
