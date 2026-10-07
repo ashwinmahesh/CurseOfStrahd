@@ -55,6 +55,8 @@ attitude ireena friendly
 interject class:cleric: Earth to earth, and the dark to the dawn. Rest, Kolyan Indirovich. Let no voice call you up again.
 interject name:godrick_pendlebrook: Rest easy, sir. We'll look after her. On my oath.
 Narrator: The words aren't the ones this village uses, but they're said with care, and the earth seems to accept them.
+inspire class:cleric: spoke the rites over Kolyan Indirovich
+approve liriel_dawnsong +2: You gave Kolyan the rites of your own faith
 -> lowered
 
 ~ lay_rites_ok
@@ -70,6 +72,7 @@ Narrator: The prayer comes out in the wrong order, and the last verse leaves you
 ~ lay_rites_honest
 set burial_method = "lay_rites"
 Narrator: You say what you can about a man you never met: that he held his door every night until his heart gave out. It's short, and Ismark nods as if it were the right length.
+approve godrick_pendlebrook +1 thistle +1: You said a few honest words over a man you never met
 -> lowered
 
 ~ hasty
@@ -77,6 +80,7 @@ set burial_method = "hasty"
 attitude ireena indifferent
 Ireena [angry]: No words. Fine. Fill it in, then. Quickly, since that's how you like it.
 Narrator: The earth goes in fast and badly, and nobody speaks. Somewhere beyond the wall, something laughs, softly.
+approve liriel_dawnsong -3 godrick_pendlebrook -2 kip_smudgewick -1: You filled in Kolyan's grave without a word
 -> lowered
 
 ~ lowered
@@ -150,6 +154,7 @@ Ireena [afraid]: I don't know what he means. I don't. Don't look at me like that
 set strahd_first_impression = "defiant"
 Strahd [smile]: Under your protection. How splendid. Then let us see what your protection is worth. Do try to keep her alive. I should hate for this to be short.
 Narrator: He lifts one gloved hand, as if to summon a waiter. All around the churchyard, the earth begins to split.
+approve godrick_pendlebrook +2 thistle +2 wren_featherfoot +1 kip_smudgewick -1: You told Strahd to his face that Ireena was under your protection
 -> rise
 
 ~ threat_ok
@@ -161,12 +166,14 @@ else
 Strahd: Perhaps you are. Let us find out.
 endif
 Narrator: He lifts one hand, and the churchyard earth begins to split.
+approve thistle +2 kip_smudgewick -2 ratatoille -1: You threatened Strahd across a grave
 -> rise
 
 ~ threat_fail
 set strahd_first_impression = "defiant"
 Strahd [smile]: Oh, well said. Truly. I have been threatened by better, but rarely with such conviction. Allow me to return the courtesy.
 Narrator: He lifts one hand, and the churchyard earth begins to split.
+approve thistle +2 kip_smudgewick -2 ratatoille -1: You threatened Strahd across a grave
 -> rise
 
 ~ courteous
@@ -175,6 +182,7 @@ Strahd [smile]: Manners. In Barovia. You have made an old man very happy. We wil
 Narrator: The mist thickens at the gate, and then he isn't there.
 vanish strahd
 Ireena [angry]: Courtesy. To him.
+approve liriel_dawnsong +1 kip_smudgewick +1 ratatoille +1 thistle -2 wren_featherfoot -1 godrick_pendlebrook -1: You bowed to Strahd and answered him politely
 -> after_strahd
 
 ~ violent
@@ -182,6 +190,7 @@ set strahd_first_impression = "violent"
 Narrator: Steel and spell reach the lych-gate together and pass through cold mist. His laughter comes from everywhere at once.
 Strahd: Rude. But spirited. Here, then: something you are allowed to kill.
 Narrator: All around the churchyard, the earth begins to split.
+approve thistle +1 kip_smudgewick -3 ratatoille -2: You attacked Strahd at the lych-gate
 -> rise
 
 ~ silent
@@ -222,6 +231,7 @@ Narrator: Doru drops backward off the wall and is gone. Behind you, the old grav
 ~ doru_father
 Doru [sad]: Is he. Is he still. Tell him... no. Tell him nothing. Tell him I was never here.
 Narrator: For a moment he's only a young man on a wall. Then he isn't there at all.
+approve liriel_dawnsong +2 godrick_pendlebrook +1 wren_featherfoot +1: You told Doru his father still prays for him
 -> after_strahd
 
 ~ doru_attack

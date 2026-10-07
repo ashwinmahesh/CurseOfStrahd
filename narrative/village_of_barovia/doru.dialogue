@@ -39,6 +39,7 @@ Narrator: He looks like a frightened young man, and nothing in his face says oth
 ~ pray
 Doru [angry]: Stop. Stop it, it burns. No, keep going. Father used to... stop! Stop!
 Narrator: For a heartbeat the hunger leaves his face, and a scared boy looks down at you. Then it comes back.
+inspire class:cleric: prayed for a vampire spawn who used to be a boy
 -> menu
 
 ~ free_warn
@@ -51,6 +52,7 @@ interject tag:blunt: He's a hungry wolf asking us to open the pen.
 set doru_freed
 quest the_priests_son doru_freed
 Narrator: He's past you before the words are finished, a rush of cold air up the stair. Somewhere above, a door bangs, and the bell rope thrums once, as if something brushed it going over the wall.
+approve kip_smudgewick -3 liriel_dawnsong -2 godrick_pendlebrook -2 ratatoille -2 thistle -1: You let a starving vampire spawn loose on the village
 -> END
 
 ~ fight
@@ -72,6 +74,8 @@ Doru [sad]: He sent you. Didn't he. He finally said yes. Tell him I'm sorry abou
 
 ~ blessed_prayer
 Narrator: The prayer begins. Doru closes his eyes, and for one breath his lips move with it.
+inspire class:cleric: prayed Doru out of the world
+approve liriel_dawnsong +2: You prayed for Doru as he went
 -> blessed_fight
 
 ~ blessed_fight

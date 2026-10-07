@@ -40,6 +40,7 @@ set pack_challenge_begun
 Emil: Then stand close, and don't let them get behind you.
 Kiril: Pity. You'd have made good company at the master's table. As the dinner.
 interject class:wizard: Everyone stand somewhere I can see you. I'm about to be very loud.
+approve thistle +3 godrick_pendlebrook +2 kip_smudgewick +1: You stood with Emil against Kiril's pack
 combat pack_challenge
 
 ~ aside
@@ -48,6 +49,7 @@ leave emil_toranescu
 set emil_dead
 Narrator: Pack law has rules, and Kiril keeps them to the letter. A ring of wolves; two men stripping off their shirts; then two wolves, one grey and slow from a month in silver, one black and fresh from the hunt.
 Narrator: It is quick, which is the only kind thing about it. Afterwards Kiril stands up a man again, licking his teeth, and nobody in the cave looks at you.
+approve thistle -2 godrick_pendlebrook -2 liriel_dawnsong -1: You stood back and let Kiril kill Emil
 -> kiril_wins
 
 ~ betray
@@ -57,6 +59,7 @@ leave emil_toranescu
 set emil_dead
 Narrator: Kiril's favourites take Emil by the arms and walk him back toward the dark. Kiril doesn't watch. He's looking at you, and grinning.
 Kiril: Sensible meat. I like sensible meat. The silver's too good for him now. He'll go to the moon at dawn.
+approve thistle -4 godrick_pendlebrook -3 wren_featherfoot -2 kip_smudgewick -2 liriel_dawnsong -2: You handed Emil back to Kiril
 -> kiril_wins
 
 ~ kiril_wins
@@ -88,6 +91,7 @@ Kiril [smile]: I counted. Fewer of you than of us, and I've teeth left over. Now
 
 ~ kids_won
 Kiril: ...Ha. You've got some wolf in you. Fine. Take the pups. They whine all night anyway, and the master can wait for his army till next moon.
+approve thistle +2 kip_smudgewick +2 godrick_pendlebrook +2: You talked Kiril out of the stolen children
 -> kids_freed
 
 ~ kids_bought
@@ -95,6 +99,7 @@ gold -100
 set kiril_bribed
 Narrator: Kiril weighs the purse in one big hand, then tosses it to the nearest of his wolves without looking.
 Kiril: A wolf can be bought. A wolf just can't stay bought. Take the pups before I remember I'm hungry.
+approve kip_smudgewick +2 godrick_pendlebrook +1 thistle +1: You bought the stolen children back from Kiril
 -> kids_freed
 
 ~ kids_bought_dear
@@ -102,6 +107,7 @@ gold -150
 set kiril_bribed
 Narrator: He weighs the heavier purse, grins, and tosses it over his shoulder to the nearest wolf.
 Kiril: A hundred for the pups, fifty for the arithmetic. Take them before I remember I'm hungry.
+approve kip_smudgewick +2 godrick_pendlebrook +1 thistle +1: You bought the stolen children back from Kiril
 -> kids_freed
 
 ~ kids_freed
@@ -119,12 +125,14 @@ Kiril: No. You've had my generosity. Don't push your luck up my hill.
 set pack_challenge_begun
 set truce_broken
 Kiril [smile]: There it is. I knew there was a wolf in you somewhere.
+approve thistle +3 godrick_pendlebrook +2: You broke Kiril's truce to take the children
 combat pack_challenge
 
 ~ kids_left
 set den_children_left
 quest the_stolen_children left
 Narrator: Behind the pole gate at the back of the den, a girl's voice says something you don't quite catch, and then nothing.
+approve thistle -6 kip_smudgewick -5 godrick_pendlebrook -5 liriel_dawnsong -4 wren_featherfoot -4 ratatoille -3: You left the stolen children with the wolves
 -> kiril_resolve
 
 ~ kiril_resolve
@@ -144,6 +152,7 @@ leave emil_toranescu
 Emil [angry]: You freed me to kill me? Zuleika said you were honest. She was right. You're honest butchers.
 Kiril [smile]: Ha! I like these ones. Shame.
 interject class:cleric: Wolves that hunt people, and wolves that only hunt deer for now. I won't gamble the next twenty winters on which is which.
+approve thistle +1 godrick_pendlebrook +1 liriel_dawnsong -1: You turned on Kiril and Emil both
 combat den_reckoning
 
 # ---------------------------------------------------------------- Kiril ruling the den

@@ -82,6 +82,7 @@ endif
 Narrator: Rose folds her hands at once, the way she was taught, and Thorn copies her a beat late. Halfway through, they both look up, puzzled, as if they have forgotten the words.
 Rose: Mother doesn't pray to the Morninglord anymore. She says he never answers, and the other one does.
 interject name:liriel_dawnsong: He does answer. Not always quickly. Never like that.
+inspire class:cleric: prayed with two lost children
 -> questions
 
 ~ promise
@@ -90,11 +91,13 @@ Rose [smile]: Thank you. Thank you. We'll wait here. We're very good at waiting.
 Thorn: Don't let it eat you.
 interject name:wren_featherfoot: Wouldn't dream of it. I'm all knees and elbows. Terrible eating.
 quest into_the_mists village_edge
+approve godrick_pendlebrook +3 liriel_dawnsong +1 thistle +1 wren_featherfoot +1 kip_smudgewick +1: You promised two frightened children you'd find their brother
 -> END
 
 ~ refuse
 Rose [sad]: Then who will?
 Narrator: Thorn starts to cry without making a sound. When you look back down the road a little later, the two of them stand exactly where you left them, and have not moved at all.
+approve godrick_pendlebrook -3 liriel_dawnsong -2 wren_featherfoot -2 kip_smudgewick -2 thistle -1: You told two lost children you couldn't help them
 quest into_the_mists village_edge
 -> END
 

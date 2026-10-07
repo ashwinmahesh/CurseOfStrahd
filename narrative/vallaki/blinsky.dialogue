@@ -55,6 +55,7 @@ Blinsky: He keeps them in a chest at the foot of his bed in the Baron's house. H
 Narrator: It takes a while, and a good deal of effort, and a hat. But somewhere around the third verse, Blinsky's mouth twitches, and Piccolo falls off his shoulder with shock.
 Blinsky [smile]: That was nearly funny. Here. A whistle. For when the toys come for you. I joke. Mostly.
 give signal_whistle
+approve wren_featherfoot +2: You made the saddest toymaker in Barovia laugh
 -> menu
 
 ~ laugh_fail

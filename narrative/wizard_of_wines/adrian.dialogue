@@ -32,6 +32,7 @@ Adrian: The druids from Yester Hill grow things. Blights, they call them: brush 
 ~ apology
 set adrian_apology_heard
 Adrian: Sorry. Well. It was dark, I was a bird, and this valley teaches people to hit birds. I'll take sorry. My father won't, so don't spend all of it on me.
+approve thistle +1 godrick_pendlebrook +1: You said sorry to Adrian for the raven
 -> first_menu
 
 ~ to_father

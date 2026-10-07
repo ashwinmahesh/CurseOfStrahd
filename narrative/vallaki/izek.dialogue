@@ -22,6 +22,7 @@ Narrator: He doesn't move until Ireena turns away. Then he watches her go, and g
 ~ scare_ok
 Narrator: For a moment the scaled hand flexes, and you hear the claws click. Then he looks at your weapons, and at the crowd watching, and steps back one pace.
 Izek: Not here. Not in front of the town.
+approve godrick_pendlebrook +2 thistle +1: You stepped between Izek and Ireena
 -> END
 
 ~ scare_fail

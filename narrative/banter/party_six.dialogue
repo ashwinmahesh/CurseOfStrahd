@@ -170,3 +170,78 @@ interject name:thistle: ...Why'd you carry a pony?
 interject name:godrick_pendlebrook: He was tired.
 endif
 -> END
+
+# --- Romances between the six (camp/romance_*.dialogue): the others notice the spark, then the couple are a couple ---
+
+~ thistle_wren_spark_godrick
+if name:thistle and name:wren_featherfoot and name:godrick_pendlebrook and flag.romance_thistle_wren == "spark"
+interject name:godrick_pendlebrook: Wren. Why does Thistle keep looking at you like you're a pie on a windowsill?
+interject name:wren_featherfoot: No idea. Couldn't say. Lovely weather.
+endif
+-> END
+
+~ godrick_thistle_spark_wren
+if name:godrick_pendlebrook and name:thistle and name:wren_featherfoot and flag.romance_godrick_thistle == "spark"
+interject name:wren_featherfoot: Godrick, you've polished that same buckle for an hour. Thistle's not even looking. ...She's looking now. Polish faster.
+interject name:godrick_pendlebrook: I don't know what you mean. It's a very important buckle.
+endif
+-> END
+
+~ liriel_ratatoille_spark_thistle
+if name:liriel_dawnsong and name:ratatoille and name:thistle and flag.romance_liriel_ratatoille == "spark"
+interject name:thistle: Cook. Why'd you give Sunbeam the big bit of bread?
+interject name:ratatoille: I didn't. It was random. The bread was random. Bread is very random.
+interject name:liriel_dawnsong: It was a lovely bit of bread.
+endif
+-> END
+
+~ thistle_wren_together_race
+if name:thistle and name:wren_featherfoot and flag.romance_thistle_wren == "together"
+interject name:wren_featherfoot: Race you to that tree.
+interject name:thistle: Which tree?
+interject name:wren_featherfoot: Any tree. I just like losing to you now. It's a whole new hobby.
+interject name:thistle: You never lose to me. You let me.
+interject name:wren_featherfoot: Only sometimes. Keeps you guessing.
+endif
+-> END
+
+~ thistle_wren_together_kip
+if name:thistle and name:wren_featherfoot and name:kip_smudgewick and flag.romance_thistle_wren == "together"
+interject name:kip_smudgewick: I've drawn something up for the two of you. Purely as a precaution. Standard terms. Who gets the good bedroll, and so on.
+interject name:thistle: I get the good bedroll.
+interject name:wren_featherfoot: She gets the good bedroll. Sign it, Kip. Witness it. Frame it.
+endif
+-> END
+
+~ godrick_thistle_together_carry
+if name:godrick_pendlebrook and name:thistle and flag.romance_godrick_thistle == "together"
+interject name:thistle: Big. Carry me. My feet are tired.
+interject name:godrick_pendlebrook: Your feet are never tired. You walked forty miles yesterday and climbed a tower for fun.
+interject name:thistle: Carry me anyway.
+interject name:godrick_pendlebrook: ...Right then. Up you get.
+endif
+-> END
+
+~ godrick_thistle_together_liriel
+if name:godrick_pendlebrook and name:thistle and name:liriel_dawnsong and flag.romance_godrick_thistle == "together"
+interject name:godrick_pendlebrook: Liriel, would you bless us? Thistle and me. Together, I mean. Not like the boots.
+interject name:liriel_dawnsong: I'd be delighted. Morning's grace upon you both, and may she never bite you hard.
+interject name:thistle: No promises.
+endif
+-> END
+
+~ liriel_ratatoille_together_grace
+if name:liriel_dawnsong and name:ratatoille and flag.romance_liriel_ratatoille == "together"
+interject name:ratatoille: I've made you something. Don't say grace over it yet. Taste it first. Then say grace.
+interject name:liriel_dawnsong: That isn't how grace works, my dear.
+interject name:ratatoille: It's how it works with this one. Trust me. I'm a diviner. I can see the future, and in the future you say grace twice.
+endif
+-> END
+
+~ liriel_ratatoille_together_wren
+if name:liriel_dawnsong and name:ratatoille and name:wren_featherfoot and flag.romance_liriel_ratatoille == "together"
+interject name:wren_featherfoot: Rat. Rat. You're holding hands with a priestess. In public. The Third Circle will hear of this.
+interject name:ratatoille: The Third Circle approves. The Third Circle wrote to say so.
+interject name:liriel_dawnsong: He did. He showed me the letter. It was very formal.
+endif
+-> END

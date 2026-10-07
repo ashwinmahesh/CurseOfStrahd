@@ -100,6 +100,7 @@ interject name:liriel_dawnsong: I have sung the sun up every morning of my life.
 else
 interject tag:pious: I have stood on hills to watch the sun come up. I have not felt this before about putting one out.
 endif
+approve liriel_dawnsong -2 godrick_pendlebrook -1: You drowned the Baron's wicker sun for Lady Wachter
 -> END
 
 ~ keep_watch
@@ -122,6 +123,7 @@ set wachter_saboteur_caught
 Narrator: One servant bolts. The other is slower, and fat with Lady Wachter's dinners. He sits in the mud, bucket in his lap, and tells you everything he knows, which is that he was told to make the sun wet and not to ask why.
 interject tag:blunt: Witness. The Baron will want him.
 Narrator: The watch takes him at dawn. The sun sleeps dry.
+approve thistle -1 wren_featherfoot -1: You seized a frightened servant for the Baron
 -> END
 
 ~ sun_after
@@ -223,16 +225,19 @@ Narrator: Every eye in the square that isn't on the Baron is on you: the armed s
 ~ pick_baron
 set vallaki_pledge = "baron"
 quest festival_of_the_blazing_sun baron_side
+approve thistle -2 wren_featherfoot -2 liriel_dawnsong -1 godrick_pendlebrook -1: You stood with the Baron, who jails people for frowning
 -> baron_side
 
 ~ pick_wachter
 set vallaki_pledge = "wachter"
 quest festival_of_the_blazing_sun wachter_side
+approve liriel_dawnsong -3 godrick_pendlebrook -3 kip_smudgewick -2 thistle -1 wren_featherfoot -1 ratatoille -1: You stood with Lady Wachter, who would rule Vallaki for Strahd
 -> wachter_side
 
 ~ pick_town
 set vallaki_pledge = "town"
 quest festival_of_the_blazing_sun town_side
+approve godrick_pendlebrook +2 thistle +2 wren_featherfoot +2 liriel_dawnsong +2 kip_smudgewick +1 ratatoille +1: You stood with the people of Vallaki, against both of them
 -> town_side
 
 # The Baron's side: Lady Wachter's coup comes out of the crowd.
