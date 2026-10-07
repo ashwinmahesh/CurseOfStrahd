@@ -6,6 +6,7 @@ extends RefCounted
 ## merged into a few meshes, one surface per material, so a village costs a handful of draws per house.
 
 const MANIFEST_JSON := "res://art/models/kit/manifest.json"
+const PAINTED_WOOD := "kit/painted_wood"
 
 static var _manifest: Dictionary = {}
 static var _constants: Dictionary = {}
@@ -109,7 +110,7 @@ static func merge(parts: Array, paint: String = "") -> MeshInstance3D:
 				var src := m.surface_get_material(i)
 				name = src.resource_name if src != null else "pal_pewter"
 			if repaint != "" and name == repaint and paint != "":
-				name = "pal_" + paint
+				name = "paint:" + paint
 			if not tools.has(name):
 				var st := SurfaceTool.new()
 				st.begin(Mesh.PRIMITIVE_TRIANGLES)
@@ -130,10 +131,34 @@ static func merge(parts: Array, paint: String = "") -> MeshInstance3D:
 ## The game's material for a module surface (ModelPiece's names: pal_, glow_, tex_), or a texture set by its own path
 ## ("interior/plaster_wall") for a house's core.
 static func material(name: String) -> Material:
+	if name.begins_with("paint:"):
+		return painted(name.trim_prefix("paint:"))
 	if name.contains("/"):
 		var m := Look.cel_textured(name)
 		return m if m != null else Look.cel("bone_dark")
 	return ModelPiece.material(name)
+
+
+static var _paints: Dictionary = {}
+
+
+## A house's paint (Vallaki's clapboard): the kit's weathered painted wood (W4) tinted the palette colour `colour`,
+## so each house is its own colour with the same worn, flaking paint; a flat colour where that wood isn't there.
+static func painted(colour: String) -> Material:
+	var key := "%s|%s" % [colour, Look.style()]
+	if _paints.has(key):
+		return _paints[key] as Material
+	var base := Look.cel_textured(PAINTED_WOOD)
+	var m: Material = null
+	if base != null:
+		var d := base.duplicate() as ShaderMaterial
+		# The wood is pale grey, so its tint is the colour itself, lifted a little to keep it from going muddy.
+		d.set_shader_parameter("tint", Look.color(colour).lightened(0.25))
+		m = d
+	else:
+		m = Look.cel(colour)
+	_paints[key] = m
+	return m
 
 
 ## A transform on a wall face: at `base` (the face's foot), facing along `yaw`, stretched by `s` above `pivot`.
@@ -157,6 +182,21 @@ static func interior_style(board: ArenaBoard) -> String:
 	if best == "":
 		best = str((cfg.get("themes", {}) as Dictionary).get(board.theme, ""))
 	return best
+
+
+## ArenaBoard's interior and dungeon wall squares come here (its one hook): a lone square is a pillar, and in the
+## Modern look, where the catalog turns them on, rooms get full-height walls that cut away toward the camera with the
+## ground outside (InteriorWalls, W8). False leaves the square to ArenaBoard's own cut-away wall.
+static func interior_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> bool:
+	var floor := board.floor_material()
+	for d in SetDressing.FACES:
+		var fb := board.floor_box(c + d) if board.grid.in_bounds(c + d) else null
+		if fb != null:
+			floor = fb.material_override   # the room's own floor, from a square beside it already built
+			break
+	if pillar(board, c, floor):
+		return true
+	return InteriorWalls.build(board, c, wall_mat)
 
 
 ## A lone wall square inside a room (no wall beside it) is a pillar in the board's interior style, standing on the

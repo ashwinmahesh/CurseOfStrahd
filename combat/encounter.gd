@@ -43,6 +43,9 @@ var damage_responses: DamageResponses
 var feature_recipes: FeatureRecipes
 var monster_actions: MonsterActions
 var ai: AiBrain
+## The playthrough's difficulty (combat/difficulty.gd): how the AI fights and the optional rules. Balanced unless a
+## story fight sets it up with Difficulty.prepare.
+var difficulty: Difficulty = Difficulty.named(Difficulty.DEFAULT)
 var shapes: ShapeChange
 ## A place where even allies can't pass through each other (a location's or fight's `allies_block`).
 var allies_block := false
@@ -141,6 +144,9 @@ func add(creature: Creature, side: StringName, cell: Vector2i) -> Combatant:
 	creature.d20_after = feature_actions.after_d20
 	creature.effect_added = _effect_added
 	combatants.append(c)
+	# A foe that joins mid-fight (Children of the Night) comes at the difficulty's Hit Points and +2s too.
+	if state == State.ACTIVE and side == &"enemy" and creature is Monster:
+		difficulty.toughen(c, false)
 	return c
 
 

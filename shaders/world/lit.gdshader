@@ -3,6 +3,7 @@
 // and silver fittings shine, polished wood takes a soft highlight and cloth stays dull.
 shader_type spatial;
 #include "res://shaders/world/lit_light.gdshaderinc"
+#include "res://shaders/world/weather_surface.gdshaderinc"
 
 uniform vec3 albedo : source_color = vec3(0.36, 0.36, 0.41);
 uniform sampler2D albedo_tex : source_color, filter_nearest, repeat_enable;
@@ -17,9 +18,11 @@ uniform float roughness : hint_range(0.0, 1.0) = 0.75;
 uniform float metallic : hint_range(0.0, 1.0) = 0.0;
 
 varying vec3 world_pos;
+varying vec3 world_normal;
 
 void vertex() {
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	world_normal = normalize((MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
 
 void fragment() {
@@ -35,10 +38,23 @@ void fragment() {
 		float line = step(f.x, 0.03) + step(f.y, 0.03);
 		base = mix(base, grid_line, clamp(line, 0.0, 1.0));
 	}
+	// The weather (W12): rain darkens and glosses, snow settles on what faces up.
+	float r = roughness;
+	float m = metallic;
+	if (world_wet > 0.0) {
+		base *= 1.0 - world_wet * 0.3 * smoothstep(0.2, 0.9, r);
+		r = mix(r, 0.22, world_wet * 0.75);
+	}
+	float snow = ws_snow(world_pos, world_normal);
+	if (snow > 0.0) {
+		base = mix(base, WS_SNOW, snow);
+		r = mix(r, 0.65, snow);
+		m = mix(m, 0.0, snow);
+	}
 	ALBEDO = base;
 	EMISSION = emission;
 	// Never below 0.1: the screen pass reads near-zero roughness as water (strahd_post.gdshader).
-	ROUGHNESS = clamp(roughness, 0.1, 1.0);
-	METALLIC = metallic;
+	ROUGHNESS = clamp(r, 0.1, 1.0);
+	METALLIC = m;
 	SPECULAR = specular;
 }

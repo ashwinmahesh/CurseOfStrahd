@@ -78,6 +78,8 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	_frame.offset_top = -size.y / 2.0 - 8.0
 	_frame.offset_bottom = size.y / 2.0 - 8.0
 	add_child(_frame)
+	# The arch is this screen's frame: closing, it sinks away like a framed screen's panel (UiMotion.dismiss).
+	set_meta(&"frame_panel", _frame)
 	var art := UiParts.drawn(size, _paint_frame)
 	art.size = size
 	_frame.add_child(art)
