@@ -152,8 +152,11 @@ func next() -> Dictionary:
 					return {"kind": "notice", "text": "Journal updated: %s" % Compendium.shared().display_name("quests", str(s["id"]))}
 			"give":
 				pc += 1
-				st.give_item(str(s["item"]), int(s["qty"]), speaker)
-				return {"kind": "notice", "text": "%s receives %s%s" % [_first(speaker), Compendium.shared().display_name("items", str(s["item"])),
+				var taker := speaker
+				if str(s.get("to", "")) != "" and st.find_member(str(s["to"])) != null:
+					taker = st.find_member(str(s["to"]))
+				st.give_item(str(s["item"]), int(s["qty"]), taker)
+				return {"kind": "notice", "text": "%s receives %s%s" % [_first(taker), Compendium.shared().display_name("items", str(s["item"])),
 					" ×%d" % int(s["qty"]) if int(s["qty"]) > 1 else ""]}
 			"take":
 				pc += 1
@@ -256,6 +259,18 @@ func next() -> Dictionary:
 					_picking = true
 					_pick_purpose = "respec"
 					return _pick_beat()
+			"approve", "inspire":
+				# Companion approval (story/approval.gd) and Heroic Inspiration for playing in character
+				# (story/in_character.gd). Each statement counts once a playthrough, however often its node runs.
+				pc += 1
+				var once := "_%s/%s:%s:%d" % [str(s["t"]), file.key, node, int(s["n"])]
+				if st.flags.has(once):
+					continue
+				st.flags[once] = true
+				var said := Approval.react(st, s["changes"] as Array, str(s["why"])) if str(s["t"]) == "approve" \
+					else InCharacter.award(st, str(s["selector"]), str(s["why"]))
+				if said != "":
+					return {"kind": "notice", "text": said, "approval": str(s["t"]) == "approve"}
 			"narrate":
 				pc += 1
 				if narrator != null:

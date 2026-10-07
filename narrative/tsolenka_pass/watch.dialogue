@@ -75,6 +75,7 @@ tsolenka_sergeant: Gone. All of it. The crown, the valley we kept it for. And us
 tsolenka_sergeant: Well. Somebody might have said. Lads: stand down.
 Narrator: They go one at a time, the youngest first, like candles at the end of a long night. The sergeant goes last. He looks at the gate, and then at you, and nods once, as if signing something over.
 interject class:cleric: Rest. You kept it long enough.
+approve liriel_dawnsong +2 godrick_pendlebrook +2: You let the dead watch of Tsolenka stand down
 -> END
 
 ~ release_fail
@@ -85,6 +86,7 @@ tsolenka_sergeant: Nice words. I've heard nice words before, at this gate, from 
 ~ fight
 set tsolenka_watch_fate = "fought"
 tsolenka_sergeant: Then you'll be made to, and we'll log it. Watch! To me!
+approve godrick_pendlebrook -1 liriel_dawnsong -1: You fought your way through the dead watch of Tsolenka
 combat tsolenka_watch
 
 ~ leave

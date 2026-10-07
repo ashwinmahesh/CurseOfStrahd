@@ -28,12 +28,14 @@ Narrator: {name} hums the first bar, a little off key, and the nursemaid goes ve
 durst_nursemaid [sad]: He was mine. The master's and mine. The mistress gave him to the robed ones the night he was born, and they carried him down, and I followed them.
 durst_nursemaid [sad]: He's under the house. He's been under the house so long. If you go down, sing it to him. Someone should.
 Narrator: She rocks the empty air one last time and is gone, the way breath goes from a window.
+approve liriel_dawnsong +2 wren_featherfoot +1 godrick_pendlebrook +1: You hummed a grieving nursemaid her lullaby
 -> calmed
 
 ~ rest_ok
 Narrator: The words reach her slowly, like warmth into frozen hands. Her cupped hands open, and there is nothing in them, and she looks at the nothing for a long time.
 durst_nursemaid [sad]: Gone. Yes. I knew. I knew when they stopped him crying. They stopped me too, at the bottom of the stairs.
 Narrator: She fades from the doorway like a word you meant to say and didn't.
+approve liriel_dawnsong +2 godrick_pendlebrook +1: You talked a grieving ghost into resting
 -> calmed
 
 ~ calmed
@@ -55,4 +57,5 @@ durst_nursemaid [angry]: Liars. You're with them. You're wearing their faces!
 
 ~ fight
 Narrator: The cold comes off her like a slammed door.
+approve liriel_dawnsong -2 wren_featherfoot -1: You struck first at a grieving ghost
 combat nursery_specter

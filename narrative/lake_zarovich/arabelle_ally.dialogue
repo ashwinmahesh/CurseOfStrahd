@@ -55,4 +55,5 @@ interject class:cleric: We'll keep her behind us, always. Always.
 ~ home
 set arabelle_sent_home
 Arabelle: All right. I'll be at the camp. You'll come and get me there, when you're ready. Papa will cry again. He likes crying more than he says.
+approve kip_smudgewick +2 godrick_pendlebrook +1: You sent Arabelle home to her father
 -> END

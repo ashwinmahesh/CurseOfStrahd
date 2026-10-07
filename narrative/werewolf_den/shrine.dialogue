@@ -27,4 +27,5 @@ Narrator: A cloaked woman with no face. Whatever she is, she is very old, and ve
 ~ morninglord
 Narrator: The words echo strangely in the low cave. The candles at her feet don't gutter; nothing answers. But nothing objects, either, and the air feels a little less close when you are done.
 interject name:liriel_dawnsong: Sisters needn't agree to share a house. Good night to you, lady. He sends his regards.
+inspire class:cleric: prayed to the Morninglord in the house of Mother Night
 -> END

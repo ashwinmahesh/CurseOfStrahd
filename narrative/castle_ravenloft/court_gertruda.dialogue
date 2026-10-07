@@ -53,6 +53,7 @@ Gertruda: I'm not... I hum. Mother says I hum when I'm frightened. I've been hum
 
 ~ convinced_mother
 Gertruda [afraid]: She said that? She isn't angry? All three locks. She'd never. She must have been so frightened.
+approve kip_smudgewick +2 godrick_pendlebrook +1: You kept your word to Mad Mary and brought her message to Gertruda
 -> convinced
 
 ~ convinced_anastrasya
@@ -67,6 +68,7 @@ Gertruda [afraid]: An account. In a book. Like a horse. Like buying a horse.
 ~ convinced_blessing
 Narrator: A plain blessing, said plainly. Something in the room thins, like perfume when a window is opened, and the girl blinks as if waking.
 Gertruda: Why did I... I don't even like blue.
+inspire class:cleric: blessed the spell off a frightened girl
 -> convinced
 
 ~ convinced_persuaded
@@ -90,6 +92,7 @@ set gertruda_rescued
 quest find_gertruda found
 Gertruda: I'll be quiet. I'm good at quiet. I've had practice.
 interject tag:cheerful: Stay behind me and you'll be fine. Mostly behind me. Generally in the direction of behind.
+approve godrick_pendlebrook +3 kip_smudgewick +3 liriel_dawnsong +2 thistle +2 wren_featherfoot +1 ratatoille +1: You took Gertruda out of Strahd's guest rooms
 -> END
 
 ~ wait

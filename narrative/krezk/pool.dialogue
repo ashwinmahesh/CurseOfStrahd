@@ -63,6 +63,7 @@ interject name:liriel_dawnsong: Those were wishes. I'll pray for you. No, I insi
 if not name:liriel_dawnsong
 interject class:cleric: I'm going to pretend I didn't see that, and then I'm going to pray about it anyway.
 endif
+approve kip_smudgewick -2 liriel_dawnsong -2 godrick_pendlebrook -2 wren_featherfoot -1: You scooped the wishes out of the Pool of the White Sun
 -> END
 
 ~ ireena_vision
@@ -125,6 +126,7 @@ Narrator: Ireena leans out over the water until her breath clouds its surface. T
 Ireena: If I go now, he waits. A hundred years, two hundred, for the next one of me, in some village, with my face. Some girl who doesn't know what's coming to her window.
 Ireena: No. When he's dead, I'll come back. I swear it on my father. Wait for me a little longer, Sergei. You're good at it.
 Sergei von Zarovich: I am. I have had practice.
+approve thistle +1 godrick_pendlebrook +1 wren_featherfoot +1: You left Ireena free to go to Sergei if she chose
 -> ireena_fade
 
 ~ ireena_stays
@@ -169,4 +171,5 @@ interject class:cleric: Someone's listening here. Not loudly. But listening.
 elif tag:pious
 interject tag:pious: That's the first prayer in this valley that didn't feel like shouting down a well.
 endif
+approve liriel_dawnsong +1: You lit a candle at the White Sun's shrine
 -> END

@@ -83,6 +83,7 @@ else
 interject tag:blunt: How many druids?
 endif
 Davian: Fewer than yesterday, if you start now.
+approve ratatoille +1 godrick_pendlebrook +1 kip_smudgewick +1: You promised Davian you'd clear his house
 -> menu
 
 # ---------------------------------------------------------------- The menu
@@ -189,11 +190,13 @@ endif
 ~ cart_vallaki
 set winery_first_cart = "vallaki"
 Davian: To Urwin, then. He'll pretend he isn't pleased. He gets that from me.
+approve kip_smudgewick +1: You sent the first cart of wine to Urwin's inn
 -> check_done
 
 ~ cart_village
 set winery_first_cart = "village"
 Davian: To the village. The shopkeeper there will try to charge them double for it. The ravens will see that he doesn't.
+approve godrick_pendlebrook +1 liriel_dawnsong +1 kip_smudgewick +1: You sent the first cart of wine to the village that has least
 -> check_done
 
 ~ cart_krezk
@@ -270,6 +273,7 @@ Davian: He's home. That's the thing. Whatever else is true, he's home.
 if flag.elvir_truth_known and not flag.martikovs_reconciled
 Narrator: At the graveside Davian keeps looking at Adrian, like a man who has something to say and has forgotten the language it's in.
 endif
+approve liriel_dawnsong +2 godrick_pendlebrook +1 kip_smudgewick +1: You brought Elvir Martikov home to be buried
 -> check_done
 
 ~ reconcile_proof
@@ -320,6 +324,7 @@ else
 interject tag:loyal: Good. That's good.
 endif
 interject guest:ireena: My father and my brother never said it either. Not once, before the end. I'm glad somebody did.
+approve kip_smudgewick +2 wren_featherfoot +2 liriel_dawnsong +1 godrick_pendlebrook +1 thistle +1: You got Davian and Adrian talking again
 -> check_done
 
 # ---------------------------------------------------------------- The strongbox in the office
@@ -337,6 +342,7 @@ gold -60
 attitude davian_martikov friendly
 Davian: Hm. A thief who brings it back is either a fool or an honest man having a bad week. I'll assume the second. Keep ten for the lock.
 gold +10
+approve kip_smudgewick +2 godrick_pendlebrook +2: You gave back every coin from Davian's strongbox
 -> menu
 
 ~ strongbox_claim
@@ -346,11 +352,13 @@ Davian: Then we'll find out when I count it, won't we. I'll count it later, alon
 ~ strongbox_fee
 set winery_strongbox_kept
 Davian: Your fee. My father paid men to clear wolves from these rows, and they charged less, and they were also thieves. Fine. It's paid.
+approve kip_smudgewick -1 godrick_pendlebrook -1: You kept Davian's strongbox and called it your fee
 -> menu
 
 ~ strongbox_lie
 Davian: The druids. Of course. Filthy creatures, druids. No respect for a good lock.
 Narrator: He frowns at the lock for a long while afterwards, and then lets it be.
+approve kip_smudgewick -2 godrick_pendlebrook -2 wren_featherfoot +1: You blamed the druids for what you took from Davian's strongbox
 -> menu
 
 ~ strongbox_lie_caught

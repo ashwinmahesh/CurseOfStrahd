@@ -32,6 +32,7 @@ interject class:rogue: Or shut the flue and let it choke. Simple usually works.
 set crg_hearth_quiet
 set crg_ever_hearth_out
 Narrator: You find the ring's first letter and its last, and draw a line through both. The fire goes out like a held breath let go. Nothing in the hall stirs.
+approve ratatoille +2: You unpicked the spell feeding Strahd's hearth
 -> after
 
 ~ arcana_fail

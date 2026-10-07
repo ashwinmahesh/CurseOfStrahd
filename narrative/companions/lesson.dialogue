@@ -25,6 +25,7 @@ Kasimir: I did. I do. I don't know. He says let her rest. He was always the wise
 if not (quest.the_last_lesson >= the_brother)
 quest the_last_lesson the_brother
 endif
+approve wren_featherfoot +5: You brought me to Kasimir with Master Sorrel's letter
 -> vallaki/kasimir:menu
 
 # --- Patrina (amber_temple/patrina:kasimir_meets) ----------------------------------------------------------------
@@ -36,6 +37,7 @@ Kasimir: "Let her rest, brother."
 Narrator: Patrina's ghost turns her ruined face toward her brother, and for the first time since you came into the hall, the book in her hands holds still.
 Patrina: Sorrel wrote that? Little Sorrel?
 Kasimir: He did. He's dead, sister. He lived a long time, a long way away, and he taught a halfling to fight, and he wanted you to rest.
+approve wren_featherfoot +3: You let me give Patrina her little brother's last words
 -> amber_temple/patrina:kasimir_rest
 
 # --- Rahadin (castle_ravenloft/court_rahadin:menu) ---------------------------------------------------------------
@@ -52,7 +54,12 @@ if not (quest.the_last_lesson >= the_chamberlain)
 quest the_last_lesson the_chamberlain
 endif
 Narrator: Wren has gone very still. Not the stillness of a fighter waiting. The other kind.
-* [name:wren_featherfoot] (Tell him what Sorrel thought of him.) -> rahadin_pity
+# Approval (story/approval.gd): Strained or worse, and Wren won't take the party's way here; Close or better, and he
+# finds the lesson out loud.
+if approval.wren_featherfoot <= strained
+Narrator: He doesn't look round at any of you. Whatever he's deciding, he isn't asking you to help him decide it.
+endif
+* [name:wren_featherfoot] [if not (approval.wren_featherfoot <= strained)] (Tell him what Sorrel thought of him.) -> rahadin_pity
 * [name:wren_featherfoot] (Go for his throat.) -> rahadin_rage
 * (Pull Wren back.) -> rahadin_pulled
 
@@ -63,11 +70,20 @@ Narrator: For a heartbeat, every voice around Rahadin goes silent. The hall is s
 Rahadin: Leave my sight.
 interject name:wren_featherfoot: Already going. Master Sorrel says the leaf doesn't fight the wind. Turns out the leaf just has to decide it isn't the wind's problem.
 Narrator: Wren turns his back on the chamberlain and walks away on his own two feet, not fast. It's the bravest thing you've seen anyone do in this house.
+if approval.wren_featherfoot >= close
+Narrator: Out on the landing, where Rahadin can't see, he stops and leans on the wall and lets out a long, shaking breath. Then he looks at the rest of you.
+interject name:wren_featherfoot: I worked it out. The last lesson. It was never in the letter. He only said it was, so I'd have to come all this way to find out.
+interject name:wren_featherfoot: You don't get finished on your own. That's it. That's the whole lesson. You need someone to walk up the stairs with.
+interject name:wren_featherfoot: Rude of him, honestly. A whole mountain range, for that.
+inspire name:wren_featherfoot: learned the last lesson
+endif
 quest the_last_lesson learned
+approve wren_featherfoot +8: You let me feel sorry for Rahadin, and walk away
 -> castle_ravenloft/court_rahadin:menu
 
 ~ rahadin_rage
 quest the_last_lesson unlearned
+approve wren_featherfoot -4: You let me go for Rahadin's throat
 interject name:wren_featherfoot: Sorry, Master.
 Narrator: He's across the hall before anyone can move, and Rahadin's sword is already out to meet him, as if it had been waiting four hundred years for exactly this.
 -> castle_ravenloft/court_rahadin:fight
@@ -75,4 +91,5 @@ Narrator: He's across the hall before anyone can move, and Rahadin's sword is al
 ~ rahadin_pulled
 Narrator: A hand on his shoulder. Wren shakes once under it, like a dog coming out of water, and then he lets out a breath he has been holding since the stairs.
 interject name:wren_featherfoot: Right. Yes. Thank you. Not now. Not like that.
+approve wren_featherfoot +3: You pulled me back from Rahadin
 -> castle_ravenloft/court_rahadin:menu
