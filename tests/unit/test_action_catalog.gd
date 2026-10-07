@@ -250,7 +250,10 @@ func test_lay_on_hands_heals_the_chosen_amount_and_smites_wait_for_a_hit() -> vo
 	var free := ch.resource_left("spell:divine_smite")
 	var slots := ch.slots_left(1)
 	TestCombat.next_d20(e, 1)
-	e.attack(p, z, str(e.attack_options(p)[0]["id"]))
+	var miss := e.attack(p, z, str(e.attack_options(p)[0]["id"]))
+	# A human's Heroic Inspiration offers a reroll on the miss: decline it.
+	if miss.is_paused():
+		e.answer_reaction(false)
 	assert_eq(ch.resource_left("spell:divine_smite"), free, "the free smite isn't spent on a miss")
 	assert_eq(ch.slots_left(1), slots, "nor a slot")
 	assert_true("smite:divine_smite" in p.armed, "still armed for a later hit")
