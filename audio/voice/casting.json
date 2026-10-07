@@ -140,11 +140,11 @@
       "settings": {}
     },
     "vosk": {
-      "voice_id": "T9b79HXLiVAfoDftSrr2",
-      "name": "Barovia Master Vosk",
+      "voice_id": "0c8J1N1i3sIcgiJsow0W",
+      "name": "James - Clear, Polished and Steady",
       "description": "A man with a mild, precise, soft-spoken English accent, a scholar with impeccable manners: dry, reasonable and pleasant, like a solicitor explaining a contract. A faint purr of hunger beneath the politeness.",
       "settings": {},
-      "released": true
+      "library": true
     },
     "ilinca_vrana": {
       "voice_id": "OeKBZ4fy2kWOIj9a3sqa",
@@ -236,11 +236,11 @@
       "released": true
     },
     "patrina_velikovna": {
-      "voice_id": "4c91aQvGHiaNPbIBlyBJ",
-      "name": "Barovia patrina_velikovna",
+      "voice_id": "2t85BBUECtLLKQzxLD95",
+      "name": "Amber - Calm, Elegant and Dreamy",
       "description": "A woman with a clear, cold, intelligent voice, an ageless dusk elf, now a banshee: proud, cutting and grieving, with a ghostly, wailing edge that rises when she is angry. Strong, clearly audible Eastern European (Romanian) accent.",
       "settings": {},
-      "released": true
+      "library": true
     },
     "anna_krezkova": {
       "voice_id": "yQUYTdiLIGtq2lWiGd3s",
@@ -273,14 +273,15 @@
       "voice_id": "ir7msdqDL3R95caViPX9",
       "name": "Barovia izek",
       "description": "A big, scarred man with a deep, harsh, menacing voice and a strong, clearly audible Eastern European (Romanian) accent. A brute enforcer: blunt, threatening, few words; strangely soft and broken when he speaks of the woman in his dreams.",
-      "settings": {}
-    },
-    "kiril_stoyanovich": {
-      "voice_id": "fDokD1dZ6MB5NJyXuR6a",
-      "name": "Barovia kiril_stoyanovich",
-      "description": "A huge man with a rough, mocking, snarling voice and a strong, clearly audible Eastern European (Romanian) accent. A grinning werewolf bully, swaggering and cruel, laughing through his teeth.",
       "settings": {},
       "released": true
+    },
+    "kiril_stoyanovich": {
+      "voice_id": "XaEUesE01wKIKaa0xI0h",
+      "name": "Alexey's English With Russian Accent Professional Male Voice",
+      "description": "A huge man with a rough, mocking, snarling voice and a strong, clearly audible Eastern European (Romanian) accent. A grinning werewolf bully, swaggering and cruel, laughing through his teeth.",
+      "settings": {},
+      "library": true
     },
     "rose": {
       "voice_id": "nDJIICjR9zfJExIFeSCN",
@@ -423,11 +424,11 @@
       "released": true
     },
     "vestige_zantras": {
-      "voice_id": "joBCkEfW44SdjHfeDArP",
-      "name": "Barovia vestige_zantras",
+      "voice_id": "LvmvHEBEmMJBJw9UuhwO",
+      "name": "Eldrin - Wise Ancient Wizard Storyteller",
       "description": "A theatrical monarch's voice from inside amber: grand, flattering and hungry for adoration, playing to an audience. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "library": true
     },
     "gunther_arasek": {
       "voice_id": "WPmgivzb1hIgqySv4d34",
@@ -861,6 +862,20 @@
       "voice_id": "WnWkMUJG5Rah5H4tplqk",
       "name": "Barovia Godrick Pendlebrook",
       "description": "A golden, handsome young knight with a rich, velvety baritone and a polished English accent. Arrogant charm and wry humour, relaxed and teasing, a sardonic half-smile in every line; brave and sincere when it counts, never shouting."
+    },
+    "fen_burley": {
+      "voice_id": "XUJ29OW0MoYTmJxM26UZ",
+      "name": "Barovia fen_burley",
+      "description": "An old man in his seventies with a rough, low, gravelly voice and a rural Scottish accent like Thistle's, a woodsman of very few words. Slow and plain, long silences, tender underneath; a wolf's growl rising under the words when he struggles.",
+      "settings": {},
+      "released": true
+    },
+    "mister_quillon": {
+      "voice_id": "NyIsA0PuEuE4hyIQ8wMX",
+      "name": "Barovia mister_quillon",
+      "description": "A slim, ageless gentleman with a soft, smooth, precise tenor and a crisp, upper-class English accent, a devil playing a solicitor. Courteous, patient and faintly amused, never raising his voice; thin and very quiet when cornered.",
+      "settings": {},
+      "released": true
     }
   }
 }
