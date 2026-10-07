@@ -3,9 +3,16 @@ extends TestCase
 ## right words (and not the names that merely contain them), and cards that nest, pin and stay on screen.
 
 
+func before_each() -> void:
+	# The headless pointer rests nowhere, so cards here open and close only when the test asks.
+	if TipCards.current != null:
+		TipCards.current.hold = true
+
+
 func after_each() -> void:
 	if TipCards.current != null:
 		TipCards.current.clear()
+		TipCards.current.hold = false
 
 
 func _terms_file() -> Array:

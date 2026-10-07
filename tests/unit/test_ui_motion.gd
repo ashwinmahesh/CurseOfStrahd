@@ -20,6 +20,14 @@ func _frames(n: int) -> void:
 		await get_tree().process_frame
 
 
+## Waits until `done()` holds, or `seconds` pass (a busy machine draws slowly; motion counts in seconds, not frames).
+func _until(done: Callable, seconds: float = 5.0) -> void:
+	var left := seconds
+	while left > 0.0 and not bool(done.call()):
+		await get_tree().process_frame
+		left -= get_process_delta_time()
+
+
 func test_interface_sounds_are_listed() -> void:
 	for id: String in ["click", "hover", "close", "quill", "pin", "unpin", "page", "coins", "card"]:
 		assert_false(Audio.files("sfx", id).is_empty(), id)
@@ -51,8 +59,9 @@ func test_a_closing_screen_stops_taking_input_then_goes() -> void:
 	assert_false(layer.is_queued_for_deletion(), "it sinks away first")
 	assert_eq(b.mouse_filter, Control.MOUSE_FILTER_IGNORE, "and takes no clicks while it does")
 	assert_eq(layer.process_mode, Node.PROCESS_MODE_DISABLED)
-	await get_tree().create_timer(0.8).timeout
-	assert_false(is_instance_valid(layer), "then it's gone")
+	var ref: WeakRef = weakref(layer)
+	await _until(func() -> bool: return ref.get_ref() == null)
+	assert_true(ref.get_ref() == null, "then it's gone")
 
 
 func test_numbers_roll_from_what_was_shown() -> void:
@@ -65,7 +74,7 @@ func test_numbers_roll_from_what_was_shown() -> void:
 	UiMotion.roll(l, "test:gold:roll", 60.0, fmt)
 	assert_eq(l.text, "10 gp", "starts from the last value shown")
 	add_child(l)
-	await get_tree().create_timer(1.2).timeout
+	await _until(func() -> bool: return l.text == "60 gp")
 	assert_eq(l.text, "60 gp", "and ends on the new one")
 	l.queue_free()
 
@@ -79,7 +88,7 @@ func test_hit_point_bars_roll() -> void:
 	var bar := UiParts.hp_bar(ch, 200.0, 20.0)
 	assert_eq(float(bar.get_meta(&"roll_from", -1.0)), float(ch.max_hp()), "a loss drains from the old value")
 	add_child(bar)
-	await get_tree().create_timer(1.2).timeout
+	await _until(func() -> bool: return float(bar.get_meta(&"roll_t", 0.0)) >= 1.0)
 	assert_eq(float(bar.get_meta(&"roll_t", 0.0)), 1.0, "and finishes")
 	var again := UiParts.hp_bar(ch, 200.0, 20.0)
 	assert_false(again.has_meta(&"roll_from"), "nothing rolls when nothing changed")
@@ -97,7 +106,7 @@ func test_tarokka_cards_turn_face_up() -> void:
 	add_child(card)
 	UiMotion.flip_in(card, 0.0)
 	assert_false(face.visible, "the back shows first")
-	await get_tree().create_timer(0.8).timeout
+	await _until(func() -> bool: return face.visible and is_equal_approx(card.scale.x, 1.0))
 	assert_true(face.visible, "then the face")
 	assert_true(is_equal_approx(card.scale.x, 1.0), "standing flat again")
 	card.queue_free()
@@ -112,6 +121,6 @@ func test_a_page_turns_across_the_journal() -> void:
 	layer.add_child(page)
 	UiMotion.turn_page(page)
 	assert_eq(layer.get_child_count(), 2, "the leaf lies over the page")
-	await get_tree().create_timer(0.8).timeout
+	await _until(func() -> bool: return layer.get_child_count() == 1)
 	assert_eq(layer.get_child_count(), 1, "and is gone once it has turned")
 	layer.queue_free()
