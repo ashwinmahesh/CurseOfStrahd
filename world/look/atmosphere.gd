@@ -198,19 +198,17 @@ func _modern_finish() -> void:
 
 
 ## How soft the modern finish's depth of field is (0 none, Godot's 0..1).
-const MODERN_DOF := 0.14
+const MODERN_DOF := 0.1
 var _dof: CameraAttributesPractical = null
 
 
-## The sharp band follows the camera's zoom: from a little in front of the party to a little behind it.
+## The blur starts well behind the party (it follows the zoom) and comes in slowly.
 func _focus_dof() -> void:
 	if _dof == null or _rig == null:
 		return
 	var d := _rig.distance
-	_dof.dof_blur_far_distance = d + 1.0 + d * 0.12
-	_dof.dof_blur_far_transition = 3.5 + d * 0.25
-	_dof.dof_blur_near_distance = maxf(1.0, d - 2.0 - d * 0.08)
-	_dof.dof_blur_near_transition = 2.0
+	_dof.dof_blur_far_distance = d + 9.0 + d * 0.3
+	_dof.dof_blur_far_transition = 12.0
 
 
 const MODERN_TONEMAP := Environment.TONE_MAPPER_AGX
@@ -276,11 +274,12 @@ func _open_the_lake() -> void:
 func attach(rig: CameraRig, post: MeshInstance3D) -> void:
 	_rig = rig
 	_post = (post.mesh as QuadMesh).material as ShaderMaterial if post != null and post.mesh is QuadMesh else null
-	if Look.modern() and rig != null and rig.camera != null:
-		# The diorama's depth of field (tilt-shift): the party's ground sharp, what's far behind and near the lens soft.
+	if Look.modern() and GameSettings.depth_blur() and rig != null and rig.camera != null:
+		# Depth of field in the far distance only: the land past the playfield softens, while the party, foes and
+		# anything that can be clicked (all well inside the sharp band) stay crisp. Nothing near the lens blurs.
 		_dof = CameraAttributesPractical.new()
 		_dof.dof_blur_far_enabled = true
-		_dof.dof_blur_near_enabled = true
+		_dof.dof_blur_near_enabled = false
 		_dof.dof_blur_amount = MODERN_DOF
 		rig.camera.attributes = _dof
 		_focus_dof()

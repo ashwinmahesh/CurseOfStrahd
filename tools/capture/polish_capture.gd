@@ -17,6 +17,10 @@ func _ready() -> void:
 	_look = OS.get_environment("POLISH_LOOK")
 	if _look != "":
 		Look.set_style(_look, false)
+	# POLISH_DOF=off: the Modern look without its depth blur, for this run only.
+	if OS.get_environment("POLISH_DOF") == "off":
+		GameSettings.set_value("depth_blur", false, false)
+		_look += "_nodof"
 	GameState.reset()
 	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]:
 		var ch := Pregens.build(id, 3)
