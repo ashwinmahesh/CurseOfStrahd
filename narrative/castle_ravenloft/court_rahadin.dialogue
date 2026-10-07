@@ -116,6 +116,7 @@ Gertruda [afraid]: I want to go home. I'm allowed to want that. Aren't I?
 set rahadin_stood_aside
 Narrator: For a long moment the only sound is the screaming. Then Rahadin steps aside, exactly one pace.
 Rahadin: The master will be amused. She will come back on her own; they generally do. Mind the stairs.
+approve godrick_pendlebrook +2 thistle +1 kip_smudgewick +1: You made Rahadin stand aside for Gertruda
 -> END
 
 ~ refused
@@ -129,4 +130,5 @@ quest find_gertruda lost
 Gertruda [sad]: Oh. Yes. Of course. I'll go up.
 Narrator: She climbs the stairs alone and doesn't look back. Rahadin bows to you, very correctly.
 Rahadin: The master thanks you for returning what is his.
+approve godrick_pendlebrook -5 kip_smudgewick -4 liriel_dawnsong -3 thistle -3 wren_featherfoot -3 ratatoille -2: You sent Gertruda back up the stairs to Strahd
 -> END

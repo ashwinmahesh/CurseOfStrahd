@@ -37,11 +37,13 @@ give potion_of_healing 2
 give climbers_kit
 gold +30
 Narrator: You take their potions, their purse and their ropes, and you tell them, out loud, that you'll put it all to good use. It seems only polite.
+approve kip_smudgewick -1 liriel_dawnsong -1: You went through a frozen expedition's packs
 -> END
 
 ~ expedition_rites
 Narrator: You say the words. When you look back from the next bend, the snow has covered them over gently, like a sheet drawn up by someone who loved them.
 interject name:liriel_dawnsong: Be at peace. Nobody should have to wait so long to be told they may stop.
+approve liriel_dawnsong +2 godrick_pendlebrook +1: You said the words over a frozen expedition
 -> END
 
 ~ expedition_rites_plain

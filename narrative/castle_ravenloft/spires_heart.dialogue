@@ -41,6 +41,7 @@ Narrator: The magic is too old and too tangled to read. All you can tell is that
 set heart_of_sorrow_known
 Narrator: Under your palm the glass is warm. You feel the beat, and under the beat, faintly, someone else's pain, caught and held.
 interject class:cleric: It's carrying his wounds for him. Every one. A reliquary that keeps the hurt instead of the saint.
+inspire class:cleric: listened to the Heart of Sorrow through the glass
 -> menu
 
 ~ strike

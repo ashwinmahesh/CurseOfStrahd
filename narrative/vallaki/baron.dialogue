@@ -96,6 +96,7 @@ Baron: Think cheerfully. That's all I ask. That's all I ever ask.
 
 ~ refuse
 Baron [angry]: I don't jail them for frowning. I jail them for spreading it. It's a contagion! Ask the priest; he buries the ones who caught it.
+approve thistle +2 wren_featherfoot +2 godrick_pendlebrook +1: You told the Baron you don't work for men who jail people for frowning
 -> menu
 
 ~ pledge
@@ -112,6 +113,7 @@ interject name:kip_smudgewick: We said we'd stand with you, Baron. A Smudgewick 
 else
 interject tag:loyal: We said we'd stand with you. We will.
 endif
+approve thistle -2 wren_featherfoot -2 liriel_dawnsong -1 godrick_pendlebrook -1: You stood with the Baron, who jails people for frowning
 -> menu
 
 ~ orders
@@ -174,12 +176,14 @@ endif
 ~ mercy_ok
 set wachter_fate = "exiled"
 Baron: Oh, very well. Out of the stocks and out of the gate, and her house to the festival fund. You're too soft, marshals. It's very becoming.
+approve liriel_dawnsong +2 wren_featherfoot +2 godrick_pendlebrook +1 kip_smudgewick +1: You talked Lady Wachter out of the stocks and into exile
 -> after
 
 ~ mercy_bought
 gold -100
 set wachter_fate = "exiled"
 Baron [smile]: The Festival of Mercy! Oh, that's good. That's very good. Bunting, a pardon, and a collection plate. Out of the stocks and out of the gate with her, and a speech!
+approve liriel_dawnsong +2 wren_featherfoot +2 godrick_pendlebrook +1 kip_smudgewick +1: You bought Lady Wachter's way out of the stocks
 -> after
 
 ~ mercy_fail

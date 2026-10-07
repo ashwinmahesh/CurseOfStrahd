@@ -136,6 +136,7 @@ set godfrey_remembers
 quest the_order_of_the_silver_dragon remembering
 attitude sir_godfrey_gwilym friendly
 Sir Godfrey Gwilym: Ask the commander to call the muster. All of us at the table, the way it was. Say your piece to the Order, not to him. I'll stand up when you do. I promise, and I'll remember promising.
+approve godrick_pendlebrook +4 liriel_dawnsong +1: You gave Sir Godfrey back the Order's oath
 -> menu
 
 # ---------------------------------------------------------------- The ally (Madam Eva's ghost card)

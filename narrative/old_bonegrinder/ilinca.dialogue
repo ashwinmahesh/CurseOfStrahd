@@ -103,6 +103,7 @@ set ilinca_joined
 join ilinca_vrana
 Ilinca: Then I'll come. Don't expect much: I'm an old bird with a short sword. But I can work a cage lock, and I know where the old one keeps her keys.
 interject tag:loyal: An old soldier with a short sword has saved my life more than once. Welcome.
+approve thistle +1 wren_featherfoot +1: You asked Ilinca's raven to fly with you
 -> END
 
 ~ forgiven

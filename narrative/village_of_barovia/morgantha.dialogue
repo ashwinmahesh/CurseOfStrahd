@@ -95,6 +95,7 @@ Morgantha: My windmill, pet, on the road to Vallaki. Me and my two daughters, ba
 set morgantha_driven_off
 Narrator: For one breath the sweetness drains out of her face, and what's under it is older than the village.
 Morgantha [sly]: Well. Aren't you brave. Morgantha's going, duckling. But Morgantha remembers every face. Every single one.
+approve thistle +2 godrick_pendlebrook +1 kip_smudgewick +1: You ran the pastry woman out of the village
 -> END
 
 ~ threat_fail

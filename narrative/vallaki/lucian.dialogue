@@ -63,6 +63,7 @@ interject class:cleric: Bones don't walk off on their own. Not a saint's, anyway
 ~ promise
 attitude father_lucian friendly
 Father Lucian: Thank you. I mean it more than I can say without sounding like a sermon. Start with Milivoj, if you must. He digs in the churchyard most days. Be gentle with him. He has three young ones at home and no parents for them.
+approve liriel_dawnsong +2 godrick_pendlebrook +1: You promised Father Lucian you'd find St. Andral's bones
 -> menu
 
 ~ who_wants
@@ -97,6 +98,7 @@ Father Lucian: Tonight, or any night now. If whoever took the saint means the ch
 set church_vigil
 Narrator: Lucian bars the doors and lights every candle he owns. You take your places in the nave. For hours there is nothing but the wax burning down and the priest's voice saying the long prayers under his breath.
 Father Lucian: Whatever happens, they don't reach the altar. Not while I'm breathing.
+approve liriel_dawnsong +2 godrick_pendlebrook +2 thistle +1: You kept vigil at St. Andral's with Father Lucian
 -> END
 
 ~ return
@@ -130,6 +132,7 @@ endif
 else
 interject class:cleric: Holy ground again. You can feel it in your teeth.
 endif
+approve liriel_dawnsong +5 godrick_pendlebrook +2 kip_smudgewick +1 thistle +1 wren_featherfoot +1 ratatoille +1: You brought St. Andral home to his church
 if not flag.vallaki_milestone_reached
 set vallaki_milestone_reached
 xp milestone
@@ -159,6 +162,7 @@ if guest:ismark
 Ismark: And I'll... well. Somebody should stay with her. Somebody should also keep you lot alive. I can't do both.
 -> ismark_choice
 endif
+approve godrick_pendlebrook +1: You left Ireena safe behind the church's walls
 -> menu
 
 ~ ismark_choice
@@ -203,6 +207,7 @@ set vallaki_pledge = "town"
 quest festival_of_the_blazing_sun town_side
 attitude father_lucian friendly
 Father Lucian: Then God bless you, and God help us. Urwin Martikov feels the same, and he's quieter about it than I am, which is wiser.
+approve godrick_pendlebrook +2 thistle +2 wren_featherfoot +2 liriel_dawnsong +2 kip_smudgewick +1 ratatoille +1: You stood with the people of Vallaki, against both of them
 -> festival_plan
 
 ~ festival_plan
