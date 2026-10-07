@@ -201,6 +201,20 @@ func test_autosave_on_arriving_but_not_in_a_fight() -> void:
 	SaveSystem.delete_slot(SaveSystem.AUTOSAVE)
 
 
+## Alt names everything usable nearby (docs/plans/ui_polish.md): people, doors (locked says so), containers and
+## things to read, but never a hiding place nobody has searched out yet.
+func test_alt_names_what_can_be_used() -> void:
+	var labels := (root.get("hud") as ExploreHud).thing_labels
+	labels.pinned = true
+	var texts: Array[String] = []
+	for p in labels.plates():
+		texts.append(str(p["text"]))
+	labels.pinned = false
+	for want: String in ["Ismark Kolyanovich", "Door · locked", "Chest", "Old book"]:
+		assert_true(texts.has(want), "%s is named (got %s)" % [want, texts])
+	assert_false(texts.has("Loose stone"), "an unsearched hiding place stays hidden")
+
+
 func test_round_start_save_resumes_the_fight() -> void:
 	var v := _view()
 	v.start_encounter("wolves")

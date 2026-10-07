@@ -32,6 +32,8 @@ var _roll_panel: PanelContainer
 var minimap: Minimap
 ## Ways out to other regions marked over the world (ui/exploration/exit_signs.gd).
 var exit_signs: ExitSigns
+## Names over everything usable while Alt is held (ui/exploration/thing_labels.gd).
+var thing_labels: ThingLabels
 
 ## [label, key, command, icon (art/ui/icons)]
 const BUTTONS := [["Character", "C", "sheet", "character"], ["Inventory", "I", "inventory", "inventory"],
@@ -49,6 +51,8 @@ func build(state: StoryState) -> void:
 	st = state
 	exit_signs = ExitSigns.new()
 	add_child(exit_signs)
+	thing_labels = ThingLabels.new()
+	add_child(thing_labels)
 	_party_box = VBoxContainer.new()
 	_party_box.position = Vector2(12, 12)
 	_party_box.add_theme_constant_override("separation", 6)
@@ -320,6 +324,7 @@ func _fit_where(text: String) -> void:
 func show_location(view: LocationView) -> void:
 	minimap.show_location(view)
 	exit_signs.show_location(view)
+	thing_labels.show_location(view, exit_signs.signs)
 
 
 ## Shows a passage in the Narrator's box, with `portrait` (art/portraits/<id>.png; the Narrator's by default, ""

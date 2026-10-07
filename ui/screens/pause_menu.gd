@@ -246,13 +246,13 @@ func _show_saves() -> void:
 	_title("The party has fallen" if game_over else "Load a Save")
 	var top := 124.0
 	if game_over:
-		var lost := _text("Barovia keeps what it takes. Go back to the last autosave, or load a save to try again.", 10.0, _c("arch_text"))
+		var lost := _text("Barovia keeps what it takes. Load a save to try again.", 10.0, _c("arch_text"))
 		lost.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		lost.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		lost.position = _u(24, 118)
-		lost.size = _u(W_U - 48.0, 28)
+		lost.position = _u(24, 126)
+		lost.size = _u(W_U - 48.0, 20)
 		_place(lost)
-		top = 150.0
+		top = 154.0
 	_list_box = VBoxContainer.new()
 	_list_box.add_theme_constant_override("separation", 5)
 	var scroll := ScrollContainer.new()
