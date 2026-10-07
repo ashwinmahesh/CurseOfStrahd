@@ -257,6 +257,7 @@ quest the_third_stone found
 quest the_witch_of_berez bargained
 Narrator: She digs under the crocheted blanket, prises the green stone out from under the root's chin, and drops it into your palm as if it burned. In the cradle, the root begins very slowly to wither.
 Baba Lysaga: There. And the pantry's open. Take your crumbs. Not a word to him, ever, or I'll find you. I found her, didn't I?
+approve liriel_dawnsong -2 godrick_pendlebrook -2 kip_smudgewick -1: You blackmailed Baba Lysaga over Marina's murder
 -> milestone
 
 ~ fight_inside
@@ -277,6 +278,7 @@ Baba Lysaga [angry]: You again. You've had what you came for. Go away, before I 
 
 ~ betrayal_outside
 Baba Lysaga [angry]: Oath-breakers! I knew it! The hut knew it!
+approve godrick_pendlebrook -2 kip_smudgewick -2: You broke your bargain with Baba Lysaga
 combat lysaga_and_hut
 
 # ---------------------------------------------------------------- After Strahd has heard the truth

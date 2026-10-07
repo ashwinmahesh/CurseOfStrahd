@@ -1,0 +1,20 @@
+{
+  "region": "companions",
+  "flags": [
+    {
+      "id": "romance_thistle_wren",
+      "type": "string",
+      "summary": "Thistle and Wren's romance (narrative/camp/romance_thistle_wren): spark, courting, together, or over when the party steered them apart."
+    },
+    {
+      "id": "romance_godrick_thistle",
+      "type": "string",
+      "summary": "Godrick and Thistle's romance (narrative/camp/romance_godrick_thistle): spark, courting, together, or over. Thistle walks one romance at a time."
+    },
+    {
+      "id": "romance_liriel_ratatoille",
+      "type": "string",
+      "summary": "Liriel and Ratatoille's romance (narrative/camp/romance_liriel_ratatoille): spark, courting, together, or over."
+    }
+  ]
+}

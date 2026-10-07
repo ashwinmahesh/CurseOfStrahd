@@ -63,11 +63,52 @@ static func palette_size() -> int:
 	return _palette.size()
 
 
+## A flat-coloured world material: Classic's cel bands, or in the Modern finish lit like painted 3D with the colour's
+## own roughness and metal (COLOUR_MATERIALS).
 static func cel(albedo_name: String) -> ShaderMaterial:
 	var m := ShaderMaterial.new()
-	m.shader = CEL_SHADER
+	m.shader = LIT_SHADER if modern() else CEL_SHADER
 	m.set_shader_parameter("albedo", color(albedo_name))
+	if modern():
+		var spec := COLOUR_MATERIALS.get(albedo_name, {}) as Dictionary
+		m.set_shader_parameter("roughness", float(spec.get("roughness", 0.75)))
+		m.set_shader_parameter("metallic", float(spec.get("metallic", 0.0)))
 	return m
+
+
+## The Modern finish's lit world shaders (Improvement Ideas W3); Classic keeps CEL_SHADER and CEL_WORLD_SHADER.
+const LIT_SHADER := preload("res://shaders/world/lit.gdshader")
+const LIT_WORLD_SHADER := preload("res://shaders/world/lit_world.gdshader")
+
+## Flat palette colours that aren't matte, for the Modern finish (the rest take roughness 0.75): metal fittings shine,
+## bone and ivory and polished dark wood take a soft highlight, cloth stays dull.
+const COLOUR_MATERIALS := {
+	"silver": {"roughness": 0.3, "metallic": 0.9},
+	"pewter": {"roughness": 0.4, "metallic": 0.8},
+	"ivory": {"roughness": 0.45},
+	"bone": {"roughness": 0.55},
+	"walnut": {"roughness": 0.5},
+	"void": {"roughness": 0.5},
+	"ink": {"roughness": 0.5},
+	"slate": {"roughness": 0.55},
+	"leather": {"roughness": 0.6},
+	"blood": {"roughness": 0.9},
+	"blood_deep": {"roughness": 0.9},
+	"crimson": {"roughness": 0.9},
+	"vampire_red": {"roughness": 0.9},
+	"plum": {"roughness": 0.9},
+	"moss": {"roughness": 0.95},
+}
+
+
+## The parameter a world material is coloured by: "albedo" for a flat colour, "tint" over a texture, "" for another
+## kind of material (an emptied container darkens it, ModelPiece.dim).
+static func tint_key(m: ShaderMaterial) -> String:
+	if m.shader in [CEL_SHADER, LIT_SHADER]:
+		return "albedo"
+	if m.shader in [CEL_WORLD_SHADER, LIT_WORLD_SHADER]:
+		return "tint"
+	return ""
 
 
 const CEL_WORLD_SHADER := preload("res://shaders/cel_world.gdshader")
@@ -106,23 +147,89 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 	if modern() and info.has("hd_file") and ResourceLoader.exists("res://" + str(info["hd_file"])):
 		path = "res://" + str(info["hd_file"])
 	var m := ShaderMaterial.new()
-	m.shader = CEL_WORLD_SHADER
+	m.shader = LIT_WORLD_SHADER if modern() else CEL_WORLD_SHADER
 	m.set_shader_parameter("albedo_tex", load(path) as Texture2D)
 	m.set_shader_parameter("tile_units", float(info.get("tile_world_units", 2.0)))
 	m.set_shader_parameter("wall_band", str(info.get("wrap", "xy")) == "x")
 	m.set_shader_parameter("grid_strength", grid)
 	m.set_shader_parameter("grid_line", color("ink"))
 	if modern():
-		var nm := normal_map(path)
+		var spec := material_for(surface)
+		var nm: Texture2D = null
+		if info.has("normal_file") and ResourceLoader.exists("res://" + str(info["normal_file"])):
+			nm = load("res://" + str(info["normal_file"])) as Texture2D
+		else:
+			nm = normal_map(path)
 		if nm != null:
 			m.set_shader_parameter("normal_tex", nm)
-			m.set_shader_parameter("normal_strength", MODERN_RELIEF)
+			m.set_shader_parameter("normal_strength", MODERN_RELIEF * float(spec.get("relief", 1.0)))
+		if info.has("orm_file") and ResourceLoader.exists("res://" + str(info["orm_file"])):
+			m.set_shader_parameter("orm_tex", load("res://" + str(info["orm_file"])) as Texture2D)
+			m.set_shader_parameter("use_orm", true)
+		m.set_shader_parameter("roughness", float(spec.get("roughness", 0.8)))
+		m.set_shader_parameter("metallic", float(spec.get("metallic", 0.0)))
+		m.set_shader_parameter("roughness_spread", float(spec.get("spread", 0.35)))
 	_textured[key] = m
 	return m
 
 
-## How deep the modern finish's relief reads (cel_world.gdshader normal_strength).
+## How deep the modern finish's relief reads (lit_world.gdshader normal_strength, times the surface's `relief`).
 const MODERN_RELIEF := 0.9
+
+## How each world surface takes the light in the Modern finish (W3), by the first word of this list its name holds
+## ("interior/marble_floor" is marble): roughness (0 a mirror, 1 chalk), how much rougher its dark is than its light
+## (`spread`), how deep its relief reads (`relief`) and metal. A surface's own "material" in art/textures/manifest.json
+## wins over this, and its own "normal_file" and "orm_file" (occlusion, roughness, metal) over both.
+const MATERIALS: Array[Array] = [
+	["marble", {"roughness": 0.15, "spread": 0.3, "relief": 0.5}],
+	["black_stone", {"roughness": 0.25, "spread": 0.4, "relief": 0.6}],
+	["amber", {"roughness": 0.2, "spread": 0.3, "relief": 0.5}],
+	["tile", {"roughness": 0.3, "spread": 0.5, "relief": 0.8}],
+	["parquet", {"roughness": 0.3, "spread": 0.5, "relief": 0.6}],
+	["panel", {"roughness": 0.4, "spread": 0.5, "relief": 0.9}],
+	["wainscot", {"roughness": 0.45, "spread": 0.5, "relief": 0.8}],
+	["cobble", {"roughness": 0.4, "spread": 0.9, "relief": 1.2}],
+	["flag", {"roughness": 0.5, "spread": 0.8, "relief": 1.1}],
+	["courtyard", {"roughness": 0.55, "spread": 0.8, "relief": 1.0}],
+	["roof_slate", {"roughness": 0.45, "spread": 0.7, "relief": 0.9}],
+	["mud", {"roughness": 0.35, "spread": 0.7, "relief": 0.8}],
+	["water", {"roughness": 0.1, "spread": 0.0, "relief": 0.3}],
+	["snow", {"roughness": 0.55, "spread": 0.4, "relief": 0.6}],
+	["planks", {"roughness": 0.6, "spread": 0.6, "relief": 0.9}],
+	["boards", {"roughness": 0.65, "spread": 0.6, "relief": 0.9}],
+	["logs", {"roughness": 0.75, "spread": 0.5, "relief": 1.0}],
+	["brick", {"roughness": 0.7, "spread": 0.6, "relief": 1.0}],
+	["ashlar", {"roughness": 0.65, "spread": 0.6, "relief": 1.0}],
+	["stone", {"roughness": 0.65, "spread": 0.6, "relief": 1.0}],
+	["rock", {"roughness": 0.75, "spread": 0.5, "relief": 1.1}],
+	["cliff", {"roughness": 0.75, "spread": 0.5, "relief": 1.1}],
+	["scree", {"roughness": 0.8, "spread": 0.4, "relief": 1.0}],
+	["terracotta", {"roughness": 0.65, "spread": 0.5, "relief": 0.8}],
+	["plaster", {"roughness": 0.9, "spread": 0.2, "relief": 0.7}],
+	["whitewash", {"roughness": 0.9, "spread": 0.2, "relief": 0.6}],
+	["wallpaper", {"roughness": 0.8, "spread": 0.2, "relief": 0.5}],
+	["damask", {"roughness": 0.7, "spread": 0.3, "relief": 0.5}],
+	["house_wall", {"roughness": 0.85, "spread": 0.3, "relief": 0.9}],
+	["rug", {"roughness": 1.0, "spread": 0.0, "relief": 0.6}],
+	["carpet", {"roughness": 1.0, "spread": 0.0, "relief": 0.6}],
+	["thatch", {"roughness": 1.0, "spread": 0.0, "relief": 1.0}],
+	["grass", {"roughness": 0.8, "spread": 0.4, "relief": 0.8}],
+	["earth", {"roughness": 0.85, "spread": 0.3, "relief": 0.9}],
+]
+
+
+## The light-taking settings for a surface ("village/cobbles"): MATERIALS by name, under its own manifest "material".
+static func material_for(surface: String) -> Dictionary:
+	var out := {"roughness": 0.8, "spread": 0.35, "relief": 1.0, "metallic": 0.0}
+	for row: Array in MATERIALS:
+		if surface.contains(str(row[0])):
+			out.merge(row[1] as Dictionary, true)
+			break
+	var parts := surface.split("/")
+	if parts.size() == 2:
+		var info := (((textures().get("themes", {}) as Dictionary).get(parts[0], {}) as Dictionary).get(parts[1], {})) as Dictionary
+		out.merge(info.get("material", {}) as Dictionary, true)
+	return out
 static var _normals: Dictionary = {}
 
 

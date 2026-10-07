@@ -245,6 +245,7 @@ func test_old_bonegrinder_the_children_go_home() -> void:
 		["Keep them", "Take mine", "We'll buy them back", "Strike her down", "We're leaving", "Wait. Not like this",
 		"No deals with hags", "Leave her to her baking", "Our deal ends here"])
 	await bot.settle()
+	GoldenSaves.keep("old_bonegrinder", "test_phase5_exit")
 	for npc: String in ["ilinca_vrana"]:
 		if not st.guest_ids.has(npc):
 			await bot.talk(npc)
@@ -283,6 +284,7 @@ func test_wizard_of_wines_saved_and_yester_hill_broken() -> void:
 		"Go. Crawl off this hill", "The stone from Yester Hill.", "Yester Hill is finished."],
 		["End it", "Call it our fee", "Deception", "Leave it standing"])
 	await bot.settle()
+	GoldenSaves.keep("wizard_of_wines", "test_phase5_exit")
 	await bot.talk("davian_martikov")
 	await bot.settle()
 	if not _ok(await bot.go_to("wizard_of_wines_cellar"), "down to the cellar", bot):
@@ -327,6 +329,7 @@ func test_argynvostholt_the_beacon_is_lit() -> void:
 	if not _ok(await bot.go_to("argynvostholt_hall"), "into the hall", bot):
 		return
 	await bot.settle()
+	GoldenSaves.keep("argynvostholt", "test_phase5_exit")
 	await bot.talk("argynvost")
 	await bot.settle()
 	if not _ok(await bot.go_to("argynvostholt_mausoleum"), "the mausoleum", bot):
@@ -362,6 +365,7 @@ func test_krezk_and_the_abbot_repents() -> void:
 		["Attack", "Kill", "Steal", "Intimidation", "No. We won't help", "No. We can't take this", "We're leaving", "Stop this",
 		"It's your abbey"])
 	await bot.settle()
+	GoldenSaves.keep("krezk", "test_phase5_exit")
 	if not _ok(await bot.go_to("abbey_of_st_markovia"), "up to the abbey", bot):
 		return
 	await bot.settle()
@@ -401,6 +405,7 @@ func test_berez_baratok_and_the_tsolenka_gate() -> void:
 		"Stand aside", "Haul on the winch", "Dig around the plinth"],
 		["Come down, witch", "Light the grave-lamp", "Your nurse did", "We never said we'd leave you alive"])
 	await bot.settle()
+	GoldenSaves.keep("berez", "test_phase5_exit")
 	if not bool(st.get_flag("lysaga_guests", false)):
 		await bot.talk("baba_lysaga")
 		await bot.settle()
@@ -445,6 +450,7 @@ func test_werewolf_den_emil_leads_the_pack() -> void:
 		["We won't do your killing", "Settle it between", "Take him back", "Neither of you", "Then we'll take them", "We're leaving",
 		"Draw steel", "Let him go"])
 	await bot.settle()
+	GoldenSaves.keep("werewolf_den", "test_phase5_exit")
 	if not bool(st.get_flag("zuleika_asked", false)):
 		await bot.talk("zuleika_toranescu")
 		await bot.settle()
@@ -474,6 +480,7 @@ func test_amber_temple_the_pact_is_learned_and_no_gift_taken() -> void:
 		"What are you offering?", "We'll take nothing from you.", "No one", "Seal it."],
 		["Draw steel", "Attack", "Strike", "Smash", "Lie down in the amber", "I accept", "Keep at it", "bleeding hand"])
 	await bot.settle()
+	GoldenSaves.keep("amber_temple", "test_phase5_exit")
 	await bot.use(Vector2i(19, 8))
 	await bot.settle()
 	if not _ok(await bot.go_to("amber_temple_faceless_god"), "the hall of the faceless god", bot):

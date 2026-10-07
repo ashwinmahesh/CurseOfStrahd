@@ -1,6 +1,78 @@
 # Kip Smudgewick's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each plays
 # once. Quest: The Fine Print (narrative/companions/fine_print.dialogue). Mister Quillon calls at the fire twice:
-# once to remind Kip of his terms, and once, if Kip has Strahd's signature, to be paid.
+# once to remind Kip of his terms, and once, if Kip has Strahd's signature, to be paid. The file offers its first talk
+# that holds: when he's Strained or Doubtful (story/approval.gd), those first; then the quest's; then Warm, Close and
+# Devoted.
+
+# --- When he's lost faith in the party (approval) ----------------------------------------------------------------
+
+~ talk_strained
+if name:kip_smudgewick and approval.kip_smudgewick <= strained
+-> strained
+endif
+-> END
+
+~ strained
+Narrator: Kip doesn't offer anyone an apricot tonight. That has never happened before. He sits with his hat in his lap and talks slowly, politely and very clearly, like a man reading out terms.
+interject name:kip_smudgewick: I'd like it on the record, please, that I've been very patient. I'm a patient man. You have to be, with trees.
+interject name:kip_smudgewick: But I've sat across a table from a devil, and I know what it looks like when somebody stops counting what things cost other people. I've seen it in a mirror. I don't want to see it in you.
+if flag.dark_gifts_taken >= 1
+interject name:kip_smudgewick: We let something in the amber give one of us a gift. Do you know what they call a gift, where Mister Quillon comes from? An advance.
+endif
+interject name:kip_smudgewick: When I settle with Mister Quillon, I'll do it on my own, if it comes to that. I'll not have him see me standing with people like this. He'd only take notes.
+* Then hold us to account, Kip. -> strained_account
+* We're sorry. -> strained_sorry
+* Nobody asked you. -> strained_cold
+
+~ strained_account
+interject name:kip_smudgewick: I can do that. I'm very good at accounts. I'll keep a ledger. Two columns. The second one's for putting things right.
+approve kip_smudgewick +10: You asked me to hold you to account
+-> END
+
+~ strained_sorry
+interject name:kip_smudgewick: Accepted. Provisionally. Subject to terms. I'm sorry, I can't help it. Accepted.
+approve kip_smudgewick +5: You told me you were sorry
+-> END
+
+~ strained_cold
+Narrator: He puts his hat on, carefully, and pulls it down over his horns, and doesn't say anything else all night.
+approve kip_smudgewick -6: You told me nobody asked me
+-> END
+
+~ talk_doubt
+if name:kip_smudgewick and approval.kip_smudgewick == doubtful
+-> doubt
+endif
+-> END
+
+~ doubt
+Narrator: Kip is doing his accounts tonight. You can tell because he keeps sighing at a little book and licking his pencil. Eventually he shuts it.
+interject name:kip_smudgewick: Can I raise a matter? Under any other business. It's a bit awkward. I'll be brief. I'm never brief.
+interject name:kip_smudgewick: I've done a lot of deals in my life, and only one bad one. And lately, watching us, I keep getting the feeling I had in the lane that night. The polite feeling. The "sign here, it's all perfectly fair" feeling.
+if flag.bella_pact
+interject name:kip_smudgewick: We shook on it with a hag. I know what a handshake like that's worth. I've got one in my pocket.
+endif
+interject name:kip_smudgewick: I'm not saying anything. I'm just saying it. Notwithstanding.
+* You're right. We'll be more careful. -> doubt_careful
+* Every deal's a risk, Kip. -> doubt_risk
+* Mind your own ledger. -> doubt_ledger
+
+~ doubt_careful
+interject name:kip_smudgewick: Lovely. Thank you. That's all I wanted. Apricot? I've got loads. I always have loads. That's sort of the problem.
+approve kip_smudgewick +6: You said we'd be more careful
+-> END
+
+~ doubt_risk
+interject name:kip_smudgewick: It is. That's true. Mum says you weigh the risk on one hand and the fruit on the other, and you never put your soul on the scale. I did. I'm saying don't.
+approve kip_smudgewick +1: You told me every deal's a risk
+-> END
+
+~ doubt_ledger
+interject name:kip_smudgewick: Right. Yes. Sorry. I'll mind it. ...I'll mind it very carefully.
+approve kip_smudgewick -4: You told me to mind my own ledger
+-> END
+
+# --- His quest ---------------------------------------------------------------------------------------------------
 
 ~ talk_quillon
 if name:kip_smudgewick and quest.the_fine_print == the_contract
@@ -22,6 +94,7 @@ Mister Quillon: Our agreement runs to the end of the final harvest. I merely men
 
 ~ quillon_leave
 Mister Quillon: Of course. I can't do anything else here, you understand; my jurisdiction ends at the mists. I can only talk. You'd be amazed what talking does.
+approve kip_smudgewick +3: You told Mister Quillon to leave me alone
 -> quillon_go
 
 ~ quillon_terms
@@ -77,6 +150,7 @@ interject name:godrick_pendlebrook: So we just need the vampire to write his nam
 endif
 interject name:kip_smudgewick: Freely given. In his own hand. Right. Right. I can do that. I'm a salesman. Getting people to sign things is the entire job.
 quest the_fine_print the_small_print
+approve kip_smudgewick +3: You read the small print with me
 -> END
 
 ~ reading_fail
@@ -88,7 +162,9 @@ interject name:kip_smudgewick: Somebody who reads contracts for a living. A lawy
 -> END
 
 ~ talk_settle
-if name:kip_smudgewick and quest.the_fine_print >= the_small_print and not (quest.the_fine_print >= free) and (flag.strahd_letter_kept or flag.kip_invitation_kept or flag.kip_strahd_signed)
+# Approval (story/approval.gd): Strained or worse, and he won't call Quillon with the party watching until it's mended;
+# Close or better, and the first apricot pit of a free orchard becomes a charm that works.
+if name:kip_smudgewick and quest.the_fine_print >= the_small_print and not (quest.the_fine_print >= free) and (flag.strahd_letter_kept or flag.kip_invitation_kept or flag.kip_strahd_signed) and not (approval.kip_smudgewick <= strained)
 -> settle
 endif
 -> END
@@ -125,6 +201,14 @@ Narrator: Then Kip takes an apricot out of his pocket, from habit, and looks at 
 interject name:kip_smudgewick: It's going off. It's going off! LOOK. It's going brown! Oh, thank every god there is, it's ROTTING.
 interject name:thistle: Why's he crying at a bad apricot?
 interject name:wren_featherfoot: Long story. Good ending.
+inspire name:kip_smudgewick: read the small print, like Mum always said
+if approval.kip_smudgewick >= close
+Narrator: Later, when the others are asleep, Kip sits up by the fire with his little knife and the stone of the bruised apricot, carving. In the morning there's a charm on a string, tied to the pack of whoever slept nearest.
+interject name:kip_smudgewick: Apricot-pit charm. Finest in three counties. I've sold hundreds, and not one of them ever worked, because the orchard was cursed.
+interject name:kip_smudgewick: This one might. First pit off a free tree. No charge. Partners don't charge each other.
+give stone_of_good_luck
+endif
+approve kip_smudgewick +8: You stood by me while I settled up with Mister Quillon
 -> END
 
 ~ talk_home
@@ -143,8 +227,103 @@ interject name:kip_smudgewick: I've been lying to my dad for two years, every da
 
 ~ home_saved
 interject name:kip_smudgewick: I did. I did do that. I keep forgetting that part. I'm going to put it in the letter. "I'm sorry, and also I saved everyone." That's a good sentence. That's a sentence a person can live with.
+approve kip_smudgewick +2: You reminded me I saved them
 -> END
 
 ~ home_tell
 interject name:kip_smudgewick: When I get home. Yes. When I get home I'll tell him, and he'll be furious, and then he'll make me dig the whole bottom field on my own, and I'll be so happy I'll cry into the soil.
+approve kip_smudgewick +2: You told me I'd get home to tell Dad myself
+-> END
+
+# --- As he comes to trust the party (approval) --------------------------------------------------------------------
+
+~ talk_warm
+if name:kip_smudgewick and approval.kip_smudgewick >= warm and level >= 3
+-> warm
+endif
+-> END
+
+~ warm
+Narrator: Kip is carving tonight: an apricot-pit charm, turning it under his thumb as the little knife goes round. There's a row of them on the log beside him, each face slightly different.
+interject name:kip_smudgewick: Finest apricot-pit charms in three counties. I'd say four, but there's a woman in the next valley who does a very good rabbit.
+interject name:kip_smudgewick: Pip used to sit with me and choose the faces. She liked them sad. Said a sad one would understand you better. She's little. She's very wise. Gets it from her grandmother. Not from me.
+* Tell us about Pip. -> warm_pip
+* Can I have one? -> warm_charm
+* Which one's the sad one? -> warm_sad
+
+~ warm_pip
+interject name:kip_smudgewick: She sells better than me. She stands on a crate at market and tells people the apricots are sad to be left behind. They buy two. She's going to run the stall one day, and I'll just carry the boxes. That's my whole retirement plan.
+approve kip_smudgewick +3: You asked me about Pip
+-> END
+
+~ warm_charm
+interject name:kip_smudgewick: Course. One apricot. No. No charge. Don't tell my mum; she says I give the stock away.
+approve kip_smudgewick +2: You asked for one of my charms
+-> END
+
+~ warm_sad
+Narrator: He holds one up. It's a very small face with its mouth turned down and its eyebrows up, the way a person looks when they've been told bad news kindly.
+interject name:kip_smudgewick: That one. I did that one in the Svalich woods, the first night. I didn't mean to. My hands just did it.
+approve kip_smudgewick +2: You asked which one was the sad one
+-> END
+
+~ talk_close
+if name:kip_smudgewick and approval.kip_smudgewick >= close and level >= 5
+-> close
+endif
+-> END
+
+~ close
+Narrator: Kip is sitting a little way from the fire with his hat off. Without it his horns look very large and very red in the firelight, and he keeps touching one of them, the way some people touch a scar.
+interject name:kip_smudgewick: People see the horns and count their change twice. All my life. I don't blame them. I'd count mine, if I were them and I saw me.
+interject name:kip_smudgewick: So I've always been honest. Stupidly honest. Change counted out loud. Weights on the table where you can see them. Because if I wasn't, I'd only be what they thought I was.
+interject name:kip_smudgewick: And then I signed that paper in the lane. And now I don't know if I'm the honest one or the horns.
+* You're the honest one. -> close_honest
+* The horns don't decide that, Kip. You do. -> close_decide
+* We've never once counted our change around you. -> close_change
+
+~ close_honest
+interject name:kip_smudgewick: Am I? Even after? ...You'd know. You've seen me at it. You've seen me give back the change people didn't notice.
+approve kip_smudgewick +3: You told me I'm the honest one
+-> close_end
+
+~ close_decide
+interject name:kip_smudgewick: Me. Huh. That's a frightening amount of responsibility. I'll need it in writing. No, I won't. I'll need it said again sometime, that's all.
+approve kip_smudgewick +3: You told me I decide who I am, not the horns
+-> close_end
+
+~ close_change
+interject name:kip_smudgewick: You haven't, have you. I'd have noticed. I always notice.
+approve kip_smudgewick +3: You told me you've never counted your change around me
+-> close_end
+
+~ close_end
+interject name:kip_smudgewick: Right. Good. Lovely. I'm putting my hat back on now, because it's cold, not for any emotional reason. Apricot? They're all free tonight.
+-> END
+
+~ talk_devoted
+if name:kip_smudgewick and approval.kip_smudgewick >= devoted and level >= 8
+-> devoted
+endif
+-> END
+
+~ devoted
+Narrator: Kip has unrolled a fresh sheet of paper on the log and is writing, very carefully, in his best market-day hand. When you lean over, he lets you look. It's headed PARTNERSHIP AGREEMENT.
+interject name:kip_smudgewick: Smudgewick and Company. Apricots and adventuring. I've put all your names in. I've left the small print blank on purpose. No small print. Just the big print.
+interject name:kip_smudgewick: Clause one: nobody signs anything without reading it. Clause two: nobody goes into the dark alone. Clause three: I bring the apricots. There isn't a clause four. Three's a good number for clauses.
+* Where do I sign? -> devoted_sign
+* What's in it for you? -> devoted_what
+
+~ devoted_sign
+interject name:kip_smudgewick: Just there. Freely given, in your own hand. ...I've wanted to say that to someone and mean it nicely for two years.
+approve kip_smudgewick +3: You signed Smudgewick and Company's partnership agreement
+-> devoted_end
+
+~ devoted_what
+interject name:kip_smudgewick: Company. That's all. That's the whole consideration. It's a very good deal. Best I ever made.
+approve kip_smudgewick +3: You asked what was in it for me, and let me say it
+-> devoted_end
+
+~ devoted_end
+inspire name:kip_smudgewick: drew up a contract with no small print
 -> END

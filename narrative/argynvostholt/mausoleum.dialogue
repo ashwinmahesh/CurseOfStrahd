@@ -49,6 +49,7 @@ Narrator: He steps back into the wall and is gone, and the doorway is only a doo
 
 ~ warden_force
 Phantom Warden: I opened the gate once. I'll not open this one.
+approve godrick_pendlebrook -2 liriel_dawnsong -1: You forced your way past the dragon's warden
 combat bone_watch
 
 ~ bones
@@ -77,6 +78,7 @@ Narrator: Old bones, very large, very cold. If there's anything else here, it is
 ~ prayer
 Narrator: {name} kneels at the foot of the bier and says the old words for the dead. The frost on the nearest rib brightens, very slightly, as if someone had leaned toward a window to listen.
 interject tag:pious: He's still here. Not much of him. Enough to say thank you.
+inspire class:cleric: prayed at the foot of a dead dragon's bier
 -> END
 
 ~ kindle
@@ -86,4 +88,5 @@ Narrator: {name} holds a torch to the frost on the ribs. For a moment, nothing. 
 interject class:wizard: Cold fire. Technically impossible. I'll want notes. I'll want so many notes.
 interject tag:pious: It feels like dawn in my hands. I haven't felt that since the mists.
 Narrator: Far off in the house behind you, a chair scrapes back from a long table.
+approve ratatoille +1: You kindled cold fire from a dragon's bones
 -> END

@@ -183,6 +183,7 @@ endif
 set abbot_dress_asked
 quest the_abbots_bride asked
 Abbot [smile]: Thank you. Look in Krezk. Every village keeps a dress in a chest somewhere, waiting for a girl who did not live to wear it.
+approve liriel_dawnsong -3 godrick_pendlebrook -2 kip_smudgewick -1 thistle -1: You agreed to find a wedding dress for the devil's bride
 if not flag.krezk_gate_open and not flag.abbot_vouched
 -> vouch
 endif
@@ -191,6 +192,7 @@ endif
 ~ dress_no
 set abbot_dress_refused
 Abbot: Then not yet. You will change your minds, or you will not. I am patient. Ask the snow how patient I am.
+approve liriel_dawnsong +3 godrick_pendlebrook +2 kip_smudgewick +1 thistle +1: You refused to dress a corpse for the devil
 -> menu
 
 ~ still_looking
@@ -222,6 +224,7 @@ Abbot: In my own chapel. Very well. I will not let you undo my work.
 if guest:ezmerelda
 interject guest:ezmerelda: Finally. Silver first, questions never.
 endif
+approve liriel_dawnsong -3 godrick_pendlebrook -1: You drew steel on an angel in his own chapel
 combat abbot_wrath
 
 ~ bye

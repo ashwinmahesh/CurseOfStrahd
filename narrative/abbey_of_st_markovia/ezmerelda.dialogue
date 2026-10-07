@@ -26,6 +26,7 @@ if not name:liriel_dawnsong
 interject class:cleric: Dawn keep you, stranger, and the dark keep its distance.
 endif
 Ezmerelda: That sounded like you meant it, and nothing came off you in smoke. Good enough.
+inspire class:cleric: blessed a wary stranger out loud, and meant it
 -> who
 
 ~ cards

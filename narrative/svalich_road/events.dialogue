@@ -50,12 +50,14 @@ endif
 set strahd_road_encounter = "defiant"
 Strahd [smile]: Off my road. In my land. Under my sky. You have a gift for comedy. Good evening.
 Narrator: He rides on through the middle of you. The black horse never breaks its walk, and you find you have stepped aside without meaning to.
+approve thistle +2 godrick_pendlebrook +1 kip_smudgewick -1: You told Strahd to get off the road
 -> END
 
 ~ s_courteous
 set strahd_road_encounter = "courteous"
 Strahd: There. You see? Civilisation survives, even here. We will dine together, one evening. I insist.
 Narrator: He touches two fingers to his brow and rides on into the fog, and the fog closes behind him like a curtain.
+approve liriel_dawnsong +1 kip_smudgewick +1 thistle -1 wren_featherfoot -1: You returned Strahd's courtesy on the road
 -> END
 
 ~ s_shield
@@ -63,6 +65,7 @@ set strahd_road_encounter = "shield"
 Strahd: How gallant. She hardly needs you there; she can refuse me perfectly well on her own. She has been doing it for centuries.
 Ireena: What does that mean?
 Strahd [smile]: Ask the old woman at the pool. Or ask me, over dinner. Good evening, Ireena.
+approve godrick_pendlebrook +3 liriel_dawnsong +1 thistle +1 wren_featherfoot +1: You stepped between Strahd and Ireena
 -> END
 
 ~ s_violent
@@ -70,6 +73,7 @@ set strahd_road_encounter = "violent"
 Narrator: Steel clears leather. The black horse doesn't flinch. Your blow passes through the place where he was and closes on cold fog that smells of old roses.
 Strahd: Not on the road. The road is for travelling. We will do this properly, in my house, when you are ready. You are not ready.
 Narrator: His laughter comes from behind you, then from far away, then not at all.
+approve thistle +1 kip_smudgewick -2 ratatoille -1: You drew on Strahd on the open road
 -> END
 
 ~ s_silent
@@ -112,6 +116,7 @@ Narrator: An old woman, grey and peaceful, with her hands folded on a sprig of d
 ~ anca_bless
 set anca_examined
 Narrator: You lay a hand on the coffin and begin the words. Cold comes up through the wood into your palm. Then you see the marks.
+inspire class:cleric: blessed a dead stranger's coffin on the road
 -> anca_marks
 
 ~ anca_marks
@@ -130,6 +135,7 @@ set anca_fate = "staked"
 Narrator: Bogdan sends the boy to sit by the cart with his back turned. It is quick. It is not easy. Afterwards he closes the lid himself and stands with his hand on it.
 Bogdan [sad]: Thank you. I won't say it again, so hear it now. Thank you.
 interject class:cleric: She'll sleep now. Properly, this time.
+approve liriel_dawnsong +2 godrick_pendlebrook +1: You helped Bogdan see his mother properly to rest
 -> END
 
 ~ anca_hurry
@@ -141,11 +147,13 @@ Narrator: The cart goes away toward the village at a speed no coffin was built f
 ~ anca_silent
 set anca_fate = "unwarned"
 Narrator: They go on toward the village, the cart creaking, the boy pulling. The old woman's hands are folded very neatly. Nobody in this valley would think to look at her throat.
+approve liriel_dawnsong -2 godrick_pendlebrook -2 kip_smudgewick -1: You let Bogdan carry his mother home without warning him what she'll become
 -> END
 
 ~ anca_coin
 gold -5
 Bogdan: That's... thank you. That's a priest's fee and a candle besides. Mother would have made you take soup for it.
+approve kip_smudgewick +1 godrick_pendlebrook +1: You paid a stranger's priest fee on the road
 -> funeral_menu
 
 ~ anca_goodbye
@@ -181,6 +189,7 @@ combat road_dead_procession
 set dead_procession_turned
 Narrator: The light of your faith hits them like a wind. They set the empty coffin down in the middle of the road, turn together, and walk off into the fields toward wherever they were buried.
 interject tag:cheerful: We're just going to leave the coffin there? In the road? All right.
+inspire class:cleric: turned a dead procession back to their graves
 -> END
 
 ~ dp_fight
@@ -216,6 +225,7 @@ Narrator: A big black bird with a big black beak, and opinions. Beyond that it k
 take ration 1
 set raven_fed
 Narrator: It takes the crust, considers it, and then, quite unmistakably, nods. It flies off west toward the vineyards beyond Vallaki, and circles back twice to make sure you saw which way.
+approve thistle +2 kip_smudgewick +1: You fed a raven on the road
 -> END
 
 ~ raven_shoo
@@ -225,6 +235,7 @@ Narrator: It hops out of reach, plainly offended, and flies off west.
 ~ raven_harm
 set raven_harmed
 Narrator: It tumbles into the ditch, struggles up and flies away low and lopsided, shrieking. From the trees on both sides of the road, a great many ravens shriek back.
+approve thistle -2 liriel_dawnsong -1 wren_featherfoot -1: You brought a raven down for no good reason
 -> END
 
 # --- Wolf hunters in the woods (day, Svalich Woods) ---
@@ -305,6 +316,7 @@ give ration 2
 give torch 2
 gold +4
 Narrator: Rations, torches, four gold pieces knotted in a sock. And a letter, half written, that begins: the road is safer than they say, my love, and stops there.
+approve kip_smudgewick -1 godrick_pendlebrook -1: You went through a lost traveller's bundle and took what was useful
 -> END
 
 ~ lb_track_ok
@@ -320,4 +332,5 @@ Narrator: The marks lose themselves in pine needles. The woods are very quiet, i
 
 ~ lb_leave
 Narrator: You leave it for whoever comes looking. You suspect nobody will.
+approve kip_smudgewick +1 godrick_pendlebrook +1: You left a lost traveller's bundle for whoever comes looking
 -> END

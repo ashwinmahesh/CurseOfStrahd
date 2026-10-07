@@ -80,8 +80,9 @@ static func instance(id: String) -> Node3D:
 
 ## The game material for a model surface named in Blender.
 static func material(name: String) -> Material:
-	if _materials.has(name):
-		return _materials[name] as Material
+	var key := name + "|" + Look.style()   # a change of look gets fresh materials
+	if _materials.has(key):
+		return _materials[key] as Material
 	var m: Material = null
 	if name.begins_with("pal_"):
 		m = Look.cel(name.trim_prefix("pal_"))
@@ -99,7 +100,7 @@ static func material(name: String) -> Material:
 		m = sm
 	if m == null:
 		m = Look.cel("pewter")
-	_materials[name] = m
+	_materials[key] = m
 	return m
 
 
@@ -473,7 +474,7 @@ static func dim(node: Node3D) -> void:
 			if m == null:
 				continue
 			# A flat colour's albedo, or a texture's tint, darkened.
-			var key := "albedo" if m.shader == Look.CEL_SHADER else ("tint" if m.shader in [Look.CEL_WORLD_SHADER, SPRITE_SHADER] else "")
+			var key := "tint" if m.shader == SPRITE_SHADER else Look.tint_key(m)
 			if key == "":
 				continue
 			var d := m.duplicate() as ShaderMaterial

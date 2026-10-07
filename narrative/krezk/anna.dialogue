@@ -65,6 +65,8 @@ set ilya_fate = "healed"
 quest the_burgomasters_son healed
 gold +40
 Anna Krezkova: Take this. Don't argue. It was for his stone, and he won't need one now.
+inspire class:cleric: prayed a dying boy back to his mother
+approve liriel_dawnsong +3 kip_smudgewick +2 godrick_pendlebrook +2 thistle +1 wren_featherfoot +1 ratatoille +1: You healed Ilya Krezkov
 -> END
 
 ~ water_cure
@@ -74,6 +76,7 @@ Narrator: It goes, but not all the way. Whatever the water has done, it has done
 set ilya_fate = "frail"
 quest the_burgomasters_son frail
 Anna Krezkova [sad]: He'll live. I can do the rest. I've done harder.
+approve kip_smudgewick +2 liriel_dawnsong +1 godrick_pendlebrook +1: You bathed Ilya's fever with water from the White Sun
 -> END
 
 ~ dress
@@ -93,16 +96,19 @@ endif
 Narrator: You tell her. She listens all the way through, holding the boy's hand, and her face does nothing at all.
 Anna Krezkova: So. He's sewing a girl for the devil, and he wants her married in white. And if I give it, he'll come down and put his hand on my son.
 Anna Krezkova [sad]: I kept it for a daughter. I had three. They're by the pool. Give it to his poor stitched girl. At least someone will wear it.
+approve liriel_dawnsong +1 godrick_pendlebrook +1: You told Anna the truth about what the Abbot wanted her dress for
 -> dress_given
 
 ~ dress_lie
 Narrator: She looks at you the way mothers look at children who have just said they didn't touch the honey.
 Anna Krezkova: Then I won't ask. It's in the chest at the foot of my bed. Take it. If it buys my son a morning, he can make a scarecrow's wedding out of it for all I care.
+approve godrick_pendlebrook -1 kip_smudgewick -1: You let Anna give up her dress without knowing what it was for
 -> dress_given
 
 ~ dress_declined
 set anna_dress_declined
 Anna Krezkova: You'd rather find another? Up in that abbey, perhaps. The nuns left everything behind when they went; they say the matron's room is still locked. Find one there, then. Find it quickly.
+approve kip_smudgewick +1 godrick_pendlebrook +1 liriel_dawnsong +1: You wouldn't take a dead daughter's dress from her mother
 -> menu
 
 ~ dress_given

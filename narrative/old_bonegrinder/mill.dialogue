@@ -16,6 +16,7 @@ Narrator: The bags split under the knife like overripe plums, and something goes
 if flag.bonegrinder_bargain == "dream"
 Narrator: Something small and warm comes home. Whichever of you paid Morgantha with a dream remembers it, all at once, and has to sit down.
 endif
+approve liriel_dawnsong +3 godrick_pendlebrook +1 wren_featherfoot +1: You cut the stolen souls free from the mill's rafters
 -> END
 
 # --- Burning the mill (the cart shed), once the children are out ---
@@ -38,4 +39,5 @@ set bonegrinder_burned
 Narrator: It goes up faster than you would believe: the stair, the loft, the straw, the sails last of all, turning at last as the fire takes them. The ravens lift off the oak in one black sheet and circle it, shouting.
 interject tag:blunt: Good.
 interject class:wizard: The millstone will come through it. Stone always does. Nobody will ever grind anything on it again.
+approve thistle +2 godrick_pendlebrook +1: You burned Old Bonegrinder to the ground
 -> END

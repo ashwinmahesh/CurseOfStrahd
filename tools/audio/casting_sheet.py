@@ -31,11 +31,14 @@ def main():
             "timbre, accent, rhythm and temperament. Lines and characters count each distinct voiced line once.", "",
             f"Model: `{c['model']}` unless the speaker names their own, `{c['output_format']}`. The Barovians, the Vistani and",
             "the castle's people speak on `eleven_v3`, which keeps the Eastern European accents that `eleven_v4` flattens",
-            "(owner, 2026-10-07).", "",
+            "(owner, 2026-10-07). New lines of every non-minor character are voiced on `eleven_v3` (owner, 2026-10-07);",
+            "a speaker who moved keeps their older clips, and the Model column names the model those came from.",
+            "`make voice SPEAKER=<id> RECAST=1` re-voices them; `tools/audio/generate_voice.py --models` counts them.", "",
             "| Speaker | Lines | Characters | Voice | Model | Description |", "|---|---:|---:|---|---|---|"]
     for speaker, v in sorted(c["voices"].items(), key=lambda kv: -chars[kv[0]]):
         voice = v.get("name") or ("shares " + v["shares"] if v.get("shares") else "to cast")
-        rows.append(f"| `{speaker}` | {count[speaker]:,} | {chars[speaker]:,} | {voice} | `{model_for(c, speaker)}` | "
+        model = f"`{model_for(c, speaker)}`" + (f" (older lines `{v['earlier_model']}`)" if v.get("earlier_model") else "")
+        rows.append(f"| `{speaker}` | {count[speaker]:,} | {chars[speaker]:,} | {voice} | {model} | "
                     f"{v.get('description', '')} |")
     OUT.write_text("\n".join(rows) + "\n")
     print(f"Wrote {OUT.relative_to(el.ROOT)} ({len(c['voices'])} speakers)")

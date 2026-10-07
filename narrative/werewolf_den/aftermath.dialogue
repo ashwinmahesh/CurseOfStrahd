@@ -84,6 +84,7 @@ if not flag.wolf_den_milestone_reached
 set wolf_den_milestone_reached
 xp milestone
 endif
+approve godrick_pendlebrook +2 kip_smudgewick +2 thistle +2: You walked the stolen children down to the road home
 -> END
 
 ~ bite_ok
@@ -102,6 +103,8 @@ set mirela_cured
 Narrator: The prayer is short and plain, and for once in this valley something seems to be listening. The red ring around the bite fades, slowly, like a blush.
 interject name:liriel_dawnsong: The dawn comes, little one. Even here. Even to a bitten arm.
 Mirela: It doesn't itch any more. It always itched.
+inspire class:cleric: prayed the wolf's bite out of a child's arm
+approve liriel_dawnsong +2 kip_smudgewick +1 thistle +1: You cured Mirela's bite before it took her
 -> home
 
 ~ bite_later

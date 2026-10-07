@@ -7,6 +7,7 @@ extends RefCounted
 ## `tarokka.drawn`, `tarokka.sword == swords_3`, `tarokka.ally.npc == ezmerelda` (ADR 0010), `tarokka.enemy.roam`,
 ## `final_room:<room>` (the room Strahd waits in: the enemy card's, or the roam pick for `mists`, ADR 0014), `guest:ireena`,
 ## `treasure_at:<place>` (a treasure the reading put there, not yet found) and `gift:<dark gift>` (ADR 0011),
+## `approval.thistle >= close` (a companion's approval tier, or a score; story/approval.gd),
 ## `check.last`, `true`, `false`, with `and`, `or`, `not` and parentheses. An empty condition is true.
 
 var st: StoryState
@@ -199,6 +200,8 @@ func _term() -> bool:
 		return (att == rhs) == (op == "==")
 	if t.begins_with("visited:"):
 		return st.visited.has(t.substr(8))
+	if t.begins_with("approval."):
+		return Approval.compare(st, t.substr(9), op, rhs)
 	if t.contains(":"):
 		if t.begins_with("item:"):
 			return st.party_has_item(t.substr(5))
