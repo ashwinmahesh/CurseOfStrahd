@@ -19,6 +19,10 @@ uniform vec4 ink : source_color = vec4(0.071, 0.055, 0.094, 1.0);
 uniform float sharpen = 0.9;
 // Off for a sprite that keeps its own orientation (DirectionalSprite.setup_material reads the node's billboard mode).
 uniform bool billboard = true;
+// A ghostly image (an Echo Knight's echo, CombatToken): 0 is the figure as drawn, 1 is its colours washed to gray
+// and tinted with `ghost_tint` (the token's modulate makes it translucent).
+uniform float ghost = 0.0;
+uniform vec4 ghost_tint : source_color = vec4(0.741, 0.741, 0.776, 1.0);
 
 void vertex() {
 	// No early return here: Godot's own vertex code runs after this block.
@@ -74,6 +78,10 @@ void fragment() {
 	float edge = clamp(near - acc.a, 0.0, 1.0);
 	float a = clamp(acc.a + edge, 0.0, 1.0);
 	vec3 col = a > 0.0 ? (rgb * acc.a + ink.rgb * edge) / a : ink.rgb;
+	if (ghost > 0.0) {
+		float lum = dot(col, vec3(0.299, 0.587, 0.114));
+		col = mix(col, clamp(vec3(lum) * ghost_tint.rgb * 1.35, 0.0, 1.0), ghost);
+	}
 	ALBEDO = col * COLOR.rgb;
 	ALPHA = a * COLOR.a;
 }

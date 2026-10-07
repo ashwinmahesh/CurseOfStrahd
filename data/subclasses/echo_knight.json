@@ -1,0 +1,113 @@
+{
+  "id": "echo_knight",
+  "name": "Echo Knight",
+  "class": "fighter",
+  "source": {
+    "book": "EGtW",
+    "note": "Explorer's Guide to Wildemount (2014 rules), entered from knowledge and fitted to the 2024 Fighter; every change from the 2014 text is listed in docs/rules/deviations.md. Check against the owner's copy."
+  },
+  "summary": "A warrior of Dunamancy who calls a shadowy echo of a possible self and fights from both places at once.",
+  "role_tags": [
+    "mobility",
+    "damage"
+  ],
+  "resources": [
+    {
+      "id": "unleash_incarnation",
+      "name": "Unleash Incarnation",
+      "recharge": "long",
+      "max": "mod:con",
+      "min": 1,
+      "from_level": 3
+    }
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "manifest_echo",
+        "name": "Manifest Echo",
+        "summary": "Bonus Action: a gray, see-through echo of you appears within 15 ft. Attack from its space, swap places with it, move it 30 ft a turn, and make Opportunity Attacks from it.",
+        "text": "As a Bonus Action, you call up an echo of yourself in an unoccupied space you can see within 15 feet. It is a translucent gray image of you with AC 14 + your Proficiency Bonus and 1 Hit Point; it is immune to every condition, uses your saving throw bonuses, is your size and fills its space. It lasts until it is destroyed, you dismiss it (a Bonus Action), you call another, or you are Incapacitated, and it vanishes if it is more than 30 feet from you at the end of your turn. On your turn you can send it up to 30 feet in any direction (no action; this doesn't provoke Opportunity Attacks). As a Bonus Action you can swap places with it by teleporting, for 15 feet of your movement, however far apart you are. Any attack you make as part of the Attack action can come from your space or the echo's, chosen attack by attack, as if you stood there: reach, range, cover and Weapon Mastery (Push, Cleave) all count from the echo. When a creature you can see leaves the echo's 5-foot reach, you can take a Reaction to make an Opportunity Attack against it from the echo's space. In the game an attack comes from the echo on its own when only the echo can reach the target, or always while Strike from the Echo is armed; your Bonus Action Light-weapon attack, Grapple and Shove stay with you.",
+        "action": "bonus_action",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "unleash_incarnation",
+        "name": "Unleash Incarnation",
+        "summary": "When you take the Attack action, make one more melee attack from your echo's space. Constitution modifier uses (minimum 1) per Long Rest.",
+        "text": "Each time you take the Attack action, you can make one extra melee attack from your echo's position. You can do this a number of times equal to your Constitution modifier (minimum once), and you regain every use when you finish a Long Rest.",
+        "action": "free",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "echo_avatar",
+        "name": "Echo Avatar",
+        "summary": "Magic action: for up to 10 minutes you see and hear through your echo (you are Blinded and Deafened), and it can roam up to 1,000 ft from you.",
+        "text": "As a Magic action, you move your awareness into your echo for up to 10 minutes, ending it whenever you like (no action). Meanwhile you see what the echo sees and hear what it hears instead of using your own senses, so you are Blinded and Deafened, and the echo isn't destroyed by being far from you until it is more than 1,000 feet away. In the game this works in fights; scouting ahead while exploring isn't in the game yet.",
+        "action": "action",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "shadow_martyr",
+        "name": "Shadow Martyr",
+        "summary": "Reaction before an attack roll against another creature you can see: your echo leaps beside it and takes the attack instead. Once per Short or Long Rest, or spend a use of Unleash Incarnation.",
+        "text": "When a creature you can see is about to make an attack roll against a creature other than you, you can take a Reaction to teleport your echo to an unoccupied space within 5 feet of the target; the attack roll is made against the echo instead. You can do this once per Short or Long Rest, and again by spending a use of Unleash Incarnation. A spell's attack rolls are offered like any other; only a roll a spell makes later without a pause (a Chromatic Orb's leap) takes the echo just while Shadow Martyr is set to Automatic in the class tab.",
+        "action": "reaction",
+        "implemented": "engine",
+        "resource": {
+          "id": "shadow_martyr",
+          "name": "Shadow Martyr",
+          "max": 1,
+          "recharge": "short"
+        },
+        "policy": "ask",
+        "policy_modes": [
+          "ask",
+          "auto",
+          "never"
+        ],
+        "policy_cost": "Your Reaction and Shadow Martyr (or a use of Unleash Incarnation)"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "reclaim_potential",
+        "name": "Reclaim Potential",
+        "summary": "When damage destroys your echo and you have no Temporary Hit Points, gain 2d6 + Constitution modifier of them. Constitution modifier uses (minimum 1) per Long Rest.",
+        "text": "When your echo is destroyed by taking damage, you can gain 2d6 + your Constitution modifier Temporary Hit Points if you don't already have any. You can do this a number of times equal to your Constitution modifier (minimum once) and regain every use on a Long Rest. It happens on its own unless you turn it Off in the class tab.",
+        "implemented": "engine",
+        "resource": {
+          "id": "reclaim_potential",
+          "name": "Reclaim Potential",
+          "max": "mod:con",
+          "min": 1,
+          "recharge": "long"
+        },
+        "policy": "auto",
+        "policy_cost": "A use of Reclaim Potential"
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "legion_of_one",
+        "name": "Legion of One",
+        "summary": "Keep two echoes at once and act from either; when you roll Initiative with no Unleash Incarnation left, regain one use.",
+        "text": "Manifest Echo can make a second echo while the first remains; calling a third destroys the other two. Anything you can do from one echo's space you can do from the other's. And when you roll Initiative with no uses of Unleash Incarnation left, you regain one.",
+        "implemented": "engine"
+      }
+    }
+  ],
+  "playable": true
+}

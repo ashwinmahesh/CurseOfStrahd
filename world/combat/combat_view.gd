@@ -950,7 +950,11 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		return
 	if kind == "place" and (t == null or not c.hostile_to(t.combatant)):
 		var rng := int(selected.get("range", 0))
-		var ok := hover_cell.x >= 0 and e.grid.distance_ft(c.cell, c.size_cells, hover_cell, 1) <= rng
+		# Measured from an Echo Knight's echo when the action moves it.
+		var src := e.get_c(str(selected.get("from", "")))
+		if src == null:
+			src = c
+		var ok := hover_cell.x >= 0 and e.grid.distance_ft(src.cell, src.size_cells, hover_cell, 1) <= rng
 		overlay.show_cells("area", [hover_cell] if hover_cell.x >= 0 else [])
 		hud.show_tooltip(str(selected["label"]), ["Click a square to place it (or an enemy to put it beside them)" if ok else "Out of range (%d ft)" % rng], [], at)
 		return
@@ -1041,7 +1045,10 @@ func _play_events() -> void:
 				await tw.finished
 			"attack":
 				_stop_walking(walking)
-				var a := _tok(str(ev["attacker"]))
+				# An Echo Knight's blow struck from its echo plays on the echo.
+				var a := _tok(str(ev.get("from", ev["attacker"])))
+				if a == null:
+					a = _tok(str(ev["attacker"]))
 				var d := _tok(str(ev["target"]))
 				if a != null and d != null:
 					# Advantage or Disadvantage on the roll shows over the attacker, with its reason.

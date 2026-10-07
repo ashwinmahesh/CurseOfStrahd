@@ -701,6 +701,9 @@ func _walk_feature(f: Dictionary, key: String, src: Dictionary, scope: Dictionar
 	for policy_key: String in ["policy", "policy_cost"]:
 		if f.has(policy_key):
 			features[-1][policy_key] = str(f[policy_key])
+	# Its class-tab choices when they aren't Automatic and Off (Shadow Martyr can also Ask).
+	if f.has("policy_modes"):
+		features[-1]["policy_modes"] = (f["policy_modes"] as Array).duplicate()
 	if f.has("choice"):
 		var c := f["choice"] as Dictionary
 		var picks := _register_choice(c, key, src, str(c.get("label", f.get("name", ""))), scope)

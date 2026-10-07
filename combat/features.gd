@@ -492,6 +492,7 @@ func rider_options(c: Combatant) -> Array[Dictionary]:
 		if mastery in ["push", "topple"] and not out.any(func(x: Dictionary) -> bool: return str(x["id"]) == "skip:" + mastery):
 			out.append({"id": "skip:" + mastery, "label": "Hold back %s" % mastery.capitalize(), "sub": "don't use the mastery this turn", "why": ""})
 	out.append_array(enc().class_features.rider_options(c))
+	out.append_array(enc().echo_knight.rider_options(c))
 	return out
 
 

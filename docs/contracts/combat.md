@@ -53,7 +53,7 @@ illusory_self, riposte, parry, stones_endurance, interception, protective_field,
 | type | fields |
 |---|---|
 | move | id, from, to, forced |
-| attack | attacker, target, hit, critical, action (the attack option's id: `weapon:longsword`, `monster:claw`; `spell:fire_bolt` for a spell attack) |
+| attack | attacker, target, hit, critical, action (the attack option's id: `weapon:longsword`, `monster:claw`; `spell:fire_bolt` for a spell attack), from (the token the blow comes from: the attacker, or an Echo Knight's echo) |
 | damage / heal | id, amount (critical) |
 | condition / down / death | id |
 | death_save | id, success |
@@ -143,6 +143,12 @@ Reaction offers may provide `stop_if` alongside `stop`: after `use`, the continu
 
 Action targeting `points` collects `count` distinct grid positions into `opts.points`; selecting an already chosen position deselects it. Invalid summon spaces are rejected during selection. Multi-creature feature and sustained-action selections read the action's own `count` instead of a spell's target count. `Combatant.record_step` retains the voluntary path. Charge checks count trailing steps that each close distance to the current target, allowing angled approaches on a square grid. Sideways/retreating steps break the counted approach; attacks, teleports, forced movement and new turns clear it.
 
+Before a spell's attack rolls (`SpellCaster._before_attack_rolls`, in `cast`, `cast_with_numbers` and `cast_free`, for a
+spell with `attack` and creature targets but no `object`), the before-roll offers (`EchoKnight.before_roll`,
+`Reactions.before_roll`) are made for each roll `attack_shots` says the spell will make, with a stand-in attack state
+(`pre_roll: true`); the spell resolves once they are answered, and `spell_attack` takes each roll's answers from
+`ctx.pre_rolls` (the creature it is now made against, added Advantage and Disadvantage).
+
 `feature.hit_response` offers a Reaction after an attack hit survives hit-negating defenses. It spends `resource`, forces a save against the feature class’s spell DC, and applies `effects` on failure through the shared effect engine. `range` and `requires_sight` are opt-in restrictions. Weapon/monster attacks pause for the normal reaction prompt; synchronous spell attacks only respond when `Encounter._reaction_decision` returns `auto`. The original hit still resolves if the attacker is Stunned by the response.
 
 Triggered selections reuse `ReactionRequest.target_choices` (`id`, `label`) and `selected_ids`; `spends_reaction: false` changes the prompt and log wording without consuming a Reaction. The encounter remains paused, the HUD allows explicit selection of each candidate, and the continuation revalidates targets. `TriggeredFeatures` reads `feature.cast_form` to expose a casting variant (`opts.cast_form` = feature id) for its named concentration `spell`, checking and spending `resource`. Its `modifiers` attach to that casting’s concentration and duration. An optional `pulse` declares `radius`, `dice` and damage `type`, offered on adoption and each own turn start. Frozen Haunt supplies these values in subclass data. Automatic selection affects enemies; the prompt can select or spare any eligible creature.
@@ -228,4 +234,16 @@ maximum (spent when it answers yes; `Encounter._max_damage_dice` builds the roll
 `roll_damage_parts`, `_roll_spell_damage` and the poison features; `waives_components(c, spell_id)` skips a spell's
 components; `choice_in` carries the right-click choice of a `feat:fr:` action; `shaped_list` lists a Fluid Forms shape's
 actions. The hotbar lists FeatureActions for any combatant, a shaped character or a summoned creature included.
+
+`EchoKnight` (`e.echo_knight`, actions `feat:ek:<id>`; Explorer's Guide to Wildemount) keeps the Echo Knight's echoes:
+creatures on the board with meta `echo_of` (the knight's id) and `echo_n`, a `look_of` in their stat block for the
+view, no place in `order` (no turns) and none in `allies_of`. `attack_why`/`attack_origin` decide whether an attack of
+the Attack action (`attack`, a Nick `offhand_attack`, Haste's attack; ActionCatalog's `target_why` and
+`attack_preview`) comes from an echo's space, and `strike(c, echo, fn)` runs the attack with the knight and the echo
+swapped until it and every prompt it pauses on are done (meta `strike_from` while it runs). Other hooks: `provokers`
+and `oa_origin` (Opportunity Attacks from the echo), `before_roll` (Shadow Martyr, first of the before-roll offers),
+`spell_redirect` (Shadow Martyr against a spell roll that can't pause, Automatic only), `in_avatar`/`echo_sees` (Echo Avatar in
+`can_see`), `turn_start`/`turn_end`, `effect_added`, `after_damage`, `on_death`, `initiative_rolled` and
+`rider_options`. A hotbar entry can carry `from` (an echo's id) or `from_echo` (any echo): its range is measured from
+there (`range_why`, in `target_why`, `FeatureActions.perform` and the view's place hover).
 

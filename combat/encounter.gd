@@ -47,6 +47,8 @@ var triggered_features: TriggeredFeatures
 var ravenloft: RavenloftFeatures
 ## Heroes of Faerûn and Arcana Unleashed options that need their own code (combat/faerun_features.gd).
 var faerun: FaerunFeatures
+## The Echo Knight's echoes, and attacks from their spaces (combat/echo_knight.gd).
+var echo_knight: EchoKnight
 ## The attack whose damage is being dealt right now: {attacker, target, melee} (Zhentarim Tactics answers a melee hit).
 var hit_context: Dictionary = {}
 ## Magic items: the Items tab, item powers and the hooks below (combat/combat_items.gd, ADR 0012).
@@ -90,6 +92,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	class_features = ClassFeatures.new(self)
 	ravenloft = RavenloftFeatures.new(self)
 	faerun = FaerunFeatures.new(self)
+	echo_knight = EchoKnight.new(self)
 	triggered_features = TriggeredFeatures.new(self)
 	items = CombatItems.new(self)
 	legendary = Legendary.new(self)
@@ -107,9 +110,14 @@ func add(creature: Creature, side: StringName, cell: Vector2i) -> Combatant:
 	creature.id = c.id
 	creature.d20_before = feature_actions.before_d20
 	creature.d20_after = feature_actions.after_d20
-	creature.effect_added = faerun.effect_added
+	creature.effect_added = _effect_added
 	combatants.append(c)
 	return c
+
+
+func _effect_added(cr: Creature, fx: Effect) -> void:
+	faerun.effect_added(cr, fx)
+	echo_knight.effect_added(cr, fx)
 
 
 func get_c(id: String) -> Combatant:
@@ -162,6 +170,7 @@ func start(surprised_ids: Array = []) -> void:
 	class_features.initiative_rolled()
 	ravenloft.initiative_rolled()
 	faerun.initiative_rolled()
+	echo_knight.initiative_rolled()
 	order = combatants.duplicate()
 	order.sort_custom(func(a: Combatant, b: Combatant) -> bool:
 		if a.initiative != b.initiative:
@@ -219,10 +228,11 @@ func hostiles_of(c: Combatant) -> Array[Combatant]:
 	return out
 
 
+## An Echo Knight's echo is an image, not an ally (no Pack Tactics, Sneak Attack, auras or healing picks).
 func allies_of(c: Combatant) -> Array[Combatant]:
 	var out: Array[Combatant] = []
 	for o in combatants:
-		if o != c and o.is_alive() and c.allied_with(o):
+		if o != c and o.is_alive() and c.allied_with(o) and not EchoKnight.is_echo(o):
 			out.append(o)
 	return out
 
@@ -291,6 +301,9 @@ func can_see_space(a: Combatant, cell: Vector2i, size: int = 1) -> bool:
 
 
 func can_see(a: Combatant, b: Combatant) -> bool:
+	# Echo Avatar: the knight sees through its echoes instead of its own (Blinded) eyes.
+	if echo_knight.in_avatar(a):
+		return echo_knight.echo_sees(a, b)
 	var dist := distance(a, b)
 	var blind := a.creature.sense_range("blindsight")
 	var truesight := a.creature.sense_range("truesight")
@@ -565,6 +578,7 @@ func _begin_turn() -> void:
 	class_features.turn_start(c)
 	ravenloft.turn_start(c)
 	faerun.turn_start(c)
+	echo_knight.turn_start(c)
 	monster_actions.turn_start(c)
 	items.turn_start(c)
 	triggered_features.turn_start(c)
@@ -601,6 +615,7 @@ func end_turn() -> CombatResult:
 	class_features.turn_end(c)
 	ravenloft.turn_end(c)
 	faerun.turn_end(c)
+	echo_knight.turn_end(c)
 	monster_actions.turn_end(c)
 	items.turn_end(c)
 	triggered_features.turn_end(c)
@@ -858,7 +873,7 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 				if decision == "ask":
 					var req := ReactionRequest.new("opportunity_attack", p.id, c.id)
 					req.title = "Opportunity Attack?"
-					req.text = "%s is leaving %s's reach. %s can spend a Reaction to make one melee attack now." % [c.name(), p.name(), p.name()]
+					req.text = "%s is leaving %s's reach. %s can spend a Reaction to make one melee attack now." % [c.name(), echo_knight.reach_name(p, c), p.name()]
 					req.continuation = func(use: bool) -> CombatResult:
 						if use:
 							return then(_opportunity_attack(p, c), resume)
@@ -1178,6 +1193,8 @@ func _provokers(mover: Combatant, from: Vector2i, to: Vector2i) -> Array[Combata
 		var after := grid.distance_ft(p.cell, p.size_cells, to, mover.size_cells)
 		if before <= reach and after > reach:
 			out.append(p)
+	# An Echo Knight's echo: leaving its 5-ft reach.
+	echo_knight.provokers(mover, from, to, out)
 	return out
 
 
@@ -1204,11 +1221,12 @@ func _opportunity_attack(p: Combatant, target: Combatant) -> CombatResult:
 				return spells.cast_free(p, str(sp["id"]), [target], Vector2.INF, {})
 	if option.is_empty():
 		return CombatResult.new()
+	var echo := echo_knight.oa_origin(p, target)
 	p.reaction_available = false
-	log.add("reaction", "%s makes an Opportunity Attack against %s" % [p.name(), target.name()], p.id)
+	log.add("reaction", "%s makes an Opportunity Attack against %s%s" % [p.name(), target.name(), " from its echo's space" if echo != null else ""], p.id)
 	var oa := option.duplicate()
 	oa["opportunity"] = true
-	return _resolve_attack(p, target, oa, {"reaction": true, "opportunity": true})
+	return echo_knight.strike(p, echo, func() -> CombatResult: return _resolve_attack(p, target, oa, {"reaction": true, "opportunity": true}))
 
 
 ## Runs `next` after `result`, or after the player answers the prompt `result` paused on (chaining again if the
@@ -1558,6 +1576,7 @@ func use_one_attack(c: Combatant) -> void:
 		spend_action(c)
 		c.took_attack_action = true
 		c.attacks_left = attacks_per_action(c) - 1
+		echo_knight.attack_action_taken(c)
 
 
 func spend_action(c: Combatant) -> void:
@@ -1691,15 +1710,17 @@ func haste_action_use(c: Combatant, what: String, target: Combatant, option_id: 
 			var option := option_by_id(c, option_id)
 			if option.is_empty():
 				return CombatResult.fail("No such attack")
-			var check := attack_legal(c, target, option)
+			var check := echo_knight.attack_why(c, target, option, true)
 			if check != "":
 				return CombatResult.fail(check)
 			var sanct := spells.sanctuary_blocks(c, target)
 			if sanct != "":
 				return CombatResult.fail(sanct)
 			c.haste_action = false
+			echo_knight.attack_action_taken(c)
 			log.add("info", "%s attacks with Haste's extra action" % c.name(), c.id)
-			return _resolve_attack(c, target, option, {})
+			var hecho := echo_knight.attack_origin(c, target, option)
+			return echo_knight.strike(c, hecho, func() -> CombatResult: return _resolve_attack(c, target, option, {}))
 	return CombatResult.new()
 
 
@@ -1788,7 +1809,8 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 	var option := option_by_id(c, option_id)
 	if option.is_empty():
 		return CombatResult.fail("No such attack")
-	var check := attack_legal(c, target, option)
+	# An Echo Knight's attack can come from its echo's space.
+	var check := echo_knight.attack_why(c, target, option, true)
 	if check != "":
 		return CombatResult.fail(check)
 	if c.attacks_left <= 0 and not c.action_available:
@@ -1815,6 +1837,7 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 		c.attacks_left = attacks_per_action(c) - 1
 		if c.creature is Monster:
 			c.attacks_left = 0
+		echo_knight.attack_action_taken(c)
 	else:
 		return CombatResult.fail("No attacks left this turn")
 	var p := option["profile"] as WeaponProfile
@@ -1823,7 +1846,8 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 	# Loading: one shot per action, whatever the number of attacks (Crossbow Expert ignores it).
 	if "loading" in p.properties and not features.has_feat(c, "crossbow_expert"):
 		c.set_meta("loading_fired", "%d:%d" % [round_no, turn_index])
-	return _resolve_attack(c, target, option, opts)
+	var echo := echo_knight.attack_origin(c, target, option)
+	return echo_knight.strike(c, echo, func() -> CombatResult: return _resolve_attack(c, target, option, opts))
 
 
 ## The Light property's extra attack (a Bonus Action, or part of the Attack action with Nick), with a different
@@ -1855,7 +1879,8 @@ func offhand_attack(c: Combatant, target: Combatant, option_id: String) -> Comba
 		nick = true
 	if not nick and not c.bonus_available:
 		return CombatResult.fail("Bonus Action already used")
-	var check := attack_legal(c, target, option)
+	# With Nick the extra attack is part of the Attack action, so an Echo Knight can make it from its echo.
+	var check := echo_knight.attack_why(c, target, option, nick)
 	if check != "":
 		return CombatResult.fail(check)
 	var sanct := spells.sanctuary_blocks(c, target)
@@ -1864,7 +1889,8 @@ func offhand_attack(c: Combatant, target: Combatant, option_id: String) -> Comba
 	c.nick_used = true
 	if not nick:
 		c.bonus_available = false
-	return _resolve_attack(c, target, option, {"offhand": true})
+	var echo := echo_knight.attack_origin(c, target, option) if nick else null
+	return echo_knight.strike(c, echo, func() -> CombatResult: return _resolve_attack(c, target, option, {"offhand": true}))
 
 
 ## "" if `c` can attack `target` with `option` from where it stands, otherwise why not.
@@ -2156,7 +2182,7 @@ func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: 
 	if not bool(option["melee"]) and str(option.get("kind", "")) in ["weapon", "thrown", "monster"] and spells.zones.deflects_between(c, target):
 		if c.creature is Character and str(option.get("kind", "")) == "weapon":
 			_spend_ammo(c, option["profile"] as WeaponProfile)
-		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false, "action": str(option.get("id", ""))})
+		events.append({"type": "attack", "attacker": c.id, "from": EchoKnight.striking_from(c), "target": target.id, "hit": false, "critical": false, "action": str(option.get("id", ""))})
 		r.lines.append(log.add("miss", "The Wind Wall deflects %s's shot at %s" % [c.name(), target.name()], c.id))
 		return r
 	var sit := attack_situation(c, target, option)
@@ -2173,7 +2199,8 @@ func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: 
 		(sit["disadvantage"] as Array[String]).append("Agile Movement")
 	var st := {"c": c, "target": target, "option": option, "opts": opts, "sit": sit, "r": r,
 		"ac": target.creature.ac_value() + int(sit["cover_bonus"])}
-	var before := reactions.before_roll(st)
+	var before := echo_knight.before_roll(st)
+	before.append_array(reactions.before_roll(st))
 	before.append_array(items.before_roll(st))
 	return reactions.offer(before, func() -> CombatResult: return _roll_attack(st), r)
 
@@ -2256,13 +2283,13 @@ func _attack_outcome(st: Dictionary) -> CombatResult:
 		return _attack_missed(st)
 	var miss := func() -> CombatResult:
 		r.lines.append(log.add("miss", "%s's attack on %s is turned aside (%d vs AC %d)" % [c.name(), target.name(), t.total, int(st["ac"])], target.id, details))
-		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false, "edge": attack_edge(st["t"] as D20Test), "action": str(option.get("id", ""))})
+		events.append({"type": "attack", "attacker": c.id, "from": EchoKnight.striking_from(c), "target": target.id, "hit": false, "critical": false, "edge": attack_edge(st["t"] as D20Test), "action": str(option.get("id", ""))})
 		features.after_miss(c, target, option, r)
 		return r
 	var hit_offers := reactions.after_hit_target(st, miss)
 	hit_offers.append_array(monster_actions.parry_offer(st, miss))
 	return reactions.offer(hit_offers, func() -> CombatResult:
-		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": true, "critical": critical, "edge": attack_edge(st["t"] as D20Test), "action": str(option.get("id", ""))})
+		events.append({"type": "attack", "attacker": c.id, "from": EchoKnight.striking_from(c), "target": target.id, "hit": true, "critical": critical, "edge": attack_edge(st["t"] as D20Test), "action": str(option.get("id", ""))})
 		return _after_hit(st), r)
 
 
@@ -2283,7 +2310,7 @@ func _attack_missed(st: Dictionary) -> CombatResult:
 	var option := st["option"] as Dictionary
 	var r := st["r"] as CombatResult
 	var t := st["t"] as D20Test
-	events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false, "edge": attack_edge(st["t"] as D20Test), "action": str(option.get("id", ""))})
+	events.append({"type": "attack", "attacker": c.id, "from": EchoKnight.striking_from(c), "target": target.id, "hit": false, "critical": false, "edge": attack_edge(st["t"] as D20Test), "action": str(option.get("id", ""))})
 	r.lines.append(log.add("miss", "%s misses %s (%d vs AC %d)" % [c.name(), target.name(), t.total, int(st["ac"])], c.id, st["details"] as Array))
 	_on_miss(c, target, option, r)
 	features.after_miss(c, target, option, r)
@@ -2438,6 +2465,9 @@ func _apply_hit(st: Dictionary, parts: Dictionary, details: Array[String], dmg_t
 ## (`retaliate` modifiers: `value` or `dice`, `type`, `within` feet).
 func retaliate(attacker: Combatant, target: Combatant) -> void:
 	if attacker == null or not attacker.is_alive():
+		return
+	# A blow struck from an Echo Knight's echo: the knight was never within reach of the shield.
+	if attacker.has_meta("strike_from"):
 		return
 	for m in target.creature.modifiers_for(&"retaliate"):
 		if distance(attacker, target) > int(m.data.get("within", 5)):
@@ -2625,6 +2655,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		events.append({"type": "death", "id": target.id})
 		ravenloft.on_death(source, target)
 		faerun.on_death(source, target)
+		echo_knight.on_death(source, target)
 		if target.has_meta("vanishes"):
 			events.append({"type": "vanish", "id": target.id})
 	elif dr.dropped_to_zero and not target.creature.dead and monster_actions.lycanthrope(target):
@@ -2663,6 +2694,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	if dr.final > 0 and source != null and source != target and target.is_alive():
 		_queue_damage_reactions(source, target)
 	faerun.after_damage(source, target, dr.final, parts)
+	echo_knight.after_damage(source, target)
 	spells.zones.prune()
 	_check_over()
 	return dr
@@ -2919,15 +2951,17 @@ func _on_hit_effects(c: Combatant, target: Combatant, option: Dictionary, dr: Da
 					e.turn_owner_id = c.id
 					target.creature.add_effect(e)
 			"topple":
-				var dc := 8 + c.creature.ability_mod(p.ability) + c.creature.proficiency_bonus()
-				var s := target.creature.roll_save(dice, &"con", dc, [], [], "Topple (%s)" % target.name())
-				if not s.success:
-					target.creature.add_condition(&"prone", "Topple")
-					log.add("condition", "Topple: %s falls Prone" % target.name(), target.id, [s.describe()])
-				else:
-					log.add("info", "Topple: %s keeps its feet" % target.name(), target.id, [s.describe()])
+				# Hold back Topple or Push (hotbar riders): the mastery is skipped this turn.
+				if not "skip:topple" in c.armed:
+					var dc := 8 + c.creature.ability_mod(p.ability) + c.creature.proficiency_bonus()
+					var s := target.creature.roll_save(dice, &"con", dc, [], [], "Topple (%s)" % target.name())
+					if not s.success:
+						target.creature.add_condition(&"prone", "Topple")
+						log.add("condition", "Topple: %s falls Prone" % target.name(), target.id, [s.describe()])
+					else:
+						log.add("info", "Topple: %s keeps its feet" % target.name(), target.id, [s.describe()])
 			"push":
-				if Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large"):
+				if Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large") and not "skip:push" in c.armed:
 					var moved := forced_move(target, center_of(c), 10)
 					if moved > 0:
 						log.add("info", "Push: %s is shoved %d ft" % [target.name(), moved * 5], target.id)

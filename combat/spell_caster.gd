@@ -851,13 +851,14 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		_overchannel_cost(c, level)
 	ctx["targets"] = tgt
 	e.faerun.before_resolve(ctx)
-	_resolve(ctx, tgt, cells, r)
-	check_tethers()
-	_finish_concentration(ctx)
-	_after_cast_features(ctx, use_free)
-	zones.prune()
-	e._check_over()
-	return e.then(r, func() -> CombatResult: return e.run_reaction_queue(r))
+	return _before_attack_rolls(ctx, tgt, r, func() -> CombatResult:
+		_resolve(ctx, tgt, cells, r)
+		check_tethers()
+		_finish_concentration(ctx)
+		_after_cast_features(ctx, use_free)
+		zones.prune()
+		e._check_over()
+		return e.then(r, func() -> CombatResult: return e.run_reaction_queue(r)))
 
 
 ## Overchannel (Evoker 14): the first use per Long Rest is free; each later one deals 2d12 Necrotic per spell level
@@ -953,12 +954,13 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 	var ctx := {"c": c, "s": s, "slot": level, "nums": nums, "conc": conc, "opts": opts, "point": point, "cells": cells,
 		"choice": choice_of(s, opts), "direction": opts.get("direction", Vector2.ZERO), "cell": check["cell"]}
 	var r := CombatResult.new()
-	_resolve(ctx, tgt, cells, r)
-	check_tethers()
-	_finish_concentration(ctx)
-	zones.prune()
-	e._check_over()
-	return e.then(r, func() -> CombatResult: return e.run_reaction_queue(r))
+	return _before_attack_rolls(ctx, tgt, r, func() -> CombatResult:
+		_resolve(ctx, tgt, cells, r)
+		check_tethers()
+		_finish_concentration(ctx)
+		zones.prune()
+		e._check_over()
+		return e.then(r, func() -> CombatResult: return e.run_reaction_queue(r)))
 
 
 ## Casts a spell without a slot or the usual action (War God's Blessing, features that cast spells): opts may say
@@ -1000,12 +1002,13 @@ func cast_free(c: Combatant, spell_id: String, targets: Array, point: Vector2, o
 	var ctx := {"c": c, "s": s2, "slot": level, "nums": nums, "conc": conc, "opts": opts, "point": point, "cells": cells,
 		"choice": choice_of(s, opts), "direction": Vector2.ZERO, "cell": check["cell"]}
 	var r := CombatResult.new()
-	_resolve(ctx, tgt, cells, r)
-	check_tethers()
-	_finish_concentration(ctx)
-	zones.prune()
-	e._check_over()
-	return r
+	return _before_attack_rolls(ctx, tgt, r, func() -> CombatResult:
+		_resolve(ctx, tgt, cells, r)
+		check_tethers()
+		_finish_concentration(ctx)
+		zones.prune()
+		e._check_over()
+		return r)
 
 
 ## Validates targets, range and line of effect. {why, targets: Array[Combatant], cell: Vector2i}
@@ -1317,6 +1320,61 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 			tgt[0].creature.add_effect(eh)
 
 
+## The creature each of a spell's attack rolls is made against, in order: one per target, or one per ray or beam
+## (Scorching Ray, Eldritch Blast) shared round the targets.
+func attack_shots(ctx: Dictionary, tgt: Array[Combatant]) -> Array[Combatant]:
+	var s := ctx["s"] as Dictionary
+	var count := 1
+	var dmg := s.get("damage", []) as Array
+	if not dmg.is_empty() and str((dmg[0] as Dictionary).get("per", "")) == "ray":
+		count = target_count(s, int(ctx["slot"]))
+	elif not dmg.is_empty() and str((dmg[0] as Dictionary).get("per", "")) == "beam":
+		count = specials.beams(ctx["c"] as Combatant)
+	var shots: Array[Combatant] = []
+	if count > 1 and not tgt.is_empty():
+		for i in count:
+			shots.append(tgt[i % tgt.size()])
+	else:
+		shots.assign(tgt)
+	return shots
+
+
+## Before a spell's attack rolls, the reactions that come before an attack roll (Shadow Martyr, Warding Flare,
+## Protection, Lucky against you) are offered for each roll, pausing for a player's answer as a weapon attack does;
+## then `go` resolves the spell. Each roll's answers wait in ctx.pre_rolls for spell_attack: the creature the roll is
+## now made against and any Advantage or Disadvantage they added.
+func _before_attack_rolls(ctx: Dictionary, tgt: Array[Combatant], r: CombatResult, go: Callable) -> CombatResult:
+	var s := ctx["s"] as Dictionary
+	if not s.has("attack") or s.has("object") or tgt.is_empty():
+		return go.call() as CombatResult
+	var e := enc()
+	var c := ctx["c"] as Combatant
+	var option := {"melee": str(s["attack"]) == "melee", "profile": WeaponProfile.new(), "kind": "spell"}
+	var pre: Array = []
+	var offers: Array = []
+	for t in attack_shots(ctx, tgt):
+		var adv: Array[String] = []
+		var dis: Array[String] = []
+		var st := {"c": c, "target": t, "orig": t, "option": option, "sit": {"advantage": adv, "disadvantage": dis}, "pre_roll": true, "ac": 0}
+		pre.append(st)
+		offers.append_array(e.echo_knight.before_roll(st))
+		offers.append_array(e.reactions.before_roll(st))
+	ctx["pre_rolls"] = pre
+	if offers.is_empty():
+		return go.call() as CombatResult
+	return e.reactions.offer(offers, go, r)
+
+
+## The answers given before this attack roll at `t` (_before_attack_rolls), taken once; {} if there were none.
+func _take_pre_roll(ctx: Dictionary, t: Combatant) -> Dictionary:
+	for st: Variant in ctx.get("pre_rolls", []):
+		var d := st as Dictionary
+		if not bool(d.get("used", false)) and d["orig"] == t:
+			d["used"] = true
+			return d
+	return {}
+
+
 func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult) -> void:
 	var c := ctx["c"] as Combatant
 	var s := ctx["s"] as Dictionary
@@ -1324,19 +1382,7 @@ func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 	if not cells.is_empty() and not s.has("attack"):
 		victims = _area_victims(c, s, cells, str(ctx.get("choice", "")))
 	if s.has("attack"):
-		var count := 1
-		var dmg := s.get("damage", []) as Array
-		if not dmg.is_empty() and str((dmg[0] as Dictionary).get("per", "")) == "ray":
-			count = target_count(s, int(ctx["slot"]))
-		elif not dmg.is_empty() and str((dmg[0] as Dictionary).get("per", "")) == "beam":
-			count = specials.beams(c)
-		var shots: Array[Combatant] = []
-		if count > 1:
-			for i in count:
-				shots.append(tgt[i % tgt.size()])
-		else:
-			shots = tgt
-		for t in shots:
+		for t in attack_shots(ctx, tgt):
 			if t.is_alive():
 				spell_attack(ctx, t, r)
 		return
@@ -1497,7 +1543,14 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	(option["profile"] as WeaponProfile).normal_range = range_ft(s, c)
 	if ctx.has("attack_origin"):
 		option["origin_cell"] = ctx["attack_origin"]
+	# Shadow Martyr (Echo Knight) may have sent an echo in before the roll; a roll the spell makes later (a Chromatic
+	# Orb's leap) can't pause, so there the echo takes it only on Automatic.
+	var pre := _take_pre_roll(ctx, t)
+	t = pre["target"] as Combatant if not pre.is_empty() else e.echo_knight.spell_redirect(c, t)
 	var sit := e.attack_situation(c, t, option)
+	if not pre.is_empty():
+		(sit["advantage"] as Array[String]).append_array((pre["sit"] as Dictionary)["advantage"] as Array[String])
+		(sit["disadvantage"] as Array[String]).append_array((pre["sit"] as Dictionary)["disadvantage"] as Array[String])
 	if bool(s.get("ignore_partial_cover", false)):
 		sit["cover_bonus"] = 0
 	# Wand of the War Mage: spell attacks ignore Half Cover.

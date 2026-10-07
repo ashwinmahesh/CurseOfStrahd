@@ -87,6 +87,7 @@ func list(c: Combatant) -> Array[Dictionary]:
 	e.class_features.list(c, out, aw, bw)
 	e.ravenloft.list(c, out, aw, bw)
 	e.faerun.list(c, out, aw, bw)
+	e.echo_knight.list(c, out, aw, bw)
 	e.feature_recipes.list(c, out)
 	# Battle Master: Bonus Action maneuvers and Commander's Strike.
 	var die := f().superiority_die(c)
@@ -338,7 +339,11 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 	var r := CombatResult.new()
 	var head := id.get_slice(":", 0)
 	var rng := int(entry.get("range", 0))
-	if t != null and rng > 0 and t != c and e.distance(c, t) > rng:
+	# Aimed from an Echo Knight's echo rather than its user.
+	var from_echo: Variant = e.echo_knight.range_why(c, entry, t, rng) if t != null and rng > 0 else null
+	if from_echo != null and str(from_echo) != "":
+		return CombatResult.fail(str(from_echo))
+	if from_echo == null and t != null and rng > 0 and t != c and e.distance(c, t) > rng:
 		return CombatResult.fail("Out of range (%d ft)" % rng)
 	match head:
 		"sequence_attack":
@@ -369,6 +374,8 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 			e.faerun.targets_in = targets
 			e.faerun.choice_in = choice
 			return e.faerun.perform(c, id.substr(3), t, cell, point)
+		"ek":
+			return e.echo_knight.perform(c, id.substr(3), t, cell, choice)
 		"fast_hands_kit":
 			var keep := c.action_available
 			c.action_available = true
