@@ -16,6 +16,10 @@ var title: String = ""
 var text: String = ""
 var cost: String = "Reaction"
 var continuation: Callable
+## Optional multi-selection for triggered effects; a decision need not spend a Reaction.
+var target_choices: Array[Dictionary] = []
+var selected_ids: Array[String] = []
+var spends_reaction: bool = true
 
 
 func _init(kind_: String, reactor: String, trigger: String) -> void:

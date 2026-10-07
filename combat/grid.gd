@@ -186,6 +186,14 @@ func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable,
 				return -1
 			if is_solid(c) or bool(blocked.call(c)):
 				mult = maxi(mult, 2)
+			if (mode & MOVE_UNHINDERED) == 0:
+				if has_flag(c, DIFFICULT) and (mode & MOVE_FLY) == 0:
+					mult = maxi(mult, 2)
+				var incorporeal_slow: Variant = slowed.call(c)
+				if incorporeal_slow is int and int(incorporeal_slow) > 1:
+					mult = maxi(mult, int(incorporeal_slow))
+				elif bool(incorporeal_slow):
+					mult = maxi(mult, 2)
 			continue
 		if is_solid(c) or bool(blocked.call(c)):
 			return -1

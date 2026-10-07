@@ -8,7 +8,7 @@ extends RefCounted
 
 var _enc: WeakRef
 
-const HANDLED := ["power_word_kill", "power_word_stun", "power_word_heal", "power_word_fortify", "mass_heal", "divine_word",
+const HANDLED := ["power_word_pain", "mordenkainens_lucubration", "wail_of_the_banshee", "power_word_kill", "power_word_stun", "power_word_heal", "power_word_fortify", "mass_heal", "divine_word",
 	"prismatic_spray", "maze", "time_stop", "reverse_gravity", "true_polymorph", "shapechange", "animal_shapes",
 	"delayed_blast_fireball", "forcecage"]
 
@@ -28,6 +28,13 @@ func sp() -> SpellCaster:
 func resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult) -> bool:
 	var s := ctx["s"] as Dictionary
 	match str(s["id"]):
+		"power_word_pain":
+			for t in tgt:
+				power_word_pain(ctx, t, r)
+		"mordenkainens_lucubration":
+			lucubration(ctx, r)
+		"wail_of_the_banshee":
+			wail_of_the_banshee(ctx, tgt, r)
 		"power_word_kill":
 			for t in tgt:
 				power_word_kill(ctx, t, r)
@@ -81,7 +88,9 @@ func _save(ctx: Dictionary, t: Combatant, ab: StringName, cond: String = "") -> 
 	var e := enc()
 	var s := ctx["s"] as Dictionary
 	var keys := t.creature.save_keys(ab)
-	keys.append("save_vs:spell")
+	keys.append_array(SpellCaster.spell_save_keys((ctx["c"] as Combatant).id))
+	if str(s["id"]) in ["polymorph", "true_polymorph"]:
+		keys.append("save_vs:shapechange")
 	if cond != "":
 		keys.append("save_vs:%s" % cond)
 	var test := t.creature.roll_d20(e.dice, D20Test.Kind.SAVING_THROW, t.creature.save_bonus(ab), _dc(ctx), keys, [] as Array[String], [] as Array[String],
@@ -92,8 +101,16 @@ func _save(ctx: Dictionary, t: Combatant, ab: StringName, cond: String = "") -> 
 
 func _kill(t: Combatant, why: String) -> void:
 	var e := enc()
+	if t.creature.has_flag("death_ward"):
+		for fx: Effect in t.creature.effects.duplicate():
+			if fx.modifiers.any(func(m: Modifier) -> bool: return m.stat == &"flag" and m.text("value") == "death_ward"):
+				t.creature.remove_effect(fx)
+		e.log.add("info", "Death Ward prevents %s from dying (%s)" % [t.name(), why], t.id)
+		return
 	t.creature.hp = 0
 	t.creature.dead = true
+	if t.creature.concentration != null:
+		t.creature.concentration.end("death")
 	e.log.add("death", "%s dies (%s)" % [t.name(), why], t.id)
 	e.events.append({"type": "death", "id": t.id})
 	e.class_features.on_drop(null, t)
@@ -123,6 +140,40 @@ func _heal(ctx: Dictionary, t: Combatant, amount: int, r: CombatResult) -> int:
 # --- Power Words, Divine Word, Mass Heal -------------------------------------------------------------------
 
 ## Power Word Kill: a creature with 100 Hit Points or fewer dies; otherwise 12d12 Psychic.
+func lucubration(ctx: Dictionary, r: CombatResult) -> void:
+	var c := ctx["c"] as Combatant
+	var ch := sp().caster_char(c)
+	if ch == null:
+		return
+	var maximum := int(ctx["slot"]) / 2
+	var selected: Array[int] = []
+	var choice := str(ctx.get("choice", "auto"))
+	if choice != "auto" and choice != "":
+		for word in choice.split("+"):
+			selected.append(int(word))
+	else:
+		for lv in range(maximum, 0, -1):
+			for i in mini(2 - selected.size(), ch.expended_slots(lv)):
+				selected.append(lv)
+	for lv in selected:
+		ch.recover_slot(lv)
+		_log(ctx, "%s recovers a level %d spell slot" % [c.name(), lv], c, r)
+
+
+func wail_of_the_banshee(ctx: Dictionary, targets: Array[Combatant], r: CombatResult) -> void:
+	var c := ctx["c"] as Combatant
+	var survivors: Array[Combatant] = []
+	for t in targets:
+		if t.creature.has_condition(&"deafened") or sp().zones.silenced(c.cell) or sp().zones.silenced(t.cell):
+			_log(ctx, "%s cannot hear the wail" % t.name(), t, r)
+			continue
+		if t.creature.hp <= 50:
+			_kill(t, "Wail of the Banshee")
+		else:
+			survivors.append(t)
+	sp()._save_spell(ctx, survivors, r)
+
+
 func power_word_kill(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	var e := enc()
 	if t.creature.hp <= 100:
@@ -134,6 +185,15 @@ func power_word_kill(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 
 ## Power Word Stun: 150 Hit Points or fewer: Stunned, a Constitution save at the end of each of its turns; more:
 ## Speed 0 until the start of the caster's next turn.
+func power_word_pain(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
+	var affected := t.creature.hp <= 100
+	var s := ctx["s"] as Dictionary
+	var damage := sp().roll_damage_parts(ctx, s["damage"] as Array, false, t)
+	r.damage += sp().deal_spell_damage(ctx, t, [{"amount": int(damage["total"]), "type": "force", "spell": true}], false, str(s["name"]), [str(damage["text"])]).final
+	if affected and t.is_alive():
+		sp().apply_effect_entries(ctx, t, s["effects"] as Array, "cast", r)
+
+
 func power_word_stun(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	var e := enc()
 	if t.creature.hp <= 150:
@@ -265,7 +325,7 @@ func prism_ray(ctx: Dictionary, t: Combatant, ray: int, amount: int, r: CombatRe
 	if ray <= 5:
 		var info := PRISM[ray - 1] as Array
 		var ok := _save(ctx, t, &"dex")
-		var amt := amount / 2 if ok else amount
+		var amt := t.creature.damage_after_save(amount, &"dex", ok, true, true)
 		r.damage += e.deal_damage(c, t, [{"amount": amt, "type": str(info[1]), "spell": true}], false, "Prismatic %s ray" % str(info[0]).capitalize()).final
 	elif ray == 6:
 		if not _save(ctx, t, &"dex", "restrained"):
@@ -289,7 +349,7 @@ func prism_turn_end(t: Combatant) -> void:
 	for fx: Effect in t.creature.effects.duplicate():
 		if str(fx.data.get("prism", "")) != "indigo":
 			continue
-		var sv := t.creature.roll_save(e.dice, &"con", int(fx.data["dc"]), [], [], "Constitution save vs the indigo ray (%s)" % t.name())
+		var sv := t.creature.roll_save(e.dice, &"con", int(fx.data["dc"]), [], [], "Constitution save vs the indigo ray (%s)" % t.name(), SpellCaster.spell_save_keys(fx.caster_id))
 		if sv.success:
 			fx.data["wins"] = int(fx.data["wins"]) + 1
 		else:
@@ -310,7 +370,7 @@ func prism_caster_turn_start(caster: Combatant) -> void:
 		for fx: Effect in t.creature.effects.duplicate():
 			if str(fx.data.get("prism", "")) != "violet" or str(fx.data.get("caster", "")) != caster.id:
 				continue
-			var sv := t.creature.roll_save(e.dice, &"wis", int(fx.data["dc"]), [], [], "Wisdom save vs the violet ray (%s)" % t.name())
+			var sv := t.creature.roll_save(e.dice, &"wis", int(fx.data["dc"]), [], [], "Wisdom save vs the violet ray (%s)" % t.name(), SpellCaster.spell_save_keys(fx.caster_id))
 			if sv.success:
 				t.creature.remove_effect(fx)
 				e.log.add("info", "%s's sight clears" % t.name(), t.id, [sv.describe()])
@@ -437,7 +497,7 @@ func teleport_blocked(ctx: Dictionary, c: Combatant) -> bool:
 	var dc := cage.save_dc if cage.save_dc > 0 else 15
 	if cage_caster != null and cage_caster.creature is Character:
 		dc = (sp().numbers(cage_caster, sp()._entry_any(cage_caster, "forcecage"))["dc"] as Breakdown).total()
-	var sv := c.creature.roll_save(e.dice, &"cha", dc, [], [], "Charisma save to teleport out of the Forcecage (%s)" % c.name())
+	var sv := c.creature.roll_save(e.dice, &"cha", dc, [], [], "Charisma save to teleport out of the Forcecage (%s)" % c.name(), SpellCaster.spell_save_keys(cage.caster_id))
 	if not sv.success:
 		e.log.add("info", "The Forcecage holds %s; the spell is wasted" % c.name(), c.id, [sv.describe()])
 	return not sv.success
@@ -730,7 +790,7 @@ func open_fissures(o: FieldObject, c: Combatant) -> void:
 	for t in e.living():
 		if t.is_down() or not t.footprint().any(func(q: Vector2i) -> bool: return crack.has(q)):
 			continue
-		var test := t.creature.roll_save(e.dice, &"dex", o.save_dc, [], [], "Dex save vs a fissure (%s)" % t.name(), ["save_vs:spell"])
+		var test := t.creature.roll_save(e.dice, &"dex", o.save_dc, [], [], "Dex save vs a fissure (%s)" % t.name(), SpellCaster.spell_save_keys(o.caster_id))
 		if test.success:
 			var from := t.cell
 			var spot := _solid_ground(t, crack)
@@ -797,7 +857,7 @@ func _storm_round(o: FieldObject) -> void:
 				bolts += 1
 				var l := e._roll_damage_dice("10d6", false, 0, "Lightning bolt")
 				var ok := _save(ctx, t, &"dex")
-				e.deal_damage(c, t, [{"amount": int(l["total"]) / 2 if ok else int(l["total"]), "type": "lightning", "spell": true}], false, "Storm of Vengeance")
+				e.deal_damage(c, t, [{"amount": t.creature.damage_after_save(int(l["total"]), &"dex", ok, true, true), "type": "lightning", "spell": true}], false, "Storm of Vengeance")
 		4:
 			e.log.add("spell", "Hailstones hammer down", o.caster_id)
 			for t in inside:
@@ -914,7 +974,7 @@ func holy_aura_hit(attacker: Combatant, target: Combatant) -> void:
 		return
 	for o in sp().zones.live():
 		if o.spell_id == "holy_aura" and o.covers(target):
-			var sv := attacker.creature.roll_save(e.dice, &"con", o.save_dc, [], [], "Constitution save vs Holy Aura (%s)" % attacker.name())
+			var sv := attacker.creature.roll_save(e.dice, &"con", o.save_dc, [], [], "Constitution save vs Holy Aura (%s)" % attacker.name(), SpellCaster.spell_save_keys(o.caster_id))
 			if not sv.success:
 				var fx := Effect.new("Blinded (Holy Aura)", &"spell", "holy_aura").with_condition(&"blinded")
 				fx.ends = Effect.Ends.END_OF_TURN
@@ -940,7 +1000,8 @@ func creature_turn_start(c: Combatant) -> void:
 				near = true
 				break
 		if near and not c.creature.has_condition(&"blinded"):
-			var glare_keys: Array[String] = ["save_vs:blinded"]
+			var glare_keys := SpellCaster.spell_save_keys(o.caster_id)
+			glare_keys.append("save_vs:blinded")
 			var sv := c.creature.roll_save(e.dice, &"con", o.save_dc, [], [], "Constitution save vs Prismatic Wall's glare (%s)" % c.name(), glare_keys)
 			if not sv.success:
 				var fx := Effect.new("Blinded (Prismatic Wall)", &"spell", "prismatic_wall").with_condition(&"blinded")

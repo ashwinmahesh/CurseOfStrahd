@@ -4,7 +4,7 @@
   "source": {
     "book": "FRHoF",
     "checked_against": "FRHoF",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 1,
   "school": "abjuration",
@@ -29,11 +29,58 @@
   "duration": {
     "kind": "instantaneous"
   },
-  "summary": "Reference-only: One creature makes a Constitution save; Constructs and Undead automatically succeed. Failure deals 2d4 Force, halves Speed until your next turn starts, and restricts its next turn to an action or Bonus Action, not both. Success takes half damage only. Add 2d4 per slot above 1.",
-  "text": "Reference-only: One creature makes a Constitution save; Constructs and Undead automatically succeed. Failure deals 2d4 Force, halves Speed until your next turn starts, and restricts its next turn to an action or Bonus Action, not both. Success takes half damage only. Add 2d4 per slot above 1.",
+  "summary": "One creature makes a Constitution save; Constructs and Undead automatically succeed. Failure deals 2d4 Force, halves Speed until your next turn starts, and restricts its next turn to an action or Bonus Action, not both. Success takes half damage only. Add 2d4 per slot above 1.",
+  "text": "One creature makes a Constitution save; Constructs and Undead automatically succeed. Failure deals 2d4 Force, halves Speed until your next turn starts, and restricts its next turn to an action or Bonus Action, not both. Success takes half damage only. Add 2d4 per slot above 1.",
   "tags": [
-    "utility"
+    "damage",
+    "control"
   ],
   "icon": "magic_missile",
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "save": "con",
+  "save_success": "half",
+  "auto_success_types": [
+    "construct",
+    "undead"
+  ],
+  "damage": [
+    {
+      "dice": "2d4",
+      "type": "force"
+    }
+  ],
+  "upcast": {
+    "damage": "2d4"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "speed_percent",
+            "value": 50
+          }
+        ],
+        "until": "caster_turn_start"
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "action_or_bonus"
+          }
+        ],
+        "until": "target_turn_end",
+        "starts_next_turn": true
+      }
+    }
+  ],
   "playable": false
 }

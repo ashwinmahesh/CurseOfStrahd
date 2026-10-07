@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 7,
   "school": "divination",
@@ -28,11 +28,21 @@
   "duration": {
     "kind": "instantaneous"
   },
-  "summary": "Reference-only: A visible creature that just failed a D20 Test rerolls with Advantage and must use the new result. Success also grants it 6d10 Temporary HP.",
-  "text": "Reference-only: A visible creature that just failed a D20 Test rerolls with Advantage and must use the new result. Success also grants it 6d10 Temporary HP.",
+  "summary": "A visible creature that just failed a D20 Test rerolls with Advantage and must use the new result. Success also grants it 6d10 Temporary HP.",
+  "text": "A visible creature that just failed a D20 Test rerolls with Advantage and must use the new result. Success also grants it 6d10 Temporary HP.",
   "tags": [
-    "utility"
+    "buff"
   ],
   "icon": "magic_missile",
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "requires_sight": true,
+  "roll_response": {
+    "scope": "visible",
+    "reroll_advantage": true,
+    "success_temp_hp": "6d10"
+  },
   "playable": false
 }

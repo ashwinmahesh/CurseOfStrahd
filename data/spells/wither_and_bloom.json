@@ -31,8 +31,9 @@
   "summary": "Reference-only: Chosen creatures in a 10-foot-radius Sphere save Constitution against 3d6 Necrotic, half on success; ordinary plants wither. One chosen creature there may spend one Hit Die, healing its roll + your spellcasting modifier. Each slot above 2 adds 1d6 damage and one available Hit Die; add the modifier only once.",
   "text": "Reference-only: Chosen creatures in a 10-foot-radius Sphere save Constitution against 3d6 Necrotic, half on success; ordinary plants wither. One chosen creature there may spend one Hit Die, healing its roll + your spellcasting modifier. Each slot above 2 adds 1d6 damage and one available Hit Die; add the modifier only once.",
   "tags": [
-    "utility"
+    "damage"
   ],
   "icon": "magic_missile",
+  "automation": "reference",
   "playable": false
 }

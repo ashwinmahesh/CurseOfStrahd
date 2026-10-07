@@ -8,14 +8,26 @@
   },
   "category": "epic_boon",
   "repeatable": false,
-  "summary": "Reference-only: Reroll a failed save, keeping the new result. Recharges at the start of your next turn.",
+  "summary": "Reroll a failed save, keeping the new result. Recharges at the start of your next turn.",
   "benefits": [
     {
       "id": "boon_of_fortunes_favor_benefit",
       "name": "Epic Benefit",
-      "summary": "Reference-only: Reroll a failed save, keeping the new result. Recharges at the start of your next turn.",
-      "text": "Reference-only: Reroll a failed save, keeping the new result. Recharges at the start of your next turn.",
-      "implemented": "text"
+      "summary": "Reroll a failed save, keeping the new result. Recharges at the start of your next turn.",
+      "text": "Reroll a failed save, keeping the new result. Recharges at the start of your next turn.",
+      "implemented": "data",
+      "roll_response": {
+        "resource": "boon_of_fortunes_favor_benefit",
+        "kind": "save",
+        "cost": "free",
+        "do": "reroll"
+      },
+      "resource": {
+        "id": "boon_of_fortunes_favor_benefit",
+        "name": "Epic Benefit",
+        "max": 1,
+        "recharge": "turn"
+      }
     }
   ],
   "prerequisites": {

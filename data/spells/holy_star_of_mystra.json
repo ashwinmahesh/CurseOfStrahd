@@ -30,8 +30,9 @@
   "summary": "Reference-only: Gain Three-Quarters Cover and light (Bright 5 feet, Dim 5 more). On casting and later Bonus Actions, ranged spell attack a creature within 120 feet for 4d10 + spellcasting modifier Force or Radiant. After succeeding on a save against a level 7-or-lower spell targeting only you with no area, use a Reaction to reflect it at its caster, using their spell save DC.",
   "text": "Reference-only: Gain Three-Quarters Cover and light (Bright 5 feet, Dim 5 more). On casting and later Bonus Actions, ranged spell attack a creature within 120 feet for 4d10 + spellcasting modifier Force or Radiant. After succeeding on a save against a level 7-or-lower spell targeting only you with no area, use a Reaction to reflect it at its caster, using their spell save DC.",
   "tags": [
-    "utility"
+    "damage"
   ],
   "icon": "magic_missile",
+  "automation": "reference",
   "playable": false
 }

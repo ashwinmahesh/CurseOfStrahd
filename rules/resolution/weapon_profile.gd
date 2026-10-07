@@ -59,7 +59,7 @@ static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_mai
 	var off_free := off.is_empty()
 	if "two_handed" in p.properties:
 		p.two_hands = true
-	elif "versatile" in p.properties and p.melee and off_free and in_main_hand:
+	elif "versatile" in p.properties and p.melee and off_free and in_main_hand and not c.has_flag("prefer_one_handed"):
 		p.two_hands = true
 		p.damage_dice = str(w.get("versatile", p.damage_dice))
 		p.notes.append("Versatile: two-handed")
@@ -106,6 +106,12 @@ static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_mai
 ## Spells that reshape a weapon or an Unarmed Strike while they last (Shillelagh, Alter Self's Natural Weapons):
 ## `weapon_override` modifiers with items, die, ability (the spellcasting ability at casting) and damage type.
 func _apply_overrides(c: Creature) -> void:
+	if proficient and item_id != "unarmed_strike" and not two_hands:
+		for m in c.modifiers_for(&"weapon_ability"):
+			var ab := StringName(m.text("ability"))
+			if ab in Abilities.ALL and c.ability_mod(ab) > c.ability_mod(ability):
+				ability = ab
+				notes.append(m.source_name)
 	for m in c.modifiers_for(&"weapon_override"):
 		var items := m.data.get("items", []) as Array
 		if not item_id in items:

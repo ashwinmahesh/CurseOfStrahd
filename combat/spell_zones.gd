@@ -133,6 +133,7 @@ func _follow(c: Combatant) -> void:
 
 ## A creature moved one square (walking or forced): zones it entered, Emanations that follow it, auras.
 func on_moved(c: Combatant, from: Vector2i) -> void:
+	spells().check_tethers()
 	_follow(c)
 	for o: FieldObject in objects.duplicate():
 		if o.expired() or not o.covers(c) or not _affects(o, c):
@@ -269,7 +270,7 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 	# Hunger of Hadar's cold at the start of a turn: damage with no save, apart from the end-of-turn acid.
 	if trigger == "start_turn" and o.rules.has("start_damage"):
 		var cold := spells().roll_damage_parts(ctx, o.rules["start_damage"] as Array, false, t)
-		e.deal_damage(e.get_c(o.caster_id), t, [{"amount": int(cold["total"]), "type": str(cold["type"]), "spell": true}], false, label, [str(cold["text"])])
+		spells().deal_spell_damage(ctx, t, [{"amount": int(cold["total"]), "type": str(cold["type"]), "spell": true}], false, label, [str(cold["text"])])
 		return
 	if trigger != "per_square" and bool(o.rule("once_per_turn", true)) and str(o.hit_on_turn.get(t.id, "")) == turn_key:
 		return
@@ -294,7 +295,7 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 	if has_save:
 		var ab := StringName(str(o.rules["save"]))
 		# Necklace of Adaptation: harmful gases (Stinking Cloud, Cloudkill, Incendiary Cloud) are saved against with Advantage.
-		var gas: Array[String] = ["save_vs:spell"]
+		var gas := SpellCaster.spell_save_keys(o.caster_id)
 		if o.spell_id in ["stinking_cloud", "cloudkill", "incendiary_cloud", "dust_of_sneezing_and_choking__cloud"]:
 			gas.append("save_vs:gas")
 		var test := t.creature.roll_save(e.dice, ab, o.save_dc, [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], o.name, t.name()], gas)
@@ -307,13 +308,12 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 		for p: Variant in dparts:
 			var pr := spells().roll_damage_parts(ctx, [p], false, t)
 			var amt := int(pr["total"])
-			if not failed:
-				amt = amt / 2 if bool(o.rule("half", false)) else 0
+			amt = t.creature.damage_after_save(amt, StringName(str(o.rule("save", ""))), not failed, bool(o.rule("half", false)), true)
 			if failed or amt > 0:
 				parts.append({"amount": amt, "type": str(pr["type"]), "spell": true})
 			details.append(str(pr["text"]))
 		if parts.any(func(x: Dictionary) -> bool: return int(x["amount"]) > 0):
-			e.deal_damage(e.get_c(o.caster_id), t, parts, false, label, details)
+			spells().deal_spell_damage(ctx, t, parts, false, label, details)
 		else:
 			r.lines.append(e.log.add("info", "%s avoids %s" % [t.name(), label], t.id, details))
 	elif has_damage:
@@ -323,13 +323,10 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 			if trigger == "cast":
 				shared["rolled"] = rolled
 		var amount := int(rolled["total"])
-		if not failed:
-			amount = amount / 2 if bool(o.rule("half", false)) else 0
-			if t.creature.has_flag("circle_of_power"):
-				amount = 0
+		amount = t.creature.damage_after_save(amount, StringName(str(o.rule("save", ""))), not failed, bool(o.rule("half", false)), true)
 		details.append(str(rolled["text"]))
 		if amount > 0:
-			var dr := e.deal_damage(e.get_c(o.caster_id), t, [{"amount": amount, "type": str(rolled["type"]), "spell": true}], false, label, details)
+			var dr := spells().deal_spell_damage(ctx, t, [{"amount": amount, "type": str(rolled["type"]), "spell": true}], false, label, details)
 			# Guardian of Faith vanishes once it has dealt its total.
 			if o.rules.has("damage_cap"):
 				o.rules["dealt"] = int(o.rules.get("dealt", 0)) + dr.final

@@ -147,3 +147,28 @@ speed>`, `ignore_difficult_terrain`, `oa_disadvantage`, `sees_invisible`, `lante
 `spell_attacks_ignore_half_cover`, `spell_turning`, `immune_magic_missile`, `web_immune`, `elemental_command:<element>`,
 `bat_cloak`, `regeneration_ring`, `ioun_regeneration`, `kas_initiative`, `illusion`, `berserk` and the Cube of Force's
 `cube_*`.
+
+## Data-driven feature recipes and additional modifiers
+
+`Character._walk_feature` retains feature `activation` and `roll_response` dictionaries. `FeatureRecipes` consumes them; descriptions alone never activate a feature.
+
+- `activation`: `cost` (`magic`, `action`, `bonus`, `free`), optional `resource`, `targeting`, `count` (formula, minimum one), `range`, `duration`, spell-compatible `effects`, or `do: dodge`. Targets are validated before costs. `restore_slot` offers free restoration by expending an eligible slot only when a use is missing.
+- `roll_response`: `resource`, `kind` (`save` or `d20`), optional `keys_any`, `scope` (`self` or `allies`), `range`, `cost` (`free` or `reaction`), `do` (`add_die` or `reroll`), and `dice`. Failed synchronous tests follow the existing per-feature auto/never reaction policy. `recharge: turn` replenishes on the owner's next turn.
+- `temp_hp_bonus`: added to positive THP grants before comparison with existing THP.
+- `ignore_resistance`: damage-type exceptions with attack/casting provenance filters; never grants immunity bypass.
+- Conditional defense modifiers use `when` against the creature's current situation, including `bloodied`.
+- `concentration_damage_immunity`: optional `school` or `spell_id` selects the maintained spell; prevents damage checks only. The `concentration_iron_mind` flag additionally survives ordinary Incapacitated/Stunned, but not Unconscious, Petrified, death, or replacing concentration.
+- `speed_cap`: `value` caps final Speed, `kind` defaults to `all`. Lower existing Speed is preserved.
+- Modifier `except` excludes matching D20 keys before `on` matches, e.g. `on: save:all`, `except: [save:con]`.
+- Prepared spell modifiers may use `at_slot_level` and `prepared_for_classes`; maximum available casting/pact slot level determines eligibility, not remaining slots. Casting ability stays tied to the eligible class.
+
+Activation recipes also support `do: teleport`, point targeting, `swap` with a willing Medium-or-smaller ally, and `upgrades` keyed by `at_level`. `restore_only` exposes slot restoration for an ability used from a spell action. A `summon_effect` recipe can require actual slot expenditure and a spell school, grant formula-based THP, and bind resistance to that THP grant. Defense `when.temporary_hp` checks remaining THP immediately; replacing a bound grant removes its dependent effect.
+
+- `concentration_save_bonus`: for Constitution saves tagged `concentration` while the concentrated spell matches `school`, add the specified `ability` modifier (feat `@increased` resolves during character building), or `value` when no ability is given. It does not modify other Constitution saves or non-spell concentration.
+- `after_cast_speed`: on the caster’s own turn after a spell slot is spent to cast a spell of `school`, apply `value` (formula context includes `slot_level`) as a Speed bonus until that turn ends. Same-source effects use normal strongest-effect stacking; free casts and cantrips do not trigger it.
+
+A modifier’s `skill` may resolve a feature-local pick such as `@choice`, just as its `ability` can. Enchanting Conversationalist applies its Intelligence bonus only to its selected skill.
+
+`weapon_ability` offers a proficient one-handed weapon an alternate ability for attack and damage when its modifier is higher; Unarmed Strikes are excluded. `prefer_one_handed` keeps Versatile weapons in a one-handed grip when the other hand is free. Bladesong uses these alongside its AC/Speed/check and concentration-save modifiers; its effect’s `ends_on_two_handed_attack` parameter ends it before a two-handed attack resolves.
+
+`resource_restore` restores `value` uses of `resource` after a successful positive expenditure of `when_spent`. Failed or zero expenditures do not trigger it, and the destination resource’s normal maximum applies. Bladesong uses this to regain a use when Arcane Recovery is spent.

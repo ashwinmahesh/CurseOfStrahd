@@ -36,5 +36,6 @@
     "utility"
   ],
   "icon": "magic_missile",
+  "automation": "reference",
   "playable": false
 }

@@ -8,21 +8,60 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Jump; Spider Climb; Slow; Polymorph; Animate Objects. Reference-only: On your turn, a slotted Transmutation adds 5 feet times slot level to Speed until that turn ends.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Jump; Spider Climb; Slow; Polymorph; Animate Objects. On your turn, a slotted Transmutation adds 5 feet times slot level to Speed until that turn ends.",
   "benefits": [
     {
       "id": "transmutation_adept_spells",
       "name": "Additional Spells",
-      "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Jump; Spider Climb; Slow; Polymorph; Animate Objects.",
-      "text": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Jump; Spider Climb; Slow; Polymorph; Animate Objects.",
-      "implemented": "text"
+      "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Jump; Spider Climb; Slow; Polymorph; Animate Objects.",
+      "text": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Jump; Spider Climb; Slow; Polymorph; Animate Objects.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "jump",
+          "at_slot_level": 1,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "spider_climb",
+          "at_slot_level": 2,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "slow",
+          "at_slot_level": 3,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "polymorph",
+          "at_slot_level": 4,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "animate_objects",
+          "at_slot_level": 5,
+          "prepared_for_classes": true
+        }
+      ]
     },
     {
       "id": "transmutation_adept_benefit",
       "name": "School Benefit",
-      "summary": "Reference-only: On your turn, a slotted Transmutation adds 5 feet times slot level to Speed until that turn ends.",
-      "text": "Reference-only: On your turn, a slotted Transmutation adds 5 feet times slot level to Speed until that turn ends.",
-      "implemented": "text"
+      "summary": "On your turn, a slotted Transmutation adds 5 feet times slot level to Speed until that turn ends.",
+      "text": "On your turn, a slotted Transmutation adds 5 feet times slot level to Speed until that turn ends.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "after_cast_speed",
+          "school": "transmutation",
+          "value": "5*slot_level"
+        }
+      ]
     }
   ],
   "prerequisites": {

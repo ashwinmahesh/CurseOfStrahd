@@ -46,6 +46,7 @@ var _pad_repeat := 0.0
 
 var selected: Dictionary = {}
 var picked: Array = []
+var picked_points: Array[Vector2] = []
 var slot_level := 0
 var _reach: Dictionary = {}
 var _target_cycle := 0
@@ -237,6 +238,7 @@ func _advance() -> void:
 	mode = Mode.IDLE
 	selected = {}
 	picked = []
+	picked_points = []
 	hud.set_pips([], 0)
 	_reach = catalog.move_reach(c) if c.can_act() else {}
 	cursor_cell = c.cell
@@ -353,6 +355,7 @@ func _choose(action: Dictionary, level: int = 0) -> void:
 		return
 	selected = action
 	picked = []
+	picked_points = []
 	mode = Mode.TARGET
 	if str(action["kind"]) in ["spell", "item_spell"]:
 		hud.set_pips(levels, slot_level)
@@ -364,6 +367,7 @@ func _cancel_targeting() -> void:
 	hud.hide_tooltip()
 	selected = {}
 	picked = []
+	picked_points = []
 	hud.set_pips([], 0)
 	overlay.clear("target")
 	overlay.clear("friendly")
@@ -376,7 +380,7 @@ func _show_target_marks() -> void:
 	var c := _player()
 	var foes: Array = []
 	var friends: Array = []
-	if c == null or selected.is_empty() or str(selected["targeting"]) in ["point", "direction"]:
+	if c == null or selected.is_empty() or str(selected["targeting"]) in ["point", "points", "direction"]:
 		return
 	if str(selected["targeting"]) == "dead":
 		var dead: Array = []
@@ -406,6 +410,7 @@ func _perform(action: Dictionary, targets: Array, point: Vector2, dir: Vector2) 
 	slot_level = 0
 	selected = {}
 	picked = []
+	picked_points = []
 	hud.set_pips([], 0)
 	if not r.ok:
 		hud.banner(r.reason, 1.6)
@@ -512,6 +517,31 @@ func _square_picked(id: String) -> void:
 func _confirm_target(c: Combatant, t: CombatToken) -> void:
 	var kind := str(selected["targeting"])
 	match kind:
+		"points":
+			if hover_cell.x < 0:
+				return
+			var point := Vector2(hover_cell) + Vector2(0.5, 0.5)
+			if str(selected["kind"]) == "spell" and not point in picked_points:
+				var check_opts := (selected.get("opts", {}) as Dictionary).duplicate()
+				check_opts.erase("splintered")
+				var check := e.spells._check_targets(c, Compendium.shared().spell_data(str(selected["spell_id"])), slot_level, [], point, check_opts)
+				if str(check["why"]) != "":
+					hud.banner(str(check["why"]), 1.4)
+					return
+			if point in picked_points:
+				picked_points.erase(point)
+			else:
+				picked_points.append(point)
+			var need := int(selected.get("count", 2))
+			if picked_points.size() >= need:
+				var placed := selected.duplicate(true)
+				var options := (placed.get("opts", {}) as Dictionary).duplicate()
+				options["points"] = picked_points.duplicate()
+				placed["opts"] = options
+				_perform(placed, [], picked_points[0], Vector2.ZERO)
+			else:
+				hud.banner("%d of %d spaces chosen" % [picked_points.size(), need], 1.2)
+				_update_hover()
 		"point":
 			_perform(selected, [], _aim_point(), Vector2.ZERO)
 		"place":
@@ -533,7 +563,7 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 				picked.erase(t.combatant)
 			else:
 				picked.append(t.combatant)
-			var need := e.spells.target_count(Compendium.shared().spell_data(str(selected["spell_id"])), slot_level)
+			var need := e.spells.target_count(Compendium.shared().spell_data(str(selected["spell_id"])), slot_level + (1 if str((selected.get("opts", {}) as Dictionary).get("slot_boost", "")) != "" else 0)) if str(selected["kind"]) == "spell" else int(selected.get("count", 1))
 			if picked.size() >= need:
 				_perform(selected, picked.duplicate(), Vector2.INF, Vector2.ZERO)
 			else:
@@ -894,6 +924,15 @@ func _update_hover() -> void:
 
 func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 	var kind := str(selected["targeting"])
+	if kind == "points" or (kind == "point" and str(selected["kind"]) == "feat"):
+		var cells: Array = []
+		for point in picked_points:
+			cells.append(Vector2i(floori(point.x), floori(point.y)))
+		if hover_cell.x >= 0:
+			cells.append(hover_cell)
+		overlay.show_cells("area", cells)
+		hud.show_tooltip(str(selected["label"]), ["Choose a visible space within %d ft" % int(selected.get("range", 0)), "%d of %d spaces chosen" % [picked_points.size(), int(selected.get("count", 2))]] if kind == "points" else ["Choose an empty space or a willing ally to swap with"], [], at)
+		return
 	if kind in ["point", "direction"]:
 		var pv := catalog.spell_preview(c, selected, _aim_point(), _aim_dir(c), slot_level)
 		overlay.show_cells("area", pv["cells"] as Array)

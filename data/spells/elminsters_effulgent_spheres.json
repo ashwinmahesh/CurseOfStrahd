@@ -32,8 +32,9 @@
   "summary": "Reference-only: Six orbiting spheres can be spent individually. Reaction to Acid, Cold, Fire, Lightning, or Thunder damage: resist that type until your next turn starts. Bonus Action: ranged spell attack within 120 feet for 3d6 of one of those types, spending the sphere hit or miss. Ends when all spheres are spent. Gain one more sphere per slot above 6.",
   "text": "Reference-only: Six orbiting spheres can be spent individually. Reaction to Acid, Cold, Fire, Lightning, or Thunder damage: resist that type until your next turn starts. Bonus Action: ranged spell attack within 120 feet for 3d6 of one of those types, spending the sphere hit or miss. Ends when all spheres are spent. Gain one more sphere per slot above 6.",
   "tags": [
-    "utility"
+    "damage"
   ],
   "icon": "magic_missile",
+  "automation": "reference",
   "playable": false
 }

@@ -33,8 +33,9 @@
   "summary": "Reference-only: Create a 20-foot-radius Sphere of magical Darkness; strong wind disperses it. Appearance, entry, movement into a creature, or end of turn prompts a Wisdom save once per turn: 5d6 Psychic and subtract 1d6 from saves until the next turn ends on failure; half damage only on success. It moves 10 feet away from you at your turn start. Circle variant requires five secondary casters spending level 3+ slots and consumes three Pandemonium black pearls: range 1 mile, lasts until dispelled without Concentration; ends if any participant joins another Circle casting of Doomtide.",
   "text": "Reference-only: Create a 20-foot-radius Sphere of magical Darkness; strong wind disperses it. Appearance, entry, movement into a creature, or end of turn prompts a Wisdom save once per turn: 5d6 Psychic and subtract 1d6 from saves until the next turn ends on failure; half damage only on success. It moves 10 feet away from you at your turn start. Circle variant requires five secondary casters spending level 3+ slots and consumes three Pandemonium black pearls: range 1 mile, lasts until dispelled without Concentration; ends if any participant joins another Circle casting of Doomtide.",
   "tags": [
-    "utility"
+    "damage"
   ],
   "icon": "magic_missile",
+  "automation": "reference",
   "playable": false
 }

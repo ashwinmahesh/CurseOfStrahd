@@ -32,7 +32,14 @@
         "name": "Frigid Explorer",
         "summary": "Cold damage from your weapon attacks, Ranger spells, and Ranger features ignores Resistance. Weapon hits may add 1d4 Cold per target per turn, increasing to 1d6 at Ranger level 11.",
         "text": "Cold damage from your weapon attacks, Ranger spells, and Ranger features ignores Resistance. Weapon hits may add 1d4 Cold per target per turn, increasing to 1d6 at Ranger level 11.",
-        "implemented": "text"
+        "implemented": "engine",
+        "modifiers": [
+          {
+            "stat": "ignore_resistance",
+            "value": "cold",
+            "damage_class": "ranger"
+          }
+        ]
       }
     },
     {
@@ -42,7 +49,7 @@
         "name": "Hunter’s Rime",
         "summary": "Casting Hunter’s Mark gives you 1d10 + Ranger level Temporary Hit Points. Your marked creature cannot Disengage.",
         "text": "Casting Hunter’s Mark gives you 1d10 + Ranger level Temporary Hit Points. Your marked creature cannot Disengage.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -52,7 +59,44 @@
         "name": "Fortifying Soul",
         "summary": "Once per Long Rest, take a Magic action to choose up to Wisdom modifier visible creatures (minimum 1). Each heals 1d10 + Ranger level and gains Advantage on saves to avoid or end Frightened for 1 hour.",
         "text": "Once per Long Rest, take a Magic action to choose up to Wisdom modifier visible creatures (minimum 1). Each heals 1d10 + Ranger level and gains Advantage on saves to avoid or end Frightened for 1 hour.",
-        "implemented": "text"
+        "implemented": "data",
+        "activation": {
+          "cost": "magic",
+          "resource": "fortifying_soul",
+          "targeting": "multi",
+          "count": "mod:wis",
+          "duration": {
+            "kind": "hours",
+            "amount": 1
+          },
+          "effects": [
+            {
+              "effect": "heal",
+              "params": {
+                "dice": "1d10",
+                "flat": "class_level"
+              }
+            },
+            {
+              "effect": "modifiers",
+              "params": {
+                "modifiers": [
+                  {
+                    "stat": "advantage",
+                    "on": "save_vs:frightened"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "action": "action",
+        "resource": {
+          "id": "fortifying_soul",
+          "name": "Fortifying Soul",
+          "max": 1,
+          "recharge": "long"
+        }
       }
     },
     {
@@ -62,7 +106,41 @@
         "name": "Chilling Retribution",
         "summary": "Reaction when hit by an attack roll: the attacker makes a Wisdom save against your spell DC. Failure: Stunned with Speed 0 until your next turn ends. Uses equal Wisdom modifier (minimum 1) per Long Rest.",
         "text": "Reaction when hit by an attack roll: the attacker makes a Wisdom save against your spell DC. Failure: Stunned with Speed 0 until your next turn ends. Uses equal Wisdom modifier (minimum 1) per Long Rest.",
-        "implemented": "text"
+        "implemented": "data",
+        "resource": {
+          "id": "chilling_retribution",
+          "name": "Chilling Retribution",
+          "max": "mod:wis",
+          "min": 1,
+          "recharge": "long"
+        },
+        "hit_response": {
+          "resource": "chilling_retribution",
+          "save": "wis",
+          "effects": [
+            {
+              "effect": "condition",
+              "params": {
+                "condition": "stunned",
+                "primary_condition": "stunned",
+                "until": "caster_turn_end"
+              }
+            },
+            {
+              "effect": "modifiers",
+              "params": {
+                "until": "caster_turn_end",
+                "primary_condition": "stunned",
+                "modifiers": [
+                  {
+                    "stat": "speed_set",
+                    "value": 0
+                  }
+                ]
+              }
+            }
+          ]
+        }
       }
     },
     {
@@ -72,7 +150,63 @@
         "name": "Frozen Haunt",
         "summary": "When casting Hunter’s Mark, adopt a form lasting until that spell ends. Once per Long Rest, or restore use with a level 4+ slot without an action. Gain immunity to Cold, Grappled, Prone, and Restrained. On activation and your turn starts, chosen creatures in a 15-foot Emanation take 2d4 Cold. Pass through creatures and objects as Difficult Terrain, taking 1d10 Force if ending a turn inside; when the form ends inside one, move to the nearest empty space.",
         "text": "When casting Hunter’s Mark, adopt a form lasting until that spell ends. Once per Long Rest, or restore use with a level 4+ slot without an action. Gain immunity to Cold, Grappled, Prone, and Restrained. On activation and your turn starts, chosen creatures in a 15-foot Emanation take 2d4 Cold. Pass through creatures and objects as Difficult Terrain, taking 1d10 Force if ending a turn inside; when the form ends inside one, move to the nearest empty space.",
-        "implemented": "text"
+        "implemented": "data",
+        "resource": {
+          "id": "frozen_haunt",
+          "name": "Frozen Haunt",
+          "max": 1,
+          "recharge": "long"
+        },
+        "activation": {
+          "restore_only": true,
+          "resource": "frozen_haunt",
+          "restore_slot": 4,
+          "cost": "free"
+        },
+        "cast_form": {
+          "spell": "hunters_mark",
+          "resource": "frozen_haunt",
+          "modifiers": [
+            {
+              "stat": "immunity",
+              "value": "cold"
+            },
+            {
+              "stat": "condition_immunity",
+              "value": "grappled"
+            },
+            {
+              "stat": "condition_immunity",
+              "value": "prone"
+            },
+            {
+              "stat": "condition_immunity",
+              "value": "restrained"
+            },
+            {
+              "stat": "flag",
+              "value": "incorporeal_movement"
+            },
+            {
+              "stat": "flag",
+              "value": "incorporeal_occupied"
+            },
+            {
+              "stat": "flag",
+              "value": "frozen_haunt"
+            }
+          ],
+          "pulse": {
+            "radius": 15,
+            "dice": "2d4",
+            "type": "cold"
+          },
+          "embedded_damage": {
+            "dice": "1d10",
+            "type": "force"
+          },
+          "shunt_on_end": true
+        }
       }
     }
   ],

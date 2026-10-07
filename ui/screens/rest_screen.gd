@@ -101,6 +101,7 @@ func _draw() -> void:
 		_box.add_child(heal)
 	for ch in st.party:
 		_arcane_recovery_row(ch)
+		_slot_exchange_row(ch)
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 12)
 		row.add_child(UiParts.framed_portrait(CombatToken.art_for(ch), 52.0, ch.hp <= 0, ch.dead))
@@ -359,3 +360,25 @@ func _camp_talks() -> void:
 		UiParts.light_up(b)
 		b.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		_box.add_child(b)
+
+
+func _slot_exchange_row(ch: Character) -> void:
+	for option in ch.slot_conversion_options():
+		var pick := option
+		var button := UiParts.small_button("%s · %s: level %d slot → %d %s" % [ch.name, pick["label"], pick["slot"], pick["slot"], str(pick["resource"]).replace("_", " ")], func() -> void:
+			if ch.convert_slot_to_resource(str(pick["feature"]), int(pick["slot"])):
+				_draw())
+		_box.add_child(button)
+	if not _short_done:
+		return
+	for option in ch.slot_recovery_options():
+		var pick := option
+		var button := UiParts.small_button("%s · %s: %d %s → level %d slot" % [ch.name, pick["label"], pick["cost"], str(pick["resource"]).replace("_", " "), pick["slot"]], func() -> void:
+			if ch.recover_slot_with_resource(str(pick["feature"]), int(pick["slot"])):
+				_draw())
+		_box.add_child(button)
+
+func _exit_tree() -> void:
+	if st != null:
+		for ch in st.party:
+			ch.close_slot_recovery()
