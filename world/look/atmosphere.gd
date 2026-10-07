@@ -382,8 +382,8 @@ const DAY_TONE := {"shade": "slate", "amount": 0.45, "pivot": 0.24, "shade_satur
 ## Indoors the shade is the deep night blue of a dark house, and moonlight from unseen windows fills it a little, cool
 ## and readable (the target frames' blue-grey floors away from the lamps): the ambient light leans to `ambient_tint`
 ## by `ambient_mix` and is `ambient` times as strong, and the moon key light `key` times.
-const INDOOR_TONE := {"shade": "night_deep", "ambient": 1.25, "ambient_tint": "moon_blue", "ambient_mix": 0.55,
-	"key": 1.8}
+const INDOOR_TONE := {"shade": "night_deep", "ambient": 1.1, "ambient_tint": "moon_blue", "ambient_mix": 0.5,
+	"key": 1.4}
 
 
 ## The Modern grade for a time of day: MODERN_TONE, a day's DAY_TONE or an indoor INDOOR_TONE, then the mood's own
@@ -641,6 +641,7 @@ func attach(rig: CameraRig, post: MeshInstance3D) -> void:
 	_show_night_pieces()
 	_set_weather_on_surfaces()
 	_light_kit_flames()
+	_light_model_flames()
 	_scan_lights()
 	# Lights added later (a lantern lit, a spell's light, a fire) join as they enter the tree, instead of the whole
 	# place being searched for them every second (P3).
@@ -976,6 +977,62 @@ func _light_kit_flames() -> void:
 				_dress_light(l)
 
 
+## Fires and candles modelled into the location's 3D props (a hearth, a brazier, a campfire, a torch, a candelabra:
+## their "flame" and "candle" sockets in art/models/manifest.json) light the room around them in the Modern finish,
+## unless one of the location's own lights already stands within a square: the target frames' hearths glow across the
+## hall. A fire's light hangs a little in front of and above its flame, so the firebox doesn't swallow its shadows.
+func _light_model_flames() -> void:
+	var view := get_parent()
+	if board == null or view == null or not Look.modern():
+		return
+	var taken: Array[Vector3] = []
+	for l in view.find_children("*", "OmniLight3D", true, false):
+		taken.append((l as OmniLight3D).global_position)
+	var models := ModelPiece.manifest()
+	for n in view.find_children("Model_*", "Node3D", true, false):
+		var model := n as Node3D
+		var info := models.get(str(model.get_meta("model", "")), {}) as Dictionary
+		var sockets := info.get("sockets", {}) as Dictionary
+		var fire: Array[Vector3] = []
+		var candles: Array[Vector3] = []
+		for key: String in sockets:
+			var a := sockets[key] as Array
+			var at := Vector3(float(a[0]), float(a[1]), float(a[2]))
+			if key.begins_with("flame"):
+				fire.append(at)
+			elif key.begins_with("candle"):
+				candles.append(at)
+		var lights: Array[Array] = []   # [local position, kind]
+		for at in fire:
+			lights.append([at + Vector3(0, 0.35, 0.3 if str(info.get("mount", "")) == "wall" else 0.0), "fire"])
+		if not candles.is_empty():
+			var mid := Vector3.ZERO
+			for at in candles:
+				mid += at
+			lights.append([mid / candles.size() + Vector3(0, 0.12, 0), "candle"])
+		for entry in lights:
+			var world := model.global_transform * (entry[0] as Vector3)
+			var near := false
+			for t in taken:
+				if t.distance_to(world) < 1.2:
+					near = true
+					break
+			if near:
+				continue
+			var kind := str(entry[1])
+			var l := CandleFlicker.new()
+			l.name = "PropLight"
+			l.light_color = Look.color("flame" if kind == "fire" else "candle")
+			l.omni_range = 4.5 if kind == "fire" else 3.2
+			l.base_energy = 1.9 if kind == "fire" else 1.2
+			l.light_energy = l.base_energy
+			l.set_meta("light_kind", kind)
+			model.add_child(l)
+			l.global_position = world
+			taken.append(world)
+			_dress_light(l)
+
+
 ## The middles of the groups of flame vertices (each candle's, or each sconce's few candles together).
 static func _flame_clusters(verts: PackedVector3Array) -> Array[Vector3]:
 	var sums: Array[Vector3] = []
@@ -1038,7 +1095,7 @@ func _scan_lights() -> void:
 const LIGHT_KINDS := {
 	"candle": {"size": 0.03, "fog": 1.0, "energy": 1.3, "reach": 1.15},
 	"lamp": {"size": 0.06, "fog": 1.2, "energy": 1.25, "reach": 1.15},
-	"lantern": {"size": 0.08, "fog": 1.2, "energy": 0.7, "reach": 0.85},
+	"lantern": {"size": 0.08, "fog": 1.2, "energy": 0.85, "reach": 0.9},
 	"torch": {"size": 0.12, "fog": 1.8, "energy": 1.3, "reach": 1.2},
 	"fire": {"size": 0.25, "fog": 2.0, "energy": 1.6, "reach": 1.4},
 	"magic": {"size": 0.12, "fog": 1.6, "steady": true},

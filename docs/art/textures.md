@@ -130,8 +130,8 @@ At the top level of the manifest, `macro_file` names a tileable soft noise (W4):
 lightened, and its roughness nudged, by it over about nine squares (`macro_units`), `Look.MACRO_STRENGTH` (0.35)
 unless the surface's `macro` says otherwise.
 
-Without any of these a surface takes the row of `Look.MATERIALS` whose word its name holds (marble 0.15, tile and
-parquet 0.3, cobbles 0.4 with a wide spread so the stone tops glint, flagstones 0.5, stone 0.65, plaster 0.9,
+Without any of these a surface takes the row of `Look.MATERIALS` whose word its name holds (marble 0.3, tile
+parquet 0.36 and 0.3, cobbles 0.4 with a wide spread so the stone tops glint, flagstones 0.5, stone 0.65, plaster 0.9,
 rugs and thatch 1.0), else roughness 0.8. Flat colours: `Look.COLOUR_MATERIALS` (pewter and silver are metal,
 ivory, bone and polished walnut take a soft highlight, cloth colours stay dull), else 0.75. Roughness never goes
 below 0.1, which the screen pass keeps for water.

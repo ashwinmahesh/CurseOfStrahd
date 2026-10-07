@@ -391,3 +391,17 @@ func test_castle_piers_light_their_sconces() -> void:
 	assert_true(named >= 2, "the piers' sconces are lit (%d)" % named)
 	v.queue_free()
 	Look.set_style(was, false)
+
+
+## The Death House's hearths light the room in the Modern finish (their modelled fire, W5).
+func test_hearths_light_the_room() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var v := _view("death_house_ground")
+	var fires := 0
+	for n in v.find_children("*", "OmniLight3D", true, false):
+		if str(n.get_meta("light_kind", "")) == "fire":
+			fires += 1
+	assert_true(fires >= 2, "its hearths burn (%d)" % fires)
+	v.queue_free()
+	Look.set_style(was, false)

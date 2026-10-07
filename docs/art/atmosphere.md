@@ -184,9 +184,11 @@ it on the window).
   (`CandleFlicker`, meta `sway`; 2 on High and Medium).
 - **Strength by kind** (Modern): hearths throw half again as much light and reach further, candles, lamps and
   torches a little more, and the party's lantern less, so a room's own lights lead (the target frames).
-- **Kit flames**: candles and flames modelled into the building kit's pieces (the castle piers' sconces) light the
-  room around them; the flames are found in the piece's own mesh (`Atmosphere._light_kit_flames`), and floor-level
-  stubs and flames beside the location's own lights are left alone.
+- **Kit and prop flames**: candles and flames modelled into the building kit's pieces (the castle piers' sconces)
+  light the room around them; the flames are found in the piece's own mesh (`Atmosphere._light_kit_flames`), and
+  floor-level stubs and flames beside the location's own lights are left alone. Likewise the 3D props' fires and
+  candles (hearths, braziers, campfires, torches, candelabras: their `flame` and `candle` sockets in
+  art/models/manifest.json; `_light_model_flames`), unless the location's own light stands within a square.
 - **Indoor shade** (Modern) is filled a little by cool moonlight from unseen windows, readable blue-grey rather than
   black (`INDOOR_TONE`: the ambient leans to moon blue and the moon key light is stronger).
 - **Windows indoors** are the moon or the day coming in: the key light's colour, steady, with a spot light over the
