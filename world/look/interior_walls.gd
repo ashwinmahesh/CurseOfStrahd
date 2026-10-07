@@ -17,8 +17,11 @@ const HEIGHTS := {"castle": 3.0, "church": 2.8, "amber": 3.0, "dungeon": 2.4, "m
 const STOREY := 2.5
 ## How far the outside ground reaches past the map.
 const REACH := 10.0
-## How much of the camera's heading a wall's room side must face away from it to count as in front.
-const FRONT := 0.3
+## How far apart (squares) the points are that look past a wall, away from the camera, for floor behind it.
+const BEYOND := 0.8
+## Only floor this near the party (squares) brings a wall down: rooms further off keep their walls, so the view is the
+## party's room and its neighbours, framed by standing walls.
+const NEAR := 7.0
 
 
 ## Builds wall square `c` (wall material `wall_mat`, as ArenaBoard picked it): a pillar, a room wall (a full and a cut
@@ -30,15 +33,15 @@ static func build(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> bool:
 	if (st["outside"] as Dictionary).has(c):
 		_outside(board, c, st)
 		return true
-	var faces := _open_faces(board, c)
-	if faces.is_empty():
+	if _open_faces(board, c).is_empty():
 		_block(board, c, wall_mat, st)
 		return true
-	_room_wall(board, c, wall_mat, faces, st)
+	_room_wall(board, c, wall_mat, st)
 	return true
 
 
-## This board's W8 settings, worked out once: {height, outside (cells), ground, below, entry}; empty when off.
+## This board's W8 settings, worked out once: {style, height, ground, below, outside (cells), walls, headers}; empty
+## when off.
 static func _state(board: ArenaBoard) -> Dictionary:
 	if board.has_meta("interior_walls"):
 		return board.get_meta("interior_walls") as Dictionary
@@ -50,7 +53,7 @@ static func _state(board: ArenaBoard) -> Dictionary:
 		st = {"style": style, "height": float(place.get("height", HEIGHTS.get(style, 2.4))),
 			"ground": str(place.get("ground", (cfg.get("ground", {}) as Dictionary).get(style, ""))),
 			"below": float(place.get("below", 0.0)) * STOREY, "outside": _outside_cells(board), "walls": [],
-			"done_ground": false}
+			"headers": {}, "done_ground": false}
 		var root := Node3D.new()
 		root.name = "InteriorWalls"
 		board.add_child(root)
@@ -60,8 +63,7 @@ static func _state(board: ArenaBoard) -> Dictionary:
 		# A building entry so the board's cut-away reaches the walls each frame (TownBuilder.cut_away).
 		var entry := {"interior": true, "root": root, "upper": upper, "walls": null, "extras": [], "cut": false,
 			"aabb": AABB(), "rect": Rect2i(), "group": -1, "height": float(st["height"]), "state": st, "dir": Vector2.ZERO}
-		board.buildings.append(entry)
-		st["entry"] = entry
+		board.buildings.append(entry)   # (the entry holds the state, never the other way: a cycle would leak both)
 	board.set_meta("interior_walls", st)
 	return st
 
@@ -123,7 +125,7 @@ static func _open_faces(board: ArenaBoard, c: Vector2i) -> Array[Vector2i]:
 
 ## A room wall: its full storey and its cut-away version under one node on its square, the full one standing unless
 ## the camera looks into a room over it. An outer wall of an upper floor runs down to the ground outside.
-static func _room_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material, faces: Array[Vector2i], st: Dictionary) -> void:
+static func _room_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material, st: Dictionary) -> void:
 	var h := float(st["height"])
 	var node := Node3D.new()
 	node.name = "InteriorWall"
@@ -145,7 +147,41 @@ static func _room_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material, faces
 	var below := float(st["below"])
 	if below > 0.0 and _beside_outside(c, st):
 		_box(node, Vector3(1, below, 1), Vector3(0, -below / 2.0, 0), wall_mat)   # down to the street
-	(st["walls"] as Array).append({"node": node, "full": full, "low": low, "faces": faces, "cut": false, "h": h})
+	(st["walls"] as Array).append({"node": node, "full": full, "low": low, "cell": c, "cut": false, "h": h})
+	# A doorway beside this wall (one open square between it and another wall): the wall goes on over it.
+	for d in SetDressing.FACES:
+		var n := c + d
+		var other := n + d
+		if board.grid.in_bounds(other) and _open(board, n) and board.grid.has_flag(other, CombatGrid.WALL) \
+				and not (st["headers"] as Dictionary).has(n):
+			_header(board, n, d, wall_mat, st)
+
+
+static func _open(board: ArenaBoard, c: Vector2i) -> bool:
+	return board.grid.in_bounds(c) and not board.grid.has_flag(c, CombatGrid.WALL) and not board.grid.has_flag(c, CombatGrid.VOID)
+
+
+## The wall over a doorway, from the cut-away height (an interior door's top) to the storey's; it stands while either
+## wall beside it stands.
+static func _header(board: ArenaBoard, n: Vector2i, along: Vector2i, wall_mat: Material, st: Dictionary) -> void:
+	var h := float(st["height"])
+	var node := Node3D.new()
+	node.name = "InteriorWall"
+	node.position = board.cell_center(n)
+	board.add_child(node)
+	var full := Node3D.new()
+	full.name = "Full"
+	node.add_child(full)
+	var size := Vector3(1.0, h - CUT, 0.5) if along.x != 0 else Vector3(0.5, h - CUT, 1.0)
+	_box(full, size, Vector3(0, CUT + (h - CUT) / 2.0, 0), _tall(wall_mat, h))
+	_box(full, size + Vector3(0.02, 0.1 - size.y, 0.02), Vector3(0, h + 0.05, 0), Look.cel(ArenaBoard.CUT_FACE))
+	var low := Node3D.new()
+	low.name = "Cut"
+	low.visible = false
+	node.add_child(low)
+	(st["headers"] as Dictionary)[n] = true
+	(st["walls"] as Array).append({"node": node, "full": full, "low": low, "cell": n, "cut": false, "h": h,
+		"flanks": [n - along, n + along]})
 
 
 ## Solid wall inside the building (a thick wall's middle): a block at the cut-away height, its top the dark of a cut wall.
@@ -175,7 +211,7 @@ static func _outside(board: ArenaBoard, c: Vector2i, st: Dictionary) -> void:
 	var mat := Look.cel_textured(ground, 0.0)
 	var w := board.grid.width + 2.0 * REACH
 	var d := board.grid.depth + 2.0 * REACH
-	var y := -float(st["below"])
+	var y := -float(st["below"]) - 0.04   # a little under the rooms' floors, which stand at the squares' level
 	var slab := _box(board, Vector3(w, 0.2, d), Vector3(board.grid.width / 2.0, y - 0.1, board.grid.depth / 2.0),
 		mat if mat != null else Look.cel("stone_deep"))
 	slab.name = "OutsideGround"
@@ -221,24 +257,33 @@ static func _box(parent: Node3D, size: Vector3, pos: Vector3, mat: Material) -> 
 	return mi
 
 
-## Each frame (TownBuilder.cut_away): the walls in front of the rooms, seen from the camera, go down to the cut-away
-## height, the rest stand. A wall changing squashes down or grows back, then its other version takes over.
-static func cut(entry: Dictionary, camera_pos: Vector3, focus: Vector3, delta: float) -> void:
+## Each frame (TownBuilder.cut_away): a wall with floor just beyond it, looking from the camera, near the party,
+## stands in front of the party's room or one beside it and goes down to the cut-away height; the rest stand (the far
+## walls frame the rooms, and rooms further off stay walled). A thick wall's back half goes down with its front. A wall changing squashes down or grows back, then its other version takes over.
+static func cut(board: ArenaBoard, entry: Dictionary, camera_pos: Vector3, focus: Vector3, delta: float) -> void:
 	var dir := Vector2(focus.x - camera_pos.x, focus.z - camera_pos.z)
 	if dir.length() < 0.01:
 		return
 	dir = dir.normalized()
 	var st := entry["state"] as Dictionary
+	var ahead := {}
+	var near := Vector2(focus.x, focus.z)
+	for w: Dictionary in st["walls"]:
+		if not w.has("flanks"):
+			ahead[w["cell"]] = _in_front(board, w["cell"] as Vector2i, dir, near)
 	for w: Dictionary in st["walls"]:
 		if not is_instance_valid(w["node"]):
 			continue
-		var front := false
-		for d: Vector2i in w["faces"]:
-			if Vector2(d).dot(dir) > FRONT:
-				front = true
+		var front := bool(ahead.get(w["cell"], false))
+		if w.has("flanks"):
+			front = false
+			for f: Vector2i in w["flanks"]:
+				front = front or bool(ahead.get(f, true))
 		var full := w["full"] as Node3D
 		var low := w["low"] as Node3D
 		var goal := CUT / float(w["h"]) if front else 1.0
+		if w.has("flanks"):
+			goal = 0.02 if front else 1.0   # a doorway's header: gone with the walls beside it
 		var s := move_toward(full.scale.y, goal, delta * 4.0)
 		if not is_equal_approx(s, full.scale.y):
 			full.scale.y = s
@@ -247,3 +292,15 @@ static func cut(entry: Dictionary, camera_pos: Vector3, focus: Vector3, delta: f
 			full.visible = not down
 			low.visible = down
 		w["cut"] = front
+
+
+## Floor within four squares beyond wall square `c`, looking away from the camera along `dir` (a full storey hides the
+## ground about three squares behind it from the camera), and near the party (`near`): the wall stands in front of
+## the room the party is in or one beside it.
+static func _in_front(board: ArenaBoard, c: Vector2i, dir: Vector2, near: Vector2) -> bool:
+	for k: int in [1, 2, 3, 4, 5]:
+		var p := Vector2(c.x + 0.5, c.y + 0.5) + dir * (k * BEYOND)
+		var n := Vector2i(floori(p.x), floori(p.y))
+		if n != c and _open(board, n) and p.distance_to(near) <= NEAR:
+			return true
+	return false
