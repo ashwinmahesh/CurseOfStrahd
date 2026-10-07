@@ -280,5 +280,65 @@
       "thunder",
       "wind"
     ]
+  },
+  "combat": {
+    "_note": "What a fight sounds like (world/combat/fx/combat_sfx.gd, docs/art/spell_effects.md). Each entry names effects in sfx. families: a spell or ability's sounds by its look's family (art/vfx/effects.json), at each moment its effect shows: cast (the effect begins), launch (a missile leaves the hand), impact (it lands or bursts), arrive (a jump's far end); an entry starting with @ is the flavour's sound for that moment (flavours). keys: a spell's, feature's or monster action's own sounds, over its family's. A family with no entry plays the plain spell sound. hits: a weapon, claw or bite landing, by what struck (blade: slashing, blunt: bludgeoning, point: a melee pierce, shot: an arrow, bolt or throw) and how hard (light, heavy, critical).",
+    "families": {},
+    "flavours": {},
+    "keys": {},
+    "hits": {
+      "blade": {
+        "light": [
+          "hit"
+        ],
+        "heavy": [
+          "hit",
+          "thud"
+        ],
+        "critical": [
+          "hit",
+          "crit"
+        ]
+      },
+      "point": {
+        "light": [
+          "hit"
+        ],
+        "heavy": [
+          "hit",
+          "thud"
+        ],
+        "critical": [
+          "hit",
+          "crit"
+        ]
+      },
+      "blunt": {
+        "light": [
+          "thud"
+        ],
+        "heavy": [
+          "thud",
+          "fall"
+        ],
+        "critical": [
+          "fall",
+          "crit"
+        ]
+      },
+      "shot": {
+        "light": [
+          "thud"
+        ],
+        "heavy": [
+          "thud",
+          "hit"
+        ],
+        "critical": [
+          "hit",
+          "crit"
+        ]
+      }
+    }
   }
 }
