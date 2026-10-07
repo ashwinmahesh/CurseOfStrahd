@@ -211,7 +211,7 @@ func set_step_time(seconds: float) -> void:
 	if seconds <= 0.0 or sprite_frames == null or not sprite_frames.has_animation(&"walk_s"):
 		return
 	var cycle := float(sprite_frames.get_frame_count(&"walk_s")) / maxf(1.0, sprite_frames.get_animation_speed(&"walk_s"))
-	walk_speed = clampf(cycle / (CELLS_PER_CYCLE * seconds), 0.5, 2.5)
+	walk_speed = clampf(cycle / (CELLS_PER_CYCLE * seconds), 0.3, 2.5)
 
 
 ## Plays the attack once toward `facing` (from the saddle when riding and the sheet has it): `struck` fires on the hit
