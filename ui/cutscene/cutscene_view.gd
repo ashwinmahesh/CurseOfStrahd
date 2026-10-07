@@ -1,0 +1,235 @@
+class_name CutsceneView
+extends Control
+## A story cutscene's picture (story/cutscenes.gd; docs/ui/cutscenes.md) filling the screen, with a caption under it:
+## the narrator's words in the book's italic, or a speaker's name over their line. The picture fades up out of black
+## and closes in very slowly on its focus, so a still frame feels alive. A Skip button sits at the top right; Esc in the
+## owner (CutscenePlayer, or DialogueUI during a conversation) pauses it with Resume and Skip. Clicks and keys are the
+## owner's to handle: the view only reports a click on the picture.
+
+## Skip, from the corner button or the pause card.
+signal skip_requested
+## A left click on the picture while it isn't paused.
+signal clicked
+
+## The slow push-in: the picture grows by this much over this long.
+const PUSH_SCALE := 1.06
+const PUSH_SECONDS := 28.0
+const FADE_SECONDS := 0.8
+## The caption's width at most, centred on the screen.
+const CAPTION_WIDTH := 1240.0
+
+var art: TextureRect
+var image_path := ""
+## A caption is up (a line to read, Skip on offer); off while the conversation shows its box over the picture.
+var captioning := false
+var paused := false
+var _focus := Vector2(0.5, 0.5)
+var _push: Tween
+var _caption: VBoxContainer
+var _name: Label
+var _text: RichTextLabel
+var _hint: Label
+var _skip: Button
+var _pause: PanelContainer
+
+
+func _init() -> void:
+	name = "CutsceneView"
+	set_anchors_preset(Control.PRESET_FULL_RECT)
+	clip_contents = true
+	mouse_filter = Control.MOUSE_FILTER_STOP
+
+
+func _ready() -> void:
+	gui_input.connect(_on_gui_input)
+	var black := ColorRect.new()
+	black.color = Look.color("void")
+	black.set_anchors_preset(Control.PRESET_FULL_RECT)
+	black.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(black)
+	art = TextureRect.new()
+	art.name = "Art"
+	art.set_anchors_preset(Control.PRESET_FULL_RECT)
+	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	art.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	art.resized.connect(func() -> void: art.pivot_offset = art.size * _focus)
+	add_child(art)
+	# Shade at the top for the Skip button and a deeper one at the bottom for the caption, like a film's letterbox.
+	add_child(_shade(true, 150.0, 0.55))
+	add_child(_shade(false, 340.0, 0.9))
+	_caption = VBoxContainer.new()
+	_caption.name = "Caption"
+	_caption.alignment = BoxContainer.ALIGNMENT_END
+	_caption.add_theme_constant_override("separation", 4)
+	_caption.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_place(_caption, Vector2(0.5, 1.0), Rect2(-CAPTION_WIDTH / 2.0, -250, CAPTION_WIDTH, 196))
+	_caption.grow_vertical = Control.GROW_DIRECTION_BEGIN   # a long line rises up the picture, never onto the hint
+	add_child(_caption)
+	_name = UiKit.label("", 22, "gilt_light")
+	_name.add_theme_font_override("font", UiKit.display_font())
+	_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_caption.add_child(_name)
+	_text = RichTextLabel.new()
+	_text.bbcode_enabled = true
+	_text.fit_content = true
+	_text.scroll_active = false
+	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_text.custom_minimum_size = Vector2(CAPTION_WIDTH, 0)
+	_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_text.add_theme_font_override("normal_font", EndingScreen.serif(false))
+	_text.add_theme_font_override("italics_font", EndingScreen.serif(true))
+	for k: String in ["normal_font_size", "italics_font_size"]:
+		_text.add_theme_font_size_override(k, 25)
+	_text.add_theme_color_override("default_color", Look.color("vellum"))
+	_text.add_theme_color_override("font_outline_color", Look.color("void"))
+	_text.add_theme_constant_override("outline_size", 7)
+	_caption.add_child(_text)
+	_hint = UiKit.label("Click, Space or Enter to go on · Esc pauses", 13, "parchment")
+	_hint.name = "Hint"
+	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_place(_hint, Vector2(0.5, 1.0), Rect2(-400, -44, 800, 24))
+	add_child(_hint)
+	_skip = UiParts.small_button("Skip  ▸▸", func() -> void: skip_requested.emit())
+	_skip.name = "Skip"
+	_skip.focus_mode = Control.FOCUS_NONE
+	_skip.modulate = Color(1, 1, 1, 0.85)
+	_place(_skip, Vector2(1.0, 0.0), Rect2(-150, 28, 118, 32))
+	add_child(_skip)
+	_build_pause()
+	show_caption(false)
+
+
+## The pause card: the picture waits under it until Resume (or Esc again); Skip leaves the cutscene.
+func _build_pause() -> void:
+	_pause = UiKit.panel()
+	_pause.name = "Paused"
+	_place(_pause, Vector2(0.5, 0.5), Rect2(-190, -110, 380, 220))
+	_pause.visible = false
+	var col := VBoxContainer.new()
+	col.alignment = BoxContainer.ALIGNMENT_CENTER
+	col.add_theme_constant_override("separation", 12)
+	_pause.add_child(col)
+	var head := UiKit.header("Paused")
+	head.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	col.add_child(head)
+	var resume := UiKit.button("Resume", func() -> void: set_paused(false))
+	resume.name = "Resume"
+	col.add_child(resume)
+	var skip := UiKit.button("Skip the scene", func() -> void:
+		set_paused(false)
+		skip_requested.emit())
+	skip.name = "SkipScene"
+	col.add_child(skip)
+	add_child(_pause)
+
+
+## Shows `path` (a res:// picture), fading up from black or from the picture before, and starts its slow push-in.
+func show_image(path: String, focus: Vector2 = Vector2(0.5, 0.5)) -> void:
+	if path == image_path:
+		return
+	image_path = path
+	_focus = focus
+	art.texture = load(path) as Texture2D if ResourceLoader.exists(path) else null
+	art.pivot_offset = art.size * _focus
+	art.scale = Vector2.ONE
+	if _push != null:
+		_push.kill()
+		_push = null
+	if not UiMotion.on():
+		art.modulate.a = 1.0
+		return
+	art.modulate.a = 0.0
+	_push = UiMotion.tween_for(art)
+	_push.tween_property(art, "modulate:a", 1.0, FADE_SECONDS).set_ease(Tween.EASE_OUT)
+	_push.parallel().tween_property(art, "scale", Vector2.ONE * PUSH_SCALE, PUSH_SECONDS) \
+		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+
+
+## The caption under the picture: `speaker` over `bbcode` ("" for the narrator, whose words are already italic).
+func caption(speaker: String, bbcode: String) -> void:
+	_name.text = speaker
+	_name.visible = speaker != ""
+	_text.text = "[center]%s[/center]" % bbcode
+
+
+## A line is up to read (with Skip and the hint), or not (the conversation's box is showing over the picture).
+func show_caption(on: bool) -> void:
+	captioning = on
+	_caption.visible = on
+	_hint.visible = on
+	_skip.visible = on
+	if not on and paused:
+		set_paused(false)
+
+
+func set_paused(on: bool) -> void:
+	paused = on
+	_pause.visible = on
+	if _push != null and _push.is_valid():
+		if on:
+			_push.pause()
+		else:
+			_push.play()
+
+
+## Fades the whole view out, then calls `done` (at once without motion).
+func fade_out(done: Callable) -> void:
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if not UiMotion.on() or not is_inside_tree():
+		done.call()
+		return
+	var tw := UiMotion.tween_for(self)
+	tw.tween_property(self, "modulate:a", 0.0, 0.45).set_ease(Tween.EASE_IN)
+	tw.tween_callback(done)
+
+
+## What the caption says now, as plain text (tests).
+func caption_text() -> String:
+	return _text.get_parsed_text().strip_edges() if captioning else ""
+
+
+func _on_gui_input(event: InputEvent) -> void:
+	var mb := event as InputEventMouseButton
+	if mb == null or not mb.pressed or mb.button_index != MOUSE_BUTTON_LEFT:
+		return
+	accept_event()
+	if not paused:
+		clicked.emit()
+
+
+static func _shade(top: bool, height: float, alpha: float) -> TextureRect:
+	var grad := Gradient.new()
+	grad.set_color(0, Color(Look.color("void"), alpha if top else 0.0))
+	grad.set_color(1, Color(Look.color("void"), 0.0 if top else alpha))
+	var gt := GradientTexture2D.new()
+	gt.gradient = grad
+	gt.fill_from = Vector2(0, 0)
+	gt.fill_to = Vector2(0, 1)
+	var t := TextureRect.new()
+	t.texture = gt
+	t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	t.stretch_mode = TextureRect.STRETCH_SCALE
+	t.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	t.anchor_right = 1.0
+	if top:
+		t.offset_bottom = height
+	else:
+		t.anchor_top = 1.0
+		t.anchor_bottom = 1.0
+		t.offset_top = -height
+	return t
+
+
+static func _place(c: Control, anchor: Vector2, r: Rect2) -> void:
+	c.anchor_left = anchor.x
+	c.anchor_right = anchor.x
+	c.anchor_top = anchor.y
+	c.anchor_bottom = anchor.y
+	c.offset_left = r.position.x
+	c.offset_top = r.position.y
+	c.offset_right = r.end.x
+	c.offset_bottom = r.end.y
+	c.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	c.grow_vertical = Control.GROW_DIRECTION_BOTH
