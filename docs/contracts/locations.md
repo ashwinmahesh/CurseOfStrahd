@@ -40,10 +40,14 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   flag is set, e.g. by dialogue), `dialogue` (only started by a `combat` line). On victory the game sets `flag` and
   moves `quest: {id, stage}` along. A monster entry may carry `hp` to tune that stat block for this fight.
   `waiting: true` (an `enter_area` fight only) puts its foes in plain view before the fight: they show once the party
-  can see them, can notice the party, and can be attacked first (docs/rules/stealth.md, F7).
+  can see them, can notice the party, and can be attacked first (docs/rules/stealth.md, F7). A waiting monster's
+  `facing` (north, south, east, west or between) points its sight cone; unset, it faces the middle of its group.
   `surprise`: `party`, `enemies` or
   empty; `when` is a condition (docs/contracts/dialogue.md).
 - **Rest:** `safe`, `risky` (a Long Rest is interrupted on a 1 in 6) or `no` (with `rest_text`); default risky.
+- **Crime (F8, docs/rules/stealth.md):** a container's `owner` (an npc id) makes taking from it stealing when somebody
+  sees; an area's `private` (an npc id) makes it a private room, with `open` (a condition) for when it may be entered;
+  the location's `watch` names the guard who answers a crime here ("" for nobody; unset, the region's watch).
 - **NPCs:** `{npc, cell, dialogue, when, hours, facing, approach, asleep, path, pause}`. The first entry per NPC whose
   `when` holds stands there; the game re-checks after every conversation and fight. `approach: n` makes the NPC speak
   first, once, when the leader comes within n squares and can see them. `asleep: true` lays the NPC down asleep
@@ -62,7 +66,8 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
 
 `id`, `name`, `title`, `summary`, `portrait` (art id), `sprite` (art id), `attitude` (starting: hostile,
 indifferent, friendly), `voice` (docs/voice/<id>.md), `monster` (stat block id if they can fight), `guest` (true if
-they can join as a guest ally), `tags`.
+they can join as a guest ally), `tags`, `pockets` (F8: items a picked pocket holds beyond the coins their tags give,
+or false for a pocket nobody can pick).
 
 ## data/quests/<id>.json (schema: quest.schema.json)
 

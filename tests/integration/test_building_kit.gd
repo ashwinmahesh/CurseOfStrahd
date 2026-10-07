@@ -13,6 +13,10 @@ func before_each() -> void:
 		GameState.story.party.append(ch)
 
 
+func after_each() -> void:
+	Look.set_style(Look.DEFAULT_STYLE, false)
+
+
 func _view(loc_id: String) -> LocationView:
 	var v := LocationView.create(loc_id, GameState.story, null, Dice.roller, "default")
 	add_child(v)
@@ -183,3 +187,67 @@ func test_lone_wall_squares_are_pillars() -> void:
 		assert_eq(BuildingKit.interior_style(v.board), str(pair[2]))
 		v.queue_free()
 		await _frames(1)
+
+
+## W8: a room's walls stand a full storey, and a wall drops to the cut-away height when it stands between the camera
+## and the party's room; turning the camera turns which. Past the house's outer walls there's the street, a storey
+## below on the Death House's upper floor, and a doorway has wall over it. The Classic look keeps the low walls.
+func test_interiors_have_full_walls_that_cut_away() -> void:
+	var v := _view("death_house_upper")
+	await _frames(2)
+	var board := v.board
+	var st := board.get_meta("interior_walls", {}) as Dictionary
+	assert_false(st.is_empty(), "the Death House's upper floor has full walls")
+	assert_eq(float(st.get("height", 0.0)), float(InteriorWalls.HEIGHTS["manor"]), "a manor's storey")
+	var ground := board.get_node_or_null("OutsideGround") as MeshInstance3D
+	assert_true(ground != null, "the street lies outside")
+	if ground != null:
+		var top := ground.global_position.y + (ground.mesh as BoxMesh).size.y / 2.0
+		assert_between(top, -InteriorWalls.STOREY - 0.2, -InteriorWalls.STOREY + 0.1, "a storey below")
+	var headers := 0
+	var wall := {}
+	for w: Dictionary in st.get("walls", []):
+		if w.has("flanks"):
+			headers += 1
+			continue
+		# An outer wall on the room's north side: the room below it, nothing open above it.
+		var c := w["cell"] as Vector2i
+		if wall.is_empty() and _open(board, c + Vector2i(0, 1)) and _open(board, c + Vector2i(0, 2)):
+			var clear := true
+			for k: int in [1, 2, 3, 4, 5]:
+				clear = clear and not _open(board, c - Vector2i(0, k))
+			if clear:
+				wall = w
+	assert_true(headers > 0, "doorways have wall over them (%d)" % headers)
+	assert_false(wall.is_empty(), "a north wall to look at")
+	if wall.is_empty():
+		v.queue_free()
+		return
+	var full := wall["full"] as Node3D
+	var low := wall["low"] as Node3D
+	var tall := AABB()
+	for mi: Node in full.find_children("*", "MeshInstance3D", true, false):
+		tall = tall.merge((mi as MeshInstance3D).global_transform * (mi as MeshInstance3D).mesh.get_aabb())
+	assert_true(tall.size.y > 2.3, "the wall stands a storey (%.2f)" % tall.size.y)
+	var focus := board.cell_center((wall["cell"] as Vector2i) + Vector2i(0, 2))
+	# The camera south of the party: the north wall is the far wall, standing.
+	board.cut_buildings(focus + Vector3(0, 8, 10), focus, 1.0)
+	assert_true(full.visible and not low.visible, "the far wall stands")
+	# Turned to look south: it's between the camera and the party, and drops to the cut-away height.
+	board.cut_buildings(focus + Vector3(0, 8, -10), focus, 1.0)
+	assert_true(low.visible and not full.visible, "the near wall is cut away")
+	board.cut_buildings(focus + Vector3(0, 8, 10), focus, 1.0)
+	assert_true(full.visible and not low.visible, "and stands again when the camera turns back")
+	v.queue_free()
+	await _frames(1)
+	Look.set_style("classic", false)
+	var c := _view("death_house_upper")
+	await _frames(2)
+	assert_false(c.board.has_meta("interior_walls") and not (c.board.get_meta("interior_walls") as Dictionary).is_empty(),
+		"Classic keeps its low walls")
+	assert_true(c.board.get_node_or_null("InteriorWalls") == null, "with no full walls")
+	c.queue_free()
+
+
+func _open(board: ArenaBoard, c: Vector2i) -> bool:
+	return board.grid.in_bounds(c) and not board.grid.has_flag(c, CombatGrid.WALL) and not board.grid.has_flag(c, CombatGrid.VOID)

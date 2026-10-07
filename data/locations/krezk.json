@@ -543,6 +543,30 @@
       ],
       "surprise": "",
       "flag": "krezk_wolves_driven_off"
+    },
+    {
+      "id": "watch_arrest",
+      "trigger": "dialogue",
+      "text": "The watch closes in, spears levelled.",
+      "monsters": [
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            32,
+            18
+          ],
+          "name": "Watchman 1"
+        },
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            34,
+            18
+          ],
+          "name": "Watchman 2"
+        }
+      ],
+      "surprise": ""
     }
   ],
   "narration": {

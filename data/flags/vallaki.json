@@ -432,6 +432,11 @@
       "summary": "The party failed to bully their way past the east gate (gate). The watch has their faces chalked on the gatepost: the gate guard says so, and the lockup warden's bribe goes up from 15 to 25 gp."
     },
     {
+      "id": "crime_vallaki",
+      "type": "int",
+      "summary": "F8: crimes somebody saw in Vallaki that the watch hasn't settled (story/crime.gd counts them; narrative/watch/vallaki.dialogue fines the party and clears it)."
+    },
+    {
       "id": "vallaki_stocks_grumbler",
       "type": "bool",
       "summary": "A townsman is in the stocks for insufficient cheer: put there at 8 every third morning while the Baron rules, let out at the evening bell (data/schedule/vallaki.json)."
