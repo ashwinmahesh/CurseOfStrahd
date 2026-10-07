@@ -363,6 +363,7 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 		"rh":
 			return e.ravenloft.perform(c, id.substr(3), t, cell, point)
 		"fr":
+			e.faerun.targets_in = targets
 			return e.faerun.perform(c, id.substr(3), t, cell, point)
 		"fast_hands_kit":
 			var keep := c.action_available
@@ -884,6 +885,10 @@ func before_d20(cr: Creature, kind: D20Test.Kind, keys: Array[String], _target: 
 	for side: String in ["advantage", "disadvantage"]:
 		if rh.has(side):
 			out[side] = (out.get(side, []) as Array) + (rh[side] as Array)
+	var fr := e.faerun.before_d20(c, kind, keys)
+	for side: String in ["advantage", "disadvantage"]:
+		if fr.has(side):
+			out[side] = (out.get(side, []) as Array) + (fr[side] as Array)
 	return out
 
 

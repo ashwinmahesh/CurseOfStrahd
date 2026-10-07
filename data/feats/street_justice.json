@@ -15,20 +15,20 @@
       "name": "Headlock",
       "summary": "Your allies have Advantage on attacks against creatures you have Grappled.",
       "text": "Your allies have Advantage on attacks against creatures you have Grappled.",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "sturdy_knot",
       "name": "Sturdy Knot",
       "summary": "Add Proficiency Bonus to the DC to escape or break Chain, Manacles, or Rope you use to restrain a creature.",
-      "text": "Add Proficiency Bonus to the DC to escape or break Chain, Manacles, or Rope you use to restrain a creature.",
+      "text": "When you use Chain, Manacles or Rope to restrain a creature, add your Proficiency Bonus to the DC to escape or break it. The game doesn't bind captives yet, so this is played at the table.",
       "implemented": "text"
     },
     {
       "id": "tough_talk",
       "name": "Tough Talk",
       "summary": "Hostility does not give Disadvantage to your Intimidation checks to influence a creature.",
-      "text": "Hostility does not give Disadvantage to your Intimidation checks to influence a creature.",
+      "text": "Being hostile doesn't give you Disadvantage on Intimidation checks to influence a creature. The game has no influence checks yet, so this is played at the table.",
       "implemented": "text"
     }
   ],
@@ -43,5 +43,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

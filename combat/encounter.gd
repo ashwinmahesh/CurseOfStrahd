@@ -47,6 +47,8 @@ var triggered_features: TriggeredFeatures
 var ravenloft: RavenloftFeatures
 ## Heroes of Faerûn and Arcana Unleashed options that need their own code (combat/faerun_features.gd).
 var faerun: FaerunFeatures
+## The attack whose damage is being dealt right now: {attacker, target, melee} (Zhentarim Tactics answers a melee hit).
+var hit_context: Dictionary = {}
 ## Magic items: the Items tab, item powers and the hooks below (combat/combat_items.gd, ADR 0012).
 var items: CombatItems
 var _cover_cache: Dictionary = {}
@@ -560,6 +562,7 @@ func _begin_turn() -> void:
 	feature_actions.turn_start(c)
 	class_features.turn_start(c)
 	ravenloft.turn_start(c)
+	faerun.turn_start(c)
 	monster_actions.turn_start(c)
 	items.turn_start(c)
 	triggered_features.turn_start(c)
@@ -595,6 +598,7 @@ func end_turn() -> CombatResult:
 	feature_actions.turn_end(c)
 	class_features.turn_end(c)
 	ravenloft.turn_end(c)
+	faerun.turn_end(c)
 	monster_actions.turn_end(c)
 	items.turn_end(c)
 	triggered_features.turn_end(c)
@@ -2023,6 +2027,7 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 			adv.append("Improved Duplicity")
 	if grapples.has(c.id) and str(grapples[c.id]) != target.id:
 		dis.append("Grappled (attacking someone other than the grappler)")
+	adv.append_array(faerun.attack_advantage(c, target))
 	if c.hidden or not can_see(target, c):
 		adv.append("target can't see you")
 	if not can_see(c, target):
@@ -2393,7 +2398,9 @@ func _apply_hit(st: Dictionary, parts: Dictionary, details: Array[String], dmg_t
 	# Rampage (giant hyena) answers a hit on a creature that was already Bloodied.
 	if c.creature is Monster and target.creature.is_bloodied():
 		c.set_meta("hit_bloodied", "%d:%d" % [round_no, turn_index])
+	hit_context = {"attacker": c.id, "target": target.id, "melee": bool(option.get("melee", false))}
 	var dr := deal_damage(c, target, arr, critical, (option["profile"] as WeaponProfile).name, all_details, true, st.get("damage_responses", []))
+	hit_context = {}
 	r.damage = dr.final
 	if target.is_down():
 		r.killed.append(target.id)
@@ -2615,7 +2622,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		spells.specials.mid.hand_destroyed(target)
 	if dr.final > 0 and source != null and source != target and target.is_alive():
 		_queue_damage_reactions(source, target)
-	faerun.after_damage(source, target, dr.final)
+	faerun.after_damage(source, target, dr.final, parts)
 	spells.zones.prune()
 	_check_over()
 	return dr
@@ -2670,6 +2677,7 @@ func _reduce_by_dice(target: Combatant, parts: Array, details: Array) -> Array:
 ## finished.
 func _queue_damage_reactions(source: Combatant, target: Combatant) -> void:
 	ravenloft.queue_damage_reactions(source, target)
+	faerun.queue_damage_reactions(source, target)
 	# Berserk Lashing (Clay Construct Spirit): a Slam at a random creature within 5 ft whenever it takes damage.
 	if target.creature is Monster and monster_actions.has_trait(target, "berserk_lashing") and spells.can_react(target) and target.creature.hp > 0:
 		reaction_queue.append({"kind": "berserk_lashing", "reactor": target.id, "trigger": source.id})
@@ -2707,6 +2715,8 @@ func _queue_sentinels(attacker: Combatant, target: Combatant) -> void:
 func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
 	if str(q["kind"]).begins_with("rh_"):
 		return ravenloft.queued_ok(q, reactor)
+	if str(q["kind"]).begins_with("fr_"):
+		return faerun.queued_ok(q, reactor)
 	match str(q["kind"]):
 		"hellish_rebuke":
 			return spells.can_cast_reaction(reactor, "hellish_rebuke")
@@ -2728,6 +2738,8 @@ func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
 func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> CombatResult:
 	if str(q["kind"]).begins_with("rh_"):
 		return ravenloft.fire_queued(q, reactor, trigger)
+	if str(q["kind"]).begins_with("fr_"):
+		return faerun.fire_queued(q, reactor, trigger)
 	match str(q["kind"]):
 		"hellish_rebuke":
 			return spells.cast_reaction_spell(reactor, "hellish_rebuke", trigger)
@@ -2806,7 +2818,7 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 			if pending != null:
 				return then(sub, func() -> CombatResult: return run_reaction_queue(r))
 			continue
-		var words := ravenloft.queued_text(kind) if kind.begins_with("rh_") else _QUEUED_TEXT[kind] as Array
+		var words := ravenloft.queued_text(kind) if kind.begins_with("rh_") else (faerun.queued_text(kind) if kind.begins_with("fr_") else _QUEUED_TEXT[kind] as Array)
 		var req := ReactionRequest.new(kind, reactor.id, trigger.id)
 		req.title = str(words[0])
 		req.text = str(words[1]) % [trigger.name(), reactor.name()]
@@ -3002,6 +3014,7 @@ func disengage(c: Combatant, use_bonus: bool = false) -> CombatResult:
 		spend_action(c)
 	c.disengaged = true
 	log.add("info", "%s takes the Disengage action: no Opportunity Attacks this turn" % c.name(), c.id)
+	faerun.after_disengage(c)
 	return CombatResult.new()
 
 
@@ -3040,7 +3053,7 @@ func help_attack(c: Combatant, enemy: Combatant) -> CombatResult:
 	add_mark({"kind": "advantage_against", "target": enemy.id, "helper": c.id, "source": "Help (%s)" % c.name(),
 		"expires_owner": c.id, "expires_phase": "start", "consume": true})
 	log.add("info", "%s distracts %s: the next ally attack against it has Advantage" % [c.name(), enemy.name()], c.id)
-	faerun.after_help(c)
+	faerun.after_help(c, enemy)
 	return CombatResult.new()
 
 

@@ -8,14 +8,26 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: Advantage on checks to Influence Beasts. Beast Sense is always prepared with the ability raised by this feat; once per Long Rest cast it without a slot or Concentration, or use slots normally.",
+  "summary": "Beast Sense is always prepared, cast with the ability this feat raised; once per Long Rest cast it without a slot. Advantage on checks to influence Beasts.",
   "benefits": [
     {
       "id": "enclave_magic_benefit",
       "name": "Benefits",
-      "summary": "Reference-only: Advantage on checks to Influence Beasts. Beast Sense is always prepared with the ability raised by this feat; once per Long Rest cast it without a slot or Concentration, or use slots normally.",
-      "text": "Reference-only: Advantage on checks to Influence Beasts. Beast Sense is always prepared with the ability raised by this feat; once per Long Rest cast it without a slot or Concentration, or use slots normally.",
-      "implemented": "text"
+      "summary": "Beast Sense is always prepared, cast with the ability this feat raised; once per Long Rest cast it without a slot. Advantage on checks to influence Beasts.",
+      "text": "You always have Beast Sense prepared; it uses the ability this feat increased. You can cast it once without a spell slot or Concentration, regaining that on a Long Rest, and with your slots as usual. You also have Advantage on Charisma checks to influence Beasts (played at the table: the game has no influence checks yet).",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "beast_sense",
+          "ability": "@increased",
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          },
+          "always_prepared": true
+        }
+      ]
     }
   ],
   "prerequisites": {
@@ -31,5 +43,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

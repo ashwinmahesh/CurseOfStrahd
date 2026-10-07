@@ -8,7 +8,7 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying. Reference-only: Reaction when a visible creature within 60 feet makes a D20 Test: grant Advantage or Disadvantage. Once per Long Rest; a slotted Divination restores use.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying. Reaction when a visible creature within 60 feet makes a D20 Test: give it Advantage or Disadvantage. Once per Long Rest; a Divination spell cast with a slot restores the use.",
   "benefits": [
     {
       "id": "divination_adept_spells",
@@ -52,9 +52,18 @@
     {
       "id": "divination_adept_benefit",
       "name": "School Benefit",
-      "summary": "Reference-only: Reaction when a visible creature within 60 feet makes a D20 Test: grant Advantage or Disadvantage. Once per Long Rest; a slotted Divination restores use.",
-      "text": "Reference-only: Reaction when a visible creature within 60 feet makes a D20 Test: grant Advantage or Disadvantage. Once per Long Rest; a slotted Divination restores use.",
-      "implemented": "text"
+      "summary": "Reaction when a visible creature within 60 feet makes a D20 Test: give it Advantage or Disadvantage. Once per Long Rest; a Divination spell cast with a slot restores the use.",
+      "text": "When a creature you can see within 60 feet makes a D20 Test, you can take a Reaction to give that roll Advantage or Disadvantage. Once per Long Rest; casting a Divination spell with a spell slot restores the use. In a fight it's off until you set it to Automatic in the class tab: it then gives Disadvantage to the first saving throw an enemy within range makes against your own spell.",
+      "implemented": "engine",
+      "action": "reaction",
+      "resource": {
+        "id": "divination_adept",
+        "name": "Divination Adept",
+        "max": 1,
+        "recharge": "long"
+      },
+      "policy": "never",
+      "policy_cost": "Your Reaction, once per Long Rest"
     }
   ],
   "prerequisites": {
@@ -70,5 +79,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

@@ -8,14 +8,38 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: Learn Ray of Frost, or a Wizard cantrip if already known, using the ability raised by this feat. Once per turn, a hit dealing Cold applies −1d4 to the target’s next save before your next turn ends.",
+  "summary": "Learn Ray of Frost, or another Wizard cantrip if you know it, cast with the ability this feat raised. Once per turn, a hit that deals Cold damage gives the target −1d4 on its next saving throw before your next turn ends.",
   "benefits": [
     {
+      "id": "cold_caster_cantrip",
+      "name": "Frost Magic",
+      "summary": "Learn Ray of Frost, or another Wizard cantrip if you know it, cast with the ability this feat raised.",
+      "text": "You learn Ray of Frost; if you already know it, you learn another Wizard cantrip of your choice. It uses the ability this feat increased as its spellcasting ability.",
+      "implemented": "data",
+      "choice": {
+        "id": "cantrip",
+        "kind": "cantrip",
+        "count": 1,
+        "filter": {
+          "list": "wizard",
+          "level": 0
+        },
+        "label": "Ray of Frost, or another Wizard cantrip if you know it"
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "@cantrip",
+          "ability": "@increased"
+        }
+      ]
+    },
+    {
       "id": "cold_caster_benefit",
-      "name": "Benefits",
-      "summary": "Reference-only: Learn Ray of Frost, or a Wizard cantrip if already known, using the ability raised by this feat. Once per turn, a hit dealing Cold applies −1d4 to the target’s next save before your next turn ends.",
-      "text": "Reference-only: Learn Ray of Frost, or a Wizard cantrip if already known, using the ability raised by this feat. Once per turn, a hit dealing Cold applies −1d4 to the target’s next save before your next turn ends.",
-      "implemented": "text"
+      "name": "Frostbite",
+      "summary": "Once per turn, a hit that deals Cold damage gives the target −1d4 on its next saving throw before your next turn ends.",
+      "text": "Once per turn, when you hit a creature with an attack roll and deal Cold damage, it subtracts 1d4 from the next saving throw it makes before the end of your next turn.",
+      "implemented": "engine"
     }
   ],
   "prerequisites": {
@@ -30,5 +54,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

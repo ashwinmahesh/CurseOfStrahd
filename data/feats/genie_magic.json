@@ -14,8 +14,36 @@
       "id": "wish_magic",
       "name": "Wish Magic",
       "summary": "Once per Long Rest, use a Magic action to cast a chosen level 1 Sorcerer spell with an action casting time. Use the ability raised by this feat. Treat it as cast with a level 2 slot at character level 11, or level 3 slot at level 17.",
-      "text": "Once per Long Rest, use a Magic action to cast a chosen level 1 Sorcerer spell with an action casting time. Use the ability raised by this feat. Treat it as cast with a level 2 slot at character level 11, or level 3 slot at level 17.",
-      "implemented": "text"
+      "text": "Choose a level 1 Sorcerer spell with a casting time of an action. Once per Long Rest you can cast it with a Magic action without a spell slot, using the ability this feat increased. From character level 11 it's cast as if with a level 2 slot, and from level 17 a level 3 slot.",
+      "implemented": "data",
+      "action": "action",
+      "choice": {
+        "id": "spell",
+        "kind": "spell",
+        "count": 1,
+        "filter": {
+          "list": "sorcerer",
+          "level": 1,
+          "casting_time": "action",
+          "granted": true
+        }
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "@spell",
+          "ability": "@increased",
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          },
+          "always_prepared": false,
+          "free_slot": {
+            "11": 2,
+            "17": 3
+          }
+        }
+      ]
     }
   ],
   "prerequisites": {
@@ -30,5 +58,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

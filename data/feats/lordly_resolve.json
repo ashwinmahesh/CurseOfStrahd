@@ -8,14 +8,21 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: Once per Long Rest, Bonus Action selects up to three creatures within 60 feet who see you. Each can spend a Reaction to stand if Speed is not 0. For 1 minute or until you are Incapacitated, they cannot become possessed, Charmed, or Frightened; existing such effects instead allow Advantage on new saves.",
+  "summary": "Once per Long Rest, Bonus Action: up to three allies within 60 feet who see you can stand up with a Reaction and can't be Charmed, Frightened or possessed for 1 minute.",
   "benefits": [
     {
       "id": "lordly_resolve_benefit",
       "name": "Benefits",
-      "summary": "Reference-only: Once per Long Rest, Bonus Action selects up to three creatures within 60 feet who see you. Each can spend a Reaction to stand if Speed is not 0. For 1 minute or until you are Incapacitated, they cannot become possessed, Charmed, or Frightened; existing such effects instead allow Advantage on new saves.",
-      "text": "Reference-only: Once per Long Rest, Bonus Action selects up to three creatures within 60 feet who see you. Each can spend a Reaction to stand if Speed is not 0. For 1 minute or until you are Incapacitated, they cannot become possessed, Charmed, or Frightened; existing such effects instead allow Advantage on new saves.",
-      "implemented": "text"
+      "summary": "Once per Long Rest, Bonus Action: up to three allies within 60 feet who see you can stand up with a Reaction and can't be Charmed, Frightened or possessed for 1 minute.",
+      "text": "Once per Long Rest, as a Bonus Action, choose up to three creatures within 60 feet that can see you. Each that is Prone can spend its Reaction to stand up, if its Speed isn't 0. For 1 minute, or until you are Incapacitated, they can't be possessed, Charmed or Frightened, and they have Advantage on saves to end such effects already on them.",
+      "implemented": "engine",
+      "action": "bonus_action",
+      "resource": {
+        "id": "lordly_resolve",
+        "name": "Lordly Resolve",
+        "max": 1,
+        "recharge": "long"
+      }
     }
   ],
   "prerequisites": {
@@ -30,5 +37,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

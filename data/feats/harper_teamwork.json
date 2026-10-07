@@ -8,14 +8,14 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: Help for an ally’s attack also gives that enemy Disadvantage on its first save before your next turn starts. After succeeding on a save ending your Frightened or Paralyzed, end the same condition on one visible ally within 30 feet.",
+  "summary": "Your Help on an attack also gives the enemy Disadvantage on its next save before your next turn. When you save to end your own Frightened or Paralyzed, you also end it on a visible ally within 30 feet.",
   "benefits": [
     {
       "id": "harper_teamwork_benefit",
       "name": "Benefits",
-      "summary": "Reference-only: Help for an ally’s attack also gives that enemy Disadvantage on its first save before your next turn starts. After succeeding on a save ending your Frightened or Paralyzed, end the same condition on one visible ally within 30 feet.",
-      "text": "Reference-only: Help for an ally’s attack also gives that enemy Disadvantage on its first save before your next turn starts. After succeeding on a save ending your Frightened or Paralyzed, end the same condition on one visible ally within 30 feet.",
-      "implemented": "text"
+      "summary": "Your Help on an attack also gives the enemy Disadvantage on its next save before your next turn. When you save to end your own Frightened or Paralyzed, you also end it on a visible ally within 30 feet.",
+      "text": "When you take the Help action to assist an ally's attack, the enemy you distract also has Disadvantage on the next saving throw it makes before the start of your next turn. When you succeed on a saving throw to end the Frightened or Paralyzed condition on yourself, you can end the same condition on one ally you can see within 30 feet.",
+      "implemented": "engine"
     }
   ],
   "prerequisites": {
@@ -30,5 +30,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

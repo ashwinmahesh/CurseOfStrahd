@@ -8,21 +8,29 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: after an action-time slotted spell, a Bonus Action lets you both Dash and Hide. Uses equal the modifier of the ability increased by this feat, per Long Rest. Reference-only: while Invisible from Hide, a Verbal component or spell attack does not end that condition if you finish the turn behind Three-Quarters or Total Cover.",
+  "summary": "After casting a spell with an action and a slot, a Bonus Action lets you both Dash and Hide. Uses equal the modifier of the ability this feat raised, per Long Rest. While Invisible from Hide, casting a Verbal spell or making a spell attack doesn't reveal you if you end the turn behind Three-Quarters or Total Cover.",
   "benefits": [
     {
       "id": "shrouding_spells",
       "name": "Shrouding Spells",
-      "summary": "Reference-only: after an action-time slotted spell, a Bonus Action lets you both Dash and Hide. Uses equal the modifier of the ability increased by this feat, per Long Rest.",
-      "text": "Reference-only: after an action-time slotted spell, a Bonus Action lets you both Dash and Hide. Uses equal the modifier of the ability increased by this feat, per Long Rest.",
-      "implemented": "text"
+      "summary": "After casting a spell with an action and a slot, a Bonus Action lets you both Dash and Hide. Uses equal the modifier of the ability this feat raised, per Long Rest.",
+      "text": "Right after you cast a spell with a casting time of an action using a spell slot, you can take a Bonus Action to both Dash and Hide. You can do this a number of times equal to the modifier of the ability this feat increased (minimum once), regaining all uses on a Long Rest.",
+      "implemented": "engine",
+      "action": "bonus_action",
+      "resource": {
+        "id": "shrouding_spells",
+        "name": "Shrouding Spells",
+        "max": "mod:@increased",
+        "min": 1,
+        "recharge": "long"
+      }
     },
     {
       "id": "sneaky_casting",
       "name": "Sneaky Casting",
-      "summary": "Reference-only: while Invisible from Hide, a Verbal component or spell attack does not end that condition if you finish the turn behind Three-Quarters or Total Cover.",
-      "text": "Reference-only: while Invisible from Hide, a Verbal component or spell attack does not end that condition if you finish the turn behind Three-Quarters or Total Cover.",
-      "implemented": "text"
+      "summary": "While Invisible from Hide, casting a Verbal spell or making a spell attack doesn't reveal you if you end the turn behind Three-Quarters or Total Cover.",
+      "text": "While you have the Invisible condition from the Hide action, casting a spell with a Verbal component or making a spell attack roll doesn't end it, as long as you finish that turn with Three-Quarters or Total Cover from every enemy.",
+      "implemented": "engine"
     }
   ],
   "prerequisites": {
@@ -38,5 +46,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

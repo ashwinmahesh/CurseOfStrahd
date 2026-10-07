@@ -369,6 +369,14 @@ static func prerequisite_problem(f: Dictionary, ch: Character, level: int) -> St
 		return ""
 	if int(pre.get("level", 0)) > level:
 		return "Requires level %d" % int(pre["level"])
+	# Either of several (Purple Dragon Commandant: the Rook feat or Martial weapon training).
+	if pre.has("any"):
+		var met := false
+		for alt: Variant in pre["any"]:
+			if prerequisite_problem({"prerequisites": alt}, ch, level) == "":
+				met = true
+		if not met:
+			return "Requires %s" % str(pre.get("text", "one of its prerequisites"))
 	var all_of := pre.get("abilities", {}) as Dictionary
 	for ab: String in all_of:
 		if ch.ability_score(StringName(ab)) < int(all_of[ab]):
@@ -485,6 +493,9 @@ static func _spells(c: Choice, ch: Character, comp: Compendium) -> void:
 		if school is String and str(school) != "" and str(s.get("school", "")) != str(school):
 			continue
 		if from_choice != "" and not allowed_ids.has(str(s["id"])):
+			continue
+		# Only spells with this casting time (Genie Magic: an action).
+		if c.filter.has("casting_time") and str((s.get("casting_time", {}) as Dictionary).get("unit", "")) != str(c.filter["casting_time"]):
 			continue
 		var o := ChoiceOption.make(str(s["id"]), str(s["name"]), str(s.get("summary", "")))
 		o.data = {"level": level, "school": str(s.get("school", "")), "ritual": bool(s.get("ritual", false)),

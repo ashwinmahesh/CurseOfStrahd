@@ -8,7 +8,7 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Choose Acid, Cold, Fire, Lightning, or Poison Resistance. Reference-only: After dealing damage through Attack or Magic on your turn, Dragon’s Terror can be used as a Bonus Action that turn.",
+  "summary": "Choose Acid, Cold, Fire, Lightning, or Poison Resistance. After you deal damage with an attack or a Magic action on your turn, you can use Dragon's Terror as a Bonus Action that turn.",
   "benefits": [
     {
       "id": "dragonscarred_resistance",
@@ -38,9 +38,9 @@
     {
       "id": "dragonscarred_benefit",
       "name": "Benefits",
-      "summary": "Reference-only: After dealing damage through Attack or Magic on your turn, Dragon’s Terror can be used as a Bonus Action that turn.",
-      "text": "Reference-only: After dealing damage through Attack or Magic on your turn, Dragon’s Terror can be used as a Bonus Action that turn.",
-      "implemented": "text"
+      "summary": "After you deal damage with an attack or a Magic action on your turn, you can use Dragon's Terror as a Bonus Action that turn.",
+      "text": "When you deal damage to a creature with an attack or with a Magic action on your turn, you can use Dragon's Terror as a Bonus Action instead of a Magic action later that turn.",
+      "implemented": "engine"
     }
   ],
   "prerequisites": {
@@ -55,5 +55,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

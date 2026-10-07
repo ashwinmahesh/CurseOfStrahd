@@ -8,14 +8,20 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: Standing from Prone costs 5 feet. While you and an ally within 5 feet are not Incapacitated, both gain Advantage on Strength saves.",
+  "summary": "Standing up from Prone costs you only 5 feet. While you and an ally within 5 feet of you aren't Incapacitated, both of you have Advantage on Strength saves.",
   "benefits": [
     {
       "id": "orders_resilience_benefit",
       "name": "Benefits",
-      "summary": "Reference-only: Standing from Prone costs 5 feet. While you and an ally within 5 feet are not Incapacitated, both gain Advantage on Strength saves.",
-      "text": "Reference-only: Standing from Prone costs 5 feet. While you and an ally within 5 feet are not Incapacitated, both gain Advantage on Strength saves.",
-      "implemented": "text"
+      "summary": "Standing up from Prone costs you only 5 feet. While you and an ally within 5 feet of you aren't Incapacitated, both of you have Advantage on Strength saves.",
+      "text": "Standing up from Prone costs you only 5 feet of movement. While you and an ally within 5 feet of you are both not Incapacitated, each of you has Advantage on Strength saving throws.",
+      "implemented": "engine",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "hop_up"
+        }
+      ]
     }
   ],
   "prerequisites": {
@@ -31,5 +37,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

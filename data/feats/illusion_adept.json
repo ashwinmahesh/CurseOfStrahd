@@ -8,7 +8,7 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Silent Image; Phantasmal Force; Major Image; Hallucinatory Terrain; Seeming. Reference-only: Slotted Illusions require only costly or consumed Material components. Investigation checks to discern your spell illusions have Disadvantage.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Silent Image; Phantasmal Force; Major Image; Hallucinatory Terrain; Seeming. Illusion spells you cast with a slot need no Verbal or Somatic components, and no Material component without a cost. Checks to discern your illusions have Disadvantage.",
   "benefits": [
     {
       "id": "illusion_adept_spells",
@@ -52,9 +52,15 @@
     {
       "id": "illusion_adept_benefit",
       "name": "School Benefit",
-      "summary": "Reference-only: Slotted Illusions require only costly or consumed Material components. Investigation checks to discern your spell illusions have Disadvantage.",
-      "text": "Reference-only: Slotted Illusions require only costly or consumed Material components. Investigation checks to discern your spell illusions have Disadvantage.",
-      "implemented": "text"
+      "summary": "Illusion spells you cast with a slot need no Verbal or Somatic components, and no Material component without a cost. Checks to discern your illusions have Disadvantage.",
+      "text": "When you cast an Illusion spell with a spell slot, it needs only its costly or consumed Material components: you can cast it while unable to speak or inside magical Silence. Checks to see through your illusion spells have Disadvantage; the game has no such checks yet, so that part is played at the table.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "waive_components:illusion"
+        }
+      ]
     }
   ],
   "prerequisites": {
@@ -70,5 +76,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

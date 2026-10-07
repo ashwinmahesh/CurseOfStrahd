@@ -213,4 +213,8 @@ hold the book options that need their own code. Each FaerunFeatures hook sits be
 `after_stabilize`, `after_ready`, `blocks_forced_move` (start of `forced_move`), `exploit_opening` (weapon damage
 dice) and `effect_added`, which every Creature calls when an effect lands (`Creature.effect_added`, set in `add`).
 A monster save action's damage parts carry `magic: true` when the action is `magical`, as spell parts carry `spell`.
+Batch 3 added `before_d20`, `turn_start`/`turn_end`, `after_save_ended` (a successful repeat save), `after_disengage`,
+`attack_advantage` (in `attack_situation`) and queued damage reactions with `fr_` kinds (`queue_damage_reactions`,
+`queued_ok`, `fire_queued`, `queued_text`). `Encounter.hit_context` names the attack whose damage is being dealt
+({attacker, target, melee, spell}) while `deal_damage` runs for a weapon, monster or spell attack hit.
 
