@@ -5,7 +5,7 @@
     "book": "FRAiF",
     "page": 244,
     "checked_against": "FRAiF",
-    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/11054399-silver-harper-pin. Prices use the existing rarity convention; unspecified weight is 0. Reference-only properties require manual adjudication."
+    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/11054399-silver-harper-pin. Prices use the existing rarity convention; unspecified weight is 0."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -16,7 +16,8 @@
   },
   "theme": "implements",
   "icon": "amulet",
-  "summary": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type.",
-  "text": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type. While worn, magic identifying your type, alignment, or location reports that persona. Also set a thought of up to 25 words at attunement; thought-reading detects that preset message. A reader can use Study and DC 13 Intelligence (Investigation) to recognize that the thoughts are preprogrammed.",
-  "playable": false
+  "summary": "Divination reports a chosen Harper persona instead of you, and thought-reading finds a planted message.",
+  "text": "When you attune to this pin you choose a Harper persona with its own alignment and creature type, and a thought of up to 25 words. While you wear it, magic that would reveal your creature type, alignment or location reports the persona instead, and magic that reads your thoughts finds the planted thought; a reader can spot it as rehearsed with a Study action and a DC 13 Intelligence (Investigation) check. (No such magic is cast at the party in the game.)",
+  "playable": true,
+  "worn": "cloak"
 }

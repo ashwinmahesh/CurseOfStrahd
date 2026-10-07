@@ -963,7 +963,8 @@ func _spring_trap(trap: Dictionary, victim: Combatant) -> void:
 		var amount := int(rolled["total"])
 		if success:
 			amount /= 2
-		var dr := victim.creature.take_damage(amount, StringName(str(trap.get("damage_type", "bludgeoning"))), false, dice, str(trap.get("label", "a trap")))
+		# Thief's Thimble: its wearer's trap damage soaks into it first.
+		var dr := victim.creature.take_damage(FaerunItems.thimble(victim.creature, amount), StringName(str(trap.get("damage_type", "bludgeoning"))), false, dice, str(trap.get("label", "a trap")))
 		lines.append(dr.describe(victim.name()))
 		(tokens[victim.id] as CombatToken).flash(Look.color("vampire_red"))
 	if str(trap.get("condition", "")) != "" and not success:

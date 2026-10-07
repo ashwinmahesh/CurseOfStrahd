@@ -432,6 +432,9 @@ func use(c: Combatant, item_id: String, power_id: String, targets: Array = [], p
 	var cost := power_cost(power, spell)
 	if bool(power.get("toggle", false)):
 		return toggle(c, p, opts)
+	# A power that only works on its user (the Calimemnon Crystal's Invisibility).
+	if bool(power.get("self_only", false)):
+		targets = [c]
 	var who: Combatant = targets[0] as Combatant if not targets.is_empty() and targets[0] is Combatant else c
 	if power.has("custom"):
 		var r0 := specials.use(c, p, targets, point, dir, lvl, opts)
@@ -449,6 +452,10 @@ func use(c: Combatant, item_id: String, power_id: String, targets: Array = [], p
 			_after_use(c, p, spell, lvl)
 			return CombatResult.fail(fail)
 	var nums := numbers(c, p, lvl)
+	# Arcanist's Bestiary: creatures other than these save with Disadvantage.
+	if power.has("disadvantage_unless"):
+		opts = opts.duplicate()
+		opts["dis_unless"] = power["disadvantage_unless"]
 	var label := str(spell.get("name", "")) if str(spell.get("name", "")) == str(p["data"].get("name", item_id)) \
 		else "%s (%s)" % [spell.get("name", ""), p["data"].get("name", item_id)]
 	var r := cast(c, spell, lvl, targets, point, dir, nums, cost, opts, label)
@@ -622,6 +629,8 @@ func cast(c: Combatant, spell: Dictionary, level: int, targets: Array, point: Ve
 		"targets": tgt.map(func(t: Combatant) -> String: return t.id)})
 	var ctx := {"c": c, "s": spell, "slot": level, "nums": nums, "conc": conc, "opts": opts, "point": point, "cells": cells,
 		"choice": choice, "direction": dir, "cell": check["cell"], "item": true}
+	if opts.has("dis_unless") and not tgt.is_empty() and not str(tgt[0].creature.creature_type) in (opts["dis_unless"] as Array):
+		ctx["save_disadvantage"] = [label]
 	var r := CombatResult.new()
 	sp._resolve(ctx, tgt, cells, r)
 	sp._finish_concentration(ctx)

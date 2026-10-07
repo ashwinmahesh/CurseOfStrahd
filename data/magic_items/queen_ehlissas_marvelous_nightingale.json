@@ -4,21 +4,128 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
   "cost_gp": 0,
   "magic": {
     "rarity": "artifact",
-    "attunement": true
+    "attunement": true,
+    "charges": {
+      "max": 6,
+      "regain": "1d6+1",
+      "when": "dawn"
+    }
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only: Magic action activates the bird’s song for 10 minutes (audible 300 feet), or ends it early; after reverting, wait 1 hour to reactivate.",
-  "text": "Reference-only: Magic action activates the bird’s song for 10 minutes (audible 300 feet), or ends it early; after reverting, wait 1 hour to reactivate. Six charges; regain 1d6+1 at dawn. While singing within 60 feet, Bonus Action casts at DC 18: Detect Evil and Good or Speak with Animals (0), Calm Emotions (1), Slow (2), Compulsion (3), Greater Restoration (4), Delayed Blast Fireball or Prismatic Spray (6). While singing, a 15-foot Emanation acts as Zone of Truth (DC 18); you know save outcomes. Reaction casts Counterspell (DC 18) while singing, once per dawn. Random properties: two minor beneficial, one major beneficial, one minor detrimental. Destroy by releasing it into a whirlwind in Limbo.",
+  "summary": "Artifact songbird: for 10 minutes its song lets you cast its spells as a Bonus Action (DC 18) and keeps those near it truthful.",
+  "text": "As a Magic action you can set this mechanical bird singing for 10 minutes (audible 300 feet away), or stop it early; once it stops it can't sing again for an hour. It has 6 charges and regains 1d6 + 1 expended charges each dawn. While it sings, as a Bonus Action you can cast from it (save DC 18): Detect Evil and Good or Speak with Animals (no charge), Calm Emotions (1 charge), Slow (2), Compulsion (3), Greater Restoration (4), or Delayed Blast Fireball or Prismatic Spray (6). While it sings, a 15-foot area around it works as Zone of Truth (DC 18) and you know who saves, and once per dawn you can take a Reaction to cast Counterspell (DC 18) from it. It carries two minor beneficial properties, one major beneficial property and one minor detrimental property. Releasing it into a whirlwind in Limbo destroys it. (Its Zone of Truth plays out in conversation; no creature in a fight casts a spell the game lets you counter.)",
   "treasure": {
     "random": false
   },
-  "playable": false
+  "playable": true,
+  "powers": [
+    {
+      "id": "song",
+      "name": "Song",
+      "cost": "magic",
+      "toggle": true,
+      "minutes": 10,
+      "uses": {
+        "count": 1,
+        "per": "short"
+      },
+      "text": "Magic action: the bird sings for 10 minutes (then rests for an hour)."
+    },
+    {
+      "id": "detect_evil_and_good",
+      "name": "Detect Evil and Good",
+      "spell": "detect_evil_and_good",
+      "dc": 18,
+      "cost": "bonus",
+      "while_on": "song"
+    },
+    {
+      "id": "speak_with_animals",
+      "name": "Speak with Animals",
+      "spell": "speak_with_animals",
+      "dc": 18,
+      "cost": "bonus",
+      "while_on": "song"
+    },
+    {
+      "id": "calm_emotions",
+      "name": "Calm Emotions",
+      "spell": "calm_emotions",
+      "dc": 18,
+      "cost": "bonus",
+      "while_on": "song",
+      "charges": 1
+    },
+    {
+      "id": "slow",
+      "name": "Slow",
+      "spell": "slow",
+      "dc": 18,
+      "cost": "bonus",
+      "while_on": "song",
+      "charges": 2
+    },
+    {
+      "id": "compulsion",
+      "name": "Compulsion",
+      "spell": "compulsion",
+      "dc": 18,
+      "cost": "bonus",
+      "while_on": "song",
+      "charges": 3
+    },
+    {
+      "id": "greater_restoration",
+      "name": "Greater Restoration",
+      "spell": "greater_restoration",
+      "dc": 18,
+      "cost": "bonus",
+      "while_on": "song",
+      "charges": 4
+    },
+    {
+      "id": "delayed_blast_fireball",
+      "name": "Delayed Blast Fireball",
+      "spell": "delayed_blast_fireball",
+      "dc": 18,
+      "cost": "bonus",
+      "while_on": "song",
+      "charges": 6
+    },
+    {
+      "id": "prismatic_spray",
+      "name": "Prismatic Spray",
+      "spell": "prismatic_spray",
+      "dc": 18,
+      "cost": "bonus",
+      "while_on": "song",
+      "charges": 6
+    },
+    {
+      "id": "truth",
+      "name": "Zone of Truth",
+      "cost": "free",
+      "custom": "flavour",
+      "field": true,
+      "params": {
+        "text": "fills the air with a melody no lie can ride"
+      },
+      "while_on": "song"
+    }
+  ],
+  "artifact": {
+    "properties": {
+      "minor_beneficial": 2,
+      "major_beneficial": 1,
+      "minor_detrimental": 1
+    }
+  }
 }

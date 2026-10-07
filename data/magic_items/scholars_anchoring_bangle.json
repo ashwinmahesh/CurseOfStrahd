@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -15,7 +15,22 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only while worn: on a proficient Intelligence skill check made to Study, treat natural rolls below 10 as 10.",
-  "text": "Reference-only while worn: on a proficient Intelligence skill check made to Study, treat natural rolls below 10 as 10. Once per dawn, a Reaction turns a failed Concentration save into a success.",
-  "playable": false
+  "summary": "A proficient Study check treats rolls under 10 as 10; once a day a Reaction saves your Concentration.",
+  "text": "While wearing this bangle, when you make an Intelligence check with a skill you're proficient in to Study, a d20 roll of 9 or lower counts as a 10. Once per dawn, when you fail a Constitution saving throw to keep Concentration, you can take a Reaction to succeed instead.",
+  "playable": true,
+  "worn": "wrists",
+  "powers": [
+    {
+      "id": "anchor",
+      "name": "Anchor the Spell",
+      "cost": "reaction",
+      "custom": "fr_anchor",
+      "hidden": true,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once a day, used on its own: a failed Concentration save succeeds."
+    }
+  ]
 }

@@ -56,6 +56,9 @@ static func keyhole_forms(item_id: String) -> Array[String]:
 func why(c: Combatant, p: Dictionary) -> String:
 	var power := p["power"] as Dictionary
 	var e := enc()
+	# Powers that only work while another of the item's powers is on (the Nightingale's songs).
+	if power.has("while_on") and not items().toggled(c, str(p["item_id"]), str(power["while_on"])):
+		return "Only while its %s is on" % str(power["while_on"]).replace("_", " ")
 	match str(power.get("custom", "")):
 		"fr_reshape":
 			if e.current() != c:
@@ -317,7 +320,7 @@ func use_more(c: Combatant, p: Dictionary, targets: Array, point: Vector2, dir: 
 			ch.restore_resource("sorcery_points", mini(2, spent))
 			_log("info", "%s draws %d Sorcery Points back from the orb" % [c.name(), mini(2, spent)], c)
 			return CombatResult.new()
-	return CombatResult.fail("Not built yet")
+	return use_wondrous(c, p, targets, point, opts)
 
 
 ## Wand of Teeth: 1 to 3 charges for a 30-ft Cone; Dex DC 15, 1d8 Piercing per charge and Poisoned until the
@@ -448,3 +451,392 @@ func after_step(mover: Combatant, from: Vector2i) -> void:
 				e.forced_move(t, e.center_of(h), 30)
 				_log("info", "%s is thrown back (Dissuader)" % t.name(), t, [sv.describe()])
 		return
+
+
+# --- Wondrous items (batch 9c) ------------------------------------------------------------------------------------------
+
+## Custom powers of the wondrous items.
+func use_wondrous(c: Combatant, p: Dictionary, targets: Array, point: Vector2, opts: Dictionary) -> CombatResult:
+	var power := p["power"] as Dictionary
+	var e := enc()
+	var iid := str(p["item_id"])
+	var entry := p["entry"] as Dictionary
+	var label := str((p["data"] as Dictionary).get("name", ""))
+	match str(power.get("custom", "")):
+		"fr_blood_ready":
+			c.set_meta("blood_amulet", iid)
+			_log("info", "%s's blood amulet thirsts" % c.name(), c)
+			return CombatResult.new()
+		"fr_rune_ready":
+			if str(entry.get("pick", "")) == "":
+				return CombatResult.fail("Choose the rune's element after a Long Rest")
+			c.set_meta("prismatic_rune", iid)
+			_log("info", "%s's prismatic rune glows %s" % [c.name(), str(entry["pick"])], c)
+			return CombatResult.new()
+		"fr_dream_use":
+			if not entry.has("dream"):
+				return CombatResult.fail("No dream recorded")
+			c.set_meta("portent_next", int(entry["dream"]))
+			entry.erase("dream")
+			_log("info", "%s calls on the dream woven into the tapestry" % c.name(), c)
+			return CombatResult.new()
+		"fr_manacle":
+			var t: Combatant = targets[0] as Combatant if not targets.is_empty() and targets[0] is Combatant else null
+			if t == null or t == c or e.distance(c, t) > 5:
+				return CombatResult.fail("Choose a creature within 5 ft")
+			if not (t.creature.has_condition(&"grappled") or t.creature.has_condition(&"incapacitated")):
+				return CombatResult.fail("It must be Grappled or Incapacitated")
+			if Creature.SIZES.find(t.creature.size) > Creature.SIZES.find(&"large"):
+				return CombatResult.fail("Too big for the chain")
+			items()._pay(c, "magic")
+			var sv := t.creature.roll_save(e.dice, &"dex", 15, [], [], "Dexterity save vs %s (%s)" % [label, t.name()], ["save_vs:restrained"])
+			if sv.success:
+				_log("info", "%s slips the chain" % t.name(), t, [sv.describe()])
+				return CombatResult.new()
+			var fx := Effect.new("Chained (%s)" % label, &"item", iid).with_condition(&"restrained")
+			fx.caster_id = c.id
+			fx.lasting({"kind": "hours", "amount": 8})
+			t.creature.add_effect(fx)
+			CombatItems.spend_use(p)
+			_log("condition", "%s is chained (%s)" % [t.name(), label], t, [sv.describe()])
+			e.events.append({"type": "condition", "id": t.id})
+			return CombatResult.new()
+		"fr_manacle_release":
+			for t2 in e.combatants:
+				for fx2: Effect in t2.creature.effects.duplicate():
+					if fx2.source_id == iid and fx2.caster_id == c.id:
+						t2.creature.remove_effect(fx2)
+						_log("info", "%s releases %s from the chain" % [c.name(), t2.name()], c)
+			return CombatResult.new()
+		"fr_puppet":
+			var to := Vector2i(floori(point.x), floori(point.y)) if point != Vector2.INF else Vector2i(-1, -1)
+			if to.x < 0 or e.grid.distance_ft(c.cell, c.size_cells, to, 1) > 30 or not e.can_see_space(c, to):
+				return CombatResult.fail("Choose a space you can see within 30 ft")
+			items()._pay(c, "bonus")
+			for fx3: Effect in c.creature.effects.duplicate():
+				if fx3.stack_key == "puppet:%s" % iid:
+					c.creature.remove_effect(fx3)
+			var doll := Effect.new(label, &"item", iid)
+			doll.stack_key = "puppet:%s" % iid
+			doll.data["puppet_cell"] = [to.x, to.y]
+			doll.lasting({"kind": "minutes", "amount": 1})
+			doll.turn_owner_id = c.id
+			c.creature.add_effect(doll)
+			_log("info", "%s's puppet hovers at %s" % [c.name(), to], c)
+			return CombatResult.new()
+	return use_artifact(c, p, targets)
+
+
+## Spell-Slinger's Puppet: while the doll hovers within 30 ft, its holder speaks through it (Verbal components even
+## when it can't speak itself, as long as the doll's square isn't silenced).
+func puppet_voice(c: Combatant) -> bool:
+	var e := enc()
+	for fx: Effect in c.creature.effects:
+		if not fx.data.has("puppet_cell"):
+			continue
+		var at := fx.data["puppet_cell"] as Array
+		var cell := Vector2i(int(at[0]), int(at[1]))
+		if e.grid.distance_ft(c.cell, c.size_cells, cell, 1) <= 30 and not e.spells.zones.silenced(cell):
+			return true
+	return false
+
+
+## Blood Amulet: the next damage its wearer deals (once readied) spends a charge for 2d10 Necrotic and a Constitution
+## save (DC 15) against a level of Exhaustion.
+func on_damaged(source: Combatant, target: Combatant, amount: int, _parts: Array) -> void:
+	if source == null or amount <= 0 or source == target or not source.has_meta("blood_amulet") or not target.is_alive():
+		return
+	var e := enc()
+	var iid := str(source.get_meta("blood_amulet"))
+	source.remove_meta("blood_amulet")
+	var ch := CombatItems.ch_of(source)
+	if ch == null or ch.charges_left(iid) <= 0:
+		return
+	ch.spend_charges(iid, 1)
+	var rolled := e._roll_damage_dice("2d10", false, 0, "Blood Amulet")
+	e.deal_damage(source, target, [{"amount": int(rolled["total"]), "type": "necrotic"}], false, "Blood Amulet", [str(rolled["text"])])
+	if target.is_alive():
+		var sv := target.creature.roll_save(e.dice, &"con", 15, [], [], "Constitution save vs Blood Amulet (%s)" % target.name())
+		if not sv.success:
+			target.creature.exhaustion += 1
+			_log("condition", "%s's blood runs thin: a level of Exhaustion (Blood Amulet)" % target.name(), target, [sv.describe()])
+
+
+## Boon Companion's Bands: one wearer's area spell spares the other wearer (an automatic success, no damage on a
+## half), once a day between them.
+func banded(ctx: Dictionary, t: Combatant) -> bool:
+	if bool(ctx.get("item", false)):
+		return false
+	var c := ctx["c"] as Combatant
+	if t == c or not c.allied_with(t) or not (ctx["s"] as Dictionary).has("area"):
+		return false
+	var mine := items().find_power(c, "boon_companions_bands", "spare")
+	var theirs := items().find_power(t, "boon_companions_bands", "spare")
+	if mine.is_empty() or theirs.is_empty() or not items().has_active(c, "boon_companions_bands") or not items().has_active(t, "boon_companions_bands"):
+		return false
+	if CombatItems.uses_spent(mine) >= CombatItems.use_count(mine) or CombatItems.uses_spent(theirs) >= CombatItems.use_count(theirs):
+		return false
+	CombatItems.spend_use(mine)
+	CombatItems.spend_use(theirs)
+	_log("info", "%s's band shields %s from the spell (Boon Companion's Bands)" % [c.name(), t.name()], t)
+	return true
+
+
+## After a spell attack hits: a Spell Duelist's Trophy casts Dispel Magic on the creature hit by a melee spell attack,
+## once a day.
+func after_spell_hit(ctx: Dictionary, t: Combatant, melee: bool, r: CombatResult) -> void:
+	var c := ctx["c"] as Combatant
+	if not melee or not t.is_alive() or bool(ctx.get("item", false)):
+		return
+	var p := items().find_power(c, "spell_duelists_trophy", "duel_dispel")
+	if p.is_empty() or not items().has_active(c, "spell_duelists_trophy") or CombatItems.uses_spent(p) >= CombatItems.use_count(p) \
+			or str(c.reaction_rules.get("spell_duelists_trophy", "auto")) == "never":
+		return
+	if not t.creature.effects.any(func(fx: Effect) -> bool: return fx.source_kind == &"spell") and t.creature.concentration == null:
+		return
+	CombatItems.spend_use(p)
+	_log("spell", "%s's trophy unravels the magic on %s (Spell Duelist's Trophy)" % [c.name(), t.name()], c)
+	var sub := {"c": c, "s": Compendium.shared().spell_data("dispel_magic"), "slot": 3, "nums": ctx["nums"]}
+	enc().spells._dispel(sub, t, r)
+
+
+## A Prismatic Rune readied: the spell's damage turns to the rune's element, for a charge.
+func prismatic(ctx: Dictionary) -> void:
+	var c := ctx["c"] as Combatant
+	if not c.has_meta("prismatic_rune") or not (ctx["s"] as Dictionary).has("damage"):
+		return
+	var iid := str(c.get_meta("prismatic_rune"))
+	c.remove_meta("prismatic_rune")
+	var ch := CombatItems.ch_of(c)
+	var p := items().find_power(c, iid, "ready")
+	if ch == null or p.is_empty() or ch.charges_left(iid) <= 0:
+		return
+	ch.spend_charges(iid, 1)
+	var ty := str((p["entry"] as Dictionary).get("pick", ""))
+	if ty != "":
+		ctx["transmute_to"] = ty
+		_log("info", "The prismatic rune turns %s's spell to %s" % [c.name(), ty], c)
+
+
+## After a D20 Test: the Lucky Foot rerolls a natural 1 on a save or check (and is used up); the Ring of Dedicated
+## Focus adds Hit Dice to a failed Concentration save; the Scholar's Anchoring Bangle floors a Study check at 10 and,
+## once a day, saves a Concentration; the Thespian's Playbill adds Charisma to Study.
+func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
+	var e := enc()
+	var ch := CombatItems.ch_of(c)
+	if ch == null or t.kind == D20Test.Kind.ATTACK_ROLL:
+		return
+	if "study" in keys:
+		if items().has_active(c, "thespians_playbill"):
+			t.add_bonus(maxi(1, c.creature.ability_mod(&"cha")), "Thespian's Playbill")
+		var skill_key := keys.filter(func(k: String) -> bool: return k.begins_with("check:") and Abilities.SKILLS.has(StringName(k.substr(6))))
+		var proficient := skill_key.any(func(k: String) -> bool: return ch.skill_rank(StringName(k.substr(6))) >= 1)
+		if items().has_active(c, "scholars_anchoring_bangle") and proficient and t.kept < 10:
+			t.floor_natural(10, "Scholar's Anchoring Bangle")
+	if t.success or t.target <= 0:
+		return
+	if t.kept == 1 and not t.auto_failed:
+		for it in items().carried(c):
+			if str(it["id"]) == "lucky_foot":
+				ch.remove_one("lucky_foot")
+				var n := e.dice.d20("Lucky Foot")
+				t.set_natural(n, "Lucky Foot")
+				_log("info", "%s rubs the Lucky Foot and tries again: %d" % [c.name(), n], c)
+				break
+		if t.success:
+			return
+	if t.kind == D20Test.Kind.SAVING_THROW and "concentration" in keys:
+		if items().has_active(c, "ring_of_dedicated_focus") and str(c.reaction_rules.get("ring_of_dedicated_focus", "auto")) != "never":
+			for i in 2:
+				if t.success:
+					break
+				var hd := _spend_hit_die(ch, "Ring of Dedicated Focus")
+				if hd <= 0:
+					break
+				t.add_bonus(hd, "Ring of Dedicated Focus")
+		var p := items().find_power(c, "scholars_anchoring_bangle", "anchor")
+		if not t.success and not p.is_empty() and items().has_active(c, "scholars_anchoring_bangle") and e.spells.can_react(c) \
+				and CombatItems.uses_spent(p) < CombatItems.use_count(p) and str(c.reaction_rules.get("scholars_anchoring_bangle", "auto")) != "never":
+			CombatItems.spend_use(p)
+			c.reaction_available = false
+			t.add_bonus(maxi(0, t.target - t.total), "Scholar's Anchoring Bangle")
+			_log("reaction", "%s's bangle anchors the spell in place" % c.name(), c)
+
+
+## Rolls the biggest unspent Hit Die (spending it), or 0 when none are left.
+func _spend_hit_die(ch: Character, label: String) -> int:
+	var pool := ch.hit_dice()
+	var best := 0
+	for die: String in pool:
+		var entry := pool[die] as Dictionary
+		if int(entry["spent"]) < int(entry["total"]) and int(die) > best:
+			best = int(die)
+	if best == 0:
+		return 0
+	ch.hit_dice_spent[str(best)] = int(ch.hit_dice_spent.get(str(best), 0)) + 1
+	return enc().dice.roll_one(best, label)
+
+
+## Thief's Thimble: it soaks up damage from traps its wearer springs (30 Hit Points, then it breaks).
+static func thimble(cr: Creature, amount: int) -> int:
+	var ch := cr as Character if cr is Character else null
+	if ch == null or amount <= 0:
+		return amount
+	for entry in ch.inventory:
+		if str(entry["id"]) != "thiefs_thimble" or not ch.item_active(entry):
+			continue
+		var left := int(entry.get("thimble_hp", 30))
+		var soaked := mini(left, amount)
+		entry["thimble_hp"] = left - soaked
+		if left - soaked <= 0:
+			ch.unequip_item("thiefs_thimble")
+			ch.remove_one("thiefs_thimble")
+		return amount - soaked
+	return amount
+
+
+## Field powers (outside a fight, from the inventory): choosing a pick after a Long Rest (Arcanist's Bestiary's skill,
+## the Prismatic Rune's element), and recording a dream with the Dream Weaver.
+static func field_use(ch: Character, p: Dictionary, dice: DiceRoller, opts: Dictionary) -> Dictionary:
+	var power := p["power"] as Dictionary
+	var entry := p["entry"] as Dictionary
+	var label := str((p["data"] as Dictionary).get("name", ""))
+	match str(power.get("custom", "")):
+		"fr_set_pick":
+			var pick := str(opts.get("choice", ""))
+			if not pick in ((power.get("choice", {}) as Dictionary).get("from", []) as Array):
+				return {"ok": false, "text": "Choose one", "lines": []}
+			entry["pick"] = pick
+			ch.items_changed()
+			return {"ok": true, "text": "%s's %s: %s." % [ch.name.get_slice(" ", 0), label, pick.replace("_", " ").capitalize()], "lines": []}
+		"fr_duplicate":
+			var pick := str(opts.get("choice", ""))
+			if not pick in duplicable(ch):
+				return {"ok": false, "text": "Choose a nonmagical item you carry", "lines": []}
+			ch.add_item(pick)
+			return {"ok": true, "text": "The %s hums and sets a perfect copy of the %s beside the original." % [label, Compendium.shared().display_name("items", pick)], "lines": []}
+		"fr_dream_record":
+			var n := dice.d20("%s (%s)" % [label, ch.name])
+			entry["dream"] = n
+			return {"ok": true, "text": "%s studies the tapestry through the night and dreams of a %d." % [ch.name.get_slice(" ", 0), n], "lines": []}
+	return {"ok": false, "text": "Not built yet", "lines": []}
+
+
+# --- Artifacts (batch 9d) -----------------------------------------------------------------------------------------------
+
+## Custom powers of the artifacts.
+func use_artifact(c: Combatant, p: Dictionary, targets: Array) -> CombatResult:
+	var power := p["power"] as Dictionary
+	var e := enc()
+	var label := str((p["data"] as Dictionary).get("name", ""))
+	match str(power.get("custom", "")):
+		"fr_crystal_rays":
+			var rays: Array[Combatant] = []
+			for x: Variant in targets:
+				if x is Combatant and (x as Combatant).is_alive() and e.distance(c, x as Combatant) <= 60 and rays.size() < 6:
+					rays.append(x as Combatant)
+			if rays.is_empty():
+				return CombatResult.fail("Choose up to six creatures within 60 ft")
+			items()._pay(c, "magic")
+			for t in rays:
+				if not t.is_alive():
+					continue
+				if t == c or c.allied_with(t):
+					var hr := e.heal_roll("2d6+2", t, label)
+					var got := t.creature.heal(int(hr["total"]), label)
+					_log("heal", "A ray of the %s mends %s: +%d Hit Points" % [label, t.name(), got], t, [str(hr["text"])])
+					e.events.append({"type": "heal", "id": t.id, "amount": got})
+				else:
+					var sv := t.creature.roll_save(e.dice, &"dex", 18, [], [], "Dexterity save vs %s (%s)" % [label, t.name()])
+					var rolled := e._roll_damage_dice("6d6+6", false, 0, label)
+					var amount := int(rolled["total"]) / (2 if sv.success else 1)
+					e.deal_damage(c, t, [{"amount": amount, "type": "radiant"}], false, label, [sv.describe(), str(rolled["text"])])
+			return CombatResult.new()
+		"fr_wrecker":
+			return _wrecker_start(c, p)
+		"fr_wrecker_stop":
+			return _wrecker_stop(c)
+		"fr_crystal_aura_end":
+			var o := e.spells.zones.object_of(c.id, "%s__cold_aura" % MagicItems.recipe_owner(str(p["item_id"])))
+			if o == null:
+				return CombatResult.fail("The cold aura isn't up")
+			items()._pay(c, "magic")
+			o.ended = true
+			e.spells.zones.prune()
+			_log("info", "%s lets the crystal's cold aura fade" % c.name(), c)
+			return CombatResult.new()
+	return CombatResult.fail("Not built yet")
+
+
+## Nonmagical items the Universal Pantograph could copy for `ch`.
+static func duplicable(ch: Character) -> Array:
+	var out: Array = []
+	for entry in ch.inventory:
+		var d := Compendium.shared().item_data(str(entry["id"]))
+		if int(entry.get("qty", 0)) > 0 and not d.is_empty() and not MagicItems.is_magic(d) and not str(entry["id"]) in out:
+			out.append(str(entry["id"]))
+	return out
+
+
+## Workshop Wrecker: for 1 minute a whirlwind of tools batters every other creature in the room as it starts and at
+## the start of its user's turns. How hard depends on the room: the fight's map in feet (15/30/50/100 ft: Dex DC
+## 18/17/15/14 against 6d6 + 5/4d6 + 4/2d6 + 2/1d6 + 1 Bludgeoning); a bigger room takes no real harm, and outdoors
+## the whirlwind blows away.
+const WRECKER_TIERS := [[15, 18, "6d6+5"], [30, 17, "4d6+4"], [50, 15, "2d6+2"], [100, 14, "1d6+1"]]
+
+
+func _wrecker_start(c: Combatant, p: Dictionary) -> CombatResult:
+	items()._pay(c, "magic")
+	var fx := Effect.new(str((p["data"] as Dictionary).get("name", "")), &"item", str(p["item_id"]))
+	fx.stack_key = "workshop_wrecker:%s" % p["item_id"]
+	fx.data["wrecker"] = true
+	fx.lasting({"kind": "minutes", "amount": 1})
+	fx.turn_owner_id = c.id
+	c.creature.add_effect(fx)
+	CombatItems.spend_use(p)
+	_log("info", "%s sets the Workshop Wrecker spinning" % c.name(), c)
+	_wreck(c)
+	return CombatResult.new()
+
+
+func _wreck(c: Combatant) -> void:
+	var e := enc()
+	if e.outdoors:
+		_log("info", "The whirlwind of tools tears off into the open sky", c)
+		for fx: Effect in c.creature.effects.duplicate():
+			if bool(fx.data.get("wrecker", false)):
+				c.creature.remove_effect(fx)
+		return
+	var size := maxi(e.grid.width, e.grid.depth) * CombatGrid.FEET
+	var tier: Array = []
+	for t: Variant in WRECKER_TIERS:
+		if size <= int((t as Array)[0]):
+			tier = t as Array
+			break
+	if tier.is_empty():
+		_log("info", "The room is too big for the Workshop Wrecker to do real harm", c)
+		return
+	var rolled := e._roll_damage_dice(str(tier[2]), false, 0, "Workshop Wrecker")
+	for o in e.combatants:
+		if o == c or not o.is_alive():
+			continue
+		var sv := o.creature.roll_save(e.dice, &"dex", int(tier[1]), [], [], "Dexterity save vs Workshop Wrecker (%s)" % o.name())
+		if sv.success:
+			_log("info", "%s ducks the flying tools" % o.name(), o, [sv.describe()])
+			continue
+		e.deal_damage(c, o, [{"amount": int(rolled["total"]), "type": "bludgeoning"}], false, "Workshop Wrecker", [sv.describe(), str(rolled["text"])])
+
+
+func _wrecker_stop(c: Combatant) -> CombatResult:
+	for fx: Effect in c.creature.effects.duplicate():
+		if bool(fx.data.get("wrecker", false)):
+			c.creature.remove_effect(fx)
+			_log("info", "%s stops the Workshop Wrecker" % c.name(), c)
+			return CombatResult.new()
+	return CombatResult.fail("It isn't spinning")
+
+
+## At the start of its user's turn the Workshop Wrecker strikes again.
+func turn_start(c: Combatant) -> void:
+	if c.creature.effects.any(func(fx: Effect) -> bool: return bool(fx.data.get("wrecker", false))):
+		_wreck(c)

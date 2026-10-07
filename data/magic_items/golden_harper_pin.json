@@ -5,7 +5,7 @@
     "book": "FRAiF",
     "page": 244,
     "checked_against": "FRAiF",
-    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/11054448-golden-harper-pin. Prices use the existing rarity convention; unspecified weight is 0. Reference-only properties require manual adjudication."
+    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/11054448-golden-harper-pin. Prices use the existing rarity convention; unspecified weight is 0."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -16,7 +16,20 @@
   },
   "theme": "implements",
   "icon": "amulet",
-  "summary": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type.",
-  "text": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type. While worn, magic identifying your type, alignment, or location reports that persona. While worn, cast Nondetection on yourself. It lasts until you freely end it, remove the pin, or end attunement.",
-  "playable": false
+  "summary": "Divination reports a chosen Harper persona instead of you, and you can cloak yourself with Nondetection.",
+  "text": "When you attune to this pin you choose a Harper persona with its own alignment and creature type. While you wear it, magic that would reveal your creature type, alignment or location reports the persona instead, and you can cast Nondetection on yourself; it lasts until you end it, take the pin off or end your attunement. (No such magic is cast at the party in the game.)",
+  "playable": true,
+  "worn": "cloak",
+  "powers": [
+    {
+      "id": "nondetection",
+      "name": "Nondetection",
+      "cost": "free",
+      "custom": "flavour",
+      "field": true,
+      "params": {
+        "text": "hides you from divination magic"
+      }
+    }
+  ]
 }

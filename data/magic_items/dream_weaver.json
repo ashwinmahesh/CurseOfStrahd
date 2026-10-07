@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -15,7 +15,31 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only while within 30 feet of the hung tapestry: study it for 1 hour during a Long Rest, recording a d20 to replace one of your D20 Tests before rolling until your next Long Rest.",
-  "text": "Reference-only while within 30 feet of the hung tapestry: study it for 1 hour during a Long Rest, recording a d20 to replace one of your D20 Tests before rolling until your next Long Rest. It records a Dream caster’s name and appearance. While Unconscious, gain Advantage on Intelligence, Wisdom, and Charisma saves.",
-  "playable": false
+  "summary": "Study it during a Long Rest to dream a d20 roll you can use in place of one later.",
+  "text": "While this tapestry hangs within 30 feet of you, you can study it for 1 hour during a Long Rest and record a d20 roll. Until your next Long Rest you can use that number in place of one of your D20 Tests before rolling. It also records the name and appearance of anyone who casts Dream on you, and while you're Unconscious within 30 feet of it you have Advantage on Intelligence, Wisdom and Charisma saving throws.",
+  "playable": true,
+  "powers": [
+    {
+      "id": "record",
+      "name": "Dream on It",
+      "cost": "free",
+      "custom": "fr_dream_record",
+      "field": true,
+      "combat": false,
+      "uses": {
+        "count": 1,
+        "per": "long"
+      },
+      "requires": "anyone",
+      "text": "During a Long Rest: record a d20 roll."
+    },
+    {
+      "id": "use_dream",
+      "name": "Use the Dream",
+      "cost": "free",
+      "custom": "fr_dream_use",
+      "requires": "anyone",
+      "text": "Your next D20 Test uses the number you dreamed."
+    }
+  ]
 }

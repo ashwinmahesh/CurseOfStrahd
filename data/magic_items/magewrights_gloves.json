@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -15,7 +15,8 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only: while worn, count as two workers when crafting nonmagical items with Alchemist’s, Brewer’s, Calligrapher’s, Cartographer’s, Glassblower’s, or Jeweler’s tools..",
-  "text": "Reference-only: while worn, count as two workers when crafting nonmagical items with Alchemist’s, Brewer’s, Calligrapher’s, Cartographer’s, Glassblower’s, or Jeweler’s tools.",
-  "playable": false
+  "summary": "While worn, you count as two workers crafting with artisan's tools.",
+  "text": "While wearing these gloves you count as two workers when crafting ordinary items with Alchemist's, Brewer's, Calligrapher's, Cartographer's, Glassblower's or Jeweler's Tools. (The game has no crafting yet, so they do nothing more.)",
+  "playable": true,
+  "worn": "hands"
 }

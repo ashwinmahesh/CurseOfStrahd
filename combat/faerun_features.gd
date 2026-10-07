@@ -1985,6 +1985,7 @@ func before_resolve(ctx: Dictionary) -> void:
 	var c := ctx["c"] as Combatant
 	var ch := _ch(c)
 	_boons_before_resolve(ctx)
+	enc().items.specials.fr.prismatic(ctx)
 	# Blessing of Moonlight: decided as the Moonbeam is cast, so its first save already counts.
 	if ch != null and str((ctx["s"] as Dictionary).get("id", "")) == "moonbeam" and CombatFeatures.has_feature(c, "blessing_of_moonlight") \
 			and ch.resource_left("blessing_of_moonlight") > 0 and allowed(c, "blessing_of_moonlight"):

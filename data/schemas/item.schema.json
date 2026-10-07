@@ -636,6 +636,21 @@
             "type": "integer",
             "description": "How many creatures a multi-target power picks (Tramontane Armor's grip)."
           },
+          "while_on": {
+            "type": "string",
+            "description": "Another power of the item that must be on (toggled) for this one to work (Queen Ehlissa's Marvelous Nightingale)."
+          },
+          "self_only": {
+            "type": "boolean",
+            "description": "The power's spell targets only its user."
+          },
+          "disadvantage_unless": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Creature types that save normally against the power's spell; the rest save with Disadvantage (Arcanist's Bestiary)."
+          },
           "range": {
             "type": "integer"
           },

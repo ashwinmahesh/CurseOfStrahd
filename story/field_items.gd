@@ -30,6 +30,9 @@ static func options(party: Array[Character], ch: Character, item_id: String, dic
 			targeting = "ally" if kind in ["creature", "ally"] else "self"
 		var o := {"power_id": str(power.get("id", "")), "label": str(power.get("name", "Use")), "legal": why == "", "reason": why,
 			"targeting": targeting, "spell_id": spell_id, "text": str(power.get("text", "")), "choices": (power.get("choice", {}) as Dictionary).get("from", [])}
+		# Universal Pantograph: what it could copy.
+		if str(power.get("custom", "")) == "fr_duplicate":
+			o["choices"] = FaerunItems.duplicable(ch)
 		if str(power.get("custom", "")) == "ring_store":
 			o["store"] = store_options(party, p)
 			if why == "" and (o["store"] as Array).is_empty():
@@ -79,7 +82,8 @@ static func _field_why(e: Encounter, c: Combatant, p: Dictionary) -> String:
 		why = ""
 	if why == "No effect in a fight":
 		why = ""
-	if why == "" and power.has("custom") and not str(power["custom"]) in FIELD_CUSTOM and bool(power.get("combat", true)) == false:
+	if why == "" and power.has("custom") and not str(power["custom"]) in FIELD_CUSTOM and not str(power["custom"]).begins_with("fr_") \
+			and bool(power.get("combat", true)) == false:
 		why = "Not built yet"
 	# Lock openers work on a lock in the world: the door's or chest's right-click menu offers them.
 	if why == "" and str(power.get("custom", "")) in ["chime_of_opening", "mystery_key"]:
@@ -114,6 +118,12 @@ static func use(st: StoryState, ch: Character, item_id: String, power_id: String
 		if bool(res.get("ok", false)):
 			e.items._after_use(c, p, {}, 0)
 		return res
+	# Heroes of Faerûn and Arcana Unleashed items' own field powers (combat/faerun_items.gd).
+	if str(power.get("custom", "")).begins_with("fr_") and not bool(power.get("combat", true)):
+		var fres := FaerunItems.field_use(ch, p, dice, opts)
+		if bool(fres.get("ok", false)):
+			e.items._after_use(c, p, {}, 0)
+		return fres
 	var spell_id := CombatItems.power_spell(item_id, power)
 	var spell := Compendium.shared().spell_data(spell_id) if spell_id != "" else {}
 	# An exploring spell (no effect in a fight): recorded for its duration, as FieldCasting does.

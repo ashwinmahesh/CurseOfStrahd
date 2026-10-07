@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -15,7 +15,30 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only: Magic action while worn targets a Grappled or Incapacitated Large-or-smaller creature within 5 feet.",
-  "text": "Reference-only: Magic action while worn targets a Grappled or Incapacitated Large-or-smaller creature within 5 feet. DC 15 Dexterity or Restrained and chained to move with you for 8 hours, or until freely released. Only Disintegrate can destroy the chain. Once per dawn after successfully binding.",
-  "playable": false
+  "summary": "Once a day after it binds someone: chain a Grappled or Incapacitated creature (Dex DC 15) for 8 hours.",
+  "text": "As a Magic action while wearing this manacle you can target a Large or smaller creature within 5 feet that has the Grappled or Incapacitated condition. It makes a DC 15 Dexterity saving throw or has the Restrained condition, chained to you, for 8 hours or until you let it go (no action). Only Disintegrate can destroy the chain. Once it has bound a creature it can't do so again until the next dawn.",
+  "playable": true,
+  "worn": "wrists",
+  "powers": [
+    {
+      "id": "bind",
+      "name": "Chain",
+      "cost": "magic",
+      "custom": "fr_manacle",
+      "targeting": "enemy",
+      "range": 5,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Chain a Grappled or Incapacitated creature within 5 ft (Dex DC 15)."
+    },
+    {
+      "id": "release",
+      "name": "Let Go",
+      "cost": "free",
+      "custom": "fr_manacle_release",
+      "text": "Release the chained creature."
+    }
+  ]
 }

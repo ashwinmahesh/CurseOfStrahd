@@ -307,3 +307,280 @@ func test_orb_of_sorcery_restores_points() -> void:
 	assert_true(e.items.use(sorc, "orb_of_sorcery", "restore").ok)
 	assert_eq(ch.resource_left("sorcery_points"), full - 1, "two back")
 	var _unused := c
+
+
+const ITEMS_9C := ["arcane_chatelaine", "arcanists_bestiary", "bellows_of_strangulation", "blood_amulet", "blemished_idol_of_good_fortunes",
+	"tarnished_idol_of_good_fortunes", "golden_idol_of_good_fortunes", "boon_companions_bands", "conjurers_canopy", "dictation_quill",
+	"elocutionists_lexicon", "ensorcelled_missive", "evergreen_fertilizer", "homeward_compass", "magewrights_gloves", "sweeping_broom",
+	"secret_keepers_circlet", "silver_harper_pin", "golden_harper_pin", "spell_component_ring", "thespians_playbill",
+	"scholars_anchoring_bangle", "dream_weaver", "lucky_foot", "mages_manacle", "ring_of_dedicated_focus", "spell_slingers_puppet",
+	"spell_duelists_trophy", "thiefs_thimble", "prismatic_rune", "potion_of_tirelessness", "mechanical_wonder_mobility"]
+
+
+func _wearing(e: Encounter, item_id: String, cell: Vector2i = Vector2i(2, 2), pregen: String = "silvain_aster") -> Combatant:
+	var c := TestCombat.hero(e, pregen, cell, 9)
+	var ch := c.creature as Character
+	ch.add_item(item_id)
+	if MagicItems.needs_attunement(Compendium.shared().item_data(item_id)):
+		ch.attune(item_id)
+	var slot := MagicItems.worn_slot(Compendium.shared().item_data(item_id))
+	if slot != "":
+		ch.wear(item_id)
+	elif bool(Compendium.shared().item_data(item_id).get("held", false)):
+		ch.equip(item_id, "main_hand")
+	return c
+
+
+func test_the_9c_items_are_switched_on() -> void:
+	var ids := Compendium.shared().all_playable("magic_items").map(func(d: Dictionary) -> String: return str(d["id"]))
+	for id: String in ITEMS_9C:
+		assert_true(id in ids, "%s playable" % id)
+
+
+func test_arcanists_bestiary_skill_and_charm() -> void:
+	var e := TestCombat.open_field()
+	var c := _wearing(e, "arcanists_bestiary")
+	var beast := TestCombat.punching_bag(e, Vector2i(4, 2), 80, "beast")
+	TestCombat.start_with(e, c)
+	var ch := c.creature as Character
+	var st := StoryState.new()
+	st.party.append(ch)
+	var res := FieldItems.use(st, ch, "arcanists_bestiary", "study_focus", null, e.dice, {"choice": "nature"})
+	assert_true(bool(res["ok"]), str(res.get("text", "")))
+	assert_eq(ch.skill_rank(&"nature"), 1, "proficient in Nature")
+	assert_true(e.items.use(c, "arcanists_bestiary", "charm", [beast]).ok)
+	assert_true(e.log.dump().contains("Arcanist"), "a Beast saves with Disadvantage")
+
+
+func test_bellows_choke_and_blood_amulet() -> void:
+	var e := TestCombat.open_field()
+	var c := _wearing(e, "bellows_of_strangulation")
+	var ch := c.creature as Character
+	ch.add_item("blood_amulet")
+	ch.attune("blood_amulet")
+	ch.wear("blood_amulet")
+	var foe := _talker(e, Vector2i(5, 2))
+	TestCombat.start_with(e, c)
+	assert_true(e.items.use(c, "bellows_of_strangulation", "choke", [foe]).ok)
+	assert_true(foe.creature.has_condition(&"incapacitated"), "choking")
+	assert_true(e.items.use(c, "blood_amulet", "ready").ok)
+	var hp := foe.creature.hp
+	e.deal_damage(c, foe, [{"amount": 3, "type": "fire"}], false, "test")
+	assert_true(hp - foe.creature.hp > 3, "2d10 Necrotic more")
+	assert_eq(foe.creature.exhaustion, 1, "and a level of Exhaustion")
+	assert_eq(ch.charges_left("blood_amulet"), 2)
+
+
+func test_boon_companions_bands_spare_the_partner() -> void:
+	var e := TestCombat.open_field()
+	var c := _wearing(e, "boon_companions_bands")
+	var pal := _wearing(e, "boon_companions_bands", Vector2i(6, 2), "ilse_varga")
+	var foe := _talker(e, Vector2i(6, 3))
+	TestCombat.start_with(e, c)
+	(( c.creature as Character).spellcasting[0]["prepared"] as Array).append("fireball")
+	var hp := pal.creature.hp
+	assert_true(e.spells.cast(c, "fireball", 3, [], Vector2(6.5, 2.5)).ok)
+	assert_eq(pal.creature.hp, hp, "the companion is spared")
+	assert_true(foe.creature.hp < foe.creature.max_hp(), "the foe isn't")
+
+
+func test_bangle_ring_and_lucky_foot_rescue_rolls() -> void:
+	var e := TestCombat.open_field()
+	var c := _wearing(e, "ring_of_dedicated_focus")
+	var ch := c.creature as Character
+	ch.add_item("lucky_foot")
+	TestCombat.punching_bag(e, Vector2i(9, 2))
+	TestCombat.start_with(e, c)
+	c.creature.begin_concentration("bless", "Bless")
+	var keys: Array[String] = ["save:all", "save:con", "concentration"]
+	var t := D20Test.from_natural(D20Test.Kind.SAVING_THROW, 5, 0, 10)
+	var spent := 0
+	for k: String in ch.hit_dice_spent:
+		spent += int(ch.hit_dice_spent[k])
+	e.items.specials.fr.after_d20(c, t, keys)
+	var after := 0
+	for k: String in ch.hit_dice_spent:
+		after += int(ch.hit_dice_spent[k])
+	assert_true(after > spent, "Hit Dice spent on the save")
+	var one := D20Test.from_natural(D20Test.Kind.ABILITY_CHECK, 1, 0, 30)
+	e.items.specials.fr.after_d20(c, one, ["check:all"] as Array[String])
+	assert_false(ch.inventory.any(func(x: Dictionary) -> bool: return str(x["id"]) == "lucky_foot" and int(x["qty"]) > 0), "the charm is used up")
+	assert_true(one.kept != 1 or one.reroll_note.contains("Lucky Foot"), "rerolled")
+
+
+func test_dream_weaver_and_prismatic_rune() -> void:
+	var e := TestCombat.open_field()
+	var c := _wearing(e, "prismatic_rune")
+	var ch := c.creature as Character
+	ch.add_item("dream_weaver")
+	ch.attune("dream_weaver")
+	var foe := _talker(e, Vector2i(5, 2))
+	TestCombat.start_with(e, c)
+	var st := StoryState.new()
+	st.party.append(ch)
+	assert_true(bool(FieldItems.use(st, ch, "dream_weaver", "record", null, e.dice)["ok"]))
+	assert_true(e.items.use(c, "dream_weaver", "use_dream").ok)
+	assert_true(c.has_meta("portent_next"), "the dreamed roll waits")
+	assert_true(bool(FieldItems.use(st, ch, "prismatic_rune", "element", null, e.dice, {"choice": "cold"})["ok"]))
+	assert_true(e.items.use(c, "prismatic_rune", "ready").ok)
+	(ch.spellcasting[0]["prepared"] as Array).append("fire_bolt")
+	c.action_available = true
+	assert_true(e.spells.cast(c, "fire_bolt", 0, [foe]).ok)
+	assert_true(e.log.dump().contains("cold") or e.log.dump().contains("Cold"), "the Fire Bolt turns to Cold")
+
+
+func test_manacle_puppet_trophy_thimble_and_potion() -> void:
+	var e := TestCombat.open_field()
+	var c := _wearing(e, "mages_manacle")
+	var ch := c.creature as Character
+	var foe := _talker(e, Vector2i(3, 2))
+	TestCombat.start_with(e, c)
+	foe.creature.add_condition(&"incapacitated", "test")
+	var rb := e.items.use(c, "mages_manacle", "bind", [foe])
+	assert_true(rb.ok, "bind: " + rb.reason)
+	assert_true(foe.creature.has_condition(&"restrained"), "chained")
+	var rr := e.items.use(c, "mages_manacle", "release")
+	assert_true(rr.ok, "release: " + rr.reason)
+	assert_false(foe.creature.has_condition(&"restrained"), "let go")
+	ch.add_item("spell_slingers_puppet")
+	ch.attune("spell_slingers_puppet")
+	ch.equip("spell_slingers_puppet", "main_hand")
+	c.bonus_available = true
+	var rh := e.items.use(c, "spell_slingers_puppet", "hover", [], Vector2(5.5, 2.5))
+	assert_true(rh.ok, "hover: " + rh.reason)
+	c.creature.add_effect(Effect.new("Gagged").with_modifier("flag", {"value": "speechless"}))
+	assert_true(e.items.specials.fr.puppet_voice(c), "speaks through the doll")
+	ch.add_item("thiefs_thimble")
+	ch.attune("thiefs_thimble")
+	ch.wear("thiefs_thimble")
+	assert_eq(FaerunItems.thimble(ch, 12), 0, "the thimble soaks the trap")
+	assert_eq(FaerunItems.thimble(ch, 25), 7, "until its 30 are gone")
+	ch.add_item("potion_of_tirelessness")
+	c.bonus_available = true
+	var rp := e.items.use(c, "potion_of_tirelessness", "drink", [c])
+	assert_true(rp.ok, "drink: " + rp.reason)
+	assert_true(c.creature.has_flag("trance"), "magic can't put it to sleep")
+
+
+func test_trophy_dispels_on_a_melee_spell_hit_and_bangle_and_playbill_help_study() -> void:
+	var e := TestCombat.open_field()
+	var c := _wearing(e, "spell_duelists_trophy")
+	var ch := c.creature as Character
+	var foe := _talker(e, Vector2i(3, 2))
+	TestCombat.start_with(e, c)
+	var bless := Effect.new("Bless", &"spell", "bless")
+	bless.spell_level = 1
+	foe.creature.add_effect(bless)
+	var ctx := {"c": c, "s": Compendium.shared().spell_data("shocking_grasp"), "slot": 0, "nums": e.spells.numbers(c, {"class_id": "wizard"})}
+	e.items.specials.fr.after_spell_hit(ctx, foe, true, CombatResult.new())
+	assert_false(foe.creature.effects.has(bless), "Dispel Magic on the creature hit")
+	ch.add_item("scholars_anchoring_bangle")
+	ch.attune("scholars_anchoring_bangle")
+	ch.wear("scholars_anchoring_bangle")
+	ch.add_item("thespians_playbill")
+	ch.attune("thespians_playbill")
+	ch.equip("thespians_playbill", "off_hand")
+	var skill := "arcana" if ch.skill_rank(&"arcana") >= 1 else "history"
+	var t := D20Test.from_natural(D20Test.Kind.ABILITY_CHECK, 3, 0, 40)
+	e.items.specials.fr.after_d20(c, t, ["check:all", "check:" + skill, "study"] as Array[String])
+	assert_true(t.reroll_note.contains("Scholar") or ch.skill_rank(StringName(skill)) < 1, "a 3 counts as 10")
+	assert_true(t.extra_label.contains("Thespian"), "Charisma added")
+	c.creature.begin_concentration("bless", "Bless")
+	var conc := D20Test.from_natural(D20Test.Kind.SAVING_THROW, 2, 0, 30)
+	e.items.specials.fr.after_d20(c, conc, ["save:all", "save:con", "concentration"] as Array[String])
+	assert_true(conc.success, "the bangle anchors the spell")
+	assert_false(c.reaction_available)
+
+
+func test_the_9d_artifacts_and_the_blocked_ones() -> void:
+	var ids := Compendium.shared().all_playable("magic_items").map(func(d: Dictionary) -> String: return str(d["id"]))
+	for id: String in ["calimemnon_crystal", "queen_ehlissas_marvelous_nightingale", "universal_pantograph"]:
+		assert_true(id in ids, "%s playable" % id)
+	assert_true("workshop_wrecker" in ids, "the Workshop Wrecker too")
+	for id: String in ["crown_of_horns", "orb_of_damara", "tome_of_the_dragon", "travelers_pearl", "windskiff",
+			"mechanical_wonder_gyrocopter", "mechanical_wonder_domestic", "mechanical_wonder_flying", "staff_of_the_lost"]:
+		assert_false(id in ids, "%s waits for its rules" % id)
+
+
+func test_calimemnon_crystal_rays_and_cold_aura() -> void:
+	var e := TestCombat.open_field()
+	var c := _wearing(e, "calimemnon_crystal")
+	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(3, 3), 5)
+	var foe := _talker(e, Vector2i(6, 2))
+	TestCombat.start_with(e, c)
+	assert_eq(c.creature.speed("fly").total(), 30, "Fly 30")
+	ally.creature.hp = 5
+	var hp := foe.creature.hp
+	var r := e.items.use(c, "calimemnon_crystal", "rays", [ally, ally, foe, foe, foe, foe])
+	assert_true(r.ok, r.reason)
+	assert_true(ally.creature.hp > 5, "rays mend an ally")
+	assert_true(foe.creature.hp < hp, "and burn a foe")
+	c.action_available = true
+	c.magic_action_used = false
+	var ra := e.items.use(c, "calimemnon_crystal", "cold_aura")
+	assert_true(ra.ok, ra.reason)
+	assert_true(e.spells.zones.object_of(c.id, "calimemnon_crystal__cold_aura") != null, "the cold aura is up")
+	c.action_available = true
+	c.magic_action_used = false
+	assert_true(e.items.use(c, "calimemnon_crystal", "end_aura").ok)
+	assert_true(e.spells.zones.object_of(c.id, "calimemnon_crystal__cold_aura") == null, "and down")
+	c.action_available = true
+	c.magic_action_used = false
+	var inv := e.items.use(c, "calimemnon_crystal", "invisibility", [ally])
+	assert_true(inv.ok, inv.reason)
+	assert_true(c.creature.has_condition(&"invisible") and not ally.creature.has_condition(&"invisible"), "Invisibility on yourself only")
+
+
+func test_nightingale_sings_its_spells() -> void:
+	var e := TestCombat.open_field()
+	var c := _wearing(e, "queen_ehlissas_marvelous_nightingale")
+	var ch := c.creature as Character
+	var foe := _talker(e, Vector2i(5, 2))
+	TestCombat.start_with(e, c)
+	assert_false(e.items.use(c, "queen_ehlissas_marvelous_nightingale", "slow", [foe]).ok, "not before it sings")
+	assert_true(e.items.use(c, "queen_ehlissas_marvelous_nightingale", "song").ok)
+	var start := ch.charges_left("queen_ehlissas_marvelous_nightingale")
+	var r := e.items.use(c, "queen_ehlissas_marvelous_nightingale", "slow", [foe], Vector2(5.5, 2.5))
+	assert_true(r.ok, r.reason)
+	assert_false(c.bonus_available, "a Bonus Action")
+	assert_eq(ch.charges_left("queen_ehlissas_marvelous_nightingale"), start - 2)
+
+
+func test_universal_pantograph_copies_an_ordinary_item() -> void:
+	var e := TestCombat.open_field()
+	var c := _wearing(e, "universal_pantograph")
+	var ch := c.creature as Character
+	ch.add_item("rope")
+	var before := 0
+	for x in ch.inventory:
+		if str(x["id"]) == "rope":
+			before += int(x["qty"])
+	var st := StoryState.new()
+	st.party.append(ch)
+	var opts := FieldItems.options(st.party, ch, "universal_pantograph", e.dice)
+	var dup := opts.filter(func(o: Dictionary) -> bool: return str(o["power_id"]) == "duplicate")
+	assert_true(not dup.is_empty() and "rope" in ((dup[0] as Dictionary)["choices"] as Array), "rope can be copied")
+	assert_false("universal_pantograph" in ((dup[0] as Dictionary)["choices"] as Array), "magic items can't")
+	assert_true(bool(FieldItems.use(st, ch, "universal_pantograph", "duplicate", null, e.dice, {"choice": "rope"})["ok"]))
+	var after := 0
+	for x in ch.inventory:
+		if str(x["id"]) == "rope":
+			after += int(x["qty"])
+	assert_eq(after, before + 1, "a copy")
+
+
+func test_workshop_wrecker_batters_a_small_room() -> void:
+	var rows: Array[String] = ["......", "......", "......"]
+	var e := TestCombat.encounter(rows, 3)
+	var c := _wearing(e, "workshop_wrecker", Vector2i(0, 0))
+	var foe := _talker(e, Vector2i(4, 2))
+	TestCombat.start_with(e, c)
+	var hp := foe.creature.hp
+	var r := e.items.use(c, "workshop_wrecker", "wreck")
+	assert_true(r.ok, r.reason)
+	assert_true(foe.creature.hp < hp, "a 30-ft room: 4d6 + 4 on a failed save")
+	assert_eq(c.creature.hp, c.creature.max_hp(), "not its user")
+	hp = foe.creature.hp
+	e.items.specials.fr.turn_start(c)
+	assert_true(foe.creature.hp < hp, "again at the start of its turn")
+	assert_true(e.items.use(c, "workshop_wrecker", "stop").ok)

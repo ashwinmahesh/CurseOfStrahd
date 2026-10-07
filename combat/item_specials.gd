@@ -38,8 +38,9 @@ func has(c: Combatant, item_or_template: String) -> bool:
 
 ## "" if a custom power can be used now, else why not.
 func why(c: Combatant, p: Dictionary) -> String:
-	if str((p["power"] as Dictionary).get("custom", "")).begins_with("fr_"):
-		return fr.why(c, p)
+	var fw := fr.why(c, p)
+	if fw != "" or str((p["power"] as Dictionary).get("custom", "")).begins_with("fr_"):
+		return fw
 	var w := _weapon_why(c, p)
 	return w if w != "" else _arcana_why(c, p)
 
@@ -437,6 +438,7 @@ func adjust_incoming(_source: Combatant, target: Combatant, parts: Array, label:
 ## After damage: the Berserker Axe's curse answering a hostile creature's blow; a Staff of the Python's snake killed
 ## takes the staff with it.
 func on_damaged(source: Combatant, target: Combatant, amount: int, parts: Array) -> void:
+	fr.on_damaged(source, target, amount, parts)
 	var e := enc()
 	if amount > 0 and has(target, "cloak_of_displacement"):
 		target.set_meta("displacement_off", true)
@@ -497,6 +499,7 @@ func before_d20(c: Combatant, kind: D20Test.Kind, keys: Array[String]) -> Array[
 ## A failed D20 Test: a Ring of Evasion turns a failed Dex save into a success; a Luck Blade rerolls a failure once a
 ## day (used automatically, like the game's other mid-roll choices; deviations.md).
 func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
+	fr.after_d20(c, t, keys)
 	var e := enc()
 	var ch := ch_of(c)
 	if ch == null or t.success or t.target <= 0:
@@ -567,6 +570,7 @@ func surprise_filter(ids: Array) -> Array:
 ## The start of a creature's turn: summoned helpers whose time is up leave, Sword of Wounding's wounds bleed, a
 ## berserker attacks.
 func turn_start(c: Combatant) -> void:
+	fr.turn_start(c)
 	var e := enc()
 	for o in e.combatants:
 		if o.has_meta("vanish_round") and str(o.get_meta("summoner", "")) == c.id and int(o.get_meta("vanish_round")) <= e.round_no and o.is_alive():

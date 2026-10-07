@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -15,7 +15,19 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only: Bonus Action while held makes the doll hover at a visible empty point within 30 feet for 1 minute.",
-  "text": "Reference-only: Bonus Action while held makes the doll hover at a visible empty point within 30 feet for 1 minute. Bonus Actions move it up to 30 feet, staying within 30 feet of you, or end the effect. While within 30 feet, speak through it, including Verbal spell components even if you cannot speak.",
-  "playable": false
+  "summary": "A doll you float up to 30 ft away and speak through, Verbal spells included.",
+  "text": "As a Bonus Action while holding this doll you can make it hover at an empty point you can see within 30 feet for 1 minute; a Bonus Action moves it again (it stays within 30 feet of you) or ends the effect. While it's within 30 feet you can speak through it, including the Verbal components of your spells, even if you can't speak yourself or stand in Silence.",
+  "playable": true,
+  "held": true,
+  "powers": [
+    {
+      "id": "hover",
+      "name": "Float the Puppet",
+      "cost": "bonus",
+      "custom": "fr_puppet",
+      "targeting": "point",
+      "range": 30,
+      "text": "Bonus Action: the doll hovers at a point within 30 ft for a minute; you speak (and cast) through it."
+    }
+  ]
 }

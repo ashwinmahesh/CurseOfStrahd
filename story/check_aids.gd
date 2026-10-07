@@ -13,6 +13,9 @@ static func options(ch: Character, test: D20Test) -> Array[Dictionary]:
 		return out
 	if ch.heroic_inspiration:
 		out.append({"id": "heroic_inspiration", "label": "Heroic Inspiration: reroll the d20"})
+	# Lucky Foot: a natural 1 rolled again (the charm is used up).
+	if test.kept == 1 and not test.auto_failed and ch.inventory.any(func(e: Dictionary) -> bool: return str(e["id"]) == "lucky_foot" and int(e.get("qty", 0)) > 0):
+		out.append({"id": "lucky_foot", "label": "Lucky Foot: reroll the natural 1 (the charm is used up)"})
 	if _has_feature(ch, "tactical_mind") and ch.resource_left("second_wind") > 0:
 		out.append({"id": "tactical_mind", "label": "Tactical Mind: add 1d10 (a Second Wind use, kept if it still fails)"})
 	return out
@@ -26,6 +29,10 @@ static func apply(id: String, ch: Character, test: D20Test, dice: DiceRoller) ->
 				ch.heroic_inspiration = false
 				var n := dice.d20("Heroic Inspiration reroll (%s)" % ch.name)
 				test.set_natural(n, "Heroic Inspiration")
+		"lucky_foot":
+			if test.kept == 1:
+				ch.remove_one("lucky_foot")
+				test.set_natural(dice.d20("Lucky Foot (%s)" % ch.name), "Lucky Foot")
 		"tactical_mind":
 			if ch.resource_left("second_wind") > 0:
 				var r := int(dice.roll_expr("1d10", "Tactical Mind (%s)" % ch.name)["total"])

@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -15,7 +15,28 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only while worn: cast Mage Hand; omit Somatic components from slotted spells; once per dawn, cast Dispel Magic on a creature as part of hitting it with a melee spell attack..",
-  "text": "Reference-only while worn: cast Mage Hand; omit Somatic components from slotted spells; once per dawn, cast Dispel Magic on a creature as part of hitting it with a melee spell attack.",
-  "playable": false
+  "summary": "Cast Mage Hand; no Somatic components with slots; once a day a melee spell attack hit dispels the target's magic.",
+  "text": "While wearing this trophy you can cast Mage Hand from it, your spells cast with a slot need no Somatic components, and once per dawn, when you hit a creature with a melee spell attack, you can also cast Dispel Magic on it (at level 3). The game doesn't track free hands for Somatic components, and the Dispel Magic happens on its own the first time it can.",
+  "playable": true,
+  "worn": "neck",
+  "powers": [
+    {
+      "id": "mage_hand",
+      "name": "Mage Hand",
+      "spell": "mage_hand",
+      "dc": "wielder"
+    },
+    {
+      "id": "duel_dispel",
+      "name": "Duelist's Dispel",
+      "cost": "free",
+      "custom": "fr_duel_dispel",
+      "hidden": true,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once a day, on its own: a melee spell attack hit also casts Dispel Magic on the target."
+    }
+  ]
 }

@@ -4,18 +4,43 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
   "cost_gp": 4000,
   "magic": {
     "rarity": "rare",
-    "attunement": false
+    "attunement": false,
+    "charges": {
+      "max": 6,
+      "when": "never",
+      "last": {
+        "die": 1,
+        "on": 1,
+        "result": "destroyed",
+        "text": "falls apart with its last key"
+      }
+    }
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only: six keys each cast Arcane Lock by touching a closed entrance or container with a Magic action.",
-  "text": "Reference-only: six keys each cast Arcane Lock by touching a closed entrance or container with a Magic action. Used keys disappear; using the last destroys the clasp.",
-  "playable": false
+  "summary": "A clasp of six keys; each casts Arcane Lock on a door or container and then vanishes.",
+  "text": "This clasp holds six keys. As a Magic action you can touch one to a closed door, window, gate or container to cast Arcane Lock on it; that key then vanishes, and when the last one is used the clasp crumbles.",
+  "playable": true,
+  "held": true,
+  "powers": [
+    {
+      "id": "lock",
+      "name": "Arcane Lock",
+      "cost": "magic",
+      "custom": "flavour",
+      "field": true,
+      "params": {
+        "text": "seals a door or container shut with Arcane Lock"
+      },
+      "combat": false,
+      "charges": 1
+    }
+  ]
 }

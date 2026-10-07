@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -15,7 +15,21 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only: a Magic action while holding the dictionary opens it to the word you are trying to remember..",
-  "text": "Reference-only: a Magic action while holding the dictionary opens it to the word you are trying to remember.",
-  "playable": false
+  "summary": "Opens to the word you're trying to remember.",
+  "text": "As a Magic action while holding this dictionary you can make it fall open to the word you're struggling to remember.",
+  "playable": true,
+  "held": true,
+  "powers": [
+    {
+      "id": "find_word",
+      "name": "Find the Word",
+      "cost": "magic",
+      "custom": "flavour",
+      "field": true,
+      "params": {
+        "text": "falls open at exactly the word you were reaching for"
+      },
+      "combat": false
+    }
+  ]
 }
