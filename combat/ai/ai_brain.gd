@@ -154,16 +154,6 @@ func play_turn(c: Combatant) -> CombatResult:
 		var control := ma.bonus_action(c, "control")
 		if control.is_paused():
 			return control
-		# Tactician and Honour: the best spell of its whole list, or its scroll, when it beats the weapon.
-		if e.difficulty.tactics in ["sharp", "ruthless"] and c.action_available and AiSpells.casts(c):
-			Creature.begin_read()
-			var cast_plan := spells.plan(c, action_worth(c, plan_turn(c)))
-			Creature.end_read()
-			if not cast_plan.is_empty():
-				last_plan = cast_plan
-				var cr := spells.cast(c, cast_plan)
-				if cr.ok or cr.is_paused():
-					return e.then(cr, func() -> CombatResult: return _after_main(c))
 		var spell_plan := _spell_plan(c, prof)
 		if not spell_plan.is_empty():
 			last_plan = spell_plan
@@ -203,7 +193,16 @@ func play_turn(c: Combatant) -> CombatResult:
 	# Weighing every square and target asks the same creatures thousands of questions: one read (Creature.begin_read).
 	Creature.begin_read()
 	var plan := plan_turn(c)
+	# Tactician and Honour: the best spell of a caster's whole list, or its scroll, when it beats the weapon plan.
+	var cast_plan := {}
+	if e.difficulty.tactics in ["sharp", "ruthless"] and c.action_available and AiSpells.casts(c):
+		cast_plan = spells.plan(c, action_worth(c, plan))
 	Creature.end_read()
+	if not cast_plan.is_empty():
+		last_plan = cast_plan
+		var cr := spells.cast(c, cast_plan)
+		if cr.ok or cr.is_paused():
+			return e.then(cr, func() -> CombatResult: return _after_main(c))
 	last_plan = plan
 	match str(plan["kind"]):
 		"attack":

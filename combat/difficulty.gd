@@ -126,10 +126,11 @@ func describe() -> Array[String]:
 			out.append("Enemies fight as the book has them.")
 		_:
 			out.append("Enemies gang up on the hurt and go for your healers and spellcasters first.")
+			out.append("Enemy spellcasters cast from their whole spell list.")
 	if tactics == "ruthless":
 		out.append("Cruel foes strike a hero who has fallen to 0 Hit Points.")
 	if kit:
-		out.append("Armed foes carry a Potion of Healing and drink it when Bloodied. You loot any they don't.")
+		out.append("Armed foes carry a Potion of Healing and drink it when Bloodied; casters carry a spell scroll. You loot what they don't use.")
 	if morale:
 		out.append("When their side breaks, foes flee the fight, except mindless things and bosses.")
 	if full_bosses:
