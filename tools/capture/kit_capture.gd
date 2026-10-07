@@ -40,6 +40,16 @@ const SHOTS := {
 	"death_house_upper": {"loc": "death_house_upper"},
 	"dungeon": {"loc": "death_house_dungeon_2"},
 	"church": {"loc": "village_church", "cells": [[10, 14], [11, 14], [10, 15], [11, 15]]},
+	"castle_gates": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 27], [20, 27], [19, 28], [20, 28]],
+		"look": [19, 16], "dist": 22.0},
+	"castle_bridge": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 26], [20, 26], [19, 27], [20, 27]],
+		"dist": 12.0, "yaw": 1},
+	"castle_yard": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[15, 14], [16, 14], [15, 15], [16, 15]],
+		"look": [18, 8], "dist": 16.0},
+	"castle_overlook": {"loc": "castle_ravenloft_overlook", "hour": 21, "cells": [[10, 3], [11, 3], [10, 4], [11, 4]],
+		"dist": 14.0},
+	"castle_roofs": {"loc": "castle_ravenloft_spires_roofs", "hour": 21, "cells": [[8, 6], [9, 6], [8, 7], [9, 7]],
+		"dist": 16.0},
 }
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 
