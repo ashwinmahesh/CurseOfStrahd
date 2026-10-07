@@ -72,6 +72,13 @@ validate:
 lint: import
 	tools/lint_gd.sh
 
+## F1's balance tool (tools/balance/balance_sim.gd): a fight played RUNS times (20) in each difficulty mode by the
+## pregens on autopilot. ENC=<data/encounters id>, or LOCATION=<id> FIGHT=<fight id> [LEVEL=n] [PARTY="a b c d"].
+.PHONY: balance
+balance:
+	@$(FRESH)
+	$(G) --headless --script res://tools/balance/balance_sim.gd -- $(if $(ENC),--encounter=$(ENC),) $(if $(LOCATION),--location=$(LOCATION),) $(if $(FIGHT),--fight=$(FIGHT),) $(if $(LEVEL),--level=$(LEVEL),) $(if $(PARTY),"--party=$(PARTY)",) $(if $(MODES),"--modes=$(MODES)",) $(if $(RUNS),--runs=$(RUNS),) $(if $(JSON),--json=$(JSON),) $(if $(NO_WARD),--no_ward,) 2>&1 | $(LOGCHK)
+
 ## Local CI: everything main must pass before a merge (plan §4, ADR 0001).
 ci: validate lint test
 

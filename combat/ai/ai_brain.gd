@@ -14,6 +14,8 @@ extends RefCounted
 ##   cowardly:    flees when Bloodied.
 ## Steps that can pause for a player's reaction (an Opportunity Attack while moving, Shield, Uncanny Dodge) are
 ## chained with Encounter.then(), so the turn carries on after the player answers.
+## The playthrough's difficulty changes how it fights (combat/ai/ai_tactics.gd): spread or focused blows, potions,
+## fleeing a broken fight, and at Honour cruel foes striking the fallen.
 
 const PROFILES := {
 	"pack_hunter": {"oa_fear": 1.0, "finish": 1.5, "nearest": false, "flee_bloodied": false},
@@ -37,11 +39,19 @@ var _enc: WeakRef
 var last_plan: Dictionary = {}
 ## Legendary and lair choices, and the strahd profile (combat/ai/boss_brain.gd).
 var boss: BossBrain
+## How it fights at the playthrough's difficulty (combat/ai/ai_tactics.gd), and its casters' spells at Tactician
+## and Honour (combat/ai/ai_spells.gd).
+var tactics: AiTactics
+var spells: AiSpells
+## The fallen hero this turn's plan strikes (Honour), whom the attack steps keep at although they're down.
+var _finishing: Combatant = null
 
 
 func _init(encounter: Encounter) -> void:
 	_enc = weakref(encounter)
 	boss = BossBrain.new(encounter)
+	tactics = AiTactics.new(encounter)
+	spells = AiSpells.new(encounter)
 
 
 func enc() -> Encounter:
@@ -115,6 +125,16 @@ func play_turn(c: Combatant) -> CombatResult:
 			return _flee(c, caster, true)
 	if not c.can_act():
 		return CombatResult.new()
+	_finishing = null
+	# The difficulty's kit and morale: a Bloodied foe drinks its potion; a broken side flees (combat/ai/ai_tactics.gd).
+	if c.side == &"enemy":
+		var drank: Variant = tactics.potion_turn(c)
+		if drank != null:
+			return drank as CombatResult
+		if e.difficulty.morale and not AiTactics.fearless(c) and tactics.broken(c):
+			var fled: Variant = tactics.flee_turn(c)
+			if fled != null:
+				return fled as CombatResult
 	if str(c.ai_profile) == "strahd":
 		var bt: Variant = boss.play_turn(c)
 		if bt != null:
@@ -173,10 +193,21 @@ func play_turn(c: Combatant) -> CombatResult:
 	# Weighing every square and target asks the same creatures thousands of questions: one read (Creature.begin_read).
 	Creature.begin_read()
 	var plan := plan_turn(c)
+	# Tactician and Honour: the best spell of a caster's whole list, or its scroll, when it beats the weapon plan.
+	var cast_plan := {}
+	if e.difficulty.tactics in ["sharp", "ruthless"] and c.action_available and AiSpells.casts(c):
+		cast_plan = spells.plan(c, action_worth(c, plan))
 	Creature.end_read()
+	if not cast_plan.is_empty():
+		last_plan = cast_plan
+		var cr := spells.cast(c, cast_plan)
+		if cr.ok or cr.is_paused():
+			return e.then(cr, func() -> CombatResult: return _after_main(c))
 	last_plan = plan
 	match str(plan["kind"]):
 		"attack":
+			if bool(plan.get("finish", false)):
+				_finishing = plan["target"] as Combatant
 			return e.then(_move_then_attack(c, plan), func() -> CombatResult: return _after_main(c))
 		"approach":
 			if c.creature is Monster:
@@ -417,6 +448,10 @@ func plan_turn(c: Combatant) -> Dictionary:
 				if score > float(best["score"]):
 					best = {"kind": "attack", "target": t, "cell": cell, "option": str(o["id"]), "score": score,
 						"why": "%s at %s with %s" % [t.name(), cell, p.name]}
+	# Honour: a cruel foe may strike a hero on 0 Hit Points instead (combat/ai/ai_tactics.gd).
+	var fallen := tactics.fallen_plan(c, options, reach, threats, float(prof["oa_fear"]))
+	if not fallen.is_empty() and float(fallen["score"]) > float(best["score"]):
+		best = fallen
 	if str(best["kind"]) == "attack":
 		return best
 	if not visible.is_empty():
@@ -500,16 +535,34 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 	# Finishing a foe ends its turns for good.
 	var hp_left := t.creature.hp + t.creature.temp_hp
 	if avg >= hp_left and not echo:
-		score += float(prof["finish"]) * 3.0 * float(hc["chance"])
+		score += float(prof["finish"]) * 3.0 * float(hc["chance"]) * tactics.finish_scale()
 	# Concentrating casters are worth breaking.
 	if t.creature.concentration != null:
 		score += 1.0
 	score += boss.target_bonus(c, t)
+	# The difficulty: spread blows (Story), or gang up on the hurt, healers and casters (Tactician and Honour).
+	if not echo:
+		score += tactics.target_adjust(t, expected)
 	# Opportunity Attacks along the way.
 	if cell != c.cell and float(prof["oa_fear"]) > 0.0:
 		score -= float(prof["oa_fear"]) * _oa_risk(c, CombatGrid.path_to(reach, cell), threats)
 	score -= cost * 0.01
 	return score
+
+
+## What a weapon plan is worth for the whole action: its score for each attack the action makes (Multiattack, Extra
+## Attack). Nothing when it can't attack this turn.
+func action_worth(c: Combatant, weapon: Dictionary) -> float:
+	if str(weapon.get("kind", "")) != "attack":
+		return 0.0
+	var n := maxi(1, enc().attacks_per_action(c))
+	if c.creature is Monster:
+		var multi := (c.creature as Monster).action("multiattack")
+		var count := 0
+		for entry: Variant in multi.get("multiattack", []):
+			count += int((entry as Dictionary).get("count", 1))
+		n = maxi(n, count)
+	return float(weapon["score"]) * n
 
 
 ## Average damage of an attack option, counting a monster's extra dice and a little for its riders.
@@ -634,7 +687,7 @@ func _attack_step(c: Combatant, target: Combatant, option_id: String) -> CombatR
 		return CombatResult.new()
 	var option := e.option_by_id(c, option_id)
 	var t := target
-	if t == null or t.is_down() or option.is_empty() or e.attack_legal(c, t, option) != "":
+	if t == null or (t.is_down() and t != _finishing) or option.is_empty() or e.attack_legal(c, t, option) != "":
 		var alt := _best_in_reach(c)
 		if alt.is_empty():
 			return CombatResult.new()
@@ -652,6 +705,7 @@ func _attack_step(c: Combatant, target: Combatant, option_id: String) -> CombatR
 				queue.append("|".join(choices))
 		return _multi_step(c, t, queue)
 	var r: CombatResult
+	tactics.note_strike(t)
 	if c.creature is Monster:
 		r = e.monster_attack(c, t, str(option.get("action_id", "")))
 	else:
@@ -690,7 +744,7 @@ func _multi_step(c: Combatant, target: Combatant, queue: Array[String]) -> Comba
 			continue
 		var option := e.option_by_id(c, "monster:" + cid2)
 		var tt := target
-		if tt == null or tt.is_down() or option.is_empty() or e.attack_legal(c, tt, option) != "":
+		if tt == null or (tt.is_down() and tt != _finishing) or option.is_empty() or e.attack_legal(c, tt, option) != "":
 			tt = null
 			for h in e.hostiles_of(c):
 				if not h.is_down() and not option.is_empty() and e.attack_legal(c, h, option) == "":
@@ -705,6 +759,7 @@ func _multi_step(c: Combatant, target: Combatant, queue: Array[String]) -> Comba
 			t = tt
 	if t == null:
 		return _multi_step(c, target, queue)
+	tactics.note_strike(t)
 	var r := e.monster_attack(c, t, best_id)
 	return e.then(r, func() -> CombatResult: return _multi_step(c, t, queue))
 

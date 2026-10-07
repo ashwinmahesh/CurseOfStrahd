@@ -52,9 +52,9 @@ func test_the_pick_fits_and_goes_back() -> void:
 	var back := _button("Back")
 	var begin: Button = null
 	for b in _buttons():
-		if b.text.begins_with("Begin"):
+		if b.text.begins_with("Go on"):   # the party pick goes on to the difficulty page (F1)
 			begin = b
-	assert_true(back != null and begin != null, "Back and Begin are both there")
+	assert_true(back != null and begin != null, "Back and Go on are both there")
 	for b: Button in [back, begin]:
 		var r := b.get_global_rect()
 		assert_true(r.end.y <= screen.y and r.position.y >= 0.0, "%s is on screen (%s in %s)" % [b.text, r, screen])

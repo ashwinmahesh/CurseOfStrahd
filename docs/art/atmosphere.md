@@ -68,7 +68,10 @@ anyone touching this file.
   Empty squares inside a map (Krezk's approach, the Abbey's road) are hillside too, unless the mood says they are a
   drop (`"void": "drop"`: the castle's roofs and chasms, Tsolenka's gorge). No tree of the land stands within two
   squares of anywhere people can walk.
-- **Water.** Lakes, rivers, pools and marsh drift in two layers of the water texture, deeper water darker, foam
+- **Water.** In the Modern finish (W14, `shaders/world/lit_water.gdshader`) water deepens smoothly from the shore,
+  small ripples drift with the current and bend the light, so the moon and the lamps leave glints on it and the
+  reflections waver, the sky's light lies on it more at a glancing angle, soft broken foam laps along the shore, and
+  rain rings it in wet weather (W12). In Classic, lakes, rivers, pools and marsh drift in two layers of the water texture, deeper water darker, foam
   lapping along the shore, thin highlight lines riding the current and the sky's light on the surface. Water keeps
   its own colours through the grade (it marks itself in the normal buffer for the screen pass), so a lake never
   turns the colour of the road. A row of the map's frame trees standing across a lake becomes open water (the rules
@@ -80,6 +83,15 @@ anyone touching this file.
   in a blizzard; will-o'-wisps and fireflies after dark; dust hanging in shut-up rooms; crows circling overhead;
   chimney smoke bent by the wind; sparks over open fires; candlelight spilling from lit windows after dark;
   lightning flashes in a storm (and through the castle's spire windows).
+- **Weather on surfaces** (W12, Modern; `shaders/world/weather_surface.gdshaderinc`, the global uniforms
+  `world_wet`, `world_snow`, `world_time` and `world_sky` that Atmosphere sets from the mood's weather outdoors):
+  rain darkens and glosses everything and its colour deepens, puddles gather in the low places of level ground,
+  ringing with drops and holding the sky's light, and the sun and moon leave almost no highlight under rain cloud, so
+  wet stone glistens in the lamps; snow settles on roofs, ledges and wall tops even when light, and lies on the ground
+  in drifts that join up as it gets heavier (Krezk patchy, the Abbey half covered, the mountains white). The party
+  leaves footprints (decals with a dip and, in mud, standing water) where the ground takes them: snow once it lies
+  (`SNOW_GROUND`), mud, marsh and bare earth, grass and roads in the rain; a print every `STRIDE`, the last
+  `MAX_PRINTS` kept. The pathfinder steers round difficult ground, so prints in mud are rarer than in snow.
 - **Grade.** In the Modern finish (W16) the shade takes the place's own cool colour and loses some of its colour while
   lamplight keeps its warm one, so light pools warm against cool, dark shade (the chosen direction: A's effects in
   B's tone): night blue by default, blue-grey on an overcast day, deep night blue indoors; a mood's `tone` gives
