@@ -12,6 +12,8 @@ const STEP_NAMES: Array[String] = ["Class", "Origin", "Ability Scores", "Class C
 
 var compendium: Compendium
 var build: Dictionary
+## Names the company already has: a character made mid-game can't take one (name_problems).
+var taken_names: Array[String] = []
 var _preview: Character = null
 
 
@@ -309,6 +311,11 @@ func name_problems() -> Array[String]:
 	var key := str(build.get("name", "")).to_snake_case()
 	if bool(app.get("custom", false)) and key != "" and not compendium.get_entry("pregens", key).is_empty():
 		out.append("%s is one of your companions' names; choose another for your hero." % str(build["name"]))
+	elif key != "":
+		for t in taken_names:
+			if t.to_snake_case() == key:
+				out.append("Someone in your company is already called %s; choose another name." % t)
+				break
 	return out
 
 

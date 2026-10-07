@@ -55,6 +55,12 @@ func _redraw() -> void:
 	for c in _sheet.get_children():
 		c.queue_free()
 	_sheet.add_child(LiveSheet.build(ctl.preview(), ch))
+	# Several levels waiting (back from camp, or made after the party had levelled): which one this is.
+	var waiting := st.levels_waiting(ch)
+	if waiting > 1:
+		var more := "%d more wait" % (waiting - 1) if waiting > 2 else "1 more waits"
+		_body.add_child(UiParts.row(UiKit.label("Level %d for %s; %s after it, up to the party's level %d." % [ch.character_level() + 1,
+			ch.name.get_slice(" ", 0), more, st.target_level()], 15, "gilt_light", 1000)))
 	# 1. Class
 	_body.add_child(UiParts.section("1 · Class to advance"))
 	var classes := HFlowContainer.new()

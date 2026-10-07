@@ -5,7 +5,11 @@ extends SceneTree
 ## to bottom, the background glow and, for spells, a halo: spells by flavour (fire, frost, necrotic...), items in
 ## their natural colours (steel, wood, leather...). Every tile shares the gilt frame of the menus. Tiles whose key left
 ## the catalog are removed.
-## Run: godot --headless --path . --script res://tools/art/build_icons.gd
+##
+## The catalog's "ui" keys are menu glyphs instead: the silhouette as a plain white shape, like the menu icons
+## `make ui_art` writes, which buttons tint gilt. They go beside those in art/ui/icons (UiKit.icon), and nothing else
+## there is touched.
+## Run: godot --headless --path . --script res://tools/art/build_icons.gd [-- --ui]
 
 const CATALOG := "res://art/icons.json"
 const PACK := "res://art/sourced/game_icons/icons/ffffff/transparent/1x1/"
@@ -14,6 +18,8 @@ const SIZE := 128
 const KINDS: Array[String] = ["spells", "items"]
 ## The tint an entry without "@<tint>" gets.
 const DEFAULT_TINT := {"spells": "arcane", "items": "cloth"}
+const UI_OUT := "res://art/ui/icons/"
+const UI_SIZE := 96
 ## Backgrounds when a tint names none: a crimson glow for spells, near black for items.
 const DEFAULT_BG := {"spells": ["blood", "blood_deep", "ui_black"], "items": ["ui_oxblood", "ui_black", "ui_black"]}
 
@@ -28,7 +34,11 @@ func _init() -> void:
 	var tints := catalog.get("tints", {}) as Dictionary
 	var missing: Array[String] = []
 	var written := 0
-	for kind in KINDS:
+	# `-- --ui` writes only the menu glyphs.
+	var kinds: Array[String] = []
+	if not "--ui" in OS.get_cmdline_user_args():
+		kinds = KINDS
+	for kind in kinds:
 		var keys := catalog.get(kind, {}) as Dictionary
 		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT + kind))
 		for key: String in keys:
@@ -52,6 +62,16 @@ func _init() -> void:
 			if f.ends_with(".png") and not keys.has(f.get_basename()):
 				DirAccess.remove_absolute(ProjectSettings.globalize_path(OUT + kind.path_join(f)))
 				DirAccess.remove_absolute(ProjectSettings.globalize_path(OUT + kind.path_join(f + ".import")))
+	var glyphs := catalog.get("ui", {}) as Dictionary
+	for key: String in glyphs:
+		var glyph_path := PACK + str(glyphs[key]) + ".svg"
+		var img := Image.new()
+		if not FileAccess.file_exists(glyph_path) or img.load_svg_from_string(glyph(FileAccess.get_file_as_string(glyph_path)), UI_SIZE / 512.0) != OK:
+			missing.append("ui/%s: %s" % [key, glyphs[key]])
+			continue
+		var png := UI_OUT + key + ".png"
+		img.save_png(png)
+		written += 1
 	for m in missing:
 		printerr("icons: no silhouette or tint for " + m)
 	print("icons: %d tiles written to %s" % [written, OUT])
@@ -86,6 +106,15 @@ static func tile(kind: String, source: String, tint: Dictionary) -> String:
 	for corner: Vector2 in [Vector2(42, 42), Vector2(470, 42), Vector2(42, 470), Vector2(470, 470)]:
 		s += "<path d=\"M%d %dl14 14l-14 14l-14 -14z\" fill=\"%s\" stroke=\"%s\" stroke-width=\"4\"/>" % [corner.x, corner.y - 14, c("gilt_light"), c("ui_black")]
 	return s + "</svg>"
+
+
+## A menu glyph: the silhouette in white on nothing, filling the square as the menu icons do.
+static func glyph(source: String) -> String:
+	var body := source.substr(source.find(">") + 1)
+	body = body.substr(0, body.rfind("</svg>"))
+	# The pack draws a black square behind each glyph; drop it.
+	body = body.replace("<path d=\"M0 0h512v512H0z\"/>", "")
+	return "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\" width=\"512\" height=\"512\"><g transform=\"translate(12 12) scale(0.953125)\">%s</g></svg>" % body
 
 
 ## The silhouette's paths with their white fill swapped for `paint`.

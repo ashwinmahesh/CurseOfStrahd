@@ -1,5 +1,5 @@
 {
-  "_note": "Icon key -> game-icons.net silhouette (art/sourced/game_icons, CC BY 3.0). make icons frames each one as art/icons/<spells|items>/<key>.png. A spell or item uses the key in its data's \"icon\", else its own id.",
+  "_note": "Icon key -> game-icons.net silhouette (art/sourced/game_icons, CC BY 3.0). make icons frames each one as art/icons/<spells|items>/<key>.png. A spell or item uses the key in its data's \"icon\", else its own id. \"ui\" keys are menu glyphs: plain white shapes in art/ui/icons (make icons).",
   "_tints": "A key's value is <silhouette>@<tint>. A tint gives palette colours: face top to bottom, bg centre to edge, glow (a spell's halo). Spells are coloured by flavour, items in their natural colours; no tint = arcane / cloth.",
   "tints": {
     "arcane": {"face": ["gilt_light", "gilt", "gilt_dark"], "bg": ["blood", "blood_deep", "ui_black"], "glow": "crimson"},
@@ -43,6 +43,9 @@
     "orange": {"face": ["flame", "candle", "ember"]},
     "yellow": {"face": ["ivory", "wick", "flame"]},
     "pink": {"face": ["lilac", "rose", "vampire_red"]}
+  },
+  "ui": {
+    "create": "lorc/quill-ink"
   },
   "spells": {
     "acid_splash": "lorc/acid-blob@acid",
