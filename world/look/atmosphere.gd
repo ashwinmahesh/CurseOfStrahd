@@ -171,6 +171,8 @@ func _build() -> void:
 		_modern_finish()
 	if board == null:
 		return
+	if Look.modern():
+		_flat_floors_cast_no_shadow()
 	if mood.has("water"):
 		_build_water()
 	if outdoors and not (mood.get("surround", {}) as Dictionary).is_empty():
@@ -317,6 +319,21 @@ func _update_lamp_shadows() -> void:
 			l.shadow_enabled = want
 		if want and not is_equal_approx(l.distance_fade_shadow, fade):
 			l.distance_fade_shadow = fade
+
+
+## A level floor or ground square can't shadow anything (nothing stands under it), yet each is its own box that every
+## shadow map would draw again: the sun's splits and every shadowed lamp's six faces (W17: the sun's shadows doubled
+## the draw calls). Raised floors (a dais, steps) keep their shadows.
+func _flat_floors_cast_no_shadow() -> void:
+	for n in board.get_children():
+		var mi := n as MeshInstance3D
+		if mi == null or not (mi.mesh is BoxMesh):
+			continue
+		var name_ := str(mi.name)
+		if not (name_.begins_with("Floor") or name_.begins_with("Ground") or name_.begins_with("Water")):
+			continue
+		if mi.position.y + (mi.mesh as BoxMesh).size.y / 2.0 <= 0.02:
+			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
 ## The Modern finish's depth of field, as a strength the owner picks from (docs/plans/ui_polish.md): how soft

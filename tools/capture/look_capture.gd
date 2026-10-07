@@ -14,7 +14,8 @@ extends Node
 ## - LOOK_OUTLINE=off|silhouette|full: the world's ink lines.
 ## - LOOK_FADE=1: the 3D pieces near the party faded, as when they stand in front of it.
 ## - LOOK_BENCH=1 times each part of the renderer in turn instead of shooting (_bench), LOOK_BENCH=presets the graphics
-##   presets, several rounds over, since other work on the machine makes one reading noisy.
+##   presets, several rounds over, since other work on the machine makes one reading noisy; LOOK_BENCH=pairs what one
+##   change saves, switching it on and off in quick turns (_bench_pairs), the steadiest under load.
 
 ## Each shot: the place, the hour, where the party stands (empty: the place's own spawn) and the camera.
 const SHOTS := {
@@ -56,6 +57,9 @@ func capture_shots(tool: Node, out: String) -> void:
 		if OS.get_environment("LOOK_BENCH") == "presets":
 			await _bench_presets(tool, id)
 			continue
+		if OS.get_environment("LOOK_BENCH") == "pairs":
+			await _bench_pairs(tool, id)
+			continue
 		if OS.get_environment("LOOK_BENCH") != "":
 			await _bench(tool, id)
 			continue
@@ -67,7 +71,9 @@ func capture_shots(tool: Node, out: String) -> void:
 		var ms := float(Time.get_ticks_usec() - t0) / 1000.0 / 120.0
 		Engine.max_fps = 60
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
-		print("look %s %s: %.2f ms a frame uncapped (%d fps)" % [Look.style(), id, ms, int(1000.0 / ms)])
+		var calls := RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
+		print("look %s %s: %.2f ms a frame uncapped (%d fps), %d draw calls" % [Look.style(), id, ms, int(1000.0 / ms),
+			calls])
 		await tool.call("wait_frames", 10)
 		tool.call("_shot", "%s_%s.png" % [out, id])
 
@@ -209,7 +215,9 @@ func _bench_presets(tool: Node, id: String) -> void:
 	Engine.max_fps = 0
 	# High, then High with one setting at Medium's (or off), then Medium and Low.
 	var med := Graphics.SPECS["medium"] as Dictionary
-	var less := {"high": {}, "-msaa": {"msaa": Viewport.MSAA_DISABLED}, "-ao": {"ao": med["ao"], "ao_half": true},
+	var less := {"high": {}, "hash_noise": {}, "-msaa": {"msaa": Viewport.MSAA_DISABLED},
+		"msaa2": {"msaa": Viewport.MSAA_2X}, "-splits2": {"sun_splits": 2}, "-dof_low": {"dof": med["dof"]},
+		"-ao": {"ao": med["ao"], "ao_half": true},
 		"-bounce": {"bounce": -1}, "-filter": {"filter": med["filter"]}, "-lamp_soft": {"lamp_soft": false},
 		"-sun_soft": {"sun_soft": false}, "-lamps6": {"lamp_shadows": 6, "lamp_atlas": 4096}, "-haze48": {"haze": 48},
 		"-ssr32": {"reflections": 32}, "-sway": {"swaying": 0}, "medium": {}, "low": {}}
@@ -223,6 +231,8 @@ func _bench_presets(tool: Node, id: String) -> void:
 		for p in parts:
 			Graphics.overrides = less[p] as Dictionary
 			Graphics.set_preset(p if p in Graphics.PRESETS else "high", false)
+			var post := (view.post.mesh as QuadMesh).material as ShaderMaterial
+			post.set_shader_parameter("fast_noise", p != "hash_noise")
 			await tool.call("wait_frames", 20)
 			var last := Time.get_ticks_usec()
 			for i in 60:
@@ -240,5 +250,59 @@ func _bench_presets(tool: Node, id: String) -> void:
 			float(t[t.size() / 2]), float(t[t.size() / 4])])
 	Graphics.overrides = {}
 	Graphics.set_preset(was, false)
+	Engine.max_fps = 60
+	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+
+
+## What each change saves on the High preset, steady under load: the change is switched on and off every 16 frames,
+## ten times, the first 4 frames after each switch dropped; the saving is the median over the turns of the frame time
+## with it on less with it off.
+func _bench_pairs(tool: Node, id: String) -> void:
+	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+	Engine.max_fps = 0
+	var post := (view.post.mesh as QuadMesh).material as ShaderMaterial
+	var floors: Array[MeshInstance3D] = []
+	for n in view.board.get_children():
+		var mi := n as MeshInstance3D
+		if mi != null and mi.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF and mi.mesh is BoxMesh:
+			floors.append(mi)
+	var sun := view.atmosphere.sun
+	var vp := get_viewport()
+	# [name, on, off]: what to set for the change on, and for it off.
+	var changes: Array[Array] = [
+		["texture noise (vs hashed)", func() -> void: post.set_shader_parameter("fast_noise", true),
+			func() -> void: post.set_shader_parameter("fast_noise", false)],
+		["flat floors cast no shadow", func() -> void:
+			for f in floors:
+				f.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF,
+			func() -> void:
+				for f in floors:
+					f.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON],
+		["sun in 2 splits (vs 4)", func() -> void: sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS,
+			func() -> void: sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS],
+		["MSAA 2x (vs 4x)", func() -> void: vp.msaa_3d = Viewport.MSAA_2X, func() -> void: vp.msaa_3d = Viewport.MSAA_4X],
+		["no MSAA (vs 4x)", func() -> void: vp.msaa_3d = Viewport.MSAA_DISABLED,
+			func() -> void: vp.msaa_3d = Viewport.MSAA_4X],
+		["no sun shadows", func() -> void: sun.shadow_enabled = false, func() -> void: sun.shadow_enabled = true],
+	]
+	for c: Array in changes:
+		var on := c[1] as Callable
+		var off := c[2] as Callable
+		var savings: Array[float] = []
+		var with_on := 0.0
+		for turn in 10:
+			var times := [0.0, 0.0]
+			for side in 2:
+				(off if side == 0 else on).call()
+				await tool.call("wait_frames", 4)
+				var t0 := Time.get_ticks_usec()
+				await tool.call("wait_frames", 12)
+				times[side] = float(Time.get_ticks_usec() - t0) / 1000.0 / 12.0
+			savings.append(float(times[0]) - float(times[1]))
+			with_on += float(times[1])
+		off.call()
+		savings.sort()
+		print("pairs %s %s: saves %.2f ms (median of 10; with it %.1f ms a frame)" % [id, c[0],
+			savings[savings.size() / 2], with_on / 10.0])
 	Engine.max_fps = 60
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)

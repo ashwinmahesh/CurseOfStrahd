@@ -103,9 +103,9 @@ Mini (Apple M6) on High.
 
 | | Low | Medium | High |
 |---|---|---|---|
-| Anti-aliasing | FXAA | SMAA | MSAA 4x and SMAA |
-| 3D resolution | 77%, FSR 1 upscale | full | full |
-| Sun and moon shadow map | 2048, 2 splits, hard | 4096, 4 splits, soft (PCSS) | 4096, 4 splits, soft |
+| Anti-aliasing | FXAA | SMAA | MSAA 2x and SMAA |
+| 3D resolution | 75%, MetalFX spatial upscale (FSR 1 off the Mac) | full | full |
+| Sun and moon shadow map | 2048, 2 splits, hard | 4096, 2 splits, soft (PCSS) | 4096, 2 splits, soft |
 | Lamps casting shadows (nearest the party) | 2 | 6 | 8 |
 | Lamp shadow atlas | 2048 | 4096 | 8192 |
 | Shadow filtering | soft low | soft medium | soft high |
@@ -117,7 +117,15 @@ Mini (Apple M6) on High.
 | Volumetric haze (light shafts, lamp glow in the air) | off (window cones stay) | 48 cells | 64 cells |
 | Depth of field blur | very low | low | medium |
 
-FSR 1 rather than FSR 2 on Low: FSR 2 upscales over time like TAA and would blur and smear the sprites.
+A spatial upscaler on Low, not a temporal one (MetalFX temporal, FSR 2): those work over time like TAA and would
+blur and smear the sprites.
+
+**What things cost** (paired on/off timings at 1080p on High, `LOOK_BENCH=pairs`, and the P3 probe's, both with the
+Mac under heavy load, so the sizes are rough and the order holds): the sun's shadows are the biggest single cost,
+since each split draws the scene's shadow casters again (forest roads most of all: their trees); a level floor square
+casting a shadow was a third of the village's frame (they no longer do: nothing stands under one); then the lamps and
+their shadows, the screen pass (its mist noise now comes from a texture, 1 to 2 ms cheaper outdoors), MSAA, light
+bounced off walls and the depth of field. Contact shadows, reflections, glow, haze and SMAA are cheap.
 
 **The frame meter.** F3 shows frames a second, the average and slowest frame of the last half second and the preset
 in the top left corner, orange when over the 60 fps budget (`FrameMeter`, GameSettings `frame_meter`; Graphics puts

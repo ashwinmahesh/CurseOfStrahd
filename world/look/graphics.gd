@@ -10,18 +10,22 @@ extends RefCounted
 ## Edges: MSAA smooths the edges of 3D shapes, and SMAA after it smooths the ink lines the screen pass draws round
 ## them (MSAA can't reach those: they're drawn per pixel after the scene). SMAA only blends along stair-stepped edges,
 ## so the character sprites, already smooth from their own shader, keep their detail; TAA would blur them, and so
-## would FSR 2's temporal upscaling, so Low draws the world smaller with FSR 1 (spatial) instead.
+## would any temporal upscaling, so Low draws the world smaller and upscales it spatially: Apple's MetalFX on the
+## Mac's Metal renderer, FSR 1 elsewhere.
 
 const PRESETS: Array[String] = ["low", "medium", "high"]
 const DEFAULT_PRESET := "high"
 const LABELS := {"low": "Low", "medium": "Medium", "high": "High"}
 
 ## Per preset:
-## - msaa: samples on 3D edges; edge_aa: the screen-space pass over the finished picture (SMAA or the cheaper FXAA).
-## - scale: the share of the window's resolution the 3D world is drawn at (below 1 upscaled with FSR 1).
+## - msaa: samples on 3D edges (2x on High: 4x cost 1.4 to 2.9 ms more at 1080p for little SMAA doesn't already do);
+##   edge_aa: the screen-space pass over the finished picture (SMAA or the cheaper FXAA).
+## - scale: the share of the window's resolution the 3D world is drawn at (below 1 upscaled spatially).
 ## - sun_map: the sun and moon's shadow map (pixels a side), shared by its splits; sun_splits: 2 or 4 bands from near
-##   to far, each with its own share of the map, so shadows near the party are sharp; sun_soft: the shadows soften
-##   with distance from what casts them (Atmosphere.SUN_SIZE).
+##   to far, each with its own share of the map, so shadows near the party are sharp (2 on every preset: fitted to
+##   what the camera sees, two are sharp enough, and each split draws the scene's shadow casters again, about 4.7 ms
+##   at 1080p in the village and on the road); sun_soft: the shadows soften with distance from what casts them
+##   (Atmosphere.SUN_SIZE).
 ## - lamp_atlas: the shadow atlas every other light draws into (pixels a side); lamp_shadows: how many lights
 ##   nearest the party cast shadows (Atmosphere picks them); lamp_soft: their shadows soften with distance by the
 ##   light's size (Atmosphere.LIGHT_KINDS), else they're evenly soft.
@@ -35,18 +39,18 @@ const LABELS := {"low": "Low", "medium": "Medium", "high": "High"}
 ## - dof: the depth of field's blur quality (RenderingServer.DOFBlurQuality).
 ## - sprite_shadows: the characters cast shadows from the lights (W6, the animations thread reads it).
 const SPECS := {
-	"low": {"msaa": Viewport.MSAA_DISABLED, "edge_aa": Viewport.SCREEN_SPACE_AA_FXAA, "scale": 0.77,
+	"low": {"msaa": Viewport.MSAA_DISABLED, "edge_aa": Viewport.SCREEN_SPACE_AA_FXAA, "scale": 0.75,
 		"sun_map": 2048, "sun_splits": 2, "sun_soft": false, "lamp_atlas": 2048, "lamp_shadows": 2,
 		"lamp_soft": false, "filter": RenderingServer.SHADOW_QUALITY_SOFT_LOW, "reflections": 0, "swaying": 0,
 		"ao": RenderingServer.ENV_SSAO_QUALITY_LOW, "ao_half": true, "bounce": -1, "haze": 0,
 		"dof": RenderingServer.DOF_BLUR_QUALITY_VERY_LOW, "sprite_shadows": false},
 	"medium": {"msaa": Viewport.MSAA_DISABLED, "edge_aa": Viewport.SCREEN_SPACE_AA_SMAA, "scale": 1.0,
-		"sun_map": 4096, "sun_splits": 4, "sun_soft": true, "lamp_atlas": 4096, "lamp_shadows": 6,
+		"sun_map": 4096, "sun_splits": 2, "sun_soft": true, "lamp_atlas": 4096, "lamp_shadows": 6,
 		"lamp_soft": true, "filter": RenderingServer.SHADOW_QUALITY_SOFT_MEDIUM, "reflections": 32, "swaying": 2,
 		"ao": RenderingServer.ENV_SSAO_QUALITY_MEDIUM, "ao_half": true, "bounce": -1, "haze": 48,
 		"dof": RenderingServer.DOF_BLUR_QUALITY_LOW, "sprite_shadows": true},
-	"high": {"msaa": Viewport.MSAA_4X, "edge_aa": Viewport.SCREEN_SPACE_AA_SMAA, "scale": 1.0,
-		"sun_map": 4096, "sun_splits": 4, "sun_soft": true, "lamp_atlas": 8192, "lamp_shadows": 8,
+	"high": {"msaa": Viewport.MSAA_2X, "edge_aa": Viewport.SCREEN_SPACE_AA_SMAA, "scale": 1.0,
+		"sun_map": 4096, "sun_splits": 2, "sun_soft": true, "lamp_atlas": 8192, "lamp_shadows": 8,
 		"lamp_soft": true, "filter": RenderingServer.SHADOW_QUALITY_SOFT_HIGH, "reflections": 56, "swaying": 2,
 		"ao": RenderingServer.ENV_SSAO_QUALITY_HIGH, "ao_half": true,
 		"bounce": RenderingServer.ENV_SSIL_QUALITY_MEDIUM, "haze": 64, "dof": RenderingServer.DOF_BLUR_QUALITY_MEDIUM,
@@ -100,7 +104,10 @@ static func apply(vp: Viewport) -> void:
 	vp.msaa_3d = s["msaa"] as Viewport.MSAA
 	vp.screen_space_aa = s["edge_aa"] as Viewport.ScreenSpaceAA
 	var scale := float(s["scale"])
-	vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR if scale < 1.0 else Viewport.SCALING_3D_MODE_BILINEAR
+	vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
+	if scale < 1.0:
+		var metal := RenderingServer.get_current_rendering_driver_name() == "metal"
+		vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_METALFX_SPATIAL if metal else Viewport.SCALING_3D_MODE_FSR
 	vp.scaling_3d_scale = scale
 	vp.positional_shadow_atlas_size = int(s["lamp_atlas"])
 	vp.positional_shadow_atlas_16_bits = true

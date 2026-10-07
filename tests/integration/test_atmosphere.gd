@@ -206,7 +206,7 @@ func test_lamps_nearest_the_party_cast_shadows() -> void:
 	Look.set_style(was, false)
 
 
-## The Modern sun's shadows reach only as far as the camera sees, so they follow the zoom, in four splits.
+## The Modern sun's shadows reach only as far as the camera sees, so they follow the zoom, in the preset's splits.
 func test_sun_shadows_follow_the_zoom() -> void:
 	var was := Look.style()
 	Look.set_style("modern", false)
@@ -218,7 +218,15 @@ func test_sun_shadows_follow_the_zoom() -> void:
 	v.rig.distance = 25.0
 	v.atmosphere.call("_fit_sun_shadows")
 	assert_true(v.atmosphere.sun.directional_shadow_max_distance > close, "zoomed out, the shadows reach further")
-	assert_eq(v.atmosphere.sun.directional_shadow_mode, DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS, "four splits")
+	var splits := DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS if Graphics.sun_splits() == 4 \
+		else DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
+	assert_eq(v.atmosphere.sun.directional_shadow_mode, splits, "the preset's splits")
+	var flat := 0
+	for n in v.board.get_children():
+		if n is MeshInstance3D and str(n.name).begins_with("Floor") and (n as MeshInstance3D).position.y < 0.0 \
+				and (n as MeshInstance3D).cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF:
+			flat += 1
+	assert_true(flat > 0, "level floor squares cast no shadow")
 	v.queue_free()
 	Look.set_style(was, false)
 
