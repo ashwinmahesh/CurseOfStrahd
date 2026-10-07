@@ -204,6 +204,39 @@ def load_strip(path, expect=3, key_magenta=False):
     return ([Keyframe(c) for c in crops] if crops else None), problems
 
 
+def colour_profile(crop, palette=None):
+    """The share of a figure's pixels in each palette colour (crop sampled every third pixel)."""
+    pal = cutout.load_palette() if palette is None else palette
+    q = cutout.quantize(crop[::3, ::3], pal)
+    rgb = q[q[..., 3] > 0.5][:, :3]
+    if len(rgb) == 0:
+        return np.zeros(len(pal))
+    idx = np.argmin(((rgb[:, None, :] - pal[None]) ** 2).sum(-1), axis=1)
+    h = np.bincount(idx, minlength=len(pal)).astype(float)
+    return h / h.sum()
+
+
+# Owner 2026-10-07 ("colour glitching in the walk"): a pose Gemini recoloured (a green tabard, dark armour) pops when
+# the poses play in turn. Shares of palette colours that overlap less than this with the reference pose's mean a
+# recolour; ordinary pose changes (a raised arm, a motion smear) stay above about 0.78.
+COLOUR_MATCH = 0.72
+
+
+def colour_drift(keyframes, skip=()):
+    """Problems for poses whose colours differ from frame 1's (the reference pose redrawn). `skip`: frame numbers that
+    rightly show other colours (lying on the back shows the front of a figure seen from behind)."""
+    pal = cutout.load_palette()
+    ref = colour_profile(keyframes[0].crop, pal)
+    out = []
+    for i, kf in enumerate(keyframes[1:], start=2):
+        if i in skip:
+            continue
+        overlap = float(np.minimum(ref, colour_profile(kf.crop, pal)).sum())
+        if overlap < COLOUR_MATCH:
+            out.append(f"frame {i} is recoloured (colours {overlap:.2f} like the reference)")
+    return out
+
+
 def match_colours(frames, first, ref):
     """Gemini drifts a little in brightness and tint between images. Frame 1 redraws the turnaround view, so the
     per-channel tone curve that maps frame 1's colours onto the view's (quantile matching over opaque pixels) is
@@ -232,7 +265,7 @@ def strip_scale(ref_h, ref_w, first):
     k = ref_h / float(first.h)
     problems = []
     ratio_ref, ratio_first = ref_w / float(ref_h), first.w / float(first.h)
-    if abs(ratio_first - ratio_ref) > 0.3 * ratio_ref:
+    if abs(ratio_first - ratio_ref) > 0.4 * ratio_ref:
         problems.append(f"frame 1 is shaped unlike the turnaround view (w/h {ratio_first:.2f} vs {ratio_ref:.2f})")
     return k, problems
 

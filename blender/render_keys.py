@@ -56,6 +56,28 @@ PLANS = {
                    (4, 1.0, 1.0, 1, 0, 0.006), (4, 0.99, 1.012, 1, 0, 0.012)] + breathing("base"),
         "anims": [("walk", list(range(8)), [1] * 8, 10.0, True), ("idle", [8, 9, 10, 11], [1] * 4, 4.0, True)],
     },
+    # Doubled keys: two strips each ("strips"); poses named <strip letter><n> (a1 = the first strip's first pose).
+    "walk8": {
+        "file": "walk", "fixed_height": True, "strips": ["walk8a", "walk8b"],
+        "frames": [("a1", 1.0, 1.0, 1, 0, 0), ("a1", 1.01, 0.99, 1, 0, -0.004), ("a2", 1.015, 0.98, 1, 0, -0.012),
+                   ("a2", 1.01, 0.99, 1, 0, -0.008), ("a3", 1.0, 1.0, 1, 0, 0.004), ("a3", 0.995, 1.006, 1, 0, 0.008),
+                   ("a4", 0.99, 1.012, 1, 0, 0.012), ("a4", 0.995, 1.006, 1, 0, 0.006),
+                   ("b1", 1.0, 1.0, 1, 0, 0), ("b1", 1.01, 0.99, 1, 0, -0.004), ("b2", 1.015, 0.98, 1, 0, -0.012),
+                   ("b2", 1.01, 0.99, 1, 0, -0.008), ("b3", 1.0, 1.0, 1, 0, 0.004), ("b3", 0.995, 1.006, 1, 0, 0.008),
+                   ("b4", 0.99, 1.012, 1, 0, 0.012), ("b4", 0.995, 1.006, 1, 0, 0.006)]
+        + [("base", 1.0, 1.0, 0, 0, 0), ("base", 0.998, 1.004, 0, 0, 0), ("base", 0.997, 1.007, 0, 0, 0),
+           ("base", 0.995, 1.012, 0, 0, 0), ("base", 0.997, 1.007, 0, 0, 0), ("base", 0.998, 1.004, 0, 0, 0)],
+        "anims": [("walk", list(range(16)), [1] * 16, 20.0, True), ("idle", list(range(16, 22)), [1] * 6, 6.0, True)],
+    },
+    "attack10": {
+        "file": "attack", "strips": ["attack10a", "attack10b"],
+        "frames": [("a1", 1.0, 1.0, 0, 0, 0), ("a2", 1.0, 1.0, -1, -0.005, 0), ("a3", 1.02, 0.98, -2, -0.01, 0),
+                   ("a4", 1.02, 0.98, -3, -0.012, 0), ("a5", 0.98, 1.03, -4, -0.015, 0), ("b1", 1.05, 0.97, 4, 0.025, 0),
+                   ("b2", 1.07, 0.96, 6, 0.04, 0), ("b3", 1.02, 0.99, 4, 0.03, 0), ("b4", 1.0, 1.0, 2, 0.015, 0),
+                   ("b5", 1.0, 1.0, 1, 0.005, 0), ("base", 1.0, 1.0, 0, 0, 0)],
+        "anims": [("attack", list(range(11)), [1, 1, 1, 1, 1.75, 0.6, 0.75, 1.5, 1, 1, 1], 16.0, False)],
+        "hits": {"attack": 6},
+    },
     "attack5": {
         "file": "attack",
         "frames": [(1, 1.0, 1.0, 0, 0, 0), (2, 1.03, 0.97, -2, -0.01, 0), (3, 0.98, 1.03, -4, -0.015, 0),
@@ -104,14 +126,23 @@ MAX_WIDE, MAX_TALL, MIN_WIDE, MARGIN = 3.0, 1.8, 1.0, 6
 def args():
     p = argparse.ArgumentParser()
     p.add_argument("--id", required=True)
-    p.add_argument("--kind", required=True, choices=list(PLANS))
+    p.add_argument("--kind", required=True, choices=list(PLANS) + [k for pl in PLANS.values() for k in pl.get("strips", [])])
     p.add_argument("--cell", type=int, default=384)
     p.add_argument("--check", action="store_true")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
 
-def strip_count(kind):
-    return 1 + max(p for p, *_ in PLANS[kind]["frames"] if isinstance(p, int))
+def strip_count(kind, strip=None):
+    """Figures on one strip of `kind` (the reference redraw included); `strip` picks one of a multi-strip kind."""
+    plan = PLANS[kind]
+    if "strips" in plan:
+        letter = "ab"[plan["strips"].index(strip)]
+        return 1 + max(int(p[1:]) for p, *_ in plan["frames"] if isinstance(p, str) and p[0] == letter and p != "base")
+    return 1 + max(p for p, *_ in plan["frames"] if isinstance(p, int))
+
+
+# Strip kinds that feed a multi-strip plan, so --check and anim_keyframes.py can ask about one strip.
+STRIP_OF = {k: (plan_name, k) for plan_name, plan in PLANS.items() for k in plan.get("strips", [])}
 
 
 def write_tres(path, texture, cell, directions, cols, anims, meta):
@@ -134,7 +165,14 @@ def write_tres(path, texture, cell, directions, cols, anims, meta):
 
 def main():
     a = args()
+    only_strip = None
+    if a.kind in STRIP_OF:
+        # One strip of a two-strip plan: checked on its own (rendering takes the plan's name).
+        a.kind, only_strip = STRIP_OF[a.kind]
     plan = PLANS[a.kind]
+    strip_kinds = plan.get("strips", [a.kind])
+    if only_strip:
+        strip_kinds = [only_strip]
     flags = anim.walk_flags(a.id)
     sheet = anim.clean_source(cutout.load_rgba(cutout.ROOT / flags["turnaround"]))
     figures = cutout.find_figures(sheet, flags["views"] or rw.view_count(sheet))
@@ -146,20 +184,25 @@ def main():
     if flags["body"] != "humanoid" or flags["static"]:
         ppu = max(ppu, max(f.shape[1] for f in figures) / (rw.FIGURE_HEIGHT * 1.12 * 0.94))
 
-    count = strip_count(a.kind)
     problems, strips = {}, {}
     for name, fig in zip(names, figures):
-        path = anim.strip_path(a.id, a.kind, name)
-        if not path.exists():
-            problems[name] = ["missing"]
-            continue
-        kfs, found = anim.load_strip(path, count, key_magenta=(a.kind == "ride"))
-        if kfs is not None:
-            k, more = anim.strip_scale(fig.shape[0], fig.shape[1], kfs[0])
-            found += more
-            strips[name] = (kfs, k)
-        if found:
-            problems[name] = found
+        got = []
+        for si, sk in enumerate(strip_kinds):
+            count = strip_count(a.kind, sk if "strips" in plan else None)
+            path = anim.strip_path(a.id, sk, name)
+            if not path.exists():
+                problems.setdefault(name, []).append(f"{sk} missing" if len(strip_kinds) > 1 else "missing")
+                continue
+            kfs, found = anim.load_strip(path, count, key_magenta=(a.kind == "ride"))
+            if kfs is not None:
+                k, more = anim.strip_scale(fig.shape[0], fig.shape[1], kfs[0])
+                found += more + anim.colour_drift(kfs, skip=(count,) if a.kind == "hurt" else ())
+                letter = "ab"[plan["strips"].index(sk)] if "strips" in plan else ""
+                got.append((letter, kfs, k))
+            if found:
+                problems.setdefault(name, []).extend(f"{sk}: {w}" if len(strip_kinds) > 1 else w for w in found)
+        if len(got) == len(strip_kinds):
+            strips[name] = got
     if a.check:
         print("CHECK " + json.dumps(problems))
         return
@@ -176,15 +219,17 @@ def main():
     views = {}
     for name, fig in zip(names, figures):
         base = anim.Keyframe(fig)
-        kfs, k = strips[name]
-        for kf, crop in zip(kfs, anim.match_colours([kf.crop for kf in kfs], kfs[0].crop, fig)):
-            kf.crop = crop
         stand_x = (base.anchor - base.w / 2.0) / ppu
         root = bpy.data.objects.new(name, None)
         scene.collection.objects.link(root)
         planes = {"base": rw.make_plane(f"{name}_base", base.crop, ppu, (base.anchor, base.h), (stand_x, 0.0), 0.0, root)}
-        for i, kf in enumerate(kfs[1:], start=1):
-            planes[i] = rw.make_plane(f"{name}_{i}", kf.crop, ppu / k, (kf.anchor, kf.h), (stand_x, 0.0), 0.0, root)
+        for letter, kfs, k in strips[name]:
+            for kf, crop in zip(kfs, anim.match_colours([kf.crop for kf in kfs], kfs[0].crop, fig)):
+                kf.crop = crop
+            for i, kf in enumerate(kfs[1:], start=1):
+                key = f"{letter}{i}" if letter else i
+                planes[key] = rw.make_plane(f"{name}_{key}", kf.crop, ppu / k, (kf.anchor, kf.h), (stand_x, 0.0), 0.0,
+                                            root)
         views[name] = (root, planes)
 
     tmp = Path(tempfile.mkdtemp(prefix=f"{a.kind}_{a.id}_"))
@@ -227,7 +272,7 @@ def main():
     cutout.save_rgba(anim.finish_sheet(cutout.pack_grid(frames, cols), flags["saturate"]), out_dir / f"{stem}.png")
     s = anim.spec(a.id)
     meta = {"hit_frames": plan.get("hits", {}), "anim_set": 2}
-    if a.kind == "attack5":
+    if a.kind in ("attack5", "attack10"):
         meta.update(hit_frame=plan["hits"]["attack"], casts=bool(s.get("casts", False)))
     write_tres(out_dir / f"{stem}.tres", f"res://art/sprites/{a.id}/{stem}.png", (cw, ch), rw.DIRECTIONS, cols,
                plan["anims"], meta)
