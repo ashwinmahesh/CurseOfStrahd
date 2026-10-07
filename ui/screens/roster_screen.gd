@@ -3,7 +3,8 @@ extends CanvasLayer
 ## Who travels (owner, 2026-10-06): the party (up to StoryState.PARTY_CAP) and the rest of the roster at camp, with
 ## send to camp, bring along, and swap (pick someone at camp, then whose place they take). Opened from the party
 ## screen outside fights and conversations; the world swaps the figures as soon as the party changes. Those at camp
-## don't fight or speak in the story, and catch up on levels when they rejoin.
+## don't fight, speak or level; the levels they missed wait for them (owner, 2026-10-07), taken one by one on the
+## level-up screen once they're back in the party.
 
 var root: Node
 var st: StoryState
@@ -42,7 +43,7 @@ func _draw() -> void:
 		for ch in st.bench:
 			camp.add_child(_card(ch, false))
 		_frame.add_child(camp)
-	var note := "Those at camp don't fight or speak in the story. They catch up on levels when they rejoin."
+	var note := "Those at camp don't fight, speak or level. The levels they miss wait for them, to take when they rejoin."
 	if _picked != null:
 		note = "Choose whose place %s takes." % _picked.name.get_slice(" ", 0)
 	_frame.add_child(UiKit.label(note, 14, "gilt" if _picked != null else "parchment", 1200))
@@ -66,12 +67,22 @@ func _card(ch: Character, travelling: bool) -> Control:
 	n.add_theme_font_override("font", UiKit.display_font())
 	who.add_child(n)
 	who.add_child(UiKit.label(ch.class_summary(), 13, "parchment", 170))
-	var lvl := ch.character_level()
-	var behind := travelling == false and lvl < st.target_level()
-	who.add_child(UiKit.label("Level %d%s" % [lvl, " (catches up on rejoining)" if behind else ""], 13, "vellum", 170))
+	who.add_child(UiKit.label("Level %d" % ch.character_level(), 13, "vellum", 170))
+	var waiting := st.levels_waiting(ch)
+	if waiting > 0:
+		var badge := UiParts.pill("▲ %s waiting" % ("A level up" if waiting == 1 else "%d level ups" % waiting), "bile")
+		badge.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		badge.tooltip_text = ("Taken on the level-up screen, one level at a time." if travelling
+			else "Kept for when they rejoin the party: then the level-up screen walks through each one.")
+		who.add_child(badge)
 	head.add_child(who)
 	col.add_child(head)
 	col.add_child(UiParts.hp_bar(ch, 260.0, 16.0, false))
+	if travelling and waiting > 0:
+		var idx := st.party.find(ch)
+		var up := UiParts.small_button("Level up", func() -> void: root.call("open_screen", "level_up", idx))
+		UiParts.light_up(up)
+		col.add_child(up)
 	if travelling:
 		if _picked != null:
 			var swap := UiParts.small_button("%s takes this place" % _picked.name.get_slice(" ", 0), func() -> void:
