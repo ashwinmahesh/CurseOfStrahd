@@ -69,6 +69,30 @@ func test_short_rest_spends_hit_dice() -> void:
 	assert_eq(GameState.story.minute_of_day, (minute + 60) % (24 * 60))
 
 
+## A feat list shows the highlighted feat's full text in a panel beside it (owner, 2026-10-07), and follows the mouse.
+func test_feat_list_has_a_description_panel() -> void:
+	var c := Choice.new()
+	c.key = "test.feat"
+	c.kind = "feat"
+	c.count = 1
+	c.label = "Feat"
+	c.filter = {"category": "general"}
+	ChoiceOptions.populate(c, GameState.story.party[0])
+	var w := ChoiceWidget.create(c)
+	add_child(w)
+	await _frames(1)
+	var shown := w.get("_shown") as String
+	assert_ne(shown, "", "a feat is described from the start")
+	w.show_detail("great_weapon_master")
+	await _frames(1)
+	var texts: Array[String] = []
+	for l in w.find_children("*", "Label", true, false):
+		texts.append((l as Label).text)
+	assert_true(texts.has("Great Weapon Master"), "its name heads the panel")
+	assert_true(texts.has("Hew"), "each benefit is listed by name")
+	w.queue_free()
+
+
 ## Heal up (docs/plans/ui_polish.md): one click spends Hit Point Dice for everyone hurt, never for someone at full.
 func test_heal_up_spends_dice_for_the_hurt() -> void:
 	var ilse := GameState.story.party[0]
