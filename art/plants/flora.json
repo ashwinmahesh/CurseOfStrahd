@@ -1,5 +1,5 @@
 {
-  "about": "What grows where in the Modern look (Flora, docs/art/plants.md). A place takes the set named for its mood in moods, else the set of the mood it is like (art/atmosphere/moods.json), else forest. trees: the 3D plants standing in for each 2D tree (a variant is picked per tree), how tall they stand against their model (scale, in the map and on the land, never past tallest) and how thick the land's forest is against the old trees (tree_density). Plant lists are [plant, how many per square]: land on the forest ground past the map's edge (out to land_reach squares), under on the map's tree squares, open on its grass squares where people walk (kept short: open_scale, and off the middle of the square), shore beside water. tint warms or cools the leaves; snow lies on the tops; bark is the trunks' ridge and furrow colours and lichen.",
+  "about": "What grows where in the Modern look (Flora, docs/art/plants.md). A place takes the set named for its mood in moods, else the set of the mood it is like (art/atmosphere/moods.json), else forest. trees: the 3D plants standing in for each 2D tree (a variant is picked per tree), how tall they stand against their model (scale, in the map and on the land, kept between shortest and tallest) and how thick the land's forest is against the old trees (tree_density). Plant lists are [plant, how many per square]: land on the forest ground past the map's edge (out to land_reach squares), under on the map's tree squares, edge on the side of a square beside them, open on its other grass squares where people walk (kept short: open_scale, and off the middle of the square), shore beside water. tint warms or cools the leaves; snow lies on the tops; bark is the trunks' ridge and furrow colours and lichen.",
   "moods": {
     "svalich_woods": "forest",
     "barovia_village": "forest",
@@ -22,12 +22,15 @@
         "pine_clawed": ["spruce_b"]
       },
       "scale": {"map": [0.62, 0.8], "land": [0.85, 1.1]},
+      "shortest": {"map": 2.3, "land": 2.0},
       "tallest": {"map": 3.9, "land": 6.0},
       "tree_density": 0.45,
       "land": [["fern_a", 0.35], ["fern_b", 0.3], ["bracken", 0.12], ["bush_a", 0.18], ["bush_b", 0.18],
         ["grass_a", 0.7], ["grass_b", 0.6], ["grass_dry", 0.25], ["sedge", 0.15]],
       "under": [["fern_a", 0.35], ["fern_b", 0.3], ["bush_b", 0.2], ["fern_small", 0.3], ["grass_a", 0.3]],
       "open": [["grass_b", 0.9], ["grass_a", 0.4], ["fern_small", 0.08], ["grass_dry", 0.15]],
+      "edge": [["fern_a", 0.45], ["fern_b", 0.35], ["fern_small", 0.3], ["bracken", 0.12], ["bush_b", 0.15],
+        ["grass_a", 0.3]],
       "open_scale": 0.6,
       "shore": [["reeds", 1.2], ["sedge", 1.0]],
       "land_reach": 14.0,
@@ -51,6 +54,7 @@
       "land": [["grass_dry", 0.6], ["sedge", 0.35], ["grass_b", 0.3], ["fern_small", 0.08], ["bush_b", 0.06]],
       "under": [["grass_dry", 0.8], ["fern_small", 0.4], ["sedge", 0.5]],
       "open": [["grass_dry", 0.35], ["sedge", 0.2]],
+      "edge": [["grass_dry", 0.5], ["fern_small", 0.25], ["sedge", 0.3]],
       "tint": "#e8ecf2",
       "snow": 0.25
     },
@@ -59,6 +63,7 @@
       "land": [["grass_dry", 0.15]],
       "under": [["grass_dry", 0.2]],
       "open": [],
+      "edge": [["grass_dry", 0.2]],
       "tint": "#dfe6ee",
       "snow": 0.7
     },
@@ -72,6 +77,7 @@
       "land": [["sedge", 0.8], ["reeds", 0.45], ["grass_dry", 0.5], ["grass_a", 0.3], ["bracken", 0.06]],
       "under": [["sedge", 0.8], ["grass_dry", 0.6], ["reeds", 0.3]],
       "open": [["sedge", 0.3], ["grass_dry", 0.3]],
+      "edge": [["sedge", 0.6], ["reeds", 0.3], ["grass_dry", 0.4]],
       "shore": [["reeds", 2.2], ["sedge", 1.2]],
       "tint": "#e9e6cc"
     },
@@ -80,6 +86,7 @@
       "land": [["bracken", 0.35], ["grass_dry", 0.8], ["fern_b", 0.15], ["bush_b", 0.12], ["sedge", 0.2]],
       "under": [["bracken", 0.5], ["grass_dry", 0.7], ["fern_small", 0.3]],
       "open": [["grass_dry", 0.6], ["grass_b", 0.2]],
+      "edge": [["bracken", 0.4], ["grass_dry", 0.5], ["fern_small", 0.2]],
       "tint": "#ece3cf"
     },
     "castle": {
@@ -92,6 +99,7 @@
       "land": [["grass_dry", 0.5], ["sedge", 0.2], ["bracken", 0.1]],
       "under": [["grass_dry", 0.5], ["bracken", 0.2]],
       "open": [["grass_dry", 0.2]],
+      "edge": [["grass_dry", 0.4], ["bracken", 0.15]],
       "tint": "#e3e1e6"
     }
   }

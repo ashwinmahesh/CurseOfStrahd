@@ -23,12 +23,12 @@ func _view(loc_id: String) -> LocationView:
 	return v
 
 
-func _instances(root: Node, prefix: String) -> Array[Transform3D]:
-	var out: Array[Transform3D] = []
+## Where the copies of plants drawn many at once stand (Flora.plant_all keeps them; headless MultiMeshes don't).
+func _instances(root: Node, prefix: String) -> PackedVector3Array:
+	var out := PackedVector3Array()
 	for n in root.find_children(prefix + "*", "MultiMeshInstance3D", true, false):
-		var mm := (n as MultiMeshInstance3D).multimesh
-		for i in mm.instance_count:
-			out.append((n as MultiMeshInstance3D).global_transform * mm.get_instance_transform(i))
+		for p: Vector3 in n.get_meta("origins", PackedVector3Array()) as PackedVector3Array:
+			out.append((n as MultiMeshInstance3D).global_transform * p)
 	return out
 
 
@@ -96,8 +96,8 @@ func test_plants_stand_on_the_land() -> void:
 	var land := v.atmosphere.land
 	var checked := 0
 	for t in _instances(land.root, "Plants_"):
-		var p := Vector2(t.origin.x, t.origin.z)
-		assert_true(absf(t.origin.y - (land.surface_y(p) - 0.02)) < 0.02, "a plant at %s stands on the ground" % p)
+		var p := Vector2(t.x, t.z)
+		assert_true(absf(t.y - (land.surface_y(p) - 0.02)) < 0.02, "a plant at %s stands on the ground" % p)
 		var c := Vector2i(floori(p.x), floori(p.y))
 		assert_false(v.grid.in_bounds(c) and not v.grid.has_flag(c, CombatGrid.VOID), "no land plant on map square %s" % c)
 		checked += 1
@@ -114,12 +114,12 @@ func test_map_plants_keep_clear() -> void:
 		var g := v.grid
 		var n := 0
 		for t in _instances(v.atmosphere.land.root, "MapPlants_"):
-			var c := Vector2i(floori(t.origin.x), floori(t.origin.z))
+			var c := Vector2i(floori(t.x), floori(t.z))
 			assert_true(g.in_bounds(c), "%s: a map plant at %s is on the map" % [loc_id, c])
 			assert_false(g.has_flag(c, CombatGrid.WATER), "%s: no plant in the water at %s" % [loc_id, c])
 			assert_false(v.board.occupied.has(c), "%s: no plant where a location's thing stands (%s)" % [loc_id, c])
 			if not g.has_flag(c, CombatGrid.WALL):
-				var off := Vector2(t.origin.x - c.x - 0.5, t.origin.z - c.y - 0.5)
+				var off := Vector2(t.x - c.x - 0.5, t.z - c.y - 0.5)
 				assert_true(off.length() > 0.25, "%s: a plant keeps off the middle of %s (%.2f)" % [loc_id, c, off.length()])
 			n += 1
 		assert_true(n > 0, "%s has plants on its own ground" % loc_id)

@@ -180,13 +180,15 @@ func tree_for(kind: String, pick: int) -> String:
 
 
 ## How much to scale tree `id` in the map (`where` "map") or on the land ("land"), picked by `pick`: a share of its
-## modelled height from the set's `scale`, never taller than its `tallest` there (the map's trees stay 10 to 20 ft,
-## as the old ones were, so they don't wall in the squares beside them).
+## modelled height from the set's `scale`, kept between its `shortest` and `tallest` there (the map's trees stay 10 to
+## 20 ft, as the old ones were, so they don't wall in the squares beside them).
 func tree_scale(id: String, where: String, pick: int) -> float:
 	var r := (spec.get("scale", {}) as Dictionary).get(where, [0.9, 1.1]) as Array
 	var s := lerpf(float(r[0]), float(r[1]), float(posmod(pick * 7919, 1000)) / 1000.0)
+	var h := maxf(height_of(id), 0.1)
+	var shortest := float((spec.get("shortest", {}) as Dictionary).get(where, 0.0))
 	var tallest := float((spec.get("tallest", {}) as Dictionary).get(where, 100.0))
-	return minf(s, tallest / maxf(height_of(id), 0.1))
+	return clampf(s, shortest / h, tallest / h)
 
 
 ## A plant as its own node: a tree the map stands on its squares, or one of the land's first rows (they fade when they
@@ -211,7 +213,8 @@ static func instance(id: String, s: float) -> MeshInstance3D:
 
 
 ## Draws many copies of plants, grouped by chunk so the camera culls them: `items` is plant id -> Array of
-## [Transform3D, Color]. Trees cast shadows where `shadows` says so.
+## [Transform3D, Color]. Trees cast shadows where `shadows` says so. Each chunk keeps where its copies stand (meta
+## "origins"), since a MultiMesh without a renderer (headless) keeps none.
 static func plant_all(parent: Node3D, items: Dictionary, shadows: bool, label: String) -> void:
 	for id: String in items:
 		var m := mesh(id)
@@ -231,12 +234,16 @@ static func plant_all(parent: Node3D, items: Dictionary, shadows: bool, label: S
 			mm.use_colors = true
 			mm.mesh = m
 			mm.instance_count = list.size()
+			var origins := PackedVector3Array()
 			for i in list.size():
-				mm.set_instance_transform(i, (list[i] as Array)[0] as Transform3D)
+				var t := (list[i] as Array)[0] as Transform3D
+				mm.set_instance_transform(i, t)
 				mm.set_instance_color(i, (list[i] as Array)[1] as Color)
+				origins.append(t.origin)
 			var mmi := MultiMeshInstance3D.new()
 			mmi.name = "%s_%s_%d_%d" % [label, id, key.x, key.y]
 			mmi.multimesh = mm
+			mmi.set_meta("origins", origins)
 			mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if shadows else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			parent.add_child(mmi)
 
@@ -271,7 +278,8 @@ func ground_item(at: Vector3, s: float) -> Array:
 	return [Transform3D(b, at), Color(v, v * rng.randf_range(0.97, 1.03), v * rng.randf_range(0.92, 1.0))]
 
 
-## Ground plants on the map's own squares: thick under its trees, short and sparse where people walk on wild ground
+## Ground plants on the map's own squares: thick under its trees, ferns and undergrowth spilling out of the woods
+## onto the side of a square that faces them, short and sparse grass elsewhere where people walk on wild ground
 ## (never in the middle of a square, so feet and the selection rings stay clear), reeds on the shore. Squares a
 ## location's things stand on, buildings and furniture are left bare.
 func dress_map(board: ArenaBoard, parent: Node3D) -> void:
@@ -279,6 +287,7 @@ func dress_map(board: ArenaBoard, parent: Node3D) -> void:
 	var under := spec.get("under", []) as Array
 	var open := spec.get("open", []) as Array
 	var shore := spec.get("shore", []) as Array
+	var edge := spec.get("edge", []) as Array
 	var wild := board.theme in ArenaBoard.WILD
 	var open_scale := float(spec.get("open_scale", 0.6))
 	var items := {}
@@ -301,11 +310,37 @@ func dress_map(board: ArenaBoard, parent: Node3D) -> void:
 			for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
 				if g.in_bounds(c + d) and g.has_flag(c + d, CombatGrid.WATER):
 					by_water = true
+			var woods := Vector2.ZERO
+			for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 1),
+					Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)]:
+				if g.in_bounds(c + d) and board.is_tree(c + d):
+					woods += Vector2(d)
 			if by_water and not shore.is_empty():
 				_scatter_square(items, c, shore, 0.8, 0.3, 0.0)
+			elif woods != Vector2.ZERO and not edge.is_empty():
+				_scatter_edge(items, c, edge, woods.normalized())
 			else:
 				_scatter_square(items, c, open, open_scale, 0.32, 0.0)
 	plant_all(parent, items, false, "MapPlants")
+
+
+## Scatters `choices` along the side of square `c` toward `toward` (the woods beside it), in a band from 0.3 to 0.5
+## off its middle.
+func _scatter_edge(items: Dictionary, c: Vector2i, choices: Array, toward: Vector2) -> void:
+	var n := density(choices)
+	var count := floori(n) + (1 if rng.randf() < n - floorf(n) else 0)
+	var across := Vector2(-toward.y, toward.x)
+	for i in count:
+		var id := pick_from(choices)
+		if id == "":
+			continue
+		var p := Vector2(0.5, 0.5) + toward * rng.randf_range(0.32, 0.5) + across * rng.randf_range(-0.45, 0.45)
+		p = p.clamp(Vector2(0.02, 0.02), Vector2(0.98, 0.98))
+		if (p - Vector2(0.5, 0.5)).length() < 0.3:
+			continue
+		if not items.has(id):
+			items[id] = []
+		(items[id] as Array).append(ground_item(Vector3(c.x + p.x, 0.0, c.y + p.y), 0.85))
 
 
 ## Scatters `choices` over square `c` (its density per square), keeping `clear` units off the square's middle.

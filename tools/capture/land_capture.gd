@@ -16,6 +16,7 @@ const SHOTS := {
 	"road_dusk": {"loc": "into_the_mists_road", "hour": 18, "cells": [[12, 15], [13, 15], [12, 16], [13, 14]]},
 	"road_far": {"loc": "into_the_mists_road", "hour": 12, "cells": [[12, 15], [13, 15], [12, 16], [13, 14]],
 		"zoom": 22.0},
+	"road_fade": {"loc": "into_the_mists_road", "hour": 12, "cells": [[15, 17], [14, 17], [15, 16], [14, 16]]},
 	"village_dusk": {"loc": "village_of_barovia", "hour": 18},
 	"village_far": {"loc": "village_of_barovia", "hour": 12, "zoom": 22.0},
 	"woods": {"loc": "road_forest", "hour": 12},
