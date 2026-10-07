@@ -5152,6 +5152,24 @@
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Kip Smudgewick, a friendly tiefling man in his early thirties with maroon-red skin, curling dark-grey ram's horns, a long thin tail, golden eyes and an anxious smile, wearing a wide-brimmed straw hat, a mustard-yellow shirt with rolled sleeves, a brown leather waistcoat, a green canvas apron with pockets full of orange apricots, a small black book on a chain at his hip, brown breeches and boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
       "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "fen_burley_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/fen_burley_portrait.png",
+      "sprites": "art/portraits/fen_burley.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "Bust portrait of Fen Burley, Thistle's grandda, half turned into a werewolf (owner's new companions, 2026-10-07), text prompt only (no turnaround: the map figure borrows another sprite). make portrait BG=ash_violet."
+    },
+    {
+      "id": "mister_quillon_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/mister_quillon_portrait.png",
+      "sprites": "art/portraits/mister_quillon.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "Bust portrait of Mister Quillon, the devil holding Kip's contract (owner's new companions, 2026-10-07), text prompt only (no turnaround: the map figure borrows another sprite). make portrait BG=ash_violet."
     }
   ],
   "image_provider": "gemini"
