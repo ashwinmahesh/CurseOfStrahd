@@ -93,20 +93,35 @@ is an opaque, hard-edged shape for the same reason. Character sprites draw after
 them and they stay crisp. On this Mac, Vallaki in the rain, the castle's storm and the Tsolenka blizzard all hold the capture's 120 fps cap at
 1600 x 900 with it on, the same as with it off (`--uncapped --compare`).
 
-## Edges and shadows in the Modern finish
+## Edges, shadows and the graphics presets in the Modern finish
 
-The Modern finish (Improvement Ideas W2) sets the renderer by a graphics preset, `Graphics` (Low, Medium, High;
-GameSettings `graphics`, High by default), applied as each place opens. Classic keeps the renderer it was frozen with
-(owner, 2026-10-07): no anti-aliasing, the sun in two splits, no lamp shadows.
+The Modern finish (Improvement Ideas W2, W17) sets the renderer by a graphics preset, `Graphics` (Low, Medium, High;
+GameSettings `graphics`, High by default; `Graphics.LABELS` for the Settings row), applied as each place opens and at
+once when it changes (`Graphics.set_preset`). Classic keeps the renderer it was frozen with (owner, 2026-10-07): no
+anti-aliasing, the sun in two splits, no lamp shadows. The bar is 60 frames a second at 1080p on the owner's Mac
+Mini (Apple M6) on High.
 
 | | Low | Medium | High |
 |---|---|---|---|
 | Anti-aliasing | FXAA | SMAA | MSAA 4x and SMAA |
-| Sun and moon shadow map | 2048, 2 splits | 4096, 4 splits | 4096, 4 splits |
-| Lamps casting shadows (nearest the party) | 2 | 6 | 12 |
+| 3D resolution | 77%, FSR 1 upscale | full | full |
+| Sun and moon shadow map | 2048, 2 splits, hard | 4096, 4 splits, soft (PCSS) | 4096, 4 splits, soft |
+| Lamps casting shadows (nearest the party) | 2 | 6 | 8 |
 | Lamp shadow atlas | 2048 | 4096 | 8192 |
 | Shadow filtering | soft low | soft medium | soft high |
+| Flames whose shadows sway | none | 2 | 2 |
 | Reflections on polished and wet floors (screen-space, steps) | none | 32 | 56 |
+| Contact shadows (SSAO) | low, half size | medium, half size | high, half size |
+| Characters cast shadows (W6) | no | yes | yes |
+| Light bounced off walls (SSIL) | off | off | medium |
+| Volumetric haze (light shafts, lamp glow in the air) | off (window cones stay) | 48 cells | 64 cells |
+| Depth of field blur | very low | low | medium |
+
+FSR 1 rather than FSR 2 on Low: FSR 2 upscales over time like TAA and would blur and smear the sprites.
+
+**The frame meter.** F3 shows frames a second, the average and slowest frame of the last half second and the preset
+in the top left corner, orange when over the 60 fps budget (`FrameMeter`, GameSettings `frame_meter`; Graphics puts
+it on the window).
 
 - **Edges.** MSAA smooths 3D edges; SMAA then smooths the ink lines the screen pass draws round them, which MSAA can't
   reach. Neither blurs the character sprites (TAA would).
@@ -124,7 +139,7 @@ GameSettings `graphics`, High by default), applied as each place opens. Classic 
   windows from the weather, the party's lantern, flames and spell lights by what they are. Their size sets how soft
   their shadows are (a candle's crisp, a hearth's soft) and how strongly they light the haze; magic lights and windows
   hold steady. The nearest few flames that cast shadows sway a little with their flicker, so their shadows stir
-  (`CandleFlicker`, meta `sway`; 4 on High, 2 on Medium).
+  (`CandleFlicker`, meta `sway`; 2 on High and Medium).
 - **Windows indoors** are the moon or the day coming in: the key light's colour, steady, with a spot light over the
   wall beside the window down across the room (casting shadows) and a glowing cone of dusty haze along it
   (`shaders/world/light_shaft.gdshader`), hung on the window's light so they hide with it.

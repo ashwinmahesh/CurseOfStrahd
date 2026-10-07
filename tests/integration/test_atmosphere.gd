@@ -288,3 +288,39 @@ func test_each_mood_has_its_own_grade() -> void:
 			assert_true(Look.color(str(a._tone(t)["shade"])) is Color, "%s %s" % [id, t])
 		a.free()
 	Look.set_style(was, false)
+
+
+## The presets step down the heavy effects (W17): Low draws the world smaller and drops the haze and bounced light,
+## and a change of preset reaches the place on screen at once.
+func test_presets_reach_the_place_on_screen() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	Graphics.set_preset("high", false)
+	var v := _view("village_of_barovia")
+	await get_tree().process_frame
+	assert_true(v.atmosphere.env.volumetric_fog_enabled and v.atmosphere.env.ssil_enabled, "High: haze and bounce")
+	Graphics.set_preset("low", false)
+	assert_false(v.atmosphere.env.volumetric_fog_enabled, "Low drops the haze at once")
+	assert_false(v.atmosphere.env.ssil_enabled, "and the bounced light")
+	assert_true(get_viewport().scaling_3d_scale < 1.0, "and draws the world smaller")
+	assert_eq(v.atmosphere.sun.light_angular_distance, 0.0, "with plain sun shadows")
+	Graphics.set_preset(Graphics.DEFAULT_PRESET, false)
+	assert_true(is_equal_approx(get_viewport().scaling_3d_scale, 1.0), "High draws it full size again")
+	v.queue_free()
+	Look.set_style(was, false)
+
+
+## The frame-time meter (W17) sits on the window, hidden until F3.
+func test_the_frame_meter_waits_for_f3() -> void:
+	var v := _view("village_of_barovia")
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var meter := get_tree().root.get_node_or_null(FrameMeter.NODE_NAME) as FrameMeter
+	assert_true(meter != null, "on the window")
+	var meters := 0
+	for n in get_tree().root.get_children():
+		if n is FrameMeter:
+			meters += 1
+	assert_eq(meters, 1, "just one, however many places open")
+	assert_eq(meter.visible, FrameMeter.shown(), "shown as the setting says")
+	v.queue_free()

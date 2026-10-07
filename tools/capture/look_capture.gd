@@ -5,12 +5,16 @@ extends Node
 ## The frame time is measured uncapped (no vsync, no frame cap) over two seconds' worth of frames: the window is drawn
 ## off screen, where Godot's own GPU timer reads zero, so the time a frame takes end to end stands in for it.
 ##   make capture SCENE=res://tools/capture/look_capture.tscn NAME=look/before FRAMES=10
-## Environment: LOOK_SHOTS=village_dusk,castle_hall (default: every shot), LOOK_STYLE=classic|modern and
-## LOOK_GRAPHICS=low|medium|high (this run only), LOOK_OFF=msaa,pcss,lamps,filter,splits,ssr (turn one thing off to see
-## what it costs), LOOK_AA=msaa2|fxaa|smaa (another anti-aliasing in its place), LOOK_OUTLINE=off|silhouette|full
-## (the world's ink lines), LOOK_FADE=1 (the 3D pieces near the party faded, as when they stand in front of it). LOOK_BENCH=1 times each part of
-## the renderer in turn instead (_bench), and LOOK_BENCH=presets the graphics presets, several rounds over, since
-## other work on the machine makes one reading noisy.
+## Environment (each for this run only):
+## - LOOK_SHOTS=village_dusk,castle_hall: which shots (default every one).
+## - LOOK_STYLE=classic|modern, LOOK_GRAPHICS=low|medium|high: the finish and the graphics preset.
+## - LOOK_METER=1: the F3 frame meter shown.
+## - LOOK_OFF=msaa,pcss,lamps,filter,splits,ssr: turn things off to see what they cost.
+## - LOOK_AA=msaa2|fxaa|smaa: another anti-aliasing in place of the preset's.
+## - LOOK_OUTLINE=off|silhouette|full: the world's ink lines.
+## - LOOK_FADE=1: the 3D pieces near the party faded, as when they stand in front of it.
+## - LOOK_BENCH=1 times each part of the renderer in turn instead of shooting (_bench), LOOK_BENCH=presets the graphics
+##   presets, several rounds over, since other work on the machine makes one reading noisy.
 
 ## Each shot: the place, the hour, where the party stands (empty: the place's own spawn) and the camera.
 const SHOTS := {
@@ -34,6 +38,8 @@ func _ready() -> void:
 	var style := OS.get_environment("LOOK_STYLE")
 	if style != "":
 		Look.set_style(style, false)
+	if OS.get_environment("LOOK_METER") != "":
+		GameSettings.set_value("frame_meter", true, false)
 	var graphics := OS.get_environment("LOOK_GRAPHICS")
 	if graphics != "":
 		Graphics.set_preset(graphics, false)
@@ -195,22 +201,28 @@ func _bench(tool: Node, id: String) -> void:
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 
 
-## Times the graphics presets, and High without MSAA, the same way: round after round, with the mean, the median and
-## where the quickest quarter of frames ends.
+## Times the graphics presets, and High with one setting at a time stepped down to Medium's, the same way: round after
+## round, with the mean, the median and where the quickest quarter of frames ends.
 func _bench_presets(tool: Node, id: String) -> void:
 	var was := Graphics.preset()
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	Engine.max_fps = 0
-	var parts: Array[String] = ["high", "high_no_msaa", "medium", "low"]
+	# High, then High with one setting at Medium's (or off), then Medium and Low.
+	var med := Graphics.SPECS["medium"] as Dictionary
+	var less := {"high": {}, "-msaa": {"msaa": Viewport.MSAA_DISABLED}, "-ao": {"ao": med["ao"], "ao_half": true},
+		"-bounce": {"bounce": -1}, "-filter": {"filter": med["filter"]}, "-lamp_soft": {"lamp_soft": false},
+		"-sun_soft": {"sun_soft": false}, "-lamps6": {"lamp_shadows": 6, "lamp_atlas": 4096}, "-haze48": {"haze": 48},
+		"-ssr32": {"reflections": 32}, "-sway": {"swaying": 0}, "medium": {}, "low": {}}
+	var parts: Array[String] = []
+	for k: String in less:
+		parts.append(k)
 	var times := {}
 	for p in parts:
 		times[p] = []
-	for round_ in 6:
+	for round_ in 5:
 		for p in parts:
-			Graphics.set_preset("high" if p == "high_no_msaa" else p, false)
-			if p == "high_no_msaa":
-				get_viewport().msaa_3d = Viewport.MSAA_DISABLED
-			view.atmosphere.call("_update_lamp_shadows")
+			Graphics.overrides = less[p] as Dictionary
+			Graphics.set_preset(p if p in Graphics.PRESETS else "high", false)
 			await tool.call("wait_frames", 20)
 			var last := Time.get_ticks_usec()
 			for i in 60:
@@ -226,6 +238,7 @@ func _bench_presets(tool: Node, id: String) -> void:
 		t.sort()
 		print("presets %s %s: mean %.2f ms, median %.2f, quickest quarter from %.2f" % [id, p, sum / t.size(),
 			float(t[t.size() / 2]), float(t[t.size() / 4])])
+	Graphics.overrides = {}
 	Graphics.set_preset(was, false)
 	Engine.max_fps = 60
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
