@@ -100,12 +100,16 @@ GameSettings `graphics`, High by default), applied as each place opens. Classic 
 | Lamps casting shadows (nearest the party) | 2 | 6 | 12 |
 | Lamp shadow atlas | 2048 | 4096 | 8192 |
 | Shadow filtering | soft low | soft medium | soft high |
+| Reflections on polished and wet floors (screen-space, steps) | none | 32 | 56 |
 
 - **Edges.** MSAA smooths 3D edges; SMAA then smooths the ink lines the screen pass draws round them, which MSAA can't
   reach. Neither blurs the character sprites (TAA would).
 - **The sun's shadows** reach only as far as the camera sees, in splits packed round the ground in view, so they
   follow the zoom and a square near the party gets about four times the detail it had. The sun and moon have a size
   (`Atmosphere.SUN_SIZE`, Godot's PCSS), so a shadow is sharp where a post meets the ground and softer at its far end.
+- **Surfaces** take the light like painted 3D in Modern (highlights, relief, roughness per surface: docs/art/textures.md
+  "How a surface takes the light"). The flat sky colour isn't reflected (`reflected_light_source` off): it laid a grey
+  sheen over everything; floors reflect what's on screen instead.
 - **Lamp shadows.** Lanterns, hearths, braziers, candles, lit windows, the party's lantern and spell lights all can
   cast shadows; every quarter second the nearest to the party get the preset's budget. A light already casting keeps
   its shadow until another is clearly nearer, so shadows don't blink as the party walks, and shadows fade out a

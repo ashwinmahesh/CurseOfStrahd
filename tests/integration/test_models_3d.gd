@@ -322,7 +322,7 @@ func test_a_looted_desk_dims() -> void:
 	SetDressing.mark_looted(desk)
 	for i in mi.mesh.get_surface_count():
 		var m := mi.get_surface_override_material(i) as ShaderMaterial
-		var key := "albedo" if m.shader == Look.CEL_SHADER else "tint"
+		var key := "albedo" if Look.tint_key(m) == "albedo" else "tint"
 		var a := ModelPiece.colour_of((before[i] as ShaderMaterial).get_shader_parameter(key))
 		var b := ModelPiece.colour_of(m.get_shader_parameter(key))
 		assert_true(b.v < a.v, "surface %d is darker once looted" % i)

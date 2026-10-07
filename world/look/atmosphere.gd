@@ -207,6 +207,15 @@ func _modern_finish() -> void:
 	sun.shadow_blur = 1.0
 	sun.shadow_bias = 0.03
 	sun.shadow_normal_bias = 1.0
+	# Polished and wet floors reflect what stands on them (W3): the lit world shaders' low roughness picks it up. The
+	# flat sky colour isn't reflected: it would lay a grey sheen over every surface and wash the colour out.
+	env.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
+	var steps := Graphics.reflection_steps()
+	env.ssr_enabled = steps > 0
+	env.ssr_max_steps = maxi(steps, 1)
+	env.ssr_fade_in = 0.15
+	env.ssr_fade_out = 2.0
+	env.ssr_depth_tolerance = 0.25
 
 
 ## The sun or moon's apparent size in degrees for the Modern finish's soft shadows (Godot's PCSS): sharp where a post

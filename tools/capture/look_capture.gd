@@ -6,7 +6,7 @@ extends Node
 ## off screen, where Godot's own GPU timer reads zero, so the time a frame takes end to end stands in for it.
 ##   make capture SCENE=res://tools/capture/look_capture.tscn NAME=look/before FRAMES=10
 ## Environment: LOOK_SHOTS=village_dusk,castle_hall (default: every shot), LOOK_STYLE=classic|modern and
-## LOOK_GRAPHICS=low|medium|high (this run only), LOOK_OFF=msaa,pcss,lamps,filter,splits (turn one thing off to see
+## LOOK_GRAPHICS=low|medium|high (this run only), LOOK_OFF=msaa,pcss,lamps,filter,splits,ssr (turn one thing off to see
 ## what it costs), LOOK_AA=msaa2|fxaa|smaa (another anti-aliasing in its place). LOOK_BENCH=1 times each part of
 ## the renderer in turn instead (_bench), and LOOK_BENCH=presets the graphics presets, several rounds over, since
 ## other work on the machine makes one reading noisy.
@@ -102,6 +102,8 @@ func _build(shot: Dictionary) -> void:
 	if "filter" in off:
 		RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
 		RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
+	if "ssr" in off:
+		view.atmosphere.env.ssr_enabled = false
 	if "splits" in off:
 		view.atmosphere.sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
 	if "lamps" in off:
