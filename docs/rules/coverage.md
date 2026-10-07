@@ -287,4 +287,4 @@ the new classes' level 8-11 features in combat (listed under Classes; the spell 
 Review regression coverage: `test_review_regressions.gd` checks incorporeal flight over ground Difficult
 Terrain, Freedom of Movement and numeric slowing, angled monster charges and broken approaches, plus
 safe default reaction policies and the player-accessible opt-in controls. Existing free responses retain
-their prior policy. These changes do not enable any gated book entries.
+their prior policy. Non-spell repeated saves (including monster charm) are covered through damage and turn-end triggers, with typed empty save keys. These changes do not enable any gated book entries.

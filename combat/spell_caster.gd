@@ -3831,7 +3831,10 @@ func _repeat_save(c: Combatant, fx: Effect, adv: Array[String]) -> void:
 	var e := enc()
 	var ab := StringName(str(fx.repeat_save.get("ability", "wis")))
 	var dc := int(fx.repeat_save.get("dc", 10))
-	var test := c.creature.roll_save(e.dice, ab, dc, adv, [], "%s save to end %s (%s)" % [Creature.ABILITY_NAMES[ab], fx.name, c.name()], spell_save_keys(fx.caster_id) if fx.source_kind == &"spell" else [])
+	var keys: Array[String] = []
+	if fx.source_kind == &"spell":
+		keys = spell_save_keys(fx.caster_id)
+	var test := c.creature.roll_save(e.dice, ab, dc, adv, [], "%s save to end %s (%s)" % [Creature.ABILITY_NAMES[ab], fx.name, c.name()], keys)
 	var then_kind := str(fx.repeat_save.get("then", ""))
 	# Contagion and Flesh to Stone: three successes end it; three failures settle it (lasting, or Petrified).
 	var three := str(fx.repeat_save.get("three", ""))

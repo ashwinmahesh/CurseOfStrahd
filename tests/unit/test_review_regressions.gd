@@ -117,3 +117,21 @@ func test_spell_hit_responses_preserve_ask_and_off_policies() -> void:
 	TestCombat.next_d20(e, 20)
 	assert_false(e.spells.spell_attack(ctx, c, CombatResult.new()).success)
 	assert_eq(ch.slots_left(8), slots - 1)
+
+func test_nonspell_repeat_saves_resolve_after_damage_and_at_turn_end() -> void:
+	for trigger: String in ["damage", "turn"]:
+		var e := TestCombat.open_field()
+		e.default_player_reaction = "never"
+		var c := TestCombat.hero(e, "ilse_varga", Vector2i(2, 3))
+		TestCombat.punching_bag(e, Vector2i(8, 3))
+		TestCombat.start_with(e, c)
+		var charm := Effect.new("Monster Charm", &"monster", "test_monster_charm").with_condition(&"charmed")
+		charm.repeat_save = {"ability": "wis", "dc": 10, "when": "end", "on_damage": trigger == "damage"}
+		c.creature.add_effect(charm)
+		TestCombat.next_d20(e, 20)
+		if trigger == "damage":
+			e.deal_damage(null, c, [{"amount": 1, "type": "force"}], false, "Hit")
+		else:
+			e.end_turn()
+		assert_false(charm in c.creature.effects, trigger + ": successful non-spell save ends the effect")
+		assert_false(c.creature.has_condition(&"charmed"), trigger)
