@@ -46,7 +46,7 @@ func test_mood_names_resolve() -> void:
 func test_moods_use_palette_colours_and_known_weather() -> void:
 	var palette := JSON.parse_string(FileAccess.get_file_as_string("res://art/palette/palette.json")) as Dictionary
 	var colour_keys := ["sky", "ambient", "key", "mist", "mists", "fog", "shadows", "lights", "deep", "shallow", "foam",
-		"glint", "core", "rim", "colour", "splash_colour"]
+		"glint", "core", "rim", "colour", "splash_colour", "shade"]
 	var bad: Array[String] = []
 	for id: String in Atmosphere.moods()["moods"] as Dictionary:
 		var mood := Atmosphere.resolve(id)
@@ -264,3 +264,27 @@ func test_a_swaying_flame_comes_back_to_rest() -> void:
 		f._process(0.05)
 	assert_true(f.position.is_equal_approx(Vector3(2, 1, 3)), "and it comes back to rest")
 	f.queue_free()
+
+
+
+## The Modern grade (W16) is the place's own: cool shade by default, a mood's colour where it has one, and every time
+## of day resolves to palette colours.
+func test_each_mood_has_its_own_grade() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var village := _view("village_of_barovia")
+	var night := village.atmosphere._tone("night")
+	var day := village.atmosphere._tone("day")
+	assert_eq(str(night["shade"]), "night", "the village's night shade is night blue")
+	assert_eq(str(day["shade"]), "slate", "and its overcast day blue-grey")
+	village.queue_free()
+	var berez := _view("berez")
+	assert_eq(str(berez.atmosphere._tone("night")["shade"]), "bog_deep", "Berez keeps its sick green")
+	berez.queue_free()
+	for id: String in Atmosphere.moods()["moods"] as Dictionary:
+		var a := Atmosphere.new()
+		a.mood = Atmosphere.resolve(id)
+		for t: String in ["day", "dusk", "night", "dawn", "any"]:
+			assert_true(Look.color(str(a._tone(t)["shade"])) is Color, "%s %s" % [id, t])
+		a.free()
+	Look.set_style(was, false)

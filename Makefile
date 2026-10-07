@@ -63,6 +63,7 @@ lfs-quiet:
 validate:
 	python3 tools/data/validate_data.py
 	python3 tools/data/check_implemented.py
+	python3 tools/data/check_rules_docs.py
 
 ## Compiles every rules/ script standalone (no autoloads allowed there).
 lint: import
