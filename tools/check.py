@@ -30,7 +30,8 @@ ASSET_EXT = {".png", ".jpg", ".jpeg", ".webp", ".svg", ".ogg", ".wav", ".mp3", "
              ".gpl", ".jsonl", ".gdignore", ".ttf", ".otf"}
 ASSET_DIRS = ("blender/", "tools/art/", "tools/audio/", "tools/ui/", "art/generated/", "art/sourced/")
 CODE_EXT = {".gd", ".tscn", ".tres", ".gdshader"}
-EVERYTHING = ("Makefile", "project.godot", "addons/", "tests/test_runner.", "tools/logcheck.sh", "tools/lint_gd.sh")
+EVERYTHING = ("Makefile", "project.godot", "addons/", "tests/test_runner.", "tools/run_tests.py", "tools/logcheck.sh",
+              "tools/lint_gd.sh")
 LINTED = ("rules/", "combat/", "story/")
 MAX_COST = 2  # a test that uses the change (1) or uses a script that does (2); scenes and resources cost nothing
 CI_TARGETS = {"import", "validate", "lint", "test", "ci", "check"}
