@@ -55,7 +55,8 @@ def generate(rec, name):
 def process(rec, name):
     with tempfile.TemporaryDirectory() as tmp:
         out = subprocess.run([BLENDER, "-b", "--python", str(ROOT / "blender" / "make_decals.py"), "--",
-                              "--in", str(sheet(name)), "--out", tmp, "--name", name],
+                              "--in", str(sheet(name)), "--out", tmp, "--name", name]
+                             + (["--along"] if rec["sheets"][name].get("along") else []),
                              capture_output=True, text=True)
         made = [json.loads(l[len("decal: "):]) for l in out.stdout.splitlines() if l.startswith("decal: ")]
         if out.returncode != 0 or not made:

@@ -58,7 +58,7 @@ func test_boards_are_dressed_with_decals() -> void:
 		var v := LocationView.create(loc_id, GameState.story, null, Dice.roller, "default")
 		add_child(v)
 		await _frames(1)
-		var decals := v.board.find_children("Decal_*", "Decal", true, false)
+		var decals := v.board.find_children("*", "Decal", true, false)
 		assert_true(decals.size() >= 8, "%s has its decals (%d)" % [loc_id, decals.size()])
 		var walls := 0
 		for d: Decal in decals:
@@ -68,9 +68,20 @@ func test_boards_are_dressed_with_decals() -> void:
 			assert_true(walls > 0, "%s has marks on its walls" % loc_id)
 		v.queue_free()
 		await _frames(1)
+	# Wheel ruts run along the roads between the crossroads' ways out (W11's GroundRelief.roads()).
+	var x := LocationView.create("svalich_crossroads", GameState.story, null, Dice.roller, "default")
+	add_child(x)
+	await _frames(1)
+	var ruts := 0
+	for d: Decal in x.board.find_children("*", "Decal", true, false):
+		if d.texture_albedo != null and d.texture_albedo.resource_path.contains("floor_ruts"):
+			ruts += 1
+	assert_true(ruts >= 40, "the crossroads' roads are rutted (%d)" % ruts)
+	x.queue_free()
+	await _frames(1)
 	Look.set_style("classic", false)
 	var c := LocationView.create("village_of_barovia", GameState.story, null, Dice.roller, "default")
 	add_child(c)
 	await _frames(1)
-	assert_eq(c.board.find_children("Decal_*", "Decal", true, false).size(), 0, "Classic is left as it was")
+	assert_eq(c.board.find_children("*", "Decal", true, false).size(), 0, "Classic is left as it was")
 	c.queue_free()

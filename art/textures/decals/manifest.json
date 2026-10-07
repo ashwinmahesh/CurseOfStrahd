@@ -421,7 +421,7 @@
       "file": "art/textures/decals/floor_ruts_1.webp",
       "normal_file": "art/textures/decals/floor_ruts_1_n.webp",
       "view": "floor",
-      "aspect": 0.915,
+      "aspect": 1.142,
       "sheet": "floor_ruts",
       "subject": "a straight stretch of two parallel wheel ruts running from left to right, dark wet churned mud in the two grooves with a little standing water, fading away at both ends"
     },
@@ -429,7 +429,7 @@
       "file": "art/textures/decals/floor_ruts_2.webp",
       "normal_file": "art/textures/decals/floor_ruts_2_n.webp",
       "view": "floor",
-      "aspect": 0.969,
+      "aspect": 1.21,
       "sheet": "floor_ruts",
       "subject": "a straight stretch of two parallel wheel ruts running from left to right, drier, cracked brown mud with small stones pressed in, fading away at both ends"
     },
@@ -437,7 +437,7 @@
       "file": "art/textures/decals/floor_ruts_3.webp",
       "normal_file": "art/textures/decals/floor_ruts_3_n.webp",
       "view": "floor",
-      "aspect": 0.972,
+      "aspect": 1.216,
       "sheet": "floor_ruts",
       "subject": "a straight stretch of two parallel wheel ruts running from left to right, muddy, with hoof prints between them, fading away at both ends"
     },
@@ -445,7 +445,7 @@
       "file": "art/textures/decals/floor_ruts_4.webp",
       "normal_file": "art/textures/decals/floor_ruts_4_n.webp",
       "view": "floor",
-      "aspect": 1.124,
+      "aspect": 1.406,
       "sheet": "floor_ruts",
       "subject": "a straight stretch of two parallel wheel ruts running from left to right, shallow and grassy at the edges, fading away at both ends"
     }

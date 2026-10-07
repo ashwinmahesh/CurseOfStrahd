@@ -1,5 +1,5 @@
 {
-  "about": "Decals (Improvement Ideas W10, docs/art/decals.md): sheets of four marks on white painted by Gemini (2K, art/prompts/decal_preamble.txt, a look target frame as the style reference) and cut apart by blender/make_decals.py into art/textures/decals/<sheet>_<n>.webp with soft alpha and a normal map. view: floor (seen from above) or wall (seen straight on, its bottom edge at the foot of the wall).",
+  "about": "Decals (Improvement Ideas W10, docs/art/decals.md): sheets of four marks on white painted by Gemini (2K, art/prompts/decal_preamble.txt, a look target frame as the style reference) and cut apart by blender/make_decals.py into art/textures/decals/<sheet>_<n>.webp with soft alpha and a normal map. view: floor (seen from above) or wall (seen straight on, its bottom edge at the foot of the wall). along: marks that run on (ruts): cut to their straight middle with long soft ends, for laying end to end.",
   "prompt": "A 2 x 2 grid of four separate {what} marks, each centred alone in its own quarter of the picture with wide plain white all round it, none touching the edges or each other: top left, {a}; top right, {b}; bottom left, {c}; bottom right, {d}. {view} Draw only the four marks on white, not a scene, a floor or a place.",
   "views": {
     "floor": "Each is seen straight from above, as if lying on a floor (orthographic, no perspective).",
@@ -144,7 +144,8 @@
         "a straight stretch of two parallel wheel ruts running from left to right, drier, cracked brown mud with small stones pressed in, fading away at both ends",
         "a straight stretch of two parallel wheel ruts running from left to right, muddy, with hoof prints between them, fading away at both ends",
         "a straight stretch of two parallel wheel ruts running from left to right, shallow and grassy at the edges, fading away at both ends"
-      ]
+      ],
+      "along": true
     }
   }
 }

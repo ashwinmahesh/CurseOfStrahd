@@ -199,15 +199,16 @@ static func ruts(board: ArenaBoard, roads: Array[PackedVector2Array]) -> int:
 					var nm := _texture(str(info.get("normal_file", "")))
 					if nm != null:
 						d.texture_normal = nm
-					d.size = Vector3(0.95, 0.5, 1.5)
+					var aspect := float(info.get("aspect", 1.0))
+					d.size = Vector3(0.9, 0.5, 0.9 / maxf(aspect, 0.3))
 					d.position = Vector3(p.x, board.floor_y(c), p.y)
-					d.rotation.y = atan2(dir.x, dir.y)
+					d.rotation.y = atan2(dir.x, dir.y) + (PI if h % 2 == 0 else 0.0)
 					d.upper_fade = 0.3
 					d.lower_fade = 0.3
-					d.modulate = Color(0.85, 0.82, 0.8)
+					d.modulate = Color(0.78, 0.76, 0.74, 0.7)
 					root.add_child(d)
 					count += 1
-				next += 1.05
+				next += 0.55
 			walked += seg
 	return count
 

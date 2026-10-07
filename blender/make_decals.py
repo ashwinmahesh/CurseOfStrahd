@@ -28,6 +28,8 @@ def args():
     p.add_argument("--out", required=True)
     p.add_argument("--name", required=True)
     p.add_argument("--size", type=int, default=512)
+    p.add_argument("--along", action="store_true", help="marks that run on (wheel ruts): keep the middle of each "
+                   "lengthwise, fading out softly toward both ends so copies laid end to end overlap without seams")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
 
@@ -52,7 +54,7 @@ def area_down(img, k):
     return img[:h2 * k, :w2 * k].reshape(h2, k, w2, k, -1).mean(axis=(1, 3))
 
 
-def one(q, size):
+def one(q, size, along=False):
     rgb = q[..., :3].copy()
     border = np.concatenate([rgb[:8].reshape(-1, 3), rgb[-8:].reshape(-1, 3), rgb[:, :8].reshape(-1, 3),
                              rgb[:, -8:].reshape(-1, 3)])
@@ -73,6 +75,13 @@ def one(q, size):
     x0, x1 = max(0, xs.min() - pad), min(a.shape[1], xs.max() + pad)
     a, colour = a[y0:y1, x0:x1], colour[y0:y1, x0:x1]
     h, w = a.shape
+    if along:
+        # The middle lengthwise (the tracks run top to bottom, their ends tapered), faded over a third at each end.
+        m0, m1 = int(h * 0.1), int(h * 0.9)
+        a, colour = a[m0:m1].copy(), colour[m0:m1]
+        h = a.shape[0]
+        t = np.minimum(np.arange(h), np.arange(h)[::-1]) / (h / 3.0)
+        a *= np.clip(t, 0.0, 1.0)[:, None] ** 1.5
     # Fade to nothing at the edges, so a projected decal never shows its box.
     ramp = 16
     fy = np.minimum(np.arange(h), np.arange(h)[::-1])[:, None]
@@ -101,7 +110,7 @@ def main():
     out = Path(a.out)
     for i, (r, c) in enumerate(((0, 0), (0, 1), (1, 0), (1, 1))):
         q = sheet[r * H // 2:(r + 1) * H // 2, c * W // 2:(c + 1) * W // 2]
-        res = one(q, a.size)
+        res = one(q, a.size, a.along)
         if res is None:
             print("decal: " + json.dumps({"n": i + 1, "empty": True}))
             continue

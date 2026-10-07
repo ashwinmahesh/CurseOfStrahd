@@ -28,6 +28,9 @@ const SHOTS := {
 		"look": [22, 12], "dist": 17.0},
 	"krezk_noon": {"loc": "krezk", "hour": 13, "cells": [[14, 13], [15, 13], [14, 14], [15, 14]],
 		"look": [12, 10], "dist": 15.0, "yaw": 1},
+	"road_day": {"loc": "into_the_mists_road", "hour": 12, "cells": [[12, 15], [13, 15], [12, 16], [13, 14]]},
+	"crossroads": {"loc": "svalich_crossroads", "hour": 12, "cells": [[20, 15], [21, 15], [20, 16], [21, 16]],
+		"look": [20, 12], "dist": 15.0},
 	"death_house_hall": {"loc": "death_house_ground", "cells": [[13, 8], [14, 8], [13, 9], [14, 9]]},
 	"castle_hall": {"loc": "castle_ravenloft_main_floor", "cells": [[25, 8], [26, 8], [25, 9], [26, 9]]},
 	"church": {"loc": "village_church", "cells": [[10, 14], [11, 14], [10, 15], [11, 15]]},
@@ -51,6 +54,12 @@ func capture_shots(tool: Node, out: String) -> void:
 		var shot := SHOTS[id] as Dictionary
 		_build(shot)
 		await tool.call("wait_frames", 40)
+		var ruts := 0
+		var decals := view.board.find_children("*", "Decal", true, false)
+		for d in decals:
+			if str(d.name).contains("ruts"):
+				ruts += 1
+		print("kit %s: %d decals, %d of them ruts" % [id, decals.size(), ruts])
 		tool.call("_shot", "%s_%s.png" % [out, id])
 
 
