@@ -24,19 +24,40 @@ everything; the effects only show it (ADR 0007).
 
 ## Families
 
-| family | what it looks like | pilot spell |
+The descriptions live in `art/vfx/effects.json` (`families`); every one is built in `world/combat/fx/`.
+
+| family | where it plays | for example |
 |---|---|---|
-| bolt | a glowing missile with a trail streaks from the hand and bursts on the target | Fire Bolt |
-| beam | a crackling beam joins hand and target for a moment, flaring where it lands | Eldritch Blast |
-| burst | a bead arcs to the point and explodes: churning ball sized to the area, shockwave, sparks, smoke | Fireball |
-| heal | warm light wells up: a soft shaft, spiralling motes and a circle of light at the feet | Cure Wounds |
-| smite | a shaft of light strikes down on the target as the blow lands, sparks and a ring across the floor | Divine Smite |
+| bolt, ray, beam, shot | caster to each target (FxMissiles), one per attack roll; a miss sails past; a beam can chain | Fire Bolt, Scorching Ray, Eldritch Blast, an arrow |
+| touch, drain | a hand's touch; life streaming back to the caster | Shocking Grasp, Vampiric Touch, a vampire's bite |
+| burst, cone, line, nova | over the spell's squares (FxAreas): explosion, spray, bolt along a line, shockwave from the caster | Fireball, Burning Hands, Lightning Bolt, Thunderwave |
+| strike, cloud, wall, ground, aura | from the sky, billowing, rising, erupting, settling round the caster | Flame Strike, Cloudkill, Wall of Fire, Entangle, Spirit Guardians |
+| heal, buff, debuff, psychic, ward, transform | on each creature (FxBodies) | Cure Wounds, Bless, Hex, Vicious Mockery, Shield of Faith, Polymorph |
+| smite, slash | on a blow that lands | Divine Smite, a zombie's slam, a longsword |
+| summon, teleport, glimmer | where a creature appears, both ends of a jump, a small working | Summon Undead, Misty Step, Detect Magic |
+
+## Abilities and attacks
+
+- **Class features** (`features` in the data) play on the `ability` event the action catalog emits when one is used
+  from the hotbar (Second Wind, Rage, Lay On Hands, Patient Defense...). Features the engine shows as a `spell` event
+  with a non-spell id (Turn Undead, Divine Spark, Breath Weapon, Elemental Burst) are looked up there too.
+- **Monster actions** (`monsters`, keyed `<monster>.<action>`): a save action plays on its `ability` event, an attack on
+  its `attack` event (the event's `action` names it). With no pick a ranged attack is a bolt (magic damage) or a shot,
+  a melee attack a touch (magic) or a slash, and a save action takes its area's shape or a curse or psychic look,
+  coloured by its damage type.
+- **Weapons** (`weapons`): a slash on a melee hit, a shot for a ranged attack.
+- Creatures that appear (`summon_creature`) open a summoning circle in the last cast's colours; a `teleport` bursts
+  into mist at both ends.
+- `python3 tools/vfx/assign_families.py` sorts spells into families from their data (plus a list of spells whose
+  look the data can't tell) and writes the picks a spell is missing; Faerûn, Arcana Unleashed and Ravenloft: The
+  Horrors Within content is skipped.
 
 ## Checking it
 
 - `make capture SCENE=res://tools/capture/vfx_capture.tscn NAME=vfx/vfx FRAMES=30` plays each staged spell in the
   Village of Barovia at night twice, effects off and on, and saves the frames (`VFX_ONLY=fire_bolt,fireball` for a
-  few, `VFX_SIDES=after` to skip the "before" pass, `VFX_LOOK=classic` for the classic finish).
+  few, `VFX_SIDES=after` to skip the "before" pass, `VFX_LOOK=classic` for the classic finish, `VFX_SET=gallery` for
+  one cast of every family).
 - `python3 tools/capture/vfx_sheet.py captures/vfx/vfx` joins them into side-by-side GIFs, stills at the moment the
   two differ most, and `vfx_overview.png`.
 - `tests/unit/test_spell_fx.gd` checks the data (picks, families, palette colours) and that effects clean up.

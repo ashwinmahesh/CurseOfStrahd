@@ -170,3 +170,34 @@ func test_a_monster_save_action_comes_as_an_ability_event() -> void:
 	assert_eq(str(ev["key"]), "vampire_spawn.bite")
 	assert_eq(str(ev["by"]), v.id)
 	assert_eq(ev["targets"], [h.id])
+
+
+func test_feature_and_monster_picks_name_a_family_and_a_real_action() -> void:
+	var d := _data()
+	for table: String in ["features", "monsters", "weapons"]:
+		for key: String in d.get(table, {}) as Dictionary:
+			var cue := SpellFx._spec((d[table] as Dictionary)[key])
+			assert_true((d["families"] as Dictionary).has(str(cue["family"])), "%s %s: no family %s" % [table, key, cue["family"]])
+			assert_true(str(cue.get("flavour", "")) == "" or (d["flavours"] as Dictionary).has(str(cue["flavour"])), "%s %s: no flavour" % [table, key])
+	for key: String in d["monsters"] as Dictionary:
+		var block := Compendium.shared().monster_data(key.get_slice(".", 0))
+		assert_false(block.is_empty(), "art/vfx/effects.json: no monster %s" % key)
+		var found := false
+		for section: String in ["actions", "bonus_actions", "reactions"]:
+			for a: Variant in block.get(section, []) as Array:
+				found = found or str((a as Dictionary).get("id", "")) == key.get_slice(".", 1)
+		assert_true(found, "art/vfx/effects.json: %s has no action %s" % [key.get_slice(".", 0), key.get_slice(".", 1)])
+
+
+func test_attacks_and_monster_actions_find_their_look() -> void:
+	var e := TestCombat.open_field(4)
+	var skull := TestCombat.foe(e, "flameskull", Vector2i(3, 3))
+	var zombie := TestCombat.foe(e, "zombie", Vector2i(5, 3))
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2))
+	assert_eq(str(SpellFx.attack_cue(skull, "monster:fire_ray")["family"]), "ray", "the Flameskull's green fire jet, picked")
+	assert_eq(str(SpellFx.attack_cue(skull, "monster:fire_ray")["flavour"]), "necrotic")
+	assert_eq(str(SpellFx.attack_cue(zombie, "monster:slam")["family"]), "slash", "a plain blow")
+	assert_eq(str(SpellFx.attack_cue(ilse, "weapon:greatsword")["family"]), "slash")
+	assert_eq(str(SpellFx.ability_cue("feature", "second_wind", ilse)["family"]), "heal")
+	assert_eq(str(SpellFx.spell_cue("turn_undead")["family"]), "nova", "a feature shown as a spell event")
+	assert_true(SpellFx.spell_cue("no_such_thing").is_empty())

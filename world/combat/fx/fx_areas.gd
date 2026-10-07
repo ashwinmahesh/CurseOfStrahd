@@ -142,10 +142,10 @@ static func cone(fx: SpellFx, cue: Dictionary, caster: CombatToken, cells: Array
 	var speed := reach / life * 1.6
 	var flavour := str(cue["flavour"])
 	var shape := FxKit.Shape.PUFF if SpellFx.fiery(flavour) else FxKit.Shape.GLOW
-	var spray := FxKit.particles({"amount": int(clampf(reach * 22.0, 40.0, 220.0)), "lifetime": life, "explosiveness": 0.55,
+	var spray := FxKit.particles({"amount": int(clampf(reach * 26.0, 40.0, 260.0)), "lifetime": life, "explosiveness": 0.55,
 		"emit": "sphere", "radius": 0.08, "dir": dir, "spread": 26.0, "speed": Vector2(speed * 0.7, speed),
-		"damping": Vector2(speed * 0.8, speed * 1.2), "size": 0.45 + reach * 0.12, "grow": FxKit.curve(0.3, 1.0, 1.4, 0.3),
-		"colours": [cols["core"], cols["glow"], cols["edge"], cols["smoke"]], "material": FxKit.glow_material(shape, cols["core"], 2.4)})
+		"damping": Vector2(speed * 0.8, speed * 1.2), "size": minf(0.28 + reach * 0.05, 0.8), "grow": FxKit.curve(0.3, 1.0, 1.2, 0.3),
+		"colours": [cols["glow"], cols["edge"], cols["smoke"]], "material": FxKit.glow_material(shape, cols["core"], 1.5)})
 	var shards := FxKit.particles({"amount": int(clampf(reach * 10.0, 20.0, 90.0)), "lifetime": life * 1.1, "explosiveness": 0.6,
 		"dir": dir, "spread": 24.0, "speed": Vector2(speed * 0.6, speed * 1.1), "damping": Vector2(speed * 0.5, speed),
 		"size": Vector2(0.05, 0.3), "align": true, "colours": [cols["core"], cols["glow"], cols["edge"]],
@@ -216,10 +216,10 @@ static func nova(fx: SpellFx, cue: Dictionary, caster: CombatToken, cells: Array
 		radius = maxf(radius, Vector2(p.x - feet.x, p.z - feet.z).length() + 0.5)
 	radius *= float(cue.get("size", 1.0))
 	shockwave(fx, cue, feet, radius * 2.2, 0.4)
-	var shell := FxKit.particles({"amount": int(clampf(radius * 30.0, 40.0, 200.0)), "lifetime": 0.55, "explosiveness": 0.95,
+	var shell := FxKit.particles({"amount": int(clampf(radius * 24.0, 30.0, 160.0)), "lifetime": 0.5, "explosiveness": 0.95,
 		"emit": "sphere", "radius": 0.3, "speed": Vector2(radius * 2.4, radius * 3.0), "damping": Vector2(radius * 3.0, radius * 4.0),
-		"size": 0.35 + radius * 0.1, "grow": FxKit.curve(0.4, 1.0, 0.6, 0.2), "colours": [cols["core"], cols["glow"], cols["edge"]],
-		"material": FxKit.glow_material(FxKit.Shape.GLOW, cols["core"], 2.2)})
+		"size": minf(0.22 + radius * 0.04, 0.5), "grow": FxKit.curve(0.4, 1.0, 0.4, 0.2), "colours": [cols["glow"], cols["edge"]],
+		"material": FxKit.glow_material(FxKit.Shape.GLOW, cols["core"], 1.5)})
 	var sparks := FxKit.particles({"amount": 50, "lifetime": 0.6, "emit": "sphere", "radius": 0.3, "speed": Vector2(radius * 2.0, radius * 4.0),
 		"damping": Vector2(2.0, 4.0), "size": Vector2(0.05, 0.28), "align": true, "colours": [cols["core"], cols["glow"]],
 		"material": FxKit.glow_material(FxKit.Shape.STREAK, cols["core"], 3.0, false)})
@@ -295,22 +295,25 @@ static func _strike_one(fx: SpellFx, cue: Dictionary, ground: Vector3, radius: f
 			"speed": Vector2(14.0, 18.0), "damping": Vector2.ZERO, "size": Vector2(0.06, 0.45), "align": true,
 			"colours": [cols["core"], cols["glow"], cols["edge"]], "material": FxKit.glow_material(FxKit.Shape.STREAK, cols["core"], 2.8, false)})
 		fx.emit(hail, ground + Vector3(0, 8.0, 0))
-	var shaft := FxKit.column(fx, ground, radius * 0.85, radius * 1.05, 9.0, cols, 2.4)
-	var sm := shaft.material_override as ShaderMaterial
-	sm.set_shader_parameter("scroll", 5.0)
-	var down := shaft.create_tween()
-	down.tween_method(func(v: float) -> void: sm.set_shader_parameter("fade", v), 0.0, 1.0, 0.06)
-	down.tween_interval(0.12 * fx.pace())
-	down.tween_property(shaft, "scale", Vector3(0.2, 1.0, 0.2), 0.45 * fx.pace()).set_ease(Tween.EASE_IN)
-	down.parallel().tween_method(func(v: float) -> void: sm.set_shader_parameter("fade", v), 1.0, 0.0, 0.45 * fx.pace())
-	down.tween_callback(shaft.queue_free)
+	# A pillar of light or flame for what burns or shines (Flame Strike, Moonbeam, Sacred Flame); lightning and hail
+	# come down on their own.
+	if flavour != "lightning" and not (flavour in ["cold", "water"] or str(cue["key"]) == "ice_storm"):
+		var shaft := FxKit.column(fx, ground, minf(radius * 0.85, 1.4), minf(radius * 1.05, 1.7), 7.0, cols, 1.4)
+		var sm := shaft.material_override as ShaderMaterial
+		sm.set_shader_parameter("scroll", 5.0)
+		var down := shaft.create_tween()
+		down.tween_method(func(v: float) -> void: sm.set_shader_parameter("fade", v), 0.0, 1.0, 0.06)
+		down.tween_interval(0.12 * fx.pace())
+		down.tween_property(shaft, "scale", Vector3(0.2, 1.0, 0.2), 0.45 * fx.pace()).set_ease(Tween.EASE_IN)
+		down.parallel().tween_method(func(v: float) -> void: sm.set_shader_parameter("fade", v), 1.0, 0.0, 0.45 * fx.pace())
+		down.tween_callback(shaft.queue_free)
 	var t := fx.get_tree().create_timer(0.08 * fx.pace())
 	t.timeout.connect(func() -> void:
 		shockwave(fx, cue, ground, radius * 3.0, 0.4)
 		var splash := FxKit.particles({"amount": int(clampf(radius * 26.0, 24.0, 160.0)), "lifetime": 0.7, "emit": "ring",
 			"radius": radius * 0.6, "inner": 0.0, "dir": Vector3.UP, "spread": 40.0, "speed": Vector2(2.0, 5.0), "damping": Vector2(2.0, 4.0),
-			"gravity": Vector3(0, -6.0, 0), "size": 0.4, "grow": FxKit.curve(0.5, 1.0, 0.2),
-			"colours": [cols["core"], cols["glow"], cols["edge"]], "material": FxKit.glow_material(FxKit.Shape.PUFF if SpellFx.fiery(flavour) else FxKit.Shape.GLOW, cols["core"], 2.4)})
+			"gravity": Vector3(0, -6.0, 0), "size": 0.3, "grow": FxKit.curve(0.5, 1.0, 0.2),
+			"colours": [cols["glow"], cols["edge"]], "material": FxKit.glow_material(FxKit.Shape.PUFF if SpellFx.fiery(flavour) else FxKit.Shape.GLOW, cols["core"], 1.5)})
 		fx.emit(splash, ground + Vector3(0, 0.1, 0))
 		FxKit.flash(fx, ground + Vector3(0, 1.0, 0), cols["light"], 7.0, radius * 3.0 + 2.0, 0.03, 0.7)
 		fx.shake(clampf(radius * 0.03, 0.03, 0.12), 0.3))

@@ -33,6 +33,44 @@ const STAGES := {
 			{"type": "smite", "caster": "caster", "spell": "divine_smite", "target": "t0"}, {"type": "damage", "id": "t0", "amount": 23}]},
 }
 
+## VFX_SET=gallery: one cast of each family (after only), to check them all. "cast" builds the events from the spell
+## (its area's squares, an attack and damage per target, healing); "ability" plays a class feature's or a monster's
+## action by its key; "attack" a blow with that action id; "teleport_to" moves the caster after the cast.
+const GALLERY := {
+	"magic_missile": {"caster": "Silvain", "targets": [[3, 0]], "cast": "magic_missile"},
+	"scorching_ray": {"caster": "Silvain", "targets": [[3, 0], [3, 1]], "cast": "scorching_ray"},
+	"chain_lightning": {"caster": "Silvain", "targets": [[3, 0], [4, 1], [3, -1]], "cast": "chain_lightning"},
+	"ray_of_frost": {"caster": "Silvain", "targets": [[3, 0]], "cast": "ray_of_frost"},
+	"burning_hands": {"caster": "Silvain", "targets": [[2, 0], [3, 0]], "cast": "burning_hands"},
+	"cone_of_cold": {"caster": "Silvain", "targets": [[3, 0], [4, 1]], "cast": "cone_of_cold"},
+	"lightning_bolt": {"caster": "Silvain", "targets": [[3, 0], [5, 0]], "cast": "lightning_bolt"},
+	"thunderwave": {"caster": "Silvain", "targets": [[1, 0], [1, 1]], "cast": "thunderwave"},
+	"spirit_guardians": {"caster": "Hedda", "targets": [[2, 0]], "cast": "spirit_guardians"},
+	"flame_strike": {"caster": "Hedda", "targets": [[4, 0]], "cast": "flame_strike"},
+	"call_lightning": {"caster": "Silvain", "targets": [[4, 0]], "cast": "call_lightning"},
+	"ice_storm": {"caster": "Silvain", "targets": [[4, 0], [5, 1]], "cast": "ice_storm"},
+	"cloudkill": {"caster": "Silvain", "targets": [[4, 0]], "cast": "cloudkill"},
+	"wall_of_fire": {"caster": "Silvain", "targets": [[4, 0]], "cast": "wall_of_fire"},
+	"entangle": {"caster": "Hedda", "targets": [[4, 0], [4, 1]], "cast": "entangle"},
+	"bless": {"caster": "Hedda", "targets": [[1, 0]], "ally": "Godrick", "cast": "bless"},
+	"hex": {"caster": "Kip", "targets": [[3, 0]], "cast": "hex"},
+	"vicious_mockery": {"caster": "Kip", "targets": [[3, 0]], "cast": "vicious_mockery"},
+	"shield_of_faith": {"caster": "Hedda", "targets": [[1, 0]], "ally": "Godrick", "cast": "shield_of_faith"},
+	"shocking_grasp": {"caster": "Silvain", "targets": [[1, 0]], "cast": "shocking_grasp"},
+	"vampiric_touch": {"caster": "Kip", "targets": [[1, 0]], "cast": "vampiric_touch"},
+	"summon_undead": {"caster": "Silvain", "targets": [[2, 0]], "ally": "Godrick", "cast": "summon_undead", "summoned": true},
+	"misty_step": {"caster": "Kip", "targets": [[3, 0]], "cast": "misty_step", "teleport_to": [2, 1]},
+	"polymorph": {"caster": "Silvain", "targets": [[3, 0]], "cast": "polymorph"},
+	"detect_magic": {"caster": "Silvain", "targets": [[3, 0]], "cast": "detect_magic"},
+	"second_wind": {"caster": "Godrick", "targets": [[3, 0]], "ability": "feature:second_wind", "self": true},
+	"turn_undead": {"caster": "Hedda", "targets": [[2, 0], [3, 1]], "ability": "spell:turn_undead"},
+	"zombie_slam": {"caster": "Zombie", "targets": [[1, 0]], "ally": "Godrick", "attack": "monster:slam"},
+	"ghost_visage": {"caster": "Zombie", "targets": [[3, 0], [4, 1]], "ally": "Godrick", "ability": "monster:ghost.horrific_visage"},
+	"vampire_bite": {"caster": "Zombie", "targets": [[1, 0]], "ally": "Godrick", "ability": "monster:vampire_spawn.bite"},
+	"longsword": {"caster": "Godrick", "targets": [[1, 0]], "attack": "weapon:longsword"},
+	"arrow": {"caster": "Silvain", "targets": [[4, 0]], "attack": "weapon:longbow@arrow"},
+}
+
 var root: Node
 var cv: CombatView
 var _only: Array[String] = []
@@ -72,15 +110,21 @@ func capture_shots(tool: Node, out: String) -> void:
 			break
 	await tool.call("wait_frames", 60)
 	var meta := {}
-	for key: String in STAGES:
+	var stages: Dictionary = GALLERY if OS.get_environment("VFX_SET") == "gallery" else STAGES
+	if stages == GALLERY:
+		_sides = [true]
+	for key: String in stages:
 		if not _only.is_empty() and not key in _only:
 			continue
-		var ids := _stage(STAGES[key] as Dictionary)
+		var st := (stages[key] as Dictionary).duplicate(true)
+		var ids := _stage(st)
+		if not st.has("events"):
+			st["events"] = _auto_events(st, ids)
 		await tool.call("wait_frames", 30)
 		meta[key] = _frame_box(ids)
 		for on in _sides:
 			SpellFx.enabled = on
-			await _record(STAGES[key] as Dictionary, ids, "%s_%s_%s" % [out, key, "after" if on else "before"])
+			await _record(st, ids, "%s_%s_%s" % [out, key, "after" if on else "before"])
 	SpellFx.enabled = true
 	var f := FileAccess.open(out + "_meta.json", FileAccess.WRITE)
 	f.store_string(JSON.stringify(meta))
@@ -134,6 +178,49 @@ func _stage(st: Dictionary) -> Dictionary:
 	return ids
 
 
+## The events a gallery stage plays, from its "cast", "ability" or "attack" (ids still by name: "caster", "t0"...).
+func _auto_events(st: Dictionary, ids: Dictionary) -> Array:
+	var ev: Array = []
+	var ts: Array = []
+	for i in (st["targets"] as Array).size():
+		ts.append("t%d" % i)
+	if st.has("cast"):
+		var sid := str(st["cast"])
+		var sd := Compendium.shared().spell_data(sid)
+		var caster := cv.e.get_c(str(ids["caster"]))
+		if sd.has("area"):
+			var t0 := cv.e.get_c(str(ids["t0"]))
+			var at := cv.e.center_of(t0)
+			var dir := (at - cv.e.center_of(caster)).normalized()
+			ids["area"] = cv.e.spells.area_for(caster, sd, at, dir, maxi(1, int(sd.get("level", 1))))
+		ev.append({"type": "spell", "spell": sid, "caster": "caster", "targets": ts})
+		for t: String in ts:
+			if sd.has("attack"):
+				ev.append({"type": "attack", "attacker": "caster", "target": t, "hit": true})
+			if sd.has("damage"):
+				ev.append({"type": "damage", "id": t, "amount": 9})
+			elif "healing" in (sd.get("tags", []) as Array):
+				ev.append({"type": "heal", "id": t, "amount": 9})
+		if st.has("teleport_to"):
+			var to := caster.cell + Vector2i(int((st["teleport_to"] as Array)[0]), int((st["teleport_to"] as Array)[1]))
+			ev.append({"type": "teleport", "id": "caster", "from": caster.cell, "to": to})
+	elif st.has("ability"):
+		var spec := str(st["ability"])
+		var src := spec.get_slice(":", 0)
+		var key := spec.substr(src.length() + 1)
+		var on: Array = ["caster"] if bool(st.get("self", false)) else ts
+		if src == "spell":
+			ev.append({"type": "spell", "spell": key, "caster": "caster", "targets": on})
+		else:
+			ev.append({"type": "ability", "source": src, "by": "caster", "key": key, "targets": on, "cells": []})
+		for t: String in on:
+			ev.append({"type": "heal" if bool(st.get("self", false)) else "damage", "id": t, "amount": 8})
+	elif st.has("attack"):
+		ev.append({"type": "attack", "attacker": "caster", "target": "t0", "hit": true, "action": str(st["attack"])})
+		ev.append({"type": "damage", "id": "t0", "amount": 7})
+	return ev
+
+
 ## A spot for the caster with room for every target offset (cells free and standing ground), in the most open part
 ## of the map (no walls or houses between the camera and the stage).
 func _open_spot(e: Encounter, right: Vector2i, offsets: Array, fwd: Vector2i) -> Vector2i:
@@ -183,7 +270,7 @@ func _record(st: Dictionary, ids: Dictionary, prefix: String) -> void:
 	var events: Array = []
 	for ev: Variant in st["events"]:
 		var d := (ev as Dictionary).duplicate(true)
-		for k: String in ["caster", "attacker", "target", "id"]:
+		for k: String in ["caster", "attacker", "target", "id", "by"]:
 			if d.has(k):
 				d[k] = ids[str(d[k])]
 		if d.has("targets"):
@@ -193,6 +280,9 @@ func _record(st: Dictionary, ids: Dictionary, prefix: String) -> void:
 		events.append(d)
 	cv.e.events.append_array(events)
 	cv.call("_play_events")
+	if bool(st.get("summoned", false)) and SpellFx.enabled:
+		# What a summoning's creature arriving looks like (the real event makes a new token).
+		get_tree().create_timer(0.5).timeout.connect(func() -> void: cv.fx.summoned(cv.tokens[ids["t0"]] as CombatToken))
 	DirAccess.make_dir_recursive_absolute(prefix.get_base_dir())
 	for i in CLIP_FRAMES:
 		await get_tree().process_frame

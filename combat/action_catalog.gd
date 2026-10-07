@@ -783,7 +783,8 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 		# A stat-block action the player runs (a summoned or shaped creature's): keyed like the monster's own.
 		source = "monster"
 		key = MonsterActions.action_key(c, {"id": key.substr(9)})
-	var told := e.events.slice(mark).any(func(ev: Variant) -> bool: return str((ev as Dictionary).get("type", "")) == "ability")
+	# A feature that already told the view itself (a save action's own event, Turn Undead's spell event) needs no more.
+	var told := e.events.slice(mark).any(func(ev: Variant) -> bool: return str((ev as Dictionary).get("type", "")) in ["ability", "spell"])
 	if key != "" and r.ok and mark <= e.events.size() and not told:
 		e.events.insert(mark, {"type": "ability", "source": source, "by": c.id, "key": key,
 			"targets": targets.map(func(x: Variant) -> String: return (x as Combatant).id), "cells": []})

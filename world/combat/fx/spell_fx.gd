@@ -43,6 +43,10 @@ static func data() -> Dictionary:
 ## How a spell looks: {key, family, flavour, colours (name -> Color), size, count...}, or {} for nothing new.
 static func spell_cue(spell_id: String) -> Dictionary:
 	var s := Compendium.shared().spell_data(spell_id)
+	if s.is_empty():
+		# A feature shown as a spell event (Turn Undead, Breath Weapon, Elemental Burst): its look is a feature's.
+		var fpick := _spec((data().get("features", {}) as Dictionary).get(spell_id, ""))
+		return {} if fpick.is_empty() else _finish(fpick, spell_id)
 	var spec := _spec((data().get("spells", {}) as Dictionary).get(spell_id, ""))
 	if str(spec.get("family", "")) == "":
 		spec["family"] = derive_family(s)
