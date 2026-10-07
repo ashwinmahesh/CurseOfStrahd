@@ -27,6 +27,10 @@ const SHOTS := {
 	"castle_hall": {"loc": "castle_ravenloft_main_floor", "cells": [[25, 8], [26, 8], [25, 9], [26, 9]]},
 	"tser_pool": {"loc": "tser_pool", "hour": 18},
 	"death_house_den": {"loc": "death_house_ground", "cells": [[4, 5], [5, 5], [4, 6], [5, 6]]},
+	"lake_dusk": {"loc": "lake_zarovich", "hour": 18, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]]},
+	"lake_night": {"loc": "lake_zarovich", "hour": 23, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]]},
+	"tser_pool_water": {"loc": "tser_pool", "hour": 23, "cells": [[15, 9], [16, 9], [15, 10], [16, 10]]},
+	"berez_night": {"loc": "berez", "hour": 23, "cells": [[24, 6], [25, 6], [24, 7], [25, 5]]},
 	"castle_dining": {"loc": "castle_ravenloft_main_floor", "cells": [[7, 10], [8, 10], [7, 11], [8, 11]]},
 }
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]

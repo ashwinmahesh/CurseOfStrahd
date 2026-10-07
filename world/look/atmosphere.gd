@@ -11,6 +11,8 @@ extends Node
 
 const MOODS_JSON := "res://art/atmosphere/moods.json"
 const WATER_SHADER := preload("res://shaders/atmosphere/water.gdshader")
+## The Modern finish's water (W14): ripples that bend the light, glints, a smooth depth colour, soft foam.
+const LIT_WATER_SHADER := preload("res://shaders/world/lit_water.gdshader")
 ## Seconds a change in the time of day takes to settle.
 const TRANSITION := 3.0
 ## Lights that light the mist around them (the screen pass takes this many).
@@ -394,11 +396,21 @@ func _tone(p: String) -> Dictionary:
 	return t
 
 
+## Whether the mood's weather includes a kind ("rain", "snow" ...).
+func has_weather(kind: String) -> bool:
+	for w: Variant in mood.get("weather", []):
+		if str(w) == kind or (w is Dictionary and str((w as Dictionary).get("kind", "")) == kind):
+			return true
+	return false
+
+
 ## The board's water squares get the moving water (one material for the whole place, the land's lakes included).
 func _build_water() -> void:
 	var spec := mood.get("water", {}) as Dictionary
 	water = ShaderMaterial.new()
-	water.shader = WATER_SHADER
+	water.shader = LIT_WATER_SHADER if Look.modern() else WATER_SHADER
+	if Look.modern():
+		water.set_shader_parameter("rain", 1.0 if has_weather("rain") else 0.0)
 	var info := ((Look.textures().get("themes", {}) as Dictionary).get("wild", {}) as Dictionary).get("water", {}) as Dictionary
 	if not info.is_empty() and ResourceLoader.exists("res://" + str(info.get("file", ""))):
 		water.set_shader_parameter("albedo_tex", load("res://" + str(info["file"])) as Texture2D)

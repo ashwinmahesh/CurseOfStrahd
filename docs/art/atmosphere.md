@@ -68,7 +68,10 @@ anyone touching this file.
   Empty squares inside a map (Krezk's approach, the Abbey's road) are hillside too, unless the mood says they are a
   drop (`"void": "drop"`: the castle's roofs and chasms, Tsolenka's gorge). No tree of the land stands within two
   squares of anywhere people can walk.
-- **Water.** Lakes, rivers, pools and marsh drift in two layers of the water texture, deeper water darker, foam
+- **Water.** In the Modern finish (W14, `shaders/world/lit_water.gdshader`) water deepens smoothly from the shore,
+  small ripples drift with the current and bend the light, so the moon and the lamps leave glints on it and the
+  reflections waver, the sky's light lies on it more at a glancing angle, soft broken foam laps along the shore, and
+  rain rings it in wet weather (W12). In Classic, lakes, rivers, pools and marsh drift in two layers of the water texture, deeper water darker, foam
   lapping along the shore, thin highlight lines riding the current and the sky's light on the surface. Water keeps
   its own colours through the grade (it marks itself in the normal buffer for the screen pass), so a lake never
   turns the colour of the road. A row of the map's frame trees standing across a lake becomes open water (the rules
