@@ -356,6 +356,67 @@ func _build_npcs() -> void:
 		grid.set_flag(cb.cell, CombatGrid.LOW, true)   # an NPC blocks the square while standing there
 
 
+
+# --- People who step into a scene (the dialogue statements `appear <npc> [at <id>]` and `vanish <npc>`) --------------
+
+## Figures a conversation brought on: npc id -> token. Gone when the conversation ends (or at `vanish`).
+var _staged: Dictionary = {}
+
+
+## Owner report (2026-10-07): Strahd spoke at the funeral but wasn't there. A scene puts a speaker on the map for as
+## long as it lasts: beside a door, prop, container or exit named `at`, or a few squares from the party.
+func stage_npc(npc_id: String, at: String = "") -> void:
+	if npc_tokens.has(npc_id) or _staged.has(npc_id) or members.is_empty():
+		return
+	var near := leader().cell
+	var found := false
+	if at != "":
+		for list: String in ["doors", "props", "containers", "exits"]:
+			for t: Variant in loc.get(list, []):
+				var spec := t as Dictionary
+				if str(spec.get("id", "")) == at and spec.has("cell"):
+					near = _cell(spec["cell"])
+					found = true
+	var taken := {}
+	for m in members + guest_members:
+		taken[m.cell] = true
+	var cell := Vector2i(-1, -1)
+	for c in _cells_around(near, 16 if found else 24):
+		if taken.has(c) or grid.is_solid(c) or npc_tokens.values().any(func(t: Node) -> bool: return grid.cell_at((t as Node3D).position) == c):
+			continue
+		if not found and c.distance_to(near) < 3.0:
+			continue   # beside the party, not on top of it
+		cell = c
+		break
+	if cell == Vector2i(-1, -1):
+		return
+	var npc := Compendium.shared().get_entry("npcs", npc_id)
+	var data := Compendium.shared().monster_data(str(npc.get("monster", "commoner")))
+	if data.is_empty():
+		data = Compendium.shared().monster_data("commoner")
+	var m := Monster.from_data(data)
+	m.name = str(npc.get("name", npc_id))
+	var cb := Combatant.new(m, &"neutral", cell)
+	cb.id = "npc_" + npc_id
+	var tok := _npc_token(cb, str(npc.get("sprite", npc_id)))
+	tok.position = board.cell_center(cell)
+	add_child(tok)
+	if leader() != null:
+		var to_party := Vector2(leader().cell - cell)
+		tok.face(to_party, false)
+	_staged[npc_id] = tok
+
+
+func unstage_npc(npc_id: String) -> void:
+	if _staged.has(npc_id):
+		(_staged[npc_id] as Node).queue_free()
+		_staged.erase(npc_id)
+
+
+func clear_staged() -> void:
+	for id: String in _staged.keys():
+		unstage_npc(id)
+
 func _npc_token(cb: Combatant, art: String) -> CombatToken:
 	return CombatToken.create(cb, art)
 
@@ -915,6 +976,7 @@ func actions_at(cell: Vector2i) -> Dictionary:
 				"why": "" if not ch.known_spells().is_empty() else "No spells"})
 			if ch.hp <= 0 and not ch.dead:
 				out.append_array(_tend_actions(ch))
+			out.append_array(_lay_on_hands_actions(ch))
 			out.append_array(PitFall.actions_for(self, members[i]))
 			return {"title": ch.name, "actions": out}
 	var thing := thing_at(cell)
@@ -975,6 +1037,9 @@ func act(cell: Vector2i, action_id: String) -> void:
 		return
 	if action_id in ["stabilize", "kit"] or action_id.begins_with("potion:"):
 		_tend(cell, action_id)
+		return
+	if action_id.begins_with("loh:"):
+		_lay_on_hands_out(cell, action_id.substr(4))
 		return
 	var thing := thing_at(cell)
 	match action_id:
@@ -1055,6 +1120,60 @@ func _tend_actions(ch: Character) -> Array[Dictionary]:
 				m.name.get_slice(" ", 0)]})
 	return out
 
+
+
+## A paladin's Lay On Hands outside a fight: heal `ch` by an amount picked from the pool (1-5, steps of 5, or all
+## they need), or spend 5 to end Poisoned. Ids "loh:<amount>" / "loh:poison".
+func _lay_on_hands_actions(ch: Character) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var healer := _lay_on_hands_healer()
+	if healer == null or ch.dead:
+		return out
+	var pool := healer.resource_left("lay_on_hands")
+	var hurt := ch.max_hp() - ch.hp
+	var who := healer.name.get_slice(" ", 0)
+	if hurt > 0:
+		out.append({"id": "loh:%d" % mini(hurt, pool), "label": "Lay On Hands (%s): heal %d, all they need (pool %d)" % [who, mini(hurt, pool), pool]})
+		for c: Variant in ClassFeatures.lay_on_hands_choices(pool):
+			var v := str((c as Dictionary)["value"])
+			if v.is_valid_int() and int(v) < mini(hurt, pool):
+				out.append({"id": "loh:" + v, "label": "Lay On Hands (%s): heal %s" % [who, v]})
+	if ch.has_condition(&"poisoned") and pool >= 5:
+		out.append({"id": "loh:poison", "label": "Lay On Hands (%s): end Poisoned (5)" % who})
+	return out
+
+
+## The conscious party member with points left in a Lay On Hands pool, or null.
+func _lay_on_hands_healer() -> Character:
+	for m in st.party:
+		if m.hp > 0 and not m.dead and m.resource_left("lay_on_hands") > 0:
+			return m
+	return null
+
+
+func _lay_on_hands_out(cell: Vector2i, choice: String) -> void:
+	var target: Character = null
+	for m in members:
+		if m.cell == cell:
+			target = m.creature as Character
+	var healer := _lay_on_hands_healer()
+	if target == null or healer == null or target.dead:
+		return
+	var who := target.name.get_slice(" ", 0)
+	var pool := healer.resource_left("lay_on_hands")
+	if choice == "poison":
+		if pool < 5:
+			return
+		healer.spend_resource("lay_on_hands", 5)
+		target.remove_condition(&"poisoned")
+		toast.emit("%s lays hands on %s: the poison is gone" % [healer.name.get_slice(" ", 0), who])
+	else:
+		var n := clampi(int(choice), 1, pool)
+		healer.spend_resource("lay_on_hands", n)
+		var healed := target.heal(n, "Lay On Hands")
+		toast.emit("%s lays hands on %s: %d Hit Points (%d left in the pool)" % [healer.name.get_slice(" ", 0), who, healed, pool - n])
+	refresh_party()
+	party_tended.emit()
 
 
 ## Outside a fight, a party member with Hit Points again gets up (Prone ends: there's no turn to spend standing) and

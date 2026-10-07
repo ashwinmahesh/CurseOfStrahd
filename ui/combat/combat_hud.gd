@@ -630,7 +630,17 @@ func _chips(c: Combatant) -> String:
 		parts.append(str(cond).capitalize())
 	if cr.concentration != null:
 		parts.append("◎ " + cr.concentration.name)
+	var marked := {}
+	for fx0 in cr.effects:
+		if fx0.data.has("mark_by"):
+			marked[str(fx0.data.get("mark_of", ""))] = true
 	for fx in cr.effects:
+		# A marked creature shows "Hexed by ..." once, not the spell's own effect beside it.
+		if marked.has(fx.source_id):
+			continue
+		if fx.data.has("mark_by"):
+			parts.append(fx.name)
+			continue
 		if fx.conditions.is_empty() and fx.source_kind == &"spell" and (cr.concentration == null or fx.source_id != cr.concentration.source_id):
 			parts.append(fx.name)
 	if c.hidden:

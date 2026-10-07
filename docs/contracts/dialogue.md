@@ -38,6 +38,9 @@ Speaker [mood]: Text               Picks a portrait expression (neutral, smile, 
 * [Cleric] Text -> node            Shown only if a party member is a Cleric; that character speaks it. Also
                                    [Elf], [Criminal] (background), [tag:blunt] and [knows:remove_curse] (a spell that character can cast
                                    now; the option text should name it).
+appear <npc> [at <id>]             The npc steps onto the map for this scene: beside the door, prop, container or exit
+                                   with that id, or a few squares from the party. Gone when the conversation ends.
+vanish <npc>                       ...or before, here (he melts into mist at the gate).
 -> node                            Jump. "-> END" ends the conversation; "-> file:node" jumps to another file.
 if <condition>                     Conditional block, closed by "endif" ("elif <condition>" and "else" allowed).
 set flag_id                        Sets a flag to true. "set flag_id = 3", "set flag_id = \"string\"",

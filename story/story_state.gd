@@ -304,6 +304,9 @@ func advance_minutes(minutes: int) -> void:
 		day += 1
 	for ch in party:
 		ch.advance_minutes(minutes)
+	# Story allies' spells and Concentration run out with the clock too.
+	for g in guests:
+		g.advance_minutes(minutes)
 	_item_time(start, minutes)
 
 

@@ -137,8 +137,8 @@ Rahadin, Ratatoille's and Kip's moments at Strahd's dinner, and Strahd greeting 
 
 ## New NPCs
 
-`fen_burley` (uses the werewolf art until his own is drawn) and `mister_quillon` (uses the noble art until his own is
-drawn). Voice bibles: docs/voice/fen_burley.md, docs/voice/mister_quillon.md.
+`fen_burley` and `mister_quillon`, each with a portrait of their own; on the map Fen wears the werewolf figure and
+Quillon (who only appears at the campfire) the noble's. Voice bibles: docs/voice/fen_burley.md, docs/voice/mister_quillon.md.
 
 ## Lines to voice
 

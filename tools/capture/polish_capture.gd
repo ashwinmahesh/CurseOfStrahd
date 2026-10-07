@@ -79,6 +79,21 @@ func capture_shots(tool: Node, out: String) -> void:
 		await tool.call("wait_frames", 140)
 		await _shoot(tool, out + "_hud_second_toast.png", 2)
 		root.call("_command", "sneak")
+	if _wants("small"):
+		# The F1 controls card, a small loot window with coins and a single item, and Heal up on the rest screen.
+		hud.toggle_controls()
+		await _shoot(tool, out + "_controls.png")
+		hud.toggle_controls()
+		root.call("_open_loot", "capture_purse", [{"id": "dagger", "qty": 1}], 7.0)
+		await _shoot(tool, out + "_loot_small.png")
+		(root.get("loot") as LootWindow).call("_close")
+		GameState.story.party[0].hp = 4
+		GameState.story.party[2].hp = 9
+		root.call("open_screen", "rest", 0)
+		await _shoot(tool, out + "_rest.png")
+		(root.get("screen") as RestScreen).heal_up()
+		await _shoot(tool, out + "_rest_healed.png")
+		root.call("close_screen")
 	if _wants("talk"):
 		# Morgantha: one question asked, her options again with it dimmed, and the scroll-back.
 		root.call("start_dialogue", "village_of_barovia/morgantha:start", "morgantha")
@@ -115,6 +130,34 @@ func capture_shots(tool: Node, out: String) -> void:
 	if _wants("saved"):
 		hud.saved_note()
 		await _shoot(tool, out + "_autosaved.png", 4)
+	if _wants("saves"):
+		# Saves with long place names in every list that shows them: the game-over screen, the pause menu's Load and
+		# the title's Load (owner report 2026-10-07: a name ran out of its box). Saves of the capture's own only.
+		var real_dir := SaveSystem.save_dir
+		SaveSystem.save_dir = "user://capture_saves/%d/" % OS.get_process_id()
+		var made: Array[String] = []
+		for loc: String in ["castle_ravenloft_court_weeping", "amber_temple_faceless_god", "death_house_dungeon_1"]:
+			GameState.story.location = loc
+			SaveSystem.save("cap_" + loc)
+			made.append("cap_" + loc)
+		SaveSystem.autosave()
+		made.append(SaveSystem.AUTOSAVE)
+		root.call("open_screen", "game_over", 0)
+		await _shoot(tool, out + "_saves_game_over.png")
+		root.call("open_screen", "menu", 0)
+		(root.get("screen") as PauseMenu).call("_show_saves")
+		await _shoot(tool, out + "_saves_pause_load.png")
+		root.call("close_screen")
+		var title := (load("res://scenes/main_menu.tscn") as PackedScene).instantiate()
+		add_child(title)
+		await tool.call("wait_frames", 4)
+		title.call("_show_loads")
+		await _shoot(tool, out + "_saves_title_load.png")
+		title.queue_free()
+		for slot in made:
+			SaveSystem.delete_slot(slot)
+		DirAccess.remove_absolute(SaveSystem.save_dir)
+		SaveSystem.save_dir = real_dir
 	if _wants("settings"):
 		root.call("open_screen", "menu", 0)
 		await _shoot(tool, out + "_menu.png")

@@ -67,6 +67,13 @@ The scales were checked in Godot at the combat camera's distance (see Preview). 
 real-size bricks or planks, turn to mush under mipmapping and the palette pass, so the details are drawn a
 little larger than life.
 
+## The Modern look's smooth tiles (`<surface>_hd.png`)
+`make textures HD=1` (`blender/make_texture.py --hd`) writes, beside each palette-snapped tile, a 768 px tile from
+the same swatch for the Modern finish (docs/art/style_bible.md): the snapped tile's colours softened so their flat
+bands blend, with the swatch's own fine shading laid back over them, at the snapped tile's brightness. Its path is
+the entry's `hd_file` in the manifest; `Look.cel_textured` uses it when the look is Modern, else the snapped tile.
+No new images are generated for it. The snapped tiles are not touched.
+
 ## Applying them (for the lead)
 
 - **Material.** `shaders/cel.gdshader` already has `albedo_tex` and `use_texture`. It *multiplies* `albedo`,

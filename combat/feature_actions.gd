@@ -294,7 +294,7 @@ func _perform_creature(c: Combatant, act_id: String, t: Combatant, cell: Vector2
 	return r
 
 
-func perform(c: Combatant, id: String, t: Combatant, point: Vector2) -> CombatResult:
+func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: String = "") -> CombatResult:
 	var e := enc()
 	var entry := {}
 	for x in list(c):
@@ -323,7 +323,7 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2) -> CombatRe
 				return CombatResult.fail("Not available")
 			return e.spells.specials.mid.take_action_save(c, saves[idx])
 		"cf":
-			return e.class_features.perform(c, id.substr(3), t, cell, point)
+			return e.class_features.perform(c, id.substr(3) + ((":" + choice) if choice != "" else ""), t, cell, point)
 		"rh":
 			return e.ravenloft.perform(c, id.substr(3), t, cell, point)
 		"fast_hands_kit":

@@ -197,6 +197,22 @@ func _modern_finish() -> void:
 	sun.shadow_blur = 1.8
 
 
+## How soft the modern finish's depth of field is (0 none, Godot's 0..1).
+const MODERN_DOF := 0.14
+var _dof: CameraAttributesPractical = null
+
+
+## The sharp band follows the camera's zoom: from a little in front of the party to a little behind it.
+func _focus_dof() -> void:
+	if _dof == null or _rig == null:
+		return
+	var d := _rig.distance
+	_dof.dof_blur_far_distance = d + 1.0 + d * 0.12
+	_dof.dof_blur_far_transition = 3.5 + d * 0.25
+	_dof.dof_blur_near_distance = maxf(1.0, d - 2.0 - d * 0.08)
+	_dof.dof_blur_near_transition = 2.0
+
+
 const MODERN_TONEMAP := Environment.TONE_MAPPER_AGX
 const MODERN_EXPOSURE := 1.35
 const MODERN_GRADE := 0.4
@@ -260,6 +276,14 @@ func _open_the_lake() -> void:
 func attach(rig: CameraRig, post: MeshInstance3D) -> void:
 	_rig = rig
 	_post = (post.mesh as QuadMesh).material as ShaderMaterial if post != null and post.mesh is QuadMesh else null
+	if Look.modern() and rig != null and rig.camera != null:
+		# The diorama's depth of field (tilt-shift): the party's ground sharp, what's far behind and near the lens soft.
+		_dof = CameraAttributesPractical.new()
+		_dof.dof_blur_far_enabled = true
+		_dof.dof_blur_near_enabled = true
+		_dof.dof_blur_amount = MODERN_DOF
+		rig.camera.attributes = _dof
+		_focus_dof()
 	_apply_static()
 	weather = AtmosphereWeather.build(self, board, mood, outdoors, get_parent())
 	_show_night_pieces()
@@ -486,6 +510,7 @@ func _process(delta: float) -> void:
 				wx.set_meta("offset", Vector3(wx.position.x, 0.0, wx.position.z))
 			var off := wx.get_meta("offset") as Vector3
 			wx.global_position = Vector3(_rig.global_position.x + off.x, wx.global_position.y, _rig.global_position.z + off.z)
+	_focus_dof()
 	if _post == null:
 		return
 	_post.set_shader_parameter("atmo_time", _time)

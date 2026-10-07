@@ -7,6 +7,7 @@
 # ---------------------------------------------------------------- At the Blue Water Inn (Vallaki)
 
 ~ inn
+appear strahd
 Narrator: Across the dark, one upstairs window of the Blue Water Inn stands wide open to the cold. You run.
 Narrator: In Ireena's room the candles are out. She stands at the open window in her nightdress, and outside it, standing on nothing, is Strahd.
 if flag.ismark_guards_ireena
@@ -17,6 +18,7 @@ endif
 # ---------------------------------------------------------------- At the Krezkovs' house (Krezk)
 
 ~ krezk
+appear strahd
 Narrator: Krezk's wall stands and its gate is barred, and none of it matters: the shutters of the Krezkovs' upper room hang open in the cold.
 Narrator: Inside, Ireena holds out her hand at the window, as if to someone helping her down from a carriage. Outside it, standing on nothing, is Strahd.
 if flag.ismark_in_krezk
@@ -141,6 +143,7 @@ Ireena: Then come back soon. And next time, knock louder.
 # ---------------------------------------------------------------- At St. Andral's (holy ground)
 
 ~ church
+appear strahd
 set strahd_window = "church"
 Narrator: Past midnight the bell of St. Andral's starts to toll on its own, slow and uneven. You find Ireena at the church door, wide awake.
 Narrator: At the churchyard gate stands Strahd, one gloved hand on the gatepost, coming no further.

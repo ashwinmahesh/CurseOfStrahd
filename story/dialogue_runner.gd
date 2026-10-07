@@ -233,6 +233,9 @@ func next() -> Dictionary:
 				pc += 1
 				if npc_id != "":
 					return {"kind": "shop", "npc": npc_id}
+			"appear", "vanish":
+				pc += 1
+				return {"kind": "stage", "what": str(s["t"]), "npc": str(s["npc"]), "at": str(s.get("at", ""))}
 			"join":
 				pc += 1
 				if st.add_guest(str(s["npc"])):

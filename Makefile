@@ -111,9 +111,10 @@ pregens:
 portrait:
 	$(BLENDER) -b --python blender/portrait.py -- --in $(abspath $(SRC)) --id $(ID) $(if $(BG),--bg $(BG),) $(if $(SAT),--saturate $(SAT),)
 
-## Environment texture sets (docs/art/textures.md): make textures [GENERATE=1] [ONLY="village/cobbles ..."]
+## Environment texture sets (docs/art/textures.md): make textures [GENERATE=1] [ONLY="village/cobbles ..."] [HD=1]
+## (HD=1: only the Modern look's smooth tiles, <surface>_hd.png)
 textures:
-	python3 tools/art/build_textures.py $(if $(GENERATE),--generate,) $(if $(ONLY),--only $(ONLY),)
+	python3 tools/art/build_textures.py $(if $(GENERATE),--generate,) $(if $(ONLY),--only $(ONLY),) $(if $(HD),--hd,)
 
 ## Billboard prop (single view on white -> cut out, palette-snapped): make prop SRC=<png> ID=<id> HEIGHT=<world units>
 prop:

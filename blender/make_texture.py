@@ -17,6 +17,7 @@ Steps (all numpy, no PIL; runs in Blender's Python like the sprite tools):
    --max-colours, each at least 0.6 %) or the --palette names given, snap again to that subset so no stray hue
    flecks remain, then cutout.despeckle on the tile (wrap-around).
 Writes art/textures/<theme>/<surface>.png and its entry in art/textures/manifest.json.
+--hd instead writes only the Modern look's tile, <surface>_hd.png (hd_tile), and its entry's hd_file.
 """
 import argparse
 import json
@@ -45,6 +46,7 @@ def args():
     p.add_argument("--saturate", type=float, default=1.0, help="chroma boost before quantizing (cutout.saturate)")
     p.add_argument("--note", default="")
     p.add_argument("--preview", default="")
+    p.add_argument("--hd", action="store_true", help="write only the Modern look's smooth tile (<surface>_hd.png)")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
 
@@ -164,10 +166,25 @@ def pick_palette(rgba, max_colours, min_share=0.006):
     return [names[i] for i in order]
 
 
+def hd_tile(src_tile, snapped):
+    """The Modern look's tile (docs/plans/ui_polish.md): the palette-snapped tile's colours, softened so its flat
+    bands blend, with the source's own fine shading laid back over them, so a stone keeps the set's hues but reads
+    as carved rather than posterised. Wrap-safe (every blur wraps)."""
+    w = np.array([0.299, 0.587, 0.114], dtype=np.float32)
+    base = np.stack([gaussian_wrap(snapped[..., c], 1.6) for c in range(3)], axis=2)
+    lum = src_tile @ w
+    detail = lum - gaussian_wrap(lum, 4.0)
+    out = base + detail[..., None] * 0.9
+    # Keep the snapped tile's overall brightness so the sets match their Classic look in a scene.
+    out *= (snapped @ w).mean() / max(float((out @ w).mean()), 1e-3)
+    return np.clip(out, 0.0, 1.0).astype(np.float32)
+
+
 def main():
     a = args()
     src = cutout.load_rgba(a.src)[..., :3]
     tile, n = make_seamless(src, a.axis)
+    full_tile = tile
     tile = area_resize(tile, a.size)
     tile = flatten_light(tile, a.axis).astype(np.float32)
     rgba = np.concatenate([tile, np.ones(tile.shape[:2] + (1,), np.float32)], axis=2)
@@ -175,6 +192,20 @@ def main():
     names = [s.strip() for s in a.palette.split(",") if s.strip()] or pick_palette(rgba, a.max_colours)
     out = cutout.quantize(rgba, cutout.load_palette(names))
     out = cutout.despeckle(cutout.despeckle(out, wrap=True), wrap=True)
+    if a.hd:
+        # At the seamless tile's own resolution (768 px for a 1024 swatch): the snapped tile is brought up to it.
+        hd_size = full_tile.shape[0]
+        big = flatten_light(full_tile, a.axis).astype(np.float32)
+        snapped_big = area_resize(out[..., :3].astype(np.float32), hd_size)
+        hd = hd_tile(big, snapped_big)
+        hd_rgba = np.concatenate([hd, np.ones(hd.shape[:2] + (1,), np.float32)], axis=2)
+        rel_hd = Path("art") / "textures" / a.theme / f"{a.surface}_hd.png"
+        cutout.save_rgba(hd_rgba, cutout.ROOT / rel_hd)
+        data = json.loads(MANIFEST.read_text())
+        data["themes"][a.theme][a.surface]["hd_file"] = str(rel_hd)
+        MANIFEST.write_text(json.dumps(data, indent=2) + "\n")
+        print(f"texture: {rel_hd} ({hd_size} px, Modern)")
+        return
     rel = Path("art") / "textures" / a.theme / f"{a.surface}.png"
     cutout.save_rgba(out, cutout.ROOT / rel)
     if a.preview:
