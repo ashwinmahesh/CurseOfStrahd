@@ -560,7 +560,7 @@ func hit_damage_dice(c: Combatant, target: Combatant, option: Dictionary, st: Di
 	var melee := bool(option["melee"])
 	out.append_array(e.class_features.hit_dice(c, target, option, st))
 	out.append_array(e.ravenloft.hit_dice(c, target, option, st))
-	out.append_array(e.faerun.hit_dice(c, target))
+	out.append_array(e.faerun.hit_dice(c, target, option))
 	if not c.creature is Character:
 		return out
 	var ch := c.creature as Character
@@ -882,7 +882,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 		e.events.append({"type": "condition", "id": target.id})
 	# Envenom Weapons (Assassin 13): the Poison Cunning Strike also deals 2d6 Poison that ignores Resistance.
 	if "poison" in (st.get("cunning", []) as Array) and has_feature(c, "envenom_weapons") and alive:
-		var ev := e._roll_damage_dice("2d6", false, 0, "Envenom Weapons")
+		var ev := e._max_damage_dice("2d6", false) if e.faerun.maximized(c, "poison") else e._roll_damage_dice("2d6", false, 0, "Envenom Weapons")
 		e.deal_damage(c, target, [{"amount": int(ev["total"]), "type": "poison", "ignore_resistance": true, "ignore_source": "Envenom Weapons"}], false, "Envenom Weapons", [str(ev["text"])])
 	# Death Strike (Assassin 17): a first-round Sneak Attack makes the target save (Con, 8 + Dex + PB) or take double.
 	if st.has("sneak") and has_feature(c, "death_strike") and _first_round() and alive and dr.final > 0:
@@ -961,7 +961,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 			e.log.add("condition", "%s is bashed Prone (Shield Master)" % target.name(), target.id)
 	if bool(st.get("poison_dose", false)) and alive:
 		if not _save(target, &"con", 8 + c.creature.ability_mod(&"int") + c.creature.proficiency_bonus(), "Poisoner's dose", "poisoned"):
-			var rolled2 := e._roll_damage_dice("2d8", false, 0, "Poison dose")
+			var rolled2 := e._max_damage_dice("2d8", false) if e.faerun.maximized(c, "poison") else e._roll_damage_dice("2d8", false, 0, "Poison dose")
 			e.deal_damage(c, target, [{"amount": int(rolled2["total"]), "type": "poison", "ignore_resistance": has_feat(c, "poisoner"), "ignore_source": "Potent Poison"}], false, "Poison", [str(rolled2["text"])])
 			var fx11 := Effect.new("Poisoned (dose)", &"feature", "poisoner").with_condition(&"poisoned")
 			fx11.ends = Effect.Ends.END_OF_TURN

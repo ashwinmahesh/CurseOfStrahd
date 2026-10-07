@@ -8,14 +8,23 @@
   },
   "category": "epic_boon",
   "repeatable": false,
-  "summary": "Reference-only: A visible enemy reaching 0 HP grants Advantage on your next attack before your next turn ends. Once per turn while Bloodied, an attack can add PB damage of its type.",
+  "summary": "An enemy you see fall gives you Advantage on your next attack, and while Bloodied you add your Proficiency Bonus to one hit's damage each turn.",
   "benefits": [
     {
-      "id": "boon_of_bloodshed_benefit",
-      "name": "Epic Benefit",
-      "summary": "Reference-only: A visible enemy reaching 0 HP grants Advantage on your next attack before your next turn ends. Once per turn while Bloodied, an attack can add PB damage of its type.",
-      "text": "Reference-only: A visible enemy reaching 0 HP grants Advantage on your next attack before your next turn ends. Once per turn while Bloodied, an attack can add PB damage of its type.",
-      "implemented": "text"
+      "id": "bloodshed_taste",
+      "name": "Taste of Blood",
+      "summary": "When an enemy you can see drops to 0 Hit Points, you have Advantage on your next attack roll before the end of your next turn.",
+      "text": "When an enemy you can see drops to 0 Hit Points, your next attack roll before the end of your next turn has Advantage.",
+      "implemented": "engine"
+    },
+    {
+      "id": "bloodshed_strike",
+      "name": "Blood for Blood",
+      "summary": "Once per turn while you're Bloodied, a hit adds your Proficiency Bonus to its damage.",
+      "text": "Once per turn while you're Bloodied, when you hit with an attack you can add your Proficiency Bonus to its damage, of the attack's own damage type. It's added on its own unless you turn it Off in the class tab.",
+      "implemented": "engine",
+      "policy": "auto",
+      "policy_cost": "Once per turn while Bloodied"
     }
   ],
   "prerequisites": {
@@ -33,5 +42,5 @@
     "points": 1,
     "max": 30
   },
-  "playable": false
+  "playable": true
 }

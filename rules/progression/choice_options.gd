@@ -434,6 +434,12 @@ static func _spells(c: Choice, ch: Character, comp: Compendium) -> void:
 	var list := str(c.filter.get("list", ""))
 	# Several lists at once (Magical Discoveries: Cleric, Druid or Wizard).
 	var lists: Array = c.filter.get("lists", []) as Array
+	# The spell lists of the classes the character casts with (Boon of Magic School Mastery).
+	if bool(c.filter.get("own_lists", false)):
+		lists = []
+		for sc in ch.spellcasting:
+			if str(sc.get("list", "")) != "" and not str(sc["list"]) in lists:
+				lists.append(str(sc["list"]))
 	# Pointing at a spell already known (Agonizing Blast) rather than learning one; optionally only damaging ones.
 	var known_only := bool(c.filter.get("known_only", false))
 	var damaging := bool(c.filter.get("damaging", false))

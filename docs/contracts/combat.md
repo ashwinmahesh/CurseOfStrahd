@@ -223,4 +223,9 @@ member whose familiar is still summoned (`Character.familiar`: "here" or "pocket
 cleared when it drops to 0 Hit Points or is dismissed) the familiar at the start of a location fight
 (`SpellCaster.precast(c, id, true)`: no slot); `FaerunFeatures.familiar_of(c)` finds it, and its caster's `feat:fr:familiar_away` / `familiar_back` /
 `familiar_dismiss` are Find Familiar's pocket-dimension and dismiss Magic actions.
+Batch 8 (epic boons): `FaerunFeatures.maximized(c, type)` says whether a damage roll of that type uses every die's
+maximum (spent when it answers yes; `Encounter._max_damage_dice` builds the roll) and is asked by weapon hits,
+`roll_damage_parts`, `_roll_spell_damage` and the poison features; `waives_components(c, spell_id)` skips a spell's
+components; `choice_in` carries the right-click choice of a `feat:fr:` action; `shaped_list` lists a Fluid Forms shape's
+actions. The hotbar lists FeatureActions for any combatant, a shaped character or a summoned creature included.
 

@@ -27,9 +27,9 @@ func original(c: Combatant) -> Creature:
 	return (originals[c.id] as Dictionary)["creature"] as Creature if originals.has(c.id) else c.creature
 
 
-## Shapechange keeps the caster's spellcasting (Wild Shape, Polymorph and the rest don't).
+## Shapechange and Boon of Fluid Forms keep the caster's spellcasting (Wild Shape, Polymorph and the rest don't).
 func keeps_spells(c: Combatant) -> bool:
-	return originals.has(c.id) and str((originals[c.id] as Dictionary).get("label", "")) == "Shapechange" \
+	return originals.has(c.id) and str((originals[c.id] as Dictionary).get("label", "")) in ["Shapechange", "Fluid Forms"] \
 		and (originals[c.id] as Dictionary)["creature"] is Character
 
 
@@ -75,6 +75,9 @@ func transform(c: Combatant, beast: Dictionary, opts: Dictionary = {}) -> Monste
 	m.d20_before = orig.d20_before
 	m.d20_after = orig.d20_after
 	var tmp := int(opts.get("temp_hp", 0))
+	# Boon of Fluid Forms: 20 more Temporary Hit Points from any change of shape.
+	if tmp > 0:
+		tmp += FaerunFeatures.shape_temp_bonus(orig)
 	if tmp > 0:
 		m.temp_hp = tmp
 	originals[c.id] = {"creature": orig, "ai_profile": str(c.ai_profile), "ends_without_temp_hp": bool(opts.get("ends_without_temp_hp", false)),

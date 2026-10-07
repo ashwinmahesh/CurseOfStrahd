@@ -78,7 +78,10 @@ func list(c: Combatant) -> Array[Dictionary]:
 			"Use your action to repeat the save against %s." % afx.name))
 	# A druid in Wild Shape can leave the form as a Bonus Action.
 	if e.shapes.is_shaped(c) and e.shapes.original(c) is Character and c.is_player_controlled():
-		out.append(_entry("cf:revert_shape", "Leave Wild Shape", "true form", "bonus", bw, "none", "Bonus Action: return to your true form."))
+		if str((e.shapes.originals[c.id] as Dictionary).get("label", "")) == "Fluid Forms":
+			e.faerun.shaped_list(c, out)
+		else:
+			out.append(_entry("cf:revert_shape", "Leave Wild Shape", "true form", "bonus", bw, "none", "Bonus Action: return to your true form."))
 	if ch == null:
 		return out
 	e.class_features.list(c, out, aw, bw)
@@ -364,6 +367,7 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 			return e.ravenloft.perform(c, id.substr(3), t, cell, point)
 		"fr":
 			e.faerun.targets_in = targets
+			e.faerun.choice_in = choice
 			return e.faerun.perform(c, id.substr(3), t, cell, point)
 		"fast_hands_kit":
 			var keep := c.action_available

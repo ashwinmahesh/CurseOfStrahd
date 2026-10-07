@@ -97,6 +97,15 @@ func _uninspired_allies(c: Combatant, feet: int, perceive: Callable) -> Array[Co
 
 # --- Hotbar actions -----------------------------------------------------------------------------------------
 
+## A character in a shape from Boon of Fluid Forms: ending it is a Magic action.
+func shaped_list(c: Combatant, out: Array[Dictionary]) -> void:
+	var e := enc()
+	if e.shapes.is_shaped(c) and str((e.shapes.originals[c.id] as Dictionary).get("label", "")) == "Fluid Forms":
+		out.append(_entry("fluid_forms_end", "Return to Your Form", "end Fluid Shape", "action",
+			_first(e._action_check(c), "Only one Magic action this turn" if c.magic_action_used else ""), "none",
+			"Magic action: you return to your own form (Boon of Fluid Forms)."))
+
+
 func list(c: Combatant, out: Array[Dictionary], aw: String, _bw: String) -> void:
 	var ch := _ch(c)
 	if ch == null:
@@ -104,6 +113,7 @@ func list(c: Combatant, out: Array[Dictionary], aw: String, _bw: String) -> void
 	var e := enc()
 	var tw := e._turn_check(c)
 	_subclass_list(c, ch, out, tw)
+	_boon_list(c, ch, out, tw)
 	if feat(c, "arcane_artist") and str(c.get_meta("arcane_artist_window", "")) == _turn_key():
 		out.append(_entry("arcane_artist", "Arcane Artist: inspire", "Heroic Inspiration · 30 ft", "free",
 			_first(tw, _res_why(c, "arcane_artist")), "ally",
@@ -161,6 +171,8 @@ func list(c: Combatant, out: Array[Dictionary], aw: String, _bw: String) -> void
 
 ## A multi-target action hands its picks in `targets`; the hotbar's single pick comes as `t`.
 var targets_in: Array = []
+## The right-click choice an action was performed with (Boon of Fluid Forms' shape), or "".
+var choice_in := ""
 
 
 func _targets_of(t: Combatant) -> Array[Combatant]:
@@ -225,6 +237,20 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, _point: Vec
 			return _tag_team(c, t)
 		"elemental_familiar":
 			return _elemental_burst(c)
+		"radiance_arm":
+			c.set_meta("radiance_armed", not bool(c.get_meta("radiance_armed", false)))
+			_log("info", "%s %s Exquisite Radiance" % [c.name(), "readies" if bool(c.get_meta("radiance_armed", false)) else "holds back"], c)
+		"fluid_forms":
+			return _fluid_form(c, choice_in)
+		"fluid_forms_end":
+			var why := _first(e._action_check(c), "Only one Magic action this turn" if c.magic_action_used else "")
+			if why != "":
+				return CombatResult.fail(why)
+			e.spend_action(c)
+			c.magic_action_used = true
+			e.shapes.revert(c, "it lets the shape go")
+		"bright_sun":
+			return _bright_sun(c)
 		"familiar_away", "familiar_back", "familiar_dismiss":
 			return _familiar_command(c, id, cell)
 		_:
@@ -295,6 +321,11 @@ func _terror_immune(c: Combatant, t: Combatant) -> void:
 
 ## Inspired by Fear: a creature just became Frightened of a holder (any feature or spell, the holder as its source).
 func effect_added(cr: Creature, fx: Effect) -> void:
+	# Boon of the Bright Sun: the light goes out when its bearer is Incapacitated.
+	var bearer := enc().get_c(cr.id)
+	if bearer != null and _sun_of(bearer) != null and not bearer.can_act():
+		_sun_of(bearer).ended = true
+		_log("info", "%s's sunlight fades" % bearer.name(), bearer)
 	if not &"frightened" in fx.conditions or fx.caster_id == "" or fx.caster_id == cr.id:
 		return
 	var c := enc().get_c(fx.caster_id)
@@ -366,6 +397,8 @@ func after_cast(c: Combatant, s: Dictionary, slot: int, free: bool = false, ctx:
 	if ch == null:
 		return
 	var school := str(s.get("school", ""))
+	c.remove_meta("erupting_live")
+	_revelry(c, s)
 	_subclass_after_cast(c, ch, s, slot, free, ctx)
 	if feat(c, "arcane_artist") and school == "illusion" and ch.resource_left("arcane_artist") > 0:
 		c.set_meta("arcane_artist_window", _turn_key())
@@ -455,6 +488,11 @@ func spell_damage_bonus(ctx: Dictionary, bonus: Breakdown) -> int:
 		return 0
 	var s := ctx["s"] as Dictionary
 	var total := 0
+	# Boon of Bloodshed: a spell attack is an attack too.
+	if s.has("attack"):
+		for d in _bloodshed_dice(c, enc().spells._damage_type_safe(ctx)):
+			bonus.add("Boon of Bloodshed", int(d["dice"]))
+			total += int(d["dice"])
 	for pair: Array in [["evocation_adept", "evocation_adept_benefit", "Evocation Adept"], ["spellfire_adept", "spellfire_adept_benefit", "Spellfire Adept"]]:
 		if not feat(c, str(pair[0])) or not allowed(c, str(pair[1])):
 			continue
@@ -504,6 +542,12 @@ func after_damage(source: Combatant, target: Combatant, amount: int, parts: Arra
 	var e := enc()
 	if source == null or amount <= 0 or source == target:
 		return
+	# Erupting Spellpower: each creature the spell damages falls Prone.
+	if bool(source.get_meta("erupting_live", false)) and parts.any(func(p: Variant) -> bool: return bool((p as Dictionary).get("spell", false))) \
+			and target.is_alive() and not target.creature.has_condition(&"prone"):
+		target.creature.add_condition(&"prone", "Erupting Spellpower")
+		_log("condition", "%s is knocked Prone (Boon of Erupting Spellpower)" % target.name(), target)
+		e.events.append({"type": "condition", "id": target.id})
 	# Spirit Lantern: an enemy dying in a lantern's light gives it a fragment.
 	if target.creature.dead or target.creature.hp <= 0:
 		_lantern_catch(target)
@@ -561,6 +605,10 @@ func exploit_opening(c: Combatant, opts: Dictionary) -> bool:
 ## Before anyone rolls: a Zhentarim Ruffian may spend Heroic Inspiration for its side's Advantage on Initiative.
 func before_initiative() -> void:
 	_family_first.clear()
+	for b in enc().combatants:
+		var bc := _ch(b)
+		if bc != null and feat(b, "boon_of_erupting_spellpower"):
+			bc.restore_resource("erupting_spellpower", 1)
 	for c in enc().combatants:
 		var ch := _ch(c)
 		if ch == null or not ch.heroic_inspiration or not feat(c, "zhentarim_ruffian") or not allowed(c, "family_first"):
@@ -747,6 +795,8 @@ func _lordly_resolve(c: Combatant, picked: Array[Combatant]) -> CombatResult:
 ## as their killer's turn starts.
 func turn_start(c: Combatant) -> void:
 	var e := enc()
+	_sun_turn(c)
+	_terror_turn(c)
 	for z: Dictionary in _rising.duplicate():
 		if str(z["caster"]) == c.id:
 			_rising.erase(z)
@@ -824,8 +874,10 @@ func before_d20(c: Combatant, kind: D20Test.Kind, keys: Array[String]) -> Dictio
 
 ## Undead Thralls (Necromancer 6): Undead a necromancer controls add its Intelligence modifier Necrotic damage
 ## to their hits while within 60 ft of it.
-func hit_dice(c: Combatant, _target: Combatant) -> Array[Dictionary]:
+func hit_dice(c: Combatant, _target: Combatant, option: Dictionary = {}) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
+	if option.has("profile"):
+		out.append_array(_bloodshed_dice(c, str((option["profile"] as WeaponProfile).damage_type)))
 	if c.creature.creature_type != &"undead" or not c.has_meta("summoner"):
 		return out
 	var e := enc()
@@ -843,6 +895,8 @@ func attack_advantage(c: Combatant, target: Combatant) -> Array[String]:
 	# Strike Fear (Scion of the Three): Advantage against a creature it Terrified.
 	if target != null and target.creature.has_flag("terrified_by:%s" % c.id) and target.creature.has_condition(&"frightened"):
 		out.append("Terrified")
+	if c.creature.has_flag("bloodshed_advantage"):
+		out.append("Boon of Bloodshed")
 	# `grapples` maps a grappled creature to its grappler.
 	if target == null or not e.grapples.has(target.id):
 		return out
@@ -988,7 +1042,7 @@ func _negative_energy_flood(ctx: Dictionary, tgt: Array[Combatant], r: CombatRes
 			continue
 		var only: Array[Combatant] = [t]
 		e.spells._save_spell(ctx, only, r)
-		if t.creature.dead and t.creature.creature_type == &"humanoid":
+		if t.creature.dead and t.creature.creature_type == &"humanoid" and not t.has_meta("no_undead"):
 			_rising.append({"caster": c.id, "cell": t.cell, "slot": int(ctx["slot"])})
 			r.lines.append(e.log.add("info", "%s will rise as a Zombie at the start of %s's next turn" % [t.name(), c.name()], t.id))
 
@@ -1926,6 +1980,7 @@ func _spellfire_burst(c: Combatant, id: String, t: Combatant) -> CombatResult:
 func before_resolve(ctx: Dictionary) -> void:
 	var c := ctx["c"] as Combatant
 	var ch := _ch(c)
+	_boons_before_resolve(ctx)
 	# Blessing of Moonlight: decided as the Moonbeam is cast, so its first save already counts.
 	if ch != null and str((ctx["s"] as Dictionary).get("id", "")) == "moonbeam" and CombatFeatures.has_feature(c, "blessing_of_moonlight") \
 			and ch.resource_left("blessing_of_moonlight") > 0 and allowed(c, "blessing_of_moonlight"):
@@ -2156,9 +2211,15 @@ func _deaths_master(c: Combatant) -> CombatResult:
 
 ## Death's Master: an Undead dropping to 0 can explode (its own on its own; another's only on Automatic, for a
 ## Reaction and a level 5+ slot). Harvest Undead is handled when the necromancer is hurt.
-func on_death(_source: Combatant, dead: Combatant) -> void:
+func on_death(source: Combatant, dead: Combatant) -> void:
 	var e := enc()
 	_familiar_lost(dead)
+	_boons_on_death(source, dead)
+	for h in e.combatants:
+		var sun := _sun_of(h)
+		if sun != null and h == dead:
+			sun.ended = true
+			e.spells.zones.prune()
 	if dead.creature.creature_type != &"undead":
 		return
 	for h in e.combatants:
@@ -2534,3 +2595,249 @@ func _familiar_lost(dead: Combatant) -> void:
 	if owner != null and familiar_of(enc().get_c(str(dead.get_meta("summoner")))) == null:
 		owner.familiar = ""
 
+
+## The epic boons' actions: Exquisite Radiance armed, Fluid Forms' shapes, the Bright Sun.
+func _boon_list(c: Combatant, ch: Character, out: Array[Dictionary], tw: String) -> void:
+	var e := enc()
+	if feat(c, "boon_of_exquisite_radiance") and ch.resource_left("exquisite_radiance") > 0:
+		var armed := bool(c.get_meta("radiance_armed", false))
+		out.append(_entry("radiance_arm", "Exquisite Radiance" + (" (armed)" if armed else ""), "maximize a Radiant roll", "free", tw, "none",
+			"Arm it: the next Radiant damage roll you make uses the maximum on every die. Once per Long Rest. Click again to hold it back."))
+	if feat(c, "boon_of_fluid_forms"):
+		var fw := _first(_first(e._action_check(c), "Only one Magic action this turn" if c.magic_action_used else ""), _res_why(c, "fluid_forms"))
+		var ff := _entry("fluid_forms", "Fluid Shape", "CR 10 or lower · 1 hour", "action", fw, "none",
+			"Magic action: become a Beast, Humanoid or Monstrosity of Challenge Rating 10 or lower for 1 hour, with its Hit Points as Temporary Hit Points (and 20 more). You keep your mind, Hit Points and spellcasting. Once per Long Rest.")
+		var forms: Array = [{"value": "", "label": "Strongest"}]
+		for f in fluid_forms():
+			forms.append({"value": str(f["id"]), "label": "%s (CR %s)" % [f.get("name", ""), str(f.get("cr", 0))]})
+		ff["choices"] = forms
+		ff["choice_label"] = "Shape"
+		out.append(ff)
+	if feat(c, "boon_of_the_bright_sun"):
+		var lit := _sun_of(c) != null
+		out.append(_entry("bright_sun", "End the Bright Sun" if lit else "Bright Sun", "no action" if lit else "30 ft of sunlight",
+			"free" if lit else "bonus", tw if lit else e._bonus_check(c), "none",
+			"End the sunlight." if lit else "Bonus Action: shine with sunlight in a 30-ft Emanation that dispels magical Darkness; you and allies you can see in it gain 10 Temporary Hit Points at the start of each of your turns."))
+
+
+# --- Epic boons (Heroes of Faerûn, Arcana Unleashed) -------------------------------------------------------------------
+
+## A creature drops: Exquisite Radiance's final rest, Bloodshed's taste of blood, the Soul Drinker's siphon.
+func _boons_on_death(source: Combatant, dead: Combatant) -> void:
+	var e := enc()
+	if source != null and feat(source, "boon_of_exquisite_radiance"):
+		dead.set_meta("no_undead", true)
+	for h in e.combatants:
+		if h == dead or not h.is_alive() or h.is_down() or not h.hostile_to(dead):
+			continue
+		if feat(h, "boon_of_bloodshed") and e.can_see_space(h, dead.cell):
+			var fx := Effect.new("Taste of Blood", &"feature", "boon_of_bloodshed").with_modifier("flag", {"value": "bloodshed_advantage"})
+			fx.ends = Effect.Ends.END_OF_TURN
+			fx.turn_owner_id = h.id
+			fx.skip_turn_ends = e.own_turn_skip(h)
+			fx.ends_on.append("attack_roll")
+			fx.stack_key = "boon_of_bloodshed"
+			h.creature.add_effect(fx)
+		var hc := _ch(h)
+		if hc != null and feat(h, "boon_of_the_soul_drinker") and hc.resource_left("siphon_life") > 0 and allowed(h, "siphon_life") \
+				and e.spells.can_react(h) and e.distance(h, dead) <= 120 and h.creature.hp < h.creature.max_hp():
+			hc.spend_resource("siphon_life")
+			h.reaction_available = false
+			var got := h.creature.heal(50, "Siphon Life")
+			_log("heal", "%s drinks the fading life of %s: +%d Hit Points (Boon of the Soul Drinker)" % [h.name(), dead.name(), got], h)
+			e.events.append({"type": "heal", "id": h.id, "amount": got})
+
+
+## Boon of Bloodshed: once per turn while Bloodied, a hit adds the Proficiency Bonus of its damage type.
+func _bloodshed_dice(c: Combatant, ty: String) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if feat(c, "boon_of_bloodshed") and c.creature.is_bloodied() and allowed(c, "bloodshed_strike") and _once_per_turn(c, "bloodshed_turn"):
+		out.append({"dice": str(c.creature.proficiency_bonus()), "type": ty, "label": "Boon of Bloodshed"})
+	return out
+
+
+## Whether every die of `c`'s damage roll of type `ty` counts as its maximum now (spent when it does): Boon of
+## Exquisite Radiance once armed, Boon of Poison Mastery once per turn.
+func maximized(c: Combatant, ty: String) -> bool:
+	if c == null:
+		return false
+	var ch := _ch(c)
+	if ty == "radiant" and ch != null and bool(c.get_meta("radiance_armed", false)) and ch.resource_left("exquisite_radiance") > 0:
+		ch.spend_resource("exquisite_radiance")
+		c.remove_meta("radiance_armed")
+		_log("info", "%s's radiance burns at its brightest (Boon of Exquisite Radiance)" % c.name(), c)
+		return true
+	if ty == "poison" and feat(c, "boon_of_poison_mastery") and _once_per_turn(c, "poison_mastery_turn"):
+		return true
+	return false
+
+
+## Boon of Fluid Forms: the shapes it allows.
+static func fluid_forms() -> Array[Dictionary]:
+	return HighMagic.forms(10.0, ["beast", "humanoid", "monstrosity"])
+
+
+## Boon of Fluid Forms: 20 more Temporary Hit Points from any change of shape.
+static func shape_temp_bonus(cr: Creature) -> int:
+	var ch := cr as Character if cr is Character else null
+	if ch != null and ch.feats_taken.any(func(f: Dictionary) -> bool: return str(f["id"]) == "boon_of_fluid_forms"):
+		return 20
+	return 0
+
+
+func _fluid_form(c: Combatant, pick: String) -> CombatResult:
+	var e := enc()
+	var ch := _ch(c)
+	var why := _first(e._action_check(c), "Only one Magic action this turn" if c.magic_action_used else "")
+	if why != "":
+		return CombatResult.fail(why)
+	if ch.resource_left("fluid_forms") <= 0:
+		return CombatResult.fail("None left")
+	var form := {}
+	for f in fluid_forms():
+		if str(f["id"]) == pick:
+			form = f
+	if form.is_empty():
+		var all := fluid_forms()
+		if all.is_empty():
+			return CombatResult.fail("No shape to take")
+		form = all[all.size() - 1]
+	ch.spend_resource("fluid_forms")
+	e.spend_action(c)
+	c.magic_action_used = true
+	e.shapes.transform(c, form, {"temp_hp": int((form.get("hp", {}) as Dictionary).get("average", 1)), "keep_mind": true,
+		"ends_without_temp_hp": true, "label": "Fluid Forms"})
+	return CombatResult.new()
+
+
+## Boon of the Bright Sun: the sunlight shining from `c`, or null.
+func _sun_of(c: Combatant) -> FieldObject:
+	return enc().spells.zones.object_of(c.id, "boon_of_the_bright_sun") if c != null else null
+
+
+func _bright_sun(c: Combatant) -> CombatResult:
+	var e := enc()
+	if _sun_of(c) != null:
+		var o := _sun_of(c)
+		o.ended = true
+		e.spells.zones.prune()
+		_log("info", "%s lets the sunlight fade (Boon of the Bright Sun)" % c.name(), c)
+		return CombatResult.new()
+	var why := e._bonus_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	c.bonus_available = false
+	var o2 := FieldObject.new(FieldObject.Kind.ZONE, "boon_of_the_bright_sun", "Bright Sun")
+	o2.caster_id = c.id
+	o2.cell = c.cell
+	o2.cells = [c.cell]
+	o2.origin = e.center_of(c)
+	o2.follows_caster = true
+	o2.rules = {"light": {"bright": 30, "dim": 0, "sunlight": true}, "light_on": "caster", "triggers": []}
+	var r := CombatResult.new()
+	e.spells.zones.add(o2, r)
+	_log("spell", "%s blazes with the light of the sun (Boon of the Bright Sun)" % c.name(), c)
+	_sun_dispels(c)
+	return r
+
+
+## Magical Darkness overlapping the Bright Sun's 30 ft is dispelled.
+func _sun_dispels(c: Combatant) -> void:
+	var e := enc()
+	for other in e.spells.zones.live():
+		if not bool(other.rule("darkness", false)):
+			continue
+		if other.cells.any(func(cell: Vector2i) -> bool: return e.grid.distance_ft(c.cell, c.size_cells, cell, 1) <= 30):
+			other.ended = true
+			_log("info", "The sunlight burns away %s (Boon of the Bright Sun)" % other.name, c)
+	e.spells.zones.prune()
+
+
+## The Bright Sun goes out when its bearer dies or is Incapacitated; at the start of the bearer's turn it and its
+## allies it can see in the light gain 10 Temporary Hit Points.
+func _sun_turn(c: Combatant) -> void:
+	var e := enc()
+	for h in e.combatants:
+		var o := _sun_of(h)
+		if o != null and (not h.is_alive() or not h.can_act()):
+			o.ended = true
+			_log("info", "%s's sunlight fades" % h.name(), h)
+	e.spells.zones.prune()
+	if _sun_of(c) == null:
+		return
+	_sun_dispels(c)
+	for a: Combatant in e.allies_of(c) + [c]:
+		if not a.is_alive() or a.is_down() or e.distance(c, a) > 30 or (a != c and not e.can_see(c, a)):
+			continue
+		if a.creature.add_temp_hp(10, "Bright Sun"):
+			_log("heal", "%s basks in the sunlight: 10 Temporary Hit Points (Boon of the Bright Sun)" % a.name(), a)
+
+
+## Boon of Terror: a Frightened creature starting its turn near the boon's bearer may be made to flee.
+func _terror_turn(t: Combatant) -> void:
+	var e := enc()
+	if not t.creature.has_condition(&"frightened") or not t.is_alive() or t.is_down():
+		return
+	for h in e.combatants:
+		var hc := _ch(h)
+		if hc == null or h == t or not h.hostile_to(t) or not feat(h, "boon_of_terror") or not allowed(h, "boon_of_terror_benefit"):
+			continue
+		if hc.resource_left("boon_of_terror") <= 0 or not e.spells.can_react(h) or e.distance(h, t) > 60 or not e.can_see(h, t):
+			continue
+		if int(e.cover(h, t)["cover"]) == CombatGrid.Cover.TOTAL:
+			continue
+		hc.spend_resource("boon_of_terror")
+		h.reaction_available = false
+		var dc := 8 + h.creature.ability_mod(&"cha") + h.creature.proficiency_bonus()
+		var sv := t.creature.roll_save(e.dice, &"wis", dc, [], [], "Wisdom save vs Boon of Terror (%s)" % t.name(), ["save_vs:frightened"])
+		if sv.success:
+			_log("info", "%s holds its ground against %s's dread (Boon of Terror)" % [t.name(), h.name()], t, [sv.describe()])
+			return
+		var fx := Effect.new("Paralyzing Dread", &"feature", "boon_of_terror").with_modifier("flag", {"value": "fear_flee"})
+		fx.caster_id = h.id
+		fx.ends = Effect.Ends.END_OF_TURN
+		fx.turn_owner_id = t.id
+		t.creature.add_effect(fx)
+		_log("condition", "%s flees from %s in terror (Boon of Terror)" % [t.name(), h.name()], t, [sv.describe()])
+		e.events.append({"type": "condition", "id": t.id})
+		return
+
+
+## Spells about to resolve: Erupting Spellpower (a damaging spell cast with a slot) and Boon of the Furious Storm
+## (Disadvantage on saves against Lightning or Thunder spells).
+func _boons_before_resolve(ctx: Dictionary) -> void:
+	var c := ctx["c"] as Combatant
+	var ch := _ch(c)
+	var s := ctx["s"] as Dictionary
+	if ch == null:
+		return
+	var types: Array = (s.get("damage", []) as Array).map(func(d: Variant) -> String: return str((d as Dictionary).get("type", "")))
+	if feat(c, "boon_of_the_furious_storm") and ("lightning" in types or "thunder" in types or enc().spells._damage_type_safe(ctx) in ["lightning", "thunder"]):
+		var dis := (ctx.get("save_disadvantage", []) as Array).duplicate()
+		dis.append("Boon of the Furious Storm")
+		ctx["save_disadvantage"] = dis
+	if feat(c, "boon_of_erupting_spellpower") and bool(ctx.get("spent_slot", false)) and s.has("damage") \
+			and ch.resource_left("erupting_spellpower") > 0 and allowed(c, "erupting_spellpower"):
+		ch.spend_resource("erupting_spellpower")
+		ctx["erupting"] = true
+		c.set_meta("erupting_live", true)
+		_log("info", "%s's spell erupts with power (Boon of Erupting Spellpower)" % c.name(), c)
+
+
+## Boon of Revelry: a creature Charmed by its bearer's Otto's Irresistible Dance can't cast Verbal spells.
+func _revelry(c: Combatant, s: Dictionary) -> void:
+	if str(s.get("id", "")) != "ottos_irresistible_dance" or not feat(c, "boon_of_revelry"):
+		return
+	for t in enc().combatants:
+		for fx: Effect in t.creature.effects:
+			if fx.source_id == "ottos_irresistible_dance" and fx.caster_id == c.id and &"charmed" in fx.conditions \
+					and not fx.modifiers.any(func(m: Modifier) -> bool: return m.text("value") == "speechless"):
+				fx.with_modifier("flag", {"value": "speechless"})
+				_log("info", "%s sings nonsense as it dances (Boon of Revelry)" % t.name(), t)
+
+
+## Spells whose components `c` can skip: Magic School Mastery's level 1 spell, Boon of Revelry's dance.
+func waives_components(c: Combatant, spell_id: String) -> bool:
+	if spell_id == "ottos_irresistible_dance" and feat(c, "boon_of_revelry"):
+		return true
+	return feat(c, "boon_of_magic_school_mastery") and _feat_pick(c, "boon_of_magic_school_mastery", "school_mastery_minor") == spell_id

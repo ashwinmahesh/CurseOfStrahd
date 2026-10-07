@@ -2365,6 +2365,9 @@ func _after_hit(st: Dictionary) -> CombatResult:
 			if int(again["total"]) > int(rolled["total"]):
 				rolled = again
 				dmg_text.append("Savage Attacker: rerolled and kept %d" % int(again["total"]))
+		# Boon of Exquisite Radiance, Boon of Poison Mastery: every die at its maximum.
+		if not bool(entry.get("penalty", false)) and int(DiceRoller.parse_expr(str(entry["dice"]))["count"]) > 0 and faerun.maximized(c, str(entry["type"])):
+			rolled = _max_damage_dice(str(entry["dice"]), critical)
 		var ty := str(entry["type"])
 		if bool(entry.get("penalty", false)):
 			parts[str(p.damage_type)] = int(parts.get(str(p.damage_type), 0)) - int(rolled["total"])
@@ -2470,6 +2473,14 @@ func _roll_damage_dice(expr: String, critical: bool, minimum: int, reason: Strin
 	if int(parsed["modifier"]) != 0:
 		text += " %+d" % int(parsed["modifier"])
 	return {"total": total, "text": "%s = %d" % [text.strip_edges(), total]}
+
+
+## Every die of `expr` at its highest face (Boon of Exquisite Radiance, Boon of Poison Mastery).
+func _max_damage_dice(expr: String, critical: bool) -> Dictionary:
+	var p := DiceRoller.parse_expr(expr)
+	var count := int(p["count"]) * (2 if critical else 1)
+	var total := count * int(p["sides"]) + int(p["modifier"])
+	return {"total": total, "text": "%dd%d at their maximum = %d" % [count, int(p["sides"]), total]}
 
 
 ## Dice rolled to give `t` Hit Points: Soothing Familiar counts low dice as 3s.
