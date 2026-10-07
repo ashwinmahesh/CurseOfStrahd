@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -15,19 +15,25 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Cast Augury once per dawn; the idol speaks its omen..",
-  "text": "Cast Augury once per dawn; the idol speaks its omen.",
+  "summary": "Once a day, the idol speaks an Augury.",
+  "text": "Once per dawn you can cast Augury from this idol; the idol itself speaks the omen.",
   "powers": [
     {
       "id": "augury",
       "name": "Augury",
-      "spell": "augury",
-      "dc": "wielder",
+      "cost": "magic",
+      "custom": "flavour",
+      "field": true,
       "uses": {
         "count": 1,
         "per": "dawn"
-      }
+      },
+      "params": {
+        "text": "whispers an omen about the plan you describe: weal, woe, both or nothing"
+      },
+      "text": "Once a day: Augury, spoken by the idol."
     }
   ],
-  "playable": false
+  "playable": true,
+  "held": true
 }

@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "ring",
   "weight_lb": 0,
@@ -15,8 +15,18 @@
   },
   "theme": "arcana",
   "icon": "ring",
-  "summary": "Reference-only: after failing a Constitution save for Concentration, roll and expend up to two unused Hit Dice and add them to the save..",
-  "text": "Reference-only: after failing a Constitution save for Concentration, roll and expend up to two unused Hit Dice and add them to the save.",
+  "summary": "When you fail a Concentration save, spend up to two Hit Dice and add them.",
+  "text": "While wearing this ring, when you fail a Constitution saving throw to keep Concentration, you can roll and spend up to two unspent Hit Point Dice and add them to the save. It's used on its own, one die at a time until the save succeeds.",
   "worn": "ring",
-  "playable": false
+  "playable": true,
+  "powers": [
+    {
+      "id": "focus",
+      "name": "Dedicated Focus",
+      "cost": "free",
+      "custom": "fr_focus",
+      "hidden": true,
+      "text": "Used on its own when you fail a Concentration save."
+    }
+  ]
 }

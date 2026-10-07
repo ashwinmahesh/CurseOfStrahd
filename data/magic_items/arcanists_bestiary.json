@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -15,7 +15,54 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only: held book casts Charm Monster once per dawn (DC 15; non-Humanoids save with Disadvantage).",
-  "text": "Reference-only: held book casts Charm Monster once per dawn (DC 15; non-Humanoids save with Disadvantage). Attunement grants Arcana, History, Nature, or Religion proficiency, changeable on a Long Rest. Carrying it, a successful Study/Arcana check on a visible Aberration, Construct, Elemental, Fey, or Monstrosity also reveals its damage defenses.",
-  "playable": false
+  "summary": "Once a day it casts Charm Monster (DC 15; non-Humanoids save with Disadvantage); attuned, you're proficient in Arcana, History, Nature or Religion.",
+  "text": "While holding this book you can cast Charm Monster (save DC 15) from it once per dawn; a creature that isn't a Humanoid makes the save with Disadvantage. While attuned to it you have proficiency in one skill you choose from Arcana, History, Nature and Religion, and you can change the choice when you finish a Long Rest. (The game's Study action already reveals a creature's damage defenses on a success.)",
+  "playable": true,
+  "held": true,
+  "modifiers": [
+    {
+      "stat": "proficiency",
+      "kind": "skill",
+      "value": "@pick",
+      "attuned_only": true
+    }
+  ],
+  "powers": [
+    {
+      "id": "charm",
+      "name": "Charm Monster",
+      "spell": "charm_monster",
+      "dc": 15,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "disadvantage_unless": [
+        "humanoid"
+      ]
+    },
+    {
+      "id": "study_focus",
+      "name": "Choose a Subject",
+      "cost": "free",
+      "custom": "fr_set_pick",
+      "field": true,
+      "combat": false,
+      "uses": {
+        "count": 1,
+        "per": "long"
+      },
+      "requires": "anyone",
+      "choice": {
+        "label": "Skill",
+        "from": [
+          "arcana",
+          "history",
+          "nature",
+          "religion"
+        ]
+      },
+      "text": "After a Long Rest: pick the skill the bestiary teaches you."
+    }
+  ]
 }

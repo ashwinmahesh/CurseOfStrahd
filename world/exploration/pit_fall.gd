@@ -71,11 +71,11 @@ static func spring(view: LocationView, trap: Dictionary, victim: Combatant) -> v
 		var own_fall := str(trap.get("damage_type", "")) == "bludgeoning" and str(trap.get("damage", "")) != ""
 		if not own_fall:
 			var fall := view.dice.roll_expr("%dd6" % maxi(1, feet / 10), "Falling %d ft" % feet)
-			var dr := victim.creature.take_damage(int(fall["total"]), &"bludgeoning", false, view.dice, "the fall")
+			var dr := victim.creature.take_damage(FaerunItems.thimble(victim.creature, int(fall["total"])), &"bludgeoning", false, view.dice, "the fall")
 			lines.append(dr.describe(victim.name()))
 		if str(trap.get("damage", "")) != "":
 			var rolled := view.dice.roll_expr(str(trap["damage"]), "Trap: %s" % label)
-			var dr2 := victim.creature.take_damage(int(rolled["total"]), StringName(str(trap.get("damage_type", "piercing"))), false, view.dice, label)
+			var dr2 := victim.creature.take_damage(FaerunItems.thimble(victim.creature, int(rolled["total"])), StringName(str(trap.get("damage_type", "piercing"))), false, view.dice, label)
 			lines.append(dr2.describe(victim.name()))
 		victim.creature.add_condition(&"prone", label)
 		fallen(view)[victim.name()] = id

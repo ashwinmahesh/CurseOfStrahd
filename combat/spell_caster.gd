@@ -141,10 +141,12 @@ func _why_not(c: Combatant, s: Dictionary, entry: Dictionary) -> String:
 	var waived := (int(s.get("level", 0)) > 0 and c.creature.has_flag("waive_components:%s" % str(s.get("school", "")))) \
 		or enc().faerun.waives_components(c, str(s.get("id", "")))
 	if bool(comp.get("v", false)) and not waived and not (str(s.get("school", "")) == "illusion" and CombatFeatures.has_feature(c, "improved_illusions")):
-		if c.creature.has_flag("speechless"):
+		# Spell-Slinger's Puppet: its holder speaks through the doll.
+		var voiced := enc().items.specials.fr.puppet_voice(c)
+		if c.creature.has_flag("speechless") and not voiced:
 			return "Can't speak"
 		for cell in c.footprint():
-			if zones.silenced(cell):
+			if zones.silenced(cell) and not voiced:
 				return "Silence: no Verbal spells here"
 	if c.creature.has_flag("cant_cast"):
 		return "Can't cast spells in this form"
@@ -1553,6 +1555,7 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	if t.is_alive():
 		_on_spell_hit(ctx, t, r)
 		e.class_features.cantrip_hit(ctx, t)
+		e.items.specials.fr.after_spell_hit(ctx, t, melee, r)
 	_secondary(ctx, t, r)
 	return test
 
@@ -1741,7 +1744,7 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 			dis.append("Magical Ambush")
 		if c.creature.has_flag("corona") and e.in_sunlight(t) and c.hostile_to(t) and _damage_type_safe(ctx) in ["fire", "radiant"]:
 			dis.append("Corona of Light")
-		var sculpted := _sculpted(ctx, t) or _careful(ctx, t)
+		var sculpted := _sculpted(ctx, t) or _careful(ctx, t) or e.items.specials.fr.banded(ctx, t)
 		if str(ctx.get("heightened", "")) == t.id:
 			dis.append("Heightened Spell")
 		var vs := s.get("save_disadvantage_for", "") as String

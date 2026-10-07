@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -15,7 +15,25 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only: a Magic action plants the stick to shelter a 20-foot Cube from ordinary weather for 1 hour, providing dry, comfortable air.",
-  "text": "Reference-only: a Magic action plants the stick to shelter a 20-foot Cube from ordinary weather for 1 hour, providing dry, comfortable air. Creatures, objects, and magic pass freely. Another Magic action ends it early; after it ends, wait 1d12 hours to reuse.",
-  "playable": false
+  "summary": "Plant it to shelter a 20-ft cube from the weather for an hour.",
+  "text": "As a Magic action you push this stick into the ground: for 1 hour a 20-foot cube around it stays dry, still and comfortable whatever the weather, while creatures, objects and magic pass through freely. Another Magic action ends it early, and afterward it can't be used again for 1d12 hours.",
+  "playable": true,
+  "held": true,
+  "powers": [
+    {
+      "id": "shelter",
+      "name": "Shelter",
+      "cost": "magic",
+      "custom": "flavour",
+      "field": true,
+      "params": {
+        "text": "raises a calm, dry shelter against the weather for an hour"
+      },
+      "combat": false,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    }
+  ]
 }

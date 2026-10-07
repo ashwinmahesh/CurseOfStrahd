@@ -74,4 +74,8 @@ for its `duration`); a Spell Scroll an implicit "Read".
   `fr_<id>` (and `after: "fr_<id>"`), the weapon specials `mage_breaker`, `namers_needle`, `dispelling`, `goading`, the
   Keyholes daggers' second try (an after-miss offer), the Staffs of Skulls' and Martialist's before-roll offers, and
   Dissuader's push (`after_step`, called as any creature takes a step). A power's `count` is how many creatures a
-  multi-target power picks.
+  multi-target power picks. Batch 9c adds: `disadvantage_unless` (creature types that save normally against a
+  power's spell), a modifier `value` of `"@pick"` (the choice saved on the item's inventory entry by an `fr_set_pick`
+  field power), `fr_` field powers (`FaerunItems.field_use`, through `FieldItems.use`), `FaerunItems.thimble` in trap
+  damage, `puppet_voice` in Verbal component checks, `banded` beside Sculpt Spells and `after_spell_hit` after a spell
+  attack hits.

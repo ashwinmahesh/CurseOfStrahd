@@ -5,7 +5,7 @@
     "book": "FRAiF",
     "page": 245,
     "checked_against": "FRAiF",
-    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/10771765-mechanical-wonder. Prices use the existing rarity convention; unspecified weight is 0. Reference-only properties require manual adjudication."
+    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/10771765-mechanical-wonder. Prices use the existing rarity convention; unspecified weight is 0."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -16,7 +16,15 @@
   },
   "theme": "implements",
   "icon": "amulet",
-  "summary": "Reference-only: activate with 1 minute of winding its unique hand key, taking the Utilize action each turn.",
-  "text": "Reference-only: activate with 1 minute of winding its unique hand key, taking the Utilize action each turn. Worn on your back or flank, it operates for 24 hours and gives you a Speed of 30 feet. Other creatures cannot remove it without your consent.",
-  "playable": false
+  "summary": "Wound up and strapped to your back, it gives you a Speed of 30 feet for 24 hours.",
+  "text": "Wind this wonder with its key for 1 minute and strap it to your back or flank: for the next 24 hours it gives you a Speed of 30 feet, and no one else can take it off you without your consent. (The game treats it as wound whenever it's worn.)",
+  "playable": true,
+  "worn": "cloak",
+  "modifiers": [
+    {
+      "stat": "speed_set",
+      "kind": "walk",
+      "value": 30
+    }
+  ]
 }

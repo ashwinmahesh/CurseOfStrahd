@@ -4,18 +4,57 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
   "cost_gp": 4000,
   "magic": {
     "rarity": "rare",
-    "attunement": "by a Spellcaster"
+    "attunement": "by a Spellcaster",
+    "charges": {
+      "max": 6,
+      "regain": "1d6",
+      "when": "dawn"
+    }
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only: after a Long Rest choose Acid, Cold, Fire, Lightning, or Thunder.",
-  "text": "Reference-only: after a Long Rest choose Acid, Cold, Fire, Lightning, or Thunder. Spend 1 of 6 charges when casting a damaging spell to change its damage to that type. Regain 1d6 charges each dawn.",
-  "playable": false
+  "summary": "Six charges (1d6 back at dawn): a charge turns a damaging spell to the rune's element (picked after a Long Rest).",
+  "text": "When you finish a Long Rest you choose Acid, Cold, Fire, Lightning or Thunder for this rune. It has 6 charges and regains 1d6 expended charges each dawn. When you cast a spell that deals damage, you can spend 1 charge to change its damage to the chosen type. In a fight you ready it (no action) before the spell.",
+  "playable": true,
+  "held": true,
+  "powers": [
+    {
+      "id": "element",
+      "name": "Choose the Element",
+      "cost": "free",
+      "custom": "fr_set_pick",
+      "field": true,
+      "combat": false,
+      "uses": {
+        "count": 1,
+        "per": "long"
+      },
+      "requires": "anyone",
+      "choice": {
+        "label": "Element",
+        "from": [
+          "acid",
+          "cold",
+          "fire",
+          "lightning",
+          "thunder"
+        ]
+      },
+      "text": "After a Long Rest: the rune's element."
+    },
+    {
+      "id": "ready",
+      "name": "Ready the Rune",
+      "cost": "free",
+      "custom": "fr_rune_ready",
+      "text": "Your next damaging spell spends a charge and deals the rune's element instead."
+    }
+  ]
 }

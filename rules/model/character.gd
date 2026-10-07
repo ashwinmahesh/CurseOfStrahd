@@ -262,6 +262,12 @@ func item_modifiers() -> Array[Modifier]:
 			# Only while the item still holds a gem of that kind (Helm of Brilliance's rubies).
 			if d.has("requires_gem") and int((e.get("gems", {}) as Dictionary).get(str(d["requires_gem"]), 0)) <= 0:
 				continue
+			# A value its owner picked (Arcanist's Bestiary's skill, chosen after a Long Rest).
+			if str(d.get("value", "")) == "@pick":
+				if str(e.get("pick", "")) == "":
+					continue
+				d = d.duplicate(true)
+				d["value"] = str(e["pick"])
 			# Two of the same item don't stack (one Ring of Protection counts once).
 			var dedupe := "%s|%s" % [iid, JSON.stringify(d)]
 			if seen.has(dedupe):

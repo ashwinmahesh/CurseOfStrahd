@@ -437,6 +437,7 @@ func adjust_incoming(_source: Combatant, target: Combatant, parts: Array, label:
 ## After damage: the Berserker Axe's curse answering a hostile creature's blow; a Staff of the Python's snake killed
 ## takes the staff with it.
 func on_damaged(source: Combatant, target: Combatant, amount: int, parts: Array) -> void:
+	fr.on_damaged(source, target, amount, parts)
 	var e := enc()
 	if amount > 0 and has(target, "cloak_of_displacement"):
 		target.set_meta("displacement_off", true)
@@ -497,6 +498,7 @@ func before_d20(c: Combatant, kind: D20Test.Kind, keys: Array[String]) -> Array[
 ## A failed D20 Test: a Ring of Evasion turns a failed Dex save into a success; a Luck Blade rerolls a failure once a
 ## day (used automatically, like the game's other mid-roll choices; deviations.md).
 func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
+	fr.after_d20(c, t, keys)
 	var e := enc()
 	var ch := ch_of(c)
 	if ch == null or t.success or t.target <= 0:

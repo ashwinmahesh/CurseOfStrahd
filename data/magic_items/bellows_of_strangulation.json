@@ -4,18 +4,125 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
   "cost_gp": 4000,
   "magic": {
     "rarity": "rare",
-    "attunement": false
+    "attunement": false,
+    "charges": {
+      "max": 6,
+      "regain": "1d6+1",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed"
+      }
+    }
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only: held bellows uses a Magic action and charges to Incapacitate one visible creature within 60 feet (1 charge) or creatures in a 30-foot Cone (3 charges): DC 15 Constitution, lasting 1 minute with end-turn repeat saves.",
-  "text": "Reference-only: held bellows uses a Magic action and charges to Incapacitate one visible creature within 60 feet (1 charge) or creatures in a 30-foot Cone (3 charges): DC 15 Constitution, lasting 1 minute with end-turn repeat saves. Cloudkill costs 5 charges (DC 17). Six charges, regaining 1d6+1 each dawn; spending the last destroys it on a d20 result of 1.",
-  "playable": false
+  "summary": "Six charges (1d6 + 1 back at dawn): choke one creature (1), a 30-ft Cone (3) or cast Cloudkill (5).",
+  "text": "This bellows has 6 charges and regains 1d6 + 1 expended charges each dawn; when you spend the last one, roll a d20 and on a 1 it splits apart. While holding it, as a Magic action you can spend 1 charge to target a creature you can see within 60 feet, or 3 charges to blast a 30-foot Cone: each target makes a DC 15 Constitution saving throw or has the Incapacitated condition for 1 minute, repeating the save at the end of each of its turns. You can also spend 5 charges to cast Cloudkill (save DC 17).",
+  "playable": true,
+  "held": true,
+  "recipes": {
+    "choke": {
+      "name": "Strangling Gasp",
+      "level": 0,
+      "school": "transmutation",
+      "range": {
+        "kind": "feet",
+        "feet": 60
+      },
+      "targets": {
+        "kind": "creature",
+        "count": 1
+      },
+      "save": "con",
+      "save_success": "none",
+      "conditions": [
+        "incapacitated"
+      ],
+      "duration": {
+        "kind": "minutes",
+        "amount": 1
+      },
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "incapacitated",
+            "repeat_save": "end_of_turn"
+          }
+        }
+      ],
+      "components": {},
+      "tags": [
+        "control"
+      ]
+    },
+    "gust": {
+      "name": "Strangling Gust",
+      "level": 0,
+      "school": "transmutation",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "cone",
+        "size": 30
+      },
+      "save": "con",
+      "save_success": "none",
+      "conditions": [
+        "incapacitated"
+      ],
+      "duration": {
+        "kind": "minutes",
+        "amount": 1
+      },
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "incapacitated",
+            "repeat_save": "end_of_turn"
+          }
+        }
+      ],
+      "components": {},
+      "tags": [
+        "control"
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "choke",
+      "name": "Strangling Gasp",
+      "recipe": "choke",
+      "dc": 15,
+      "cost": "magic",
+      "charges": 1
+    },
+    {
+      "id": "gust",
+      "name": "Strangling Gust",
+      "recipe": "gust",
+      "dc": 15,
+      "cost": "magic",
+      "charges": 3
+    },
+    {
+      "id": "cloudkill",
+      "name": "Cloudkill",
+      "spell": "cloudkill",
+      "dc": 17,
+      "charges": 5
+    }
+  ]
 }

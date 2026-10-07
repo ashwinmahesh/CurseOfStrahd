@@ -636,6 +636,13 @@
             "type": "integer",
             "description": "How many creatures a multi-target power picks (Tramontane Armor's grip)."
           },
+          "disadvantage_unless": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Creature types that save normally against the power's spell; the rest save with Disadvantage (Arcanist's Bestiary)."
+          },
           "range": {
             "type": "integer"
           },

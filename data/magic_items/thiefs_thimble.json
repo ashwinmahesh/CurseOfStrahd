@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -15,7 +15,8 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only: while worn, it absorbs damage from traps you trigger.",
-  "text": "Reference-only: while worn, it absorbs damage from traps you trigger. It has 30 HP; at 0 it breaks and excess damage reaches you.",
-  "playable": false
+  "summary": "Soaks up 30 damage from traps you set off, then breaks.",
+  "text": "While you wear this thimble, damage from traps you set off goes into it first. It has 30 Hit Points; when they're gone it breaks, and any damage left over reaches you.",
+  "playable": true,
+  "worn": "ring"
 }

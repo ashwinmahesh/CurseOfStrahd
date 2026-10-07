@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -15,7 +15,21 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only: a Magic action activates sweeping in a 20-foot square centered on a visible ground point within 60 feet.",
-  "text": "Reference-only: a Magic action activates sweeping in a 20-foot square centered on a visible ground point within 60 feet. It continues until a Magic action stops it.",
-  "playable": false
+  "summary": "Sweeps a 20-ft square by itself until told to stop.",
+  "text": "As a Magic action you can set this broom sweeping a 20-foot square centered on a point on the ground you can see within 60 feet. It keeps going until you stop it with another Magic action.",
+  "playable": true,
+  "held": true,
+  "powers": [
+    {
+      "id": "sweep",
+      "name": "Sweep",
+      "cost": "magic",
+      "custom": "flavour",
+      "field": true,
+      "params": {
+        "text": "whisks away the dust and debris of a 20-ft square"
+      },
+      "combat": false
+    }
+  ]
 }

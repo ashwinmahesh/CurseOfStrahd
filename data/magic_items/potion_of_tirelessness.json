@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "potion",
   "weight_lb": 0,
@@ -15,7 +15,25 @@
   },
   "theme": "arcana",
   "icon": "potion_orange",
-  "summary": "Reference-only: drinking removes the need for sleep and prevents magical sleep for 24 hours.",
-  "text": "Reference-only: drinking removes the need for sleep and prevents magical sleep for 24 hours. During this time, a Long Rest takes 4 hours of conscious, quiet focus.",
-  "playable": false
+  "summary": "For 24 hours you need no sleep and magic can't put you to sleep; a Long Rest is 4 hours of quiet focus.",
+  "text": "For 24 hours after drinking this potion you don't need to sleep and magic can't put you to sleep. During that time a Long Rest takes only 4 hours, spent awake in quiet focus. (The party's rests still take their usual time.)",
+  "playable": true,
+  "stackable": true,
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "trance"
+          }
+        ]
+      }
+    }
+  ]
 }
