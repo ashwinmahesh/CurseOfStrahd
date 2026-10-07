@@ -187,7 +187,10 @@ func play_turn(c: Combatant) -> CombatResult:
 		if near != null:
 			last_plan = {"kind": "flee", "why": "Bloodied coward"}
 			return _flee(c, near, true)
+	# Weighing every square and target asks the same creatures thousands of questions: one read (Creature.begin_read).
+	Creature.begin_read()
 	var plan := plan_turn(c)
+	Creature.end_read()
 	last_plan = plan
 	match str(plan["kind"]):
 		"attack":

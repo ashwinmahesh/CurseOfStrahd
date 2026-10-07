@@ -41,6 +41,7 @@ func before_each() -> void:
 
 
 func after_each() -> void:
+	(Compendium.shared().tables["locations"] as Dictionary).erase(str(ARENA["id"]))
 	for i in KNOWN.size():
 		var k := KNOWN[i] as Array
 		if not _known_seen.has(i) and _opened.any(func(w: String) -> bool: return w.begins_with(str(k[0]))):

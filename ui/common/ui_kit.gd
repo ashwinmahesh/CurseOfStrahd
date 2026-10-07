@@ -163,6 +163,10 @@ static func screen_frame(root: CanvasLayer, title_text: String, size: Vector2 = 
 	esc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_centre(esc, Vector2(-100, size.y / 2.0 + 4.0), Vector2(100, size.y / 2.0 + 24.0))
 	root.add_child(esc)
+	# The screen rises into place, and UiMotion.dismiss sinks it again (G9).
+	root.set_meta(&"frame_panel", p)
+	var crown: Array[Control] = [crest, cap, t, foot, esc]
+	UiMotion.open_frame(dim, p, crown)
 	return box
 
 
