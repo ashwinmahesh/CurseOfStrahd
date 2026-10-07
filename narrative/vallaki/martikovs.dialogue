@@ -88,6 +88,7 @@ set vallaki_pledge = "town"
 quest festival_of_the_blazing_sun town_side
 attitude urwin_martikov friendly
 Urwin: Then talk to Lucian. He's better with words. When it comes to the festival, there'll be more of us in the crowd than you'll think. Keep your eyes on the rooftops.
+approve godrick_pendlebrook +2 thistle +2 wren_featherfoot +2 liriel_dawnsong +2 kip_smudgewick +1 ratatoille +1: You stood with the people of Vallaki, against both of them
 -> urwin_menu
 
 ~ insight_ok
@@ -150,6 +151,7 @@ if flag.wine_shortage_heard
 interject tag:curious: The tavern in the village of Barovia is out too. The barkeep said the deliveries had stopped.
 Danika: Then it's not just us. Then something's wrong at the vineyard. I'll tell Urwin. He'll want to know where you heard it.
 endif
+approve ratatoille +1: You told the Blue Water's barmaid her wine was thin
 -> danika
 
 ~ ireena_safe

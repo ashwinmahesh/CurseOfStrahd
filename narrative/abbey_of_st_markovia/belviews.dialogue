@@ -37,6 +37,7 @@ endif
 
 ~ kitchen_ok
 Belview: Ourselves. Ourselves. That's a lot of selves. We'll practise.
+approve wren_featherfoot +1 liriel_dawnsong +1 godrick_pendlebrook +1: You told the Belviews they could just be themselves
 -> END
 
 ~ kitchen_need
@@ -61,6 +62,7 @@ Narrator: One by one the doors swing out. They come out on all fours and on two 
 Narrator: Then they're gone down the corridor and out through the kitchen, and the Belviews in the kitchen are wailing and laughing at once, and the mountain has some new and strange residents.
 interject name:thistle: Go on. Run. No more cages. Run till you can't see the walls.
 interject tag:pious: Whatever he made of them, they were people first. They should have a sky over them.
+approve thistle +3 liriel_dawnsong +1 godrick_pendlebrook +1 wren_featherfoot +1: You opened the Abbot's cages
 -> END
 
 ~ riot

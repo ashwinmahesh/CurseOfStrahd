@@ -71,6 +71,7 @@ func test_two_seeds_draw_two_readings_at_madam_evas_table() -> void:
 	var a := await _reading_at_tser_pool(11)
 	if not _ok(a.size() == 5, "seed 11: five cards %s" % [a]):
 		return
+	GoldenSaves.keep("tser_pool", "test_phase4_exit")
 	var journal := QuestLog.journal(GameState.story)
 	var text := ""
 	for q in journal:
@@ -91,6 +92,7 @@ func test_two_seeds_draw_two_readings_at_madam_evas_table() -> void:
 ## Plays Vallaki to the end of the Festival for one faction. Returns the flags at the end.
 func _vallaki(pledge_place: String, pledge_npc: String, prefer: Array[String], aftermath_npc: String, seed_value: int) -> Dictionary:
 	await _start("vallaki", 5, seed_value)
+	GoldenSaves.keep("vallaki", "test_phase4_exit")
 	var p: Array[String] = ["This is Ireena"]
 	p.append_array(prefer)
 	p.append_array(["We're ready. Let the festival begin."])

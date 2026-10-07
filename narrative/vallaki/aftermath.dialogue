@@ -80,12 +80,14 @@ Izek: I do. I remember all of it.
 endif
 Izek: I'm done, my lord. I'm done.
 Narrator: Izek Strazni walks down off the dais and out of the square, and nobody, not even the Baron, tells him to come back.
+approve wren_featherfoot +2 liriel_dawnsong +2 godrick_pendlebrook +1: You told Izek the truth instead of fighting him
 -> baron_close
 
 ~ duel
 set izek_claim_made
 Baron [afraid]: Not on the dais! Not on the dais, I've only just had it painted!
 interject tag:blunt: Down, then. Here.
+approve godrick_pendlebrook +2 thistle +2: You stood between Izek and Ireena in the square
 combat izek_duel
 
 ~ baron_after_claim
@@ -131,12 +133,14 @@ Lady Wachter: You've earned a say in it, my friends. What shall we do with our B
 set baron_fate = "exiled"
 Lady Wachter: Merciful. How unfashionable. Very well: he leaves at dawn with what he can carry, which, knowing Vargas, will be bunting.
 Baron [sad]: All will be... well, it will be something.
+approve liriel_dawnsong +1 wren_featherfoot +1 godrick_pendlebrook +1: You let the Baron leave Vallaki with his life
 -> wachter_close
 
 ~ baron_stocks
 set baron_fate = "stocks"
 Lady Wachter: The stocks, then. He built them. It seems only fair that he should try them.
 Narrator: The crowd parts to let him through. A few people don't look away. Most do.
+approve thistle +1 liriel_dawnsong -1: You put the Baron in his own stocks
 -> wachter_close
 
 ~ baron_executed
@@ -145,6 +149,7 @@ Lady Wachter: Then I shall do as I like. Take him to the lockup. Tonight, quietl
 Lydia Petrovna [afraid]: No! No, please...
 interject class:cleric: That is not a choice I will carry for her. Remember that I said so.
 interject tag:pious: May the gods forgive us. I don't think they will.
+approve liriel_dawnsong -4 godrick_pendlebrook -3 wren_featherfoot -3 kip_smudgewick -2 thistle -1: You left the Baron's life to Lady Wachter
 -> wachter_close
 
 ~ wachter_close

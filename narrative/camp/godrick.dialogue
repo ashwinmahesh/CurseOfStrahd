@@ -1,5 +1,83 @@
 # Godrick Pendlebrook's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each
-# plays once. Quest: A Knight, More or Less (narrative/companions/ladle.dialogue).
+# plays once. Quest: A Knight, More or Less (narrative/companions/ladle.dialogue). The file offers its first talk
+# that holds, so the approval talks come in this order (story/approval.gd): when he's Strained or Doubtful, those
+# first; then the quest's; then Warm, Close and Devoted as the campaign goes on.
+
+# --- When he's lost faith in the party (approval) ----------------------------------------------------------------
+
+~ talk_strained
+if name:godrick_pendlebrook and approval.godrick_pendlebrook <= strained
+-> strained
+endif
+-> END
+
+~ strained
+Narrator: Godrick takes his bedroll to the far side of the fire tonight and sits on it with his back very straight, and doesn't laugh at anything.
+interject name:godrick_pendlebrook: I'm going to say this once, and then I'll carry on, because I said I would.
+interject name:godrick_pendlebrook: I came here to be a knight. A proper one. And I've been standing next to things a knight doesn't stand next to.
+if flag.death_house_sacrificed
+interject name:godrick_pendlebrook: We put one of our own on a table in the dark. I still see it when I shut my eyes.
+elif flag.dark_gifts_taken >= 1
+interject name:godrick_pendlebrook: We let one of us take a gift from a thing in a box. A devil's gift. Kip's told us what those cost.
+elif flag.gertruda_given_back
+interject name:godrick_pendlebrook: We sent a frightened girl back up the stairs to him. I promised her mother. I promised.
+endif
+interject name:godrick_pendlebrook: I'll fight beside you. I'll not leave you. But when it comes to the Order and the oath, I can't kneel and say those words with this on me.
+* Then help us do better, Godrick. Tell us when we're wrong. -> strained_help
+* We're sorry. Truly. -> strained_sorry
+* Then don't kneel. -> strained_cold
+
+~ strained_help
+interject name:godrick_pendlebrook: I can do that. I'm good at saying when things are wrong. I'm loud. It's one of my gifts.
+interject name:godrick_pendlebrook: Right. We start again tomorrow. Everybody gets to start again tomorrow. That's what tomorrow's for.
+approve godrick_pendlebrook +10: You asked me to tell you when we're wrong
+-> END
+
+~ strained_sorry
+interject name:godrick_pendlebrook: Sorry's a start. Sir Pellam said sorry's the door and not the house. We'll see about the house.
+approve godrick_pendlebrook +6: You said you were sorry, and meant it
+-> END
+
+~ strained_cold
+Narrator: He nods slowly, as if you've told him something he already knew, and lies down with his back to the fire.
+approve godrick_pendlebrook -5: You told me not to kneel, then
+-> END
+
+~ talk_doubt
+if name:godrick_pendlebrook and approval.godrick_pendlebrook == doubtful
+-> doubt
+endif
+-> END
+
+~ doubt
+Narrator: Godrick has been quiet all evening, which for Godrick is like a mountain being quiet. At last he puts down the sword he's been sharpening and clears his throat.
+interject name:godrick_pendlebrook: Can I say something? I'm no good at hard things, so I'll say it plain and then I'll stop.
+interject name:godrick_pendlebrook: Sir Pellam said a knight's only as good as the people he won't leave behind. Lately I keep looking back, and I keep seeing people we left.
+if flag.bonegrinder_bargain == "abandoned" or flag.den_children_left
+interject name:godrick_pendlebrook: Children. We walked away from children in a cage. I keep hearing it.
+endif
+interject name:godrick_pendlebrook: I'm not saying I'm better than anybody. I'm not clever enough to be sure what's right. But I'm sure about some things, and that's one of them.
+* You're right. We'll do better. -> doubt_better
+* We did what we had to, Godrick. -> doubt_had_to
+* You don't have to come with us. -> doubt_go
+
+~ doubt_better
+interject name:godrick_pendlebrook: Right then. That's all I wanted. Well, no. I wanted it not to have happened. But that's the next best thing.
+approve godrick_pendlebrook +6: You heard me out when I said we'd been leaving people behind
+-> END
+
+~ doubt_had_to
+interject name:godrick_pendlebrook: Maybe. You're cleverer than me; maybe you can see a way it had to be. I can't. I'll keep looking for it.
+approve godrick_pendlebrook +1: You told me we did what we had to
+-> END
+
+~ doubt_go
+Narrator: For a moment he looks as though you'd struck him. Then the cheer goes out of his face entirely, and he speaks very gently.
+interject name:godrick_pendlebrook: I do, though. That's the thing about an oath. I swore I'd see this through. I never swore I'd like how.
+approve godrick_pendlebrook -4: You told me I didn't have to come with you
+-> END
+
+# --- His quest ---------------------------------------------------------------------------------------------------
 
 ~ talk_ladle
 if name:godrick_pendlebrook and quest.the_ladle
@@ -24,15 +102,18 @@ interject name:godrick_pendlebrook: So here's my question, and I want a straight
 
 ~ ladle_counts
 interject name:godrick_pendlebrook: That's what I think too, most days. Then I think, it's a ladle. Then I think, it was his ladle. Round and round.
+approve godrick_pendlebrook +1: You told me the ladle counts
 -> ladle_end
 
 ~ ladle_order
 interject name:godrick_pendlebrook: Right. Yes. Find the Order, hand over the sword, kneel. Simple. I'm good at simple.
+approve godrick_pendlebrook +1: You promised we'd find the Order
 -> ladle_end
 
 ~ ladle_ready
 interject name:godrick_pendlebrook: ...Huh.
 interject name:godrick_pendlebrook: I'm going to have to sit with that one a while. I'm slow with the big ones. I get there.
+approve godrick_pendlebrook +3: You told me Sir Pellam knew I was ready
 -> ladle_end
 
 ~ ladle_end
@@ -72,14 +153,17 @@ if name:wren_featherfoot
 interject name:wren_featherfoot: It's there to keep the rest of the word in order. Like a sergeant. A silent sergeant.
 endif
 interject name:godrick_pendlebrook: K. N. I. G. H. T. Knight. ...I read that. That was me reading.
+approve godrick_pendlebrook +4: You sat up half the night teaching me to read
 -> END
 
 ~ letters_do
 interject name:godrick_pendlebrook: Sir Pellam used to say that. I always thought he was being kind. Maybe he was being right. He could be both. He was good at both.
+approve godrick_pendlebrook +2: You told me an oath is what you do, not what you read
 -> END
 
 ~ letters_thanks
 interject name:godrick_pendlebrook: Thank you for not making a thing of it. That's a kindness. I'm keeping a list of kindnesses. Well. Somebody else is writing it down.
+approve godrick_pendlebrook +2: You didn't make a thing of it when I told you I can't read
 -> END
 
 ~ talk_knighted
@@ -101,4 +185,111 @@ else
 interject name:godrick_pendlebrook: I'll keep it. Somebody'll need soup one day. A knight's for people who need things.
 endif
 interject name:godrick_pendlebrook: Right then. That's done. Now there's only the vampire.
+-> END
+
+# --- As he comes to trust the party (approval) --------------------------------------------------------------------
+
+~ talk_warm
+if name:godrick_pendlebrook and approval.godrick_pendlebrook >= warm and level >= 3
+-> warm
+endif
+-> END
+
+~ warm
+Narrator: Godrick is trying to whittle. It is going badly. Something that might once have been a horse is now mostly a stick with a sad face.
+interject name:godrick_pendlebrook: It's a horse. Was a horse. It's a dog now. It'll be a spoon by the end.
+interject name:godrick_pendlebrook: Can I tell you something daft? Back home I was the youngest of six. The others were clever, or quick, or good with money, and I was large. That was my whole job. Being large, and carrying things.
+interject name:godrick_pendlebrook: You lot ask me what I think. In a fight, in a town. You wait for the answer, even when it's slow coming. Nobody's waited for my answer before.
+* Your answers are worth waiting for. -> warm_worth
+* You're more than large, Godrick. -> warm_more
+* (Take the knife and show him how.) -> warm_knife
+
+~ warm_worth
+interject name:godrick_pendlebrook: Ha! Now you're just being kind. ...Keep being kind. I like it.
+approve godrick_pendlebrook +2: You told me my answers are worth waiting for
+-> END
+
+~ warm_more
+interject name:godrick_pendlebrook: I'm also tall. ...That was a joke. I make jokes now. Wren's a bad influence.
+if name:wren_featherfoot
+interject name:wren_featherfoot: It was a terrible joke. I've never been prouder.
+endif
+approve godrick_pendlebrook +2: You told me I'm more than large
+-> END
+
+~ warm_knife
+Narrator: You take the knife and the stick and show him: thumb behind the blade, little cuts, away from yourself. He watches with his tongue between his teeth. By the end of the watch the dog is a spoon, and a fairly good one.
+interject name:godrick_pendlebrook: A spoon! I meant a spoon. I definitely meant a spoon the whole time.
+if name:ratatoille
+interject name:ratatoille: It's a beautiful spoon. Lopsided. Lopsided spoons stir better; everyone knows that.
+endif
+approve godrick_pendlebrook +3: You showed me how to whittle, and didn't laugh at the dog
+-> END
+
+~ talk_close
+if name:godrick_pendlebrook and approval.godrick_pendlebrook >= close and level >= 5
+-> close
+endif
+-> END
+
+~ close
+Narrator: Godrick sits up on watch long after his turn is over, looking out at nothing. When you come to relieve him, he doesn't move over. He just says it.
+interject name:godrick_pendlebrook: I'm scared of something. Not monsters. Monsters are easy; you hit them.
+interject name:godrick_pendlebrook: I'm scared people only like me because I'm big and I smile a lot. Like a good dog. And if I stopped smiling, or got hurt and couldn't carry things, they'd find somebody else to like.
+interject name:godrick_pendlebrook: I've never said that out loud. It sounds worse out loud.
+* We'd still be here if you couldn't lift a cup. -> close_stay
+* Godrick, we like you because you're good. -> close_good
+* Everybody's afraid of that. -> close_everyone
+
+~ close_stay
+interject name:godrick_pendlebrook: ...You would, wouldn't you. I can tell. I'm good at telling. It's the one clever thing I've got.
+approve godrick_pendlebrook +3: You told me you'd stay even if I couldn't carry anything
+-> close_end
+
+~ close_good
+interject name:godrick_pendlebrook: Good. Huh. Sir Pellam said that once, on his last day. I thought he was rambling.
+approve godrick_pendlebrook +3: You told me you like me because I'm good
+-> close_end
+
+~ close_everyone
+interject name:godrick_pendlebrook: Are they? Even Wren? Even Liriel? Huh. That's a comfort, and a bit sad. Mostly a comfort.
+approve godrick_pendlebrook +2: You told me everybody's afraid of that
+-> close_end
+
+~ close_end
+Narrator: He gets up at last, stretches until his back cracks like a fence post, and puts one enormous hand on your shoulder, very gently, as if you might break.
+if flag.godrick_letters
+interject name:godrick_pendlebrook: Right then. Bed. That's going on the list of kindnesses. I'll write it down myself. I can do that now. Badly.
+else
+interject name:godrick_pendlebrook: Right then. Bed. That's going on the list of kindnesses. Somebody'll have to write it down for me.
+endif
+-> END
+
+~ talk_devoted
+if name:godrick_pendlebrook and approval.godrick_pendlebrook >= devoted and level >= 8
+-> devoted
+endif
+-> END
+
+~ devoted
+Narrator: Tonight Godrick has the ladle out again. Not polishing it. Just holding it, the way you'd hold a letter from home.
+interject name:godrick_pendlebrook: I've been thinking what Sir Pellam would make of you lot. He was very particular about company. He sent a bishop away once for slurping.
+interject name:godrick_pendlebrook: He'd like you. He'd argue with every one of you, and then he'd like you. That's how you knew he liked you; he argued.
+interject name:godrick_pendlebrook: When this is done, if we're alive, you're coming to the manor. All of you. There's more sheep than tenants and the roof leaks in the good bedroom, but there's room. There's always been more room than people.
+* We'll come. -> devoted_yes
+* Will there be soup? -> devoted_soup
+
+~ devoted_yes
+interject name:godrick_pendlebrook: Right then. That's settled. I'll tell Mum. She'll cry. She cries at everything; it's where I get it.
+approve godrick_pendlebrook +3: You promised to come to the manor, after
+-> devoted_end
+
+~ devoted_soup
+interject name:godrick_pendlebrook: There'll be soup. I'll make it myself, with the ladle. Ha! It'd finally be doing two things at once.
+approve godrick_pendlebrook +3: You asked whether there'd be soup at the manor
+-> devoted_end
+
+~ devoted_end
+interject name:godrick_pendlebrook: Whatever's up at that castle, I'm not afraid of it. I never was, much; I'm not clever enough. But now I've got a better reason. I've got you lot to walk back down with.
+inspire name:godrick_pendlebrook: knew what he was fighting for
 -> END

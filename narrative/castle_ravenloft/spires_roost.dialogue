@@ -27,17 +27,20 @@ Narrator: A big raven drops onto your wrist, looks you over, and croaks once. Th
 if flag.keepers_allied
 interject tag:cheerful: I think somebody vouched for us.
 endif
+approve thistle +2: You held out a hand to the castle's ravens as a friend
 -> hint
 
 ~ fed
 take ration 1
 set roost_ravens_calm
 Narrator: The ravens come down in a black rush and the food is gone in a heartbeat. Afterwards they sit closer, and the roost is quieter.
+approve thistle +2: You fed the ravens in Strahd's roost
 -> hint
 
 ~ calm
 set roost_ravens_calm
 Narrator: You move like someone with all night to spare, and the ravens decide you aren't worth the trouble of a fight.
+approve thistle +1: You calmed the ravens in Strahd's roost
 -> hint
 
 ~ hint

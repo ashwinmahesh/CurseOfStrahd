@@ -56,6 +56,7 @@ else
 Narrator: A little later, through the window, you hear the shouting start on the shore. It goes on for a long time. Then it stops, and there is only the sound of two people sitting by a fire.
 endif
 interject name:wren_featherfoot: Look at him. Putting his coat on to go and get shouted at by his student. ...Lucky old man.
+approve wren_featherfoot +2 liriel_dawnsong +1 kip_smudgewick +1 godrick_pendlebrook +1: You sent Van Richten down to his student
 -> END
 
 ~ ally_again

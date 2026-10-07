@@ -23,7 +23,7 @@ static func dress(root: Node3D, board: ArenaBoard, loc_id: String, loc: Dictiona
 		if str(prop.get("kind", "")) == "search" or not StoryConditions.check(str(prop.get("when", "")), st):
 			continue
 		if SetDressing.place(board, prop) == null:
-			var art := LocationView._prop_art(prop)
+			var art := LocationBuilder._prop_art(prop)
 			if art != "":
 				board.prop_sprite(art, board.cell_center(_cell(prop["cell"])), 0.8)
 	for c: Variant in loc.get("containers", []):

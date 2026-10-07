@@ -1,0 +1,1449 @@
+{
+	"combat": {},
+	"current_scene": "res://scenes/game.tscn",
+	"day": 1,
+	"dice": {
+		"seed": 3,
+		"state": -1669467724071411553
+	},
+	"faction_attitudes": {},
+	"flags": {},
+	"leader_index": 0,
+	"minute_of_day": 480,
+	"party": [],
+	"party_positions": [],
+	"quests": {},
+	"saved_at": "2026-10-06T04:08:57",
+	"story": {
+		"attitudes": {
+			"ireena": "friendly",
+			"ismark": "friendly"
+		},
+		"codex": [],
+		"day": 2,
+		"fallen": [],
+		"flags": {
+			"_banter/banter/death_house:bt_dwarf_stonework": true,
+			"_banter/banter/death_house:bt_elf_portraits": true,
+			"_banter/banter/village_of_barovia:banter_shutters": true,
+			"_xp/death_house/attic:milestone:94": true,
+			"_xp/death_house/escape:window_through:30": true,
+			"burial_agreed": true,
+			"death_house_armor_destroyed": true,
+			"death_house_completed": true,
+			"death_house_grick_slain": true,
+			"death_house_heard_plea": true,
+			"death_house_milestone_dungeon": true,
+			"death_house_promised_walter": true,
+			"death_house_rats_scattered": true,
+			"death_house_refused": true,
+			"death_house_secret_stair_found": true,
+			"death_house_window_attempted": true,
+			"ireena_met": true,
+			"ismark_met": true,
+			"mists_gates_opened": true,
+			"mists_wolves_fought": true,
+			"mists_wolves_resolved": true
+		},
+		"gold": 10.0,
+		"last_check": false,
+		"leader": 0,
+		"location": "burgomaster_mansion",
+		"location_states": {
+			"blood_of_the_vine": {
+				"doors": {},
+				"encounters": {},
+				"found": {},
+				"looted": {},
+				"props": {},
+				"traps": {}
+			},
+			"burgomaster_mansion": {
+				"doors": {
+					"parlor_door": "open"
+				},
+				"encounters": {},
+				"found": {},
+				"looted": {},
+				"props": {},
+				"traps": {}
+			},
+			"death_house_attic": {
+				"doors": {
+					"spare_bedroom_door": "open"
+				},
+				"encounters": {},
+				"found": {
+					"chimney_seam": true
+				},
+				"looted": {},
+				"props": {
+					"chimney_seam": true
+				},
+				"traps": {
+					"attic_beams": "found"
+				}
+			},
+			"death_house_dungeon_1": {
+				"doors": {
+					"crypt_gate": "open",
+					"lower_stair_door": "open",
+					"well_door": "open"
+				},
+				"encounters": {
+					"well_grick": true
+				},
+				"found": {},
+				"looted": {},
+				"props": {},
+				"traps": {
+					"passage_pit": "found"
+				}
+			},
+			"death_house_dungeon_2": {
+				"doors": {
+					"winch_door": "open"
+				},
+				"encounters": {
+					"drowned_rats": true
+				},
+				"found": {},
+				"looted": {},
+				"props": {},
+				"traps": {}
+			},
+			"death_house_ground": {
+				"doors": {
+					"dh_dining_door": "open"
+				},
+				"encounters": {
+					"ground_escape_weapons": true,
+					"window_last_guard": true
+				},
+				"found": {},
+				"looted": {},
+				"props": {
+					"tall_window": true
+				},
+				"traps": {
+					"hall_chandelier": "found"
+				}
+			},
+			"death_house_third": {
+				"doors": {
+					"attic_stair_door": "open"
+				},
+				"encounters": {
+					"armor_guardian": true,
+					"third_escape_swords": true
+				},
+				"found": {},
+				"looted": {},
+				"props": {},
+				"traps": {
+					"soot_cloud": "found"
+				}
+			},
+			"death_house_upper": {
+				"doors": {},
+				"encounters": {},
+				"found": {},
+				"looted": {},
+				"props": {},
+				"traps": {
+					"hall_wall_blades": "found"
+				}
+			},
+			"into_the_mists_road": {
+				"doors": {
+					"barovia_gates": "open"
+				},
+				"encounters": {
+					"mists_wolves": true
+				},
+				"found": {},
+				"looted": {},
+				"props": {},
+				"traps": {
+					"mists_wolf_trap": "found"
+				}
+			},
+			"village_of_barovia": {
+				"doors": {
+					"death_house_gate": "open",
+					"mansion_gate": "open"
+				},
+				"encounters": {},
+				"found": {},
+				"looted": {},
+				"props": {},
+				"traps": {}
+			}
+		},
+		"milestones": 2,
+		"minute_of_day": 749,
+		"narrator": {
+			"check:perception:failure": {
+				"done": false,
+				"last": 1108.0,
+				"played": [
+					1.0
+				]
+			},
+			"combat:start": {
+				"done": false,
+				"last": 2167.0,
+				"played": [
+					0.0,
+					0.0
+				]
+			},
+			"combat:victory": {
+				"done": false,
+				"last": 2168.0,
+				"played": [
+					1.0,
+					1.0
+				]
+			},
+			"dream:death_house": {
+				"done": true,
+				"last": 1666.0,
+				"played": [
+					2.0
+				]
+			},
+			"enter:blood_of_the_vine": {
+				"done": false,
+				"last": 2179.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:burgomaster_mansion": {
+				"done": false,
+				"last": 2189,
+				"played": [
+					0
+				]
+			},
+			"enter:death_house_attic": {
+				"done": false,
+				"last": 1671.0,
+				"played": [
+					0.0,
+					2.0
+				]
+			},
+			"enter:death_house_dungeon_1": {
+				"done": false,
+				"last": 1114.0,
+				"played": [
+					1.0
+				]
+			},
+			"enter:death_house_dungeon_2": {
+				"done": false,
+				"last": 1180.0,
+				"played": [
+					1.0
+				]
+			},
+			"enter:death_house_ground": {
+				"done": false,
+				"last": 2167.0,
+				"played": [
+					2.0,
+					3.0
+				]
+			},
+			"enter:death_house_lot": {
+				"done": false,
+				"last": 2174.0,
+				"played": [
+					0.0,
+					1.0
+				]
+			},
+			"enter:death_house_third": {
+				"done": false,
+				"last": 1676.0,
+				"played": [
+					1.0,
+					2.0
+				]
+			},
+			"enter:death_house_upper": {
+				"done": false,
+				"last": 2162.0,
+				"played": [
+					1.0,
+					2.0
+				]
+			},
+			"enter:dh_attic_hall": {
+				"done": false,
+				"last": 1671.0,
+				"played": [
+					1.0,
+					3.0
+				]
+			},
+			"enter:dh_attic_landing": {
+				"done": true,
+				"last": 1101.0,
+				"played": [
+					1.0
+				]
+			},
+			"enter:dh_attic_stair": {
+				"done": false,
+				"last": 1676.0,
+				"played": [
+					0.0,
+					1.0
+				]
+			},
+			"enter:dh_crypt_passage": {
+				"done": false,
+				"last": 1666.0,
+				"played": [
+					0.0,
+					1.0
+				]
+			},
+			"enter:dh_cult_refectory": {
+				"done": false,
+				"last": 1666.0,
+				"played": [
+					0.0,
+					2.0
+				]
+			},
+			"enter:dh_dining_room": {
+				"done": false,
+				"last": 2168.0,
+				"played": [
+					2.0
+				]
+			},
+			"enter:dh_family_crypts": {
+				"done": false,
+				"last": 1666.0,
+				"played": [
+					1.0,
+					2.0
+				]
+			},
+			"enter:dh_flooded_passage": {
+				"done": false,
+				"last": 1180.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:dh_foyer": {
+				"done": true,
+				"last": 1091.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:dh_lower_landing": {
+				"done": false,
+				"last": 1180.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:dh_lower_stair": {
+				"done": false,
+				"last": 1175.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:dh_main_hall": {
+				"done": false,
+				"last": 2167.0,
+				"played": [
+					1.0,
+					2.0
+				]
+			},
+			"enter:dh_ritual_chamber": {
+				"done": true,
+				"last": 1181.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:dh_spare_bedroom": {
+				"done": false,
+				"last": 1671.0,
+				"played": [
+					1.0,
+					2.0
+				]
+			},
+			"enter:dh_stair_foot": {
+				"done": false,
+				"last": 1666.0,
+				"played": [
+					0.0,
+					1.0
+				]
+			},
+			"enter:dh_third_hall": {
+				"done": false,
+				"last": 1676.0,
+				"played": [
+					1.0,
+					2.0
+				]
+			},
+			"enter:dh_upper_hall": {
+				"done": false,
+				"last": 2162.0,
+				"played": [
+					0.0,
+					2.0
+				]
+			},
+			"enter:dh_well_chamber": {
+				"done": false,
+				"last": 1666.0,
+				"played": [
+					0.0,
+					1.0
+				]
+			},
+			"enter:dh_winch_room": {
+				"done": true,
+				"last": 1181.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:into_the_mists_road": {
+				"done": false,
+				"last": 1080.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:mansion_hall": {
+				"done": true,
+				"last": 2189,
+				"played": [
+					0
+				]
+			},
+			"enter:mansion_parlor": {
+				"done": true,
+				"last": 2189,
+				"played": [
+					0
+				]
+			},
+			"enter:mansion_yard": {
+				"done": true,
+				"last": 2184,
+				"played": [
+					0
+				]
+			},
+			"enter:mary_lane": {
+				"done": false,
+				"last": 2184,
+				"played": [
+					0
+				]
+			},
+			"enter:mercantile_front": {
+				"done": true,
+				"last": 1086.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:mists_gates": {
+				"done": true,
+				"last": 1081.0,
+				"played": [
+					2.0
+				]
+			},
+			"enter:mists_svalich_woods": {
+				"done": true,
+				"last": 1080.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:mists_village_edge": {
+				"done": true,
+				"last": 1081.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:tavern_common_room": {
+				"done": true,
+				"last": 2179.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:village_of_barovia": {
+				"done": false,
+				"last": 2184,
+				"played": [
+					0.0,
+					1.0,
+					1
+				]
+			},
+			"enter:village_road_east": {
+				"done": true,
+				"last": 1086.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:village_road_west": {
+				"done": true,
+				"last": 2184,
+				"played": [
+					0
+				]
+			},
+			"enter:village_square": {
+				"done": false,
+				"last": 2174.0,
+				"played": [
+					1.0
+				]
+			},
+			"examine:tall_window": {
+				"done": false,
+				"last": 2169.0,
+				"played": [
+					0.0
+				]
+			},
+			"open:barovia_gates": {
+				"done": true,
+				"last": 1081.0,
+				"played": [
+					0.0
+				]
+			},
+			"open:crypt_gate": {
+				"done": true,
+				"last": 1114.0,
+				"played": [
+					0.0
+				]
+			},
+			"open:lower_stair_door": {
+				"done": true,
+				"last": 1175.0,
+				"played": [
+					0.0
+				]
+			},
+			"rest:long": {
+				"done": false,
+				"last": 2157.0,
+				"played": [
+					0.0
+				]
+			},
+			"search:chimney_seam": {
+				"done": false,
+				"last": 1109.0,
+				"played": [
+					0.0
+				]
+			},
+			"trap:attic_beams:found": {
+				"done": false,
+				"last": 1671.0,
+				"played": [
+					0.0
+				]
+			},
+			"trap:hall_chandelier:found": {
+				"done": false,
+				"last": 2168.0,
+				"played": [
+					0.0
+				]
+			},
+			"trap:hall_wall_blades:found": {
+				"done": false,
+				"last": 2162.0,
+				"played": [
+					0.0
+				]
+			},
+			"trap:mists_wolf_trap:found": {
+				"done": false,
+				"last": 1080.0,
+				"played": [
+					0.0
+				]
+			},
+			"trap:passage_pit:found": {
+				"done": false,
+				"last": 1114.0,
+				"played": [
+					0.0
+				]
+			},
+			"trap:soot_cloud:found": {
+				"done": false,
+				"last": 2157.0,
+				"played": [
+					0.0
+				]
+			}
+		},
+		"party": [
+			{
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {
+						"art": "ilse_varga"
+					},
+					"background": "soldier",
+					"base_scores": {
+						"cha": 12.0,
+						"con": 13.0,
+						"dex": 14.0,
+						"int": 8.0,
+						"str": 15.0,
+						"wis": 10.0
+					},
+					"choices": {
+						"background.abilities": [
+							"str",
+							"str",
+							"dex"
+						],
+						"background.tool": [
+							"dice_set"
+						],
+						"battle_master.3.combat_superiority": [
+							"ambush",
+							"bait_and_switch",
+							"commanders_strike"
+						],
+						"battle_master.3.student_of_war.skill": [
+							"insight"
+						],
+						"battle_master.3.student_of_war.tool": [
+							"alchemists_supplies"
+						],
+						"fighter.1.fighting_style": [
+							"archery"
+						],
+						"fighter.1.skills": [
+							"animal_handling",
+							"history"
+						],
+						"fighter.1.weapon_mastery": [
+							"battleaxe",
+							"blowgun",
+							"club"
+						],
+						"fighter.3.fighter_subclass": [
+							"battle_master"
+						],
+						"origin.languages": [
+							"common_sign_language",
+							"draconic"
+						],
+						"species.size": [
+							"medium"
+						],
+						"species.skillful": [
+							"acrobatics"
+						],
+						"species.versatile": [
+							"alert"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {},
+					"levels": [
+						{
+							"class": "fighter",
+							"hp": 0.0
+						},
+						{
+							"class": "fighter",
+							"hp": 0.0
+						},
+						{
+							"class": "fighter",
+							"hp": 0.0
+						}
+					],
+					"name": "Brannoc Vell",
+					"species": "human"
+				},
+				"currency": {
+					"cp": 0.0,
+					"ep": 0.0,
+					"gp": 18.0,
+					"pp": 0.0,
+					"sp": 0.0
+				},
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "brannoc_vell",
+				"inventory": [
+					{
+						"id": "chain_mail",
+						"qty": 1.0,
+						"slot": "armor"
+					},
+					{
+						"id": "greatsword",
+						"qty": 1.0,
+						"slot": "main_hand"
+					},
+					{
+						"id": "flail",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "javelin",
+						"qty": 7.0,
+						"slot": ""
+					},
+					{
+						"id": "dungeoneers_pack",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "spear",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "shortbow",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "arrow",
+						"qty": 20.0,
+						"slot": ""
+					},
+					{
+						"id": "dice_set",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "healers_kit",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "quiver",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1.0,
+						"slot": ""
+					}
+				],
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 22,
+					"resources_used": {
+						"action_surge": 1,
+						"second_wind": 0,
+						"superiority_dice": 0
+					},
+					"stable": false,
+					"temp_hp": 0
+				}
+			},
+			{
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {
+						"art": "tamsin_tealeaf"
+					},
+					"background": "criminal",
+					"base_scores": {
+						"cha": 8.0,
+						"con": 13.0,
+						"dex": 15.0,
+						"int": 14.0,
+						"str": 12.0,
+						"wis": 10.0
+					},
+					"choices": {
+						"background.abilities": [
+							"dex",
+							"dex",
+							"con"
+						],
+						"origin.languages": [
+							"common_sign_language",
+							"draconic"
+						],
+						"rogue.1.expertise": [
+							"acrobatics",
+							"athletics"
+						],
+						"rogue.1.skills": [
+							"acrobatics",
+							"athletics",
+							"deception",
+							"insight"
+						],
+						"rogue.1.thieves_cant": [
+							"dwarvish"
+						],
+						"rogue.1.weapon_mastery": [
+							"club",
+							"dagger"
+						],
+						"rogue.3.rogue_subclass": [
+							"arcane_trickster"
+						],
+						"rogue.cantrips": [
+							"acid_splash",
+							"blade_ward"
+						],
+						"rogue.prepared": [
+							"alarm",
+							"burning_hands",
+							"charm_person"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {},
+					"levels": [
+						{
+							"class": "rogue",
+							"hp": 0.0
+						},
+						{
+							"class": "rogue",
+							"hp": 0.0
+						},
+						{
+							"class": "rogue",
+							"hp": 0.0
+						}
+					],
+					"name": "Pip Marrow",
+					"species": "halfling"
+				},
+				"currency": {
+					"cp": 0.0,
+					"ep": 0.0,
+					"gp": 24.0,
+					"pp": 0.0,
+					"sp": 0.0
+				},
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "pip_marrow",
+				"inventory": [
+					{
+						"id": "leather_armor",
+						"qty": 1.0,
+						"slot": "armor"
+					},
+					{
+						"id": "dagger",
+						"qty": 4.0,
+						"slot": ""
+					},
+					{
+						"id": "shortsword",
+						"qty": 1.0,
+						"slot": "main_hand"
+					},
+					{
+						"id": "shortbow",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "arrow",
+						"qty": 0.0,
+						"slot": ""
+					},
+					{
+						"id": "quiver",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "thieves_tools",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "burglars_pack",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "thieves_tools",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "crowbar",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1.0,
+						"slot": ""
+					}
+				],
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 24,
+					"resources_used": {},
+					"stable": false,
+					"temp_hp": 0
+				}
+			},
+			{
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {
+						"art": "hedda_ironvow"
+					},
+					"background": "acolyte",
+					"base_scores": {
+						"cha": 12.0,
+						"con": 13.0,
+						"dex": 8.0,
+						"int": 10.0,
+						"str": 14.0,
+						"wis": 15.0
+					},
+					"choices": {
+						"background.abilities": [
+							"int",
+							"int",
+							"wis"
+						],
+						"background.feat.level_1_spell": [
+							"bane"
+						],
+						"background.feat.two_cantrips.cantrips": [
+							"guidance",
+							"light"
+						],
+						"background.feat.two_cantrips.spellcasting_ability": [
+							"int"
+						],
+						"cleric.1.divine_order": [
+							"protector"
+						],
+						"cleric.1.skills": [
+							"history",
+							"medicine"
+						],
+						"cleric.3.cleric_subclass": [
+							"life_domain"
+						],
+						"cleric.cantrips": [
+							"mending",
+							"resistance",
+							"sacred_flame"
+						],
+						"cleric.prepared": [
+							"bless",
+							"command",
+							"create_or_destroy_water",
+							"cure_wounds",
+							"detect_evil_and_good",
+							"augury"
+						],
+						"origin.languages": [
+							"common_sign_language",
+							"draconic"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {},
+					"levels": [
+						{
+							"class": "cleric",
+							"hp": 0.0
+						},
+						{
+							"class": "cleric",
+							"hp": 0.0
+						},
+						{
+							"class": "cleric",
+							"hp": 0.0
+						}
+					],
+					"name": "Odessa Flint",
+					"species": "dwarf"
+				},
+				"currency": {
+					"cp": 0.0,
+					"ep": 0.0,
+					"gp": 15.0,
+					"pp": 0.0,
+					"sp": 0.0
+				},
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "odessa_flint",
+				"inventory": [
+					{
+						"id": "chain_shirt",
+						"qty": 1.0,
+						"slot": "armor"
+					},
+					{
+						"id": "shield",
+						"qty": 1.0,
+						"slot": "off_hand"
+					},
+					{
+						"id": "mace",
+						"qty": 1.0,
+						"slot": "main_hand"
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "priests_pack",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "calligraphers_supplies",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "book",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "parchment",
+						"qty": 10.0,
+						"slot": ""
+					},
+					{
+						"id": "robe",
+						"qty": 1.0,
+						"slot": ""
+					}
+				],
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 18,
+					"resources_used": {
+						"channel_divinity": 0,
+						"spell:bane": 0,
+						"stonecunning": 0
+					},
+					"stable": false,
+					"temp_hp": 0
+				}
+			},
+			{
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {
+						"art": "silvain_aster"
+					},
+					"background": "sage",
+					"base_scores": {
+						"cha": 10.0,
+						"con": 13.0,
+						"dex": 12.0,
+						"int": 15.0,
+						"str": 8.0,
+						"wis": 14.0
+					},
+					"choices": {
+						"abjurer.3.abjuration_savant": [
+							"arcane_lock",
+							"arcane_vigor"
+						],
+						"background.abilities": [
+							"con",
+							"con",
+							"int"
+						],
+						"background.feat.level_1_spell": [
+							"alarm"
+						],
+						"background.feat.two_cantrips.cantrips": [
+							"acid_splash",
+							"blade_ward"
+						],
+						"background.feat.two_cantrips.spellcasting_ability": [
+							"int"
+						],
+						"origin.languages": [
+							"common_sign_language",
+							"draconic"
+						],
+						"species.elven_lineage": [
+							"drow"
+						],
+						"species.keen_senses": [
+							"insight"
+						],
+						"species.spellcasting_ability": [
+							"int"
+						],
+						"wizard.1.skills": [
+							"investigation",
+							"medicine"
+						],
+						"wizard.2.scholar": [
+							"arcana"
+						],
+						"wizard.3.wizard_subclass": [
+							"abjurer"
+						],
+						"wizard.cantrips": [
+							"chill_touch",
+							"elementalism",
+							"fire_bolt"
+						],
+						"wizard.prepared": [
+							"burning_hands",
+							"charm_person",
+							"chromatic_orb",
+							"color_spray",
+							"comprehend_languages",
+							"alter_self"
+						],
+						"wizard.spellbook": [
+							"alarm",
+							"burning_hands",
+							"charm_person",
+							"chromatic_orb",
+							"color_spray",
+							"comprehend_languages",
+							"detect_magic",
+							"disguise_self",
+							"alter_self",
+							"augury"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {},
+					"levels": [
+						{
+							"class": "wizard",
+							"hp": 0.0
+						},
+						{
+							"class": "wizard",
+							"hp": 0.0
+						},
+						{
+							"class": "wizard",
+							"hp": 0.0
+						}
+					],
+					"name": "Ithren Vael",
+					"species": "elf"
+				},
+				"currency": {
+					"cp": 0.0,
+					"ep": 0.0,
+					"gp": 13.0,
+					"pp": 0.0,
+					"sp": 0.0
+				},
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "ithren_vael",
+				"inventory": [
+					{
+						"id": "dagger",
+						"qty": 2.0,
+						"slot": ""
+					},
+					{
+						"id": "arcane_focus_staff",
+						"qty": 1.0,
+						"slot": "main_hand"
+					},
+					{
+						"id": "robe",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "spellbook",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "scholars_pack",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "quarterstaff",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "calligraphers_supplies",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "book",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "parchment",
+						"qty": 8.0,
+						"slot": ""
+					},
+					{
+						"id": "robe",
+						"qty": 1.0,
+						"slot": ""
+					}
+				],
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 20,
+					"resources_used": {
+						"arcane_recovery": 0,
+						"arcane_ward": 0,
+						"spell:alarm": 0,
+						"spell:faerie_fire": 0
+					},
+					"stable": false,
+					"temp_hp": 0
+				}
+			}
+		],
+		"positions": [
+			[
+				4,
+				12
+			],
+			[
+				5,
+				11
+			],
+			[
+				6,
+				11
+			],
+			[
+				7,
+				11
+			]
+		],
+		"quests": {
+			"bury_the_burgomaster": {
+				"history": [
+					"asked",
+					"find_a_priest"
+				],
+				"stage": "find_a_priest"
+			},
+			"death_house": {
+				"history": [
+					"plea",
+					"secret_stair",
+					"the_altar",
+					"escaped_refused"
+				],
+				"stage": "escaped_refused"
+			},
+			"escort_ireena": {
+				"history": [
+					"asked"
+				],
+				"stage": "asked"
+			},
+			"into_the_mists": {
+				"history": [
+					"the_pack",
+					"village_edge"
+				],
+				"stage": "village_edge"
+			}
+		},
+		"start_level": 1,
+		"stash": [],
+		"visited": {
+			"blood_of_the_vine": true,
+			"burgomaster_mansion": true,
+			"death_house_attic": true,
+			"death_house_dungeon_1": true,
+			"death_house_dungeon_2": true,
+			"death_house_ground": true,
+			"death_house_lot": true,
+			"death_house_third": true,
+			"death_house_upper": true,
+			"dh_attic_hall": true,
+			"dh_attic_landing": true,
+			"dh_attic_stair": true,
+			"dh_crypt_passage": true,
+			"dh_cult_refectory": true,
+			"dh_dining_room": true,
+			"dh_family_crypts": true,
+			"dh_flooded_passage": true,
+			"dh_foyer": true,
+			"dh_lower_landing": true,
+			"dh_lower_stair": true,
+			"dh_main_hall": true,
+			"dh_ritual_chamber": true,
+			"dh_spare_bedroom": true,
+			"dh_stair_foot": true,
+			"dh_third_hall": true,
+			"dh_upper_hall": true,
+			"dh_well_chamber": true,
+			"dh_winch_room": true,
+			"into_the_mists_road": true,
+			"mansion_hall": true,
+			"mansion_parlor": true,
+			"mansion_yard": true,
+			"mary_lane": true,
+			"mercantile_front": true,
+			"mists_gates": true,
+			"mists_svalich_woods": true,
+			"mists_village_edge": true,
+			"tavern_common_room": true,
+			"village_of_barovia": true,
+			"village_road_east": true,
+			"village_road_west": true,
+			"village_square": true
+		}
+	},
+	"tarokka": {},
+	"version": 2
+}

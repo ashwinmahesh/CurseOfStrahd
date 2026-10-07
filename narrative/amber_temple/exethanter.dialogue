@@ -121,6 +121,7 @@ Narrator: He takes the jar in both hands, carefully, the way you'd hold a bird. 
 Exethanter: Thank you. Truly. I'd give you something, if I could remember what I own.
 Exethanter: The word for the doors, at least, you shall have, written out large. And there's a note about the jackal somewhere. Ask me about him; I'll find it now. I feel much less distracted.
 set warden_word_known
+approve wren_featherfoot +1 kip_smudgewick +1 liriel_dawnsong -1: You gave a forgetful lich his phylactery back
 -> menu
 
 ~ lid_keep
@@ -139,6 +140,7 @@ Narrator: The jar bursts on the flagstones. Among the wax and the shards, a dull
 Exethanter: Oh.
 Narrator: For a long moment he says nothing. Then he looks down at his hands as if they belonged to someone else.
 Exethanter: I think I've been waiting for that for a very long time. Thank you. I think. Would you go away now, please? Gently.
+approve liriel_dawnsong +2 thistle +1: You smashed Exethanter's phylactery and let him go
 -> END
 
 ~ smashed_after
@@ -166,12 +168,14 @@ Exethanter: Please. I'd like to forget this again now. Would you mind very much 
 ~ strahd_forget
 Narrator: He closes his eyes, or the sparks dim, and when they brighten again he is smiling at you pleasantly.
 Exethanter: Thank you. ...Thank you for what? Never mind. I'm sure it was kind.
+approve wren_featherfoot +1 liriel_dawnsong +1: You let Exethanter forget
 -> menu
 
 ~ strahd_remember
 set exethanter_remembers
 Exethanter: ...Yes. All right. A warden's whole job is to remember. I'll write it on the back of my hand, where I'll see it every time I reach for something.
 Exethanter: If the jackal is in my temple, he's waiting at the bottom, where it happened. And when he's gone, there's a rite. The last one we had. Find me after.
+approve godrick_pendlebrook +1 thistle +1: You asked Exethanter to remember what he helped start
 -> menu
 
 ~ norganas
@@ -195,11 +199,13 @@ endif
 set exethanter_note_given
 Narrator: You write it out in a clear hand and pin it to his sleeve among a hundred others: THESE ARE FRIENDS. DO NOT FREEZE THEM.
 Exethanter: How thoughtful! I'll read it every time I see you. If I remember to read it. I generally do read my sleeve.
+approve wren_featherfoot +2 godrick_pendlebrook +1 kip_smudgewick +1: You pinned a note to the lich's sleeve so he'd know you were friends
 -> menu
 
 ~ attack
 set exethanter_hostile
 Exethanter: Oh, must we? I was enjoying the company. I can't remember the last time I enjoyed company.
+approve godrick_pendlebrook -1 wren_featherfoot -1 kip_smudgewick -1: You attacked a harmless old lich
 combat exethanter_wrath
 
 ~ bye

@@ -1,0 +1,938 @@
+{
+	"combat": {},
+	"current_scene": "res://scenes/game.tscn",
+	"day": 1,
+	"dice": {
+		"seed": 7,
+		"state": -675120422737357875
+	},
+	"faction_attitudes": {},
+	"flags": {},
+	"golden": {
+		"chapter": "old_bonegrinder",
+		"commit": "cb36fa9b",
+		"made": "2026-10-07",
+		"made_by": "test_phase5_exit"
+	},
+	"home_slot": "",
+	"leader_index": 0,
+	"minute_of_day": 480,
+	"party": [],
+	"party_positions": [],
+	"quests": {},
+	"saved_at": "2026-10-07T14:48:22",
+	"story": {
+		"active_spells": {},
+		"attitudes": {},
+		"bench": [],
+		"codex": [],
+		"day": 1,
+		"fallen": [],
+		"flags": {
+			"_banter/banter/old_bonegrinder:banter_sails": true,
+			"bonegrinder_rumor": true
+		},
+		"gold": 400.0,
+		"guests": [],
+		"last_check": false,
+		"leader": 0,
+		"location": "old_bonegrinder_hill",
+		"location_states": {
+			"old_bonegrinder_hill": {
+				"doors": {},
+				"encounters": {},
+				"found": {},
+				"in_pit": {},
+				"looted": {},
+				"props": {},
+				"traps": {}
+			}
+		},
+		"miles_since_long_rest": 0.0,
+		"milestones": 0,
+		"minute_of_day": 600,
+		"narrator": {
+			"enter:hill_track": {
+				"done": true,
+				"last": 600,
+				"played": [
+					0
+				]
+			},
+			"enter:old_bonegrinder_hill": {
+				"done": false,
+				"last": 600,
+				"played": [
+					0
+				]
+			}
+		},
+		"options": {
+			"respec": true
+		},
+		"party": [
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "soldier",
+					"base_scores": {
+						"cha": 12.0,
+						"con": 13.0,
+						"dex": 14.0,
+						"int": 8.0,
+						"str": 15.0,
+						"wis": 10.0
+					},
+					"choices": {
+						"background.abilities": [
+							"str",
+							"str",
+							"con"
+						],
+						"background.tool": [
+							"dice_set"
+						],
+						"fighter.1.fighting_style": [
+							"defense"
+						],
+						"fighter.1.skills": [
+							"insight",
+							"survival"
+						],
+						"fighter.1.weapon_mastery": [
+							"greatsword",
+							"flail",
+							"javelin",
+							"spear"
+						],
+						"fighter.3.fighter_subclass": [
+							"champion"
+						],
+						"fighter.4.ability_score_improvement": [
+							"ability_score_improvement"
+						],
+						"fighter.4.ability_score_improvement/ability_score_improvement.abilities": [
+							"str",
+							"str"
+						],
+						"origin.languages": [
+							"dwarvish",
+							"elvish"
+						],
+						"species.size": [
+							"medium"
+						],
+						"species.skillful": [
+							"perception"
+						],
+						"species.versatile": [
+							"tough"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "she/her",
+						"tags": [
+							"blunt",
+							"loyal",
+							"veteran"
+						]
+					},
+					"levels": [
+						{
+							"class": "fighter",
+							"hp": 0.0
+						},
+						{
+							"class": "fighter",
+							"hp": 0
+						},
+						{
+							"class": "fighter",
+							"hp": 0
+						},
+						{
+							"class": "fighter",
+							"hp": 0
+						},
+						{
+							"class": "fighter",
+							"hp": 0
+						}
+					],
+					"name": "Ilse Varga",
+					"species": "human"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 18,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": true,
+				"hit_dice_spent": {},
+				"id": "ilse_varga",
+				"inventory": [
+					{
+						"id": "chain_mail",
+						"qty": 1,
+						"slot": "armor"
+					},
+					{
+						"id": "greatsword",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "flail",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "javelin",
+						"qty": 8,
+						"slot": ""
+					},
+					{
+						"id": "dungeoneers_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "spear",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "shortbow",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "arrow",
+						"qty": 20,
+						"slot": ""
+					},
+					{
+						"id": "dice_set",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "healers_kit",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "quiver",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 54,
+					"resources_used": {
+						"action_surge": 0,
+						"second_wind": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "criminal",
+					"base_scores": {
+						"cha": 8.0,
+						"con": 13.0,
+						"dex": 15.0,
+						"int": 14.0,
+						"str": 12.0,
+						"wis": 10.0
+					},
+					"choices": {
+						"background.abilities": [
+							"dex",
+							"dex",
+							"con"
+						],
+						"origin.languages": [
+							"halfling",
+							"goblin"
+						],
+						"rogue.1.expertise": [
+							"stealth",
+							"sleight_of_hand"
+						],
+						"rogue.1.skills": [
+							"acrobatics",
+							"deception",
+							"investigation",
+							"perception"
+						],
+						"rogue.1.thieves_cant": [
+							"elvish"
+						],
+						"rogue.1.weapon_mastery": [
+							"dagger",
+							"shortbow"
+						],
+						"rogue.3.rogue_subclass": [
+							"thief"
+						],
+						"rogue.4.ability_score_improvement": [
+							"ability_score_improvement"
+						],
+						"rogue.4.ability_score_improvement/ability_score_improvement.abilities": [
+							"dex",
+							"dex"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "he/him",
+						"tags": [
+							"curious",
+							"light-fingered",
+							"cheerful"
+						]
+					},
+					"levels": [
+						{
+							"class": "rogue",
+							"hp": 0.0
+						},
+						{
+							"class": "rogue",
+							"hp": 0
+						},
+						{
+							"class": "rogue",
+							"hp": 6
+						},
+						{
+							"class": "rogue",
+							"hp": 0
+						},
+						{
+							"class": "rogue",
+							"hp": 0
+						}
+					],
+					"name": "Tamsin Tealeaf",
+					"species": "halfling"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 24,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "tamsin_tealeaf",
+				"inventory": [
+					{
+						"id": "leather_armor",
+						"qty": 1,
+						"slot": "armor"
+					},
+					{
+						"id": "dagger",
+						"qty": 4,
+						"slot": ""
+					},
+					{
+						"id": "shortsword",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "shortbow",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "arrow",
+						"qty": 20,
+						"slot": ""
+					},
+					{
+						"id": "quiver",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "thieves_tools",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "burglars_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "thieves_tools",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "crowbar",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 39,
+					"resources_used": {},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "acolyte",
+					"base_scores": {
+						"cha": 12.0,
+						"con": 13.0,
+						"dex": 8.0,
+						"int": 10.0,
+						"str": 14.0,
+						"wis": 15.0
+					},
+					"choices": {
+						"background.abilities": [
+							"wis",
+							"wis",
+							"cha"
+						],
+						"background.feat.level_1_spell": [
+							"sanctuary"
+						],
+						"background.feat.two_cantrips.cantrips": [
+							"light",
+							"toll_the_dead"
+						],
+						"background.feat.two_cantrips.spellcasting_ability": [
+							"wis"
+						],
+						"cleric.1.divine_order": [
+							"protector"
+						],
+						"cleric.1.skills": [
+							"medicine",
+							"persuasion"
+						],
+						"cleric.3.cleric_subclass": [
+							"life_domain"
+						],
+						"cleric.4.ability_score_improvement": [
+							"ability_score_improvement"
+						],
+						"cleric.4.ability_score_improvement/ability_score_improvement.abilities": [
+							"wis",
+							"con"
+						],
+						"cleric.cantrips": [
+							"guidance",
+							"sacred_flame",
+							"thaumaturgy",
+							"resistance"
+						],
+						"cleric.prepared": [
+							"command",
+							"guiding_bolt",
+							"healing_word",
+							"shield_of_faith",
+							"detect_magic",
+							"spiritual_weapon",
+							"hold_person",
+							"spirit_guardians",
+							"dispel_magic"
+						],
+						"origin.languages": [
+							"dwarvish",
+							"giant"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "she/her",
+						"tags": [
+							"devout",
+							"patient",
+							"dry humor"
+						]
+					},
+					"levels": [
+						{
+							"class": "cleric",
+							"hp": 0.0
+						},
+						{
+							"class": "cleric",
+							"hp": 0
+						},
+						{
+							"class": "cleric",
+							"hp": 0
+						},
+						{
+							"class": "cleric",
+							"hp": 0
+						},
+						{
+							"class": "cleric",
+							"hp": 0
+						}
+					],
+					"name": "Hedda Ironvow",
+					"species": "dwarf"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 15,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "hedda_ironvow",
+				"inventory": [
+					{
+						"id": "chain_shirt",
+						"qty": 1,
+						"slot": "armor"
+					},
+					{
+						"id": "shield",
+						"qty": 1,
+						"slot": "off_hand"
+					},
+					{
+						"id": "mace",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "priests_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "calligraphers_supplies",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "book",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "parchment",
+						"qty": 10,
+						"slot": ""
+					},
+					{
+						"id": "robe",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 43,
+					"resources_used": {
+						"channel_divinity": 0,
+						"spell:sanctuary": 0,
+						"stonecunning": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "sage",
+					"base_scores": {
+						"cha": 10.0,
+						"con": 13.0,
+						"dex": 12.0,
+						"int": 15.0,
+						"str": 8.0,
+						"wis": 14.0
+					},
+					"choices": {
+						"background.abilities": [
+							"int",
+							"int",
+							"con"
+						],
+						"background.feat.level_1_spell": [
+							"find_familiar"
+						],
+						"background.feat.two_cantrips.cantrips": [
+							"minor_illusion",
+							"shocking_grasp"
+						],
+						"background.feat.two_cantrips.spellcasting_ability": [
+							"int"
+						],
+						"evoker.3.evocation_savant": [
+							"scorching_ray",
+							"shatter"
+						],
+						"evoker.5.evocation_savant": [
+							"lightning_bolt"
+						],
+						"origin.languages": [
+							"draconic",
+							"dwarvish"
+						],
+						"species.elven_lineage": [
+							"high_elf"
+						],
+						"species.keen_senses": [
+							"perception"
+						],
+						"species.spellcasting_ability": [
+							"int"
+						],
+						"wizard.1.skills": [
+							"investigation",
+							"insight"
+						],
+						"wizard.2.scholar": [
+							"arcana"
+						],
+						"wizard.3.wizard_subclass": [
+							"evoker"
+						],
+						"wizard.4.ability_score_improvement": [
+							"ability_score_improvement"
+						],
+						"wizard.4.ability_score_improvement/ability_score_improvement.abilities": [
+							"int",
+							"int"
+						],
+						"wizard.cantrips": [
+							"fire_bolt",
+							"mage_hand",
+							"light",
+							"ray_of_frost"
+						],
+						"wizard.prepared": [
+							"magic_missile",
+							"shield",
+							"mage_armor",
+							"sleep",
+							"thunderwave",
+							"scorching_ray",
+							"web",
+							"fireball",
+							"counterspell"
+						],
+						"wizard.spellbook": [
+							"magic_missile",
+							"shield",
+							"mage_armor",
+							"sleep",
+							"thunderwave",
+							"burning_hands",
+							"feather_fall",
+							"chromatic_orb",
+							"invisibility",
+							"web",
+							"blur",
+							"hold_person",
+							"fireball",
+							"counterspell"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "they/them",
+						"tags": [
+							"bookish",
+							"proud",
+							"secretly kind"
+						]
+					},
+					"levels": [
+						{
+							"class": "wizard",
+							"hp": 0.0
+						},
+						{
+							"class": "wizard",
+							"hp": 0
+						},
+						{
+							"class": "wizard",
+							"hp": 0
+						},
+						{
+							"class": "wizard",
+							"hp": 0
+						},
+						{
+							"class": "wizard",
+							"hp": 0
+						}
+					],
+					"name": "Silvain Aster",
+					"species": "elf"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 13,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "silvain_aster",
+				"inventory": [
+					{
+						"id": "dagger",
+						"qty": 2,
+						"slot": ""
+					},
+					{
+						"id": "arcane_focus_staff",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "robe",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "spellbook",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "scholars_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "quarterstaff",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "calligraphers_supplies",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "book",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "parchment",
+						"qty": 8,
+						"slot": ""
+					},
+					{
+						"id": "robe",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 32,
+					"resources_used": {
+						"arcane_recovery": 0,
+						"spell:detect_magic": 0,
+						"spell:find_familiar": 0,
+						"spell:misty_step": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			}
+		],
+		"positions": [
+			[
+				14,
+				21
+			],
+			[
+				15,
+				21
+			],
+			[
+				13,
+				21
+			],
+			[
+				14,
+				22
+			]
+		],
+		"quests": {},
+		"seed": 7,
+		"shops": {},
+		"start_level": 1,
+		"stash": [],
+		"tarokka": {},
+		"travel_resume": {},
+		"visited": {
+			"hill_track": true,
+			"old_bonegrinder_hill": true
+		}
+	},
+	"tarokka": {},
+	"version": 2
+}
