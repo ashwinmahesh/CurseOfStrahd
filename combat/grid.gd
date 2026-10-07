@@ -333,14 +333,26 @@ func _line_blockers(a: Vector2, b: Vector2, a_cells: Array[Vector2i], t_cells: A
 	var maxx := floori(maxf(a.x, b.x)) + 1
 	var minz := floori(minf(a.y, b.y)) - 1
 	var maxz := floori(maxf(a.y, b.y)) + 1
+	var any_creatures := not creature_cells.is_empty()
+	var d := b - a
 	for z in range(minz, maxz + 1):
-		for x in range(minx, maxx + 1):
+		# Only the squares of this row the segment can reach (the AI asks for thousands of lines a turn, and the whole
+		# box around a long diagonal is mostly squares it never comes near): where it runs between z and z + 1, with
+		# a square of margin each side. The row is still read in order, so the same blocker is found first.
+		var row_lo := minx
+		var row_hi := maxx
+		if absf(d.y) > 0.000001:
+			var ta := clampf((z - 0.001 - a.y) / d.y, 0.0, 1.0)
+			var tb := clampf((z + 1.001 - a.y) / d.y, 0.0, 1.0)
+			row_lo = maxi(minx, floori(minf(a.x + d.x * ta, a.x + d.x * tb)) - 1)
+			row_hi = mini(maxx, floori(maxf(a.x + d.x * ta, a.x + d.x * tb)) + 1)
+		for x in range(row_lo, row_hi + 1):
+			var f := _flags[z * width + x] if x >= 0 and z >= 0 and x < width and z < depth else VOID
 			var c := Vector2i(x, z)
-			if c in a_cells or c in t_cells:
-				continue
-			var f := flags(c)
-			var is_creature := creature_cells.has(c)
+			var is_creature := any_creatures and creature_cells.has(c)
 			if (f & (WALL | LOW)) == 0 and not is_creature:
+				continue
+			if c in a_cells or c in t_cells:
 				continue
 			if (f & WALL) != 0:
 				if _segment_hits_wall(a, b, c):

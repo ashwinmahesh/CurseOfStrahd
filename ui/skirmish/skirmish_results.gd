@@ -20,7 +20,8 @@ func _init() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 
-func show_for(e: Encounter, title: String) -> void:
+## `earned`: the names of achievements this fight earned (N8).
+func show_for(e: Encounter, title: String, earned: Array[String] = []) -> void:
 	tally = FightTally.tally(e)
 	var won := e.outcome == "victory"
 	var head := e.legendary.end_title()
@@ -30,6 +31,11 @@ func show_for(e: Encounter, title: String) -> void:
 	var sub := UiKit.label("%s · %d round%s" % [title, e.round_no, "" if e.round_no == 1 else "s"], 17, "parchment")
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	frame.add_child(sub)
+	if not earned.is_empty():
+		var got := UiKit.label("Achievement%s: %s" % ["" if earned.size() == 1 else "s", ", ".join(earned)], 16, "gilt_light")
+		got.name = "Earned"
+		got.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		frame.add_child(got)
 	var body := VBoxContainer.new()
 	body.add_theme_constant_override("separation", 6)
 	body.add_child(UiParts.section("The party"))
