@@ -215,7 +215,7 @@ func _advance_index() -> void:
 			e.log.add("turn", "Round %d" % e.round_no, "")
 			e.events.append({"type": "round", "round": e.round_no})
 			e.legendary.round_started()
-		if e.current().is_alive():
+		if e.current().is_alive() and not e.current().has_meta("left_fight"):
 			break
 
 
@@ -253,7 +253,8 @@ func _check_over() -> void:
 	var party_up := false
 	var enemies_up := false
 	for c in e.combatants:
-		if not c.is_alive() or c.creature.hp <= 0 or c.creature.has_flag("spell_object"):
+		# A creature that fell out of the fight (EncounterMovement.leave_grid) no longer counts for either side.
+		if not c.is_alive() or c.creature.hp <= 0 or c.creature.has_flag("spell_object") or c.has_meta("left_fight"):
 			continue
 		if c.side in [&"party", &"guest"]:
 			party_up = true

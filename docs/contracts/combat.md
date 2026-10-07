@@ -52,8 +52,9 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `monster_attack(c, target, action_id)`, `begin_multiattack(c)` | Stat-block attacks |
 | `dash/disengage(c, use_bonus)`, `dodge`, `help_attack(c, enemy)`, `hide(c, use_bonus)`, `search`, `study(c, t)` | Standard actions; `use_bonus` needs Cunning Action |
 | `ready_attack(c, option_id)` | Readied attack, triggers when an enemy comes into reach |
-| `unarmed_special(c, t, "grapple" / "shove_prone" / "shove")`, `escape_grapple(c)` | |
+| `unarmed_special(c, t, "grapple" / "shove_prone" / "shove")`, `escape_grapple(c)`, `release_grapple(c, t)` | a grappler drags what it holds when it moves (1 extra foot per foot); letting go is free |
 | `stand_up(c)`, `drop_prone(c)`, `stabilize(c, t, use_kit)`, `death_save(c)` | |
+| `fall(c, feet)` | 1d6 per 10 ft (20d6 at most), Prone unless unharmed; Slow Fall and Feather Fall answer it. `forced_move` calls it for a ledge, and `movement.fall_away` for a map's open drop (`grid.drop_ft`, from the map's `drop_ft`): the creature leaves the grid (`left_fight` meta) |
 | `spells.cast(c, spell_id, slot, targets, point, direction, opts)` | `point` for spheres, `direction` for cones, cubes and lines from the caster; opts: `word` (Command), `damage_type` |
 | `spells.use_sustained(c, action_id, targets, point, direction)` | a sustained spell action (`spells.sustained_actions(c)`): Spiritual Weapon's strike, Witch Bolt's arc, Flaming Sphere's roll... |
 | `spells.spiritual_weapon_attack(c, t, cell)` | shortcut for the weapon's strike |
@@ -84,7 +85,8 @@ illusory_self, riposte, parry, stones_endurance, interception, protective_field,
 
 | type | fields |
 |---|---|
-| move | id, from, to, forced |
+| move | id, from, to, forced, dragged (pulled along by its grappler: it moves with the step before it) |
+| fall | id, feet: a creature falls (off a ledge, into a drop) |
 | attack | attacker, target, hit, critical, action (the attack option's id: `weapon:longsword`, `monster:claw`; `spell:fire_bolt` for a spell attack), from (the token the blow comes from: the attacker, or an Echo Knight's echo) |
 | damage / heal | id, amount (critical) |
 | condition / down / death | id |
@@ -95,7 +97,7 @@ illusory_self, riposte, parry, stones_endurance, interception, protective_field,
 | summon | caster, cell (Spiritual Weapon) |
 | object / object_gone | id, kind, cell: a spell object or lingering area appeared, moved or ended (`spells.zones.objects`) |
 | teleport | id, from, to (Misty Step, Bait and Switch, Engulf) |
-| summon_creature / vanish | id: a summoned creature (Summon Undead, a severed limb) joined; a creature vanished |
+| summon_creature / vanish | id: a summoned creature (Summon Undead, a severed limb) joined; a creature vanished (left: "fell" when it went into a drop) |
 | resize | id: Enlarge/Reduce or Large Form changed its size |
 | turn | id, round |
 | round | round |

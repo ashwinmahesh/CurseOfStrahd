@@ -423,6 +423,10 @@ func center_of(c: Combatant) -> Vector2:
 	return movement.center_of(c)
 
 
+func fall(c: Combatant, feet: int, why: String = "Falling") -> int:
+	return movement.fall(c, feet, why)
+
+
 # --- Mounted combat (EncounterMounts) -------------------------------------------------------------
 
 func mount_of(c: Combatant) -> Combatant:
@@ -461,6 +465,10 @@ func escape_grapple(c: Combatant) -> CombatResult:
 
 func _release_grapples_by(grappler: Combatant) -> void:
 	grappling._release_grapples_by(grappler)
+
+
+func release_grapple(c: Combatant, target: Combatant) -> CombatResult:
+	return grappling.release(c, target)
 
 
 # --- Weapons and attack options (EncounterWeapons) ------------------------------------------------

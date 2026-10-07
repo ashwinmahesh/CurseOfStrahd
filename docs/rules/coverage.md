@@ -53,7 +53,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Blinded, Charmed, Deafened | data + creature.gd | partial (sight/hearing/charmer checks: Phase 2-3) | test_conditions |
 | Exhaustion (−2 per level to D20 Tests, −5 ft, death at 6, Long Rest −1) | data + creature.gd | tested | test_conditions |
 | Frightened | data; Turn Undead fleeing in ai_brain.gd | partial (Disadvantage always on, see deviations; can't-approach only for AI) | test_conditions, test_combat_spells |
-| Grappled (Speed 0) | data + encounter.gd | tested (Speed 0, escape, other-target Disadvantage); dragging: deviations | test_conditions, test_combat_encounter |
+| Grappled (Speed 0) | data + encounter.gd, encounter_grapples.gd | tested (Speed 0, escape, other-target Disadvantage; dragged when its grappler moves, 1 extra foot per foot unless Tiny or two sizes smaller, no Opportunity Attacks for being dragged; ends when pulled out of the grapple's range or let go) | test_conditions, test_combat_encounter, test_height_and_falls |
 | Incapacitated (no actions, breaks Concentration) | data + creature.gd | tested | test_conditions |
 | Invisible | data + encounter.gd can_see | tested (hidden creatures, attacks either way) | test_conditions, test_combat_encounter |
 | Paralyzed, Petrified, Stunned, Unconscious | data + creature.gd | tested (auto-crit within 5 ft) | test_conditions, test_attacks |
@@ -161,7 +161,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 |---|---|---|---|
 | Initiative: Dexterity check, surprise = Disadvantage, identical monsters share a roll, ties | encounter.gd start | tested | test_combat_encounter |
 | Turn order, rounds, the action economy (Action, Bonus Action, Reaction, movement, one free object interaction) | encounter.gd, combatant.gd | tested | test_combat_encounter |
-| Grid movement: 5 ft squares, diagonals 5 ft, no corner cutting, Difficult Terrain double, climbing | grid.gd | tested | test_combat_grid |
+| Grid movement: 5 ft squares, diagonals 5 ft, no corner cutting, Difficult Terrain double, climbing up and down (1 extra foot per foot, 2 in Difficult Terrain, none extra with a Climb Speed; a 5 ft step is stairs, deviations) | grid.gd step_cost | tested | test_combat_grid, test_height_and_falls |
 | Moving through creatures (allies, Incapacitated, Tiny, two sizes different; enemy squares are Difficult Terrain); can't end in an occupied square | encounter.gd _occupancy_for | tested | test_combat_encounter |
 | Halfling Nimbleness, Naturally Stealthy, Luck | encounter.gd, d20_test.gd reroll_ones | tested (Nimbleness, Luck through the suite) | test_combat_encounter |
 | Prone: Disadvantage to attack, Advantage within 5 ft / Disadvantage beyond against it, standing costs half Speed, crawling double | encounter.gd, action_catalog.gd | tested | test_combat_encounter, test_action_catalog |
@@ -171,7 +171,8 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Cover: Half +2, Three-Quarters +5, Total untargetable; creatures give Half; Dex saves add cover | grid.gd cover_between, spell_caster.gd | tested | test_combat_grid, test_combat_encounter |
 | Critical Hits, automatic crits against Paralyzed/Unconscious within 5 ft | encounter.gd | tested | test_combat_encounter |
 | Standard actions: Attack, Dash, Disengage, Dodge, Help (attack), Hide, Search, Study, Ready (attacks), Magic, Utilize (Healer's Kit), Influence | encounter.gd, action_catalog.gd | tested (Influence has no target in the arena; readied spells: deviations) | test_combat_encounter, test_action_catalog |
-| Grapple and Shove with Unarmed Strike; escape | encounter.gd | tested | test_combat_encounter |
+| Grapple and Shove with Unarmed Strike; escape; letting go (no action); a Shove off a ledge or into a map's open drop | encounter_grapples.gd, encounter_movement.gd forced_move | tested | test_combat_encounter, test_height_and_falls |
+| Falling: 1d6 Bludgeoning per 10 ft (at most 20d6), Prone unless unharmed; forced off a ledge 10 ft or more high, or into a map's open drop (out of the fight, deviations); a push stops at a ledge 10 ft or more above; Slow Fall and Feather Fall (automatic, deviations) | encounter_movement.gd fall, fall_away, forced_move; grid.gd drop_at; map `drop_ft` | tested | test_height_and_falls |
 | Two-weapon fighting (Light) and Nick | encounter.gd offhand_attack | tested | test_combat_encounter |
 | Thrown weapons leave the hand; ammunition used up | encounter.gd | tested | test_combat_encounter |
 | Death Saving Throws on the creature's turn, stabilizing (Medicine DC 10 or Healer's Kit) | encounter.gd death_save, stabilize | tested (rules in test_death_saves) | test_death_saves, test_combat_arena_scene |
