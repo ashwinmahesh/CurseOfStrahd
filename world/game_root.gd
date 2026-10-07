@@ -23,6 +23,7 @@ var ending: EndingScreen = null      ## the campaign's last screen, once the gam
 
 func _ready() -> void:
 	InputActions.ensure()
+	Cursors.install()
 	GameState.current_scene = "res://scenes/game.tscn"
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--load="):
@@ -109,6 +110,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.party_tended.connect(_refresh)
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
+		Cursors.show("pointer")
 		LayerFade.fade(self, hud, false, 0.25)   # the combat HUD fades up in its place
 		Audio.play_music("combat")
 		_boss_music.call_deferred(cv)   # the fight is set up just after this signal
@@ -152,6 +154,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_hover = pick
 		var thing := view.thing_at(pick) if pick.x >= 0 else {}
 		hud.hint(str(thing.get("label", "")), (event as InputEventMouseMotion).position)
+		Cursors.show(Cursors.for_thing(thing))
 	elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
 		var cell := view.pick_cell(view.rig.camera, (event as InputEventMouseButton).position)
 		if cell.x >= 0:
@@ -345,6 +348,7 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 	if ref == "" or dialogue != null:
 		return
 	ModeController.force(ModeController.Mode.DIALOGUE)
+	Cursors.show("pointer")
 	_dialogue_ref = ref
 	hud.visible = false
 	dialogue = DialogueUI.new()
@@ -622,6 +626,7 @@ func _on_time_passed(minutes: int) -> void:
 
 
 func _exit_tree() -> void:
+	Cursors.uninstall()
 	if st != null and st.time_passed.is_connected(_on_time_passed):
 		st.time_passed.disconnect(_on_time_passed)
 
@@ -636,6 +641,7 @@ func _place_mood() -> String:
 
 func open_screen(kind: String, index: int) -> void:
 	close_screen()
+	Cursors.show("pointer")
 	if kind in ["sheet", "inventory", "journal", "party", "level_up"]:
 		Audio.sfx("page")
 	match kind:
