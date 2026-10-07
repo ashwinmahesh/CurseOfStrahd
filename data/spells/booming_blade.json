@@ -43,5 +43,5 @@
     "control"
   ],
   "summary": "A melee weapon attack that wraps the target in thunder: if it moves of its own will before your next turn, it takes Thunder damage.",
-  "text": "You brandish the weapon that is the spell's material component and make one melee attack with it against a creature within 5 feet of you, using the weapon's usual attack and damage. On a hit, the target suffers the attack's normal effects and is wrapped in booming energy until the start of your next turn. If it willingly moves 5 feet or more before then, it takes 1d8 Thunder damage and the spell ends. From character level 5 the hit also deals 1d8 extra Thunder damage and the damage for moving becomes 2d8; both grow by 1d8 at level 11 (2d8 and 3d8) and again at level 17 (3d8 and 4d8)."
+  "text": "Make one melee weapon attack against a creature within 5 feet, with the weapon you're casting through (it's the spell's material component) and that weapon's usual attack roll and damage. If it hits, thunder clings to the target until your next turn starts; should the target choose to move 5 feet or more in that time, the thunder bursts for 1d8 Thunder damage and the spell is over. At character level 5 the hit adds 1d8 Thunder damage and the burst becomes 2d8; at level 11 these are 2d8 and 3d8, and at level 17 3d8 and 4d8."
 }
