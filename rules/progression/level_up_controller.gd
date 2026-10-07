@@ -3,8 +3,9 @@ extends RefCounted
 ## Gaining a level (plan §5.6 "Level up", 2024 PHB "Level Advancement" and "Multiclassing"): choose the
 ## class to advance (multiclass prerequisites checked and explained), take the fixed Hit Points or roll the
 ## die, read the new features, make every choice the level grants (subclass, feat, spells, Expertise ...),
-## compare before and after, then confirm. The character doesn't change until confirm(). recommend() fills the picks
-## with sensible ones first (Q10), which the player changes as they like.
+## compare before and after, then confirm. The character doesn't change until confirm(). The picks start blank;
+## recommend() (the screen's Use Recommended, Q10) fills the ones still blank with sensible ones, which the player
+## changes as they like.
 
 const MAX_LEVEL := 20
 
@@ -216,9 +217,10 @@ static func _group(c: Choice) -> String:
 	return "%s|%s" % [c.replace_group, c.class_id if c.class_id != "" else c.source]
 
 
-## Q10: fills every pick this level still needs with a recommended one, leaving picks already made: the character's
-## own level plan where it fits (a companion's data/pregens `level_plan`), else RecommendedPicks. A choice a pick opens
-## (an Ability Score Improvement's abilities, a feat's spell) is filled too. Returns what it filled, for the screen:
+## Q10: fills every pick this level still needs with a recommended one, keeping every pick already made (a subclass
+## other than the recommended one stays, and what it asks for is filled for it): the character's own level plan where it
+## fits (a companion's data/pregens `level_plan`), else RecommendedPicks. A choice a pick opens (an Ability Score
+## Improvement's abilities, a feat's spell) is filled too. Returns what it filled, for the screen:
 ## [{key, label, names (the picks as the player reads them), plan (true when the level plan gave them)}].
 func recommend() -> Array[Dictionary]:
 	var plan := RecommendedPicks.plan_step(character, chosen_class).get("choices", {}) as Dictionary
@@ -234,7 +236,12 @@ func recommend() -> Array[Dictionary]:
 			break
 		before[next.key] = next.picks.duplicate()
 		if plan.has(next.key):
-			if choose(next.key, plan[next.key] as Array).is_empty():
+			# The plan's picks after the ones already made, never in place of them.
+			var planned: Array = next.picks.duplicate()
+			for p: Variant in plan[next.key] as Array:
+				if planned.size() < next.count and not str(p) in planned:
+					planned.append(str(p))
+			if choose(next.key, planned).is_empty():
 				from_plan[next.key] = true
 				continue
 			# The plan no longer fits (an earlier pick changed): back to what was there, then the usual picks.
@@ -261,11 +268,6 @@ func recommend() -> Array[Dictionary]:
 				"names": names, "plan": from_plan.has(c.key)})
 	return out
 
-
-## Puts this level's picks back as they were before any were made (the Hit Points stay as chosen).
-func reset_picks() -> void:
-	build["choices"] = (character.build.get("choices", {}) as Dictionary).duplicate(true)
-	_refresh()
 
 
 func choose(key: String, picks: Array) -> Array[String]:

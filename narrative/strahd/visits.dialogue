@@ -8,6 +8,7 @@
 ~ watcher
 appear strahd
 set strahd_watcher_seen
+cutscene strahd_watcher
 Narrator: The road bends under a bare ridge. Up on the skyline a rider sits a black horse, perfectly still, watching you go by.
 if guest:ireena
 Ireena [afraid]: Don't look at him. That's what he wants. Keep walking.
@@ -29,6 +30,7 @@ approve thistle +1 godrick_pendlebrook +1: You stared Strahd down from the road
 -> watcher_gone
 
 ~ watcher_gone
+cutscene end
 Narrator: A ragged flock of bats lifts off the ridge and beats away south, toward the castle. Nobody is up there now.
 -> END
 

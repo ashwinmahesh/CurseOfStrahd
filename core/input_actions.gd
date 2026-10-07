@@ -19,6 +19,8 @@ const BINDINGS := {
 	&"quick_save": [KEY_F5],
 	&"quick_load": [KEY_F9],
 	&"toggle_palette": [KEY_P],
+	# Exploring: hold to see what each foe in plain view can see (U10; always shown while sneaking).
+	&"show_sight": [KEY_L],
 	# Combat (docs/ui/combat_view.md).
 	&"combat_end_turn": [KEY_SPACE],
 	&"combat_cancel": [KEY_ESCAPE],
