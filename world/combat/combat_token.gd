@@ -84,6 +84,10 @@ static func art_for(cr: Creature) -> String:
 		var look := str(((cr as Character).build.get("appearance", {}) as Dictionary).get("art", ""))
 		if look != "":
 			return look
+		# A pregen with art of its own (the six on the roster) wears it; anyone else borrows a look by class.
+		for own: String in [cr.id, cr.name.to_snake_case()]:
+			if own != "" and ResourceLoader.exists("res://art/sprites/%s/walk.tres" % own):
+				return own
 		return default_look(cr as Character)
 	return cr.name.to_snake_case()
 

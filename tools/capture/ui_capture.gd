@@ -80,6 +80,15 @@ func capture_shots(tool: Node, out: String) -> void:
 				root.get("screen").call("_draw")
 			await _shoot(tool, "%s_%s.png" % [out, kind])
 			root.call("close_screen")
+	if _wants("spellbook"):
+		# A found spellbook (the Dursts'): its spells, and the party's Wizard copying them.
+		GameState.story.party[0].add_item("durst_spellbook", 1)
+		GameState.story.gold = maxf(GameState.story.gold, 120.0)
+		root.call("open_screen", "inventory", 0)
+		(root.get("screen") as InventoryScreen).selected = "durst_spellbook"
+		root.get("screen").call("_draw")
+		await _shoot(tool, "%s_spellbook.png" % out)
+		root.call("close_screen")
 	if _wants("roster"):
 		# Tamsin waits at camp and is picked to swap in: the screen shows whose place she can take.
 		var tamsin := GameState.story.party[1]

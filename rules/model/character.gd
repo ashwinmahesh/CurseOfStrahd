@@ -986,6 +986,10 @@ func _build_spellcasting() -> void:
 			entry["spellbook_max"] = int(book.get("start", 6)) + int(book.get("per_level", 2)) * (n - 1)
 			entry["spellbook"] = _register_choice({"kind": "spellbook", "count": int(entry["spellbook_max"]),
 				"filter": {"list": list, "max_level": "slots"}}, "%s.spellbook" % cid, src, "Spellbook").duplicate()
+			# Spells copied in from books found on the road (copy_spell): more than the level's picks, never counted.
+			for cs: Variant in build.get("copied_spells", []):
+				if not str(cs) in (entry["spellbook"] as Array):
+					(entry["spellbook"] as Array).append(str(cs))
 		if prepared_max > 0:
 			var filter := {"list": list, "max_level": "slots", "min_level": 1}
 			# Magical Secrets (Bard 10): the class's `spell_list` modifiers open more lists to its prepared spells.
@@ -1083,6 +1087,55 @@ func extra_spell_lists(class_id: String) -> Array[String]:
 			continue
 		out.append(m.text("value"))
 	return out
+
+
+# --- Copying found spells into a spellbook ----------------------------------------------------------------------
+
+## 2024 Wizard (Expanding the Book): a found Wizard spell of 1st level or higher, of a level the Wizard can prepare,
+## goes into the spellbook for 2 hours and 50 GP of inks per spell level. The UI pays the time and the gold.
+const COPY_MINUTES_PER_LEVEL := 120
+const COPY_GP_PER_LEVEL := 50
+
+
+## The class that keeps a spellbook ("" for none: only a Wizard copies spells).
+func spellbook_class() -> String:
+	for e in spellcasting:
+		if int(e.get("spellbook_max", 0)) > 0:
+			return str(e["class_id"])
+	return ""
+
+
+## Why `spell_id` can't go into this character's spellbook now, or "" if it can.
+func copy_spell_problem(spell_id: String) -> String:
+	var cid := spellbook_class()
+	if cid == "":
+		return "Only a Wizard can copy spells into a spellbook"
+	var s := compendium.spell_data(spell_id)
+	if s.is_empty():
+		return "Unknown spell"
+	var e := spellcasting_entry(cid)
+	if not str(e.get("list", cid)) in (s.get("classes", []) as Array):
+		return "Not a %s spell" % str(e.get("name", cid))
+	var lv := int(s.get("level", 0))
+	if lv == 0:
+		return "Cantrips aren't copied into a spellbook"
+	if spell_id in (e.get("spellbook", []) as Array):
+		return "Already in the spellbook"
+	var slots := Spellcasting.slots_for([{"progression": str(e["progression"]), "level": class_level_of(cid)}])
+	if lv > Spellcasting.highest_slot_level(slots):
+		return "Level %d: too high to prepare yet" % lv
+	return ""
+
+
+## Copies `spell_id` into the spellbook (it can then be prepared like any other). False if copy_spell_problem says no.
+func copy_spell(spell_id: String) -> bool:
+	if copy_spell_problem(spell_id) != "":
+		return false
+	var copied := (build.get("copied_spells", []) as Array).duplicate()
+	copied.append(spell_id)
+	build["copied_spells"] = copied
+	refresh()
+	return true
 
 
 ## Every slot this character can cast with, by spell level: the Spellcasting slots (Multiclass Spellcaster table)

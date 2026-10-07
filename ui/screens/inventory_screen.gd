@@ -300,6 +300,8 @@ func _draw_card() -> void:
 			_card.add_child(UiKit.label("~ Needs Strength %d: Speed -10 ft" % int(arm["strength"]), 14, "gilt", 420))
 	_card.add_child(UiParts.section("Description"))
 	_card.add_child(UiKit.label(str(shown.get("text", shown.get("summary", ""))), 14, "vellum", 420))
+	if not (data.get("spells", []) as Array).is_empty():
+		_spellbook_card(data.get("spells", []) as Array)
 	# Magic items: rarity and attunement (three items at most; attuning takes a Short Rest).
 	var magic := shown.get("magic", {}) as Dictionary
 	if not magic.is_empty():
@@ -421,6 +423,54 @@ func _draw_card() -> void:
 				selected = ""
 			_draw()))
 	_card.add_child(bottom)
+
+
+## A found spellbook (item `spells`): the list for anyone to read, and a Copy button for each Wizard in the party
+## (Character.copy_spell, 2024 rules: a level they can prepare, 2 hours and 50 gp of inks per spell level, outside
+## fights and conversations). A copied spell is prepared from the spellbook like the rest.
+func _spellbook_card(book: Array) -> void:
+	_card.add_child(UiParts.section("Spells in this book"))
+	var wizards: Array[Character] = []
+	for m in st.party:
+		if m.spellbook_class() != "":
+			wizards.append(m)
+	if wizards.is_empty():
+		_card.add_child(UiKit.label("Nobody in the party keeps a spellbook. A Wizard could copy these into theirs.", 13, "parchment", 420))
+	var calm := ModeController.mode == ModeController.Mode.EXPLORATION
+	for sp: Variant in book:
+		var sid := str(sp)
+		var s := Compendium.shared().spell_data(sid)
+		var lv := int(s.get("level", 0))
+		var head := HBoxContainer.new()
+		head.add_theme_constant_override("separation", 6)
+		UiParts.add_icon(head, "spell", sid, 24.0)
+		var name := UiKit.label("%s (%s)" % [str(s.get("name", sid)), "cantrip" if lv == 0 else "level %d" % lv], 14, "vellum", 380)
+		name.tooltip_text = str(s.get("summary", ""))
+		name.mouse_filter = Control.MOUSE_FILTER_PASS
+		head.add_child(name)
+		_card.add_child(head)
+		if wizards.is_empty():
+			continue
+		var acts := HFlowContainer.new()
+		acts.add_theme_constant_override("h_separation", 6)
+		var cost := lv * Character.COPY_GP_PER_LEVEL
+		var minutes := lv * Character.COPY_MINUTES_PER_LEVEL
+		for w in wizards:
+			var why := w.copy_spell_problem(sid)
+			if why == "" and st.gold < cost:
+				why = "Needs %d gp of inks; the party has %d" % [cost, int(st.gold)]
+			if why == "" and not calm:
+				why = "Not during a fight or a conversation"
+			var label := "In %s's book" % w.name.get_slice(" ", 0) if why == "Already in the spellbook" else "%s copies it (%d h, %d gp)" % [w.name.get_slice(" ", 0), minutes / 60, cost]
+			var b := UiParts.small_button(label, func() -> void:
+				if w.copy_spell(sid):
+					st.gold -= cost
+					st.advance_minutes(minutes)
+				_draw())
+			b.disabled = why != ""
+			b.tooltip_text = why if why != "" else "Into %s's spellbook; prepare it from there after a Long Rest." % w.name.get_slice(" ", 0)
+			acts.add_child(b)
+		_card.add_child(acts)
 
 
 ## The stash is reachable where it's safe to rest (an inn, a home).
