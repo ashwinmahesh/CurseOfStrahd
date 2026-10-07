@@ -172,3 +172,11 @@ A modifier’s `skill` may resolve a feature-local pick such as `@choice`, just 
 `weapon_ability` offers a proficient one-handed weapon an alternate ability for attack and damage when its modifier is higher; Unarmed Strikes are excluded. `prefer_one_handed` keeps Versatile weapons in a one-handed grip when the other hand is free. Bladesong uses these alongside its AC/Speed/check and concentration-save modifiers; its effect’s `ends_on_two_handed_attack` parameter ends it before a two-handed attack resolves.
 
 `resource_restore` restores `value` uses of `resource` after a successful positive expenditure of `when_spent`. Failed or zero expenditures do not trigger it, and the destination resource’s normal maximum applies. Bladesong uses this to regain a use when Arcane Recovery is spent.
+
+`ritual_duration`: `spell_id` and `value` (minutes): that spell cast as a Ritual outside a fight lasts at least this
+long (Emerald Enclave Fledgling: Speak with Animals for 480 minutes).
+
+`resource_cast` may name one `spell` instead of a `school` (Arcane Safeguard's Resistance, Spellfire Spark's Sacred
+Flame); a feat-granted spell counts as known. `casting` is `action` or `bonus_action`; a cantrip cast this way spends
+the feature's use too. A feature with `policy` (`auto` or `never`, and `policy_cost` for the label) acts on its own
+in a fight, and the class tab offers Automatic and Off for it (Rallying Cry, Family First, Stand as One).

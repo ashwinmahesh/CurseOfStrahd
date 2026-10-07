@@ -197,6 +197,11 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 		"days":
 			lasting = int(dur.get("amount", 1)) * 24 * 60
 	st.advance_minutes(minutes)
+	# A longer Ritual for one spell (Emerald Enclave Fledgling: Speak with Animals for 8 hours).
+	if as_ritual:
+		for m in caster.modifiers_for(&"ritual_duration"):
+			if m.text("spell_id") == spell_id:
+				lasting = maxi(lasting, m.number("value"))
 	if lasting > 0:
 		st.active_spells[spell_id] = {"until": st.total_minutes() + lasting, "caster": caster.id}
 	return {"ok": true, "effect": spell_id, "text": "%s casts %s%s." % [caster.name.get_slice(" ", 0), data["name"],

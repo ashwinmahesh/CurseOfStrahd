@@ -30,9 +30,17 @@
       "id": "rook_rallying_cry",
       "name": "Rallying Cry",
       "summary": "When rolling Initiative while not Incapacitated, grant Heroic Inspiration to up to Proficiency Bonus visible creatures within 30 feet. Once per Long Rest.",
-      "text": "When rolling Initiative while not Incapacitated, grant Heroic Inspiration to up to Proficiency Bonus visible creatures within 30 feet. Once per Long Rest.",
-      "implemented": "text"
+      "text": "When you roll Initiative and aren't Incapacitated, you can give Heroic Inspiration to up to a number of allies equal to your Proficiency Bonus who are within 30 feet and whom you can see. Once per Long Rest. In a fight it happens on its own, to the nearest allies without Heroic Inspiration, unless you turn it Off in the class tab.",
+      "implemented": "engine",
+      "resource": {
+        "id": "rook_rallying_cry",
+        "name": "Rallying Cry",
+        "max": 1,
+        "recharge": "long"
+      },
+      "policy": "auto",
+      "policy_cost": "Once per Long Rest"
     }
   ],
-  "playable": false
+  "playable": true
 }

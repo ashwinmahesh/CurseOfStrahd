@@ -58,6 +58,8 @@ var events: Array[Dictionary] = []
 ## after(creature, test, keys) changes the finished test in place.
 var d20_before: Callable = Callable()
 var d20_after: Callable = Callable()
+## Told of every effect that lands (creature, effect): the encounter's book hooks (Inspired by Fear).
+var effect_added: Callable = Callable()
 
 
 func _init() -> void:
@@ -930,6 +932,8 @@ func add_effect(e: Effect) -> bool:
 	effects.append(e)
 	log_event({"type": "effect_added", "creature": id, "effect": e.name})
 	_after_conditions_changed()
+	if effect_added.is_valid():
+		effect_added.call(self, e)
 	return true
 
 

@@ -203,3 +203,14 @@ spends nothing. The class abilities tab provides Ask, Off, and Auto at an **exac
 spends against synchronous damage, and it never substitutes another slot level if that pool is exhausted.
 A declined/handled attack response is recorded on that attack so the central damage path cannot try it again.
 Song of Defense (Bladesinger) is the user.
+
+### Book modules
+
+`RavenloftFeatures` (`e.ravenloft`, actions `feat:rh:<id>`) and `FaerunFeatures` (`e.faerun`, actions `feat:fr:<id>`)
+hold the book options that need their own code. Each FaerunFeatures hook sits beside the matching Ravenloft one:
+`list`/`perform`, `before_initiative`/`initiative_advantage`/`initiative_rolled`, `after_cast`, `spell_damage_bonus`,
+`after_hit`, `adjust_incoming`, plus `after_damage` (end of `deal_damage`), `after_help`/`help_reach` (Help),
+`after_stabilize`, `after_ready`, `blocks_forced_move` (start of `forced_move`), `exploit_opening` (weapon damage
+dice) and `effect_added`, which every Creature calls when an effect lands (`Creature.effect_added`, set in `add`).
+A monster save action's damage parts carry `magic: true` when the action is `magical`, as spell parts carry `spell`.
+

@@ -774,6 +774,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 	var size_ok := Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large")
 	e.class_features.after_hit(c, target, option, st, r)
 	e.ravenloft.after_hit(c, target, option, st, r)
+	e.faerun.after_hit(c, target, critical)
 	# Battle Master maneuvers.
 	if st.has("maneuver"):
 		var id := str(st["maneuver"])

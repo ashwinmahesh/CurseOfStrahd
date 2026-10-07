@@ -45,6 +45,8 @@ var class_features: ClassFeatures
 ## Ravenloft: The Horrors Within options (combat/ravenloft_features.gd).
 var triggered_features: TriggeredFeatures
 var ravenloft: RavenloftFeatures
+## Heroes of Faerûn and Arcana Unleashed options that need their own code (combat/faerun_features.gd).
+var faerun: FaerunFeatures
 ## Magic items: the Items tab, item powers and the hooks below (combat/combat_items.gd, ADR 0012).
 var items: CombatItems
 var _cover_cache: Dictionary = {}
@@ -85,6 +87,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	shapes = ShapeChange.new(self)
 	class_features = ClassFeatures.new(self)
 	ravenloft = RavenloftFeatures.new(self)
+	faerun = FaerunFeatures.new(self)
 	triggered_features = TriggeredFeatures.new(self)
 	items = CombatItems.new(self)
 	legendary = Legendary.new(self)
@@ -102,6 +105,7 @@ func add(creature: Creature, side: StringName, cell: Vector2i) -> Combatant:
 	creature.id = c.id
 	creature.d20_before = feature_actions.before_d20
 	creature.d20_after = feature_actions.after_d20
+	creature.effect_added = faerun.effect_added
 	combatants.append(c)
 	return c
 
@@ -121,6 +125,7 @@ func current() -> Combatant:
 ## one roll) and starts round 1. Ties: higher Dexterity first, then the party.
 func start(surprised_ids: Array = []) -> void:
 	surprised_ids = items.surprise_filter(surprised_ids)
+	faerun.before_initiative()
 	var group_rolls := {}
 	for c in combatants:
 		c.surprised = c.id in surprised_ids
@@ -135,7 +140,9 @@ func start(surprised_ids: Array = []) -> void:
 		if c.surprised:
 			dis.append("Surprised")
 		var bonus := c.creature.initiative_bonus()
-		var t := c.creature.roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, 0, c.creature.initiative_keys(), items.initiative_advantage(c), dis,
+		var init_adv := items.initiative_advantage(c)
+		init_adv.append_array(faerun.initiative_advantage(c))
+		var t := c.creature.roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, 0, c.creature.initiative_keys(), init_adv, dis,
 			"Initiative (%s)" % c.name())
 		# Ambush (Battle Master): a Superiority Die on Initiative.
 		if features.knows_maneuver(c, "ambush") and (c.creature as Character).resource_left("superiority_dice") > 0:
@@ -152,6 +159,7 @@ func start(surprised_ids: Array = []) -> void:
 		log.add("roll", "%s rolls Initiative: %d" % [c.name(), t.total], c.id, [t.describe(), bonus.describe()])
 	class_features.initiative_rolled()
 	ravenloft.initiative_rolled()
+	faerun.initiative_rolled()
 	order = combatants.duplicate()
 	order.sort_custom(func(a: Combatant, b: Combatant) -> bool:
 		if a.initiative != b.initiative:
@@ -1006,6 +1014,7 @@ func ready_attack(c: Combatant, option_id: String) -> CombatResult:
 	spend_action(c)
 	c.readied = {"option": option_id}
 	log.add("info", "%s readies an attack (%s) for the first enemy to come within reach" % [c.name(), option["label"]], c.id)
+	faerun.after_ready(c)
 	return CombatResult.new()
 
 
@@ -1035,6 +1044,7 @@ func ready_spell(c: Combatant, spell_id: String, slot: int) -> CombatResult:
 			return CombatResult.fail("No level %d slots left" % slot)
 	spend_action(c)
 	c.magic_action_used = true
+	faerun.after_ready(c)
 	if not spells.casting_gate(c):
 		return CombatResult.new()
 	if level > 0:
@@ -1094,6 +1104,7 @@ func stabilize(c: Combatant, target: Combatant, use_kit: bool) -> CombatResult:
 	if t.success:
 		target.creature.stabilize()
 		log.add("heal", "%s stabilizes %s" % [c.name(), target.name()], c.id, [t.describe()])
+		faerun.after_stabilize(c)
 	else:
 		log.add("info", "%s can't stop %s's bleeding" % [c.name(), target.name()], c.id, [t.describe()])
 	return CombatResult.new()
@@ -1346,6 +1357,9 @@ func drop_prone(c: Combatant) -> CombatResult:
 ## It goes in a straight line away from (or, with `toward`, toward) the grid point `origin`, square by square, and
 ## stops at walls and other creatures. Areas it's moved into still affect it. Returns the squares moved.
 func forced_move(target: Combatant, origin: Vector2, feet: int, toward: bool = false) -> int:
+	# Stand as One (Tyro of the Gauntlet): an ally beside it spends a Reaction and it doesn't budge.
+	if feet > 0 and faerun.blocks_forced_move(target):
+		return 0
 	# Dwarven Plate: a Reaction cuts a shove across the ground by up to 10 ft.
 	feet = items.forced_move_feet(target, feet)
 	var dir := center_of(target) - origin
@@ -2322,9 +2336,16 @@ func _after_hit(st: Dictionary) -> CombatResult:
 			"penalty": bool(m.data.get("penalty", false))})
 	var turn_key := "%d:%d" % [round_no, turn_index]
 	var savage := c.creature.has_flag("savage_attacker") and str(_savage_turn.get(c.id, "")) != turn_key and c.creature is Character
+	var exploit := faerun.exploit_opening(c, opts)
 	for entry in dice_list:
 		var rolled := _roll_damage_dice(str(entry["dice"]), critical, p.die_minimum if bool(entry.get("weapon", false)) else 0,
 			"%s damage" % entry["label"], features.damage_reroll_rule(c, p, entry))
+		# Exploit Opening (Zhentarim Ruffian): an Opportunity Attack's damage dice twice, the better roll kept.
+		if exploit and not bool(entry.get("penalty", false)):
+			var twice := _roll_damage_dice(str(entry["dice"]), critical, p.die_minimum if bool(entry.get("weapon", false)) else 0, "Exploit Opening reroll")
+			if int(twice["total"]) > int(rolled["total"]):
+				rolled = twice
+				dmg_text.append("Exploit Opening: rolled twice, kept %d" % int(twice["total"]))
 		if savage and bool(entry.get("weapon", false)) and p.item_id != "unarmed_strike":
 			_savage_turn[c.id] = turn_key
 			var again := _roll_damage_dice(str(entry["dice"]), critical, p.die_minimum, "Savage Attacker reroll")
@@ -2594,6 +2615,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		spells.specials.mid.hand_destroyed(target)
 	if dr.final > 0 and source != null and source != target and target.is_alive():
 		_queue_damage_reactions(source, target)
+	faerun.after_damage(source, target, dr.final)
 	spells.zones.prune()
 	_check_over()
 	return dr
@@ -3010,12 +3032,15 @@ func help_attack(c: Combatant, enemy: Combatant) -> CombatResult:
 	var why := _action_check(c)
 	if why != "":
 		return CombatResult.fail(why)
-	if enemy == null or not c.hostile_to(enemy) or distance(c, enemy) > 5:
-		return CombatResult.fail("Choose an enemy within 5 ft")
+	# Distracting Melody (Harper Agent): an enemy up to 30 ft away that can see or hear you.
+	var reach := faerun.help_reach(c, enemy)
+	if enemy == null or not c.hostile_to(enemy) or distance(c, enemy) > reach:
+		return CombatResult.fail("Choose an enemy within %d ft" % reach)
 	spend_action(c)
 	add_mark({"kind": "advantage_against", "target": enemy.id, "helper": c.id, "source": "Help (%s)" % c.name(),
 		"expires_owner": c.id, "expires_phase": "start", "consume": true})
 	log.add("info", "%s distracts %s: the next ally attack against it has Advantage" % [c.name(), enemy.name()], c.id)
+	faerun.after_help(c)
 	return CombatResult.new()
 
 

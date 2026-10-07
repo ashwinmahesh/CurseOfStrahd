@@ -8,14 +8,14 @@
   },
   "category": "origin",
   "repeatable": false,
-  "summary": "Once per turn, reduce damage you take from a spell or magical effect by 1d4 while not Incapacitated. Always prepared: Sacred Flame; choose Intelligence, Wisdom, or Charisma for casting. You may cast Sacred Flame as a Bonus Action Proficiency Bonus times per Long Rest. The alternate casting time is not automated.",
+  "summary": "Once per turn, reduce damage you take from a spell by 1d4 while not Incapacitated. Always prepared: Sacred Flame; choose Intelligence, Wisdom, or Charisma for casting. Cast Sacred Flame as a Bonus Action Proficiency Bonus times per Long Rest.",
   "benefits": [
     {
       "id": "spellfire_magic_absorption",
       "name": "Magic Absorption",
       "summary": "Once per turn, reduce damage you take from a spell or magical effect by 1d4 while not Incapacitated.",
       "text": "Once per turn, reduce damage you take from a spell or magical effect by 1d4 while not Incapacitated.",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "spellfire_flame_cantrip",
@@ -45,10 +45,23 @@
     {
       "id": "spellfire_flame_bonus",
       "name": "Spellfire Flame",
-      "summary": "You may cast Sacred Flame as a Bonus Action Proficiency Bonus times per Long Rest. The alternate casting time is not automated.",
-      "text": "You may cast Sacred Flame as a Bonus Action Proficiency Bonus times per Long Rest. The alternate casting time is not automated.",
-      "implemented": "text"
+      "summary": "Cast Sacred Flame as a Bonus Action, Proficiency Bonus times per Long Rest.",
+      "text": "You can cast Sacred Flame with a Bonus Action instead of an action, a number of times equal to your Proficiency Bonus; you regain all uses on a Long Rest.",
+      "implemented": "data",
+      "action": "bonus_action",
+      "resource_cast": {
+        "spell": "sacred_flame",
+        "casting": "bonus_action",
+        "resource": "spellfire_flame_bonus",
+        "cost": 1
+      },
+      "resource": {
+        "id": "spellfire_flame_bonus",
+        "name": "Spellfire Flame",
+        "max": "pb",
+        "recharge": "long"
+      }
     }
   ],
-  "playable": false
+  "playable": true
 }

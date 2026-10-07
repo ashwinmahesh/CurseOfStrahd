@@ -487,7 +487,7 @@ func _save_one(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult, rol
 		var rolled := rolled_once[i] as Dictionary
 		var amount := int(rolled["total"])
 		amount = t.creature.damage_after_save(amount, ab, test.success, str(sv.get("success", "none")) == "half", bool(act.get("magical", false)))
-		parts.append({"amount": amount, "type": str(dd["type"])})
+		parts.append({"amount": amount, "type": str(dd["type"]), "magic": bool(act.get("magical", false))})
 		texts.append(str(rolled["text"]))
 	if not parts.is_empty() and parts.any(func(p: Dictionary) -> bool: return int(p["amount"]) > 0):
 		var dr := e.deal_damage(c, t, parts, false, str(act.get("name", "")), texts)

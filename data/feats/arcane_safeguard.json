@@ -8,7 +8,7 @@
   },
   "category": "origin",
   "repeatable": false,
-  "summary": "Always prepared: Resistance; choose Intelligence, Wisdom, or Charisma for casting. Help assisting an ally’s ability check also grants that ally Temporary Hit Points equal to your Proficiency Bonus. Resistance may be cast as a Bonus Action Proficiency Bonus times per Long Rest; alternate casting is not automated.",
+  "summary": "Always prepared: Resistance; choose Intelligence, Wisdom, or Charisma for casting. Cast Resistance as a Bonus Action Proficiency Bonus times per Long Rest. Help that assists an ally's ability check also grants it Temporary Hit Points equal to your Proficiency Bonus.",
   "benefits": [
     {
       "id": "arcane_safeguard_cantrip",
@@ -37,11 +37,31 @@
     },
     {
       "id": "arcane_safeguard_benefit",
-      "name": "Sheltering Aid",
-      "summary": "Help assisting an ally’s ability check also grants that ally Temporary Hit Points equal to your Proficiency Bonus. Resistance may be cast as a Bonus Action Proficiency Bonus times per Long Rest; alternate casting is not automated.",
-      "text": "Help assisting an ally’s ability check also grants that ally Temporary Hit Points equal to your Proficiency Bonus. Resistance may be cast as a Bonus Action Proficiency Bonus times per Long Rest; alternate casting is not automated.",
+      "name": "Safeguarding Help",
+      "summary": "When your Help assists an ally's ability check, that ally also gains Temporary Hit Points equal to your Proficiency Bonus.",
+      "text": "When you take the Help action to assist an ally's ability check, that ally also gains Temporary Hit Points equal to your Proficiency Bonus. The game has no Help for ability checks yet (in a fight, Help assists attack rolls), so this part is played out at the table.",
       "implemented": "text"
+    },
+    {
+      "id": "arcane_safeguard_quick_ward",
+      "name": "Quick Ward",
+      "summary": "Cast Resistance as a Bonus Action, Proficiency Bonus times per Long Rest.",
+      "text": "You can cast Resistance with a Bonus Action instead of an action, a number of times equal to your Proficiency Bonus; you regain all uses on a Long Rest.",
+      "action": "bonus_action",
+      "implemented": "data",
+      "resource_cast": {
+        "spell": "resistance",
+        "casting": "bonus_action",
+        "resource": "arcane_safeguard_quick_ward",
+        "cost": 1
+      },
+      "resource": {
+        "id": "arcane_safeguard_quick_ward",
+        "name": "Quick Ward",
+        "max": "pb",
+        "recharge": "long"
+      }
     }
   ],
-  "playable": false
+  "playable": true
 }

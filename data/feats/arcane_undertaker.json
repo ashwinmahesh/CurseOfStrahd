@@ -70,9 +70,15 @@
       "id": "understanding_of_death",
       "name": "Understanding of Death",
       "summary": "Gain Heroic Inspiration after using Help to stabilize a creature at 0 Hit Points. Once per Long Rest.",
-      "text": "Gain Heroic Inspiration after using Help to stabilize a creature at 0 Hit Points. Once per Long Rest.",
-      "implemented": "text"
+      "text": "When you take the Help action to stabilize a creature at 0 Hit Points (a successful Wisdom (Medicine) check), you gain Heroic Inspiration if you don't have it. Once per Long Rest.",
+      "implemented": "engine",
+      "resource": {
+        "id": "understanding_of_death",
+        "name": "Understanding of Death",
+        "max": 1,
+        "recharge": "long"
+      }
     }
   ],
-  "playable": false
+  "playable": true
 }

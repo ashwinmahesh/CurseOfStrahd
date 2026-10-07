@@ -15,15 +15,17 @@
       "name": "Exploit Opening",
       "summary": "Roll the damage dice for your Opportunity Attack twice and choose which result to use.",
       "text": "Roll the damage dice for your Opportunity Attack twice and choose which result to use.",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "family_first",
       "name": "Family First",
       "summary": "When rolling Initiative, spend your Heroic Inspiration to give yourself and your allies Advantage on that Initiative roll.",
-      "text": "When rolling Initiative, spend your Heroic Inspiration to give yourself and your allies Advantage on that Initiative roll.",
-      "implemented": "text"
+      "text": "When rolling Initiative, spend your Heroic Inspiration to give yourself and your allies Advantage on that Initiative roll. In a fight it happens on its own when you have Heroic Inspiration, unless you turn it Off in the class tab.",
+      "implemented": "engine",
+      "policy": "auto",
+      "policy_cost": "Your Heroic Inspiration"
     }
   ],
-  "playable": false
+  "playable": true
 }
