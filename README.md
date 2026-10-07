@@ -40,8 +40,27 @@ You need:
 - macOS on Apple Silicon.
 - Godot 4.7.2 at `/Applications/Godot.app`. Elsewhere, point `GODOT` at the binary (`make run GODOT=/path/to/Godot`).
 - Python 3 for the data checks in `make ci` (standard library only).
+- Git LFS (`brew install git-lfs`). New art and voice clips are stored in Git LFS (`.gitattributes`); without it,
+  they check out as small pointer files the game can't load.
 - Blender 5.2, a `GEMINI_API_KEY` and an `ELEVENLABS_API_KEY` only if you rebuild art or voices. Playing needs none
   of them, since the art and the voice clips are in the repo.
+
+After cloning, turn Git LFS on for the repo and fetch its files once:
+
+```bash
+git lfs install
+```
+
+```bash
+git lfs pull
+```
+
+The raw generated art in `art/generated` isn't loaded by the game or the tests. A clone that only plays or tests can
+skip downloading it, which saves LFS bandwidth (GitHub's free plan has 10 GiB a month):
+
+```bash
+git config lfs.fetchexclude "art/generated/**"
+```
 
 Start the game from the repo root:
 
