@@ -72,8 +72,8 @@ var input_locked := false
 var _queue: Array[Vector2i] = []     ## the leader's remaining path
 var _on_arrive: Callable = Callable()
 var _step_t := 0.0
-## Counts down to the party standing still: the walk cycle plays until the last step's glide has finished.
-var _walk_stop_t := -1.0
+## Party tokens gliding between squares (PartyGlide), by token id.
+var _glides: Dictionary = {}
 var _areas_in: Dictionary = {}
 
 
@@ -712,17 +712,16 @@ func _process(delta: float) -> void:
 		var focus := (tokens[leader().id] as Node3D).global_position if tokens.has(leader().id) else Vector3.ZERO
 		board.fade_occluders(rig.camera.global_position, focus, delta)
 		board.cut_buildings(rig.camera.global_position, focus, delta)
-	if _walk_stop_t >= 0.0 and not in_combat:
-		_walk_stop_t -= delta
-		if _walk_stop_t < 0.0 and _queue.is_empty():
-			_stand_still()
+	_update_glides(delta)
 	if in_combat or _queue.is_empty():
 		return
 	_step_t -= delta
 	if _step_t > 0.0:
 		return
-	_step_t = SNEAK_STEP_TIME if sneaking else STEP_TIME
 	var next: Vector2i = _queue.pop_front()
+	# A diagonal step is longer, so it takes longer: the party keeps one steady pace.
+	var diagonal := absi(next.x - leader().cell.x) + absi(next.y - leader().cell.y) == 2
+	_step_t = (SNEAK_STEP_TIME if sneaking else STEP_TIME) * (sqrt(2.0) if diagonal else 1.0)
 	if grid.has_flag(next, CombatGrid.WALL) and not _exit_at(next):
 		var door := _openable_doors().get(next, {}) as Dictionary
 		if not door.is_empty():
@@ -732,8 +731,6 @@ func _process(delta: float) -> void:
 			_on_arrive = Callable()
 			return
 	_advance_party(next)
-	# Walking until this step's glide ends (a step right after it keeps the cycle going; a walk cut short stops too).
-	_walk_stop_t = _step_t
 	if _check_cell_events():
 		_queue.clear()
 		_on_arrive = Callable()
@@ -744,13 +741,6 @@ func _process(delta: float) -> void:
 			var cb := _on_arrive
 			_on_arrive = Callable()
 			cb.call()
-
-
-## The party (and guests) stop walking in place once they've arrived.
-func _stand_still() -> void:
-	for m: Combatant in members + guest_members:
-		if tokens.has(m.id):
-			(tokens[m.id] as CombatToken).face(Vector2.ZERO, false)
 
 
 ## The leader steps to `next`; each follower steps into the square the one ahead of it just left.
@@ -773,20 +763,40 @@ func _advance_party(next: Vector2i) -> void:
 			continue
 		var was := g.cell
 		g.cell = ahead
-		var gt := tokens[g.id] as CombatToken
-		gt.face(Vector2(ahead - was), true, SNEAK_STEP_TIME if sneaking else STEP_TIME)
-		create_tween().tween_property(gt, "position", board.cell_center(ahead), (SNEAK_STEP_TIME if sneaking else STEP_TIME) * 0.95)
+		_glide(g.id, board.cell_center(ahead), members.size() + guest_members.find(g))
 		ahead = was
 
 
 func _move_member(i: int, to: Vector2i) -> void:
 	var m := members[i]
-	var from := m.cell
 	m.cell = to
-	var tok := tokens[m.id] as CombatToken
-	tok.face(Vector2(to - from), true, SNEAK_STEP_TIME if sneaking else STEP_TIME)
-	var tw := create_tween()
-	tw.tween_property(tok, "position", board.cell_center(to), (SNEAK_STEP_TIME if sneaking else STEP_TIME) * 0.95)
+	_glide(m.id, board.cell_center(to), i)
+
+
+## Sends a party token on toward `to` (the square it just moved into). `place` in the line sets how long a follower
+## waits before setting off from a standstill, so the line moves off one after another.
+func _glide(id: String, to: Vector3, place: int) -> void:
+	var tok := tokens.get(id) as CombatToken
+	if tok == null:
+		return
+	var g := _glides.get(id) as PartyGlide
+	if g == null:
+		g = PartyGlide.new(tok)
+		g.wait = PartyGlide.FOLLOW_DELAY * place
+		g.catch_up = 1.0 if place == 0 else 1.4
+		_glides[id] = g
+	g.step_time = SNEAK_STEP_TIME if sneaking else STEP_TIME
+	g.points.append(to)
+
+
+func _update_glides(delta: float) -> void:
+	if in_combat:
+		_glides.clear()   # the fight places everyone itself
+		return
+	for id: String in _glides.keys():
+		var g := _glides[id] as PartyGlide
+		if not is_instance_valid(g.token) or g.update(delta):
+			_glides.erase(id)
 
 
 func _save_positions() -> void:
