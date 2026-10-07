@@ -983,113 +983,170 @@
       "voice_id": "Xh5OictnmgRO4dff7pLm",
       "name": "Viktor - Bold, Slavic and Impatient",
       "description": "A Barovian highwayman: a rough, impatient man with a strong Eastern European accent, sneering and greedy.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
     },
     "bark_bandit_captain": {
       "voice_id": "BDqe1qZiwPi7xspRxTgh",
       "name": "Roderich - Crude & Ruthless",
       "description": "A bandit captain: an older, crude, ruthless man who barks orders and enjoys it.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
     },
     "bark_guard": {
       "voice_id": "6sXsAlJKKBf265ucBSRt",
       "name": "Maksim - Raw Unpolished Deep",
       "description": "A Vallaki guard: a deep, blunt, tired Barovian voice with an Eastern European accent.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
     },
     "bark_berserker": {
       "voice_id": "uq0HIbNZKn11Hs5ifEdd",
       "name": "Harry - Fierce Warrior",
       "description": "A berserker: a wild young man shouting with bloodlust.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
     },
     "bark_cultist": {
       "voice_id": "um6p7QUWG1g5HBE5RxEo",
       "name": "Valerian | The Nihilist Evil",
       "description": "A cultist of the night: intense, fervent and unhinged.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
     },
     "bark_witch": {
       "voice_id": "upV1WVQQOkwfYxJITYqG",
       "name": "Horpyna - Village Witch & Trickster",
       "description": "A Barovian witch: a cackling, mocking woman with an Eastern European accent.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
     },
     "bark_druid": {
       "voice_id": "gDQfVolj9RbmXgumLcOq",
       "name": "Elinor | The Gruff Aunt",
       "description": "A Yester Hill druid: a gruff, old woman, fierce and earthy.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
     },
     "bark_mongrelfolk": {
       "voice_id": "zauh4pbY6h1ZRErsRiAJ",
       "name": "Valf - Goblin, Raspy, Fantasy Monster",
       "description": "A mongrelfolk: a raspy, broken, creature-like voice, eager and childish.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
     },
     "bark_vampire_spawn": {
       "voice_id": "FcZStbCG9g9QxDlJioSD",
       "name": "Ilinca | The Vampire Countess",
       "description": "A vampire spawn: a hungry, silky woman's voice with a Russian accent, hissing at the edges.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
     },
     "bark_hag": {
       "voice_id": "xBIfEFAROTtux2FvqTLj",
       "name": "Nadine – Whispering Witch of the Black Forest",
       "description": "A night hag: a whispering, sinister old woman, sweet and poisonous.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
     },
     "bark_revenant": {
       "voice_id": "AocjYzHzWRalprWmBG9m",
       "name": "Greg - Ghostly, Gritty, Brave and Raspy",
       "description": "A revenant: a gritty, raspy, ghostly man driven only by vengeance.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
     },
     "bark_wight": {
-      "voice_id": "ttNi9wVM8M97tsxE7PFZ",
-      "name": "Victor - Eloquent Evil Villain",
-      "description": "A wight: an old, cold, eloquent undead lord, contemptuous of the living.",
-      "settings": {},
-      "library": true
+      "voice_id": "M5E055lOUxMi0kJpGyE9",
+      "name": "Gravel Midnight – Deep Grit Character Voice",
+      "description": "A wight: an old, cold, commanding undead lord with a dry, rasping, grave-dust voice, contemptuous of the living.",
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
     },
     "bark_ogre": {
       "voice_id": "3VkFsBHdRPqWKsitgYhJ",
       "name": "Azgar - Indimidating Orc Troll",
       "description": "An ogre: a huge, deep, slow and stupid brute.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
     },
     "bark_werewolf": {
       "voice_id": "A921zklid24OpyVy1Elb",
       "name": "Dracon - Feral, Demonic & Dangerous",
       "description": "A werewolf: a feral, snarling, raspy man halfway to a beast.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
     },
     "bark_phantom_knight": {
       "voice_id": "YRJMFMoNhLEYl3Nae0G6",
       "name": "Xavier - Big, Deep & Powerful narrator",
       "description": "A phantom knight of the Order of the Silver Dragon: big, deep and noble, sworn to an old oath.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
     },
     "bark_arcanaloth": {
       "voice_id": "vfaqCOvlrKi4Zp7C2IAm",
       "name": "Malyx - Echoey, Menacing and Deep Demon",
       "description": "An arcanaloth: an echoing, menacing, deep fiend with a lawyer's patience.",
-      "settings": {},
-      "library": true
+      "settings": {
+        "stability": 0.0
+      },
+      "library": true,
+      "model": "eleven_v3"
     },
     "noise_wolf": {
       "sfx": true,
