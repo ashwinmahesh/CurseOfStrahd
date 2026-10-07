@@ -25,10 +25,13 @@
       "settings": {}
     },
     "ireena": {
-      "voice_id": "hbR403j9lbbtMIJJiMta",
-      "name": "Barovia Ireena Kolyana",
-      "description": "A woman in her early twenties with a clear, steady mid-range voice and a light Eastern European accent. Proud, guarded and brave; short, controlled sentences with a dry edge, and a tremor she keeps out of her voice unless frightened.",
-      "settings": {}
+      "voice_id": "4TxM5AKNyvGHB4VByPs3",
+      "name": "Barovia Ireena (2026-10-07)",
+      "description": "A passionate young Eastern European woman with a thick Romanian accent in her English. A rich, expressive mid-range voice with strong emotional colour and dynamic range: defiant, frightened, tender and furious by turns, her voice breaking a little when she is afraid. Proud, brave and alive.",
+      "settings": {
+        "stability": 0.35,
+        "style": 0.25
+      }
     },
     "ismark": {
       "voice_id": "MPsVDVcDCapCO3oxCNoC",
@@ -836,7 +839,7 @@
     "kip_smudgewick": {
       "voice_id": "oCHQAjcoZiUR4mk6bigI",
       "name": "Barovia Kip Smudgewick",
-      "description": "A friendly, anxious tiefling man in his early thirties with a warm, quick, slightly breathless baritone and a soft West Country English accent. A fast-talking market-stall salesman, polite and eager to please, apologising and selling at once; slow, careful and hard as nails when he is cornered."
+      "description": "A friendly, anxious tiefling man of about fifty with a warm, quick, slightly breathless baritone and a soft West Country English accent. A fast-talking market-stall salesman, polite and eager to please, apologising and selling at once; slow, careful and hard as nails when he is cornered. (Updated 2026-10-07: about fifty, Pip is his daughter; the voice is unchanged, the owner's pick.)"
     },
     "liriel_dawnsong": {
       "voice_id": "I9Au5cFrwupn8JvYBp61",
