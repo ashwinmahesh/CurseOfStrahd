@@ -335,7 +335,8 @@
       ],
       "dialogue": "old_bonegrinder/offalia:asleep",
       "when": "flag.offalia_asleep and not flag.offalia_slain and not flag.offalia_at_large",
-      "facing": "west"
+      "facing": "west",
+      "asleep": true
     },
     {
       "npc": "bella_sunbane",

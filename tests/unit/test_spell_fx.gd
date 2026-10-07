@@ -282,3 +282,49 @@ func test_a_volley_does_not_wait_on_a_missile_that_already_landed() -> void:
 	await fx.until(flying.finished)
 	assert_false(flying.is_running(), "a missile still in the air is waited for")
 	fx.queue_free()
+
+
+## Tokens for a volley's caster and two targets, in the scene so they have places.
+func _volley_tokens() -> Array[CombatToken]:
+	var e := TestCombat.open_field(2)
+	var out: Array[CombatToken] = []
+	for spot: Vector2i in [Vector2i(1, 1), Vector2i(4, 1), Vector2i(4, 3)]:
+		var tok := CombatToken.create(e.add(TestCombat.monster("zombie"), &"enemy", spot))
+		add_child(tok)
+		tok.position = Vector3(spot.x + 0.5, 0, spot.y + 0.5)
+		out.append(tok)
+	return out
+
+
+## Runs `_missiles` and frees `gone` once the first missile is away (a creature that vanished mid-volley, as in
+## Baba Lysaga's fight at Berez, 2026-10-07): the volley skips it, or flies on without its caster, with no script error.
+func _volley_losing(cue: Dictionary, targets: Array[CombatToken], caster: CombatToken, gone: CombatToken) -> bool:
+	var fx := SpellFx.new()
+	add_child(fx)
+	var done := [false]
+	var run := func() -> void:
+		await fx._missiles(str(cue["family"]), cue, caster, targets)
+		done[0] = true
+	run.call()
+	gone.free()
+	for i in 600:
+		if bool(done[0]):
+			break
+		await get_tree().process_frame
+	fx.queue_free()
+	return bool(done[0])
+
+
+func test_a_volley_goes_on_when_a_token_is_freed_mid_flight() -> void:
+	var toks := _volley_tokens()
+	var shots: Array[CombatToken] = [toks[1], toks[2]]
+	assert_true(await _volley_losing(SpellFx.spell_cue("fire_bolt"), shots, toks[0], toks[2]), "a target freed mid-volley")
+	toks = _volley_tokens()
+	shots = [toks[1], toks[2]]
+	assert_true(await _volley_losing(SpellFx.spell_cue("chain_lightning"), shots, toks[0], toks[1]), "a chain's first link freed")
+	toks = _volley_tokens()
+	shots = [toks[1]]
+	assert_true(await _volley_losing(SpellFx.spell_cue("magic_missile"), shots, toks[0], toks[0]), "the caster freed between darts")
+	for t in toks:
+		if is_instance_valid(t):
+			t.queue_free()
