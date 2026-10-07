@@ -973,9 +973,17 @@ func _play_events() -> void:
 				var tc := _tok(str(ev["id"]))
 				if tc != null:
 					tc.refresh()
-					if kind == "down" and tc.combatant.side == &"party":
+					if kind == "down" and tc.combatant.side in [&"party", &"guest"]:
+						# A hero falls (owner ask 2026-10-07): the body drops, a thud and a bell, and their frame cries out.
+						Audio.sfx("fall")
+						Audio.sfx("toll", 0.0)
+						tc.fall()
+						hud.flash_down(tc.combatant.id)
+						hud.banner("%s falls!" % tc.combatant.name())
 						_narrate("combat:fall", tc.combatant, null)
 					elif kind == "death" and tc.combatant.side == &"enemy":
+						Audio.sfx("enemy_death")
+						Audio.sfx("thud")
 						_narrate("combat:kill", null, tc.combatant)
 					elif kind == "death" and tc.combatant.side == &"party":
 						_narrate("death:" + tc.combatant.id, tc.combatant, null)

@@ -85,6 +85,10 @@ var _log_toggle: Button
 var _controls: PanelContainer
 
 
+## Party member id -> when their fall alarm ends (msec).
+var _down_alarm := {}
+
+
 func _init() -> void:
 	name = "CombatHud"
 	layer = 10
@@ -531,8 +535,10 @@ func _refresh_party() -> void:
 		if c.side not in [&"party", &"guest"]:
 			continue
 		var on := c == shown
+		var alarm := int(_down_alarm.get(c.id, 0)) > Time.get_ticks_msec()
 		var card := PanelContainer.new()
-		card.add_theme_stylebox_override("panel", _style("ui_black", "gilt_light" if on else "gilt_dark", 3 if on else 2))
+		card.add_theme_stylebox_override("panel", _style("ui_oxblood" if alarm else "ui_black",
+			"vampire_red" if alarm or c.is_down() else ("gilt_light" if on else "gilt_dark"), 4 if alarm else (3 if on else 2)))
 		card.custom_minimum_size = Vector2(270, 0)
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 8)
@@ -540,7 +546,8 @@ func _refresh_party() -> void:
 		row.add_child(UiParts.framed_portrait(CombatToken.art_id(c), 64.0, c.is_down(), c.creature.dead))
 		var v := VBoxContainer.new()
 		v.add_theme_constant_override("separation", 3)
-		var nm := _label(c.name() + (" (guest)" if c.side == &"guest" else ""), 17, "gilt_light" if on else "vellum")
+		var nm := _label(c.name() + (" (guest)" if c.side == &"guest" else "") + ("  ☠ DOWN" if c.is_down() and not c.creature.dead else ""),
+			17, "vampire_red" if c.is_down() else ("gilt_light" if on else "vellum"))
 		nm.add_theme_font_override("font", UiKit.display_font())
 		v.add_child(nm)
 		v.add_child(_hp_bar(c, 170, 10.0))
@@ -565,6 +572,15 @@ func _refresh_party() -> void:
 		btn.pressed.connect(func() -> void: inspect_requested.emit(c.id))
 		card.add_child(btn)
 		_party_box.add_child(card)
+
+
+## A party member just fell: their frame flashes red for a moment (and stays marked DOWN while they're down).
+func flash_down(id: String) -> void:
+	_down_alarm[id] = Time.get_ticks_msec() + 2500
+	_refresh_party()
+	get_tree().create_timer(2.6).timeout.connect(func() -> void:
+		if is_inside_tree():
+			_refresh_party())
 
 
 func _chips(c: Combatant) -> String:

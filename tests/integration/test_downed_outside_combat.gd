@@ -131,3 +131,24 @@ func test_a_fight_that_ends_while_prone_leaves_them_standing() -> void:
 	await _frames(4)
 	assert_false(v.in_combat, "the fight is over")
 	assert_false(ch.has_condition(&"prone"), "back outside combat, they get up")
+
+
+## Owner ask (2026-10-07): when a hero drops to 0 Hit Points in a fight, the body falls, a sound plays and the HUD
+## says so: their party frame flashes red and is marked DOWN, and a banner names them.
+func test_a_hero_falling_in_a_fight_raises_the_alarm() -> void:
+	var v := _view()
+	assert_true(v.start_encounter("rat"))
+	await _frames(3)
+	var cv := v.combat_view
+	var hero := cv.e.get_c(GameState.story.party[1].id)
+	hero.creature.take_damage(hero.creature.hp, &"slashing")
+	cv.e.events.append({"type": "down", "id": hero.id})
+	cv.call("_play_events")
+	await _frames(2)
+	var hud := cv.hud
+	assert_true(int((hud.get("_down_alarm") as Dictionary).get(hero.id, 0)) > Time.get_ticks_msec(), "the frame flashes")
+	assert_true(str((hud.get("_banner") as Label).text).contains(hero.name()), "a banner names the fallen")
+	var tok := cv.call("_tok", hero.id) as CombatToken
+	assert_true(tok != null and (tok.get("_lying") as Node3D).visible, "the body is on the ground")
+	cv.finished.emit("victory")
+	await _frames(3)
