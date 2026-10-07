@@ -69,7 +69,7 @@ illusory_self, riposte, parry, stones_endurance, interception, protective_field,
 | round | round |
 | over | outcome (victory, defeat) |
 
-`action`, `ability` and `smite` are for the view's effects only (world/combat/fx/spell_fx.gd, docs/art/spell_effects.md):
+`action`, `ability`, `smite` and a `lair` event's `targets` are for the view's effects only (world/combat/fx/spell_fx.gd, docs/art/spell_effects.md):
 nothing in the rules reads them, and emitting them changes no roll, order or state.
 
 ## The hotbar (`ActionCatalog`)
@@ -131,6 +131,6 @@ Children of the Night once when two or more foes stand; uses legendary Moves to 
 legendary strikes otherwise; below a quarter of his Hit Points with Regeneration working, takes mist form and keeps
 away until he is back over half. Withdrawing turns him to mist (or a bat) as he goes.
 
-Events: `legendary` (id, option, name, left), `lair` (id, action, name), `form` (id, form, art: the token wears the
+Events: `legendary` (id, option, name, left), `lair` (id, action, name, targets), `form` (id, form, art: the token wears the
 shape's sprite when it exists), `vanish` (id, left: mist or withdraw, narration) for a creature leaving the fight.
 The initiative tracker shows a legendary creature's actions left (◆◇) and the lair's card at count 20.

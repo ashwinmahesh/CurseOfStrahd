@@ -705,9 +705,10 @@
     "battle_medic": "heal@healing",
     "blessing_of_the_trickster": "buff@illusion",
     "know_your_enemy": "glimmer@moon",
-    "lucky": "glimmer@radiant"
+    "lucky": "glimmer@radiant",
+    "children_of_the_night": "summon@blood"
   },
-  "_monsters": "A monster's own actions by \"<monster>.<action>\". With no pick, a ranged attack is a bolt (magic damage) or a shot, a melee attack a touch (magic) or a slash, and a save action takes its area's shape (cone, line, nova) or a curse or psychic look, all in its damage type's colours.",
+  "_monsters": "A monster's own actions by \"<monster>.<action>\". With no pick, a ranged attack is a bolt (magic damage) or a shot, a melee attack a touch (magic) or a slash, and a save action takes its area's shape (cone, line, nova) or a curse or psychic look, all in its damage type's colours. Lair actions use the same keys (\"strahd_von_zarovich.shadow_thief\").",
   "monsters": {
     "flameskull.fire_ray": "ray@necrotic",
     "nothic.rotting_gaze": "ray@necrotic",
@@ -743,6 +744,14 @@
     "giant_constrictor_snake.constrict": "debuff@steel",
     "elephant.trample": "slash@earth",
     "air_elemental.whirlwind": "debuff@thunder",
-    "water_elemental.whelm": "nova@water"
+    "water_elemental.whelm": "nova@water",
+    "strahd_von_zarovich.through_the_walls": "transform@shadow",
+    "strahd_von_zarovich.slam_the_doors": {
+      "family": "nova",
+      "flavour": "thunder",
+      "size": 2.0
+    },
+    "strahd_von_zarovich.vengeful_dead": "debuff@necrotic",
+    "strahd_von_zarovich.shadow_thief": "psychic@shadow"
   }
 }

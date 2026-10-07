@@ -122,8 +122,9 @@ static func _monster_action(c: Combatant, action_id: String) -> Dictionary:
 	if c == null or not c.creature is Monster:
 		return {}
 	var block := (c.creature as Monster).data
-	for section: String in ["actions", "bonus_actions", "reactions", "legendary_actions"]:
-		for a: Variant in block.get(section, []) as Array:
+	for section: String in ["actions", "bonus_actions", "reactions", "lair_actions"]:
+		var list: Variant = block.get(section, [])
+		for a: Variant in (list as Array if list is Array else []):
 			if str((a as Dictionary).get("id", "")) == action_id:
 				return a as Dictionary
 	return {}

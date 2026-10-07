@@ -183,8 +183,9 @@ func test_feature_and_monster_picks_name_a_family_and_a_real_action() -> void:
 		var block := Compendium.shared().monster_data(key.get_slice(".", 0))
 		assert_false(block.is_empty(), "art/vfx/effects.json: no monster %s" % key)
 		var found := false
-		for section: String in ["actions", "bonus_actions", "reactions"]:
-			for a: Variant in block.get(section, []) as Array:
+		for section: String in ["actions", "bonus_actions", "reactions", "lair_actions"]:
+			var list: Variant = block.get(section, [])
+			for a: Variant in (list as Array if list is Array else []):
 				found = found or str((a as Dictionary).get("id", "")) == key.get_slice(".", 1)
 		assert_true(found, "art/vfx/effects.json: %s has no action %s" % [key.get_slice(".", 0), key.get_slice(".", 1)])
 
@@ -201,3 +202,29 @@ func test_attacks_and_monster_actions_find_their_look() -> void:
 	assert_eq(str(SpellFx.ability_cue("feature", "second_wind", ilse)["family"]), "heal")
 	assert_eq(str(SpellFx.spell_cue("turn_undead")["family"]), "nova", "a feature shown as a spell event")
 	assert_true(SpellFx.spell_cue("no_such_thing").is_empty())
+
+
+func test_a_lair_action_names_whom_it_turns_on() -> void:
+	var e := TestCombat.open_field(3)
+	e.default_player_reaction = "never"
+	var data := {"id": "test_boss", "name": "Test Boss", "size": "medium", "type": "undead", "ac": 15,
+		"hp": {"average": 100, "dice": "10d10+45"}, "speed": {"walk": 30},
+		"abilities": {"str": 18, "dex": 14, "con": 16, "int": 12, "wis": 12, "cha": 16}, "cr": 10, "proficiency_bonus": 4,
+		"actions": [], "ai_profile": "brute", "lair_actions": [{"id": "spirit", "name": "Spirit", "kind": "attack",
+			"attack": {"bonus": 40, "range": 120}, "damage": [{"average": 7, "dice": "2d6", "type": "necrotic"}], "summary": "x"}]}
+	var boss := e.add(Monster.from_data(data), &"enemy", Vector2i(3, 3))
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(8, 3), 5)
+	e.lair = false
+	e.start()
+	boss.initiative = 10
+	a.initiative = 5
+	e.order.sort_custom(func(x: Combatant, y: Combatant) -> bool: return x.initiative > y.initiative)
+	e.lair = true
+	e.legendary.lair_round = 0
+	e.turn_index = 0
+	e.drain_events()
+	e._lair_then_begin()
+	var lair := e.drain_events().filter(func(ev: Variant) -> bool: return str((ev as Dictionary)["type"]) == "lair")
+	assert_eq(lair.size(), 1, "the lair acted")
+	assert_eq(str((lair[0] as Dictionary)["action"]), "spirit")
+	assert_eq((lair[0] as Dictionary)["targets"], [a.id], "the hero it struck")

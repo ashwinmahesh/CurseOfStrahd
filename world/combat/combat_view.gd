@@ -1161,6 +1161,16 @@ func _play_events() -> void:
 					lt.flash(Look.color("vampire_red"), 0.3)
 				hud.banner(("Lair action: %s" if kind == "lair" else "Legendary action: %s") % str(ev["name"]), 1.1)
 				await get_tree().create_timer(0.35 * GameSettings.combat_pace()).timeout
+				# The lair's own effect (its attacks and saves have no events of their own): "<master>.<action>".
+				if kind == "lair" and lt != null and SpellFx.enabled:
+					var lcue := SpellFx.ability_cue("monster", MonsterActions.action_key(lt.combatant, {"id": str(ev["action"])}), lt.combatant)
+					if not lcue.is_empty():
+						var lon: Array[CombatToken] = []
+						for id: Variant in ev.get("targets", []) as Array:
+							var lo := _tok(str(id))
+							if lo != null:
+								lon.append(lo)
+						await fx.cast(lcue, lt, lon, [], board, false)
 			"form":
 				_swap_form_art(str(ev["id"]), str(ev.get("art", "")))
 			"vanish":
