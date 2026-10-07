@@ -80,9 +80,7 @@
         "always selling"
       ]
     },
-    "appearance": {
-      "art": "gunther_arasek"
-    }
+    "appearance": {}
   },
   "level_plan": [
     {
@@ -302,6 +300,5 @@
         ]
       }
     }
-  ],
-  "art_todo": "Borrows the gunther_arasek sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
+  ]
 }

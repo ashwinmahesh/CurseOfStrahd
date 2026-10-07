@@ -346,6 +346,13 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 	add_child(dialogue)
 	dialogue.ended.connect(_dialogue_ended)
 	dialogue.shop_requested.connect(func(npc: String) -> void: open_shop(npc, true))
+	dialogue.stage_requested.connect(func(what: String, npc: String, at: String) -> void:
+		if view == null:
+			return
+		if what == "appear":
+			view.stage_npc(npc, at)
+		else:
+			view.unstage_npc(npc))
 	dialogue.respec_requested.connect(respec)
 	var runner := DialogueRunner.new(st, Dice.roller, narrator)
 	runner.npc_id = _npc_id
@@ -358,6 +365,8 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 
 func _dialogue_ended(combat: String) -> void:
 	dialogue = null
+	if view != null:
+		view.clear_staged()   # whoever stepped into the scene leaves with it
 	# `end_game`, or the parley's yield or ireena, ends the campaign (ADR 0014).
 	if Endings.reached(st) != "" or (Endings.parley_ends(st) and Endings.request(st) != ""):
 		show_ending()
