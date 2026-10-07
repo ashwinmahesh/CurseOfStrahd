@@ -111,3 +111,53 @@ func test_walk_cycle_paced_to_the_step_time() -> void:
 	assert_true(s.walk_speed < fast, "sneaking walks slower")
 	assert_between(fast, 0.5, 2.5)
 	s.free()
+
+
+## Animation set v2 (render_keys.py): the hero's merged frames have every pose, and the poses and one-shots play.
+func test_full_animation_set_poses_and_one_shots() -> void:
+	var frames := DirectionalSprite.frames_for("godrick_pendlebrook")
+	for base: String in ["walk", "idle", "attack", "hurt", "die", "down", "ride_idle", "ride_attack", "sneak_idle", "sneak_walk",
+			"cast"]:
+		for d in DirectionalSprite.DIRECTIONS:
+			assert_true(frames.get_frame_count(StringName(base + "_" + d)) >= 1, "godrick %s_%s" % [base, d])
+	assert_true(frames.get_frame_count(&"idle_s") >= 2, "idle breathes")
+	assert_false(frames.get_animation_loop(&"die_s"), "the fall plays once")
+	assert_true(frames.get_animation_loop(&"down_s"), "lying holds")
+	var s := DirectionalSprite.create(frames, 1.5)
+	assert_eq(s._loop_for(), "idle")
+	s.moving = true
+	assert_eq(s._loop_for(), "walk")
+	s.pose = "sneak"
+	assert_eq(s._loop_for(), "sneak_walk", "sneaking while moving")
+	s.moving = false
+	assert_eq(s._loop_for(), "sneak_idle")
+	s.pose = "ride"
+	assert_eq(s._loop_for(), "ride_idle")
+	assert_true(s.attack(), "attacks from the saddle")
+	assert_eq(str(s.animation), "ride_attack_s")
+	s.animation_finished.emit()
+	s.pose = ""
+	assert_true(s.hurt(), "flinches")
+	assert_true(s.has_struck(), "a flinch lands no blow")
+	s.animation_finished.emit()
+	assert_true(s.cast(), "casts")
+	assert_eq(str(s.animation), "cast_s")
+	s.frame = int((frames.get_meta("hit_frames") as Dictionary)["cast"])
+	assert_true(s.has_struck(), "the spell lands on its frame")
+	s.animation_finished.emit()
+	assert_true(s.die(), "falls")
+	assert_eq(s.pose, "down")
+	assert_false(s.hurt(), "no flinch while falling or lying")
+	s.animation_finished.emit()
+	assert_eq(s._loop_for(), "down", "lies there")
+	s.free()
+
+
+func test_sprites_without_the_full_set_keep_the_old_behaviour() -> void:
+	var s := DirectionalSprite.create(DirectionalSprite.frames_for("wolf"), 0.8)
+	assert_false(s.hurt(), "no flinch")
+	assert_false(s.die(), "no drawn fall")
+	assert_false(s.cast(), "no spell gesture")
+	s.pose = "sneak"
+	assert_eq(s._loop_for(), "idle", "a pose the sheet lacks falls back to standing")
+	s.free()

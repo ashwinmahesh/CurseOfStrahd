@@ -60,3 +60,9 @@ lying-down figure, portraits and dialogue all work unchanged.
 `tests/unit/test_hero_look.gd`: every combination has its pieces (and walks and attacks), composed sheets have no
 keys left and wear the chosen colours, tints map shades to ramps, heights follow species and pick, and a custom
 character gets its paper doll in game.
+
+## TODO: fuller animation for custom heroes
+
+The six pre-made heroes have the fuller animation set (breathing idle, drawn walk, five-step attack, hit and fall, riding,
+sneaking, casting; docs/art/animation.md, "Animation set v2"). Custom heroes from the creator keep the earlier walk
+and attack until that set is worked out for paper-doll parts (owner 2026-10-07: about 35 images a hero, so later).

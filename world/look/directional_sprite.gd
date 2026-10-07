@@ -2,7 +2,9 @@ class_name DirectionalSprite
 extends AnimatedSprite3D
 ## A billboard that plays the right one of 8 rendered directions for where the character faces
 ## relative to the camera (art/sprites/<id>/walk.tres from blender/render_walk.py), and its attack
-## (attack.tres from blender/render_attack.py) when asked (docs/art/animation.md).
+## (attack.tres from blender/render_attack.py) when asked (docs/art/animation.md). Sprites with the fuller animation
+## set (blender/render_keys.py) also breathe while idle, flinch when hit, fall when they drop, and have poses for
+## sneaking, riding a mount and lying down, plus a spell gesture.
 
 ## The attack reached its hit frame (the blow lands): show the hit or miss now.
 signal struck
@@ -18,11 +20,18 @@ var facing := Vector3.BACK
 var moving := false
 ## Playback rate of the walk cycle relative to its sheet (set_step_time).
 var walk_speed := 1.0
+## The standing pose: "" (on foot), "sneak" (crouched, hidden or sneaking), "ride" (astride a mount) or "down" (lying:
+## at 0 Hit Points or Prone). A pose the sheet doesn't have falls back to on foot.
+var pose := ""
 var _attacking := false
 var _struck := false
 var _hit_frame := 2
+## The one-shot animation playing ("attack", "cast", "hurt", "die"...), "" when none.
+var _one_shot := ""
 
-## Merged frames per sprite id: walk.tres plus attack.tres (frames_for).
+## The sheets a sprite folder may hold, merged in this order (a later sheet's animation replaces an earlier one).
+const SHEETS: Array[String] = ["walk", "attack", "hurt", "ride", "sneak", "cast"]
+## Merged frames per sprite id (frames_for).
 static var _frames_cache: Dictionary = {}
 
 
@@ -77,25 +86,39 @@ static func frames_for(art_id: String) -> SpriteFrames:
 	if not ResourceLoader.exists(walk_path):
 		return null
 	var walk := load(walk_path) as SpriteFrames
-	var attack_path := "res://art/sprites/%s/attack.tres" % art_id
+	var sources: Array[SpriteFrames] = [walk]
+	for sheet: String in SHEETS.slice(1):
+		var path := "res://art/sprites/%s/%s.tres" % [art_id, sheet]
+		if ResourceLoader.exists(path):
+			sources.append(load(path) as SpriteFrames)
 	var frames := walk
-	if walk != null and ResourceLoader.exists(attack_path):
-		var attack := load(attack_path) as SpriteFrames
+	if walk != null and sources.size() > 1:
 		frames = SpriteFrames.new()
 		frames.remove_animation(&"default")
-		for source: SpriteFrames in [walk, attack]:
+		var hits := {}
+		for source in sources:
 			for anim in source.get_animation_names():
 				if anim == &"default":
 					continue
+				if frames.has_animation(anim):
+					frames.remove_animation(anim)
 				frames.add_animation(anim)
 				frames.set_animation_loop(anim, source.get_animation_loop(anim))
 				frames.set_animation_speed(anim, source.get_animation_speed(anim))
 				for i in source.get_frame_count(anim):
 					frames.add_frame(anim, source.get_frame_texture(anim, i), source.get_frame_duration(anim, i))
-		frames.set_meta("hit_frame", int(attack.get_meta("hit_frame", 2)))
-		frames.set_meta("casts", bool(attack.get_meta("casts", false)))
+			hits.merge(source.get_meta("hit_frames", {}) as Dictionary, true)
+			if source.has_meta("hit_frame"):
+				frames.set_meta("hit_frame", int(source.get_meta("hit_frame")))
+				frames.set_meta("casts", bool(source.get_meta("casts", false)))
+		frames.set_meta("hit_frames", hits)
 	_frames_cache[art_id] = frames
 	return frames
+
+
+## Whether the frames have animation `base` (in every direction when in one).
+static func has_anim(frames: SpriteFrames, base: String) -> bool:
+	return frames != null and frames.has_animation(StringName(base + "_s"))
 
 
 ## Whether these frames have a drawn attack (every direction has one when any does).
@@ -143,19 +166,54 @@ func set_step_time(seconds: float) -> void:
 	walk_speed = clampf(cycle / (CELLS_PER_CYCLE * seconds), 0.5, 2.5)
 
 
-## Plays the attack once toward `facing`: `struck` fires on the hit frame, `attack_finished` at the end, then it
-## stands idle again. Returns false, playing nothing, when the sprite has no attack sheet.
+## Plays the attack once toward `facing` (from the saddle when riding and the sheet has it): `struck` fires on the hit
+## frame, `attack_finished` at the end, then it stands idle again. Returns false, playing nothing, when the sprite has
+## no attack sheet.
 func attack() -> bool:
 	if not has_attack(sprite_frames):
 		return false
+	return _play_once("ride_attack" if pose == "ride" and has_anim(sprite_frames, "ride_attack") else "attack", true)
+
+
+## The spell gesture (gather, release on the hit frame), like attack(). False when the sheet has none.
+func cast() -> bool:
+	if not has_anim(sprite_frames, "cast"):
+		return false
+	return _play_once("cast", true)
+
+
+## Flinches from a blow and recovers (no hit frame). False when the sheet has no flinch or the figure is lying down.
+func hurt() -> bool:
+	if not has_anim(sprite_frames, "hurt") or pose == "down" or _attacking or _one_shot == "die":
+		return false
+	return _play_once("hurt", false)
+
+
+## Falls (flinch, stagger, collapse) and then lies there (pose "down"). False when the sheet has no fall.
+func die() -> bool:
+	if not has_anim(sprite_frames, "die") or str(animation).begins_with("down_") or _one_shot == "die":
+		return false
+	pose = "down"
+	return _play_once("die", false)
+
+
+func _play_once(base: String, lands_a_blow: bool) -> bool:
 	var cam := get_viewport().get_camera_3d() if is_inside_tree() else null
 	var dir := direction_for(facing, cam.global_basis) if cam != null else "s"
-	_attacking = true
-	_struck = false
+	_one_shot = base
+	_attacking = lands_a_blow
+	_struck = not lands_a_blow
+	_hit_frame = int((sprite_frames.get_meta("hit_frames", {}) as Dictionary).get(base,
+		sprite_frames.get_meta("hit_frame", 2) if base == "attack" else 1))
 	moving = false
 	speed_scale = 1.0
-	play(StringName("attack_" + dir))
+	play(StringName(base + "_" + dir))
 	return true
+
+
+## Falling right now (the drawn fall is playing).
+func is_dying() -> bool:
+	return _one_shot == "die"
 
 
 func is_attacking() -> bool:
@@ -174,6 +232,7 @@ func _on_frame_changed() -> void:
 
 
 func _on_animation_finished() -> void:
+	_one_shot = ""
 	if not _attacking:
 		return
 	_attacking = false
@@ -188,17 +247,33 @@ func _process(delta: float) -> void:
 	if cam == null:
 		return
 	_keep_sharp(cam, delta)
-	if _attacking:
-		if not moving:
+	if _one_shot != "":
+		if not moving or _one_shot == "die":
 			return
 		# Moving again cuts the attack short.
 		_on_animation_finished()
-	speed_scale = walk_speed if moving else 1.0
-	var anim := StringName(("walk_" if moving else "idle_") + direction_for(facing, cam.global_basis))
+	var base := _loop_for()
+	speed_scale = walk_speed if base in ["walk", "sneak_walk"] else 1.0
+	var anim := StringName(base + "_" + direction_for(facing, cam.global_basis))
 	if animation != anim:
 		var f := frame
 		play(anim)
-		frame = f
+		frame = f if f < sprite_frames.get_frame_count(anim) else 0
+
+
+## The looping animation for the pose and whether the figure is moving.
+func _loop_for() -> String:
+	match pose:
+		"down":
+			if has_anim(sprite_frames, "down"):
+				return "down"
+		"ride":
+			if has_anim(sprite_frames, "ride_idle"):
+				return "ride_idle"
+		"sneak":
+			if has_anim(sprite_frames, "sneak_walk"):
+				return "sneak_walk" if moving else "sneak_idle"
+	return "walk" if moving else "idle"
 
 
 ## How many screen pixels one sheet pixel covers decides the filter: sharp while it's above SHARP_DOWN_TO, mipmapped
