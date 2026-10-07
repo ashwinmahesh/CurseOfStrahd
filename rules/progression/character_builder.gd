@@ -191,10 +191,13 @@ func pending_choices() -> Array[Choice]:
 	return out
 
 
-## Choices that belong to a step: ORIGIN (background, species, languages), CHOICES (class and its feats).
+## Choices that belong to a step: ORIGIN (background, species, languages), CHOICES (class and its feats). A pick only
+## a rest changes stays at its default here.
 func choices_for_step(step: Step) -> Array[Choice]:
 	var out: Array[Choice] = []
 	for c in all_choices():
+		if not c.at_creation:
+			continue
 		var origin := c.key.begins_with("background.") or c.key.begins_with("species.") or c.key.begins_with("origin.")
 		if (step == Step.ORIGIN and origin) or (step == Step.CHOICES and not origin):
 			out.append(c)

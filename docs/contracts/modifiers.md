@@ -117,6 +117,10 @@ artisan or musical instrument); weapon masteries `melee: true` (Barbarian); beas
 Invocation options carry `prerequisites`: `{"level": 5, "invocation": "pact_of_the_blade", "cantrip": "damage"
 | "attack"}`; ChoiceOptions blocks them with the reason.
 
+`replaceable` says when earlier picks may change (`long_rest`, `short_rest`, `level_up`) and `replace_max` how many
+at once. `default` is the pick until the player changes it (the background's origin feat, a High Elf's
+Prestidigitation); `creation: false` keeps a choice out of character creation, for a pick only a rest changes.
+
 ## Classes
 
 Beyond features, a class names `tool_choices` (a tool choice at level 1: Bard instruments) and, under

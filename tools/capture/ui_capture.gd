@@ -144,6 +144,10 @@ func capture_shots(tool: Node, out: String) -> void:
 					var scroll := sc as ScrollContainer
 					scroll.scroll_vertical = int((l as Label).global_position.y - scroll.global_position.y) - 60
 		await _shoot(tool, "%s_item_rest_prepare.png" % out)
+		# Below it, his High Elf cantrip (Prestidigitation until he swaps it).
+		for sc in inv.find_children("*", "ScrollContainer", true, false):
+			(sc as ScrollContainer).scroll_vertical = 100000
+		await _shoot(tool, "%s_item_rest_high_elf.png" % out)
 		root.call("close_screen")
 	if _wants("level_up"):
 		GameState.story.milestones = 10
