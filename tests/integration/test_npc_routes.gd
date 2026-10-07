@@ -111,9 +111,10 @@ func test_talking_holds_everyone_still() -> void:
 
 func test_he_stops_beside_the_leader() -> void:
 	var v := _view()
-	v.leader().cell = Vector2i(4, 2)
+	var at := _cell_of("ismark")
+	v.leader().cell = at + Vector2i(0, 1)
 	await _run(3.0)
-	assert_eq(_cell_of("ismark"), Vector2i(3, 1), "someone comes up to him, so he waits")
+	assert_eq(_cell_of("ismark"), at, "someone comes up to him, so he waits")
 
 
 func test_turn_based_exploring_moves_him_only_as_a_round_ends() -> void:
