@@ -2412,6 +2412,8 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 				target.creature.remove_effect(e)
 				log.add("info", "%s ends on %s (took damage)" % [e.name, target.name()], target.id)
 	# Undead Fortitude (2025 zombie): a Con save (DC 5 + damage) to drop to 1 HP instead, unless Radiant or a crit.
+	# On a success it never falls: no death, no "unconscious", just a zombie still standing at 1 Hit Point.
+	var fortitude: D20Test = null
 	if target.creature.dead and target.creature.has_flag("undead_fortitude") and not critical:
 		var radiant := false
 		for p: Variant in parts:
@@ -2423,7 +2425,10 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 			if save.success:
 				target.creature.dead = false
 				target.creature.hp = 1
-				log.add("info", "%s keeps standing: Undead Fortitude" % target.name(), target.id, [save.describe()])
+				dr.dropped_to_zero = false
+				dr.died = false
+				dr.instant_death = false
+				fortitude = save
 	# A shape (Polymorph, Wild Shape) that runs out: the real creature comes back with what's left.
 	shapes.after_damage(target)
 	# Gift of the Protectors: a party member drops to 1 instead of 0 once per Long Rest.
@@ -2461,6 +2466,9 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		all_details.append(text)
 		log.add("hit", headline, source.id if source != null else "", all_details)
 	events.append({"type": "damage", "id": target.id, "amount": dr.final, "critical": critical})
+	if fortitude != null:
+		log.add("info", "%s keeps standing at 1 Hit Point (Undead Fortitude)" % target.name(), target.id, [fortitude.describe()])
+		events.append({"type": "trait", "id": target.id, "name": "Undead Fortitude"})
 	if dr.concentration_broken:
 		log.add("info", "%s loses Concentration" % target.name(), target.id, [dr.concentration_save.describe()])
 	if was_up and target.is_down():

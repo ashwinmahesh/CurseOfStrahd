@@ -1090,6 +1090,13 @@ func _play_events() -> void:
 					add_child(nt)
 					tokens[sc.id] = nt
 					nt.flash(Look.color("lilac"), 0.5)
+			"trait":
+				# A monster trait that just saved it or changed the fight (Undead Fortitude): its name over the token.
+				var trt := _tok(str(ev["id"]))
+				if trt != null:
+					trt.refresh()
+					_float(trt, str(ev["name"]), "bone", 34)
+					await get_tree().create_timer(0.35).timeout
 			"legendary", "lair":
 				# A boss acting between turns (ADR 0014): its name over the field, and a flash on the boss.
 				_stop_walking(walking)
