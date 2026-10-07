@@ -1030,9 +1030,9 @@ func _play_events() -> void:
 	var walking: Dictionary = {}
 	# Who just played their attack as a spell gesture: the spell's own attack rolls that follow don't replay it.
 	var cast_by := ""
-	var at := -1
+	var ev_at := -1   # where `ev` is in `events`, for what follows it
 	for ev in events:
-		at += 1
+		ev_at += 1
 		if _closed:
 			return   # the story took the fight back mid-way: its tokens may be gone
 		var kind := str(ev["type"])
@@ -1096,7 +1096,7 @@ func _play_events() -> void:
 					if not bool(ev["hit"]):
 						Audio.sfx("swing")
 					elif not flew and not str(ev.get("action", "")).begins_with("spell:") and (acue.is_empty() or str(acue["flavour"]) == "steel"):
-						CombatSfx.hit(CombatSfx.hit_kind(a.combatant, str(ev.get("action", ""))), _damage_after(events, at, d.combatant.id),
+						CombatSfx.hit(CombatSfx.hit_kind(a.combatant, str(ev.get("action", ""))), _damage_after(events, ev_at, d.combatant.id),
 							d.combatant, bool(ev.get("critical", false)))
 					if not bool(ev["hit"]):
 						_float(d, "miss", "parchment")
