@@ -11,8 +11,28 @@ import sys
 from collections import defaultdict
 
 
+def fast(r):
+    """The effects_fast phase: one row per effect, already paired frame by frame."""
+    rows = [s for s in r["samples"] if s["kind"] == "effect"]
+    loads = [s.get("load", 0) for s in rows]
+    print("Size %s; Mac load average %.0f to %.0f\n" % (r["meta"]["size"], min(loads), max(loads)))
+    place = ""
+    for s in rows:
+        p, fx = s["what"].split("|")
+        if p != place:
+            place = p
+            print("%s" % p)
+            print("  %-14s %8s %8s %9s %7s   %s" % ("effect off", "on ms", "off ms", "saves ms", "saves", "draw calls on -> off"))
+        on = s["on_ms"]["p50"]
+        print("  %-14s %8.1f %8.1f %9.1f %6.0f%%   %d -> %d" % (fx, on, s["frame_ms"]["p50"], s["saves_ms"]["p50"],
+              100.0 * s["saves_ms"]["p50"] / on if on else 0, s["draws_on"], s["draws_off"]))
+
+
 def main():
     r = json.load(open(sys.argv[1]))
+    if any(s["kind"] == "effect" for s in r["samples"]):
+        fast(r)
+        return
     on = defaultdict(list)
     off = defaultdict(list)
     loads = []

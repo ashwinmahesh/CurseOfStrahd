@@ -22,6 +22,7 @@ var frames := 240                    ## measured frames per sample
 var warm := 90                       ## frames let pass before measuring (shaders compile, tweens settle)
 var passes := 2
 var pairs := 3                       ## on/off pairs per effect in the effects phase
+var cycles := 10                     ## off/on switches per effect in the effects_fast phase
 var report := {"samples": [], "loads": [], "memory": [], "meta": {}}
 var _last_usec := 0
 var _draw_start := 0
@@ -40,6 +41,7 @@ func _ready() -> void:
 	warm = int(args.get("warm", warm))
 	passes = int(args.get("passes", passes))
 	pairs = int(args.get("pairs", pairs))
+	cycles = int(args.get("cycles", cycles))
 	var only := str(args.get("only", "title,newgame,places,saveload,combat,effects")).split(",")
 	var places: Array = PLACES if str(args.get("places", "")) == "" else Array(str(args["places"]).split(","))
 	var out := str(args.get("out", "user://perf_report.json"))
@@ -79,6 +81,8 @@ func _ready() -> void:
 			await _combat(p)
 		if "effects" in only:
 			await _effects(p)
+		if "effects_fast" in only:
+			await _effects_fast(p)
 		if "presets" in only:
 			await _presets(p)
 	if "memory" in only:
@@ -309,6 +313,63 @@ func _effects(p: int) -> void:
 				undo.call()
 	root.queue_free()
 	await _wait(2)
+
+
+## Each effect switched off and on every few frames (`cycles` times), the first frames after each switch dropped:
+## the GPU is shared with other work (Blender renders) whose load swings within seconds, and a fast alternation
+## cancels most of it. One sample row per effect: frame_ms is with it off, on_ms with it on.
+func _effects_fast(p: int) -> void:
+	var root := await _story_root(5)
+	const RUN := 12
+	const SKIP := 4
+	for spec: String in EFFECT_PLACES:
+		var where := spec.get_slice("@", 0)
+		GameState.story.minute_of_day = NIGHT if spec.ends_with("night") else DAY
+		_phase("move: " + where)
+		root.call("enter_location", where, "default")
+		_close_popups(root)
+		root.call("_refresh")
+		await _wait(warm * 2)
+		var view := root.get("view") as Node
+		for fx: String in EFFECTS:
+			_phase("effects: %s %s" % [spec, fx])
+			var on_ms: Array[float] = []
+			var off_ms: Array[float] = []
+			var diffs: Array[float] = []
+			var draws_on := 0
+			var draws_off := 0
+			for k in cycles:
+				var on_run := await _run_frames(RUN, SKIP)
+				draws_on = RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
+				var undo := _effect_off(view, fx)
+				var off_run := await _run_frames(RUN, SKIP)
+				draws_off = RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
+				undo.call()
+				on_ms.append_array(on_run)
+				off_ms.append_array(off_run)
+				diffs.append(_stats(on_run)["p50"] - _stats(off_run)["p50"])
+			var row := {"kind": "effect", "what": "%s|%s" % [spec, fx], "pass": p, "on_ms": _stats(on_ms),
+				"frame_ms": _stats(off_ms), "saves_ms": _stats(diffs), "draws_on": draws_on, "draws_off": draws_off,
+				"video_mb": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0,
+				"load": _loadavg()}
+			report["samples"].append(row)
+			print("PERF effect %s %s | on p50 %.1f | off p50 %.1f | saves %.1f ms (cycle median) | draws %d -> %d" % [
+				spec, fx, row["on_ms"]["p50"], row["frame_ms"]["p50"], row["saves_ms"]["p50"], draws_on, draws_off])
+	root.queue_free()
+	await _wait(2)
+
+
+## `n` frame times (ms), after letting `skip` frames pass (a switch's first frames can carry a shader compile).
+func _run_frames(n: int, skip: int) -> Array[float]:
+	await _wait(skip)
+	_rec.clear()
+	_recording = true
+	await _wait(n)
+	_recording = false
+	var out: Array[float] = []
+	for r in _rec:
+		out.append(float(r["ms"]))
+	return out
 
 
 ## Switches one effect off in the place being shown; returns what puts it back.

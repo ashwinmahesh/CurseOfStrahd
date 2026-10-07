@@ -294,6 +294,7 @@ def main():
     ap.add_argument("--profile", action="store_true")
     ap.add_argument("--preload", default="")
     ap.add_argument("--pairs", type=int, default=0)
+    ap.add_argument("--cycles", type=int, default=0)
     ap.add_argument("--port", type=int, default=0)
     ap.add_argument("--timeout", type=int, default=1800)
     args = ap.parse_args()
@@ -310,6 +311,8 @@ def main():
         user.append("--preload=" + args.preload)
     if args.pairs:
         user.append("--pairs=%d" % args.pairs)
+    if args.cycles:
+        user.append("--cycles=%d" % args.cycles)
     cmd = [os.path.join(ROOT, "tools", "godot"), "--path", ROOT, "--resolution", "1x1", "--position", "100000,100000",
            "--audio-driver", "Dummy"]
     prof = None
@@ -337,6 +340,8 @@ def main():
         print("perf: script profile in", path)
     if os.path.exists(report):
         print_report(json.load(open(report)))
+        if any(s["kind"] in ("effect", "effects") for s in json.load(open(report))["samples"]):
+            print("\nEffect costs: python3 tools/perf/perf_effects.py " + report)
     else:
         print("perf: no report; see", log)
         sys.exit(1)
@@ -359,6 +364,8 @@ def print_report(r):
     print("\nFrames (ms; p10 / p50 / p95 / max; draw p50 = the renderer's CPU side plus waiting on the GPU; draw calls; "
           "video MB; resident MB; load average)")
     for s in r["samples"]:
+        if s["kind"] == "effect":
+            continue   # tools/perf/perf_effects.py prints these
         f = s["frame_ms"]
         print("  %-8s %-44s %6.2f %6.2f %6.2f %7.1f | draw %5.2f | %5d draws | %5.0f vram | %5.0f rss | load %4.1f%s" % (
             s["kind"], s["what"][:44], f.get("p10", 0), f["p50"], f["p95"], f["max"], s["draw_ms"]["p50"],
