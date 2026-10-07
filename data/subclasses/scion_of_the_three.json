@@ -7,7 +7,7 @@
     "checked_against": "FRHoF",
     "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
   },
-  "summary": "Occult gifts from the Dead Three turn a rogue into a terrifying pursuer. Some features are reference-only; see each feature’s implementation status.",
+  "summary": "Occult gifts from the Dead Three turn a rogue into a terrifying pursuer.",
   "features": [
     {
       "level": 3,
@@ -15,8 +15,16 @@
         "id": "scion_bloodthirst",
         "name": "Bloodthirst",
         "summary": "Reaction when a visible enemy within 30 feet takes damage, survives, and is Bloodied: teleport to a visible empty space within 5 feet of it and make one melee attack. Uses equal Intelligence modifier (minimum 1) per Long Rest.",
-        "text": "Reaction when a visible enemy within 30 feet takes damage, survives, and is Bloodied: teleport to a visible empty space within 5 feet of it and make one melee attack. Uses equal Intelligence modifier (minimum 1) per Long Rest.",
-        "implemented": "text"
+        "text": "When an enemy you can see within 30 feet takes damage and is left Bloodied but alive, you can take a Reaction to teleport to an empty space within 5 feet of it and make one melee attack against it. Intelligence modifier uses (minimum 1) per Long Rest.",
+        "implemented": "engine",
+        "action": "reaction",
+        "resource": {
+          "id": "scion_bloodthirst",
+          "name": "Bloodthirst",
+          "max": "mod:int",
+          "recharge": "long",
+          "min": 1
+        }
       }
     },
     {
@@ -96,8 +104,8 @@
         "id": "scion_strike_fear",
         "name": "Strike Fear",
         "summary": "Cunning Strike option: spend 1d6 Sneak Attack for Terrify. The target makes a Wisdom save or is Frightened for 1 minute; you have Advantage against it while so Frightened. It repeats the save at each turn’s end to end the effect.",
-        "text": "Cunning Strike option: spend 1d6 Sneak Attack for Terrify. The target makes a Wisdom save or is Frightened for 1 minute; you have Advantage against it while so Frightened. It repeats the save at each turn’s end to end the effect.",
-        "implemented": "text"
+        "text": "A new Cunning Strike option, Terrify (costs 1d6 of Sneak Attack): the target makes a Wisdom save or is Frightened of you for 1 minute, repeating the save at the end of each of its turns; you have Advantage on attack rolls against it while it's Frightened this way.",
+        "implemented": "engine"
       }
     },
     {
@@ -106,8 +114,8 @@
         "id": "aura_of_malevolence",
         "name": "Aura of Malevolence",
         "summary": "When teleporting with Bloodthirst, chosen creatures within 10 feet of either departure or arrival (choose one) take Intelligence modifier damage of your Dread Allegiance resistance type. It ignores Resistance.",
-        "text": "When teleporting with Bloodthirst, chosen creatures within 10 feet of either departure or arrival (choose one) take Intelligence modifier damage of your Dread Allegiance resistance type. It ignores Resistance.",
-        "implemented": "text"
+        "text": "When you teleport with Bloodthirst, creatures you choose within 10 feet of the space you left or the one you arrive in (in the game, your enemies around your arrival) take damage equal to your Intelligence modifier, of your Dread Allegiance's Resistance type. It ignores Resistance.",
+        "implemented": "engine"
       }
     },
     {
@@ -116,10 +124,10 @@
         "id": "dread_incarnate",
         "name": "Dread Incarnate",
         "summary": "Regain one Bloodthirst use on a Short Rest. Treat Sneak Attack damage dice showing 1 or 2 as 3.",
-        "text": "Regain one Bloodthirst use on a Short Rest. Treat Sneak Attack damage dice showing 1 or 2 as 3.",
-        "implemented": "text"
+        "text": "You regain one use of Bloodthirst when you finish a Short Rest, and Sneak Attack dice that roll 1 or 2 count as 3.",
+        "implemented": "engine"
       }
     }
   ],
-  "playable": false
+  "playable": true
 }

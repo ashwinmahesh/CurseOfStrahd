@@ -1251,6 +1251,9 @@ static func relink_concentration(creatures: Array[Creature], saved: Dictionary) 
 func damage_after_save(amount: int, ability: StringName, success: bool, half: bool, magical: bool = false) -> int:
 	if half and ability == &"dex" and has_flag("evasion") and not has_condition(&"incapacitated"):
 		return 0 if success else amount / 2
+	# Crown of Spellfire (Spellfire Sorcery 18): magic's half-on-a-success becomes none, and half on a failure.
+	if half and magical and has_flag("spellfire_crown") and not has_condition(&"incapacitated"):
+		return 0 if success else amount / 2
 	if success:
 		if half and magical and has_flag("circle_of_power"):
 			return 0

@@ -772,7 +772,15 @@
     "shrouding_spells": "buff@shadow",
     "flustering_strike": "glimmer@illusion",
     "commandant_rally": "ward@steel",
-    "lordly_resolve": "buff@radiant"
+    "lordly_resolve": "buff@radiant",
+    "inspired_eclipse": "teleport@moon",
+    "eventide_step": "teleport@moon",
+    "djinni_step": "teleport@thunder",
+    "shift_element": "glimmer@ward",
+    "noble_scion": "transform@lightning",
+    "burst_flames": "ward@fire",
+    "burst_fire": "bolt@radiant",
+    "crown_of_spellfire": "transform@fire"
   },
   "_monsters": "A monster's own actions by \"<monster>.<action>\". With no pick, a ranged attack is a bolt (magic damage) or a shot, a melee attack a touch (magic) or a slash, and a save action takes its area's shape (cone, line, nova) or a curse or psychic look, all in its damage type's colours. Lair actions use the same keys (\"strahd_von_zarovich.shadow_thief\").",
   "monsters": {

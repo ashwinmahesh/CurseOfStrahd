@@ -422,6 +422,7 @@ const CUNNING := {
 	"daze": ["Daze", 2, "Con save or Dazed", 14],
 	"knock_out": ["Knock Out", 6, "Con save or Unconscious 1 min", 14],
 	"obscure": ["Obscure", 3, "Dex save or Blinded", 14],
+	"terrify": ["Terrify", 1, "Wis save or Frightened 1 min", 9],
 }
 
 
@@ -445,6 +446,9 @@ func rider_options(c: Combatant) -> Array[Dictionary]:
 			if id == "stealth_attack" and not has_feature(c, "supreme_sneak"):
 				continue
 			if int(row[3]) == 14 and not has_feature(c, "devious_strikes"):
+				continue
+			# Scion of the Three's Strike Fear adds Terrify.
+			if id == "terrify" and not has_feature(c, "scion_strike_fear"):
 				continue
 			var why2 := ""
 			if id == "poison" and enc().item_count(c, "poisoners_kit") <= 0:
@@ -774,7 +778,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 	var size_ok := Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large")
 	e.class_features.after_hit(c, target, option, st, r)
 	e.ravenloft.after_hit(c, target, option, st, r)
-	e.faerun.after_hit(c, target, critical)
+	e.faerun.after_hit(c, target, critical, st)
 	# Battle Master maneuvers.
 	if st.has("maneuver"):
 		var id := str(st["maneuver"])
@@ -850,6 +854,15 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 					fx4.turn_owner_id = target.id
 					fx4.skip_turn_ends = e.own_turn_skip(target)
 					target.creature.add_effect(fx4)
+			"terrify":
+				if alive and not _save(target, &"wis", dc_dex, "Cunning Strike: Terrify", "frightened"):
+					var fx6 := Effect.new("Terrified", &"feature", "scion_strike_fear").with_condition(&"frightened") \
+						.with_modifier("flag", {"value": "terrified_by:%s" % c.id})
+					fx6.caster_id = c.id
+					fx6.lasting({"kind": "minutes", "amount": 1})
+					fx6.turn_owner_id = target.id
+					fx6.repeat_save = {"ability": "wis", "dc": dc_dex, "when": "end"}
+					target.creature.add_effect(fx6)
 			"knock_out":
 				if alive and not _save(target, &"con", dc_dex, "Cunning Strike: Knock Out", "unconscious"):
 					var fx5 := Effect.new("Knocked Out", &"feature", "devious_strikes").with_condition(&"unconscious")

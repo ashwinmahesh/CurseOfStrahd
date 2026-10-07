@@ -7,7 +7,7 @@
     "checked_against": "AU",
     "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
   },
-  "summary": "A cleric who studies and reshapes arcane magic. Some features are reference-only; see each feature’s implementation status.",
+  "summary": "A cleric who studies and reshapes arcane magic.",
   "features": [
     {
       "level": 3,
@@ -51,8 +51,8 @@
         "id": "modify_magic",
         "name": "Modify Magic",
         "summary": "When casting, spend Channel Divinity freely for one benefit: one spell target gains 2d8 + Cleric level Temporary Hit Points; or, after a visible creature succeeds on its first save against that spell, subtract 1d6 from that save.",
-        "text": "When casting, spend Channel Divinity freely for one benefit: one spell target gains 2d8 + Cleric level Temporary Hit Points; or, after a visible creature succeeds on its first save against that spell, subtract 1d6 from that save.",
-        "implemented": "text"
+        "text": "When you cast a spell you can spend a use of Channel Divinity (no action) for one benefit; arm it on the hotbar before casting. Ward: one creature the spell targets gains 2d8 + your Cleric level Temporary Hit Points. Unravel: the first time a creature you can see succeeds on its save against the spell, it subtracts 1d6 from that save, possibly failing.",
+        "implemented": "engine"
       }
     },
     {
@@ -61,8 +61,14 @@
         "id": "dispelling_recovery",
         "name": "Dispelling Recovery",
         "summary": "After casting a slotted spell that heals or ends a condition on a creature, cast Dispel Magic as part of the same action, Bonus Action, or Reaction without a slot. Once per Short or Long Rest; Channel Divinity restores use without an action.",
-        "text": "After casting a slotted spell that heals or ends a condition on a creature, cast Dispel Magic as part of the same action, Bonus Action, or Reaction without a slot. Once per Short or Long Rest; Channel Divinity restores use without an action.",
-        "implemented": "text"
+        "text": "After you cast a spell with a spell slot that restores Hit Points or ends a condition on a creature, you can also cast Dispel Magic without a slot as part of the same action (from the hotbar, for the rest of that turn). Once per Short or Long Rest; spending a use of Channel Divinity (no action) restores it.",
+        "implemented": "engine",
+        "resource": {
+          "id": "dispelling_recovery",
+          "name": "Dispelling Recovery",
+          "max": 1,
+          "recharge": "short"
+        }
       }
     },
     {
@@ -168,5 +174,5 @@
       "teleportation_circle"
     ]
   },
-  "playable": false
+  "playable": true
 }

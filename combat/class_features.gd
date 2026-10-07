@@ -1830,6 +1830,9 @@ func refresh_auras() -> void:
 					fx.modifiers.append(Modifier.of("resistance", {"value": ty}, "Aura of Warding", &"feature"))
 			if has(p, "aura_of_alacrity") and t != p:
 				fx.modifiers.append(Modifier.of("speed", {"value": 10}, "Aura of Alacrity", &"feature"))
+			# Aura of Elemental Shielding (Oath of the Noble Genies 7): the element the paladin holds now.
+			if has(p, "aura_of_elemental_shielding"):
+				fx.modifiers.append(Modifier.of("resistance", {"value": enc().faerun.genie_element(p)}, "Aura of Elemental Shielding", &"feature"))
 			t.creature.add_effect(fx)
 
 

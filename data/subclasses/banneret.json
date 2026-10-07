@@ -7,7 +7,7 @@
     "checked_against": "FRHoF",
     "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
   },
-  "summary": "A knight whose leadership helps companions recover and seize opportunities. Some features are reference-only; see each feature’s implementation status.",
+  "summary": "A knight whose leadership helps companions recover and seize opportunities.",
   "features": [
     {
       "level": 3,
@@ -34,9 +34,22 @@
       "feature": {
         "id": "knightly_envoy",
         "name": "Knightly Envoy",
-        "summary": "Cast Comprehend Languages as a Ritual only, using Charisma. Learn one PHB or Heroes of Faerûn language; after a Long Rest, it may change to a language heard, read, or seen signed in the previous 24 hours. Ritual-only casting and the language swap are reference-only.",
-        "text": "Cast Comprehend Languages as a Ritual only, using Charisma. Learn one PHB or Heroes of Faerûn language; after a Long Rest, it may change to a language heard, read, or seen signed in the previous 24 hours. Ritual-only casting and the language swap are reference-only.",
-        "implemented": "text"
+        "summary": "Comprehend Languages as a Ritual with Charisma; learn one language.",
+        "text": "You can cast Comprehend Languages as a Ritual, using Charisma. You also learn one language. (The book lets you swap it after a Long Rest for one you've heard, read or seen signed in the last day; in the game you pick it when you take the feature.)",
+        "implemented": "data",
+        "choice": {
+          "id": "language",
+          "kind": "language",
+          "count": 1
+        },
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "comprehend_languages",
+            "ability": "cha",
+            "always_prepared": true
+          }
+        ]
       }
     },
     {
@@ -45,8 +58,16 @@
         "id": "banneret_group_recovery",
         "name": "Group Recovery",
         "summary": "When Second Wind heals you, also heal up to Charisma modifier allies (minimum 1) within a 30-foot Emanation for 1d4 + Fighter level each. Once per Short or Long Rest.",
-        "text": "When Second Wind heals you, also heal up to Charisma modifier allies (minimum 1) within a 30-foot Emanation for 1d4 + Fighter level each. Once per Short or Long Rest.",
-        "implemented": "text"
+        "text": "When Second Wind heals you, up to your Charisma modifier (minimum 1) allies within 30 feet also regain 1d4 + your Fighter level Hit Points (the most hurt first). Once per Short or Long Rest; it happens on its own unless you turn it Off in the class tab.",
+        "implemented": "engine",
+        "resource": {
+          "id": "banneret_group_recovery",
+          "name": "Group Recovery",
+          "max": 1,
+          "recharge": "short"
+        },
+        "policy": "auto",
+        "policy_cost": "Once per Short or Long Rest"
       }
     },
     {
@@ -56,7 +77,7 @@
         "name": "Team Tactics",
         "summary": "Allies chosen for Group Recovery also gain Advantage on D20 Tests until your next turn starts.",
         "text": "Allies chosen for Group Recovery also gain Advantage on D20 Tests until your next turn starts.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -65,8 +86,10 @@
         "id": "banneret_rallying_surge",
         "name": "Rallying Surge",
         "summary": "When using Action Surge, choose up to Charisma modifier allies (minimum 1) within a 30-foot Emanation. Each can immediately spend a Reaction to make a weapon or Unarmed Strike attack, or move half its Speed without Opportunity Attacks.",
-        "text": "When using Action Surge, choose up to Charisma modifier allies (minimum 1) within a 30-foot Emanation. Each can immediately spend a Reaction to make a weapon or Unarmed Strike attack, or move half its Speed without Opportunity Attacks.",
-        "implemented": "text"
+        "text": "When you use Action Surge, up to your Charisma modifier (minimum 1) allies within 30 feet can each spend a Reaction to make one weapon attack or Unarmed Strike (in the game: each ally with an enemy in reach attacks the nearest one). It happens on its own unless you turn it Off in the class tab.",
+        "implemented": "engine",
+        "policy": "auto",
+        "policy_cost": "Your allies' Reactions"
       }
     },
     {
@@ -75,8 +98,10 @@
         "id": "banneret_shared_resilience",
         "name": "Shared Resilience",
         "summary": "Reaction when a visible ally within 60 feet fails a save: spend Indomitable to let the ally reroll with a bonus equal to your Fighter level; it must keep the new roll.",
-        "text": "Reaction when a visible ally within 60 feet fails a save: spend Indomitable to let the ally reroll with a bonus equal to your Fighter level; it must keep the new roll.",
-        "implemented": "text"
+        "text": "When an ally you can see within 60 feet fails a saving throw, you can take a Reaction and spend a use of Indomitable to let it reroll with a bonus equal to your Fighter level; it must use the new roll. In a fight it's off until you set it to Automatic in the class tab.",
+        "implemented": "engine",
+        "policy": "never",
+        "policy_cost": "Your Reaction and a use of Indomitable"
       }
     },
     {
@@ -106,9 +131,9 @@
         "name": "Bolstered Rally",
         "summary": "Group Recovery and Rallying Surge now reach a 60-foot Emanation.",
         "text": "Group Recovery and Rallying Surge now reach a 60-foot Emanation.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     }
   ],
-  "playable": false
+  "playable": true
 }

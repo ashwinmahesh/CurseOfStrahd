@@ -265,6 +265,8 @@ func test_zhentarim_family_first_and_exploit_opening() -> void:
 	assert_false(foe.initiative_test.describe().contains("Family First"), "not the enemy")
 	TestCombat.start_with(e, foe)
 	c.reaction_rules["opportunity_attack"] = "auto"
+	# Only the Ruffian answers; an ally asked about its own Opportunity Attack would leave the prompt open.
+	ally.reaction_rules["opportunity_attack"] = "never"
 	e.move(foe, Vector2i(6, 3))
 	assert_true(e.log.texts().any(func(x: String) -> bool: return x.contains("Opportunity Attack")), "an Opportunity Attack")
 	assert_true(e.dice.log.any(func(x: Dictionary) -> bool: return str(x.get("reason", "")).contains("Exploit Opening")), "its damage dice rolled twice")

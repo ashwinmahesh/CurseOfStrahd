@@ -830,7 +830,10 @@ static func _ordinal(n: int) -> String:
 func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vector2 = Vector2.INF,
 		dir: Vector2 = Vector2.ZERO, slot: int = 0, opts: Dictionary = {}) -> CombatResult:
 	var mark := e.events.size()
+	e.faerun.before_action(c)
 	var r := _perform(c, action, targets, point, dir, slot, opts)
+	if r.ok:
+		e.faerun.after_action(c, action, targets)
 	# A class feature in use: an `ability` event ahead of what it did, for the view's effect (emit-only).
 	var key := ability_key(action)
 	var source := "feature"
