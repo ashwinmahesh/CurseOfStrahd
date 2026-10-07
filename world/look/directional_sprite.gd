@@ -193,10 +193,10 @@ static func setup_material(s: SpriteBase3D) -> void:
 	m.set_shader_parameter("ink", Look.color("void"))
 	# A sprite laid flat (the lying view) keeps its rotation; the walking figures billboard round the Y axis.
 	m.set_shader_parameter("billboard", s.billboard != BaseMaterial3D.BILLBOARD_DISABLED)
-	# The Modern finish lights figures by the scene and lets them cast shadows (Improvement Ideas W6); Classic is
-	# frozen as it was.
+	# The Modern finish lights figures by the scene and lets them cast shadows (Improvement Ideas W6) where the
+	# graphics preset has them (not on Low, W17); Classic is frozen as it was.
 	m.set_shader_parameter("lit", Look.modern())
-	if Look.modern():
+	if Look.modern() and Graphics.sprite_shadows():
 		s.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	s.material_override = m
 	if s is Sprite3D:
