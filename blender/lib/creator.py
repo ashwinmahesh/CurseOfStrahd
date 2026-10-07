@@ -180,6 +180,9 @@ def head(arr, skin=None, fig_h=None, expect=None, top_frac=0.45):
         cands.append((top, sub, float(len(sy)), (sy.max() - sy.min() + 1) * (sx.max() - sx.min() + 1)))
     if not cands:
         return None
+    # A horn curling over the brow can split a sliver of skin off above it; scraps that small are never the head.
+    big = max(c[2] for c in cands)
+    cands = [c for c in cands if c[2] >= 0.2 * big]
     if expect is None:
         top, best, _, _ = min(cands, key=lambda c: c[0])
     else:
