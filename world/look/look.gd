@@ -303,4 +303,5 @@ static func style_post(mat: ShaderMaterial) -> void:
 	mat.set_shader_parameter("soft_bands", m)
 	mat.set_shader_parameter("keep_hdr", m)
 	mat.set_shader_parameter("outlines", not m)
+	mat.set_shader_parameter("tone_split", m)
 	mat.set_shader_parameter("outline_width", 1.2 if m else 1.5)
