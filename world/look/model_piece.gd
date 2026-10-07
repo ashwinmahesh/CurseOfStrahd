@@ -139,8 +139,16 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 		# Building-sized (a wagon, a market stall): it keeps its size and clears the trees it stands among, as the
 		# 2D big pieces do, but shrinks where it would reach something else standing near it (no overlaps).
 		var size := info.get("size", [1, 1, 1]) as Array
-		var fit := big_fit(board, cell, Vector2(float(size[0]), float(size[2])), faces.x != 0)
+		var foot := footprint_of(model, holder.rotation.y)
+		var fit := big_fit(board, cell, foot)
 		model.scale *= fit
+		var mine := [cell, Rect2(Vector2(cell.x + 0.5, cell.y + 0.5) + foot.position * fit, foot.size * fit)]
+		var feet: Array = board.get_meta("big_feet", [])
+		feet.append(mine)
+		board.set_meta("big_feet", feet)
+		holder.tree_exiting.connect(func() -> void:
+			if is_instance_valid(board):
+				(board.get_meta("big_feet", []) as Array).erase(mine))   # props rebuilt after a talk stand again
 		SetDressing._clear_trees_around(board, parent, cell, maxf(float(size[0]), float(size[2])) * fit)
 	if mount == "against_wall" or mount == "wall":
 		# A wall piece with no wall face free beside it stands on its square like furniture against a wall.
@@ -224,15 +232,13 @@ static func tree_mesh(id: String) -> Mesh:
 	return mesh
 
 
-## How much a building-sized piece `size` (x, z) on `cell` must shrink so its footprint keeps clear of the location's
-## other things standing near it: 1 where there's room.
-static func big_fit(board: ArenaBoard, cell: Vector2i, size: Vector2, turned: bool) -> float:
-	var foot := Vector2(size.y, size.x) if turned else size
+## How much a building-sized piece must shrink so its footprint (`foot`: its x and z extent about its node, already
+## turned) keeps clear of the location's other things standing near `cell`: 1 where there's room.
+static func big_fit(board: ArenaBoard, cell: Vector2i, foot: Rect2) -> float:
 	var centre := Vector2(cell.x + 0.5, cell.y + 0.5)
 	var s := 1.0
 	while s > 0.4:
-		var half := foot * s / 2.0
-		var rect := Rect2(centre - half, half * 2.0)
+		var rect := Rect2(centre + foot.position * s, foot.size * s)
 		var clear := true
 		for dx in range(-3, 4):
 			for dz in range(-3, 4):
@@ -242,10 +248,28 @@ static func big_fit(board: ArenaBoard, cell: Vector2i, size: Vector2, turned: bo
 				# The location's own things; the board's furniture, stumps and brambles under it are cleared away.
 				if board.occupied.has(c) and rect.intersects(Rect2(c.x, c.y, 1, 1).grow(-0.12)):
 					clear = false
+		for other: Variant in board.get_meta("big_feet", []):
+			# Another building-sized piece already standing near (one on this very square is the data's own pairing).
+			if (other as Array)[0] != cell and rect.intersects(((other as Array)[1] as Rect2).grow(-0.04)):
+				clear = false
 		if clear:
 			return s
 		s -= 0.05
 	return 0.4
+
+
+## A model's footprint about its holder (x and z), turned by `yaw`.
+static func footprint_of(model: Node3D, yaw: float) -> Rect2:
+	var box := AABB()
+	var first := true
+	for n in model.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		var b := (model.transform * mi.transform) * mi.mesh.get_aabb()
+		box = b if first else box.merge(b)
+		first = false
+	var turn := Transform3D(Basis(Vector3.UP, yaw), Vector3.ZERO)
+	var r := turn * box
+	return Rect2(r.position.x, r.position.z, r.size.x, r.size.z)
 
 
 ## A wall piece (a fireplace) on the face of wall square `wall` looking along `normal`, under `root`. Where the square
@@ -267,7 +291,12 @@ static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall:
 	holder.add_child(model)
 	var depth := float((info.get("size", [1, 1, 0.1]) as Array)[2])
 	var front := wall + normal
-	if depth > 0.2 and (board.grid.has_flag(front, CombatGrid.LOW) or (board.occupied.has(front) and front != own)):
+	var tall := float((info.get("size", [1, 1, 0.1]) as Array)[1]) >= 0.85
+	if board.occupied.has(front) and front != own and not tall and depth > 0.03:
+		# A small piece (a crest, a plaque) over something standing against this wall (a throne) lies flat on it.
+		model.scale.z = 0.03 / depth
+		depth = 0.03
+	elif depth > 0.2 and (board.grid.has_flag(front, CombatGrid.LOW) or (board.occupied.has(front) and front != own)):
 		model.scale.z = 0.2 / depth
 		depth = 0.2
 	if str(info.get("mount", "wall")) != "wall":
