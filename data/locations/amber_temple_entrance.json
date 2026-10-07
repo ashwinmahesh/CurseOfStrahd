@@ -537,6 +537,7 @@
     {
       "id": "frozen_watch",
       "trigger": "enter_area:east_guardroom",
+      "waiting": true,
       "when": "not flag.frozen_watch_cleared and level >= 10",
       "text": "The figures in the frost turn their heads. Ice cracks off their mail as they stand.",
       "monsters": [
@@ -579,6 +580,7 @@
     {
       "id": "frozen_watch",
       "trigger": "enter_area:east_guardroom",
+      "waiting": true,
       "when": "not flag.frozen_watch_cleared",
       "text": "The figures in the frost turn their heads. Ice cracks off their mail as they stand.",
       "monsters": [

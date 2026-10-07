@@ -10,11 +10,14 @@ NOFOCUS := env __CFBundleIdentifier=org.godotengine.godot $(G)
 ## Agent runs that open a window go through tools/godot, which keeps Godot from ever taking focus (CLAUDE.md).
 UNSEEN  := GODOT=$(GODOT) tools/godot --path . --resolution 1x1 --position 100000,100000 --max-fps 60 --audio-driver Dummy
 LOGCHK  := tools/logcheck.sh
+## Imports with the editor's window kept off screen, so textures import several at once (tools/import.sh: about twice
+## as fast; headless outside a desktop session or with IMPORT_HEADLESS=1).
+IMPORT  := GODOT=$(GODOT) tools/import.sh
 STAMP   := .godot/.last_import
 FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./captures -o -path ./builds \) -prune -o \
              \( -name '*.gd' -o -name '*.tscn' -o -name '*.tres' -o -name '*.png' -o -name '*.ogg' -o -name '*.wav' \
              -o -name '*.mp3' -o -name '*.glb' \) -newer $(STAMP) -print -quit)" ]; then \
-             echo "Files changed since the last import: importing first."; $(G) --headless --import > /dev/null 2>&1; \
+             echo "Files changed since the last import: importing first."; $(IMPORT) > /dev/null 2>&1; \
              touch $(STAMP); fi
 
 .PHONY: run arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens plants
@@ -42,7 +45,7 @@ smoke:
 	$(G) --headless --quit-after $(or $(FRAMES),600) $(SCENE) 2>&1 | $(LOGCHK)
 
 import:
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 	@touch $(STAMP)
 
 ## The test files share several headless Godot processes (tools/run_tests.py); JOBS=n sets how many, JOBS=1 is one.
@@ -73,10 +76,10 @@ lint: import
 ci: validate lint test
 
 ## The quick check while working (CLAUDE.md says when it is enough): only what covers the files changed since main,
-## from validate to the tests that use them (tools/check.py). make check [BASE=<branch>] [DRY=1]
+## from validate to the tests that use them (tools/check.py). make check [BASE=<branch>] [DEPTH=n|all] [DRY=1]
 check:
 	@$(FRESH)
-	python3 tools/check.py $(if $(BASE),--base $(BASE),) $(if $(DRY),--dry-run,)
+	python3 tools/check.py $(if $(BASE),--base $(BASE),) $(if $(DEPTH),--depth $(DEPTH),) $(if $(DRY),--dry-run,)
 
 palette:
 	python3 tools/art/build_palette.py
@@ -90,7 +93,7 @@ art-spend:
 ## make voice [SPEAKER="narrator madam_eva"] [LIMIT=n] [DRY=1] [MAX_USD=5] [RECAST=1] [PRUNE=1]
 voice:
 	python3 tools/audio/generate_voice.py $(if $(SPEAKER),--speaker $(SPEAKER),) $(if $(LIMIT),--limit $(LIMIT),) $(if $(DRY),--dry-run,) $(if $(MAX_USD),--max-usd $(MAX_USD),) $(if $(RECAST),--recast,) $(if $(PRUNE),--prune,)
-	$(if $(DRY),,$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null)
+	$(if $(DRY),,$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null)
 
 ## Writes screenshots to captures/ from a window that never takes focus or shows: it opens 1 px wide in a corner, moves
 ## off screen and is drawn by tools/capture (silent, 60 fps). LOCATION=<id> starts the story game there.
@@ -112,16 +115,16 @@ sprite:
 anims:
 	$(if $(GENERATE),python3 tools/art/anim_keyframes.py --retry 2 $(if $(ONLY),--only $(ONLY),) && python3 tools/art/anim_keyframes.py --kind walk $(if $(ONLY),--only $(ONLY),),true)
 	python3 tools/art/build_anims.py $(if $(ONLY),--only $(ONLY),)
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 	python3 tools/art/set_import.py $(wildcard art/sprites/*/walk.png) $(wildcard art/sprites/*/attack.png)
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 
 ## The six heroes' HD animation sheets (set v2) from their strips: make keys [ONLY="id ..."] [KINDS="walk8 ..."]
 keys:
 	python3 tools/art/build_keys.py $(if $(ONLY),--only $(ONLY),) $(if $(KINDS),--kinds $(KINDS),)
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 	python3 tools/art/set_import.py --sheets $(foreach id,$(or $(ONLY),godrick_pendlebrook kip_smudgewick liriel_dawnsong ratatoille thistle wren_featherfoot),$(wildcard art/sprites/$(id)/*.png))
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 
 ## Re-render every character walk sheet from its turnaround with the current cutter and its recorded flags
 ## (art/manifest.json sprite_flags): make sprites [ONLY="id ..."]
@@ -160,14 +163,14 @@ props:
 ## [PREVIEW=captures/models.png] writes art/models/*.glb and manifest.json, then imports them.
 models:
 	$(BLENDER) -b --python blender/models_3d.py -- $(if $(ONLY),--only $(ONLY),) $(if $(PREVIEW),--preview $(abspath $(PREVIEW)),)
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 
 ## The Modern look's trees and plants (docs/art/plants.md): paints the leaf cards, builds art/plants/*.glb and
 ## manifest.json, then imports them. make plants [ONLY="spruce_a fern_a"] (rebuilds only those models).
 plants:
 	python3 tools/art/plant_cards.py
 	$(BLENDER) -b --python blender/plants_3d.py -- $(if $(ONLY),--only $(ONLY),)
-	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 
 ## Menu ornaments and icons (black-on-white Gemini art -> white shapes with alpha, tinted in game): make ui_art
 ui_art:

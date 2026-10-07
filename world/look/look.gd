@@ -339,6 +339,24 @@ static func cel_checker(a: String, b: String, line: String) -> ShaderMaterial:
 	return m
 
 
+static var _noise: ImageTexture = null
+
+
+## A 256 x 256 tile of random values for the screen pass's noise in the Modern finish (strahd_post.gdshader
+## fast_noise): its own fixed seed, so the mist is the same from run to run (cosmetic, never Dice).
+static func noise_texture() -> ImageTexture:
+	if _noise == null:
+		var rng := RandomNumberGenerator.new()
+		rng.seed = 0x5742A
+		var img := Image.create(256, 256, false, Image.FORMAT_R8)
+		for y in 256:
+			for x in 256:
+				var v := rng.randf()
+				img.set_pixel(x, y, Color(v, v, v))
+		_noise = ImageTexture.create_from_image(img)
+	return _noise
+
+
 ## Where the screen pass draws among blended things: before all of them (they draw at 0 and above).
 const POST_PRIORITY := -1
 
@@ -381,4 +399,7 @@ static func style_post(mat: ShaderMaterial) -> void:
 	mat.set_shader_parameter("keep_hdr", m)
 	mat.set_shader_parameter("outlines", not m)
 	mat.set_shader_parameter("tone_split", m)
+	mat.set_shader_parameter("fast_noise", m)
+	if m:
+		mat.set_shader_parameter("noise_tex", noise_texture())
 	mat.set_shader_parameter("outline_width", 1.2 if m else 1.5)
