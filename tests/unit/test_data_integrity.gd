@@ -30,7 +30,8 @@ func test_phase_1_content_counts() -> void:
 
 func test_every_class_and_subclass_builds_and_levels_to_11() -> void:
 	var c := Compendium.shared()
-	for sub in c.all("subclasses"):
+	# Every subclass a player can pick (entries marked "playable": false aren't offered yet, docs/tasks/FR-AU-01.md).
+	for sub in c.all_playable("subclasses"):
 		var cls := str(sub["class"])
 		var b := CharacterBuilder.new()
 		b.set_class(cls)
