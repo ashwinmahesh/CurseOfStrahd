@@ -37,12 +37,8 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 		if o.has("still") and not (o["still"] as Callable).call():
 			continue
 		var kind := str(o["kind"])
-		var decision := e._reaction_decision(reactor, kind, str(o.get("default", "")))
-		if bool(o.get("forced", false)):
-			decision = "auto"
-		elif decision == "ask" and not bool(o.get("ask", true)):
-			decision = "auto" if e.d20.sync_allows(o) else "never"
-		if decision == "never" or (decision == "ask" and o.has("helps") and not (o["helps"] as Callable).call()):
+		var decision := decide(o)
+		if decision == "never":
 			continue
 		if decision == "auto":
 			(o["use"] as Callable).call()
@@ -75,6 +71,21 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 		r.pending = req
 		return r
 	return done.call() as CombatResult
+
+
+## What happens to an offer that's still open: "auto" (its creature's rule or the AI takes it, or it's `forced`),
+## "never", or "ask" (the player is asked). An offer the creature's rule would ask about but that can't change the
+## result (`helps`) is "never"; one that answers a roll about to be made (`ask: false`) follows D20Responses.sync_allows.
+func decide(o: Dictionary) -> String:
+	var e := enc()
+	if bool(o.get("forced", false)):
+		return "auto"
+	var decision := e._reaction_decision(o["reactor"] as Combatant, str(o["kind"]), str(o.get("default", "")))
+	if decision == "ask" and not bool(o.get("ask", true)):
+		decision = "auto" if e.d20.sync_allows(o) else "never"
+	if decision == "ask" and o.has("helps") and not (o["helps"] as Callable).call():
+		decision = "never"
+	return decision
 
 
 func _react_ok(c: Combatant) -> bool:

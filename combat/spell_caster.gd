@@ -617,8 +617,8 @@ func _room_for(cell: Vector2i, size: int) -> bool:
 
 # --- Turn and damage hooks (SpellTurns) -----------------------------------------------------------
 
-func turn_start(c: Combatant) -> void:
-	turn_hooks.turn_start(c)
+func turn_start(c: Combatant) -> CombatResult:
+	return turn_hooks.turn_start(c)
 
 
 func _turn_start_effects(c: Combatant) -> void:

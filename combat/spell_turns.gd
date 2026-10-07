@@ -23,28 +23,56 @@ func _comp() -> Compendium:
 	return Compendium.shared()
 
 
-func turn_start(c: Combatant) -> void:
+## The start of `c`'s turn for spells: the areas it starts in, the high-level spells' hooks, burning and other start
+## effects, repeated saves, Bestow Curse's dodge, Blink's return. Saves stop for the choices after their rolls, so each
+## step waits on the one before (Encounter.each).
+func turn_start(c: Combatant) -> CombatResult:
 	var spells := sp()
 	var e := enc()
-	spells.zones.turn_start(c)
-	spells.specials.high.tick_suppressed(c.id, true)
-	if c.has_meta("vanish_round") and enc().round_no >= int(c.get_meta("vanish_round")):
-		spells._dismiss(c.id)
-	spells.specials.high.caster_turn_start(c)
-	spells.specials.high.creature_turn_start(c)
-	spells.specials.mid.panic_turn(c)
-	spells.specials.mid.ai_turn(c)
-	spells._prune_sustained()
-	_turn_start_effects(c)
-	spells.saves._repeat_saves(c, "start")
-	spells.specials.turn_start(c)
-	# Bestow Curse (Dodge): a Wisdom save at the start of its turn or it must take the Dodge action.
-	if c.creature.has_flag("cursed_dodge") and c.can_act():
-		for fx: Effect in c.creature.effects:
-			if fx.source_id == "bestow_curse":
-				var caster := e.get_c(fx.caster_id)
-				var dc := (spells.numbers(caster, spells._entry_any(caster, "bestow_curse"))["dc"] as Breakdown).total() if caster != null and caster.creature is Character else 13
-				var sv := c.creature.roll_save(e.dice, &"wis", dc, [], [], "Wisdom save vs Bestow Curse (%s)" % c.name(), SpellCaster.spell_save_keys(fx.caster_id))
+	var none := CombatResult.new()
+	var steps: Array = [
+		func() -> CombatResult: return spells.zones.turn_start(c),
+		func() -> CombatResult:
+			spells.specials.high.tick_suppressed(c.id, true)
+			if c.has_meta("vanish_round") and enc().round_no >= int(c.get_meta("vanish_round")):
+				spells._dismiss(c.id)
+			spells.specials.high.caster_turn_start(c)
+			spells.specials.high.creature_turn_start(c)
+			spells.specials.mid.panic_turn(c)
+			spells.specials.mid.ai_turn(c)
+			spells._prune_sustained()
+			_turn_start_effects(c)
+			return none,
+		func() -> CombatResult: return spells.saves._repeat_saves(c, "start", true),
+		func() -> CombatResult:
+			spells.specials.turn_start(c)
+			return _cursed_dodge(c),
+		func() -> CombatResult:
+			# Blink: back from the Ethereal Plane.
+			if c.has_meta("ethereal"):
+				c.remove_meta("ethereal")
+				c.creature.remove_effects_named("Blinked away")
+				e.log.add("info", "%s blinks back" % c.name(), c.id)
+				e.events.append({"type": "condition", "id": c.id})
+			return none,
+	]
+	return e.each(steps, func(step: Variant) -> CombatResult: return (step as Callable).call() as CombatResult, func() -> CombatResult: return none)
+
+
+## Bestow Curse (Dodge): a Wisdom save at the start of its turn or it must take the Dodge action.
+func _cursed_dodge(c: Combatant) -> CombatResult:
+	var spells := sp()
+	var e := enc()
+	if not c.creature.has_flag("cursed_dodge") or not c.can_act():
+		return CombatResult.new()
+	for fx: Effect in c.creature.effects:
+		if fx.source_id != "bestow_curse":
+			continue
+		var caster := e.get_c(fx.caster_id)
+		var dc := (spells.numbers(caster, spells._entry_any(caster, "bestow_curse"))["dc"] as Breakdown).total() if caster != null and caster.creature is Character else 13
+		return e.d20.then_after(c, func() -> D20Test:
+			return c.creature.roll_save(e.dice, &"wis", dc, [], [], "Wisdom save vs Bestow Curse (%s)" % c.name(), SpellCaster.spell_save_keys(fx.caster_id)),
+			func(sv: D20Test) -> CombatResult:
 				if not sv.success:
 					e.spend_action(c)
 					var dg := Effect.new("Dodging", &"effect", "dodge").with_modifier("attacked_with", {"value": "disadvantage"}).with_modifier("advantage", {"on": "save:dex"})
@@ -53,13 +81,8 @@ func turn_start(c: Combatant) -> void:
 					dg.ends_when_incapacitated = true
 					c.creature.add_effect(dg)
 					e.log.add("info", "%s cowers and takes the Dodge action (Bestow Curse)" % c.name(), c.id, [sv.describe()])
-				break
-	# Blink: back from the Ethereal Plane.
-	if c.has_meta("ethereal"):
-		c.remove_meta("ethereal")
-		c.creature.remove_effects_named("Blinked away")
-		e.log.add("info", "%s blinks back" % c.name(), c.id)
-		e.events.append({"type": "condition", "id": c.id})
+				return CombatResult.new(), CombatResult.new())
+	return CombatResult.new()
 
 
 ## Effects that act at the start of their bearer's turn: burning and thorns (`turn_damage`), Heroism's Temporary Hit
@@ -90,14 +113,14 @@ func _turn_start_effects(c: Combatant) -> void:
 func turn_end(c: Combatant) -> CombatResult:
 	var spells := sp()
 	var e := enc()
-	spells.zones.turn_end(c)
-	spells.specials.high.caster_turn_end(c)
-	spells.specials.high.prism_turn_end(c)
-	spells.specials.high.tick_suppressed(c.id, false)
-	spells.specials.turn_end(c)
-	return e.then(spells.saves._repeat_saves(c, "end", true), func() -> CombatResult:
-		_after_repeat_saves(c)
-		return CombatResult.new())
+	return e.then(spells.zones.turn_end(c), func() -> CombatResult:
+		spells.specials.high.caster_turn_end(c)
+		spells.specials.high.prism_turn_end(c)
+		spells.specials.high.tick_suppressed(c.id, false)
+		spells.specials.turn_end(c)
+		return e.then(spells.saves._repeat_saves(c, "end", true), func() -> CombatResult:
+			_after_repeat_saves(c)
+			return CombatResult.new()))
 
 
 func _after_repeat_saves(c: Combatant) -> void:

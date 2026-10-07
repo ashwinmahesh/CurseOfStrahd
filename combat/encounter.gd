@@ -296,16 +296,16 @@ func start(surprised_ids: Array = []) -> void:
 	turns.start(surprised_ids)
 
 
-func _begin_turn() -> void:
-	turns._begin_turn()
+func _begin_turn() -> CombatResult:
+	return turns._begin_turn()
 
 
 func end_turn() -> CombatResult:
 	return turns.end_turn()
 
 
-func _lair_then_begin() -> void:
-	turns._lair_then_begin()
+func _lair_then_begin() -> CombatResult:
+	return turns._lair_then_begin()
 
 
 func _check_over() -> void:

@@ -60,6 +60,9 @@ var inventory: Array[Dictionary] = []
 var weapon_set_2: Dictionary = {}
 ## Consumables kept to hand (plan §5.6 "quick slots"): item ids the fight's hotbar also shows on its Common tab.
 var quick_slots: Array[String] = []
+## The player's standing answer to each kind of prompt in a fight (an Opportunity Attack, Shield, Indomitable...):
+## kind -> "ask", "auto" or "never". A fight's Combatant shares this Dictionary, so a choice lasts from fight to fight.
+var reaction_rules: Dictionary = {}
 var currency: Dictionary = {"cp": 0, "sp": 0, "ep": 0, "gp": 0, "pp": 0}
 ## die size (as String) -> spent count
 var hit_dice_spent: Dictionary = {}
@@ -2126,7 +2129,7 @@ func to_dict() -> Dictionary:
 		"currency": currency.duplicate(), "hit_dice_spent": hit_dice_spent.duplicate(),
 		"slots_used": slots_used.duplicate(), "pact_slots_used": pact_slots_used,
 		"heroic_inspiration": heroic_inspiration, "id": id, "attuned": attuned.duplicate(), "familiar": familiar,
-		"weapon_set_2": weapon_set_2.duplicate(), "quick_slots": quick_slots.duplicate()}
+		"weapon_set_2": weapon_set_2.duplicate(), "quick_slots": quick_slots.duplicate(), "reaction_rules": reaction_rules.duplicate()}
 
 
 static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Character:
@@ -2154,6 +2157,7 @@ static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Characte
 	c.weapon_set_2 = (d.get("weapon_set_2", {}) as Dictionary).duplicate()
 	for q: Variant in d.get("quick_slots", []):
 		c.quick_slots.append(str(q))
+	c.reaction_rules = (d.get("reaction_rules", {}) as Dictionary).duplicate()
 	return c
 
 

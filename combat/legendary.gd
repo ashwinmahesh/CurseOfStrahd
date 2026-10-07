@@ -144,7 +144,7 @@ func round_started() -> void:
 func round_ending() -> void:
 	var e := enc()
 	if e.lair and lair_round < e.round_no and lair_master() != null:
-		lair_turn()
+		lair_turn(false)
 
 
 # --- Leaving the fight ------------------------------------------------------------------------------------------
@@ -605,8 +605,10 @@ func lair_slot() -> int:
 	return e.order.size()
 
 
-## The lair's turn: the last lair action's effects end, then the master's AI picks one (never the last one again).
-func lair_turn() -> void:
+## The lair's turn: the last lair action's effects end, then the master's AI picks one (never the last one again). A
+## save it calls for stops for the choices after its roll (F6), so the turn can come back paused; with `pausable` false
+## (the round's end, which can't wait) the choices follow their rules.
+func lair_turn(pausable: bool = true) -> CombatResult:
 	var e := enc()
 	lair_round = e.round_no
 	for c in e.combatants:
@@ -615,10 +617,10 @@ func lair_turn() -> void:
 				c.creature.remove_effect(fx)
 	var m := lair_master()
 	if m == null:
-		return
+		return CombatResult.new()
 	var plan := e.ai.boss.lair_plan(m, last_lair)
 	if plan.is_empty():
-		return
+		return CombatResult.new()
 	var act := plan["action"] as Dictionary
 	last_lair = str(act["id"])
 	_log("spell", "Initiative 20, the lair acts: %s" % act.get("name", ""), m, [str(act.get("summary", ""))])
@@ -629,6 +631,13 @@ func lair_turn() -> void:
 	for tv: Variant in plan.get("targets", []):
 		aimed.append((tv as Combatant).id)
 	e.events.append({"type": "lair", "id": m.id, "action": last_lair, "name": str(act.get("name", "")), "targets": aimed})
+	var r := CombatResult.new()
+	var done := func() -> CombatResult:
+		e.spells.zones.prune()
+		e._check_over()
+		if e.state == Encounter.State.ACTIVE:
+			return e.run_reaction_queue(r)
+		return r
 	match str(act.get("kind", "text")):
 		"self":
 			var fx := Effect.new(str(act.get("name", "Lair")), &"monster", "lair:%s" % last_lair)
@@ -643,17 +652,15 @@ func lair_turn() -> void:
 			if t != null:
 				_lair_attack(m, act, t)
 		"save":
-			for tv: Variant in plan.get("targets", []):
+			return e.each(plan.get("targets", []) as Array, func(tv: Variant) -> CombatResult:
 				var t2 := tv as Combatant
 				if t2.is_alive() and e.state == Encounter.State.ACTIVE:
-					_lair_save(m, act, t2)
+					return _lair_save(m, act, t2, pausable)
+				return r, done)
 		"summon":
 			var sm := act.get("summon", {}) as Dictionary
 			_summon(m, str(sm.get("monster", "")), _count(sm), m.cell, LAIR_COUNT)
-	e.spells.zones.prune()
-	e._check_over()
-	if e.state == Encounter.State.ACTIVE:
-		e.run_reaction_queue(CombatResult.new())
+	return done.call() as CombatResult
 
 
 ## Foes a lair action could reach: hostile to the master, standing, seen by it, within `targets.range` (default 120)
@@ -703,13 +710,25 @@ func _lair_attack(m: Combatant, act: Dictionary, t: Combatant) -> void:
 
 
 ## A lair action's saving throw for one foe: damage (half or none on a success), riders on a failure, and its
-## summon on a failure (a shadow torn from the target, acting on initiative 20).
-func _lair_save(m: Combatant, act: Dictionary, t: Combatant) -> void:
+## summon on a failure (a shadow torn from the target, acting on initiative 20). The save stops for the choices after
+## its roll.
+func _lair_save(m: Combatant, act: Dictionary, t: Combatant, pausable: bool = true) -> CombatResult:
 	var e := enc()
 	var sv := act.get("save", {}) as Dictionary
 	var ab := StringName(str(sv.get("ability", "wis")))
 	var label := str(act.get("name", "Lair"))
-	var test := t.creature.roll_save(e.dice, ab, int(sv.get("dc", 10)), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], label, t.name()])
+	var roll := func() -> D20Test:
+		return t.creature.roll_save(e.dice, ab, int(sv.get("dc", 10)), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], label, t.name()])
+	if not pausable:
+		return _lair_saved(m, act, t, roll.call() as D20Test, false)
+	return e.d20.then_after(t, roll, func(test: D20Test) -> CombatResult: return _lair_saved(m, act, t, test, true), CombatResult.new())
+
+
+func _lair_saved(m: Combatant, act: Dictionary, t: Combatant, test: D20Test, pausable: bool) -> CombatResult:
+	var e := enc()
+	var r := CombatResult.new()
+	var sv := act.get("save", {}) as Dictionary
+	var label := str(act.get("name", "Lair"))
 	var parts: Array = []
 	var texts: Array[String] = [test.describe()]
 	for d: Variant in act.get("damage", []):
@@ -725,14 +744,18 @@ func _lair_save(m: Combatant, act: Dictionary, t: Combatant) -> void:
 	elif test.success:
 		_log("info", "%s resists %s" % [t.name(), label], t, texts)
 	if test.success or not t.is_alive():
-		return
+		return r
+	var summon := func() -> CombatResult:
+		if act.has("summon"):
+			var sm := act["summon"] as Dictionary
+			var made := _summon(m, str(sm.get("monster", "")), _count(sm), t.cell, LAIR_COUNT)
+			if made > 0:
+				_log("condition", "%s's %s rises against it" % [t.name(), Compendium.shared().monster_data(str(sm["monster"])).get("name", "summons")], t)
+		return r
 	if act.has("on_fail"):
-		e.monster_actions.apply_riders(m, t, act["on_fail"] as Array, MonsterActions.taken_by_type(t, parts), label)
-	if act.has("summon"):
-		var sm := act["summon"] as Dictionary
-		var made := _summon(m, str(sm.get("monster", "")), _count(sm), t.cell, LAIR_COUNT)
-		if made > 0:
-			_log("condition", "%s's %s rises against it" % [t.name(), Compendium.shared().monster_data(str(sm["monster"])).get("name", "summons")], t)
+		var riders := e.monster_actions.apply_riders(m, t, act["on_fail"] as Array, MonsterActions.taken_by_type(t, parts), label, pausable)
+		return e.then(riders, summon) if pausable else summon.call() as CombatResult
+	return summon.call() as CombatResult
 
 
 # --- Calling creatures ------------------------------------------------------------------------------------------

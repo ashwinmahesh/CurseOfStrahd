@@ -188,6 +188,12 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 		return e.then(r, func() -> CombatResult: return run_reaction_queue(r))
 	while not e.reaction_queue.is_empty():
 		var q := e.reaction_queue.pop_front() as Dictionary
+		# A roll's choices that waited for this moment (a Concentration save): asked in turn, then the roll is settled.
+		if q.has("offers"):
+			var settle := q["settle"] as Callable
+			return e.reactions.offer((q["offers"] as Array).duplicate(), func() -> CombatResult:
+				settle.call()
+				return run_reaction_queue(r), r)
 		var reactor := e.get_c(str(q["reactor"]))
 		var trigger := e.get_c(str(q["trigger"]))
 		if reactor == null or trigger == null or not trigger.is_alive() or not _queued_ok(q, reactor):

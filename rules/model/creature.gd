@@ -745,7 +745,8 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 		if dice != null:
 			var t := roll_save(dice, &"con", r.concentration_dc, [], [], "Concentration (%s)" % name, ["concentration"])
 			r.concentration_save = t
-			if not t.success:
+			# A failure the player can still answer (Heroic Inspiration, Indomitable) is settled later (awaiting).
+			if not t.success and not t.awaiting:
 				r.concentration_broken = true
 				concentration.end("failed a Concentration save")
 	_log_damage(r)

@@ -99,7 +99,12 @@ static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [
 		c.initiative = int(cd["initiative"])
 		c.initiative_group = str(cd["group"])
 		c.surprised = bool(cd["surprised"])
-		c.reaction_rules = (cd.get("reaction_rules", {}) as Dictionary).duplicate()
+		# A character keeps sharing its own rules with the fight (Character.reaction_rules).
+		if creature is Character:
+			c.reaction_rules = (creature as Character).reaction_rules
+			c.reaction_rules.merge(cd.get("reaction_rules", {}) as Dictionary, true)
+		else:
+			c.reaction_rules = (cd.get("reaction_rules", {}) as Dictionary).duplicate()
 		c.reaction_available = bool(cd.get("reaction_available", true))
 		c.hidden = bool(cd.get("hidden", false))
 		c.stealth_total = int(cd.get("stealth_total", 0))

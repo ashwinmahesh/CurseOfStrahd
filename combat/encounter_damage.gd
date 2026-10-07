@@ -81,6 +81,22 @@ func stabilize(c: Combatant, target: Combatant, use_kit: bool) -> CombatResult:
 	return CombatResult.new()
 
 
+## A Concentration save waiting on the player's choices: queued with the reactions to the damage, it asks them in turn
+## and then keeps or ends Concentration on what the roll comes to.
+func _hold_concentration(target: Combatant, conc: Concentration, t: D20Test, offers: Array) -> void:
+	var e := enc()
+	e.reaction_queue.append({"kind": "concentration_save", "reactor": target.id, "trigger": target.id, "offers": offers,
+		"settle": func() -> void:
+			t.awaiting = false
+			if conc == null or conc.ended or target.creature.concentration != conc:
+				return
+			if t.success:
+				e.log.add("info", "%s keeps Concentration" % target.name(), target.id, [t.describe()])
+				return
+			conc.end("failed a Concentration save")
+			e.log.add("info", "%s loses Concentration" % target.name(), target.id, [t.describe()])})
+
+
 ## Rolls damage dice (doubled on a Critical Hit; dice below `minimum` count as `minimum`).
 ## {total, text}
 func _roll_damage_dice(expr: String, critical: bool, minimum: int, reason: String, reroll: Dictionary = {}) -> Dictionary:
@@ -167,7 +183,14 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	if source != null and e.features.has_feat(source, "mage_slayer") and target.creature.concentration != null:
 		slayer = Effect.new("Mage Slayer", &"feature", "mage_slayer").with_modifier("disadvantage", {"on": "concentration"})
 		target.creature.add_effect(slayer)
+	# A failed Concentration save the player could answer (Heroic Inspiration, Indomitable) waits until the attack or
+	# spell that caused it is done, then asks (the reaction queue); Concentration holds until then.
+	var held := e.d20.collect(target, true)
+	var conc := target.creature.concentration
 	var dr := target.creature.take_damage_parts(parts, critical, e.dice, label)
+	var waiting := e.d20.collected(held)
+	if dr.concentration_save != null and dr.concentration_save.awaiting:
+		_hold_concentration(target, conc, dr.concentration_save, waiting)
 	if slayer != null:
 		target.creature.remove_effect(slayer)
 	if source != null and dr.final > 0:
