@@ -12,7 +12,7 @@ signal round_started(round: int)
 signal menu_requested
 
 ## Seconds per square for a token moving on the board (owner 2026-10-06: half the old speed, it read unnaturally fast).
-const STEP_TIME := 0.26
+const STEP_TIME := 0.37   # seconds a square (owner 2026-10-07: about 30% slower than 0.26)
 const AI_PAUSE := 0.35
 ## How long damage and healing numbers stay over a creature.
 const FLOAT_TIME := 2.4
