@@ -6,6 +6,7 @@
 # ---------------------------------------------------------------- The watcher (the first journey after the burial)
 
 ~ watcher
+appear strahd
 set strahd_watcher_seen
 Narrator: The road bends under a bare ridge. Up on the skyline a rider sits a black horse, perfectly still, watching you go by.
 if guest:ireena
@@ -32,6 +33,7 @@ Narrator: A ragged flock of bats lifts off the ridge and beats away south, towar
 # ---------------------------------------------------------------- The night visit (a Long Rest through the night)
 
 ~ night
+appear strahd
 Narrator: You wake in the small hours and know at once you are not alone. Just past the last of the light, a tall man stands watching the others sleep.
 if flag.strahd_met
 Strahd: Do not get up. I only came to see how my guests are sleeping. Badly, I think. The valley does that.
@@ -98,6 +100,7 @@ Strahd: Rude, in a man's own house. Sleep, then. If you can.
 # ---------------------------------------------------------------- The test of strength (a night road, level 7+)
 
 ~ test
+appear strahd
 Narrator: Eyes in the dark ahead, a dozen pairs, low to the ground. The wolves part, and a man in black walks out between them as if through a garden.
 Strahd: Good evening. I hear you are becoming formidable. I like to see such things for myself. Indulge me.
 if guest:ireena

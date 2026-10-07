@@ -321,11 +321,7 @@
         ]
       }
     },
-    "roster": true,
-    "appearance": {
-      "art": "mirabel"
-    },
-    "art_todo": "Borrows the mirabel sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
+    "roster": true
   },
   "ratatoille": {
     "name": "Ratatoille",
@@ -481,11 +477,7 @@
         ]
       }
     },
-    "roster": true,
-    "appearance": {
-      "art": "silvain_aster"
-    },
-    "art_todo": "Borrows the silvain_aster sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
+    "roster": true
   },
   "wren_featherfoot": {
     "name": "Wren Featherfoot",
@@ -557,11 +549,7 @@
         ]
       }
     },
-    "roster": true,
-    "appearance": {
-      "art": "tamsin_tealeaf"
-    },
-    "art_todo": "Borrows the tamsin_tealeaf sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
+    "roster": true
   },
   "kip_smudgewick": {
     "name": "Kip Smudgewick",
@@ -672,10 +660,6 @@
         ]
       }
     },
-    "roster": true,
-    "appearance": {
-      "art": "gunther_arasek"
-    },
-    "art_todo": "Borrows the gunther_arasek sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
+    "roster": true
   }
 }

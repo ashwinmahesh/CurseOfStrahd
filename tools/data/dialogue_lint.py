@@ -44,6 +44,7 @@ RE_TIME = re.compile(r"^time\s+(\+\d+|until\s+\d{1,2})$")
 RE_SHOP = re.compile(r"^(shop|respec)$")
 RE_END_GAME = re.compile(r"^end_game$")
 RE_GUEST = re.compile(rf"^(join|leave)\s+({ID})$")
+RE_STAGE = re.compile(rf"^(appear\s+({ID})(?:\s+at\s+({ID}))?|vanish\s+({ID}))$")
 RE_FLAG_REF = re.compile(rf"\bflag\.({ID})")
 CLASS_TAGS = {"fighter", "rogue", "cleric", "wizard", "barbarian", "bard", "druid", "monk", "paladin", "ranger",
               "sorcerer", "warlock"}
@@ -178,6 +179,10 @@ def parse_file(path):
         m = RE_GUEST.match(line)
         if m:
             out["speakers"].append((m.group(2), where))
+            continue
+        m = RE_STAGE.match(line)
+        if m:
+            out["speakers"].append((m.group(2) or m.group(4), where))   # the npc must exist
             continue
         m = RE_ATT.match(line)
         if m:
