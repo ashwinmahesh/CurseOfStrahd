@@ -229,6 +229,11 @@ def semantic_checks(data):
         for sp in sc.get("at_will", []) + [x for v in sc.get("per_day", {}).values() for x in v]:
             if sp not in spells:
                 pending.append(f"monsters/{mid}: spell '{sp}' (not in Phase 1 spell data)")
+    # A found spellbook lists the spells a Wizard can copy out of it (Character.copy_spell).
+    for iid, it in items.items():
+        for sp in it.get("spells", []):
+            if sp not in spells:
+                errors.append(f"items/{iid}: spellbook spell '{sp}' isn't in data/spells")
     # Encounters: who's in it exists, everyone stands on open floor inside the map, nobody overlaps, and the
     # difficulty matches the 2024 DMG XP budget for the party.
     budget = {1: (50, 75, 100), 2: (100, 150, 200), 3: (150, 225, 400), 4: (250, 375, 500), 5: (500, 750, 1100)}

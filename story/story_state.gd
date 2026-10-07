@@ -570,4 +570,37 @@ static func from_dict(d: Dictionary) -> StoryState:
 			cr.state_from_dict(gd.get("state", {}) as Dictionary)
 			st.guest_ids.append(str(gd["npc"]))
 			st.guests.append(cr)
+	_upgrade_durst_spellbook(st)
 	return st
+
+
+## Saves from before found spellbooks listed their spells (owner, 2026-10-07): the Dursts' footlocker in Death House
+## held a plain "spellbook". Swap it for the Dursts' book wherever it went: still in the footlocker, carried by
+## someone who isn't a Wizard (a Wizard's own book stays theirs), or in the stash.
+static func _upgrade_durst_spellbook(st: StoryState) -> void:
+	var ls := st.location_states.get("death_house_dungeon_1", {}) as Dictionary
+	if ls.is_empty():
+		return
+	var left := (ls.get("contents", {}) as Dictionary).get("durst_footlocker", {}) as Dictionary
+	for it: Variant in left.get("items", []):
+		if str((it as Dictionary)["id"]) == "spellbook":
+			(it as Dictionary)["id"] = "durst_spellbook"
+			return
+	if left.is_empty() and not bool((ls.get("looted", {}) as Dictionary).get("durst_footlocker", false)):
+		return
+	if st.party_has_item("durst_spellbook"):
+		return
+	var everyone: Array[Character] = []
+	everyone.append_array(st.party)
+	everyone.append_array(st.bench)
+	for ch in everyone:
+		if ch.spellbook_class() != "":
+			continue
+		for e: Dictionary in ch.inventory:
+			if str(e["id"]) == "spellbook" and int(e.get("qty", 1)) == 1:
+				e["id"] = "durst_spellbook"
+				return
+	for e: Dictionary in st.stash:
+		if str(e["id"]) == "spellbook" and int(e.get("qty", 1)) == 1:
+			e["id"] = "durst_spellbook"
+			return

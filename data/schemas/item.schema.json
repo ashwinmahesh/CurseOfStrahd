@@ -757,6 +757,11 @@
       "type": "object",
       "description": "What magic armor or a shield does beyond modifiers: no_crits, no_training, ac_vs_ranged, specials."
     },
+    "spells": {
+      "type": "array",
+      "items": {"$ref": "common.schema.json#/$defs/id"},
+      "description": "A found spellbook's spells: anyone can read the list, a Wizard can copy them (Character.copy_spell)."
+    },
     "scroll_spell": {
       "type": "string",
       "description": "The spell a Spell Scroll holds."

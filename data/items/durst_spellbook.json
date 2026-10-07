@@ -1,0 +1,23 @@
+{
+  "id": "durst_spellbook",
+  "name": "The Dursts' Spellbook",
+  "source": {
+    "book": "CoS",
+    "note": "Our own contents for the cult's spellbook in Death House; not checked against the module."
+  },
+  "category": "gear",
+  "weight_lb": 3,
+  "cost_gp": 50,
+  "icon": "spellbook",
+  "summary": "A cultist's spellbook bound in black leather, its pages ruled in a cramped, careful hand. Seven Wizard spells a Wizard can copy.",
+  "text": "Black calfskin over boards, the corners worn pale. Inside, in a cramped and careful hand, the spells the Dursts' cult kept for its rites: tongues of the dead, faces that aren't yours, a little borrowed life, and darkness on request. Anyone can read the list; a Wizard can copy them into their own book.",
+  "spells": [
+    "comprehend_languages",
+    "disguise_self",
+    "false_life",
+    "ray_of_sickness",
+    "unseen_servant",
+    "darkness",
+    "gentle_repose"
+  ]
+}
