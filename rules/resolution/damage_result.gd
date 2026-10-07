@@ -6,6 +6,8 @@ extends RefCounted
 
 var source: String = ""
 var type: StringName = &""
+## Every damage type in the hit, in order (a Ghoul's Bite: Piercing and Necrotic).
+var types: Array[StringName] = []
 var raw: int = 0
 var final: int = 0
 var absorbed_by_temp: int = 0
@@ -23,7 +25,11 @@ var concentration_broken: bool = false
 
 func describe(target_name: String = "") -> String:
 	var who := target_name if target_name != "" else "Target"
-	var text := "%s takes %d %s damage" % [who, final, str(type).capitalize()]
+	var names: Array[String] = []
+	for ty in (types if not types.is_empty() else [type] as Array[StringName]):
+		if not str(ty).capitalize() in names:
+			names.append(str(ty).capitalize())
+	var text := "%s takes %d %s damage" % [who, final, " + ".join(names)]
 	if raw != final:
 		text += " (%d before %s)" % [raw, ", ".join(notes)]
 	if absorbed_by_temp > 0:
