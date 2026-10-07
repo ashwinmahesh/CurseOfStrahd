@@ -1201,6 +1201,7 @@
           10
         ]
       ],
+      "pit_ft": 40,
       "detect_dc": 15,
       "disarm_dc": 15,
       "save": {
