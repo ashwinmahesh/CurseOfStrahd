@@ -332,3 +332,47 @@ func test_the_frame_meter_waits_for_f3() -> void:
 	assert_eq(meters, 1, "just one, however many places open")
 	assert_eq(meter.visible, FrameMeter.shown(), "shown as the setting says")
 	v.queue_free()
+
+
+## Weather lies on the surfaces in the Modern finish (W12): rain wets Vallaki's streets, snow lies at the Abbey, and
+## a dry place is dry; Classic is frozen without it.
+func test_weather_on_surfaces() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var expect := {"vallaki": [true, false], "abbey_of_st_markovia": [false, true], "village_of_barovia": [false, false]}
+	for loc_id: String in expect:
+		var v := _view(loc_id)
+		await get_tree().process_frame
+		var e := expect[loc_id] as Array
+		assert_eq(v.atmosphere.wetness > 0.0, bool(e[0]), "%s wet" % loc_id)
+		assert_eq(v.atmosphere.snow_cover > 0.0, bool(e[1]), "%s snowy" % loc_id)
+		v.queue_free()
+		await get_tree().process_frame
+	Look.set_style("classic", false)
+	var c := _view("vallaki")
+	await get_tree().process_frame
+	assert_eq(c.atmosphere.wetness, 0.0, "Classic stays as it was")
+	c.queue_free()
+	Look.set_style(was, false)
+
+
+## The party leaves footprints on ground that takes them (W12): mud, snow, marsh and bare earth, not cobbles.
+func test_footprints_on_soft_ground() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var v := _view("berez")
+	var soft := Vector2i(-1, -1)
+	for z in v.grid.depth:
+		for x in v.grid.width:
+			if soft.x < 0 and v.atmosphere._ground_at(Vector2i(x, z)) != "":
+				soft = Vector2i(x, z)
+	assert_true(soft.x >= 0, "Berez has ground that takes footprints")
+	var tok := v.tokens[v.members[0].id] as Node3D
+	tok.global_position = v.board.cell_center(soft)
+	v.atmosphere._footprints()
+	tok.global_position = v.board.cell_center(soft) + Vector3(0.4, 0, 0)
+	v.atmosphere._footprints()
+	assert_true(v.atmosphere._prints.size() >= 1, "a step leaves a print")
+	v.queue_free()
+	Look.set_style(was, false)
+

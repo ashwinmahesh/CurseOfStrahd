@@ -7,6 +7,7 @@
 shader_type spatial;
 #include "res://shaders/world/world_map.gdshaderinc"
 #include "res://shaders/world/lit_light.gdshaderinc"
+#include "res://shaders/world/weather_surface.gdshaderinc"
 
 uniform sampler2D albedo_tex : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
 // Multiplies the texture (an emptied container darkens, ModelPiece.dim).
@@ -65,22 +66,22 @@ void fragment() {
 	vec2 uv = world_uv(world_pos, world_normal, tile_units, uv_offset, wall_band, band_top, band_height);
 	float layer = float(tile_layer(uv));
 	bool layered = layer_count > 0;
+	bool top = world_top(world_normal);
 	vec3 base = (layered ? texture(albedo_layers, vec3(uv, layer)).rgb : texture(albedo_tex, uv).rgb) * tint;
 	float macro = 0.5;
 	if (macro_strength > 0.0) {
 		macro = texture(macro_tex, world_axes(world_pos, world_normal) / macro_units).r;
 		base *= mix(1.0, 0.72 + 0.56 * macro, macro_strength);
 	}
-	if (world_top(world_normal) && grid_strength > 0.0) {
+	if (top && grid_strength > 0.0) {
 		vec2 f = fract(world_pos.xz);
 		float line = step(f.x, 0.02) + step(f.y, 0.02);
 		base = mix(base, grid_line, clamp(line, 0.0, 1.0) * grid_strength);
 	}
-	ALBEDO = base;
+	vec3 wn = normalize(world_normal);
 	if (normal_strength > 0.0) {
 		vec3 map = layered ? texture(normal_layers, vec3(uv, layer)).rgb : texture(normal_tex, uv).rgb;
-		vec3 wn = world_relief(world_normal, map, normal_strength);
-		NORMAL = normalize((VIEW_MATRIX * vec4(wn, 0.0)).xyz);
+		wn = world_relief(world_normal, map, normal_strength);
 	}
 	float r = roughness + (0.45 - dot(base, vec3(0.299, 0.587, 0.114))) * roughness_spread;
 	float m = metallic;
@@ -91,6 +92,40 @@ void fragment() {
 		m = orm.b;
 	}
 	r += (macro - 0.5) * 0.3 * macro_strength;
+	// The weather (W12): rain darkening and glossing everything, with puddles in the low places ringing with drops;
+	// snow settled on what faces up.
+	float puddle = 0.0;
+	if (world_wet > 0.0) {
+		// Wet: darker and a little richer in colour.
+		base *= 1.0 - world_wet * 0.45 * smoothstep(0.2, 0.9, r);
+		float wl = dot(base, vec3(0.299, 0.587, 0.114));
+		base = max(mix(vec3(wl), base, 1.0 + world_wet * 0.25), vec3(0.0));
+		r = mix(r, 0.2, world_wet * 0.8);
+		puddle = ws_puddle(world_pos, top);
+		if (puddle > 0.0) {
+			vec2 ripple = ws_rain_slope(world_pos.xz) * 0.05;
+			wn = normalize(mix(wn, vec3(0.0, 1.0, 0.0), puddle) + vec3(ripple.x, 0.0, ripple.y) * puddle);
+			base = mix(base, base * 0.25, puddle);
+			r = mix(r, 0.1, puddle);
+		}
+	}
+	float snow = ws_snow(world_pos, world_normal);
+	if (snow > 0.0) {
+		// The surface's own shapes still show through a thin covering: its light and dark tint the snow a little and
+		// half its relief remains.
+		float detail = clamp(dot(base, vec3(0.299, 0.587, 0.114)) * 2.2, 0.0, 1.0);
+		base = mix(base, WS_SNOW * mix(0.8, 1.05, detail), snow);
+		r = mix(r, 0.65, snow);
+		m = mix(m, 0.0, snow);
+		wn = normalize(mix(wn, normalize(world_normal), snow * 0.5));
+	}
+	ALBEDO = base;
+	NORMAL = normalize((VIEW_MATRIX * vec4(wn, 0.0)).xyz);
+	if (puddle > 0.0) {
+		// A puddle holds the sky's light, more of it at a glancing angle.
+		float glance = pow(1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0), 3.0);
+		EMISSION = world_sky.rgb * puddle * (0.04 + glance * 0.3);
+	}
 	// Never below 0.1: the screen pass reads near-zero roughness as water (strahd_post.gdshader).
 	ROUGHNESS = clamp(r, 0.1, 1.0);
 	METALLIC = m;
