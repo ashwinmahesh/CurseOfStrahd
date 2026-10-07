@@ -135,6 +135,16 @@
         "patches of lichen in grey-green spots",
         "a fringe of moss and small weeds along the bottom edge"
       ]
+    },
+    "floor_ruts": {
+      "view": "floor",
+      "ref": "road_day_ab",
+      "subjects": [
+        "a straight stretch of two parallel wheel ruts running from left to right, dark wet churned mud in the two grooves with a little standing water, fading away at both ends",
+        "a straight stretch of two parallel wheel ruts running from left to right, drier, cracked brown mud with small stones pressed in, fading away at both ends",
+        "a straight stretch of two parallel wheel ruts running from left to right, muddy, with hoof prints between them, fading away at both ends",
+        "a straight stretch of two parallel wheel ruts running from left to right, shallow and grassy at the edges, fading away at both ends"
+      ]
     }
   }
 }

@@ -66,18 +66,49 @@ static func hash_cell(cell: Vector2i) -> int:
 
 
 ## A new copy of model `id` with its surfaces in the game's materials (by material name: pal_<colour>,
-## glow_<colour>, tex_<theme>__<surface>).
+## glow_<colour>, tex_<theme>__<surface>). The model's file is opened once: after that a copy is its meshes in new
+## MeshInstance3Ds (a place's 900-odd pieces cost a fifth of what opening the scene each time did; perf pass).
 static func instance(id: String) -> Node3D:
-	var info := manifest()[id] as Dictionary
-	var root := (load("res://" + str(info["file"])) as PackedScene).instantiate() as Node3D
+	var key := id + "|" + Look.style()
+	if not _parts.has(key):
+		_parts[key] = _read_parts(id)
+	var root := Node3D.new()
 	root.name = "Model_" + id
-	for n in root.find_children("*", "MeshInstance3D", true, false):
-		var mi := n as MeshInstance3D
-		for i in mi.mesh.get_surface_count():
-			var src := mi.mesh.surface_get_material(i)
-			mi.set_surface_override_material(i, material(src.resource_name if src != null else ""))
+	for part: Array in _parts[key]:
+		var mi := MeshInstance3D.new()
+		mi.name = str(part[3])
+		mi.mesh = part[0] as Mesh
+		mi.transform = part[1] as Transform3D
+		var mats := part[2] as Array
+		for i in mats.size():
+			mi.set_surface_override_material(i, mats[i] as Material)
+		root.add_child(mi)
 	root.set_meta("model", id)
 	return root
+
+
+static var _parts: Dictionary = {}
+
+
+## Model `id`'s meshes as [mesh, transform under the model's root, the game's material per surface, node name].
+static func _read_parts(id: String) -> Array:
+	var info := manifest()[id] as Dictionary
+	var scene := (load("res://" + str(info["file"])) as PackedScene).instantiate() as Node3D
+	var out: Array = []
+	for n in scene.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		var xf := mi.transform
+		var p := mi.get_parent()
+		while p != scene and p is Node3D:
+			xf = (p as Node3D).transform * xf
+			p = p.get_parent()
+		var mats: Array = []
+		for i in mi.mesh.get_surface_count():
+			var src := mi.mesh.surface_get_material(i)
+			mats.append(material(src.resource_name if src != null else ""))
+		out.append([mi.mesh, xf, mats, mi.name])
+	scene.free()
+	return out
 
 
 ## The game material for a model surface named in Blender.

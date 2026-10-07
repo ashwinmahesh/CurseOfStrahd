@@ -163,6 +163,55 @@ static func _scatter(board: ArenaBoard, rule: Dictionary, ri: int, strewn: Dicti
 	return count
 
 
+## Wheel ruts along the roads the shaped ground carves (W11, GroundRelief.roads()): a rut decal every square or so,
+## turned along the road, overlapping so the tracks run on. The land calls this once it has the relief.
+static func ruts(board: ArenaBoard, roads: Array[PackedVector2Array]) -> int:
+	if not Look.modern() or roads.is_empty():
+		return 0
+	var ids := ids_for(["floor_ruts"])
+	if ids.is_empty():
+		return 0
+	var root := board.get_node_or_null("Clutter") as Node3D
+	if root == null:
+		root = Node3D.new()
+		root.name = "Clutter"
+		board.add_child(root)
+	var count := 0
+	for line in roads:
+		var walked := 0.0
+		var next := 0.0
+		for i in range(1, line.size()):
+			var a := line[i - 1]
+			var b := line[i]
+			var seg := a.distance_to(b)
+			while next <= walked + seg and seg > 0.001:
+				var t := (next - walked) / seg
+				var p := a.lerp(b, t)
+				var dir := (b - a).normalized()
+				var h := _hash(board.place, Vector2i(floori(p.x * 4.0), floori(p.y * 4.0)), 77)
+				var c := Vector2i(floori(p.x), floori(p.y))
+				if board.grid.in_bounds(c) and not board.grid.has_flag(c, CombatGrid.WALL):
+					var d := Decal.new()
+					var id := ids[h % ids.size()]
+					var info := manifest()[id] as Dictionary
+					d.name = "Decal_" + id
+					d.texture_albedo = _texture(str(info["file"]))
+					var nm := _texture(str(info.get("normal_file", "")))
+					if nm != null:
+						d.texture_normal = nm
+					d.size = Vector3(0.95, 0.5, 1.5)
+					d.position = Vector3(p.x, board.floor_y(c), p.y)
+					d.rotation.y = atan2(dir.x, dir.y)
+					d.upper_fade = 0.3
+					d.lower_fade = 0.3
+					d.modulate = Color(0.85, 0.82, 0.8)
+					root.add_child(d)
+					count += 1
+				next += 1.05
+			walked += seg
+	return count
+
+
 ## Where a rule's mark can go on square `c`: [{at: Vector3 (the surface point), normal: Vector3 (out of the
 ## surface), wall: bool}]. on: floor (any open floor), edge (open floor beside a wall), difficult (rough ground),
 ## boundary (open floor beside rough ground: the mark sits on the line between them), wall (an open face of a wall
