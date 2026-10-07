@@ -92,12 +92,11 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   options and books are never voiced.
 
 ## Done means
-- `make check` while working: it runs only what covers the files changed since main (tools/check.py, `DRY=1` shows
-  the plan). Docs alone run nothing; art and audio files only re-import; data and dialogue run the validators and
-  the tests that name the changed ids; scripts and scenes run lint and the tests that use them.
-- `make check` green is enough to hand over docs, art, audio, data, dialogue, captures, tools, Makefile targets
-  outside `make ci` (it dry-runs them), and ui/ or world/ scripts. Changes to rules/, combat/, story/, core/,
-  tests/support or the ci targets need `make ci` green with a clean log.
-  The build thread runs `make ci` before every merge to main either way.
+- Hand off with `make check` green and a clean log (owner, 2026-10-07): it runs what covers the files changed since
+  main (tools/check.py, `DRY=1` shows the plan). Docs alone run nothing; art and audio re-import and run the tests
+  that check that art; data and dialogue run the validators and the tests that quote the ids or read the table;
+  scripts and scenes run lint, a compile of every script, and the tests that use them (`DEPTH=2` or `DEPTH=all`
+  reaches further). Changes to project.godot, an autoload, the test runner or the ci targets run `make ci`.
+  The build thread runs the full suite once for each batch of hand-offs before it merges them.
 - A new screen or panel goes into tests/integration/test_layout.gd, which fails on text or buttons spilling out.
 - A capture for anything visual. Never weaken tests to pass. Never mark an owner sign-off as passed.
