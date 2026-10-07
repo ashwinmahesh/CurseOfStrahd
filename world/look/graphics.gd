@@ -20,22 +20,24 @@ const DEFAULT_PRESET := "high"
 ##   nearest the party cast shadows (Atmosphere picks them).
 ## - filter: soft shadow filtering for both (RenderingServer.ShadowQuality).
 ## - reflections: steps of the screen-space reflections on polished and wet surfaces (0 = none).
+## - swaying: how many of the shadow-casting flames nearest the party sway as they flicker, stirring their shadows
+##   (each redraws its shadow map every frame).
 const SPECS := {
 	"low": {"msaa": Viewport.MSAA_DISABLED, "edge_aa": Viewport.SCREEN_SPACE_AA_FXAA,
 		"sun_map": 2048, "sun_splits": 2, "lamp_atlas": 2048, "lamp_shadows": 2,
-		"filter": RenderingServer.SHADOW_QUALITY_SOFT_LOW, "reflections": 0},
+		"filter": RenderingServer.SHADOW_QUALITY_SOFT_LOW, "reflections": 0, "swaying": 0},
 	"medium": {"msaa": Viewport.MSAA_DISABLED, "edge_aa": Viewport.SCREEN_SPACE_AA_SMAA,
 		"sun_map": 4096, "sun_splits": 4, "lamp_atlas": 4096, "lamp_shadows": 6,
-		"filter": RenderingServer.SHADOW_QUALITY_SOFT_MEDIUM, "reflections": 32},
+		"filter": RenderingServer.SHADOW_QUALITY_SOFT_MEDIUM, "reflections": 32, "swaying": 2},
 	"high": {"msaa": Viewport.MSAA_4X, "edge_aa": Viewport.SCREEN_SPACE_AA_SMAA,
 		"sun_map": 4096, "sun_splits": 4, "lamp_atlas": 8192, "lamp_shadows": 12,
-		"filter": RenderingServer.SHADOW_QUALITY_SOFT_HIGH, "reflections": 56},
+		"filter": RenderingServer.SHADOW_QUALITY_SOFT_HIGH, "reflections": 56, "swaying": 4},
 }
 ## The renderer as Classic was frozen with: no anti-aliasing, the sun's 4096 map in two splits, no lamp shadows,
 ## Godot's default soft filter. (project.godot holds High's settings for scenes that open without a place.)
 const CLASSIC := {"msaa": Viewport.MSAA_DISABLED, "edge_aa": Viewport.SCREEN_SPACE_AA_DISABLED,
 	"sun_map": 4096, "sun_splits": 2, "lamp_atlas": 4096, "lamp_shadows": 0,
-	"filter": RenderingServer.SHADOW_QUALITY_SOFT_LOW, "reflections": 0}
+	"filter": RenderingServer.SHADOW_QUALITY_SOFT_LOW, "reflections": 0, "swaying": 0}
 
 
 static func preset() -> String:
@@ -80,3 +82,7 @@ static func sun_splits() -> int:
 
 static func reflection_steps() -> int:
 	return int(spec()["reflections"])
+
+
+static func swaying_flames() -> int:
+	return int(spec()["swaying"])
