@@ -48,6 +48,11 @@ func before_each() -> void:
 	await _frames(3)
 
 
+## The fixture hall goes again, so a test that walks every location (test_set_dressing) never meets it.
+func after_each() -> void:
+	Compendium.shared().tables["locations"].erase("test_hall")
+
+
 func _frames(n: int) -> void:
 	for i in n:
 		await get_tree().process_frame

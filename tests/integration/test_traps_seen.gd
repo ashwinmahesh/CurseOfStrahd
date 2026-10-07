@@ -121,3 +121,19 @@ func test_a_rope_gets_them_out() -> void:
 	assert_ne(victim.cell, Vector2i(4, 2), "standing beside the pit")
 	assert_false(victim.creature.has_condition(&"prone"))
 	assert_true((view.tokens[victim.id] as CombatToken).sprite.global_position.y > -0.1, "back at floor level")
+
+
+func test_every_pit_trap_is_a_pit() -> void:
+	# Owner (2026-10-07): any pit trap is a real drop. A trap that speaks of a pit, a shaft or an oubliette has `pit_ft`.
+	var c := Compendium.shared()
+	var pits := 0
+	for lid: String in c.table("locations"):
+		if lid.begins_with("test_"):
+			continue   # this file's own hall
+		for t: Variant in c.get_entry("locations", lid).get("traps", []):
+			var trap := t as Dictionary
+			var words := ("%s %s %s" % [trap["id"], trap.get("label", ""), trap.get("text", "")]).to_lower()
+			if words.contains(" pit") or words.contains("_pit") or words.contains("shaft") or words.contains("oubliette"):
+				assert_true(PitFall.is_pit(trap), "%s/%s is a pit with a depth" % [lid, trap["id"]])
+				pits += 1
+	assert_true(pits >= 2, "the Death House passage and the castle's open cell")

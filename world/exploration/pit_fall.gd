@@ -4,7 +4,8 @@ extends RefCounted
 ## (the Death House crypt passage's 10-foot spiked pit). Once found or sprung the board shows it in 3D: the floor
 ## gone, stone sides going down, stakes at the bottom and the tipping slab that covered it. Whoever springs it makes the
 ## trap's saving throw: a success catches the edge; a failure falls in, takes 1d6 bludgeoning per 10 ft (2024 falling)
-## plus the trap's own damage, lands Prone and stays at the bottom until they climb out. With a rope in the party
+## plus the trap's own damage (a pit whose own damage is bludgeoning, like an oubliette, already counts the fall),
+## lands Prone and stays at the bottom until they climb out. With a rope in the party
 ## the climb needs no check; without one it's a DC 15 Strength (Athletics) check (2024: climbing a sheer surface), a
 ## minute a try. While someone is down there the party doesn't drag them along, and clicking to walk with them leading
 ## tries the climb first. An open pit is walked round where there's room, and jumped where it fills a passage.
@@ -66,9 +67,12 @@ static func spring(view: LocationView, trap: Dictionary, victim: Combatant) -> v
 	var label := str(trap.get("label", "a pit"))
 	if not caught:
 		var feet := int(trap["pit_ft"])
-		var fall := view.dice.roll_expr("%dd6" % maxi(1, feet / 10), "Falling %d ft" % feet)
-		var dr := victim.creature.take_damage(int(fall["total"]), &"bludgeoning", false, view.dice, "the fall")
-		lines.append(dr.describe(victim.name()))
+		# A pit whose own damage is bludgeoning (an oubliette) already counts the fall; any other (stakes) adds to it.
+		var own_fall := str(trap.get("damage_type", "")) == "bludgeoning" and str(trap.get("damage", "")) != ""
+		if not own_fall:
+			var fall := view.dice.roll_expr("%dd6" % maxi(1, feet / 10), "Falling %d ft" % feet)
+			var dr := victim.creature.take_damage(int(fall["total"]), &"bludgeoning", false, view.dice, "the fall")
+			lines.append(dr.describe(victim.name()))
 		if str(trap.get("damage", "")) != "":
 			var rolled := view.dice.roll_expr(str(trap["damage"]), "Trap: %s" % label)
 			var dr2 := victim.creature.take_damage(int(rolled["total"]), StringName(str(trap.get("damage_type", "piercing"))), false, view.dice, label)
@@ -141,7 +145,7 @@ static func climb_out(view: LocationView, cell: Vector2i) -> bool:
 	return true
 
 
-## The free square beside the pit nearest the way the party is facing (any open square next to it).
+## The nearest free square out of the pit (through the pit's own squares, for a wide pit), else any open one.
 static func _ledge(view: LocationView, m: Combatant, trap: Dictionary) -> Vector2i:
 	var pit := {}
 	for c: Variant in trap.get("cells", []):
@@ -150,15 +154,23 @@ static func _ledge(view: LocationView, m: Combatant, trap: Dictionary) -> Vector
 	for o in view.members:
 		if o != m:
 			taken[o.cell] = true
-	for dir: Vector2i in CombatGrid.DIRS:
-		var c := m.cell + dir
-		if view.grid.in_bounds(c) and not view.grid.is_solid(c) and not pit.has(c) and not taken.has(c):
-			return c
-	for dir: Vector2i in CombatGrid.DIRS:
-		var c := m.cell + dir
-		if view.grid.in_bounds(c) and not view.grid.is_solid(c) and not pit.has(c):
-			return c
-	return m.cell
+	var spare := Vector2i(-1, -1)
+	var seen := {m.cell: true}
+	var todo: Array[Vector2i] = [m.cell]
+	while not todo.is_empty():
+		var at: Vector2i = todo.pop_front()
+		for dir: Vector2i in CombatGrid.DIRS:
+			var c := at + dir
+			if seen.has(c) or not view.grid.in_bounds(c) or view.grid.is_solid(c):
+				continue
+			seen[c] = true
+			if pit.has(c):
+				todo.append(c)
+			elif not taken.has(c):
+				return c
+			elif spare.x < 0:
+				spare = c
+	return spare if spare.x >= 0 else m.cell
 
 
 ## On arriving: open pits shown and anyone saved at the bottom of one put back there.
@@ -312,7 +324,8 @@ static func build(view: LocationView, trap: Dictionary, sprung: bool) -> Node3D:
 			_box(root, Vector3(size.x + 0.02, 0.03, size.z + 0.02), Vector3(mid.x, top + 0.015, mid.z) + off, "rim").cast_shadow = \
 				GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		_box(root, Vector3(1.0, 0.1, 1.0), Vector3(c.x + 0.5, top - d - 0.05, c.y + 0.5), "bottom")
-		for i in 9:
+		# Stakes only where the trap's own damage says so (piercing); an oubliette is a bare shaft.
+		for i in (9 if str(trap.get("damage_type", "")) == "piercing" else 0):
 			var stake := MeshInstance3D.new()
 			var cm := CylinderMesh.new()
 			cm.top_radius = 0.0
