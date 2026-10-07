@@ -31,8 +31,9 @@
   "summary": "Reference-only: A hovering lantern sheds Dim Light 60 feet and captures fragments when enemies die in that light, up to your spellcasting modifier. Bonus Action spends a fragment on a visible creature within 60 feet: Constitution save against 4d8 + spellcasting modifier Necrotic (half on success), heal an Undead for that amount, or impose Disadvantage on incoming attacks until your next turn starts. Fragments vanish when the spell ends.",
   "text": "Reference-only: A hovering lantern sheds Dim Light 60 feet and captures fragments when enemies die in that light, up to your spellcasting modifier. Bonus Action spends a fragment on a visible creature within 60 feet: Constitution save against 4d8 + spellcasting modifier Necrotic (half on success), heal an Undead for that amount, or impose Disadvantage on incoming attacks until your next turn starts. Fragments vanish when the spell ends.",
   "tags": [
-    "utility"
+    "damage"
   ],
   "icon": "magic_missile",
+  "automation": "reference",
   "playable": false
 }

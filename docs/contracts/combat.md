@@ -129,3 +129,45 @@ away until he is back over half. Withdrawing turns him to mist (or a bat) as he 
 Events: `legendary` (id, option, name, left), `lair` (id, action, name), `form` (id, form, art: the token wears the
 shape's sprite when it exists), `vanish` (id, left: mist or withdraw, narration) for a creature leaving the fight.
 The initiative tracker shows a legendary creature's actions left (◆◇) and the lair's card at count 20.
+
+## Reusable feature and spell responses
+
+`FeatureRecipes` supplies data-defined activations and synchronous failed-D20 responses through `FeatureActions`. Save-based damage reduction is shared by ordinary spells, zones and monster actions. Magical monster saves carry a magic key when the action declares `magical`.
+
+Reaction offers may provide `stop_if` alongside `stop`: after `use`, the continuation stops only when the predicate is true. This allows an interrupted Shield to spend its Reaction while the original hit continues. Spell casting gates run after casting time is consumed and before slot payment or concentration replacement.
+
+Action targeting `points` collects `count` distinct grid positions into `opts.points`; selecting an already chosen position deselects it. Invalid summon spaces are rejected during selection. Multi-creature feature and sustained-action selections read the action's own `count` instead of a spell's target count. `Combatant.record_step` records a straight voluntary run; attacks consume that run, and teleports/forced movement clear it. Charge checks use distance actually closed during this run.
+
+`feature.hit_response` offers a Reaction after an attack hit survives hit-negating defenses. It spends `resource`, forces a save against the feature class’s spell DC, and applies `effects` on failure through the shared effect engine. `range` and `requires_sight` are opt-in restrictions. Weapon/monster attacks pause for the normal reaction prompt; synchronous spell attacks use the current auto/never response policy. The original hit still resolves if the attacker is Stunned by the response.
+
+Triggered selections reuse `ReactionRequest.target_choices` (`id`, `label`) and `selected_ids`; `spends_reaction: false` changes the prompt and log wording without consuming a Reaction. The encounter remains paused, the HUD allows explicit selection of each candidate, and the continuation revalidates targets. `TriggeredFeatures` reads `feature.cast_form` to expose a casting variant (`opts.cast_form` = feature id) for its named concentration `spell`, checking and spending `resource`. Its `modifiers` attach to that casting’s concentration and duration. An optional `pulse` declares `radius`, `dice` and damage `type`, offered on adoption and each own turn start. Frozen Haunt supplies these values in subclass data. Automatic selection affects enemies; the prompt can select or spare any eligible creature.
+
+`incorporeal_occupied` allows ending movement in another creature’s space and makes those spaces Difficult Terrain. A casting form’s optional `embedded_damage` declares the dice and type for ending a turn inside a creature or solid terrain. `shunt_on_end` searches the whole battlefield for the nearest free footprint when the form ends. The effect stores its recipe and class provenance; its callback is restored on loading a fight.
+
+Feature activations may specify `save` (against the feature class’s spell save DC) and `target_perceives_caster`. Save keys include magical effects and imposed conditions. Effect `params.tether` stores a range and optional `perceive_caster` requirement; leaving range or losing both sight and hearing ends that effect. Hypnotic Presence uses this together with damage-ending and primary-condition linkage, without requiring Concentration.
+
+Activations may require `unarmored` and allow `dismissible` effects. Effect parameters `ends_when_incapacitated`, `ends_on_two_handed_attack` and `ends_when_armored` end the effect when their condition occurs, including equipping armor or a Shield. Bladesong consumes its Bonus Action and resource, lasts one minute, and restores one use when Arcane Recovery is consumed.
+
+The `attack_cantrip` feature recipe (optional `class` filter) and legacy War Magic use validated `opts.war_magic`, consuming one Attack-action attack rather than a Magic action. Only one cantrip substitution is allowed in that Attack action; a new action or turn resets the marker. Bladesinger requires a Wizard cantrip. The `after_cast_attack` recipe matches `casting_time`, then grants a Bonus Action attack with data-defined `allow_ranged` and `weapons_only` restrictions. Its eligibility is tied to that specific bonus attack and cleared when used or at turn start. Song of Victory supplies this recipe, allowing ranged weapons and excluding Unarmed Strikes.
+
+
+`slot_exchange` feature recipes declare a resource, free slot-to-resource conversion, and a table of slot recovery costs and class-level gates. `Character` validates exchanges and caps restored resources; spell slot conversion does not count as casting a slotted spell. Recovery opens only at a declared event (`short_rest` or `uncanny_metabolism`), restores at most one expended slot per feature per event, and supports ordinary and Pact Magic slots. The rest screen closes the window on exit; combat offers end the window after acceptance or declining all choices, without spending a Reaction.
+
+`on_feature_target` applies ordinary effect entries after a declared feature targets a creature. `stunning_strike` emits this event after either save outcome. A modifier's `on` or `value` suffix `:caster` resolves to the source combatant's id. Spell saves carry `save_vs:spell:<caster id>` alongside spell/magic keys, including shared, special, repeated and zone saves; non-spell feature saves do not acquire spell provenance. Focused Strike uses a caster-specific disadvantage effect ending at its caster's next turn start.
+
+`spell_sequence` declares eligible casting classes and base spell levels, a Bonus Action resource cost, and subsequent attacks. A selected `opts.spell_sequence` validates the spell and targets before paying; it spends the Bonus Action, resource and normal casting costs, preserving the normal action. Follow-up attacks use the normal attack resolver, validate before consumption, and expire at turn start. `attack_tag` identifies the existing attack context (such as Flurry) only while that strike resolves. Improved Mystic Fighting Style trades two Flurry attacks for an action-time level 1–2 Sorcerer spell, leaving one Unarmed Strike; upcasting uses the normal spell-slot rules.
+
+
+### Resource-funded spellcasting
+
+`feature.resource_cast` selects a prepared spell by school and, with `subclass_spells`, membership in that
+class's subclass spell table. `resource`/`cost` replace slot payment; `casting: action` supplies the feature's
+Magic action even for a spell that ordinarily takes longer. `omit_material: true` removes Material components
+from this casting. The cast uses its prepared class's ability, at base level, retaining targeting, concentration,
+and the other spell rules. It neither spends a slot nor changes the one-slot-spell-per-turn marker. Target and
+eligibility failures consume nothing. Resource casting cannot combine with another payment or attack-substitution
+feature. The combat catalog and exploration spell controls expose the same recipe; exhausted uses remain visible.
+Exploration continues to use the existing field spell handlers; this recipe does not add missing spell effects.
+
+The `spell_sequence.max_level` limit applies to the effective level of the actual casting, including upcasting
+and effects that raise that level. Catalog slot choices and engine validation enforce the same cap before costs.

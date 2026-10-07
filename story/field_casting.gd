@@ -44,7 +44,7 @@ static func helpful(data: Dictionary) -> bool:
 		if data.has(k):
 			return false
 	var kind := str((data.get("targets", {}) as Dictionary).get("kind", ""))
-	return kind in ["creature", "self"] and (data.has("heal") or data.has("effects"))
+	return kind in ["creature", "self"] and (data.has("heal") or data.has("effects") or bool(data.get("field_utility", false)))
 
 
 ## Casts `spell_id` from `caster` at `slot` (0 = the lowest that works) on `targets`. Returns {ok, text, lines}.
@@ -137,7 +137,7 @@ static func utility_options(party: Array[Character], caster: Character, dice: Di
 		var level := int(data.get("level", 0))
 		var slots := _slots(caster, level)
 		var ritual := bool(data.get("ritual", false))
-		var entry := {"id": id, "name": str(data["name"]), "level": level, "ritual": ritual, "slots": slots, "legal": true, "reason": ""}
+		var entry := {"id": id, "name": str(data["name"]), "level": level, "ritual": ritual, "slots": slots, "legal": true, "reason": "", "resource_casts": caster.resource_casts(id)}
 		if level > 0 and slots.is_empty() and not ritual:
 			entry["legal"] = false
 			entry["reason"] = "No spell slots left"
@@ -151,19 +151,41 @@ static func utility_options(party: Array[Character], caster: Character, dice: Di
 ## Casts an exploring spell: spends the slot (or, `as_ritual`, ten more minutes), records it in
 ## StoryState.active_spells for its duration (conditions: `spell:<id>`), and returns {ok, text, effect}; the world
 ## applies `effect` (light, detect_magic, find_traps) where the party stands.
-static func cast_utility(st: StoryState, caster: Character, spell_id: String, as_ritual: bool, slot: int = 0) -> Dictionary:
+static func cast_utility(st: StoryState, caster: Character, spell_id: String, as_ritual: bool, slot: int = 0, resource_feature: String = "") -> Dictionary:
 	var data := Compendium.shared().spell_data(spell_id)
 	if data.is_empty():
 		return {"ok": false, "text": "Unknown spell"}
+	var utilities := utility_options(st.party, caster, DiceRoller.new(0))
+	if not utilities.any(func(option: Dictionary) -> bool: return str(option["id"]) == spell_id):
+		return {"ok": false, "text": "Use this spell through its combat or helpful-spell action"}
+	if not caster.known_spells().any(func(k: Dictionary) -> bool: return str(k["id"]) == spell_id):
+		return {"ok": false, "text": "Spell is not prepared or known"}
+	if caster.hp <= 0 or caster.dead or caster.has_condition(&"incapacitated") or caster.has_flag("cant_cast"):
+		return {"ok": false, "text": "%s can't cast" % caster.name}
+	if bool((data.get("components", {}) as Dictionary).get("v", false)) and caster.has_flag("speechless"):
+		return {"ok": false, "text": "Can't speak"}
+	var payment: Dictionary = {}
+	if resource_feature != "":
+		if as_ritual or slot > int(data.get("level", 0)):
+			return {"ok": false, "text": "This feature casts at base level using its Magic action"}
+		for feature in caster.resource_casts(spell_id):
+			if str(feature["id"]) == resource_feature:
+				payment = feature["resource_cast"] as Dictionary
+		if payment.is_empty():
+			return {"ok": false, "text": "This feature cannot cast that spell"}
+		if caster.resource_left(str(payment["resource"])) < int(payment["cost"]):
+			return {"ok": false, "text": "No uses left"}
 	var level := int(data.get("level", 0))
 	if as_ritual and not bool(data.get("ritual", false)):
 		return {"ok": false, "text": "%s isn't a Ritual" % data["name"]}
-	if level > 0 and not as_ritual:
+	if level > 0 and not as_ritual and payment.is_empty():
 		var slots := _slots(caster, level)
 		if slots.is_empty():
 			return {"ok": false, "text": "No spell slots left"}
 		if not caster.expend_slot(slot if slot in slots else slots[0]):
 			return {"ok": false, "text": "No spell slots left"}
+	if not payment.is_empty():
+		caster.spend_resource(str(payment["resource"]), int(payment["cost"]))
 	var minutes := 10 if as_ritual else 1
 	var dur := data.get("duration", {}) as Dictionary
 	var lasting := 0

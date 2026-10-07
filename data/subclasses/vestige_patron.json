@@ -24,9 +24,247 @@
       "feature": {
         "id": "vestige_spells",
         "name": "Vestige Spells",
-        "summary": "Choose the Life, Light, Trickery, or War Cleric domain. Its domain spells become always-prepared Warlock spells at the equivalent Warlock levels. The domain selection and these prepared spells are reference-only.",
-        "text": "Choose the Life, Light, Trickery, or War Cleric domain. Its domain spells become always-prepared Warlock spells at the equivalent Warlock levels. The domain selection and these prepared spells are reference-only.",
-        "implemented": "text"
+        "summary": "Choose the Life, Light, Trickery, or War Cleric domain. Its domain spells become always-prepared Warlock spells at the equivalent Warlock levels.",
+        "text": "Choose the Life, Light, Trickery, or War Cleric domain. Its domain spells become always-prepared Warlock spells at the equivalent Warlock levels.",
+        "implemented": "data",
+        "choice": {
+          "kind": "option",
+          "count": 1,
+          "options": [
+            {
+              "id": "life",
+              "name": "Life Domain",
+              "summary": "Prepare the Life Domain spells as Warlock spells.",
+              "implemented": "data",
+              "modifiers": [
+                {
+                  "stat": "spell",
+                  "value": "aid",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "bless",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "cure_wounds",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "lesser_restoration",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "mass_healing_word",
+                  "at_class_level": 5
+                },
+                {
+                  "stat": "spell",
+                  "value": "revivify",
+                  "at_class_level": 5
+                },
+                {
+                  "stat": "spell",
+                  "value": "aura_of_life",
+                  "at_class_level": 7
+                },
+                {
+                  "stat": "spell",
+                  "value": "death_ward",
+                  "at_class_level": 7
+                },
+                {
+                  "stat": "spell",
+                  "value": "greater_restoration",
+                  "at_class_level": 9
+                },
+                {
+                  "stat": "spell",
+                  "value": "mass_cure_wounds",
+                  "at_class_level": 9
+                }
+              ]
+            },
+            {
+              "id": "light",
+              "name": "Light Domain",
+              "summary": "Prepare the Light Domain spells as Warlock spells.",
+              "implemented": "data",
+              "modifiers": [
+                {
+                  "stat": "spell",
+                  "value": "burning_hands",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "faerie_fire",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "scorching_ray",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "see_invisibility",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "daylight",
+                  "at_class_level": 5
+                },
+                {
+                  "stat": "spell",
+                  "value": "fireball",
+                  "at_class_level": 5
+                },
+                {
+                  "stat": "spell",
+                  "value": "arcane_eye",
+                  "at_class_level": 7
+                },
+                {
+                  "stat": "spell",
+                  "value": "wall_of_fire",
+                  "at_class_level": 7
+                },
+                {
+                  "stat": "spell",
+                  "value": "flame_strike",
+                  "at_class_level": 9
+                },
+                {
+                  "stat": "spell",
+                  "value": "scrying",
+                  "at_class_level": 9
+                }
+              ]
+            },
+            {
+              "id": "trickery",
+              "name": "Trickery Domain",
+              "summary": "Prepare the Trickery Domain spells as Warlock spells.",
+              "implemented": "data",
+              "modifiers": [
+                {
+                  "stat": "spell",
+                  "value": "charm_person",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "disguise_self",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "invisibility",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "pass_without_trace",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "hypnotic_pattern",
+                  "at_class_level": 5
+                },
+                {
+                  "stat": "spell",
+                  "value": "nondetection",
+                  "at_class_level": 5
+                },
+                {
+                  "stat": "spell",
+                  "value": "confusion",
+                  "at_class_level": 7
+                },
+                {
+                  "stat": "spell",
+                  "value": "dimension_door",
+                  "at_class_level": 7
+                },
+                {
+                  "stat": "spell",
+                  "value": "dominate_person",
+                  "at_class_level": 9
+                },
+                {
+                  "stat": "spell",
+                  "value": "modify_memory",
+                  "at_class_level": 9
+                }
+              ]
+            },
+            {
+              "id": "war",
+              "name": "War Domain",
+              "summary": "Prepare the War Domain spells as Warlock spells.",
+              "implemented": "data",
+              "modifiers": [
+                {
+                  "stat": "spell",
+                  "value": "guiding_bolt",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "magic_weapon",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "shield_of_faith",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "spiritual_weapon",
+                  "at_class_level": 3
+                },
+                {
+                  "stat": "spell",
+                  "value": "crusaders_mantle",
+                  "at_class_level": 5
+                },
+                {
+                  "stat": "spell",
+                  "value": "spirit_guardians",
+                  "at_class_level": 5
+                },
+                {
+                  "stat": "spell",
+                  "value": "fire_shield",
+                  "at_class_level": 7
+                },
+                {
+                  "stat": "spell",
+                  "value": "freedom_of_movement",
+                  "at_class_level": 7
+                },
+                {
+                  "stat": "spell",
+                  "value": "hold_monster",
+                  "at_class_level": 9
+                },
+                {
+                  "stat": "spell",
+                  "value": "steel_wind_strike",
+                  "at_class_level": 9
+                }
+              ]
+            }
+          ]
+        }
       }
     },
     {

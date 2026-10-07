@@ -34,6 +34,7 @@ var spells: SpellCaster
 var features: CombatFeatures
 var reactions: Reactions
 var feature_actions: FeatureActions
+var feature_recipes: FeatureRecipes
 var monster_actions: MonsterActions
 var ai: AiBrain
 var shapes: ShapeChange
@@ -41,6 +42,7 @@ var shapes: ShapeChange
 var allies_block := false
 var class_features: ClassFeatures
 ## Ravenloft: The Horrors Within options (combat/ravenloft_features.gd).
+var triggered_features: TriggeredFeatures
 var ravenloft: RavenloftFeatures
 ## Magic items: the Items tab, item powers and the hooks below (combat/combat_items.gd, ADR 0012).
 var items: CombatItems
@@ -75,11 +77,13 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	features = CombatFeatures.new(self)
 	reactions = Reactions.new(self)
 	feature_actions = FeatureActions.new(self)
+	feature_recipes = FeatureRecipes.new(self)
 	monster_actions = MonsterActions.new(self)
 	ai = AiBrain.new(self)
 	shapes = ShapeChange.new(self)
 	class_features = ClassFeatures.new(self)
 	ravenloft = RavenloftFeatures.new(self)
+	triggered_features = TriggeredFeatures.new(self)
 	items = CombatItems.new(self)
 	legendary = Legendary.new(self)
 
@@ -258,6 +262,22 @@ func _layout_hash() -> int:
 ## (Darkvision in the dark; nothing but Blindsight or Truesight in magical Darkness), and `b` being Invisible,
 ## hidden or on the Ethereal Plane (See Invisibility and Truesight see the Invisible; Faerie Fire and Starry Wisp
 ## take its benefit away; Mind Spike's caster always knows where its target is).
+func space_available(cell: Vector2i, size: int, except: Array = []) -> bool:
+	for square in CombatGrid.footprint(cell, size):
+		if not grid.in_bounds(square) or grid.is_solid(square):
+			return false
+		var occupant := occupant_at(square)
+		if occupant != null and not occupant in except:
+			return false
+	return true
+
+
+func can_see_space(a: Combatant, cell: Vector2i, size: int = 1) -> bool:
+	var marker := Combatant.new(Creature.new(), &"neutral", cell)
+	marker.size_cells = size
+	return can_see(a, marker)
+
+
 func can_see(a: Combatant, b: Combatant) -> bool:
 	var dist := distance(a, b)
 	var blind := a.creature.sense_range("blindsight")
@@ -483,6 +503,10 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 		slowed[cell] = terrain[cell] if terrain[cell] is int else true
 	if c.creature.has_flag("pass_through_creatures"):
 		blocked = {}
+	if c.creature.has_flag("incorporeal_occupied"):
+		for cell: Vector2i in occupied:
+			slowed[cell] = true
+		occupied = {}
 	# Wall of Force and Wall of Stone: no one walks through.
 	for wcell: Vector2i in spells.specials.mid.blocked_cells():
 		blocked[wcell] = true
@@ -528,6 +552,7 @@ func _begin_turn() -> void:
 	ravenloft.turn_start(c)
 	monster_actions.turn_start(c)
 	items.turn_start(c)
+	triggered_features.turn_start(c)
 	if c.creature.has_flag("dazed"):
 		c.bonus_available = false
 		log.add("info", "%s is Dazed: it can move or act this turn, not both" % c.name(), c.id)
@@ -562,6 +587,7 @@ func end_turn() -> CombatResult:
 	ravenloft.turn_end(c)
 	monster_actions.turn_end(c)
 	items.turn_end(c)
+	triggered_features.turn_end(c)
 	spells.turn_end(c)
 	spells.zones.prune()
 	_check_over()
@@ -841,6 +867,7 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 		var from := c.cell
 		c.movement_left -= step
 		c.moved = true
+		c.record_step(c.cell, to)
 		c.cell = to
 		c.facing = Vector2(to - from).normalized()
 		events.append({"type": "move", "id": c.id, "from": from, "to": to})
@@ -1004,10 +1031,13 @@ func ready_spell(c: Combatant, spell_id: String, slot: int) -> CombatResult:
 		slot = maxi(slot, level)
 		if ch.slots_left(slot) <= 0:
 			return CombatResult.fail("No level %d slots left" % slot)
-		ch.expend_slot(slot)
-		c.cast_slot_spell_this_turn = true
 	spend_action(c)
 	c.magic_action_used = true
+	if not spells.casting_gate(c):
+		return CombatResult.new()
+	if level > 0:
+		ch.expend_slot(slot)
+		c.cast_slot_spell_this_turn = true
 	var conc := c.creature.begin_concentration("readied:" + spell_id, "a readied %s" % s["name"])
 	c.readied = {"spell": spell_id, "slot": slot, "conc": conc}
 	log.add("spell", "%s readies %s for the first enemy to come within %d ft" % [c.name(), s["name"], spells.range_ft(s, c)], c.id)
@@ -1187,7 +1217,9 @@ func answer_reaction(use: bool) -> CombatResult:
 	var req := pending
 	pending = null
 	var verbs := ["spends Heroic Inspiration", "keeps Heroic Inspiration"] if req.kind == "heroic_inspiration" else ["uses its Reaction", "holds its Reaction"]
-	log.add("reaction", "%s %s" % [get_c(req.reactor_id).name(), verbs[0] if use else verbs[1]], req.reactor_id)
+	if not req.spends_reaction:
+		verbs = ["confirms " + req.title, "declines " + req.title]
+	log.add("reaction" if req.spends_reaction else "info", "%s %s" % [get_c(req.reactor_id).name(), verbs[0] if use else verbs[1]], req.reactor_id)
 	var res := req.continuation.call(use) as CombatResult
 	req.continuation = Callable()
 	res.pending = pending
@@ -1331,6 +1363,7 @@ func forced_move(target: Combatant, origin: Vector2, feet: int, toward: bool = f
 		events.append({"type": "move", "id": target.id, "from": target.cell, "to": nxt, "forced": true})
 		var was := target.cell
 		target.cell = nxt
+		target.clear_run()
 		moved += 1
 		_after_step(target, was)
 	if moved > 0:
@@ -1495,6 +1528,7 @@ func use_one_attack(c: Combatant) -> void:
 
 
 func spend_action(c: Combatant) -> void:
+	c.remove_meta("attack_cantrip_used")
 	if c.extra_actions > 0:
 		c.extra_actions -= 1
 		c.attacks_left = 0
@@ -1592,6 +1626,10 @@ func haste_action_use(c: Combatant, what: String, target: Combatant, option_id: 
 	var why := _turn_check(c)
 	if why != "":
 		return CombatResult.fail(why)
+	if what == "dash" and c.creature.has_flag("cannot_dash"):
+		return CombatResult.fail("Cannot Dash while affected")
+	if what == "disengage" and not can_disengage(c):
+		return CombatResult.fail("Hunter’s Rime prevents Disengage")
 	if not c.haste_action or not c.creature.has_flag("hasted"):
 		return CombatResult.fail("No Haste action left")
 	if not c.can_act():
@@ -1889,7 +1927,9 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 	var adv: Array[String] = []
 	var dis: Array[String] = []
 	var p := option["profile"] as WeaponProfile
-	var dist := distance(c, target)
+	var origin_cell: Vector2i = option.get("origin_cell", c.cell)
+	var origin_size := 1 if option.has("origin_cell") else c.size_cells
+	var dist := grid.distance_ft(origin_cell, origin_size, target.cell, target.size_cells)
 	var melee := bool(option["melee"])
 	var duel := spells.specials.duel_disadvantage(c, target)
 	if duel != "":
@@ -1897,6 +1937,10 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 	class_features.attack_situation(c, target, option, adv, dis)
 	for m in target.creature.modifiers_for(&"attacked_with"):
 		if m.source_name == "Dodging" and (not can_see(target, c) or target.speed() <= 0):
+			continue
+		if m.text("attack_kind") == "ranged" and melee:
+			continue
+		if m.text("attack_kind") == "melee" and not melee:
 			continue
 		# Spellguard Shield: only spell attacks.
 		if bool(m.data.get("spell_only", false)) and str(option.get("kind", "")) != "spell":
@@ -1980,7 +2024,7 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 	# Elusive (Rogue 18): no Advantage against it while it isn't Incapacitated.
 	if target.creature.has_flag("elusive") and target.can_act():
 		adv.clear()
-	var cov := cover(c, target)
+	var cov := grid.cover_between(origin_cell, origin_size, target.cell, target.size_cells, creature_cells([c, target])) if option.has("origin_cell") else cover(c, target)
 	var degree := int(cov["cover"])
 	var by := str(cov["by"])
 	# Bulwark of Force: at least Half Cover.
@@ -2065,6 +2109,10 @@ func hit_chance(c: Combatant, target: Combatant, option: Dictionary) -> Dictiona
 ## attacker armed), reactions against the damage (Uncanny Dodge, Parry, Interception...), defenses, Undead
 ## Fortitude, mastery properties and on-hit effects, then reactions to the damage (Hellish Rebuke) and Riposte.
 func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: Dictionary) -> CombatResult:
+	if (option["profile"] as WeaponProfile).two_hands:
+		for fx: Effect in c.creature.effects.duplicate():
+			if bool(fx.data.get("ends_on_two_handed_attack", false)):
+				c.creature.remove_effect(fx)
 	var r := CombatResult.new()
 	# Wind Wall: ordinary missiles shot across it are deflected upward and miss.
 	if not bool(option["melee"]) and str(option.get("kind", "")) in ["weapon", "thrown", "monster"] and spells.zones.deflects_between(c, target):
@@ -2101,6 +2149,8 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 	var p := option["profile"] as WeaponProfile
 	var ac := int(st["ac"])
 	var keys: Array[String] = ["attack", "attack:melee" if bool(option["melee"]) else "attack:ranged", "attack:%s" % p.ability]
+	st["charge"] = monster_actions.charge_of(c, target, option)
+	c.clear_run()
 	var label := "%s → %s (%s)" % [c.name(), target.name(), p.name]
 	var t := c.creature.roll_d20(dice, D20Test.Kind.ATTACK_ROLL, p.attack, ac, keys, sit["advantage"] as Array[String],
 		sit["disadvantage"] as Array[String], label, p.crit_range, attacked_dice(target))
@@ -2208,6 +2258,10 @@ func _attack_missed(st: Dictionary) -> CombatResult:
 
 
 func _after_hit(st: Dictionary) -> CombatResult:
+	if not bool(st.get("hit_responses_offered", false)):
+		st["hit_responses_offered"] = true
+		return reactions.offer(feature_recipes.hit_responses(st["c"] as Combatant, st["target"] as Combatant),
+			func() -> CombatResult: return _after_hit(st), st["r"] as CombatResult)
 	var c := st["c"] as Combatant
 	var target := st["target"] as Combatant
 	var option := st["option"] as Dictionary
@@ -2224,7 +2278,7 @@ func _after_hit(st: Dictionary) -> CombatResult:
 	var dmg_text: Array[String] = []
 	var dice_list: Array[Dictionary] = [{"dice": p.damage_dice, "type": str(p.damage_type), "label": p.name, "weapon": true}]
 	if c.creature is Monster:
-		dice_list.append_array((c.creature as Monster).extra_damage_dice(str(option.get("action_id", ""))))
+		dice_list.append_array((c.creature as Monster).extra_damage_dice(str(option.get("action_id", "")), target.creature))
 	var sneak := features.sneak_attack_dice(c, target, option, t)
 	if sneak != "":
 		sneak = features.cunning_strike_cost(c, sneak, st)
@@ -2236,7 +2290,7 @@ func _after_hit(st: Dictionary) -> CombatResult:
 	dice_list.append_array(features.hit_damage_dice(c, target, option, st))
 	dice_list.append_array(items.hit_damage_dice(c, target, option, st))
 	# A charge (giant elk, goat, boars, rhinoceros): extra or bigger damage after a straight run at the target.
-	var charge := monster_actions.charge_of(c, target, option)
+	var charge := st.get("charge", {}) as Dictionary
 	if not charge.is_empty():
 		c.set_meta("charged_vs", target.id)
 		if bool(charge.get("replace", false)):
@@ -2332,6 +2386,8 @@ func retaliate(attacker: Combatant, target: Combatant) -> void:
 	for m in target.creature.modifiers_for(&"retaliate"):
 		if distance(attacker, target) > int(m.data.get("within", 5)):
 			continue
+		if bool(m.data.get("once_per_turn", false)) and not class_features._once(target, "retaliate:%s" % m.source_id):
+			continue
 		var amount := m.number("value") if m.data.has("value") else 0
 		var text := "%d" % amount
 		if m.data.has("dice"):
@@ -2392,6 +2448,11 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		parts.append({"amount": int(extra["total"]), "type": "necrotic"})
 		details = details.duplicate()
 		details.append("Bestow Curse 1d8: %s" % extra["text"])
+	if source != null and source.creature.has_flag("siege_monster") and (target.creature.has_flag("spell_object") or target.creature.creature_type == &"object"):
+		parts = parts.duplicate(true)
+		for part: Dictionary in parts:
+			part["amount"] = int(part["amount"]) * 2
+		details.append("Siege Monster: double damage to objects")
 	parts = _reduce_by_dice(target, parts, details)
 	parts = _bastion(target, parts, details)
 	feature_actions.adjust_incoming(source, target, parts)
@@ -2879,6 +2940,8 @@ func begin_multiattack(c: Combatant) -> Array[Dictionary]:
 # --- Standard actions -----------------------------------------------------------------------------
 
 func dash(c: Combatant, use_bonus: bool = false) -> CombatResult:
+	if c.creature.has_flag("cannot_dash"):
+		return CombatResult.fail("Cannot Dash while affected")
 	var why := _bonus_check(c) if use_bonus else _action_check(c)
 	if why == "" and use_bonus and not CombatFeatures.has_feature(c, "cunning_action"):
 		why = "Needs Cunning Action"
@@ -2895,6 +2958,8 @@ func dash(c: Combatant, use_bonus: bool = false) -> CombatResult:
 
 
 func disengage(c: Combatant, use_bonus: bool = false) -> CombatResult:
+	if not can_disengage(c):
+		return CombatResult.fail("Hunter’s Rime prevents Disengage")
 	var why := _bonus_check(c) if use_bonus else _action_check(c)
 	if why == "" and use_bonus and not CombatFeatures.has_feature(c, "cunning_action"):
 		why = "Needs Cunning Action"
@@ -2916,13 +2981,18 @@ func dodge(c: Combatant) -> CombatResult:
 	if why != "":
 		return CombatResult.fail(why)
 	spend_action(c)
+	apply_dodge(c)
+	return CombatResult.new()
+
+
+## The Dodge effect is shared by the normal action and resource-paid alternate activations.
+func apply_dodge(c: Combatant) -> void:
 	var e := Effect.new("Dodging", &"effect", "dodge").with_modifier("attacked_with", {"value": "disadvantage"}).with_modifier("advantage", {"on": "save:dex"})
 	e.ends = Effect.Ends.START_OF_TURN
 	e.turn_owner_id = c.id
 	e.ends_when_incapacitated = true
 	c.creature.add_effect(e)
 	log.add("info", "%s takes the Dodge action" % c.name(), c.id)
-	return CombatResult.new()
 
 
 ## Help (2024): distract an enemy within 5 ft; the next attack roll by one of your allies against it has
@@ -3135,3 +3205,15 @@ func drain_events() -> Array[Dictionary]:
 	var out := events.duplicate()
 	events.clear()
 	return out
+
+
+func can_disengage(c: Combatant) -> bool:
+	for hunter in combatants:
+		if not CombatFeatures.has_feature(hunter, "hunters_rime"):
+			continue
+		for fx in hunter.creature.effects:
+			if fx.source_id == "hunters_mark":
+				for m in fx.modifiers:
+					if m.text("vs") == c.id:
+						return false
+	return true

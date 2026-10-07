@@ -38,18 +38,19 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 			continue
 		if decision == "auto":
 			(o["use"] as Callable).call()
-			if o.has("stop"):
+			if o.has("stop") and (not o.has("stop_if") or (o["stop_if"] as Callable).call()):
 				return (o["stop"] as Callable).call() as CombatResult
 			continue
 		var req := ReactionRequest.new(kind, reactor.id, str(o.get("trigger", "")))
 		req.title = str(o["title"])
 		req.text = str(o["text"])
 		req.cost = str(o.get("cost", "Reaction"))
+		req.spends_reaction = bool(o.get("spends_reaction", true))
 		var rest := chain.duplicate()
 		req.continuation = func(use: bool) -> CombatResult:
 			if use:
 				(o["use"] as Callable).call()
-				if o.has("stop"):
+				if o.has("stop") and (not o.has("stop_if") or (o["stop_if"] as Callable).call()):
 					return (o["stop"] as Callable).call() as CombatResult
 			return offer(rest, done, r)
 		e.pending = req
@@ -203,11 +204,23 @@ func after_hit_target(st: Dictionary, miss: Callable) -> Array:
 	var out: Array = []
 	e.class_features.after_hit_target(st, miss, out)
 	e.ravenloft.after_hit_target(st, miss, out)
+	for sid in e.spells.incoming_roll_responses(target):
+		var spell_id := sid
+		var name := str(Compendium.shared().spell_data(sid)["name"])
+		out.append({"kind": sid, "reactor": target, "trigger": c.id, "title": "Reaction: %s?" % name,
+			"text": "Replace the triggering attack's roll with 1.", "cost": "Reaction and a spell slot",
+			"still": func() -> bool: return t.success and e.spells.can_cast_reaction(target, spell_id),
+			"use": func() -> void:
+				e.spells.answer_incoming_roll(target, t, spell_id)
+				st["critical"] = t.critical,
+			"stop_if": func() -> bool: return not t.success,
+			"stop": miss})
 	if not critical and t.total < ac + 5 and e.spells.can_cast_reaction(target, "shield"):
 		out.append({"kind": "shield", "reactor": target, "trigger": c.id, "title": "Reaction: Shield?",
 			"text": "%s hits %s: %d vs AC %d. Shield gives +5 AC until the start of %s's next turn (AC %d), so this attack misses." % [c.name(), target.name(), t.total, ac, target.name(), ac + 5],
 			"cost": "Reaction and a level 1 spell slot",
-			"use": func() -> void: e.spells.cast_shield(target),
+			"use": func() -> void: st["shield_cast"] = e.spells.cast_shield(target),
+			"stop_if": func() -> bool: return bool(st.get("shield_cast", false)),
 			"stop": func() -> CombatResult:
 				st["ac"] = ac + 5
 				return miss.call() as CombatResult})

@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 3,
   "school": "enchantment",
@@ -28,11 +28,31 @@
     "kind": "minutes",
     "amount": 10
   },
-  "summary": "Reference-only: Up to three visible willing creatures fall Unconscious. Damage or an action to wake one ends its effect. Ten uninterrupted minutes grants a Short Rest; a beneficiary cannot benefit again before a Long Rest. Add one target per slot above 3.",
-  "text": "Reference-only: Up to three visible willing creatures fall Unconscious. Damage or an action to wake one ends its effect. Ten uninterrupted minutes grants a Short Rest; a beneficiary cannot benefit again before a Long Rest. Add one target per slot above 3.",
+  "summary": "Up to three visible willing creatures fall Unconscious. Damage or an action to wake one ends its effect. Ten uninterrupted minutes grants a Short Rest; a beneficiary cannot benefit again before a Long Rest. Add one target per slot above 3.",
+  "text": "Up to three visible willing creatures fall Unconscious. Damage or an action to wake one ends its effect. Ten uninterrupted minutes grants a Short Rest; a beneficiary cannot benefit again before a Long Rest. Add one target per slot above 3.",
   "tags": [
-    "utility"
+    "healing"
   ],
   "icon": "magic_missile",
+  "targets": {
+    "kind": "creature",
+    "count": 3
+  },
+  "requires_sight": true,
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "unconscious",
+        "wakeable": true,
+        "ends_on_damage": true,
+        "short_rest_on_expiry": true,
+        "primary_condition": "unconscious"
+      }
+    }
+  ],
   "playable": false
 }

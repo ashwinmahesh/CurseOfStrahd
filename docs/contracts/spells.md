@@ -105,3 +105,26 @@ its slot spent, held with Concentration, and released at the first enemy to come
 - Code handlers (combat/spell_specials.gd): Polymorph (combat/shape_change.gd), Banishment, Otiluke's Resilient Sphere,
   Dimension Door, Heat Metal, Confusion, Compelled Duel, Compulsion, Dominate Beast, Dissonant Whispers, Eldritch Blast's
   beams, Sorcerous Burst.
+
+## Supplemental spell recipes
+
+`automation: reference` disables casting with “Not automated yet”, separately from combat role tags. A damage reference remains tagged `damage`.
+
+Shared additions:
+
+- `requires_sight`, `ignore_partial_cover`, `crit_range`, `repeat_targets`, and `auto_success_types` express target/attack/save exceptions. Full cover remains blocking unless an explicit object movement rule allows passing barriers.
+- Spell weapons can choose multiple targets for their attack count, measure attacks from the object, and save casting numbers. Validate the whole selection before moving or paying for the activation.
+- Sustained actions serialize casting DC/attack/modifier/class rather than a live `Breakdown`. They can override attack `effects`, require the granting effect (`requires_effect`), and break on tether range/cover. Duration uses actual spell units.
+- Effect `primary_condition` links all grouped penalties to that condition: immunity discards the group and curing it removes dependent penalties. `starts_next_turn` delays turn restrictions. `casting_save` stores ability and casting DC on the effect; failing spends casting time without a slot or replacing concentration.
+- `until: minutes:N` supports a fixed condition duration. Minute effects tick every ten owner turns as well as during exploration time advancement.
+- `turn_damage.upcast: false` keeps ongoing damage independent of initial upcasting. `repeat_fail_exhaustion` adds Exhaustion on a failed repeat save.
+- `end_concentration` is an effect operation. Temporary Exhaustion records its own contribution and removes only that contribution with its effect.
+- `short_rest_on_expiry` grants a Short Rest only after uninterrupted natural expiry, then creates a Long-Rest lockout. Damage, waking, cures, dispelling, and other early removal do not grant that rest.
+
+These primitives are tested in `test_faerun_recipes`; book-level completion and outstanding exceptions live in rules/coverage.md.
+
+Spell `roll_response` describes failed-D20 or incoming-attack reactions: `scope`, `natural`, `incoming_natural`, `reroll_advantage`, and `success_temp_hp`. Synchronous checks/saves use auto/never; attack defense joins the existing reaction prompt. `field_utility` exposes a harmless self/creature handler to exploration casting. Slot recovery can restore Spellcasting or Pact Magic slots (Spellcasting first at the same level).
+
+Splintered Summons supplies two `opts.points` plus `splintered: true`. Both full footprints, visibility, range and non-overlap are validated before payment. A real slot and feature use are required; both creatures have half HP, keep the same form, and share the casting's concentration. The action catalog exposes the two-point choice while retaining form and slot choices.
+
+Subclass `cast_level_boost` recipes select an explicit spell variant (`opts.slot_boost`). Eligibility checks school, optional extra-target upcasting or absence of attack/save mechanics, resource availability, and actual slot expenditure before any costs. The spell resolves with effective `slot + 1`; `paid_slot` retains the spent slot for post-cast benefits such as Arcane Ward or school Adept features. Free castings and cantrips cannot use the variant.

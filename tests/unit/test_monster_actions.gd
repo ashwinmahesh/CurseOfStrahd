@@ -169,7 +169,7 @@ func test_giant_elk_charge_adds_damage_and_knocks_prone() -> void:
 	assert_false(h.creature.has_condition(&"prone"), "no charge without a run-up")
 	assert_false(e.log.entries.any(func(x: Dictionary) -> bool: return "Charge" in str(x.get("details", ""))), "no charge dice")
 	# A 20-ft run straight at the target.
-	elk.turn_start_cell = Vector2i(-2, 3)
+	elk.record_step(Vector2i(-2, 3), elk.cell)
 	elk.moved = true
 	elk.action_available = true
 	elk.attacks_left = 0

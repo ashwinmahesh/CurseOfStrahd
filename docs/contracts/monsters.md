@@ -43,3 +43,7 @@ through SpellCaster with the stat block's numbers (MonsterActions.cast).
 `spellcaster` (Phantasmal Killer, Magic Missile from range, Etherealness to escape when badly hurt), `support`
 (Divine Aid's Healing Word for a fallen ally), `strahd` (docs/contracts/combat.md "Bosses": legendary and lair
 actions, `regenerates`, `forms`, `misty_escape`, `legendary_resistance`, `ward` and the action `summon` block).
+
+## Conditional summon attacks
+
+Monster extra-damage recipes may use `when.target_condition`; the attack's actual target is passed into damage selection. A rider's `unless_condition` suppresses reapplying that condition (Fungus Spirit's additional damage instead of refreshing Poisoned). Dinosaur and Plant Spirit choices derive their stat blocks from slot level and caster attack/DC. Siege damage doubles against represented structures/objects; scenery without combat durability is outside this operation.

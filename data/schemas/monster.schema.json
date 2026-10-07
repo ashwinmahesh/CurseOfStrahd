@@ -387,6 +387,10 @@
         "not_while_grappling": {
           "type": "boolean",
           "description": "Can't be used while the monster holds a creature (a vine blight's Constricting Vine)."
+        },
+        "magical": {
+          "type": "boolean",
+          "description": "A magical ability: enables defenses against magical effects on its save and damage."
         }
       }
     },

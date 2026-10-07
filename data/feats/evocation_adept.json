@@ -8,14 +8,46 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force. Reference-only: Once per turn when an Evocation deals damage on casting, roll and spend up to two unused Hit Dice, adding their total to one damage roll.",
+  "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force. Reference-only: Once per turn when an Evocation deals damage on casting, roll and spend up to two unused Hit Dice, adding their total to one damage roll.",
   "benefits": [
     {
       "id": "evocation_adept_spells",
       "name": "Additional Spells",
-      "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force.",
-      "text": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force.",
-      "implemented": "text"
+      "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force.",
+      "text": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "chromatic_orb",
+          "at_slot_level": 1,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "shatter",
+          "at_slot_level": 2,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "fireball",
+          "at_slot_level": 3,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "vitriolic_sphere",
+          "at_slot_level": 4,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "wall_of_force",
+          "at_slot_level": 5,
+          "prepared_for_classes": true
+        }
+      ]
     },
     {
       "id": "evocation_adept_benefit",

@@ -33,8 +33,9 @@
   "summary": "Reference-only: Arrange up to four contiguous 10-foot squares of skeletal hands within range; enemies treat them as Difficult Terrain. Enemies present at casting, entering, or ending a turn there save Strength once per turn: failure deals 6d6 Necrotic and subtracts 1d6 from damage rolls until their next turn ends. Add 1d6 damage per slot above 5.",
   "text": "Reference-only: Arrange up to four contiguous 10-foot squares of skeletal hands within range; enemies treat them as Difficult Terrain. Enemies present at casting, entering, or ending a turn there save Strength once per turn: failure deals 6d6 Necrotic and subtracts 1d6 from damage rolls until their next turn ends. Add 1d6 damage per slot above 5.",
   "tags": [
-    "utility"
+    "damage"
   ],
   "icon": "magic_missile",
+  "automation": "reference",
   "playable": false
 }

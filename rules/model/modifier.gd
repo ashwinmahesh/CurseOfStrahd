@@ -64,6 +64,9 @@ func on_keys() -> Array[String]:
 
 
 func matches_any(keys: Array[String]) -> bool:
+	for excluded: Variant in data.get("except", []):
+		if str(excluded) in keys:
+			return false
 	for k in on_keys():
 		if k in keys:
 			return true

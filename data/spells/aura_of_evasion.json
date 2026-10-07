@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 7,
   "school": "abjuration",
@@ -28,11 +28,38 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: You and allies in a 30-foot Emanation have Advantage on Dexterity saves. Against Dexterity saves for half damage, success deals none and failure deals half. Incapacitated creatures receive no benefit.",
-  "text": "Reference-only: You and allies in a 30-foot Emanation have Advantage on Dexterity saves. Against Dexterity saves for half damage, success deals none and failure deals half. Incapacitated creatures receive no benefit.",
+  "summary": "You and allies in a 30-foot Emanation have Advantage on Dexterity saves. Against Dexterity saves for half damage, success deals none and failure deals half. Incapacitated creatures receive no benefit.",
+  "text": "You and allies in a 30-foot Emanation have Advantage on Dexterity saves. Against Dexterity saves for half damage, success deals none and failure deals half. Incapacitated creatures receive no benefit.",
   "tags": [
-    "utility"
+    "defense"
   ],
   "icon": "magic_missile",
+  "targets": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 30
+  },
+  "zone": {
+    "triggers": [],
+    "affects": "allies",
+    "include_caster": true,
+    "inside": {
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save:dex",
+          "when": {
+            "incapacitated": false
+          }
+        },
+        {
+          "stat": "flag",
+          "value": "evasion"
+        }
+      ]
+    }
+  },
   "playable": false
 }

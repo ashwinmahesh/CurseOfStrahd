@@ -8,7 +8,7 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Choose Necrotic, Psychic, Radiant, or Thunder Resistance. Reference-only: add 1d6 to a failed save against magic. Uses equal PB per Long Rest.",
+  "summary": "Choose Necrotic, Psychic, Radiant, or Thunder Resistance. add 1d6 to a failed save against magic. Uses equal PB per Long Rest.",
   "benefits": [
     {
       "id": "magical_resilience",
@@ -37,9 +37,25 @@
     {
       "id": "spell_resistant_save",
       "name": "Magic Resistant",
-      "summary": "Reference-only: add 1d6 to a failed save against magic. Uses equal PB per Long Rest.",
-      "text": "Reference-only: add 1d6 to a failed save against magic. Uses equal PB per Long Rest.",
-      "implemented": "text"
+      "summary": "add 1d6 to a failed save against magic. Uses equal PB per Long Rest.",
+      "text": "add 1d6 to a failed save against magic. Uses equal PB per Long Rest.",
+      "implemented": "data",
+      "roll_response": {
+        "resource": "spell_resistant_save",
+        "kind": "save",
+        "cost": "free",
+        "keys_any": [
+          "save_vs:spell",
+          "save_vs:magic"
+        ],
+        "dice": "1d6"
+      },
+      "resource": {
+        "id": "spell_resistant_save",
+        "name": "Magic Resistant",
+        "max": "pb",
+        "recharge": "long"
+      }
     }
   ],
   "prerequisites": {

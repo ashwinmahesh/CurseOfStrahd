@@ -36,5 +36,6 @@
   ],
   "icon": "magic_missile",
   "ritual": true,
+  "automation": "reference",
   "playable": false
 }

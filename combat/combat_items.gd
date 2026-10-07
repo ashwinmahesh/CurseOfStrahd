@@ -994,6 +994,7 @@ func filter_magic_effect(t: Combatant, fxo: Effect) -> void:
 		for m: Modifier in fxo.modifiers.duplicate():
 			var v: Variant = m.data.get("value", 0)
 			var slows := (m.stat == &"speed" and (v is int or v is float) and int(v) < 0) \
+				or m.stat == &"speed_cap" \
 				or (m.stat == &"speed_percent" and (v is int or v is float) and int(v) < 100) \
 				or (m.stat == &"speed_set" and str(m.data.get("kind", "walk")) == "walk" and (v is int or v is float) and int(v) == 0)
 			if slows:

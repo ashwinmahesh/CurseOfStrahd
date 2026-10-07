@@ -8,14 +8,100 @@
   },
   "category": "epic_boon",
   "repeatable": false,
-  "summary": "Reference-only: While Bloodied, resist all damage except Force.",
+  "summary": "While Bloodied, resist all damage except Force.",
   "benefits": [
     {
       "id": "boon_of_desperate_resilience_benefit",
       "name": "Epic Benefit",
-      "summary": "Reference-only: While Bloodied, resist all damage except Force.",
-      "text": "Reference-only: While Bloodied, resist all damage except Force.",
-      "implemented": "text"
+      "summary": "While Bloodied, resist all damage except Force.",
+      "text": "While Bloodied, resist all damage except Force.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "resistance",
+          "value": "acid",
+          "when": {
+            "bloodied": true
+          }
+        },
+        {
+          "stat": "resistance",
+          "value": "bludgeoning",
+          "when": {
+            "bloodied": true
+          }
+        },
+        {
+          "stat": "resistance",
+          "value": "cold",
+          "when": {
+            "bloodied": true
+          }
+        },
+        {
+          "stat": "resistance",
+          "value": "fire",
+          "when": {
+            "bloodied": true
+          }
+        },
+        {
+          "stat": "resistance",
+          "value": "lightning",
+          "when": {
+            "bloodied": true
+          }
+        },
+        {
+          "stat": "resistance",
+          "value": "necrotic",
+          "when": {
+            "bloodied": true
+          }
+        },
+        {
+          "stat": "resistance",
+          "value": "piercing",
+          "when": {
+            "bloodied": true
+          }
+        },
+        {
+          "stat": "resistance",
+          "value": "poison",
+          "when": {
+            "bloodied": true
+          }
+        },
+        {
+          "stat": "resistance",
+          "value": "psychic",
+          "when": {
+            "bloodied": true
+          }
+        },
+        {
+          "stat": "resistance",
+          "value": "radiant",
+          "when": {
+            "bloodied": true
+          }
+        },
+        {
+          "stat": "resistance",
+          "value": "slashing",
+          "when": {
+            "bloodied": true
+          }
+        },
+        {
+          "stat": "resistance",
+          "value": "thunder",
+          "when": {
+            "bloodied": true
+          }
+        }
+      ]
     }
   ],
   "prerequisites": {

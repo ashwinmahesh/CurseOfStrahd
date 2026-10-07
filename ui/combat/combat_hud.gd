@@ -64,6 +64,8 @@ var _prompt_title: Label
 var _prompt_text: Label
 var _prompt_cost: Label
 var _prompt_rule: OptionButton
+var _prompt_targets: VBoxContainer
+var _prompt_use: Button
 var _details: PanelContainer
 var _details_box: VBoxContainer
 var _banner: Label
@@ -404,6 +406,13 @@ func _build_prompt() -> void:
 	box.add_child(_prompt_text)
 	_prompt_cost = _label("", 15, "parchment")
 	box.add_child(_prompt_cost)
+	var target_scroll := ScrollContainer.new()
+	target_scroll.custom_minimum_size.y = 150
+	target_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	box.add_child(target_scroll)
+	_prompt_targets = VBoxContainer.new()
+	_prompt_targets.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	target_scroll.add_child(_prompt_targets)
 	var rule_row := HBoxContainer.new()
 	rule_row.add_child(_label("Next time: ", 15, "parchment"))
 	_prompt_rule = OptionButton.new()
@@ -415,6 +424,7 @@ func _build_prompt() -> void:
 	var buttons := HBoxContainer.new()
 	buttons.add_theme_constant_override("separation", 12)
 	var use := Button.new()
+	_prompt_use = use
 	use.text = "Use Reaction (A / Enter)"
 	use.pressed.connect(func() -> void: answer_prompt(true))
 	var skip := Button.new()
@@ -848,7 +858,7 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 		items.append({"separator": "Metamagic"})
 		for mm: Variant in mms:
 			items.append({"id": "meta:%s" % (mm as Dictionary)["id"], "label": str((mm as Dictionary)["label"]), "enabled": usable, "why": why})
-	if str(action["kind"]) == "spell" and str(action["cost"]) == "action" and shown != null:
+	if str(action["kind"]) == "spell" and str(action["cost"]) == "action" and shown != null and str((action.get("opts", {}) as Dictionary).get("resource_cast", "")) == "":
 		items.append({"separator": "Ready"})
 		items.append({"id": "ready", "label": "Ready %s: release it when an enemy comes in range" % action["label"], "enabled": usable, "why": why})
 	if str(action["kind"]) == "item_spell" and shown != null:
@@ -857,8 +867,8 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 			items.append({"separator": "Casting level (more charges)"})
 			for l in ilevels:
 				items.append({"id": "cast:%d" % l, "label": "Use at level %d" % l, "enabled": usable, "why": why})
-	if str(action["kind"]) == "spell" and shown != null:
-		var levels := catalog.slot_choices(shown, str(action["spell_id"]))
+	if str(action["kind"]) == "spell" and shown != null and str((action.get("opts", {}) as Dictionary).get("resource_cast", "")) == "":
+		var levels := catalog.level_choices(shown, action)
 		if not levels.is_empty():
 			items.append({"separator": "Casting level"})
 			var ch := shown.creature as Character
@@ -1066,6 +1076,22 @@ func show_prompt(req: ReactionRequest) -> void:
 	_prompt_title.text = req.title
 	_prompt_text.text = req.text
 	_prompt_cost.text = "Costs: " + req.cost
+	_prompt_use.text = "Use Reaction (A / Enter)" if req.spends_reaction else "Confirm (A / Enter)"
+	for child: Node in _prompt_targets.get_children():
+		_prompt_targets.remove_child(child)
+		child.queue_free()
+	_prompt_targets.get_parent().visible = not req.target_choices.is_empty()
+	for choice in req.target_choices:
+		var target_id := str(choice["id"])
+		var check := CheckButton.new()
+		check.text = str(choice["label"])
+		check.button_pressed = target_id in req.selected_ids
+		check.toggled.connect(func(on: bool) -> void:
+			if on and not target_id in req.selected_ids:
+				req.selected_ids.append(target_id)
+			elif not on:
+				req.selected_ids.erase(target_id))
+		_prompt_targets.add_child(check)
 	_prompt_rule.select(0)
 	_prompt.visible = true
 

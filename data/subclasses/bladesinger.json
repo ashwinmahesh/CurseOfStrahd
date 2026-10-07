@@ -14,9 +14,75 @@
       "feature": {
         "id": "bladesong",
         "name": "Bladesong",
-        "summary": "Bonus Action while wearing no armor or Shield: Bladesong for 1 minute. It ends if Incapacitated, you don armor or a Shield, or you use two hands for a weapon attack; end it freely. Uses equal Intelligence modifier (minimum 1) per Long Rest; Arcane Recovery restores one. While active, add Intelligence modifier to AC (minimum +1), gain 10 feet of Speed and Advantage on Acrobatics, use Intelligence for proficient weapon attack and damage rolls, and add Intelligence modifier to Concentration saves. Activation and these temporary benefits are reference-only.",
-        "text": "Bonus Action while wearing no armor or Shield: Bladesong for 1 minute. It ends if Incapacitated, you don armor or a Shield, or you use two hands for a weapon attack; end it freely. Uses equal Intelligence modifier (minimum 1) per Long Rest; Arcane Recovery restores one. While active, add Intelligence modifier to AC (minimum +1), gain 10 feet of Speed and Advantage on Acrobatics, use Intelligence for proficient weapon attack and damage rolls, and add Intelligence modifier to Concentration saves. Activation and these temporary benefits are reference-only.",
-        "implemented": "text"
+        "summary": "Bonus Action while wearing no armor or Shield: Bladesong for 1 minute. It ends if Incapacitated, you don armor or a Shield, or you use two hands for a weapon attack; end it freely. Uses equal Intelligence modifier (minimum 1) per Long Rest; Arcane Recovery restores one. While active, add Intelligence modifier to AC (minimum +1), gain 10 feet of Speed and Advantage on Acrobatics, use Intelligence for proficient weapon attack and damage rolls, and add Intelligence modifier to Concentration saves.",
+        "text": "Bonus Action while wearing no armor or Shield: Bladesong for 1 minute. It ends if Incapacitated, you don armor or a Shield, or you use two hands for a weapon attack; end it freely. Uses equal Intelligence modifier (minimum 1) per Long Rest; Arcane Recovery restores one. While active, add Intelligence modifier to AC (minimum +1), gain 10 feet of Speed and Advantage on Acrobatics, use Intelligence for proficient weapon attack and damage rolls, and add Intelligence modifier to Concentration saves.",
+        "implemented": "data",
+        "resource": {
+          "id": "bladesong",
+          "name": "Bladesong",
+          "max": "mod:int",
+          "min": 1,
+          "recharge": "long"
+        },
+        "activation": {
+          "cost": "bonus",
+          "resource": "bladesong",
+          "unarmored": true,
+          "dismissible": true,
+          "duration": {
+            "kind": "minutes",
+            "amount": 1
+          },
+          "effects": [
+            {
+              "effect": "modifiers",
+              "params": {
+                "ends_when_incapacitated": true,
+                "ends_when_armored": true,
+                "modifiers": [
+                  {
+                    "stat": "flag",
+                    "value": "bladesong"
+                  },
+                  {
+                    "stat": "flag",
+                    "value": "prefer_one_handed"
+                  },
+                  {
+                    "stat": "ac",
+                    "value": "mod:int",
+                    "min": 1
+                  },
+                  {
+                    "stat": "speed",
+                    "value": 10
+                  },
+                  {
+                    "stat": "advantage",
+                    "on": "check:acrobatics"
+                  },
+                  {
+                    "stat": "weapon_ability",
+                    "ability": "int"
+                  },
+                  {
+                    "stat": "concentration_save_bonus",
+                    "ability": "int"
+                  }
+                ],
+                "ends_on_two_handed_attack": true
+              }
+            }
+          ]
+        },
+        "modifiers": [
+          {
+            "stat": "resource_restore",
+            "when_spent": "arcane_recovery",
+            "resource": "bladesong",
+            "value": 1
+          }
+        ]
       }
     },
     {
@@ -127,9 +193,12 @@
       "feature": {
         "id": "bladesinger_cantrip_attack",
         "name": "Cantrip Substitution",
-        "summary": "One attack in your Attack action may be replaced by a Wizard cantrip with an action casting time. This substitution is not automated.",
-        "text": "One attack in your Attack action may be replaced by a Wizard cantrip with an action casting time. This substitution is not automated.",
-        "implemented": "text"
+        "summary": "One attack in your Attack action may be replaced by a Wizard cantrip with an action casting time.",
+        "text": "One attack in your Attack action may be replaced by a Wizard cantrip with an action casting time.",
+        "implemented": "data",
+        "attack_cantrip": {
+          "class": "wizard"
+        }
       }
     },
     {
@@ -149,7 +218,12 @@
         "name": "Song of Victory",
         "summary": "After casting a spell with an action casting time, you may make one weapon attack as a Bonus Action.",
         "text": "After casting a spell with an action casting time, you may make one weapon attack as a Bonus Action.",
-        "implemented": "text"
+        "implemented": "data",
+        "after_cast_attack": {
+          "casting_time": "action",
+          "weapons_only": true,
+          "allow_ranged": true
+        }
       }
     }
   ],

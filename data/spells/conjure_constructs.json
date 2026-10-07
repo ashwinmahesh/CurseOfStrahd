@@ -31,8 +31,9 @@
   "summary": "Reference-only: Place intangible Construct spirits within 60 feet. On casting and later Magic actions, choose a target within 5 feet of them: Dexterity save against 3d6 Force (half on success), or 1d6 + spellcasting modifier Temporary HP. Move the spirits up to 30 feet when moving on your turn. Both dice totals gain 1d6 per slot above 3.",
   "text": "Reference-only: Place intangible Construct spirits within 60 feet. On casting and later Magic actions, choose a target within 5 feet of them: Dexterity save against 3d6 Force (half on success), or 1d6 + spellcasting modifier Temporary HP. Move the spirits up to 30 feet when moving on your turn. Both dice totals gain 1d6 per slot above 3.",
   "tags": [
-    "utility"
+    "damage"
   ],
   "icon": "magic_missile",
+  "automation": "reference",
   "playable": false
 }

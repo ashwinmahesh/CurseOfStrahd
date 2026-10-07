@@ -37,7 +37,12 @@ var surged: bool = false
 var magic_action_used: bool = false      ## at most one Magic action a turn (Action Surge's can't be Magic)
 var haste_action: bool = false           ## Haste's extra action: one weapon attack, Dash, Disengage, Hide or Utilize
 var moved: bool = false                  ## moved this turn (Steady Aim)
-var turn_start_cell: Vector2i = Vector2i.ZERO  ## where the turn began (a charge's run-up)
+var turn_start_cell: Vector2i = Vector2i.ZERO
+## The uninterrupted straight segment of voluntary movement immediately preceding an attack.
+var run_start: Vector2i = Vector2i.ZERO
+var run_end: Vector2i = Vector2i.ZERO
+var run_direction: Vector2i = Vector2i.ZERO
+var run_feet: int = 0
 var stood_up: bool = false
 var hidden: bool = false
 var stealth_total: int = 0
@@ -125,9 +130,29 @@ func reach_ft() -> int:
 	return best
 
 
+func clear_run() -> void:
+	run_start = cell
+	run_end = cell
+	run_direction = Vector2i.ZERO
+	run_feet = 0
+
+
+func record_step(from: Vector2i, to: Vector2i) -> void:
+	var direction := Vector2i(signi(to.x - from.x), signi(to.y - from.y))
+	if from != run_end or direction != run_direction:
+		run_start = from
+		run_feet = 0
+	run_direction = direction
+	run_end = to
+	run_feet += maxi(absi(to.x - from.x), absi(to.y - from.y)) * 5
+
+
 func reset_turn() -> void:
+	remove_meta("attack_cantrip_used")
+	remove_meta("sequence_attacks")
 	movement_left = speed()
 	turn_start_cell = cell
+	clear_run()
 	action_available = true
 	bonus_available = true
 	reaction_available = true
@@ -144,6 +169,7 @@ func reset_turn() -> void:
 	haste_action = false
 	free_move_ft = 0
 	bonus_attack = ""
+	remove_meta("bonus_attack_rule")
 	moved = false
 	stood_up = false
 	death_save_rolled = false

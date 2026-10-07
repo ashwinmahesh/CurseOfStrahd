@@ -235,7 +235,15 @@
             "size_step",
             "inspiration_die",
             "retaliate",
-            "spell_list"
+            "spell_list",
+            "temp_hp_bonus",
+            "ignore_resistance",
+            "concentration_damage_immunity",
+            "speed_cap",
+            "concentration_save_bonus",
+            "after_cast_speed",
+            "weapon_ability",
+            "resource_restore"
           ]
         },
         "value": {
@@ -301,6 +309,23 @@
         },
         "text": {
           "type": "string"
+        },
+        "at_slot_level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9
+        },
+        "prepared_for_classes": {
+          "type": "boolean"
+        },
+        "damage_class": {
+          "type": "string"
+        },
+        "when_spent": {
+          "type": "string"
+        },
+        "resource": {
+          "type": "string"
         }
       }
     },
@@ -324,7 +349,9 @@
             "custom",
             "push",
             "pull",
-            "end_condition"
+            "end_condition",
+            "end_concentration",
+            "temporary_exhaustion"
           ]
         },
         "params": {
@@ -513,6 +540,484 @@
           "minimum": 1,
           "maximum": 20,
           "description": "Character level at which this feature starts (species traits that arrive at level 3 or 5)."
+        },
+        "activation": {
+          "type": "object",
+          "required": [
+            "cost"
+          ],
+          "properties": {
+            "cost": {
+              "enum": [
+                "magic",
+                "action",
+                "bonus",
+                "free"
+              ]
+            },
+            "resource": {
+              "type": "string"
+            },
+            "targeting": {
+              "enum": [
+                "none",
+                "multi",
+                "creature",
+                "ally",
+                "enemy",
+                "point"
+              ]
+            },
+            "count": {
+              "$ref": "#/$defs/formula"
+            },
+            "range": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "duration": {
+              "type": "object"
+            },
+            "effects": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/effect_ref"
+              }
+            },
+            "do": {
+              "enum": [
+                "dodge",
+                "teleport"
+              ]
+            },
+            "restore_slot": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9
+            },
+            "swap": {
+              "type": "boolean"
+            },
+            "upgrades": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "at_level"
+                ],
+                "properties": {
+                  "at_level": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "range": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "restore_slot": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "restore_only": {
+              "type": "boolean"
+            },
+            "save": {
+              "$ref": "#/$defs/ability"
+            },
+            "target_perceives_caster": {
+              "type": "boolean"
+            },
+            "unarmored": {
+              "type": "boolean"
+            },
+            "dismissible": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "roll_response": {
+          "type": "object",
+          "required": [
+            "resource"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "resource": {
+              "type": "string"
+            },
+            "kind": {
+              "enum": [
+                "save",
+                "d20"
+              ]
+            },
+            "scope": {
+              "enum": [
+                "self",
+                "allies"
+              ]
+            },
+            "range": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "cost": {
+              "enum": [
+                "free",
+                "reaction"
+              ]
+            },
+            "do": {
+              "enum": [
+                "add_die",
+                "reroll"
+              ]
+            },
+            "dice": {
+              "type": "string"
+            },
+            "keys_any": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "summon_effect": {
+          "type": "object",
+          "required": [
+            "temp_hp"
+          ],
+          "properties": {
+            "temp_hp": {
+              "$ref": "#/$defs/formula"
+            },
+            "requires_slot": {
+              "type": "boolean"
+            },
+            "school": {
+              "type": "string"
+            },
+            "resistance": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/damage_type"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "hit_response": {
+          "type": "object",
+          "required": [
+            "resource",
+            "save",
+            "effects"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "resource": {
+              "type": "string"
+            },
+            "save": {
+              "$ref": "#/$defs/ability"
+            },
+            "effects": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/effect_ref"
+              }
+            },
+            "range": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "requires_sight": {
+              "type": "boolean"
+            }
+          }
+        },
+        "cast_level_boost": {
+          "type": "object",
+          "required": [
+            "school",
+            "resource"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "school": {
+              "type": "string"
+            },
+            "resource": {
+              "type": "string"
+            },
+            "adds_target": {
+              "type": "boolean"
+            },
+            "no_attack_or_save": {
+              "type": "boolean"
+            }
+          }
+        },
+        "cast_form": {
+          "description": "A form adopted on casting the named concentration spell; it ends with that concentration.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "spell",
+            "resource",
+            "modifiers"
+          ],
+          "properties": {
+            "spell": {
+              "$ref": "#/$defs/id"
+            },
+            "resource": {
+              "type": "string"
+            },
+            "modifiers": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/modifier"
+              }
+            },
+            "pulse": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "dice",
+                "type",
+                "radius"
+              ],
+              "properties": {
+                "dice": {
+                  "$ref": "#/$defs/dice"
+                },
+                "type": {
+                  "$ref": "#/$defs/damage_type"
+                },
+                "radius": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "embedded_damage": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "dice",
+                "type"
+              ],
+              "properties": {
+                "dice": {
+                  "$ref": "#/$defs/dice"
+                },
+                "type": {
+                  "$ref": "#/$defs/damage_type"
+                }
+              }
+            },
+            "shunt_on_end": {
+              "type": "boolean"
+            }
+          }
+        },
+        "attack_cantrip": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "class": {
+              "type": "string"
+            },
+            "classes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "after_cast_attack": {
+          "type": "object",
+          "required": [
+            "casting_time"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "casting_time": {
+              "enum": [
+                "action",
+                "bonus_action",
+                "reaction"
+              ]
+            },
+            "weapons_only": {
+              "type": "boolean"
+            },
+            "allow_ranged": {
+              "type": "boolean"
+            }
+          }
+        },
+        "slot_exchange": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "resource"
+          ],
+          "properties": {
+            "resource": {
+              "type": "string"
+            },
+            "slot_to_resource": {
+              "type": "boolean"
+            },
+            "recover_on": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "recover": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "slot",
+                  "cost",
+                  "at_level"
+                ],
+                "properties": {
+                  "slot": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9
+                  },
+                  "cost": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "at_level": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 20
+                  }
+                }
+              }
+            }
+          }
+        },
+        "on_feature_target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "trigger",
+            "effects"
+          ],
+          "properties": {
+            "trigger": {
+              "type": "string"
+            },
+            "effects": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/effect_ref"
+              }
+            }
+          }
+        },
+        "spell_sequence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "classes",
+            "min_level",
+            "max_level",
+            "resource",
+            "resource_cost",
+            "followup_attacks",
+            "attack_kind"
+          ],
+          "properties": {
+            "classes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "min_level": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9
+            },
+            "max_level": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9
+            },
+            "resource": {
+              "type": "string"
+            },
+            "resource_cost": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "followup_attacks": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "attack_kind": {
+              "enum": [
+                "unarmed",
+                "any"
+              ]
+            },
+            "attack_tag": {
+              "type": "string"
+            }
+          }
+        },
+        "resource_cast": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "resource",
+            "cost",
+            "casting",
+            "school",
+            "subclass_spells",
+            "omit_material"
+          ],
+          "properties": {
+            "resource": {
+              "type": "string"
+            },
+            "cost": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "casting": {
+              "const": "action"
+            },
+            "school": {
+              "type": "string"
+            },
+            "subclass_spells": {
+              "type": "boolean"
+            },
+            "omit_material": {
+              "const": true
+            }
+          }
         }
       }
     },

@@ -8,14 +8,24 @@
   },
   "category": "epic_boon",
   "repeatable": false,
-  "summary": "Reference-only: Add 5 whenever gaining Temporary HP. Hit Dice spent to heal use their maximum results.",
+  "summary": "Add 5 whenever gaining Temporary HP. Hit Dice spent to heal use their maximum results.",
   "benefits": [
     {
       "id": "boon_of_bountiful_health_benefit",
       "name": "Epic Benefit",
-      "summary": "Reference-only: Add 5 whenever gaining Temporary HP. Hit Dice spent to heal use their maximum results.",
-      "text": "Reference-only: Add 5 whenever gaining Temporary HP. Hit Dice spent to heal use their maximum results.",
-      "implemented": "text"
+      "summary": "Add 5 whenever gaining Temporary HP. Hit Dice spent to heal use their maximum results.",
+      "text": "Add 5 whenever gaining Temporary HP. Hit Dice spent to heal use their maximum results.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "temp_hp_bonus",
+          "value": 5
+        },
+        {
+          "stat": "flag",
+          "value": "max_hit_dice"
+        }
+      ]
     }
   ],
   "prerequisites": {

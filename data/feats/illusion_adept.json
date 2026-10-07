@@ -8,14 +8,46 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Silent Image; Phantasmal Force; Major Image; Hallucinatory Terrain; Seeming. Reference-only: Slotted Illusions require only costly or consumed Material components. Investigation checks to discern your spell illusions have Disadvantage.",
+  "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Silent Image; Phantasmal Force; Major Image; Hallucinatory Terrain; Seeming. Reference-only: Slotted Illusions require only costly or consumed Material components. Investigation checks to discern your spell illusions have Disadvantage.",
   "benefits": [
     {
       "id": "illusion_adept_spells",
       "name": "Additional Spells",
-      "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Silent Image; Phantasmal Force; Major Image; Hallucinatory Terrain; Seeming.",
-      "text": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Silent Image; Phantasmal Force; Major Image; Hallucinatory Terrain; Seeming.",
-      "implemented": "text"
+      "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Silent Image; Phantasmal Force; Major Image; Hallucinatory Terrain; Seeming.",
+      "text": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Silent Image; Phantasmal Force; Major Image; Hallucinatory Terrain; Seeming.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "silent_image",
+          "at_slot_level": 1,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "phantasmal_force",
+          "at_slot_level": 2,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "major_image",
+          "at_slot_level": 3,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "hallucinatory_terrain",
+          "at_slot_level": 4,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "seeming",
+          "at_slot_level": 5,
+          "prepared_for_classes": true
+        }
+      ]
     },
     {
       "id": "illusion_adept_benefit",

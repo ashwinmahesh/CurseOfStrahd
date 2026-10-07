@@ -922,19 +922,33 @@ func _cast_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void:
 
 ## Exploring spells (Light, Detect Magic, Find Traps ...): Cast, or as a Ritual.
 func _utility_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void:
+	var resource_controls: VBoxContainer
+	if not (o.get("resource_casts", []) as Array).is_empty():
+		resource_controls = VBoxContainer.new()
+		row.add_child(resource_controls)
+		var normal_controls := HBoxContainer.new()
+		resource_controls.add_child(normal_controls)
+		row = normal_controls
 	var id := str(o["id"])
 	var cast := UiParts.small_button("Cast", func() -> void: _do_utility(ch, id, false), "spells")
 	cast.disabled = not bool(o["legal"])
 	cast.tooltip_text = str(o["reason"])
 	row.add_child(cast)
+	for feature: Dictionary in o.get("resource_casts", []):
+		var rule := feature["resource_cast"] as Dictionary
+		var feat_id := str(feature["id"])
+		var resource_button := UiParts.small_button(str(feature["name"]), func() -> void: _do_utility(ch, id, false, feat_id), "spells")
+		resource_button.disabled = ch.resource_left(str(rule["resource"])) < int(rule["cost"]) or ch.hp <= 0 or ch.dead
+		resource_button.tooltip_text = "Spend %d %s; no spell slot or Material components" % [int(rule["cost"]), str((ch.resources[str(rule["resource"])] as Dictionary).get("name", rule["resource"]))]
+		resource_controls.add_child(resource_button)
 	if bool(o["ritual"]):
 		var rit := UiParts.small_button("Ritual", func() -> void: _do_utility(ch, id, true))
 		rit.tooltip_text = "As a Ritual: 10 more minutes, no slot"
 		row.add_child(rit)
 
 
-func _do_utility(ch: Character, spell_id: String, ritual: bool) -> void:
-	var res := FieldCasting.cast_utility(st, ch, spell_id, ritual)
+func _do_utility(ch: Character, spell_id: String, ritual: bool, resource_feature: String = "") -> void:
+	var res := FieldCasting.cast_utility(st, ch, spell_id, ritual, 0, resource_feature)
 	_cast_note = str(res["text"])
 	if bool(res["ok"]) and root != null and root.get("view") != null:
 		(root.get("view") as LocationView).apply_spell_effect(spell_id)

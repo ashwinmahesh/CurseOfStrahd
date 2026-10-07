@@ -8,14 +8,46 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory. Reference-only: Slotted Enchantments require only costly or consumed Material components; other components are waived.",
+  "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory. Reference-only: Slotted Enchantments require only costly or consumed Material components; other components are waived.",
   "benefits": [
     {
       "id": "enchantment_adept_spells",
       "name": "Additional Spells",
-      "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory.",
-      "text": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory.",
-      "implemented": "text"
+      "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory.",
+      "text": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "dissonant_whispers",
+          "at_slot_level": 1,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "enthrall",
+          "at_slot_level": 2,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "hold_person",
+          "at_slot_level": 3,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "dominate_beast",
+          "at_slot_level": 4,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "modify_memory",
+          "at_slot_level": 5,
+          "prepared_for_classes": true
+        }
+      ]
     },
     {
       "id": "enchantment_adept_benefit",

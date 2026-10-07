@@ -12,6 +12,10 @@ static func for_spell(spell_id: String, slot: int, option: String, nums: Diction
 	var atk := (nums["attack"] as Breakdown).total() if nums.has("attack") else 5
 	var dc := (nums["dc"] as Breakdown).total() if nums.has("dc") else 13
 	match spell_id:
+		"summon_dinosaur":
+			return dinosaur_spirit(slot, option if option != "" else "ankylosaur", atk, dc)
+		"summon_plant":
+			return plant_spirit(slot, option if option != "" else "tree", atk)
 		"summon_fey":
 			return fey_spirit(slot, option if option != "" else "fuming", atk, dc)
 		"summon_undead":
@@ -526,3 +530,65 @@ static func owl() -> Dictionary:
 			"summary": "Doesn't provoke Opportunity Attacks when it flies out of reach."}],
 		"actions": [], "ai_profile": "brute", "summary": "A familiar: it can Help, but never attacks.", "text": "Find Familiar.",
 	}
+
+
+## Source-scaled spirits use the same monster attacks, grapples, and player controls as other summons.
+static func dinosaur_spirit(slot: int, form: String, atk: int, dc: int) -> Dictionary:
+	var lvl := maxi(6, slot)
+	var hp := 60 + 10 * (lvl - 6)
+	var actions: Array = [{"id": "slam", "name": "Slam", "kind": "melee", "attack": {"bonus": atk, "reach": 10},
+		"damage": [{"dice": "1d10+%d" % (5 + lvl), "type": "bludgeoning"}], "summary": "Strike with the spirit’s weight."}]
+	var primary := "slam"
+	var alternatives: Array = []
+	if form == "tyrannosaur":
+		primary = "bite"
+		alternatives = ["slam"]
+		actions.append({"id": "bite", "name": "Bite", "kind": "melee", "attack": {"bonus": atk, "reach": 10},
+			"damage": [{"dice": "2d10+%d" % (5 + lvl), "type": "piercing"}],
+			"on_hit": [{"do": "grapple", "escape_dc": dc, "restrain": true, "max_size": "large", "limit": 99}], "summary": "Large or smaller targets are Grappled and Restrained until they escape."})
+	elif form == "triceratops":
+		primary = "gore"
+		alternatives = ["slam"]
+		actions.append({"id": "gore", "name": "Gore", "kind": "melee", "attack": {"bonus": atk, "reach": 5},
+			"damage": [{"dice": "1d10+%d" % (5 + lvl), "type": "piercing"}],
+			"charge": {"feet": 20, "damage": [{"dice": "1d10", "type": "piercing"}],
+				"on_hit": [{"do": "condition", "condition": "prone", "max_size": "huge"}]}, "summary": "A straight 20-foot charge adds 1d10 damage and knocks Huge or smaller targets Prone."})
+	actions.push_front({"id": "multiattack", "name": "Multiattack", "multiattack": [{"action": primary, "count": _attacks(lvl), "or": alternatives}], "summary": "Choose attacks equal to half the spell level."})
+	var traits: Array = [{"id": "tough", "name": "Tough", "action": "passive", "summary": "Add half the spell level to Strength and Constitution saves.",
+		"modifiers": [{"stat": "save", "ability": "str", "value": lvl / 2}, {"stat": "save", "ability": "con", "value": lvl / 2}]}]
+	if form == "ankylosaur":
+		traits.append({"id": "siege_monster", "name": "Siege Monster", "action": "passive", "summary": "Double damage against objects and structures.", "modifiers": [{"stat": "flag", "value": "siege_monster"}]})
+	return {"id": "dinosaur_spirit", "name": "Dinosaur Spirit (%s)" % form.capitalize(), "size": "huge", "type": "beast", "ac": 11 + lvl + (2 if form == "ankylosaur" else 0),
+		"hp": {"average": hp, "dice": str(hp)}, "speed": {"walk": 40}, "abilities": {"str": 21, "dex": 11, "con": 15, "int": 4, "wis": 12, "cha": 9},
+		"cr": 0, "xp": 0, "proficiency_bonus": 2, "initiative": 0, "summon": true, "actions": actions, "traits": traits,
+		"ai_profile": "brute", "summary": "A summoned dinosaur spirit.", "text": "Summon Dinosaur."}
+
+
+static func plant_spirit(slot: int, form: String, atk: int) -> Dictionary:
+	var lvl := maxi(5, slot)
+	var hp := 50 + 10 * (lvl - 5)
+	var speed := {"walk": 40}
+	if form == "vine":
+		speed["climb"] = 40
+	var actions: Array = []
+	var primary := "slam"
+	var alternatives: Array = []
+	var traits: Array = []
+	if form == "fungus":
+		primary = "spore_spray"
+		alternatives = ["spore_spray_melee"]
+		for melee: bool in [false, true]:
+			actions.append({"id": "spore_spray_melee" if melee else "spore_spray", "name": "Spore Spray (%s)" % ("melee" if melee else "ranged"),
+				"kind": "melee" if melee else "ranged", "attack": {"bonus": atk, "reach": 5, "range": [30]},
+				"damage": [{"dice": "1d4+%d" % lvl, "type": "poison"}, {"dice": "3d4", "type": "poison", "when": {"target_condition": "poisoned"}}],
+				"on_hit": [{"do": "condition", "condition": "poisoned", "unless_condition": "poisoned", "until": "target_turn_end"}], "summary": "Poison the target until its next turn ends, or deal an extra 3d4 Poison if already Poisoned."})
+	else:
+		actions.append({"id": "slam", "name": "Slam", "kind": "melee", "attack": {"bonus": atk, "reach": 5},
+			"damage": [{"dice": "1d10+%d" % (3 + lvl), "type": "bludgeoning"}], "summary": "A heavy plant limb strikes the target."})
+	if form == "tree":
+		traits.append({"id": "siege_monster", "name": "Siege Monster", "action": "passive", "summary": "Double damage against objects and structures.", "modifiers": [{"stat": "flag", "value": "siege_monster"}]})
+	actions.push_front({"id": "multiattack", "name": "Multiattack", "multiattack": [{"action": primary, "count": _attacks(lvl), "or": alternatives}], "summary": "Choose attacks equal to half the spell level."})
+	return {"id": "plant_spirit", "name": "Plant Spirit (%s)" % form.capitalize(), "size": "large", "type": "plant", "ac": 11 + lvl + (2 if form == "tree" else 0),
+		"hp": {"average": hp, "dice": str(hp)}, "speed": speed, "abilities": {"str": 17, "dex": 13, "con": 14, "int": 10, "wis": 13, "cha": 10},
+		"vulnerabilities": ["fire" if form == "tree" else "slashing"], "cr": 0, "xp": 0, "proficiency_bonus": 2, "initiative": 1, "summon": true,
+		"actions": actions, "traits": traits, "ai_profile": "brute", "summary": "A summoned plant spirit.", "text": "Summon Plant."}

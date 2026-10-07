@@ -184,7 +184,7 @@ func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable,
 		if (mode & MOVE_INCORPOREAL) != 0:
 			if not in_bounds(c) or has_flag(c, VOID):
 				return -1
-			if is_solid(c) or bool(blocked.call(c)):
+			if is_solid(c) or bool(blocked.call(c)) or bool(slowed.call(c)) or has_flag(c, DIFFICULT):
 				mult = maxi(mult, 2)
 			continue
 		if is_solid(c) or bool(blocked.call(c)):

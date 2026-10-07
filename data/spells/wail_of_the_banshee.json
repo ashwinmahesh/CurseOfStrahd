@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 9,
   "school": "necromancy",
@@ -26,11 +26,33 @@
   "duration": {
     "kind": "instantaneous"
   },
-  "summary": "Reference-only: Choose up to ten creatures within range that can hear you. Targets at 50 HP or fewer die. Others save Constitution against 12d10 Psychic and Deafened for 1 hour; success takes half damage only.",
-  "text": "Reference-only: Choose up to ten creatures within range that can hear you. Targets at 50 HP or fewer die. Others save Constitution against 12d10 Psychic and Deafened for 1 hour; success takes half damage only.",
+  "summary": "Choose up to ten creatures within range that can hear you. Targets at 50 HP or fewer die. Others save Constitution against 12d10 Psychic and Deafened for 1 hour; success takes half damage only.",
+  "text": "Choose up to ten creatures within range that can hear you. Targets at 50 HP or fewer die. Others save Constitution against 12d10 Psychic and Deafened for 1 hour; success takes half damage only.",
   "tags": [
-    "utility"
+    "damage",
+    "control"
   ],
   "icon": "magic_missile",
+  "targets": {
+    "kind": "creature",
+    "count": 10
+  },
+  "save": "con",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "12d10",
+      "type": "psychic"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "deafened",
+        "until": "minutes:60"
+      }
+    }
+  ],
   "playable": false
 }

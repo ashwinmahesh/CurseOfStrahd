@@ -28,7 +28,28 @@
       "name": "Resilient Anatomy",
       "summary": "Gain Advantage on saves against involuntary shape-shifting. After failing a Constitution save, use a Reaction to add 1d4, possibly succeeding instead; uses equal Proficiency Bonus per Long Rest.",
       "text": "Gain Advantage on saves against involuntary shape-shifting. After failing a Constitution save, use a Reaction to add 1d4, possibly succeeding instead; uses equal Proficiency Bonus per Long Rest.",
-      "implemented": "text"
+      "implemented": "data",
+      "roll_response": {
+        "resource": "resilient_anatomy",
+        "kind": "save",
+        "cost": "reaction",
+        "keys_any": [
+          "save:con"
+        ],
+        "dice": "1d4"
+      },
+      "resource": {
+        "id": "resilient_anatomy",
+        "name": "Resilient Anatomy",
+        "max": "pb",
+        "recharge": "long"
+      },
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:shapechange"
+        }
+      ]
     }
   ],
   "playable": false

@@ -73,7 +73,9 @@ func _resists(ctx: Dictionary, t: Combatant, ab: StringName, extra_keys: Array[S
 		return false
 	var dc := (ctx["nums"]["dc"] as Breakdown).total()
 	var keys := t.creature.save_keys(ab)
-	keys.append("save_vs:spell")
+	keys.append_array(SpellCaster.spell_save_keys(c.id))
+	if str(s["id"]) in ["polymorph", "true_polymorph"]:
+		keys.append("save_vs:shapechange")
 	keys.append_array(extra_keys)
 	var adv: Array[String] = []
 	if bool(s.get("save_advantage_if_fighting", false)) and c.hostile_to(t):
@@ -464,7 +466,7 @@ func heat_metal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	if not t.is_alive() or t.creature.hp <= 0:
 		return
 	var dc := (ctx["nums"]["dc"] as Breakdown).total()
-	var sv := t.creature.roll_save(e.dice, &"con", dc, [], [], "Constitution save vs Heat Metal (%s)" % t.name())
+	var sv := t.creature.roll_save(e.dice, &"con", dc, [], [], "Constitution save vs Heat Metal (%s)" % t.name(), SpellCaster.spell_save_keys((ctx["c"] as Combatant).id))
 	if not sv.success and metal == "weapon":
 		if t.creature is Character:
 			(t.creature as Character).unequip("main_hand")
