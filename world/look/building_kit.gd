@@ -140,3 +140,41 @@ static func material(name: String) -> Material:
 static func face_xf(base: Vector3, yaw: float, s: float = 1.0, pivot: float = 0.0) -> Transform3D:
 	var b := Basis(Vector3.UP, yaw) * Basis.from_scale(Vector3(1.0, s, 1.0))
 	return Transform3D(b, base + Vector3(0, pivot * (1.0 - s), 0))
+
+
+# --- Interiors ------------------------------------------------------------------------------------------------
+
+## The interior style of a board (catalog building_kit "interiors"): the place's own (by the start of its id, so every
+## room of Castle Ravenloft is "castle"), else its board theme's; "" for none.
+static func interior_style(board: ArenaBoard) -> String:
+	var cfg := settings().get("interiors", {}) as Dictionary
+	var best := ""
+	var best_len := 0
+	for prefix: String in cfg.get("places", {}):
+		if board.place.begins_with(prefix) and prefix.length() > best_len:
+			best = str((cfg["places"] as Dictionary)[prefix])
+			best_len = prefix.length()
+	if best == "":
+		best = str((cfg.get("themes", {}) as Dictionary).get(board.theme, ""))
+	return best
+
+
+## A lone wall square inside a room (no wall beside it) is a pillar in the board's interior style, standing on the
+## room's floor (`floor`), taller than the cut-away walls and fading when it hides the party. False when the square
+## isn't a lone pillar or the style has none, so ArenaBoard builds its block as before.
+static func pillar(board: ArenaBoard, c: Vector2i, floor: Material) -> bool:
+	var id := "kit_pillar_" + interior_style(board)
+	if not has(id) or c.x <= 0 or c.y <= 0 or c.x >= board.grid.width - 1 or c.y >= board.grid.depth - 1:
+		return false
+	for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		if board.grid.has_flag(c + d, CombatGrid.WALL) or board.grid.has_flag(c + d, CombatGrid.VOID):
+			return false
+	var at := board.cell_center(c)
+	board.add_box("Floor", Vector3(1, 0.2, 1), Vector3(at.x, board.floor_y(c) - 0.1, at.z), floor)
+	var mi := merge([[id, Transform3D(Basis(), Vector3(at.x, board.floor_y(c), at.z))]])
+	if mi == null:
+		return false
+	mi.name = "Pillar"
+	board.add_child(mi)
+	ModelPiece.fade_with_trees(board, mi)
+	return true

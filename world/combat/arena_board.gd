@@ -516,6 +516,10 @@ func _wall(c: Vector2i) -> void:
 		_tree(c)
 		return
 	if theme in INTERIORS or theme == "dungeon":
+		# A lone wall square in a room is a pillar in the place's style (BuildingKit, docs/art/building_kit.md).
+		var room := _room_at(c)
+		if BuildingKit.pillar(self, c, room["floor"] as Material if room.has("floor") else _floor_mat):
+			return
 		# Cut-away walls (low enough to see over from the camera), capped with a darker band.
 		var colour := {"manor": "umber", "tavern": "walnut", "shop": "walnut", "townhouse": "umber", "church": "slate",
 			"attic": "peat"}.get(theme, "stone_deep") as String

@@ -35,6 +35,8 @@ func test_the_kit_has_every_module() -> void:
 	for style: String in styles:
 		for part: String in ["low_a", "up_a", "up_win", "door", "door_top", "corner", "foot", "window", "window_lit",
 				"window_shut", "yard_arm", "yard_pier"]:
+			if style == "church" and part.begins_with("yard"):
+				continue   # a churchyard's walls are the town's
 			if not BuildingKit.has(BuildingKit.wall_id(style, part)):
 				missing.append(BuildingKit.wall_id(style, part))
 		var roofs := (cfg.get("roofs", {}) as Dictionary).get(style, {}) as Dictionary
@@ -71,7 +73,7 @@ func test_village_houses_are_built_from_the_kit() -> void:
 	var doors := 0
 	var lit := 0
 	for b: Dictionary in board.buildings:
-		assert_eq(str(b.get("kit", "")), "timber", "a village house is timber-framed")
+		assert_true(str(b.get("kit", "")) in ["timber", "church"], "a village house is timber-framed (or the church)")
 		var walls := b["walls"] as MeshInstance3D
 		assert_true(walls != null and walls.mesh is ArrayMesh and walls.mesh.get_surface_count() >= 3,
 			"its walls are the kit's modules, merged")
@@ -142,8 +144,9 @@ func test_each_town_has_its_style() -> void:
 	assert_true(v.board.buildings.size() >= 6, "Vallaki has its houses")
 	var paints := {}
 	for b: Dictionary in v.board.buildings:
-		assert_eq(str(b.get("kit", "")), "clapboard", "Vallaki's houses are clapboard")
-		paints[str(b["paint"])] = true
+		assert_true(str(b.get("kit", "")) in ["clapboard", "church"], "Vallaki's houses are clapboard (and St. Andral's)")
+		if str(b["kit"]) == "clapboard":
+			paints[str(b["paint"])] = true
 	assert_true(paints.size() >= 3, "painted in several colours (%d)" % paints.size())
 	assert_true(v.board.get_node_or_null("Palisade") is MeshInstance3D, "behind its palisade")
 	v.queue_free()
@@ -161,3 +164,22 @@ func test_each_town_has_its_style() -> void:
 				tall += 1
 	assert_true(walls > 0 and tall == walls, "its walls are the tall town wall (%d of %d)" % [tall, walls])
 	k.queue_free()
+
+
+## A lone wall square in a room is a pillar in the place's style: the castle's carved piers, the church's columns.
+func test_lone_wall_squares_are_pillars() -> void:
+	for pair: Array in [["castle_ravenloft_main_floor", Vector2i(22, 5), "castle"], ["village_church", Vector2i(5, 18), "church"],
+			["death_house_dungeon_2", Vector2i(19, 12), "dungeon"]]:
+		var v := _view(str(pair[0]))
+		await _frames(2)
+		var cell := pair[1] as Vector2i
+		var found := false
+		for n: Node in v.board.dressing.get(cell, []):
+			if n.name == "Pillar" and n is MeshInstance3D:
+				found = true
+				assert_true((n as MeshInstance3D).get_aabb().size.y > 2.0, "%s's pillar stands tall" % pair[0])
+				assert_true(n in v.board.mesh_occluders, "and fades when it hides the party")
+		assert_true(found, "%s has a %s pillar at %s" % [pair[0], pair[2], cell])
+		assert_eq(BuildingKit.interior_style(v.board), str(pair[2]))
+		v.queue_free()
+		await _frames(1)

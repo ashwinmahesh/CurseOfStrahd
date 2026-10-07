@@ -161,7 +161,7 @@ static func _gates(board: ArenaBoard) -> Dictionary:
 ## border (both ways on a corner). The logs of the whole border are one mesh, made once the last square asks.
 ## False when the kit has no palisade.
 static func palisade(board: ArenaBoard, c: Vector2i, ground: Material) -> bool:
-	if not BuildingKit.has("kit_palisade"):
+	if not BuildingKit.has("kit_palisade") or BuildingKit.style_for(board) == "":
 		return false
 	board.add_box("Ground", Vector3(1, 0.2, 1), Vector3(c.x + 0.5, -0.1, c.y + 0.5), ground)
 	if not board.has_meta("palisade_parts"):

@@ -3,7 +3,8 @@ extends Node
 ## houses, yard walls, interior walls and pillars from the game's camera, in daylight and at dusk, so a change to the
 ## kit can be judged side by side. Not part of the game.
 ##   make capture SCENE=res://tools/capture/kit_capture.tscn NAME=kit/before FRAMES=10
-## Environment: KIT_SHOTS=village_dusk,vallaki_noon (default: every shot).
+## Environment: KIT_SHOTS=village_dusk,vallaki_noon (default: every shot); KIT_OFF=1 builds the towns without the kit
+## (the plain boxes), for the same shots before and after under the same light.
 
 ## Each shot: the place, the hour, where the party stands (empty: the place's own spawn), and optionally the square
 ## the camera looks at, how far it is, and how many 45-degree steps it is turned from the opening heading.
@@ -38,6 +39,8 @@ var view: LocationView = null
 
 func _ready() -> void:
 	InputActions.ensure()
+	if OS.get_environment("KIT_OFF") != "":
+		SetDressing.catalog().erase("building_kit")
 
 
 func capture_shots(tool: Node, out: String) -> void:

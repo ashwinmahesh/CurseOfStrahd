@@ -4321,6 +4321,223 @@
       "triangles": 392,
       "part": "gable",
       "span": 12
+    },
+    "kit_pillar_castle": {
+      "file": "art/models/kit/kit_pillar_castle.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.186,
+        2.5,
+        1.2
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_bone",
+        "pal_ink",
+        "pal_ivory",
+        "pal_pewter",
+        "pal_slate",
+        "pal_void",
+        "tex_castle__ashlar"
+      ],
+      "triangles": 1932,
+      "part": "pillar"
+    },
+    "kit_pillar_church": {
+      "file": "art/models/kit/kit_pillar_church.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.72,
+        2.3,
+        0.72
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_slate"
+      ],
+      "triangles": 372,
+      "part": "pillar"
+    },
+    "kit_pillar_dungeon": {
+      "file": "art/models/kit/kit_pillar_dungeon.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.86,
+        2.254,
+        0.86
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep"
+      ],
+      "triangles": 352,
+      "part": "pillar"
+    },
+    "kit_pillar_timber": {
+      "file": "art/models/kit/kit_pillar_timber.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        2.36,
+        1.0
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_slate"
+      ],
+      "triangles": 288,
+      "part": "pillar"
+    },
+    "kit_pillar_amber": {
+      "file": "art/models/kit/kit_pillar_amber.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.86,
+        2.28,
+        0.86
+      ],
+      "materials": [
+        "glow_candle",
+        "glow_ember",
+        "pal_ink",
+        "pal_void",
+        "tex_amber__black_stone"
+      ],
+      "triangles": 268,
+      "part": "pillar"
+    },
+    "kit_castle_face": {
+      "file": "art/models/kit/kit_castle_face.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.09,
+        0.072
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_slate"
+      ],
+      "triangles": 192,
+      "part": "face"
+    },
+    "kit_church_face": {
+      "file": "art/models/kit/kit_church_face.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.75,
+        0.075
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_slate"
+      ],
+      "triangles": 36,
+      "part": "face"
+    },
+    "kit_castle_coping": {
+      "file": "art/models/kit/kit_castle_coping.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.13,
+        0.09
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_slate"
+      ],
+      "triangles": 24,
+      "part": "coping"
+    },
+    "kit_church_coping": {
+      "file": "art/models/kit/kit_church_coping.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.11,
+        0.08
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_slate"
+      ],
+      "triangles": 24,
+      "part": "coping"
+    },
+    "kit_amber_coping": {
+      "file": "art/models/kit/kit_amber_coping.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.11,
+        0.07
+      ],
+      "materials": [
+        "glow_ember",
+        "pal_ink"
+      ],
+      "triangles": 24,
+      "part": "coping"
+    },
+    "kit_manor_coping": {
+      "file": "art/models/kit/kit_manor_coping.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.1,
+        0.07
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_umber"
+      ],
+      "triangles": 24,
+      "part": "coping"
+    },
+    "kit_timber_coping": {
+      "file": "art/models/kit/kit_timber_coping.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        0.12,
+        0.082
+      ],
+      "materials": [
+        "pal_peat"
+      ],
+      "triangles": 12,
+      "part": "coping"
+    },
+    "kit_dungeon_coping": {
+      "file": "art/models/kit/kit_dungeon_coping.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.987,
+        0.137,
+        0.08
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 48,
+      "part": "coping"
     }
   },
   "constants": {

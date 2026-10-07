@@ -1566,7 +1566,25 @@
       "ash_violet",
       "rust",
       "night"
-    ]
+    ],
+    "interiors": {
+      "about": "Interiors: the style a place's rooms are built in, by the start of its id, else by board theme. A lone wall square inside a room is a pillar in that style (kit_pillar_<style>); every open face of a cut-away wall gets the style's coping along its top and, where no panelling does, its face module (kit_<style>_coping, kit_<style>_face).",
+      "places": {
+        "castle_ravenloft": "castle",
+        "amber_temple": "amber"
+      },
+      "themes": {
+        "church": "church",
+        "dungeon": "dungeon",
+        "attic": "timber",
+        "tavern": "timber",
+        "shop": "timber",
+        "house": "timber",
+        "inn": "timber",
+        "manor": "manor",
+        "townhouse": "manor"
+      }
+    }
   },
   "outdoor_rooms": [
     [

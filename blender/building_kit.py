@@ -791,6 +791,161 @@ def kit_chimney_cap(p):
     p.socket("smoke", (0, 0, 0.42))
 
 
+# --- Interior pillars --------------------------------------------------------------------------------------------
+# A lone wall square inside a room is a pillar (BuildingKit.pillar): origin at the middle of its square on the floor,
+# made per interior style. They stand taller than the cut-away walls and fade when they hide the party.
+
+ASHLAR = "tex_castle__ashlar"
+
+
+def _sconce(p, at, out, candles=3):
+    """An iron sconce on a pillar's face at `at` (x, y, z), sticking out toward `out` (a unit (x, y)): a bracket, a
+    drip pan and candles with their flames."""
+    ox, oy = out
+    x, y, z = at
+    p.box((0.05 + abs(ox) * 0.14, 0.05 + abs(oy) * 0.14, 0.04), (x + ox * 0.07, y + oy * 0.07, z - 0.06), "pal_ink")
+    p.cyl(0.11, 0.025, (x + ox * 0.16, y + oy * 0.16, z - 0.04), "pal_ink", segs=10)
+    for k in range(candles):
+        a = 2 * math.pi * k / candles
+        cx, cy = x + ox * 0.16 + 0.06 * math.cos(a), y + oy * 0.16 + 0.06 * math.sin(a)
+        hgt = 0.1 + 0.03 * k
+        p.cyl(0.018, hgt, (cx, cy, z - 0.02), "pal_ivory", segs=6)
+        p.cyl(0.012, 0.045, (cx, cy, z - 0.02 + hgt), "glow_flame", r2=0.002, segs=5)
+
+
+@kit("kit_pillar_castle", part="pillar")
+def kit_pillar_castle(p):
+    """Castle Ravenloft's hall piers: a stepped plinth, a shaft of ashlar clustered with four colonnettes, a band,
+    a carved upper block with a blind pointed arch on each face and gargoyle heads at its corners, a cornice, and an
+    iron sconce of candles on two faces."""
+    p.box((0.96, 0.96, 0.16), (0, 0, 0.08), DRESSED_DARK, soft=0.01, segs=1)
+    p.box((0.86, 0.86, 0.16), (0, 0, 0.24), DRESSED_DARK, soft=0.01, segs=1)
+    p.box((0.66, 0.66, 1.3), (0, 0, 0.32 + 0.65), ASHLAR)
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.cyl(0.075, 1.3, (sx * 0.33, sy * 0.33, 0.32), DRESSED, segs=10)
+            p.lathe([(0.0, 0.0), (0.11, 0.0), (0.11, 0.06), (0.08, 0.1), (0.0, 0.1)], (sx * 0.33, sy * 0.33, 0.32), DRESSED_DARK, segs=10)
+    p.box((0.84, 0.84, 0.1), (0, 0, 1.67), DRESSED_DARK)
+    p.box((0.76, 0.76, 0.58), (0, 0, 2.01), ASHLAR)
+    for k in range(4):
+        a = math.radians(k * 90)
+        nx, ny = math.sin(a), -math.cos(a)
+        outer = arch(-0.2, 0.2, 1.86, 0.2, n=10)
+        inner = arch(-0.14, 0.14, 1.86, 0.15, n=10)
+        # A blind arch: a dark recess with a stone ring round its head, on the face looking along (nx, ny).
+        p.box((0.28, 0.04, 0.3), (nx * 0.385, ny * 0.385, 1.94), "pal_void", rot=(0, 0, k * 90))
+        p.prism(outer + list(reversed(inner)) , 0.05, (nx * 0.39, ny * 0.39, 0), DRESSED, rot=(0, 0, k * 90))
+        for sx in (-1, 1):   # jambs
+            p.box((0.06, 0.05, 0.36), (nx * 0.39 + math.cos(a) * sx * 0.17, ny * 0.39 + math.sin(a) * sx * 0.17, 1.68 + 0.18 + 0.0),
+                  DRESSED, rot=(0, 0, k * 90))
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            # gargoyle heads: a snout and two horns pointing out from each upper corner
+            hx, hy = sx * 0.42, sy * 0.42
+            p.box((0.14, 0.14, 0.12), (hx, hy, 2.2), DRESSED_DARK, rot=(0, 0, 45), soft=0.02)
+            p.box((0.1, 0.22, 0.07), (hx + sx * 0.06, hy + sy * 0.06, 2.17), DRESSED_DARK, rot=(0, 0, 45 * sx * sy))
+            for h in (-1, 1):
+                p.cyl(0.016, 0.1, (hx + h * 0.03, hy - h * 0.03, 2.26), "pal_bone", r2=0.003, segs=5, rot=(sx * 25, sy * 25, 0))
+    p.box((0.9, 0.9, 0.1), (0, 0, 2.35), DRESSED)
+    p.box((0.7, 0.7, 0.1), (0, 0, 2.45), DRESSED_DARK)
+    for out in ((0, -1), (0, 1)):
+        _sconce(p, (out[0] * 0.33, out[1] * 0.33, 1.35), out)
+
+
+@kit("kit_pillar_church", part="pillar")
+def kit_pillar_church(p):
+    """A nave column: a square plinth, a moulded base, a round shaft, a cushion capital under a square abacus."""
+    p.box((0.7, 0.7, 0.14), (0, 0, 0.07), DRESSED_DARK, soft=0.01, segs=1)
+    p.lathe([(0.0, 0.14), (0.3, 0.14), (0.3, 0.2), (0.26, 0.26), (0.28, 0.3), (0.22, 0.36), (0.0, 0.36)], (0, 0, 0), DRESSED, segs=16)
+    p.cyl(0.21, 1.62, (0, 0, 0.36), DRESSED, segs=16)
+    p.lathe([(0.0, 1.98), (0.22, 1.98), (0.24, 2.02), (0.36, 2.2), (0.0, 2.2)], (0, 0, 0), DRESSED, segs=16)
+    p.box((0.66, 0.66, 0.1), (0, 0, 2.25), DRESSED_DARK)
+
+
+@kit("kit_pillar_dungeon", part="pillar")
+def kit_pillar_dungeon(p):
+    """A rough pillar of stacked stone blocks, worn and uneven, with a flat capstone."""
+    rng = p.rng
+    z = 0.0
+    while z < 1.9:
+        h = rng.uniform(0.26, 0.36)
+        w = rng.uniform(0.62, 0.74)
+        p.box((w, w * rng.uniform(0.92, 1.05), h - 0.02), (rng.uniform(-0.03, 0.03), rng.uniform(-0.03, 0.03), z + h / 2),
+              rng.choice(["pal_stone", "pal_slate", "pal_stone_deep"]), rot=(rng.uniform(-2, 2), rng.uniform(-2, 2), rng.uniform(-8, 8)),
+              soft=0.04, segs=1)
+        z += h
+    p.box((0.86, 0.86, 0.14), (0, 0, z + 0.07), "pal_slate", soft=0.03, segs=1)
+
+
+@kit("kit_pillar_timber", part="pillar")
+def kit_pillar_timber(p):
+    """A wooden post on a stone pad, its top braced out four ways under a cross of beams."""
+    p.box((0.42, 0.42, 0.14), (0, 0, 0.07), "pal_slate", soft=0.02, segs=1)
+    p.box((0.24, 0.24, 2.0), (0, 0, 1.14), OAK, soft=0.02, segs=1)
+    for k in range(4):
+        a = math.radians(k * 90)
+        ux, uy = math.cos(a), math.sin(a)
+        p.box((0.46, 0.08, 0.08), (ux * 0.25, uy * 0.25, 1.96), OAK, rot=(0, -45, k * 90), soft=0.01, segs=1)
+    p.box((1.0, 0.2, 0.2), (0, 0, 2.24), OAK)
+    p.box((0.2, 1.0, 0.2), (0, 0, 2.26), OAK)
+
+
+@kit("kit_pillar_amber", part="pillar")
+def kit_pillar_amber(p):
+    """The Amber Temple's pillars: an octagonal shaft of black stone with veins of amber light, a stepped base and a
+    flaring capital."""
+    p.box((0.86, 0.86, 0.18), (0, 0, 0.09), "pal_void", soft=0.01, segs=1)
+    p.lathe([(0.0, 0.18), (0.38, 0.18), (0.36, 0.28), (0.3, 0.32), (0.0, 0.32)], (0, 0, 0), "pal_ink", segs=8, smooth=False)
+    p.lathe([(0.0, 0.32), (0.27, 0.32), (0.25, 2.0), (0.0, 2.0)], (0, 0, 0), "tex_amber__black_stone", segs=8, smooth=False)
+    for k in range(8):
+        a = math.radians(k * 45 + 22.5)
+        p.box((0.03, 0.03, 1.5), (0.255 * math.cos(a), 0.255 * math.sin(a), 1.15), "glow_candle" if k % 2 else "glow_ember")
+    p.lathe([(0.0, 2.0), (0.26, 2.0), (0.42, 2.2), (0.42, 2.28), (0.0, 2.28)], (0, 0, 0), "pal_ink", segs=8, smooth=False)
+
+
+# --- Interior wall faces -----------------------------------------------------------------------------------------
+# On each face of a cut-away interior wall that looks into a room (ModelPiece.dress_wall): a face module in the
+# place's style, and a coping along the cut top so the wall reads as a wall with a moulded top, not a box. Faces are
+# one square wide, origin at the foot of the face, front -y like the house modules; CUT is the walls' cut height.
+
+CUT = 1.15
+
+
+@kit("kit_castle_face", part="face")
+def kit_castle_face(p):
+    """Castle Ravenloft's halls: a plinth course, a blind pointed arch on slender colonnettes, a moulded coping."""
+    p.box((1.0, 0.05, 0.16), (0, -0.025, 0.08), DRESSED_DARK)
+    for sx in (-1, 1):
+        p.cyl(0.032, 0.62, (sx * 0.38, -0.04, 0.16), DRESSED, segs=8)
+        p.box((0.1, 0.07, 0.05), (sx * 0.38, -0.035, 0.8), DRESSED_DARK)
+    outer = arch(-0.44, 0.44, 0.83, 0.26, n=12)
+    inner = arch(-0.34, 0.34, 0.83, 0.2, n=12)
+    p.prism(outer + list(reversed(inner)), 0.05, (0, -0.025, 0), DRESSED)
+
+
+@kit("kit_church_face", part="face")
+def kit_church_face(p):
+    """A nave's walls: a chamfered plinth and a string course at sill height."""
+    p.box((1.0, 0.06, 0.2), (0, -0.03, 0.1), DRESSED_DARK)
+    p.box((1.0, 0.05, 0.05), (0, -0.04, 0.2), DRESSED_DARK, rot=(45, 0, 0))
+    p.box((1.0, 0.05, 0.06), (0, -0.025, 0.72), DRESSED)
+
+
+def _coping(p, mat, edge, proud=0.06, h=0.08):
+    """A moulded band along the cut top of an interior wall's face, with a bead under it."""
+    p.box((1.0, proud + 0.02, h), (0, -(proud + 0.02) / 2 + 0.01, CUT - h / 2 + 0.01), mat)
+    p.box((1.0, proud * 0.6, 0.025), (0, -proud * 0.3, CUT - h - 0.008), edge)
+
+
+kit("kit_castle_coping", part="coping")(lambda p: _coping(p, DRESSED, DRESSED_DARK, proud=0.07, h=0.1))
+kit("kit_church_coping", part="coping")(lambda p: _coping(p, DRESSED, DRESSED_DARK))
+kit("kit_amber_coping", part="coping")(lambda p: _coping(p, "pal_ink", "glow_ember", proud=0.05))
+kit("kit_manor_coping", part="coping")(lambda p: _coping(p, "pal_peat", "pal_umber", proud=0.05, h=0.07))
+kit("kit_timber_coping", part="coping")(lambda p: beam(p, (-0.5, CUT - 0.06), (0.5, CUT - 0.06), 0.12, OAK, d=0.07))
+kit("kit_dungeon_coping", part="coping")(lambda p: stones(p, -0.5, 0.5, CUT - 0.14, CUT + 0.01, ["pal_stone", "pal_slate"], 0.06,
+                                                          course=0.15, mortar="", soft=0.0, lengths=(0.22, 0.4), rough=4.0))
+
+
 # --- Build and export --------------------------------------------------------------------------------------------
 
 def main():

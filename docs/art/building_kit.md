@@ -12,9 +12,24 @@ They are now put together from a kit of Blender modules in their region's style,
 | timber | the Village of Barovia, Old Bonegrinder's hill, the Wizard of Wines, Van Richten's tower (board theme `village`) | Barovian half-timbering: dark oak posts, sill beam, mid rail and wall plate, braces, St Andrew's crosses and chevrons over cracked plaster with brick showing (`interior/plaster_wall`), a fieldstone footing, deep thatch on small houses and slate on grand ones, casements with plank shutters |
 | clapboard | Vallaki (theme `vallaki`) | lapped painted boards (each house its own colour from `paints`), corner boards, frieze and skirt boards, cased windows with a pediment, a pedimented door case, steep slate roofs with carved bargeboards; the town's border is a palisade of sharpened logs |
 | stone | Krezk, the Abbey, Argynvostholt, the castle's outer yards (theme `shrine_yard`) | coursed stone with quoins, a chamfered plinth, a string course and an eaves cornice, dressed window surrounds with keystones, a round-arched door; Krezk's wall is the tall wall with merlons |
+| church | the house that holds a church's doors (the village church, St. Andral's) | dressed stone with a tall plinth, buttresses and angle buttresses, a corbel table under the eaves, lancet windows with Y-tracery and hood moulds, a very steep slate roof, parapet gables with kneelers and a cross (a rose window on a wide one), and a bell tower over the doors: clasping buttresses, a belfry of louvred lancets, a corbelled parapet and a slated spire |
 
 The style comes from `art/sprites/props/catalog.json` `building_kit`: a place's own, else its board theme's. A place
 or theme not named keeps the plain boxes (none are left).
+
+**Interiors** take a style too (`building_kit.interiors`, by the start of the place's id, else the board theme):
+`castle` for every room of Castle Ravenloft, `amber` for the Amber Temple, `church`, `dungeon`, `manor` (the Death
+House, the mansions) and `timber` (inns, shops, houses, attics). In that style:
+
+- **Pillars.** A lone wall square inside a room (no wall beside it) is a pillar instead of a block
+  (`BuildingKit.pillar`, asked by `ArenaBoard._wall`): the castle's carved piers (a stepped plinth, a shaft clustered
+  with colonnettes, a blind arch on each face of the upper block, gargoyle heads, iron sconces of candles), a church's
+  round column with its base and capital, a dungeon's stacked rough blocks, a wooden post braced four ways, the Amber
+  Temple's black octagonal shafts veined with amber light. They stand about 2.3 high, taller than the cut-away walls,
+  and fade when they hide the party, as the trees do.
+- **Wall faces.** Every open face of a cut-away wall gets the style's coping along its cut top (a moulded stone band,
+  a dark wood rail, an oak plate, rough capstones), and where no panelling covers it the style's face: the castle's
+  blind arcade on colonnettes over a plinth course, a church's plinth and string course (`ModelPiece.dress_wall`).
 
 ## How a house is put together (`world/look/town_builder.gd`, `world/look/building_kit.gd`)
 
@@ -57,13 +72,17 @@ repaints, and the kit's constants). A wall module is one square's face, 1 unit w
 and the existing texture sets; the HD surfaces (W4) will give the kit its own painted materials.
 
 Checks: `tests/integration/test_building_kit.gd` (every module TownBuilder asks for exists with real materials, the
-village is built of kit houses with door bays and lit windows, a house cuts away to its footing, Vallaki is clapboard
-behind its palisade and Krezk is stone inside its tall wall). Captures, before and after:
+village is built of kit houses with door bays and lit windows, a house cuts away to its footing, the churches are
+stone with their towers, Vallaki is clapboard behind its palisade and Krezk is stone inside its tall wall, and lone
+wall squares are pillars in the castle, the church and the Death House's dungeon). Captures, before and after:
 
     make capture SCENE=res://tools/capture/kit_capture.tscn NAME=kit/after FRAMES=10   # KIT_SHOTS=village_close,...
 
 ## Not done yet
 
-- Interiors, pillars and the castle's gothic (W7's second part), then W8's interiors that keep their outer walls.
+- Interior door surrounds per style; the castle's own outer architecture comes with W19 (its silhouette), and W8
+  gives interiors their full-height outer walls.
+- Lights at the pillars' sconces and the lit windows (W5's, in the light lane): the window markers in `board.windows`
+  carry meta `lit`, and the sconces are at 1.35 on two faces of each castle pier.
 - The kit's own HD materials (W4): timber, plaster, thatch and stone painted at 2K with normal and roughness maps.
 - Houses are still rectangles; an L-shaped block is two houses with their own roofs.
