@@ -44,7 +44,7 @@ func _process(_delta: float) -> void:
 ## What the plates say now: [{text, kind, at (screen), dim}], nearest the camera last so it's drawn on top.
 func plates() -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
-	if view == null or not is_instance_valid(view) or view.rig == null or view.in_combat:
+	if view == null or not is_instance_valid(view) or view.rig == null or view.in_combat or view.members.is_empty():
 		return out
 	var cam := view.rig.camera
 	var seen := {}

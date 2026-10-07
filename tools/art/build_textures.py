@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Builds the environment texture sets from tools/art/texture_recipes.json (P4-09, docs/art/textures.md).
 
-Usage: tools/art/build_textures.py [--generate] [--only theme/surface ...] [--preview-dir DIR]
+Usage: tools/art/build_textures.py [--generate] [--only theme/surface ...] [--preview-dir DIR] [--hd]
 
 For each recipe: (with --generate) asks Gemini for a swatch through tools/art/generate.sh, saved as
 art/generated/textures/<theme>_<surface>.png; then runs blender/make_texture.py, which makes it seamless,
 palette-snaps it and writes art/textures/<theme>/<surface>.png and its entry in art/textures/manifest.json.
-Without --generate only the processing step runs, from the swatches already generated. Stdlib only.
+Without --generate only the processing step runs, from the swatches already generated. --hd writes only the Modern
+look's smooth tiles beside them (<surface>_hd.png, the entry's hd_file). Stdlib only.
 """
 import argparse
 import json
@@ -55,6 +56,7 @@ def main():
     p.add_argument("--only", nargs="*", default=[], help="theme/surface keys to build (default: all)")
     p.add_argument("--preview-dir", default="", help="also write a 3x3 tiled preview per texture here")
     p.add_argument("--manifest-only", action="store_true", help="only rewrite the manifest's apply/arena_themes")
+    p.add_argument("--hd", action="store_true", help="only the Modern look's smooth tiles (<surface>_hd.png)")
     a = p.parse_args()
     rec = json.loads(RECIPES.read_text())
     failed = []
@@ -84,6 +86,8 @@ def main():
                 cmd += ["--palette", ",".join(r["palette"])]
             if r.get("note"):
                 cmd += ["--note", r["note"]]
+            if a.hd:
+                cmd += ["--hd"]
             if a.preview_dir:
                 cmd += ["--preview", str(Path(a.preview_dir).resolve() / f"{theme}_{surf}.png")]
             out = subprocess.run(cmd, capture_output=True, text=True)
