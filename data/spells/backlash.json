@@ -31,8 +31,9 @@
   "summary": "Reference-only: When damaged, reduce it by 4d6 + your spellcasting modifier. If the damaging creature is within 60 feet, it makes a Constitution save against 4d6 Force, half on success. Both dice totals gain 1d6 per slot above 4.",
   "text": "Reference-only: When damaged, reduce it by 4d6 + your spellcasting modifier. If the damaging creature is within 60 feet, it makes a Constitution save against 4d6 Force, half on success. Both dice totals gain 1d6 per slot above 4.",
   "tags": [
-    "utility"
+    "damage"
   ],
   "icon": "magic_missile",
+  "automation": "reference",
   "playable": false
 }

@@ -149,8 +149,12 @@ func test_models_stay_in_their_square() -> void:
 func test_models_are_their_real_size() -> void:
 	var feet := SetDressing.catalog().get("feet", {}) as Dictionary
 	var problems: Array[String] = []
-	for loc_id: String in ["death_house_upper", "death_house_ground", "village_of_barovia", "vallaki", "tser_pool",
-			"castle_ravenloft_chapel", "old_bonegrinder", "krezk", "berez_baba_lysagas_hut", "yester_hill"]:
+	var places: Array = ["death_house_upper", "death_house_ground", "village_of_barovia", "vallaki", "tser_pool", "old_bonegrinder",
+		"krezk", "berez_baba_lysagas_hut", "yester_hill"]
+	for loc_id: String in Compendium.shared().tables["locations"] as Dictionary:
+		if loc_id.begins_with("castle_ravenloft"):
+			places.append(loc_id)
+	for loc_id: String in places:
 		var v := _view(loc_id)
 		await _frames(1)
 		for m in _models(v.board):

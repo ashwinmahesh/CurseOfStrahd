@@ -479,7 +479,7 @@
     },
     "secondary": {
       "type": "object",
-      "description": "A save that follows a spell attack, hit or miss, around the target (Ice Knife's burst).",
+      "description": "A save-based burst after the primary spell attack or saving throw.",
       "additionalProperties": false,
       "properties": {
         "radius": {
@@ -507,6 +507,15 @@
         "exclude_target": {
           "type": "boolean",
           "description": "The burst spares the creature it centres on (Lightning Arrow)."
+        },
+        "disadvantage_if_zero": {
+          "type": "boolean"
+        },
+        "damages_objects": {
+          "type": "boolean"
+        },
+        "ignites_objects": {
+          "type": "boolean"
         }
       }
     },
@@ -749,6 +758,13 @@
         "reach": {
           "type": "integer",
           "description": "How far from the object it can strike (Grasping Vine 30)."
+        },
+        "attacks": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pick_attack_targets": {
+          "type": "boolean"
         }
       }
     },
@@ -866,6 +882,22 @@
           },
           "mode": {
             "type": "string"
+          },
+          "attacks": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "tether": {
+            "type": "boolean"
+          },
+          "requires_effect": {
+            "type": "boolean"
+          },
+          "effects": {
+            "type": "array",
+            "items": {
+              "$ref": "common.schema.json#/$defs/effect_ref"
+            }
           }
         }
       }
@@ -967,6 +999,68 @@
       "type": "string",
       "pattern": "^[a-z0-9_]+$",
       "description": "Key of its icon in art/icons.json when it isn't the spell's own id."
+    },
+    "automation": {
+      "type": "string",
+      "enum": [
+        "reference"
+      ],
+      "description": "An imported reference whose behavior has not been implemented; never presented as a combat utility spell."
+    },
+    "crit_range": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 20
+    },
+    "ignore_partial_cover": {
+      "type": "boolean"
+    },
+    "auto_success_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "repeat_targets": {
+      "type": "boolean"
+    },
+    "ends_on_save": {
+      "type": "boolean"
+    },
+    "requires_sight": {
+      "type": "boolean"
+    },
+    "roll_response": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "enum": [
+            "self",
+            "visible"
+          ]
+        },
+        "natural": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "incoming_natural": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "reroll_advantage": {
+          "type": "boolean"
+        },
+        "success_temp_hp": {
+          "$ref": "common.schema.json#/$defs/dice"
+        }
+      },
+      "additionalProperties": false
+    },
+    "field_utility": {
+      "type": "boolean",
+      "description": "Helpful non-damaging self/creature handler available through FieldCasting."
     }
   }
 }

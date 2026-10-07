@@ -7,17 +7,31 @@ Engine: `Character` sheet values and breakdowns, `Creature.effects / active_cond
 ## What this screen must do
 
 - Show the whole party at a glance, and every detail of one character, with every number explained.
-- Make the player the director of everyone: the four party members and any story guest. Guests are directed in
+- Make the player the director of everyone: the party (up to four) and any story guest. Guests are directed in
   combat like the party but their level and gear come from the story.
 - Run rests and spell preparation, and track the lingering things Barovia does to people.
 
 ## Party overview (`pm_01_overview`)
 ![Party overview](wireframes/pm_01_overview.svg)
 
-Four columns plus the guest slot: portrait, class and level, Hit Points bar (Bloodied called out in words), Hit
+A column per party member (up to four) plus the guest slot: portrait, class and level, Hit Points bar (Bloodied called out in words), Hit
 Point Dice, spell slots, class resources (Second Wind, Channel Divinity ...), conditions with remaining time,
 exhaustion, attunements, and the ⬆ level-up badge. Below: the **party skill table** (best character per skill,
 Expertise starred), from `PartyCoverage`.
+
+## Who travels (roster screen)
+
+Added by the owner (2026-10-06, 2026-10-07). The roster is the six companions (character_creation.md, Start) plus the
+custom hero if there is one. Up to four (`StoryState.PARTY_CAP`) travel; the rest wait at camp (`StoryState.bench`),
+where they don't fight, speak or level. **Change who travels** on the party overview opens the roster screen, outside
+fights and conversations only; it shows when someone is at camp or the party has room. Party cards have **Send to
+camp** (never the last one on the road); camp cards have **Bring along** (while there's room) and **Swap in**, then
+"<name> takes this place" on the party member to replace. The world swaps the figures as soon as the party changes.
+
+Levels missed at camp wait (owner, 2026-10-07): a benched member keeps their level, and their card shows
+"▲ A level up waiting" or "▲ 2 level ups waiting" (`StoryState.levels_waiting`, the party's milestone level minus
+theirs). Once they're back in the party, **Level up** opens the level-up screen, which reopens for the next level
+until they've caught up, so every choice is the player's.
 
 ## Character sheet (`pm_02_sheet`)
 ![Character sheet](wireframes/pm_02_sheet.svg)

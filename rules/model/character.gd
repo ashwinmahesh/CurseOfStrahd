@@ -685,14 +685,17 @@ func _walk_feature(f: Dictionary, key: String, src: Dictionary, scope: Dictionar
 		"text": str(f.get("text", "")), "source": src["label"], "source_kind": src["kind"],
 		"class_id": src["class_id"], "level": src["level"], "action": str(f.get("action", "passive")),
 		"implemented": str(f.get("implemented", "data")), "key": key})
+	for recipe_key: String in ["activation", "roll_response", "summon_effect", "hit_response", "cast_level_boost", "cast_form", "attack_cantrip", "after_cast_attack", "slot_exchange", "on_feature_target", "spell_sequence", "resource_cast"]:
+		if f.has(recipe_key):
+			features[-1][recipe_key] = (f[recipe_key] as Dictionary).duplicate(true)
 	if f.has("choice"):
 		var c := f["choice"] as Dictionary
-		var picks := _register_choice(c, key, src, str(f.get("name", "")), scope)
+		var picks := _register_choice(c, key, src, str(c.get("label", f.get("name", ""))), scope)
 		scope[str(c.get("id", "choice"))] = picks
 	for c2: Variant in f.get("choices", []):
 		var cd := c2 as Dictionary
 		var sub_key := "%s.%s" % [key, cd.get("id", "choice")]
-		var picks2 := _register_choice(cd, sub_key, src, str(f.get("name", "")), scope)
+		var picks2 := _register_choice(cd, sub_key, src, str(cd.get("label", f.get("name", ""))), scope)
 		scope[str(cd.get("id", "choice"))] = picks2
 	for md: Variant in f.get("modifiers", []):
 		_add_modifier(md as Dictionary, str(f.get("name", "")), src, scope)
@@ -712,7 +715,10 @@ func _add_modifier(md: Dictionary, feature_name: String, src: Dictionary, scope:
 	if d.has("ability") and str(d["ability"]).begins_with("@"):
 		var a := _resolve_ref(str(d["ability"]), scope)
 		d["ability"] = a[0] if not a.is_empty() else ""
-	elif str(d.get("ability", "")) == "choice":
+	if d.has("skill") and str(d["skill"]).begins_with("@"):
+		var skills := _resolve_ref(str(d["skill"]), scope)
+		d["skill"] = skills[0] if not skills.is_empty() else ""
+	if str(d.get("ability", "")) == "choice":
 		d["ability"] = str(scope.get("choice", ""))
 	# `when` filters can name a pick too (Agonizing Blast: {"spell_id": "@cantrip"}).
 	if d.has("when"):
@@ -1039,13 +1045,23 @@ func _build_spellcasting() -> void:
 ## with `min`) or a class table column (`count_column`: Favored Enemy).
 func _collect_granted_spells() -> void:
 	var ctx := formula_context()
+	var highest_slot := 0
+	var slots := spell_slots()
+	for i in slots.size():
+		if slots[i] > 0:
+			highest_slot = i + 1
 	for m in _modifiers:
-		if m.stat != &"spell":
+		if m.stat != &"spell" or highest_slot < m.number("at_slot_level", 0):
 			continue
 		var spell_id := m.text("value")
 		if spell_id == "":
 			continue
 		if m.class_id != "" and class_level_of(m.class_id) < m.number("at_class_level", 0):
+			continue
+		if bool(m.data.get("prepared_for_classes", false)):
+			for casting in spellcasting:
+				granted_spells.append({"id": spell_id, "class_id": str(casting["class_id"]), "ability": str(casting["ability"]),
+					"uses": 0, "recharge": "", "always_prepared": true, "at_level": m.at_level(), "source": m.source_name})
 			continue
 		var ability := m.text("ability")
 		if ability == "" and m.class_id != "":
@@ -1180,6 +1196,25 @@ func slots_left(level: int) -> int:
 
 
 ## Spends a slot of that level: a Pact Magic slot first (they return on a Short Rest), else a Spellcasting slot.
+## Expended slots of either pool at this level; used by effects that restore spell slots without a pool restriction.
+func expended_slots(level: int) -> int:
+	if level < 1 or level > 9:
+		return 0
+	var pact := pact_magic()
+	return slots_used[level - 1] + (int(pact["used"]) if int(pact["level"]) == level else 0)
+
+
+## Restore a Spellcasting slot first, then a Pact Magic slot at the same level.
+func recover_slot(level: int) -> bool:
+	if expended_slots(level) <= 0:
+		return false
+	if slots_used[level - 1] > 0:
+		slots_used[level - 1] -= 1
+	else:
+		pact_slots_used -= 1
+	return true
+
+
 func expend_slot(level: int) -> bool:
 	var pact := pact_magic()
 	if int(pact["level"]) == level and int(pact["left"]) > 0:
@@ -1551,6 +1586,7 @@ func mists_deny_short_rest(dice: DiceRoller, miles_since_long_rest: float) -> bo
 ## Tireless (Ranger 10) also takes away a level of Exhaustion.
 func finish_short_rest() -> void:
 	super.finish_short_rest()
+	open_slot_recovery("short_rest")
 	pact_slots_used = 0
 	_reset_item_uses(["short"])
 	if has_flag("tireless") and exhaustion > 0 and not dead:
@@ -1571,6 +1607,7 @@ func _rest_temp_hp() -> void:
 
 func finish_long_rest() -> void:
 	super.finish_long_rest()
+	close_slot_recovery()
 	if dead:
 		return
 	hit_dice_spent.clear()
@@ -1698,6 +1735,11 @@ func equip(item_id: String, slot: String) -> bool:
 				holding[0]["slot"] = ""
 			entry["slot"] = slot
 			_item_mods_key = ""
+			var situation := armor_situation()
+			if str(situation["armor"]) != "none" or bool(situation["shield"]):
+				for fx: Effect in effects.duplicate():
+					if bool(fx.data.get("ends_when_armored", false)):
+						remove_effect(fx)
 			return true
 	return false
 
@@ -2012,3 +2054,109 @@ static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Characte
 	for a: Variant in d.get("attuned", []):
 		c.attuned.append(str(a))
 	return c
+
+
+func spend_resource(res_id: String, amount: int = 1) -> bool:
+	if not super.spend_resource(res_id, amount):
+		return false
+	if amount > 0:
+		for modifier in modifiers_for(&"resource_restore"):
+			if modifier.text("when_spent") == res_id:
+				var ctx := formula_context()
+				ctx["class_level"] = class_level_of(modifier.class_id)
+				restore_resource(modifier.text("resource"), maxi(0, modifier.value_on(ctx)))
+	return true
+
+
+## Transient choices belong to the just-finished rest or feature event, never to a saved build.
+var _slot_recovery_windows: Dictionary = {}
+
+func open_slot_recovery(trigger: String) -> void:
+	for feature in features:
+		var rule := feature.get("slot_exchange", {}) as Dictionary
+		if trigger in (rule.get("recover_on", []) as Array):
+			_slot_recovery_windows[str(feature["id"])] = true
+
+func close_slot_recovery() -> void:
+	_slot_recovery_windows.clear()
+
+## All values and level gates come from a feature's exchange table; no subclass names here.
+func slot_recovery_options() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if dead:
+		return out
+	for feature in features:
+		var rule := feature.get("slot_exchange", {}) as Dictionary
+		if rule.is_empty() or not _slot_recovery_windows.has(str(feature["id"])):
+			continue
+		for tier: Dictionary in rule.get("recover", []):
+			var slot := int(tier["slot"])
+			if class_level_of(str(feature["class_id"])) < int(tier["at_level"]) or resource_left(str(rule["resource"])) < int(tier["cost"]) or expended_slots(slot) <= 0:
+				continue
+			out.append({"feature": str(feature["id"]), "label": str(feature["name"]), "slot": slot,
+				"resource": str(rule["resource"]), "cost": int(tier["cost"])})
+	return out
+
+func recover_slot_with_resource(feature_id: String, slot: int) -> bool:
+	for option in slot_recovery_options():
+		if str(option["feature"]) != feature_id or int(option["slot"]) != slot:
+			continue
+		if not spend_resource(str(option["resource"]), int(option["cost"])):
+			return false
+		recover_slot(slot)
+		_slot_recovery_windows.erase(feature_id)
+		return true
+	return false
+
+func slot_conversion_options() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if dead:
+		return out
+	for feature in features:
+		var rule := feature.get("slot_exchange", {}) as Dictionary
+		if rule.is_empty() or not bool(rule.get("slot_to_resource", false)):
+			continue
+		var resource := str(rule["resource"])
+		if resource_left(resource) >= resource_max(resource):
+			continue
+		for slot in range(1, 10):
+			if slots_left(slot) > 0:
+				out.append({"feature": str(feature["id"]), "label": str(feature["name"]), "resource": resource, "slot": slot})
+	return out
+
+func convert_slot_to_resource(feature_id: String, slot: int) -> bool:
+	for option in slot_conversion_options():
+		if str(option["feature"]) == feature_id and int(option["slot"]) == slot:
+			if not expend_slot(slot):
+				return false
+			restore_resource(str(option["resource"]), slot)
+			return true
+	return false
+
+
+## Alternate casting payments are feature data. Eligibility uses the prepared source, not a spell's class list.
+## These options remain visible when exhausted so callers can explain the unavailable resource.
+func resource_casts(spell_id: String) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var spell := compendium.spell_data(spell_id)
+	if spell.is_empty():
+		return out
+	for feature in features:
+		var rule := feature.get("resource_cast", {}) as Dictionary
+		if rule.is_empty() or str(spell.get("school", "")) != str(rule["school"]):
+			continue
+		var cid := str(feature["class_id"])
+		var sub := compendium.subclass_data(str(subclasses.get(cid, "")))
+		var on_table := false
+		for tier: Variant in (sub.get("always_prepared", {}) as Dictionary).values():
+			if spell_id in (tier as Array):
+				on_table = true
+		if bool(rule.get("subclass_spells", false)) and not on_table:
+			continue
+		for known in known_spells():
+			if str(known["id"]) == spell_id and str(known["class_id"]) == cid and str(known["kind"]) in ["prepared", "always"]:
+				var option := feature.duplicate(true)
+				option["ability"] = str(known["ability"])
+				out.append(option)
+				break
+	return out

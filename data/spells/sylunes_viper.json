@@ -4,7 +4,7 @@
   "source": {
     "book": "FRHoF",
     "checked_against": "FRHoF",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 3,
   "school": "conjuration",
@@ -27,11 +27,75 @@
     "kind": "hours",
     "amount": 1
   },
-  "summary": "Reference-only: Gain 15 Temporary HP and a Climb Speed equal to Speed. The spell ends when these Temporary HP run out. While active, a Magic action makes a ranged spell attack within 50 feet: 1d6 Force and Poisoned until your next turn starts; while so Poisoned, the target is Incapacitated. Each slot above 3 adds 5 Temporary HP and 1d6 damage.",
-  "text": "Reference-only: Gain 15 Temporary HP and a Climb Speed equal to Speed. The spell ends when these Temporary HP run out. While active, a Magic action makes a ranged spell attack within 50 feet: 1d6 Force and Poisoned until your next turn starts; while so Poisoned, the target is Incapacitated. Each slot above 3 adds 5 Temporary HP and 1d6 damage.",
+  "summary": "Gain 15 Temporary HP and a Climb Speed equal to Speed. The spell ends when these Temporary HP run out. While active, a Magic action makes a ranged spell attack within 50 feet: 1d6 Force and Poisoned until your next turn starts; while so Poisoned, the target is Incapacitated. Each slot above 3 adds 5 Temporary HP and 1d6 damage.",
+  "text": "Gain 15 Temporary HP and a Climb Speed equal to Speed. The spell ends when these Temporary HP run out. While active, a Magic action makes a ranged spell attack within 50 feet: 1d6 Force and Poisoned until your next turn starts; while so Poisoned, the target is Incapacitated. Each slot above 3 adds 5 Temporary HP and 1d6 damage.",
   "tags": [
-    "utility"
+    "damage",
+    "defense",
+    "control"
   ],
   "icon": "magic_missile",
+  "targets": {
+    "kind": "self"
+  },
+  "temp_hp": {
+    "flat": 15
+  },
+  "upcast": {
+    "temp_hp": 5,
+    "damage": "1d6"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "ends_without_temp_hp": true,
+        "modifiers": [
+          {
+            "stat": "speed_set",
+            "kind": "climb",
+            "value": "walk"
+          }
+        ]
+      }
+    }
+  ],
+  "sustain": [
+    {
+      "do": "attack",
+      "cost": "magic",
+      "range": 50,
+      "attack": "ranged",
+      "not_this_turn": false,
+      "requires_effect": true,
+      "damage": [
+        {
+          "dice": "1d6",
+          "type": "force"
+        }
+      ],
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "poisoned",
+            "until": "caster_turn_start",
+            "primary_condition": "poisoned"
+          }
+        },
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "incapacitated",
+            "until": "caster_turn_start",
+            "primary_condition": "poisoned"
+          }
+        }
+      ],
+      "label": "Venomous Bite",
+      "sub": "50 ft · Force + Poisoned",
+      "help": "Magic action: a ranged spell attack. A hit deals Force damage and poisons and incapacitates the target until your next turn starts."
+    }
+  ],
   "playable": false
 }

@@ -40,7 +40,21 @@
       "name": "Helpful Premonition",
       "summary": "Reaction after you or a visible creature within 30 feet fails a save: add 1d4 to its total, possibly making it succeed. Uses equal Proficiency Bonus per Long Rest.",
       "text": "Reaction after you or a visible creature within 30 feet fails a save: add 1d4 to its total, possibly making it succeed. Uses equal Proficiency Bonus per Long Rest.",
-      "implemented": "text"
+      "implemented": "data",
+      "roll_response": {
+        "resource": "arcane_omens_benefit",
+        "kind": "save",
+        "cost": "reaction",
+        "scope": "allies",
+        "range": 30,
+        "dice": "1d4"
+      },
+      "resource": {
+        "id": "arcane_omens_benefit",
+        "name": "Helpful Premonition",
+        "max": "pb",
+        "recharge": "long"
+      }
     }
   ],
   "playable": false

@@ -1,6 +1,6 @@
 # Faerûn and Arcana content pack
 
-This is a content-only expansion. It adds JSON entries and source-book identifiers to the data schema; it does not change `rules/`, `core/`, `combat/`, UI code, or existing content entries.
+The catalog contains the three books below. The gameplay follow-up extends shared rules and combat systems. The implementation audit is in progress; catalog presence and source verification do not imply full automation. See [rules coverage](../rules/coverage.md#faerûn-and-arcana-unleashed-gameplay-audit).
 
 ## Catalog coverage
 
@@ -34,28 +34,21 @@ Entries were compared against these published chapters and individual item pages
 
 `source.checked_against` identifies the book used to verify source mechanics, not a claim of automated implementation. The source note distinguishes game-specific defaults from book values.
 
-## Automation boundary
+## Gameplay audit
 
-The existing data contracts implement starting abilities, proficiencies, equipment, feat ability increases, spell choices, spellcasting progressions, prepared-spell lists, passive defenses, weapon/armor bonuses, movement speeds, and supported item spell powers. Subclass and feat features retain the existing `implemented: data` / `implemented: text` distinction. Text-only features require manual adjudication.
+The original import included six spell recipes and 46 reference entries. The follow-up is replacing reference entries with executable mechanics and extending reusable rules for features, saves, concentration, summons, spell weapons, and sustained actions. The coverage ledger records tested mechanics and remaining exceptions; it is the completion authority.
 
-Six spells use existing combat effects: **Laeral's Silver Lance, Inflict Doubt, Fractured Awareness, Entrancing Mirrors, Invulnerability, and Iron Body**. Laeral's chosen targets use the game's established enemy-area targeting convention. The other 46 spells are explicitly labeled **Reference-only** in both summary and text. Their metadata makes them available in spell lists, but casting them does not automate their described effects. Familiar and summoned-spirit entries link to their source stat blocks rather than inventing unsupported companion behavior.
+In combat, reference spells remain disabled with “Not automated yet” until a handler or recipe exists. Exploration spell effects remain part of the audit. Damage spells keep their damage classification. Feature `implemented: data` includes data-defined activation and roll-response recipes; a text summary alone never counts as gameplay implementation.
 
-Magic items label each unsupported property **Reference-only**. Items can combine working bonuses or spell powers with manual properties. An item power delegates to the existing spell implementation, including any limitations of that spell. Reference-only item properties have no action button. Artifacts are excluded from random treasure.
-
-Other manual cases include Circle casting, conditional reactions, faction tactics, Arcane Shot options, familiar transformations, slot-threshold spells from the Adept feats, Vestige Patron's chosen domain spells, and alternative prerequisites for Purple Dragon Commandant and Spellfire Adept. Repeatable Boon of Magic School Mastery requires manually choosing a different school each time. No new modifier names or bespoke feature handlers are introduced.
+Magic items may still combine working bonuses or spell powers with reference properties. Item spell powers inherit the actual implementation and limitations of their spell. The item and feature audits remain open. Artifacts are excluded from random treasure.
 
 ## Content defaults
 
 - Backgrounds include the book's equipment package A and the 50 GP option B. Fixed equipment choices use Dice Set, an Arcane Crystal, or an Amulet where needed. Cosmic Dawn Experiment uses Carpenter's Tools. Tool proficiency choices remain selectable. Shadowmasters Exile and Agent of the Ninth Quill's spikes use the game's pack of ten.
 - Artificer is omitted from spell class lists because it is not an available class in this game.
 - Item prices follow the existing rarity convention (half price for potions), rather than a price asserted by these books. Unspecified weight is 0; templated weapons and armor inherit their base item's weight. Artifact price 0 is a placeholder and does not make artifacts random loot.
-- Existing icon keys are reused. No art pipeline or core file changes are needed.
+- Existing icon keys are reused.
 
 ## Validation
 
-Verified on October 6, 2026:
-
-- `make check`: passed; 1,919 data files, no schema/reference errors, no incorrect engine labels, and all four data-integrity tests passed. These build every subclass through level 11 and every background.
-- `make -o import test FILES=test_icons.gd`: all seven tests passed after asset import.
-- A temporary behavior probe exercised the six automated spells: damage, conditions, save/check/attack penalties, resistances/immunities, and concentration cleanup all passed. The probe was removed to keep the change limited to content and documentation.
-- `git diff --check`: clean. Existing content, rules, core, combat, and UI files are unchanged; the only existing file edited is the source-book enum in the data schema.
+The initial catalog import passed data integrity and icon checks. Gameplay regression evidence belongs to the current coverage ledger and test files. The full follow-up requires a fresh `make ci` pass after all mechanics and documentation are complete; the earlier content-only checks do not certify this work.

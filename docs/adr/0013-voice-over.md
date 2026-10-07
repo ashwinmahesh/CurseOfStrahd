@@ -12,8 +12,10 @@ line that hasn't changed, and the game must work with any mix of voiced and unvo
 ## Decision
 
 - **Provider and model pinned** in `audio/voice/casting.json`: ElevenLabs `eleven_v4`, `mp3_44100_64` (speech at
-  64 kbps keeps the repository small; Godot imports MP3 natively). Every clip in the game comes from that model, as
-  every image comes from the pinned Gemini model. The key is `ELEVENLABS_API_KEY`, read from the environment or
+  64 kbps keeps the repository small; Godot imports MP3 natively). A speaker can name their own model there instead
+  (owner, 2026-10-07): the Barovians, the Vistani and the castle's people speak on `eleven_v3`, which keeps the
+  Eastern European accents `eleven_v4` flattens; everyone else, the Narrator and the party among them, stays on
+  `eleven_v4`. The key is `ELEVENLABS_API_KEY`, read from the environment or
   `~/.zshrc` and sent as the `xi-api-key` header, never written anywhere.
 - **A clip is keyed by its speaker and its text**: `res://audio/voice/<speaker>/<key>.mp3`, where `<key>` is the
   first 16 hex digits of the SHA-1 of the line's trimmed text and `<speaker>` is `narrator`, an npc id, a prebuilt

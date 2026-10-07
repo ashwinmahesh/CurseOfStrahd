@@ -125,8 +125,8 @@ func _attacks(c: Combatant, out: Array[Dictionary]) -> void:
 
 func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 	var why := e._action_check(c)
-	out.append(_entry("dash", COMMON, "Dash", "+%d ft" % c.speed(), "action", why, "none", "Gain extra movement equal to your Speed."))
-	out.append(_entry("disengage", COMMON, "Disengage", "no Opp. Attacks", "action", why, "none", "Your movement doesn't provoke Opportunity Attacks this turn."))
+	out.append(_entry("dash", COMMON, "Dash", "+%d ft" % c.speed(), "action", why if why != "" else ("Cannot Dash while affected" if c.creature.has_flag("cannot_dash") else ""), "none", "Gain extra movement equal to your Speed."))
+	out.append(_entry("disengage", COMMON, "Disengage", "no Opp. Attacks", "action", why if why != "" else ("Hunter’s Rime prevents Disengage" if not e.can_disengage(c) else ""), "none", "Your movement doesn't provoke Opportunity Attacks this turn."))
 	out.append(_entry("dodge", COMMON, "Dodge", "until your turn", "action", why, "none", "Attacks against you have Disadvantage; Advantage on Dex saves."))
 	var help := _entry("help", COMMON, "Help", "ally Advantage", "action", why, "enemy", "Distract an enemy within 5 ft: the next ally attack against it has Advantage.")
 	help["range"] = 5
@@ -223,6 +223,7 @@ func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 		if fa.has("choices"):
 			en["choices"] = fa["choices"]
 			en["choice_label"] = str(fa.get("choice_label", "Choose"))
+		en["count"] = int(fa.get("count", 1))
 		out.append(en)
 	for ro in e.features.rider_options(c):
 		var armed := str(ro["id"]) in c.armed
@@ -234,13 +235,13 @@ func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 		re["kind"] = "rider"
 		out.append(re)
 	# War Magic (Eldritch Knight 7): a cantrip in place of one attack of the Attack action.
-	if CombatFeatures.has_feature(c, "war_magic") and c.attacks_left > 0:
+	if (CombatFeatures.has_feature(c, "war_magic") or not e.triggered_features.recipes(c, "attack_cantrip").is_empty()) and (c.attacks_left > 0 or c.action_available):
 		for sp in e.spells.castable(c):
 			if int(sp["level"]) == 0 and str(sp["casting"]) == "action":
 				var data := Compendium.shared().spell_data(str(sp["id"]))
-				if not e.spells.has_combat_rules(data):
+				if not e.spells.has_combat_rules(data) or not e.triggered_features.cantrip_attack(c, data, sp):
 					continue
-				var wm := _entry("war_magic:" + str(sp["id"]), tab, "War Magic: %s" % sp["name"], "replaces an attack", "attack", e.features_attack_why(c), _spell_targeting(data),
+				var wm := _entry("war_magic:" + str(sp["id"]), tab, "Cantrip attack: %s" % sp["name"], "replaces an attack", "attack", e.features_attack_why(c), _spell_targeting(data),
 					"Cast this cantrip in place of one of your attacks.")
 				wm["kind"] = "spell"
 				wm["spell_id"] = str(sp["id"])
@@ -308,7 +309,7 @@ func _sustained(c: Combatant, out: Array[Dictionary]) -> void:
 		var targeting := "none"
 		match str(a["do"]):
 			"attack":
-				targeting = "enemy"
+				targeting = "multi" if int(d.get("attacks", 1)) > 1 else "enemy"
 			"area", "aim":
 				targeting = "direction"
 			"move_object":
@@ -322,6 +323,8 @@ func _sustained(c: Combatant, out: Array[Dictionary]) -> void:
 			str(d.get("help", "")))
 		entry["kind"] = "sustain"
 		entry["sustain_id"] = str(a["id"])
+		entry["count"] = int(d.get("attacks", 1))
+		entry["repeat"] = int(d.get("attacks", 1)) > 1
 		entry["range"] = int(d.get("range", int(d.get("move", 0)) + int(d.get("reach", 0))))
 		entry["spell_id"] = str(a["spell_id"])
 		out.append(entry)
@@ -353,7 +356,7 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 		a["range"] = e.spells.range_ft(data)
 		var t := data.get("targets", {}) as Dictionary
 		a["count"] = int(t.get("count", 1))
-		a["repeat"] = str(s["id"]) in ["magic_missile", "scorching_ray"]
+		a["repeat"] = str(s["id"]) in ["magic_missile", "scorching_ray"] or bool(data.get("repeat_targets", false))
 		a["concentration"] = bool((data.get("duration", {}) as Dictionary).get("concentration", false))
 		if c.creature is Character:
 			var mm: Array = []
@@ -390,6 +393,54 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 			a["choices"] = forms
 			a["choice_label"] = "Beast form"
 			a["opts"] = {"choice": ""}
+		for feature in (c.creature as Character).resource_casts(str(s["id"])):
+			var paid := a.duplicate(true)
+			var cast_entry := e.spells.resource_cast_entry(c, data, str(feature["id"]))
+			paid["id"] = str(a["id"]) + ":" + str(feature["id"])
+			paid["label"] = str(feature["name"]) + " · " + str(a["label"])
+			paid["cost"] = "action"
+			paid["reason"] = str(cast_entry["reason"])
+			paid["legal"] = bool(cast_entry["legal"])
+			paid["opts"] = (a.get("opts", {}) as Dictionary).duplicate()
+			(paid["opts"] as Dictionary)["resource_cast"] = str(feature["id"])
+			paid.erase("metamagic")
+			out.append(paid)
+		for feature in e.triggered_features.spell_sequences(c, data, s):
+			var sequence := a.duplicate(true)
+			sequence["id"] = str(a["id"]) + ":" + str(feature["id"])
+			sequence["label"] = str(feature["name"]) + " · " + str(a["label"])
+			sequence["cost"] = "bonus"
+			sequence["reason"] = e.triggered_features.sequence_why(c, data, s, feature)
+			sequence["legal"] = str(sequence["reason"]) == ""
+			sequence["opts"] = (a.get("opts", {}) as Dictionary).duplicate()
+			(sequence["opts"] as Dictionary)["spell_sequence"] = str(feature["id"])
+			out.append(sequence)
+		for feature in e.triggered_features.casting_forms(c, data):
+			var form := a.duplicate(true)
+			form["id"] = str(a["id"]) + ":" + str(feature["id"])
+			form["label"] = str(a["label"]) + " · " + str(feature["name"])
+			form["opts"] = (a.get("opts", {}) as Dictionary).duplicate()
+			(form["opts"] as Dictionary)["cast_form"] = str(feature["id"])
+			out.append(form)
+		for feature in e.triggered_features.casting_boosts(c, data):
+			var boosted := a.duplicate(true)
+			boosted["id"] = str(a["id"]) + ":" + str(feature["id"])
+			boosted["label"] = str(a["label"]) + " · " + str(feature["name"])
+			boosted["opts"] = (a.get("opts", {}) as Dictionary).duplicate()
+			(boosted["opts"] as Dictionary)["slot_boost"] = str(feature["id"])
+			if int((data.get("upcast", {}) as Dictionary).get("targets", 0)) > 0:
+				boosted["targeting"] = "multi"
+			out.append(boosted)
+		if e.spells.can_splinter(c, data):
+			var split := a.duplicate(true)
+			split["id"] = str(a["id"]) + ":splintered"
+			split["label"] = str(a["label"]) + " · two spirits"
+			split["targeting"] = "points"
+			split["count"] = 2
+			var split_opts := (split.get("opts", {}) as Dictionary).duplicate()
+			split_opts["splintered"] = true
+			split["opts"] = split_opts
+			out.append(split)
 		if str(s["id"]) == "command":
 			# One slot per word the engine knows (Approach and Drop: deviations.md).
 			for word: String in SpellCaster.COMMAND_WORDS:
@@ -424,6 +475,8 @@ static func spell_targeting(data: Dictionary) -> String:
 	if str(data.get("id", "")) == "spare_the_dying":
 		return "dying"
 	var tags := data.get("tags", []) as Array
+	if bool((data.get("object", {}) as Dictionary).get("pick_attack_targets", false)):
+		return "multi"
 	if data.has("object") or str(data.get("id", "")) in ["misty_step", "dimension_door"] or str(data.get("id", "")) in SpellCaster.SUMMON_SPELLS:
 		return "place"
 	if str(data.get("id", "")) == "revivify":
@@ -829,7 +882,7 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 			return e.ready_spell(c, str(action["spell_id"]), slot)
 		"feat":
 			var fchoice := str((action.get("opts", {}) as Dictionary).get("choice", opts.get("choice", "")))
-			return e.feature_actions.perform(c, id.substr(5), t, point if point != Vector2.INF else (Vector2(dir.x, dir.y) + e.center_of(c) if dir != Vector2.ZERO else Vector2.INF), fchoice)
+			return e.feature_actions.perform(c, id.substr(5), t, point if point != Vector2.INF else (Vector2(dir.x, dir.y) + e.center_of(c) if dir != Vector2.ZERO else Vector2.INF), fchoice, targets)
 		"rider":
 			return e.features.toggle_rider(c, id.substr(6))
 		"sustain":
@@ -961,6 +1014,8 @@ func target_why(c: Combatant, action: Dictionary, t: Combatant) -> String:
 			if e.grid.distance_ft(obj.cell, 1, t.cell, t.size_cells) > rng:
 				return "Too far from the %s (%d ft)" % [obj.name, rng]
 			return ""
+	if str(action["kind"]) == "spell" and bool(Compendium.shared().spell_data(str(action["spell_id"])).get("requires_sight", false)) and not e.can_see(c, t):
+		return "You must see the target"
 	if str(action["kind"]) == "spell" and c.creature.has_condition(&"charmed"):
 		var charm := e.charm_blocks(c, t)
 		if charm != "" and c.hostile_to(t):
@@ -1111,12 +1166,22 @@ static func _avg(expr: String) -> float:
 
 ## Levels a hotbar spell entry can be cast at: spell slots, or an item's charge levels (a Wand of Fireballs).
 func level_choices(c: Combatant, action: Dictionary) -> Array[int]:
+	if str((action.get("opts", {}) as Dictionary).get("resource_cast", "")) != "":
+		return [int(action["slot"])]
 	if str(action.get("kind", "")) == "item_spell":
 		var out: Array[int] = []
 		for l: Variant in action.get("levels", []):
 			out.append(int(l))
 		return out
-	return slot_choices(c, str(action.get("spell_id", "")))
+	var levels := slot_choices(c, str(action.get("spell_id", "")))
+	var opts := action.get("opts", {}) as Dictionary
+	var sequence_id := str(opts.get("spell_sequence", ""))
+	if sequence_id != "":
+		for feature in e.triggered_features.recipes(c, "spell_sequence"):
+			if str(feature["id"]) == sequence_id:
+				var cap := int((feature["spell_sequence"] as Dictionary)["max_level"]) - (1 if "twinned" in (opts.get("metamagic", []) as Array) else 0)
+				levels = levels.filter(func(level: int) -> bool: return level <= cap)
+	return levels
 
 
 ## Character.spell_preview for a hotbar entry, with an item's own DC and attack bonus in place of the caster's.

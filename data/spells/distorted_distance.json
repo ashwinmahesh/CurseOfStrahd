@@ -32,8 +32,9 @@
   "summary": "Reference-only: Create a 60-foot-radius Sphere. For each visible creature inside, choose a speed boost of 20 feet until its next turn ends, or an Intelligence save against 2d10 Psychic and Difficult Terrain within the Sphere until its turn ends. Repeat this choice on entry or end of turn, at most once per turn per creature.",
   "text": "Reference-only: Create a 60-foot-radius Sphere. For each visible creature inside, choose a speed boost of 20 feet until its next turn ends, or an Intelligence save against 2d10 Psychic and Difficult Terrain within the Sphere until its turn ends. Repeat this choice on entry or end of turn, at most once per turn per creature.",
   "tags": [
-    "utility"
+    "damage"
   ],
   "icon": "magic_missile",
+  "automation": "reference",
   "playable": false
 }

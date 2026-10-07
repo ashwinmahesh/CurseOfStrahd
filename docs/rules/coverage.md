@@ -242,7 +242,49 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Shadow Sorcery: Eyes of the Dark, Spirits of Ill Omen, Shadow Walk, Umbral Form | ravenloft_features.gd, encounter.gd can_see, spell_caster.gd cast | implemented; tested: Eyes of the Dark, Spirits of Ill Omen | test_ravenloft |
 | Undead Patron: Form of Dread, Grave Touched, Necrotic Husk (Unholy Resuscitation), Superior Dread | ravenloft_features.gd | implemented; tested: Form of Dread, Frightful Avatar, Unholy Resuscitation | test_ravenloft |
 
+## Faerûn and Arcana Unleashed gameplay audit
+
+**In progress.** FRHoF, FRAiF and AU contribute 52 spells, 16 subclasses, 63 feats, 81 item entries and 28 backgrounds. The source-checked catalog is described in [the content pack](../content/faerun_arcana.md). This table records tested portions, not a claim that a whole subclass, book, or spell is finished. Implementation is delivered in smaller MRs. The first batch contains the shared engine work and tested mechanics below; remaining mechanics stay in the audit backlog. All 240 catalog entries retain the readiness gate from main (`playable: false`); enabling an entry requires a separate complete-entry audit.
+
+| Mechanic | Implementation and evidence | Remaining audit |
+|---|---|---|
+| Spellfire Flare; Wardaway; Uncertain Footing; Disruptive Tune | Shared attacks, automatic saves, turn-delayed action restrictions, movement restrictions and concentration disruption; `test_faerun_recipes` | All alternate movement actions and class provenance |
+| Aura of Evasion; Elminster’s Elusion | Shared save damage reduction, magic/spell save keys, incapacitation exceptions; `test_faerun_recipes` | All bespoke save callers |
+| Cacophonic Shield; Lightning Ring; Festering Blast; Vision of Elapsing Eons | Zones, repeated damage/conditions, repeat saves, wake actions and Exhaustion; `test_faerun_recipes` | Explicit chosen exemptions in area UI |
+| Blade of Disaster | Controllable field weapon, two attacks, critical threshold, range from blade, saved casting numbers and cleanup; `test_faerun_recipes` | Visual target-selection verification |
+| Enervation; Death Armor; Syluné’s Viper | Actual-damage draining, concentration tether, melee retaliation, dependent conditions, held spell actions and THP cleanup; `test_faerun_recipes` | Broader shared drain provenance |
+| Wail of the Banshee; Waves of Exhaustion; Catnap; Mordenkainen’s Lucubration | Hearing/HP thresholds, temporary Exhaustion contribution, uninterrupted-rest reward, spent-slot recovery; `test_faerun_recipes` | Pact slots and field-casting access tested |
+| Summon Dinosaur; Summon Plant | Form choices, scaled stat blocks and controlled actions, conditional attacks and riders; `test_faerun_recipes` | Placement footprint/visibility and target-directed grid approach tested; arbitrary scenery objects still pending |
+| Detonate | Target-centered secondary burst, post-damage drop-to-zero check, shared damage roll for creatures and objects, primary exclusion; `test_faerun_recipes` | Arbitrary scenery without object HP |
+| Power Word Pain | Shared casting-save gate, time versus slot costs, speed cap and save exception; `test_faerun_recipes` | Source checks complete for these effects |
+| Moment of Prescience; Reweave Fate | Shared D20 replacement and reroll responses, attack defense, Advantage cancellation, THP and slot costs; `test_faerun_recipes` | Player-accessible Ask/Automatic/Off preferences; synchronous checks/saves only spend on Auto; manual continuation pending |
+| Conjurer | Benign/Distant Transposition, Durable Summons, Focused Conjuration, Splintered Summons; `test_faerun_features`; off-screen targeting captures | Creation spells outside the shared summon path, field-casting companions |
+| Feature activations | Shared validated targeting, costs, resources and slot restoration: Arcane Infiltrator’s Dodge, Winter Walker’s Fortifying Soul, Knowledge’s Divine Foreknowledge; `test_faerun_features` | Remaining active features |
+| Save responses | Arcane Omens, Spell Resistant, Transmuted Anatomy, Boon of Fortune’s Favor; `test_faerun_features` | Reaction-cost responses require Auto, configurable in the class abilities tab; manual synchronous and non-allied beneficiary choices pending |
+| Passive features | Adept slot-threshold preparation, Conjuration concentration bonus, Transmutation turn Speed, Vestige domain spells, Bountiful Health, Desperate Resilience, Iron Mind and Focused Conjuration; `test_faerun_features` | Remaining school benefits, subclass mechanics and concentration callers |
+| Knowledge Domain Mind Magic | Shared `resource_cast` recipe, base-level casting with Channel Divinity, prepared-domain filtering, class provenance and exploration controls; `test_resource_casting` | Existing exploration-only spell handlers still need their own effect audit; Unfettered Mind remains pending |
+| Warrior of the Mystic Arts | Existing third-caster progression, Wisdom casting, cantrip substitution, Focus/slot exchange windows, Focused Strike and Flurry spell substitution; `test_mystic_arts` | Rest and combat recovery UI captured; caster-specific initial/repeated saves and Pact slot recovery tested. Multiclass duplicate-spell sources use the eligible casting class; 13 focused tests cover these paths and the level-2 cap on the actual Flurry casting; full CI checkpoint recorded below |
+| Bladesinger | Bladesong activation, bonuses, weapon ability/grip, equipment/incapacitation ending, dismissal, Arcane Recovery restoration, cantrip substitution and Song of Victory; `test_faerun_features` | Weapon focus and Song of Defense |
+| Transmuter | Empowered Transmutation distinguishes effective spell level from actual slot costs and rejects attacks/saves; `test_faerun_features` | Stone, enhanced forms and Master Transmuter |
+| Enchanter | Chosen-skill Intelligence bonus; Hypnotic Presence with save, sensory/range tether, immunity and damage ending; Split Enchantment effective upcasting; `test_faerun_features` | Instinctive Charm, Alter Memories and all sensory-change callers |
+| Winter Walker | Frigid Explorer, Hunter’s Rime, Fortifying Soul, Chilling Retribution and Frozen Haunt; `test_faerun_features` | All Ranger cold spell paths, synchronous spell-attack response choice; Frozen Haunt uses shared casting-form/pulse recipes; targeting, movement and alternate recipe values have focused tests |
+| Initial six spell recipes | Laeral’s Silver Lance, Inflict Doubt, Fractured Awareness, Entrancing Mirrors, Invulnerability, Iron Body | Source-to-engine audit including circle variants |
+| Remaining spells and abilities | Reference entries and text features remain explicit | Full implementation, edge cases and end-to-end tests still required |
+| Items and backgrounds | Initial catalog/data tests | Full property, companion, item evolution and prerequisite audit still required |
+
+Current focused tests are `test_faerun_recipes.gd`, `test_faerun_features.gd`, `test_mystic_arts.gd`, and `test_resource_casting.gd`, with regression suites for the shared engines. The Mystic Arts and Mind Magic controls have off-screen captures. Full CI must be rerun after the final changes. No owner sign-off or complete-book coverage is claimed.
+
+Verification checkpoint (2026-10-06): `make ci` passed with **844/844 tests**, 1,919 data files validated, 74 standalone engine scripts checked, and no error or warning markers. Focused Mystic Arts/resource-casting tests passed **19/19**; exploration/party-screen regression passed **34/34**. Off-screen captures verify Mystic Focus rest/recovery and Mind Magic exploration/combat controls. This verifies the current implementation, not the remaining book rules.
+
+Checkpoint counts (2026-10-06): 30 of 52 new spells have recipes or handlers; 22 are explicitly reference-only. Of 126 top-level subclass feature entries, 50 remain `text`; of 106 feat benefits, 64 remain `text`. These are entry counts, not a percentage of rules completion: data-backed entries can still have audit exceptions listed above, and item/background audits remain open.
+
 ## Not started (later phases)
 
 Influence and NPC attitudes as a rule (attitudes exist in the story; haggling is written into dialogue for now);
 the new classes' level 8-11 features in combat (listed under Classes; the spell and ability thread).
+
+
+Review regression coverage: `test_review_regressions.gd` checks incorporeal flight over ground Difficult
+Terrain, Freedom of Movement and numeric slowing, angled monster charges and broken approaches, plus
+safe default reaction policies and the player-accessible opt-in controls. Existing free responses retain
+their prior policy. Non-spell repeated saves (including monster charm) are covered through damage and turn-end triggers, with typed empty save keys. These changes do not enable any gated book entries.

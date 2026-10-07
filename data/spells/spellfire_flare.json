@@ -4,7 +4,7 @@
   "source": {
     "book": "FRHoF",
     "checked_against": "FRHoF",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 1,
   "school": "evocation",
@@ -26,11 +26,28 @@
   "duration": {
     "kind": "instantaneous"
   },
-  "summary": "Reference-only: Ranged spell attack that ignores Half and Three-Quarters Cover; hit deals 2d10 Radiant. Each slot above 1 adds one separately targeted blast with its own attack roll.",
-  "text": "Reference-only: Ranged spell attack that ignores Half and Three-Quarters Cover; hit deals 2d10 Radiant. Each slot above 1 adds one separately targeted blast with its own attack roll.",
+  "summary": "Ranged spell attack that ignores Half and Three-Quarters Cover; hit deals 2d10 Radiant. Each slot above 1 adds one separately targeted blast with its own attack roll.",
+  "text": "Ranged spell attack that ignores Half and Three-Quarters Cover; hit deals 2d10 Radiant. Each slot above 1 adds one separately targeted blast with its own attack roll.",
   "tags": [
-    "utility"
+    "damage"
   ],
   "icon": "magic_missile",
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "attack": "ranged",
+  "ignore_partial_cover": true,
+  "damage": [
+    {
+      "dice": "2d10",
+      "type": "radiant",
+      "per": "ray"
+    }
+  ],
+  "upcast": {
+    "targets": 1
+  },
+  "repeat_targets": true,
   "playable": false
 }

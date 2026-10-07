@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 5,
   "school": "necromancy",
@@ -29,11 +29,37 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: While active, Magic actions emit a 60-foot Cone. Creatures save Constitution or gain 1 Exhaustion, capped at 4 from this spell. All Exhaustion gained from this spell ends with it.",
-  "text": "Reference-only: While active, Magic actions emit a 60-foot Cone. Creatures save Constitution or gain 1 Exhaustion, capped at 4 from this spell. All Exhaustion gained from this spell ends with it.",
+  "summary": "While active, Magic actions emit a 60-foot Cone. Creatures save Constitution or gain 1 Exhaustion, never increasing the target’s total Exhaustion above 4. All Exhaustion gained from this spell ends with it.",
+  "text": "While active, Magic actions emit a 60-foot Cone. Creatures save Constitution or gain 1 Exhaustion, never increasing the target’s total Exhaustion above 4. All Exhaustion gained from this spell ends with it.",
   "tags": [
-    "utility"
+    "debuff"
   ],
   "icon": "magic_missile",
+  "targets": {
+    "kind": "self"
+  },
+  "sustain": [
+    {
+      "do": "area",
+      "cost": "magic",
+      "not_this_turn": false,
+      "area": {
+        "shape": "cone",
+        "size": 60
+      },
+      "save": "con",
+      "effects": [
+        {
+          "effect": "temporary_exhaustion",
+          "params": {
+            "maximum": 4
+          }
+        }
+      ],
+      "label": "Waves of Exhaustion",
+      "sub": "60-foot Cone · Constitution",
+      "help": "Magic action: each failed save adds 1 Exhaustion, up to a total level of 4. These levels end with the spell."
+    }
+  ],
   "playable": false
 }

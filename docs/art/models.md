@@ -14,7 +14,7 @@ better. Lets start rolling out this change everywhere") and then asked for every
 NPC, or a character shold be a 3D assett" (2026-10-07). The rollout went in batches, each merged to main: (1) common
 furniture and containers with 3D on everywhere, (2) doors, gates, windows and wall trim, (3) town and outdoor pieces,
 (5) nature, (6) every remaining object, figure and wall picture, (7) landmarks and buildings, (8) the last few.
-Castle Ravenloft's own pieces follow once its set dressing is settled.
+(9) Castle Ravenloft's own pieces, once World assets had chosen them.
 
 What stays painted is flat by nature: scorch marks, bloodstains, drag and claw marks, rune and offering circles,
 puddles, a plaster seam, the flames of fires and candles. The fog bank is the world look's mist.
@@ -60,6 +60,7 @@ without a model is drawn as before.
 | wall fittings (trophies, chains, shelves of jars, winches, robes on pegs ...) | the same | sculpted from their art against the wall |
 | about 60 more hand-modelled objects (braziers, altars, shrines, cabinets, the canopy bed, harpsichord, organ, tubs, the wine press, stoves, marble hearths, the manor entrance, painted doors, windows, rugs, straw ...) | the same | as their 2D pieces were mounted |
 | cottage, tent, vardo, barn_collapsed, windmill, bell_tower, tower_vr, hut_lysaga, standing_stones, gallows, barrow, gulthias_tree, ribbon_tree ... | the same | building-sized: they keep their size and clear the trees; a piece standing in for a whole house is a 3D building over its ground; tall ones fade |
+| Castle Ravenloft: throne, black_carriage, bone_table, iron_maiden, reliquary_sealed, coffin_plinth, heart_of_sorrow, lift_cage, cauldron, stone_font, glass_vessels, bat_perch, gold_heap, gold_spill, skull_chandelier, great_doors (a door leaf; spans the keep's two-square doorway), drawbridge, roof_hatch (a floor exit); gargoyle, black_horse, saint_defaced, bone_throne, bone_chair, statue_young_strahd sculpted; the portraits, dragon_skull, stone_faces, names_wall, bronze_plaque, banner_regiment, key_board, wine_rack_bricked in 3D mounts | the same | as their 2D pieces were mounted; cobwebs and blood pools stay painted |
 
 ## How a piece finds its place (`world/look/model_piece.gd`, `ModelPiece`)
 
@@ -73,6 +74,10 @@ panelling.
   centred on its square.
 - **Wall pieces:** on the face the 2D piece would hang on, looking into the room. A piece modelled round its middle
   (a door leaf some places hang as a picture) stands just in front of the face.
+- **No overlaps** (owner rule): a deep wall piece (an oven, a winch) over the board's furniture in front of it is
+  flattened to 0.2 deep; a small one (a crest) over furniture standing against the same wall lies flat on the wall;
+  a wall piece with no wall beside it takes its square like a standing prop; building-sized pieces shrink only as far
+  as they must to keep clear of the location's other things and of each other (`ModelPiece.big_fit`).
 - **Stairs:** a stairwell down opens its square's floor while it shows.
 - **Panelling:** one module per open face; a one-square gap in a wall (a doorway) is left to the door frame. The
   modules sit under one holder on the wall square, so a prop that takes the square, or a hidden area, hides them.
@@ -122,7 +127,6 @@ contact, stairs and the cottage's size as it does the 2D ones. Captures:
 
 ## Not done yet
 
-- Castle Ravenloft's own pieces, once the world assets work there has chosen them.
 - Sculpted pieces are only as deep as a swelling of their outline: from the side they read as thick reliefs, not
   carved figures.
 - Long runs of pews or tables are one model per square, so a long table shows its seams.

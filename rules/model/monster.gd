@@ -135,13 +135,14 @@ func attack_profile(action_id: String) -> WeaponProfile:
 
 ## Extra damage dice an action deals beyond its first damage entry (Ghoul Bite's Necrotic), for
 ## AttackResolver's extra_dice option.
-func extra_damage_dice(action_id: String) -> Array[Dictionary]:
+func extra_damage_dice(action_id: String, target: Creature = null) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var dmg := _damage_entries(action(action_id))
 	for i in range(1, dmg.size()):
 		var d := dmg[i] as Dictionary
 		if d.has("when") and not d.has("if"):
-			continue
+			if not d["when"] is Dictionary or target == null or not target.has_condition(StringName(str((d["when"] as Dictionary).get("target_condition", "")))):
+				continue
 		out.append({"dice": str(d["dice"]), "type": str(d["type"]), "label": str(d["type"]).capitalize()})
 	return out
 

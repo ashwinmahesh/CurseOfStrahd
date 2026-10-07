@@ -185,7 +185,15 @@
             "intimidation",
             "persuasion"
           ]
-        }
+        },
+        "modifiers": [
+          {
+            "stat": "check",
+            "skill": "@choice",
+            "value": "mod:int",
+            "min": 1
+          }
+        ]
       }
     },
     {
@@ -193,9 +201,9 @@
       "feature": {
         "id": "enchanting_bonus",
         "name": "Enchanting Conversationalist: Bonus",
-        "summary": "Checks using the selected skill add your Intelligence modifier, minimum +1. This additional bonus is reference-only.",
-        "text": "Checks using the selected skill add your Intelligence modifier, minimum +1. This additional bonus is reference-only.",
-        "implemented": "text"
+        "summary": "Checks using the selected skill add your Intelligence modifier, minimum +1.",
+        "text": "Checks using the selected skill add your Intelligence modifier, minimum +1.",
+        "implemented": "data"
       }
     },
     {
@@ -205,7 +213,69 @@
         "name": "Hypnotic Presence",
         "summary": "Magic action: one visible creature within 10 feet that sees or hears you makes a Wisdom save against your spell DC. Failure Charms and Incapacitates it with Speed 0 for 1 minute, ending if it takes damage, leaves 10 feet, or can neither see nor hear you. Uses equal Intelligence modifier (minimum 1) per Long Rest.",
         "text": "Magic action: one visible creature within 10 feet that sees or hears you makes a Wisdom save against your spell DC. Failure Charms and Incapacitates it with Speed 0 for 1 minute, ending if it takes damage, leaves 10 feet, or can neither see nor hear you. Uses equal Intelligence modifier (minimum 1) per Long Rest.",
-        "implemented": "text"
+        "implemented": "data",
+        "resource": {
+          "id": "hypnotic_presence",
+          "name": "Hypnotic Presence",
+          "max": "mod:int",
+          "min": 1,
+          "recharge": "long"
+        },
+        "activation": {
+          "cost": "magic",
+          "targeting": "creature",
+          "range": 10,
+          "target_perceives_caster": true,
+          "resource": "hypnotic_presence",
+          "save": "wis",
+          "duration": {
+            "kind": "minutes",
+            "amount": 1
+          },
+          "effects": [
+            {
+              "effect": "condition",
+              "params": {
+                "primary_condition": "charmed",
+                "ends_on_damage": true,
+                "tether": {
+                  "range": 10,
+                  "perceive_caster": true
+                },
+                "condition": "charmed"
+              }
+            },
+            {
+              "effect": "condition",
+              "params": {
+                "primary_condition": "charmed",
+                "ends_on_damage": true,
+                "tether": {
+                  "range": 10,
+                  "perceive_caster": true
+                },
+                "condition": "incapacitated"
+              }
+            },
+            {
+              "effect": "modifiers",
+              "params": {
+                "primary_condition": "charmed",
+                "ends_on_damage": true,
+                "tether": {
+                  "range": 10,
+                  "perceive_caster": true
+                },
+                "modifiers": [
+                  {
+                    "stat": "speed_set",
+                    "value": 0
+                  }
+                ]
+              }
+            }
+          ]
+        }
       }
     },
     {
@@ -215,7 +285,18 @@
         "name": "Split Enchantment",
         "summary": "When casting an Enchantment spell with a slot that can add a target by upcasting, increase its effective level by 1. Uses equal Intelligence modifier per Long Rest.",
         "text": "When casting an Enchantment spell with a slot that can add a target by upcasting, increase its effective level by 1. Uses equal Intelligence modifier per Long Rest.",
-        "implemented": "text"
+        "implemented": "data",
+        "resource": {
+          "id": "split_enchantment",
+          "name": "Split Enchantment",
+          "max": "mod:int",
+          "recharge": "long"
+        },
+        "cast_level_boost": {
+          "adds_target": true,
+          "school": "enchantment",
+          "resource": "split_enchantment"
+        }
       }
     },
     {

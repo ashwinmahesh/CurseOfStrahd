@@ -146,9 +146,16 @@ func _owner() -> String:
 func on_turn_start(creature_id: String) -> bool:
 	if creature_id != _owner():
 		return false
+	data.erase("await_owner_start")
 	match ends:
 		Ends.START_OF_TURN:
 			return true
+		Ends.MINUTES:
+			data["elapsed_rounds"] = int(data.get("elapsed_rounds", 0)) + 1
+			if int(data["elapsed_rounds"]) >= ROUNDS_PER_MINUTE:
+				minutes_left -= 1
+				data["elapsed_rounds"] = 0
+			return minutes_left <= 0
 		Ends.ROUNDS:
 			rounds_left -= 1
 			return rounds_left <= 0

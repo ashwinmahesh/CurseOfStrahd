@@ -176,7 +176,29 @@
         "name": "Benign Transposition",
         "summary": "Bonus Action: teleport to an empty visible space within 30 feet, or exchange places with a willing Medium or smaller creature within range. Uses equal Intelligence modifier (minimum 1) per Long Rest.",
         "text": "Bonus Action: teleport to an empty visible space within 30 feet, or exchange places with a willing Medium or smaller creature within range. Uses equal Intelligence modifier (minimum 1) per Long Rest.",
-        "implemented": "text"
+        "implemented": "data",
+        "resource": {
+          "id": "benign_transposition",
+          "name": "Benign Transposition",
+          "max": "mod:int",
+          "recharge": "long",
+          "min": 1
+        },
+        "activation": {
+          "cost": "bonus",
+          "resource": "benign_transposition",
+          "do": "teleport",
+          "targeting": "point",
+          "range": 30,
+          "swap": true,
+          "upgrades": [
+            {
+              "at_level": 6,
+              "range": 60,
+              "restore_slot": 3
+            }
+          ]
+        }
       }
     },
     {
@@ -186,7 +208,7 @@
         "name": "Distant Transposition",
         "summary": "Benign Transposition reaches 60 feet. A level 3+ spell slot restores one use without an action.",
         "text": "Benign Transposition reaches 60 feet. A level 3+ spell slot restores one use without an action.",
-        "implemented": "text"
+        "implemented": "data"
       }
     },
     {
@@ -196,7 +218,23 @@
         "name": "Durable Summons",
         "summary": "A creature summoned or created by a Conjuration spell cast with a slot gains Temporary Hit Points equal to twice your Wizard level when it appears. While these remain, it resists every damage type except Force, Necrotic, Psychic, and Radiant.",
         "text": "A creature summoned or created by a Conjuration spell cast with a slot gains Temporary Hit Points equal to twice your Wizard level when it appears. While these remain, it resists every damage type except Force, Necrotic, Psychic, and Radiant.",
-        "implemented": "text"
+        "implemented": "data",
+        "summon_effect": {
+          "requires_slot": true,
+          "school": "conjuration",
+          "temp_hp": "2*class_level",
+          "resistance": [
+            "acid",
+            "bludgeoning",
+            "cold",
+            "fire",
+            "lightning",
+            "piercing",
+            "poison",
+            "slashing",
+            "thunder"
+          ]
+        }
       }
     },
     {
@@ -206,7 +244,13 @@
         "name": "Focused Conjuration",
         "summary": "Damage cannot interrupt your Concentration on Conjuration spells.",
         "text": "Damage cannot interrupt your Concentration on Conjuration spells.",
-        "implemented": "text"
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "concentration_damage_immunity",
+            "school": "conjuration"
+          }
+        ]
       }
     },
     {
@@ -216,7 +260,19 @@
         "name": "Splintered Summons",
         "summary": "When a slotted Conjuration spell summons a spirit with an included stat block, you may summon two of that kind in separate empty spaces, each at half current and maximum HP. Both disappear on losing Concentration. Once per Long Rest; spend a level 5+ slot freely to restore use.",
         "text": "When a slotted Conjuration spell summons a spirit with an included stat block, you may summon two of that kind in separate empty spaces, each at half current and maximum HP. Both disappear on losing Concentration. Once per Long Rest; spend a level 5+ slot freely to restore use.",
-        "implemented": "text"
+        "implemented": "engine",
+        "resource": {
+          "id": "splintered_summons",
+          "name": "Splintered Summons",
+          "max": 1,
+          "recharge": "long"
+        },
+        "activation": {
+          "cost": "free",
+          "resource": "splintered_summons",
+          "restore_only": true,
+          "restore_slot": 5
+        }
       }
     }
   ],

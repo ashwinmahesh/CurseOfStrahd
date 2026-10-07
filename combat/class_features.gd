@@ -575,6 +575,9 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 	var head := id.get_slice(":", 0)
 	var arg := id.get_slice(":", 1) if id.contains(":") else ""
 	var r := CombatResult.new()
+	var restriction := e.feature_actions.movement_restriction(c, id)
+	if restriction != "":
+		return CombatResult.fail(restriction)
 	match head:
 		"rage":
 			return _start_rage(c, arg)
@@ -1079,8 +1082,10 @@ func _start_rage(c: Combatant, animal: String) -> CombatResult:
 	e.events.append({"type": "condition", "id": c.id})
 	e.log.add("info", "%s flies into a Rage%s" % [c.name(), (" (%s)" % animal.capitalize()) if animal != "" else ""], c.id)
 	if animal == "eagle":
-		c.disengaged = true
-		c.movement_left += c.speed()
+		if e.can_disengage(c):
+			c.disengaged = true
+		if not c.creature.has_flag("cannot_dash"):
+			c.movement_left += c.speed()
 	if has(c, "instinctive_pounce"):
 		c.movement_left += c.speed() / 2
 	if has(c, "vitality_of_the_tree"):
@@ -1448,6 +1453,9 @@ func hit_dice(c: Combatant, target: Combatant, option: Dictionary, st: Dictionar
 	if has(c, "dread_ambusher") and _uses(c, "dreadful_strike", "Dreadful Strike", maxi(1, c.creature.ability_mod(&"wis")), "long") > 0 and _once(c, "dreadful_strike"):
 		(_ch(c)).spend_resource("dreadful_strike")
 		out.append({"dice": "2d8" if has(c, "stalkers_flurry") else "2d6", "type": "psychic", "label": "Dreadful Strike"})
+	# Winter Walker: Polar Strikes only on weapon attacks, once per target per turn.
+	if has(c, "frigid_explorer") and p.item_id != "unarmed_strike" and str(option.get("kind", "")) in ["weapon", "thrown"] and _once(c, "polar_strikes:%s" % target.id):
+		out.append({"dice": "1d6" if level_of(c, "ranger") >= 11 else "1d4", "type": "cold", "label": "Polar Strikes"})
 	# Fey Wanderer: Dreadful Strikes (once per turn per creature).
 	if has(c, "dreadful_strikes") and _once(c, "dreadful_strikes:%s" % target.id):
 		out.append({"dice": "1d6" if level_of(c, "ranger") >= 11 else "1d4", "type": "psychic", "label": "Dreadful Strikes"})
@@ -1541,6 +1549,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, st: Dictiona
 			target.creature.add_effect(half)
 			e.add_mark({"kind": "advantage_against", "target": target.id, "source": "Stunning Strike", "expires_owner": c.id, "expires_phase": "start", "consume": true})
 		e.events.append({"type": "condition", "id": target.id})
+		e.feature_recipes.on_feature_target(c, target, "stunning_strike")
 	# Open Hand Technique on Flurry of Blows hits.
 	if str(c.get_meta("flurry_turn", "")) == _turn_key() and alive and has(c, "open_hand_technique"):
 		var tech := ""
@@ -1909,6 +1918,7 @@ func turn_start(c: Combatant) -> void:
 		if ch.resources.has("focus_points"):
 			(ch.resources["focus_points"] as Dictionary)["used"] = 0
 		_heal(c, c, e.dice.roll_one(martial_die(c), "Uncanny Metabolism") + level_of(c, "monk"), "Uncanny Metabolism")
+		e.feature_recipes.offer_slot_recovery(c, "uncanny_metabolism")
 	# Guarded Mind (Psi Warrior 10): start the turn Charmed or Frightened, spend a Psionic Energy Die to end it.
 	if has(c, "guarded_mind") and (c.creature.has_condition(&"charmed") or c.creature.has_condition(&"frightened")) and ch.resource_left("psionic_energy") > 0:
 		ch.spend_resource("psionic_energy")

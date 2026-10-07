@@ -8,21 +8,60 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental. Reference-only: Concentration saves for Conjuration spells add the modifier of the ability increased by this feat.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental. Concentration saves for Conjuration spells add the modifier of the ability increased by this feat.",
   "benefits": [
     {
       "id": "conjuration_adept_spells",
       "name": "Additional Spells",
-      "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental.",
-      "text": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental.",
-      "implemented": "text"
+      "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental.",
+      "text": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "entangle",
+          "at_slot_level": 1,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "misty_step",
+          "at_slot_level": 2,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "conjure_animals",
+          "at_slot_level": 3,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "dimension_door",
+          "at_slot_level": 4,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "conjure_elemental",
+          "at_slot_level": 5,
+          "prepared_for_classes": true
+        }
+      ]
     },
     {
       "id": "conjuration_adept_benefit",
       "name": "School Benefit",
-      "summary": "Reference-only: Concentration saves for Conjuration spells add the modifier of the ability increased by this feat.",
-      "text": "Reference-only: Concentration saves for Conjuration spells add the modifier of the ability increased by this feat.",
-      "implemented": "text"
+      "summary": "Concentration saves for Conjuration spells add the modifier of the ability increased by this feat.",
+      "text": "Concentration saves for Conjuration spells add the modifier of the ability increased by this feat.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "concentration_save_bonus",
+          "school": "conjuration",
+          "ability": "@increased"
+        }
+      ]
     }
   ],
   "prerequisites": {

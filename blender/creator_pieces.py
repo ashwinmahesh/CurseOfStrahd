@@ -364,6 +364,14 @@ def head_piece(a):
         meta.append({"cx": round((hd["cx"] - x0) * s, 2), "top": round((hd["top"] - top) * s, 2),
                      "skull_w": round(hd["skull_w"] * s, 2), "cut": round((hd["cut"] - top) * s, 2)})
         crops.append(crop)
+    # One skull, five views: a view whose skull reads far narrower than the others measured a horn or an ear, and
+    # would blow the piece up when it's fitted to a body; it takes the other views' width.
+    widths = sorted(m["skull_w"] for m in meta)
+    med = widths[len(widths) // 2]
+    for name, m in zip(rw.VIEWS5, meta):
+        if m["skull_w"] < 0.6 * med:
+            print(f"head {a.id}: {name} skull {m['skull_w']} is narrow beside the others ({med}); using {med}")
+            m["skull_w"] = med
     pack(crops, meta, OUT / "heads" / f"{a.id}.png", OUT / "heads" / f"{a.id}.json",
          {"source": str(src.relative_to(cutout.ROOT))})
     print(f"head {a.id}: " + ", ".join(f"{n} {c.shape[1]}x{c.shape[0]}" for n, c in zip(rw.VIEWS5, crops)))

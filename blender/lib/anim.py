@@ -112,6 +112,11 @@ def split_strip(arr, count=3):
             continue
         x0 = min(r[1] for r in c)
         x1 = max(r[2] for r in c)
+        y0 = min(r[0] for r in c)
+        y1 = max(r[0] for r in c) + 1
+        # A panel border Gemini sometimes rules around a frame: a big, nearly empty outline. Not a figure.
+        if (y1 - y0) > 0.3 * arr.shape[0] and area < 0.05 * (y1 - y0) * (x1 - x0):
+            continue
         info.append((area, x0, x1, c))
     info.sort(key=lambda t: t[0], reverse=True)
     problems = []
@@ -155,9 +160,40 @@ def split_strip(arr, count=3):
     return [c for _, c in sorted(crops, key=lambda t: t[0])], problems
 
 
-def load_strip(path, expect=3):
+def key_out_magenta(arr):
+    """Clears a flat magenta silhouette drawn as a stand-in (the horse under a rider, tools/art/anim_keyframes.py ride):
+    the strip's most common strongly magenta colour, everything close to it, and the blended fringe around it."""
+    rgb = arr[..., :3]
+    mx, mn = rgb.max(axis=2), rgb.min(axis=2)
+    sat = (mx - mn) / np.maximum(mx, 1e-6)
+    r, g, b = rgb[..., 0], rgb[..., 1], rgb[..., 2]
+    magenta = (sat > 0.45) & (r > g + 0.2) & (b > g + 0.15) & (arr[..., 3] > 0.5)
+    if magenta.sum() < 500:
+        return arr
+    q = np.round(rgb[magenta] * 15).astype(int)
+    keys, counts = np.unique(q[:, 0] * 256 + q[:, 1] * 16 + q[:, 2], return_counts=True)
+    top = keys[np.argmax(counts)]
+    centre = np.array([(top // 256) / 15.0, ((top // 16) % 16) / 15.0, (top % 16) / 15.0])
+    dist = np.linalg.norm(rgb - centre, axis=2)
+    gone = magenta & (dist < 0.3)
+    # The blended fringe: pixels next to the cleared area that still lean magenta.
+    for _ in range(2):
+        near = np.zeros_like(gone)
+        near[1:] |= gone[:-1]
+        near[:-1] |= gone[1:]
+        near[:, 1:] |= gone[:, :-1]
+        near[:, :-1] |= gone[:, 1:]
+        gone |= near & (r > g + 0.08) & (b > g + 0.05) & (dist < 0.55)
+    out = arr.copy()
+    out[gone] = 0.0
+    return out
+
+
+def load_strip(path, expect=3, key_magenta=False):
     """Returns (keyframes or None, problems) for one strip image."""
     raw = cutout.load_rgba(path)
+    if key_magenta:
+        raw = key_out_magenta(cutout.remove_background(raw))
     arr = drop_ground_lines(clean_source(raw))
     problems = []
     alpha = arr[..., 3] > 0.5

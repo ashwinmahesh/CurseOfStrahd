@@ -111,3 +111,85 @@ func test_walk_cycle_paced_to_the_step_time() -> void:
 	assert_true(s.walk_speed < fast, "sneaking walks slower")
 	assert_between(fast, 0.5, 2.5)
 	s.free()
+
+
+## Every creature that can turn up in a fight has a sprite with a walk and an attack: each stat block in data/monsters,
+## every creature the combat code makes on the spot (summons, familiars, severed limbs), each under the art id the
+## combat token looks up (CombatToken.ART_ALIASES). A block that is also a person in data/npcs (Rahadin) wears that
+## person's sprite, which the people's art pass draws and tools/art/check_npc_art.py tracks, so it isn't counted here.
+func test_every_fighting_creature_has_a_sprite() -> void:
+	var people := {}
+	for f in DirAccess.get_files_at("res://data/npcs"):
+		if f.ends_with(".json"):
+			var n: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/npcs/" + f))
+			if n is Dictionary:
+				people[str((n as Dictionary).get("sprite", (n as Dictionary).get("id", "")))] = true
+	var ids: Array[String] = []
+	for f in DirAccess.get_files_at("res://data/monsters"):
+		if f.ends_with(".json"):
+			var d: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/monsters/" + f))
+			if d is Dictionary:
+				var id := str((d as Dictionary).get("art", (d as Dictionary).get("id", "")))
+				if not people.has(id):
+					ids.append(id)
+	ids.append_array(["severed_arm", "severed_head", "illusion", "bigbys_hand", "animated_object", "giant_insect",
+		"aberrant_spirit", "bestial_spirit", "celestial_spirit", "construct_spirit", "draconic_spirit", "elemental_spirit",
+		"fey_spirit", "fiendish_spirit", "undead_spirit", "otherworldly_steed", "primal_beast", "imp_familiar",
+		"pseudodragon_familiar", "quasit_familiar", "slaad_tadpole_familiar", "sphinx_familiar", "sprite_familiar",
+		"venomous_snake_familiar", "owl_familiar", "skeleton_familiar"])
+	var missing: Array[String] = []
+	for id in ids:
+		var aid := str(CombatToken.ART_ALIASES.get(id, id))
+		if not DirectionalSprite.has_attack(DirectionalSprite.frames_for(aid)):
+			missing.append(id)
+	assert_eq(missing, [] as Array[String], "creatures without a walk and attack sheet")
+
+
+## Animation set v2 (render_keys.py): the hero's merged frames have every pose, and the poses and one-shots play.
+func test_full_animation_set_poses_and_one_shots() -> void:
+	var frames := DirectionalSprite.frames_for("godrick_pendlebrook")
+	for base: String in ["walk", "idle", "attack", "hurt", "die", "down", "ride_idle", "ride_attack", "sneak_idle", "sneak_walk",
+			"cast"]:
+		for d in DirectionalSprite.DIRECTIONS:
+			assert_true(frames.get_frame_count(StringName(base + "_" + d)) >= 1, "godrick %s_%s" % [base, d])
+	assert_true(frames.get_frame_count(&"idle_s") >= 2, "idle breathes")
+	assert_false(frames.get_animation_loop(&"die_s"), "the fall plays once")
+	assert_true(frames.get_animation_loop(&"down_s"), "lying holds")
+	var s := DirectionalSprite.create(frames, 1.5)
+	assert_eq(s._loop_for(), "idle")
+	s.moving = true
+	assert_eq(s._loop_for(), "walk")
+	s.pose = "sneak"
+	assert_eq(s._loop_for(), "sneak_walk", "sneaking while moving")
+	s.moving = false
+	assert_eq(s._loop_for(), "sneak_idle")
+	s.pose = "ride"
+	assert_eq(s._loop_for(), "ride_idle")
+	assert_true(s.attack(), "attacks from the saddle")
+	assert_eq(str(s.animation), "ride_attack_s")
+	s.animation_finished.emit()
+	s.pose = ""
+	assert_true(s.hurt(), "flinches")
+	assert_true(s.has_struck(), "a flinch lands no blow")
+	s.animation_finished.emit()
+	assert_true(s.cast(), "casts")
+	assert_eq(str(s.animation), "cast_s")
+	s.frame = int((frames.get_meta("hit_frames") as Dictionary)["cast"])
+	assert_true(s.has_struck(), "the spell lands on its frame")
+	s.animation_finished.emit()
+	assert_true(s.die(), "falls")
+	assert_eq(s.pose, "down")
+	assert_false(s.hurt(), "no flinch while falling or lying")
+	s.animation_finished.emit()
+	assert_eq(s._loop_for(), "down", "lies there")
+	s.free()
+
+
+func test_sprites_without_the_full_set_keep_the_old_behaviour() -> void:
+	var s := DirectionalSprite.create(DirectionalSprite.frames_for("wolf"), 0.8)
+	assert_false(s.hurt(), "no flinch")
+	assert_false(s.die(), "no drawn fall")
+	assert_false(s.cast(), "no spell gesture")
+	s.pose = "sneak"
+	assert_eq(s._loop_for(), "idle", "a pose the sheet lacks falls back to standing")
+	s.free()

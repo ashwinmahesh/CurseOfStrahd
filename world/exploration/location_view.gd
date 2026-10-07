@@ -693,7 +693,17 @@ func step(dir: Vector2i) -> void:
 var _exit_check := 0.0
 
 
+## The party crouches while sneaking (CombatToken.sneaking; sprites with the fuller animation set show it).
+var _shown_sneaking := false
+
+
 func _process(delta: float) -> void:
+	if sneaking != _shown_sneaking:
+		_shown_sneaking = sneaking
+		for m: Combatant in members + guest_members:
+			if tokens.has(m.id):
+				(tokens[m.id] as CombatToken).sneaking = sneaking
+				(tokens[m.id] as CombatToken).refresh()
 	_exit_check -= delta
 	if _exit_check <= 0.0:
 		_exit_check = 0.25

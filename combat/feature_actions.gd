@@ -83,6 +83,7 @@ func list(c: Combatant) -> Array[Dictionary]:
 		return out
 	e.class_features.list(c, out, aw, bw)
 	e.ravenloft.list(c, out, aw, bw)
+	e.feature_recipes.list(c, out)
 	# Battle Master: Bonus Action maneuvers and Commander's Strike.
 	var die := f().superiority_die(c)
 	if die > 0:
@@ -204,9 +205,14 @@ func list(c: Combatant) -> Array[Dictionary]:
 	if f().has_feat(c, "poisoner") and e.item_count(c, "poisoners_kit") > 0 and not c.has_meta("poisoned_weapon"):
 		out.append(_entry("apply_poison", "Apply Poison", "next hit: 2d8 Poison", "bonus", _first(bw, _res_why(c, "poison_doses")), "none", "Bonus Action: coat a weapon; the next hit forces a Con save or 2d8 Poison and Poisoned."))
 	if c.bonus_attack != "" or (f().has_feat(c, "polearm_master") and c.took_attack_action) or (f().has_feat(c, "dual_wielder") and c.light_attack_weapon != ""):
+		var attack_rule := c.get_meta("bonus_attack_rule", {}) as Dictionary
+		if c.bonus_attack == "" or str(attack_rule.get("label", "")) != c.bonus_attack:
+			attack_rule = {}
 		for o in e.attack_options(c):
 			var p := o["profile"] as WeaponProfile
-			if not bool(o["melee"]):
+			if not bool(o["melee"]) and not bool(attack_rule.get("allow_ranged", false)):
+				continue
+			if bool(attack_rule.get("weapons_only", false)) and p.item_id == "unarmed_strike":
 				continue
 			var label := ""
 			if c.bonus_attack != "":
@@ -216,7 +222,7 @@ func list(c: Combatant) -> Array[Dictionary]:
 			if label == "":
 				continue
 			var pa := _entry("bonus_attack:%s:%s" % [label.to_snake_case(), o["id"]], "%s: %s" % [label, p.name], "Bonus Action attack", "bonus", bw, "enemy",
-				"A Bonus Action attack (%s)." % label, p.reach)
+				"A Bonus Action attack (%s)." % label, p.reach if bool(o["melee"]) else p.long_range)
 			out.append(pa)
 	if f().has_feat(c, "lucky") and not "lucky" in c.armed:
 		out.append(_entry("lucky", "Lucky", "%d Luck Points" % ch.resource_left("luck_points"), "free", _first(e._turn_check(c), _res_why(c, "luck_points")), "none", "Spend a Luck Point: Advantage on your next D20 Test."))
@@ -224,7 +230,22 @@ func list(c: Combatant) -> Array[Dictionary]:
 		out.append(_entry("escape_artist", "Escape Artist", "Disengage", "bonus", bw, "none", "Bonus Action: Disengage, and end the Grappled condition on yourself."))
 	if f().has_feat(c, "boon_of_recovery") and ch.resource_left("recover_vitality") > 0:
 		out.append(_entry("recover_vitality", "Recover Vitality", "%d d10 left" % ch.resource_left("recover_vitality"), "bonus", bw, "none", "Bonus Action: roll up to five d10s from the pool and regain that many Hit Points."))
+	for entry in out:
+		var restriction := movement_restriction(c, str(entry["id"]).trim_prefix("feat:"))
+		if str(entry.get("why", "")) == "" and restriction != "":
+			entry["why"] = restriction
 	return out
+
+
+## Features that explicitly take Dash/Disengage obey the same prohibitions as the basic action.
+## Movement that merely avoids Opportunity Attacks (Tactical Shift, Swoop) is not Disengage.
+func movement_restriction(c: Combatant, id: String) -> String:
+	var key := id.trim_prefix("cf:").get_slice(":", 0)
+	if key in ["lunging_attack", "adrenaline_rush", "eagle_dash", "step_of_the_wind", "step_of_the_wind_focus"] and c.creature.has_flag("cannot_dash"):
+		return "Cannot Dash"
+	if key in ["evasive_footwork", "escape_artist", "eagle_dash", "patient_defense", "patient_defense_focus", "step_of_the_wind_focus"] and not enc().can_disengage(c):
+		return "Cannot Disengage"
+	return ""
 
 
 # --- Using them ---------------------------------------------------------------------------------
@@ -294,7 +315,7 @@ func _perform_creature(c: Combatant, act_id: String, t: Combatant, cell: Vector2
 	return r
 
 
-func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: String = "") -> CombatResult:
+func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: String = "", targets: Array = []) -> CombatResult:
 	var e := enc()
 	var entry := {}
 	for x in list(c):
@@ -304,6 +325,8 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 		return CombatResult.fail("Not available")
 	if str(entry["why"]) != "":
 		return CombatResult.fail(str(entry["why"]))
+	if id.begins_with("reaction_policy:"):
+		return e.reactions.set_policy(c, id.get_slice(":", 1), id.get_slice(":", 2))
 	var ch := _ch(c)
 	var cell := Vector2i(floori(point.x), floori(point.y)) if point != Vector2.INF else Vector2i(-1, -1)
 	var r := CombatResult.new()
@@ -312,6 +335,16 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 	if t != null and rng > 0 and t != c and e.distance(c, t) > rng:
 		return CombatResult.fail("Out of range (%d ft)" % rng)
 	match head:
+		"sequence_attack":
+			return e.triggered_features.sequence_attack(c, t, id.trim_prefix("sequence_attack:"))
+		"slot_exchange":
+			if not ch.convert_slot_to_resource(id.get_slice(":", 1), int(id.get_slice(":", 2))):
+				return CombatResult.fail("That exchange is no longer available")
+			return r
+		"recipe":
+			return e.feature_recipes.perform(c, id.substr(7), targets if not targets.is_empty() else ([t] if t != null else []), 0, cell)
+		"recipe_restore":
+			return e.feature_recipes.perform(c, id.get_slice(":", 1), [], int(id.get_slice(":", 2)))
 		"free_move":
 			return e.free_move(c, cell)
 		"creature":
@@ -660,13 +693,14 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 		"bonus_attack":
 			var label := id.get_slice(":", 1)
 			var opt_id := id.substr(("bonus_attack:%s:" % label).length())
-			c.bonus_available = false
-			if c.bonus_attack != "":
-				c.bonus_attack = ""
 			var opt2 := e.option_by_id(c, opt_id)
 			var check := e.attack_legal(c, t, opt2)
 			if check != "":
 				return CombatResult.fail(check)
+			c.bonus_available = false
+			if c.bonus_attack != "":
+				c.bonus_attack = ""
+				c.remove_meta("bonus_attack_rule")
 			var o3 := opt2.duplicate()
 			if label == "pole_strike":
 				var pp := (opt2["profile"] as WeaponProfile).with_ability((opt2["profile"] as WeaponProfile).ability, c.creature)
@@ -852,12 +886,22 @@ func before_d20(cr: Creature, kind: D20Test.Kind, keys: Array[String], _target: 
 ## failed save, Psi-Bolstered Knack and Tactical Mind on failed checks. Player-controlled creatures follow their rule
 ## for each (default: use it), since a save can't pause the fight.
 func after_d20(cr: Creature, t: D20Test, keys: Array[String]) -> void:
+	_after_d20_features(cr, t, keys)
+	var e := enc()
+	if e != null:
+		var c := e.get_c(cr.id)
+		if c != null:
+			e.spells.after_failed_d20(c, t)
+
+
+func _after_d20_features(cr: Creature, t: D20Test, keys: Array[String]) -> void:
 	var e := enc()
 	if e == null:
 		return
 	var c := e.get_c(cr.id)
 	if c == null:
 		return
+	e.feature_recipes.after_d20(c, t, keys)
 	e.class_features.after_d20(c, t)
 	e.ravenloft.after_d20(c, t, keys)
 	e.items.after_d20(c, t, keys)
@@ -1007,4 +1051,15 @@ func adjust_incoming(source: Combatant, target: Combatant, parts: Array) -> void
 			var d4 := p4 as Dictionary
 			if bool(d4.get("spell", false)):
 				d4["amount"] = int(d4["amount"]) / 2
+	if source != null:
+		for m in source.creature.modifiers_for(&"ignore_resistance"):
+			for raw: Variant in parts:
+				var part := raw as Dictionary
+				if str(part["type"]) != m.text("value"):
+					continue
+				var cid := m.text("damage_class")
+				var weapon := bool(part.get("weapon", false)) and str(part.get("item", "")) != "unarmed_strike"
+				if cid == "" or weapon or str(part.get("spell_class", "")) == cid or str(part.get("feature_class", "")) == cid:
+					part["ignore_resistance"] = true
+					part["ignore_source"] = m.source_name
 	enc().ravenloft.adjust_incoming(source, target, parts)

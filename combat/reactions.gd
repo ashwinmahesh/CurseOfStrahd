@@ -38,18 +38,19 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 			continue
 		if decision == "auto":
 			(o["use"] as Callable).call()
-			if o.has("stop"):
+			if o.has("stop") and (not o.has("stop_if") or (o["stop_if"] as Callable).call()):
 				return (o["stop"] as Callable).call() as CombatResult
 			continue
 		var req := ReactionRequest.new(kind, reactor.id, str(o.get("trigger", "")))
 		req.title = str(o["title"])
 		req.text = str(o["text"])
 		req.cost = str(o.get("cost", "Reaction"))
+		req.spends_reaction = bool(o.get("spends_reaction", true))
 		var rest := chain.duplicate()
 		req.continuation = func(use: bool) -> CombatResult:
 			if use:
 				(o["use"] as Callable).call()
-				if o.has("stop"):
+				if o.has("stop") and (not o.has("stop_if") or (o["stop_if"] as Callable).call()):
 					return (o["stop"] as Callable).call() as CombatResult
 			return offer(rest, done, r)
 		e.pending = req
@@ -203,11 +204,23 @@ func after_hit_target(st: Dictionary, miss: Callable) -> Array:
 	var out: Array = []
 	e.class_features.after_hit_target(st, miss, out)
 	e.ravenloft.after_hit_target(st, miss, out)
+	for sid in e.spells.incoming_roll_responses(target):
+		var spell_id := sid
+		var name := str(Compendium.shared().spell_data(sid)["name"])
+		out.append({"kind": sid, "reactor": target, "trigger": c.id, "title": "Reaction: %s?" % name,
+			"text": "Replace the triggering attack's roll with 1.", "cost": "Reaction and a spell slot",
+			"still": func() -> bool: return t.success and e.spells.can_cast_reaction(target, spell_id),
+			"use": func() -> void:
+				e.spells.answer_incoming_roll(target, t, spell_id)
+				st["critical"] = t.critical,
+			"stop_if": func() -> bool: return not t.success,
+			"stop": miss})
 	if not critical and t.total < ac + 5 and e.spells.can_cast_reaction(target, "shield"):
 		out.append({"kind": "shield", "reactor": target, "trigger": c.id, "title": "Reaction: Shield?",
 			"text": "%s hits %s: %d vs AC %d. Shield gives +5 AC until the start of %s's next turn (AC %d), so this attack misses." % [c.name(), target.name(), t.total, ac, target.name(), ac + 5],
 			"cost": "Reaction and a level 1 spell slot",
-			"use": func() -> void: e.spells.cast_shield(target),
+			"use": func() -> void: st["shield_cast"] = e.spells.cast_shield(target),
+			"stop_if": func() -> bool: return bool(st.get("shield_cast", false)),
 			"stop": func() -> CombatResult:
 				st["ac"] = ac + 5
 				return miss.call() as CombatResult})
@@ -383,3 +396,42 @@ func against_damage(st: Dictionary, parts: Dictionary, notes: Array[String]) -> 
 					tc.spend_resource("psionic_energy")
 					cut.call(maxi(1, e.dice.roll_one(tdie, "Protective Field") + target.creature.ability_mod(&"int")), "Protective Field")})
 	return out
+
+
+## Response spells and Reaction-cost feature recipes that also have synchronous trigger paths.
+func configurable_policies(c: Combatant) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if not c.creature is Character:
+		return out
+	var seen := {}
+	for known in (c.creature as Character).known_spells():
+		var spell := Compendium.shared().spell_data(str(known["id"]))
+		if not spell.has("roll_response") or seen.has(str(spell["id"])):
+			continue
+		seen[str(spell["id"])] = true
+		out.append({"id": str(spell["id"]), "name": str(spell["name"]), "cost": "Reaction and a spell slot"})
+	for f in (c.creature as Character).features:
+		var response := f.get("roll_response", {}) as Dictionary
+		if not f.has("hit_response") and (response.is_empty() or str(response.get("cost", "free")) != "reaction"):
+			continue
+		if seen.has(str(f["id"])):
+			continue
+		seen[str(f["id"])] = true
+		out.append({"id": str(f["id"]), "name": str(f["name"]), "cost": "Reaction and a feature use"})
+	return out
+
+func list_policies(c: Combatant, out: Array[Dictionary]) -> void:
+	for policy in configurable_policies(c):
+		for mode: String in ["ask", "auto", "never"]:
+			out.append({"id": "feat:reaction_policy:%s:%s" % [policy["id"], mode],
+				"label": "%s: %s" % [policy["name"], {"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]],
+				"sub": str({"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]) + (" · selected" if enc()._reaction_decision(c, str(policy["id"])) == mode else ""),
+				"cost": "free", "why": enc()._turn_check(c), "targeting": "none", "range": 0,
+				"help": "%s. Automatic permits spending whenever eligible. Ask prompts where supported; synchronous rolls/spell hits do not spend until you choose Automatic. Off never spends." % policy["cost"]})
+
+func set_policy(c: Combatant, id: String, mode: String) -> CombatResult:
+	if enc()._turn_check(c) != "" or not mode in ["ask", "auto", "never"] \
+			or not configurable_policies(c).any(func(p: Dictionary) -> bool: return str(p["id"]) == id):
+		return CombatResult.fail("Not an available reaction preference")
+	c.reaction_rules[id] = mode
+	return CombatResult.new()

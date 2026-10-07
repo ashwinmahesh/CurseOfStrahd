@@ -17,6 +17,10 @@ func _ready() -> void:
 	_look = OS.get_environment("POLISH_LOOK")
 	if _look != "":
 		Look.set_style(_look, false)
+	# POLISH_DOF=off: the Modern look without its depth blur, for this run only.
+	if OS.get_environment("POLISH_DOF") == "off":
+		GameSettings.set_value("depth_blur", false, false)
+		_look += "_nodof"
 	GameState.reset()
 	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]:
 		var ch := Pregens.build(id, 3)
@@ -79,6 +83,67 @@ func capture_shots(tool: Node, out: String) -> void:
 		await tool.call("wait_frames", 140)
 		await _shoot(tool, out + "_hud_second_toast.png", 2)
 		root.call("_command", "sneak")
+	if _wants("spells"):
+		# Every kind of spell list: preparing spells, the wizard's sheet, a found spellbook and the combat Spells tab.
+		var ps := PrepareScreen.new()
+		add_child(ps)
+		ps.open(root, GameState.story, 0)
+		await tool.call("wait_frames", 4)
+		# Scrolled to Liriel's prepared spells.
+		for l in ps.find_children("*", "Label", true, false):
+			if (l as Label).text.begins_with("Liriel") and (l as Label).text.contains("Cleric"):
+				for sc in ps.find_children("*", "ScrollContainer", true, false):
+					var scroll := sc as ScrollContainer
+					scroll.scroll_vertical = int((l as Label).global_position.y - scroll.global_position.y) - 8
+				break
+		await _shoot(tool, out + "_spells_prepare.png")
+		ps.free()
+		root.call("open_screen", "sheet", 3)
+		(root.get("screen") as CharacterSheetScreen).show_tab("Spells")
+		await _shoot(tool, out + "_spells_sheet.png")
+		root.call("close_screen")
+		GameState.story.party[0].add_item("durst_spellbook", 1)
+		root.call("open_screen", "inventory", 0)
+		(root.get("screen") as InventoryScreen).selected = "durst_spellbook"
+		root.get("screen").call("_draw")
+		await _shoot(tool, out + "_spells_book.png")
+		root.call("close_screen")
+		root.call("enter_location", "death_house_dungeon_1", "default")
+		await tool.call("wait_frames", 20)
+		hud.close_narration()
+		var view := root.get("view") as LocationView
+		view.start_encounter("passage_ghouls")
+		await tool.call("wait_frames", 120)
+		var chud := view.combat_view.get("hud") as CombatHud if view.combat_view != null else null
+		if chud != null:
+			for c in view.combat_view.e.combatants:
+				if c.name().begins_with("Liriel"):
+					chud.shown = c
+			chud.set_tab(ActionCatalog.SPELLS)
+			await _shoot(tool, out + "_spells_combat.png")
+	if _wants("feat"):
+		# Level 4's feat on the level-up screen (Godrick from level 3), scrolled to the choice, with a feat hovered.
+		var godrick := Pregens.build("godrick_pendlebrook", 3)
+		godrick.finish_long_rest()
+		GameState.story.party[0] = godrick
+		GameState.story.milestones = 10
+		root.call("open_screen", "level_up", 0)
+		await tool.call("wait_frames", 4)
+		var screen := root.get("screen") as Node
+		for l in screen.find_children("*", "Label", true, false):
+			if (l as Label).text.contains("Choices"):
+				for sc in screen.find_children("*", "ScrollContainer", true, false):
+					var scroll := sc as ScrollContainer
+					if scroll.get_parent() is PanelContainer:
+						scroll.scroll_vertical = int((l as Label).global_position.y - scroll.global_position.y) - 8
+		await tool.call("wait_frames", 4)
+		# Hover the longest-text feat in the list, as the mouse would.
+		for b in screen.find_children("*", "Button", true, false):
+			if (b as Button).text.contains("Great Weapon Master"):
+				(b as Button).mouse_entered.emit()
+				break
+		await _shoot(tool, out + "_feat_level_up.png")
+		root.call("close_screen")
 	if _wants("small"):
 		# The F1 controls card, a small loot window with coins and a single item, and Heal up on the rest screen.
 		hud.toggle_controls()
@@ -118,6 +183,29 @@ func capture_shots(tool: Node, out: String) -> void:
 			root.set("dialogue", null)
 			hud.visible = true
 			ModeController.force(ModeController.Mode.EXPLORATION)
+	if _wants("glow"):
+		# The rim on the thing under the mouse: the nearest door, chest or prop to the leader.
+		var view := root.get("view") as LocationView
+		for where: String in ["death_house_ground", "village_of_barovia"]:
+			root.call("enter_location", where, "default")
+			await tool.call("wait_frames", 30)
+			hud.close_narration()
+			view = root.get("view") as LocationView
+			var best := Vector2i(-1, -1)
+			var best_d := 1 << 30
+			for entry: Array in view.call("_pickables"):
+				var cell := entry[1] as Vector2i
+				var k := str(view.thing_at(cell).get("kind", ""))
+				if k in ["door", "container", "prop"]:
+					var d := view.grid.distance_ft(view.leader().cell, 1, cell, 1)
+					if d < best_d:
+						best_d = d
+						best = cell
+			if best.x >= 0:
+				(root.get("glow") as HoverGlow).show(view, best, view.thing_at(best))
+				hud.hint(str(view.thing_at(best).get("label", "")), view.rig.camera.unproject_position(view.board.cell_center(best) + Vector3(0, 0.6, 0)))
+			await _shoot(tool, out + "_glow_%s.png" % where)
+			(root.get("glow") as HoverGlow).clear()
 	if _wants("alt"):
 		hud.thing_labels.pinned = true
 		await _shoot(tool, out + "_alt_village.png")

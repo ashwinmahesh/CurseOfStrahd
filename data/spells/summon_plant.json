@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 5,
   "school": "conjuration",
@@ -30,11 +30,22 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: Summon a Fungus, Tree, or Vine spirit into a visible empty space. It acts just after you on your Initiative, follows free verbal commands, and otherwise Dodges and avoids danger. It disappears at 0 HP or spell end. Slot level scales the source Plant Spirit stat block; statistics and companion actions require manual resolution.",
-  "text": "Reference-only: Summon a Fungus, Tree, or Vine spirit into a visible empty space. It acts just after you on your Initiative, follows free verbal commands, and otherwise Dodges and avoids danger. It disappears at 0 HP or spell end. Slot level scales the source Plant Spirit stat block; statistics and companion actions require manual resolution.",
+  "summary": "Summon a Fungus, Tree, or Vine spirit into a visible empty space. It acts just after you on your Initiative, follows free verbal commands, and otherwise Dodges and avoids danger. It disappears at 0 HP or spell end. Slot level scales the source Plant Spirit stat block; you control its actions and movement.",
+  "text": "Summon a Fungus, Tree, or Vine spirit into a visible empty space. It acts just after you on your Initiative, follows free verbal commands, and otherwise Dodges and avoids danger. It disappears at 0 HP or spell end. Slot level scales the source Plant Spirit stat block; you control its actions and movement.",
   "tags": [
-    "utility"
+    "summon"
   ],
   "icon": "magic_missile",
+  "targets": {
+    "kind": "point"
+  },
+  "choice": {
+    "kind": "option",
+    "from": [
+      "fungus",
+      "tree",
+      "vine"
+    ]
+  },
   "playable": false
 }

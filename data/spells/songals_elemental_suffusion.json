@@ -33,8 +33,9 @@
   "summary": "Reference-only: Gain resistance to Acid, Cold, Fire, Lightning, or Thunder, and Fly 30 feet with hover. On casting and each turn start, chosen creatures in a 15-foot Emanation save Dexterity against 2d6 of one of those types and Prone; success takes half damage only. Circle variant takes 1 minute to cast, lasts 10 minutes with Concentration, and grants the benefits to one extra creature per secondary caster (maximum nine); each secondary caster spends a level 2+ slot.",
   "text": "Reference-only: Gain resistance to Acid, Cold, Fire, Lightning, or Thunder, and Fly 30 feet with hover. On casting and each turn start, chosen creatures in a 15-foot Emanation save Dexterity against 2d6 of one of those types and Prone; success takes half damage only. Circle variant takes 1 minute to cast, lasts 10 minutes with Concentration, and grants the benefits to one extra creature per secondary caster (maximum nine); each secondary caster spends a level 2+ slot.",
   "tags": [
-    "utility"
+    "damage"
   ],
   "icon": "magic_missile",
+  "automation": "reference",
   "playable": false
 }

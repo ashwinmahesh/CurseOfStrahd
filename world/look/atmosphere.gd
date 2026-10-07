@@ -287,8 +287,9 @@ func _open_the_lake() -> void:
 func attach(rig: CameraRig, post: MeshInstance3D) -> void:
 	_rig = rig
 	_post = (post.mesh as QuadMesh).material as ShaderMaterial if post != null and post.mesh is QuadMesh else null
-	if Look.modern() and rig != null and rig.camera != null:
-		# The diorama's depth of field (tilt-shift): the party's ground sharp, what's far behind and near the lens soft.
+	if Look.modern() and GameSettings.depth_blur() and rig != null and rig.camera != null:
+		# A light depth of field behind the party (DOF_STRENGTHS): the far edge of the screen softens while the party,
+		# foes and anything that can be clicked stay crisp. Settings > Depth blur turns it off.
 		_dof = CameraAttributesPractical.new()
 		_dof.dof_blur_far_enabled = true
 		rig.camera.attributes = _dof

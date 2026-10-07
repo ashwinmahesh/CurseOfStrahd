@@ -8,14 +8,46 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Shield; Lesser Restoration; Protection from Energy; Banishment; Mass Cure Wounds. Reference-only: After a slotted Abjuration, you or a visible creature within 30 feet gains Temporary HP equal to twice slot level.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Shield; Lesser Restoration; Protection from Energy; Banishment; Mass Cure Wounds. Reference-only: After a slotted Abjuration, you or a visible creature within 30 feet gains Temporary HP equal to twice slot level.",
   "benefits": [
     {
       "id": "abjuration_adept_spells",
       "name": "Additional Spells",
-      "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Shield; Lesser Restoration; Protection from Energy; Banishment; Mass Cure Wounds.",
-      "text": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Shield; Lesser Restoration; Protection from Energy; Banishment; Mass Cure Wounds.",
-      "implemented": "text"
+      "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Shield; Lesser Restoration; Protection from Energy; Banishment; Mass Cure Wounds.",
+      "text": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Shield; Lesser Restoration; Protection from Energy; Banishment; Mass Cure Wounds.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "shield",
+          "at_slot_level": 1,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "lesser_restoration",
+          "at_slot_level": 2,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "protection_from_energy",
+          "at_slot_level": 3,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "banishment",
+          "at_slot_level": 4,
+          "prepared_for_classes": true
+        },
+        {
+          "stat": "spell",
+          "value": "mass_cure_wounds",
+          "at_slot_level": 5,
+          "prepared_for_classes": true
+        }
+      ]
     },
     {
       "id": "abjuration_adept_benefit",

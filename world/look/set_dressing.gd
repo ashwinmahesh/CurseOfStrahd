@@ -363,8 +363,8 @@ static func exit_piece(board: ArenaBoard, spec: Dictionary) -> Node3D:
 	# Stairs are the way itself, so they show only while the way is open (LocationView keeps them hidden while the
 	# exit's `when` is false: a secret stair nobody has found). A door stays drawn even when it's barred.
 	var model := ModelPiece.for_art(board, art)
-	if model != "" and str((ModelPiece.manifest()[model] as Dictionary).get("mount", "")).begins_with("stairs"):
-		ModelPiece.stand(board, root, model, art, cell)
+	if model != "" and (str((ModelPiece.manifest()[model] as Dictionary).get("mount", "")).begins_with("stairs") or mount == "floor"):
+		ModelPiece.stand(board, root, model, art, cell)   # 3D stairs, a hatch (docs/art/models.md)
 		root.set_meta("only_when_open", true)
 		return root
 	if _stairs(board, root, art, cell):
