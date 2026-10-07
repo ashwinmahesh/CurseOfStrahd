@@ -439,6 +439,7 @@ func test_from_the_road_to_the_dawn() -> void:
 	if not _ok(st.location == "castle_ravenloft_gates", "the carriage set the party down at the castle gate (at %s)" % st.location, bot):
 		return
 	assert_eq(str(st.get_flag("strahd_invitation", "")), "accepted")
+	GoldenSaves.keep("castle_ravenloft_gates", "test_phase6_exit")
 	if not _ok(await bot.go_to("castle_ravenloft_main_floor"), "in through the great doors", bot):
 		return
 	_view().refresh_npcs()
@@ -464,6 +465,8 @@ func test_from_the_road_to_the_dawn() -> void:
 		await bot.settle(2000)
 		_fights(bot)
 	var ending := await _ended(bot)
+	GoldenSaves.keep("the_end", "test_phase6_exit", {"finished": {"ending": ending,
+		"title": str(Endings.get_ending(ending).get("title", ending))}})
 	_ok(bool(st.get_flag("strahd_destroyed", false)), "Strahd destroyed", bot)
 	assert_eq(st.quest_stage("strahds_lair"), "destroyed")
 	assert_eq(ending, "strahd_destroyed", "dawn over Barovia")

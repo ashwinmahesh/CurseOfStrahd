@@ -93,6 +93,7 @@ Lady Wachter: No more festivals. No more stocks for a sour face. A town that sto
 Lady Wachter: For him? With him. It's his valley; it always has been. I'd simply stop pretending otherwise. Do you know what he does to towns that pretend? Look at your village. Look at its graveyard.
 interject class:cleric: There's a word for this in every temple I know, my lady.
 Lady Wachter: There's a word for most things in temples. Very few of them keep the wolves off.
+approve godrick_pendlebrook +1 liriel_dawnsong +1: You named Lady Wachter's plan for what it is
 -> menu
 
 ~ pledge
@@ -110,6 +111,7 @@ interject name:kip_smudgewick: Terms agreed, then, madam. I do hope you're worth
 else
 interject tag:loyal: We gave our word. I hope you're worth it.
 endif
+approve liriel_dawnsong -3 godrick_pendlebrook -3 kip_smudgewick -2 thistle -1 wren_featherfoot -1 ratatoille -1: You stood with Lady Wachter, who would rule Vallaki for Strahd
 -> menu
 
 ~ orders

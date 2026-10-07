@@ -95,6 +95,7 @@ func load_slot(slot: String) -> Error:
 	var dict := data as Dictionary
 	if int(dict.get("version", 0)) > GameState.SAVE_VERSION:
 		return ERR_FILE_UNRECOGNIZED
+	dict = upgrade(dict)
 	GameState.from_dict(dict)
 	# The fight's round-start save and the autosave aren't the game's slot: they go back to the one they were written
 	# for, so a quicksave after loading one still goes to the game's own.
@@ -104,6 +105,24 @@ func load_slot(slot: String) -> Error:
 		current_slot = slot
 	EventBus.game_loaded.emit(slot)
 	return OK
+
+
+## Saves from older builds (P4). A change to what a save holds bumps GameState.SAVE_VERSION and adds a step here that
+## takes a save of the version before it to the new one, so an old save is mended in one place before GameState reads
+## it. Every save in tests/saves (made by older builds) goes through this in every test run
+## (tests/integration/test_golden_saves.gd), so a missing or wrong step fails there first. Version 1 was Phase 0's;
+## 2 has been the format since Phase 3. Mends that apply to every save whatever its version (a pregen's current look,
+## the Dursts' book) stay in StoryState.from_dict.
+static func upgrade(data: Dictionary) -> Dictionary:
+	var out := data.duplicate(true)
+	var v := int(out.get("version", 1))
+	while v < GameState.SAVE_VERSION:
+		match v:
+			1:
+				pass   # Phase 0 saves held no story: the game starts them on the mists road as a new game does
+		v += 1
+		out["version"] = v
+	return out
 
 
 func has_slot(slot: String) -> bool:
@@ -123,7 +142,7 @@ func list_slots() -> Array[Dictionary]:
 		var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(save_dir.path_join(f)))
 		if not data is Dictionary:
 			continue
-		var d := data as Dictionary
+		var d := upgrade(data as Dictionary)
 		var story := d.get("story", {}) as Dictionary
 		var names: Array[String] = []
 		for m: Variant in story.get("party", []):

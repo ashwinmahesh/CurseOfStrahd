@@ -38,4 +38,5 @@ interject class:cleric: Come away from the edge now. We can talk about it by a f
 Ireena: Ireena. Yes. That's me. That's who I am.
 Narrator: She steps back from the edge, one pace and then another, and lets out a breath she seems to have been holding for a very long time.
 Ireena: Say it again if I ever forget.
+approve godrick_pendlebrook +1 liriel_dawnsong +1: You reminded Ireena of her own name at the falls
 -> END

@@ -19,6 +19,7 @@ Vosk [smile]: Your assessor wrote it carelessly because he never expected you to
 if not (quest.the_fine_print >= the_small_print)
 quest the_fine_print the_small_print
 endif
+approve kip_smudgewick +3: You took my contract to someone who could read it
 Vosk: Now. My fee.
 * [name:kip_smudgewick] Offer him an apricot. -> vosk_apricot
 * [if gold >= 50] Pay him fifty gold. -> vosk_gold
@@ -54,6 +55,7 @@ interject name:kip_smudgewick: Before anyone burns that, er. Could I have it? It
 set strahd_letter_kept
 interject name:kip_smudgewick: Thank you. I'll keep it somewhere safe. Somewhere very safe. My hat.
 Narrator: Kip folds the letter into the band of his straw hat. For a while it's warm against his horns. Then, oddly, it isn't.
+approve kip_smudgewick +4: You gave me Strahd's letter when I asked for it
 -> END
 
 # --- The invitation (strahd/letters:invitation) -----------------------------------------------------------------
@@ -88,6 +90,8 @@ Strahd: Freely given. In my own hand. Your assessor will hate it. Give him my re
 if not (quest.the_fine_print >= signed)
 quest the_fine_print signed
 endif
+inspire name:kip_smudgewick: got the lord of the land of mists to sign a receipt
+approve kip_smudgewick +6: You let me ask Strahd for his signature, and nothing else
 -> castle_ravenloft/gates_dinner:table
 
 ~ dinner_sold
@@ -95,4 +99,5 @@ quest the_fine_print strahds_debtor
 Narrator: Strahd holds out his hand, and Kip, very slowly, puts the contract in it. It doesn't burn. It goes into Strahd's coat like a letter going into a drawer.
 Strahd: There. You're mine now, a little. Don't look so worried. I'm very patient with the things I own.
 interject name:kip_smudgewick: Thank you, sir. I think. I'll think about whether I think.
+approve kip_smudgewick -6: You let me sell my contract to Strahd
 -> castle_ravenloft/gates_dinner:table

@@ -34,6 +34,7 @@ endif
 
 ~ first_burned
 Narrator: The paper takes the flame slowly, as if it would rather not, and the black wax runs like something alive.
+approve thistle +1: You burned Strahd's first letter
 -> END
 
 ~ first_kept
@@ -79,6 +80,7 @@ Strahd: No harm will come to you under my roof before the meal is over. You have
 set strahd_invitation = "accepted"
 Narrator: The door shuts behind you on its own. The carriage moves off with no word and no whip, faster than horses should, up into the mountains and the cloud.
 time +90
+approve ratatoille +1: You accepted Strahd's invitation to dinner
 -> END
 
 ~ decline
@@ -89,4 +91,5 @@ Narrator: The door swings shut. The carriage turns in the road with great care a
 ~ tear
 set strahd_invitation = "declined"
 Narrator: The pieces go off in the wind. The horses watch you do it. Then the carriage turns and goes, unhurried, like something that will be back.
+approve thistle +1 wren_featherfoot +1: You tore up Strahd's invitation in front of his horses
 -> END

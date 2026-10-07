@@ -1,5 +1,73 @@
 # Wren Featherfoot's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each
-# plays once. Quest: The Last Lesson (narrative/companions/lesson.dialogue).
+# plays once. Quest: The Last Lesson (narrative/companions/lesson.dialogue). The file offers its first talk that
+# holds: when he's Strained or Doubtful (story/approval.gd), those first; then the quest's; then Warm, Close and
+# Devoted.
+
+# --- When he's lost faith in the party (approval) ----------------------------------------------------------------
+
+~ talk_strained
+if name:wren_featherfoot and approval.wren_featherfoot <= strained
+-> strained
+endif
+-> END
+
+~ strained
+Narrator: Wren is very calm tonight. No jokes, no handstands, no last word. He sits by the fire and speaks quietly, and that's how you know.
+interject name:wren_featherfoot: I'm going to say this once, plainly, because I don't do plainly and I want you to notice.
+interject name:wren_featherfoot: Master Sorrel took me off the street because he thought there was something in me worth the trouble. Lately I've been wondering what he'd make of the company I keep. I don't like the answer.
+interject name:wren_featherfoot: I'll keep walking with you. I owe you that. But when it comes to the castle, and whatever's waiting for me up there, I'll be making my own choices. Not yours.
+* Then help us earn your trust back. -> strained_earn
+* We're sorry, Wren. -> strained_sorry
+* That's your loss. -> strained_cold
+
+~ strained_earn
+interject name:wren_featherfoot: Easy, then. Be kind when it's stupid to be. Be kind when nobody would know. That's the trick.
+interject name:wren_featherfoot: I'm still learning it myself. We can be terrible at it together.
+approve wren_featherfoot +10: You asked how to earn my trust back
+-> END
+
+~ strained_sorry
+interject name:wren_featherfoot: Noted. Sorry's a good start. Master Sorrel would say the leaf apologising to the wind changes nothing. Then he'd make tea anyway.
+approve wren_featherfoot +5: You told me you were sorry
+-> END
+
+~ strained_cold
+interject name:wren_featherfoot: Probably. Night.
+approve wren_featherfoot -6: You told me it's my loss
+-> END
+
+~ talk_doubt
+if name:wren_featherfoot and approval.wren_featherfoot == doubtful
+-> doubt
+endif
+-> END
+
+~ doubt
+Narrator: Wren isn't doing handstands tonight. He's sitting on the boulder with his chin on his knees, which on Wren looks like a man in chains.
+interject name:wren_featherfoot: Right. Quick one. I'll keep it short; I know you're all very busy being heroes.
+interject name:wren_featherfoot: Master Sorrel had a saying. "Watch what your hands do when nobody's grading them." Lately our hands have been doing some things I'd not want graded.
+interject name:wren_featherfoot: I was a thief, you know. I know what it looks like when somebody's talking themselves into something. I did it every day for years. It looks like this.
+* Fair. We'll watch our hands. -> doubt_fair
+* You'd know, thief. -> doubt_thief
+* We're doing what has to be done. -> doubt_done
+
+~ doubt_fair
+interject name:wren_featherfoot: I'll allow it. ...Thanks. That was the sincere bit. Don't get used to it.
+approve wren_featherfoot +6: You said we'd watch our hands
+-> END
+
+~ doubt_thief
+Narrator: The joke he had ready doesn't come. He just looks at you.
+interject name:wren_featherfoot: I would. That's why I'm saying it.
+approve wren_featherfoot -4: You called me a thief for saying it
+-> END
+
+~ doubt_done
+interject name:wren_featherfoot: Everybody says that. It was never once true when I said it.
+approve wren_featherfoot +1: You told me we're doing what has to be done
+-> END
+
+# --- His quest ---------------------------------------------------------------------------------------------------
 
 ~ talk_sorrel
 if name:wren_featherfoot and quest.the_last_lesson
@@ -32,6 +100,7 @@ interject name:wren_featherfoot: Never. I've had it fourteen months in my shirt.
 
 ~ sorrel_find
 interject name:wren_featherfoot: Course we will. Easy. How many elves called Kasimir can there be in one valley? Don't answer that. It's a valley full of vampires; there's probably a club.
+approve wren_featherfoot +1: You listened to me talk about Master Sorrel
 -> END
 
 ~ talk_letter
@@ -50,10 +119,12 @@ interject name:wren_featherfoot: "The boy who brings you this is the best thing 
 
 ~ letter_right
 interject name:wren_featherfoot: Don't. Don't, I'll cry, and then you'll all have to watch a monk cry, and it's not a dignified sight. We cry with our whole bodies. It's all the flexibility.
+approve wren_featherfoot +3: You told me Master Sorrel was right about me
 -> letter_end
 
 ~ letter_else
 interject name:wren_featherfoot: Sneaky. That's very him. He couldn't say it to my face. He wrote it down and posted it across a mountain range to make sure.
+approve wren_featherfoot +2: You worked out why Master Sorrel wrote it down
 -> letter_end
 
 ~ letter_end
@@ -79,4 +150,98 @@ interject name:wren_featherfoot: So. That's done. Letter's delivered. I've been 
 endif
 interject name:wren_featherfoot: I don't feel finished. That's the thing. Master Sorrel said the last lesson was in the letter, and I've read the letter, well, I've heard it read, and I still don't know what the lesson was.
 quest the_last_lesson let_her_rest
+-> END
+
+# --- As he comes to trust the party (approval) --------------------------------------------------------------------
+
+~ talk_warm
+if name:wren_featherfoot and approval.wren_featherfoot >= warm and level >= 3
+-> warm
+endif
+-> END
+
+~ warm
+Narrator: Wren is juggling three stones, then four, then a stone, an apple and somebody's boot. It isn't clear whose boot.
+interject name:wren_featherfoot: Evening. Don't look for your boot; it's in the air. Watch this.
+interject name:wren_featherfoot: Master Sorrel used to say juggling's just throwing things and trusting they'll come back. I said that's not a lesson, that's optimism. He said those are the same thing, and caught all four without looking.
+* Teach me. -> warm_teach
+* Give me back my boot. -> warm_boot
+* Do you ever stop moving? -> warm_stop
+
+~ warm_teach
+Narrator: Three stones. You drop nine, and catch one, and the one you catch is almost by accident.
+interject name:wren_featherfoot: That one. That catch. Remember what your hands did. That's the whole of juggling, and most of everything else.
+approve wren_featherfoot +3: You let me teach you to juggle
+-> END
+
+~ warm_boot
+interject name:wren_featherfoot: Spoilsport. Here. It was getting heavy anyway; what have you got in there, a brick?
+approve wren_featherfoot +1: You put up with me juggling your boot
+-> END
+
+~ warm_stop
+interject name:wren_featherfoot: Only when I'm sad. So, no. Never. Look at me go.
+Narrator: He catches everything, one-handed, and for a moment he's very still. Then the stones are up again.
+approve wren_featherfoot +2: You asked whether I ever stop moving
+-> END
+
+~ talk_close
+if name:wren_featherfoot and approval.wren_featherfoot >= close and level >= 5
+-> close
+endif
+-> END
+
+~ close
+Narrator: It's late and quiet, and Wren is lying flat on his back in the grass, perfectly still. It takes you a moment to realise he isn't asleep.
+interject name:wren_featherfoot: Don't panic. I'm practising sitting still. Master Sorrel said I'd never manage it. I'm proving him wrong after he's dead. It's very petty. He'd love it.
+interject name:wren_featherfoot: Can I tell you the real thing? I'm scared I'm a clown with good knees. That I'm tricks all the way down, and if you took the jokes out there'd be nothing left but a halfling doing a handstand.
+interject name:wren_featherfoot: Master Sorrel saw something in me. I've never known what. I've been too busy being funny to look.
+* We've seen it too. -> close_seen
+* The jokes are part of you. They're not a trick. -> close_part
+* You don't have to be funny with us. -> close_funny
+
+~ close_seen
+interject name:wren_featherfoot: Have you? What does it look like? No, don't tell me. I'd only make a joke about it.
+approve wren_featherfoot +3: You told me you've seen it too
+-> close_end
+
+~ close_part
+interject name:wren_featherfoot: Huh. Part of me. Like a nose. A nose isn't a trick. A nose is a nose. I'll think about that.
+approve wren_featherfoot +3: You told me the jokes are part of me
+-> close_end
+
+~ close_funny
+interject name:wren_featherfoot: I know. That's what's so frightening about you lot. Everywhere else, being funny's the fee for being let in.
+approve wren_featherfoot +3: You told me I don't have to be funny with you
+-> close_end
+
+~ close_end
+interject name:wren_featherfoot: Right. Yes. Good. I'm going to do a handstand now, to cope. Don't watch. Watch a bit.
+-> END
+
+~ talk_devoted
+if name:wren_featherfoot and approval.wren_featherfoot >= devoted and level >= 8
+-> devoted
+endif
+-> END
+
+~ devoted
+Narrator: Wren comes and sits next to you on watch, which he never does; he hates watch. He's quiet for a long while.
+interject name:wren_featherfoot: Master Sorrel used to say the last lesson is always who you are when the teacher's gone. I thought that was very deep. Now I think he just didn't want to write the last lesson.
+interject name:wren_featherfoot: Thing is, the teacher's gone, and here I am, and I know who I am. Mostly. I'm the one who'd walk into that castle for you lot without a joke ready. That's new. That's terrifying.
+* We'd do the same for you. -> devoted_same
+* Have a joke ready anyway. -> devoted_joke
+
+~ devoted_same
+interject name:wren_featherfoot: I know. I've seen you. That's the worst part. I've got nobody to blame for this but all of you.
+approve wren_featherfoot +3: You told me we'd do the same for you
+-> devoted_end
+
+~ devoted_joke
+interject name:wren_featherfoot: Oh, I will. I've got a good one for Strahd. It's about his hair. I've been saving it.
+approve wren_featherfoot +3: You told me to have a joke ready anyway
+-> devoted_end
+
+~ devoted_end
+inspire name:wren_featherfoot: knew who he is with the teacher gone
 -> END

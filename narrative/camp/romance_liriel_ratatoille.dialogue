@@ -1,0 +1,102 @@
+# Liriel and Ratatoille, a romance between two of the six (story/approval.gd ROMANCES, docs/story/approval.md). Camp
+# talks (story/camp_talk.gd), each offered once: the spark, the courting, and together. Flag
+# romance_liriel_ratatoille: "spark", "courting", "together", or "over" when the party steered them apart.
+
+~ talk_spark
+if name:liriel_dawnsong and name:ratatoille and not flag.romance_liriel_ratatoille and approval.liriel_dawnsong >= warm and approval.ratatoille >= warm and level >= 3
+-> spark
+endif
+-> END
+
+~ spark
+Narrator: Supper is a stew tonight, and Ratatoille has fussed over it for an hour. When he finally ladles it out, Liriel folds her hands over her bowl, as she always does, and says grace.
+interject name:liriel_dawnsong: For the bread, and the fire, and the hands that made them. Morning's grace on all three.
+Narrator: Ratatoille, who would usually be serving the second bowl by now, has stopped with the ladle in the air.
+interject name:ratatoille: You always do that. Every time. Even for rations.
+interject name:liriel_dawnsong: Of course. The Morninglord made bread before he made kings. You're the nearest thing to a temple we have out here.
+Narrator: Ratatoille goes pink to the tips of his ears and spills stew on his boot.
+* He's blushing, Liriel. -> spark_tease
+* (Say nothing, and pass the bread.) -> spark_quiet
+* Can we eat before it's cold? -> spark_away
+
+~ spark_tease
+interject name:ratatoille: I'm not. It's the steam. It's a very steamy stew. I've overseasoned it with steam.
+interject name:liriel_dawnsong: He's lovely when he's flustered, isn't he? Oh. Did I say that aloud?
+set romance_liriel_ratatoille = "spark"
+approve liriel_dawnsong +1 ratatoille +1: You noticed the blushing at supper
+-> END
+
+~ spark_quiet
+Narrator: You pass the bread. Liriel takes a piece and tells him it's the best she's ever had, and Ratatoille says it isn't, it's a little dense, and looks as though he might float away.
+set romance_liriel_ratatoille = "spark"
+-> END
+
+~ spark_away
+interject name:ratatoille: Yes. Of course. Eat. That's what it's for. It's only food.
+Narrator: He serves the rest without a word. Liriel looks at her hands, and then at the fire.
+set romance_liriel_ratatoille = "over"
+-> END
+
+~ talk_courting
+if name:liriel_dawnsong and name:ratatoille and flag.romance_liriel_ratatoille == "spark" and approval.liriel_dawnsong >= warm and approval.ratatoille >= warm and level >= 5
+-> courting
+endif
+-> END
+
+~ courting
+Narrator: Ratatoille corners you behind the supply packs, looking as though he's about to cast something difficult.
+interject name:ratatoille: I need a consultation. In confidence. I've tried divination. Divination says "obviously", which is very unhelpful, and also rude.
+interject name:ratatoille: Liriel. She's a priestess. She's lovely and she talks to a god, and I'm a cook who learned fire so people would sit with him. What would she want with a cook?
+* She says grace over your food, Rat. Every time. -> courting_grace
+* Cook for her. Just her. -> courting_cook
+* Priestesses don't court. Leave it be. -> courting_leave
+
+~ courting_grace
+interject name:ratatoille: She does, doesn't she. Nobody ever did. Not even Maman. She'd say "eat it before it goes cold", which isn't the same.
+interject name:ratatoille: Very well. I'll say something. I'll prepare remarks. Several drafts.
+set romance_liriel_ratatoille = "courting"
+approve ratatoille +2: You reminded me Liriel says grace over my food
+-> END
+
+~ courting_cook
+interject name:ratatoille: Just her. Something small. Bread, and the little honey cakes from home, and nobody else allowed to taste them. ...That's a terribly forward thing to do with honey cakes.
+set romance_liriel_ratatoille = "courting"
+approve ratatoille +2: You told me to cook for her, just her
+-> END
+
+~ courting_leave
+interject name:ratatoille: No. No, of course. I'd thought so. It's a very old order. Very particular.
+Narrator: He goes back to the fire and makes supper in silence, and it's excellent, and he doesn't eat any of it.
+set romance_liriel_ratatoille = "over"
+approve ratatoille -1: You told me to leave it be
+-> END
+
+~ talk_together
+if name:liriel_dawnsong and name:ratatoille and flag.romance_liriel_ratatoille == "courting" and approval.liriel_dawnsong >= close and approval.ratatoille >= close and level >= 7
+-> together
+endif
+-> END
+
+~ together
+Narrator: Ratatoille has made something small tonight, on a plate by itself: two honey cakes, still warm, and nothing else. He sets it down in front of Liriel and stands there holding a page of notes he isn't reading.
+interject name:ratatoille: I prepared remarks. Several drafts. They're all terrible. I'm going to say the shortest one.
+interject name:ratatoille: You say grace over my food. Nobody ever did. I think I've been cooking for you since Death House, and I didn't know it until somebody told me.
+Narrator: Liriel looks at the cakes a long while. Then she folds her hands over the plate, the way she always does.
+interject name:liriel_dawnsong: For the bread, and the fire, and the hands that made them. Especially the hands.
+interject name:liriel_dawnsong: Yes, if that was a question. I've been waiting for you to ask it for weeks. He told me you would. He's very reliable about breakfast, and apparently about this.
+* (Leave them to it.) -> together_leave
+* Finally. -> together_finally
+
+~ together_leave
+Narrator: You leave them to the honey cakes. Later, someone notices they're sitting on the same side of the fire, her head on his shoulder, and neither of them has said a word in an hour, and neither of them seems to need to.
+-> together_end
+
+~ together_finally
+interject name:ratatoille: Finally? You knew? Everyone knew? Divination knew. Of course divination knew.
+interject name:liriel_dawnsong: Everyone knew, my dear. Even Thistle knew, and Thistle thinks a carriage is a box on wheels.
+-> together_end
+
+~ together_end
+set romance_liriel_ratatoille = "together"
+approve liriel_dawnsong +3 ratatoille +3: You were there the night we finally said it
+-> END

@@ -67,6 +67,7 @@ Narrator: The ring grinds in its socket and holds. Somewhere above, something st
 set larders_nadia_freed
 quest the_cooks_guests freed
 Narrator: The shackle opens. She rubs her ankle, stands, sits down again, and stands up properly the second time.
+approve thistle +2 godrick_pendlebrook +1 kip_smudgewick +1: You took the chain off the girl in the larder cells
 -> nadia_way
 
 ~ nadia_way
@@ -136,6 +137,7 @@ Doru [sad]: I went home to him, to the castle. I thought he'd give me a seat at 
 ~ doru_father
 Doru: Does he? Still? Even now? Tell him... no. Don't tell him where I am. Tell him I went far away.
 Doru [angry]: Come a little closer while you think it over. Just a little.
+approve liriel_dawnsong +1: You told Doru his father still prays for him
 -> doru_menu
 
 ~ doru_cure
@@ -148,11 +150,13 @@ Doru: Yes. Please. Before he wants me again.
 interject class:cleric: Close your eyes, Doru. Think of the church with the candles lit.
 Narrator: It is quick. The hunger goes out of his face, and for a moment he is only a tired boy. Then he is dust in the chains.
 interject tag:pious: We'll tell his father he was brave at the end. It's even true.
+approve liriel_dawnsong +2 thistle +1 godrick_pendlebrook +1: You gave Doru his rest at last
 -> END
 
 ~ doru_free
 set larders_doru_fate = "freed"
 Doru: Thank you. Thank you. Oh, you're warm. You're all so warm.
+approve kip_smudgewick -2 liriel_dawnsong -1: You struck the chains off a starving vampire spawn
 combat larders_doru_hunger
 
 ~ doru_leave

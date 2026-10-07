@@ -121,7 +121,16 @@ static func _vec2(v: Variant) -> Vector2:
 
 # --- Building -------------------------------------------------------------------------------------
 
+## The window's renderer follows the graphics preset (anti-aliasing, shadow maps) from the place that opens on.
+func _ready() -> void:
+	Graphics.apply(get_viewport())
+
+
 func _build() -> void:
+	for l: Variant in loc.get("lights", []):
+		var cell := (l as Dictionary).get("cell", []) as Array
+		if cell.size() == 2:
+			_data_lights[Vector2i(int(cell[0]), int(cell[1]))] = str((l as Dictionary).get("kind", "lamp"))
 	env = Environment.new()
 	env.background_mode = Environment.BG_COLOR
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
@@ -194,7 +203,101 @@ func _modern_finish() -> void:
 	env.volumetric_fog_anisotropy = 0.45
 	env.volumetric_fog_length = 40.0
 	env.volumetric_fog_ambient_inject = 0.15
-	sun.shadow_blur = 1.8
+	# Sharper sun and moon shadows (W2): the splits are packed round what the camera sees (_fit_sun_shadows follows
+	# the zoom), and the light's size softens a shadow the further it falls from what casts it.
+	if Graphics.sun_splits() == 4:
+		sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
+	sun.light_angular_distance = SUN_SIZE
+	sun.shadow_blur = 1.0
+	sun.shadow_bias = 0.03
+	sun.shadow_normal_bias = 1.0
+	# Polished and wet floors reflect what stands on them (W3): the lit world shaders' low roughness picks it up. The
+	# flat sky colour isn't reflected: it would lay a grey sheen over every surface and wash the colour out.
+	env.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
+	var steps := Graphics.reflection_steps()
+	env.ssr_enabled = steps > 0
+	env.ssr_max_steps = maxi(steps, 1)
+	env.ssr_fade_in = 0.15
+	env.ssr_fade_out = 2.0
+	env.ssr_depth_tolerance = 0.25
+
+
+## The sun or moon's apparent size in degrees for the Modern finish's soft shadows (Godot's PCSS): sharp where a post
+## meets the ground, softer at the far end of a long dusk shadow.
+const SUN_SIZE := 1.2
+var _fitted_distance := -1.0
+
+
+## The sun's shadow reaches only as far as the camera can see, in splits packed round the ground in view (the camera
+## looks 40 degrees down with a 32 degree field, so the ground in view runs from about 0.75 to 1.5 times its distance
+## to the party), so a square near the party gets four times the shadow detail it had with one 60 unit reach.
+func _fit_sun_shadows() -> void:
+	if _rig == null or not Look.modern() or is_equal_approx(_rig.distance, _fitted_distance):
+		return
+	_fitted_distance = _rig.distance
+	var d := _rig.distance
+	var far := d * 1.7 + 12.0
+	sun.directional_shadow_max_distance = far
+	if sun.directional_shadow_mode == DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS:
+		sun.directional_shadow_split_1 = d * 0.9 / far
+		sun.directional_shadow_split_2 = d * 1.15 / far
+		sun.directional_shadow_split_3 = d * 1.45 / far
+	else:
+		sun.directional_shadow_split_1 = d * 1.15 / far
+
+
+## Shadows for the lights near the party, up to the graphics preset's budget (W2): lamps, hearths, lit windows, the
+## party's lantern and spell lights all can, nearest first; the rest light without. A light already casting keeps its
+## shadow until another is clearly nearer, so shadows don't flicker on and off as the party walks; shadows fade out
+## a little past the party. A light with the meta `no_shadow` never casts one.
+const LAMP_SHADOW_KEEP := 0.7
+var _shadow_scan := 0.0
+
+
+func _update_lamp_shadows() -> void:
+	var budget := Graphics.lamp_shadows()
+	if budget <= 0 or _rig == null:
+		return
+	var focus := _rig.global_position
+	var ranked: Array[Array] = []
+	for l in _lights:
+		if not is_instance_valid(l) or not l.is_visible_in_tree() or l.light_energy <= 0.01 or l.has_meta("no_shadow"):
+			continue
+		var d2 := l.global_position.distance_squared_to(focus)
+		ranked.append([d2 * (LAMP_SHADOW_KEEP if l.shadow_enabled else 1.0), l])
+	ranked.sort_custom(func(a: Array, b: Array) -> bool: return float(a[0]) < float(b[0]))
+	var keep := {}
+	for i in mini(budget, ranked.size()):
+		keep[ranked[i][1]] = true
+	# The nearest few flames that cast shadows sway with their flicker, so their shadows stir (W5; CandleFlicker).
+	var sway := Graphics.swaying_flames()
+	for i in ranked.size():
+		var l := ranked[i][1] as OmniLight3D
+		var swaying := i < budget and sway > 0 and l is CandleFlicker \
+			and str(l.get_meta("light_kind", "")) in ["candle", "lamp", "torch", "fire"]
+		if swaying:
+			sway -= 1
+		l.set_meta("sway", swaying)
+	var fade := _rig.distance + 12.0
+	for l in _lights:
+		if not is_instance_valid(l):
+			continue
+		# Only real changes are set: setting a light's shadow again, even to the same value, can make Godot redraw its
+		# shadow map.
+		var want := keep.has(l)
+		if want != l.shadow_enabled:
+			if want:
+				l.shadow_bias = 0.04
+				l.shadow_normal_bias = 1.0
+				l.shadow_blur = 1.0
+				l.omni_shadow_mode = OmniLight3D.SHADOW_CUBE
+				l.distance_fade_enabled = true
+				# Only the shadow fades with distance; the light itself still reaches the far side of the map.
+				l.distance_fade_begin = 500.0
+				l.distance_fade_length = 10.0
+			l.shadow_enabled = want
+		if want and not is_equal_approx(l.distance_fade_shadow, fade):
+			l.distance_fade_shadow = fade
 
 
 ## The Modern finish's depth of field, as a strength the owner picks from (docs/plans/ui_polish.md): how soft
@@ -521,6 +624,11 @@ func _process(delta: float) -> void:
 			var off := wx.get_meta("offset") as Vector3
 			wx.global_position = Vector3(_rig.global_position.x + off.x, wx.global_position.y, _rig.global_position.z + off.z)
 	_focus_dof()
+	_fit_sun_shadows()
+	_shadow_scan -= delta
+	if _shadow_scan <= 0.0:
+		_shadow_scan = 0.25
+		_update_lamp_shadows()
 	if _post == null:
 		return
 	_post.set_shader_parameter("atmo_time", _time)
@@ -551,7 +659,124 @@ func _scan_lights() -> void:
 	if view == null:
 		return
 	for n in view.find_children("*", "OmniLight3D", true, false):
-		_lights.append(n as OmniLight3D)
+		var l := n as OmniLight3D
+		_lights.append(l)
+		if Look.modern() and not l.has_meta("light_kind"):
+			_dress_light(l)
+
+
+# --- Lights (W5) -----------------------------------------------------------------------------------
+
+## How each kind of light behaves in the Modern finish (Improvement Ideas W5): `size` is how soft its shadows are
+## (Godot's light_size: a candle's crisp, a hearth's soft), `fog` how strongly it lights the haze around it, `steady`
+## that it doesn't flicker. A window indoors is the moon or the day coming in: cold, steady, with a shaft of light
+## through the haze (_window_shaft).
+const LIGHT_KINDS := {
+	"candle": {"size": 0.03, "fog": 1.0},
+	"lamp": {"size": 0.06, "fog": 1.2},
+	"lantern": {"size": 0.08, "fog": 1.2},
+	"torch": {"size": 0.12, "fog": 1.8},
+	"fire": {"size": 0.25, "fog": 2.0},
+	"magic": {"size": 0.12, "fog": 1.6, "steady": true},
+	"window": {"size": 0.4, "fog": 0.5, "steady": true},
+	"lit_window": {"size": 0.3, "fog": 1.0},
+	"spell": {"size": 0.1, "fog": 1.5},
+}
+## Shafts through windows (W5): how far above the floor the light comes in, how much the spot lights the haze, and
+## the glowing cone drawn along it (shaders/world/light_shaft.gdshader: Godot's fog volumes are too coarse to show a
+## beam's edges at this camera distance).
+const SHAFT_HEIGHT := 2.6
+const SHAFT_FOG := 2.0
+const SHAFT_GLOW := 0.3
+const SHAFT_SHADER := preload("res://shaders/world/light_shaft.gdshader")
+var _data_lights: Dictionary = {}
+
+
+## What a light is: the location's own lights by their square and kind in its data; lit windows from the weather;
+## the party's lantern; a flame (the flame colour); anything else a spell's.
+func _light_kind(l: OmniLight3D) -> String:
+	var view := get_parent()
+	if view != null and view.get("lantern") == l:
+		return "lantern"
+	if str(l.name).begins_with("WindowLight"):
+		return "lit_window"
+	var c := Vector2i(floori(l.global_position.x), floori(l.global_position.z))
+	if _data_lights.has(c):
+		var k := str(_data_lights[c])
+		return k if LIGHT_KINDS.has(k) else "lamp"
+	if l is CandleFlicker:
+		return "fire" if l.light_color.is_equal_approx(Look.color("flame")) else "lamp"
+	return "spell"
+
+
+func _dress_light(l: OmniLight3D) -> void:
+	var kind := _light_kind(l)
+	var spec := LIGHT_KINDS[kind] as Dictionary
+	l.set_meta("light_kind", kind)
+	l.light_size = float(spec["size"])
+	l.light_volumetric_fog_energy = float(spec["fog"])
+	if bool(spec.get("steady", false)) and l is CandleFlicker:
+		(l as CandleFlicker).flicker = 0.0
+	if kind == "window" and not outdoors:
+		# The moon or the day, not a candle: the key light's colour, and its shaft through the haze.
+		l.light_color = sun.light_color
+		_window_shaft(l)
+
+
+## A shaft of the key light (the moon, or the day) coming in through a window over the wall beside the window's
+## square, down across the room through the haze; a child of the window's light, so it hides with it.
+func _window_shaft(l: OmniLight3D) -> void:
+	if board == null:
+		return
+	var c := Vector2i(floori(l.global_position.x), floori(l.global_position.z))
+	var out := Vector2i.ZERO
+	for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		if board.grid.in_bounds(c + d) and board.grid.has_flag(c + d, CombatGrid.WALL):
+			out = d
+			break
+	if out == Vector2i.ZERO:
+		return
+	var inward := Vector3(-out.x, 0.0, -out.y)
+	var from := board.cell_center(c) - inward * 1.2 + Vector3(0, SHAFT_HEIGHT, 0)
+	var spot := SpotLight3D.new()
+	spot.name = "WindowShaft"
+	spot.light_color = sun.light_color
+	spot.light_energy = 2.0
+	spot.light_volumetric_fog_energy = SHAFT_FOG
+	spot.spot_range = 8.0
+	spot.spot_angle = 14.0
+	spot.spot_attenuation = 0.6
+	spot.shadow_enabled = true
+	spot.light_size = 0.3
+	spot.distance_fade_enabled = true
+	spot.distance_fade_begin = 40.0
+	spot.distance_fade_length = 10.0
+	l.add_child(spot)
+	var dir := (inward + Vector3(0, -1.1, 0)).normalized()
+	spot.look_at_from_position(from, from + dir)
+	# The cone of lit haze from the window down to where the light meets the floor.
+	var to := from + dir * (from.y / -dir.y)
+	var cone := CylinderMesh.new()
+	cone.top_radius = 0.35
+	cone.bottom_radius = 0.8
+	cone.height = from.distance_to(to)
+	cone.cap_top = false
+	cone.cap_bottom = false
+	var glow := ShaderMaterial.new()
+	glow.shader = SHAFT_SHADER
+	glow.render_priority = 1
+	glow.set_shader_parameter("colour", sun.light_color)
+	glow.set_shader_parameter("strength", SHAFT_GLOW)
+	glow.set_shader_parameter("shaft_length", cone.height)
+	var beam := MeshInstance3D.new()
+	beam.name = "WindowBeam"
+	beam.mesh = cone
+	beam.material_override = glow
+	beam.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	l.add_child(beam)
+	var up := -dir
+	var side := up.cross(Vector3.UP if absf(up.y) < 0.99 else Vector3.RIGHT).normalized()
+	beam.global_transform = Transform3D(Basis(side, up, side.cross(up)), (from + to) / 2.0)
 
 
 ## The lit lights nearest the camera's focus go to the screen pass.

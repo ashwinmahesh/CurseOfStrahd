@@ -19,7 +19,8 @@ turnarounds  draws the missing sheets (two Gemini calls at a time) and redraws a
 register     adds the art/manifest.json entries (with sprite_flags), the animations.json entries and the heights.
 portraits    draws the missing turn-bar portraits from each turnaround and runs make portrait (BG=ash_violet).
 Then: tools/art/anim_keyframes.py --only ... --retry 2 (and --kind walk), and make anims ONLY="...".
-GEMINI_BUDGET=<counter file>:<max> caps the calls across all of these tools (tools/art/gemini_budget.py).
+GEMINI_BUDGET=<counter file>:<max> caps the calls across all of these tools (tools/art/gemini_budget.py), and each
+step first checks the art spend ledger: it stops before starting if it would pass the key's stop point.
 """
 import argparse
 import json
@@ -99,6 +100,8 @@ def turnarounds(spec, ids, jobs):
             path.unlink(missing_ok=True)
         print(f"GAVE UP {cid}", flush=True)
         return False
+    gemini_budget.preflight(sum(not (CHARS / f"{cid}_turnaround.png").exists() for cid in ids), "", "turnarounds",
+                            model())
     with ThreadPoolExecutor(max_workers=jobs) as pool:
         results = list(pool.map(one, ids))
     print(f"{results.count(True)} of {len(ids)} turnarounds ready", flush=True)
@@ -177,6 +180,8 @@ def portraits(spec, ids, jobs):
         ok = r.returncode == 0
         print(f"{'ok ' if ok else 'FAILED'} {cid} portrait", flush=True)
         return ok
+    gemini_budget.preflight(sum(not (PORTRAITS / f"{cid}_portrait.png").exists() for cid in ids), "", "portraits",
+                            model())
     with ThreadPoolExecutor(max_workers=jobs) as pool:
         results = list(pool.map(one, ids))
     print(f"{results.count(True)} of {len(ids)} portraits ready", flush=True)

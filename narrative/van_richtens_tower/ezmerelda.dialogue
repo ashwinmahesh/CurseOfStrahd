@@ -85,6 +85,7 @@ Ezmerelda: Good. Say the name, mind your feet, and don't touch anything that hum
 
 ~ tower_price
 Ezmerelda: Whatever he's left lying about that isn't his notes. He'll be appalled. That's a reward in itself.
+approve kip_smudgewick +1 godrick_pendlebrook -1: You asked Ezmerelda what was in it for you
 -> menu
 
 ~ hand
@@ -118,6 +119,7 @@ interject name:godrick_pendlebrook: We gave him our word. And now we've broken i
 else
 interject tag:loyal: We gave him our word. That's broken now.
 endif
+approve godrick_pendlebrook -2 kip_smudgewick -1: You broke your promise to keep Van Richten's secret
 Ezmerelda: Then I'll tell him I wrung it out of you. He'll believe it. He knows me.
 endif
 if flag.rictavio_gone
@@ -137,12 +139,14 @@ quest the_hunters_tower kept
 endif
 Ezmerelda [angry]: He made you promise. Of course he did. He's very good at making people promise things that keep them away from him.
 Ezmerelda: ...Fine. Keep his secret. You're the first people in this valley who've kept anything. I'll keep looking. I'm good at looking.
+approve godrick_pendlebrook +1 kip_smudgewick +1: You kept Van Richten's secret, even from his student
 -> menu
 
 ~ lie_ok
 set ezmerelda_lied
 Narrator: She looks at you for a long moment, and decides to believe you. It costs her something.
 Ezmerelda: Then I'll keep waiting. I'm good at waiting. No, I'm not. I'm terrible at it.
+approve wren_featherfoot +1 godrick_pendlebrook -1: You lied to Ezmerelda about her teacher
 -> menu
 
 ~ lie_fail

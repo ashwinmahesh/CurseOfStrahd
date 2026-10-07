@@ -38,6 +38,7 @@ endif
 ~ lamp
 set marina_lamp_lit
 Narrator: The wick takes at once, as if it had been waiting. A small, steady yellow light stands on the mound in the middle of the black marsh, where everything can see it.
+approve liriel_dawnsong +1: You lit Marina's grave-lamp
 if flag.lysaga_dead or flag.lysaga_left_broken or flag.strahd_knows_marina_truth
 Narrator: Nothing answers it but the frogs. For a while the statue's face looks almost warm.
 -> END
@@ -89,6 +90,7 @@ Narrator: It could be anything. In Barovia, it usually is.
 
 ~ bier_veil
 Narrator: The lace is soft and cold. When you step back, it lies a little straighter than he left it. You suspect he'll notice.
+approve liriel_dawnsong +1 godrick_pendlebrook +1: You straightened Marina's veil
 -> END
 
 # ---------------------------------------------------------------- Strahd at the monument (night, approach)
