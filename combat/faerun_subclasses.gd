@@ -347,25 +347,30 @@ func _rallying_surge(c: Combatant) -> void:
 		e._opportunity_attack(a, foe)
 
 
-func _shared_resilience(c: Combatant, t: D20Test) -> void:
+## Shared Resilience (Banneret 15): a Reaction and a use of Indomitable let an ally within 60 ft it can see reroll a
+## failed save with the Fighter's level added. It asks where the save can pause (its class-tab rule otherwise).
+func shared_resilience_offers(c: Combatant, t: D20Test, out: Array) -> void:
 	var e := enc()
-	if t.success or t.kind != D20Test.Kind.SAVING_THROW or t.target <= 0:
+	if t.kind != D20Test.Kind.SAVING_THROW or t.target <= 0:
 		return
 	for h in e.combatants:
 		var hc := _ch(h)
-		if h == c or hc == null or not CombatFeatures.has_feature(h, "banneret_shared_resilience") or not h.allied_with(c):
+		if h == c or hc == null or not h.is_alive() or not CombatFeatures.has_feature(h, "banneret_shared_resilience") or not h.allied_with(c):
 			continue
-		if str(h.reaction_rules.get("banneret_shared_resilience", "never")) != "auto" or hc.resource_left("indomitable") <= 0:
-			continue
-		if not e.spells.can_react(h) or e.distance(h, c) > 60 or not e.can_see(h, c):
-			continue
-		hc.spend_resource("indomitable")
-		h.reaction_available = false
-		var again := D20Test.roll(e.dice, t.kind, t.modifier + hc.class_level_of("fighter"), t.target, 0, 0, "Shared Resilience", t.crit_range)
-		t.set_natural(again.kept, "Shared Resilience")
-		t.add_bonus(hc.class_level_of("fighter"), "Shared Resilience")
-		_log("reaction", "%s lends %s their resolve (Shared Resilience)" % [h.name(), c.name()], h, [t.describe()])
-		return
+		var banneret := h
+		out.append({"kind": "banneret_shared_resilience", "reactor": h, "trigger": c.id, "sync": "explicit",
+			"title": "Reaction: Shared Resilience?",
+			"text": func() -> String: return "%s. %s can spend Indomitable so it rerolls with +%d." % [D20Responses.line(c, t), banneret.name(), hc.class_level_of("fighter")],
+			"cost": "Reaction and a use of Indomitable",
+			"still": func() -> bool: return not t.success and hc.resource_left("indomitable") > 0 and e.spells.can_react(banneret) \
+				and e.distance(banneret, c) <= 60 and e.can_see(banneret, c),
+			"helps": func() -> bool: return D20Responses.could_reach(t, 20, hc.class_level_of("fighter")),
+			"use": func() -> void:
+				hc.spend_resource("indomitable")
+				banneret.reaction_available = false
+				t.reroll(e.dice, "Shared Resilience", false, c.creature.has_flag("luck"))
+				t.add_bonus(hc.class_level_of("fighter"), "Shared Resilience")
+				_log("reaction", "%s lends %s their resolve (Shared Resilience)" % [banneret.name(), c.name()], banneret, [t.describe()])})
 
 
 func _elemental_smite(c: Combatant, target: Combatant) -> void:
@@ -422,19 +427,26 @@ func _elemental_smite(c: Combatant, target: Combatant) -> void:
 					_log("condition", "A wave throws %s back and down" % x.name(), x)
 
 
-func _noble_scion_save(c: Combatant, t: D20Test) -> void:
+## Noble Scion (Noble Genies 20): while the majesty lasts, a Reaction turns a failed D20 Test of the paladin or an ally
+## in its Aura of Protection into a success. It asks where the roll can pause (its class-tab rule otherwise).
+func noble_scion_offers(c: Combatant, t: D20Test, out: Array) -> void:
 	var e := enc()
-	if t.success or t.target <= 0:
+	if t.target <= 0:
 		return
 	for p in e.combatants:
-		if not p.creature.has_flag("noble_scion") or not (p == c or p.allied_with(c)) or e.distance(p, c) > (30 if CombatFeatures.has_feature(p, "aura_expansion") else 10):
+		if not p.is_alive() or not p.creature.has_flag("noble_scion") or not (p == c or p.allied_with(c)):
 			continue
-		if str(p.reaction_rules.get("noble_scion", "never")) != "auto" or not e.spells.can_react(p):
-			continue
-		p.reaction_available = false
-		t.add_bonus(maxi(0, t.target - t.total), "Noble Scion")
-		_log("reaction", "%s's majesty turns the failure into a success (Noble Scion)" % p.name(), p)
-		return
+		var scion := p
+		out.append({"kind": "noble_scion", "reactor": p, "trigger": c.id, "sync": "explicit",
+			"title": "Reaction: Noble Scion?",
+			"text": func() -> String: return "%s. %s's majesty can turn it into a success." % [D20Responses.line(c, t), scion.name()],
+			"cost": "Reaction",
+			"still": func() -> bool: return not t.success and e.spells.can_react(scion) \
+				and e.distance(scion, c) <= (30 if CombatFeatures.has_feature(scion, "aura_expansion") else 10),
+			"use": func() -> void:
+				scion.reaction_available = false
+				t.add_bonus(maxi(0, t.target - t.total), "Noble Scion")
+				_log("reaction", "%s's majesty turns the failure into a success (Noble Scion)" % scion.name(), scion)})
 
 
 func _bloodthirst(c: Combatant, t: Combatant) -> CombatResult:
@@ -525,24 +537,26 @@ func before_resolve(ctx: Dictionary) -> void:
 		c.set_meta("unravel_live", true)
 
 
-func _unravel(c: Combatant, t: D20Test, keys: Array[String]) -> void:
+func unravel_offers(c: Combatant, t: D20Test, keys: Array[String], out: Array) -> void:
 	var e := enc()
-	if not t.success or t.kind != D20Test.Kind.SAVING_THROW:
+	if t.kind != D20Test.Kind.SAVING_THROW:
 		return
 	for k in keys:
 		if not k.begins_with("save_vs:spell:"):
 			continue
 		var caster := e.get_c(k.substr(14))
 		var cch := _ch(caster)
-		if caster == null or cch == null or not bool(caster.get_meta("unravel_live", false)) or cch.resource_left("channel_divinity") <= 0:
+		if caster == null or cch == null:
 			continue
-		if not e.can_see(caster, c):
-			continue
-		caster.remove_meta("unravel_live")
-		caster.remove_meta("modify_magic")
-		cch.spend_resource("channel_divinity")
-		t.add_bonus(-e.dice.roll_one(6, "Modify Magic"), "Modify Magic")
-		_log("info", "%s unravels %s's resistance (Modify Magic)" % [caster.name(), c.name()], caster, [t.describe()])
+		# Armed on the hotbar ahead of the spell (Modify Magic: Unravel), so it isn't a choice now.
+		out.append({"kind": "modify_magic", "reactor": caster, "forced": true,
+			"still": func() -> bool: return t.success and bool(caster.get_meta("unravel_live", false)) and cch.resource_left("channel_divinity") > 0 and e.can_see(caster, c),
+			"use": func() -> void:
+				caster.remove_meta("unravel_live")
+				caster.remove_meta("modify_magic")
+				cch.spend_resource("channel_divinity")
+				t.add_bonus(-e.dice.roll_one(6, "Modify Magic"), "Modify Magic")
+				_log("info", "%s unravels %s's resistance (Modify Magic)" % [caster.name(), c.name()], caster, [t.describe()])})
 		return
 
 

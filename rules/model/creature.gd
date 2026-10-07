@@ -832,6 +832,15 @@ func _die(reason: String) -> void:
 ## Death Saving Throw (2024): 10+ succeeds; three successes = Stable, three failures = death; a natural 1
 ## counts as two failures, a natural 20 restores 1 Hit Point. Bonuses to saving throws apply.
 func roll_death_save(dice: DiceRoller) -> D20Test:
+	var t := roll_death_save_d20(dice)
+	if t != null:
+		apply_death_save(t)
+	return t
+
+
+## The Death Saving Throw's roll alone, before it counts (what follows the roll can still change it: Heroic
+## Inspiration); apply_death_save counts it. Null if no save is needed.
+func roll_death_save_d20(dice: DiceRoller) -> D20Test:
 	if dead or hp > 0 or stable:
 		return null
 	var bonus := Breakdown.new("Death save")
@@ -841,7 +850,13 @@ func roll_death_save(dice: DiceRoller) -> D20Test:
 			bonus.add_nonzero(m.source_name, mod_value(m, ctx))
 	_add_d20_modifiers(bonus, ctx)
 	var keys: Array[String] = ["save:all", "death_save"]
-	var t := roll_d20(dice, D20Test.Kind.SAVING_THROW, bonus, 10, keys, [], [], "Death save (%s)" % name)
+	return roll_d20(dice, D20Test.Kind.SAVING_THROW, bonus, 10, keys, [], [], "Death save (%s)" % name)
+
+
+## Counts a Death Saving Throw rolled with roll_death_save_d20.
+func apply_death_save(t: D20Test) -> void:
+	if dead or hp > 0 or stable:
+		return
 	if t.kept == 20 or (t.kept >= 18 and has_flag("survivor")):
 		heal(1, "natural 20 on a Death Saving Throw" if t.kept == 20 else "Survivor: %d counts as a 20" % t.kept)
 	elif t.kept == 1:
@@ -854,7 +869,6 @@ func roll_death_save(dice: DiceRoller) -> D20Test:
 		_die("three Death Saving Throw failures")
 	elif death_successes >= 3:
 		stabilize()
-	return t
 
 
 func stabilize() -> void:

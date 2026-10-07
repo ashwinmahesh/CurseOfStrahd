@@ -1772,24 +1772,37 @@ func against_damage(st: Dictionary, total: Callable, cut: Callable, out: Array) 
 			break
 
 
-## A save `t` just failed: Countercharm (Bard 7) lets it reroll a save against Charmed or Frightened with Advantage.
-func after_failed_save(t: Combatant, test: D20Test, keys: Array[String]) -> void:
+## A failed save (D20Responses): Countercharm (Bard 7) from the bard or a bard within 30 ft, against being Charmed or
+## Frightened (a reroll with Advantage), and the Zealot's Fanatical Focus (once per Rage, a reroll with the Rage
+## Damage bonus).
+func failed_save_offers(t: Combatant, test: D20Test, keys: Array[String], out: Array) -> void:
 	var e := enc()
-	if not ("save_vs:charmed" in keys or "save_vs:frightened" in keys):
-		return
-	for b in e.allies_of(t):
-		if has(b, "countercharm") and e.spells.can_react(b) and e.distance(b, t) <= 30:
-			b.reaction_available = false
-			var a := e.dice.d20("Countercharm")
-			var a2 := e.dice.d20("Countercharm")
-			test.set_natural(maxi(a, a2), "Countercharm (%s)" % b.name())
-			e.log.add("info", "%s's Countercharm steadies %s" % [b.name(), t.name()], b.id, [test.describe()])
-			return
+	if "save_vs:charmed" in keys or "save_vs:frightened" in keys:
+		for b in e.living():
+			if not has(b, "countercharm") or not (b == t or b.allied_with(t)) or e.distance(b, t) > 30:
+				continue
+			var bard := b
+			out.append({"kind": "countercharm", "reactor": b, "trigger": t.id, "title": "Reaction: Countercharm?",
+				"text": func() -> String: return "%s. %s's Countercharm has the save rolled again with Advantage." % [D20Responses.line(t, test), bard.name()],
+				"cost": "Reaction",
+				"still": func() -> bool: return not test.success and e.spells.can_react(bard),
+				"helps": func() -> bool: return D20Responses.could_reach(test),
+				"use": func() -> void:
+					bard.reaction_available = false
+					test.reroll(e.dice, "Countercharm (%s)" % bard.name(), true, t.creature.has_flag("luck"))
+					e.log.add("reaction", "%s's Countercharm steadies %s" % [bard.name(), t.name()], bard.id, [test.describe()])})
 	# Zealot's Fanatical Focus: once per Rage, reroll a failed save with the Rage Damage bonus.
-	if has(t, "fanatical_focus") and raging(t) and not t.has_meta("fanatical_used"):
-		t.set_meta("fanatical_used", true)
-		test.set_natural(e.dice.d20("Fanatical Focus"), "Fanatical Focus")
-		test.add_bonus(rage_bonus(t), "Fanatical Focus")
+	if has(t, "fanatical_focus"):
+		out.append({"kind": "fanatical_focus", "reactor": t, "title": "Fanatical Focus?",
+			"text": func() -> String: return "%s. Reroll the save with +%d and use the new roll?" % [D20Responses.line(t, test), rage_bonus(t)],
+			"cost": "Fanatical Focus (once per Rage)", "spends_reaction": false,
+			"still": func() -> bool: return not test.success and raging(t) and not t.has_meta("fanatical_used"),
+			"helps": func() -> bool: return D20Responses.could_reach(test, 20, rage_bonus(t)),
+			"use": func() -> void:
+				t.set_meta("fanatical_used", true)
+				test.reroll(e.dice, "Fanatical Focus", false, t.creature.has_flag("luck"))
+				test.add_bonus(rage_bonus(t), "Fanatical Focus")
+				e.log.add("info", "%s's fury carries it through (Fanatical Focus)" % t.name(), t.id, [test.describe()])})
 
 
 # --- Auras ------------------------------------------------------------------------------------------------
@@ -2141,63 +2154,99 @@ func fey_step_rider(c: Combatant, from: Vector2i) -> void:
 		_temp(c, e.dice.roll_one(10, "Refreshing Step"), "Refreshing Step")
 
 
-## Before a creature's d20: Restore Balance (Clockwork Sorcery 3) cancels an ally's Disadvantage or a foe's Advantage
-## within 60 ft (Charisma-modifier uses per Long Rest). Called after the roll: it rerolls the d20 straight.
-func balance_roll(c: Combatant, t: D20Test) -> void:
+## Restore Balance (Clockwork Sorcery 3): a sorcerer within 60 ft who sees the roller cancels an ally's Disadvantage or
+## a foe's Advantage on a roll about to be made. Rolled straight it takes the first die (Charisma-modifier uses per
+## Long Rest). The roll is settled before anyone could be asked, so it's never asked: it's used when it changes the
+## result, unless turned Off (deviations.md).
+func balance_offers(c: Combatant, t: D20Test, out: Array) -> void:
 	var e := enc()
-	if not (t.advantage or t.disadvantage) or (t.advantage and t.disadvantage):
+	if t.target <= 0 or not (t.advantage or t.disadvantage) or t.rolls.size() < 2:
 		return
 	for s in e.living():
-		if not has(s, "restore_balance") or not e.spells.can_react(s) or e.distance(s, c) > 60:
+		if not has(s, "restore_balance") or e.distance(s, c) > 60 or (s != c and not e.can_see(s, c)):
 			continue
-		var friendly := s.allied_with(c)
-		if (friendly and t.disadvantage) or (not friendly and t.advantage):
-			if _uses(s, "restore_balance", "Restore Balance", maxi(1, s.creature.ability_mod(&"cha")), "long") <= 0:
-				continue
-			_ch(s).spend_resource("restore_balance")
-			s.reaction_available = false
-			t.set_natural(t.rolls[0] if not t.rolls.is_empty() else t.kept, "Restore Balance (%s)" % s.name())
-			e.log.add("reaction", "%s restores balance to %s's roll" % [s.name(), c.name()], s.id, [t.describe()])
-			return
+		var friendly := s == c or s.allied_with(c)
+		if (friendly and not t.disadvantage) or (not friendly and not t.advantage):
+			continue
+		var sorc := s
+		var helps := func() -> bool: return t.would_succeed_with(t.rolls[0]) != t.success and (t.disadvantage if friendly else t.advantage)
+		out.append({"kind": "restore_balance", "reactor": s, "trigger": c.id, "ask": false, "title": "Reaction: Restore Balance?",
+			"text": "%s is about to roll with %s." % [c.name(), "Disadvantage" if friendly else "Advantage"], "cost": "Reaction and a use of Restore Balance",
+			"still": func() -> bool: return helps.call() and e.spells.can_react(sorc) \
+				and _uses(sorc, "restore_balance", "Restore Balance", maxi(1, sorc.creature.ability_mod(&"cha")), "long") > 0,
+			"use": func() -> void:
+				_ch(sorc).spend_resource("restore_balance")
+				sorc.reaction_available = false
+				var first := t.rolls[0]
+				t.rolls = [first]
+				t.advantage = false
+				t.disadvantage = false
+				t.set_natural(first, "Restore Balance (%s)" % sorc.name())
+				e.log.add("reaction", "%s restores balance to %s's roll" % [sorc.name(), c.name()], sorc.id, [t.describe()])})
 
 
-## After any D20 Test a character makes: Dark One's Own Luck (Fiend 6), Bend Luck (Wild Magic 6) from an ally,
-## Cosmic Omen (Stars 6), Tides of Chaos.
-func after_d20(c: Combatant, t: D20Test) -> void:
+## After a D20 Test (D20Responses): Cosmic Omen (Stars 6: Woe takes a d6 from a foe's roll that only just succeeded,
+## Weal adds one to an ally's that only just failed; a roll about to be made, so never asked), Dark One's Own Luck
+## (Fiend 6: 1d10 on its own check or save) and Bend Luck (Wild Magic 6: a Reaction and a Sorcery Point for 1d4 on
+## another creature's roll, added for an ally, taken away from a foe).
+func d20_offers(c: Combatant, t: D20Test, out: Array) -> void:
 	var e := enc()
 	if t.target <= 0:
 		return
-	balance_roll(c, t)
-	if t.success:
-		# Cosmic Omen (Woe): subtract a d6 from a foe's roll that only just succeeded.
-		for s in e.hostiles_of(c):
-			if has(s, "cosmic_omen") and str(s.get_meta("omen", "weal")) == "woe" and e.spells.can_react(s) and t.total - t.target < 6 \
-					and e.distance(s, c) <= 30 and _uses(s, "cosmic_omen", "Cosmic Omen", maxi(1, s.creature.ability_mod(&"wis")), "long") > 0:
-				_ch(s).spend_resource("cosmic_omen")
-				s.reaction_available = false
-				t.add_bonus(-e.dice.roll_one(6, "Cosmic Omen (Woe)"), "Cosmic Omen (%s)" % s.name())
-				break
-		return
-	var short := t.target - t.total
+	for s in e.hostiles_of(c):
+		if not has(s, "cosmic_omen") or str(s.get_meta("omen", "weal")) != "woe" or e.distance(s, c) > 30 or not e.can_see(s, c):
+			continue
+		var woe := s
+		out.append({"kind": "cosmic_omen", "reactor": s, "trigger": c.id, "ask": false, "title": "Reaction: Cosmic Omen (Woe)?",
+			"text": "%s is about to roll." % c.name(), "cost": "Reaction and a use of Cosmic Omen",
+			"still": func() -> bool: return t.success and not t.critical and t.total - t.target < 6 and e.spells.can_react(woe) \
+				and _uses(woe, "cosmic_omen", "Cosmic Omen", maxi(1, woe.creature.ability_mod(&"wis")), "long") > 0,
+			"use": func() -> void:
+				_ch(woe).spend_resource("cosmic_omen")
+				woe.reaction_available = false
+				t.add_bonus(-e.dice.roll_one(6, "Cosmic Omen (Woe)"), "Cosmic Omen (%s)" % woe.name())
+				e.log.add("reaction", "%s reads woe in the stars for %s" % [woe.name(), c.name()], woe.id, [t.describe()])})
 	var ch := _ch(c)
-	if ch != null and has(c, "dark_ones_own_luck") and t.kind != D20Test.Kind.ATTACK_ROLL and short <= 10 \
-			and _uses(c, "dark_ones_own_luck", "Dark One's Own Luck", maxi(1, c.creature.ability_mod(&"cha")), "long") > 0:
-		ch.spend_resource("dark_ones_own_luck")
-		t.add_bonus(e.dice.roll_one(10, "Dark One's Own Luck"), "Dark One's Own Luck")
-		if t.success:
-			return
+	if ch != null and has(c, "dark_ones_own_luck") and t.kind != D20Test.Kind.ATTACK_ROLL:
+		out.append({"kind": "dark_ones_own_luck", "reactor": c, "title": "Dark One's Own Luck?",
+			"text": func() -> String: return "%s. Add 1d10 to the roll?" % D20Responses.line(c, t),
+			"cost": func() -> String: return "A use of Dark One's Own Luck (%d left)" % ch.resource_left("dark_ones_own_luck"), "spends_reaction": false,
+			"still": func() -> bool: return not t.success and t.target - t.total <= 10 \
+				and _uses(c, "dark_ones_own_luck", "Dark One's Own Luck", maxi(1, c.creature.ability_mod(&"cha")), "long") > 0,
+			"use": func() -> void:
+				ch.spend_resource("dark_ones_own_luck")
+				t.add_bonus(e.dice.roll_one(10, "Dark One's Own Luck"), "Dark One's Own Luck")
+				e.log.add("info", "%s calls on the Dark One's luck" % c.name(), c.id, [t.describe()])})
+	for s in e.combatants:
+		if s == c or not s.is_alive() or not has(s, "bend_luck") or _ch(s) == null or not e.can_see(s, c):
+			continue
+		var sorc := s
+		var friendly := s.allied_with(c)
+		out.append({"kind": "bend_luck", "reactor": s, "trigger": c.id, "sync": "auto" if friendly else "explicit",
+			"title": "Reaction: Bend Luck?",
+			"text": func() -> String: return "%s. %s can bend luck: 1d4 %s the roll." % [D20Responses.line(c, t), sorc.name(), "added to" if friendly else "taken from"],
+			"cost": "Reaction and 1 Sorcery Point",
+			"still": func() -> bool: return e.spells.can_react(sorc) and _ch(sorc).resource_left("sorcery_points") > 0 \
+				and ((friendly and not t.success and t.target - t.total <= 4) or (not friendly and t.success and not t.critical and t.total - t.target <= 3)),
+			"use": func() -> void:
+				_ch(sorc).spend_resource("sorcery_points")
+				sorc.reaction_available = false
+				var v := e.dice.roll_one(4, "Bend Luck")
+				t.add_bonus(v if friendly else -v, "Bend Luck (%s)" % sorc.name())
+				e.log.add("reaction", "%s bends %s's luck" % [sorc.name(), c.name()], sorc.id, [t.describe()])})
 	for s in e.allies_of(c):
-		if t.success:
-			return
-		if has(s, "bend_luck") and s != c and e.spells.can_react(s) and _ch(s).resource_left("sorcery_points") > 0 and short <= 4 and e.distance(s, c) <= 60:
-			_ch(s).spend_resource("sorcery_points")
-			s.reaction_available = false
-			t.add_bonus(e.dice.roll_one(4, "Bend Luck"), "Bend Luck (%s)" % s.name())
-		elif has(s, "cosmic_omen") and str(s.get_meta("omen", "weal")) == "weal" and e.spells.can_react(s) and short <= 6 and e.distance(s, c) <= 30 \
-				and _uses(s, "cosmic_omen", "Cosmic Omen", maxi(1, s.creature.ability_mod(&"wis")), "long") > 0:
-			_ch(s).spend_resource("cosmic_omen")
-			s.reaction_available = false
-			t.add_bonus(e.dice.roll_one(6, "Cosmic Omen (Weal)"), "Cosmic Omen (%s)" % s.name())
+		if not has(s, "cosmic_omen") or str(s.get_meta("omen", "weal")) != "weal" or e.distance(s, c) > 30 or not e.can_see(s, c):
+			continue
+		var weal := s
+		out.append({"kind": "cosmic_omen", "reactor": s, "trigger": c.id, "ask": false, "title": "Reaction: Cosmic Omen (Weal)?",
+			"text": "%s is about to roll." % c.name(), "cost": "Reaction and a use of Cosmic Omen",
+			"still": func() -> bool: return not t.success and t.target - t.total <= 6 and e.spells.can_react(weal) \
+				and _uses(weal, "cosmic_omen", "Cosmic Omen", maxi(1, weal.creature.ability_mod(&"wis")), "long") > 0,
+			"use": func() -> void:
+				_ch(weal).spend_resource("cosmic_omen")
+				weal.reaction_available = false
+				t.add_bonus(e.dice.roll_one(6, "Cosmic Omen (Weal)"), "Cosmic Omen (%s)" % weal.name())
+				e.log.add("reaction", "%s reads weal in the stars for %s" % [weal.name(), c.name()], weal.id, [t.describe()])})
 
 
 ## After a spell with a slot: Beguiling Magic (Glamour 3), Wild Magic Surge (Wild Magic 3), Inspiring Smite (Glory 3),
