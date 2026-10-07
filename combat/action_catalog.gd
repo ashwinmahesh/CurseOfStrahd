@@ -1104,6 +1104,32 @@ func move_reach(c: Combatant) -> Dictionary:
 
 
 ## Moving to `cell` (cb_01): {ok, cost, left, path, warnings, reason}. `reach` is move_reach(c), cached by the HUD.
+## The right-click menu for a square in a fight (owner ask, 2026-10-07): Move here (or why not: you can pass through
+## an ally but not stop on them), then everything `c` could do to whoever stands there right now (attacks, spells,
+## Help, Stabilize, items...) and Info. [{id, label, enabled, why, action?}], id "move", "info" or "act:<action id>".
+func square_actions(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var o := e.occupant_at(cell)
+	if cell != c.cell:
+		var mp := move_preview(c, cell, reach)
+		var why := str(mp["reason"])
+		if why == "Occupied":
+			why = "You can move through %s's space but not stop in it" % o.name() if o != null and c.allied_with(o) else "Someone is there"
+		out.append({"id": "move", "label": "Move here (%d ft)" % int(mp["cost"]) if bool(mp["ok"]) else "Move here", "enabled": bool(mp["ok"]), "why": why})
+	if o == null or o == c:
+		return out
+	var seen := {}
+	for a in actions_for(c):
+		if not bool(a["legal"]) or str(a["targeting"]) in ["none", "self", "point", "direction", "place", "multi"]:
+			continue
+		if seen.has(str(a["label"])) or target_why(c, a, o) != "":
+			continue
+		seen[str(a["label"])] = true
+		out.append({"id": "act:%s" % a["id"], "label": str(a["label"]), "enabled": true, "action": a})
+	out.append({"id": "info", "label": "Info"})
+	return out
+
+
 func move_preview(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Dictionary:
 	var r := reach if not reach.is_empty() else move_reach(c)
 	var path: Array[Vector2i] = []

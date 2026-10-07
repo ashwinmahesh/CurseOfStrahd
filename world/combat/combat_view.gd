@@ -89,6 +89,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 		_update_hover())
 	hud.radial_picked.connect(_radial)
 	hud.cast_at_level.connect(func(action: Dictionary, level: int) -> void: _choose(action, level))
+	hud.square_picked.connect(_square_picked)
 	if e.state == Encounter.State.SETUP:
 		if e.title != "":
 			e.log.add("turn", e.title, "")
@@ -459,6 +460,55 @@ func _confirm_at() -> void:
 	_advance()
 
 
+## Right-click on a square on your turn: one menu with Move here and everything you could do to whoever is there.
+var _menu_cell := Vector2i(-1, -1)
+var _menu_items: Array[Dictionary] = []
+
+
+func _open_square_menu(at: Vector2) -> bool:
+	var c := _player()
+	if c == null or e.current() != c:
+		return false
+	_pick_from_mouse(at)
+	var t := _target_under()
+	var cell := t.combatant.cell if t != null else hover_cell
+	if cell.x < 0:
+		return false
+	_menu_cell = cell
+	_menu_items = catalog.square_actions(c, cell, _reach)
+	if _menu_items.is_empty():
+		return false
+	var o := e.occupant_at(cell)
+	var shown: Array[Dictionary] = []
+	for it in _menu_items:
+		shown.append({"id": it["id"], "label": it["label"], "enabled": it.get("enabled", true), "why": it.get("why", "")})
+	hud.hide_tooltip()
+	hud.open_square_menu(o.name() if o != null else "This square", shown, at)
+	return true
+
+
+func _square_picked(id: String) -> void:
+	var c := _player()
+	if c == null or mode != Mode.IDLE:
+		return
+	var o := e.occupant_at(_menu_cell)
+	if id == "move":
+		hover_token = null
+		hover_cell = _menu_cell
+		_confirm_at()
+		return
+	if id == "info":
+		if o != null and o.is_player_controlled():
+			_inspect(o.id)
+		elif o != null:
+			hud.show_details(o.name(), ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)])
+		return
+	for it in _menu_items:
+		if str(it["id"]) == id and it.has("action") and o != null:
+			_perform(it["action"] as Dictionary, [o], Vector2.INF, Vector2.ZERO)
+			return
+
+
 func _confirm_target(c: Combatant, t: CombatToken) -> void:
 	var kind := str(selected["targeting"])
 	match kind:
@@ -610,6 +660,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_pick_from_mouse(mb.position)
 			_confirm_at()
 		elif mb.button_index == MOUSE_BUTTON_RIGHT:
+			if mode == Mode.IDLE and _open_square_menu(mb.position):
+				return
 			_cancel_targeting()
 			_update_hover()
 	elif event.is_action_pressed(&"combat_confirm"):

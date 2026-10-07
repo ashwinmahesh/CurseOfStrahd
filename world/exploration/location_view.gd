@@ -895,6 +895,9 @@ func actions_at(cell: Vector2i) -> Dictionary:
 	for i in members.size():
 		if members[i].cell == cell:
 			var ch := members[i].creature as Character
+			# Party members share squares outside a fight, so the leader can walk onto anyone's.
+			if i != 0:
+				out.append({"id": "walk", "label": "Walk here"})
 			out.append({"id": "lead:%d" % i, "label": "Lead the party", "enabled": i != 0 and ch.hp > 0,
 				"why": "Already leading" if i == 0 else ("Can't lead while down" if ch.hp <= 0 else "")})
 			out.append({"id": "sheet:%d" % i, "label": "Character sheet"})
@@ -916,6 +919,7 @@ func actions_at(cell: Vector2i) -> Dictionary:
 		"npc":
 			var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
 			title = str(npc.get("name", spec["npc"]))
+			out.append({"id": "walk", "label": "Walk over"})
 			out.append({"id": "talk", "label": "Talk", "enabled": str(spec.get("dialogue", "")) != "",
 				"why": "" if str(spec.get("dialogue", "")) != "" else "Nothing to say"})
 			if npc.has("shop"):
@@ -965,6 +969,12 @@ func act(cell: Vector2i, action_id: String) -> void:
 	var thing := thing_at(cell)
 	match action_id:
 		"walk":
+			# Up to someone in the world (an NPC): stop beside them rather than on them.
+			if not thing.is_empty() and str(thing["kind"]) == "npc":
+				var beside := _adjacent_free(cell)
+				if beside != Vector2i(-1, -1):
+					walk_to(beside)
+				return
 			walk_to(cell)
 			return
 		"search_here":
