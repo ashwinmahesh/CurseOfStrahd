@@ -9,6 +9,7 @@ extends RefCounted
 ##        {kind: "options", options: [{text, label, check: {skill, dc, bonus, chance, who}, enabled}]}
 ##        {kind: "check", who, portrait, skill, dc, total, success, detail, said}
 ##        {kind: "notice", text}
+##        {kind: "cutscene", id, image, focus}: a full-screen picture under what follows (id "" takes it away)
 ##        {kind: "end", combat: encounter id or "", end_game: the conversation ended the campaign (`end_game`)}
 
 ## The Narrator's portrait (art/portraits/narrator.png), on their lines here and in the exploration box.
@@ -277,6 +278,13 @@ func next() -> Dictionary:
 					var text := narrator.line(str(s["key"]), st, speaker)
 					if text != "":
 						return _line_beat("Narrator", "", text)
+			"cutscene":
+				# A full-screen picture behind the lines that follow (story/cutscenes.gd); `cutscene end` takes it away.
+				pc += 1
+				var cut := "" if str(s["id"]) == "end" else str(s["id"])
+				var img := Cutscenes.image(cut, st) if cut != "" else ""
+				if cut == "" or img != "":
+					return {"kind": "cutscene", "id": cut, "image": img, "focus": Cutscenes.focus(cut)}
 			"end_game":
 				# The campaign ends here (ADR 0014): the ending that holds now is recorded; the game plays it when the
 				# conversation closes.

@@ -1,7 +1,8 @@
 extends Node
 ## Turn-based exploring (F7) for captures, in the Wizard of Wines cellar with the druid and his blights at their dig:
-## the party sneaking in rounds with the turn-based panel, the foes in plain view, a walk's trail and cost, Attack on a
-## foe's right-click menu, and the fight opening with the unaware foes surprised and a hidden member.
+## the party sneaking in rounds with the turn-based panel, the foes in plain view with their eyes (U10), a walk's trail
+## and cost, the eyes and reach turning red for a party that sneaks badly, Attack on a foe's right-click menu, and the
+## fight opening with the unaware foes surprised and a hidden member.
 ## make capture SCENE=res://tools/capture/plan_capture.tscn NAME=plan FRAMES=40
 
 var root: Node
@@ -73,6 +74,16 @@ func capture_shots(tool: Node, out: String) -> void:
 	LocationPlan.preview(view, Vector2i(17, 6))
 	hud.hint(LocationPlan.hover_text(view, Vector2i(17, 6)), Vector2(900, 420))
 	await _shoot(tool, out + "_1_turn_based.png")
+	# Who can see you (U10): with poorer Stealth the overseer's eye turns red, its reach shows, and the hint warns.
+	for m: Combatant in view.members:
+		view.sneak_totals[m.creature] = 9
+	await tool.call("wait_frames", 4)
+	LocationPlan.preview(view, Vector2i(17, 6))
+	hud.hint(LocationPlan.hover_text(view, Vector2i(17, 6)), Vector2(900, 420))
+	await _shoot(tool, out + "_1b_who_can_see_you.png")
+	for m: Combatant in view.members:
+		view.sneak_totals[m.creature] = 26
+	await tool.call("wait_frames", 4)
 	var foe := Vector2i(-1, -1)
 	for w in view.waiting:
 		if LocationStealth.is_shown(w):

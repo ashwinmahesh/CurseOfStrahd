@@ -28,6 +28,28 @@ static BOOL nf_set_policy(id self, SEL _cmd, NSApplicationActivationPolicy polic
 static void nf_order_back(id self, SEL _cmd, id sender) { [(NSWindow *)self orderBack:sender]; }
 static void nf_order_back_regardless(id self, SEL _cmd) { [(NSWindow *)self orderBack:nil]; }
 
+// NOFOCUS_HIDE=1 (make import, which runs the editor for its GPU texture compressor): windows never go on screen at
+// all. The editor restores its own full-size layout whatever --position says, so ordering it behind isn't enough.
+static BOOL nf_hide;
+static void (*nf_order_window_orig)(id, SEL, NSWindowOrderingMode, NSInteger);
+static void nf_order_window(id self, SEL _cmd, NSWindowOrderingMode place, NSInteger other) {
+	if (place == NSWindowOut) {
+		nf_order_window_orig(self, _cmd, place, other);
+	} else {
+		nf_note("showing a window (hidden)");
+	}
+}
+static void nf_hidden_sender(id self, SEL _cmd, id sender) { nf_note("ordering a window front (hidden)"); }
+static void nf_hidden(id self, SEL _cmd) { nf_note("orderFrontRegardless (hidden)"); }
+static void (*nf_set_visible_orig)(id, SEL, BOOL);
+static void nf_set_visible(id self, SEL _cmd, BOOL flag) {
+	if (!flag) {
+		nf_set_visible_orig(self, _cmd, flag);
+	} else {
+		nf_note("setIsVisible:YES (hidden)");
+	}
+}
+
 // Godot's "unbundled activation hack" turns the process into a foreground app before activating it; AppKit's own
 // switch to an accessory goes through here too and is let through.
 static OSStatus nf_transform(const ProcessSerialNumber *psn, ProcessApplicationTransformState state) {
@@ -58,6 +80,18 @@ __attribute__((constructor)) static void nf_init(void) {
 	Method policy = class_getInstanceMethod(app, @selector(setActivationPolicy:));
 	nf_set_policy_orig = (BOOL (*)(id, SEL, NSApplicationActivationPolicy))method_setImplementation(policy, (IMP)nf_set_policy);
 	Class win = [NSWindow class];
+	nf_hide = getenv("NOFOCUS_HIDE") != NULL;
+	if (nf_hide) {
+		nf_replace(win, @selector(makeKeyAndOrderFront:), (IMP)nf_hidden_sender);
+		nf_replace(win, @selector(orderFront:), (IMP)nf_hidden_sender);
+		nf_replace(win, @selector(orderBack:), (IMP)nf_hidden_sender);
+		nf_replace(win, @selector(orderFrontRegardless), (IMP)nf_hidden);
+		Method order = class_getInstanceMethod(win, @selector(orderWindow:relativeTo:));
+		nf_order_window_orig = (void (*)(id, SEL, NSWindowOrderingMode, NSInteger))method_setImplementation(order, (IMP)nf_order_window);
+		Method visible = class_getInstanceMethod(win, @selector(setIsVisible:));
+		nf_set_visible_orig = (void (*)(id, SEL, BOOL))method_setImplementation(visible, (IMP)nf_set_visible);
+		return;
+	}
 	nf_replace(win, @selector(makeKeyAndOrderFront:), (IMP)nf_order_back);
 	nf_replace(win, @selector(orderFront:), (IMP)nf_order_back);
 	nf_replace(win, @selector(orderFrontRegardless), (IMP)nf_order_back_regardless);
