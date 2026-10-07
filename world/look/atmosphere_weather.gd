@@ -306,13 +306,15 @@ static func _swell_curve() -> CurveTexture:
 	return ct
 
 
-## Candlelight spilling from the lit windows onto the street after dark.
+## Candlelight spilling from the lit windows onto the street after dark. A window is a painted sprite (lit when its
+## art is the lit window) or, on a house built from the kit, a marker where its glass is (meta "lit"); either faces
+## out of the house along its +z, or says which way is out in its meta "out".
 func _window_light() -> void:
 	if _board == null:
 		return
 	for key: String in _board.windows:
-		var sp := _board.windows[key] as Sprite3D
-		if sp == null or sp.texture == null or not sp.texture.resource_path.contains("window_lit"):
+		var w := _board.windows[key] as Node3D
+		if w == null or not _lit_window(w):
 			continue
 		var l := OmniLight3D.new()
 		l.name = "WindowLight"
@@ -320,10 +322,17 @@ func _window_light() -> void:
 		l.omni_range = 3.2
 		l.light_energy = 1.3
 		l.omni_attenuation = 1.4
-		var out := sp.global_basis.z
-		l.position = sp.position + out * 0.7 + Vector3(0, -0.2, 0)
-		sp.get_parent().add_child(l)
+		var out := (w.get_meta("out", w.basis.z) as Vector3).normalized()
+		l.position = w.position + out * 0.7 + Vector3(0, -0.2, 0)
+		w.get_parent().add_child(l)
 		night_lights.append(l)
+
+
+static func _lit_window(w: Node3D) -> bool:
+	if w is Sprite3D:
+		var sp := w as Sprite3D
+		return sp.texture != null and sp.texture.resource_path.contains("window_lit")
+	return bool(w.get_meta("lit", false))
 
 
 ## Sparks rising off every open fire (the flames the location's lights and burning props put up).

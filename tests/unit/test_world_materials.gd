@@ -1,7 +1,7 @@
 extends TestCase
 ## How the world's surfaces take the light (Improvement Ideas W3, docs/art/textures.md): the Modern finish lights them
-## like painted 3D with a roughness and metal per surface, Classic keeps its cel bands, and whatever darkens a piece
-## finds its colour either way.
+## like painted 3D with a roughness and metal per surface and without ink lines (W15), Classic keeps its cel bands and
+## lines, and whatever darkens a piece finds its colour either way.
 
 var _was := ""
 
@@ -48,3 +48,43 @@ func test_the_colour_key_is_found_in_either_finish() -> void:
 		Look.set_style(s, false)
 		assert_eq(Look.tint_key(Look.cel("walnut")), "albedo", "%s flat colour" % s)
 		assert_eq(Look.tint_key(Look.cel_textured("village/cobbles")), "tint", "%s texture" % s)
+
+
+## The world's ink lines (W15): Classic keeps them; Modern leaves them to the characters.
+func test_world_ink_lines_only_in_classic() -> void:
+	var mat := ShaderMaterial.new()
+	mat.shader = Look.POST_SHADER
+	Look.set_style("modern", false)
+	Look.style_post(mat)
+	assert_false(bool(mat.get_shader_parameter("outlines")), "no ink lines on the Modern world")
+	Look.set_style("classic", false)
+	Look.style_post(mat)
+	assert_true(bool(mat.get_shader_parameter("outlines")), "Classic keeps them")
+
+
+## Edge-matched variants (W4): a surface listing variants gets one picked per tile, its own tile as layer 0.
+func test_variants_become_layers() -> void:
+	Look.set_style("modern", false)
+	var m := ShaderMaterial.new()
+	m.shader = Look.LIT_WORLD_SHADER
+	var info := {"variants": [{"file": "art/textures/village/mud_road_hd.png"}]}
+	Look._set_variants(m, info, "res://art/textures/village/cobbles_hd.png")
+	assert_eq(int(m.get_shader_parameter("layer_count")), 2, "the tile and its variant")
+	var arr := m.get_shader_parameter("albedo_layers") as Texture2DArray
+	assert_true(arr != null and arr.get_layers() == 2, "as one texture array")
+	assert_true(m.get_shader_parameter("normal_layers") is Texture2DArray, "with normal maps made for each")
+	var plain := ShaderMaterial.new()
+	plain.shader = Look.LIT_WORLD_SHADER
+	Look._set_variants(plain, {}, "res://art/textures/village/cobbles_hd.png")
+	assert_eq(int(plain.get_shader_parameter("layer_count") if plain.get_shader_parameter("layer_count") != null else 0), 0,
+		"no variants, no layers")
+
+
+## Broad patches (W4) only where the texture manifest names the noise to draw them from.
+func test_no_macro_without_its_noise() -> void:
+	Look.set_style("modern", false)
+	if str(Look.textures().get("macro_file", "")) != "":
+		return
+	var m := Look.cel_textured("village/cobbles")
+	var s: Variant = m.get_shader_parameter("macro_strength")
+	assert_true(s == null or float(s) == 0.0, "no macro noise, no patches")
