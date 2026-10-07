@@ -1592,14 +1592,14 @@
       ],
       "size": [
         1.857,
-        2.987,
+        2.988,
         1.947
       ],
       "materials": [
         "pal_ash_violet",
         "pal_blood"
       ],
-      "triangles": 2180,
+      "triangles": 2208,
       "turns": true
     },
     "dead_tree_b": {
@@ -1610,14 +1610,14 @@
       ],
       "size": [
         1.509,
-        3.431,
+        3.432,
         2.076
       ],
       "materials": [
         "pal_ash_violet",
         "pal_blood"
       ],
-      "triangles": 2180,
+      "triangles": 2208,
       "turns": true
     },
     "bramble_a": {
@@ -5296,19 +5296,20 @@
         "windmill"
       ],
       "size": [
-        3.973,
-        6.287,
-        1.9
+        3.969,
+        6.285,
+        3.839
       ],
       "materials": [
-        "pal_ash_violet",
-        "pal_bone_dark",
+        "pal_night",
+        "pal_parchment",
         "pal_peat",
-        "pal_slate",
+        "pal_rust",
         "pal_umber",
-        "tex_church__stone_wall"
+        "tex_church__stone_wall",
+        "tex_village__house_wall"
       ],
-      "triangles": 338,
+      "triangles": 802,
       "big": true
     },
     "bell_tower": {
@@ -5384,15 +5385,16 @@
         "standing_stones"
       ],
       "size": [
-        1.89,
-        2.264,
-        0.834
+        1.992,
+        2.2,
+        0.872
       ],
       "materials": [
         "pal_pewter",
+        "pal_silver",
         "pal_stone_deep"
       ],
-      "triangles": 540,
+      "triangles": 408,
       "big": true,
       "turns": true
     },
@@ -5482,16 +5484,19 @@
         "gulthias_tree"
       ],
       "size": [
-        6.95,
-        7.184,
-        6.596
+        5.626,
+        6.979,
+        5.381
       ],
       "materials": [
+        "pal_ash_violet",
         "pal_blood",
-        "pal_bruise",
+        "pal_blood_deep",
+        "pal_bone",
+        "pal_bone_dark",
         "pal_moon_blue"
       ],
-      "triangles": 2320,
+      "triangles": 3092,
       "big": true
     },
     "ribbon_tree": {
@@ -5514,7 +5519,7 @@
         "pal_slate",
         "pal_stone"
       ],
-      "triangles": 2348,
+      "triangles": 2376,
       "big": true
     }
   }
