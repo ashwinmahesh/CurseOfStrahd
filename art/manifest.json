@@ -5981,6 +5981,141 @@
       "sprite_flags": [
         "BODY=slither"
       ]
+    },
+    {
+      "id": "rahadin",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/rahadin_turnaround.png",
+      "sprites": "art/sprites/rahadin/walk.tres",
+      "portrait": "art/portraits/rahadin.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Rahadin, Strahd's chamberlain: a small, slight, very precise dusk elf man with ash-grey dark skin, sharp severe features, cold pale grey eyes and long straight black hair tied back, wearing an immaculate high-collared black doublet and black breeches with a black half-cape, a curved scimitar at his hip and a bandolier of small darts. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "ludmilla_vilisevic",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/ludmilla_vilisevic_turnaround.png",
+      "sprites": "art/sprites/ludmilla_vilisevic/walk.tres",
+      "portrait": "art/portraits/ludmilla_vilisevic.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Ludmilla Vilisevic, the eldest of Strahd's vampire brides: a tall, cold, beautiful pale woman with dark auburn hair pinned up in an elegant old-fashioned style, red eyes and the hint of fangs, wearing an elegant high-collared gown of deep wine-red velvet with black lace and a cameo brooch. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "anastrasya_karelova",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/anastrasya_karelova_turnaround.png",
+      "sprites": "art/sprites/anastrasya_karelova/walk.tres",
+      "portrait": "art/portraits/anastrasya_karelova.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Anastrasya Karelova, the youngest of Strahd's vampire brides: a slight, pale young woman with long loose straw-blonde hair, sad red eyes and the hint of fangs, wearing a borrowed pale lilac silk gown a little too large for her, with a dark ribbon at her throat. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "volenta_popofsky",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/volenta_popofsky_turnaround.png",
+      "sprites": "art/sprites/volenta_popofsky/walk.tres",
+      "portrait": "art/portraits/volenta_popofsky.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Volenta Popofsky, Strahd's third vampire bride: a small, sprightly pale young woman with short wild dark curls, bright gleeful red eyes and a toothy grin with fangs, wearing a short-skirted dark crimson and black dress with ruffles, black stockings and buckled shoes. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "escher",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/escher_turnaround.png",
+      "sprites": "art/sprites/escher/walk.tres",
+      "portrait": "art/portraits/escher.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Escher, a vain young nobleman turned vampire spawn: a handsome, sulky pale young man with styled dark hair, red eyes and fangs, wearing a rich but rumpled black velvet doublet with silver embroidery, an open lace-cuffed shirt, black breeches and a single gold earring. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "pidlwick_ii",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/pidlwick_ii_turnaround.png",
+      "sprites": "art/sprites/pidlwick_ii/walk.tres",
+      "portrait": "art/portraits/pidlwick_ii.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Pidlwick II, a child-sized clockwork jester: a wooden and brass automaton with a painted porcelain face fixed in a smile, glass eyes, a faded red-and-yellow motley jester's suit and a three-pointed cap with tarnished bells, visible brass joints at the wrists and knees, a small slate and chalk at his belt, holding a little wooden club. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "cyrus_belview",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/cyrus_belview_turnaround.png",
+      "sprites": "art/sprites/cyrus_belview/walk.tres",
+      "portrait": "art/portraits/cyrus_belview.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Cyrus Belview, a big stooped mongrelfolk cook: a hulking hunched humanoid patched together from different creatures, with one boar's tusk, one hare's ear and one human ear, mottled skin, a goat's hoof for one foot, wearing a filthy stained cook's apron over a grey shirt and holding a meat cleaver. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "gertruda",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/gertruda_turnaround.png",
+      "sprites": "art/sprites/gertruda/walk.tres",
+      "portrait": "art/portraits/gertruda.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Gertruda, Mad Mary's sixteen-year-old daughter: a sheltered, dreamy young human girl with long loose dark-brown hair and wide innocent eyes, wearing a borrowed, slightly too-large pale yellow silk gown with puffed sleeves and soft slippers. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "brother_anatol",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/brother_anatol_turnaround.png",
+      "sprites": "art/sprites/brother_anatol/walk.tres",
+      "portrait": "art/portraits/brother_anatol.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Brother Anatol, a vampire spawn disguised as a monk of the Morninglord: a gaunt, pale young man with a tonsured head and gentle features but faintly red eyes, wearing a plain rough brown monk's robe with a rope belt and a small wooden sunburst holy symbol, barefoot. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "lief_lipsiege",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/lief_lipsiege_turnaround.png",
+      "sprites": "art/sprites/lief_lipsiege/walk.tres",
+      "portrait": "art/portraits/lief_lipsiege.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Lief Lipsiege, Strahd's accountant: a thin, nervous, balding human man in his sixties with wire spectacles, ink-stained fingers and a sallow face, wearing a threadbare black clerk's coat with sleeve garters, a long iron chain shackled to one ankle, holding a quill pen and a heavy ledger. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "nadia_boteanu",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/nadia_boteanu_turnaround.png",
+      "sprites": "art/sprites/nadia_boteanu/walk.tres",
+      "portrait": "art/portraits/nadia_boteanu.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Nadia Boteanu, a young lamplighter from Vallaki: a wiry young human woman with short dark hair and a smudged determined face, wearing a patched grey wool coat over a brown dress, fingerless gloves, sturdy boots and a torn cap, holding a long brass lamplighter's pole with a hook at the top. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "strahd_mist",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/strahd_mist_turnaround.png",
+      "sprites": "art/sprites/strahd_mist/walk.tres",
+      "portrait": "art/portraits/strahd_mist.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Strahd von Zarovich in mist form: a drifting column of cold grey-violet fog and swirling vapour roughly the height of a man, with the faint shape of a tall caped figure and Strahd's gaunt pale face and glowing red eyes half-formed in the mist near the top, flat cartoon colours, fully opaque flat colours. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Drifting a little above the ground, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=float -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=float"
+      ]
     }
   ],
   "image_provider": "gemini"
