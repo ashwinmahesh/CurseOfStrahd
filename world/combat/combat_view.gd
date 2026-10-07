@@ -90,6 +90,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	hud.build(e, catalog)
 	hud.action_chosen.connect(_choose)
 	hud.end_turn_pressed.connect(_end_turn)
+	hud.undo_move_pressed.connect(_undo_move)
 	hud.reaction_answered.connect(_answer)
 	hud.inspect_requested.connect(_inspect)
 	hud.death_save_pressed.connect(_death_save)
@@ -298,6 +299,22 @@ func _end_turn() -> void:
 
 
 var _confirmed_end := false
+
+
+## Takes back the current creature's last move (the HUD's Undo move, or Ctrl+Z): it goes back with its movement.
+func _undo_move() -> void:
+	var c := _player()
+	if c == null or mode not in [Mode.IDLE, Mode.TARGET]:
+		return
+	var r := e.undo_move(c)
+	if not r.ok:
+		hud.banner(r.reason, 1.6)
+		return
+	_cancel_targeting()
+	mode = Mode.BUSY
+	overlay.clear_all()
+	await _play_events()
+	_advance()
 
 
 func _death_save() -> void:
@@ -718,6 +735,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			menu_requested.emit()
 	elif event.is_action_pressed(&"combat_end_turn"):
 		_end_turn()
+	elif event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo \
+			and (event as InputEventKey).physical_keycode == KEY_Z \
+			and ((event as InputEventKey).ctrl_pressed or (event as InputEventKey).meta_pressed):
+		_undo_move()   # Ctrl+Z (Cmd+Z on a Mac), ahead of plain Z, which changes the tab
 	elif event.is_action_pressed(&"combat_tab_prev"):
 		hud.cycle_tab(-1)
 	elif event.is_action_pressed(&"combat_tab_next"):
@@ -1054,7 +1075,9 @@ func _play_events() -> void:
 				var from: Vector2i = ev["from"]
 				var to: Vector2i = ev["to"]
 				var step := STEP_TIME * GameSettings.combat_pace()   # the fast combat speed (Settings)
-				tok.face(Vector2(to - from), not bool(ev.get("forced", false)), step)
+				# A move taken back (undo) glides home like a rewind: no walking, no turning round.
+				var back := bool(ev.get("undo", false))
+				tok.face(Vector2.ZERO if back else Vector2(to - from), not bool(ev.get("forced", false)) and not back, step)
 				walking[tok] = true
 				var tw := create_tween()
 				tw.tween_property(tok, "position", _token_spot(tok.combatant, to), step)

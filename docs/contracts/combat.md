@@ -20,6 +20,7 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | Damage and healing dice, dealing damage, Death Saving Throws, stabilizing | `encounter_damage.gd` (`damage`) |
 | Reaction decisions and answers, the queued reactions | `encounter_reactions.gd` (`reaction_flow`) |
 | Standard actions, hiding, effects' actions (escape, douse, wake), Haste's action | `encounter_actions.gd` (`actions`) |
+| Taking back a move | `encounter_undo.gd` (`undo`) |
 | Casting: paying, checking targets, resolving the recipe | `spell_casting.gd` (`casting`) |
 | What can be cast, casting numbers, Metamagic | `spell_options.gd` (`options`) |
 | Reaction spells, releasing a readied spell | `spell_reactions.gd` (`reaction_spells`) |
@@ -61,6 +62,7 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `features.toggle_rider(c, rider_id)` | arm a rider for this turn's next hit (`features.rider_options(c)`): maneuvers, Cunning Strike, Giant Ancestry, Psionic Strike |
 | `feature_actions.perform(c, id, t, point)` | a class, subclass, feat or species action (`feature_actions.list(c)`); the eight Phase 4 classes' actions are `cf:<id>`, run by combat/class_features.gd |
 | `free_move(c, cell)`, `jump(c, cell)` | movement without Opportunity Attacks from a feature; Jump's 30 ft leap |
+| `undo_move(c)`, `can_undo_move(c)` | Takes back `c`'s last move (`move`, `free_move`, `jump`, with the mount or rider that went along) while nothing came of it: no die rolled, no reaction offered (even one declined or passed up), nothing queued, no other creature, zone, spell object, mark or grapple changed, no log line but the move's own, and nothing new seen (the mover not spotted, no foe the party couldn't see in sight now). Moves come back one by one, to the last thing that wasn't a move; anything else ends them. Player-controlled creatures on their own turn only; not saved |
 | `escape_effect(c, effect_id)`, `wake(c, t)`, `haste_action_use(c, what, t, option_id)`, `use_item(c, item_id, t)` | breaking free of Web/Entangle, shaking a sleeper awake, Haste's extra action, potions and Goodberries |
 | `items.use(c, item_id, power_id, targets, point, direction, level, opts)` | a magic item's power (ADR 0012, docs/contracts/magic_items.md): a wand's spell at a level paid in charges, a potion, a toggle, a custom power; `items.list(c)` is the Items tab |
 | `features.second_wind / action_surge / steady_aim / turn_undead / divine_spark / preserve_life` | |
@@ -84,7 +86,7 @@ illusory_self, riposte, parry, stones_endurance, interception, protective_field,
 
 | type | fields |
 |---|---|
-| move | id, from, to, forced |
+| move | id, from, to, forced, mounted (a rider carried along), undo (a move taken back: the token goes back to `to`) |
 | attack | attacker, target, hit, critical, action (the attack option's id: `weapon:longsword`, `monster:claw`; `spell:fire_bolt` for a spell attack), from (the token the blow comes from: the attacker, or an Echo Knight's echo) |
 | damage / heal | id, amount (critical) |
 | condition / down / death | id |

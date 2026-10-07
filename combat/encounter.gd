@@ -8,8 +8,8 @@ extends RefCounted
 ##
 ## The Encounter holds the fight's state. Its jobs live in helpers, a file each, that it makes and owns:
 ## EncounterTurns, EncounterSight, EncounterMovement, EncounterMounts, EncounterGrapples, EncounterWeapons,
-## EncounterAttacks, EncounterDamage, EncounterReactions and EncounterActions (combat/encounter_*.gd). The forwarding
-## functions at the end are the Encounter's interface, so the HUD, the AI, spells and features keep calling it.
+## EncounterAttacks, EncounterDamage, EncounterReactions, EncounterActions and EncounterUndo (combat/encounter_*.gd). The
+## forwarding functions at the end are the Encounter's interface, so the HUD, the AI, spells and features keep calling it.
 
 enum State { SETUP, ACTIVE, OVER }
 
@@ -91,6 +91,8 @@ var attacks: EncounterAttacks
 var damage: EncounterDamage
 var reaction_flow: EncounterReactions
 var actions: EncounterActions
+## Taking back a move (combat/encounter_undo.gd).
+var undo: EncounterUndo
 
 
 func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
@@ -122,6 +124,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	triggered_features = TriggeredFeatures.new(self)
 	items = CombatItems.new(self)
 	legendary = Legendary.new(self)
+	undo = EncounterUndo.new(self)
 
 
 # --- Setup ----------------------------------------------------------------------------------------
@@ -687,3 +690,13 @@ func study(c: Combatant, target: Combatant) -> CombatResult:
 
 func can_disengage(c: Combatant) -> bool:
 	return actions.can_disengage(c)
+
+
+# --- Taking back a move (EncounterUndo) -----------------------------------------------------------
+
+func can_undo_move(c: Combatant) -> bool:
+	return undo.can_undo_move(c)
+
+
+func undo_move(c: Combatant) -> CombatResult:
+	return undo.undo_move(c)
