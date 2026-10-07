@@ -794,7 +794,8 @@ func body_dropped(body: Combatant) -> void:
 ## Incapacitated inside, aware but not in control) until the body drops to 0 Hit Points or the ghost leaves.
 func possess(src: Combatant, t: Combatant, label: String) -> void:
 	var e := enc()
-	if t.has_meta("possessed_by") or src.has_meta("possessing"):
+	# Lordly Resolve: a creature it steadies can't be possessed.
+	if t.has_meta("possessed_by") or src.has_meta("possessing") or t.creature.has_flag("no_possession"):
 		return
 	t.set_meta("possessed_by", src.id)
 	t.set_meta("possessed_from", [str(t.side), str(t.controller)])

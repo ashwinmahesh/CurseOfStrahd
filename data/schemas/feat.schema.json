@@ -20,6 +20,7 @@
         "feature": {"type": "string", "description": "Feature id the character must have, e.g. fighting_style."},
         "spellcasting": {"type": "boolean", "description": "Spellcasting or Pact Magic feature."},
         "proficiency": {"type": "object", "properties": {"kind": {"type": "string"}, "value": {"type": "string"}}},
+        "any": {"type": "array", "items": {"type": "object"}, "description": "Either of these (each a prerequisites object): Purple Dragon Commandant's Rook feat or Martial weapon training."},
         "text": {"type": "string", "description": "The prerequisite as the player reads it."}
       }
     },

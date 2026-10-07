@@ -59,3 +59,16 @@ func _granted_spells(node: Variant, out: Array[String]) -> void:
 			out.append(str(d["spell"]))
 		for v: Variant in d.values():
 			_granted_spells(v, out)
+
+
+## A switched-on entry tells the player what it does, not that it's a placeholder.
+func test_playable_entries_read_as_finished() -> void:
+	var comp := Compendium.shared()
+	for folder: String in ["backgrounds", "feats", "spells", "subclasses", "magic_items"]:
+		for e in comp.all_playable(folder):
+			if not str((e.get("source", {}) as Dictionary).get("book", "")) in ["FRHoF", "FRAiF", "AU"]:
+				continue
+			var words := JSON.stringify(e)
+			for stale: String in ["Reference-only", "not automated", "reference-only", "check this either/or"]:
+				assert_false(words.contains(stale), "%s/%s still says '%s'" % [folder, e["id"], stale])
+

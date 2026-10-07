@@ -105,6 +105,8 @@ func castable(c: Combatant) -> Array[Dictionary]:
 		var res_id := "spell:%s" % id
 		if str(k["kind"]) == "granted" and ch.resource_left(res_id) > 0:
 			entry["free"] = true
+			# Genie Magic: the free casting at a higher slot from some character level on.
+			entry["free_slot"] = int(k.get("free_slot", 0))
 		# Warlock invocations that cast a spell at will (Armor of Shadows, Fiendish Vigor...).
 		if ClassFeatures.at_will(c, id) or chain:
 			entry["free"] = true
@@ -135,7 +137,9 @@ func _why_not(c: Combatant, s: Dictionary, entry: Dictionary) -> String:
 	if why != "":
 		return why
 	var comp := s.get("components", {}) as Dictionary
-	if bool(comp.get("v", false)) and not (str(s.get("school", "")) == "illusion" and CombatFeatures.has_feature(c, "improved_illusions")):
+	# Enchantment and Illusion Adept: a spell of that school cast with a slot needs no Verbal component.
+	var waived := int(s.get("level", 0)) > 0 and c.creature.has_flag("waive_components:%s" % str(s.get("school", "")))
+	if bool(comp.get("v", false)) and not waived and not (str(s.get("school", "")) == "illusion" and CombatFeatures.has_feature(c, "improved_illusions")):
 		if c.creature.has_flag("speechless"):
 			return "Can't speak"
 		for cell in c.footprint():
@@ -699,7 +703,7 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	if level == 0:
 		slot = 0
 	elif use_free:
-		slot = level
+		slot = maxi(level, int(entry.get("free_slot", 0)))
 	else:
 		slot = maxi(slot, level)
 		if c.cast_slot_spell_this_turn:
@@ -768,7 +772,8 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		e.log.add("info", "%s raises %s to effective level %d (%s; level %d slot spent)" % [c.name(), s["name"], slot, boost["name"], paid_slot], c.id)
 	if bool(opts.get("splintered", false)):
 		ch.spend_resource("splintered_summons")
-	if c.hidden and bool((s.get("components", {}) as Dictionary).get("v", false)):
+	if c.hidden and bool((s.get("components", {}) as Dictionary).get("v", false)) and not e.faerun.sneaky_casting(c) \
+			and not (level > 0 and c.creature.has_flag("waive_components:%s" % str(s.get("school", "")))):
 		e.reveal(c, "cast a spell aloud")
 	end_sanctuary(c, "cast a spell")
 	trigger_ends(c, "cast_spell")
@@ -856,7 +861,7 @@ func _after_cast_features(ctx: Dictionary, free: bool) -> void:
 		enc().class_features.after_cast(c, s, slot)
 		enc().feature_recipes.after_cast(c, s, slot)
 	enc().ravenloft.after_cast(c, s, slot)
-	enc().faerun.after_cast(c, s, slot)
+	enc().faerun.after_cast(c, s, slot, free)
 	enc().triggered_features.after_cast(ctx)
 	if str(s["id"]) == "hunters_mark" and CombatFeatures.has_feature(c, "hunters_rime"):
 		var amount := enc().dice.roll_one(10, "Hunter’s Rime") + caster_char(c).class_level_of("ranger")
@@ -1509,7 +1514,9 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 			var xr := e._roll_damage_dice(m.text("dice", "1d6"), critical, 0, m.source_name)
 			parts.append({"amount": int(xr["total"]), "type": xt, "spell": true})
 			details.append("%s %s: %s" % [m.source_name, m.text("dice"), xr["text"]])
+		e.hit_context = {"attacker": c.id, "target": t.id, "melee": melee, "spell": true}
 		var dr := deal_spell_damage(ctx, t, parts, critical, str(s["name"]), details)
+		e.hit_context = {}
 		r.damage += dr.final
 		if melee:
 			e.retaliate(c, t)
@@ -2624,7 +2631,9 @@ func _magic_missile(ctx: Dictionary, tgt: Array[Combatant], r: CombatResult) -> 
 			continue
 		var rolled := e._roll_damage_dice("1d4+1", false, 0, "Magic Missile dart")
 		var bonus := _damage_bonus(ctx)
-		deal_spell_damage(ctx, t, [{"amount": int(rolled["total"]) + (bonus.total() if i == 0 else 0), "type": "force"}], false, "Magic Missile",
+		# One damage roll's bonuses ride the first dart (Empowered Evocation; Evocation Adept, Arcane Overload).
+		var first := bonus.total() + e.faerun.spell_damage_bonus(ctx, bonus) if i == 0 else 0
+		deal_spell_damage(ctx, t, [{"amount": int(rolled["total"]) + first, "type": "force"}], false, "Magic Missile",
 			["Dart %d: %s" % [i + 1, rolled["text"]]])
 
 
@@ -3863,6 +3872,7 @@ func _repeat_save(c: Combatant, fx: Effect, adv: Array[String]) -> void:
 		c.creature.remove_effect(fx)
 		e.log.add("info", "%s shakes off %s" % [c.name(), fx.name], c.id, [test.describe()])
 		e.events.append({"type": "condition", "id": c.id})
+		e.faerun.after_save_ended(c, fx)
 	elif then_kind == "sleep_unconscious":
 		c.creature.remove_effect(fx)
 		var deep := Effect.new("Sleep", &"spell", "sleep").with_condition(&"unconscious")

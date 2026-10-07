@@ -8,14 +8,32 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: After a creature within 5 feet hits you with a melee attack, you may make an Opportunity Attack against it. After each Long Rest, choose a proficient skill to have Expertise until your next Long Rest.",
+  "summary": "After a creature within 5 feet hits you with a melee attack, you can make an Opportunity Attack against it. Expertise in one skill you're proficient in, changed after each Long Rest.",
   "benefits": [
     {
       "id": "zhentarim_tactics_benefit",
-      "name": "Benefits",
-      "summary": "Reference-only: After a creature within 5 feet hits you with a melee attack, you may make an Opportunity Attack against it. After each Long Rest, choose a proficient skill to have Expertise until your next Long Rest.",
-      "text": "Reference-only: After a creature within 5 feet hits you with a melee attack, you may make an Opportunity Attack against it. After each Long Rest, choose a proficient skill to have Expertise until your next Long Rest.",
-      "implemented": "text"
+      "name": "Hit Back",
+      "summary": "After a creature within 5 feet hits you with a melee attack, you can make an Opportunity Attack against it.",
+      "text": "When a creature within 5 feet of you hits you with a melee attack, you can take a Reaction to make an Opportunity Attack against it.",
+      "action": "reaction",
+      "implemented": "engine"
+    },
+    {
+      "id": "zhentarim_tactics_expertise",
+      "name": "Trade Secrets",
+      "summary": "Expertise in one skill you're proficient in, changed after each Long Rest.",
+      "text": "Choose a skill you're proficient in: you have Expertise with it. The book lets you choose again after each Long Rest; in the game you choose when you take the feat and can change it when you gain a level.",
+      "implemented": "data",
+      "choice": {
+        "id": "skill",
+        "kind": "expertise",
+        "count": 1,
+        "filter": {
+          "proficient": true
+        },
+        "replaceable": "level_up",
+        "replace_max": 1
+      }
     }
   ],
   "prerequisites": {
@@ -30,5 +48,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

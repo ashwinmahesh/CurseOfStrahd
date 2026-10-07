@@ -8,18 +8,53 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: Requires Purple Dragon Rook or Martial Weapon proficiency; check this either/or prerequisite manually. Bonus Action grants a visible ally within 30 feet 2d6 + increased-ability modifier Temporary HP, PB times per Long Rest. While Bloodied, attack rolls have Advantage.",
+  "summary": "Bonus Action: a visible ally within 30 feet gains 2d6 + the raised ability's modifier Temporary Hit Points. Proficiency Bonus uses per Long Rest. While Bloodied, your attack rolls have Advantage.",
   "benefits": [
     {
-      "id": "purple_dragon_commandant_benefit",
-      "name": "Benefits",
-      "summary": "Reference-only: Requires Purple Dragon Rook or Martial Weapon proficiency; check this either/or prerequisite manually. Bonus Action grants a visible ally within 30 feet 2d6 + increased-ability modifier Temporary HP, PB times per Long Rest. While Bloodied, attack rolls have Advantage.",
-      "text": "Reference-only: Requires Purple Dragon Rook or Martial Weapon proficiency; check this either/or prerequisite manually. Bonus Action grants a visible ally within 30 feet 2d6 + increased-ability modifier Temporary HP, PB times per Long Rest. While Bloodied, attack rolls have Advantage.",
-      "implemented": "text"
+      "id": "commandant_rally",
+      "name": "Rallying Command",
+      "summary": "Bonus Action: a visible ally within 30 feet gains 2d6 + the raised ability's modifier Temporary Hit Points. Proficiency Bonus uses per Long Rest.",
+      "text": "As a Bonus Action, choose an ally you can see within 30 feet: it gains Temporary Hit Points equal to 2d6 plus the modifier of the ability this feat increased. Proficiency Bonus uses per Long Rest.",
+      "action": "bonus_action",
+      "implemented": "engine",
+      "resource": {
+        "id": "commandant_rally",
+        "name": "Rallying Command",
+        "max": "pb",
+        "recharge": "long"
+      }
+    },
+    {
+      "id": "commandant_bloodied_fury",
+      "name": "Bloodied Fury",
+      "summary": "While Bloodied, your attack rolls have Advantage.",
+      "text": "While you are Bloodied, you have Advantage on attack rolls.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "attack",
+          "when": {
+            "bloodied": true
+          }
+        }
+      ]
     }
   ],
   "prerequisites": {
-    "level": 4
+    "level": 4,
+    "any": [
+      {
+        "feature": "rook_rallying_cry"
+      },
+      {
+        "proficiency": {
+          "kind": "weapon",
+          "value": "martial"
+        }
+      }
+    ],
+    "text": "Level 4+, Purple Dragon Rook or Martial weapon training"
   },
   "ability_increase": {
     "from": [
@@ -29,5 +64,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

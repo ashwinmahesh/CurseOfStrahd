@@ -8,7 +8,7 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory. Reference-only: Slotted Enchantments require only costly or consumed Material components; other components are waived.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory. Enchantment spells you cast with a slot need no Verbal or Somatic components, and no Material component without a cost.",
   "benefits": [
     {
       "id": "enchantment_adept_spells",
@@ -52,9 +52,15 @@
     {
       "id": "enchantment_adept_benefit",
       "name": "School Benefit",
-      "summary": "Reference-only: Slotted Enchantments require only costly or consumed Material components; other components are waived.",
-      "text": "Reference-only: Slotted Enchantments require only costly or consumed Material components; other components are waived.",
-      "implemented": "text"
+      "summary": "Enchantment spells you cast with a slot need no Verbal or Somatic components, and no Material component without a cost.",
+      "text": "When you cast an Enchantment spell with a spell slot, it needs only its costly or consumed Material components: you can cast it while unable to speak or inside magical Silence.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "waive_components:enchantment"
+        }
+      ]
     }
   ],
   "prerequisites": {
@@ -70,5 +76,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

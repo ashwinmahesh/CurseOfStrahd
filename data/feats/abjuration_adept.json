@@ -8,7 +8,7 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Shield; Lesser Restoration; Protection from Energy; Banishment; Mass Cure Wounds. Reference-only: After a slotted Abjuration, you or a visible creature within 30 feet gains Temporary HP equal to twice slot level.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Shield; Lesser Restoration; Protection from Energy; Banishment; Mass Cure Wounds. After an Abjuration spell cast with a slot, you or a visible creature within 30 feet gains Temporary Hit Points equal to twice the slot level.",
   "benefits": [
     {
       "id": "abjuration_adept_spells",
@@ -52,9 +52,9 @@
     {
       "id": "abjuration_adept_benefit",
       "name": "School Benefit",
-      "summary": "Reference-only: After a slotted Abjuration, you or a visible creature within 30 feet gains Temporary HP equal to twice slot level.",
-      "text": "Reference-only: After a slotted Abjuration, you or a visible creature within 30 feet gains Temporary HP equal to twice slot level.",
-      "implemented": "text"
+      "summary": "After an Abjuration spell cast with a slot, you or a visible creature within 30 feet gains Temporary Hit Points equal to twice the slot level.",
+      "text": "After you cast an Abjuration spell with a spell slot, you or a creature you can see within 30 feet gains Temporary Hit Points equal to twice the slot's level. The game gives them to the spell's ally target with the fewest Hit Points, or to you when the spell has no other ally target.",
+      "implemented": "engine"
     }
   ],
   "prerequisites": {
@@ -70,5 +70,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

@@ -8,7 +8,7 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force. Reference-only: Once per turn when an Evocation deals damage on casting, roll and spend up to two unused Hit Dice, adding their total to one damage roll.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force. Once per turn, when an Evocation spell you cast deals damage, roll and spend up to two unused Hit Dice and add them to one damage roll.",
   "benefits": [
     {
       "id": "evocation_adept_spells",
@@ -52,9 +52,11 @@
     {
       "id": "evocation_adept_benefit",
       "name": "School Benefit",
-      "summary": "Reference-only: Once per turn when an Evocation deals damage on casting, roll and spend up to two unused Hit Dice, adding their total to one damage roll.",
-      "text": "Reference-only: Once per turn when an Evocation deals damage on casting, roll and spend up to two unused Hit Dice, adding their total to one damage roll.",
-      "implemented": "text"
+      "summary": "Once per turn, when an Evocation spell you cast deals damage, roll and spend up to two unused Hit Dice and add them to one damage roll.",
+      "text": "Once per turn, when an Evocation spell you cast deals damage, you can roll up to two of your unused Hit Dice, spending them, and add the total to one of the spell's damage rolls. In a fight it spends two (the largest first) unless you turn it Off in the class tab.",
+      "implemented": "engine",
+      "policy": "auto",
+      "policy_cost": "Up to two Hit Dice"
     }
   ],
   "prerequisites": {
@@ -70,5 +72,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

@@ -8,14 +8,62 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "Reference-only: choose a level 1 and a level 2 spell from your Magic Initiate list, using its casting ability. Both are always prepared; cast each free once per Long Rest or using slots. Replace one with a same-level spell from that list on gaining a level.",
+  "summary": "A level 1 and a level 2 spell from your Magic Initiate list, always prepared, each cast once free per Long Rest.",
   "benefits": [
     {
       "id": "connoisseur_spells",
       "name": "Additional Spells",
-      "summary": "Reference-only: choose a level 1 and a level 2 spell from your Magic Initiate list, using its casting ability. Both are always prepared; cast each free once per Long Rest or using slots. Replace one with a same-level spell from that list on gaining a level.",
-      "text": "Reference-only: choose a level 1 and a level 2 spell from your Magic Initiate list, using its casting ability. Both are always prepared; cast each free once per Long Rest or using slots. Replace one with a same-level spell from that list on gaining a level.",
-      "implemented": "text"
+      "summary": "A level 1 and a level 2 spell from your Magic Initiate list, always prepared, each cast once free per Long Rest.",
+      "text": "Choose a level 1 and a level 2 spell from the spell list of your Magic Initiate feat; they use that feat's spellcasting ability. You always have both prepared, can cast each once without a slot (regaining that on a Long Rest), and can cast them with your slots. When you gain a level you can swap one for another of the same level from that list.",
+      "implemented": "data",
+      "choices": [
+        {
+          "id": "level_1_spell",
+          "kind": "spell",
+          "count": 1,
+          "filter": {
+            "list": "@list",
+            "level": 1
+          },
+          "replaceable": "level_up",
+          "replace_max": 1,
+          "replace_group": "Magic Connoisseur"
+        },
+        {
+          "id": "level_2_spell",
+          "kind": "spell",
+          "count": 1,
+          "filter": {
+            "list": "@list",
+            "level": 2
+          },
+          "replaceable": "level_up",
+          "replace_max": 1,
+          "replace_group": "Magic Connoisseur"
+        }
+      ],
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "@level_1_spell",
+          "ability": "@spellcasting_ability",
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          },
+          "always_prepared": true
+        },
+        {
+          "stat": "spell",
+          "value": "@level_2_spell",
+          "ability": "@spellcasting_ability",
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          },
+          "always_prepared": true
+        }
+      ]
     }
   ],
   "prerequisites": {
@@ -32,5 +80,8 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true,
+  "params": {
+    "from_feat": "magic_initiate"
+  }
 }

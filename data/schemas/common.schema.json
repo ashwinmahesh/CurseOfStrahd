@@ -454,7 +454,16 @@
           "$ref": "#/$defs/recharge"
         },
         "max": {
-          "$ref": "#/$defs/formula"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/formula"
+            },
+            {
+              "type": "string",
+              "pattern": "^mod:@[a-z_]+$",
+              "description": "The modifier of a pick of the same feature (Spell Subterfuge: the ability the feat increased)."
+            }
+          ]
         },
         "min": {
           "type": "integer"

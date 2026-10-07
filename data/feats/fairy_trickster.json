@@ -15,14 +15,21 @@
       "name": "Faerie Trod Trotter",
       "summary": "After you Disengage on your turn, ignore Difficult Terrain’s extra movement cost for the rest of the turn.",
       "text": "After you Disengage on your turn, ignore Difficult Terrain’s extra movement cost for the rest of the turn.",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "flustering_strike",
       "name": "Flustering Strike",
       "summary": "On an attack hit, force a Wisdom save against DC 8 + the increased ability’s modifier + Proficiency Bonus. Failure gives Disadvantage on saves until your next turn ends. Uses equal Proficiency Bonus per Long Rest.",
-      "text": "On an attack hit, force a Wisdom save against DC 8 + the increased ability’s modifier + Proficiency Bonus. Failure gives Disadvantage on saves until your next turn ends. Uses equal Proficiency Bonus per Long Rest.",
-      "implemented": "text"
+      "text": "When you hit with an attack roll, you can force the target to make a Wisdom save (DC 8 + the modifier of the ability this feat raised + your Proficiency Bonus); on a failure it has Disadvantage on saving throws until the end of your next turn. Proficiency Bonus uses per Long Rest. In a fight, arm it on the hotbar before the attack.",
+      "implemented": "engine",
+      "resource": {
+        "id": "flustering_strike",
+        "name": "Flustering Strike",
+        "max": "pb",
+        "recharge": "long"
+      },
+      "action": "free"
     }
   ],
   "prerequisites": {
@@ -36,5 +43,5 @@
     "points": 1,
     "max": 20
   },
-  "playable": false
+  "playable": true
 }

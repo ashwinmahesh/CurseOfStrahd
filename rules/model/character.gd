@@ -705,6 +705,14 @@ func _walk_feature(f: Dictionary, key: String, src: Dictionary, scope: Dictionar
 		_add_modifier(md as Dictionary, str(f.get("name", "")), src, scope)
 	if f.has("resource"):
 		var r := (f["resource"] as Dictionary).duplicate()
+		# A maximum that names a pick of the feat ("mod:@increased": Spell Subterfuge's Shrouding Spells).
+		if r.get("max") is String and str(r["max"]).contains("@"):
+			var mx := str(r["max"])
+			for k: String in scope:
+				var v: Variant = scope[k]
+				mx = mx.replace("@" + k, str((v as Array)[0]) if v is Array and not (v as Array).is_empty() else str(v))
+			# Not picked yet (a build in progress): the resource waits for the pick.
+			r["max"] = mx if not (mx.contains("@") or mx.ends_with(":")) else 0
 		r["class_id"] = src["class_id"]
 		r["source"] = src["label"]
 		_resource_defs.append(r)
@@ -754,6 +762,20 @@ func _walk_feat(feat_id: String, key: String, parent: Dictionary, params: Dictio
 	var src := _source("feat", feat_id, label, "", int(parent.get("level", 0)))
 	var scope := {}
 	var fp := feat.get("params", {}) as Dictionary
+	# A feat built on another one's picks (Magic Connoisseur: the list and ability of your Magic Initiate).
+	if fp.has("from_feat"):
+		var bases := _feat_picks(str(fp["from_feat"]))
+		if bases.size() > 1:
+			var opts: Array = []
+			for i in bases.size():
+				opts.append({"id": str(i), "name": "%s list" % str(bases[i]["list"]).capitalize(), "summary": str(bases[i]["source"])})
+			var bp := _register_choice({"kind": "option", "count": 1, "options": opts}, "%s.base" % key, src,
+				"%s: which %s" % [feat.get("name", ""), compendium.display_name("feats", str(fp["from_feat"]))], scope)
+			if not bp.is_empty() and bp[0].is_valid_int() and int(bp[0]) < bases.size():
+				bases = [bases[int(bp[0])]]
+		if not bases.is_empty():
+			scope["list"] = str(bases[0]["list"])
+			scope["spellcasting_ability"] = [str(bases[0]["ability"])]
 	if params.has("list"):
 		scope["list"] = str(params["list"])
 	elif fp.has("lists"):
@@ -776,6 +798,26 @@ func _walk_feat(feat_id: String, key: String, parent: Dictionary, params: Dictio
 	if feat.has("drawback"):
 		var drawback := feat["drawback"] as Dictionary
 		_walk_feature(drawback, "%s.%s" % [key, drawback.get("id", "drawback")], src, scope)
+
+
+## Each time this character took `feat_id` (walked so far): {list, ability, source} from its picks or its
+## background's parameters (Magic Initiate's spell list and spellcasting ability).
+func _feat_picks(feat_id: String) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for f in feats_taken:
+		if str(f["id"]) != feat_id:
+			continue
+		var key := str(f["key"])
+		var list := ""
+		var lp := picks_for("%s.list" % key)
+		if not lp.is_empty():
+			list = lp[0]
+		elif key == "background.feat":
+			list = str((compendium.background_data(str(build.get("background", ""))).get("feat_params", {}) as Dictionary).get("list", ""))
+		var ab := picks_for("%s.two_cantrips.spellcasting_ability" % key)
+		if list != "":
+			out.append({"list": list, "ability": ab[0] if not ab.is_empty() else "int", "source": str(f["source"])})
+	return out
 
 
 func _add_increases(picks: Array[String], cap: int, label: String) -> void:
@@ -1084,9 +1126,15 @@ func _collect_granted_spells() -> void:
 			count = Formula.evaluate(n_uses, c) if n_uses is String else int(n_uses)
 			if uses.has("min"):
 				count = maxi(count, int(uses["min"]))
+		# A free casting at a higher slot from some character level on (Genie Magic: {"11": 2, "17": 3}).
+		var free_slot := 0
+		var fs := m.data.get("free_slot", {}) as Dictionary
+		for at: Variant in fs:
+			if character_level() >= int(str(at)):
+				free_slot = maxi(free_slot, int(fs[at]))
 		granted_spells.append({"id": spell_id, "class_id": m.class_id, "ability": ability, "uses": count,
 			"recharge": str(uses.get("recharge", "")), "always_prepared": bool(m.data.get("always_prepared", true)),
-			"at_level": m.at_level(), "source": m.source_name})
+			"at_level": m.at_level(), "source": m.source_name, "free_slot": free_slot})
 
 
 func spellcasting_entry(class_id: String) -> Dictionary:
@@ -1283,7 +1331,7 @@ func known_spells() -> Array[Dictionary]:
 			if spellcasting_entry(gcid).is_empty():
 				gcid = ""
 			out.append({"id": str(g["id"]), "class_id": gcid, "ability": str(g["ability"]), "kind": "granted",
-				"source": str(g["source"]), "uses": int(g["uses"]), "recharge": str(g["recharge"])})
+				"source": str(g["source"]), "uses": int(g["uses"]), "recharge": str(g["recharge"]), "free_slot": int(g.get("free_slot", 0))})
 	return out
 
 
