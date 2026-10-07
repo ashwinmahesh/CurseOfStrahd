@@ -2,7 +2,7 @@
 """Sets 3D-friendly import settings on images Godot has already imported: VRAM compression (BPTC/S3TC) with
 mipmaps, the same as the character walk sheets. Used for art/textures, art/sprites/props and new walk sheets.
 
-Usage: tools/art/set_import.py [--sheets] <png> [<png> ...]      then: make import
+Usage: tools/art/set_import.py [--sheets | --normal] <image> [<image> ...]      then: make import
 
 --sheets: character sheets drawn through the crisp sprite shader (shaders/world/sprite_crisp.gdshader), which samples
 the full-size sheet and never its mipmaps: VRAM compression without mipmaps (a quarter less memory).
@@ -25,6 +25,10 @@ def main():
     if "--sheets" in args:
         args.remove("--sheets")
         settings["mipmaps/generate"] = "false"
+    if "--normal" in args:
+        # Normal maps (the HD surfaces' _n files, W4): compressed as normal maps (RGTC), which keep their detail.
+        args.remove("--normal")
+        settings["compress/normal_map"] = "1"
     for arg in args:
         imp = Path(arg + ".import") if not arg.endswith(".import") else Path(arg)
         if not imp.exists():

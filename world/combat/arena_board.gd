@@ -206,6 +206,7 @@ func _build() -> void:
 			_dress(c, dressed)
 	if theme == "shrine_yard" and place == "":
 		_lanterns()   # the arena's lit pillars
+	Clutter.dress(self)   # decals: cracks, stains, moss, mud fringes ... (docs/art/decals.md)
 
 
 ## Tall billboards (trees) that fade when they stand between the camera and the party.

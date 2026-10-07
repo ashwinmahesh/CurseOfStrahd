@@ -1,0 +1,421 @@
+{
+  "about": "Decals (docs/art/decals.md, tools/art/build_decals.py): each one's albedo with soft alpha, its normal map, whether it lies on a floor or a wall, and its aspect (width / height).",
+  "decals": {
+    "floor_cracks_1": {
+      "file": "art/textures/decals/floor_cracks_1.webp",
+      "normal_file": "art/textures/decals/floor_cracks_1_n.webp",
+      "view": "floor",
+      "aspect": 1.008,
+      "sheet": "floor_cracks",
+      "subject": "a branching network of thin dark cracks in stone, with a few chipped flakes along them"
+    },
+    "floor_cracks_2": {
+      "file": "art/textures/decals/floor_cracks_2.webp",
+      "normal_file": "art/textures/decals/floor_cracks_2_n.webp",
+      "view": "floor",
+      "aspect": 0.975,
+      "sheet": "floor_cracks",
+      "subject": "a single long jagged crack with smaller cracks splitting off it"
+    },
+    "floor_cracks_3": {
+      "file": "art/textures/decals/floor_cracks_3.webp",
+      "normal_file": "art/textures/decals/floor_cracks_3_n.webp",
+      "view": "floor",
+      "aspect": 0.962,
+      "sheet": "floor_cracks",
+      "subject": "a cluster of short hairline cracks round a chipped, broken spot"
+    },
+    "floor_cracks_4": {
+      "file": "art/textures/decals/floor_cracks_4.webp",
+      "normal_file": "art/textures/decals/floor_cracks_4_n.webp",
+      "view": "floor",
+      "aspect": 0.936,
+      "sheet": "floor_cracks",
+      "subject": "a star of cracks spreading from a small impact hole"
+    },
+    "floor_stains_1": {
+      "file": "art/textures/decals/floor_stains_1.webp",
+      "normal_file": "art/textures/decals/floor_stains_1_n.webp",
+      "view": "floor",
+      "aspect": 1.054,
+      "sheet": "floor_stains",
+      "subject": "an old dark water stain with a paler tide-mark ring"
+    },
+    "floor_stains_2": {
+      "file": "art/textures/decals/floor_stains_2.webp",
+      "normal_file": "art/textures/decals/floor_stains_2_n.webp",
+      "view": "floor",
+      "aspect": 0.998,
+      "sheet": "floor_stains",
+      "subject": "a dark greasy oil stain, roughly round, soaked in"
+    },
+    "floor_stains_3": {
+      "file": "art/textures/decals/floor_stains_3.webp",
+      "normal_file": "art/textures/decals/floor_stains_3_n.webp",
+      "view": "floor",
+      "aspect": 1.038,
+      "sheet": "floor_stains",
+      "subject": "a smudge of black soot and ash with faint swirls"
+    },
+    "floor_stains_4": {
+      "file": "art/textures/decals/floor_stains_4.webp",
+      "normal_file": "art/textures/decals/floor_stains_4_n.webp",
+      "view": "floor",
+      "aspect": 1.018,
+      "sheet": "floor_stains",
+      "subject": "a faded rust-red stain spreading in a blotch"
+    },
+    "floor_blood_1": {
+      "file": "art/textures/decals/floor_blood_1.webp",
+      "normal_file": "art/textures/decals/floor_blood_1_n.webp",
+      "view": "floor",
+      "aspect": 1.004,
+      "sheet": "floor_blood",
+      "subject": "an old pool of dried dark blood, almost black at its heart"
+    },
+    "floor_blood_2": {
+      "file": "art/textures/decals/floor_blood_2.webp",
+      "normal_file": "art/textures/decals/floor_blood_2_n.webp",
+      "view": "floor",
+      "aspect": 1.039,
+      "sheet": "floor_blood",
+      "subject": "a smeared trail where something bloody was dragged"
+    },
+    "floor_blood_3": {
+      "file": "art/textures/decals/floor_blood_3.webp",
+      "normal_file": "art/textures/decals/floor_blood_3_n.webp",
+      "view": "floor",
+      "aspect": 1.009,
+      "sheet": "floor_blood",
+      "subject": "a spray of dark red blood drops and splatter"
+    },
+    "floor_blood_4": {
+      "file": "art/textures/decals/floor_blood_4.webp",
+      "normal_file": "art/textures/decals/floor_blood_4_n.webp",
+      "view": "floor",
+      "aspect": 0.974,
+      "sheet": "floor_blood",
+      "subject": "a line of dark blood drips"
+    },
+    "floor_puddles_1": {
+      "file": "art/textures/decals/floor_puddles_1.webp",
+      "normal_file": "art/textures/decals/floor_puddles_1_n.webp",
+      "view": "floor",
+      "aspect": 1.723,
+      "sheet": "floor_puddles",
+      "subject": "a shallow puddle of dark still water, blue-grey, with a pale reflection and a wet dark rim"
+    },
+    "floor_puddles_2": {
+      "file": "art/textures/decals/floor_puddles_2.webp",
+      "normal_file": "art/textures/decals/floor_puddles_2_n.webp",
+      "view": "floor",
+      "aspect": 4.274,
+      "sheet": "floor_puddles",
+      "subject": "a long thin puddle of dark water with faint ripples"
+    },
+    "floor_puddles_3": {
+      "file": "art/textures/decals/floor_puddles_3.webp",
+      "normal_file": "art/textures/decals/floor_puddles_3_n.webp",
+      "view": "floor",
+      "aspect": 2.669,
+      "sheet": "floor_puddles",
+      "subject": "two small dark puddles side by side with wet rims"
+    },
+    "floor_puddles_4": {
+      "file": "art/textures/decals/floor_puddles_4.webp",
+      "normal_file": "art/textures/decals/floor_puddles_4_n.webp",
+      "view": "floor",
+      "aspect": 1.556,
+      "sheet": "floor_puddles",
+      "subject": "a muddy brown puddle with a dark rim of wet mud"
+    },
+    "floor_leaves_1": {
+      "file": "art/textures/decals/floor_leaves_1.webp",
+      "normal_file": "art/textures/decals/floor_leaves_1_n.webp",
+      "view": "floor",
+      "aspect": 1.039,
+      "sheet": "floor_leaves",
+      "subject": "a loose scatter of a dozen dead brown and ochre leaves"
+    },
+    "floor_leaves_2": {
+      "file": "art/textures/decals/floor_leaves_2.webp",
+      "normal_file": "art/textures/decals/floor_leaves_2_n.webp",
+      "view": "floor",
+      "aspect": 1.325,
+      "sheet": "floor_leaves",
+      "subject": "a small drift of dark wet fallen leaves"
+    },
+    "floor_leaves_3": {
+      "file": "art/textures/decals/floor_leaves_3.webp",
+      "normal_file": "art/textures/decals/floor_leaves_3_n.webp",
+      "view": "floor",
+      "aspect": 1.163,
+      "sheet": "floor_leaves",
+      "subject": "a few scattered dark red and brown leaves with a twig"
+    },
+    "floor_leaves_4": {
+      "file": "art/textures/decals/floor_leaves_4.webp",
+      "normal_file": "art/textures/decals/floor_leaves_4_n.webp",
+      "view": "floor",
+      "aspect": 1.128,
+      "sheet": "floor_leaves",
+      "subject": "a thin scatter of dry curled leaves and pine needles"
+    },
+    "floor_mud_1": {
+      "file": "art/textures/decals/floor_mud_1.webp",
+      "normal_file": "art/textures/decals/floor_mud_1_n.webp",
+      "view": "floor",
+      "aspect": 1.015,
+      "sheet": "floor_mud",
+      "subject": "an irregular splash of wet dark brown mud with soft ragged edges"
+    },
+    "floor_mud_2": {
+      "file": "art/textures/decals/floor_mud_2.webp",
+      "normal_file": "art/textures/decals/floor_mud_2_n.webp",
+      "view": "floor",
+      "aspect": 0.999,
+      "sheet": "floor_mud",
+      "subject": "a muddy patch with boot prints in it"
+    },
+    "floor_mud_3": {
+      "file": "art/textures/decals/floor_mud_3.webp",
+      "normal_file": "art/textures/decals/floor_mud_3_n.webp",
+      "view": "floor",
+      "aspect": 0.993,
+      "sheet": "floor_mud",
+      "subject": "a fringe of mud spattered outward from one side"
+    },
+    "floor_mud_4": {
+      "file": "art/textures/decals/floor_mud_4.webp",
+      "normal_file": "art/textures/decals/floor_mud_4_n.webp",
+      "view": "floor",
+      "aspect": 1.084,
+      "sheet": "floor_mud",
+      "subject": "a smear of mud with small stones pressed in it"
+    },
+    "floor_straw_1": {
+      "file": "art/textures/decals/floor_straw_1.webp",
+      "normal_file": "art/textures/decals/floor_straw_1_n.webp",
+      "view": "floor",
+      "aspect": 1.503,
+      "sheet": "floor_straw",
+      "subject": "a loose scatter of pale dry straw stalks"
+    },
+    "floor_straw_2": {
+      "file": "art/textures/decals/floor_straw_2.webp",
+      "normal_file": "art/textures/decals/floor_straw_2_n.webp",
+      "view": "floor",
+      "aspect": 1.707,
+      "sheet": "floor_straw",
+      "subject": "a flattened little heap of old hay"
+    },
+    "floor_straw_3": {
+      "file": "art/textures/decals/floor_straw_3.webp",
+      "normal_file": "art/textures/decals/floor_straw_3_n.webp",
+      "view": "floor",
+      "aspect": 1.571,
+      "sheet": "floor_straw",
+      "subject": "straw mixed with dirt, trodden down"
+    },
+    "floor_straw_4": {
+      "file": "art/textures/decals/floor_straw_4.webp",
+      "normal_file": "art/textures/decals/floor_straw_4_n.webp",
+      "view": "floor",
+      "aspect": 1.066,
+      "sheet": "floor_straw",
+      "subject": "a few stray stalks of straw"
+    },
+    "floor_dust_1": {
+      "file": "art/textures/decals/floor_dust_1.webp",
+      "normal_file": "art/textures/decals/floor_dust_1_n.webp",
+      "view": "floor",
+      "aspect": 1.119,
+      "sheet": "floor_dust",
+      "subject": "a drift of grey dust and grit gathered in a corner, triangular, fading out"
+    },
+    "floor_dust_2": {
+      "file": "art/textures/decals/floor_dust_2.webp",
+      "normal_file": "art/textures/decals/floor_dust_2_n.webp",
+      "view": "floor",
+      "aspect": 1.067,
+      "sheet": "floor_dust",
+      "subject": "scattered small pebbles and grit"
+    },
+    "floor_dust_3": {
+      "file": "art/textures/decals/floor_dust_3.webp",
+      "normal_file": "art/textures/decals/floor_dust_3_n.webp",
+      "view": "floor",
+      "aspect": 1.113,
+      "sheet": "floor_dust",
+      "subject": "crumbled plaster chips and dust"
+    },
+    "floor_dust_4": {
+      "file": "art/textures/decals/floor_dust_4.webp",
+      "normal_file": "art/textures/decals/floor_dust_4_n.webp",
+      "view": "floor",
+      "aspect": 1.015,
+      "sheet": "floor_dust",
+      "subject": "a faint grey film of dust with footprints through it"
+    },
+    "wall_damp_1": {
+      "file": "art/textures/decals/wall_damp_1.webp",
+      "normal_file": "art/textures/decals/wall_damp_1_n.webp",
+      "view": "wall",
+      "aspect": 0.636,
+      "sheet": "wall_damp",
+      "subject": "dark damp streaks running straight down a wall from the top"
+    },
+    "wall_damp_2": {
+      "file": "art/textures/decals/wall_damp_2.webp",
+      "normal_file": "art/textures/decals/wall_damp_2_n.webp",
+      "view": "wall",
+      "aspect": 0.989,
+      "sheet": "wall_damp",
+      "subject": "a blotch of grey-green mould with damp around it"
+    },
+    "wall_damp_3": {
+      "file": "art/textures/decals/wall_damp_3.webp",
+      "normal_file": "art/textures/decals/wall_damp_3_n.webp",
+      "view": "wall",
+      "aspect": 2.097,
+      "sheet": "wall_damp",
+      "subject": "a tide-mark of rising damp along the bottom, wavy"
+    },
+    "wall_damp_4": {
+      "file": "art/textures/decals/wall_damp_4.webp",
+      "normal_file": "art/textures/decals/wall_damp_4_n.webp",
+      "view": "wall",
+      "aspect": 0.994,
+      "sheet": "wall_damp",
+      "subject": "long thin rust-brown water stains dripping down"
+    },
+    "wall_soot_1": {
+      "file": "art/textures/decals/wall_soot_1.webp",
+      "normal_file": "art/textures/decals/wall_soot_1_n.webp",
+      "view": "wall",
+      "aspect": 0.726,
+      "sheet": "wall_soot",
+      "subject": "a plume of black soot rising and spreading upward, fading at the top"
+    },
+    "wall_soot_2": {
+      "file": "art/textures/decals/wall_soot_2.webp",
+      "normal_file": "art/textures/decals/wall_soot_2_n.webp",
+      "view": "wall",
+      "aspect": 0.28,
+      "sheet": "wall_soot",
+      "subject": "a narrow smudge of torch soot rising upward"
+    },
+    "wall_soot_3": {
+      "file": "art/textures/decals/wall_soot_3.webp",
+      "normal_file": "art/textures/decals/wall_soot_3_n.webp",
+      "view": "wall",
+      "aspect": 0.987,
+      "sheet": "wall_soot",
+      "subject": "a broad scorch mark, black at its heart"
+    },
+    "wall_soot_4": {
+      "file": "art/textures/decals/wall_soot_4.webp",
+      "normal_file": "art/textures/decals/wall_soot_4_n.webp",
+      "view": "wall",
+      "aspect": 0.77,
+      "sheet": "wall_soot",
+      "subject": "faint grey smoke staining spreading upward"
+    },
+    "wall_cracks_1": {
+      "file": "art/textures/decals/wall_cracks_1.webp",
+      "normal_file": "art/textures/decals/wall_cracks_1_n.webp",
+      "view": "wall",
+      "aspect": 0.67,
+      "sheet": "wall_cracks",
+      "subject": "a long jagged crack running down a wall with small branches"
+    },
+    "wall_cracks_2": {
+      "file": "art/textures/decals/wall_cracks_2.webp",
+      "normal_file": "art/textures/decals/wall_cracks_2_n.webp",
+      "view": "wall",
+      "aspect": 0.985,
+      "sheet": "wall_cracks",
+      "subject": "a web of fine cracks round a broken patch"
+    },
+    "wall_cracks_3": {
+      "file": "art/textures/decals/wall_cracks_3.webp",
+      "normal_file": "art/textures/decals/wall_cracks_3_n.webp",
+      "view": "wall",
+      "aspect": 1.004,
+      "sheet": "wall_cracks",
+      "subject": "a stepped crack zig-zagging down"
+    },
+    "wall_cracks_4": {
+      "file": "art/textures/decals/wall_cracks_4.webp",
+      "normal_file": "art/textures/decals/wall_cracks_4_n.webp",
+      "view": "wall",
+      "aspect": 1.059,
+      "sheet": "wall_cracks",
+      "subject": "a few short hairline cracks"
+    },
+    "wall_moss_1": {
+      "file": "art/textures/decals/wall_moss_1.webp",
+      "normal_file": "art/textures/decals/wall_moss_1_n.webp",
+      "view": "wall",
+      "aspect": 0.905,
+      "sheet": "wall_moss",
+      "subject": "dark green moss creeping up from the bottom edge, thinning upward"
+    },
+    "wall_moss_2": {
+      "file": "art/textures/decals/wall_moss_2.webp",
+      "normal_file": "art/textures/decals/wall_moss_2_n.webp",
+      "view": "wall",
+      "aspect": 0.833,
+      "sheet": "wall_moss",
+      "subject": "sprigs of dark ivy climbing from the bottom edge"
+    },
+    "wall_moss_3": {
+      "file": "art/textures/decals/wall_moss_3.webp",
+      "normal_file": "art/textures/decals/wall_moss_3_n.webp",
+      "view": "wall",
+      "aspect": 1.103,
+      "sheet": "wall_moss",
+      "subject": "patches of lichen in grey-green spots"
+    },
+    "wall_moss_4": {
+      "file": "art/textures/decals/wall_moss_4.webp",
+      "normal_file": "art/textures/decals/wall_moss_4_n.webp",
+      "view": "wall",
+      "aspect": 2.247,
+      "sheet": "wall_moss",
+      "subject": "a fringe of moss and small weeds along the bottom edge"
+    },
+    "floor_moss_1": {
+      "file": "art/textures/decals/floor_moss_1.webp",
+      "normal_file": "art/textures/decals/floor_moss_1_n.webp",
+      "view": "floor",
+      "aspect": 1.095,
+      "sheet": "floor_moss",
+      "subject": "a patch of dark green moss with soft ragged edges"
+    },
+    "floor_moss_2": {
+      "file": "art/textures/decals/floor_moss_2.webp",
+      "normal_file": "art/textures/decals/floor_moss_2_n.webp",
+      "view": "floor",
+      "aspect": 1.067,
+      "sheet": "floor_moss",
+      "subject": "a ring of pale grey-green lichen spots"
+    },
+    "floor_moss_3": {
+      "file": "art/textures/decals/floor_moss_3.webp",
+      "normal_file": "art/textures/decals/floor_moss_3_n.webp",
+      "view": "floor",
+      "aspect": 1.073,
+      "sheet": "floor_moss",
+      "subject": "a clump of moss with tiny dark ferns"
+    },
+    "floor_moss_4": {
+      "file": "art/textures/decals/floor_moss_4.webp",
+      "normal_file": "art/textures/decals/floor_moss_4_n.webp",
+      "view": "floor",
+      "aspect": 0.913,
+      "sheet": "floor_moss",
+      "subject": "faint green algae streaks of damp"
+    }
+  }
+}
