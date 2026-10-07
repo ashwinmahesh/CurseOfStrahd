@@ -311,7 +311,9 @@ func _show(beat: Dictionary) -> void:
 			_waiting_continue = true
 			if beat.has("card"):
 				Audio.sfx("card")
-				_spread.add_child(_tarokka_card(str(beat["card"]), str(beat.get("slot", ""))))
+				var card := _tarokka_card(str(beat["card"]), str(beat.get("slot", "")))
+				_spread.add_child(card)
+				UiMotion.flip_in(card)
 		"check":
 			var colour := "bile" if bool(beat["success"]) else "vampire_red"
 			var said := str(beat.get("said", ""))
