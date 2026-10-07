@@ -1,0 +1,927 @@
+{
+	"combat": {},
+	"current_scene": "res://scenes/game.tscn",
+	"day": 1,
+	"dice": {
+		"seed": 193434499,
+		"state": -8955524659079789415
+	},
+	"faction_attitudes": {},
+	"flags": {},
+	"golden": {
+		"chapter": "death_house",
+		"commit": "cb36fa9b",
+		"made": "2026-10-07",
+		"made_by": "test_phase3_exit"
+	},
+	"home_slot": "exit_test",
+	"leader_index": 0,
+	"minute_of_day": 480,
+	"party": [],
+	"party_positions": [],
+	"quests": {},
+	"saved_at": "2026-10-07T14:46:40",
+	"story": {
+		"active_spells": {},
+		"attitudes": {},
+		"bench": [],
+		"codex": [],
+		"day": 1,
+		"fallen": [],
+		"flags": {
+			"_failed/into_the_mists/wolves:choose:Stand tall and shout them off the road. If they don't give way, they attack.": true,
+			"_strahd": {
+				"fired": {},
+				"last": -1000000.0,
+				"pending": {}
+			},
+			"death_house_heard_plea": true,
+			"death_house_promised_walter": true,
+			"mists_gates_opened": true,
+			"mists_wolves_fought": true,
+			"mists_wolves_resolved": true
+		},
+		"gold": 10.0,
+		"guests": [],
+		"last_check": false,
+		"leader": 0,
+		"location": "death_house_ground",
+		"location_states": {
+			"death_house_ground": {
+				"doors": {},
+				"encounters": {},
+				"found": {},
+				"in_pit": {},
+				"looted": {},
+				"props": {},
+				"traps": {}
+			},
+			"into_the_mists_road": {
+				"doors": {
+					"barovia_gates": "open"
+				},
+				"encounters": {
+					"mists_wolves": true
+				},
+				"found": {},
+				"in_pit": {},
+				"looted": {},
+				"props": {},
+				"traps": {
+					"mists_wolf_trap": "found"
+				}
+			},
+			"village_of_barovia": {
+				"doors": {
+					"death_house_gate": "open"
+				},
+				"encounters": {},
+				"found": {},
+				"in_pit": {},
+				"looted": {},
+				"props": {},
+				"traps": {}
+			}
+		},
+		"miles_since_long_rest": 0.0,
+		"milestones": 0,
+		"minute_of_day": 1151,
+		"narrator": {
+			"enter:death_house_ground": {
+				"done": false,
+				"last": 1151,
+				"played": [
+					2
+				]
+			},
+			"enter:death_house_lot": {
+				"done": false,
+				"last": 1146,
+				"played": [
+					0
+				]
+			},
+			"enter:dh_foyer": {
+				"done": true,
+				"last": 1151,
+				"played": [
+					0
+				]
+			},
+			"enter:into_the_mists_road": {
+				"done": false,
+				"last": 1141,
+				"played": [
+					0.0,
+					2
+				]
+			},
+			"enter:mercantile_front": {
+				"done": true,
+				"last": 1146,
+				"played": [
+					0
+				]
+			},
+			"enter:mists_gates": {
+				"done": true,
+				"last": 1141.0,
+				"played": [
+					2.0
+				]
+			},
+			"enter:mists_svalich_woods": {
+				"done": true,
+				"last": 1080.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:mists_village_edge": {
+				"done": true,
+				"last": 1141.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:village_of_barovia": {
+				"done": false,
+				"last": 1146,
+				"played": [
+					0
+				]
+			},
+			"enter:village_road_east": {
+				"done": true,
+				"last": 1146,
+				"played": [
+					0
+				]
+			},
+			"open:barovia_gates": {
+				"done": true,
+				"last": 1141.0,
+				"played": [
+					0.0
+				]
+			},
+			"rest:short": {
+				"done": false,
+				"last": 1141.0,
+				"played": [
+					2.0
+				]
+			},
+			"trap:mists_wolf_trap:found": {
+				"done": false,
+				"last": 1080.0,
+				"played": [
+					0.0
+				]
+			}
+		},
+		"options": {
+			"asked": {
+				"death_house/rose_thorn|We'll find Walter. I promise.": true,
+				"into_the_mists/wolves|Stand tall and shout them off the road. If they don't give way, they attack.": true
+			},
+			"respec": true
+		},
+		"party": [
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {
+						"art": "ilse_varga"
+					},
+					"background": "soldier",
+					"base_scores": {
+						"cha": 12.0,
+						"con": 13.0,
+						"dex": 14.0,
+						"int": 8.0,
+						"str": 15.0,
+						"wis": 10.0
+					},
+					"choices": {
+						"background.abilities": [
+							"str",
+							"str",
+							"dex"
+						],
+						"background.tool": [
+							"dice_set"
+						],
+						"fighter.1.fighting_style": [
+							"arcane_warrior"
+						],
+						"fighter.1.fighting_style/arcane_warrior.arcane_warrior_cantrips.cantrips": [
+							"acid_splash",
+							"blade_ward"
+						],
+						"fighter.1.fighting_style/arcane_warrior.arcane_warrior_cantrips.casting_ability": [
+							"int"
+						],
+						"fighter.1.skills": [
+							"animal_handling",
+							"history"
+						],
+						"fighter.1.weapon_mastery": [
+							"battleaxe",
+							"blowgun",
+							"club"
+						],
+						"origin.languages": [
+							"common_sign_language",
+							"draconic"
+						],
+						"species.size": [
+							"medium"
+						],
+						"species.skillful": [
+							"acrobatics"
+						],
+						"species.versatile": [
+							"alert"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {},
+					"levels": [
+						{
+							"class": "fighter",
+							"hp": 0.0
+						}
+					],
+					"name": "Brannoc Vell",
+					"species": "human"
+				},
+				"currency": {
+					"cp": 0.0,
+					"ep": 0.0,
+					"gp": 18.0,
+					"pp": 0.0,
+					"sp": 0.0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "brannoc_vell",
+				"inventory": [
+					{
+						"id": "chain_mail",
+						"qty": 1.0,
+						"slot": "armor"
+					},
+					{
+						"id": "greatsword",
+						"qty": 1.0,
+						"slot": "main_hand"
+					},
+					{
+						"id": "flail",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "javelin",
+						"qty": 8.0,
+						"slot": ""
+					},
+					{
+						"id": "dungeoneers_pack",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "spear",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "shortbow",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "arrow",
+						"qty": 20.0,
+						"slot": ""
+					},
+					{
+						"id": "dice_set",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "healers_kit",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "quiver",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1.0,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 11,
+					"resources_used": {
+						"second_wind": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {
+						"art": "tamsin_tealeaf"
+					},
+					"background": "criminal",
+					"base_scores": {
+						"cha": 8.0,
+						"con": 13.0,
+						"dex": 15.0,
+						"int": 14.0,
+						"str": 12.0,
+						"wis": 10.0
+					},
+					"choices": {
+						"background.abilities": [
+							"dex",
+							"dex",
+							"con"
+						],
+						"origin.languages": [
+							"common_sign_language",
+							"draconic"
+						],
+						"rogue.1.expertise": [
+							"acrobatics",
+							"athletics"
+						],
+						"rogue.1.skills": [
+							"acrobatics",
+							"athletics",
+							"deception",
+							"insight"
+						],
+						"rogue.1.thieves_cant": [
+							"dwarvish"
+						],
+						"rogue.1.weapon_mastery": [
+							"club",
+							"dagger"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {},
+					"levels": [
+						{
+							"class": "rogue",
+							"hp": 0.0
+						}
+					],
+					"name": "Pip Marrow",
+					"species": "halfling"
+				},
+				"currency": {
+					"cp": 0.0,
+					"ep": 0.0,
+					"gp": 24.0,
+					"pp": 0.0,
+					"sp": 0.0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {
+					"8": 1.0
+				},
+				"id": "pip_marrow",
+				"inventory": [
+					{
+						"id": "leather_armor",
+						"qty": 1.0,
+						"slot": "armor"
+					},
+					{
+						"id": "dagger",
+						"qty": 4.0,
+						"slot": ""
+					},
+					{
+						"id": "shortsword",
+						"qty": 1.0,
+						"slot": "main_hand"
+					},
+					{
+						"id": "shortbow",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "arrow",
+						"qty": 19.0,
+						"slot": ""
+					},
+					{
+						"id": "quiver",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "thieves_tools",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "burglars_pack",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "thieves_tools",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "crowbar",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1.0,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 10,
+					"resources_used": {},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {
+						"art": "hedda_ironvow"
+					},
+					"background": "acolyte",
+					"base_scores": {
+						"cha": 12.0,
+						"con": 13.0,
+						"dex": 8.0,
+						"int": 10.0,
+						"str": 14.0,
+						"wis": 15.0
+					},
+					"choices": {
+						"background.abilities": [
+							"int",
+							"int",
+							"wis"
+						],
+						"background.feat.level_1_spell": [
+							"bane"
+						],
+						"background.feat.two_cantrips.cantrips": [
+							"guidance",
+							"light"
+						],
+						"background.feat.two_cantrips.spellcasting_ability": [
+							"int"
+						],
+						"cleric.1.divine_order": [
+							"protector"
+						],
+						"cleric.1.skills": [
+							"history",
+							"medicine"
+						],
+						"cleric.cantrips": [
+							"mending",
+							"resistance",
+							"sacred_flame"
+						],
+						"cleric.prepared": [
+							"bless",
+							"command",
+							"create_or_destroy_water",
+							"cure_wounds"
+						],
+						"origin.languages": [
+							"common_sign_language",
+							"draconic"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {},
+					"levels": [
+						{
+							"class": "cleric",
+							"hp": 0.0
+						}
+					],
+					"name": "Odessa Flint",
+					"species": "dwarf"
+				},
+				"currency": {
+					"cp": 0.0,
+					"ep": 0.0,
+					"gp": 15.0,
+					"pp": 0.0,
+					"sp": 0.0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "odessa_flint",
+				"inventory": [
+					{
+						"id": "chain_shirt",
+						"qty": 1.0,
+						"slot": "armor"
+					},
+					{
+						"id": "shield",
+						"qty": 1.0,
+						"slot": "off_hand"
+					},
+					{
+						"id": "mace",
+						"qty": 1.0,
+						"slot": "main_hand"
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "priests_pack",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "calligraphers_supplies",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "book",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "parchment",
+						"qty": 10.0,
+						"slot": ""
+					},
+					{
+						"id": "robe",
+						"qty": 1.0,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 10,
+					"resources_used": {
+						"spell:bane": 0,
+						"stonecunning": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {
+						"art": "silvain_aster"
+					},
+					"background": "sage",
+					"base_scores": {
+						"cha": 10.0,
+						"con": 13.0,
+						"dex": 12.0,
+						"int": 15.0,
+						"str": 8.0,
+						"wis": 14.0
+					},
+					"choices": {
+						"background.abilities": [
+							"con",
+							"con",
+							"int"
+						],
+						"background.feat.level_1_spell": [
+							"alarm"
+						],
+						"background.feat.two_cantrips.cantrips": [
+							"acid_splash",
+							"blade_ward"
+						],
+						"background.feat.two_cantrips.spellcasting_ability": [
+							"int"
+						],
+						"origin.languages": [
+							"common_sign_language",
+							"draconic"
+						],
+						"species.elven_lineage": [
+							"drow"
+						],
+						"species.keen_senses": [
+							"insight"
+						],
+						"species.spellcasting_ability": [
+							"int"
+						],
+						"wizard.1.skills": [
+							"investigation",
+							"medicine"
+						],
+						"wizard.cantrips": [
+							"booming_blade",
+							"chill_touch",
+							"elementalism"
+						],
+						"wizard.prepared": [
+							"burning_hands",
+							"charm_person",
+							"chromatic_orb",
+							"color_spray"
+						],
+						"wizard.spellbook": [
+							"alarm",
+							"burning_hands",
+							"charm_person",
+							"chromatic_orb",
+							"color_spray",
+							"comprehend_languages"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {},
+					"levels": [
+						{
+							"class": "wizard",
+							"hp": 0.0
+						}
+					],
+					"name": "Ithren Vael",
+					"species": "elf"
+				},
+				"currency": {
+					"cp": 0.0,
+					"ep": 0.0,
+					"gp": 13.0,
+					"pp": 0.0,
+					"sp": 0.0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "ithren_vael",
+				"inventory": [
+					{
+						"id": "dagger",
+						"qty": 2.0,
+						"slot": ""
+					},
+					{
+						"id": "arcane_focus_staff",
+						"qty": 1.0,
+						"slot": "main_hand"
+					},
+					{
+						"id": "robe",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "spellbook",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "scholars_pack",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "quarterstaff",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "calligraphers_supplies",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "book",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "parchment",
+						"qty": 8.0,
+						"slot": ""
+					},
+					{
+						"id": "robe",
+						"qty": 1.0,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 8,
+					"resources_used": {
+						"arcane_recovery": 0,
+						"spell:alarm": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			}
+		],
+		"positions": [
+			[
+				13,
+				15
+			],
+			[
+				14,
+				15
+			],
+			[
+				12,
+				15
+			],
+			[
+				13,
+				16
+			]
+		],
+		"quests": {
+			"death_house": {
+				"history": [
+					"plea"
+				],
+				"stage": "plea"
+			},
+			"into_the_mists": {
+				"history": [
+					"the_pack",
+					"village_edge"
+				],
+				"stage": "village_edge"
+			}
+		},
+		"seed": 0,
+		"shops": {},
+		"start_level": 1,
+		"stash": [],
+		"tarokka": {},
+		"travel_resume": {},
+		"visited": {
+			"death_house_ground": true,
+			"death_house_lot": true,
+			"dh_foyer": true,
+			"into_the_mists_road": true,
+			"mercantile_front": true,
+			"mists_gates": true,
+			"mists_svalich_woods": true,
+			"mists_village_edge": true,
+			"village_of_barovia": true,
+			"village_road_east": true
+		}
+	},
+	"tarokka": {},
+	"version": 2
+}

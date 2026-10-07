@@ -1,0 +1,1555 @@
+{
+	"combat": {},
+	"current_scene": "res://scenes/game.tscn",
+	"day": 1,
+	"dice": {
+		"seed": 1570773935,
+		"state": -4873085542760875363
+	},
+	"faction_attitudes": {},
+	"flags": {},
+	"golden": {
+		"chapter": "village_of_barovia",
+		"commit": "cb36fa9b",
+		"made": "2026-10-07",
+		"made_by": "test_phase3_exit"
+	},
+	"home_slot": "exit_test",
+	"leader_index": 0,
+	"minute_of_day": 480,
+	"party": [],
+	"party_positions": [],
+	"quests": {},
+	"saved_at": "2026-10-07T14:47:05",
+	"story": {
+		"active_spells": {},
+		"attitudes": {},
+		"bench": [],
+		"codex": [],
+		"day": 2,
+		"fallen": [],
+		"flags": {
+			"_banter/banter/death_house:bt_criminal_keepsakes": true,
+			"_banter/banter/death_house:bt_dwarf_stonework": true,
+			"_banter/banter/death_house:bt_elf_portraits": true,
+			"_failed/into_the_mists/wolves:choose:Stand tall and shout them off the road. If they don't give way, they attack.": true,
+			"_strahd": {
+				"fired": {},
+				"last": -1000000.0,
+				"pending": {}
+			},
+			"_xp/death_house/attic:milestone:94": true,
+			"_xp/death_house/escape:window_through:30": true,
+			"death_house_armor_destroyed": true,
+			"death_house_completed": true,
+			"death_house_heard_plea": true,
+			"death_house_milestone_dungeon": true,
+			"death_house_promised_walter": true,
+			"death_house_refused": true,
+			"death_house_secret_stair_found": true,
+			"death_house_window_attempted": true,
+			"mists_gates_opened": true,
+			"mists_wolves_fought": true,
+			"mists_wolves_resolved": true
+		},
+		"gold": 10.0,
+		"guests": [],
+		"last_check": true,
+		"leader": 0,
+		"location": "village_of_barovia",
+		"location_states": {
+			"death_house_attic": {
+				"doors": {
+					"storage_door": "open"
+				},
+				"encounters": {},
+				"found": {
+					"storage_panel": true
+				},
+				"in_pit": {},
+				"looted": {},
+				"props": {
+					"storage_panel": true
+				},
+				"traps": {
+					"attic_beams": "found",
+					"attic_floorboards": "found"
+				}
+			},
+			"death_house_dungeon_1": {
+				"doors": {
+					"crypt_gate": "open",
+					"lower_stair_door": "open",
+					"refectory_door": "open",
+					"well_door": "open"
+				},
+				"encounters": {},
+				"found": {},
+				"in_pit": {},
+				"looted": {},
+				"props": {},
+				"traps": {
+					"passage_pit": "triggered"
+				}
+			},
+			"death_house_dungeon_2": {
+				"doors": {
+					"winch_door": "open"
+				},
+				"encounters": {
+					"shades_harry": true
+				},
+				"found": {},
+				"in_pit": {},
+				"looted": {},
+				"props": {},
+				"traps": {}
+			},
+			"death_house_ground": {
+				"doors": {
+					"dh_dining_door": "open"
+				},
+				"encounters": {
+					"ground_escape_weapons": true
+				},
+				"found": {},
+				"in_pit": {},
+				"looted": {},
+				"props": {
+					"tall_window": true
+				},
+				"traps": {
+					"hall_chandelier": "found"
+				}
+			},
+			"death_house_third": {
+				"doors": {
+					"attic_stair_door": "open"
+				},
+				"encounters": {
+					"armor_guardian": true,
+					"third_escape_swords": true
+				},
+				"found": {
+					"attic_stair_door": true
+				},
+				"in_pit": {},
+				"looted": {},
+				"props": {},
+				"traps": {
+					"soot_cloud": "found"
+				}
+			},
+			"death_house_upper": {
+				"doors": {},
+				"encounters": {},
+				"found": {},
+				"in_pit": {},
+				"looted": {},
+				"props": {},
+				"traps": {
+					"hall_wall_blades": "found",
+					"rotten_floorboard": "found"
+				}
+			},
+			"into_the_mists_road": {
+				"doors": {
+					"barovia_gates": "open"
+				},
+				"encounters": {
+					"mists_wolves": true
+				},
+				"found": {},
+				"in_pit": {},
+				"looted": {},
+				"props": {},
+				"traps": {
+					"mists_wolf_trap": "found"
+				}
+			},
+			"village_of_barovia": {
+				"doors": {
+					"death_house_gate": "open"
+				},
+				"encounters": {},
+				"found": {},
+				"in_pit": {},
+				"looted": {},
+				"props": {},
+				"traps": {}
+			}
+		},
+		"miles_since_long_rest": 0.0,
+		"milestones": 2,
+		"minute_of_day": 445,
+		"narrator": {
+			"check:perception:failure": {
+				"done": false,
+				"last": 1721.0,
+				"played": [
+					0.0
+				]
+			},
+			"check:perception:success": {
+				"done": false,
+				"last": 1223.0,
+				"played": [
+					0.0
+				]
+			},
+			"combat:start": {
+				"done": false,
+				"last": 1161.0,
+				"played": [
+					8.0
+				]
+			},
+			"combat:victory": {
+				"done": false,
+				"last": 1162.0,
+				"played": [
+					9.0
+				]
+			},
+			"dream:death_house": {
+				"done": true,
+				"last": 1708.0,
+				"played": [
+					1.0
+				]
+			},
+			"enter:death_house_attic": {
+				"done": false,
+				"last": 1722,
+				"played": [
+					1.0,
+					1
+				]
+			},
+			"enter:death_house_dungeon_1": {
+				"done": false,
+				"last": 1727,
+				"played": [
+					1
+				]
+			},
+			"enter:death_house_dungeon_2": {
+				"done": false,
+				"last": 1732,
+				"played": [
+					1
+				]
+			},
+			"enter:death_house_ground": {
+				"done": false,
+				"last": 1819,
+				"played": [
+					2.0,
+					3
+				]
+			},
+			"enter:death_house_lot": {
+				"done": false,
+				"last": 1885,
+				"played": [
+					0.0,
+					1
+				]
+			},
+			"enter:death_house_third": {
+				"done": false,
+				"last": 1808,
+				"played": [
+					1.0,
+					2
+				]
+			},
+			"enter:death_house_upper": {
+				"done": false,
+				"last": 1814,
+				"played": [
+					1.0,
+					2
+				]
+			},
+			"enter:dh_attic_hall": {
+				"done": false,
+				"last": 1803,
+				"played": [
+					1.0,
+					3
+				]
+			},
+			"enter:dh_attic_landing": {
+				"done": true,
+				"last": 1161.0,
+				"played": [
+					1.0
+				]
+			},
+			"enter:dh_attic_stair": {
+				"done": false,
+				"last": 1223.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:dh_cult_refectory": {
+				"done": false,
+				"last": 1727,
+				"played": [
+					1
+				]
+			},
+			"enter:dh_dining_room": {
+				"done": false,
+				"last": 1880,
+				"played": [
+					2
+				]
+			},
+			"enter:dh_family_crypts": {
+				"done": false,
+				"last": 1727,
+				"played": [
+					0
+				]
+			},
+			"enter:dh_flooded_passage": {
+				"done": false,
+				"last": 1732,
+				"played": [
+					0
+				]
+			},
+			"enter:dh_foyer": {
+				"done": true,
+				"last": 1151.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:dh_lower_landing": {
+				"done": false,
+				"last": 1732,
+				"played": [
+					0
+				]
+			},
+			"enter:dh_lower_stair": {
+				"done": false,
+				"last": 1727,
+				"played": [
+					0
+				]
+			},
+			"enter:dh_main_hall": {
+				"done": false,
+				"last": 1819,
+				"played": [
+					1.0,
+					2
+				]
+			},
+			"enter:dh_pit_passage": {
+				"done": false,
+				"last": 1727,
+				"played": [
+					0
+				]
+			},
+			"enter:dh_ritual_chamber": {
+				"done": true,
+				"last": 1732,
+				"played": [
+					0
+				]
+			},
+			"enter:dh_stair_foot": {
+				"done": false,
+				"last": 1727,
+				"played": [
+					0
+				]
+			},
+			"enter:dh_storage_room": {
+				"done": true,
+				"last": 1708.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:dh_third_hall": {
+				"done": false,
+				"last": 1808,
+				"played": [
+					1.0,
+					2
+				]
+			},
+			"enter:dh_upper_hall": {
+				"done": false,
+				"last": 1814,
+				"played": [
+					0.0,
+					2
+				]
+			},
+			"enter:dh_well_chamber": {
+				"done": false,
+				"last": 1727,
+				"played": [
+					0
+				]
+			},
+			"enter:dh_winch_room": {
+				"done": true,
+				"last": 1732,
+				"played": [
+					0
+				]
+			},
+			"enter:into_the_mists_road": {
+				"done": false,
+				"last": 1141.0,
+				"played": [
+					0.0,
+					2.0
+				]
+			},
+			"enter:mercantile_front": {
+				"done": true,
+				"last": 1146.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:mists_gates": {
+				"done": true,
+				"last": 1141.0,
+				"played": [
+					2.0
+				]
+			},
+			"enter:mists_svalich_woods": {
+				"done": true,
+				"last": 1080.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:mists_village_edge": {
+				"done": true,
+				"last": 1141.0,
+				"played": [
+					0.0
+				]
+			},
+			"enter:village_of_barovia": {
+				"done": false,
+				"last": 1885,
+				"played": [
+					0.0,
+					1
+				]
+			},
+			"enter:village_road_east": {
+				"done": true,
+				"last": 1146.0,
+				"played": [
+					0.0
+				]
+			},
+			"examine:tall_window": {
+				"done": false,
+				"last": 1880,
+				"played": [
+					0
+				]
+			},
+			"open:attic_stair_door": {
+				"done": true,
+				"last": 1223.0,
+				"played": [
+					0.0
+				]
+			},
+			"open:barovia_gates": {
+				"done": true,
+				"last": 1141.0,
+				"played": [
+					0.0
+				]
+			},
+			"open:crypt_gate": {
+				"done": true,
+				"last": 1727,
+				"played": [
+					0
+				]
+			},
+			"open:lower_stair_door": {
+				"done": true,
+				"last": 1727,
+				"played": [
+					0
+				]
+			},
+			"rest:long": {
+				"done": false,
+				"last": 1708.0,
+				"played": [
+					0.0
+				]
+			},
+			"rest:short": {
+				"done": false,
+				"last": 1798,
+				"played": [
+					2.0,
+					1
+				]
+			},
+			"search:storage_panel": {
+				"done": false,
+				"last": 1722.0,
+				"played": [
+					0.0
+				]
+			},
+			"trap:attic_beams:found": {
+				"done": false,
+				"last": 1803,
+				"played": [
+					0
+				]
+			},
+			"trap:attic_floorboards:found": {
+				"done": false,
+				"last": 1228.0,
+				"played": [
+					0.0
+				]
+			},
+			"trap:hall_chandelier:found": {
+				"done": false,
+				"last": 1880,
+				"played": [
+					0
+				]
+			},
+			"trap:hall_wall_blades:found": {
+				"done": false,
+				"last": 1814,
+				"played": [
+					0
+				]
+			},
+			"trap:mists_wolf_trap:found": {
+				"done": false,
+				"last": 1080.0,
+				"played": [
+					0.0
+				]
+			},
+			"trap:rotten_floorboard:found": {
+				"done": false,
+				"last": 1156.0,
+				"played": [
+					0.0
+				]
+			},
+			"trap:soot_cloud:found": {
+				"done": false,
+				"last": 1808,
+				"played": [
+					0
+				]
+			}
+		},
+		"options": {
+			"asked": {
+				"death_house/altar|Refuse. Nobody here is dying for you.": true,
+				"death_house/altar|Run for the stairs.": true,
+				"death_house/escape|Smash the glass and haul everyone up through the gap. Too slow, and the house fights back.": true,
+				"death_house/rose_thorn|We'll find Walter. I promise.": true,
+				"into_the_mists/wolves|Stand tall and shout them off the road. If they don't give way, they attack.": true
+			},
+			"respec": true
+		},
+		"party": [
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {
+						"art": "ilse_varga"
+					},
+					"background": "soldier",
+					"base_scores": {
+						"cha": 12.0,
+						"con": 13.0,
+						"dex": 14.0,
+						"int": 8.0,
+						"str": 15.0,
+						"wis": 10.0
+					},
+					"choices": {
+						"background.abilities": [
+							"str",
+							"str",
+							"dex"
+						],
+						"background.tool": [
+							"dice_set"
+						],
+						"banneret.3.banneret_well_spoken": [
+							"insight"
+						],
+						"banneret.3.knightly_envoy": [
+							"dwarvish"
+						],
+						"fighter.1.fighting_style": [
+							"arcane_warrior"
+						],
+						"fighter.1.fighting_style/arcane_warrior.arcane_warrior_cantrips.cantrips": [
+							"acid_splash",
+							"blade_ward"
+						],
+						"fighter.1.fighting_style/arcane_warrior.arcane_warrior_cantrips.casting_ability": [
+							"int"
+						],
+						"fighter.1.skills": [
+							"animal_handling",
+							"history"
+						],
+						"fighter.1.weapon_mastery": [
+							"battleaxe",
+							"blowgun",
+							"club"
+						],
+						"fighter.3.fighter_subclass": [
+							"banneret"
+						],
+						"origin.languages": [
+							"common_sign_language",
+							"draconic"
+						],
+						"species.size": [
+							"medium"
+						],
+						"species.skillful": [
+							"acrobatics"
+						],
+						"species.versatile": [
+							"alert"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {},
+					"levels": [
+						{
+							"class": "fighter",
+							"hp": 0.0
+						},
+						{
+							"class": "fighter",
+							"hp": 0.0
+						},
+						{
+							"class": "fighter",
+							"hp": 0
+						}
+					],
+					"name": "Brannoc Vell",
+					"species": "human"
+				},
+				"currency": {
+					"cp": 0.0,
+					"ep": 0.0,
+					"gp": 18.0,
+					"pp": 0.0,
+					"sp": 0.0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {
+					"10": 1
+				},
+				"id": "brannoc_vell",
+				"inventory": [
+					{
+						"id": "chain_mail",
+						"qty": 1.0,
+						"slot": "armor"
+					},
+					{
+						"id": "greatsword",
+						"qty": 1.0,
+						"slot": "main_hand"
+					},
+					{
+						"id": "flail",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "javelin",
+						"qty": 8.0,
+						"slot": ""
+					},
+					{
+						"id": "dungeoneers_pack",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "spear",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "shortbow",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "arrow",
+						"qty": 20.0,
+						"slot": ""
+					},
+					{
+						"id": "dice_set",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "healers_kit",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "quiver",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1.0,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 21,
+					"resources_used": {
+						"action_surge": 0,
+						"banneret_group_recovery": 0,
+						"second_wind": 1
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {
+						"art": "tamsin_tealeaf"
+					},
+					"background": "criminal",
+					"base_scores": {
+						"cha": 8.0,
+						"con": 13.0,
+						"dex": 15.0,
+						"int": 14.0,
+						"str": 12.0,
+						"wis": 10.0
+					},
+					"choices": {
+						"background.abilities": [
+							"dex",
+							"dex",
+							"con"
+						],
+						"origin.languages": [
+							"common_sign_language",
+							"draconic"
+						],
+						"rogue.1.expertise": [
+							"acrobatics",
+							"athletics"
+						],
+						"rogue.1.skills": [
+							"acrobatics",
+							"athletics",
+							"deception",
+							"insight"
+						],
+						"rogue.1.thieves_cant": [
+							"dwarvish"
+						],
+						"rogue.1.weapon_mastery": [
+							"club",
+							"dagger"
+						],
+						"rogue.3.rogue_subclass": [
+							"arcane_trickster"
+						],
+						"rogue.cantrips": [
+							"acid_splash",
+							"blade_ward"
+						],
+						"rogue.prepared": [
+							"alarm",
+							"burning_hands",
+							"charm_person"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {},
+					"levels": [
+						{
+							"class": "rogue",
+							"hp": 0.0
+						},
+						{
+							"class": "rogue",
+							"hp": 0.0
+						},
+						{
+							"class": "rogue",
+							"hp": 0
+						}
+					],
+					"name": "Pip Marrow",
+					"species": "halfling"
+				},
+				"currency": {
+					"cp": 0.0,
+					"ep": 0.0,
+					"gp": 24.0,
+					"pp": 0.0,
+					"sp": 0.0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {
+					"8": 1
+				},
+				"id": "pip_marrow",
+				"inventory": [
+					{
+						"id": "leather_armor",
+						"qty": 1.0,
+						"slot": "armor"
+					},
+					{
+						"id": "dagger",
+						"qty": 4.0,
+						"slot": ""
+					},
+					{
+						"id": "shortsword",
+						"qty": 1.0,
+						"slot": "main_hand"
+					},
+					{
+						"id": "shortbow",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "arrow",
+						"qty": 11,
+						"slot": ""
+					},
+					{
+						"id": "quiver",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "thieves_tools",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "burglars_pack",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "thieves_tools",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "crowbar",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1.0,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [
+						{
+							"caster_id": "",
+							"concentration": {
+								"caster": "",
+								"source": ""
+							},
+							"conditions": [],
+							"consume_on": [],
+							"consume_when_attacked": false,
+							"data": {},
+							"ends": 6,
+							"ends_on": [],
+							"ends_on_damage": false,
+							"ends_when_incapacitated": false,
+							"escape": {},
+							"minutes_left": 0,
+							"modifiers": [
+								{
+									"class_id": "",
+									"data": {
+										"ability": "str",
+										"max": 30,
+										"stat": "ability",
+										"value": -3
+									},
+									"id": "",
+									"kind": "monster",
+									"name": "Draining Swipe"
+								}
+							],
+							"name": "Draining Swipe (Str drained)",
+							"repeat_save": {},
+							"rounds_left": 0,
+							"skip_turn_ends": 0,
+							"source_id": "ability_drain",
+							"source_kind": "monster",
+							"spell_level": 0,
+							"stack_key": "ability_drain:39",
+							"turn_owner_id": ""
+						}
+					],
+					"exhaustion": 0,
+					"hp": 23,
+					"resources_used": {},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {
+						"art": "hedda_ironvow"
+					},
+					"background": "acolyte",
+					"base_scores": {
+						"cha": 12.0,
+						"con": 13.0,
+						"dex": 8.0,
+						"int": 10.0,
+						"str": 14.0,
+						"wis": 15.0
+					},
+					"choices": {
+						"arcana_domain.3.student_of_arcana.cantrips": [
+							"acid_splash",
+							"blade_ward"
+						],
+						"arcana_domain.3.student_of_arcana.skill": [
+							"arcana"
+						],
+						"background.abilities": [
+							"int",
+							"int",
+							"wis"
+						],
+						"background.feat.level_1_spell": [
+							"bane"
+						],
+						"background.feat.two_cantrips.cantrips": [
+							"guidance",
+							"light"
+						],
+						"background.feat.two_cantrips.spellcasting_ability": [
+							"int"
+						],
+						"cleric.1.divine_order": [
+							"protector"
+						],
+						"cleric.1.skills": [
+							"history",
+							"medicine"
+						],
+						"cleric.3.cleric_subclass": [
+							"arcana_domain"
+						],
+						"cleric.cantrips": [
+							"mending",
+							"resistance",
+							"sacred_flame"
+						],
+						"cleric.prepared": [
+							"bless",
+							"command",
+							"create_or_destroy_water",
+							"cure_wounds",
+							"detect_evil_and_good",
+							"aid"
+						],
+						"origin.languages": [
+							"common_sign_language",
+							"draconic"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {},
+					"levels": [
+						{
+							"class": "cleric",
+							"hp": 0.0
+						},
+						{
+							"class": "cleric",
+							"hp": 0.0
+						},
+						{
+							"class": "cleric",
+							"hp": 0
+						}
+					],
+					"name": "Odessa Flint",
+					"species": "dwarf"
+				},
+				"currency": {
+					"cp": 0.0,
+					"ep": 0.0,
+					"gp": 15.0,
+					"pp": 0.0,
+					"sp": 0.0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "odessa_flint",
+				"inventory": [
+					{
+						"id": "chain_shirt",
+						"qty": 1.0,
+						"slot": "armor"
+					},
+					{
+						"id": "shield",
+						"qty": 1.0,
+						"slot": "off_hand"
+					},
+					{
+						"id": "mace",
+						"qty": 1.0,
+						"slot": "main_hand"
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "priests_pack",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "calligraphers_supplies",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "book",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "parchment",
+						"qty": 10.0,
+						"slot": ""
+					},
+					{
+						"id": "robe",
+						"qty": 1.0,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					1,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 24,
+					"resources_used": {
+						"channel_divinity": 0,
+						"spell:bane": 0,
+						"stonecunning": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {
+						"art": "silvain_aster"
+					},
+					"background": "sage",
+					"base_scores": {
+						"cha": 10.0,
+						"con": 13.0,
+						"dex": 12.0,
+						"int": 15.0,
+						"str": 8.0,
+						"wis": 14.0
+					},
+					"choices": {
+						"abjurer.3.abjuration_savant": [
+							"arcane_lock",
+							"arcane_vigor"
+						],
+						"background.abilities": [
+							"con",
+							"con",
+							"int"
+						],
+						"background.feat.level_1_spell": [
+							"alarm"
+						],
+						"background.feat.two_cantrips.cantrips": [
+							"acid_splash",
+							"blade_ward"
+						],
+						"background.feat.two_cantrips.spellcasting_ability": [
+							"int"
+						],
+						"origin.languages": [
+							"common_sign_language",
+							"draconic"
+						],
+						"species.elven_lineage": [
+							"drow"
+						],
+						"species.keen_senses": [
+							"insight"
+						],
+						"species.spellcasting_ability": [
+							"int"
+						],
+						"wizard.1.skills": [
+							"investigation",
+							"medicine"
+						],
+						"wizard.2.scholar": [
+							"arcana"
+						],
+						"wizard.3.wizard_subclass": [
+							"abjurer"
+						],
+						"wizard.cantrips": [
+							"booming_blade",
+							"chill_touch",
+							"elementalism"
+						],
+						"wizard.prepared": [
+							"burning_hands",
+							"charm_person",
+							"chromatic_orb",
+							"color_spray",
+							"comprehend_languages",
+							"alter_self"
+						],
+						"wizard.spellbook": [
+							"alarm",
+							"burning_hands",
+							"charm_person",
+							"chromatic_orb",
+							"color_spray",
+							"comprehend_languages",
+							"detect_magic",
+							"disguise_self",
+							"alter_self",
+							"augury"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {},
+					"levels": [
+						{
+							"class": "wizard",
+							"hp": 0.0
+						},
+						{
+							"class": "wizard",
+							"hp": 0.0
+						},
+						{
+							"class": "wizard",
+							"hp": 0
+						}
+					],
+					"name": "Ithren Vael",
+					"species": "elf"
+				},
+				"currency": {
+					"cp": 0.0,
+					"ep": 0.0,
+					"gp": 13.0,
+					"pp": 0.0,
+					"sp": 0.0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {
+					"6": 2
+				},
+				"id": "ithren_vael",
+				"inventory": [
+					{
+						"id": "dagger",
+						"qty": 0.0,
+						"slot": ""
+					},
+					{
+						"id": "arcane_focus_staff",
+						"qty": 1.0,
+						"slot": "main_hand"
+					},
+					{
+						"id": "robe",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "spellbook",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "scholars_pack",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "quarterstaff",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "calligraphers_supplies",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "book",
+						"qty": 1.0,
+						"slot": ""
+					},
+					{
+						"id": "parchment",
+						"qty": 8.0,
+						"slot": ""
+					},
+					{
+						"id": "robe",
+						"qty": 1.0,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [
+						{
+							"caster_id": "",
+							"concentration": {
+								"caster": "",
+								"source": ""
+							},
+							"conditions": [],
+							"consume_on": [],
+							"consume_when_attacked": false,
+							"data": {},
+							"ends": 6,
+							"ends_on": [],
+							"ends_on_damage": false,
+							"ends_when_incapacitated": false,
+							"escape": {},
+							"minutes_left": 0,
+							"modifiers": [
+								{
+									"class_id": "",
+									"data": {
+										"ability": "str",
+										"max": 30,
+										"stat": "ability",
+										"value": -2
+									},
+									"id": "",
+									"kind": "monster",
+									"name": "Draining Swipe"
+								}
+							],
+							"name": "Draining Swipe (Str drained)",
+							"repeat_save": {},
+							"rounds_left": 0,
+							"skip_turn_ends": 0,
+							"source_id": "ability_drain",
+							"source_kind": "monster",
+							"spell_level": 0,
+							"stack_key": "ability_drain:42",
+							"turn_owner_id": ""
+						},
+						{
+							"caster_id": "",
+							"concentration": {
+								"caster": "",
+								"source": ""
+							},
+							"conditions": [],
+							"consume_on": [],
+							"consume_when_attacked": false,
+							"data": {},
+							"ends": 6,
+							"ends_on": [],
+							"ends_on_damage": false,
+							"ends_when_incapacitated": false,
+							"escape": {},
+							"minutes_left": 0,
+							"modifiers": [
+								{
+									"class_id": "",
+									"data": {
+										"ability": "str",
+										"max": 30,
+										"stat": "ability",
+										"value": -4
+									},
+									"id": "",
+									"kind": "monster",
+									"name": "Draining Swipe"
+								}
+							],
+							"name": "Draining Swipe (Str drained)",
+							"repeat_save": {},
+							"rounds_left": 0,
+							"skip_turn_ends": 0,
+							"source_id": "ability_drain",
+							"source_kind": "monster",
+							"spell_level": 0,
+							"stack_key": "ability_drain:47",
+							"turn_owner_id": ""
+						}
+					],
+					"exhaustion": 0,
+					"hp": 20,
+					"resources_used": {
+						"arcane_recovery": 0,
+						"arcane_ward": 0,
+						"spell:alarm": 0,
+						"spell:faerie_fire": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			}
+		],
+		"positions": [
+			[
+				35,
+				23
+			],
+			[
+				36,
+				23
+			],
+			[
+				34,
+				23
+			],
+			[
+				35,
+				22
+			]
+		],
+		"quests": {
+			"death_house": {
+				"history": [
+					"plea",
+					"secret_stair",
+					"the_altar",
+					"escaped_refused"
+				],
+				"stage": "escaped_refused"
+			},
+			"into_the_mists": {
+				"history": [
+					"the_pack",
+					"village_edge"
+				],
+				"stage": "village_edge"
+			}
+		},
+		"seed": 0,
+		"shops": {},
+		"start_level": 1,
+		"stash": [],
+		"tarokka": {},
+		"travel_resume": {},
+		"visited": {
+			"death_house_attic": true,
+			"death_house_dungeon_1": true,
+			"death_house_dungeon_2": true,
+			"death_house_ground": true,
+			"death_house_lot": true,
+			"death_house_third": true,
+			"death_house_upper": true,
+			"dh_attic_hall": true,
+			"dh_attic_landing": true,
+			"dh_attic_stair": true,
+			"dh_cult_refectory": true,
+			"dh_dining_room": true,
+			"dh_family_crypts": true,
+			"dh_flooded_passage": true,
+			"dh_foyer": true,
+			"dh_lower_landing": true,
+			"dh_lower_stair": true,
+			"dh_main_hall": true,
+			"dh_pit_passage": true,
+			"dh_ritual_chamber": true,
+			"dh_stair_foot": true,
+			"dh_storage_room": true,
+			"dh_third_hall": true,
+			"dh_upper_hall": true,
+			"dh_well_chamber": true,
+			"dh_winch_room": true,
+			"into_the_mists_road": true,
+			"mercantile_front": true,
+			"mists_gates": true,
+			"mists_svalich_woods": true,
+			"mists_village_edge": true,
+			"village_of_barovia": true,
+			"village_road_east": true
+		}
+	},
+	"tarokka": {},
+	"version": 2
+}
