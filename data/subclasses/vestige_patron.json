@@ -1,0 +1,63 @@
+{
+  "id": "vestige_patron",
+  "name": "Vestige Patron",
+  "class": "warlock",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "summary": "A warlock accompanied by a fragment of a forgotten deity. Some features are reference-only; see each feature’s implementation status.",
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "vestige_companion",
+        "name": "Vestige Companion",
+        "summary": "Gain a Small Celestial, Fiend, or Undead companion; choose anew after a Long Rest. It acts on your turn, Dodging unless commanded with your Bonus Action, or commanded to strike by sacrificing an Attack-action attack. While you are Incapacitated it acts freely. It disappears at 0 HP or your death; a 1-minute ceremony restores it to full HP within 5 feet. Magic actions dismiss it or return it within 30 feet. The companion and its stat block are reference-only; see the linked source.",
+        "text": "Gain a Small Celestial, Fiend, or Undead companion; choose anew after a Long Rest. It acts on your turn, Dodging unless commanded with your Bonus Action, or commanded to strike by sacrificing an Attack-action attack. While you are Incapacitated it acts freely. It disappears at 0 HP or your death; a 1-minute ceremony restores it to full HP within 5 feet. Magic actions dismiss it or return it within 30 feet. The companion and its stat block are reference-only; see the linked source.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "vestige_spells",
+        "name": "Vestige Spells",
+        "summary": "Choose the Life, Light, Trickery, or War Cleric domain. Its domain spells become always-prepared Warlock spells at the equivalent Warlock levels. The domain selection and these prepared spells are reference-only.",
+        "text": "Choose the Life, Light, Trickery, or War Cleric domain. Its domain spells become always-prepared Warlock spells at the equivalent Warlock levels. The domain selection and these prepared spells are reference-only.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "vestige_power",
+        "name": "Vestige Power",
+        "summary": "The companion regains Divine Power after your Short or Long Rest and Magical Cunning. While within 30 feet, you share its damage resistances.",
+        "text": "The companion regains Divine Power after your Short or Long Rest and Magical Cunning. While within 30 feet, you share its damage resistances.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "vestige_recovery",
+        "name": "Vestige Recovery",
+        "summary": "Reaction when your companion would reach 0 HP: spend a Pact Magic slot to restore it to maximum HP and teleport it to an empty visible space within 30 feet of itself. Once per Long Rest.",
+        "text": "Reaction when your companion would reach 0 HP: spend a Pact Magic slot to restore it to maximum HP and teleport it to an empty visible space within 30 feet of itself. Once per Long Rest.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "semblance_of_life",
+        "name": "Semblance of Life",
+        "summary": "Once per Long Rest, a Magic action transforms your companion within 90 feet for 1 hour into the matching Summon Celestial/Fiend/Undead spirit, at spell level half Warlock level (round down, max 9). It retains personality, Divine Power, HP, and Hit Dice, and gains Temporary HP equal to the spirit’s HP. The form ends early when those Temporary HP run out; any remaining vanish after 1 hour.",
+        "text": "Once per Long Rest, a Magic action transforms your companion within 90 feet for 1 hour into the matching Summon Celestial/Fiend/Undead spirit, at spell level half Warlock level (round down, max 9). It retains personality, Divine Power, HP, and Hit Dice, and gains Temporary HP equal to the spirit’s HP. The form ends early when those Temporary HP run out; any remaining vanish after 1 hour.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

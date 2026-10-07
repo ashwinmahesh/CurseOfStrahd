@@ -1,0 +1,67 @@
+{
+  "id": "knight_of_the_gauntlet",
+  "name": "Knight of the Gauntlet",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. Equipment A uses an Amulet for the book’s unspecified Holy Symbol."
+  },
+  "summary": "You joined the Order of the Gauntlet to protect others through courage, fellowship, and force of arms.",
+  "ability_scores": [
+    "str",
+    "int",
+    "wis"
+  ],
+  "feat": "tyro_of_the_gauntlet",
+  "skills": [
+    "athletics",
+    "medicine"
+  ],
+  "tool": {
+    "id": "smiths_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "spear",
+          "qty": 1
+        },
+        {
+          "id": "smiths_tools",
+          "qty": 1
+        },
+        {
+          "id": "bullseye_lantern",
+          "qty": 1
+        },
+        {
+          "id": "holy_symbol_amulet",
+          "qty": 1
+        },
+        {
+          "id": "manacles",
+          "qty": 1
+        },
+        {
+          "id": "oil",
+          "qty": 5
+        },
+        {
+          "id": "tinderbox",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 9
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

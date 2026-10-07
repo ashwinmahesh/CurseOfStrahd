@@ -1,0 +1,40 @@
+{
+  "id": "hindsight",
+  "name": "Hindsight",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 9,
+  "school": "divination",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 10
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 500
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a tiny hourglass worth 500 GP, consumed",
+    "m_cost_gp": 500,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "summary": "Reference-only: Observe events within 500 feet over the preceding 10 years. Visions initially advance about one day per second; freely pause, rewind, slow, or fast-forward during Concentration.",
+  "text": "Reference-only: Observe events within 500 feet over the preceding 10 years. Visions initially advance about one day per second; freely pause, rewind, slow, or fast-forward during Concentration.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile"
+}

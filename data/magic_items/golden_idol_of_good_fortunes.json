@@ -1,0 +1,38 @@
+{
+  "id": "golden_idol_of_good_fortunes",
+  "name": "Golden Idol of Good Fortunes",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "amulet",
+  "summary": "Cast Augury once per dawn; the idol speaks its omen.",
+  "text": "Cast Augury once per dawn; the idol speaks its omen. +1 AC while attuned. Reference-only: while held, Magic action converts a touched nonmagical trade bar or gemstone into coins of equal value. Reference-only: while holding the idol, cast Globe of Invulnerability once per dawn.",
+  "powers": [
+    {
+      "id": "augury",
+      "name": "Augury",
+      "spell": "augury",
+      "dc": "wielder",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    }
+  ],
+  "modifiers": [
+    {
+      "stat": "ac",
+      "value": 1
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "mechanical_wonder_gyrocopter",
+  "name": "Mechanical Wonder (Gyrocopter)",
+  "source": {
+    "book": "FRAiF",
+    "page": 245,
+    "checked_against": "FRAiF",
+    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/10771765-mechanical-wonder. Prices use the existing rarity convention; unspecified weight is 0. Reference-only properties require manual adjudication."
+  },
+  "category": "wondrous",
+  "weight_lb": 500,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "amulet",
+  "summary": "Reference-only: activate with 1 minute of winding its unique hand key, taking the Utilize action each turn.",
+  "text": "Reference-only: activate with 1 minute of winding its unique hand key, taking the Utilize action each turn. Operates for 8 hours. Huge vehicle weighing 500 pounds: AC 14, HP 50, Speed 5 feet, Fly 20 feet. Requires one pilot and carries up to 2,000 pounds; exceeding capacity deactivates it. Eight spectral safety cords attach or detach with a Utilize action. Attached riders glide 5 feet horizontally per foot descended. A cord stretched beyond 500 feet disappears and returns to the vehicle."
+}

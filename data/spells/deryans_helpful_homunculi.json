@@ -1,0 +1,39 @@
+{
+  "id": "deryans_helpful_homunculi",
+  "name": "Deryan’s Helpful Homunculi",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 2,
+  "school": "conjuration",
+  "classes": [
+    "cleric",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "gemstone powder worth 100 GP, consumed, and Artisan’s Tools you are proficient with",
+    "m_cost_gp": 100,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "summary": "Reference-only: Intangible, invulnerable helpers are proficient in Arcana and the Artisan’s Tools supplied to cast the spell. They count as one crafting assistant, halving crafting time.",
+  "text": "Reference-only: Intangible, invulnerable helpers are proficient in Arcana and the Artisan’s Tools supplied to cast the spell. They count as one crafting assistant, halving crafting time.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile",
+  "ritual": true
+}

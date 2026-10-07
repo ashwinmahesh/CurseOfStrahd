@@ -1,0 +1,20 @@
+{
+  "id": "prismatic_rune",
+  "name": "Prismatic Rune",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Spellcaster"
+  },
+  "theme": "arcana",
+  "icon": "amulet",
+  "summary": "Reference-only: after a Long Rest choose Acid, Cold, Fire, Lightning, or Thunder.",
+  "text": "Reference-only: after a Long Rest choose Acid, Cold, Fire, Lightning, or Thunder. Spend 1 of 6 charges when casting a damaging spell to change its damage to that type. Regain 1d6 charges each dawn."
+}

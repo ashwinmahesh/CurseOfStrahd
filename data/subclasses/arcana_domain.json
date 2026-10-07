@@ -1,0 +1,171 @@
+{
+  "id": "arcana_domain",
+  "name": "Arcana Domain",
+  "class": "cleric",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "summary": "A cleric who studies and reshapes arcane magic. Some features are reference-only; see each feature’s implementation status.",
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "student_of_arcana",
+        "name": "Student of Arcana",
+        "summary": "Choose Arcana or a Cleric starting skill; learn two Wizard cantrips as Cleric spells, replacing one when gaining a Cleric level.",
+        "text": "Choose Arcana or a Cleric starting skill; learn two Wizard cantrips as Cleric spells, replacing one when gaining a Cleric level.",
+        "implemented": "data",
+        "choices": [
+          {
+            "id": "skill",
+            "kind": "skill",
+            "count": 1,
+            "from": [
+              "arcana",
+              "history",
+              "insight",
+              "medicine",
+              "persuasion",
+              "religion"
+            ]
+          },
+          {
+            "id": "cantrips",
+            "kind": "cantrip",
+            "count": 2,
+            "filter": {
+              "list": "wizard",
+              "level": 0
+            },
+            "replaceable": "level_up",
+            "replace_max": 1
+          }
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "modify_magic",
+        "name": "Modify Magic",
+        "summary": "When casting, spend Channel Divinity freely for one benefit: one spell target gains 2d8 + Cleric level Temporary Hit Points; or, after a visible creature succeeds on its first save against that spell, subtract 1d6 from that save.",
+        "text": "When casting, spend Channel Divinity freely for one benefit: one spell target gains 2d8 + Cleric level Temporary Hit Points; or, after a visible creature succeeds on its first save against that spell, subtract 1d6 from that save.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "dispelling_recovery",
+        "name": "Dispelling Recovery",
+        "summary": "After casting a slotted spell that heals or ends a condition on a creature, cast Dispel Magic as part of the same action, Bonus Action, or Reaction without a slot. Once per Short or Long Rest; Channel Divinity restores use without an action.",
+        "text": "After casting a slotted spell that heals or ends a condition on a creature, cast Dispel Magic as part of the same action, Bonus Action, or Reaction without a slot. Once per Short or Long Rest; Channel Divinity restores use without an action.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "arcana_magical_mastery",
+        "name": "Magical Mastery",
+        "summary": "Choose a Wizard spell from each level 6–9, always prepared as Cleric spells. On gaining a Cleric level, replace at most one with a Wizard spell of the same level.",
+        "text": "Choose a Wizard spell from each level 6–9, always prepared as Cleric spells. On gaining a Cleric level, replace at most one with a Wizard spell of the same level.",
+        "implemented": "data",
+        "choices": [
+          {
+            "id": "spell_6",
+            "kind": "spell",
+            "count": 1,
+            "filter": {
+              "list": "wizard",
+              "level": 6
+            },
+            "replaceable": "level_up",
+            "replace_max": 1,
+            "replace_group": "Magical Mastery"
+          },
+          {
+            "id": "spell_7",
+            "kind": "spell",
+            "count": 1,
+            "filter": {
+              "list": "wizard",
+              "level": 7
+            },
+            "replaceable": "level_up",
+            "replace_max": 1,
+            "replace_group": "Magical Mastery"
+          },
+          {
+            "id": "spell_8",
+            "kind": "spell",
+            "count": 1,
+            "filter": {
+              "list": "wizard",
+              "level": 8
+            },
+            "replaceable": "level_up",
+            "replace_max": 1,
+            "replace_group": "Magical Mastery"
+          },
+          {
+            "id": "spell_9",
+            "kind": "spell",
+            "count": 1,
+            "filter": {
+              "list": "wizard",
+              "level": 9
+            },
+            "replaceable": "level_up",
+            "replace_max": 1,
+            "replace_group": "Magical Mastery"
+          }
+        ],
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "@spell_6",
+            "always_prepared": true
+          },
+          {
+            "stat": "spell",
+            "value": "@spell_7",
+            "always_prepared": true
+          },
+          {
+            "stat": "spell",
+            "value": "@spell_8",
+            "always_prepared": true
+          },
+          {
+            "stat": "spell",
+            "value": "@spell_9",
+            "always_prepared": true
+          }
+        ]
+      }
+    }
+  ],
+  "always_prepared": {
+    "3": [
+      "detect_magic",
+      "magic_missile",
+      "magic_weapon",
+      "nystuls_magic_aura"
+    ],
+    "5": [
+      "counterspell",
+      "dispel_magic"
+    ],
+    "7": [
+      "arcane_eye",
+      "leomunds_secret_chest"
+    ],
+    "9": [
+      "bigbys_hand",
+      "teleportation_circle"
+    ]
+  }
+}

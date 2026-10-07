@@ -1,0 +1,35 @@
+{
+  "id": "chattering_staff_of_skulls",
+  "name": "Chattering Staff of Skulls",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "staff",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Spellcaster"
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "summary": "While held, cast Chill Touch with your spell attack bonus and gain Advantage on Intimidation.",
+  "text": "While held, cast Chill Touch with your spell attack bonus and gain Advantage on Intimidation. Reference-only: sheds Dim Light 5 feet. Reaction imposes Disadvantage on an attack by a visible creature within 30 feet.",
+  "held": true,
+  "powers": [
+    {
+      "id": "chill_touch",
+      "name": "Chill Touch",
+      "spell": "chill_touch",
+      "dc": "wielder"
+    }
+  ],
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "check:intimidation"
+    }
+  ]
+}

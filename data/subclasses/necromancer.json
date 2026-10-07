@@ -1,0 +1,266 @@
+{
+  "id": "necromancer",
+  "name": "Necromancer",
+  "class": "wizard",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "summary": "A wizard specializing in life energy and undead servants. Some features are reference-only; see each feature’s implementation status.",
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "necromancy_savant",
+        "name": "Necromancy Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 2,
+          "filter": {
+            "list": "wizard",
+            "school": "necromancy",
+            "min_level": 1,
+            "max_level": 2
+          }
+        }
+      }
+    },
+    {
+      "level": 5,
+      "feature": {
+        "id": "necromancy_savant",
+        "name": "Necromancy Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "necromancy",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "necromancy_savant",
+        "name": "Necromancy Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "necromancy",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 9,
+      "feature": {
+        "id": "necromancy_savant",
+        "name": "Necromancy Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "necromancy",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "necromancy_savant",
+        "name": "Necromancy Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "necromancy",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 13,
+      "feature": {
+        "id": "necromancy_savant",
+        "name": "Necromancy Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "necromancy",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "necromancy_savant",
+        "name": "Necromancy Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "necromancy",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "necromancy_savant",
+        "name": "Necromancy Savant",
+        "summary": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "text": "Add Wizard spells of this school to your spellbook for free: two of level 1–2 at Wizard level 3, then one of a level you can cast on gaining a new spell slot level.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "necromancy",
+            "min_level": 1,
+            "max_level": "slots"
+          }
+        }
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "necromancy_resistance",
+        "name": "Necromancy Spellbook: Resistance",
+        "summary": "Resistance to Necrotic damage.",
+        "text": "Resistance to Necrotic damage.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "necrotic"
+          }
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "necromancy_familiar",
+        "name": "Necromancy Spellbook: Familiar",
+        "summary": "Find Familiar is added to your spellbook. It can use a Skeleton or Zombie form, or a normal form with the Undead type. You may trade one Attack-action attack for your familiar to attack with its Reaction. The spellbook addition and familiar changes are reference-only.",
+        "text": "Find Familiar is added to your spellbook. It can use a Skeleton or Zombie form, or a normal form with the Undead type. You may trade one Attack-action attack for your familiar to attack with its Reaction. The spellbook addition and familiar changes are reference-only.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "undead_vitality",
+        "name": "Undead Vitality",
+        "summary": "After casting a Necromancy spell with a slot, one visible Undead within 60 feet may heal the slot level + your Wizard level.",
+        "text": "After casting a Necromancy spell with a slot, one visible Undead within 60 feet may heal the slot level + your Wizard level.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "grave_power",
+        "name": "Grave Power",
+        "summary": "While holding your spellbook, Arcane Recovery reduces your Exhaustion by 1, and damage from Wizard spells and features ignores Necrotic Resistance.",
+        "text": "While holding your spellbook, Arcane Recovery reduces your Exhaustion by 1, and damage from Wizard spells and features ignores Necrotic Resistance.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "necromancer_animate_dead",
+        "name": "Animate Dead",
+        "summary": "Animate Dead is always prepared.",
+        "text": "Animate Dead is always prepared.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "animate_dead",
+            "always_prepared": true
+          }
+        ]
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "undead_thralls",
+        "name": "Undead Thralls",
+        "summary": "Animate Dead can be cast without a slot once per Long Rest, and any casting may have its effective level increased by 1. Holding your spellbook, your Necromancy-created or summoned Undead gain current and maximum HP equal to Intelligence modifier + half Wizard level (round down); controlled Undead within 60 feet add Intelligence modifier Necrotic damage (minimum 1) on attack-roll hits.",
+        "text": "Animate Dead can be cast without a slot once per Long Rest, and any casting may have its effective level increased by 1. Holding your spellbook, your Necromancy-created or summoned Undead gain current and maximum HP equal to Intelligence modifier + half Wizard level (round down); controlled Undead within 60 feet add Intelligence modifier Necrotic damage (minimum 1) on attack-roll hits.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "harvest_undead",
+        "name": "Harvest Undead",
+        "summary": "Reaction after damage leaves you Bloodied but above 0 HP: reduce a visible Undead you control to 0 HP to heal yourself for your Wizard level.",
+        "text": "Reaction after damage leaves you Bloodied but above 0 HP: reduce a visible Undead you control to 0 HP to heal yourself for your Wizard level.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "deaths_master",
+        "name": "Death’s Master",
+        "summary": "While holding your spellbook: once per Long Rest, a Bonus Action grants Wizard level Temporary Hit Points to any number of your Necromancy-created or summoned Undead within 60 feet. When a visible Undead drops to 0 HP, you may explode it: roll d6s equal to half its unused Hit Dice (round up, minimum 1d6). Creatures in its 10-foot Emanation make Dexterity saves against your spell DC, taking that much Necrotic and losing Reactions until their next turn starts on failure, or half damage only on success. Exploding an Undead you do not control also costs a Reaction and a level 5+ spell slot.",
+        "text": "While holding your spellbook: once per Long Rest, a Bonus Action grants Wizard level Temporary Hit Points to any number of your Necromancy-created or summoned Undead within 60 feet. When a visible Undead drops to 0 HP, you may explode it: roll d6s equal to half its unused Hit Dice (round up, minimum 1d6). Creatures in its 10-foot Emanation make Dexterity saves against your spell DC, taking that much Necrotic and losing Reactions until their next turn starts on failure, or half damage only on success. Exploding an Undead you do not control also costs a Reaction and a level 5+ spell slot.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

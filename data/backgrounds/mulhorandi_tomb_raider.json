@@ -1,0 +1,95 @@
+{
+  "id": "mulhorandi_tomb_raider",
+  "name": "Mulhorandi Tomb Raider",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "summary": "You search the tombs and lost cities of Mulhorand for relics of its ancient peoples.",
+  "ability_scores": [
+    "dex",
+    "con",
+    "int"
+  ],
+  "feat": "lucky",
+  "skills": [
+    "investigation",
+    "religion"
+  ],
+  "tool": {
+    "id": "masons_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 1
+        },
+        {
+          "id": "light_hammer",
+          "qty": 1
+        },
+        {
+          "id": "masons_tools",
+          "qty": 1
+        },
+        {
+          "id": "backpack",
+          "qty": 1
+        },
+        {
+          "id": "bedroll",
+          "qty": 1
+        },
+        {
+          "id": "crowbar",
+          "qty": 1
+        },
+        {
+          "id": "ladder",
+          "qty": 1
+        },
+        {
+          "id": "pole",
+          "qty": 1
+        },
+        {
+          "id": "pouch",
+          "qty": 2
+        },
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "string",
+          "qty": 1
+        },
+        {
+          "id": "tinderbox",
+          "qty": 1
+        },
+        {
+          "id": "torch",
+          "qty": 5
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        },
+        {
+          "id": "waterskin",
+          "qty": 1
+        }
+      ],
+      "gp": 26
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

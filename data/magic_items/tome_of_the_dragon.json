@@ -1,0 +1,21 @@
+{
+  "id": "tome_of_the_dragon",
+  "name": "Tome of the Dragon",
+  "source": {
+    "book": "FRAiF",
+    "page": 247,
+    "checked_against": "FRAiF",
+    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/10771768-tome-of-the-dragon. Prices use the existing rarity convention; unspecified weight is 0. Reference-only properties require manual adjudication."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "amulet",
+  "summary": "Reference-only: a Dragon or a spellcaster with at least two level 5 spell slots can perform this dracolich ritual.",
+  "text": "Reference-only: a Dragon or a spellcaster with at least two level 5 spell slots can perform this dracolich ritual. It requires continuous access to an adult or ancient dragon, alive or dead, and 80,000 GP in supplies including the spirit-anchor gem. One qualified assistant may help, or more with DM permission. The ritual takes 180 days divided by the number of participants, with uninterrupted work and rest restrictions in the source. Completion deals 12d6 Necrotic to each participant; those reduced to 0 HP die and become DM-controlled Zombies. The target becomes an independent Dracolich. A living dragon dies and its spirit enters the gem; a dead body instead receives an evil dragon spirit from the Outer Planes."
+}

@@ -1,0 +1,36 @@
+{
+  "id": "sylunes_viper",
+  "name": "Syluné’s Viper",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 3,
+  "school": "conjuration",
+  "classes": [
+    "druid",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a snake fang"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "summary": "Reference-only: Gain 15 Temporary HP and a Climb Speed equal to Speed. The spell ends when these Temporary HP run out. While active, a Magic action makes a ranged spell attack within 50 feet: 1d6 Force and Poisoned until your next turn starts; while so Poisoned, the target is Incapacitated. Each slot above 3 adds 5 Temporary HP and 1d6 damage.",
+  "text": "Reference-only: Gain 15 Temporary HP and a Climb Speed equal to Speed. The spell ends when these Temporary HP run out. While active, a Magic action makes a ranged spell attack within 50 feet: 1d6 Force and Poisoned until your next turn starts; while so Poisoned, the target is Incapacitated. Each slot above 3 adds 5 Temporary HP and 1d6 damage.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile"
+}

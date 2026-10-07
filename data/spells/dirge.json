@@ -1,0 +1,35 @@
+{
+  "id": "dirge",
+  "name": "Dirge",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 6,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "summary": "Reference-only: A 60-foot Emanation prevents nonexempt creatures from healing. Entry, movement into a creature, or end of turn prompts a Constitution save once per turn: 3d10 Necrotic and Prone on failure; half damage and halved Speed on success. Circle variant: at least two secondary casters each spend a level 4+ slot; duration becomes 10 minutes with Concentration. Failed saves also give 1 Exhaustion; while that Exhaustion remains, Long Rests restore neither HP nor Exhaustion. Circle casting is manual.",
+  "text": "Reference-only: A 60-foot Emanation prevents nonexempt creatures from healing. Entry, movement into a creature, or end of turn prompts a Constitution save once per turn: 3d10 Necrotic and Prone on failure; half damage and halved Speed on success. Circle variant: at least two secondary casters each spend a level 4+ slot; duration becomes 10 minutes with Concentration. Failed saves also give 1 Exhaustion; while that Exhaustion remains, Long Rests restore neither HP nor Exhaustion. Circle casting is manual.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile"
+}
