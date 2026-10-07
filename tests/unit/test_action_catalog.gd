@@ -224,3 +224,36 @@ func test_right_click_square_menu_lists_move_and_what_you_can_do_to_whoever_is_t
 	var empty := cat.square_actions(ilse, Vector2i(6, 5))
 	assert_eq(empty.size(), 1, "an empty square: just Move here")
 	assert_true(bool((empty[0] as Dictionary)["enabled"]))
+
+
+func test_lay_on_hands_heals_the_chosen_amount_and_smites_wait_for_a_hit() -> void:
+	var e := TestCombat.open_field()
+	var ch := TestChars.custom("paladin", "human", 3)
+	var p := e.add(ch, &"party", Vector2i(2, 2))
+	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(3, 3))
+	var z := TestCombat.foe(e, "zombie", Vector2i(3, 2))
+	z.creature.hp = 200
+	TestCombat.start_with(e, p)
+	var cat := ActionCatalog.new(e)
+	ally.creature.hp = 5
+	var loh := cat.find(p, "feat:cf:lay_on_hands")
+	assert_false((loh.get("choices", []) as Array).is_empty(), "amounts to pick from")
+	var three := loh.duplicate(true)
+	three["opts"] = {"choice": "3"}
+	assert_true(cat.perform(p, three, [ally]).ok)
+	assert_eq(ally.creature.hp, 8, "exactly the 3 points chosen")
+	assert_eq(ch.resource_left("lay_on_hands"), 12, "15 - 3 left in the pool")
+	# Divine Smite from the Spells tab arms it; a miss spends nothing.
+	p.bonus_available = true
+	assert_true(cat.perform(p, cat.find(p, "spell:divine_smite")).ok)
+	assert_true("smite:divine_smite" in p.armed, "armed for the next hit")
+	var free := ch.resource_left("spell:divine_smite")
+	var slots := ch.slots_left(1)
+	TestCombat.next_d20(e, 1)
+	var miss := e.attack(p, z, str(e.attack_options(p)[0]["id"]))
+	# A human's Heroic Inspiration offers a reroll on the miss: decline it.
+	if miss.is_paused():
+		e.answer_reaction(false)
+	assert_eq(ch.resource_left("spell:divine_smite"), free, "the free smite isn't spent on a miss")
+	assert_eq(ch.slots_left(1), slots, "nor a slot")
+	assert_true("smite:divine_smite" in p.armed, "still armed for a later hit")

@@ -15,6 +15,12 @@ var _where: Label
 ## The width of the top-right block the location's name has to fit.
 const WHERE_WIDTH := 346.0
 var _mode: Label
+## The current objective under the time (the newest open quest's), a click opens the journal.
+var _goal: Label
+## Toasts that came while another was up, shown one after another.
+var _toast_queue: Array[String] = []
+## The command bar's buttons by command, so Sneak and Split can light up while they're on.
+var _bar_buttons: Dictionary = {}
 var _narr: RichTextLabel
 var _narr_time := 0.0
 var _narr_face: Control
@@ -23,6 +29,8 @@ var _toast: Label
 var _toast_time := 0.0
 var _roll: Label
 var _roll_time := 0.0
+var _saved: Label
+var _saved_time := 0.0
 var _hint_panel: PanelContainer
 var _toast_panel: PanelContainer
 var _roll_panel: PanelContainer
@@ -30,6 +38,18 @@ var _roll_panel: PanelContainer
 var minimap: Minimap
 ## Ways out to other regions marked over the world (ui/exploration/exit_signs.gd).
 var exit_signs: ExitSigns
+## Names over everything usable while Alt is held (ui/exploration/thing_labels.gd).
+var thing_labels: ThingLabels
+
+## The exploring controls card (F1), like the one in fights.
+const CONTROLS: Array[String] = [
+	"Mouse: click the floor to walk there; click a person, door, chest or thing to use it (the hint says what a click will do); right-click it for everything you can do; the mouse wheel zooms.",
+	"Hold Alt to see the names of everything you can use nearby.",
+	"Keyboard: WASD or the arrows walk · Q / E turn the camera · 1-4 or Tab pick who leads · C character · I inventory · J journal · P party · M map · R rest · F search · V sneak · G split the party · F5 quicksave · F9 load it · Esc menu.",
+	"In conversations: 1-9 pick an answer · Space, Enter or a click goes on · H shows what's been said.",
+	"Controller: left stick walks · A uses what's beside you · Back opens its menu · X searches · Y journal · LB / RB character and inventory · Start menu.",
+]
+var _controls: PanelContainer
 
 ## [label, key, command, icon (art/ui/icons)]
 const BUTTONS := [["Character", "C", "sheet", "character"], ["Inventory", "I", "inventory", "inventory"],
@@ -47,6 +67,8 @@ func build(state: StoryState) -> void:
 	st = state
 	exit_signs = ExitSigns.new()
 	add_child(exit_signs)
+	thing_labels = ThingLabels.new()
+	add_child(thing_labels)
 	_party_box = VBoxContainer.new()
 	_party_box.position = Vector2(12, 12)
 	_party_box.add_theme_constant_override("separation", 6)
@@ -72,6 +94,17 @@ func build(state: StoryState) -> void:
 	_mode = _label("", 15, "parchment")
 	_mode.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	top.add_child(_mode)
+	_goal = _label("", 14, "gilt_light")
+	_goal.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_goal.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_goal.custom_minimum_size = Vector2(WHERE_WIDTH, 0)
+	_goal.mouse_filter = Control.MOUSE_FILTER_STOP
+	_goal.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	_goal.gui_input.connect(func(ev: InputEvent) -> void:
+		var mb := ev as InputEventMouseButton
+		if mb != null and mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
+			command.emit("journal"))
+	top.add_child(_goal)
 	add_child(top)
 	var narr_panel := PanelContainer.new()
 	var s := StyleBoxFlat.new()
@@ -151,6 +184,50 @@ func build(state: StoryState) -> void:
 	_roll_panel.offset_bottom = -78
 	_roll_panel.visible = false
 	add_child(_roll_panel)
+	_controls = UiKit.panel("ui_black", "gilt_dark")
+	var cs := _controls.get_theme_stylebox("panel") as StyleBoxFlat
+	cs.set_corner_radius_all(10)
+	cs.corner_detail = 1
+	cs.set_content_margin_all(22)
+	UiKit.trim(_controls, 56.0)
+	_controls.anchor_left = 0.5
+	_controls.anchor_right = 0.5
+	_controls.offset_left = -440
+	_controls.offset_right = 440
+	_controls.offset_top = 140
+	_controls.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_controls.visible = false
+	var cbox := VBoxContainer.new()
+	cbox.add_theme_constant_override("separation", 8)
+	cbox.add_child(_label("Controls (F1 to close)", 20, "gilt_light"))
+	for line: String in CONTROLS:
+		var l := _label(line, 15, "vellum")
+		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		l.custom_minimum_size = Vector2(820, 0)
+		cbox.add_child(l)
+	_controls.add_child(cbox)
+	add_child(_controls)
+	var f1 := _label("F1: controls", 12, "gilt_dark")
+	f1.anchor_top = 1.0
+	f1.anchor_bottom = 1.0
+	f1.offset_left = 16
+	f1.offset_top = -30
+	f1.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(f1)
+	# A quiet "Autosaved" at the bottom right when the game saves itself.
+	_saved = _label("◆ Autosaved", 14, "gilt")
+	_saved.anchor_left = 1.0
+	_saved.anchor_right = 1.0
+	_saved.anchor_top = 1.0
+	_saved.anchor_bottom = 1.0
+	_saved.offset_left = -170
+	_saved.offset_right = -18
+	_saved.offset_top = -44
+	_saved.offset_bottom = -20
+	_saved.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_saved.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_saved.visible = false
+	add_child(_saved)
 	# The command bar sits on a dark plate with gilt corners, like the frames of the menus it opens.
 	var plate := PanelContainer.new()
 	var ps := UiKit.style("ui_black", "gilt_dark", 2, 0.88)
@@ -181,6 +258,21 @@ func build(state: StoryState) -> void:
 		btn.add_theme_constant_override("icon_max_width", 30)
 		btn.custom_minimum_size = Vector2(52, 48)
 		btn.expand_icon = false
+		# Its key in the lower corner, so the shortcuts are learned by looking.
+		var key := _label(str(b[1]), 10 if str(b[1]).length() > 1 else 12, "gilt_light")
+		key.add_theme_constant_override("outline_size", 4)
+		key.anchor_left = 1.0
+		key.anchor_right = 1.0
+		key.anchor_top = 1.0
+		key.anchor_bottom = 1.0
+		key.offset_left = -26
+		key.offset_right = -7
+		key.offset_top = -17
+		key.offset_bottom = -2
+		key.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		key.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		btn.add_child(key)
+		_bar_buttons[cmd] = btn
 		bar.add_child(btn)
 	add_child(plate)
 	refresh()
@@ -282,9 +374,33 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		_party_box.add_child(gcard)
 	if location_name != "":
 		_fit_where(location_name)
+	# Sneak and Split read as on while they are.
+	for pair: Array in [["sneak", sneaking], ["split", solo]]:
+		var b := _bar_buttons.get(str(pair[0]), null) as Button
+		if b != null:
+			var on := bool(pair[1])
+			b.modulate = Color(1.25, 1.12, 0.8) if on else Color.WHITE
+			b.tooltip_text = ("%s (%s) · on" if on else "%s (%s)") % [str(pair[0]).capitalize(), "V" if pair[0] == "sneak" else "G"]
+	_goal.text = _objective()
+	_goal.visible = _goal.text != ""
 	var hours := st.minute_of_day / 60
 	_mode.text = "Day %d · %02d:%02d%s%s · %d gp" % [st.day, hours, st.minute_of_day % 60, " · Sneaking" if sneaking else "",
 		" · Split party" if solo else "", int(st.gold)]
+
+
+## The newest open quest's first objective ("◆ Follow the hidden stair down"), or "".
+func _objective() -> String:
+	var newest := ""
+	for q in QuestLog.journal(st):
+		if str(q["status"]) == "active" and not (q["objectives"] as Array).is_empty():
+			newest = str((q["objectives"] as Array)[0])
+			_goal_tip = "%s · click for the journal (J)" % q["name"]
+	if _goal != null:
+		_goal.tooltip_text = _goal_tip
+	return ("◆ " + newest) if newest != "" else ""
+
+
+var _goal_tip := ""
 
 
 ## The location's name at the top right: the book hand at 24 px, smaller for a long name ("The Amber Temple: Hall of
@@ -304,6 +420,7 @@ func _fit_where(text: String) -> void:
 func show_location(view: LocationView) -> void:
 	minimap.show_location(view)
 	exit_signs.show_location(view)
+	thing_labels.show_location(view, exit_signs.signs)
 
 
 ## Shows a passage in the Narrator's box, with `portrait` (art/portraits/<id>.png; the Narrator's by default, ""
@@ -318,6 +435,8 @@ func narrate(text: String, portrait: String = DialogueRunner.NARRATOR_PORTRAIT) 
 		_narr_face.add_child(UiParts.framed_portrait(portrait, 76.0))
 	_narr.text = "[i][color=#%s]%s[/color][/i]" % [Look.color("parchment").to_html(false), text.replace("[", "[lb]")]
 	_narr_time = clampf(3.0 + text.length() * 0.05, 4.0, 10.0)
+	if GameSettings.narration_stays():
+		_narr_time = 1.0e9   # the player keeps it up until they close it (Settings)
 	# The Narrator speaks it, if it's recorded (ADR 0013); the box stays up until the voice is done.
 	_narr_time = maxf(_narr_time, VoiceOver.say(VoiceOver.NARRATOR, text) + 1.0)
 
@@ -345,6 +464,11 @@ func hint(text: String, at: Vector2) -> void:
 
 
 func toast(text: String) -> void:
+	# Another message is still being read: this one waits its turn (unless it's the same again).
+	if _toast_time > 1.0 and text != "" and text != _toast.text:
+		if not text in _toast_queue:
+			_toast_queue.append(text)
+		return
 	_toast.text = text
 	_toast_time = 2.5
 	_toast_panel.visible = text != ""
@@ -352,6 +476,21 @@ func toast(text: String) -> void:
 	_toast_panel.reset_size()
 	_toast_panel.offset_left = -_toast_panel.size.x / 2.0
 	_toast_panel.offset_right = _toast_panel.size.x / 2.0
+
+
+func toggle_controls() -> void:
+	_controls.visible = not _controls.visible
+
+
+func controls_showing() -> bool:
+	return _controls.visible
+
+
+## The game just saved itself: a note at the bottom right that fades.
+func saved_note() -> void:
+	_saved_time = 2.5
+	_saved.visible = true
+	_saved.modulate.a = 1.0
 
 
 func roll(text: String) -> void:
@@ -384,6 +523,13 @@ func _process(delta: float) -> void:
 		_toast_time -= delta
 		_toast_panel.modulate.a = clampf(_toast_time, 0.0, 1.0)
 		_toast_panel.visible = _toast_time > 0.0
+		if _toast_time <= 0.6 and not _toast_queue.is_empty():
+			_toast_time = 0.0
+			toast(_toast_queue.pop_front())
+	if _saved_time > 0.0:
+		_saved_time -= delta
+		_saved.modulate.a = clampf(_saved_time, 0.0, 1.0)
+		_saved.visible = _saved_time > 0.0
 	if _roll_time > 0.0:
 		_roll_time -= delta
 		_roll_panel.modulate.a = clampf(_roll_time, 0.0, 1.0)

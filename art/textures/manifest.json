@@ -77,7 +77,8 @@
           "bog_deep",
           "moss"
         ],
-        "source": "art/generated/textures/village_cobbles.png"
+        "source": "art/generated/textures/village_cobbles.png",
+        "hd_file": "art/textures/village/cobbles_hd.png"
       },
       "mud_road": {
         "file": "art/textures/village/mud_road.png",
@@ -94,7 +95,8 @@
           "moon_blue",
           "grave"
         ],
-        "source": "art/generated/textures/village_mud_road.png"
+        "source": "art/generated/textures/village_mud_road.png",
+        "hd_file": "art/textures/village/mud_road_hd.png"
       },
       "grass": {
         "file": "art/textures/village/grass.png",
@@ -111,7 +113,8 @@
           "bone_dark"
         ],
         "source": "art/generated/textures/village_grass.png",
-        "saturate": 1.3
+        "saturate": 1.3,
+        "hd_file": "art/textures/village/grass_hd.png"
       },
       "house_wall": {
         "file": "art/textures/village/house_wall.png",
@@ -128,7 +131,8 @@
           "tan",
           "slate"
         ],
-        "source": "art/generated/textures/village_house_wall.png"
+        "source": "art/generated/textures/village_house_wall.png",
+        "hd_file": "art/textures/village/house_wall_hd.png"
       },
       "roof_slate": {
         "file": "art/textures/village/roof_slate.png",
@@ -144,7 +148,8 @@
           "night",
           "moon_blue"
         ],
-        "source": "art/generated/textures/village_roof_slate.png"
+        "source": "art/generated/textures/village_roof_slate.png",
+        "hd_file": "art/textures/village/roof_slate_hd.png"
       },
       "roof_thatch": {
         "file": "art/textures/village/roof_thatch.png",
@@ -161,7 +166,8 @@
           "tan",
           "bog"
         ],
-        "source": "art/generated/textures/village_roof_thatch.png"
+        "source": "art/generated/textures/village_roof_thatch.png",
+        "hd_file": "art/textures/village/roof_thatch_hd.png"
       }
     },
     "interior": {
@@ -179,7 +185,8 @@
           "leather",
           "rust"
         ],
-        "source": "art/generated/textures/interior_wood_planks.png"
+        "source": "art/generated/textures/interior_wood_planks.png",
+        "hd_file": "art/textures/interior/wood_planks_hd.png"
       },
       "rug": {
         "file": "art/textures/interior/rug.png",
@@ -196,7 +203,8 @@
           "leather",
           "umber"
         ],
-        "source": "art/generated/textures/interior_rug.png"
+        "source": "art/generated/textures/interior_rug.png",
+        "hd_file": "art/textures/interior/rug_hd.png"
       },
       "plaster_wall": {
         "file": "art/textures/interior/plaster_wall.png",
@@ -213,7 +221,8 @@
           "bone",
           "blood"
         ],
-        "source": "art/generated/textures/interior_plaster_wall.png"
+        "source": "art/generated/textures/interior_plaster_wall.png",
+        "hd_file": "art/textures/interior/plaster_wall_hd.png"
       },
       "wainscot_wall": {
         "file": "art/textures/interior/wainscot_wall.png",
@@ -231,7 +240,8 @@
           "walnut"
         ],
         "source": "art/generated/textures/interior_wainscot_wall.png",
-        "note": "Wraps in x only: map V from 0 at the top of the wall to 1 at the floor, one tile per wall height."
+        "note": "Wraps in x only: map V from 0 at the top of the wall to 1 at the floor, one tile per wall height.",
+        "hd_file": "art/textures/interior/wainscot_wall_hd.png"
       },
       "tile_floor": {
         "file": "art/textures/interior/tile_floor.png",
@@ -248,7 +258,8 @@
           "silver",
           "slate"
         ],
-        "source": "art/generated/textures/interior_tile_floor.png"
+        "source": "art/generated/textures/interior_tile_floor.png",
+        "hd_file": "art/textures/interior/tile_floor_hd.png"
       },
       "tile_wall": {
         "file": "art/textures/interior/tile_wall.png",
@@ -265,7 +276,8 @@
           "blood",
           "bone"
         ],
-        "source": "art/generated/textures/interior_tile_wall.png"
+        "source": "art/generated/textures/interior_tile_wall.png",
+        "hd_file": "art/textures/interior/tile_wall_hd.png"
       },
       "kitchen_flags": {
         "file": "art/textures/interior/kitchen_flags.png",
@@ -281,7 +293,8 @@
           "ink",
           "peat"
         ],
-        "source": "art/generated/textures/interior_kitchen_flags.png"
+        "source": "art/generated/textures/interior_kitchen_flags.png",
+        "hd_file": "art/textures/interior/kitchen_flags_hd.png"
       },
       "kitchen_wall": {
         "file": "art/textures/interior/kitchen_wall.png",
@@ -298,7 +311,8 @@
           "pewter",
           "peat"
         ],
-        "source": "art/generated/textures/interior_kitchen_wall.png"
+        "source": "art/generated/textures/interior_kitchen_wall.png",
+        "hd_file": "art/textures/interior/kitchen_wall_hd.png"
       },
       "parquet": {
         "file": "art/textures/interior/parquet.png",
@@ -315,7 +329,8 @@
           "ink",
           "grave"
         ],
-        "source": "art/generated/textures/interior_parquet.png"
+        "source": "art/generated/textures/interior_parquet.png",
+        "hd_file": "art/textures/interior/parquet_hd.png"
       },
       "wood_panel": {
         "file": "art/textures/interior/wood_panel.png",
@@ -332,7 +347,8 @@
           "bog_deep",
           "bone_dark"
         ],
-        "source": "art/generated/textures/interior_wood_panel.png"
+        "source": "art/generated/textures/interior_wood_panel.png",
+        "hd_file": "art/textures/interior/wood_panel_hd.png"
       },
       "carpet": {
         "file": "art/textures/interior/carpet.png",
@@ -350,7 +366,8 @@
           "bone"
         ],
         "source": "art/generated/textures/interior_carpet.png",
-        "saturate": 1.25
+        "saturate": 1.25,
+        "hd_file": "art/textures/interior/carpet_hd.png"
       },
       "wallpaper_nursery": {
         "file": "art/textures/interior/wallpaper_nursery.png",
@@ -368,7 +385,8 @@
           "moon_blue"
         ],
         "source": "art/generated/textures/interior_wallpaper_nursery.png",
-        "saturate": 1.2
+        "saturate": 1.2,
+        "hd_file": "art/textures/interior/wallpaper_nursery_hd.png"
       },
       "wallpaper_green": {
         "file": "art/textures/interior/wallpaper_green.png",
@@ -386,7 +404,8 @@
           "umber"
         ],
         "source": "art/generated/textures/interior_wallpaper_green.png",
-        "saturate": 1.2
+        "saturate": 1.2,
+        "hd_file": "art/textures/interior/wallpaper_green_hd.png"
       },
       "marble_floor": {
         "file": "art/textures/interior/marble_floor.png",
@@ -403,7 +422,8 @@
           "pewter",
           "stone_deep"
         ],
-        "source": "art/generated/textures/interior_marble_floor.png"
+        "source": "art/generated/textures/interior_marble_floor.png",
+        "hd_file": "art/textures/interior/marble_floor_hd.png"
       },
       "whitewash": {
         "file": "art/textures/interior/whitewash.png",
@@ -420,7 +440,8 @@
           "void",
           "bone"
         ],
-        "source": "art/generated/textures/interior_whitewash.png"
+        "source": "art/generated/textures/interior_whitewash.png",
+        "hd_file": "art/textures/interior/whitewash_hd.png"
       },
       "workshop_boards": {
         "file": "art/textures/interior/workshop_boards.png",
@@ -437,7 +458,8 @@
           "slate",
           "skin_shadow"
         ],
-        "source": "art/generated/textures/interior_workshop_boards.png"
+        "source": "art/generated/textures/interior_workshop_boards.png",
+        "hd_file": "art/textures/interior/workshop_boards_hd.png"
       },
       "carved_panel": {
         "file": "art/textures/interior/carved_panel.png",
@@ -454,7 +476,8 @@
           "moon_blue",
           "peat"
         ],
-        "source": "art/generated/textures/interior_carved_panel.png"
+        "source": "art/generated/textures/interior_carved_panel.png",
+        "hd_file": "art/textures/interior/carved_panel_hd.png"
       },
       "damp_plaster": {
         "file": "art/textures/interior/damp_plaster.png",
@@ -471,7 +494,8 @@
           "moon_blue",
           "stone_deep"
         ],
-        "source": "art/generated/textures/interior_damp_plaster.png"
+        "source": "art/generated/textures/interior_damp_plaster.png",
+        "hd_file": "art/textures/interior/damp_plaster_hd.png"
       },
       "attic_boards": {
         "file": "art/textures/interior/attic_boards.png",
@@ -488,7 +512,8 @@
           "ink",
           "grave"
         ],
-        "source": "art/generated/textures/interior_attic_boards.png"
+        "source": "art/generated/textures/interior_attic_boards.png",
+        "hd_file": "art/textures/interior/attic_boards_hd.png"
       },
       "terracotta": {
         "file": "art/textures/interior/terracotta.png",
@@ -506,7 +531,8 @@
           "stone_deep"
         ],
         "source": "art/generated/textures/interior_terracotta.png",
-        "saturate": 1.1
+        "saturate": 1.1,
+        "hd_file": "art/textures/interior/terracotta_hd.png"
       }
     },
     "church": {
@@ -523,7 +549,8 @@
           "slate",
           "pewter"
         ],
-        "source": "art/generated/textures/church_stone_flags.png"
+        "source": "art/generated/textures/church_stone_flags.png",
+        "hd_file": "art/textures/church/stone_flags_hd.png"
       },
       "stone_wall": {
         "file": "art/textures/church/stone_wall.png",
@@ -540,7 +567,8 @@
           "ink",
           "night"
         ],
-        "source": "art/generated/textures/church_stone_wall.png"
+        "source": "art/generated/textures/church_stone_wall.png",
+        "hd_file": "art/textures/church/stone_wall_hd.png"
       }
     },
     "vallaki": {
@@ -556,7 +584,8 @@
           "stone_deep",
           "ink"
         ],
-        "source": "art/generated/textures/vallaki_cobbled_square.png"
+        "source": "art/generated/textures/vallaki_cobbled_square.png",
+        "hd_file": "art/textures/vallaki/cobbled_square_hd.png"
       },
       "palisade_logs": {
         "file": "art/textures/vallaki/palisade_logs.png",
@@ -573,7 +602,8 @@
           "moon_blue",
           "stone_deep"
         ],
-        "source": "art/generated/textures/vallaki_palisade_logs.png"
+        "source": "art/generated/textures/vallaki_palisade_logs.png",
+        "hd_file": "art/textures/vallaki/palisade_logs_hd.png"
       },
       "house_wall": {
         "file": "art/textures/vallaki/house_wall.png",
@@ -590,7 +620,8 @@
           "stone_deep",
           "ink"
         ],
-        "source": "art/generated/textures/vallaki_house_wall.png"
+        "source": "art/generated/textures/vallaki_house_wall.png",
+        "hd_file": "art/textures/vallaki/house_wall_hd.png"
       }
     },
     "dungeon": {
@@ -608,7 +639,8 @@
           "slate",
           "bog_deep"
         ],
-        "source": "art/generated/textures/dungeon_stone_floor.png"
+        "source": "art/generated/textures/dungeon_stone_floor.png",
+        "hd_file": "art/textures/dungeon/stone_floor_hd.png"
       },
       "stone_wall": {
         "file": "art/textures/dungeon/stone_wall.png",
@@ -625,7 +657,8 @@
           "night",
           "bog_deep"
         ],
-        "source": "art/generated/textures/dungeon_stone_wall.png"
+        "source": "art/generated/textures/dungeon_stone_wall.png",
+        "hd_file": "art/textures/dungeon/stone_wall_hd.png"
       },
       "damp_brick": {
         "file": "art/textures/dungeon/damp_brick.png",
@@ -643,7 +676,8 @@
           "moss"
         ],
         "source": "art/generated/textures/dungeon_damp_brick.png",
-        "saturate": 1.2
+        "saturate": 1.2,
+        "hd_file": "art/textures/dungeon/damp_brick_hd.png"
       },
       "earth_braced": {
         "file": "art/textures/dungeon/earth_braced.png",
@@ -660,7 +694,8 @@
           "pewter",
           "crimson"
         ],
-        "source": "art/generated/textures/dungeon_earth_braced.png"
+        "source": "art/generated/textures/dungeon_earth_braced.png",
+        "hd_file": "art/textures/dungeon/earth_braced_hd.png"
       },
       "packed_earth": {
         "file": "art/textures/dungeon/packed_earth.png",
@@ -677,7 +712,8 @@
           "slate",
           "ink"
         ],
-        "source": "art/generated/textures/dungeon_packed_earth.png"
+        "source": "art/generated/textures/dungeon_packed_earth.png",
+        "hd_file": "art/textures/dungeon/packed_earth_hd.png"
       }
     },
     "wild": {
@@ -695,7 +731,8 @@
           "mist_blue",
           "bruise_deep"
         ],
-        "source": "art/generated/textures/wild_water.png"
+        "source": "art/generated/textures/wild_water.png",
+        "hd_file": "art/textures/wild/water_hd.png"
       }
     },
     "cave": {
@@ -714,7 +751,8 @@
           "peat",
           "bone"
         ],
-        "source": "art/generated/textures/cave_rock_floor.png"
+        "source": "art/generated/textures/cave_rock_floor.png",
+        "hd_file": "art/textures/cave/rock_floor_hd.png"
       },
       "rock_wall": {
         "file": "art/textures/cave/rock_wall.png",
@@ -731,7 +769,8 @@
           "ink",
           "bone"
         ],
-        "source": "art/generated/textures/cave_rock_wall.png"
+        "source": "art/generated/textures/cave_rock_wall.png",
+        "hd_file": "art/textures/cave/rock_wall_hd.png"
       }
     },
     "amber": {
@@ -751,7 +790,8 @@
           "ink"
         ],
         "source": "art/generated/textures/amber_black_stone.png",
-        "saturate": 1.2
+        "saturate": 1.2,
+        "hd_file": "art/textures/amber/black_stone_hd.png"
       },
       "amber_wall": {
         "file": "art/textures/amber/amber_wall.png",
@@ -769,7 +809,8 @@
           "tan"
         ],
         "source": "art/generated/textures/amber_amber_wall.png",
-        "saturate": 1.2
+        "saturate": 1.2,
+        "hd_file": "art/textures/amber/amber_wall_hd.png"
       }
     },
     "mountain": {
@@ -788,7 +829,8 @@
           "stone",
           "ivory"
         ],
-        "source": "art/generated/textures/mountain_snow.png"
+        "source": "art/generated/textures/mountain_snow.png",
+        "hd_file": "art/textures/mountain/snow_hd.png"
       },
       "cliff": {
         "file": "art/textures/mountain/cliff.png",
@@ -805,7 +847,8 @@
           "stone_deep",
           "ink"
         ],
-        "source": "art/generated/textures/mountain_cliff.png"
+        "source": "art/generated/textures/mountain_cliff.png",
+        "hd_file": "art/textures/mountain/cliff_hd.png"
       },
       "scree": {
         "file": "art/textures/mountain/scree.png",
@@ -822,7 +865,8 @@
           "ink",
           "parchment"
         ],
-        "source": "art/generated/textures/mountain_scree.png"
+        "source": "art/generated/textures/mountain_scree.png",
+        "hd_file": "art/textures/mountain/scree_hd.png"
       }
     },
     "marsh": {
@@ -841,7 +885,8 @@
           "mist_blue",
           "peat"
         ],
-        "source": "art/generated/textures/marsh_marsh_mud.png"
+        "source": "art/generated/textures/marsh_marsh_mud.png",
+        "hd_file": "art/textures/marsh/marsh_mud_hd.png"
       }
     }
   }

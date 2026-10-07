@@ -3,6 +3,7 @@
 // outline; `tint` darkens an emptied container. The palette pass snaps the result afterwards.
 shader_type spatial;
 render_mode diffuse_lambert, specular_disabled;
+#include "res://shaders/cel_light.gdshaderinc"
 
 uniform sampler2D albedo_tex : source_color, filter_linear_mipmap, repeat_disable;
 uniform vec3 tint : source_color = vec3(1.0);
@@ -21,6 +22,6 @@ void fragment() {
 void light() {
 	float ndl = clamp(dot(NORMAL, LIGHT), 0.0, 1.0);
 	float lit = ndl * ATTENUATION;
-	float band = lit > 0.5 ? 1.0 : (lit > 0.12 ? mid_tone : (lit > 0.02 ? shadow_floor : 0.0));
+	float band = cel_band(lit, mid_tone, shadow_floor);
 	DIFFUSE_LIGHT += band * LIGHT_COLOR / PI;
 }

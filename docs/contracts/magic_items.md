@@ -7,7 +7,7 @@ ADR 0012. Schema: `data/schemas/item.schema.json`. Text and summaries are our ow
 | key | meaning |
 |---|---|
 | `magic.rarity` | common, uncommon, rare, very_rare, legendary, artifact |
-| `magic.attunement` | `true`, or the requirement in words ("by a Wizard", "by a Spellcaster", "by a Cleric, Druid, or Paladin"); classes, "spellcaster" and species are checked, alignment isn't tracked |
+| `magic.attunement` | (attuning and ending it are instant in the game, owner house rule 2026-10-07, docs/rules/deviations.md; three at most) `true`, or the requirement in words ("by a Wizard", "by a Spellcaster", "by a Cleric, Druid, or Paladin"); classes, "spellcaster" and species are checked, alignment isn't tracked |
 | `magic.charges` | `max` (number or dice), `start`, `regain` (dice or "all"), `when` (dawn, dusk, long, short, never), `last` ({die, on, result: destroyed / nonmagical, text}: what happens when the last charge goes) |
 | `magic.cursed`, `magic.curse` | a curse (attunement can't end until Remove Curse lifts it; `curse` is shown once attuned) |
 | `appears_as` | the item it passes for until identified or attuned to (Potion of Poison, Dust of Sneezing and Choking) |

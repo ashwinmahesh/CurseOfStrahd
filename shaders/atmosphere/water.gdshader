@@ -3,6 +3,7 @@
 // on the surface. Cel-lit in flat bands like everything else; the palette pass snaps it.
 shader_type spatial;
 render_mode diffuse_lambert, specular_disabled;
+#include "res://shaders/cel_light.gdshaderinc"
 
 uniform sampler2D albedo_tex : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
 uniform float tile_units = 3.0;
@@ -85,6 +86,6 @@ void fragment() {
 void light() {
 	float ndl = clamp(dot(NORMAL, LIGHT), 0.0, 1.0);
 	float lit = ndl * ATTENUATION;
-	float band = lit > 0.5 ? 1.0 : (lit > 0.12 ? mid_tone : (lit > 0.02 ? shadow_floor : 0.0));
+	float band = cel_band(lit, mid_tone, shadow_floor);
 	DIFFUSE_LIGHT += band * LIGHT_COLOR / PI;
 }

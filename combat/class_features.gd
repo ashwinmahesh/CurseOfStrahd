@@ -320,8 +320,11 @@ static func _monk_unarmored(ch: Character) -> bool:
 func _paladin(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, bw: String) -> void:
 	if has(c, "lay_on_hands"):
 		var lw := _first(bw, _res_why(c, "lay_on_hands"))
-		out.append(_entry("lay_on_hands", "Lay On Hands", "%d in the pool" % ch.resource_left("lay_on_hands"), "bonus", lw, "ally",
-			"Bonus Action: touch a creature and restore Hit Points from the pool (what it needs, up to what's left); or spend 5 to end Poisoned.", 5))
+		var loh := _entry("lay_on_hands", "Lay On Hands", "%d in the pool" % ch.resource_left("lay_on_hands"), "bonus", lw, "ally",
+			"Bonus Action: touch a creature and restore Hit Points from the pool, as many as you choose (right-click for an amount; a plain click heals what it needs); or spend 5 to end Poisoned.", 5)
+		loh["choices"] = lay_on_hands_choices(ch.resource_left("lay_on_hands"))
+		loh["choice_label"] = "How much"
+		out.append(loh)
 	var cw := _res_why(c, "paladin_channel_divinity")
 	match ch.subclasses.get("paladin", ""):
 		"oath_of_devotion":
@@ -672,7 +675,7 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 						e.log.add("heal", "%s is no longer %s (Physician's Touch)" % [t.name(), str(cond).capitalize()], t.id)
 						break
 		"lay_on_hands":
-			return _lay_on_hands(c, t)
+			return _lay_on_hands(c, t, arg)
 		"sacred_weapon":
 			ch.spend_resource("paladin_channel_divinity")
 			var sw := _minutes(c, "Sacred Weapon", "sacred_weapon", 10).with_modifier("flag", {"value": "sacred_weapon"})
@@ -1124,13 +1127,51 @@ func _elemental_burst(c: Combatant, point: Vector2) -> CombatResult:
 
 # --- Paladin -----------------------------------------------------------------------------------------------
 
-func _lay_on_hands(c: Combatant, t: Combatant) -> CombatResult:
+## The amounts offered for Lay On Hands (any number from the pool, 2024): 1 to 5, then steps of 5, the whole pool,
+## and 5 points to end Poisoned.
+static func lay_on_hands_choices(pool: int) -> Array:
+	var out: Array = []
+	var amounts: Array[int] = []
+	for n in range(1, mini(5, pool) + 1):
+		amounts.append(n)
+	for n2 in range(10, pool + 1, 5):
+		amounts.append(n2)
+	if pool > 0 and not pool in amounts:
+		amounts.append(pool)
+	for n3 in amounts:
+		out.append({"label": "Heal %d" % n3, "value": str(n3)})
+	if pool >= 5:
+		out.append({"label": "End Poisoned (5)", "value": "poison"})
+	return out
+
+
+## Lay On Hands: `amount` "" heals what the target needs (up to the pool), a number heals that many, "poison" spends
+## 5 to end Poisoned.
+func _lay_on_hands(c: Combatant, t: Combatant, amount: String = "") -> CombatResult:
 	var e := enc()
 	var ch := _ch(c)
 	if t == null or e.distance(c, t) > 5:
 		return CombatResult.fail("Touch a creature within 5 ft")
-	c.bonus_available = false
 	var pool := ch.resource_left("lay_on_hands")
+	if amount == "poison":
+		if pool < 5:
+			return CombatResult.fail("Needs 5 points in the pool")
+		if not t.creature.has_condition(&"poisoned"):
+			return CombatResult.fail("%s isn't Poisoned" % t.name())
+		c.bonus_available = false
+		ch.spend_resource("lay_on_hands", 5)
+		e.spells.cure(t, &"poisoned")
+		e.log.add("heal", "%s purges the poison from %s (Lay On Hands)" % [c.name(), t.name()], c.id)
+		return CombatResult.new()
+	if amount.is_valid_int():
+		var want := clampi(int(amount), 1, pool)
+		if want > pool or pool <= 0:
+			return CombatResult.fail("Only %d left in the pool" % pool)
+		c.bonus_available = false
+		ch.spend_resource("lay_on_hands", want)
+		_heal(c, t, want, "Lay On Hands")
+		return CombatResult.new()
+	c.bonus_available = false
 	if t.creature.has_condition(&"poisoned") and pool >= 5 and t.creature.hp >= t.creature.max_hp() / 2:
 		ch.spend_resource("lay_on_hands", 5)
 		e.spells.cure(t, &"poisoned")

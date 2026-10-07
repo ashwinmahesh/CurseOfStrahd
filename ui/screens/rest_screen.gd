@@ -90,6 +90,15 @@ func _draw() -> void:
 		swap.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		_box.add_child(swap)
 	_camp_talks()
+	# One click for the usual Short Rest chore: everyone hurt spends dice until a roll would mostly go to waste.
+	var anyone := false
+	for ch in st.party:
+		anyone = anyone or not _heal_plan(ch).is_empty()
+	if anyone:
+		var heal := UiKit.button("Heal up with Hit Point Dice", heal_up, 15, "rest")
+		heal.tooltip_text = "Each hurt character spends Hit Point Dice, largest first, until they're close to full or out of dice."
+		heal.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		_box.add_child(heal)
 	for ch in st.party:
 		_arcane_recovery_row(ch)
 		var row := HBoxContainer.new()
@@ -164,6 +173,49 @@ func _finish_study(rested: Array[Character]) -> String:
 		lines.append("%s learns the %s is %s." % [ch.name.get_slice(" ", 0), seemed, "just what it seemed" if real == seemed else "really a %s" % real])
 	_study.clear()
 	return " ".join(lines)
+
+
+## Heal up (docs/plans/ui_polish.md): every hurt character spends Hit Point Dice, largest first, while what they're
+## missing is at least an average roll of that die (so little of a roll is wasted), then the screen reports it.
+func heal_up() -> void:
+	var lines: Array[String] = []
+	for ch in st.party:
+		var spent := 0
+		var healed := 0
+		var guard := 0
+		while guard < 40:
+			guard += 1
+			var plan := _heal_plan(ch)
+			if plan.is_empty():
+				break
+			healed += ch.spend_hit_die(Dice.roller, int(plan[0]))
+			spent += 1
+		if spent > 0:
+			lines.append("%s spends %d %s and regains %d Hit Points." % [ch.name.get_slice(" ", 0), spent,
+				"die" if spent == 1 else "dice", healed])
+	_log.text = " ".join(lines) if not lines.is_empty() else "Nobody needs it."
+	Audio.sfx("page")
+	_draw()
+
+
+## The dice `ch` would spend next for Heal up: [die] or [] when they're near enough full, out of dice, down or dead.
+func _heal_plan(ch: Character) -> Array:
+	if ch.dead or ch.hp <= 0 or ch.hp >= ch.max_hp():
+		return []
+	var missing := ch.max_hp() - ch.hp
+	var hd := ch.hit_dice()
+	var sizes: Array[int] = []
+	for die: String in hd:
+		var e := hd[die] as Dictionary
+		if int(e["spent"]) < int(e["total"]):
+			sizes.append(int(die))
+	sizes.sort()
+	sizes.reverse()
+	for die in sizes:
+		# An average roll of the die (what the character's sheet would show), at least 1.
+		if float(missing) >= maxf(1.0, die / 2.0 + 0.5 + ch.ability_mod(&"con")):
+			return [die]
+	return []
 
 
 func _spend(ch: Character, die: int) -> void:

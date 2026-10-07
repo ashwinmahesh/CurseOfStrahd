@@ -153,6 +153,8 @@ func _build() -> void:
 	sun.shadow_bias = 0.04
 	sun.shadow_normal_bias = 1.2
 	add_child(sun)
+	if Look.modern():
+		_modern_finish()
 	if board == null:
 		return
 	if mood.has("water"):
@@ -162,6 +164,58 @@ func _build() -> void:
 		add_child(land.root)
 		board.occluders.append_array(land.occluders)
 		board.mesh_occluders.append_array(land.mesh_occluders)
+
+
+## The modern finish (Look.modern, docs/plans/ui_polish.md): filmic tone, bloom on what burns, deeper contact shadows
+## with light bounced off the walls, a thin haze that catches lantern light, and softer shadow edges. The mood's own
+## settings (its haze, its contact shadows) still count; this only adds to them.
+func _modern_finish() -> void:
+	env.tonemap_mode = MODERN_TONEMAP
+	env.tonemap_exposure = MODERN_EXPOSURE
+	env.tonemap_white = 6.0
+	env.glow_enabled = true
+	env.glow_intensity = 0.7
+	env.glow_strength = 1.0
+	env.glow_bloom = 0.02
+	env.glow_hdr_threshold = 0.9
+	env.glow_hdr_scale = 2.0
+	env.glow_blend_mode = Environment.GLOW_BLEND_MODE_SCREEN
+	env.ssao_enabled = true
+	env.ssao_radius = 1.1
+	env.ssao_intensity = maxf(float(mood.get("ambient_occlusion", 0.0)), 1.8)
+	env.ssao_power = 1.5
+	env.ssao_detail = 0.6
+	env.ssao_light_affect = 0.15
+	env.ssil_enabled = true
+	env.ssil_radius = 3.0
+	env.ssil_intensity = 0.8
+	env.volumetric_fog_enabled = true
+	env.volumetric_fog_density = 0.004 if outdoors else 0.006
+	env.volumetric_fog_anisotropy = 0.45
+	env.volumetric_fog_length = 40.0
+	env.volumetric_fog_ambient_inject = 0.15
+	sun.shadow_blur = 1.8
+
+
+## How soft the modern finish's depth of field is (0 none, Godot's 0..1).
+const MODERN_DOF := 0.14
+var _dof: CameraAttributesPractical = null
+
+
+## The sharp band follows the camera's zoom: from a little in front of the party to a little behind it.
+func _focus_dof() -> void:
+	if _dof == null or _rig == null:
+		return
+	var d := _rig.distance
+	_dof.dof_blur_far_distance = d + 1.0 + d * 0.12
+	_dof.dof_blur_far_transition = 3.5 + d * 0.25
+	_dof.dof_blur_near_distance = maxf(1.0, d - 2.0 - d * 0.08)
+	_dof.dof_blur_near_transition = 2.0
+
+
+const MODERN_TONEMAP := Environment.TONE_MAPPER_AGX
+const MODERN_EXPOSURE := 1.35
+const MODERN_GRADE := 0.4
 
 
 ## The board's water squares get the moving water (one material for the whole place, the land's lakes included).
@@ -222,6 +276,14 @@ func _open_the_lake() -> void:
 func attach(rig: CameraRig, post: MeshInstance3D) -> void:
 	_rig = rig
 	_post = (post.mesh as QuadMesh).material as ShaderMaterial if post != null and post.mesh is QuadMesh else null
+	if Look.modern() and rig != null and rig.camera != null:
+		# The diorama's depth of field (tilt-shift): the party's ground sharp, what's far behind and near the lens soft.
+		_dof = CameraAttributesPractical.new()
+		_dof.dof_blur_far_enabled = true
+		_dof.dof_blur_near_enabled = true
+		_dof.dof_blur_amount = MODERN_DOF
+		rig.camera.attributes = _dof
+		_focus_dof()
 	_apply_static()
 	weather = AtmosphereWeather.build(self, board, mood, outdoors, get_parent())
 	_show_night_pieces()
@@ -401,6 +463,8 @@ func _apply(k: float) -> void:
 			v[key] = lerpf(float(a), float(b), k)
 	env.background_color = v["sky"] as Color
 	env.fog_light_color = v["fog"] as Color
+	if env.volumetric_fog_enabled:
+		env.volumetric_fog_albedo = v["fog"] as Color
 	env.ambient_light_color = v["ambient"] as Color
 	env.ambient_light_energy = float(v["ambient_energy"]) * (1.0 + _flash * 2.5)
 	sun.light_color = (v["key"] as Color).lerp(Look.color("frost"), _flash)
@@ -419,7 +483,9 @@ func _apply(k: float) -> void:
 	_post.set_shader_parameter("saturation", float(v["saturation"]))
 	_post.set_shader_parameter("grade_shadows", v["grade_shadows"] as Color)
 	_post.set_shader_parameter("grade_lights", v["grade_lights"] as Color)
-	_post.set_shader_parameter("grade_amount", float(v["grade_amount"]))
+	# Without the palette snap pulling colours back to the palette, the full gradient map tints too hard (grass
+	# turns pink); the modern finish uses less of it.
+	_post.set_shader_parameter("grade_amount", float(v["grade_amount"]) * (MODERN_GRADE if Look.modern() else 1.0))
 
 
 # --- Every frame ----------------------------------------------------------------------------------
@@ -444,6 +510,7 @@ func _process(delta: float) -> void:
 				wx.set_meta("offset", Vector3(wx.position.x, 0.0, wx.position.z))
 			var off := wx.get_meta("offset") as Vector3
 			wx.global_position = Vector3(_rig.global_position.x + off.x, wx.global_position.y, _rig.global_position.z + off.z)
+	_focus_dof()
 	if _post == null:
 		return
 	_post.set_shader_parameter("atmo_time", _time)

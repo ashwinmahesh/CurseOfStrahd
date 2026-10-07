@@ -223,6 +223,12 @@ func _slot_row(ch: Character, slot: String) -> Control:
 	if item.is_empty():
 		return UiParts.row(line)
 	var id := str(item["id"])
+	# Taking it off straight from the equipped list (owner report 2026-10-07: "no way to unequip armor").
+	var off := UiParts.small_button("Take off", func() -> void:
+		ch.unequip(slot)
+		_draw())
+	off.tooltip_text = "Unequip it: back to the pack"
+	line.add_child(off)
 	return UiParts.click_row(line, func() -> void:
 		selected = id
 		_draw(), id == selected)
@@ -291,8 +297,11 @@ func _draw_card() -> void:
 			_card.add_child(UiKit.label("Compared with your %s: %s average damage (%.1f vs %.1f)" % [main["name"], ("▲ %.1f more" % diff) if diff > 0 else ("▼ %.1f less" % -diff) if diff < 0 else "the same", p.average_damage(), mp.average_damage()], 14, "vellum", 420))
 	elif Gear.is_armor(data):
 		var arm := data["armor"] as Dictionary
+		# Light armor has no Dexterity cap: its data says `"dex_cap": null` (owner report 2026-10-07: reading null as a
+		# number stopped the card short of its Actions, so leather armor showed no Unequip).
+		var dex_cap := 99 if arm.get("dex_cap") == null else int(arm["dex_cap"])
 		_card.add_child(UiKit.label("%s armor: AC %d%s%s" % [str(arm["kind"]).capitalize(), int(arm.get("base_ac", 10)),
-			"" if int(arm.get("dex_cap", 99)) == 0 else " + Dex" + (" (max %d)" % int(arm["dex_cap"]) if int(arm.get("dex_cap", 99)) < 10 else ""),
+			"" if dex_cap == 0 else " + Dex" + (" (max %d)" % dex_cap if dex_cap < 10 else ""),
 			", Stealth Disadvantage" if bool(arm.get("stealth_disadvantage", false)) else ""], 15, "vellum", 420))
 		if not ch.trained_for(data):
 			_card.add_child(UiKit.label("~ No training: Disadvantage on Strength and Dexterity rolls, and no spellcasting", 14, "gilt", 420))
@@ -302,7 +311,8 @@ func _draw_card() -> void:
 	_card.add_child(UiKit.label(str(shown.get("text", shown.get("summary", ""))), 14, "vellum", 420))
 	if not (data.get("spells", []) as Array).is_empty():
 		_spellbook_card(data.get("spells", []) as Array)
-	# Magic items: rarity and attunement (three items at most; attuning takes a Short Rest).
+	# Magic items: rarity and attunement (three items at most; attuning and ending it are instant: owner house rule
+	# 2026-10-07, docs/contracts/magic_items.md).
 	var magic := shown.get("magic", {}) as Dictionary
 	if not magic.is_empty():
 		var needs: Variant = magic.get("attunement", false)
@@ -323,9 +333,8 @@ func _draw_card() -> void:
 				_card.add_child(end)
 			else:
 				var why := ch.attune_blocker(selected)
-				var att := UiKit.button("Attune (a Short Rest: 1 hour)", func() -> void:
-					if ch.attune(selected):
-						st.advance_minutes(60)
+				var att := UiKit.button("Attune", func() -> void:
+					ch.attune(selected)
 					_draw(), 14)
 				att.disabled = why != ""
 				att.tooltip_text = why
