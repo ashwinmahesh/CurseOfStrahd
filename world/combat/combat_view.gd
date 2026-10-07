@@ -1254,12 +1254,27 @@ func capture_shots(tool: Node, out: String) -> void:
 			if near != null:
 				_advance()
 				await tool.call("wait_frames", 30)
+				# Capture only: the foe is knocked down so the tooltip shows its ADVANTAGE line.
+				near.creature.add_condition(&"prone", "Capture")
 				hover_token = tokens[near.id] as CombatToken
 				hover_cell = near.cell
 				using_pad = true
 				_update_hover()
 				await tool.call("wait_frames", 10)
 				tool.call("_shot", out + "_2_attack.png")
+				# The right-click menu on that square: Move here, every attack and spell on the foe, Info.
+				var spot := get_viewport().get_visible_rect().size / 2.0
+				_menu_cell = near.cell
+				_menu_items = catalog.square_actions(c, near.cell, _reach)
+				var shown: Array[Dictionary] = []
+				for it in _menu_items:
+					shown.append({"id": it["id"], "label": it["label"], "enabled": it.get("enabled", true), "why": it.get("why", "")})
+				hud.hide_tooltip()
+				hud.open_square_menu(near.name(), shown, spot)
+				await tool.call("wait_frames", 10)
+				tool.call("_shot", out + "_2b_square_menu.png")
+				hud._menu.hide()
+				near.creature.remove_condition(&"prone", "Capture")
 				break
 		await _autoplay_turn(pilot)
 	# A spell template: Silvain's Burning Hands or Sleep aimed at the thickest knot of enemies.
@@ -1270,7 +1285,9 @@ func capture_shots(tool: Node, out: String) -> void:
 		if c2.is_player_controlled() and (c2.creature as Character).class_level_of("wizard") > 0 and c2.can_act():
 			_advance()
 			await tool.call("wait_frames", 20)
-			var a := catalog.find(c2, "spell:thunderwave")
+			var a := catalog.find(c2, "spell:burning_hands")
+			if a.is_empty() or not bool(a["legal"]):
+				a = catalog.find(c2, "spell:thunderwave")
 			if not a.is_empty() and bool(a["legal"]):
 				_choose(a)
 				var target := e.ai._nearest_enemy(c2)
