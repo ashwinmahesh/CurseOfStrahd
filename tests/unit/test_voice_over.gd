@@ -28,7 +28,8 @@ func test_every_clip_belongs_to_a_known_speaker_and_loads() -> void:
 		return
 	for speaker in dir.get_directories():
 		assert_true(speaker == VoiceOver.NARRATOR or speaker in VoiceOver.HEROES or speaker in VoiceOver.HERO_VOICES
-			or not Compendium.shared().get_entry("npcs", speaker).is_empty(), "%s is the Narrator, a hero or an npc" % speaker)
+			or not Compendium.shared().get_entry("npcs", speaker).is_empty() or CombatBarks.is_speaker(speaker),
+			"%s is the Narrator, a hero, an npc or a fight voice" % speaker)
 		var clips := Array(DirAccess.open(VoiceOver.DIR + speaker).get_files()).filter(func(f: String) -> bool:
 			return f.ends_with(".mp3"))
 		# A few per speaker: loading thousands of clips would slow the suite for no extra safety.
