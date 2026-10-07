@@ -40,6 +40,10 @@ Owner, 2026-10-06, pointing at the Crimson settings concept: "Everything shouldn
 
 - Long rules text goes in a tooltip; the page keeps names, one-line summaries and tags.
 - Every number's tooltip is its Breakdown (`breakdown_tip`).
+- Rules text goes through `TermText` (or `rules_tip`, which uses it) so its rules words are gilded and open their
+  glossary cards; a rich tooltip is a `tip` on `drawn`/`tipped`/`tip_button` or a "tip_card" meta Callable, never
+  `_make_custom_tooltip` (docs/ui/rules_cards.md).
+- Motion goes through `UiMotion` (short, skipped in tests and still captures); sounds through `Audio.sfx`.
 - Group with `section` and `row`; pick with `click_row` or `light_up`; finish with one `primary_button`.
 - Colours only from Look; state is told by shape or words as well as colour (Bloodied, ▲, ✓, !).
 - Lists of many options read better in the plain face (`ThemeDB.fallback_font`), headings in the display face.
