@@ -1,0 +1,38 @@
+{
+  "id": "cacophonic_shield",
+  "name": "Cacophonic Shield",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 3,
+  "school": "evocation",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "summary": "Reference-only: A 10-foot Emanation deals 3d6 Thunder on a failed Constitution save, half on success. Failure also Deafens until your next turn starts. Trigger on entry, movement into a creature, or end of turn, at most once per turn; designate exempt creatures when casting. You resist Thunder and incoming ranged attacks have Disadvantage. Add 1d6 damage per slot above 3.",
+  "text": "Reference-only: A 10-foot Emanation deals 3d6 Thunder on a failed Constitution save, half on success. Failure also Deafens until your next turn starts. Trigger on entry, movement into a creature, or end of turn, at most once per turn; designate exempt creatures when casting. You resist Thunder and incoming ranged attacks have Disadvantage. Add 1d6 damage per slot above 3.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile",
+  "playable": false
+}

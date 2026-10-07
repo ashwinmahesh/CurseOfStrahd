@@ -1,0 +1,37 @@
+{
+  "id": "boon_of_the_iron_mind",
+  "name": "Boon of the Iron Mind",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "category": "epic_boon",
+  "repeatable": false,
+  "summary": "Reference-only: Concentration ends only when you begin another Concentration effect, become Petrified or Unconscious, or die.",
+  "benefits": [
+    {
+      "id": "boon_of_the_iron_mind_benefit",
+      "name": "Epic Benefit",
+      "summary": "Reference-only: Concentration ends only when you begin another Concentration effect, become Petrified or Unconscious, or die.",
+      "text": "Reference-only: Concentration ends only when you begin another Concentration effect, become Petrified or Unconscious, or die.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 19
+  },
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "playable": false
+}

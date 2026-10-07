@@ -30,7 +30,8 @@ func test_phase_1_content_counts() -> void:
 
 func test_every_class_and_subclass_builds_and_levels_to_11() -> void:
 	var c := Compendium.shared()
-	for sub in c.all("subclasses"):
+	# Every subclass a player can pick (entries marked "playable": false aren't offered yet, docs/tasks/FR-AU-01.md).
+	for sub in c.all_playable("subclasses"):
 		var cls := str(sub["class"])
 		var b := CharacterBuilder.new()
 		b.set_class(cls)
@@ -64,9 +65,9 @@ func test_every_class_and_subclass_builds_and_levels_to_11() -> void:
 
 func test_every_species_and_background_builds() -> void:
 	var c := Compendium.shared()
-	var backgrounds := c.all("backgrounds")
+	var backgrounds := c.all_playable("backgrounds")   # the ones a player can pick (docs/tasks/FR-AU-01.md)
 	var i := 0
-	for sp in c.all("species"):
+	for sp in c.all_playable("species"):
 		var bg := backgrounds[i % backgrounds.size()]
 		i += 1
 		var b := CharacterBuilder.new()

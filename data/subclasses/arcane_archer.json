@@ -1,0 +1,110 @@
+{
+  "id": "arcane_archer",
+  "name": "Arcane Archer",
+  "class": "fighter",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "summary": "A fighter who infuses ammunition with magic. Some features are reference-only; see each feature’s implementation status.",
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "arcane_archer_cantrip",
+        "name": "Arcane Archer Lore: Cantrip",
+        "summary": "Learn Druidcraft or Prestidigitation using Intelligence.",
+        "text": "Learn Druidcraft or Prestidigitation using Intelligence.",
+        "implemented": "data",
+        "choice": {
+          "id": "cantrip",
+          "kind": "cantrip",
+          "count": 1,
+          "from": [
+            "druidcraft",
+            "prestidigitation"
+          ]
+        },
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "@cantrip",
+            "ability": "int"
+          }
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "arcane_archer_skills",
+        "name": "Arcane Archer Lore: Skills",
+        "summary": "Gain Arcana and Nature proficiency, replacing each already-known skill with a Fighter starting skill. This conditional proficiency grant is reference-only.",
+        "text": "Gain Arcana and Nature proficiency, replacing each already-known skill with a Fighter starting skill. This conditional proficiency grant is reference-only.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "arcane_shot",
+        "name": "Arcane Shot",
+        "summary": "Choose two Arcane Shot options. Learn one more at Fighter levels 7, 10, 15, and 18; each time, you may replace a known option. Once per turn apply one option to a ranged Ammunition-weapon attack, after hitting and dealing damage unless the option replaces the roll. Uses equal Intelligence modifier (minimum 1), restored on Short or Long Rest. Save DC 8 + Intelligence modifier + PB. Arcane Shot die: d6, d8 at Fighter 10, d10 at 15, d12 at 18. Shot selection and effects are reference-only; see the source for the eight options.",
+        "text": "Choose two Arcane Shot options. Learn one more at Fighter levels 7, 10, 15, and 18; each time, you may replace a known option. Once per turn apply one option to a ranged Ammunition-weapon attack, after hitting and dealing damage unless the option replaces the roll. Uses equal Intelligence modifier (minimum 1), restored on Short or Long Rest. Save DC 8 + Intelligence modifier + PB. Arcane Shot die: d6, d8 at Fighter 10, d10 at 15, d12 at 18. Shot selection and effects are reference-only; see the source for the eight options.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "curving_shot",
+        "name": "Curving Shot",
+        "summary": "Immediately after missing with a ranged Ammunition-weapon attack, a Bonus Action redirects it toward a visible creature within weapon range and 60 feet of the original target. Make a new attack roll.",
+        "text": "Immediately after missing with a ranged Ammunition-weapon attack, a Bonus Action redirects it toward a visible creature within weapon range and 60 feet of the original target. Make a new attack roll.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "magical_ammunition",
+        "name": "Magical Ammunition",
+        "summary": "Magic action: shoot nonmagical ammunition at a visible solid surface in weapon range. Choose shadows (15-foot Emanation for 1 minute; extinguish nonmagical flames, −5 Perception and Passive Perception), unlocking (15-foot Emanation; unbar/unstick or open one nonmagical lock per object; sound audible 300 feet), or a climbable 120-foot vine for 10 minutes. Removing it with a Magic action ends the effect; ammunition is destroyed when the effect ends. Once per Short or Long Rest; spend Second Wind freely to restore use.",
+        "text": "Magic action: shoot nonmagical ammunition at a visible solid surface in weapon range. Choose shadows (15-foot Emanation for 1 minute; extinguish nonmagical flames, −5 Perception and Passive Perception), unlocking (15-foot Emanation; unbar/unstick or open one nonmagical lock per object; sound audible 300 feet), or a climbable 120-foot vine for 10 minutes. Removing it with a Magic action ends the effect; ammunition is destroyed when the effect ends. Once per Short or Long Rest; spend Second Wind freely to restore use.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "ever_ready_shot",
+        "name": "Ever-Ready Shot",
+        "summary": "Regain one Arcane Shot use on rolling Initiative.",
+        "text": "Regain one Arcane Shot use on rolling Initiative.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "indomitable_teleport",
+        "name": "Indomitable Teleport",
+        "summary": "After succeeding on an Indomitable save, teleport up to 60 feet to an empty visible space.",
+        "text": "After succeeding on an Indomitable save, teleport up to 60 feet to an empty visible space.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "masterful_shots",
+        "name": "Masterful Shots",
+        "summary": "Reaction when a visible creature misses you: move up to half Speed away without Opportunity Attacks, then make a ranged attack against it if within weapon range.",
+        "text": "Reaction when a visible creature misses you: move up to half Speed away without Opportunity Attacks, then make a ranged attack against it if within weapon range.",
+        "implemented": "text"
+      }
+    }
+  ],
+  "playable": false
+}

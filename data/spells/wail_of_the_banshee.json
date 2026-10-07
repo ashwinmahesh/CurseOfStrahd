@@ -1,0 +1,36 @@
+{
+  "id": "wail_of_the_banshee",
+  "name": "Wail of the Banshee",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 9,
+  "school": "necromancy",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "summary": "Reference-only: Choose up to ten creatures within range that can hear you. Targets at 50 HP or fewer die. Others save Constitution against 12d10 Psychic and Deafened for 1 hour; success takes half damage only.",
+  "text": "Reference-only: Choose up to ten creatures within range that can hear you. Targets at 50 HP or fewer die. Others save Constitution against 12d10 Psychic and Deafened for 1 hour; success takes half damage only.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile",
+  "playable": false
+}

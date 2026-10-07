@@ -1,0 +1,57 @@
+{
+  "id": "dissuader",
+  "name": "Dissuader",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "staff",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "summary": "+1 to this weapon’s attack and damage rolls; Calm Emotions (DC 15) once per dawn.",
+  "text": "+1 to this weapon’s attack and damage rolls; Calm Emotions (DC 15) once per dawn. Reference-only, each once per dawn: Magic action creates a 30-foot aura for 1 minute, forcing chosen visible entrants or end-turn occupants to save DC 15 Wisdom or be Frightened until their next turn starts. Reaction when a creature enters 5 feet pushes chosen creatures in a 30-foot Emanation up to 30 feet away on a failed DC 15 Strength save.",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "default": "quarterstaff",
+    "name": "Dissuader"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "powers": [
+    {
+      "id": "calm_emotions",
+      "name": "Calm Emotions",
+      "spell": "calm_emotions",
+      "dc": 15,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    }
+  ],
+  "playable": false
+}

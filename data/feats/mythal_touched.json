@@ -1,0 +1,34 @@
+{
+  "id": "mythal_touched",
+  "name": "Mythal Touched",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "category": "general",
+  "repeatable": false,
+  "summary": "Reference-only: Reaction when hit by a spell attack or failing a spell save: roll on the Mythal-Touched Magic table in the source. DC 8 + modifier of the increased ability + PB; PB uses per Long Rest. Table effects require manual resolution.",
+  "benefits": [
+    {
+      "id": "mythal_touched_benefit",
+      "name": "Benefits",
+      "summary": "Reference-only: Reaction when hit by a spell attack or failing a spell save: roll on the Mythal-Touched Magic table in the source. DC 8 + modifier of the increased ability + PB; PB uses per Long Rest. Table effects require manual resolution.",
+      "text": "Reference-only: Reaction when hit by a spell attack or failing a spell save: roll on the Mythal-Touched Magic table in the source. DC 8 + modifier of the increased ability + PB; PB uses per Long Rest. Table effects require manual resolution.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 4
+  },
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "playable": false
+}

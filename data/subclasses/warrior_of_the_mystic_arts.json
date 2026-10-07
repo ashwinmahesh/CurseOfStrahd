@@ -1,0 +1,115 @@
+{
+  "id": "warrior_of_the_mystic_arts",
+  "name": "Warrior of the Mystic Arts",
+  "class": "monk",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "summary": "A monk who combines martial training with Sorcerer spells. Some features are reference-only; see each feature’s implementation status.",
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "mystic_spellcasting",
+        "name": "Spellcasting",
+        "summary": "Wisdom-based Sorcerer spellcasting with an Arcane Focus. Start with two cantrips and three prepared level 1 spells; learn a third cantrip at Monk level 10. Spell slots and prepared spells follow the third-caster table. Replace one cantrip and one prepared spell on gaining a Monk level.",
+        "text": "Wisdom-based Sorcerer spellcasting with an Arcane Focus. Start with two cantrips and three prepared level 1 spells; learn a third cantrip at Monk level 10. Spell slots and prepared spells follow the third-caster table. Replace one cantrip and one prepared spell on gaining a Monk level.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "mystic_fighting_style",
+        "name": "Mystic Fighting Style",
+        "summary": "Replace one Unarmed Strike in your Attack action with a Sorcerer cantrip that takes an action.",
+        "text": "Replace one Unarmed Strike in your Attack action with a Sorcerer cantrip that takes an action.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "mystic_focus",
+        "name": "Mystic Focus",
+        "summary": "Spend a slot without an action to recover Focus Points equal to its level. After a Short Rest or Uncanny Metabolism, spend Focus Points to recover one slot: level 1 costs 2 (Monk 6+), level 2 costs 3 (Monk 7+), level 3 costs 5 (Monk 13+), level 4 costs 6 (Monk 19+).",
+        "text": "Spend a slot without an action to recover Focus Points equal to its level. After a Short Rest or Uncanny Metabolism, spend Focus Points to recover one slot: level 1 costs 2 (Monk 6+), level 2 costs 3 (Monk 7+), level 3 costs 5 (Monk 13+), level 4 costs 6 (Monk 19+).",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "focused_strike",
+        "name": "Focused Strike",
+        "summary": "A Stunning Strike target has Disadvantage on saves against your spells until your next turn starts, regardless of its Stunning Strike save result.",
+        "text": "A Stunning Strike target has Disadvantage on saves against your spells until your next turn starts, regardless of its Stunning Strike save result.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "improved_mystic_fighting_style",
+        "name": "Improved Mystic Fighting Style",
+        "summary": "Replace two Flurry of Blows strikes with one level 1 or 2 Sorcerer spell that normally takes an action, casting within the same Bonus Action.",
+        "text": "Replace two Flurry of Blows strikes with one level 1 or 2 Sorcerer spell that normally takes an action, casting within the same Bonus Action.",
+        "implemented": "text"
+      }
+    }
+  ],
+  "spellcasting": {
+    "ability": "wis",
+    "progression": "third",
+    "list": "sorcerer",
+    "focus": "arcane",
+    "cantrips": [
+      0,
+      0,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "prepared": [
+      0,
+      0,
+      3,
+      4,
+      4,
+      4,
+      5,
+      6,
+      6,
+      7,
+      8,
+      8,
+      9,
+      10,
+      10,
+      11,
+      11,
+      11,
+      12,
+      13
+    ],
+    "swap_prepared": "level_up"
+  },
+  "playable": false
+}

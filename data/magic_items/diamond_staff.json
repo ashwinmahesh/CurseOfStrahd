@@ -1,0 +1,109 @@
+{
+  "id": "diamond_staff",
+  "name": "Diamond Staff",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "staff",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": "by a Sorcerer, Warlock, or Wizard",
+    "charges": {
+      "max": 20,
+      "regain": "1d6+4",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "summary": "+3 to weapon attack and damage; while held, Advantage on Arcana.",
+  "text": "+3 to weapon attack and damage; while held, Advantage on Arcana. Twenty charges; regain 1d6+4 at dawn. Last charge destroys the staff on a d20 roll of 1. Spells use your DC: Detect Magic and Light at will; Identify 1, Knock 2, True Seeing 3, Legend Lore 5, Maze 8 charges. Reference-only: Tongues at will on yourself; 1 charge creates Bright Light 40 feet and Dim Light 40 more for 1 minute or until commanded off; on a melee hit, spend 2 charges for DC 17 Constitution against Stunned until your next turn ends.",
+  "held": true,
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "default": "quarterstaff",
+    "name": "Diamond Staff"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "advantage",
+      "on": "check:arcana"
+    }
+  ],
+  "powers": [
+    {
+      "id": "detect_magic",
+      "name": "Detect Magic",
+      "spell": "detect_magic",
+      "dc": "wielder"
+    },
+    {
+      "id": "light",
+      "name": "Light",
+      "spell": "light",
+      "dc": "wielder"
+    },
+    {
+      "id": "identify",
+      "name": "Identify",
+      "spell": "identify",
+      "dc": "wielder",
+      "charges": 1
+    },
+    {
+      "id": "knock",
+      "name": "Knock",
+      "spell": "knock",
+      "dc": "wielder",
+      "charges": 2
+    },
+    {
+      "id": "true_seeing",
+      "name": "True Seeing",
+      "spell": "true_seeing",
+      "dc": "wielder",
+      "charges": 3
+    },
+    {
+      "id": "legend_lore",
+      "name": "Legend Lore",
+      "spell": "legend_lore",
+      "dc": "wielder",
+      "charges": 5
+    },
+    {
+      "id": "maze",
+      "name": "Maze",
+      "spell": "maze",
+      "dc": "wielder",
+      "charges": 8
+    }
+  ],
+  "playable": false
+}

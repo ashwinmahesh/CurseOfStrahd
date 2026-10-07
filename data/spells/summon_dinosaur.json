@@ -1,0 +1,39 @@
+{
+  "id": "summon_dinosaur",
+  "name": "Summon Dinosaur",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 6,
+  "school": "conjuration",
+  "classes": [
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 90
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "polished scale worth 600 GP",
+    "m_cost_gp": 600
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "summary": "Reference-only: Summon an Ankylosaur, Triceratops, or Tyrannosaur spirit into a visible empty space. It acts just after you on your Initiative, follows free verbal commands, and otherwise Dodges and avoids danger. It disappears at 0 HP or spell end. Slot level scales the source Dinosaur Spirit stat block; statistics and companion actions require manual resolution.",
+  "text": "Reference-only: Summon an Ankylosaur, Triceratops, or Tyrannosaur spirit into a visible empty space. It acts just after you on your Initiative, follows free verbal commands, and otherwise Dodges and avoids danger. It disappears at 0 HP or spell end. Slot level scales the source Dinosaur Spirit stat block; statistics and companion actions require manual resolution.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile",
+  "playable": false
+}

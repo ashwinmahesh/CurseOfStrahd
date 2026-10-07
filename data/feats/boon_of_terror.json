@@ -1,0 +1,54 @@
+{
+  "id": "boon_of_terror",
+  "name": "Boon of Terror",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "category": "epic_boon",
+  "repeatable": false,
+  "summary": "Immune to Frightened; Intimidation proficiency and Expertise. Reference-only: Reaction when a visible Frightened creature within 60 feet starts its turn without Total Cover: Wisdom DC 8 + Charisma modifier + PB or spend its turn fleeing you by its fastest means. Once per Short or Long Rest.",
+  "benefits": [
+    {
+      "id": "terror_protection",
+      "name": "Fearless and Intimidating",
+      "summary": "Immune to Frightened; Intimidation proficiency and Expertise.",
+      "text": "Immune to Frightened; Intimidation proficiency and Expertise.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "condition_immunity",
+          "value": "frightened"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "intimidation"
+        },
+        {
+          "stat": "expertise",
+          "value": "intimidation"
+        }
+      ]
+    },
+    {
+      "id": "boon_of_terror_benefit",
+      "name": "Epic Benefit",
+      "summary": "Reference-only: Reaction when a visible Frightened creature within 60 feet starts its turn without Total Cover: Wisdom DC 8 + Charisma modifier + PB or spend its turn fleeing you by its fastest means. Once per Short or Long Rest.",
+      "text": "Reference-only: Reaction when a visible Frightened creature within 60 feet starts its turn without Total Cover: Wisdom DC 8 + Charisma modifier + PB or spend its turn fleeing you by its fastest means. Once per Short or Long Rest.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 19
+  },
+  "ability_increase": {
+    "from": [
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "playable": false
+}

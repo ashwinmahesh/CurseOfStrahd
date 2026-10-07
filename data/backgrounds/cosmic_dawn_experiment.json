@@ -1,0 +1,53 @@
+{
+  "id": "cosmic_dawn_experiment",
+  "name": "Cosmic Dawn Experiment",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. Equipment A uses carpenters_tools as its fixed default; equipment does not follow the proficiency choice in the current schema."
+  },
+  "summary": "Transmutation experiments altered your body and taught you to make use of its unfamiliar strengths.",
+  "ability_scores": [
+    "str",
+    "dex",
+    "con"
+  ],
+  "feat": "transmuted_anatomy",
+  "skills": [
+    "athletics",
+    "survival"
+  ],
+  "tool": {
+    "id": "carpenters_tools",
+    "choice": "artisan"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "carpenters_tools",
+          "qty": 1
+        },
+        {
+          "id": "backpack",
+          "qty": 1
+        },
+        {
+          "id": "robe",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 30
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ],
+  "playable": false
+}

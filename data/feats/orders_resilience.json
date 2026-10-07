@@ -1,0 +1,35 @@
+{
+  "id": "orders_resilience",
+  "name": "Order’s Resilience",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "category": "general",
+  "repeatable": false,
+  "summary": "Reference-only: Standing from Prone costs 5 feet. While you and an ally within 5 feet are not Incapacitated, both gain Advantage on Strength saves.",
+  "benefits": [
+    {
+      "id": "orders_resilience_benefit",
+      "name": "Benefits",
+      "summary": "Reference-only: Standing from Prone costs 5 feet. While you and an ally within 5 feet are not Incapacitated, both gain Advantage on Strength saves.",
+      "text": "Reference-only: Standing from Prone costs 5 feet. While you and an ally within 5 feet are not Incapacitated, both gain Advantage on Strength saves.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 4,
+    "feature": "stand_as_one"
+  },
+  "ability_increase": {
+    "from": [
+      "str",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "playable": false
+}

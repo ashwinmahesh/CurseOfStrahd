@@ -1,0 +1,45 @@
+{
+  "id": "mage_breaker",
+  "name": "Mage Breaker",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "dagger",
+  "summary": "+1 to this weapon’s attack and damage rolls.",
+  "text": "+1 to this weapon’s attack and damage rolls. Reference-only: damaging a concentrating target with this weapon imposes Disadvantage on the resulting Concentration save.",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "dagger"
+    ],
+    "default": "dagger",
+    "name": "Mage Breaker"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "playable": false
+}

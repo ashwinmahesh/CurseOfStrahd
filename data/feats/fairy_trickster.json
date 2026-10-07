@@ -1,0 +1,40 @@
+{
+  "id": "fairy_trickster",
+  "name": "Fairy Trickster",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "category": "general",
+  "repeatable": false,
+  "summary": "After you Disengage on your turn, ignore Difficult Terrain’s extra movement cost for the rest of the turn. On an attack hit, force a Wisdom save against DC 8 + the increased ability’s modifier + Proficiency Bonus. Failure gives Disadvantage on saves until your next turn ends. Uses equal Proficiency Bonus per Long Rest.",
+  "benefits": [
+    {
+      "id": "faerie_trod_trotter",
+      "name": "Faerie Trod Trotter",
+      "summary": "After you Disengage on your turn, ignore Difficult Terrain’s extra movement cost for the rest of the turn.",
+      "text": "After you Disengage on your turn, ignore Difficult Terrain’s extra movement cost for the rest of the turn.",
+      "implemented": "text"
+    },
+    {
+      "id": "flustering_strike",
+      "name": "Flustering Strike",
+      "summary": "On an attack hit, force a Wisdom save against DC 8 + the increased ability’s modifier + Proficiency Bonus. Failure gives Disadvantage on saves until your next turn ends. Uses equal Proficiency Bonus per Long Rest.",
+      "text": "On an attack hit, force a Wisdom save against DC 8 + the increased ability’s modifier + Proficiency Bonus. Failure gives Disadvantage on saves until your next turn ends. Uses equal Proficiency Bonus per Long Rest.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 4
+  },
+  "ability_increase": {
+    "from": [
+      "dex",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "playable": false
+}

@@ -1,0 +1,103 @@
+{
+  "id": "college_of_the_moon",
+  "name": "College of the Moon",
+  "class": "bard",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "summary": "Moonshae storytellers draw on primal magic to restore and shelter their companions. Some features are reference-only; see each feature’s implementation status.",
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "moons_inspiration",
+        "name": "Moon’s Inspiration",
+        "summary": "When granting Bardic Inspiration as a Bonus Action, you may teleport up to 30 feet to a visible empty space and become Invisible until your next turn starts; attacking, dealing damage, or casting a spell ends that invisibility. Once per turn when a spell heals a creature, you may spend and roll a Bardic Inspiration die to add its result to that healing and increase that creature’s Speed by 10 feet until its next turn ends.",
+        "text": "When granting Bardic Inspiration as a Bonus Action, you may teleport up to 30 feet to a visible empty space and become Invisible until your next turn starts; attacking, dealing damage, or casting a spell ends that invisibility. Once per turn when a spell heals a creature, you may spend and roll a Bardic Inspiration die to add its result to that healing and increase that creature’s Speed by 10 feet until its next turn ends.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "moon_primal_lore",
+        "name": "Primal Lore",
+        "summary": "Learn Druidic, a Druid cantrip that counts as a Bard cantrip, and one listed skill. The cantrip can change on gaining a Bard level.",
+        "text": "Learn Druidic, a Druid cantrip that counts as a Bard cantrip, and one listed skill. The cantrip can change on gaining a Bard level.",
+        "implemented": "data",
+        "choices": [
+          {
+            "id": "primal_cantrip",
+            "kind": "cantrip",
+            "count": 1,
+            "filter": {
+              "list": "druid",
+              "level": 0
+            },
+            "replaceable": "level_up"
+          },
+          {
+            "id": "primal_skill",
+            "kind": "skill",
+            "count": 1,
+            "from": [
+              "animal_handling",
+              "insight",
+              "medicine",
+              "nature",
+              "perception",
+              "survival"
+            ]
+          }
+        ],
+        "modifiers": [
+          {
+            "stat": "proficiency",
+            "kind": "language",
+            "value": "druidic"
+          }
+        ]
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "moonbeam_prepared",
+        "name": "Moonbeam",
+        "summary": "Moonbeam is always prepared.",
+        "text": "Moonbeam is always prepared.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "moonbeam",
+            "always_prepared": true
+          }
+        ]
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "blessing_of_moonlight",
+        "name": "Blessing of Moonlight",
+        "summary": "Once per Long Rest, modify a casting of Moonbeam: while it lasts you shed Dim Light for 5 feet; each failed save against that Moonbeam lets you heal another visible creature within 60 feet for 2d4 Hit Points.",
+        "text": "Once per Long Rest, modify a casting of Moonbeam: while it lasts you shed Dim Light for 5 feet; each failed save against that Moonbeam lets you heal another visible creature within 60 feet for 2d4 Hit Points.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "eventides_splendor",
+        "name": "Eventide’s Splendor",
+        "summary": "Inspired Eclipse may also make the Bardic Inspiration recipient Invisible until its next turn starts and let it use a Reaction to teleport up to 30 feet to a visible empty space. Lunar Vitality may use a rolled 1d6 instead of spending a Bardic Inspiration die.",
+        "text": "Inspired Eclipse may also make the Bardic Inspiration recipient Invisible until its next turn starts and let it use a Reaction to teleport up to 30 feet to a visible empty space. Lunar Vitality may use a rolled 1d6 instead of spending a Bardic Inspiration die.",
+        "implemented": "text"
+      }
+    }
+  ],
+  "playable": false
+}

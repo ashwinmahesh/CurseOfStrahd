@@ -1,0 +1,79 @@
+{
+  "id": "orb_of_damara",
+  "name": "Orb of Damara",
+  "source": {
+    "book": "FRAiF",
+    "page": 246,
+    "checked_against": "FRAiF",
+    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/10771767-orb-of-damara. Prices use the existing rarity convention; unspecified weight is 0. Reference-only properties require manual adjudication."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 0,
+  "magic": {
+    "rarity": "artifact",
+    "attunement": true,
+    "charges": {
+      "max": 6,
+      "regain": "1d4+2",
+      "when": "dawn"
+    }
+  },
+  "theme": "relics",
+  "icon": "amulet",
+  "summary": "Fly Speed 60 feet.",
+  "text": "Fly Speed 60 feet. Six charges, regaining 1d4+2 each dawn; spells use DC 18 and +10 spell attacks: Disguise Self (free), Fire Shield (2), Hold Person (1), See Invisibility (1), Summon Dragon at level 9 (4). Reference-only: hovering. A Magic action exhales a 15-foot Cone of Acid, Cold, Fire, Lightning, or Poison: DC 18 Dexterity for 6d6 damage, half on success. While not Incapacitated, your 20-foot fear aura forces enemies starting there to save DC 18 Wisdom or be Frightened until their next turn starts; success grants 24-hour immunity. A Magic action toggles the aura. Roll two minor beneficial and two minor detrimental artifact properties. Swallowing the orb permanently transforms you into a DM-controlled adult chromatic dragon chosen by the DM; when slain, you revert and the orb reappears. An Ancient Gold Dragon willingly swallowing it destroys both the orb and that dragon.",
+  "modifiers": [
+    {
+      "stat": "speed_set",
+      "kind": "fly",
+      "value": 60
+    }
+  ],
+  "treasure": {
+    "random": false
+  },
+  "powers": [
+    {
+      "id": "disguise_self",
+      "name": "Disguise Self",
+      "spell": "disguise_self",
+      "dc": 18,
+      "attack": 10
+    },
+    {
+      "id": "fire_shield",
+      "name": "Fire Shield",
+      "spell": "fire_shield",
+      "dc": 18,
+      "charges": 2,
+      "attack": 10
+    },
+    {
+      "id": "hold_person",
+      "name": "Hold Person",
+      "spell": "hold_person",
+      "dc": 18,
+      "charges": 1,
+      "attack": 10
+    },
+    {
+      "id": "see_invisibility",
+      "name": "See Invisibility",
+      "spell": "see_invisibility",
+      "dc": 18,
+      "charges": 1,
+      "attack": 10
+    },
+    {
+      "id": "summon_dragon",
+      "name": "Summon Dragon",
+      "spell": "summon_dragon",
+      "dc": 18,
+      "charges": 4,
+      "attack": 10,
+      "level": 9
+    }
+  ],
+  "playable": false
+}

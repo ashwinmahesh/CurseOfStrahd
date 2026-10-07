@@ -1,0 +1,57 @@
+{
+  "id": "spell_resistant",
+  "name": "Spell Resistant",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "category": "general",
+  "repeatable": false,
+  "summary": "Choose Necrotic, Psychic, Radiant, or Thunder Resistance. Reference-only: add 1d6 to a failed save against magic. Uses equal PB per Long Rest.",
+  "benefits": [
+    {
+      "id": "magical_resilience",
+      "name": "Magical Resilience",
+      "summary": "Choose Necrotic, Psychic, Radiant, or Thunder Resistance.",
+      "text": "Choose Necrotic, Psychic, Radiant, or Thunder Resistance.",
+      "implemented": "data",
+      "choice": {
+        "id": "type",
+        "kind": "damage_type",
+        "count": 1,
+        "from": [
+          "necrotic",
+          "psychic",
+          "radiant",
+          "thunder"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "resistance",
+          "value": "@type"
+        }
+      ]
+    },
+    {
+      "id": "spell_resistant_save",
+      "name": "Magic Resistant",
+      "summary": "Reference-only: add 1d6 to a failed save against magic. Uses equal PB per Long Rest.",
+      "text": "Reference-only: add 1d6 to a failed save against magic. Uses equal PB per Long Rest.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 4
+  },
+  "ability_increase": {
+    "from": [
+      "dex",
+      "con"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "playable": false
+}

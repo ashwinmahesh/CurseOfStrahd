@@ -1,0 +1,39 @@
+{
+  "id": "enervation",
+  "name": "Enervation",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 5,
+  "school": "necromancy",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "summary": "Reference-only: A visible creature makes a Dexterity save against 6d8 Necrotic, half on success. Success ends the spell. After failure, later Bonus Actions deal 2d8 Necrotic automatically. Every damage instance heals you for half damage dealt. Ends if target leaves range or gains Total Cover. Initial damage gains 1d8 per slot above 5.",
+  "text": "Reference-only: A visible creature makes a Dexterity save against 6d8 Necrotic, half on success. Success ends the spell. After failure, later Bonus Actions deal 2d8 Necrotic automatically. Every damage instance heals you for half damage dealt. Ends if target leaves range or gains Total Cover. Initial damage gains 1d8 per slot above 5.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile",
+  "playable": false
+}

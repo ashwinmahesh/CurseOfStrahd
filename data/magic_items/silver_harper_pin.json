@@ -1,0 +1,22 @@
+{
+  "id": "silver_harper_pin",
+  "name": "Silver Harper Pin",
+  "source": {
+    "book": "FRAiF",
+    "page": 244,
+    "checked_against": "FRAiF",
+    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/11054399-silver-harper-pin. Prices use the existing rarity convention; unspecified weight is 0. Reference-only properties require manual adjudication."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "amulet",
+  "summary": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type.",
+  "text": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type. While worn, magic identifying your type, alignment, or location reports that persona. Also set a thought of up to 25 words at attunement; thought-reading detects that preset message. A reader can use Study and DC 13 Intelligence (Investigation) to recognize that the thoughts are preprogrammed.",
+  "playable": false
+}

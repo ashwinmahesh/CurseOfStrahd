@@ -1,0 +1,34 @@
+{
+  "id": "mordenkainens_lucubration",
+  "name": "Mordenkainen’s Lucubration",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 5,
+  "school": "divination",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "summary": "Reference-only: Recover up to two spent slots of level 2 or lower. A level 6–7 casting can restore slots up to level 3; a level 8–9 casting can restore slots up to level 4.",
+  "text": "Reference-only: Recover up to two spent slots of level 2 or lower. A level 6–7 casting can restore slots up to level 3; a level 8–9 casting can restore slots up to level 4.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile",
+  "playable": false
+}

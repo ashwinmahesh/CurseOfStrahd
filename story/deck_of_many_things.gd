@@ -150,7 +150,7 @@ static func _key_weapon(ch: Character, dice: DiceRoller) -> String:
 
 static func _random_wondrous(dice: DiceRoller) -> String:
 	var pool: Array[String] = []
-	for d in Compendium.shared().all("magic_items"):
+	for d in Compendium.shared().all_playable("magic_items"):
 		if str(d.get("category", "")) == "wondrous" and MagicItems.rarity(d) in ["uncommon", "rare"] and bool((d.get("treasure", {}) as Dictionary).get("random", true)):
 			pool.append(str(d["id"]))
 	return pool[dice.roll_one(pool.size(), "Sun") - 1] if not pool.is_empty() else ""

@@ -342,7 +342,7 @@ static func _feats(c: Choice, ch: Character, comp: Compendium) -> void:
 		if not str(f["key"]).begins_with(c.key + "/") and not (c.key == "background.feat_choice" and str(f["key"]) == "background.feat"):
 			taken[str(f["id"])] = str(f["source"])
 	var gifts: Array[ChoiceOption] = []
-	for f in comp.all("feats"):
+	for f in comp.all_playable("feats"):
 		# `from` lists feats offered whatever their category (a background's own origin feat beside the Dark Gifts).
 		if not categories.is_empty() and not str(f.get("category", "")) in categories and not str(f["id"]) in c.from:
 			continue

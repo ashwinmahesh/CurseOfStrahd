@@ -1,0 +1,39 @@
+{
+  "id": "warlike_familiar",
+  "name": "Warlike Familiar",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "category": "general",
+  "repeatable": false,
+  "summary": "Reference-only: Always prepare Battle Familiar with your Familiar Friend casting ability; cast it free once per Long Rest or using slots. Your familiar can use a Reaction when a creature within 5 feet is hit to add your PB to that creature’s AC against the attack.",
+  "benefits": [
+    {
+      "id": "warlike_familiar_benefit",
+      "name": "Familiar Benefit",
+      "summary": "Reference-only: Always prepare Battle Familiar with your Familiar Friend casting ability; cast it free once per Long Rest or using slots. Your familiar can use a Reaction when a creature within 5 feet is hit to add your PB to that creature’s AC against the attack.",
+      "text": "Reference-only: Always prepare Battle Familiar with your Familiar Friend casting ability; cast it free once per Long Rest or using slots. Your familiar can use a Reaction when a creature within 5 feet is hit to add your PB to that creature’s AC against the attack.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 4,
+    "feature": "faithful_companion_spell",
+    "text": "Level 4+, Familiar Friend feat"
+  },
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "playable": false
+}

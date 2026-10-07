@@ -1,0 +1,40 @@
+{
+  "id": "flowering_blossom_rod",
+  "name": "Flowering Blossom Rod",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "rod",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Spellcaster"
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "summary": "While held, cast Druidcraft at will.",
+  "text": "While held, cast Druidcraft at will. Reference-only: Plant Growth (Overgrowth only) once per dawn; Magic action restores nonmagical plants in a visible 5-foot Cube within 15 feet for 1d4 days. Cast Insect Plague once per dawn using your spell DC.",
+  "held": true,
+  "powers": [
+    {
+      "id": "druidcraft",
+      "name": "Druidcraft",
+      "spell": "druidcraft",
+      "dc": "wielder"
+    },
+    {
+      "id": "insect_plague",
+      "name": "Insect Plague",
+      "spell": "insect_plague",
+      "dc": "wielder",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    }
+  ],
+  "playable": false
+}

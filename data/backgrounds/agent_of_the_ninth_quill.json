@@ -1,0 +1,60 @@
+{
+  "id": "agent_of_the_ninth_quill",
+  "name": "Agent of the Ninth Quill",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. Iron Spikes is represented as the standard pack of ten individual spikes."
+  },
+  "summary": "Arcane theft and sabotage with the Ninth Quill sharpened your magical tradecraft.",
+  "ability_scores": [
+    "dex",
+    "int",
+    "cha"
+  ],
+  "feat": "arcane_infiltrator",
+  "skills": [
+    "arcana",
+    "sleight_of_hand"
+  ],
+  "tool": {
+    "id": "thieves_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 1
+        },
+        {
+          "id": "light_hammer",
+          "qty": 1
+        },
+        {
+          "id": "thieves_tools",
+          "qty": 1
+        },
+        {
+          "id": "iron_spike",
+          "qty": 10
+        },
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 17
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ],
+  "playable": false
+}

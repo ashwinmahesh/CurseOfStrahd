@@ -1,0 +1,47 @@
+{
+  "id": "arcane_infiltrator",
+  "name": "Arcane Infiltrator",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Always prepared: Friends; choose Intelligence, Wisdom, or Charisma for casting. Dodge as a Bonus Action, up to Proficiency Bonus times per Long Rest.",
+  "benefits": [
+    {
+      "id": "arcane_infiltrator_cantrip",
+      "name": "Friends",
+      "summary": "Always prepared: Friends; choose Intelligence, Wisdom, or Charisma for casting.",
+      "text": "Always prepared: Friends; choose Intelligence, Wisdom, or Charisma for casting.",
+      "implemented": "data",
+      "choice": {
+        "id": "casting_ability",
+        "kind": "spellcasting_ability",
+        "count": 1,
+        "from": [
+          "int",
+          "wis",
+          "cha"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "friends",
+          "ability": "@casting_ability",
+          "always_prepared": true
+        }
+      ]
+    },
+    {
+      "id": "arcane_infiltrator_benefit",
+      "name": "Cunning Diversion",
+      "summary": "Dodge as a Bonus Action, up to Proficiency Bonus times per Long Rest.",
+      "text": "Dodge as a Bonus Action, up to Proficiency Bonus times per Long Rest.",
+      "implemented": "text"
+    }
+  ],
+  "playable": false
+}

@@ -1,0 +1,35 @@
+{
+  "id": "enclave_magic",
+  "name": "Enclave Magic",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "category": "general",
+  "repeatable": false,
+  "summary": "Reference-only: Advantage on checks to Influence Beasts. Beast Sense is always prepared with the ability raised by this feat; once per Long Rest cast it without a slot or Concentration, or use slots normally.",
+  "benefits": [
+    {
+      "id": "enclave_magic_benefit",
+      "name": "Benefits",
+      "summary": "Reference-only: Advantage on checks to Influence Beasts. Beast Sense is always prepared with the ability raised by this feat; once per Long Rest cast it without a slot or Concentration, or use slots normally.",
+      "text": "Reference-only: Advantage on checks to Influence Beasts. Beast Sense is always prepared with the ability raised by this feat; once per Long Rest cast it without a slot or Concentration, or use slots normally.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 4,
+    "feature": "enclave_speak_with_animals"
+  },
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "playable": false
+}

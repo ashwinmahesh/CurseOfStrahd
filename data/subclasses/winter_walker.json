@@ -1,0 +1,97 @@
+{
+  "id": "winter_walker",
+  "name": "Winter Walker",
+  "class": "ranger",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "summary": "A cold-weather hunter who draws strength from the frozen wilds. Some features are reference-only; see each feature’s implementation status.",
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "winter_frost_resistance",
+        "name": "Frost Resistance",
+        "summary": "Resistance to Cold damage.",
+        "text": "Resistance to Cold damage.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "cold"
+          }
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "frigid_explorer",
+        "name": "Frigid Explorer",
+        "summary": "Cold damage from your weapon attacks, Ranger spells, and Ranger features ignores Resistance. Weapon hits may add 1d4 Cold per target per turn, increasing to 1d6 at Ranger level 11.",
+        "text": "Cold damage from your weapon attacks, Ranger spells, and Ranger features ignores Resistance. Weapon hits may add 1d4 Cold per target per turn, increasing to 1d6 at Ranger level 11.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "hunters_rime",
+        "name": "Hunter’s Rime",
+        "summary": "Casting Hunter’s Mark gives you 1d10 + Ranger level Temporary Hit Points. Your marked creature cannot Disengage.",
+        "text": "Casting Hunter’s Mark gives you 1d10 + Ranger level Temporary Hit Points. Your marked creature cannot Disengage.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "fortifying_soul",
+        "name": "Fortifying Soul",
+        "summary": "Once per Long Rest, take a Magic action to choose up to Wisdom modifier visible creatures (minimum 1). Each heals 1d10 + Ranger level and gains Advantage on saves to avoid or end Frightened for 1 hour.",
+        "text": "Once per Long Rest, take a Magic action to choose up to Wisdom modifier visible creatures (minimum 1). Each heals 1d10 + Ranger level and gains Advantage on saves to avoid or end Frightened for 1 hour.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "chilling_retribution",
+        "name": "Chilling Retribution",
+        "summary": "Reaction when hit by an attack roll: the attacker makes a Wisdom save against your spell DC. Failure: Stunned with Speed 0 until your next turn ends. Uses equal Wisdom modifier (minimum 1) per Long Rest.",
+        "text": "Reaction when hit by an attack roll: the attacker makes a Wisdom save against your spell DC. Failure: Stunned with Speed 0 until your next turn ends. Uses equal Wisdom modifier (minimum 1) per Long Rest.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "frozen_haunt",
+        "name": "Frozen Haunt",
+        "summary": "When casting Hunter’s Mark, adopt a form lasting until that spell ends. Once per Long Rest, or restore use with a level 4+ slot without an action. Gain immunity to Cold, Grappled, Prone, and Restrained. On activation and your turn starts, chosen creatures in a 15-foot Emanation take 2d4 Cold. Pass through creatures and objects as Difficult Terrain, taking 1d10 Force if ending a turn inside; when the form ends inside one, move to the nearest empty space.",
+        "text": "When casting Hunter’s Mark, adopt a form lasting until that spell ends. Once per Long Rest, or restore use with a level 4+ slot without an action. Gain immunity to Cold, Grappled, Prone, and Restrained. On activation and your turn starts, chosen creatures in a 15-foot Emanation take 2d4 Cold. Pass through creatures and objects as Difficult Terrain, taking 1d10 Force if ending a turn inside; when the form ends inside one, move to the nearest empty space.",
+        "implemented": "text"
+      }
+    }
+  ],
+  "always_prepared": {
+    "3": [
+      "ice_knife"
+    ],
+    "5": [
+      "hold_person"
+    ],
+    "9": [
+      "remove_curse"
+    ],
+    "13": [
+      "ice_storm"
+    ],
+    "17": [
+      "cone_of_cold"
+    ]
+  },
+  "playable": false
+}
