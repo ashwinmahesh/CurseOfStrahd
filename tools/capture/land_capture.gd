@@ -6,7 +6,9 @@ extends Node
 ## Environment: LAND_SHOTS=road_day,woods (default: every shot), LAND_STYLE=classic|modern (this run only),
 ## LAND_ZOOM=22 (every shot from this far out), LAND_TIME=1 (also time each shot uncapped), LAND_RAW=1 (without the
 ## screen pass: no outlines, mist, land fade or grade, to see the plants' own colours), LAND_BENCH=1 (time the
-## place with each group of plants hidden in turn, round after round, instead of shooting it).
+## place with each group of plants hidden in turn, round after round, instead of shooting it), LAND_NO_FLORA=1 (the
+## Modern look without its trees and plants: the old trees, for before-and-after pairs), LAND_GIF=n (n frames a
+## tenth of a second apart, numbered, to show the wind).
 ## The road and village shots stand the party where the light lane's look_capture does, so frames compare across lanes.
 
 ## Each shot: the place, the hour, where the party stands (empty: the place's own spawn), and optionally the camera's
@@ -38,6 +40,7 @@ func _ready() -> void:
 	var style := OS.get_environment("LAND_STYLE")
 	if style != "":
 		Look.set_style(style, false)
+	Flora.off = OS.get_environment("LAND_NO_FLORA") != ""
 
 
 func capture_shots(tool: Node, out: String) -> void:
@@ -63,6 +66,9 @@ func capture_shots(tool: Node, out: String) -> void:
 			print("land %s %s: %.2f ms a frame uncapped (%d fps)" % [Look.style(), id, ms, int(1000.0 / ms)])
 			await tool.call("wait_frames", 10)
 		tool.call("_shot", "%s_%s.png" % [out, id])
+		for f in int(OS.get_environment("LAND_GIF")) if OS.get_environment("LAND_GIF") != "" else 0:
+			await tool.call("wait_frames", 6)
+			tool.call("_shot", "%s_%s_%02d.png" % [out, id, f])
 
 
 func _build(shot: Dictionary) -> void:

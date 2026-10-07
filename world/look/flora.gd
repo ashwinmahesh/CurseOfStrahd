@@ -27,11 +27,13 @@ static var _materials: Dictionary = {}    ## "<material>|<kind>" -> ShaderMateri
 var set_id := "forest"
 var spec: Dictionary = {}
 var rng := RandomNumberGenerator.new()
+## Set by art QA tools only, to shoot a place as it was before (tools/capture/land_capture.gd LAND_NO_FLORA).
+static var off := false
 
 
 ## True where the Modern look's plants are drawn.
 static func enabled() -> bool:
-	return Look.modern() and FileAccess.file_exists(MANIFEST_JSON)
+	return Look.modern() and not off and FileAccess.file_exists(MANIFEST_JSON)
 
 
 static func manifest() -> Dictionary:
