@@ -52,13 +52,15 @@ func test_a_family_and_its_flavour_layer() -> void:
 	var saved := CombatSfx._data
 	CombatSfx._data = {
 		"families": {"burst": {"impact": ["blast", "@impact"]}, "bolt": {"launch": "@launch", "impact": "@impact"}},
-		"flavours": {"fire": {"launch": "fire_whoosh", "impact": "fire_burst"}},
+		"flavours": {"fire": {"launch": "fire_whoosh", "impact": "fire_burst"}, "force": {"impact": ["thump", "shimmer"]}},
 		"keys": {"hold_person": {"cast": ["chains", "mind"]}}}
 	assert_eq(CombatSfx.ids_for({"key": "fireball", "family": "burst", "flavour": "fire"}, "impact"), ["blast", "fire_burst"] as Array[String])
 	assert_eq(CombatSfx.ids_for({"key": "fireball", "family": "burst", "flavour": "cold"}, "impact"), ["blast"] as Array[String],
 		"a flavour with no sound leaves the family's")
 	assert_eq(CombatSfx.ids_for({"key": "fire_bolt", "family": "bolt", "flavour": "fire"}, "launch"), ["fire_whoosh"] as Array[String])
 	assert_eq(CombatSfx.ids_for({"key": "fire_bolt", "family": "bolt", "flavour": "fire"}, "cast"), [] as Array[String])
+	assert_eq(CombatSfx.ids_for({"key": "magic_missile", "family": "bolt", "flavour": "force"}, "impact"), ["thump", "shimmer"] as Array[String],
+		"a flavour's moment can layer several sounds")
 	assert_eq(CombatSfx.ids_for({"key": "hold_person", "family": "psychic", "flavour": "mind"}, "cast"), ["chains", "mind"] as Array[String],
 		"a spell's own sound wins over its family's")
 	CombatSfx._data = saved
