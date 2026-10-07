@@ -2,7 +2,8 @@
 """Gemini image generation, the counterpart of tools/art/generate.sh for Gemini Flash image models.
 
 Usage: tools/art/generate_gemini.py <name> <subfolder> "<prompt>" [--model M] [--aspect 3:2] [--ref img.png] [--size 2K]
-Adds the project style preamble, saves art/generated/<subfolder>/<name>.png and logs the call to
+    [--preamble art/prompts/<file>.txt]
+Adds the project style preamble (or the one --preamble names), saves art/generated/<subfolder>/<name>.png and logs the call to
 art/generation_log.jsonl. Stdlib only. The key comes from GEMINI_API_KEY (read from ~/.zshrc if
 the shell doesn't have it) and is sent as a header, never in the URL.
 
@@ -11,6 +12,9 @@ removes it (blender/lib/cutout.py remove_background).
 
 --ref sends an existing image along with the prompt (e.g. the neutral portrait when generating another
 expression of the same character); it is recorded in the log.
+
+--preamble swaps the cartoon style preamble for another, such as the world look's target frames
+(art/prompts/look_target_preamble.txt), which repaint a capture in a lit 3D style the cartoon preamble forbids.
 
 --size asks for a larger image (2K or 4K) where a picture is shown big, such as the travel map; the default is 1K.
 
@@ -72,9 +76,10 @@ def main():
     p.add_argument("--aspect", default="1:1", help="e.g. 1:1, 3:2, 16:9")
     p.add_argument("--ref", action="append", default=[], help="reference image (PNG), may repeat")
     p.add_argument("--size", default="", help="1K (default), 2K or 4K")
+    p.add_argument("--preamble", default="art/prompts/style_preamble.txt", help="style preamble, relative to the repo")
     a = p.parse_args()
 
-    preamble = (ROOT / "art" / "prompts" / "style_preamble.txt").read_text().strip()
+    preamble = (ROOT / a.preamble).read_text().strip()
     parts = [{"inlineData": {"mimeType": "image/png", "data": base64.b64encode(Path(r).read_bytes()).decode()}}
              for r in a.ref]
     parts.append({"text": f"{preamble} {a.prompt}"})
@@ -106,7 +111,9 @@ def main():
     usage = data.get("usageMetadata", {})
     with open(ROOT / "art" / "generation_log.jsonl", "a") as f:
         f.write(json.dumps({"time": time.strftime("%Y-%m-%dT%H:%M:%S"), "name": a.name, "folder": a.folder,
-                            "model": a.model, "aspect": a.aspect, **({"size": a.size} if a.size else {}), "prompt": a.prompt,
+                            "model": a.model, "aspect": a.aspect, **({"size": a.size} if a.size else {}),
+                            **({"preamble": a.preamble} if a.preamble != "art/prompts/style_preamble.txt" else {}),
+                            "prompt": a.prompt,
                             **({"ref": [os.path.relpath(Path(r).resolve(), ROOT) for r in a.ref]} if a.ref else {}),
                             "output_tokens": usage.get("candidatesTokenCount")}) + "\n")
     print(f"Saved image: {out}")
