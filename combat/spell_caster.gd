@@ -829,6 +829,8 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		c.armed.erase("overchannel")
 		ctx["overchannel"] = true
 		_overchannel_cost(c, level)
+	ctx["targets"] = tgt
+	e.faerun.before_resolve(ctx)
 	_resolve(ctx, tgt, cells, r)
 	check_tethers()
 	_finish_concentration(ctx)
@@ -861,7 +863,7 @@ func _after_cast_features(ctx: Dictionary, free: bool) -> void:
 		enc().class_features.after_cast(c, s, slot)
 		enc().feature_recipes.after_cast(c, s, slot)
 	enc().ravenloft.after_cast(c, s, slot)
-	enc().faerun.after_cast(c, s, slot, free)
+	enc().faerun.after_cast(c, s, slot, free, ctx)
 	enc().triggered_features.after_cast(ctx)
 	if str(s["id"]) == "hunters_mark" and CombatFeatures.has_feature(c, "hunters_rime"):
 		var amount := enc().dice.roll_one(10, "Hunter’s Rime") + caster_char(c).class_level_of("ranger")
@@ -1989,6 +1991,7 @@ func _heal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 		var pmax := DiceRoller.parse_expr(dice)
 		total = int(pmax["count"]) * int(pmax["sides"]) + int(pmax["modifier"])
 	total = e.ravenloft.spell_healing(ctx, t, dice, total)
+	total += e.faerun.spell_healing(ctx, t)
 	var amount := total + bonus.total() + int((s.get("heal", {}) as Dictionary).get("flat", 0)) \
 		+ int((s.get("upcast", {}) as Dictionary).get("heal_flat", 0)) * maxi(0, int(ctx["slot"]) - int(s.get("level", 0)))
 	# Moon Sickle: healing spells cast while holding it heal 1d4 more.

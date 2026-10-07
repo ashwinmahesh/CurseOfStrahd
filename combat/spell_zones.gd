@@ -371,6 +371,9 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 			r.lines.append(e.log.add("info", "%s avoids %s" % [t.name(), label], t.id, details))
 	elif has_save:
 		r.lines.append(e.log.add("info", "%s %s the %s save" % [t.name(), "fails" if failed else "succeeds on", o.name], t.id, details))
+	# Blessing of Moonlight (College of the Moon): a failed save against a blessed Moonbeam heals someone.
+	if failed and has_save:
+		enc().faerun.zone_failed_save(o, t)
 	if t.is_alive():
 		spells().apply_effect_entries(ctx, t, effects, "fail" if failed else "success", r)
 

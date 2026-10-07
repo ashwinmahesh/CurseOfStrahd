@@ -2347,7 +2347,11 @@ func _after_hit(st: Dictionary) -> CombatResult:
 	var savage := c.creature.has_flag("savage_attacker") and str(_savage_turn.get(c.id, "")) != turn_key and c.creature is Character
 	var exploit := faerun.exploit_opening(c, opts)
 	for entry in dice_list:
-		var rolled := _roll_damage_dice(str(entry["dice"]), critical, p.die_minimum if bool(entry.get("weapon", false)) else 0,
+		var minimum := p.die_minimum if bool(entry.get("weapon", false)) else 0
+		# Dread Incarnate (Scion of the Three 17): Sneak Attack dice of 1 or 2 count as 3.
+		if str(entry.get("label", "")) == "Sneak Attack" and CombatFeatures.has_feature(c, "dread_incarnate"):
+			minimum = maxi(minimum, 3)
+		var rolled := _roll_damage_dice(str(entry["dice"]), critical, minimum,
 			"%s damage" % entry["label"], features.damage_reroll_rule(c, p, entry))
 		# Exploit Opening (Zhentarim Ruffian): an Opportunity Attack's damage dice twice, the better roll kept.
 		if exploit and not bool(entry.get("penalty", false)):

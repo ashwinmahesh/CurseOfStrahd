@@ -7,7 +7,7 @@
     "checked_against": "FRHoF",
     "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
   },
-  "summary": "A radiant champion empowered by the four kinds of elemental genies. Some features are reference-only; see each feature’s implementation status.",
+  "summary": "A radiant champion empowered by the four kinds of elemental genies.",
   "features": [
     {
       "level": 3,
@@ -15,8 +15,8 @@
         "id": "elemental_smite",
         "name": "Elemental Smite",
         "summary": "Immediately after Divine Smite, spend Channel Divinity for one effect. Dao: Grapple the smitten target (escape DC your spell save DC), also Restraining it while Grappled. Djinni: teleport 30 feet to a visible empty space; until your next turn ends resist Bludgeoning, Piercing, and Slashing and be immune to Grappled, Prone, and Restrained. Efreeti: deal 2d4 Fire to the target and 2d4 Fire to another visible creature within 30 feet of you. Marid: the smitten target and chosen creatures in your 10-foot Emanation make Strength saves against your spell DC; failure pushes them 15 feet away and knocks them Prone.",
-        "text": "Immediately after Divine Smite, spend Channel Divinity for one effect. Dao: Grapple the smitten target (escape DC your spell save DC), also Restraining it while Grappled. Djinni: teleport 30 feet to a visible empty space; until your next turn ends resist Bludgeoning, Piercing, and Slashing and be immune to Grappled, Prone, and Restrained. Efreeti: deal 2d4 Fire to the target and 2d4 Fire to another visible creature within 30 feet of you. Marid: the smitten target and chosen creatures in your 10-foot Emanation make Strength saves against your spell DC; failure pushes them 15 feet away and knocks them Prone.",
-        "implemented": "text"
+        "text": "Right after you deal Divine Smite damage, you can spend a use of Channel Divinity for one genie's gift (arm it on the hotbar before the attack). Dao: the target is Grappled by you (escape DC your spell save DC) and Restrained while Grappled this way. Djinni: you teleport up to 30 feet to an empty space you can see, and until the end of your next turn you resist Bludgeoning, Piercing and Slashing damage and can't be Grappled, knocked Prone or Restrained. Efreeti: the target and another creature you can see within 30 feet of you take 2d4 Fire damage each. Marid: the target and creatures you choose in your 10-foot Emanation make a Strength save against your spell save DC or are pushed 15 feet away and knocked Prone.",
+        "implemented": "engine"
       }
     },
     {
@@ -58,8 +58,20 @@
         "id": "aura_of_elemental_shielding",
         "name": "Aura of Elemental Shielding",
         "summary": "Choose Acid, Cold, Fire, Lightning, or Thunder. You and allies in Aura of Protection resist it. You may change the type at the start of each of your turns without an action.",
-        "text": "Choose Acid, Cold, Fire, Lightning, or Thunder. You and allies in Aura of Protection resist it. You may change the type at the start of each of your turns without an action.",
-        "implemented": "text"
+        "text": "Choose Acid, Cold, Fire, Lightning or Thunder: you and allies in your Aura of Protection have Resistance to it. At the start of each of your turns you can switch the type (in the game, from the hotbar on your turn, no action).",
+        "implemented": "engine",
+        "choice": {
+          "id": "element",
+          "kind": "damage_type",
+          "count": 1,
+          "from": [
+            "fire",
+            "cold",
+            "lightning",
+            "thunder",
+            "acid"
+          ]
+        }
       }
     },
     {
@@ -68,8 +80,16 @@
         "id": "elemental_rebuke",
         "name": "Elemental Rebuke",
         "summary": "Reaction when hit by an attack roll: halve the damage against you, rounding down. The attacker makes a Dexterity save against your spell DC, taking 2d10 + Charisma modifier damage on failure, half on success; choose Acid, Cold, Fire, Lightning, or Thunder. Uses equal Charisma modifier (minimum 1) per Long Rest.",
-        "text": "Reaction when hit by an attack roll: halve the damage against you, rounding down. The attacker makes a Dexterity save against your spell DC, taking 2d10 + Charisma modifier damage on failure, half on success; choose Acid, Cold, Fire, Lightning, or Thunder. Uses equal Charisma modifier (minimum 1) per Long Rest.",
-        "implemented": "text"
+        "text": "When an attack roll hits you, you can take a Reaction to halve the damage (rounded down); the attacker makes a Dexterity save against your spell save DC, taking 2d10 + your Charisma modifier damage of your Aura of Elemental Shielding type (Fire if you have none) on a failure, half on a success. Charisma modifier uses (minimum 1) per Long Rest.",
+        "implemented": "engine",
+        "action": "reaction",
+        "resource": {
+          "id": "elemental_rebuke",
+          "name": "Elemental Rebuke",
+          "max": "mod:cha",
+          "recharge": "long",
+          "min": 1
+        }
       }
     },
     {
@@ -78,8 +98,17 @@
         "id": "noble_scion",
         "name": "Noble Scion",
         "summary": "Bonus Action: for 10 minutes gain a 60-foot hovering Fly Speed and a Reaction that turns a failed D20 Test by you or an ally in Aura of Protection into a success. End freely. Once per Long Rest; spend a level 5 slot without an action to restore its use.",
-        "text": "Bonus Action: for 10 minutes gain a 60-foot hovering Fly Speed and a Reaction that turns a failed D20 Test by you or an ally in Aura of Protection into a success. End freely. Once per Long Rest; spend a level 5 slot without an action to restore its use.",
-        "implemented": "text"
+        "text": "As a Bonus Action you take on a genie's majesty for 10 minutes: a Fly Speed of 60 feet (you can hover), and when you or an ally in your Aura of Protection fails a D20 Test you can take a Reaction to make it succeed (in a fight that Reaction is off until you set it to Automatic in the class tab). You can end it at any time. Once per Long Rest; spending a level 5 spell slot (no action) restores the use.",
+        "implemented": "engine",
+        "action": "bonus_action",
+        "resource": {
+          "id": "noble_scion",
+          "name": "Noble Scion",
+          "max": 1,
+          "recharge": "long"
+        },
+        "policy": "never",
+        "policy_cost": "Your Reaction"
       }
     }
   ],
@@ -106,5 +135,5 @@
       "contact_other_plane"
     ]
   },
-  "playable": false
+  "playable": true
 }

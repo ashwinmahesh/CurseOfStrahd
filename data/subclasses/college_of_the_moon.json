@@ -7,7 +7,7 @@
     "checked_against": "FRHoF",
     "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
   },
-  "summary": "Moonshae storytellers draw on primal magic to restore and shelter their companions. Some features are reference-only; see each feature’s implementation status.",
+  "summary": "Moonshae storytellers draw on primal magic to restore and shelter their companions.",
   "features": [
     {
       "level": 3,
@@ -15,8 +15,10 @@
         "id": "moons_inspiration",
         "name": "Moon’s Inspiration",
         "summary": "When granting Bardic Inspiration as a Bonus Action, you may teleport up to 30 feet to a visible empty space and become Invisible until your next turn starts; attacking, dealing damage, or casting a spell ends that invisibility. Once per turn when a spell heals a creature, you may spend and roll a Bardic Inspiration die to add its result to that healing and increase that creature’s Speed by 10 feet until its next turn ends.",
-        "text": "When granting Bardic Inspiration as a Bonus Action, you may teleport up to 30 feet to a visible empty space and become Invisible until your next turn starts; attacking, dealing damage, or casting a spell ends that invisibility. Once per turn when a spell heals a creature, you may spend and roll a Bardic Inspiration die to add its result to that healing and increase that creature’s Speed by 10 feet until its next turn ends.",
-        "implemented": "text"
+        "text": "Inspired Eclipse: when you give Bardic Inspiration with a Bonus Action, you can teleport up to 30 feet to an empty space you can see and become Invisible until the start of your next turn (it ends early if you attack, deal damage or cast a spell). Lunar Vitality: once per turn when a spell of yours heals a creature, you can spend and roll a Bardic Inspiration die, adding it to the healing, and that creature's Speed rises by 10 feet until the end of its next turn. In a fight Lunar Vitality happens on its own unless you turn it Off in the class tab.",
+        "implemented": "engine",
+        "policy": "auto",
+        "policy_cost": "A Bardic Inspiration die"
       }
     },
     {
@@ -84,8 +86,16 @@
         "id": "blessing_of_moonlight",
         "name": "Blessing of Moonlight",
         "summary": "Once per Long Rest, modify a casting of Moonbeam: while it lasts you shed Dim Light for 5 feet; each failed save against that Moonbeam lets you heal another visible creature within 60 feet for 2d4 Hit Points.",
-        "text": "Once per Long Rest, modify a casting of Moonbeam: while it lasts you shed Dim Light for 5 feet; each failed save against that Moonbeam lets you heal another visible creature within 60 feet for 2d4 Hit Points.",
-        "implemented": "text"
+        "text": "Once per Long Rest, when you cast Moonbeam you can bless it: while it lasts you shed Dim Light for 5 feet, and each time a creature fails its save against that Moonbeam you can heal another creature you can see within 60 feet for 2d4 Hit Points (in the game, the most hurt of your allies). In a fight the blessing goes on your next Moonbeam unless you turn it Off in the class tab.",
+        "implemented": "engine",
+        "resource": {
+          "id": "blessing_of_moonlight",
+          "name": "Blessing of Moonlight",
+          "max": 1,
+          "recharge": "long"
+        },
+        "policy": "auto",
+        "policy_cost": "Once per Long Rest"
       }
     },
     {
@@ -94,10 +104,10 @@
         "id": "eventides_splendor",
         "name": "Eventide’s Splendor",
         "summary": "Inspired Eclipse may also make the Bardic Inspiration recipient Invisible until its next turn starts and let it use a Reaction to teleport up to 30 feet to a visible empty space. Lunar Vitality may use a rolled 1d6 instead of spending a Bardic Inspiration die.",
-        "text": "Inspired Eclipse may also make the Bardic Inspiration recipient Invisible until its next turn starts and let it use a Reaction to teleport up to 30 feet to a visible empty space. Lunar Vitality may use a rolled 1d6 instead of spending a Bardic Inspiration die.",
-        "implemented": "text"
+        "text": "Inspired Eclipse can also turn the creature you inspired Invisible until the start of its next turn, and it can use its Reaction to teleport up to 30 feet to an empty space it can see (in a fight you pick its spot right away). Lunar Vitality uses a free 1d6 instead of spending a Bardic Inspiration die.",
+        "implemented": "engine"
       }
     }
   ],
-  "playable": false
+  "playable": true
 }
