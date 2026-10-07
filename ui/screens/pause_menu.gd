@@ -63,6 +63,8 @@ static func _c(name: String) -> Color:
 func open(root_: Node, state: StoryState, _index: int) -> void:
 	root = root_
 	st = state
+	# The world as the menu opens over it: the picture for a save made from its pages (lane 16, Q9).
+	SaveSystem.hold_view(self)
 	var dim := ColorRect.new()
 	dim.color = Color(_c("arch_back"), 0.86)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)

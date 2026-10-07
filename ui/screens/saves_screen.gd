@@ -5,6 +5,8 @@ extends CanvasLayer
 ## saves once they confirm, or loads; over the title it loads, since the title's column has no room for a list. The
 ## list scrolls, so any number of saves fits, and every line ends in an ellipsis rather than spilling. Back or Escape
 ## returns to whatever opened it (Escape first closes the overwrite question, if it's up).
+## Q9: each save shows its picture and the player's note (typed above the list when saving), the list sorts by when,
+## place or day, and loading has a second tab for the backups kept before each update.
 
 ## Closed by Back, Escape or a save (after `saved`).
 signal closed
@@ -15,16 +17,26 @@ enum Mode { SAVE, LOAD }
 
 ## The frame, as wide as the credits' and short enough for the shortest window the game draws (1600 x 900).
 const SIZE := Vector2(1100, 760)
+## A save's picture in its row.
+const PICTURE := Vector2(160, 90)
+## How the list is sorted, kept with the player's settings: [id, the button's words].
+const SORTS := [["newest", "Newest first"], ["place", "By place"], ["day", "By day"]]
+const TABS: Array[String] = ["Your Saves", "Backups"]
 
 var mode := Mode.LOAD
 ## What happens once a save has loaded: the opener leaves for the game (the pause menu unpauses first).
 var after_load: Callable
 var _list: VBoxContainer
-var _note: Label
+var _status: Label
 var _ask: Control                  ## the overwrite question, while it's up
 var _new: Button                   ## New Save, when saving
 var _back: Button
 var _hidden: CanvasItem            ## what the page hides under it while it's up (the arch, the title's column)
+var _tab := "Your Saves"           ## loading: the player's saves or the backups
+var _tabs: Control
+var _hint: Label
+var _note_edit: LineEdit           ## the player's note for the save about to be made
+var _sort: Button
 
 
 func _init() -> void:
@@ -54,21 +66,40 @@ func _build() -> void:
 	box.add_child(clear)
 	var head := HBoxContainer.new()
 	head.add_theme_constant_override("separation", 16)
-	var hint := UiKit.label("Choose a save to save over, or start a new one. Every other save stays as it is."
-		if mode == Mode.SAVE else "Choose a save to load. The game's own autosaves and a fight's round start are here too.",
-		15, "parchment")
-	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	hint.custom_minimum_size = Vector2(1, 0)
-	hint.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	hint.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	head.add_child(hint)
+	_hint = UiKit.label("", 15, "parchment")
+	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_hint.custom_minimum_size = Vector2(1, 0)
+	_hint.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_hint.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	head.add_child(_hint)
+	_sort = UiKit.button(_sort_words(), _next_sort, 15)
+	_sort.name = "Sort"
+	_sort.tooltip_text = "How the list is sorted: newest first, by place, or by the day in Barovia."
+	head.add_child(_sort)
+	box.add_child(head)
 	if mode == Mode.SAVE:
+		var note_row := HBoxContainer.new()
+		note_row.add_theme_constant_override("separation", 16)
+		_note_edit = LineEdit.new()
+		_note_edit.name = "Note"
+		_note_edit.placeholder_text = "Your note on this save (optional)"
+		_note_edit.max_length = 60
+		_note_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_note_edit.add_theme_font_size_override("font_size", 16)
+		_note_edit.tooltip_text = "Shown with the save in every list. Writing over a save keeps its note unless you type a new one."
+		_note_edit.text_submitted.connect(func(_t: String) -> void: _save_new())
+		note_row.add_child(_note_edit)
 		_new = UiParts.primary_button("New Save", _save_new)
 		_new.name = "NewSave"
 		_new.tooltip_text = "Saves the game in a new slot."
 		_new.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-		head.add_child(_new)
-	box.add_child(head)
+		note_row.add_child(_new)
+		box.add_child(note_row)
+	else:
+		_tabs = Control.new()
+		_tabs.custom_minimum_size = Vector2(0, 40)
+		box.add_child(_tabs)
+		_draw_tabs()
 	var pane := UiParts.pane(10)
 	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_list = VBoxContainer.new()
@@ -82,14 +113,14 @@ func _build() -> void:
 	back.name = "Back"
 	back.tooltip_text = "Back (Esc)"
 	foot.add_child(back)
-	_note = UiKit.label("", 15, "gilt_light")
-	_note.clip_text = true
-	_note.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	_note.custom_minimum_size = Vector2(1, 0)
-	_note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_note.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	foot.add_child(_note)
+	_status = UiKit.label("", 15, "gilt_light")
+	_status.clip_text = true
+	_status.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_status.custom_minimum_size = Vector2(1, 0)
+	_status.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_status.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	foot.add_child(_status)
 	box.add_child(foot)
 	_back = back
 	_fill()
@@ -100,25 +131,107 @@ func _build() -> void:
 	_focus()
 
 
-## The saves this page offers: to save over, only the player's own games still being played (the autosave and a
-## fight's round start are the game's, and a finished game is kept as its ending); to load, every one.
-func slots() -> Array[Dictionary]:
+## The saves this page offers, sorted: to save over, only the player's own games still being played (the autosave and
+## a fight's round start are the game's, and a finished game is kept as its ending); to load, every one.
+func slots(dir: String = "") -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
-	for s in SaveSystem.list_slots():
+	for s in SaveSystem.list_slots(dir):
 		if mode == Mode.LOAD or (str(s["kind"]) == "" and str(s["finished"]) == ""):
 			out.append(s)
+	return sorted(out, sort_id())
+
+
+## The player's sort (SORTS), "newest" until they pick another.
+static func sort_id() -> String:
+	var id := str(GameSettings.value("saves_sort", "newest"))
+	return id if SORTS.any(func(o: Array) -> bool: return str(o[0]) == id) else "newest"
+
+
+func _next_sort() -> void:
+	var ids: Array = SORTS.map(func(o: Array) -> String: return str(o[0]))
+	GameSettings.set_value("saves_sort", str(ids[(ids.find(sort_id()) + 1) % ids.size()]))
+	_sort.text = _sort_words()
+	_fill()
+
+
+static func _sort_words() -> String:
+	for o: Array in SORTS:
+		if str(o[0]) == sort_id():
+			return "%s  ›" % o[1]
+	return ""
+
+
+## `list` (as SaveSystem.list_slots gives it: newest first, finished games last) sorted by `how`: "newest" keeps it,
+## "place" goes by the place's name and "day" by the latest day in Barovia, the newest save first within each.
+static func sorted(list: Array[Dictionary], how: String) -> Array[Dictionary]:
+	var out := list.duplicate()
+	if how == "newest":
+		return out
+	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if how == "place" and str(a["location"]) != str(b["location"]):
+			return str(a["location"]).naturalnocasecmp_to(str(b["location"])) < 0
+		if how == "day" and int(a["day"]) != int(b["day"]):
+			return int(a["day"]) > int(b["day"])
+		return str(a["saved_at"]) > str(b["saved_at"]))
 	return out
 
 
-func _fill() -> void:
-	for c in _list.get_children():
+func _draw_tabs() -> void:
+	for c in _tabs.get_children():
 		c.queue_free()
+	var strip := UiParts.tab_strip(TABS, _tab, func(t: String) -> void:
+		_tab = t
+		_draw_tabs()
+		_fill()
+		_focus())
+	strip.set_anchors_preset(Control.PRESET_FULL_RECT)
+	for b in strip.get_children():
+		b.name = str((b as Button).text).replace(" ", "")
+		(b as Button).tooltip_text = {"Your Saves": "Your saves, the autosaves and a fight's round start.",
+			"Backups": "A copy of every save, kept before each update of the game."}.get((b as Button).text, "") as String
+	_tabs.add_child(strip)
+
+
+func _fill() -> void:
+	# Out of the list at once, so the new rows can take their slots' names.
+	for c in _list.get_children():
+		_list.remove_child(c)
+		c.queue_free()
+	if mode == Mode.SAVE:
+		_hint.text = "Choose a save to save over, or start a new one. Every other save stays as it is."
+	elif _tab == "Backups":
+		_hint.text = "Copies of your saves from before each update. A game loaded from one saves in a new slot."
+		_fill_backups()
+		return
+	else:
+		_hint.text = "Choose a save to load. The game's own autosaves and a fight's round start are here too."
 	var shown := slots()
 	if shown.is_empty():
 		_list.add_child(UiKit.label("No saves of your own yet: New Save makes the first." if mode == Mode.SAVE
 			else "No saves yet.", 15, "parchment"))
 	for s in shown:
 		_list.add_child(_row(s))
+
+
+## Each backup (newest first) under a heading saying when it was kept, with its saves.
+func _fill_backups() -> void:
+	var folders := SaveSystem.backups()
+	if folders.is_empty():
+		_list.add_child(UiKit.label("No backups yet. The game keeps a copy of every save before each update.", 15, "parchment"))
+	for f in folders:
+		var shown := slots(SaveSystem.backups_dir().path_join(f))
+		if shown.is_empty():
+			continue
+		_list.add_child(UiParts.section(backup_title(f)))
+		for s in shown:
+			_list.add_child(_row(s))
+
+
+## A backup's heading from its folder name (<date>T<time>_<commit>): "Kept 2026-10-07 18:55, before build 463d4670".
+static func backup_title(folder: String) -> String:
+	var at := folder.get_slice("_", 0)
+	var stamp := "%s %s" % [at.get_slice("T", 0), at.get_slice("T", 1).replace("-", ":").left(5)]
+	return "Kept %s, before build %s" % [stamp, folder.get_slice("_", 1)]
 
 
 ## The keyboard starts on New Save when saving, else on the newest save's Load (Back if there's none).
@@ -134,34 +247,76 @@ func _focus() -> void:
 	target.grab_focus.call_deferred()
 
 
-## One save: its place, what kind of save it is with the day and when, the party, and the page's button.
+## One save: its picture, its place, what kind of save it is with the day and when, the party, the player's note, and
+## the page's button.
 func _row(s: Dictionary) -> Control:
 	var slot := str(s["slot"])
+	var home := _in_saves(s)
 	var line := HBoxContainer.new()
 	line.add_theme_constant_override("separation", 14)
+	line.add_child(picture(s))
 	var info := VBoxContainer.new()
 	info.add_theme_constant_override("separation", 1)
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info.alignment = BoxContainer.ALIGNMENT_CENTER
 	var place := _fit(str(s["location"]), 19, "gilt_light")
 	place.add_theme_font_override("font", UiKit.display_font())
 	info.add_child(place)
 	info.add_child(_fit("%s · Day %d · %s" % [kind_of(s), int(s["day"]), when(s)], 14, "vellum"))
 	info.add_child(_fit(str(s["party"]), 13, "parchment"))
+	var note := str(s.get("note", ""))
+	if note != "":
+		var n := _fit("“%s”" % note, 15, "gilt")
+		n.name = "Note"
+		info.add_child(n)
 	line.add_child(info)
 	var act := UiParts.small_button("Save Here" if mode == Mode.SAVE else "Load", func() -> void:
 		if mode == Mode.SAVE:
 			_confirm(s)
 		else:
-			_load(slot))
+			_load(s))
 	act.name = "Act"
 	act.tooltip_text = "Save over this one (you'll be asked first)." if mode == Mode.SAVE else "Load this save."
 	act.custom_minimum_size = Vector2(124, 0)
 	line.add_child(act)
-	var tip := "%s · Day %d · %s\n%s\n%s" % [s["location"], int(s["day"]), when(s), s["party"], slot]
+	var tip := "%s · Day %d · %s\n%s%s\n%s" % [s["location"], int(s["day"]), when(s), s["party"],
+		"\n“%s”" % note if note != "" else "", slot]
 	var row := UiParts.row(line, func() -> Control: return UiParts.rules_tip(kind_of(s), "", tip),
-		slot == SaveSystem.current_slot)
+		home and slot == SaveSystem.current_slot)
 	row.name = slot
 	return row
+
+
+## A save's picture (Q9), framed in gilt; a save with none (a fight's round start, one from before pictures) shows the
+## crest on black instead.
+static func picture(s: Dictionary) -> Control:
+	var holder := Control.new()
+	holder.custom_minimum_size = PICTURE
+	holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	holder.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var path := str(s.get("thumb", ""))
+	var img := Image.load_from_file(path) if path != "" and FileAccess.file_exists(path) else null
+	if img != null and not img.is_empty():
+		var pic := TextureRect.new()
+		pic.name = "Picture"
+		pic.texture = ImageTexture.create_from_image(img)
+		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		pic.set_anchors_preset(Control.PRESET_FULL_RECT)
+		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		holder.add_child(pic)
+	holder.add_child(UiParts.drawn(PICTURE, func(c: Control) -> void:
+		var r := Rect2(Vector2.ZERO, c.size)
+		if img == null:
+			c.draw_rect(r, Look.color("ui_black"))
+			UiParts.crest(c, c.size / 2.0, 14.0)
+		c.draw_rect(r.grow(-1), Look.color("gilt_dark"), false, 2.0)))
+	return holder
+
+
+## A save in the saves folder (not a backup's copy).
+static func _in_saves(s: Dictionary) -> bool:
+	return str(s.get("dir", SaveSystem.save_dir)).simplify_path() == SaveSystem.save_dir.simplify_path()
 
 
 ## What kind of save it is, as its row says: the game's own slot, the autosave, a fight's round start, or a save.
@@ -173,7 +328,7 @@ static func kind_of(s: Dictionary) -> String:
 			return "Fight, round start"
 	if str(s.get("finished", "")) != "":
 		return "Finished"
-	return "This game" if str(s["slot"]) == SaveSystem.current_slot else "Save"
+	return "This game" if _in_saves(s) and str(s["slot"]) == SaveSystem.current_slot else "Save"
 
 
 ## When it was saved, to the minute ("2026-10-07 22:19").
@@ -199,23 +354,29 @@ func _save_new() -> void:
 	_save(SaveSystem.new_slot_name())
 
 
+## The note typed above the list, or null (keep the save's own) when there's none.
+func _typed_note() -> Variant:
+	var t := _note_edit.text.strip_edges() if _note_edit != null else ""
+	return t if t != "" else null
+
+
 func _save(slot: String) -> void:
-	var err := SaveSystem.save(slot)
+	var err := SaveSystem.save(slot, _typed_note())
 	if err != OK:
-		_note.text = "Can't save now." if err == ERR_UNAVAILABLE else "The save couldn't be written (%s)." % error_string(err)
+		_status.text = "Can't save now." if err == ERR_UNAVAILABLE else "The save couldn't be written (%s)." % error_string(err)
 		return
 	Audio.sfx("page")
 	saved.emit(slot)
 	close()
 
 
-func _load(slot: String) -> void:
-	var err := SaveSystem.load_slot(slot)
+func _load(s: Dictionary) -> void:
+	var err := SaveSystem.load_from(str(s.get("dir", SaveSystem.save_dir)), str(s["slot"]))
 	if err == OK:
 		if after_load.is_valid():
 			after_load.call()
 		return
-	_note.text = "That save is from a newer build of the game." if err == ERR_FILE_UNRECOGNIZED \
+	_status.text = "That save is from a newer build of the game." if err == ERR_FILE_UNRECOGNIZED \
 		else "That save couldn't be read (%s)." % error_string(err)
 
 
@@ -255,6 +416,12 @@ func _confirm(s: Dictionary) -> void:
 		var l := _fit(str(t[0]), int(t[1]), str(t[2]))
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		col.add_child(l)
+	var keeps: Variant = _typed_note()
+	var note := str(keeps) if keeps != null else str(s.get("note", ""))
+	if note != "":
+		var n := _fit("“%s”" % note, 15, "gilt")
+		n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		col.add_child(n)
 	var warn := UiKit.label("It's replaced by the game as it is now. Every other save stays as it is.", 15, "parchment", 500)
 	warn.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(warn)

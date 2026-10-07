@@ -390,6 +390,14 @@ func test_the_saves_pages() -> void:
 	if not await _game(LATE):
 		return
 	_golden_saves_on_disk(true)
+	# A save with the longest note a player can type (Q9), and a backup of them all.
+	var noted := FileAccess.get_file_as_string(SaveSystem.slot_path("v2_vallaki"))
+	var data := JSON.parse_string(noted) as Dictionary
+	data["note"] = "W".repeat(60)
+	var f := FileAccess.open(SaveSystem.slot_path("v2_vallaki"), FileAccess.WRITE)
+	f.store_string(JSON.stringify(data))
+	f.close()
+	SaveSystem.back_up_for_build("layout_build")
 	for mode: int in [SavesScreen.Mode.SAVE, SavesScreen.Mode.LOAD]:
 		await _check("the saves page (%s)" % ("save" if mode == SavesScreen.Mode.SAVE else "load"), func() -> Variant:
 			root.call("open_screen", "menu", 0)
@@ -407,7 +415,19 @@ func test_the_saves_pages() -> void:
 		page.call("_confirm", page.slots()[0])
 		await _frames(2)
 		return root.get("screen"), _close_screen)
+	await _check("the saves page (backups)", func() -> Variant:
+		root.call("open_screen", "menu", 0)
+		await _frames(1)
+		var menu := root.get("screen") as PauseMenu
+		menu.call("_open_saves", SavesScreen.Mode.LOAD)
+		await _frames(1)
+		(menu.find_child("Backups", true, false) as Button).pressed.emit()
+		await _frames(2)
+		return menu, _close_screen)
 	await _check("the game-over screen", _screen("game_over", 0), _close_screen)
+	for b in SaveSystem.backups():
+		SaveSystem._remove_dir(SaveSystem.backups_dir().path_join(b))
+	SaveSystem._remove_dir(SaveSystem.backups_dir())
 	_golden_saves_on_disk(false)
 
 

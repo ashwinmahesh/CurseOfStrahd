@@ -2,7 +2,8 @@ extends TestCase
 ## Save Game picks where the save goes (owner, 2026-10-07: "we should be able to select the slot to save to, or save
 ## to a new slot"): a new slot, or over one of the player's own saves once they confirm. The saves are a page of their
 ## own (ui/screens/saves_screen.gd) over the pause menu, the game-over screen and the title, the list scrolls, and
-## Back or Escape returns to whatever opened it.
+## Back or Escape returns to whatever opened it. Q9: a picture and the player's note with each save, sorting, the
+## newest five autosaves, and a copy of every save kept before each update.
 
 var root: Node
 var _real_dir := ""
@@ -34,6 +35,10 @@ func after_each() -> void:
 	if root != null:
 		root.queue_free()
 		root = null
+	for b in SaveSystem.backups():
+		SaveSystem._remove_dir(SaveSystem.backups_dir().path_join(b))
+	SaveSystem._remove_dir(SaveSystem.backups_dir())
+	GameSettings.set_value("saves_sort", "newest")
 	for f in DirAccess.get_files_at(SaveSystem.save_dir):
 		DirAccess.remove_absolute(SaveSystem.save_dir.path_join(f))
 	DirAccess.remove_absolute(SaveSystem.save_dir)
@@ -274,3 +279,127 @@ func test_files_beside_the_saves_are_not_saves() -> void:
 	assert_eq(SaveSystem.save("real"), OK)
 	var listed: Array = SaveSystem.list_slots().map(func(s: Dictionary) -> String: return str(s["slot"]))
 	assert_eq(listed, ["real"], "only the save is listed")
+
+
+func test_a_note_goes_with_its_save() -> void:
+	var menu := await _menu()
+	await _press(menu, "Save Game")
+	var page := _page(menu)
+	_note_field(page).text = "Before the Abbey"
+	await _press(page, "New Save")
+	var slot := SaveSystem.current_slot
+	assert_eq(str(SaveSystem.describe(slot)["note"]), "Before the Abbey", "the note is kept with the save")
+	assert_eq(SaveSystem.quick_save(), OK)
+	assert_eq(str(SaveSystem.describe(slot)["note"]), "Before the Abbey", "a quicksave over it keeps it")
+	# Writing over it keeps its note unless a new one is typed; the question shows the note the save will have.
+	await _press(menu, "Save Game")
+	page = _page(menu)
+	_row_button(page, slot).pressed.emit()
+	await _frames(1)
+	assert_true(_shows(page.find_child("Confirm", true, false), "Before the Abbey"), "the question shows the note it keeps")
+	await _press(page, "Overwrite")
+	assert_eq(str(SaveSystem.describe(slot)["note"]), "Before the Abbey")
+	await _press(menu, "Save Game")
+	page = _page(menu)
+	_note_field(page).text = "After the Abbey"
+	_row_button(page, slot).pressed.emit()
+	await _frames(1)
+	await _press(page, "Overwrite")
+	assert_eq(str(SaveSystem.describe(slot)["note"]), "After the Abbey", "a new note replaces it")
+	await _press(menu, "Load a Save")
+	assert_true(_shows(_page(menu).find_child(slot, true, false), "After the Abbey"), "the Load list shows it")
+	root.call("close_screen")
+
+
+func _note_field(page: SavesScreen) -> LineEdit:
+	return page.find_children("Note", "LineEdit", true, false)[0] as LineEdit
+
+
+## Whether a label under `n` shows `text`.
+static func _shows(n: Node, text: String) -> bool:
+	return n != null and n.find_children("*", "Label", true, false).any(func(l: Node) -> bool:
+		return (l as Label).text.contains(text))
+
+
+func test_a_picture_goes_with_each_save() -> void:
+	var shot := Image.create(400, 300, false, Image.FORMAT_RGBA8)
+	shot.fill(Color(0.5, 0.1, 0.1))
+	var thumb := SaveSystem.thumbnail_of(shot)
+	assert_eq(thumb.get_size(), SaveSystem.THUMB, "the middle 16:9 of the screen, small")
+	var menu := await _menu()
+	# A headless run has no screen to take: hand in the picture the menu would have held.
+	SaveSystem.set("_held", thumb)
+	await _press(menu, "Save Game")
+	await _press(_page(menu), "New Save")
+	var slot := SaveSystem.current_slot
+	assert_true(FileAccess.file_exists(SaveSystem.thumb_path(slot)), "the picture is written beside the save")
+	assert_eq(str(SaveSystem.describe(slot)["thumb"]), SaveSystem.thumb_path(slot))
+	await _press(menu, "Load a Save")
+	var row := _page(menu).find_child(slot, true, false)
+	assert_true(row != null and row.find_child("Picture", true, false) is TextureRect, "the row shows it")
+	root.call("close_screen")
+	SaveSystem.delete_slot(slot)
+	assert_false(FileAccess.file_exists(SaveSystem.thumb_path(slot)), "and goes with it")
+
+
+func test_the_newest_autosaves_are_kept() -> void:
+	assert_eq(SaveSystem.save("mine"), OK)
+	for i in SaveSystem.AUTOSAVES + 2:
+		GameState.story.gold = float(i)
+		assert_eq(SaveSystem.autosave(), OK)
+	var autos := SaveSystem.list_slots().filter(func(s: Dictionary) -> bool: return str(s["kind"]) == "autosave")
+	assert_eq(autos.size(), SaveSystem.AUTOSAVES, "the newest %d are kept" % SaveSystem.AUTOSAVES)
+	assert_eq(float((_on_disk(SaveSystem.AUTOSAVE)["story"] as Dictionary)["gold"]), float(SaveSystem.AUTOSAVES + 1), "the newest is the autosave")
+	assert_eq(float((_on_disk(SaveSystem.autosave_slot(2))["story"] as Dictionary)["gold"]), float(SaveSystem.AUTOSAVES), "the one before it next")
+	assert_false(SaveSystem.has_slot(SaveSystem.autosave_slot(SaveSystem.AUTOSAVES + 1)), "the oldest goes")
+	SaveSystem.current_slot = ""
+	assert_eq(SaveSystem.load_slot(SaveSystem.autosave_slot(3)), OK)
+	assert_eq(SaveSystem.current_slot, "mine", "an older autosave goes back to its game's slot too")
+
+
+func test_the_list_sorts_by_when_place_or_day() -> void:
+	var list: Array[Dictionary] = [
+		{"slot": "b", "saved_at": "2026-10-07T12:00:00", "location": "Krezk", "day": 2},
+		{"slot": "c", "saved_at": "2026-10-07T11:00:00", "location": "Death House", "day": 5},
+		{"slot": "a", "saved_at": "2026-10-07T10:00:00", "location": "Vallaki", "day": 3}]
+	var names := func(how: String) -> Array: return SavesScreen.sorted(list, how).map(func(s: Dictionary) -> String: return str(s["slot"]))
+	assert_eq(names.call("newest"), ["b", "c", "a"], "newest first")
+	assert_eq(names.call("place"), ["c", "b", "a"], "by place")
+	assert_eq(names.call("day"), ["c", "a", "b"], "by the day in Barovia")
+	assert_eq(SaveSystem.save("any"), OK)
+	var menu := await _menu()
+	await _press(menu, "Load a Save")
+	var sort := _page(menu).find_child("Sort", true, false) as Button
+	sort.pressed.emit()
+	assert_eq(SavesScreen.sort_id(), "place", "the button steps to the next")
+	assert_true(sort.text.begins_with("By place"))
+	root.call("close_screen")
+
+
+func test_every_save_is_copied_before_an_update() -> void:
+	GameState.story.gold = 33.0
+	assert_eq(SaveSystem.save("one"), OK)
+	assert_eq(SaveSystem.autosave(), OK)
+	var made := SaveSystem.back_up_for_build("abcdef123456")
+	assert_true(made != "" and FileAccess.file_exists(made.path_join("one.json")), "every save is copied")
+	assert_true(FileAccess.file_exists(made.path_join("autosave.json")), "the autosave too")
+	assert_eq(SaveSystem.back_up_for_build("abcdef123456"), "", "once per build")
+	assert_eq(SaveSystem.list_slots().size(), 2, "a backup's copies aren't listed as saves")
+	GameState.story.gold = 1.0
+	assert_eq(SaveSystem.save("one"), OK)
+	var menu := await _menu()
+	var went: Array[String] = []
+	menu.scene_changer = func(path: String) -> void: went.append(path)
+	await _press(menu, "Load a Save")
+	var page := _page(menu)
+	await _press(page, "Backups")
+	assert_true(_shows(page, "before build abcdef12"), "a heading says when it was kept")
+	_row_button(page, "one").pressed.emit()
+	assert_eq(went, [PauseMenu.GAME_SCENE] as Array[String], "a backup loads")
+	assert_eq(GameState.story.gold, 33.0, "as it was kept")
+	assert_eq(SaveSystem.current_slot, "", "a game from a backup has no slot until its first save")
+	assert_eq(float((_on_disk("one")["story"] as Dictionary)["gold"]), 1.0, "the save itself is untouched")
+	root.call("close_screen")
+	for i in SaveSystem.BACKUPS_KEPT + 2:
+		SaveSystem.back_up_for_build("build%02d" % i)
+	assert_eq(SaveSystem.backups().size(), SaveSystem.BACKUPS_KEPT, "the newest %d builds' copies are kept" % SaveSystem.BACKUPS_KEPT)
