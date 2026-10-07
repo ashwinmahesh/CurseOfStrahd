@@ -22,7 +22,8 @@
       "voice_id": "19wUuwPVysIy2RmEm9cY",
       "name": "Barovia Madam Eva",
       "description": "A very old woman with a dry, cracked, low voice and a light Eastern European accent. Slow and certain, as if she has already heard the answer; she savours riddles and lets silences sit. Warm underneath, faintly amused, never in a hurry.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "ireena": {
       "voice_id": "4TxM5AKNyvGHB4VByPs3",
@@ -31,13 +32,15 @@
       "settings": {
         "stability": 0.35,
         "style": 0.25
-      }
+      },
+      "model": "eleven_v3"
     },
     "ismark": {
       "voice_id": "MPsVDVcDCapCO3oxCNoC",
       "name": "Barovia Ismark Kolyanovich",
       "description": "A man in his late twenties with a tired, warm baritone and a light Eastern European accent. Weary gallows wit: short, plain sentences that end in a dry sting. A soldier's bluntness under a gentleman's manners; sounds like he hasn't slept.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "abbot": {
       "voice_id": "jT0ufcOturgnHnyxzjS0",
@@ -49,25 +52,29 @@
       "voice_id": "cwrfPUlbf5fNAZi1O1Dw",
       "name": "Barovia Ezmerelda d'Avenir",
       "description": "A woman in her thirties with a sharp, confident, slightly husky voice and a light Eastern European accent. Quick, practical and impatient, a monster hunter's dry humour; clipped sentences, a hint of a smirk, steel underneath.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "baron_vargas": {
       "voice_id": "kHWijpmRqGPRU7sjEAcn",
       "name": "Barovia Baron Vargas Vallakovich",
       "description": "A round, florid man in his fifties with a loud, plummy, booming voice and a light Eastern European accent. Desperately cheerful and pompous, proclaiming rather than talking; forced brightness that cracks into panic. 'All will be well!'",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "davian_martikov": {
       "voice_id": "M9KGJWNbMiNbJ9UAd6Vo",
       "name": "Barovia Davian Martikov",
       "description": "An old man in his seventies with a deep, grave, weathered voice and a light Eastern European accent. A stern patriarch: few words, heavy pauses, pride and grief held tightly. Speaks like stones being set down.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "morgantha": {
       "voice_id": "FWyd13ecWCcLepGfnHfQ",
       "name": "Barovia morgantha",
       "description": "An old woman with a sugary, crooning, sing-song voice and a strong, clearly audible Eastern European (Romanian) accent, sweet as syrup with something rotten underneath. Endearments, appraisal, cackling warmth; refers to herself in the third person. Grandmotherly menace.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "exethanter": {
       "voice_id": "oXIJMW5UjOOMx1NJehjt",
@@ -86,7 +93,8 @@
       "voice_id": "LHSMrecFL1EFazWSPHaY",
       "name": "Barovia lady_wachter",
       "description": "A widow in her fifties with a cool, refined, velvet voice and a strong, clearly audible Eastern European (Romanian) accent. Impeccable manners, unhurried, every word chosen; polite menace over tea. Never raises her voice because she never needs to.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "rictavio": {
       "voice_id": "XmHSvnTPu7n04QlhMJRk",
@@ -98,7 +106,8 @@
       "voice_id": "hmltLA3C24WM4meHdxdu",
       "name": "Barovia dmitri_krezkov",
       "description": "A broad man in his fifties with a gruff, low, gravelly voice and a strong, clearly audible Eastern European (Romanian) accent. Proud and stubborn, short hard sentences, a burgomaster used to saying no. Grief he will not show.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "sir_godfrey_gwilym": {
       "voice_id": "2qfrj3EPdB8wfr7VFvhz",
@@ -110,37 +119,43 @@
       "voice_id": "MGJAUDu0HyArLnST1CKd",
       "name": "Barovia father_lucian",
       "description": "A man in his fifties with a soft, careful, tired tenor and a strong, clearly audible Eastern European (Romanian) accent. A kind priest: gentle, measured, conciliatory, choosing words so as not to accuse anyone. Quiet worry in every line.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "donavich": {
       "voice_id": "op88pBNeBHBmJiWLztAG",
       "name": "Barovia donavich",
       "description": "A gaunt priest in his fifties with a thin, hoarse, exhausted voice and a strong, clearly audible Eastern European (Romanian) accent. Haunted and fervent, praying under his breath, breaking into desperate hope or shame; sounds starved and sleepless.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "baba_lysaga": {
       "voice_id": "c0doinAQD3XeNl3RsLFo",
       "name": "Barovia baba_lysaga",
       "description": "A tiny, ancient woman with a quick, cackling, magpie voice and a thick, strong Eastern European (Romanian) accent. Fussing, scolding and boasting about 'my boy' like a doting nursemaid, then dropping into a cold, venomous whisper. Unhinged and fast.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "bildrath": {
       "voice_id": "Ok7hTs4BRx1jITpYQCKp",
       "name": "Barovia bildrath",
       "description": "A narrow, middle-aged man with a dry, nasal, clipped voice and a strong, clearly audible Eastern European (Romanian) accent. A miserly shopkeeper: prim, flat, unimpressed, every sentence a price. No haggling, no warmth.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "strahd": {
       "voice_id": "qCQXkOQiy0oQ0aNl6v7k",
       "name": "Barovia Strahd (accent)",
       "description": "A tall aristocrat, timeless in age, with a rich, smooth, cultured baritone and an old-world Eastern European accent. Elegant, mocking and supremely calm; every word deliberate, amused contempt wrapped in perfect courtesy. Quietly dangerous, never shouting. Remixed 2026-10-07 to add a strong Romanian accent (owner).",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "zuleika_toranescu": {
       "voice_id": "Uwb8Xw6TIGFtO5jf17EC",
       "name": "Barovia zuleika_toranescu",
       "description": "A lean woman in her forties with a low, rough, earthy voice and a strong, clearly audible Eastern European (Romanian) accent. Watchful and resolute, a werewolf who keeps her rage on a leash; spare words, sudden intensity, gentle with children.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "vosk": {
       "voice_id": "0c8J1N1i3sIcgiJsow0W",
@@ -160,13 +175,15 @@
       "voice_id": "zJkooQj8YQ0EJZRwSyY2",
       "name": "Barovia emil_toranescu",
       "description": "A big, grey-bearded man with a deep, rumbling, patient voice and a strong, clearly audible Eastern European (Romanian) accent. Slow and steady like a farmer, with a wolf's growl underneath; pained and proud, few words, great weight.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "stanimir": {
       "voice_id": "Z9PoGEiEEL23Z08FAwzB",
       "name": "Barovia stanimir",
       "description": "A huge, grey-bearded man in his sixties with a big, warm, jovial bass voice and a strong, clearly audible Eastern European (Romanian) accent. Hearty and welcoming, laughing easily, a fiddler and storyteller; a shrewd merchant under the warmth.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "adrian_martikov": {
       "voice_id": "okBzG1aIaZbnqR1zVlXb",

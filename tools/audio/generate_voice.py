@@ -51,9 +51,23 @@ def spoken(c, speaker, text):
     return f"{tag} {text}" if tag else text
 
 
+def model_for(c, speaker):
+    """The speaker's own model if casting.json names one (owner, 2026-10-07: eleven_v3 keeps the Eastern European
+    accents that eleven_v4 flattens), else the pinned default."""
+    v = c["voices"].get(speaker, {})
+    return model_for(c, v["shares"]) if v.get("shares") else v.get("model", c["model"])
+
+
+PRICE_PER_1K = {"eleven_v3": 0.08, "eleven_multilingual_v2": 0.08}
+
+
+def price(c, speaker):
+    return PRICE_PER_1K.get(model_for(c, speaker), float(c["price_per_1k_usd"]))
+
+
 def recipe(c, speaker):
     """What makes a clip: a change here means the speaker's clips are out of date (--recast)."""
-    blob = [voice_id(c, speaker), c["model"], c["output_format"], settings_for(c, speaker)]
+    blob = [voice_id(c, speaker), model_for(c, speaker), c["output_format"], settings_for(c, speaker)]
     if accent_tag(c, speaker):
         blob.append(accent_tag(c, speaker))
     return hashlib.sha1(json.dumps(blob, sort_keys=True).encode()).hexdigest()[:10]
@@ -100,7 +114,7 @@ def main():
     if a.limit:
         todo = todo[:a.limit]
     chars = sum(len(t["text"]) for t in todo)
-    usd = chars / 1000 * float(c["price_per_1k_usd"])
+    usd = sum(len(t["text"]) / 1000 * price(c, t["speaker"]) for t in todo)
     print(f"{len(todo)} clip(s) to generate, {chars:,} characters, about ${usd:.2f} at ${c['price_per_1k_usd']}/1K "
           f"({c['model']})" + (f"; no voice cast yet for {len(uncast)} speaker(s)" if uncast else ""))
     if a.dry_run or not todo:
@@ -114,16 +128,16 @@ def main():
     def one(line):
         speaker, key, text = line["speaker"], line["key"], line["text"]
         vid = voice_id(c, speaker)
-        audio, headers = el.tts(vid, spoken(c, speaker, text), c["model"], c["output_format"], settings_for(c, speaker))
+        audio, headers = el.tts(vid, spoken(c, speaker, text), model_for(c, speaker), c["output_format"], settings_for(c, speaker))
         out = el.VOICE_DIR / speaker / f"{key}.mp3"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_bytes(audio)
         cost = headers.get("character-cost") or headers.get("x-character-count")
         with lock:
             manifest[f"{speaker}/{key}"] = {"text": text, "recipe": recipe(c, speaker), "chars": len(text)}
-            el.log({"speaker": speaker, "key": key, "chars": len(text), "voice_id": vid, "model": c["model"],
+            el.log({"speaker": speaker, "key": key, "chars": len(text), "voice_id": vid, "model": model_for(c, speaker),
                     "format": c["output_format"], **({"accent_tag": accent_tag(c, speaker)} if accent_tag(c, speaker) else {}),
-                    "usd_est": round(len(text) / 1000 * float(c["price_per_1k_usd"]), 5),
+                    "usd_est": round(len(text) / 1000 * price(c, speaker), 5),
                     **({"billed_chars": cost} if cost else {}), "request_id": headers.get("request-id", "")})
             done[0] += 1
             done[1] += len(text)
