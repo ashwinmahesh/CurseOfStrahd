@@ -45,6 +45,18 @@ line that hasn't changed, and the game must work with any mix of voiced and unvo
   combat log's Narrator lines speak. `beat_voice(beat)` finds a party member's voice (`voice_for`), and banter
   plays line by line in each speaker's voice (`say_all`) while the box stays up (`hold_narration`).
 
+## In fights (owner, 2026-10-07)
+
+- **Enemy voices and creature noises** (`narrative/combat/barks.json`, A5 of the improvement list): each kind of
+  talking enemy has battle cries, taunts, pain and death lines, spoken as `bark_<kind>` in a library voice (no voice
+  slot) on `eleven_v4`, the owner's pick; each kind of beast, undead or creature has noises, made as `noise_<kind>`
+  with ElevenLabs sound effects (`eleven_text_to_sound_v2`, billed by the second at a set length: casting.json `sfx`),
+  where a noise's "text" is its prompt. `make voice` makes both, and the manifest records each clip's model.
+- **Playback** is `CombatBarks` (world/combat/combat_barks.gd), on the Voice bus beside the Narrator: a kind's battle
+  cry the first time one acts, a taunt or snarl on some of its hits, a cry under a heavy blow, its death; one at a
+  time, a pause between them, never while the Narrator speaks (a Narrator line fades a bark out). Named characters
+  (Strahd, Rahadin, Izek...) stay quiet in fights for now.
+
 ## Casting decisions (owner, 2026-10-06)
 
 - **The Narrator** is a designed voice in the style of the Baldur's Gate 3 narrator (a low, warm English woman,

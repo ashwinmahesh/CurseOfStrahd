@@ -1429,6 +1429,966 @@
   "recipe": "768295efb1",
   "text": "That face. Well, well. They keep making that face, don't they? Like a bad penny."
  },
+ "bark_arcanaloth/265b2f0ed7461083": {
+  "chars": 36,
+  "model": "eleven_v4",
+  "recipe": "96752253d8",
+  "text": "I have read how this ends. You lose."
+ },
+ "bark_arcanaloth/4b80ddf1e6ce21f8": {
+  "chars": 40,
+  "model": "eleven_v4",
+  "recipe": "96752253d8",
+  "text": "I shall... return to the Lower Planes..."
+ },
+ "bark_arcanaloth/6d61295cf53d3a2d": {
+  "chars": 28,
+  "model": "eleven_v4",
+  "recipe": "96752253d8",
+  "text": "You will regret that clause."
+ },
+ "bark_arcanaloth/949ca8041decb2c4": {
+  "chars": 38,
+  "model": "eleven_v4",
+  "recipe": "96752253d8",
+  "text": "A bargain you should not have refused."
+ },
+ "bark_arcanaloth/b9a09b0673c8e7c3": {
+  "chars": 27,
+  "model": "eleven_v4",
+  "recipe": "96752253d8",
+  "text": "This contract... is void..."
+ },
+ "bark_arcanaloth/c9af65fbfe9ca317": {
+  "chars": 50,
+  "model": "eleven_v4",
+  "recipe": "96752253d8",
+  "text": "How tedious. Very well, let us negotiate in blood."
+ },
+ "bark_arcanaloth/cbd29489ffad4a5c": {
+  "chars": 22,
+  "model": "eleven_v4",
+  "recipe": "96752253d8",
+  "text": "Every wound is a debt."
+ },
+ "bark_arcanaloth/e4b4ec9097a897c0": {
+  "chars": 40,
+  "model": "eleven_v4",
+  "recipe": "96752253d8",
+  "text": "Your souls are worth more than you know."
+ },
+ "bark_arcanaloth/e5eb946314a53c27": {
+  "chars": 16,
+  "model": "eleven_v4",
+  "recipe": "96752253d8",
+  "text": "Impudent mortal!"
+ },
+ "bark_arcanaloth/ee60b8410fcfa6d2": {
+  "chars": 16,
+  "model": "eleven_v4",
+  "recipe": "96752253d8",
+  "text": "Mm. Interesting."
+ },
+ "bark_bandit/0feb88027fd1c682": {
+  "chars": 44,
+  "model": "eleven_v4",
+  "recipe": "5b513f3b6a",
+  "text": "Nobody leaves these woods with full pockets."
+ },
+ "bark_bandit/1168401fca4cc123": {
+  "chars": 34,
+  "model": "eleven_v4",
+  "recipe": "5b513f3b6a",
+  "text": "That's for wandering off the road!"
+ },
+ "bark_bandit/32eb11a6465191c2": {
+  "chars": 26,
+  "model": "eleven_v4",
+  "recipe": "5b513f3b6a",
+  "text": "Argh! You'll pay for that!"
+ },
+ "bark_bandit/552dfd08cd1bd81a": {
+  "chars": 39,
+  "model": "eleven_v4",
+  "recipe": "5b513f3b6a",
+  "text": "Take them! Quick, before the wolves do!"
+ },
+ "bark_bandit/654322a2341a7874": {
+  "chars": 13,
+  "model": "eleven_v4",
+  "recipe": "5b513f3b6a",
+  "text": "Ha! Too slow!"
+ },
+ "bark_bandit/92d42f8533bd033a": {
+  "chars": 16,
+  "model": "eleven_v4",
+  "recipe": "5b513f3b6a",
+  "text": "Not like this..."
+ },
+ "bark_bandit/9330be8457fc460f": {
+  "chars": 36,
+  "model": "eleven_v4",
+  "recipe": "5b513f3b6a",
+  "text": "Your purse or your throat, stranger."
+ },
+ "bark_bandit/973ab79972b592db": {
+  "chars": 39,
+  "model": "eleven_v4",
+  "recipe": "5b513f3b6a",
+  "text": "Should have... stayed in the village..."
+ },
+ "bark_bandit/ada1365b1aad0709": {
+  "chars": 13,
+  "model": "eleven_v4",
+  "recipe": "5b513f3b6a",
+  "text": "Gods, my arm!"
+ },
+ "bark_bandit/d371330ed49c1bff": {
+  "chars": 13,
+  "model": "eleven_v4",
+  "recipe": "5b513f3b6a",
+  "text": "Bleed for me."
+ },
+ "bark_bandit_captain/13df79369afcc26d": {
+  "chars": 35,
+  "model": "eleven_v4",
+  "recipe": "f7968af555",
+  "text": "Surround them. Leave none standing."
+ },
+ "bark_bandit_captain/367b686ade597484": {
+  "chars": 36,
+  "model": "eleven_v4",
+  "recipe": "f7968af555",
+  "text": "Lucky strike. You won't get another."
+ },
+ "bark_bandit_captain/980631179e683681": {
+  "chars": 25,
+  "model": "eleven_v4",
+  "recipe": "f7968af555",
+  "text": "Hold the line, curse you!"
+ },
+ "bark_bandit_captain/995a098e35f08fcb": {
+  "chars": 33,
+  "model": "eleven_v4",
+  "recipe": "f7968af555",
+  "text": "Is that all the steel you've got?"
+ },
+ "bark_bandit_captain/aad3e98740c877db": {
+  "chars": 38,
+  "model": "eleven_v4",
+  "recipe": "f7968af555",
+  "text": "Kneel, and I might let you crawl away."
+ },
+ "bark_bandit_captain/da6f8d5690026920": {
+  "chars": 38,
+  "model": "eleven_v4",
+  "recipe": "f7968af555",
+  "text": "You picked the wrong road, outlanders."
+ },
+ "bark_bandit_captain/ea8028475afdacba": {
+  "chars": 16,
+  "model": "eleven_v4",
+  "recipe": "f7968af555",
+  "text": "That one's mine!"
+ },
+ "bark_bandit_captain/f894a6646037f1e0": {
+  "chars": 23,
+  "model": "eleven_v4",
+  "recipe": "f7968af555",
+  "text": "The mists... take me..."
+ },
+ "bark_bandit_captain/faa8f7fe71d6fe48": {
+  "chars": 32,
+  "model": "eleven_v4",
+  "recipe": "f7968af555",
+  "text": "Steel out, lads! We eat tonight!"
+ },
+ "bark_bandit_captain/fd62dca0dda1c43d": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "f7968af555",
+  "text": "Run, you fools..."
+ },
+ "bark_berserker/3f0c254fedb2008d": {
+  "chars": 16,
+  "model": "eleven_v4",
+  "recipe": "ecf42a9056",
+  "text": "Good... fight..."
+ },
+ "bark_berserker/487191388e00cf97": {
+  "chars": 6,
+  "model": "eleven_v4",
+  "recipe": "ecf42a9056",
+  "text": "Raaah!"
+ },
+ "bark_berserker/5ae844fbdaf6da1d": {
+  "chars": 6,
+  "model": "eleven_v4",
+  "recipe": "ecf42a9056",
+  "text": "Crack!"
+ },
+ "bark_berserker/8135fba3b7ea269e": {
+  "chars": 20,
+  "model": "eleven_v4",
+  "recipe": "ecf42a9056",
+  "text": "I'll break you open!"
+ },
+ "bark_berserker/a9c66cc865d0c273": {
+  "chars": 11,
+  "model": "eleven_v4",
+  "recipe": "ecf42a9056",
+  "text": "More! MORE!"
+ },
+ "bark_berserker/ba5f40ca44ca1009": {
+  "chars": 23,
+  "model": "eleven_v4",
+  "recipe": "ecf42a9056",
+  "text": "Is that it? Hit harder!"
+ },
+ "bark_berserker/caecd634ba1ad172": {
+  "chars": 23,
+  "model": "eleven_v4",
+  "recipe": "ecf42a9056",
+  "text": "Come on, then! Come ON!"
+ },
+ "bark_berserker/d255d066d84d172f": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "ecf42a9056",
+  "text": "Ha ha! Feel that?"
+ },
+ "bark_berserker/f16eed042408b328": {
+  "chars": 21,
+  "model": "eleven_v4",
+  "recipe": "ecf42a9056",
+  "text": "Blood! Give me blood!"
+ },
+ "bark_berserker/fe1b96307910acbb": {
+  "chars": 13,
+  "model": "eleven_v4",
+  "recipe": "ecf42a9056",
+  "text": "Not... yet..."
+ },
+ "bark_cultist/1fcbef29caf50955": {
+  "chars": 32,
+  "model": "eleven_v4",
+  "recipe": "bfb1b95841",
+  "text": "He sees you. He sees all of you."
+ },
+ "bark_cultist/387177ea053f2921": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "bfb1b95841",
+  "text": "Another offering!"
+ },
+ "bark_cultist/3c2a2648bf671e2b": {
+  "chars": 19,
+  "model": "eleven_v4",
+  "recipe": "bfb1b95841",
+  "text": "Kneel to the night!"
+ },
+ "bark_cultist/5c97a60fa82cfbc3": {
+  "chars": 25,
+  "model": "eleven_v4",
+  "recipe": "bfb1b95841",
+  "text": "The night... remembers..."
+ },
+ "bark_cultist/77625672ddf8dc87": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "bfb1b95841",
+  "text": "Your blood sings!"
+ },
+ "bark_cultist/788c3a71c37912f7": {
+  "chars": 25,
+  "model": "eleven_v4",
+  "recipe": "bfb1b95841",
+  "text": "Master, give me strength!"
+ },
+ "bark_cultist/a19ca41542a08f80": {
+  "chars": 41,
+  "model": "eleven_v4",
+  "recipe": "bfb1b95841",
+  "text": "The dark is hungry, and you will feed it."
+ },
+ "bark_cultist/aeab7dad57b2ed0f": {
+  "chars": 19,
+  "model": "eleven_v4",
+  "recipe": "bfb1b95841",
+  "text": "The pain is a gift!"
+ },
+ "bark_cultist/d231e8c154fda81a": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "bfb1b95841",
+  "text": "I go... to him..."
+ },
+ "bark_cultist/d8870c7276de6b06": {
+  "chars": 21,
+  "model": "eleven_v4",
+  "recipe": "bfb1b95841",
+  "text": "Blood for the master!"
+ },
+ "bark_druid/2716c5ef0ca1d4d9": {
+  "chars": 23,
+  "model": "eleven_v4",
+  "recipe": "c8839bd3bc",
+  "text": "Roots, rise! Bind them!"
+ },
+ "bark_druid/554b3cf35ddf7491": {
+  "chars": 23,
+  "model": "eleven_v4",
+  "recipe": "c8839bd3bc",
+  "text": "Wither, like the vines!"
+ },
+ "bark_druid/65dfd20d482eccf0": {
+  "chars": 14,
+  "model": "eleven_v4",
+  "recipe": "c8839bd3bc",
+  "text": "Feed the soil!"
+ },
+ "bark_druid/66d71330ead33b98": {
+  "chars": 20,
+  "model": "eleven_v4",
+  "recipe": "c8839bd3bc",
+  "text": "Gah! Thorns and ash!"
+ },
+ "bark_druid/71333c12102dc602": {
+  "chars": 33,
+  "model": "eleven_v4",
+  "recipe": "c8839bd3bc",
+  "text": "The Mother will not forgive this!"
+ },
+ "bark_druid/7be6299946d1ae5c": {
+  "chars": 28,
+  "model": "eleven_v4",
+  "recipe": "c8839bd3bc",
+  "text": "Return me... to the earth..."
+ },
+ "bark_druid/8544c3dcbcf56862": {
+  "chars": 42,
+  "model": "eleven_v4",
+  "recipe": "c8839bd3bc",
+  "text": "The hill hungers, and you are its harvest."
+ },
+ "bark_druid/973c6ea70f72b3e5": {
+  "chars": 28,
+  "model": "eleven_v4",
+  "recipe": "c8839bd3bc",
+  "text": "The land takes back its own."
+ },
+ "bark_druid/c432599d701fef3c": {
+  "chars": 37,
+  "model": "eleven_v4",
+  "recipe": "c8839bd3bc",
+  "text": "The Wicker will burn you, outlanders!"
+ },
+ "bark_druid/f06df0bae278f98b": {
+  "chars": 24,
+  "model": "eleven_v4",
+  "recipe": "c8839bd3bc",
+  "text": "The tree... will grow..."
+ },
+ "bark_guard/216f3492e452c7f8": {
+  "chars": 29,
+  "model": "eleven_v4",
+  "recipe": "119f224a92",
+  "text": "Halt! You'll answer for this!"
+ },
+ "bark_guard/2ae4597a25abe5de": {
+  "chars": 20,
+  "model": "eleven_v4",
+  "recipe": "119f224a92",
+  "text": "The Baron's justice!"
+ },
+ "bark_guard/5c0caf591078ec83": {
+  "chars": 22,
+  "model": "eleven_v4",
+  "recipe": "119f224a92",
+  "text": "All will be... well..."
+ },
+ "bark_guard/5ebb89fb293be5a2": {
+  "chars": 10,
+  "model": "eleven_v4",
+  "recipe": "119f224a92",
+  "text": "Stay down!"
+ },
+ "bark_guard/6865e77821b821e2": {
+  "chars": 25,
+  "model": "eleven_v4",
+  "recipe": "119f224a92",
+  "text": "Troublemakers. Take them!"
+ },
+ "bark_guard/6d272d5a9c9f19fc": {
+  "chars": 6,
+  "model": "eleven_v4",
+  "recipe": "119f224a92",
+  "text": "Yield!"
+ },
+ "bark_guard/8e1307431a9397a6": {
+  "chars": 12,
+  "model": "eleven_v4",
+  "recipe": "119f224a92",
+  "text": "To me! Help!"
+ },
+ "bark_guard/a592a056a1569a9c": {
+  "chars": 15,
+  "model": "eleven_v4",
+  "recipe": "119f224a92",
+  "text": "Tell my wife..."
+ },
+ "bark_guard/f3404c4552412402": {
+  "chars": 40,
+  "model": "eleven_v4",
+  "recipe": "119f224a92",
+  "text": "In the Baron's name, lay down your arms!"
+ },
+ "bark_guard/f7ae06d284bddbcf": {
+  "chars": 16,
+  "model": "eleven_v4",
+  "recipe": "119f224a92",
+  "text": "Ngh! Hold, hold!"
+ },
+ "bark_hag/016a90dfff8f7228": {
+  "chars": 22,
+  "model": "eleven_v4",
+  "recipe": "62f9c11e07",
+  "text": "Wretched little thing!"
+ },
+ "bark_hag/24c3d8bc18dbd833": {
+  "chars": 29,
+  "model": "eleven_v4",
+  "recipe": "62f9c11e07",
+  "text": "Come, come. Auntie's waiting."
+ },
+ "bark_hag/62629913f82936b9": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "62f9c11e07",
+  "text": "Mine, mine, mine!"
+ },
+ "bark_hag/753aa71b95645289": {
+  "chars": 27,
+  "model": "eleven_v4",
+  "recipe": "62f9c11e07",
+  "text": "A fine nightmare, isn't it?"
+ },
+ "bark_hag/84e02cb75fed8d69": {
+  "chars": 31,
+  "model": "eleven_v4",
+  "recipe": "62f9c11e07",
+  "text": "You'll wake screaming for this!"
+ },
+ "bark_hag/8698a2e199adaacf": {
+  "chars": 39,
+  "model": "eleven_v4",
+  "recipe": "62f9c11e07",
+  "text": "Sweet dreams have a price, little ones."
+ },
+ "bark_hag/a883c6fbeaa6a86e": {
+  "chars": 25,
+  "model": "eleven_v4",
+  "recipe": "62f9c11e07",
+  "text": "Scream louder, sweetling."
+ },
+ "bark_hag/bb024817b9c130e9": {
+  "chars": 31,
+  "model": "eleven_v4",
+  "recipe": "62f9c11e07",
+  "text": "Not the end... never the end..."
+ },
+ "bark_hag/bd3e9ee12c3e5ac8": {
+  "chars": 28,
+  "model": "eleven_v4",
+  "recipe": "62f9c11e07",
+  "text": "My coven... will find you..."
+ },
+ "bark_hag/de4c959b3d5215c9": {
+  "chars": 30,
+  "model": "eleven_v4",
+  "recipe": "62f9c11e07",
+  "text": "I'll keep your souls in a jar."
+ },
+ "bark_mongrelfolk/0113b5b1afd16b4c": {
+  "chars": 19,
+  "model": "eleven_v4",
+  "recipe": "64ca6b8773",
+  "text": "Hehehe! Hurts, yes?"
+ },
+ "bark_mongrelfolk/0c112601173bde97": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "64ca6b8773",
+  "text": "Got you, got you!"
+ },
+ "bark_mongrelfolk/144ebe70b0fef191": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "64ca6b8773",
+  "text": "Bad! Bad visitor!"
+ },
+ "bark_mongrelfolk/2861100df92b2fdc": {
+  "chars": 11,
+  "model": "eleven_v4",
+  "recipe": "64ca6b8773",
+  "text": "Bite! Bite!"
+ },
+ "bark_mongrelfolk/3409abc714a482f5": {
+  "chars": 23,
+  "model": "eleven_v4",
+  "recipe": "64ca6b8773",
+  "text": "Hehh. Hehh. Fresh ones!"
+ },
+ "bark_mongrelfolk/523d43a8e4b3314c": {
+  "chars": 9,
+  "model": "eleven_v4",
+  "recipe": "64ca6b8773",
+  "text": "Mother..."
+ },
+ "bark_mongrelfolk/7392da6b6f701cc1": {
+  "chars": 32,
+  "model": "eleven_v4",
+  "recipe": "64ca6b8773",
+  "text": "Visitors! Master wants visitors!"
+ },
+ "bark_mongrelfolk/97fa8ca0ecdbecd0": {
+  "chars": 25,
+  "model": "eleven_v4",
+  "recipe": "64ca6b8773",
+  "text": "Don't... want... to go..."
+ },
+ "bark_mongrelfolk/bf2b6c846f21700c": {
+  "chars": 11,
+  "model": "eleven_v4",
+  "recipe": "64ca6b8773",
+  "text": "Ow! Ow, ow!"
+ },
+ "bark_mongrelfolk/e1ea9ca96296a920": {
+  "chars": 38,
+  "model": "eleven_v4",
+  "recipe": "64ca6b8773",
+  "text": "Not supposed to be here! Not supposed!"
+ },
+ "bark_ogre/0299c9ac64efc18b": {
+  "chars": 10,
+  "model": "eleven_v4",
+  "recipe": "b389eb609b",
+  "text": "Owww! Bad!"
+ },
+ "bark_ogre/0fc8bb850b3bde46": {
+  "chars": 8,
+  "model": "eleven_v4",
+  "recipe": "b389eb609b",
+  "text": "Crunchy!"
+ },
+ "bark_ogre/5eb5f9da59613a2c": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "b389eb609b",
+  "text": "Ogre... sleepy..."
+ },
+ "bark_ogre/79fdec30da50d50e": {
+  "chars": 12,
+  "model": "eleven_v4",
+  "recipe": "b389eb609b",
+  "text": "You... food!"
+ },
+ "bark_ogre/90859c4e270d34d0": {
+  "chars": 22,
+  "model": "eleven_v4",
+  "recipe": "b389eb609b",
+  "text": "Little people! Squish!"
+ },
+ "bark_ogre/a2174a01a714d008": {
+  "chars": 11,
+  "model": "eleven_v4",
+  "recipe": "b389eb609b",
+  "text": "Ogre ANGRY!"
+ },
+ "bark_ogre/bc7ed38fa080f5dc": {
+  "chars": 12,
+  "model": "eleven_v4",
+  "recipe": "b389eb609b",
+  "text": "Ogre hungry!"
+ },
+ "bark_ogre/dc44758bac5cdcf4": {
+  "chars": 7,
+  "model": "eleven_v4",
+  "recipe": "b389eb609b",
+  "text": "Nooo..."
+ },
+ "bark_ogre/ea3dddfe7d8a1f5b": {
+  "chars": 12,
+  "model": "eleven_v4",
+  "recipe": "b389eb609b",
+  "text": "Hah! Squish!"
+ },
+ "bark_ogre/f9f0ebb581ff4511": {
+  "chars": 6,
+  "model": "eleven_v4",
+  "recipe": "b389eb609b",
+  "text": "Smash!"
+ },
+ "bark_phantom_knight/100c40aa79f6cf29": {
+  "chars": 23,
+  "model": "eleven_v4",
+  "recipe": "3f29936512",
+  "text": "The dragon's vengeance!"
+ },
+ "bark_phantom_knight/148acd1016b9707c": {
+  "chars": 10,
+  "model": "eleven_v4",
+  "recipe": "3f29936512",
+  "text": "Hold fast!"
+ },
+ "bark_phantom_knight/3a1171fb250e9728": {
+  "chars": 8,
+  "model": "eleven_v4",
+  "recipe": "3f29936512",
+  "text": "Justice!"
+ },
+ "bark_phantom_knight/72f18c844de3a1e2": {
+  "chars": 14,
+  "model": "eleven_v4",
+  "recipe": "3f29936512",
+  "text": "For Argynvost!"
+ },
+ "bark_phantom_knight/897f69d0f4962d39": {
+  "chars": 21,
+  "model": "eleven_v4",
+  "recipe": "3f29936512",
+  "text": "Forgive us, master..."
+ },
+ "bark_phantom_knight/8ee359d546f27f1f": {
+  "chars": 32,
+  "model": "eleven_v4",
+  "recipe": "3f29936512",
+  "text": "You trespass upon sacred ground!"
+ },
+ "bark_phantom_knight/91d717b4520d45f9": {
+  "chars": 20,
+  "model": "eleven_v4",
+  "recipe": "3f29936512",
+  "text": "Stand and be judged!"
+ },
+ "bark_phantom_knight/9450aece065eafff": {
+  "chars": 26,
+  "model": "eleven_v4",
+  "recipe": "3f29936512",
+  "text": "Our oath... unfulfilled..."
+ },
+ "bark_phantom_knight/d07c52833dfb1252": {
+  "chars": 35,
+  "model": "eleven_v4",
+  "recipe": "3f29936512",
+  "text": "For the Order of the Silver Dragon!"
+ },
+ "bark_phantom_knight/dd2665009286a21d": {
+  "chars": 24,
+  "model": "eleven_v4",
+  "recipe": "3f29936512",
+  "text": "Our oath does not break!"
+ },
+ "bark_revenant/1307a041457f3380": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "d96d4170fd",
+  "text": "Again. And again."
+ },
+ "bark_revenant/16631d60fd657c62": {
+  "chars": 10,
+  "model": "eleven_v4",
+  "recipe": "d96d4170fd",
+  "text": "Stay down."
+ },
+ "bark_revenant/7160c2b9baf22914": {
+  "chars": 29,
+  "model": "eleven_v4",
+  "recipe": "d96d4170fd",
+  "text": "Pain means nothing to me now."
+ },
+ "bark_revenant/8a66f913fbbc1c3b": {
+  "chars": 19,
+  "model": "eleven_v4",
+  "recipe": "d96d4170fd",
+  "text": "I will... return..."
+ },
+ "bark_revenant/aa68a74696e1ce7c": {
+  "chars": 18,
+  "model": "eleven_v4",
+  "recipe": "d96d4170fd",
+  "text": "Not... finished..."
+ },
+ "bark_revenant/ae6416ac3433d84d": {
+  "chars": 30,
+  "model": "eleven_v4",
+  "recipe": "d96d4170fd",
+  "text": "Nothing will stand between us."
+ },
+ "bark_revenant/b2493be3eec1df0d": {
+  "chars": 46,
+  "model": "eleven_v4",
+  "recipe": "d96d4170fd",
+  "text": "Out of my way. I came back for one thing only."
+ },
+ "bark_revenant/c93ea8824ccab0de": {
+  "chars": 50,
+  "model": "eleven_v4",
+  "recipe": "d96d4170fd",
+  "text": "I clawed my way from the grave. You won't stop me."
+ },
+ "bark_revenant/dcef9e7087e4ef97": {
+  "chars": 25,
+  "model": "eleven_v4",
+  "recipe": "d96d4170fd",
+  "text": "Vengeance does not sleep."
+ },
+ "bark_revenant/e1a3743d68b572df": {
+  "chars": 19,
+  "model": "eleven_v4",
+  "recipe": "d96d4170fd",
+  "text": "I have died before."
+ },
+ "bark_vampire_spawn/1c7eaa78274ece3a": {
+  "chars": 23,
+  "model": "eleven_v4",
+  "recipe": "e2cc94c116",
+  "text": "Such warm, sweet blood."
+ },
+ "bark_vampire_spawn/33774badf2e27866": {
+  "chars": 33,
+  "model": "eleven_v4",
+  "recipe": "e2cc94c116",
+  "text": "The master said I could keep you."
+ },
+ "bark_vampire_spawn/3469fa175134c655": {
+  "chars": 6,
+  "model": "eleven_v4",
+  "recipe": "e2cc94c116",
+  "text": "Hssss!"
+ },
+ "bark_vampire_spawn/686011d31832a6d8": {
+  "chars": 18,
+  "model": "eleven_v4",
+  "recipe": "e2cc94c116",
+  "text": "Free... at last..."
+ },
+ "bark_vampire_spawn/7b3fff42ceedd449": {
+  "chars": 23,
+  "model": "eleven_v4",
+  "recipe": "e2cc94c116",
+  "text": "You dare? I am eternal!"
+ },
+ "bark_vampire_spawn/8c6949656bb830e2": {
+  "chars": 20,
+  "model": "eleven_v4",
+  "recipe": "e2cc94c116",
+  "text": "Master... forgive..."
+ },
+ "bark_vampire_spawn/9699e1f2e9fb9558": {
+  "chars": 10,
+  "model": "eleven_v4",
+  "recipe": "e2cc94c116",
+  "text": "So warm..."
+ },
+ "bark_vampire_spawn/97ba042c8e1dd238": {
+  "chars": 19,
+  "model": "eleven_v4",
+  "recipe": "e2cc94c116",
+  "text": "Your blood is mine!"
+ },
+ "bark_vampire_spawn/be344399261cca9a": {
+  "chars": 10,
+  "model": "eleven_v4",
+  "recipe": "e2cc94c116",
+  "text": "Mmm. More."
+ },
+ "bark_vampire_spawn/e3e3f51a5dbf75cb": {
+  "chars": 29,
+  "model": "eleven_v4",
+  "recipe": "e2cc94c116",
+  "text": "I can hear your heart racing."
+ },
+ "bark_werewolf/21c4648adfd664d9": {
+  "chars": 27,
+  "model": "eleven_v4",
+  "recipe": "1f88ccde88",
+  "text": "Silver! Who brought silver?"
+ },
+ "bark_werewolf/373f847b6aec2902": {
+  "chars": 26,
+  "model": "eleven_v4",
+  "recipe": "1f88ccde88",
+  "text": "Mother Night... take me..."
+ },
+ "bark_werewolf/5529e636eefe6537": {
+  "chars": 19,
+  "model": "eleven_v4",
+  "recipe": "1f88ccde88",
+  "text": "Bleed, little lamb!"
+ },
+ "bark_werewolf/5c6b407614e43ac5": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "1f88ccde88",
+  "text": "The moon is mine!"
+ },
+ "bark_werewolf/7db11f2dcf11e365": {
+  "chars": 29,
+  "model": "eleven_v4",
+  "recipe": "1f88ccde88",
+  "text": "Run. I like it when they run."
+ },
+ "bark_werewolf/93ad2e63a693d593": {
+  "chars": 28,
+  "model": "eleven_v4",
+  "recipe": "1f88ccde88",
+  "text": "I smell your fear from here."
+ },
+ "bark_werewolf/98e407b05a21b7a8": {
+  "chars": 20,
+  "model": "eleven_v4",
+  "recipe": "1f88ccde88",
+  "text": "Rrraagh! You'll beg!"
+ },
+ "bark_werewolf/9f048fd62aeccab2": {
+  "chars": 23,
+  "model": "eleven_v4",
+  "recipe": "1f88ccde88",
+  "text": "The pack hunts tonight!"
+ },
+ "bark_werewolf/b20505a26b3f2126": {
+  "chars": 26,
+  "model": "eleven_v4",
+  "recipe": "1f88ccde88",
+  "text": "The pack... will avenge..."
+ },
+ "bark_werewolf/c36963b9ef46e37e": {
+  "chars": 22,
+  "model": "eleven_v4",
+  "recipe": "1f88ccde88",
+  "text": "Ha! Taste of the hunt!"
+ },
+ "bark_wight/0c6a7216e2d9767b": {
+  "chars": 22,
+  "model": "eleven_v4",
+  "recipe": "0cfd76c6fd",
+  "text": "The dark... at last..."
+ },
+ "bark_wight/1a61f152a7a5cfbb": {
+  "chars": 25,
+  "model": "eleven_v4",
+  "recipe": "0cfd76c6fd",
+  "text": "Your warmth will be mine."
+ },
+ "bark_wight/1fbaddf845c9ae01": {
+  "chars": 10,
+  "model": "eleven_v4",
+  "recipe": "0cfd76c6fd",
+  "text": "Insolence!"
+ },
+ "bark_wight/6c6d3a90366a961c": {
+  "chars": 18,
+  "model": "eleven_v4",
+  "recipe": "0cfd76c6fd",
+  "text": "Dust... to dust..."
+ },
+ "bark_wight/8144b4c90961d046": {
+  "chars": 30,
+  "model": "eleven_v4",
+  "recipe": "0cfd76c6fd",
+  "text": "The living, here? How foolish."
+ },
+ "bark_wight/858db209717b39ab": {
+  "chars": 25,
+  "model": "eleven_v4",
+  "recipe": "0cfd76c6fd",
+  "text": "Feel your life slip away."
+ },
+ "bark_wight/a05fbcb245750c87": {
+  "chars": 30,
+  "model": "eleven_v4",
+  "recipe": "0cfd76c6fd",
+  "text": "Rise, my dead. We have guests."
+ },
+ "bark_wight/ada40af386d5a9a5": {
+  "chars": 29,
+  "model": "eleven_v4",
+  "recipe": "0cfd76c6fd",
+  "text": "You cannot kill what is dead!"
+ },
+ "bark_wight/e64d459ada7d2132": {
+  "chars": 15,
+  "model": "eleven_v4",
+  "recipe": "0cfd76c6fd",
+  "text": "Cold, isn't it?"
+ },
+ "bark_wight/e861bca7778fb4a5": {
+  "chars": 8,
+  "model": "eleven_v4",
+  "recipe": "0cfd76c6fd",
+  "text": "Join us."
+ },
+ "bark_witch/058fabba6a261009": {
+  "chars": 28,
+  "model": "eleven_v4",
+  "recipe": "adf7ed5027",
+  "text": "Fresh meat for the cauldron!"
+ },
+ "bark_witch/2913a31cbd5e3ff0": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "adf7ed5027",
+  "text": "Eeeargh! My face!"
+ },
+ "bark_witch/33ddb315b1f1d1a9": {
+  "chars": 34,
+  "model": "eleven_v4",
+  "recipe": "adf7ed5027",
+  "text": "Your bones will make a fine broth."
+ },
+ "bark_witch/4febdace225c1cd3": {
+  "chars": 19,
+  "model": "eleven_v4",
+  "recipe": "adf7ed5027",
+  "text": "Shrivel and squirm!"
+ },
+ "bark_witch/5e92796422594e15": {
+  "chars": 26,
+  "model": "eleven_v4",
+  "recipe": "adf7ed5027",
+  "text": "Hee hee hee! Dance for me!"
+ },
+ "bark_witch/7ccc01a6c75144e3": {
+  "chars": 27,
+  "model": "eleven_v4",
+  "recipe": "adf7ed5027",
+  "text": "My pretties... avenge me..."
+ },
+ "bark_witch/7e2148e17572a395": {
+  "chars": 21,
+  "model": "eleven_v4",
+  "recipe": "adf7ed5027",
+  "text": "Come closer, dearies."
+ },
+ "bark_witch/8a36dffe1a244918": {
+  "chars": 39,
+  "model": "eleven_v4",
+  "recipe": "adf7ed5027",
+  "text": "Oh, look at the pretty heroes. Hee hee!"
+ },
+ "bark_witch/8d233c666536a703": {
+  "chars": 19,
+  "model": "eleven_v4",
+  "recipe": "adf7ed5027",
+  "text": "Curse... you all..."
+ },
+ "bark_witch/950245fac59dcda7": {
+  "chars": 20,
+  "model": "eleven_v4",
+  "recipe": "adf7ed5027",
+  "text": "You'll rot for that!"
+ },
  "baron_vargas/032d1b172c355486": {
   "chars": 31,
   "recipe": "3698ca2bc1",
@@ -39803,6 +40763,1014 @@
   "chars": 176,
   "recipe": "dd92281f92",
   "text": "A little shrine on a post, a fish carved on its roof, fish bones in its bowl. Somebody painted TO THE LAKE, WHO FEEDS US on the post, and somebody else has scratched out FEEDS."
+ },
+ "noise_bats/1914f7ed0cfb7576": {
+  "chars": 38,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Bats shrieking in alarm and scattering"
+ },
+ "noise_bats/5a70f02814d0f339": {
+  "chars": 72,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "Hundreds of bats bursting into flight, high shrill squeaks and wingbeats"
+ },
+ "noise_bats/5eb206df44f4b308": {
+  "chars": 56,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A swarm of bats screeching and flapping wildly in a cave"
+ },
+ "noise_bats/68b95b1221490aa3": {
+  "chars": 61,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "Bats diving and biting, shrill screeches and fluttering wings"
+ },
+ "noise_bats/728489036dcedf09": {
+  "chars": 45,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A bat swarm scattering away, wingbeats fading"
+ },
+ "noise_bats/92e90cb7c20cb34a": {
+  "chars": 52,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A flurry of leathery wings and tiny bites, squeaking"
+ },
+ "noise_bats/bbc4eae756544637": {
+  "chars": 24,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Pained squealing of bats"
+ },
+ "noise_bats/d1486daca6ee03df": {
+  "chars": 47,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "Squeaks dying away as bats drop and flutter off"
+ },
+ "noise_blight/02d05d48e5714d6a": {
+  "chars": 52,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A wooden branch swinging hard, creaking and snapping"
+ },
+ "noise_blight/1b239ba898b53383": {
+  "chars": 29,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Wood cracking and splintering"
+ },
+ "noise_blight/64fea7e8fa3afc40": {
+  "chars": 63,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "Twigs snapping and leaves rustling, a creature of wood stirring"
+ },
+ "noise_blight/9533209c4ef93b19": {
+  "chars": 43,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A whip of thorny vines lashing with a creak"
+ },
+ "noise_blight/bda69813ff3ec5af": {
+  "chars": 45,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "Dry wood breaking apart into a pile of sticks"
+ },
+ "noise_blight/c122c6335d3612f8": {
+  "chars": 60,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "Dry branches creaking and rustling as something wooden moves"
+ },
+ "noise_blight/dbd529232eace025": {
+  "chars": 43,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Branches groaning and creaking under a blow"
+ },
+ "noise_blight/fcc6d5a17a2d2359": {
+  "chars": 55,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A wooden creature crumbling, twigs snapping and falling"
+ },
+ "noise_claw/01b3b2734f1438dd": {
+  "chars": 36,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A soft squelch and twitching fingers"
+ },
+ "noise_claw/135c87a27e81833f": {
+  "chars": 40,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A severed hand twitching and going still"
+ },
+ "noise_claw/52b121787fc12f12": {
+  "chars": 40,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "Fingernails skittering quickly over wood"
+ },
+ "noise_claw/5789b9a5ac4a3576": {
+  "chars": 30,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Knuckles cracking under a blow"
+ },
+ "noise_claw/6bae180f2d3583d0": {
+  "chars": 54,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A hand grabbing and squeezing with a crack of knuckles"
+ },
+ "noise_claw/8a650ea5cd08ed99": {
+  "chars": 54,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A severed hand scuttling across stone, fingers tapping"
+ },
+ "noise_claw/9f1777f90c46c171": {
+  "chars": 27,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "Fingernails scratching hard"
+ },
+ "noise_claw/ea91c9a7633ea2ba": {
+  "chars": 37,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "Fingers curling up with a dry crackle"
+ },
+ "noise_construct/253908381caf7938": {
+  "chars": 55,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "Heavy metal plates scraping and clanking as armor moves"
+ },
+ "noise_construct/273cad8fd1e61766": {
+  "chars": 31,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A dented metal clang and rattle"
+ },
+ "noise_construct/2cde957b24ad9fb8": {
+  "chars": 58,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A suit of armor collapsing into a heap of clattering metal"
+ },
+ "noise_construct/3396f7a882cbe84e": {
+  "chars": 37,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "Metal joints grinding in a fast swing"
+ },
+ "noise_construct/3c07e20c9e6e7f34": {
+  "chars": 51,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "Animated armor swinging with a heavy metallic clank"
+ },
+ "noise_construct/463572c541da0866": {
+  "chars": 37,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Armor plates ringing from a hard blow"
+ },
+ "noise_construct/627a9743262894cf": {
+  "chars": 50,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "Metal pieces crashing to a stone floor and rolling"
+ },
+ "noise_construct/64fc5e6eda6c4b0b": {
+  "chars": 55,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "An empty suit of armor clanking to life, metal grinding"
+ },
+ "noise_flame/19efde6b0b0a3253": {
+  "chars": 39,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A fire flickering and crackling sharply"
+ },
+ "noise_flame/3837cca40503183e": {
+  "chars": 37,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A fire guttering out with a long hiss"
+ },
+ "noise_flame/388856e94728fba7": {
+  "chars": 46,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A burning skull cackling with a whoosh of fire"
+ },
+ "noise_flame/536e2bdbce16fc94": {
+  "chars": 40,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "Roaring flames flaring up with a crackle"
+ },
+ "noise_flame/7f892c56b00c84dd": {
+  "chars": 28,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "Fire lashing out with a roar"
+ },
+ "noise_flame/98903f71d6bad4f4": {
+  "chars": 40,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A burst of flame whooshing and crackling"
+ },
+ "noise_flame/da2d6f316c7e5ae4": {
+  "chars": 39,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "Flames dying down into embers and smoke"
+ },
+ "noise_flame/e8ced17af1b23e4c": {
+  "chars": 29,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Flames sputtering and hissing"
+ },
+ "noise_ghoul/0108325ec92240d8": {
+  "chars": 50,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A ghoul snarling and chattering its teeth hungrily"
+ },
+ "noise_ghoul/0ce8909df61d85b6": {
+  "chars": 45,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A hungry ghoul snapping its teeth with a hiss"
+ },
+ "noise_ghoul/1142f4c722b06ad7": {
+  "chars": 35,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A ghoul collapsing with a long hiss"
+ },
+ "noise_ghoul/35a1a4df1aa74479": {
+  "chars": 25,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A ghoul shrieking in pain"
+ },
+ "noise_ghoul/3ca9a9416bcda30c": {
+  "chars": 49,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A ghoul's dying screech that rattles into silence"
+ },
+ "noise_ghoul/5519e8e558476b59": {
+  "chars": 45,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A ghoul's feral screech as it claws and bites"
+ },
+ "noise_ghoul/7af20403f6029bf8": {
+  "chars": 30,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A ghoul's pained hissing snarl"
+ },
+ "noise_ghoul/ae40f3cfc930941d": {
+  "chars": 49,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A ghoul hissing and shrieking, ravenous and feral"
+ },
+ "noise_insects/00f28826358fcbf9": {
+  "chars": 47,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A thick swarm of insects buzzing loudly, rising"
+ },
+ "noise_insects/0daf7dfeecba48c6": {
+  "chars": 42,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A cloud of wasps and flies droning angrily"
+ },
+ "noise_insects/241a4ad3de046738": {
+  "chars": 48,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "Insects stinging, sharp buzzing close to the ear"
+ },
+ "noise_insects/57f634fdb0d0faba": {
+  "chars": 28,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Angry buzzing spiking higher"
+ },
+ "noise_insects/71eb36824af8a479": {
+  "chars": 47,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "An insect swarm's buzz breaking up for a moment"
+ },
+ "noise_insects/72d5f80260612df0": {
+  "chars": 50,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A swarm of insects dispersing, buzzing fading away"
+ },
+ "noise_insects/afc535d2f56345bf": {
+  "chars": 29,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "Buzzing dying down to silence"
+ },
+ "noise_insects/ecfd318712f21640": {
+  "chars": 40,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A swarm of beetles skittering and biting"
+ },
+ "noise_nightmare/1a5197c200184380": {
+  "chars": 35,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A pained snort and stamp of a horse"
+ },
+ "noise_nightmare/25e18c1408a1fd1e": {
+  "chars": 25,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A horse whinnying in pain"
+ },
+ "noise_nightmare/5da92af11ce1f3e0": {
+  "chars": 41,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "Hooves striking hard with a horse's snort"
+ },
+ "noise_nightmare/62c209448d46b720": {
+  "chars": 52,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A black horse rearing and shrieking, hooves stamping"
+ },
+ "noise_nightmare/6c084b46c564cd68": {
+  "chars": 37,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A horse kicking with a furious whinny"
+ },
+ "noise_nightmare/8f573e834dbe4473": {
+  "chars": 48,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A horse collapsing with a last shuddering whinny"
+ },
+ "noise_nightmare/aba01520fb553fda": {
+  "chars": 42,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A demonic horse fading with a dying shriek"
+ },
+ "noise_nightmare/ed958a42dedd2009": {
+  "chars": 48,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A demonic horse screaming with a crackle of fire"
+ },
+ "noise_ooze/17560428d8d208a7": {
+  "chars": 47,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A wet, bubbling, squelching monster approaching"
+ },
+ "noise_ooze/2d384be9f9f20dcb": {
+  "chars": 32,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A slimy monster gurgling in pain"
+ },
+ "noise_ooze/5eaf8aeec29802c8": {
+  "chars": 33,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A tentacle lashing with a squelch"
+ },
+ "noise_ooze/652c880af7ce6a80": {
+  "chars": 29,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A wet slap and a sticky slurp"
+ },
+ "noise_ooze/833f67827bd89aab": {
+  "chars": 50,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A slimy creature gurgling and slurping as it moves"
+ },
+ "noise_ooze/be29b0db211202bc": {
+  "chars": 55,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A monster collapsing into a wet heap with a long gurgle"
+ },
+ "noise_ooze/cd80a40d980f77bb": {
+  "chars": 42,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A slimy creature melting and bubbling away"
+ },
+ "noise_ooze/fcf5cd0fdb1e2b0a": {
+  "chars": 33,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A wet squelch and a bubbling hiss"
+ },
+ "noise_rats/00b72b20ee7e831b": {
+  "chars": 50,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "Last squeals as a rat swarm breaks apart and flees"
+ },
+ "noise_rats/2823bca088c0130f": {
+  "chars": 47,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "Dozens of rats chittering and scrabbling closer"
+ },
+ "noise_rats/44c466bb8961362a": {
+  "chars": 28,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Sharp pained squeaks of rats"
+ },
+ "noise_rats/5cf7a1e1b1afd925": {
+  "chars": 50,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A swarm of rats squeaking and scurrying over stone"
+ },
+ "noise_rats/87633b116b3cf917": {
+  "chars": 51,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "Rats scattering away into the walls, squeaks fading"
+ },
+ "noise_rats/a564103064288b94": {
+  "chars": 40,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "Rats biting and gnawing, frantic squeaks"
+ },
+ "noise_rats/b33160fd69241d40": {
+  "chars": 22,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Rats squealing in pain"
+ },
+ "noise_rats/f3c4fe725c945fac": {
+  "chars": 60,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A swarm of rats swarming over someone, squealing and nipping"
+ },
+ "noise_ravens/0eca256437fab7fe": {
+  "chars": 48,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "Ravens scattering into the sky, caws fading away"
+ },
+ "noise_ravens/1abbee1f7b49c9bd": {
+  "chars": 47,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A flock of crows flying off, wingbeats receding"
+ },
+ "noise_ravens/831af701b37bfd02": {
+  "chars": 26,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A raven screeching in pain"
+ },
+ "noise_ravens/a9a81589cfe8595c": {
+  "chars": 24,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Crows squawking in alarm"
+ },
+ "noise_ravens/b4737b7862a36ca9": {
+  "chars": 48,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "Angry crows and ravens swarming, loud harsh caws"
+ },
+ "noise_ravens/ed3c12f47a219fb2": {
+  "chars": 56,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A flock of ravens cawing harshly and beating their wings"
+ },
+ "noise_ravens/ef218ec73b64c3e5": {
+  "chars": 52,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "Ravens pecking and clawing, harsh caws and wingbeats"
+ },
+ "noise_ravens/f4317dd2117a2ebe": {
+  "chars": 41,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A raven diving with a shriek and flapping"
+ },
+ "noise_roc/0c041f11c3acda44": {
+  "chars": 35,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "Giant talons striking with a shriek"
+ },
+ "noise_roc/4a496fc58148a880": {
+  "chars": 60,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "An enormous bird of prey screeching overhead, huge wingbeats"
+ },
+ "noise_roc/4c0aa93304dba04e": {
+  "chars": 43,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "Huge wings beating weakly, a fading screech"
+ },
+ "noise_roc/536dd21ffda40305": {
+  "chars": 25,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A huge eagle's pained cry"
+ },
+ "noise_roc/871bec2cc82d63c8": {
+  "chars": 30,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A giant bird shrieking in pain"
+ },
+ "noise_roc/8bbd00351382ffc7": {
+  "chars": 39,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A giant bird's dying cry and heavy fall"
+ },
+ "noise_roc/a3341ff8a4943a2b": {
+  "chars": 54,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A giant eagle's piercing cry echoing through mountains"
+ },
+ "noise_roc/c30f3f899ca47c57": {
+  "chars": 52,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A huge bird diving with a screech and a gust of wind"
+ },
+ "noise_skeleton/162b1d189a0d97f8": {
+  "chars": 53,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A skeleton collapsing into a pile of clattering bones"
+ },
+ "noise_skeleton/60c5c7354f80aaeb": {
+  "chars": 48,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A skeleton rising, bones rattling and clattering"
+ },
+ "noise_skeleton/77783188b4993f88": {
+  "chars": 39,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Bones cracking and rattling from a blow"
+ },
+ "noise_skeleton/7f9b0083c1ed7e22": {
+  "chars": 43,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "Bones falling apart and scattering on stone"
+ },
+ "noise_skeleton/92a574073ac52e5c": {
+  "chars": 40,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A skeleton's ribs clattering when struck"
+ },
+ "noise_skeleton/9d507a4158200cb3": {
+  "chars": 50,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "Dry bones clacking together as a skeleton advances"
+ },
+ "noise_skeleton/a14294397430e447": {
+  "chars": 36,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "Bony arms rattling in a quick strike"
+ },
+ "noise_skeleton/b0303531e64c27e7": {
+  "chars": 54,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A skeleton's jaw clacking as it swings, rattling bones"
+ },
+ "noise_spider/079318d6dfefe027": {
+  "chars": 33,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A giant spider screeching in pain"
+ },
+ "noise_spider/194f5c4b6496e5cd": {
+  "chars": 33,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A spider's pained chittering hiss"
+ },
+ "noise_spider/2a8cc38e0f49aefc": {
+  "chars": 52,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A giant spider hissing and chittering, legs clicking"
+ },
+ "noise_spider/6e42a3b6ade0e598": {
+  "chars": 62,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A giant spider curling up with a dying screech, legs twitching"
+ },
+ "noise_spider/a605a7493393733e": {
+  "chars": 47,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A giant spider's fangs biting with a sharp hiss"
+ },
+ "noise_spider/b787346a405fa743": {
+  "chars": 44,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A spider's death hiss fading as it collapses"
+ },
+ "noise_spider/d497abcd79789d76": {
+  "chars": 52,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A huge spider skittering closer with a menacing hiss"
+ },
+ "noise_spider/eaa5c94d2c6aa5e2": {
+  "chars": 48,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A spider lunging, chitinous clicks and a screech"
+ },
+ "noise_spirit/297c617f53b1dcd7": {
+  "chars": 56,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A ghost shrieking as it passes through someone, chilling"
+ },
+ "noise_spirit/a11c90421948b890": {
+  "chars": 27,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A spirit's distorted shriek"
+ },
+ "noise_spirit/a90df58b04c58fc6": {
+  "chars": 32,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A ghost wailing in pain, echoing"
+ },
+ "noise_spirit/d5fcc7239313d2c0": {
+  "chars": 48,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A spirit dissolving with a long sigh and whisper"
+ },
+ "noise_spirit/dc0f26bb2c47353b": {
+  "chars": 39,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A ghostly wail rising, cold and echoing"
+ },
+ "noise_spirit/f0e015a5429c7e90": {
+  "chars": 39,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A spectral hiss with a cold rush of air"
+ },
+ "noise_spirit/f7c813941fbc03b8": {
+  "chars": 39,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A ghostly wail fading away into silence"
+ },
+ "noise_spirit/fef7c68074c72db3": {
+  "chars": 43,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "Eerie whispering voices and a spectral moan"
+ },
+ "noise_stone/00110ab23cbee682": {
+  "chars": 31,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Rock splitting with a low growl"
+ },
+ "noise_stone/25c17253f9a02344": {
+  "chars": 45,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "Stone chipping and cracking, a rumbling grunt"
+ },
+ "noise_stone/4462063aab015bcf": {
+  "chars": 41,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "Stone claws scraping and a gravelly snarl"
+ },
+ "noise_stone/4614f20d1740115d": {
+  "chars": 41,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A heavy stone fist striking with a crunch"
+ },
+ "noise_stone/7ca07c02a39a5463": {
+  "chars": 41,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A gravelly stone growl with grinding rock"
+ },
+ "noise_stone/93cf52d3b0ee0d9a": {
+  "chars": 37,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "Rock breaking apart and tumbling down"
+ },
+ "noise_stone/a123eae8959b6e9a": {
+  "chars": 49,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A stone statue shattering and crumbling to rubble"
+ },
+ "noise_stone/ff0297fc50d3ee6f": {
+  "chars": 58,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A stone gargoyle cracking free and growling, grinding rock"
+ },
+ "noise_wolf/026efdb41c8fc926": {
+  "chars": 47,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A wolf's savage bite, a short snarl and tearing"
+ },
+ "noise_wolf/1cdd6e4e0e600d71": {
+  "chars": 30,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A wolf yelping sharply in pain"
+ },
+ "noise_wolf/1cdf9245931dc798": {
+  "chars": 42,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A dying wolf whimpering and falling silent"
+ },
+ "noise_wolf/7423bd05b7c08641": {
+  "chars": 59,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A wolf pack howling and snarling, ready to attack, at night"
+ },
+ "noise_wolf/84e398b02b4dd284": {
+  "chars": 46,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A big wolf letting out a pained growling whine"
+ },
+ "noise_wolf/8ade311f06e440c8": {
+  "chars": 69,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A large wolf snarling and growling aggressively up close, teeth bared"
+ },
+ "noise_wolf/b3caf2886f78170c": {
+  "chars": 45,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A wolf's last weak howl fading into a whimper"
+ },
+ "noise_wolf/e9b161d8695205cd": {
+  "chars": 64,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A wolf lunging and biting with snapping jaws and a vicious snarl"
+ },
+ "noise_zombie/32c95672f929e034": {
+  "chars": 40,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A guttural undead roar with a wet gurgle"
+ },
+ "noise_zombie/37d0058c66ddcc11": {
+  "chars": 42,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "A zombie grunting from a blow, wet and low"
+ },
+ "noise_zombie/5432b726ab995a83": {
+  "chars": 52,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A zombie moaning and gurgling as it shambles forward"
+ },
+ "noise_zombie/7eb282416c5dd07e": {
+  "chars": 57,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A rotting body slumping to the ground with a final gurgle"
+ },
+ "noise_zombie/99e2d2df35d711cb": {
+  "chars": 52,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 2.0,
+  "text": "A rotting zombie groaning hungrily, low and guttural"
+ },
+ "noise_zombie/c70d00283a9f1bbe": {
+  "chars": 32,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 0.8,
+  "text": "An undead groan of pain, rasping"
+ },
+ "noise_zombie/fb4ff6d58c0f71d7": {
+  "chars": 46,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.5,
+  "text": "A zombie collapsing with a long rattling groan"
+ },
+ "noise_zombie/fbcf49c9b198adc0": {
+  "chars": 47,
+  "model": "eleven_text_to_sound_v2",
+  "recipe": "ed5f088fa4",
+  "seconds": 1.0,
+  "text": "A zombie snarling and grunting as it lashes out"
  },
  "offalia_wormwiggle/20e7da63ef42be20": {
   "chars": 101,

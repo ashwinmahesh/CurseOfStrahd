@@ -130,11 +130,45 @@ the castle's people speak on `eleven_v3`, which keeps the Eastern European accen
 | `vistana` | 4 | 445 | Barovia vistana | `eleven_v3` | A woman in her thirties with a wry, dry, observant voice and a strong, clearly audible Eastern European (Romanian) accent. Off duty and unimpressed, but urgent when it matters. |
 | `vasilka` | 7 | 443 | Barovia vasilka | `eleven_v3` | A young woman's beautiful, smooth, perfectly flat and polite voice, a stitched bride who knows etiquette and nothing else: affectless, courteous, eerily empty. |
 | `kolyan_indirovich` | 5 | 432 | Barovia kolyan_indirovich | `eleven_v3` | An old man's tired, dignified, fading voice and a strong, clearly audible Eastern European (Romanian) accent, the late burgomaster speaking from a letter or memory: formal, grave and loving. |
+| `noise_wolf` | 8 | 402 | Sound effects: wolf | `eleven_v4` | Noises for wolf, dire_wolf in fights. |
 | `cult_shades` | 7 | 397 | Barovia cult_shades | `eleven_v3` | A chorus of hollow, whispering, overlapping voices speaking as one: robed shadows chanting and pleading, cold and insistent. |
+| `noise_bats` | 8 | 395 | Sound effects: bats | `eleven_v4` | Noises for swarm_of_bats in fights. |
+| `noise_blight` | 8 | 390 | Sound effects: blight | `eleven_v4` | Noises for twig_blight, needle_blight, vine_blight, tree_blight, scarecrow, shambling_mound, baba_lysagas_creeping_hut in fights. |
+| `noise_construct` | 8 | 374 | Sound effects: construct | `eleven_v4` | Noises for animated_armor, strahds_animated_armor, helmed_horror, animated_flying_sword, broom_of_animated_attack, amber_golem in fights. |
+| `noise_spider` | 8 | 371 | Sound effects: spider | `eleven_v4` | Noises for giant_spider in fights. |
+| `noise_zombie` | 8 | 368 | Sound effects: zombie | `eleven_v4` | Noises for zombie, strahd_zombie, flesh_golem in fights. |
+| `noise_skeleton` | 8 | 363 | Sound effects: skeleton | `eleven_v4` | Noises for skeleton in fights. |
 | `vestige_yog` | 9 | 362 | Barovia vestige_yog | `eleven_v4` | An enormous, slow, monosyllabic voice through the floor, with long pauses; immovable. Inhuman resonance. |
+| `noise_rats` | 8 | 348 | Sound effects: rats | `eleven_v4` | Noises for swarm_of_rats in fights. |
+| `noise_stone` | 8 | 343 | Sound effects: stone | `eleven_v4` | Noises for gargoyle in fights. |
+| `noise_ravens` | 8 | 342 | Sound effects: ravens | `eleven_v4` | Noises for swarm_of_ravens in fights. |
+| `noise_roc` | 8 | 338 | Sound effects: roc | `eleven_v4` | Noises for roc in fights. |
+| `noise_insects` | 8 | 331 | Sound effects: insects | `eleven_v4` | Noises for swarm_of_insects in fights. |
+| `noise_ghoul` | 8 | 328 | Sound effects: ghoul | `eleven_v4` | Noises for ghoul, ghast in fights. |
+| `noise_nightmare` | 8 | 328 | Sound effects: nightmare | `eleven_v4` | Noises for nightmare in fights. |
+| `noise_spirit` | 8 | 323 | Sound effects: spirit | `eleven_v4` | Noises for shadow, specter, wraith, banshee, guardian_portrait, will_o_wisp in fights. |
+| `noise_ooze` | 8 | 321 | Sound effects: ooze | `eleven_v4` | Noises for black_pudding, mimic, grick, nothic, rug_of_smothering in fights. |
+| `noise_claw` | 8 | 318 | Sound effects: claw | `eleven_v4` | Noises for crawling_claw in fights. |
+| `bark_arcanaloth` | 10 | 313 | Malyx - Echoey, Menacing and Deep Demon | `eleven_v4` | An arcanaloth: an echoing, menacing, deep fiend with a lawyer's patience. |
+| `noise_flame` | 8 | 298 | Sound effects: flame | `eleven_v4` | Noises for flameskull, fire_elemental in fights. |
+| `bark_bandit_captain` | 10 | 293 | Roderich - Crude & Ruthless | `eleven_v4` | A bandit captain: an older, crude, ruthless man who barks orders and enjoys it. |
 | `mirabel` | 6 | 286 | Barovia mirabel | `eleven_v3` | A Vistani woman in her forties speaking English with a very strong, thick Romanian accent, heavy on every word. A deep, throaty, laughing voice; loves a good story and bad wine; warm and knowing. |
+| `bark_hag` | 10 | 279 | Nadine – Whispering Witch of the Black Forest | `eleven_v4` | A night hag: a whispering, sinister old woman, sweet and poisonous. |
+| `bark_bandit` | 10 | 273 | Viktor - Bold, Slavic and Impatient | `eleven_v4` | A Barovian highwayman: a rough, impatient man with a strong Eastern European accent, sneering and greedy. |
+| `bark_druid` | 10 | 272 | Elinor | The Gruff Aunt | `eleven_v4` | A Yester Hill druid: a gruff, old woman, fierce and earthy. |
 | `arik` | 9 | 268 | Barovia arik | `eleven_v3` | A grey, unhurried man with a flat, toneless, empty voice and a strong, clearly audible Eastern European (Romanian) accent. Answers with the fewest words possible; nobody behind the eyes. |
 | `elisabeth_durst` | 5 | 267 | Barovia elisabeth_durst | `eleven_v3` | A woman with a sharp, cold, aristocratic voice turned rasping and hungry, a ghoul and a true believer: righteous, contemptuous and impatient. Strong, clearly audible Eastern European (Romanian) accent. |
+| `bark_revenant` | 10 | 263 | Greg - Ghostly, Gritty, Brave and Raspy | `eleven_v4` | A revenant: a gritty, raspy, ghostly man driven only by vengeance. |
+| `bark_witch` | 10 | 250 | Horpyna - Village Witch & Trickster | `eleven_v4` | A Barovian witch: a cackling, mocking woman with an Eastern European accent. |
+| `bark_werewolf` | 10 | 237 | Dracon - Feral, Demonic & Dangerous | `eleven_v4` | A werewolf: a feral, snarling, raspy man halfway to a beast. |
+| `bark_cultist` | 10 | 233 | Valerian | The Nihilist Evil | `eleven_v4` | A cultist of the night: intense, fervent and unhinged. |
+| `bark_phantom_knight` | 10 | 213 | Xavier - Big, Deep & Powerful narrator | `eleven_v4` | A phantom knight of the Order of the Silver Dragon: big, deep and noble, sworn to an old oath. |
+| `bark_wight` | 10 | 212 | Victor - Eloquent Evil Villain | `eleven_v4` | A wight: an old, cold, eloquent undead lord, contemptuous of the living. |
+| `bark_mongrelfolk` | 10 | 202 | Valf - Goblin, Raspy, Fantasy Monster | `eleven_v4` | A mongrelfolk: a raspy, broken, creature-like voice, eager and childish. |
+| `bark_guard` | 10 | 195 | Maksim - Raw Unpolished Deep | `eleven_v4` | A Vallaki guard: a deep, blunt, tired Barovian voice with an Eastern European accent. |
+| `bark_vampire_spawn` | 10 | 191 | Ilinca | The Vampire Countess | `eleven_v4` | A vampire spawn: a hungry, silky woman's voice with a Russian accent, hissing at the edges. |
+| `bark_berserker` | 10 | 156 | Harry - Fierce Warrior | `eleven_v4` | A berserker: a wild young man shouting with bloodlust. |
+| `bark_ogre` | 10 | 117 | Azgar - Indimidating Orc Troll | `eleven_v4` | An ogre: a huge, deep, slow and stupid brute. |
 | `toma_sarnov` | 2 | 86 | Teddy Twinkle - Cute Cartoon | `eleven_v4` | A small boy of about five with a frightened, whispery child's voice and a strong, clearly audible Eastern European (Romanian) accent. |
 | `amber_sentinel` | 3 | 57 | Barovia amber_sentinel | `eleven_v4` | A vast, booming, inhuman voice speaking in short commands, like stone grinding under a mountain; slow, absolute, echoing. |
 | `tsolenka_watchman` | 1 | 21 | Barovia tsolenka_watchman | `eleven_v3` | A dead watchman's hollow, rasping, distant voice, strong, clearly audible Eastern European (Romanian) accent. |
