@@ -184,9 +184,12 @@ func _base_ctx() -> Dictionary:
 
 func formula_context(slot_level: int = 0) -> Dictionary:
 	var ctx := _base_ctx()
+	# All six scores from one pass over the modifiers (an attack's numbers ask for this context many times a turn).
+	var raises := _ability_modifiers()
+	var base := ctx.duplicate()
 	ctx["slot_level"] = slot_level
 	for ab: StringName in Abilities.ALL:
-		var score := ability_score(ab)
+		var score := _ability_breakdown_with(ab, raises, base).total()
 		ctx["score:%s" % ab] = score
 		ctx["mod:%s" % ab] = Abilities.modifier(score)
 	return ctx
@@ -204,16 +207,31 @@ func mod_value(m: Modifier, ctx: Dictionary) -> int:
 # --- Abilities, saves, checks --------------------------------------------------------------------
 
 func ability_breakdown(ab: StringName) -> Breakdown:
+	return _ability_breakdown_with(ab, _ability_modifiers(), _base_ctx())
+
+
+## The modifiers that raise ability scores and set their floors, [ability, ability_min], read in one pass.
+func _ability_modifiers() -> Array[Array]:
+	var up: Array[Modifier] = []
+	var floors: Array[Modifier] = []
+	for m in all_modifiers():
+		if m.stat == &"ability":
+			up.append(m)
+		elif m.stat == &"ability_min":
+			floors.append(m)
+	return [up, floors]
+
+
+func _ability_breakdown_with(ab: StringName, raises: Array[Array], ctx: Dictionary) -> Breakdown:
 	var b := Breakdown.new(str(ABILITY_NAMES[ab]))
 	for p in base_ability_parts(ab):
 		b.add(str(p["label"]), int(p["value"]))
-	var ctx := _base_ctx()
-	for m in modifiers_for(&"ability"):
+	for m: Modifier in raises[0]:
 		if m.text("ability") == ab:
 			var cap := m.number("max", 20)
 			var gain := mini(mod_value(m, ctx), maxi(0, cap - b.sum()))
 			b.add_nonzero(m.source_name, gain)
-	for m in modifiers_for(&"ability_min"):
+	for m: Modifier in raises[1]:
 		if m.text("ability") == ab:
 			b.set_floor(mod_value(m, ctx), m.source_name)
 	return b
