@@ -127,6 +127,10 @@ func _ready() -> void:
 
 
 func _build() -> void:
+	for l: Variant in loc.get("lights", []):
+		var cell := (l as Dictionary).get("cell", []) as Array
+		if cell.size() == 2:
+			_data_lights[Vector2i(int(cell[0]), int(cell[1]))] = str((l as Dictionary).get("kind", "lamp"))
 	env = Environment.new()
 	env.background_mode = Environment.BG_COLOR
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
@@ -265,6 +269,15 @@ func _update_lamp_shadows() -> void:
 	var keep := {}
 	for i in mini(budget, ranked.size()):
 		keep[ranked[i][1]] = true
+	# The nearest few flames that cast shadows sway with their flicker, so their shadows stir (W5; CandleFlicker).
+	var sway := Graphics.swaying_flames()
+	for i in ranked.size():
+		var l := ranked[i][1] as OmniLight3D
+		var swaying := i < budget and sway > 0 and l is CandleFlicker \
+			and str(l.get_meta("light_kind", "")) in ["candle", "lamp", "torch", "fire"]
+		if swaying:
+			sway -= 1
+		l.set_meta("sway", swaying)
 	var fade := _rig.distance + 12.0
 	for l in _lights:
 		if not is_instance_valid(l):
@@ -316,7 +329,33 @@ func _focus_dof() -> void:
 
 const MODERN_TONEMAP := Environment.TONE_MAPPER_AGX
 const MODERN_EXPOSURE := 1.35
-const MODERN_GRADE := 0.4
+## The Modern finish's grade, one per mood (Improvement Ideas W16; the screen pass's tone_split), in place of the
+## gradient map Classic keeps: the shade takes the place's cool `shade` colour by `amount` and keeps only some of its
+## colour (`shade_saturation`), its blacks sink (`black`), `pivot` is the brightness where shade turns to light, and
+## `ambient` is how much of the mood's ambient light fills the shade. Lamplight keeps its own warm colour, so it pools
+## warm against cool, dark shade (direction B's tone). A mood's "tone" changes any of them, a time of day's "tone"
+## within it changes them again: Berez and the larders take a sick green shade, the brides' court crimson, a tavern
+## warm peat.
+const MODERN_TONE := {"shade": "night", "amount": 0.55, "shade_saturation": 0.6, "black": 0.03, "pivot": 0.36,
+	"ambient": 0.8}
+## An overcast day is still day: blue-grey shade, more of the ground counts as lit, the shade keeps more colour and
+## all its fill.
+const DAY_TONE := {"shade": "slate", "amount": 0.45, "pivot": 0.24, "shade_saturation": 0.8, "ambient": 1.0}
+## Indoors the shade is the deep night blue of a dark house.
+const INDOOR_TONE := {"shade": "night_deep"}
+
+
+## The Modern grade for a time of day: MODERN_TONE, a day's DAY_TONE or an indoor INDOOR_TONE, then the mood's own
+## "tone", then the time's.
+func _tone(p: String) -> Dictionary:
+	var t := MODERN_TONE.duplicate()
+	if p == "day":
+		t.merge(DAY_TONE, true)
+	elif p == "any":
+		t.merge(INDOOR_TONE, true)
+	t.merge(mood.get("tone", {}) as Dictionary, true)
+	t.merge(((mood.get("times", {}) as Dictionary).get(p, {}) as Dictionary).get("tone", {}) as Dictionary, true)
+	return t
 
 
 ## The board's water squares get the moving water (one material for the whole place, the land's lakes included).
@@ -528,6 +567,7 @@ func _target(p: String) -> Dictionary:
 	var grade := t.get("grade", {}) as Dictionary
 	var level := float(LEVELS.get(light_level, 1.0))
 	var angle := _vec2(t.get("key_angle", mood.get("key_angle", [-40, 30])))
+	var tone := _tone(p)
 	return {
 		"sky": Look.color(str(t.get("sky", "grave"))),
 		"fog": Look.color(str(t.get("fog", t.get("sky", "grave")))),
@@ -545,6 +585,12 @@ func _target(p: String) -> Dictionary:
 		"grade_shadows": Look.color(str(grade.get("shadows", "pewter"))) if not grade.is_empty() else Color(0.5, 0.5, 0.5),
 		"grade_lights": Look.color(str(grade.get("lights", "pewter"))) if not grade.is_empty() else Color(0.5, 0.5, 0.5),
 		"grade_amount": float(grade.get("amount", 0.0)),
+		"tone_shade": Look.color(str(tone["shade"])),
+		"tone_amount": float(tone["amount"]),
+		"tone_sat": float(tone["shade_saturation"]),
+		"tone_black": float(tone["black"]),
+		"tone_pivot": float(tone["pivot"]),
+		"tone_ambient": float(tone["ambient"]),
 	}
 
 
@@ -566,7 +612,8 @@ func _apply(k: float) -> void:
 	if env.volumetric_fog_enabled:
 		env.volumetric_fog_albedo = v["fog"] as Color
 	env.ambient_light_color = v["ambient"] as Color
-	env.ambient_light_energy = float(v["ambient_energy"]) * (1.0 + _flash * 2.5)
+	var fill := float(v["tone_ambient"]) if Look.modern() else 1.0
+	env.ambient_light_energy = float(v["ambient_energy"]) * fill * (1.0 + _flash * 2.5)
 	sun.light_color = (v["key"] as Color).lerp(Look.color("frost"), _flash)
 	sun.light_energy = float(v["key_energy"]) * (1.0 + _flash * 3.0)
 	sun.rotation_degrees = v["key_angle"] as Vector3
@@ -583,9 +630,14 @@ func _apply(k: float) -> void:
 	_post.set_shader_parameter("saturation", float(v["saturation"]))
 	_post.set_shader_parameter("grade_shadows", v["grade_shadows"] as Color)
 	_post.set_shader_parameter("grade_lights", v["grade_lights"] as Color)
-	# Without the palette snap pulling colours back to the palette, the full gradient map tints too hard (grass
-	# turns pink); the modern finish uses less of it.
-	_post.set_shader_parameter("grade_amount", float(v["grade_amount"]) * (MODERN_GRADE if Look.modern() else 1.0))
+	# The Modern finish tints only the shade (tone_split), by MODERN_TONE's share of the mood's amount.
+	_post.set_shader_parameter("grade_amount", float(v["grade_amount"]))
+	if Look.modern():
+		_post.set_shader_parameter("tone_shade", v["tone_shade"] as Color)
+		_post.set_shader_parameter("tone_amount", float(v["tone_amount"]))
+		_post.set_shader_parameter("tone_shade_saturation", float(v["tone_sat"]))
+		_post.set_shader_parameter("tone_black", float(v["tone_black"]))
+		_post.set_shader_parameter("tone_pivot", float(v["tone_pivot"]))
 
 
 # --- Every frame ----------------------------------------------------------------------------------
@@ -646,7 +698,124 @@ func _scan_lights() -> void:
 	if view == null:
 		return
 	for n in view.find_children("*", "OmniLight3D", true, false):
-		_lights.append(n as OmniLight3D)
+		var l := n as OmniLight3D
+		_lights.append(l)
+		if Look.modern() and not l.has_meta("light_kind"):
+			_dress_light(l)
+
+
+# --- Lights (W5) -----------------------------------------------------------------------------------
+
+## How each kind of light behaves in the Modern finish (Improvement Ideas W5): `size` is how soft its shadows are
+## (Godot's light_size: a candle's crisp, a hearth's soft), `fog` how strongly it lights the haze around it, `steady`
+## that it doesn't flicker. A window indoors is the moon or the day coming in: cold, steady, with a shaft of light
+## through the haze (_window_shaft).
+const LIGHT_KINDS := {
+	"candle": {"size": 0.03, "fog": 1.0},
+	"lamp": {"size": 0.06, "fog": 1.2},
+	"lantern": {"size": 0.08, "fog": 1.2},
+	"torch": {"size": 0.12, "fog": 1.8},
+	"fire": {"size": 0.25, "fog": 2.0},
+	"magic": {"size": 0.12, "fog": 1.6, "steady": true},
+	"window": {"size": 0.4, "fog": 0.5, "steady": true},
+	"lit_window": {"size": 0.3, "fog": 1.0},
+	"spell": {"size": 0.1, "fog": 1.5},
+}
+## Shafts through windows (W5): how far above the floor the light comes in, how much the spot lights the haze, and
+## the glowing cone drawn along it (shaders/world/light_shaft.gdshader: Godot's fog volumes are too coarse to show a
+## beam's edges at this camera distance).
+const SHAFT_HEIGHT := 2.6
+const SHAFT_FOG := 2.0
+const SHAFT_GLOW := 0.3
+const SHAFT_SHADER := preload("res://shaders/world/light_shaft.gdshader")
+var _data_lights: Dictionary = {}
+
+
+## What a light is: the location's own lights by their square and kind in its data; lit windows from the weather;
+## the party's lantern; a flame (the flame colour); anything else a spell's.
+func _light_kind(l: OmniLight3D) -> String:
+	var view := get_parent()
+	if view != null and view.get("lantern") == l:
+		return "lantern"
+	if str(l.name).begins_with("WindowLight"):
+		return "lit_window"
+	var c := Vector2i(floori(l.global_position.x), floori(l.global_position.z))
+	if _data_lights.has(c):
+		var k := str(_data_lights[c])
+		return k if LIGHT_KINDS.has(k) else "lamp"
+	if l is CandleFlicker:
+		return "fire" if l.light_color.is_equal_approx(Look.color("flame")) else "lamp"
+	return "spell"
+
+
+func _dress_light(l: OmniLight3D) -> void:
+	var kind := _light_kind(l)
+	var spec := LIGHT_KINDS[kind] as Dictionary
+	l.set_meta("light_kind", kind)
+	l.light_size = float(spec["size"])
+	l.light_volumetric_fog_energy = float(spec["fog"])
+	if bool(spec.get("steady", false)) and l is CandleFlicker:
+		(l as CandleFlicker).flicker = 0.0
+	if kind == "window" and not outdoors:
+		# The moon or the day, not a candle: the key light's colour, and its shaft through the haze.
+		l.light_color = sun.light_color
+		_window_shaft(l)
+
+
+## A shaft of the key light (the moon, or the day) coming in through a window over the wall beside the window's
+## square, down across the room through the haze; a child of the window's light, so it hides with it.
+func _window_shaft(l: OmniLight3D) -> void:
+	if board == null:
+		return
+	var c := Vector2i(floori(l.global_position.x), floori(l.global_position.z))
+	var out := Vector2i.ZERO
+	for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		if board.grid.in_bounds(c + d) and board.grid.has_flag(c + d, CombatGrid.WALL):
+			out = d
+			break
+	if out == Vector2i.ZERO:
+		return
+	var inward := Vector3(-out.x, 0.0, -out.y)
+	var from := board.cell_center(c) - inward * 1.2 + Vector3(0, SHAFT_HEIGHT, 0)
+	var spot := SpotLight3D.new()
+	spot.name = "WindowShaft"
+	spot.light_color = sun.light_color
+	spot.light_energy = 2.0
+	spot.light_volumetric_fog_energy = SHAFT_FOG
+	spot.spot_range = 8.0
+	spot.spot_angle = 14.0
+	spot.spot_attenuation = 0.6
+	spot.shadow_enabled = true
+	spot.light_size = 0.3
+	spot.distance_fade_enabled = true
+	spot.distance_fade_begin = 40.0
+	spot.distance_fade_length = 10.0
+	l.add_child(spot)
+	var dir := (inward + Vector3(0, -1.1, 0)).normalized()
+	spot.look_at_from_position(from, from + dir)
+	# The cone of lit haze from the window down to where the light meets the floor.
+	var to := from + dir * (from.y / -dir.y)
+	var cone := CylinderMesh.new()
+	cone.top_radius = 0.35
+	cone.bottom_radius = 0.8
+	cone.height = from.distance_to(to)
+	cone.cap_top = false
+	cone.cap_bottom = false
+	var glow := ShaderMaterial.new()
+	glow.shader = SHAFT_SHADER
+	glow.render_priority = 1
+	glow.set_shader_parameter("colour", sun.light_color)
+	glow.set_shader_parameter("strength", SHAFT_GLOW)
+	glow.set_shader_parameter("shaft_length", cone.height)
+	var beam := MeshInstance3D.new()
+	beam.name = "WindowBeam"
+	beam.mesh = cone
+	beam.material_override = glow
+	beam.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	l.add_child(beam)
+	var up := -dir
+	var side := up.cross(Vector3.UP if absf(up.y) < 0.99 else Vector3.RIGHT).normalized()
+	beam.global_transform = Transform3D(Basis(side, up, side.cross(up)), (from + to) / 2.0)
 
 
 ## The lit lights nearest the camera's focus go to the screen pass.

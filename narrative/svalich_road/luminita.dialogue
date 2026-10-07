@@ -82,6 +82,7 @@ endif
 ~ earring
 Narrator: She takes the silver horse's head, looks at it for a long time, and puts it in her own ear without a word.
 Luminita: There. Now he's still riding.
+approve wren_featherfoot +1 liriel_dawnsong +1 godrick_pendlebrook +1: You gave Luminita the earring of the brother she lost
 -> END
 
 ~ after_news

@@ -262,3 +262,23 @@ func test_a_zone_wears_its_look_and_lets_it_go() -> void:
 	assert_false(is_instance_valid(zone), "gone with the spell")
 	field.queue_free()
 	board.queue_free()
+
+
+## A volley waits for its last missile only while it's still flying: a slow frame can land it during the pause
+## between shots, its tween is then freed, and awaiting it was a script error (a busy make ci, 2026-10-07).
+func test_a_volley_does_not_wait_on_a_missile_that_already_landed() -> void:
+	var fx := SpellFx.new()
+	add_child(fx)
+	var tw := fx.create_tween()
+	tw.tween_interval(0.01)
+	var landed: Signal = tw.finished
+	tw = null
+	for i in 5:
+		await get_tree().process_frame
+	assert_false(is_instance_valid(landed.get_object()), "the finished tween is gone")
+	await fx.until(landed)
+	var flying := fx.create_tween()
+	flying.tween_interval(0.05)
+	await fx.until(flying.finished)
+	assert_false(flying.is_running(), "a missile still in the air is waited for")
+	fx.queue_free()

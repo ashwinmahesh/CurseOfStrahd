@@ -1,5 +1,75 @@
 # Thistle's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each plays once.
-# Quest: Grandda's Trail (narrative/companions/fen.dialogue).
+# Quest: Grandda's Trail (narrative/companions/fen.dialogue). The file offers its first talk that holds: when she's
+# Strained or Doubtful (story/approval.gd), those first; then the quest's; then Warm, Close and Devoted.
+
+# --- When she's lost faith in the party (approval) ----------------------------------------------------------------
+
+~ talk_strained
+if name:thistle and approval.thistle <= strained
+-> strained
+endif
+-> END
+
+~ strained
+Narrator: Thistle sleeps outside the firelight tonight, on her own, with her back to you. It's the first time she hasn't slept within arm's reach of somebody.
+interject name:thistle: Not your pack tonight. Maybe not tomorrow.
+interject name:thistle: A pack looks after its own and doesn't eat the little ones. That's all the rules. There's only two.
+interject name:thistle: You keep breaking the second one.
+interject name:thistle: I'm still going to Grandda. On my own if I have to. I'll not have you near him like this.
+* Then show us what a pack does. -> strained_show
+* We're sorry, Thistle. -> strained_sorry
+* Go, then. -> strained_go
+
+~ strained_show
+interject name:thistle: Easy. Little ones behind you. You eat last. You don't leave nobody. Do that.
+interject name:thistle: Do that, and I'll come back to the fire.
+approve thistle +10: You asked me to show you what a pack does
+-> END
+
+~ strained_sorry
+interject name:thistle: Sorry's a word. Words don't smell like anything. Show me.
+approve thistle +5: You told me you were sorry
+-> END
+
+~ strained_go
+Narrator: She doesn't answer. In the morning she's still with you, but a little farther off, the way a dog walks when it's been kicked and hasn't decided yet.
+approve thistle -6: You told me to go
+-> END
+
+~ talk_doubt
+if name:thistle and approval.thistle == doubtful
+-> doubt
+endif
+-> END
+
+~ doubt
+Narrator: Thistle isn't up a tree tonight. She's on the ground, right across the fire, staring at you. She's been doing it for some time.
+interject name:thistle: You smell wrong. Lately. All of you. Like a dog that's been in the bins.
+interject name:thistle: Grandda says you can tell a pack by what it leaves behind. We've been leaving bad things.
+if flag.den_children_left
+interject name:thistle: Pups. In the den. We left the pups.
+endif
+interject name:thistle: Fix it. Or don't. But I'm watching.
+* You're right. We'll fix it. -> doubt_fix
+* What would you have done, Thistle? -> doubt_ask
+* Stop sniffing us. -> doubt_sniff
+
+~ doubt_fix
+interject name:thistle: Good. Then I'll stop staring. Mostly.
+approve thistle +6: You said we'd fix it
+-> END
+
+~ doubt_ask
+interject name:thistle: Bit them. Then gone and got the little ones out. Then had supper. It's not hard. You lot make it hard.
+approve thistle +3: You asked me what I'd have done
+-> END
+
+~ doubt_sniff
+interject name:thistle: Can't. Nose works. Yours should.
+approve thistle -4: You told me to stop sniffing you
+-> END
+
+# --- Her quest ---------------------------------------------------------------------------------------------------
 
 ~ talk_grandda
 if name:thistle and quest.fens_trail
@@ -28,6 +98,7 @@ interject name:thistle: I'll find him. I can track a moth across a frozen lake. 
 
 ~ grandda_help
 interject name:thistle: Course you will. You're my pack now. That's how packs work.
+approve thistle +2: You said you'd help me find Grandda
 -> END
 
 ~ grandda_dead
@@ -60,6 +131,7 @@ if name:liriel_dawnsong
 interject name:liriel_dawnsong: You can belong to the woods and the town both, dear heart. Most of us belong to more than one place. It's how we know we're not lost.
 endif
 interject name:thistle: Six cakes. I'm getting more tomorrow.
+approve thistle +1: You didn't laugh about the cakes
 -> END
 
 ~ talk_after
@@ -87,4 +159,99 @@ interject name:thistle: He taught me that. The quick way. For hares. So they don
 interject name:thistle: Good lass. That's what he said. Good lass.
 Narrator: Somebody sits down next to her. She leans on them, hard, and doesn't say anything else, and that's all right.
 endif
+-> END
+
+# --- As she comes to trust the party (approval) -------------------------------------------------------------------
+
+~ talk_warm
+if name:thistle and approval.thistle >= warm and level >= 3
+-> warm
+endif
+-> END
+
+~ warm
+Narrator: Thistle drops out of a tree beside you with no warning at all, which she seems to think is a greeting.
+interject name:thistle: You. Arm-wrestle. Now. Big's asleep and I need to win something.
+* (Arm-wrestle her.) -> warm_wrestle
+* (Let her win.) -> warm_letwin
+* Not tonight, Thistle. -> warm_no
+
+~ warm_wrestle
+check Strength DC 15 -> warm_won | warm_lost
+
+~ warm_won
+Narrator: It takes a long time and both your faces go red, but her knuckles touch the log first.
+interject name:thistle: BARK AND BONES. Again! No. Tomorrow. My arm's gone. You're all right, you. You're pack.
+approve thistle +3: You beat me at arm-wrestling, fair and square
+-> END
+
+~ warm_lost
+Narrator: Your knuckles hit the log hard enough to hurt. She whoops loud enough to wake the camp.
+interject name:thistle: Ha! Good try. Proper try. You didn't let me. I'd have smelled it.
+approve thistle +3: You arm-wrestled me properly and didn't let me win
+-> END
+
+~ warm_letwin
+Narrator: You go easy. She stops pushing at once and looks at you, deeply offended.
+interject name:thistle: You let me. Don't let me. Grandda never let me, not once. That's how I knew he thought I was real.
+approve thistle -1: You let me win at arm-wrestling
+-> END
+
+~ warm_no
+interject name:thistle: Fine. Tomorrow. I'm going to be so strong tomorrow.
+-> END
+
+~ talk_close
+if name:thistle and approval.thistle >= close and level >= 5
+-> close
+endif
+-> END
+
+~ close
+Narrator: Thistle is lying on her back by the fire, looking up at the place where stars would be if the fog let them through.
+interject name:thistle: In the Thornwood you can see all of them. Grandda knows the names. Not the real names. His names. That one's the Old Hare. That one's Bess's Nose.
+interject name:thistle: When we've got Grandda, I'm going home. To the Thornwood. That's the plan.
+interject name:thistle: Only I never had a pack that talks back before. Never had folk to sit by that weren't him and the dogs. And I'm going to miss you. I'm going to miss you so much I'm angry about it.
+* Then come and find us, after. -> close_find
+* The Thornwood's lucky to have you. -> close_lucky
+* We'll miss you too. -> close_miss
+
+~ close_find
+interject name:thistle: I can do that. I can find anybody. I can track a moth across a frozen lake. You'll never get rid of me.
+approve thistle +3: You told me to come and find you, after
+-> close_end
+
+~ close_lucky
+interject name:thistle: It is. It doesn't know it. Trees never know anything. That's why you have to tell them things.
+approve thistle +2: You told me the Thornwood's lucky to have me
+-> close_end
+
+~ close_miss
+interject name:thistle: Good. You should. I'm very good to have about.
+approve thistle +3: You told me you'll miss me too
+-> close_end
+
+~ close_end
+interject name:thistle: Don't tell Big I said any of that. He'll cry. He cries at everything.
+interject name:thistle: I'm not crying. It's the smoke.
+-> END
+
+~ talk_devoted
+if name:thistle and approval.thistle >= devoted and level >= 8
+-> devoted
+endif
+-> END
+
+~ devoted
+Narrator: The fog thins for once after midnight, and for a few minutes there are stars over the camp. Thistle wakes everyone to see them, whether they want to or not.
+interject name:thistle: LOOK. Look. There's the Old Hare. There's Bess's Nose.
+interject name:thistle: And that one. The little one by the Hare, see? That's new. I'm naming it.
+* What's it called? -> devoted_name
+* (Just look.) -> devoted_name
+
+~ devoted_name
+interject name:thistle: The Pack. ...It's a rubbish name. It's the best name. It's all of you.
+interject name:thistle: When I'm home and you're wherever, I'll look up and there you'll be. Being rubbish. Being mine.
+approve thistle +3: You let me name a star for us
+inspire name:thistle: named a star for her pack
 -> END

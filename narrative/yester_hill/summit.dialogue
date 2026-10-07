@@ -26,10 +26,12 @@ interject name:liriel_dawnsong: Fire is a kind of dawn. The small kind. It will 
 else
 interject tag:pious: Fire's a kind of dawn. The small kind. It'll do.
 endif
+approve thistle +2 liriel_dawnsong +1 godrick_pendlebrook +1: You burned the Gulthias tree
 -> END
 
 ~ leave_tree
 Narrator: You leave it standing. The roots don't move. Walking away, you have the strong impression that they will once you've gone.
+approve thistle -1: You left the Gulthias tree standing
 -> END
 
 ~ heart
@@ -85,4 +87,5 @@ Narrator: The roots give him up slowly, one at a time. You wrap what's left of h
 if guest:adrian_martikov
 Adrian: I'll carry him. ...Please. Let me carry him.
 endif
+approve liriel_dawnsong +2 godrick_pendlebrook +1 kip_smudgewick +1: You cut Elvir Martikov out of the roots to take him home
 -> END

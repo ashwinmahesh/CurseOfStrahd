@@ -6,7 +6,7 @@ Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log 
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
 ## Commands (add new ones to the Makefile)
-make run | arena | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd JOBS=n] | validate | lint | check [DRY=1] | ci | lfs-quiet | art-spend | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
+make run | arena | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd JOBS=n] | golden-saves | validate | lint | check [DRY=1] | ci | lfs-quiet | art-spend | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
 make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | keys [ONLY="id …"] [KINDS=…] | creator [GENERATE=1] | pregens [ONLY="id …"] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
@@ -18,7 +18,9 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
   screen. Batch screenshots into few runs.
 - Any other Godot run that opens a window goes through `tools/godot` (same arguments as Godot), never the Godot.app
   path: it loads tools/macos/nofocus.m so Godot can't activate itself (owner decision 2026-10-06).
-- `make run` and `make arena` are for the owner to play: run them only when asked.
+- `make run` and `make arena` are for the owner to play: run them only when asked. `make play` is his stable copy
+  (~/Documents/CurseOfStrahdGame-play, tools/play/play.sh): it only moves to a main the build thread marked after a
+  clean `make ci` (refs/play/green). Never edit or check out anything in it; PLAY_NO_RUN=1 updates it without a window.
 
 ## Code
 - Static types everywhere; `untyped_declaration` is an error.
@@ -29,6 +31,8 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 - The player controls every party member and guest; AI only drives enemies and neutrals.
 - Scenes are built in code; .tscn files are thin roots. 1 world unit = one 5 ft square.
 - After adding a class_name, `make import` before `make test`.
+- A change to what a save holds bumps `GameState.SAVE_VERSION` and adds a `SaveSystem.upgrade` step; then
+  `make golden-saves` adds the new version's saves beside the old ones in tests/saves, which every test run loads.
 - A new git worktree: before its first `make import`, seed the import cache from the main checkout as an APFS clone,
   which takes almost no disk: `mkdir -p <worktree>/.godot && cp -Rc ~/Documents/CurseOfStrahdGame/.godot/imported
   <worktree>/.godot/`. Never rsync or plain-copy it (about 8 GB per worktree on a nearly full disk).
@@ -42,7 +46,8 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 
 ## Rules source
 Full 2024 PHB (owner decision 2026-10-05, personal use only). SRD 5.2 is the import starting point.
-Rule deviations go in docs/rules/deviations.md; a rule is "done" only when coverage.md says so.
+Rule deviations go in docs/rules/deviations.md; a rule is "done" only when coverage.md says so. Close or update
+the rows your change touches: `make validate` checks both docs against the built phases and the data.
 Data `text` and `summary` are our own words, never copied. Set `source.checked_against` only after comparing every
 number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribution: docs/assets/LICENSES.md.
 
@@ -94,4 +99,5 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   outside `make ci` (it dry-runs them), and ui/ or world/ scripts. Changes to rules/, combat/, story/, core/,
   tests/support or the ci targets need `make ci` green with a clean log.
   The build thread runs `make ci` before every merge to main either way.
+- A new screen or panel goes into tests/integration/test_layout.gd, which fails on text or buttons spilling out.
 - A capture for anything visual. Never weaken tests to pass. Never mark an owner sign-off as passed.

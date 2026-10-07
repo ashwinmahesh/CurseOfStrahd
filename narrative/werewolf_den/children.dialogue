@@ -51,6 +51,7 @@ endif
 set ana_doll_returned
 Mirela: That's Ana's! She dropped it when they carried us up. She's been crying for it every night.
 Narrator: The smallest girl takes the doll through the poles without a word and folds herself around it, and for the first time since you came in, nobody in the pen is shaking.
+approve thistle +1 kip_smudgewick +1 godrick_pendlebrook +1: You gave Ana back her rag doll
 -> menu
 
 ~ bite_ok
@@ -70,12 +71,15 @@ Narrator: She tucks the arm inside her coat and turns her shoulder to you, and t
 set mirela_cured
 Narrator: The prayer is short and plain, and for once something in this valley seems to be listening. The red ring round the bite fades slowly, like a blush.
 Mirela: It doesn't itch any more. It always itched.
+inspire class:cleric: prayed the wolf's bite out of a child's arm
+approve liriel_dawnsong +2 kip_smudgewick +1 thistle +1: You cured Mirela's bite before it took her
 -> menu
 
 ~ break_truce
 set truce_broken
 Mirela: Now? With all of them out there?
 Narrator: In the great cave behind you, somebody laughs: a big, delighted laugh that turns into a howl halfway through.
+approve thistle +2 godrick_pendlebrook +1: You broke Kiril's truce to get the children out
 combat pack_challenge
 
 ~ bye

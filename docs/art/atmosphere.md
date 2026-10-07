@@ -77,7 +77,13 @@ anyone touching this file.
   in a blizzard; will-o'-wisps and fireflies after dark; dust hanging in shut-up rooms; crows circling overhead;
   chimney smoke bent by the wind; sparks over open fires; candlelight spilling from lit windows after dark;
   lightning flashes in a storm (and through the castle's spire windows).
-- **Grade.** Each time of day maps brightness through its own shadow and light colours, so a scene keeps to one
+- **Grade.** In the Modern finish (W16) the shade takes the place's own cool colour and loses some of its colour while
+  lamplight keeps its warm one, so light pools warm against cool, dark shade (the chosen direction: A's effects in
+  B's tone): night blue by default, blue-grey on an overcast day, deep night blue indoors; a mood's `tone` gives
+  its own (Berez, Yester Hill, crypts and the castle larders sick green, the brides' court crimson, the castle's
+  storm bruise purple, a tavern warm peat, the snows moon blue) and can change how much colour the shade keeps, how
+  deep its blacks go and how much ambient light fills it (`Atmosphere.MODERN_TONE`, `DAY_TONE`, `INDOOR_TONE`). In
+  Classic each time of day maps brightness through its own shadow and light colours, so a scene keeps to one
   family of hues; strongly coloured light (a lantern, a fire) keeps more of its own colour. Greys stay on the grey
   ramp in the palette snap where the mood asks (`keep_greys`), so a pale grey fades without a muddy brown ring. A
   vignette sinks the screen's edges towards `void`.
@@ -114,6 +120,14 @@ GameSettings `graphics`, High by default), applied as each place opens. Classic 
   cast shadows; every quarter second the nearest to the party get the preset's budget. A light already casting keeps
   its shadow until another is clearly nearer, so shadows don't blink as the party walks, and shadows fade out a
   little past the party. A light with the meta `no_shadow` never casts one.
+- **Each light by its kind** (W5, `Atmosphere.LIGHT_KINDS`): a location's lights by their `kind` in its data, lit
+  windows from the weather, the party's lantern, flames and spell lights by what they are. Their size sets how soft
+  their shadows are (a candle's crisp, a hearth's soft) and how strongly they light the haze; magic lights and windows
+  hold steady. The nearest few flames that cast shadows sway a little with their flicker, so their shadows stir
+  (`CandleFlicker`, meta `sway`; 4 on High, 2 on Medium).
+- **Windows indoors** are the moon or the day coming in: the key light's colour, steady, with a spot light over the
+  wall beside the window down across the room (casting shadows) and a glowing cone of dusty haze along it
+  (`shaders/world/light_shaft.gdshader`), hung on the window's light so they hide with it.
 
 ## Rules for new places
 

@@ -43,10 +43,12 @@ combat press_house_mash
 
 ~ doubt_nature
 Narrator: For a moment the young druid looks at the press, the rafters, the vines through the open door, as if counting how old each of them is.
+approve thistle +1: You told Kostin his lord is only a tenant of the land
 -> doubt
 
 ~ doubt_druid
 interject class:druid: The green keeps no lord, brother. It had none before the castle. It'll have none when the castle is a hill of moss.
+inspire class:druid: spoke the old words of the green to a druid of the blight
 -> doubt
 
 ~ doubt_persuade
