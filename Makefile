@@ -43,6 +43,12 @@ import:
 test: import
 	python3 tools/run_tests.py --godot $(GODOT) $(if $(JOBS),--jobs $(JOBS),) $(if $(ONLY),--only=$(ONLY),) $(if $(FILES),--files=$(FILES),) 2>&1 | $(LOGCHK)
 
+## Golden saves (P4): the playthrough tests keep a save at the start of each chapter in tests/saves
+## (v<save version>_<chapter>.json, tests/support/golden_saves.gd); one already there is never made again.
+.PHONY: golden-saves
+golden-saves:
+	GOLDEN_SAVES=$$(git rev-parse --short HEAD) $(MAKE) test FILES=test_golden_saves.gd,test_phase3_exit.gd,test_phase4_exit.gd,test_phase5_exit.gd,test_phase6_exit.gd
+
 
 ## Git LFS noise: old art and clips that only changed timestamp stop showing as modified (tools/lfs_quiet.sh).
 lfs-quiet:
