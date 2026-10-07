@@ -339,12 +339,20 @@ static func cel_checker(a: String, b: String, line: String) -> ShaderMaterial:
 	return m
 
 
+## Where the screen pass draws among blended things: before all of them (they draw at 0 and above).
+const POST_PRIORITY := -1
+
+
 ## A full-screen quad that runs the outline + palette pass. Parent it to the active camera.
 static func make_post_process() -> MeshInstance3D:
 	var quad := QuadMesh.new()
 	quad.size = Vector2(2, 2)
 	var mat := ShaderMaterial.new()
 	mat.shader = POST_SHADER
+	# First in the transparent pass: the pass redraws the whole screen from the copy taken before that pass, so
+	# anything blended drawn ahead of it would be painted over (a 3D piece fading in front of the party vanished
+	# instead of ghosting). Everything blended now draws over the finished picture.
+	mat.render_priority = POST_PRIORITY
 	mat.set_shader_parameter("palette_tex", PALETTE_TEX)
 	mat.set_shader_parameter("palette_size", palette_size())
 	mat.set_shader_parameter("outline_color", color("void"))

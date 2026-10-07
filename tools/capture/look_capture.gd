@@ -8,7 +8,7 @@ extends Node
 ## Environment: LOOK_SHOTS=village_dusk,castle_hall (default: every shot), LOOK_STYLE=classic|modern and
 ## LOOK_GRAPHICS=low|medium|high (this run only), LOOK_OFF=msaa,pcss,lamps,filter,splits,ssr (turn one thing off to see
 ## what it costs), LOOK_AA=msaa2|fxaa|smaa (another anti-aliasing in its place), LOOK_OUTLINE=off|silhouette|full
-## (the world's ink lines). LOOK_BENCH=1 times each part of
+## (the world's ink lines), LOOK_FADE=1 (the 3D pieces near the party faded, as when they stand in front of it). LOOK_BENCH=1 times each part of
 ## the renderer in turn instead (_bench), and LOOK_BENCH=presets the graphics presets, several rounds over, since
 ## other work on the machine makes one reading noisy.
 
@@ -101,6 +101,15 @@ func _build(shot: Dictionary) -> void:
 			post.set_shader_parameter("outlines", true)
 			post.set_shader_parameter("outline_creases", true)
 			post.set_shader_parameter("outline_strength", 1.0)
+	if OS.get_environment("LOOK_FADE") != "":
+		# Every 3D piece within five squares of the party fades as if it stood in front of them (the post chain's
+		# fade check).
+		var focus := view.rig.global_position
+		for t in view.board.mesh_occluders:
+			if is_instance_valid(t) and t.global_position.distance_to(focus) < 5.0:
+				t.set_meta("fade", 0.72)
+				ModelPiece.set_fade(t, 0.72)
+		view.set_process(false)
 	var off := OS.get_environment("LOOK_OFF").split(",", false)
 	if "msaa" in off:
 		get_viewport().msaa_3d = Viewport.MSAA_DISABLED
