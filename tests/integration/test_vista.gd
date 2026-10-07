@@ -7,6 +7,7 @@ extends TestCase
 
 
 func before_each() -> void:
+	InputActions.ensure()   # the camera's wheel handler also asks about its rotate keys
 	GameState.reset()
 	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
 		var ch := Pregens.build(id, 1)
