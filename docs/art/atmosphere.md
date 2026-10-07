@@ -100,21 +100,26 @@ them and they stay crisp. On this Mac, Vallaki in the rain, the castle's storm a
 ## Ground with shape in the Modern finish
 
 Improvement Ideas W11. On an outdoor wild map (ArenaBoard.WILD) the ground people walk on is drawn as one shaped
-skin instead of flat squares: shallow hollows, a fine unevenness, and two wheel ruts along the shortest walk between
-each two ways out on the map's edge. The skin never rises above the squares' floor level and is never deeper than
-`GroundRelief.DEEPEST`, so tokens, grid overlays and spell templates still stand on the same 5 ft grid
+skin instead of flat squares, with shallow hollows. It never rises above the squares' floor level and is never deeper
+than `GroundRelief.DEEPEST`, so tokens, grid overlays and spell templates still stand on the same 5 ft grid
 (`floor_y`/`cell_center` are untouched; real heights are F4's), and it settles flat round any square drawn flat (a
-prop's, a door's, an exit's, a raised one, water). The board's own floor boxes there are lowered out of sight under it
-(`ArenaBoard.floor_box`, `floor_material`). Under the map's woods (tree squares) the ground rises into banks with
-mounds on them, and the land past the edge starts on the banks and settles into its hills; the roads out of the map
-carry the same crown, ruts and verges. The trees and plants stand on all of it. Towns keep their streets, rooms and
-yards their floors, and Classic stays flat.
+prop's, a door's, an exit's, a raised one, water). The board's own floor boxes there stop drawing themselves (render
+layers 0; `ArenaBoard.floor_box`, `floor_material`); a trap's square keeps its box, so a pit still opens it. Under the
+map's woods (tree squares) the ground rises into banks with mounds on them, and the land past the edge starts on the
+banks and settles into its hills. The trees and plants stand on all of it. Towns keep their streets, rooms and yards
+their floors, and Classic stays flat. `GroundRelief.roads()` lays the shortest walks between the map's ways out; the
+surfaces lane's wheel-rut decals (W10) follow them.
+
+Hidden until found: the skin, the banks and the map's ground plants leave out squares HiddenAreas hides
+(AtmosphereLand's HiddenWatch redraws them when a secret door is found).
+
+A place is built on every arrival, so all of it is worked out on one coarse grid of points (two a square), from
+distance fields over flat arrays, and indexed into a few meshes; and since a place comes out the same every time, what
+a build works out (the land's fields and mesh, the relief, the trees, the plants) is kept for the newest eight places
+and drawn again from that on the next visit. `AtmosphereLand.build_ms` says what each phase took.
 
     make capture SCENE=res://tools/capture/land_capture.tscn NAME=land/clay FRAMES=10 \
       LAND_SHOTS=crossroads LAND_CLAY=1     # the shaped ground in plain clay; LAND_NO_RELIEF=1 for without
-
-The shape is gentle: on today's busy ground textures it shows most in low light, and wheel-rut decals (W10) can follow
-`GroundRelief`'s roads. Not done: a hidden area's ground outdoors stays drawn (HiddenAreas hides the lowered boxes).
 
 ## Vistas in the Modern finish
 

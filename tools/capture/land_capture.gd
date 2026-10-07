@@ -139,8 +139,9 @@ func _build(shot: Dictionary) -> void:
 	if OS.get_environment("LAND_CLAY") != "" and view.atmosphere.land != null:
 		# The shaped ground in plain clay, to see its shape without the texture.
 		var clay := Look.cel("stone")
-		for n in view.atmosphere.land.root.find_children("Ground*", "MeshInstance3D", true, false):
-			(n as MeshInstance3D).material_override = clay
+		for pattern: String in ["Walked*", "Banks"]:
+			for n in view.atmosphere.land.root.find_children(pattern, "MeshInstance3D", true, false):
+				(n as MeshInstance3D).material_override = clay
 
 
 ## Times the place with each group of the land's plants hidden in turn, over several rounds, and prints the quickest

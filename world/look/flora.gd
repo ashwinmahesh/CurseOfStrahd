@@ -27,8 +27,10 @@ static var _materials: Dictionary = {}    ## "<material>|<kind>" -> ShaderMateri
 var set_id := "forest"
 var spec: Dictionary = {}
 var rng := RandomNumberGenerator.new()
-## The map's own ground plants by square (dress_map): cell -> {plant id: [[Transform3D, Color], ...]}.
+## The map's own ground plants by square (dress_map): cell -> {plant id: [[Transform3D, Color], ...]}, and what
+## plant_map made of them with nothing hidden.
 var map_items: Dictionary = {}
+var map_made: Array = []
 ## Set by art QA tools only, to shoot a place as it was before (tools/capture/land_capture.gd LAND_NO_FLORA).
 static var off := false
 
@@ -218,8 +220,10 @@ static func instance(id: String, s: float) -> MeshInstance3D:
 
 ## Draws many copies of plants, grouped by chunk so the camera culls them: `items` is plant id -> Array of
 ## [Transform3D, Color]. Trees cast shadows where `shadows` says so. Each chunk keeps where its copies stand (meta
-## "origins"), since a MultiMesh without a renderer (headless) keeps none.
-static func plant_all(parent: Node3D, items: Dictionary, shadows: bool, label: String) -> void:
+## "origins"), since a MultiMesh without a renderer (headless) keeps none. Returns what it made, one
+## [name, MultiMesh, shadows, origins] per chunk, which replant() draws again without working any of it out.
+static func plant_all(parent: Node3D, items: Dictionary, shadows: bool, label: String) -> Array:
+	var made := []
 	for id: String in items:
 		var m := mesh(id)
 		if m == null:
@@ -238,18 +242,51 @@ static func plant_all(parent: Node3D, items: Dictionary, shadows: bool, label: S
 			mm.use_colors = true
 			mm.mesh = m
 			mm.instance_count = list.size()
+			# All the copies at once (a 3 x 4 transform by rows, then the colour), rather than one call each.
+			var buf := PackedFloat32Array()
+			buf.resize(list.size() * 16)
 			var origins := PackedVector3Array()
+			origins.resize(list.size())
 			for i in list.size():
 				var t := (list[i] as Array)[0] as Transform3D
-				mm.set_instance_transform(i, t)
-				mm.set_instance_color(i, (list[i] as Array)[1] as Color)
-				origins.append(t.origin)
-			var mmi := MultiMeshInstance3D.new()
-			mmi.name = "%s_%s_%d_%d" % [label, id, key.x, key.y]
-			mmi.multimesh = mm
-			mmi.set_meta("origins", origins)
-			mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if shadows else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-			parent.add_child(mmi)
+				var c := (list[i] as Array)[1] as Color
+				var b := t.basis
+				var o := i * 16
+				buf[o] = b.x.x
+				buf[o + 1] = b.y.x
+				buf[o + 2] = b.z.x
+				buf[o + 3] = t.origin.x
+				buf[o + 4] = b.x.y
+				buf[o + 5] = b.y.y
+				buf[o + 6] = b.z.y
+				buf[o + 7] = t.origin.y
+				buf[o + 8] = b.x.z
+				buf[o + 9] = b.y.z
+				buf[o + 10] = b.z.z
+				buf[o + 11] = t.origin.z
+				buf[o + 12] = c.r
+				buf[o + 13] = c.g
+				buf[o + 14] = c.b
+				buf[o + 15] = c.a
+				origins[i] = t.origin
+			mm.buffer = buf
+			made.append(["%s_%s_%d_%d" % [label, id, key.x, key.y], mm, shadows, origins])
+	replant(parent, made)
+	return made
+
+
+## Draws again what plant_all made (its MultiMeshes are shared, not copied); returns the nodes.
+static func replant(parent: Node3D, made: Array) -> Array[Node]:
+	var nodes: Array[Node] = []
+	for rec: Array in made:
+		var mmi := MultiMeshInstance3D.new()
+		mmi.name = str(rec[0])
+		mmi.multimesh = rec[1] as MultiMesh
+		mmi.set_meta("origins", rec[3])
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if bool(rec[2]) else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		parent.add_child(mmi)
+		nodes.append(mmi)
+	return nodes
 
 
 ## A plant from weighted list `choices` ([[id, weight], ...]), or "".
@@ -338,7 +375,10 @@ func dress_map(board: ArenaBoard, ground_y: Callable, bare: Dictionary = {}) -> 
 
 
 ## Draws the map's ground plants (dress_map) under `parent`, leaving out the `hidden` squares; returns the nodes made.
+## With nothing hidden, what it made is kept (map_made) to draw again on the next visit.
 func plant_map(parent: Node3D, hidden: Dictionary = {}) -> Array[Node]:
+	if hidden.is_empty() and not map_made.is_empty():
+		return replant(parent, map_made)
 	var items := {}
 	for c: Vector2i in map_items:
 		if hidden.has(c):
@@ -349,11 +389,13 @@ func plant_map(parent: Node3D, hidden: Dictionary = {}) -> Array[Node]:
 				items[id] = []
 			(items[id] as Array).append_array(per[id] as Array)
 	var before := parent.get_child_count()
-	plant_all(parent, items, false, "MapPlants")
-	var made: Array[Node] = []
+	var made := plant_all(parent, items, false, "MapPlants")
+	if hidden.is_empty():
+		map_made = made
+	var nodes: Array[Node] = []
 	for i in range(before, parent.get_child_count()):
-		made.append(parent.get_child(i))
-	return made
+		nodes.append(parent.get_child(i))
+	return nodes
 
 
 ## Scatters `choices` along the side of square `c` toward `toward` (the woods beside it), in a band from 0.3 to 0.5
