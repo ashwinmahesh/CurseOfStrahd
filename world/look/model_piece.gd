@@ -9,6 +9,7 @@ extends RefCounted
 ## so it takes the scene's lights and shadows, and the screen pass outlines it and snaps it to the palette.
 
 const MANIFEST_JSON := "res://art/models/manifest.json"
+const SPRITE_SHADER := preload("res://shaders/cel_sprite.gdshader")
 ## How far a piece standing against a wall keeps off the wall face.
 const GAP := 0.004
 ## Sides of a square in the order furniture looks for a wall to back onto: north first, so it faces the camera.
@@ -90,6 +91,12 @@ static func material(name: String) -> Material:
 		m = g
 	elif name.begins_with("tex_"):
 		m = Look.cel_textured(name.trim_prefix("tex_").replace("__", "/"))
+	elif name.begins_with("spr_") and SetDressing.has_art(name.trim_prefix("spr_")):
+		# Painted with its own 2D art (a piece sculpted from its sprite).
+		var sm := ShaderMaterial.new()
+		sm.shader = SPRITE_SHADER
+		sm.set_shader_parameter("albedo_tex", load("res://" + str((SetDressing.manifest()[name.trim_prefix("spr_")] as Dictionary)["file"])) as Texture2D)
+		m = sm
 	if m == null:
 		m = Look.cel("pewter")
 	_materials[name] = m
@@ -133,7 +140,8 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 	var back := backing_side(board, cell)
 	var faces := Vector2i(0, 1) if back == Vector2i.ZERO else -back
 	holder.rotation.y = atan2(float(faces.x), float(faces.y))
-	if mount == "against_wall":
+	if mount == "against_wall" or mount == "wall":
+		# A wall piece with no wall face free beside it stands on its square like furniture against a wall.
 		var depth := float((info.get("size", [1, 1, 0.3]) as Array)[2])
 		holder.set_meta("against_wall", true)
 		if back != Vector2i.ZERO:
@@ -371,7 +379,7 @@ static func dim(node: Node3D) -> void:
 			if m == null:
 				continue
 			# A flat colour's albedo, or a texture's tint, darkened.
-			var key := "albedo" if m.shader == Look.CEL_SHADER else ("tint" if m.shader == Look.CEL_WORLD_SHADER else "")
+			var key := "albedo" if m.shader == Look.CEL_SHADER else ("tint" if m.shader in [Look.CEL_WORLD_SHADER, SPRITE_SHADER] else "")
 			if key == "":
 				continue
 			var d := m.duplicate() as ShaderMaterial

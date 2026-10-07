@@ -1919,6 +1919,1554 @@
         "pal_umber"
       ],
       "triangles": 1056
+    },
+    "statue_knight": {
+      "file": "art/models/statue_knight.glb",
+      "mount": "free",
+      "stands_for": [
+        "statue_knight",
+        "statue_knight_back"
+      ],
+      "size": [
+        0.7,
+        1.4,
+        0.304
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_statue_knight",
+        "spr_statue_knight_back"
+      ],
+      "triangles": 3528,
+      "sculpted": true
+    },
+    "armor_stand": {
+      "file": "art/models/armor_stand.glb",
+      "mount": "free",
+      "stands_for": [
+        "armor_stand",
+        "armor_stand_back"
+      ],
+      "size": [
+        0.508,
+        1.177,
+        0.229
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_armor_stand",
+        "spr_armor_stand_back"
+      ],
+      "triangles": 2536,
+      "sculpted": true
+    },
+    "armor_wolf_helm": {
+      "file": "art/models/armor_wolf_helm.glb",
+      "mount": "free",
+      "stands_for": [
+        "armor_wolf_helm",
+        "armor_wolf_helm_back"
+      ],
+      "size": [
+        0.781,
+        1.4,
+        0.345
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_armor_wolf_helm",
+        "spr_armor_wolf_helm_back"
+      ],
+      "triangles": 3308,
+      "sculpted": true
+    },
+    "statue_saint": {
+      "file": "art/models/statue_saint.glb",
+      "mount": "free",
+      "stands_for": [
+        "statue_saint",
+        "statue_saint_back"
+      ],
+      "size": [
+        0.727,
+        1.765,
+        0.309
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_statue_saint",
+        "spr_statue_saint_back"
+      ],
+      "triangles": 2676,
+      "sculpted": true
+    },
+    "statue_strahd": {
+      "file": "art/models/statue_strahd.glb",
+      "mount": "free",
+      "stands_for": [
+        "statue_strahd",
+        "statue_strahd_back"
+      ],
+      "size": [
+        0.97,
+        1.23,
+        0.392
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_statue_strahd",
+        "spr_statue_strahd_back"
+      ],
+      "triangles": 5760,
+      "sculpted": true
+    },
+    "statue_head": {
+      "file": "art/models/statue_head.glb",
+      "mount": "free",
+      "stands_for": [
+        "statue_head"
+      ],
+      "size": [
+        0.419,
+        0.286,
+        0.35
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_statue_head"
+      ],
+      "triangles": 7044,
+      "sculpted": true
+    },
+    "statue_mother_night": {
+      "file": "art/models/statue_mother_night.glb",
+      "mount": "free",
+      "stands_for": [
+        "statue_mother_night"
+      ],
+      "size": [
+        0.98,
+        1.428,
+        0.392
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_statue_mother_night"
+      ],
+      "triangles": 3588,
+      "sculpted": true
+    },
+    "scarecrow": {
+      "file": "art/models/scarecrow.glb",
+      "mount": "free",
+      "stands_for": [
+        "scarecrow",
+        "scarecrow_back"
+      ],
+      "size": [
+        0.942,
+        1.4,
+        0.279
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_scarecrow",
+        "spr_scarecrow_back"
+      ],
+      "triangles": 2776,
+      "sculpted": true
+    },
+    "scarecrow_stitched": {
+      "file": "art/models/scarecrow_stitched.glb",
+      "mount": "free",
+      "stands_for": [
+        "scarecrow_stitched",
+        "scarecrow_stitched_back"
+      ],
+      "size": [
+        0.969,
+        1.4,
+        0.291
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_scarecrow_stitched",
+        "spr_scarecrow_stitched_back"
+      ],
+      "triangles": 2936,
+      "sculpted": true
+    },
+    "stuffed_wolf": {
+      "file": "art/models/stuffed_wolf.glb",
+      "mount": "free",
+      "stands_for": [
+        "stuffed_wolf",
+        "stuffed_wolf_back"
+      ],
+      "size": [
+        0.816,
+        0.784,
+        0.421
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_stuffed_wolf",
+        "spr_stuffed_wolf_back"
+      ],
+      "triangles": 6780,
+      "sculpted": true
+    },
+    "horse": {
+      "file": "art/models/horse.glb",
+      "mount": "free",
+      "stands_for": [
+        "horse",
+        "horse_back"
+      ],
+      "size": [
+        1.4,
+        1.4,
+        0.495
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_horse",
+        "spr_horse_back"
+      ],
+      "triangles": 5332,
+      "big": true,
+      "sculpted": true
+    },
+    "carcass": {
+      "file": "art/models/carcass.glb",
+      "mount": "free",
+      "stands_for": [
+        "carcass",
+        "carcass_back"
+      ],
+      "size": [
+        0.939,
+        0.436,
+        0.49
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_carcass",
+        "spr_carcass_back"
+      ],
+      "triangles": 5636,
+      "sculpted": true
+    },
+    "skeleton_leather": {
+      "file": "art/models/skeleton_leather.glb",
+      "mount": "free",
+      "stands_for": [
+        "skeleton_leather",
+        "skeleton_leather_back"
+      ],
+      "size": [
+        0.606,
+        0.687,
+        0.221
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_skeleton_leather",
+        "spr_skeleton_leather_back"
+      ],
+      "triangles": 4128,
+      "sculpted": true
+    },
+    "doll": {
+      "file": "art/models/doll.glb",
+      "mount": "free",
+      "stands_for": [
+        "doll"
+      ],
+      "size": [
+        0.208,
+        0.385,
+        0.096
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_doll"
+      ],
+      "triangles": 3520,
+      "sculpted": true
+    },
+    "doll_yellow": {
+      "file": "art/models/doll_yellow.glb",
+      "mount": "free",
+      "stands_for": [
+        "doll_yellow",
+        "doll_yellow_back"
+      ],
+      "size": [
+        0.231,
+        0.385,
+        0.111
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_doll_yellow",
+        "spr_doll_yellow_back"
+      ],
+      "triangles": 3784,
+      "sculpted": true
+    },
+    "poppet": {
+      "file": "art/models/poppet.glb",
+      "mount": "free",
+      "stands_for": [
+        "poppet"
+      ],
+      "size": [
+        0.19,
+        0.288,
+        0.086
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_poppet"
+      ],
+      "triangles": 3080,
+      "sculpted": true
+    },
+    "crow_barrel": {
+      "file": "art/models/crow_barrel.glb",
+      "mount": "free",
+      "stands_for": [
+        "crow_barrel",
+        "crow_barrel_back"
+      ],
+      "size": [
+        0.354,
+        0.785,
+        0.295
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_crow_barrel",
+        "spr_crow_barrel_back"
+      ],
+      "triangles": 3940,
+      "sculpted": true
+    },
+    "charms": {
+      "file": "art/models/charms.glb",
+      "mount": "free",
+      "stands_for": [
+        "charms"
+      ],
+      "size": [
+        0.969,
+        1.072,
+        0.147
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_charms"
+      ],
+      "triangles": 5296,
+      "sculpted": true
+    },
+    "soul_bags": {
+      "file": "art/models/soul_bags.glb",
+      "mount": "free",
+      "stands_for": [
+        "soul_bags"
+      ],
+      "size": [
+        0.978,
+        0.978,
+        0.294
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_soul_bags"
+      ],
+      "triangles": 5964,
+      "sculpted": true
+    },
+    "frozen_traveller": {
+      "file": "art/models/frozen_traveller.glb",
+      "mount": "free",
+      "stands_for": [
+        "frozen_traveller"
+      ],
+      "size": [
+        0.708,
+        0.785,
+        0.365
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_frozen_traveller"
+      ],
+      "triangles": 5620,
+      "sculpted": true
+    },
+    "frozen_birds": {
+      "file": "art/models/frozen_birds.glb",
+      "mount": "free",
+      "stands_for": [
+        "frozen_birds"
+      ],
+      "size": [
+        0.45,
+        0.588,
+        0.16
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_frozen_birds"
+      ],
+      "triangles": 4016,
+      "sculpted": true
+    },
+    "roc_nest": {
+      "file": "art/models/roc_nest.glb",
+      "mount": "free",
+      "stands_for": [
+        "roc_nest"
+      ],
+      "size": [
+        0.907,
+        0.684,
+        0.749
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_roc_nest"
+      ],
+      "triangles": 7216,
+      "sculpted": true
+    },
+    "dragon_bones": {
+      "file": "art/models/dragon_bones.glb",
+      "mount": "free",
+      "stands_for": [
+        "dragon_bones"
+      ],
+      "size": [
+        2.459,
+        1.6,
+        1.237
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_dragon_bones"
+      ],
+      "triangles": 6516,
+      "big": true,
+      "sculpted": true
+    },
+    "mobile": {
+      "file": "art/models/mobile.glb",
+      "mount": "free",
+      "stands_for": [
+        "mobile"
+      ],
+      "size": [
+        0.762,
+        1.177,
+        0.118
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_mobile"
+      ],
+      "triangles": 2024,
+      "sculpted": true
+    },
+    "coats": {
+      "file": "art/models/coats.glb",
+      "mount": "free",
+      "stands_for": [
+        "coats",
+        "coats_back"
+      ],
+      "size": [
+        0.554,
+        1.2,
+        0.137
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_coats",
+        "spr_coats_back"
+      ],
+      "triangles": 3688,
+      "sculpted": true
+    },
+    "sheeted_furniture": {
+      "file": "art/models/sheeted_furniture.glb",
+      "mount": "free",
+      "stands_for": [
+        "sheeted_furniture",
+        "sheeted_furniture_back"
+      ],
+      "size": [
+        0.952,
+        0.844,
+        0.588
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_sheeted_furniture",
+        "spr_sheeted_furniture_back"
+      ],
+      "triangles": 8192,
+      "sculpted": true
+    },
+    "refuse_mound": {
+      "file": "art/models/refuse_mound.glb",
+      "mount": "free",
+      "stands_for": [
+        "refuse_mound"
+      ],
+      "size": [
+        0.936,
+        0.57,
+        0.784
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_refuse_mound"
+      ],
+      "triangles": 6532,
+      "sculpted": true
+    },
+    "bones": {
+      "file": "art/models/bones.glb",
+      "mount": "free",
+      "stands_for": [
+        "bones"
+      ],
+      "size": [
+        0.549,
+        0.372,
+        0.348
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_bones"
+      ],
+      "triangles": 5448,
+      "sculpted": true
+    },
+    "sword_leaning": {
+      "file": "art/models/sword_leaning.glb",
+      "mount": "free",
+      "stands_for": [
+        "sword_leaning",
+        "sword_leaning_back"
+      ],
+      "size": [
+        0.477,
+        0.785,
+        0.074
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_sword_leaning",
+        "spr_sword_leaning_back"
+      ],
+      "triangles": 2912,
+      "sculpted": true
+    },
+    "jewel_box": {
+      "file": "art/models/jewel_box.glb",
+      "mount": "free",
+      "stands_for": [
+        "jewel_box"
+      ],
+      "size": [
+        0.417,
+        0.687,
+        0.311
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_jewel_box"
+      ],
+      "triangles": 3676,
+      "sculpted": true
+    },
+    "music_box": {
+      "file": "art/models/music_box.glb",
+      "mount": "free",
+      "stands_for": [
+        "music_box"
+      ],
+      "size": [
+        0.323,
+        0.687,
+        0.244
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_music_box"
+      ],
+      "triangles": 2500,
+      "sculpted": true
+    },
+    "cage_hanging": {
+      "file": "art/models/cage_hanging.glb",
+      "mount": "free",
+      "stands_for": [
+        "cage_hanging"
+      ],
+      "size": [
+        0.862,
+        1.373,
+        0.517
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_cage_hanging"
+      ],
+      "triangles": 4764,
+      "sculpted": true
+    },
+    "wicker_cage": {
+      "file": "art/models/wicker_cage.glb",
+      "mount": "free",
+      "stands_for": [
+        "wicker_cage"
+      ],
+      "size": [
+        0.673,
+        1.373,
+        0.408
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_wicker_cage"
+      ],
+      "triangles": 3852,
+      "sculpted": true
+    },
+    "painting": {
+      "file": "art/models/painting.glb",
+      "mount": "wall",
+      "stands_for": [
+        "painting"
+      ],
+      "size": [
+        0.687,
+        0.82,
+        0.058
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 84,
+      "sockets": {
+        "art": [
+          0.0,
+          0.7,
+          0.014
+        ]
+      },
+      "decals": [
+        {
+          "art": "painting",
+          "region": [
+            0,
+            0,
+            164,
+            196
+          ],
+          "socket": "art",
+          "width": 0.617
+        }
+      ]
+    },
+    "painting_row": {
+      "file": "art/models/painting_row.glb",
+      "mount": "wall",
+      "stands_for": [
+        "painting_row"
+      ],
+      "size": [
+        0.99,
+        0.456,
+        0.058
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 84,
+      "sockets": {
+        "art": [
+          0.0,
+          0.7,
+          0.014
+        ]
+      },
+      "decals": [
+        {
+          "art": "painting_row",
+          "region": [
+            0,
+            0,
+            248,
+            108
+          ],
+          "socket": "art",
+          "width": 0.92
+        }
+      ]
+    },
+    "family_portrait": {
+      "file": "art/models/family_portrait.glb",
+      "mount": "wall",
+      "stands_for": [
+        "family_portrait"
+      ],
+      "size": [
+        0.787,
+        0.92,
+        0.058
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 84,
+      "sockets": {
+        "art": [
+          0.0,
+          0.425,
+          0.014
+        ]
+      },
+      "decals": [
+        {
+          "art": "family_portrait",
+          "region": [
+            0,
+            0,
+            188,
+            224
+          ],
+          "socket": "art",
+          "width": 0.717
+        }
+      ]
+    },
+    "portrait_couple": {
+      "file": "art/models/portrait_couple.glb",
+      "mount": "wall",
+      "stands_for": [
+        "portrait_couple"
+      ],
+      "size": [
+        0.715,
+        0.82,
+        0.058
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 84,
+      "sockets": {
+        "art": [
+          0.0,
+          0.7,
+          0.014
+        ]
+      },
+      "decals": [
+        {
+          "art": "portrait_couple",
+          "region": [
+            0,
+            0,
+            172,
+            196
+          ],
+          "socket": "art",
+          "width": 0.645
+        }
+      ]
+    },
+    "mirror": {
+      "file": "art/models/mirror.glb",
+      "mount": "wall",
+      "stands_for": [
+        "mirror"
+      ],
+      "size": [
+        0.522,
+        0.67,
+        0.058
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 84,
+      "sockets": {
+        "art": [
+          0.0,
+          0.7,
+          0.014
+        ]
+      },
+      "decals": [
+        {
+          "art": "mirror",
+          "region": [
+            0,
+            0,
+            120,
+            160
+          ],
+          "socket": "art",
+          "width": 0.452
+        }
+      ]
+    },
+    "mirror_full": {
+      "file": "art/models/mirror_full.glb",
+      "mount": "wall",
+      "stands_for": [
+        "mirror_full"
+      ],
+      "size": [
+        0.676,
+        1.22,
+        0.058
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 84,
+      "sockets": {
+        "art": [
+          0.0,
+          0.575,
+          0.014
+        ]
+      },
+      "decals": [
+        {
+          "art": "mirror_full",
+          "region": [
+            0,
+            0,
+            160,
+            300
+          ],
+          "socket": "art",
+          "width": 0.606
+        }
+      ]
+    },
+    "tally_board": {
+      "file": "art/models/tally_board.glb",
+      "mount": "wall",
+      "stands_for": [
+        "tally_board"
+      ],
+      "size": [
+        0.809,
+        0.66,
+        0.03
+      ],
+      "materials": [
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 12,
+      "sockets": {
+        "art": [
+          0.0,
+          0.7,
+          0.032
+        ]
+      },
+      "decals": [
+        {
+          "art": "tally_board",
+          "region": [
+            0,
+            0,
+            196,
+            160
+          ],
+          "socket": "art",
+          "width": 0.749
+        }
+      ]
+    },
+    "notes_wall": {
+      "file": "art/models/notes_wall.glb",
+      "mount": "wall",
+      "stands_for": [
+        "notes_wall"
+      ],
+      "size": [
+        0.98,
+        0.959,
+        0.03
+      ],
+      "materials": [
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 12,
+      "sockets": {
+        "art": [
+          0.0,
+          0.4497,
+          0.032
+        ]
+      },
+      "decals": [
+        {
+          "art": "notes_wall",
+          "region": [
+            0,
+            0,
+            268,
+            260
+          ],
+          "socket": "art",
+          "width": 0.92
+        }
+      ]
+    },
+    "notice_papers": {
+      "file": "art/models/notice_papers.glb",
+      "mount": "wall",
+      "stands_for": [
+        "notice_papers"
+      ],
+      "size": [
+        0.98,
+        0.781,
+        0.03
+      ],
+      "materials": [
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 12,
+      "sockets": {
+        "art": [
+          0.0,
+          0.7,
+          0.032
+        ]
+      },
+      "decals": [
+        {
+          "art": "notice_papers",
+          "region": [
+            0,
+            0,
+            252,
+            196
+          ],
+          "socket": "art",
+          "width": 0.92
+        }
+      ]
+    },
+    "hanging_sign": {
+      "file": "art/models/hanging_sign.glb",
+      "mount": "wall",
+      "stands_for": [
+        "hanging_sign"
+      ],
+      "size": [
+        0.783,
+        0.76,
+        0.03
+      ],
+      "materials": [
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 12,
+      "sockets": {
+        "art": [
+          0.0,
+          0.7,
+          0.032
+        ]
+      },
+      "decals": [
+        {
+          "art": "hanging_sign",
+          "region": [
+            0,
+            0,
+            192,
+            184
+          ],
+          "socket": "art",
+          "width": 0.723
+        }
+      ]
+    },
+    "drawings": {
+      "file": "art/models/drawings.glb",
+      "mount": "wall",
+      "stands_for": [
+        "drawings"
+      ],
+      "size": [
+        0.711,
+        0.66,
+        0.03
+      ],
+      "materials": [
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 12,
+      "sockets": {
+        "art": [
+          0.0,
+          0.7,
+          0.032
+        ]
+      },
+      "decals": [
+        {
+          "art": "drawings",
+          "region": [
+            0,
+            0,
+            172,
+            160
+          ],
+          "socket": "art",
+          "width": 0.651
+        }
+      ]
+    },
+    "relief": {
+      "file": "art/models/relief.glb",
+      "mount": "wall",
+      "stands_for": [
+        "relief"
+      ],
+      "size": [
+        1.0,
+        0.764,
+        0.06
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 24,
+      "sockets": {
+        "art": [
+          0.0,
+          0.7,
+          0.052
+        ]
+      },
+      "decals": [
+        {
+          "art": "relief",
+          "region": [
+            0,
+            0,
+            248,
+            192
+          ],
+          "socket": "art",
+          "width": 0.92
+        }
+      ]
+    },
+    "arch_carved": {
+      "file": "art/models/arch_carved.glb",
+      "mount": "wall",
+      "stands_for": [
+        "arch_carved"
+      ],
+      "size": [
+        0.997,
+        1.16,
+        0.06
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 24,
+      "sockets": {
+        "art": [
+          0.0,
+          0.55,
+          0.052
+        ]
+      },
+      "decals": [
+        {
+          "art": "arch_carved",
+          "region": [
+            0,
+            0,
+            240,
+            288
+          ],
+          "socket": "art",
+          "width": 0.917
+        }
+      ]
+    },
+    "carved_paneling": {
+      "file": "art/models/carved_paneling.glb",
+      "mount": "wall",
+      "stands_for": [
+        "carved_paneling"
+      ],
+      "size": [
+        1.0,
+        1.003,
+        0.06
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 24,
+      "sockets": {
+        "art": [
+          0.0,
+          0.4716,
+          0.052
+        ]
+      },
+      "decals": [
+        {
+          "art": "carved_paneling",
+          "region": [
+            0,
+            0,
+            280,
+            288
+          ],
+          "socket": "art",
+          "width": 0.92
+        }
+      ]
+    },
+    "wall_alcoves": {
+      "file": "art/models/wall_alcoves.glb",
+      "mount": "wall",
+      "stands_for": [
+        "wall_alcoves"
+      ],
+      "size": [
+        1.0,
+        0.589,
+        0.06
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 24,
+      "sockets": {
+        "art": [
+          0.0,
+          0.7,
+          0.052
+        ]
+      },
+      "decals": [
+        {
+          "art": "wall_alcoves",
+          "region": [
+            0,
+            0,
+            452,
+            260
+          ],
+          "socket": "art",
+          "width": 0.92
+        }
+      ]
+    },
+    "brick_wall": {
+      "file": "art/models/brick_wall.glb",
+      "mount": "wall",
+      "stands_for": [
+        "brick_wall"
+      ],
+      "size": [
+        0.895,
+        1.16,
+        0.06
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 24,
+      "sockets": {
+        "art": [
+          0.0,
+          0.55,
+          0.052
+        ]
+      },
+      "decals": [
+        {
+          "art": "brick_wall",
+          "region": [
+            0,
+            0,
+            216,
+            288
+          ],
+          "socket": "art",
+          "width": 0.815
+        }
+      ]
+    },
+    "sunburst": {
+      "file": "art/models/sunburst.glb",
+      "mount": "wall",
+      "stands_for": [
+        "sunburst"
+      ],
+      "size": [
+        0.88,
+        0.86,
+        0.06
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 24,
+      "sockets": {
+        "art": [
+          0.0,
+          0.7,
+          0.052
+        ]
+      },
+      "decals": [
+        {
+          "art": "sunburst",
+          "region": [
+            0,
+            0,
+            212,
+            212
+          ],
+          "socket": "art",
+          "width": 0.8
+        }
+      ]
+    },
+    "tapestry": {
+      "file": "art/models/tapestry.glb",
+      "mount": "wall",
+      "stands_for": [
+        "tapestry"
+      ],
+      "size": [
+        1.11,
+        0.05,
+        0.065
+      ],
+      "materials": [
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 116,
+      "sockets": {
+        "art": [
+          0.0,
+          0.7,
+          0.03
+        ]
+      },
+      "decals": [
+        {
+          "art": "tapestry",
+          "region": [
+            0,
+            0,
+            404,
+            248
+          ],
+          "socket": "art",
+          "width": 0.92
+        }
+      ]
+    },
+    "banner_dragon": {
+      "file": "art/models/banner_dragon.glb",
+      "mount": "wall",
+      "stands_for": [
+        "banner_dragon"
+      ],
+      "size": [
+        0.573,
+        0.05,
+        0.065
+      ],
+      "materials": [
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 116,
+      "sockets": {
+        "art": [
+          0.0,
+          0.5,
+          0.03
+        ]
+      },
+      "decals": [
+        {
+          "art": "banner_dragon",
+          "region": [
+            0,
+            0,
+            104,
+            260
+          ],
+          "socket": "art",
+          "width": 0.383
+        }
+      ]
+    },
+    "stag_head": {
+      "file": "art/models/stag_head.glb",
+      "mount": "wall",
+      "stands_for": [
+        "stag_head"
+      ],
+      "size": [
+        0.673,
+        0.782,
+        0.22
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_stag_head"
+      ],
+      "triangles": 2784,
+      "sculpted": true
+    },
+    "trophy_wolf": {
+      "file": "art/models/trophy_wolf.glb",
+      "mount": "wall",
+      "stands_for": [
+        "trophy_wolf"
+      ],
+      "size": [
+        0.841,
+        0.477,
+        0.22
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_trophy_wolf"
+      ],
+      "triangles": 9636,
+      "sculpted": true
+    },
+    "skeleton_shackles": {
+      "file": "art/models/skeleton_shackles.glb",
+      "mount": "wall",
+      "stands_for": [
+        "skeleton_shackles"
+      ],
+      "size": [
+        0.545,
+        0.977,
+        0.196
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_skeleton_shackles"
+      ],
+      "triangles": 3524,
+      "sculpted": true
+    },
+    "wall_chains": {
+      "file": "art/models/wall_chains.glb",
+      "mount": "wall",
+      "stands_for": [
+        "wall_chains"
+      ],
+      "size": [
+        0.928,
+        0.949,
+        0.22
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_wall_chains"
+      ],
+      "triangles": 5696,
+      "sculpted": true
+    },
+    "jars": {
+      "file": "art/models/jars.glb",
+      "mount": "wall",
+      "stands_for": [
+        "jars"
+      ],
+      "size": [
+        0.861,
+        0.65,
+        0.22
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_jars"
+      ],
+      "triangles": 7032,
+      "sculpted": true
+    },
+    "gear_brake": {
+      "file": "art/models/gear_brake.glb",
+      "mount": "wall",
+      "stands_for": [
+        "gear_brake"
+      ],
+      "size": [
+        0.907,
+        0.78,
+        0.22
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_gear_brake"
+      ],
+      "triangles": 5384,
+      "sculpted": true
+    },
+    "winch": {
+      "file": "art/models/winch.glb",
+      "mount": "wall",
+      "stands_for": [
+        "winch"
+      ],
+      "size": [
+        0.876,
+        0.669,
+        0.22
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_winch"
+      ],
+      "triangles": 6892,
+      "sculpted": true
+    },
+    "dumbwaiter": {
+      "file": "art/models/dumbwaiter.glb",
+      "mount": "wall",
+      "stands_for": [
+        "dumbwaiter"
+      ],
+      "size": [
+        0.668,
+        0.573,
+        0.22
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_dumbwaiter"
+      ],
+      "triangles": 7984,
+      "sculpted": true
+    },
+    "robe_pegs": {
+      "file": "art/models/robe_pegs.glb",
+      "mount": "wall",
+      "stands_for": [
+        "robe_pegs"
+      ],
+      "size": [
+        0.889,
+        0.831,
+        0.22
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_robe_pegs"
+      ],
+      "triangles": 6436,
+      "sculpted": true
+    },
+    "uniforms": {
+      "file": "art/models/uniforms.glb",
+      "mount": "wall",
+      "stands_for": [
+        "uniforms"
+      ],
+      "size": [
+        0.887,
+        0.847,
+        0.22
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_uniforms"
+      ],
+      "triangles": 5852,
+      "sculpted": true
+    },
+    "crest": {
+      "file": "art/models/crest.glb",
+      "mount": "wall",
+      "stands_for": [
+        "crest"
+      ],
+      "size": [
+        0.436,
+        0.573,
+        0.161
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_crest"
+      ],
+      "triangles": 4496,
+      "sculpted": true
+    },
+    "shelves_wall": {
+      "file": "art/models/shelves_wall.glb",
+      "mount": "wall",
+      "stands_for": [
+        "shelves_wall"
+      ],
+      "size": [
+        0.859,
+        0.859,
+        0.22
+      ],
+      "materials": [
+        "pal_ink",
+        "spr_shelves_wall"
+      ],
+      "triangles": 5036,
+      "sculpted": true
     }
   }
 }

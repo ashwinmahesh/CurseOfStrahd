@@ -63,6 +63,8 @@ func test_catalog_models_exist() -> void:
 		for m: String in ((ModelPiece.manifest()[id] as Dictionary).get("materials", []) as Array):
 			if m.begins_with("pal_") or m.begins_with("glow_"):
 				assert_true(palette.has(m.substr(m.find("_") + 1)), "%s's colour %s is in the palette" % [id, m])
+			elif m.begins_with("spr_"):
+				assert_true(SetDressing.has_art(m.trim_prefix("spr_")), "%s is painted with 2D art that exists: %s" % [id, m])
 			else:
 				assert_true(m.begins_with("tex_") and Look.cel_textured(m.trim_prefix("tex_").replace("__", "/")) != null,
 					"%s's surface %s exists" % [id, m])
@@ -128,7 +130,7 @@ func test_models_stay_in_their_square() -> void:
 			var mount := str(info["mount"])
 			var cell := v.grid.cell_at(m.global_position)
 			var room := Rect2(cell.x - 0.03, cell.y - 0.03, 1.06, 1.06)
-			if mount == "wall" or m.has_meta("hung"):
+			if m.has_meta("hung"):
 				var n := m.global_basis.z.normalized()
 				var front := v.grid.cell_at(m.global_position + n * 0.5)
 				room = Rect2(front.x - 0.06, front.y - 0.06, 1.12, 1.12)

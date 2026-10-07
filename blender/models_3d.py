@@ -60,6 +60,8 @@ def _hex_of(name):
 
 def _preview_colour(name):
     """The colour Blender shows a surface in (the game draws its own): a palette colour, or a texture's average."""
+    if name.startswith("spr_"):
+        return [0.5, 0.5, 0.5, 1.0]
     if not name.startswith("tex_"):
         return _linear(_hex_of(name))
     theme, _, surface = name[4:].partition("__")
@@ -2212,6 +2214,211 @@ def vines(p):
                    "pal_plum", rough=0.05, subdiv=1, bury=0.0)
 
 
+# --- Depth from the 2D art (rollout batch 6) -------------------------------------------------------------------
+# Figurative pieces (statues, stuffed animals, skeletons, dolls) are sculpted from their own 2D art: the sprite's
+# silhouette becomes a solid whose front swells toward its middle, painted with the sprite (its back with the 2D back
+# view where there is one, else the front mirrored). They take light and shadow and have real thickness from every side.
+
+PROPS = json.loads((ROOT / "art" / "sprites" / "props" / "manifest.json").read_text())["props"]
+
+
+def _alpha_grid(art, rows):
+    """The sprite's coverage on a grid `rows` tall: grid[r][c] True where it's painted (r from the bottom)."""
+    info = PROPS[art]
+    img = bpy.data.images.load(str(ROOT / info["file"]))
+    w, h = img.size
+    px = img.pixels[:]
+    bpy.data.images.remove(img)
+    cols = max(2, round(rows * w / h))
+    grid = []
+    for r in range(rows):
+        row = []
+        for c in range(cols):
+            x = min(w - 1, int((c + 0.5) * w / cols))
+            y = min(h - 1, int((r + 0.5) * h / rows))
+            row.append(px[(y * w + x) * 4 + 3] > 0.5)
+        grid.append(row)
+    return grid, cols
+
+
+def _distance(grid, rows, cols):
+    """Chamfer distance from each painted cell to the nearest empty one (outside counts as empty)."""
+    INF = 10 ** 6
+    d = [[0 if not grid[r][c] else INF for c in range(cols)] for r in range(rows)]
+
+    def at(r, c):
+        return d[r][c] if 0 <= r < rows and 0 <= c < cols else 0
+    for r in range(rows):
+        for c in range(cols):
+            if d[r][c]:
+                d[r][c] = min(d[r][c], at(r - 1, c) + 1, at(r, c - 1) + 1, at(r - 1, c - 1) + 1.4, at(r - 1, c + 1) + 1.4)
+    for r in reversed(range(rows)):
+        for c in reversed(range(cols)):
+            if d[r][c]:
+                d[r][c] = min(d[r][c], at(r + 1, c) + 1, at(r, c + 1) + 1, at(r + 1, c + 1) + 1.4, at(r + 1, c - 1) + 1.4)
+    return d
+
+
+def inflate(p, art, height, depth=0.3, rows=56, back=None, at=(0.0, 0.0, 0.0), rim="pal_ink"):
+    """A solid `height` tall sculpted from 2D `art` (its silhouette, swelling to `depth` thick at its widest part),
+    standing on `at` and facing -y; the front painted with the sprite, the back with `back` (or the front mirrored)."""
+    grid, cols = _alpha_grid(art, rows)
+    d = _distance(grid, rows, cols)
+    dmax = max(max(row) for row in d) or 1
+    cell = height / rows
+    width = cell * cols
+    half = depth / 2.0
+
+    def hc(r, c):
+        """Thickness at the corner (r, c): the mean swell of the four cells round it (outside cells count as flat)."""
+        vals = []
+        for rr in (r - 1, r):
+            for cc in (c - 1, c):
+                vals.append(math.sqrt(min(1.0, d[rr][cc] / (dmax * 0.6))) if 0 <= rr < rows and 0 <= cc < cols and grid[rr][cc] else 0.0)
+        return half * (0.15 + 0.85 * sum(vals) / 4.0)
+    t = bmesh.new()
+    uv = t.loops.layers.uv.new("UVMap")
+    front_v, back_v = {}, {}
+
+    def vert(store, r, c, sign):
+        if (r, c) not in store:
+            x = at[0] - width / 2 + c * cell
+            z = at[2] + r * cell
+            store[(r, c)] = t.verts.new((x, at[1] - sign * hc(r, c), z))
+        return store[(r, c)]
+    fronts, backs, rims = [], [], []
+    for r in range(rows):
+        for c in range(cols):
+            if not grid[r][c]:
+                continue
+            q = [(r, c), (r, c + 1), (r + 1, c + 1), (r + 1, c)]
+            f = t.faces.new([vert(front_v, rr, cc, 1) for rr, cc in q])
+            for loop, (rr, cc) in zip(f.loops, q):
+                loop[uv].uv = (cc / cols, rr / rows)
+            fronts.append(f)
+            b = t.faces.new([vert(back_v, rr, cc, -1) for rr, cc in reversed(q)])
+            for loop, (rr, cc) in zip(b.loops, reversed(q)):
+                loop[uv].uv = ((cols - cc) / cols if back is None else (cols - cc) / cols, rr / rows)
+            backs.append(b)
+            for (dr, dc), (a, bb) in (((-1, 0), ((r, c), (r, c + 1))), ((1, 0), ((r + 1, c + 1), (r + 1, c))),
+                                       ((0, -1), ((r + 1, c), (r, c))), ((0, 1), ((r, c + 1), (r + 1, c + 1)))):
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc]:
+                    continue
+                rf = t.faces.new([vert(front_v, *a, 1), vert(back_v, *a, -1), vert(back_v, *bb, -1), vert(front_v, *bb, 1)])
+                rims.append(rf)
+    bmesh.ops.recalc_face_normals(t, faces=t.faces)
+    front_set, back_set = set(fronts), set(backs)
+    p._append_faces(t, lambda f: ("spr_" + art) if f in front_set else (("spr_" + (back or art)) if f in back_set else rim),
+                    smooth=True)
+
+
+# Sculpted from their 2D art: art -> (height in world units, thickness as a share of the width).
+SCULPTED = {
+    "statue_knight": (1.4, 0.45), "armor_stand": (1.2, 0.45), "armor_wolf_helm": (1.4, 0.45), "statue_saint": (1.8, 0.42),
+    "statue_strahd": (1.4, 0.4), "statue_head": (0.3, 0.8), "statue_mother_night": (1.6, 0.4), "scarecrow": (1.4, 0.3),
+    "scarecrow_stitched": (1.4, 0.3), "stuffed_wolf": (0.8, 0.5), "horse": (1.4, 0.35), "carcass": (0.5, 0.5),
+    "skeleton_leather": (0.7, 0.35), "doll": (0.4, 0.45), "doll_yellow": (0.4, 0.45), "poppet": (0.3, 0.45),
+    "crow_barrel": (0.8, 0.8), "charms": (1.2, 0.15), "soul_bags": (1.2, 0.3), "frozen_traveller": (0.8, 0.5),
+    "frozen_birds": (0.6, 0.35), "roc_nest": (0.7, 0.8), "dragon_bones": (1.6, 0.5), "mobile": (1.2, 0.15),
+    "coats": (1.2, 0.25), "sheeted_furniture": (1.1, 0.6), "refuse_mound": (0.6, 0.8), "bones": (0.4, 0.6),
+    "sword_leaning": (0.8, 0.15), "jewel_box": (0.7, 0.7), "music_box": (0.7, 0.7), "cage_hanging": (1.4, 0.6),
+    "wicker_cage": (1.4, 0.6),
+}
+BIG_SCULPTED = {"horse", "dragon_bones"}
+
+
+def _sculpt_builder(art, height, share):
+    def build(p):
+        info = PROPS[art]
+        aspect = float(info.get("world_width", 1.0)) / float(info.get("world_height", 1.0))
+        h = height
+        if art not in BIG_SCULPTED and h * aspect > 0.98:
+            h = 0.98 / aspect   # no wider than its square, as the 2D pieces were squeezed to fit
+        rows = max(28, min(56, int(52 * min(1.0, math.sqrt(1.0 / aspect)))))
+        inflate(p, art, h, depth=max(0.04, share * h * aspect), rows=rows, back=info.get("back"))
+    build.__doc__ = "%s, sculpted from its 2D art." % art
+    return build
+
+
+for _art, (_h, _share) in SCULPTED.items():
+    _back = PROPS.get(_art, {}).get("back")
+    model(_art, "free", [_art] + ([_back] if _back else []), big=_art in BIG_SCULPTED, sculpted=True)(
+        _sculpt_builder(_art, _h, _share))
+
+
+# Wall pictures and fittings: art -> how it's mounted. The picture itself stays the 2D art (a painting, a carving's
+# design, a notice), set in real depth: a moulded frame, a board, a stone slab, a rod it hangs from; fittings with
+# a shape of their own (trophies, chains, shelves of jars) are sculpted from their art against the wall.
+WALL_ART = {
+    "painting": "frame", "painting_row": "frame", "family_portrait": "frame", "portrait_couple": "frame",
+    "mirror": "frame", "mirror_full": "frame",
+    "tally_board": "board", "notes_wall": "board", "notice_papers": "board", "hanging_sign": "board", "drawings": "board",
+    "relief": "slab", "arch_carved": "slab", "carved_paneling": "slab", "wall_alcoves": "slab", "brick_wall": "slab",
+    "sunburst": "slab",
+    "tapestry": "cloth", "banner_dragon": "cloth",
+    "stag_head": "sculpt", "trophy_wolf": "sculpt", "skeleton_shackles": "sculpt", "wall_chains": "sculpt", "jars": "sculpt",
+    "gear_brake": "sculpt", "winch": "sculpt", "dumbwaiter": "sculpt", "robe_pegs": "sculpt", "uniforms": "sculpt",
+    "crest": "sculpt", "shelves_wall": "sculpt",
+}
+
+
+def _wall_fit(art):
+    """The picture's size on a wall face (no wider than the face) and its foot: tall pieces stand on the floor, small
+    ones hang at about eye level (SetDressing._hang's rule)."""
+    info = PROPS[art]
+    w, h = float(info.get("world_width", 1.0)), float(info.get("world_height", 1.0))
+    fit = min(1.0, 0.92 / w)
+    w, h = w * fit, h * fit
+    bottom = 0.0 if h >= 0.85 else max(0.0, 0.7 - h / 2)
+    return w, h, bottom
+
+
+def _wall_art_builder(art, style):
+    def build(p):
+        w, h, bottom = _wall_fit(art)
+        zc = bottom + h / 2
+        if style == "sculpt":
+            depth = min(0.22, 0.35 * w)
+            inflate(p, art, h, depth=depth, rows=44, at=(0.0, -depth / 2 - 0.004, bottom))
+            return
+        lift = 0.0
+        if style == "frame":
+            t, d = 0.035, 0.05
+            p.box((w + 0.01, 0.012, h + 0.01), (0, -0.006, zc), "pal_peat")
+            for s in (-1, 1):
+                p.box((w + 2 * t, d, t), (0, -d / 2, zc + s * (h / 2 + t / 2)), "pal_umber")
+                p.box((t, d, h + 2 * t), (s * (w / 2 + t / 2), -d / 2, zc), "pal_umber")
+                p.box((w + 2 * t - 0.02, 0.008, 0.008), (0, -d - 0.004, zc + s * (h / 2 + t / 2)), "pal_tan")
+            lift = 0.014
+        elif style == "board":
+            p.box((w + 0.06, 0.03, h + 0.06), (0, -0.015, zc), WOOD)
+            lift = 0.032
+        elif style == "slab":
+            p.box((w + 0.04, 0.05, h + 0.04), (0, -0.025, zc), "pal_slate")
+            p.box((w + 0.08, 0.06, 0.04), (0, -0.03, zc + h / 2 + 0.02), "pal_stone")
+            lift = 0.052
+        elif style == "cloth":
+            p.cyl(0.014, w + 0.12, (-w / 2 - 0.06, -0.04, zc + h / 2 + 0.015), "pal_umber", rot=(0, 90, 0), segs=8)
+            for s in (-1, 1):
+                p.lathe([(0.0, 0.0), (0.02, 0.0), (0.025, 0.015), (0.0, 0.035)], (s * (w / 2 + 0.06), -0.04, zc + h / 2 + 0.015),
+                        "pal_tan", rot=(0, s * 90, 0), segs=8)
+                p.box((0.02, 0.04, 0.03), (s * (w / 2 - 0.05), -0.02, zc + h / 2 + 0.015), "pal_umber")
+            lift = 0.03
+        else:
+            lift = 0.006
+        p.socket("art", (0.0, -lift, zc))
+    build.__doc__ = "%s on a wall: %s." % (art, style)
+    return build
+
+
+for _art, _style in WALL_ART.items():
+    _w, _h, _b = _wall_fit(_art)
+    model(_art, "wall", [_art], sculpted=_style == "sculpt",
+          decals=None if _style == "sculpt" else [{"art": _art, "region": [0, 0, PROPS[_art]["width_px"], PROPS[_art]["height_px"]],
+                                                   "socket": "art", "width": round(_w, 4)}])(_wall_art_builder(_art, _style))
+
+
 # --- Export and preview ----------------------------------------------------------------------------------------
 
 def bounds(ob):
@@ -2253,7 +2460,7 @@ def export(built):
         bpy.context.view_layer.objects.active = ob
         out = OUT_DIR / (id_ + ".glb")
         bpy.ops.export_scene.gltf(filepath=str(out), export_format="GLB", use_selection=True, export_yup=True,
-                                  export_apply=True, export_texcoords=False, export_materials="EXPORT")
+                                  export_apply=True, export_texcoords=True, export_materials="EXPORT")
         lo, hi = bounds(ob)
         spec = MODELS[id_]
         entry = {"file": "art/models/%s.glb" % id_, "mount": spec["mount"], "stands_for": spec["stands_for"],
@@ -2270,6 +2477,8 @@ def export(built):
             entry["big"] = True
         if spec.get("turns"):
             entry["turns"] = True
+        if spec.get("sculpted"):
+            entry["sculpted"] = True
         models[id_] = entry
         print("model %s: %s, %d triangles" % (id_, entry["size"], entry["triangles"]))
     path.write_text(json.dumps(data, indent=2) + "\n")
@@ -2295,6 +2504,16 @@ def preview(built, out, yaw_deg=45.0):
     shading = scene.display.shading
     shading.light = "STUDIO"
     shading.color_type = "MATERIAL"
+    sprites = [m for m in bpy.data.materials if m.name.startswith("spr_")]
+    for m in sprites:
+        # Show the sculpted pieces painted (only in these renders: the exported files carry no images).
+        img = bpy.data.images.load(str(ROOT / PROPS[m.name[4:]]["file"]))
+        node = m.node_tree.nodes.new("ShaderNodeTexImage")
+        node.image = img
+        m.node_tree.nodes.active = node
+        m.node_tree.links.new(node.outputs["Color"], m.node_tree.nodes["Principled BSDF"].inputs["Base Color"])
+    if sprites:
+        shading.color_type = "TEXTURE"
     shading.show_object_outline = True
     shading.show_cavity = False
     scene.render.resolution_x = 900
