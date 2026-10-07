@@ -89,7 +89,7 @@ anims:
 	$(if $(GENERATE),python3 tools/art/anim_keyframes.py --retry 2 $(if $(ONLY),--only $(ONLY),) && python3 tools/art/anim_keyframes.py --kind walk $(if $(ONLY),--only $(ONLY),),true)
 	python3 tools/art/build_anims.py $(if $(ONLY),--only $(ONLY),)
 	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
-	python3 tools/art/set_import.py $(wildcard art/sprites/*/walk.png) $(wildcard art/sprites/*/attack.png)
+	python3 tools/art/set_import.py --sheets $(wildcard art/sprites/*/walk.png) $(wildcard art/sprites/*/attack.png)
 	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
 
 ## The six heroes' HD animation sheets (set v2) from their strips: make keys [ONLY="id ..."] [KINDS="walk8 ..."]

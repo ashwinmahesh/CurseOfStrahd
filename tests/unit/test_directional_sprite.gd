@@ -30,8 +30,8 @@ func test_villager_sprite_frames_have_every_direction() -> void:
 	if frames == null:
 		return
 	for d in DirectionalSprite.DIRECTIONS:
-		assert_eq(frames.get_frame_count(StringName("walk_" + d)), 8, "walk_" + d)
-		assert_eq(frames.get_frame_count(StringName("idle_" + d)), 1, "idle_" + d)
+		assert_eq(frames.get_frame_count(DirectionalSprite.anim_for(frames, "walk", d)[0] as StringName), 8, "walk_" + d)
+		assert_eq(frames.get_frame_count(DirectionalSprite.anim_for(frames, "idle", d)[0] as StringName), 1, "idle_" + d)
 
 
 ## Every character sprite sheet (art/sprites/<id>/walk.tres) and the animations the game plays from it.

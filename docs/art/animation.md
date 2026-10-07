@@ -100,6 +100,15 @@ VRAM-compressed without mipmaps (`tools/art/set_import.py --sheets`; the crisp s
 `make keys [ONLY="id ..."] [KINDS="walk8 ..."]` renders them (`make anims` leaves the heroes alone);
 `tools/art/preview/hd_compare.tscn` shows sheets side by side at any zoom.
 
+**Everyone else in HD (owner 2026-10-07: "lets do it").** `tools/art/hd_turnarounds.py` asks Gemini to redraw each
+character's turnaround at 2K, then `blender/hd_colour.py` gives the redraw the original's colours and rejects it (to
+be drawn again) if the views, their sizes or the picture itself differ. `render_walk.py` and `render_attack.py` cut
+the HD turnaround when there is one: 768 px cells rendered at twice the size, frames trimmed and packed, mirror-image
+directions shown flipped, exactly as the heroes' sheets. The attack's wind-up and strike still come from the 1K
+strips, which are drawn at about the size they're shown. Packing alone makes a walk sheet several times smaller (the
+villager's went from 9.4 to 1.2 megapixels at 384 px), so HD sheets end up about the size of the old grids. The title
+screen's travellers, drawn some 20 times smaller, average their sheet through `shaders/ui/sprite_small.gdshader`.
+
 In game, `DirectionalSprite.frames_for` merges every sheet a sprite folder has (walk, attack, hurt, ride, sneak,
 cast) and picks the loop from its `pose`: "" (on foot), "sneak", "ride" or "down". `CombatToken` sets the pose from
 the fight (riding when `Encounter.mount_of` has a mount, crouched when hidden or when the party sneaks while
