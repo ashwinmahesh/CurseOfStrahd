@@ -28,6 +28,7 @@ const SHOTS := {
 	"castle_hall": {"loc": "castle_ravenloft_main_floor", "cells": [[25, 8], [26, 8], [25, 9], [26, 9]]},
 	"tser_pool": {"loc": "tser_pool", "hour": 18},
 	"death_house_den": {"loc": "death_house_ground", "cells": [[4, 5], [5, 5], [4, 6], [5, 6]]},
+	"tavern": {"loc": "blood_of_the_vine"},
 	"lake_dusk": {"loc": "lake_zarovich", "hour": 18, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]]},
 	"lake_night": {"loc": "lake_zarovich", "hour": 23, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]]},
 	"tser_pool_water": {"loc": "tser_pool", "hour": 23, "cells": [[15, 9], [16, 9], [15, 10], [16, 10]]},
@@ -100,8 +101,8 @@ func capture_shots(tool: Node, out: String) -> void:
 		Engine.max_fps = 60
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 		var calls := RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
-		print("look %s %s: %.2f ms a frame uncapped (%d fps), %d draw calls, rain %s, snow %s" % [Look.style(), id, ms,
-			int(1000.0 / ms), calls, view.atmosphere.weather_spec("rain"), view.atmosphere.weather_spec("snow")])
+		print("look %s %s: %.2f ms a frame uncapped (%d fps), %d draw calls, %d lights" % [Look.style(), id, ms,
+			int(1000.0 / ms), calls, view.find_children("*", "OmniLight3D", true, false).size()])
 		await tool.call("wait_frames", 10)
 		tool.call("_shot", "%s_%s.png" % [out, id])
 

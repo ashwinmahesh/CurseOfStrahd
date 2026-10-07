@@ -376,3 +376,18 @@ func test_footprints_on_soft_ground() -> void:
 	v.queue_free()
 	Look.set_style(was, false)
 
+
+
+
+## The castle's carved piers light their sconces in the Modern finish (the flames found in the kit's own meshes).
+func test_castle_piers_light_their_sconces() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var v := _view("castle_ravenloft_main_floor")
+	var named := 0
+	for n in v.board.find_children("*", "OmniLight3D", true, false):
+		if str(n.get_meta("light_kind", "")) == "candle" and n.get_parent() is MeshInstance3D:
+			named += 1
+	assert_true(named >= 2, "the piers' sconces are lit (%d)" % named)
+	v.queue_free()
+	Look.set_style(was, false)
