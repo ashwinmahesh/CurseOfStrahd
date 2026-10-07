@@ -23,6 +23,8 @@ var _toast: Label
 var _toast_time := 0.0
 var _roll: Label
 var _roll_time := 0.0
+var _saved: Label
+var _saved_time := 0.0
 var _hint_panel: PanelContainer
 var _toast_panel: PanelContainer
 var _roll_panel: PanelContainer
@@ -151,6 +153,20 @@ func build(state: StoryState) -> void:
 	_roll_panel.offset_bottom = -78
 	_roll_panel.visible = false
 	add_child(_roll_panel)
+	# A quiet "Autosaved" at the bottom right when the game saves itself.
+	_saved = _label("◆ Autosaved", 14, "gilt")
+	_saved.anchor_left = 1.0
+	_saved.anchor_right = 1.0
+	_saved.anchor_top = 1.0
+	_saved.anchor_bottom = 1.0
+	_saved.offset_left = -170
+	_saved.offset_right = -18
+	_saved.offset_top = -44
+	_saved.offset_bottom = -20
+	_saved.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_saved.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_saved.visible = false
+	add_child(_saved)
 	# The command bar sits on a dark plate with gilt corners, like the frames of the menus it opens.
 	var plate := PanelContainer.new()
 	var ps := UiKit.style("ui_black", "gilt_dark", 2, 0.88)
@@ -354,6 +370,13 @@ func toast(text: String) -> void:
 	_toast_panel.offset_right = _toast_panel.size.x / 2.0
 
 
+## The game just saved itself: a note at the bottom right that fades.
+func saved_note() -> void:
+	_saved_time = 2.5
+	_saved.visible = true
+	_saved.modulate.a = 1.0
+
+
 func roll(text: String) -> void:
 	_roll.text = text
 	_roll_time = 8.0
@@ -384,6 +407,10 @@ func _process(delta: float) -> void:
 		_toast_time -= delta
 		_toast_panel.modulate.a = clampf(_toast_time, 0.0, 1.0)
 		_toast_panel.visible = _toast_time > 0.0
+	if _saved_time > 0.0:
+		_saved_time -= delta
+		_saved.modulate.a = clampf(_saved_time, 0.0, 1.0)
+		_saved.visible = _saved_time > 0.0
 	if _roll_time > 0.0:
 		_roll_time -= delta
 		_roll_panel.modulate.a = clampf(_roll_time, 0.0, 1.0)

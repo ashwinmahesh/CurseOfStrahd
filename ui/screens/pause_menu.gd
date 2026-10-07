@@ -246,7 +246,7 @@ func _show_saves() -> void:
 	_title("The party has fallen" if game_over else "Load a Save")
 	var top := 124.0
 	if game_over:
-		var lost := _text("Barovia keeps what it takes. Load a save to try again.", 10.0, _c("arch_text"))
+		var lost := _text("Barovia keeps what it takes. Go back to the last autosave, or load a save to try again.", 10.0, _c("arch_text"))
 		lost.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		lost.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		lost.position = _u(24, 118)
@@ -266,6 +266,9 @@ func _show_saves() -> void:
 	_list()
 	if not game_over:
 		_button(3, "Back", _show_menu)
+	elif SaveSystem.has_slot(SaveSystem.AUTOSAVE):
+		_button(3, "Last Autosave", func() -> void: _load(SaveSystem.AUTOSAVE)).tooltip_text = \
+			"Back to where the game last saved itself: arriving somewhere, a rest or a won fight."
 	_button(4, "Quit to Title", func() -> void: leave_to(TITLE_SCENE))
 	_buttons[0].grab_focus.call_deferred()
 
@@ -458,12 +461,17 @@ func _list() -> void:
 		info.add_theme_constant_override("separation", 0)
 		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		var where := "This game · %s" % s["location"] if str(s["slot"]) == SaveSystem.current_slot else str(s["location"])
+		var kind := str(s.get("kind", ""))
+		if kind == "autosave":
+			where = "Autosave · %s" % s["location"]
+		elif kind == "round":
+			where = "Fight, round start · %s" % s["location"]
 		info.add_child(_text("%s · Day %d" % [where, int(s["day"])], 10.0, _c("arch_text")))
 		info.add_child(_text(str(s["saved_at"]).replace("T", " "), 8.0, Color(_c("arch_text"), 0.55)))
 		row.add_child(info)
 		var slot := str(s["slot"])
 		row.add_child(UiParts.small_button("Load", func() -> void: _load(slot)))
-		if not game_over:
+		if not game_over and kind == "":
 			row.add_child(UiParts.small_button("Overwrite", func() -> void: _save(slot)))
 		var party_text := "%s\n%s" % [slot, s["party"]]
 		_list_box.add_child(UiParts.row(row, func() -> Control: return UiParts.rules_tip("Party", "", party_text)))

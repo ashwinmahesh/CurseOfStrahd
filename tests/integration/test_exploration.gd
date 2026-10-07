@@ -185,6 +185,22 @@ func test_story_saves_and_loads() -> void:
 	SaveSystem.delete_slot("test_slot")
 
 
+## The game saves itself on arriving somewhere (docs/plans/ui_polish.md), but never mid-fight.
+func test_autosave_on_arriving_but_not_in_a_fight() -> void:
+	SaveSystem.delete_slot(SaveSystem.AUTOSAVE)
+	root.set("autosaves", true)
+	root.call("enter_location", "test_hall", "default")
+	await _frames(3)
+	assert_true(SaveSystem.has_slot(SaveSystem.AUTOSAVE), "arriving saves the game")
+	SaveSystem.delete_slot(SaveSystem.AUTOSAVE)
+	_view().start_encounter("wolves")
+	await _frames(3)
+	root.call("_autosave")
+	assert_false(SaveSystem.has_slot(SaveSystem.AUTOSAVE), "never in a fight")
+	root.set("autosaves", false)
+	SaveSystem.delete_slot(SaveSystem.AUTOSAVE)
+
+
 func test_round_start_save_resumes_the_fight() -> void:
 	var v := _view()
 	v.start_encounter("wolves")
