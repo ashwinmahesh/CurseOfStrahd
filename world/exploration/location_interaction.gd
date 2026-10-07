@@ -70,6 +70,10 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 			else:
 				out.append({"id": "disarm", "label": "Disarm", "enabled": false, "why": "Nobody has thieves' tools"})
 			out.append({"id": "avoid", "label": "Walk around it (the party already does)", "enabled": false})
+		"foe":
+			# A foe waiting in plain view (LocationStealth): the party can open the fight from where it stands.
+			title = str(thing["name"])
+			out.append({"id": "strike", "label": "Attack: start the fight%s" % (" (sneaking: Surprise)" if view.sneaking else "")})
 		"exit":
 			title = str(spec.get("label", "The way on"))
 			var open := StoryConditions.check(str(spec.get("when", "")), view.st)
@@ -111,6 +115,10 @@ static func act(view: LocationView, cell: Vector2i, action_id: String) -> void:
 			return
 		"climb":
 			PitFall.climb_out(view, cell)
+			return
+		"strike":
+			if not thing.is_empty() and str(thing["kind"]) == "foe":
+				view.strike(str(thing["id"]))
 			return
 	if thing.is_empty():
 		return
@@ -161,6 +169,8 @@ static func _look(view: LocationView, cell: Vector2i, thing: Dictionary) -> void
 				(" and %s damage" % spec["damage"]) if spec.has("damage") else ""])
 		"exit":
 			view.narration.emit("%s, to %s." % [spec.get("label", "A way on"), Compendium.shared().get_entry("locations", str(spec["to"])).get("name", spec["to"])])
+		"foe":
+			view.narration.emit("%s. It hasn't seen you yet." % str(thing["name"]))
 		_:
 			if not view._say("look:" + str(spec.get("id", "")), view.leader().creature as Character):
 				view.narration.emit(str(spec.get("label", "Something")).capitalize() + ".")
@@ -187,6 +197,9 @@ static func _pickables(view: LocationView) -> Array:
 	for m: Combatant in view.members + view.guest_members:
 		if view.tokens.has(m.id):
 			out.append([view.tokens[m.id], m.cell])
+	for w in view.waiting:
+		if LocationStealth.is_shown(w):
+			out.append([w["token"], (w["foe"] as Combatant).cell])
 	# Nothing in an area the party hasn't found yet can be hovered or clicked (HiddenAreas).
 	for shown in view._npc_shown:
 		if not HiddenAreas.hides(view, shown["cell"] as Vector2i):
@@ -205,6 +218,10 @@ static func _pickables(view: LocationView) -> Array:
 static func thing_at(view: LocationView, cell: Vector2i) -> Dictionary:
 	if HiddenAreas.hides(view, cell):
 		return {}
+	var w := LocationStealth.foe_at(view, cell)
+	if not w.is_empty():
+		var foe := w["foe"] as Combatant
+		return {"kind": "foe", "id": str(w["encounter"]), "name": foe.name(), "label": "Attack %s" % foe.name(), "spec": {"cell": [foe.cell.x, foe.cell.y]}}
 	for shown in view._npc_shown:
 		var spec := shown["spec"] as Dictionary
 		if shown["cell"] == cell:
@@ -247,6 +264,9 @@ static func click(view: LocationView, cell: Vector2i) -> void:
 	if thing.is_empty() or str(thing["kind"]) == "exit":
 		view.walk_to(cell)
 		return
+	if str(thing["kind"]) == "foe" and view.planning:
+		view.strike(str(thing["id"]))   # turn-based: the party is placed, and a click on a foe opens the fight
+		return
 	var stand := _adjacent_free(view, cell)
 	if stand == Vector2i(-1, -1):
 		view.toast.emit("Can't reach it")
@@ -288,6 +308,8 @@ static func interact(view: LocationView, thing: Dictionary) -> void:
 			_use_prop(view, spec)
 		"trap":
 			LocationTraps._disarm(view, spec)
+		"foe":
+			view.strike(str(thing["id"]))
 
 
 static func _use_container(view: LocationView, ct: Dictionary, method: String = "auto") -> void:
