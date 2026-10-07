@@ -5,8 +5,9 @@ extends CanvasLayer
 ## An arched frame (wine to black, a gilt line and a fainter inset one), the crest at the apex, scrolls at the
 ## shoulders, the title over a lozenge rule, Music, Effects and Voices sliders with their icons, the choices as long
 ## hexagons (the selected one wine with lozenges outside its points), and a footer wave between corner brackets. The
-## concept had two sliders and three buttons; this menu has three, five and a respec option, so the arch is taller,
-## with the concept's spacing kept. The saves open in the same arch. As the game-over screen it offers only loading.
+## concept had two sliders and three buttons; this menu has three, five and a way to Settings (the look, the window,
+## fight speed, narration and the respec option, docs/plans/ui_polish.md), so the arch is taller, with the concept's
+## spacing kept. The saves open in the same arch. As the game-over screen it offers only loading.
 ## Quicksave (and F5, here and exploring) saves over the game's current slot (SaveSystem.current_slot).
 
 ## Concept units to pixels.
@@ -32,6 +33,7 @@ var _items: Array[Control] = []    ## everything placed on the frame for the cur
 var _buttons: Array[Button] = []
 var _list_box: VBoxContainer       ## the saves, when they're showing
 var _note: Label                   ## "Saved." under the buttons
+var _on_settings := false
 static var _serif: Font
 
 
@@ -154,6 +156,7 @@ static func _lozenge(c: CanvasItem, at: Vector2, r: float, fill: Color, stroke: 
 # --- Pages ----------------------------------------------------------------------------------------
 
 func _clear() -> void:
+	_on_settings = false
 	for n in _items:
 		n.queue_free()
 	_items.clear()
@@ -208,19 +211,9 @@ func _show_menu() -> void:
 		Audio.set_volumes(Audio.music_volume, v)
 		Audio.sfx("click"))
 	_slider_row(SLIDER_Y[2], "Voices", VoiceOver.volume(), VoiceOver.set_volume)
-	var respec := CheckBox.new()
-	respec.text = "Allow rebuilding a character at Madam Eva"
-	respec.add_theme_font_override("font", serif())
-	respec.add_theme_font_size_override("font_size", roundi(10.5 * K))
-	for k: String in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_hover_pressed_color"]:
-		respec.add_theme_color_override(k, Color(_c("arch_text"), 0.8))
-	respec.button_pressed = bool(st.options.get("respec", true))
-	respec.tooltip_text = "Madam Eva can rebuild one of the party from scratch (a respec)."
-	respec.toggled.connect(func(on: bool) -> void: st.options["respec"] = on)
-	respec.focus_mode = Control.FOCUS_NONE
-	_place(respec)
-	respec.reset_size()
-	respec.position = Vector2((_u(W_U, 0).x - respec.size.x) / 2.0, _u(0, RESPEC_Y).y - respec.size.y / 2.0)
+	# The rest of the player's settings (the look, the window, fight speed, the respec) are a page of their own.
+	var more := _link("◆  Settings  ◆", _show_settings)
+	more.position = Vector2((_u(W_U, 0).x - more.size.x) / 2.0, _u(0, RESPEC_Y).y - more.size.y / 2.0)
 	var can := SaveSystem.can_save()
 	var why := "In a fight the game saves itself at the start of each round; load that save to retry the round."
 	_button(0, "Resume", func() -> void: root.call("close_screen"))
@@ -239,6 +232,116 @@ func _show_menu() -> void:
 	_note.size = _u(W_U, 14)
 	_place(_note)
 	_buttons[0].grab_focus.call_deferred()
+
+
+## Settings (docs/plans/ui_polish.md): the world's look, the window, how fast fights play, how long the Narrator's box
+## stays up, and the respec option, each a choice the player flips with a click; kept in user://settings.cfg.
+func _show_settings() -> void:
+	_clear()
+	_on_settings = true
+	_title("Settings")
+	_choice_row(155.0, "Look", ["Modern", "Classic"], 0 if Look.modern() else 1, func(i: int) -> void:
+		_set_look("modern" if i == 0 else "classic"),
+		"Modern: smooth light, relief and glow. Classic: the 1990s cartoon, every colour from the palette.")
+	_choice_row(192.0, "Window", ["Windowed", "Fullscreen"], 1 if GameSettings.fullscreen() else 0, func(i: int) -> void:
+		GameSettings.set_fullscreen(i == 1), "Play in a window or fill the screen.")
+	_choice_row(229.0, "Fights", ["Normal", "Fast"], 1 if GameSettings.fast_combat() else 0, func(i: int) -> void:
+		GameSettings.set_fast_combat(i == 1), "Fast plays moves and the pauses between turns at twice the speed.")
+	_choice_row(266.0, "Narration", ["Fades", "Stays"], 1 if GameSettings.narration_stays() else 0, func(i: int) -> void:
+		GameSettings.set_narration_stays(i == 1), "Whether the Narrator's box fades on its own or stays until you close it.")
+	var respec := CheckBox.new()
+	respec.text = "Allow rebuilding a character at Madam Eva"
+	respec.add_theme_font_override("font", serif())
+	respec.add_theme_font_size_override("font_size", roundi(10.5 * K))
+	for k: String in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_hover_pressed_color"]:
+		respec.add_theme_color_override(k, Color(_c("arch_text"), 0.8))
+	respec.button_pressed = bool(st.options.get("respec", true)) if st != null else true
+	respec.tooltip_text = "Madam Eva can rebuild one of the party from scratch (a respec)."
+	respec.toggled.connect(func(on: bool) -> void:
+		if st != null:
+			st.options["respec"] = on)
+	respec.focus_mode = Control.FOCUS_NONE
+	_place(respec)
+	respec.reset_size()
+	respec.position = Vector2((_u(W_U, 0).x - respec.size.x) / 2.0, _u(0, 303.0).y - respec.size.y / 2.0)
+	_note = _text("", 9.5, _c("arch_gold_light"))
+	_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_note.position = _u(24, 330)
+	_note.size = _u(W_U - 48.0, 30)
+	_place(_note)
+	_button(3, "Back", _show_menu)
+	_button(4, "Resume", func() -> void: root.call("close_screen"))
+	_buttons[0].grab_focus.call_deferred()
+
+
+## A new look applies to the place at once when the party is simply exploring; in a fight, from the next place.
+func _set_look(style: String) -> void:
+	if style == Look.style():
+		return
+	Look.set_style(style)
+	var view := root.get("view") as LocationView if root != null and "view" in root else null
+	if view != null and not view.in_combat and root.has_method("rebuild"):
+		root.call("rebuild")
+		_note.text = ""
+	elif _note != null:
+		_note.text = "The new look starts at the next place you go."
+
+
+## A row of the settings page at concept y: the label at x 30 (Georgia 14) and, where the sliders' tracks are, the
+## current choice between gilt arrows; a click moves to the next choice.
+func _choice_row(y: float, text: String, options: Array[String], current: int, on_change: Callable, tip: String) -> void:
+	var l := _text(text, 14.0, _c("arch_text"))
+	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	l.position = _u(30, y - 10.0)
+	l.size = _u(100, 20)
+	_place(l)
+	var b := Button.new()
+	b.name = text
+	b.tooltip_text = tip
+	b.focus_mode = Control.FOCUS_NONE
+	b.add_theme_font_override("font", serif())
+	b.add_theme_font_size_override("font_size", roundi(13.0 * K))
+	for k: String in ["font_color", "font_pressed_color", "font_focus_color"]:
+		b.add_theme_color_override(k, _c("arch_gold_light"))
+	b.add_theme_color_override("font_hover_color", _c("arch_text"))
+	for state: String in ["normal", "hover", "pressed", "focus", "disabled", "hover_pressed"]:
+		b.add_theme_stylebox_override(state, StyleBoxEmpty.new())
+	var at := [current]
+	b.text = "‹  %s  ›" % options[current]
+	b.pressed.connect(func() -> void:
+		Audio.sfx("click")
+		at[0] = (int(at[0]) + 1) % options.size()
+		b.text = "‹  %s  ›" % options[int(at[0])]
+		on_change.call(int(at[0])))
+	b.position = _u(130, y - 11.0)
+	b.size = _u(127, 22)
+	# A fine gold rule under the choice, like the sliders' tracks.
+	var rule := UiParts.drawn(_u(127, 4), func(c: Control) -> void:
+		c.draw_line(Vector2(0, c.size.y / 2.0), Vector2(c.size.x, c.size.y / 2.0), Color(_c("arch_gold"), 0.45), 1.0, true)
+		_lozenge(c, Vector2(c.size.x / 2.0, c.size.y / 2.0), 3.0, _c("arch_gold")))
+	rule.position = _u(130, y + 10.0)
+	_place(rule)
+	_place(b)
+
+
+## A small centred text button in the arch's gold (the menu's way to Settings).
+func _link(text: String, on_press: Callable) -> Button:
+	var b := Button.new()
+	b.text = text
+	b.focus_mode = Control.FOCUS_NONE
+	b.add_theme_font_override("font", serif())
+	b.add_theme_font_size_override("font_size", roundi(11.5 * K))
+	for k: String in ["font_color", "font_pressed_color", "font_focus_color"]:
+		b.add_theme_color_override(k, _c("arch_gold"))
+	b.add_theme_color_override("font_hover_color", _c("arch_gold_light"))
+	for state: String in ["normal", "hover", "pressed", "focus", "disabled", "hover_pressed"]:
+		b.add_theme_stylebox_override(state, StyleBoxEmpty.new())
+	b.pressed.connect(func() -> void: Audio.sfx("click"))
+	b.pressed.connect(on_press)
+	_place(b)
+	b.reset_size()
+	return b
 
 
 func _show_saves() -> void:
@@ -528,7 +631,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed(&"combat_cancel") and root != null:
 		get_viewport().set_input_as_handled()
-		if _list_box != null:
+		if _list_box != null or _on_settings:
 			_show_menu()
 		else:
 			root.call("close_screen")

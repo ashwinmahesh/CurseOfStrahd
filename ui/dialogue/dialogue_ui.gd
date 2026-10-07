@@ -23,7 +23,12 @@ var _continue_row: HBoxContainer
 var _waiting_continue := false
 var _option_buttons: Array[Button] = []
 var _focus := 0
+## What's been said in this conversation, for the scroll-back (H or the History button).
 var _history: Array[String] = []
+var _history_panel: PanelContainer
+var _history_text: RichTextLabel
+## The keys of the options shown now ("file|text"), to mark the one chosen as already asked.
+var _option_keys: Array[String] = []
 ## The options on screen now (the runner's option dictionaries), for the controller focus and for tests.
 var options_shown: Array = []
 var _spread: HBoxContainer
@@ -145,6 +150,14 @@ func _ready() -> void:
 	_hint = _label("or click, Space, Enter or Esc", 13, "parchment")
 	_continue_row.add_child(_hint)
 	right.add_child(_continue_row)
+	# The scroll-back of what's been said: a button under the speaker's name, and H.
+	var hist := UiParts.small_button("History (H)", toggle_history)
+	hist.name = "History"
+	hist.focus_mode = Control.FOCUS_NONE
+	hist.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	hist.modulate = Color(1, 1, 1, 0.8)
+	left.add_child(hist)
+	_build_history()
 	# The Tarokka spread: each card Madam Eva turns stays face up above the conversation.
 	_spread = HBoxContainer.new()
 	_spread.add_theme_constant_override("separation", 14)
@@ -155,6 +168,59 @@ func _ready() -> void:
 	_spread.offset_top = 60
 	_spread.alignment = BoxContainer.ALIGNMENT_CENTER
 	add_child(_spread)
+
+
+## The scroll-back panel over the scene, above the box: every line of this conversation so far, newest at the bottom.
+func _build_history() -> void:
+	_history_panel = PanelContainer.new()
+	var s := UiKit.style("ui_black", "gilt_dark", 2, 0.97)
+	s.set_corner_radius_all(10)
+	s.corner_detail = 1
+	s.set_content_margin_all(20)
+	_history_panel.add_theme_stylebox_override("panel", s)
+	UiKit.trim(_history_panel, 56.0)
+	_history_panel.anchor_left = 0.5
+	_history_panel.anchor_right = 0.5
+	_history_panel.offset_left = -560
+	_history_panel.offset_right = 560
+	_history_panel.offset_top = 40
+	_history_panel.offset_bottom = 520
+	_history_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	_history_panel.visible = false
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 8)
+	_history_panel.add_child(col)
+	var head := HBoxContainer.new()
+	var title := UiKit.header("So far")
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head.add_child(title)
+	head.add_child(UiParts.small_button("Close (H)", toggle_history))
+	col.add_child(head)
+	_history_text = RichTextLabel.new()
+	_history_text.bbcode_enabled = true
+	_history_text.scroll_following = true
+	_history_text.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_history_text.add_theme_font_size_override("normal_font_size", 16)
+	_history_text.add_theme_font_size_override("italics_font_size", 16)
+	_history_text.add_theme_color_override("default_color", Look.color("vellum"))
+	col.add_child(_history_text)
+	add_child(_history_panel)
+
+
+func toggle_history() -> void:
+	_history_panel.visible = not _history_panel.visible
+	if _history_panel.visible:
+		_history_text.text = "\n\n".join(_history) if not _history.is_empty() else "[i]Nothing said yet.[/i]"
+
+
+func history_open() -> bool:
+	return _history_panel != null and _history_panel.visible
+
+
+func _remember(line: String) -> void:
+	_history.append(line)
+	if _history.size() > 200:
+		_history.pop_front()
 
 
 ## A face-up Tarokka card: its art if there is any, else its name, suit and number on a card face.
@@ -239,6 +305,7 @@ func _show(beat: Dictionary) -> void:
 			_waiting_continue = true
 		"notice":
 			_text.text = "[color=#%s]◆ %s[/color]" % [Look.color("bile").to_html(false), _esc(str(beat["text"]))]
+			_remember(_text.text)
 			_waiting_continue = true
 			if beat.has("card"):
 				Audio.sfx("card")
@@ -252,6 +319,7 @@ func _show(beat: Dictionary) -> void:
 				("[i]\"%s\"[/i]\n" % _esc(said)) if said != "" else "", Look.color(colour).to_html(false), beat["who"], beat["skill"],
 				int(beat["total"]), int(beat["dc"]), "success" if bool(beat["success"]) else "failure",
 				Look.color("parchment").to_html(false), _esc(str(beat["detail"]))]
+			_remember(_text.text)
 			_waiting_continue = true
 			# A failed check: what the roller could still spend (Heroic Inspiration, Tactical Mind).
 			for aid: Variant in beat.get("aids", []):
@@ -292,11 +360,13 @@ func _line(beat: Dictionary) -> void:
 		_show_portrait(str(beat["portrait"]))
 		_name.text = "Narrator"
 		_text.text = "[i][color=#%s]%s[/color][/i]" % [Look.color("parchment").to_html(false), _esc(str(beat["text"]))]
+		_remember(_text.text)
 		return
 	_name.text = str(beat["name"])
 	_show_portrait(str(beat["portrait"]))
 	var colour := "moonlight" if bool(beat["party"]) else "vellum"
 	_text.text = "[color=#%s]%s[/color]" % [Look.color(colour).to_html(false), _esc(str(beat["text"]))]
+	_remember("[color=#%s]%s:[/color] %s" % [Look.color("gilt_light").to_html(false), _esc(str(beat["name"])), _text.text])
 
 
 ## The speaker's portrait (art/portraits/<id>.png) in the gilt frame; none if there's no such art.
@@ -308,7 +378,9 @@ func _show_portrait(art_id: String) -> void:
 
 func _show_options(options: Array) -> void:
 	_option_buttons.clear()
+	_option_keys.clear()
 	options_shown = options
+	var asked := _asked()
 	var i := 0
 	for o: Variant in options:
 		var opt := o as Dictionary
@@ -322,7 +394,16 @@ func _show_options(options: Array) -> void:
 			extra = "  (%s %+d, %d%%)" % [str(check["who"]).get_slice(" ", 0), int(check["bonus"]), roundi(float(check["chance"]) * 100.0)]
 		b.text = "%d. %s%s%s" % [i + 1, (label + " ") if label != "" else "", opt["text"], extra]
 		_option_look(b)
-		b.add_theme_color_override("font_color", Look.color("gilt_light") if label != "" else Look.color("vellum"))
+		var key := _option_key(str(opt["text"]))
+		_option_keys.append(key)
+		# Already asked in an earlier visit: dimmer, still there to ask again (BG3's way).
+		var seen := not bool(opt.get("member", false)) and asked.has(key)
+		b.add_theme_color_override("font_color", Look.color("gilt_light") if label != "" else Look.color("parchment" if seen else "vellum"))
+		if seen:
+			b.add_theme_color_override("font_focus_color", Look.color("parchment"))
+			b.add_theme_color_override("font_hover_color", Look.color("vellum"))
+			b.text = "%s  ✓" % b.text
+			b.tooltip_text = "Already asked"
 		b.add_theme_color_override("font_hover_color", Look.color("gilt_light"))
 		var idx := i
 		if not bool(opt.get("enabled", true)):
@@ -333,9 +414,14 @@ func _show_options(options: Array) -> void:
 		_options.add_child(b)
 		_option_buttons.append(b)
 		i += 1
+	# The keyboard starts on the first thing not asked yet.
 	_focus = 0
+	for k in _option_buttons.size():
+		if not _option_buttons[k].disabled and not asked.has(_option_keys[k]):
+			_focus = k
+			break
 	if not _option_buttons.is_empty():
-		_option_buttons[0].grab_focus()
+		_option_buttons[_focus].grab_focus()
 
 
 ## The options' area is as tall as its options, up to OPTIONS_SHARE of the screen; past that it scrolls.
@@ -366,8 +452,26 @@ func _option_look(b: Button) -> void:
 func _choose(i: int) -> void:
 	Audio.sfx("click")
 	var member := i < options_shown.size() and bool((options_shown[i] as Dictionary).get("member", false))
+	if not member and i < _option_keys.size():
+		_asked()[_option_keys[i]] = true
+		_remember("[color=#%s]▸ %s[/color]" % [Look.color("moonlight").to_html(false), _esc(str((options_shown[i] as Dictionary)["text"]))])
 	_clear_options()
 	_show(runner.pick_member(i) if member else runner.choose(i))
+
+
+## The options chosen before, kept with the story (it's saved and loaded with it): "file|text" -> true.
+func _asked() -> Dictionary:
+	if runner == null or runner.st == null:
+		return {}
+	if not runner.st.options.get("asked") is Dictionary:
+		runner.st.options["asked"] = {}
+	return runner.st.options["asked"] as Dictionary
+
+
+## An option is known by its words within its conversation's file (the same question can come back from more than
+## one node of it).
+func _option_key(text: String) -> String:
+	return "%s|%s" % [runner.file.key if runner != null and runner.file != null else "", text]
 
 
 func _clear_options() -> void:
@@ -383,12 +487,27 @@ func _clicked(event: InputEvent) -> void:
 	if mb == null or not mb.pressed or mb.button_index != MOUSE_BUTTON_LEFT:
 		return
 	get_viewport().set_input_as_handled()
+	if history_open():
+		toggle_history()
+		return
 	if runner != null and _waiting_continue:
 		_advance()
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if runner == null:
+		return
+	if event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo \
+			and (event as InputEventKey).physical_keycode == KEY_H:
+		get_viewport().set_input_as_handled()
+		toggle_history()
+		return
+	if history_open():
+		# The scroll-back is being read: Escape closes it and nothing else moves the conversation on.
+		if event.is_action_pressed(&"combat_cancel"):
+			toggle_history()
+		if event is InputEventKey or event is InputEventMouseButton:
+			get_viewport().set_input_as_handled()
 		return
 	if _waiting_continue:
 		# A click that no part of the screen took (the Tarokka cards) continues too.
