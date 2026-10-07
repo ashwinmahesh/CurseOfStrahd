@@ -243,7 +243,7 @@ class Piece:
             bottoms.append(t.faces.new([rim[(k + 1) % n], rim[k], hub]))
         bmesh.ops.recalc_face_normals(t, faces=t.faces)
         under_set = set(bottoms)
-        self._append_faces(t, lambda f: under if f in under_set else mat)
+        self._append_faces(t, lambda f: under if f in under_set else mat, smooth=True)
 
     def socket(self, name, at):
         self.sockets[name] = at
@@ -1902,7 +1902,7 @@ def cart_broken(p):
 # Trees, brambles and stones come in a few variants each (the catalog lists them; the board picks one by place) and
 # are free to turn (manifest "turns"): the board gives each copy its own heading, as nature has no front.
 
-def _pine(p, H, tiers, bare=0.45, crown="pal_bog", crown_hi="pal_moss", trunk="pal_peat", width=0.75, trunk_r=0.11):
+def _pine(p, H, tiers, bare=0.45, crown="pal_bog_deep", crown_hi="pal_bog", trunk="pal_peat", width=0.62, trunk_r=0.11):
     rng = p.rng
     p.lathe([(trunk_r, 0.0), (trunk_r * 0.75, 0.15), (trunk_r * 0.65, bare + 0.3), (trunk_r * 0.35, H * 0.8), (0.0, H * 0.85)],
             (0, 0, 0), trunk, segs=8, smooth=False)
@@ -1916,7 +1916,7 @@ def _pine(p, H, tiers, bare=0.45, crown="pal_bog", crown_hi="pal_moss", trunk="p
         z = bare + f * span * 0.82
         r = width * (1.0 - f * 0.82) * rng.uniform(0.92, 1.05)
         h = span * 0.32 * (1.0 - f * 0.35)
-        p.tier((rng.uniform(-0.02, 0.02), rng.uniform(-0.02, 0.02), z), r, h, crown if i % 2 == 0 else crown_hi, "pal_bruise_deep",
+        p.tier((rng.uniform(-0.02, 0.02), rng.uniform(-0.02, 0.02), z), r, h, crown if i % 2 == 0 else crown_hi, "pal_void",
                points=rng.choice([7, 8, 9]), droop=0.05 + 0.05 * (1 - f), twist=rng.uniform(0, 1))
     p.lathe([(0.05, 0.0), (0.0, 0.25)], (0, 0, bare + span * 0.82 + span * 0.2), crown_hi, segs=6, smooth=False)
 
@@ -1934,7 +1934,7 @@ def pine_b(p):
 
 @model("pine_c", "free", ["pine"], turns=True)
 def pine_c(p):
-    _pine(p, 2.7, 6, bare=0.35, crown="pal_moss", crown_hi="pal_bog")
+    _pine(p, 2.7, 6, bare=0.35, crown="pal_bog", crown_hi="pal_bog_deep")
 
 
 @model("pine_clawed", "free", ["pine_clawed"], turns=True)

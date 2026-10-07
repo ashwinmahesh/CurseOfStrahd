@@ -1510,15 +1510,15 @@
         "pine"
       ],
       "size": [
-        1.364,
+        1.128,
         3.33,
-        1.35
+        1.116
       ],
       "materials": [
         "pal_bog",
-        "pal_bruise_deep",
-        "pal_moss",
-        "pal_peat"
+        "pal_bog_deep",
+        "pal_peat",
+        "pal_void"
       ],
       "triangles": 356,
       "turns": true
@@ -1530,15 +1530,15 @@
         "pine"
       ],
       "size": [
-        1.489,
+        1.231,
         3.634,
-        1.406
+        1.162
       ],
       "materials": [
         "pal_bog",
-        "pal_bruise_deep",
-        "pal_moss",
-        "pal_peat"
+        "pal_bog_deep",
+        "pal_peat",
+        "pal_void"
       ],
       "triangles": 396,
       "turns": true
@@ -1550,15 +1550,15 @@
         "pine"
       ],
       "size": [
-        1.462,
+        1.209,
         3.026,
-        1.525
+        1.261
       ],
       "materials": [
         "pal_bog",
-        "pal_bruise_deep",
-        "pal_moss",
-        "pal_peat"
+        "pal_bog_deep",
+        "pal_peat",
+        "pal_void"
       ],
       "triangles": 332,
       "turns": true
@@ -1576,10 +1576,10 @@
       ],
       "materials": [
         "pal_ash_violet",
-        "pal_bruise_deep",
         "pal_moon_blue",
         "pal_night",
-        "pal_parchment"
+        "pal_parchment",
+        "pal_void"
       ],
       "triangles": 340,
       "turns": true
