@@ -13,6 +13,7 @@ var choice: Choice
 ## text in a panel on the right (owner, 2026-10-07: long feats didn't fit a tooltip): the option under the mouse, else
 ## the one picked, else the first that can be taken.
 const SPLIT_KINDS: Array[String] = ["feat", "fighting_style"]
+const SPELL_KINDS: Array[String] = ["cantrip", "spell", "spellbook"]
 ## The list and the panel scroll on their own past this height, so the panel stays beside the list.
 const SPLIT_HEIGHT := 470.0
 var _detail: VBoxContainer
@@ -48,7 +49,22 @@ func _build() -> void:
 	grid.columns = 2 if split else (3 if choice.options.size() > 8 else 2)
 	grid.add_theme_constant_override("h_separation", 6)
 	grid.add_theme_constant_override("v_separation", 5)
-	for o in choice.options:
+	# Spells go under a heading per spell level, alphabetical within it (SpellGroups).
+	var spells := choice.kind in SPELL_KINDS
+	var options: Array = SpellGroups.sorted(choice.options, func(o: ChoiceOption) -> String: return o.id) if spells else choice.options
+	var level_now := -1
+	var grids: Array[GridContainer] = [grid]
+	for ov: Variant in options:
+		var o := ov as ChoiceOption
+		if spells and SpellGroups.level_of(o.id) != level_now:
+			level_now = SpellGroups.level_of(o.id)
+			if grid.get_child_count() > 0:
+				grid = GridContainer.new()
+				grid.columns = grids[0].columns
+				grid.add_theme_constant_override("h_separation", 6)
+				grid.add_theme_constant_override("v_separation", 5)
+				grids.append(grid)
+			grid.set_meta(&"heading", SpellGroups.heading(level_now))
 		var picked := o.id in choice.picks
 		var mark := "◆ " if picked else ("✕ " if not o.legal else ("~ " if o.warning != "" else "◇ "))
 		var tip := o.summary
@@ -91,6 +107,15 @@ func _build() -> void:
 		grid.add_child(b)
 	if split:
 		_build_split(grid)
+	elif spells:
+		for g in grids:
+			if g.get_child_count() == 0:
+				continue
+			# A heading only when the list spans more than one level.
+			if grids.size() > 1 or choice.kind == "spellbook":
+				var cap := UiParts.caption(str(g.get_meta(&"heading", "")).to_upper(), 12, "gilt")
+				add_child(cap)
+			add_child(g)
 	else:
 		add_child(grid)
 
