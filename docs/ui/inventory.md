@@ -7,8 +7,10 @@ stash, attunement and merchants are Phase 3 and 4 engine work; this spec fixes t
 
 ## What this screen must do
 
-- One inventory per character, plus a party stash at safe places (the Blue Water Inn, Argynvostholt once
-  reclaimed). Currency in cp, sp, ep, gp, pp with conversion.
+- One inventory per character, plus a party stash. Things go into the stash from anywhere (the item card's Send to
+  the stash, the loot window's Stash and All to the stash) and come out only at a safe place: an inn, a home,
+  Argynvostholt once reclaimed (owner, 2026-10-07). An item keeps its own state there (charges, identified, a junk
+  mark). Currency in cp, sp, ep, gp, pp with conversion.
 - Show what every item does *for this character*, compare it with what's equipped, and never let carrying,
   attunement or quest items surprise the player.
 - Fast with mouse, keyboard and controller, and smooth with 300+ items (plan's performance budget).
@@ -19,9 +21,12 @@ stash, attunement and merchants are Phase 3 and 4 engine work; this spec fixes t
 - **Paper doll**: head, cloak, neck, armor, hands, belt, two rings, feet; **weapon sets** (main hand + off hand,
   two sets with a quick swap ↻); ammunition and spellcasting focus slots. Equipping armor shows the new AC on the
   slot; armor without training warns before equipping (Disadvantage on Str/Dex rolls, no spellcasting).
-- **Backpack**: filters (All, Weapons, Armor, Consumables, Tools, Quest, Junk, New), sort by name, weight, value
-  or newest, search; columns Item / Qty / Weight / Value; packs open as containers (▸). Quest items show 🔒 and can't
-  be sold or dropped.
+- **Backpack**: filters (All, Weapons, Armor, Consumables, Magic, Gear), the New and Junk marks as toggles with their
+  counts, sort by name, weight, value or newest, and a search box (every word must appear in the item's name, kind
+  or rarity); columns Item / Qty / Weight / Value; packs open as containers (▸). Quest items (and the three
+  treasures) show Quest and can't be sold, stashed, dropped or marked as junk. **New** is what arrived since the
+  character's page was last opened (finds, purchases, gifts; never starting gear). **Junk** is the player's mark,
+  kept when the item changes hands; the Junk view totals its weight and value.
 - **Carrying**: carried / capacity with the breakdown (Strength × 15, × size; Powerful Build counts one size larger)
   and the optional DMG encumbrance thresholds if the owner turns them on.
 - **Attunement**: three slots; attuning and ending an attunement are instant, from the item's row (owner house rule,
@@ -40,8 +45,9 @@ stash, attunement and merchants are Phase 3 and 4 engine work; this spec fixes t
 - **Party transfer**: drag an item onto another portrait (or "Give to…"); the receiving character's capacity is
   checked first.
 - **Merchant**: Buy and Sell columns; prices change with the NPC's attitude (Hostile/Indifferent/Friendly, 2024
-  Influence) and an optional Persuasion haggle that rolls in the open; "Sell all junk"; quest items can't be sold.
-- **Stash** appears at safe places, as a third column.
+  Influence) and an optional Persuasion haggle that rolls in the open; "Sell all junk" sells everything the party
+  marked as junk that this merchant buys, from every pack at once (equipped things stay); quest items can't be sold.
+- **Stash** shows under the backpack everywhere; its Take buttons work only at safe places.
 
 ## Combat hooks (Phase 2)
 

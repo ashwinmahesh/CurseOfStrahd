@@ -1,7 +1,8 @@
 class_name LootWindow
 extends CanvasLayer
 ## The loot window (docs/ui/inventory.md, inv_02): what a container holds, with Take all, Take one, Take gold, or Send
-## to whoever can carry it (overloaded characters are skipped, and it says so). Coins go to the party purse.
+## to whoever can carry it (overloaded characters are skipped, and it says so). Coins go to the party purse. Anything
+## can go straight to the party stash instead (Q7, owner 2026-10-07): it's taken out again at a safe place.
 
 signal closed
 
@@ -28,7 +29,7 @@ func show_loot(state: StoryState, cid: String, its: Array, g: float, v: Location
 	# As tall as what's inside (owner, docs/plans/ui_polish.md: a purse of coins sat in a frame built for twenty
 	# items), from a small box for a few things up to the old size for a full chest.
 	var lines := its.size() + (1 if g > 0.0 else 0)
-	var box := UiKit.screen_frame(self, "Loot", Vector2(760, clampf(250.0 + 58.0 * maxf(1.0, lines), 330.0, 560.0)))
+	var box := UiKit.screen_frame(self, "Loot", Vector2(860, clampf(250.0 + 58.0 * maxf(1.0, lines), 330.0, 560.0)))
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
 	row.add_child(UiParts.caption("Give to", 12))
@@ -47,6 +48,9 @@ func show_loot(state: StoryState, cid: String, its: Array, g: float, v: Location
 	var buttons := HBoxContainer.new()
 	buttons.add_theme_constant_override("separation", 10)
 	buttons.add_child(UiKit.button("Send to who can carry", _send_all, 15))
+	var to_stash := UiKit.button("All to the stash", stash_all, 15)
+	to_stash.tooltip_text = "Everything here into the party stash, and the coins to the purse. Take things out at an inn or a home."
+	buttons.add_child(to_stash)
 	buttons.add_child(UiKit.button("Close", _close, 15))
 	buttons.add_child(UiParts.gap())
 	var all := UiParts.primary_button("Take all (Space)", _take_all, "inventory")
@@ -84,6 +88,10 @@ func _redraw() -> void:
 		row.add_child(UiKit.label("%s lb" % str(data.get("weight_lb", 0)), 13, "parchment"))
 		var idx := i
 		row.add_child(UiParts.small_button("Take one", func() -> void: _take(idx, 1)))
+		var stash := UiParts.small_button("Stash", func() -> void: _stash(idx))
+		stash.tooltip_text = "Into the party stash; take it out at an inn or a home"
+		stash.disabled = InventoryScreen.is_quest(data)
+		row.add_child(stash)
 		_list.add_child(UiParts.row(row, _item_tip(data)))
 
 
@@ -140,6 +148,29 @@ func _send_all() -> void:
 	_take_gold()
 	if not notes.is_empty() and view != null:
 		view.toast.emit("; ".join(notes))
+	_close()
+
+
+## One find (all of it) into the party stash, with its own state.
+func _stash(i: int) -> void:
+	var it := items[i] as Dictionary
+	st.stash_add(str(it["id"]), int(it.get("qty", 1)), it)
+	items.remove_at(i)
+	_redraw()
+	_maybe_done()
+
+
+## Everything into the party stash (quest items to the chosen character, since they can't be stashed), the coins to
+## the purse.
+func stash_all() -> void:
+	for it: Variant in items:
+		var d := it as Dictionary
+		if InventoryScreen.is_quest(Compendium.shared().item_data(str(d["id"]))):
+			_target().add_item(str(d["id"]), int(d.get("qty", 1)), d)
+		else:
+			st.stash_add(str(d["id"]), int(d.get("qty", 1)), d)
+	items.clear()
+	_take_gold()
 	_close()
 
 

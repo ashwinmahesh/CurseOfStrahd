@@ -19,6 +19,8 @@ grade.
 | Mist, the Mists' wall, cloud shadows, ground patches, grade, vignette, then outlines and the palette snap | `shaders/post/strahd_post.gdshader` |
 | Water, forest trees (one MultiMesh), leaves, rain, splashes, motes, crows, smoke | `shaders/atmosphere/` |
 | Art QA: a place at each time of day from the game camera, with frame times | `tools/art/preview/atmosphere_preview.tscn` |
+| The renderer by graphics preset: anti-aliasing, shadow maps, how many lamps cast shadows | `world/look/graphics.gd` (`Graphics`) |
+| The world look's before-and-after shots, with frame times and a cost bench | `tools/capture/look_capture.tscn` |
 
 `LocationView` makes one `Atmosphere` and hands it the camera and the screen pass; `update_daylight()` tells it the
 time of day. A mood can be `like` another and change only what differs.
@@ -85,6 +87,34 @@ is an opaque, hard-edged shape for the same reason. Character sprites draw after
 them and they stay crisp. On this Mac, Vallaki in the rain, the castle's storm and the Tsolenka blizzard all hold the capture's 120 fps cap at
 1600 x 900 with it on, the same as with it off (`--uncapped --compare`).
 
+## Edges and shadows in the Modern finish
+
+The Modern finish (Improvement Ideas W2) sets the renderer by a graphics preset, `Graphics` (Low, Medium, High;
+GameSettings `graphics`, High by default), applied as each place opens. Classic keeps the renderer it was frozen with
+(owner, 2026-10-07): no anti-aliasing, the sun in two splits, no lamp shadows.
+
+| | Low | Medium | High |
+|---|---|---|---|
+| Anti-aliasing | FXAA | SMAA | MSAA 4x and SMAA |
+| Sun and moon shadow map | 2048, 2 splits | 4096, 4 splits | 4096, 4 splits |
+| Lamps casting shadows (nearest the party) | 2 | 6 | 12 |
+| Lamp shadow atlas | 2048 | 4096 | 8192 |
+| Shadow filtering | soft low | soft medium | soft high |
+| Reflections on polished and wet floors (screen-space, steps) | none | 32 | 56 |
+
+- **Edges.** MSAA smooths 3D edges; SMAA then smooths the ink lines the screen pass draws round them, which MSAA can't
+  reach. Neither blurs the character sprites (TAA would).
+- **The sun's shadows** reach only as far as the camera sees, in splits packed round the ground in view, so they
+  follow the zoom and a square near the party gets about four times the detail it had. The sun and moon have a size
+  (`Atmosphere.SUN_SIZE`, Godot's PCSS), so a shadow is sharp where a post meets the ground and softer at its far end.
+- **Surfaces** take the light like painted 3D in Modern (highlights, relief, roughness per surface: docs/art/textures.md
+  "How a surface takes the light"). The flat sky colour isn't reflected (`reflected_light_source` off): it laid a grey
+  sheen over everything; floors reflect what's on screen instead.
+- **Lamp shadows.** Lanterns, hearths, braziers, candles, lit windows, the party's lantern and spell lights all can
+  cast shadows; every quarter second the nearest to the party get the preset's budget. A light already casting keeps
+  its shadow until another is clearly nearer, so shadows don't blink as the party walks, and shadows fade out a
+  little past the party. A light with the meta `no_shadow` never casts one.
+
 ## Rules for new places
 
 - An outdoor place gets its region's or theme's mood; give it its own only when it should feel different. Indoor
@@ -101,3 +131,11 @@ them and they stay crisp. On this Mac, Vallaki in the rain, the castle's storm a
 
 `--overview` frames the whole map, `--uncapped --compare` also times and shoots it with the atmosphere's extras off,
 `--set=mist_strength:0.8` tries a value, `--no-ao` turns contact shadows off. `make capture` draws off screen.
+
+For a change to the light, the materials or the screen pass, shoot the world look's set places before and after:
+
+    make capture SCENE=res://tools/capture/look_capture.tscn NAME=look/after FRAMES=10 [ARGS="--size=1920x1080"]
+
+`LOOK_SHOTS=village_dusk,castle_hall` picks shots, `LOOK_STYLE` and `LOOK_GRAPHICS` pick the finish and preset for
+the run, and `LOOK_BENCH=1` (each part of the renderer) or `LOOK_BENCH=presets` times them round after round. Other
+work on the Mac makes single frame times noisy; compare parts within one run.

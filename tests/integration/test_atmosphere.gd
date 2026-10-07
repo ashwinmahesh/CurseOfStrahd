@@ -162,3 +162,62 @@ func test_indoors_stays_indoors() -> void:
 	var v := _view("blood_of_the_vine")
 	assert_true(v.atmosphere.land == null, "no land around a room")
 	assert_true(v.atmosphere.weather.follow.is_empty(), "no weather indoors")
+
+
+## The renderer for each finish (Improvement Ideas W2): Classic keeps the renderer it was frozen with whatever the
+## preset, and Modern's presets step up in how many lamps cast shadows.
+func test_graphics_presets() -> void:
+	var was := Look.style()
+	Look.set_style("classic", false)
+	Graphics.set_preset("high", false)
+	assert_eq(Graphics.spec(), Graphics.CLASSIC, "Classic keeps its frozen renderer")
+	assert_eq(Graphics.lamp_shadows(), 0, "no lamp shadows in Classic")
+	Look.set_style("modern", false)
+	var budgets: Array[int] = []
+	for p: String in Graphics.PRESETS:
+		Graphics.set_preset(p, false)
+		budgets.append(Graphics.lamp_shadows())
+	assert_true(budgets[0] < budgets[1] and budgets[1] < budgets[2], "more lamps cast shadows as the preset rises")
+	Graphics.set_preset(Graphics.DEFAULT_PRESET, false)
+	Look.set_style(was, false)
+
+
+## In the Modern finish the lights nearest the party cast shadows, up to the preset's budget, and no others.
+func test_lamps_nearest_the_party_cast_shadows() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	Graphics.set_preset("medium", false)
+	var v := _view("death_house_ground")
+	v.atmosphere.call("_update_lamp_shadows")
+	var focus := v.rig.global_position
+	var shadowed: Array[float] = []
+	var plain: Array[float] = []
+	for n in v.find_children("*", "OmniLight3D", true, false):
+		var l := n as OmniLight3D
+		if not l.is_visible_in_tree() or l.light_energy <= 0.01:
+			continue
+		(shadowed if l.shadow_enabled else plain).append(l.global_position.distance_to(focus))
+	assert_false(shadowed.is_empty(), "the house's lamps cast shadows")
+	assert_eq(shadowed.size(), mini(Graphics.lamp_shadows(), shadowed.size() + plain.size()), "the budget is filled")
+	if not plain.is_empty():
+		assert_true(shadowed.max() <= plain.min(), "the shadows go to the nearest lights")
+	v.queue_free()
+	Graphics.set_preset(Graphics.DEFAULT_PRESET, false)
+	Look.set_style(was, false)
+
+
+## The Modern sun's shadows reach only as far as the camera sees, so they follow the zoom, in four splits.
+func test_sun_shadows_follow_the_zoom() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	Graphics.set_preset("high", false)
+	var v := _view("village_of_barovia")
+	v.rig.distance = 10.0
+	v.atmosphere.call("_fit_sun_shadows")
+	var close := v.atmosphere.sun.directional_shadow_max_distance
+	v.rig.distance = 25.0
+	v.atmosphere.call("_fit_sun_shadows")
+	assert_true(v.atmosphere.sun.directional_shadow_max_distance > close, "zoomed out, the shadows reach further")
+	assert_eq(v.atmosphere.sun.directional_shadow_mode, DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS, "four splits")
+	v.queue_free()
+	Look.set_style(was, false)

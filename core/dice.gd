@@ -9,7 +9,10 @@ func _ready() -> void:
 	roller.rolled.connect(func(entry: Dictionary) -> void: EventBus.roll_made.emit(entry))
 
 
+## A fixed seed starts the rolls over, the fresh seeds derived from it (reseed_random) included, so a test that seeds
+## rolls the same whatever ran before it in the same process (make test shares the files among processes).
 func reseed(seed_value: int) -> void:
+	_reseeds = 0
 	roller.reseed(seed_value)
 
 
