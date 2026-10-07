@@ -221,3 +221,46 @@ func test_sun_shadows_follow_the_zoom() -> void:
 	assert_eq(v.atmosphere.sun.directional_shadow_mode, DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS, "four splits")
 	v.queue_free()
 	Look.set_style(was, false)
+
+
+## In the Modern finish each light takes its kind (W5): soft or crisp shadows by its size, and a window indoors is the
+## key light coming in, steady, with a shaft of light through the haze.
+func test_lights_take_their_kind() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var v := _view("death_house_ground")
+	var kinds := {}
+	var shafts := 0
+	for n in v.find_children("*", "OmniLight3D", true, false):
+		var l := n as OmniLight3D
+		var kind := str(l.get_meta("light_kind", ""))
+		kinds[kind] = true
+		if kind == "window":
+			if l is CandleFlicker:
+				assert_eq((l as CandleFlicker).flicker, 0.0, "a window's light is steady")
+			if l.find_child("WindowBeam", false, false) != null:
+				shafts += 1
+	for k: String in ["lamp", "window", "lantern"]:
+		assert_true(kinds.has(k), "Death House's %s is dressed as one" % k)
+	assert_true(shafts >= 1, "a window indoors lets a shaft of light in")
+	v.queue_free()
+	Look.set_style(was, false)
+
+
+## A swaying flame drifts a little from where it stands, and comes back to rest when it stops (W5).
+func test_a_swaying_flame_comes_back_to_rest() -> void:
+	var f := CandleFlicker.new()
+	f.position = Vector3(2, 1, 3)
+	add_child(f)
+	f.set_meta("sway", true)
+	var moved := false
+	for i in 40:
+		f._process(0.05)
+		moved = moved or not f.position.is_equal_approx(Vector3(2, 1, 3))
+	assert_true(moved, "it sways while asked")
+	assert_true(f.position.distance_to(Vector3(2, 1, 3)) <= f.sway * 1.5, "but only a little")
+	f.set_meta("sway", false)
+	for i in 80:
+		f._process(0.05)
+	assert_true(f.position.is_equal_approx(Vector3(2, 1, 3)), "and it comes back to rest")
+	f.queue_free()

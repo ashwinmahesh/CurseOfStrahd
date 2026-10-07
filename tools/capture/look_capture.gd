@@ -20,6 +20,8 @@ const SHOTS := {
 	"road_dusk": {"loc": "into_the_mists_road", "hour": 18, "cells": [[12, 15], [13, 15], [12, 16], [13, 14]]},
 	"castle_hall": {"loc": "castle_ravenloft_main_floor", "cells": [[25, 8], [26, 8], [25, 9], [26, 9]]},
 	"tser_pool": {"loc": "tser_pool", "hour": 18},
+	"death_house_den": {"loc": "death_house_ground", "cells": [[4, 5], [5, 5], [4, 6], [5, 6]]},
+	"castle_dining": {"loc": "castle_ravenloft_main_floor", "cells": [[7, 10], [8, 10], [7, 11], [8, 11]]},
 }
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 
