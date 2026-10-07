@@ -1,4 +1,4 @@
-# Skirmish and the Character Lab (N1)
+# Skirmish, the Character Lab and the encounter editor (N1, N9)
 
 Status: built 2026-10-07 (lane 18 of Improvement Ideas.md) · not yet seen by the owner
 Code: `skirmish/` (rules side: `SkirmishSetup`, `HeroLab`, `SkirmishLibrary`, `SkirmishState`), `ui/skirmish/`
@@ -25,10 +25,17 @@ and after a fight.
   (a template such as a +1 weapon or a Flame Tongue goes on the weapon or armor the hero holds; weapons go in hand,
   armor and worn items are put on, and items are attuned while a place is free).
 - **Foes.** The stat blocks by Challenge Rating with a search; click to add one, up to 20.
-- **Field.** The Phase 2 arena or any location's map, with a sketch of where everyone starts, day or night outdoors,
-  and who is surprised. Nobody placed starts round the place's way in; the foes stand about ten squares off across
-  open ground. Doors stand open and furniture squares stay clear.
+- **Field and the encounter editor (N9).** The Phase 2 arena or any location's map, drawn from above with everyone's
+  start, day or night outdoors, and who is surprised. The sketch is the editor: choose a stat block from the list
+  beside it and click squares to put foes there, or click anyone and then a square to move them; right-click takes a
+  foe away or sends a hero back to a filled-in start. Squares that can't be used say why on hover and on a click
+  (walls, low cover, water, the place's furniture and doorways, someone already there, a big creature that won't
+  fit on one level). Anyone not placed starts where it's filled in, drawn fainter: the party round the place's way
+  in, the foes about ten squares off across open ground. Pin everyone keeps the filled-in squares; Clear the squares
+  fills them all in again. Doors stand open.
 - **Saved.** Save under a name (the same name replaces it), load or delete. Files are JSON in `user://skirmish/`.
+  **Use its fight** takes a saved fight (map, hour, surprise, foes and their squares, and the heroes' starting
+  squares by order) for the party you have.
 
 ## The fight and after
 

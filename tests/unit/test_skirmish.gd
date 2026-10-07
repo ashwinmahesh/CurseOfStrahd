@@ -3,7 +3,8 @@ extends TestCase
 ## put on, setups that save and load, the 2024 encounter budgets, everyone placed on open ground on every map, the
 ## fight built with the place's light, and the per-fight tally read from the combat log.
 
-const TEST_DIR := "user://test_skirmish/"
+## A folder of this run's own, so test runs side by side never touch each other's setups.
+var test_dir := "user://test_skirmish_%d/" % OS.get_process_id()
 
 
 func after_each() -> void:
@@ -71,7 +72,7 @@ func test_the_lab_level_cap_reaches_20() -> void:
 
 
 func test_setups_save_and_load() -> void:
-	SkirmishLibrary.dir = TEST_DIR
+	SkirmishLibrary.dir = test_dir
 	var s := SkirmishSetup.new()
 	s.title = "Wolves at Night"
 	s.map_id = "location:svalich_crossroads"
@@ -246,3 +247,68 @@ func test_a_whole_fight_is_tallied() -> void:
 			assert_eq(dead, e.combatants.filter(func(c: Combatant) -> bool: return c.side == &"enemy").size())
 		assert_eq(kills, dead, "every dead foe is somebody's kill (seed %d)" % seed_value)
 		assert_true(dealt > 0 and taken_by_foes > 0, "damage dealt and taken (%d, %d)" % [dealt, taken_by_foes])
+
+
+# --- The encounter editor (N9) --------------------------------------------------------------------
+
+func test_the_editor_places_moves_and_refuses() -> void:
+	var s := SkirmishSetup.new()   # the arena: walls round the edge, '=' and '~' inside
+	s.add_hero(HeroLab.pregen("thistle", 3), "thistle")
+	var g := s.grid()
+	var why: Array[String] = []
+	assert_true(s.add_foe_at(g, "ogre", Vector2i(18, 10), why), str(why))
+	assert_eq(s.foes.size(), 1)
+	assert_true(s.pinned("foe", 0))
+	var cells := s.placements(g)
+	assert_eq(s.piece_at(cells, Vector2i(19, 11)), {"kind": "foe", "index": 0}, "the Large ogre covers four squares")
+	assert_eq(s.place_problem(g, "foe", -1, Vector2i(0, 0), "wolf"), "A wall")
+	assert_eq(s.place_problem(g, "foe", -1, Vector2i(5, 9), "wolf"), "Low cover: nobody stands on it")
+	assert_eq(s.place_problem(g, "foe", -1, Vector2i(19, 11), "wolf"), "Someone stands there")
+	assert_eq(s.place_problem(g, "foe", -1, Vector2i(21, 7), "ogre"), "A wall", "the ogre's far squares hit the stones")
+	assert_false(s.add_foe_at(g, "wolf", Vector2i(18, 11), why))
+	assert_eq(why.back(), "Someone stands there")
+	# Moving: the ogre to open ground; the hero placed, then back to filled in.
+	assert_true(s.place(g, "foe", 0, Vector2i(12, 5)))
+	assert_eq(SkirmishSetup._cell_of(s.foes[0]), Vector2i(12, 5))
+	assert_true(s.place(g, "hero", 0, Vector2i(2, 12)))
+	assert_eq((s.placements(g)["party"] as Array[Vector2i])[0], Vector2i(2, 12))
+	s.unplace("hero", 0)
+	assert_false(s.pinned("hero", 0))
+	# A filled-in hero standing where a foe is put moves aside.
+	var auto := (s.placements(g)["party"] as Array[Vector2i])[0]
+	assert_true(s.add_foe_at(g, "wolf", auto, why), str(why))
+	var after := s.placements(g)
+	assert_ne((after["party"] as Array[Vector2i])[0], auto)
+	assert_eq((after["foes"] as Array[Vector2i])[1], auto)
+
+
+func test_a_saved_fight_is_taken_for_another_party() -> void:
+	var fight := SkirmishSetup.new()
+	fight.map_id = "location:tser_pool"
+	fight.time = "night"
+	fight.surprise = "party"
+	var g := fight.grid()
+	fight.add_hero(HeroLab.pregen("thistle", 2), "thistle")
+	var spot := (fight.placements(g)["party"] as Array[Vector2i])[0]
+	fight.place(g, "hero", 0, spot)
+	var foe_spot := (fight.placements(g)["party"] as Array[Vector2i])[0] + Vector2i(6, 0)
+	for d: Vector2i in [Vector2i(6, 0), Vector2i(-6, 0), Vector2i(0, 6), Vector2i(0, -6), Vector2i(4, 4)]:
+		if fight.place_problem(g, "foe", -1, spot + d, "werewolf") == "":
+			foe_spot = spot + d
+			break
+	assert_true(fight.add_foe_at(g, "werewolf", foe_spot))
+	var mine := SkirmishSetup.new()
+	mine.add_hero(HeroLab.quick_hero("monk", 7), "")
+	mine.add_hero(HeroLab.quick_hero("cleric", 7), "")
+	mine.add_foe("rat")
+	mine.take_fight(fight)
+	assert_eq(mine.map_id, "location:tser_pool")
+	assert_eq(mine.time, "night")
+	assert_eq(mine.surprise, "party")
+	assert_eq(mine.party.size(), 2, "the party stays")
+	assert_eq(mine.hero(0).name, "Lab Monk")
+	assert_eq(mine.foes.size(), 1)
+	assert_eq(str(mine.foes[0]["monster"]), "werewolf")
+	assert_eq(SkirmishSetup._cell_of(mine.foes[0]), foe_spot)
+	assert_eq(SkirmishSetup._cell_of(mine.party[0]), spot, "the first hero starts where the saved one did")
+	assert_false(mine.pinned("hero", 1))

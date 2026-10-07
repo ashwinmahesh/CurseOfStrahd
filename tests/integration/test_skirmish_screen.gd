@@ -12,7 +12,7 @@ var arena: CombatArena
 
 
 func before_each() -> void:
-	SkirmishLibrary.dir = "user://test_skirmish_screen/"
+	SkirmishLibrary.dir = "user://test_skirmish_screen_%d/" % OS.get_process_id()
 	SkirmishScreen.current = null
 	SkirmishScreen.kept_tab = "Party"
 
@@ -166,3 +166,46 @@ func test_a_skirmish_is_fought_on_its_map_and_ends_on_the_results() -> void:
 	var row := FightTally.side_rows(arena.e, arena.results.tally, "party")[0]
 	assert_eq(int(row["kills"]), 2, "both ghouls are Wren's")
 	assert_true(arena.results.find_child("FightAgain", true, false) != null)
+
+
+func test_the_encounter_editor_works_on_the_sketch() -> void:
+	await _open()
+	SkirmishScreen.add_level = 4
+	screen.call("_add_pregen", "kip_smudgewick")
+	screen.tab = "Field"
+	screen.field_list = "Stat blocks"
+	screen.call("_redraw")
+	await frames(2)
+	assert_true(screen.sketch.editable)
+	screen.brush = {"kind": "new", "monster": "ghoul"}
+	screen.call("_show_sketch")
+	assert_true(screen.sketch.shade.has(Vector2i(10, 6)), "open ground is shaded for the brush")
+	assert_false(screen.sketch.shade.has(Vector2i(0, 0)), "walls aren't")
+	screen.call("_sketch_clicked", Vector2i(10, 6), MOUSE_BUTTON_LEFT)
+	screen.call("_sketch_clicked", Vector2i(12, 6), MOUSE_BUTTON_LEFT)
+	screen.call("_sketch_clicked", Vector2i(0, 0), MOUSE_BUTTON_LEFT)
+	assert_eq(screen.setup.foes.size(), 2, "two ghouls; the wall refused")
+	assert_true(screen._note.text.contains("A wall"), screen._note.text)
+	# Pick the second ghoul up and move it; right-click takes the first away.
+	screen.brush = {}
+	screen.call("_sketch_clicked", Vector2i(12, 6), MOUSE_BUTTON_LEFT)
+	assert_eq(screen.brush, {"kind": "foe", "index": 1})
+	screen.call("_sketch_clicked", Vector2i(14, 8), MOUSE_BUTTON_LEFT)
+	assert_eq(SkirmishSetup._cell_of(screen.setup.foes[1]), Vector2i(14, 8))
+	screen.call("_sketch_clicked", Vector2i(10, 6), MOUSE_BUTTON_RIGHT)
+	assert_eq(screen.setup.foes.size(), 1)
+	assert_eq(SkirmishSetup._cell_of(screen.setup.foes[0]), Vector2i(14, 8))
+	# The hero placed by hand, saved, and the fight taken for a new party.
+	screen.brush = {"kind": "hero", "index": 0}
+	screen.call("_sketch_clicked", Vector2i(3, 12), MOUSE_BUTTON_LEFT)
+	assert_true(screen.setup.pinned("hero", 0))
+	screen.setup.title = "Ghoul in the shrine"
+	screen.call("_save")
+	screen.setup.party.clear()
+	screen.setup.foes.clear()
+	screen.call("_add_quick", "fighter")
+	screen.call("_load", "ghoul_in_the_shrine", true)
+	assert_eq(screen.setup.party.size(), 1)
+	assert_eq(screen.setup.hero(0).name, "Lab Fighter")
+	assert_eq(screen.setup.foes.size(), 1)
+	assert_eq((screen.setup.placements(screen.setup.grid())["party"] as Array[Vector2i])[0], Vector2i(3, 12))

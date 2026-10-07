@@ -1,7 +1,8 @@
 extends Node
 ## make capture SCENE=res://tools/capture/skirmish_capture.tscn NAME=skirmish FRAMES=10
 ## Skirmish and the Character Lab (N1): the Add a hero page, the Lab with a level 14 hero and the item list, the foes,
-## the field's map, the saved setups, then the fight on Vallaki's square at night and its results.
+## the field's map, the encounter editor placing vampire spawn, the saved setups, then the fight on Vallaki's square at
+## night and its results.
 
 var screen: SkirmishScreen
 var arena: CombatArena
@@ -41,6 +42,21 @@ func capture_shots(tool: Node, out: String) -> void:
 	screen.call("_redraw")
 	await tool.call("wait_frames", 20)
 	tool.call("_shot", out + "_4_field.png")
+	# The encounter editor: a stat block as the brush, foes put on the square by hand, one picked up to move.
+	screen.field_list = "Stat blocks"
+	screen.call("_redraw")
+	var g := screen.setup.grid()
+	var cells := screen.setup.placements(g)
+	var hero := (cells["party"] as Array[Vector2i])[0]
+	screen.brush = {"kind": "new", "monster": "vampire_spawn"}
+	for d: Vector2i in [Vector2i(5, -4), Vector2i(7, -3), Vector2i(-6, 3)]:
+		screen.call("_sketch_clicked", hero + d, MOUSE_BUTTON_LEFT)
+	screen.brush = {"kind": "foe", "index": 0}
+	screen.call("_refresh_field")
+	await tool.call("wait_frames", 20)
+	tool.call("_shot", out + "_4b_editor.png")
+	screen.brush = {}
+	screen.field_list = "Maps"
 	screen.setup.title = "Night in Vallaki"
 	SkirmishLibrary.save(screen.setup)
 	screen.tab = "Saved"

@@ -34,6 +34,12 @@ var lab_state := SkirmishState.new()
 var undo: Dictionary = {}
 var creation: CreationScreen = null
 var sketch: MapSketch = null
+## The encounter editor's brush: {} (nothing), {kind: "new", monster} to add foes, or {kind: "hero" | "foe", index}
+## to move one; and which list the Field tab shows ("Maps" or "Stat blocks").
+var brush: Dictionary = {}
+var field_list := "Maps"
+var _hint: Label = null
+var _strip_box: VBoxContainer = null
 
 var layer: CanvasLayer
 var _frame: VBoxContainer
@@ -132,6 +138,8 @@ func _redraw() -> void:
 		c.queue_free()
 	_list = null
 	sketch = null
+	_hint = null
+	_strip_box = null
 	match tab:
 		"Party":
 			_party_tab()
@@ -312,7 +320,7 @@ func _add_page(box: VBoxContainer) -> void:
 	box.add_child(_level_picker(add_level, func(l: int) -> void:
 		add_level = clampi(l, 1, HeroLab.MAX_LEVEL)
 		_redraw()))
-	box.add_child(UiKit.label("The pregens follow their own level plans to 11 and the Lab's picks after that. A quick hero takes its class's recommended scores and the first sensible picks; open the Lab to change any of it.", 13, "parchment", 820))
+	box.add_child(UiKit.label("The pregens follow their own level plans to 11 and the Lab's picks after that. A quick hero takes its class's recommended scores and the first sensible picks; open the Lab to change any of it.", 13, "parchment", 720))
 	box.add_child(UiParts.section("The company"))
 	var grid := GridContainer.new()
 	grid.columns = 5
@@ -438,10 +446,10 @@ func _lab_page(box: VBoxContainer) -> void:
 	var n := UiKit.label(ch.name, 26, "gilt_light")
 	n.add_theme_font_override("font", UiKit.display_font())
 	col.add_child(n)
-	col.add_child(UiKit.label(ch.class_summary(), 15, "parchment", 600))
+	col.add_child(UiKit.label(ch.class_summary(), 15, "parchment", 540))
 	col.add_child(UiKit.label("%d Hit Points · AC %d · Speed %d ft · Proficiency %s" % [ch.max_hp(), ch.ac_value(),
 		ch.speed().total(), UiKit.signed(ch.proficiency_bonus())], 14, "vellum"))
-	col.add_child(UiKit.label(_gear_line(ch), 13, "bone", 600))
+	col.add_child(UiKit.label(_gear_line(ch), 13, "bone", 540))
 	head.add_child(col)
 	var tools := VBoxContainer.new()
 	tools.add_theme_constant_override("separation", 4)
@@ -711,33 +719,65 @@ func _chosen_row(mid: String) -> Control:
 	return UiParts.row(line)
 
 
-# --- Field ----------------------------------------------------------------------------------------
+# --- Field and the encounter editor (N9) ----------------------------------------------------------
 
+## The map and where everyone starts. The sketch is the encounter editor: choose a stat block on the left and click
+## squares to put foes there, or click anyone on the map and then a square to move them; right-click takes a foe away
+## (or sends a hero back to the filled-in start). Whoever isn't placed starts where the setup fills them in, shown
+## fainter.
 func _field_tab() -> void:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 14)
 	_body.add_child(row)
 	var left := VBoxContainer.new()
-	left.custom_minimum_size = Vector2(360, 0)
+	left.custom_minimum_size = Vector2(340, 0)
 	left.add_theme_constant_override("separation", 6)
 	row.add_child(left)
-	left.add_child(UiParts.section("Maps"))
-	left.add_child(_search("Search: Vallaki, castle, road...", _fill_maps))
+	left.add_child(UiParts.tab_strip(["Maps", "Stat blocks"] as Array[String], field_list, func(t: String) -> void:
+		field_list = t
+		_filter = ""
+		_redraw(), {}, 14))
+	if field_list == "Maps":
+		left.add_child(_search("Search: Vallaki, castle, road...", _fill_maps))
+	else:
+		left.add_child(_search("Search: wolf, undead, Strahd...", _fill_brushes))
 	var pair := _scroll_list()
 	left.add_child(pair[0])
 	_list = pair[1]
-	_fill_maps()
+	if field_list == "Maps":
+		_fill_maps()
+	else:
+		_fill_brushes()
 	var right := VBoxContainer.new()
 	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	right.add_theme_constant_override("separation", 8)
+	right.add_theme_constant_override("separation", 6)
 	row.add_child(right)
 	var entry := SkirmishSetup.map_entry(setup.map_id)
-	right.add_child(UiParts.section(str(entry.get("name", "No map"))))
+	var tools := HBoxContainer.new()
+	tools.add_theme_constant_override("separation", 6)
+	tools.add_child(UiParts.small_button("Pin everyone", func() -> void:
+		setup.pin(setup.placements(setup.grid()))
+		say("Everyone stays where they stand now.")
+		_redraw()))
+	tools.add_child(UiParts.small_button("Clear the squares", func() -> void:
+		setup.unpin()
+		brush = {}
+		say("Everyone's start is filled in again.")
+		_redraw()))
+	right.add_child(UiParts.section(str(entry.get("name", "No map")), tools))
 	sketch = MapSketch.new()
+	sketch.editable = true
 	sketch.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	sketch.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	sketch.custom_minimum_size = Vector2(600, 420)
+	sketch.custom_minimum_size = Vector2(600, 400)
+	sketch.cell_clicked.connect(_sketch_clicked)
+	sketch.cell_hovered.connect(_sketch_hovered)
 	right.add_child(sketch)
+	_hint = UiKit.label(_brush_hint(), 14, "parchment", 700)
+	right.add_child(_hint)
+	_strip_box = VBoxContainer.new()
+	_strip_box.add_child(_piece_strip())
+	right.add_child(_strip_box)
 	_show_sketch()
 	var options := HBoxContainer.new()
 	options.add_theme_constant_override("separation", 8)
@@ -766,7 +806,75 @@ func _field_tab() -> void:
 	right.add_child(options)
 
 
-## Draws the chosen map with everyone where they'd start.
+## Every hero and foe as a chip: click one, then a square, to move them there.
+func _piece_strip() -> Control:
+	var flow := HFlowContainer.new()
+	flow.add_theme_constant_override("h_separation", 5)
+	flow.add_theme_constant_override("v_separation", 5)
+	for i in setup.party.size():
+		var nm := str((setup.party[i].get("build", {}) as Dictionary).get("name", "Hero")).get_slice(" ", 0)
+		flow.add_child(_piece_chip(nm, "hero", i))
+	for i in setup.foes.size():
+		var nm := str(Compendium.shared().monster_data(str(setup.foes[i]["monster"])).get("name", "Foe"))
+		flow.add_child(_piece_chip("%d %s" % [i + 1, nm], "foe", i))
+	return flow
+
+
+func _piece_chip(text: String, kind: String, i: int) -> Button:
+	var b := UiParts.small_button(text, func() -> void:
+		brush = {"kind": kind, "index": i} if not _is_brush(kind, i) else {}
+		_refresh_field())
+	if _is_brush(kind, i):
+		UiParts.light_up(b)
+	if not setup.pinned(kind, i):
+		b.modulate = Color(1, 1, 1, 0.7)
+	b.tooltip_text = ("Placed" if setup.pinned(kind, i) else "Filled in") + ": click, then click a square to move them."
+	if kind == "hero":
+		b.add_theme_color_override("font_color", Look.color("gilt_light"))
+	return b
+
+
+func _is_brush(kind: String, i: int) -> bool:
+	return str(brush.get("kind", "")) == kind and int(brush.get("index", -1)) == i
+
+
+func _brush_hint() -> String:
+	match str(brush.get("kind", "")):
+		"new":
+			return "Click squares to add a %s at each. Right-click a foe to take it away." % str(Compendium.shared().monster_data(str(brush["monster"])).get("name", "foe"))
+		"hero", "foe":
+			return "Click a square to move them there. Right-click a foe to take it away, or a hero to let the start be filled in."
+	return "Choose a stat block on the left and click the map to put foes there, or click anyone on the map to move them."
+
+
+## The stat blocks as brushes for the editor.
+func _fill_brushes() -> void:
+	if _list == null:
+		return
+	for c in _list.get_children():
+		c.queue_free()
+	var words := _filter.strip_edges().to_lower()
+	for d in SkirmishSetup.monsters():
+		var nm := str(d.get("name", d["id"]))
+		if words != "" and not nm.to_lower().contains(words) and not str(d.get("type", "")).to_lower().contains(words):
+			continue
+		var mid := str(d["id"])
+		var line := HBoxContainer.new()
+		line.add_theme_constant_override("separation", 8)
+		var cr := UiParts.figure("CR " + SkirmishSetup.cr_text(d.get("cr", 0)), 14, "gilt")
+		cr.custom_minimum_size = Vector2(58, 0)
+		line.add_child(cr)
+		line.add_child(UiKit.label(nm, 15, "vellum"))
+		line.add_child(UiParts.gap())
+		line.add_child(UiKit.label(str(d.get("size", "")).capitalize(), 12, "parchment"))
+		var lit := str(brush.get("kind", "")) == "new" and str(brush.get("monster", "")) == mid
+		_list.add_child(UiParts.click_row(line, func() -> void:
+			brush = {"kind": "new", "monster": mid} if not lit else {}
+			_fill_brushes()
+			_refresh_field(), lit))
+
+
+## Draws the chosen map with everyone where they'd start, and where the brush may go.
 func _show_sketch() -> void:
 	if sketch == null:
 		return
@@ -774,22 +882,114 @@ func _show_sketch() -> void:
 	if g == null:
 		return
 	var cells := setup.placements(g)
-	sketch.show_map(g, setup.furniture(), marks_for(setup, cells))
+	var marks := marks_for(setup, cells)
+	for m in marks:
+		m["lit"] = _is_brush(str(m["kind"]), int(m["index"]))
+	sketch.shade = {}
+	var kind := str(brush.get("kind", ""))
+	if kind != "":
+		for z in g.depth:
+			for x in g.width:
+				var c := Vector2i(x, z)
+				var problem := setup.place_problem(g, "foe" if kind == "new" else kind, int(brush.get("index", -1)), c, str(brush.get("monster", "")))
+				if problem == "":
+					sketch.shade[c] = true
+	sketch.show_map(g, setup.furniture(), marks)
 
 
-## The sketch's marks for `cells` (SkirmishSetup.placements): heroes by initial, foes numbered.
+## The sketch's marks for `cells` (SkirmishSetup.placements): heroes by initial, foes numbered; placed ones solid.
 static func marks_for(s: SkirmishSetup, cells: Dictionary) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var pc := cells["party"] as Array[Vector2i]
 	for i in pc.size():
 		var nm := str((s.party[i].get("build", {}) as Dictionary).get("name", "?"))
-		out.append({"cell": pc[i], "size": 1, "side": "party", "label": nm.left(1)})
+		out.append({"cell": pc[i], "size": 1, "side": "party", "label": nm.left(1), "kind": "hero", "index": i,
+			"pinned": s.pinned("hero", i)})
 	var fc := cells["foes"] as Array[Vector2i]
 	for i in fc.size():
 		var data := Compendium.shared().monster_data(str(s.foes[i]["monster"]))
 		out.append({"cell": fc[i], "size": CombatGrid.size_cells_for(StringName(str(data.get("size", "medium")))),
-			"side": "enemy", "label": str(i + 1)})
+			"side": "enemy", "label": str(i + 1), "kind": "foe", "index": i, "pinned": s.pinned("foe", i)})
 	return out
+
+
+func _sketch_clicked(cell: Vector2i, button: int) -> void:
+	var g := setup.grid()
+	var cells := setup.placements(g)
+	var piece := setup.piece_at(cells, cell)
+	var why: Array[String] = []
+	if button == MOUSE_BUTTON_RIGHT:
+		if piece.is_empty():
+			brush = {}
+		elif str(piece["kind"]) == "foe":
+			var i := int(piece["index"])
+			# A foe placed in the editor takes its squares with it; the others keep theirs.
+			setup.foes.remove_at(i)
+			brush = {}
+			say("Took a foe away.")
+		else:
+			setup.unplace("hero", int(piece["index"]))
+			say("Their start is filled in again.")
+		_refresh_field()
+		return
+	match str(brush.get("kind", "")):
+		"new":
+			if not piece.is_empty():
+				brush = piece
+			elif setup.add_foe_at(g, str(brush["monster"]), cell, why):
+				say("Added %s at %d, %d." % [str(Compendium.shared().monster_data(str(brush["monster"])).get("name", "")), cell.x, cell.y])
+			else:
+				say(", ".join(why))
+		"hero", "foe":
+			if not piece.is_empty() and str(piece["kind"]) == str(brush["kind"]) and int(piece["index"]) == int(brush["index"]):
+				setup.place(g, str(piece["kind"]), int(piece["index"]), cell)   # clicking where they stand pins them
+				brush = {}
+			elif not piece.is_empty() and setup.pinned(str(piece["kind"]), int(piece["index"])):
+				brush = piece
+			elif setup.place(g, str(brush["kind"]), int(brush["index"]), cell, why):
+				brush = {}
+			else:
+				say(", ".join(why))
+		_:
+			if not piece.is_empty():
+				brush = piece
+	_refresh_field()
+
+
+## After an edit on the map: the sketch, the chips, the hint and the summary, leaving the list where it was.
+func _refresh_field() -> void:
+	if _hint != null:
+		_hint.text = _brush_hint()
+	if _strip_box != null:
+		for c in _strip_box.get_children():
+			c.queue_free()
+		_strip_box.add_child(_piece_strip())
+	_show_sketch()
+	_draw_side()
+
+
+func _sketch_hovered(cell: Vector2i) -> void:
+	if _hint == null:
+		return
+	if cell.x < 0:
+		_hint.text = _brush_hint()
+		return
+	var g := setup.grid()
+	var piece := setup.piece_at(setup.placements(g), cell)
+	var what := ""
+	if not piece.is_empty():
+		var i := int(piece["index"])
+		what = str((setup.party[i].get("build", {}) as Dictionary).get("name", "A hero")) if str(piece["kind"]) == "hero" \
+			else "%d %s" % [i + 1, str(Compendium.shared().monster_data(str(setup.foes[i]["monster"])).get("name", ""))]
+		what += " (placed)" if setup.pinned(str(piece["kind"]), i) else " (filled in)"
+	else:
+		var problem := setup.place_problem(g, "hero", -1, cell)
+		what = "Open ground" if problem == "" else problem
+		if g.has_flag(cell, CombatGrid.DIFFICULT) and problem == "":
+			what = "Difficult Terrain"
+		if g.height(cell) > 0 and problem == "":
+			what += ", raised %d ft" % g.height(cell)
+	_hint.text = "Square %d, %d · %s" % [cell.x, cell.y, what]
 
 
 func _fill_maps() -> void:
@@ -816,6 +1016,7 @@ func _fill_maps() -> void:
 			if setup.map_id != id:
 				setup.map_id = id
 				setup.unpin()
+				brush = {}
 			_redraw(), id == setup.map_id))
 
 
@@ -837,7 +1038,7 @@ func _saved_tab() -> void:
 	row.add_child(field)
 	row.add_child(UiKit.button("Save", _save, 15, "save"))
 	box.add_child(row)
-	box.add_child(UiKit.label("Saving under a name that's taken replaces that setup. Heroes are saved as they are, items and all.", 13, "parchment"))
+	box.add_child(UiKit.label("Saving under a name that's taken replaces that setup. Heroes are saved as they are, items and all, and foes where the encounter editor put them. Use its fight takes a saved fight for the party you have.", 13, "parchment", 1100))
 	box.add_child(UiParts.section("Saved setups"))
 	var pair := _scroll_list()
 	box.add_child(pair[0])
@@ -854,7 +1055,13 @@ func _saved_tab() -> void:
 		line.add_child(UiKit.label("%s · %d heroes · %d foes · %s" % [str(entry.get("name", "?")), int(s["heroes"]), int(s["foes"]),
 			str(s["saved_at"]).replace("T", " ").left(16)], 13, "parchment"))
 		line.add_child(UiParts.gap())
-		line.add_child(UiParts.small_button("Load", func() -> void: _load(file)))
+		var load_all := UiParts.small_button("Load", func() -> void: _load(file))
+		load_all.tooltip_text = "The whole setup: heroes, foes and map."
+		line.add_child(load_all)
+		var fight_only := UiParts.small_button("Use its fight", func() -> void: _load(file, true))
+		fight_only.tooltip_text = "Its map, foes and squares, keeping the party you have."
+		fight_only.disabled = setup.party.is_empty()
+		line.add_child(fight_only)
 		line.add_child(UiParts.small_button("Delete", func() -> void:
 			SkirmishLibrary.delete(file)
 			say("Deleted.")
@@ -868,10 +1075,17 @@ func _save() -> void:
 	_redraw()
 
 
-func _load(file: String) -> void:
+## Loads a saved setup, or with `fight_only` just its fight (SkirmishSetup.take_fight), keeping the party.
+func _load(file: String, fight_only: bool = false) -> void:
 	var s := SkirmishLibrary.load_setup(file)
 	if s == null:
 		say("Couldn't read that setup.")
+		return
+	brush = {}
+	if fight_only:
+		setup.take_fight(s)
+		say("The fight from “%s”, with your party." % s.title)
+		_redraw()
 		return
 	setup = s
 	current = s

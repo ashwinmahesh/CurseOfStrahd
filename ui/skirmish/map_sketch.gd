@@ -13,7 +13,7 @@ signal cell_hovered(cell: Vector2i)
 var grid: CombatGrid = null
 ## {cell: true}: the location's furniture, chests, doorways and ways out.
 var furniture: Dictionary = {}
-## [{cell: Vector2i, size: int, side: "party" | "enemy", label: String, lit: bool}]
+## [{cell: Vector2i, size: int, side: "party" | "enemy", label: String, lit: bool, pinned: bool}]
 var marks: Array[Dictionary] = []
 ## Squares tinted to show where the chosen piece may go (the editor's brush).
 var shade: Dictionary = {}
@@ -129,15 +129,19 @@ func _draw() -> void:
 		var rad := r.size.x * 0.42
 		var party := str(m.get("side", "")) == "party"
 		var lit := bool(m.get("lit", false))
+		# Squares filled in rather than placed in the editor show fainter.
+		var a := 1.0 if bool(m.get("pinned", true)) or lit else 0.6
+		if lit:
+			draw_circle(centre, rad + maxf(2.0, _cell * 0.14), Color(Look.color("gilt_light"), 0.35))
 		if party:
-			draw_circle(centre, rad, Look.color("ui_black"))
-			draw_arc(centre, rad, 0, TAU, 24, Look.color("gilt_light" if lit else "gilt"), maxf(1.5, _cell * 0.12), true)
+			draw_circle(centre, rad, Color(Look.color("ui_black"), a))
+			draw_arc(centre, rad, 0, TAU, 24, Color(Look.color("gilt_light" if lit else "gilt"), a), maxf(1.5, _cell * 0.12), true)
 		else:
-			draw_circle(centre, rad, Look.color("blood_deep" if not lit else "crimson"))
-			draw_arc(centre, rad, 0, TAU, 24, Look.color("vampire_red" if not lit else "gilt_light"), maxf(1.0, _cell * 0.08), true)
+			draw_circle(centre, rad, Color(Look.color("blood_deep" if not lit else "crimson"), a))
+			draw_arc(centre, rad, 0, TAU, 24, Color(Look.color("vampire_red" if not lit else "gilt_light"), a), maxf(1.0, _cell * 0.08), true)
 		var label := str(m.get("label", ""))
 		if label != "" and _cell >= 9.0:
 			var fs := int(clampf(r.size.x * 0.48, 8.0, 22.0))
-			UiParts.centred_text(self, font, label, centre, fs, Look.color("ivory" if party else "vellum"))
+			UiParts.centred_text(self, font, label, centre, fs, Color(Look.color("ivory" if party else "vellum"), a))
 	if editable and hover.x >= 0:
 		draw_rect(cell_rect(hover), Look.color("gilt_light"), false, 2.0)

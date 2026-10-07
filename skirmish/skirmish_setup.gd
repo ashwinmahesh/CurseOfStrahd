@@ -54,6 +54,21 @@ func duplicate_setup() -> SkirmishSetup:
 	return SkirmishSetup.from_dict(to_dict())
 
 
+## Takes another setup's fight (a saved one from the encounter editor): its map, hour, surprise, foes and their
+## squares, and the heroes' starting squares by order, keeping this party.
+func take_fight(other: SkirmishSetup) -> void:
+	map_id = other.map_id
+	time = other.time
+	surprise = other.surprise
+	foes.clear()
+	for f in other.foes:
+		foes.append(f.duplicate(true))
+	for i in party.size():
+		party[i].erase("cell")
+		if i < other.party.size() and other.party[i].has("cell"):
+			party[i]["cell"] = (other.party[i]["cell"] as Array).duplicate()
+
+
 # --- The heroes -----------------------------------------------------------------------------------
 
 ## Adds a hero (its current state is stored; the fight starts it rested); `pregen` names the pregen it was built
@@ -453,6 +468,96 @@ func pin(cells: Dictionary) -> void:
 	for i in mini(fc.size(), foes.size()):
 		if fc[i].x >= 0:
 			foes[i]["cell"] = [fc[i].x, fc[i].y]
+
+
+# --- The encounter editor (N9) --------------------------------------------------------------------
+
+## The hero or foe whose footprint covers `cell` in `cells` (placements()): {kind: "hero" | "foe", index}, or {}.
+func piece_at(cells: Dictionary, cell: Vector2i) -> Dictionary:
+	var pc := cells["party"] as Array[Vector2i]
+	for i in pc.size():
+		if pc[i] == cell:
+			return {"kind": "hero", "index": i}
+	var fc := cells["foes"] as Array[Vector2i]
+	for i in fc.size():
+		if fc[i].x >= 0 and cell in CombatGrid.footprint(fc[i], _foe_size(i)):
+			return {"kind": "foe", "index": i}
+	return {}
+
+
+func _entry(kind: String, index: int) -> Dictionary:
+	return party[index] if kind == "hero" else foes[index]
+
+
+## Whether the editor placed this hero or foe (else its square is filled in).
+func pinned(kind: String, index: int) -> bool:
+	return _cell_of(_entry(kind, index)).x >= 0
+
+
+## Why a hero or foe (`monster` for one not added yet) can't stand at `cell`, or "" when it can: walls, water and the
+## map's edge, the place's furniture, and anyone the editor has already placed (pieces filled in make room).
+func place_problem(g: CombatGrid, kind: String, index: int, cell: Vector2i, monster: String = "") -> String:
+	var size := 1
+	if kind == "foe":
+		var mid := monster if monster != "" else str(foes[index]["monster"])
+		size = CombatGrid.size_cells_for(StringName(str(Compendium.shared().monster_data(mid).get("size", "medium"))))
+	var taken := {}
+	for i in party.size():
+		if not (kind == "hero" and i == index):
+			var c := _cell_of(party[i])
+			if c.x >= 0:
+				taken[c] = "someone"
+	for i in foes.size():
+		if not (kind == "foe" and i == index and monster == ""):
+			var c := _cell_of(foes[i])
+			if c.x >= 0:
+				for f in CombatGrid.footprint(c, _foe_size(i)):
+					taken[f] = "someone"
+	var stuff := furniture()
+	for c in CombatGrid.footprint(cell, size):
+		if not g.in_bounds(c) or g.has_flag(c, CombatGrid.VOID):
+			return "Off the map"
+		if g.has_flag(c, CombatGrid.WATER):
+			return "Deep water"
+		if g.has_flag(c, CombatGrid.WALL):
+			return "A wall"
+		if g.has_flag(c, CombatGrid.LOW):
+			return "Low cover: nobody stands on it"
+		if stuff.has(c):
+			return "Furniture, a chest or a doorway"
+		if taken.has(c):
+			return "Someone stands there"
+	if not fits(g, cell, size):
+		return "Not on one level"
+	return ""
+
+
+## Puts a hero or foe at `cell` (the editor's click). False with the reason in `why` when it can't stand there.
+func place(g: CombatGrid, kind: String, index: int, cell: Vector2i, why: Array[String] = []) -> bool:
+	var problem := place_problem(g, kind, index, cell)
+	if problem != "":
+		why.append(problem)
+		return false
+	_entry(kind, index)["cell"] = [cell.x, cell.y]
+	return true
+
+
+## Adds a foe standing at `cell`. False (with why) when there's no room, or twenty already.
+func add_foe_at(g: CombatGrid, monster_id: String, cell: Vector2i, why: Array[String] = []) -> bool:
+	var problem := place_problem(g, "foe", -1, cell, monster_id)
+	if problem != "":
+		why.append(problem)
+		return false
+	if not add_foe(monster_id):
+		why.append("%d foes at most" % MAX_FOES)
+		return false
+	foes.back()["cell"] = [cell.x, cell.y]
+	return true
+
+
+## The hero or foe's square goes back to being filled in.
+func unplace(kind: String, index: int) -> void:
+	_entry(kind, index).erase("cell")
 
 
 ## Forgets every square, so all are filled in again (a new map).
