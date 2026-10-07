@@ -10,6 +10,9 @@ extends CanvasLayer
 ## Everything drags: a pack item onto a doll slot, a weapon set or a quick slot; anything onto another character's chip
 ## (it goes to them), the stash or back into the pack. Right-click a tile for its actions. "New" is what arrived since
 ## the character's page was last opened (Character.add_item marks it; closing this screen clears it for every page shown).
+## Two views (owner, 2026-10-07), kept in the player's settings: the paper doll with the icon grid, or the list (the
+## equipped and worn items as rows beside the portrait, the pack and stash as rows), with the same drags, right-click
+## menus, weapon sets and quick slots.
 
 const FILTERS := ["All", "Weapons", "Armor", "Consumables", "Magic", "Gear"]
 const SORTS := ["name", "weight", "value", "newest"]
@@ -25,6 +28,7 @@ const QUICK_CATEGORIES: Array[String] = ["potion", "consumable", "scroll"]
 const TILE := Vector2(64, 72)
 const DOLL_TILE := Vector2(54, 58)
 const STASH_TILE := Vector2(50, 56)
+const VIEWS := {"doll": "Paper doll", "list": "List"}
 
 var root: Node
 var st: StoryState
@@ -37,13 +41,16 @@ var selected := ""
 var search := ""
 ## "new" or "junk" shows only items with that mark; "" shows everything the filter keeps.
 var marks := ""
+## "doll" or "list" (GameSettings "inventory_view").
+var view := "doll"
 var _frame: VBoxContainer
 var _card: VBoxContainer
-var _grid: GridContainer
+## The pack's tiles (doll view) or rows (list view).
+var _grid: Container
 var _list_foot: Control
 ## Every tile showing an inventory entry, so picking one only relights them instead of rebuilding the screen (a drag
 ## starting from a tile would end if the tile were rebuilt under it).
-var _tiles: Array[ItemTile] = []
+var _tiles: Array[Control] = []
 var _picked: Dictionary = {}
 ## How many of a stack the card's Give, Stash and Drop move, and Split off splits off.
 var _amount := 1
@@ -66,7 +73,19 @@ func open(root_: Node, state: StoryState, index_: int) -> void:
 	root = root_
 	st = state
 	index = clampi(index_, 0, st.party.size() - 1)
+	view = str(GameSettings.value("inventory_view", "doll"))
+	if not VIEWS.has(view):
+		view = "doll"
 	_frame = UiKit.screen_frame(self, "Inventory", Vector2(1500, 850))
+	_draw()
+
+
+## Switches between the paper doll and the list, and remembers the choice.
+func set_view(v: String) -> void:
+	if not VIEWS.has(v):
+		return
+	view = v
+	GameSettings.set_value("inventory_view", v)
 	_draw()
 
 
@@ -98,12 +117,24 @@ func _draw() -> void:
 	purse.add_child(UiParts.figure("%d gp" % int(st.gold), 22, "gilt_light"))
 	purse.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	strip.add_child(purse)
+	# The view switch: the paper doll or the list.
+	var views := HBoxContainer.new()
+	views.add_theme_constant_override("separation", 4)
+	views.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	views.add_child(UiParts.caption("View", 11))
+	for v: String in VIEWS:
+		var vb := UiParts.small_button(str(VIEWS[v]), func() -> void: set_view(v))
+		vb.tooltip_text = "Worn slots round the portrait, the pack as icons" if v == "doll" else "Equipped and worn items as rows, the pack as a list"
+		if v == view:
+			UiParts.light_up(vb)
+		views.add_child(vb)
+	strip.add_child(views)
 	_frame.add_child(strip)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 16)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_frame.add_child(row)
-	row.add_child(_doll(ch))
+	row.add_child(_doll(ch) if view == "doll" else _list_column(ch))
 	row.add_child(_pack(ch))
 	_card = VBoxContainer.new()
 	_card.add_theme_constant_override("separation", 8)
@@ -379,6 +410,269 @@ func _fill_tile(t: ItemTile, ch: Character, e: Dictionary, from: Dictionary) -> 
 	_tiles.append(t)
 
 
+# --- The list view (owner, 2026-10-07: the old list beside the paper doll, with the same drags and menus) -------------
+
+## The left column of the list view: the portrait and Armor Class, the equipped and worn items as rows, weapon set II,
+## the quick slots and the load. It scrolls when a character wears a lot.
+func _list_column(ch: Character) -> Control:
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 8)
+	var who := HBoxContainer.new()
+	who.add_theme_constant_override("separation", 12)
+	who.add_child(UiParts.framed_portrait(CombatToken.art_for(ch), 120.0, ch.hp <= 0, ch.dead))
+	who.add_child(UiParts.shield(ch.ac_value(), func() -> Control: return UiParts.breakdown_tip(ch.armor_class(), "Armor Class")))
+	var att := VBoxContainer.new()
+	att.alignment = BoxContainer.ALIGNMENT_CENTER
+	att.add_child(UiParts.caption("Attuned", 10))
+	att.add_child(UiParts.pips(Character.MAX_ATTUNED, ch.attuned.size(), "lilac"))
+	who.add_child(att)
+	col.add_child(who)
+	var n := UiKit.title(ch.name)
+	n.add_theme_font_size_override("font_size", 24)
+	n.clip_text = true
+	n.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	n.custom_minimum_size = Vector2(300, 0)
+	col.add_child(n)
+	var swap := UiParts.small_button("↻ Swap", func() -> void:
+		ch.swap_weapon_sets()
+		_say("%s swaps weapons." % ch.name.get_slice(" ", 0))
+		_draw())
+	swap.tooltip_text = "Hold weapon set II: what's in hand now becomes set II (outside fights)"
+	col.add_child(UiParts.section("Equipped", swap))
+	for slot in Character.EQUIP_SLOTS:
+		col.add_child(_slot_line(ch, slot))
+	col.add_child(UiParts.section("Set II"))
+	for slot2: String in ["main_hand", "off_hand"]:
+		col.add_child(_set2_line(ch, slot2))
+	# Worn magic items (2024 DMG: one cloak, one pair of boots..., two rings, any number of Ioun Stones). The section
+	# takes any worn item dropped on it, into its own slot.
+	col.add_child(UiParts.section("Worn"))
+	var worn := ItemTile.Zone.new()
+	worn.name = "WornZone"
+	worn.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+	worn.accepts = func(d: Dictionary) -> bool: return str(d.get("from", "")) in ["pack", "stash"] \
+		and MagicItems.worn_slot(Compendium.shared().item_data(str(d.get("id", "")))) != "" \
+		and (str(d["from"]) != "stash" or _stash_open())
+	worn.dropped = func(d: Dictionary) -> void:
+		_drop_on_slot(d, MagicItems.worn_slot(Compendium.shared().item_data(str(d["id"]))), {})
+	var worn_list := VBoxContainer.new()
+	worn_list.add_theme_constant_override("separation", 4)
+	for e in ch.inventory:
+		if str(e.get("slot", "")) in MagicItems.WORN_SLOTS and int(e.get("qty", 0)) > 0:
+			worn_list.add_child(_worn_line(ch, e))
+	if worn_list.get_child_count() == 0:
+		worn_list.add_child(UiKit.label("Nothing worn. Drag a cloak, ring or boots here.", 13, "bone", 300))
+	worn.add_child(worn_list)
+	col.add_child(worn)
+	col.add_child(UiParts.section("Quick slots"))
+	var quick := HBoxContainer.new()
+	quick.add_theme_constant_override("separation", 6)
+	for i in QUICK_SLOTS:
+		quick.add_child(_quick_tile(ch, i))
+	col.add_child(quick)
+	var cap := ch.carrying_capacity().total()
+	var carried := ch.carried_weight()
+	var over := carried > cap
+	col.add_child(UiParts.bar(carried, cap, 0.0, "%.1f / %d lb%s" % [carried, cap, " · Overloaded" if over else ""],
+		"vampire_red" if over else "gilt_dark", func() -> Control: return UiParts.breakdown_tip(ch.carrying_capacity(),
+			"Carrying capacity", "%d lb" % cap, "Overloaded: Speed drops." if over else ""), 300.0))
+	var scroll := UiParts.fill_scroll(col)
+	scroll.custom_minimum_size = Vector2(336, 0)
+	scroll.size_flags_horizontal = Control.SIZE_FILL
+	return scroll
+
+
+## A list row for inventory entry `e` around `content`: what a drag from it carries, its tooltip, picking, the
+## right-click menu and double-click, as on a tile.
+func _row(ch: Character, e: Dictionary, from: Dictionary, content: Control) -> ItemTile.Row:
+	var r := ItemTile.Row.new()
+	var data := Compendium.shared().item_data(str(e["id"]))
+	var shown := MagicItems.shown_data(data, e)
+	r.icon = UiParts.icon_texture("item", str(shown.get("id", e["id"])))
+	r.payload = {"from": "pack", "ch": index, "id": str(e["id"]), "entry": e}
+	r.payload.merge(from, true)
+	var tip_data := shown.duplicate()
+	tip_data["name"] = MagicItems.display_name(data, e) + (" ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else "")
+	r.tip = LootWindow._item_tip(tip_data)
+	r.lit = is_same(e, _picked) or (_picked.is_empty() and str(e["id"]) == selected)
+	r.picked.connect(func() -> void: _pick(e))
+	r.activated.connect(func() -> void: _activate(e))
+	r.menu_requested.connect(func(at: Vector2) -> void: _open_menu(actions_for(e), at))
+	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	r.add_child(content)
+	_tiles.append(r)
+	return r
+
+
+## A pack row's content: icon, name and count, its marks (new, junk, equipped, quest, magic, charges) and weight.
+func _pack_line(ch: Character, e: Dictionary, data: Dictionary) -> Control:
+	var id := str(e["id"])
+	var junk := InventoryScreen.is_junk(e)
+	var line := HBoxContainer.new()
+	line.add_theme_constant_override("separation", 10)
+	UiParts.add_icon(line, "item", str(MagicItems.shown_data(data, e).get("id", id)))
+	var nm := UiKit.label(MagicItems.display_name(data, e) + (" ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else ""), 15,
+		"bone" if junk else "vellum")
+	nm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	nm.clip_text = true
+	nm.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	line.add_child(nm)
+	if bool(e.get("new", false)):
+		line.add_child(UiParts.pill("New", "gilt_light"))
+	if junk:
+		line.add_child(UiParts.pill("Junk", "bone"))
+	if str(e.get("slot", "")) != "":
+		line.add_child(UiParts.pill("Equipped", "moonlight"))
+	if id in ch.quick_slots:
+		line.add_child(UiParts.pill("Quick", "bile"))
+	if InventoryScreen.is_quest(data):
+		line.add_child(UiParts.pill("Quest", "flame"))
+	if not (data.get("magic", {}) as Dictionary).is_empty():
+		line.add_child(UiParts.pill("Attuned" if id in ch.attuned else "Magic", "lilac"))
+	if MagicItems.has_charges(data):
+		line.add_child(UiParts.pill("%d/%d" % [int(e.get("charges", 0)), MagicItems.max_charges(data, e)], "moonlight"))
+	var wt := UiKit.label("%s lb" % str(data.get("weight_lb", 0)), 13, "parchment")
+	wt.custom_minimum_size = Vector2(52, 0)
+	wt.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	line.add_child(wt)
+	return line
+
+
+## An equipped slot as a row: its name, the item and its one key number, and Take off (owner report 2026-10-07: "no way
+## to unequip armor"). Takes what fits dropped on it; drag it to the pack to take it off.
+func _slot_line(ch: Character, slot: String) -> Control:
+	var item := ch.equipped(slot)
+	var line := HBoxContainer.new()
+	line.add_theme_constant_override("separation", 10)
+	if not item.is_empty():
+		UiParts.add_icon(line, "item", str(item["id"]))
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 0)
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_child(UiParts.caption(slot.replace("_", " "), 10))
+	var nm := UiKit.label(str(item.get("name", "Empty")), 15, "vellum" if not item.is_empty() else "bone")
+	nm.clip_text = true
+	nm.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	col.add_child(nm)
+	line.add_child(col)
+	var e := {}
+	for x in ch.inventory:
+		if str(x.get("slot", "")) == slot and int(x.get("qty", 0)) > 0:
+			e = x
+	var r: Control
+	if not item.is_empty():
+		var stat := ""
+		if Gear.is_shield(item):
+			stat = "+%d AC" % int((item["armor"] as Dictionary).get("base_ac", 2))
+		elif Gear.is_armor(item):
+			stat = "AC %d" % int((item["armor"] as Dictionary).get("base_ac", 10))
+		elif Gear.is_weapon(item):
+			var p := WeaponProfile.build(ch, item)
+			stat = "%s · %s" % [p.attack.signed(), p.damage_dice + ("%+d" % p.damage_bonus.total() if p.damage_bonus.total() != 0 else "")]
+		line.add_child(UiParts.figure(stat, 15, "gilt_light"))
+		var off := UiParts.small_button("Take off", func() -> void:
+			ch.unequip(slot)
+			_draw())
+		off.tooltip_text = "Unequip it: back to the pack"
+		line.add_child(off)
+		r = _row(ch, e, {"from": "slot", "slot": slot}, line)
+		off.mouse_filter = Control.MOUSE_FILTER_STOP
+	else:
+		var empty := ItemTile.Row.new()
+		empty.tip = func() -> Control: return UiParts.rules_tip(slot_name(slot), "Empty", "Drag something that goes here from the pack.")
+		line.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		empty.add_child(line)
+		r = empty
+	r.set("accepts", func(d: Dictionary) -> bool: return fits_slot(d, slot))
+	r.set("dropped", func(d: Dictionary) -> void: _drop_on_slot(d, slot, e))
+	return r
+
+
+## Weapon set II's main or off hand as a row: what's held when the sets are swapped.
+func _set2_line(ch: Character, slot: String) -> Control:
+	var id := str(ch.weapon_set_2.get(slot, ""))
+	var line := HBoxContainer.new()
+	line.add_theme_constant_override("separation", 10)
+	var has := id != "" and not ch.entry_of(id).is_empty()
+	if has:
+		UiParts.add_icon(line, "item", id, 28.0)
+	line.add_child(UiParts.caption(slot_name(slot), 10))
+	var nm := UiKit.label(Compendium.shared().display_name("items", id) if has else "Empty", 14, "vellum" if has else "bone")
+	nm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	nm.clip_text = true
+	nm.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	line.add_child(nm)
+	line.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var r := ItemTile.Row.new()
+	r.add_child(line)
+	if has:
+		r.icon = UiParts.icon_texture("item", id)
+		r.payload = {"from": "set2", "ch": index, "id": id, "slot": slot}
+		r.tip = LootWindow._item_tip(Compendium.shared().item_data(id))
+		r.picked.connect(func() -> void: _pick(ch.entry_of(id)))
+		var out_of_set := func() -> void:
+			ch.weapon_set_2.erase(slot)
+			_draw()
+		r.menu_requested.connect(func(at: Vector2) -> void: _open_menu([{"label": "Out of set II", "call": out_of_set}], at))
+	else:
+		r.tip = func() -> Control: return UiParts.rules_tip("Set II · %s" % slot_name(slot), "Empty",
+			"Drag a weapon here to hold it when you swap sets: a bow behind the sword and shield.")
+	r.accepts = func(d: Dictionary) -> bool: return fits_set2(d, slot)
+	r.dropped = func(d: Dictionary) -> void:
+		_set_weapon_2(_ch(), str(d["id"]), slot)
+		_draw()
+	return r
+
+
+## A worn magic item as a row: where it's worn, the item, and whether it's working.
+func _worn_line(ch: Character, e: Dictionary) -> Control:
+	var data := Compendium.shared().item_data(str(e["id"]))
+	var line := HBoxContainer.new()
+	line.add_theme_constant_override("separation", 10)
+	UiParts.add_icon(line, "item", str(MagicItems.shown_data(data, e).get("id", e["id"])))
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 0)
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_child(UiParts.caption(str(MagicItems.SLOT_NAMES.get(str(e["slot"]), e["slot"])), 10))
+	var nm := UiKit.label(MagicItems.display_name(data, e), 15, "vellum")
+	nm.clip_text = true
+	nm.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	col.add_child(nm)
+	line.add_child(col)
+	if not ch.item_active(e):
+		line.add_child(UiParts.pill("Needs attunement", "flame"))
+	return _row(ch, e, {"from": "slot", "slot": str(e["slot"])}, line)
+
+
+## A stash row: the item and its count, and Take at a safe place; dragged out of the stash only there.
+func _stash_row(se: Dictionary, i: int, at_safe: bool, tip: Callable) -> Control:
+	var sid := str(se["id"])
+	var line := HBoxContainer.new()
+	line.add_theme_constant_override("separation", 8)
+	UiParts.add_icon(line, "item", sid, 24.0)
+	var data := Compendium.shared().item_data(sid)
+	var sn := UiKit.label("%s ×%d" % [MagicItems.display_name(data, se), int(se["qty"])], 14, "vellum" if at_safe else "bone")
+	sn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	line.add_child(sn)
+	var take := func() -> void:
+		_take_from_stash(se, _ch())
+		_draw()
+	var tb := UiParts.small_button("Take", take)
+	tb.disabled = not at_safe
+	tb.tooltip_text = "To %s's pack" % _ch().name.get_slice(" ", 0) if at_safe else "Only at a safe place: an inn or a home"
+	line.add_child(tb)
+	line.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var r := ItemTile.Row.new()
+	r.add_child(line)
+	r.icon = UiParts.icon_texture("item", sid)
+	r.tip = tip
+	if at_safe:
+		r.payload = {"from": "stash", "index": i, "id": sid, "entry": se}
+		r.activated.connect(take)
+		r.menu_requested.connect(func(at: Vector2) -> void: _open_menu([{"label": "Take out", "call": take}], at))
+	return r
+
+
 # --- The pack and the stash ---------------------------------------------------------------------------
 
 func _pack(ch: Character) -> Control:
@@ -389,6 +683,7 @@ func _pack(ch: Character) -> Control:
 		filter = f
 		_draw(), {}, 14))
 	var pane := ItemTile.Zone.new()
+	pane.name = "PackZone"
 	pane.add_theme_stylebox_override("panel", _panel_style("ui_oxblood", "gilt", 0.35, 10, 2))
 	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	pane.accepts = func(d: Dictionary) -> bool: return str(d.get("from", "")) in ["slot", "set2", "quick"] \
@@ -411,10 +706,15 @@ func _pack(ch: Character) -> Control:
 	sorts.add_child(UiParts.gap())
 	sorts.add_child(UiParts.caption("Drag onto a slot, a chip or the stash", 10, "parchment"))
 	inner.add_child(sorts)
-	_grid = GridContainer.new()
-	_grid.columns = 8
-	_grid.add_theme_constant_override("h_separation", 6)
-	_grid.add_theme_constant_override("v_separation", 6)
+	if view == "doll":
+		var grid := GridContainer.new()
+		grid.columns = 8
+		grid.add_theme_constant_override("h_separation", 6)
+		grid.add_theme_constant_override("v_separation", 6)
+		_grid = grid
+	else:
+		_grid = VBoxContainer.new()
+		_grid.add_theme_constant_override("separation", 4)
 	inner.add_child(UiParts.fill_scroll(_grid))
 	_list_foot = VBoxContainer.new()
 	inner.add_child(_list_foot)
@@ -433,12 +733,16 @@ func _stash(ch: Character) -> Control:
 	var where := UiParts.caption("Take things out here" if at_safe else "Take things out at an inn or a home", 11, "bile" if at_safe else "parchment")
 	box.add_child(UiParts.section("Party stash", where))
 	var zone := ItemTile.Zone.new()
+	zone.name = "StashZone"
 	zone.add_theme_stylebox_override("panel", _panel_style("ui_black", "gilt_dark", 0.7, 6, 1))
 	zone.custom_minimum_size = Vector2(0, 2 * STASH_TILE.y + 18)
 	zone.accepts = func(d: Dictionary) -> bool: return str(d.get("from", "")) in ["pack", "slot"] \
 		and not InventoryScreen.is_quest(Compendium.shared().item_data(str(d.get("id", ""))))
 	zone.dropped = func(d: Dictionary) -> void: _drop_on_stash(d)
-	var flow := HFlowContainer.new()
+	var flow: Container = HFlowContainer.new()
+	if view == "list":
+		flow = VBoxContainer.new()
+		flow.add_theme_constant_override("separation", 4)
 	flow.add_theme_constant_override("h_separation", 5)
 	flow.add_theme_constant_override("v_separation", 5)
 	if st.stash.is_empty():
@@ -456,6 +760,10 @@ func _stash(ch: Character) -> Control:
 		var shown := MagicItems.shown_data(data, se).duplicate()
 		shown["name"] = MagicItems.display_name(data, se) + (" ×%d" % int(se["qty"]) if int(se["qty"]) > 1 else "")
 		var tip := LootWindow._item_tip(shown)
+		if view == "list":
+			flow.add_child(_stash_row(se, i, at_safe, tip))
+			t.free()
+			continue
 		if at_safe:
 			t.tip = tip
 			t.payload = {"from": "stash", "index": i, "id": sid, "entry": se}
@@ -688,7 +996,7 @@ func _pick(e: Dictionary) -> void:
 	_note = ""
 	for t in _tiles:
 		if is_instance_valid(t):
-			t.lit = is_same(t.payload.get("entry"), e)
+			t.set("lit", is_same((t.get("payload") as Dictionary).get("entry"), e))
 			t.queue_redraw()
 	_draw_card()
 
@@ -925,9 +1233,12 @@ func _fill_list() -> void:
 			why = "Nothing new since you last looked."
 		_list_foot.add_child(UiKit.label(why, 15, "bone", 540))
 	for r in rows:
-		var t := ItemTile.make(TILE)
-		_fill_tile(t, ch, r["e"] as Dictionary, {"from": "pack"})
-		_grid.add_child(t)
+		if view == "doll":
+			var t := ItemTile.make(TILE)
+			_fill_tile(t, ch, r["e"] as Dictionary, {"from": "pack"})
+			_grid.add_child(t)
+		else:
+			_grid.add_child(_row(ch, r["e"] as Dictionary, {"from": "pack"}, _pack_line(ch, r["e"] as Dictionary, r["d"] as Dictionary)))
 	if marks == "junk" and not rows.is_empty():
 		var weight := 0.0
 		var value := 0.0
@@ -945,8 +1256,8 @@ func shown_ids() -> Array[String]:
 	if _grid == null:
 		return out
 	for c in _grid.get_children():
-		if c is ItemTile and not c.is_queued_for_deletion():
-			out.append(str((c as ItemTile).payload.get("id", "")))
+		if (c is ItemTile or c is ItemTile.Row) and not c.is_queued_for_deletion():
+			out.append(str((c.get("payload") as Dictionary).get("id", "")))
 	return out
 
 

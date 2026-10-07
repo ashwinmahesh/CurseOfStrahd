@@ -23,6 +23,7 @@ func before_each() -> void:
 
 
 func after_each() -> void:
+	GameSettings.set_value("inventory_view", "doll")
 	if root != null:
 		root.queue_free()
 		root = null
@@ -206,3 +207,46 @@ func test_stash_by_drag_from_anywhere_out_only_at_a_safe_place() -> void:
 	assert_eq(out.size(), 1, "at the inn it can")
 	inv.call("_drop_on_pack", out[0].payload)
 	assert_false(ch.entry_of("rope").is_empty(), "back in the pack")
+
+
+## The list view (owner, 2026-10-07): the old rows beside the portrait, with the same drags, menus, weapon sets and quick
+## slots, and the screen remembers which view was chosen.
+func test_the_list_view_drags_and_menus_too() -> void:
+	var ch := GameState.story.party[0]
+	ch.add_item("cloak_of_protection")
+	ch.add_item("potion_of_healing", 2)
+	var inv := await _open(0)
+	inv.set_view("list")
+	await _frames(1)
+	root.call("close_screen")
+	inv = await _open(0)
+	assert_eq(inv.view, "list", "it opens in the view last chosen")
+	var rows: Array[ItemTile.Row] = []
+	for n in inv.find_children("*", "", true, false):
+		if n is ItemTile.Row and not n.is_queued_for_deletion():
+			rows.append(n as ItemTile.Row)
+	var cloak: ItemTile.Row = null
+	var potion: ItemTile.Row = null
+	for r in rows:
+		if str(r.payload.get("from", "")) == "pack" and str(r.payload.get("id", "")) == "cloak_of_protection":
+			cloak = r
+		if str(r.payload.get("from", "")) == "pack" and str(r.payload.get("id", "")) == "potion_of_healing":
+			potion = r
+	assert_true(cloak != null and potion != null, "the pack is rows")
+	assert_true(inv.shown_ids().has("cloak_of_protection"))
+	# The Worn section takes the cloak into its own slot.
+	var worn := inv.find_child("WornZone", true, false) as ItemTile.Zone
+	assert_true(worn != null and worn._can_drop_data(Vector2.ZERO, cloak.payload), "the Worn section takes the cloak")
+	worn._drop_data(Vector2.ZERO, cloak.payload)
+	await _frames(1)
+	assert_eq(str(ch.entry_of("cloak_of_protection").get("slot", "")), "cloak", "worn from the list")
+	# Right-click and quick slots work on rows as on tiles.
+	var acts := inv.actions_for(ch.entry_of("potion_of_healing"))
+	var keep := acts.filter(func(a: Dictionary) -> bool: return str(a["label"]).begins_with("Keep to hand"))
+	assert_eq(keep.size(), 1, "a potion's menu offers a quick slot")
+	(keep[0]["call"] as Callable).call()
+	assert_true("potion_of_healing" in ch.quick_slots)
+	# The equipped rows still say Take off.
+	var offs := inv.find_children("*", "Button", true, false).filter(func(b: Node) -> bool:
+		return not b.is_queued_for_deletion() and (b as Button).text == "Take off")
+	assert_true(offs.size() >= 1, "Take off on the equipped rows")

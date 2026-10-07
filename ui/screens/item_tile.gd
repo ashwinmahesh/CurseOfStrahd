@@ -202,3 +202,98 @@ class DropButton extends Button:
 
 	func _drop_data(_at: Vector2, data: Variant) -> void:
 		dropped.call(data)
+
+
+## The same for a row of the inventory's list view: the screen lays out the row's content (icon, name, tags, weight) on a
+## crimson row card that lights when picked, glows on hover and takes a bile edge while a drag it takes hovers over it.
+## Drags, drops, the right-click menu and double-click work as on a tile.
+class Row extends PanelContainer:
+	signal picked
+	signal activated
+	signal menu_requested(at: Vector2)
+
+	var payload: Dictionary = {}
+	var accepts: Callable
+	var dropped: Callable
+	var tip: Callable
+	## The drag preview's picture.
+	var icon: Texture2D
+	var lit := false:
+		set(v):
+			lit = v
+			_restyle()
+	var _hover := false
+	var _drop_ok := false
+
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_STOP
+		mouse_entered.connect(func() -> void:
+			_hover = true
+			_restyle())
+		mouse_exited.connect(func() -> void:
+			_hover = false
+			_drop_ok = false
+			_restyle())
+		if tip.is_valid():
+			tooltip_text = "·"
+		_restyle()
+
+	func _restyle() -> void:
+		var s := StyleBoxFlat.new()
+		s.bg_color = Color(Look.color("ui_wine" if lit or _hover else "ui_oxblood"), 0.75 if lit else (0.65 if _hover else 0.55))
+		var edge := "bile" if _drop_ok else ("gilt_light" if lit else ("gilt" if _hover else "gilt_dark"))
+		s.border_color = Color(Look.color(edge), 0.95)
+		s.set_border_width_all(2 if lit or _drop_ok else 1)
+		s.set_corner_radius_all(7)
+		s.corner_detail = 1
+		s.set_content_margin_all(7)
+		add_theme_stylebox_override("panel", s)
+
+	func _notification(what: int) -> void:
+		if what == NOTIFICATION_DRAG_END and _drop_ok:
+			_drop_ok = false
+			_restyle()
+
+	func _make_custom_tooltip(_for_text: String) -> Object:
+		return tip.call() as Control if tip.is_valid() else null
+
+	func _gui_input(event: InputEvent) -> void:
+		var mb := event as InputEventMouseButton
+		if mb == null or not mb.pressed:
+			return
+		if mb.button_index == MOUSE_BUTTON_LEFT:
+			if mb.double_click:
+				activated.emit()
+			else:
+				picked.emit()
+			accept_event()
+		elif mb.button_index == MOUSE_BUTTON_RIGHT:
+			menu_requested.emit(mb.global_position)
+			accept_event()
+
+	func _get_drag_data(_at: Vector2) -> Variant:
+		if payload.is_empty():
+			return null
+		var ghost := TextureRect.new()
+		ghost.texture = icon
+		ghost.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		ghost.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		ghost.size = Vector2(44, 44)
+		ghost.position = Vector2(-22, -22)
+		ghost.modulate = Color(1, 1, 1, 0.85)
+		var holder := Control.new()
+		holder.add_child(ghost)
+		set_drag_preview(holder)
+		return payload
+
+	func _can_drop_data(_at: Vector2, data: Variant) -> bool:
+		var ok := data is Dictionary and accepts.is_valid() and bool(accepts.call(data))
+		if ok != _drop_ok:
+			_drop_ok = ok
+			_restyle()
+		return ok
+
+	func _drop_data(_at: Vector2, data: Variant) -> void:
+		_drop_ok = false
+		_restyle()
+		dropped.call(data)

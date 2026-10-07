@@ -137,6 +137,20 @@ func capture_shots(tool: Node, out: String) -> void:
 					break
 			await _shoot(tool, "%s_drag.png" % out)
 		root.call("close_screen")
+	if _wants("list"):
+		# The list view (owner, 2026-10-07): the same character and pack as rows, with a drag over the Worn section.
+		var inv2 := _inventory(func(i: InventoryScreen) -> void:
+			i.view = "list"
+			i.selected = "longbow")
+		await _shoot(tool, "%s_list.png" % out)
+		var worn := inv2.find_child("WornZone", true, false) as Control
+		if worn != null:
+			worn.modulate = Color(1.12, 1.12, 1.0)
+		inv2.call("_open_menu", inv2.actions_for(GameState.story.party[0].entry_of("potion_of_healing")), Vector2(900, 330))
+		await _shoot(tool, "%s_list_menu.png" % out)
+		for m in inv2.find_children("*", "PopupMenu", true, false):
+			(m as PopupMenu).hide()
+		root.call("close_screen")
 	if _wants("level_up"):
 		# Q10: a companion at an Ability Score Improvement (filled from their own level plan), and a new hero choosing a
 		# subclass (filled with the class's recommended picks). Each shot scrolls to the picks.
