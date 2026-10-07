@@ -8,8 +8,10 @@ extends RefCounted
 const DIR := "res://audio/voice/"
 const NARRATOR := "narrator"
 ## The prebuilt heroes speak in their own voices; a custom character (build.appearance.custom) in the one the player
-## picked for them (build.appearance.voice).
-const HEROES: Array[String] = ["hedda_ironvow", "ilse_varga", "silvain_aster", "tamsin_tealeaf"]
+## picked for them (build.appearance.voice). The six on the roster (owner, 2026-10-06), then the first four, who stay
+## for older saves.
+const HEROES: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille", "wren_featherfoot",
+	"kip_smudgewick", "hedda_ironvow", "ilse_varga", "silvain_aster", "tamsin_tealeaf"]
 const HERO_VOICES: Array[String] = ["hero_female", "hero_male"]
 const BUS := &"Voice"
 const SETTINGS := "user://settings.cfg"

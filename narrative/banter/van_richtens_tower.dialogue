@@ -17,16 +17,21 @@ endif
 ~ banter_ward_for_one
 if flag.tower_ward_known and flag.ezmerelda_met_at_tower
 interject class:wizard: A ward keyed to one person. You'd have to know her very well. Her voice, her stride, her temper. Months of work, out of love.
+if tag:blunt
 interject tag:blunt: Locking someone out isn't love.
 interject class:wizard: No. It's what fear does when it's been in love too long.
+elif name:thistle and class:wizard
+interject name:thistle: Locking folk out isn't love. That's just a cage, inside out.
+interject class:wizard: No. It's what fear does when it's been in love too long.
+endif
 endif
 -> END
 
 ~ banter_rictavio
-if flag.van_richten_identity_known and not flag.rictavio_unmasked
-interject name:silvain_aster: Rictavio. The man in the feathers. That was Rudolph van Richten, and I watched him juggle. I may never recover.
-interject name:tamsin_tealeaf: He juggled badly, if that helps.
-interject name:silvain_aster: It does not.
+if flag.van_richten_identity_known and not flag.rictavio_unmasked and name:wren_featherfoot and name:ratatoille
+interject name:wren_featherfoot: Rictavio. The feathers, the wagon, the patter. That was Van Richten, and I told him his juggling needed work.
+interject name:ratatoille: Van Richten! I've read every one of his guides. Twice. I could have had him sign one. I could have cooked for him.
+interject name:wren_featherfoot: He dropped the third ball, Rat. Every time. Somebody had to say.
 endif
 -> END
 

@@ -79,14 +79,14 @@ endif
 Stanimir: Luminita must hear it from me. Not from you. From me.
 Stanimir: And listen. Somebody in this camp will send word up the hill that you passed this way. That is how it is with us. It will be me, and I will tell him you went east. Small thing. Big thing. Both.
 set stanimir_misdirects
-interject tag:veteran: That's a real favour. Noted.
+interject tag:veteran: That's a real favour. We won't forget it.
 -> menu
 
 ~ wine
 set stanimir_wine_shared
 Stanimir [smile]: Plum wine, from plums that grew in a summer before any of you were born. Drink! It won't hurt. Much.
 Narrator: It goes down like warm honey and lands like a kick. For a moment the valley feels almost like somewhere people live on purpose.
-interject species:dwarf: Mm. Strong. Too sweet. I'll need a second cup to be certain.
+interject species:dwarf: Strong. Too sweet. I'll need a second cup to be certain.
 interject species:halfling: I'd like the recipe. I'd like the recipe very much.
 -> menu
 
@@ -110,7 +110,7 @@ if guest:ireena
 Ireena [afraid]: I know the end of that story. I've dreamed it. The wall, and the wind, and somebody calling a name that isn't mine.
 Stanimir: Then we will play something cheerful. Something very loud and very cheerful.
 endif
-interject name:silvain_aster: The chronology is suspect and the sources are unnamed. I believe every word.
+interject name:liriel_dawnsong: A bargain with something under the world. Then that is why the morning stays away.
 -> menu
 
 ~ answer_ok
@@ -136,14 +136,14 @@ Stanimir [angry]: My strongbox is lighter by forty gold, and you are the only st
 gold -40
 set vistani_repaid
 Stanimir: Good. A guest who takes and then gives back is still a guest. Barely. Sit, but sit where I can see your hands.
-interject name:tamsin_tealeaf: In fairness, it was a very badly hidden strongbox.
+interject name:kip_smudgewick: We're very sorry. Truly. Have an apricot as well. No obligation.
 -> menu
 
 ~ lie_ok
 set stanimir_deceived
 Narrator: He looks at you for a long moment, and then at the two young men behind him, and you can see him deciding which of them to shout at later.
 Stanimir: Then one of my own owes me an apology. Sit. I'm sorry I asked.
-interject class:cleric: Mm.
+interject class:cleric: We'll put it right before we leave. Won't we.
 -> menu
 
 ~ lie_fail

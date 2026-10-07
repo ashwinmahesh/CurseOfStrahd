@@ -1,0 +1,18 @@
+{
+  "id": "aurel_mirescu",
+  "name": "Aurel Mirescu",
+  "title": "A reader",
+  "summary": "Silvain Aster's old colleague, who came to Barovia after the Tome of Strahd. Charmed and kept awake in the count's study, reading the count's life aloud to an empty chair.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "scholar",
+    "companions",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him"
+}

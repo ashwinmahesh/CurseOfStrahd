@@ -40,6 +40,7 @@ vestige_zantras: At last. An audience. Do you know how long it has been since an
 * What are you offering? -> zantras_offer
 * [History DC 13] Read the wardens' inscription on the lid. -> zantras_lid | zantras_lid_fail
 * [if guest:ireena] (It's looking at Ireena.) -> zantras_ireena
+* [name:ratatoille] [if not flag.ratatoille_zantras_refused and not gift:gift_of_zantras] (Ratatoille has gone very still, listening.) -> companions/table:zantras
 * (Step away from the amber.) -> END
 
 ~ zantras_want
@@ -189,7 +190,7 @@ vestige_taar_haak: SMALL. SOFT. WHICH OF YOU HITS HARDEST? That one. No, that on
 
 ~ taar_haak_want
 vestige_taar_haak: War. Any war. Yours will do. One of us is hungry, one of us is angry, and the other three are worse.
-interject name:ilse_varga: I've served under men like you. Five at once is new. The ending is always the same.
+interject name:godrick_pendlebrook: Sir Pellam went to three wars. He said they all end the same way: somebody digging.
 vestige_taar_haak: Was it a good ending? Tell us about the ending.
 -> taar_haak_menu
 
@@ -255,7 +256,6 @@ vestige_shami_amourae: Mm. You're cold. You're always cold here, aren't you? Nob
 * What do you want with us? -> shami_amourae_want
 * What are you offering? -> shami_amourae_offer
 * [History DC 13] Read the wardens' inscription on the lid. -> shami_amourae_lid | shami_amourae_lid_fail
-* [name:tamsin_tealeaf] Do you know who the woman in my locket is? -> shami_amourae_locket
 * (Step away from the amber.) -> END
 
 ~ shami_amourae_want
@@ -270,7 +270,7 @@ vestige_shami_amourae: Anyone you smile at will want to say yes, even the ones w
 
 ~ shami_amourae_price
 vestige_shami_amourae: Only that you'll be as easy to persuade as you make everyone else. And you won't want to refuse a pleasure ever again. Why would you? I've never understood people who refuse.
-interject tag:devout: That's not a price. That's a leash with ribbons on it.
+interject tag:pious: That's not a price. That's a leash with ribbons on it.
 * No. -> shami_amourae_refuse
 * I accept. -> shami_amourae_accept
 
@@ -280,11 +280,6 @@ Narrator: The inscription, in plain words: "Shami-Amourae, the honeyed hand. Its
 
 ~ shami_amourae_lid_fail
 Narrator: Someone has kissed the lid so often that the inscription has worn smooth. The prints of lips are still in the frost.
--> shami_amourae_menu
-
-~ shami_amourae_locket
-vestige_shami_amourae: Oh, she's lovely. A great many men have loved that face, little thief, and one loves it still, up in his castle. Take my gift and she'll look at you that way instead. Just once. You'll remember it forever.
-Player: That's a no. My knees have gone to water, but that is a very firm no.
 -> shami_amourae_menu
 
 ~ shami_amourae_accept
@@ -334,7 +329,7 @@ vestige_yog: Soft. You are... soft. Everything cuts you. That is... sad.
 
 ~ yog_want
 vestige_yog: Want is soft. I... endure.
-interject name:hedda_ironvow: Stone remembers, my folk say. Stone doesn't love. There's a reason we always say both.
+interject name:thistle: Grandda says rocks endure too. Never met anybody who wanted to be a rock.
 -> yog_menu
 
 ~ yog_offer
@@ -470,7 +465,6 @@ vestige_khirad: You came. I read that you would, eleven centuries ago, in a star
 * What do you want with us? -> khirad_want
 * What are you offering? -> khirad_offer
 * [History DC 13] Read the wardens' inscription on the lid. -> khirad_lid | khirad_lid_fail
-* [name:silvain_aster] Where is Aurel Mirescu? -> khirad_aurel
 * (Step away from the amber.) -> END
 
 ~ khirad_want
@@ -494,14 +488,6 @@ Narrator: The inscription, in plain words: "Khirad, who reads the stars backward
 
 ~ khirad_lid_fail
 Narrator: The inscription has been scratched over with tiny star charts. Someone sat here a long time, copying what the vestige told them.
--> khirad_menu
-
-~ khirad_aurel
-vestige_khirad: Reading. Still. In a high room, by a window that is always lit. He has been reading a very long time, and he cannot stop. Take my gift, and you may look in on him tonight.
-if flag.eva_question == "aurel"
-interject name:silvain_aster: Madam Eva said the same thing. "Reading still." Two seers agreeing is either evidence or a conspiracy.
-endif
-Player: That is precisely the answer I was afraid of, from precisely the source I can't trust. Thank you. I think.
 -> khirad_menu
 
 ~ khirad_accept
@@ -626,7 +612,7 @@ vestige_savnok: ...You have secrets. Everyone does. Shall I keep them for you?
 
 ~ savnok_want
 vestige_savnok: ...Keys. Locks. Things unsaid.
-interject name:tamsin_tealeaf: A box that talks. Do you know how many years I've waited for a box to talk back?
+interject name:wren_featherfoot: Keys, locks and things unsaid. Has somebody been going through my pack?
 -> savnok_menu
 
 ~ savnok_offer
@@ -832,7 +818,6 @@ vestige_tarakamedes: Little warm things. You stand on the graves of my servants 
 * What do you want with us? -> tarakamedes_want
 * What are you offering? -> tarakamedes_offer
 * [History DC 13] Read the wardens' inscription on the lid. -> tarakamedes_lid | tarakamedes_lid_fail
-* [name:ilse_varga] Some of my company are dead. Can you give them back? -> tarakamedes_kestrel
 * [if flag.doru_cure_promised] Is there a cure for a vampire's bite? -> tarakamedes_doru
 * [if guest:kasimir_velikov and not flag.kasimir_bargain and not flag.patrina_fate and not flag.patrina_destroyed] (Kasimir steps up to the amber.) -> tarakamedes_kasimir
 * (Step away from the amber.) -> END
@@ -858,11 +843,6 @@ Narrator: The inscription, in plain words: "Tarakamedes, the dragon in the grave
 
 ~ tarakamedes_lid_fail
 Narrator: The lid is so cold that your breath freezes on it, and the frost fills the letters before you can read them.
--> tarakamedes_menu
-
-~ tarakamedes_kestrel
-vestige_tarakamedes: Give them back? No. Lend them back. They'd stand in a line for you again, sergeant. They'd even answer when you counted them. They just wouldn't be warm.
-Player: Forty. I'd count forty, and not one of them would be warm. No.
 -> tarakamedes_menu
 
 ~ tarakamedes_doru
@@ -1074,7 +1054,7 @@ vestige_zhudun: I was a sun once. Worlds turned around me. Now I am a cinder in 
 * What do you want with us? -> zhudun_want
 * What are you offering? -> zhudun_offer
 * [History DC 13] Read the wardens' inscription on the lid. -> zhudun_lid | zhudun_lid_fail
-* [name:hedda_ironvow] You're not the dawn. -> zhudun_hedda
+* [name:liriel_dawnsong] You're not the dawn. -> zhudun_liriel
 * (Step away from the amber.) -> END
 
 ~ zhudun_want
@@ -1100,9 +1080,9 @@ Narrator: The inscription, in plain words: "Zhudun, the dead star. It burned out
 Narrator: The grey light makes every letter look the same. You give up before your eyes start to ache.
 -> zhudun_menu
 
-~ zhudun_hedda
+~ zhudun_liriel
 vestige_zhudun: No. But you haven't felt your dawn since you came through the mist, have you, little priestess? Not once. I can feel how cold you are. Let me be your light. I'm right here, and he isn't.
-Player: Mm. He isn't here. That's what faith is for. You don't need any; you're right here. That's how I know you're not him.
+Player: He isn't here. I know. That is what faith is for. You need none; you are right here. That is how I know you are not him.
 -> zhudun_menu
 
 ~ zhudun_accept
@@ -1152,7 +1132,7 @@ vestige_dahlver_nar: Hello. Hello. Hello. Don't mind us; we're all in here, ever
 
 ~ dahlver_nar_want
 vestige_dahlver_nar: Mouths. Teeth. Voices. We collect, you see. We're collectors.
-interject name:tamsin_tealeaf: I've known fences like you. Never sell to them. They pay well, and then you're part of the collection.
+interject name:kip_smudgewick: Never sell to a collector, Mum says. They pay beautifully, and then one day you're in the cabinet.
 -> dahlver_nar_menu
 
 ~ dahlver_nar_offer

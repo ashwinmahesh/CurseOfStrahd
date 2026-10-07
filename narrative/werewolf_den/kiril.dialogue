@@ -16,6 +16,9 @@ if guest:ezmerelda
 Kiril [smile]: And the Vistani huntress. How's the leg? I kept the boot. It's on my wall.
 Ezmerelda: Then I'll come and fetch it, dog.
 endif
+if name:thistle and not flag.kiril_offer_heard
+-> companions/fen:kiril
+endif
 -> choice
 
 ~ choice
@@ -28,7 +31,7 @@ endif
 ~ children_q
 set kiril_children_asked
 Kiril: The pups? They're pack now, or they will be after the moon. Don't fret. I'll raise them right. Strong and hungry, like me.
-interject tag:devout: Children aren't yours to raise, wolf.
+interject tag:pious: Children aren't yours to raise, wolf.
 Kiril: Everything in these hills is mine to raise. Ask the deer.
 -> choice
 
@@ -132,7 +135,7 @@ set wolf_den_milestone_reached
 xp milestone
 endif
 Kiril: Run along. Tell the valley Kiril Stoyanovich keeps his word. Tell them what else I keep, too.
-interject tag:veteran: We walked away from a fight we could have won. I'll be counting that one for a while.
+interject tag:veteran: We walked away from a fight we could have won. I'll be carrying that one for a while.
 -> END
 
 ~ neither

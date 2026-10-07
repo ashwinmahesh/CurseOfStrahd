@@ -279,6 +279,18 @@
       "model": "milestone",
       "when": "name:ilse_varga",
       "dialogue": "companions/kestrel:tally_crossroads"
+    },
+    {
+      "id": "fen_blaze_crossroads",
+      "cell": [
+        25,
+        9
+      ],
+      "kind": "examine",
+      "label": "Notches in a dead tree",
+      "model": "dead_tree",
+      "when": "name:thistle",
+      "dialogue": "companions/fen:blaze_crossroads"
     }
   ],
   "encounters": [

@@ -1,0 +1,82 @@
+# Wren Featherfoot's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each
+# plays once. Quest: The Last Lesson (narrative/companions/lesson.dialogue).
+
+~ talk_sorrel
+if name:wren_featherfoot and quest.the_last_lesson
+-> sorrel
+endif
+-> END
+
+~ sorrel
+Narrator: Wren is doing a handstand on a boulder at the edge of the firelight. He has been doing it for some time. He doesn't seem tired.
+interject name:wren_featherfoot: Evening. Don't mind me. Master Sorrel used to make me do this for an hour every night. Said it put the blood back where the brains were.
+* Tell us about him. -> sorrel_tell
+* How long can you do that? -> sorrel_long
+
+~ sorrel_long
+interject name:wren_featherfoot: Until someone asks me a question I don't want to answer. Then I fall over. It's very convenient.
+-> sorrel_tell
+
+~ sorrel_tell
+Narrator: Wren comes down off his hands, neatly, and sits on the boulder with his knees up.
+interject name:wren_featherfoot: I tried to pick his pocket. Big market day, old elf in grey, looked half asleep. He caught my wrist without turning round. Didn't even stop walking. Just walked me out of the market by the wrist, like a dog on a lead.
+interject name:wren_featherfoot: He said, "You have very good hands and a very bad teacher. I can fix one of those." I said, which one. He said, "Come and find out."
+interject name:wren_featherfoot: Fourteen years. A lesson a day. Some of them were punching. Most of them were sitting still, which is worse.
+interject name:wren_featherfoot: He died before the last one. I asked him what it was, at the end. He said it was in the letter. And then he said, "Don't open it, you little thief." And then he laughed, and then he went.
+* You never opened it? -> sorrel_never
+* We'll find Kasimir. -> sorrel_find
+
+~ sorrel_never
+interject name:wren_featherfoot: Never. I've had it fourteen months in my shirt. I've held it up to candles. I'm a scoundrel, not a monster.
+-> sorrel_find
+
+~ sorrel_find
+interject name:wren_featherfoot: Course we will. Easy. How many elves called Kasimir can there be in one valley? Don't answer that. It's a valley full of vampires; there's probably a club.
+-> END
+
+~ talk_letter
+if name:wren_featherfoot and quest.the_last_lesson >= the_brother
+-> letter
+endif
+-> END
+
+~ letter
+Narrator: Wren is sitting very still at the fire tonight. It's the most unsettling thing you've seen him do.
+interject name:wren_featherfoot: He had a sister. He had a brother and a sister and a mother and a whole people, and they were here, and he never said one word in fourteen years.
+interject name:wren_featherfoot: I used to tell him everything. Every stupid thing. He'd just nod. I thought he didn't have anything to tell.
+interject name:wren_featherfoot: "The boy who brings you this is the best thing I did with the time I stole." That's what he wrote. About me. I've been doing handstands for fourteen years and he thought I was the best thing he did.
+* He was right. -> letter_right
+* He wanted you to hear it from someone else. -> letter_else
+
+~ letter_right
+interject name:wren_featherfoot: Don't. Don't, I'll cry, and then you'll all have to watch a monk cry, and it's not a dignified sight. We cry with our whole bodies. It's all the flexibility.
+-> letter_end
+
+~ letter_else
+interject name:wren_featherfoot: Sneaky. That's very him. He couldn't say it to my face. He wrote it down and posted it across a mountain range to make sure.
+-> letter_end
+
+~ letter_end
+interject name:wren_featherfoot: "Let her rest." That's what he told Kasimir. Let her rest. I think that's the lesson. I think. I'm not sure I've got it yet.
+-> END
+
+~ talk_rest
+if name:wren_featherfoot and quest.the_last_lesson >= the_brother and not (quest.the_last_lesson >= let_her_rest) and (quest.patrinas_wail == at_rest or quest.patrinas_wail == destroyed or quest.patrinas_wail == restored)
+-> rest
+endif
+-> END
+
+~ rest
+if quest.patrinas_wail == restored
+Narrator: Wren comes back to the fire late, with his hands in his pockets, which he never does.
+interject name:wren_featherfoot: She walked out of that temple barefoot in the snow and didn't look back once. Kasimir gave the thing in the grave every year he had but one, for that. He'll be dead by spring.
+interject name:wren_featherfoot: Master Sorrel told him not to. He wrote it down and posted it across the mountains. Let her rest. And we got it there, and it wasn't enough.
+interject name:wren_featherfoot: Maybe that's the lesson. That you can deliver the letter and it doesn't make anybody read it.
+else
+Narrator: Wren is sitting on the same boulder as always, not doing a handstand. He looks up as you come over.
+interject name:wren_featherfoot: She's at rest. Patrina. Four hundred years of turning pages, and she closed the book. Kasimir said she looked surprised. Like she'd forgotten you were allowed to stop.
+interject name:wren_featherfoot: So. That's done. Letter's delivered. I've been waiting all day to feel different. I keep stopping in doorways.
+endif
+interject name:wren_featherfoot: I don't feel finished. That's the thing. Master Sorrel said the last lesson was in the letter, and I've read the letter, well, I've heard it read, and I still don't know what the lesson was.
+quest the_last_lesson let_her_rest
+-> END

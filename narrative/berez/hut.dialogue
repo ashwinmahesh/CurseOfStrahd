@@ -33,8 +33,20 @@ endif
 if guest:ireena
 interject guest:ireena: She had my hair. Didn't she. Whoever she was.
 endif
-interject name:tamsin_tealeaf: So Berez didn't kill the girl. The nanny did. And the whole village went under for it.
-interject name:silvain_aster: And the one person who most needs to know is the one who did the drowning. Fascinating. Horrible, but fascinating.
+if name:wren_featherfoot
+interject name:wren_featherfoot: So Berez never killed the girl. His old nanny did. And the whole village drowned for it.
+elif name:liriel_dawnsong
+interject name:liriel_dawnsong: The village never harmed her. Her nurse did, and all of Berez drowned for it. Oh, those poor people.
+else
+interject tag:curious: So Berez didn't kill the girl. The nanny did. And the whole village went under for it.
+endif
+if name:kip_smudgewick
+interject name:kip_smudgewick: And the one party who most needs telling is the one who did the drowning. I don't like that clause one bit.
+elif name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Then somebody ought to tell him. The castle man. He drowned a whole village over a lie. That's not fair, even to him.
+else
+interject tag:cynical: And the one man who most needs to hear it is the one who did the drowning.
+endif
 -> END
 
 ~ poppet_known

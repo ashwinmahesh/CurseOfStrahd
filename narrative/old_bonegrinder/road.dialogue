@@ -125,5 +125,9 @@ combat offalia_on_the_road
 ~ raven_flight
 Narrator: Ravens come down the lane in one long black line, low over your heads. One drops something in the road at {leader}'s feet as it passes: a little stoppered bottle tied with a black feather.
 give potion_of_healing 1
+if name:kip_smudgewick
+interject name:kip_smudgewick: Odd coin, she said. I'll take odd coin. Better than apricots. Don't tell the apricots.
+else
 interject tag:curious: Odd coin, she said. I like odd coin.
+endif
 -> END

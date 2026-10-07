@@ -10,18 +10,17 @@ endif
 -> END
 
 ~ banter_court_portraits
-if visited:court_study and visited:court_kings_hall
-interject name:tamsin_tealeaf: She's everywhere in this house. Over the fire, in the hall, by the bed. The woman in my locket.
-interject name:hedda_ironvow: Then perhaps it's not your locket, lad. Perhaps it never was.
-interject name:tamsin_tealeaf: That is not a comforting thing to say in a vampire's castle, Hedda.
+if visited:court_study and visited:court_kings_hall and flag.ireena_met and name:godrick_pendlebrook and name:thistle
+interject name:godrick_pendlebrook: That lady's in every room. Over the fire, in the hall, by his bed. Who is she?
+interject name:thistle: Looks like Ireena. Lots of pictures of somebody who looks like Ireena. I don't like it.
+interject name:godrick_pendlebrook: No. Neither do I.
 endif
 -> END
 
 ~ banter_court_skull
-if flag.argynvost_skull_found and flag.argynvost_skull_known
-interject name:silvain_aster: That's Argynvost. On a wall. Between a bear and a stag, as if he were game.
-interject name:ilse_varga: The knights on the ridge are waiting for it. Four hundred years they've waited.
-interject name:silvain_aster: Then it can wait until we've dealt with the man who hung it there. But not a day longer.
+if flag.argynvost_skull_found and flag.argynvost_skull_known and name:ratatoille and name:godrick_pendlebrook
+interject name:ratatoille: A silver dragon, mounted between a bear and a stag like game. It's in the poorest possible taste.
+interject name:godrick_pendlebrook: The knights on the ridge have waited four hundred years for him. He goes home. After we've dealt with the one who hung him there.
 endif
 -> END
 
@@ -33,9 +32,9 @@ endif
 -> END
 
 ~ banter_court_brides
-if flag.court_brides_met and not flag.court_brides_fought
-interject class:cleric: Three women he made into that. I keep thinking about who they were before.
-interject name:ilse_varga: The quiet one still is, a bit. Did you see her at the window?
+if flag.court_brides_met and not flag.court_brides_fought and name:liriel_dawnsong and name:ratatoille
+interject name:liriel_dawnsong: Three women he made into that. I keep thinking of who they were before.
+interject name:ratatoille: The quiet one still is, a little. She kept looking at the window. Nobody looks at a window in this house unless they're hoping.
 endif
 -> END
 
@@ -47,29 +46,32 @@ endif
 -> END
 
 ~ banter_court_given_back
-if flag.gertruda_given_back
-interject name:hedda_ironvow: We left that girl up there.
-interject tag:blunt: We did. I'd like it if nobody talked about it for a while.
+if flag.gertruda_given_back and name:liriel_dawnsong and name:wren_featherfoot
+interject name:liriel_dawnsong: We left that child up there. With him. I won't pretend otherwise.
+interject name:wren_featherfoot: Nobody make a joke. Not even me.
 endif
 -> END
 
 ~ banter_court_lief
-if flag.lief_freed
-interject name:tamsin_tealeaf: Forty-one years chained to a desk, and the first thing he did when he was free was tidy it.
-interject name:silvain_aster: Some cages are a shape you grow into.
+if flag.lief_freed and name:kip_smudgewick and name:wren_featherfoot
+interject name:kip_smudgewick: Forty-one years chained to a desk, and the first thing he did when he was free was tidy it. I understood him completely.
+interject name:wren_featherfoot: That's what worries me about you, Kip.
+interject name:kip_smudgewick: You saw that desk. It needed doing.
 endif
 -> END
 
 ~ banter_court_anastrasya
-if flag.anastrasya_at_rest
-interject name:hedda_ironvow: The girl from Krezk. When we're done here, someone should tell her mother. If she has one living.
-interject name:ilse_varga: I'll do it. I've done it before.
+if flag.anastrasya_at_rest and name:thistle and name:kip_smudgewick
+interject name:thistle: The girl from Krezk. Somebody should tell her ma.
+interject name:kip_smudgewick: I'll go, if she has one living. I'll take something with me. You don't go to a mother empty-handed.
 endif
 -> END
 
 ~ banter_court_vault
-if flag.court_treasury_found
-interject name:tamsin_tealeaf: A whole vault of gold and he never spends it. That's not a hoard. That's a sulk.
+if flag.court_treasury_found and name:thistle and name:godrick_pendlebrook
+interject name:thistle: Big room full of gold, and he never spends any. What's it for? You can't eat gold.
+interject name:godrick_pendlebrook: Maybe he's keeping it for a rainy day.
+interject name:thistle: Big. It's always a rainy day here.
 interject class:wizard: Dragons hoard because they can't help it. I suspect he hoards because he can't think of anything else to want.
 endif
 -> END

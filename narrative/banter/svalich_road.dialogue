@@ -1,72 +1,106 @@
 # Party banter on the Old Svalich Road and at Tser Pool. Each node opens with an `if` gate: it is eligible only while
 # its condition holds, and plays once. Party members speak through interjections; guests (Ireena, Ismark) speak as
-# themselves, so their lines sit behind `guest:` conditions.
+# themselves, so their lines sit behind `guest:` conditions. An exchange between companions names them in its gate.
 
 ~ banter_left_hanging
-if flag.crossroads_gallows_seen and not flag.nicu_cut_down and not flag.crossroads_dead_cleared
+if flag.crossroads_gallows_seen and not flag.nicu_cut_down and not flag.crossroads_dead_cleared and name:liriel_dawnsong and name:godrick_pendlebrook
+interject name:liriel_dawnsong: We passed a hanged boy at the crossroads and left him to the crows. I prayed as we walked. It wasn't enough.
+interject name:godrick_pendlebrook: Then we go back and cut him down. Nobody gets left behind. Not even the dead ones.
+elif flag.crossroads_gallows_seen and not flag.nicu_cut_down and not flag.crossroads_dead_cleared
 interject class:cleric: We walked past a hanged boy and left him for the crows. I'd like that on someone's conscience other than mine.
-interject tag:blunt: It's on all of ours. Noted. We go back, or we don't. Decide.
+interject tag:blunt: It's on all of ours. We go back and cut him down, or we don't. Decide.
 endif
 -> END
 
 ~ banter_nicu_buried
-if flag.nicu_cut_down and flag.nicu_rites_said
-interject tag:cheerful: You know, that's the first person in this valley we've put in the ground who actually stayed there.
-interject class:cleric: Mm. Words help. So does a straight grave.
+if flag.nicu_cut_down and flag.nicu_rites_said and name:wren_featherfoot and name:liriel_dawnsong
+interject name:wren_featherfoot: First person we've buried in this valley who's actually stayed buried. Low bar. We cleared it.
+interject name:liriel_dawnsong: He's at rest, Wren. Words help. So does a straight grave, and someone who stays to dig it.
 endif
 -> END
 
 ~ banter_nicu_risen
-if flag.crossroads_dead_cleared
-interject tag:veteran: Left him hanging, and he came down on his own. Lesson learned. We cut them down from now on.
-interject tag:bookish: The literature calls it an unquiet death. The literature has never had one try to strangle it.
+if flag.crossroads_dead_cleared and name:thistle and name:kip_smudgewick
+interject name:thistle: We left him up. He came down by himself, and angry. Next one, we cut down.
+interject name:kip_smudgewick: Agreed. Hereinafter, all hanged persons shall be cut down. I'm writing it in. In ink.
 endif
 -> END
 
 ~ banter_luminita
-if flag.luminita_confessed
-interject tag:curious: She gave him the horse to sell. She thinks it's her rope.
-interject class:cleric: Then someone should keep telling her it isn't, until she believes it. That's most of what healing is.
+if flag.luminita_confessed and name:kip_smudgewick and name:godrick_pendlebrook
+interject name:kip_smudgewick: She gave him the horse to sell. Now she thinks she tied the rope herself.
+interject name:godrick_pendlebrook: She didn't. She's sad, and she thinks sad means guilty. Somebody should keep telling her it doesn't.
+interject name:kip_smudgewick: ...Yes. Somebody should tell her that.
 endif
 -> END
 
 ~ banter_misdirect
-if flag.stanimir_misdirects
-interject tag:veteran: The fiddler's sending word up the hill that we went east. That's a man risking something for us.
-interject tag:curious: Or a man who'll tell the castle the truth the minute it pays better.
-interject tag:veteran: Both. That's how favours work out here.
+if flag.stanimir_misdirects and name:wren_featherfoot and name:thistle
+interject name:wren_featherfoot: The fiddler's telling the castle we went east. That's a man sticking his neck out for us.
+interject name:thistle: Or selling us the minute it pays better. He smells like both.
+interject name:wren_featherfoot: Both, then. I'll allow it.
 endif
 -> END
 
-~ banter_truth_ilse
-if flag.eva_truth_teller == "ilse_varga"
-interject name:tamsin_tealeaf: Ilse. About the fever. I won't bring it up again.
-interject name:ilse_varga: You just did.
-interject name:tamsin_tealeaf: That was the last time. That one doesn't count.
-interject name:ilse_varga: Noted. ...Thank you.
+~ banter_truth_godrick
+if flag.eva_truth_teller == "godrick_pendlebrook" and name:godrick_pendlebrook and name:ratatoille
+interject name:ratatoille: Godrick. About the reading. Letters are only a recipe for sounds. I could teach you, evenings. I'd be very patient. Probably.
+interject name:godrick_pendlebrook: Would you? I'd like that. I'd like that very much.
+elif flag.eva_truth_teller == "godrick_pendlebrook" and name:godrick_pendlebrook and name:liriel_dawnsong
+interject name:liriel_dawnsong: You keep your oath without a book, Godrick. The words live where they ought to: in you.
+interject name:godrick_pendlebrook: Oh. Well. When you say it like that, it doesn't sound so bad.
 endif
 -> END
 
-~ banter_truth_hedda
-if flag.eva_truth_teller == "hedda_ironvow"
-interject name:silvain_aster: Hedda. For what it's worth, the theological literature is unanimous that faith which never goes cold was never tested.
-interject name:hedda_ironvow: Mm. Is it unanimous?
-interject name:silvain_aster: It is now. I'm writing it.
+~ banter_truth_liriel
+if flag.eva_truth_teller == "liriel_dawnsong" and name:liriel_dawnsong and name:thistle
+interject name:thistle: Sunbeam. Scared of the dark. Here, of all places.
+interject name:liriel_dawnsong: Yes. In hindsight, it was a poor choice of country.
+interject name:thistle: I'll sleep by your lamp, then. Dark has to get past me first.
+elif flag.eva_truth_teller == "liriel_dawnsong" and name:liriel_dawnsong and name:godrick_pendlebrook
+interject name:godrick_pendlebrook: My lady. I'll keep the lantern lit every night. I'm the tallest, so it'll light more.
+interject name:liriel_dawnsong: That isn't how lanterns work, Godrick. Thank you. It helps more than you know.
 endif
 -> END
 
-~ banter_truth_silvain
-if flag.eva_truth_teller == "silvain_aster"
-interject name:ilse_varga: Aurel. Your friend. Short version: we find the book, we find him, or we find what happened. Either way, we look.
-interject name:silvain_aster: That is the short version. Thank you, Ilse. I'll want the long one in writing, later.
+~ banter_truth_thistle
+if flag.eva_truth_teller == "thistle" and name:thistle and name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Thistle. You belong with us. That's a somewhere. It's got a cook and everything.
+interject name:thistle: ...Shut up, Big.
+elif flag.eva_truth_teller == "thistle" and name:thistle and name:kip_smudgewick
+interject name:kip_smudgewick: For what it's worth, you'd do well in a market town. People trust a loud voice.
+interject name:thistle: ...Pastries, though?
+interject name:kip_smudgewick: Every market day. I'll show you the good stalls. No obligation.
 endif
 -> END
 
-~ banter_truth_tamsin
-if flag.eva_truth_teller == "tamsin_tealeaf"
-interject name:tamsin_tealeaf: Somebody planted it on me. Me! I've never been so insulted in my life.
-interject name:hedda_ironvow: Mm. Better planted than stolen, little one. Planted means you were chosen.
-interject name:tamsin_tealeaf: That's worse. Hedda, that's so much worse.
+~ banter_truth_ratatoille
+if flag.eva_truth_teller == "ratatoille" and name:ratatoille and name:liriel_dawnsong
+interject name:liriel_dawnsong: Ratatoille. Feeding people is holy work. When I say grace over your cooking, I mean every word.
+interject name:ratatoille: ...Please don't tell the academy. Or do. No. Don't.
+elif flag.eva_truth_teller == "ratatoille" and name:ratatoille and name:thistle
+interject name:thistle: Cook more, then. Cast less. I'll eat it.
+interject name:ratatoille: That is not the point. You have entirely missed the... What would you like tonight?
+endif
+-> END
+
+~ banter_truth_wren
+if flag.eva_truth_teller == "wren_featherfoot" and name:wren_featherfoot and name:liriel_dawnsong
+interject name:liriel_dawnsong: You never had your last lesson, you said. Perhaps you're having it now, Wren. Slowly.
+interject name:wren_featherfoot: Rude. Lovely, but rude.
+elif flag.eva_truth_teller == "wren_featherfoot" and name:wren_featherfoot and name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Sir Pellam died before he'd finished with me, too. I think they leave us to finish ourselves.
+interject name:wren_featherfoot: ...Yeah. All right. Thanks, big man.
+endif
+-> END
+
+~ banter_truth_kip
+if flag.eva_truth_teller == "kip_smudgewick" and name:kip_smudgewick and name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Your da said no so you'd not have to. You said yes so he'd not have to. That's a family, that.
+interject name:kip_smudgewick: ...Apricot? No reason. I just need to hand you something.
+elif flag.eva_truth_teller == "kip_smudgewick" and name:kip_smudgewick and name:liriel_dawnsong
+interject name:liriel_dawnsong: You did a wrong thing for a loving reason, Kip. I'll pray for you. No, I insist.
+interject name:kip_smudgewick: Is that in my favour, or against? Sorry. Professional habit.
 endif
 -> END
 
@@ -78,113 +112,204 @@ endif
 -> END
 
 ~ banter_forced_reading
-if flag.eva_reading_paid == "forced"
-interject class:cleric: We took a reading by force from an old woman. I would like it written down somewhere that I was against it.
-interject tag:blunt: It's written down. In her face. She won't forget it.
+if flag.eva_reading_paid == "forced" and name:liriel_dawnsong and name:kip_smudgewick
+interject name:liriel_dawnsong: We frightened an old woman into reading for us. Let it be written that I was against it.
+interject name:kip_smudgewick: It's written. In her face. People remember who leaned on them, and they remember the price.
 endif
 -> END
 
 ~ banter_brawl
-if flag.tser_pool_brawl_won
-interject tag:cheerful: The only music in Barovia. We stopped it.
-interject tag:veteran: They drew first.
-interject tag:cheerful: Did they? I keep trying to remember that they did.
+if flag.tser_pool_brawl_won and name:wren_featherfoot and name:ratatoille
+interject name:wren_featherfoot: Only music in the whole valley, and we stopped it. Nice work, everyone.
+interject name:ratatoille: They swung first. I'm almost certain. I was mid-incantation at the time.
+interject name:wren_featherfoot: Keep saying it, Rat. One of us will believe it.
 endif
 -> END
 
 ~ banter_eva_ireena
 if flag.eva_recognized_ireena and guest:ireena
 Ireena: "You have come round again." What did she mean by that? Don't answer. I don't think I want the answer.
-interject name:tamsin_tealeaf: I'm not answering. I'm just holding the locket very tightly.
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: Then we won't answer. We'll only stay close, as long as you'll have us.
+else
+interject tag:loyal: Nobody's answering. We're just staying close.
+endif
 endif
 -> END
 
 ~ banter_question
-if flag.eva_question == "escape"
+if flag.eva_question == "escape" and name:godrick_pendlebrook
+interject name:godrick_pendlebrook: One road out, and it goes through him. Good. I like a plan with one road.
+elif flag.eva_question == "escape"
 interject tag:blunt: No door out but through him. Good. I prefer a plan with one road.
+elif flag.eva_question == "weakness" and name:ratatoille
+interject name:ratatoille: The three things, the friend and the room. All at once, in the right order. It's a recipe. A horrible one.
 elif flag.eva_question == "weakness"
-interject tag:bookish: The three things, the friend and the room. She made it sound like a recipe. Horrible, but a recipe.
-elif flag.eva_question == "kestrel"
-interject name:ilse_varga: Some of them still walking his roads, she said. In his colours. I'll know them. I'll know their faces.
-interject class:cleric: Mm. And when you know them, we'll be beside you.
-elif flag.eva_question == "dawn"
-interject name:hedda_ironvow: Dawn comes, but it never arrives. I've been chewing on that for a mile. It's the worst sermon I've ever heard, and the truest.
-elif flag.eva_question == "aurel"
-interject name:silvain_aster: Still reading, she said. That sounds like him. That sounds exactly like him.
-elif flag.eva_question == "locket"
-interject name:tamsin_tealeaf: Tatyana. The woman in the locket has a name. Somehow that makes it worse.
+interject tag:scholarly: The three things, the friend and the room. She made it sound like a recipe. Horrible, but a recipe.
+elif flag.eva_question == "ireena" and name:thistle
+interject name:thistle: No high places. No still water. Easy. I'll watch her feet.
 elif flag.eva_question == "ireena"
 interject tag:loyal: Keep her away from heights and still water. We can do that. We can do that every single day.
+elif flag.eva_question == "why" and name:wren_featherfoot
+interject name:wren_featherfoot: He was bored, so he sent for the entertainment. I've played worse rooms. Not many.
 elif flag.eva_question == "why"
 interject tag:cheerful: Because he was bored. We're the entertainment. I've had worse jobs. Not many.
 endif
 -> END
 
+~ banter_question_order
+if flag.eva_question == "order" and name:godrick_pendlebrook and name:wren_featherfoot
+interject name:godrick_pendlebrook: I asked after the Order, and she answered in a riddle. I'm bad at riddles. Was that a yes?
+interject name:wren_featherfoot: Master Sorrel talked in riddles too. Usually meant "yes, but you won't like it."
+interject name:godrick_pendlebrook: But it's a yes!
+elif flag.eva_question == "order" and name:godrick_pendlebrook and name:liriel_dawnsong
+interject name:godrick_pendlebrook: She answered me sideways about the Order. Seers do that, don't they?
+interject name:liriel_dawnsong: They do. It lets you hear the answer when you're ready to.
+interject name:godrick_pendlebrook: Right then! I'll be ready by the time we find them.
+endif
+-> END
+
+~ banter_question_dawn
+if flag.eva_question == "dawn" and name:liriel_dawnsong and name:thistle
+interject name:liriel_dawnsong: I didn't truly need her answer. I only wanted to hear someone else say the dawn comes.
+interject name:thistle: Dawn's coming! There. Loud enough?
+interject name:liriel_dawnsong: Quite loud enough, dear heart. Thank you.
+elif flag.eva_question == "dawn" and name:liriel_dawnsong and name:ratatoille
+interject name:liriel_dawnsong: I knew the answer before I asked. I only wanted to hear it in someone else's mouth.
+interject name:ratatoille: Technically, I am a diviner. I foresee breakfast. Breakfast implies a morning. Voilà.
+interject name:liriel_dawnsong: That is the kindest bad theology I have ever heard. Thank you.
+endif
+-> END
+
+~ banter_question_fen
+if flag.eva_question == "fen" and name:thistle and name:godrick_pendlebrook
+interject name:thistle: She answered about Grandda. Don't ask what she said.
+interject name:godrick_pendlebrook: I won't. I'll just walk on this side of you. The windy side.
+interject name:thistle: ...Thanks, Big.
+elif flag.eva_question == "fen" and name:thistle and name:wren_featherfoot
+interject name:thistle: Don't ask me what she said about Grandda. Not yet.
+interject name:wren_featherfoot: Wasn't going to. Race you to that tree instead?
+interject name:thistle: ...Go.
+endif
+-> END
+
+~ banter_question_wizard
+if flag.eva_question == "wizard" and name:ratatoille and name:thistle
+interject name:ratatoille: She knows where the Wizard of Wines is. A seer of her standing! I must practise my bow.
+interject name:thistle: You'll leave us for him? Who cooks?
+interject name:ratatoille: An apprentice has evenings off. I assume. I'll cook in the evenings.
+elif flag.eva_question == "wizard" and name:ratatoille and name:kip_smudgewick
+interject name:ratatoille: The Wizard of Wines is real, and in this valley. My apprenticeship is as good as signed.
+interject name:kip_smudgewick: Read it first, whatever it is. Read the small print, that's what Mum says.
+interject name:ratatoille: Kip. Genius does not come with small print.
+interject name:kip_smudgewick: Everything comes with small print.
+endif
+-> END
+
+~ banter_question_kasimir
+if flag.eva_question == "kasimir" and name:wren_featherfoot and name:kip_smudgewick
+interject name:kip_smudgewick: Will you open Sorrel's letter before you hand it over? Just a peek. For the paperwork.
+interject name:wren_featherfoot: Kip. I'm a scoundrel, not a monster. It goes to his brother sealed.
+elif flag.eva_question == "kasimir" and name:wren_featherfoot and name:liriel_dawnsong
+interject name:liriel_dawnsong: So Kasimir is a real man, somewhere in this valley. Not only a name on a letter.
+interject name:wren_featherfoot: Real man, real letter. Easy. Walk up, hand it over, done.
+interject name:liriel_dawnsong: You've carried it this far, Wren. You'll carry it the rest.
+endif
+-> END
+
+~ banter_question_contract
+if flag.eva_question == "contract" and name:kip_smudgewick and name:godrick_pendlebrook
+interject name:kip_smudgewick: I asked if there's a way out. She answered like a solicitor. That's either very good or very bad.
+interject name:godrick_pendlebrook: If the devil comes for you, I'll fight him. That's three times I've offered now.
+interject name:kip_smudgewick: Legally inadvisable. Deeply appreciated. Please keep offering.
+elif flag.eva_question == "contract" and name:kip_smudgewick and name:wren_featherfoot
+interject name:kip_smudgewick: She answered like a solicitor. Notwithstanding, I think there was a door in it somewhere.
+interject name:wren_featherfoot: Then we find the door. I've squeezed through smaller ones for less.
+endif
+-> END
+
 ~ banter_reading
-if tarokka.drawn and tarokka.ally == darklord
-interject tag:blunt: No ally. Fine. Four of us. Count off.
-interject tag:cheerful: Four! I'm four. I mean, I'm one. We're four.
-elif tarokka.drawn
-interject tag:bookish: Five cards, one valley, and a castle at the end. I have never wanted so badly for a fortune-teller to be a fraud.
-interject class:cleric: She isn't. You know she isn't. That's why you're cross.
+if tarokka.drawn and tarokka.ally == darklord and name:wren_featherfoot and name:godrick_pendlebrook
+interject name:wren_featherfoot: No friend in the cards. Fine. We've got us.
+interject name:godrick_pendlebrook: Then we'll be our own ally. I'll be the big one.
+elif tarokka.drawn and name:ratatoille and name:liriel_dawnsong
+interject name:ratatoille: Her spread is crude, her technique unorthodox, and she is right. I can feel it. I hate it.
+interject name:liriel_dawnsong: Gently, Ratatoille. Envy is only admiration that hasn't eaten yet.
 endif
 -> END
 
 ~ banter_treasure_given
-if flag.tser_treasure_given
-interject tag:curious: She just had it. In a chest. Behind her chair. For years.
-interject tag:veteran: Waiting for the right hands. Keep yours on it.
+if flag.tser_treasure_given and name:kip_smudgewick and name:wren_featherfoot
+interject name:kip_smudgewick: She kept it in a chest behind her chair. For years. I'd have sold it inside a week.
+interject name:wren_featherfoot: She was waiting for the right hands, Kip. Keep yours on it, not on a price.
 endif
 -> END
 
 ~ banter_robbery
-if flag.vistani_robbed and flag.vistani_repaid
-interject tag:blunt: We robbed the only friendly fire in the valley, and paid it back. Let's not do the first part again.
-elif flag.vistani_robbed and flag.stanimir_deceived
-interject class:cleric: Stanimir thinks one of his own boys took his gold. Somebody is going to be shouted at for that, and it won't be us.
-interject tag:curious: The old woman knew, though. She looked right at me.
+if flag.vistani_robbed and flag.vistani_repaid and name:kip_smudgewick and name:wren_featherfoot
+interject name:kip_smudgewick: We robbed the only friendly fire in the valley, then paid it back. With interest. I added interest. I felt I should.
+interject name:wren_featherfoot: Good. Next time we rob the castle. Bigger pockets.
+elif flag.vistani_robbed and flag.stanimir_deceived and name:liriel_dawnsong and name:wren_featherfoot
+interject name:liriel_dawnsong: Stanimir thinks one of his own boys took the gold. Some poor lad will be shouted at, for us.
+interject name:wren_featherfoot: The old woman knew, though. She looked right at me. Nobody looks right at me.
 endif
 -> END
 
 ~ banter_strahd_road
-if flag.strahd_road_encounter == "violent"
-interject tag:blunt: I swung at him. My blade went through fog. Next time, sunlight.
-elif flag.strahd_road_encounter == "courteous"
-interject tag:proud: We were polite to him again. I would like it known that I was polite strategically.
-interject tag:blunt: It didn't look strategic.
-elif flag.strahd_road_encounter == "defiant"
-interject tag:cheerful: Off my road, he said. His road. As if he owns the road.
-interject tag:bookish: He does own the road. That's rather the problem.
+if flag.strahd_road_encounter == "violent" and name:thistle and name:ratatoille
+interject name:thistle: Hit him square. Hit fog. Cheat!
+interject name:ratatoille: Mist form. Textbook. Next time, sunlight. I will find out where one buys sunlight.
+elif flag.strahd_road_encounter == "courteous" and name:godrick_pendlebrook and name:wren_featherfoot
+interject name:godrick_pendlebrook: We were polite to him. Sir Pellam always said be polite to a man before you hit him.
+interject name:wren_featherfoot: Did he say how long before?
+interject name:godrick_pendlebrook: ...No. He never said.
+elif flag.strahd_road_encounter == "defiant" and name:kip_smudgewick and name:ratatoille
+interject name:kip_smudgewick: Off my road, he says. I looked. No toll house, no milestones with his name. No paperwork at all.
+interject name:ratatoille: He doesn't need paperwork. He owns the wolves.
+interject name:kip_smudgewick: ...That is a kind of paperwork.
 elif flag.strahd_road_encounter == "shield"
 Ireena: You stood in front of me. Don't do it again. ...Thank you.
-elif flag.strahd_road_encounter == "silent"
-interject tag:curious: Nobody said a word to him. Was that brave or was that terrified?
-interject tag:veteran: Yes.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Sorry, my lady. I'll do it again.
+endif
+elif flag.strahd_road_encounter == "silent" and name:wren_featherfoot and name:thistle
+interject name:wren_featherfoot: Nobody said a word to him. Was that brave, or were we terrified?
+interject name:thistle: Both. You go quiet near a bear. That's clever, not scared.
 endif
 -> END
 
 ~ banter_anca
-if flag.anca_fate == "unwarned"
-interject class:cleric: Two marks on that old woman's throat, and we let her son wheel her into a churchyard. We should have said.
-interject tag:blunt: We should have. Next time we do.
-elif flag.anca_fate == "staked"
-interject tag:cheerful: The boy didn't watch. Good. I watched for him. I'd rather I had that memory than him.
+if flag.anca_fate == "unwarned" and name:liriel_dawnsong and name:ratatoille
+interject name:liriel_dawnsong: Two marks on that old woman's throat, and we let her son wheel her into a churchyard. We should have said.
+interject name:ratatoille: I knew what they were. I've read about them for years. And I said nothing. Next time I say it out loud.
+elif flag.anca_fate == "staked" and name:godrick_pendlebrook and name:kip_smudgewick
+interject name:godrick_pendlebrook: The lad didn't watch. Good. I watched for him. Better I keep that than him.
+interject name:kip_smudgewick: I gave him an apricot after. It was all I had.
 endif
 -> END
 
 ~ banter_procession
-if flag.dead_procession_turned
-interject tag:curious: They just put the coffin down and walked off. Into the fields. Like a funeral going home.
-interject class:cleric: Mm. That is exactly what it was.
-elif flag.dead_procession_destroyed
-interject tag:veteran: Six of them carrying a coffin for one. They'd measured us. I don't like being measured.
+if flag.dead_procession_turned and name:thistle and name:liriel_dawnsong
+interject name:thistle: They put the box down and walked off into the fields. Like they were going home.
+interject name:liriel_dawnsong: They were. Be at peace, all of you.
+elif flag.dead_procession_destroyed and name:kip_smudgewick and name:wren_featherfoot
+interject name:kip_smudgewick: Six of them carrying one coffin, and they'd measured us for it. I don't like being measured.
+interject name:wren_featherfoot: Bet they'd have done you a good price.
+interject name:kip_smudgewick: Not funny. ...Slightly funny.
 endif
 -> END
 
 ~ banter_raven
-if flag.raven_fed
+if flag.raven_fed and name:thistle
+interject name:thistle: That raven nodded at us. Proper nod. Then off toward the vineyards, looking back. It wants following.
+interject species:elf: Some birds in old places carry more than seeds. I'd follow it, one day.
+elif flag.raven_fed
 interject tag:curious: That raven nodded at us. A bird nodded. And then it flew off toward the vineyards like it wanted us to follow.
 interject species:elf: Some birds in old places carry more than seeds. I'd follow it, one day.
+elif flag.raven_harmed and name:ratatoille and name:kip_smudgewick
+interject name:ratatoille: We hurt the one creature in this valley that wasn't trying to kill us. Every augury I know calls that a bad sign.
+interject name:kip_smudgewick: It might have been his. His bird, I mean. Possibly.
+interject name:ratatoille: It wasn't. A diviner knows an omen when it looks at him. That one looked kind.
 elif flag.raven_harmed
 interject class:druid: We hurt the one creature in this valley that wasn't trying to kill us. The trees noticed.
 interject tag:blunt: It might have been his.
@@ -193,9 +318,11 @@ endif
 -> END
 
 ~ banter_hunters
-if flag.hunters_befriended and flag.werewolf_rumor
+if flag.hunters_befriended and flag.werewolf_rumor and name:godrick_pendlebrook and name:thistle
+interject name:godrick_pendlebrook: Wolves on two legs, a den in the hills, and a mother they pray to. That's not a pack. That's a parish.
+interject name:thistle: Grandda says a wolf that prays has forgotten which one it is.
+elif flag.hunters_befriended and flag.werewolf_rumor
 interject tag:veteran: Wolves that walk on two legs, a den in the hills, and a mother they pray to. That's not a pack. That's a regiment.
-interject tag:curious: A regiment with fleas.
 elif flag.hunters_fought
 interject class:cleric: Frightened men with bows, and we cut them down on a road. They thought we were his. Maybe they weren't entirely wrong.
 elif flag.werewolf_rumor
@@ -206,22 +333,30 @@ endif
 ~ banter_falls
 if flag.ireena_falls_memory and guest:ireena
 Ireena: At the falls. I wasn't going to jump. I want you to know that. I just couldn't remember, for a moment, whose feet they were.
+if name:thistle
+interject name:thistle: Yours. I know your tracks now. I'd know them anywhere.
+else
 interject tag:loyal: Then we'll remember for you. They're yours. Both of them.
+endif
 endif
 -> END
 
 ~ banter_werewolf
-if flag.falls_werewolf_slain
-interject tag:veteran: That thing at the falls was listening to the water with us. Waiting for one of us to stand too close to the edge.
-interject tag:cheerful: Good thing none of us is the type to stand too close to an edge.
-interject tag:veteran: You were standing on the edge.
+if flag.falls_werewolf_slain and name:thistle and name:wren_featherfoot
+interject name:thistle: That wolf at the falls was waiting. For one of us to stand too near the edge.
+interject name:wren_featherfoot: Good thing none of us is the type to stand near edges.
+interject name:thistle: You did a handstand on the edge.
 endif
 -> END
 
 ~ banter_ismark_road
 if guest:ismark and visited:tser_pool
 Ismark: Do you know, I'd never been to Tser Pool? Twenty years, half a day's walk. Father always said the Vistani would steal my boots.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: They didn't, though! Look. Boots. Both of them.
+else
 interject tag:cheerful: They didn't, though. You've still got your boots.
+endif
 Ismark: I've checked twice.
 endif
 -> END

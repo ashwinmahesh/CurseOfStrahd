@@ -1,0 +1,681 @@
+{
+  "godrick_pendlebrook": {
+    "name": "Godrick Pendlebrook",
+    "pronouns": "he/him",
+    "class": "paladin",
+    "species": "goliath",
+    "background": "noble",
+    "summary": "Goliath Paladin (Oath of Devotion), Noble. A shield, a longsword and a smile that has talked him out of more trouble than his head has.",
+    "hook": "He swore at Sir Pellam's deathbed to carry the old knight's sword to the Order of the Silver Dragon, somewhere in a land of mists, and be knighted there. He has practised kneeling.",
+    "scores": {
+      "str": 15,
+      "dex": 10,
+      "con": 13,
+      "int": 8,
+      "wis": 12,
+      "cha": 14
+    },
+    "tags": [
+      "gallant",
+      "earnest",
+      "big-hearted"
+    ],
+    "prefs": {
+      "giant_ancestry": [
+        "stone_giant"
+      ],
+      "background.abilities": [
+        "str",
+        "str",
+        "cha"
+      ],
+      "tool": [
+        "playing_card_set"
+      ],
+      "skilled_proficiencies": [
+        "animal_handling",
+        "performance",
+        "perception"
+      ],
+      "languages": [
+        "giant",
+        "dwarvish"
+      ],
+      "skills": [
+        "athletics",
+        "insight"
+      ],
+      "weapon_mastery": [
+        "longsword",
+        "javelin"
+      ],
+      "fighting_style": [
+        "defense"
+      ],
+      "paladin_subclass": [
+        "oath_of_devotion"
+      ],
+      "prepared": [
+        "divine_smite",
+        "bless",
+        "cure_wounds",
+        "heroism",
+        "command",
+        "warding_bond",
+        "lesser_restoration",
+        "revivify",
+        "aura_of_vitality",
+        "remove_curse",
+        "crusaders_mantle",
+        "magic_weapon"
+      ]
+    },
+    "levels": {
+      "4": {
+        "4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ability_score_improvement.abilities": [
+          "str",
+          "cha"
+        ]
+      },
+      "8": {
+        "8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ability_score_improvement.abilities": [
+          "str",
+          "str"
+        ]
+      }
+    },
+    "roster": true
+  },
+  "liriel_dawnsong": {
+    "name": "Liriel Dawnsong",
+    "pronouns": "she/her",
+    "class": "cleric",
+    "species": "elf",
+    "background": "acolyte",
+    "summary": "High Elf Cleric (Light Domain), Acolyte. Radiant fire, healing hands and a faith that has never once been asked to bend.",
+    "hook": "On the morning of her vows the Morninglord showed her a valley where the sun had not risen in four hundred years, and a voice that said: carry the dawn there. She has never doubted a vision in her life.",
+    "scores": {
+      "str": 8,
+      "dex": 13,
+      "con": 14,
+      "int": 10,
+      "wis": 15,
+      "cha": 12
+    },
+    "tags": [
+      "faithful",
+      "gentle",
+      "unbending"
+    ],
+    "prefs": {
+      "elven_lineage": [
+        "high_elf"
+      ],
+      "species.spellcasting_ability": [
+        "wis"
+      ],
+      "keen_senses": [
+        "perception"
+      ],
+      "background.abilities": [
+        "wis",
+        "wis",
+        "cha"
+      ],
+      "two_cantrips.cantrips": [
+        "light",
+        "spare_the_dying"
+      ],
+      "two_cantrips.spellcasting_ability": [
+        "wis"
+      ],
+      "level_1_spell": [
+        "sanctuary"
+      ],
+      "languages": [
+        "elvish",
+        "dwarvish"
+      ],
+      "skills": [
+        "medicine",
+        "persuasion"
+      ],
+      "divine_order": [
+        "thaumaturge"
+      ],
+      "cleric_subclass": [
+        "light_domain"
+      ],
+      "blessed_strikes": [
+        "potent_spellcasting"
+      ],
+      "cantrips": [
+        "sacred_flame",
+        "guidance",
+        "word_of_radiance",
+        "thaumaturgy",
+        "toll_the_dead",
+        "resistance"
+      ],
+      "prepared": [
+        "healing_word",
+        "bless",
+        "guiding_bolt",
+        "cure_wounds",
+        "spiritual_weapon",
+        "spirit_guardians",
+        "revivify",
+        "remove_curse",
+        "lesser_restoration",
+        "aid",
+        "shield_of_faith",
+        "death_ward",
+        "guardian_of_faith",
+        "greater_restoration",
+        "mass_cure_wounds",
+        "heal",
+        "dispel_magic",
+        "beacon_of_hope",
+        "banishment",
+        "freedom_of_movement",
+        "mass_healing_word",
+        "command"
+      ]
+    },
+    "levels": {
+      "4": {
+        "4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ability_score_improvement.abilities": [
+          "wis",
+          "con"
+        ]
+      },
+      "8": {
+        "8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ability_score_improvement.abilities": [
+          "wis",
+          "wis"
+        ]
+      }
+    },
+    "roster": true
+  },
+  "thistle": {
+    "name": "Thistle",
+    "pronouns": "she/her",
+    "class": "ranger",
+    "species": "human",
+    "background": "guide",
+    "summary": "Human Ranger (Hunter), Guide. A longbow, a loud laugh and no idea what a fork is for.",
+    "hook": "The old trapper who raised her in the deep woods followed a wolf the size of a pony into a wall of fog and didn't come back. She has followed his trail blazes ever since, and they lead here.",
+    "scores": {
+      "str": 12,
+      "dex": 15,
+      "con": 13,
+      "int": 8,
+      "wis": 14,
+      "cha": 10
+    },
+    "tags": [
+      "boisterous",
+      "wild",
+      "fierce"
+    ],
+    "prefs": {
+      "species.size": [
+        "medium"
+      ],
+      "skillful": [
+        "intimidation"
+      ],
+      "versatile": [
+        "alert"
+      ],
+      "background.abilities": [
+        "dex",
+        "dex",
+        "wis"
+      ],
+      "two_cantrips.cantrips": [
+        "druidcraft",
+        "thorn_whip"
+      ],
+      "two_cantrips.spellcasting_ability": [
+        "wis"
+      ],
+      "level_1_spell": [
+        "goodberry"
+      ],
+      "origin.languages": [
+        "elvish",
+        "goblin"
+      ],
+      "skills": [
+        "animal_handling",
+        "athletics",
+        "perception"
+      ],
+      "weapon_mastery": [
+        "longbow",
+        "scimitar"
+      ],
+      "deft_explorer.expertise": [
+        "survival"
+      ],
+      "deft_explorer.languages": [
+        "sylvan",
+        "druidic"
+      ],
+      "fighting_style": [
+        "archery"
+      ],
+      "ranger_subclass": [
+        "hunter"
+      ],
+      "expertise": [
+        "perception",
+        "stealth"
+      ],
+      "prepared": [
+        "ensnaring_strike",
+        "cure_wounds",
+        "speak_with_animals",
+        "hail_of_thorns",
+        "entangle",
+        "pass_without_trace",
+        "spike_growth",
+        "lightning_arrow",
+        "conjure_barrage",
+        "conjure_animals",
+        "lesser_restoration",
+        "barkskin"
+      ]
+    },
+    "levels": {
+      "4": {
+        "4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ability_score_improvement.abilities": [
+          "dex",
+          "wis"
+        ]
+      },
+      "8": {
+        "8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ability_score_improvement.abilities": [
+          "dex",
+          "dex"
+        ]
+      }
+    },
+    "roster": true,
+    "appearance": {
+      "art": "mirabel"
+    },
+    "art_todo": "Borrows the mirabel sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
+  },
+  "ratatoille": {
+    "name": "Ratatoille",
+    "pronouns": "he/him",
+    "class": "wizard",
+    "species": "elf",
+    "background": "artisan",
+    "summary": "High Elf Wizard (Diviner), Artisan. A spellbook, a skillet and an urgent need to be taken seriously.",
+    "hook": "Nobody sat with him at the academy until he learned to throw fire. Then he heard of a great Wizard of Wines beyond the mists, a master of magic and the table both, and set out to become his apprentice.",
+    "scores": {
+      "str": 8,
+      "dex": 14,
+      "con": 13,
+      "int": 15,
+      "wis": 12,
+      "cha": 10
+    },
+    "tags": [
+      "eager",
+      "fussy",
+      "gourmet"
+    ],
+    "prefs": {
+      "elven_lineage": [
+        "high_elf"
+      ],
+      "species.spellcasting_ability": [
+        "int"
+      ],
+      "keen_senses": [
+        "perception"
+      ],
+      "background.abilities": [
+        "int",
+        "int",
+        "dex"
+      ],
+      "background.tool": [
+        "cooks_utensils"
+      ],
+      "crafter_tool_proficiency": [
+        "potters_tools",
+        "tinkers_tools",
+        "smiths_tools"
+      ],
+      "languages": [
+        "elvish",
+        "draconic"
+      ],
+      "skills": [
+        "arcana",
+        "history"
+      ],
+      "scholar": [
+        "arcana"
+      ],
+      "wizard_subclass": [
+        "diviner"
+      ],
+      "divination_savant": [
+        "detect_thoughts",
+        "see_invisibility",
+        "clairvoyance",
+        "tongues",
+        "arcane_eye",
+        "divination",
+        "scrying",
+        "legend_lore",
+        "true_seeing"
+      ],
+      "cantrips": [
+        "fire_bolt",
+        "mage_hand",
+        "ray_of_frost",
+        "minor_illusion",
+        "toll_the_dead"
+      ],
+      "spellbook": [
+        "shield",
+        "magic_missile",
+        "mage_armor",
+        "sleep",
+        "burning_hands",
+        "thunderwave",
+        "misty_step",
+        "web",
+        "scorching_ray",
+        "hold_person",
+        "fireball",
+        "counterspell",
+        "haste",
+        "fly",
+        "dimension_door",
+        "polymorph",
+        "greater_invisibility",
+        "fire_shield",
+        "cone_of_cold",
+        "wall_of_force",
+        "bigbys_hand",
+        "otilukes_freezing_sphere",
+        "tashas_bubbling_cauldron",
+        "chain_lightning",
+        "grease",
+        "unseen_servant",
+        "tensers_floating_disk",
+        "detect_magic",
+        "feather_fall",
+        "comprehend_languages",
+        "identify"
+      ],
+      "prepared": [
+        "shield",
+        "magic_missile",
+        "mage_armor",
+        "sleep",
+        "burning_hands",
+        "thunderwave",
+        "web",
+        "misty_step",
+        "fireball",
+        "counterspell",
+        "haste",
+        "dimension_door",
+        "polymorph",
+        "cone_of_cold",
+        "wall_of_force",
+        "greater_invisibility",
+        "tashas_bubbling_cauldron",
+        "scorching_ray",
+        "hold_person",
+        "fly",
+        "grease",
+        "detect_magic"
+      ]
+    },
+    "levels": {
+      "4": {
+        "4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ability_score_improvement.abilities": [
+          "int",
+          "dex"
+        ]
+      },
+      "8": {
+        "8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ability_score_improvement.abilities": [
+          "int",
+          "int"
+        ]
+      }
+    },
+    "roster": true,
+    "appearance": {
+      "art": "silvain_aster"
+    },
+    "art_todo": "Borrows the silvain_aster sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
+  },
+  "wren_featherfoot": {
+    "name": "Wren Featherfoot",
+    "pronouns": "he/him",
+    "class": "monk",
+    "species": "halfling",
+    "background": "entertainer",
+    "summary": "Halfling Monk (Warrior of the Open Hand), Entertainer. Fast hands, faster feet and the last word in every argument.",
+    "hook": "His old master, a dusk elf who never spoke of where he came from, died last winter and left Wren one errand: a letter for a brother named Kasimir, in the valley where the sun doesn't rise.",
+    "scores": {
+      "str": 12,
+      "dex": 15,
+      "con": 13,
+      "int": 8,
+      "wis": 14,
+      "cha": 10
+    },
+    "tags": [
+      "quick",
+      "cheeky",
+      "restless"
+    ],
+    "prefs": {
+      "background.abilities": [
+        "dex",
+        "dex",
+        "str"
+      ],
+      "background.tool": [
+        "flute"
+      ],
+      "instrument_training": [
+        "lute",
+        "drum",
+        "pan_flute"
+      ],
+      "languages": [
+        "halfling",
+        "elvish"
+      ],
+      "skills": [
+        "athletics",
+        "insight"
+      ],
+      "monk.1.tools": [
+        "calligraphers_supplies"
+      ],
+      "monk_subclass": [
+        "warrior_of_the_open_hand"
+      ]
+    },
+    "levels": {
+      "4": {
+        "4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ability_score_improvement.abilities": [
+          "dex",
+          "wis"
+        ]
+      },
+      "8": {
+        "8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ability_score_improvement.abilities": [
+          "dex",
+          "wis"
+        ]
+      }
+    },
+    "roster": true,
+    "appearance": {
+      "art": "tamsin_tealeaf"
+    },
+    "art_todo": "Borrows the tamsin_tealeaf sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
+  },
+  "kip_smudgewick": {
+    "name": "Kip Smudgewick",
+    "pronouns": "he/him",
+    "class": "warlock",
+    "species": "tiefling",
+    "background": "merchant",
+    "summary": "Tiefling Warlock (Fiend Patron), Merchant. Eldritch fire, a cart of apricots and a contract he reads every night by candlelight.",
+    "hook": "When the blight took his family's orchard he signed a devil's contract to save it. The devil has offered him one way out: bring back a signature from the lord of a land of mists. The apricots never rot now.",
+    "scores": {
+      "str": 8,
+      "dex": 13,
+      "con": 14,
+      "int": 12,
+      "wis": 10,
+      "cha": 15
+    },
+    "tags": [
+      "nervous",
+      "honest-ish",
+      "always selling"
+    ],
+    "prefs": {
+      "species.size": [
+        "medium"
+      ],
+      "species.spellcasting_ability": [
+        "cha"
+      ],
+      "fiendish_legacy": [
+        "infernal"
+      ],
+      "background.abilities": [
+        "cha",
+        "cha",
+        "con"
+      ],
+      "languages": [
+        "dwarvish",
+        "halfling"
+      ],
+      "skills": [
+        "investigation",
+        "nature"
+      ],
+      "eldritch_invocations": [
+        "pact_of_the_tome",
+        "agonizing_blast",
+        "armor_of_shadows",
+        "repelling_blast",
+        "devils_sight",
+        "fiendish_vigor",
+        "eldritch_mind",
+        "ascendant_step",
+        "one_with_shadows"
+      ],
+      "agonizing_blast": [
+        "eldritch_blast"
+      ],
+      "repelling_blast": [
+        "eldritch_blast"
+      ],
+      "cantrips": [
+        "eldritch_blast",
+        "prestidigitation",
+        "mage_hand",
+        "minor_illusion"
+      ],
+      "warlock_subclass": [
+        "fiend_patron"
+      ],
+      "mystic_arcanum": [
+        "true_seeing"
+      ],
+      "prepared": [
+        "hex",
+        "armor_of_agathys",
+        "protection_from_evil_and_good",
+        "misty_step",
+        "hold_person",
+        "counterspell",
+        "hunger_of_hadar",
+        "dimension_door",
+        "banishment",
+        "hold_monster",
+        "synaptic_static",
+        "comprehend_languages",
+        "unseen_servant"
+      ]
+    },
+    "levels": {
+      "4": {
+        "4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ability_score_improvement.abilities": [
+          "cha",
+          "con"
+        ]
+      },
+      "8": {
+        "8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "ability_score_improvement.abilities": [
+          "cha",
+          "cha"
+        ]
+      }
+    },
+    "roster": true,
+    "appearance": {
+      "art": "gunther_arasek"
+    },
+    "art_todo": "Borrows the gunther_arasek sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
+  }
+}

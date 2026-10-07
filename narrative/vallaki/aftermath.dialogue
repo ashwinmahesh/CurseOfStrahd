@@ -24,8 +24,16 @@ endif
 Lydia Petrovna [smile]: I'll sew you sashes. Proper ones. With your names on.
 Baron: A hundred gold, as promised, and the freedom of the town, and a place on the dais at every festival forever. Every week. Forever!
 gold +100
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Every week? Oh, that's splendid! Is there cake every week?
+else
 interject tag:cheerful: Every week?
+endif
+if name:wren_featherfoot
+interject name:wren_featherfoot: Forever. He said forever. Somebody hold me.
+else
 interject tag:blunt: Forever.
+endif
 -> izek_claim
 
 ~ izek_claim
@@ -136,7 +144,7 @@ set baron_fate = "executed"
 Lady Wachter: Then I shall do as I like. Take him to the lockup. Tonight, quietly. There's no need to spoil the afternoon.
 Lydia Petrovna [afraid]: No! No, please...
 interject class:cleric: That is not a choice I will carry for her. Remember that I said so.
-interject tag:devout: Morninglord forgive us. I don't think he will.
+interject tag:pious: May the gods forgive us. I don't think they will.
 -> wachter_close
 
 ~ wachter_close

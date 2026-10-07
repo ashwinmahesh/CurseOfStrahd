@@ -1,0 +1,50 @@
+{
+  "region": "castle_ravenloft",
+  "flags": [
+    {
+      "id": "kestrel_roll_called",
+      "type": "bool",
+      "summary": "Ilse began Kestrel Company's roll call at Captain Merrow's table (castle_ravenloft/personal_kestrel:roll_call)."
+    },
+    {
+      "id": "kestrel_merrow_called",
+      "type": "bool",
+      "summary": "Ilse's Persuasion failed and Merrow called the whole company out of the walls (crg_kestrel_table, the four-soldier fight)."
+    },
+    {
+      "id": "kestrel_merrow_counted",
+      "type": "bool",
+      "summary": "Merrow stood and was counted (Persuasion DC 18) and led the turned company out to meet the dawn; no fight."
+    },
+    {
+      "id": "kestrel_merrow_fallen",
+      "type": "bool",
+      "summary": "The party beat Captain Merrow at his table (crg_kestrel_table); the quest is at count_off."
+    },
+    {
+      "id": "kestrel_cellar_cleared",
+      "type": "bool",
+      "summary": "The party beat the three of the company on the servants' stair (crg_kestrel_cellar, when Vell wasn't with them)."
+    },
+    {
+      "id": "kestrel_count_done",
+      "type": "bool",
+      "summary": "Ilse wrote the last number of the count (the roll call's end, or the coats after the fight)."
+    },
+    {
+      "id": "locket_portrait_seen",
+      "type": "bool",
+      "summary": "Tamsin stood before Tatyana's portrait in the court study when the locket was already with Sergei or Ireena."
+    },
+    {
+      "id": "aurel_found",
+      "type": "bool",
+      "summary": "Silvain found Aurel Mirescu reading by the fire in the court study."
+    },
+    {
+      "id": "aurel_arcana_failed",
+      "type": "bool",
+      "summary": "An Arcana attempt on Aurel's charm pulled it tighter; that way is closed."
+    }
+  ]
+}

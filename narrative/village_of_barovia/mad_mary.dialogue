@@ -68,7 +68,7 @@ set gertruda_search_promised
 quest find_gertruda promised
 attitude mad_mary friendly
 Mad Mary [afraid]: You will? You'll look? Dark hair, a blue dress with a mended hem, she hums when she's afraid. She'll be afraid. Tell her I'm not angry. Tell her the door is unlocked now. All three locks.
-interject name:ilse_varga: We'll look. I don't make promises I can't count.
+interject name:thistle: Grandda says nobody's lost. Just not found yet. I'll find her.
 -> menu
 
 ~ refuse

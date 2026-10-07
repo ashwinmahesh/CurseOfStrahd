@@ -24,6 +24,15 @@ quest the_abbots_bride met
 Narrator: A young monk in a plain brown habit is lighting the candles along the altar rail. He doesn't use a taper. He touches each wick with a fingertip, and each one lights.
 Narrator: He turns. Golden hair, a face like a saint carved by someone who had only heard saints described. For a moment the light in the chapel seems to arrange itself around him, and then it remembers itself.
 Abbot: Welcome. I hoped you would come today. I am the Abbot of this house. You are cold, and tired, and a little afraid of me. All three are sensible. Two of them I can help with.
+interject name:liriel_dawnsong: The light leaned toward him. I have never seen light do that. Not for anyone.
+if name:liriel_dawnsong
+Narrator: Liriel takes one step toward him and goes down on both knees on the cold flags, her hands over her mouth. When she looks up her face is wet and shining.
+interject name:liriel_dawnsong: You're one of His. An angel of the Morninglord, here, in the dark. Oh, I knew it. I knew He hadn't forgotten this place.
+Abbot [smile]: Get up, little sister. It's been a long time since anyone knelt to me who meant it. Get up before I start to like it.
+if not (quest.carry_the_dawn >= the_angel)
+quest carry_the_dawn the_angel
+endif
+endif
 if flag.krezk_abbey_directed and not flag.krezk_gate_open
 Abbot: Krezk shut its gate on you and pointed up the mountain. They do that. I am where Krezk sends what it would rather not decide about.
 endif
@@ -55,6 +64,7 @@ endif
 * [if not flag.krezk_gate_open and not flag.abbot_vouched] Krezk won't open its gate to us. -> vouch
 * [if flag.ilya_heard and not flag.ilya_fate and not flag.abbot_dress_asked] The burgomaster's son is dying. Will you help him? -> ilya
 * [if (flag.wedding_dress_found or flag.wards_dress_found) and not flag.wedding_dress_delivered] We've brought a dress for your bride. -> abbey_of_st_markovia/unveiling:deliver
+* [name:liriel_dawnsong] [if flag.abbot_bride_revealed and not flag.liriel_asked_abbot and not flag.abbot_fate] Ask him whether he still remembers the sun. -> companions/dawn:sun
 * Attack the Abbot. -> attack
 * Goodbye. -> bye
 
@@ -73,7 +83,11 @@ set markovia_story_heard
 Abbot: Markovia. She went up the road to the castle with a handful of the faithful, and she did not come back. Brave. Very brave, and mistaken.
 Abbot: One does not cure a fever by killing the patient. One sits with him. One brings him water. One is patient.
 if flag.markovia_letter_read
+if name:kip_smudgewick
+interject name:kip_smudgewick: With respect, sir, that's not what her letter says. I read it. Small print and all.
+else
 interject tag:blunt: That's not what her letter says.
+endif
 Abbot: Letters say many things, child. Clovin keeps a great deal of paper. It comforts him.
 Narrator: He says it gently, and a little too quickly, and doesn't look at you while he does.
 endif
@@ -97,13 +111,20 @@ Narrator: He's handsome, and calm, and very still. If there's more to it than th
 ~ divine
 set abbot_nature_known
 Narrator: You reach for the holy in the room and find it at once, blinding, like the sun through a keyhole. It is in him. It is him. And at the bottom of it, like silt in a well, something has gone sour.
+interject name:liriel_dawnsong: He is of the heavens. My Lord's own heavens, I think. And underneath, something has soured, the way milk sours.
+if not name:liriel_dawnsong
 interject class:cleric: He's celestial. An angel, or the next thing to one. And something in him has turned, the way milk turns.
+endif
 Abbot: You see clearly, child. Most people only see the face. It is a good face. I was given it to be trusted.
 -> menu
 
 ~ ireena_ok
 Narrator: His eyes keep going back to her. Her hair, her hands, the line of her throat. Not hunger. Worse: the look of a collector at the one piece missing from a set he has spent his whole life completing.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: My lady, stand by me. Closer than that. He'll have to go round me, and I'm a long way round.
+else
 interject tag:loyal: Stay close to us, Ireena. Closer than that.
+endif
 -> menu
 
 ~ ireena_fail
@@ -116,8 +137,18 @@ Abbot: This valley has a sickness, and the sickness has a name. Loneliness. Its 
 Abbot: So I am making him a wife.
 Narrator: He says it the way a carpenter says he is making a chair.
 Abbot: Vasilka. She waits in the wards, across the courtyard. Go and see her, if you wish. Be gentle. She is not awake.
+if name:thistle
+interject name:thistle: Made from what? This whole place smells like a dug grave.
+else
 interject tag:blunt: Made from what?
+endif
 Abbot: From what Krezk was finished with. Nothing is wasted in this house.
+if name:liriel_dawnsong
+Narrator: Liriel doesn't say anything at all. She has gone white to the lips, and very still, the way a candle goes still in a room where a door has just closed.
+if not (quest.carry_the_dawn >= the_fall)
+quest carry_the_dawn the_fall
+endif
+endif
 if guest:ezmerelda
 interject guest:ezmerelda: You're stitching a corpse a wedding for Strahd. I've hunted a lot of madmen. You're the calmest.
 endif

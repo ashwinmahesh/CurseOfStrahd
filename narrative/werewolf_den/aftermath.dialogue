@@ -40,7 +40,7 @@ Zuleika: Then go. I held this den with you in silver. I can hold it with you out
 Emil: She means she never needed me.
 Zuleika: I mean bring yourself back in one piece. Or most of the pieces.
 quest find_the_ally found
-interject name:tamsin_tealeaf: We have a werewolf. An actual werewolf. On our side. I'd like that written down somewhere official.
+interject name:kip_smudgewick: A werewolf. On our side. Lovely. I'll draw up a little agreement. Terms of non-biting. Nothing formal.
 interject class:cleric: Mind the bite, and we'll get along.
 Emil: I always mind the bite. That was the whole argument.
 -> END
@@ -78,7 +78,7 @@ Mirela: Is it over? Are they all...?
 
 ~ home
 Mirela: Krezk is down the stream path, then west on the road. We can find it. We're not little. Except Ana. Ana's little.
-interject name:ilse_varga: You're not walking it alone. Fall in. Single file. Nobody falls behind.
+interject name:godrick_pendlebrook: You're not walking it alone, Mirela. Ana can ride on my shoulders. Everybody else, single file behind me.
 Narrator: You walk them down to the road and as far as the first milestone, where Mirela takes over, counting heads every twenty paces like a sergeant on a march.
 if not flag.wolf_den_milestone_reached
 set wolf_den_milestone_reached
@@ -100,7 +100,7 @@ Narrator: She snatches her arm away and tucks it into her coat, and looks at you
 ~ bite_prayer
 set mirela_cured
 Narrator: The prayer is short and plain, and for once in this valley something seems to be listening. The red ring around the bite fades, slowly, like a blush.
-interject name:hedda_ironvow: Dawn comes, little one. Even here. Even to arms.
+interject name:liriel_dawnsong: The dawn comes, little one. Even here. Even to a bitten arm.
 Mirela: It doesn't itch any more. It always itched.
 -> home
 

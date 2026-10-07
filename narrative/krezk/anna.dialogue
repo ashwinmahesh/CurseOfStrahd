@@ -54,8 +54,8 @@ Narrator: Hot skin, a racing pulse, a cough that rattles. You've seen fevers bre
 
 ~ cleric_cure
 Narrator: You kneel by the bed and lay a hand on the boy's chest and pray. For a moment nothing. Then the warmth under your palm changes: not the fever's heat, but a cleaner one, like sun through a shutter.
-if name:hedda_ironvow
-interject name:hedda_ironvow: There. Mm. There it goes. Out you go, you miserable thing. This boy has goats to shout at.
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: There. Do you feel it? Out it goes, little one. Be at peace.
 else
 interject class:cleric: There. Feel that? That's it leaving.
 endif
@@ -111,7 +111,11 @@ set anna_dress_given
 set wedding_dress_source = "anna"
 quest the_abbots_bride dress_found
 Narrator: Anna lifts out a dress of heavy cream wool and old lace, folded in lavender. It has been mended in two places by a careful hand, and never worn since.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: We'll bring it back to you, my lady, if there's any way at all. I swear it.
+else
 interject tag:loyal: We'll bring it back to you if there's any way at all.
+endif
 Anna Krezkova: Bring back the Abbot instead. Down this mountain, to this bed.
 -> END
 

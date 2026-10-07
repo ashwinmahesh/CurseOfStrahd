@@ -1,0 +1,115 @@
+# Liriel Dawnsong's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each
+# plays once. Quest: Carry the Dawn (narrative/companions/dawn.dialogue).
+
+~ talk_silence
+if name:liriel_dawnsong and quest.carry_the_dawn == the_vision
+-> silence
+endif
+-> END
+
+~ silence
+Narrator: Liriel is awake before anyone, kneeling at the edge of the camp facing east, where the dawn would be if this valley had one. Her lips are moving. After a while they stop.
+interject name:liriel_dawnsong: Morning's grace. I'm sorry. I didn't mean to wake anyone.
+* Is something wrong? -> silence_wrong
+* (Kneel beside her.) -> silence_kneel
+
+~ silence_kneel
+Narrator: You kneel beside her in the wet grass. She doesn't look round, but she moves over a little, to make room.
+-> silence_wrong
+
+~ silence_wrong
+interject name:liriel_dawnsong: He answers. That's the strange part. I pray for healing and the healing comes. I pray for light and the light comes. Everything works.
+interject name:liriel_dawnsong: But he isn't here. At home I'd pray and he'd be in the room, the way you can tell someone's in the next room with the door shut. Here the door is shut and there's no next room. There's just the door.
+interject name:liriel_dawnsong: I've never prayed into a silence before. It's very loud.
+* Maybe that's why you were sent. To be the next room. -> silence_sent
+* He sent you here. He knew it would be like this. -> silence_knew
+* Do you want to stop? -> silence_stop
+
+~ silence_sent
+interject name:liriel_dawnsong: ...Oh.
+interject name:liriel_dawnsong: That's either very wise or very silly, and I can't tell which, and I think that means it's wise. Thank you.
+-> silence_end
+
+~ silence_knew
+interject name:liriel_dawnsong: Yes. He always knows. That's the comfort of him. It's also, I'm learning, the difficulty.
+-> silence_end
+
+~ silence_stop
+interject name:liriel_dawnsong: Stop? No. Oh, no. You don't stop talking to someone you love because they've gone quiet. That's when you talk more.
+-> silence_end
+
+~ silence_end
+if not (quest.carry_the_dawn >= the_silence)
+quest carry_the_dawn the_silence
+endif
+interject name:godrick_pendlebrook: I'll pray with you tomorrow, if you like. I don't know any of the words. I'll hum.
+interject name:thistle: Your god's like a deer, Sunbeam. You go quiet and still and wait, and they come out. Grandda says.
+interject name:kip_smudgewick: For what it's worth, my... the people I'm in business with... they're very loud. All the time. I'd take quiet.
+interject name:liriel_dawnsong: The dawn comes. It always comes. I'll just have to be patient about where.
+-> END
+
+~ talk_dark
+if name:liriel_dawnsong and quest.carry_the_dawn >= the_silence and flag.eva_truth_teller != "liriel_dawnsong"
+-> dark
+endif
+-> END
+
+~ dark
+Narrator: The watch changes in the small hours, and there's a light burning in Liriel's bedroll: a tiny one, the size of a candle flame, cupped against her chest. Her eyes are open.
+interject name:liriel_dawnsong: Oh. Don't mind me. It's a devotional light. The Morninglord likes a lamp lit.
+* [Insight DC 10] It isn't, is it? -> dark_truth | dark_truth
+* Goodnight, Liriel. -> dark_leave
+
+~ dark_truth
+interject name:liriel_dawnsong: ...No. It isn't. I'm frightened of the dark. I have been since I was very small. A priestess of the dawn, afraid of the dark. You'd think it would be funny. It is, a little.
+interject name:liriel_dawnsong: And now I've come to the darkest place in the world on purpose, and every night it's very, very dark.
+if name:thistle
+interject name:thistle: I'll sleep next to you. I sleep light. Anything comes, I'll bite it.
+interject name:liriel_dawnsong: That's very kind, dear heart. Please don't bite anything near my face.
+elif name:godrick_pendlebrook
+interject name:godrick_pendlebrook: I'll sit up with you. I'm big. The dark has to get past me first. I've never lost a staring contest with the dark.
+else
+Narrator: Someone sits down beside her and stays until morning, and nobody mentions it the next day.
+endif
+interject name:liriel_dawnsong: Being brave isn't not being afraid. I know that. I've told it to a hundred novices. It turns out it's much easier to say.
+-> END
+
+~ dark_leave
+interject name:liriel_dawnsong: Goodnight. Be at peace.
+-> END
+
+~ talk_faith
+if name:liriel_dawnsong and quest.carry_the_dawn >= the_fall and flag.abbot_fate
+-> faith
+endif
+-> END
+
+~ faith
+Narrator: Liriel hasn't said much since the abbey. Tonight she sits with her holy symbol in her lap, not praying, just turning it so the firelight runs round the rim.
+if flag.abbot_fate == "repentant"
+interject name:liriel_dawnsong: He remembered. In the end, he remembered the sun. He laid her down and went up the mountain to wait for judgement, and I think he'll get mercy, and I think he knows it, and I think that frightens him more.
+elif flag.abbot_fate == "wedding"
+interject name:liriel_dawnsong: We let him do it. We stood there and let an angel of the Morninglord give a dead girl to the devil in white, and call it love. I keep seeing the dress.
+elif flag.abbot_fate == "slain"
+interject name:liriel_dawnsong: We killed an angel. I helped. I'd do it again. I don't know what that makes me, and I'm not going to pretend I don't mind.
+else
+interject name:liriel_dawnsong: He sits in his church and won't speak. An angel. In the dark, with nobody to pray to. I'd have thought that couldn't happen to one of them.
+endif
+interject name:liriel_dawnsong: I always thought heaven was... finished. Perfect. That the messengers were the safe part. And here's one who stayed too long in the dark and forgot what he was for.
+interject name:liriel_dawnsong: If an angel can fall here, then nobody is coming to fix Barovia. Not him. Not anyone from above.
+* Then it's up to us. -> faith_us
+* Does that shake your faith? -> faith_shake
+
+~ faith_shake
+interject name:liriel_dawnsong: It shook it. I could feel it go, like a bell. And then it rang.
+-> faith_us
+
+~ faith_us
+interject name:liriel_dawnsong: Yes. That's what I've decided. He didn't send me here to watch an angel do it. He sent me because there wasn't one. The dawn doesn't come down from above. It gets carried.
+interject name:liriel_dawnsong: So I'll carry it. All the way up to the castle, if I have to, and I'll sing it in his chapel.
+if not (quest.carry_the_dawn >= faith_kept)
+quest carry_the_dawn faith_kept
+endif
+interject name:wren_featherfoot: You're scarier than you look, you know that?
+interject name:liriel_dawnsong: Everyone says that. I've never understood why it surprises them.
+-> END

@@ -285,6 +285,11 @@
       "id": "gulthias_tree_burned",
       "type": "bool",
       "summary": "The party burned the Gulthias tree on Yester Hill. Every blight in the region dies (encounters and the road table change), the stone comes clean, and the druids can't return. Later regions and the epilogue may read it."
+    },
+    {
+      "id": "davian_pledged",
+      "type": "bool",
+      "summary": "The party promised Davian to clear the winery (davian:pledge); the Wizard of Wines scene returns to his main menu after that."
     }
   ]
 }

@@ -105,6 +105,18 @@
       "kind": "examine",
       "label": "A clawed pine",
       "model": "pine_clawed"
+    },
+    {
+      "id": "fen_blaze_lake",
+      "cell": [
+        12,
+        4
+      ],
+      "kind": "examine",
+      "label": "A blazed pine",
+      "model": "pine_clawed",
+      "when": "name:thistle",
+      "dialogue": "companions/fen:blaze_lake"
     }
   ],
   "narration": {

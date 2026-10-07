@@ -44,7 +44,11 @@ endif
 
 ~ arabelle_q
 Arrigal: Luvash's girl wandered off. Children do. My brother drinks, which is how he looks for things. The lake will give her back, or it won't. That's the way of lakes.
+if name:thistle
+interject name:thistle: That's a cold answer for an uncle. He's lying. Smells like it.
+else
 interject tag:blunt: That's a cold answer for an uncle.
+endif
 Arrigal: It's a cold valley.
 -> arrigal_menu
 
@@ -189,7 +193,11 @@ set arabelle_rescued
 quest missing_arabelle rescued
 Narrator: Inside the sack is a small girl, soaked, furious and very much alive, with black hair plastered over a solemn face. Bluto has gone, somewhere in the reeds.
 Arabelle: You took a long time. The water was cold. The fish-man is sad; don't hurt him. He'll go in the lake himself, in the end. I've seen it.
+if name:kip_smudgewick
+interject name:kip_smudgewick: Hello, miss. We're very glad you're not drowned. Apricot? No charge. You must be starving.
+else
 interject tag:cheerful: Hello. We're very glad you're not drowned.
+endif
 Arabelle: So am I. Take me to my father. He'll be drinking. He drinks when he's frightened.
 -> END
 

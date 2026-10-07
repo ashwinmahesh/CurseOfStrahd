@@ -3,9 +3,9 @@
 
 ~ start
 Narrator: A grey wolf stands square in the narrows, head low, while more shapes wait in the fog beyond it and something shifts in the trees behind you. None of them growl; they are waiting to see what you do.
-interject name:tamsin_tealeaf: Good dog. Nice dog. Large, organized dog.
-if not name:tamsin_tealeaf
-  interject species:halfling: I'd like it noted that I'm the bite-sized one.
+interject name:kip_smudgewick: Good dog. Nice dog. Apricot? No? No. Very sensible.
+if not name:kip_smudgewick
+  interject species:halfling: Just so everyone knows, I'm the bite-sized one.
 endif
 -> choose
 
@@ -19,7 +19,7 @@ endif
 
 ~ wait
 Narrator: You wait, and the wolves wait longer. When you finally look up, every one of them is still looking at you.
-interject name:ilse_varga: They're not leaving. They're holding a line. Ours to cross or not.
+interject name:ratatoille: Non, they are not leaving. They hold a line, like sentries at a gate. Someone has drilled them.
 -> choose
 
 ~ cowed_shout
@@ -42,9 +42,8 @@ Narrator: Light flares white and a clap of thunder rolls down the road. The wolv
 set mists_wolves_resolved
 set mists_wolves_cowed
 quest into_the_mists the_pack
-interject name:ilse_varga: They withdrew in order. Somebody trained them.
-interject name:hedda_ironvow: Mm. Wolves that do as they're told. I'd like to meet whoever tells them. Briefly.
-if not name:hedda_ironvow
+interject name:thistle: Wasn't fear. They were sent off. Somebody's whistling for them.
+if not name:thistle
   interject class:cleric: Wolves don't keep ranks. Not on their own.
 endif
 -> END

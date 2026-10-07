@@ -10,9 +10,9 @@ if flag.death_house_heard_plea
     set death_house_saw_through_lure
     set death_house_lore += 1
   endif
-  if name:tamsin_tealeaf and name:ilse_varga
-    interject name:tamsin_tealeaf: That's an old painting. Ilse. That is a very old painting.
-    interject name:ilse_varga: I see it.
+  if name:thistle and name:liriel_dawnsong
+    interject name:thistle: That's them. The road ones. Same wolf. That paint's older than Grandda.
+    interject name:liriel_dawnsong: Then they have been waiting in that road a very long time. Poor lambs.
   else
     interject tag:curious: How long ago was this painted? And how are they still that age outside?
   endif
@@ -36,9 +36,8 @@ if not flag.death_house_read_strahd_letter
   set death_house_read_strahd_letter
   set death_house_lore += 1
 endif
-interject name:ilse_varga: That S. Same hand as my letter. Same flourish. He writes to the people he means to keep.
-interject name:silvain_aster: Look at the pen pressure. He wasn't angry when he wrote this. He was amused. That's worse.
-if not name:silvain_aster
+interject name:kip_smudgewick: Not one promise in it. Mum says read the small print. There isn't any. That's worse.
+if not name:kip_smudgewick
   interject class:wizard: He wrote this as if he had all the time in the world. I suspect he does.
 endif
 -> END
@@ -47,8 +46,8 @@ endif
 narrate examine:durst_deeds
 Narrator: Deeds and titles tied with string: this house, a vineyard plot long since sold, and a windmill on the Old Svalich Road, its sails sketched in the margin by a bored clerk.
 set death_house_found_deeds
-interject name:tamsin_tealeaf: A windmill. We could own a windmill. I've never owned anything I didn't have to run from.
-if not name:tamsin_tealeaf
+interject name:ratatoille: A windmill. A windmill means flour, and flour means bread. Not that I would... I am a wizard. Purely academic.
+if not name:ratatoille
   interject background:criminal: Paper says it's ours if we want it. Paper says a lot of things.
 endif
 -> END
@@ -72,8 +71,8 @@ Narrator: Sheet music stands open on the rack: a lullaby, copied out in a carefu
 set death_house_harpsichord_played
 set death_house_knows_lullaby
 Narrator: The tune is simple and sad, the kind you sing over a crib at two in the morning. As the last note fades, a second pair of hands nobody can see plays it again, softly, from the beginning.
-interject name:hedda_ironvow: Someone sang that to a baby. Every night, I think.
-if not name:hedda_ironvow
+interject name:liriel_dawnsong: A cradle song, sung every night by someone who loved him. Keep it close. Someone in this house will know it.
+if not name:liriel_dawnsong
   interject class:bard: I'll keep that one. A tune like that is a key to someone.
 endif
 -> END
@@ -87,7 +86,7 @@ Narrator: {name}'s fingers stumble. The keys go dead under them one by one, as i
 set death_house_harpsichord_played
 set death_house_knows_lullaby
 Narrator: The notes resolve in {name}'s head into a lullaby, slow and simple, and very tired. Somewhere upstairs, very faintly, someone else is humming it too.
-interject name:silvain_aster: Three-four time, a falling third at every cadence. A song for rocking. I'd know it again anywhere.
+interject name:wren_featherfoot: Got it. Three-four, rocks like a cradle. I've busked worse for coppers, and I'll be humming this for a week.
 -> END
 
 ~ read_fail
@@ -103,9 +102,9 @@ if not flag.death_house_learned_walter
   set death_house_learned_walter
   set death_house_lore += 1
 endif
-interject name:hedda_ironvow: Cared for. Mm. I know how this story ends. I wish I didn't.
-interject name:tamsin_tealeaf: Walter. The baby brother. He wasn't the mistress's, was he.
-if not name:hedda_ironvow
+interject name:thistle: "Cared for." That's a lie. I can smell a lie on paper.
+interject name:godrick_pendlebrook: Walter was the nurse's baby. Hers and the master's. That's what the lady knew. Isn't it.
+if not name:thistle
   interject class:cleric: "Cared for." I've read that phrase on too many graves.
 endif
 -> END

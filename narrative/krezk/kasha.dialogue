@@ -37,7 +37,11 @@ Kasha Varo: The wall's for the wolves. The pool's for us.
 ~ pool
 Kasha Varo: It doesn't freeze. Never has. Snow falls in and stops being snow. And when the sun goes behind the clouds, look in it quick, and you'll see the sun stays in the water a breath longer than it stays in the sky.
 Kasha Varo: It remembers, you see. The sun used to come here properly. The water's been holding onto it ever since, the way you'd keep a letter.
+if name:kip_smudgewick
+interject name:kip_smudgewick: Does it do anything? Heal? Bless? Could it be bottled? Asking professionally.
+else
 interject tag:curious: Does it do anything? Heal? Bless?
+endif
 Kasha Varo: Fill a flask and find out. It doesn't do anything for people who ask what it does. That's my experience. Sixty years of it.
 -> menu
 
@@ -45,7 +49,11 @@ Kasha Varo: Fill a flask and find out. It doesn't do anything for people who ask
 Kasha Varo: Krezk's. All of us end up round the pool, sooner or later. The little stones by the pavilion are the burgomaster's. Five of them. Anna comes and sits with them on Tuesdays.
 if flag.abbot_bride_revealed or flag.vasilka_examined or flag.turned_earth_found
 Kasha Varo [afraid]: And some of them are lighter than they should be, if you take my meaning. I've found earth turned that I didn't turn. I put it back. I say a prayer. It's all I can do.
+if name:thistle
+interject name:thistle: The Abbot's bride. That's where he dug her up.
+else
 interject tag:blunt: The Abbot's bride. That's where he got her.
+endif
 Kasha Varo: I didn't say that. I'd never say that. Not out loud, where the mountain can hear.
 endif
 -> menu

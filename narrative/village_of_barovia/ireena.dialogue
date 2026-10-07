@@ -69,7 +69,7 @@ endif
 if flag.ireena_door_threatened
 Ireena [angry]: And I know your voice. You're the one who told my door to open. Now. Keep that voice down in this house.
 endif
-interject name:tamsin_tealeaf: Oh. Oh, that's... no. No, I'm fine. I'm fine.
+interject name:godrick_pendlebrook: My lady. Sir Godrick Pendlebrook, at your service. Fear not.
 if flag.burial_agreed and not flag.donavich_will_officiate and not flag.donavich_refused_rites
 Ireena: Ismark says you'll help with Father. Then he needs a priest. Father Donavich, at the church on the hill. He hasn't left it in weeks, but he owes Father that much.
 quest bury_the_burgomaster find_a_priest
@@ -124,17 +124,6 @@ Ireena: My eyes are up here. So is my sword.
 ~ past
 Ireena: I don't know where I come from. Father found me on the road, eight or nine, with no name and no memory. He gave me both. Some nights I dream of a lake, a white dress, and falling. That's all I have.
 interject species:elf: Memories that thin are rarely an accident.
--> menu
-
-~ locket
-set tamsin_locket_recognized
-if not (quest.the_locket >= her_face)
-quest the_locket her_face
-endif
-Narrator: Tamsin opens the silver locket and holds it out. The tiny painted woman inside has Ireena's face: the same eyes, the same red hair, in a gown a few centuries out of fashion.
-Ireena [afraid]: Where did you get this? I've never sat for a painter. I've never owned a dress like that. Who is she?
-interject name:tamsin_tealeaf: I was hoping you could tell me. She's been calling my name in my sleep for three months.
-Ireena: Then she and I have something in common. Someone calls mine too. Put it away. Please.
 -> menu
 
 ~ agree_burial
@@ -278,3 +267,16 @@ Ireena: Changed your minds? Or just checking the shutters for us?
 * We'll take you after all. Vallaki. -> accept_vallaki
 * We'll take you to Krezk. -> krezk
 * Just checking on you. -> END
+
+# --- The first four (owner, 2026-10-06: kept so older saves still play their quests) ---
+
+~ locket
+set tamsin_locket_recognized
+if not (quest.the_locket >= her_face)
+quest the_locket her_face
+endif
+Narrator: Tamsin opens the silver locket and holds it out. The tiny painted woman inside has Ireena's face: the same eyes, the same red hair, in a gown a few centuries out of fashion.
+Ireena [afraid]: Where did you get this? I've never sat for a painter. I've never owned a dress like that. Who is she?
+interject name:tamsin_tealeaf: I was hoping you could tell me. She's been calling my name in my sleep for three months.
+Ireena: Then she and I have something in common. Someone calls mine too. Put it away. Please.
+-> menu

@@ -1,13 +1,13 @@
 # Party banter while exploring Death House (and the road into it). Each node is one short exchange; its opening
 # `if` is the gate. The game plays an eligible node (gate true) at a quiet moment, once each.
-# Pregen voices: docs/voice/{ilse_varga, tamsin_tealeaf, hedda_ironvow, silvain_aster}.md. Class, species and
-# background lines are written so any such character could say them.
+# Pregen voices: docs/voice/{godrick_pendlebrook, liriel_dawnsong, thistle, ratatoille, wren_featherfoot,
+# kip_smudgewick}.md. Class, species and background lines are written so any such character could say them.
 
 ~ bt_too_clean
-if name:ilse_varga and name:tamsin_tealeaf and visited:dh_main_hall and not flag.death_house_completed
-  interject name:tamsin_tealeaf: Somebody dusts this place.
-  interject name:ilse_varga: Nobody's lived here in years.
-  interject name:tamsin_tealeaf: That's what I said. Somebody dusts this place.
+if name:ratatoille and name:wren_featherfoot and visited:dh_main_hall and not flag.death_house_completed
+  interject name:ratatoille: Not a speck of dust. Not one. I have never been so frightened by good housekeeping.
+  interject name:wren_featherfoot: Bet you checked the corners anyway.
+  interject name:ratatoille: I have checked the corners. The corners are immaculate.
 endif
 -> END
 
@@ -19,47 +19,49 @@ endif
 -> END
 
 ~ bt_wolf_blood
-if flag.mists_wolves_fought and visited:dh_den and name:hedda_ironvow and name:silvain_aster
-  interject name:hedda_ironvow: Eleven wolf heads on that wall, and wolves waiting for us on the road. I don't think that's a coincidence.
-  interject name:silvain_aster: It's a grudge. The house hunted someone's wolves, and now someone's wolves hunt the house's guests.
+if flag.mists_wolves_fought and visited:dh_den and name:thistle and name:ratatoille
+  interject name:thistle: Eleven wolf heads on that wall. Wolves on the road, waiting for us. Wolves remember.
+  interject name:ratatoille: A feud, then. The house hunted someone's wolves, and now someone's wolves hunt the house's guests.
 endif
 -> END
 
 ~ bt_locked_from_outside
-if visited:dh_childrens_room and name:tamsin_tealeaf and name:ilse_varga
-  interject name:tamsin_tealeaf: I don't like rooms that lock from the outside. I've been in a few.
-  interject name:ilse_varga: You got out.
-  interject name:tamsin_tealeaf: I always get out. That's not the same as liking it.
+if visited:dh_childrens_room and name:thistle and name:godrick_pendlebrook
+  interject name:thistle: Lock's on the outside. Of a little one's room. I hate that. I hate that.
+  interject name:godrick_pendlebrook: Then I'll take the door off its hinges. No hinges, no lock. Just a plank.
+  interject name:thistle: ...Good. Do it.
 endif
 -> END
 
 ~ bt_nursery_locks
-if visited:dh_childrens_room and class:rogue and not name:tamsin_tealeaf
+if visited:dh_childrens_room and class:rogue
   interject class:rogue: Locks on the outside of a children's door. Whoever fitted those knew exactly what they were for.
 endif
 -> END
 
 ~ bt_theology_of_debt
-if flag.death_house_read_strahd_letter and name:hedda_ironvow and name:silvain_aster
-  interject name:silvain_aster: His letter treats worship as a bad debt.
-  interject name:hedda_ironvow: Mm. Most gods would agree. They just send kinder letters.
-  interject name:silvain_aster: Do they? I've never had one.
-  interject name:hedda_ironvow: You've never asked.
+if flag.death_house_read_strahd_letter and name:kip_smudgewick and name:liriel_dawnsong
+  interject name:kip_smudgewick: His letter treats worship like a debt. I know that kind of letter. I've had that kind of letter.
+  interject name:liriel_dawnsong: The Morninglord has never once sent me a bill, Kip. He sends the morning. Every morning. Free.
+  interject name:kip_smudgewick: No obligation?
+  interject name:liriel_dawnsong: None at all.
 endif
 -> END
 
 ~ bt_the_signature
-if flag.death_house_read_strahd_letter and name:ilse_varga and name:tamsin_tealeaf
-  interject name:tamsin_tealeaf: Maybe it's just his initial, Ilse. Lots of people start with S.
-  interject name:ilse_varga: It's a signature, Tealeaf. It's a promise.
+if flag.death_house_read_strahd_letter and name:godrick_pendlebrook and name:wren_featherfoot
+  interject name:godrick_pendlebrook: What's it say at the bottom? My eyes are tired.
+  interject name:wren_featherfoot: Just an S. Signed like he's sure we'll know him.
+  interject name:godrick_pendlebrook: Do we?
+  interject name:wren_featherfoot: We will.
 endif
 -> END
 
 ~ bt_windmill
-if flag.death_house_found_deeds and name:tamsin_tealeaf and name:silvain_aster
-  interject name:tamsin_tealeaf: So when this is over, we retire to the windmill.
-  interject name:silvain_aster: There is a noise under this house that suggests "over" is optimistic.
-  interject name:tamsin_tealeaf: Windmill, Silvain. Hold on to the windmill.
+if flag.death_house_found_deeds and name:ratatoille and name:kip_smudgewick
+  interject name:ratatoille: A deed to a windmill. A windmill means flour. Flour means pastry. Kip, we could have a shop.
+  interject name:kip_smudgewick: Apricot tarts. You bake, I sell. After. If there's an after.
+  interject name:ratatoille: There will be an after. I have foreseen it. Roughly.
 endif
 -> END
 
@@ -71,7 +73,7 @@ endif
 
 ~ bt_elf_portraits
 if visited:dh_upper_hall and species:elf
-  interject species:elf: I remember the fashions in the oldest of these portraits. They were embarrassing then, too.
+  interject species:elf: My grandmother wore a collar like that in her portrait. She said it was embarrassing then, too.
 endif
 -> END
 
@@ -96,11 +98,9 @@ endif
 -> END
 
 ~ bt_children_truth
-if flag.death_house_children_truth and name:hedda_ironvow and name:ilse_varga
-  interject name:hedda_ironvow: They starved, waiting for a door to open.
-  interject name:ilse_varga: Then we open every door in this house.
-  interject name:hedda_ironvow: Mm. Most of them will be worse.
-  interject name:ilse_varga: Every door.
+if flag.death_house_children_truth and name:godrick_pendlebrook and name:liriel_dawnsong
+  interject name:godrick_pendlebrook: They were waiting for somebody to come. Somebody came. It's us. We're late, but we came.
+  interject name:liriel_dawnsong: Then let's not keep them waiting any longer.
 endif
 -> END
 
@@ -119,12 +119,12 @@ if flag.death_house_saw_through_lure and class:cleric and class:wizard
 endif
 -> END
 
-~ bt_escape_candlestick
-if flag.death_house_refused and not flag.death_house_completed and name:ilse_varga and name:tamsin_tealeaf
-  interject name:ilse_varga: Keep moving. Don't touch anything.
-  interject name:tamsin_tealeaf: I wasn't going to touch anything.
-  interject name:ilse_varga: You're holding a candlestick.
-  interject name:tamsin_tealeaf: It touched me first.
+~ bt_escape_chair
+if flag.death_house_refused and not flag.death_house_completed and name:kip_smudgewick and name:thistle
+  interject name:kip_smudgewick: Keep moving. Don't touch anything. Please.
+  interject name:thistle: Not touching anything.
+  interject name:kip_smudgewick: You're carrying a chair.
+  interject name:thistle: Good chair. Mine.
 endif
 -> END
 
@@ -137,6 +137,6 @@ endif
 
 ~ bt_after_the_altar
 if flag.death_house_sacrificed
-  Narrator: Nobody counts off anymore. Nobody needs to be told the number.
+  Narrator: Nobody says the number aloud anymore. Nobody needs to.
 endif
 -> END

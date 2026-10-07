@@ -2,17 +2,17 @@
 # only while its condition holds. Party members speak only through interjections.
 
 ~ banter_soup
-if flag.larders_cyrus_met and not flag.larders_cyrus_slain and not flag.larders_cyrus_hostile
-interject name:tamsin_tealeaf: I had the soup. Before he told us who it was for. It was very good soup.
-interject name:hedda_ironvow: It was barley and mutton, lass. I checked.
-interject name:tamsin_tealeaf: You checked after I ate it.
+if flag.larders_cyrus_met and not flag.larders_cyrus_slain and not flag.larders_cyrus_hostile and name:thistle and name:ratatoille
+interject name:thistle: Had the soup. Before he said who it was for. Good soup.
+interject name:ratatoille: Barley and mutton. I tasted it first. Almost certainly mutton.
+interject name:thistle: Almost?
 endif
 -> END
 
 ~ banter_cook
-if flag.larders_cyrus_met and not flag.larders_cyrus_slain and not flag.larders_nadia_fate
-interject name:ilse_varga: He gives her extra bread so she won't be ready yet. That's the kindest thing anyone does in this castle, and it's monstrous.
-interject name:silvain_aster: Both things can be true. Down here, they usually are.
+if flag.larders_cyrus_met and not flag.larders_cyrus_slain and not flag.larders_nadia_fate and name:godrick_pendlebrook and name:liriel_dawnsong
+interject name:godrick_pendlebrook: He gives her extra bread so she won't be ready yet. That's kind. And it's horrible. I can't make it be just one.
+interject name:liriel_dawnsong: Down here it's never just one. I'm praying for him as well, Godrick. Someone ought to.
 endif
 -> END
 
@@ -24,48 +24,53 @@ endif
 -> END
 
 ~ banter_escaped
-if flag.larders_nadia_fate == "escaped"
-interject name:tamsin_tealeaf: Out in the scrap barrel. When she tells this story in Vallaki, she'll leave that part out.
-interject name:hedda_ironvow: She'll tell it every winter for fifty years, barrel and all. I'd stake my beard.
+if flag.larders_nadia_fate == "escaped" and name:godrick_pendlebrook and name:thistle
+interject name:godrick_pendlebrook: Out in the scrap barrel! Clever girl. When she tells it in Vallaki, she'll leave the barrel out.
+interject name:thistle: I won't. Best bit's the barrel.
 endif
 -> END
 
 ~ banter_shawl
-if flag.larders_nadia_lost
-interject name:ilse_varga: You don't send one soldier up a road alone. I've known that for eleven years. I said nothing.
+if flag.larders_nadia_lost and name:kip_smudgewick and name:wren_featherfoot
+interject name:kip_smudgewick: We let her go up alone. I said it would be fine. I'm always saying it'll be fine.
+interject name:wren_featherfoot: We all said it, Kip. Don't you go carrying it on your own.
 endif
 -> END
 
 ~ banter_brother
-if flag.larders_anatol_fate == "unmasked" and not flag.larders_anatol_destroyed
-interject name:hedda_ironvow: A false priest in a cell, set out like bait for decent folk. That's the part I can't forgive. He used the dawn for it.
+if flag.larders_anatol_fate == "unmasked" and not flag.larders_anatol_destroyed and name:thistle and name:liriel_dawnsong
+interject name:thistle: Knew it. That priest smelled wrong from the door.
+interject name:liriel_dawnsong: He wore the dawn like a coat, to lure decent people close. I find I am very angry, and I don't mind it at all.
 interject tag:blunt: Then let's go back and give him some.
 endif
 -> END
 
 ~ banter_doru
-if flag.larders_doru_fate == "rest"
-interject name:hedda_ironvow: His father will want to know. I'll tell him myself, if I live. Gently.
+if flag.larders_doru_fate == "rest" and name:liriel_dawnsong and name:godrick_pendlebrook
+interject name:liriel_dawnsong: Father Donavich will want to know his son is at rest. He should hear it from a priest. I'll tell him myself, gently.
+interject name:godrick_pendlebrook: I'll come with you. I'm good at standing quiet in doorways.
 endif
 -> END
 
 ~ banter_bones
-if flag.larders_hall_told and not flag.larders_furnace_quenched
-interject name:silvain_aster: A lamp fed by a furnace fed by nothing. It's a machine for keeping one room lit forever. I'd almost admire it.
-interject name:tamsin_tealeaf: Don't.
+if flag.larders_hall_told and not flag.larders_furnace_quenched and name:ratatoille and name:wren_featherfoot
+interject name:ratatoille: A lamp fed by a furnace fed by nothing. A machine for keeping one room lit forever. As craft, I almost admire it.
+interject name:wren_featherfoot: Rat. There's a table made of bones under that lamp. Admire it quieter.
 endif
 -> END
 
 ~ banter_dark
-if flag.larders_furnace_quenched
-interject name:silvain_aster: Every green lamp below the castle went out at once. Somewhere upstairs, someone noticed.
+if flag.larders_furnace_quenched and name:wren_featherfoot and name:kip_smudgewick
+interject name:wren_featherfoot: Every green lamp under the castle, out at once. Somewhere upstairs, somebody just put his glass down.
 interject tag:cheerful: Good. Let him wonder about something for once.
+interject name:kip_smudgewick: Will he send someone down to look? I'd like to be somewhere else when they look.
 endif
 -> END
 
 ~ banter_niche
-if flag.larders_niche_opened
-interject name:tamsin_tealeaf: He sold the wrong man vinegar, and paid for it for three hundred years. I've cheated worse people for less.
-interject name:ilse_varga: Not in this castle you haven't.
+if flag.larders_niche_opened and name:kip_smudgewick and name:ratatoille
+interject name:kip_smudgewick: Sold the wrong man vinegar and got bricked up with his stock. That's every merchant's nightmare. I've had that exact dream.
+interject name:ratatoille: To be fair, vinegar sold as wine is a crime. Not a bricking-up crime. A strongly worded letter.
+interject name:kip_smudgewick: Rat!
 endif
 -> END

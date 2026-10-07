@@ -58,7 +58,11 @@ Lydia Petrovna: Come to the festival! Wear something yellow, if you have it. If 
 if flag.baron_fate == "executed"
 Narrator: Lady Lydia sits in a pew with a half-sewn sash across her knees. She hasn't put a stitch in it for hours, and she doesn't look up when you come near.
 Lydia Petrovna [sad]: He only wanted everyone to be happy.
-interject tag:devout: Dawn comes, my lady. Even here. I'll sit with you until it does.
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: The dawn comes, my lady. Even here. I'll sit with you until it does.
+else
+interject tag:pious: Dawn comes, my lady. Even here. I'll sit with you until it does.
+endif
 elif flag.baron_fate == "exiled"
 Lydia Petrovna [sad]: We leave at dawn. Lucian has found us a cart. I've packed the bunting. I don't know why. Habit.
 else

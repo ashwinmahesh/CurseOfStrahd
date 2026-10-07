@@ -4,7 +4,7 @@
 ~ start
 Narrator: A woman made of mist and cold hangs in the nursery doorway, her apron grey, her face worn down to the shape of worry. Her hands are cupped as if around a sleeping child.
 durst_nursemaid [sad]: Have you brought him? Have you brought my Walter back up?
-interject name:hedda_ironvow: Easy, sister. Easy. We're not the ones who took him.
+interject name:godrick_pendlebrook: Easy, madam. Easy now. We're not the ones who took him. We'd never.
 -> choose
 
 ~ choose
@@ -42,9 +42,9 @@ if not flag.death_house_learned_walter
   set death_house_learned_walter
   set death_house_lore += 1
 endif
-interject name:hedda_ironvow: Go on, sister. Dawn comes. Even for you. Especially for you.
-interject name:tamsin_tealeaf: I don't like this house. I want that written down somewhere official.
-if not name:hedda_ironvow
+interject name:liriel_dawnsong: Be at peace, sister. The dawn comes, even for you. Especially for you.
+interject name:kip_smudgewick: I don't like this house. I'd like that in writing. Signed, and witnessed.
+if not name:liriel_dawnsong
   interject class:cleric: Rest. You've earned it more than anyone in this house.
 endif
 -> END

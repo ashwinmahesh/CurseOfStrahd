@@ -1,0 +1,139 @@
+# Ilse Varga's personal quest, Count Off (data/quests/kestrel_company.json): the castle payoff, hook 1 in
+# docs/story/personal_quests.md. Everything here needs Ilse in the party and the trail followed as far as Jory Fenn
+# (quest.kestrel_company >= the_deserter); the map entries' `when` hide it otherwise. On the main floor
+# (data/locations/castle_ravenloft_main_floor.json):
+# - npc kestrel_merrow at Strahd's shoulder while the dinner waits (at_dinner), then at the head of the dining table
+#   (roll_call, approach) when the party came uninvited or once Strahd has gone;
+# - prop crg_kestrel_coats: the company's coats on the chairs, and the count's last word after a fight (coats);
+# - encounters crg_kestrel_cellar (the servery, up the servants' stair from the cellars; Corporal Vell leads them if
+#   he isn't at rest) and crg_kestrel_table (Merrow, with four of the company if Ilse's call failed, two if Jory
+#   wasn't forgiven, none if Jory's drum held them in their ranks). Winning it moves the quest to count_off.
+# Ilse's Persuasion DC 18 is spent on a failure (owner rule): the fight is always there, and failing makes it worse.
+
+~ at_dinner
+Narrator: Behind the host's chair stands a broad man in a grey coat under a crimson one, a little bird stitched on the shoulder. He keeps his eyes on the back of his master's head.
+interject name:ilse_varga: Captain.
+Captain Merrow: Not at the master's table, sergeant. After.
+-> END
+
+# --- The roll call at the head of the table ------------------------------------------------------------------
+
+~ roll_call
+if flag.kestrel_roll_called
+Captain Merrow: Still here, sergeant? Finish it, then. You've one name left.
+-> merrow_menu
+endif
+set kestrel_roll_called
+Narrator: Forty chairs down the long table, a grey coat over the back of every one. At the head sits a broad man with a captain's knot on his shoulder and nothing in his glass.
+Captain Merrow: Sergeant Varga. You're a year late. I kept your chair.
+interject name:ilse_varga: You kept forty chairs, Merrow.
+Captain Merrow [smile]: The master likes a full table. So do I.
+if flag.kestrel_jory_forgiven
+Narrator: Far below, down at the gate, a drum starts up. Three slow beats and a roll: the company's call to fall in.
+interject name:ilse_varga: Fenn. He came after all.
+Narrator: Behind the panelling, all round the hall, something shuffles into line.
+endif
+interject name:ilse_varga: Company. Roll call.
+if flag.kestrel_roll_kept
+Narrator: Ilse opens the cracked book Jory carried in his drum: forty names in the captain's own hand. Merrow's eyes go to it and stay there.
+Captain Merrow: That's my book.
+interject name:ilse_varga: It's the company's book. You only wrote in it.
+else
+Narrator: Ilse has no book. She doesn't need one. Eleven years of mornings, forty names.
+endif
+-> roll
+
+~ roll
+Narrator: She reads the names in the order they signed. After each one, from somewhere inside the walls, a voice she knows says "Present."
+Narrator: Nine names get nothing back: the night at Tser Pool. Ilse reads those slower, and marks each one.
+interject name:ilse_varga: Fenn, Jory. ...Alive. Vallaki, on the wall. I'll answer for him.
+if flag.kestrel_vell_rests
+interject name:ilse_varga: Vell, Teodor. Corporal. Counted. One.
+else
+Narrator: At "Vell", the answer comes up through the floor, from the cellars, hoarse and tired: "Present, Sergeant. Fourteen."
+endif
+if flag.kestrel_cellar_cleared
+Narrator: Three names near the end get no answer: the three on the cellar stair. Ilse marks them and doesn't look up.
+endif
+Narrator: Thirty-nine names. Then the last, which she has kept for the end.
+interject name:ilse_varga: Merrow, Aldous. Captain.
+Narrator: The voices in the walls go quiet. Merrow doesn't answer.
+-> merrow_menu
+
+~ merrow_menu
+* [name:ilse_varga] [Persuasion DC 18] Merrow, Aldous. Captain. Stand up and be counted. -> merrow_counted | merrow_calls
+* Then answer for them, Captain. (Draw steel.) -> merrow_fight
+* Not tonight. -> merrow_later
+
+~ merrow_later
+Captain Merrow: I'll be here. None of us is going anywhere.
+-> END
+
+~ merrow_counted
+set kestrel_merrow_counted
+Narrator: For a long moment nothing moves. Then the captain pushes back his chair and stands, because a sergeant has called the roll, and he has answered the roll every morning of his life.
+Captain Merrow: ...Merrow, Aldous. Captain. Forty.
+Captain Merrow [sad]: I signed for them, Ilse. He asked for forty at his table and I said we'd be honoured. I thought it was a contract.
+interject name:ilse_varga: It was. You read it badly. Now finish it.
+Captain Merrow: Company. On me. Fall in.
+Narrator: The panels along the walls swing open. They come out in file, grey under crimson, each taking a coat from a chair in passing, and follow their captain out toward the courtyard to wait for the sun.
+if not flag.kestrel_vell_rests
+Narrator: Last up the cellar stair comes a young corporal, who stops by Ilse just long enough to nod.
+endif
+interject name:hedda_ironvow: Dawn's in two hours. Mm. They'll stand in ranks for it. I'll go and say the words.
+-> finale
+
+~ merrow_calls
+set kestrel_merrow_called
+Captain Merrow [angry]: No. I call the roll in this company. I called it from the wall, and they came.
+Narrator: He says one word to the walls, and every panel in the hall bangs open at once.
+-> merrow_fight
+
+~ merrow_fight
+if flag.kestrel_merrow_called
+Narrator: Four of the company step out of the walls, grey under crimson and hungry, and Merrow draws the sword he carried for twenty years.
+elif flag.kestrel_jory_forgiven
+Narrator: Merrow looks to the walls for his company. Nobody comes. Down at the gate the drum is still beating "fall in", and behind the panels they stand where they fell in.
+Captain Merrow: Fenn. Of course. Him and that drum.
+else
+Narrator: Two panels swing open behind him, and two of the company step out into the candlelight.
+endif
+interject name:ilse_varga: Kestrel Company. Count off.
+combat crg_kestrel_table
+
+# --- The end of the count ------------------------------------------------------------------------------------
+
+~ finale
+set kestrel_count_done
+interject name:ilse_varga: Thirty-nine. Forty. That's the company.
+if flag.kestrel_roll_kept
+Narrator: She writes the last number in the captain's book, closes it, and buttons it inside her coat, next to the letter with the S.
+else
+Narrator: She cuts the last mark into the stock of her sword, beside the others, where she'll see it every time she draws.
+endif
+interject name:ilse_varga: All present or accounted for. Nobody missing. First time in a year.
+interject name:tamsin_tealeaf: You said that like a prayer.
+interject name:ilse_varga: It is one. Only one I know.
+if flag.kestrel_jory_forgiven
+interject name:ilse_varga: Fenn's at the gate. I said I'd bring him the count. Somebody remind me to thank him.
+endif
+if not (quest.kestrel_company >= count_off)
+quest kestrel_company count_off
+endif
+-> END
+
+# --- The coats on the chairs (prop crg_kestrel_coats) ------------------------------------------------------
+
+~ coats
+if flag.kestrel_count_done
+Narrator: Grey coats on the backs of the chairs, a little bird on every shoulder. Every one has a number now.
+-> END
+endif
+if flag.kestrel_merrow_fallen
+Narrator: The hall is quiet. The captain lies at the head of his table, and the coats hang on the chairs, waiting for nobody.
+-> finale
+endif
+Narrator: Grey coats hang over the chairs all down the long table, forty of them, a little bird stitched on every shoulder. Dust on all of them, and not one moth. Someone has been keeping them.
+interject name:ilse_varga: He laid a place for every one of us. Mine's at the foot, by the door. Sergeant's place.
+interject name:hedda_ironvow: Mm. Then we'll not sit in it.
+-> END

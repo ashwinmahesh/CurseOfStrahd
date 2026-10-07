@@ -2,7 +2,11 @@
 
 ~ drowned_bell
 Narrator: Somewhere ahead, under the black water, a bell rings. Once, then again, slow, the way a chapel bell rings for a burial. There is no wind. There is no chapel.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Bells don't ring underwater. Do they? Is that a riddle? I'm bad at riddles.
+else
 interject tag:curious: Bells don't ring underwater. Do they? They shouldn't.
+endif
 * Wade out toward the sound. -> bell_wade
 * [Religion DC 13] Say a word for whoever it's ringing for. -> bell_prayer | bell_prayer_fail
 * Keep to the track. -> bell_leave

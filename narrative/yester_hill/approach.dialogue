@@ -19,7 +19,7 @@ endif
 ~ sneaked
 set yester_sneaked
 Narrator: You find a way that keeps to the shadow: thorn, shale, a loose stone caught before it can fall. Take it, and nobody on the crown will know you're coming until you're there.
-interject name:ilse_varga: The flank is ours. Nobody moves till I count three. One.
+interject name:thistle: Quiet now. Step where I step. Like foxes.
 -> END
 
 ~ heard
@@ -44,7 +44,11 @@ set adrian_truth_shared
 Narrator: Adrian reads it once. Then he lays his hand over the words, as if to keep them warm.
 Adrian [sad]: He was always the stubborn one. A thorn through his leg, and he's still giving orders.
 endif
-interject tag:devout: Mm. He wanted it known. That's the last thing a dying man can give you, if he's able: what he wants known.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: He wanted his father to know. Then his father will know. I swear it.
+else
+interject tag:pious: He wanted it known. That's the last thing a dying man can give you, if he's able: what he wants known.
+endif
 -> END
 
 ~ kostin

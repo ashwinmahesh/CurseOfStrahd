@@ -4,7 +4,7 @@ extends Node
 ## screen's study row, and the loot window showing only what a disguised item passes for.
 ## make capture SCENE=res://tools/capture/item_capture.tscn NAME=items FRAMES=10
 
-const PARTY: Array[String] = ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]
+const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 
 var root: Node
 

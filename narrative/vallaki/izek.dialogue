@@ -86,7 +86,11 @@ set izek_sister_truth
 quest izek_obsession truth_guessed
 Narrator: It fits like a key in a lock. A little sister lost in the woods by the lake, about the age Ireena was when Kolyan Indirovich found her wandering, with no memory of where she came from. The red hair.
 Narrator: Izek hasn't been dreaming of a woman all these years. He's been remembering a child.
+if name:ratatoille
+interject name:ratatoille: Oh. Oh, non. It fits. Every piece of it fits. She's his sister.
+else
 interject tag:curious: Oh. Oh, no.
+endif
 -> menu
 
 ~ deduce_fail

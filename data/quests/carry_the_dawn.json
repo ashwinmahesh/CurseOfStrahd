@@ -1,0 +1,62 @@
+{
+  "id": "carry_the_dawn",
+  "name": "Carry the Dawn",
+  "summary": "On the morning of her vows the Morninglord showed Liriel Dawnsong a valley where the sun had not risen in four hundred years, and told her to carry the dawn there.",
+  "region": "companions",
+  "stages": [
+    {
+      "id": "the_vision",
+      "journal": "On the dawn of her vows, Liriel saw a valley in a ring of mountains, a castle on a spike of rock, and a sky that had not seen the sun in four hundred years. A voice like warmth on her face said: carry the dawn there. She left the next morning. She has never once doubted a vision.",
+      "objectives": [
+        "Carry the dawn to Barovia"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_silence",
+      "journal": "In Barovia Liriel's prayers are still answered, but her god feels far away, as if heard through a wall. She has never prayed into a silence before. She says it's very loud.",
+      "objectives": [
+        "Find where the Morninglord's light still reaches in this valley"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "a_spark",
+      "journal": "When St. Andral's bones came home to his church in Vallaki, Liriel felt it: a warmth on her face, for the length of a breath, like a window opened in winter. The light reaches Barovia where somebody carries it.",
+      "objectives": [
+        "Keep carrying it"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_angel",
+      "journal": "The Abbot of St. Markovia is an angel of the Morninglord's own heaven, sent to keep this valley's faith. Liriel knew him at once, and wept for joy in his chapel.",
+      "objectives": [
+        "Learn what the angel is doing here"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_fall",
+      "journal": "The Abbot is sewing the lord of Barovia a bride from Krezk's dead, and believes it is an act of love. Liriel did not shout at him. She asked him, very quietly, whether he still remembers the sun.",
+      "objectives": [
+        "Decide what becomes of the Abbot's work"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "faith_kept",
+      "journal": "Heaven's own messenger fell here, and the dawn did not. Liriel has stopped waiting for the Morninglord to fix Barovia. She has decided that is what she is for.",
+      "objectives": [
+        "Bring the dawn to the castle"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_dawn",
+      "journal": "At the defiled altar of Castle Ravenloft, Liriel sang the morning hymn the way the novices sing the sun up, and for the length of the hymn real dawn came through the chapel windows, gold on the dust. It went out when she stopped. It came, though. It came.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

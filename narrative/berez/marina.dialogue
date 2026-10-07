@@ -9,9 +9,6 @@ set ireena_saw_marina
 Narrator: Ireena stops at the foot of the mound. The statue has her face. Not a likeness: her face, the set of the jaw, the small frown.
 Ireena: I've never been here. I know I've never been here. So why do I know there are nine steps under that plinth?
 endif
-if flag.tamsin_locket_recognized
-interject name:tamsin_tealeaf: It's her again. The woman in my locket. How many times can one face happen?
-endif
 -> monument_menu
 
 ~ monument_menu
@@ -22,7 +19,11 @@ endif
 
 ~ plinth
 Narrator: One word is cut deep into the plinth: MARINA. Below it, smaller, in the same fine and patient hand: Berez took her. I took Berez.
-interject tag:devout: He signed it. He signed a grave, the way you'd sign a letter.
+if name:kip_smudgewick
+interject name:kip_smudgewick: He signed it. Like a receipt. So he does sign things. Good to know. No reason.
+else
+interject tag:pious: He signed it. He signed a grave, the way you'd sign a letter.
+endif
 -> monument_menu
 
 ~ dig

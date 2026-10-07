@@ -5,50 +5,52 @@
 if not flag.morgantha_home_met and not flag.bonegrinder_burned
 interject tag:curious: A windmill with the sails tied down, and the chimney going full blast. What's it grinding, if the wind isn't turning it?
 interject tag:blunt: Don't answer that.
+if tag:blunt
 interject class:wizard: I wasn't going to. I was going to think it very loudly.
+endif
 endif
 -> END
 
 ~ banter_keeper
 if flag.ilinca_met and not flag.children_rescued
 interject class:cleric: Lycanthropes who worship nothing but keeping watch. I was taught they were all cursed. She seems more tired than cursed.
-interject tag:loyal: Most soldiers I've known were both.
+interject tag:loyal: Most people who keep a watch are both.
 endif
 -> END
 
 ~ banter_coven
-if flag.coven_explained and not flag.morgantha_slain
-interject name:ilse_varga: Three of them, fight them one at a time. That's not cheating. That's just the only tactics anybody ever needed.
-interject name:silvain_aster: It's the first chapter of every treatise on hags, actually. The second chapter is a list of the people who skipped the first.
+if flag.coven_explained and not flag.morgantha_slain and name:godrick_pendlebrook and name:ratatoille
+interject name:godrick_pendlebrook: Right then. We don't fight three hags. We fight one hag, three times.
+interject name:ratatoille: That is, technically, correct. Split a coven and its magic curdles, like a sauce pulled off the heat too soon.
 endif
 -> END
 
 ~ banter_pastry_taste
-if flag.dream_pastry_eaten and flag.offalia_met
-interject name:tamsin_tealeaf: I ate one of those. In the village. It was the best thing I've eaten in my life, and I've eaten in a duke's larder.
-interject name:hedda_ironvow: And now you know where the flour comes from.
-interject name:tamsin_tealeaf: And now I'm never eating anything again. For about an hour.
+if flag.dream_pastry_eaten and flag.offalia_met and name:thistle and name:ratatoille
+interject name:thistle: I ate one of those in the village. Best thing I ever ate. Better than yours, Cook. Sorry.
+interject name:ratatoille: Thistle. Think what the flour is ground from.
+interject name:thistle: ...Oh.
 endif
 -> END
 
 ~ banter_bella_pact
 if flag.bella_pact and not flag.morgantha_slain
-interject tag:devout: We've promised a mill full of stolen souls to a hag so that she'll sit out a fight. I keep turning it over to find the side that looks better.
+interject tag:pious: We've promised a mill full of stolen souls to a hag so that she'll sit out a fight. I keep turning it over to find the side that looks better.
 interject tag:blunt: There isn't one. There's the side with the children on it. That'll have to do.
 endif
 -> END
 
 ~ banter_children_out
-if flag.children_rescued
-interject name:ilse_varga: Two of them, alive, walking down a hill on their own feet. I've had worse days in this trade. Most of them, in fact.
-interject tag:cheerful: Toma waved. Did you see? He waved at me.
+if flag.children_rescued and name:kip_smudgewick and name:godrick_pendlebrook
+interject name:kip_smudgewick: Two of them, alive, walking down a hill on their own feet. I gave them an apricot each. No obligation.
+interject name:godrick_pendlebrook: Toma waved at me. I waved back, a big one. He sat down in the mud, laughing.
 endif
 -> END
 
 ~ banter_the_truth
-if flag.sarnov_truth_told
-interject name:hedda_ironvow: We told a ten-year-old her mother sold her. I've been asking myself whether that was right since the stair.
-interject name:silvain_aster: She asked. She'd have known if we lied, and then she'd have known we lied, too. That's two things to carry instead of one.
+if flag.sarnov_truth_told and name:godrick_pendlebrook and name:liriel_dawnsong
+interject name:godrick_pendlebrook: We told a little girl her mother sold her. I keep thinking we ought to have lied.
+interject name:liriel_dawnsong: She asked us. A lie would have been one more thing taken from her, and she'd have known it.
 endif
 -> END
 
@@ -62,21 +64,23 @@ endif
 ~ banter_bargain
 if flag.bonegrinder_bargain == "gold" or flag.bonegrinder_bargain == "truce"
 interject tag:blunt: We paid a hag to give back children she stole, and walked out past her oven. Somebody tell me that was the clever thing.
+if tag:blunt
 interject class:wizard: It was the living thing. Clever comes second, in this valley.
+endif
 endif
 -> END
 
 ~ banter_dream_debt
 if flag.bonegrinder_bargain == "dream" and not flag.morgantha_slain
 interject tag:curious: The one she took a dream from. Do you know what it was?
-interject tag:devout: No. That's the part I can't forgive her. Not the taking. That I don't know what's missing.
+interject tag:pious: No. That's the part I can't forgive her. Not the taking. That I don't know what's missing.
 endif
 -> END
 
 ~ banter_another_house
-if flag.death_house_children_met and flag.sarnov_children_met
-interject name:tamsin_tealeaf: Another house with children shut in upstairs. Is that every house in Barovia, do you think? Is it the architecture?
-interject name:hedda_ironvow: It is the landlord.
+if flag.death_house_children_met and flag.sarnov_children_met and name:thistle and name:wren_featherfoot
+interject name:thistle: Another stone box with children shut in the top. Is that how town folk build them? On purpose?
+interject name:wren_featherfoot: Not the builders, love. The landlord.
 endif
 -> END
 
@@ -94,15 +98,15 @@ endif
 -> END
 
 ~ banter_trade_ended
-if flag.pastry_trade == "ended"
-interject name:tamsin_tealeaf: No more dream pastries anywhere in the valley. Somewhere a lot of people are going to wake up and remember they're sad.
-interject name:ilse_varga: Good. Sad people bolt their doors. Dreaming ones don't.
+if flag.pastry_trade == "ended" and name:wren_featherfoot and name:kip_smudgewick
+interject name:wren_featherfoot: No more dream pastries anywhere in the valley. A lot of folk are going to wake up tomorrow and remember they're sad.
+interject name:kip_smudgewick: Better sad than eaten. Sad folk bolt their doors. Dreamers leave them on the latch.
 endif
 -> END
 
 ~ banter_ireena_mill
 if guest:ireena and flag.morgantha_home_met
 interject guest:ireena: My father bought one of her baskets once, the winter he couldn't sleep. He slept all the next day, smiling. I thought she'd done him a kindness.
-interject tag:devout: It was a kindness, from him. Not from her.
+interject tag:pious: It was a kindness, from him. Not from her.
 endif
 -> END

@@ -52,7 +52,7 @@ Ezmerelda: Nobody with fangs has ever asked to buy silver. Not twice, anyway. Si
 
 ~ who
 Ezmerelda: Ezmerelda d'Avenir. Vistani, when the wagons will have me. I hunt the things that hunt people. Right now I'm hunting one stubborn old man who taught me how, and who has locked me out of his house.
-interject background:sage: d'Avenir. Van Richten's student. There's a chapter on you in the second monograph. Well, a footnote. A long footnote.
+interject background:sage: d'Avenir. Van Richten's student. You're in his second monograph, on the hunting of werewolves.
 Ezmerelda: He'll have got my good side wrong.
 -> menu
 
@@ -66,7 +66,11 @@ endif
 endif
 Ezmerelda: It's Rudolph's. Rudolph van Richten. An archmage built it centuries ago, and the old lock still opens to that wizard's name. I found the name under the moss in an hour: KHAZAN.
 Ezmerelda: Then Rudolph's own ward threw me twenty feet into the lake. He wove my name into it. Mine. Nobody else's. Months of work, to keep out one person.
-interject tag:bookish: A ward keyed to a single person? That's extraordinary craft.
+if name:kip_smudgewick
+interject name:kip_smudgewick: A ward keyed to one named party? That's a very specific clause. Somebody wrote that very carefully.
+else
+interject tag:scholarly: A ward keyed to a single person? That's extraordinary craft.
+endif
 Ezmerelda: He was always thorough about the wrong things.
 Ezmerelda: It won't know you. Go in for me. Find out where he's gone, and bring me anything with his handwriting on it.
 if treasure_at:van_richtens_tower
@@ -109,7 +113,11 @@ quest the_hunters_tower told
 endif
 Ezmerelda: Rictavio. Rudolph is calling himself Rictavio. In a taproom.
 if flag.rictavio_secret_kept
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: We gave him our word. And now we've broken it. I don't like that, madam. Not one bit.
+else
 interject tag:loyal: We gave him our word. That's broken now.
+endif
 Ezmerelda: Then I'll tell him I wrung it out of you. He'll believe it. He knows me.
 endif
 if flag.rictavio_gone
@@ -159,7 +167,11 @@ quest wolves_in_the_hills heard
 endif
 Ezmerelda: A pack dens two hours east along the ridge, in a cave above Lake Zarovich. One of them took my leg below the knee, years ago, when I was young and quick and stupid. Big, black, and laughing while it did it.
 Ezmerelda: I've been taking them back two at a time ever since. Lately they've been carrying children up there, from the farms under Krezk. I'd go in after them, if Rudolph would let me into his armoury.
+if name:thistle
+interject name:thistle: Two at a time? Wolves don't wait their turn. Hit the den all at once.
+else
 interject class:fighter: Two at a time is how you lose. All at once is how you win.
+endif
 Ezmerelda: Says someone who still has both feet.
 -> menu
 

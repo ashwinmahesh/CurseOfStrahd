@@ -53,7 +53,7 @@ Argynvost: And I'm held with them, I think. You can't leave a house while everyo
 set vladimir_last_words_known
 Argynvost: I asked him to let them go. "Let them go home. Don't keep them for me." I said it plainly. I had very little breath left for poetry.
 Argynvost [sad]: He heard me. He held my head and heard me, and then he stood up and swore them all to vengeance in my name. I don't blame him. He was a boy, really. I would like him to stop.
-interject name:ilse_varga: He couldn't face going home without you. So he made sure nobody went.
+interject name:wren_featherfoot: He couldn't go home without you. So he made sure nobody did.
 Argynvost: Yes. Exactly that. You understand him better than he'd like.
 -> menu
 
@@ -96,7 +96,7 @@ Argynvost: I know. I can feel it, like a hand on my back. Go up. Don't hurry on 
 
 ~ prayed
 Argynvost: On bad nights, I'm afraid they did. I kept the chapel for them, and they kept looking at my window. I told them the Morninglord was a far better listener. He also didn't eat their sheep.
-interject class:cleric: Mm. He'd have liked you.
+interject class:cleric: He would have liked you, I think.
 Argynvost: We corresponded, in a way. Mostly one way.
 -> menu
 

@@ -63,7 +63,11 @@ set tower_rumor
 Bluto: I haven't eaten in four days. Maybe that's what she was. Maybe she was only hunger, talking in my own voice.
 Bluto: The boat's yours whenever you want it. I'll row, if you'll have me. The north shore is where the wolves come down to drink; there's a trail up from there into the hills, to their den.
 Bluto: And west, up the stream, there's a little cold lake under the mountain with a tower in it. A lamp burns there some nights. A Vistani woman has her wagon by it, and she shoots at anything that moves.
+if name:ratatoille
+interject name:ratatoille: Four days? Non, non, non. Sit. Eat this first. That is not advice, monsieur, it is a recipe.
+else
 interject class:cleric: Eat something first. That's not advice, it's an order.
+endif
 Bluto: Yes. Yes, all right.
 -> END
 
@@ -154,5 +158,9 @@ Narrator: A flat-bottomed rowboat, tarred and sound: the only boat on the landin
 ~ take_boat
 set lake_boat_ready
 Narrator: You bail it out and ship the oars. It sits low and steady in the water: a good boat. Across the lake, the hills wait.
+if name:wren_featherfoot
+interject name:wren_featherfoot: Borrowing. This is borrowing. Master Sorrel taught me the difference. Mostly.
+else
 interject tag:curious: Borrowing. This is borrowing. We'll bring it back. Probably.
+endif
 -> END

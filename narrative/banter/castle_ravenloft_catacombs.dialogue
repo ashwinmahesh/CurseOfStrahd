@@ -2,23 +2,25 @@
 # opens with an `if` gate (the castle's banter plays anywhere in the region, so each says where it belongs).
 
 ~ banter_rows
-if at:castle_ravenloft_catacombs and not flag.strahd_in_coffin
-interject name:tamsin_tealeaf: Every one of these rooms has exactly one door. I've counted. I'm going to keep counting.
-interject name:ilse_varga: And every one has a tenant. Keep moving, Tealeaf.
+if at:castle_ravenloft_catacombs and not flag.strahd_in_coffin and name:thistle and name:wren_featherfoot
+interject name:thistle: Stone boxes for sleeping in. Forever. And I thought towns were bad.
+interject name:wren_featherfoot: Every one with somebody home, too. Keep walking, and don't knock.
 endif
 -> END
 
 ~ banter_wand
-if at:castle_ravenloft_catacombs and item:arcane_focus_wand
-interject name:silvain_aster: Ash wood, badly balanced, a chip out of the grip. It is a terrible wand. Somebody loved him enough to bury him with it.
+if at:castle_ravenloft_catacombs and item:arcane_focus_wand and name:ratatoille and name:kip_smudgewick
+interject name:ratatoille: Ash, badly balanced, a chip out of the grip. A truly dreadful wand. Somebody loved him enough to bury him with it.
 interject tag:cheerful: And he loved us enough to leave it lying about. Everybody wins.
+interject name:kip_smudgewick: I'd leave something in exchange, all the same. Only all I've got is apricots.
 endif
 -> END
 
 ~ banter_names
-if at:castle_ravenloft_catacombs and not flag.strahd_destroyed
-interject name:hedda_ironvow: All these names. Cooks, grooms, stewards. He buried his servants under his house like a man keeping receipts.
+if at:castle_ravenloft_catacombs and not flag.strahd_destroyed and name:kip_smudgewick and name:liriel_dawnsong
+interject name:kip_smudgewick: Cooks, grooms, a steward. All in rows, all labelled. He keeps his servants like a ledger.
 interject tag:blunt: Or a man who doesn't let anybody leave.
+interject name:liriel_dawnsong: Every one of them was somebody's child. I'll say their names as we pass.
 endif
 -> END
 
@@ -30,23 +32,23 @@ endif
 -> END
 
 ~ banter_parents
-if at:castle_ravenloft_catacombs_tombs and not flag.strahd_in_coffin
-interject name:silvain_aster: A king and a queen and their sons, carved on the wall. One face cut away. I wonder whether he did that himself or had someone do it for him.
-interject name:hedda_ironvow: Himself. That sort always does it himself.
+if at:castle_ravenloft_catacombs_tombs and not flag.strahd_in_coffin and name:godrick_pendlebrook and name:thistle
+interject name:godrick_pendlebrook: A king and a queen and their boys, all in stone. And one face scratched clean off. That's sad, that is.
+interject name:thistle: He did that himself. Nobody else would dare.
+interject name:godrick_pendlebrook: Then it's sadder.
 endif
 -> END
 
 ~ banter_coffin
-if flag.strahd_in_coffin and not flag.strahd_destroyed
-interject name:hedda_ironvow: He's down there in the dark with no breath to hold. Morninglord, keep him lying still a little longer.
-interject name:ilse_varga: Then we go down. Now. Nobody stops to loot anything.
-interject name:tamsin_tealeaf: Nobody was going to. Much.
+if flag.strahd_in_coffin and not flag.strahd_destroyed and name:liriel_dawnsong and name:godrick_pendlebrook
+interject name:liriel_dawnsong: He's down there in his coffin. Morninglord, hold him there a little longer. That's all I ask.
+interject name:godrick_pendlebrook: Right. Stairs. Coffin. Stake. In that order, and nobody stops for anything.
 endif
 -> END
 
 ~ banter_guardians
 if flag.cat_guardians_stilled and at:castle_ravenloft_catacombs_tombs
 interject tag:veteran: Six statues, and three of them were empty armour that walked. I'll be checking every statue in this castle twice now.
-interject class:wizard: The other three were simply statues. I checked. Twice.
+interject class:wizard: Three of those statues were simply statues. I checked. Twice.
 endif
 -> END

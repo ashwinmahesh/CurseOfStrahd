@@ -1,0 +1,177 @@
+# Thistle's personal quest, Grandda's Trail (data/quests/fens_trail.json, docs/story/personal_quests.md). Every scene
+# needs Thistle. Started from into_the_mists/arrival:hooks. The blazes: props fen_blaze_crossroads
+# (svalich_crossroads) and fen_blaze_lake (lake_zarovich_trail). Kiril's offer: werewolf_den/kiril (inline). Fen in
+# chains: npc fen_burley in werewolf_den_caves. Freeing him uses the same ways as Emil's chains (the key, Athletics,
+# Sleight of Hand); lifting the curse needs someone who knows Remove Curse; or he asks for mercy.
+
+# --- The blazes -----------------------------------------------------------------------------------------------
+
+~ blaze_crossroads
+if flag.fen_blaze_crossroads
+Narrator: Fen's blaze, three notches and Thistle's fresh crow feather, still bright in the grey.
+-> END
+endif
+set fen_blaze_crossroads
+Narrator: On the dead tree by the signpost, at a tall man's shoulder height: three neat notches cut with a knife, and in the middle one a crow feather, weathered down to a bare quill.
+interject name:thistle: GRANDDA! That's his! That's his mark!
+interject name:thistle: A year old. Maybe more. Clean cuts, right hand, not in a hurry. He was fine here. He was following something big and he was fine.
+Narrator: She digs a new crow feather out of her hair, where she apparently keeps a few, and presses it into the cut next to the old one.
+interject name:thistle: So he knows I came. If he comes back this way.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: We'll find him, Thistle. That's what the feather means now. That we're coming.
+endif
+if not (quest.fens_trail >= the_blazes)
+quest fens_trail the_blazes
+endif
+-> END
+
+~ blaze_lake
+if flag.fen_blaze_lake
+Narrator: The left-handed blaze, and the word under it. Thistle doesn't look at it again.
+-> END
+endif
+set fen_blaze_lake
+Narrator: Low on a pine above the lake trail, three notches and a crow feather. The cuts are ragged and too deep, and they lean the wrong way.
+interject name:thistle: Left hand. He cut this with his left hand. Grandda's only ever used his right.
+interject name:thistle: He was hurt. He was hurt bad. And he still stopped to cut me a blaze.
+Narrator: Under the notches, scratched into the bark in a hurry, there is a word.
+interject name:thistle: That's... that's letters. He never wrote letters. What's it say?
+if name:ratatoille
+interject name:ratatoille: It says "run". I'm sorry. It just says "run".
+elif name:liriel_dawnsong
+interject name:liriel_dawnsong: It says "run", dear heart.
+elif name:wren_featherfoot
+interject name:wren_featherfoot: It says run, Thistle.
+elif name:kip_smudgewick
+interject name:kip_smudgewick: It says "run". That's... that's the whole thing. Just "run".
+else
+Narrator: Four letters, cut deep: RUN.
+endif
+Narrator: The blaze points up the slope, toward the hills above the lake where, at night, the wolves are loudest.
+interject name:thistle: He wrote that for me. He never wrote anything. He learned a word, just to tell me to run.
+interject name:thistle: I'm not running.
+if not (quest.fens_trail >= the_wolf_road)
+quest fens_trail the_wolf_road
+endif
+-> END
+
+# --- Kiril's offer (werewolf_den/kiril) ------------------------------------------------------------------------
+
+~ kiril
+set kiril_offer_heard
+Kiril [smile]: And you. Yes, you. I smelled you at the bottom of the hill. Pine and smoke and nobody's dog. You weren't raised by people, were you, girl?
+interject name:thistle: Raised by a trapper and two hounds. And a crow. The crow did most of it.
+Kiril: Then what are you doing walking on a lead with these? Run with us. No walls, no forks, no bowing to burgomasters. The night belongs to you and you belong to nobody. You'd be good at it. You'd be the best of us.
+Narrator: For a moment Thistle doesn't answer, and her nostrils flare, and you can see her hearing it: the whole wide dark of the hills, and no one ever telling her to sit still again.
+interject name:thistle: You steal children.
+Kiril: Pups. The master wants pups.
+interject name:thistle: Grandda says a wolf that walks like a man is two kinds of trouble and one kind of sad. You're the trouble kind. I've got a pack. Mine don't eat kids.
+-> werewolf_den/kiril:choice
+
+# --- Fen in the den (npc fen_burley, werewolf_den_caves) ---------------------------------------------------------
+
+~ start
+if not flag.fen_met
+-> first
+endif
+if quest.fens_trail >= fen_cured or quest.fens_trail >= fen_freed or quest.fens_trail >= fen_rests
+-> END
+endif
+Fen Burley: Still here, lass. Still me. Mostly.
+-> menu
+
+~ first
+set fen_met
+Narrator: In the far corner of the alcove a second prisoner hangs from iron rings, chained by both wrists in silver: something too long in the arm and too heavy in the shoulder to be a man, grey-furred, head down. Its breath steams.
+Narrator: Then it lifts its head, and the face is half an old man's: white stubble, a broken nose, and two fingers missing from the left hand.
+interject name:thistle: ...Grandda?
+Fen Burley: Told you to run.
+interject name:thistle: You never told me anything! You never wrote anything! You learned a whole word!
+Fen Burley: Aye. Took me a week. Wanted it to be the right one.
+Narrator: Thistle's on her knees in the straw in front of him before anyone can stop her, both hands on his face, fur and stubble and all, and he lets her, and closes his eyes.
+Fen Burley: Wolf came out of the fog. Followed it in. Its brothers were waiting. They bit me and brought me home like a sack of meal, because the big one wanted the best tracker in two worlds running with his pack.
+Fen Burley: Wanted me to track bairns. Out of farmhouses. I said no. So I hang here till the moon changes my mind.
+Fen Burley: Some nights it nearly does, lass. I'll not lie to you. Some nights I'm more of it than me.
+if not (quest.fens_trail >= found_him)
+quest fens_trail found_him
+endif
+-> menu
+
+~ menu
+* [knows:remove_curse] (Cast Remove Curse on him.) -> cure
+* [if flag.emil_key_found] (Use the key on his chains.) -> free_key
+* [if not flag.emil_key_found and not flag.fen_force_tried] [Athletics DC 15] Tear his rings out of the rock. -> free_force | force_fail
+* [if not flag.emil_key_found and not flag.fen_pick_tried] [Sleight of Hand DC 14] Pick his cuffs. -> free_pick | pick_fail
+* What can we do for you? -> ask
+* We'll be back for you. -> bye
+
+~ force_fail
+set fen_force_tried
+Narrator: The ring shifts in the rock, grinds, and holds. Fen growls deep in his chest, and then stops himself.
+Fen Burley: The big one keeps the key. Or Emil knows. Ask Emil.
+-> menu
+
+~ pick_fail
+set fen_pick_tried
+Narrator: The silver is soft and the lock is stiff and the pick slips. The cuff bites, and Fen's skin smokes where it touches.
+Fen Burley: Leave it. Find the key, lass.
+-> menu
+
+~ ask
+Fen Burley: Get me out, if you can. Out of the chains, anyway. What's in me doesn't come out with a key.
+Fen Burley: Or, if the moon's close and you can't do better, do the other thing. Quick, the way I taught you with the hares. I'd rather that than wake up with you in my mouth.
+interject name:thistle: Don't. Don't say that. I'm not doing that.
+Fen Burley: Aye. I know. I'm only telling you it's allowed.
+* [name:thistle] (Do the other thing, the way he taught her.) -> mercy
+* We'll find another way. -> menu
+
+~ cure
+Narrator: The prayer is short and old, and the words go into him like a hand into a wound, and find the thing curled up inside, and pull.
+Narrator: Fen arches in his chains and howls, and the howl breaks halfway and comes out as an old man's yell, and the fur goes, and the length goes out of his arms, and then there's only a skinny, white-stubbled trapper hanging from two rings, sobbing and laughing at once.
+if flag.emil_key_found or flag.emil_freed
+Narrator: The cuffs open with Emil's key. Thistle catches him before he hits the straw.
+else
+Narrator: Out of the wolf, his wrists are thin enough to work out of the cuffs. Thistle catches him before he hits the straw.
+endif
+Fen Burley: My girl. My girl.
+interject name:thistle: You smell like a dog, Grandda. You smell like a wet dog.
+Fen Burley: Aye. Well. You smell like a town.
+Fen Burley: I'll go down to Krezk. They've walls there, but you can climb them, and they keep goats. I'll wait. You come and find me after. You're good at that.
+set fen_fate = "cured"
+quest fens_trail fen_cured
+-> END
+
+~ free_key
+Narrator: The key turns in the silver with a sound like a held breath going out. Fen drops to four feet in the straw and stays there a long moment, head down, shaking.
+-> freed
+
+~ free_force
+Narrator: The ring comes out of the rock in a spray of grit, and the other with it. Fen drops to four feet in the straw and stays there a long moment, head down, shaking.
+-> freed
+
+~ free_pick
+Narrator: The cuffs give one after the other with two small clicks. Fen drops to four feet in the straw and stays there a long moment, head down, shaking.
+-> freed
+
+~ freed
+Fen Burley: Better. Aye. Better.
+Fen Burley: Don't look at me like that, lass. I'm not coming out of this. Not all the way. But I'll not hunt bairns, and I'll not hunt you, and the high woods are wide.
+interject name:thistle: Come with us. You can track. You're the best tracker in two worlds, you said.
+Fen Burley: And on the full moon I'm the best tracker in two worlds with teeth. No.
+Fen Burley: Don't follow my blazes this time. Make your own.
+Narrator: He goes out of the alcove on four legs, fast and low, and at the mouth of the cave he stops and looks back once, and makes a sound that might have been a laugh.
+set fen_fate = "freed"
+quest fens_trail fen_freed
+-> END
+
+~ mercy
+Narrator: Thistle does it quickly, with her knife, the way he taught her, and he is looking at her the whole time, and he isn't afraid.
+Fen Burley: Good lass.
+Narrator: Afterwards she carries him out herself, and won't be helped, and buries him under a rowan on the hillside with a crow feather in the bark above him.
+set fen_fate = "rests"
+quest fens_trail fen_rests
+-> END
+
+~ bye
+Fen Burley: Aye. Mind the big one. He grins before he bites.
+-> END

@@ -1,0 +1,78 @@
+# Wren Featherfoot's personal quest, The Last Lesson (data/quests/the_last_lesson.json, docs/story/personal_quests.md).
+# Every scene needs Wren. Started from into_the_mists/arrival:hooks. The brother: Kasimir's menu at the Vistani camp
+# (vallaki/kasimir). Let her rest: Patrina at the Amber Temple, where Wren can read Sorrel's last line to Kasimir
+# (amber_temple/patrina:kasimir_meets); the stage follows patrinas_wail's ending. The chamberlain and the lesson:
+# Rahadin in Castle Ravenloft (castle_ravenloft/court_rahadin:menu).
+
+# --- The letter (vallaki/kasimir:menu) -------------------------------------------------------------------------
+
+~ kasimir
+set wren_letter_given
+interject name:wren_featherfoot: Before you say anything sad, I've got something for you. Delivery. From the other side of the mountains. Sorry it's late; it's been travelling fourteen years, one way and another.
+Narrator: Wren holds out a letter, creased soft at the folds, sealed in grey wax with a leaf pressed into it. Kasimir looks at the seal and stops breathing.
+Kasimir: That is my brother's seal.
+interject name:wren_featherfoot: Sorrel. Master Sorrel. He took me in off the street. He died last winter. He was very old, and he went quietly, and he was annoyed with me right up to the end, which he'd want you to know.
+Kasimir: Sorrel went over the mountains before the mists came. I thought him dead four hundred years. I thought him dead every day of them.
+Narrator: He breaks the seal. He reads it once to himself, and then, without being asked, aloud, very slowly, as if each word has to be carried.
+Kasimir: "Kasimir. You stayed, and I ran, and neither of us saved her. I have had a long time to decide which of us was the coward, and the answer is both, and it does not matter any more."
+Kasimir: "I hear you mean to go to the temple in the mountains, where death can be argued with. Do not. Whatever answers there will want more than either of us has, and it will not give her back as she was. Let her rest, brother."
+Kasimir: "The boy who brings you this is the best thing I did with the time I stole. Feed him. He will say he isn't hungry. He is lying. S."
+Narrator: Kasimir folds the letter along its old folds and holds it against his chest, and for a long time there is no sound at the camp but the fire.
+interject name:wren_featherfoot: He never said. Fourteen years and he never said he had a brother. He never said he was from here.
+Kasimir: We do not say it. We are what is left of a people who said yes to the lord of this valley once. Our sister said yes to him too. Patrina. Our own people stoned her for it, and I stood at the back.
+interject name:wren_featherfoot: And now you want to go up a mountain and argue her back.
+Kasimir: I did. I do. I don't know. He says let her rest. He was always the wise one. He was always the one who left.
+if not (quest.the_last_lesson >= the_brother)
+quest the_last_lesson the_brother
+endif
+-> vallaki/kasimir:menu
+
+# --- Patrina (amber_temple/patrina:kasimir_meets) ----------------------------------------------------------------
+
+~ patrina
+set wren_patrina_words
+interject name:wren_featherfoot: Kasimir. The last line. Read her the last line he wrote. Not the bit about me. The bit before.
+Kasimir: "Let her rest, brother."
+Narrator: Patrina's ghost turns her ruined face toward her brother, and for the first time since you came into the hall, the book in her hands holds still.
+Patrina: Sorrel wrote that? Little Sorrel?
+Kasimir: He did. He's dead, sister. He lived a long time, a long way away, and he taught a halfling to fight, and he wanted you to rest.
+-> amber_temple/patrina:kasimir_rest
+
+# --- Rahadin (castle_ravenloft/court_rahadin:menu) ---------------------------------------------------------------
+
+~ rahadin
+set wren_rahadin_met
+interject name:wren_featherfoot: You're a dusk elf.
+Rahadin: I was. I am Rahadin. I keep this house.
+interject name:wren_featherfoot: I had a teacher. Sorrel Velikov. He never said your name once in fourteen years. I think I know why now.
+Narrator: The screaming around the chamberlain rises, all at once, as if every voice in it has turned to look. One of them, very clearly, is a woman calling a name. It is Sorrel's name.
+Rahadin: The Velikovs. The mother, I think. She asked me to spare the children. I explained that there were no children, only the master's tenants, and that tenants who stone the master's guest are no longer tenants.
+Rahadin: The youngest son ran. I let him. It was an oversight. I have not made many.
+if not (quest.the_last_lesson >= the_chamberlain)
+quest the_last_lesson the_chamberlain
+endif
+Narrator: Wren has gone very still. Not the stillness of a fighter waiting. The other kind.
+* [name:wren_featherfoot] (Tell him what Sorrel thought of him.) -> rahadin_pity
+* [name:wren_featherfoot] (Go for his throat.) -> rahadin_rage
+* (Pull Wren back.) -> rahadin_pulled
+
+~ rahadin_pity
+interject name:wren_featherfoot: He didn't hate you. I thought about it all the way up the stairs, and he didn't. He never hated anybody. He'd have looked at you and felt sorry for you, with all those voices and nobody to talk to but the dog upstairs.
+interject name:wren_featherfoot: So that's what I'm doing. I'm feeling sorry for you. It's horrible. I don't recommend it.
+Narrator: For a heartbeat, every voice around Rahadin goes silent. The hall is so quiet you can hear the candles. The chamberlain's face doesn't change at all, but his hand has gone to his sword and stopped there, and stays.
+Rahadin: Leave my sight.
+interject name:wren_featherfoot: Already going. Master Sorrel says the leaf doesn't fight the wind. Turns out the leaf just has to decide it isn't the wind's problem.
+Narrator: Wren turns his back on the chamberlain and walks away on his own two feet, not fast. It's the bravest thing you've seen anyone do in this house.
+quest the_last_lesson learned
+-> castle_ravenloft/court_rahadin:menu
+
+~ rahadin_rage
+quest the_last_lesson unlearned
+interject name:wren_featherfoot: Sorry, Master.
+Narrator: He's across the hall before anyone can move, and Rahadin's sword is already out to meet him, as if it had been waiting four hundred years for exactly this.
+-> castle_ravenloft/court_rahadin:fight
+
+~ rahadin_pulled
+Narrator: A hand on his shoulder. Wren shakes once under it, like a dog coming out of water, and then he lets out a breath he has been holding since the stairs.
+interject name:wren_featherfoot: Right. Yes. Thank you. Not now. Not like that.
+-> castle_ravenloft/court_rahadin:menu

@@ -556,6 +556,51 @@
       "kind": "decor",
       "label": "Fallen stones",
       "model": "rubble"
+    },
+    {
+      "id": "court_study_chair",
+      "cell": [
+        5,
+        2
+      ],
+      "kind": "decor",
+      "label": "An armchair by the fire",
+      "model": "armchair"
+    },
+    {
+      "id": "court_study_window_lit",
+      "cell": [
+        9,
+        0
+      ],
+      "kind": "examine",
+      "label": "A lit window",
+      "model": "window_lit",
+      "when": "name:silvain_aster and not (quest.aurels_last_chapter >= the_last_page)",
+      "text": "One tall window with lamplight behind the glass. From anywhere in the valley it would be the one light in the castle that never goes out."
+    },
+    {
+      "id": "court_study_window",
+      "cell": [
+        9,
+        0
+      ],
+      "kind": "decor",
+      "label": "A tall window",
+      "model": "window_tall",
+      "when": "not name:silvain_aster or quest.aurels_last_chapter >= the_last_page"
+    },
+    {
+      "id": "court_locket_candles",
+      "cell": [
+        7,
+        1
+      ],
+      "kind": "examine",
+      "label": "Candles under her portrait",
+      "model": "candelabra",
+      "when": "name:tamsin_tealeaf and not flag.locket_portrait_seen and not (quest.the_locket >= given_to_strahd)",
+      "dialogue": "castle_ravenloft/personal_locket:start"
     }
   ],
   "containers": [
@@ -776,6 +821,17 @@
       "dialogue": "castle_ravenloft/court_lief:start",
       "when": "not flag.lief_freed",
       "facing": "north"
+    },
+    {
+      "npc": "aurel_mirescu",
+      "cell": [
+        3,
+        2
+      ],
+      "dialogue": "castle_ravenloft/personal_aurel:start",
+      "when": "name:silvain_aster and not (quest.aurels_last_chapter >= the_last_page) and not (final_room:castle_ravenloft_study and quest.strahds_lair == foretold)",
+      "facing": "east",
+      "approach": 9
     }
   ],
   "encounters": [

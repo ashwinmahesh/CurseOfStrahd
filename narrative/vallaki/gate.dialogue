@@ -60,8 +60,16 @@ quest sanctuary_for_ireena arrived
 endif
 Town Guard: The rules, quick. The Festival of the Blazing Sun is in the square; the Baron lights the sun at noon and everyone attends. Lamps out at the second bell. Nobody frowns at the Baron.
 Town Guard: If you've a grievance, keep it indoors. If you've a dead relative, Father Lucian at St. Andral's. If you've a live one who frowns, keep them indoors as well.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Smiling! I can do that. Look. I'm very good at it.
+else
 interject tag:cheerful: I can smile. I'm smiling now. Look.
-interject tag:blunt: Laws about faces. Noted.
+endif
+if name:thistle
+interject name:thistle: A law. About faces. Why?
+else
+interject tag:blunt: Laws about faces. Of course there are.
+endif
 Town Guard: Lovely. Hold it like that until you're out of sight. All will be well.
 -> END
 

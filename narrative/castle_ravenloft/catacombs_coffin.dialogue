@@ -91,12 +91,8 @@ endif
 set cat_last_words_heard
 Strahd: You will find the valley very quiet without me. Very small. You will go home, and nothing there will ever be as large as I was.
 Strahd: Close the lid. Walk away. Come back in a hundred years and we will do this again. It will be the most interesting thing that ever happens to any of you.
-if name:ilse_varga
-interject name:ilse_varga: You sent my company a letter. Forty of them answered it. No.
-endif
-if name:silvain_aster and item:tome_of_strahd
-interject name:silvain_aster: I have read your book. I know exactly how large you were. No.
-endif
+interject name:godrick_pendlebrook: You're not large. You're loud. Sir Pellam was large. No.
+interject name:thistle: Home's the whole Thornwood. You're a box in a cellar. No.
 interject class:rogue: He's stalling. Every word is another minute for him to mend.
 -> resting_menu
 

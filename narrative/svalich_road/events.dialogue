@@ -31,9 +31,6 @@ endif
 if tarokka.drawn
 Strahd: You have been to see the old woman at the pool. She always did love an audience. Did she tell you where to dig?
 endif
-if name:ilse_varga
-Strahd: Sergeant. You still carry my letter. I am touched. Your company kept theirs too. They were so very punctual.
-endif
 if flag.doru_freed
 Strahd: And my thanks for the boy from under the church. He arrived hungry and grateful. Such a rare combination.
 endif
@@ -132,7 +129,7 @@ Bogdan [afraid]: She said a gentleman came to the window. Said he was lonely. Sh
 set anca_fate = "staked"
 Narrator: Bogdan sends the boy to sit by the cart with his back turned. It is quick. It is not easy. Afterwards he closes the lid himself and stands with his hand on it.
 Bogdan [sad]: Thank you. I won't say it again, so hear it now. Thank you.
-interject class:cleric: Mm. She'll sleep now. Properly.
+interject class:cleric: She'll sleep now. Properly, this time.
 -> END
 
 ~ anca_hurry
@@ -167,7 +164,7 @@ endif
 set dead_procession_met
 Narrator: Lanterns on the road ahead, swaying in a line: a funeral procession, out at the one hour no living Barovian would walk. Mourners in grey carry an open coffin between them. It is empty.
 Narrator: As they come close, the one at the front lifts his lantern to your faces, one after another, as if measuring.
-interject tag:blunt: Count off. Six of them. None of them breathing.
+interject tag:blunt: Six of them. None of them breathing.
 * [Stealth DC 13] Get off the road and into the ditch, quietly. -> dp_hidden | dp_seen
 * [Cleric] [Religion DC 14] Raise your holy symbol and send them back to their graves. -> dp_turned | dp_fight
 * Stand and fight. -> dp_fight

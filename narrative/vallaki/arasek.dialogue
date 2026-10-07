@@ -20,7 +20,11 @@ Gunther: Pleasure. Bring it back dented and I'll buy it for half. Bring it back 
 
 ~ prices
 Gunther: Twice what you'd pay over the mountains. Every cart that reaches us loses a horse or a driver on the way, some months both. My sister Yelena keeps the books, and the books say twice.
+if name:kip_smudgewick
+interject name:kip_smudgewick: Could the books say once and a half, neighbour? Trade rate? One merchant to another?
+else
 interject tag:curious: Could the books say once and a half?
+endif
 Gunther: You can ask Yelena. I'd sell you a helmet first.
 if flag.bildrath_robbed
 Gunther: You've come from the village, eh? Bildrath's prices? Ten times. And I hear somebody helped themselves to his strongbox. Not that I'd ever think it of you.

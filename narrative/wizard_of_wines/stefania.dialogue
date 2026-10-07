@@ -27,7 +27,7 @@ set elvir_story_heard
 quest elvir_martikov heard
 Stefania: No. He won't. Last spring Father sent Elvir and Adrian to watch Yester Hill. The druids' things caught them in the bracken. Adrian came home alone, all blood and feathers, and said "I flew." Nothing else. Not then, not since.
 Stefania: Elvir was the youngest. The loud one. Father raised a cairn for him with nothing under it, and he's hardly said a kind word to Adrian since.
-interject tag:patient: And you? What do you think happened?
+interject tag:gentle: And you? What do you think happened?
 Stefania: I think my brother would have died for Elvir without stopping to think. So something stopped him. I'd give a great deal to know what.
 -> menu
 
@@ -64,6 +64,10 @@ Stefania: Sleeping in beds again, which they're furious about; they'd got used t
 else
 Stefania: They think it's an adventure, which is the only mercy in it. Toma has decided he's going to kill a druid. He's seven. I've told him he finishes his porridge first.
 endif
+if name:wren_featherfoot
+interject name:wren_featherfoot: I could teach them a coin trick. Purely for morale. Watch this.
+else
 interject tag:cheerful: I could teach them a coin trick. Purely for morale.
+endif
 Stefania: If a single coin goes missing in this camp, I'll know who to shout at.
 -> menu

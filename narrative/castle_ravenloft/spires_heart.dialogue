@@ -57,6 +57,6 @@ Narrator: Red light pours out of it and is gone. The pieces that hit the floor a
 Narrator: Far below, deep in the castle, something draws a long breath, and the whole tower seems to listen.
 set heart_of_sorrow_shattered
 quest the_heart_of_sorrow shattered
-interject name:silvain_aster: Whatever it was holding for him, it isn't holding it any more.
+interject name:ratatoille: The binding is cut. Every wound it was carrying for him, he carries himself now.
 interject tag:blunt: Good. Now he bleeds.
 -> END

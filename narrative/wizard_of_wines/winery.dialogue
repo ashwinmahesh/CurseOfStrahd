@@ -24,6 +24,6 @@ Narrator: The hoop turns with a grudging click, and the whole end of the cask sw
 if guest:adrian_martikov
 Adrian: The founder's cask. Of course. He told Stefania and not me. Of course he did.
 endif
-interject name:tamsin_tealeaf: Now that is a hiding place. I'd have looked under the floor. So did the druids, by the look of the floor.
+interject name:kip_smudgewick: Now that is a hiding place. I'd have looked under the floor. So did the druids, by the state of it.
 interject class:wizard: There's an enchantment in it: old, patient, very simple. Grow. Whoever made it wanted nothing else from the world.
 -> END

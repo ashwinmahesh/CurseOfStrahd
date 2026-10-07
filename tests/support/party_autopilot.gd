@@ -1,7 +1,8 @@
 class_name PartyAutopilot
 extends RefCounted
-## A stand-in player for balance simulations and soak tests: plays the four pregens with simple, sensible tactics
-## (healing the fallen, Turn Undead on a crowd of zombies, Sleep on a wolf pack, Steady Aim from range).
+## A stand-in player for balance simulations and soak tests: plays the pregens with simple, sensible tactics
+## (healing the fallen, Turn Undead on a crowd of zombies, Sleep on a wolf pack, Steady Aim from range, a ranger's
+## bow and a warlock's Eldritch Blast from range). Paladins and monks fight like fighters.
 ## Test-only: in the game the player controls every party member (plan pillar 2).
 
 var e: Encounter
@@ -24,6 +25,10 @@ func play(c: Combatant) -> CombatResult:
 		return _wizard(c)
 	if ch.class_level_of("rogue") > 0:
 		return _rogue(c)
+	if ch.class_level_of("warlock") > 0:
+		return _warlock(c)
+	if ch.class_level_of("ranger") > 0:
+		return _ranger(c)
 	return _fighter(c)
 
 
@@ -169,11 +174,14 @@ func _cleric(c: Combatant) -> CombatResult:
 		var gb := _cast(c, "guiding_bolt", 1, [target])
 		if gb.ok:
 			return gb
-	var cantrip := "toll_the_dead" if target.creature.hp < target.creature.max_hp() else "sacred_flame"
+	var cantrips: Array[String] = ["sacred_flame", "toll_the_dead"]
+	if target.creature.hp < target.creature.max_hp():
+		cantrips.reverse()
 	if e.distance(c, target) <= 60:
-		var r := _cast(c, cantrip, 0, [target])
-		if r.ok:
-			return r
+		for cantrip in cantrips:
+			var r := _cast(c, cantrip, 0, [target])
+			if r.ok:
+				return r
 	return _melee_turn(c)
 
 
@@ -215,6 +223,38 @@ func _wizard(c: Combatant) -> CombatResult:
 	var r := _cast(c, "fire_bolt", 0, [target])
 	if r.ok:
 		return r
+	return _melee_turn(c)
+
+
+func _ranger(c: Combatant) -> CombatResult:
+	var foes := _enemies(c)
+	if foes.is_empty():
+		return _melee_turn(c)
+	for f in foes:
+		if e.distance(c, f) <= 5:
+			return _melee_turn(c)
+	var target := _weakest(foes)
+	for id: String in ["weapon:longbow", "weapon:shortbow"]:
+		var bow := e.option_by_id(c, id)
+		if not bow.is_empty() and e.attack_legal(c, target, bow) == "":
+			return e.attack(c, target, id)
+	return _melee_turn(c)
+
+
+func _warlock(c: Combatant) -> CombatResult:
+	var foes := _enemies(c)
+	if foes.is_empty() or not c.action_available:
+		return _melee_turn(c)
+	var target := _weakest(foes)
+	if e.distance(c, target) <= 120:
+		# One beam per tier (levels 1, 5, 11, 17); try the most first.
+		for beams: int in [4, 3, 2, 1]:
+			var aim: Array = []
+			for i in beams:
+				aim.append(target)
+			var r := _cast(c, "eldritch_blast", 0, aim)
+			if r.ok:
+				return r
 	return _melee_turn(c)
 
 

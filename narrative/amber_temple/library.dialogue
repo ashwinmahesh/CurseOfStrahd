@@ -16,7 +16,7 @@ set warden_word_known
 set vosk_named
 Narrator: Under a recipe for ink and a list of the names of his own fingers, you find the wardens' word, written out in capitals with DO NOT FORGET beside it.
 Narrator: Lower down, half hidden by a pressed flower: THE JACKAL IN THE STACKS IS NOT A SCHOLAR. HIS NAME IS ASHKARRETH. SAY IT AND HE MUST ANSWER.
-interject tag:bookish: A true name, filed under a pressed flower. I would like a word with whoever trained this man as an archivist.
+interject tag:scholarly: A true name, filed under a pressed flower. I would like a word with whoever trained this man as an archivist.
 -> END
 
 ~ notes_fail
