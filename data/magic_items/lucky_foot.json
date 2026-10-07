@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: after rolling a natural 1 on a save or ability check, consume the charm to reroll; keep the new result..",
-  "text": "Reference-only: after rolling a natural 1 on a save or ability check, consume the charm to reroll; keep the new result."
+  "text": "Reference-only: after rolling a natural 1 on a save or ability check, consume the charm to reroll; keep the new result.",
+  "playable": false
 }

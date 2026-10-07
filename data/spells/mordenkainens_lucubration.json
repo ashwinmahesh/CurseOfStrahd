@@ -29,5 +29,6 @@
   "tags": [
     "utility"
   ],
-  "icon": "magic_missile"
+  "icon": "magic_missile",
+  "playable": false
 }

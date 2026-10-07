@@ -19,5 +19,6 @@
   "text": "Reference-only: Magic action activates the bird’s song for 10 minutes (audible 300 feet), or ends it early; after reverting, wait 1 hour to reactivate. Six charges; regain 1d6+1 at dawn. While singing within 60 feet, Bonus Action casts at DC 18: Detect Evil and Good or Speak with Animals (0), Calm Emotions (1), Slow (2), Compulsion (3), Greater Restoration (4), Delayed Blast Fireball or Prismatic Spray (6). While singing, a 15-foot Emanation acts as Zone of Truth (DC 18); you know save outcomes. Reaction casts Counterspell (DC 18) while singing, once per dawn. Random properties: two minor beneficial, one major beneficial, one minor detrimental. Destroy by releasing it into a whirlwind in Limbo.",
   "treasure": {
     "random": false
-  }
+  },
+  "playable": false
 }

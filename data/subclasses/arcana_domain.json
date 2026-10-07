@@ -167,5 +167,6 @@
       "bigbys_hand",
       "teleportation_circle"
     ]
-  }
+  },
+  "playable": false
 }

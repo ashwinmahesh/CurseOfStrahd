@@ -31,5 +31,6 @@
       "stat": "advantage",
       "on": "check:intimidation"
     }
-  ]
+  ],
+  "playable": false
 }

@@ -56,5 +56,6 @@
       "text": "While your familiar is within 5 feet, gain Advantage on a proficient skill check. Uses equal Proficiency Bonus per Long Rest.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "arrow",
   "summary": "Reference-only: A creature damaged by this ammunition saves DC 13 Charisma or loses Reactions until its next turn starts.",
-  "text": "Reference-only: A creature damaged by this ammunition saves DC 13 Charisma or loses Reactions until its next turn starts. The ammunition becomes mundane after hitting."
+  "text": "Reference-only: A creature damaged by this ammunition saves DC 13 Charisma or loses Reactions until its next turn starts. The ammunition becomes mundane after hitting.",
+  "playable": false
 }

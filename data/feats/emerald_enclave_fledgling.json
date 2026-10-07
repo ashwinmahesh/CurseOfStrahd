@@ -49,5 +49,6 @@
       "text": "As part of Help, exchange places with a willing, non-Incapacitated ally within 5 feet, without provoking Opportunity Attacks.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

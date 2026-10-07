@@ -219,5 +219,6 @@
         "implemented": "text"
       }
     }
-  ]
+  ],
+  "playable": false
 }

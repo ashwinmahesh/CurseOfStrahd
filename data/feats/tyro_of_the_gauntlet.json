@@ -25,5 +25,6 @@
       "text": "Taking Ready gives Disadvantage to the next attack against you before your next turn starts.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

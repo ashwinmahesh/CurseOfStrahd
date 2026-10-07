@@ -17,5 +17,6 @@
   "icon": "ring",
   "summary": "Reference-only: when one wearer creates an area effect requiring saves, protect the paired wearer in that area: automatic save success and no damage if success normally halves it.",
   "text": "Reference-only: when one wearer creates an area effect requiring saves, protect the paired wearer in that area: automatic save success and no damage if success normally halves it. Shared once-per-dawn use. Destroying either band destroys both.",
-  "worn": "ring"
+  "worn": "ring",
+  "playable": false
 }

@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: a Magic action plants the stick to shelter a 20-foot Cube from ordinary weather for 1 hour, providing dry, comfortable air.",
-  "text": "Reference-only: a Magic action plants the stick to shelter a 20-foot Cube from ordinary weather for 1 hour, providing dry, comfortable air. Creatures, objects, and magic pass freely. Another Magic action ends it early; after it ends, wait 1d12 hours to reuse."
+  "text": "Reference-only: a Magic action plants the stick to shelter a 20-foot Cube from ordinary weather for 1 hour, providing dry, comfortable air. Creatures, objects, and magic pass freely. Another Magic action ends it early; after it ends, wait 1d12 hours to reuse.",
+  "playable": false
 }

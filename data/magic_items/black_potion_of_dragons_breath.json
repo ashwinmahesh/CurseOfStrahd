@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "potion_orange",
   "summary": "Reference-only: drinking grants Dragon’s Breath for 1 minute, DC 13, without Concentration.",
-  "text": "Reference-only: drinking grants Dragon’s Breath for 1 minute, DC 13, without Concentration. The breath deals Acid damage."
+  "text": "Reference-only: drinking grants Dragon’s Breath for 1 minute, DC 13, without Concentration. The breath deals Acid damage.",
+  "playable": false
 }

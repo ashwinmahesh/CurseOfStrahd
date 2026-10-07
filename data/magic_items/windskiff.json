@@ -17,5 +17,6 @@
   "theme": "implements",
   "icon": "amulet",
   "summary": "Reference-only: three charges, fully restored each dawn.",
-  "text": "Reference-only: three charges, fully restored each dawn. While holding the jewelry, a Magic action spends 1 charge to unfold a personal sailing vehicle for 1 hour, or until you freely speak its command word. Medium object: AC 12, HP 30, Speed 40 feet; door-sized with a 10-foot sail. It hovers just above the surface and glides 5 feet horizontally for every foot descended. The vehicle and its riders take no falling damage."
+  "text": "Reference-only: three charges, fully restored each dawn. While holding the jewelry, a Magic action spends 1 charge to unfold a personal sailing vehicle for 1 hour, or until you freely speak its command word. Medium object: AC 12, HP 30, Speed 40 feet; door-sized with a 10-foot sail. It hovers just above the surface and glides 5 feet horizontally for every foot descended. The vehicle and its riders take no falling damage.",
+  "playable": false
 }

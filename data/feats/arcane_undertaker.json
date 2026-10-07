@@ -73,5 +73,6 @@
       "text": "Gain Heroic Inspiration after using Help to stabilize a creature at 0 Hit Points. Once per Long Rest.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

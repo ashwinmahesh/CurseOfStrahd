@@ -70,5 +70,6 @@
   ],
   "feat_params": {
     "list": "druid"
-  }
+  },
+  "playable": false
 }

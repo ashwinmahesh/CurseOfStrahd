@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: Magic action activates for 1 minute, damaging creatures and unattended nonmagical objects on activation and your turn starts.",
-  "text": "Reference-only: Magic action activates for 1 minute, damaging creatures and unattended nonmagical objects on activation and your turn starts. Confined Cube sizes 15/30/50/100 feet use Dexterity DC 18/17/15/14 for 6d6+5/4d6+4/2d6+2/1d6+1 Bludgeoning on failure. Larger rooms suffer negligible damage; outdoors it escapes at 300 feet per round. Freely stop by command within 30 feet. Once per dawn."
+  "text": "Reference-only: Magic action activates for 1 minute, damaging creatures and unattended nonmagical objects on activation and your turn starts. Confined Cube sizes 15/30/50/100 feet use Dexterity DC 18/17/15/14 for 6d6+5/4d6+4/2d6+2/1d6+1 Bludgeoning on failure. Larger rooms suffer negligible damage; outdoors it escapes at 300 feet per round. Freely stop by command within 30 feet. Once per dawn.",
+  "playable": false
 }

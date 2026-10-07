@@ -36,5 +36,6 @@
       "dc": 15,
       "charges": 1
     }
-  ]
+  ],
+  "playable": false
 }

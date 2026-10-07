@@ -152,5 +152,6 @@
         "implemented": "text"
       }
     }
-  ]
+  ],
+  "playable": false
 }

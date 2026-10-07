@@ -18,5 +18,6 @@
   "summary": "Sorcerer focus.",
   "text": "Sorcerer focus. Reference-only: a Magic action while holding it restores up to 2 spent Sorcery Points, once per dawn.",
   "focus": "arcane",
-  "held": true
+  "held": true,
+  "playable": false
 }

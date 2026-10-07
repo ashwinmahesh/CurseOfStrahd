@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: write on the sheet, then seal it with a Magic action and a spoken or signed passphrase.",
-  "text": "Reference-only: write on the sheet, then seal it with a Magic action and a spoken or signed passphrase. Anyone opening it without that phrase sees unreadable writing."
+  "text": "Reference-only: write on the sheet, then seal it with a Magic action and a spoken or signed passphrase. Anyone opening it without that phrase sees unreadable writing.",
+  "playable": false
 }

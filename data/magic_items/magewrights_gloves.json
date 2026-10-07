@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: while worn, count as two workers when crafting nonmagical items with Alchemist’s, Brewer’s, Calligrapher’s, Cartographer’s, Glassblower’s, or Jeweler’s tools..",
-  "text": "Reference-only: while worn, count as two workers when crafting nonmagical items with Alchemist’s, Brewer’s, Calligrapher’s, Cartographer’s, Glassblower’s, or Jeweler’s tools."
+  "text": "Reference-only: while worn, count as two workers when crafting nonmagical items with Alchemist’s, Brewer’s, Calligrapher’s, Cartographer’s, Glassblower’s, or Jeweler’s tools.",
+  "playable": false
 }

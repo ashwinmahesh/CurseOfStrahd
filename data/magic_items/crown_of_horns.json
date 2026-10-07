@@ -28,5 +28,6 @@
   ],
   "treasure": {
     "random": false
-  }
+  },
+  "playable": false
 }

@@ -17,5 +17,6 @@
   "icon": "ring",
   "summary": "Reference-only: a Magic action stores the non-costly, unconsumed Material component for one prepared spell.",
   "text": "Reference-only: a Magic action stores the non-costly, unconsumed Material component for one prepared spell. While wearing it, that spell needs no free hand to access its Material component. Holds one spell’s component at a time.",
-  "worn": "ring"
+  "worn": "ring",
+  "playable": false
 }

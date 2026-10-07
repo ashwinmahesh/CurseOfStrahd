@@ -105,5 +105,6 @@
         "implemented": "text"
       }
     }
-  ]
+  ],
+  "playable": false
 }

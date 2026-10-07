@@ -86,6 +86,18 @@ func get_entry(folder: String, id: String) -> Dictionary:
 
 
 ## All entries of a folder, sorted by name.
+## Whether an entry may be offered in play (character creation, level-up and spell choices, random treasure). Books
+## added before their rules all work mark their entries `"playable": false` until each is automated (owner decision
+## 2026-10-07: Faerun and Arcana Unleashed on hold). Lookups by id ignore it, so saves that name one still load.
+static func playable(entry: Dictionary) -> bool:
+	return bool(entry.get("playable", true))
+
+
+## `all(folder)` without the entries that aren't playable yet.
+func all_playable(folder: String) -> Array[Dictionary]:
+	return all(folder).filter(func(e: Dictionary) -> bool: return playable(e))
+
+
 func all(folder: String) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for v: Variant in table(folder).values():
@@ -166,7 +178,7 @@ func condition_data(id: String) -> Dictionary:
 
 func subclasses_of(class_id: String) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
-	for s in all("subclasses"):
+	for s in all_playable("subclasses"):
 		if str(s.get("class", "")) == class_id:
 			out.append(s)
 	return out
@@ -175,7 +187,7 @@ func subclasses_of(class_id: String) -> Array[Dictionary]:
 ## Spells on a class's list (`list` = class id). level -1 = any level.
 func spells_for(list: String, level: int = -1) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
-	for s in all("spells"):
+	for s in all_playable("spells"):
 		if level >= 0 and int(s.get("level", -1)) != level:
 			continue
 		if list != "" and not list in (s.get("classes", []) as Array):
@@ -186,7 +198,7 @@ func spells_for(list: String, level: int = -1) -> Array[Dictionary]:
 
 func feats_in(category: String) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
-	for f in all("feats"):
+	for f in all_playable("feats"):
 		if category == "" or str(f.get("category", "")) == category:
 			out.append(f)
 	return out

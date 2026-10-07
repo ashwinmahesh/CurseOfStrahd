@@ -17,5 +17,6 @@
   "theme": "implements",
   "icon": "amulet",
   "summary": "Reference-only: activate with 1 minute of winding its unique hand key, taking the Utilize action each turn.",
-  "text": "Reference-only: activate with 1 minute of winding its unique hand key, taking the Utilize action each turn. Worn on your back or flank, it operates for 24 hours and gives you a Speed of 30 feet. Other creatures cannot remove it without your consent."
+  "text": "Reference-only: activate with 1 minute of winding its unique hand key, taking the Utilize action each turn. Worn on your back or flank, it operates for 24 hours and gives you a Speed of 30 feet. Other creatures cannot remove it without your consent.",
+  "playable": false
 }

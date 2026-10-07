@@ -42,5 +42,6 @@
       "text": "After casting an Illusion spell, grant Heroic Inspiration to one ally within 30 feet who can see you. Once per Long Rest.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

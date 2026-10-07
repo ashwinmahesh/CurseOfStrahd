@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "arrow",
   "summary": "Reference-only: After this ammunition damages a target, all ongoing spells of level 3 or lower on that target end; the ammunition becomes mundane..",
-  "text": "Reference-only: After this ammunition damages a target, all ongoing spells of level 3 or lower on that target end; the ammunition becomes mundane."
+  "text": "Reference-only: After this ammunition damages a target, all ongoing spells of level 3 or lower on that target end; the ammunition becomes mundane.",
+  "playable": false
 }

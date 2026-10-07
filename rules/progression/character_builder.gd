@@ -76,7 +76,7 @@ func class_preview(id: String) -> Dictionary:
 
 func available_backgrounds() -> Array[ChoiceOption]:
 	var out: Array[ChoiceOption] = []
-	for b in compendium.all("backgrounds"):
+	for b in compendium.all_playable("backgrounds"):
 		var o := ChoiceOption.make(str(b["id"]), str(b["name"]), str(b.get("summary", "")))
 		o.data = {"abilities": b["ability_scores"], "feat": compendium.display_name("feats", str(b["feat"])),
 			"skills": b["skills"], "tool": (b.get("tool", {}) as Dictionary).get("id", "")}
@@ -92,7 +92,7 @@ func set_background(id: String) -> void:
 
 func available_species() -> Array[ChoiceOption]:
 	var out: Array[ChoiceOption] = []
-	for s in compendium.all("species"):
+	for s in compendium.all_playable("species"):
 		var o := ChoiceOption.make(str(s["id"]), str(s["name"]), str(s.get("summary", "")))
 		o.data = {"speed": s.get("speed", 30), "sizes": s.get("sizes", []), "darkvision": s.get("darkvision", 0)}
 		out.append(o)

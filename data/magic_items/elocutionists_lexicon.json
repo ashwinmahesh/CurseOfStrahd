@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: a Magic action while holding the dictionary opens it to the word you are trying to remember..",
-  "text": "Reference-only: a Magic action while holding the dictionary opens it to the word you are trying to remember."
+  "text": "Reference-only: a Magic action while holding the dictionary opens it to the word you are trying to remember.",
+  "playable": false
 }

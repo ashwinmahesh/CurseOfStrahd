@@ -105,5 +105,6 @@
       "banishing_smite",
       "contact_other_plane"
     ]
-  }
+  },
+  "playable": false
 }

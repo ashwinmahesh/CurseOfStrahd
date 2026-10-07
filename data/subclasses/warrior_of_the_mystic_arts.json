@@ -110,5 +110,6 @@
       13
     ],
     "swap_prepared": "level_up"
-  }
+  },
+  "playable": false
 }

@@ -109,3 +109,14 @@ Downloading these PDFs needs the owner's yes first (list each file).
   shared combat behaviour (the Spell and ability audit thread) first.
 - New systems the game doesn't have: Circle Magic, faction renown, Bastion facilities and evolving magic items.
   Each needs an owner call on whether it belongs in a Barovia campaign before any work.
+
+## The readiness flag (owner decision 2026-10-07: hide until ready)
+
+Every entry from the Faerun books and Arcana Unleashed (`source.book` FRHoF, FRAiF or AU in data/backgrounds,
+data/feats, data/spells, data/subclasses and data/magic_items) carries `"playable": false`. While it does, the game
+leaves the entry out of character creation, level-up and spell choices and random treasure (`Compendium.playable`,
+`Compendium.all_playable`); a lookup by id still finds it, so a save that names one still loads.
+
+To turn an entry on once all of its rules work in the game, set `"playable": true` in its file (or delete the line).
+Nothing else needs to change. `tests/unit/test_playable_gate.gd` checks that whatever is marked `false` is left out of
+the choices and treasure, and that it still loads by id.

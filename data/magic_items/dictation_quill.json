@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: a Magic action sets the quill writing your spoken or signed words at 25 words per minute with supplied paper and ink.",
-  "text": "Reference-only: a Magic action sets the quill writing your spoken or signed words at 25 words per minute with supplied paper and ink. Ends after 1 hour, when supplies run out, or on your command without an action."
+  "text": "Reference-only: a Magic action sets the quill writing your spoken or signed words at 25 words per minute with supplied paper and ink. Ends after 1 hour, when supplies run out, or on your command without an action.",
+  "playable": false
 }

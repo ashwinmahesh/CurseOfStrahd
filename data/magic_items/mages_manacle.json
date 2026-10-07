@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: Magic action while worn targets a Grappled or Incapacitated Large-or-smaller creature within 5 feet.",
-  "text": "Reference-only: Magic action while worn targets a Grappled or Incapacitated Large-or-smaller creature within 5 feet. DC 15 Dexterity or Restrained and chained to move with you for 8 hours, or until freely released. Only Disintegrate can destroy the chain. Once per dawn after successfully binding."
+  "text": "Reference-only: Magic action while worn targets a Grappled or Incapacitated Large-or-smaller creature within 5 feet. DC 15 Dexterity or Restrained and chained to move with you for 8 hours, or until freely released. Only Disintegrate can destroy the chain. Once per dawn after successfully binding.",
+  "playable": false
 }

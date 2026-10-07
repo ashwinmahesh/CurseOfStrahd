@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "potion_orange",
   "summary": "Reference-only: drinking removes the need for sleep and prevents magical sleep for 24 hours.",
-  "text": "Reference-only: drinking removes the need for sleep and prevents magical sleep for 24 hours. During this time, a Long Rest takes 4 hours of conscious, quiet focus."
+  "text": "Reference-only: drinking removes the need for sleep and prevents magical sleep for 24 hours. During this time, a Long Rest takes 4 hours of conscious, quiet focus.",
+  "playable": false
 }

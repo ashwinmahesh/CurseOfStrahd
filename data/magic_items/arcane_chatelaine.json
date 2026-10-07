@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: six keys each cast Arcane Lock by touching a closed entrance or container with a Magic action.",
-  "text": "Reference-only: six keys each cast Arcane Lock by touching a closed entrance or container with a Magic action. Used keys disappear; using the last destroys the clasp."
+  "text": "Reference-only: six keys each cast Arcane Lock by touching a closed entrance or container with a Magic action. Used keys disappear; using the last destroys the clasp.",
+  "playable": false
 }

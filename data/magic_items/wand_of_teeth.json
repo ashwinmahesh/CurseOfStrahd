@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "wand",
   "summary": "Reference-only: Magic action while held spends 1–3 of 10 charges for a 30-foot Cone.",
-  "text": "Reference-only: Magic action while held spends 1–3 of 10 charges for a 30-foot Cone. DC 15 Dexterity: 1d8 Piercing per charge and Poisoned until your next turn starts on failure; half damage only on success. Regain 1d10 charges each dawn; spending the last destroys it on a d20 result of 1."
+  "text": "Reference-only: Magic action while held spends 1–3 of 10 charges for a 30-foot Cone. DC 15 Dexterity: 1d8 Piercing per charge and Poisoned until your next turn starts on failure; half damage only on success. Regain 1d10 charges each dawn; spending the last destroys it on a d20 result of 1.",
+  "playable": false
 }

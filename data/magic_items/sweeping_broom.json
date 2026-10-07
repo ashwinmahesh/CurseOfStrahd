@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: a Magic action activates sweeping in a 20-foot square centered on a visible ground point within 60 feet.",
-  "text": "Reference-only: a Magic action activates sweeping in a 20-foot square centered on a visible ground point within 60 feet. It continues until a Magic action stops it."
+  "text": "Reference-only: a Magic action activates sweeping in a 20-foot square centered on a visible ground point within 60 feet. It continues until a Magic action stops it.",
+  "playable": false
 }

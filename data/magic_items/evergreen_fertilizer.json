@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: spread this powder around a nonmagical plant to keep it healthy for 365 days..",
-  "text": "Reference-only: spread this powder around a nonmagical plant to keep it healthy for 365 days."
+  "text": "Reference-only: spread this powder around a nonmagical plant to keep it healthy for 365 days.",
+  "playable": false
 }

@@ -30,5 +30,6 @@
       "dc": "wielder",
       "charges": 1
     }
-  ]
+  ],
+  "playable": false
 }

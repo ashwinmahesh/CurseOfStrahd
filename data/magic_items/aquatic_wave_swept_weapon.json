@@ -54,5 +54,6 @@
       "kind": "swim",
       "value": 30
     }
-  ]
+  ],
+  "playable": false
 }

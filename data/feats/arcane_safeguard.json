@@ -42,5 +42,6 @@
       "text": "Help assisting an ally’s ability check also grants that ally Temporary Hit Points equal to your Proficiency Bonus. Resistance may be cast as a Bonus Action Proficiency Bonus times per Long Rest; alternate casting is not automated.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

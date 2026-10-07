@@ -71,5 +71,6 @@
       "dice": "12d10",
       "type": "psychic"
     }
-  ]
+  ],
+  "playable": false
 }

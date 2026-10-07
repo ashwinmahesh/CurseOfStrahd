@@ -238,5 +238,6 @@
         "implemented": "text"
       }
     }
-  ]
+  ],
+  "playable": false
 }

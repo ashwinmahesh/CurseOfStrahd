@@ -35,5 +35,6 @@
         "per": "dawn"
       }
     }
-  ]
+  ],
+  "playable": false
 }

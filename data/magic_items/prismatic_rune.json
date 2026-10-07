@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: after a Long Rest choose Acid, Cold, Fire, Lightning, or Thunder.",
-  "text": "Reference-only: after a Long Rest choose Acid, Cold, Fire, Lightning, or Thunder. Spend 1 of 6 charges when casting a damaging spell to change its damage to that type. Regain 1d6 charges each dawn."
+  "text": "Reference-only: after a Long Rest choose Acid, Cold, Fire, Lightning, or Thunder. Spend 1 of 6 charges when casting a damaging spell to change its damage to that type. Regain 1d6 charges each dawn.",
+  "playable": false
 }

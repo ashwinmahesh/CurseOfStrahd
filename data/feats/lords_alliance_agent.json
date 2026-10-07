@@ -24,5 +24,6 @@
       "text": "After a visible enemy damages an ally within 5 feet of you, your next attack against that enemy has Advantage until your next turn ends.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

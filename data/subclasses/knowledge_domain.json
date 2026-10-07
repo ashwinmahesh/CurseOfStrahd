@@ -101,5 +101,6 @@
       "scrying",
       "synaptic_static"
     ]
-  }
+  },
+  "playable": false
 }

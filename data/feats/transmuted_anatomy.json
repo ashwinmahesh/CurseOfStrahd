@@ -30,5 +30,6 @@
       "text": "Gain Advantage on saves against involuntary shape-shifting. After failing a Constitution save, use a Reaction to add 1d4, possibly succeeding instead; uses equal Proficiency Bonus per Long Rest.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

@@ -17,5 +17,6 @@
   "icon": "ring",
   "summary": "Reference-only: after failing a Constitution save for Concentration, roll and expend up to two unused Hit Dice and add them to the save..",
   "text": "Reference-only: after failing a Constitution save for Concentration, roll and expend up to two unused Hit Dice and add them to the save.",
-  "worn": "ring"
+  "worn": "ring",
+  "playable": false
 }

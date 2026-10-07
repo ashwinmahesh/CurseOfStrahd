@@ -32,5 +32,6 @@
       "text": "When you make a creature Frightened of you, gain Heroic Inspiration if you lack it. Once per Short or Long Rest.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

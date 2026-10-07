@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: Bonus Action while held makes the doll hover at a visible empty point within 30 feet for 1 minute.",
-  "text": "Reference-only: Bonus Action while held makes the doll hover at a visible empty point within 30 feet for 1 minute. Bonus Actions move it up to 30 feet, staying within 30 feet of you, or end the effect. While within 30 feet, speak through it, including Verbal spell components even if you cannot speak."
+  "text": "Reference-only: Bonus Action while held makes the doll hover at a visible empty point within 30 feet for 1 minute. Bonus Actions move it up to 30 feet, staying within 30 feet of you, or end the effect. While within 30 feet, speak through it, including Verbal spell components even if you cannot speak.",
+  "playable": false
 }

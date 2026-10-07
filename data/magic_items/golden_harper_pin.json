@@ -17,5 +17,6 @@
   "theme": "implements",
   "icon": "amulet",
   "summary": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type.",
-  "text": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type. While worn, magic identifying your type, alignment, or location reports that persona. While worn, cast Nondetection on yourself. It lasts until you freely end it, remove the pin, or end attunement."
+  "text": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type. While worn, magic identifying your type, alignment, or location reports that persona. While worn, cast Nondetection on yourself. It lasts until you freely end it, remove the pin, or end attunement.",
+  "playable": false
 }

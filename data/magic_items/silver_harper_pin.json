@@ -17,5 +17,6 @@
   "theme": "implements",
   "icon": "amulet",
   "summary": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type.",
-  "text": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type. While worn, magic identifying your type, alignment, or location reports that persona. Also set a thought of up to 25 words at attunement; thought-reading detects that preset message. A reader can use Study and DC 13 Intelligence (Investigation) to recognize that the thoughts are preprogrammed."
+  "text": "Reference-only: when attuning, choose a Harper persona, including its alignment and creature type. While worn, magic identifying your type, alignment, or location reports that persona. Also set a thought of up to 25 words at attunement; thought-reading detects that preset message. A reader can use Study and DC 13 Intelligence (Investigation) to recognize that the thoughts are preprogrammed.",
+  "playable": false
 }

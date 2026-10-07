@@ -262,5 +262,6 @@
         "implemented": "text"
       }
     }
-  ]
+  ],
+  "playable": false
 }

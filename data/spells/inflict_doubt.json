@@ -65,5 +65,6 @@
     "control",
     "debuff"
   ],
-  "icon": "mind_sliver"
+  "icon": "mind_sliver",
+  "playable": false
 }

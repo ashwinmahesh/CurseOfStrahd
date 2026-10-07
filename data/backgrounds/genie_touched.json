@@ -58,5 +58,6 @@
   ],
   "feat_params": {
     "list": "wizard"
-  }
+  },
+  "playable": false
 }

@@ -74,5 +74,6 @@
       "attack": 10,
       "level": 9
     }
-  ]
+  ],
+  "playable": false
 }

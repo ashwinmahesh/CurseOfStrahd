@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only while worn: cast Mage Hand; omit Somatic components from slotted spells; once per dawn, cast Dispel Magic on a creature as part of hitting it with a melee spell attack..",
-  "text": "Reference-only while worn: cast Mage Hand; omit Somatic components from slotted spells; once per dawn, cast Dispel Magic on a creature as part of hitting it with a melee spell attack."
+  "text": "Reference-only while worn: cast Mage Hand; omit Somatic components from slotted spells; once per dawn, cast Dispel Magic on a creature as part of hitting it with a melee spell attack.",
+  "playable": false
 }

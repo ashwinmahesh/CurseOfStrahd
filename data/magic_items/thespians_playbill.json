@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: while holding it, Intelligence checks made to Study add your Charisma modifier, minimum +1..",
-  "text": "Reference-only: while holding it, Intelligence checks made to Study add your Charisma modifier, minimum +1."
+  "text": "Reference-only: while holding it, Intelligence checks made to Study add your Charisma modifier, minimum +1.",
+  "playable": false
 }

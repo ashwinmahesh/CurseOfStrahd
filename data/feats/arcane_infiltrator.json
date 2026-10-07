@@ -42,5 +42,6 @@
       "text": "Dodge as a Bonus Action, up to Proficiency Bonus times per Long Rest.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

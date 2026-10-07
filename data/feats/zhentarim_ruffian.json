@@ -24,5 +24,6 @@
       "text": "When rolling Initiative, spend your Heroic Inspiration to give yourself and your allies Advantage on that Initiative roll.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

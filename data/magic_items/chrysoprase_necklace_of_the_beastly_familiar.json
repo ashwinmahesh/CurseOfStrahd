@@ -17,5 +17,6 @@
   "icon": "amulet",
   "summary": "Reference-only: while worn, cast Find Familiar once per dawn.",
   "text": "Reference-only: while worn, cast Find Familiar once per dawn. A Magic action transforms your familiar within 60 feet into a Giant Scorpion for 10 minutes. Retain alignment, personality, creature type, HP, and Hit Dice; other statistics use the Beast form. Equipment does not transform; unusable equipment drops. Gain the Beast’s HP as Temporary HP, which vanish on reverting; transformation ends early when these Temporary HP run out.",
-  "worn": "neck"
+  "worn": "neck",
+  "playable": false
 }

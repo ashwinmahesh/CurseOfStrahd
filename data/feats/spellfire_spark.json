@@ -49,5 +49,6 @@
       "text": "You may cast Sacred Flame as a Bonus Action Proficiency Bonus times per Long Rest. The alternate casting time is not automated.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

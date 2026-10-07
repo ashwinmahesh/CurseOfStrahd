@@ -120,5 +120,6 @@
         "implemented": "text"
       }
     }
-  ]
+  ],
+  "playable": false
 }

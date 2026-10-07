@@ -42,5 +42,6 @@
       "text": "Reaction after you or a visible creature within 30 feet fails a save: add 1d4 to its total, possibly making it succeed. Uses equal Proficiency Bonus per Long Rest.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

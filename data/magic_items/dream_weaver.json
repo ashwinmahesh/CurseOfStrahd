@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only while within 30 feet of the hung tapestry: study it for 1 hour during a Long Rest, recording a d20 to replace one of your D20 Tests before rolling until your next Long Rest.",
-  "text": "Reference-only while within 30 feet of the hung tapestry: study it for 1 hour during a Long Rest, recording a d20 to replace one of your D20 Tests before rolling until your next Long Rest. It records a Dream caster’s name and appearance. While Unconscious, gain Advantage on Intelligence, Wisdom, and Charisma saves."
+  "text": "Reference-only while within 30 feet of the hung tapestry: study it for 1 hour during a Long Rest, recording a d20 to replace one of your D20 Tests before rolling until your next Long Rest. It records a Dream caster’s name and appearance. While Unconscious, gain Advantage on Intelligence, Wisdom, and Charisma saves.",
+  "playable": false
 }

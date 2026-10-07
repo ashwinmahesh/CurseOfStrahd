@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: a Magic action while holding the compass sets your present location as its destination.",
-  "text": "Reference-only: a Magic action while holding the compass sets your present location as its destination. It points there on the same plane; elsewhere, or when unset, its needle spins. A Magic action clears the destination."
+  "text": "Reference-only: a Magic action while holding the compass sets your present location as its destination. It points there on the same plane; elsewhere, or when unset, its needle spins. A Magic action clears the destination.",
+  "playable": false
 }

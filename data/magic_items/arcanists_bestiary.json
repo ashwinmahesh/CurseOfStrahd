@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: held book casts Charm Monster once per dawn (DC 15; non-Humanoids save with Disadvantage).",
-  "text": "Reference-only: held book casts Charm Monster once per dawn (DC 15; non-Humanoids save with Disadvantage). Attunement grants Arcana, History, Nature, or Religion proficiency, changeable on a Long Rest. Carrying it, a successful Study/Arcana check on a visible Aberration, Construct, Elemental, Fey, or Monstrosity also reveals its damage defenses."
+  "text": "Reference-only: held book casts Charm Monster once per dawn (DC 15; non-Humanoids save with Disadvantage). Attunement grants Arcana, History, Nature, or Religion proficiency, changeable on a Long Rest. Carrying it, a successful Study/Arcana check on a visible Aberration, Construct, Elemental, Fey, or Monstrosity also reveals its damage defenses.",
+  "playable": false
 }

@@ -18,5 +18,6 @@
   "summary": "Arcane Focus.",
   "text": "Arcane Focus. Reference-only: shines green for the duration of any Divination spell targeting you.",
   "focus": "arcane",
-  "held": true
+  "held": true,
+  "playable": false
 }

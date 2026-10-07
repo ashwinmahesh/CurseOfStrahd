@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only while worn: on a proficient Intelligence skill check made to Study, treat natural rolls below 10 as 10.",
-  "text": "Reference-only while worn: on a proficient Intelligence skill check made to Study, treat natural rolls below 10 as 10. Once per dawn, a Reaction turns a failed Concentration save into a success."
+  "text": "Reference-only while worn: on a proficient Intelligence skill check made to Study, treat natural rolls below 10 as 10. Once per dawn, a Reaction turns a failed Concentration save into a success.",
+  "playable": false
 }

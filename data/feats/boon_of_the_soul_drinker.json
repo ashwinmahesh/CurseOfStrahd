@@ -50,5 +50,6 @@
     ],
     "points": 1,
     "max": 30
-  }
+  },
+  "playable": false
 }

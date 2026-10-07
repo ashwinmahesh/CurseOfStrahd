@@ -33,5 +33,6 @@
       "text": "When rolling Initiative while not Incapacitated, grant Heroic Inspiration to up to Proficiency Bonus visible creatures within 30 feet. Once per Long Rest.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

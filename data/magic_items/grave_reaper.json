@@ -48,5 +48,6 @@
         "type": "necrotic"
       }
     ]
-  }
+  },
+  "playable": false
 }

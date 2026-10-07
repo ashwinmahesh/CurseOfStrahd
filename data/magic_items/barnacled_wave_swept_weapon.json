@@ -45,5 +45,6 @@
         "item": "@self"
       }
     }
-  ]
+  ],
+  "playable": false
 }

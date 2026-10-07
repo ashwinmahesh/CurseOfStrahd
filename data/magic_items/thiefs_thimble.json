@@ -16,5 +16,6 @@
   "theme": "arcana",
   "icon": "amulet",
   "summary": "Reference-only: while worn, it absorbs damage from traps you trigger.",
-  "text": "Reference-only: while worn, it absorbs damage from traps you trigger. It has 30 HP; at 0 it breaks and excess damage reaches you."
+  "text": "Reference-only: while worn, it absorbs damage from traps you trigger. It has 30 HP; at 0 it breaks and excess damage reaches you.",
+  "playable": false
 }

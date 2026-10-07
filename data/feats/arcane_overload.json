@@ -42,5 +42,6 @@
       "text": "When an Evocation spell you cast deals damage, add Proficiency Bonus to one of its damage rolls. Once per Long Rest.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

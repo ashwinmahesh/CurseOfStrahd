@@ -19,5 +19,6 @@
   "text": "Reference-only: closing this 2-foot box around a nonmagical item creates a duplicate beside it. Magic actions enlarge it for a Medium creature or restore its size. Enclose a creature and consume 100 GP diamond dust to cast Clone; after casting the creature exits and the box locks for 120 days. The completed clone needs no vessel. Without a clone inside, 999 years submerged in a Feywild bog destroys it.",
   "treasure": {
     "random": false
-  }
+  },
+  "playable": false
 }

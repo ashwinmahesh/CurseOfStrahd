@@ -45,5 +45,6 @@
       "text": "When Help assists an ally’s attack, you may distract an enemy 30 feet away if it can see or hear you.",
       "implemented": "text"
     }
-  ]
+  ],
+  "playable": false
 }

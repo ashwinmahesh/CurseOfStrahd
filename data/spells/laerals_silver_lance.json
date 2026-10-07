@@ -63,5 +63,6 @@
     "damage",
     "control"
   ],
-  "icon": "lightning_bolt"
+  "icon": "lightning_bolt",
+  "playable": false
 }
