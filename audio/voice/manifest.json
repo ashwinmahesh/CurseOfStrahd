@@ -44369,12 +44369,14 @@
  },
  "sir_godfrey_gwilym/04587b68a62d27d6": {
   "chars": 159,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Lord Argynvost lit it every night with his own breath. Silver fire, no heat in it. You could see it from every farm in the valley. It meant somebody was awake."
  },
  "sir_godfrey_gwilym/0c1e15afe1aace24": {
   "chars": 146,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "It went out when he died. The commander won't hear it spoken of. If you want the rest, try the chapel. Something there still answers, some nights."
  },
  "sir_godfrey_gwilym/15d82913cd5b5d0c": {
@@ -44385,12 +44387,14 @@
  },
  "sir_godfrey_gwilym/19d67deb1eddda5e": {
   "chars": 143,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "I follow the commander. I have since we were boys with wooden swords. And he's not wrong about Strahd. He's never once been wrong about Strahd."
  },
  "sir_godfrey_gwilym/1e4c51239b9cda9a": {
   "chars": 12,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "...We watch."
  },
  "sir_godfrey_gwilym/1ffae6d1c0606a2d": {
@@ -44401,62 +44405,74 @@
  },
  "sir_godfrey_gwilym/206b1f58eb5106ec": {
   "chars": 144,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "The horses are four hundred years dead, so we'll walk to war. We've walked further for worse reasons. Say the word when you go up to the castle."
  },
  "sir_godfrey_gwilym/23501f153ff932a6": {
   "chars": 185,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Ask the commander to call the muster. All of us at the table, the way it was. Say your piece to the Order, not to him. I'll stand up when you do. I promise, and I'll remember promising."
  },
  "sir_godfrey_gwilym/2d5e96189dfa6421": {
   "chars": 159,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Our patrol saw a black carriage at Vallaki's gate, bold as you like, by daylight. So the town bends the knee to him now. We'd have ridden out about that, once."
  },
  "sir_godfrey_gwilym/2e3d3fc18b50344b": {
   "chars": 187,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "One thing, and then I'll stop fussing. Don't cross the courtyard after dark. Our men-at-arms are still fighting the last battle out there, and they don't stop to ask whose side you're on."
  },
  "sir_godfrey_gwilym/2e610ef49b854b3d": {
   "chars": 111,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Welcome to Argynvostholt. Mind the steps. The third one's gone, and the fourth, and honestly most of the house."
  },
  "sir_godfrey_gwilym/3020aec7965cd09b": {
   "chars": 79,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "One more. I'll remember this light till then. That's an easy thing to remember."
  },
  "sir_godfrey_gwilym/320eddff19d99170": {
   "chars": 113,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Me? The old woman's cards wanted me? I'm the one who loses his boots. Some mornings I lose which foot they go on."
  },
  "sir_godfrey_gwilym/3577239f45d852be": {
   "chars": 157,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Let them go home. ...I heard that. I was lying beside them in the courtyard. I heard him say it, and Vladimir told me I'd heard wrong, and I let him tell me."
  },
  "sir_godfrey_gwilym/36462ddedb5ccc2d": {
   "chars": 147,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "That it mattered. Yes. I can hold on to that. The rest will come back or it won't, and either way I'll know which side of the door I'm standing on."
  },
  "sir_godfrey_gwilym/3792fb6b0e103fbd": {
   "chars": 122,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "The patrol says Vallaki's quieter these days. Not frightened-quiet. Busy-quiet. I'd forgotten towns could sound like that."
  },
  "sir_godfrey_gwilym/379360dd2a87e133": {
   "chars": 102,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "There's something about him on my wall. I wrote it down so I'd keep it. I can't remember what I wrote."
  },
  "sir_godfrey_gwilym/385fd4d11100cec0": {
   "chars": 73,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Or I could stay for one more ride. Your choice. I've made enough of mine."
  },
  "sir_godfrey_gwilym/3c71e8eb10ee875b": {
@@ -44467,137 +44483,164 @@
  },
  "sir_godfrey_gwilym/41b69637de903d95": {
   "chars": 38,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Four hundred years. I let him tell me."
  },
  "sir_godfrey_gwilym/451a14960875f69d": {
   "chars": 37,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "I'll stand, Vladimir. I won't say it."
  },
  "sir_godfrey_gwilym/45c95d412678ee87": {
   "chars": 92,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "I'll be in my room with the wall. Come and fetch me when you need a big man in a lot of tin."
  },
  "sir_godfrey_gwilym/4ab075c3efa98c54": {
   "chars": 60,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "I'll stand with you. I won't say it. I said it once already."
  },
  "sir_godfrey_gwilym/4b35cc0d135b4ab1": {
   "chars": 190,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Keep the watch. Shield the sleeper and the stranger. Lift the fallen. Take nothing not given. And when the light goes out, be the light. Rise, Sir Godrick, of the Order of the Silver Dragon."
  },
  "sir_godfrey_gwilym/4c4aa0f51cb4f7c7": {
   "chars": 185,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "The Order of the Silver Dragon. Lord Argynvost founded us: a silver dragon who liked people enough to look like one at dinner. We kept a watch over the valley. Farms, roads, the passes."
  },
  "sir_godfrey_gwilym/4f69014c1732e3de": {
   "chars": 198,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "The great hall, straight through. He sits at the head of the table, where he's sat since... I stopped counting at three hundred years. Be courteous. He isn't dangerous unless you mention the castle."
  },
  "sir_godfrey_gwilym/580798fb44a8dc24": {
   "chars": 108,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Go carefully. And if you hear singing in the chapel at night, don't worry. It's only the house, remembering."
  },
  "sir_godfrey_gwilym/5b4ee3cef9e2a17e": {
   "chars": 142,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Sit in his chair and add my name to the roster as absent. It'll be the first absence in four hundred years. He'll take it harder than a sword."
  },
  "sir_godfrey_gwilym/5fafe414210f32f6": {
   "chars": 41,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "I am. It comes and goes, how much I mind."
  },
  "sir_godfrey_gwilym/613a7a44b929395c": {
   "chars": 39,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "I'll put you down as the one who asked."
  },
  "sir_godfrey_gwilym/623c392c50d4720d": {
   "chars": 133,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Be the light. Not \"hate the dark\". We swore to be the light, and we've been sitting in the dark for four hundred years keeping score."
  },
  "sir_godfrey_gwilym/6466086714787ecc": {
   "chars": 41,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "You'll mention the castle. Everyone does."
  },
  "sir_godfrey_gwilym/6775a32f41d84d4e": {
   "chars": 174,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "The Lantern Company. Twenty men we sent over the passes for help, the week before the end. They came back too late, and the young lord's archers were waiting on our own road."
  },
  "sir_godfrey_gwilym/695d41359906052b": {
   "chars": 125,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Then a young lord came over the mountains with an army. We lost. We died. We got up again. That last part wasn't in the oath."
  },
  "sir_godfrey_gwilym/702ee54db7f0181e": {
   "chars": 103,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "The oath's still there. I checked this morning, the way you'd pat a pocket for your purse. Still there."
  },
  "sir_godfrey_gwilym/709d74e8c14f9640": {
   "chars": 47,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Still here. Still me, mostly. What do you need?"
  },
  "sir_godfrey_gwilym/714d00242d5dceaf": {
   "chars": 48,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Vladimir. Please. Look at what's in their hands."
  },
  "sir_godfrey_gwilym/752c2eaad350e279": {
   "chars": 112,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "They ride home every night. They never get here. I go down to the gate sometimes, to see if tonight's the night."
  },
  "sir_godfrey_gwilym/770fe3b8db864418": {
   "chars": 114,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "And St. Andral's has its saint back, I hear. Good. I was christened under that roof, I think. Or one very like it."
  },
  "sir_godfrey_gwilym/78d594322991decc": {
   "chars": 107,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Cold. You lot are warm, though. I'd forgotten people were warm. I keep standing too close; tell me if I do."
  },
  "sir_godfrey_gwilym/80aeaea89647f757": {
   "chars": 82,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "I've written all your names on the inside of my gauntlet. In case. You don't mind?"
  },
  "sir_godfrey_gwilym/8265c7d332b834ae": {
   "chars": 34,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Stand easy, Piet. They're with me."
  },
  "sir_godfrey_gwilym/8586775214697027": {
   "chars": 174,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "And the mists came down behind him, and no help ever came, and Vladimir called him a coward at the table, so the rest of us would have somebody to hate who wasn't the dragon."
  },
  "sir_godfrey_gwilym/91ac9a3cee42dfd7": {
   "chars": 124,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "The light's still pulling at me, very gently, like a child at a sleeve. I don't mind. It means it'll be there when I'm done."
  },
  "sir_godfrey_gwilym/93ef9a11b4a2ce42": {
   "chars": 80,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "And I let him. I wrote it on the wall so I wouldn't, and then I forgot the wall."
  },
  "sir_godfrey_gwilym/98f82c5559f6a3eb": {
   "chars": 31,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Do you think so? I've wondered."
  },
  "sir_godfrey_gwilym/9b729f9939018753": {
@@ -44608,147 +44651,176 @@
  },
  "sir_godfrey_gwilym/a0ca13cff01065fa": {
   "chars": 123,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "But some nights I can't remember why we swore what we swore. I remember that it mattered. I've lost the words for the rest."
  },
  "sir_godfrey_gwilym/a978e5f906771a20": {
   "chars": 154,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "A ladle. Oh, that's the best thing I've heard in four hundred years. Then you were already a knight, lad. I'm only the witness. Let's witness it properly."
  },
  "sir_godfrey_gwilym/a9e1740e3e4c4cd4": {
   "chars": 68,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Back again. Good. The house is better with somebody breathing in it."
  },
  "sir_godfrey_gwilym/baffb1d75728c777": {
   "chars": 47,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "I'm with them, Vladimir. Put me down as absent."
  },
  "sir_godfrey_gwilym/be5eeb50ffb1307d": {
   "chars": 151,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "I put the ones that mattered most down low. So I'd still be able to reach them, at the end. Read it to me. My eyes have gone the way of the rest of me."
  },
  "sir_godfrey_gwilym/bfe4b45b4b29c2cc": {
   "chars": 72,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "I'll write it on the inside of my gauntlet. I write everything down now."
  },
  "sir_godfrey_gwilym/c16699f3157481b9": {
   "chars": 61,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Who knighted you first, lad? Somebody did. You stand like it."
  },
  "sir_godfrey_gwilym/c548bc165733edc4": {
   "chars": 108,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "I know that name. It hurts, and I don't know why it hurts. That's how I know it's one of the important ones."
  },
  "sir_godfrey_gwilym/c5496e50f2dcc0a2": {
   "chars": 60,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Four hundred years, lad. Still at our posts, though. Mostly."
  },
  "sir_godfrey_gwilym/c9ab46f3276c7bb3": {
   "chars": 166,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Then I'll come. I'll tell the commander myself, so he hears it from me and not from the hall. He'll say I'm a fool. He's said it before. It has never once stopped me."
  },
  "sir_godfrey_gwilym/cae45f233069c797": {
   "chars": 60,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "There wouldn't be. The young lord kept the libraries, after."
  },
  "sir_godfrey_gwilym/d2639688c06f08b6": {
   "chars": 63,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Brothers. Hear them out. I did, and I remember things I'd lost."
  },
  "sir_godfrey_gwilym/dcbacc496a0af82b": {
   "chars": 126,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "You swore his oath. I heard you. I'm not angry. I swore it too, once, and it took me four hundred years to hear what I'd said."
  },
  "sir_godfrey_gwilym/ddc2da278151928f": {
   "chars": 87,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Thank you. Tell the old woman her cards were right about me, and that I was very tired."
  },
  "sir_godfrey_gwilym/de2279e9c60b9863": {
   "chars": 132,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "It's calling. It's warm. ...Not yet. I promised somebody a ride. I'll come when the castle's done, and the light will still be here."
  },
  "sir_godfrey_gwilym/de58c19c92cfbddc": {
   "chars": 103,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Teodor. The pears were Teodor's. I've been remembering his pears for years and thinking they were mine."
  },
  "sir_godfrey_gwilym/e78f6c2d8d6823b7": {
   "chars": 78,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "\"Remember the oath.\" I wrote that for tonight, I think. I just didn't know it."
  },
  "sir_godfrey_gwilym/e79ed6320a8d6c75": {
   "chars": 142,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "The night before the end. Argynvost called Aldric up to the tower and sent him out over the passes for help, because he had the fastest horse."
  },
  "sir_godfrey_gwilym/e8c1ee3b4ed48cd2": {
   "chars": 175,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Pears. I remember pears very clearly. And a grey mare who bit everyone but me. And my sister Gwenllian, who laughed like a goose. I've lost her face. I've still got the laugh."
  },
  "sir_godfrey_gwilym/ea3825a5f90eda63": {
   "chars": 115,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "The cards. The old woman's cards wanted me, didn't they? I can feel the light pulling. I could go now. I'd like to."
  },
  "sir_godfrey_gwilym/ecb56e1681c0e431": {
   "chars": 138,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "The town with the festivals? The patrol says the singing carries all the way up the ridge. It isn't happy singing. It's very loud singing."
  },
  "sir_godfrey_gwilym/ed05ecd220ad72a1": {
   "chars": 9,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Ashgrove."
  },
  "sir_godfrey_gwilym/f142b3dabe87e177": {
   "chars": 136,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "It's kind of you. It isn't enough, not yet. Find me the words, if you can. They're carved somewhere in this house. I used to know where."
  },
  "sir_godfrey_gwilym/f1aef10f5444ceec": {
   "chars": 86,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Keep the sword. Aldric would want it to go on being carried by someone who comes back."
  },
  "sir_godfrey_gwilym/f3943f3c6235ef4a": {
   "chars": 141,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "I'd go. I'd go tonight. But I'd be half a knight. I've lost the oath, and a knight without his oath is a man standing in a great deal of tin."
  },
  "sir_godfrey_gwilym/f681f11517f970f3": {
   "chars": 113,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "The road patrol said you'd be coming. They said you were polite. That's rare enough that they mentioned it twice."
  },
  "sir_godfrey_gwilym/f787802f1769b31e": {
   "chars": 158,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Sir Godfrey Gwilym, of the Order of the Silver Dragon, or what's left of it. You'll want the commander. Everyone does, eventually. Then they wish they hadn't."
  },
  "sir_godfrey_gwilym/ff1d9e99538c454f": {
   "chars": 43,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Kneel, then. No, the other knee. That's it."
  },
  "sir_godfrey_gwilym/ff475f0e82e94b5e": {
   "chars": 63,
-  "recipe": "31cb6abbc7",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
   "text": "Something new. I haven't had anything new since... well. Since."
  },
  "sorvia/0761c60ad36005ab": {

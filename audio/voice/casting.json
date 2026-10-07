@@ -118,7 +118,6 @@
       "description": "A big, gentle man with a deep, kindly, slightly hollow voice and a warm English accent, a dead knight who is forgetting. Slow, careful and courteous, searching for words, tender about his lost comrades.",
       "settings": {},
       "model": "eleven_v3",
-      "earlier_model": "eleven_v4",
       "model_since": "2026-10-07"
     },
     "father_lucian": {
