@@ -251,6 +251,7 @@ func _refresh_all() -> void:
 		var t := _tok(id)
 		if t == null:
 			continue
+		t.mounted = e.mount_of(t.combatant) != null
 		t.refresh()
 		t.set_active(cur != null and t.combatant == cur and e.state == Encounter.State.ACTIVE)
 	hud.refresh()
@@ -1069,6 +1070,7 @@ func _play_events() -> void:
 				var t := _tok(str(ev["id"]))
 				if t != null:
 					t.flash(Look.color("vampire_red"))
+					t.hurt()
 					_float(t, ("CRIT %d" if bool(ev.get("critical", false)) else "-%d") % int(ev["amount"]), "vampire_red", 64)
 					t.refresh()
 					await get_tree().create_timer(0.35 * GameSettings.combat_pace()).timeout
@@ -1090,7 +1092,9 @@ func _play_events() -> void:
 						hud.flash_down(tc.combatant.id)
 						hud.banner("%s falls!" % tc.combatant.name())
 						_narrate("combat:fall", tc.combatant, null)
-					elif kind == "death" and tc.combatant.side == &"enemy":
+					elif kind == "death":
+						tc.fall_if_drawn()
+					if kind == "death" and tc.combatant.side == &"enemy":
 						Audio.sfx("enemy_death")
 						Audio.sfx("thud")
 						_narrate("combat:kill", null, tc.combatant)
@@ -1106,7 +1110,12 @@ func _play_events() -> void:
 				if caster != null:
 					caster.flash(Look.color("lilac"), 0.3)
 					var aim := _spell_aim(ev, caster)
-					if caster.casts_with_attack() and aim != Vector2.ZERO and caster.start_attack(aim):
+					# The drawn spell gesture when the sprite has one (aimed, or facing as it is for a spell on itself);
+					# else casters whose attack is a spell gesture play that.
+					if caster.start_cast(aim):
+						cast_by = caster.combatant.id
+						await caster.wait_for_strike()
+					elif caster.casts_with_attack() and aim != Vector2.ZERO and caster.start_attack(aim):
 						cast_by = caster.combatant.id
 						await caster.wait_for_strike()
 				var cells := ev.get("cells", []) as Array

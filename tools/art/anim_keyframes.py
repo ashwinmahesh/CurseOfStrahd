@@ -72,7 +72,77 @@ def cut_refs(asset_id, out):
     return list(json.loads(meta.read_text()))
 
 
+# The fuller animation set (docs/art/animation.md, "Animation set v2"): one strip per view and kind, drawn at 2K. Each
+# entry: the action named in the prompt, and frames 2.. (frame 1 is always the reference pose redrawn). {WINDUP},
+# {STRIKE}, {CAST_GATHER} and {CAST_RELEASE} come from the character's animations.json entry.
+V2_KINDS = {
+    "walk4": ("walk cycle", [
+        "walking, contact: the right leg forward with its heel just touching the ground, the left leg back on its toes, "
+        "the left arm swinging forward and the right arm back",
+        "walking, passing: the weight on the straight right leg, the left leg bent and lifted as it passes under the body, "
+        "the body at its highest, arms passing the hips",
+        "walking, contact: the left leg forward with its heel just touching the ground, the right leg back on its toes, "
+        "the right arm swinging forward and the left arm back",
+        "walking, passing: the weight on the straight left leg, the right leg bent and lifted as it passes under the body, "
+        "the body at its highest, arms passing the hips"]),
+    "attack5": ("{ATTACK}", [
+        "ready: a fighting stance, knees bent, weight balanced, weapon or hands up and ready",
+        "anticipation: crouching lower and pulling back, coiling the body, halfway to the wind-up",
+        "wind-up at its peak: {WINDUP}",
+        "strike: {STRIKE}, with a short curved pale motion smear trailing the weapon or hand and touching it",
+        "follow-through: just after the blow, the weapon or hands carried on past the target, the body twisted, the "
+        "weight on the front foot"]),
+    "hurt": ("hit, fall and collapse", [
+        "hit and flinching: recoiling backward from a blow, head snapped back, grimacing, one arm raised to guard, knees "
+        "bent",
+        "staggering: knees buckling, the arms dropping, swaying",
+        "collapsing: fallen to the knees, slumping forward, head bowed, one hand on the ground",
+        "lying flat on the ground on the back, eyes closed, unconscious, drawn well apart from the kneeling figure with a "
+        "wide gap between them"]),
+    "ride": ("ride on a horse", [
+        "riding: seated astride a horse, holding the reins, back straight",
+        "riding and raising the weapon high to strike, still seated astride the horse",
+        "riding and striking down at an enemy beside the horse, still seated astride"]),
+    "sneak": ("sneaking walk", [
+        "sneaking: crouched low with the knees deeply bent, the body hunched forward, looking ahead warily, weapon held "
+        "close",
+        "sneaking step: crouched low, the right foot stepping forward softly onto its toes",
+        "sneaking step: crouched low, the left foot stepping forward softly onto its toes; no ground, stones or scenery "
+        "anywhere"]),
+    "cast": ("spell", [
+        "gathering a spell: {CAST_GATHER}",
+        "releasing the spell: {CAST_RELEASE}"]),
+}
+CAST_DEFAULTS = ("one hand raised before the chest with a small glowing light gathering in the palm, the other arm "
+                 "drawn back, eyes intent",
+                 "the hand thrust forward at the enemy with a small burst of light leaving it, leaning forward")
+
+
+def strip_count(kind):
+    """Figures on a strip of `kind` (frame 1 included)."""
+    return 1 + len(V2_KINDS[kind][1]) if kind in V2_KINDS else 3
+
+
 def prompt(kind, spec, view):
+    if kind in V2_KINDS:
+        action, frames = V2_KINDS[kind]
+        gather, release = spec.get("cast_gather", CAST_DEFAULTS[0]), spec.get("cast_release", CAST_DEFAULTS[1])
+        lines = " ".join(f"Frame {i + 2}: {f}." for i, f in enumerate(frames))
+        text = (ROOT / "art" / "prompts" / "keyframes_v2.txt").read_text().strip()
+        if kind == "ride":
+            # A rider can't be drawn seated on nothing: the horse is drawn as a flat magenta silhouette that
+            # blender/render_keys.py keys out, leaving the rider astride (the far leg hidden, as on any mount).
+            text += (" In frames 2 to 4 the horse is a plain flat solid pure magenta (#FF00FF) silhouette with no"
+                     " black outline, no shading, lines, saddle or details; only the rider is drawn normally, in the"
+                     " same colours as the reference.")
+        fields = {"COUNT": str(1 + len(frames)), "WHO": spec["who"], "VIEW": VIEW_TEXT[view], "ACTION": action,
+                  "FRAMES": lines}
+        for k, v in fields.items():
+            text = text.replace("{" + k + "}", v)
+        for k, v in {"ATTACK": spec["attack"], "WINDUP": spec["windup"], "STRIKE": spec["strike"],
+                     "CAST_GATHER": gather, "CAST_RELEASE": release}.items():
+            text = text.replace("{" + k + "}", v)
+        return text
     text = (ROOT / "art" / "prompts" / f"{kind}_keyframes.txt").read_text().strip()
     fields = {"WHO": spec["who"], "VIEW": VIEW_TEXT[view]}
     if kind == "attack":
@@ -97,7 +167,8 @@ def generate(job):
             print(f"STOP {asset_id} {kind}_{view}: the Gemini call budget is spent ({gemini_budget.used()})", flush=True)
             return False
         r = subprocess.run([sys.executable, str(ROOT / "tools" / "art" / "generate_gemini.py"), f"{kind}_{view}",
-                            f"anim/{asset_id}", text, "--model", model(), "--aspect", "21:9", "--ref", str(ref)],
+                            f"anim/{asset_id}", text, "--model", model(), "--aspect", "21:9", "--ref", str(ref)]
+                           + (["--size", "2K"] if kind in V2_KINDS else []),
                            capture_output=True, text=True)
         if "per_day" in (r.stderr + r.stdout) or "credits are depleted" in (r.stderr + r.stdout):
             print(f"STOP {asset_id} {kind}_{view}: Gemini's daily quota or credits are used up", flush=True)
@@ -113,10 +184,11 @@ def generate(job):
     return ok
 
 
-def check(asset_id):
-    """Views of `asset_id` whose attack strip should be drawn again, with the reasons."""
-    r = subprocess.run([BLENDER, "-b", "--python", str(ROOT / "blender" / "render_attack.py"), "--",
-                        "--id", asset_id, "--check"], capture_output=True, text=True)
+def check(asset_id, kind="attack"):
+    """Views of `asset_id` whose `kind` strip should be drawn again, with the reasons."""
+    script, extra = ("render_attack.py", []) if kind == "attack" else ("render_keys.py", ["--kind", kind])
+    r = subprocess.run([BLENDER, "-b", "--python", str(ROOT / "blender" / script), "--",
+                        "--id", asset_id, "--check", *extra], capture_output=True, text=True)
     for line in r.stdout.splitlines():
         if line.startswith("CHECK "):
             return json.loads(line[6:])
@@ -126,7 +198,7 @@ def check(asset_id):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--only", nargs="*")
-    p.add_argument("--kind", choices=["attack", "walk"], default="attack")
+    p.add_argument("--kind", choices=["attack", "walk", *V2_KINDS], default="attack")
     p.add_argument("--views", nargs="*", help="regenerate just these views (implies --force for them)")
     p.add_argument("--force", action="store_true")
     p.add_argument("--jobs", type=int, default=2)
@@ -166,9 +238,10 @@ def main():
                 wanted = (a.views and view in a.views) or (not a.views and (a.force or not out.exists()))
                 if wanted and view in refs_for(asset_id):
                     jobs.append(job(asset_id, view))
-        if a.recheck and a.kind == "attack":
+        checks = a.kind == "attack" or a.kind in V2_KINDS
+        if a.recheck and checks:
             with ThreadPoolExecutor(max_workers=4) as pool:
-                verdicts = dict(zip(ids, pool.map(check, ids)))
+                verdicts = dict(zip(ids, pool.map(lambda i: check(i, a.kind), ids)))
             queued = {(j[0], j[2]) for j in jobs}
             for asset_id, bad in verdicts.items():
                 for view, why in bad.items():
@@ -183,11 +256,11 @@ def main():
             with ThreadPoolExecutor(max_workers=a.jobs) as pool:
                 results = list(pool.map(generate, jobs))
             failed = results.count(False)
-            if a.kind != "attack" or attempt == a.retry:
+            if not checks or attempt == a.retry:
                 break
             touched = sorted({j[0] for j in jobs})
             with ThreadPoolExecutor(max_workers=4) as pool:
-                verdicts = dict(zip(touched, pool.map(check, touched)))
+                verdicts = dict(zip(touched, pool.map(lambda i: check(i, a.kind), touched)))
             jobs = []
             for asset_id, bad in verdicts.items():
                 for view, why in bad.items():
