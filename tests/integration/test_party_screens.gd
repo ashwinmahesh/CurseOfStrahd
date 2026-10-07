@@ -293,6 +293,27 @@ func test_a_wizard_swaps_one_cantrip_per_long_rest_even_after_reopening() -> voi
 	assert_false(ChoiceOptions.swap_open(silvain.choice("wizard.cantrips")), "the swap chance closed with the screen")
 
 
+func test_an_items_long_rest_offers_prepared_spells_too() -> void:
+	# Daern's Instant Fortress gives the party a Long Rest from the inventory: the same chance follows it.
+	var ilse := GameState.story.party[0]
+	ilse.add_item("daerns_instant_fortress")
+	root.call("open_screen", "inventory", 0)
+	await _frames(1)
+	var inv := root.get("screen") as InventoryScreen
+	var prep := func() -> Array: return inv.find_children("*", "Button", true, false).filter(func(b: Node) -> bool:
+		return (b as Button).text == "Change prepared spells" and not b.is_queued_for_deletion())
+	assert_eq((prep.call() as Array).size(), 0, "no rest yet")
+	inv.selected = "daerns_instant_fortress"
+	inv.call("_use_power", "fortress", {})
+	await _frames(1)
+	var btn := prep.call() as Array
+	assert_eq(btn.size(), 1, "offered after the item's Long Rest")
+	(btn[0] as Button).pressed.emit()
+	await _frames(2)
+	var keys: Array = inv.find_children("*", "ChoiceWidget", true, false).map(func(w: Node) -> String: return (w as ChoiceWidget).choice.key)
+	assert_true("wizard.cantrips" in keys and "cleric.prepared" in keys, str(keys))
+
+
 func test_quicksave_from_the_pause_menu() -> void:
 	# A new game has no slot: the first quicksave makes one, and later ones go over it.
 	SaveSystem.current_slot = ""

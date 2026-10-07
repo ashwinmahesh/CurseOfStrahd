@@ -29,6 +29,9 @@ var replace_max: int = -1
 ## Choices that share one swap between them name the same group, also how the player reads them ("Mystic Arcanum":
 ## one arcanum spell per Warlock level across all four).
 var replace_group: String = ""
+## False for a pick only a rest changes, which character creation leaves at its `default` (a High Elf's
+## Prestidigitation).
+var at_creation := true
 ## Set while a swap chance is open (ChoiceOptions.open_swap): the picks it started from, and how many of them may
 ## still go (-1 any). Empty `swap_from` means no chance is open and the picks are free (character creation).
 var swap_from: Array[String] = []

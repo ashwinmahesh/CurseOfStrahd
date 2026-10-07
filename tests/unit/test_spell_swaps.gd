@@ -120,6 +120,37 @@ func test_a_wizard_swaps_one_cantrip_after_a_long_rest() -> void:
 			"%s is in the spellbook" % o.id)
 
 
+func test_a_high_elf_swaps_prestidigitation_after_a_long_rest() -> void:
+	# Ratatoille, a High Elf Wizard: the lineage's Prestidigitation becomes another Wizard cantrip after a Long Rest.
+	var ch := TestChars.pregen("ratatoille", 1)
+	var key := "species.lineage.high_elf_lineage.cantrip"
+	var c := ch.choice(key)
+	assert_true(c != null and c.replaceable == "long_rest", "the High Elf cantrip is a choice a Long Rest changes")
+	assert_eq(ch.picks_for(key), [] as Array[String], "the pregen never picked it")
+	assert_eq(c.picks, ["prestidigitation"] as Array[String], "it starts as Prestidigitation")
+	var known := func() -> Array: return ch.known_spells().map(func(k: Dictionary) -> String: return str(k["id"]))
+	assert_true("prestidigitation" in known.call(), str(known.call()))
+	var st := StoryState.new()
+	st.party.append(ch)
+	var keys: Array = PrepareScreen.preparable(st).map(func(e: Dictionary) -> String: return (e["choice"] as Choice).key)
+	assert_eq(keys.slice(-2), ["wizard.cantrips", key], "offered after the Wizard's own cantrips: %s" % [keys])
+	assert_false(key in PrepareScreen.preparable(st, "short_rest").map(func(e: Dictionary) -> String: return (e["choice"] as Choice).key))
+	c = _swap(ch, key, c.picks, "long_rest")
+	assert_eq(c.swap_max, 1)
+	var other := _unpicked(c, ch.picks_for("wizard.cantrips"))
+	assert_true(other != "" and other in Compendium.shared().spells_for("wizard", 0).map(func(s: Dictionary) -> String: return str(s["id"])), other)
+	var picks := ChoiceOptions.toggled(c, other, true)
+	assert_eq(picks, [other], "picking the new one swaps it in")
+	_store(ch, key, picks)
+	assert_true(other in known.call() and not "prestidigitation" in known.call(), str(known.call()))
+	# A level up leaves it; character creation leaves it at Prestidigitation.
+	assert_eq(_swap(ch, key, ch.picks_for(key), "level_up").swap_max, 0)
+	var b := CharacterBuilder.new(null, (Compendium.shared().get_entry("pregens", "ratatoille")["build"] as Dictionary).duplicate(true))
+	var origin: Array = b.choices_for_step(CharacterBuilder.Step.ORIGIN).map(func(x: Choice) -> String: return x.key)
+	assert_true("species.elven_lineage" in origin and not key in origin, str(origin))
+	assert_true("prestidigitation" in b.preview().known_spells().map(func(k: Dictionary) -> String: return str(k["id"])))
+
+
 func test_a_bard_swaps_one_cantrip_and_one_spell_each_level() -> void:
 	var ch := TestChars.custom("bard", "human", 1)
 	var up := LevelUpController.new(ch)
