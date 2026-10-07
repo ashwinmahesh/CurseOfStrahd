@@ -228,3 +228,37 @@ func test_a_lair_action_names_whom_it_turns_on() -> void:
 	assert_eq(lair.size(), 1, "the lair acted")
 	assert_eq(str((lair[0] as Dictionary)["action"]), "spirit")
 	assert_eq((lair[0] as Dictionary)["targets"], [a.id], "the hero it struck")
+
+
+## Lingering areas (FxZones): every spell that leaves a zone has a lasting look, and every look is one FxZones builds.
+func test_every_lingering_spell_has_a_look() -> void:
+	var zones := _data()["zones"] as Dictionary
+	for s in Compendium.shared().all("spells"):
+		if s.has("zone") and str((s.get("source", {}) as Dictionary).get("book", "")) == "PHB2024":
+			assert_true(zones.has(str(s["id"])), "%s leaves an area but has no look in art/vfx/effects.json zones" % s["id"])
+	for id: String in zones:
+		assert_false(Compendium.shared().spell_data(id).is_empty(), "zones: no spell %s" % id)
+		var spec := SpellFx._spec(zones[id])
+		assert_true(str(spec["family"]) in FxZones.LOOKS, "zones: %s has no look %s" % [id, spec["family"]])
+		assert_true(str(spec.get("flavour", "")) == "" or (_data()["flavours"] as Dictionary).has(str(spec["flavour"])), "zones: %s flavour" % id)
+
+
+func test_a_zone_wears_its_look_and_lets_it_go() -> void:
+	var board := ArenaBoard.build(CombatGrid.from_rows(["..........", "..........", "..........", "..........", ".........."]))
+	add_child(board)
+	var field := FieldView.create(board)
+	add_child(field)
+	var f := FieldObject.new(FieldObject.Kind.ZONE, "darkness", "Darkness")
+	f.cells.assign([Vector2i(2, 2), Vector2i(3, 2), Vector2i(2, 3)])
+	f.rules = {"obscured": "heavy"}
+	f.rounds_left = 5
+	field.sync([f])
+	var zone := field.node_for(f.id)
+	assert_true(zone != null and zone.get_child_count() >= 2, "the floor tint and the black mist")
+	assert_true(zone.find_children("*", "GPUParticles3D", true, false).size() >= 1, "Darkness billows")
+	f.ended = true
+	field.sync([f])
+	await get_tree().process_frame
+	assert_false(is_instance_valid(zone), "gone with the spell")
+	field.queue_free()
+	board.queue_free()

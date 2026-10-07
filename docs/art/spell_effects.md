@@ -36,6 +36,16 @@ The descriptions live in `art/vfx/effects.json` (`families`); every one is built
 | smite, slash | on a blow that lands | Divine Smite, a zombie's slam, a longsword |
 | summon, teleport, glimmer | where a creature appears, both ends of a jump, a small working | Summon Undead, Misty Step, Detect Magic |
 
+## Lingering areas
+
+A spell that leaves an area on the board (Darkness, Wall of Fire, Web, Grease, Spike Growth, Cloudkill, Spirit
+Guardians...) keeps a 3D look for as long as it lasts: `zones` in the data picks one of FxZones' looks (mist, dark,
+flames, spikes, vines, tentacles, web, slick, frost, daggers, swarm, spirits, aura, dome, beam, light, storm, quake,
+wind, water, prism) and its flavour. The field view (world/combat/field_view.gd) builds it under the zone with a fainter
+floor tint (the squares still read for the rules); its emitters start already full, so a moving aura never pops.
+Thorns, vines, tentacles and web strands are lit meshes that sway (shaders/fx/fx_sway.gdshader), Grease and ice are
+slicks on the floor (shaders/fx/fx_slick.gdshader). `VFX_SET=zones` captures them before and after.
+
 ## Abilities and attacks
 
 - **Class features** (`features` in the data) play on the `ability` event the action catalog emits when one is used

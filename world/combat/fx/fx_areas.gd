@@ -387,3 +387,29 @@ static func ground(fx: SpellFx, cue: Dictionary, caster: CombatToken, cells: Arr
 	fx.pulse(circle, 0.15, 0.5, 0.8)
 	fx.shake(0.04, 0.3)
 	await fx.wait(0.35)
+
+
+## A twisting pattern of colours weaving through the area (Hypnotic Pattern): ribbons of glints in many hues spiral
+## up through the squares while rings of light ripple out over the creatures caught in it.
+static func pattern(fx: SpellFx, cue: Dictionary, caster: CombatToken, cells: Array, board: ArenaBoard) -> void:
+	if cells.is_empty():
+		return
+	var ex := extent(cells, board)
+	var r := float(ex["radius"])
+	var mid := ex["mid"] as Vector3
+	var hues: Array[String] = ["rose", "candle", "wick", "bile", "moonlight", "lilac", "orchid"]
+	for i in hues.size():
+		var h := Look.color(hues[i])
+		var swirl := FxKit.particles({"amount": int(clampf(r * 10.0, 14.0, 60.0)), "lifetime": 1.6, "explosiveness": 0.25,
+			"emit": "ring", "radius": r * (0.25 + 0.1 * i), "inner": r * 0.1, "ring_height": 0.4, "dir": Vector3.UP, "spread": 10.0,
+			"speed": Vector2(0.4, 0.9), "damping": Vector2(0.2, 0.4), "orbit": Vector2(0.35, 0.6) * (1.0 if i % 2 == 0 else -1.0),
+			"size": 0.16, "grow": FxKit.curve(0.2, 1.0, 0.0, 0.4), "fade_in": true, "colours": [h, h],
+			"material": FxKit.glow_material(FxKit.Shape.GLINT, Look.color("ivory"), 2.6)})
+		fx.emit(swirl, mid + Vector3(0, 0.3 + 0.12 * i, 0))
+	var ripples := FxKit.particles({"amount": 6, "lifetime": 1.0, "explosiveness": 0.0, "speed": Vector2.ZERO, "spin": Vector2.ZERO,
+		"size": r * 2.2, "grow": FxKit.curve(0.1, 0.6, 1.0, 0.5), "colours": [Look.color("lilac"), Look.color("rose"), Look.color("moonlight")],
+		"fade_in": true, "material": FxKit.glow_material(FxKit.Shape.RING, Look.color("ivory"), 1.2)})
+	fx.emit(ripples, mid + Vector3(0, 1.0, 0))
+	FxKit.flash(fx, mid + Vector3(0, 1.2, 0), (cue["colours"] as Dictionary)["light"], 2.5, r * 2.5, 0.2, 1.0)
+	await fx.wait(0.45)
+

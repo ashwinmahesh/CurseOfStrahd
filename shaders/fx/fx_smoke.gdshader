@@ -14,6 +14,12 @@ uniform float soft = 0.35;
 varying float seed;
 varying float phase;
 
+// Particle colours come from palette gradients, which hold sRGB values: turn them linear like every other colour.
+vec3 to_linear(vec3 c) {
+	return mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(0.04045, c));
+}
+
+
 void vertex() {
 	seed = fract(sin(float(INSTANCE_ID) * 57.3 + 1.7) * 43758.5453);
 	phase = INSTANCE_CUSTOM.y;
@@ -35,6 +41,6 @@ void fragment() {
 	float n2 = texture(noise_tex, UV * 1.3 + vec2(seed * 2.0 - phase * 0.3, seed)).r;
 	float body = clamp(1.0 - r, 0.0, 1.0);
 	float a = smoothstep(0.1, 0.6, body * (0.5 + n * 0.9) + (n2 - 0.5) * 0.25 - phase * 0.3);
-	ALBEDO = COLOR.rgb * (0.85 + n2 * 0.3);
+	ALBEDO = to_linear(COLOR.rgb) * (0.85 + n2 * 0.3);
 	ALPHA = clamp(a * COLOR.a * density * soften, 0.0, 1.0);
 }

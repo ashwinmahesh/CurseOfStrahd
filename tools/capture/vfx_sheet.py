@@ -65,7 +65,7 @@ def main():
         n = min(len(before), len(after))
         if n == 0:
             continue
-        cb = crop_box(box, key in ("fireball",))
+        cb = crop_box(box, key not in ("fire_bolt", "eldritch_blast", "cure_wounds", "divine_smite"))
         name = key.replace("_", " ").title()
         frames = []
         best, best_i = -1.0, 0
@@ -76,8 +76,10 @@ def main():
                 best, best_i = diff, i
             frames.append(pair(bi, ai, cb, HALF, name))
         gif = os.path.join(out_dir, f"vfx_{key}.gif")
-        pal = [f.quantize(colors=128, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE) for f in frames]
-        pal[0].save(gif, save_all=True, append_images=pal[1:], duration=33, loop=0, optimize=True)
+        # Long clips (a lingering area) keep every other frame, so the GIF stays small.
+        step = 2 if len(frames) > 80 else 1
+        pal = [f.quantize(colors=128, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE) for f in frames[::step]]
+        pal[0].save(gif, save_all=True, append_images=pal[1:], duration=33 * step, loop=0, optimize=True)
         still = pair(Image.open(before[best_i]).convert("RGB"), Image.open(after[best_i]).convert("RGB"), cb, STILL_HALF, name)
         still_path = os.path.join(out_dir, f"vfx_{key}_still.png")
         still.save(still_path)
