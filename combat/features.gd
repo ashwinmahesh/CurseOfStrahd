@@ -560,6 +560,7 @@ func hit_damage_dice(c: Combatant, target: Combatant, option: Dictionary, st: Di
 	var melee := bool(option["melee"])
 	out.append_array(e.class_features.hit_dice(c, target, option, st))
 	out.append_array(e.ravenloft.hit_dice(c, target, option, st))
+	out.append_array(e.faerun.hit_dice(c, target))
 	if not c.creature is Character:
 		return out
 	var ch := c.creature as Character

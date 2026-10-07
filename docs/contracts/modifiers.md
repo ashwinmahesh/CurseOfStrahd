@@ -180,3 +180,7 @@ long (Emerald Enclave Fledgling: Speak with Animals for 480 minutes).
 Flame); a feat-granted spell counts as known. `casting` is `action` or `bonus_action`; a cantrip cast this way spends
 the feature's use too. A feature with `policy` (`auto` or `never`, and `policy_cost` for the label) acts on its own
 in a fight, and the class tab offers Automatic and Off for it (Rallying Cry, Family First, Stand as One).
+
+`exhaustion_relief`: `when_spent` (a resource) and `value`: spending that resource also removes that many levels of
+Exhaustion (Necromancer's Grave Power with Arcane Recovery).
+

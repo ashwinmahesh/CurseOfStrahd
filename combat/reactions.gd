@@ -213,6 +213,7 @@ func after_hit_target(st: Dictionary, miss: Callable) -> Array:
 	var out: Array = []
 	e.class_features.after_hit_target(st, miss, out)
 	e.ravenloft.after_hit_target(st, miss, out)
+	e.faerun.after_hit_target(st, miss, out)
 	for sid in e.spells.incoming_roll_responses(target):
 		var spell_id := sid
 		var name := str(Compendium.shared().spell_data(sid)["name"])

@@ -547,7 +547,7 @@ func _warlock(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, b
 		out.append(_entry("awakened_mind", "Awakened Mind", "telepathic link" + ("; Wis save" if has(c, "clairvoyant_combatant") and cw == "" else ""), "bonus", bw, "creature",
 			"Bonus Action: link minds with a creature within 30 ft.%s" % (" Clairvoyant Combatant: it makes a Wisdom save or has Disadvantage on attacks against you while you have Advantage against it." if has(c, "clairvoyant_combatant") else ""), 30))
 	var fam := _familiar(c)
-	if fam != null and knows_invocation(c, "pact_of_the_chain"):
+	if fam != null and (knows_invocation(c, "pact_of_the_chain") or has(c, "necromancy_familiar")):
 		var fw := e_attack_why(c)
 		out.append(_entry("familiar_strike", "Familiar Strike", "%s attacks" % fam.name(), "attack", _first(fw, "" if enc().spells.can_react(fam) else "The familiar's Reaction is used"), "enemy",
 			"Give up one of your attacks: your familiar makes one attack with its Reaction.", 120))

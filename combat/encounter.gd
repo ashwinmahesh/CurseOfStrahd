@@ -2594,6 +2594,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		log.add("death", "%s dies" % target.name(), target.id)
 		events.append({"type": "death", "id": target.id})
 		ravenloft.on_death(source, target)
+		faerun.on_death(source, target)
 		if target.has_meta("vanishes"):
 			events.append({"type": "vanish", "id": target.id})
 	elif dr.dropped_to_zero and not target.creature.dead and monster_actions.lycanthrope(target):
@@ -2843,8 +2844,9 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 		var cq := cleave_queue.pop_front() as Dictionary
 		var cc := cq["c"] as Combatant
 		var ct := cq["target"] as Combatant
-		if ct.is_alive() and not ct.is_down() and cc.can_act():
-			var sub2 := _resolve_attack(cc, ct, cq["option"] as Dictionary, {"cleave": true, "no_mod": true})
+		if ct.is_alive() and not ct.is_down() and (cc.can_act() or bool(cq.get("redirected", false))):
+			# Instinctive Charm passes its own options (the redirected attack keeps its modifiers).
+			var sub2 := _resolve_attack(cc, ct, cq["option"] as Dictionary, cq.get("opts", {"cleave": true, "no_mod": true}) as Dictionary)
 			if pending != null:
 				return then(sub2, func() -> CombatResult: return run_reaction_queue(r))
 	return r

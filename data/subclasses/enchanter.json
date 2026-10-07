@@ -7,7 +7,7 @@
     "checked_against": "AU",
     "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
   },
-  "summary": "A wizard specializing in influencing minds. Some features are reference-only; see each feature’s implementation status.",
+  "summary": "A wizard specializing in influencing minds.",
   "features": [
     {
       "level": 3,
@@ -305,8 +305,15 @@
         "id": "instinctive_charm",
         "name": "Instinctive Charm",
         "summary": "Reaction when a visible attacker within 30 feet hits you: Wisdom save against your spell DC. Failure makes the attack miss you and redirect, with the same roll, to another creature in its reach other than the attacker; you choose if several qualify. Once per Long Rest; casting an Enchantment spell with a slot restores use.",
-        "text": "Reaction when a visible attacker within 30 feet hits you: Wisdom save against your spell DC. Failure makes the attack miss you and redirect, with the same roll, to another creature in its reach other than the attacker; you choose if several qualify. Once per Long Rest; casting an Enchantment spell with a slot restores use.",
-        "implemented": "text"
+        "text": "When a creature you can see within 30 feet hits you with an attack roll, you can take a Reaction: it makes a Wisdom save against your spell save DC. On a failure the attack misses you and goes, with the same roll, at another creature within its reach other than itself (the game picks the nearest one). Once per Long Rest; casting an Enchantment spell with a spell slot restores the use.",
+        "implemented": "engine",
+        "action": "reaction",
+        "resource": {
+          "id": "instinctive_charm",
+          "name": "Instinctive Charm",
+          "max": 1,
+          "recharge": "long"
+        }
       }
     },
     {
@@ -314,11 +321,11 @@
       "feature": {
         "id": "alter_memories",
         "name": "Alter Memories",
-        "summary": "When casting a slotted Enchantment that Charms, choose one target to remain unaware of your influence. Once before the spell ends, a Magic action forces an Intelligence save; failure erases up to 1 + Intelligence modifier hours (minimum 1), capped by the spell duration.",
-        "text": "When casting a slotted Enchantment that Charms, choose one target to remain unaware of your influence. Once before the spell ends, a Magic action forces an Intelligence save; failure erases up to 1 + Intelligence modifier hours (minimum 1), capped by the spell duration.",
+        "summary": "A creature you Charm with a slotted Enchantment can be left unaware of it, and later lose some memories.",
+        "text": "When you cast an Enchantment spell with a spell slot that Charms, you can choose one target to stay unaware it was charmed. Once before the spell ends, a Magic action makes it save on Intelligence or forget up to 1 + your Intelligence modifier hours (minimum 1), no more than the spell lasted. This plays out in the story's conversations; nothing changes in a fight.",
         "implemented": "text"
       }
     }
   ],
-  "playable": false
+  "playable": true
 }

@@ -2117,6 +2117,10 @@ func spend_resource(res_id: String, amount: int = 1) -> bool:
 				var ctx := formula_context()
 				ctx["class_level"] = class_level_of(modifier.class_id)
 				restore_resource(modifier.text("resource"), maxi(0, modifier.value_on(ctx)))
+		# Grave Power (Necromancer 6): Arcane Recovery also eases Exhaustion.
+		for relief in modifiers_for(&"exhaustion_relief"):
+			if relief.text("when_spent") == res_id and exhaustion > 0:
+				exhaustion = maxi(0, exhaustion - maxi(1, relief.number("value", 1)))
 	return true
 
 

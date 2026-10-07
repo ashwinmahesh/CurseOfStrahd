@@ -244,7 +244,8 @@
             "after_cast_speed",
             "weapon_ability",
             "resource_restore",
-            "ritual_duration"
+            "ritual_duration",
+            "exhaustion_relief"
           ]
         },
         "value": {
