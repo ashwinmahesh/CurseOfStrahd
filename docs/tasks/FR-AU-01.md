@@ -2,7 +2,7 @@
 id: FR-AU-01
 title: Player content from Heroes of Faerûn, Adventures in Faerûn and Arcana Unleashed
 owner: Rules Engine
-status: in_progress
+status: blocked
 depends_on: []
 ---
 
@@ -123,3 +123,19 @@ leaves the entry out of character creation, level-up and spell choices and rando
 To turn an entry on once all of its rules work in the game, set `"playable": true` in its file (or delete the line).
 Nothing else needs to change. `tests/unit/test_playable_gate.gd` checks that whatever is marked `false` is left out of
 the choices and treasure, and that it still loads by id.
+
+## Where it stands (2026-10-07)
+
+221 of the 240 entries are switched on (batches 1 to 9: 14 subclasses, 61 feats, 28 backgrounds, 51 spells and 67
+magic items); docs/rules/coverage.md lists each batch and docs/rules/deviations.md how each differs from the book.
+The 19 still hidden wait for the owner:
+
+- Rules data not in our files: Mythal Touched's table; the Battle Familiar stat block (and with it Warlike Familiar);
+  Arcane Archer's eight Arcane Shot options; Vestige Patron's companion; the five Necklaces of the Beastly Familiar's
+  beasts (Giant Octopus, Giant Scorpion, Hippopotamus, Mammoth, Tyrannosaurus Rex); Staff of the Lost's Minotaur of
+  Baphomet; the Mechanical Wonders' (Domestic, Flying) servant stat blocks; the Crown of Horns' Lich, the Orb of
+  Damara's adult chromatic dragons and the Tome of the Dragon's Dracolich.
+- Systems the game lacks: Teleport to a place on the world map (Traveler's Pearl) and vehicles (Windskiff,
+  Mechanical Wonder (Gyrocopter)).
+- An open choice: Bladesinger's free-hand rule (dropped by default).
+
