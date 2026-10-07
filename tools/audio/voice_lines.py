@@ -13,6 +13,10 @@ the voice of each prebuilt hero it fits and in both custom-hero voices (VoiceOve
 speaks). Not voiced: player options, rolls, notices, book and letter text, and any line holding {name}, {leader} or
 {target} (filled in at run time).
 
+In fights (narrative/combat/barks.json): each kind of talking enemy's battle cries, taunts, pain and death lines as
+the speaker bark_<kind>, and each kind of creature's noises as noise_<kind>, where a noise's text is the prompt it is
+made from (a sound effect, with its length in seconds) rather than words.
+
 Usage: tools/audio/voice_lines.py [--speaker narrator] [--json]   (prints counts per speaker, or the lines as JSON)
 """
 import argparse
@@ -154,17 +158,35 @@ def _data_lines():
                     yield "madam_eva", o["verse"], f"tarokka/{slot}:{card}"
 
 
+def _bark_lines():
+    f = ROOT / "narrative" / "combat" / "barks.json"
+    if not f.exists():
+        return
+    d = json.loads(f.read_text())
+    for kind, v in d.get("voices", {}).items():
+        for moment, said in v.get("lines", {}).items():
+            for t in said:
+                yield f"bark_{kind}", t, f"barks/{kind}:{moment}"
+    for kind, v in d.get("noises", {}).items():
+        for moment, sounds in v.get("sounds", {}).items():
+            for snd in sounds:
+                yield f"noise_{kind}", snd["prompt"], f"barks/{kind}:{moment}", {"seconds": float(snd["seconds"])}
+
+
 def lines():
-    """{(speaker, key): {"speaker", "key", "text", "sources": [...]}} for every voiced line."""
+    """{(speaker, key): {"speaker", "key", "text", "sources": [...]}} for every voiced line (a noise also has its
+    "seconds")."""
     npcs = _npcs()
     out = {}
-    for speaker, text, where in list(_dialogue_lines(npcs)) + list(_data_lines()):
+    for speaker, text, where, *extra in list(_dialogue_lines(npcs)) + list(_data_lines()) + list(_bark_lines()):
         text = text.strip()
         if "{" in text:
             continue
         k = (speaker, key(text))
         entry = out.setdefault(k, {"speaker": speaker, "key": k[1], "text": text, "sources": []})
         entry["sources"].append(where)
+        for e in extra:
+            entry.update(e)
     return out
 
 

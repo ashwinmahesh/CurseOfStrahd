@@ -33,13 +33,18 @@ The owner picked Modern as the default on 2026-10-07 (docs/plans/ui_polish.md); 
 Settings (`Look.style`, kept in user://settings.cfg by `GameSettings`). The art is the same in both.
 - **Classic** is the pass described under Palette: every world pixel snapped to the palette, light in two or three
   hard bands, mist and cloud shadows in flat bands.
-- **Modern** keeps the ink outlines and the palette's hues but drops the snap: the cel shaders light with a soft
-  ramp (`shaders/cel_light.gdshaderinc`, global uniform `look_soft`), floors and walls use the smooth
-  `<surface>_hd.png` tiles (docs/art/textures.md) with relief from a normal map made from the tile itself
-  (`Look.normal_map`), AgX tone mapping with glow on anything brighter than white (flames, lanterns), deeper contact
-  shadows with bounced light, a thin volumetric haze, smooth mist and cloud shadows, a lighter colour grade, and a
-  light depth of field far behind the party that follows the zoom, never near the lens
-  (`Atmosphere._modern_finish`, `_focus_dof`, strengths in `Atmosphere.DOF_STRENGTHS`, "light" by default).
+- **Modern** is the HD-2D look the owner chose on 2026-10-07 (Improvement Ideas W1: direction A's effects in
+  direction B's tone; target frames in `art/generated/look_targets/*_ab.png`): 2D cartoon characters with their ink,
+  moving through a lit 3D world with no ink lines of its own (W15). The palette's hues stay but the snap goes. World
+  surfaces are lit like painted 3D (`shaders/world/lit*.gdshader`: highlights, relief, roughness per surface,
+  reflections on polished floors; docs/art/textures.md "How a surface takes the light"), floors and walls use the
+  smooth `<surface>_hd.png` tiles, the lights nearest the party cast soft shadows by their kind, windows let shafts
+  of light in, and edges are anti-aliased (docs/art/atmosphere.md "Edges and shadows"). AgX tone mapping with glow on
+  anything brighter than white (flames, lanterns), deeper contact shadows with bounced light, a thin volumetric
+  haze, smooth mist and cloud shadows, a lighter colour grade, and a light depth of field far behind the party that
+  follows the zoom, never near the lens (`Atmosphere._modern_finish`, `_focus_dof`, strengths in
+  `Atmosphere.DOF_STRENGTHS`, "light" by default). Classic is frozen as it was (owner, 2026-10-07): new work needn't
+  keep it up to date, only keep it working.
 - Anything new must read in both: check a place with `make capture SCENE=res://tools/capture/polish_capture.tscn`
   and `POLISH_LOOK=classic|modern POLISH_ONLY=look`.
 

@@ -156,7 +156,8 @@ advice, never enforced.
 - Every number opens its breakdown on hover or focus: the engine's `Breakdown.describe()` parts, e.g. "AC 17 =
   Chain Mail 16 + Defense 1", with things that don't count named ("Dexterity: heavy armor").
 - Rule terms (Advantage, Concentration, Weapon Mastery, Heroic Inspiration, Bloodied ...) are links that open
-  nested tooltips; Y twice or right-click pins one; pinned tooltips stack until closed.
+  nested tooltips; clicking a term, right-clicking a card or middle-clicking pins one; pinned tooltips stack until
+  closed (docs/ui/rules_cards.md).
 - Unavailable options stay visible with the reason from `ChoiceOption.reason`; soft warnings show
   `ChoiceOption.warning` with a ~ icon.
 - Controller and keyboard map as in the wireframe. Focus is a thick candle frame plus a ▸ marker. Text scales

@@ -86,9 +86,14 @@ What a surface takes, in this order (each optional; the first that exists wins):
 
 | Key in the surface's manifest entry | What it is |
 |---|---|
-| `normal_file` | A tangent-space normal map in the tile's own UV (OpenGL convention, green up), same tiling as `file`. Without one, `Look.normal_map` makes one from the tile's brightness (dark lines read as grooves). |
+| `normal_file` | A tangent-space normal map in the tile's own UV, same tiling as `file`: OpenGL convention (red to the image's right, green to its top), as Godot's `Image.bump_map_to_normal_map` makes them; two-channel maps work too (z is rebuilt). Without one, `Look.normal_map` makes one from the tile's brightness (dark lines read as grooves). |
 | `orm_file` | Occlusion, roughness and metal in red, green and blue (glTF's order), same tiling. Without one, the numbers below are used and roughness varies with the tile's brightness (dark grout and cracks rougher, worn tops smoother). |
-| `material` | `{"roughness": 0..1, "spread": 0..1, "relief": n, "metallic": 0..1}`: overrides for this surface. `spread` is how much rougher the dark of the tile is than its light; `relief` scales the normal map (1 = `Look.MODERN_RELIEF`). |
+| `material` | `{"roughness": 0..1, "spread": 0..1, "relief": n, "metallic": 0..1, "macro": 0..1}`: overrides for this surface. `spread` is how much rougher the dark of the tile is than its light; `relief` scales the normal map (1 = `Look.MODERN_RELIEF`); `macro` is how strongly the broad patches below break it up (0 for rugs, carpets and checker tiles). |
+| `variants` | `[{"file", "normal_file", "orm_file"}, ...]`: edge-matched variants of the tile (W4), all the size and import format of `hd_file`, every one sharing its border band. The shader picks one per tile (layer 0 is the surface's own), so a floor stops repeating. A variant without a normal map gets one made from its tile; ORM is used only when every layer has one. |
+
+At the top level of the manifest, `macro_file` names a tileable soft noise (W4): every Modern surface is darkened and
+lightened, and its roughness nudged, by it over about nine squares (`macro_units`), `Look.MACRO_STRENGTH` (0.35)
+unless the surface's `macro` says otherwise.
 
 Without any of these a surface takes the row of `Look.MATERIALS` whose word its name holds (marble 0.15, tile and
 parquet 0.3, cobbles 0.4 with a wide spread so the stone tops glint, flagstones 0.5, stone 0.65, plaster 0.9,

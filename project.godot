@@ -20,6 +20,7 @@ SaveSystem="*res://core/save_system.gd"
 SceneRouter="*res://core/scene_router.gd"
 ModeController="*res://core/mode_controller.gd"
 Audio="*res://core/audio.gd"
+UiFeel="*res://ui/common/ui_feel.gd"
 
 [debug]
 

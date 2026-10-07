@@ -26,6 +26,10 @@ func after_each() -> void:
 	if root != null:
 		root.queue_free()
 		root = null
+	# The made-up places leave the shared Compendium, so later tests in this process (test_skirmish walks every
+	# location) never meet them.
+	for id: String in ["junk_inn", "junk_road"]:
+		(Compendium.shared().tables["locations"] as Dictionary).erase(id)
 
 
 func _frames(n: int) -> void:
@@ -39,14 +43,9 @@ func _open(i: int) -> InventoryScreen:
 	return root.get("screen") as InventoryScreen
 
 
-## The item names the backpack list shows now (the 15 pt name on each row, not its tags or weight).
+## The items the backpack grid shows now, by id.
 func _listed(inv: InventoryScreen) -> Array[String]:
-	var out: Array[String] = []
-	var list := inv.get("_list") as VBoxContainer
-	for l in list.find_children("*", "Label", true, false):
-		if not (l as Node).is_queued_for_deletion() and (l as Label).get_theme_font_size("font_size") == 15:
-			out.append((l as Label).text)
-	return out
+	return inv.shown_ids()
 
 
 func _button(n: Node, text: String, exact: bool = false) -> Button:
@@ -83,7 +82,7 @@ func test_search_finds_by_name_kind_and_rarity() -> void:
 	inv.search = "potion"
 	inv.call("_fill_list")
 	await _frames(1)
-	assert_eq(_listed(inv), ["Potion of Healing ×2"] as Array[String], "search by name")
+	assert_eq(_listed(inv), ["potion_of_healing"] as Array[String], "search by name")
 	inv.search = "WAND secrets"
 	inv.call("_fill_list")
 	await _frames(1)
@@ -92,15 +91,16 @@ func test_search_finds_by_name_kind_and_rarity() -> void:
 	inv.call("_fill_list")
 	await _frames(1)
 	var text := ""
-	for l in (inv.get("_list") as Node).find_children("*", "Label", true, false):
-		text += (l as Label).text
+	for l in (inv.get("_list_foot") as Node).find_children("*", "Label", true, false):
+		if not (l as Node).is_queued_for_deletion():
+			text += (l as Label).text
 	assert_true(text.contains("matches"), "an empty search says so: %s" % text)
 	inv.search = ""
 	inv.filter = "Magic"
 	inv.call("_draw")
 	await _frames(1)
-	for name_ in _listed(inv):
-		assert_true(name_.contains("Wand") or name_.contains("Potion"), "the Magic filter keeps magic items only: %s" % name_)
+	for id in _listed(inv):
+		assert_true(id.contains("wand") or id.contains("potion"), "the Magic filter keeps magic items only: %s" % id)
 
 
 func test_mark_as_junk_and_the_junk_filter() -> void:
@@ -119,7 +119,7 @@ func test_mark_as_junk_and_the_junk_filter() -> void:
 	inv.marks = "junk"
 	inv.call("_draw")
 	await _frames(1)
-	assert_eq(_listed(inv), ["Flail"] as Array[String], "the Junk filter shows it alone")
+	assert_eq(_listed(inv), ["flail"] as Array[String], "the Junk filter shows it alone")
 	inv.selected = "st_andrals_bones"
 	inv.marks = ""
 	inv.call("_draw")
@@ -178,15 +178,23 @@ func test_stash_from_anywhere_take_out_only_at_a_safe_place() -> void:
 	await _frames(1)
 	assert_true(ch.entry_of("wand_of_secrets").is_empty(), "it left the pack")
 	assert_true(GameState.story.party_has_item("wand_of_secrets"), "and waits in the stash")
-	var take := _button(inv, "Take", true)
-	assert_true(take != null and take.disabled, "but can't come out here")
+	assert_true(_stash_tiles(inv).is_empty(), "but nothing can be dragged out of the stash here")
 	root.call("close_screen")
 	GameState.story.location = "junk_inn"
 	inv = await _open(0)
-	take = _button(inv, "Take", true)
-	assert_true(take != null and not take.disabled, "at the inn it can")
-	take.pressed.emit()
+	var out := _stash_tiles(inv)
+	assert_eq(out.size(), 1, "at the inn it can")
+	inv.call("_drop_on_pack", out[0].payload)
 	assert_eq(int(ch.entry_of("wand_of_secrets").get("charges", -1)), 1, "with the charges it had, not a fresh wand's")
+
+
+## The stash's tiles that can be dragged out (only at a safe place).
+func _stash_tiles(inv: InventoryScreen) -> Array[ItemTile]:
+	var out: Array[ItemTile] = []
+	for n in inv.find_children("*", "ItemTile", true, false):
+		if not (n as Node).is_queued_for_deletion() and str((n as ItemTile).payload.get("from", "")) == "stash":
+			out.append(n as ItemTile)
+	return out
 
 
 func test_loot_goes_to_the_stash_with_its_state() -> void:

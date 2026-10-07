@@ -46,6 +46,7 @@ func actions_for(c: Combatant) -> Array[Dictionary]:
 	_spells(c, out)
 	_sustained(c, out)
 	_items(c, out)
+	_quick(c, out)
 	_passives(c, out)
 	return out
 
@@ -539,6 +540,20 @@ func _items(c: Combatant, out: Array[Dictionary]) -> void:
 		var kit := _entry("healers_kit", ITEMS, "Healer's Kit", "stabilize, no check", "action", e._action_check(c), "dying")
 		kit["range"] = 5
 		out.append(kit)
+
+
+## Quick slots (plan §5.6, the inventory's paper doll): the consumables a character keeps to hand are on the Common tab
+## too.
+func _quick(c: Combatant, out: Array[Dictionary]) -> void:
+	if not c.creature is Character or (c.creature as Character).quick_slots.is_empty():
+		return
+	var quick := (c.creature as Character).quick_slots
+	for a: Dictionary in out.duplicate():
+		var iid := str(a.get("item_id", str(a["id"]).get_slice(":", 1) if str(a["id"]).begins_with("item:") else ""))
+		if str(a["tab"]) == ITEMS and iid in quick:
+			var q: Dictionary = a.duplicate()
+			q["tab"] = COMMON
+			out.append(q)
 
 
 func _passives(c: Combatant, out: Array[Dictionary]) -> void:

@@ -13,6 +13,10 @@ Each clip's model is recorded in the manifest. A speaker who moved to a new mode
 2026-10-07: v3 for new lines of every non-minor character, the old v4 lines kept for now): casting.json names the
 model they came from as `earlier_model`, --models counts every speaker's clips by model, and
 `make voice SPEAKER=<id> RECAST=1` re-voices a speaker's older clips on their current model.
+
+A speaker cast with "sfx": true (a creature's noises in fights, noise_<kind>) has no voice: each of its lines is a
+prompt for ElevenLabs' sound effects, made at the line's length in seconds and billed by the second (casting.json
+"sfx" holds the model and rates).
 """
 import argparse
 import hashlib
@@ -31,6 +35,10 @@ MANIFEST = el.VOICE_DIR / "manifest.json"
 
 def settings_for(c, speaker):
     return {**c["default_settings"], **(c["voices"][speaker].get("settings", {}))}
+
+
+def is_sfx(c, speaker):
+    return bool(c["voices"].get(speaker, {}).get("sfx"))
 
 
 def voice_id(c, speaker):
@@ -58,8 +66,10 @@ def spoken(c, speaker, text):
 
 def model_for(c, speaker):
     """The speaker's own model if casting.json names one (owner, 2026-10-07: eleven_v3 keeps the Eastern European
-    accents that eleven_v4 flattens), else the pinned default."""
+    accents that eleven_v4 flattens), else the pinned default; a noise speaker's is the sound effects model."""
     v = c["voices"].get(speaker, {})
+    if v.get("sfx"):
+        return c["sfx"]["model"]
     return model_for(c, v["shares"]) if v.get("shares") else v.get("model", c["model"])
 
 
@@ -70,9 +80,19 @@ def price(c, speaker):
     return PRICE_PER_1K.get(model_for(c, speaker), float(c["price_per_1k_usd"]))
 
 
+def cost(c, line):
+    """A line's estimated cost in dollars: its characters, or a noise's seconds."""
+    if is_sfx(c, line["speaker"]):
+        return float(line.get("seconds", 1.0)) * c["sfx"]["credits_per_second"] * c["sfx"]["usd_per_credit"]
+    return len(line["text"]) / 1000 * price(c, line["speaker"])
+
+
 def recipe(c, speaker, model=None):
     """What makes a clip: a change here means the speaker's clips are out of date (--recast). `model` asks what the
     recipe was on another model (a speaker's earlier one)."""
+    if is_sfx(c, speaker):
+        blob = [model or model_for(c, speaker), c["output_format"], c["sfx"]["prompt_influence"]]
+        return hashlib.sha1(json.dumps(blob, sort_keys=True).encode()).hexdigest()[:10]
     blob = [voice_id(c, speaker), model or model_for(c, speaker), c["output_format"], settings_for(c, speaker)]
     if accent_tag(c, speaker):
         blob.append(accent_tag(c, speaker))
@@ -138,7 +158,7 @@ def main():
         print(f"{len(gone)} clip(s) pruned")
         return
 
-    cast = {s for s in c["voices"] if voice_id(c, s)}
+    cast = {s for s in c["voices"] if voice_id(c, s) or is_sfx(c, s)}
     todo, uncast = [], set()
     for (speaker, key), line in sorted(every.items(), key=lambda kv: (kv[0][0], kv[1]["sources"][0])):
         if a.speaker and speaker not in a.speaker:
@@ -152,10 +172,12 @@ def main():
             todo.append(line)
     if a.limit:
         todo = todo[:a.limit]
-    chars = sum(len(t["text"]) for t in todo)
-    usd = sum(len(t["text"]) / 1000 * price(c, t["speaker"]) for t in todo)
-    print(f"{len(todo)} clip(s) to generate, {chars:,} characters, about ${usd:.2f} at ${c['price_per_1k_usd']}/1K "
-          f"({c['model']})" + (f"; no voice cast yet for {len(uncast)} speaker(s)" if uncast else ""))
+    chars = sum(len(t["text"]) for t in todo if not is_sfx(c, t["speaker"]))
+    secs = sum(float(t.get("seconds", 1.0)) for t in todo if is_sfx(c, t["speaker"]))
+    usd = sum(cost(c, t) for t in todo)
+    print(f"{len(todo)} clip(s) to generate, {chars:,} characters" + (f" and {secs:.0f} s of sound effects" if secs else "")
+          + f", about ${usd:.2f} at ${c['price_per_1k_usd']}/1K ({c['model']})"
+          + (f"; no voice cast yet for {len(uncast)} speaker(s)" if uncast else ""))
     if a.dry_run or not todo:
         return
     if usd > a.max_usd:
@@ -167,18 +189,24 @@ def main():
     def one(line):
         speaker, key, text = line["speaker"], line["key"], line["text"]
         vid = voice_id(c, speaker)
-        audio, headers = el.tts(vid, spoken(c, speaker, text), model_for(c, speaker), c["output_format"], settings_for(c, speaker))
+        if is_sfx(c, speaker):
+            audio, headers = el.sound(text, float(line.get("seconds", 1.0)), c["output_format"], c["sfx"]["prompt_influence"],
+                                      model_for(c, speaker))
+        else:
+            audio, headers = el.tts(vid, spoken(c, speaker, text), model_for(c, speaker), c["output_format"], settings_for(c, speaker))
         out = el.VOICE_DIR / speaker / f"{key}.mp3"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_bytes(audio)
-        cost = headers.get("character-cost") or headers.get("x-character-count")
+        billed = headers.get("character-cost") or headers.get("x-character-count")
         with lock:
             manifest[f"{speaker}/{key}"] = {"text": text, "recipe": recipe(c, speaker), "chars": len(text),
-                                             "model": model_for(c, speaker)}
+                                             "model": model_for(c, speaker),
+                                             **({"seconds": float(line["seconds"])} if is_sfx(c, speaker) else {})}
             el.log({"speaker": speaker, "key": key, "chars": len(text), "voice_id": vid, "model": model_for(c, speaker),
                     "format": c["output_format"], **({"accent_tag": accent_tag(c, speaker)} if accent_tag(c, speaker) else {}),
-                    "usd_est": round(len(text) / 1000 * price(c, speaker), 5),
-                    **({"billed_chars": cost} if cost else {}), "request_id": headers.get("request-id", "")})
+                    **({"seconds": float(line["seconds"])} if is_sfx(c, speaker) else {}),
+                    "usd_est": round(cost(c, line), 5),
+                    **({"billed_chars": billed} if billed else {}), "request_id": headers.get("request-id", "")})
             done[0] += 1
             done[1] += len(text)
             if done[0] % 50 == 0:
@@ -192,8 +220,7 @@ def main():
             if f.exception() is not None:
                 failed.append((futures[f], f.exception()))
     MANIFEST.write_text(json.dumps(manifest, indent=1, sort_keys=True, ensure_ascii=False) + "\n")
-    print(f"Generated {done[0]} clip(s), {done[1]:,} characters, about "
-          f"${done[1] / 1000 * float(c['price_per_1k_usd']):.2f}")
+    print(f"Generated {done[0]} clip(s), {done[1]:,} characters of text and prompts, about ${usd:.2f} estimated")
     for t, e in failed[:10]:
         print(f"  FAILED {t['speaker']}/{t['key']}: {e}")
     if failed:

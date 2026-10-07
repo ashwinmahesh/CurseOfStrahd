@@ -105,9 +105,72 @@ func capture_shots(tool: Node, out: String) -> void:
 			{"id": "rope", "qty": 1}, {"id": "torch", "qty": 5}], 25.0, null)
 		await _shoot(tool, "%s_loot.png" % out)
 		lw.queue_free()
+	if _wants("doll"):
+		# U11: rings and a cloak worn, a bow in weapon set II, potions in the quick slots, then the right-click menu and a
+		# drag over the free ring slot.
+		var g := GameState.story.party[0]
+		g.add_item("cloak_of_protection")
+		g.wear("ring_of_protection")
+		g.wear("cloak_of_protection")
+		g.attune("ring_of_protection")
+		g.attune("cloak_of_protection")
+		g.add_item("longbow")
+		g.weapon_set_2 = {"main_hand": "longbow"}
+		g.quick_slots.assign(["potion_of_healing", "candle"])
+		var inv := _inventory(func(i: InventoryScreen) -> void: i.selected = "longbow")
+		await _shoot(tool, "%s_doll.png" % out)
+		var wand: ItemTile = null
+		for n in inv.find_children("*", "ItemTile", true, false):
+			if str((n as ItemTile).payload.get("id", "")) == "wand_of_secrets":
+				wand = n as ItemTile
+		if wand != null:
+			inv.call("_pick", wand.payload["entry"])
+			inv.call("_open_menu", inv.actions_for(wand.payload["entry"] as Dictionary), wand.get_global_rect().get_center())
+			await _shoot(tool, "%s_menu.png" % out)
+			for m in inv.find_children("*", "PopupMenu", true, false):
+				(m as PopupMenu).hide()
+			for n in inv.find_children("*", "ItemTile", true, false):
+				var t := n as ItemTile
+				if t.payload.is_empty() and t.caption == "Ring":
+					t.set("_drop_ok", true)
+					t.queue_redraw()
+					break
+			await _shoot(tool, "%s_drag.png" % out)
+		root.call("close_screen")
+	if _wants("list"):
+		# The list view (owner, 2026-10-07): the same character and pack as rows, with a drag over the Worn section.
+		var inv2 := _inventory(func(i: InventoryScreen) -> void:
+			i.view = "list"
+			i.selected = "longbow")
+		await _shoot(tool, "%s_list.png" % out)
+		var worn := inv2.find_child("WornZone", true, false) as Control
+		if worn != null:
+			worn.modulate = Color(1.12, 1.12, 1.0)
+		inv2.call("_open_menu", inv2.actions_for(GameState.story.party[0].entry_of("potion_of_healing")), Vector2(900, 330))
+		await _shoot(tool, "%s_list_menu.png" % out)
+		for m in inv2.find_children("*", "PopupMenu", true, false):
+			(m as PopupMenu).hide()
+		root.call("close_screen")
 	if _wants("level_up"):
+		# Q10: a companion at an Ability Score Improvement (filled from their own level plan), and a new hero choosing a
+		# subclass (filled with the class's recommended picks). Each shot scrolls to the picks.
 		GameState.story.milestones = 10
-		for i: int in [0, 2]:
+		var party := GameState.story.party
+		party[0] = Pregens.build("godrick_pendlebrook", 3)
+		var hero := TestChars.custom("cleric", "human", 2)
+		hero.name = "Mirela Vasquez"
+		hero.build["name"] = hero.name
+		party[3] = hero
+		for i: int in [0, 3]:
 			root.call("open_screen", "level_up", i)
-			await _shoot(tool, "%s_level_up_%s.png" % [out, GameState.story.party[i].name.get_slice(" ", 0).to_lower()])
+			await tool.call("wait_frames", 4)
+			var screen := root.get("screen") as Node
+			for l in screen.find_children("*", "Label", true, false):
+				if (l as Label).text.begins_with("4 · Choices"):
+					var up := (l as Node).get_parent()
+					while up != null and not up is ScrollContainer:
+						up = up.get_parent()
+					if up != null:
+						(up as ScrollContainer).scroll_vertical = int((l as Label).global_position.y - (up as ScrollContainer).global_position.y) - 20
+			await _shoot(tool, "%s_level_up_%s.png" % [out, party[i].name.get_slice(" ", 0).to_lower()])
 			root.call("close_screen")

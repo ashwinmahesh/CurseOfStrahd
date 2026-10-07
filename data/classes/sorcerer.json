@@ -229,6 +229,14 @@
       "arcana",
       "persuasion"
     ],
+    "subclass": "draconic_sorcery",
+    "feats": [
+      "war_caster",
+      "resilient",
+      "fey_touched",
+      "alert",
+      "elemental_adept"
+    ],
     "note": "Charisma first, then Constitution for Hit Points and Concentration."
   },
   "levels": [

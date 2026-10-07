@@ -28,8 +28,10 @@ func _draw() -> void:
 		_frame.remove_child(c)
 		c.queue_free()
 	_frame.add_child(UiParts.tab_strip(["Quests", "Codex"], tab, func(t: String) -> void:
+		var forward := t == "Codex"
 		tab = t
-		_draw(), {"Quests": "journal", "Codex": "search"}))
+		_draw()
+		UiMotion.turn_page(_frame.get_child(1) as Control, forward), {"Quests": "journal", "Codex": "search"}))
 	var pane := UiParts.pane(14)
 	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_frame.add_child(pane)

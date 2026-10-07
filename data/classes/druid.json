@@ -286,6 +286,14 @@
       "perception",
       "nature"
     ],
+    "subclass": "circle_of_the_stars",
+    "feats": [
+      "war_caster",
+      "resilient",
+      "fey_touched",
+      "alert",
+      "tough"
+    ],
     "note": "Wisdom first, then Constitution to keep Concentration and Dexterity for Armor Class."
   },
   "levels": [
