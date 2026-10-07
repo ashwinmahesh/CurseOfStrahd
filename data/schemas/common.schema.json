@@ -134,10 +134,7 @@
             "MM2025",
             "CoS",
             "custom",
-            "RtHW",
-            "FRHoF",
-            "FRAiF",
-            "AU"
+            "RtHW"
           ]
         },
         "page": {
@@ -151,10 +148,7 @@
             "BR2024",
             "PHB2024",
             "MM2025",
-            "RtHW",
-            "FRHoF",
-            "FRAiF",
-            "AU"
+            "RtHW"
           ],
           "description": "Set only when the numbers were compared line by line with that source (BR2024 = the free 2024 Basic Rules on D&D Beyond). Absent means entered from knowledge and still needs a check against the book. RtHW = Ravenloft: The Horrors Within (2026). SRD5.2 = the System Reference Document 5.2.1 (its monster blocks are the 2025 Monster Manual's)."
         },
