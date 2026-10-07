@@ -43,9 +43,9 @@ func test_a_clash_in_one_list_swaps_the_keys() -> void:
 
 
 func test_the_lists_only_clash_where_they_meet() -> void:
-	# Space ends a turn in fights; exploring, it's free for the journal.
-	assert_eq(InputActions.bind(&"open_journal", 0, KEY_SPACE), "")
-	assert_eq(InputActions.keys(&"combat_end_turn")[0], KEY_SPACE, "the fight keeps Space")
+	# Z changes the hotbar's tab in fights; exploring, it's free for the journal.
+	assert_eq(InputActions.bind(&"open_journal", 0, KEY_Z), "")
+	assert_eq(InputActions.keys(&"combat_tab_prev")[0], KEY_Z, "the fight keeps Z")
 	# Q turns the camera in both modes, so a fight key on Q takes it from the camera.
 	InputActions.bind(&"combat_toggle_log", 0, KEY_Q)
 	assert_eq(InputActions.keys(&"camera_rotate_left")[0], KEY_L, "the camera takes the log's old key")
