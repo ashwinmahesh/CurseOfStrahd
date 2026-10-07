@@ -193,3 +193,17 @@ func test_sprites_without_the_full_set_keep_the_old_behaviour() -> void:
 	s.pose = "sneak"
 	assert_eq(s._loop_for(), "idle", "a pose the sheet lacks falls back to standing")
 	s.free()
+
+
+## The crisp sprite shader billboards the walking figures round the Y axis, but a sprite laid flat (CombatToken's
+## lying view, for sheets without a drawn "down" pose) keeps its own rotation, so a downed figure lies on the ground.
+func test_the_crisp_shader_billboards_only_billboarded_sprites() -> void:
+	var frames := DirectionalSprite.frames_for("thistle")
+	var s := DirectionalSprite.create(frames, 1.3)
+	assert_true(bool((s.material_override as ShaderMaterial).get_shader_parameter("billboard")), "standing figures turn to the camera")
+	var lying := Sprite3D.new()
+	lying.texture = frames.get_frame_texture(&"idle_s", 0)
+	DirectionalSprite.setup_material(lying)
+	assert_false(bool((lying.material_override as ShaderMaterial).get_shader_parameter("billboard")), "the lying view stays flat")
+	s.free()
+	lying.free()

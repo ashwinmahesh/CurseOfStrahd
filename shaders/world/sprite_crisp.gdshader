@@ -2,8 +2,8 @@
 // At the usual zoom a sheet is drawn at about half its size: plain linear sampling skips texels (jagged, broken lines)
 // and mipmaps blur. This shader takes a 4x4 grid of samples across part of each screen pixel's footprint on the
 // full-resolution sheet (sharp, without the jaggies), and draws an ink outline of `outline_px` screen pixels round the
-// figure so its silhouette stays clear at any zoom. Billboard (Y only), unshaded, modulate through COLOR,
-// alpha-blended (fades work). DirectionalSprite binds the sheet (texture_albedo = the current frame's atlas): the
+// figure so its silhouette stays clear at any zoom. Billboard (Y only) unless `billboard` is off (CombatToken's lying
+// view lies flat on the ground), unshaded, modulate through COLOR, alpha-blended (fades work). DirectionalSprite binds the sheet (texture_albedo = the current frame's atlas): the
 // sprite's UVs already address the atlas.
 shader_type spatial;
 render_mode unshaded, cull_disabled, depth_draw_opaque, depth_prepass_alpha;
@@ -14,19 +14,24 @@ uniform float footprint = 0.6;
 // Outline width in screen pixels, and its colour (the palette's ink).
 uniform float outline_px = 1.4;
 uniform vec4 ink : source_color = vec4(0.071, 0.055, 0.094, 1.0);
+// Off for a sprite that keeps its own orientation (DirectionalSprite.setup_material reads the node's billboard mode).
+uniform bool billboard = true;
 
 void vertex() {
-	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(
-		vec4(normalize(cross(vec3(0.0, 1.0, 0.0), INV_VIEW_MATRIX[2].xyz)), 0.0),
-		vec4(0.0, 1.0, 0.0, 0.0),
-		vec4(normalize(cross(INV_VIEW_MATRIX[0].xyz, vec3(0.0, 1.0, 0.0))), 0.0),
-		MODEL_MATRIX[3]);
-	MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(
-		vec4(length(MODEL_MATRIX[0].xyz), 0.0, 0.0, 0.0),
-		vec4(0.0, length(MODEL_MATRIX[1].xyz), 0.0, 0.0),
-		vec4(0.0, 0.0, length(MODEL_MATRIX[2].xyz), 0.0),
-		vec4(0.0, 0.0, 0.0, 1.0));
-	MODELVIEW_NORMAL_MATRIX = mat3(MODELVIEW_MATRIX);
+	// No early return here: Godot's own vertex code runs after this block.
+	if (billboard) {
+		MODELVIEW_MATRIX = VIEW_MATRIX * mat4(
+			vec4(normalize(cross(vec3(0.0, 1.0, 0.0), INV_VIEW_MATRIX[2].xyz)), 0.0),
+			vec4(0.0, 1.0, 0.0, 0.0),
+			vec4(normalize(cross(INV_VIEW_MATRIX[0].xyz, vec3(0.0, 1.0, 0.0))), 0.0),
+			MODEL_MATRIX[3]);
+		MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(
+			vec4(length(MODEL_MATRIX[0].xyz), 0.0, 0.0, 0.0),
+			vec4(0.0, length(MODEL_MATRIX[1].xyz), 0.0, 0.0),
+			vec4(0.0, 0.0, length(MODEL_MATRIX[2].xyz), 0.0),
+			vec4(0.0, 0.0, 0.0, 1.0));
+		MODELVIEW_NORMAL_MATRIX = mat3(MODELVIEW_MATRIX);
+	}
 }
 
 void fragment() {

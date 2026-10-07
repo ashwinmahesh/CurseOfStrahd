@@ -133,7 +133,8 @@ static func attack_casts(frames: SpriteFrames) -> bool:
 
 
 ## Shared settings for character sprites (also the lying-down view): drawn after the screen pass through the crisp
-## sprite shader (CRISP), which samples the current sheet (bind_sheet).
+## sprite shader (CRISP), which samples the current sheet (bind_sheet). Set the sprite's billboard mode first: a
+## sprite with billboarding off (the lying view) keeps its own rotation.
 static func setup_material(s: SpriteBase3D) -> void:
 	s.alpha_cut = SpriteBase3D.ALPHA_CUT_DISABLED
 	s.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR
@@ -143,6 +144,8 @@ static func setup_material(s: SpriteBase3D) -> void:
 	m.shader = CRISP
 	m.render_priority = RENDER_PRIORITY
 	m.set_shader_parameter("ink", Look.color("void"))
+	# A sprite laid flat (the lying view) keeps its rotation; the walking figures billboard round the Y axis.
+	m.set_shader_parameter("billboard", s.billboard != BaseMaterial3D.BILLBOARD_DISABLED)
 	s.material_override = m
 	if s is Sprite3D:
 		bind_sheet(s, (s as Sprite3D).texture)
