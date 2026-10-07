@@ -6,7 +6,8 @@ extends CanvasLayer
 ## list scrolls, so any number of saves fits, and every line ends in an ellipsis rather than spilling. Back or Escape
 ## returns to whatever opened it (Escape first closes the overwrite question, if it's up).
 ## Q9: each save shows its picture and the player's note (typed above the list when saving), the list sorts by when,
-## place or day, and loading has a second tab for the backups kept before each update.
+## place or day, and loading has a second tab for the backups kept before each update. Q12: a Chapters tab, to jump in
+## at the start of any chapter.
 
 ## Closed by Back, Escape or a save (after `saved`).
 signal closed
@@ -21,7 +22,11 @@ const SIZE := Vector2(1100, 760)
 const PICTURE := Vector2(160, 90)
 ## How the list is sorted, kept with the player's settings: [id, the button's words].
 const SORTS := [["newest", "Newest first"], ["place", "By place"], ["day", "By day"]]
-const TABS: Array[String] = ["Your Saves", "Backups"]
+const TABS: Array[String] = ["Your Saves", "Chapters", "Backups"]
+## The travel map, for a chapter's picture and a save without one of its own.
+const MAP := "res://art/ui/map/barovia.png"
+## How much of the map a picture shows, in map pixels (16:9).
+const MAP_VIEW := Vector2(640, 360)
 
 var mode := Mode.LOAD
 ## What happens once a save has loaded: the opener leaves for the game (the pause menu unpauses first).
@@ -188,17 +193,24 @@ func _draw_tabs() -> void:
 	for b in strip.get_children():
 		b.name = str((b as Button).text).replace(" ", "")
 		(b as Button).tooltip_text = {"Your Saves": "Your saves, the autosaves and a fight's round start.",
+			"Chapters": "Jump in at the start of any chapter, the party at that chapter's level and gear.",
 			"Backups": "A copy of every save, kept before each update of the game."}.get((b as Button).text, "") as String
 	_tabs.add_child(strip)
 
 
 func _fill() -> void:
+	_sort.visible = true
 	# Out of the list at once, so the new rows can take their slots' names.
 	for c in _list.get_children():
 		_list.remove_child(c)
 		c.queue_free()
 	if mode == Mode.SAVE:
 		_hint.text = "Choose a save to save over, or start a new one. Every other save stays as it is."
+	elif _tab == "Chapters":
+		_hint.text = "Begin at the start of any chapter, the party at its level and gear. Its first save makes a new slot."
+		_sort.visible = false
+		_fill_chapters()
+		return
 	elif _tab == "Backups":
 		_hint.text = "Copies of your saves from before each update. A game loaded from one saves in a new slot."
 		_fill_backups()
@@ -211,6 +223,42 @@ func _fill() -> void:
 			else "No saves yet.", 15, "parchment"))
 	for s in shown:
 		_list.add_child(_row(s))
+
+
+## Each chapter (Q12, SaveSystem.chapters) in story order: the map around it, its number and title, the party's level
+## and the day, and Begin.
+func _fill_chapters() -> void:
+	var list := SaveSystem.chapters()
+	if list.is_empty():
+		_list.add_child(UiKit.label("No chapter saves in this build.", 15, "parchment"))
+	for s in list:
+		_list.add_child(_chapter_row(s))
+
+
+func _chapter_row(s: Dictionary) -> Control:
+	var line := HBoxContainer.new()
+	line.add_theme_constant_override("separation", 14)
+	line.add_child(picture(s))
+	var info := VBoxContainer.new()
+	info.add_theme_constant_override("separation", 1)
+	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info.alignment = BoxContainer.ALIGNMENT_CENTER
+	var head := _fit("Chapter %d: %s" % [int(s["number"]), s["title"]], 19, "gilt_light")
+	head.add_theme_font_override("font", UiKit.display_font())
+	info.add_child(head)
+	info.add_child(_fit("Level %d · Day %d · %s" % [int(s["level"]), int(s["day"]), s["location"]], 14, "vellum"))
+	info.add_child(_fit(", ".join(SaveSystem.chapter_party()), 13, "parchment"))
+	line.add_child(info)
+	var go := UiParts.small_button("Begin", func() -> void: _begin(s))
+	go.name = "Act"
+	go.tooltip_text = "Start a game here with your heroes at this level; the others wait at camp. Its first save makes a slot of its own."
+	go.custom_minimum_size = Vector2(124, 0)
+	line.add_child(go)
+	var about := place_summary(str(s.get("location_id", "")), str(s.get("place", "")))
+	var row := UiParts.row(line, func() -> Control: return UiParts.rules_tip(str(s["title"]),
+		"Chapter %d · Level %d" % [int(s["number"]), int(s["level"])], about))
+	row.name = str(s["chapter"])
+	return row
 
 
 ## Each backup (newest first) under a heading saying when it was kept, with its saves.
@@ -262,7 +310,7 @@ func _row(s: Dictionary) -> Control:
 	var place := _fit(str(s["location"]), 19, "gilt_light")
 	place.add_theme_font_override("font", UiKit.display_font())
 	info.add_child(place)
-	info.add_child(_fit("%s · Day %d · %s" % [kind_of(s), int(s["day"]), when(s)], 14, "vellum"))
+	info.add_child(_fit("%s · Day %d · Level %d · %s" % [kind_of(s), int(s["day"]), int(s.get("level", 1)), when(s)], 14, "vellum"))
 	info.add_child(_fit(str(s["party"]), 13, "parchment"))
 	var note := str(s.get("note", ""))
 	if note != "":
@@ -287,8 +335,8 @@ func _row(s: Dictionary) -> Control:
 	return row
 
 
-## A save's picture (Q9), framed in gilt; a save with none (a fight's round start, one from before pictures) shows the
-## crest on black instead.
+## A save's picture (Q9), framed in gilt. A chapter, or a save with none (a fight's round start, one from before
+## pictures), shows the travel map around its place; one off the map shows the crest on black.
 static func picture(s: Dictionary) -> Control:
 	var holder := Control.new()
 	holder.custom_minimum_size = PICTURE
@@ -296,10 +344,12 @@ static func picture(s: Dictionary) -> Control:
 	holder.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var path := str(s.get("thumb", ""))
 	var img := Image.load_from_file(path) if path != "" and FileAccess.file_exists(path) else null
-	if img != null and not img.is_empty():
+	var tex: Texture2D = ImageTexture.create_from_image(img) if img != null and not img.is_empty() else \
+		map_view(str(s.get("location_id", "")), str(s.get("place", "")))
+	if tex != null:
 		var pic := TextureRect.new()
 		pic.name = "Picture"
-		pic.texture = ImageTexture.create_from_image(img)
+		pic.texture = tex
 		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		pic.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -307,11 +357,50 @@ static func picture(s: Dictionary) -> Control:
 		holder.add_child(pic)
 	holder.add_child(UiParts.drawn(PICTURE, func(c: Control) -> void:
 		var r := Rect2(Vector2.ZERO, c.size)
-		if img == null:
+		if tex == null:
 			c.draw_rect(r, Look.color("ui_black"))
 			UiParts.crest(c, c.size / 2.0, 14.0)
 		c.draw_rect(r.grow(-1), Look.color("gilt_dark"), false, 2.0)))
 	return holder
+
+
+## The travel map around `place` (a travel place's id) or else the place `location_id` is at or in the region of, or
+## null when it's off the map (Death House's cellars are in the village's region; a test room is nowhere).
+static func map_view(location_id: String, place: String = "") -> Texture2D:
+	var at := _map_place(location_id, place)
+	if at.is_empty() or not ResourceLoader.exists(MAP):
+		return null
+	var map := load(MAP) as Texture2D
+	var pos := at.get("pos", []) as Array
+	var size := map.get_size()
+	var view := Rect2(Vector2(float(pos[0]), float(pos[1])) * size - MAP_VIEW / 2.0, MAP_VIEW)
+	view.position = view.position.clamp(Vector2.ZERO, size - MAP_VIEW)
+	var crop := AtlasTexture.new()
+	crop.atlas = map
+	crop.region = view
+	return crop
+
+
+## The travel place (data/travel) for `place` or `location_id`: the place by id, else the one at that location, else
+## one in the location's region. {} if none.
+static func _map_place(location_id: String, place: String) -> Dictionary:
+	var region := str(Compendium.shared().get_entry("locations", location_id).get("region", "")) if location_id != "" else ""
+	var by_region := {}
+	for t: Variant in (Compendium.shared().tables.get("travel", {}) as Dictionary).values():
+		for p: Variant in (t as Dictionary).get("places", []):
+			var d := p as Dictionary
+			if (d.get("pos", []) as Array).size() < 2:
+				continue
+			if (place != "" and str(d["id"]) == place) or (location_id != "" and str(d.get("location", "")) == location_id):
+				return d
+			if by_region.is_empty() and region != "" and str(d.get("region", "")) == region:
+				by_region = d
+	return by_region
+
+
+## What the travel map says of a place, for a chapter's tooltip ("" if nothing).
+static func place_summary(location_id: String, place: String) -> String:
+	return str(_map_place(location_id, place).get("summary", ""))
 
 
 ## A save in the saves folder (not a backup's copy).
@@ -378,6 +467,15 @@ func _load(s: Dictionary) -> void:
 		return
 	_status.text = "That save is from a newer build of the game." if err == ERR_FILE_UNRECOGNIZED \
 		else "That save couldn't be read (%s)." % error_string(err)
+
+
+func _begin(chapter: Dictionary) -> void:
+	var err := SaveSystem.begin_chapter(chapter)
+	if err == OK:
+		if after_load.is_valid():
+			after_load.call()
+		return
+	_status.text = "That chapter couldn't be read (%s)." % error_string(err)
 
 
 ## The question before a save is written over another: the save it replaces, and Overwrite or Cancel.

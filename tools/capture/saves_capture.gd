@@ -1,7 +1,7 @@
 extends Node
 ## The saves' own page (ui/screens/saves_screen.gd, lane 16) from a late party, with the golden saves as the list:
-## Save Game, the question before writing over a save, Load a Save, the game-over screen and the title's Load. Saves of
-## the capture's own only, so the owner's never show or change.
+## Save Game, the question before writing over a save, Load a Save with its Backups and Chapters tabs, the game-over
+## screen and the title's Load. Saves of the capture's own only, so the owner's never show or change.
 ## make capture SCENE=res://tools/capture/saves_capture.tscn NAME=saves FRAMES=30
 
 const LATE := "v2_amber_temple.json"
@@ -70,6 +70,8 @@ func capture_shots(tool: Node, out: String) -> void:
 	await _shoot(tool, out + "_3_load_page.png")
 	(_page().find_child("Backups", true, false) as Button).pressed.emit()
 	await _shoot(tool, out + "_3b_backups.png")
+	(_page().find_child("Chapters", true, false) as Button).pressed.emit()
+	await _shoot(tool, out + "_3c_chapters.png")
 	root.call("close_screen")
 	if SaveSystem.autosave() == OK:
 		_made.append(SaveSystem.AUTOSAVE)

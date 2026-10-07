@@ -217,8 +217,8 @@ func list_slots(dir: String = "") -> Array[Dictionary]:
 	return out
 
 
-## What a save says about itself for the lists, or {} when `slot` isn't a save: {slot, dir, saved_at, location,
-## day, party, finished: the ending's title or "", kind: "autosave", "round" (a fight's round start) or "" for a save
+## What a save says about itself for the lists, or {} when `slot` isn't a save: {slot, dir, saved_at, location (its
+## name), location_id, level (the party's highest), day, party, finished: the ending's title or "", kind: "autosave", "round" (a fight's round start) or "" for a save
 ## the player made, note: the player's own, thumb: its picture's path or ""}. Other files kept beside the saves
 ## (achievements.json, N8) aren't saves: every save says its version.
 func describe(slot: String, dir: String = "") -> Dictionary:
@@ -229,13 +229,17 @@ func describe(slot: String, dir: String = "") -> Dictionary:
 	var d := upgrade(raw)
 	var story := d.get("story", {}) as Dictionary
 	var names: Array[String] = []
+	var level := 0
 	for m: Variant in story.get("party", []):
-		names.append(str(((m as Dictionary).get("build", {}) as Dictionary).get("name", "?")))
+		var build := (m as Dictionary).get("build", {}) as Dictionary
+		names.append(str(build.get("name", "?")))
+		level = maxi(level, (build.get("levels", []) as Array).size())
 	var loc := Compendium.shared().get_entry("locations", str(story.get("location", "")))
 	var ended := str((d.get("finished", {}) as Dictionary).get("title", ""))
 	var place := str(loc.get("name", story.get("location", ""))) if ended == "" else "The End: %s" % ended
 	var thumb := thumb_path(slot, from)
 	return {"slot": slot, "dir": from, "saved_at": str(d.get("saved_at", "")), "location": place,
+		"location_id": str(story.get("location", "")), "level": level,
 		"day": int(story.get("day", 1)), "party": ", ".join(names), "finished": ended,
 		"kind": "autosave" if is_autosave(slot) else ("round" if slot == ROUND_START else ""),
 		"note": str(d.get("note", "")), "thumb": thumb if FileAccess.file_exists(thumb) else ""}
@@ -264,6 +268,95 @@ func _move(from: String, to: String) -> void:
 	DirAccess.rename_absolute(slot_path(from), slot_path(to))
 	if FileAccess.file_exists(thumb_path(from)):
 		DirAccess.rename_absolute(thumb_path(from), thumb_path(to))
+
+
+# --- Chapters (Q12) -------------------------------------------------------------------------------
+
+## Jump-in saves (Q12): the start of each chapter, the party at that chapter's level and gear. They are the golden
+## saves P4 keeps (tests/saves, made by the auto-player the playthrough tests use, so the same saves the tests load);
+## each chapter's newest save version is offered. Loaded, a chapter is a game with no slot of its own, like a backup.
+const CHAPTERS_DIR := "res://tests/saves/"
+## Story order: [chapter, title, the travel map's place it starts at]. A chapter without a save isn't offered.
+const CHAPTERS := [["into_the_mists", "Into the Mists", "gates_of_barovia"], ["death_house", "Death House", "village_of_barovia"],
+	["village_of_barovia", "The Village of Barovia", "village_of_barovia"], ["tser_pool", "Tser Pool", "tser_pool"],
+	["vallaki", "Vallaki", "vallaki"], ["old_bonegrinder", "Old Bonegrinder", "old_bonegrinder"],
+	["wizard_of_wines", "The Wizard of Wines", "wizard_of_wines"], ["krezk", "Krezk", "krezk"],
+	["berez", "The Ruins of Berez", "berez"], ["argynvostholt", "Argynvostholt", "argynvostholt"],
+	["werewolf_den", "The Werewolf Den", "werewolf_den"], ["amber_temple", "The Amber Temple", "amber_temple"],
+	["castle_ravenloft_gates", "The Gates of Castle Ravenloft", "castle_ravenloft"]]
+
+
+## The chapters there are saves for, in story order, as describe() gives them, with {chapter, title, number, place}.
+func chapters() -> Array[Dictionary]:
+	var newest := {}   ## chapter -> [save version, file name without .json]
+	for f in _files(CHAPTERS_DIR):
+		if not (f.begins_with("v") and f.ends_with(".json")):
+			continue
+		var stem := f.get_basename()
+		var version := stem.get_slice("_", 0).trim_prefix("v")
+		if not version.is_valid_int() or int(version) > GameState.SAVE_VERSION:
+			continue
+		var chapter := stem.substr(stem.find("_") + 1)
+		if not newest.has(chapter) or int((newest[chapter] as Array)[0]) < int(version):
+			newest[chapter] = [int(version), stem]
+	var out: Array[Dictionary] = []
+	for i in CHAPTERS.size():
+		var c := CHAPTERS[i] as Array
+		if not newest.has(str(c[0])):
+			continue
+		var s := describe(str((newest[str(c[0])] as Array)[1]), CHAPTERS_DIR)
+		if s.is_empty():
+			continue
+		s["chapter"] = str(c[0])
+		s["title"] = str(c[1])
+		s["number"] = i + 1
+		s["place"] = str(c[2])
+		out.append(s)
+	return out
+
+
+## Begins a chapter (Q12): its save, with the party it was made with (the tests' party) swapped for the roster's
+## heroes at the chapter's level. The first four of the roster travel, as the title's New game picks them, and the
+## rest wait at camp; the magic items the chapter's party had found go to the new travellers' packs, one member's to
+## one member, and their coin to the party's purse. Like a backup, the game has no slot until its first save.
+func begin_chapter(c: Dictionary) -> Error:
+	var err := load_from(str(c["dir"]), str(c["slot"]))
+	if err != OK:
+		return err
+	var st := GameState.story
+	var old: Array[Character] = st.party.duplicate()
+	old.append_array(st.bench)
+	st.party.clear()
+	st.bench.clear()
+	for id in Pregens.roster_ids():
+		var ch := Pregens.build(id, maxi(1, int(c.get("level", 1))))
+		if ch == null:
+			continue
+		ch.finish_long_rest()
+		if st.party.size() < StoryState.PARTY_CAP:
+			st.party.append(ch)
+		else:
+			st.bench.append(ch)
+	st.leader = 0
+	if st.party.is_empty():
+		return OK
+	const COIN := {"cp": 0.01, "sp": 0.1, "ep": 0.5, "gp": 1.0, "pp": 10.0}
+	for i in old.size():
+		var to := st.party[i % st.party.size()]
+		for e: Dictionary in old[i].inventory:
+			if MagicItems.is_magic(Compendium.shared().item_data(str(e["id"]))):
+				to.add_item(str(e["id"]), int(e["qty"]), Character.entry_state(e))
+		for coin: String in old[i].currency:
+			st.gold += float(old[i].currency[coin]) * float(COIN.get(coin, 0.0))
+	return OK
+
+
+## Who travels when a chapter begins (begin_chapter): the first four of the roster, by name.
+static func chapter_party() -> Array[String]:
+	var out: Array[String] = []
+	for id: String in Pregens.roster_ids().slice(0, StoryState.PARTY_CAP):
+		out.append(str(Compendium.shared().get_entry("pregens", id).get("name", id)))
+	return out
 
 
 # --- Thumbnails -----------------------------------------------------------------------------------

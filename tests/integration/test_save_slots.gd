@@ -3,7 +3,7 @@ extends TestCase
 ## to a new slot"): a new slot, or over one of the player's own saves once they confirm. The saves are a page of their
 ## own (ui/screens/saves_screen.gd) over the pause menu, the game-over screen and the title, the list scrolls, and
 ## Back or Escape returns to whatever opened it. Q9: a picture and the player's note with each save, sorting, the
-## newest five autosaves, and a copy of every save kept before each update.
+## newest five autosaves, and a copy of every save kept before each update. Q12: a jump-in save for each chapter.
 
 var root: Node
 var _real_dir := ""
@@ -403,3 +403,45 @@ func test_every_save_is_copied_before_an_update() -> void:
 	for i in SaveSystem.BACKUPS_KEPT + 2:
 		SaveSystem.back_up_for_build("build%02d" % i)
 	assert_eq(SaveSystem.backups().size(), SaveSystem.BACKUPS_KEPT, "the newest %d builds' copies are kept" % SaveSystem.BACKUPS_KEPT)
+
+
+func test_each_chapter_has_a_jump_in_save() -> void:
+	var list := SaveSystem.chapters()
+	assert_true(list.size() >= 10, "a save for each chapter (found %d)" % list.size())
+	var numbers: Array = list.map(func(c: Dictionary) -> int: return int(c["number"]))
+	var in_order := numbers.duplicate()
+	in_order.sort()
+	assert_eq(numbers, in_order, "in story order")
+	for c in list:
+		assert_true(str(c["title"]) != "" and int(c["level"]) >= 1, "%s has a title and a party level" % c["chapter"])
+	var levels: Array = list.map(func(c: Dictionary) -> int: return int(c["level"]))
+	assert_true(int(levels[-1]) > int(levels[0]), "the party is higher level in later chapters: %s" % [levels])
+
+
+func test_a_chapter_starts_a_game_without_a_slot() -> void:
+	assert_eq(SaveSystem.save("mine"), OK)
+	var menu := await _menu()
+	var went: Array[String] = []
+	menu.scene_changer = func(path: String) -> void: went.append(path)
+	await _press(menu, "Load a Save")
+	var page := _page(menu)
+	await _press(page, "Chapters")
+	var row := page.find_child("vallaki", true, false)
+	assert_true(row != null, "Vallaki is listed")
+	assert_true(_shows(row, "Chapter") and _shows(row, "Vallaki"), "with its number and title")
+	assert_true(row.find_child("Picture", true, false) is TextureRect, "and the map around it")
+	(row.find_child("Act", true, false) as Button).pressed.emit()
+	assert_eq(went, [PauseMenu.GAME_SCENE] as Array[String], "Begin starts it")
+	assert_eq(GameState.story.location, "vallaki", "where the chapter starts")
+	assert_eq(SaveSystem.current_slot, "", "a game without a slot of its own: its first save makes one")
+	var st := GameState.story
+	var roster := Pregens.roster_ids()
+	var ids: Array[String] = []
+	for ch in st.party:
+		ids.append(ch.id)
+	assert_eq(ids, roster.slice(0, StoryState.PARTY_CAP), "the roster's heroes travel, not the party the chapter was made with")
+	assert_eq(st.bench.size(), roster.size() - StoryState.PARTY_CAP, "the rest wait at camp")
+	var chapter := SaveSystem.chapters().filter(func(c: Dictionary) -> bool: return str(c["chapter"]) == "vallaki")[0] as Dictionary
+	for ch: Character in st.party + st.bench:
+		assert_eq(ch.character_level(), int(chapter["level"]), "%s at the chapter's level" % ch.name)
+	root.call("close_screen")

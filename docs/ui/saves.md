@@ -1,8 +1,8 @@
 # Saves and save slots (lane 16)
 
 Status: the slot picker built 2026-10-07 (owner: "When clicking Save Game, we should be able to select the slot to
-save to, or save to a new slot"); Q9 (pictures, notes, sorting, more autosaves, backups) the same day · not yet seen
-by the owner
+save to, or save to a new slot"); Q9 (pictures, notes, sorting, more autosaves, backups) and Q12 (jump-in saves for
+each chapter) the same day · not yet seen by the owner
 Code: `ui/screens/saves_screen.gd` (the page), `core/save_system.gd` (the files). Hooks: `ui/screens/pause_menu.gd`
 (Save Game, Load a Save, the game-over arch), `ui/menu/main_menu.gd` (the title's Load).
 Tests: `tests/integration/test_save_slots.gd`, and the saves pages in `tests/integration/test_layout.gd`.
@@ -20,13 +20,19 @@ and the full text is in the row's tooltip.
   as its ending. A save goes back to the menu with "Saved."; the slot saved to becomes the game's own (F5 saves there).
 - **Load a Save** (pause menu, the game-over arch, the title's Load): every save, the autosave and round start too,
   newest first. A save from a newer build says so instead of loading.
-- **Pictures and notes (Q9)**: each row shows a picture of the game as it was saved, framed in gilt (the crest on
-  black for a fight's round start or a save from before pictures), and the player's own note in quotes. The note is
+- **Pictures and notes (Q9)**: each row shows a picture of the game as it was saved, framed in gilt (the travel map
+  around the place for a fight's round start or a save from before pictures), the party's level, and the player's own note in quotes. The note is
   typed above the list when saving (60 letters at most; Enter makes a new save with it). Writing over a save keeps
   its note unless a new one is typed, and the overwrite question shows the note the save will have.
 - **Sorting (Q9)**: Newest first, By place or By day (the latest day in Barovia first), kept with the player's
   settings (`saves_sort`).
-- **Backups (Q9)**: loading has a second tab, Backups: each update's copies under a heading saying when they were
+- **Chapters (Q12)**: loading's second tab: a jump-in save at the start of each chapter, in story order, with the
+  travel map around where it starts, its number and title, the party's level and the day; the travel map's line
+  about the place is its tooltip. Begin starts a game there with no slot of its own (its first save makes one), with
+  the roster's heroes at the chapter's level: the first four travel (as New game picks them) and the other two wait at
+  camp. The chapter saves were made with the tests' party, so `SaveSystem.begin_chapter` swaps it out, moving the
+  magic items it had found into the new travellers' packs (one member's to one member) and its coin to the purse.
+- **Backups (Q9)**: loading's third tab, Backups: each update's copies under a heading saying when they were
   kept. A game loaded from a backup has no slot of its own, so its first save makes a new one and the backup stays
   as it was.
 - **Ways back**: Back, or Escape. Escape closes the overwrite question first, then the page, then (in the game) the
@@ -56,3 +62,8 @@ picture, `<slot>.webp`. Other files kept there (N8's `achievements.json`) aren't
   `make play`), before anything reads a save, every save and picture is copied to
   `backups/<date>T<time>_<commit>/`. Once per build; the newest eight builds' copies are kept. A working checkout has
   no build file, so it never backs up.
+- **Chapters**: `SaveSystem.chapters()` offers the golden saves P4 keeps in `tests/saves` (made by the auto-player
+  the playthrough tests use, so the same saves every test run loads): each chapter's newest save version, in the
+  story order of `SaveSystem.CHAPTERS` (13 chapters, Into the Mists to the Gates of Castle Ravenloft; the new game and
+  the ending are left out). They load through `SaveSystem.upgrade` like any save, so they keep loading as the format
+  changes, and `make golden-saves` refreshing them refreshes the chapters too.
