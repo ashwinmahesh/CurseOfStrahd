@@ -118,6 +118,13 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 				root.tree_exiting.connect(func() -> void:
 					if is_instance_valid(board):
 						board.show_building(cell))
+				var building := ModelPiece.for_art(board, art)
+				if building != "":
+					# A 3D building (docs/art/models.md) over the house's ground, facing south.
+					var b := ModelPiece.stand(board, root, building, art, cell, at)
+					b.rotation.y = 0.0
+					ModelPiece.fade_with_trees(board, b)
+					return root
 				var tower := _sprite(art)
 				tower.pixel_size *= scale_
 				tower.position = at
@@ -136,6 +143,8 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 			var piece := stand_piece(board, root, art, cell, scale_, null, front, bool(look.get("fade", false)) or bool(look.get("big", false)))
 			if bool(look.get("fade", false)) and piece is Sprite3D:
 				_fade_with_trees(board, piece as Sprite3D)
+			elif bool(look.get("fade", false)) and piece != null and piece.has_meta("model"):
+				ModelPiece.fade_with_trees(board, piece)
 	return root
 
 

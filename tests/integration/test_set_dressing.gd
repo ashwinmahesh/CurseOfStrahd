@@ -79,6 +79,19 @@ func test_death_house_doors_props_and_containers() -> void:
 			"a 3D hearth (docs/art/models.md) facing into the room")
 	assert_true(absf(piece.position.z - 1.0) < 0.05, "on the wall's south face (the wall square is row 0)")
 	var cabinet := v.container_nodes["den_gun_cabinet"] as Node3D
+	var models := cabinet.find_children("Model_*", "Node3D", true, false)
+	if not models.is_empty():
+		# A 3D cabinet (docs/art/models.md): its back on the den's west wall face, facing east into the room.
+		var box := _world_box(models[0] as Node3D)
+		assert_true(absf(box.position.x - 1.0) < 0.02, "its back on the west wall's face (x %.3f)" % box.position.x)
+		assert_true((models[0] as Node3D).global_basis.z.normalized().is_equal_approx(Vector3(1, 0, 0)), "facing into the room")
+		var mi := (models[0] as Node3D).find_children("*", "MeshInstance3D", true, false)[0] as MeshInstance3D
+		var was: Variant = (mi.get_surface_override_material(0) as ShaderMaterial).get_shader_parameter("albedo")
+		v.mark_looted("den_gun_cabinet")
+		var now: Variant = (mi.get_surface_override_material(0) as ShaderMaterial).get_shader_parameter("albedo")
+		assert_true(ModelPiece.colour_of(now).v < ModelPiece.colour_of(was).v, "an emptied container dims")
+		v.queue_free()
+		return
 	var pictures := cabinet.find_children("*", "Sprite3D", true, false)
 	assert_false(pictures.is_empty(), "the hunting cabinet is a picture, not a box")
 	var front := pictures[0] as Sprite3D
@@ -157,9 +170,15 @@ func test_pointing_at_a_tall_piece_picks_it() -> void:
 	await _frames(2)
 	var cam := v.rig.camera
 	var cabinet := v.container_nodes["den_gun_cabinet"] as Node3D
-	var front := cabinet.find_children("*", "Sprite3D", true, false)[0] as Sprite3D
-	var tall := front.texture.get_height() * front.pixel_size
-	var high := front.global_position + Vector3(0, tall * 0.85, 0)
+	var high: Vector3
+	var models := cabinet.find_children("Model_*", "Node3D", true, false)
+	if not models.is_empty():
+		var box := _world_box(models[0] as Node3D)   # a 3D cabinet: the top of its front
+		high = Vector3(box.end.x, box.position.y + box.size.y * 0.85, box.get_center().z)
+	else:
+		var front := cabinet.find_children("*", "Sprite3D", true, false)[0] as Sprite3D
+		var tall := front.texture.get_height() * front.pixel_size
+		high = front.global_position + Vector3(0, tall * 0.85, 0)
 	var screen := cam.unproject_position(high)
 	assert_ne(GridPick.cell_under(cam, v.grid, screen), Vector2i(1, 9), "the floor under that point is another square")
 	assert_eq(v.pick_cell(cam, screen), Vector2i(1, 9), "pointing at the cabinet's top picks the cabinet")
@@ -183,6 +202,8 @@ func test_no_piece_overlaps_another_or_a_wall() -> void:
 			var sp := n as Sprite3D
 			if not sp.is_visible_in_tree() or sp.has_meta("ground_cover") or sp in board.occluders or sp.axis != Vector3.AXIS_Z:
 				continue
+			if _in_model(sp):
+				continue   # the painted part of a 3D piece (docs/art/models.md); test_models_3d keeps models in their squares
 			if sp.billboard == BaseMaterial3D.BILLBOARD_DISABLED:
 				if sp.get_parent().name.begins_with("AgainstWall") or sp.get_parent().name.begins_with("Door") or sp.name == "Leaf":
 					continue
@@ -301,6 +322,8 @@ func test_pieces_are_drawn_at_their_real_size() -> void:
 			if not n.has_meta("art") or not feet.has(str(n.get_meta("art"))):
 				continue
 			var art := str(n.get_meta("art"))
+			if n.has_meta("model"):
+				continue   # a 3D piece is built at its real size (docs/art/models.md); test_models_3d checks it
 			var sp: Sprite3D = n as Sprite3D if n is Sprite3D else null
 			if sp == null:
 				var inner := n.find_children("*", "Sprite3D", true, false)
@@ -322,8 +345,12 @@ func test_pieces_are_drawn_at_their_real_size() -> void:
 	var road := _view("into_the_mists_road")
 	await _frames(1)
 	var cottage := road.prop_nodes["edge_cottage_shutters"] as Node3D
-	var pic := cottage.find_children("*", "Sprite3D", true, false)[0] as Sprite3D
-	assert_true(pic.texture.get_height() * pic.pixel_size > 3.0, "the cottage stands about 16 ft tall")
+	var models := cottage.find_children("Model_*", "Node3D", true, false)
+	if not models.is_empty():
+		assert_true(_world_box(models[0] as Node3D).size.y > 3.0, "the 3D cottage stands about 16 ft tall")
+	else:
+		var pic := cottage.find_children("*", "Sprite3D", true, false)[0] as Sprite3D
+		assert_true(pic.texture.get_height() * pic.pixel_size > 3.0, "the cottage stands about 16 ft tall")
 	for d: Vector2i in [Vector2i(-1, 0), Vector2i(0, 1), Vector2i(-1, 1)]:
 		assert_false(_drawn(road.board, Vector2i(6, 9) + d), "no tree in front of the cottage at %s" % (Vector2i(6, 9) + d))
 	road.queue_free()
