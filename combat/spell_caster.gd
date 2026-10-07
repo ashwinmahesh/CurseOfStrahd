@@ -1488,6 +1488,8 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	(option["profile"] as WeaponProfile).normal_range = range_ft(s, c)
 	if ctx.has("attack_origin"):
 		option["origin_cell"] = ctx["attack_origin"]
+	# Shadow Martyr (Echo Knight): an echo can leap in to take the roll (on Automatic only: this can't pause).
+	t = e.echo_knight.spell_redirect(c, t)
 	var sit := e.attack_situation(c, t, option)
 	if bool(s.get("ignore_partial_cover", false)):
 		sit["cover_bonus"] = 0

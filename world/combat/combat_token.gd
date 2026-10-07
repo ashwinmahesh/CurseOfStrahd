@@ -65,6 +65,10 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 const ART_ALIASES := {"strahd_von_zarovich": "strahd", "izek_strazni": "izek", "ezmerelda_davenir": "ezmerelda",
 	"owl_familiar": "owl", "skeleton_familiar": "skeleton"}
 
+## The art each character on the field wears, by creature id: an Echo Knight's echo (`look_of` in its stat block) is
+## drawn as a ghostly copy of its knight.
+static var _looks: Dictionary = {}
+
 var combatant: Combatant
 var art_override := ""
 ## Riding a mount (CombatView sets it from Encounter.mount_of) and sneaking (exploration's sneak mode): with the
@@ -101,6 +105,8 @@ static func art_for(cr: Creature) -> String:
 	if cr is Monster:
 		var data := (cr as Monster).data
 		var id := str(data.get("id", ""))
+		if _looks.has(str(data.get("look_of", ""))):
+			return str(_looks[str(data["look_of"])])
 		return str(data.get("art", ART_ALIASES.get(id, id)))
 	if cr is Character:
 		if HeroLook.is_custom(cr as Character):
@@ -142,11 +148,16 @@ static func create(c: Combatant, art: String = "") -> CombatToken:
 func _build() -> void:
 	var c := combatant
 	var aid := art_override if art_override != "" else art_id(c)
+	if c.creature is Character:
+		_looks[c.id] = aid
 	var frames := DirectionalSprite.frames_for(aid)
 	var size_units := float(c.size_cells)
 	if frames != null:
 		sprite = DirectionalSprite.create(frames, height_for(aid))
 		sprite.play(&"idle_s")
+		if _is_echo() and sprite.material_override is ShaderMaterial:
+			(sprite.material_override as ShaderMaterial).set_shader_parameter("ghost", 1.0)
+			(sprite.material_override as ShaderMaterial).set_shader_parameter("ghost_tint", Look.color("silver"))
 		add_child(sprite)
 		body = sprite
 		_lying = Sprite3D.new()
@@ -268,6 +279,9 @@ func refresh() -> void:
 	_status.text = " · ".join(chips)
 	_label.text = combatant.name()
 	_base_modulate = Color.WHITE
+	if _is_echo():
+		# An Echo Knight's echo: a translucent gray image of its knight (the sprite shader washes it gray).
+		_base_modulate = Color(1, 1, 1, 0.6)
 	if cr.dead:
 		_base_modulate = Color(0.45, 0.4, 0.45, 0.0)
 		_leave_remains()
@@ -293,6 +307,10 @@ func refresh() -> void:
 			sprite.modulate = _faded(_base_modulate)
 	_show_fade()
 
+
+
+func _is_echo() -> bool:
+	return combatant.creature is Monster and (combatant.creature as Monster).data.has("look_of")
 
 
 ## The pose standing up: astride a mount, crouched when hidden or sneaking, else on foot.

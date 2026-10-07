@@ -300,6 +300,15 @@ Verification checkpoint (2026-10-06): `make ci` passed with **844/844 tests**, 1
 
 Checkpoint counts (2026-10-06): 30 of 52 new spells have recipes or handlers; 22 are explicitly reference-only. Of 126 top-level subclass feature entries, 50 remain `text`; of 106 feat benefits, 64 remain `text`. These are entry counts, not a percentage of rules completion: data-backed entries can still have audit exceptions listed above, and item/background audits remain open.
 
+## Explorer's Guide to Wildemount (EGtW; combat/echo_knight.gd)
+
+The 2014 Echo Knight, fitted to the 2024 Fighter (every change is in deviations.md). Entered from knowledge, not checked
+against the book (`source.note`).
+
+| Rule | Code | Status | Test |
+|---|---|---|---|
+| Echo Knight: Manifest Echo (the echo on the board: AC 14 + Proficiency Bonus, 1 Hit Point, immune to conditions, the knight's saves; moved 30 ft a turn for no action, swapped with for a Bonus Action and 15 ft, dismissed, fading past 30 ft or when its knight is Incapacitated; attacks of the Attack action, the Nick attack and Haste's attack from its space, Weapon Mastery counted from there; Opportunity Attacks when a creature leaves its 5-ft reach), Unleash Incarnation (once per Attack action, Action Surge included), Echo Avatar (Blinded and Deafened, sight through the echo, 1,000 ft leash), Shadow Martyr (prompted for attack rolls, Automatic for spell attack rolls; Unleash Incarnation as a second use), Reclaim Potential, Legion of One (two echoes, the third replaces both, a use back on Initiative) | data/subclasses/echo_knight.json, echo_knight.gd with hooks in encounter.gd (attack, offhand, Haste, Opportunity Attacks, before the roll, sight, turns, damage, Initiative), spell_caster.gd spell_attack, action_catalog.gd, feature_actions.gd, features.gd riders; the view draws the echo as a ghostly copy of its knight (combat_token.gd) and plays blows from its token (combat_view.gd); effects in art/vfx/effects.json | implemented; tested: every feature, an attack and an Opportunity Attack from the echo, Push from the echo's square, a save and load with an echo. Echo Avatar's scouting outside fights isn't in the game (no hidden areas to explore) | test_echo_knight |
+
 ## Not started (later phases)
 
 Influence and NPC attitudes as a rule (attitudes exist in the story; haggling is written into dialogue for now);

@@ -489,10 +489,14 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 		return -1e9
 	var avg := _avg(c, o)
 	var expected := float(hc["chance"]) * avg
+	# An Echo Knight's echo is only an image (its knight calls another with a Bonus Action): worth little.
+	var echo := EchoKnight.is_echo(t)
+	if echo:
+		expected *= 0.3
 	var score := expected
 	# Finishing a foe ends its turns for good.
 	var hp_left := t.creature.hp + t.creature.temp_hp
-	if avg >= hp_left:
+	if avg >= hp_left and not echo:
 		score += float(prof["finish"]) * 3.0 * float(hc["chance"])
 	# Concentrating casters are worth breaking.
 	if t.creature.concentration != null:

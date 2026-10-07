@@ -137,7 +137,8 @@
             "RtHW",
             "FRHoF",
             "FRAiF",
-            "AU"
+            "AU",
+            "EGtW"
           ]
         },
         "page": {
@@ -558,10 +559,22 @@
         },
         "policy": {
           "enum": [
+            "ask",
             "auto",
             "never"
           ],
-          "description": "The feature acts on its own; the class tab offers Automatic and Off, starting at this value."
+          "description": "The feature acts on its own; the class tab offers Automatic and Off (or `policy_modes`), starting at this value."
+        },
+        "policy_modes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "ask",
+              "auto",
+              "never"
+            ]
+          },
+          "description": "The class tab's choices for a `policy` feature when they aren't Automatic and Off (a Reaction that can ask first)."
         },
         "policy_cost": {
           "type": "string",

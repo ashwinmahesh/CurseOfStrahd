@@ -795,7 +795,17 @@
     "radiance_arm": "glimmer@radiant",
     "fluid_forms": "transform@nature",
     "fluid_forms_end": "transform@nature",
-    "bright_sun": "aura@radiant"
+    "bright_sun": "aura@radiant",
+    "manifest_echo": "summon@ward",
+    "echo_move": "glimmer@ward",
+    "echo_swap": "teleport@ward",
+    "echo_dismiss": "teleport@ward",
+    "unleash_incarnation": {"family": "nova", "flavour": "ward", "size": 0.6},
+    "echo_avatar": "psychic@ward",
+    "echo_avatar_end": "glimmer@ward",
+    "shadow_martyr": "teleport@ward",
+    "reclaim_potential": "ward@ward",
+    "legion_of_one": "glimmer@ward"
   },
   "_monsters": "A monster's own actions by \"<monster>.<action>\". With no pick, a ranged attack is a bolt (magic damage) or a shot, a melee attack a touch (magic) or a slash, and a save action takes its area's shape (cone, line, nova) or a curse or psychic look, all in its damage type's colours. Lair actions use the same keys (\"strahd_von_zarovich.shadow_thief\").",
   "monsters": {
