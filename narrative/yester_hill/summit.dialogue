@@ -21,7 +21,11 @@ Narrator: All down the slope, every blight on the hill folds up where it stands 
 if guest:adrian_martikov
 Adrian: That's for my brother. ...No. That's for the next one. Elvir would say so.
 endif
-interject tag:devout: Fire's a kind of dawn. The small kind. It'll do.
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: Fire is a kind of dawn. The small kind. It will do, for now.
+else
+interject tag:pious: Fire's a kind of dawn. The small kind. It'll do.
+endif
 -> END
 
 ~ leave_tree
@@ -35,7 +39,11 @@ if not flag.gulthias_tree_burned
 Narrator: A thread of black runs through the green, fine as a hair: the same black as the tree's bark.
 interject class:wizard: The tree's in it. A little. Good soil and time will draw it out, I think. Or fire.
 endif
+if name:kip_smudgewick
+interject name:kip_smudgewick: It's warm. Warm like a hand. I don't love that. Here, somebody else hold it.
+else
 interject tag:curious: It's warm. It's warm like a hand is warm. I don't love that.
+endif
 -> END
 
 ~ elvir

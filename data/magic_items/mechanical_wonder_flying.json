@@ -1,0 +1,22 @@
+{
+  "id": "mechanical_wonder_flying",
+  "name": "Mechanical Wonder (Flying)",
+  "source": {
+    "book": "FRAiF",
+    "page": 245,
+    "checked_against": "FRAiF",
+    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/10771765-mechanical-wonder. Prices use the existing rarity convention; unspecified weight is 0. Reference-only properties require manual adjudication."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "amulet",
+  "summary": "Reference-only: activate with 1 minute of winding its unique hand key, taking the Utilize action each turn.",
+  "text": "Reference-only: activate with 1 minute of winding its unique hand key, taking the Utilize action each turn. Operates for 24 hours and carries 100 pounds. It acts after you on your Initiative, follows your commands without an action, otherwise Dodges and avoids danger, and is destroyed at 0 HP. Touching it with its key as a Utilize action deactivates it (Unconscious). Tiny Construct: AC 12, HP 2 (1d4), Speed 5 feet, Fly 30 feet; Str 2, Dex 15, Con 10, Int 3, Wis 10, Cha 1. Immune to Poison damage, Exhaustion, and Poisoned; Blindsight 60 feet, passive Perception 10; understands Common but cannot speak; CR 0. Bonus Action: Dash, or chime to give one ally it sees within 60 feet Advantage on its next Musical Instrument or Tinker’s Tools check before the wonder’s next turn starts. See the linked source for its full servant stat block.",
+  "playable": false
+}

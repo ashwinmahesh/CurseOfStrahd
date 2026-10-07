@@ -81,12 +81,12 @@ endif
 set strahd_pact_known = "full"
 Narrator: You open the Tome beside the copper book. His own pages tell the same night from the other side: a long climb, a courteous old warden, a voice in the dark that understood him at last.
 Narrator: Read together, they say what neither says alone. He didn't bargain to live forever. He bargained to stop growing older than her. Everything after was the price.
-interject name:silvain_aster: The primary source and the contract, side by side. I have waited my whole life for a footnote like this. I find I don't enjoy it at all.
+interject name:kip_smudgewick: His diary and his contract, side by side. He read every term, and he signed anyway. That's the part I can't stop looking at.
 -> pact_after
 
 ~ pact_after
 interject class:cleric: He gave his brother to a thing in a box, and the land has paid the rest ever since.
-interject tag:blunt: Then the land is how it ends. Noted.
+interject tag:blunt: Then the land is how it ends.
 if flag.stanimir_tale_heard
 interject tag:curious: Stanimir's story by the fire had a prince, a brother and a bride. It left out the box.
 endif

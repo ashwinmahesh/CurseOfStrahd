@@ -281,7 +281,6 @@ cooldown 10
 
 ~ examine:aurel_last_note
 | A folded sheet of good paper, written in a fast, educated hand. It's addressed to nobody, and signed with two initials.
-| [name:silvain_aster] {name} knows the hand before the first word: Aurel always crossed his sevens, and he crossed them here too.
 cooldown 10
 
 # ---------------------------------------------------------------- Burgomaster's mansion
@@ -315,7 +314,7 @@ cooldown 10
 
 ~ examine:church_altar_stone
 | The altar is a single block of grey stone with a sunburst carved into its face. Someone has scrubbed it so often that the sunburst is wearing away.
-| [name:hedda_ironvow] The sunburst of the Morninglord, cut into stone the way it is at home. {name} lays a palm on it: the stone is cold, and it wasn't always.
+| [name:liriel_dawnsong] The sunburst of the Morninglord, worn almost smooth. {name} lays a palm on it the way you take a friend's hand in a sickroom: the stone is cold, and it wasn't always.
 cooldown 10
 
 ~ examine:morninglord_window
@@ -398,10 +397,12 @@ cooldown 10
 
 ~ dream:dream_pastry
 | {name} dreams of someone lost: a warm kitchen, a familiar voice, a door that opens onto everything that was taken. Waking feels like a theft, and the honey taste won't leave {name}'s mouth.
-| [name:ilse_varga] {name} dreams of Kestrel Company on the march, forty voices singing the old rude songs, every face exactly as it was. She counts them all and nobody is missing, and then she wakes.
-| [name:tamsin_tealeaf] {name} dreams of the woman from the locket, standing by a lake in a white dress. She turns to say his name, and he wakes with the honey still sweet on his tongue.
-| [name:hedda_ironvow] {name} dreams of the chapel at dawn, the light striking the altar, warmth on her face. She wakes in grey Barovian daylight and lies still a long while.
-| [name:silvain_aster] {name} dreams of a library, and of Aurel at a long table, turning pages and laughing. He looks up to say something, and the dream ends before he can.
+| [name:godrick_pendlebrook] {name} dreams of Sir Pellam by an inn fire with his boots off, telling the old stories and laughing at the end of every one. Then Pellam picks up a soup ladle, very solemnly, and {name} wakes.
+| [name:liriel_dawnsong] {name} dreams of the temple on the hill, the novices singing the sun up, warmth on her face. She wakes to grey Barovian daylight and keeps her eyes shut a while longer.
+| [name:thistle] {name} dreams of the hut in the Thornwood: the hounds asleep by the fire, Grandda Fen whittling and saying nothing. She wakes with one hand out, reaching for a hound that isn't there.
+| [name:ratatoille] {name} dreams of the inn kitchen at home, flour on every surface, his mother tasting from his spoon and saying nothing, which means perfect. He wakes hungry for something no pastry can fix.
+| [name:wren_featherfoot] {name} dreams of Master Sorrel in the practice yard, beckoning him over for one more lesson. Sorrel opens his mouth to begin, and {name} wakes.
+| [name:kip_smudgewick] {name} dreams of the orchard in blossom, his sister Pip laughing in the long grass, his father whistling at the gate. He wakes, and the apricots in his pack smell sweeter than they should.
 
 ~ rest:short
 | You rest with your backs to a wall that has seen worse. Somewhere a dog barks once and thinks better of it.

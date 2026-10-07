@@ -1,0 +1,38 @@
+{
+  "id": "transfix",
+  "name": "Transfix",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 7,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "summary": "Reference-only: A visible creature within 60 feet saves Charisma or becomes Charmed and Incapacitated, moving directly toward you on its turns. Ending a turn within 5 feet deals 4d8 Psychic. It provokes Opportunity Attacks normally and repeats the save before entering damaging terrain. Later Magic actions target more creatures; one that saved against this casting cannot be retargeted. Add 1d8 damage per slot above 7.",
+  "text": "Reference-only: A visible creature within 60 feet saves Charisma or becomes Charmed and Incapacitated, moving directly toward you on its turns. Ending a turn within 5 feet deals 4d8 Psychic. It provokes Opportunity Attacks normally and repeats the save before entering damaging terrain. Later Magic actions target more creatures; one that saved against this casting cannot be retargeted. Add 1d8 damage per slot above 7.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile",
+  "playable": false
+}

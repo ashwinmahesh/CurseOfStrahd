@@ -1,0 +1,21 @@
+{
+  "id": "spell_duelists_trophy",
+  "name": "Spell Duelist’s Trophy",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Spellcaster"
+  },
+  "theme": "arcana",
+  "icon": "amulet",
+  "summary": "Reference-only while worn: cast Mage Hand; omit Somatic components from slotted spells; once per dawn, cast Dispel Magic on a creature as part of hitting it with a melee spell attack..",
+  "text": "Reference-only while worn: cast Mage Hand; omit Somatic components from slotted spells; once per dawn, cast Dispel Magic on a creature as part of hitting it with a melee spell attack.",
+  "playable": false
+}

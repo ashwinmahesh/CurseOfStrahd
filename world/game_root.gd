@@ -67,12 +67,16 @@ func _ready() -> void:
 		show_ending.call_deferred()
 
 
-## A quick start: the four pregens at level 1 (plan §5.6 Start step). The full creator replaces this in the menu.
+## A quick start: four of the six at level 1 travelling, the other two at camp (plan §5.6 Start step). The menu's
+## roster pick replaces this.
 func _new_pregen_party() -> void:
-	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
+	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille", "wren_featherfoot", "kip_smudgewick"]:
 		var ch := Pregens.build(id, 1)
 		ch.finish_long_rest()
-		st.party.append(ch)
+		if st.party.size() < StoryState.PARTY_CAP:
+			st.party.append(ch)
+		else:
+			st.bench.append(ch)
 	st.gold = 10.0
 
 
@@ -101,6 +105,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.narration.connect(func(t: String) -> void: hud.narrate(t))
 	view.toast.connect(func(t: String) -> void: hud.toast(t))
 	view.check_rolled.connect(func(t: String) -> void: hud.roll(t))
+	view.party_tended.connect(_refresh)
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
 		LayerFade.fade(self, hud, false, 0.25)   # the combat HUD fades up in its place
@@ -116,6 +121,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 	hud.show_location(view)
 	_refresh()
 	if spawn != "":
+		_autosave.call_deferred()   # arriving somewhere new (before any visit that greets the party)
 		_strahd.call_deferred("arrive")   # Strahd's presence (ADR 0014): a visit on arriving somewhere
 
 
@@ -123,6 +129,8 @@ func _refresh() -> void:
 	if view == null:
 		return
 	view.update_daylight()
+	if not view.in_combat:
+		view.refresh_party()   # healed outside a fight: back on their feet, chips up to date
 	hud.refresh(str(view.loc.get("name", "")), view.sneaking, view.solo)
 
 
@@ -400,6 +408,8 @@ func _after_combat(outcome: String) -> void:
 	if not st.travel_resume.is_empty():
 		hud.toast("The road is clear. You go on.")
 		_continue_journey.call_deferred()
+	else:
+		_autosave.call_deferred()   # a won fight is a checkpoint
 
 
 ## The campaign's end (ADR 0014): the ending reached plays on the ending screen, which marks the save finished and
@@ -552,6 +562,7 @@ var _fade_label: Label = null
 func _on_time_passed(minutes: int) -> void:
 	if not is_inside_tree():
 		return
+	_autosave.call_deferred()   # after a rest or a wait, once it's done
 	if _fade == null:
 		var layer := CanvasLayer.new()
 		layer.layer = 40
@@ -605,6 +616,8 @@ func open_screen(kind: String, index: int) -> void:
 			screen = JournalScreen.new()
 		"party":
 			screen = PartyScreen.new()
+		"roster":
+			screen = RosterScreen.new()
 		"rest":
 			screen = RestScreen.new()
 		"menu":
@@ -645,6 +658,20 @@ func narrate_key(key: String) -> String:
 ## Rebuilds the current location (after a rest or level up changes what's shown).
 func rebuild() -> void:
 	enter_location(st.location, "")
+
+
+## The autosave (docs/plans/ui_polish.md): only while simply exploring, never in a fight, a conversation or the
+## ending, and only when this is the game itself; a capture or test that puts it inside another scene leaves it off
+## unless it turns `autosaves` on.
+var autosaves := false
+
+
+func _autosave() -> void:
+	if not (autosaves or get_tree().current_scene == self) or view == null or view.in_combat or dialogue != null \
+			or ending != null or ModeController.mode != ModeController.Mode.EXPLORATION or Endings.reached(st) != "":
+		return
+	if SaveSystem.autosave() == OK:
+		hud.saved_note()
 
 
 func _quick_save() -> void:

@@ -34,7 +34,11 @@ Ilka [afraid]: Is she watching? She's always watching. Get us out. Please.
 
 ~ how_long
 Ilka: Eleven days. I scratch the bar each time the light comes in. She lets us out to wash. She weighs us on the flour scale. Toma's getting heavier. I've stopped eating.
+if name:ratatoille
+interject name:ratatoille: Clever girl. Very clever. When you are out, I will cook you anything you like. Anything.
+else
 interject tag:cheerful: Clever girl. Very clever girl.
+endif
 -> menu
 
 ~ who
@@ -47,7 +51,11 @@ Ilka [sad]: I'm not stupid. I know what that means. Toma doesn't. Don't tell him
 ~ rescue
 Narrator: The cages hang still. The girl has both hands on the bars, white at the knuckles. The boy is awake now, staring at the rocking chair, which has finally stopped.
 Ilka: Is she dead? Really dead? She said she couldn't die. She said it every night.
+if name:wren_featherfoot
+interject name:wren_featherfoot: She could. She did. You can stop counting now, love.
+else
 interject tag:blunt: She could. She did.
+endif
 Narrator: Morgantha's keys hang on a ring at what was her apron. The cages open at the second try, and the children climb out as stiff as old men.
 -> freed
 
@@ -70,7 +78,11 @@ Ilka [sad]: Did Mama sell us? You can tell me. I'd rather know.
 ~ truth
 set sarnov_truth_told
 Ilka: I knew. I only wanted somebody to say it out loud, so it was real and I could stop thinking about it.
-interject tag:devout: None of it was your doing. Not one bit. Remember that part as well.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: None of it was your fault. Not one bit. You remember that part too.
+else
+interject tag:pious: None of it was your doing. Not one bit. Remember that part as well.
+endif
 -> destination
 
 ~ lie
@@ -108,5 +120,9 @@ if guest:ilinca_vrana
 leave ilinca_vrana
 endif
 Narrator: She takes a child by each hand and goes down the stair with them, slowly, talking about soup the whole way.
+if name:thistle
+interject name:thistle: Bye, Toma! Bye, Ilka! Whistle like this if anyone bothers you!
+else
 interject tag:cheerful: Bye, Toma! No more cake!
+endif
 -> old_bonegrinder/aftermath:reckon

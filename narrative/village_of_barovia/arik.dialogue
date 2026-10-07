@@ -50,7 +50,7 @@ if flag.scholar_notes_found
 Arik: Scholar. You found the bag.
 else
 Arik: Scholar. Wrote a lot. Went up the castle road. Left a bag. Back room.
-interject name:silvain_aster: Thin, ink to the elbows, never finished a sentence without a footnote? Aurel. It has to be Aurel. Back room, he says. Back room.
+interject name:ratatoille: A scholar! Here! Notes, in a bag, in the back room. Nobody touch anything until I have looked.
 endif
 -> menu
 

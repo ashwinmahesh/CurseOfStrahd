@@ -1,0 +1,58 @@
+{
+  "id": "arcane_eloquence",
+  "name": "Arcane Eloquence",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Always prepared: Vicious Mockery; choose Intelligence, Wisdom, or Charisma for casting. Add 1d4 to your Deception, Intimidation, and Persuasion checks.",
+  "benefits": [
+    {
+      "id": "arcane_eloquence_cantrip",
+      "name": "Vicious Mockery",
+      "summary": "Always prepared: Vicious Mockery; choose Intelligence, Wisdom, or Charisma for casting.",
+      "text": "Always prepared: Vicious Mockery; choose Intelligence, Wisdom, or Charisma for casting.",
+      "implemented": "data",
+      "choice": {
+        "id": "casting_ability",
+        "kind": "spellcasting_ability",
+        "count": 1,
+        "from": [
+          "int",
+          "wis",
+          "cha"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "vicious_mockery",
+          "ability": "@casting_ability",
+          "always_prepared": true
+        }
+      ]
+    },
+    {
+      "id": "arcane_eloquence_benefit",
+      "name": "Smooth Talker",
+      "summary": "Add 1d4 to your Deception, Intimidation, and Persuasion checks.",
+      "text": "Add 1d4 to your Deception, Intimidation, and Persuasion checks.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "bonus_die",
+          "dice": "1d4",
+          "on": [
+            "check:deception",
+            "check:intimidation",
+            "check:persuasion"
+          ]
+        }
+      ]
+    }
+  ],
+  "playable": false
+}

@@ -20,7 +20,7 @@ func _ready() -> void:
 			_at = Vector2i(int(xz.get_slice(",", 0)), int(xz.get_slice(",", 1)))
 	InputActions.ensure()
 	GameState.reset()
-	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
+	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]:
 		var ch := Pregens.build(id, 1)
 		ch.finish_long_rest()
 		GameState.story.party.append(ch)

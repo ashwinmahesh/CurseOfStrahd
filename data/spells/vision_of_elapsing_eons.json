@@ -1,0 +1,39 @@
+{
+  "id": "vision_of_elapsing_eons",
+  "name": "Vision of Elapsing Eons",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 9,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "summary": "Reference-only: One visible creature saves Intelligence or takes 10d12 Psychic and becomes Paralyzed. Repeat at turn end: failure adds 1 Exhaustion; success ends the spell. Another creature within 5 feet can end it with an action to shake the target awake.",
+  "text": "Reference-only: One visible creature saves Intelligence or takes 10d12 Psychic and becomes Paralyzed. Repeat at turn end: failure adds 1 Exhaustion; success ends the spell. Another creature within 5 feet can end it with an action to shake the target awake.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile",
+  "playable": false
+}

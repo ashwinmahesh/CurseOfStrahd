@@ -1,0 +1,21 @@
+{
+  "id": "mages_manacle",
+  "name": "Mage’s Manacle",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "amulet",
+  "summary": "Reference-only: Magic action while worn targets a Grappled or Incapacitated Large-or-smaller creature within 5 feet.",
+  "text": "Reference-only: Magic action while worn targets a Grappled or Incapacitated Large-or-smaller creature within 5 feet. DC 15 Dexterity or Restrained and chained to move with you for 8 hours, or until freely released. Only Disintegrate can destroy the chain. Once per dawn after successfully binding.",
+  "playable": false
+}

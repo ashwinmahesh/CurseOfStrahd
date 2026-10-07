@@ -19,13 +19,13 @@ Vosk [smile]: Oh! Company. Forgive me, I've been reading so long I'd forgotten o
 * What do you know about the sarcophagi? -> sarcophagi
 * [Insight DC 17] Something about him is wrong. -> insight_ok | insight_fail
 * [if flag.dark_gifts_taken >= 1] One of us took a gift. -> gift_taken
-* [name:silvain_aster] Did a scholar named Aurel Mirescu pass through here? -> aurel
 * [if guest:ireena] (He keeps looking at Ireena.) -> ireena
+* [name:kip_smudgewick] [if quest.the_fine_print >= the_assessor and not flag.kip_vosk_paid] Ask him to read Kip's contract. -> companions/fine_print:vosk
 * Goodbye. -> leave
 
 ~ studying
 Vosk: Contracts, mostly. This temple is full of them, if you know how to read. Every sarcophagus is a standing offer, and every offer has terms. I find terms fascinating. People never read them.
-interject tag:bookish: You're a scholar of bargains.
+interject tag:scholarly: You're a scholar of bargains.
 Vosk: Of the people who make them. The bargains are all rather alike.
 -> menu
 
@@ -52,23 +52,6 @@ Narrator: A mild man, a little lonely, too fond of the sound of his own sentence
 ~ gift_taken
 Narrator: Vosk's nose lifts, very slightly, like a dog's at a kitchen door.
 Vosk [smile]: So someone did. Congratulations. Most people only look. Don't let the warden lecture you; he took one himself, long ago. Everyone here has.
--> menu
-
-~ aurel
-Vosk: Mirescu? Thin, ink to the elbows, never finished a sentence without a footnote? Of course. He sat just there. He was going up to the castle to read, he said.
-Narrator: He says it warmly, and it fits like a borrowed coat.
-* [Insight DC 13] Did he, though? -> aurel_lie | aurel_true
-* Thank you. -> menu
-
-~ aurel_lie
-set vosk_suspected
-Narrator: Every detail he gave you, you gave him first, in the way you said the name. He has never met Aurel. He has met you, and that was enough.
-interject name:silvain_aster: You read my face and recited it back to me. That is the single most offensive thing anyone has ever done to me in a library.
-Vosk [smile]: You'd be amazed what people will pay for the thing they most want to hear.
--> menu
-
-~ aurel_true
-Narrator: He seems sincere. Then again, so does the snow, until you're under it.
 -> menu
 
 ~ ireena

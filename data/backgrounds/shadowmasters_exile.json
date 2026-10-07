@@ -1,0 +1,76 @@
+{
+  "id": "shadowmasters_exile",
+  "name": "Shadowmasters Exile",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. The book’s Iron Spikes equipment entry is represented as its standard pack of ten individual spikes."
+  },
+  "summary": "Expelled from Thesk’s Shadowmasters, you now put their training in stealth and violence to your own uses.",
+  "ability_scores": [
+    "dex",
+    "int",
+    "cha"
+  ],
+  "feat": "savage_attacker",
+  "skills": [
+    "acrobatics",
+    "stealth"
+  ],
+  "tool": {
+    "id": "thieves_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 2
+        },
+        {
+          "id": "thieves_tools",
+          "qty": 1
+        },
+        {
+          "id": "caltrops",
+          "qty": 1
+        },
+        {
+          "id": "costume",
+          "qty": 1
+        },
+        {
+          "id": "grappling_hook",
+          "qty": 1
+        },
+        {
+          "id": "iron_spike",
+          "qty": 10
+        },
+        {
+          "id": "mirror",
+          "qty": 1
+        },
+        {
+          "id": "pouch",
+          "qty": 2
+        },
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 3
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ],
+  "playable": false
+}

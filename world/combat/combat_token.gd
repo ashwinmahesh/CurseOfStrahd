@@ -8,6 +8,8 @@ extends Node3D
 
 ## Sprite height in world units (1 unit = 5 ft) by creature, so a halfling stands half a human's height.
 const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.0, "silvain_aster": 1.25,
+	"godrick_pendlebrook": 1.55, "liriel_dawnsong": 1.18, "thistle": 1.22, "ratatoille": 1.24, "wren_featherfoot": 0.74,
+	"kip_smudgewick": 1.28,
 	"zombie": 1.25, "wolf": 0.8, "dire_wolf": 1.35, "ismark": 1.32, "ireena": 1.2, "rose": 0.9, "thorn": 0.75,
 	"donavich": 1.15, "bildrath": 1.2, "parriwimple": 1.45, "mad_mary": 1.15, "morgantha": 1.1, "strahd": 1.4,
 	"ghoul": 1.15, "ghast": 1.2, "specter": 1.25, "shadow": 1.2, "cultist": 1.2, "animated_armor": 1.3,
@@ -82,6 +84,10 @@ static func art_for(cr: Creature) -> String:
 		var look := str(((cr as Character).build.get("appearance", {}) as Dictionary).get("art", ""))
 		if look != "":
 			return look
+		# A pregen with art of its own (the six on the roster) wears it; anyone else borrows a look by class.
+		for own: String in [cr.id, cr.name.to_snake_case()]:
+			if own != "" and ResourceLoader.exists("res://art/sprites/%s/walk.tres" % own):
+				return own
 		return default_look(cr as Character)
 	return cr.name.to_snake_case()
 
@@ -250,6 +256,26 @@ func refresh() -> void:
 			sprite.modulate = _faded(_base_modulate)
 	_show_fade()
 
+
+
+## The fall to the ground at 0 Hit Points or death: the standing figure crumples and the body drops into place with a
+## red flash (procedural, no drawn frames).
+func fall() -> void:
+	if sprite == null or _lying == null or not is_inside_tree():
+		return
+	var lie_y := _lying.position.y
+	sprite.visible = true
+	_lying.visible = false
+	var tw := create_tween()
+	tw.tween_property(sprite, "scale", Vector3(1.15, 0.15, 1.0), 0.22).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	tw.tween_callback(func() -> void:
+		sprite.scale = Vector3.ONE
+		sprite.visible = false
+		_lying.visible = true
+		_lying.position.y = lie_y + 0.35
+		_lying.modulate = Look.color("vampire_red"))
+	tw.tween_property(_lying, "position:y", lie_y, 0.18).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE)
+	tw.tween_property(_lying, "modulate", _faded(_base_modulate), 0.5)
 
 ## Names show only for the creature whose turn it is and the one under the cursor, to keep the field readable.
 ## A dark stain where a creature fell.

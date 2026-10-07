@@ -7,7 +7,9 @@ Narrator: The portrait stands a little open on its hinge. Behind it, narrow step
 -> END
 endif
 Narrator: A young woman with red-gold hair, painted life-sized, looks out of a deep alcove as if someone had just said her name. The frame is very fine, and very clean.
-interject name:tamsin_tealeaf: That's her. The woman in my locket. The same face.
+if flag.ireena_met
+interject name:godrick_pendlebrook: Evening, my lady. ...I've just bowed to a painting. But that's Ireena's face. That's her exactly.
+endif
 * [if flag.court_treasury_known or flag.court_ledger_read] Swing her aside: push the left side of the frame. -> open
 * [Investigation DC 16] (Look closely at the frame.) -> open | stuck
 * [Perception DC 18] (Feel round the frame for a draught.) -> open | stuck

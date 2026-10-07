@@ -126,7 +126,7 @@ func test_right_click_menu_info_and_casting_level() -> void:
 	var e := _enc()
 	var hud := _v().get("hud") as CombatHud
 	var catalog := _v().get("catalog") as ActionCatalog
-	# Play until it's Silvain's turn (enemies act on their own; party turns are ended).
+	# Play until it's the wizard's turn (enemies act on their own; party turns are ended).
 	for i in 40:
 		await _until_player_turn()
 		if e.state != Encounter.State.ACTIVE:

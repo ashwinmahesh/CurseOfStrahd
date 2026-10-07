@@ -1,0 +1,35 @@
+{
+  "id": "wand_of_freshness",
+  "name": "Wand of Freshness",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+  },
+  "category": "wand",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false,
+    "charges": {
+      "max": 4,
+      "regain": "1d4+1",
+      "when": "dawn"
+    }
+  },
+  "theme": "arcana",
+  "icon": "wand",
+  "summary": "Four charges; cast Purify Food and Drink for 1 charge.",
+  "text": "Four charges; cast Purify Food and Drink for 1 charge. Regain 1d4+1 charges each dawn.",
+  "powers": [
+    {
+      "id": "purify_food_and_drink",
+      "name": "Purify Food And Drink",
+      "spell": "purify_food_and_drink",
+      "dc": "wielder",
+      "charges": 1
+    }
+  ],
+  "playable": false
+}

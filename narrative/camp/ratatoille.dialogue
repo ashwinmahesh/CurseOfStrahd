@@ -1,0 +1,95 @@
+# Ratatoille's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each plays
+# once. Quest: A Seat at the Table (narrative/companions/table.dialogue). The last talk is the quest's ending.
+
+~ talk_refectory
+if name:ratatoille and quest.a_seat_at_the_table
+-> refectory
+endif
+-> END
+
+~ refectory
+Narrator: Ratatoille is doing something complicated to tonight's rations with a pinch of salt, a pinch of something from a twist of paper, and a great deal of concentration. It smells unreasonably good.
+interject name:ratatoille: Don't watch. I can't work when people watch. Watch a little.
+* Where did you learn to cook like that? -> refectory_where
+* Why magic, then, and not cooking? -> refectory_why
+
+~ refectory_where
+interject name:ratatoille: Under a pastry table. My family keeps a kitchen in a river town. Eleven of us, one kitchen. I was the one nobody noticed, so I was the one who saw how everything was done.
+-> refectory_why
+
+~ refectory_why
+interject name:ratatoille: At the academy I sat alone at meals for nine years. Nine. Do you know how long that is for an elf? It isn't long. It felt long.
+interject name:ratatoille: Then one day a boy called Aubert put a frog in my soup, and I lost my temper, and I threw fire across the refectory. Not at him. Mostly not at him. The curtains were never the same.
+interject name:ratatoille: The next day, people sat with me. A whole table of them. Asking about fire.
+interject name:ratatoille: So I learned more fire. And then other things. Divination, which is very prestigious, you know, it's the senior school. Titles. Circles. Nobody sits alone at the senior school.
+interject name:ratatoille: And then I heard about the Wizard of Wines, and I thought: there's a man who's done both. Magic and the table. And nobody would dare laugh at him. I'm going to learn from him, and then nobody will ever laugh at me again.
+* People are sitting with you now. -> refectory_now
+* Nobody here is laughing. -> refectory_now
+
+~ refectory_now
+interject name:ratatoille: That's because they haven't tasted it yet. Here. Taste this. No, wait. Now. Now taste it.
+if name:thistle
+interject name:thistle: BARK AND BONES. Rat. RAT.
+interject name:ratatoille: That's good? That's a good noise?
+elif name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Oh. Oh, that's lovely. That's the best thing I've had since the mutton soup at the Wheatsheaf, and I cried at the Wheatsheaf.
+endif
+interject name:ratatoille: It's nothing. It's rations. Anybody could do it. Nobody's going to do it, but anybody could.
+-> END
+
+~ talk_recipes
+if name:ratatoille and quest.a_seat_at_the_table >= a_winery and flag.eva_truth_teller != "ratatoille"
+-> recipes
+endif
+-> END
+
+~ recipes
+Narrator: Ratatoille has his spellbook open on his knees and is reading it the way some people read letters from home.
+interject name:ratatoille: You can look. It's all right. Everyone's going to find out eventually.
+Narrator: The spellbook is laid out like a cookery book. Every spell has its ingredients listed down the margin, its method numbered, and a note at the bottom headed "Serving suggestion". Fireball's says: "Do not serve indoors."
+interject name:ratatoille: I'd rather cook than cast. I always would. I'm good at magic, I'm very good, I'm going to be extremely good. But I'd rather cook. When I cook, I'm not trying to be anything.
+interject name:ratatoille: That's a terrible thing for a wizard to say. Don't tell the Wizard of Wines. Wherever he is. If he exists. Whoever he was.
+* Maybe you can be both. -> recipes_both
+* Your secret's safe. -> recipes_safe
+
+~ recipes_both
+interject name:ratatoille: That's what I wanted. That's the whole reason I came. And it turned out to be a farm. A very good farm. I'm not bitter. I'm a little bitter. It's good wine.
+-> END
+
+~ recipes_safe
+interject name:ratatoille: Thank you. Not that it's a secret. It's just private. There's a difference. One's for hiding, and one's for keeping.
+-> END
+
+~ talk_table
+if name:ratatoille and quest.a_seat_at_the_table >= the_wizard_found and not (quest.a_seat_at_the_table >= his_own_table)
+-> table
+endif
+-> END
+
+~ table
+Narrator: Ratatoille sends everyone away from the fire for an hour and won't say why. When you're let back, there's a cloth laid on the ground, and a supper on it that has no business existing in this valley: something roasted, something in a sauce, bread that's still warm, and a little pastry at each place with an apricot in it.
+if name:kip_smudgewick
+interject name:kip_smudgewick: Those are my apricots. You got them out of my cart. ...They're beautiful. Keep going.
+endif
+interject name:ratatoille: Sit. Everybody sit. Sit with me. That's an order. I'm a diviner of the... I'm a cook. Sit.
+if quest.a_seat_at_the_table >= the_masters_word
+interject name:ratatoille: Mordenkainen told me status is a coat. Anyone can wear it, and it keeps nobody warm. I've been thinking about that. He's right. He's a horrible old man and he's right.
+else
+interject name:ratatoille: The wizard on the mountain played dragonchess against nobody for a year. The greatest wizard of the age, maybe, and nobody sat with him either. I've been thinking about that.
+endif
+if flag.ratatoille_zantras_refused
+interject name:ratatoille: And a thing in amber offered me the whole world looking at me, forever, and I very nearly said yes, and the only reason I didn't was that I already had this. Which I hadn't noticed. Until right then.
+endif
+if flag.ratatoille_refused_strahd
+interject name:ratatoille: And the devil himself offered me a tower, and I told him I already had a table. I meant this one. I meant you.
+endif
+Narrator: He stands up. He looks round at all of you, and visibly loses his nerve, and visibly gets it back.
+interject name:ratatoille: Ratatoille. Cook. And wizard. In that order.
+Narrator: He sits down again, very fast, and goes very pink, and starts serving before anyone can say anything.
+quest a_seat_at_the_table his_own_table
+interject name:godrick_pendlebrook: Hear, hear!
+interject name:thistle: COOK!
+interject name:liriel_dawnsong: Bless this table, and the one who made it.
+interject name:wren_featherfoot: In that order. I'll allow it.
+interject name:kip_smudgewick: Can I sell these? I'm not going to. I just want to know if I can.
+-> END

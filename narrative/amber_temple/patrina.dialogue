@@ -60,7 +60,7 @@ Patrina: He stood at the back. Did he tell you? Everyone was throwing, and my br
 ~ reading
 Patrina: The same page I was reading when I left. It's about him: how a prince became a lord forever. I thought if I understood it, he would see me as an equal.
 Patrina: He did, for a while. That's the trouble with being clever. Someone always finds a use for it.
-interject tag:bookish: I know that page's kind. One reads it to understand, and it reads you back.
+interject tag:scholarly: I know that page's kind. One reads it to understand, and it reads you back.
 -> menu
 
 ~ brother
@@ -119,6 +119,7 @@ Kasimir: Patrina.
 Patrina: ...Kasimir. You climbed a mountain. You. I'd have bet my bones against it, if I still had the use of them.
 Kasimir: I stood at the back. I have stood at the back for three hundred years. I came up here to stop.
 Patrina [angry]: Then say it properly. Not to them. To me.
+* [name:wren_featherfoot] [if flag.wren_letter_given and not flag.wren_patrina_words] (Have Kasimir read her the last line of Sorrel's letter.) -> companions/lesson:patrina
 * [Persuasion DC 13] (Help Kasimir find the words.) -> kasimir_words_ok | kasimir_words_fail
 * (Let him speak for himself.) -> kasimir_alone
 * [if not flag.kasimir_bargain] Kasimir. In the vaults below, there's a vestige that could bring her back. -> kasimir_tempted

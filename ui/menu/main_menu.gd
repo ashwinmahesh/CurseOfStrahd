@@ -1,19 +1,26 @@
 extends Control
-## The title screen (plan §5.6 Start step): New game (the pregenerated party as it is, or with one of them replaced
-## by a custom hero the player makes: owner, 2026-10-06, "only 1 character of the party can be the custom created
-## one"), Continue (the newest save), Load, the Phase 2 combat arena, and Quit.
+## The title screen (plan §5.6 Start step): New game (choose up to four from the roster to travel, the rest wait at camp;
+## one custom hero the player makes joins the roster: owner, 2026-10-06), Continue (the newest save), Load, the
+## Phase 2 combat arena, and Quit.
 
-## The pregenerated party, in marching order.
-const PARTY: Array[String] = ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]
 
 var _creation: CreationScreen = null
+## The new game's choice: roster ids travelling ("hero" for the custom hero), and the hero once made.
+var _picked: Array[String] = []
+var _hero: Character = null
 var _box: VBoxContainer
+## Which page of the title is showing ("title", "new_game", "load"): Escape steps back from the last two.
+var _view := "title"
 
 
 func _ready() -> void:
 	# The title never starts paused: a menu opened in a fight pauses the tree, and a scene change keeps it paused.
 	get_tree().paused = false
 	InputActions.ensure()
+	# The window the player picked in Settings, only when this is the game's own title (never a capture inside it).
+	(func() -> void:
+		if is_inside_tree() and get_tree().current_scene == self:
+			GameSettings.apply_display()).call_deferred()
 	Audio.play_music("title")
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	var bg := ColorRect.new()
@@ -56,6 +63,7 @@ func _ready() -> void:
 
 
 func _title() -> void:
+	_view = "title"
 	for c in _box.get_children():
 		c.queue_free()
 	var t := UiKit.label("Curse of Strahd", 72, "vampire_red")
@@ -119,116 +127,171 @@ func _gap(h: float) -> Control:
 
 
 func _new_game() -> void:
+	_view = "new_game"
 	for c in _box.get_children():
 		c.queue_free()
+	var roster := Pregens.roster_ids()
+	if _picked.is_empty():
+		for id in roster:
+			if _picked.size() < StoryState.PARTY_CAP:
+				_picked.append(id)
 	_box.add_child(UiKit.title("Who goes into the mists?"))
-	_box.add_child(UiParts.section("The pregenerated party"))
-	_box.add_child(_party_cards(Callable()))
-	_box.add_child(UiParts.primary_button("Play these four", _pregen_party))
-	(_box.get_child(_box.get_child_count() - 1) as Button).size_flags_horizontal = Control.SIZE_FILL
-	var own := UiKit.button("Bring your own hero", _choose_replacement, 18)
-	own.tooltip_text = "Make one character of your own to take a companion's place. The other three come with you."
-	_box.add_child(own)
-	_box.add_child(UiKit.button("Back", _title, 16))
-
-
-## The four pregens on a plate; with `on_pick`, each card is a button that picks that companion.
-func _party_cards(on_pick: Callable) -> Control:
+	_box.add_child(UiKit.label("Choose up to four to travel. The rest wait at camp, and you can swap them in on the road. Or make a hero of your own.", 15, "parchment", 560))
+	var grid := GridContainer.new()
+	grid.columns = 4
+	grid.add_theme_constant_override("h_separation", 8)
+	grid.add_theme_constant_override("v_separation", 8)
+	for id in roster:
+		var data := Compendium.shared().get_entry("pregens", id)
+		grid.add_child(_roster_card(id, id, str(data.get("name", id)), _class_line(str(data.get("summary", ""))),
+			"%s\n\n%s" % [str(data.get("summary", "")), str(data.get("hook", ""))]))
+	if _hero != null:
+		grid.add_child(_roster_card("hero", CombatToken.art_for(_hero), _hero.name, _hero.class_summary(), "Your own hero."))
+	else:
+		grid.add_child(_make_hero_card())
+	_box.add_child(grid)
+	var total := roster.size() + (1 if _hero != null else 0)
+	var want := mini(StoryState.PARTY_CAP, total)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
-	for id in PARTY:
-		var data := Compendium.shared().get_entry("pregens", id)
-		var col := VBoxContainer.new()
-		col.add_theme_constant_override("separation", 4)
-		col.add_child(UiParts.framed_portrait(id, 140.0))
-		var n := UiKit.label(str(data.get("name", id)), 17, "gilt_light")
-		n.add_theme_font_override("font", UiKit.display_font())
-		col.add_child(n)
-		col.add_child(UiKit.label(str(data.get("summary", "")), 12, "parchment", 140))
-		if on_pick.is_valid():
-			# The buttons line up along the bottom of the plate, whatever the summaries' lengths.
-			var push := Control.new()
-			push.size_flags_vertical = Control.SIZE_EXPAND_FILL
-			col.add_child(push)
-			var first := str(data.get("name", id)).get_slice(" ", 0)
-			var b := UiParts.small_button("Leave %s behind" % first, func() -> void: on_pick.call(id))
-			b.tooltip_text = str(data.get("hook", ""))
-			col.add_child(b)
-		row.add_child(col)
-	var plate := UiParts.card("ui_black", "gilt_dark", 0.82, 12)
-	plate.add_child(row)
-	return plate
+	var back := UiParts.primary_button("Back", _title)
+	back.tooltip_text = "Back to the title (Esc)"
+	row.add_child(back)
+	if _hero != null:
+		var own := UiKit.button("Change your hero", _open_hero, 16)
+		own.tooltip_text = "Make changes to your own hero: looks, voice, class and the rest."
+		row.add_child(own)
+	row.add_child(UiParts.gap())
+	var go := UiParts.primary_button("Begin with these %d" % _picked.size() if _picked.size() != 1 else "Begin alone", _begin)
+	go.disabled = _picked.size() != want
+	go.tooltip_text = "" if not go.disabled else "Choose %d to travel." % want
+	row.add_child(go)
+	_box.add_child(row)
 
 
-## Bring your own hero: who stays behind.
-func _choose_replacement() -> void:
-	for c in _box.get_children():
-		c.queue_free()
-	_box.add_child(UiKit.title("Who stays behind?"))
-	_box.add_child(UiKit.label("Your hero takes one companion's place. The other three travel with you, and their own stories come along.", 15, "parchment", 560))
-	_box.add_child(_party_cards(_open_hero))
-	_box.add_child(UiKit.button("Back", _new_game, 16))
+## The first sentence of a pregen's summary: species, class and background ("Goliath Paladin (Oath of Devotion), Noble.").
+static func _class_line(summary: String) -> String:
+	var i := summary.find(". ")
+	return summary.substr(0, i + 1) if i >= 0 else summary
 
 
-func _pregen_party() -> void:
+## The card that opens the hero creator, shown until a hero is made.
+func _make_hero_card() -> Control:
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 3)
+	col.add_child(UiParts.framed_portrait("hero_01", 110.0))
+	var n := UiKit.label("Your own hero", 15, "gilt_light", 118)
+	n.add_theme_font_override("font", UiKit.display_font())
+	col.add_child(n)
+	col.add_child(UiKit.label("Make a character of your own: looks, voice, class.", 11, "parchment", 118))
+	var card := UiParts.click_row(col, _open_hero, false, func() -> Control: return UiParts.rules_tip("Your own hero",
+		"Create", "Make a character of your own, from looks and voice to class. They join the roster like anyone else."))
+	card.custom_minimum_size = Vector2(132, 0)
+	return card
+
+
+## One roster member as a card the player clicks to choose (lit) or leave at camp.
+func _roster_card(key: String, art: String, title: String, line: String, hook: String) -> Control:
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 3)
+	col.add_child(UiParts.framed_portrait(art, 110.0))
+	var n := UiKit.label(title, 15, "gilt_light", 118)
+	n.add_theme_font_override("font", UiKit.display_font())
+	col.add_child(n)
+	col.add_child(UiKit.label(line, 11, "parchment", 118))
+	var on := key in _picked
+	var card := UiParts.click_row(col, func() -> void:
+		if key in _picked:
+			_picked.erase(key)
+		elif _picked.size() < StoryState.PARTY_CAP:
+			_picked.append(key)
+		_new_game(), on, func() -> Control: return UiParts.rules_tip(title, "Travelling" if on else "At camp", hook))
+	card.custom_minimum_size = Vector2(132, 0)
+	return card
+
+
+## The chosen travel; the rest of the roster waits at camp.
+func _begin() -> void:
 	var party: Array[Character] = []
-	for id in PARTY:
-		var ch := Pregens.build(id, 1)
-		ch.finish_long_rest()
-		party.append(ch)
-	_start(party)
+	var bench: Array[Character] = []
+	var order: Array[String] = Pregens.roster_ids()
+	order.append("hero")
+	for key in order:
+		var ch: Character = _hero if key == "hero" else null
+		if key != "hero":
+			ch = Pregens.build(key, 1)
+			ch.finish_long_rest()
+		if ch == null:
+			continue
+		if key in _picked:
+			party.append(ch)
+		else:
+			bench.append(ch)
+	_start(party, bench)
 
 
-## The custom hero's creator; when it's done, the hero stands where `replacing` would have.
-func _open_hero(replacing: String) -> void:
+## The custom hero's creator; the hero joins the roster, and is picked to travel.
+func _open_hero() -> void:
 	var others: Array[String] = []
-	for id in PARTY:
-		if id != replacing:
+	for id in _picked:
+		if id != "hero":
 			others.append(id)
 	_creation = CreationScreen.new()
 	_box.visible = false
 	add_child(_creation)
 	_creation.finished.connect(func(made: Array[Character]) -> void:
-		var party: Array[Character] = []
-		for id in PARTY:
-			if id == replacing:
-				party.append(made[0])
-			else:
-				var ch := Pregens.build(id, 1)
-				ch.finish_long_rest()
-				party.append(ch)
-		_start(party))
+		_hero = made[0]
+		if not "hero" in _picked:
+			if _picked.size() >= StoryState.PARTY_CAP:
+				_picked.pop_back()
+			_picked.append("hero")
+		_creation.queue_free()
+		_creation = null
+		_box.visible = true
+		_new_game())
 	_creation.cancelled.connect(func() -> void:
 		_creation.queue_free()
 		_creation = null
 		_box.visible = true
 		_new_game())
-	_creation.open_hero(replacing, others)
+	_creation.open_hero(others)
 
 
 ## A fresh playthrough: the party at level 1 on the Old Svalich Road, at dusk.
-func _start(party: Array[Character]) -> void:
+func _start(party: Array[Character], bench: Array[Character] = []) -> void:
 	GameState.reset()
+	Dice.reseed_random()   # every new game rolls its own dice
 	SaveSystem.current_slot = ""    # a new game has no save slot until its first save
 	var st := GameState.story
 	for ch in party:
 		st.party.append(ch)
+	for ch in bench:
+		st.bench.append(ch)
 	st.gold = 10.0
 	st.location = ""
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 
 func _show_loads() -> void:
+	_view = "load"
 	for c in _box.get_children():
 		c.queue_free()
 	_box.add_child(UiKit.title("Load"))
 	for s in SaveSystem.list_slots():
 		var slot := str(s["slot"])
-		var b := UiKit.button("%s · Day %d" % [s["location"], int(s["day"])], func() -> void: _load(slot), 17)
+		var prefix := {"autosave": "Autosave · ", "round": "Fight, round start · "}.get(str(s.get("kind", "")), "") as String
+		var b := UiKit.button("%s%s · Day %d" % [prefix, s["location"], int(s["day"])], func() -> void: _load(slot), 17)
 		b.tooltip_text = "%s · %s\n%s" % [slot, str(s["saved_at"]).replace("T", " "), s["party"]]
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		_box.add_child(b)
 	_box.add_child(UiKit.button("Back", _title, 16))
+
+
+## Escape steps back to the title from the party pick and the load list (the hero creator handles its own).
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel") and _creation == null and _view != "title":
+		get_viewport().set_input_as_handled()
+		_title()
 
 
 func _load(slot: String) -> void:
@@ -236,18 +299,14 @@ func _load(slot: String) -> void:
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 
-## The capture tool's sequence: the title, the new-game choice, who stays behind, and the hero creator's Appearance
-## tabs and Review.
+## The capture tool's sequence: the title, the roster pick, and the hero creator's Appearance tabs and Review.
 func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 10)
 	tool.call("_shot", out + "_1_title.png")
 	_new_game()
 	await tool.call("wait_frames", 10)
 	tool.call("_shot", out + "_2_new_game.png")
-	_choose_replacement()
-	await tool.call("wait_frames", 10)
-	tool.call("_shot", out + "_3_who_stays.png")
-	_open_hero("tamsin_tealeaf")
+	_open_hero()
 	var b := _creation.b()
 	b.set_class("fighter")
 	_creation.call("_suit_outfit")

@@ -1,0 +1,60 @@
+{
+  "id": "harper",
+  "name": "Harper",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "summary": "The Harpers taught you to gather information, work undercover, and oppose tyranny.",
+  "ability_scores": [
+    "dex",
+    "int",
+    "cha"
+  ],
+  "feat": "harper_agent",
+  "skills": [
+    "performance",
+    "sleight_of_hand"
+  ],
+  "tool": {
+    "id": "disguise_kit"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "disguise_kit",
+          "qty": 1
+        },
+        {
+          "id": "bedroll",
+          "qty": 1
+        },
+        {
+          "id": "costume",
+          "qty": 1
+        },
+        {
+          "id": "grappling_hook",
+          "qty": 1
+        },
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 14
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ],
+  "playable": false
+}

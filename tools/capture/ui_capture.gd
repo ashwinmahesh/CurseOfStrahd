@@ -5,7 +5,7 @@ extends Node
 ## the sheet for a level 7 warlock, monk and druid.
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
-const PARTY: Array[String] = ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]
+const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 ## [character index, tab]
 const SHEET_SHOTS := [[2, "Actions"], [0, "Actions"], [2, "Spells"], [3, "Spells"], [1, "Features"], [0, "Equipment"],
 	[0, "Effects"], [3, "Notes"]]
@@ -80,6 +80,26 @@ func capture_shots(tool: Node, out: String) -> void:
 				root.get("screen").call("_draw")
 			await _shoot(tool, "%s_%s.png" % [out, kind])
 			root.call("close_screen")
+	if _wants("spellbook"):
+		# A found spellbook (the Dursts'): its spells, and the party's Wizard copying them.
+		GameState.story.party[0].add_item("durst_spellbook", 1)
+		GameState.story.gold = maxf(GameState.story.gold, 120.0)
+		root.call("open_screen", "inventory", 0)
+		(root.get("screen") as InventoryScreen).selected = "durst_spellbook"
+		root.get("screen").call("_draw")
+		await _shoot(tool, "%s_spellbook.png" % out)
+		root.call("close_screen")
+	if _wants("roster"):
+		# Tamsin waits at camp and is picked to swap in: the screen shows whose place she can take.
+		var tamsin := GameState.story.party[1]
+		GameState.story.send_to_camp(tamsin)
+		root.call("open_screen", "roster", 0)
+		var rs := root.get("screen") as RosterScreen
+		rs.set("_picked", tamsin)
+		rs.call("_draw")
+		await _shoot(tool, "%s_roster.png" % out)
+		root.call("close_screen")
+		GameState.story.bring_along(tamsin)
 	if _wants("prepare"):
 		var ps := PrepareScreen.new()
 		add_child(ps)

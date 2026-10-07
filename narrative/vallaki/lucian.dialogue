@@ -39,8 +39,8 @@ else
 Father Lucian: Never mind. I can see in your faces it isn't a happy answer.
 endif
 endif
-if name:hedda_ironvow and flag.holy_symbol_rumor
-interject name:hedda_ironvow: A raven and a sunburst, Father. Donavich said it was lost. Did St. Andral's ever have word of it?
+if name:liriel_dawnsong and flag.holy_symbol_rumor
+interject name:liriel_dawnsong: Father, a raven holding a sunburst. Donavich said it was lost. Did St. Andral's ever have word of it?
 Father Lucian: Only stories. That it was carried against the castle once, and didn't come back. Stories are what we have instead of relics, these days.
 endif
 -> theft
@@ -121,7 +121,15 @@ Father Lucian: I won't ask who took them. I find I don't want to know. I've deci
 endif
 Father Lucian: Take these, and my blessing with them. It's not much, but it's what the church has.
 give holy_water 2
+if name:liriel_dawnsong
+Narrator: Down in the crypt the lid grinds home, and Liriel, standing at the top of the steps, closes her eyes and turns her face up as if into sunlight. For a breath the whole nave is warm.
+interject name:liriel_dawnsong: There. Did you feel that? Like a window opened in winter. He's here. Wherever somebody carries Him, He's here.
+if not (quest.carry_the_dawn >= a_spark)
+quest carry_the_dawn a_spark
+endif
+else
 interject class:cleric: Holy ground again. You can feel it in your teeth.
+endif
 if not flag.vallaki_milestone_reached
 set vallaki_milestone_reached
 xp milestone

@@ -62,7 +62,7 @@ static func pools() -> Dictionary:
 	if not _pools.is_empty():
 		return _pools
 	var groups := {}
-	for d in Compendium.shared().all("magic_items"):
+	for d in Compendium.shared().all_playable("magic_items"):
 		var id := str(d["id"])
 		if not MagicItems.is_magic(d) or bool(d.get("quest_locked", false)) or str(d.get("category", "")) == "quest":
 			continue

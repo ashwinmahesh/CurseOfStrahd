@@ -1,0 +1,42 @@
+{
+  "id": "spell_subterfuge",
+  "name": "Spell Subterfuge",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "category": "general",
+  "repeatable": false,
+  "summary": "Reference-only: after an action-time slotted spell, a Bonus Action lets you both Dash and Hide. Uses equal the modifier of the ability increased by this feat, per Long Rest. Reference-only: while Invisible from Hide, a Verbal component or spell attack does not end that condition if you finish the turn behind Three-Quarters or Total Cover.",
+  "benefits": [
+    {
+      "id": "shrouding_spells",
+      "name": "Shrouding Spells",
+      "summary": "Reference-only: after an action-time slotted spell, a Bonus Action lets you both Dash and Hide. Uses equal the modifier of the ability increased by this feat, per Long Rest.",
+      "text": "Reference-only: after an action-time slotted spell, a Bonus Action lets you both Dash and Hide. Uses equal the modifier of the ability increased by this feat, per Long Rest.",
+      "implemented": "text"
+    },
+    {
+      "id": "sneaky_casting",
+      "name": "Sneaky Casting",
+      "summary": "Reference-only: while Invisible from Hide, a Verbal component or spell attack does not end that condition if you finish the turn behind Three-Quarters or Total Cover.",
+      "text": "Reference-only: while Invisible from Hide, a Verbal component or spell attack does not end that condition if you finish the turn behind Three-Quarters or Total Cover.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 4,
+    "spellcasting": true
+  },
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "playable": false
+}

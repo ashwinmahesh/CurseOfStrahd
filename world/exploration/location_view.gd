@@ -20,6 +20,8 @@ signal hover_changed(text: String)
 signal banter(lines: Array)
 ## The party reached a road out of here (an exit to "travel"): the game opens the map.
 signal travel_requested
+## A party member down outside a fight was stabilized or healed from the right-click menu.
+signal party_tended
 
 const STEP_TIME := 0.18
 const SNEAK_STEP_TIME := 0.32
@@ -264,7 +266,10 @@ func _build_lights() -> void:
 		omni.base_energy = 1.4 if str(li["kind"]) in ["candle", "lamp"] else 2.2
 		omni.position = board.cell_center(_cell(li["cell"])) + Vector3(0, 1.2, 0)
 		add_child(omni)
-		if str(li.get("kind", "")) == "torch" and SetDressing.has_art("torch"):
+		if str(li.get("kind", "")) == "torch" and ModelPiece.for_art(board, "torch") != "":
+			ModelPiece.stand(board, board, ModelPiece.for_art(board, "torch"), "torch", _cell(li["cell"]))   # 3D (docs/art/models.md)
+			omni.position.y = 1.9
+		elif str(li.get("kind", "")) == "torch" and SetDressing.has_art("torch"):
 			board.prop_sprite("torch", board.cell_center(_cell(li["cell"])))
 			omni.position.y = 1.9
 		elif str(li.get("kind", "")) in ["fire", "bonfire", "brazier", "torch"]:
@@ -380,8 +385,10 @@ func _place_party() -> void:
 		(tokens[members[0].id] as Node3D).add_child(lantern)
 
 
-## Swaps in party members whose character changed (Madam Eva's respec) where the old ones stood.
+## Swaps in party members whose character changed (Madam Eva's respec, a swap on the roster screen) where the old ones
+## stood; someone sent to camp leaves, and someone brought along steps in beside the party.
 func rebuild_party() -> void:
+	_fit_party_size()
 	for i in mini(members.size(), st.party.size()):
 		if members[i].creature == st.party[i]:
 			continue
@@ -401,6 +408,57 @@ func rebuild_party() -> void:
 			rig.follow = fresh
 			if lantern != null and lantern.get_parent() == null:
 				fresh.add_child(lantern)
+
+
+## Matches the figures to the party's size (the roster screen): figures for members who left go, and members who
+## joined stand on free squares near the leader. rebuild_party then swaps any changed faces in place.
+func _fit_party_size() -> void:
+	var left: Array[Combatant] = []
+	for cb in members:
+		if not cb.creature in st.party:
+			left.append(cb)
+	for cb in left:
+		if members.size() <= st.party.size():
+			break
+		members.erase(cb)
+		if tokens.has(cb.id):
+			var tok := tokens[cb.id] as CombatToken
+			if lantern != null and lantern.get_parent() == tok:
+				tok.remove_child(lantern)
+			tok.queue_free()
+			tokens.erase(cb.id)
+	if members.size() < st.party.size() and not members.is_empty():
+		var taken: Array[Vector2i] = []
+		for cb in members:
+			taken.append(cb.cell)
+		var cells := _cells_around(members[0].cell, st.party.size() + members.size())
+		for i in range(members.size(), st.party.size()):
+			var cell := members[0].cell
+			for c in cells:
+				if not c in taken:
+					cell = c
+					break
+			taken.append(cell)
+			var cb := Combatant.new(st.party[i], &"party", cell)
+			members.append(cb)
+			var tok := CombatToken.create(cb)
+			tok.position = board.cell_center(cell)
+			add_child(tok)
+			tokens[cb.id] = tok
+	# Members keep the party's order (a swap puts the newcomer in the leaver's place).
+	var ordered: Array[Combatant] = []
+	for ch in st.party:
+		for cb in members:
+			if cb.creature == ch:
+				ordered.append(cb)
+	if ordered.size() == members.size():
+		members = ordered
+	if lantern != null and not members.is_empty() and lantern.get_parent() == null:
+		(tokens[members[0].id] as Node3D).add_child(lantern)
+	if not members.is_empty():
+		rig.follow = tokens[members[0].id] as Node3D
+	_save_positions()
+	place_guests()
 
 
 ## Puts the party's guests behind the last member (called again when someone joins or leaves).
@@ -488,6 +546,8 @@ func leader() -> Combatant:
 func walk_to(cell: Vector2i, then: Callable = Callable()) -> bool:
 	if busy or in_combat or members.is_empty():
 		return false
+	if PitFall.holds(self, leader()) and not PitFall.climb_out(self, leader().cell):
+		return false   # the leader is at the bottom of a pit: the climb comes first
 	var path := _path(leader().cell, cell)
 	if path.is_empty():
 		toast.emit("Can't get there")
@@ -507,7 +567,8 @@ func _path(from: Vector2i, to: Vector2i, around_traps: bool = true) -> Array[Vec
 	if around_traps:
 		for t: Variant in loc.get("traps", []):
 			var trap := t as Dictionary
-			if str((st.loc_state(loc_id)["traps"] as Dictionary).get(str(trap["id"]), "")) == "found":
+			var tstate := str((st.loc_state(loc_id)["traps"] as Dictionary).get(str(trap["id"]), ""))
+			if tstate == "found" or PitFall.open_hole(trap, tstate):
 				for c: Variant in trap["cells"]:
 					avoid[_cell(c)] = true
 	avoid.erase(to)
@@ -576,7 +637,7 @@ func _process(delta: float) -> void:
 	if _exit_check <= 0.0:
 		_exit_check = 0.25
 		refresh_exits()
-	if board != null and rig != null and rig.camera != null and not members.is_empty() and (not board.occluders.is_empty() or not board.buildings.is_empty()):
+	if board != null and rig != null and rig.camera != null and not members.is_empty() and (not board.occluders.is_empty() or not board.mesh_occluders.is_empty() or not board.buildings.is_empty()):
 		var focus := (tokens[leader().id] as Node3D).global_position if tokens.has(leader().id) else Vector3.ZERO
 		board.fade_occluders(rig.camera.global_position, focus, delta)
 		board.cut_buildings(rig.camera.global_position, focus, delta)
@@ -630,7 +691,7 @@ func _advance_party(next: Vector2i) -> void:
 	if solo:
 		return
 	for i in range(1, members.size()):
-		if members[i].creature.hp <= 0:
+		if members[i].creature.hp <= 0 or PitFall.holds(self, members[i]):
 			continue
 		if old[i - 1] != members[i].cell:
 			_move_member(i, old[i - 1])
@@ -804,6 +865,9 @@ func _check_traps() -> bool:
 
 
 func _spring_trap(trap: Dictionary, victim: Combatant) -> void:
+	if PitFall.is_pit(trap):
+		PitFall.spring(self, trap, victim)   # a real drop: catch the edge or fall in (and climb out later)
+		return
 	var id := str(trap["id"])
 	(st.loc_state(loc_id)["traps"] as Dictionary)[id] = "triggered"
 	var lines: Array[String] = []
@@ -840,12 +904,18 @@ func actions_at(cell: Vector2i) -> Dictionary:
 	for i in members.size():
 		if members[i].cell == cell:
 			var ch := members[i].creature as Character
+			# Party members share squares outside a fight, so the leader can walk onto anyone's.
+			if i != 0:
+				out.append({"id": "walk", "label": "Walk here"})
 			out.append({"id": "lead:%d" % i, "label": "Lead the party", "enabled": i != 0 and ch.hp > 0,
 				"why": "Already leading" if i == 0 else ("Can't lead while down" if ch.hp <= 0 else "")})
 			out.append({"id": "sheet:%d" % i, "label": "Character sheet"})
 			out.append({"id": "inventory:%d" % i, "label": "Inventory"})
 			out.append({"id": "spells:%d" % i, "label": "Cast a spell...", "enabled": not ch.known_spells().is_empty(),
 				"why": "" if not ch.known_spells().is_empty() else "No spells"})
+			if ch.hp <= 0 and not ch.dead:
+				out.append_array(_tend_actions(ch))
+			out.append_array(PitFall.actions_for(self, members[i]))
 			return {"title": ch.name, "actions": out}
 	var thing := thing_at(cell)
 	if thing.is_empty():
@@ -865,6 +935,7 @@ func actions_at(cell: Vector2i) -> Dictionary:
 				var closed := str((npc["shop"] as Dictionary).get("closed", ""))
 				var open := closed == "" or not StoryConditions.check(closed, st)
 				out.append({"id": "trade", "label": "Trade", "enabled": open, "why": "" if open else "Closed for now"})
+			out.append({"id": "walk", "label": "Walk over"})
 		"door", "container":
 			title = str(spec.get("label", "the door" if str(thing["kind"]) == "door" else "the chest")).capitalize()
 			var verb := "Open" if str(thing["kind"]) == "door" else "Open and look inside"
@@ -902,9 +973,18 @@ func actions_at(cell: Vector2i) -> Dictionary:
 func act(cell: Vector2i, action_id: String) -> void:
 	if busy or in_combat or members.is_empty():
 		return
+	if action_id in ["stabilize", "kit"] or action_id.begins_with("potion:"):
+		_tend(cell, action_id)
+		return
 	var thing := thing_at(cell)
 	match action_id:
 		"walk":
+			# Up to someone in the world (an NPC): stop beside them rather than on them.
+			if not thing.is_empty() and str(thing["kind"]) == "npc":
+				var beside := _adjacent_free(cell)
+				if beside != Vector2i(-1, -1):
+					walk_to(beside)
+				return
 			walk_to(cell)
 			return
 		"search_here":
@@ -915,6 +995,9 @@ func act(cell: Vector2i, action_id: String) -> void:
 			return
 		"go":
 			walk_to(cell)
+			return
+		"climb":
+			PitFall.climb_out(self, cell)
 			return
 	if thing.is_empty():
 		return
@@ -940,6 +1023,112 @@ func act(cell: Vector2i, action_id: String) -> void:
 	else:
 		walk_to(stand, then)
 
+
+
+# --- A party member down outside a fight (owner ask, 2026-10-07) --------------------------------------------
+
+## What the others can do for `ch` at 0 Hit Points (2024 rules, as in a fight): a DC 10 Wisdom (Medicine) check by
+## the best of them, a Healer's Kit (no check), or a healing potion given to them.
+func _tend_actions(ch: Character) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var medic := _best(&"medicine")
+	if ch.stable:
+		out.append({"id": "stabilize", "label": "Stabilize", "enabled": false, "why": "Already stable"})
+	elif medic == null:
+		out.append({"id": "stabilize", "label": "Stabilize", "enabled": false, "why": "Nobody is on their feet"})
+	else:
+		out.append({"id": "stabilize", "label": "Stabilize: %s, Medicine %+d vs DC 10" % [medic.name.get_slice(" ", 0),
+			medic.skill_bonus(&"medicine").total()]})
+		var kit := _holder_of("healers_kit")
+		if kit != null:
+			out.append({"id": "kit", "label": "Stabilize with %s's Healer's Kit" % kit.name.get_slice(" ", 0)})
+	var seen := {}
+	for m in st.party:
+		if m.hp <= 0:
+			continue
+		for e: Dictionary in m.inventory:
+			var id := str(e["id"])
+			if seen.has(id) or int(e["qty"]) <= 0 or _potion_heal(id).is_empty():
+				continue
+			seen[id] = true
+			out.append({"id": "potion:" + id, "label": "Give %s (%s's)" % [Compendium.shared().item_data(id).get("name", id),
+				m.name.get_slice(" ", 0)]})
+	return out
+
+
+
+## Outside a fight, a party member with Hit Points again gets up (Prone ends: there's no turn to spend standing) and
+## every party token shows its current state (owner report 2026-10-07: healed outside combat but still "Prone · Dying").
+func refresh_party() -> void:
+	if in_combat:
+		return
+	for m in members + guest_members:
+		var cr := m.creature
+		if cr.hp > 0 and not cr.dead and cr.has_condition(&"prone"):
+			cr.remove_condition(&"prone")
+		if tokens.has(m.id):
+			(tokens[m.id] as CombatToken).refresh()
+
+## A conscious party member carrying `item_id`, or null.
+func _holder_of(item_id: String) -> Character:
+	for m in st.party:
+		if m.hp > 0 and m.inventory.any(func(e: Dictionary) -> bool: return str(e["id"]) == item_id and int(e["qty"]) > 0):
+			return m
+	return null
+
+
+## A potion's healing ({dice, flat}), or {} if it isn't a healing potion.
+static func _potion_heal(item_id: String) -> Dictionary:
+	var data := Compendium.shared().item_data(item_id)
+	if str(data.get("category", "")) != "potion":
+		return {}
+	for fx: Variant in data.get("effects", []):
+		if str((fx as Dictionary).get("effect", "")) == "heal":
+			return (fx as Dictionary).get("params", {}) as Dictionary
+	return {}
+
+
+## Stabilizes or heals the party member at `cell` (the menu's stabilize, kit and potion:<id>).
+func _tend(cell: Vector2i, action_id: String) -> void:
+	var target: Character = null
+	for m in members:
+		if m.cell == cell:
+			target = m.creature as Character
+	if target == null or target.dead or target.hp > 0:
+		return
+	var who := target.name.get_slice(" ", 0)
+	if action_id == "stabilize":
+		var medic := _best(&"medicine")
+		if medic == null or target.stable:
+			return
+		var t := medic.roll_check(dice, &"medicine", 10)
+		check_rolled.emit(t.describe())
+		if t.success:
+			target.stabilize()
+			toast.emit("%s stops %s's bleeding: Stable" % [medic.name.get_slice(" ", 0), who])
+		else:
+			toast.emit("%s can't stop %s's bleeding (try again)" % [medic.name.get_slice(" ", 0), who])
+	elif action_id == "kit":
+		var holder := _holder_of("healers_kit")
+		if holder == null or target.stable:
+			return
+		target.stabilize()
+		toast.emit("%s binds %s's wounds with a Healer's Kit: Stable" % [holder.name.get_slice(" ", 0), who])
+	else:
+		var item_id := action_id.get_slice(":", 1)
+		var holder := _holder_of(item_id)
+		var heal := _potion_heal(item_id)
+		if holder == null or heal.is_empty():
+			return
+		var name := str(Compendium.shared().item_data(item_id).get("name", item_id))
+		var amount := int(heal.get("flat", 0))
+		if heal.has("dice"):
+			amount += int(dice.roll_expr(str(heal["dice"]), "%s gives %s %s" % [holder.name, target.name, name])["total"])
+		var healed := target.heal(amount, name)
+		holder.remove_one(item_id)
+		toast.emit("%s gives %s a %s: rolled %d, %d Hit Points" % [holder.name.get_slice(" ", 0), who, name, amount, healed])
+	refresh_party()
+	party_tended.emit()
 
 ## "Look": what the party can tell at a glance, without walking over.
 func _look(cell: Vector2i, thing: Dictionary) -> void:
@@ -1696,6 +1885,8 @@ func start_encounter(encounter_id: String) -> bool:
 	if str(spec.get("final_battle", "")) != "":
 		e.places.append(str(spec["final_battle"]))
 	e.lair = bool(spec.get("lair", false))
+	# Party members pass through each other's spaces unless the place or the fight says otherwise.
+	e.allies_block = bool(spec.get("allies_block", loc.get("allies_block", false)))
 	e.outdoors = bool(loc["map"].get("outdoors", false))
 	e.legendary.set_withdraw(spec.get("withdraw", {}))
 	if str(spec.get("final_battle", "")) != "" and st.quest_stage_index("strahds_lair", st.quest_stage("strahds_lair")) < st.quest_stage_index("strahds_lair", "confronted"):

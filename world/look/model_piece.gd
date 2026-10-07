@@ -9,6 +9,7 @@ extends RefCounted
 ## so it takes the scene's lights and shadows, and the screen pass outlines it and snaps it to the palette.
 
 const MANIFEST_JSON := "res://art/models/manifest.json"
+const SPRITE_SHADER := preload("res://shaders/cel_sprite.gdshader")
 ## How far a piece standing against a wall keeps off the wall face.
 const GAP := 0.004
 ## Sides of a square in the order furniture looks for a wall to back onto: north first, so it faces the camera.
@@ -43,14 +44,23 @@ static func in_use(board: ArenaBoard) -> bool:
 
 ## The model that stands in for 2D `art` on this board, or "". A catalog entry can depend on the board's theme
 ## ({theme: model, "*": model}): wooden stairs in houses, stone ones in dungeons and churches.
-static func for_art(board: ArenaBoard, art: String) -> String:
+## A list of models is a set of variants (pines, boulders): `pick` (from where the piece stands) chooses one.
+static func for_art(board: ArenaBoard, art: String, pick: int = 0) -> String:
 	if art == "" or not in_use(board):
 		return ""
 	var entry: Variant = (settings().get("art", {}) as Dictionary).get(art, "")
-	var id := str(entry)
 	if entry is Dictionary:
-		id = str((entry as Dictionary).get(board.theme, (entry as Dictionary).get("*", "")))
+		entry = (entry as Dictionary).get(board.theme, (entry as Dictionary).get("*", ""))
+	if entry is Array:
+		var options := entry as Array
+		entry = options[posmod(pick, options.size())] if not options.is_empty() else ""
+	var id := str(entry)
 	return id if has_model(id) else ""
+
+
+## A number for a square, to pick a variant and a heading that stay the same every time the place is built.
+static func hash_cell(cell: Vector2i) -> int:
+	return absi(cell.x * 73856093 ^ cell.y * 19349663)
 
 
 ## A new copy of model `id` with its surfaces in the game's materials (by material name: pal_<colour>,
@@ -81,6 +91,12 @@ static func material(name: String) -> Material:
 		m = g
 	elif name.begins_with("tex_"):
 		m = Look.cel_textured(name.trim_prefix("tex_").replace("__", "/"))
+	elif name.begins_with("spr_") and SetDressing.has_art(name.trim_prefix("spr_")):
+		# Painted with its own 2D art (a piece sculpted from its sprite).
+		var sm := ShaderMaterial.new()
+		sm.shader = SPRITE_SHADER
+		sm.set_shader_parameter("albedo_tex", load("res://" + str((SetDressing.manifest()[name.trim_prefix("spr_")] as Dictionary)["file"])) as Texture2D)
+		m = sm
 	if m == null:
 		m = Look.cel("pewter")
 	_materials[name] = m
@@ -92,7 +108,7 @@ static func material(name: String) -> Material:
 ## A standing piece on `cell` (SetDressing.stand_piece and exits): a holder on the square, turned to face into the
 ## room, with the model in it. Against-the-wall furniture stands with its back on the wall face. Returns the holder.
 static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, cell: Vector2i,
-		at_override: Variant = null) -> Node3D:
+		at_override: Variant = null, scale_: float = 1.0) -> Node3D:
 	var info := manifest()[id] as Dictionary
 	var mount := str(info.get("mount", "free"))
 	var holder := Node3D.new()
@@ -102,7 +118,14 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 	holder.set_meta("model", id)
 	parent.add_child(holder)
 	var model := instance(id)
+	model.scale = Vector3.ONE * scale_
 	holder.add_child(model)
+	if bool(info.get("turns", false)):
+		# Nature has no front: each copy gets its own heading, the same every time the place is built.
+		holder.rotation.y = float(hash_cell(cell) % 360) * PI / 180.0
+		holder.set_meta("nature", true)
+		_extras(model, info)
+		return holder
 	if mount == "stairs_up" or mount == "stairs_down":
 		var e := entry_side(board, cell)
 		holder.rotation.y = atan2(float(e.x), float(e.y))   # the steps start on the side the party walks in from
@@ -112,8 +135,17 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 	var back := backing_side(board, cell)
 	var faces := Vector2i(0, 1) if back == Vector2i.ZERO else -back
 	holder.rotation.y = atan2(float(faces.x), float(faces.y))
-	if mount == "against_wall":
+	if bool(info.get("big", false)) and at_override == null:
+		# Building-sized (a wagon, a market stall): it keeps its size and clears the trees it stands among, as the
+		# 2D big pieces do, but shrinks where it would reach something else standing near it (no overlaps).
+		var size := info.get("size", [1, 1, 1]) as Array
+		var fit := big_fit(board, cell, Vector2(float(size[0]), float(size[2])), faces.x != 0)
+		model.scale *= fit
+		SetDressing._clear_trees_around(board, parent, cell, maxf(float(size[0]), float(size[2])) * fit)
+	if mount == "against_wall" or mount == "wall":
+		# A wall piece with no wall face free beside it stands on its square like furniture against a wall.
 		var depth := float((info.get("size", [1, 1, 0.3]) as Array)[2])
+		holder.set_meta("against_wall", true)
 		if back != Vector2i.ZERO:
 			model.position = Vector3(0, 0, -0.5 + GAP)
 			board.used_faces["%d,%d,%d,%d" % [cell.x + back.x, cell.y + back.y, -back.x, -back.y]] = true   # no portrait behind it
@@ -123,8 +155,103 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 	return holder
 
 
-## A wall piece (a fireplace) on the face of wall square `wall` looking along `normal`, under `root`.
-static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall: Vector2i, normal: Vector2i) -> Node3D:
+## A 3D tree for 2D tree art `kind` (a pine, a dead tree) standing at `at`, as tall as the 2D tree drawn at `size`
+## of its art, turned by `yaw`; null when this place has no model for it. The board's trees and the land around a map
+## use it; the caller fades it (ArenaBoard.mesh_occluders).
+static func tree(board: ArenaBoard, kind: String, at: Vector3, size: float, pick: int, yaw: float) -> Node3D:
+	var id := for_art(board, kind, pick)
+	if id == "":
+		return null
+	var holder := Node3D.new()
+	holder.name = "Model_" + id
+	holder.position = at
+	holder.rotation.y = yaw
+	holder.set_meta("model", id)
+	holder.set_meta("nature", true)
+	var model := instance(id)
+	model.scale = Vector3.ONE * tree_scale(kind, id, size)
+	holder.add_child(model)
+	return holder
+
+
+## How much to scale model `id` so it stands as tall as 2D tree art `kind` drawn at `size`.
+static func tree_scale(kind: String, id: String, size: float) -> float:
+	var art_h := float((SetDressing.manifest().get(kind, {}) as Dictionary).get("world_height", 4.0)) * size
+	var model_h := float(((manifest()[id] as Dictionary).get("size", [1, 3, 1]) as Array)[1])
+	return art_h / maxf(model_h, 0.01)
+
+
+## A tall 3D piece (a tower, the Gulthias Tree) fades like the trees when it stands between the camera and the party.
+static func fade_with_trees(board: ArenaBoard, piece: Node3D) -> void:
+	board.mesh_occluders.append(piece)
+	piece.tree_exiting.connect(func() -> void:
+		if is_instance_valid(board):
+			board.mesh_occluders.erase(piece))
+
+
+## Fades a 3D piece standing between the camera and the party (0 drawn solid, 1 gone), as the trees' billboards fade.
+static func set_fade(node: Node3D, amount: float) -> void:
+	for n in node.find_children("*", "GeometryInstance3D", true, false):
+		(n as GeometryInstance3D).transparency = amount
+
+
+const INSTANCED_SHADER := preload("res://shaders/cel_instanced.gdshader")
+static var _tree_meshes: Dictionary = {}
+
+
+## Model `id` as one mesh whose surfaces carry their own cel materials that take each instance's colour (the land's
+## MultiMesh of trees darkens the far ones).
+static func tree_mesh(id: String) -> Mesh:
+	if _tree_meshes.has(id):
+		return _tree_meshes[id] as Mesh
+	var src: Mesh = null
+	var root := (load("res://" + str((manifest()[id] as Dictionary)["file"])) as PackedScene).instantiate()
+	for n in root.find_children("*", "MeshInstance3D", true, false):
+		src = (n as MeshInstance3D).mesh
+		break
+	root.free()
+	if src == null:
+		return null
+	var mesh := src.duplicate() as Mesh
+	for i in mesh.get_surface_count():
+		var name := mesh.surface_get_material(i).resource_name if mesh.surface_get_material(i) != null else ""
+		var m := ShaderMaterial.new()
+		m.shader = INSTANCED_SHADER
+		var colour := name.substr(name.find("_") + 1) if name.begins_with("pal_") or name.begins_with("glow_") else "bog_deep"
+		m.set_shader_parameter("albedo", Look.color(colour))
+		mesh.surface_set_material(i, m)
+	_tree_meshes[id] = mesh
+	return mesh
+
+
+## How much a building-sized piece `size` (x, z) on `cell` must shrink so its footprint keeps clear of the location's
+## other things standing near it: 1 where there's room.
+static func big_fit(board: ArenaBoard, cell: Vector2i, size: Vector2, turned: bool) -> float:
+	var foot := Vector2(size.y, size.x) if turned else size
+	var centre := Vector2(cell.x + 0.5, cell.y + 0.5)
+	var s := 1.0
+	while s > 0.4:
+		var half := foot * s / 2.0
+		var rect := Rect2(centre - half, half * 2.0)
+		var clear := true
+		for dx in range(-3, 4):
+			for dz in range(-3, 4):
+				var c := cell + Vector2i(dx, dz)
+				if c == cell or not board.grid.in_bounds(c):
+					continue
+				# The location's own things; the board's furniture, stumps and brambles under it are cleared away.
+				if board.occupied.has(c) and rect.intersects(Rect2(c.x, c.y, 1, 1).grow(-0.12)):
+					clear = false
+		if clear:
+			return s
+		s -= 0.05
+	return 0.4
+
+
+## A wall piece (a fireplace) on the face of wall square `wall` looking along `normal`, under `root`. Where the square
+## in front of it holds something else (a table, a brazier), a deep piece is flattened to keep clear of it.
+static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall: Vector2i, normal: Vector2i,
+		own := Vector2i(-9999, -9999)) -> Node3D:
 	var info := manifest()[id] as Dictionary
 	var holder := Node3D.new()
 	holder.name = "Model_" + id
@@ -138,10 +265,36 @@ static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall:
 	root.add_child(holder)
 	var model := instance(id)
 	holder.add_child(model)
+	var depth := float((info.get("size", [1, 1, 0.1]) as Array)[2])
+	var front := wall + normal
+	if depth > 0.2 and (board.grid.has_flag(front, CombatGrid.LOW) or (board.occupied.has(front) and front != own)):
+		model.scale.z = 0.2 / depth
+		depth = 0.2
 	if str(info.get("mount", "wall")) != "wall":
 		# A piece modelled round its middle (a door leaf hung as a picture) stands just in front of the face.
-		model.position = Vector3(0, 0, float((info.get("size", [1, 1, 0.1]) as Array)[2]) / 2.0)
+		model.position = Vector3(0, 0, depth / 2.0)
 	_extras(model, info)
+	return holder
+
+
+## Wall piece `art` as a model for a house wall (TownBuilder's windows): its lowest point at the node, facing +z,
+## its foot where the 2D piece's would be; null if there's no model.
+static func wall_model(board: ArenaBoard, art: String) -> Node3D:
+	var id := for_art(board, art)
+	if id == "":
+		return null
+	var holder := Node3D.new()
+	holder.name = "Model_" + id
+	holder.set_meta("model", id)
+	var model := instance(id)
+	holder.add_child(model)
+	_extras(model, manifest()[id] as Dictionary)
+	var low := INF
+	for n in model.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		low = minf(low, (mi.transform * mi.mesh.get_aabb()).position.y)
+	if low < INF:
+		model.position.y = -low
 	return holder
 
 
@@ -273,6 +426,9 @@ static func _extras(model: Node3D, info: Dictionary) -> void:
 			sp.shaded = true
 			if str(decal.get("anchor", "center")) == "bottom":
 				sp.offset = Vector2(0, float(r[3]) / 2.0)
+			if bool(decal.get("lie", false)):
+				sp.axis = Vector3.AXIS_Y   # lying on the floor (a rug)
+			sp.rotation.y = deg_to_rad(float(decal.get("turn", 0.0)))   # 180: the back face of a door
 			sp.position = Vector3(float(at[0]) + ((x0 + x1) / 2.0 - middle) * px, float(at[1]), float(at[2]))
 			model.add_child(sp)
 
@@ -288,7 +444,7 @@ static func dim(node: Node3D) -> void:
 			if m == null:
 				continue
 			# A flat colour's albedo, or a texture's tint, darkened.
-			var key := "albedo" if m.shader == Look.CEL_SHADER else ("tint" if m.shader == Look.CEL_WORLD_SHADER else "")
+			var key := "albedo" if m.shader == Look.CEL_SHADER else ("tint" if m.shader in [Look.CEL_WORLD_SHADER, SPRITE_SHADER] else "")
 			if key == "":
 				continue
 			var d := m.duplicate() as ShaderMaterial

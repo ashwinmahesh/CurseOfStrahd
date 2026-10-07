@@ -1,0 +1,43 @@
+# Hedda Ironvow's personal quest, Cold Prayers (data/quests/cold_prayers.json): the castle payoff, hook 3 in
+# docs/story/personal_quests.md. Prop crg_chapel_dawn_step, the step before the altar in the chapel's chancel
+# (data/locations/castle_ravenloft_chapel.json), when Hedda carries the raven's warmth (quest.cold_prayers >= warmth).
+# The chancel lies past the nave, so when Strahd waits in the chapel (the artifact card) his final battle comes first
+# and the prayer can only follow it; otherwise she can pray whenever the party reaches the altar. No rolls.
+
+~ start
+Narrator: Hedda stops at the foot of the altar and looks at the dust on it for a long moment. Then she kneels on the cold step, the way her chapel taught her, and takes out the silver raven.
+interject name:hedda_ironvow: Mm. Somebody prayed here once and meant it. Stone remembers. Give me a little while.
+* (Kneel beside her.) -> kneel
+* (Keep watch at the doors.) -> watch
+* (Not now. Bring her away.) -> later
+
+~ later
+interject name:hedda_ironvow: Mm. Later, then. It's waited three hundred years. It can wait for us.
+-> END
+
+~ kneel
+Narrator: You kneel beside her. The step is so cold it aches.
+-> prayer
+
+~ watch
+Narrator: You stand at the doors with your back to her and watch the dark passage. Behind you, Hedda begins.
+-> prayer
+
+~ prayer
+interject name:hedda_ironvow: Morninglord. It's Hedda. I'm a long way from the mountain, in a bad man's house, and I've been cold a long time.
+interject name:hedda_ironvow: I'm not asking for the sun. Just the morning. Just for as long as I'm talking. I'll talk slowly.
+Narrator: The raven in her hands grows warm, then hot, then too bright to look at. The black window over the altar turns grey, and then gold.
+Narrator: Dawn comes through the coloured glass. Real dawn, with real warmth in it, laid in red and gold squares across the dust and the broken pews and your faces.
+if flag.strahd_in_coffin
+Narrator: Somewhere far below the chapel floor, something in a coffin turns its face to the wall.
+endif
+interject name:ilse_varga: ...Warm. I'd forgotten.
+interject name:tamsin_tealeaf: Don't stop, Hedda. Keep talking. Say anything. Read us a recipe.
+interject name:silvain_aster: It isn't a spell. I would know. It's simply morning, in here. That isn't possible, and I'm going to stop saying so.
+interject name:hedda_ironvow: For the ones in the dark here, and for the ones who carried the raven before me. For the woman who didn't come back with it. Dawn comes. It always does.
+Narrator: She says amen. The gold goes grey, then black, and the window is only a window again. The warmth stays in your hands a little longer than it should.
+interject name:hedda_ironvow: Mm. Warm. I knew it would be. ...I hoped it would be. On a good day that's the same thing.
+if not (quest.cold_prayers >= dawn)
+quest cold_prayers dawn
+endif
+-> END

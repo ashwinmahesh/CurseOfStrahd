@@ -15,8 +15,8 @@ endif
 ~ start
 Narrator: Robed figures made of shadow stand around the stone altar, faces hidden, voices joined. The chant has been rising since the stairs, and here, at last, you can make out the words.
 cult_shades: One must die. One must die. One must die.
-interject name:silvain_aster: Technically, everyone must. I suspect they mean sooner.
-if not name:silvain_aster
+interject name:kip_smudgewick: "Must" is a very strong word. Is there a clause? There's always a clause.
+if not name:kip_smudgewick
   interject class:wizard: Everyone dies eventually. I assume they're in a hurry.
 endif
 if flag.death_house_promised_walter
@@ -48,14 +48,14 @@ Narrator: A mound of rot and old rushes, taller than a man, steaming faintly in 
 if flag.death_house_dollhouse_altar_seen
   Narrator: The lump of grey clay beside the dollhouse altar. It was never clay.
 endif
-interject name:tamsin_tealeaf: It's breathing. Why is it breathing. Heaps don't breathe.
+interject name:thistle: Smells wrong. That heap's breathing. Heaps don't breathe!
 -> choose
 
 ~ denounce_ok
 set death_house_altar_denounced
 set death_house_head_start
 Narrator: {name}'s voice rings off the stone, and the shades flinch back from it like smoke from an opened door. The chant stumbles, and the heap stirs, but slowly, so slowly.
-interject name:hedda_ironvow: Mm. They remember what dawn is. Good.
+interject name:godrick_pendlebrook: Ha! They didn't like that! They remember the dawn, then. Good.
 -> choose
 
 ~ denounce_fail
@@ -67,20 +67,20 @@ Narrator: The words come out strong, and the chant swallows them whole without s
 set death_house_head_start
 Narrator: You tell their story back to them plainly, every piece the house let slip on your way down, and you do not leave out the ending.
 Narrator: For the first time in years the chant falters. Knowing a story is a kind of power over it.
-interject name:silvain_aster: Footnoted and cross-referenced. They hate that.
+interject name:ratatoille: You see? Divination is only paying attention. Nobody in this house expected us to pay attention.
 -> choose
 
 ~ familiar
 cult_shades: A spirit does not die. It only goes home. One must die.
-interject name:silvain_aster: I wasn't really offering. I was establishing the rules. Rules established.
+interject name:wren_featherfoot: Worth a go. They don't strike me as the haggling sort.
 -> choose
 
 ~ refuse
 Narrator: The chanting stops. In the silence, the heap of refuse takes a long, wet breath.
 cult_shades: Then the house will have all of you.
 set death_house_refused
-interject name:ilse_varga: Fall back to the stairs. Don't run until I say. ...Run.
-if not name:ilse_varga
+interject name:godrick_pendlebrook: Right then! Back to the stairs, everyone past me. I'll be the door. Go!
+if not name:godrick_pendlebrook
   interject class:fighter: Back to the stairs. Keep together. Go!
 endif
 if flag.death_house_head_start
@@ -121,11 +121,11 @@ combat lorghoth_rises
 
 ~ sacrifice
 Narrator: The chant softens, almost kindly: the altar is waiting for one of you to lie down on it. Whoever does will not get up.
-interject name:hedda_ironvow: No. Listen to me. This is the one thing we do not do. Not for a door. Not for anything.
-if not name:hedda_ironvow
+interject name:liriel_dawnsong: No. Hear me. This is the one thing we do not do. Not for a door. Not for anything.
+if not name:liriel_dawnsong
   interject class:cleric: Don't. Whatever this buys us, we'll be paying for it forever.
 endif
-interject name:ilse_varga: I've lost a company. I'm not giving one of you to a hole in the floor.
+interject name:wren_featherfoot: I'm not joking now. Nobody lies down on that. Nobody.
 * Choose who lies on the altar. They die, and the house lets the rest of you go. -> sacrifice_done
 * No. Not this. -> choose
 

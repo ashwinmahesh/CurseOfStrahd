@@ -101,8 +101,8 @@ func from_dict(data: Dictionary) -> void:
 	for p: Variant in data.get("party_positions", []):
 		var a := p as Array
 		party_positions.append(Vector3(float(a[0]), float(a[1]), float(a[2])))
-	if data.has("dice"):
-		Dice.roller.set_state(data["dice"] as Dictionary)
+	# Fresh dice on every load (owner decision 2026-10-07): a reload never replays the rolls it was saved before.
+	Dice.reseed_random()
 	if data.has("story"):
 		story = StoryState.from_dict(data["story"] as Dictionary)
 	combat_snapshot = (data.get("combat", {}) as Dictionary).duplicate(true)

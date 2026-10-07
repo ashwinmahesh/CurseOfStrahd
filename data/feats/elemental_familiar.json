@@ -1,0 +1,39 @@
+{
+  "id": "elemental_familiar",
+  "name": "Elemental Familiar",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "category": "general",
+  "repeatable": false,
+  "summary": "Reference-only: When casting Find Familiar, choose Acid, Cold, Fire, Lightning, or Thunder Resistance for it until recast. Bonus Action commands it within 120 feet to spend a Reaction: creatures in its 5-foot Emanation save Dexterity against 8 + your familiar casting modifier + PB or take 2d4 of that type; Medium-or-smaller failures also fall Prone.",
+  "benefits": [
+    {
+      "id": "elemental_familiar_benefit",
+      "name": "Familiar Benefit",
+      "summary": "Reference-only: When casting Find Familiar, choose Acid, Cold, Fire, Lightning, or Thunder Resistance for it until recast. Bonus Action commands it within 120 feet to spend a Reaction: creatures in its 5-foot Emanation save Dexterity against 8 + your familiar casting modifier + PB or take 2d4 of that type; Medium-or-smaller failures also fall Prone.",
+      "text": "Reference-only: When casting Find Familiar, choose Acid, Cold, Fire, Lightning, or Thunder Resistance for it until recast. Bonus Action commands it within 120 feet to spend a Reaction: creatures in its 5-foot Emanation save Dexterity against 8 + your familiar casting modifier + PB or take 2d4 of that type; Medium-or-smaller failures also fall Prone.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 4,
+    "feature": "faithful_companion_spell",
+    "text": "Level 4+, Familiar Friend feat"
+  },
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "playable": false
+}

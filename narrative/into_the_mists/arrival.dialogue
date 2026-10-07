@@ -13,11 +13,32 @@ Narrator: You walk into the white, and a dozen steps later you walk out of it fa
 
 ~ hooks
 Narrator: Each of you came looking for something. None of you came looking for this.
-interject name:ilse_varga: My company went into a fog like this a year ago. If this is where it took them, I'm in the right place.
-interject name:tamsin_tealeaf: The lady in my locket called my name the whole way here. I'd like a word with her about directions.
-interject name:hedda_ironvow: I dreamed of a dying sun and a silver raven. Mm. This sky looks like the first half of that dream.
-interject name:silvain_aster: Aurel's last letter came out of a land of mists. Wherever this is, I'll want notes.
+interject name:godrick_pendlebrook: A land of mists. This is it. Sir Pellam, I'm here. I've got your sword. I've not dropped it once. Well. Once.
+interject name:liriel_dawnsong: A valley in a ring of mountains, and no sun. I've seen this sky before. I saw it on the morning of my vows.
+interject name:thistle: Grandda's blazes came this way. Right into the fog. He went in here. So I'm going in here.
+interject name:ratatoille: Somewhere in this fog is the Wizard of Wines. A master of the arcane and the table. He's going to be so impressed with me.
+interject name:wren_featherfoot: "The valley where the sun does not rise." Well, he wasn't wrong. Hello, Kasimir, wherever you are. Got post for you.
+interject name:kip_smudgewick: A land of mists. Right. Lord of a land of mists. One signature. That's all. How hard can one signature be?
 # Each pregen's personal quest starts here (docs/story/personal_quests.md); a custom hero in their place starts none.
+if name:godrick_pendlebrook
+quest the_ladle the_errand
+endif
+if name:liriel_dawnsong
+quest carry_the_dawn the_vision
+endif
+if name:thistle
+quest fens_trail the_trail
+endif
+if name:ratatoille
+quest a_seat_at_the_table the_apprenticeship
+endif
+if name:wren_featherfoot
+quest the_last_lesson the_letter
+endif
+if name:kip_smudgewick
+quest the_fine_print the_contract
+endif
+# The first four (kept for older saves).
 if name:ilse_varga
 quest kestrel_company the_letter
 endif
@@ -30,10 +51,10 @@ endif
 if name:silvain_aster
 quest aurels_last_chapter the_letter
 endif
-if not name:ilse_varga
+if not name:godrick_pendlebrook
   interject class:fighter: Road goes one way. So do we.
 endif
-if not name:hedda_ironvow
+if not name:liriel_dawnsong
   interject class:cleric: Whatever brought us here went to some trouble. That's worth remembering.
 endif
 * Try walking back into the mist. -> again
@@ -41,8 +62,8 @@ endif
 
 ~ again
 Narrator: The mist lets you in, holds you a moment like a host taking your coat, and hands you back to the road, facing west.
-interject name:silvain_aster: Not an illusion. Illusions are rude. This is courteous. I like that a great deal less.
-if not name:silvain_aster
+interject name:ratatoille: Not an illusion. Illusions have a smell, like burnt sugar. This smells of nothing at all. I like that a great deal less.
+if not name:ratatoille
   interject class:wizard: That isn't fog. That's a border, and it has opinions.
 endif
 -> END
@@ -64,8 +85,8 @@ endif
 set mists_carcass_studied
 set mists_read_the_pack
 Narrator: {name} reads the churned earth: a dozen wolves moving in a line, not a scatter, and a kill they never touched. They were not hungry; they were busy.
-interject name:ilse_varga: That's a patrol, not a hunt. Someone's posted pickets on this road.
-if not name:ilse_varga
+interject name:thistle: That's not a hunt. Wolves in a line like that, somebody's walking them. Like dogs.
+if not name:thistle
   interject background:soldier: Wolves in a line. That's a picket. Somebody gives them orders.
 endif
 -> END

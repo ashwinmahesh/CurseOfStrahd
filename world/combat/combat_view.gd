@@ -89,6 +89,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 		_update_hover())
 	hud.radial_picked.connect(_radial)
 	hud.cast_at_level.connect(func(action: Dictionary, level: int) -> void: _choose(action, level))
+	hud.square_picked.connect(_square_picked)
 	if e.state == Encounter.State.SETUP:
 		if e.title != "":
 			e.log.add("turn", e.title, "")
@@ -220,7 +221,7 @@ func _advance() -> void:
 		mode = Mode.BUSY
 		overlay.clear_all()
 		hud.hide_tooltip()
-		await get_tree().create_timer(AI_PAUSE).timeout
+		await get_tree().create_timer(AI_PAUSE * GameSettings.combat_pace()).timeout
 		if e.state != Encounter.State.ACTIVE or e.current() != c or e.pending != null:
 			_advance()
 			return
@@ -459,6 +460,55 @@ func _confirm_at() -> void:
 	_advance()
 
 
+## Right-click on a square on your turn: one menu with Move here and everything you could do to whoever is there.
+var _menu_cell := Vector2i(-1, -1)
+var _menu_items: Array[Dictionary] = []
+
+
+func _open_square_menu(at: Vector2) -> bool:
+	var c := _player()
+	if c == null or e.current() != c:
+		return false
+	_pick_from_mouse(at)
+	var t := _target_under()
+	var cell := t.combatant.cell if t != null else hover_cell
+	if cell.x < 0:
+		return false
+	_menu_cell = cell
+	_menu_items = catalog.square_actions(c, cell, _reach)
+	if _menu_items.is_empty():
+		return false
+	var o := e.occupant_at(cell)
+	var shown: Array[Dictionary] = []
+	for it in _menu_items:
+		shown.append({"id": it["id"], "label": it["label"], "enabled": it.get("enabled", true), "why": it.get("why", "")})
+	hud.hide_tooltip()
+	hud.open_square_menu(o.name() if o != null else "This square", shown, at)
+	return true
+
+
+func _square_picked(id: String) -> void:
+	var c := _player()
+	if c == null or mode != Mode.IDLE:
+		return
+	var o := e.occupant_at(_menu_cell)
+	if id == "move":
+		hover_token = null
+		hover_cell = _menu_cell
+		_confirm_at()
+		return
+	if id == "info":
+		if o != null and o.is_player_controlled():
+			_inspect(o.id)
+		elif o != null:
+			hud.show_details(o.name(), ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)])
+		return
+	for it in _menu_items:
+		if str(it["id"]) == id and it.has("action") and o != null:
+			_perform(it["action"] as Dictionary, [o], Vector2.INF, Vector2.ZERO)
+			return
+
+
 func _confirm_target(c: Combatant, t: CombatToken) -> void:
 	var kind := str(selected["targeting"])
 	match kind:
@@ -610,6 +660,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_pick_from_mouse(mb.position)
 			_confirm_at()
 		elif mb.button_index == MOUSE_BUTTON_RIGHT:
+			if mode == Mode.IDLE and _open_square_menu(mb.position):
+				return
 			_cancel_targeting()
 			_update_hover()
 	elif event.is_action_pressed(&"combat_confirm"):
@@ -867,6 +919,7 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		return
 	var why := catalog.target_why(c, selected, o)
 	var lines2: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()]]
+	var tip_title := o.name()
 	if str(selected["kind"]) in ["spell", "item_spell"]:
 		var data := Compendium.shared().spell_data(str(selected["spell_id"]))
 		var prev := catalog.cast_preview(c, selected, slot_level)
@@ -876,6 +929,12 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			var ac := o.creature.ac_value() + int(sit["cover_bonus"])
 			var needs := clampi(ac - (prev["attack"] as Breakdown).total(), 2, 20)
 			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [(prev["attack"] as Breakdown).total(), ac, needs])
+			var sa := sit["advantage"] as Array
+			var sd := sit["disadvantage"] as Array
+			if not sa.is_empty() and sd.is_empty():
+				tip_title = "%s · ADVANTAGE" % o.name()
+			elif not sd.is_empty() and sa.is_empty():
+				tip_title = "%s · DISADVANTAGE" % o.name()
 			for s: Variant in sit["advantage"]:
 				lines2.append("Advantage: %s" % s)
 			for s: Variant in sit["disadvantage"]:
@@ -891,7 +950,7 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			lines2.append("Heals %s %+d" % [prev["heal_dice"], (prev["heal_bonus"] as Breakdown).total()])
 	if kind == "multi":
 		lines2.append("Chosen: %d" % picked.count(o))
-	hud.show_tooltip(o.name(), lines2, [why] if why != "" else [], at)
+	hud.show_tooltip(tip_title, lines2, [why] if why != "" else [], at)
 
 
 # --- Playing events -------------------------------------------------------------------------------
@@ -923,10 +982,11 @@ func _play_events() -> void:
 					continue
 				var from: Vector2i = ev["from"]
 				var to: Vector2i = ev["to"]
-				tok.face(Vector2(to - from), not bool(ev.get("forced", false)), STEP_TIME)
+				var step := STEP_TIME * GameSettings.combat_pace()   # the fast combat speed (Settings)
+				tok.face(Vector2(to - from), not bool(ev.get("forced", false)), step)
 				walking[tok] = true
 				var tw := create_tween()
-				tw.tween_property(tok, "position", _token_spot(tok.combatant, to), STEP_TIME)
+				tw.tween_property(tok, "position", _token_spot(tok.combatant, to), step)
 				if bool(ev.get("mounted", false)):
 					continue
 				await tw.finished
@@ -935,6 +995,12 @@ func _play_events() -> void:
 				var a := _tok(str(ev["attacker"]))
 				var d := _tok(str(ev["target"]))
 				if a != null and d != null:
+					# Advantage or Disadvantage on the roll shows over the attacker, with its reason.
+					var edge := ev.get("edge", {}) as Dictionary
+					if not edge.is_empty():
+						var adv := str(edge["kind"]) == "advantage"
+						var why := ", ".join(edge.get("why", []) as Array)
+						_float(a, ("ADVANTAGE" if adv else "DISADVANTAGE") + (("\n" + why) if why != "" else ""), "candle" if adv else "mist_blue", 34)
 					var dir := (d.position - a.position)
 					var home := a.position
 					# The drawn attack winds up, then the token steps in on the blow; without one, just the step.
@@ -962,7 +1028,7 @@ func _play_events() -> void:
 					t.flash(Look.color("vampire_red"))
 					_float(t, ("CRIT %d" if bool(ev.get("critical", false)) else "-%d") % int(ev["amount"]), "vampire_red", 64)
 					t.refresh()
-					await get_tree().create_timer(0.35).timeout
+					await get_tree().create_timer(0.35 * GameSettings.combat_pace()).timeout
 			"heal":
 				var th := _tok(str(ev["id"]))
 				if th != null:
@@ -973,9 +1039,17 @@ func _play_events() -> void:
 				var tc := _tok(str(ev["id"]))
 				if tc != null:
 					tc.refresh()
-					if kind == "down" and tc.combatant.side == &"party":
+					if kind == "down" and tc.combatant.side in [&"party", &"guest"]:
+						# A hero falls (owner ask 2026-10-07): the body drops, a thud and a bell, and their frame cries out.
+						Audio.sfx("fall")
+						Audio.sfx("toll", 0.0)
+						tc.fall()
+						hud.flash_down(tc.combatant.id)
+						hud.banner("%s falls!" % tc.combatant.name())
 						_narrate("combat:fall", tc.combatant, null)
 					elif kind == "death" and tc.combatant.side == &"enemy":
+						Audio.sfx("enemy_death")
+						Audio.sfx("thud")
 						_narrate("combat:kill", null, tc.combatant)
 					elif kind == "death" and tc.combatant.side == &"party":
 						_narrate("death:" + tc.combatant.id, tc.combatant, null)
@@ -995,7 +1069,7 @@ func _play_events() -> void:
 				var cells := ev.get("cells", []) as Array
 				if not cells.is_empty():
 					overlay.show_cells("area", cells)
-					await get_tree().create_timer(0.45).timeout
+					await get_tree().create_timer(0.45 * GameSettings.combat_pace()).timeout
 					overlay.clear("area")
 			"summon", "object", "object_gone":
 				_show_weapons()
@@ -1008,7 +1082,7 @@ func _play_events() -> void:
 						tt.scale = Vector3.ONE * (float(tt.combatant.size_cells) if tt.combatant.size_cells > 1 else 1.0)
 					tt.flash(Look.color("lilac"), 0.3)
 					tt.position = _token_spot(tt.combatant, ev["to"] as Vector2i)
-					await get_tree().create_timer(0.2).timeout
+					await get_tree().create_timer(0.2 * GameSettings.combat_pace()).timeout
 			"summon_creature":
 				var sc := e.get_c(str(ev["id"]))
 				if sc != null and not tokens.has(sc.id):
@@ -1017,6 +1091,13 @@ func _play_events() -> void:
 					add_child(nt)
 					tokens[sc.id] = nt
 					nt.flash(Look.color("lilac"), 0.5)
+			"trait":
+				# A monster trait that just saved it or changed the fight (Undead Fortitude): its name over the token.
+				var trt := _tok(str(ev["id"]))
+				if trt != null:
+					trt.refresh()
+					_float(trt, str(ev["name"]), "bone", 34)
+					await get_tree().create_timer(0.35 * GameSettings.combat_pace()).timeout
 			"legendary", "lair":
 				# A boss acting between turns (ADR 0014): its name over the field, and a flash on the boss.
 				_stop_walking(walking)
@@ -1024,7 +1105,7 @@ func _play_events() -> void:
 				if lt != null:
 					lt.flash(Look.color("vampire_red"), 0.3)
 				hud.banner(("Lair action: %s" if kind == "lair" else "Legendary action: %s") % str(ev["name"]), 1.1)
-				await get_tree().create_timer(0.35).timeout
+				await get_tree().create_timer(0.35 * GameSettings.combat_pace()).timeout
 			"form":
 				_swap_form_art(str(ev["id"]), str(ev.get("art", "")))
 			"vanish":
@@ -1181,12 +1262,27 @@ func capture_shots(tool: Node, out: String) -> void:
 			if near != null:
 				_advance()
 				await tool.call("wait_frames", 30)
+				# Capture only: the foe is knocked down so the tooltip shows its ADVANTAGE line.
+				near.creature.add_condition(&"prone", "Capture")
 				hover_token = tokens[near.id] as CombatToken
 				hover_cell = near.cell
 				using_pad = true
 				_update_hover()
 				await tool.call("wait_frames", 10)
 				tool.call("_shot", out + "_2_attack.png")
+				# The right-click menu on that square: Move here, every attack and spell on the foe, Info.
+				var spot := get_viewport().get_visible_rect().size / 2.0
+				_menu_cell = near.cell
+				_menu_items = catalog.square_actions(c, near.cell, _reach)
+				var shown: Array[Dictionary] = []
+				for it in _menu_items:
+					shown.append({"id": it["id"], "label": it["label"], "enabled": it.get("enabled", true), "why": it.get("why", "")})
+				hud.hide_tooltip()
+				hud.open_square_menu(near.name(), shown, spot)
+				await tool.call("wait_frames", 10)
+				tool.call("_shot", out + "_2b_square_menu.png")
+				hud._menu.hide()
+				near.creature.remove_condition(&"prone", "Capture")
 				break
 		await _autoplay_turn(pilot)
 	# A spell template: Silvain's Burning Hands or Sleep aimed at the thickest knot of enemies.
@@ -1197,7 +1293,9 @@ func capture_shots(tool: Node, out: String) -> void:
 		if c2.is_player_controlled() and (c2.creature as Character).class_level_of("wizard") > 0 and c2.can_act():
 			_advance()
 			await tool.call("wait_frames", 20)
-			var a := catalog.find(c2, "spell:thunderwave")
+			var a := catalog.find(c2, "spell:burning_hands")
+			if a.is_empty() or not bool(a["legal"]):
+				a = catalog.find(c2, "spell:thunderwave")
 			if not a.is_empty() and bool(a["legal"]):
 				_choose(a)
 				var target := e.ai._nearest_enemy(c2)

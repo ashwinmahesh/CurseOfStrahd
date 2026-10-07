@@ -101,11 +101,17 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 	match mount:
 		"wall":
 			if not _hang(board, root, art, cell, scale_):
+				if board.grid.has_flag(cell, CombatGrid.LOW) or board.grid.has_flag(cell, CombatGrid.DIFFICULT):
+					_take_square(board, root, cell)   # no wall beside it: it stands in place of the board's furniture there
 				_stand(board, root, art, cell, scale_)
 		"floor":
 			if on_wall_square:
 				_take_square(board, root, cell)
-			_lay(board, root, art, cell, scale_)
+			var model := ModelPiece.for_art(board, art, ModelPiece.hash_cell(cell))
+			if model != "":
+				ModelPiece.stand(board, root, model, art, cell)   # a 3D piece (docs/art/models.md)
+			else:
+				_lay(board, root, art, cell, scale_)
 		_:
 			if on_wall_square and board.house_cells.has(cell) and bool(look.get("building", false)):
 				# The whole building is this piece (Old Bonegrinder's windmill, the Abbey's bell tower): the house
@@ -114,6 +120,13 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 				root.tree_exiting.connect(func() -> void:
 					if is_instance_valid(board):
 						board.show_building(cell))
+				var building := ModelPiece.for_art(board, art)
+				if building != "":
+					# A 3D building (docs/art/models.md) over the house's ground, facing south.
+					var b := ModelPiece.stand(board, root, building, art, cell, at)
+					b.rotation.y = 0.0
+					ModelPiece.fade_with_trees(board, b)
+					return root
 				var tower := _sprite(art)
 				tower.pixel_size *= scale_
 				tower.position = at
@@ -132,6 +145,8 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 			var piece := stand_piece(board, root, art, cell, scale_, null, front, bool(look.get("fade", false)) or bool(look.get("big", false)))
 			if bool(look.get("fade", false)) and piece is Sprite3D:
 				_fade_with_trees(board, piece as Sprite3D)
+			elif bool(look.get("fade", false)) and piece != null and piece.has_meta("model"):
+				ModelPiece.fade_with_trees(board, piece)
 	return root
 
 
@@ -194,10 +209,14 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 	leaf.position = base
 	leaf.rotation.y = yaw
 	board.add_child(leaf)
-	var model := "" if secret else ModelPiece.for_art(board, art)
+	var model := ModelPiece.for_art(board, art)
+	if model != "" and str((ModelPiece.manifest()[model] as Dictionary).get("mount", "")) != "door":
+		model = ""   # a facade (church doors) hangs on a wall; as a leaf in an opening it stays 2D
 	var sp: Sprite3D = null
+	var model_leaf: Node3D = null
 	if model != "":
-		leaf.add_child(ModelPiece.door_leaf(model, w, h))   # a 3D leaf (docs/art/models.md)
+		model_leaf = ModelPiece.door_leaf(model, w, h)   # a 3D leaf (docs/art/models.md)
+		leaf.add_child(model_leaf)
 	else:
 		sp = _sprite(art)
 		var info := manifest()[art] as Dictionary
@@ -219,7 +238,10 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 		_frame(board, base, along_x, h)
 	if secret:
 		# Hidden: a block of wall (the bookcase door shows its shelves on the wall faces) until it is found.
-		sp.visible = false
+		if sp != null:
+			sp.visible = false
+		if model_leaf != null:
+			model_leaf.visible = false
 		var disguise := Node3D.new()
 		disguise.name = "Disguise"
 		leaf.add_child(disguise)
@@ -230,7 +252,16 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 		block.position = Vector3(0, h / 2.0, 0)
 		block.material_override = board.wall_material()
 		disguise.add_child(block)
-		if art == "door_bookcase":
+		if art == "door_bookcase" and model_leaf != null:
+			# The 3D bookcase on both faces of the wall.
+			var depth := float(((ModelPiece.manifest()[model] as Dictionary).get("size", [1, 1, 0.3]) as Array)[2])
+			for s: float in [-1.0, 1.0]:
+				var face := ModelPiece.door_leaf(model, w, h)
+				face.name = "Face"
+				face.position = Vector3(0, 0, s * (0.5 + depth / 2.0 + WALL_GAP))
+				face.rotation.y = 0.0 if s > 0 else PI
+				disguise.add_child(face)
+		elif art == "door_bookcase":
 			for s: float in [-1.0, 1.0]:
 				var face := _sprite(art)
 				face.billboard = BaseMaterial3D.BILLBOARD_DISABLED
@@ -264,7 +295,10 @@ static func _pillar(board: ArenaBoard, cell: Vector2i, h: float, statue: String)
 	_frame_box(board, Vector3(0.84, h, 0.84), base + Vector3(0, h / 2.0, 0), stone)
 	_frame_box(board, Vector3(1.0, 0.16, 1.0), base + Vector3(0, h + 0.08, 0), Look.cel("stone_deep"))
 	_frame_box(board, Vector3(1.0, 0.2, 1.0), base + Vector3(0, 0.1, 0), Look.cel("stone_deep"))
-	if statue != "" and has_art(statue):
+	if statue != "" and ModelPiece.for_art(board, statue) != "":
+		var st := ModelPiece.stand(board, board, ModelPiece.for_art(board, statue), statue, cell, base + Vector3(0, h + 0.16, 0))
+		st.rotation.y = 0.0   # the gate's statues look down the road
+	elif statue != "" and has_art(statue):
 		var sp := _sprite(statue)
 		sp.position = base + Vector3(0, h + 0.16, 0)
 		board.add_child(sp)
@@ -399,7 +433,7 @@ static func _stand(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i,
 ## Added to `parent`; returns the piece.
 static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Vector2i, scale_: float = 1.0,
 		at_override: Variant = null, front_override: String = "", big: bool = false) -> Node3D:
-	var model := ModelPiece.for_art(board, art)
+	var model := ModelPiece.for_art(board, art, ModelPiece.hash_cell(cell))
 	if model != "":
 		return ModelPiece.stand(board, parent, model, art, cell, at_override)   # a 3D piece (docs/art/models.md)
 	scale_ *= float((catalog().get("scales", {}) as Dictionary).get(art, 1.0))
@@ -630,7 +664,7 @@ static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, 
 	board.used_faces[key] = true
 	var model := ModelPiece.for_art(board, art)
 	if model != "":
-		ModelPiece.hang(board, root, model, art, wall, normal)
+		ModelPiece.hang(board, root, model, art, wall, normal, cell)
 		board.attach_to_building(wall, root)
 		return true
 	var info := manifest()[art] as Dictionary

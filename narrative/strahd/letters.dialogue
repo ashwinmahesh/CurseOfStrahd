@@ -26,6 +26,9 @@ if tarokka.drawn
 Strahd: The old woman at the pool has told you a story about me. She tells it to everyone. It always ends the same way.
 endif
 Strahd: Go where you like. See what my land has to show you. When you are ready, we will dine. Until then I remain your host, Strahd von Zarovich.
+if name:kip_smudgewick
+-> companions/fine_print:letter
+endif
 * Burn it. -> first_burned
 * Keep it. -> first_kept
 
@@ -48,7 +51,9 @@ Narrator: A black carriage waits on the road ahead, drawn by two black horses wi
 endif
 Narrator: On the seat lies a letter sealed in black wax.
 Strahd: My guests. You have grown remarkable, and I have grown curious. Dine with me tonight at Castle Ravenloft. The carriage knows the way.
-if flag.strahd_letter_kept
+if flag.kip_contract_void and not flag.strahd_letter_kept and not flag.kip_invitation_kept and not flag.kip_strahd_signed
+Strahd: You gave my first letter to a devil. I am told he was very cross. I can't remember when I last enjoyed a piece of news so much.
+elif flag.strahd_letter_kept
 Strahd: You kept my first letter. I noticed. I notice everything that concerns you.
 endif
 if flag.strahd_night_visit == "attacked"
@@ -62,6 +67,10 @@ Strahd: Ireena is welcome, of course. Her room has been ready for a very long ti
 Ireena [angry]: I'll ride in his coach when I'm dead. Which is what he's hoping.
 endif
 Strahd: No harm will come to you under my roof before the meal is over. You have my word, and my word is older than your kingdoms.
+-> invitation_choice
+
+~ invitation_choice
+* [name:kip_smudgewick] [if not flag.kip_invitation_kept and not (quest.the_fine_print >= free)] Take the letter. -> companions/fine_print:invitation
 * Get in. -> accept
 * Not tonight. -> decline
 * Tear up the letter. -> tear

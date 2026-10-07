@@ -1,0 +1,307 @@
+{
+  "id": "kip_smudgewick",
+  "name": "Kip Smudgewick",
+  "pronouns": "he/him",
+  "summary": "Tiefling Warlock (Fiend Patron), Merchant. Eldritch fire, a cart of apricots and a contract he reads every night by candlelight.",
+  "hook": "When the blight took his family's orchard he signed a devil's contract to save it. The devil has offered him one way out: bring back a signature from the lord of a land of mists. The apricots never rot now.",
+  "roster": true,
+  "build": {
+    "name": "Kip Smudgewick",
+    "species": "tiefling",
+    "background": "merchant",
+    "ability_method": "standard_array",
+    "base_scores": {
+      "str": 8,
+      "dex": 13,
+      "con": 14,
+      "int": 12,
+      "wis": 10,
+      "cha": 15
+    },
+    "levels": [
+      {
+        "class": "warlock",
+        "hp": 0
+      }
+    ],
+    "choices": {
+      "species.size": [
+        "medium"
+      ],
+      "species.spellcasting_ability": [
+        "cha"
+      ],
+      "species.fiendish_legacy": [
+        "infernal"
+      ],
+      "background.abilities": [
+        "cha",
+        "cha",
+        "con"
+      ],
+      "origin.languages": [
+        "dwarvish",
+        "halfling"
+      ],
+      "warlock.1.skills": [
+        "investigation",
+        "nature"
+      ],
+      "warlock.1.eldritch_invocations": [
+        "pact_of_the_tome"
+      ],
+      "warlock.1.eldritch_invocations/pact_of_the_tome.cantrips": [
+        "eldritch_blast",
+        "prestidigitation",
+        "mage_hand"
+      ],
+      "warlock.1.eldritch_invocations/pact_of_the_tome.rituals": [
+        "alarm",
+        "comprehend_languages"
+      ],
+      "warlock.cantrips": [
+        "eldritch_blast",
+        "prestidigitation"
+      ],
+      "warlock.prepared": [
+        "hex",
+        "armor_of_agathys"
+      ]
+    },
+    "equipment": {
+      "class": "a",
+      "background": "a"
+    },
+    "identity": {
+      "pronouns": "he/him",
+      "tags": [
+        "nervous",
+        "honest-ish",
+        "always selling"
+      ]
+    },
+    "appearance": {
+      "art": "gunther_arasek"
+    }
+  },
+  "level_plan": [
+    {
+      "level": 2,
+      "class": "warlock",
+      "hp": 0,
+      "choices": {
+        "warlock.1.eldritch_invocations": [
+          "pact_of_the_tome",
+          "agonizing_blast",
+          "armor_of_shadows"
+        ],
+        "warlock.1.eldritch_invocations/agonizing_blast": [
+          "eldritch_blast"
+        ],
+        "warlock.prepared": [
+          "hex",
+          "armor_of_agathys",
+          "protection_from_evil_and_good"
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "class": "warlock",
+      "hp": 0,
+      "choices": {
+        "warlock.3.warlock_subclass": [
+          "fiend_patron"
+        ],
+        "warlock.prepared": [
+          "hex",
+          "armor_of_agathys",
+          "protection_from_evil_and_good",
+          "misty_step"
+        ]
+      }
+    },
+    {
+      "level": 4,
+      "class": "warlock",
+      "hp": 0,
+      "choices": {
+        "warlock.4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "warlock.4.ability_score_improvement/ability_score_improvement.abilities": [
+          "cha",
+          "con"
+        ],
+        "warlock.cantrips": [
+          "eldritch_blast",
+          "prestidigitation",
+          "mage_hand"
+        ],
+        "warlock.prepared": [
+          "hex",
+          "armor_of_agathys",
+          "protection_from_evil_and_good",
+          "misty_step",
+          "hold_person"
+        ]
+      }
+    },
+    {
+      "level": 5,
+      "class": "warlock",
+      "hp": 0,
+      "choices": {
+        "warlock.1.eldritch_invocations": [
+          "pact_of_the_tome",
+          "agonizing_blast",
+          "armor_of_shadows",
+          "repelling_blast",
+          "devils_sight"
+        ],
+        "warlock.prepared": [
+          "hex",
+          "armor_of_agathys",
+          "protection_from_evil_and_good",
+          "misty_step",
+          "hold_person",
+          "counterspell"
+        ]
+      }
+    },
+    {
+      "level": 6,
+      "class": "warlock",
+      "hp": 0,
+      "choices": {
+        "warlock.prepared": [
+          "hex",
+          "armor_of_agathys",
+          "protection_from_evil_and_good",
+          "misty_step",
+          "hold_person",
+          "counterspell",
+          "hunger_of_hadar"
+        ]
+      }
+    },
+    {
+      "level": 7,
+      "class": "warlock",
+      "hp": 0,
+      "choices": {
+        "warlock.1.eldritch_invocations": [
+          "pact_of_the_tome",
+          "agonizing_blast",
+          "armor_of_shadows",
+          "repelling_blast",
+          "devils_sight",
+          "fiendish_vigor"
+        ],
+        "warlock.prepared": [
+          "hex",
+          "armor_of_agathys",
+          "protection_from_evil_and_good",
+          "misty_step",
+          "hold_person",
+          "counterspell",
+          "hunger_of_hadar",
+          "dimension_door"
+        ]
+      }
+    },
+    {
+      "level": 8,
+      "class": "warlock",
+      "hp": 0,
+      "choices": {
+        "warlock.8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "warlock.8.ability_score_improvement/ability_score_improvement.abilities": [
+          "cha",
+          "cha"
+        ],
+        "warlock.prepared": [
+          "hex",
+          "armor_of_agathys",
+          "protection_from_evil_and_good",
+          "misty_step",
+          "hold_person",
+          "counterspell",
+          "hunger_of_hadar",
+          "dimension_door",
+          "banishment"
+        ]
+      }
+    },
+    {
+      "level": 9,
+      "class": "warlock",
+      "hp": 0,
+      "choices": {
+        "warlock.1.eldritch_invocations": [
+          "pact_of_the_tome",
+          "agonizing_blast",
+          "armor_of_shadows",
+          "repelling_blast",
+          "devils_sight",
+          "fiendish_vigor",
+          "eldritch_mind"
+        ],
+        "warlock.prepared": [
+          "hex",
+          "armor_of_agathys",
+          "protection_from_evil_and_good",
+          "misty_step",
+          "hold_person",
+          "counterspell",
+          "hunger_of_hadar",
+          "dimension_door",
+          "banishment",
+          "hold_monster"
+        ]
+      }
+    },
+    {
+      "level": 10,
+      "class": "warlock",
+      "hp": 0,
+      "choices": {
+        "fiend_patron.10.fiendish_resilience": [
+          "acid"
+        ],
+        "warlock.cantrips": [
+          "eldritch_blast",
+          "prestidigitation",
+          "mage_hand",
+          "minor_illusion"
+        ]
+      }
+    },
+    {
+      "level": 11,
+      "class": "warlock",
+      "hp": 0,
+      "choices": {
+        "warlock.11.mystic_arcanum": [
+          "true_seeing"
+        ],
+        "warlock.prepared": [
+          "hex",
+          "armor_of_agathys",
+          "protection_from_evil_and_good",
+          "misty_step",
+          "hold_person",
+          "counterspell",
+          "hunger_of_hadar",
+          "dimension_door",
+          "banishment",
+          "hold_monster",
+          "synaptic_static"
+        ]
+      }
+    }
+  ],
+  "art_todo": "Borrows the gunther_arasek sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
+}

@@ -43,6 +43,9 @@ Sir Godfrey Gwilym: One thing, and then I'll stop fussing. Don't cross the court
 * [if flag.phantom_ride_seen] We saw riders on the road at night. Grey ones. -> ride_seen
 * [if flag.vallaki_backed] We've come from Vallaki. -> vallaki
 * What do you remember of being alive? -> alive
+* [name:godrick_pendlebrook] [if quest.the_ladle and not flag.ladle_sword_shown] Present Sir Aldric Ashgrove's sword. -> companions/ladle:sword
+* [name:godrick_pendlebrook] [if flag.ladle_sword_shown and not flag.ladle_wall_read] Ask what his wall says about Aldric Ashgrove. -> companions/ladle:wall
+* [name:godrick_pendlebrook] [if quest.the_ladle >= kept_faith and flag.godfrey_remembers and not (quest.the_ladle >= knighted)] Ask Sir Godfrey to knight him. -> companions/ladle:knighting
 * Goodbye, Sir Godfrey. -> bye
 
 ~ order
@@ -167,7 +170,7 @@ Sir Godfrey Gwilym: Then I'll come. I'll tell the commander myself, so he hears 
 join sir_godfrey_gwilym
 quest find_the_ally found
 attitude sir_godfrey_gwilym friendly
-interject name:ilse_varga: Welcome to the line, Sir Godfrey. We count off before every fight. Learn your number.
+interject name:thistle: Welcome, Sir Godfrey! I'm Thistle. Don't forget it. I'll check.
 Sir Godfrey Gwilym: I'll write it on the inside of my gauntlet. I write everything down now.
 -> END
 
@@ -178,6 +181,7 @@ Sir Godfrey Gwilym: Still here. Still me, mostly. What do you need?
 * How are you holding up? -> companion_how
 * [if flag.vladimir_met and not flag.order_fate] What will the commander do about you leaving? -> companion_vladimir
 * [if flag.order_fate != "rest"] Wait for us at Argynvostholt for now. -> companion_wait
+* [name:godrick_pendlebrook] [if quest.the_ladle >= kept_faith and flag.godfrey_remembers and not (quest.the_ladle >= knighted)] Ask Sir Godfrey to knight him. -> companions/ladle:knighting
 * Nothing. Let's go. -> END
 
 ~ companion_how

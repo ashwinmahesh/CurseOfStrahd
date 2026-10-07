@@ -103,7 +103,7 @@ Narrator: He tips his head back and howls. It starts as a man's voice and finish
 if guest:ireena
 Ireena [afraid]: I know that sound. I know it from somewhere I've never been.
 endif
-interject name:ilse_varga: Count off. Four, and a wolf. Hold the line when he comes.
+interject name:ratatoille: Step one: backs to the rock. Step two: stand beside the wolf. Step three: I would rather not say.
 interject tag:cheerful: Well. He definitely heard that.
 Emil: He's not far. He never was, from his supper. Wait for him in the great cave, where he can see us.
 -> END
@@ -132,7 +132,7 @@ Emil: The ones who loved Kiril are dead or gone down the Krezk road. The rest ar
 
 ~ leader_castle
 Emil: Not come. Let the old man on the hill whistle for his dogs. If it ever comes to the end with him, and you need teeth at his gates, send word up the hill.
-interject tag:veteran: Noted. Teeth at the gates.
+interject tag:veteran: Teeth at the gates. We'll remember.
 -> leader_menu
 
 ~ leader_bye

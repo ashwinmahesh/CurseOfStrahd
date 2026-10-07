@@ -1,0 +1,69 @@
+{
+  "id": "familiar_trainer",
+  "name": "Familiar Trainer",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. Equipment A uses dice_set as its fixed default; equipment does not follow the proficiency choice in the current schema."
+  },
+  "summary": "A bond with a magical familiar taught you to approach adventures together.",
+  "ability_scores": [
+    "con",
+    "int",
+    "wis"
+  ],
+  "feat": "familiar_friend",
+  "skills": [
+    "animal_handling",
+    "arcana"
+  ],
+  "tool": {
+    "id": "dice_set",
+    "choice": "gaming_set"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "quarterstaff",
+          "qty": 1
+        },
+        {
+          "id": "dice_set",
+          "qty": 1
+        },
+        {
+          "id": "bedroll",
+          "qty": 1
+        },
+        {
+          "id": "bell",
+          "qty": 1
+        },
+        {
+          "id": "string",
+          "qty": 1
+        },
+        {
+          "id": "tinderbox",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        },
+        {
+          "id": "waterskin",
+          "qty": 1
+        }
+      ],
+      "gp": 44
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ],
+  "playable": false
+}

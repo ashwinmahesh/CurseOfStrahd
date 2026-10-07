@@ -258,6 +258,32 @@ func test_sneak_attack_with_an_ally_next_to_the_target() -> void:
 	assert_true(ilse.is_alive())
 
 
+func test_sneak_attack_rules_disadvantage_weapon_and_reaction_turns() -> void:
+	var e := TestCombat.open_field()
+	var t := TestCombat.hero(e, "tamsin_tealeaf", Vector2i(2, 2))
+	TestCombat.hero(e, "ilse_varga", Vector2i(4, 2))
+	var w := TestCombat.foe(e, "dire_wolf", Vector2i(3, 2))
+	w.creature.hp = 300
+	TestCombat.start_with(e, t)
+	var opt := e.option_by_id(t, "weapon:shortsword")
+	var adv := D20Test.new()
+	adv.advantage = true
+	var dis := D20Test.new()
+	dis.disadvantage = true
+	var plain := D20Test.new()
+	assert_eq(e.features.sneak_attack_dice(t, w, opt, dis), "", "Disadvantage blocks it, even with an ally beside the target")
+	var club := e.option_by_id(t, "unarmed")
+	if not club.is_empty():
+		assert_eq(e.features.sneak_attack_dice(t, w, club, adv), "", "not with a weapon that's neither Finesse nor ranged")
+	assert_eq(e.features.sneak_attack_dice(t, w, opt, plain), "2d6", "an ally within 5 ft of the target is enough")
+	assert_eq(e.features.sneak_attack_dice(t, w, opt, adv), "", "once per turn")
+	# The wolf's turn: an Opportunity Attack on someone else's turn can Sneak Attack again.
+	e.end_turn()
+	while e.current() != w:
+		e.end_turn()
+	assert_eq(e.features.sneak_attack_dice(t, w, opt, plain), "2d6", "again on another creature's turn (a Reaction attack)")
+
+
 func test_nick_offhand_attack_is_part_of_the_attack_action() -> void:
 	var e := TestCombat.open_field()
 	var t := TestCombat.hero(e, "tamsin_tealeaf", Vector2i(2, 2))
@@ -280,6 +306,11 @@ func test_undead_fortitude_and_radiant_damage() -> void:
 	e.deal_damage(h, z, [{"amount": 4, "type": "bludgeoning"}], false, "test")
 	assert_true(z.is_alive(), "Con save DC 9 succeeds on a natural 20 (+3)")
 	assert_eq(z.creature.hp, 1)
+	assert_false(z.is_down(), "it never falls: still standing")
+	var kinds: Array = e.events.map(func(x: Dictionary) -> String: return str(x["type"]))
+	assert_false("down" in kinds or "death" in kinds, "no fall, no death on a successful save")
+	assert_true("trait" in kinds, "the board shows Undead Fortitude over it")
+	assert_false(e.log.dump().contains("Zombie falls unconscious"))
 	e.deal_damage(h, z, [{"amount": 4, "type": "radiant"}], false, "test")
 	assert_false(z.is_alive(), "no save against Radiant damage")
 
@@ -401,3 +432,17 @@ func test_frightened_creatures_cannot_move_closer_to_what_they_fear() -> void:
 	assert_true(e.move(ilse, Vector2i(1, 2)).ok, "away is fine")
 	ilse.creature.remove_effect(fx)
 	assert_true(e.move(ilse, Vector2i(3, 2)).ok, "no longer Frightened")
+
+
+func test_party_members_move_through_each_other_as_difficult_terrain() -> void:
+	var e := TestCombat.encounter(["#########", "#.......#", "#########"])
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(1, 1))
+	TestCombat.hero(e, "silvain_aster", Vector2i(2, 1))
+	TestCombat.foe(e, "zombie", Vector2i(7, 1))
+	TestCombat.start_with(e, a)
+	var reach := e.reachable_for(a)
+	assert_true(reach.has(Vector2i(3, 1)), "through the ally in a one-square corridor")
+	assert_eq(int((reach[Vector2i(3, 1)] as Dictionary)["cost"]), 15, "the ally's square costs double (Difficult Terrain)")
+	assert_true(bool((reach[Vector2i(2, 1)] as Dictionary)["occupied"]), "but you can't stop there")
+	e.allies_block = true
+	assert_false(e.reachable_for(a).has(Vector2i(3, 1)), "a place can say allies block each other")

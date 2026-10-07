@@ -1,0 +1,54 @@
+{
+  "id": "spellfire_spark",
+  "name": "Spellfire Spark",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Once per turn, reduce damage you take from a spell or magical effect by 1d4 while not Incapacitated. Always prepared: Sacred Flame; choose Intelligence, Wisdom, or Charisma for casting. You may cast Sacred Flame as a Bonus Action Proficiency Bonus times per Long Rest. The alternate casting time is not automated.",
+  "benefits": [
+    {
+      "id": "spellfire_magic_absorption",
+      "name": "Magic Absorption",
+      "summary": "Once per turn, reduce damage you take from a spell or magical effect by 1d4 while not Incapacitated.",
+      "text": "Once per turn, reduce damage you take from a spell or magical effect by 1d4 while not Incapacitated.",
+      "implemented": "text"
+    },
+    {
+      "id": "spellfire_flame_cantrip",
+      "name": "Sacred Flame",
+      "summary": "Always prepared: Sacred Flame; choose Intelligence, Wisdom, or Charisma for casting.",
+      "text": "Always prepared: Sacred Flame; choose Intelligence, Wisdom, or Charisma for casting.",
+      "implemented": "data",
+      "choice": {
+        "id": "casting_ability",
+        "kind": "spellcasting_ability",
+        "count": 1,
+        "from": [
+          "int",
+          "wis",
+          "cha"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "sacred_flame",
+          "ability": "@casting_ability",
+          "always_prepared": true
+        }
+      ]
+    },
+    {
+      "id": "spellfire_flame_bonus",
+      "name": "Spellfire Flame",
+      "summary": "You may cast Sacred Flame as a Bonus Action Proficiency Bonus times per Long Rest. The alternate casting time is not automated.",
+      "text": "You may cast Sacred Flame as a Bonus Action Proficiency Bonus times per Long Rest. The alternate casting time is not automated.",
+      "implemented": "text"
+    }
+  ],
+  "playable": false
+}

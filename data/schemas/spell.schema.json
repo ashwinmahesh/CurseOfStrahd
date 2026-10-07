@@ -18,6 +18,7 @@
   ],
   "additionalProperties": false,
   "properties": {
+    "playable": {"type": "boolean", "description": "False until every rule of the entry works in the game: it is then left out of character creation, level-up and spell choices and random treasure (Compendium.playable). Absent means playable."},
     "id": {
       "$ref": "common.schema.json#/$defs/id"
     },

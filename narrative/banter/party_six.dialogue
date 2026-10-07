@@ -1,0 +1,172 @@
+# Party banter between the six companions, playable anywhere (story/banter.gd plays banter/party* in every region).
+# Each node needs its speakers in the party (the opening `if`), and some wait for a point in a personal quest
+# (docs/story/personal_quests.md). Voices: docs/voice/<id>.md.
+
+~ godrick_thistle_arm
+if name:godrick_pendlebrook and name:thistle
+interject name:thistle: Big. Arm-wrestle. Now.
+interject name:godrick_pendlebrook: We did that this morning. You won.
+interject name:thistle: I know. I want to win again. It was good.
+endif
+-> END
+
+~ godrick_liriel_bless
+if name:godrick_pendlebrook and name:liriel_dawnsong
+interject name:godrick_pendlebrook: Liriel, would you bless my boots? They've been through a lot.
+interject name:liriel_dawnsong: Godrick, I blessed your boots on Tuesday.
+interject name:godrick_pendlebrook: That was the left one. The right one's been feeling left out.
+interject name:liriel_dawnsong: Morning's grace upon this boot. There. Be at peace, boot.
+endif
+-> END
+
+~ godrick_ratatoille_theory
+if name:godrick_pendlebrook and name:ratatoille
+interject name:godrick_pendlebrook: Rat, how does the fire one work? The short way.
+interject name:ratatoille: The short way. Right. You take the ambient arcane potential and you fold it along the somatic axis until the... you point, and it goes whoosh.
+interject name:godrick_pendlebrook: Brilliant. I could do that. I can point.
+endif
+-> END
+
+~ godrick_wren_late
+if name:godrick_pendlebrook and name:wren_featherfoot
+interject name:wren_featherfoot: Godrick, why did the skeleton stay home from the ball?
+interject name:godrick_pendlebrook: I don't know.
+interject name:wren_featherfoot: Had no body to go with.
+Narrator: Nothing, for a long moment. Then Godrick laughs so hard he has to sit down on a stump, three full minutes after everyone else has stopped.
+endif
+-> END
+
+~ godrick_kip_devil
+if name:godrick_pendlebrook and name:kip_smudgewick and quest.the_fine_print >= the_assessor and not (quest.the_fine_print >= free)
+interject name:godrick_pendlebrook: I've been thinking about your devil, Kip.
+interject name:kip_smudgewick: Please don't, Godrick.
+interject name:godrick_pendlebrook: What if I challenged him? Honourably. To single combat. Devils must have honour. They've got contracts.
+interject name:kip_smudgewick: That is the most frightening kind thing anyone has ever offered me. Apricot?
+endif
+-> END
+
+~ liriel_thistle_manners
+if name:liriel_dawnsong and name:thistle
+interject name:liriel_dawnsong: Dear heart, in a town, one doesn't sniff people to see if they're lying.
+interject name:thistle: Why not? Works.
+interject name:liriel_dawnsong: ...It does work. That's the trouble with you. You're always right in the wrong way.
+endif
+-> END
+
+~ liriel_thistle_whistle
+if name:liriel_dawnsong and name:thistle and visited:vallaki
+Narrator: A piercing two-fingered whistle splits the air. Every bird in the trees leaves at once. Liriel lowers her hand, pink to the ears.
+interject name:liriel_dawnsong: Oh. I did it.
+interject name:thistle: SUNBEAM! Told you! Fingers in, tongue back, push!
+interject name:liriel_dawnsong: Don't tell the abbess.
+endif
+-> END
+
+~ liriel_ratatoille_grace
+if name:liriel_dawnsong and name:ratatoille
+interject name:liriel_dawnsong: Thank you for the bread this morning, Ratatoille. I said grace over it twice. Once wasn't enough.
+interject name:ratatoille: It was... it was only bread.
+interject name:liriel_dawnsong: The Morninglord made bread before he made kings. There's a reason.
+interject name:ratatoille: I'm going to go and stand behind that tree for a moment.
+endif
+-> END
+
+~ liriel_wren_jokes
+if name:liriel_dawnsong and name:wren_featherfoot and quest.the_last_lesson >= the_brother
+interject name:liriel_dawnsong: Wren, you've made eleven jokes since breakfast.
+interject name:wren_featherfoot: Twelve. You missed the one about the turnip. It was subtle.
+interject name:liriel_dawnsong: You make more of them when you're sad. I've counted. I won't say anything else about it.
+interject name:wren_featherfoot: ...That was a thirteenth joke, that you just did. That was mine. Give it back.
+endif
+-> END
+
+~ liriel_kip_soul
+if name:liriel_dawnsong and name:kip_smudgewick and not (quest.the_fine_print >= free)
+interject name:liriel_dawnsong: Kip, when this is over, I'd like you to come to the temple with me. Just to sit. You needn't pray.
+interject name:kip_smudgewick: Will they let me in? With the... with the horns and the whole... situation?
+interject name:liriel_dawnsong: They let me in, and I once set fire to the abbess's bonnet with a candle. They'll let anyone in. That's rather the point.
+endif
+-> END
+
+~ thistle_ratatoille_hands
+if name:thistle and name:ratatoille
+interject name:ratatoille: Thistle, there's a spoon. I gave you a spoon. It's beside you. It's touching your leg.
+interject name:thistle: Spoon's slower.
+interject name:ratatoille: That's... that's actually the highest compliment a cook can receive. Use your hands. Use both hands.
+endif
+-> END
+
+~ thistle_wren_race
+if name:thistle and name:wren_featherfoot
+interject name:thistle: Race you to that tree.
+interject name:wren_featherfoot: Which tree? There are a lot of trees. It's a forest.
+interject name:thistle: Ha! Already there!
+interject name:wren_featherfoot: That's cheating! That's... I'll allow it. I'll allow it once.
+endif
+-> END
+
+~ thistle_kip_smell
+if name:thistle and name:kip_smudgewick
+interject name:thistle: You smell like smoke and fruit.
+interject name:kip_smudgewick: I've started carrying lavender.
+interject name:thistle: Now you smell like smoke and fruit and a grandma. Better. Keep it.
+endif
+-> END
+
+~ ratatoille_wren_titles
+if name:ratatoille and name:wren_featherfoot
+interject name:wren_featherfoot: Morning, Diviner of the Third Circle. How's the circle?
+interject name:ratatoille: Thriving, thank you, Wren of the No Circle Whatsoever.
+interject name:wren_featherfoot: Ooh. Rude. Pass the bread.
+endif
+-> END
+
+~ ratatoille_kip_shop
+if name:ratatoille and name:kip_smudgewick
+interject name:ratatoille: After all this. Apricot tarts. Apricot glaze on a pork loin. A little shop by a river.
+interject name:kip_smudgewick: Apricot jam on everything. Straw hats on a hook by the door. A sign. A painted sign.
+interject name:ratatoille: "Smudgewick and Ratatoille."
+interject name:kip_smudgewick: "Ratatoille and Smudgewick." Alphabetical, Rat. You'd want it done properly.
+endif
+-> END
+
+~ wren_kip_loophole
+if name:wren_featherfoot and name:kip_smudgewick and quest.the_fine_print >= the_assessor and not (quest.the_fine_print >= free)
+interject name:wren_featherfoot: What if you died for a minute? Just a minute. Technically void.
+interject name:kip_smudgewick: I don't think it works like that.
+interject name:wren_featherfoot: What if you were two halflings in a coat?
+interject name:kip_smudgewick: Wren, I'm a tiefling.
+interject name:wren_featherfoot: Three halflings, then. I'm only trying to help.
+endif
+-> END
+
+~ kip_free_apricots
+if name:kip_smudgewick and quest.the_fine_print >= free
+interject name:kip_smudgewick: Look. Look at this one. Mouldy. Proper mould. Green and everything.
+if name:thistle
+interject name:thistle: Why are you so happy about a rotten apricot?
+interject name:kip_smudgewick: Because it's MINE, Thistle. Nobody owns it but me and the mould.
+else
+Narrator: He holds it up to the light as if it were a jewel.
+endif
+endif
+-> END
+
+~ godrick_knight_wren
+if name:godrick_pendlebrook and name:wren_featherfoot and quest.the_ladle >= knighted
+interject name:wren_featherfoot: Morning, Sir Godrick.
+interject name:godrick_pendlebrook: Morning, Wren!
+interject name:wren_featherfoot: I'm just going to say it every morning now. Sir Godrick. Sir Godrick. Sir Godrick.
+interject name:godrick_pendlebrook: I'm never going to get tired of that. You'll get tired first. I promise you'll get tired first.
+endif
+-> END
+
+~ thistle_godrick_fen
+if name:thistle and name:godrick_pendlebrook and quest.fens_trail >= the_wolf_road and not flag.fen_fate
+interject name:godrick_pendlebrook: You've gone quiet, Thistle. You're never quiet. It's like the sea going quiet.
+interject name:thistle: Thinking about the word. On the tree. Run.
+interject name:godrick_pendlebrook: We're not running. Any of us. I'll carry you up that hill if I have to. I've carried heavier. I once carried a pony.
+interject name:thistle: ...Why'd you carry a pony?
+interject name:godrick_pendlebrook: He was tired.
+endif
+-> END

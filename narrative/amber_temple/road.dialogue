@@ -13,7 +13,7 @@ Narrator: Cairn to cairn, roped hand to hand, you find the path. When the snow l
 ~ whiteout_lost
 time +120
 Narrator: You walk for an hour and come back to your own footprints. By the time the snow lifts, the light has moved a long way across the sky.
-interject name:ilse_varga: Count off. ...Good. Still all here.
+interject name:godrick_pendlebrook: Everybody here? Shout if you're not. ...Right. Nobody's shouted. Good.
 -> END
 
 ~ whiteout_wait
@@ -41,7 +41,7 @@ Narrator: You take their potions, their purse and their ropes, and you tell them
 
 ~ expedition_rites
 Narrator: You say the words. When you look back from the next bend, the snow has covered them over gently, like a sheet drawn up by someone who loved them.
-interject name:hedda_ironvow: Mm. Nobody should wait that long to be told they can stop.
+interject name:liriel_dawnsong: Be at peace. Nobody should have to wait so long to be told they may stop.
 -> END
 
 ~ expedition_rites_plain

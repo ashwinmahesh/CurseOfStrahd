@@ -1,0 +1,110 @@
+{
+  "id": "oath_of_the_noble_genies",
+  "name": "Oath of the Noble Genies",
+  "class": "paladin",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "summary": "A radiant champion empowered by the four kinds of elemental genies. Some features are reference-only; see each feature’s implementation status.",
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "elemental_smite",
+        "name": "Elemental Smite",
+        "summary": "Immediately after Divine Smite, spend Channel Divinity for one effect. Dao: Grapple the smitten target (escape DC your spell save DC), also Restraining it while Grappled. Djinni: teleport 30 feet to a visible empty space; until your next turn ends resist Bludgeoning, Piercing, and Slashing and be immune to Grappled, Prone, and Restrained. Efreeti: deal 2d4 Fire to the target and 2d4 Fire to another visible creature within 30 feet of you. Marid: the smitten target and chosen creatures in your 10-foot Emanation make Strength saves against your spell DC; failure pushes them 15 feet away and knocks them Prone.",
+        "text": "Immediately after Divine Smite, spend Channel Divinity for one effect. Dao: Grapple the smitten target (escape DC your spell save DC), also Restraining it while Grappled. Djinni: teleport 30 feet to a visible empty space; until your next turn ends resist Bludgeoning, Piercing, and Slashing and be immune to Grappled, Prone, and Restrained. Efreeti: deal 2d4 Fire to the target and 2d4 Fire to another visible creature within 30 feet of you. Marid: the smitten target and chosen creatures in your 10-foot Emanation make Strength saves against your spell DC; failure pushes them 15 feet away and knocks them Prone.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "genies_splendor",
+        "name": "Genie’s Splendor",
+        "summary": "Unarmored AC is 10 + Dexterity modifier + Charisma modifier; a Shield is allowed. Choose Acrobatics, Intimidation, Performance, or Persuasion proficiency.",
+        "text": "Unarmored AC is 10 + Dexterity modifier + Charisma modifier; a Shield is allowed. Choose Acrobatics, Intimidation, Performance, or Persuasion proficiency.",
+        "implemented": "data",
+        "choice": {
+          "kind": "skill",
+          "count": 1,
+          "from": [
+            "acrobatics",
+            "intimidation",
+            "performance",
+            "persuasion"
+          ]
+        },
+        "modifiers": [
+          {
+            "stat": "ac_formula",
+            "base": 10,
+            "abilities": [
+              "dex",
+              "cha"
+            ],
+            "when": {
+              "armor": "none"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "aura_of_elemental_shielding",
+        "name": "Aura of Elemental Shielding",
+        "summary": "Choose Acid, Cold, Fire, Lightning, or Thunder. You and allies in Aura of Protection resist it. You may change the type at the start of each of your turns without an action.",
+        "text": "Choose Acid, Cold, Fire, Lightning, or Thunder. You and allies in Aura of Protection resist it. You may change the type at the start of each of your turns without an action.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "elemental_rebuke",
+        "name": "Elemental Rebuke",
+        "summary": "Reaction when hit by an attack roll: halve the damage against you, rounding down. The attacker makes a Dexterity save against your spell DC, taking 2d10 + Charisma modifier damage on failure, half on success; choose Acid, Cold, Fire, Lightning, or Thunder. Uses equal Charisma modifier (minimum 1) per Long Rest.",
+        "text": "Reaction when hit by an attack roll: halve the damage against you, rounding down. The attacker makes a Dexterity save against your spell DC, taking 2d10 + Charisma modifier damage on failure, half on success; choose Acid, Cold, Fire, Lightning, or Thunder. Uses equal Charisma modifier (minimum 1) per Long Rest.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 20,
+      "feature": {
+        "id": "noble_scion",
+        "name": "Noble Scion",
+        "summary": "Bonus Action: for 10 minutes gain a 60-foot hovering Fly Speed and a Reaction that turns a failed D20 Test by you or an ally in Aura of Protection into a success. End freely. Once per Long Rest; spend a level 5 slot without an action to restore its use.",
+        "text": "Bonus Action: for 10 minutes gain a 60-foot hovering Fly Speed and a Reaction that turns a failed D20 Test by you or an ally in Aura of Protection into a success. End freely. Once per Long Rest; spend a level 5 slot without an action to restore its use.",
+        "implemented": "text"
+      }
+    }
+  ],
+  "always_prepared": {
+    "3": [
+      "chromatic_orb",
+      "elementalism",
+      "thunderous_smite"
+    ],
+    "5": [
+      "mirror_image",
+      "phantasmal_force"
+    ],
+    "9": [
+      "fly",
+      "gaseous_form"
+    ],
+    "13": [
+      "conjure_minor_elementals",
+      "summon_elemental"
+    ],
+    "17": [
+      "banishing_smite",
+      "contact_other_plane"
+    ]
+  },
+  "playable": false
+}

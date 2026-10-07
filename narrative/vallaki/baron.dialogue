@@ -52,7 +52,11 @@ endif
 ~ festival
 Baron: For? It's for happiness! Every week, a festival. The Festival of the First Frost. The Festival of Neighbourliness, which was compulsory. This week, the Blazing Sun: a great wicker sun, lit at noon, so the sky remembers what it's supposed to be doing.
 Baron: And everyone comes, and everyone cheers, and anyone who doesn't goes in the stocks. Morale, you see. Morale is a wall.
-interject tag:blunt: Morale by order. I've served under a captain like that. Once.
+if name:wren_featherfoot
+interject name:wren_featherfoot: Morale by order. Master Sorrel says you can't make a cat purr by shouting at it.
+else
+interject tag:blunt: Morale by order. That never ends well.
+endif
 -> menu
 
 ~ afraid
@@ -103,7 +107,11 @@ quest festival_of_the_blazing_sun baron_side
 attitude baron_vargas friendly
 Baron [smile]: Marshals! My marshals! Lydia, they'll need sashes! Gold thread!
 Baron: Now listen. The sun must burn. Somebody always tries to spoil it. Keep an eye on it the night before, and catch whoever comes with a bucket. And stand by me when the torches go in.
+if name:kip_smudgewick
+interject name:kip_smudgewick: We said we'd stand with you, Baron. A Smudgewick keeps his word.
+else
 interject tag:loyal: We said we'd stand with you. We will.
+endif
 -> menu
 
 ~ orders

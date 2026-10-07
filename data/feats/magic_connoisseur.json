@@ -1,0 +1,36 @@
+{
+  "id": "magic_connoisseur",
+  "name": "Magic Connoisseur",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "category": "general",
+  "repeatable": false,
+  "summary": "Reference-only: choose a level 1 and a level 2 spell from your Magic Initiate list, using its casting ability. Both are always prepared; cast each free once per Long Rest or using slots. Replace one with a same-level spell from that list on gaining a level.",
+  "benefits": [
+    {
+      "id": "connoisseur_spells",
+      "name": "Additional Spells",
+      "summary": "Reference-only: choose a level 1 and a level 2 spell from your Magic Initiate list, using its casting ability. Both are always prepared; cast each free once per Long Rest or using slots. Replace one with a same-level spell from that list on gaining a level.",
+      "text": "Reference-only: choose a level 1 and a level 2 spell from your Magic Initiate list, using its casting ability. Both are always prepared; cast each free once per Long Rest or using slots. Replace one with a same-level spell from that list on gaining a level.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 4,
+    "feature": "two_cantrips",
+    "text": "Level 4+, Magic Initiate feat"
+  },
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "playable": false
+}

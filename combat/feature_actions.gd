@@ -782,7 +782,7 @@ func _breath(c: Combatant, shape: String, point: Vector2) -> CombatResult:
 	var dir := (point - e.center_of(c)).normalized() if point != Vector2.INF else Vector2(c.facing)
 	var size := 15 if shape == "cone" else 30
 	var origin := e.center_of(c) + dir * (c.size_cells / 2.0)
-	var cells := e.grid.area_cells("cone" if shape == "cone" else "line", size, origin, dir, 5)
+	var cells := e.grid.cone_from(c.cell, c.size_cells, e.center_of(c) + dir, size) if shape == "cone" else e.grid.area_cells("line", size, origin, dir, 5)
 	var lvl := c.creature.character_level()
 	var dice := "%dd10" % (1 + (1 if lvl >= 5 else 0) + (1 if lvl >= 11 else 0) + (1 if lvl >= 17 else 0))
 	var ty := "fire"

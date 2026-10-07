@@ -168,7 +168,8 @@ end. None is on the way to either Tarokka place. Strahd appears in this part onl
 
 - `larders_bone_lamp_trap` (hall of bones): see §7. `when: not flag.larders_furnace_quenched`.
 - `larders_open_cell_pit` (N4, the cell whose gate stands open, with a satchel on the straw as bait): a false floor
-  over an oubliette; detect 15, disarm 15, Dex 14, 4d6 bludgeoning.
+  over an oubliette, `pit_ft` 40 (4d6 bludgeoning is the fall itself; the climb out is rope or DC 15 Athletics,
+  world/exploration/pit_fall.gd); detect 15, disarm 15, Dex 14.
 - Secret doors `larders_crawl_furnace` (30, 9) and `larders_crawl_throne` (37, 11), DC 15: the stoker's crawl, with
   a dead stoker's pouch. A back way into the hall of bones.
 

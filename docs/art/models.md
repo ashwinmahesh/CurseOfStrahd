@@ -10,9 +10,14 @@ Blender from the 2D props they replace. Characters and creatures stay 2D sprites
 boulders, which already look right from every side.
 
 The Death House upper floor was the pilot; the owner signed it off the same day ("the 3D pieces look so much
-better. Lets start rolling out this change everywhere"). The rollout goes in batches, each merged to main: (1)
-common furniture and containers with 3D on everywhere, (2) doors, gates, windows and the other panelled walls,
-(3) town and outdoor pieces, (4) Castle Ravenloft once its pieces are chosen.
+better. Lets start rolling out this change everywhere") and then asked for everything: "Anything that isnt a player,
+NPC, or a character shold be a 3D assett" (2026-10-07). The rollout went in batches, each merged to main: (1) common
+furniture and containers with 3D on everywhere, (2) doors, gates, windows and wall trim, (3) town and outdoor pieces,
+(5) nature, (6) every remaining object, figure and wall picture, (7) landmarks and buildings, (8) the last few.
+Castle Ravenloft's own pieces follow once its set dressing is settled.
+
+What stays painted is flat by nature: scorch marks, bloodstains, drag and claw marks, rune and offering circles,
+puddles, a plaster seam, the flames of fires and candles. The fog bank is the world look's mist.
 
 ## Where they are used
 
@@ -39,6 +44,22 @@ without a model is drawn as before.
 | bed, bed_small | bed, bed_small | against the wall (headboard on it), a square long |
 | wardrobe, sideboard, shelves | the same and their `_front` views | against the wall |
 | pew, lectern, table_set, letters_table, coffin | the same | free-standing |
+| door_house, door_double, door_carved, gate_iron, crypt_gate, portcullis, curtain | the same leaves (the carved door keeps its 2D hand) | door: modelled at the 2D leaf's 0.86 x 1.15 and scaled to the opening; never for secret doors |
+| church_doors | church_doors (exits) | on the wall face: a stone arch, 3D leaves, the 2D rose window as a decal |
+| window_tall, window_stained | the same | on the wall face: a deep pointed-arch reveal and sill round the 2D window, kept whole as a decal |
+| window_shuttered | the same | on the wall face |
+| panelling | the `interior/wood_panel` and `interior/carved_panel` surfaces | wall modules: stiles, skirting and a top rail |
+| wall_trim | papered and plastered surfaces (plaster, green and nursery papers, damp plaster, whitewash, kitchen) | wall modules: a skirting board and a picture rail |
+| wagon, market_stall, cart_broken | the same | free-standing, building-sized (`big`): they keep their size and clear the trees around them |
+| shop_counter, bar_counter, workbench, cask_rack | the same and their `_front` views | against the wall |
+| woodpile, notice_board, crypt_small, crypt, gravestone, well, well_stone, bridge_parapet, signpost | the same | free-standing |
+| pine_a/b/c, pine_clawed, dead_tree_a/b | pine, pine_clawed, dead_tree (variants picked by square) | trees in the board's woods and the land past the map's edge, as tall as the 2D trees, each turned its own way; they fade like the billboards (ArenaBoard.mesh_occluders) |
+| bramble_a/b, boulder_a/b, log, stump, rubble, cairn, snowdrift, ice_patch, reeds, leaves, grave_mound, hay_bale, garden_bed, vines | the same | free-standing, turned per square (nature has no front) |
+| sculpted pieces (statues, armour, scarecrows, the stuffed wolves, the horse, carcasses, skeletons, dolls, cages, charms, sheeted furniture, the dollhouse, harp, spinning wheel, the colossus, the faceless statue, Strahd's effigy, the wicker sun ...) | the same | made from their own sprite: its silhouette made solid, swelling toward the middle, painted with the sprite in front and the 2D back view behind (`spr_<art>` materials, shaders/cel_sprite.gdshader) |
+| wall pictures (paintings, portraits, mirrors, boards, notices, reliefs, carvings, tapestries, banners) | the same | the 2D picture kept in a 3D mount: a moulded frame, a board, a stone slab, a hanging rod |
+| wall fittings (trophies, chains, shelves of jars, winches, robes on pegs ...) | the same | sculpted from their art against the wall |
+| about 60 more hand-modelled objects (braziers, altars, shrines, cabinets, the canopy bed, harpsichord, organ, tubs, the wine press, stoves, marble hearths, the manor entrance, painted doors, windows, rugs, straw ...) | the same | as their 2D pieces were mounted |
+| cottage, tent, vardo, barn_collapsed, windmill, bell_tower, tower_vr, hut_lysaga, standing_stones, gallows, barrow, gulthias_tree, ribbon_tree ... | the same | building-sized: they keep their size and clear the trees; a piece standing in for a whole house is a 3D building over its ground; tall ones fade |
 
 ## How a piece finds its place (`world/look/model_piece.gd`, `ModelPiece`)
 
@@ -57,6 +78,10 @@ panelling.
   modules sit under one holder on the wall square, so a prop that takes the square, or a hidden area, hides them.
 - **Picking:** `SpritePick.hit` also tests the ray against each model's triangles, so pointing at any drawn part
   picks the piece.
+- **Elsewhere:** the board's trees, brambles and yard gravestones (`ArenaBoard`), the land's near and far trees
+  (`AtmosphereLand`, a MultiMesh per tree variant with shaders/cel_instanced.gdshader keeping the far ones darker), a
+  town house's windows (`TownBuilder`), torches (`LocationView`), the gates' statues and the secret bookcase door
+  (`SetDressing`) all use a model where there is one.
 
 ## Look
 
@@ -89,14 +114,17 @@ the footprint, or of the back for pieces that stand against or hang on a wall.
 `manifest.json` records each model's mount, the 2D art it stands for, its size and its sockets.
 
 Checks: `tests/integration/test_models_3d.gd` (the catalog's models exist, the library is built of them, in every
-location each model stays in its square, a place left out keeps its 2D pieces, picking, looted desks dim). Captures:
+location each model stays in its square, every model is its real height, the woods are 3D trees that fade, a place
+left out keeps its 2D pieces, picking, looted desks dim); `test_set_dressing.gd` checks 3D pieces for facing, wall
+contact, stairs and the cottage's size as it does the 2D ones. Captures:
 
     make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=death_house_upper NAME=library ARGS="--at=4,4"
 
 ## Not done yet
 
-- Batches 2 to 4 (above). Until then doors other than plain wooden ones, windows, statues, counters, stalls,
-  wagons, crypts and the castle's own pieces are 2D.
+- Castle Ravenloft's own pieces, once the world assets work there has chosen them.
+- Sculpted pieces are only as deep as a swelling of their outline: from the side they read as thick reliefs, not
+  carved figures.
 - Long runs of pews or tables are one model per square, so a long table shows its seams.
 - No lights of their own: candles and the hearth glow but don't light the room (lighting belongs to the world look).
 - The secret bookcase door keeps its 2D disguise.

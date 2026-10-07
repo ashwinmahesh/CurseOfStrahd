@@ -23,7 +23,7 @@
     {
       "id": "death_house_read_strahd_letter",
       "type": "bool",
-      "summary": "The party read Strahd's letter to Gustav Durst in the secret study. Lore. Village/Phase 4 may read (Ilse's letter, Strahd scenes)."
+      "summary": "The party read Strahd's letter to Gustav Durst in the secret study. Lore. Village/Phase 4 may read (Strahd scenes)."
     },
     {
       "id": "death_house_found_deeds",

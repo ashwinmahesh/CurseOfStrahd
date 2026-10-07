@@ -1,4 +1,4 @@
-# Travel map, minimap, ways out, hidden areas and traps
+# Travel map, minimap, ways out, hidden areas, traps and pits
 
 Owner ask (2026-10-06): the map screen should look like a real map, there should be a minimap of the current area in
 the top right of the HUD that moves with the party, and the ways out of an area to another region should be obvious.
@@ -120,4 +120,29 @@ the top right of the HUD that moves with the party, and the ways out of an area 
   is enough (2024). An unnoticed trap shows nothing at all. Anything above everyone's passive Perception stays hidden
   until a Search (the leader's Wisdom (Perception) check, 15 ft), Find Traps or a Wand of Secrets finds it. Stepping
   on an unnoticed trap still springs it.
+- A noticed trap's border also shows through a wall in front of it as red hatching (shaders/world/xray_mark.gdshader),
+  so a trap in a one-square passage still reads from the diagonal camera.
+
+## Pits (`world/exploration/pit_fall.gd`)
+
+- Owner playtest (2026-10-07): the Death House crypt passage's pit is a 10-foot drop, so show the hole and let the
+  party climb out; any other pit trap the same way. A trap with `pit_ft` is a pit that deep, and every pit trap has
+  one (a test checks any trap that speaks of a pit, a shaft or an oubliette): the Death House crypt passage
+  (`passage_pit`, 10 ft, the book's depth) and Castle Ravenloft's open cell N4 (`larders_open_cell_pit`, 40 ft,
+  inferred from its 4d6 fall). Falls that leave nobody in a hole stay ordinary traps: rotten floorboards and a beam
+  you go through to the knee or waist, the spire's broken step onto the stair below, Argynvostholt's gallery, Old
+  Bonegrinder's chute (you come out at the millstone) and the Amber Temple's snow cornice (you catch the rock).
+- Found or sprung, the board shows it in 3D: the floor gone, stone sides going down, pale stakes at the bottom, a pale
+  lip round the edge with the red border just outside it, and the slab that covered it propped up (found) or hanging
+  down inside (sprung). The cut-away walls within two squares come down to their footing so the camera can see in;
+  they go back up if it's disarmed. Unnoticed, it shows nothing, as before.
+- Springing it: the trap's saving throw. A success catches the edge. A failure falls in: 1d6 bludgeoning per 10 ft
+  (2024 falling) plus the trap's own damage (a pit whose own damage is bludgeoning already counts the fall), Prone,
+  and at the bottom (the figure goes down; the ring and labels
+  stay at the edge, since the camera can't see the bottom of a 10-foot shaft). Who's in a pit is saved with the
+  location.
+- Climbing out (right-click the character, or click to walk with them leading): with a rope anywhere in the party,
+  no check; without one, a DC 15 Strength (Athletics) check, a minute a try. Someone at 0 Hit Points needs the
+  rope. The party doesn't drag anyone in a pit along; an open pit is walked round, or jumped where it fills a
+  passage.
 

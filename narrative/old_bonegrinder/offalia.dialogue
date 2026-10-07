@@ -47,6 +47,7 @@ Offalia [smile]: Dream pastries! Two hundred a week. Mother does the honey, Bell
 ~ flour
 Offalia: From the big stone, silly. You put things in the top and turn it, and it comes out the bottom soft as soft. Mother says you mustn't waste anything. Not the marrow. Not the teeth.
 Narrator: She says it the way any other cook would say "not the rind".
+interject name:ratatoille: Non. Non, non, non. That is not flour. That is not baking. I think I need to sit down.
 interject species:dwarf: I've ground a lot of things in my time. Ore. Grudges. Never that.
 -> menu
 
@@ -84,7 +85,11 @@ Narrator: Upstairs, the rocking stops for a moment, then starts again.
 
 ~ fight
 Offalia [angry]: Nobody tells me to step away from Mother's oven. Nobody. Only Mother.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: I just did, madam. Sorry. Step away, please.
+else
 interject class:fighter: Somebody just did.
+endif
 combat bakery_offalia
 
 # --- Asleep on the bakery floor (after the dream pastry) ---
@@ -97,7 +102,7 @@ Narrator: Offalia snores on the bakery floor with crumbs on her chin, smiling at
 ~ coup
 set offalia_slain
 Narrator: It takes longer than it should, and all of you together, and she never once stops smiling. Nobody speaks afterwards. There isn't anything that would help.
-interject tag:devout: That was necessary. I'll pray about whether it was right.
+interject tag:pious: That was necessary. I'll pray about whether it was right.
 if flag.morgantha_slain
 -> old_bonegrinder/aftermath:reckon
 endif

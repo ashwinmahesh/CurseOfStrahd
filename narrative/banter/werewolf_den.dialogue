@@ -8,10 +8,22 @@ interject class:druid: Someone who wants them sleepy, not dead. That's a differe
 endif
 -> END
 
+~ banter_hills_thistle
+if visited:werewolf_den and not visited:werewolf_den_caves and name:thistle and name:godrick_pendlebrook
+interject name:godrick_pendlebrook: You've gone quiet, Thistle. You're never quiet.
+interject name:thistle: Tracks this big. Last wolf this big took Grandda's hounds. He went after it.
+interject name:godrick_pendlebrook: Then we walk soft. And we walk together.
+endif
+-> END
+
 ~ banter_two_wolves
 if flag.emil_freed and not flag.pack_resolved
 interject tag:veteran: Two wolves, one den. One wants an army for the castle. One wants to be left alone in the hills. I know which I'd rather have at my back.
+if tag:veteran
 interject class:cleric: I know which I'd rather have nowhere near a child. They're the same answer, which is a mercy.
+else
+interject class:cleric: Kiril wants an army for the castle. Emil wants the hills and quiet. Only one of them would ever let a child go home.
+endif
 endif
 -> END
 
@@ -22,11 +34,19 @@ interject tag:loyal: We put the one who said no in charge. That's the part that 
 endif
 -> END
 
+~ banter_emil_won_six
+if flag.wolf_pack_leader == "emil" and name:kip_smudgewick and name:wren_featherfoot
+interject name:kip_smudgewick: We've put a werewolf in charge of the werewolves. I had concerns. I've brought him apricots anyway.
+interject name:wren_featherfoot: Wolves don't eat apricots, Kip.
+interject name:kip_smudgewick: He took three. Very politely. I think it's going to be fine.
+endif
+-> END
+
 ~ banter_kiril_won
 if flag.wolf_pack_leader == "kiril"
-interject tag:devout: We walked out of there and left him on top. I'll be praying about that for a long while.
+interject tag:pious: We walked out of there and left him on top. I'll be praying about that for a long while.
 if flag.den_children_left
-interject class:fighter: Eleven days to the moon. I counted. I'll keep counting.
+interject class:fighter: Eleven days to the full moon. I'll be watching the sky every one of them.
 endif
 endif
 -> END

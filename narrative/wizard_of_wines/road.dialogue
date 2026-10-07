@@ -13,6 +13,10 @@ Narrator: It looks at the leaf, then west toward Yester Hill, then at you, with 
 else
 Narrator: It looks at the leaf, then toward the vineyards south of the lake road, then back at you, as if you were being slow on purpose.
 endif
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: I think that was a letter. From a bird. Do we write back?
+else
 interject tag:curious: I think we just got a letter.
+endif
 -> END
 

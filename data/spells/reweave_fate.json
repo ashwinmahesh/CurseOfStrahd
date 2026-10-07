@@ -1,0 +1,38 @@
+{
+  "id": "reweave_fate",
+  "name": "Reweave Fate",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+  },
+  "level": 7,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "cleric",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "reaction",
+    "trigger": "after a visible creature within 60 feet fails a D20 Test"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "summary": "Reference-only: A visible creature that just failed a D20 Test rerolls with Advantage and must use the new result. Success also grants it 6d10 Temporary HP.",
+  "text": "Reference-only: A visible creature that just failed a D20 Test rerolls with Advantage and must use the new result. Success also grants it 6d10 Temporary HP.",
+  "tags": [
+    "utility"
+  ],
+  "icon": "magic_missile",
+  "playable": false
+}

@@ -29,28 +29,28 @@
   },
   "party": [
     {
-      "pregen": "ilse_varga",
+      "pregen": "godrick_pendlebrook",
       "cell": [
         6,
         6
       ]
     },
     {
-      "pregen": "hedda_ironvow",
+      "pregen": "liriel_dawnsong",
       "cell": [
         6,
         8
       ]
     },
     {
-      "pregen": "tamsin_tealeaf",
+      "pregen": "wren_featherfoot",
       "cell": [
         5,
         5
       ]
     },
     {
-      "pregen": "silvain_aster",
+      "pregen": "ratatoille",
       "cell": [
         4,
         8

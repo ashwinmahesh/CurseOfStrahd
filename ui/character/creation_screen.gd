@@ -6,9 +6,8 @@ extends CanvasLayer
 ## from CharacterBuilder; this screen only lays them out and sends picks back. Emits finished(party) when all four
 ## are confirmed.
 ##
-## Hero mode (open_hero): one custom character who takes a pregenerated companion's place. Its Appearance step is the
-## paper doll (AppearancePanel: body, head, hair, beard, skin, outfit, portrait and voice), and Review weighs the party
-## it will travel with.
+## Hero mode (open_hero): one custom character for the roster. Its Appearance step is the paper doll (AppearancePanel:
+## body, head, hair, beard, skin, outfit, portrait and voice), and Review weighs the party it will travel with.
 
 signal finished(party: Array[Character])
 signal cancelled
@@ -28,9 +27,8 @@ var _rail: VBoxContainer
 var _body: VBoxContainer
 var _sheet: VBoxContainer
 var _rolled_text := ""
-## Hero mode: the pregen the hero replaces and the three who travel with them.
+## Hero mode, and the pregens chosen to travel alongside the hero.
 var hero_mode := false
-var replacing := ""
 var companions: Array[String] = []
 var _appearance_tab := "Body"
 ## The player picked an outfit themselves, so a class change no longer picks one for them.
@@ -52,10 +50,9 @@ func open_with(starting: Array[Dictionary], count: int = 4) -> void:
 	_build_frame("Create your party" if count > 1 else "Rebuild a character")
 
 
-## One custom hero in place of the pregen `replacing_id`; `others` are the three pregens who come along.
-func open_hero(replacing_id: String, others: Array[String]) -> void:
+## One custom hero for the roster; `others` are the pregens chosen to travel with them (shown, and weighed on Review).
+func open_hero(others: Array[String]) -> void:
 	hero_mode = true
-	replacing = replacing_id
 	companions = others
 	var app := HeroLook.default_appearance("female")
 	builders.append(CharacterBuilder.new(null, {"appearance": app, "identity": {"pronouns": "she/her", "tags": []}}))
@@ -122,20 +119,20 @@ func _draw_strip() -> void:
 		if i == slot:
 			UiParts.light_up(chip)
 		_strip.add_child(chip)
-	if hero_mode:
+	if hero_mode and not companions.is_empty():
 		var with := HBoxContainer.new()
 		with.add_theme_constant_override("separation", 4)
 		var names: Array[String] = []
 		for id in companions:
 			with.add_child(UiParts.framed_portrait(id, 42.0))
 			names.append(str(Compendium.shared().get_entry("pregens", id).get("name", id)).get_slice(" ", 0))
-		var cap := UiKit.label("Travelling with %s" % _and_list(names), 14, "parchment")
-		cap.tooltip_text = "Your hero takes %s's place." % str(Compendium.shared().get_entry("pregens", replacing).get("name", replacing))
-		cap.mouse_filter = Control.MOUSE_FILTER_PASS
+		var cap := UiKit.label("Travelling with %s" % _and_list(names) if not names.is_empty() else "", 14, "parchment")
 		with.add_child(cap)
 		_strip.add_child(with)
 	_strip.add_child(UiParts.gap())
-	_strip.add_child(UiParts.small_button("Back to title", func() -> void: cancelled.emit()))
+	var leave := UiParts.small_button("Back", func() -> void: cancelled.emit())
+	leave.tooltip_text = "Leave the creator without keeping this character (Esc on the first step)"
+	_strip.add_child(leave)
 	var all_done := not confirmed.has(false)
 	var go := UiParts.primary_button("Begin the adventure" if builders.size() > 1 or hero_mode else "Done", _finish)
 	go.disabled = not all_done
@@ -205,6 +202,19 @@ func _draw_rest() -> void:
 func _changed() -> void:
 	confirmed[slot] = false
 	_draw()
+
+
+## Escape steps back one creation step, and from the first step leaves the creator (as its Back button does). A text
+## field being typed in keeps Escape for itself.
+func _unhandled_input(event: InputEvent) -> void:
+	if not event.is_action_pressed("ui_cancel"):
+		return
+	get_viewport().set_input_as_handled()
+	if step > 0:
+		step -= 1
+		_draw()
+	else:
+		cancelled.emit()
 
 
 func _class_step() -> void:

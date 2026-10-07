@@ -69,6 +69,14 @@
           }
         }
       }
+    },
+    "art_todo": {
+      "type": "string",
+      "description": "A placeholder look still in use (build.appearance.art borrows another character's art until this one's is drawn)."
+    },
+    "roster": {
+      "type": "boolean",
+      "description": "Offered in the roster the player picks the party from (owner, 2026-10-06)."
     }
   }
 }

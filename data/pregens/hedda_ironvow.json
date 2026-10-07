@@ -4,6 +4,7 @@
   "pronouns": "she/her",
   "summary": "Dwarf Cleric (Life Domain), Acolyte. A healer in a shirt of mail who keeps the party standing.",
   "hook": "Night after night she dreams of a dying sun and a silver raven clutching a sunburst; her temple's oldest book says the symbol was lost in a land of mists.",
+  "roster": false,
   "build": {
     "name": "Hedda Ironvow",
     "species": "dwarf",

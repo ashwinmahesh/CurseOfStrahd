@@ -90,8 +90,16 @@ endif
 ~ soak
 set festival_sun_soaked
 Narrator: A bucket from the well, then another, then forty. The watchman posted in the square is asleep in a doorway with a festival ribbon over his eyes, exactly as Lady Wachter promised. By the time the sky greys, the straw is soaked to the core.
+if name:wren_featherfoot
+interject name:wren_featherfoot: We drowned a sun. Bet nobody's ever said that before. Bet nobody should.
+else
 interject tag:cheerful: We drowned a sun. I've never said that sentence before. I don't think anyone has.
-interject tag:devout: I have stood on hills to watch the sun come up. I have not felt this before about putting one out.
+endif
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: I have sung the sun up every morning of my life. I have never put one out. I find I don't like it.
+else
+interject tag:pious: I have stood on hills to watch the sun come up. I have not felt this before about putting one out.
+endif
 -> END
 
 ~ keep_watch
@@ -175,7 +183,11 @@ endif
 ~ sun_blazes
 Narrator: Torches go to the straw. You kept it dry through the night, and it shows: the wicker catches with a roar, and for a few heartbeats there is a sun in Vallaki, gold and enormous, and the faces in the square are lit with something very close to joy.
 Baron [smile]: You see? You SEE! All is well!
-interject tag:devout: Oh. Oh, look at that.
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: Oh. Oh, look. The dawn comes.
+else
+interject tag:pious: Oh. Oh, look at that.
+endif
 -> turn
 
 ~ sun_dies
@@ -242,8 +254,12 @@ endif
 if flag.wachter_betrayed
 Lady Wachter [angry]: And my new friends at his side. You drank my tea. I hope he gave you something better than biscuits.
 endif
-interject tag:blunt: Her people. Count them as they come.
+interject tag:blunt: Her people are in the crowd. Watch for steel.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Behind me, Baron. Fear not. Leave it to me.
+else
 interject tag:loyal: Behind me, Baron.
+endif
 set festival_climax
 combat festival_coup
 
@@ -282,6 +298,10 @@ else
 Baron: Sergeants! Clear my square!
 endif
 interject class:cleric: Behind me, Father. You've done your part.
+if name:thistle
+interject name:thistle: Nobody gets past me to the crowd. Nobody.
+else
 interject tag:blunt: Hold the line here. Nobody gets past to the crowd.
+endif
 set festival_climax
 combat festival_izek_rampage

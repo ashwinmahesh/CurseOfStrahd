@@ -39,6 +39,9 @@ interject guest:ireena: My father bought your wine for every feast day. He said 
 Davian: No vine should live in this valley; there's no sun worth the name. Ours do because three stones lie in their soil, green as new leaves, each the size of a plum. A wizard paid them to my family, long ago, for a winter's lodging.
 Davian: One was stolen last autumn. The ravens followed the thief to Berez, the drowned village by the river, to the witch who lives there. One the druids carried off to their hill. The last I hid the night we fled.
 Davian: They're tearing my house apart to find it. So far my house is winning.
+if name:ratatoille and not (quest.a_seat_at_the_table >= a_winery)
+-> companions/table:winery
+endif
 -> stones_menu
 
 ~ stones_menu
@@ -64,6 +67,7 @@ Davian: Because a raven sees a great deal and repeats it in the right ears. My f
 -> stones_menu
 
 ~ pledge
+set davian_pledged
 set winery_stone_hiding_told
 set yester_hill_known
 quest wizard_of_wines asked
@@ -73,7 +77,11 @@ attitude davian_martikov friendly
 endif
 Davian: Then here are the terms. Drive them out of the winery and out of the press house. Bring up my stone from the founder's cask: cellar, foot of the stair, third hoop, pull. Then we'll talk about the hill.
 Davian: I'll pay in the only coin I trust. Wine, when there's wine again. Until then, my gratitude, which is rarer.
+if name:wren_featherfoot
+interject name:wren_featherfoot: How many druids? Roughly. Asking for my knees.
+else
 interject tag:blunt: How many druids?
+endif
 Davian: Fewer than yesterday, if you start now.
 -> menu
 
@@ -92,6 +100,8 @@ Davian: Fewer than yesterday, if you start now.
 * [if tarokka.ally.npc == davian_martikov and not guest:davian_martikov] Madam Eva's cards named you. -> ally
 * [if not flag.winery_reclaimed] What's waiting for us in the winery? -> intel
 * [name:hedda_ironvow] [if quest.cold_prayers and flag.keepers_of_the_feather_met and not flag.hedda_keepers_told] Ask about a silver raven with a sunburst in its claws. -> companions/prayers:davian
+* [name:ratatoille] [if quest.a_seat_at_the_table and not (quest.a_seat_at_the_table >= a_winery)] Ask about the Wizard of Wines. -> companions/table:winery
+* [name:ratatoille] [if flag.winery_reclaimed and not flag.ratatoille_supper_cooked] Ask for the use of the kitchen tonight. -> companions/table:supper
 * Tell us about the winery. -> lore
 * Goodbye. -> bye
 
@@ -104,7 +114,13 @@ endif
 
 ~ lore
 Davian: My family pressed wine on this hill before the valley had its lord. The man on the sign is the wizard who paid us in stones. We set by a cask for him every year. He's never come for it. Wizards are poor at visiting.
+if name:kip_smudgewick
+interject name:kip_smudgewick: A creditor who never collects. Either very generous or very dead. I wish mine were either.
+elif class:wizard and not name:ratatoille
 interject class:wizard: A wizard who never collects a debt is either very generous or very dead.
+else
+interject tag:cynical: A man who never collects a debt is either very generous or very dead.
+endif
 Davian: I've drunk to both, in alternate years.
 -> menu
 
@@ -224,8 +240,16 @@ quest wizard_of_wines saved
 xp milestone
 Narrator: That night the Martikovs broach a cask from before the druids came, and the whole family drinks in the yard under a sky with no stars in it, and for an hour nobody looks up.
 Davian: To the hill, broken. To the house, ours. And to strangers, who it turns out are good for something.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Good for something! That's the nicest thing anyone's said about me in this whole valley.
+else
 interject tag:cheerful: That's the nicest thing anyone's said about me in this whole valley.
-interject tag:devout: Mm. Good wine. Dawn comes slower to some places than others. It comes.
+endif
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: The dawn comes slower to some places than others. It comes. Morning's grace on this house.
+else
+interject tag:pious: Good wine. Dawn comes slower to some places than others. It comes.
+endif
 -> check_done
 
 ~ keepers_oath
@@ -290,7 +314,11 @@ Narrator: He gets up. He's an old man, and it takes a while. He goes to where hi
 Davian: Adrian. The press is yours. My knees are finished with it.
 Adrian: Your knees are fine.
 Davian: Then take it anyway.
+if name:thistle
+interject name:thistle: Good. That's good.
+else
 interject tag:loyal: Good. That's good.
+endif
 interject guest:ireena: My father and my brother never said it either. Not once, before the end. I'm glad somebody did.
 -> check_done
 

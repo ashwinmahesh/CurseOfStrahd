@@ -12,6 +12,7 @@
   ],
   "additionalProperties": false,
   "properties": {
+    "playable": {"type": "boolean", "description": "False until every rule of the entry works in the game: it is then left out of character creation, level-up and spell choices and random treasure (Compendium.playable). Absent means playable."},
     "id": {
       "$ref": "common.schema.json#/$defs/id"
     },
@@ -756,6 +757,11 @@
     "armor_rules": {
       "type": "object",
       "description": "What magic armor or a shield does beyond modifiers: no_crits, no_training, ac_vs_ranged, specials."
+    },
+    "spells": {
+      "type": "array",
+      "items": {"$ref": "common.schema.json#/$defs/id"},
+      "description": "A found spellbook's spells: anyone can read the list, a Wizard can copy them (Character.copy_spell)."
     },
     "scroll_spell": {
       "type": "string",

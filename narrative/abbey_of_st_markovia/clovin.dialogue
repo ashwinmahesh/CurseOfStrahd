@@ -39,7 +39,11 @@ endif
 ~ belviews
 Clovin Belview: We were Krezk folk once. Grandmother says. Then we all got sick and came up here and got better. Then he made us better again. And again. He calls it improving.
 Clovin Belview: I've had three improvements. You can see two of them. Don't ask about the third. Mother's had nine. She doesn't come out much.
+if name:kip_smudgewick
+interject name:kip_smudgewick: That's not medicine. I've paid for medicine. It comes in a little bottle, and nobody grows an ear.
+else
 interject tag:blunt: That's not medicine.
+endif
 Clovin Belview: No. But he says it with such a kind face.
 -> menu
 
@@ -73,7 +77,11 @@ Clovin Belview: The door sticks. Low down, by the hinge. A good kick and it'd re
 set clovin_befriended
 Narrator: From somewhere in his habit he produces a bottle with an inch of wine left in it, and looks at the inch, and at you, and makes a terrible decision.
 Clovin Belview: The last of the Martikovs'. Go on. Nobody drinks with me. Mother says it's because of the ear. I say it's because of the wine.
+if name:wren_featherfoot
+interject name:wren_featherfoot: To the ear. Best ear on the mountain, and I've seen a few today.
+else
 interject tag:cheerful: To the ear.
+endif
 Clovin Belview [smile]: To the ear!
 -> menu
 

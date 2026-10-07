@@ -3,22 +3,25 @@
 
 ~ banter_smiles
 if flag.vallaki_arrived and not flag.festival_over
-interject tag:blunt: Count the smiles on this street. Fourteen. Count the ones that mean it. None.
+interject tag:blunt: Look at the smiles on this street. Every one of them put on by order. Not one of them meant.
 interject tag:cheerful: I mean mine.
+if tag:cheerful
 interject class:wizard: Yours is the one that worries them most.
+endif
 endif
 -> END
 
 ~ banter_morale
-if flag.baron_met and not flag.festival_over
-interject name:ilse_varga: Morale by order. I served under a captain who flogged men for looking tired. He was very well defended, right up until the night nobody woke him.
-interject tag:devout: Joy isn't a wall. It's a window. You can't board it up and still call it one.
+if flag.baron_met and not flag.festival_over and name:thistle and name:godrick_pendlebrook
+interject name:thistle: He locks folk up for frowning? I frown at everything! Big, they'll have me in a cell by supper.
+interject name:godrick_pendlebrook: Fear not. I'll do your smiling for you. I've got plenty spare.
+interject tag:pious: Joy isn't a wall. It's a window. You can't board it up and still call it one.
 endif
 -> END
 
 ~ banter_saint
-if flag.bones_theft_known and not flag.bones_returned
-interject name:tamsin_tealeaf: Somebody stole a saint. A whole saint. I've never stolen a saint. You'd never fence him. Who'd you even sell a saint to?
+if flag.bones_theft_known and not flag.bones_returned and name:kip_smudgewick and class:cleric
+interject name:kip_smudgewick: Who steals a saint? Who would you even sell one to? I sold jam to a bishop once, and he haggled.
 interject class:cleric: Someone who wants a church to be just a room. Which tells you who.
 endif
 -> END
@@ -30,41 +33,36 @@ interject tag:blunt: The treatises weren't standing in the storeroom. We go at n
 endif
 -> END
 
-~ banter_two_dreamers
-if flag.izek_dolls_seen and flag.tamsin_locket_recognized
-interject name:tamsin_tealeaf: Izek dreams of her. I dream of her. The lord of the castle has her portrait in a locket. That's three of us now, and I'm the only one who isn't frightening.
-interject name:silvain_aster: You stole the locket. You're a little frightening.
-interject name:tamsin_tealeaf: I borrowed it. Somebody wanted me to.
-endif
--> END
-
 ~ banter_book_club
-if flag.lady_wachter_met and not flag.festival_over
-interject name:silvain_aster: A book club with no books. I've been to academic societies like that. Generally they're worshipping something.
-interject name:hedda_ironvow: Mm. She poured my tea before I asked how I took it. Some people learn your habits because they like you. Some learn them the way a butcher learns the weight of a pig.
+if flag.lady_wachter_met and not flag.festival_over and name:wren_featherfoot and name:thistle
+interject name:wren_featherfoot: A book club with no books. I knew clubs like that back home. They were always worshipping something. Usually gin.
+interject name:thistle: She looked us over like Grandda looks at a hog before market. Not liking. Weighing.
 endif
 -> END
 
 ~ banter_letter
-if flag.wachter_evidence and flag.death_house_read_strahd_letter
-interject name:silvain_aster: The hand in Lady Wachter's letter is the same as the one in the letter under the Durst house. The same loops. The same patience. He writes to everybody, doesn't he?
+if flag.wachter_evidence and flag.death_house_read_strahd_letter and name:ratatoille and name:godrick_pendlebrook
+interject name:ratatoille: The hand in Lady Wachter's letter matches the one under the Durst house. Same loops, same patience. He writes to everybody.
+interject name:godrick_pendlebrook: I'll take your word for it. My eyes are tired. But a man who writes to everybody wants something from everybody.
 interject tag:blunt: He writes to his tools.
 endif
 -> END
 
 ~ banter_pledge_baron
 if flag.vallaki_pledge == "baron" and not flag.festival_begun
-interject class:cleric: We've sworn ourselves to a man who jails widows for laughing. I'd like that noted somewhere.
-interject tag:loyal: Noted. The other one writes to the castle.
+interject class:cleric: We've sworn ourselves to a man who jails widows for laughing. Someone should say that out loud.
+if tag:loyal
+interject tag:loyal: Fair. But the other one writes to the castle.
 interject class:cleric: That's why I'm still here. It isn't why I'm comfortable.
+endif
 endif
 -> END
 
 ~ banter_pledge_wachter
-if flag.vallaki_pledge == "wachter" and not flag.festival_begun
-interject name:hedda_ironvow: She keeps a shrine to the thing in the castle under her own floor. And we have taken her coin. I want it said out loud, so that none of us can pretend later that we didn't know.
-interject name:ilse_varga: Said. Heard. We gave our word. I've kept worse words to worse captains.
-interject name:hedda_ironvow: That is not the comfort you think it is, sergeant.
+if flag.vallaki_pledge == "wachter" and not flag.festival_begun and name:liriel_dawnsong and name:kip_smudgewick
+interject name:liriel_dawnsong: She keeps a shrine to the devil of that castle under her own floor, and we have taken her coin. I want that said aloud.
+interject name:kip_smudgewick: Said. Only, we did shake on it. A bargain's a bargain, even a bad one. Especially a bad one.
+interject name:liriel_dawnsong: Then we keep our word, Kip, and we watch her hands while we do.
 endif
 -> END
 
@@ -72,15 +70,15 @@ endif
 if flag.vallaki_pledge == "town" and not flag.festival_begun
 interject tag:curious: So we're siding with the priest, the innkeeper, and everyone who isn't in charge?
 interject tag:blunt: Biggest side in any town. Usually the one that loses.
-interject tag:devout: Usually. Not always. Dawn comes.
+interject tag:pious: Usually. Not always. Every saint started out on the losing side.
 endif
 -> END
 
 ~ banter_rictavio
-if flag.rictavio_unmasked
-interject name:silvain_aster: Van Richten. Rudolph van Richten. In a feathered hat, in a taproom. I have read every word that man ever published, twice, and he made me play the lute.
-interject tag:cheerful: You were quite good.
-interject name:silvain_aster: I was abysmal, and he knew it, and he let me finish. I don't know how to feel about any of this.
+if flag.rictavio_unmasked and name:ratatoille and name:wren_featherfoot
+interject name:ratatoille: Rudolph van Richten, in a feathered hat, on a chair. I have read every word he ever published, twice, and I yawned at him.
+interject name:wren_featherfoot: Loudly. Twice. I was proud of you.
+interject name:ratatoille: It was a very well-informed yawn. Mon dieu. I yawned at Van Richten.
 endif
 -> END
 
@@ -94,8 +92,10 @@ endif
 ~ banter_victor
 if flag.victor_met and not flag.victor_vanished
 interject class:wizard: The boy is genuinely gifted. His circle is the finest piece of work I've seen in this valley, and it is a beautifully drawn door into nothing.
+if tag:blunt
 interject tag:blunt: Two maids walked through it.
 interject class:wizard: Yes. I know. That's the part I can't get past either.
+endif
 endif
 -> END
 
@@ -124,14 +124,16 @@ endif
 ~ banter_vistani
 if flag.vistani_friends
 interject tag:curious: Every Vistani wagon in Barovia is our wagon now. Do you think that includes the cooking?
+if tag:curious
 interject class:cleric: It includes the gratitude of a father. That's worth more than stew, and harder to come by.
+endif
 endif
 -> END
 
 ~ banter_ravens
 if flag.keepers_of_the_feather_met
 interject tag:curious: There's a raven on the roof again. It's the same one. I'm sure it's the same one.
-interject tag:blunt: Then it's on our side. Count it.
+interject tag:blunt: Then it's on our side. Let it watch.
 endif
 -> END
 
@@ -150,7 +152,7 @@ endif
 
 ~ banter_sanctuary
 if flag.ireena_sanctuary == "st_andrals"
-interject tag:devout: Holy ground, a good priest, a brother on the door. It's the best we could do for her. I hope it's the best anyone could.
+interject tag:pious: Holy ground, a good priest, a brother on the door. It's the best we could do for her. I hope it's the best anyone could.
 interject tag:blunt: It's walls. She's lived behind walls before. It's what's outside them that worries me.
 endif
 -> END
@@ -165,14 +167,16 @@ endif
 ~ banter_after_wachter
 if flag.vallaki_backed == "wachter"
 interject class:cleric: She thanked us. In his name. I can still hear it.
+if tag:loyal
 interject tag:loyal: We kept our word. That has to count for something.
 interject class:cleric: It counts. I'm only not sure which side of the ledger.
+endif
 endif
 -> END
 
 ~ banter_after_town
 if flag.vallaki_backed == "neither"
 interject tag:cheerful: A council. Arguing about lamp oil. Out loud. I think that might be the happiest thing I've seen in Barovia.
-interject tag:devout: Mm. Not a sunrise. But it's facing the right way.
+interject tag:pious: Not a sunrise. But it's facing the right way.
 endif
 -> END

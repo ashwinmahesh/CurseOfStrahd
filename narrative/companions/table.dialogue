@@ -1,0 +1,120 @@
+# Ratatoille's personal quest, A Seat at the Table (data/quests/a_seat_at_the_table.json,
+# docs/story/personal_quests.md). Every scene needs Ratatoille. Started from into_the_mists/arrival:hooks. The winery:
+# wizard_of_wines/davian:stones (inline). The kitchen: Davian's menu once the winery is the family's again. The wizard
+# on the mountain: mount_baratok/mordenkainen:start (inline) and :restored_menu. The vestige that offers him an
+# audience: amber_temple/vestiges (Zantras). Strahd's offer: castle_ravenloft/gates_dinner. The ending: camp/ratatoille.
+
+# --- The Wizard of Wines is a winery (wizard_of_wines/davian:stones, or his menu) ------------------------------------
+
+~ winery
+interject name:ratatoille: Forgive me. Master Martikov. Sir. I am looking for the Wizard of Wines. The great wizard. The master of the arcane and the table. Is he... in?
+Davian: You're sitting on his doorstep. That's his lane, with the druids on it. That's his vines. I'm the master of the Wizard of Wines, for my sins.
+interject name:ratatoille: You're the Wizard of Wines.
+Davian: The Wizard of Wines is a winery, boy. It's a sign over a gate. It's a house that makes wine.
+Narrator: Ratatoille sits down, quite suddenly, on the nearest cask.
+interject name:ratatoille: I crossed the mists. I crossed the mists for a farm.
+if name:wren_featherfoot
+interject name:wren_featherfoot: To be fair, it's a very magical farm. There's a sign and everything.
+endif
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: There, there. It's a good farm, Rat. Look at it. That's a lot of grapes.
+endif
+Davian: It's named for a wizard, if that helps. My grandfather named the house for the man who paid us the stones, to annoy him. He stayed a whole winter. A rude old man with a long nose, played dragonchess against himself every night and lost his temper with the black king.
+interject name:ratatoille: ...A wizard. There was a wizard. A real one. Where is he now?
+Davian: Gone up into the mountains, last I heard, forty years back. If he's alive, he's somewhere high and cold, being rude to it.
+if flag.mordenkainen_met
+interject name:ratatoille: Dragonchess against himself. On a mountain. The old man on Baratok, with the frost on the pieces. That's him. That's the Wizard of Wines. And he talks to rocks.
+quest a_seat_at_the_table the_wizard_found
+else
+interject name:ratatoille: Then I'll find him. Somewhere high and cold. I'm writing this down. Somebody hold my skillet.
+quest a_seat_at_the_table a_winery
+endif
+if flag.davian_pledged or flag.winery_reclaimed
+-> wizard_of_wines/davian:menu
+endif
+-> wizard_of_wines/davian:stones_menu
+
+# --- Supper for the Martikovs (wizard_of_wines/davian:menu) ---------------------------------------------------------
+
+~ supper
+set ratatoille_supper_cooked
+Narrator: Ratatoille asks, very formally, for the use of the kitchen. Davian looks at him the way he looks at weather, and waves a hand.
+Narrator: For three hours the house smells of onions, thyme, browned butter and a great deal of muttering in another language. Stefania looks in once and is sent out again with a spoon to taste.
+interject name:ratatoille: Nobody touch the pot. Nobody look at the pot. The pot is thinking.
+Narrator: Supper is a stew of the winery's last mutton with dumplings that float, a loaf with a crust like a drum, and the family's own wine poured back into the gravy. Nine Martikovs eat it in silence, which in this family is a kind of applause.
+Davian: Three helpings. I don't take three helpings of anything. Ask my wife. Ask my dead wife; she'll tell you.
+Davian: Again tomorrow.
+interject name:ratatoille: Again... tomorrow. Yes. Of course. It was nothing. It was a peasant stew. Excuse me, I have to go and stand in the yard for a moment.
+if name:thistle
+interject name:thistle: Cook. COOK. That's the best thing I ever ate. Better than the last best thing. Is there more?
+endif
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: He went out to the yard to cry, I think. Let's give him a minute. The Morninglord made bread before he made kings, you know. There's a reason.
+endif
+if not (quest.a_seat_at_the_table >= the_kitchen)
+quest a_seat_at_the_table the_kitchen
+endif
+-> wizard_of_wines/davian:menu
+
+# --- Asking the master (mount_baratok/mordenkainen:restored_menu) --------------------------------------------------
+
+~ apprentice
+interject name:ratatoille: Master Mordenkainen. Archmage. Sir. I am Ratatoille, Diviner of the... I'm Ratatoille. I've read everything you ever wrote, including the footnotes, including the footnote about the footnotes. I crossed the mists to become your apprentice.
+Mordenkainen: You crossed the mists for me? Nobody's done that on purpose.
+interject name:ratatoille: Well. For the Wizard of Wines. Which was you. Which I didn't know. It's complicated.
+Mordenkainen: I paid that family three stones for a winter's lodging and some decent food, forty years ago. Is that what I'm famous for now? Gods help us all.
+Mordenkainen: Look at me, boy. The greatest wizard alive spent a year on this rock eating raw turnips and arguing with a cat that wasn't there. I had every title in the West. They were no use to me at all up here.
+Mordenkainen: Status is a coat. Anyone can wear it, and it keeps nobody warm. What are you good at? Not magic. I can see what you're good at with magic. What are you good at?
+interject name:ratatoille: ...Cooking.
+Mordenkainen: Then cook. Cook for the people you're walking into the dark with, and they'll walk out again. You'll be a better wizard for it. Divination is mostly knowing when a thing is done, and you already know that.
+Mordenkainen: No apprentice. You don't need a master; you need a kitchen. Come back when this is over and make me something that isn't a turnip.
+interject name:ratatoille: Yes, Master. Sir. Mordenkainen. Thank you.
+if name:wren_featherfoot
+interject name:wren_featherfoot: Told you. Well. I didn't. I was going to.
+endif
+if not (quest.a_seat_at_the_table >= the_masters_word)
+quest a_seat_at_the_table the_masters_word
+endif
+-> mount_baratok/mordenkainen:restored_menu
+
+# --- Zantras offers an audience (amber_temple/vestiges) --------------------------------------------------------------
+
+~ zantras
+Narrator: The amber in front of Ratatoille warms like a hearth. The voice in it is glorious and fond, a king's voice from a stage, speaking only to him.
+interject name:ratatoille: It's saying... it says everyone would look at me. Everyone, everywhere, forever. They'd stand when I came into a room. They'd want me to sit with them.
+Narrator: For a moment he leans toward the amber. You see exactly how much he wants it.
+* [name:ratatoille] (Step back from it.) -> zantras_no
+* (Pull him back.) -> zantras_pulled
+
+~ zantras_no
+set ratatoille_zantras_refused
+interject name:ratatoille: No. Thank you. I mean, no. People already sit with me. Some of them eat with their hands, but they sit with me.
+vestige_zantras: Furniture. You'll be furniture again by morning.
+-> amber_temple/vestiges:zantras_menu
+
+~ zantras_pulled
+set ratatoille_zantras_refused
+Narrator: Somebody's hand closes on his collar and pulls, and he comes away from the amber blinking, as if out of a warm bath into the cold.
+interject name:ratatoille: I was going to step back. I was about to. Thank you. Let's never mention it.
+-> amber_temple/vestiges:zantras_menu
+
+# --- Strahd's offer (castle_ravenloft/gates_dinner) ---------------------------------------------------------------------
+
+~ dinner
+set ratatoille_dinner_tasted
+interject name:ratatoille: The venison's been hung a day too long and the sauce is hiding it. The bread's good. Who made the bread?
+Strahd [smile]: A critic at my table. How refreshing; my staff are all too frightened to tell me anything. You are the cook among my guests, I think. And a diviner, they tell me.
+Strahd: Stay. Cook for me, or conjure for me, as you prefer. I will give you a title older than your family and a tower of your own, and every person in this valley will stand when you enter a room. I don't make that offer twice.
+* [name:ratatoille] (Refuse him.) -> dinner_no
+* [name:ratatoille] (Say nothing, and keep eating.) -> dinner_quiet
+
+~ dinner_no
+set ratatoille_refused_strahd
+interject name:ratatoille: No, thank you, Your Excellency. I already have a table. They're sitting at it.
+Strahd: Pity. You would have made a very good monster. You have the attention to detail.
+-> castle_ravenloft/gates_dinner:table
+
+~ dinner_quiet
+Narrator: Ratatoille butters his bread very carefully and eats it. Strahd watches him do it with every appearance of delight.
+Strahd: The offer stands until you leave my house. Then it falls, like everything else.
+-> castle_ravenloft/gates_dinner:table

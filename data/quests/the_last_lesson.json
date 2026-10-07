@@ -1,0 +1,52 @@
+{
+  "id": "the_last_lesson",
+  "name": "The Last Lesson",
+  "summary": "Wren Featherfoot's old master, a dusk elf called Sorrel, died before Wren's training was finished, and left him one errand: a sealed letter for a brother named Kasimir, in the valley where the sun does not rise.",
+  "region": "companions",
+  "stages": [
+    {
+      "id": "the_letter",
+      "journal": "Master Sorrel took Wren in off the street after Wren tried to pick his pocket, and taught him a lesson a day for fourteen years. He died last winter before the last one, and left Wren a sealed letter in a hand that shook: for my brother Kasimir, in the valley where the sun does not rise. Wren hasn't opened it.",
+      "objectives": [
+        "Find Kasimir"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_brother",
+      "journal": "Kasimir Velikov is a dusk elf mending nets at the Vistani camp outside Vallaki, and Sorrel was his younger brother, the one who went over the mountains before the mists closed. Kasimir read the letter aloud: 'You stayed, and I ran, and neither of us saved her. Let her rest, brother. Don't go to the temple. Whatever answers there will want more than either of us has.' Their sister was Patrina, who went to Strahd, and their own people stoned her for it.",
+      "objectives": [
+        "Help Kasimir let his sister rest"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "let_her_rest",
+      "journal": "Patrina Velikovna is at peace, or gone. Sorrel's letter got where it was going. Wren says he doesn't feel any different. He keeps stopping in doorways.",
+      "objectives": [
+        "Learn what Sorrel couldn't teach"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_chamberlain",
+      "journal": "Strahd's chamberlain Rahadin is a dusk elf too. The screaming that follows him is the voices of everyone he ever killed for his master, and Sorrel's mother is one of them. Sorrel never once said his name.",
+      "objectives": [
+        "Face Rahadin"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "learned",
+      "journal": "Wren told Rahadin that Master Sorrel never hated him, only pitied him, and that Wren did too. For a moment every voice around the chamberlain went quiet. Wren walked away from him on his own two feet. It was the last lesson; Sorrel had left it in the letter after all.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "unlearned",
+      "journal": "Wren went for Rahadin's throat with every lesson he had, and none of them were Sorrel's. Whatever happens now, Wren knows which lesson he skipped.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

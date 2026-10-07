@@ -76,7 +76,7 @@ Narrator: Old bones, very large, very cold. If there's anything else here, it is
 
 ~ prayer
 Narrator: {name} kneels at the foot of the bier and says the old words for the dead. The frost on the nearest rib brightens, very slightly, as if someone had leaned toward a window to listen.
-interject tag:devout: He's still here. Not much of him. Enough to say thank you.
+interject tag:pious: He's still here. Not much of him. Enough to say thank you.
 -> END
 
 ~ kindle
@@ -84,6 +84,6 @@ set dragon_fire_kindled
 quest the_dark_beacon kindled
 Narrator: {name} holds a torch to the frost on the ribs. For a moment, nothing. Then the flame turns silver from the wick up and stops giving any heat at all. It casts no shadow. It burns as if it has been waiting.
 interject class:wizard: Cold fire. Technically impossible. I'll want notes. I'll want so many notes.
-interject tag:devout: It feels like dawn in my hands. I haven't felt that since the mists.
+interject tag:pious: It feels like dawn in my hands. I haven't felt that since the mists.
 Narrator: Far off in the house behind you, a chair scrapes back from a long table.
 -> END

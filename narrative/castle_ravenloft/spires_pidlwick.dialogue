@@ -69,7 +69,7 @@ Narrator: You tell him what you know. He listens with his head on one side and h
 set pidlwick_truth_known
 Pidlwick II: THEY LOVED HIM. NOT ME. SO I HELPED HIM DOWN.
 Pidlwick II: SORRY. VERY SORRY. FOR A VERY LONG TIME.
-interject name:hedda_ironvow: Centuries of sorry. That's a long penance, little one, even for a toy.
+interject name:liriel_dawnsong: Sorry for a very long time. That is a long penance, little one. Be at peace.
 interject tag:blunt: He pushed a man down a tower because he was jealous. Let's not forget it.
 -> menu
 
@@ -77,7 +77,7 @@ interject tag:blunt: He pushed a man down a tower because he was jealous. Let's 
 set pidlwick_played
 time +10
 Narrator: Three wooden balls appear from nowhere and he tosses you one. For a few minutes, on a stair in a vampire's house, you play catch with a clockwork jester, and he is very good at it.
-interject name:tamsin_tealeaf: He palmed one of those. I saw it. I'd have done the same.
+interject name:wren_featherfoot: He palmed one. Saw it. Lovely wrist on him. I'd have been quicker, but lovely.
 Pidlwick II: (A deep bow, then the slate.) AGAIN? LATER?
 -> menu
 
@@ -132,8 +132,8 @@ if tarokka.ally.npc == pidlwick_ii
 quest find_the_ally found
 endif
 attitude pidlwick_ii friendly
-interject name:ilse_varga: Fall in, jester. Behind me, not in front. And never behind me on a stair.
-Pidlwick II: (He salutes with the wrong hand.) YES SERGEANT.
+interject name:godrick_pendlebrook: Welcome aboard, little fellow! You walk beside me. Nobody walks behind anybody on a stair. New rule.
+Pidlwick II: (He salutes with the wrong hand.) YES SIR.
 -> END
 
 ~ refuse

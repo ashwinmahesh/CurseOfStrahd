@@ -1,0 +1,52 @@
+{
+  "id": "covenant_of_the_grave_recruit",
+  "name": "Covenant of the Grave Recruit",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "summary": "The Covenant of the Grave trained you to study death through history, medicine, and necromancy.",
+  "ability_scores": [
+    "str",
+    "int",
+    "wis"
+  ],
+  "feat": "arcane_undertaker",
+  "skills": [
+    "history",
+    "medicine"
+  ],
+  "tool": {
+    "id": "herbalism_kit"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 1
+        },
+        {
+          "id": "herbalism_kit",
+          "qty": 1
+        },
+        {
+          "id": "book",
+          "qty": 1
+        },
+        {
+          "id": "shovel",
+          "qty": 1
+        }
+      ],
+      "gp": 16
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ],
+  "playable": false
+}

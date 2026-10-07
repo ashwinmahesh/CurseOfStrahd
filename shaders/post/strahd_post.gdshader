@@ -17,6 +17,11 @@ uniform sampler2D normal_tex : hint_normal_roughness_texture, filter_nearest;
 uniform sampler2D palette_tex : filter_nearest;
 uniform int palette_size = 46;
 uniform bool quantize = true;
+// The modern finish (Look.modern, docs/plans/ui_polish.md): mist, cloud shadows, ground patches and the land's fade
+// come out smooth instead of in flat bands, and light brighter than white (flames, lanterns) is passed on so the
+// glow can bloom it.
+uniform bool soft_bands = false;
+uniform bool keep_hdr = false;
 uniform bool keep_greys = false;
 uniform float dither_strength : hint_range(0.0, 0.2) = 0.045;
 // Pixel size of the art grid. 1 = native; 2 makes chunkier pixels.
@@ -174,7 +179,9 @@ void fragment() {
 	vec2 vp = VIEWPORT_SIZE;
 	vec2 cell = floor(FRAGCOORD.xy / pixel_size);
 	vec2 uv = (cell + 0.5) * pixel_size / vp;
-	vec3 col = to_srgb(texture(screen_tex, uv).rgb);
+	vec3 lin_in = texture(screen_tex, uv).rgb;
+	vec3 col = to_srgb(lin_in);
+	vec3 excess = max(lin_in - vec3(1.0), vec3(0.0));
 	float raw_depth = texture(depth_tex, uv).r;
 	bool empty = raw_depth <= 0.0;
 
@@ -219,7 +226,7 @@ void fragment() {
 		if (wn.y > 0.8) {
 			vec2 gp = wpos.xz * 0.07 + 31.0;
 			float g = fbm(gp + vec2(fbm(gp * 2.3 + 1.7), fbm(gp * 2.3 + 6.2)) * 1.4);
-			float step_g = floor(g * 4.0) / 3.0 - 0.5;
+			float step_g = soft_bands ? (g - 0.5) * 0.9 : floor(g * 4.0) / 3.0 - 0.5;
 			col *= 1.0 + step_g * ground_variation;
 		}
 	}
@@ -228,7 +235,8 @@ void fragment() {
 		// Domain-warped, so the shadows have ragged cloud edges rather than round blots.
 		vec2 cp = wpos.xz * cloud_scale + cloud_wind * atmo_time * cloud_scale;
 		float c = fbm(cp + vec2(fbm(cp * 2.0 + 3.3), fbm(cp * 2.0 + 9.1)) * 1.2);
-		float shade = step(1.0 - cloud_cover, c) * 0.6 + step(1.0 - cloud_cover + 0.08, c) * 0.4;
+		float shade = soft_bands ? smoothstep(1.0 - cloud_cover - 0.05, 1.0 - cloud_cover + 0.14, c)
+			: step(1.0 - cloud_cover, c) * 0.6 + step(1.0 - cloud_cover + 0.08, c) * 0.4;
 		col *= 1.0 - cloud_strength * shade;
 	}
 
@@ -252,7 +260,7 @@ void fragment() {
 		vec2 o = max(max(land_rect.xy - wpos.xz, wpos.xz - land_rect.zw), vec2(0.0));
 		float out_d = length(o) + (vnoise(wpos.xz * 0.21) - 0.5) * 3.0;
 		float f = empty ? 1.0 : smoothstep(land_fade.x, land_fade.x + land_fade.y, out_d);
-		col = mix(col, to_srgb(land_color), floor(f * 4.0 + 0.5) / 4.0);
+		col = mix(col, to_srgb(land_color), soft_bands ? f : floor(f * 4.0 + 0.5) / 4.0);
 	}
 
 	if (mist_strength > 0.0 && (!empty || mist_beyond)) {
@@ -282,7 +290,9 @@ void fragment() {
 		tau *= len / float(STEPS);
 		float m = 1.0 - exp(-tau * mist_thickness);
 		// Flat bands, like the rest of the cel look.
-		m = floor(m * mist_bands + 0.35) / mist_bands;
+		if (!soft_bands) {
+			m = floor(m * mist_bands + 0.35) / mist_bands;
+		}
 		// The Mists themselves are a flat pale wall nothing is seen through, inked along its billowing edge like the
 		// cartoon clouds it stands for.
 		float wa = wall_amount(wpos);
@@ -325,5 +335,5 @@ void fragment() {
 		}
 		col = pick;
 	}
-	ALBEDO = to_linear(col);
+	ALBEDO = to_linear(col) + (keep_hdr ? excess * 0.85 : vec3(0.0));
 }

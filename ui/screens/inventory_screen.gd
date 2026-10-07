@@ -223,6 +223,12 @@ func _slot_row(ch: Character, slot: String) -> Control:
 	if item.is_empty():
 		return UiParts.row(line)
 	var id := str(item["id"])
+	# Taking it off straight from the equipped list (owner report 2026-10-07: "no way to unequip armor").
+	var off := UiParts.small_button("Take off", func() -> void:
+		ch.unequip(slot)
+		_draw())
+	off.tooltip_text = "Unequip it: back to the pack"
+	line.add_child(off)
 	return UiParts.click_row(line, func() -> void:
 		selected = id
 		_draw(), id == selected)
@@ -291,8 +297,11 @@ func _draw_card() -> void:
 			_card.add_child(UiKit.label("Compared with your %s: %s average damage (%.1f vs %.1f)" % [main["name"], ("▲ %.1f more" % diff) if diff > 0 else ("▼ %.1f less" % -diff) if diff < 0 else "the same", p.average_damage(), mp.average_damage()], 14, "vellum", 420))
 	elif Gear.is_armor(data):
 		var arm := data["armor"] as Dictionary
+		# Light armor has no Dexterity cap: its data says `"dex_cap": null` (owner report 2026-10-07: reading null as a
+		# number stopped the card short of its Actions, so leather armor showed no Unequip).
+		var dex_cap := 99 if arm.get("dex_cap") == null else int(arm["dex_cap"])
 		_card.add_child(UiKit.label("%s armor: AC %d%s%s" % [str(arm["kind"]).capitalize(), int(arm.get("base_ac", 10)),
-			"" if int(arm.get("dex_cap", 99)) == 0 else " + Dex" + (" (max %d)" % int(arm["dex_cap"]) if int(arm.get("dex_cap", 99)) < 10 else ""),
+			"" if dex_cap == 0 else " + Dex" + (" (max %d)" % dex_cap if dex_cap < 10 else ""),
 			", Stealth Disadvantage" if bool(arm.get("stealth_disadvantage", false)) else ""], 15, "vellum", 420))
 		if not ch.trained_for(data):
 			_card.add_child(UiKit.label("~ No training: Disadvantage on Strength and Dexterity rolls, and no spellcasting", 14, "gilt", 420))
@@ -300,7 +309,10 @@ func _draw_card() -> void:
 			_card.add_child(UiKit.label("~ Needs Strength %d: Speed -10 ft" % int(arm["strength"]), 14, "gilt", 420))
 	_card.add_child(UiParts.section("Description"))
 	_card.add_child(UiKit.label(str(shown.get("text", shown.get("summary", ""))), 14, "vellum", 420))
-	# Magic items: rarity and attunement (three items at most; attuning takes a Short Rest).
+	if not (data.get("spells", []) as Array).is_empty():
+		_spellbook_card(data.get("spells", []) as Array)
+	# Magic items: rarity and attunement (three items at most; attuning and ending it are instant: owner house rule
+	# 2026-10-07, docs/contracts/magic_items.md).
 	var magic := shown.get("magic", {}) as Dictionary
 	if not magic.is_empty():
 		var needs: Variant = magic.get("attunement", false)
@@ -321,9 +333,8 @@ func _draw_card() -> void:
 				_card.add_child(end)
 			else:
 				var why := ch.attune_blocker(selected)
-				var att := UiKit.button("Attune (a Short Rest: 1 hour)", func() -> void:
-					if ch.attune(selected):
-						st.advance_minutes(60)
+				var att := UiKit.button("Attune", func() -> void:
+					ch.attune(selected)
 					_draw(), 14)
 				att.disabled = why != ""
 				att.tooltip_text = why
@@ -423,6 +434,54 @@ func _draw_card() -> void:
 	_card.add_child(bottom)
 
 
+## A found spellbook (item `spells`): the list for anyone to read, and a Copy button for each Wizard in the party
+## (Character.copy_spell, 2024 rules: a level they can prepare, 2 hours and 50 gp of inks per spell level, outside
+## fights and conversations). A copied spell is prepared from the spellbook like the rest.
+func _spellbook_card(book: Array) -> void:
+	_card.add_child(UiParts.section("Spells in this book"))
+	var wizards: Array[Character] = []
+	for m in st.party:
+		if m.spellbook_class() != "":
+			wizards.append(m)
+	if wizards.is_empty():
+		_card.add_child(UiKit.label("Nobody in the party keeps a spellbook. A Wizard could copy these into theirs.", 13, "parchment", 420))
+	var calm := ModeController.mode == ModeController.Mode.EXPLORATION
+	for sp: Variant in book:
+		var sid := str(sp)
+		var s := Compendium.shared().spell_data(sid)
+		var lv := int(s.get("level", 0))
+		var head := HBoxContainer.new()
+		head.add_theme_constant_override("separation", 6)
+		UiParts.add_icon(head, "spell", sid, 24.0)
+		var name := UiKit.label("%s (%s)" % [str(s.get("name", sid)), "cantrip" if lv == 0 else "level %d" % lv], 14, "vellum", 380)
+		name.tooltip_text = str(s.get("summary", ""))
+		name.mouse_filter = Control.MOUSE_FILTER_PASS
+		head.add_child(name)
+		_card.add_child(head)
+		if wizards.is_empty():
+			continue
+		var acts := HFlowContainer.new()
+		acts.add_theme_constant_override("h_separation", 6)
+		var cost := lv * Character.COPY_GP_PER_LEVEL
+		var minutes := lv * Character.COPY_MINUTES_PER_LEVEL
+		for w in wizards:
+			var why := w.copy_spell_problem(sid)
+			if why == "" and st.gold < cost:
+				why = "Needs %d gp of inks; the party has %d" % [cost, int(st.gold)]
+			if why == "" and not calm:
+				why = "Not during a fight or a conversation"
+			var label := "In %s's book" % w.name.get_slice(" ", 0) if why == "Already in the spellbook" else "%s copies it (%d h, %d gp)" % [w.name.get_slice(" ", 0), minutes / 60, cost]
+			var b := UiParts.small_button(label, func() -> void:
+				if w.copy_spell(sid):
+					st.gold -= cost
+					st.advance_minutes(minutes)
+				_draw())
+			b.disabled = why != ""
+			b.tooltip_text = why if why != "" else "Into %s's spellbook; prepare it from there after a Long Rest." % w.name.get_slice(" ", 0)
+			acts.add_child(b)
+		_card.add_child(acts)
+
+
 ## The stash is reachable where it's safe to rest (an inn, a home).
 func _stash_open() -> bool:
 	return str(Compendium.shared().get_entry("locations", st.location).get("rest", "")) == "safe"
@@ -470,7 +529,10 @@ func _drink() -> void:
 	if root.has_method("_refresh"):
 		root.call("_refresh")
 	_draw()
-	_card.add_child(UiKit.label("%s regains %d Hit Points." % [ch.name, healed], 15, "bile"))
+	# Owner report (2026-10-07): "it restored 1 Hit Point". Show the roll and the cap, so a near-full drinker's 1 makes sense.
+	var full := " (now at full)" if ch.hp >= ch.max_hp() and healed < int(rolled["total"]) else ""
+	_card.add_child(UiKit.label("%s drinks it: rolled %d (%s), regains %d Hit Points%s." % [ch.name, int(rolled["total"]),
+		str(heal["dice"]), healed, full], 15, "bile"))
 
 
 ## A worn magic item as a row you can click: where it's worn, the item, and whether it's working.

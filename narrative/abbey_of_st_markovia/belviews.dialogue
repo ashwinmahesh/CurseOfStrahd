@@ -15,7 +15,11 @@ Belview: Belview. We're all Belview. Mother is Belview, Clovin is Belview, the o
 
 ~ courtyard_abbot
 Belview: Gifts. He gives us gifts. I had my eyes. Before, I couldn't see in the dark. Now I can't see in the light. That's a gift. He said so.
+if name:ratatoille
+interject name:ratatoille: Would you like to come down to Krezk one day? I would cook for you. Nobody throws stones at the cook.
+else
 interject tag:cheerful: Would you... would you like to come down to Krezk, one day?
+endif
 Belview: Krezk throws stones. Krezk throws stones at Belviews. Stones, stones. I'll stay.
 -> END
 
@@ -55,7 +59,8 @@ Narrator: The bars are on the outside, held by simple iron pins. Anyone could le
 set wards_cells_freed
 Narrator: One by one the doors swing out. They come out on all fours and on two feet and on the shapes in between, slowly, sniffing your hands. One of them touches your sleeve with a paw that was once a hand.
 Narrator: Then they're gone down the corridor and out through the kitchen, and the Belviews in the kitchen are wailing and laughing at once, and the mountain has some new and strange residents.
-interject tag:devout: Whatever he made of them, they were people first. They should have a sky over them.
+interject name:thistle: Go on. Run. No more cages. Run till you can't see the walls.
+interject tag:pious: Whatever he made of them, they were people first. They should have a sky over them.
 -> END
 
 ~ riot

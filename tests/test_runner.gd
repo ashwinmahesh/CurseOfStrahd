@@ -6,7 +6,10 @@ const DIRS := ["res://tests/unit/", "res://tests/integration/"]
 
 
 func _ready() -> void:
-	SaveSystem.save_dir = "user://test_saves/"
+	# Saves go to a folder of this run's own: every checkout of the project shares one user:// folder, so test runs in
+	# two worktrees at once would load each other's round-start saves.
+	SaveSystem.save_dir = "user://test_saves/%d/" % OS.get_process_id()
+	GameSettings.path = SaveSystem.save_dir.path_join("settings.cfg")   # never the player's own settings
 	var only := ""
 	var files_only := PackedStringArray()
 	for arg in OS.get_cmdline_user_args():
@@ -59,4 +62,15 @@ func _ready() -> void:
 	Compendium.release()
 	print("")
 	print("%d tests, %d passed, %d failed" % [total, total - failed.size(), failed.size()])
+	_clear_saves()
 	get_tree().quit(1 if not failed.is_empty() or total == 0 else 0)
+
+
+## Removes this run's save folder.
+func _clear_saves() -> void:
+	var dir := DirAccess.open(SaveSystem.save_dir)
+	if dir == null:
+		return
+	for f in dir.get_files():
+		dir.remove(f)
+	DirAccess.remove_absolute(SaveSystem.save_dir)

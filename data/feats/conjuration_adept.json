@@ -1,0 +1,42 @@
+{
+  "id": "conjuration_adept",
+  "name": "Conjuration Adept",
+  "source": {
+    "book": "AU",
+    "checked_against": "AU",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-1-character-options. "
+  },
+  "category": "general",
+  "repeatable": false,
+  "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental. Reference-only: Concentration saves for Conjuration spells add the modifier of the ability increased by this feat.",
+  "benefits": [
+    {
+      "id": "conjuration_adept_spells",
+      "name": "Additional Spells",
+      "summary": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental.",
+      "text": "Reference-only: always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental.",
+      "implemented": "text"
+    },
+    {
+      "id": "conjuration_adept_benefit",
+      "name": "School Benefit",
+      "summary": "Reference-only: Concentration saves for Conjuration spells add the modifier of the ability increased by this feat.",
+      "text": "Reference-only: Concentration saves for Conjuration spells add the modifier of the ability increased by this feat.",
+      "implemented": "text"
+    }
+  ],
+  "prerequisites": {
+    "level": 4,
+    "spellcasting": true
+  },
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "playable": false
+}

@@ -48,6 +48,11 @@ func before_each() -> void:
 	await _frames(3)
 
 
+## The fixture hall goes again, so a test that walks every location (test_set_dressing) never meets it.
+func after_each() -> void:
+	Compendium.shared().tables["locations"].erase("test_hall")
+
+
 func _frames(n: int) -> void:
 	for i in n:
 		await get_tree().process_frame
@@ -178,6 +183,36 @@ func test_story_saves_and_loads() -> void:
 	assert_eq(GameState.story.party.size(), 4)
 	assert_eq(GameState.story.location, "test_hall")
 	SaveSystem.delete_slot("test_slot")
+
+
+## The game saves itself on arriving somewhere (docs/plans/ui_polish.md), but never mid-fight.
+func test_autosave_on_arriving_but_not_in_a_fight() -> void:
+	SaveSystem.delete_slot(SaveSystem.AUTOSAVE)
+	root.set("autosaves", true)
+	root.call("enter_location", "test_hall", "default")
+	await _frames(3)
+	assert_true(SaveSystem.has_slot(SaveSystem.AUTOSAVE), "arriving saves the game")
+	SaveSystem.delete_slot(SaveSystem.AUTOSAVE)
+	_view().start_encounter("wolves")
+	await _frames(3)
+	root.call("_autosave")
+	assert_false(SaveSystem.has_slot(SaveSystem.AUTOSAVE), "never in a fight")
+	root.set("autosaves", false)
+	SaveSystem.delete_slot(SaveSystem.AUTOSAVE)
+
+
+## Alt names everything usable nearby (docs/plans/ui_polish.md): people, doors (locked says so), containers and
+## things to read, but never a hiding place nobody has searched out yet.
+func test_alt_names_what_can_be_used() -> void:
+	var labels := (root.get("hud") as ExploreHud).thing_labels
+	labels.pinned = true
+	var texts: Array[String] = []
+	for p in labels.plates():
+		texts.append(str(p["text"]))
+	labels.pinned = false
+	for want: String in ["Ismark Kolyanovich", "Door · locked", "Chest", "Old book"]:
+		assert_true(texts.has(want), "%s is named (got %s)" % [want, texts])
+	assert_false(texts.has("Loose stone"), "an unsearched hiding place stays hidden")
 
 
 func test_round_start_save_resumes_the_fight() -> void:
@@ -333,7 +368,19 @@ func test_trees_fade_and_come_back_without_a_box() -> void:
 	root.call("enter_location", "into_the_mists_road", "")
 	await _frames(3)
 	var board := _view().board
-	assert_false(board.occluders.is_empty(), "the road has billboard trees")
+	if board.occluders.is_empty():
+		# 3D trees (docs/art/models.md, owner request 2026-10-07): they fade through their meshes' transparency.
+		assert_false(board.mesh_occluders.is_empty(), "the road has trees")
+		var t3 := board.mesh_occluders[0]
+		var at := t3.global_position + Vector3(-1.5, 0, 0)
+		for i in 10:
+			board.fade_occluders(at + Vector3(10, 10, 0), at, 0.5)
+		var mesh := t3.find_children("*", "GeometryInstance3D", true, false)[0] as GeometryInstance3D
+		assert_true(mesh.transparency > 0.5, "the tree between the camera and the party fades")
+		for i in 10:
+			board.fade_occluders(at + Vector3(-10, 10, 0), at, 0.5)
+		assert_eq(mesh.transparency, 0.0, "back, solid, when the camera moves")
+		return
 	var tree := board.occluders[0]
 	var focus := tree.position + Vector3(-1.5, 0, 0)
 	for i in 10:

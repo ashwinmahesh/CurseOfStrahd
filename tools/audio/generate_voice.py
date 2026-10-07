@@ -38,10 +38,25 @@ def voice_id(c, speaker):
     return "" if v.get("released") else v.get("voice_id", "")
 
 
+def accent_tag(c, speaker):
+    """An audio tag sent before every line the speaker says, such as "[strong Romanian accent]" (owner, 2026-10-06:
+    the accent asked for in a voice's design doesn't survive generation on its own). It isn't spoken, and it isn't
+    part of the clip's key."""
+    v = c["voices"].get(speaker, {})
+    return accent_tag(c, v["shares"]) if v.get("shares") else v.get("accent_tag", "")
+
+
+def spoken(c, speaker, text):
+    tag = accent_tag(c, speaker)
+    return f"{tag} {text}" if tag else text
+
+
 def recipe(c, speaker):
     """What makes a clip: a change here means the speaker's clips are out of date (--recast)."""
-    blob = json.dumps([voice_id(c, speaker), c["model"], c["output_format"], settings_for(c, speaker)], sort_keys=True)
-    return hashlib.sha1(blob.encode()).hexdigest()[:10]
+    blob = [voice_id(c, speaker), c["model"], c["output_format"], settings_for(c, speaker)]
+    if accent_tag(c, speaker):
+        blob.append(accent_tag(c, speaker))
+    return hashlib.sha1(json.dumps(blob, sort_keys=True).encode()).hexdigest()[:10]
 
 
 def main():
@@ -99,7 +114,7 @@ def main():
     def one(line):
         speaker, key, text = line["speaker"], line["key"], line["text"]
         vid = voice_id(c, speaker)
-        audio, headers = el.tts(vid, text, c["model"], c["output_format"], settings_for(c, speaker))
+        audio, headers = el.tts(vid, spoken(c, speaker, text), c["model"], c["output_format"], settings_for(c, speaker))
         out = el.VOICE_DIR / speaker / f"{key}.mp3"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_bytes(audio)
@@ -107,7 +122,8 @@ def main():
         with lock:
             manifest[f"{speaker}/{key}"] = {"text": text, "recipe": recipe(c, speaker), "chars": len(text)}
             el.log({"speaker": speaker, "key": key, "chars": len(text), "voice_id": vid, "model": c["model"],
-                    "format": c["output_format"], "usd_est": round(len(text) / 1000 * float(c["price_per_1k_usd"]), 5),
+                    "format": c["output_format"], **({"accent_tag": accent_tag(c, speaker)} if accent_tag(c, speaker) else {}),
+                    "usd_est": round(len(text) / 1000 * float(c["price_per_1k_usd"]), 5),
                     **({"billed_chars": cost} if cost else {}), "request_id": headers.get("request-id", "")})
             done[0] += 1
             done[1] += len(text)

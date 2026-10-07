@@ -8,6 +8,7 @@ Narrator: Up in the hills a wolf howls, long and rising. Another answers it from
 ~ howl_ok
 set den_way_known
 Narrator: The first howl came from the rock face at the top of the pine slope, north and a little east of the lake, and every other voice is answering it. That is where they sleep.
+interject name:thistle: Hear the first one? That's the boss. Grandda says find the boss and you've found the bed.
 -> END
 
 ~ howl_fail

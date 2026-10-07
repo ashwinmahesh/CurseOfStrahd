@@ -20,7 +20,7 @@ func test_phase_1_content_counts() -> void:
 	assert_eq((phb_only.call(c.all("backgrounds")) as Array).size(), 16)
 	assert_eq((rthw_only.call(c.all("backgrounds")) as Array).size(), 4, "Haunted One, Investigator, Mist Wanderer, Spirit Medium")
 	assert_eq(c.table("monsters").size(), 125, "76 from Phase 1, 36 that magic items summon or become, Death House's mimic, and Castle Ravenloft's 12 (P6-02)")
-	assert_eq(c.table("pregens").size(), 4)
+	assert_eq(c.table("pregens").size(), 10, "the six on the roster and the first four, kept for older saves and tests")
 	assert_true(c.table("feats").size() >= 70)
 	assert_true(c.table("spells").size() >= 170)
 	for level in 4:
@@ -30,7 +30,8 @@ func test_phase_1_content_counts() -> void:
 
 func test_every_class_and_subclass_builds_and_levels_to_11() -> void:
 	var c := Compendium.shared()
-	for sub in c.all("subclasses"):
+	# Every subclass a player can pick (entries marked "playable": false aren't offered yet, docs/tasks/FR-AU-01.md).
+	for sub in c.all_playable("subclasses"):
 		var cls := str(sub["class"])
 		var b := CharacterBuilder.new()
 		b.set_class(cls)
@@ -64,9 +65,9 @@ func test_every_class_and_subclass_builds_and_levels_to_11() -> void:
 
 func test_every_species_and_background_builds() -> void:
 	var c := Compendium.shared()
-	var backgrounds := c.all("backgrounds")
+	var backgrounds := c.all_playable("backgrounds")   # the ones a player can pick (docs/tasks/FR-AU-01.md)
 	var i := 0
-	for sp in c.all("species"):
+	for sp in c.all_playable("species"):
 		var bg := backgrounds[i % backgrounds.size()]
 		i += 1
 		var b := CharacterBuilder.new()

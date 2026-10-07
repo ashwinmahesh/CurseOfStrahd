@@ -425,6 +425,11 @@ func area_for(c: Combatant, s: Dictionary, point: Vector2, direction: Vector2, s
 			if g.in_bounds(f) and not f in em:
 				em.append(f)
 		return em
+	if self_origin and shape == "cone":
+		var aim := direction if direction.length() > 0.01 else Vector2(c.facing)
+		if aim.length() < 0.01:
+			aim = Vector2.RIGHT
+		return g.cone_from(c.cell, c.size_cells, center + aim, size)
 	if self_origin:
 		var dir := direction.normalized() if direction.length() > 0.01 else Vector2(c.facing)
 		if dir.length() < 0.01:
@@ -1198,7 +1203,7 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	var hit := test.success
 	if hit and e.mirror_image_takes(t, c, test.total):
 		hit = false
-	e.events.append({"type": "attack", "attacker": c.id, "target": t.id, "hit": hit, "critical": test.critical and hit})
+	e.events.append({"type": "attack", "attacker": c.id, "target": t.id, "hit": hit, "critical": test.critical and hit, "edge": Encounter.attack_edge(test)})
 	if not hit:
 		r.lines.append(e.log.add("miss", "%s's %s misses %s (%d vs AC %d)" % [c.name(), s["name"], t.name(), test.total, ac], c.id, details))
 		var half_on_miss := str(s.get("miss", "")) == "half" or (int(s.get("level", 0)) == 0 and c.creature.has_flag("potent_cantrip"))
@@ -1806,11 +1811,16 @@ func apply_effect_entries(ctx: Dictionary, t: Combatant, entries: Array, when: S
 				continue
 			"heal":
 				var amount := int(params.get("flat", 0))
+				var roll_text := ""
 				if params.has("dice"):
-					amount += int(e._roll_damage_dice(str(params["dice"]), false, 0, str(s["name"]))["total"])
+					var hr := e._roll_damage_dice(str(params["dice"]), false, 0, str(s["name"]))
+					amount += int(hr["total"])
+					roll_text = "%s %s" % [params["dice"], hr["text"]]
 				var healed := who.creature.heal(amount, str(s["name"]))
 				if healed > 0:
-					r.lines.append(e.log.add("heal", "%s regains %d Hit Points (%s)" % [who.name(), healed, s["name"]], who.id))
+					var capped := " (rolled %d, now at full)" % amount if healed < amount and who.creature.hp >= who.creature.max_hp() else ""
+					r.lines.append(e.log.add("heal", "%s regains %d Hit Points (%s)%s" % [who.name(), healed, s["name"], capped], who.id,
+						[roll_text] if roll_text != "" else []))
 					e.events.append({"type": "heal", "id": who.id, "amount": healed})
 				continue
 			"end_condition":

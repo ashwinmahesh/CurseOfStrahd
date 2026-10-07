@@ -15,6 +15,8 @@ signal slot_level_changed(level: int)
 signal radial_picked(choice: String)
 ## Right-click → "Cast at level N" on a spell slot.
 signal cast_at_level(action: Dictionary, level: int)
+## A choice from the right-click menu on a square of the board.
+signal square_picked(id: String)
 
 const COST_COLOURS := {"action": "moss", "attack": "moss", "bonus": "gilt", "reaction": "mist_blue", "free": "slate",
 	"movement": "moon_blue"}
@@ -74,15 +76,24 @@ var _slot_row: HBoxContainer
 var _menu: ContextMenu
 var _menu_action: Dictionary = {}
 var _death_button: Button
+var _slot_scroll: ScrollContainer
 var radial: RadialMenu
 var _portraits: Dictionary = {}
 ## The log panel can be minimized to its title bar; the choice lasts for the session.
 static var log_minimized := false
+## It opens compact, over the top right only, and grows to its full height on a click (also for the session).
+static var log_tall := false
 const LOG_BOTTOM := 600.0
+const LOG_COMPACT_BOTTOM := 372.0
 var _log_panel: PanelContainer
 var _log_title: Label
 var _log_toggle: Button
+var _log_grow: Button
 var _controls: PanelContainer
+
+
+## Party member id -> when their fall alarm ends (msec).
+var _down_alarm := {}
 
 
 func _init() -> void:
@@ -130,9 +141,6 @@ func build(encounter: Encounter, catalog_: ActionCatalog) -> void:
 		l.custom_minimum_size = Vector2(800, 0)
 		cbox.add_child(l)
 	add_child(_controls)
-	var hint := _label("F1: controls", 14, "parchment")
-	hint.position = Vector2(14, 520)
-	add_child(hint)
 
 
 func toggle_controls() -> void:
@@ -156,6 +164,8 @@ func _build_strip() -> void:
 	_round_label = _label("Round 1", 24, "gilt_light")
 	head.add_child(_round_label)
 	head.add_child(_label("turn order", 14, "parchment"))
+	# The controls card's key sits here, out of the way of the party frames (a guest's frame used to cover it).
+	head.add_child(_label("F1: controls", 12, "gilt_dark"))
 	row.add_child(head)
 	_strip = HBoxContainer.new()
 	_strip.add_theme_constant_override("separation", 6)
@@ -185,6 +195,11 @@ func _build_log() -> void:
 	_log_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_log_title.clip_text = true
 	head.add_child(_log_title)
+	_log_grow = Button.new()
+	_log_grow.custom_minimum_size = Vector2(30, 26)
+	_log_grow.tooltip_text = "Show more or less of the combat log"
+	_log_grow.pressed.connect(grow_log)
+	head.add_child(_log_grow)
 	_log_toggle = Button.new()
 	_log_toggle.custom_minimum_size = Vector2(30, 26)
 	_log_toggle.tooltip_text = "Minimize or restore the combat log (L)"
@@ -194,7 +209,7 @@ func _build_log() -> void:
 	_log = RichTextLabel.new()
 	_log.bbcode_enabled = true
 	_log.scroll_following = true
-	_log.custom_minimum_size = Vector2(390, 420)
+	_log.custom_minimum_size = Vector2(390, 120)
 	_log.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_log.add_theme_font_size_override("normal_font_size", 14)
 	_log.add_theme_font_size_override("italics_font_size", 14)
@@ -210,10 +225,19 @@ func toggle_log() -> void:
 	_apply_log_state()
 
 
+## Between the compact log (the latest lines, over the top right only) and the full-height one.
+func grow_log() -> void:
+	log_tall = not log_tall
+	log_minimized = false
+	_apply_log_state()
+
+
 func _apply_log_state() -> void:
 	_log.visible = not log_minimized
 	_log_toggle.text = "+" if log_minimized else "–"
-	_log_panel.offset_bottom = _log_panel.offset_top + 46 if log_minimized else LOG_BOTTOM
+	_log_grow.text = "▴" if log_tall else "▾"
+	_log_grow.visible = not log_minimized
+	_log_panel.offset_bottom = _log_panel.offset_top + 46 if log_minimized else (LOG_BOTTOM if log_tall else LOG_COMPACT_BOTTOM)
 	_update_log_title()
 
 
@@ -312,6 +336,7 @@ func _build_hotbar() -> void:
 	scroll.custom_minimum_size = Vector2(980, 112)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	mid.add_child(scroll)
+	_slot_scroll = scroll
 	_slots = GridContainer.new()
 	_slots.columns = 7
 	_slots.add_theme_constant_override("h_separation", 6)
@@ -531,18 +556,33 @@ func _refresh_party() -> void:
 		if c.side not in [&"party", &"guest"]:
 			continue
 		var on := c == shown
+		var alarm := int(_down_alarm.get(c.id, 0)) > Time.get_ticks_msec()
 		var card := PanelContainer.new()
-		card.add_theme_stylebox_override("panel", _style("ui_black", "gilt_light" if on else "gilt_dark", 3 if on else 2))
+		card.add_theme_stylebox_override("panel", _style("ui_oxblood" if alarm else "ui_black",
+			"vampire_red" if alarm or c.is_down() else ("gilt_light" if on else "gilt_dark"), 4 if alarm else (3 if on else 2)))
 		card.custom_minimum_size = Vector2(270, 0)
+		card.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 8)
 		card.add_child(row)
 		row.add_child(UiParts.framed_portrait(CombatToken.art_id(c), 64.0, c.is_down(), c.creature.dead))
 		var v := VBoxContainer.new()
 		v.add_theme_constant_override("separation", 3)
-		var nm := _label(c.name() + (" (guest)" if c.side == &"guest" else ""), 17, "gilt_light" if on else "vellum")
+		v.custom_minimum_size = Vector2(180, 0)
+		# The name, then what they are in small pills (a guest, DOWN), so a long name or a fall never widens the frame.
+		var head := HBoxContainer.new()
+		head.add_theme_constant_override("separation", 5)
+		var nm := _label(c.name(), 17, "vampire_red" if c.is_down() else ("gilt_light" if on else "vellum"))
 		nm.add_theme_font_override("font", UiKit.display_font())
-		v.add_child(nm)
+		nm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		nm.clip_text = true
+		nm.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		head.add_child(nm)
+		if c.side == &"guest":
+			head.add_child(UiParts.pill("Guest", "moonlight", 11))
+		if c.is_down() and not c.creature.dead:
+			head.add_child(UiParts.pill("DOWN", "vampire_red", 11))
+		v.add_child(head)
 		v.add_child(_hp_bar(c, 170, 10.0))
 		var cr := c.creature
 		var status := "%d/%d" % [cr.hp, cr.max_hp()]
@@ -551,9 +591,11 @@ func _refresh_party() -> void:
 		var chips := _chips(c)
 		if chips != "":
 			status += " · " + chips
+		# One line, cut with an ellipsis; the whole list is in the frame's tooltip.
 		var sl := _label(status, 13, "parchment")
 		sl.custom_minimum_size = Vector2(180, 0)
-		sl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		sl.clip_text = true
+		sl.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		v.add_child(sl)
 		row.add_child(v)
 		var btn := Button.new()
@@ -563,8 +605,18 @@ func _refresh_party() -> void:
 		for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 			btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
 		btn.pressed.connect(func() -> void: inspect_requested.emit(c.id))
+		btn.tooltip_text = "%s · %s\nClick to see their actions" % [c.name(), status]
 		card.add_child(btn)
 		_party_box.add_child(card)
+
+
+## A party member just fell: their frame flashes red for a moment (and stays marked DOWN while they're down).
+func flash_down(id: String) -> void:
+	_down_alarm[id] = Time.get_ticks_msec() + 2500
+	_refresh_party()
+	get_tree().create_timer(2.6).timeout.connect(func() -> void:
+		if is_inside_tree():
+			_refresh_party())
 
 
 func _chips(c: Combatant) -> String:
@@ -615,7 +667,12 @@ func _refresh_hotbar() -> void:
 			_turn_note.text = "%d attack%s left in this Attack action" % [c.attacks_left, "" if c.attacks_left == 1 else "s"]
 	_refresh_slot_pips(c)
 	_end_turn.disabled = not mine or e.pending != null
-	_death_button.visible = mine and e.needs_death_save(c)
+	# A dying hero has nothing else to do: the Death Saving Throw takes the action slots' place inside the bar (owner
+	# report 2026-10-07: added under them, it pushed the bar past the bottom of the screen).
+	var dying := mine and e.needs_death_save(c)
+	_death_button.visible = dying
+	_tabs.visible = not dying
+	_slot_scroll.visible = not dying
 	# Tabs.
 	for ch in _tabs.get_children():
 		ch.queue_free()
@@ -655,10 +712,6 @@ func _refresh_hotbar() -> void:
 		var usable := bool(a["legal"]) and mine
 		var b := Button.new()
 		b.custom_minimum_size = SLOT_SIZE
-		b.clip_text = true
-		var key := "%d " % ((i + 1) % 10) if i < 10 else ""
-		b.text = "%s%s\n%s" % [key, a["label"], a["sub"]]
-		b.add_theme_font_size_override("font_size", 13)
 		# A dark face like every other button, its cost told by the colour of its top edge (and the word in the tooltip).
 		var colour := str(COST_COLOURS.get(str(a["cost"]), "slate"))
 		var focused := i == focus_slot
@@ -676,10 +729,7 @@ func _refresh_hotbar() -> void:
 		stripe.offset_bottom = 5
 		stripe.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		b.add_child(stripe)
-		b.add_theme_color_override("font_color", Look.color("ivory"))
-		b.add_theme_color_override("font_hover_color", Look.color("gilt_light"))
-		b.add_theme_color_override("font_disabled_color", Look.color("bone"))
-		UiParts.texture_on_button(b, UiParts.action_icon(a), 32)
+		_slot_face(b, a, i, usable)
 		b.disabled = not usable
 		var reason := str(a["reason"]) if not bool(a["legal"]) else ""
 		if not mine and reason == "":
@@ -694,6 +744,62 @@ func _refresh_hotbar() -> void:
 		_slot_buttons.append(b)
 		_slot_actions.append(a)
 		i += 1
+
+
+## A hotbar slot's face: the icon at the left with its hotkey on its corner, then the name and the line under it,
+## each shrunk to fit the space left and only then cut with an ellipsis (names like "Spear (thrown)" used to be cut
+## off mid-word at the slot's edge).
+func _slot_face(b: Button, a: Dictionary, i: int, usable: bool) -> void:
+	var tex := UiParts.action_icon(a)
+	var left := 14.0
+	if tex != null:
+		var ic := TextureRect.new()
+		ic.texture = tex
+		ic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		ic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		ic.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		ic.position = Vector2(12, (SLOT_SIZE.y - 30.0) / 2.0 + 1.0)
+		ic.size = Vector2(30, 30)
+		ic.modulate = Color.WHITE if usable else Color(Color.WHITE, 0.4)
+		ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		b.add_child(ic)
+		left = 47.0
+	var width := SLOT_SIZE.x - left - 12.0
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", -3)
+	col.alignment = BoxContainer.ALIGNMENT_CENTER
+	col.position = Vector2(left, 6)
+	col.size = Vector2(width, SLOT_SIZE.y - 8.0)
+	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	b.add_child(col)
+	var name_ := _fitted(str(a["label"]), width, 13, 10, "ivory" if usable else "bone")
+	col.add_child(name_)
+	if str(a["sub"]) != "":
+		col.add_child(_fitted(str(a["sub"]), width, 12, 9, "parchment" if usable else "bone"))
+	if usable:
+		b.mouse_entered.connect(func() -> void: name_.add_theme_color_override("font_color", Look.color("gilt_light")))
+		b.mouse_exited.connect(func() -> void: name_.add_theme_color_override("font_color", Look.color("ivory")))
+	if i < 10:
+		var key := _label(str((i + 1) % 10), 11, "gilt_light" if usable else "gilt_dark")
+		key.position = Vector2(36, 28) if tex != null else Vector2(5, 15)
+		key.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		b.add_child(key)
+
+
+## One line of a slot's text at the largest size from `big` down to `small` that fits `width`, cut with an ellipsis if
+## even `small` doesn't.
+func _fitted(text: String, width: float, big: int, small: int, colour: String) -> Label:
+	var font := ThemeDB.fallback_font
+	var size := big
+	while size > small and font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x > width:
+		size -= 1
+	var l := _label(text, size, colour)
+	l.add_theme_constant_override("outline_size", 3)
+	l.clip_text = true
+	l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	l.custom_minimum_size = Vector2(width, 0)
+	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return l
 
 
 ## Spell slots left by level, as filled and empty pips ("1st ●●●○").
@@ -752,8 +858,17 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 	_menu.show_actions(str(action.get("label", "")), items, at)
 
 
+## The right-click menu on a square of the board (combat_view builds the items from ActionCatalog.square_actions).
+func open_square_menu(title: String, items: Array[Dictionary], at: Vector2) -> void:
+	_menu_action = {"square": true}
+	_menu.show_actions(title, items, at)
+
+
 func _on_menu(id: String) -> void:
 	var action := _menu_action
+	if bool(action.get("square", false)):
+		square_picked.emit(id)
+		return
 	if action.is_empty() or shown == null:
 		return
 	if id == "info":

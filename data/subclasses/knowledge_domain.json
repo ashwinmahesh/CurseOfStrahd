@@ -1,0 +1,106 @@
+{
+  "id": "knowledge_domain",
+  "name": "Knowledge Domain",
+  "class": "cleric",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "summary": "Devotees of knowledge pursue hidden truths and wield divination magic. Some features are reference-only; see each feature’s implementation status.",
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "blessings_of_knowledge",
+        "name": "Blessings of Knowledge",
+        "summary": "Choose an Artisan’s Tools proficiency and two of Arcana, History, Nature, or Religion; gain proficiency and Expertise in both skills.",
+        "text": "Choose an Artisan’s Tools proficiency and two of Arcana, History, Nature, or Religion; gain proficiency and Expertise in both skills.",
+        "implemented": "data",
+        "choices": [
+          {
+            "id": "lore_skills",
+            "kind": "skill",
+            "count": 2,
+            "from": [
+              "arcana",
+              "history",
+              "nature",
+              "religion"
+            ]
+          },
+          {
+            "id": "artisan_tool",
+            "kind": "tool",
+            "count": 1,
+            "filter": {
+              "tool_kind": "artisan"
+            }
+          }
+        ],
+        "modifiers": [
+          {
+            "stat": "expertise",
+            "value": "@lore_skills"
+          }
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "knowledge_mind_magic",
+        "name": "Mind Magic",
+        "summary": "Magic action: spend Channel Divinity to cast a prepared Divination spell from the Knowledge Domain list without a spell slot or Material components.",
+        "text": "Magic action: spend Channel Divinity to cast a prepared Divination spell from the Knowledge Domain list without a spell slot or Material components.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "unfettered_mind",
+        "name": "Unfettered Mind",
+        "summary": "Gain telepathy to 60 feet, contacting up to Wisdom modifier creatures simultaneously (minimum 1). Gain Intelligence saving throw proficiency, or another saving throw proficiency you lack if already proficient. These benefits are reference-only.",
+        "text": "Gain telepathy to 60 feet, contacting up to Wisdom modifier creatures simultaneously (minimum 1). Gain Intelligence saving throw proficiency, or another saving throw proficiency you lack if already proficient. These benefits are reference-only.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "divine_foreknowledge",
+        "name": "Divine Foreknowledge",
+        "summary": "Bonus Action: gain Advantage on D20 Tests for 1 hour. Once per Long Rest; a level 6 or higher spell slot can restore the use without an action.",
+        "text": "Bonus Action: gain Advantage on D20 Tests for 1 hour. Once per Long Rest; a level 6 or higher spell slot can restore the use without an action.",
+        "implemented": "text"
+      }
+    }
+  ],
+  "always_prepared": {
+    "3": [
+      "command",
+      "comprehend_languages",
+      "detect_magic",
+      "detect_thoughts",
+      "identify",
+      "mind_spike"
+    ],
+    "5": [
+      "dispel_magic",
+      "nondetection",
+      "tongues"
+    ],
+    "7": [
+      "arcane_eye",
+      "banishment",
+      "confusion"
+    ],
+    "9": [
+      "legend_lore",
+      "scrying",
+      "synaptic_static"
+    ]
+  },
+  "playable": false
+}

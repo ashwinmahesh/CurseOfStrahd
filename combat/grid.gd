@@ -266,7 +266,7 @@ static func path_to(reach: Dictionary, goal: Vector2i) -> Array[Vector2i]:
 
 ## Cover a target at `target` (footprint `t_size`) has against an attacker at `attacker` (`a_size`), by the
 ## corner method: from the attacker corner that sees best, trace lines to the four corners of the target square
-## that is easiest to see. Walls blocking 1-2 lines give Half Cover, 3 Three-Quarters, 4 Total; low obstacles and
+## that is easiest to see. Walls blocking 2 lines give Half Cover (one isn't enough), 3 Three-Quarters, 4 Total; low obstacles and
 ## other creatures (`creature_cells`) give at most Half Cover. An attacker standing 10+ ft above a low obstacle sees over it.
 ## Returns {cover: Cover, blocked: int, by: String}.
 func cover_between(attacker: Vector2i, a_size: int, target: Vector2i, t_size: int,
@@ -297,13 +297,15 @@ func cover_between(attacker: Vector2i, a_size: int, target: Vector2i, t_size: in
 	return best
 
 
-## Degrees don't add: walls decide Three-Quarters and Total; creatures and low obstacles give at most Half.
+## Degrees don't add: walls decide Three-Quarters and Total; creatures and low obstacles give at most Half. Cover
+## needs the obstacle to block at least half the target (2024 rules), so one clipped line of four is no cover: a
+## wall or crate merely beside the target, not between, gives nothing.
 static func _cover_from(wall: int, soft: int) -> int:
 	if wall >= 4:
 		return Cover.TOTAL
 	if wall == 3:
 		return Cover.THREE_QUARTERS
-	if wall + soft > 0:
+	if wall + soft >= 2:
 		return Cover.HALF
 	return Cover.NONE
 
@@ -449,10 +451,7 @@ func area_cells(shape: String, size_ft: int, origin: Vector2, direction: Vector2
 					var across := (p - origin).dot(side)
 					inside = along >= 0.0 and along <= r and absf(across) <= r / 2.0
 				"cone":
-					var v := p - origin
-					var along2 := v.dot(dir)
-					var across2 := absf(v.dot(Vector2(-dir.y, dir.x)))
-					inside = along2 > 0.0 and along2 <= r + 0.001 and across2 <= along2 / 2.0 + 0.001
+					inside = _cone_covers(c, origin, dir, r)
 				"wall":
 					# A straight wall one square thick, centred on the point and running along `direction`.
 					var v4 := p - origin
@@ -467,6 +466,36 @@ func area_cells(shape: String, size_ft: int, origin: Vector2, direction: Vector2
 					inside = along3 > 0.0 and along3 <= r + 0.001 and across3 <= width_ft / float(FEET) / 2.0 + 0.001
 			if inside and not _wall_between(check_origin, p):
 				out.append(c)
+	return out
+
+
+## A square is in a cone when at least a quarter of it lies inside the cone's triangle (its width at any distance
+## equals that distance): that gives the even, symmetric templates of the grid rules (a 15-ft cone straight out is
+## 1, 3, 3 squares; diagonally 2, 3, 1) instead of the thin, lopsided shapes a square's centre alone gives.
+func _cone_covers(c: Vector2i, origin: Vector2, dir: Vector2, r: float) -> bool:
+	var side := Vector2(-dir.y, dir.x)
+	var hit := 0
+	for i in 4:
+		for j in 4:
+			var v := Vector2(c.x + (i + 0.5) / 4.0, c.y + (j + 0.5) / 4.0) - origin
+			var along := v.dot(dir)
+			if along > 0.0 and along <= r + 0.001 and absf(v.dot(side)) <= along / 2.0 + 0.001:
+				hit += 1
+	return hit >= 4
+
+
+## A cone from a creature toward `toward`: aimed along the nearest of the eight grid directions, starting at the
+## middle of the creature's facing edge (straight out) or at its corner (diagonally).
+func cone_from(cell: Vector2i, size_cells: int, toward: Vector2, size_ft: int) -> Array[Vector2i]:
+	var center := Vector2(cell.x + size_cells / 2.0, cell.y + size_cells / 2.0)
+	var aim := toward - center
+	if aim.length() < 0.01:
+		aim = Vector2.RIGHT
+	var step := Vector2(roundf(cos(snappedf(aim.angle(), PI / 4.0))), roundf(sin(snappedf(aim.angle(), PI / 4.0))))
+	var origin := center + step * (size_cells / 2.0)
+	var out := area_cells("cone", size_ft, origin, step.normalized())
+	for f in footprint(cell, size_cells):
+		out.erase(f)
 	return out
 
 

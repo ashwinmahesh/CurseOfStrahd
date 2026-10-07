@@ -1,0 +1,54 @@
+{
+  "id": "emerald_enclave_fledgling",
+  "name": "Emerald Enclave Fledgling",
+  "source": {
+    "book": "FRHoF",
+    "checked_against": "FRHoF",
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Always prepared: Speak with Animals; choose Intelligence, Wisdom, or Charisma for casting. Speak with Animals lasts 8 hours when you cast it as a Ritual; this extended duration is not automated. As part of Help, exchange places with a willing, non-Incapacitated ally within 5 feet, without provoking Opportunity Attacks.",
+  "benefits": [
+    {
+      "id": "enclave_speak_with_animals",
+      "name": "Speak with Animals",
+      "summary": "Always prepared: Speak with Animals; choose Intelligence, Wisdom, or Charisma for casting.",
+      "text": "Always prepared: Speak with Animals; choose Intelligence, Wisdom, or Charisma for casting.",
+      "implemented": "data",
+      "choice": {
+        "id": "casting_ability",
+        "kind": "spellcasting_ability",
+        "count": 1,
+        "from": [
+          "int",
+          "wis",
+          "cha"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "speak_with_animals",
+          "ability": "@casting_ability",
+          "always_prepared": true
+        }
+      ]
+    },
+    {
+      "id": "enclave_ritual_duration",
+      "name": "Extended Animal Conversation",
+      "summary": "Speak with Animals lasts 8 hours when you cast it as a Ritual; this extended duration is not automated.",
+      "text": "Speak with Animals lasts 8 hours when you cast it as a Ritual; this extended duration is not automated.",
+      "implemented": "text"
+    },
+    {
+      "id": "enclave_tag_team",
+      "name": "Tag Team",
+      "summary": "As part of Help, exchange places with a willing, non-Incapacitated ally within 5 feet, without provoking Opportunity Attacks.",
+      "text": "As part of Help, exchange places with a willing, non-Incapacitated ally within 5 feet, without provoking Opportunity Attacks.",
+      "implemented": "text"
+    }
+  ],
+  "playable": false
+}

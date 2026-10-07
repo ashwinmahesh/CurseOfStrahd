@@ -2,18 +2,18 @@
 # while its condition holds. Party members speak through interjections; a line plays if a matching member is present.
 
 ~ banter_wall
-if visited:krezk and not flag.krezk_gate_open
-interject tag:blunt: A wall that size, and they still check every face that comes up the road. I'd do the same.
+if visited:krezk and not flag.krezk_gate_open and name:godrick_pendlebrook and name:kip_smudgewick
+interject name:godrick_pendlebrook: A wall that big, and they still look at every face on the road. Fair enough. I'd look at us twice.
 interject tag:cheerful: We have very trustworthy faces.
-interject name:tamsin_tealeaf: Speak for yourself. Mine's been on posters.
+interject name:kip_smudgewick: Mine's very honest. It's the horns that let it down. Do you think they'd take an apricot?
 endif
 -> END
 
 ~ banter_angel
-if flag.abbot_nature_known and not flag.abbot_fate
-interject name:hedda_ironvow: Mm. I prayed my whole life to meet something sent from above. I didn't think it would be lighting candles with its thumb and sewing corpses.
-interject name:silvain_aster: The old texts say they're made for one purpose. Leave them too long without it, they find another.
-interject name:hedda_ironvow: Don't. I don't want it to make sense.
+if flag.abbot_nature_known and not flag.abbot_fate and name:kip_smudgewick and name:ratatoille
+interject name:kip_smudgewick: A real angel, sewing dead girls together. I always thought if I met one, I'd ask for help with a paperwork matter.
+interject name:ratatoille: The treatises say they are made for one purpose. Leave one too long without it, and it finds another.
+interject name:liriel_dawnsong: Not yet, please. Let me pray before anyone explains him to me.
 endif
 -> END
 
@@ -21,69 +21,75 @@ endif
 if flag.belview_family_met
 interject tag:curious: The Belviews repeat everything you say. Everything. I said "hello" and got it back in my own voice from six directions.
 interject tag:blunt: They were a family from Krezk. Farmers. He did that to them and called it a gift.
-interject tag:devout: Then we treat them like a family from Krezk. Whatever they look like now.
+interject tag:pious: Then we treat them like a family from Krezk. Whatever they look like now.
 endif
 -> END
 
 ~ banter_bride
-if flag.abbot_bride_revealed and not flag.abbot_fate
-interject name:ilse_varga: A wife, for him. As a cure. I've seen officers try to cure a bad general with a better horse.
-interject name:silvain_aster: Did it work?
-interject name:ilse_varga: The horse died first.
+if flag.abbot_bride_revealed and not flag.abbot_fate and name:thistle and name:godrick_pendlebrook
+interject name:thistle: A wife, stitched out of dead girls, to make him gentle. Grandda tried that with a mean dog. Got it a friend.
+interject name:wren_featherfoot: And?
+interject name:thistle: Dog ate the friend.
+interject name:godrick_pendlebrook: Then nobody's giving him a friend. Not her. Not anyone.
 endif
 -> END
 
 ~ banter_dress
 if flag.wedding_dress_found and not flag.wedding_dress_delivered
 interject tag:loyal: Anna's dress. She folded it in lavender. We're carrying it up a mountain to put it on a dead girl.
+if tag:loyal
 interject class:cleric: For her son. She knew what she was doing. That's what makes it hard to carry.
+endif
 endif
 -> END
 
 ~ banter_letter
 if flag.markovia_letter_read and not flag.abbot_fate
-interject tag:bookish: "Patience is how he feeds." The saint saw through him four hundred years ago. In one line.
+interject tag:scholarly: "Patience is how he feeds." The saint saw through him four hundred years ago. In one line.
 interject tag:blunt: And the angel kept the letter under a floorboard.
-interject tag:bookish: No. The angel lost it. Clovin kept it. That's the part I keep thinking about.
+interject tag:scholarly: No. The angel lost it. Clovin kept it. That's the part I keep thinking about.
 endif
 -> END
 
 ~ banter_pool
-if flag.ireena_pool_vision and guest:ireena
+if flag.ireena_pool_vision and guest:ireena and (tag:curious or name:liriel_dawnsong)
+if tag:curious
 interject tag:curious: Ireena. The man in the water. Do you want to talk about it?
+else
+interject name:liriel_dawnsong: Ireena. The man in the water. Would you like to speak of him?
+endif
 interject guest:ireena: No. Yes. Later. Ask me again when we're somewhere with a fire and no water anywhere.
 endif
 -> END
 
 ~ banter_hunter
-if guest:ezmerelda
-interject name:silvain_aster: Is it true Van Richten writes his notes in three ciphers?
+if guest:ezmerelda and name:ratatoille and name:wren_featherfoot
+interject name:ratatoille: Mademoiselle, is it true Van Richten writes his notes in three ciphers? I have a theory about the third.
 interject guest:ezmerelda: Four. The fourth is his handwriting.
-interject name:tamsin_tealeaf: I like her.
+interject name:wren_featherfoot: Oh, I like her.
 interject guest:ezmerelda: Everyone does, at first. Ask Rudolph.
 endif
 -> END
 
 ~ banter_wedding
-if flag.abbot_fate == "wedding"
+if flag.abbot_fate == "wedding" and name:kip_smudgewick and class:cleric
 interject class:cleric: We let it happen. A bride in a cart, waving at nobody.
-interject name:ilse_varga: We got the boy healed. That was the bargain. I've made worse ones and slept.
-interject class:cleric: I haven't. Give me time; I'll learn, I suppose. I'd rather not.
+interject name:kip_smudgewick: We got the boy healed. That was the bargain. I've made worse ones, and I still sleep. Mostly.
+interject class:cleric: I haven't. I suppose I'll learn. I would rather not.
 endif
 -> END
 
 ~ banter_repentant
 if flag.abbot_fate == "repentant"
-interject tag:devout: He walked up the mountain to be judged. I keep wondering who's going to do it.
+interject tag:pious: He walked up the mountain to be judged. I keep wondering who's going to do it.
 interject tag:curious: Maybe nobody. Maybe that's the point. You go anyway.
 endif
 -> END
 
 ~ banter_slain
-if flag.abbot_fate == "slain"
-interject name:hedda_ironvow: There was no blood. Only light. I don't know what we killed, exactly. I know it needed killing. Mm. I'll pray for it anyway.
-interject name:tamsin_tealeaf: Can you pray for something like that?
-interject name:hedda_ironvow: You can pray for anything. That's rather the point of it.
+if flag.abbot_fate == "slain" and name:wren_featherfoot and name:godrick_pendlebrook
+interject name:wren_featherfoot: No blood. Just light, and then nothing. What was that, that we killed?
+interject name:godrick_pendlebrook: Something that forgot what it was for. Sir Pellam prayed for everything he ever had to kill. I'll pray for this one.
 endif
 -> END
 

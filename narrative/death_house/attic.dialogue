@@ -9,8 +9,8 @@ if flag.death_house_children_remains_taken
   -> END
 endif
 Narrator: Under the dolls and the wooden horse lie two small bundles wrapped in faded blankets, tied shut with a child's careful knot.
-interject name:hedda_ironvow: Mm. Children. Stone remembers. So will I.
-if not name:hedda_ironvow
+interject name:liriel_dawnsong: Oh, little ones. You waited such a long time.
+if not name:liriel_dawnsong
   interject species:dwarf: Small bones. The small ones always weigh the most.
 endif
 -> chest_choice
@@ -26,7 +26,7 @@ if not flag.death_house_children_truth
   set death_house_children_truth
   set death_house_lore += 1
 endif
-interject name:ilse_varga: Locked in and left. Somebody had the key the whole time.
+interject name:thistle: Shut in and left. Worst thing there is.
 -> chest_choice
 
 ~ chest_medicine_fail
@@ -37,8 +37,8 @@ Narrator: Old bones in old blankets. Whatever happened to them, it happened a lo
 set death_house_children_remains_taken
 quest rose_and_thorn remains
 Narrator: The bundles weigh almost nothing. Whoever carries them will feel them all the way down.
-interject name:ilse_varga: Careful. Wrap them twice. It's cold where they're going.
-interject name:tamsin_tealeaf: I've carried a lot of things out of a lot of houses. Never anything I wanted to put back somewhere safe.
+interject name:godrick_pendlebrook: I'll carry them. Gently. They'll not feel a single bump, I promise.
+interject name:kip_smudgewick: I've carried a lot of things to market. Never anything this light. Or this heavy.
 -> END
 
 ~ dollhouse
@@ -55,9 +55,9 @@ if not flag.death_house_dollhouse_altar_seen
   set death_house_dollhouse_altar_seen
   set death_house_lore += 1
 endif
-interject name:silvain_aster: A working model, secret and all. Either a very cruel joke or a very guilty conscience.
-if not name:silvain_aster
-  interject tag:bookish: Someone put the truth in a toy, where only a child would look. That's a confession.
+interject name:ratatoille: Accurate to the doorknobs, secret stair and all. This is not a toy. It is a map someone was too guilty to burn.
+if not name:ratatoille
+  interject tag:scholarly: Someone put the truth in a toy, where only a child would look. That's a confession.
 endif
 -> secret_stair
 
@@ -74,8 +74,8 @@ Narrator: Rose's finger touches a panel in the corner of the toy storage room. I
 ~ secret_panel
 narrate search:storage_panel
 Narrator: The seam runs in a neat rectangle. Pressed, the plaster swings inward on a breath of warm air, onto a stair that winds down inside the walls.
-interject name:tamsin_tealeaf: Oh, lovely work. Hinges on the inside. Whoever built this didn't want company.
-if not name:tamsin_tealeaf
+interject name:wren_featherfoot: Hinges on the inside. Lovely work. I used to know people who'd pay good money for a door like this.
+if not name:wren_featherfoot
   interject class:rogue: Hinges on the inside. Whoever built this didn't want to be followed.
 endif
 -> secret_stair
@@ -107,8 +107,8 @@ endif
 
 ~ trunk_medicine
 Narrator: Stab wounds, many of them, the blade turned on the ribs again and again. Someone did this in a fury, and then folded her neatly into a trunk.
-interject name:hedda_ironvow: Rage first, then tidiness. That's a particular kind of person.
-if not name:hedda_ironvow
+interject name:godrick_pendlebrook: Angry first, then tidy after. I've met that sort. They smile at you in church.
+if not name:godrick_pendlebrook
   interject class:cleric: Whoever did this was angry, and then very, very calm. I'll pray for her twice.
 endif
 -> END

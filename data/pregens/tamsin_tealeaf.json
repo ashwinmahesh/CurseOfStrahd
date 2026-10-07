@@ -4,6 +4,7 @@
   "pronouns": "he/him",
   "summary": "Halfling Rogue (Thief), Criminal. Quick fingers, quicker feet and Expertise in getting into places.",
   "hook": "He lifted a silver locket from a nobleman's coach; the portrait inside is of a red-haired woman he has never met, and he dreams of her calling his name.",
+  "roster": false,
   "build": {
     "name": "Tamsin Tealeaf",
     "species": "halfling",
