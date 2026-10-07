@@ -6,6 +6,7 @@ covers them:
   docs (*.md, docs/)                       nothing
   art and audio files, their pipelines     make import
   data/, narrative/                        make validate, test_data_integrity and the tests that quote a changed id
+  tests/saves/ (golden saves)              test_golden_saves
   scripts, scenes, shaders, art JSON       make validate, make lint when rules/, combat/ or story/ changed, and the
                                            tests that use a changed file directly or through one other script
                                            (a scene in between is free)
@@ -30,8 +31,10 @@ ASSET_EXT = {".png", ".jpg", ".jpeg", ".webp", ".svg", ".ogg", ".wav", ".mp3", "
              ".gpl", ".jsonl", ".gdignore", ".ttf", ".otf"}
 ASSET_DIRS = ("blender/", "tools/art/", "tools/audio/", "tools/ui/", "art/generated/", "art/sourced/")
 CODE_EXT = {".gd", ".tscn", ".tres", ".gdshader"}
-EVERYTHING = ("Makefile", "project.godot", "addons/", "tests/test_runner.", "tools/logcheck.sh", "tools/lint_gd.sh")
+EVERYTHING = ("Makefile", "project.godot", "addons/", "tests/test_runner.", "tools/run_tests.py", "tools/logcheck.sh",
+              "tools/lint_gd.sh")
 LINTED = ("rules/", "combat/", "story/")
+GOLDEN = "tests/saves/"  # the golden saves: test_golden_saves loads them all (P4)
 MAX_COST = 2  # a test that uses the change (1) or uses a script that does (2); scenes and resources cost nothing
 CI_TARGETS = {"import", "validate", "lint", "test", "ci", "check"}
 
@@ -215,6 +218,8 @@ def plan(files: list[str], fork: str) -> dict:
                         nxt.append(user)
             frontier = nxt
         tests.update(p for p in cost if is_test(p))
+    if any(p.startswith(GOLDEN) for p in files):
+        tests.add("tests/integration/test_golden_saves.gd")
     out["tests"] = sorted(os.path.basename(t) for t in tests if os.path.exists(os.path.join(ROOT, t)))
     return out
 

@@ -1,7 +1,7 @@
 extends Control
 ## The title screen (plan §5.6 Start step): New game (choose up to four from the roster to travel, the rest wait at camp;
-## one custom hero the player makes joins the roster: owner, 2026-10-06), Continue (the newest save), Load, the
-## Phase 2 combat arena, and Quit.
+## one custom hero the player makes joins the roster: owner, 2026-10-06), Continue (the newest save), Load, Skirmish
+## and the Character Lab (ui/skirmish/), the Phase 2 combat arena, and Quit.
 
 
 var _creation: CreationScreen = null
@@ -94,6 +94,7 @@ func _title() -> void:
 	var load := UiKit.button("Load", _show_loads, 24)
 	load.disabled = slots.is_empty()
 	_box.add_child(load)
+	_box.add_child(UiKit.button("Skirmish and Character Lab", func() -> void: get_tree().change_scene_to_file("res://scenes/skirmish.tscn"), 18))
 	_box.add_child(UiKit.button("Combat arena (Phase 2)", func() -> void: get_tree().change_scene_to_file("res://scenes/combat/arena.tscn"), 18))
 	if WhatsNew.available():
 		_box.add_child(UiKit.button("What's new", func() -> void: WhatsNew.open(self), 18))
