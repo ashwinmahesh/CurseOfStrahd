@@ -156,6 +156,7 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 	m.set_shader_parameter("grid_line", color("ink"))
 	if modern():
 		var spec := material_for(surface)
+		var relief := MODERN_RELIEF * float(spec.get("relief", 1.0))
 		var nm: Texture2D = null
 		if info.has("normal_file") and ResourceLoader.exists("res://" + str(info["normal_file"])):
 			nm = load("res://" + str(info["normal_file"])) as Texture2D
@@ -163,7 +164,7 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 			nm = normal_map(path)
 		if nm != null:
 			m.set_shader_parameter("normal_tex", nm)
-			m.set_shader_parameter("normal_strength", MODERN_RELIEF * float(spec.get("relief", 1.0)))
+			m.set_shader_parameter("normal_strength", relief)
 		if info.has("orm_file") and ResourceLoader.exists("res://" + str(info["orm_file"])):
 			m.set_shader_parameter("orm_tex", load("res://" + str(info["orm_file"])) as Texture2D)
 			m.set_shader_parameter("use_orm", true)
@@ -304,31 +305,61 @@ static var _normals: Dictionary = {}
 
 
 ## A normal map made from a texture's own brightness (dark ink lines and mortar read as grooves), softened first so
-## it gives bevels rather than noise; made once per texture and kept. Null if the image can't be read.
+## it gives bevels rather than noise. Made once per texture and kept, in memory and on disk (user://look_cache: every
+## first visit made them on the spot, up to 290 ms in the castle, P3; now only the first ever does), as two channels
+## (the shader rebuilds z). Null if the image can't be read.
 static func normal_map(path: String) -> Texture2D:
 	if _normals.has(path):
 		return _normals[path] as Texture2D
+	var cached := _cached_normal(path)
+	if cached != null:
+		_normals[path] = cached
+		return cached
 	var tex := load(path) as Texture2D
-	var img := tex.get_image() if tex != null else null
-	if img == null:
-		_normals[path] = null
+	var img := _normal_image(tex.get_image() if tex != null else null)
+	var out: ImageTexture = ImageTexture.create_from_image(img) if img != null else null
+	_normals[path] = out
+	if out != null:
+		DirAccess.make_dir_recursive_absolute(NORMAL_CACHE)
+		ResourceSaver.save(out, _normal_cache_path(path))
+	return out
+
+
+const NORMAL_CACHE := "user://look_cache/normals/"
+
+
+## The normal map image for a texture's image: decompressed, softened, turned to normals, mipmapped and compressed to
+## two channels.
+static func _normal_image(src: Image) -> Image:
+	if src == null:
 		return null
-	img = img.duplicate() as Image
+	var img := src.duplicate() as Image
 	if img.is_compressed() and img.decompress() != OK:
-		_normals[path] = null
 		return null
 	img.clear_mipmaps()
 	var w := img.get_width()
 	var h := img.get_height()
 	img.convert(Image.FORMAT_L8)
-	# A cheap blur: down to a quarter and back up, so lines become soft grooves.
+	# A cheap blur: down to a third and back up, so lines become soft grooves.
 	img.resize(maxi(8, w / 3), maxi(8, h / 3), Image.INTERPOLATE_BILINEAR)
 	img.resize(w, h, Image.INTERPOLATE_CUBIC)
 	img.bump_map_to_normal_map(6.0)
 	img.generate_mipmaps()
-	var out := ImageTexture.create_from_image(img)
-	_normals[path] = out
-	return out
+	img.compress(Image.COMPRESS_S3TC, Image.COMPRESS_SOURCE_NORMAL)   # two channels (RGTC) for a normal map
+	return img
+
+
+## Where a texture's normal map is kept on disk: by its path and when its image last changed.
+static func _normal_cache_path(path: String) -> String:
+	var stamp := FileAccess.get_modified_time(path)
+	return NORMAL_CACHE + "%s_%d.res" % [path.md5_text(), stamp]
+
+
+static func _cached_normal(path: String) -> Texture2D:
+	var file := _normal_cache_path(path)
+	if not FileAccess.file_exists(file):
+		return null
+	return ResourceLoader.load(file, "", ResourceLoader.CACHE_MODE_IGNORE) as Texture2D
 
 
 static func cel_checker(a: String, b: String, line: String) -> ShaderMaterial:

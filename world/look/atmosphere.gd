@@ -475,6 +475,10 @@ func attach(rig: CameraRig, post: MeshInstance3D) -> void:
 	weather = AtmosphereWeather.build(self, board, mood, outdoors, get_parent())
 	_show_night_pieces()
 	_scan_lights()
+	# Lights added later (a lantern lit, a spell's light, a fire) join as they enter the tree, instead of the whole
+	# place being searched for them every second (P3).
+	if is_inside_tree() and not get_tree().node_added.is_connected(_on_node_added):
+		get_tree().node_added.connect(_on_node_added)
 	_apply(1.0)
 	_next_flash = _rng.randf_range(4.0, 10.0)
 
@@ -722,7 +726,7 @@ func _process(delta: float) -> void:
 	_light_scan -= delta
 	if _light_scan <= 0.0:
 		_light_scan = 1.0
-		_scan_lights()
+		_prune_lights()
 	_update_glows()
 
 
@@ -737,6 +741,22 @@ func _lightning(delta: float) -> bool:
 		_next_flash = _rng.randf_range(0.12, 0.2) if _rng.randf() < 0.5 and was < 0.5 else _rng.randf_range(7.0, 16.0)
 	_flash = maxf(0.0, _flash - delta * 6.0)
 	return _flash > 0.0 or was > 0.0
+
+
+## A light entering the place (Atmosphere listens to the tree while it's on screen).
+func _on_node_added(n: Node) -> void:
+	var l := n as OmniLight3D
+	var view := get_parent()
+	if l == null or view == null or l in _lights or not view.is_ancestor_of(l):
+		return
+	_lights.append(l)
+	if Look.modern() and not l.has_meta("light_kind"):
+		_dress_light.call_deferred(l)
+
+
+## Lights that have left the place drop out.
+func _prune_lights() -> void:
+	_lights = _lights.filter(func(l: OmniLight3D) -> bool: return is_instance_valid(l) and l.is_inside_tree())
 
 
 ## Every light in the place that can light the mist: the location's lamps and fires, the party's lantern, windows.
