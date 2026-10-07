@@ -3728,19 +3728,18 @@ def coffin_plinth(p):
 
 @model("heart_of_sorrow", "free", ["heart_of_sorrow"])
 def heart_of_sorrow(p):
-    """The Heart of Sorrow: a huge crystal heart glowing red inside a pale blue crystal shell, hung on chains."""
-    H0 = 0.7
-    heart = [(x * 0.82, z * 0.82) for x, z in ((0.0, 0.0), (0.42, 0.42), (0.5, 0.62), (0.42, 0.8), (0.25, 0.86), (0.0, 0.72),
-                                              (-0.25, 0.86), (-0.42, 0.8), (-0.5, 0.62), (-0.42, 0.42))]
-    p.prism([(x * 1.14, y * 1.12 - 0.04) for x, y in heart], 0.22, (0, 0, H0), "pal_moonlight")
-    p.prism(heart, 0.34, (0, 0, H0), "glow_crimson")
-    for x in (-0.3, 0.0, 0.3):
-        z0 = H0 + (0.9 if x else 0.75)
-        links = [(x * (1 - k / 6) + (x * 0.4) * (k / 6), 0.0, z0 + k * 0.18) for k in range(7)]
-        p.tube(links, 0.02, "pal_stone_deep", segs=5)
-    for k in range(3):
-        a = math.radians(90 + 120 * k)
-        p.tube([(0.0, 0.0, H0 + 0.1), (0.45 * math.cos(a), 0.45 * math.sin(a), 0.0)], 0.02, "pal_stone_deep", segs=5)
+    """The Heart of Sorrow: a huge faceted crystal heart glowing blood-red, a pale crystal rim round it, bound in chains
+    that cross its face and rise to the ceiling."""
+    H0 = 0.75
+    for s_ in (-1, 1):
+        p.rock((s_ * 0.2, 0, H0 + 0.42), (0.5, 0.36, 0.5), "glow_blood", rough=0.04, subdiv=1, bury=0.0)
+        p.rock((s_ * 0.2, 0.03, H0 + 0.4), (0.56, 0.3, 0.56), "pal_moonlight", rough=0.04, subdiv=1, bury=0.0)
+    p.lathe([(0.0, 0.0), (0.44, 0.55), (0.0, 0.56)], (0, 0, H0 - 0.1), "glow_blood", segs=6, smooth=False, rot=(0, 0, 30))
+    p.lathe([(0.0, 0.0), (0.48, 0.58), (0.0, 0.59)], (0, 0.04, H0 - 0.14), "pal_moonlight", segs=6, smooth=False, rot=(0, 0, 30))
+    for s_ in (-1, 1):
+        p.tube([(s_ * 0.45, -0.2, H0 + 0.8), (0.0, -0.21, H0 + 0.35), (-s_ * 0.3, -0.2, H0 + 0.05)], 0.022, "pal_stone_deep", segs=5)
+        p.tube([(s_ * 0.3, 0.0, H0 + 0.75), (s_ * 0.45, 0.0, H0 + 1.35)], 0.022, "pal_stone_deep", segs=5)
+    p.tube([(0.0, 0.0, H0 + 0.65), (0.0, 0.0, H0 + 1.4)], 0.022, "pal_stone_deep", segs=5)
 
 
 @model("lift_cage", "free", ["lift_cage"])

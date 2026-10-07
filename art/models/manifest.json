@@ -6244,16 +6244,16 @@
         "heart_of_sorrow"
       ],
       "size": [
-        0.935,
-        2.692,
-        0.711
+        0.941,
+        1.54,
+        0.96
       ],
       "materials": [
-        "glow_crimson",
+        "glow_blood",
         "pal_moonlight",
         "pal_stone_deep"
       ],
-      "triangles": 318
+      "triangles": 204
     },
     "lift_cage": {
       "file": "art/models/lift_cage.glb",
