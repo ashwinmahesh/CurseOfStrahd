@@ -61,7 +61,9 @@ var _was_moving := false
 
 ## The sheets a sprite folder may hold, merged in this order (a later sheet's animation replaces an earlier one).
 const SHEETS: Array[String] = ["walk", "attack", "hurt", "ride", "sneak", "cast"]
-## Merged frames per sprite id (frames_for).
+## Merged frames per sprite id (frames_for), held weakly: a character's sheets stay in video memory only while
+## something shows it (Performance pass 2026-10-07: holding every sheet seen made video memory climb from 1.15 GB to
+## 1.84 GB over 12 places and stay there at the title). Leaving a place frees the sheets of everyone no longer shown.
 static var _frames_cache: Dictionary = {}
 
 
@@ -114,7 +116,10 @@ static func frames_for(art_id: String) -> SpriteFrames:
 	if HeroLook.known(art_id):
 		return HeroLook.frames_for_art(art_id)
 	if _frames_cache.has(art_id):
-		return _frames_cache[art_id] as SpriteFrames
+		var kept := (_frames_cache[art_id] as WeakRef).get_ref() as SpriteFrames
+		if kept != null:
+			return kept
+		_frames_cache.erase(art_id)
 	var walk_path := "res://art/sprites/%s/walk.tres" % art_id
 	if not ResourceLoader.exists(walk_path):
 		return null
@@ -149,7 +154,8 @@ static func frames_for(art_id: String) -> SpriteFrames:
 		frames.set_meta("hit_frames", hits)
 		if not mirrored.is_empty():
 			frames.set_meta("mirrored", mirrored)
-	_frames_cache[art_id] = frames
+	if frames != null:
+		_frames_cache[art_id] = weakref(frames)
 	return frames
 
 
