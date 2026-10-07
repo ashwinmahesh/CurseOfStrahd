@@ -147,7 +147,7 @@ func _to_end() -> void:
 	phase = Phase.END
 	RunStats.observe_gold(st)
 	if save_on_finish:
-		RunStats.earn(st, Achievements.for_ending(st, str(ending.get("id", ""))))
+		Achievements.earn(st, Achievements.for_ending(st, str(ending.get("id", ""))))
 	if save_on_finish and not saved:
 		saved = SaveSystem.save_finished(str(ending.get("id", "")), str(ending.get("title", ""))) == OK
 	_show_end()
@@ -418,7 +418,7 @@ func show_tally() -> void:
 		var h := UiParts.caption(str(col[1]).to_upper(), 12, "gilt")
 		h.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		grid.add_child(h)
-	for r in RunStats.hero_rows(st):
+	for r in RunStats.hero_rows(st, CombatToken.art_for):
 		grid.add_child(UiParts.framed_portrait(str(r.get("art", "hero_01")), 46.0, false, str(r.get("status", "")) in ["dead", "fallen"]))
 		var who := VBoxContainer.new()
 		who.add_theme_constant_override("separation", 0)

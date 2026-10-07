@@ -2,8 +2,8 @@
 
 Status: built 2026-10-07 (lane 18 of Improvement Ideas.md) · not yet seen by the owner
 Code: `story/fight_tally.gd` (one fight, from its combat log), `story/run_stats.gd` (the run, kept in
-`StoryState.run_stats` and saved with the game), `story/achievements.gd`, `ui/screens/achievements_panel.gd`, and the
-tally on `ui/screens/ending_screen.gd`. Hooks: `world/game_root.gd` (each story fight, `RunStats.watch`),
+`StoryState.run_stats` and saved with the game), `core/achievements.gd`, `ui/screens/achievements_panel.gd`, and the
+tally on `ui/screens/ending_screen.gd`. Hooks: `world/game_root.gd` (each story fight, `Achievements.watch`),
 `world/combat/combat_arena.gd` (Skirmish results), `ui/skirmish/skirmish_screen.gd` (the achievements button).
 Capture: `make capture SCENE=res://scenes/game.tscn NAME=ending ARGS="--ending=strahd_destroyed"` (shots 6 and 7).
 

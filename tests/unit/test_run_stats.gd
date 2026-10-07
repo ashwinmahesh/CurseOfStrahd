@@ -109,7 +109,7 @@ func test_achievements_are_earned_once_and_kept() -> void:
 	assert_eq(Achievements.name_of("ending_strahd_destroyed"), "Dawn over Barovia")
 	# A run notes what it earned.
 	var st := StoryState.new()
-	var names := RunStats.earn(st, ["first_victory", "snake_eyes"] as Array[String])
+	var names := Achievements.earn(st, ["first_victory", "snake_eyes"] as Array[String])
 	assert_eq(names, ["Cursed Dice"] as Array[String])
 	assert_eq(st.run_stats["earned"], ["snake_eyes"])
 

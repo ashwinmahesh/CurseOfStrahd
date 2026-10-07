@@ -1,7 +1,8 @@
 extends TestCase
 ## Run stats at the ending (N8) in the real game scene: a story fight is added to the run when it ends (kills and
 ## all, an achievement toasted), the record saves with the game, and The End lists what the run earned and opens the
-## company's tally with each hero's row. Achievements go beside this test run's saves, never the player's.
+## company's tally with each hero's row. Achievements are kept beside the saves (a test run's own folder), and this
+## test keeps a file of its own, since other tests in the process earn them too.
 
 const HALL := "run_stats_test_hall"
 
@@ -10,7 +11,8 @@ var root: Node
 
 func before_each() -> void:
 	Engine.time_scale = 4.0
-	Achievements.path = ""   # beside the test run's own saves (SaveSystem.save_dir)
+	Achievements.path = "user://test_achievements_story_%d.json" % OS.get_process_id()
+	DirAccess.remove_absolute(Achievements.path)
 
 
 func after_each() -> void:
@@ -18,7 +20,8 @@ func after_each() -> void:
 	if root != null:
 		root.queue_free()
 		root = null
-	DirAccess.remove_absolute(Achievements.file())
+	DirAccess.remove_absolute(Achievements.path)
+	Achievements.path = ""
 	SaveSystem.current_slot = ""
 	GameState.reset()
 	ModeController.force(ModeController.Mode.EXPLORATION)
@@ -47,7 +50,10 @@ func _start() -> void:
 
 
 func test_a_story_fight_counts_and_the_ending_shows_the_tally() -> void:
-	assert_true(Achievements.file().begins_with(SaveSystem.save_dir), "beside the test run's saves")
+	var own := Achievements.path
+	Achievements.path = ""
+	assert_true(Achievements.file().begins_with(SaveSystem.save_dir), "kept beside the saves: a test run's own folder")
+	Achievements.path = own
 	await _start()
 	var st := GameState.story
 	var view := root.get("view") as LocationView

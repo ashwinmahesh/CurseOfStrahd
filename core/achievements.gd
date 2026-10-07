@@ -33,6 +33,27 @@ const LIST := {
 const WOLVES: Array[String] = ["wolf", "dire_wolf", "werewolf", "winter_wolf"]
 
 
+## Watches a story fight from its start (the game's combat_started): when it's over, adds it to the run (RunStats)
+## and reports any achievement earned to `toast` (a Callable taking the text).
+static func watch(cv: CombatView, st: StoryState, toast: Callable = Callable()) -> void:
+	cv.finished.connect(func(_outcome: String) -> void:
+		var t := RunStats.add_fight(st, cv.e, CombatToken.art_for)
+		for n in earn(st, for_story_fight(st, cv.e, t)):
+			if toast.is_valid():
+				toast.call("Achievement: %s" % n))
+
+
+## Grants achievements reached in this run and notes the new ones in it (the ending lists them); returns their names.
+static func earn(st: StoryState, ids: Array[String]) -> Array[String]:
+	var names: Array[String] = []
+	var mine := st.run_stats.get("earned", []) as Array
+	for id in grant(ids):
+		mine.append(id)
+		names.append(name_of(id))
+	st.run_stats["earned"] = mine
+	return names
+
+
 ## Every achievement in order, the endings' last: [{id, name, text, earned (a date or "")}].
 static func all() -> Array[Dictionary]:
 	var got := earned()

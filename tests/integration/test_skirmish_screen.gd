@@ -12,6 +12,9 @@ var arena: CombatArena
 
 
 func before_each() -> void:
+	# Achievements of this test's own: other tests in the same process may have earned them already.
+	Achievements.path = "user://test_achievements_skirmish_%d.json" % OS.get_process_id()
+	DirAccess.remove_absolute(Achievements.path)
 	SkirmishLibrary.dir = "user://test_skirmish_screen_%d/" % OS.get_process_id()
 	SkirmishScreen.current = null
 	SkirmishScreen.kept_tab = "Party"
@@ -27,6 +30,8 @@ func after_each() -> void:
 	for f in SkirmishLibrary.list():
 		SkirmishLibrary.delete(str(f["file"]))
 	SkirmishLibrary.dir = "user://skirmish/"
+	DirAccess.remove_absolute(Achievements.path)
+	Achievements.path = ""
 	SkirmishScreen.current = null
 	CombatArena.skirmish = null
 	get_tree().paused = false
@@ -176,7 +181,7 @@ func test_a_skirmish_is_fought_on_its_map_and_ends_on_the_results() -> void:
 	var earned := arena.results.find_child("Earned", true, false) as Label
 	assert_true(earned != null and earned.text.contains("Proving Grounds") and earned.text.contains("Overwhelming Force"),
 		"achievements the fight earned: %s" % (earned.text if earned != null else "none"))
-	assert_true(Achievements.has("skirmish_win"), "kept beside this test run's saves")
+	assert_true(Achievements.has("skirmish_win"), "kept")
 
 
 func test_the_encounter_editor_works_on_the_sketch() -> void:

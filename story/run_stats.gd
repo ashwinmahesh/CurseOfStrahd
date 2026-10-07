@@ -4,7 +4,8 @@ extends RefCounted
 ## hits and misses, damage dealt and taken, hardest blow, falls and deaths, added up from every story fight's combat
 ## log (FightTally); and for the party, fights won, rounds fought, foes defeated by kind, and gold. Kept in
 ## StoryState.run_stats, so it saves with the game. Gold is read at each fight's end and at the ending: what came in
-## and went out between two readings counts as found or spent.
+## and went out between two readings counts as found or spent. Pure data with no autoloads (make lint compiles story/
+## on its own); Achievements (core/) watches the game's fights and calls add_fight.
 
 ## The purse a new game starts with (main_menu.gd, game_root.gd).
 const START_GOLD := 10.0
@@ -12,28 +13,9 @@ const HERO_KEYS: Array[String] = ["fights", "kills", "crits", "nat20", "nat1", "
 	"damage_taken", "downs", "deaths"]
 
 
-## Watches a story fight from its start (the game's combat_started): when it's over, adds it up and reports any
-## achievement earned to `toast` (a Callable taking the text).
-static func watch(cv: CombatView, st: StoryState, toast: Callable = Callable()) -> void:
-	cv.finished.connect(func(_outcome: String) -> void:
-		for n in earn(st, add_fight(st, cv.e)):
-			if toast.is_valid():
-				toast.call("Achievement: %s" % n))
-
-
-## Grants achievements reached in this run and notes the new ones in it (the ending lists them); returns their names.
-static func earn(st: StoryState, ids: Array[String]) -> Array[String]:
-	var names: Array[String] = []
-	var mine := st.run_stats.get("earned", []) as Array
-	for id in Achievements.grant(ids):
-		mine.append(id)
-		names.append(Achievements.name_of(id))
-	st.run_stats["earned"] = mine
-	return names
-
-
-## Adds one fight to the run; returns the achievement ids it reaches.
-static func add_fight(st: StoryState, e: Encounter) -> Array[String]:
+## Adds one fight to the run and returns its tally. `art_of(character) -> String` names each hero's portrait (the
+## game passes the combat tokens' art lookup), kept for heroes who later leave the company.
+static func add_fight(st: StoryState, e: Encounter, art_of: Callable = Callable()) -> Dictionary:
 	var t := FightTally.tally(e)
 	var rs := st.run_stats
 	rs["fights"] = int(rs.get("fights", 0)) + 1
@@ -51,7 +33,8 @@ static func add_fight(st: StoryState, e: Encounter) -> Array[String]:
 			var key := hero_key(c.creature as Character)
 			var h := heroes.get(key, {"name": c.creature.name}) as Dictionary
 			h["name"] = c.creature.name
-			h["art"] = CombatToken.art_for(c.creature as Character)
+			if art_of.is_valid():
+				h["art"] = str(art_of.call(c.creature))
 			for k in HERO_KEYS:
 				if k == "fights":
 					h[k] = int(h.get(k, 0)) + 1
@@ -75,7 +58,7 @@ static func add_fight(st: StoryState, e: Encounter) -> Array[String]:
 	rs["kills_by_kind"] = by_kind
 	rs["kills_by_type"] = by_type
 	observe_gold(st)
-	return Achievements.for_story_fight(st, e, t)
+	return t
 
 
 ## The id a hero's record is kept under (their character id, which saves keep).
@@ -110,8 +93,9 @@ static func totals(st: StoryState) -> Dictionary:
 	return out
 
 
-## The heroes' records for the ending, the travelling party first, then those at camp, then anyone else who fought.
-static func hero_rows(st: StoryState) -> Array[Dictionary]:
+## The heroes' records for the ending, the travelling party first, then those at camp, then anyone else who fought;
+## `art_of` as for add_fight.
+static func hero_rows(st: StoryState, art_of: Callable = Callable()) -> Array[Dictionary]:
 	var heroes := st.run_stats.get("heroes", {}) as Dictionary
 	var out: Array[Dictionary] = []
 	var seen := {}
@@ -119,7 +103,8 @@ static func hero_rows(st: StoryState) -> Array[Dictionary]:
 		var key := hero_key(ch)
 		var h := (heroes.get(key, {}) as Dictionary).duplicate()
 		h["name"] = ch.name
-		h["art"] = CombatToken.art_for(ch)
+		if art_of.is_valid():
+			h["art"] = str(art_of.call(ch))
 		h["status"] = "dead" if ch.dead else ("at camp" if ch in st.bench else "")
 		out.append(h)
 		seen[key] = true
