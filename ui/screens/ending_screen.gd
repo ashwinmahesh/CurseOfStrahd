@@ -5,6 +5,9 @@ extends CanvasLayer
 ## place or ally, with a portrait), then The End, when the save is marked finished (SaveSystem.save_finished) and
 ## Return to the title goes back to the main menu. Continue, a click, Space or Enter goes on; Esc skips the rest of
 ## the narration or of the slides. The castle key art lies behind it all, lit by the ending's tone (dawn, night, blood).
+## The End also lists the achievements this run earned, and opens the company's tally (N8): each hero's kills, Critical
+## Hits, natural 20s and 1s, falls and deaths over the whole run (RunStats), the party's fights and gold, and every
+## achievement.
 
 ## The last card is up and the save is marked finished.
 signal finished_shown
@@ -34,6 +37,9 @@ var runner: DialogueRunner
 var save_on_finish := true
 var to_title := true
 var saved := false
+
+## The company's tally while it's open.
+var tally: CanvasLayer = null
 
 var _tone: Array = []
 var _card: VBoxContainer
@@ -139,6 +145,9 @@ func _to_slides() -> void:
 func _to_end() -> void:
 	VoiceOver.stop()
 	phase = Phase.END
+	RunStats.observe_gold(st)
+	if save_on_finish:
+		RunStats.earn(st, Achievements.for_ending(st, str(ending.get("id", ""))))
 	if save_on_finish and not saved:
 		saved = SaveSystem.save_finished(str(ending.get("id", "")), str(ending.get("title", ""))) == OK
 	_show_end()
@@ -351,11 +360,112 @@ func _show_end() -> void:
 	_card.add_child(UiKit.divider(380.0))
 	var note := "Your story is saved, marked finished." if saved else "Your story is told."
 	_card.add_child(_centred(UiKit.label(note, 18, "parchment")))
+	var earned := st.run_stats.get("earned", []) as Array
+	if not earned.is_empty():
+		_card.add_child(_centred(UiKit.label("Earned on this road", 15, "gilt")))
+		var pills := HFlowContainer.new()
+		pills.alignment = FlowContainer.ALIGNMENT_CENTER
+		pills.add_theme_constant_override("h_separation", 8)
+		pills.add_theme_constant_override("v_separation", 6)
+		pills.custom_minimum_size = Vector2(900, 0)
+		pills.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		for id: Variant in earned:
+			pills.add_child(UiParts.pill(Achievements.name_of(str(id)), "gilt_light", 14))
+		_card.add_child(pills)
+	var row := HBoxContainer.new()
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_theme_constant_override("separation", 16)
 	var home := UiParts.primary_button("Return to the title", leave)
 	home.name = "ReturnToTitle"
-	_card.add_child(home)
+	row.add_child(home)
+	var stats := UiKit.button("The company's tally", show_tally, 18)
+	stats.name = "Tally"
+	row.add_child(stats)
+	_card.add_child(row)
 	home.grab_focus.call_deferred()
 	_footer.visible = false
+
+
+# --- The company's tally (N8) ---------------------------------------------------------------------
+
+const TALLY_COLUMNS: Array[Array] = [["fights", "Fights"], ["kills", "Kills"], ["crits", "Crits"], ["nat20", "20s"],
+	["nat1", "1s"], ["hits", "Hits"], ["misses", "Misses"], ["damage_dealt", "Dealt"], ["damage_taken", "Taken"],
+	["best_hit", "Hardest"], ["downs", "Falls"], ["deaths", "Deaths"]]
+
+
+## Each hero's record over the run, the party's fights and gold, the foes it defeated most, and every achievement.
+func show_tally() -> void:
+	if tally != null:
+		return
+	tally = CanvasLayer.new()
+	tally.name = "CompanyTally"
+	tally.layer = 55
+	add_child(tally)
+	var frame := UiKit.screen_frame(tally, "The Company's Tally", Vector2(1480, 820))
+	var under_crest := Control.new()
+	under_crest.custom_minimum_size = Vector2(0, 12)
+	frame.add_child(under_crest)
+	var body := VBoxContainer.new()
+	body.add_theme_constant_override("separation", 8)
+	body.add_child(UiParts.section("The heroes"))
+	var grid := GridContainer.new()
+	grid.columns = TALLY_COLUMNS.size() + 2
+	grid.add_theme_constant_override("h_separation", 16)
+	grid.add_theme_constant_override("v_separation", 4)
+	grid.add_child(Control.new())
+	grid.add_child(Control.new())
+	for col in TALLY_COLUMNS:
+		var h := UiParts.caption(str(col[1]).to_upper(), 12, "gilt")
+		h.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		grid.add_child(h)
+	for r in RunStats.hero_rows(st):
+		grid.add_child(UiParts.framed_portrait(str(r.get("art", "hero_01")), 46.0, false, str(r.get("status", "")) in ["dead", "fallen"]))
+		var who := VBoxContainer.new()
+		who.add_theme_constant_override("separation", 0)
+		var n := UiKit.label(str(r.get("name", "")), 16, "gilt_light")
+		n.custom_minimum_size = Vector2(230, 0)
+		who.add_child(n)
+		if str(r.get("status", "")) != "":
+			who.add_child(UiKit.label(str(r["status"]), 12, "vampire_red" if str(r["status"]) in ["dead", "fallen"] else "parchment"))
+		grid.add_child(who)
+		for col in TALLY_COLUMNS:
+			var v := int(r.get(str(col[0]), 0))
+			var f := UiParts.figure(str(v), 16, "ivory" if v > 0 else "bone_dark")
+			f.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+			f.custom_minimum_size = Vector2(54, 0)
+			grid.add_child(f)
+	body.add_child(grid)
+	body.add_child(UiParts.section("The road"))
+	var rs := st.run_stats
+	var lines: Array[String] = []
+	lines.append("%d fights, %d won, over %d rounds." % [int(rs.get("fights", 0)), int(rs.get("won", 0)), int(rs.get("rounds", 0))])
+	lines.append("Gold: %d gp found and %d gp spent along the way; %d gp in the purse at the end." % [roundi(float(rs.get("gold_found", 0.0))),
+		roundi(float(rs.get("gold_spent", 0.0))), roundi(st.gold)])
+	var best := rs.get("best_hit", {}) as Dictionary
+	if not best.is_empty():
+		lines.append("The hardest blow: %d damage, by %s." % [int(best["amount"]), str(best["name"])])
+	var foes := RunStats.top_kills(st)
+	if not foes.is_empty():
+		lines.append("Defeated most: %s." % ", ".join(foes))
+	if not st.fallen.is_empty():
+		lines.append("Lost for good: %s." % ", ".join(st.fallen.map(func(f: Dictionary) -> String: return str(f.get("name", "")))))
+	for line in lines:
+		body.add_child(UiKit.label(line, 16, "vellum", 1300))
+	body.add_child(UiParts.section("Achievements"))
+	body.add_child(AchievementsPanel.list(1300.0))
+	var pane := UiParts.pane(12)
+	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	pane.add_child(UiParts.fill_scroll(body))
+	frame.add_child(pane)
+	var close := UiParts.primary_button("Close", close_tally)
+	close.name = "CloseTally"
+	frame.add_child(close)
+
+
+func close_tally() -> void:
+	if tally != null:
+		tally.queue_free()
+		tally = null
 
 
 # --- Input ----------------------------------------------------------------------------------------
@@ -370,6 +480,11 @@ func _clicked(event: InputEvent) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if tally != null:
+		if event.is_action_pressed(&"combat_cancel") or event.is_action_pressed(&"ui_cancel"):
+			close_tally()
+		get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed(&"combat_cancel"):
 		get_viewport().set_input_as_handled()
 		skip()
@@ -391,8 +506,25 @@ const CAPTURE_FLAGS := {"vallaki_backed": "neither", "order_fate": "rest", "wine
 	"bonegrinder_fate": "destroyed", "death_house_children_at_rest": true, "dark_gifts_taken": 1}
 
 
+## A run's worth of numbers for the tally's capture (a capture plays no fights).
+static func _capture_stats(st: StoryState) -> void:
+	var heroes := {}
+	var i := 0
+	for ch in st.party:
+		i += 1
+		heroes[RunStats.hero_key(ch)] = {"name": ch.name, "fights": 41, "kills": 18 + i * 7, "crits": 3 + i * 2, "nat20": 6 + i,
+			"nat1": 9 - i, "hits": 120 + i * 13, "misses": 70 - i * 5, "damage_dealt": 1900 + i * 410, "damage_taken": 1500 - i * 120,
+			"best_hit": 30 + i * 9, "downs": 4 - (i % 3), "deaths": 1 if i == 3 else 0}
+	st.run_stats = {"heroes": heroes, "fights": 41, "won": 40, "rounds": 187, "gold_found": 6240.0, "gold_spent": 3815.0,
+		"gold_seen": st.gold,
+		"best_hit": {"name": st.party[0].name if not st.party.is_empty() else "", "amount": 66},
+		"kills_by_kind": {"wolf": 23, "zombie": 19, "vampire_spawn": 7, "ghoul": 11, "werewolf": 4},
+		"earned": ["first_victory", "critical", "wolves_25", "big_hit"]}
+
+
 ## make capture SCENE=res://scenes/game.tscn NAME=ending ARGS="--ending=<id>": the title card, the first narration
-## line, a speaker's line, the first slide, a slide with a portrait, and The End. No save is written.
+## line, a speaker's line, the first slide, a slide with a portrait, The End, and the company's tally. No save is
+## written.
 static func capture(game: Node, tool: Node, out: String, id: String) -> void:
 	var st := GameState.story
 	for k: String in CAPTURE_FLAGS:
@@ -407,6 +539,7 @@ static func capture(game: Node, tool: Node, out: String, id: String) -> void:
 		st.party[0].accept_dark_gift(Endings.HEIR_GIFT)
 	st.add_guest("ireena")
 	st.set_flag(Endings.FLAG, id)
+	_capture_stats(st)
 	game.call("show_ending")
 	var screen := game.get("ending") as EndingScreen
 	if screen == null:
@@ -437,3 +570,6 @@ static func capture(game: Node, tool: Node, out: String, id: String) -> void:
 	screen.skip()
 	await tool.call("wait_frames", 70)
 	tool.call("_shot", out + "_6_end.png")
+	screen.show_tally()
+	await tool.call("wait_frames", 30)
+	tool.call("_shot", out + "_7_tally.png")

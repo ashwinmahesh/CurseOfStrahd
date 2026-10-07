@@ -49,6 +49,8 @@ var miles_since_long_rest: float = 0.0
 var options: Dictionary = {"respec": true}
 ## Exploring spells still running: spell id -> {until: total minute, caster} (Light, Detect Magic, Speak with Dead).
 var active_spells: Dictionary = {}
+## The run's record for the ending (RunStats): each hero's kills, crits, natural 20s and 1s and more, and the gold.
+var run_stats: Dictionary = {}
 
 
 # --- Flags, quests, attitudes ---------------------------------------------------------------------
@@ -565,7 +567,7 @@ func to_dict() -> Dictionary:
 		"location_states": location_states.duplicate(true), "last_check": last_check, "fallen": fallen.duplicate(true),
 		"seed": playthrough_seed, "tarokka": tarokka.duplicate(), "guests": _guests_to_dict(), "shops": shops.duplicate(true),
 		"travel_resume": travel_resume.duplicate(), "active_spells": active_spells.duplicate(true),
-		"options": options.duplicate(), "miles_since_long_rest": miles_since_long_rest}
+		"options": options.duplicate(), "miles_since_long_rest": miles_since_long_rest, "run_stats": run_stats.duplicate(true)}
 
 
 ## A pregen loaded from a save wears its look as data/pregens has it now. The six on the roster borrowed other
@@ -634,6 +636,7 @@ static func from_dict(d: Dictionary) -> StoryState:
 	st.shops = (d.get("shops", {}) as Dictionary).duplicate(true)
 	st.travel_resume = (d.get("travel_resume", {}) as Dictionary).duplicate()
 	st.active_spells = (d.get("active_spells", {}) as Dictionary).duplicate(true)
+	st.run_stats = (d.get("run_stats", {}) as Dictionary).duplicate(true)
 	st.options.merge(d.get("options", {}) as Dictionary, true)
 	for g: Variant in d.get("guests", []):
 		var gd := g as Dictionary

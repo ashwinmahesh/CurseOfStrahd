@@ -166,6 +166,10 @@ func test_a_skirmish_is_fought_on_its_map_and_ends_on_the_results() -> void:
 	var row := FightTally.side_rows(arena.e, arena.results.tally, "party")[0]
 	assert_eq(int(row["kills"]), 2, "both ghouls are Wren's")
 	assert_true(arena.results.find_child("FightAgain", true, false) != null)
+	var earned := arena.results.find_child("Earned", true, false) as Label
+	assert_true(earned != null and earned.text.contains("Proving Grounds") and earned.text.contains("Overwhelming Force"),
+		"achievements the fight earned: %s" % (earned.text if earned != null else "none"))
+	assert_true(Achievements.has("skirmish_win"), "kept beside this test run's saves")
 
 
 func test_the_encounter_editor_works_on_the_sketch() -> void:
