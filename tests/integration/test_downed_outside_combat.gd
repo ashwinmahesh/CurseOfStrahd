@@ -152,3 +152,38 @@ func test_a_hero_falling_in_a_fight_raises_the_alarm() -> void:
 	assert_true(tok != null and (tok.get("_lying") as Node3D).visible, "the body is on the ground")
 	cv.finished.emit("victory")
 	await _frames(3)
+
+
+## Owner report (2026-10-07): the Death Saving Throw button sat below the bottom of the screen. It takes the action
+## slots' place inside the bar, and nothing in the combat HUD reaches past the window's edges.
+func test_the_death_save_button_is_on_screen() -> void:
+	var v := _view()
+	assert_true(v.start_encounter("rat"))
+	await _frames(3)
+	var cv := v.combat_view
+	var e := cv.e
+	for i in 10:
+		if e.current().side == &"party":
+			break
+		e.end_turn()
+		await _frames(1)
+	var c := e.current()
+	c.creature.take_damage(c.creature.hp, &"slashing")
+	assert_true(e.needs_death_save(c), "the hero must roll")
+	cv.hud.refresh()
+	await _frames(2)
+	var button := cv.hud.get("_death_button") as Button
+	assert_true(button.visible, "the button shows")
+	var screen := cv.hud.get_viewport().get_visible_rect()
+	var problems: Array[String] = []
+	for n in cv.hud.find_children("*", "Control", true, false):
+		var ctl := n as Control
+		if not ctl.is_visible_in_tree() or ctl.get_global_rect().size == Vector2.ZERO:
+			continue
+		var r := ctl.get_global_rect()
+		if r.end.y > screen.end.y + 1.0 or r.position.y < screen.position.y - 1.0:
+			problems.append("%s (%s) at y %d-%d" % [ctl.name, ctl.get_class(), r.position.y, r.end.y])
+	assert_eq(problems, [] as Array[String], "inside the %dx%d window" % [screen.size.x, screen.size.y])
+	assert_true(screen.encloses(button.get_global_rect()), "the Death Saving Throw button is on screen")
+	cv.finished.emit("victory")
+	await _frames(3)

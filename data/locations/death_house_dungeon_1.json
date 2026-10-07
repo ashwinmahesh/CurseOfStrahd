@@ -751,6 +751,7 @@
         ]
       ],
       "label": "a covered spiked pit",
+      "pit_ft": 10,
       "detect_dc": 15,
       "disarm_dc": 15,
       "save": {

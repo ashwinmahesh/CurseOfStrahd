@@ -407,6 +407,15 @@
           },
           "text": {
             "type": "string"
+          },
+          "pit_ft": {
+            "description": "A pit this many feet deep: shown as a hole once found or sprung; a failed save drops the victim in (falling damage plus the trap's), and they climb out with rope or a DC 15 Athletics check (world/exploration/pit_fall.gd).",
+            "type": "integer",
+            "minimum": 0
+          },
+          "model": {
+            "description": "The prop art a noticed trap shows (art/sprites/props); else picked by a word in its id or label (world/exploration/trap_sight.gd).",
+            "type": "string"
           }
         }
       }

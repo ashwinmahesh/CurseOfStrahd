@@ -543,6 +543,8 @@ func leader() -> Combatant:
 func walk_to(cell: Vector2i, then: Callable = Callable()) -> bool:
 	if busy or in_combat or members.is_empty():
 		return false
+	if PitFall.holds(self, leader()) and not PitFall.climb_out(self, leader().cell):
+		return false   # the leader is at the bottom of a pit: the climb comes first
 	var path := _path(leader().cell, cell)
 	if path.is_empty():
 		toast.emit("Can't get there")
@@ -562,7 +564,8 @@ func _path(from: Vector2i, to: Vector2i, around_traps: bool = true) -> Array[Vec
 	if around_traps:
 		for t: Variant in loc.get("traps", []):
 			var trap := t as Dictionary
-			if str((st.loc_state(loc_id)["traps"] as Dictionary).get(str(trap["id"]), "")) == "found":
+			var tstate := str((st.loc_state(loc_id)["traps"] as Dictionary).get(str(trap["id"]), ""))
+			if tstate == "found" or PitFall.open_hole(trap, tstate):
 				for c: Variant in trap["cells"]:
 					avoid[_cell(c)] = true
 	avoid.erase(to)
@@ -685,7 +688,7 @@ func _advance_party(next: Vector2i) -> void:
 	if solo:
 		return
 	for i in range(1, members.size()):
-		if members[i].creature.hp <= 0:
+		if members[i].creature.hp <= 0 or PitFall.holds(self, members[i]):
 			continue
 		if old[i - 1] != members[i].cell:
 			_move_member(i, old[i - 1])
@@ -859,6 +862,9 @@ func _check_traps() -> bool:
 
 
 func _spring_trap(trap: Dictionary, victim: Combatant) -> void:
+	if PitFall.is_pit(trap):
+		PitFall.spring(self, trap, victim)   # a real drop: catch the edge or fall in (and climb out later)
+		return
 	var id := str(trap["id"])
 	(st.loc_state(loc_id)["traps"] as Dictionary)[id] = "triggered"
 	var lines: Array[String] = []
@@ -906,6 +912,7 @@ func actions_at(cell: Vector2i) -> Dictionary:
 				"why": "" if not ch.known_spells().is_empty() else "No spells"})
 			if ch.hp <= 0 and not ch.dead:
 				out.append_array(_tend_actions(ch))
+			out.append_array(PitFall.actions_for(self, members[i]))
 			return {"title": ch.name, "actions": out}
 	var thing := thing_at(cell)
 	if thing.is_empty():
@@ -985,6 +992,9 @@ func act(cell: Vector2i, action_id: String) -> void:
 			return
 		"go":
 			walk_to(cell)
+			return
+		"climb":
+			PitFall.climb_out(self, cell)
 			return
 	if thing.is_empty():
 		return
@@ -1113,7 +1123,7 @@ func _tend(cell: Vector2i, action_id: String) -> void:
 			amount += int(dice.roll_expr(str(heal["dice"]), "%s gives %s %s" % [holder.name, target.name, name])["total"])
 		var healed := target.heal(amount, name)
 		holder.remove_one(item_id)
-		toast.emit("%s gives %s a %s: %d Hit Points" % [holder.name.get_slice(" ", 0), who, name, healed])
+		toast.emit("%s gives %s a %s: rolled %d, %d Hit Points" % [holder.name.get_slice(" ", 0), who, name, amount, healed])
 	refresh_party()
 	party_tended.emit()
 
