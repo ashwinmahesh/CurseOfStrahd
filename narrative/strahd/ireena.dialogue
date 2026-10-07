@@ -47,6 +47,7 @@ set strahd_window = "symbol"
 Narrator: The sun in the symbol wakes. White light fills the room, and Strahd turns his face from it with a hiss like water on a hot stove.
 Strahd [angry]: Keep your trinket. It will not keep her.
 Narrator: Then there is only the night outside, and Ireena on her knees by the sill, shaking, herself again.
+approve liriel_dawnsong +2 godrick_pendlebrook +1: You raised the Holy Symbol of Ravenkind between Strahd and Ireena
 -> saved
 
 ~ faith
@@ -54,6 +55,7 @@ set strahd_window = "faith"
 Narrator: You put yourself in the window with your faith held up before you. It is a small light, but it is between them.
 Strahd: How brave, and how thin. Another night. There are so many nights.
 Narrator: He steps back into the dark, and the dark keeps him. Ireena sags against the wall, blinking, herself again.
+approve liriel_dawnsong +1 godrick_pendlebrook +1: You stood in Ireena's window with nothing but your faith
 -> saved
 
 ~ ward
@@ -89,6 +91,7 @@ endif
 set strahd_window = "fight"
 Narrator: You go for him. Ireena cries out and stumbles back from the sill, and Strahd laughs, delighted, and steps into the room.
 Strahd: At last. Some conversation.
+approve godrick_pendlebrook +1 thistle +1: You went for Strahd at Ireena's window
 -> END
 
 ~ taken
@@ -97,6 +100,7 @@ set ireena_held_by_strahd
 Narrator: Ireena puts her hand in his. He lifts her over the sill as lightly as a dancer, and she does not look back.
 Strahd: Do come to dinner. She will be there. She has always been there.
 Narrator: Then the window is empty and the night is empty, and her shawl lies on the floor where it fell.
+approve godrick_pendlebrook -5 liriel_dawnsong -3 thistle -3 wren_featherfoot -3 kip_smudgewick -3 ratatoille -2: You let Strahd lift Ireena out of the window
 if flag.ireena_in_krezk
 set ireena_in_krezk = false
 else
@@ -156,11 +160,13 @@ Strahd: Holy ground. Bones in a box. You will not stay inside a church forever, 
 
 ~ church_go
 Strahd [smile]: As my guests wish. I was leaving in any case. I only wanted her to hear the bell.
+approve thistle +1 godrick_pendlebrook +1: You told Strahd to leave the churchyard
 -> church_end
 
 ~ church_fear
 Strahd: Afraid? Of a box of bones and a tired priest? I am disappointed in you. I had thought you clever.
 Narrator: But he doesn't take his hand off the gatepost, and he doesn't take one step past it.
+approve wren_featherfoot +1 liriel_dawnsong +1: You asked Strahd what he was afraid of
 -> church_end
 
 ~ church_end

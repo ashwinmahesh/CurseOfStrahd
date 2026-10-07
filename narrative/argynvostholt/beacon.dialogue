@@ -47,12 +47,14 @@ Vladimir: He told you. Of course he told you. He never could keep a thing to him
 Vladimir: I held his head and he said it, and I could not bear to go where he was going and tell him I had lost his house. So I kept them here, so that none of us would have to.
 Vladimir: Light it. I will stand with you while it catches. I owe him that much.
 set vladimir_fate = "made_peace"
+approve godrick_pendlebrook +2 wren_featherfoot +2 liriel_dawnsong +1: You made peace with Vladimir instead of fighting him
 -> light
 
 ~ persuaded
 Vladimir: Company. ...Four hundred years in the front row, and he has never once looked up at us.
 Vladimir: Light it, then. Quickly, before I remember why not.
 set vladimir_fate = "made_peace"
+approve godrick_pendlebrook +2 wren_featherfoot +2 liriel_dawnsong +1: You made peace with Vladimir instead of fighting him
 -> light
 
 ~ refuses
@@ -71,6 +73,7 @@ combat beacon_stand
 
 ~ back_down
 Narrator: You lower the flame. Vladimir watches it all the way down, then turns and goes back down the stair without a word, and his knights go with him.
+approve godrick_pendlebrook -2 liriel_dawnsong -1: You left the Order's beacon dark
 -> END
 
 ~ fallen
@@ -124,6 +127,7 @@ else
 Narrator: Down in the great hall, at the head of the table, a commander sits back in a winged chair and lets his sword lie.
 Argynvost: Come home, boy. You held the gate long enough.
 endif
+approve godrick_pendlebrook +4 liriel_dawnsong +3 kip_smudgewick +1 thistle +1 wren_featherfoot +1 ratatoille +1: You lit Argynvost's beacon and let the Order go home
 -> godfrey_check
 
 ~ godfrey_check
@@ -154,12 +158,14 @@ Sir Godfrey Gwilym: Or I could stay for one more ride. Your choice. I've made en
 Sir Godfrey Gwilym: One more. I'll remember this light till then. That's an easy thing to remember.
 join sir_godfrey_gwilym
 quest find_the_ally found
+approve godrick_pendlebrook +2: You asked Sir Godfrey to ride with you one more time
 -> farewell
 
 ~ godfrey_rests
 quest find_the_ally lost
 Sir Godfrey Gwilym: Thank you. Tell the old woman her cards were right about me, and that I was very tired.
 Narrator: He sits down on the top step with his back to the wall and his face to the light, and is still.
+approve liriel_dawnsong +2 godrick_pendlebrook +1: You let Sir Godfrey rest
 -> farewell
 
 ~ farewell

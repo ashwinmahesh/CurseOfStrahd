@@ -102,6 +102,7 @@ gold -150
 set bonegrinder_bargain = "gold"
 quest children_of_the_mill bargain_struck
 Morgantha [smile]: A hundred and fifty. Their mother let them go for less, if you don't count the honey. Pleasure doing business, dearies.
+approve kip_smudgewick +2 godrick_pendlebrook +1: You bought the children back from Morgantha
 -> release
 
 ~ pay_gold_rude
@@ -109,6 +110,7 @@ gold -200
 set bonegrinder_bargain = "gold"
 quest children_of_the_mill bargain_struck
 Morgantha [smile]: Two hundred. A hundred and fifty for the ducklings, and fifty for the shouting. Morgantha did say manners keep you fresh, pet.
+approve kip_smudgewick +2 godrick_pendlebrook +1: You bought the children back from Morgantha
 -> release
 
 ~ dream_offer
@@ -121,12 +123,14 @@ set bonegrinder_bargain = "dream"
 quest children_of_the_mill bargain_struck
 Narrator: She leans close enough that {name} can smell the honey on her, and lays one cold finger on {name}'s brow. Something small and warm goes out of {name}, and afterwards {name} can't remember what it was.
 Morgantha [smile]: Delicious. Morgantha will be seeing you, duckling. Now and again. Don't wake.
+approve godrick_pendlebrook +3 liriel_dawnsong +2 kip_smudgewick +1 wren_featherfoot +1: You gave Morgantha a dream of your own for the children
 -> release
 
 ~ truce_ok
 set bonegrinder_bargain = "truce"
 quest children_of_the_mill bargain_struck
 Morgantha [sly]: Peace, from heroes. That's worth something: you're the sort who keeps a promise and hates yourselves for it. Very well. The children, for your word. Morgantha will hold you to it.
+approve liriel_dawnsong +1 kip_smudgewick +1: You traded the hags your word of peace for the children
 -> release
 
 ~ truce_fail
@@ -140,6 +144,7 @@ set pastry_trade = "thriving"
 quest children_of_the_mill children_abandoned
 Morgantha [smile]: Sensible. You'll go far, dearies. Not very far; it's a small valley. But far.
 Narrator: Behind the bars, the girl puts an arm round her brother and watches you go. She doesn't call out. She has stopped expecting anyone to.
+approve kip_smudgewick -6 godrick_pendlebrook -6 liriel_dawnsong -5 thistle -5 wren_featherfoot -5 ratatoille -4: You left two children in the hags' cage
 -> END
 
 ~ release

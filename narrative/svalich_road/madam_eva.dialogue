@@ -114,6 +114,8 @@ set eva_truth_teller = "godrick_pendlebrook"
 Player: I can't read. Not proper. My name, and "ale", and "danger". Every letter we've had, I've said my eyes were tired and given it to someone else. My eyes are fine. I'm just slow.
 Madam Eva: Slow. Ha. The cards have read for kings who could recite a library and could not read a face. You read faces, big one. That is the harder alphabet.
 interject name:liriel_dawnsong: Oh, Godrick. We'll teach you. Every night, if you like. Be at peace.
+approve godrick_pendlebrook +3: You stood by me when I told Madam Eva I can't read
+inspire name:godrick_pendlebrook: paid Madam Eva in an honest truth
 -> reading
 
 ~ truth_liriel
@@ -122,6 +124,8 @@ set eva_truth_teller = "liriel_dawnsong"
 Player: I'm frightened of the dark. I have been since I was small. A priestess of the dawn, and I sleep with a light on, and tell everyone it's devotion. And I've come to the darkest place in the world.
 Madam Eva [sad]: Then you came on purpose to the thing you fear most, carrying a candle. Child, that is not a weakness. That is the whole of courage, in one sentence.
 interject name:thistle: I'll sleep next to you, Sunbeam. Anything comes in the dark, I'll bite it.
+approve liriel_dawnsong +3: You stood by me when I told Madam Eva I'm afraid of the dark
+inspire name:liriel_dawnsong: paid Madam Eva in an honest truth
 -> reading
 
 ~ truth_thistle
@@ -130,6 +134,8 @@ set eva_truth_teller = "thistle"
 Player: I like towns. Bit. Beds. The little cakes. People singing in the big room at the inn. And I don't fit in them, and I don't fit in the woods any more either. I don't fit anywhere.
 Madam Eva [sly]: The Vistani have no house and no country and we fit everywhere the road goes. Belonging is not a place, wolf-girl. It is the people who save you a seat.
 interject name:godrick_pendlebrook: You fit with us. You fit right next to me. Mostly because nobody else will arm-wrestle me.
+approve thistle +3: You stood by me when I told Madam Eva I don't fit anywhere
+inspire name:thistle: paid Madam Eva in an honest truth
 -> reading
 
 ~ truth_ratatoille
@@ -138,6 +144,8 @@ set eva_truth_teller = "ratatoille"
 Player: I'd rather cook than cast. I always would. I learned magic so people would sit with me, and I'm good at it, and I'd still rather be in a kitchen. That's a terrible thing for a wizard to say.
 Madam Eva: Is it? The best wizard I ever read for burned his own beard making me an omelette. He was happier holding that pan than any staff.
 interject name:wren_featherfoot: I'm telling everyone. No, I'm not. Yes I am. No, I'm not.
+approve ratatoille +3: You stood by me when I told Madam Eva I'd rather cook
+inspire name:ratatoille: paid Madam Eva in an honest truth
 -> reading
 
 ~ truth_wren
@@ -146,6 +154,8 @@ set eva_truth_teller = "wren_featherfoot"
 Player: My master died before my last lesson. I asked him what it was and he said it was in a letter I'm not allowed to read. I make jokes all day so nobody notices I'm not finished.
 Madam Eva [sad]: Everybody is not finished, little acrobat. The ones who think they are, they are the ones the cards worry about.
 interject name:ratatoille: For what it's worth, I'd noticed. I didn't say anything. I'm not good at saying things. I'd have made you soup.
+approve wren_featherfoot +3: You stood by me when I told Madam Eva I'm not finished
+inspire name:wren_featherfoot: paid Madam Eva in an honest truth
 -> reading
 
 ~ truth_kip
@@ -154,6 +164,8 @@ set eva_truth_teller = "kip_smudgewick"
 Player: My dad sent the devil away from our gate. Told him we'd manage. I went after him down the lane and signed behind Dad's back. I came home and said the orchard came back on its own. He went to temple and gave thanks for it. I've been lying to him for two years.
 Madam Eva: You sold yourself to save a man who would not let you. That is a terrible bargain and a very good son. The cards will take it. They like a good son.
 interject name:liriel_dawnsong: Kip. Thank you for telling us. We'll get you home to tell him yourself.
+approve kip_smudgewick +3: You stood by me when I told Madam Eva who signed the contract
+inspire name:kip_smudgewick: paid Madam Eva in an honest truth
 -> reading
 
 ~ truth_other
@@ -166,6 +178,7 @@ Madam Eva: Yes. That will do. Keep the rest of it; you will need something to ca
 ~ free_ok
 set eva_reading_paid = "free"
 Madam Eva [sly]: For the valley. Ha! Nobody has said that to me in sixty years. Very well. The valley can owe me. It already owes me a great deal.
+approve godrick_pendlebrook +1 liriel_dawnsong +1: You asked Madam Eva to read for the valley's sake
 -> reading
 
 ~ free_fail
@@ -179,6 +192,7 @@ set eva_reading_paid = "forced"
 attitude madam_eva hostile
 Narrator: For a heartbeat something old and very cold looks out of her eyes. Then she laughs, a dry sound like a deck being cut.
 Madam Eva [sly]: Brave. Stupid, but brave. Fine. The cards will speak to you, and you will wish you had paid them.
+approve godrick_pendlebrook -3 liriel_dawnsong -2 kip_smudgewick -1 wren_featherfoot -1: You threatened an old woman for her cards
 -> reading
 
 ~ threat_fail
@@ -205,6 +219,7 @@ set vistani_turned_hostile
 attitude madam_eva hostile
 attitude stanimir hostile
 Madam Eva: Then go and do it. I will be here when you are finished. I always am.
+approve godrick_pendlebrook -3 liriel_dawnsong -3 kip_smudgewick -3 wren_featherfoot -2: You turned on the Vistani in their own camp
 -> END
 
 ~ refuse
@@ -222,6 +237,7 @@ Madam Eva: Before we begin. One of you has forty of my nephew's gold pieces abou
 gold -40
 set vistani_repaid
 Madam Eva: Good. The cards prefer clean hands. Cleaner hands. They are not fussy.
+approve kip_smudgewick +2 godrick_pendlebrook +1: You gave the Vistani back what was taken from them
 -> price
 
 ~ robbed_lie_ok
@@ -240,6 +256,7 @@ Narrator: She doesn't write it down. She doesn't need to; you watch her remember
 set eva_reading_paid = "forced"
 attitude madam_eva hostile
 Madam Eva: Then it is yours, and so is what comes with it. Remember that I said so. Sit. The cards will speak to thieves; they have spoken to worse.
+approve kip_smudgewick -3 godrick_pendlebrook -2 wren_featherfoot -1 liriel_dawnsong -1: You kept what was stolen from the Vistani to their faces
 -> reading
 
 ~ after_brawl
@@ -401,36 +418,42 @@ interject tag:veteran: Three items, one ally, one room. That's a plan. I've foll
 set eva_question = "order"
 Madam Eva [sly]: The dragon's knights keep their watch still, big one, on a hill where the house is burned and the dead lay the table every night. Their master will not knight you. One of them will. Look low on the wall.
 Player: Low on the wall. Right. Is that a riddle? I'm bad at riddles.
+approve godrick_pendlebrook +3: You spent Madam Eva's question on the Order for me
 -> farewell
 
 ~ q_dawn
 set eva_question = "dawn"
 Madam Eva: Dawn comes to this valley every day, priestess. It simply never arrives. Somebody has to carry it the last of the way, into his house.
 Player: Then I'll carry it. I've carried it this far.
+approve liriel_dawnsong +3: You spent Madam Eva's question on the dawn for me
 -> farewell
 
 ~ q_fen
 set eva_question = "fen"
 Madam Eva [sad]: Your old trapper is alive, wolf-girl. He walks on more legs than he left home with, some nights. He is waiting where the wolves wait, above the lake. He told you to run. Don't.
 Player: Wasn't going to.
+approve thistle +3: You spent Madam Eva's question on Grandda Fen
 -> farewell
 
 ~ q_wizard
 set eva_question = "wizard"
 Madam Eva [sly]: The wizard you want pays his debts in green stones and plays games against nobody, up where the snow is. You will find his name in a cellar before you find him on a mountain. And you will not like either.
 Player: A cellar. A mountain. Right. I'll take notes. I'm writing this down. Somebody hold my skillet.
+approve ratatoille +3: You spent Madam Eva's question on the Wizard of Wines for me
 -> farewell
 
 ~ q_kasimir
 set eva_question = "kasimir"
 Madam Eva: The man you carry a letter for mends nets he will never cast, at a fire that is not his, outside the walled town. He has waited four hundred years for word from over the mountains. Don't make him wait longer.
 Player: Four hundred years. Master Sorrel always did take his time with the post.
+approve wren_featherfoot +3: You spent Madam Eva's question on Kasimir for me
 -> farewell
 
 ~ q_contract
 set eva_question = "contract"
 Madam Eva: Read it, merchant. Every word. Devils write in a hurry and expect their clients to sign in tears. The way out of a cage is very often written on the cage.
 Player: Right. Read it. I can do that. I'll read it tonight. I'll read it tomorrow. I'll definitely read it.
+approve kip_smudgewick +3: You spent Madam Eva's question on my contract
 -> farewell
 
 ~ q_why

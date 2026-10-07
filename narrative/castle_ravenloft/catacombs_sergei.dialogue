@@ -37,6 +37,7 @@ interject class:wizard: One can guess who. One would rather not.
 ~ rites
 set cat_sergei_rites_said
 Narrator: The old words, said properly, in a room that has heard only one man's apologies for a very long time. The candle flames lean toward the tomb, and then stand up straight again.
+approve liriel_dawnsong +1: You said the rites over Sergei's tomb
 -> tomb_menu
 
 ~ rites_lost
@@ -109,4 +110,5 @@ Ireena [sad]: That's the first time you've called me that.
 ~ ireena_fade
 Narrator: The second face is gone. The water is only water, and Ireena gets up off her knees and brushes the dust from them, and is herself again, mostly.
 interject guest:ireena: Don't. Whatever it is. Later, when we're out in the air.
+approve wren_featherfoot +1 liriel_dawnsong +1: You let Ireena have her moment at Sergei's tomb
 -> tomb_look

@@ -83,10 +83,12 @@ interject name:godrick_pendlebrook: None of it was your fault. Not one bit. You 
 else
 interject tag:pious: None of it was your doing. Not one bit. Remember that part as well.
 endif
+approve thistle +1 liriel_dawnsong +1 godrick_pendlebrook +1: You told Ilka the truth about her mother
 -> destination
 
 ~ lie
 Narrator: Ilka looks at you a long moment, and decides to let you have the lie. It is the kindest thing anyone does in the mill today.
+approve kip_smudgewick +1 wren_featherfoot +1: You let Ilka keep a kind lie about her mother
 -> destination
 
 ~ destination

@@ -53,6 +53,7 @@ Narrator: Black water, weed and cold, and nothing in your hands. When you come u
 
 ~ let_go
 Narrator: Bluto looks back once, as if he'd expected someone to argue. Then he walks off the end of the jetty, and the stones take him straight down.
+approve liriel_dawnsong -3 godrick_pendlebrook -3 kip_smudgewick -2 wren_featherfoot -1: You let Bluto walk off the jetty
 -> drowned
 
 ~ saved
@@ -69,6 +70,7 @@ else
 interject class:cleric: Eat something first. That's not advice, it's an order.
 endif
 Bluto: Yes. Yes, all right.
+approve liriel_dawnsong +2 godrick_pendlebrook +2 kip_smudgewick +1 ratatoille +1: You pulled Bluto back from the edge of the jetty
 -> END
 
 ~ drowned
@@ -110,6 +112,7 @@ set lake_boat_ready
 Narrator: He doesn't fight. He leaves the fish where they lie and walks ahead of you along the shore to the painted wagons, and when Luvash sees who you have brought, the whole camp goes silent.
 Narrator: You don't stay to see what the Vistani decide. You hear it, a little later, from the road.
 interject tag:blunt: It was theirs to decide. Not ours.
+approve godrick_pendlebrook +1 liriel_dawnsong +1 kip_smudgewick +1: You let Arabelle's people judge Bluto
 -> END
 
 ~ kill
@@ -117,12 +120,14 @@ set bluto_fate = "killed"
 set lake_boat_ready
 Narrator: He sees it coming and doesn't run. It is quick. Afterwards the fish go on flapping on the shingle for a long time, and then they stop.
 interject class:cleric: That wasn't justice. That was only the end of something.
+approve liriel_dawnsong -3 wren_featherfoot -2 kip_smudgewick -2 godrick_pendlebrook -1 thistle +1: You killed Bluto on the shingle
 -> END
 
 ~ left
 set bluto_fate = "left"
 set lake_boat_ready
 Bluto: Every day. Yes. Every day. Take the boat, I can't look at it. Take it and go.
+approve wren_featherfoot +2 liriel_dawnsong +1: You left Bluto to live with what he did
 -> END
 
 # ---------------------------------------------------------------- Bluto, later

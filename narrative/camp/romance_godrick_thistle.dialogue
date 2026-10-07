@@ -1,0 +1,100 @@
+# Godrick and Thistle, a romance between two of the six (story/approval.gd ROMANCES, docs/story/approval.md). Camp
+# talks (story/camp_talk.gd), each offered once: the spark, the courting, and together. Flag romance_godrick_thistle:
+# "spark", "courting", "together", or "over" when the party steered them apart. Thistle walks one road at a time: this
+# one or Wren's (camp/romance_thistle_wren).
+
+~ talk_spark
+if name:godrick_pendlebrook and name:thistle and not flag.romance_godrick_thistle and (not flag.romance_thistle_wren or flag.romance_thistle_wren == "over") and approval.godrick_pendlebrook >= warm and approval.thistle >= warm and level >= 3
+-> spark
+endif
+-> END
+
+~ spark
+Narrator: The eating contest was Thistle's idea. Most things involving shouting are. It has been going on for some time, and Ratatoille has stopped cooking in protest.
+interject name:thistle: Again. Another. Big, you're slowing down.
+interject name:godrick_pendlebrook: I'm not slowing down. I'm savouring. Sir Pellam said a knight savours.
+Narrator: Thistle wins in the end by eating the last sausage straight off his fork. Godrick laughs so loud the horses startle, a beat after everyone else, the way he always does. Then he keeps looking at her after he's stopped laughing.
+interject name:godrick_pendlebrook: You've got a bit of sausage on your nose.
+interject name:thistle: Leave it. It's mine. I won it.
+* You two are good together. -> spark_nudge
+* (Say nothing, and hide a smile.) -> spark_quiet
+* Can we stop eating the rations for sport? -> spark_away
+
+~ spark_nudge
+interject name:godrick_pendlebrook: We are, aren't we? Best friends inside a day. I've never had that. I've had friends, but they took weeks.
+Narrator: Thistle doesn't say anything at all, which is the loudest thing she's done all night.
+set romance_godrick_thistle = "spark"
+approve godrick_pendlebrook +1 thistle +1: You told us we're good together
+-> END
+
+~ spark_quiet
+Narrator: You say nothing. Godrick reaches over and takes the bit of sausage off her nose, very gently, and Thistle lets him, which nobody has ever seen her let anyone do.
+set romance_godrick_thistle = "spark"
+-> END
+
+~ spark_away
+interject name:godrick_pendlebrook: Fair. Sorry. That was the last of the good sausages, wasn't it. Sorry, Rat.
+set romance_godrick_thistle = "over"
+-> END
+
+~ talk_courting
+if name:godrick_pendlebrook and name:thistle and flag.romance_godrick_thistle == "spark" and approval.godrick_pendlebrook >= warm and approval.thistle >= warm and level >= 5
+-> courting
+endif
+-> END
+
+~ courting
+Narrator: Godrick finds you at the edge of camp, turning his helmet round and round in his enormous hands.
+interject name:godrick_pendlebrook: I need advice. Courting advice. Sir Pellam was very clear about courting: flowers, a poem, a respectful distance, and never on a Tuesday.
+interject name:godrick_pendlebrook: Only it's Thistle. She'd eat the flowers. She'd laugh at the poem, and then she'd bite me for the respectful distance. And I don't know what day it is.
+* Be yourself, Godrick. That's who she likes. -> courting_self
+* Challenge her to something. -> courting_challenge
+* Maybe she just sees you as a friend. -> courting_friend
+
+~ courting_self
+interject name:godrick_pendlebrook: Myself. Right. I can do that. I'm very good at being myself. It's the only thing I've had much practice at.
+set romance_godrick_thistle = "courting"
+approve godrick_pendlebrook +2: You told me to be myself with Thistle
+-> END
+
+~ courting_challenge
+interject name:godrick_pendlebrook: A challenge! Yes. Arm-wrestling. Loser has to say something nice. I'll lose on purpose. No. She'd smell it. I'll lose properly.
+set romance_godrick_thistle = "courting"
+approve godrick_pendlebrook +2: You told me to challenge Thistle to something
+-> END
+
+~ courting_friend
+interject name:godrick_pendlebrook: ...Right. Yes. You're cleverer than me about these things. Friends is good. Friends is the best thing I've got.
+Narrator: He puts his helmet back on, though there's nothing to fight, and goes back to the fire.
+set romance_godrick_thistle = "over"
+approve godrick_pendlebrook -1: You told me Thistle only sees me as a friend
+-> END
+
+~ talk_together
+if name:godrick_pendlebrook and name:thistle and flag.romance_godrick_thistle == "courting" and approval.godrick_pendlebrook >= close and approval.thistle >= close and level >= 7
+-> together
+endif
+-> END
+
+~ together
+Narrator: It's Thistle who does it in the end, because Godrick never would have. She walks straight up to him in front of everyone, takes him by the collar of his mail, and pulls until he bends down, which takes some pulling.
+interject name:thistle: Big. You're mine. Pack, and the other thing. Both. Say yes.
+interject name:godrick_pendlebrook: ...Yes. Yes! Is this, are we... yes. Right then. Yes.
+Narrator: She kisses him on the nose, which is all she can reach, and lets go. He stays bent over for a moment, as though he's forgotten how to stand up straight.
+interject name:godrick_pendlebrook: Sir Pellam said there'd be flowers. There weren't any flowers. This was better than flowers.
+* (Leave them to it.) -> together_leave
+* Congratulations, both of you. -> together_congrats
+
+~ together_leave
+Narrator: You go and find something very interesting to look at on the other side of the camp. Behind you, Godrick starts to laugh, a beat late, and doesn't stop for a long time.
+-> together_end
+
+~ together_congrats
+interject name:godrick_pendlebrook: Thank you! Thank you. I'd make a speech, but I think she'd bite me.
+interject name:thistle: I would. Gently. Mostly.
+-> together_end
+
+~ together_end
+set romance_godrick_thistle = "together"
+approve godrick_pendlebrook +3 thistle +3: You were there when we said it
+-> END

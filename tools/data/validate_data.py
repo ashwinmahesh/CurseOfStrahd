@@ -507,6 +507,31 @@ def castle_checks(data, parsed, errors, cond, flags_set, dialogue_refs):
                 dialogue_refs.append((step["dialogue"], w))
 
 
+def approval_checks(data, p, errors):
+    """Companion approval and Heroic Inspiration in one parsed dialogue file (story/approval.gd, story/in_character.gd):
+    `approve` and `approval.<id>` name roster companions, and a condition compares with a tier or a number."""
+    companions = {pid for pid, pg in data["pregens"].items() if pg.get("roster", True)}
+    tiers = set(re.findall(r'"id": "([a-z_]+)", "name"', (ROOT / "story" / "approval.gd").read_text()))
+    for cid, delta, where in p.get("approvals", []):
+        if cid not in companions:
+            errors.append(f"narrative/{where}: approve: '{cid}' isn't one of the six companions ({', '.join(sorted(companions))})")
+        if delta == 0 or abs(delta) > 20:
+            errors.append(f"narrative/{where}: approve: a change of {delta:+d} (use -20 to +20, never 0)")
+    for cid, rhs, where in p.get("approval_terms", []):
+        if cid not in companions:
+            errors.append(f"narrative/{where}: approval.{cid}: not one of the six companions")
+        if rhs and rhs not in tiers and not re.fullmatch(r"[+-]?\d+", rhs):
+            errors.append(f"narrative/{where}: approval.{cid}: compare with a tier ({', '.join(sorted(tiers))}) or a number, not '{rhs}'")
+    for sel, where in p.get("inspires", []):
+        if sel == "party":
+            continue
+        kind = sel.split(":", 1)[0]
+        if kind not in ("name", "class", "species", "background", "tag", "knows"):
+            errors.append(f"narrative/{where}: inspire {sel}: use name:, class:, species:, background:, tag: or knows:")
+        elif kind == "name" and sel.split(":", 1)[1] not in data["pregens"]:
+            errors.append(f"narrative/{where}: inspire {sel}: no pregen called that")
+
+
 def story_checks(data, errors, need):
     """Locations, NPCs, quests, the flag registry and every .dialogue file (ADR 0008, ADR 0009)."""
     flags = {}
@@ -672,6 +697,7 @@ def story_checks(data, errors, need):
             flags_read.setdefault(fid, []).extend(wh)
         for fid, wh in p["flags_set"].items():
             flags_set.setdefault(fid, []).extend(wh)
+        approval_checks(data, p, errors)
     treasure_checks(data, parsed, errors, pending_list)
     castle_checks(data, parsed, errors, cond, flags_set, dialogue_refs)
     for ref, w in dialogue_refs:

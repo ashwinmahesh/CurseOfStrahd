@@ -68,6 +68,7 @@ Donavich [afraid]: A madman. A poor soul I shelter, out of charity. He's loud. P
 time +120
 Narrator: You sit in the back pews while he prays. The voice below begs, then bargains, then sings a hymn with the words wrong. Near the second hour it stops calling him Father and starts calling him Papa.
 Donavich [sad]: Forgive me. You've sat through it now. There's no use lying to people who've sat through it.
+approve liriel_dawnsong +2 godrick_pendlebrook +1: You sat with Father Donavich through his son's screaming
 -> truth
 
 ~ insight_fail
@@ -100,6 +101,7 @@ quest the_priests_son cure_promised
 attitude donavich friendly
 Donavich: You would? There are old stories. Saints' bones that turn the dead. Relics of the Morninglord. The sun itself, once. If anything in this valley could bring him back, it's one of those.
 Donavich [sad]: I'll keep him fed on prayer until you come back. It's all I have to feed him on.
+approve liriel_dawnsong +3 godrick_pendlebrook +2 kip_smudgewick +1: You promised Donavich you'd look for a way to save his son
 -> menu
 
 ~ mercy
@@ -111,6 +113,7 @@ Donavich [afraid]: End it. You mean kill him. Kill my boy.
 
 ~ mercy_cleric
 Narrator: You don't argue. You tell him what you would want if it were your child, and what you would want if it were you down there, and he listens with his eyes closed.
+inspire class:cleric: spoke to a grieving priest as one priest to another
 -> mercy_ok
 
 ~ mercy_ok
@@ -124,6 +127,7 @@ set donavich_gave_holy_water
 give holy_water 2
 Donavich: Take these. Holy water. It will burn him. I blessed it for him weeks ago, and could never throw it.
 endif
+approve thistle +1 liriel_dawnsong +1: You talked a father into letting his son go
 -> END
 
 ~ mercy_fail
@@ -181,6 +185,7 @@ interject name:wren_featherfoot: Lost, not destroyed. Master Sorrel says nothing
 attitude donavich friendly
 Narrator: You kneel beside him and pray aloud. For a few breaths the voice under the floor stops, as if it's listening too.
 Donavich [sad]: You still feel Him? Here? I haven't, not for a year. I say "Dawn will come" every night, to keep my mouth from saying other things.
+approve liriel_dawnsong +1: You prayed with a priest who couldn't feel his god
 -> menu
 
 ~ needs

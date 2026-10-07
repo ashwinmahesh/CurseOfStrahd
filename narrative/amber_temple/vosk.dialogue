@@ -133,6 +133,7 @@ dark_gift gift_of_the_hollow
 if gift:gift_of_the_hollow
 set vosk_fate = "paid"
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us lie down in Vosk's amber
 quest the_amber_temple broker_paid
 Narrator: The amber is warm, and it fits. For a moment you feel the whole valley at once, every road and grave and pulse in it, and on a hill far away, something turns its head toward you.
 Narrator: When you climb out, Vosk is closing his book with a soft, satisfied clap.
@@ -146,6 +147,7 @@ Vosk: No one? You came all this way down to say no one. Well. I've been told no 
 ~ refuse
 Vosk: Nothing? Not even something small for the road? A pity. I do hate a wasted trip.
 Narrator: He takes off his spectacles, and his face comes away with them.
+approve kip_smudgewick +2 liriel_dawnsong +1: You told Master Vosk you'd take nothing from him
 combat vosk_unmasked
 
 ~ trick_ok
@@ -182,8 +184,10 @@ quest the_amber_temple broker_banished
 Vosk: Never? That is a very long word for a mortal to use. ...Agreed. Bound and agreed.
 Narrator: He gathers his books one by one and walks into the hollow amber as if it were a doorway. For him, it is. The amber flickers once and he's gone.
 Narrator: All through the temple, the voices in the sarcophagi fall silent for a moment, as if a door had shut somewhere in a house they live in.
+approve kip_smudgewick +3 liriel_dawnsong +2 godrick_pendlebrook +1: You bound Master Vosk never to broker another bargain in this valley
 -> amber_temple/vault:revelation
 
 ~ named_attack
 Narrator: He sees it coming, and for once he doesn't smile.
+approve godrick_pendlebrook -2: You struck Master Vosk while he was bound
 combat vosk_unmasked

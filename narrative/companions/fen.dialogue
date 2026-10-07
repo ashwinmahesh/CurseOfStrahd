@@ -23,6 +23,7 @@ endif
 if not (quest.fens_trail >= the_blazes)
 quest fens_trail the_blazes
 endif
+approve thistle +2: You found Grandda's first blaze with me
 -> END
 
 ~ blaze_lake
@@ -53,6 +54,7 @@ interject name:thistle: I'm not running.
 if not (quest.fens_trail >= the_wolf_road)
 quest fens_trail the_wolf_road
 endif
+approve thistle +2: You followed Grandda's blazes up from the lake with me
 -> END
 
 # --- Kiril's offer (werewolf_den/kiril) ------------------------------------------------------------------------
@@ -66,6 +68,7 @@ Narrator: For a moment Thistle doesn't answer, and her nostrils flare, and you c
 interject name:thistle: You steal children.
 Kiril: Pups. The master wants pups.
 interject name:thistle: Grandda says a wolf that walks like a man is two kinds of trouble and one kind of sad. You're the trouble kind. I've got a pack. Mine don't eat kids.
+inspire name:thistle: turned down Kiril's pack to his face
 -> werewolf_den/kiril:choice
 
 # --- Fen in the den (npc fen_burley, werewolf_den_caves) ---------------------------------------------------------
@@ -95,10 +98,13 @@ Fen Burley: Some nights it nearly does, lass. I'll not lie to you. Some nights I
 if not (quest.fens_trail >= found_him)
 quest fens_trail found_him
 endif
+approve thistle +3: You found Grandda with me
 -> menu
 
 ~ menu
-* [knows:remove_curse] (Cast Remove Curse on him.) -> cure
+# Approval (story/approval.gd): Strained or worse, and Thistle won't let the party's magic near him until it's mended.
+* [knows:remove_curse] [if not (approval.thistle <= strained)] (Cast Remove Curse on him.) -> cure
+* [knows:remove_curse] [if approval.thistle <= strained] (Cast Remove Curse on him.) -> cure_refused
 * [if flag.emil_key_found] (Use the key on his chains.) -> free_key
 * [if not flag.emil_key_found and not flag.fen_force_tried] [Athletics DC 15] Tear his rings out of the rock. -> free_force | force_fail
 * [if not flag.emil_key_found and not flag.fen_pick_tried] [Sleight of Hand DC 14] Pick his cuffs. -> free_pick | pick_fail
@@ -125,6 +131,13 @@ Fen Burley: Aye. I know. I'm only telling you it's allowed.
 * [name:thistle] (Do the other thing, the way he taught her.) -> mercy
 * We'll find another way. -> menu
 
+~ cure_refused
+Narrator: Thistle is between you and him before the first word, low and fast, the way she goes between a hound and a snare.
+interject name:thistle: Don't. Don't touch him. Not you lot. Not the way you've been.
+Narrator: Fen growls something low at her back, gentle, the way you'd settle a dog. She doesn't move an inch.
+interject name:thistle: No. I'll find someone else. Someone I trust.
+-> menu
+
 ~ cure
 Narrator: The prayer is short and old, and the words go into him like a hand into a wound, and find the thing curled up inside, and pull.
 Narrator: Fen arches in his chains and howls, and the howl breaks halfway and comes out as an old man's yell, and the fur goes, and the length goes out of his arms, and then there's only a skinny, white-stubbled trapper hanging from two rings, sobbing and laughing at once.
@@ -137,8 +150,16 @@ Fen Burley: My girl. My girl.
 interject name:thistle: You smell like a dog, Grandda. You smell like a wet dog.
 Fen Burley: Aye. Well. You smell like a town.
 Fen Burley: I'll go down to Krezk. They've walls there, but you can climb them, and they keep goats. I'll wait. You come and find me after. You're good at that.
+if approval.thistle >= close
+Narrator: Fen looks past her at the rest of you for a long moment, the way he'd size up a strange dog: slowly, and all the way to the bottom.
+interject name:thistle: My pack, Grandda. All of them. Even the loud ones.
+Narrator: He nods once, as if that settles something. Then he shrugs out of the ragged trapper's cloak the wolf never quite tore off him and drops it round her shoulders.
+Narrator: It has hidden him in the trees through forty winters, and he won't need hiding any more. It smells of pine and wet dog and woodsmoke, and she pulls it closed with both fists.
+give cloak_of_elvenkind to name:thistle
+endif
 set fen_fate = "cured"
 quest fens_trail fen_cured
+approve thistle +10: You lifted the wolf out of Grandda
 -> END
 
 ~ free_key
@@ -162,6 +183,7 @@ Fen Burley: Don't follow my blazes this time. Make your own.
 Narrator: He goes out of the alcove on four legs, fast and low, and at the mouth of the cave he stops and looks back once, and makes a sound that might have been a laugh.
 set fen_fate = "freed"
 quest fens_trail fen_freed
+approve thistle +5: You took the silver off Grandda and let him go to the high woods
 -> END
 
 ~ mercy
@@ -170,6 +192,7 @@ Fen Burley: Good lass.
 Narrator: Afterwards she carries him out herself, and won't be helped, and buries him under a rowan on the hillside with a crow feather in the bark above him.
 set fen_fate = "rests"
 quest fens_trail fen_rests
+approve thistle +2: You let me do what Grandda asked, the way he taught me
 -> END
 
 ~ bye

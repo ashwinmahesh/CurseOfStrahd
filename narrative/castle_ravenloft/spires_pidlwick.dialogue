@@ -79,6 +79,7 @@ time +10
 Narrator: Three wooden balls appear from nowhere and he tosses you one. For a few minutes, on a stair in a vampire's house, you play catch with a clockwork jester, and he is very good at it.
 interject name:wren_featherfoot: He palmed one. Saw it. Lovely wrist on him. I'd have been quicker, but lovely.
 Pidlwick II: (A deep bow, then the slate.) AGAIN? LATER?
+approve wren_featherfoot +2: You played catch with a clockwork jester on a vampire's stair
 -> menu
 
 ~ winding
@@ -134,6 +135,7 @@ endif
 attitude pidlwick_ii friendly
 interject name:godrick_pendlebrook: Welcome aboard, little fellow! You walk beside me. Nobody walks behind anybody on a stair. New rule.
 Pidlwick II: (He salutes with the wrong hand.) YES SIR.
+approve godrick_pendlebrook +1 wren_featherfoot +1: You let Pidlwick come along
 -> END
 
 ~ refuse

@@ -61,6 +61,7 @@ Player: "Some sicknesses are cured by tenderness. Others only grow fat on it. Ke
 Narrator: Clovin is very quiet for a while. His feathered hand opens and closes.
 Clovin Belview: She went to kill him. The saint. She didn't go to make friends with him. He told us she went to make friends.
 Clovin Belview: Keep it. No. Read it to him. Read it to him when he's happy. I want to see his face.
+approve ratatoille +1 liriel_dawnsong +1: You read St. Markovia's letter aloud to Clovin
 -> menu
 
 ~ bride
@@ -83,6 +84,7 @@ else
 interject tag:cheerful: To the ear.
 endif
 Clovin Belview [smile]: To the ear!
+approve ratatoille +1 wren_featherfoot +1: You drank the last of the Martikovs' wine with Clovin
 -> menu
 
 ~ after
