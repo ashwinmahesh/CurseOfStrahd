@@ -1,8 +1,10 @@
 extends TestCase
-## Two owner bugs. Escape didn't open the pause menu in the Combat Arena, so there was no way out: it now opens the
-## menu (the fight waits), Escape closes it, and it opens after the fight too. And after quitting a game to the title,
+## Three owner bugs. Escape didn't open the pause menu in the Combat Arena, so there was no way out: it now opens the
+## menu (the fight waits), Escape closes it, and it opens after the fight too. After quitting a game to the title,
 ## sometimes no title button answered: the menu had paused the tree in a fight and the pause outlived the scene change.
-## Leaving through the menu now unpauses, and the title screen never starts paused.
+## Leaving through the menu now unpauses, and the title screen never starts paused. And closing the menu in the game
+## raised "Something went wrong" (2026-10-07, after Settings' Window switch): it sank away like a framed screen
+## without having a frame; its arch is now its frame.
 
 const SCENE := preload("res://scenes/combat/arena.tscn")
 
@@ -82,3 +84,47 @@ func test_the_title_answers_even_if_left_paused() -> void:
 	assert_true(not buttons.is_empty(), "the title has its buttons")
 	assert_true((buttons[0] as Button).can_process(), "and they take input")
 	title.queue_free()
+
+
+## Every error logged while it's attached.
+class Errors extends Logger:
+	var seen: Array[String] = []
+
+	func _log_error(_function: String, file: String, line: int, code: String, rationale: String, _editor_notify: bool,
+			error_type: int, _script_backtraces: Array[ScriptBacktrace]) -> void:
+		if error_type == ERROR_TYPE_ERROR or error_type == ERROR_TYPE_SCRIPT:
+			seen.append("%s:%d %s" % [file, line, rationale if rationale != "" else code])
+
+
+func test_the_menu_closes_cleanly_in_the_game() -> void:
+	UiMotion.on()
+	var was_reduced := UiMotion.reduced
+	UiMotion.reduced = false   # as in a windowed game; headless runs have motion off
+	GameState.reset()
+	var game := (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(game)
+	await _frames(5)
+	var errors := Errors.new()
+	OS.add_logger(errors)
+	game.call("open_screen", "menu", 0)
+	await _frames(2)
+	var menu := game.get("screen") as PauseMenu
+	menu.call("_show_settings")
+	await _frames(1)
+	var window := menu.find_child("Window", true, false) as Button
+	window.pressed.emit()   # Fullscreen (headless has no window to change)
+	window.pressed.emit()   # and back to Windowed
+	assert_true(menu.get_meta(&"frame_panel", menu) is Control, "the arch is the menu's frame, so it sinks like the others")
+	game.call("close_screen")
+	var ref: WeakRef = weakref(menu)
+	var left := 5.0
+	while left > 0.0 and ref.get_ref() != null:
+		await get_tree().process_frame
+		left -= get_process_delta_time()
+	OS.remove_logger(errors)
+	assert_true(ref.get_ref() == null, "the menu closed")
+	assert_eq(errors.seen, [] as Array[String], "and nothing went wrong")
+	UiMotion.reduced = was_reduced
+	GameSettings.set_fullscreen(false)
+	game.queue_free()
+	await _frames(1)

@@ -53,6 +53,22 @@ When the party opens a fight (an attack on a waiting foe, or stepping into the f
   against them have Disadvantage and theirs have Advantage, until they attack, cast a spell aloud, or a foe gets a
   clear view of them. Hiding ends with the fight.
 
+## Who can see you (U10)
+
+While the party sneaks or explores turn-based, or while the player holds **L**, each foe in plain view shows the
+squares it can see and wears an eye (`world/exploration/sight_overlay.gd`, after Baldur's Gate 3's sight cones):
+
+- **red** when it would notice one of the party who stepped into its sight even in dim light (always, when the party
+  isn't sneaking);
+- **amber** when only bright light would give the party away (dim light takes 5 off its passive Perception);
+- **gold** when the party's Stealth beats it either way.
+
+The squares each foe watches are tinted on the ground in its eye's colour (a square several watch takes the most
+dangerous): within 30 ft, in its line of sight, and without Three-Quarters Cover from it. Foes see all around them,
+since the 2024 rules have no facing, so these are circles cut by walls rather than cones. Hovering a square says when a foe in plain view would see the
+leader there (in turn-based mode the walk's ring turns red too), before anyone moves. Foes the party can't see yet
+show no eye, and the warning never names them.
+
 ## Stealing and crime (F8) and the town watch (F2)
 
 Code: `story/crime.gd` (the record), `world/exploration/location_crime.gd` (the scene), the watch's dialogue in

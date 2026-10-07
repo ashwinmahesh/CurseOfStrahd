@@ -12,10 +12,11 @@
       ],
       "materials": [
         "pal_bone_dark",
-        "pal_peat",
         "pal_slate",
         "pal_stone",
-        "pal_stone_deep"
+        "pal_stone_deep",
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 688,
       "part": "low"
@@ -31,10 +32,11 @@
       ],
       "materials": [
         "pal_bone_dark",
-        "pal_peat",
         "pal_slate",
         "pal_stone",
-        "pal_stone_deep"
+        "pal_stone_deep",
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 732,
       "part": "low"
@@ -50,10 +52,11 @@
       ],
       "materials": [
         "pal_bone_dark",
-        "pal_peat",
         "pal_slate",
         "pal_stone",
-        "pal_stone_deep"
+        "pal_stone_deep",
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 688,
       "part": "low"
@@ -69,10 +72,11 @@
       ],
       "materials": [
         "pal_bone_dark",
-        "pal_peat",
         "pal_slate",
         "pal_stone",
-        "pal_stone_deep"
+        "pal_stone_deep",
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 788,
       "part": "low"
@@ -87,7 +91,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 36,
       "part": "up"
@@ -102,7 +107,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 48,
       "part": "up"
@@ -117,7 +123,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 60,
       "part": "up"
@@ -132,7 +139,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 60,
       "part": "up"
@@ -147,7 +155,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 60,
       "part": "up"
@@ -163,10 +172,11 @@
       ],
       "materials": [
         "pal_bone_dark",
-        "pal_peat",
         "pal_slate",
         "pal_stone",
-        "pal_stone_deep"
+        "pal_stone_deep",
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 520,
       "part": "door"
@@ -181,7 +191,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 36,
       "part": "door_top"
@@ -196,8 +207,8 @@
         0.22
       ],
       "materials": [
-        "pal_peat",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__oak_v"
       ],
       "triangles": 120,
       "part": "corner"
@@ -214,9 +225,9 @@
       "materials": [
         "pal_ink",
         "pal_night_deep",
-        "pal_peat",
         "pal_umber",
-        "tex_interior__wood_planks"
+        "tex_interior__wood_planks",
+        "tex_kit__oak"
       ],
       "triangles": 228,
       "sockets": {
@@ -240,9 +251,9 @@
       "materials": [
         "glow_candle",
         "pal_ink",
-        "pal_peat",
         "pal_umber",
-        "tex_interior__wood_planks"
+        "tex_interior__wood_planks",
+        "tex_kit__oak"
       ],
       "triangles": 228,
       "sockets": {
@@ -266,9 +277,9 @@
       "materials": [
         "pal_ink",
         "pal_night_deep",
-        "pal_peat",
         "pal_umber",
-        "tex_interior__wood_planks"
+        "tex_interior__wood_planks",
+        "tex_kit__oak"
       ],
       "triangles": 228,
       "sockets": {
@@ -532,7 +543,7 @@
         0.14
       ],
       "materials": [
-        "pal_pewter"
+        "tex_kit__dressed_stone"
       ],
       "triangles": 36,
       "part": "up"
@@ -547,7 +558,7 @@
         0.14
       ],
       "materials": [
-        "pal_pewter"
+        "tex_kit__dressed_stone"
       ],
       "triangles": 36,
       "part": "up"
@@ -562,8 +573,8 @@
         0.264
       ],
       "materials": [
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 1528,
       "part": "door"
@@ -578,7 +589,7 @@
         0.14
       ],
       "materials": [
-        "pal_pewter"
+        "tex_kit__dressed_stone"
       ],
       "triangles": 24,
       "part": "door_top"
@@ -593,8 +604,8 @@
         0.345
       ],
       "materials": [
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 408,
       "part": "corner"
@@ -611,8 +622,8 @@
       "materials": [
         "pal_ink",
         "pal_night_deep",
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 480,
       "sockets": {
@@ -636,8 +647,8 @@
       "materials": [
         "glow_candle",
         "pal_ink",
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 480,
       "sockets": {
@@ -661,8 +672,8 @@
       "materials": [
         "pal_ink",
         "pal_night_deep",
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 480,
       "sockets": {
@@ -703,6 +714,7 @@
       ],
       "materials": [
         "pal_peat",
+        "tex_kit__oak",
         "tex_village__roof_thatch"
       ],
       "triangles": 186,
@@ -739,6 +751,7 @@
       ],
       "materials": [
         "pal_peat",
+        "tex_kit__oak",
         "tex_village__roof_thatch"
       ],
       "triangles": 186,
@@ -775,6 +788,7 @@
       ],
       "materials": [
         "pal_peat",
+        "tex_kit__oak",
         "tex_village__roof_thatch"
       ],
       "triangles": 186,
@@ -811,6 +825,7 @@
       ],
       "materials": [
         "pal_peat",
+        "tex_kit__oak",
         "tex_village__roof_thatch"
       ],
       "triangles": 186,
@@ -847,6 +862,7 @@
       ],
       "materials": [
         "pal_peat",
+        "tex_kit__oak",
         "tex_village__roof_thatch"
       ],
       "triangles": 186,
@@ -883,6 +899,7 @@
       ],
       "materials": [
         "pal_peat",
+        "tex_kit__oak",
         "tex_village__roof_thatch"
       ],
       "triangles": 186,
@@ -919,6 +936,7 @@
       ],
       "materials": [
         "pal_peat",
+        "tex_kit__oak",
         "tex_village__roof_thatch"
       ],
       "triangles": 186,
@@ -955,6 +973,7 @@
       ],
       "materials": [
         "pal_peat",
+        "tex_kit__oak",
         "tex_village__roof_thatch"
       ],
       "triangles": 186,
@@ -991,6 +1010,7 @@
       ],
       "materials": [
         "pal_peat",
+        "tex_kit__oak",
         "tex_village__roof_thatch"
       ],
       "triangles": 186,
@@ -1027,6 +1047,7 @@
       ],
       "materials": [
         "pal_peat",
+        "tex_kit__oak",
         "tex_village__roof_thatch"
       ],
       "triangles": 186,
@@ -1063,6 +1084,7 @@
       ],
       "materials": [
         "pal_peat",
+        "tex_kit__oak",
         "tex_village__roof_thatch"
       ],
       "triangles": 186,
@@ -1099,6 +1121,7 @@
       ],
       "materials": [
         "pal_peat",
+        "tex_kit__oak",
         "tex_village__roof_thatch"
       ],
       "triangles": 186,
@@ -1135,9 +1158,9 @@
         1.733
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -1174,9 +1197,9 @@
         2.72
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -1213,9 +1236,9 @@
         3.72
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -1252,9 +1275,9 @@
         4.72
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -1291,9 +1314,9 @@
         5.72
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -1330,9 +1353,9 @@
         6.72
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -1369,9 +1392,9 @@
         7.72
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -1408,9 +1431,9 @@
         8.712
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -1447,9 +1470,9 @@
         9.704
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -1486,9 +1509,9 @@
         10.697
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -1525,9 +1548,9 @@
         11.691
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -1564,9 +1587,9 @@
         12.685
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -2083,9 +2106,9 @@
         1.733
       ],
       "materials": [
-        "pal_peat",
         "pal_stone_deep",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -2122,9 +2145,9 @@
         2.727
       ],
       "materials": [
-        "pal_peat",
         "pal_stone_deep",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -2161,9 +2184,9 @@
         3.727
       ],
       "materials": [
-        "pal_peat",
         "pal_stone_deep",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -2200,9 +2223,9 @@
         4.727
       ],
       "materials": [
-        "pal_peat",
         "pal_stone_deep",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -2239,9 +2262,9 @@
         5.727
       ],
       "materials": [
-        "pal_peat",
         "pal_stone_deep",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -2278,9 +2301,9 @@
         6.727
       ],
       "materials": [
-        "pal_peat",
         "pal_stone_deep",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -2317,9 +2340,9 @@
         7.721
       ],
       "materials": [
-        "pal_peat",
         "pal_stone_deep",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -2356,9 +2379,9 @@
         8.712
       ],
       "materials": [
-        "pal_peat",
         "pal_stone_deep",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -2395,9 +2418,9 @@
         9.704
       ],
       "materials": [
-        "pal_peat",
         "pal_stone_deep",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -2434,9 +2457,9 @@
         10.697
       ],
       "materials": [
-        "pal_peat",
         "pal_stone_deep",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -2473,9 +2496,9 @@
         11.691
       ],
       "materials": [
-        "pal_peat",
         "pal_stone_deep",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -2512,9 +2535,9 @@
         12.685
       ],
       "materials": [
-        "pal_peat",
         "pal_stone_deep",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -2532,7 +2555,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 48,
       "part": "gable",
@@ -2548,7 +2572,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 48,
       "part": "gable",
@@ -2564,7 +2589,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 72,
       "part": "gable",
@@ -2580,7 +2606,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 72,
       "part": "gable",
@@ -2596,7 +2623,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 96,
       "part": "gable",
@@ -2612,7 +2640,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 96,
       "part": "gable",
@@ -2628,7 +2657,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 96,
       "part": "gable",
@@ -2644,7 +2674,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 96,
       "part": "gable",
@@ -2660,7 +2691,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 96,
       "part": "gable",
@@ -2676,7 +2708,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 96,
       "part": "gable",
@@ -2692,7 +2725,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 96,
       "part": "gable",
@@ -2708,7 +2742,8 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 96,
       "part": "gable",
@@ -2950,7 +2985,7 @@
         0.07
       ],
       "materials": [
-        "pal_pewter"
+        "tex_kit__dressed_stone"
       ],
       "triangles": 12,
       "part": "gable",
@@ -2966,8 +3001,8 @@
         0.1
       ],
       "materials": [
-        "pal_pewter",
-        "pal_void"
+        "pal_void",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 132,
       "part": "gable",
@@ -2983,8 +3018,8 @@
         0.1
       ],
       "materials": [
-        "pal_pewter",
-        "pal_void"
+        "pal_void",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 132,
       "part": "gable",
@@ -3000,8 +3035,8 @@
         0.1
       ],
       "materials": [
-        "pal_pewter",
-        "pal_void"
+        "pal_void",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 132,
       "part": "gable",
@@ -3017,8 +3052,8 @@
         0.1
       ],
       "materials": [
-        "pal_pewter",
-        "pal_void"
+        "pal_void",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 132,
       "part": "gable",
@@ -3034,8 +3069,8 @@
         0.1
       ],
       "materials": [
-        "pal_pewter",
-        "pal_void"
+        "pal_void",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 132,
       "part": "gable",
@@ -3051,8 +3086,8 @@
         0.1
       ],
       "materials": [
-        "pal_pewter",
-        "pal_void"
+        "pal_void",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 132,
       "part": "gable",
@@ -3068,8 +3103,8 @@
         0.1
       ],
       "materials": [
-        "pal_pewter",
-        "pal_void"
+        "pal_void",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 132,
       "part": "gable",
@@ -3085,8 +3120,8 @@
         0.1
       ],
       "materials": [
-        "pal_pewter",
-        "pal_void"
+        "pal_void",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 132,
       "part": "gable",
@@ -3102,8 +3137,8 @@
         0.1
       ],
       "materials": [
-        "pal_pewter",
-        "pal_void"
+        "pal_void",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 132,
       "part": "gable",
@@ -3119,8 +3154,8 @@
         0.1
       ],
       "materials": [
-        "pal_pewter",
-        "pal_void"
+        "pal_void",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 132,
       "part": "gable",
@@ -3136,8 +3171,8 @@
         0.1
       ],
       "materials": [
-        "pal_pewter",
-        "pal_void"
+        "pal_void",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 132,
       "part": "gable",
@@ -3301,9 +3336,9 @@
         0.54
       ],
       "materials": [
-        "pal_pewter",
         "pal_slate",
-        "pal_stone_deep"
+        "pal_stone_deep",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 336,
       "part": "yard_arm",
@@ -3319,9 +3354,9 @@
         0.66
       ],
       "materials": [
-        "pal_pewter",
         "pal_slate",
-        "pal_stone_deep"
+        "pal_stone_deep",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 516,
       "part": "yard_pier",
@@ -3337,9 +3372,9 @@
         0.52
       ],
       "materials": [
-        "pal_pewter",
         "pal_slate",
-        "pal_stone_deep"
+        "pal_stone_deep",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 1032,
       "part": "yard_arm",
@@ -3355,9 +3390,9 @@
         0.66
       ],
       "materials": [
-        "pal_pewter",
         "pal_slate",
-        "pal_stone_deep"
+        "pal_stone_deep",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 852,
       "part": "yard_pier",
@@ -3391,8 +3426,8 @@
         0.5
       ],
       "materials": [
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 48,
       "part": "low"
@@ -3407,8 +3442,8 @@
         0.34
       ],
       "materials": [
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 104,
       "part": "up"
@@ -3425,8 +3460,8 @@
       "materials": [
         "pal_ink",
         "pal_moon_blue",
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 338,
       "sockets": {
@@ -3448,8 +3483,8 @@
         0.284
       ],
       "materials": [
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 376,
       "part": "door"
@@ -3464,8 +3499,8 @@
         0.95
       ],
       "materials": [
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 84,
       "part": "corner"
@@ -3481,10 +3516,10 @@
       ],
       "materials": [
         "pal_ink",
-        "pal_pewter",
         "pal_umber",
         "pal_void",
         "tex_church__stone_wall",
+        "tex_kit__dressed_stone",
         "tex_village__roof_slate"
       ],
       "triangles": 1104,
@@ -3500,9 +3535,9 @@
         0.24
       ],
       "materials": [
-        "pal_pewter",
         "pal_plum",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 392,
       "part": "gable",
@@ -3520,8 +3555,8 @@
       "materials": [
         "pal_ink",
         "pal_night_deep",
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 474,
       "sockets": {
@@ -3578,7 +3613,7 @@
         0.13
       ],
       "materials": [
-        "pal_pewter"
+        "tex_kit__dressed_stone"
       ],
       "triangles": 72,
       "part": "up"
@@ -3593,7 +3628,7 @@
         0.13
       ],
       "materials": [
-        "pal_pewter"
+        "tex_kit__dressed_stone"
       ],
       "triangles": 72,
       "part": "up"
@@ -3610,8 +3645,8 @@
       "materials": [
         "glow_candle",
         "pal_ink",
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 338,
       "sockets": {
@@ -3634,9 +3669,9 @@
       ],
       "materials": [
         "pal_ink",
-        "pal_pewter",
         "pal_plum",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 338,
       "sockets": {
@@ -3673,7 +3708,7 @@
         0.13
       ],
       "materials": [
-        "pal_pewter"
+        "tex_kit__dressed_stone"
       ],
       "triangles": 60,
       "part": "door_top"
@@ -3707,9 +3742,9 @@
         1.746
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -3746,9 +3781,9 @@
         2.746
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -3785,9 +3820,9 @@
         3.746
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -3824,9 +3859,9 @@
         4.746
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -3863,9 +3898,9 @@
         5.742
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -3883,9 +3918,9 @@
         6.731
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -3922,9 +3957,9 @@
         7.721
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -3961,9 +3996,9 @@
         8.712
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -4000,9 +4035,9 @@
         9.704
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -4039,9 +4074,9 @@
         10.697
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -4078,9 +4113,9 @@
         11.691
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -4117,9 +4152,9 @@
         12.685
       ],
       "materials": [
-        "pal_peat",
         "pal_slate",
         "pal_umber",
+        "tex_kit__oak",
         "tex_village__roof_slate"
       ],
       "triangles": 98,
@@ -4137,8 +4172,8 @@
         0.24
       ],
       "materials": [
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 136,
       "part": "gable",
@@ -4156,8 +4191,8 @@
       "materials": [
         "pal_ink",
         "pal_night_deep",
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 474,
       "sockets": {
@@ -4182,8 +4217,8 @@
       "materials": [
         "pal_ink",
         "pal_night_deep",
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 474,
       "sockets": {
@@ -4206,9 +4241,9 @@
         0.24
       ],
       "materials": [
-        "pal_pewter",
         "pal_plum",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 392,
       "part": "gable",
@@ -4224,9 +4259,9 @@
         0.24
       ],
       "materials": [
-        "pal_pewter",
         "pal_plum",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 392,
       "part": "gable",
@@ -4242,9 +4277,9 @@
         0.24
       ],
       "materials": [
-        "pal_pewter",
         "pal_plum",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 392,
       "part": "gable",
@@ -4260,9 +4295,9 @@
         0.24
       ],
       "materials": [
-        "pal_pewter",
         "pal_plum",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 392,
       "part": "gable",
@@ -4278,9 +4313,9 @@
         0.24
       ],
       "materials": [
-        "pal_pewter",
         "pal_plum",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 392,
       "part": "gable",
@@ -4296,9 +4331,9 @@
         0.24
       ],
       "materials": [
-        "pal_pewter",
         "pal_plum",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 392,
       "part": "gable",
@@ -4314,9 +4349,9 @@
         0.24
       ],
       "materials": [
-        "pal_pewter",
         "pal_plum",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 392,
       "part": "gable",
@@ -4336,10 +4371,10 @@
         "pal_bone",
         "pal_ink",
         "pal_ivory",
-        "pal_pewter",
         "pal_slate",
         "pal_void",
-        "tex_castle__ashlar"
+        "tex_castle__ashlar",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 1932,
       "part": "pillar"
@@ -4354,8 +4389,8 @@
         0.72
       ],
       "materials": [
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 372,
       "part": "pillar"
@@ -4387,8 +4422,9 @@
         1.0
       ],
       "materials": [
-        "pal_peat",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__oak",
+        "tex_kit__oak_v"
       ],
       "triangles": 288,
       "part": "pillar"
@@ -4422,8 +4458,8 @@
         0.072
       ],
       "materials": [
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 192,
       "part": "face"
@@ -4438,8 +4474,8 @@
         0.075
       ],
       "materials": [
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 36,
       "part": "face"
@@ -4454,8 +4490,8 @@
         0.09
       ],
       "materials": [
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 24,
       "part": "coping"
@@ -4470,8 +4506,8 @@
         0.08
       ],
       "materials": [
-        "pal_pewter",
-        "pal_slate"
+        "pal_slate",
+        "tex_kit__dressed_stone"
       ],
       "triangles": 24,
       "part": "coping"
@@ -4518,7 +4554,7 @@
         0.082
       ],
       "materials": [
-        "pal_peat"
+        "tex_kit__oak"
       ],
       "triangles": 12,
       "part": "coping"
@@ -4538,6 +4574,118 @@
       ],
       "triangles": 48,
       "part": "coping"
+    },
+    "kit_scatter_pebbles": {
+      "file": "art/models/kit/kit_scatter_pebbles.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.391,
+        0.065,
+        0.388
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 180,
+      "part": "scatter"
+    },
+    "kit_scatter_stones": {
+      "file": "art/models/kit/kit_scatter_stones.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.276,
+        0.132,
+        0.407
+      ],
+      "materials": [
+        "pal_moss",
+        "pal_slate"
+      ],
+      "triangles": 60,
+      "part": "scatter"
+    },
+    "kit_scatter_roots": {
+      "file": "art/models/kit/kit_scatter_roots.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.319,
+        0.116,
+        0.318
+      ],
+      "materials": [
+        "pal_peat"
+      ],
+      "triangles": 240,
+      "part": "scatter"
+    },
+    "kit_scatter_bones": {
+      "file": "art/models/kit/kit_scatter_bones.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.381,
+        0.1,
+        0.312
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_void"
+      ],
+      "triangles": 808,
+      "part": "scatter"
+    },
+    "kit_scatter_debris": {
+      "file": "art/models/kit/kit_scatter_debris.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.288,
+        0.057,
+        0.294
+      ],
+      "materials": [
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 96,
+      "part": "scatter"
+    },
+    "kit_scatter_twigs": {
+      "file": "art/models/kit/kit_scatter_twigs.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.197,
+        0.026,
+        0.394
+      ],
+      "materials": [
+        "pal_umber"
+      ],
+      "triangles": 104,
+      "part": "scatter"
+    },
+    "kit_scatter_mushrooms": {
+      "file": "art/models/kit/kit_scatter_mushrooms.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        0.178,
+        0.082,
+        0.162
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_bone_dark",
+        "pal_tan"
+      ],
+      "triangles": 312,
+      "part": "scatter"
     }
   },
   "constants": {
