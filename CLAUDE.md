@@ -46,7 +46,8 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 
 ## Rules source
 Full 2024 PHB (owner decision 2026-10-05, personal use only). SRD 5.2 is the import starting point.
-Rule deviations go in docs/rules/deviations.md; a rule is "done" only when coverage.md says so.
+Rule deviations go in docs/rules/deviations.md; a rule is "done" only when coverage.md says so. Close or update
+the rows your change touches: `make validate` checks both docs against the built phases and the data.
 Data `text` and `summary` are our own words, never copied. Set `source.checked_against` only after comparing every
 number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribution: docs/assets/LICENSES.md.
 
