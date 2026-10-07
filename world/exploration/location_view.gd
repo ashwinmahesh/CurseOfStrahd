@@ -20,6 +20,8 @@ extends Node3D
 signal exit_requested(location_id: String, spawn: String)
 signal dialogue_requested(ref: String, npc_id: String)
 signal narration(text: String)
+## A place's cutscene (story/cutscenes.gd `trigger`): its picture, with the narrator's line as the caption.
+signal cutscene_requested(id: String, caption: String)
 signal toast(text: String)
 signal loot_opened(container_id: String, items: Array, gold: float)
 signal combat_started(view: CombatView)
@@ -182,7 +184,11 @@ func _say(key: String, actor: Character = null, fallback: String = "") -> bool:
 	if text == "":
 		text = fallback
 	if text != "":
-		narration.emit(text)
+		var cut := Cutscenes.for_trigger(key, st) if not cutscene_requested.get_connections().is_empty() else ""
+		if cut != "":
+			cutscene_requested.emit(cut, text)
+		else:
+			narration.emit(text)
 		return true
 	return false
 

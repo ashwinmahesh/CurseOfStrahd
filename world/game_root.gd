@@ -112,6 +112,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.travel_requested.connect(func() -> void: open_travel.call_deferred(true))
 	view.dialogue_requested.connect(start_dialogue)
 	view.narration.connect(func(t: String) -> void: hud.narrate(t))
+	view.cutscene_requested.connect(play_cutscene)
 	view.toast.connect(func(t: String) -> void: hud.toast(t))
 	view.check_rolled.connect(func(t: String) -> void: hud.roll(t))
 	view.party_tended.connect(_refresh)
@@ -731,6 +732,23 @@ func close_screen() -> void:
 			screen.queue_free()
 		screen = null
 	_refresh()
+
+
+## A place's cutscene (story/cutscenes.gd): its picture over everything with the narrator's line as the caption. It
+## stands in for a full-screen panel until it closes, so nothing in the world moves under it.
+func play_cutscene(id: String, caption: String) -> void:
+	close_screen()
+	var player := CutscenePlayer.new()
+	add_child(player)
+	if not player.play(id, [caption] as Array[String], st):
+		player.queue_free()
+		hud.narrate(caption)
+		return
+	screen = player
+	player.finished.connect(func() -> void:
+		if screen == player:
+			screen = null
+		_refresh())
 
 
 ## Plays a Narrator trigger here (rests, dreams). Returns the line, or "".
