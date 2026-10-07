@@ -867,6 +867,7 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		return
 	var why := catalog.target_why(c, selected, o)
 	var lines2: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()]]
+	var tip_title := o.name()
 	if str(selected["kind"]) in ["spell", "item_spell"]:
 		var data := Compendium.shared().spell_data(str(selected["spell_id"]))
 		var prev := catalog.cast_preview(c, selected, slot_level)
@@ -876,6 +877,12 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			var ac := o.creature.ac_value() + int(sit["cover_bonus"])
 			var needs := clampi(ac - (prev["attack"] as Breakdown).total(), 2, 20)
 			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [(prev["attack"] as Breakdown).total(), ac, needs])
+			var sa := sit["advantage"] as Array
+			var sd := sit["disadvantage"] as Array
+			if not sa.is_empty() and sd.is_empty():
+				tip_title = "%s · ADVANTAGE" % o.name()
+			elif not sd.is_empty() and sa.is_empty():
+				tip_title = "%s · DISADVANTAGE" % o.name()
 			for s: Variant in sit["advantage"]:
 				lines2.append("Advantage: %s" % s)
 			for s: Variant in sit["disadvantage"]:
@@ -891,7 +898,7 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			lines2.append("Heals %s %+d" % [prev["heal_dice"], (prev["heal_bonus"] as Breakdown).total()])
 	if kind == "multi":
 		lines2.append("Chosen: %d" % picked.count(o))
-	hud.show_tooltip(o.name(), lines2, [why] if why != "" else [], at)
+	hud.show_tooltip(tip_title, lines2, [why] if why != "" else [], at)
 
 
 # --- Playing events -------------------------------------------------------------------------------
@@ -935,6 +942,12 @@ func _play_events() -> void:
 				var a := _tok(str(ev["attacker"]))
 				var d := _tok(str(ev["target"]))
 				if a != null and d != null:
+					# Advantage or Disadvantage on the roll shows over the attacker, with its reason.
+					var edge := ev.get("edge", {}) as Dictionary
+					if not edge.is_empty():
+						var adv := str(edge["kind"]) == "advantage"
+						var why := ", ".join(edge.get("why", []) as Array)
+						_float(a, ("ADVANTAGE" if adv else "DISADVANTAGE") + (("\n" + why) if why != "" else ""), "candle" if adv else "mist_blue", 34)
 					var dir := (d.position - a.position)
 					var home := a.position
 					# The drawn attack winds up, then the token steps in on the blow; without one, just the step.

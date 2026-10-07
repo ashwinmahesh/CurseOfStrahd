@@ -970,6 +970,12 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 	var dis := sit["disadvantage"] as Array
 	if adv.is_empty() and dis.is_empty():
 		lines.append("No Advantage or Disadvantage")
+	elif not adv.is_empty() and not dis.is_empty():
+		lines.append("Advantage and Disadvantage cancel out: a single d20")
+	# The roll's edge leads the tooltip's title so it can't be missed.
+	out["edge"] = "advantage" if dis.is_empty() and not adv.is_empty() else ("disadvantage" if adv.is_empty() and not dis.is_empty() else "")
+	if str(out["edge"]) != "":
+		out["title"] = "%s · %s" % [out["title"], "ADVANTAGE" if str(out["edge"]) == "advantage" else "DISADVANTAGE"]
 	for s: Variant in adv:
 		lines.append("Advantage: %s" % s)
 	for s: Variant in dis:

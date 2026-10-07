@@ -2163,14 +2163,25 @@ func _attack_outcome(st: Dictionary) -> CombatResult:
 		return _attack_missed(st)
 	var miss := func() -> CombatResult:
 		r.lines.append(log.add("miss", "%s's attack on %s is turned aside (%d vs AC %d)" % [c.name(), target.name(), t.total, int(st["ac"])], target.id, details))
-		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false})
+		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false, "edge": attack_edge(st["t"] as D20Test)})
 		features.after_miss(c, target, option, r)
 		return r
 	var hit_offers := reactions.after_hit_target(st, miss)
 	hit_offers.append_array(monster_actions.parry_offer(st, miss))
 	return reactions.offer(hit_offers, func() -> CombatResult:
-		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": true, "critical": critical})
+		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": true, "critical": critical, "edge": attack_edge(st["t"] as D20Test)})
 		return _after_hit(st), r)
+
+
+## "advantage", "disadvantage" or "" for an attack roll, with the reasons (the view shows it over the attacker).
+static func attack_edge(t: D20Test) -> Dictionary:
+	if t == null:
+		return {}
+	if t.advantage:
+		return {"kind": "advantage", "why": t.advantage_sources.duplicate()}
+	if t.disadvantage:
+		return {"kind": "disadvantage", "why": t.disadvantage_sources.duplicate()}
+	return {}
 
 
 func _attack_missed(st: Dictionary) -> CombatResult:
@@ -2179,7 +2190,7 @@ func _attack_missed(st: Dictionary) -> CombatResult:
 	var option := st["option"] as Dictionary
 	var r := st["r"] as CombatResult
 	var t := st["t"] as D20Test
-	events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false})
+	events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false, "edge": attack_edge(st["t"] as D20Test)})
 	r.lines.append(log.add("miss", "%s misses %s (%d vs AC %d)" % [c.name(), target.name(), t.total, int(st["ac"])], c.id, st["details"] as Array))
 	_on_miss(c, target, option, r)
 	features.after_miss(c, target, option, r)

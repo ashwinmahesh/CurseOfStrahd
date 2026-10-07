@@ -182,3 +182,24 @@ func test_attacks_cant_target_their_own_user_but_self_spells_can() -> void:
 	assert_false(bolt.is_empty() or heal.is_empty())
 	assert_eq(cat.target_why(silvain, bolt, silvain), "Can't attack yourself", "an attack-roll spell can't target its caster")
 	assert_eq(cat.target_why(hedda, heal, hedda), "", "a spell for a creature you can see can still be cast on yourself")
+
+
+func test_advantage_and_disadvantage_are_flagged_in_the_preview_and_the_roll() -> void:
+	var e := TestCombat.open_field()
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2))
+	var z := TestCombat.foe(e, "zombie", Vector2i(3, 2))
+	z.creature.hp = 100
+	TestCombat.start_with(e, ilse)
+	var cat := ActionCatalog.new(e)
+	z.creature.add_condition(&"prone", "test")
+	var pv := cat.attack_preview(ilse, cat.find(ilse, "attack:weapon:greatsword"), z)
+	assert_eq(str(pv["edge"]), "advantage")
+	assert_true(str(pv["title"]).ends_with("ADVANTAGE"), str(pv["title"]))
+	e.events.clear()
+	e.attack(ilse, z, "weapon:greatsword")
+	var ev := {}
+	for x: Dictionary in e.events:
+		if str(x["type"]) == "attack":
+			ev = x
+	assert_eq(str((ev.get("edge", {}) as Dictionary).get("kind", "")), "advantage", "the roll carries its edge for the display")
+	assert_true(((ev["edge"] as Dictionary)["why"] as Array).size() > 0, "and why")

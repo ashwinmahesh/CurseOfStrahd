@@ -266,7 +266,7 @@ static func path_to(reach: Dictionary, goal: Vector2i) -> Array[Vector2i]:
 
 ## Cover a target at `target` (footprint `t_size`) has against an attacker at `attacker` (`a_size`), by the
 ## corner method: from the attacker corner that sees best, trace lines to the four corners of the target square
-## that is easiest to see. Walls blocking 1-2 lines give Half Cover, 3 Three-Quarters, 4 Total; low obstacles and
+## that is easiest to see. Walls blocking 2 lines give Half Cover (one isn't enough), 3 Three-Quarters, 4 Total; low obstacles and
 ## other creatures (`creature_cells`) give at most Half Cover. An attacker standing 10+ ft above a low obstacle sees over it.
 ## Returns {cover: Cover, blocked: int, by: String}.
 func cover_between(attacker: Vector2i, a_size: int, target: Vector2i, t_size: int,
@@ -297,13 +297,15 @@ func cover_between(attacker: Vector2i, a_size: int, target: Vector2i, t_size: in
 	return best
 
 
-## Degrees don't add: walls decide Three-Quarters and Total; creatures and low obstacles give at most Half.
+## Degrees don't add: walls decide Three-Quarters and Total; creatures and low obstacles give at most Half. Cover
+## needs the obstacle to block at least half the target (2024 rules), so one clipped line of four is no cover: a
+## wall or crate merely beside the target, not between, gives nothing.
 static func _cover_from(wall: int, soft: int) -> int:
 	if wall >= 4:
 		return Cover.TOTAL
 	if wall == 3:
 		return Cover.THREE_QUARTERS
-	if wall + soft > 0:
+	if wall + soft >= 2:
 		return Cover.HALF
 	return Cover.NONE
 

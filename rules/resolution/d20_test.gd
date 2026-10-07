@@ -150,6 +150,9 @@ func describe() -> String:
 	var die := "d20 %d" % kept
 	if rolls.size() == 2:
 		die = "d20 %s (%d, %d)" % ["adv" if advantage else "dis", rolls[0], rolls[1]]
+		var why := advantage_sources if advantage else disadvantage_sources
+		if not why.is_empty():
+			die = "d20 %s [%s] (%d, %d)" % ["adv" if advantage else "dis", ", ".join(why), rolls[0], rolls[1]]
 	var sign := "+" if modifier >= 0 else "-"
 	var bonus := ""
 	if extra != 0 or extra_label != "":

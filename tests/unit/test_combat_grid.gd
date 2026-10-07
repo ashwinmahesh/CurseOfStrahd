@@ -68,6 +68,21 @@ func test_walls_give_cover_by_corner_lines() -> void:
 	assert_true(c == CombatGrid.Cover.HALF or c == CombatGrid.Cover.THREE_QUARTERS, "partial wall gives partial cover")
 
 
+func test_standing_beside_something_isnt_cover() -> void:
+	# A target with a wall or a crate next to it, not between it and the attacker: no cover.
+	var beside_wall := CombatGrid.from_rows([".......", ".......", "....#..", "......."])
+	assert_eq(int(beside_wall.cover_between(Vector2i(0, 1), 1, Vector2i(4, 1), 1)["cover"]), CombatGrid.Cover.NONE, "wall below the target")
+	var beside_crate := CombatGrid.from_rows([".......", ".....=.", ".......", "......."])
+	assert_eq(int(beside_crate.cover_between(Vector2i(0, 1), 1, Vector2i(4, 1), 1)["cover"]), CombatGrid.Cover.NONE, "crate behind the target")
+	# Diagonal attackers: a wall square at the target's side corner clips one line at most.
+	var corner := CombatGrid.from_rows(["....#..", ".......", ".......", "......."])
+	assert_eq(int(corner.cover_between(Vector2i(0, 3), 1, Vector2i(4, 1), 1)["cover"]), CombatGrid.Cover.NONE, "a wall on the target's far side")
+	# A creature next to the target but not in the way gives nothing; one in the way gives Half.
+	var open := CombatGrid.from_rows([".......", ".......", ".......", "......."])
+	assert_eq(int(open.cover_between(Vector2i(0, 1), 1, Vector2i(4, 1), 1, {Vector2i(4, 2): "Zombie"})["cover"]), CombatGrid.Cover.NONE)
+	assert_eq(int(open.cover_between(Vector2i(0, 1), 1, Vector2i(4, 1), 1, {Vector2i(3, 1): "Zombie"})["cover"]), CombatGrid.Cover.HALF)
+
+
 func test_low_walls_and_creatures_give_half_cover() -> void:
 	var g := CombatGrid.from_rows([".....", "..=..", "....."])
 	var cov := g.cover_between(Vector2i(0, 1), 1, Vector2i(4, 1), 1)
