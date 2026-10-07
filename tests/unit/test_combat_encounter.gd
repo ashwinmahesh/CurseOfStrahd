@@ -427,3 +427,17 @@ func test_frightened_creatures_cannot_move_closer_to_what_they_fear() -> void:
 	assert_true(e.move(ilse, Vector2i(1, 2)).ok, "away is fine")
 	ilse.creature.remove_effect(fx)
 	assert_true(e.move(ilse, Vector2i(3, 2)).ok, "no longer Frightened")
+
+
+func test_party_members_move_through_each_other_as_difficult_terrain() -> void:
+	var e := TestCombat.encounter(["#########", "#.......#", "#########"])
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(1, 1))
+	TestCombat.hero(e, "silvain_aster", Vector2i(2, 1))
+	TestCombat.foe(e, "zombie", Vector2i(7, 1))
+	TestCombat.start_with(e, a)
+	var reach := e.reachable_for(a)
+	assert_true(reach.has(Vector2i(3, 1)), "through the ally in a one-square corridor")
+	assert_eq(int((reach[Vector2i(3, 1)] as Dictionary)["cost"]), 15, "the ally's square costs double (Difficult Terrain)")
+	assert_true(bool((reach[Vector2i(2, 1)] as Dictionary)["occupied"]), "but you can't stop there")
+	e.allies_block = true
+	assert_false(e.reachable_for(a).has(Vector2i(3, 1)), "a place can say allies block each other")

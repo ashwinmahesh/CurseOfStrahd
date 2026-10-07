@@ -37,6 +37,8 @@ var feature_actions: FeatureActions
 var monster_actions: MonsterActions
 var ai: AiBrain
 var shapes: ShapeChange
+## A place where even allies can't pass through each other (a location's or fight's `allies_block`).
+var allies_block := false
 var class_features: ClassFeatures
 ## Ravenloft: The Horrors Within options (combat/ravenloft_features.gd).
 var ravenloft: RavenloftFeatures
@@ -450,8 +452,8 @@ func fear_sources(c: Combatant) -> Array[Combatant]:
 
 ## How other creatures' squares affect `c`'s movement: {blocked, slowed, occupied}, each a set of cells.
 ## 2024: you can pass through an ally, an Incapacitated creature, a Tiny creature or one two sizes different
-## (Halfling Nimbleness: any larger creature); another creature's space is Difficult Terrain unless it's Tiny or
-## your ally; you can't end your move in an occupied space.
+## (Halfling Nimbleness: any larger creature); another creature's space, an ally's too, is Difficult Terrain unless
+## it's Tiny; you can't end your move in an occupied space. `allies_block` (a place's flag) makes allies block too.
 func _occupancy_for(c: Combatant) -> Dictionary:
 	var blocked := {}
 	var slowed := {}
@@ -466,9 +468,10 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 		var swarmy := o.creature.has_flag("swarm") or c.creature.has_flag("swarm") or c.creature.has_flag("enters_spaces")
 		if swarmy:
 			continue
-		var passable := c.allied_with(o) or o.creature.has_flag("no_actions") or o.creature.size == &"tiny" \
+		var passable := (c.allied_with(o) and not allies_block) or o.creature.has_flag("no_actions") or o.creature.size == &"tiny" \
 			or absi(o_size - my_size) >= 2 or (c.creature.has_flag("halfling_nimbleness") and o_size > my_size)
-		var slows := not c.allied_with(o) and o.creature.size != &"tiny"
+		# 2024: any other creature's space is Difficult Terrain, an ally's included (a Tiny one excepted).
+		var slows := o.creature.size != &"tiny"
 		for cell in o.footprint():
 			occupied[cell] = true
 			if not passable:
@@ -2163,14 +2166,25 @@ func _attack_outcome(st: Dictionary) -> CombatResult:
 		return _attack_missed(st)
 	var miss := func() -> CombatResult:
 		r.lines.append(log.add("miss", "%s's attack on %s is turned aside (%d vs AC %d)" % [c.name(), target.name(), t.total, int(st["ac"])], target.id, details))
-		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false})
+		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false, "edge": attack_edge(st["t"] as D20Test)})
 		features.after_miss(c, target, option, r)
 		return r
 	var hit_offers := reactions.after_hit_target(st, miss)
 	hit_offers.append_array(monster_actions.parry_offer(st, miss))
 	return reactions.offer(hit_offers, func() -> CombatResult:
-		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": true, "critical": critical})
+		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": true, "critical": critical, "edge": attack_edge(st["t"] as D20Test)})
 		return _after_hit(st), r)
+
+
+## "advantage", "disadvantage" or "" for an attack roll, with the reasons (the view shows it over the attacker).
+static func attack_edge(t: D20Test) -> Dictionary:
+	if t == null:
+		return {}
+	if t.advantage:
+		return {"kind": "advantage", "why": t.advantage_sources.duplicate()}
+	if t.disadvantage:
+		return {"kind": "disadvantage", "why": t.disadvantage_sources.duplicate()}
+	return {}
 
 
 func _attack_missed(st: Dictionary) -> CombatResult:
@@ -2179,7 +2193,7 @@ func _attack_missed(st: Dictionary) -> CombatResult:
 	var option := st["option"] as Dictionary
 	var r := st["r"] as CombatResult
 	var t := st["t"] as D20Test
-	events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false})
+	events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false, "edge": attack_edge(st["t"] as D20Test)})
 	r.lines.append(log.add("miss", "%s misses %s (%d vs AC %d)" % [c.name(), target.name(), t.total, int(st["ac"])], c.id, st["details"] as Array))
 	_on_miss(c, target, option, r)
 	features.after_miss(c, target, option, r)

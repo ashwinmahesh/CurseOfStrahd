@@ -112,3 +112,10 @@ func test_concentration_dc() -> void:
 	assert_eq(Concentration.save_dc(7), 10)
 	assert_eq(Concentration.save_dc(22), 11)
 	assert_eq(Concentration.save_dc(100), 30, "capped at 30")
+
+
+func test_a_hit_of_two_damage_types_names_both() -> void:
+	var c := TestChars.dummy(50)
+	var r := c.take_damage_parts([{"amount": 6, "type": "piercing"}, {"amount": 4, "type": "necrotic"}])
+	assert_eq(r.final, 10)
+	assert_true(r.describe("Ilse").begins_with("Ilse takes 10 Piercing + Necrotic damage"), r.describe("Ilse"))

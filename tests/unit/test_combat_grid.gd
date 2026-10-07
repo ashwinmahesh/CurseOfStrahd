@@ -68,6 +68,21 @@ func test_walls_give_cover_by_corner_lines() -> void:
 	assert_true(c == CombatGrid.Cover.HALF or c == CombatGrid.Cover.THREE_QUARTERS, "partial wall gives partial cover")
 
 
+func test_standing_beside_something_isnt_cover() -> void:
+	# A target with a wall or a crate next to it, not between it and the attacker: no cover.
+	var beside_wall := CombatGrid.from_rows([".......", ".......", "....#..", "......."])
+	assert_eq(int(beside_wall.cover_between(Vector2i(0, 1), 1, Vector2i(4, 1), 1)["cover"]), CombatGrid.Cover.NONE, "wall below the target")
+	var beside_crate := CombatGrid.from_rows([".......", ".....=.", ".......", "......."])
+	assert_eq(int(beside_crate.cover_between(Vector2i(0, 1), 1, Vector2i(4, 1), 1)["cover"]), CombatGrid.Cover.NONE, "crate behind the target")
+	# Diagonal attackers: a wall square at the target's side corner clips one line at most.
+	var corner := CombatGrid.from_rows(["....#..", ".......", ".......", "......."])
+	assert_eq(int(corner.cover_between(Vector2i(0, 3), 1, Vector2i(4, 1), 1)["cover"]), CombatGrid.Cover.NONE, "a wall on the target's far side")
+	# A creature next to the target but not in the way gives nothing; one in the way gives Half.
+	var open := CombatGrid.from_rows([".......", ".......", ".......", "......."])
+	assert_eq(int(open.cover_between(Vector2i(0, 1), 1, Vector2i(4, 1), 1, {Vector2i(4, 2): "Zombie"})["cover"]), CombatGrid.Cover.NONE)
+	assert_eq(int(open.cover_between(Vector2i(0, 1), 1, Vector2i(4, 1), 1, {Vector2i(3, 1): "Zombie"})["cover"]), CombatGrid.Cover.HALF)
+
+
 func test_low_walls_and_creatures_give_half_cover() -> void:
 	var g := CombatGrid.from_rows([".....", "..=..", "....."])
 	var cov := g.cover_between(Vector2i(0, 1), 1, Vector2i(4, 1), 1)
@@ -102,6 +117,27 @@ func test_cube_cone_and_line_areas() -> void:
 	assert_false(Vector2i(2, 1) in cone)
 	var line := g.area_cells("line", 30, Vector2(0, 2.5), Vector2.RIGHT)
 	assert_eq(line.size(), 6)
+
+
+func test_a_15_ft_cone_is_an_even_wedge_in_all_eight_directions() -> void:
+	var rows: Array = []
+	for i in 11:
+		rows.append("...........")
+	var g := CombatGrid.from_rows(rows)
+	var me := Vector2i(5, 5)
+	var straight := g.cone_from(me, 1, Vector2(9.5, 5.5), 15)
+	assert_eq(straight.size(), 7, "straight out: 1, then 3, then 3 squares")
+	for want: Vector2i in [Vector2i(6, 5), Vector2i(7, 4), Vector2i(7, 5), Vector2i(7, 6), Vector2i(8, 4), Vector2i(8, 5), Vector2i(8, 6)]:
+		assert_true(want in straight, "%s in the cone" % want)
+	var diagonal := g.cone_from(me, 1, Vector2(9.5, 9.5), 15)
+	assert_eq(diagonal.size(), 6)
+	for cell in diagonal:
+		assert_true(Vector2i(cell.y, cell.x) in diagonal, "a diagonal cone is mirror-symmetric (no L)")
+	# Every direction gives the same number of squares, and a slightly-off aim snaps to the nearest direction.
+	for aim: Vector2 in [Vector2(1.5, 5.5), Vector2(5.5, 1.5), Vector2(5.5, 9.5), Vector2(1.5, 1.5), Vector2(9.5, 1.5), Vector2(1.5, 9.5)]:
+		var n := g.cone_from(me, 1, aim, 15).size()
+		assert_true(n == 7 or n == 6, "%s: %d squares" % [aim, n])
+	assert_eq(g.cone_from(me, 1, Vector2(9.5, 6.3), 15), straight, "aim snaps to the nearest of the eight directions")
 
 
 func test_walls_stop_areas() -> void:

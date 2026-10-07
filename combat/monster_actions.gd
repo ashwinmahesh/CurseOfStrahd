@@ -396,7 +396,10 @@ func save_victims(c: Combatant, act: Dictionary, t: Combatant) -> Array[Combatan
 		cells = c.footprint()
 	else:
 		var origin := e.center_of(c)
-		cells = e.grid.area_cells(str(area["shape"]), int(area.get("size", 15)), origin, e.center_of(t) - origin, 5, c.cell, c.size_cells)
+		if str(area["shape"]) == "cone":
+			cells = e.grid.cone_from(c.cell, c.size_cells, e.center_of(t), int(area.get("size", 15)))
+		else:
+			cells = e.grid.area_cells(str(area["shape"]), int(area.get("size", 15)), origin, e.center_of(t) - origin, 5, c.cell, c.size_cells)
 	for o in e.living():
 		if o == c or o.is_down() or not o.footprint().any(func(x: Vector2i) -> bool: return x in cells):
 			continue

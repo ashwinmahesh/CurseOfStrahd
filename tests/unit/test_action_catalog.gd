@@ -182,3 +182,45 @@ func test_attacks_cant_target_their_own_user_but_self_spells_can() -> void:
 	assert_false(bolt.is_empty() or heal.is_empty())
 	assert_eq(cat.target_why(silvain, bolt, silvain), "Can't attack yourself", "an attack-roll spell can't target its caster")
 	assert_eq(cat.target_why(hedda, heal, hedda), "", "a spell for a creature you can see can still be cast on yourself")
+
+
+func test_advantage_and_disadvantage_are_flagged_in_the_preview_and_the_roll() -> void:
+	var e := TestCombat.open_field()
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2))
+	var z := TestCombat.foe(e, "zombie", Vector2i(3, 2))
+	z.creature.hp = 100
+	TestCombat.start_with(e, ilse)
+	var cat := ActionCatalog.new(e)
+	z.creature.add_condition(&"prone", "test")
+	var pv := cat.attack_preview(ilse, cat.find(ilse, "attack:weapon:greatsword"), z)
+	assert_eq(str(pv["edge"]), "advantage")
+	assert_true(str(pv["title"]).ends_with("ADVANTAGE"), str(pv["title"]))
+	e.events.clear()
+	e.attack(ilse, z, "weapon:greatsword")
+	var ev := {}
+	for x: Dictionary in e.events:
+		if str(x["type"]) == "attack":
+			ev = x
+	assert_eq(str((ev.get("edge", {}) as Dictionary).get("kind", "")), "advantage", "the roll carries its edge for the display")
+	assert_true(((ev["edge"] as Dictionary)["why"] as Array).size() > 0, "and why")
+
+
+func test_right_click_square_menu_lists_move_and_what_you_can_do_to_whoever_is_there() -> void:
+	var e := TestCombat.open_field()
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2))
+	var hedda := TestCombat.hero(e, "hedda_ironvow", Vector2i(4, 2))
+	var z := TestCombat.foe(e, "zombie", Vector2i(3, 3))
+	TestCombat.start_with(e, ilse)
+	var cat := ActionCatalog.new(e)
+	var on_foe := cat.square_actions(ilse, z.cell)
+	var ids: Array = on_foe.map(func(x: Dictionary) -> String: return str(x["id"]))
+	assert_true("move" in ids and "info" in ids)
+	assert_true("act:attack:weapon:greatsword" in ids, str(ids))
+	var mv := on_foe[0] as Dictionary
+	assert_false(bool(mv["enabled"]), "can't stop in a foe's square")
+	var on_ally := cat.square_actions(ilse, hedda.cell)
+	assert_true(str((on_ally[0] as Dictionary)["why"]).contains("through"), "an ally's square: pass through, don't stop")
+	assert_false(on_ally.any(func(x: Dictionary) -> bool: return str(x["id"]).begins_with("act:attack")), "no attacking a friend from the menu by accident")
+	var empty := cat.square_actions(ilse, Vector2i(6, 5))
+	assert_eq(empty.size(), 1, "an empty square: just Move here")
+	assert_true(bool((empty[0] as Dictionary)["enabled"]))

@@ -89,6 +89,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 		_update_hover())
 	hud.radial_picked.connect(_radial)
 	hud.cast_at_level.connect(func(action: Dictionary, level: int) -> void: _choose(action, level))
+	hud.square_picked.connect(_square_picked)
 	if e.state == Encounter.State.SETUP:
 		if e.title != "":
 			e.log.add("turn", e.title, "")
@@ -459,6 +460,55 @@ func _confirm_at() -> void:
 	_advance()
 
 
+## Right-click on a square on your turn: one menu with Move here and everything you could do to whoever is there.
+var _menu_cell := Vector2i(-1, -1)
+var _menu_items: Array[Dictionary] = []
+
+
+func _open_square_menu(at: Vector2) -> bool:
+	var c := _player()
+	if c == null or e.current() != c:
+		return false
+	_pick_from_mouse(at)
+	var t := _target_under()
+	var cell := t.combatant.cell if t != null else hover_cell
+	if cell.x < 0:
+		return false
+	_menu_cell = cell
+	_menu_items = catalog.square_actions(c, cell, _reach)
+	if _menu_items.is_empty():
+		return false
+	var o := e.occupant_at(cell)
+	var shown: Array[Dictionary] = []
+	for it in _menu_items:
+		shown.append({"id": it["id"], "label": it["label"], "enabled": it.get("enabled", true), "why": it.get("why", "")})
+	hud.hide_tooltip()
+	hud.open_square_menu(o.name() if o != null else "This square", shown, at)
+	return true
+
+
+func _square_picked(id: String) -> void:
+	var c := _player()
+	if c == null or mode != Mode.IDLE:
+		return
+	var o := e.occupant_at(_menu_cell)
+	if id == "move":
+		hover_token = null
+		hover_cell = _menu_cell
+		_confirm_at()
+		return
+	if id == "info":
+		if o != null and o.is_player_controlled():
+			_inspect(o.id)
+		elif o != null:
+			hud.show_details(o.name(), ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)])
+		return
+	for it in _menu_items:
+		if str(it["id"]) == id and it.has("action") and o != null:
+			_perform(it["action"] as Dictionary, [o], Vector2.INF, Vector2.ZERO)
+			return
+
+
 func _confirm_target(c: Combatant, t: CombatToken) -> void:
 	var kind := str(selected["targeting"])
 	match kind:
@@ -610,6 +660,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_pick_from_mouse(mb.position)
 			_confirm_at()
 		elif mb.button_index == MOUSE_BUTTON_RIGHT:
+			if mode == Mode.IDLE and _open_square_menu(mb.position):
+				return
 			_cancel_targeting()
 			_update_hover()
 	elif event.is_action_pressed(&"combat_confirm"):
@@ -867,6 +919,7 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		return
 	var why := catalog.target_why(c, selected, o)
 	var lines2: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()]]
+	var tip_title := o.name()
 	if str(selected["kind"]) in ["spell", "item_spell"]:
 		var data := Compendium.shared().spell_data(str(selected["spell_id"]))
 		var prev := catalog.cast_preview(c, selected, slot_level)
@@ -876,6 +929,12 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			var ac := o.creature.ac_value() + int(sit["cover_bonus"])
 			var needs := clampi(ac - (prev["attack"] as Breakdown).total(), 2, 20)
 			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [(prev["attack"] as Breakdown).total(), ac, needs])
+			var sa := sit["advantage"] as Array
+			var sd := sit["disadvantage"] as Array
+			if not sa.is_empty() and sd.is_empty():
+				tip_title = "%s · ADVANTAGE" % o.name()
+			elif not sd.is_empty() and sa.is_empty():
+				tip_title = "%s · DISADVANTAGE" % o.name()
 			for s: Variant in sit["advantage"]:
 				lines2.append("Advantage: %s" % s)
 			for s: Variant in sit["disadvantage"]:
@@ -891,7 +950,7 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			lines2.append("Heals %s %+d" % [prev["heal_dice"], (prev["heal_bonus"] as Breakdown).total()])
 	if kind == "multi":
 		lines2.append("Chosen: %d" % picked.count(o))
-	hud.show_tooltip(o.name(), lines2, [why] if why != "" else [], at)
+	hud.show_tooltip(tip_title, lines2, [why] if why != "" else [], at)
 
 
 # --- Playing events -------------------------------------------------------------------------------
@@ -935,6 +994,12 @@ func _play_events() -> void:
 				var a := _tok(str(ev["attacker"]))
 				var d := _tok(str(ev["target"]))
 				if a != null and d != null:
+					# Advantage or Disadvantage on the roll shows over the attacker, with its reason.
+					var edge := ev.get("edge", {}) as Dictionary
+					if not edge.is_empty():
+						var adv := str(edge["kind"]) == "advantage"
+						var why := ", ".join(edge.get("why", []) as Array)
+						_float(a, ("ADVANTAGE" if adv else "DISADVANTAGE") + (("\n" + why) if why != "" else ""), "candle" if adv else "mist_blue", 34)
 					var dir := (d.position - a.position)
 					var home := a.position
 					# The drawn attack winds up, then the token steps in on the blow; without one, just the step.
@@ -1189,12 +1254,27 @@ func capture_shots(tool: Node, out: String) -> void:
 			if near != null:
 				_advance()
 				await tool.call("wait_frames", 30)
+				# Capture only: the foe is knocked down so the tooltip shows its ADVANTAGE line.
+				near.creature.add_condition(&"prone", "Capture")
 				hover_token = tokens[near.id] as CombatToken
 				hover_cell = near.cell
 				using_pad = true
 				_update_hover()
 				await tool.call("wait_frames", 10)
 				tool.call("_shot", out + "_2_attack.png")
+				# The right-click menu on that square: Move here, every attack and spell on the foe, Info.
+				var spot := get_viewport().get_visible_rect().size / 2.0
+				_menu_cell = near.cell
+				_menu_items = catalog.square_actions(c, near.cell, _reach)
+				var shown: Array[Dictionary] = []
+				for it in _menu_items:
+					shown.append({"id": it["id"], "label": it["label"], "enabled": it.get("enabled", true), "why": it.get("why", "")})
+				hud.hide_tooltip()
+				hud.open_square_menu(near.name(), shown, spot)
+				await tool.call("wait_frames", 10)
+				tool.call("_shot", out + "_2b_square_menu.png")
+				hud._menu.hide()
+				near.creature.remove_condition(&"prone", "Capture")
 				break
 		await _autoplay_turn(pilot)
 	# A spell template: Silvain's Burning Hands or Sleep aimed at the thickest knot of enemies.
@@ -1205,7 +1285,9 @@ func capture_shots(tool: Node, out: String) -> void:
 		if c2.is_player_controlled() and (c2.creature as Character).class_level_of("wizard") > 0 and c2.can_act():
 			_advance()
 			await tool.call("wait_frames", 20)
-			var a := catalog.find(c2, "spell:thunderwave")
+			var a := catalog.find(c2, "spell:burning_hands")
+			if a.is_empty() or not bool(a["legal"]):
+				a = catalog.find(c2, "spell:thunderwave")
 			if not a.is_empty() and bool(a["legal"]):
 				_choose(a)
 				var target := e.ai._nearest_enemy(c2)

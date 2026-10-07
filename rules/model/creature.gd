@@ -575,6 +575,8 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 		r.raw += amount
 		if r.type == &"":
 			r.type = damage_type
+		if amount > 0 and not damage_type in r.types:
+			r.types.append(damage_type)
 		var imm := immunity_source(damage_type)
 		if imm != "":
 			if amount > 0:

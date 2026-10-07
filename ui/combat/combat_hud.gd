@@ -15,6 +15,8 @@ signal slot_level_changed(level: int)
 signal radial_picked(choice: String)
 ## Right-click → "Cast at level N" on a spell slot.
 signal cast_at_level(action: Dictionary, level: int)
+## A choice from the right-click menu on a square of the board.
+signal square_picked(id: String)
 
 const COST_COLOURS := {"action": "moss", "attack": "moss", "bonus": "gilt", "reaction": "mist_blue", "free": "slate",
 	"movement": "moon_blue"}
@@ -775,8 +777,17 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 	_menu.show_actions(str(action.get("label", "")), items, at)
 
 
+## The right-click menu on a square of the board (combat_view builds the items from ActionCatalog.square_actions).
+func open_square_menu(title: String, items: Array[Dictionary], at: Vector2) -> void:
+	_menu_action = {"square": true}
+	_menu.show_actions(title, items, at)
+
+
 func _on_menu(id: String) -> void:
 	var action := _menu_action
+	if bool(action.get("square", false)):
+		square_picked.emit(id)
+		return
 	if action.is_empty() or shown == null:
 		return
 	if id == "info":

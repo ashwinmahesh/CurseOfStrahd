@@ -904,6 +904,9 @@ func actions_at(cell: Vector2i) -> Dictionary:
 	for i in members.size():
 		if members[i].cell == cell:
 			var ch := members[i].creature as Character
+			# Party members share squares outside a fight, so the leader can walk onto anyone's.
+			if i != 0:
+				out.append({"id": "walk", "label": "Walk here"})
 			out.append({"id": "lead:%d" % i, "label": "Lead the party", "enabled": i != 0 and ch.hp > 0,
 				"why": "Already leading" if i == 0 else ("Can't lead while down" if ch.hp <= 0 else "")})
 			out.append({"id": "sheet:%d" % i, "label": "Character sheet"})
@@ -932,6 +935,7 @@ func actions_at(cell: Vector2i) -> Dictionary:
 				var closed := str((npc["shop"] as Dictionary).get("closed", ""))
 				var open := closed == "" or not StoryConditions.check(closed, st)
 				out.append({"id": "trade", "label": "Trade", "enabled": open, "why": "" if open else "Closed for now"})
+			out.append({"id": "walk", "label": "Walk over"})
 		"door", "container":
 			title = str(spec.get("label", "the door" if str(thing["kind"]) == "door" else "the chest")).capitalize()
 			var verb := "Open" if str(thing["kind"]) == "door" else "Open and look inside"
@@ -975,6 +979,12 @@ func act(cell: Vector2i, action_id: String) -> void:
 	var thing := thing_at(cell)
 	match action_id:
 		"walk":
+			# Up to someone in the world (an NPC): stop beside them rather than on them.
+			if not thing.is_empty() and str(thing["kind"]) == "npc":
+				var beside := _adjacent_free(cell)
+				if beside != Vector2i(-1, -1):
+					walk_to(beside)
+				return
 			walk_to(cell)
 			return
 		"search_here":
@@ -1875,6 +1885,8 @@ func start_encounter(encounter_id: String) -> bool:
 	if str(spec.get("final_battle", "")) != "":
 		e.places.append(str(spec["final_battle"]))
 	e.lair = bool(spec.get("lair", false))
+	# Party members pass through each other's spaces unless the place or the fight says otherwise.
+	e.allies_block = bool(spec.get("allies_block", loc.get("allies_block", false)))
 	e.outdoors = bool(loc["map"].get("outdoors", false))
 	e.legendary.set_withdraw(spec.get("withdraw", {}))
 	if str(spec.get("final_battle", "")) != "" and st.quest_stage_index("strahds_lair", st.quest_stage("strahds_lair")) < st.quest_stage_index("strahds_lair", "confronted"):
