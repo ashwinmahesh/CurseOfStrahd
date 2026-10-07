@@ -161,6 +161,7 @@ func _build() -> void:
 		land = AtmosphereLand.build(board, mood, _rng, water)
 		add_child(land.root)
 		board.occluders.append_array(land.occluders)
+		board.mesh_occluders.append_array(land.mesh_occluders)
 
 
 ## The board's water squares get the moving water (one material for the whole place, the land's lakes included).
@@ -203,7 +204,10 @@ func _open_the_lake() -> void:
 				continue
 			for n: Node3D in board.dressing.get(c, []):
 				n.visible = false
-				board.occluders.erase(n)
+				if n is Sprite3D:
+					board.occluders.erase(n)
+				else:
+					board.mesh_occluders.erase(n)
 			for n in board.get_children():
 				var mi := n as MeshInstance3D
 				if mi != null and str(mi.name).begins_with("Ground") and absf(mi.position.x - (x + 0.5)) < 0.01 \

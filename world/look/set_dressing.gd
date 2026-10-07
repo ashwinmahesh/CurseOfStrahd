@@ -105,7 +105,11 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 		"floor":
 			if on_wall_square:
 				_take_square(board, root, cell)
-			_lay(board, root, art, cell, scale_)
+			var model := ModelPiece.for_art(board, art, ModelPiece.hash_cell(cell))
+			if model != "":
+				ModelPiece.stand(board, root, model, art, cell)   # a 3D piece (docs/art/models.md)
+			else:
+				_lay(board, root, art, cell, scale_)
 		_:
 			if on_wall_square and board.house_cells.has(cell) and bool(look.get("building", false)):
 				# The whole building is this piece (Old Bonegrinder's windmill, the Abbey's bell tower): the house
@@ -401,7 +405,7 @@ static func _stand(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i,
 ## Added to `parent`; returns the piece.
 static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Vector2i, scale_: float = 1.0,
 		at_override: Variant = null, front_override: String = "", big: bool = false) -> Node3D:
-	var model := ModelPiece.for_art(board, art)
+	var model := ModelPiece.for_art(board, art, ModelPiece.hash_cell(cell))
 	if model != "":
 		return ModelPiece.stand(board, parent, model, art, cell, at_override)   # a 3D piece (docs/art/models.md)
 	scale_ *= float((catalog().get("scales", {}) as Dictionary).get(art, 1.0))

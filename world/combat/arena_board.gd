@@ -210,6 +210,8 @@ func _build() -> void:
 
 ## Tall billboards (trees) that fade when they stand between the camera and the party.
 var occluders: Array[Sprite3D] = []
+## 3D trees (ModelPiece) that fade the same way.
+var mesh_occluders: Array[Node3D] = []
 ## The scenery the board put on each square (a tree, a wall block, furniture on a '=' square, brambles), so a
 ## location's own prop can take the square's place (SetDressing): cell -> Array of nodes. Ground boxes aren't in it.
 var dressing: Dictionary = {}
@@ -593,6 +595,13 @@ func _tree(c: Vector2i) -> void:
 	_box("Ground", Vector3(1, 0.2, 1), Vector3(c.x + 0.5, -0.1, c.y + 0.5), _floor_tex if _floor_tex != null else Look.cel("bog_deep"))
 	_has_ground[c] = true
 	var first := get_child_count()
+	var pick := ModelPiece.hash_cell(c)
+	var tree3d := ModelPiece.tree(self, kind, at, size, pick, float(pick % 360) * PI / 180.0)
+	if tree3d != null:
+		add_child(tree3d)   # a 3D tree (docs/art/models.md) where the 2D one would stand, as tall
+		mesh_occluders.append(tree3d)
+		_dress(c, first)
+		return
 	var tree := prop_sprite(kind, at, size)
 	if tree != null:
 		occluders.append(tree)
@@ -699,6 +708,8 @@ func _low_cover(c: Vector2i) -> void:
 		_box("LowWall", Vector3(1.0, LOW_H, 0.45), Vector3(c.x + 0.5, base + LOW_H / 2.0, c.y + 0.5), low_mat)
 	elif up or down:
 		_box("LowWall", Vector3(0.45, LOW_H, 1.0), Vector3(c.x + 0.5, base + LOW_H / 2.0, c.y + 0.5), low_mat)
+	elif ModelPiece.for_art(self, "gravestone") != "":
+		ModelPiece.stand(self, self, ModelPiece.for_art(self, "gravestone"), "gravestone", c, null, _rng.randf_range(0.9, 1.1))
 	elif prop_sprite("gravestone", Vector3(c.x + 0.5, base, c.y + 0.5), _rng.randf_range(0.9, 1.1)) != null:
 		pass
 	else:
@@ -718,6 +729,10 @@ func _brambles(c: Vector2i) -> void:
 		var pick := str(choices[(c.x * 5 + c.y * 11) % choices.size()])
 		if SetDressing.has_art(pick):
 			var at := Vector3(c.x + 0.5 + _rng.randf_range(-0.15, 0.15), floor_y(c), c.y + 0.5 + _rng.randf_range(-0.15, 0.15))
+			var model := ModelPiece.for_art(self, pick, ModelPiece.hash_cell(c))
+			if model != "":
+				ModelPiece.stand(self, self, model, pick, c, at, _rng.randf_range(0.85, 1.15)).set_meta("ground_cover", true)
+				return
 			if str((SetDressing.manifest()[pick] as Dictionary).get("mount", "stand")) == "floor":
 				var flat := SetDressing.flat_sprite(pick)
 				flat.position = at + Vector3(0, SetDressing.WALL_GAP, 0)
@@ -798,3 +813,13 @@ func fade_occluders(camera_pos: Vector3, focus: Vector3, delta: float) -> void:
 			var fading := a < 0.999
 			t.alpha_cut = SpriteBase3D.ALPHA_CUT_DISABLED if fading else SpriteBase3D.ALPHA_CUT_DISCARD
 			t.render_priority = DirectionalSprite.RENDER_PRIORITY if fading else 0
+	for t in mesh_occluders:
+		if not is_instance_valid(t):
+			continue
+		var rel := Vector2(t.global_position.x - focus.x, t.global_position.z - focus.z)
+		var between := rel.length() < 4.0 and rel.normalized().dot(to_cam) > 0.35
+		var was := float(t.get_meta("fade", 0.0))
+		var f := move_toward(was, 0.72 if between else 0.0, delta * 4.0)
+		if not is_equal_approx(f, was):
+			t.set_meta("fade", f)
+			ModelPiece.set_fade(t, f)

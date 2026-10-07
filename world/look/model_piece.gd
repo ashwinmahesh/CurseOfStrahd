@@ -43,14 +43,23 @@ static func in_use(board: ArenaBoard) -> bool:
 
 ## The model that stands in for 2D `art` on this board, or "". A catalog entry can depend on the board's theme
 ## ({theme: model, "*": model}): wooden stairs in houses, stone ones in dungeons and churches.
-static func for_art(board: ArenaBoard, art: String) -> String:
+## A list of models is a set of variants (pines, boulders): `pick` (from where the piece stands) chooses one.
+static func for_art(board: ArenaBoard, art: String, pick: int = 0) -> String:
 	if art == "" or not in_use(board):
 		return ""
 	var entry: Variant = (settings().get("art", {}) as Dictionary).get(art, "")
-	var id := str(entry)
 	if entry is Dictionary:
-		id = str((entry as Dictionary).get(board.theme, (entry as Dictionary).get("*", "")))
+		entry = (entry as Dictionary).get(board.theme, (entry as Dictionary).get("*", ""))
+	if entry is Array:
+		var options := entry as Array
+		entry = options[posmod(pick, options.size())] if not options.is_empty() else ""
+	var id := str(entry)
 	return id if has_model(id) else ""
+
+
+## A number for a square, to pick a variant and a heading that stay the same every time the place is built.
+static func hash_cell(cell: Vector2i) -> int:
+	return absi(cell.x * 73856093 ^ cell.y * 19349663)
 
 
 ## A new copy of model `id` with its surfaces in the game's materials (by material name: pal_<colour>,
@@ -92,7 +101,7 @@ static func material(name: String) -> Material:
 ## A standing piece on `cell` (SetDressing.stand_piece and exits): a holder on the square, turned to face into the
 ## room, with the model in it. Against-the-wall furniture stands with its back on the wall face. Returns the holder.
 static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, cell: Vector2i,
-		at_override: Variant = null) -> Node3D:
+		at_override: Variant = null, scale_: float = 1.0) -> Node3D:
 	var info := manifest()[id] as Dictionary
 	var mount := str(info.get("mount", "free"))
 	var holder := Node3D.new()
@@ -102,7 +111,14 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 	holder.set_meta("model", id)
 	parent.add_child(holder)
 	var model := instance(id)
+	model.scale = Vector3.ONE * scale_
 	holder.add_child(model)
+	if bool(info.get("turns", false)):
+		# Nature has no front: each copy gets its own heading, the same every time the place is built.
+		holder.rotation.y = float(hash_cell(cell) % 360) * PI / 180.0
+		holder.set_meta("nature", true)
+		_extras(model, info)
+		return holder
 	if mount == "stairs_up" or mount == "stairs_down":
 		var e := entry_side(board, cell)
 		holder.rotation.y = atan2(float(e.x), float(e.y))   # the steps start on the side the party walks in from
@@ -127,6 +143,67 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 			model.position = Vector3(0, 0, -depth / 2.0)
 	_extras(model, info)
 	return holder
+
+
+## A 3D tree for 2D tree art `kind` (a pine, a dead tree) standing at `at`, as tall as the 2D tree drawn at `size`
+## of its art, turned by `yaw`; null when this place has no model for it. The board's trees and the land around a map
+## use it; the caller fades it (ArenaBoard.mesh_occluders).
+static func tree(board: ArenaBoard, kind: String, at: Vector3, size: float, pick: int, yaw: float) -> Node3D:
+	var id := for_art(board, kind, pick)
+	if id == "":
+		return null
+	var holder := Node3D.new()
+	holder.name = "Model_" + id
+	holder.position = at
+	holder.rotation.y = yaw
+	holder.set_meta("model", id)
+	holder.set_meta("nature", true)
+	var model := instance(id)
+	model.scale = Vector3.ONE * tree_scale(kind, id, size)
+	holder.add_child(model)
+	return holder
+
+
+## How much to scale model `id` so it stands as tall as 2D tree art `kind` drawn at `size`.
+static func tree_scale(kind: String, id: String, size: float) -> float:
+	var art_h := float((SetDressing.manifest().get(kind, {}) as Dictionary).get("world_height", 4.0)) * size
+	var model_h := float(((manifest()[id] as Dictionary).get("size", [1, 3, 1]) as Array)[1])
+	return art_h / maxf(model_h, 0.01)
+
+
+## Fades a 3D piece standing between the camera and the party (0 drawn solid, 1 gone), as the trees' billboards fade.
+static func set_fade(node: Node3D, amount: float) -> void:
+	for n in node.find_children("*", "GeometryInstance3D", true, false):
+		(n as GeometryInstance3D).transparency = amount
+
+
+const INSTANCED_SHADER := preload("res://shaders/cel_instanced.gdshader")
+static var _tree_meshes: Dictionary = {}
+
+
+## Model `id` as one mesh whose surfaces carry their own cel materials that take each instance's colour (the land's
+## MultiMesh of trees darkens the far ones).
+static func tree_mesh(id: String) -> Mesh:
+	if _tree_meshes.has(id):
+		return _tree_meshes[id] as Mesh
+	var src: Mesh = null
+	var root := (load("res://" + str((manifest()[id] as Dictionary)["file"])) as PackedScene).instantiate()
+	for n in root.find_children("*", "MeshInstance3D", true, false):
+		src = (n as MeshInstance3D).mesh
+		break
+	root.free()
+	if src == null:
+		return null
+	var mesh := src.duplicate() as Mesh
+	for i in mesh.get_surface_count():
+		var name := mesh.surface_get_material(i).resource_name if mesh.surface_get_material(i) != null else ""
+		var m := ShaderMaterial.new()
+		m.shader = INSTANCED_SHADER
+		var colour := name.substr(name.find("_") + 1) if name.begins_with("pal_") or name.begins_with("glow_") else "bog_deep"
+		m.set_shader_parameter("albedo", Look.color(colour))
+		mesh.surface_set_material(i, m)
+	_tree_meshes[id] = mesh
+	return mesh
 
 
 ## A wall piece (a fireplace) on the face of wall square `wall` looking along `normal`, under `root`.
