@@ -9,6 +9,8 @@ extends RefCounted
 ## so it takes the scene's lights and shadows, and the screen pass outlines it and snaps it to the palette.
 
 const MANIFEST_JSON := "res://art/models/manifest.json"
+## A cut-away interior wall's height (ArenaBoard's interior walls, and what the kit's copings are made for).
+const CUT_TOP := 1.15
 const SPRITE_SHADER := preload("res://shaders/cel_sprite.gdshader")
 ## How far a piece standing against a wall keeps off the wall face.
 const GAP := 0.004
@@ -168,6 +170,13 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 ## of its art, turned by `yaw`; null when this place has no model for it. The board's trees and the land around a map
 ## use it; the caller fades it (ArenaBoard.mesh_occluders).
 static func tree(board: ArenaBoard, kind: String, at: Vector3, size: float, pick: int, yaw: float) -> Node3D:
+	if Flora.enabled():
+		# The Modern look's trees (W9, Flora) where the place's set of plants has one for this kind: so a tree put
+		# back on its square (ArenaBoard.restore_cell, after a building-sized piece leaves) is the new tree too.
+		var f := _flora(board)
+		var fid := f.tree_for(kind, pick)
+		if fid != "":
+			return f.node(fid, at, f.tree_scale(fid, "map", pick), yaw)
 	var id := for_art(board, kind, pick)
 	if id == "":
 		return null
@@ -181,6 +190,19 @@ static func tree(board: ArenaBoard, kind: String, at: Vector3, size: float, pick
 	model.scale = Vector3.ONE * tree_scale(kind, id, size)
 	holder.add_child(model)
 	return holder
+
+
+## The place's set of plants (Flora), made once per board: only which plants it has, not its wind (the land sets that).
+static func _flora(board: ArenaBoard) -> Flora:
+	if board.has_meta("flora"):
+		return board.get_meta("flora") as Flora
+	var loc := Compendium.shared().get_entry("locations", board.place) if board.place != "" \
+		and Compendium.shared().has("locations", board.place) else {}
+	var f := Flora.new()
+	f.set_id = Flora.set_for(Atmosphere.mood_for(board.place, loc) if not loc.is_empty() else "")
+	f.spec = Flora.resolve(f.set_id)
+	board.set_meta("flora", f)
+	return f
 
 
 ## How much to scale model `id` so it stands as tall as 2D tree art `kind` drawn at `size`.
@@ -344,7 +366,10 @@ static func door_leaf(id: String, width: float, height: float) -> Node3D:
 ## blind arcade, a church's plinth and string course) where no panelling does, and a moulded coping along the cut top
 ## of every open face; those are merged into one mesh. Added under one holder on the wall square, so it hides and
 ## shows with the wall.
-static func dress_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> void:
+## `top` is how high the wall stands (the coping goes along it): the cut-away height, or a full storey's (W8,
+## InteriorWalls); `parent` takes the holder instead of the board (InteriorWalls keeps a wall's full and cut versions
+## under one node on its square).
+static func dress_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material, top: float = CUT_TOP, parent: Node3D = null) -> void:
 	if wall_mat == null or not in_use(board):
 		return
 	var id := ""
@@ -366,7 +391,7 @@ static func dress_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> vo
 		var foot := dir * (0.5 + GAP * 0.5) + Vector3(0, board.floor_y(n), 0)
 		var yaw := atan2(dir.x, dir.z)
 		if BuildingKit.has(coping):
-			kit_parts.append([coping, Transform3D(Basis(Vector3.UP, yaw), foot)])
+			kit_parts.append([coping, Transform3D(Basis(Vector3.UP, yaw), foot + Vector3(0, top - CUT_TOP, 0))])
 		if board.grid.in_bounds(n + d) and board.grid.has_flag(n + d, CombatGrid.WALL):
 			continue   # a one-square gap in the wall: a doorway
 		if id == "":
@@ -374,7 +399,7 @@ static func dress_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> vo
 				kit_parts.append([face_id, Transform3D(Basis(Vector3.UP, yaw), foot)])
 			continue
 		if holder == null:
-			holder = _wall_holder(board, c, id)
+			holder = _wall_holder(board, c, id, parent)
 		var face := instance(id)
 		face.position = foot
 		face.rotation.y = yaw
@@ -382,19 +407,22 @@ static func dress_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> vo
 	if kit_parts.is_empty():
 		return
 	if holder == null:
-		holder = _wall_holder(board, c, "")
+		holder = _wall_holder(board, c, "", parent)
 	var mi := BuildingKit.merge(kit_parts)
 	if mi != null:
 		mi.name = "KitFaces"
 		holder.add_child(mi)
 
 
-static func _wall_holder(board: ArenaBoard, c: Vector2i, id: String) -> Node3D:
+static func _wall_holder(board: ArenaBoard, c: Vector2i, id: String, parent: Node3D = null) -> Node3D:
 	var holder := Node3D.new()
 	holder.name = "WallModules"
 	holder.set_meta("wall_modules", id)
-	holder.position = board.cell_center(c)
-	board.add_child(holder)
+	if parent != null:
+		parent.add_child(holder)   # the parent stands on the square
+	else:
+		holder.position = board.cell_center(c)
+		board.add_child(holder)
 	return holder
 
 

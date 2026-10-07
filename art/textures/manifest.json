@@ -1419,6 +1419,48 @@
             "orm_file": "art/textures/kit/dressed_stone_2k_b_orm.webp"
           }
         ]
+      },
+      "oak_v": {
+        "size": 1536,
+        "wrap": "xy",
+        "tile_world_units": 1.0,
+        "palette": [],
+        "file": "art/textures/kit/oak_v_2k.webp",
+        "hd_file": "art/textures/kit/oak_v_2k.webp",
+        "normal_file": "art/textures/kit/oak_v_2k_n.webp",
+        "orm_file": "art/textures/kit/oak_v_2k_orm.webp",
+        "derived_from": "kit/oak",
+        "turned": 90,
+        "variants": [
+          {
+            "file": "art/textures/kit/oak_v_2k_b.webp",
+            "normal_file": "art/textures/kit/oak_v_2k_b_n.webp",
+            "orm_file": "art/textures/kit/oak_v_2k_b_orm.webp"
+          }
+        ]
+      },
+      "plaster": {
+        "file": "art/textures/kit/plaster_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/kit/plaster_2k.webp",
+        "normal_file": "art/textures/kit/plaster_2k_n.webp",
+        "orm_file": "art/textures/kit/plaster_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/kit_plaster.webp",
+        "variants": [
+          {
+            "file": "art/textures/kit/plaster_2k_b.webp",
+            "normal_file": "art/textures/kit/plaster_2k_b_n.webp",
+            "orm_file": "art/textures/kit/plaster_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/kit/plaster_2k_c.webp",
+            "normal_file": "art/textures/kit/plaster_2k_c_n.webp",
+            "orm_file": "art/textures/kit/plaster_2k_c_orm.webp"
+          }
+        ]
       }
     }
   },

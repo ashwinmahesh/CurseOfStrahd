@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bjcx1e7j5ilpc"
-path.bptc="res://.godot/imported/cobbles_2k_b.webp-98efce6ca90db8203006c8c4fefbd01e.bptc.ctex"
+path.s3tc="res://.godot/imported/cobbles_2k_b.webp-98efce6ca90db8203006c8c4fefbd01e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,12 +12,12 @@ metadata={
 [deps]
 
 source_file="res://art/textures/village/cobbles_2k_b.webp"
-dest_files=["res://.godot/imported/cobbles_2k_b.webp-98efce6ca90db8203006c8c4fefbd01e.bptc.ctex"]
+dest_files=["res://.godot/imported/cobbles_2k_b.webp-98efce6ca90db8203006c8c4fefbd01e.s3tc.ctex"]
 
 [params]
 
 compress/mode=2
-compress/high_quality=true
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

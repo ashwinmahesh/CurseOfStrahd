@@ -1533,7 +1533,7 @@
       "tsolenka_pass": "stone"
     },
     "cores": {
-      "timber": "interior/plaster_wall",
+      "timber": "kit/plaster",
       "clapboard": "",
       "stone": "church/stone_wall",
       "church": "church/stone_wall"
@@ -1568,7 +1568,7 @@
       "night"
     ],
     "interiors": {
-      "about": "Interiors: the style a place's rooms are built in, by the start of its id, else by board theme. A lone wall square inside a room is a pillar in that style (kit_pillar_<style>); every open face of a cut-away wall gets the style's coping along its top and, where no panelling does, its face module (kit_<style>_coping, kit_<style>_face).",
+      "about": "Interiors: the style a place's rooms are built in, by the start of its id, else by board theme. A lone wall square inside a room is a pillar in that style (kit_pillar_<style>); every open face of a cut-away wall gets the style's coping along its top and, where no panelling does, its face module (kit_<style>_coping, kit_<style>_face). full_walls (W8, Modern look only): rooms get full-height walls that cut away toward the camera, height by style; ground: what lies outside the building by style, and outside: a place's own (its ground, how many storeys below it lies, its walls' height); a dungeon's outside is rock.",
       "places": {
         "castle_ravenloft": "castle",
         "amber_temple": "amber"
@@ -1583,11 +1583,72 @@
         "inn": "timber",
         "manor": "manor",
         "townhouse": "manor"
+      },
+      "full_walls": false,
+      "ground": {
+        "manor": "village/grass",
+        "timber": "village/cobbles",
+        "church": "village/grass",
+        "castle": "castle/courtyard",
+        "amber": "mountain/snow"
+      },
+      "outside": {
+        "death_house_ground": {
+          "ground": "village/cobbles"
+        },
+        "death_house_upper": {
+          "ground": "village/cobbles",
+          "below": 1
+        },
+        "death_house_third": {
+          "ground": "village/cobbles",
+          "below": 2
+        },
+        "death_house_attic": {
+          "ground": "village/cobbles",
+          "below": 3
+        },
+        "vallaki_": {
+          "ground": "vallaki/cobbled_square"
+        },
+        "burgomaster_mansion": {
+          "ground": "village/cobbles"
+        },
+        "blood_of_the_vine": {
+          "ground": "village/cobbles"
+        },
+        "mad_marys_house": {
+          "ground": "village/cobbles"
+        },
+        "bildraths_mercantile": {
+          "ground": "village/cobbles"
+        },
+        "village_church": {
+          "ground": "village/grass"
+        },
+        "argynvostholt_upper": {
+          "ground": "village/grass",
+          "below": 1
+        },
+        "old_bonegrinder_loft": {
+          "ground": "village/grass",
+          "below": 1
+        },
+        "castle_ravenloft_spires": {
+          "ground": "castle/courtyard",
+          "below": 4
+        },
+        "castle_ravenloft_court": {
+          "ground": "castle/courtyard"
+        },
+        "castle_ravenloft_main_floor": {
+          "ground": "castle/courtyard"
+        }
       }
     }
   },
   "clutter": {
-    "about": "Decals laid over floors and walls by rule (world/look/clutter.gd, docs/art/decals.md): per board theme, or per place by the start of its id. decals: decal ids or sheet names (art/textures/decals/manifest.json); on: floor, edge (beside a wall), difficult, boundary (beside rough ground: mud fringes where cobbles meet mud), wall or wall_foot (an open face of a wall); chance per square; size in world units; max per board.",
+    "about": "Decals laid over floors and walls by rule (world/look/clutter.gd, docs/art/decals.md): per board theme, or per place by the start of its id. decals: decal ids or sheet names (art/textures/decals/manifest.json); on: floor, edge (beside a wall), difficult, boundary (beside rough ground: mud fringes where cobbles meet mud), wall or wall_foot (an open face of a wall); chance per square; size in world units; max per board; tint darkens or colours a mark; gloss makes it wet (puddles glint). A rule with scatter instead names kit models (blender/building_kit.py kit_scatter_*) strewn on the ground the same way.",
     "themes": {
       "village": [
         {
@@ -1600,7 +1661,13 @@
             0.8,
             1.6
           ],
-          "max": 25
+          "max": 25,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
         },
         {
           "decals": [
@@ -1637,7 +1704,13 @@
             0.9,
             1.5
           ],
-          "max": 40
+          "max": 40,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
         },
         {
           "decals": [
@@ -1664,16 +1737,30 @@
           "max": 30
         },
         {
-          "decals": [
-            "wall_damp"
+          "scatter": [
+            "kit_scatter_pebbles",
+            "kit_scatter_stones"
           ],
-          "on": "wall",
-          "chance": 0.04,
+          "on": "edge",
+          "chance": 0.08,
           "size": [
-            0.6,
-            1.0
+            0.8,
+            1.2
           ],
-          "max": 12
+          "max": 60
+        },
+        {
+          "scatter": [
+            "kit_scatter_twigs",
+            "kit_scatter_debris"
+          ],
+          "on": "floor",
+          "chance": 0.02,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 15
         }
       ],
       "vallaki": [
@@ -1687,7 +1774,13 @@
             0.8,
             1.6
           ],
-          "max": 25
+          "max": 25,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
         },
         {
           "decals": [
@@ -1724,7 +1817,13 @@
             0.9,
             1.5
           ],
-          "max": 40
+          "max": 40,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
         },
         {
           "decals": [
@@ -1751,14 +1850,26 @@
           "max": 30
         },
         {
-          "decals": [
-            "wall_damp"
+          "scatter": [
+            "kit_scatter_pebbles"
           ],
-          "on": "wall",
-          "chance": 0.04,
+          "on": "edge",
+          "chance": 0.06,
           "size": [
-            0.6,
-            1.0
+            0.8,
+            1.2
+          ],
+          "max": 60
+        },
+        {
+          "scatter": [
+            "kit_scatter_debris"
+          ],
+          "on": "floor",
+          "chance": 0.015,
+          "size": [
+            0.8,
+            1.2
           ],
           "max": 12
         }
@@ -1774,7 +1885,13 @@
             0.8,
             1.6
           ],
-          "max": 25
+          "max": 25,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
         },
         {
           "decals": [
@@ -1811,7 +1928,13 @@
             0.9,
             1.5
           ],
-          "max": 40
+          "max": 40,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
         },
         {
           "decals": [
@@ -1838,16 +1961,16 @@
           "max": 30
         },
         {
-          "decals": [
-            "wall_damp"
+          "scatter": [
+            "kit_scatter_pebbles"
           ],
-          "on": "wall",
-          "chance": 0.04,
+          "on": "edge",
+          "chance": 0.06,
           "size": [
-            0.6,
-            1.0
+            0.8,
+            1.2
           ],
-          "max": 12
+          "max": 60
         }
       ],
       "svalich_road": [
@@ -1896,6 +2019,39 @@
           "size": [
             0.8,
             1.5
+          ],
+          "max": 15,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
+        },
+        {
+          "scatter": [
+            "kit_scatter_twigs",
+            "kit_scatter_stones",
+            "kit_scatter_roots",
+            "kit_scatter_pebbles"
+          ],
+          "on": "floor",
+          "chance": 0.07,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 60
+        },
+        {
+          "scatter": [
+            "kit_scatter_mushrooms"
+          ],
+          "on": "edge",
+          "chance": 0.05,
+          "size": [
+            0.8,
+            1.2
           ],
           "max": 15
         }
@@ -1947,7 +2103,39 @@
             0.8,
             1.5
           ],
-          "max": 15
+          "max": 15,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
+        },
+        {
+          "scatter": [
+            "kit_scatter_twigs",
+            "kit_scatter_roots",
+            "kit_scatter_stones"
+          ],
+          "on": "floor",
+          "chance": 0.08,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 60
+        },
+        {
+          "scatter": [
+            "kit_scatter_mushrooms"
+          ],
+          "on": "edge",
+          "chance": 0.06,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 20
         }
       ],
       "road": [
@@ -1997,7 +2185,27 @@
             0.8,
             1.5
           ],
-          "max": 15
+          "max": 15,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
+        },
+        {
+          "scatter": [
+            "kit_scatter_pebbles",
+            "kit_scatter_stones",
+            "kit_scatter_twigs"
+          ],
+          "on": "floor",
+          "chance": 0.05,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 60
         }
       ],
       "camp": [
@@ -2047,7 +2255,13 @@
             0.8,
             1.5
           ],
-          "max": 15
+          "max": 15,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
         }
       ],
       "tser_pool": [
@@ -2097,7 +2311,13 @@
             0.8,
             1.5
           ],
-          "max": 15
+          "max": 15,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
         }
       ],
       "riverside": [
@@ -2147,7 +2367,27 @@
             0.8,
             1.5
           ],
-          "max": 15
+          "max": 15,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
+        },
+        {
+          "scatter": [
+            "kit_scatter_stones",
+            "kit_scatter_pebbles",
+            "kit_scatter_twigs"
+          ],
+          "on": "floor",
+          "chance": 0.05,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 60
         }
       ],
       "wilderness": [
@@ -2197,7 +2437,27 @@
             0.8,
             1.5
           ],
-          "max": 15
+          "max": 15,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
+        },
+        {
+          "scatter": [
+            "kit_scatter_stones",
+            "kit_scatter_pebbles",
+            "kit_scatter_twigs"
+          ],
+          "on": "floor",
+          "chance": 0.06,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 60
         }
       ],
       "manor": [
@@ -2634,6 +2894,18 @@
             0.8
           ],
           "max": 12
+        },
+        {
+          "scatter": [
+            "kit_scatter_pebbles"
+          ],
+          "on": "edge",
+          "chance": 0.04,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 15
         }
       ],
       "dungeon": [
@@ -2671,7 +2943,13 @@
             0.6,
             1.2
           ],
-          "max": 15
+          "max": 15,
+          "tint": [
+            0.45,
+            0.5,
+            0.6
+          ],
+          "gloss": true
         },
         {
           "decals": [
@@ -2732,6 +3010,32 @@
             0.8
           ],
           "max": 20
+        },
+        {
+          "scatter": [
+            "kit_scatter_pebbles",
+            "kit_scatter_bones",
+            "kit_scatter_debris"
+          ],
+          "on": "edge",
+          "chance": 0.07,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 40
+        },
+        {
+          "scatter": [
+            "kit_scatter_mushrooms"
+          ],
+          "on": "edge",
+          "chance": 0.025,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 8
         }
       ],
       "attic": [
@@ -2770,6 +3074,18 @@
             1.0
           ],
           "max": 12
+        },
+        {
+          "scatter": [
+            "kit_scatter_debris"
+          ],
+          "on": "floor",
+          "chance": 0.04,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 15
         }
       ],
       "shrine_yard": [
@@ -2832,6 +3148,20 @@
             0.9
           ],
           "max": 30
+        },
+        {
+          "scatter": [
+            "kit_scatter_pebbles",
+            "kit_scatter_stones",
+            "kit_scatter_twigs"
+          ],
+          "on": "edge",
+          "chance": 0.06,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 60
         }
       ]
     },
@@ -2920,6 +3250,19 @@
             1.0
           ],
           "max": 15
+        },
+        {
+          "scatter": [
+            "kit_scatter_pebbles",
+            "kit_scatter_bones"
+          ],
+          "on": "edge",
+          "chance": 0.04,
+          "size": [
+            0.8,
+            1.2
+          ],
+          "max": 25
         }
       ],
       "death_house": [

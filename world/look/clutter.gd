@@ -2,7 +2,8 @@ class_name Clutter
 extends RefCounted
 ## Clutter and decals (Improvement Ideas W10, docs/art/decals.md): marks laid over a board's floors and walls by rule
 ## (cracks, stains, moss, blood, puddles, leaves, straw, dust, soot, damp), so a room or a street stops reading as one
-## tile repeated, and mud fringes where cobbles meet mud so materials blend instead of meeting at a square's edge.
+## tile repeated, and mud fringes where cobbles meet mud so materials blend instead of meeting at a square's edge; and
+## small 3D things strewn over the ground (pebbles, stones, roots, bones, debris, twigs, toadstools).
 ## The marks are Godot Decals: they take the scene's light and never block a square. Which marks go where is in
 ## art/sprites/props/catalog.json "clutter"; every placement is picked from the square, so a place looks the same
 ## every time it's built. Decals only show in the Modern look (Classic is frozen as it was).
@@ -60,8 +61,12 @@ static func dress(board: ArenaBoard) -> int:
 	root.name = "Clutter"
 	board.add_child(root)
 	var placed := 0
+	var strewn := {}   # scatter model id -> Array of Transform3D (in the board's space)
 	for ri in rules.size():
 		var rule := rules[ri] as Dictionary
+		if rule.has("scatter"):
+			placed += _scatter(board, rule, ri, strewn)
+			continue
 		var ids := ids_for(rule.get("decals", []) as Array)
 		if ids.is_empty():
 			continue
@@ -85,10 +90,77 @@ static func dress(board: ArenaBoard) -> int:
 				var s := lerpf(float(size[0]), float(size[1]), float((h / 977) % 1000) / 1000.0)
 				var d := _decal(id, s, spot, h)
 				if d != null:
+					if rule.has("tint"):
+						var t := rule["tint"] as Array
+						d.modulate = Color(float(t[0]), float(t[1]), float(t[2]))
+					if bool(rule.get("gloss", false)):
+						d.texture_orm = _gloss()   # wet: the lights glint off it
 					root.add_child(d)
 					count += 1
 		placed += count
+	for id: String in strewn:
+		var mesh := _scatter_mesh(id)
+		if mesh == null:
+			continue
+		# One small node each, standing on its square, so a hidden room's things hide with it (HiddenAreas).
+		for xf: Variant in strewn[id]:
+			var mi := MeshInstance3D.new()
+			mi.name = "Scatter_" + id
+			mi.mesh = mesh
+			mi.transform = xf as Transform3D
+			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			root.add_child(mi)
 	return placed
+
+
+static var _scatter_meshes: Dictionary = {}
+
+
+## A scatter model as one mesh with the game's materials (made once).
+static func _scatter_mesh(id: String) -> Mesh:
+	var key := id + "|" + Look.style()
+	if not _scatter_meshes.has(key):
+		var merged := BuildingKit.merge([[id, Transform3D.IDENTITY]])
+		_scatter_meshes[key] = merged.mesh if merged != null else null
+		if merged != null:
+			merged.free()
+	return _scatter_meshes[key] as Mesh
+
+
+## Small 3D things strewn by a rule (pebbles, stones, roots, bones, debris, twigs, toadstools): where its decals would
+## go, a few to a square, turned and sized by the square. They don't block anything.
+static func _scatter(board: ArenaBoard, rule: Dictionary, ri: int, strewn: Dictionary) -> int:
+	var ids: Array[String] = []
+	for v: Variant in rule["scatter"]:
+		if BuildingKit.has(str(v)):
+			ids.append(str(v))
+	if ids.is_empty():
+		return 0
+	var chance := float(rule.get("chance", 0.05))
+	var cap := int(rule.get("max", 80))
+	var size := rule.get("size", [0.8, 1.2]) as Array
+	var count := 0
+	for z in board.grid.depth:
+		for x in board.grid.width:
+			if count >= cap:
+				return count
+			var c := Vector2i(x, z)
+			var h := _hash(board.place, c, ri + 101)
+			if float(h % 10007) / 10007.0 >= chance or board.occupied.has(c):
+				continue
+			var spots := _spots(board, c, str(rule.get("on", "floor")))
+			if spots.is_empty() or bool((spots[0] as Dictionary)["wall"]):
+				continue
+			var spot := spots[(h / 7) % spots.size()] as Dictionary
+			var id := ids[(h / 131) % ids.size()]
+			var s := lerpf(float(size[0]), float(size[1]), float((h / 977) % 1000) / 1000.0)
+			var at := (spot["at"] as Vector3) + Vector3(float((h / 11) % 50) / 100.0 - 0.25, 0, float((h / 13) % 50) / 100.0 - 0.25)
+			var xf := Transform3D(Basis(Vector3.UP, float(h % 360) * PI / 180.0).scaled(Vector3.ONE * s), at)
+			if not strewn.has(id):
+				strewn[id] = []
+			(strewn[id] as Array).append(xf)
+			count += 1
+	return count
 
 
 ## Where a rule's mark can go on square `c`: [{at: Vector3 (the surface point), normal: Vector3 (out of the
@@ -165,6 +237,18 @@ static func _decal(id: String, s: float, spot: Dictionary, h: int) -> Decal:
 	d.lower_fade = 0.25
 	d.normal_fade = 0.3
 	return d
+
+
+static var _gloss_tex: Texture2D = null
+
+
+## A decal's ORM for wet marks (puddles): no occlusion, almost mirror-smooth, no metal.
+static func _gloss() -> Texture2D:
+	if _gloss_tex == null:
+		var img := Image.create(4, 4, false, Image.FORMAT_RGB8)
+		img.fill(Color(1.0, 0.12, 0.0))
+		_gloss_tex = ImageTexture.create_from_image(img)
+	return _gloss_tex
 
 
 static func _texture(path: String) -> Texture2D:

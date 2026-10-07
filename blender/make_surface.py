@@ -47,6 +47,8 @@ def args():
     p.add_argument("--metallic", type=float, default=0.0)
     p.add_argument("--relief", type=float, default=1.0)
     p.add_argument("--quilt", type=int, default=0, help="further variants made from the first tile's own content")
+    p.add_argument("--crop", type=float, default=0.0, help="the share of the swatch's width one tile takes (enlarged to "
+                   "--size), for a swatch whose pieces came out too small; 0: the most the swatch allows")
     p.add_argument("--pieces", type=float, default=0.0, help="how many pieces (stones, boards) across one tile: the "
                    "tile is cut from as much of the swatch as holds that many (0: the most the swatch allows)")
     p.add_argument("--band", type=int, default=0, help="the border band variants take from the first (px; default n/8)")
@@ -280,7 +282,11 @@ def main():
     a = args()
     out = Path(a.out)
     first = cutout.load_rgba(a.srcs[0])[..., :3]
-    if a.pieces > 0:
+    if a.crop > 0:
+        s = min(first.shape[:2])
+        tile_a, n = seamless_n(first, a.axis, int(s * a.crop))
+        print(f"crop: the tile takes {n} px of the swatch's {s}")
+    elif a.pieces > 0:
         # Gemini paints a surface at whatever size it likes: cut the tile from the part of the swatch that holds the
         # pieces the tile should have, within what the swatch can give (at most a 1.7x enlargement).
         k = pieces_across(first)

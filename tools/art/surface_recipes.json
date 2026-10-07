@@ -1,5 +1,5 @@
 {
-  "about": "HD surface sets (Improvement Ideas W4, docs/art/textures.md): one Gemini swatch per surface at 2K with art/prompts/surface_preamble.txt and a look target frame as the style reference (ref: art/generated/look_targets/<ref>.png), made seamless by blender/make_surface.py (tools/art/build_surfaces.py), with a normal map and an occlusion-roughness-metal map. variants: how many edge-matched variants the surface has in all; the further ones are quilted from the first tile's own content (organic surfaces only: a quilt would break the lines of boards, tiles and courses). view: floor (top-down), wall (elevation) or roof. material: overrides written to the manifest entry's material. new: a surface the kit adds (no Classic tile). A recipe may give pieces (how many stones or boards across one tile) to cut the tile from as much of the swatch as holds that many, for a swatch Gemini drew at the wrong scale; the spectral count it relies on can mistake mortar lines for pieces, so check its printed count.",
+  "about": "HD surface sets (Improvement Ideas W4, docs/art/textures.md): one Gemini swatch per surface at 2K with art/prompts/surface_preamble.txt and a look target frame as the style reference (ref: art/generated/look_targets/<ref>.png), made seamless by blender/make_surface.py (tools/art/build_surfaces.py), with a normal map and an occlusion-roughness-metal map. variants: how many edge-matched variants the surface has in all; the further ones are quilted from the first tile's own content (organic surfaces only: a quilt would break the lines of boards, tiles and courses). view: floor (top-down), wall (elevation) or roof. material: overrides written to the manifest entry's material. new: a surface the kit adds (no Classic tile). A recipe may give pieces (how many stones or boards across one tile) to cut the tile from as much of the swatch as holds that many, for a swatch Gemini drew at the wrong scale; the spectral count it relies on can mistake mortar lines for pieces, so check its printed count. grade: a colour multiplier on the painted tile. derived: surfaces made from another's set, turned a quarter. crop: the share of the swatch's width one tile takes, for pieces that came out too small. brightness: a fixed gain instead of matching the old tile's average brightness.",
   "prompt_template": "Seamless tileable texture of {subject}, {view}, filling the whole square edge to edge, painted in the style of the reference picture's world (ignore its layout and characters).",
   "views": {
     "floor": "seen straight from above (orthographic top-down, no perspective)",
@@ -63,13 +63,15 @@
       "material": {
         "roughness": 0.25,
         "macro": 0.2
-      }
+      },
+      "crop": 0.5
     },
     "interior/marble_floor": {
       "subject": "a grand hall floor of grey and white veined marble slabs laid in a diamond pattern, polished but cracked and dulled with age",
       "view": "floor",
       "variants": 1,
-      "ref": "death_house_hall_ab"
+      "ref": "death_house_hall_ab",
+      "crop": 0.36
     },
     "interior/kitchen_flags": {
       "subject": "a kitchen floor of large worn grey-brown flagstones, uneven, stained with soot and grease, with dark joints",
@@ -93,7 +95,8 @@
       "subject": "a castle hall floor of large dark grey-violet flagstones, worn smooth, with fine cracks and dark joints",
       "view": "floor",
       "variants": 3,
-      "ref": "castle_hall_ab"
+      "ref": "castle_hall_ab",
+      "crop": 0.45
     },
     "castle/ashlar": {
       "subject": "a gothic castle wall of dark grey ashlar blocks in even courses, cold and damp, with thin mortar lines and soot stains",
@@ -105,7 +108,8 @@
       "subject": "a floor of polished black marble slabs veined with dark red, a few cracked",
       "view": "floor",
       "variants": 3,
-      "ref": "castle_hall_ab"
+      "ref": "castle_hall_ab",
+      "crop": 0.5
     },
     "castle/courtyard": {
       "subject": "a castle courtyard of worn irregular grey flagstones with weeds and moss in the cracks and damp patches",
@@ -307,7 +311,12 @@
       "variants": 2,
       "ref": "village_dusk_ab",
       "tile_world_units": 1.0,
-      "new": true
+      "new": true,
+      "grade": [
+        0.62,
+        0.55,
+        0.5
+      ]
     },
     "kit/dressed_stone": {
       "subject": "smooth dressed grey stone with no joints: finely tooled, weathered and lightly stained",
@@ -316,6 +325,21 @@
       "ref": "castle_hall_ab",
       "tile_world_units": 1.5,
       "new": true
+    },
+    "kit/plaster": {
+      "subject": "an old exterior wall of lime plaster between timbers: rough off-white and pale ochre plaster, cracked, stained and weathered, with a few patches where it has fallen away to show old red-brown brick",
+      "view": "wall",
+      "variants": 3,
+      "ref": "village_dusk_ab",
+      "tile_world_units": 2.0,
+      "new": true,
+      "brightness": 1.0
+    }
+  },
+  "derived": {
+    "kit/oak_v": {
+      "from": "kit/oak",
+      "note": "the oak with its grain running up the tile, for posts"
     }
   }
 }
