@@ -337,11 +337,11 @@ func _missiles(family: String, cue: Dictionary, caster: CombatToken, others: Arr
 		var start := SpellFx.hand(from, to) if from == caster else SpellFx.chest(from)
 		last = FxMissiles.fly(self, family, cue, start, to, true)
 		if bool(cue.get("chain", false)):
-			await last
+			await until(last)
 			from = t
 		else:
 			await wait(0.09)
-	await last
+	await until(last)
 
 
 func _spread(count: int) -> Vector3:
@@ -433,6 +433,17 @@ static func chest(t: CombatToken) -> Vector3:
 ## The combat speed setting: effects play faster in fast combat.
 func pace() -> float:
 	return GameSettings.combat_pace()
+
+
+## Waits for a missile's flight (its tween's or timer's signal) unless it has already landed. A slow frame can land
+## the last of a volley before the pauses between shots are over, and a finished tween or timer is freed at once, so
+## awaiting it then was a script error ("Error connecting to signal: finished during await", seen in a busy test run).
+func until(landed: Signal) -> void:
+	var o := landed.get_object()
+	if o == null or not is_instance_valid(o) or (o is Tween and not (o as Tween).is_running()) \
+			or (o is SceneTreeTimer and (o as SceneTreeTimer).time_left <= 0.0):
+		return
+	await landed
 
 
 ## A timer's signal `seconds` (at the combat speed) from now.

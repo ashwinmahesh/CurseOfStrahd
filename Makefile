@@ -25,6 +25,12 @@ run:
 	@$(FRESH)
 	$(NOFOCUS) < /dev/null
 
+## The owner's stable copy (P1, tools/play/play.sh): ~/Documents/CurseOfStrahdGame-play moves forward to the newest
+## main that passed make ci (refs/play/green), imports what changed, then starts. PLAY_NO_RUN=1 only updates it.
+.PHONY: play
+play:
+	@tools/play/play.sh
+
 ## Phase 2 exit: the combat arena (party of four level 3 pregens vs wolves and zombies).
 arena:
 	@$(FRESH)
