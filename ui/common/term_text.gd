@@ -1,7 +1,7 @@
 class_name TermText
 extends RichTextLabel
 ## Rules text with its glossary terms gilded (U1): resting the pointer on one opens its card beside it (TipCards), and
-## clicking it pins the card. Sizes itself to its text like a wrapped Label, and lets clicks and the scroll wheel pass
+## clicking it (left or right) pins the card. Sizes itself to its text like a wrapped Label, and lets clicks and the scroll wheel pass
 ## on to whatever holds it.
 
 ## The term under the pointer, "" when none.
@@ -46,3 +46,10 @@ func _init() -> void:
 		if m.begins_with("term:") and TipCards.current != null:
 			TipCards.current.pin_term(m.substr(5), self))
 	mouse_exited.connect(func() -> void: hovered_term = "")
+
+
+func _gui_input(event: InputEvent) -> void:
+	var mb := event as InputEventMouseButton
+	if mb != null and mb.pressed and mb.button_index == MOUSE_BUTTON_RIGHT and hovered_term != "" and TipCards.current != null:
+		TipCards.current.pin_term(hovered_term, self)
+		accept_event()

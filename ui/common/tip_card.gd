@@ -3,9 +3,9 @@ extends PanelContainer
 ## One card on the rules-card layer (U1, TipCards): a control's tooltip or a glossary term, framed in the Crimson look
 ## (black ground, gilt edge, ironwork corners). Like a tooltip it lets the pointer pass through at first; once the
 ## pointer has rested on what opened it a moment longer (a gilt line runs along its top edge) it settles, and the
-## pointer can move onto it to rest on its gilded words, which open further cards beside it. A pin in its top edge
-## keeps it open; a pinned card wears a gilt clasp, can be dragged by its top edge and closes from its cross or a
-## right-click.
+## pointer can move onto it to rest on its gilded words, which open further cards beside it. The pin in its top edge,
+## a right-click or a middle-click keeps it open; a pinned card wears a gilt clasp, can be dragged by its top edge and
+## closes from its cross or another right-click.
 
 signal pin_pressed(card: TipCard)
 signal close_pressed(card: TipCard)
@@ -15,8 +15,8 @@ signal raised(card: TipCard)
 const STRIP := 22.0
 ## A glossary card's text width.
 const TERM_WIDTH := 340.0
-const HINT := "Rest on a gilded word for its rules · middle-click pins"
-const HINT_PLAIN := "Middle-click pins this card"
+const HINT := "Rest on a gilded word for its rules · right-click pins"
+const HINT_PLAIN := "Right-click pins this card"
 
 ## "term:<id>" or "tip:<instance id of the control>".
 var key := ""
@@ -248,8 +248,12 @@ func _gui_input(event: InputEvent) -> void:
 	elif mb.pressed and mb.button_index == MOUSE_BUTTON_MIDDLE:
 		pin_pressed.emit(self)
 		accept_event()
-	elif mb.pressed and mb.button_index == MOUSE_BUTTON_RIGHT and pinned:
-		close_pressed.emit(self)
+	elif mb.pressed and mb.button_index == MOUSE_BUTTON_RIGHT:
+		# Right-click pins a card (docs/ui/character_creation.md) and closes a pinned one.
+		if pinned:
+			close_pressed.emit(self)
+		else:
+			pin_pressed.emit(self)
 		accept_event()
 
 

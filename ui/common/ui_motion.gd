@@ -132,6 +132,16 @@ static func _leaf(c: Control, page: Control, forward: bool) -> void:
 	var ink := Look.color("ui_black")
 	var wine := Look.color("ui_wine")
 	c.draw_polygon(back, PackedColorArray([ink, wine, wine, ink]))
+	# Faint ruled lines on the leaf's back, so it reads as a page.
+	var rule := Color(Look.color("gilt_dark"), 0.35)
+	var y := r.position.y + 30.0
+	while y < r.end.y - 16.0:
+		var k := (y - r.position.y) / maxf(r.size.y, 1.0)
+		var edge := top.lerp(bottom, k).x - 18.0 * (1.0 if forward else -1.0)
+		var near := far + 24.0 * (1.0 if forward else -1.0)
+		if (edge > near) == forward:
+			c.draw_line(Vector2(near, y), Vector2(edge, y), rule, 1.0)
+		y += 24.0
 	# The shadow the leaf throws on the new page, then the leaf's gilt edge.
 	var dir := 1.0 if forward else -1.0
 	var shade := PackedVector2Array([top, bottom, bottom + Vector2(36.0 * dir, 0), top + Vector2(36.0 * dir, 0)])

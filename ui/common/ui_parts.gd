@@ -376,6 +376,7 @@ static func bar(value: float, maximum: float, extra: float, text: String, fill: 
 				lost = lerpf(from, value, t)
 			else:
 				shown = lerpf(from, value, t)
+				lost = shown
 			if text != "" and c.has_meta(&"roll_text"):
 				label = str((c.get_meta(&"roll_text") as Callable).call(lerpf(from, value, t)))
 		var f := clampf(shown / span, 0.0, 1.0)
