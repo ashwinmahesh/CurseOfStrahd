@@ -23,6 +23,10 @@ silhouettes, and a small saturated palette in the spirit of *Castlevania: Sympho
 - Character sprites are the exception (owner, 2026-10-06: they read blurry and grainy through the pass): their
   sheets are rendered at 384 px cells, mipmapped, and drawn after the pass at full screen resolution. They keep the
   palette because the pipeline already quantized them.
+- In game every character sprite draws through `shaders/world/sprite_crisp.gdshader` (owner 2026-10-07: "crisp
+  lines and high definition"): a 4x4 grid of samples across each screen pixel on the full sheet (sharp without the
+  jagged lines plain sampling gives at half size) and an ink outline of about 1.4 screen pixels round the figure.
+  `tools/art/preview/sharp_lab.tscn` compares sprites under the game's camera.
 
 ## Two finishes: Modern (default) and Classic
 The owner picked Modern as the default on 2026-10-07 (docs/plans/ui_polish.md); Classic stays in the pause menu's

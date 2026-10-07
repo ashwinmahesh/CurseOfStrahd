@@ -39,11 +39,11 @@ static var _frames_cache: Dictionary = {}
 ## resolution: their sheets are already quantized to the palette by the pipeline, so they stay on-model while
 ## staying sharp (owner request 2026-10-06).
 const RENDER_PRIORITY := 6
-## Owner feedback (2026-10-06, "they still look really blurry"): a 384 px sheet shown about 110 px tall picked up
-## mostly the 96 px mipmap and went soft. Sprites now sample the full sheet; mipmaps take over only when the camera
-## is so far out (a figure under ~60 px tall) that sampling the full sheet would shimmer.
-const SHARP_DOWN_TO := 0.18
-var _filter_check := 0.0
+## Owner feedback (2026-10-06 "blurry", 2026-10-07 "crisp lines and high definition of each character's features"):
+## a 384 px sheet shown about 170 px tall was sampled plainly (jagged, broken lines) or through mipmaps (soft). Every
+## character sprite now draws through shaders/world/sprite_crisp.gdshader: a 4x4 grid of samples over each screen
+## pixel on the full sheet (sharp without jaggies) and an ink outline round the figure at any zoom.
+const CRISP := preload("res://shaders/world/sprite_crisp.gdshader")
 
 
 ## `cell_px` is the sheet's cell size; by default it's read from the frames.
@@ -52,6 +52,7 @@ static func create(frames: SpriteFrames, height_units: float, cell_px: int = -1)
 	s.sprite_frames = frames
 	s._hit_frame = int(frames.get_meta("hit_frame", 2))
 	s.frame_changed.connect(s._on_frame_changed)
+	s.animation_changed.connect(s._bind)
 	s.animation_finished.connect(s._on_animation_finished)
 	if cell_px <= 0:
 		cell_px = cell_size(frames)
@@ -131,13 +132,38 @@ static func attack_casts(frames: SpriteFrames) -> bool:
 	return has_attack(frames) and bool(frames.get_meta("casts", false))
 
 
-## Shared settings for character sprites (also the lying-down view): hard alpha edges, mipmapped filtering, and
-## drawn after the screen pass, sampled sharp (see SHARP_DOWN_TO).
+## Shared settings for character sprites (also the lying-down view): drawn after the screen pass through the crisp
+## sprite shader (CRISP), which samples the current sheet (bind_sheet).
 static func setup_material(s: SpriteBase3D) -> void:
 	s.alpha_cut = SpriteBase3D.ALPHA_CUT_DISABLED
 	s.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR
 	s.render_priority = RENDER_PRIORITY
 	s.shaded = false
+	var m := ShaderMaterial.new()
+	m.shader = CRISP
+	m.render_priority = RENDER_PRIORITY
+	m.set_shader_parameter("ink", Look.color("void"))
+	s.material_override = m
+	if s is Sprite3D:
+		bind_sheet(s, (s as Sprite3D).texture)
+	elif s is AnimatedSprite3D and (s as AnimatedSprite3D).sprite_frames != null:
+		var a := s as AnimatedSprite3D
+		var anim := a.animation if a.sprite_frames.has_animation(a.animation) else &"idle_s"
+		if a.sprite_frames.has_animation(anim):
+			bind_sheet(s, a.sprite_frames.get_frame_texture(anim, 0))
+
+
+## Points the crisp shader at `tex`'s sheet (an atlas frame's whole sheet: the sprite's UVs already address it).
+static func bind_sheet(s: SpriteBase3D, tex: Texture2D) -> void:
+	var m := s.material_override as ShaderMaterial
+	if m == null or tex == null:
+		return
+	m.set_shader_parameter("texture_albedo", (tex as AtlasTexture).atlas if tex is AtlasTexture else tex)
+
+
+func _bind() -> void:
+	if sprite_frames != null and sprite_frames.has_animation(animation) and sprite_frames.get_frame_count(animation) > 0:
+		bind_sheet(self, sprite_frames.get_frame_texture(animation, clampi(frame, 0, sprite_frames.get_frame_count(animation) - 1)))
 
 
 ## Which of the 8 directions to show. `facing` is the world-space ground direction the character
@@ -226,6 +252,7 @@ func has_struck() -> bool:
 
 
 func _on_frame_changed() -> void:
+	_bind()
 	if _attacking and not _struck and frame >= _hit_frame:
 		_struck = true
 		struck.emit()
@@ -242,11 +269,10 @@ func _on_animation_finished() -> void:
 	attack_finished.emit()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var cam := get_viewport().get_camera_3d()
 	if cam == null:
 		return
-	_keep_sharp(cam, delta)
 	if _one_shot != "":
 		if not moving or _one_shot == "die":
 			return
@@ -274,19 +300,3 @@ func _loop_for() -> String:
 			if has_anim(sprite_frames, "sneak_walk"):
 				return "sneak_walk" if moving else "sneak_idle"
 	return "walk" if moving else "idle"
-
-
-## How many screen pixels one sheet pixel covers decides the filter: sharp while it's above SHARP_DOWN_TO, mipmapped
-## below (checked a few times a second; changing the filter rebuilds the material, so only on a change).
-func _keep_sharp(cam: Camera3D, delta: float) -> void:
-	_filter_check -= delta
-	if _filter_check > 0.0:
-		return
-	_filter_check = 0.25
-	var vp := get_viewport()
-	var h := float((vp as SubViewport).size.y) if vp is SubViewport else float(get_window().size.y)
-	var d := maxf(cam.global_position.distance_to(global_position), 0.01)
-	var on_screen := h / (2.0 * d * tan(deg_to_rad(cam.fov) / 2.0)) * pixel_size
-	var want := BaseMaterial3D.TEXTURE_FILTER_LINEAR if on_screen >= SHARP_DOWN_TO else BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	if texture_filter != want:
-		texture_filter = want
