@@ -26,6 +26,11 @@ var occluders: Array[Sprite3D] = []
 var mesh_occluders: Array[Node3D] = []   ## 3D trees (ModelPiece, or Flora's) in the first rows
 ## The Modern look's trees and plants (Flora, Improvement Ideas W9); null in Classic, which keeps the old trees.
 var flora: Flora = null
+## The Modern look's shaped ground under the map's woods (GroundRelief, W11); null in Classic, which stays flat.
+var relief: GroundRelief = null
+## The roads out of the map (W11): each edge square of a way out -> Vector2(the middle of its run of open squares
+## along that edge, half the run's width).
+var _roads: Dictionary = {}
 var _edge: Dictionary = {}      ## border cell -> Edge
 var _w := 0
 var _d := 0
@@ -58,13 +63,20 @@ static func build(board_: ArenaBoard, mood: Dictionary, rng_: RandomNumberGenera
 	l._void_land = str(l.spec.get("void", "land")) == "land"
 	l._classify()
 	l._distances()
+	if GroundRelief.enabled():
+		l.relief = GroundRelief.build(board_)
+		l._find_roads()
 	l._terrain()
+	if l.relief != null:
+		var shaped := l.relief.mesh(Look.cel_textured(str(l.spec.get("ground", "village/grass"))))
+		if shaped != null:
+			l.root.add_child(shaped)
 	if Flora.enabled():
 		var loc := Compendium.shared().get_entry("locations", board_.place) if board_.place != "" \
 			and Compendium.shared().has("locations", board_.place) else {}
 		l.flora = Flora.for_place(board_, Atmosphere.mood_for(board_.place, loc) if not loc.is_empty() else "", mood)
 		l._flora_board_trees()
-		l.flora.dress_map(board_, l.root)
+		l.flora.dress_map(board_, l.root, l.map_y)
 	if float(l.spec.get("trees", 0.0)) > 0.0:
 		if l.flora != null:
 			l._flora_trees()
@@ -269,8 +281,12 @@ func _terrain() -> void:
 					if k == Edge.OPEN:
 						road += 1
 			var h := _height_at(p, near)
+			if relief != null and not water:
+				# The banks under the map's woods carry on past its edge and settle into the land.
+				var bank := relief.height(p.clamp(Vector2.ZERO, Vector2(_w, _d)))
+				h += bank * (1.0 - smoothstep(0.5, 3.5, near)) * (1.0 - float(road) / 4.0)
 			if on_map:
-				h = 0.0
+				h = relief.height(p) if relief != null else 0.0
 			elif water:
 				h = WATER_Y
 			elif road > 0:
@@ -297,6 +313,9 @@ func _terrain() -> void:
 				y10 = WATER_Y
 				y01 = WATER_Y
 				y11 = WATER_Y
+			if k == Edge.OPEN and relief != null:
+				_rutted(st, i - r, j - r, y00, y10, y01, y11)
+				continue
 			var a := Vector3(i - r, y00, j - r)
 			var b := Vector3(i - r + 1, y10, j - r)
 			var c := Vector3(i - r, y01, j - r + 1)
@@ -442,6 +461,73 @@ func _tree_models(kind: String, items: Array) -> bool:
 	return true
 
 
+# --- Ground with shape (Improvement Ideas W11) --------------------------------------------------------------------
+
+## Pieces a road square is cut into across, for its ruts.
+const RUT_STEPS := 6
+
+
+## The ways out: runs of open squares along each edge of the map, each run's middle and half its width.
+func _find_roads() -> void:
+	for side: int in 4:
+		var n := _w if side < 2 else _d
+		var run: Array[Vector2i] = []
+		for t in n + 1:
+			var c := Vector2i(-1, -1)
+			if t < n:
+				c = Vector2i(t, 0 if side == 0 else _d - 1) if side < 2 else Vector2i(0 if side == 2 else _w - 1, t)
+			if t < n and int(_edge.get(c, -1)) == Edge.OPEN:
+				run.append(c)
+				continue
+			if not run.is_empty():
+				var a := float(run[0].x if side < 2 else run[0].y)
+				var b := float(run[-1].x if side < 2 else run[-1].y) + 1.0
+				for rc in run:
+					var info := Vector2((a + b) / 2.0, (b - a) / 2.0)
+					# A corner square is on two edges: keep the wider way out.
+					if not _roads.has(rc) or (_roads[rc] as Vector2).y < info.y:
+						_roads[rc] = info
+				run.clear()
+
+
+## The ruts' height at a point on a road out: a raised crown down the middle, two wheel ruts, the verges rising at
+## the sides; nothing where the road leaves the map, so it meets the map's own flat squares.
+func _rut(p: Vector2) -> float:
+	var c := Vector2i(clampi(floori(p.x), 0, _w - 1), clampi(floori(p.y), 0, _d - 1))
+	if not _roads.has(c):
+		return 0.0
+	var info := _roads[c] as Vector2
+	var ox := maxf(-p.x, p.x - _w)
+	var oz := maxf(-p.y, p.y - _d)
+	# Beyond the left or right edge the road runs along x, so its width lies along z, and the other way round.
+	var across := p.y if ox > oz else p.x
+	var u := (across - info.x) / maxf(info.y, 0.5)
+	var au := absf(u)
+	var h := 0.03 * exp(-pow(u / 0.18, 2.0)) - 0.055 * exp(-pow((au - 0.48) / 0.14, 2.0)) + 0.07 * smoothstep(0.78, 1.1, au)
+	return h * smoothstep(0.2, 1.6, maxf(ox, oz))
+
+
+## A road square of the land cut into strips with ruts in them, on top of its corner heights.
+func _rutted(st: SurfaceTool, x: float, z: float, y00: float, y10: float, y01: float, y11: float) -> void:
+	var q := 1.0 / RUT_STEPS
+	for sj in RUT_STEPS:
+		for si in RUT_STEPS:
+			var v: Array[Vector3] = []
+			for corner: Vector2 in [Vector2(si, sj), Vector2(si + 1, sj), Vector2(si, sj + 1), Vector2(si + 1, sj + 1)]:
+				var fx := corner.x * q
+				var fz := corner.y * q
+				var y := lerpf(lerpf(y00, y10, fx), lerpf(y01, y11, fx), fz)
+				var p := Vector2(x + fx, z + fz)
+				v.append(Vector3(p.x, y + _rut(p), p.y))
+			for t: Vector3 in [v[0], v[1], v[2], v[1], v[3], v[2]]:
+				st.add_vertex(t)
+
+
+## The ground's height at a point on the map's own squares: its banks (0 where people walk, and in Classic).
+func map_y(p: Vector2) -> float:
+	return relief.height(p) if relief != null else 0.0
+
+
 # --- The Modern look's trees and plants (Flora, Improvement Ideas W9) -----------------------------------------------
 
 ## Beyond this many squares from the map the land's trees are their lighter far copies and cast no shadow.
@@ -498,6 +584,18 @@ func _flora_board_trees() -> void:
 			c.queue_free()
 		holder.add_child(Flora.instance(id, flora.tree_scale(id, "map", pick)))
 		holder.set_meta("model", id)
+		# Up on the bank under the woods (W11), a little sunk so its foot never shows a gap.
+		holder.position.y = map_y(Vector2(holder.position.x, holder.position.z)) - 0.05
+
+
+## Is land of kind `kind` within `r` squares of a point (sampled round it)?
+func _near(p: Vector2, kind: int, r: float) -> bool:
+	for i in 12:
+		var a := TAU * i / 12.0
+		for f: float in [0.5, 1.0]:
+			if _land_kind(p + Vector2(cos(a), sin(a)) * r * f) == kind:
+				return true
+	return false
 
 
 ## The land's trees as _trees() places them, from Flora: the first rows each a node of its own that fades like the
@@ -525,6 +623,9 @@ func _flora_trees() -> void:
 			if mists != "" and _beyond(p, mists):
 				continue
 			var kind := str(kinds[1 if kinds.size() > 1 and rng.randf() < dead else 0])
+			# A spruce's crown is wide: keep it off the roads out so they stay open lanes through the woods.
+			if _near(p, Edge.OPEN, 1.3):
+				continue
 			var pick := ModelPiece.hash_cell(Vector2i(floori(p.x * 3.0), floori(p.y * 3.0)))
 			var id := flora.tree_for(kind, pick)
 			if id == "":
