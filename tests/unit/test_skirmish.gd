@@ -122,6 +122,8 @@ func test_everyone_finds_open_ground_on_every_map() -> void:
 	for m: String in ["wolf", "wolf", "zombie", "dire_wolf", "ogre"]:
 		s.add_foe(m)
 	for entry in SkirmishSetup.maps():
+		if str(entry["region"]) == "Test":
+			continue   # a fixture place another test left in the shared Compendium, not one of the game's maps
 		s.map_id = str(entry["id"])
 		var g := s.grid()
 		var errors: Array[String] = []

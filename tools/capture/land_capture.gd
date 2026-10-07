@@ -7,17 +7,27 @@ extends Node
 ## LAND_ZOOM=22 (every shot from this far out), LAND_TIME=1 (also time each shot uncapped), LAND_RAW=1 (without the
 ## screen pass: no outlines, mist, land fade or grade, to see the plants' own colours), LAND_BENCH=1 (time the
 ## place with each group of plants hidden in turn, round after round, instead of shooting it), LAND_NO_FLORA=1 (the
-## Modern look without its trees and plants: the old trees, for before-and-after pairs), LAND_GIF=n (n frames a
+## Modern look without its trees and plants: the old trees, for before-and-after pairs), LAND_NO_RELIEF=1 (without
+## the shaped ground), LAND_CLAY=1 (the shaped ground in plain clay), LAND_GIF=n (n frames a
 ## tenth of a second apart, numbered, to show the wind).
 ## The road and village shots stand the party where the light lane's look_capture does, so frames compare across lanes.
 
 ## Each shot: the place, the hour, where the party stands (empty: the place's own spawn), and optionally the camera's
-## distance (7 to 22 in play) and its quarter turns.
+## distance (7 to 22 in play), its quarter turns, and a point to look at instead of the party (`look`, x and z).
 const SHOTS := {
 	"road_day": {"loc": "into_the_mists_road", "hour": 12, "cells": [[12, 15], [13, 15], [12, 16], [13, 14]]},
 	"road_dusk": {"loc": "into_the_mists_road", "hour": 18, "cells": [[12, 15], [13, 15], [12, 16], [13, 14]]},
 	"road_far": {"loc": "into_the_mists_road", "hour": 12, "cells": [[12, 15], [13, 15], [12, 16], [13, 14]],
 		"zoom": 22.0},
+	"road_exit": {"loc": "into_the_mists_road", "hour": 12, "cells": [[2, 15], [3, 15], [2, 16], [3, 14]], "zoom": 16.0,
+		"turns": 1},
+	"crossroads_exit": {"loc": "svalich_crossroads", "hour": 12, "cells": [[3, 12], [4, 12], [3, 13], [4, 11]],
+		"zoom": 16.0, "turns": 1},
+	"road_overview": {"loc": "into_the_mists_road", "hour": 12, "cells": [[2, 15], [3, 15], [2, 16], [3, 14]],
+		"zoom": 26.0},
+	"road_ruts": {"loc": "into_the_mists_road", "hour": 12, "cells": [[2, 15], [3, 15], [2, 16], [3, 14]],
+		"zoom": 8.0, "look": [-4.0, 15.5]},
+	"crossroads_dusk": {"loc": "svalich_crossroads", "hour": 18, "zoom": 11.0},
 	"road_fade": {"loc": "into_the_mists_road", "hour": 12, "cells": [[15, 17], [14, 17], [15, 16], [14, 16]]},
 	"village_dusk": {"loc": "village_of_barovia", "hour": 18},
 	"village_far": {"loc": "village_of_barovia", "hour": 12, "zoom": 22.0},
@@ -41,6 +51,7 @@ func _ready() -> void:
 	if style != "":
 		Look.set_style(style, false)
 	Flora.off = OS.get_environment("LAND_NO_FLORA") != ""
+	GroundRelief.off = OS.get_environment("LAND_NO_RELIEF") != ""
 
 
 func capture_shots(tool: Node, out: String) -> void:
@@ -100,8 +111,17 @@ func _build(shot: Dictionary) -> void:
 	view.rig.distance = zoom
 	view.rig.rotate_step(int(shot.get("turns", 0)))
 	view.rig.snap_to_target()
+	if shot.has("look"):
+		var at := shot["look"] as Array
+		view.rig.follow = null
+		view.rig.global_position = Vector3(float(at[0]), 0.0, float(at[1]))
 	if OS.get_environment("LAND_RAW") != "":
 		view.post.visible = false
+	if OS.get_environment("LAND_CLAY") != "" and view.atmosphere.land != null:
+		# The shaped ground in plain clay, to see its shape without the texture.
+		var clay := Look.cel("stone")
+		for n in view.atmosphere.land.root.find_children("Ground*", "MeshInstance3D", true, false):
+			(n as MeshInstance3D).material_override = clay
 
 
 ## Times the place with each group of the land's plants hidden in turn, over several rounds, and prints the quickest

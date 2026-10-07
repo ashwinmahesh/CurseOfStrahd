@@ -32,6 +32,8 @@ var overlay: GridOverlay
 var field: FieldView
 ## Spell and ability effects (world/combat/fx/spell_fx.gd).
 var fx: SpellFx
+## What enemies shout and creatures sound like (world/combat/combat_barks.gd).
+var barks: CombatBarks
 var rig: CameraRig
 var hud: CombatHud
 var tokens: Dictionary = {}
@@ -81,6 +83,8 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	add_child(field)
 	fx = SpellFx.new()
 	add_child(fx)
+	barks = CombatBarks.new()
+	add_child(barks)
 	hud = CombatHud.new()
 	add_child(hud)
 	hud.build(e, catalog)
@@ -1105,6 +1109,8 @@ func _play_events() -> void:
 					elif not flew and not str(ev.get("action", "")).begins_with("spell:") and (acue.is_empty() or str(acue["flavour"]) == "steel"):
 						CombatSfx.hit(CombatSfx.hit_kind(a.combatant, str(ev.get("action", ""))), _damage_after(events, ev_at, d.combatant.id),
 							d.combatant, bool(ev.get("critical", false)))
+					if bool(ev["hit"]):
+						barks.bark(a.combatant, "strike")
 					if not bool(ev["hit"]):
 						_float(d, "miss", "parchment")
 					elif bool(ev.get("critical", false)):
@@ -1116,6 +1122,8 @@ func _play_events() -> void:
 					t.hurt()
 					_float(t, ("CRIT %d" if bool(ev.get("critical", false)) else "-%d") % int(ev["amount"]), "vampire_red", 64)
 					t.refresh()
+					if t.combatant.creature.hp > 0 and CombatSfx.heavy(int(ev["amount"]), t.combatant.creature.max_hp()):
+						barks.bark(t.combatant, "hurt")
 					await get_tree().create_timer(0.35 * GameSettings.combat_pace()).timeout
 			"heal":
 				var th := _tok(str(ev["id"]))
@@ -1140,6 +1148,7 @@ func _play_events() -> void:
 					if kind == "death" and tc.combatant.side == &"enemy":
 						Audio.sfx("enemy_death")
 						Audio.sfx("thud")
+						barks.bark(tc.combatant, "death")
 						_narrate("combat:kill", null, tc.combatant)
 					elif kind == "death" and tc.combatant.side == &"party":
 						_narrate("death:" + tc.combatant.id, tc.combatant, null)
@@ -1274,6 +1283,9 @@ func _play_events() -> void:
 				fx.end_volley()
 				_stop_walking(walking)
 				_refresh_all()
+				var tn := _tok(str(ev["id"]))
+				if tn != null:
+					barks.bark(tn.combatant, "battle")   # a kind of enemy cries out the first time one acts
 			"round":
 				if not _opening:   # the opening beat shows "Roll Initiative", then round 1
 					hud.banner("Round %d" % int(ev["round"]), 1.0)
@@ -1335,7 +1347,8 @@ func _narrate(key: String, actor: Combatant, target: Combatant) -> void:
 	if text != "":
 		e.log.add("narr", text, "")
 		hud.refresh_log()
-		VoiceOver.say(VoiceOver.NARRATOR, text)
+		if VoiceOver.say(VoiceOver.NARRATOR, text) > 0.0:
+			barks.hush()   # the Narrator speaks over no one
 
 
 func _stop_walking(walking: Dictionary) -> void:

@@ -206,6 +206,14 @@
       "persuasion",
       "insight"
     ],
+    "subclass": "college_of_lore",
+    "feats": [
+      "war_caster",
+      "resilient",
+      "fey_touched",
+      "inspiring_leader",
+      "alert"
+    ],
     "note": "Charisma first, then Dexterity for Armor Class in Light armor."
   },
   "levels": [
