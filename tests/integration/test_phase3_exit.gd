@@ -114,22 +114,19 @@ func test_create_a_party_survive_death_house_and_meet_ismark_and_ireena() -> voi
 	if not _ok(bool(GameState.story.get_flag("death_house_promised_walter")), "the party promised to find Walter"):
 		return
 	await _save_and_reload("on the road")
+	GoldenSaves.keep("into_the_mists", "test_phase3_exit")
 
 	# 3. Death House, up to the attic. The attic stair is behind a secret door off the balcony (book area 11).
 	if not _ok(await bot.go_to("death_house_ground"), "reached death_house_ground"):
 		return
+	GoldenSaves.keep("death_house", "test_phase3_exit")
 	if not _ok(await bot.go_to("death_house_third"), "reached death_house_third"):
 		return
 	if not _ok(await bot.walk_to(Vector2i(11, 4)), "walked to (11, 4)"):
 		return
 	if not _ok(GameState.story.get_flag("death_house_armor_destroyed") == true, "the armor on the balcony"):
 		return
-	for i in 12:
-		if not bot.view().thing_at(Vector2i(11, 3)).is_empty():
-			break
-		bot.view().search()
-		await bot.frames(2)
-	if not _ok(not bot.view().thing_at(Vector2i(11, 3)).is_empty(), "found the panel to the attic stair"):
+	if not _ok(await bot.search_for(Vector2i(11, 3)), "found the panel to the attic stair"):
 		return
 	if not _ok(await bot.go_to("death_house_attic"), "reached death_house_attic"):
 		return
@@ -137,11 +134,8 @@ func test_create_a_party_survive_death_house_and_meet_ismark_and_ireena() -> voi
 	# 4. The hidden stair (searching the storage room's corner) and the first milestone.
 	if not _ok(await bot.walk_to(Vector2i(16, 1)), "walked to (16, 1)"):
 		return
-	for i in 12:
-		if not bot.view().thing_at(Vector2i(18, 1)).is_empty():
-			break
-		bot.view().search()
-		await bot.frames(2)
+	if not _ok(await bot.search_for(Vector2i(18, 1)), "found the seam in the storage room"):
+		return
 	if not _ok(await bot.use(Vector2i(18, 1)), "used the thing at (18, 1)"):
 		return
 	if not _ok(bool(GameState.story.get_flag("death_house_secret_stair_found")), "flag death_house_secret_stair_found"):
@@ -176,6 +170,7 @@ func test_create_a_party_survive_death_house_and_meet_ismark_and_ireena() -> voi
 	assert_eq(GameState.story.quest_stage("death_house"), "escaped_refused")
 	if not _ok(await bot.go_to("village_of_barovia"), "reached village_of_barovia"):
 		return
+	GoldenSaves.keep("village_of_barovia", "test_phase3_exit")
 
 	# 7. Ismark at the tavern, then Ireena at the mansion.
 	if not _ok(await bot.go_to("blood_of_the_vine"), "reached blood_of_the_vine"):

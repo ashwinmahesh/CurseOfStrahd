@@ -147,9 +147,9 @@ fails when a location has a prop, container or door without art.
 
 Inner wall squares that belong to some 2 x 2 block of wall are houses; the rest are yard walls. Each solid block is
 split into rectangles (largest first, growing right then down) and each rectangle becomes one house: walls 2.2
-units tall (more for large houses), a gable along the longer side with 0.18 of overhang, thatch for small village
-houses and slate for big ones (Vallaki is all slate), a stone chimney on most, and window pieces on every third
-open face. Roofs are flat-shaded meshes; their texture comes from world position (`cel_world.gdshader`), the same as
+units tall (more for large houses), a gable along the longer side, thatch for small village houses and slate for big
+ones (Vallaki is all slate), a stone chimney on most, and windows on every third open face. Since W7 the houses, yard
+walls and Vallaki's palisade are put together from the building kit in each region's style (docs/art/building_kit.md). Roofs are flat-shaded meshes; their texture comes from world position (`cel_world.gdshader`), the same as
 the boxes. A house standing between the camera and the party's leader is cut away: its roof and wall pieces hide
 and its walls drop to 0.5 units (`TownBuilder.cut_away`, called each frame with the tree fade).
 

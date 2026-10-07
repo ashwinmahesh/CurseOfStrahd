@@ -152,6 +152,7 @@ Bildrath: Haggling is a form of theft that takes longer.
 set bildrath_discount
 Bildrath [angry]: Ten percent. Ten! You have robbed me in broad daylight, and I let you. Parriwimple, write it down. No. Don't. I don't want a record of this.
 Narrator: For all his outrage, he looks at you with something new: respect, the kind one shark has for another.
+approve kip_smudgewick +2 wren_featherfoot +1: You haggled Bildrath down
 -> menu
 
 ~ haggle_fail
@@ -164,6 +165,7 @@ set bildrath_haggle_failed
 set bildrath_surcharge
 Bildrath: Lower them? No. I'll raise them. Ten percent on the dear things, for menacing the proprietor. Parriwimple, the ledger. Under "Customers, Rude".
 Narrator: Parriwimple writes it down very slowly, so you can watch him do it.
+approve kip_smudgewick -1: You menaced a shopkeeper over his prices
 -> menu
 
 ~ news
@@ -218,6 +220,7 @@ Bildrath [angry]: My strongbox is thirty gold lighter than it ought to be, and y
 ~ lie_ok
 attitude bildrath indifferent
 Bildrath: Hm. Perhaps. Perhaps it was the wolves. I shall be counting the spoons when you leave.
+approve kip_smudgewick -2 godrick_pendlebrook -2 wren_featherfoot +1: You lied to Bildrath about his strongbox
 -> menu
 
 ~ lie_fail
@@ -230,11 +233,13 @@ Bildrath [angry]: You have coin in your purse that has my thumbprint on it. Out.
 gold -30
 set bildrath_repaid
 Bildrath: Thirty gold. I'll note that you returned it. I'll also note that you took it. My ledger has two columns for a reason.
+approve kip_smudgewick +2 godrick_pendlebrook +2 liriel_dawnsong +1: You paid Bildrath back what was taken from him
 -> menu
 
 ~ threat_ok
 attitude bildrath hostile
 Bildrath [afraid]: Parriwimple, sit down. Sit. They're... customers. Valued customers. Buy something, and then leave.
+approve kip_smudgewick -2 godrick_pendlebrook -1 thistle +1: You threatened Bildrath and his nephew
 -> menu
 
 ~ threat_fail

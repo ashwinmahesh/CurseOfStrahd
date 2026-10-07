@@ -112,6 +112,7 @@ Narrator: She takes the stake in both hands and kneels on the edge of the coffin
 Strahd: Tatyana.
 Ireena: No.
 Narrator: She doesn't say anything else. She doesn't need to.
+approve godrick_pendlebrook +2 thistle +2 wren_featherfoot +2 liriel_dawnsong +1: You gave Ireena the stake
 -> the_end
 
 ~ sunsword
@@ -165,6 +166,7 @@ Narrator: For a long time Vladimir says nothing at all.
 Vladimir Horngaard: Let them go home. He said it with his last breath, and I took them to war instead.
 Vladimir Horngaard: Do it, then. And afterwards I will take my knights home.
 Narrator: He steps back from the dais, and his knights step back with him.
+approve godrick_pendlebrook +3 liriel_dawnsong +1: You reminded Vladimir of the dragon's last words at Strahd's coffin
 -> resting
 
 ~ vladimir_moved
@@ -181,4 +183,5 @@ combat cat_oathbreakers
 ~ vladimir_fight
 set vladimir_pact_broken
 Vladimir Horngaard: Then you are what he is. Oathbreakers.
+approve godrick_pendlebrook -1: You broke your oath to Vladimir at Strahd's coffin
 combat cat_oathbreakers

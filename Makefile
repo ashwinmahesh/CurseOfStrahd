@@ -17,13 +17,19 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              echo "Files changed since the last import: importing first."; $(G) --headless --import > /dev/null 2>&1; \
              touch $(STAMP); fi
 
-.PHONY: run arena smoke import test lint validate ci check lfs-quiet palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens
+.PHONY: run arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens
 
 ## Imports first when scripts or assets changed since the last import (a merge can add a class_name or images that
 ## the editor cache doesn't know yet, and the game then stops at a parse error).
 run:
 	@$(FRESH)
 	$(NOFOCUS) < /dev/null
+
+## The owner's stable copy (P1, tools/play/play.sh): ~/Documents/CurseOfStrahdGame-play moves forward to the newest
+## main that passed make ci (refs/play/green), imports what changed, then starts. PLAY_NO_RUN=1 only updates it.
+.PHONY: play
+play:
+	@tools/play/play.sh
 
 ## Phase 2 exit: the combat arena (party of four level 3 pregens vs wolves and zombies).
 arena:
@@ -39,8 +45,15 @@ import:
 	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
 	@touch $(STAMP)
 
+## The test files share several headless Godot processes (tools/run_tests.py); JOBS=n sets how many, JOBS=1 is one.
 test: import
-	$(G) --headless --quit-after 100000 res://tests/test_runner.tscn -- $(if $(ONLY),--only=$(ONLY),) $(if $(FILES),--files=$(FILES),) 2>&1 | $(LOGCHK)
+	python3 tools/run_tests.py --godot $(GODOT) $(if $(JOBS),--jobs $(JOBS),) $(if $(ONLY),--only=$(ONLY),) $(if $(FILES),--files=$(FILES),) 2>&1 | $(LOGCHK)
+
+## Golden saves (P4): the playthrough tests keep a save at the start of each chapter in tests/saves
+## (v<save version>_<chapter>.json, tests/support/golden_saves.gd); one already there is never made again.
+.PHONY: golden-saves
+golden-saves:
+	GOLDEN_SAVES=$$(git rev-parse --short HEAD) $(MAKE) test FILES=test_golden_saves.gd,test_phase3_exit.gd,test_phase4_exit.gd,test_phase5_exit.gd,test_phase6_exit.gd
 
 
 ## Git LFS noise: old art and clips that only changed timestamp stop showing as modified (tools/lfs_quiet.sh).
@@ -66,6 +79,11 @@ check:
 
 palette:
 	python3 tools/art/build_palette.py
+
+## Gemini spend (tools/art/gemini_budget.py): each key's credit and today's requests, then spend per day and thread.
+## make art-spend [DAYS=n] · after a top-up: make art-spend [KEY=backup] BALANCE=<usd> KEEP=<usd to leave untouched>
+art-spend:
+	python3 tools/art/gemini_budget.py $(if $(DAYS),--days $(DAYS),) $(if $(KEY),--key $(KEY),) $(if $(BALANCE),--balance $(BALANCE),) $(if $(KEEP),--keep $(KEEP),)
 
 ## Spoken lines (ADR 0013): generates the clips that are missing with the pinned ElevenLabs model (audio/voice/casting.json).
 ## make voice [SPEAKER="narrator madam_eva"] [LIMIT=n] [DRY=1] [MAX_USD=5] [RECAST=1] [PRUNE=1]

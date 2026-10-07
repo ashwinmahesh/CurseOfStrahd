@@ -1,0 +1,1336 @@
+{
+	"combat": {},
+	"current_scene": "res://scenes/game.tscn",
+	"day": 1,
+	"dice": {
+		"seed": 230069639,
+		"state": -5201099548421547187
+	},
+	"faction_attitudes": {},
+	"flags": {},
+	"golden": {
+		"chapter": "new_game",
+		"commit": "cb36fa9b",
+		"made": "2026-10-07",
+		"made_by": "test_golden_saves"
+	},
+	"home_slot": "",
+	"leader_index": 0,
+	"minute_of_day": 480,
+	"party": [],
+	"party_positions": [],
+	"quests": {},
+	"saved_at": "2026-10-07T14:46:33",
+	"story": {
+		"active_spells": {},
+		"attitudes": {},
+		"bench": [
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "artisan",
+					"base_scores": {
+						"cha": 10.0,
+						"con": 13.0,
+						"dex": 14.0,
+						"int": 15.0,
+						"str": 8.0,
+						"wis": 12.0
+					},
+					"choices": {
+						"background.abilities": [
+							"int",
+							"int",
+							"dex"
+						],
+						"background.feat.crafter_tool_proficiency": [
+							"potters_tools",
+							"tinkers_tools",
+							"smiths_tools"
+						],
+						"background.tool": [
+							"cooks_utensils"
+						],
+						"origin.languages": [
+							"elvish",
+							"draconic"
+						],
+						"species.elven_lineage": [
+							"high_elf"
+						],
+						"species.keen_senses": [
+							"perception"
+						],
+						"species.spellcasting_ability": [
+							"int"
+						],
+						"wizard.1.skills": [
+							"arcana",
+							"history"
+						],
+						"wizard.cantrips": [
+							"fire_bolt",
+							"mage_hand",
+							"ray_of_frost"
+						],
+						"wizard.prepared": [
+							"shield",
+							"magic_missile",
+							"mage_armor",
+							"sleep"
+						],
+						"wizard.spellbook": [
+							"shield",
+							"magic_missile",
+							"mage_armor",
+							"sleep",
+							"burning_hands",
+							"thunderwave"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "he/him",
+						"tags": [
+							"eager",
+							"fussy",
+							"gourmet"
+						]
+					},
+					"levels": [
+						{
+							"class": "wizard",
+							"hp": 0.0
+						}
+					],
+					"name": "Ratatoille",
+					"species": "elf"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 37,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "ratatoille",
+				"inventory": [
+					{
+						"id": "dagger",
+						"qty": 2,
+						"slot": ""
+					},
+					{
+						"id": "arcane_focus_staff",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "robe",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "spellbook",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "scholars_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "smiths_tools",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 7,
+					"resources_used": {
+						"arcane_recovery": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "guide",
+					"base_scores": {
+						"cha": 10.0,
+						"con": 13.0,
+						"dex": 15.0,
+						"int": 8.0,
+						"str": 12.0,
+						"wis": 14.0
+					},
+					"choices": {
+						"background.abilities": [
+							"dex",
+							"dex",
+							"wis"
+						],
+						"background.feat.level_1_spell": [
+							"goodberry"
+						],
+						"background.feat.two_cantrips.cantrips": [
+							"druidcraft",
+							"thorn_whip"
+						],
+						"background.feat.two_cantrips.spellcasting_ability": [
+							"wis"
+						],
+						"origin.languages": [
+							"elvish",
+							"goblin"
+						],
+						"ranger.1.skills": [
+							"animal_handling",
+							"athletics",
+							"perception"
+						],
+						"ranger.1.weapon_mastery": [
+							"longbow",
+							"scimitar"
+						],
+						"ranger.prepared": [
+							"ensnaring_strike",
+							"cure_wounds"
+						],
+						"species.size": [
+							"medium"
+						],
+						"species.skillful": [
+							"intimidation"
+						],
+						"species.versatile": [
+							"alert"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "she/her",
+						"tags": [
+							"boisterous",
+							"wild",
+							"fierce"
+						]
+					},
+					"levels": [
+						{
+							"class": "ranger",
+							"hp": 0.0
+						}
+					],
+					"name": "Thistle",
+					"species": "human"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 10,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": true,
+				"hit_dice_spent": {},
+				"id": "thistle",
+				"inventory": [
+					{
+						"id": "studded_leather_armor",
+						"qty": 1,
+						"slot": "armor"
+					},
+					{
+						"id": "scimitar",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "shortsword",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "longbow",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "arrow",
+						"qty": 40,
+						"slot": ""
+					},
+					{
+						"id": "quiver",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "druidic_focus_mistletoe",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "explorers_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "shortbow",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "cartographers_tools",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "bedroll",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "quiver",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "tent",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 11,
+					"resources_used": {
+						"spell:goodberry": 0,
+						"spell:hunters_mark": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "entertainer",
+					"base_scores": {
+						"cha": 10.0,
+						"con": 13.0,
+						"dex": 15.0,
+						"int": 8.0,
+						"str": 12.0,
+						"wis": 14.0
+					},
+					"choices": {
+						"background.abilities": [
+							"dex",
+							"dex",
+							"str"
+						],
+						"background.feat.instrument_training": [
+							"lute",
+							"drum",
+							"pan_flute"
+						],
+						"background.tool": [
+							"flute"
+						],
+						"monk.1.skills": [
+							"athletics",
+							"insight"
+						],
+						"monk.1.tools": [
+							"calligraphers_supplies"
+						],
+						"origin.languages": [
+							"halfling",
+							"elvish"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "he/him",
+						"tags": [
+							"quick",
+							"cheeky",
+							"restless"
+						]
+					},
+					"levels": [
+						{
+							"class": "monk",
+							"hp": 0.0
+						}
+					],
+					"name": "Wren Featherfoot",
+					"species": "halfling"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 22,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "wren_featherfoot",
+				"inventory": [
+					{
+						"id": "spear",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "dagger",
+						"qty": 5,
+						"slot": ""
+					},
+					{
+						"id": "flute",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "explorers_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "lute",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "costume",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "costume",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "mirror",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "perfume",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 9,
+					"resources_used": {},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			}
+		],
+		"codex": [],
+		"day": 1,
+		"fallen": [],
+		"flags": {
+			"_banter/banter/party_six:godrick_liriel_bless": true
+		},
+		"gold": 10.0,
+		"guests": [],
+		"last_check": false,
+		"leader": 0,
+		"location": "into_the_mists_road",
+		"location_states": {
+			"into_the_mists_road": {
+				"doors": {},
+				"encounters": {},
+				"found": {},
+				"in_pit": {},
+				"looted": {},
+				"props": {},
+				"traps": {
+					"mists_wolf_trap": "found"
+				}
+			}
+		},
+		"miles_since_long_rest": 0.0,
+		"milestones": 0,
+		"minute_of_day": 1080,
+		"narrator": {
+			"enter:into_the_mists_road": {
+				"done": false,
+				"last": 1080,
+				"played": [
+					0
+				]
+			},
+			"enter:mists_svalich_woods": {
+				"done": true,
+				"last": 1080,
+				"played": [
+					0
+				]
+			},
+			"trap:mists_wolf_trap:found": {
+				"done": false,
+				"last": 1080,
+				"played": [
+					0
+				]
+			}
+		},
+		"options": {
+			"respec": true
+		},
+		"party": [
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "noble",
+					"base_scores": {
+						"cha": 14.0,
+						"con": 13.0,
+						"dex": 10.0,
+						"int": 8.0,
+						"str": 15.0,
+						"wis": 12.0
+					},
+					"choices": {
+						"background.abilities": [
+							"str",
+							"str",
+							"cha"
+						],
+						"background.feat.skilled_proficiencies": [
+							"animal_handling",
+							"performance",
+							"perception"
+						],
+						"background.tool": [
+							"playing_card_set"
+						],
+						"origin.languages": [
+							"giant",
+							"dwarvish"
+						],
+						"paladin.1.skills": [
+							"athletics",
+							"insight"
+						],
+						"paladin.1.weapon_mastery": [
+							"longsword",
+							"javelin"
+						],
+						"paladin.prepared": [
+							"divine_smite",
+							"bless"
+						],
+						"species.giant_ancestry": [
+							"stone_giant"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "he/him",
+						"tags": [
+							"gallant",
+							"earnest",
+							"big-hearted"
+						]
+					},
+					"levels": [
+						{
+							"class": "paladin",
+							"hp": 0.0
+						}
+					],
+					"name": "Godrick Pendlebrook",
+					"species": "goliath"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 38,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "godrick_pendlebrook",
+				"inventory": [
+					{
+						"id": "chain_mail",
+						"qty": 1,
+						"slot": "armor"
+					},
+					{
+						"id": "shield",
+						"qty": 1,
+						"slot": "off_hand"
+					},
+					{
+						"id": "longsword",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "javelin",
+						"qty": 6,
+						"slot": ""
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "priests_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "dice_set",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "fine_clothes",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "perfume",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 11,
+					"resources_used": {
+						"giant_ancestry": 0,
+						"lay_on_hands": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "merchant",
+					"base_scores": {
+						"cha": 15.0,
+						"con": 14.0,
+						"dex": 13.0,
+						"int": 12.0,
+						"str": 8.0,
+						"wis": 10.0
+					},
+					"choices": {
+						"background.abilities": [
+							"cha",
+							"cha",
+							"con"
+						],
+						"origin.languages": [
+							"dwarvish",
+							"halfling"
+						],
+						"species.fiendish_legacy": [
+							"infernal"
+						],
+						"species.size": [
+							"medium"
+						],
+						"species.spellcasting_ability": [
+							"cha"
+						],
+						"warlock.1.eldritch_invocations": [
+							"pact_of_the_tome"
+						],
+						"warlock.1.eldritch_invocations/pact_of_the_tome.cantrips": [
+							"eldritch_blast",
+							"prestidigitation",
+							"mage_hand"
+						],
+						"warlock.1.eldritch_invocations/pact_of_the_tome.rituals": [
+							"alarm",
+							"comprehend_languages"
+						],
+						"warlock.1.skills": [
+							"investigation",
+							"nature"
+						],
+						"warlock.cantrips": [
+							"eldritch_blast",
+							"prestidigitation"
+						],
+						"warlock.prepared": [
+							"hex",
+							"armor_of_agathys"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "he/him",
+						"tags": [
+							"nervous",
+							"honest-ish",
+							"always selling"
+						]
+					},
+					"levels": [
+						{
+							"class": "warlock",
+							"hp": 0.0
+						}
+					],
+					"name": "Kip Smudgewick",
+					"species": "tiefling"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 37,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "kip_smudgewick",
+				"inventory": [
+					{
+						"id": "leather_armor",
+						"qty": 1,
+						"slot": "armor"
+					},
+					{
+						"id": "sickle",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "dagger",
+						"qty": 2,
+						"slot": ""
+					},
+					{
+						"id": "arcane_focus_orb",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "book",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "scholars_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "navigators_tools",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 10,
+					"resources_used": {
+						"luck_points": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "acolyte",
+					"base_scores": {
+						"cha": 12.0,
+						"con": 14.0,
+						"dex": 13.0,
+						"int": 10.0,
+						"str": 8.0,
+						"wis": 15.0
+					},
+					"choices": {
+						"background.abilities": [
+							"wis",
+							"wis",
+							"cha"
+						],
+						"background.feat.level_1_spell": [
+							"sanctuary"
+						],
+						"background.feat.two_cantrips.cantrips": [
+							"light",
+							"spare_the_dying"
+						],
+						"background.feat.two_cantrips.spellcasting_ability": [
+							"wis"
+						],
+						"cleric.1.divine_order": [
+							"thaumaturge"
+						],
+						"cleric.1.divine_order/thaumaturge": [
+							"guidance"
+						],
+						"cleric.1.skills": [
+							"medicine",
+							"persuasion"
+						],
+						"cleric.cantrips": [
+							"sacred_flame",
+							"guidance",
+							"word_of_radiance"
+						],
+						"cleric.prepared": [
+							"healing_word",
+							"bless",
+							"guiding_bolt",
+							"cure_wounds"
+						],
+						"origin.languages": [
+							"elvish",
+							"dwarvish"
+						],
+						"species.elven_lineage": [
+							"high_elf"
+						],
+						"species.keen_senses": [
+							"perception"
+						],
+						"species.spellcasting_ability": [
+							"wis"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "she/her",
+						"tags": [
+							"faithful",
+							"gentle",
+							"unbending"
+						]
+					},
+					"levels": [
+						{
+							"class": "cleric",
+							"hp": 0.0
+						}
+					],
+					"name": "Liriel Dawnsong",
+					"species": "elf"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 15,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "liriel_dawnsong",
+				"inventory": [
+					{
+						"id": "chain_shirt",
+						"qty": 1,
+						"slot": "armor"
+					},
+					{
+						"id": "shield",
+						"qty": 1,
+						"slot": "off_hand"
+					},
+					{
+						"id": "mace",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "priests_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "calligraphers_supplies",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "book",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "parchment",
+						"qty": 10,
+						"slot": ""
+					},
+					{
+						"id": "robe",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 10,
+					"resources_used": {
+						"spell:sanctuary": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"appearance": {
+						"art": "hero_01",
+						"beard": "none",
+						"build": "average",
+						"custom": true,
+						"gender": "female",
+						"hair": "braid",
+						"hair_colour": "dark_brown",
+						"head": "plain",
+						"height": "average",
+						"outfit": "shadow",
+						"portrait": "hero_01",
+						"skin": "fair",
+						"voice": "hero_female"
+					},
+					"background": "guide",
+					"base_scores": {
+						"cha": 10,
+						"con": 13,
+						"dex": 15,
+						"int": 8,
+						"str": 12,
+						"wis": 14
+					},
+					"choices": {
+						"background.abilities": [
+							"dex",
+							"dex",
+							"con"
+						],
+						"background.feat.level_1_spell": [
+							"animal_friendship"
+						],
+						"background.feat.two_cantrips.cantrips": [
+							"druidcraft",
+							"elementalism"
+						],
+						"background.feat.two_cantrips.spellcasting_ability": [
+							"int"
+						],
+						"origin.languages": [
+							"common_sign_language",
+							"draconic"
+						],
+						"ranger.1.skills": [
+							"animal_handling",
+							"athletics",
+							"insight"
+						],
+						"ranger.1.weapon_mastery": [
+							"battleaxe",
+							"blowgun"
+						],
+						"ranger.prepared": [
+							"alarm",
+							"cure_wounds"
+						],
+						"species.size": [
+							"medium"
+						],
+						"species.skillful": [
+							"acrobatics"
+						],
+						"species.versatile": [
+							"alert"
+						]
+					},
+					"levels": [
+						{
+							"class": "ranger",
+							"hp": 0
+						}
+					],
+					"name": "Vesna Dragos",
+					"species": "human"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 10,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": true,
+				"hit_dice_spent": {},
+				"id": "vesna_dragos",
+				"inventory": [
+					{
+						"id": "studded_leather_armor",
+						"qty": 1,
+						"slot": "armor"
+					},
+					{
+						"id": "scimitar",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "shortsword",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "longbow",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "arrow",
+						"qty": 40,
+						"slot": ""
+					},
+					{
+						"id": "quiver",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "druidic_focus_mistletoe",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "explorers_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "shortbow",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "cartographers_tools",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "bedroll",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "quiver",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "tent",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 12,
+					"resources_used": {
+						"spell:animal_friendship": 0,
+						"spell:hunters_mark": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			}
+		],
+		"positions": [
+			[
+				30,
+				15
+			],
+			[
+				31,
+				15
+			],
+			[
+				29,
+				15
+			],
+			[
+				30,
+				16
+			]
+		],
+		"quests": {},
+		"seed": 0,
+		"shops": {},
+		"start_level": 1,
+		"stash": [],
+		"tarokka": {},
+		"travel_resume": {},
+		"visited": {
+			"into_the_mists_road": true,
+			"mists_svalich_woods": true
+		}
+	},
+	"tarokka": {},
+	"version": 2
+}

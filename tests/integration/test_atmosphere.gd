@@ -162,3 +162,105 @@ func test_indoors_stays_indoors() -> void:
 	var v := _view("blood_of_the_vine")
 	assert_true(v.atmosphere.land == null, "no land around a room")
 	assert_true(v.atmosphere.weather.follow.is_empty(), "no weather indoors")
+
+
+## The renderer for each finish (Improvement Ideas W2): Classic keeps the renderer it was frozen with whatever the
+## preset, and Modern's presets step up in how many lamps cast shadows.
+func test_graphics_presets() -> void:
+	var was := Look.style()
+	Look.set_style("classic", false)
+	Graphics.set_preset("high", false)
+	assert_eq(Graphics.spec(), Graphics.CLASSIC, "Classic keeps its frozen renderer")
+	assert_eq(Graphics.lamp_shadows(), 0, "no lamp shadows in Classic")
+	Look.set_style("modern", false)
+	var budgets: Array[int] = []
+	for p: String in Graphics.PRESETS:
+		Graphics.set_preset(p, false)
+		budgets.append(Graphics.lamp_shadows())
+	assert_true(budgets[0] < budgets[1] and budgets[1] < budgets[2], "more lamps cast shadows as the preset rises")
+	Graphics.set_preset(Graphics.DEFAULT_PRESET, false)
+	Look.set_style(was, false)
+
+
+## In the Modern finish the lights nearest the party cast shadows, up to the preset's budget, and no others.
+func test_lamps_nearest_the_party_cast_shadows() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	Graphics.set_preset("medium", false)
+	var v := _view("death_house_ground")
+	v.atmosphere.call("_update_lamp_shadows")
+	var focus := v.rig.global_position
+	var shadowed: Array[float] = []
+	var plain: Array[float] = []
+	for n in v.find_children("*", "OmniLight3D", true, false):
+		var l := n as OmniLight3D
+		if not l.is_visible_in_tree() or l.light_energy <= 0.01:
+			continue
+		(shadowed if l.shadow_enabled else plain).append(l.global_position.distance_to(focus))
+	assert_false(shadowed.is_empty(), "the house's lamps cast shadows")
+	assert_eq(shadowed.size(), mini(Graphics.lamp_shadows(), shadowed.size() + plain.size()), "the budget is filled")
+	if not plain.is_empty():
+		assert_true(shadowed.max() <= plain.min(), "the shadows go to the nearest lights")
+	v.queue_free()
+	Graphics.set_preset(Graphics.DEFAULT_PRESET, false)
+	Look.set_style(was, false)
+
+
+## The Modern sun's shadows reach only as far as the camera sees, so they follow the zoom, in four splits.
+func test_sun_shadows_follow_the_zoom() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	Graphics.set_preset("high", false)
+	var v := _view("village_of_barovia")
+	v.rig.distance = 10.0
+	v.atmosphere.call("_fit_sun_shadows")
+	var close := v.atmosphere.sun.directional_shadow_max_distance
+	v.rig.distance = 25.0
+	v.atmosphere.call("_fit_sun_shadows")
+	assert_true(v.atmosphere.sun.directional_shadow_max_distance > close, "zoomed out, the shadows reach further")
+	assert_eq(v.atmosphere.sun.directional_shadow_mode, DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS, "four splits")
+	v.queue_free()
+	Look.set_style(was, false)
+
+
+## In the Modern finish each light takes its kind (W5): soft or crisp shadows by its size, and a window indoors is the
+## key light coming in, steady, with a shaft of light through the haze.
+func test_lights_take_their_kind() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var v := _view("death_house_ground")
+	var kinds := {}
+	var shafts := 0
+	for n in v.find_children("*", "OmniLight3D", true, false):
+		var l := n as OmniLight3D
+		var kind := str(l.get_meta("light_kind", ""))
+		kinds[kind] = true
+		if kind == "window":
+			if l is CandleFlicker:
+				assert_eq((l as CandleFlicker).flicker, 0.0, "a window's light is steady")
+			if l.find_child("WindowBeam", false, false) != null:
+				shafts += 1
+	for k: String in ["lamp", "window", "lantern"]:
+		assert_true(kinds.has(k), "Death House's %s is dressed as one" % k)
+	assert_true(shafts >= 1, "a window indoors lets a shaft of light in")
+	v.queue_free()
+	Look.set_style(was, false)
+
+
+## A swaying flame drifts a little from where it stands, and comes back to rest when it stops (W5).
+func test_a_swaying_flame_comes_back_to_rest() -> void:
+	var f := CandleFlicker.new()
+	f.position = Vector3(2, 1, 3)
+	add_child(f)
+	f.set_meta("sway", true)
+	var moved := false
+	for i in 40:
+		f._process(0.05)
+		moved = moved or not f.position.is_equal_approx(Vector3(2, 1, 3))
+	assert_true(moved, "it sways while asked")
+	assert_true(f.position.distance_to(Vector3(2, 1, 3)) <= f.sway * 1.5, "but only a little")
+	f.set_meta("sway", false)
+	for i in 80:
+		f._process(0.05)
+	assert_true(f.position.is_equal_approx(Vector3(2, 1, 3)), "and it comes back to rest")
+	f.queue_free()

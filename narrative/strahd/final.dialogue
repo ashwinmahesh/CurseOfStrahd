@@ -62,6 +62,7 @@ Narrator: Courtesy all the way down, as far as you can see. If there is a floor 
 
 ~ fight
 set strahd_parley = "fight"
+approve godrick_pendlebrook +2 thistle +2 wren_featherfoot +1 liriel_dawnsong +1: You told Strahd you came to end him
 -> answered
 
 ~ give_ireena
@@ -70,10 +71,13 @@ if guest:ireena
 Ireena [afraid]: You're... no. You wouldn't. Not after all of it.
 Ireena [sad]: Then I'll go. Not for him. For you, so you get out. Remember that I chose it.
 endif
+interject name:godrick_pendlebrook: No. I won't stand here for that. Sir Pellam wouldn't have, and I won't.
+approve godrick_pendlebrook -10 liriel_dawnsong -8 thistle -8 wren_featherfoot -8 kip_smudgewick -6 ratatoille -6: You offered Ireena to Strahd to buy your own way out
 -> answered
 
 ~ yield
 set strahd_parley = "yield"
+approve godrick_pendlebrook -4 thistle -4 wren_featherfoot -3 liriel_dawnsong -3 kip_smudgewick -2 ratatoille -2: You yielded to Strahd in his own castle
 -> answered
 
 ~ answered

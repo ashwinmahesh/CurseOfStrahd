@@ -20,10 +20,12 @@ interject class:rogue: He isn't hiding. That's the part I don't like.
 
 ~ watcher_wave
 Narrator: After a moment the rider lifts a gloved hand in return, slow and correct, like a host seeing guests off from his door.
+approve wren_featherfoot +1: You waved at Strahd on the ridge
 -> watcher_gone
 
 ~ watcher_stare
 Narrator: He doesn't look away. In the end you do, to mind your footing, and when you look up again the ridge is bare.
+approve thistle +1 godrick_pendlebrook +1: You stared Strahd down from the road
 -> watcher_gone
 
 ~ watcher_gone
@@ -77,24 +79,28 @@ Narrator: His face gives you nothing at all. It is a very good face for that. He
 ~ night_wake
 set strahd_night_visit = "woke"
 Narrator: You shout. The others come up out of sleep with weapons in their hands, and there is nobody there. The fire has burned down to blue.
+approve kip_smudgewick +1: You woke the camp when Strahd came
 -> END
 
 ~ night_shield
 set strahd_night_visit = "shield"
 Strahd [smile]: Gallant. Do you know how many gallant men have stood exactly there? I kept count, for a while.
 Narrator: He bows to Ireena, not to you, and the dark he stood in is only dark.
+approve godrick_pendlebrook +3 thistle +1: You got up and stood between Strahd and Ireena
 -> END
 
 ~ night_ward
 set strahd_night_visit = "warded"
 Narrator: The symbol catches the last of the firelight. He doesn't flinch. He looks at it the way one looks at a candle in a neighbour's window.
 Strahd: Keep it lit. It will be dark a long while yet. Good night.
+approve liriel_dawnsong +1: You held up your holy symbol to Strahd in the dark
 -> END
 
 ~ night_attack
 set strahd_night_visit = "attacked"
 Narrator: Your blade goes through him like a hand through fog, and the fog is cold enough to ache.
 Strahd: Rude, in a man's own house. Sleep, then. If you can.
+approve thistle +1 kip_smudgewick -1: You swung at Strahd by the campfire
 -> END
 
 # ---------------------------------------------------------------- The test of strength (a night road, level 7+)
@@ -116,6 +122,7 @@ endif
 ~ test_fight
 set strahd_test = "fought"
 Strahd [smile]: Splendid. Do not die too quickly. I should have to find new guests, and the valley is so short of them.
+approve thistle +1 godrick_pendlebrook +1: You drew steel when Strahd tested you on the road
 -> END
 
 ~ test_talk_failed
@@ -127,6 +134,7 @@ Strahd [smile]: Beneath me? Everything here is beneath me. That is the point of 
 set strahd_test = "talked"
 Strahd: Hm. You are right, and I dislike it. Another night, then, with better light. Do keep improving.
 Narrator: He whistles once, as a man calls a dog, and the wolves go back into the trees with him.
+approve wren_featherfoot +1 liriel_dawnsong +1 ratatoille +1: You talked Strahd out of a brawl in the mud
 -> END
 
 ~ test_after

@@ -43,6 +43,7 @@ Narrator: Grief, yes, but older and sharper than grief: the kind of guilt that h
 time +60
 Narrator: You sit. He mends. The camp's fire burns down and is built up again, and nobody says anything for a long while, which seems to be the point.
 Kasimir: You are patient. The young rarely are. Very well; you have paid for it.
+approve wren_featherfoot +2 liriel_dawnsong +1: You sat with Kasimir and said nothing
 -> grief_told
 
 ~ grief_told

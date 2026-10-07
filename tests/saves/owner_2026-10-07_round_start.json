@@ -1,0 +1,2343 @@
+{
+	"combat": {
+		"data": {
+			"boss": {
+				"departed": {},
+				"incoming": [],
+				"lair_round": 0,
+				"last_lair": "",
+				"story_flags": {},
+				"story_quests": {},
+				"withdraws": []
+			},
+			"combatants": [
+				{
+					"cell": [
+						20,
+						12
+					],
+					"character": {
+						"attuned": [],
+						"build": {
+							"ability_method": "standard_array",
+							"appearance": {},
+							"background": "sage",
+							"base_scores": {
+								"cha": 10.0,
+								"con": 13.0,
+								"dex": 12.0,
+								"int": 15.0,
+								"str": 8.0,
+								"wis": 14.0
+							},
+							"choices": {
+								"background.abilities": [
+									"int",
+									"int",
+									"con"
+								],
+								"background.feat.level_1_spell": [
+									"find_familiar"
+								],
+								"background.feat.two_cantrips.cantrips": [
+									"minor_illusion",
+									"shocking_grasp"
+								],
+								"background.feat.two_cantrips.spellcasting_ability": [
+									"int"
+								],
+								"evoker.3.evocation_savant": [
+									"scorching_ray",
+									"shatter"
+								],
+								"evoker.5.evocation_savant": [
+									"lightning_bolt"
+								],
+								"origin.languages": [
+									"draconic",
+									"dwarvish"
+								],
+								"species.elven_lineage": [
+									"high_elf"
+								],
+								"species.keen_senses": [
+									"perception"
+								],
+								"species.spellcasting_ability": [
+									"int"
+								],
+								"wizard.1.skills": [
+									"investigation",
+									"insight"
+								],
+								"wizard.2.scholar": [
+									"arcana"
+								],
+								"wizard.3.wizard_subclass": [
+									"evoker"
+								],
+								"wizard.4.ability_score_improvement": [
+									"ability_score_improvement"
+								],
+								"wizard.4.ability_score_improvement/ability_score_improvement.abilities": [
+									"int",
+									"int"
+								],
+								"wizard.cantrips": [
+									"fire_bolt",
+									"mage_hand",
+									"light",
+									"ray_of_frost"
+								],
+								"wizard.prepared": [
+									"magic_missile",
+									"shield",
+									"mage_armor",
+									"sleep",
+									"thunderwave",
+									"scorching_ray",
+									"web",
+									"fireball",
+									"counterspell"
+								],
+								"wizard.spellbook": [
+									"magic_missile",
+									"shield",
+									"mage_armor",
+									"sleep",
+									"thunderwave",
+									"burning_hands",
+									"feather_fall",
+									"chromatic_orb",
+									"invisibility",
+									"web",
+									"blur",
+									"hold_person",
+									"fireball",
+									"counterspell"
+								]
+							},
+							"equipment": {
+								"background": "a",
+								"class": "a"
+							},
+							"identity": {
+								"pronouns": "they/them",
+								"tags": [
+									"bookish",
+									"proud",
+									"secretly kind"
+								]
+							},
+							"levels": [
+								{
+									"class": "wizard",
+									"hp": 0.0
+								},
+								{
+									"class": "wizard",
+									"hp": 0
+								},
+								{
+									"class": "wizard",
+									"hp": 0
+								},
+								{
+									"class": "wizard",
+									"hp": 0
+								},
+								{
+									"class": "wizard",
+									"hp": 0
+								}
+							],
+							"name": "Silvain Aster",
+							"species": "elf"
+						},
+						"currency": {
+							"cp": 0,
+							"ep": 0,
+							"gp": 13,
+							"pp": 0,
+							"sp": 0
+						},
+						"familiar": "",
+						"heroic_inspiration": false,
+						"hit_dice_spent": {},
+						"id": "silvain_aster",
+						"inventory": [
+							{
+								"id": "dagger",
+								"qty": 2,
+								"slot": ""
+							},
+							{
+								"id": "arcane_focus_staff",
+								"qty": 1,
+								"slot": "main_hand"
+							},
+							{
+								"id": "robe",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "spellbook",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "scholars_pack",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "quarterstaff",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "calligraphers_supplies",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "book",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "parchment",
+								"qty": 8,
+								"slot": ""
+							},
+							{
+								"id": "robe",
+								"qty": 1,
+								"slot": ""
+							}
+						],
+						"pact_slots_used": 0,
+						"slots_used": [
+							0,
+							0,
+							0,
+							0,
+							0,
+							0,
+							0,
+							0,
+							0
+						],
+						"state": {
+							"concentration": {},
+							"conditions": {},
+							"dead": false,
+							"death_failures": 0,
+							"death_successes": 0,
+							"effects": [],
+							"exhaustion": 0,
+							"hp": 32,
+							"resources_used": {
+								"arcane_recovery": 0,
+								"spell:detect_magic": 0,
+								"spell:find_familiar": 0,
+								"spell:misty_step": 0
+							},
+							"stable": false,
+							"temp_hp": 0,
+							"unhealable": 0,
+							"ward_hp": 0
+						}
+					},
+					"controller": "player",
+					"group": "",
+					"has_acted": false,
+					"hidden": false,
+					"id": "silvain_aster",
+					"initiative": 6,
+					"meta": {},
+					"reaction_available": true,
+					"reaction_rules": {},
+					"side": "party",
+					"size_cells": 1,
+					"stealth_total": 0,
+					"surprised": false
+				},
+				{
+					"cell": [
+						21,
+						12
+					],
+					"character": {
+						"attuned": [],
+						"build": {
+							"ability_method": "standard_array",
+							"appearance": {},
+							"background": "acolyte",
+							"base_scores": {
+								"cha": 12.0,
+								"con": 13.0,
+								"dex": 8.0,
+								"int": 10.0,
+								"str": 14.0,
+								"wis": 15.0
+							},
+							"choices": {
+								"background.abilities": [
+									"wis",
+									"wis",
+									"cha"
+								],
+								"background.feat.level_1_spell": [
+									"sanctuary"
+								],
+								"background.feat.two_cantrips.cantrips": [
+									"light",
+									"toll_the_dead"
+								],
+								"background.feat.two_cantrips.spellcasting_ability": [
+									"wis"
+								],
+								"cleric.1.divine_order": [
+									"protector"
+								],
+								"cleric.1.skills": [
+									"medicine",
+									"persuasion"
+								],
+								"cleric.3.cleric_subclass": [
+									"life_domain"
+								],
+								"cleric.4.ability_score_improvement": [
+									"ability_score_improvement"
+								],
+								"cleric.4.ability_score_improvement/ability_score_improvement.abilities": [
+									"wis",
+									"con"
+								],
+								"cleric.cantrips": [
+									"guidance",
+									"sacred_flame",
+									"thaumaturgy",
+									"resistance"
+								],
+								"cleric.prepared": [
+									"command",
+									"guiding_bolt",
+									"healing_word",
+									"shield_of_faith",
+									"detect_magic",
+									"spiritual_weapon",
+									"hold_person",
+									"spirit_guardians",
+									"dispel_magic"
+								],
+								"origin.languages": [
+									"dwarvish",
+									"giant"
+								]
+							},
+							"equipment": {
+								"background": "a",
+								"class": "a"
+							},
+							"identity": {
+								"pronouns": "she/her",
+								"tags": [
+									"devout",
+									"patient",
+									"dry humor"
+								]
+							},
+							"levels": [
+								{
+									"class": "cleric",
+									"hp": 0.0
+								},
+								{
+									"class": "cleric",
+									"hp": 0
+								},
+								{
+									"class": "cleric",
+									"hp": 0
+								},
+								{
+									"class": "cleric",
+									"hp": 0
+								},
+								{
+									"class": "cleric",
+									"hp": 0
+								}
+							],
+							"name": "Hedda Ironvow",
+							"species": "dwarf"
+						},
+						"currency": {
+							"cp": 0,
+							"ep": 0,
+							"gp": 15,
+							"pp": 0,
+							"sp": 0
+						},
+						"familiar": "",
+						"heroic_inspiration": false,
+						"hit_dice_spent": {},
+						"id": "hedda_ironvow",
+						"inventory": [
+							{
+								"id": "chain_shirt",
+								"qty": 1,
+								"slot": "armor"
+							},
+							{
+								"id": "shield",
+								"qty": 1,
+								"slot": "off_hand"
+							},
+							{
+								"id": "mace",
+								"qty": 1,
+								"slot": "main_hand"
+							},
+							{
+								"id": "holy_symbol_amulet",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "priests_pack",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "calligraphers_supplies",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "book",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "holy_symbol_amulet",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "parchment",
+								"qty": 10,
+								"slot": ""
+							},
+							{
+								"id": "robe",
+								"qty": 1,
+								"slot": ""
+							}
+						],
+						"pact_slots_used": 0,
+						"slots_used": [
+							0,
+							0,
+							0,
+							0,
+							0,
+							0,
+							0,
+							0,
+							0
+						],
+						"state": {
+							"concentration": {},
+							"conditions": {},
+							"dead": false,
+							"death_failures": 0,
+							"death_successes": 0,
+							"effects": [],
+							"exhaustion": 0,
+							"hp": 43,
+							"resources_used": {
+								"channel_divinity": 0,
+								"spell:sanctuary": 0,
+								"stonecunning": 0
+							},
+							"stable": false,
+							"temp_hp": 0,
+							"unhealable": 0,
+							"ward_hp": 0
+						}
+					},
+					"controller": "player",
+					"group": "",
+					"has_acted": true,
+					"hidden": false,
+					"id": "hedda_ironvow",
+					"initiative": 18,
+					"meta": {},
+					"reaction_available": true,
+					"reaction_rules": {},
+					"side": "party",
+					"size_cells": 1,
+					"stealth_total": 0,
+					"surprised": false
+				},
+				{
+					"cell": [
+						19,
+						12
+					],
+					"character": {
+						"attuned": [],
+						"build": {
+							"ability_method": "standard_array",
+							"appearance": {},
+							"background": "merchant",
+							"base_scores": {
+								"cha": 15.0,
+								"con": 14.0,
+								"dex": 13.0,
+								"int": 12.0,
+								"str": 8.0,
+								"wis": 10.0
+							},
+							"choices": {
+								"background.abilities": [
+									"cha",
+									"cha",
+									"con"
+								],
+								"origin.languages": [
+									"dwarvish",
+									"halfling"
+								],
+								"species.fiendish_legacy": [
+									"infernal"
+								],
+								"species.size": [
+									"medium"
+								],
+								"species.spellcasting_ability": [
+									"cha"
+								],
+								"warlock.1.eldritch_invocations": [
+									"pact_of_the_tome",
+									"agonizing_blast",
+									"armor_of_shadows",
+									"repelling_blast",
+									"devils_sight"
+								],
+								"warlock.1.eldritch_invocations/agonizing_blast": [
+									"eldritch_blast"
+								],
+								"warlock.1.eldritch_invocations/pact_of_the_tome.cantrips": [
+									"eldritch_blast",
+									"prestidigitation",
+									"mage_hand"
+								],
+								"warlock.1.eldritch_invocations/pact_of_the_tome.rituals": [
+									"alarm",
+									"comprehend_languages"
+								],
+								"warlock.1.skills": [
+									"investigation",
+									"nature"
+								],
+								"warlock.3.warlock_subclass": [
+									"fiend_patron"
+								],
+								"warlock.4.ability_score_improvement": [
+									"ability_score_improvement"
+								],
+								"warlock.4.ability_score_improvement/ability_score_improvement.abilities": [
+									"cha",
+									"con"
+								],
+								"warlock.cantrips": [
+									"eldritch_blast",
+									"prestidigitation",
+									"mage_hand"
+								],
+								"warlock.prepared": [
+									"hex",
+									"armor_of_agathys",
+									"protection_from_evil_and_good",
+									"misty_step",
+									"hold_person",
+									"counterspell"
+								]
+							},
+							"equipment": {
+								"background": "a",
+								"class": "a"
+							},
+							"identity": {
+								"pronouns": "he/him",
+								"tags": [
+									"nervous",
+									"honest-ish",
+									"always selling"
+								]
+							},
+							"levels": [
+								{
+									"class": "warlock",
+									"hp": 0.0
+								},
+								{
+									"class": "warlock",
+									"hp": 0
+								},
+								{
+									"class": "warlock",
+									"hp": 0
+								},
+								{
+									"class": "warlock",
+									"hp": 0
+								},
+								{
+									"class": "warlock",
+									"hp": 0
+								}
+							],
+							"name": "Kip Smudgewick",
+							"species": "tiefling"
+						},
+						"currency": {
+							"cp": 0,
+							"ep": 0,
+							"gp": 37,
+							"pp": 0,
+							"sp": 0
+						},
+						"familiar": "",
+						"heroic_inspiration": false,
+						"hit_dice_spent": {},
+						"id": "kip_smudgewick",
+						"inventory": [
+							{
+								"id": "leather_armor",
+								"qty": 1,
+								"slot": "armor"
+							},
+							{
+								"id": "sickle",
+								"qty": 1,
+								"slot": "main_hand"
+							},
+							{
+								"id": "dagger",
+								"qty": 2,
+								"slot": ""
+							},
+							{
+								"id": "arcane_focus_orb",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "book",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "scholars_pack",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "navigators_tools",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "pouch",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "pouch",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "travelers_clothes",
+								"qty": 1,
+								"slot": ""
+							}
+						],
+						"pact_slots_used": 0,
+						"slots_used": [
+							0,
+							0,
+							0,
+							0,
+							0,
+							0,
+							0,
+							0,
+							0
+						],
+						"state": {
+							"concentration": {},
+							"conditions": {},
+							"dead": false,
+							"death_failures": 0,
+							"death_successes": 0,
+							"effects": [
+								{
+									"caster_id": "",
+									"concentration": {
+										"caster": "",
+										"source": ""
+									},
+									"conditions": [],
+									"consume_on": [],
+									"consume_when_attacked": false,
+									"data": {},
+									"ends": 0,
+									"ends_on": [],
+									"ends_on_damage": false,
+									"ends_when_incapacitated": false,
+									"escape": {},
+									"minutes_left": 0,
+									"modifiers": [
+										{
+											"class_id": "",
+											"data": {
+												"stat": "flag",
+												"value": "devils_sight"
+											},
+											"id": "",
+											"kind": "feature",
+											"name": "Devil's Sight"
+										}
+									],
+									"name": "Class features",
+									"repeat_save": {},
+									"rounds_left": 0,
+									"skip_turn_ends": 0,
+									"source_id": "class_standing",
+									"source_kind": "feature",
+									"spell_level": 0,
+									"stack_key": "feature:class_standing",
+									"turn_owner_id": ""
+								}
+							],
+							"exhaustion": 0,
+							"hp": 43,
+							"resources_used": {
+								"luck_points": 0,
+								"magical_cunning": 0,
+								"spell:darkness": 0,
+								"spell:hellish_rebuke": 0
+							},
+							"stable": false,
+							"temp_hp": 0,
+							"unhealable": 0,
+							"ward_hp": 0
+						}
+					},
+					"controller": "player",
+					"group": "",
+					"has_acted": false,
+					"hidden": false,
+					"id": "kip_smudgewick",
+					"initiative": 13,
+					"meta": {},
+					"reaction_available": true,
+					"reaction_rules": {},
+					"side": "party",
+					"size_cells": 1,
+					"stealth_total": 0,
+					"surprised": false
+				},
+				{
+					"cell": [
+						20,
+						13
+					],
+					"character": {
+						"attuned": [],
+						"build": {
+							"ability_method": "standard_array",
+							"appearance": {},
+							"background": "noble",
+							"base_scores": {
+								"cha": 14.0,
+								"con": 13.0,
+								"dex": 10.0,
+								"int": 8.0,
+								"str": 15.0,
+								"wis": 12.0
+							},
+							"choices": {
+								"background.abilities": [
+									"str",
+									"str",
+									"cha"
+								],
+								"background.feat.skilled_proficiencies": [
+									"animal_handling",
+									"performance",
+									"perception"
+								],
+								"background.tool": [
+									"playing_card_set"
+								],
+								"origin.languages": [
+									"giant",
+									"dwarvish"
+								],
+								"paladin.1.skills": [
+									"athletics",
+									"insight"
+								],
+								"paladin.1.weapon_mastery": [
+									"longsword",
+									"javelin"
+								],
+								"paladin.2.fighting_style": [
+									"defense"
+								],
+								"paladin.3.paladin_subclass": [
+									"oath_of_devotion"
+								],
+								"paladin.4.ability_score_improvement": [
+									"ability_score_improvement"
+								],
+								"paladin.4.ability_score_improvement/ability_score_improvement.abilities": [
+									"str",
+									"cha"
+								],
+								"paladin.prepared": [
+									"divine_smite",
+									"bless",
+									"cure_wounds",
+									"heroism",
+									"command",
+									"warding_bond"
+								],
+								"species.giant_ancestry": [
+									"stone_giant"
+								]
+							},
+							"equipment": {
+								"background": "a",
+								"class": "a"
+							},
+							"identity": {
+								"pronouns": "he/him",
+								"tags": [
+									"gallant",
+									"earnest",
+									"big-hearted"
+								]
+							},
+							"levels": [
+								{
+									"class": "paladin",
+									"hp": 0.0
+								},
+								{
+									"class": "paladin",
+									"hp": 0
+								},
+								{
+									"class": "paladin",
+									"hp": 0
+								},
+								{
+									"class": "paladin",
+									"hp": 0
+								},
+								{
+									"class": "paladin",
+									"hp": 0
+								}
+							],
+							"name": "Godrick Pendlebrook",
+							"species": "goliath"
+						},
+						"currency": {
+							"cp": 0,
+							"ep": 0,
+							"gp": 38,
+							"pp": 0,
+							"sp": 0
+						},
+						"familiar": "",
+						"heroic_inspiration": false,
+						"hit_dice_spent": {},
+						"id": "godrick_pendlebrook",
+						"inventory": [
+							{
+								"id": "chain_mail",
+								"qty": 1,
+								"slot": "armor"
+							},
+							{
+								"id": "shield",
+								"qty": 1,
+								"slot": "off_hand"
+							},
+							{
+								"id": "longsword",
+								"qty": 1,
+								"slot": "main_hand"
+							},
+							{
+								"id": "javelin",
+								"qty": 6,
+								"slot": ""
+							},
+							{
+								"id": "holy_symbol_amulet",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "priests_pack",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "dice_set",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "fine_clothes",
+								"qty": 1,
+								"slot": ""
+							},
+							{
+								"id": "perfume",
+								"qty": 1,
+								"slot": ""
+							}
+						],
+						"pact_slots_used": 0,
+						"slots_used": [
+							0,
+							0,
+							0,
+							0,
+							0,
+							0,
+							0,
+							0,
+							0
+						],
+						"state": {
+							"concentration": {},
+							"conditions": {},
+							"dead": false,
+							"death_failures": 0,
+							"death_successes": 0,
+							"effects": [],
+							"exhaustion": 0,
+							"hp": 39,
+							"resources_used": {
+								"giant_ancestry": 0,
+								"large_form": 0,
+								"lay_on_hands": 0,
+								"paladin_channel_divinity": 0,
+								"spell:divine_smite": 0,
+								"spell:find_steed": 0
+							},
+							"stable": false,
+							"temp_hp": 0,
+							"unhealable": 0,
+							"ward_hp": 0
+						}
+					},
+					"controller": "player",
+					"group": "",
+					"has_acted": false,
+					"hidden": false,
+					"id": "godrick_pendlebrook",
+					"initiative": 10,
+					"meta": {},
+					"reaction_available": true,
+					"reaction_rules": {},
+					"side": "party",
+					"size_cells": 1,
+					"stealth_total": 0,
+					"surprised": false
+				},
+				{
+					"cell": [
+						15,
+						15
+					],
+					"controller": "ai",
+					"group": "zombie",
+					"has_acted": false,
+					"hidden": false,
+					"id": "zombie#3",
+					"initiative": 2,
+					"meta": {},
+					"monster": "zombie",
+					"name": "Zombie 1",
+					"reaction_available": true,
+					"reaction_rules": {},
+					"side": "enemy",
+					"size_cells": 1,
+					"state": {
+						"concentration": {},
+						"conditions": {},
+						"dead": false,
+						"death_failures": 0,
+						"death_successes": 0,
+						"effects": [],
+						"exhaustion": 0,
+						"hp": 15,
+						"resources_used": {},
+						"stable": false,
+						"temp_hp": 0,
+						"unhealable": 0,
+						"ward_hp": 0
+					},
+					"stealth_total": 0,
+					"surprised": false
+				},
+				{
+					"cell": [
+						26,
+						10
+					],
+					"controller": "ai",
+					"group": "zombie",
+					"has_acted": false,
+					"hidden": false,
+					"id": "zombie#4",
+					"initiative": 2,
+					"meta": {},
+					"monster": "zombie",
+					"name": "Zombie 2",
+					"reaction_available": true,
+					"reaction_rules": {},
+					"side": "enemy",
+					"size_cells": 1,
+					"state": {
+						"concentration": {},
+						"conditions": {},
+						"dead": false,
+						"death_failures": 0,
+						"death_successes": 0,
+						"effects": [],
+						"exhaustion": 0,
+						"hp": 15,
+						"resources_used": {},
+						"stable": false,
+						"temp_hp": 0,
+						"unhealable": 0,
+						"ward_hp": 0
+					},
+					"stealth_total": 0,
+					"surprised": false
+				},
+				{
+					"cell": [
+						19,
+						9
+					],
+					"controller": "ai",
+					"group": "zombie",
+					"has_acted": false,
+					"hidden": false,
+					"id": "zombie#5",
+					"initiative": 2,
+					"meta": {},
+					"monster": "zombie",
+					"name": "Zombie 3",
+					"reaction_available": true,
+					"reaction_rules": {},
+					"side": "enemy",
+					"size_cells": 1,
+					"state": {
+						"concentration": {},
+						"conditions": {},
+						"dead": false,
+						"death_failures": 0,
+						"death_successes": 0,
+						"effects": [],
+						"exhaustion": 0,
+						"hp": 15,
+						"resources_used": {},
+						"stable": false,
+						"temp_hp": 0,
+						"unhealable": 0,
+						"ward_hp": 0
+					},
+					"stealth_total": 0,
+					"surprised": false
+				}
+			],
+			"grapples": {},
+			"lair": false,
+			"light": "dim",
+			"location_id": "village_of_barovia",
+			"log": [
+				{
+					"actor": "",
+					"details": [],
+					"kind": "turn",
+					"round": 0,
+					"text": "Shapes stand in the square, swaying like washing on a line. They turn toward you all at once."
+				},
+				{
+					"actor": "silvain_aster",
+					"details": [
+						"Initiative (Silvain Aster): d20 5 + 1 = 6 vs DC 0, success",
+						"Initiative 1 = Dex modifier 1"
+					],
+					"kind": "roll",
+					"round": 0,
+					"text": "Silvain Aster rolls Initiative: 6"
+				},
+				{
+					"actor": "hedda_ironvow",
+					"details": [
+						"Initiative (Hedda Ironvow): d20 19 - 1 = 18 vs DC 0, success",
+						"Initiative -1 = Dex modifier -1"
+					],
+					"kind": "roll",
+					"round": 0,
+					"text": "Hedda Ironvow rolls Initiative: 18"
+				},
+				{
+					"actor": "kip_smudgewick",
+					"details": [
+						"Initiative (Kip Smudgewick): d20 12 + 1 = 13 vs DC 0, success",
+						"Initiative 1 = Dex modifier 1"
+					],
+					"kind": "roll",
+					"round": 0,
+					"text": "Kip Smudgewick rolls Initiative: 13"
+				},
+				{
+					"actor": "godrick_pendlebrook",
+					"details": [
+						"Initiative (Godrick Pendlebrook): d20 10 + 0 = 10 vs DC 0, success",
+						"Initiative 0 = Dex modifier 0"
+					],
+					"kind": "roll",
+					"round": 0,
+					"text": "Godrick Pendlebrook rolls Initiative: 10"
+				},
+				{
+					"actor": "zombie#3",
+					"details": [
+						"Initiative (Zombie 1): d20 4 - 2 = 2 vs DC 0, success",
+						"Initiative -2 = Dex modifier -2"
+					],
+					"kind": "roll",
+					"round": 0,
+					"text": "Zombie 1 rolls Initiative: 2"
+				},
+				{
+					"actor": "",
+					"details": [],
+					"kind": "turn",
+					"round": 1,
+					"text": "Round 1"
+				},
+				{
+					"actor": "hedda_ironvow",
+					"details": [],
+					"kind": "turn",
+					"round": 1,
+					"text": "Hedda Ironvow's turn"
+				}
+			],
+			"marks": [],
+			"order": [
+				"hedda_ironvow",
+				"kip_smudgewick",
+				"godrick_pendlebrook",
+				"silvain_aster",
+				"zombie#3",
+				"zombie#4",
+				"zombie#5"
+			],
+			"outdoors": true,
+			"places": [
+				"village_of_barovia:churchyard"
+			],
+			"round": 1,
+			"rows": [
+				"########################################",
+				"##..########..#.####.###.#....#######..#",
+				"##=.########.=#.####.###.#.=.=#######=.#",
+				"##..########..#.####.###.#....#######..#",
+				"##..########..#.####.....#.=..#######=.#",
+				"##..########..#..........#.............#",
+				"##............#.###..==..#.=...~.....=.#",
+				"##=~........~=#.###......#...=...=.=...#",
+				"##............#..........#.............#",
+				"###############..........###############",
+				"#......................................#",
+				"#...~~............................~~...#",
+				".....~.....................~~......~....",
+				"#..........~...........................#",
+				"#...................==.................#",
+				"######.######..........=...#######.....#",
+				"######.######..............#######=....#",
+				"######.######..............#######=....#",
+				"######.######..########....#######.....#",
+				"#......######..########................#",
+				"#..............########.......##########",
+				"######.........########.#####.#........#",
+				"######..#####..########.#####.#=.......#",
+				"######..#####..########.#####.#........#",
+				"######..#####.~.........#####.#..#######",
+				"######..#####.~.........#####.#..#######",
+				"######..#####...######..#####.#~~#######",
+				"######..#####...######.~......#~~#######",
+				"#...............######........#~~#######",
+				"########################################"
+			],
+			"shapes": {},
+			"spells": {
+				"objects": [
+					{
+						"caster": "",
+						"cell": [
+							17,
+							17
+						],
+						"cells": [],
+						"conc": "",
+						"dc": 10,
+						"follows": false,
+						"kind": 0,
+						"name": "window",
+						"rounds": -1,
+						"rules": {
+							"light": {
+								"bright": 0,
+								"dim": 15
+							}
+						},
+						"slot": 0,
+						"spared": [],
+						"spell": ""
+					},
+					{
+						"caster": "",
+						"cell": [
+							20,
+							17
+						],
+						"cells": [],
+						"conc": "",
+						"dc": 10,
+						"follows": false,
+						"kind": 0,
+						"name": "window",
+						"rounds": -1,
+						"rules": {
+							"light": {
+								"bright": 0,
+								"dim": 15
+							}
+						},
+						"slot": 0,
+						"spared": [],
+						"spell": ""
+					},
+					{
+						"caster": "",
+						"cell": [
+							33,
+							5
+						],
+						"cells": [],
+						"conc": "",
+						"dc": 10,
+						"follows": false,
+						"kind": 0,
+						"name": "window",
+						"rounds": -1,
+						"rules": {
+							"light": {
+								"bright": 0,
+								"dim": 10
+							}
+						},
+						"slot": 0,
+						"spared": [],
+						"spell": ""
+					},
+					{
+						"caster": "",
+						"cell": [
+							30,
+							14
+						],
+						"cells": [],
+						"conc": "",
+						"dc": 10,
+						"follows": false,
+						"kind": 0,
+						"name": "lamp",
+						"rounds": -1,
+						"rules": {
+							"light": {
+								"bright": 10,
+								"dim": 20
+							}
+						},
+						"slot": 0,
+						"spared": [],
+						"spell": ""
+					},
+					{
+						"caster": "",
+						"cell": [
+							8,
+							6
+						],
+						"cells": [],
+						"conc": "",
+						"dc": 10,
+						"follows": false,
+						"kind": 0,
+						"name": "candle",
+						"rounds": -1,
+						"rules": {
+							"light": {
+								"bright": 0,
+								"dim": 10
+							}
+						},
+						"slot": 0,
+						"spared": [],
+						"spell": ""
+					},
+					{
+						"caster": "",
+						"cell": [
+							11,
+							14
+						],
+						"cells": [],
+						"conc": "",
+						"dc": 10,
+						"follows": false,
+						"kind": 0,
+						"name": "candle",
+						"rounds": -1,
+						"rules": {
+							"light": {
+								"bright": 0,
+								"dim": 5
+							}
+						},
+						"slot": 0,
+						"spared": [],
+						"spell": ""
+					}
+				],
+				"summoned": {},
+				"sustained": []
+			},
+			"studied": {},
+			"sunlit": false,
+			"title": "Shapes stand in the square, swaying like washing on a line. They turn toward you all at once.",
+			"version": 1
+		},
+		"encounter": "night_streets_dead",
+		"location": "village_of_barovia"
+	},
+	"current_scene": "res://scenes/game.tscn",
+	"day": 1,
+	"dice": {
+		"seed": 3,
+		"state": 1956124253693758136
+	},
+	"faction_attitudes": {},
+	"flags": {},
+	"home_slot": "",
+	"leader_index": 0,
+	"minute_of_day": 480,
+	"party": [],
+	"party_positions": [],
+	"quests": {},
+	"saved_at": "2026-10-07T12:05:48",
+	"story": {
+		"active_spells": {},
+		"attitudes": {},
+		"bench": [],
+		"codex": [],
+		"day": 1,
+		"fallen": [],
+		"flags": {
+			"_strahd": {
+				"fired": {},
+				"last": -1000000,
+				"pending": {}
+			}
+		},
+		"gold": 0.0,
+		"guests": [],
+		"last_check": false,
+		"leader": 0,
+		"location": "village_of_barovia",
+		"location_states": {
+			"village_of_barovia": {
+				"doors": {},
+				"encounters": {
+					"night_streets_dead": "started"
+				},
+				"found": {},
+				"in_pit": {},
+				"looted": {},
+				"props": {},
+				"traps": {}
+			}
+		},
+		"miles_since_long_rest": 0.0,
+		"milestones": 0,
+		"minute_of_day": 1080,
+		"narrator": {
+			"enter:village_of_barovia": {
+				"done": false,
+				"last": 1080,
+				"played": [
+					0
+				]
+			},
+			"enter:village_square": {
+				"done": false,
+				"last": 1080,
+				"played": [
+					1
+				]
+			}
+		},
+		"options": {
+			"respec": true
+		},
+		"party": [
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "sage",
+					"base_scores": {
+						"cha": 10.0,
+						"con": 13.0,
+						"dex": 12.0,
+						"int": 15.0,
+						"str": 8.0,
+						"wis": 14.0
+					},
+					"choices": {
+						"background.abilities": [
+							"int",
+							"int",
+							"con"
+						],
+						"background.feat.level_1_spell": [
+							"find_familiar"
+						],
+						"background.feat.two_cantrips.cantrips": [
+							"minor_illusion",
+							"shocking_grasp"
+						],
+						"background.feat.two_cantrips.spellcasting_ability": [
+							"int"
+						],
+						"evoker.3.evocation_savant": [
+							"scorching_ray",
+							"shatter"
+						],
+						"evoker.5.evocation_savant": [
+							"lightning_bolt"
+						],
+						"origin.languages": [
+							"draconic",
+							"dwarvish"
+						],
+						"species.elven_lineage": [
+							"high_elf"
+						],
+						"species.keen_senses": [
+							"perception"
+						],
+						"species.spellcasting_ability": [
+							"int"
+						],
+						"wizard.1.skills": [
+							"investigation",
+							"insight"
+						],
+						"wizard.2.scholar": [
+							"arcana"
+						],
+						"wizard.3.wizard_subclass": [
+							"evoker"
+						],
+						"wizard.4.ability_score_improvement": [
+							"ability_score_improvement"
+						],
+						"wizard.4.ability_score_improvement/ability_score_improvement.abilities": [
+							"int",
+							"int"
+						],
+						"wizard.cantrips": [
+							"fire_bolt",
+							"mage_hand",
+							"light",
+							"ray_of_frost"
+						],
+						"wizard.prepared": [
+							"magic_missile",
+							"shield",
+							"mage_armor",
+							"sleep",
+							"thunderwave",
+							"scorching_ray",
+							"web",
+							"fireball",
+							"counterspell"
+						],
+						"wizard.spellbook": [
+							"magic_missile",
+							"shield",
+							"mage_armor",
+							"sleep",
+							"thunderwave",
+							"burning_hands",
+							"feather_fall",
+							"chromatic_orb",
+							"invisibility",
+							"web",
+							"blur",
+							"hold_person",
+							"fireball",
+							"counterspell"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "they/them",
+						"tags": [
+							"bookish",
+							"proud",
+							"secretly kind"
+						]
+					},
+					"levels": [
+						{
+							"class": "wizard",
+							"hp": 0.0
+						},
+						{
+							"class": "wizard",
+							"hp": 0
+						},
+						{
+							"class": "wizard",
+							"hp": 0
+						},
+						{
+							"class": "wizard",
+							"hp": 0
+						},
+						{
+							"class": "wizard",
+							"hp": 0
+						}
+					],
+					"name": "Silvain Aster",
+					"species": "elf"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 13,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "silvain_aster",
+				"inventory": [
+					{
+						"id": "dagger",
+						"qty": 2,
+						"slot": ""
+					},
+					{
+						"id": "arcane_focus_staff",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "robe",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "spellbook",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "scholars_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "quarterstaff",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "calligraphers_supplies",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "book",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "parchment",
+						"qty": 8,
+						"slot": ""
+					},
+					{
+						"id": "robe",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 32,
+					"resources_used": {
+						"arcane_recovery": 0,
+						"spell:detect_magic": 0,
+						"spell:find_familiar": 0,
+						"spell:misty_step": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "acolyte",
+					"base_scores": {
+						"cha": 12.0,
+						"con": 13.0,
+						"dex": 8.0,
+						"int": 10.0,
+						"str": 14.0,
+						"wis": 15.0
+					},
+					"choices": {
+						"background.abilities": [
+							"wis",
+							"wis",
+							"cha"
+						],
+						"background.feat.level_1_spell": [
+							"sanctuary"
+						],
+						"background.feat.two_cantrips.cantrips": [
+							"light",
+							"toll_the_dead"
+						],
+						"background.feat.two_cantrips.spellcasting_ability": [
+							"wis"
+						],
+						"cleric.1.divine_order": [
+							"protector"
+						],
+						"cleric.1.skills": [
+							"medicine",
+							"persuasion"
+						],
+						"cleric.3.cleric_subclass": [
+							"life_domain"
+						],
+						"cleric.4.ability_score_improvement": [
+							"ability_score_improvement"
+						],
+						"cleric.4.ability_score_improvement/ability_score_improvement.abilities": [
+							"wis",
+							"con"
+						],
+						"cleric.cantrips": [
+							"guidance",
+							"sacred_flame",
+							"thaumaturgy",
+							"resistance"
+						],
+						"cleric.prepared": [
+							"command",
+							"guiding_bolt",
+							"healing_word",
+							"shield_of_faith",
+							"detect_magic",
+							"spiritual_weapon",
+							"hold_person",
+							"spirit_guardians",
+							"dispel_magic"
+						],
+						"origin.languages": [
+							"dwarvish",
+							"giant"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "she/her",
+						"tags": [
+							"devout",
+							"patient",
+							"dry humor"
+						]
+					},
+					"levels": [
+						{
+							"class": "cleric",
+							"hp": 0.0
+						},
+						{
+							"class": "cleric",
+							"hp": 0
+						},
+						{
+							"class": "cleric",
+							"hp": 0
+						},
+						{
+							"class": "cleric",
+							"hp": 0
+						},
+						{
+							"class": "cleric",
+							"hp": 0
+						}
+					],
+					"name": "Hedda Ironvow",
+					"species": "dwarf"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 15,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "hedda_ironvow",
+				"inventory": [
+					{
+						"id": "chain_shirt",
+						"qty": 1,
+						"slot": "armor"
+					},
+					{
+						"id": "shield",
+						"qty": 1,
+						"slot": "off_hand"
+					},
+					{
+						"id": "mace",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "priests_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "calligraphers_supplies",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "book",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "parchment",
+						"qty": 10,
+						"slot": ""
+					},
+					{
+						"id": "robe",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 43,
+					"resources_used": {
+						"channel_divinity": 0,
+						"spell:sanctuary": 0,
+						"stonecunning": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "merchant",
+					"base_scores": {
+						"cha": 15.0,
+						"con": 14.0,
+						"dex": 13.0,
+						"int": 12.0,
+						"str": 8.0,
+						"wis": 10.0
+					},
+					"choices": {
+						"background.abilities": [
+							"cha",
+							"cha",
+							"con"
+						],
+						"origin.languages": [
+							"dwarvish",
+							"halfling"
+						],
+						"species.fiendish_legacy": [
+							"infernal"
+						],
+						"species.size": [
+							"medium"
+						],
+						"species.spellcasting_ability": [
+							"cha"
+						],
+						"warlock.1.eldritch_invocations": [
+							"pact_of_the_tome",
+							"agonizing_blast",
+							"armor_of_shadows",
+							"repelling_blast",
+							"devils_sight"
+						],
+						"warlock.1.eldritch_invocations/agonizing_blast": [
+							"eldritch_blast"
+						],
+						"warlock.1.eldritch_invocations/pact_of_the_tome.cantrips": [
+							"eldritch_blast",
+							"prestidigitation",
+							"mage_hand"
+						],
+						"warlock.1.eldritch_invocations/pact_of_the_tome.rituals": [
+							"alarm",
+							"comprehend_languages"
+						],
+						"warlock.1.skills": [
+							"investigation",
+							"nature"
+						],
+						"warlock.3.warlock_subclass": [
+							"fiend_patron"
+						],
+						"warlock.4.ability_score_improvement": [
+							"ability_score_improvement"
+						],
+						"warlock.4.ability_score_improvement/ability_score_improvement.abilities": [
+							"cha",
+							"con"
+						],
+						"warlock.cantrips": [
+							"eldritch_blast",
+							"prestidigitation",
+							"mage_hand"
+						],
+						"warlock.prepared": [
+							"hex",
+							"armor_of_agathys",
+							"protection_from_evil_and_good",
+							"misty_step",
+							"hold_person",
+							"counterspell"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "he/him",
+						"tags": [
+							"nervous",
+							"honest-ish",
+							"always selling"
+						]
+					},
+					"levels": [
+						{
+							"class": "warlock",
+							"hp": 0.0
+						},
+						{
+							"class": "warlock",
+							"hp": 0
+						},
+						{
+							"class": "warlock",
+							"hp": 0
+						},
+						{
+							"class": "warlock",
+							"hp": 0
+						},
+						{
+							"class": "warlock",
+							"hp": 0
+						}
+					],
+					"name": "Kip Smudgewick",
+					"species": "tiefling"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 37,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "kip_smudgewick",
+				"inventory": [
+					{
+						"id": "leather_armor",
+						"qty": 1,
+						"slot": "armor"
+					},
+					{
+						"id": "sickle",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "dagger",
+						"qty": 2,
+						"slot": ""
+					},
+					{
+						"id": "arcane_focus_orb",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "book",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "scholars_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "navigators_tools",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "pouch",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "travelers_clothes",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [
+						{
+							"caster_id": "",
+							"concentration": {
+								"caster": "",
+								"source": ""
+							},
+							"conditions": [],
+							"consume_on": [],
+							"consume_when_attacked": false,
+							"data": {},
+							"ends": 0,
+							"ends_on": [],
+							"ends_on_damage": false,
+							"ends_when_incapacitated": false,
+							"escape": {},
+							"minutes_left": 0,
+							"modifiers": [
+								{
+									"class_id": "",
+									"data": {
+										"stat": "flag",
+										"value": "devils_sight"
+									},
+									"id": "",
+									"kind": "feature",
+									"name": "Devil's Sight"
+								}
+							],
+							"name": "Class features",
+							"repeat_save": {},
+							"rounds_left": 0,
+							"skip_turn_ends": 0,
+							"source_id": "class_standing",
+							"source_kind": "feature",
+							"spell_level": 0,
+							"stack_key": "feature:class_standing",
+							"turn_owner_id": ""
+						}
+					],
+					"exhaustion": 0,
+					"hp": 43,
+					"resources_used": {
+						"luck_points": 0,
+						"magical_cunning": 0,
+						"spell:darkness": 0,
+						"spell:hellish_rebuke": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			},
+			{
+				"attuned": [],
+				"build": {
+					"ability_method": "standard_array",
+					"appearance": {},
+					"background": "noble",
+					"base_scores": {
+						"cha": 14.0,
+						"con": 13.0,
+						"dex": 10.0,
+						"int": 8.0,
+						"str": 15.0,
+						"wis": 12.0
+					},
+					"choices": {
+						"background.abilities": [
+							"str",
+							"str",
+							"cha"
+						],
+						"background.feat.skilled_proficiencies": [
+							"animal_handling",
+							"performance",
+							"perception"
+						],
+						"background.tool": [
+							"playing_card_set"
+						],
+						"origin.languages": [
+							"giant",
+							"dwarvish"
+						],
+						"paladin.1.skills": [
+							"athletics",
+							"insight"
+						],
+						"paladin.1.weapon_mastery": [
+							"longsword",
+							"javelin"
+						],
+						"paladin.2.fighting_style": [
+							"defense"
+						],
+						"paladin.3.paladin_subclass": [
+							"oath_of_devotion"
+						],
+						"paladin.4.ability_score_improvement": [
+							"ability_score_improvement"
+						],
+						"paladin.4.ability_score_improvement/ability_score_improvement.abilities": [
+							"str",
+							"cha"
+						],
+						"paladin.prepared": [
+							"divine_smite",
+							"bless",
+							"cure_wounds",
+							"heroism",
+							"command",
+							"warding_bond"
+						],
+						"species.giant_ancestry": [
+							"stone_giant"
+						]
+					},
+					"equipment": {
+						"background": "a",
+						"class": "a"
+					},
+					"identity": {
+						"pronouns": "he/him",
+						"tags": [
+							"gallant",
+							"earnest",
+							"big-hearted"
+						]
+					},
+					"levels": [
+						{
+							"class": "paladin",
+							"hp": 0.0
+						},
+						{
+							"class": "paladin",
+							"hp": 0
+						},
+						{
+							"class": "paladin",
+							"hp": 0
+						},
+						{
+							"class": "paladin",
+							"hp": 0
+						},
+						{
+							"class": "paladin",
+							"hp": 0
+						}
+					],
+					"name": "Godrick Pendlebrook",
+					"species": "goliath"
+				},
+				"currency": {
+					"cp": 0,
+					"ep": 0,
+					"gp": 38,
+					"pp": 0,
+					"sp": 0
+				},
+				"familiar": "",
+				"heroic_inspiration": false,
+				"hit_dice_spent": {},
+				"id": "godrick_pendlebrook",
+				"inventory": [
+					{
+						"id": "chain_mail",
+						"qty": 1,
+						"slot": "armor"
+					},
+					{
+						"id": "shield",
+						"qty": 1,
+						"slot": "off_hand"
+					},
+					{
+						"id": "longsword",
+						"qty": 1,
+						"slot": "main_hand"
+					},
+					{
+						"id": "javelin",
+						"qty": 6,
+						"slot": ""
+					},
+					{
+						"id": "holy_symbol_amulet",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "priests_pack",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "dice_set",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "fine_clothes",
+						"qty": 1,
+						"slot": ""
+					},
+					{
+						"id": "perfume",
+						"qty": 1,
+						"slot": ""
+					}
+				],
+				"pact_slots_used": 0,
+				"slots_used": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"state": {
+					"concentration": {},
+					"conditions": {},
+					"dead": false,
+					"death_failures": 0,
+					"death_successes": 0,
+					"effects": [],
+					"exhaustion": 0,
+					"hp": 39,
+					"resources_used": {
+						"giant_ancestry": 0,
+						"large_form": 0,
+						"lay_on_hands": 0,
+						"paladin_channel_divinity": 0,
+						"spell:divine_smite": 0,
+						"spell:find_steed": 0
+					},
+					"stable": false,
+					"temp_hp": 0,
+					"unhealable": 0,
+					"ward_hp": 0
+				}
+			}
+		],
+		"positions": [
+			[
+				20,
+				12
+			],
+			[
+				21,
+				12
+			],
+			[
+				19,
+				12
+			],
+			[
+				20,
+				13
+			]
+		],
+		"quests": {},
+		"seed": 0,
+		"shops": {},
+		"start_level": 1,
+		"stash": [],
+		"tarokka": {},
+		"travel_resume": {},
+		"visited": {
+			"village_of_barovia": true,
+			"village_square": true
+		}
+	},
+	"tarokka": {},
+	"version": 2
+}

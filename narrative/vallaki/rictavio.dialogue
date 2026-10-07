@@ -63,6 +63,7 @@ set rictavio_suspected
 interject background:sage: You said the dead have no shadows to be ashamed of. That's from the monographs. The ones on the walking dead, by the doctor from Mordent. I've read them twice.
 Narrator: For a moment the showman's smile stays exactly where it is, and everything behind it goes very still.
 Rictavio: Have you now. A scholar. How dangerous for you.
+inspire background:sage: knew Van Richten's monographs when the showman quoted them
 -> menu
 
 ~ hunted
@@ -93,6 +94,7 @@ give holy_water 2
 ~ keep_secret
 set rictavio_secret_kept
 Rictavio: Thank you. People rarely keep secrets in Barovia. It's not malice; it's that he asks so nicely.
+approve wren_featherfoot +1 kip_smudgewick +1: You kept Rictavio's secret
 -> hunter
 
 ~ why

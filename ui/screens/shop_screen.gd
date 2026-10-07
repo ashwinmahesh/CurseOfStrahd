@@ -2,7 +2,8 @@ class_name ShopScreen
 extends CanvasLayer
 ## Trading with a merchant (plan §5.6, ADR 0010): their wares with prices and stock on the left, the chosen
 ## character's pack with what the merchant would pay on the right, the purse between. Prices and stock live in
-## StoryState; this screen only shows them and sends buy and sell.
+## StoryState; this screen only shows them and sends buy and sell. Sell all junk (U3) sells everything the party has
+## marked as junk (InventoryScreen) that this merchant buys, from every pack at once.
 
 signal closed
 
@@ -97,25 +98,72 @@ func _draw() -> void:
 		var n := UiKit.label("%s%s" % [data.get("name", id), " ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else ""], 15, "vellum")
 		n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.add_child(n)
+		if InventoryScreen.is_junk(e):
+			row.add_child(UiParts.pill("Junk", "bone"))
 		if str(e.get("slot", "")) != "":
 			row.add_child(UiParts.pill("Equipped", "moonlight"))
 		var b := UiParts.small_button("Sell for %s gp" % _money(offer) if offer >= 0.0 else "Won't buy", func() -> void: _sell(id))
 		b.disabled = offer < 0.0
 		row.add_child(b)
 		pack.add_child(UiParts.row(row, LootWindow._item_tip(data)))
-	cols.add_child(_side("%s's pack" % ch.name.get_slice(" ", 0), pack))
+	cols.add_child(_side("%s's pack" % ch.name.get_slice(" ", 0), pack, _junk_button()))
 
 
-func _side(title: String, list: VBoxContainer) -> Control:
+func _side(title: String, list: VBoxContainer, right: Control = null) -> Control:
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 6)
 	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	col.add_child(UiParts.section(title))
+	col.add_child(UiParts.section(title, right))
 	var pane := UiParts.pane(10)
 	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	pane.add_child(UiParts.fill_scroll(list))
 	col.add_child(pane)
 	return col
+
+
+## The party's junk this merchant buys: [{ch, e (the inventory entry), offer (each), qty}]; equipped things are left out.
+func junk_for_sale() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for m in st.party:
+		for e in m.inventory:
+			if not InventoryScreen.is_junk(e) or str(e.get("slot", "")) != "" or int(e["qty"]) <= 0:
+				continue
+			var offer := st.shop_offer(npc_id, str(e["id"]))
+			if offer >= 0.0:
+				out.append({"ch": m, "e": e, "offer": offer, "qty": int(e["qty"])})
+	return out
+
+
+func _junk_button() -> Control:
+	var count := 0
+	var total := 0.0
+	for j in junk_for_sale():
+		count += int(j["qty"])
+		total += float(j["offer"]) * int(j["qty"])
+	var b := UiParts.small_button("Sell all junk · %d for %s gp" % [count, _money(total)] if count > 0 else "Sell all junk",
+		sell_all_junk, "trade")
+	b.disabled = count == 0
+	var who := Compendium.shared().display_name("npcs", npc_id).get_slice(" ", 0)
+	b.tooltip_text = ("Everything the party marked as junk that %s buys, from every pack (equipped things stay)." % who) if count > 0 \
+		else "Nothing marked as junk that %s buys. Mark things as junk in the inventory." % who
+	return b
+
+
+## Sells every piece of junk in junk_for_sale(), each from its own entry; says how many and for how much.
+func sell_all_junk() -> void:
+	var sold := 0
+	var gained := 0.0
+	for j in junk_for_sale():
+		for i in int(j["qty"]):
+			var before := st.gold
+			if st.shop_sell(npc_id, str((j["e"] as Dictionary)["id"]), j["ch"] as Character, j["e"] as Dictionary) != "":
+				break
+			sold += 1
+			gained += st.gold - before
+	if sold > 0:
+		Audio.sfx("coins")
+	_note = "Sold %d piece%s of junk for %s gp." % [sold, "" if sold == 1 else "s", _money(gained)] if sold > 0 else "Nothing to sell."
+	_draw()
 
 
 func _buy(item_id: String) -> void:
