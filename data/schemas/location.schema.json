@@ -451,6 +451,10 @@
             "maximum": 12,
             "description": "Squares: the NPC starts its dialogue once when the leader comes this close and can see them."
           },
+          "asleep": {
+            "type": "boolean",
+            "description": "The NPC lies asleep here: Unconscious (so Incapacitated and Prone), drawn lying down, and the hover hint, Look and the Alt plates say so."
+          },
           "path": {
             "type": "array",
             "minItems": 1,
