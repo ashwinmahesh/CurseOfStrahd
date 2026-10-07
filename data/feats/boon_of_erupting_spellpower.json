@@ -8,14 +8,22 @@
   },
   "category": "epic_boon",
   "repeatable": false,
-  "summary": "Reference-only: When casting a damaging slotted spell, treat damage dice rolls of 1 or 2 as 3 and knock damaged creatures Prone. Once until you roll Initiative or finish a Short or Long Rest.",
+  "summary": "Once until you roll Initiative or rest, a damaging spell you cast with a slot turns its 1s and 2s into 3s and knocks the creatures it damages Prone.",
   "benefits": [
     {
-      "id": "boon_of_erupting_spellpower_benefit",
-      "name": "Epic Benefit",
-      "summary": "Reference-only: When casting a damaging slotted spell, treat damage dice rolls of 1 or 2 as 3 and knock damaged creatures Prone. Once until you roll Initiative or finish a Short or Long Rest.",
-      "text": "Reference-only: When casting a damaging slotted spell, treat damage dice rolls of 1 or 2 as 3 and knock damaged creatures Prone. Once until you roll Initiative or finish a Short or Long Rest.",
-      "implemented": "text"
+      "id": "erupting_spellpower",
+      "name": "Erupting Spellpower",
+      "summary": "A damaging spell cast with a slot: 1s and 2s on its damage dice count as 3s, and each creature it damages falls Prone. Back when you roll Initiative or finish a Short or Long Rest.",
+      "text": "When you cast a spell with a spell slot and it deals damage, each 1 or 2 on its damage dice counts as a 3, and each creature it damages falls Prone. Once used, it comes back when you roll Initiative or finish a Short or Long Rest. It's used on the first such spell unless you turn it Off in the class tab.",
+      "implemented": "engine",
+      "resource": {
+        "id": "erupting_spellpower",
+        "name": "Erupting Spellpower",
+        "max": 1,
+        "recharge": "short"
+      },
+      "policy": "auto",
+      "policy_cost": "Once per Initiative or rest"
     }
   ],
   "prerequisites": {
@@ -31,5 +39,5 @@
     "points": 1,
     "max": 30
   },
-  "playable": false
+  "playable": true
 }

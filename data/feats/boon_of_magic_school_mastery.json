@@ -8,14 +8,125 @@
   },
   "category": "epic_boon",
   "repeatable": true,
-  "summary": "Reference-only: Choose a school. A chosen level 1 spell of that school from your class list is always prepared and castable without slots or components. A chosen level 7-or-lower spell of that school is always prepared and free once per Long Rest; both can use slots. Repeating the feat requires a different school (enforce manually).",
+  "summary": "Pick a school of magic: a level 1 spell of it is yours at will, and a spell of up to level 7 of it is always prepared with a free casting each Long Rest.",
   "benefits": [
     {
-      "id": "boon_of_magic_school_mastery_benefit",
-      "name": "Epic Benefit",
-      "summary": "Reference-only: Choose a school. A chosen level 1 spell of that school from your class list is always prepared and castable without slots or components. A chosen level 7-or-lower spell of that school is always prepared and free once per Long Rest; both can use slots. Repeating the feat requires a different school (enforce manually).",
-      "text": "Reference-only: Choose a school. A chosen level 1 spell of that school from your class list is always prepared and castable without slots or components. A chosen level 7-or-lower spell of that school is always prepared and free once per Long Rest; both can use slots. Repeating the feat requires a different school (enforce manually).",
-      "implemented": "text"
+      "id": "school_mastery_school",
+      "name": "School of Mastery",
+      "summary": "Pick a school of magic.",
+      "text": "Pick a school of magic; the two spells below come from it.",
+      "implemented": "data",
+      "choice": {
+        "id": "school",
+        "kind": "option",
+        "count": 1,
+        "options": [
+          {
+            "id": "abjuration",
+            "name": "Abjuration",
+            "summary": "The Abjuration school.",
+            "implemented": "data"
+          },
+          {
+            "id": "conjuration",
+            "name": "Conjuration",
+            "summary": "The Conjuration school.",
+            "implemented": "data"
+          },
+          {
+            "id": "divination",
+            "name": "Divination",
+            "summary": "The Divination school.",
+            "implemented": "data"
+          },
+          {
+            "id": "enchantment",
+            "name": "Enchantment",
+            "summary": "The Enchantment school.",
+            "implemented": "data"
+          },
+          {
+            "id": "evocation",
+            "name": "Evocation",
+            "summary": "The Evocation school.",
+            "implemented": "data"
+          },
+          {
+            "id": "illusion",
+            "name": "Illusion",
+            "summary": "The Illusion school.",
+            "implemented": "data"
+          },
+          {
+            "id": "necromancy",
+            "name": "Necromancy",
+            "summary": "The Necromancy school.",
+            "implemented": "data"
+          },
+          {
+            "id": "transmutation",
+            "name": "Transmutation",
+            "summary": "The Transmutation school.",
+            "implemented": "data"
+          }
+        ]
+      }
+    },
+    {
+      "id": "school_mastery_minor",
+      "name": "Minor Mastery",
+      "summary": "A level 1 spell of that school from your class spell lists is always prepared, cast without a slot or components.",
+      "text": "Pick a level 1 spell of that school from a class spell list you can cast from. It's always prepared, and you can cast it without a spell slot or any components; you can still cast it with a slot to cast it higher.",
+      "implemented": "engine",
+      "choice": {
+        "id": "minor_spell",
+        "kind": "spell",
+        "count": 1,
+        "filter": {
+          "level": 1,
+          "school": "@school",
+          "own_lists": true
+        }
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "@minor_spell",
+          "ability": "@increased",
+          "always_prepared": true,
+          "at_will": true
+        }
+      ]
+    },
+    {
+      "id": "school_mastery_major",
+      "name": "Major Mastery",
+      "summary": "A spell of that school of level 1 to 7 from your class spell lists is always prepared, with one free casting per Long Rest.",
+      "text": "Pick a spell of that school of level 7 or lower from a class spell list you can cast from. It's always prepared, and you can cast it once without a spell slot, regaining that casting when you finish a Long Rest; otherwise you cast it with slots as usual.",
+      "implemented": "data",
+      "choice": {
+        "id": "major_spell",
+        "kind": "spell",
+        "count": 1,
+        "filter": {
+          "min_level": 1,
+          "max_level": 7,
+          "school": "@school",
+          "own_lists": true
+        }
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "@major_spell",
+          "ability": "@increased",
+          "always_prepared": true,
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          }
+        }
+      ]
     }
   ],
   "prerequisites": {
@@ -31,5 +142,5 @@
     "points": 1,
     "max": 30
   },
-  "playable": false
+  "playable": true
 }

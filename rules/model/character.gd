@@ -1137,7 +1137,7 @@ func _collect_granted_spells() -> void:
 				free_slot = maxi(free_slot, int(fs[at]))
 		granted_spells.append({"id": spell_id, "class_id": m.class_id, "ability": ability, "uses": count,
 			"recharge": str(uses.get("recharge", "")), "always_prepared": bool(m.data.get("always_prepared", true)),
-			"at_level": m.at_level(), "source": m.source_name, "free_slot": free_slot})
+			"at_level": m.at_level(), "source": m.source_name, "free_slot": free_slot, "at_will": bool(m.data.get("at_will", false))})
 
 
 func spellcasting_entry(class_id: String) -> Dictionary:
@@ -1334,7 +1334,8 @@ func known_spells() -> Array[Dictionary]:
 			if spellcasting_entry(gcid).is_empty():
 				gcid = ""
 			out.append({"id": str(g["id"]), "class_id": gcid, "ability": str(g["ability"]), "kind": "granted",
-				"source": str(g["source"]), "uses": int(g["uses"]), "recharge": str(g["recharge"]), "free_slot": int(g.get("free_slot", 0))})
+				"source": str(g["source"]), "uses": int(g["uses"]), "recharge": str(g["recharge"]), "free_slot": int(g.get("free_slot", 0)),
+				"at_will": bool(g.get("at_will", false))})
 	return out
 
 

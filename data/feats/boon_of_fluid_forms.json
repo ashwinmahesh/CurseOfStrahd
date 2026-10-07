@@ -8,14 +8,27 @@
   },
   "category": "epic_boon",
   "repeatable": false,
-  "summary": "Reference-only: Once per Long Rest, Magic action transforms you for 1 hour into a Beast, Humanoid, or Monstrosity of CR 10 or less, with Temporary HP equal to its HP. Ends early when these run out or a Magic action restores your form. Retain type, alignment, personality, mental scores, HP, Hit Dice, proficiencies, communication, and Spellcasting/Pact Magic; choose whether equipment drops or adapts. All shape-shifting Temporary HP gains increase by 20.",
+  "summary": "Once per Long Rest, become a Beast, Humanoid or Monstrosity of Challenge Rating 10 or lower for an hour, with its Hit Points as Temporary Hit Points; every shape change gives you 20 more Temporary Hit Points.",
   "benefits": [
     {
-      "id": "boon_of_fluid_forms_benefit",
-      "name": "Epic Benefit",
-      "summary": "Reference-only: Once per Long Rest, Magic action transforms you for 1 hour into a Beast, Humanoid, or Monstrosity of CR 10 or less, with Temporary HP equal to its HP. Ends early when these run out or a Magic action restores your form. Retain type, alignment, personality, mental scores, HP, Hit Dice, proficiencies, communication, and Spellcasting/Pact Magic; choose whether equipment drops or adapts. All shape-shifting Temporary HP gains increase by 20.",
-      "text": "Reference-only: Once per Long Rest, Magic action transforms you for 1 hour into a Beast, Humanoid, or Monstrosity of CR 10 or less, with Temporary HP equal to its HP. Ends early when these run out or a Magic action restores your form. Retain type, alignment, personality, mental scores, HP, Hit Dice, proficiencies, communication, and Spellcasting/Pact Magic; choose whether equipment drops or adapts. All shape-shifting Temporary HP gains increase by 20.",
-      "implemented": "text"
+      "id": "fluid_shape",
+      "name": "Fluid Shape",
+      "summary": "Once per Long Rest, a Magic action turns you into a Beast, Humanoid or Monstrosity of CR 10 or lower for 1 hour, with Temporary Hit Points equal to its Hit Points.",
+      "text": "Once per Long Rest, as a Magic action you take the shape of a Beast, Humanoid or Monstrosity of Challenge Rating 10 or lower for 1 hour and gain Temporary Hit Points equal to its Hit Points. The shape ends early when those Temporary Hit Points are gone or when you end it as a Magic action. You keep your creature type, alignment, personality, Intelligence, Wisdom and Charisma, Hit Points and Hit Point Dice, proficiencies, ways of communicating, and your Spellcasting or Pact Magic.",
+      "implemented": "engine",
+      "resource": {
+        "id": "fluid_forms",
+        "name": "Fluid Shape",
+        "max": 1,
+        "recharge": "long"
+      }
+    },
+    {
+      "id": "fluid_vigor",
+      "name": "Shifting Vigor",
+      "summary": "Whenever changing your shape gives you Temporary Hit Points, you gain 20 more.",
+      "text": "Whenever you gain Temporary Hit Points from changing your shape (this boon, Wild Shape and the like), you gain 20 more.",
+      "implemented": "engine"
     }
   ],
   "prerequisites": {
@@ -30,5 +43,5 @@
     "points": 1,
     "max": 30
   },
-  "playable": false
+  "playable": true
 }

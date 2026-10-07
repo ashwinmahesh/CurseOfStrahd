@@ -305,6 +305,10 @@
         "always_prepared": {
           "type": "boolean"
         },
+        "at_will": {
+          "type": "boolean",
+          "description": "spell: cast without a slot whenever you like (Boon of Magic School Mastery)."
+        },
         "when": {
           "type": "object",
           "description": "Filters: armor (any|none|light|medium|heavy), shield (bool), weapon (melee|ranged|one_handed|two_handed|thrown|finesse), spell (bool), school, bloodied (bool), raging (bool)."

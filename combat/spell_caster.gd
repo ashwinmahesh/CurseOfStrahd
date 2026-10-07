@@ -108,7 +108,7 @@ func castable(c: Combatant) -> Array[Dictionary]:
 			# Genie Magic: the free casting at a higher slot from some character level on.
 			entry["free_slot"] = int(k.get("free_slot", 0))
 		# Warlock invocations that cast a spell at will (Armor of Shadows, Fiendish Vigor...).
-		if ClassFeatures.at_will(c, id) or chain:
+		if ClassFeatures.at_will(c, id) or chain or bool(k.get("at_will", false)):
 			entry["free"] = true
 			entry["at_will"] = true
 		var why := _why_not(c, s, entry)
@@ -138,7 +138,8 @@ func _why_not(c: Combatant, s: Dictionary, entry: Dictionary) -> String:
 		return why
 	var comp := s.get("components", {}) as Dictionary
 	# Enchantment and Illusion Adept: a spell of that school cast with a slot needs no Verbal component.
-	var waived := int(s.get("level", 0)) > 0 and c.creature.has_flag("waive_components:%s" % str(s.get("school", "")))
+	var waived := (int(s.get("level", 0)) > 0 and c.creature.has_flag("waive_components:%s" % str(s.get("school", "")))) \
+		or enc().faerun.waives_components(c, str(s.get("id", "")))
 	if bool(comp.get("v", false)) and not waived and not (str(s.get("school", "")) == "illusion" and CombatFeatures.has_feature(c, "improved_illusions")):
 		if c.creature.has_flag("speechless"):
 			return "Can't speak"
@@ -784,7 +785,7 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	if bool(opts.get("splintered", false)):
 		ch.spend_resource("splintered_summons")
 	if c.hidden and bool((s.get("components", {}) as Dictionary).get("v", false)) and not e.faerun.sneaky_casting(c) \
-			and not (level > 0 and c.creature.has_flag("waive_components:%s" % str(s.get("school", "")))):
+			and not (level > 0 and c.creature.has_flag("waive_components:%s" % str(s.get("school", "")))) and not e.faerun.waives_components(c, spell_id):
 		e.reveal(c, "cast a spell aloud")
 	end_sanctuary(c, "cast a spell")
 	trigger_ends(c, "cast_spell")
@@ -1399,7 +1400,8 @@ func _damage_bonus(ctx: Dictionary) -> Breakdown:
 func _roll_spell_damage(ctx: Dictionary, t: Combatant, critical: bool) -> Dictionary:
 	var e := enc()
 	var dice := _damage_dice(ctx, t)
-	var rolled := e._roll_damage_dice(dice, critical, 0, "%s damage" % (ctx["s"] as Dictionary)["name"],
+	# Erupting Spellpower: 1s and 2s count as 3s.
+	var rolled := e._roll_damage_dice(dice, critical, 3 if bool(ctx.get("erupting", false)) else 0, "%s damage" % (ctx["s"] as Dictionary)["name"],
 		{"count": maxi(1, (ctx["c"] as Combatant).creature.ability_mod(&"cha")), "at_most": int(DiceRoller.parse_expr(dice)["sides"]) / 2, "source": "Empowered Spell"} \
 		if "empowered" in (ctx.get("metamagic", []) as Array) else {})
 	var sp := ctx["s"] as Dictionary
@@ -1407,6 +1409,9 @@ func _roll_spell_damage(ctx: Dictionary, t: Combatant, critical: bool) -> Dictio
 		var pm := DiceRoller.parse_expr(dice)
 		var mx := int(pm["count"]) * int(pm["sides"]) * (2 if critical else 1) + int(pm["modifier"])
 		rolled = {"total": mx, "text": "maximum (Overchannel) = %d" % mx}
+	# Boon of Exquisite Radiance, Boon of Poison Mastery: every die at its maximum.
+	elif int(DiceRoller.parse_expr(dice)["count"]) > 0 and e.faerun.maximized(ctx["c"] as Combatant, _damage_type_safe(ctx)):
+		rolled = e._max_damage_dice(dice, critical)
 	var bonus := _damage_bonus(ctx)
 	var total := int(rolled["total"]) + bonus.total()
 	total += enc().ravenloft.spell_damage_bonus(ctx, bonus)
@@ -1452,7 +1457,11 @@ func roll_damage_parts(ctx: Dictionary, parts: Array, critical: bool, _t: Combat
 			if sc.has("damage"):
 				count += int(DiceRoller.parse_expr(str(sc["damage"]))["count"]) * Spellcasting.cantrip_tier(c.creature.character_level())
 		var dice := Spellcasting._format(count, int(base["sides"]), int(base["modifier"]))
-		var rolled := e._roll_damage_dice(dice, critical, min_die, "%s damage" % s["name"])
+		# Erupting Spellpower: 1s and 2s count as 3s.
+		var rolled := e._roll_damage_dice(dice, critical, maxi(min_die, 3 if bool(ctx.get("erupting", false)) else 0), "%s damage" % s["name"])
+		# Boon of Exquisite Radiance, Boon of Poison Mastery: every die at its maximum.
+		if count > 0 and e.faerun.maximized(c, str(part["type"]) if part.has("type") else _damage_type(ctx, part)):
+			rolled = e._max_damage_dice(dice, critical)
 		var sub := int(rolled["total"])
 		if bool(part.get("add_mod", false)):
 			sub += int((ctx["nums"] as Dictionary).get("mod", 0))

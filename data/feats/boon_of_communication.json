@@ -8,13 +8,13 @@
   },
   "category": "epic_boon",
   "repeatable": false,
-  "summary": "Reference-only: Influencing Hostile creatures imposes no Disadvantage. Understand literal meanings of heard, signed, and written languages. Telepathy 120 feet.",
+  "summary": "You influence even Hostile creatures without Disadvantage, understand any language, and speak telepathically to creatures within 120 feet.",
   "benefits": [
     {
-      "id": "boon_of_communication_benefit",
-      "name": "Epic Benefit",
-      "summary": "Reference-only: Influencing Hostile creatures imposes no Disadvantage. Understand literal meanings of heard, signed, and written languages. Telepathy 120 feet.",
-      "text": "Reference-only: Influencing Hostile creatures imposes no Disadvantage. Understand literal meanings of heard, signed, and written languages. Telepathy 120 feet.",
+      "id": "communication_benefit",
+      "name": "Silver Tongue",
+      "summary": "No Disadvantage influencing Hostile creatures; you understand any language; telepathy 120 feet.",
+      "text": "When you try to influence a Hostile creature, you don't have Disadvantage. You understand the literal meaning of any spoken, signed or written language, and you can speak telepathically to a creature you can see within 120 feet. These play out in conversation: the game's conversations never give Hostile creatures Disadvantage on your checks, and every speaker understands the party.",
       "implemented": "text"
     }
   ],
@@ -30,5 +30,5 @@
     "points": 1,
     "max": 30
   },
-  "playable": false
+  "playable": true
 }

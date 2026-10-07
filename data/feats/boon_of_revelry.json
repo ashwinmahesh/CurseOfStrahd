@@ -8,14 +8,39 @@
   },
   "category": "epic_boon",
   "repeatable": false,
-  "summary": "Reference-only: Otto’s Irresistible Dance is always prepared and free once per Long Rest, or castable with slots. It needs no components; damage cannot break its Concentration. Creatures Charmed after failing its save cannot cast Verbal spells and sing nonsense if able.",
+  "summary": "Otto's Irresistible Dance is always prepared with a free casting each Long Rest; you cast it without components, damage can't break your Concentration on it, and its dancers can't cast Verbal spells.",
   "benefits": [
     {
-      "id": "boon_of_revelry_benefit",
-      "name": "Epic Benefit",
-      "summary": "Reference-only: Otto’s Irresistible Dance is always prepared and free once per Long Rest, or castable with slots. It needs no components; damage cannot break its Concentration. Creatures Charmed after failing its save cannot cast Verbal spells and sing nonsense if able.",
-      "text": "Reference-only: Otto’s Irresistible Dance is always prepared and free once per Long Rest, or castable with slots. It needs no components; damage cannot break its Concentration. Creatures Charmed after failing its save cannot cast Verbal spells and sing nonsense if able.",
-      "implemented": "text"
+      "id": "revelry_dance",
+      "name": "Irresistible Revelry",
+      "summary": "Otto's Irresistible Dance is always prepared, with one free casting per Long Rest.",
+      "text": "You always have Otto's Irresistible Dance prepared, using the ability this boon increased. You can cast it once without a spell slot, regaining that casting when you finish a Long Rest, and you can also cast it with slots.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "ottos_irresistible_dance",
+          "ability": "@increased",
+          "always_prepared": true,
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          }
+        }
+      ]
+    },
+    {
+      "id": "revelry_mastery",
+      "name": "Endless Dance",
+      "summary": "No components; damage can't break your Concentration on it; a creature it Charms can't cast Verbal spells.",
+      "text": "You cast Otto's Irresistible Dance without components, and taking damage can't break your Concentration on it. A creature Charmed by your casting of it can't cast spells with a Verbal component, and sings nonsense if it can.",
+      "implemented": "engine",
+      "modifiers": [
+        {
+          "stat": "concentration_damage_immunity",
+          "spell_id": "ottos_irresistible_dance"
+        }
+      ]
     }
   ],
   "prerequisites": {
@@ -30,5 +55,5 @@
     "points": 1,
     "max": 30
   },
-  "playable": false
+  "playable": true
 }

@@ -163,8 +163,24 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 	out.append(_entry("utilize", COMMON, "Utilize", "use an object", "action", "Nothing to use here (Healer's Kit is on Items)", "none"))
 
 
+## FeatureActions' entries as hotbar actions.
+func _feature_entries(c: Combatant, out: Array[Dictionary], tab: String) -> void:
+	for fa in e.feature_actions.list(c):
+		var en := _entry(str(fa["id"]), tab, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]), str(fa["targeting"]), str(fa["help"]))
+		en["kind"] = "feat"
+		en["range"] = int(fa["range"])
+		# Some features take a choice from the right-click menu (Lay On Hands: how many points).
+		if fa.has("choices"):
+			en["choices"] = fa["choices"]
+			en["choice_label"] = str(fa.get("choice_label", "Choose"))
+		en["count"] = int(fa.get("count", 1))
+		out.append(en)
+
+
 func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 	if not c.creature is Character:
+		# A shaped character or a summoned creature the player runs: its own actions, leaving Wild Shape, ending Fluid Shape.
+		_feature_entries(c, out, class_tab(c))
 		return
 	var ch := c.creature as Character
 	var tab := class_tab(c)
@@ -215,16 +231,7 @@ func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 				pw = "No Bloodied allies within 30 ft"
 			out.append(_entry("preserve_life", tab, "Preserve Life", "%d HP to share" % (5 * ch.class_level_of("cleric")), "action", pw, "none"))
 	_effect_actions(c, out, tab)
-	for fa in e.feature_actions.list(c):
-		var en := _entry(str(fa["id"]), tab, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]), str(fa["targeting"]), str(fa["help"]))
-		en["kind"] = "feat"
-		en["range"] = int(fa["range"])
-		# Some features take a choice from the right-click menu (Lay On Hands: how many points).
-		if fa.has("choices"):
-			en["choices"] = fa["choices"]
-			en["choice_label"] = str(fa.get("choice_label", "Choose"))
-		en["count"] = int(fa.get("count", 1))
-		out.append(en)
+	_feature_entries(c, out, tab)
 	for ro in e.features.rider_options(c):
 		var armed := str(ro["id"]) in c.armed
 		var rw := e._turn_check(c)
@@ -340,7 +347,8 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 		var sub := "Cantrip" if level == 0 else "Level %d" % level
 		if bool(s["free"]):
 			sub += " · free"
-		var preview := (c.creature as Character).spell_preview(str(s["id"]), level)
+		# A shape that keeps its spellcasting (Shapechange, Boon of Fluid Forms) previews with the caster's own sheet.
+		var preview := e.spells.caster_char(c).spell_preview(str(s["id"]), level)
 		if preview.has("damage_dice"):
 			sub += " · %s" % preview["damage_dice"]
 		elif preview.has("heal_dice"):
@@ -399,7 +407,7 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 			a["choices"] = forms
 			a["choice_label"] = "Beast form"
 			a["opts"] = {"choice": ""}
-		for feature in (c.creature as Character).resource_casts(str(s["id"])):
+		for feature in e.spells.caster_char(c).resource_casts(str(s["id"])):
 			var paid := a.duplicate(true)
 			var cast_entry := e.spells.resource_cast_entry(c, data, str(feature["id"]))
 			paid["id"] = str(a["id"]) + ":" + str(feature["id"])
@@ -1198,7 +1206,7 @@ func level_choices(c: Combatant, action: Dictionary) -> Array[int]:
 
 ## Character.spell_preview for a hotbar entry, with an item's own DC and attack bonus in place of the caster's.
 func cast_preview(c: Combatant, action: Dictionary, slot: int) -> Dictionary:
-	var prev := (c.creature as Character).spell_preview(str(action["spell_id"]), slot)
+	var prev := e.spells.caster_char(c).spell_preview(str(action["spell_id"]), slot)
 	if action.has("dc"):
 		var data := Compendium.shared().spell_data(str(action["spell_id"]))
 		if data.has("save"):
@@ -1214,10 +1222,11 @@ func slot_choices(c: Combatant, spell_id: String) -> Array[int]:
 	var out: Array[int] = []
 	var data := Compendium.shared().spell_data(spell_id)
 	var level := int(data.get("level", 0))
-	if level == 0 or not c.creature is Character:
+	var ch := e.spells.caster_char(c)
+	if level == 0 or ch == null:
 		return out
 	for l in range(level, 10):
-		if (c.creature as Character).slots_left(l) > 0:
+		if ch.slots_left(l) > 0:
 			out.append(l)
 	return out
 

@@ -8,7 +8,7 @@
   },
   "category": "epic_boon",
   "repeatable": false,
-  "summary": "Immune to Frightened; Intimidation proficiency and Expertise. Reference-only: Reaction when a visible Frightened creature within 60 feet starts its turn without Total Cover: Wisdom DC 8 + Charisma modifier + PB or spend its turn fleeing you by its fastest means. Once per Short or Long Rest.",
+  "summary": "Immune to Frightened, with Expertise in Intimidation; once per rest, a Frightened creature you can see starting its turn near you must save or flee.",
   "benefits": [
     {
       "id": "terror_protection",
@@ -34,10 +34,18 @@
     },
     {
       "id": "boon_of_terror_benefit",
-      "name": "Epic Benefit",
-      "summary": "Reference-only: Reaction when a visible Frightened creature within 60 feet starts its turn without Total Cover: Wisdom DC 8 + Charisma modifier + PB or spend its turn fleeing you by its fastest means. Once per Short or Long Rest.",
-      "text": "Reference-only: Reaction when a visible Frightened creature within 60 feet starts its turn without Total Cover: Wisdom DC 8 + Charisma modifier + PB or spend its turn fleeing you by its fastest means. Once per Short or Long Rest.",
-      "implemented": "text"
+      "name": "Paralyzing Dread",
+      "summary": "Reaction, once per Short or Long Rest: a Frightened creature starting its turn within 60 feet makes a Wisdom save or spends its turn fleeing you.",
+      "text": "When a creature you can see within 60 feet of you starts its turn Frightened and without Total Cover from you, you can take a Reaction to make it make a Wisdom saving throw against 8 + your Charisma modifier + your Proficiency Bonus. On a failure it spends that turn moving away from you by the fastest means it has. Once per Short or Long Rest; it's used on its own unless you turn it Off in the class tab.",
+      "implemented": "engine",
+      "resource": {
+        "id": "boon_of_terror",
+        "name": "Paralyzing Dread",
+        "max": 1,
+        "recharge": "short"
+      },
+      "policy": "auto",
+      "policy_cost": "A Reaction, once per Short or Long Rest"
     }
   ],
   "prerequisites": {
@@ -50,5 +58,5 @@
     "points": 1,
     "max": 30
   },
-  "playable": false
+  "playable": true
 }

@@ -8,14 +8,27 @@
   },
   "category": "epic_boon",
   "repeatable": false,
-  "summary": "Reference-only: Creatures you reduce to 0 HP cannot become Undead. Once per Long Rest, maximize all dice of one Radiant damage roll.",
+  "summary": "Creatures you fell can't rise as Undead, and once per Long Rest one Radiant damage roll uses the maximum on every die.",
   "benefits": [
     {
-      "id": "boon_of_exquisite_radiance_benefit",
-      "name": "Epic Benefit",
-      "summary": "Reference-only: Creatures you reduce to 0 HP cannot become Undead. Once per Long Rest, maximize all dice of one Radiant damage roll.",
-      "text": "Reference-only: Creatures you reduce to 0 HP cannot become Undead. Once per Long Rest, maximize all dice of one Radiant damage roll.",
-      "implemented": "text"
+      "id": "radiant_rest",
+      "name": "Final Rest",
+      "summary": "A creature you reduce to 0 Hit Points can't become Undead.",
+      "text": "A creature you reduce to 0 Hit Points can't be turned into an Undead afterward.",
+      "implemented": "engine"
+    },
+    {
+      "id": "radiant_brilliance",
+      "name": "Exquisite Radiance",
+      "summary": "Once per Long Rest, every die of one Radiant damage roll counts as its maximum.",
+      "text": "Once per Long Rest, when you roll Radiant damage, every die of that roll counts as its highest face. In a fight you arm it (no action) and the next Radiant damage roll you make uses it.",
+      "implemented": "engine",
+      "resource": {
+        "id": "exquisite_radiance",
+        "name": "Exquisite Radiance",
+        "max": 1,
+        "recharge": "long"
+      }
     }
   ],
   "prerequisites": {
@@ -33,5 +46,5 @@
     "points": 1,
     "max": 30
   },
-  "playable": false
+  "playable": true
 }

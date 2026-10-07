@@ -8,7 +8,7 @@
   },
   "category": "epic_boon",
   "repeatable": false,
-  "summary": "Resistance to Lightning and Thunder. Reference-only: While Bloodied, immune to Lightning and Thunder. Saves against your spells dealing either type have Disadvantage.",
+  "summary": "Resistance to Lightning and Thunder, immunity to both while Bloodied, and saves against your Lightning and Thunder spells have Disadvantage.",
   "benefits": [
     {
       "id": "storm_resistances",
@@ -28,11 +28,34 @@
       ]
     },
     {
-      "id": "boon_of_the_furious_storm_benefit",
-      "name": "Epic Benefit",
-      "summary": "Reference-only: While Bloodied, immune to Lightning and Thunder. Saves against your spells dealing either type have Disadvantage.",
-      "text": "Reference-only: While Bloodied, immune to Lightning and Thunder. Saves against your spells dealing either type have Disadvantage.",
-      "implemented": "text"
+      "id": "storm_fury",
+      "name": "Eye of the Storm",
+      "summary": "While you're Bloodied, you're immune to Lightning and Thunder damage.",
+      "text": "While you're Bloodied, you have Immunity to Lightning and Thunder damage.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "immunity",
+          "value": "lightning",
+          "when": {
+            "bloodied": true
+          }
+        },
+        {
+          "stat": "immunity",
+          "value": "thunder",
+          "when": {
+            "bloodied": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "storm_wrath",
+      "name": "Storm's Wrath",
+      "summary": "Saving throws against your spells that deal Lightning or Thunder damage have Disadvantage.",
+      "text": "Creatures have Disadvantage on saving throws against your spells that deal Lightning or Thunder damage.",
+      "implemented": "engine"
     }
   ],
   "prerequisites": {
@@ -48,5 +71,5 @@
     "points": 1,
     "max": 30
   },
-  "playable": false
+  "playable": true
 }
