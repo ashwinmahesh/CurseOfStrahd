@@ -35,6 +35,7 @@ var _list_box: VBoxContainer       ## the saves, when they're showing
 var _note: Label                   ## "Saved." under the buttons
 var _on_settings := false
 var _settings_page := "Game"
+var _confirm: Button                ## "Leave Honour for ...", while that switch waits for its second click
 static var _serif: Font
 
 
@@ -170,6 +171,7 @@ func _clear() -> void:
 	_buttons.clear()
 	_list_box = null
 	_note = null
+	_confirm = null
 
 
 func _place(c: Control) -> Control:
@@ -243,8 +245,8 @@ func _show_menu() -> void:
 	_buttons[0].grab_focus.call_deferred()
 
 
-## Settings (docs/plans/ui_polish.md), three pages under the title: Game (how fights and the Narrator play, turn-based
-## exploring, the respec option), Display (the look, graphics, the window, depth blur, the interface and text sizes) and Keys (KeysPage).
+## Settings (docs/plans/ui_polish.md), three pages under the title: Game (the difficulty, how fights and the Narrator
+## play, turn-based exploring, the respec option), Display (the look, graphics, the window, depth blur, the interface and text sizes) and Keys (KeysPage).
 ## Each row is a choice the player steps through with a click; kept in user://settings.cfg.
 const SETTINGS_PAGES: Array[String] = ["Game", "Display", "Keys"]
 ## Concept y of the first row and the pitch between rows.
@@ -309,9 +311,12 @@ func _page_tabs(page: String) -> void:
 			_place(mark)
 
 
-## Game: how fights and the Narrator play, turn-based exploring, and the playthrough's respec option.
+## Game: the playthrough's difficulty, how fights and the Narrator play, turn-based exploring, and the respec option.
 func _game_rows() -> void:
 	var y := ROW_Y
+	if st != null:
+		_difficulty_row(y)
+		y += ROW_PITCH
 	_choice_row(y, "Fights", ["Normal", "Fast"], 1 if GameSettings.fast_combat() else 0, func(i: int) -> void:
 		GameSettings.set_fast_combat(i == 1), "Fast plays moves and the pauses between turns at twice the speed.")
 	y += ROW_PITCH
@@ -338,6 +343,58 @@ func _game_rows() -> void:
 	_place(respec)
 	respec.reset_size()
 	respec.position = Vector2((_u(W_U, 0).x - respec.size.x) / 2.0, _u(0, y).y - respec.size.y / 2.0)
+
+
+## The playthrough's difficulty (F1, combat/difficulty.gd, kept in its options): Story, Balanced and Tactician switch
+## any time; Honour is only chosen for a new game, so it's listed only while it's the mode, and leaving it, which is for
+## good, waits for a second click on the link that appears.
+func _difficulty_row(y: float) -> void:
+	var now := Difficulty.of_options(st.options).id
+	var ids: Array[String] = []
+	var names: Array[String] = []
+	var tip: Array[String] = []
+	for id in Difficulty.IDS:
+		var d := Difficulty.named(id)
+		if id == now or Difficulty.can_switch(now, id):
+			ids.append(id)
+			names.append(d.name)
+		if d.switchable:
+			tip.append("%s: %s" % [d.name, d.summary])
+	tip.append("Honour (one life, one save) is chosen when a new game begins.")
+	_choice_row(y, "Difficulty", names, ids.find(now), func(i: int) -> void: _pick_difficulty(ids[i]), "\n".join(tip))
+
+
+## A difficulty picked on the row: at once, unless it leaves Honour, which asks first.
+func _pick_difficulty(to: String) -> void:
+	var from := Difficulty.of_options(st.options).id
+	if _confirm != null and is_instance_valid(_confirm):
+		_items.erase(_confirm)
+		_frame.remove_child(_confirm)
+		_confirm.queue_free()
+	_confirm = null
+	if to == from:
+		_note.text = ""
+		return
+	var warning := Difficulty.switch_warning(from, to)
+	if warning == "":
+		_set_difficulty(to)
+		return
+	_note.text = warning
+	_confirm = _link("Leave Honour for %s" % Difficulty.named(to).name, func() -> void:
+		_set_difficulty(to)
+		_show_settings("Game")   # Honour is no longer offered
+		_note.text = "Now %s. Enemies change from the next fight." % Difficulty.named(to).name)
+	_confirm.name = "LeaveHonour"
+	_confirm.position = Vector2((_u(W_U, 0).x - _confirm.size.x) / 2.0, _u(0, 336).y - _confirm.size.y / 2.0)
+
+
+## The playthrough's mode: kept in its options, and the party's bonus (Story's +2) put on or taken off at once.
+func _set_difficulty(to: String) -> void:
+	st.options["difficulty"] = to
+	var d := Difficulty.named(to)
+	for ch in st.roster():
+		d.fit_party(ch)
+	_note.text = "%s: %s. Enemies change from the next fight." % [d.name, d.tagline.to_lower()]
 
 
 ## Display: the world's look and how hard the renderer works, the window, depth blur, and the interface and text sizes.

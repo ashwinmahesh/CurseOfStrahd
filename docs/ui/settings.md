@@ -9,9 +9,13 @@ Three pages in the pause menu's arch, picked by the names under the title:
 
 | Page | Rows |
 |---|---|
-| Game | Fights (Normal, Fast), Narration (Fades, Stays), the respec box |
+| Game | Difficulty (Story, Balanced, Tactician; lane 22's `Difficulty`), Fights (Normal, Fast), Narration (Fades, Stays), Exploring (Real time, Turn-based; lane 25's F7), the respec box |
 | Display | Look (Modern, Classic), Graphics (Low, Medium, High: lane 6's `Graphics` presets), Window, Depth blur, Interface (85% to 120%), Text (Normal, Large, Larger) |
 | Keys | every command's key and alternate (`KeysPage`) |
+
+Difficulty lives in the playthrough's options, not the settings file. Honour is only listed while it's the mode (it's
+chosen for a new game); leaving it shows its warning and waits for the "Leave Honour" link. A switch puts the party's
+bonus on or off at once (`Difficulty.fit_party`); enemies change from the next fight.
 
 A row is `_choice_row(y, label, options, current, on_change, tip)` at `ROW_Y + n * ROW_PITCH`; a click steps to
 the next choice, a click on the left arrow steps back. A new row goes on the page it belongs to (`_game_rows` or
@@ -22,7 +26,7 @@ user://settings.cfg through `GameSettings`, never in a save (the respec box is t
 
 - `InputActions.BINDINGS` holds every action's default keys (the first is the key, the second its alternate);
   `COMMANDS` lists the ones the player can change, each in a list: "both" (walking, the camera, Tab), "explore" or
-  "fight". The player's keys are stored only where they differ ("keys" in the settings file) and put in the InputMap
+  "fight" (turn-based exploring's T and Space, and U10's L, are exploring keys). The player's keys are stored only where they differ ("keys" in the settings file) and put in the InputMap
   by `InputActions.apply()`; `ensure()` does it once a run.
 - Two commands of one list can't share a key; "both" commands clash with every list. `bind()` swaps: the command that
   had the key takes the old one, and the page's note says what moved. Escape (menus, back) and F1 (the controls

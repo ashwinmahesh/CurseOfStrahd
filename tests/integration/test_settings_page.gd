@@ -24,6 +24,7 @@ func after_each() -> void:
 	GameSettings.set_text_scale(1.0)
 	Graphics.set_preset(Graphics.DEFAULT_PRESET)
 	InputActions.reset()
+	GameState.story.options.erase("difficulty")
 	Look.set_style(Look.DEFAULT_STYLE)
 	arena.queue_free()
 
@@ -162,3 +163,32 @@ func test_a_new_key_on_the_keys_page() -> void:
 	assert_true(note.text.contains("Character"), "the note says what moved: %s" % note.text)
 	(menu.find_child("PageKeys", true, false) as Button).pressed.emit()
 	await _frames(1)
+
+
+func test_the_difficulty_switches_and_honour_asks_first() -> void:
+	var st := GameState.story
+	st.party.append(Pregens.build("godrick_pendlebrook", 3))
+	var menu := await _menu()
+	assert_true(_choice(menu, "Difficulty").text.contains("Balanced"), "no mode set reads Balanced")
+	_choice(menu, "Difficulty").pressed.emit()   # Balanced steps to Tactician
+	assert_eq(str(st.options.get("difficulty", "")), "tactician")
+	_choice(menu, "Difficulty").pressed.emit()   # and round to Story
+	assert_eq(str(st.options.get("difficulty", "")), "story")
+	assert_true(st.party[0].effects.any(func(fx: Effect) -> bool: return fx.source_id == "difficulty"),
+		"Story's +2 is on the party at once")
+	_choice(menu, "Difficulty").pressed.emit()   # Balanced
+	assert_false(st.party[0].effects.any(func(fx: Effect) -> bool: return fx.source_id == "difficulty"), "and off again")
+	assert_false(_choice(menu, "Difficulty").text.contains("Honour"), "Honour isn't offered mid-game")
+	# An Honour run: it's listed while it's the mode, and leaving it waits for the link.
+	st.options["difficulty"] = "honour"
+	menu.call("_show_settings", "Game")
+	await _frames(1)
+	_choice(menu, "Difficulty").pressed.emit()
+	assert_eq(str(st.options["difficulty"]), "honour", "not left yet")
+	var leave := menu.find_child("LeaveHonour", true, false) as Button
+	assert_true(leave != null and (menu.get("_note") as Label).text.contains("for good"), "the warning and the way to confirm")
+	leave.pressed.emit()
+	await _frames(1)
+	assert_ne(str(st.options["difficulty"]), "honour", "left for good")
+	assert_false(_choice(menu, "Difficulty").text.contains("Honour"))
+	st.party.clear()
