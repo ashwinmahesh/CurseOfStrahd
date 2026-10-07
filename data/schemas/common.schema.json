@@ -243,7 +243,8 @@
             "concentration_save_bonus",
             "after_cast_speed",
             "weapon_ability",
-            "resource_restore"
+            "resource_restore",
+            "ritual_duration"
           ]
         },
         "value": {
@@ -540,6 +541,17 @@
           "minimum": 1,
           "maximum": 20,
           "description": "Character level at which this feature starts (species traits that arrive at level 3 or 5)."
+        },
+        "policy": {
+          "enum": [
+            "auto",
+            "never"
+          ],
+          "description": "The feature acts on its own; the class tab offers Automatic and Off, starting at this value."
+        },
+        "policy_cost": {
+          "type": "string",
+          "description": "What acting costs, for the class tab's Automatic/Off entries."
         },
         "activation": {
           "type": "object",
@@ -992,10 +1004,7 @@
           "required": [
             "resource",
             "cost",
-            "casting",
-            "school",
-            "subclass_spells",
-            "omit_material"
+            "casting"
           ],
           "properties": {
             "resource": {
@@ -1006,7 +1015,14 @@
               "minimum": 1
             },
             "casting": {
-              "const": "action"
+              "enum": [
+                "action",
+                "bonus_action"
+              ]
+            },
+            "spell": {
+              "$ref": "#/$defs/id",
+              "description": "One named spell the feature casts (instead of any prepared spell of a school)."
             },
             "school": {
               "type": "string"
@@ -1016,6 +1032,22 @@
             },
             "omit_material": {
               "const": true
+            }
+          }
+        },
+        "damage_response": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reduction_per_slot"
+          ],
+          "properties": {
+            "requires_flag": {
+              "type": "string"
+            },
+            "reduction_per_slot": {
+              "type": "integer",
+              "minimum": 1
             }
           }
         }

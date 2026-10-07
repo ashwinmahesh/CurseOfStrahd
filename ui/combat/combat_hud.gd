@@ -1112,16 +1112,20 @@ func show_prompt(req: ReactionRequest) -> void:
 		_prompt_targets.remove_child(child)
 		child.queue_free()
 	_prompt_targets.get_parent().visible = not req.target_choices.is_empty()
+	var group := ButtonGroup.new() if req.max_targets == 1 else null
+	_prompt_use.disabled = req.selection_error() != ""
 	for choice in req.target_choices:
 		var target_id := str(choice["id"])
 		var check := CheckButton.new()
 		check.text = str(choice["label"])
+		check.button_group = group
 		check.button_pressed = target_id in req.selected_ids
 		check.toggled.connect(func(on: bool) -> void:
 			if on and not target_id in req.selected_ids:
 				req.selected_ids.append(target_id)
 			elif not on:
-				req.selected_ids.erase(target_id))
+				req.selected_ids.erase(target_id)
+			_prompt_use.disabled = req.selection_error() != "")
 		_prompt_targets.add_child(check)
 	_prompt_rule.select(0)
 	_prompt.visible = true
@@ -1136,7 +1140,7 @@ func prompt_open() -> bool:
 
 
 func answer_prompt(use: bool) -> void:
-	if not _prompt.visible:
+	if not _prompt.visible or (use and _prompt_use.disabled):
 		return
 	_prompt.visible = false
 	var rule := ["ask", "auto", "never"][_prompt_rule.selected] as String

@@ -39,9 +39,16 @@
       "id": "arcane_overload_benefit",
       "name": "Power Surge",
       "summary": "When an Evocation spell you cast deals damage, add Proficiency Bonus to one of its damage rolls. Once per Long Rest.",
-      "text": "When an Evocation spell you cast deals damage, add Proficiency Bonus to one of its damage rolls. Once per Long Rest.",
-      "implemented": "text"
+      "text": "Once per Long Rest, when an Evocation spell you cast deals damage, add your Proficiency Bonus to one of its damage rolls. In a fight, arm Arcane Overload on the hotbar, then cast the spell that turn.",
+      "implemented": "engine",
+      "action": "free",
+      "resource": {
+        "id": "arcane_overload",
+        "name": "Arcane Overload",
+        "max": 1,
+        "recharge": "long"
+      }
     }
   ],
-  "playable": false
+  "playable": true
 }

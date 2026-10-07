@@ -103,6 +103,8 @@ const FAERUN := {
 	"iron_body": {"caster": "Silvain", "targets": [[1, 0]], "ally": "Godrick", "cast": "iron_body"},
 	"summon_dinosaur": {"caster": "Silvain", "targets": [[2, 0]], "ally": "Godrick", "cast": "summon_dinosaur", "summoned": true},
 	"fortifying_soul": {"caster": "Hedda", "targets": [[1, 0]], "ally": "Godrick", "ability": "feature:fortifying_soul"},
+	"dragons_terror": {"caster": "Godrick", "targets": [[3, 0]], "ability": "feature:dragons_terror"},
+	"portal_step": {"caster": "Kip", "targets": [[3, 0]], "ability": "feature:portal_step", "self": true},
 }
 
 var root: Node

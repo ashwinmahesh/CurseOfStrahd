@@ -7,7 +7,7 @@
     "checked_against": "FRHoF",
     "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/character-options. "
   },
-  "summary": "An elven tradition joins wizardry, swordplay, and dance. Some features are reference-only; see each feature’s implementation status.",
+  "summary": "An elven tradition joins wizardry, swordplay, and dance.",
   "features": [
     {
       "level": 3,
@@ -168,8 +168,8 @@
         "id": "bladesinger_weapon_focus",
         "name": "Weapon Focus",
         "summary": "A proficient Melee weapon may serve as your Wizard Spellcasting Focus.",
-        "text": "A proficient Melee weapon may serve as your Wizard Spellcasting Focus.",
-        "implemented": "text"
+        "text": "A Melee weapon you're proficient with can serve as your Spellcasting Focus for Wizard spells. The game already lets every caster reach a focus or component pouch with a weapon in hand, so nothing here stops you casting while armed.",
+        "implemented": "data"
       }
     },
     {
@@ -208,7 +208,11 @@
         "name": "Song of Defense",
         "summary": "Reaction when taking damage with Bladesong active: spend a spell slot to reduce the damage by five times its level.",
         "text": "Reaction when taking damage with Bladesong active: spend a spell slot to reduce the damage by five times its level.",
-        "implemented": "text"
+        "implemented": "data",
+        "damage_response": {
+          "requires_flag": "bladesong",
+          "reduction_per_slot": 5
+        }
       }
     },
     {
@@ -227,5 +231,5 @@
       }
     }
   ],
-  "playable": false
+  "playable": true
 }

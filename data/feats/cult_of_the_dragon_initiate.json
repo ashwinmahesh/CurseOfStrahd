@@ -8,21 +8,44 @@
   },
   "category": "origin",
   "repeatable": false,
-  "summary": "Learn Draconic, or another language from the PHB or Heroes of Faerûn if you already know Draconic. Language fallback is not automated. Magic action: a visible creature within 30 feet makes a Wisdom save (DC 8 + Wisdom modifier + Proficiency Bonus). Failure: Frightened until your next turn ends. After succeeding or the effect ending, it is immune for 24 hours. When you make a creature Frightened of you, gain Heroic Inspiration if you lack it. Once per Short or Long Rest.",
+  "summary": "Learn Draconic, or another language if you already know it. Magic action: a visible creature within 30 feet makes a Wisdom save (DC 8 + Wisdom modifier + Proficiency Bonus) or is Frightened of you until your next turn ends; afterwards it's immune for 24 hours. When you make a creature Frightened of you, gain Heroic Inspiration if you lack it, once per Short or Long Rest.",
   "benefits": [
     {
       "id": "dragons_tongue",
       "name": "Dragon’s Tongue",
-      "summary": "Learn Draconic, or another language from the PHB or Heroes of Faerûn if you already know Draconic. Language fallback is not automated.",
-      "text": "Learn Draconic, or another language from the PHB or Heroes of Faerûn if you already know Draconic. Language fallback is not automated.",
-      "implemented": "text"
+      "summary": "Learn Draconic, or another language if you already know it.",
+      "text": "You learn Draconic. If you already know it, you learn another language of your choice instead.",
+      "implemented": "data",
+      "choice": {
+        "id": "language",
+        "kind": "language",
+        "count": 1,
+        "from": [
+          "draconic",
+          "common_sign_language",
+          "dwarvish",
+          "elvish",
+          "giant",
+          "gnomish",
+          "goblin",
+          "halfling",
+          "orc",
+          "abyssal",
+          "celestial",
+          "deep_speech",
+          "infernal",
+          "primordial",
+          "sylvan",
+          "undercommon"
+        ]
+      }
     },
     {
       "id": "dragons_terror",
       "name": "Dragon’s Terror",
       "summary": "Magic action: a visible creature within 30 feet makes a Wisdom save (DC 8 + Wisdom modifier + Proficiency Bonus). Failure: Frightened until your next turn ends. After succeeding or the effect ending, it is immune for 24 hours.",
       "text": "Magic action: a visible creature within 30 feet makes a Wisdom save (DC 8 + Wisdom modifier + Proficiency Bonus). Failure: Frightened until your next turn ends. After succeeding or the effect ending, it is immune for 24 hours.",
-      "implemented": "text",
+      "implemented": "engine",
       "action": "action"
     },
     {
@@ -30,8 +53,15 @@
       "name": "Inspired by Fear",
       "summary": "When you make a creature Frightened of you, gain Heroic Inspiration if you lack it. Once per Short or Long Rest.",
       "text": "When you make a creature Frightened of you, gain Heroic Inspiration if you lack it. Once per Short or Long Rest.",
-      "implemented": "text"
+      "implemented": "engine",
+      "action": "free",
+      "resource": {
+        "id": "inspired_by_fear",
+        "name": "Inspired by Fear",
+        "max": 1,
+        "recharge": "short"
+      }
     }
   ],
-  "playable": false
+  "playable": true
 }

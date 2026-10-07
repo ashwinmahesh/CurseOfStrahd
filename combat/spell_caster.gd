@@ -748,6 +748,9 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		c.magic_action_used = true
 	if not casting_gate(c):
 		return CombatResult.new()
+	# A cantrip cast through a feature's uses (Spellfire Spark's Bonus Action Sacred Flame) still spends one.
+	if level == 0 and not resource_recipe.is_empty():
+		ch.spend_resource(str(resource_recipe["resource"]), int(resource_recipe["cost"]))
 	if level > 0:
 		if "psionic_sorcery" in meta:
 			ch.spend_resource("sorcery_points", level)
@@ -853,6 +856,7 @@ func _after_cast_features(ctx: Dictionary, free: bool) -> void:
 		enc().class_features.after_cast(c, s, slot)
 		enc().feature_recipes.after_cast(c, s, slot)
 	enc().ravenloft.after_cast(c, s, slot)
+	enc().faerun.after_cast(c, s, slot)
 	enc().triggered_features.after_cast(ctx)
 	if str(s["id"]) == "hunters_mark" and CombatFeatures.has_feature(c, "hunters_rime"):
 		var amount := enc().dice.roll_one(10, "Hunter’s Rime") + caster_char(c).class_level_of("ranger")
@@ -1382,6 +1386,7 @@ func _roll_spell_damage(ctx: Dictionary, t: Combatant, critical: bool) -> Dictio
 	var bonus := _damage_bonus(ctx)
 	var total := int(rolled["total"]) + bonus.total()
 	total += enc().ravenloft.spell_damage_bonus(ctx, bonus)
+	total += enc().faerun.spell_damage_bonus(ctx, bonus)
 	# Elemental Affinity (Draconic 6), Radiant Soul (Celestial 6): Charisma to one damage roll of the type.
 	var cc := ctx["c"] as Combatant
 	var dty := _damage_type_safe(ctx)

@@ -14,17 +14,19 @@
       "id": "stand_as_one",
       "name": "Stand as One",
       "summary": "Reaction: prevent an ally within 5 feet from being pushed or pulled, provided it is not Incapacitated.",
-      "text": "Reaction: prevent an ally within 5 feet from being pushed or pulled, provided it is not Incapacitated.",
-      "implemented": "text",
-      "action": "reaction"
+      "text": "Reaction: prevent an ally within 5 feet from being pushed or pulled, provided it is not Incapacitated. In a fight it happens on its own while you have your Reaction, unless you turn it Off in the class tab.",
+      "implemented": "engine",
+      "action": "reaction",
+      "policy": "auto",
+      "policy_cost": "Your Reaction"
     },
     {
       "id": "gauntlet_vigilant",
       "name": "Vigilant",
       "summary": "Taking Ready gives Disadvantage to the next attack against you before your next turn starts.",
       "text": "Taking Ready gives Disadvantage to the next attack against you before your next turn starts.",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ],
-  "playable": false
+  "playable": true
 }

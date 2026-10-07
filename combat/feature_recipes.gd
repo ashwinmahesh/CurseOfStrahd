@@ -48,6 +48,7 @@ func list(c: Combatant, out: Array[Dictionary]) -> void:
 	if not c.creature is Character:
 		return
 	enc().reactions.list_policies(c, out)
+	enc().damage_responses.list(c, out)
 	for option in enc().triggered_features.sequence_attack_options(c):
 		var rule := c.get_meta("sequence_attacks") as Dictionary
 		var profile := option["profile"] as WeaponProfile

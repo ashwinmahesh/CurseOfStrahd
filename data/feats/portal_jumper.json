@@ -38,8 +38,15 @@
       "name": "Portal Step",
       "summary": "Once per turn, spend 15 feet of movement to teleport to a visible empty space within 15 feet. Uses equal Proficiency Bonus per Long Rest.",
       "text": "Once per turn, spend 15 feet of movement to teleport to a visible empty space within 15 feet. Uses equal Proficiency Bonus per Long Rest.",
-      "implemented": "text"
+      "implemented": "engine",
+      "action": "free",
+      "resource": {
+        "id": "portal_step",
+        "name": "Portal Step",
+        "max": "pb",
+        "recharge": "long"
+      }
     }
   ],
-  "playable": false
+  "playable": true
 }

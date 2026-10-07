@@ -58,6 +58,8 @@ var events: Array[Dictionary] = []
 ## after(creature, test, keys) changes the finished test in place.
 var d20_before: Callable = Callable()
 var d20_after: Callable = Callable()
+## Told of every effect that lands (creature, effect): the encounter's book hooks (Inspired by Fear).
+var effect_added: Callable = Callable()
 
 
 func _init() -> void:
@@ -574,11 +576,8 @@ func take_damage(amount: int, damage_type: StringName, critical: bool = false, d
 
 ## One instance of damage made of several types (a Ghoul's Bite: Piercing plus Necrotic). Each type meets
 ## the target's defenses on its own; the total is lost at once and forces one Concentration save.
-func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = null,
-		source: String = "") -> DamageResult:
+func preview_damage_parts(parts: Array) -> DamageResult:
 	var r := DamageResult.new()
-	r.critical = critical
-	r.source = source
 	if dead:
 		return r
 	var dmg := 0
@@ -612,6 +611,17 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 			r.notes.append("Vulnerability to %s: %s" % [damage_type, vul])
 		dmg += amount
 	r.final = dmg
+	return r
+
+
+func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = null,
+		source: String = "") -> DamageResult:
+	var r := preview_damage_parts(parts)
+	r.critical = critical
+	r.source = source
+	if dead:
+		return r
+	var dmg := r.final
 	if dmg <= 0:
 		_log_damage(r)
 		return r
@@ -922,6 +932,8 @@ func add_effect(e: Effect) -> bool:
 	effects.append(e)
 	log_event({"type": "effect_added", "creature": id, "effect": e.name})
 	_after_conditions_changed()
+	if effect_added.is_valid():
+		effect_added.call(self, e)
 	return true
 
 

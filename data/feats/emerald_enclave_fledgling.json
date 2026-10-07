@@ -8,7 +8,7 @@
   },
   "category": "origin",
   "repeatable": false,
-  "summary": "Always prepared: Speak with Animals; choose Intelligence, Wisdom, or Charisma for casting. Speak with Animals lasts 8 hours when you cast it as a Ritual; this extended duration is not automated. As part of Help, exchange places with a willing, non-Incapacitated ally within 5 feet, without provoking Opportunity Attacks.",
+  "summary": "Always prepared: Speak with Animals; choose Intelligence, Wisdom, or Charisma for casting. As a Ritual it lasts 8 hours. As part of Help, trade places with a willing, non-Incapacitated ally within 5 feet without provoking Opportunity Attacks.",
   "benefits": [
     {
       "id": "enclave_speak_with_animals",
@@ -38,17 +38,25 @@
     {
       "id": "enclave_ritual_duration",
       "name": "Extended Animal Conversation",
-      "summary": "Speak with Animals lasts 8 hours when you cast it as a Ritual; this extended duration is not automated.",
-      "text": "Speak with Animals lasts 8 hours when you cast it as a Ritual; this extended duration is not automated.",
-      "implemented": "text"
+      "summary": "Speak with Animals cast as a Ritual lasts 8 hours.",
+      "text": "When you cast Speak with Animals as a Ritual, it lasts 8 hours.",
+      "implemented": "data",
+      "modifiers": [
+        {
+          "stat": "ritual_duration",
+          "spell_id": "speak_with_animals",
+          "value": 480
+        }
+      ]
     },
     {
       "id": "enclave_tag_team",
       "name": "Tag Team",
       "summary": "As part of Help, exchange places with a willing, non-Incapacitated ally within 5 feet, without provoking Opportunity Attacks.",
       "text": "As part of Help, exchange places with a willing, non-Incapacitated ally within 5 feet, without provoking Opportunity Attacks.",
-      "implemented": "text"
+      "implemented": "engine",
+      "action": "free"
     }
   ],
-  "playable": false
+  "playable": true
 }

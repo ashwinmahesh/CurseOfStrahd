@@ -685,9 +685,13 @@ func _walk_feature(f: Dictionary, key: String, src: Dictionary, scope: Dictionar
 		"text": str(f.get("text", "")), "source": src["label"], "source_kind": src["kind"],
 		"class_id": src["class_id"], "level": src["level"], "action": str(f.get("action", "passive")),
 		"implemented": str(f.get("implemented", "data")), "key": key})
-	for recipe_key: String in ["activation", "roll_response", "summon_effect", "hit_response", "cast_level_boost", "cast_form", "attack_cantrip", "after_cast_attack", "slot_exchange", "on_feature_target", "spell_sequence", "resource_cast"]:
+	for recipe_key: String in ["activation", "roll_response", "summon_effect", "hit_response", "cast_level_boost", "cast_form", "attack_cantrip", "after_cast_attack", "slot_exchange", "on_feature_target", "spell_sequence", "resource_cast", "damage_response"]:
 		if f.has(recipe_key):
 			features[-1][recipe_key] = (f[recipe_key] as Dictionary).duplicate(true)
+	# A benefit that acts on its own unless turned Off (Reactions.configurable_policies).
+	for policy_key: String in ["policy", "policy_cost"]:
+		if f.has(policy_key):
+			features[-1][policy_key] = str(f[policy_key])
 	if f.has("choice"):
 		var c := f["choice"] as Dictionary
 		var picks := _register_choice(c, key, src, str(c.get("label", f.get("name", ""))), scope)
@@ -2143,7 +2147,13 @@ func resource_casts(spell_id: String) -> Array[Dictionary]:
 		return out
 	for feature in features:
 		var rule := feature.get("resource_cast", {}) as Dictionary
-		if rule.is_empty() or str(spell.get("school", "")) != str(rule["school"]):
+		if rule.is_empty():
+			continue
+		# One named spell (Spellfire Spark's Sacred Flame), or any prepared spell of a school (Mind Magic).
+		if rule.has("spell"):
+			if str(rule["spell"]) != spell_id:
+				continue
+		elif str(spell.get("school", "")) != str(rule.get("school", "")):
 			continue
 		var cid := str(feature["class_id"])
 		var sub := compendium.subclass_data(str(subclasses.get(cid, "")))
@@ -2154,7 +2164,7 @@ func resource_casts(spell_id: String) -> Array[Dictionary]:
 		if bool(rule.get("subclass_spells", false)) and not on_table:
 			continue
 		for known in known_spells():
-			if str(known["id"]) == spell_id and str(known["class_id"]) == cid and str(known["kind"]) in ["prepared", "always"]:
+			if str(known["id"]) == spell_id and str(known["class_id"]) == cid and str(known["kind"]) in ["prepared", "always", "granted"]:
 				var option := feature.duplicate(true)
 				option["ability"] = str(known["ability"])
 				out.append(option)

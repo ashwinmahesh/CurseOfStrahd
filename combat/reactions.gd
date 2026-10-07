@@ -46,9 +46,18 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 		req.text = str(o["text"])
 		req.cost = str(o.get("cost", "Reaction"))
 		req.spends_reaction = bool(o.get("spends_reaction", true))
+		req.target_choices.assign(o.get("target_choices", []))
+		req.selected_ids.assign(o.get("selected_ids", []))
+		req.min_targets = int(o.get("min_targets", 0))
+		req.max_targets = int(o.get("max_targets", 0))
+		req.validate_selected = o.get("validate_selected", Callable())
+		var request_ref: WeakRef = weakref(req)
 		var rest := chain.duplicate()
 		req.continuation = func(use: bool) -> CombatResult:
 			if use:
+				if o.has("select"):
+					var request := request_ref.get_ref() as ReactionRequest
+					(o["select"] as Callable).call(request.selected_ids)
 				(o["use"] as Callable).call()
 				if o.has("stop") and (not o.has("stop_if") or (o["stop_if"] as Callable).call()):
 					return (o["stop"] as Callable).call() as CombatResult
@@ -382,6 +391,14 @@ func against_damage(st: Dictionary, parts: Dictionary, notes: Array[String]) -> 
 					var soak := mini(pw.creature.ward_hp, int(total.call()))
 					pw.creature.ward_hp -= soak
 					cut.call(soak, "Projected Ward (%s)" % pw.name())})
+	var responded: Array = []
+	var incoming := func() -> int:
+		var packet: Array = []
+		for type: String in parts:
+			packet.append({"amount": int(parts[type]), "type": type})
+		return int(total.call()) if target.creature.preview_damage_parts(packet).final > 0 else 0
+	out.append_array(e.damage_responses.offers(target, incoming, cut, responded))
+	st["damage_responses"] = responded
 	# Psi Warrior protecting itself.
 	if target.creature is Character:
 		var tc := target.creature as Character
@@ -411,6 +428,12 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 		seen[str(spell["id"])] = true
 		out.append({"id": str(spell["id"]), "name": str(spell["name"]), "cost": "Reaction and a spell slot"})
 	for f in (c.creature as Character).features:
+		# A feature that acts on its own (Rallying Cry, Family First, Stand as One): Automatic or Off.
+		if f.has("policy") and not seen.has(str(f["id"])):
+			seen[str(f["id"])] = true
+			out.append({"id": str(f["id"]), "name": str(f["name"]), "cost": str(f.get("policy_cost", "Uses the feature")),
+				"modes": ["auto", "never"], "default": str(f["policy"])})
+			continue
 		var response := f.get("roll_response", {}) as Dictionary
 		if not f.has("hit_response") and (response.is_empty() or str(response.get("cost", "free")) != "reaction"):
 			continue
@@ -422,16 +445,18 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 
 func list_policies(c: Combatant, out: Array[Dictionary]) -> void:
 	for policy in configurable_policies(c):
-		for mode: String in ["ask", "auto", "never"]:
+		var current := str(c.reaction_rules.get(str(policy["id"]), policy["default"])) if policy.has("default") else enc()._reaction_decision(c, str(policy["id"]))
+		for mode: String in policy.get("modes", ["ask", "auto", "never"]):
 			out.append({"id": "feat:reaction_policy:%s:%s" % [policy["id"], mode],
 				"label": "%s: %s" % [policy["name"], {"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]],
-				"sub": str({"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]) + (" · selected" if enc()._reaction_decision(c, str(policy["id"])) == mode else ""),
+				"sub": str({"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]) + (" · selected" if current == mode else ""),
 				"cost": "free", "why": enc()._turn_check(c), "targeting": "none", "range": 0,
-				"help": "%s. Automatic permits spending whenever eligible. Ask prompts where supported; synchronous rolls/spell hits do not spend until you choose Automatic. Off never spends." % policy["cost"]})
+				"help": ("%s. Automatic: it happens whenever it can. Off: never." % policy["cost"]) if policy.has("default") else \
+					("%s. Automatic permits spending whenever eligible. Ask prompts where supported; synchronous rolls/spell hits do not spend until you choose Automatic. Off never spends." % policy["cost"])})
 
 func set_policy(c: Combatant, id: String, mode: String) -> CombatResult:
 	if enc()._turn_check(c) != "" or not mode in ["ask", "auto", "never"] \
-			or not configurable_policies(c).any(func(p: Dictionary) -> bool: return str(p["id"]) == id):
+			or not configurable_policies(c).any(func(p: Dictionary) -> bool: return str(p["id"]) == id and mode in p.get("modes", ["ask", "auto", "never"])):
 		return CombatResult.fail("Not an available reaction preference")
 	c.reaction_rules[id] = mode
 	return CombatResult.new()

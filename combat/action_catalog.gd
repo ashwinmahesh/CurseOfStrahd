@@ -398,7 +398,7 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 			var cast_entry := e.spells.resource_cast_entry(c, data, str(feature["id"]))
 			paid["id"] = str(a["id"]) + ":" + str(feature["id"])
 			paid["label"] = str(feature["name"]) + " · " + str(a["label"])
-			paid["cost"] = "action"
+			paid["cost"] = "bonus" if str((feature["resource_cast"] as Dictionary).get("casting", "action")) == "bonus_action" else "action"
 			paid["reason"] = str(cast_entry["reason"])
 			paid["legal"] = bool(cast_entry["legal"])
 			paid["opts"] = (a.get("opts", {}) as Dictionary).duplicate()
@@ -850,7 +850,7 @@ static func ability_key(action: Dictionary) -> String:
 	var id := str(action.get("id", ""))
 	if str(action.get("kind", "")) == "feat":
 		var key := id.substr(5)
-		for pre: String in ["cf:", "rh:"]:
+		for pre: String in ["cf:", "rh:", "fr:"]:
 			if key.begins_with(pre):
 				key = key.substr(pre.length())
 		# A data-defined activation (FeatureRecipes) shows as its feature; ending one shows nothing.

@@ -39,9 +39,16 @@
       "id": "arcane_artist_benefit",
       "name": "Inspiring Magic",
       "summary": "After casting an Illusion spell, grant Heroic Inspiration to one ally within 30 feet who can see you. Once per Long Rest.",
-      "text": "After casting an Illusion spell, grant Heroic Inspiration to one ally within 30 feet who can see you. Once per Long Rest.",
-      "implemented": "text"
+      "text": "After you cast an Illusion spell, you can give Heroic Inspiration to one ally within 30 feet who can see you (in a fight: Arcane Artist on the hotbar for the rest of that turn). Once per Long Rest.",
+      "implemented": "engine",
+      "action": "free",
+      "resource": {
+        "id": "arcane_artist",
+        "name": "Arcane Artist",
+        "max": 1,
+        "recharge": "long"
+      }
     }
   ],
-  "playable": false
+  "playable": true
 }

@@ -83,6 +83,7 @@ func list(c: Combatant) -> Array[Dictionary]:
 		return out
 	e.class_features.list(c, out, aw, bw)
 	e.ravenloft.list(c, out, aw, bw)
+	e.faerun.list(c, out, aw, bw)
 	e.feature_recipes.list(c, out)
 	# Battle Master: Bonus Action maneuvers and Commander's Strike.
 	var die := f().superiority_die(c)
@@ -327,6 +328,8 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 		return CombatResult.fail(str(entry["why"]))
 	if id.begins_with("reaction_policy:"):
 		return e.reactions.set_policy(c, id.get_slice(":", 1), id.get_slice(":", 2))
+	if id.begins_with("damage_policy:"):
+		return e.damage_responses.set_policy(c, id.get_slice(":", 1), id.get_slice(":", 2))
 	var ch := _ch(c)
 	var cell := Vector2i(floori(point.x), floori(point.y)) if point != Vector2.INF else Vector2i(-1, -1)
 	var r := CombatResult.new()
@@ -359,6 +362,8 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 			return e.class_features.perform(c, id.substr(3) + ((":" + choice) if choice != "" else ""), t, cell, point)
 		"rh":
 			return e.ravenloft.perform(c, id.substr(3), t, cell, point)
+		"fr":
+			return e.faerun.perform(c, id.substr(3), t, cell, point)
 		"fast_hands_kit":
 			var keep := c.action_available
 			c.action_available = true
@@ -1063,3 +1068,4 @@ func adjust_incoming(source: Combatant, target: Combatant, parts: Array) -> void
 					part["ignore_resistance"] = true
 					part["ignore_source"] = m.source_name
 	enc().ravenloft.adjust_incoming(source, target, parts)
+	enc().faerun.adjust_incoming(source, target, parts)
