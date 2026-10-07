@@ -490,3 +490,97 @@ func test_trophy_dispels_on_a_melee_spell_hit_and_bangle_and_playbill_help_study
 	e.items.specials.fr.after_d20(c, conc, ["save:all", "save:con", "concentration"] as Array[String])
 	assert_true(conc.success, "the bangle anchors the spell")
 	assert_false(c.reaction_available)
+
+
+func test_the_9d_artifacts_and_the_blocked_ones() -> void:
+	var ids := Compendium.shared().all_playable("magic_items").map(func(d: Dictionary) -> String: return str(d["id"]))
+	for id: String in ["calimemnon_crystal", "queen_ehlissas_marvelous_nightingale", "universal_pantograph"]:
+		assert_true(id in ids, "%s playable" % id)
+	assert_true("workshop_wrecker" in ids, "the Workshop Wrecker too")
+	for id: String in ["crown_of_horns", "orb_of_damara", "tome_of_the_dragon", "travelers_pearl", "windskiff",
+			"mechanical_wonder_gyrocopter", "mechanical_wonder_domestic", "mechanical_wonder_flying", "staff_of_the_lost"]:
+		assert_false(id in ids, "%s waits for its rules" % id)
+
+
+func test_calimemnon_crystal_rays_and_cold_aura() -> void:
+	var e := TestCombat.open_field()
+	var c := _wearing(e, "calimemnon_crystal")
+	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(3, 3), 5)
+	var foe := _talker(e, Vector2i(6, 2))
+	TestCombat.start_with(e, c)
+	assert_eq(c.creature.speed("fly").total(), 30, "Fly 30")
+	ally.creature.hp = 5
+	var hp := foe.creature.hp
+	var r := e.items.use(c, "calimemnon_crystal", "rays", [ally, ally, foe, foe, foe, foe])
+	assert_true(r.ok, r.reason)
+	assert_true(ally.creature.hp > 5, "rays mend an ally")
+	assert_true(foe.creature.hp < hp, "and burn a foe")
+	c.action_available = true
+	c.magic_action_used = false
+	var ra := e.items.use(c, "calimemnon_crystal", "cold_aura")
+	assert_true(ra.ok, ra.reason)
+	assert_true(e.spells.zones.object_of(c.id, "calimemnon_crystal__cold_aura") != null, "the cold aura is up")
+	c.action_available = true
+	c.magic_action_used = false
+	assert_true(e.items.use(c, "calimemnon_crystal", "end_aura").ok)
+	assert_true(e.spells.zones.object_of(c.id, "calimemnon_crystal__cold_aura") == null, "and down")
+	c.action_available = true
+	c.magic_action_used = false
+	var inv := e.items.use(c, "calimemnon_crystal", "invisibility", [ally])
+	assert_true(inv.ok, inv.reason)
+	assert_true(c.creature.has_condition(&"invisible") and not ally.creature.has_condition(&"invisible"), "Invisibility on yourself only")
+
+
+func test_nightingale_sings_its_spells() -> void:
+	var e := TestCombat.open_field()
+	var c := _wearing(e, "queen_ehlissas_marvelous_nightingale")
+	var ch := c.creature as Character
+	var foe := _talker(e, Vector2i(5, 2))
+	TestCombat.start_with(e, c)
+	assert_false(e.items.use(c, "queen_ehlissas_marvelous_nightingale", "slow", [foe]).ok, "not before it sings")
+	assert_true(e.items.use(c, "queen_ehlissas_marvelous_nightingale", "song").ok)
+	var start := ch.charges_left("queen_ehlissas_marvelous_nightingale")
+	var r := e.items.use(c, "queen_ehlissas_marvelous_nightingale", "slow", [foe], Vector2(5.5, 2.5))
+	assert_true(r.ok, r.reason)
+	assert_false(c.bonus_available, "a Bonus Action")
+	assert_eq(ch.charges_left("queen_ehlissas_marvelous_nightingale"), start - 2)
+
+
+func test_universal_pantograph_copies_an_ordinary_item() -> void:
+	var e := TestCombat.open_field()
+	var c := _wearing(e, "universal_pantograph")
+	var ch := c.creature as Character
+	ch.add_item("rope")
+	var before := 0
+	for x in ch.inventory:
+		if str(x["id"]) == "rope":
+			before += int(x["qty"])
+	var st := StoryState.new()
+	st.party.append(ch)
+	var opts := FieldItems.options(st.party, ch, "universal_pantograph", e.dice)
+	var dup := opts.filter(func(o: Dictionary) -> bool: return str(o["power_id"]) == "duplicate")
+	assert_true(not dup.is_empty() and "rope" in ((dup[0] as Dictionary)["choices"] as Array), "rope can be copied")
+	assert_false("universal_pantograph" in ((dup[0] as Dictionary)["choices"] as Array), "magic items can't")
+	assert_true(bool(FieldItems.use(st, ch, "universal_pantograph", "duplicate", null, e.dice, {"choice": "rope"})["ok"]))
+	var after := 0
+	for x in ch.inventory:
+		if str(x["id"]) == "rope":
+			after += int(x["qty"])
+	assert_eq(after, before + 1, "a copy")
+
+
+func test_workshop_wrecker_batters_a_small_room() -> void:
+	var rows: Array[String] = ["......", "......", "......"]
+	var e := TestCombat.encounter(rows, 3)
+	var c := _wearing(e, "workshop_wrecker", Vector2i(0, 0))
+	var foe := _talker(e, Vector2i(4, 2))
+	TestCombat.start_with(e, c)
+	var hp := foe.creature.hp
+	var r := e.items.use(c, "workshop_wrecker", "wreck")
+	assert_true(r.ok, r.reason)
+	assert_true(foe.creature.hp < hp, "a 30-ft room: 4d6 + 4 on a failed save")
+	assert_eq(c.creature.hp, c.creature.max_hp(), "not its user")
+	hp = foe.creature.hp
+	e.items.specials.fr.turn_start(c)
+	assert_true(foe.creature.hp < hp, "again at the start of its turn")
+	assert_true(e.items.use(c, "workshop_wrecker", "stop").ok)

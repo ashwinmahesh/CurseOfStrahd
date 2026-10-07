@@ -38,8 +38,9 @@ func has(c: Combatant, item_or_template: String) -> bool:
 
 ## "" if a custom power can be used now, else why not.
 func why(c: Combatant, p: Dictionary) -> String:
-	if str((p["power"] as Dictionary).get("custom", "")).begins_with("fr_"):
-		return fr.why(c, p)
+	var fw := fr.why(c, p)
+	if fw != "" or str((p["power"] as Dictionary).get("custom", "")).begins_with("fr_"):
+		return fw
 	var w := _weapon_why(c, p)
 	return w if w != "" else _arcana_why(c, p)
 
@@ -569,6 +570,7 @@ func surprise_filter(ids: Array) -> Array:
 ## The start of a creature's turn: summoned helpers whose time is up leave, Sword of Wounding's wounds bleed, a
 ## berserker attacks.
 func turn_start(c: Combatant) -> void:
+	fr.turn_start(c)
 	var e := enc()
 	for o in e.combatants:
 		if o.has_meta("vanish_round") and str(o.get_meta("summoner", "")) == c.id and int(o.get_meta("vanish_round")) <= e.round_no and o.is_alive():

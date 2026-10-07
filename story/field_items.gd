@@ -30,6 +30,9 @@ static func options(party: Array[Character], ch: Character, item_id: String, dic
 			targeting = "ally" if kind in ["creature", "ally"] else "self"
 		var o := {"power_id": str(power.get("id", "")), "label": str(power.get("name", "Use")), "legal": why == "", "reason": why,
 			"targeting": targeting, "spell_id": spell_id, "text": str(power.get("text", "")), "choices": (power.get("choice", {}) as Dictionary).get("from", [])}
+		# Universal Pantograph: what it could copy.
+		if str(power.get("custom", "")) == "fr_duplicate":
+			o["choices"] = FaerunItems.duplicable(ch)
 		if str(power.get("custom", "")) == "ring_store":
 			o["store"] = store_options(party, p)
 			if why == "" and (o["store"] as Array).is_empty():

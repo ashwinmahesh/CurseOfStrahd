@@ -78,4 +78,5 @@ for its `duration`); a Spell Scroll an implicit "Read".
   power's spell), a modifier `value` of `"@pick"` (the choice saved on the item's inventory entry by an `fr_set_pick`
   field power), `fr_` field powers (`FaerunItems.field_use`, through `FieldItems.use`), `FaerunItems.thimble` in trap
   damage, `puppet_voice` in Verbal component checks, `banded` beside Sculpt Spells and `after_spell_hit` after a spell
-  attack hits.
+  attack hits. Batch 9d adds `while_on` (another power of the item that must be on: the Nightingale's songs) and
+  `self_only` (the power's spell targets its user).

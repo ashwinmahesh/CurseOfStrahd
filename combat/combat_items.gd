@@ -432,6 +432,9 @@ func use(c: Combatant, item_id: String, power_id: String, targets: Array = [], p
 	var cost := power_cost(power, spell)
 	if bool(power.get("toggle", false)):
 		return toggle(c, p, opts)
+	# A power that only works on its user (the Calimemnon Crystal's Invisibility).
+	if bool(power.get("self_only", false)):
+		targets = [c]
 	var who: Combatant = targets[0] as Combatant if not targets.is_empty() and targets[0] is Combatant else c
 	if power.has("custom"):
 		var r0 := specials.use(c, p, targets, point, dir, lvl, opts)

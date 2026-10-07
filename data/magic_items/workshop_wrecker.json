@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight. Reference-only powers are described in text and have no action button."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-5-magic-items. Mechanics checked against the chapter. Prices use the existing rarity convention, not book-specific prices; unspecified weights use 0, and templates inherit base-item weight."
   },
   "category": "wondrous",
   "weight_lb": 0,
@@ -15,7 +15,28 @@
   },
   "theme": "arcana",
   "icon": "amulet",
-  "summary": "Reference-only: Magic action activates for 1 minute, damaging creatures and unattended nonmagical objects on activation and your turn starts.",
-  "text": "Reference-only: Magic action activates for 1 minute, damaging creatures and unattended nonmagical objects on activation and your turn starts. Confined Cube sizes 15/30/50/100 feet use Dexterity DC 18/17/15/14 for 6d6+5/4d6+4/2d6+2/1d6+1 Bludgeoning on failure. Larger rooms suffer negligible damage; outdoors it escapes at 300 feet per round. Freely stop by command within 30 feet. Once per dawn.",
-  "playable": false
+  "summary": "Once a day, a whirlwind of tools batters everyone else in the room for a minute; the smaller the room, the harder it hits.",
+  "text": "Once per dawn, as a Magic action, you set this device spinning for 1 minute. As it starts, and at the start of each of your turns, each other creature in the room makes a Dexterity saving throw, taking Bludgeoning damage on a failure: DC 18 and 6d6 + 5 in a space up to a 15-foot cube, DC 17 and 4d6 + 4 up to 30 feet, DC 15 and 2d6 + 2 up to 50 feet, DC 14 and 1d6 + 1 up to 100 feet. A bigger room takes no real harm, and outdoors the whirlwind flies off at 300 feet a round. You can stop it with a word (no action) from within 30 feet. It also smashes unattended ordinary objects. (In a fight the room is the map.)",
+  "playable": true,
+  "held": true,
+  "powers": [
+    {
+      "id": "wreck",
+      "name": "Wreck",
+      "cost": "magic",
+      "custom": "fr_wrecker",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once a day: a minute of flying tools, everyone else in the room saves or is battered."
+    },
+    {
+      "id": "stop",
+      "name": "Stop It",
+      "cost": "free",
+      "custom": "fr_wrecker_stop",
+      "text": "Stop the whirlwind."
+    }
+  ]
 }

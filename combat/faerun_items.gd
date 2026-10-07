@@ -56,6 +56,9 @@ static func keyhole_forms(item_id: String) -> Array[String]:
 func why(c: Combatant, p: Dictionary) -> String:
 	var power := p["power"] as Dictionary
 	var e := enc()
+	# Powers that only work while another of the item's powers is on (the Nightingale's songs).
+	if power.has("while_on") and not items().toggled(c, str(p["item_id"]), str(power["while_on"])):
+		return "Only while its %s is on" % str(power["while_on"]).replace("_", " ")
 	match str(power.get("custom", "")):
 		"fr_reshape":
 			if e.current() != c:
@@ -521,7 +524,7 @@ func use_wondrous(c: Combatant, p: Dictionary, targets: Array, point: Vector2, o
 			c.creature.add_effect(doll)
 			_log("info", "%s's puppet hovers at %s" % [c.name(), to], c)
 			return CombatResult.new()
-	return CombatResult.fail("Not built yet")
+	return use_artifact(c, p, targets)
 
 
 ## Spell-Slinger's Puppet: while the doll hovers within 30 ft, its holder speaks through it (Verbal components even
@@ -706,8 +709,134 @@ static func field_use(ch: Character, p: Dictionary, dice: DiceRoller, opts: Dict
 			entry["pick"] = pick
 			ch.items_changed()
 			return {"ok": true, "text": "%s's %s: %s." % [ch.name.get_slice(" ", 0), label, pick.replace("_", " ").capitalize()], "lines": []}
+		"fr_duplicate":
+			var pick := str(opts.get("choice", ""))
+			if not pick in duplicable(ch):
+				return {"ok": false, "text": "Choose a nonmagical item you carry", "lines": []}
+			ch.add_item(pick)
+			return {"ok": true, "text": "The %s hums and sets a perfect copy of the %s beside the original." % [label, Compendium.shared().display_name("items", pick)], "lines": []}
 		"fr_dream_record":
 			var n := dice.d20("%s (%s)" % [label, ch.name])
 			entry["dream"] = n
 			return {"ok": true, "text": "%s studies the tapestry through the night and dreams of a %d." % [ch.name.get_slice(" ", 0), n], "lines": []}
 	return {"ok": false, "text": "Not built yet", "lines": []}
+
+
+# --- Artifacts (batch 9d) -----------------------------------------------------------------------------------------------
+
+## Custom powers of the artifacts.
+func use_artifact(c: Combatant, p: Dictionary, targets: Array) -> CombatResult:
+	var power := p["power"] as Dictionary
+	var e := enc()
+	var label := str((p["data"] as Dictionary).get("name", ""))
+	match str(power.get("custom", "")):
+		"fr_crystal_rays":
+			var rays: Array[Combatant] = []
+			for x: Variant in targets:
+				if x is Combatant and (x as Combatant).is_alive() and e.distance(c, x as Combatant) <= 60 and rays.size() < 6:
+					rays.append(x as Combatant)
+			if rays.is_empty():
+				return CombatResult.fail("Choose up to six creatures within 60 ft")
+			items()._pay(c, "magic")
+			for t in rays:
+				if not t.is_alive():
+					continue
+				if t == c or c.allied_with(t):
+					var hr := e.heal_roll("2d6+2", t, label)
+					var got := t.creature.heal(int(hr["total"]), label)
+					_log("heal", "A ray of the %s mends %s: +%d Hit Points" % [label, t.name(), got], t, [str(hr["text"])])
+					e.events.append({"type": "heal", "id": t.id, "amount": got})
+				else:
+					var sv := t.creature.roll_save(e.dice, &"dex", 18, [], [], "Dexterity save vs %s (%s)" % [label, t.name()])
+					var rolled := e._roll_damage_dice("6d6+6", false, 0, label)
+					var amount := int(rolled["total"]) / (2 if sv.success else 1)
+					e.deal_damage(c, t, [{"amount": amount, "type": "radiant"}], false, label, [sv.describe(), str(rolled["text"])])
+			return CombatResult.new()
+		"fr_wrecker":
+			return _wrecker_start(c, p)
+		"fr_wrecker_stop":
+			return _wrecker_stop(c)
+		"fr_crystal_aura_end":
+			var o := e.spells.zones.object_of(c.id, "%s__cold_aura" % MagicItems.recipe_owner(str(p["item_id"])))
+			if o == null:
+				return CombatResult.fail("The cold aura isn't up")
+			items()._pay(c, "magic")
+			o.ended = true
+			e.spells.zones.prune()
+			_log("info", "%s lets the crystal's cold aura fade" % c.name(), c)
+			return CombatResult.new()
+	return CombatResult.fail("Not built yet")
+
+
+## Nonmagical items the Universal Pantograph could copy for `ch`.
+static func duplicable(ch: Character) -> Array:
+	var out: Array = []
+	for entry in ch.inventory:
+		var d := Compendium.shared().item_data(str(entry["id"]))
+		if int(entry.get("qty", 0)) > 0 and not d.is_empty() and not MagicItems.is_magic(d) and not str(entry["id"]) in out:
+			out.append(str(entry["id"]))
+	return out
+
+
+## Workshop Wrecker: for 1 minute a whirlwind of tools batters every other creature in the room as it starts and at
+## the start of its user's turns. How hard depends on the room: the fight's map in feet (15/30/50/100 ft: Dex DC
+## 18/17/15/14 against 6d6 + 5/4d6 + 4/2d6 + 2/1d6 + 1 Bludgeoning); a bigger room takes no real harm, and outdoors
+## the whirlwind blows away.
+const WRECKER_TIERS := [[15, 18, "6d6+5"], [30, 17, "4d6+4"], [50, 15, "2d6+2"], [100, 14, "1d6+1"]]
+
+
+func _wrecker_start(c: Combatant, p: Dictionary) -> CombatResult:
+	items()._pay(c, "magic")
+	var fx := Effect.new(str((p["data"] as Dictionary).get("name", "")), &"item", str(p["item_id"]))
+	fx.stack_key = "workshop_wrecker:%s" % p["item_id"]
+	fx.data["wrecker"] = true
+	fx.lasting({"kind": "minutes", "amount": 1})
+	fx.turn_owner_id = c.id
+	c.creature.add_effect(fx)
+	CombatItems.spend_use(p)
+	_log("info", "%s sets the Workshop Wrecker spinning" % c.name(), c)
+	_wreck(c)
+	return CombatResult.new()
+
+
+func _wreck(c: Combatant) -> void:
+	var e := enc()
+	if e.outdoors:
+		_log("info", "The whirlwind of tools tears off into the open sky", c)
+		for fx: Effect in c.creature.effects.duplicate():
+			if bool(fx.data.get("wrecker", false)):
+				c.creature.remove_effect(fx)
+		return
+	var size := maxi(e.grid.width, e.grid.depth) * CombatGrid.FEET
+	var tier: Array = []
+	for t: Variant in WRECKER_TIERS:
+		if size <= int((t as Array)[0]):
+			tier = t as Array
+			break
+	if tier.is_empty():
+		_log("info", "The room is too big for the Workshop Wrecker to do real harm", c)
+		return
+	var rolled := e._roll_damage_dice(str(tier[2]), false, 0, "Workshop Wrecker")
+	for o in e.combatants:
+		if o == c or not o.is_alive():
+			continue
+		var sv := o.creature.roll_save(e.dice, &"dex", int(tier[1]), [], [], "Dexterity save vs Workshop Wrecker (%s)" % o.name())
+		if sv.success:
+			_log("info", "%s ducks the flying tools" % o.name(), o, [sv.describe()])
+			continue
+		e.deal_damage(c, o, [{"amount": int(rolled["total"]), "type": "bludgeoning"}], false, "Workshop Wrecker", [sv.describe(), str(rolled["text"])])
+
+
+func _wrecker_stop(c: Combatant) -> CombatResult:
+	for fx: Effect in c.creature.effects.duplicate():
+		if bool(fx.data.get("wrecker", false)):
+			c.creature.remove_effect(fx)
+			_log("info", "%s stops the Workshop Wrecker" % c.name(), c)
+			return CombatResult.new()
+	return CombatResult.fail("It isn't spinning")
+
+
+## At the start of its user's turn the Workshop Wrecker strikes again.
+func turn_start(c: Combatant) -> void:
+	if c.creature.effects.any(func(fx: Effect) -> bool: return bool(fx.data.get("wrecker", false))):
+		_wreck(c)

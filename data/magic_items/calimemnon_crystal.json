@@ -5,7 +5,7 @@
     "book": "FRAiF",
     "page": 243,
     "checked_against": "FRAiF",
-    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/10771760-calimemnon-crystal. Prices use the existing rarity convention; unspecified weight is 0. Reference-only properties require manual adjudication."
+    "note": "Compared with the published D&D Beyond item page in signed-in Chrome on 2026-10-06: https://www.dndbeyond.com/magic-items/10771760-calimemnon-crystal. Prices use the existing rarity convention; unspecified weight is 0."
   },
   "category": "focus",
   "weight_lb": 0,
@@ -16,8 +16,8 @@
   },
   "theme": "relics",
   "icon": "amulet",
-  "summary": "Arcane Focus; Fly Speed 30 feet.",
-  "text": "Arcane Focus; Fly Speed 30 feet. Cast Create or Destroy Water, Enlarge/Reduce, and Major Image at will (DC 18). Reference-only: hovering and at-will Invisibility on yourself. A Magic action toggles a 20-foot Emanation of cold; each creature other than the attuned bearer takes 2d6 Cold once per turn when the aura enters its space, it enters the aura, or it ends its turn there. While holding the crystal, a Magic action once per dawn distributes six rays among creatures within 60 feet: each ray either heals 2d6+2 HP or deals 6d6+6 Radiant (DC 18 Dexterity for half). Roll one each of the minor/major beneficial and minor/major detrimental artifact properties. Only an attuned bearer casting Wish to destroy the crystal can break it, releasing its imprisoned genies.",
+  "summary": "Artifact Arcane Focus: Fly 30 ft and hover; at-will water, Enlarge/Reduce, Major Image and Invisibility on yourself; a cold aura; six healing or burning rays a day.",
+  "text": "You can use this crystal as an Arcane Focus. While attuned to it you have a Fly Speed of 30 feet and can hover, and you can cast Create or Destroy Water, Enlarge/Reduce and Major Image from it at will (save DC 18), and Invisibility on yourself. As a Magic action you can raise or end a 20-foot aura of cold around you: any other creature takes 2d6 Cold damage when the aura reaches its space, when it enters the aura, or when it ends its turn there, no more than once a turn. Once per dawn, as a Magic action while holding it, you can send six rays at creatures within 60 feet, divided as you like: a ray at an ally restores 2d6 + 2 Hit Points, and a ray at anyone else deals 6d6 + 6 Radiant damage (DC 18 Dexterity saving throw for half). It carries one minor and one major beneficial property and one minor and one major detrimental property. Only its attuned bearer casting Wish can destroy it, freeing the genies bound inside.",
   "focus": "arcane",
   "modifiers": [
     {
@@ -44,10 +44,100 @@
       "name": "Major Image",
       "spell": "major_image",
       "dc": 18
+    },
+    {
+      "id": "invisibility",
+      "name": "Invisibility",
+      "spell": "invisibility",
+      "dc": 18,
+      "self_only": true,
+      "text": "At will: Invisibility on yourself."
+    },
+    {
+      "id": "cold_aura",
+      "name": "Cold Aura",
+      "recipe": "cold_aura",
+      "dc": 18,
+      "cost": "magic",
+      "text": "Magic action: a 20-ft aura of cold, 2d6 Cold to anyone else in it once a turn."
+    },
+    {
+      "id": "end_aura",
+      "name": "End the Cold Aura",
+      "cost": "magic",
+      "custom": "fr_crystal_aura_end",
+      "text": "Magic action: the cold aura fades."
+    },
+    {
+      "id": "rays",
+      "name": "Six Rays",
+      "cost": "magic",
+      "custom": "fr_crystal_rays",
+      "targeting": "multi",
+      "count": 6,
+      "range": 60,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once a day: six rays among creatures within 60 ft: allies regain 2d6 + 2, others Dex DC 18 or 6d6 + 6 Radiant (half on a success)."
+    },
+    {
+      "id": "hover",
+      "name": "Hover",
+      "cost": "free",
+      "custom": "flavour",
+      "field": true,
+      "params": {
+        "text": "lets you hang in the air without falling"
+      }
     }
   ],
   "treasure": {
     "random": false
   },
-  "playable": false
+  "playable": true,
+  "artifact": {
+    "properties": {
+      "minor_beneficial": 1,
+      "major_beneficial": 1,
+      "minor_detrimental": 1,
+      "major_detrimental": 1
+    }
+  },
+  "recipes": {
+    "cold_aura": {
+      "name": "Cold Aura",
+      "level": 0,
+      "school": "evocation",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 20
+      },
+      "duration": {
+        "kind": "hours",
+        "amount": 24
+      },
+      "damage": [
+        {
+          "dice": "2d6",
+          "type": "cold"
+        }
+      ],
+      "zone": {
+        "triggers": [
+          "enter",
+          "end_turn",
+          "moved_into"
+        ]
+      },
+      "components": {},
+      "tags": [
+        "damage"
+      ]
+    }
+  }
 }
