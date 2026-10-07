@@ -101,6 +101,8 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 	match mount:
 		"wall":
 			if not _hang(board, root, art, cell, scale_):
+				if board.grid.has_flag(cell, CombatGrid.LOW) or board.grid.has_flag(cell, CombatGrid.DIFFICULT):
+					_take_square(board, root, cell)   # no wall beside it: it stands in place of the board's furniture there
 				_stand(board, root, art, cell, scale_)
 		"floor":
 			if on_wall_square:
@@ -662,7 +664,7 @@ static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, 
 	board.used_faces[key] = true
 	var model := ModelPiece.for_art(board, art)
 	if model != "":
-		ModelPiece.hang(board, root, model, art, wall, normal)
+		ModelPiece.hang(board, root, model, art, wall, normal, cell)
 		board.attach_to_building(wall, root)
 		return true
 	var info := manifest()[art] as Dictionary

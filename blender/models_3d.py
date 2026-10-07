@@ -2916,7 +2916,7 @@ def _wall_fit(art):
     ones hang at about eye level (SetDressing._hang's rule)."""
     info = PROPS[art]
     w, h = float(info.get("world_width", 1.0)), float(info.get("world_height", 1.0))
-    fit = min(1.0, 0.92 / w)
+    fit = min(1.0, 0.84 / w)
     w, h = w * fit, h * fit
     bottom = 0.0 if h >= 0.85 else max(0.0, 0.7 - h / 2)
     return w, h, bottom
@@ -2947,9 +2947,9 @@ def _wall_art_builder(art, style):
             p.box((w + 0.08, 0.06, 0.04), (0, -0.03, zc + h / 2 + 0.02), "pal_stone")
             lift = 0.052
         elif style == "cloth":
-            p.cyl(0.014, w + 0.12, (-w / 2 - 0.06, -0.04, zc + h / 2 + 0.015), "pal_umber", rot=(0, 90, 0), segs=8)
+            p.cyl(0.014, w + 0.08, (-w / 2 - 0.04, -0.04, zc + h / 2 + 0.015), "pal_umber", rot=(0, 90, 0), segs=8)
             for s in (-1, 1):
-                p.lathe([(0.0, 0.0), (0.02, 0.0), (0.025, 0.015), (0.0, 0.035)], (s * (w / 2 + 0.06), -0.04, zc + h / 2 + 0.015),
+                p.lathe([(0.0, 0.0), (0.02, 0.0), (0.025, 0.015), (0.0, 0.035)], (s * (w / 2 + 0.04), -0.04, zc + h / 2 + 0.015),
                         "pal_tan", rot=(0, s * 90, 0), segs=8)
                 p.box((0.02, 0.04, 0.03), (s * (w / 2 - 0.05), -0.02, zc + h / 2 + 0.015), "pal_umber")
             lift = 0.03
@@ -3495,7 +3495,7 @@ def glass_ring(p):
                rough=0.25, subdiv=0, rot_z=math.degrees(a), bury=0.02, top_z=0.3, top_p=0.6)
 
 
-@model("gulthias_tree", "free", ["gulthias_tree"], big=True)
+@model("gulthias_tree", "free", ["gulthias_tree"], big=True, turns=True)
 def gulthias_tree(p):
     """The Gulthias Tree (2D gulthias_tree): a huge twisted tree, pale limbs, its trunk wound with strands of blue and
     blood-red bark, great roots gripping the hill, red sap pooling at its foot."""
@@ -3519,7 +3519,7 @@ def gulthias_tree(p):
     p.rock((0.4, -0.8, 0), (0.9, 0.6, 0.04), "pal_blood", rough=0.2, bury=0.5)
 
 
-@model("ribbon_tree", "free", ["ribbon_tree"], big=True)
+@model("ribbon_tree", "free", ["ribbon_tree"], big=True, turns=True)
 def ribbon_tree(p):
     """The 2D ribbon tree: a bare grey tree with strips of coloured cloth tied to its branches."""
     _dead_tree(p, 3.2, 0.2, bark="pal_slate", girth=1.6, streak="pal_stone", spread=1.3)
