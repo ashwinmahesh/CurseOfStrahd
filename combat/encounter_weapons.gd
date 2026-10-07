@@ -99,6 +99,45 @@ func best_melee_option(c: Combatant, _target: Combatant) -> Dictionary:
 	return best
 
 
+## Why `ally` can't make Commander's Strike's attack for `by` ("" if it can): a willing creature (one of `by`'s allies)
+## who can see or hear it and still has its Reaction.
+func strike_ally_why(by: Combatant, ally: Combatant) -> String:
+	var e := enc()
+	if ally == null or ally == by or not by.allied_with(ally) or EchoKnight.is_echo(ally) or not e.spells.can_react(ally):
+		return "Choose an ally who still has its Reaction"
+	if not e.spells.can_see_or_hear(ally, by):
+		return "%s can't see or hear %s" % [ally.name(), by.name()]
+	return ""
+
+
+## The attack `c` makes against `t` when a feature gives it one attack (Commander's Strike: a weapon, an Unarmed Strike
+## or a stat-block attack): the option it could use from where it stands with the best hit chance times average damage,
+## or {} when none reaches.
+func strike_option(c: Combatant, t: Combatant) -> Dictionary:
+	var e := enc()
+	var best := {}
+	var best_score := -1.0
+	if t == null:
+		return best
+	for o in attack_options(c):
+		if c.creature is Monster and e.monster_actions.why_not(c, (c.creature as Monster).action(str(o.get("action_id", "")))) != "":
+			continue
+		if attack_legal(c, t, o) != "" or not has_ammo_for(c, o):
+			continue
+		var score := float(e.hit_chance(c, t, o)["chance"]) * (o["profile"] as WeaponProfile).average_damage()
+		if score > best_score:
+			best_score = score
+			best = o
+	return best
+
+
+## Commander's Strike's attack on the creature the player picked: {target, option: its id}, or {} when `c` can't
+## reach it with any attack.
+func strike_at(c: Combatant, t: Combatant) -> Dictionary:
+	var o := strike_option(c, t)
+	return {} if o.is_empty() else {"target": t, "option": str(o["id"])}
+
+
 ## How many attacks one Attack action gives (Extra Attack; the highest source wins, 2024 multiclass rule).
 func attacks_per_action(c: Combatant) -> int:
 	if c.creature.has_flag("slowed"):

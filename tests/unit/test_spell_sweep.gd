@@ -112,7 +112,8 @@ func _try(spell_id: String, seed_value: int) -> Dictionary:
 				targets = [ally]
 		"ally", "dying", "dead":
 			targets = [ally]
-		"point":
+		"point", "wall":
+			# A wall cast without drawn squares is the straight wall through the point (SpellTargeting.wall_cells).
 			point = Vector2(3.5, 3.5)
 		"place":
 			point = Vector2(5.5, 3.5) if spell_id in ["misty_step", "dimension_door", "flaming_sphere", "dancing_lights", "mage_hand", "mordenkainens_faithful_hound", "grasping_vine"] \

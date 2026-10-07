@@ -313,21 +313,27 @@ func _effect_of(c: Combatant, source_id: String) -> Effect:
 
 
 ## Crown of Madness: before moving, the creature uses its action to make a melee attack against a creature the
-## caster picks (here: the nearest creature other than itself and the caster that it can reach).
+## caster picks: a player's caster names it when casting and keeping control (SpellTargeting.crown_attack: no one, or
+## no one in reach, and it acts normally); an AI caster picks the first creature it can reach, its foes first.
 func _crown_turn(c: Combatant) -> CombatResult:
 	var e := enc()
 	var caster := e.get_c(str(c.get_meta("crowned_by", "")))
 	var best: Combatant = null
 	var opt := {}
-	for o in e.living():
-		if o == c or o == caster or o.is_down():
-			continue
-		var mo := e.best_melee_option(c, o)
-		if mo.is_empty() or e.distance(c, o) > (mo["profile"] as WeaponProfile).reach:
-			continue
-		if best == null or (caster != null and caster.hostile_to(o) and not caster.hostile_to(best)):
-			best = o
-			opt = mo
+	if caster != null and caster.is_player_controlled():
+		var pick := e.spells.targeting.crown_attack(c)
+		best = pick.get("target") as Combatant
+		opt = pick.get("option", {}) as Dictionary
+	else:
+		for o in e.living():
+			if o == c or o == caster or o.is_down():
+				continue
+			var mo := e.best_melee_option(c, o)
+			if mo.is_empty() or e.distance(c, o) > (mo["profile"] as WeaponProfile).reach:
+				continue
+			if best == null or (caster != null and caster.hostile_to(o) and not caster.hostile_to(best)):
+				best = o
+				opt = mo
 	if best == null:
 		return null
 	e.log.add("info", "%s lashes out at %s (Crown of Madness)" % [c.name(), best.name()], c.id)

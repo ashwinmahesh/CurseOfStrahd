@@ -407,6 +407,10 @@ func free_move(c: Combatant, dest: Vector2i) -> CombatResult:
 	return movement.free_move(c, dest)
 
 
+func reaction_move(c: Combatant, dest: Vector2i) -> CombatResult:
+	return movement.reaction_move(c, dest)
+
+
 func jump(c: Combatant, dest: Vector2i) -> CombatResult:
 	return movement.jump(c, dest)
 

@@ -624,7 +624,7 @@ func cast(c: Combatant, spell: Dictionary, level: int, targets: Array, point: Ve
 		var d := dir
 		if d == Vector2.ZERO and not tgt.is_empty():
 			d = (e.center_of(tgt[0]) - e.center_of(c)).normalized()
-		cells = sp.area_for(c, spell, point, d, level)
+		cells = sp.targeting.wall_cells(spell, opts, point, sp.area_for(c, spell, point, d, level))
 	e.events.append({"type": "spell", "caster": c.id, "spell": str(spell["id"]), "cells": cells,
 		"targets": tgt.map(func(t: Combatant) -> String: return t.id)})
 	var ctx := {"c": c, "s": spell, "slot": level, "nums": nums, "conc": conc, "opts": opts, "point": point, "cells": cells,

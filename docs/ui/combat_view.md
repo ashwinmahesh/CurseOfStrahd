@@ -48,6 +48,17 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
   data, with every creature inside listed: save and DC, the chance each fails, expected damage, and whether it would
   likely drop.
 - **Friendly fire** is called out in red with what happens to the ally; it never blocks (the player decides).
+- **Walls are drawn** (Wall of Fire, Wind Wall, Wall of Stone, Ice and Force, Wall of Thorns, Blade Barrier, Prismatic
+  Wall): click the square where the wall begins, then squares touching the last one (a click further along a
+  straight line adds the squares between); the floor shows the squares drawn and the next one (a red ring and the
+  reason when it can't go there), the tooltip the length used and who stands in the wall. Backspace or right-click
+  takes back the last square; Enter or a click on the last square finishes. A Wall of Fire then shows the side that
+  would burn under the pointer: click the side. A ring, globe or dome (right-click menu) is placed at a point.
+- **Second picks** (world/combat/target_picker.gd): Commander's Strike's ally, then the creature it attacks (Enter: its
+  best target); Crown of Madness's target, then the creature it must attack (Enter, or a click on the crowned creature:
+  no one), and the same pick on the keep-control action; after a Maneuvering Attack hit, the ally that moves (skipped
+  when only one can) and its square, with the path and any other enemy's Opportunity Attack shown. Backspace or
+  right-click goes back a step; Esc cancels (and passes on the maneuver's move).
 - Upcasting: the slot pips beside the tooltip pick the slot level and update the numbers (Fireball 8d6 → 9d6).
 - Concentration: casting a second Concentration spell warns that the first one ends, naming it.
 
