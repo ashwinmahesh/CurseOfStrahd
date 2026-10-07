@@ -1862,6 +1862,8 @@ func start_encounter(encounter_id: String) -> bool:
 	if str(spec.get("final_battle", "")) != "":
 		e.places.append(str(spec["final_battle"]))
 	e.lair = bool(spec.get("lair", false))
+	# Party members pass through each other's spaces unless the place or the fight says otherwise.
+	e.allies_block = bool(spec.get("allies_block", loc.get("allies_block", false)))
 	e.outdoors = bool(loc["map"].get("outdoors", false))
 	e.legendary.set_withdraw(spec.get("withdraw", {}))
 	if str(spec.get("final_battle", "")) != "" and st.quest_stage_index("strahds_lair", st.quest_stage("strahds_lair")) < st.quest_stage_index("strahds_lair", "confronted"):

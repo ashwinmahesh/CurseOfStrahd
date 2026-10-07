@@ -37,6 +37,8 @@ var feature_actions: FeatureActions
 var monster_actions: MonsterActions
 var ai: AiBrain
 var shapes: ShapeChange
+## A place where even allies can't pass through each other (a location's or fight's `allies_block`).
+var allies_block := false
 var class_features: ClassFeatures
 ## Ravenloft: The Horrors Within options (combat/ravenloft_features.gd).
 var ravenloft: RavenloftFeatures
@@ -450,8 +452,8 @@ func fear_sources(c: Combatant) -> Array[Combatant]:
 
 ## How other creatures' squares affect `c`'s movement: {blocked, slowed, occupied}, each a set of cells.
 ## 2024: you can pass through an ally, an Incapacitated creature, a Tiny creature or one two sizes different
-## (Halfling Nimbleness: any larger creature); another creature's space is Difficult Terrain unless it's Tiny or
-## your ally; you can't end your move in an occupied space.
+## (Halfling Nimbleness: any larger creature); another creature's space, an ally's too, is Difficult Terrain unless
+## it's Tiny; you can't end your move in an occupied space. `allies_block` (a place's flag) makes allies block too.
 func _occupancy_for(c: Combatant) -> Dictionary:
 	var blocked := {}
 	var slowed := {}
@@ -466,9 +468,10 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 		var swarmy := o.creature.has_flag("swarm") or c.creature.has_flag("swarm") or c.creature.has_flag("enters_spaces")
 		if swarmy:
 			continue
-		var passable := c.allied_with(o) or o.creature.has_flag("no_actions") or o.creature.size == &"tiny" \
+		var passable := (c.allied_with(o) and not allies_block) or o.creature.has_flag("no_actions") or o.creature.size == &"tiny" \
 			or absi(o_size - my_size) >= 2 or (c.creature.has_flag("halfling_nimbleness") and o_size > my_size)
-		var slows := not c.allied_with(o) and o.creature.size != &"tiny"
+		# 2024: any other creature's space is Difficult Terrain, an ally's included (a Tiny one excepted).
+		var slows := o.creature.size != &"tiny"
 		for cell in o.footprint():
 			occupied[cell] = true
 			if not passable:

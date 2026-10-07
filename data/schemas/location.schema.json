@@ -593,6 +593,10 @@
                 "type": "string"
               }
             }
+          },
+          "allies_block": {
+            "type": "boolean",
+            "description": "In this fight, party members can't move through each other's spaces (default: they can, as Difficult Terrain)."
           }
         }
       }
@@ -636,6 +640,10 @@
           }
         }
       }
+    },
+    "allies_block": {
+      "type": "boolean",
+      "description": "Party members can't move through each other's spaces anywhere in this location."
     }
   },
   "$defs": {

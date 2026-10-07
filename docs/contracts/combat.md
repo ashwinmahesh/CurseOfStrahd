@@ -95,7 +95,7 @@ Stat-block fields any monster can use (`data/schemas/monster.schema.json`; Strah
 Trait ids the code reads for `"implemented": "engine"`: `legendary_resistance`, `regeneration`, `shapechanger`,
 `misty_escape`, `children_of_the_night`, `charm`, `spider_climb`, `vampire_weakness`.
 
-Encounter fields (a location's `encounters[]`, `data/schemas/location.schema.json`): `lair: true`,
+Encounter fields (a location's `encounters[]`, `data/schemas/location.schema.json`): `allies_block: true` (also on the location: party members can't pass through each other; by default they can, as Difficult Terrain), `lair: true`,
 `final_battle: "<enemy room id>"` and `withdraw: {who, at_hp_below, after_rounds, flag}` (the foe `who` leaves below
 that many Hit Points, or at the start of its turn once `after_rounds` rounds have passed; never dies while it can
 withdraw; no loot). On an Encounter: `lair`, `location_id`, `places` (the location's Tarokka places and the final
