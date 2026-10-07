@@ -49,6 +49,8 @@ var miles_since_long_rest: float = 0.0
 var options: Dictionary = {"respec": true}
 ## Exploring spells still running: spell id -> {until: total minute, caster} (Light, Detect Magic, Speak with Dead).
 var active_spells: Dictionary = {}
+## How each of the six companions feels about the party's choices (story/approval.gd): id -> {score, memories}.
+var approval: Dictionary = {}
 
 
 # --- Flags, quests, attitudes ---------------------------------------------------------------------
@@ -175,10 +177,11 @@ func give_item(item_id: String, qty: int, ch: Character = null) -> void:
 ## Moves one `item_id` from `ch`'s pack to the party stash (from anywhere; things come out again at safe places, which
 ## the inventory screen checks). A magic item keeps its own state there (charges, identified, a lifted curse), and an
 ## attunement to it ends.
-func stash_put(item_id: String, ch: Character) -> bool:
-	if ch.entry_of(item_id).is_empty():
+func stash_put(item_id: String, ch: Character, entry: Dictionary = {}) -> bool:
+	if not ch.inventory.any(func(e: Dictionary) -> bool: return str(e["id"]) == item_id and int(e["qty"]) > 0 \
+			and (entry.is_empty() or is_same(e, entry))):
 		return false
-	stash_add(item_id, 1, ch.remove_one(item_id))
+	stash_add(item_id, 1, ch.remove_one(item_id, entry))
 	return true
 
 
@@ -197,10 +200,10 @@ func stash_add(item_id: String, qty: int, state: Dictionary = {}) -> void:
 		stash.append(e)
 
 
-## Moves one `item_id` from the stash to `ch`, with the state it was stashed with.
-func stash_take(item_id: String, ch: Character) -> bool:
+## Moves one `item_id` from the stash to `ch` (from stash entry `entry` when given), with the state it was stashed with.
+func stash_take(item_id: String, ch: Character, entry: Dictionary = {}) -> bool:
 	for e in stash:
-		if str(e["id"]) == item_id and int(e["qty"]) > 0:
+		if str(e["id"]) == item_id and int(e["qty"]) > 0 and (entry.is_empty() or is_same(e, entry)):
 			e["qty"] = int(e["qty"]) - 1
 			if int(e["qty"]) <= 0:
 				stash.erase(e)
@@ -577,7 +580,8 @@ func to_dict() -> Dictionary:
 		"location_states": location_states.duplicate(true), "last_check": last_check, "fallen": fallen.duplicate(true),
 		"seed": playthrough_seed, "tarokka": tarokka.duplicate(), "guests": _guests_to_dict(), "shops": shops.duplicate(true),
 		"travel_resume": travel_resume.duplicate(), "active_spells": active_spells.duplicate(true),
-		"options": options.duplicate(), "miles_since_long_rest": miles_since_long_rest}
+		"options": options.duplicate(), "miles_since_long_rest": miles_since_long_rest,
+		"approval": approval.duplicate(true)}
 
 
 ## A pregen loaded from a save wears its look as data/pregens has it now. The six on the roster borrowed other
@@ -647,6 +651,7 @@ static func from_dict(d: Dictionary) -> StoryState:
 	st.travel_resume = (d.get("travel_resume", {}) as Dictionary).duplicate()
 	st.active_spells = (d.get("active_spells", {}) as Dictionary).duplicate(true)
 	st.options.merge(d.get("options", {}) as Dictionary, true)
+	st.approval = Approval.from_save(d.get("approval", {}))
 	for g: Variant in d.get("guests", []):
 		var gd := g as Dictionary
 		var cr := StoryState.make_guest(str(gd["npc"]))

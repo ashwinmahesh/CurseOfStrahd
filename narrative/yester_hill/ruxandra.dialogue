@@ -102,10 +102,12 @@ Ruxandra: The bird-man's son? He sent his brother away. Ordered him off like a d
 set yester_druids_fate = "spared"
 Ruxandra: Mercy. How like strangers. ...I'll go. The tree will call me back. It always calls us back.
 Narrator: She gets up the way the very old do, in stages, and goes down the far side of the hill without once looking round.
+approve liriel_dawnsong +2 wren_featherfoot +2: You let Ruxandra crawl off the hill alive
 -> END
 
 ~ finish
 set yester_druids_fate = "killed"
 Narrator: It's quick. The roots that were reaching toward her draw back, as if they'd lost interest.
 interject class:cleric: Go to whatever's waiting, mother. I hope it's kinder than your god.
+approve thistle +1 liriel_dawnsong -1 wren_featherfoot -1: You finished Ruxandra where she lay
 -> END

@@ -31,6 +31,10 @@ rewritten for the six, so in an old save they speak only in their own quest scen
   (`narrative/svalich_road/madam_eva.dialogue`; flags `eva_truth_teller`, `eva_question`).
 - Scenes live in `narrative/companions/<quest>.dialogue`; hooks in region files jump there and come back.
 - `knows:<spell>` (new selector): a party member who can cast that spell now. Thistle's cure needs `knows:remove_curse`.
+- **Approval** (docs/story/approval.md, F3): every quest's last beat answers to its companion's approval. Strained or
+  worse holds the best ending back until it's mended; Close or better adds to it. The quest scenes and camp talks
+  also move approval, and the camp files carry approval talks (Strained, Doubtful, Warm, Close, Devoted) and three
+  romances between the six.
 
 ## Godrick Pendlebrook: A Knight, More or Less (`the_ladle`)
 

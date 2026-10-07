@@ -47,6 +47,7 @@ set flag_id                        Sets a flag to true. "set flag_id = 3", "set 
                                    "set flag_id += 1".
 quest quest_id stage_id            Moves a quest to a stage (data/quests/<id>.json).
 give item_id [qty]                 Puts items in the speaking character's pack (or the party stash if full).
+                                   "give item_id to name:thistle" puts it in that party member's pack instead.
 take item_id [qty]                 Removes items.
 gold +25 / gold -10                Party money in gp.
 attitude npc_id friendly           Sets an NPC's attitude (hostile, indifferent, friendly; 2024 Influence).
@@ -72,6 +73,15 @@ combat encounter_id                Ends the conversation and starts a fight from
 narrate trigger_key                Plays a Narrator trigger (below) inline.
 end_game                           Ends the campaign (ADR 0014): the ending whose condition holds is played
                                    when the conversation closes (docs/contracts/campaign.md Endings).
+approve thistle +3 kip_smudgewick -2: You freed the wolves
+                                   Companion approval (docs/story/approval.md): each companion id with a signed
+                                   change (-20 to +20), then an optional reason after a colon, written as the
+                                   companion's memory of what the party did. Only companions travelling in the party
+                                   react; each statement counts once a playthrough. Shows a notice.
+inspire name:thistle: spoke her mind
+                                   Heroic Inspiration for playing in character (F15): the first party member the
+                                   selector picks earns it (name:, class:, background:, species:, tag:), or everyone
+                                   with `inspire party`. Once a playthrough. Shows a notice.
 ```
 
 ## Conditions
@@ -82,7 +92,8 @@ end_game                           Ends the campaign (ADR 0014): the ending whos
 `tarokka.sword == swords_3`, `tarokka.sword.region == vallaki`, `tarokka.ally.npc == ezmerelda`, `guest:ireena`,
 `spell:speak_with_dead` (an exploring spell the party cast is still running), `at:vallaki_st_andrals` (where the party is), `option:respec` (the owner's
 switch), and `interject guest:ireena: Text` for a story ally travelling with the party,
-`gold >= 25` (the party's purse), `level >= 3`
+`approval.thistle >= close` (a companion's approval tier, compared by rank, so `<= strained` is Strained or worse;
+or a number), `gold >= 25` (the party's purse), `level >= 3`
 (the lowest character level in the party), `check.last` (the last check succeeded), joined with `and`, `or`, `not`
 and parentheses.
 

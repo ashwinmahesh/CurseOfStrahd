@@ -103,6 +103,7 @@ Anastrasya Karelova: They're gone. I'm still here. I don't want to be still here
 set anastrasya_at_rest
 Narrator: She lies down and folds her hands, and closes her eyes, and does not open them when you do what has to be done. It is very quick. Afterwards the room smells, very faintly, of bread.
 interject class:cleric: Go home, Anastrasya. Go home to Krezk.
+approve liriel_dawnsong +2 thistle +1: You gave Anastrasya the rest she asked for
 -> END
 
 ~ wait

@@ -78,6 +78,7 @@ Zuleika: Emil is in the alcove off the great cave, to the west. Here: the key to
 Narrator: She presses a small iron key into your hand. It is warm from her pocket, and the bow is wrapped in rag where it would touch the silver.
 interject tag:blunt: And if we change our minds once we're inside?
 Zuleika: Then you'll have six wolves between you and the sky. Don't.
+approve thistle +1: You agreed to free Zuleika's husband
 -> END
 
 ~ refuse

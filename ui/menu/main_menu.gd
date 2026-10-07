@@ -62,6 +62,7 @@ func _ready() -> void:
 	_box.add_theme_constant_override("separation", 12)
 	add_child(_box)
 	_title()
+	(func() -> void: WhatsNew.show_if_new(self)).call_deferred()   # what changed since the last play (Q2)
 
 
 func _title() -> void:
@@ -95,6 +96,8 @@ func _title() -> void:
 	_box.add_child(load)
 	_box.add_child(UiKit.button("Skirmish and Character Lab", func() -> void: get_tree().change_scene_to_file("res://scenes/skirmish.tscn"), 18))
 	_box.add_child(UiKit.button("Combat arena (Phase 2)", func() -> void: get_tree().change_scene_to_file("res://scenes/combat/arena.tscn"), 18))
+	if WhatsNew.available():
+		_box.add_child(UiKit.button("What's new", func() -> void: WhatsNew.open(self), 18))
 	_box.add_child(UiKit.button("Credits", _credits, 18))
 	_box.add_child(UiKit.button("Quit", func() -> void: get_tree().quit(), 18))
 

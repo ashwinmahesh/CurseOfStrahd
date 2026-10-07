@@ -56,6 +56,7 @@ set death_house_altar_denounced
 set death_house_head_start
 Narrator: {name}'s voice rings off the stone, and the shades flinch back from it like smoke from an opened door. The chant stumbles, and the heap stirs, but slowly, so slowly.
 interject name:godrick_pendlebrook: Ha! They didn't like that! They remember the dawn, then. Good.
+approve liriel_dawnsong +2 godrick_pendlebrook +1: You denounced the cult in the dawn's name
 -> choose
 
 ~ denounce_fail
@@ -68,11 +69,14 @@ set death_house_head_start
 Narrator: You tell their story back to them plainly, every piece the house let slip on your way down, and you do not leave out the ending.
 Narrator: For the first time in years the chant falters. Knowing a story is a kind of power over it.
 interject name:ratatoille: You see? Divination is only paying attention. Nobody in this house expected us to pay attention.
+approve ratatoille +2 wren_featherfoot +1: You threw the house's own story back at its cult
 -> choose
 
 ~ familiar
 cult_shades: A spirit does not die. It only goes home. One must die.
 interject name:wren_featherfoot: Worth a go. They don't strike me as the haggling sort.
+inspire class:wizard: offered the shades a spirit instead of a life
+approve ratatoille +1 kip_smudgewick +1: You tried to bargain the cult down from a life to a familiar
 -> choose
 
 ~ refuse
@@ -86,6 +90,8 @@ endif
 if flag.death_house_head_start
   Narrator: Because you knew to watch the heap, you are already moving when it begins to stand.
 endif
+approve godrick_pendlebrook +3 liriel_dawnsong +3 thistle +3 ratatoille +2 wren_featherfoot +2 kip_smudgewick +3: You refused to give the house one of your own
+inspire name:godrick_pendlebrook: stood in the doorway so the rest could run
 -> refuse_choice
 
 ~ refuse_choice
@@ -140,6 +146,8 @@ if flag.death_house_children_riding
   Narrator: Two small cold weights slip out of two of you and away up the stairs, back to the attic where the house keeps its children.
   set death_house_children_riding = false
 endif
+approve godrick_pendlebrook -10 liriel_dawnsong -10 thistle -8 ratatoille -6 wren_featherfoot -8 kip_smudgewick -8: You gave the house one of your own
+interject name:godrick_pendlebrook: We left one of ours on a table in the dark. I'll not forget it. I don't want to.
 set death_house_completed
 quest death_house escaped_sacrificed
 xp milestone

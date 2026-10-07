@@ -13,10 +13,11 @@ const UI_PALETTE_JSON := "res://art/palette/ui_palette.json"
 static var _palette: Dictionary = {}
 static var _colours: Dictionary = {}
 
-## The world's finish (docs/plans/ui_polish.md), the player's choice (GameSettings, user://settings.cfg):
-## "classic" is the 1990s cartoon pass (every pixel snapped to the palette, light in hard bands); "modern" keeps the
-## ink lines and the same art but lights it smoothly, with filmic tone, bloom on flames and lanterns, deeper contact
-## shadows and soft mist. Places built after a change use it.
+## The world's finish (docs/plans/ui_polish.md, docs/art/style_bible.md), the player's choice (GameSettings,
+## user://settings.cfg): "classic" is the 1990s cartoon pass (every pixel snapped to the palette, light in hard bands,
+## frozen as it was on 2026-10-07); "modern" is the HD-2D look: the same art, the characters inked, the world lit like
+## painted 3D without ink lines, with filmic tone, bloom on flames and lanterns, soft shadows and haze. Places built
+## after a change use it.
 const STYLES: Array[String] = ["modern", "classic"]
 ## The owner picked Modern as the default (2026-10-07); Classic stays in Settings.
 const DEFAULT_STYLE := "modern"
@@ -169,8 +170,76 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 		m.set_shader_parameter("roughness", float(spec.get("roughness", 0.8)))
 		m.set_shader_parameter("metallic", float(spec.get("metallic", 0.0)))
 		m.set_shader_parameter("roughness_spread", float(spec.get("spread", 0.35)))
+		_set_variants(m, info, path)
+		var macro := str(textures().get("macro_file", ""))
+		if macro != "" and ResourceLoader.exists("res://" + macro) and float(spec.get("macro", MACRO_STRENGTH)) > 0.0:
+			m.set_shader_parameter("macro_tex", load("res://" + macro) as Texture2D)
+			m.set_shader_parameter("macro_strength", float(spec.get("macro", MACRO_STRENGTH)))
 	_textured[key] = m
 	return m
+
+
+## How strongly broad light and dark patches break up a surface in the Modern finish (W4), unless its material says.
+const MACRO_STRENGTH := 0.35
+
+
+## A surface's edge-matched variants (W4: the manifest entry's "variants", each {"file", "normal_file", "orm_file"}):
+## one is picked per tile. Layer 0 is the surface's own tile. Normal maps a layer lacks are made from its tile; ORM
+## layers only when every layer has one. Variants that don't match the first tile's size and format are left out.
+static func _set_variants(m: ShaderMaterial, info: Dictionary, path: String) -> void:
+	var variants := info.get("variants", []) as Array
+	if variants.is_empty():
+		return
+	var albedo: Array[Image] = []
+	var normal: Array[Image] = []
+	var orm: Array[Image] = []
+	var all_orm := true
+	var layers: Array[Dictionary] = [{"file": path.trim_prefix("res://"), "normal_file": info.get("normal_file", ""),
+		"orm_file": info.get("orm_file", "")}]
+	for v: Variant in variants:
+		layers.append(v as Dictionary)
+	for layer: Dictionary in layers:
+		var a := _layer_image("res://" + str(layer.get("file", "")))
+		if a == null or (not albedo.is_empty() and not _same_shape(a, albedo[0])):
+			continue
+		var n := _layer_image("res://" + str(layer.get("normal_file", "")))
+		if n == null:
+			var made := normal_map("res://" + str(layer.get("file", "")))
+			n = made.get_image() if made != null else null
+		if n == null or (not normal.is_empty() and not _same_shape(n, normal[0])):
+			continue
+		var o := _layer_image("res://" + str(layer.get("orm_file", "")))
+		if o == null or (not orm.is_empty() and not _same_shape(o, orm[0])):
+			all_orm = false
+		albedo.append(a)
+		normal.append(n)
+		if o != null:
+			orm.append(o)
+	if albedo.size() < 2:
+		return
+	var a_arr := Texture2DArray.new()
+	var n_arr := Texture2DArray.new()
+	if a_arr.create_from_images(albedo) != OK or n_arr.create_from_images(normal) != OK:
+		return
+	m.set_shader_parameter("albedo_layers", a_arr)
+	m.set_shader_parameter("normal_layers", n_arr)
+	m.set_shader_parameter("layer_count", albedo.size())
+	if all_orm and orm.size() == albedo.size():
+		var o_arr := Texture2DArray.new()
+		if o_arr.create_from_images(orm) == OK:
+			m.set_shader_parameter("orm_layers", o_arr)
+			m.set_shader_parameter("use_orm", true)
+
+
+static func _layer_image(res: String) -> Image:
+	if res == "res://" or not ResourceLoader.exists(res):
+		return null
+	var tex := load(res) as Texture2D
+	return tex.get_image() if tex != null else null
+
+
+static func _same_shape(a: Image, b: Image) -> bool:
+	return a.get_size() == b.get_size() and a.get_format() == b.get_format() and a.has_mipmaps() == b.has_mipmaps()
 
 
 ## How deep the modern finish's relief reads (lit_world.gdshader normal_strength, times the surface's `relief`).
@@ -178,8 +247,9 @@ const MODERN_RELIEF := 0.9
 
 ## How each world surface takes the light in the Modern finish (W3), by the first word of this list its name holds
 ## ("interior/marble_floor" is marble): roughness (0 a mirror, 1 chalk), how much rougher its dark is than its light
-## (`spread`), how deep its relief reads (`relief`) and metal. A surface's own "material" in art/textures/manifest.json
-## wins over this, and its own "normal_file" and "orm_file" (occlusion, roughness, metal) over both.
+## (`spread`), how deep its relief reads (`relief`) and metal; `macro` (W4) is how strongly broad patches break it up
+## (MACRO_STRENGTH unless set). A surface's own "material" in art/textures/manifest.json wins over this, and its own
+## "normal_file" and "orm_file" (occlusion, roughness, metal) over both.
 const MATERIALS: Array[Array] = [
 	["marble", {"roughness": 0.15, "spread": 0.3, "relief": 0.5}],
 	["black_stone", {"roughness": 0.25, "spread": 0.4, "relief": 0.6}],
@@ -269,12 +339,20 @@ static func cel_checker(a: String, b: String, line: String) -> ShaderMaterial:
 	return m
 
 
+## Where the screen pass draws among blended things: before all of them (they draw at 0 and above).
+const POST_PRIORITY := -1
+
+
 ## A full-screen quad that runs the outline + palette pass. Parent it to the active camera.
 static func make_post_process() -> MeshInstance3D:
 	var quad := QuadMesh.new()
 	quad.size = Vector2(2, 2)
 	var mat := ShaderMaterial.new()
 	mat.shader = POST_SHADER
+	# First in the transparent pass: the pass redraws the whole screen from the copy taken before that pass, so
+	# anything blended drawn ahead of it would be painted over (a 3D piece fading in front of the party vanished
+	# instead of ghosting). Everything blended now draws over the finished picture.
+	mat.render_priority = POST_PRIORITY
 	mat.set_shader_parameter("palette_tex", PALETTE_TEX)
 	mat.set_shader_parameter("palette_size", palette_size())
 	mat.set_shader_parameter("outline_color", color("void"))
@@ -293,9 +371,14 @@ static func make_post_process() -> MeshInstance3D:
 
 
 ## The post pass for the current style: the palette snap and flat bands for classic, smooth and HDR for modern.
+## Modern draws no ink lines on the world (Improvement Ideas W15, the approved target frames): only the 2D characters
+## keep their ink (their own shader), so they stand apart from the lit 3D world. The post shader can still draw light
+## silhouettes only (`outline_creases` off, `outline_strength` under 1) should the world want a little line back.
 static func style_post(mat: ShaderMaterial) -> void:
 	var m := modern()
 	mat.set_shader_parameter("quantize", not m)
 	mat.set_shader_parameter("soft_bands", m)
 	mat.set_shader_parameter("keep_hdr", m)
+	mat.set_shader_parameter("outlines", not m)
+	mat.set_shader_parameter("tone_split", m)
 	mat.set_shader_parameter("outline_width", 1.2 if m else 1.5)

@@ -76,6 +76,8 @@ endif
 if not name:liriel_dawnsong
   interject class:cleric: Go gently. Nobody will lock that door again.
 endif
+approve liriel_dawnsong +4 godrick_pendlebrook +3 thistle +2 wren_featherfoot +2 kip_smudgewick +2 ratatoille +2: You laid Rose and Thorn to rest
+inspire name:liriel_dawnsong: sent two children on toward the dawn
 -> END
 
 ~ crypt_walter
@@ -90,6 +92,7 @@ endif
 ~ walter_lullaby
 Narrator: The tune goes thin and strange in the stone gallery, and nothing answers. You decide that is the right answer.
 interject name:wren_featherfoot: There. Somebody sang it for you. Sorry it took so long.
+approve wren_featherfoot +2 liriel_dawnsong +1: You sang a forgotten baby his lullaby
 -> END
 
 ~ cult_ledger

@@ -71,6 +71,8 @@ set victor_circle_flaw_known
 interject class:wizard: Your binding arcs are lovely. Your destination glyph, however, describes the absence of a place. Very precisely. It's a beautiful description of nowhere.
 Victor: That's... no. That's not... let me see.
 Narrator: He looks for a long time. The furious boy goes out of his face and leaves a frightened one.
+inspire class:wizard: read the flaw in a boy's teleportation circle
+approve ratatoille +1: You talked shop with Victor
 -> menu
 
 ~ flaw
@@ -80,6 +82,7 @@ Victor [afraid]: Then there's nowhere. It isn't broken. There's just nowhere for
 Victor: Fine. Fine! I won't step in it. I wasn't going to anyway. Not today.
 Victor: Take this. I copied it out of the book. It's the only spell in there that ever did what it said.
 give spell_scroll_level_1
+approve ratatoille +2 liriel_dawnsong +1: You showed Victor why his circle goes nowhere
 -> END
 
 ~ persuade_ok
@@ -88,6 +91,7 @@ quest victors_circle persuaded
 Victor: ...Fine. I'll leave it. Until I've worked out what's wrong with it. Which might be a while. Which might be never. Are you happy?
 interject tag:cheerful: Very.
 Victor: That makes one of us.
+approve liriel_dawnsong +1 ratatoille +1: You talked Victor out of stepping into his circle
 -> END
 
 ~ persuade_fail
@@ -100,6 +104,7 @@ Narrator: He turns his back and starts redrawing a line that didn't need redrawi
 set victor_circle = "encouraged"
 Victor [smile]: Finally. Somebody who understands. I'm close. A few more nights. When it's done, I'll be gone, and nobody in this house will ever make me wave at anything again.
 interject class:cleric: We'll regret that.
+approve liriel_dawnsong -2 godrick_pendlebrook -1 ratatoille -1: You helped Victor finish a circle that goes nowhere
 -> END
 
 ~ break
@@ -109,6 +114,7 @@ attitude victor_vallakovich hostile
 Narrator: You drag your boots through the chalk. The glow sputters along the lines and goes out, like a fuse that has been stamped on.
 Victor [angry]: Six weeks! Six weeks of work! Do you know how hard it is to get chalk in Barovia?
 Victor: Get out. Get out of my attic. I hope you're stuck here forever. I hope you are.
+approve ratatoille -2 liriel_dawnsong +1: You scuffed out six weeks of Victor's chalk
 -> END
 
 ~ ally

@@ -139,6 +139,7 @@ Abbot: Nor am I, hunter. Let us both live with not being sure.
 endif
 Abbot: Take what is in the sacristy. Keep this house open for the Belviews, if you can. They did not ask for any of it.
 give potion_of_healing 2
+approve liriel_dawnsong +5 godrick_pendlebrook +2 wren_featherfoot +1 kip_smudgewick +1 ratatoille +1: You brought an angel back to himself
 -> the_end
 
 ~ wedding
@@ -159,6 +160,7 @@ if guest:ezmerelda
 interject guest:ezmerelda: I'm going to pretend I didn't watch that. I'm a very good pretender.
 endif
 Vasilka: Thank you for coming to my wedding. I am told I will be very happy. I will try.
+approve liriel_dawnsong -6 godrick_pendlebrook -5 thistle -3 wren_featherfoot -3 kip_smudgewick -3 ratatoille -2: You stood back and let the Abbot give Vasilka to the devil
 -> the_end
 
 ~ stop
@@ -167,6 +169,7 @@ Narrator: He steps back from the bier. He doesn't look at you. He looks at her.
 Abbot: Vasilka. Child. Defend your wedding.
 Narrator: She rises from the bier in one smooth movement, like a dancer, and the Belviews reach under their rags for cleavers and pruning hooks.
 Vasilka: I am sorry. I am told this is important.
+approve godrick_pendlebrook +3 liriel_dawnsong +2 thistle +2 wren_featherfoot +1: You stopped the Abbot's wedding
 combat bride_defends
 
 ~ kneeling
@@ -201,6 +204,7 @@ Narrator: Days later, the Belviews will say he went down the mountain once, at d
 set ilya_fate = "healed"
 quest the_burgomasters_son healed
 endif
+approve wren_featherfoot +1: You left the Abbot alone with what he'd done
 -> the_end
 
 ~ kill_kneeling
@@ -212,6 +216,7 @@ Narrator: When the blow falls there's no blood, only light, pouring out of him l
 if guest:ezmerelda
 interject guest:ezmerelda: That's done, then. I thought it would feel like more.
 endif
+approve liriel_dawnsong -4 godrick_pendlebrook -3 wren_featherfoot -2 kip_smudgewick -1 thistle +1: You struck the Abbot down as he knelt
 -> the_end
 
 ~ kill_now
@@ -262,11 +267,13 @@ Narrator: Across the courtyard in the wards, the stitched bride he never finishe
 set vasilka_fate = "laid_to_rest"
 Vasilka: Rest. Yes. I can do that. I was very good at it, before.
 Narrator: She lies down on the bier and smooths her dress and closes her eyes, and does not open them again.
+approve liriel_dawnsong +2 godrick_pendlebrook +1: You told Vasilka she could rest
 -> the_end
 
 ~ vasilka_left
 set vasilka_fate = "abandoned"
 Narrator: You leave her there. When you look back from the door she's still standing, hands folded, turned toward the empty altar step, waiting.
+approve liriel_dawnsong -1: You left Vasilka standing at the altar, waiting
 -> the_end
 
 ~ ireena_waiting

@@ -61,6 +61,7 @@ set bella_fled
 Narrator: For a moment the pretty face forgets to be pretty. Then it remembers, and smiles, and that is worse.
 Bella [angry]: Offalia. The mill. To Offalia. After three hundred years of wrapping. Then the old crust can choke on her oven, and you with her.
 Narrator: She takes one step toward you and the next step into nothing, and she's gone. Far down the hill, a little later, something shrieks, and every raven in the oak goes up at once.
+approve wren_featherfoot +1 thistle +1: You turned one hag against another with a well-placed lie
 -> END
 
 ~ turn_fail
@@ -71,6 +72,7 @@ Bella [sly]: But what a sweet little lie. I'll tell Mother you tried it. She'll 
 
 ~ refuse
 Bella: Then you'll meet the whole family together, and I'll have to help, and I'll ladder my stockings. Pity.
+approve kip_smudgewick +2 liriel_dawnsong +2 godrick_pendlebrook +1: You told Bella there'd be no deals with hags
 -> END
 
 ~ pact
@@ -86,6 +88,7 @@ interject name:kip_smudgewick: Said. Witnessed. No small print, which is what wo
 else
 interject tag:blunt: Said. And there's one fewer of them to fight.
 endif
+approve liriel_dawnsong -3 kip_smudgewick -2 godrick_pendlebrook -2 thistle -1: You struck a bargain with a hag
 -> END
 
 ~ waiting
@@ -112,12 +115,14 @@ endif
 set soul_bag_given
 Narrator: She takes the bags down herself, one at a time, and counts them, and her lips move as she counts.
 Bella [smile]: Honest heroes. How very rare. I'll send you a pastry at midwinter. Don't eat it.
+approve liriel_dawnsong -3 godrick_pendlebrook -1 kip_smudgewick +1: You handed Bella the bags of stolen souls, to keep your word
 -> old_bonegrinder/aftermath:reckon
 
 ~ bags_ok
 set soul_bag_freed
 Narrator: She weighs it, and you, and decides a mill in the hand is worth more than a fight she might lose. The bags split under the knife like ripe plums, and something goes out past you, many somethings, all in a hurry to be elsewhere.
 Bella [angry]: Fine. Keep your conscience. It'll be the only warm thing you own by winter.
+approve liriel_dawnsong +3 godrick_pendlebrook +2 kip_smudgewick +1 wren_featherfoot +1: You cut open the hags' soul bags under Bella's nose
 -> old_bonegrinder/aftermath:reckon
 
 ~ bags_fail
@@ -126,6 +131,7 @@ Bella [angry]: No. A bargain is a bargain, darlings, and you've just broken your
 
 ~ betray
 Bella [smile]: Oh, I did wonder. Heroes. You always swear you're different.
+approve thistle +1 wren_featherfoot +1 godrick_pendlebrook -1 kip_smudgewick -1: You broke your word to Bella
 -> betray_fight
 
 ~ betray_fight

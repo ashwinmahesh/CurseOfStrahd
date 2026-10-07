@@ -34,6 +34,7 @@ Narrator: She lies under her linen as she always has. Nobody comes to turn the s
 
 ~ cover
 Narrator: You draw the sheet up over her face. It is the first thing in this house that has felt like a funeral.
+approve liriel_dawnsong +1: You covered Vasilka's face
 -> END
 
 ~ abandoned
@@ -45,4 +46,5 @@ Vasilka: Good evening. Is it time yet? Nobody has said. I am waiting very well. 
 set vasilka_fate = "laid_to_rest"
 Vasilka: Rest. Yes. I was very good at that, before.
 Narrator: She lies down on the altar step and smooths her dress and closes her eyes, and does not open them again.
+approve liriel_dawnsong +2 godrick_pendlebrook +1: You told Vasilka she could rest
 -> END

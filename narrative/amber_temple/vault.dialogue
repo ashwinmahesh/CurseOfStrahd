@@ -155,9 +155,11 @@ if flag.dark_gifts_taken >= 1
 Narrator: Whoever carries a gift still feels it, warm under the skin. The seal keeps the vestiges in. It can't take back what they have already given.
 endif
 Exethanter: There. Done. I think I'll sit down now. I think I'll sit down for a very long time.
+approve liriel_dawnsong +4 kip_smudgewick +4 godrick_pendlebrook +2 wren_featherfoot +1 ratatoille +1: You sealed the Amber Temple so nobody bargains there again
 -> END
 
 ~ leave_open
 set amber_seal_decided
 Exethanter: Of course. Practical. We said that too, the first year. I'll just... sweep.
+approve liriel_dawnsong -2 kip_smudgewick -2 godrick_pendlebrook -1: You left the Amber Temple open, in case you need what's there
 -> END

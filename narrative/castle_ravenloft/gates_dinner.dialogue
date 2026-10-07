@@ -134,6 +134,8 @@ Strahd: Do keep looking. I am told I am worth it.
 set crg_dinner_grace_said
 Narrator: The grace comes out steady. Every candle on the table leans away from the speaker at once, then stands straight again.
 Strahd: How brave. Your god has not eaten at this table in a very long time. Do tell him the soup was excellent.
+inspire class:cleric: said grace at Strahd's own table
+approve liriel_dawnsong +2 ratatoille +1: You said grace at Strahd's table
 -> table
 
 ~ thanks
@@ -148,6 +150,7 @@ Strahd: Keep me interested. In this house, it is the only thing that has ever ke
 endif
 Strahd: The house is yours tonight. Do not let me keep you.
 Narrator: He bows, and between one flicker of the candles and the next, the bench at the organ is empty. Somewhere above, a door closes.
+approve kip_smudgewick +1 ratatoille +1 liriel_dawnsong +1 thistle -1: You thanked Strahd for his hospitality
 -> END
 
 ~ affront
@@ -155,4 +158,5 @@ set castle_dinner = "affront"
 quest dinner_at_castle_ravenloft affront
 Narrator: Steel clears the table's edge. A glass goes over. Strahd watches the wine run toward his sleeve, and moves the sleeve.
 Strahd: Ah. And the evening was going so well.
+approve thistle +2 kip_smudgewick -2 ratatoille -2: You drew steel across Strahd's dinner table
 combat crg_dinner_affront
