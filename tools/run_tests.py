@@ -6,6 +6,9 @@ longest first, and takes the next one no other process has claimed, so no proces
 a queue. Times come from .godot/test_times.json (this checkout's last runs, written after each run) or else
 tests/support/test_times.json (a copy kept in the repo for fresh checkouts); a file with no time yet goes first.
 
+A file longer than half a process's share goes out a test at a time instead (the runner's --split), so the
+playthrough tests and the spell sweep run side by side rather than setting the finish.
+
 Output comes a file at a time as each finishes, with that file's lines together. The summary adds up every process,
 and the run fails if a test failed, a process stopped before finishing its file, a file never ran, or no tests ran.
 
@@ -157,11 +160,12 @@ class Worker:
                 self.out.block(block, self.current)  # anything printed between files (start-up, mostly)
                 block = []
                 self.current = line[len("@@ start "):]
-                self.files.append(self.current)
+                if self.current not in self.files:
+                    self.files.append(self.current)
                 continue
             if line.startswith("@@ done "):
                 name, ms = line[len("@@ done "):].rsplit(" ", 1)
-                self.times[name] = int(ms)
+                self.times[name] = self.times.get(name, 0) + int(ms)  # a split file comes a test at a time
                 self.out.block(block, self.current)
                 block = []
                 self.current = ""
@@ -197,19 +201,27 @@ def main() -> int:
         wanted = [f for f in a.files.split(",") if f]
         missing = [f for f in wanted if f not in files]
         files = [f for f in wanted if f in files]
-    jobs = max(1, min(a.jobs or default_jobs(), len(files) or 1))
+    wanted = a.jobs or default_jobs()
+    jobs = max(1, min(wanted, len(files) or 1))
+    split = []
     if jobs > 1:
         # Longest first; a file with no time yet goes before the rest, since it might be long. One process keeps the
         # order it was given, so JOBS=1 FILES=... replays a process's run exactly.
         times = load_times()
         files.sort(key=lambda f: (f in times, -times.get(f, 0), f))
+        # A file longer than half a process's share is handed out a test at a time, so it doesn't set the finish.
+        share = sum(times.get(f, 0) for f in files) / jobs
+        split = [f for f in files if times.get(f, 0) > share / 2]
+        if split:
+            jobs = max(1, wanted)   # a split file's tests can keep more processes busy than there are files
 
     base = [a.godot, "--path", ROOT, "--headless", "--quit-after", "100000", "res://tests/test_runner.tscn", "--"]
     if a.only:
         base.append("--only=" + a.only)
     claim = tempfile.mkdtemp(prefix="strahd_tests_")
-    print("make test: %d file%s in %d process%s%s" % (len(files), "" if len(files) == 1 else "s", jobs,
-          "" if jobs == 1 else "es", "" if a.jobs else " (JOBS=n to change)"), flush=True)
+    print("make test: %d file%s in %d process%s%s%s" % (len(files), "" if len(files) == 1 else "s", jobs,
+          "" if jobs == 1 else "es", "" if a.jobs else " (JOBS=n to change)",
+          "; a test at a time from " + ", ".join(split) if split else ""), flush=True)
     started = time.monotonic()
     out = Output()
     workers: list[Worker] = []
@@ -223,7 +235,8 @@ def main() -> int:
     signal.signal(signal.SIGTERM, stop)
     try:
         for n in range(jobs):
-            workers.append(Worker(n + 1, base + ["--claim=" + claim, "--files=" + ",".join(files)], out))
+            workers.append(Worker(n + 1, base + ["--claim=" + claim, "--files=" + ",".join(files)]
+                                  + (["--split=" + ",".join(split)] if split else []), out))
         for w in workers:
             w.thread.join()
     except KeyboardInterrupt:
@@ -234,7 +247,8 @@ def main() -> int:
 
     ran: dict[str, int] = {}
     for w in workers:
-        ran.update(w.times)
+        for name, ms in w.times.items():
+            ran[name] = ran.get(name, 0) + ms
     save_times(ran)
     passed = sum(w.passed for w in workers)
     failed = sum(len(w.failed) for w in workers)

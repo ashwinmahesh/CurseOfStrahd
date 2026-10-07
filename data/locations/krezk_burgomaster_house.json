@@ -77,7 +77,8 @@
           20,
           4
         ]
-      ]
+      ],
+      "private": "dmitri_krezkov"
     }
   ],
   "spawns": {
@@ -243,7 +244,8 @@
       "gold": 15,
       "model": "chest_painted",
       "lock_dc": 15,
-      "flag": "krezkov_chest_robbed"
+      "flag": "krezkov_chest_robbed",
+      "owner": "anna_krezkova"
     },
     {
       "id": "krezkov_larder",
@@ -263,7 +265,8 @@
         }
       ],
       "gold": 0,
-      "model": "cupboard"
+      "model": "cupboard",
+      "owner": "dmitri_krezkov"
     }
   ],
   "lights": [

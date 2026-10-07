@@ -985,6 +985,90 @@
       "dialogue": "companions/kestrel:jory",
       "when": "name:ilse_varga and flag.kestrel_jory_met",
       "facing": "east"
+    },
+    {
+      "npc": "vallaki_goodwife",
+      "cell": [
+        8,
+        19
+      ],
+      "dialogue": "vallaki/townsfolk:goodwife",
+      "when": "day",
+      "path": [
+        [
+          16,
+          22
+        ],
+        [
+          30,
+          23,
+          5
+        ],
+        [
+          38,
+          24
+        ],
+        [
+          30,
+          25
+        ]
+      ],
+      "pause": 2
+    },
+    {
+      "npc": "vallaki_carter",
+      "cell": [
+        12,
+        33
+      ],
+      "dialogue": "vallaki/townsfolk:carter",
+      "when": "day",
+      "path": [
+        [
+          24,
+          34
+        ],
+        [
+          34,
+          33,
+          4
+        ],
+        [
+          26,
+          25
+        ],
+        [
+          14,
+          25,
+          4
+        ]
+      ]
+    },
+    {
+      "npc": "vallaki_lamplighter",
+      "cell": [
+        10,
+        11
+      ],
+      "dialogue": "vallaki/townsfolk:lamplighter",
+      "when": "night",
+      "path": [
+        [
+          36,
+          11,
+          4
+        ],
+        [
+          42,
+          20,
+          4
+        ],
+        [
+          20,
+          21,
+          4
+        ]
+      ]
     }
   ],
   "encounters": [
@@ -2057,6 +2141,30 @@
         "id": "izek_obsession",
         "stage": "izek_slain"
       }
+    },
+    {
+      "id": "watch_arrest",
+      "trigger": "dialogue",
+      "text": "The watch closes in, spears levelled.",
+      "monsters": [
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            45,
+            19
+          ],
+          "name": "Watchman 1"
+        },
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            46,
+            19
+          ],
+          "name": "Watchman 2"
+        }
+      ],
+      "surprise": ""
     }
   ],
   "narration": {

@@ -17,7 +17,8 @@ extends Node
 ##   presets, several rounds over, since other work on the machine makes one reading noisy; LOOK_BENCH=pairs what one
 ##   change saves, switching it on and off in quick turns (_bench_pairs), the steadiest under load.
 
-## Each shot: the place, the hour, where the party stands (empty: the place's own spawn) and the camera.
+## Each shot: the place, the hour, where the party stands (empty: the place's own spawn) and, optionally, a square
+## it walks to before the shot.
 const SHOTS := {
 	"village_dusk": {"loc": "village_of_barovia", "hour": 18},
 	"village_night": {"loc": "village_of_barovia", "hour": 23},
@@ -27,6 +28,19 @@ const SHOTS := {
 	"castle_hall": {"loc": "castle_ravenloft_main_floor", "cells": [[25, 8], [26, 8], [25, 9], [26, 9]]},
 	"tser_pool": {"loc": "tser_pool", "hour": 18},
 	"death_house_den": {"loc": "death_house_ground", "cells": [[4, 5], [5, 5], [4, 6], [5, 6]]},
+	"tavern": {"loc": "blood_of_the_vine"},
+	"lake_dusk": {"loc": "lake_zarovich", "hour": 18, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]]},
+	"lake_night": {"loc": "lake_zarovich", "hour": 23, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]]},
+	"tser_pool_water": {"loc": "tser_pool", "hour": 23, "cells": [[15, 9], [16, 9], [15, 10], [16, 10]]},
+	"berez_night": {"loc": "berez", "hour": 23, "cells": [[24, 6], [25, 6], [24, 7], [25, 5]]},
+	"vallaki_rain": {"loc": "vallaki", "hour": 18},
+	"castle_gates_storm": {"loc": "castle_ravenloft_gates", "hour": 23, "cells": [[19, 30], [20, 30], [19, 29], [20, 29]]},
+	"krezk_snow": {"loc": "krezk", "hour": 12, "cells": [[14, 7], [15, 7], [14, 8], [15, 8]]},
+	"abbey_snow": {"loc": "abbey_of_st_markovia", "hour": 12, "walk": [8, 20], "zoom": 9},
+	"baratok_snow_walk": {"loc": "mount_baratok", "hour": 12, "walk": [17, 18], "zoom": 9},
+	"berez_mud_walk": {"loc": "berez", "hour": 12, "cells": [[2, 5], [2, 6], [3, 5], [3, 6]], "walk": [8, 6], "zoom": 8},
+	"village_mud_walk": {"loc": "village_of_barovia", "hour": 18, "cells": [[14, 27], [15, 27], [14, 28], [15, 28]],
+		"walk": [14, 22], "zoom": 8},
 	"castle_dining": {"loc": "castle_ravenloft_main_floor", "cells": [[7, 10], [8, 10], [7, 11], [8, 11]]},
 }
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -54,6 +68,21 @@ func capture_shots(tool: Node, out: String) -> void:
 		var shot := SHOTS[id] as Dictionary
 		_build(shot)
 		await tool.call("wait_frames", 45)
+		if shot.has("walk"):
+			# Walk the party somewhere first (footprints, a trail through the weather).
+			var to := shot["walk"] as Array
+			var from := view.leader().cell
+			var walked := view.walk_to(Vector2i(int(to[0]), int(to[1])))
+			await tool.call("wait_frames", 240)
+			print("look %s: walked %s from %s to %s, %d footprints" % [id, walked, from, view.leader().cell,
+				view.atmosphere._prints.size()])
+			# Look back along the way they came.
+			view.rig.follow = null
+			view.rig.global_position = (view.board.cell_center(from) + view.board.cell_center(view.leader().cell)) / 2.0
+			view.rig.snap_to_target()
+		if shot.has("zoom"):
+			view.rig.distance = float(shot["zoom"])
+			await tool.call("wait_frames", 30)
 		if OS.get_environment("LOOK_BENCH") == "presets":
 			await _bench_presets(tool, id)
 			continue
@@ -72,8 +101,8 @@ func capture_shots(tool: Node, out: String) -> void:
 		Engine.max_fps = 60
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 		var calls := RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
-		print("look %s %s: %.2f ms a frame uncapped (%d fps), %d draw calls" % [Look.style(), id, ms, int(1000.0 / ms),
-			calls])
+		print("look %s %s: %.2f ms a frame uncapped (%d fps), %d draw calls, %d lights" % [Look.style(), id, ms,
+			int(1000.0 / ms), calls, view.find_children("*", "OmniLight3D", true, false).size()])
 		await tool.call("wait_frames", 10)
 		tool.call("_shot", "%s_%s.png" % [out, id])
 
@@ -122,6 +151,17 @@ func _build(shot: Dictionary) -> void:
 				t.set_meta("fade", 0.72)
 				ModelPiece.set_fade(t, 0.72)
 		view.set_process(false)
+	if OS.get_environment("LOOK_SDFGI") != "":
+		var env := view.atmosphere.env
+		env.sdfgi_enabled = true
+		env.sdfgi_use_occlusion = true
+		env.sdfgi_cascades = 4
+		env.sdfgi_min_cell_size = 0.2
+		env.sdfgi_bounce_feedback = 0.5
+		env.sdfgi_energy = 1.0
+		env.ssil_enabled = false
+	if OS.get_environment("LOOK_WET") != "":
+		RenderingServer.global_shader_parameter_set(&"world_wet", float(OS.get_environment("LOOK_WET")))
 	var off := OS.get_environment("LOOK_OFF").split(",", false)
 	if "msaa" in off:
 		get_viewport().msaa_3d = Viewport.MSAA_DISABLED
@@ -269,7 +309,14 @@ func _bench_pairs(tool: Node, id: String) -> void:
 	var sun := view.atmosphere.sun
 	var vp := get_viewport()
 	# [name, on, off]: what to set for the change on, and for it off.
+	var env := view.atmosphere.env
 	var changes: Array[Array] = [
+		["SDFGI (vs SSIL)", func() -> void:
+			env.sdfgi_enabled = true
+			env.ssil_enabled = false,
+			func() -> void:
+				env.sdfgi_enabled = false
+				env.ssil_enabled = Graphics.bounce()],
 		["texture noise (vs hashed)", func() -> void: post.set_shader_parameter("fast_noise", true),
 			func() -> void: post.set_shader_parameter("fast_noise", false)],
 		["flat floors cast no shadow", func() -> void:

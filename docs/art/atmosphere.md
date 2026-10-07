@@ -17,6 +17,7 @@ grade.
 | The land around the map and over its empty squares: hills, forest, roads and lakes running on | `world/look/atmosphere_land.gd` (`AtmosphereLand`) |
 | The Modern look's trees and plants (docs/art/plants.md) | `world/look/flora.gd` (`Flora`), `art/plants/` |
 | The Modern look's shaped ground: the walked ground's hollows and ruts, banks under the woods | `world/look/ground_relief.gd` (`GroundRelief`) |
+| What lies past the edge when the camera tilts up: the mountains, Castle Ravenloft on its crag, Lake Zarovich | `world/look/vista.gd` (`Vista`), `art/vistas/`, `shaders/atmosphere/vista*.gdshader` |
 | The land lane's before-and-after shots: trees and plants, ground, vistas | `tools/capture/land_capture.tscn` |
 | Weather: leaves, rain, snow, wisps, dust, crows, chimney smoke, embers, lit windows | `world/look/atmosphere_weather.gd` (`AtmosphereWeather`) |
 | Mist, the Mists' wall, cloud shadows, ground patches, grade, vignette, then outlines and the palette snap | `shaders/post/strahd_post.gdshader` |
@@ -68,7 +69,10 @@ anyone touching this file.
   Empty squares inside a map (Krezk's approach, the Abbey's road) are hillside too, unless the mood says they are a
   drop (`"void": "drop"`: the castle's roofs and chasms, Tsolenka's gorge). No tree of the land stands within two
   squares of anywhere people can walk.
-- **Water.** Lakes, rivers, pools and marsh drift in two layers of the water texture, deeper water darker, foam
+- **Water.** In the Modern finish (W14, `shaders/world/lit_water.gdshader`) water deepens smoothly from the shore,
+  small ripples drift with the current and bend the light, so the moon and the lamps leave glints on it and the
+  reflections waver, the sky's light lies on it more at a glancing angle, soft broken foam laps along the shore, and
+  rain rings it in wet weather (W12). In Classic, lakes, rivers, pools and marsh drift in two layers of the water texture, deeper water darker, foam
   lapping along the shore, thin highlight lines riding the current and the sky's light on the surface. Water keeps
   its own colours through the grade (it marks itself in the normal buffer for the screen pass), so a lake never
   turns the colour of the road. A row of the map's frame trees standing across a lake becomes open water (the rules
@@ -80,6 +84,15 @@ anyone touching this file.
   in a blizzard; will-o'-wisps and fireflies after dark; dust hanging in shut-up rooms; crows circling overhead;
   chimney smoke bent by the wind; sparks over open fires; candlelight spilling from lit windows after dark;
   lightning flashes in a storm (and through the castle's spire windows).
+- **Weather on surfaces** (W12, Modern; `shaders/world/weather_surface.gdshaderinc`, the global uniforms
+  `world_wet`, `world_snow`, `world_time` and `world_sky` that Atmosphere sets from the mood's weather outdoors):
+  rain darkens and glosses everything and its colour deepens, puddles gather in the low places of level ground,
+  ringing with drops and holding the sky's light, and the sun and moon leave almost no highlight under rain cloud, so
+  wet stone glistens in the lamps; snow settles on roofs, ledges and wall tops even when light, and lies on the ground
+  in drifts that join up as it gets heavier (Krezk patchy, the Abbey half covered, the mountains white). The party
+  leaves footprints (decals with a dip and, in mud, standing water) where the ground takes them: snow once it lies
+  (`SNOW_GROUND`), mud, marsh and bare earth, grass and roads in the rain; a print every `STRIDE`, the last
+  `MAX_PRINTS` kept. The pathfinder steers round difficult ground, so prints in mud are rarer than in snow.
 - **Grade.** In the Modern finish (W16) the shade takes the place's own cool colour and loses some of its colour while
   lamplight keeps its warm one, so light pools warm against cool, dark shade (the chosen direction: A's effects in
   B's tone): night blue by default, blue-grey on an overcast day, deep night blue indoors; a mood's `tone` gives
@@ -99,21 +112,59 @@ them and they stay crisp. On this Mac, Vallaki in the rain, the castle's storm a
 ## Ground with shape in the Modern finish
 
 Improvement Ideas W11. On an outdoor wild map (ArenaBoard.WILD) the ground people walk on is drawn as one shaped
-skin instead of flat squares: shallow hollows, a fine unevenness, and two wheel ruts along the shortest walk between
-each two ways out on the map's edge. The skin never rises above the squares' floor level and is never deeper than
-`GroundRelief.DEEPEST`, so tokens, grid overlays and spell templates still stand on the same 5 ft grid
+skin instead of flat squares, with shallow hollows. It never rises above the squares' floor level and is never deeper
+than `GroundRelief.DEEPEST`, so tokens, grid overlays and spell templates still stand on the same 5 ft grid
 (`floor_y`/`cell_center` are untouched; real heights are F4's), and it settles flat round any square drawn flat (a
-prop's, a door's, an exit's, a raised one, water). The board's own floor boxes there are lowered out of sight under it
-(`ArenaBoard.floor_box`, `floor_material`). Under the map's woods (tree squares) the ground rises into banks with
-mounds on them, and the land past the edge starts on the banks and settles into its hills; the roads out of the map
-carry the same crown, ruts and verges. The trees and plants stand on all of it. Towns keep their streets, rooms and
-yards their floors, and Classic stays flat.
+prop's, a door's, an exit's, a raised one, water). The board's own floor boxes there stop drawing themselves (render
+layers 0; `ArenaBoard.floor_box`, `floor_material`); a trap's square keeps its box, so a pit still opens it. Under the
+map's woods (tree squares) the ground rises into banks with mounds on them, and the land past the edge starts on the
+banks and settles into its hills. The trees and plants stand on all of it. Towns keep their streets, rooms and yards
+their floors, and Classic stays flat. `GroundRelief.roads()` lays the shortest walks between the map's ways out; the
+surfaces lane's wheel-rut decals (W10) follow them.
+
+Hidden until found: the skin, the banks and the map's ground plants leave out squares HiddenAreas hides
+(AtmosphereLand's HiddenWatch redraws them when a secret door is found).
+
+A place is built on every arrival, so all of it is worked out on one coarse grid of points (two a square), from
+distance fields over flat arrays, and indexed into a few meshes; and since a place comes out the same every time, what
+a build works out (the land's fields and mesh, the relief, the trees, the plants) is kept for the newest eight places
+and drawn again from that on the next visit. `AtmosphereLand.build_ms` says what each phase took.
 
     make capture SCENE=res://tools/capture/land_capture.tscn NAME=land/clay FRAMES=10 \
       LAND_SHOTS=crossroads LAND_CLAY=1     # the shaped ground in plain clay; LAND_NO_RELIEF=1 for without
 
-The shape is gentle: on today's busy ground textures it shows most in low light, and wheel-rut decals (W10) can follow
-`GroundRelief`'s roads. Not done: a hidden area's ground outdoors stays drawn (HiddenAreas hides the lowered boxes).
+## Vistas in the Modern finish
+
+Improvement Ideas W13, the vista half (owner pick, 2026-10-07: "tilt up when zoomed out"). At its fixed 40° the play
+camera never sees the horizon, so past its farthest zoom the wheel tilts it toward the horizon over four more steps
+(`CameraRig.horizon`, eased by `horizon_shown`): it comes down to just over the treetops and roofs and its pitch rises
+to -8°, so it looks out over the party, low in the frame, to what lies past the map's edge across the top. Zooming
+back in undoes the tilt first. Play zoom is unchanged, a distance a tool sets never tilts it, and Classic (frozen)
+never tilts.
+
+What it sees (`Vista`, built with the land in the Modern finish, placed from `art/vistas/vistas.json`):
+- **The mountains round the valley**: a ring far past the map painted as four ridges by `vista.gdshader`, the
+  farthest palest, with light along the crests, snow on the high peaks and a fringe of spruce on the nearer ridges.
+  Each set of plants (`art/plants/flora.json`) has its own range: rounded forested hills round the Svalich woods,
+  tall snowy peaks at Krezk and the Abbey, white ones by Mount Baratok, low hills over the marsh at Berez.
+- **Castle Ravenloft on its crag**, a painted backdrop (`art/vistas/castle_ravenloft.png`, Gemini with
+  `art/prompts/vista_preamble.txt`, cut out by `tools/art/build_vistas.py`) at its true bearing from each place on
+  the travel art, smaller and deeper in the haze the farther off, its foot sunk in the mist, its lit windows warm.
+  Never seen from the castle's own maps.
+- **Lake Zarovich** stretching away from the places near it (Vallaki, the lake shore, Van Richten's tower, the
+  werewolf den, the Wizard of Wines).
+
+They draw after the screen pass, in a blended pass (`Look.POST_PRIORITY` draws first), so the land's fade into the
+haze doesn't swallow them while nearer land, trees and houses still hide them; each frame they take the haze colour the
+screen pass gives the far land (`land_color`), so they sit in the same air at every hour. In play they lie past the
+camera's far plane and cost nothing; the far plane opens out as the camera tilts. While tilted, leaves and wood within
+`near_fade` units of the camera thin away (`foliage.gdshader`, `bark.gdshader`).
+
+    make capture SCENE=res://tools/capture/land_capture.tscn NAME=land/tilt FRAMES=10 \
+      LAND_SHOTS=village_tilt,road_tilt,crossroads_tilt,vallaki_tilt,krezk_tilt   # LAND_NO_DOF=1: without the far blur
+
+Not done: the sky above the ridges is the screen pass's haze until the sky half of W13 (lane 6); the far blur of the
+depth of field softens the vistas when tilted.
 
 ## Edges, shadows and the graphics presets in the Modern finish
 
@@ -149,6 +200,13 @@ casting a shadow was a third of the village's frame (they no longer do: nothing 
 their shadows, the screen pass (its mist noise now comes from a texture, 1 to 2 ms cheaper outdoors), MSAA, light
 bounced off walls and the depth of field. Contact shadows, reflections, glow, haze and SMAA are cheap.
 
+**Bounce light outdoors (W18, tried and left off).** Godot's real-time global illumination (SDFGI, the only kind that
+needs no baking) was tried in place of the screen-space bounce (SSIL) on outdoor maps, 2026-10-07: in the village it
+cost about 4.7 ms a frame more at 1080p (paired timing) and on the forest road about the same as SSIL, and the
+pictures showed little difference beyond darker tree interiors and eaves. It stays off; `LOOK_SDFGI=1` in
+look_capture turns it on to try again (after W17's 60 fps check, or if the land gets big open slopes the screen
+can't see round).
+
 **The frame meter.** F3 shows frames a second, the average and slowest frame of the last half second and the preset
 in the top left corner, orange when over the 60 fps budget (`FrameMeter`, GameSettings `frame_meter`; Graphics puts
 it on the window).
@@ -170,6 +228,15 @@ it on the window).
   their shadows are (a candle's crisp, a hearth's soft) and how strongly they light the haze; magic lights and windows
   hold steady. The nearest few flames that cast shadows sway a little with their flicker, so their shadows stir
   (`CandleFlicker`, meta `sway`; 2 on High and Medium).
+- **Strength by kind** (Modern): hearths throw half again as much light and reach further, candles, lamps and
+  torches a little more, and the party's lantern less, so a room's own lights lead (the target frames).
+- **Kit and prop flames**: candles and flames modelled into the building kit's pieces (the castle piers' sconces)
+  light the room around them; the flames are found in the piece's own mesh (`Atmosphere._light_kit_flames`), and
+  floor-level stubs and flames beside the location's own lights are left alone. Likewise the 3D props' fires and
+  candles (hearths, braziers, campfires, torches, candelabras: their `flame` and `candle` sockets in
+  art/models/manifest.json; `_light_model_flames`), unless the location's own light stands within a square.
+- **Indoor shade** (Modern) is filled a little by cool moonlight from unseen windows, readable blue-grey rather than
+  black (`INDOOR_TONE`: the ambient leans to moon blue and the moon key light is stronger).
 - **Windows indoors** are the moon or the day coming in: the key light's colour, steady, with a spot light over the
   wall beside the window down across the room (casting shadows) and a glowing cone of dusty haze along it
   (`shaders/world/light_shaft.gdshader`), hung on the window's light so they hide with it.

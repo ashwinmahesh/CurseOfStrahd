@@ -1,0 +1,15 @@
+# The Village of Barovia's few people out by day (lane 4, F2): Goodwife Petra carrying water from the well. She walks
+# her route (the location's `path`) and is indoors long before dark.
+
+~ goodwife
+if flag.burgomaster_buried
+Goodwife Petra: They say the old burgomaster's in the ground at last. Good. A man shouldn't lie in his own parlour waiting for the priest.
+-> END
+endif
+Goodwife Petra [afraid]: Strangers. Don't stand so close to the well. Folk will think you've come to poison it, and then they'll think it's my fault for talking to you.
+* Who would poison a well? -> poison
+* We'll leave you be. -> END
+
+~ poison
+Goodwife Petra: Nobody. That's the point. There's nothing left here worth the trouble. Only the water, and the walk to it, and being home before the light goes.
+-> END

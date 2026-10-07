@@ -20,7 +20,7 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              echo "Files changed since the last import: importing first."; $(IMPORT) > /dev/null 2>&1; \
              touch $(STAMP); fi
 
-.PHONY: run arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens plants
+.PHONY: run arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens plants vistas
 
 ## Imports first when scripts or assets changed since the last import (a merge can add a class_name or images that
 ## the editor cache doesn't know yet, and the game then stops at a parse error).
@@ -71,6 +71,13 @@ validate:
 ## Compiles every rules/ script standalone (no autoloads allowed there).
 lint: import
 	tools/lint_gd.sh
+
+## F1's balance tool (tools/balance/balance_sim.gd): a fight played RUNS times (20) in each difficulty mode by the
+## pregens on autopilot. ENC=<data/encounters id>, or LOCATION=<id> FIGHT=<fight id> [LEVEL=n] [PARTY="a b c d"].
+.PHONY: balance
+balance:
+	@$(FRESH)
+	$(G) --headless --script res://tools/balance/balance_sim.gd -- $(if $(ENC),--encounter=$(ENC),) $(if $(LOCATION),--location=$(LOCATION),) $(if $(FIGHT),--fight=$(FIGHT),) $(if $(LEVEL),--level=$(LEVEL),) $(if $(PARTY),"--party=$(PARTY)",) $(if $(MODES),"--modes=$(MODES)",) $(if $(RUNS),--runs=$(RUNS),) $(if $(JSON),--json=$(JSON),) $(if $(NO_WARD),--no_ward,) 2>&1 | $(LOGCHK)
 
 ## Local CI: everything main must pass before a merge (plan §4, ADR 0001).
 ci: validate lint test
@@ -171,6 +178,12 @@ plants:
 	python3 tools/art/plant_cards.py
 	$(BLENDER) -b --python blender/plants_3d.py -- $(if $(ONLY),--only $(ONLY),)
 	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
+
+## The painted backdrops past a map's edge (docs/art/atmosphere.md "Vistas"): cuts art/generated/vistas into
+## art/vistas, then imports them.
+vistas:
+	python3 tools/art/build_vistas.py
+	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
 
 ## Menu ornaments and icons (black-on-white Gemini art -> white shapes with alpha, tinted in game): make ui_art
 ui_art:
