@@ -906,6 +906,11 @@ func remove_effects_named(effect_name: String) -> void:
 func begin_concentration(source_id: String, label: String) -> Concentration:
 	var old := concentration
 	var conc := Concentration.new(self, source_id, label)
+	# A spell's Concentration lasts no longer than the spell (Protection from Evil and Good: 10 minutes).
+	if compendium != null:
+		var sd := compendium.spell_data(source_id)
+		if not sd.is_empty():
+			conc.set_duration(sd.get("duration", {}) as Dictionary)
 	concentration = conc
 	# Ended after the new one is in place, so whatever the old spell's end does (Shapechange's caster changing back)
 	# sees the new Concentration.
@@ -922,6 +927,9 @@ func on_turn_start(active_creature_id: String) -> void:
 	for e: Effect in effects.duplicate():
 		if (e as Effect).on_turn_start(active_creature_id):
 			remove_effect(e as Effect)
+	# A round of the caster's Concentration passes at the start of each of its turns.
+	if active_creature_id == id and concentration != null:
+		concentration.spend_rounds(1)
 
 
 func on_turn_end(active_creature_id: String) -> void:
@@ -934,6 +942,8 @@ func advance_minutes(minutes: int) -> void:
 	for e: Effect in effects.duplicate():
 		if (e as Effect).advance_minutes(minutes):
 			remove_effect(e as Effect)
+	if concentration != null:
+		concentration.spend_rounds(minutes * Effect.ROUNDS_PER_MINUTE)
 
 
 # --- Resources and rests -------------------------------------------------------------------------

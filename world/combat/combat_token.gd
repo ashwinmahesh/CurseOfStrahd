@@ -235,6 +235,10 @@ func refresh() -> void:
 		chips.append("◎ " + cr.concentration.name)
 	if combatant.hidden:
 		chips.append("Hidden")
+	# Hex, Hunter's Mark: who marked it.
+	for fx in cr.effects:
+		if fx.data.has("mark_by"):
+			chips.append(fx.name)
 	if cr.hp <= 0 and not cr.dead and cr.uses_death_saves:
 		chips.append("Stable" if cr.stable else "Dying %d✓ %d✗" % [cr.death_successes, cr.death_failures])
 	_status.text = " · ".join(chips)
