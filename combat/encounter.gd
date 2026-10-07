@@ -725,7 +725,7 @@ func run_ai_turn() -> CombatResult:
 	var c := current()
 	if c == null or (c.is_player_controlled() and not compelled(c)):
 		return CombatResult.fail("Not an AI turn")
-	if not c.can_act() and features.fleeing_from(c) == null:
+	if not c.can_act() and features.fleeing_from(c) == null and not c.creature.has_flag("transfixed"):
 		return end_turn()
 	return then(ai.play_turn(c), func() -> CombatResult:
 		if state == State.ACTIVE and current() == c:
@@ -2058,6 +2058,10 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 	if target.creature.has_flag("half_cover") and degree < CombatGrid.Cover.HALF:
 		degree = CombatGrid.Cover.HALF
 		by = "Bulwark of Force"
+	# Holy Star of Mystra: at least Three-Quarters Cover.
+	if target.creature.has_flag("three_quarters_cover") and degree < CombatGrid.Cover.THREE_QUARTERS:
+		degree = CombatGrid.Cover.THREE_QUARTERS
+		by = "Holy Star of Mystra"
 	# Sharpshooter (weapons) and Spell Sniper (spell attacks) ignore Half and Three-Quarters Cover.
 	var ranged_kind := str(option.get("kind", ""))
 	if degree in [CombatGrid.Cover.HALF, CombatGrid.Cover.THREE_QUARTERS] and not melee and \
@@ -2490,6 +2494,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 			part["amount"] = int(part["amount"]) * 2
 		details.append("Siege Monster: double damage to objects")
 	parts = damage_responses.synchronous(target, parts, details, responses_resolved)
+	parts = faerun.synchronous_damage(source, target, parts, details, responses_resolved)
 	parts = _reduce_by_dice(target, parts, details)
 	parts = _bastion(target, parts, details)
 	feature_actions.adjust_incoming(source, target, parts)

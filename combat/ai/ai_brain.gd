@@ -71,6 +71,13 @@ func play_turn(c: Combatant) -> CombatResult:
 	if c.creature.has_flag("ethereal"):
 		last_plan = {"kind": "wait", "why": "on the Ethereal Plane"}
 		return CombatResult.new()
+	# Transfix: it walks straight to the caster and does nothing else.
+	var lure := e.faerun.transfixed_by(c)
+	if lure != null:
+		last_plan = {"kind": "approach", "why": "Transfix"}
+		if e.distance(c, lure) <= 5:
+			return CombatResult.new()
+		return _approach(c, {"target": lure, "dash": false})
 	if c.creature.has_flag("indifferent"):
 		e.log.add("info", "%s doesn't care to fight (Calm Emotions)" % c.name(), c.id)
 		last_plan = {"kind": "wait", "why": "Calm Emotions"}

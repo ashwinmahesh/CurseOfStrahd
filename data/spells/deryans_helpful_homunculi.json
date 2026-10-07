@@ -4,7 +4,7 @@
   "source": {
     "book": "FRHoF",
     "checked_against": "FRHoF",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 2,
   "school": "conjuration",
@@ -29,13 +29,12 @@
     "kind": "hours",
     "amount": 8
   },
-  "summary": "Reference-only: Intangible, invulnerable helpers are proficient in Arcana and the Artisan’s Tools supplied to cast the spell. They count as one crafting assistant, halving crafting time.",
-  "text": "Reference-only: Intangible, invulnerable helpers are proficient in Arcana and the Artisan’s Tools supplied to cast the spell. They count as one crafting assistant, halving crafting time.",
+  "summary": "Tiny intangible helpers, proficient in Arcana and in the Artisan's Tools you used to cast the spell, assist you for 8 hours: they count as one crafting assistant and halve crafting time. The game has no crafting yet, so this is played at the table.",
+  "text": "Tiny intangible helpers, proficient in Arcana and in the Artisan's Tools you used to cast the spell, assist you for 8 hours: they count as one crafting assistant and halve crafting time. The game has no crafting yet, so this is played at the table.",
   "tags": [
     "utility"
   ],
   "icon": "magic_missile",
   "ritual": true,
-  "automation": "reference",
-  "playable": false
+  "playable": true
 }

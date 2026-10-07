@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 2,
   "school": "abjuration",
@@ -35,13 +35,12 @@
     "kind": "hours",
     "amount": 1
   },
-  "summary": "Reference-only: Create a 15-foot-radius dueling Sphere and designate two willing occupants. A third creature entering ends it. A target reduced to 0 HP inside, or subjected to an instant-kill effect without damage, becomes Stable, Unconscious at 0 HP, and teleports to the nearest empty space outside. The last remaining target is marked victor. Each slot above 2 permits one more target.",
-  "text": "Reference-only: Create a 15-foot-radius dueling Sphere and designate two willing occupants. A third creature entering ends it. A target reduced to 0 HP inside, or subjected to an instant-kill effect without damage, becomes Stable, Unconscious at 0 HP, and teleports to the nearest empty space outside. The last remaining target is marked victor. Each slot above 2 permits one more target.",
+  "summary": "You mark out a 15-foot-radius dueling Sphere and name two willing duelists inside it (one more per slot level above 2). A third creature entering ends it. A duelist reduced to 0 Hit Points there, or struck by an effect that would kill it outright, is instead Stable and Unconscious at 0 Hit Points and appears just outside; the last duelist standing is the victor. The game stages no duels, so this is played at the table.",
+  "text": "You mark out a 15-foot-radius dueling Sphere and name two willing duelists inside it (one more per slot level above 2). A third creature entering ends it. A duelist reduced to 0 Hit Points there, or struck by an effect that would kill it outright, is instead Stable and Unconscious at 0 Hit Points and appears just outside; the last duelist standing is the victor. The game stages no duels, so this is played at the table.",
   "tags": [
     "utility"
   ],
   "icon": "magic_missile",
   "ritual": true,
-  "automation": "reference",
-  "playable": false
+  "playable": true
 }

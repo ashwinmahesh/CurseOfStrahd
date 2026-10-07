@@ -1193,6 +1193,8 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 	tgt.assign(tgt.filter(func(t: Combatant) -> bool: return enc().items.spell_blocked(c, t) == ""))
 	if specials.resolve(ctx, tgt, cells, r):
 		return
+	if enc().faerun.resolve_spell(ctx, tgt, cells, r):
+		return
 	match str(s["id"]):
 		"magic_missile":
 			_magic_missile(ctx, tgt, r)
@@ -1754,6 +1756,8 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 		# Ring of Spell Turning: a saved-against spell of level 7 or lower has no effect (and may go back at its caster).
 		if success and e.items.turns_spell(c, t, ctx, victims, r):
 			continue
+		if success:
+			e.faerun.reflects_spell(c, t, ctx, victims, r)
 		if has_damage and not multi.is_empty():
 			var parts: Array = []
 			for pr in multi:
@@ -3390,6 +3394,9 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 				t = c
 			var rolled2 := e._roll_damage_dice(str((d.get("heal", {}) as Dictionary).get("dice", "2d6")), false, 0, str(s["name"]))
 			var amt := int(rolled2["total"])
+			# Alustriel's Mooncloak: the dice plus the spellcasting modifier.
+			if bool((d.get("heal", {}) as Dictionary).get("add_mod", false)):
+				amt += int((ctx["nums"] as Dictionary).get("mod", 0))
 			if t.creature.has_flag("max_healing_received"):
 				var pp := DiceRoller.parse_expr(str((d.get("heal", {}) as Dictionary).get("dice", "2d6")))
 				amt = int(pp["count"]) * int(pp["sides"])
@@ -3421,6 +3428,13 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 			var victim := e.get_c(str(a["target_id"]))
 			if victim != null:
 				victim.set_meta("crown_target", str(d.get("victim_of", "")))
+		"faerun":
+			var fr := e.faerun.sustained(c, a, d, ctx, targets, point, direction, r)
+			if not fr.ok:
+				return fr
+	# A last act that spends the spell (Alustriel's Mooncloak's healing).
+	if bool(d.get("ends_spell", false)) and caster != null:
+		_end_spell_of(caster, str(a["spell_id"]), "its power is spent")
 	zones.prune()
 	e._check_over()
 	return e.then(r, func() -> CombatResult: return e.run_reaction_queue(r))
@@ -3429,6 +3443,8 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 func _sustained_check(c: Combatant, a: Dictionary, d: Dictionary, t: Combatant, point: Vector2) -> String:
 	var e := enc()
 	var reach := int(d.get("reach", 5))
+	if str(a["do"]) == "faerun":
+		return e.faerun.sustained_why(c, a, d, t, point)
 	match str(a["do"]):
 		"attack":
 			if t == null:
@@ -3837,6 +3853,11 @@ func _repeat_saves(c: Combatant, when: String) -> void:
 		if str(fx.repeat_save.get("if", "")) == "no_sight_of_caster":
 			var caster := e.get_c(fx.caster_id)
 			if caster != null and e.can_see(c, caster):
+				continue
+		# Illusory Dragon: only while the dragon is out of sight.
+		if str(fx.repeat_save.get("if", "")) == "no_sight_of_object":
+			var obj := zones.object_of(fx.caster_id, fx.source_id)
+			if obj != null and e.can_see_space(c, obj.cell):
 				continue
 		_repeat_save(c, fx, [])
 

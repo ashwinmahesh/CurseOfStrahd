@@ -914,6 +914,7 @@ func _after_d20_features(cr: Creature, t: D20Test, keys: Array[String]) -> void:
 	e.feature_recipes.after_d20(c, t, keys)
 	e.class_features.after_d20(c, t)
 	e.ravenloft.after_d20(c, t, keys)
+	e.faerun.after_d20(c, t, keys)
 	e.items.after_d20(c, t, keys)
 	e.legendary.after_d20(c, t)
 	if not cr is Character:

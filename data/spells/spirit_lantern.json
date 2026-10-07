@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 5,
   "school": "necromancy",
@@ -28,12 +28,78 @@
     "kind": "minutes",
     "amount": 10
   },
-  "summary": "Reference-only: A hovering lantern sheds Dim Light 60 feet and captures fragments when enemies die in that light, up to your spellcasting modifier. Bonus Action spends a fragment on a visible creature within 60 feet: Constitution save against 4d8 + spellcasting modifier Necrotic (half on success), heal an Undead for that amount, or impose Disadvantage on incoming attacks until your next turn starts. Fragments vanish when the spell ends.",
-  "text": "Reference-only: A hovering lantern sheds Dim Light 60 feet and captures fragments when enemies die in that light, up to your spellcasting modifier. Bonus Action spends a fragment on a visible creature within 60 feet: Constitution save against 4d8 + spellcasting modifier Necrotic (half on success), heal an Undead for that amount, or impose Disadvantage on incoming attacks until your next turn starts. Fragments vanish when the spell ends.",
+  "summary": "A ghostly lantern hovers by you for 10 minutes, shedding Dim Light 60 feet. When an enemy dies in its light, the lantern captures a fragment of its spirit (up to your spellcasting modifier). As a Bonus Action you can spend a fragment on a creature you can see within 60 feet: it makes a Constitution save against 4d8 + your spellcasting modifier Necrotic damage (half on a success); or an Undead regains that many Hit Points; or attacks against it have Disadvantage until the start of your next turn.",
+  "text": "A ghostly lantern hovers by you for 10 minutes, shedding Dim Light 60 feet. When an enemy dies in its light, the lantern captures a fragment of its spirit (up to your spellcasting modifier). As a Bonus Action you can spend a fragment on a creature you can see within 60 feet: it makes a Constitution save against 4d8 + your spellcasting modifier Necrotic damage (half on a success); or an Undead regains that many Hit Points; or attacks against it have Disadvantage until the start of your next turn.",
   "tags": [
-    "damage"
+    "damage",
+    "healing",
+    "defense"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "self"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "self",
+        "on": "cast",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "spirit_lantern"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "light",
+      "params": {
+        "target": "self",
+        "on": "cast",
+        "bright": 0,
+        "dim": 60
+      }
+    }
+  ],
+  "sustain": [
+    {
+      "do": "faerun",
+      "mode": "harm",
+      "cost": "bonus_action",
+      "range": 60,
+      "not_this_turn": false,
+      "requires_effect": true,
+      "label": "Lantern: drain",
+      "sub": "4d8 + mod Necrotic",
+      "help": "Bonus Action: spend a fragment; a creature makes a Constitution save or takes Necrotic damage.",
+      "targeting": "creature"
+    },
+    {
+      "do": "faerun",
+      "mode": "mend",
+      "cost": "bonus_action",
+      "range": 60,
+      "not_this_turn": false,
+      "requires_effect": true,
+      "label": "Lantern: mend Undead",
+      "sub": "4d8 + mod",
+      "help": "Bonus Action: spend a fragment to heal an Undead you can see.",
+      "targeting": "creature"
+    },
+    {
+      "do": "faerun",
+      "mode": "veil",
+      "cost": "bonus_action",
+      "range": 60,
+      "not_this_turn": false,
+      "requires_effect": true,
+      "label": "Lantern: veil",
+      "sub": "Disadvantage vs it",
+      "help": "Bonus Action: spend a fragment; attacks against a creature you can see have Disadvantage until your next turn.",
+      "targeting": "creature"
+    }
+  ]
 }

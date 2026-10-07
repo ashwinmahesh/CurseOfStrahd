@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 9,
   "school": "divination",
@@ -31,12 +31,11 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: Observe events within 500 feet over the preceding 10 years. Visions initially advance about one day per second; freely pause, rewind, slow, or fast-forward during Concentration.",
-  "text": "Reference-only: Observe events within 500 feet over the preceding 10 years. Visions initially advance about one day per second; freely pause, rewind, slow, or fast-forward during Concentration.",
+  "summary": "You watch what happened within 500 feet of you over the last ten years, about a day each second at first, and can pause, rewind, slow or speed the visions while you concentrate. It's cast outside fights; the story tells what you see.",
+  "text": "You watch what happened within 500 feet of you over the last ten years, about a day each second at first, and can pause, rewind, slow or speed the visions while you concentrate. It's cast outside fights; the story tells what you see.",
   "tags": [
     "utility"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true
 }

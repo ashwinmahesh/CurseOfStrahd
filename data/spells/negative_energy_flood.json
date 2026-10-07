@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 5,
   "school": "necromancy",
@@ -26,12 +26,28 @@
   "duration": {
     "kind": "instantaneous"
   },
-  "summary": "Reference-only: A visible non-Undead creature saves Constitution against 3d10 + 25 Necrotic, half on success. A Humanoid killed rises at your next turn start as a Zombie obeying verbal orders for 24 hours, then acting independently. An Undead target instead gains 3d10 Temporary HP. Damage gains 1d10 per slot above 5.",
-  "text": "Reference-only: A visible non-Undead creature saves Constitution against 3d10 + 25 Necrotic, half on success. A Humanoid killed rises at your next turn start as a Zombie obeying verbal orders for 24 hours, then acting independently. An Undead target instead gains 3d10 Temporary HP. Damage gains 1d10 per slot above 5.",
+  "summary": "A creature you can see that isn't Undead makes a Constitution save: 3d10 + 25 Necrotic damage, half on a success. A Humanoid this kills rises at the start of your next turn as a Zombie that obeys you (in the game, for the rest of the fight). An Undead target instead gains 3d10 Temporary Hit Points. +1d10 damage per slot level above 5.",
+  "text": "A creature you can see that isn't Undead makes a Constitution save: 3d10 + 25 Necrotic damage, half on a success. A Humanoid this kills rises at the start of your next turn as a Zombie that obeys you (in the game, for the rest of the fight). An Undead target instead gains 3d10 Temporary Hit Points. +1d10 damage per slot level above 5.",
   "tags": [
-    "damage"
+    "damage",
+    "summon"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "requires_sight": true,
+  "save": "con",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "3d10+25",
+      "type": "necrotic"
+    }
+  ],
+  "upcast": {
+    "damage": "1d10"
+  }
 }

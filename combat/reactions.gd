@@ -398,6 +398,7 @@ func against_damage(st: Dictionary, parts: Dictionary, notes: Array[String]) -> 
 			packet.append({"amount": int(parts[type]), "type": type})
 		return int(total.call()) if target.creature.preview_damage_parts(packet).final > 0 else 0
 	out.append_array(e.damage_responses.offers(target, incoming, cut, responded))
+	e.faerun.against_damage(st, parts, incoming, cut, out, responded)
 	st["damage_responses"] = responded
 	# Psi Warrior protecting itself.
 	if target.creature is Character:
@@ -423,6 +424,12 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 	var seen := {}
 	for known in (c.creature as Character).known_spells():
 		var spell := Compendium.shared().spell_data(str(known["id"]))
+		# A spell that acts on its own once allowed (Alustriel's Mooncloak's Reaction): Automatic or Off.
+		if spell.has("policy") and not seen.has(str(spell["id"])):
+			seen[str(spell["id"])] = true
+			out.append({"id": str(spell["id"]), "name": str(spell["name"]), "cost": "Your Reaction" + (" and a spell slot" if str(spell["id"]) == "backlash" else ""),
+				"modes": spell.get("policy_modes", ["auto", "never"]), "default": str(spell["policy"])})
+			continue
 		if not spell.has("roll_response") or seen.has(str(spell["id"])):
 			continue
 		seen[str(spell["id"])] = true

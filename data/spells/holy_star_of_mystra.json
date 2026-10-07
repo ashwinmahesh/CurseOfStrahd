@@ -4,7 +4,7 @@
   "source": {
     "book": "FRHoF",
     "checked_against": "FRHoF",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 8,
   "school": "evocation",
@@ -16,7 +16,8 @@
     "unit": "bonus_action"
   },
   "range": {
-    "kind": "self"
+    "kind": "feet",
+    "feet": 120
   },
   "components": {
     "v": true,
@@ -27,12 +28,77 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: Gain Three-Quarters Cover and light (Bright 5 feet, Dim 5 more). On casting and later Bonus Actions, ranged spell attack a creature within 120 feet for 4d10 + spellcasting modifier Force or Radiant. After succeeding on a save against a level 7-or-lower spell targeting only you with no area, use a Reaction to reflect it at its caster, using their spell save DC.",
-  "text": "Reference-only: Gain Three-Quarters Cover and light (Bright 5 feet, Dim 5 more). On casting and later Bonus Actions, ranged spell attack a creature within 120 feet for 4d10 + spellcasting modifier Force or Radiant. After succeeding on a save against a level 7-or-lower spell targeting only you with no area, use a Reaction to reflect it at its caster, using their spell save DC.",
+  "summary": "A star of Mystra's power blazes over you: you have Three-Quarters Cover and shed Bright Light 5 feet and Dim Light 5 feet beyond. When you cast it and as a Bonus Action later, you make a ranged spell attack against a creature within 120 feet for 4d10 + your spellcasting modifier Force or Radiant damage (chosen when cast). After you succeed on a save against a spell of level 7 or lower that targets only you and has no area, you can use your Reaction to turn it back on its caster, who saves against their own spell (set it to Automatic in the class tab).",
+  "text": "A star of Mystra's power blazes over you: you have Three-Quarters Cover and shed Bright Light 5 feet and Dim Light 5 feet beyond. When you cast it and as a Bonus Action later, you make a ranged spell attack against a creature within 120 feet for 4d10 + your spellcasting modifier Force or Radiant damage (chosen when cast). After you succeed on a save against a spell of level 7 or lower that targets only you and has no area, you can use your Reaction to turn it back on its caster, who saves against their own spell (set it to Automatic in the class tab).",
   "tags": [
-    "damage"
+    "damage",
+    "defense",
+    "light"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "choice": {
+    "kind": "damage_type",
+    "label": "Star",
+    "from": [
+      "radiant",
+      "force"
+    ]
+  },
+  "attack": "ranged",
+  "damage": [
+    {
+      "dice": "4d10",
+      "type_choice": [
+        "radiant",
+        "force"
+      ],
+      "add_mod": true
+    }
+  ],
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "self",
+        "on": "always",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "three_quarters_cover"
+          },
+          {
+            "stat": "flag",
+            "value": "holy_star_reflect"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "light",
+      "params": {
+        "target": "self",
+        "on": "always",
+        "bright": 5,
+        "dim": 5
+      }
+    }
+  ],
+  "sustain": [
+    {
+      "do": "attack",
+      "cost": "bonus_action",
+      "range": 120,
+      "attack": "ranged",
+      "not_this_turn": true,
+      "label": "Holy Star: strike",
+      "sub": "4d10 + mod · 120 ft",
+      "help": "Bonus Action: a ranged spell attack against a creature within 120 ft."
+    }
+  ],
+  "policy": "never"
 }

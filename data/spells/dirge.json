@@ -4,7 +4,7 @@
   "source": {
     "book": "FRHoF",
     "checked_against": "FRHoF",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 6,
   "school": "enchantment",
@@ -26,12 +26,65 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: A 60-foot Emanation prevents nonexempt creatures from healing. Entry, movement into a creature, or end of turn prompts a Constitution save once per turn: 3d10 Necrotic and Prone on failure; half damage and halved Speed on success. Circle variant: at least two secondary casters each spend a level 4+ slot; duration becomes 10 minutes with Concentration. Failed saves also give 1 Exhaustion; while that Exhaustion remains, Long Rests restore neither HP nor Exhaustion. Circle casting is manual.",
-  "text": "Reference-only: A 60-foot Emanation prevents nonexempt creatures from healing. Entry, movement into a creature, or end of turn prompts a Constitution save once per turn: 3d10 Necrotic and Prone on failure; half damage and halved Speed on success. Circle variant: at least two secondary casters each spend a level 4+ slot; duration becomes 10 minutes with Concentration. Failed saves also give 1 Exhaustion; while that Exhaustion remains, Long Rests restore neither HP nor Exhaustion. Circle casting is manual.",
+  "summary": "A mournful 60-foot Emanation surrounds you. Creatures in it other than you and those you spare (your allies) can't regain Hit Points. A creature the Emanation moves onto, entering it, or ending its turn there makes a Constitution save once per turn: on a failure 3d10 Necrotic damage and Prone; on a success half damage and its Speed is halved until the end of its next turn. The Circle casting isn't in the game.",
+  "text": "A mournful 60-foot Emanation surrounds you. Creatures in it other than you and those you spare (your allies) can't regain Hit Points. A creature the Emanation moves onto, entering it, or ending its turn there makes a Constitution save once per turn: on a failure 3d10 Necrotic damage and Prone; on a success half damage and its Speed is halved until the end of its next turn. The Circle casting isn't in the game.",
   "tags": [
-    "damage"
+    "damage",
+    "control"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "area"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 60
+  },
+  "save": "con",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "3d10",
+      "type": "necrotic"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "prone",
+        "plain": true
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "on": "success",
+        "until": "target_turn_end",
+        "modifiers": [
+          {
+            "stat": "speed_percent",
+            "value": 50
+          }
+        ]
+      }
+    }
+  ],
+  "zone": {
+    "triggers": [
+      "enter",
+      "moved_into",
+      "end_turn"
+    ],
+    "spare_allies": true,
+    "inside": {
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "cant_regain_hp"
+        }
+      ]
+    }
+  }
 }
