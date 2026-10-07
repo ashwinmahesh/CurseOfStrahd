@@ -153,7 +153,8 @@ Fen Burley: I'll go down to Krezk. They've walls there, but you can climb them, 
 if approval.thistle >= close
 Narrator: Fen looks past her at the rest of you for a long moment, the way he'd size up a strange dog: slowly, and all the way to the bottom.
 interject name:thistle: My pack, Grandda. All of them. Even the loud ones.
-Narrator: He nods once, as if that settles something. Then he shrugs out of the ragged trapper's cloak the wolf never quite tore off him and drops it round her shoulders. It has hidden him in the trees through forty winters, and he won't need hiding any more. It smells of pine and wet dog and woodsmoke, and she pulls it closed with both fists.
+Narrator: He nods once, as if that settles something. Then he shrugs out of the ragged trapper's cloak the wolf never quite tore off him and drops it round her shoulders.
+Narrator: It has hidden him in the trees through forty winters, and he won't need hiding any more. It smells of pine and wet dog and woodsmoke, and she pulls it closed with both fists.
 give cloak_of_elvenkind to name:thistle
 endif
 set fen_fate = "cured"

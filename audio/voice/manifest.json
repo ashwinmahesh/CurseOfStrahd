@@ -32095,12 +32095,6 @@
   "recipe": "dd92281f92",
   "text": "He unpins a scrap from inside his cuff, holds it up to his sparks, and hands it over without a word."
  },
- "narrator/824b7fb6a6adacd5": {
-  "chars": 335,
-  "model": "eleven_v3",
-  "recipe": "f60908d226",
-  "text": "He nods once, as if that settles something. Then he shrugs out of the ragged trapper's cloak the wolf never quite tore off him and drops it round her shoulders. It has hidden him in the trees through forty winters, and he won't need hiding any more. It smells of pine and wet dog and woodsmoke, and she pulls it closed with both fists."
- },
  "narrator/8273054df79046d7": {
   "chars": 90,
   "recipe": "dd92281f92",
@@ -34485,6 +34479,12 @@
   "chars": 171,
   "recipe": "dd92281f92",
   "text": "A storeroom of empty crates and dust. On a crate in the corner sits a leather satchel nobody has touched in weeks, tidily, as if waiting for its owner to come back for it."
+ },
+ "narrator/a1ae6a7a7007cb3b": {
+  "chars": 174,
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "It has hidden him in the trees through forty winters, and he won't need hiding any more. It smells of pine and wet dog and woodsmoke, and she pulls it closed with both fists."
  },
  "narrator/a1b721ffd09669c1": {
   "chars": 140,
@@ -40547,6 +40547,12 @@
   "chars": 174,
   "recipe": "dd92281f92",
   "text": "The bricks come out one at a time. Behind them, in a rack's worth of space, a man in a good merchant's coat sits among his own bottles, long dead, with his ledger in his lap."
+ },
+ "narrator/f6fe29c7058031b2": {
+  "chars": 160,
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He nods once, as if that settles something. Then he shrugs out of the ragged trapper's cloak the wolf never quite tore off him and drops it round her shoulders."
  },
  "narrator/f714c210bc2fb610": {
   "chars": 168,
