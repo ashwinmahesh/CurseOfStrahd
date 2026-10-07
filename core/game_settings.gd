@@ -90,6 +90,16 @@ static func set_depth_blur(on: bool) -> void:
 	set_value("depth_blur", on)
 
 
+## Whether exploring runs in rounds, one party member at a time (turn-based mode, F7: LocationPlan). Off by default;
+## T, the hotbar's Turn-based button and the Settings page all switch it.
+static func turn_based() -> bool:
+	return bool(value("turn_based", false))
+
+
+static func set_turn_based(on: bool) -> void:
+	set_value("turn_based", on)
+
+
 ## How big the interface draws while playing (Settings, Interface: U4): the HUD, conversations, the Narrator's box and
 ## rules cards. Menus and other full screens stay at 1.0 (UiScale).
 const UI_SCALES: Array[float] = [0.85, 1.0, 1.1, 1.2]

@@ -33,6 +33,8 @@ const BINDINGS := {
 	&"sneak": [KEY_V],
 	&"split": [KEY_G],
 	&"show_names": [KEY_ALT],
+	&"plan_mode": [KEY_T],
+	&"plan_round": [KEY_SPACE],
 	# Combat (docs/ui/combat_view.md).
 	&"combat_end_turn": [KEY_SPACE],
 	&"combat_cancel": [KEY_ESCAPE],
@@ -79,6 +81,8 @@ const COMMANDS := [
 	[&"sneak", "Sneak", "explore"],
 	[&"split", "Split the party", "explore"],
 	[&"show_names", "Show names (hold)", "explore"],
+	[&"plan_mode", "Turn-based exploring", "explore"],
+	[&"plan_round", "End the round (turn-based)", "explore"],
 	[&"quick_save", "Quicksave", "explore"],
 	[&"quick_load", "Load the quicksave", "explore"],
 	[&"combat_end_turn", "End the turn", "fight"],

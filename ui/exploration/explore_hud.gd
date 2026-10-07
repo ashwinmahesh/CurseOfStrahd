@@ -3,7 +3,7 @@ extends CanvasLayer
 ## The exploration screen (plan §5.2): party cards with framed portraits, Hit Points bars, conditions and the
 ## level-up badge (click to lead, right-click for the sheet), the location and time, the Narrator's box, the hover hint
 ## for what a click will do, toasts and the last roll on dark plates, and the command bar for the character,
-## inventory, journal, rest, search, sneak and split.
+## inventory, journal, rest, search, sneak, split and turn-based exploring.
 
 signal leader_picked(index: int)
 signal sheet_requested(index: int)
@@ -45,7 +45,7 @@ var thing_labels: ThingLabels
 const CONTROLS: Array[String] = [
 	"Mouse: click the floor to walk there; click a person, door, chest or thing to use it (the hint says what a click will do); right-click it for everything you can do; the mouse wheel zooms.",
 	"Hold {show_names} to see the names of everything you can use nearby.",
-	"Keyboard: {walk} walk · {camera_rotate_left} / {camera_rotate_right} turn the camera · {select_member_1}-{select_member_4} or {cycle_leader} pick who leads · {open_sheet} character · {open_inventory} inventory · {open_journal} journal · {open_party} party · {open_map} map · {rest} rest · {search} search · {sneak} sneak · {split} split the party · {quick_save} quicksave · {quick_load} load it · Esc menu. Settings, Keys changes them.",
+	"Keyboard: {walk} walk · {camera_rotate_left} / {camera_rotate_right} turn the camera · {select_member_1}-{select_member_4} or {cycle_leader} pick who leads · {open_sheet} character · {open_inventory} inventory · {open_journal} journal · {open_party} party · {open_map} map · {rest} rest · {search} search · {sneak} sneak · {split} split the party · {plan_mode} turn-based ({plan_round} ends the round) · {quick_save} quicksave · {quick_load} load it · Esc menu. Settings, Keys changes them.",
 	"In conversations: 1-9 pick an answer · Space, Enter or a click goes on · H shows what's been said.",
 	"Controller: left stick walks · A uses what's beside you · Back opens its menu · X searches · Y journal · LB / RB character and inventory · Start menu.",
 ]
@@ -56,7 +56,7 @@ var _control_lines: Array[Label] = []
 const BUTTONS := [["Character", "open_sheet", "sheet", "character"], ["Inventory", "open_inventory", "inventory", "inventory"],
 	["Journal", "open_journal", "journal", "journal"], ["Party", "open_party", "party", "party"], ["Map", "open_map", "map", "map"],
 	["Rest", "rest", "rest", "rest"], ["Search", "search", "search", "search"], ["Sneak", "sneak", "sneak", "sneak"],
-	["Split", "split", "split", "split"], ["Menu", "Esc", "menu", "menu"]]
+	["Split", "split", "split", "split"], ["Turn-based", "plan_mode", "plan", "plan"], ["Menu", "Esc", "menu", "menu"]]
 ## Each bar button's key mark: command -> [the mark, the BUTTONS row], so marks follow the player's keys.
 var _bar_keys: Dictionary = {}
 
@@ -284,7 +284,7 @@ func build(state: StoryState) -> void:
 	refresh()
 
 
-func refresh(location_name: String = "", sneaking: bool = false, solo: bool = false) -> void:
+func refresh(location_name: String = "", sneaking: bool = false, solo: bool = false, planning: bool = false) -> void:
 	if st == null:
 		return
 	for c in _party_box.get_children():
@@ -367,17 +367,19 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		_party_box.add_child(gcard)
 	if location_name != "":
 		_fit_where(location_name)
-	# Sneak and Split read as on while they are.
-	for pair: Array in [["sneak", sneaking], ["split", solo]]:
+	# Sneak, Split and Turn-based read as on while they are.
+	for pair: Array in [["sneak", sneaking], ["split", solo], ["plan", planning]]:
 		var b := _bar_buttons.get(str(pair[0]), null) as Button
 		if b != null:
 			b.modulate = Color(1.25, 1.12, 0.8) if bool(pair[1]) else Color.WHITE
-	_show_keys({"sneak": sneaking, "split": solo})
+	_show_keys({"sneak": sneaking, "split": solo, "plan": planning})
+	# Turn-based exploring's panel takes the top of the screen: toasts drop below it.
+	_toast_panel.offset_top = 136 if planning else 70
 	_goal.text = _objective()
 	_goal.visible = _goal.text != ""
 	var hours := st.minute_of_day / 60
-	_mode.text = "Day %d · %02d:%02d%s%s · %d gp" % [st.day, hours, st.minute_of_day % 60, " · Sneaking" if sneaking else "",
-		" · Split party" if solo else "", int(st.gold)]
+	_mode.text = "Day %d · %02d:%02d%s%s%s · %d gp" % [st.day, hours, st.minute_of_day % 60, " · Sneaking" if sneaking else "",
+		" · Split party" if solo else "", " · Turn-based" if planning else "", int(st.gold)]
 
 
 ## The party card's click: lead with a left click, the sheet with a right one.

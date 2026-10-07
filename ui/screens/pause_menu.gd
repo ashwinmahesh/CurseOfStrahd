@@ -241,8 +241,8 @@ func _show_menu() -> void:
 	_buttons[0].grab_focus.call_deferred()
 
 
-## Settings (docs/plans/ui_polish.md), three pages under the title: Game (how fights and the Narrator play, the respec
-## option), Display (the look, graphics, the window, depth blur, the interface and text sizes) and Keys (KeysPage).
+## Settings (docs/plans/ui_polish.md), three pages under the title: Game (how fights and the Narrator play, turn-based
+## exploring, the respec option), Display (the look, graphics, the window, depth blur, the interface and text sizes) and Keys (KeysPage).
 ## Each row is a choice the player steps through with a click; kept in user://settings.cfg.
 const SETTINGS_PAGES: Array[String] = ["Game", "Display", "Keys"]
 ## Concept y of the first row and the pitch between rows.
@@ -307,7 +307,7 @@ func _page_tabs(page: String) -> void:
 			_place(mark)
 
 
-## Game: how fights and the Narrator play, and the playthrough's respec option.
+## Game: how fights and the Narrator play, turn-based exploring, and the playthrough's respec option.
 func _game_rows() -> void:
 	var y := ROW_Y
 	_choice_row(y, "Fights", ["Normal", "Fast"], 1 if GameSettings.fast_combat() else 0, func(i: int) -> void:
@@ -315,6 +315,11 @@ func _game_rows() -> void:
 	y += ROW_PITCH
 	_choice_row(y, "Narration", ["Fades", "Stays"], 1 if GameSettings.narration_stays() else 0, func(i: int) -> void:
 		GameSettings.set_narration_stays(i == 1), "Whether the Narrator's box fades on its own or stays until you close it.")
+	y += ROW_PITCH
+	# Turn-based exploring (F7): the same switch as its key and the hotbar's Turn-based button.
+	_choice_row(y, "Exploring", ["Real time", "Turn-based"], 1 if GameSettings.turn_based() else 0, func(i: int) -> void:
+		_set_turn_based(i == 1),
+		InputActions.fill("Turn-based: outside fights the party moves in rounds, one of you at a time, to set up an ambush. {plan_mode} switches it too."))
 	y += ROW_PITCH
 	var respec := CheckBox.new()
 	respec.text = "Allow rebuilding a character at Madam Eva"
@@ -370,6 +375,15 @@ func _display_rows() -> void:
 		GameSettings.set_text_scale(texts[i])
 		_note.text = "Conversations, the Narrator and the journal read larger." if i > 0 else "",
 		"The size of what you read: conversations, the Narrator's box and the journal.")
+
+
+## Turn-based exploring on or off: the place the party is in switches at once (in a fight, once it's over).
+func _set_turn_based(on: bool) -> void:
+	var view := root.get("view") as LocationView if root != null and "view" in root else null
+	if view != null and not view.in_combat and view.planning != on:
+		view.toggle_plan()
+	else:
+		GameSettings.set_turn_based(on)
 
 
 ## A new look applies to the place at once when the party is simply exploring; in a fight, from the next place.

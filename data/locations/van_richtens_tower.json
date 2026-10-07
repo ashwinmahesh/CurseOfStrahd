@@ -320,6 +320,7 @@
     {
       "id": "tower_night_visitors",
       "trigger": "enter_area:vrt_causeway",
+      "waiting": true,
       "when": "night and flag.van_richten_notes_read and not flag.tower_visitors_beaten and level >= 8",
       "text": "Something is waiting where the causeway meets the shore: two pale figures standing very still, and above them the air full of wings. The castle has heard what you were reading.",
       "monsters": [
@@ -375,6 +376,7 @@
     {
       "id": "tower_night_visitors",
       "trigger": "enter_area:vrt_causeway",
+      "waiting": true,
       "when": "night and flag.van_richten_notes_read and not flag.tower_visitors_beaten and level >= 7",
       "text": "Something is waiting where the causeway meets the shore: two pale figures standing very still, and above them the air full of wings. The castle has heard what you were reading.",
       "monsters": [
@@ -422,6 +424,7 @@
     {
       "id": "tower_night_visitors",
       "trigger": "enter_area:vrt_causeway",
+      "waiting": true,
       "when": "night and flag.van_richten_notes_read and not flag.tower_visitors_beaten",
       "text": "Something is waiting where the causeway meets the shore: two pale figures standing very still, and above them the air full of wings. The castle has heard what you were reading.",
       "monsters": [

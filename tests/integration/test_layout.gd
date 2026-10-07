@@ -207,6 +207,18 @@ func test_the_exploring_hud() -> void:
 	await _check("the exploring HUD", func() -> Variant: return root.get("hud"))
 
 
+func test_the_turn_based_panel() -> void:
+	if not await _game(LATE):
+		return
+	var view := root.get("view") as LocationView
+	view.toggle_plan()
+	view.set_sneaking(true)
+	await _check("the turn-based panel", func() -> Variant:
+		await _frames(2)
+		return root.get("plan_bar"))
+	GameSettings.set_turn_based(false)
+
+
 func test_the_party_screens() -> void:
 	if not await _game(LATE):
 		return
