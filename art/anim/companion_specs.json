@@ -2,8 +2,8 @@
   "godrick_pendlebrook": {
     "shape": "person",
     "height": 1.55,
-    "expression": "warm, earnest, a big friendly grin",
-    "look": "Sir Godrick Pendlebrook, a huge, broad-shouldered young goliath man about seven and a half feet tall, with grey stone-coloured skin marked with darker grey mottled patches, a bald head, a square, friendly face with a strong jaw and a big warm grin, wearing polished steel chain mail under a sky-blue tabard with a white sunburst, a round steel shield on his left arm, a longsword with a worn griffin pommel at his hip, and brown leather boots",
+    "expression": "warm, earnest, a big heroic grin",
+    "look": "Sir Godrick Pendlebrook, a classic heroic paladin: a huge, big and burly young goliath man about seven and a half feet tall, with light stone-grey skin faintly marked with darker grey patches, long flowing golden-blonde hair to his shoulders, a short blonde goatee, a square, handsome, friendly face and a warm grin, wearing polished steel chain mail under a sky-blue tabard with a white sunburst, a round steel shield on his left arm, a longsword with a worn griffin pommel at his hip, and brown leather boots",
     "who": "Sir Godrick Pendlebrook, a huge goliath paladin",
     "attack": "longsword swing behind a shield",
     "windup": "the longsword raised high over his right shoulder, the round shield held up in front of his chest, feet planted wide, leaning back",
