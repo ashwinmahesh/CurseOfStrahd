@@ -18,9 +18,6 @@ Strahd: My guests. You came. Sit, please. I trust the carriage was comfortable.
 else
 Strahd: Welcome to my house. I am Strahd von Zarovich, and you are very welcome in it.
 endif
-if name:ilse_varga
-Strahd: Sergeant. You carried my letter all this way. I do like a guest who keeps her correspondence.
-endif
 if guest:ireena
 Strahd: Ireena. Candlelight suits you. Sit beside me. No? Then sit wherever you like.
 Ireena [angry]: I'll stand.
@@ -40,6 +37,37 @@ endif
 if flag.strahd_knows_marina_truth
 Strahd [sad]: I owe you the truth about Marina. I do not often owe anyone. Consider it noted.
 endif
+if name:godrick_pendlebrook
+if quest.the_ladle >= knighted
+Strahd: Sir Godrick, of the Order of the Silver Dragon. The last recruit of an order that died in my courtyard. I hope they gave you a good sword. They never had much else.
+else
+Strahd: And the large young man who calls himself Sir. I have met a great many knights. None of them smiled so much, and none of them lasted.
+endif
+interject name:godrick_pendlebrook: Thank you, my lord. I think. Lovely table.
+endif
+if name:liriel_dawnsong
+Strahd: The little priestess of the dawn. You sing to my windows in the mornings that aren't mornings. I hear everything in my valley. A lovely voice, and a hopeless task.
+interject name:liriel_dawnsong: Morning's grace, my lord. I'll pray for you. No, I insist.
+endif
+if name:thistle
+Strahd: And the wild one. My wolves speak of you. Run with them tonight, after supper, if you like. I will show you a forest no axe has ever touched.
+interject name:thistle: No. Your wolves smell wrong. So do you.
+endif
+if name:wren_featherfoot
+if flag.wren_rahadin_met
+Strahd: The little monk. My chamberlain tells me you have a teacher's manners. He did not enjoy them. Nobody has unsettled Rahadin in two hundred years.
+else
+Strahd: A dusk elf taught you to stand like that. I know the stance. I knew a whole people who stood like that.
+endif
+interject name:wren_featherfoot: Lovely castle. Bit drafty. Bit evil.
+endif
+if name:kip_smudgewick
+if flag.kip_contract_void
+Strahd [smile]: And the merchant who paid his devil with my name. I am told your assessor is still furious. I have not laughed so much in a century.
+else
+Strahd: And a merchant, with ink on his soul. I can smell it from here.
+endif
+endif
 Narrator: Places are laid for each of you. The silver is real, the food is hot, and nobody carries it in.
 -> table
 
@@ -50,6 +78,8 @@ Narrator: Places are laid for each of you. The silver is real, the food is hot, 
 * [if not flag.crg_dinner_wine_known] [Medicine DC 13] Smell the wine before anyone drinks it. -> wine_ok | wine_fail
 * [if not flag.crg_dinner_want_seen] [Insight DC 17] Watch him. What does he actually want? -> want_ok | want_fail
 * [if not flag.crg_dinner_grace_said] [Cleric] Say grace before eating. -> grace
+* [name:ratatoille] [if not flag.ratatoille_dinner_tasted] Taste the food, critically. -> companions/table:dinner
+* [name:kip_smudgewick] [if quest.the_fine_print >= the_small_print and not flag.kip_strahd_signed and not (quest.the_fine_print >= free)] Ask Strahd to sign something. -> companions/fine_print:dinner
 * Thank him for his hospitality. -> thanks
 * Draw on him. -> affront
 

@@ -55,7 +55,11 @@ endif
 
 ~ book_club
 Lady Wachter: Oh, the classics. History, mostly. The history of this valley, and who it has always belonged to. We're very well read on that subject.
-interject tag:bookish: A reading circle that meets in a cellar. In my experience the books in cellars are the interesting ones.
+if name:ratatoille
+interject name:ratatoille: A reading circle in a cellar? I'll have you know, madame, the books in cellars are always the interesting ones.
+else
+interject tag:scholarly: A reading circle that meets in a cellar. In my experience the books in cellars are the interesting ones.
+endif
 Lady Wachter: You have experience. How delightful.
 -> menu
 
@@ -101,7 +105,11 @@ quest festival_of_the_blazing_sun wachter_side
 attitude lady_wachter friendly
 Lady Wachter [smile]: Wonderful. Then a small task first. The night before the festival, it would be a great shame if that wicker sun got wet. A very great deal of water. The watchman by it will be asleep after midnight. I've seen to it.
 Lady Wachter: And on the day, stand where the watch can see you. When I speak, don't let Izek reach me. That's all. The town will do the rest; it has been waiting years to.
+if name:kip_smudgewick
+interject name:kip_smudgewick: Terms agreed, then, madam. I do hope you're worth it. I really do.
+else
 interject tag:loyal: We gave our word. I hope you're worth it.
+endif
 -> menu
 
 ~ orders

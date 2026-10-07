@@ -1,126 +1,141 @@
 # The companions' personal quests
 
-Owner request (2026-10-06): "create good personal quests for each of the prebuilt characters that are intertwined
-with the story of the world (like a good DM would)". Each pregen came to Barovia for a reason (docs/voice/*.md); these
-quests turn those reasons into four arcs that run through the places already built (Phases 1 to 5) and end in Castle
-Ravenloft (Phase 6, hooks below). They reuse the hooks the region writers already planted (Madam Eva's question and
-price, Strahd's lines at the grave, Ireena and the locket, Donavich and the raven, Aurel's note, the vestiges) and add
-a few scenes of their own.
+Owner requests (2026-10-06): "create good personal quests for each of the prebuilt characters that are intertwined
+with the story of the world (like a good DM would)", then "replace the playable characters" with six new ones and
+"redo any dialogue". Each of the six came to Barovia for a reason (docs/voice/<id>.md); these quests turn those
+reasons into arcs that run through places the campaign already has and pay off in Castle Ravenloft. They lean on the
+module's own threads: the dead Order at Argynvostholt, the Abbot, Kiril's pack, the Martikovs and Mordenkainen,
+Kasimir, Patrina and Rahadin, Master Vosk and Strahd's letters.
+
+The first four companions (Ilse, Tamsin, Hedda, Silvain) and their quests are retired. Their pregen files stay as test
+fixtures (`roster: false`) so older saves and tests still build them.
 
 ## Rules every scene follows
 
 - **Only with the companion.** Every scene, option and prop needs that pregen in the party (`name:` selectors and
   conditions, props' and NPCs' `when`). A custom hero never answers to a pregen's name (`StoryState.member_matches`),
-  so when the hero takes a pregen's place that pregen's quest never starts and nothing of it shows. The other three
-  quests run normally; lines other companions speak are interjections, so a missing companion simply says nothing.
+  so when the hero takes a pregen's place that pregen's quest never starts and nothing of it shows.
 - **Stages only move forward.** Every `quest` statement outside the opening is guarded by
   `if not (quest.<id> >= <stage>)`, so finding things out of order never rolls the journal back.
-- **Camp talks.** After a Long Rest a companion may ask for a word (`story/camp_talk.gd`, `narrative/camp/<who>.dialogue`;
-  the rest screen shows a button such as "Ilse wants a word"). A talk is a node whose first statement is `if
-  <condition>`; it's offered once the condition holds, plays once, and each companion offers one at a time.
-- **Party banter** that follows the quests anywhere: `narrative/banter/party_companions.dialogue`.
-- Failed Persuasion and Insight options are spent (owner rule); every menu has another way on.
+- **Camp talks.** After a Long Rest a companion may ask for a word (`story/camp_talk.gd`, `narrative/camp/<who>.dialogue`).
+  A talk is a node whose first statement is `if <condition>`; it's offered once the condition holds and plays once.
+- **Party banter** between the six plays anywhere: `narrative/banter/party_six.dialogue`, each exchange gated on its
+  speakers being in the party.
+- **Madam Eva** takes a truth from any of the six as her price, and answers one question from each
+  (`narrative/svalich_road/madam_eva.dialogue`; flags `eva_truth_teller`, `eva_question`).
+- Scenes live in `narrative/companions/<quest>.dialogue`; hooks in region files jump there and come back.
+- `knows:<spell>` (new selector): a party member who can cast that spell now. Thistle's cure needs `knows:remove_curse`.
 
-## Ilse Varga: Count Off (`kestrel_company`)
+## Godrick Pendlebrook: A Knight, More or Less (`the_ladle`)
 
-Kestrel Company, forty mercenaries, marched into Barovia a year ago on Strahd's invitation; Ilse let a fever keep her
-behind. Madam Eva told her some of the forty "walk his roads still, in colours that are not their own".
-
-| Stage | Where | How |
-|---|---|---|
-| `the_letter` | Into the Mists, the mist wall | arrival:hooks |
-| `the_host` | Village: Ismark reads the letter, or Strahd at the grave | ismark:letter, burial |
-| `the_tally` | Svalich crossroads: a carved milestone (prop `kestrel_tally_crossroads`) | companions/kestrel:tally_crossroads |
-| `the_count` | Tser Pool: a marked ash (prop `kestrel_tally_tser`) | companions/kestrel:tally_tser |
-| `the_deserter` | Vallaki: Jory Fenn at the south-east watch fire (npc `jory_fenn`); Stanimir can point there | companions/kestrel:jory, :stanimir |
-| `vell_met` | Crossroads castle road, at night, level 5+, after the second tally (npc `kestrel_vell`) | companions/kestrel:vell |
-| `vell_rests` | Win `kestrel_patrol` (or `kestrel_patrol_reached` if Ilse's Persuasion 15 got through to Vell: he fights held back, 45 HP) | encounter on svalich_crossroads |
-| `count_off` | **Phase 6** (success) | castle hook |
-
-Choices: forgive Jory or not (`kestrel_jory_forgiven`); reach Vell or not (`kestrel_vell_reached`). Camp talks: the
-fever (`kestrel_fever_shared`, unless she told Madam Eva) and, after Vell, "Count off".
-
-## Tamsin Tealeaf: The Woman in the Locket (`the_locket`)
-
-Tamsin lifted a locket from a coach with no driver. It holds Tatyana's portrait, and her voice has called him since.
-He was a courier who didn't know it: Strahd left the locket on his carriage seat for a thief to carry to Ireena.
+Sir Pellam knighted his squire with a soup ladle on his deathbed and sent him to have it done "proper" by the Order of
+the Silver Dragon, with the sword of Pellam's grandfather Sir Aldric Ashgrove, who rode out of the mists the night
+before the Order's last battle. Vladimir remembers Aldric as a deserter; Sir Godfrey wrote the truth on his wall.
 
 | Stage | Where | How |
 |---|---|---|
-| `the_dreams` | Into the Mists | arrival:hooks |
-| `her_face` | Village: Tamsin shows Ireena the locket | ireena:locket |
-| `her_name` | Madam Eva's answer, or Sergei in the Krezk pool | madam_eva:q_locket, pool:ireena_vision |
-| `the_inscription` | Camp talk: the back of the locket, "For T., from S. Every morning, at the water." (Ilse compares her S) | camp/tamsin |
-| `the_coach` | Henrik's black carriage tells him (`locket_coach_known`); the camp talk or Arrigal confirm it | vallaki/henrik:confess, camp/tamsin, companions/locket:arrigal |
-| `given_to_sergei` / `given_to_ireena` / `kept` | Krezk, the Pool of the White Sun: drop it in, give it to Ireena (if she travels with you), or keep it (`locket_fate`) | companions/locket:pool |
+| `the_errand` | Into the Mists | arrival:hooks |
+| `the_order_found` | Argynvostholt: Godrick shows Sir Godfrey the sword | godfrey menu, companions/ladle:sword |
+| `the_deserter` | Vladimir calls Aldric a coward (skipped if the wall was read first; Godrick quotes it back) | vladimir menu, ladle:vladimir |
+| `kept_faith` | Low on Godfrey's wall: "Aldric Ashgrove rode for help. The dragon sent him." | godfrey menu, ladle:wall |
+| `knighted` | Godfrey knights him once the Order has its oath back (`godfrey_remembers`); gives a +1 sword | godfrey menu or companion menu, ladle:knighting |
 
-## Hedda Ironvow: Cold Prayers (`cold_prayers`)
+Madam Eva: truth "he can barely read"; question "is the Order still here?" Camp: the ladle; learning to read
+(`godrick_letters`); the ladle passed on after the knighting.
 
-Hedda dreamed of a silver raven with a sunburst; since the mist her god has felt far away. The warmth reaches
-Barovia where somebody carries it.
+## Liriel Dawnsong: Carry the Dawn (`carry_the_dawn`)
+
+The Morninglord showed her a valley with no sun and told her to carry the dawn there. Her test is the Abbot, an angel
+of her own heaven, sewing the devil a bride.
 
 | Stage | Where | How |
 |---|---|---|
-| `the_dream` | Into the Mists | arrival:hooks |
-| `cold` | Madam Eva's price (Hedda's truth), or a camp talk after the burial | madam_eva:truth_hedda, camp/hedda |
-| `the_symbol` | Village: Donavich names the Holy Symbol of Ravenkind | donavich:raven |
-| `a_spark` | Vallaki: St. Andral's bones come home (`hedda_spark_felt`) | vallaki/lucian:return |
-| `the_keepers` | Wizard of Wines: Davian tells the Keepers' story of the raven and the sun | companions/prayers:davian |
-| `warmth` | Camp talk once the Holy Symbol is found (wherever the cards put it) | camp/hedda |
-| `dawn` | **Phase 6** (success) | castle hook |
+| `the_vision` | Into the Mists | arrival:hooks |
+| `the_silence` | Her god feels far away | camp/liriel:talk_silence |
+| `a_spark` | St. Andral's bones come home | vallaki/lucian:return |
+| `the_angel` | She knows the Abbot for an angel and kneels | abbey abbot:first |
+| `the_fall` | The Abbot reveals the bride | abbot:bride |
+| (choice) | "Do you still remember the sun?" (`liriel_asked_abbot`) opens a way to his repentance at the unveiling | abbot menu, companions/dawn:sun, :unveil |
+| `faith_kept` | After the Abbot's story ends, any ending | camp/liriel:talk_faith |
+| `the_dawn` | She sings real dawn into Castle Ravenloft's chapel (prop `crg_chapel_dawn_step`) | dawn:chapel |
 
-## Silvain Aster: Aurel's Last Chapter (`aurels_last_chapter`)
+Madam Eva: truth "she's afraid of the dark"; question "will dawn come?"
 
-Aurel Mirescu went after the Tome of Strahd and wrote home once: "He knows I am reading." Madam Eva: "He is reading
-still." Strahd keeps him in the castle as an audience.
+## Thistle: Grandda's Trail (`fens_trail`)
+
+Raised in the woods by the trapper Fen Burley, who followed a giant wolf into the fog. Kiril's pack, hunting beyond the
+mists, bit him; he wouldn't hunt children, so he hangs in silver in the den beside Emil (npc `fen_burley`).
+
+| Stage | Where | How |
+|---|---|---|
+| `the_trail` | Into the Mists | arrival:hooks |
+| `the_blazes` | Svalich crossroads, a dead tree by the signpost (prop `fen_blaze_crossroads`) | companions/fen:blaze_crossroads |
+| `the_wolf_road` | Lake Zarovich trail, a left-handed blaze and the word RUN (prop `fen_blaze_lake`) | fen:blaze_lake |
+| `found_him` | Werewolf den caves, west alcove | fen:start |
+| `fen_cured` / `fen_freed` / `fen_rests` | Remove Curse; break or pick his chains (or Emil's key); or mercy at his asking (`fen_fate`) | fen:cure, :freed, :mercy |
+
+Kiril asks her to run with the pack before the challenge (`kiril_offer_heard`, werewolf_den/kiril:challenge). Madam
+Eva: truth "she likes towns and fits nowhere"; question "is Grandda alive?" Camp: Grandda; the cakes; after Fen.
+
+## Ratatoille: A Seat at the Table (`a_seat_at_the_table`)
+
+He learned magic so people would sit with him, and came to apprentice himself to "the Wizard of Wines". It's a
+winery, named for the wizard who paid the Martikovs in vine stones: Mordenkainen, now mad on Mount Baratok.
+
+| Stage | Where | How |
+|---|---|---|
+| `the_apprenticeship` | Into the Mists | arrival:hooks |
+| `a_winery` | Davian: the Wizard of Wines is a winery, named for a rude wizard who played dragonchess against himself | wizard_of_wines/davian:stones or menu, companions/table:winery |
+| `the_kitchen` | He cooks the Martikovs' supper once the winery is theirs again | davian menu, table:supper |
+| `the_wizard_found` | He recognises the mad mage (or connects him at the winery if met first) | mount_baratok/mordenkainen:start |
+| `the_masters_word` | Mordenkainen restored: "Status is a coat. Cook." | mordenkainen restored menu, table:apprentice |
+| `his_own_table` | He cooks for the party: "Ratatoille. Cook. And wizard. In that order." | camp/ratatoille:talk_table |
+
+Temptations along the way: Zantras's audience in the Amber Temple (`ratatoille_zantras_refused`) and Strahd's offer of
+a title and a tower at dinner (`ratatoille_refused_strahd`); the final talk mentions whichever he turned down.
+
+## Wren Featherfoot: The Last Lesson (`the_last_lesson`)
+
+His master Sorrel, a dusk elf who never spoke of home, died before the last lesson and left a letter for "my brother
+Kasimir". Sorrel was Kasimir's and Patrina's younger brother, who left before the mists; Rahadin killed their mother.
 
 | Stage | Where | How |
 |---|---|---|
 | `the_letter` | Into the Mists | arrival:hooks |
-| `the_satchel`, `the_cipher` | Camp talk after Aurel's note is read: his shorthand points to a showman in Vallaki and the Amber Temple | camp/silvain |
-| `the_hunter` | Vallaki: Rictavio met him | companions/aurel:rictavio |
-| `the_margins` | Amber Temple library: Aurel's note to Silvain in a chained book (prop `aurel_margins`) | companions/aurel:margins |
-| `still_reading` | Camp talk once the Tome is found: Strahd's own note, "My reader Mirescu asks again to be allowed to sleep." | camp/silvain |
-| `the_last_page` | **Phase 6** (success) | castle hook |
+| `the_brother` | The Vistani camp: Kasimir reads it aloud: "Let her rest, brother. Don't go to the temple." | vallaki/kasimir menu, companions/lesson:kasimir |
+| (choice) | At Patrina's ghost, Wren has Kasimir read her the last line; it leads to her rest | amber_temple/patrina:kasimir_meets, lesson:patrina |
+| `let_her_rest` | After patrinas_wail ends (at rest, destroyed, or restored) | camp/wren:talk_rest |
+| `the_chamberlain` | Rahadin, in Castle Ravenloft | castle_ravenloft/court_rahadin menu, lesson:rahadin |
+| `learned` / `unlearned` | Pity instead of hate, and he walks away (success); or he goes for Rahadin's throat (failure, the fight) | lesson:rahadin_pity, :rahadin_rage |
 
-## Castle Ravenloft hooks (Phase 6, for the build thread)
+## Kip Smudgewick: The Fine Print (`the_fine_print`)
 
-Each is a trigger, a place and a payoff; every one needs its companion present (`name:`), and each quest's final
-stage already exists in its quest file.
+He signed a devil's contract to save the family orchard (the apricots never rot). Mister Quillon (npc
+`mister_quillon`, at the campfire only) offered a way out: "a signature of the lord of the land of mists, freely given,
+in his own hand". He meant a soul. It says signature.
 
-1. **Kestrel Company's table.** Trigger: Ilse present and `quest.kestrel_company >= the_deserter`. Place: the dining
-   hall on castle_ravenloft_main_floor, set for forty with the company's coats on the chairs; Captain Aldous Merrow
-   (vampire spawn) at the head when the party arrives uninvited or after Strahd's dinner (during the dinner he stands
-   at Strahd's shoulder and the roll call waits until Strahd leaves); the rest of the turned company in the walls and
-   the larder cellars. Payoff: Ilse calls the roll (`flag.kestrel_roll_kept`:
-   she reads it from the captain's own book); Merrow answers for it (fight, or a Persuasion 18 roll call that makes
-   him stand and be counted). If `flag.kestrel_jory_forgiven`, Jory's drum beats the company's call at the gate when
-   the party arrives. `quest kestrel_company count_off`.
-2. **Tatyana's portrait.** Trigger: Tamsin present. Place: the portrait over the fireplace in the court study (K37,
-   castle_ravenloft_court), the locket's twin. Payoff by `flag.locket_fate`: "kept", Strahd asks for it ("You carried her home. Now give her to me."), and
-   Tamsin gives it (`quest the_locket given_to_strahd`, failure) or throws it into the fire (`quest the_locket
-   burned`, success); "pool", Strahd notices it's gone ("You gave it to my brother. How very like him to accept.");
-   "ireena", if Ireena is with you she shows Strahd she has it, and remembers more. (Those two already ended at the
-   pool; the castle beat is a payoff, not a stage.)
-3. **Dawn in the devil's chapel.** Trigger: Hedda present carrying the Holy Symbol of Ravenkind
-   (`quest.cold_prayers >= warmth`). Place: the altar of castle_ravenloft_chapel, outside the artifact card's final
-   battle there or after it. Payoff: she prays at the defiled altar and, for the
-   length of the prayer, real dawn light comes through the windows; `quest cold_prayers dawn`.
-4. **The lit window.** Trigger: Silvain present, `quest.aurels_last_chapter >= still_reading` (or simply reaching the
-   room). Place: the court study (K37, castle_ravenloft_court; build thread's pick 2026-10-06, as the castle has no
-   east tower library): its window is the one Aurel's note saw lit every night "high in the east tower", and Silvain
-   says so ("Not a library. A study. He miscounted the floors; he always did."). Aurel, alive but kept awake and
-   charmed, sits by the fire reading the Tome aloud to Strahd's empty chair. Payoff: wake him (Arcana or Persuasion
-   15, or the Tome itself closed in his hands) and get him out, or, if the castle has turned him, Silvain's mercy;
-   `quest aurels_last_chapter the_last_page`.
+| Stage | Where | How |
+|---|---|---|
+| `the_contract` | Into the Mists | arrival:hooks |
+| `the_assessor` | Quillon calls at the fire | camp/kip:talk_quillon |
+| `the_small_print` | The party reads it (Ratatoille, Wren or Liriel, or Kip's Investigation 14), or Master Vosk reads it for a fee | camp/kip:talk_reading, amber_temple/vosk menu, companions/fine_print:vosk |
+| `signed` | Strahd's first letter kept (Kip asks for it), his dinner invitation kept, or Strahd signs at dinner | strahd/letters:first and :invitation_choice, castle_ravenloft/gates_dinner |
+| `free` | Quillon is paid with the signature; the contract burns; the apricots start to rot | camp/kip:talk_settle |
+| `strahds_debtor` | At dinner Kip lets Strahd buy the contract instead (failure) | fine_print:dinner_sold |
+
+## Castle Ravenloft
+
+The castle beats are built in rather than left as hooks: Liriel's dawn at the chapel altar step, Wren's lesson with
+Rahadin, Ratatoille's and Kip's moments at Strahd's dinner, and Strahd greeting each of the six by what they came for
+(castle_ravenloft/gates_dinner). Godrick's knighting happens at Argynvostholt.
 
 ## New NPCs
 
-`kestrel_vell` (Corporal Vell, vampire spawn; uses the vampire spawn art) and `jory_fenn` (Jory Fenn, Vallaki watchman;
-uses the Vallaki guard art). Voice bibles: docs/voice/kestrel_vell.md, docs/voice/jory_fenn.md.
+`fen_burley` (uses the werewolf art until his own is drawn) and `mister_quillon` (uses the noble art until his own is
+drawn). Voice bibles: docs/voice/fen_burley.md, docs/voice/mister_quillon.md.
 
 ## Lines to voice
 
 Every line in `narrative/companions/*.dialogue`, `narrative/camp/*.dialogue` and
-`narrative/banter/party_companions.dialogue`, plus the lines added to existing files (arrival hooks have no new
-lines; henrik:confess, lucian:return have one interjection or narration each). Lines with `{name}` are never voiced.
+`narrative/banter/party_six.dialogue`, plus the party lines rewritten across every region for the six. None are voiced
+until the owner picks the six's voices. Lines with `{name}` are never voiced.

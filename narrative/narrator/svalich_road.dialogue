@@ -163,7 +163,7 @@ once
 
 ~ examine:falls_cairn
 | A cairn of river stones, each scratched with a name. You count forty before you stop counting. The newest stone is blank; someone meant to come back and finish it.
-| [name:ilse_varga] {name} counts every stone on the cairn, all the way to the end. She doesn't say the number.
+| [name:kip_smudgewick] {name} reads every name on the cairn under his breath and leaves an apricot on the blank stone. It won't rot; he tries not to think about that.
 
 ~ examine:falls_marker
 | A weathered marker stone with a carving of a woman in a long dress, falling. Someone has chipped away the face.

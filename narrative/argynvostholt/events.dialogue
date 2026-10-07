@@ -36,7 +36,7 @@ set phantom_ride_seen
 Narrator: Hooves on the road behind you, a great many of them, coming fast. You get off the track just in time.
 Narrator: Twenty riders go past in a column, grey as fog, lances up, every face turned toward the ridge. Not one of them looks at you.
 Narrator: They go round the bend, and the sound of them stops all at once, like a door shut on it.
-interject name:ilse_varga: Twenty. Column of twos. Riding hard for home, and late. I know that ride.
+interject name:thistle: Twenty horses, and not one hoofprint. They're riding home. Late, by the look of them.
 -> END
 
 ~ knights_hunting

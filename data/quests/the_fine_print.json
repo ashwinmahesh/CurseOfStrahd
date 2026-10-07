@@ -1,0 +1,52 @@
+{
+  "id": "the_fine_print",
+  "name": "The Fine Print",
+  "summary": "Kip Smudgewick signed a devil's contract to save his family's apricot orchard. The devil has offered him one way out: a signature from the lord of a land of mists.",
+  "region": "companions",
+  "stages": [
+    {
+      "id": "the_contract",
+      "journal": "When the blight took the Smudgewick orchard, a polite gentleman in a grey coat came to the farm gate. Kip's father sent him away. Kip went after him and signed. The orchard lived, the debt was paid, his little sister Pip got better, and the apricots have never rotted since. Mister Quillon, assessor, has offered one way out of the contract: bring back a signature from the lord of a land of mists.",
+      "objectives": [
+        "Get out of the contract"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_assessor",
+      "journal": "Mister Quillon called at the campfire, in his grey coat, with his ledger, to see how Kip was getting on. He was pleasant. He reminded Kip that the term runs out 'at the end of the final harvest', and that his jurisdiction ends at the mists, which is why he can't do anything to help. Then he wasn't there.",
+      "objectives": [
+        "Read the contract properly"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_small_print",
+      "journal": "Read properly, the contract doesn't ask for the lord of the mists' soul, or for his name on a bargain. It asks for 'a signature of the lord of the land of mists, freely given, in his own hand'. Any signature. Mister Quillon wrote it loosely because he never expected Kip to get anywhere near Strahd. Or to read.",
+      "objectives": [
+        "Get Strahd's signature, freely given"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "signed",
+      "journal": "Kip has it: Strahd von Zarovich's own signature, freely given, in his own hand. He keeps checking his pocket.",
+      "objectives": [
+        "Call Mister Quillon and settle up"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "free",
+      "journal": "Kip called Mister Quillon to the fire and handed him Strahd's signature, and Mister Quillon read his own contract three times and went a colour Kip says he'll treasure. The contract burned in his hand. Kip's apricots are going brown. He has never been so happy to see fruit spoil.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "strahds_debtor",
+      "journal": "Strahd offered to buy Kip's contract from the devil, and Kip let him. Mister Quillon will trouble him no longer. Strahd will, whenever he likes.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

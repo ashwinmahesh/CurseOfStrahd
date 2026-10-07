@@ -28,7 +28,11 @@ if tarokka.sword.place == abbey_of_st_markovia_shrine
 quest find_the_sunsword found
 endif
 tarokka give abbey_of_st_markovia_shrine
-interject tag:bookish: "Look behind the light." Madam Eva, you magnificent old fraud. You were exactly right.
+if name:ratatoille
+interject name:ratatoille: "Look behind the light." She was right. As one diviner to another, madame, I salute you.
+else
+interject tag:scholarly: "Look behind the light." Madam Eva knew. She knew exactly where.
+endif
 else
 Narrator: The niche is empty except for a stub of white candle and a few grains of incense, gone to dust. Someone used to pray back here, out of sight, where only the sun could see them.
 endif

@@ -1,0 +1,54 @@
+{
+  "id": "a_seat_at_the_table",
+  "name": "A Seat at the Table",
+  "summary": "Ratatoille learned magic so that people would sit with him. He crossed the mists to apprentice himself to the Wizard of Wines, a master of the arcane and the table both.",
+  "region": "companions",
+  "stages": [
+    {
+      "id": "the_apprenticeship",
+      "journal": "Nobody sat with Ratatoille at the academy until the day he threw fire across the refectory. Then a traveller told him of the Wizard of Wines, beyond the mists: a master of magic and of the table, everything Ratatoille ever wanted to be in one person. He packed his spellbook and his skillet and set out to become that wizard's apprentice.",
+      "objectives": [
+        "Find the Wizard of Wines"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "a_winery",
+      "journal": "The Wizard of Wines is a winery. Ratatoille crossed the mists for a winery. But the vines live on three magic stones a wizard paid to the Martikovs long ago for a winter's lodging, and the winery is named for him: a rude old man with a long nose, who played dragonchess against himself.",
+      "objectives": [
+        "Find the wizard who paid with the stones"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_kitchen",
+      "journal": "Ratatoille cooked supper for the whole Martikov family in their own kitchen. Davian ate three helpings without a word and then said, 'Again tomorrow.' It is the nicest thing anyone has ever said to Ratatoille.",
+      "objectives": [
+        "Find the wizard who paid with the stones"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_wizard_found",
+      "journal": "On Mount Baratok an old wizard who has forgotten his own name plays dragonchess against nobody. Ratatoille knew him at once: the Wizard of Wines, the one who paid the Martikovs with the stones. He also looks exactly like the woodcut of the greatest wizard alive in Ratatoille's third-year textbook, which is impossible, because that wizard would never talk to a rock.",
+      "objectives": [
+        "Help the wizard on the mountain remember"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_masters_word",
+      "journal": "Ratatoille asked Mordenkainen to take him as an apprentice. 'The greatest wizard alive spent a year on a mountain eating raw turnips and arguing with a cat,' Mordenkainen said. 'Status is a coat, boy. Anyone can wear it. Cook. You're a better wizard for it.'",
+      "objectives": [
+        "Decide what kind of wizard to be"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "his_own_table",
+      "journal": "Ratatoille cooked for his friends at the fire, a proper supper out of almost nothing, and when they'd eaten he stood up and announced himself: 'Ratatoille. Cook. And wizard. In that order.' Then he sat down and went pink. Everyone sat with him.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

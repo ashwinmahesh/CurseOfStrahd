@@ -1,39 +1,41 @@
 # Party banter at the Wizard of Wines. Each node opens with an `if` gate: the node is eligible only while its
 # condition holds. Party members speak only through interjections; a line plays if a matching member is present.
+# Ratatoille has no lines here: his reaction to the place is a quest scene of its own.
 
 ~ banter_wine_country
-if flag.davian_met and not flag.winery_reclaimed
-interject name:tamsin_tealeaf: A whole winery, and not one bottle left whole. The druids smashed the lot. I've never hated anyone on behalf of a bottle before.
-interject name:ilse_varga: Siege logic. Burn the stores, starve the garrison. They know what they're doing.
-interject name:tamsin_tealeaf: That's worse. I wanted them to be stupid.
+if flag.davian_met and not flag.winery_reclaimed and name:kip_smudgewick and name:thistle
+interject name:kip_smudgewick: Not one bottle left whole, and the vines are sick. I know a blighted row when I see one. You don't forget it.
+interject name:thistle: Druids. Smash his stores, sour his fields, then wait. That's how Grandda starves out a badger.
+interject name:kip_smudgewick: Oh, lovely. I was hoping they'd be careless.
 endif
 -> END
 
 ~ banter_ravens
 if flag.davian_met and not flag.keepers_allied
-interject tag:bookish: Lycanthropy, but ravens. The literature is very thin. I'd like it noted that I am being extremely restrained about asking them questions.
-interject tag:blunt: Noted. Keep being restrained.
+interject tag:scholarly: Lycanthropy, but ravens. The literature is very thin. I want everyone to know I am being extremely restrained about asking them questions.
+interject tag:blunt: Good. Keep being restrained.
 endif
 -> END
 
 ~ banter_father_and_son
-if flag.elvir_story_heard and not flag.martikovs_reconciled
-interject name:hedda_ironvow: The old man grieves like stone weathers. Slowly, from the outside in, and he calls it standing firm.
-interject name:ilse_varga: He sent two soldiers out and one came back. Every officer I ever served under did the same sums. Most of them blamed the one who came back.
+if flag.elvir_story_heard and not flag.martikovs_reconciled and name:godrick_pendlebrook and name:liriel_dawnsong
+interject name:godrick_pendlebrook: Two lads went up that hill. One came home. And the old man can't forgive the one who did.
+interject name:liriel_dawnsong: Grief wants a door to knock on. Adrian is the only door left in that house.
 endif
 -> END
 
 ~ banter_stones
-if flag.winery_stone_hiding_told and not flag.winery_stone_recovered
+if flag.winery_stone_hiding_told and not flag.winery_stone_recovered and not name:ratatoille
 interject class:wizard: Three stones that make vines grow where nothing should. Payment for one winter's lodging. That wizard either loved wine more than anyone ever has, or the stones were the cheapest thing in his pockets.
 interject tag:curious: Or he's coming back for the casks.
 endif
 -> END
 
 ~ banter_reconciled
-if flag.martikovs_reconciled
-interject name:tamsin_tealeaf: Did you see the old man's face? When he gave Adrian the press? I'm not crying. It's the vinegar.
-interject name:hedda_ironvow: Mm. It's the vinegar. Stone remembers. So do fathers, eventually.
+if flag.martikovs_reconciled and name:godrick_pendlebrook and name:wren_featherfoot
+interject name:godrick_pendlebrook: When the old man gave Adrian the press. His face. I'm crying, and I don't care who sees. Knights are allowed.
+interject name:wren_featherfoot: It's the vinegar. Whole place reeks of it. That's all this is.
+interject name:liriel_dawnsong: It isn't the vinegar, Wren.
 endif
 -> END
 
@@ -53,8 +55,8 @@ endif
 -> END
 
 ~ banter_keepers
-if flag.keepers_allied
-interject tag:curious: There's a raven on that fence. And that one. And that one. They've been following us since the winery.
-interject name:silvain_aster: We have, technically, been adopted by a secret society of shapechanging birds. I'm writing it down before anyone can talk me out of it.
+if flag.keepers_allied and name:thistle and name:wren_featherfoot
+interject name:thistle: That raven's been on every fence we've passed for three days. I asked it. It says we're family now.
+interject name:wren_featherfoot: Adopted again. Last time it was an old elf with a stick. Birds are better. Birds don't make you sweep.
 endif
 -> END

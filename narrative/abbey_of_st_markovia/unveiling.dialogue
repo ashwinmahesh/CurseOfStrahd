@@ -48,7 +48,11 @@ Narrator: He doesn't wait for dusk. He says the dark up here is close enough. Th
 Narrator: Vasilka. She is beautiful, the way a thing made very carefully is beautiful, and the seams at her wrists and throat are so fine you could take them for lace. The dress fits her as though it had always been waiting.
 Narrator: The Abbot lays his palms on her brow. The candles go white. When they go yellow again, her eyes are open.
 Vasilka: Good evening. I am Vasilka. I am to be married. Have I kept anyone waiting?
+if name:wren_featherfoot
+interject name:wren_featherfoot: She's... polite. Why is that the worst part?
+else
 interject tag:curious: She's... polite.
+endif
 Abbot [smile]: She is perfect. Tomorrow Clovin will drive her down the road to the castle, and the lord of this valley will have a wife, and the valley will have peace by spring.
 if guest:ezmerelda
 interject guest:ezmerelda: Peace. From him. I've heard monsters plan a great many things. That's the first time one's planned a honeymoon.
@@ -63,6 +67,7 @@ endif
 * [if flag.ireena_pool_vision] Tell him what Ireena saw in the Pool of the White Sun. -> pool_truth
 * [if (flag.wachter_evidence or flag.death_house_read_strahd_letter) and not flag.abbot_persuade_tried] [Persuasion DC 12] We've read his letters. He writes to tools, never to people. He'll use her and throw her away. -> persuade_ok | persuade_fail
 * [if not flag.abbot_persuade_tried] [Persuasion DC 16] He won't love her. He doesn't love. He keeps. -> persuade_ok | persuade_fail
+* [name:liriel_dawnsong] [if flag.liriel_asked_abbot] Remind him of the sun he told her about. -> companions/dawn:unveil
 * [if flag.abbot_nature_known and not flag.abbot_religion_tried] [Religion DC 14] You were sent to keep this valley's faith, not to feed its devil. -> religion_ok | religion_fail
 * It's your abbey. We won't stand in your way. -> wedding
 * Stop this. She isn't yours to give away. -> stop
@@ -73,7 +78,11 @@ Narrator: You unfold Markovia's letter and read it to him, all of it, slowly, in
 Narrator: At "patience is how he feeds", the Abbot sits down on the altar step, as if someone has cut a string.
 Abbot: She wrote that. She knew. She went up that road knowing, and I have spent four hundred years telling her children she was wrong.
 if flag.markovia_story_heard
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: You told us she was brave and mistaken. She wasn't mistaken. She knew what he was, and she went anyway.
+else
 interject tag:blunt: You told us she was brave and mistaken. She wasn't mistaken. She knew exactly what he was.
+endif
 Abbot [sad]: I knew it the way you know the floor is there in the dark. I simply never put my weight on it.
 endif
 -> repent_unmake

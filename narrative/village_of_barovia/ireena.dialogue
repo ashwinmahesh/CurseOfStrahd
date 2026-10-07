@@ -69,7 +69,7 @@ endif
 if flag.ireena_door_threatened
 Ireena [angry]: And I know your voice. You're the one who told my door to open. Now. Keep that voice down in this house.
 endif
-interject name:tamsin_tealeaf: Oh. Oh, that's... no. No, I'm fine. I'm fine.
+interject name:godrick_pendlebrook: My lady. Sir Godrick Pendlebrook, at your service. Fear not.
 if flag.burial_agreed and not flag.donavich_will_officiate and not flag.donavich_refused_rites
 Ireena: Ismark says you'll help with Father. Then he needs a priest. Father Donavich, at the church on the hill. He hasn't left it in weeks, but he owes Father that much.
 quest bury_the_burgomaster find_a_priest
@@ -90,7 +90,6 @@ Ireena: Back again. Good. The house is quieter with more swords in it.
 * What's been attacking the house? -> attacks
 * [Medicine DC 12] Look at what the scarf is hiding. -> bites_seen | bites_missed
 * Where do you come from, originally? -> past
-* [name:tamsin_tealeaf] Show her the locket. -> locket
 * [if not flag.burial_agreed] We'll help you bury your father. -> agree_burial
 * [if flag.burial_agreed and not flag.burial_procession] We're ready to carry him to the church. -> procession_check
 * [if not flag.mansion_vigil] We'll stand watch with you tonight. -> vigil
@@ -124,17 +123,6 @@ Ireena: My eyes are up here. So is my sword.
 ~ past
 Ireena: I don't know where I come from. Father found me on the road, eight or nine, with no name and no memory. He gave me both. Some nights I dream of a lake, a white dress, and falling. That's all I have.
 interject species:elf: Memories that thin are rarely an accident.
--> menu
-
-~ locket
-set tamsin_locket_recognized
-if not (quest.the_locket >= her_face)
-quest the_locket her_face
-endif
-Narrator: Tamsin opens the silver locket and holds it out. The tiny painted woman inside has Ireena's face: the same eyes, the same red hair, in a gown a few centuries out of fashion.
-Ireena [afraid]: Where did you get this? I've never sat for a painter. I've never owned a dress like that. Who is she?
-interject name:tamsin_tealeaf: I was hoping you could tell me. She's been calling my name in my sleep for three months.
-Ireena: Then she and I have something in common. Someone calls mine too. Put it away. Please.
 -> menu
 
 ~ agree_burial

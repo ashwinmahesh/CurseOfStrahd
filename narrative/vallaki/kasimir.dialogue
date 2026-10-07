@@ -18,12 +18,14 @@ endif
 * [if not flag.kasimir_sister_told] (Sit with him a while, and say nothing.) -> sit
 * [if flag.kasimir_sister_told] Tell us about the temple in the mountains. -> temple
 * [if tarokka.ally.npc == kasimir_velikov and not guest:kasimir_velikov] Madam Eva's cards named you as our ally. -> ally
+* [name:wren_featherfoot] [if quest.the_last_lesson and not flag.wren_letter_given] Give him Master Sorrel's letter. -> companions/lesson:kasimir
 * Goodbye. -> bye
 
 ~ who
 Kasimir: Kasimir Velikov. My people came to this valley long ago, the elves of the dusk, as guests of its lord. We stayed as his tenants. Now there are only a handful of us, none of us young, and there will never be another. That was his doing. And, I am afraid, a little of ours.
 interject species:elf: I have heard songs about the dusk elves. None of them end like that.
 Kasimir: The songs were written before the ending. They usually are.
+interject name:wren_featherfoot: Kasimir. Sir. I... no. Not yet. Sorry. Please, go on.
 -> menu
 
 ~ vistani

@@ -1,0 +1,67 @@
+# Liriel Dawnsong's personal quest, Carry the Dawn (data/quests/carry_the_dawn.json, docs/story/personal_quests.md).
+# Every scene needs Liriel. Started from into_the_mists/arrival:hooks. The silence: camp/liriel. The spark:
+# vallaki/lucian:return (inline). The angel and the fall: abbey_of_st_markovia/abbot:first and :bride (inline) and
+# the question below (the Abbot's menu), which opens a way to his repentance at the unveiling (:unveil). Faith kept:
+# camp/liriel once the Abbot's story is over. The dawn: the altar step in Castle Ravenloft's chapel (prop
+# crg_chapel_dawn_step).
+
+# --- Does he remember the sun? (abbey_of_st_markovia/abbot:menu) ------------------------------------------------------
+
+~ sun
+set liriel_asked_abbot
+Narrator: Liriel doesn't kneel this time. She stands in front of him with her hands folded, small and straight, the way a novice stands in front of her abbess, and asks very quietly.
+interject name:liriel_dawnsong: Do you still remember the sun?
+Narrator: The candles along the altar rail gutter, all of them, at once.
+Abbot: I...
+Abbot: It came up behind the mountains. Gold first, then white. The snow went pink for a moment, every morning, as if it were embarrassed to be seen. I used to stand on the wall and watch it, before.
+Abbot [sad]: It has been a long time, child. I had stopped expecting anyone to ask.
+interject name:liriel_dawnsong: He sent you to keep it. Not to keep him. You know that. You've only forgotten that you know it.
+Abbot: Go and pray, little sister. I will think about what you have said. I have had four hundred years to think about everything else.
+-> abbey_of_st_markovia/abbot:menu
+
+# --- At the unveiling (abbey_of_st_markovia/unveiling:choice) -----------------------------------------------------------
+
+~ unveil
+interject name:liriel_dawnsong: Gold first, then white. The snow went pink, as if it were embarrassed to be seen. You told me that. You were sent to keep the morning for these people. Keep it.
+Narrator: The Abbot stops with his hand above the bride's brow. In the high windows of the chapel, behind the snow, the grey goes faintly, impossibly gold, and then is grey again.
+Abbot: You saw that.
+interject name:liriel_dawnsong: I did. So did you.
+Abbot [sad]: Gold first, then white.
+-> abbey_of_st_markovia/unveiling:repent_unmake
+
+# --- The altar step, Castle Ravenloft (prop crg_chapel_dawn_step) --------------------------------------------------
+
+~ chapel
+if quest.carry_the_dawn >= the_dawn
+Narrator: The altar step is only stone again. The dust has a faint warm colour to it still, if you look for it.
+-> END
+endif
+Narrator: The devil's chapel. The sunburst over the altar has been turned upside down and nailed there, and the pews are full of nothing but cold.
+interject name:liriel_dawnsong: I'd like to try something. It may not work. It's never not worked before, but then I'd never been here before.
+* (Let her.) -> chapel_hymn
+* (Not now.) -> END
+
+~ chapel_hymn
+set liriel_dawn_prayed
+Narrator: Liriel climbs the step, turns her back on the upside-down sun, faces the dark windows and begins the morning hymn: the one the novices sing every dawn on the temple wall, the one she has sung every morning of her life.
+Narrator: The first verse goes up into the cold and nothing happens. She doesn't stop. The second verse, and the dark in the windows thins, like a curtain held up to a lamp.
+Narrator: On the third verse the dawn comes. Real dawn, gold first and then white, pouring through the stained glass, laying coloured light over the dust and the pews and the altar, warm on your faces. Things in the walls cry out and go quiet.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Oh. Oh, that's the sun. I'd forgotten it was that colour.
+endif
+if name:thistle
+interject name:thistle: Bark and bones. Sunbeam. SUNBEAM. Look at it!
+endif
+if name:kip_smudgewick
+interject name:kip_smudgewick: It's warm. It's actually warm. I'm going to cry on a vampire's floor and I don't care who knows.
+endif
+if name:wren_featherfoot
+interject name:wren_featherfoot: Nobody move. Nobody breathe. Nobody make a joke. Not even me.
+endif
+if name:ratatoille
+interject name:ratatoille: Gold first, then white. Like a crème brûlée. I'm sorry. It's beautiful. I'm sorry.
+endif
+Narrator: When the hymn ends, the light goes out of the windows like a tide going out, slow and unhurried. It came, though. It came.
+interject name:liriel_dawnsong: There. That's what it looks like. Now we know. Now we can tell him we know.
+quest carry_the_dawn the_dawn
+-> END

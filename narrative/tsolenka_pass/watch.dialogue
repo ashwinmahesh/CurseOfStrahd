@@ -14,9 +14,7 @@ else
 tsolenka_sergeant: Halt. Watchword.
 Narrator: He says it exactly the same way as last time. You suspect he has said it exactly the same way for centuries.
 endif
-if name:ilse_varga
-interject name:ilse_varga: Still at their posts. Nobody came to relieve them, and they stayed. That's discipline. That's also the worst thing I've ever seen.
-endif
+interject name:wren_featherfoot: Master Sorrel says discipline is carrying on after the reason's gone. I don't think he meant this.
 if guest:kasimir_velikov
 interject guest:kasimir_velikov: My sister came this way. If they stopped her, they'll remember. If they didn't, they let her through to that place, and I don't know which I'd rather hear.
 endif

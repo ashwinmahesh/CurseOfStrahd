@@ -14,8 +14,8 @@ if flag.death_house_heard_plea
 endif
 Rose [afraid]: Is it over? Is the noise over? Mother said she'd unlock the door when the noise downstairs stopped.
 Thorn: You're not Mother.
-interject name:tamsin_tealeaf: No. No, we're... friends. Of the family. Sort of. Hello.
-if not name:tamsin_tealeaf
+interject name:kip_smudgewick: No! No. Friends. Of the family, sort of. Would you like an apricot? Can you... no. Sorry. Hello.
+if not name:kip_smudgewick
   interject tag:cheerful: Hello there. No, we're not your mother. We're the next best thing. Probably.
 endif
 -> ask
@@ -80,8 +80,8 @@ if not flag.death_house_children_truth
 endif
 Rose: We hid in the toy chest when it got cold. Our bones are still there. Our crypts are downstairs, by Grandmother's. Mother showed us.
 Rose [sad]: Will you take us?
-interject name:hedda_ironvow: We will, little one. That's what we're for.
-if not name:hedda_ironvow
+interject name:thistle: Course we will. You're mine now. Both of you.
+if not name:thistle
   interject class:cleric: Yes. That much, at least, we can do properly.
 endif
 -> ask
@@ -106,7 +106,7 @@ if not flag.death_house_children_truth
   set death_house_children_truth
   set death_house_lore += 1
 endif
-interject name:silvain_aster: Someone in this party now has a child in their head. I'd like that noted, and then I'd like it fixed.
+interject name:wren_featherfoot: Right. One of us has a lodger. Hands up? Nobody? Lovely.
 -> END
 
 ~ ride_along
@@ -114,7 +114,7 @@ Rose: Hold still. It doesn't hurt. Thorn, say sorry first.
 Thorn: Sorry first.
 Narrator: Two cold presences step inside two of you and settle, the way children settle in the back of a cart. Someone is humming now, and none of you started it.
 set death_house_children_riding
-interject name:ilse_varga: Two more to count, then. Fine. Nobody gets left.
+interject name:godrick_pendlebrook: Two more for the party, then. Welcome, both of you. Hold on tight; I'm very tall.
 -> END
 
 ~ promise_bones

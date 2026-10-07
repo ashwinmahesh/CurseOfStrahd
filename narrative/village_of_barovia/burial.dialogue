@@ -53,7 +53,7 @@ Ismark [weary]: No priest, then. Someone say something. Father would hate a sile
 set burial_method = "cleric_rites"
 attitude ireena friendly
 interject class:cleric: Earth to earth, and the dark to the dawn. Rest, Kolyan Indirovich. Let no voice call you up again.
-interject name:hedda_ironvow: Dawn comes, Kolyan. Even here.
+interject name:godrick_pendlebrook: Rest easy, sir. We'll look after her. On my oath.
 Narrator: The words aren't the ones this village uses, but they're said with care, and the earth seems to accept them.
 -> lowered
 
@@ -102,16 +102,6 @@ Ireena [angry]: Get out of here.
 Strahd [smile]: I am not in, my dear. Observe: the gate. I keep my manners even where others have forgotten theirs. Ireena. You look tired. You need not be.
 if flag.ireena_bite_seen
 Narrator: Ireena's hand goes to the scarf at her throat before she can stop it. He sees, and his smile widens.
-endif
-if flag.ilse_invitation_shown
-Strahd: And the soldier who kept my invitation. I am touched. Your company asked after you, you know. Near the end.
-interject name:ilse_varga: Where are they.
-if name:ilse_varga and not (quest.kestrel_company >= the_host)
-quest kestrel_company the_host
-endif
-endif
-if flag.tamsin_locket_recognized
-Strahd [sly]: The little thief carries her portrait. Keep it close. It cost more than you can imagine.
 endif
 if class:wizard
 Strahd: And a scholar. My library would delight you. You must come up and see it. Everyone does, eventually.

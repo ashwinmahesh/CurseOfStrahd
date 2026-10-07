@@ -76,8 +76,16 @@ Bella: Then you'll meet the whole family together, and I'll have to help, and I'
 ~ pact
 set bella_pact
 Bella [smile]: Lovely. I'll be on the stair with my feet up. Do be quick; she screams dreadfully when she's losing.
-interject tag:devout: We've just struck a bargain with a fiend. I want that said aloud, so none of us forgets it.
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: We have just made a bargain with a fiend. I want that said aloud, so that none of us forgets it.
+else
+interject tag:pious: We've just struck a bargain with a fiend. I want that said aloud, so none of us forgets it.
+endif
+if name:kip_smudgewick
+interject name:kip_smudgewick: Said. Witnessed. No small print, which is what worries me. Trust me. I'd know.
+else
 interject tag:blunt: Said. And there's one fewer of them to fight.
+endif
 -> END
 
 ~ waiting

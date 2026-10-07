@@ -1,0 +1,98 @@
+# Kip Smudgewick's personal quest, The Fine Print (data/quests/the_fine_print.json, docs/story/personal_quests.md).
+# Every scene needs Kip. Started from into_the_mists/arrival:hooks. Mister Quillon calls and the contract is read at
+# the fire (camp/kip). Master Vosk reads it too, for a fee (amber_temple/vosk:menu). The signature: Strahd's first
+# letter kept (strahd/letters, Kip asks), his dinner invitation kept (strahd/letters:invitation), or Strahd signing
+# for Kip at dinner (castle_ravenloft/gates_dinner). Settling up with Quillon: camp/kip.
+
+# --- Master Vosk reads it (amber_temple/vosk:menu) ----------------------------------------------------------------
+
+~ vosk
+interject name:kip_smudgewick: Master Vosk. Sir. You said you read contracts. I've got a contract. Would you, er. Would you have a look. I can pay. I've got apricots. And money. Mostly apricots.
+Narrator: Kip unrolls the contract on the table. It's longer than it should be when it's rolled up, and the ink moves a little, like something breathing in its sleep. Vosk's nose lifts.
+Vosk [smile]: Oh, my. This is Quillon's hand. Assessor Quillon of the Ninth Ledger. I haven't seen his work in centuries. Sloppy as ever.
+Vosk: Do you know, nobody reads these. Nobody. They sign and they weep and they never once read. Let me see.
+Narrator: He reads with one long finger moving under the lines, humming, as pleased as a man with a good pudding.
+Vosk: Here. The way out he offered you. "A signature of the lord of the land of mists, freely given, in his own hand." That's all it says.
+interject name:kip_smudgewick: Right. His soul. On a contract. Which he's never going to...
+Vosk: No, no, no. A signature. Not a soul; the lord's soul is spoken for, and Quillon knows it. Not a bargain. Not a contract. A signature. On anything. A laundry list. A love letter. A dinner invitation.
+Vosk [smile]: Your assessor wrote it carelessly because he never expected you to get within a mile of the lord of Barovia. Or to read.
+if not (quest.the_fine_print >= the_small_print)
+quest the_fine_print the_small_print
+endif
+Vosk: Now. My fee.
+* [name:kip_smudgewick] Offer him an apricot. -> vosk_apricot
+* [if gold >= 50] Pay him fifty gold. -> vosk_gold
+* We didn't agree a fee. -> vosk_nofee
+
+~ vosk_apricot
+set kip_vosk_paid
+interject name:kip_smudgewick: Apricot? They, er. They don't go off. Ever. You'll know why.
+Vosk [smile]: Infernal produce. Grown on a soul in escrow. Do you know how rare that is?
+Narrator: He eats it slowly, with his eyes closed, stone and all. You hear the stone crack.
+Vosk: Damned, and delicious. We're square, Mister Smudgewick. Do come back when you're free. I'd love to see what they taste like after.
+-> amber_temple/vosk:menu
+
+~ vosk_gold
+set kip_vosk_paid
+gold -50
+Vosk: Coin. How quaint. Thank you. I'll put it with the others.
+-> amber_temple/vosk:menu
+
+~ vosk_nofee
+Vosk [smile]: No. We didn't. You should have read the terms before you asked. Never mind. Consider it a lesson; the first one's free.
+interject name:kip_smudgewick: That's my line.
+-> amber_temple/vosk:menu
+
+# --- The first letter (strahd/letters:first) --------------------------------------------------------------------
+
+~ letter
+interject name:kip_smudgewick: Before anyone burns that, er. Could I have it? It's signed. I collect signatures. It's a hobby. Since about a minute ago.
+* Give Kip the letter. -> letter_kip
+* Burn it. -> strahd/letters:first_burned
+
+~ letter_kip
+set strahd_letter_kept
+interject name:kip_smudgewick: Thank you. I'll keep it somewhere safe. Somewhere very safe. My hat.
+Narrator: Kip folds the letter into the band of his straw hat. For a while it's warm against his horns. Then, oddly, it isn't.
+-> END
+
+# --- The invitation (strahd/letters:invitation) -----------------------------------------------------------------
+
+~ invitation
+set kip_invitation_kept
+interject name:kip_smudgewick: I'll just take this. The letter. Nobody needs it. Nobody needs it but me.
+Narrator: Kip slides Strahd's invitation into the band of his hat, next to his apricot-pit charm.
+-> strahd/letters:invitation_choice
+
+# --- At Strahd's table (castle_ravenloft/gates_dinner) ------------------------------------------------------------
+
+~ dinner
+interject name:kip_smudgewick: Your lordship. Sir. Your Excellency. Would you sign something for me? It's, er. It's a receipt. For the apricots.
+Strahd [smile]: You haven't given me any apricots.
+interject name:kip_smudgewick: Apricot?
+Narrator: Kip holds one out across the table. Strahd looks at it for a long moment, the way a cat looks at a moth, and takes it.
+Strahd: I know what you are carrying, little merchant. I can smell the ink from here. Some assessor with a ledger and a grey coat has his hand in your pocket, and you want my name to pay him with.
+Strahd: My soul is not mine to sell. It was sold long ago, at a better price than your devil could imagine. So my name costs me nothing. I'll give it to you.
+if not flag.kip_strahd_offer_heard
+set kip_strahd_offer_heard
+Strahd: Or I could buy your contract from him instead. Then you would owe me, and not a stranger. I am a much better landlord than a devil. Ask anyone in the valley.
+* [name:kip_smudgewick] Just the signature, please, sir. -> dinner_signed
+* [name:kip_smudgewick] (Let him buy the contract.) -> dinner_sold
+endif
+-> dinner_signed
+
+~ dinner_signed
+set kip_strahd_signed
+Narrator: Strahd takes Kip's pen, dips it in the wine, and signs the back of the bill for the apricot: a single tall letter, a Z, crossed with a flourish.
+Strahd: Freely given. In my own hand. Your assessor will hate it. Give him my regards.
+if not (quest.the_fine_print >= signed)
+quest the_fine_print signed
+endif
+-> castle_ravenloft/gates_dinner:table
+
+~ dinner_sold
+quest the_fine_print strahds_debtor
+Narrator: Strahd holds out his hand, and Kip, very slowly, puts the contract in it. It doesn't burn. It goes into Strahd's coat like a letter going into a drawer.
+Strahd: There. You're mine now, a little. Don't look so worried. I'm very patient with the things I own.
+interject name:kip_smudgewick: Thank you, sir. I think. I'll think about whether I think.
+-> castle_ravenloft/gates_dinner:table

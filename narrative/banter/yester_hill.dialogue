@@ -1,38 +1,38 @@
 # Party banter on Yester Hill. Each node opens with an `if` gate.
 
 ~ banter_humming
-if not flag.yester_hill_resolved
-interject name:silvain_aster: Listen to it. One note, held for days, by people taking turns. It's a ritual of attrition. Fascinating. Horrible, but fascinating.
-interject name:ilse_varga: How many of them?
-interject name:silvain_aster: Enough to take turns.
+if not flag.yester_hill_resolved and name:ratatoille and name:thistle
+interject name:ratatoille: Listen. One note, held for days, by people taking turns. A ritual of attrition. Fascinating. Horrible, but fascinating.
+interject name:thistle: Thirty of them, maybe more. I can smell them from here. Wet wool and bad teeth.
+interject name:ratatoille: Thirty. Wonderful. I have revised my position to simply horrible.
 endif
 -> END
 
 ~ banter_effigy
 if flag.yester_hill_known and not flag.yester_hill_resolved
 interject tag:cheerful: A forty-foot statue of the man in the castle, made of mud. Does he know? Do you think he's flattered?
-interject tag:devout: Mm. Men like him are always flattered. That's the weak joint in them.
+interject tag:pious: Men like him are always flattered. That's the weak joint in them.
 endif
 -> END
 
 ~ banter_after_the_hill
 if flag.yester_hill_resolved and not flag.gulthias_tree_burned
 interject tag:blunt: We left the tree.
-interject tag:bookish: Trees don't walk. Generally.
+interject tag:scholarly: Trees don't walk. Generally.
 interject tag:blunt: Generally.
 endif
 -> END
 
 ~ banter_burned
-if flag.gulthias_tree_burned
-interject name:hedda_ironvow: I keep hearing it. The sound it made. I'll pray for it tonight, and I don't know who I'll be praying for.
-interject name:tamsin_tealeaf: Pray for the next person who'd have climbed that hill. That's who.
+if flag.gulthias_tree_burned and name:kip_smudgewick and name:liriel_dawnsong
+interject name:kip_smudgewick: I keep hearing it. The noise it made when it caught. Trees aren't meant to make a noise like that.
+interject name:liriel_dawnsong: Then I'll pray for the next soul who would have climbed that hill, and will never know to thank us.
 endif
 -> END
 
 ~ banter_elvir
-if flag.elvir_truth_known and not flag.martikovs_reconciled
-interject name:ilse_varga: "I told him fly." He gave the order and took the cost. That's command. Most officers never learn it.
-interject tag:curious: Then we tell his father. Today.
+if flag.elvir_truth_known and not flag.martikovs_reconciled and name:godrick_pendlebrook and name:kip_smudgewick
+interject name:godrick_pendlebrook: "I told him fly." The lad sent his brother away and stayed to face them. Sir Pellam would call that a knight's death.
+interject name:kip_smudgewick: Then his father hears it. Today. Some news you don't leave sitting in a pocket.
 endif
 -> END

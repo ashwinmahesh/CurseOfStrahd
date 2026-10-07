@@ -10,7 +10,11 @@ Arabelle: You stopped the fish-man. I didn't see that. I like being surprised. I
 elif flag.bluto_fate == "drowned"
 Arabelle [sad]: The fish-man went in. I said he would. I didn't want to be right.
 endif
+if name:kip_smudgewick
+interject name:kip_smudgewick: Miss, the boat. The boat's drifting into deep water. Could we do the fish later? I'm sure it's fine. It isn't fine.
+else
 interject tag:blunt: That boat is drifting toward deep water, and she's telling us about fish.
+endif
 * [Athletics DC 12] Wade out and haul the boat in. -> haul_ok | haul_fail
 * Throw her a line. -> line
 
@@ -39,7 +43,11 @@ Arabelle: The cards said I go with you. I saw it before they did. I see the cast
 join arabelle
 quest find_the_ally found
 Arabelle: Good. Somebody has to tell you which way not to go.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Hello again, little lady! You're much drier than last time. Well done.
+else
 interject tag:cheerful: Hello again. You're much drier than last time.
+endif
 Arabelle: I'll be wet again later. Not today.
 interject class:cleric: We'll keep her behind us, always. Always.
 -> END

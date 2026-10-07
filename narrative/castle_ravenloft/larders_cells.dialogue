@@ -147,7 +147,7 @@ set larders_doru_fate = "rest"
 Doru: Yes. Please. Before he wants me again.
 interject class:cleric: Close your eyes, Doru. Think of the church with the candles lit.
 Narrator: It is quick. The hunger goes out of his face, and for a moment he is only a tired boy. Then he is dust in the chains.
-interject tag:devout: We'll tell his father he was brave at the end. It's even true.
+interject tag:pious: We'll tell his father he was brave at the end. It's even true.
 -> END
 
 ~ doru_free

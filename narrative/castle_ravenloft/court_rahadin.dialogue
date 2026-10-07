@@ -33,6 +33,7 @@ endif
 * How long have you served him? -> service
 * [Insight DC 15] What does he really want from us? -> insight_ok | insight_fail
 * [if guest:ireena] You know who this is. -> ireena
+* [name:wren_featherfoot] [if quest.the_last_lesson >= the_brother and not flag.wren_rahadin_met] Tell him who your teacher was. -> companions/lesson:rahadin
 * We didn't come as guests. -> fight
 * We'll find our own way. -> leave
 

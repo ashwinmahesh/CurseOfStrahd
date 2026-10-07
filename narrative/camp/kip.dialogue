@@ -1,0 +1,150 @@
+# Kip Smudgewick's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each plays
+# once. Quest: The Fine Print (narrative/companions/fine_print.dialogue). Mister Quillon calls at the fire twice:
+# once to remind Kip of his terms, and once, if Kip has Strahd's signature, to be paid.
+
+~ talk_quillon
+if name:kip_smudgewick and quest.the_fine_print == the_contract
+-> quillon
+endif
+-> END
+
+~ quillon
+Narrator: Kip is sitting very close to the fire, closer than is comfortable, with his straw hat pulled down over his horns.
+interject name:kip_smudgewick: Did anyone else... has anyone else seen a man? In a grey coat? Just there? At the edge of the light?
+Narrator: There's nobody at the edge of the light. Then there is: a slim gentleman in a grey coat and grey gloves, a ledger under his arm, standing exactly where the firelight stops as if it were a line painted on a floor.
+Mister Quillon: Good evening. Please, nobody get up. Mister Smudgewick. I happened to be passing.
+interject name:kip_smudgewick: Nobody happens to be passing here. There's no here to pass. It's surrounded by fog.
+Mister Quillon: Quite so. I travel on a pass. The lord of this land is very particular about his border, and I am very particular about manners, so I shan't stay. I only called to see how you were getting on.
+Mister Quillon: Our agreement runs to the end of the final harvest. I merely mention it. And the way out I so generously offered, a signature from the lord of this land, remains on the table. I do hope you're making progress. Truly. I hate a default. The paperwork.
+* Leave him alone. -> quillon_leave
+* What happens if he can't pay? -> quillon_terms
+* (Say nothing.) -> quillon_go
+
+~ quillon_leave
+Mister Quillon: Of course. I can't do anything else here, you understand; my jurisdiction ends at the mists. I can only talk. You'd be amazed what talking does.
+-> quillon_go
+
+~ quillon_terms
+Mister Quillon: Completion. The consideration is collected, the orchard continues to flourish, and his family never learns why. Everybody keeps something. It's a very fair contract. I drafted it myself.
+-> quillon_go
+
+~ quillon_go
+Narrator: Then he isn't there. The firelight runs out to the dark and stops, and there's nobody standing where it stops.
+interject name:kip_smudgewick: Sorry. Sorry about that. He does that. He's very polite. That's the worst part. He's so polite.
+interject name:kip_smudgewick: Apricot? I need to be doing something with my hands.
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: Kip. Whatever you signed, there is nothing in any contract that the Morninglord can't see through. We'll get you out.
+endif
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Next time he comes, I'll fight him. Is he the fighting sort? He looked like the fighting sort. Thin ones are.
+interject name:kip_smudgewick: Please don't fight the devil, Godrick. It's in the contract. I think. I haven't read that bit.
+endif
+quest the_fine_print the_assessor
+-> END
+
+~ talk_reading
+if name:kip_smudgewick and quest.the_fine_print == the_assessor
+-> reading
+endif
+-> END
+
+~ reading
+Narrator: Kip has the contract out tonight, unrolled across his knees and over the log and onto the grass. It's longer unrolled than it could possibly be rolled. The ink moves a little in the firelight, like something asleep.
+interject name:kip_smudgewick: Mum always says read the small print. I never have. I signed it in the lane in the dark, crying. I'm going to read it now. Will somebody help? Some of the words are in a language that hurts.
+if name:ratatoille
+interject name:ratatoille: Give it here. It's like a recipe in a bad cookbook: all the important bits are in the method. Here. The way out. "A signature of the lord of the land of mists, freely given, in his own hand."
+-> reading_found
+elif name:wren_featherfoot
+interject name:wren_featherfoot: Shove over. I've read a lot of contracts. Mostly upside down, across a desk, while someone wasn't looking. Here. "A signature of the lord of the land of mists, freely given, in his own hand."
+-> reading_found
+elif name:liriel_dawnsong
+interject name:liriel_dawnsong: Let me. The temple taught us to read the old law-tongue; it's mostly for marriage settlements. Here. "A signature of the lord of the land of mists, freely given, in his own hand."
+-> reading_found
+endif
+* [name:kip_smudgewick] [Investigation DC 14] Read it properly, all the way through. -> reading_self | reading_fail
+* We'll find someone who reads contracts. -> reading_later
+
+~ reading_self
+interject name:kip_smudgewick: Hang on. Hang on. "A signature of the lord of the land of mists, freely given, in his own hand." That's it. That's the whole clause.
+-> reading_found
+
+~ reading_found
+interject name:kip_smudgewick: A signature. He said "a signature". I thought he meant... I thought it meant his soul. On a contract. Signed over. I thought it was impossible. That's why he offered it.
+interject name:kip_smudgewick: It doesn't say that. It doesn't say soul. It doesn't say contract. It says signature. Any signature.
+interject name:kip_smudgewick: He wrote it sloppy. Mister Quillon wrote it sloppy because he never thought I'd get anywhere near a vampire lord. Or read.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: So we just need the vampire to write his name on something. That's easy! People write their names on things all the time. I can do it now. Nearly.
+endif
+interject name:kip_smudgewick: Freely given. In his own hand. Right. Right. I can do that. I'm a salesman. Getting people to sign things is the entire job.
+quest the_fine_print the_small_print
+-> END
+
+~ reading_fail
+interject name:kip_smudgewick: It keeps... the words keep moving. Every time I get to the end of a line it's a different line. I can't. I can't read it on my own.
+-> reading_later
+
+~ reading_later
+interject name:kip_smudgewick: Somebody who reads contracts for a living. A lawyer. A scholar. Somebody who isn't scared of it. Somebody very boring.
+-> END
+
+~ talk_settle
+if name:kip_smudgewick and quest.the_fine_print >= the_small_print and not (quest.the_fine_print >= free) and (flag.strahd_letter_kept or flag.kip_invitation_kept or flag.kip_strahd_signed)
+-> settle
+endif
+-> END
+
+~ settle
+if not (quest.the_fine_print >= signed)
+quest the_fine_print signed
+endif
+Narrator: Kip doesn't sit down tonight. He stands at the edge of the firelight with his hat in his hands, facing out into the dark.
+interject name:kip_smudgewick: Mister Quillon. If you'd be so kind. I'd like to settle my account.
+Narrator: A pause. Then the gentleman in grey is standing just where the light stops, ledger under his arm, gloves buttoned.
+Mister Quillon: Mister Smudgewick. You've been busy. I can smell the castle on you.
+if flag.kip_strahd_signed
+interject name:kip_smudgewick: A signature of the lord of the land of mists. Freely given. In his own hand. On the back of a bill for one apricot.
+elif flag.kip_invitation_kept
+interject name:kip_smudgewick: A signature of the lord of the land of mists. Freely given. In his own hand. At the bottom of a dinner invitation.
+else
+interject name:kip_smudgewick: A signature of the lord of the land of mists. Freely given. In his own hand. At the bottom of a letter he wrote us, to say hello.
+endif
+Narrator: Mister Quillon takes the paper between two grey fingers. He reads it. He opens his ledger and reads his own contract, once, twice, three times. His face goes a colour you have never seen on a face.
+Mister Quillon: "A signature."
+interject name:kip_smudgewick: It says signature, Mister Quillon. Not soul. Not contract. I read it. Mum always says read the small print.
+Mister Quillon: Your mother is a very tiresome woman.
+Narrator: The contract in his ledger begins to smoke at one corner. Then the whole page catches, with a soft, polite sound, and burns down to his gloves, and he doesn't drop it.
+Mister Quillon: The terms are met. The account is closed. Good evening, Mister Smudgewick. I do hope we never meet again. I will make sure we don't.
+Narrator: Then he isn't there, and neither is the paper with Strahd's name on it.
+if flag.strahd_letter_kept and not flag.kip_strahd_signed and not flag.kip_invitation_kept
+set strahd_letter_kept = false
+endif
+set kip_contract_void
+quest the_fine_print free
+interject name:kip_smudgewick: Is that... is that it? Is it done? I don't feel any different. I thought I'd feel different. I thought there'd be a noise.
+Narrator: Then Kip takes an apricot out of his pocket, from habit, and looks at it, and makes a noise. There's a soft brown bruise on one side of it. It wasn't there this morning.
+interject name:kip_smudgewick: It's going off. It's going off! LOOK. It's going brown! Oh, thank every god there is, it's ROTTING.
+interject name:thistle: Why's he crying at a bad apricot?
+interject name:wren_featherfoot: Long story. Good ending.
+-> END
+
+~ talk_home
+if name:kip_smudgewick and quest.the_fine_print >= free and flag.eva_truth_teller != "kip_smudgewick"
+-> home
+endif
+-> END
+
+~ home
+Narrator: Kip is writing a letter by the fire, slowly, crossing out more than he writes.
+interject name:kip_smudgewick: It's to my dad. I'm not going to be able to send it. There's no post out of here. I'm writing it anyway.
+interject name:kip_smudgewick: He sent Mister Quillon away from the gate. That winter. Told him we'd manage. And I went after him down the lane, and signed, and came home and said the trees had come back on their own. A miracle. He went to the temple and gave thanks for it.
+interject name:kip_smudgewick: I've been lying to my dad for two years, every day, every time an apricot didn't rot.
+* You saved them. -> home_saved
+* You can tell him when you get home. -> home_tell
+
+~ home_saved
+interject name:kip_smudgewick: I did. I did do that. I keep forgetting that part. I'm going to put it in the letter. "I'm sorry, and also I saved everyone." That's a good sentence. That's a sentence a person can live with.
+-> END
+
+~ home_tell
+interject name:kip_smudgewick: When I get home. Yes. When I get home I'll tell him, and he'll be furious, and then he'll make me dig the whole bottom field on my own, and I'll be so happy I'll cry into the soil.
+-> END

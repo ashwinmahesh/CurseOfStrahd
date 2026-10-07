@@ -109,7 +109,11 @@ Urwin: You stood between this town and the people who'd sell it. That makes you 
 endif
 Urwin: We're the Keepers of the Feather. We watch. We carry word. Some nights we fly.
 Urwin: My father keeps a vineyard south of here: the Wizard of Wines. The wine's stopped coming, and so has word from him. When you're on that road, go to him. Tell him Urwin sent you. The ravens will know you.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Did one of them just wink at me? I winked back. Was that right?
+else
 interject tag:curious: Did one of them just wink at me?
+endif
 Urwin: Probably. Don't encourage him.
 -> END
 

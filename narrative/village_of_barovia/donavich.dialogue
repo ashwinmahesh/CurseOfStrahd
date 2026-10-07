@@ -27,7 +27,7 @@ Narrator: He looks at you, then past you, at something just over your shoulder. 
 elif flag.death_house_children_at_rest
 Donavich [sad]: The Durst children. Rose and Thorn. Folk saw them in the road for years. If they are at rest now, then you've done more for this village in a night than I have in a year.
 endif
-interject name:hedda_ironvow: A sunburst on the altar. The Morninglord, this far into the dark. Mm. Someone kept faith here.
+interject name:liriel_dawnsong: A sunburst, this far into the dark. Someone kept faith here. Morning's grace on you for it, Father.
 Narrator: From under the floor a young man's voice cries out, hoarse and eager: Father, who's there? I can smell them!
 Donavich [afraid]: Forgive me. Pay it no mind, children, please. It's nothing that concerns you.
 -> menu
@@ -48,7 +48,7 @@ endif
 * [if not flag.doru_revealed] Who's screaming under the floor? -> screaming
 * [if flag.doru_revealed and not flag.doru_destroyed and not flag.doru_freed] About your son. -> son_menu
 * [if flag.burial_agreed and not flag.donavich_will_officiate and not flag.donavich_refused_rites and not flag.burgomaster_buried] Will you bury the burgomaster? -> burial
-* [name:hedda_ironvow] Tell him about the silver raven in your dreams. -> raven
+* [if not flag.holy_symbol_rumor] Is any relic of the Morninglord left in this valley? -> raven
 * [Cleric] Kneel and pray with him. -> pray
 * Is there anything you need? Anything you can spare? -> needs
 * Goodbye. -> END
@@ -83,7 +83,7 @@ set doru_revealed
 quest the_priests_son heard
 Donavich [sad]: My son. Doru. He went with the other young men to storm the castle and kill the devil in his bed. They had torches and a song. The devil gave them dinner.
 Donavich: Months later Doru came home, at night, wearing his own face. I lured him below and barred the door. I pray. He screams. Neither of us has stopped since.
-interject tag:devout: You've kept him from the village all this time. That took more strength than you know.
+interject tag:pious: You've kept him from the village all this time. That took more strength than you know.
 Donavich: Please. Whatever you are, don't hurt him. There may be a way back. There must be.
 -> son_menu
 
@@ -168,13 +168,10 @@ quest bury_the_burgomaster priest_agreed
 
 ~ raven
 set holy_symbol_rumor
-if name:hedda_ironvow and not (quest.cold_prayers >= the_symbol)
-quest cold_prayers the_symbol
-endif
-Narrator: Hedda tells him the dream: the sun going out, the silver raven, the sunburst in its claws. Donavich's hands stop shaking.
+Narrator: At the word relic, Donavich's hands stop shaking.
 Donavich: The Holy Symbol of Ravenkind. Older than this church. A giant raven brought it to a paladin of the dawn, the stories say, and it was turned against the devil once, and lost after. Lost, mind. Not destroyed.
 Donavich: If anyone alive knows where it lies, it's the old Vistani seer at Tser Pool. Or him. He keeps what frightens him.
-interject name:hedda_ironvow: Lost, not destroyed. Mm. Then it can be found.
+interject name:wren_featherfoot: Lost, not destroyed. Master Sorrel says nothing's ever lost. It's just being difficult.
 -> menu
 
 ~ pray

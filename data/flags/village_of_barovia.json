@@ -42,16 +42,6 @@
       "summary": "A party member saw the two bite marks on Ireena's neck (Phase 4 reads)."
     },
     {
-      "id": "tamsin_locket_recognized",
-      "type": "bool",
-      "summary": "Tamsin showed Ireena the locket: the portrait has her face (Phase 4+ reads; Tatyana)."
-    },
-    {
-      "id": "ilse_invitation_shown",
-      "type": "bool",
-      "summary": "Ilse showed Ismark the letter signed with an S; Strahd remarks on it at the burial."
-    },
-    {
       "id": "burial_agreed",
       "type": "bool",
       "summary": "The party agreed to help bury the burgomaster."
@@ -134,7 +124,7 @@
     {
       "id": "holy_symbol_rumor",
       "type": "bool",
-      "summary": "Donavich told Hedda of the Holy Symbol of Ravenkind (Phase 4 reads)."
+      "summary": "Donavich told the party of the Holy Symbol of Ravenkind (Phase 4 reads)."
     },
     {
       "id": "burial_procession",

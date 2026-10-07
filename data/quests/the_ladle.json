@@ -1,0 +1,47 @@
+{
+  "id": "the_ladle",
+  "name": "A Knight, More or Less",
+  "summary": "Sir Godrick Pendlebrook was knighted on a deathbed with a soup ladle. He carries his old master's sword into the mists to have it done properly, by the Order of the Silver Dragon.",
+  "region": "companions",
+  "stages": [
+    {
+      "id": "the_errand",
+      "journal": "Last autumn Sir Pellam Ashgrove died in an inn bed and knighted his squire Godrick with a soup ladle, being too weak to lift his sword. Then he gave Godrick the sword. It was his grandfather's, Sir Aldric Ashgrove, a knight of the Order of the Silver Dragon, who rode out of a land of mists on the eve of the Order's last battle and never got back in. 'Take it to them, lad. Tell them an Ashgrove kept faith. Have them knight you proper.'",
+      "objectives": [
+        "Find the Order of the Silver Dragon"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_order_found",
+      "journal": "The Order of the Silver Dragon is still at Argynvostholt, after a fashion. Its knights died four hundred years ago and are still at their posts. Sir Godfrey Gwilym knew the griffin on Aldric's pommel, and the name on it hurt him in a way he couldn't explain. 'There's something about him on my wall. I wrote it down so I'd keep it. I can't remember what.'",
+      "objectives": [
+        "Ask the Order to knight Godrick",
+        "Learn what Sir Godfrey wrote about Aldric Ashgrove"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_deserter",
+      "journal": "Vladimir Horngaard, the Order's commander, knows the name Ashgrove: the knight who rode away the night before the last battle and left his brothers to die. He will knight no one. 'The Order does not take recruits. It takes revenge.' Godrick told him, politely, that he was wrong about Sir Aldric. Godrick has never been sure of anything so completely.",
+      "objectives": [
+        "Learn what Sir Godfrey wrote about Aldric Ashgrove"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "kept_faith",
+      "journal": "Low on Sir Godfrey's wall, in his own hand, older than most of it: 'ALDRIC ASHGROVE RODE FOR HELP. THE DRAGON SENT HIM. HE DID NOT RUN. DO NOT LET VLADIMIR TELL YOU OTHERWISE.' Aldric was sent out through the mists to call for aid that never came, and the mists closed behind him. An Ashgrove kept faith.",
+      "objectives": [
+        "Ask Sir Godfrey to knight Godrick, once the Order has found its own oath again"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "knighted",
+      "journal": "In the dragon's house, by the light of whatever the Order had left, Sir Godfrey Gwilym knighted Godrick Pendlebrook with Sir Aldric's sword. He asked who had knighted him first. 'Sir Pellam. With a ladle.' Sir Godfrey laughed until his armour rang. 'Then you were already a knight, lad. I'm only the witness.'",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

@@ -31,7 +31,9 @@ endif
 if flag.dream_pastry_eaten
 Morgantha [sly]: And you had the free sample, pet. Morgantha has looked in on your dreams since. You were smiling.
 endif
-if species:halfling
+if name:wren_featherfoot
+interject name:wren_featherfoot: She's looking at me like a ham again. Rude.
+elif species:halfling
 interject species:halfling: She's looking at me like a ham again.
 endif
 -> family
@@ -71,6 +73,7 @@ endif
 
 ~ children
 Morgantha: Let them go? But they're paid for, dearie. Their mother had a basket a week all season and dreamed of her little lost one every night. A child for a season. That's the custom. Everybody knows the custom.
+interject name:kip_smudgewick: That's not a custom, madam. That's a contract. A crooked one, with the terms hidden in the honey.
 if guest:ireena
 interject guest:ireena: There's no such custom. I lived in that village all my life.
 Morgantha [smile]: Then you never ran short, did you, pet? Lucky girl. He'd pay more for you than for any pastry.

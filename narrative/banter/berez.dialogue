@@ -2,79 +2,87 @@
 # is eligible only while its condition holds. Party members speak only through interjections.
 
 ~ banter_berez_nursemaid
-if flag.berez_witch_met and not flag.lysaga_dead and not flag.lysaga_bargained
-interject name:hedda_ironvow: A midwife. She brought him into the world. Somewhere back then there was a morning when he was only a baby, and she held him, and nobody knew.
-interject tag:blunt: She knew. She said so. Teeth already.
-interject name:hedda_ironvow: Mm. That's the part I'll be praying about tonight.
+if flag.berez_witch_met and not flag.lysaga_dead and not flag.lysaga_bargained and name:liriel_dawnsong and name:thistle
+interject name:liriel_dawnsong: She was his nursemaid. Once he was only a baby in someone's arms, and somebody sang to him.
+interject name:thistle: She said he had teeth already. Grandda says you can tell a biter from the first day.
 endif
 -> END
 
 ~ banter_berez_marina
-if flag.marina_truth_known and not flag.strahd_knows_marina_truth and not flag.lysaga_dead
-interject name:tamsin_tealeaf: So we know something the lord of the valley doesn't. About his own nanny. That's the most valuable thing I've ever stolen, and I didn't even steal it.
-interject name:silvain_aster: Knowledge you can't unknow is a poor kind of treasure. Who would we be telling, and what would he do with it?
-interject name:tamsin_tealeaf: Something horrible to someone horrible. I'm trying to decide if that's a problem.
+if flag.marina_truth_known and not flag.strahd_knows_marina_truth and not flag.lysaga_dead and name:kip_smudgewick and name:wren_featherfoot
+interject name:kip_smudgewick: We know something about his own nursemaid that he doesn't. In trade, that's leverage. In Barovia, I think it's a lit fuse.
+interject name:wren_featherfoot: Tell him, and something horrible happens to someone horrible. Master Sorrel never covered that one. Shame. I'd have listened.
 endif
 -> END
 
 ~ banter_berez_told
-if flag.strahd_knows_marina_truth
-interject name:ilse_varga: We gave him a target and he took it. That's what you do with a weapon. You point it.
-interject name:hedda_ironvow: We pointed the devil at a witch. I'll not pretend I'm sorry for her. I'll not pretend it was clean, either.
+if flag.strahd_knows_marina_truth and name:thistle and name:liriel_dawnsong
+interject name:thistle: We told him. He'll go for her now. Good. She eats babies.
+interject name:liriel_dawnsong: I won't weep for her, dear heart. I won't call it clean, either.
 endif
 -> END
 
 ~ banter_berez_ireena
-if flag.ireena_saw_marina and guest:ireena
+if flag.ireena_saw_marina and guest:ireena and (tag:cheerful or name:godrick_pendlebrook)
 interject guest:ireena: Nine steps. I counted them before we got there. I don't remember learning to count them.
+if tag:cheerful
 interject tag:cheerful: Maybe you're just good at stairs.
+else
+interject name:godrick_pendlebrook: Maybe you're just very good at stairs, my lady. Some people are.
+endif
 interject guest:ireena: Thank you. That's the kindest wrong thing anyone's said to me in a month.
 endif
 -> END
 
 ~ banter_baratok_mage
-if flag.mordenkainen_met and not flag.mordenkainen_restored
-interject name:silvain_aster: If that is who I think it is, the greatest living authority on half the spells I know is up a mountain arguing with a crow. I find that unbearable. Professionally.
-interject tag:blunt: You find a lot of things unbearable professionally.
-interject name:silvain_aster: It's a demanding profession.
+if flag.mordenkainen_met and not flag.mordenkainen_restored and name:ratatoille and name:wren_featherfoot
+interject name:ratatoille: If that is who I think it is, the greatest wizard alive is up a mountain with twigs in his beard, arguing with birds.
+interject name:wren_featherfoot: Birds were winning, to be fair.
+interject name:ratatoille: Non, non, non. Do not take the birds' side. I am having a crisis.
 endif
 -> END
 
 ~ banter_baratok_restored
-if flag.mordenkainen_restored and not guest:mordenkainen
-interject name:hedda_ironvow: Did you see his face when it came back? Like a man waking up in a house that burned down while he slept.
-interject tag:cheerful: He's going to be insufferable now, isn't he.
-interject name:hedda_ironvow: Mm. Let him. He's earned a little insufferable.
+if flag.mordenkainen_restored and not guest:mordenkainen and name:liriel_dawnsong and name:wren_featherfoot
+interject name:liriel_dawnsong: Did you see his face when it all came back? He looked round for people who weren't there any more.
+interject name:wren_featherfoot: He'll be insufferable now. Great wizards always are.
+interject name:liriel_dawnsong: Then we shall bear it, Wren. We bear you.
 endif
 -> END
 
 ~ banter_mordenkainen_guest
-if guest:mordenkainen
+if guest:mordenkainen and (tag:curious or name:thistle)
 interject guest:mordenkainen: Stop looking at me as if I might wander off. I have my wits back. Most of them. The useful ones.
+if tag:curious
 interject tag:curious: Which ones are missing?
+else
+interject name:thistle: Which ones are missing?
+endif
 interject guest:mordenkainen: If I knew that, they wouldn't be missing, would they?
 endif
 -> END
 
 ~ banter_tsolenka_watch
-if flag.tsolenka_watch_met and not flag.tsolenka_gate_open
-interject name:ilse_varga: Five men. A sergeant. Posts kept, roster current, mail oiled. Nobody came to relieve them, and they stayed.
-interject name:ilse_varga: If Kestrel Company is somewhere in this valley, I hope to God it isn't like that.
-interject name:hedda_ironvow: Then we look until we know, sergeant. Dawn comes.
+if flag.tsolenka_watch_met and not flag.tsolenka_gate_open and name:godrick_pendlebrook and name:thistle
+interject name:godrick_pendlebrook: Five of them, sergeant and all. Posts kept, mail oiled. Nobody came to relieve them, and they stayed. That's how the Order does it.
+interject name:thistle: They're ghosts, Big. They don't even smell.
+interject name:godrick_pendlebrook: I know. I'd stand a watch with them anyway, and be proud to.
 endif
 -> END
 
 ~ banter_tsolenka_gate
 if flag.tsolenka_gate_open
 interject tag:curious: "Nothing comes down." They kept that sign up for centuries. And we've just opened the gate.
+if tag:curious
 interject class:wizard: We've opened it going up. Whether anything comes down is, technically, a separate question.
+endif
 interject tag:blunt: Then we shut it behind us on the way back.
 endif
 -> END
 
 ~ banter_roc
-if flag.roc_driven_off
-interject name:tamsin_tealeaf: It had a sword in its nest. A whole sword. Somebody walked up here with a sword and became bird furniture.
-interject tag:blunt: So walk faster on bridges.
+if flag.roc_driven_off and name:ratatoille and name:kip_smudgewick
+interject name:ratatoille: It had a sword in its nest. Somebody marched up here armed to the teeth and became furniture. Bird furniture.
+interject name:kip_smudgewick: I'll be walking in the very middle of the bridges, then. If nobody minds.
 endif
 -> END

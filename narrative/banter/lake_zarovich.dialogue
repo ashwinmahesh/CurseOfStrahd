@@ -18,14 +18,18 @@ endif
 ~ banter_bluto_dark
 if flag.bluto_fate == "killed" or flag.bluto_fate == "drowned"
 interject tag:veteran: The lake got somebody in the end. I keep thinking it was always going to.
-interject tag:devout: It was never going to. It just did. There's a difference, and I'll keep insisting on it.
+interject tag:pious: It was never going to. It just did. There's a difference, and I'll keep insisting on it.
 endif
 -> END
 
 ~ banter_arabelle_lake
-if guest:arabelle and visited:lake_zarovich
+if guest:arabelle and visited:lake_zarovich and (tag:cheerful or name:wren_featherfoot)
 Arabelle: The lake lady wanted me twice. She doesn't get a third time. I asked.
+if tag:cheerful
 interject tag:cheerful: Asked who?
+else
+interject name:wren_featherfoot: Asked who, sprout?
+endif
 Arabelle: Her. She's not very nice. She was polite about it, though.
 endif
 -> END

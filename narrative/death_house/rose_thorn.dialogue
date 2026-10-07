@@ -10,8 +10,8 @@ Narrator: Two children stand in the road where the cottages begin: a girl of ten
 Rose [afraid]: Please, you have to help us. Something horrible lives in our house, down in the basement.
 Thorn [sad]: It's got Walter.
 Rose: Our baby brother. He's down there crying, and we can't go back in. We can't. Please.
-interject name:ilse_varga: Easy, little one. Nobody's going back in there alone. Which house?
-if not name:ilse_varga
+interject name:godrick_pendlebrook: Fear not, little lady. Nobody's going back in there alone. Which house is it?
+if not name:godrick_pendlebrook
   interject tag:loyal: Nobody's leaving you out here. Tell us which house.
 endif
 set death_house_heard_plea
@@ -37,7 +37,7 @@ Rose [angry]: Thorn!
 ~ parents
 Rose [sad]: They went downstairs with their friends and they didn't come back up.
 Thorn: They had their robes on. The black ones.
-interject name:hedda_ironvow: Robes. Mm. Families don't wear robes to supper.
+interject name:thistle: Black robes? Families don't wear robes to supper. Even I know that.
 -> questions
 
 ~ monster
@@ -71,9 +71,9 @@ if not flag.death_house_saw_through_lure
   set death_house_saw_through_lure
   set death_house_lore += 1
 endif
-interject name:silvain_aster: They're not entirely here. Fascinating. Horrible, but fascinating.
-interject name:tamsin_tealeaf: They're still scared, though. Whatever they are. That part's real.
-if not name:silvain_aster
+interject name:ratatoille: An illusion, very old and very well made. Mon dieu, the patience in it. Someone wants us inside that house.
+interject name:kip_smudgewick: They're still scared, though. Whatever they are. That part's real.
+if not name:ratatoille
   interject class:wizard: An image, not a person. Whoever made it wanted us moved, not fooled.
 endif
 -> questions
@@ -81,14 +81,14 @@ endif
 ~ pray
 Narrator: Rose folds her hands at once, the way she was taught, and Thorn copies her a beat late. Halfway through, they both look up, puzzled, as if they have forgotten the words.
 Rose: Mother doesn't pray to the Morninglord anymore. She says he never answers, and the other one does.
-interject name:hedda_ironvow: The other one. Mm. I'd like to know his name, and then I'd like to forget it.
+interject name:liriel_dawnsong: He does answer. Not always quickly. Never like that.
 -> questions
 
 ~ promise
 set death_house_promised_walter
 Rose [smile]: Thank you. Thank you. We'll wait here. We're very good at waiting.
 Thorn: Don't let it eat you.
-interject name:tamsin_tealeaf: Wouldn't dream of it. I'm terrible to eat. All gristle and opinions.
+interject name:wren_featherfoot: Wouldn't dream of it. I'm all knees and elbows. Terrible eating.
 quest into_the_mists village_edge
 -> END
 
@@ -118,8 +118,8 @@ Narrator: Two children stand in the road where the cottages begin, as if they ha
 Rose [afraid]: Please, you have to help us. Something horrible lives in our house, down in the basement.
 Thorn [sad]: It's got Walter.
 Narrator: They don't know you, and they never will. The house is fishing again.
-interject name:hedda_ironvow: That is the cruelest thing I've seen in this valley, and the valley has been trying.
-if not name:hedda_ironvow
+interject name:ratatoille: They do not know us. They will never know anyone. That is... non. That is not right.
+if not name:ratatoille
   interject class:cleric: Whatever holds them is still in that house. Nobody has let them go.
 endif
 if flag.death_house_children_met

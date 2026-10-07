@@ -463,6 +463,17 @@
       ],
       "dialogue": "werewolf_den/children:start",
       "when": "not flag.den_children_freed"
+    },
+    {
+      "npc": "fen_burley",
+      "cell": [
+        2,
+        16
+      ],
+      "dialogue": "companions/fen:start",
+      "when": "name:thistle and not flag.fen_fate",
+      "facing": "east",
+      "approach": 3
     }
   ],
   "encounters": [

@@ -21,7 +21,7 @@ Madam Eva [sly]: There you are. The house at the end of the village let you go. 
 else
 Madam Eva [sly]: There you are. I turned up a card for you three nights ago, and it has been tapping its foot ever since. Sit.
 endif
-interject name:silvain_aster: Foretelling is a parlour trick. I would nonetheless very much like to know how it's done.
+interject name:ratatoille: Fortune-telling. Technically a branch of divination, but a very low branch. I'd nonetheless very much like to know how she does it.
 if not flag.madam_eva_rumor
 Madam Eva: Nobody sent you? No. The road sent you. It sends everyone to my table in the end; most of them simply don't stop.
 endif
@@ -44,10 +44,6 @@ Narrator: The shuffling stops. Madam Eva looks past you at Ireena for a long mom
 Madam Eva [sad]: So. You have come round again, child. Further along the road than last time.
 Ireena: I've never been here in my life.
 Madam Eva: No. Not in this one. Sit by the brazier; you are cold all the way through, and it isn't the weather.
-if flag.tamsin_locket_recognized
-interject name:tamsin_tealeaf: She means the locket. The woman in the locket. Doesn't she?
-Madam Eva [sly]: Keep that stolen face in your pocket, little thief. Some faces belong to the dead, and the dead want them back.
-endif
 -> before_price
 
 # --- The price ---
@@ -95,47 +91,61 @@ Madam Eva [sly]: Then you are like everyone else in this valley. A true thing, t
 
 ~ truth
 Madam Eva: Who pays? Not something clever. Something that costs you to say out loud.
-* [name:ilse_varga] Report the fever. -> truth_ilse
-* [name:hedda_ironvow] Admit what the mist did to her prayers. -> truth_hedda
-* [name:silvain_aster] Admit why they really want the book. -> truth_silvain
-* [name:tamsin_tealeaf] Admit the truth about the locket. -> truth_tamsin
+* [name:godrick_pendlebrook] Admit what he hides behind "my eyes are tired". -> truth_godrick
+* [name:liriel_dawnsong] Admit what she's afraid of. -> truth_liriel
+* [name:thistle] Admit the thing about towns. -> truth_thistle
+* [name:ratatoille] Admit what he'd rather be. -> truth_ratatoille
+* [name:wren_featherfoot] Admit what his master never finished. -> truth_wren
+* [name:kip_smudgewick] Admit who signed the contract, and who didn't. -> truth_kip
 * Lean close and tell her the thing you have never told the others. -> truth_other
 * On second thought, no. -> price_menu
 
-~ truth_ilse
+~ truth_godrick
 set eva_reading_paid = "truth"
-set eva_truth_teller = "ilse_varga"
-Player: Report. Kestrel Company marched into the fog without me. I had a fever. It wasn't bad enough to keep me back. I was tired of the work. That's all.
-Madam Eva: And you have been counting heads ever since, so that nobody is ever missing again. Yes. That will do. That is worth more than gold.
-interject name:hedda_ironvow: Mm. Thank you for telling us, Ilse.
-interject name:tamsin_tealeaf: For what it's worth, I'd have stayed in bed too. I'd have stayed in bed for a week.
+set eva_truth_teller = "godrick_pendlebrook"
+Player: I can't read. Not proper. My name, and "ale", and "danger". Every letter we've had, I've said my eyes were tired and given it to someone else. My eyes are fine. I'm just slow.
+Madam Eva: Slow. Ha. The cards have read for kings who could recite a library and could not read a face. You read faces, big one. That is the harder alphabet.
+interject name:liriel_dawnsong: Oh, Godrick. We'll teach you. Every night, if you like. Be at peace.
 -> reading
 
-~ truth_hedda
+~ truth_liriel
 set eva_reading_paid = "truth"
-set eva_truth_teller = "hedda_ironvow"
-if not (quest.cold_prayers >= cold)
-quest cold_prayers cold
-endif
-Player: Since we crossed the mist, I have not felt my god. The prayers still answer. They answer cold. I have told no one, because a healer who doubts is a healer nobody lets near the bed.
-Madam Eva [sad]: The Morninglord's light is a long way from here, priestess. It still reaches you. Ask why it reaches, not why it's cold.
-interject name:silvain_aster: Hedda. For the record, those cold prayers have kept me alive twice. I will take cold.
+set eva_truth_teller = "liriel_dawnsong"
+Player: I'm frightened of the dark. I have been since I was small. A priestess of the dawn, and I sleep with a light on, and tell everyone it's devotion. And I've come to the darkest place in the world.
+Madam Eva [sad]: Then you came on purpose to the thing you fear most, carrying a candle. Child, that is not a weakness. That is the whole of courage, in one sentence.
+interject name:thistle: I'll sleep next to you, Sunbeam. Anything comes in the dark, I'll bite it.
 -> reading
 
-~ truth_silvain
+~ truth_thistle
 set eva_reading_paid = "truth"
-set eva_truth_teller = "silvain_aster"
-Player: I tell everyone I want the book for the scholarship. I want it because Aurel went after it, and I would like to know whether my friend is alive. There. Somebody write that down.
-Madam Eva: A scholar who came for a friend, and was ashamed of it. The cards like you better already.
-interject name:tamsin_tealeaf: I knew it. I knew you liked him.
+set eva_truth_teller = "thistle"
+Player: I like towns. Bit. Beds. The little cakes. People singing in the big room at the inn. And I don't fit in them, and I don't fit in the woods any more either. I don't fit anywhere.
+Madam Eva [sly]: The Vistani have no house and no country and we fit everywhere the road goes. Belonging is not a place, wolf-girl. It is the people who save you a seat.
+interject name:godrick_pendlebrook: You fit with us. You fit right next to me. Mostly because nobody else will arm-wrestle me.
 -> reading
 
-~ truth_tamsin
+~ truth_ratatoille
 set eva_reading_paid = "truth"
-set eva_truth_teller = "tamsin_tealeaf"
-Player: The locket. I'm good, but I'm not that good. Nobody leaves a coach that easy to rob. I think somebody put it where my hand would find it, so I'd carry it here.
-Madam Eva [sly]: Somebody did. And now you have said it aloud, you can stop pretending you are only a thief. Good.
-interject name:ilse_varga: Noted.
+set eva_truth_teller = "ratatoille"
+Player: I'd rather cook than cast. I always would. I learned magic so people would sit with me, and I'm good at it, and I'd still rather be in a kitchen. That's a terrible thing for a wizard to say.
+Madam Eva: Is it? The best wizard I ever read for burned his own beard making me an omelette. He was happier holding that pan than any staff.
+interject name:wren_featherfoot: I'm telling everyone. No, I'm not. Yes I am. No, I'm not.
+-> reading
+
+~ truth_wren
+set eva_reading_paid = "truth"
+set eva_truth_teller = "wren_featherfoot"
+Player: My master died before my last lesson. I asked him what it was and he said it was in a letter I'm not allowed to read. I make jokes all day so nobody notices I'm not finished.
+Madam Eva [sad]: Everybody is not finished, little acrobat. The ones who think they are, they are the ones the cards worry about.
+interject name:ratatoille: For what it's worth, I'd noticed. I didn't say anything. I'm not good at saying things. I'd have made you soup.
+-> reading
+
+~ truth_kip
+set eva_reading_paid = "truth"
+set eva_truth_teller = "kip_smudgewick"
+Player: My dad sent the devil away from our gate. Told him we'd manage. I went after him down the lane and signed behind Dad's back. I came home and said the orchard came back on its own. He went to temple and gave thanks for it. I've been lying to him for two years.
+Madam Eva: You sold yourself to save a man who would not let you. That is a terrible bargain and a very good son. The cards will take it. They like a good son.
+interject name:liriel_dawnsong: Kip. Thank you for telling us. We'll get you home to tell him yourself.
 -> reading
 
 ~ truth_other
@@ -245,22 +255,22 @@ Madam Eva: You did not pay what the cards asked. They will tell you anyway. They
 endif
 Madam Eva: The first card is the past: a book in his own hand, the story of how he became what he is. Knowing it is a weapon. This one cuts him.
 tarokka read tome
-if name:silvain_aster
-interject name:silvain_aster: His own hand. His own account. I... yes. Go on. Please, go on.
+if name:ratatoille
+interject name:ratatoille: His own hand. A primary source. A devil's diary. I would give my good skillet to read it.
 elif class:wizard
 interject class:wizard: A primary source. The devil kept a diary. Of course he did.
 endif
 Madam Eva: The second card is a holy thing, made by people who believed the sun would come back. In the right hands it makes the dead remember they are dead.
 tarokka read symbol
-if name:hedda_ironvow
-interject name:hedda_ironvow: The raven and the sun. I have dreamed that symbol every night for a year. Mm. Then it's real, and it's here.
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: Made by people who believed the sun would come back. Then I'm not the first. Oh, I'm so glad I'm not the first.
 elif class:cleric
 interject class:cleric: A holy thing, still holding its light in this place. Then somebody kept faith here, once.
 endif
 Madam Eva: The third card is a blade. Not steel: daylight with an edge, once carried by the one he hated most. He cannot bear to look at it.
 tarokka read sword
-if name:ilse_varga
-interject name:ilse_varga: A sword. Good. I understand swords.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: A sword made of daylight. Now that's a proper knight's sword. Right. Good. I understand swords.
 elif class:fighter
 interject class:fighter: A blade he can't stand to look at. I can work with that.
 endif
@@ -271,8 +281,9 @@ tarokka read ally
 ~ ally_seen
 if tarokka.ally == darklord
 Narrator: She looks at the card for a long time, and does not touch it again.
-interject tag:blunt: Then we stand with each other. Count off.
-interject class:cleric: Mm. We were never going to be alone. There are four of us.
+interject tag:blunt: Then we stand with each other.
+interject class:cleric: We were never going to be alone. We have each other.
+interject name:godrick_pendlebrook: No ally? That's all right. We've got us. Us is loads.
 elif tarokka.ally.npc == ismark
 if guest:ismark
 Ismark: Me? The cards want me? Somebody tell the tavern. No, don't. They'll only laugh, and then they'll stop, and that will be worse.
@@ -290,7 +301,7 @@ else
 interject class:cleric: A dead man for an ally. Calling a soul back is no small mercy, and no cheap one.
 endif
 elif tarokka.ally.npc == parriwimple
-interject name:tamsin_tealeaf: The big lad from Bildrath's? He counted my fingers after he shook my hand. All there. Very thorough.
+interject name:thistle: The big soft one from the shop? He gave me a biscuit. He's good. He smells like flour and sad.
 elif tarokka.ally.region == vallaki
 if guest:ireena
 Ireena: Vallaki. Where we were going anyway. At least the cards are economical.
@@ -322,17 +333,17 @@ Madam Eva [sly]: And one of the three, you need not walk a step for. The cards p
 Narrator: She unlocks the iron-bound chest behind her with a key she keeps on a cord round her neck, lifts out a bundle of oilcloth, and sets it on the table between the cards.
 if tarokka.tome == stars_2
 Narrator: Inside lies a heavy book bound in black leather, clasped in tarnished silver. Nobody wants to be the first to touch it.
-interject name:silvain_aster: I will be the first to touch it.
+interject name:ratatoille: I'll... I'll touch it. Carefully. Like a soufflé.
 give tome_of_strahd
 quest find_the_tome found
 elif tarokka.symbol == stars_2
 Narrator: Inside lies a platinum sunburst with a raven at its heart. Even through the oilcloth, it is warm.
-interject name:hedda_ironvow: Oh. Oh, there you are.
+interject name:liriel_dawnsong: Oh. It's warm. Even here, it's warm.
 give holy_symbol_of_ravenkind
 quest find_the_holy_symbol found
 else
 Narrator: Inside lies a sword hilt of pale platinum with a sunburst guard and no blade. The candles burn a little brighter while it is uncovered.
-interject name:ilse_varga: No blade. I'll take it anyway.
+interject name:godrick_pendlebrook: No blade? I'll hold it anyway. Somebody ought to.
 give sunsword
 quest find_the_sunsword found
 endif
@@ -347,10 +358,12 @@ Madam Eva: One question more, and then the cards sleep. Only one. Choose it well
 * [if guest:ireena] What does he want with Ireena? -> q_ireena
 * How do we leave Barovia? -> q_escape
 * How is he destroyed? -> q_weakness
-* [name:ilse_varga] Where is Kestrel Company? -> q_kestrel
-* [name:tamsin_tealeaf] Who is the woman in the locket? -> q_locket
-* [name:hedda_ironvow] Will dawn ever come to this valley? -> q_dawn
-* [name:silvain_aster] Is Aurel Mirescu alive? -> q_aurel
+* [name:godrick_pendlebrook] Is the Order of the Silver Dragon still in this land? -> q_order
+* [name:liriel_dawnsong] Will dawn ever come to this valley? -> q_dawn
+* [name:thistle] Is Grandda Fen alive? -> q_fen
+* [name:ratatoille] Where is the Wizard of Wines? -> q_wizard
+* [name:wren_featherfoot] Where is Kasimir? -> q_kasimir
+* [name:kip_smudgewick] Is there a way out of my contract? -> q_contract
 * Why were we brought here? -> q_why
 * We've heard enough. -> q_none
 
@@ -372,37 +385,40 @@ Madam Eva: The things the cards named, in the hands the cards named, in the room
 interject tag:veteran: Three items, one ally, one room. That's a plan. I've followed worse.
 -> farewell
 
-~ q_kestrel
-set eva_question = "kestrel"
-Madam Eva: Some of your forty went into his house as guests and never came out as anything. Some walk his roads still, in colours that are not their own. You will see one before the end, sergeant. Count carefully.
-Player: ...Noted.
--> farewell
-
-~ q_locket
-set eva_question = "locket"
-if not (quest.the_locket >= her_name)
-quest the_locket her_name
-endif
-Madam Eva: Her name was Tatyana. She is dead, and she is not. Whoever put her in your hand wanted you to carry her face home, and you have.
-if guest:ireena
-Ireena: Who is Tatyana?
-Madam Eva [sly]: Ask him, child. He will tell you at great length, and every word will be a lie except her name.
-elif flag.tamsin_locket_recognized
-interject name:tamsin_tealeaf: Home. You mean the burgomaster's house. You mean Ireena.
-Madam Eva: I mean what the cards mean. Put it away, now.
-endif
+~ q_order
+set eva_question = "order"
+Madam Eva [sly]: The dragon's knights keep their watch still, big one, on a hill where the house is burned and the dead lay the table every night. Their master will not knight you. One of them will. Look low on the wall.
+Player: Low on the wall. Right. Is that a riddle? I'm bad at riddles.
 -> farewell
 
 ~ q_dawn
 set eva_question = "dawn"
-Madam Eva: Dawn comes to this valley every day, priestess. It simply never arrives. Carry the raven's sun into his house and you will see the difference.
-Player: Mm. Then I'll carry it.
+Madam Eva: Dawn comes to this valley every day, priestess. It simply never arrives. Somebody has to carry it the last of the way, into his house.
+Player: Then I'll carry it. I've carried it this far.
 -> farewell
 
-~ q_aurel
-set eva_question = "aurel"
-Madam Eva: Your friend with the ink to his elbows went up to the castle to read. He is reading still. Whether he is still alive is a question even the cards find rude.
-Player: That is not an answer. It is very nearly an answer. Thank you.
+~ q_fen
+set eva_question = "fen"
+Madam Eva [sad]: Your old trapper is alive, wolf-girl. He walks on more legs than he left home with, some nights. He is waiting where the wolves wait, above the lake. He told you to run. Don't.
+Player: Wasn't going to.
+-> farewell
+
+~ q_wizard
+set eva_question = "wizard"
+Madam Eva [sly]: The wizard you want pays his debts in green stones and plays games against nobody, up where the snow is. You will find his name in a cellar before you find him on a mountain. And you will not like either.
+Player: A cellar. A mountain. Right. I'll take notes. I'm writing this down. Somebody hold my skillet.
+-> farewell
+
+~ q_kasimir
+set eva_question = "kasimir"
+Madam Eva: The man you carry a letter for mends nets he will never cast, at a fire that is not his, outside the walled town. He has waited four hundred years for word from over the mountains. Don't make him wait longer.
+Player: Four hundred years. Master Sorrel always did take his time with the post.
+-> farewell
+
+~ q_contract
+set eva_question = "contract"
+Madam Eva: Read it, merchant. Every word. Devils write in a hurry and expect their clients to sign in tears. The way out of a cage is very often written on the cage.
+Player: Right. Read it. I can do that. I'll read it tonight. I'll read it tomorrow. I'll definitely read it.
 -> farewell
 
 ~ q_why
@@ -458,7 +474,7 @@ Madam Eva: There. You are who you are now. Try not to waste it.
 
 ~ herself
 Madam Eva: I am old. Older than the walled town on the lake, older than the inn in the village, older than some of his walls. I knew him when he was young and only ambitious. That much you get for free.
-interject name:silvain_aster: That would make you... no. That isn't possible.
+interject name:ratatoille: That would make you... no. That isn't possible. Is it? It isn't. Is it?
 Madam Eva [sly]: Many things here are not possible. Sit in enough of them and you stop counting.
 -> again_menu
 

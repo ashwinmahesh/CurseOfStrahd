@@ -184,7 +184,7 @@
           "lesser_restoration",
           "spirit_guardians",
           "revivify",
-          "aid"
+          "remove_curse"
         ]
       }
     },
@@ -206,8 +206,8 @@
           "lesser_restoration",
           "spirit_guardians",
           "revivify",
-          "aid",
-          "death_ward"
+          "remove_curse",
+          "aid"
         ]
       }
     },
@@ -233,9 +233,9 @@
           "lesser_restoration",
           "spirit_guardians",
           "revivify",
+          "remove_curse",
           "aid",
-          "death_ward",
-          "guardian_of_faith"
+          "death_ward"
         ]
       }
     },
@@ -254,11 +254,11 @@
           "lesser_restoration",
           "spirit_guardians",
           "revivify",
+          "remove_curse",
           "aid",
           "death_ward",
           "guardian_of_faith",
-          "greater_restoration",
-          "mass_cure_wounds"
+          "greater_restoration"
         ]
       }
     },
@@ -284,12 +284,12 @@
           "lesser_restoration",
           "spirit_guardians",
           "revivify",
+          "remove_curse",
           "aid",
           "death_ward",
           "guardian_of_faith",
           "greater_restoration",
-          "mass_cure_wounds",
-          "dispel_magic"
+          "mass_cure_wounds"
         ]
       }
     },
@@ -308,12 +308,12 @@
           "lesser_restoration",
           "spirit_guardians",
           "revivify",
+          "remove_curse",
           "aid",
           "death_ward",
           "guardian_of_faith",
           "greater_restoration",
           "mass_cure_wounds",
-          "dispel_magic",
           "heal"
         ]
       }

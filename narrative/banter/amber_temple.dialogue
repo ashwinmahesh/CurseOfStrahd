@@ -1,27 +1,44 @@
 # Party banter in the Amber Temple and on the ice stair below it. Each node opens with an `if` gate; the game plays
-# an eligible node at a quiet moment, once each. Pregen voices: docs/voice/{ilse_varga, tamsin_tealeaf,
-# hedda_ironvow, silvain_aster}.md. Class, species and tag lines are written so any such character could say them.
+# an eligible node at a quiet moment, once each. Pregen voices: docs/voice/{godrick_pendlebrook, liriel_dawnsong,
+# thistle, ratatoille, wren_featherfoot, kip_smudgewick}.md. Class, species and tag lines are written so any such
+# character could say them.
 
 ~ banter_thin_air
-if visited:amber_temple_entrance and not flag.amber_milestone_given
-interject name:tamsin_tealeaf: I can't feel my ears. Can anyone else feel their ears? Ilse, are my ears still on?
-interject name:ilse_varga: Both of them. I counted.
-interject name:silvain_aster: The air up here is roughly two thirds of what you're used to. That's why your head hurts. Also because Tamsin hasn't stopped talking since the pass.
+if visited:amber_temple_entrance and not flag.amber_milestone_given and name:thistle and name:godrick_pendlebrook
+interject name:thistle: Can't feel my ears! Big. Big! Are my ears still on?
+interject name:godrick_pendlebrook: Both of them, Thistle. Here, have my hat. It'll come down past your nose, but it's warm.
+interject name:thistle: Mine now.
 endif
 -> END
 
 ~ banter_voices
 if flag.amber_voices_begun and not flag.amber_temple_sealed and not flag.dark_gifts_taken
-interject tag:devout: They're not lying. That's the worst of it. Every one of them tells you the price.
+interject tag:pious: They're not lying. That's the worst of it. Every one of them tells you the price.
 interject tag:blunt: A man who tells you the price is still selling.
 interject tag:curious: I keep thinking about the eyes one. Not to take it. Just thinking about it.
-interject tag:devout: That's how it starts, my friend. Thinking about it is the first step on the stair.
+interject tag:pious: That's how it starts, my friend. Thinking about it is the first step on the stair.
+endif
+-> END
+
+~ banter_voices_answer
+if flag.amber_voices_begun and not flag.amber_temple_sealed and not flag.dark_gifts_taken and name:liriel_dawnsong and name:kip_smudgewick
+interject name:liriel_dawnsong: They answer, every one of them, the moment you speak. My god has been quiet all week.
+interject name:kip_smudgewick: That's how they sell, Miss Liriel. Mister Quillon came the week our trees died. They always come in the quiet.
+interject name:liriel_dawnsong: Then we shall be quiet together, and buy nothing.
+endif
+-> END
+
+~ banter_voices_stars
+if flag.amber_voices_begun and not flag.amber_temple_sealed and not flag.dark_gifts_taken and name:ratatoille and name:wren_featherfoot
+interject name:ratatoille: The one with the stars offered to show me everything. Everything, Wren. Do you know what that means to a diviner?
+interject name:wren_featherfoot: It means you'd find out the price afterwards. Keep walking.
+interject name:ratatoille: I am walking. I'm only walking slowly.
 endif
 -> END
 
 ~ banter_gift_taken
 if flag.dark_gifts_taken >= 1 and not flag.amber_milestone_given
-interject tag:devout: It's done, and it doesn't come undone. So we carry it together. Nobody carries a thing like that alone in this company.
+interject tag:pious: It's done, and it doesn't come undone. So we carry it together. Nobody carries a thing like that alone in this company.
 interject tag:loyal: Agreed. Whoever it is, they're still ours.
 interject tag:curious: Does it... feel like anything?
 endif
@@ -31,15 +48,16 @@ endif
 if flag.dark_gifts_taken >= 3
 interject tag:blunt: Three. We've taken three. I said one would be too many, and here we are at three.
 interject tag:proud: Strength is strength. The devil didn't climb down from this mountain with good manners either.
-interject tag:devout: No. He climbed down with a dead brother. Mind where you put your feet.
+interject tag:pious: No. He climbed down with a dead brother. Mind where you put your feet.
 endif
 -> END
 
 ~ banter_lich
-if flag.exethanter_met and not flag.exethanter_destroyed
-interject name:tamsin_tealeaf: I like him. Is it wrong that I like him? He's a lich. He's adorable.
-interject name:hedda_ironvow: He's a warden who forgot his post. I've known abbots like that. They are always charming, right up until the roof falls in.
-interject name:silvain_aster: He keeps the vault's password on his sleeve. I have never felt so professionally insulted and so personally fond at the same time.
+if flag.exethanter_met and not flag.exethanter_destroyed and name:godrick_pendlebrook and name:ratatoille
+interject name:godrick_pendlebrook: I like him. He's a lich, and I like him. He called me young man. Nobody's called me that since I was nine.
+interject name:ratatoille: He keeps the vault's password pinned to his sleeve. The greatest archmage of his age. I'm insulted on behalf of the whole profession.
+interject name:godrick_pendlebrook: You like him too, though.
+interject name:ratatoille: A little. Don't tell him. He'd only forget.
 endif
 -> END
 
@@ -47,20 +65,21 @@ endif
 if flag.vosk_suspected and not flag.vosk_fate and not flag.vosk_destroyed
 interject class:cleric: The scholar in the library has a jackal's shadow. I'd like us all to remember that when he offers to help.
 interject class:rogue: He offered me a book. Free. Nobody gives you a book for free. Not even in a library. Especially not in a library.
+interject name:kip_smudgewick: I know that sort. Polite, patient, and he's already got your name written down somewhere.
 endif
 -> END
 
 ~ banter_pact
 if flag.strahd_pact_known
-interject tag:bookish: A life he loved, on the day he most wanted to be happy. The terms read like a wedding vow turned inside out.
+interject tag:scholarly: A life he loved, on the day he most wanted to be happy. The terms read like a wedding vow turned inside out.
 interject tag:blunt: He and the land are one thing. Then we take the land back from him a piece at a time, and see which one bleeds.
-interject tag:devout: Or we bring the dawn to all of it at once. Dawn comes.
+interject tag:pious: Or we bring the dawn to all of it at once. Dawn comes.
 endif
 -> END
 
 ~ banter_sealed
 if flag.amber_temple_sealed
-interject tag:devout: Listen. Nothing. For the first time since the stair, nothing at all.
+interject tag:pious: Listen. Nothing. For the first time since the stair, nothing at all.
 interject tag:curious: I miss the eyes one a little.
 interject tag:blunt: You'll get over it.
 endif
@@ -76,13 +95,13 @@ endif
 ~ banter_kasimir_bargain
 if guest:kasimir_velikov and flag.kasimir_bargain == "made"
 interject guest:kasimir_velikov: One year. It is strange, how much longer a year feels when you can count it.
-interject tag:devout: Then we spend it well. Every day of it.
+interject tag:pious: Then we spend it well. Every day of it.
 endif
 -> END
 
 ~ banter_hollow_gift
 if gift:gift_of_the_hollow
-interject tag:devout: One of us lay down in the devil's own coffin. I want us to say that out loud, once, so none of us can pretend later.
+interject tag:pious: One of us lay down in the devil's own coffin. I want us to say that out loud, once, so none of us can pretend later.
 interject tag:blunt: Said. Heard. Now we watch them. Every night.
 endif
 -> END

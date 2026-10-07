@@ -1,0 +1,104 @@
+# Godrick Pendlebrook's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each
+# plays once. Quest: A Knight, More or Less (narrative/companions/ladle.dialogue).
+
+~ talk_ladle
+if name:godrick_pendlebrook and quest.the_ladle
+-> ladle
+endif
+-> END
+
+~ ladle
+Narrator: Godrick has the old sword across his knees and is polishing a part of it that is already very clean. Beside him on the log, also being polished, is a soup ladle.
+interject name:godrick_pendlebrook: You'll be wondering about the ladle.
+* We were, yes. -> ladle_story
+* (Sit down and wait.) -> ladle_story
+
+~ ladle_story
+interject name:godrick_pendlebrook: Sir Pellam knighted me with it. On his deathbed. In an inn called the Wheatsheaf, which did a very good mutton soup, hence the ladle.
+interject name:godrick_pendlebrook: Twelve years I carried his shield and mucked out his horse and listened to him talk about honour. He never knighted me. I asked him why once. He said I wasn't ready. I asked when I'd be ready. He said he'd know.
+interject name:godrick_pendlebrook: And then at the very end he says, "Kneel, lad," and he can't lift the sword, so he picks up the ladle off his soup tray and does it with that. And then he says, "Now take the sword to the Order and have them do it proper." And then he died.
+interject name:godrick_pendlebrook: So here's my question, and I want a straight answer, because I'm not clever and I can't work it out on my own. Does a ladle count?
+* It counts. -> ladle_counts
+* That's what the Order is for. We'll find them. -> ladle_order
+* He knew you were ready. That's the part that counts. -> ladle_ready
+
+~ ladle_counts
+interject name:godrick_pendlebrook: That's what I think too, most days. Then I think, it's a ladle. Then I think, it was his ladle. Round and round.
+-> ladle_end
+
+~ ladle_order
+interject name:godrick_pendlebrook: Right. Yes. Find the Order, hand over the sword, kneel. Simple. I'm good at simple.
+-> ladle_end
+
+~ ladle_ready
+interject name:godrick_pendlebrook: ...Huh.
+interject name:godrick_pendlebrook: I'm going to have to sit with that one a while. I'm slow with the big ones. I get there.
+-> ladle_end
+
+~ ladle_end
+interject name:liriel_dawnsong: The Morninglord was crowned with a loaf of bread in the old stories. A ladle seems perfectly respectable.
+interject name:thistle: It's a good ladle. I'd be knighted with that. Can you eat soup with it after? Then it's two things. That's better than a sword.
+interject name:wren_featherfoot: I've been knighted, you know. Well. Called a knight. By a magistrate. It wasn't a compliment.
+interject name:ratatoille: May I see it? This is a very good ladle. Copper-bottomed. Somebody loved this ladle.
+interject name:kip_smudgewick: If you ever want to sell it... no. No, sorry. Force of habit. Never sell that.
+interject name:godrick_pendlebrook: Right then. Bed. Big day tomorrow. All the days are big here. Have you noticed? It's very tiring.
+-> END
+
+~ talk_letters
+if name:godrick_pendlebrook and quest.the_ladle >= the_order_found and not (quest.the_ladle >= knighted) and flag.eva_truth_teller != "godrick_pendlebrook"
+-> letters
+endif
+-> END
+
+~ letters
+Narrator: Godrick is sitting with a page of somebody's old book open on his knee, frowning at it in the firelight as if it had insulted his mother.
+interject name:godrick_pendlebrook: Can I tell you something? You won't laugh? You can laugh a bit. Not a lot.
+interject name:godrick_pendlebrook: I can't read. Not properly. My name, and "ale", and "danger", because Sir Pellam said those were the three a knight needs. The rest of it swims about.
+interject name:godrick_pendlebrook: Every letter we've had, I've handed to someone and said my eyes are tired. My eyes are fine. They're the best eyes in the party.
+interject name:godrick_pendlebrook: And now there's an Order, and they'll have books, and oaths written down, and I'll stand there like a great big post.
+* We'll teach you. Starting tonight. -> letters_teach
+* A knight's oath is what you do, not what you read. -> letters_do
+* Thank you for telling us. -> letters_thanks
+
+~ letters_teach
+set godrick_letters
+interject name:godrick_pendlebrook: Tonight? Right now? I've got the page here. I've been holding it for an hour hoping it'd give in.
+Narrator: It takes most of the watch. It's mostly the K in "knight", which he takes personally.
+interject name:godrick_pendlebrook: Why is it there? What's it doing? It's not doing anything! Who let it in?
+if name:ratatoille
+interject name:ratatoille: It's silent. Like the p in... no, don't, that'll make it worse.
+endif
+if name:wren_featherfoot
+interject name:wren_featherfoot: It's there to keep the rest of the word in order. Like a sergeant. A silent sergeant.
+endif
+interject name:godrick_pendlebrook: K. N. I. G. H. T. Knight. ...I read that. That was me reading.
+-> END
+
+~ letters_do
+interject name:godrick_pendlebrook: Sir Pellam used to say that. I always thought he was being kind. Maybe he was being right. He could be both. He was good at both.
+-> END
+
+~ letters_thanks
+interject name:godrick_pendlebrook: Thank you for not making a thing of it. That's a kindness. I'm keeping a list of kindnesses. Well. Somebody else is writing it down.
+-> END
+
+~ talk_knighted
+if name:godrick_pendlebrook and quest.the_ladle >= knighted
+-> knighted
+endif
+-> END
+
+~ knighted
+Narrator: Sir Godrick doesn't polish anything tonight. He sits with the ladle in both hands and looks at it a long while.
+interject name:godrick_pendlebrook: I keep thinking, I should hang it up somewhere. Over a fireplace. That's what knights do with things. But I haven't got a fireplace. I've got a log.
+if flag.godrick_letters
+interject name:godrick_pendlebrook: Sir Godfrey gave me the oath on a bit of paper, after. I can read most of it. Not "sleeper". Sleeper's got two Es together, that's showing off.
+endif
+if name:ratatoille
+interject name:godrick_pendlebrook: Here. Rat. You have it. You'll use it right. Sir Pellam liked soup more than he liked honour, he told me once, and he liked honour more than anyone I ever met.
+interject name:ratatoille: I... no. I couldn't. It's your... thank you. I'll make soup with it. The best soup. Every time, I'll make the best soup.
+else
+interject name:godrick_pendlebrook: I'll keep it. Somebody'll need soup one day. A knight's for people who need things.
+endif
+interject name:godrick_pendlebrook: Right then. That's done. Now there's only the vampire.
+-> END

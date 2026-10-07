@@ -9,19 +9,27 @@ interject class:wizard: Revenants, almost certainly. They don't rest until their
 endif
 -> END
 
+~ banter_patrol_order
+if flag.order_patrol_met and not visited:argynvostholt and name:godrick_pendlebrook and name:wren_featherfoot
+interject name:godrick_pendlebrook: Knights of the Silver Dragon! The real Order. I've carried Sir Aldric's sword all this way, Wren, and there they were.
+interject name:wren_featherfoot: Big man. They weren't breathing.
+interject name:godrick_pendlebrook: I noticed. I'll ask about it at the house. Politely.
+endif
+-> END
+
 ~ banter_ridge
-if visited:argynvostholt and not flag.vladimir_met
-interject name:tamsin_tealeaf: A dragon's house. A whole dragon's house. Dragons keep hoards, everyone knows that. I'm only saying, everyone knows that.
-interject name:silvain_aster: Silver dragons are famously generous and famously uninterested in gold. The literature is very clear.
-interject name:tamsin_tealeaf: The literature's never met me.
+if visited:argynvostholt and not flag.vladimir_met and name:wren_featherfoot and name:ratatoille
+interject name:wren_featherfoot: A dragon's house. Dragons sleep on gold. I'm not saying anything. I'm just walking a bit faster.
+interject name:ratatoille: Silver dragons, I'll have you know, hoarded people, not gold. Knights. Friends. Good company at table.
+interject name:wren_featherfoot: So that's his hoard out on the road, then. Not breathing.
 endif
 -> END
 
 ~ banter_forty
-if flag.vladimir_met and not flag.order_fate
-interject name:ilse_varga: Forty knights at that table. Forty in Kestrel Company. He kept all of his. I'd have done the same, if I'd known how.
-interject name:hedda_ironvow: Mm. And would they have thanked you for it, sergeant?
-interject name:ilse_varga: No. That's what bothers me.
+if flag.vladimir_met and not flag.order_fate and name:thistle and name:godrick_pendlebrook
+interject name:thistle: Forty dead men on his chain. Grandda says a dog chained long enough forgets it's chained.
+interject name:godrick_pendlebrook: I'd still like to sit at that table with them. Just once. Is that daft?
+interject name:thistle: No. Daft's when you stop wanting things.
 endif
 -> END
 
@@ -33,25 +41,26 @@ endif
 -> END
 
 ~ banter_skull
-if flag.argynvost_skull_known and not flag.argynvost_beacon_lit
-interject name:tamsin_tealeaf: So the plan, eventually, is to break into a vampire's castle and steal a dragon's head back off his wall.
-interject name:silvain_aster: Retrieve. Return. Repatriate.
-interject name:tamsin_tealeaf: Call it what you like. I know what it is, and I've never been so proud.
+if flag.argynvost_skull_known and not flag.argynvost_beacon_lit and name:kip_smudgewick and name:godrick_pendlebrook
+interject name:kip_smudgewick: So we break into a vampire's castle and take a dragon's head off his wall. Recovery of property. Strictly legal. Mostly.
+interject name:godrick_pendlebrook: Right then! I'll carry it. It'll be heavy, a dragon's head.
+interject name:kip_smudgewick: That's your worry? Not the vampire? The weight?
+interject name:godrick_pendlebrook: I'm good at heavy.
 endif
 -> END
 
 ~ banter_flame
-if flag.dragon_fire_kindled and not flag.argynvost_beacon_lit
-interject name:silvain_aster: It isn't consuming the torch. It isn't consuming anything. It's not a fire at all. It's the memory of a fire, holding its shape.
-interject name:hedda_ironvow: Then carry it carefully. Memories are what this valley eats.
+if flag.dragon_fire_kindled and not flag.argynvost_beacon_lit and name:ratatoille and name:liriel_dawnsong
+interject name:ratatoille: It isn't burning the torch. It isn't burning anything. It's not a fire at all. It's a fire remembering itself.
+interject name:liriel_dawnsong: I was sent here to carry a light. I didn't know it would be a borrowed one. I'll carry it carefully.
 endif
 -> END
 
 ~ banter_lit
-if flag.argynvost_beacon_lit
-interject name:hedda_ironvow: You can see it from everywhere, likely. Somewhere a farmer opened a shutter tonight to look at it. I'd stake my beard on it.
-interject tag:blunt: And from the castle.
-interject name:hedda_ironvow: Especially from the castle. Good.
+if flag.argynvost_beacon_lit and name:thistle and name:ratatoille
+interject name:thistle: Look at it! Every farm in the valley can see that. Somebody's opening a shutter right now. Bet my boots.
+interject name:ratatoille: So, I would point out, can the castle.
+interject name:thistle: Good. Let him lie awake. Do vampires lie awake? Let him start.
 endif
 -> END
 
@@ -64,16 +73,20 @@ endif
 -> END
 
 ~ banter_pact
-if flag.vladimir_pact and not flag.vladimir_pact_broken
-interject name:hedda_ironvow: We swore to leave him alive. In a valley full of graves he filled. I said the words, and I want it written down somewhere that I hated saying them.
-interject name:ilse_varga: Noted. And the coin was good, and the roads are quiet. Both things are true.
+if flag.vladimir_pact and not flag.vladimir_pact_broken and name:liriel_dawnsong and name:kip_smudgewick
+interject name:liriel_dawnsong: He filled this valley with graves, and we swore to leave him living. The words sat in my mouth like stones.
+interject name:kip_smudgewick: I know that one. You sign, it's done, and after that you carry it about in your chest.
+interject name:liriel_dawnsong: Is that how it is for you, Kip?
+interject name:kip_smudgewick: Most days. Apricot? They don't help. Have one anyway.
 endif
 -> END
 
 ~ banter_pact_broken
-if flag.vladimir_pact_broken
-interject name:ilse_varga: We broke an oath to a dead man. I've never broken an oath before.
-interject name:hedda_ironvow: You broke a bad oath to keep a better one. The stone in that chapel is older than his table.
+if flag.vladimir_pact_broken and name:wren_featherfoot and name:liriel_dawnsong
+interject name:wren_featherfoot: We broke our word to a dead man. Master Sorrel would have something to say about that.
+interject name:liriel_dawnsong: What would he say?
+interject name:wren_featherfoot: Don't know. That's the trouble with dead masters. You have to guess, and you always guess the hard one.
+interject name:liriel_dawnsong: Then guess kindly. You broke a bad oath to keep a better one.
 endif
 -> END
 
@@ -93,7 +106,7 @@ endif
 
 ~ banter_beacon_road
 if flag.beacon_light_seen
-interject tag:curious: Every time we crest a hill, there it is. Like somebody left a lamp in the window for us.
-interject class:cleric: Somebody did, a long time ago. We only lit it.
+interject class:cleric: Every time we crest a hill, there it is. Somebody left a lamp in the window for us, long ago. We only lit it.
+interject tag:curious: Do you think they knew we'd come?
 endif
 -> END

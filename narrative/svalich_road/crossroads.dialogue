@@ -46,7 +46,7 @@ Narrator: A dead young man and a cheap rope. If there is more to read in him, th
 ~ token
 set nicu_token_taken
 Narrator: You work the earring free. It is a little silver horse's head, warm from nothing at all.
-interject name:tamsin_tealeaf: I'm not keeping it. For the record. It's going home.
+interject name:wren_featherfoot: Not keeping it, before anyone asks. Old hands, new habits. It's going home.
 -> gallows_menu
 
 ~ leave

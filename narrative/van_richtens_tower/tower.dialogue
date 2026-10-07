@@ -28,7 +28,11 @@ endif
 set tower_lintel_read
 set khazan_known
 Narrator: Old Barovian letters, from before the castle was built. Not a blessing or a warning: a single name, cut by someone who wanted it remembered. KHAZAN.
-interject tag:bookish: Khazan. An archmage of the old kingdom. There is a footnote about him in almost everything, and nothing about him anywhere else.
+if name:ratatoille
+interject name:ratatoille: Khazan! An archmage of the old kingdom. I'll have you know I have read of him. Briefly. Everyone has read of him briefly.
+else
+interject tag:scholarly: Khazan. An archmage of the old kingdom. Every history names him, and none of them says much more.
+endif
 -> door_menu
 
 ~ read_fail
@@ -48,7 +52,11 @@ Narrator: The door hums faintly under your palm, like a hive. Whatever it is wai
 
 ~ knock
 Narrator: You knock. The tower considers the question and declines to answer.
+if name:wren_featherfoot
+interject name:wren_featherfoot: Rude. I'd have let us in.
+else
 interject tag:cheerful: Rude.
+endif
 -> door_menu
 
 ~ open

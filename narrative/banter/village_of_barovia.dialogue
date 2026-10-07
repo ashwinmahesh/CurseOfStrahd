@@ -1,107 +1,106 @@
 # Party banter while exploring the Village of Barovia. Each node opens with an `if` gate: the node is eligible
 # only while its condition holds (engine note in docs/regions/village_of_barovia.md §11). Party members speak
-# only through interjections; a line plays if a matching member is present.
+# only through interjections; a line plays if a matching member is present. An exchange between companions names
+# them in its gate.
 
 ~ banter_shutters
-if visited:village_of_barovia
-interject tag:blunt: Count the shutters. Forty-one. Count the open ones. None.
-interject tag:cheerful: Maybe they're just shy.
+if visited:village_of_barovia and name:thistle and name:wren_featherfoot
+interject name:thistle: Whole village shut up tight. In the daytime. Smells like fear and cabbage.
+interject name:wren_featherfoot: Maybe they're shy.
 interject class:wizard: Or maybe they've read the same history of this valley I have.
 endif
 -> END
 
 ~ banter_lesser
-if flag.ismark_met
-interject name:hedda_ironvow: The tavern calls him the Lesser, I hear. Mm. Villages name their sons the way masons name stones: by what cracked.
-interject name:ilse_varga: He held a house for a month with one sword. That's not lesser. That's understaffed.
-endif
--> END
-
-~ banter_locket
-if flag.tamsin_locket_recognized
-interject name:tamsin_tealeaf: Same face. The exact same face. That locket's older than anyone in this village, and she's sitting in a parlor down the road.
-interject name:silvain_aster: Portraits flatter. Coincidences happen. And neither explains why you dream about her, so do keep the locket somewhere I can see it.
+if flag.ismark_met and name:godrick_pendlebrook and name:wren_featherfoot
+interject name:godrick_pendlebrook: The Lesser, they call him. I was the youngest of six. I know that name, even when nobody says it.
+interject name:wren_featherfoot: Held a house a month with one sword. If that's lesser, I'd love to meet the greater.
 endif
 -> END
 
 ~ banter_bites
-if flag.ireena_bite_seen
-interject class:cleric: Two bites, and she still keeps her own counsel. Most would be raving by now.
-interject tag:blunt: She's a soldier where it counts. Nobody told her she's allowed to break.
+if flag.ireena_bite_seen and name:liriel_dawnsong and name:wren_featherfoot
+interject name:liriel_dawnsong: Two bites on her throat, and she still keeps her own counsel. Most people would be raving by now.
+interject name:wren_featherfoot: Nobody's told her she's allowed to break. Let's none of us tell her.
 endif
 -> END
 
 ~ banter_morgantha
-if flag.morgantha_met
+if flag.morgantha_met and name:wren_featherfoot and name:thistle
+interject name:wren_featherfoot: She pinched my cheek and said I'd keep. Keep for what, madam? Keep for what?
+interject name:thistle: Smells wrong, that one. Sweet on top, rotten under. Eat nothing she sells.
+elif flag.morgantha_met
 interject species:halfling: She pinched my cheek. Like she was checking a melon. Like she was checking a melon for later.
-interject tag:blunt: Don't eat anything she sells. That's an order.
+interject tag:blunt: Don't eat anything she sells. I mean it.
 endif
 -> END
 
 ~ banter_pastry
-if flag.dream_pastry_eaten
-interject class:cleric: Never eat a stranger's pie in a cursed valley. They teach it to novices. I'd have thought it went without saying.
-interject tag:cheerful: It was a very good pie, though.
-interject class:cleric: That is how they get you.
+if flag.dream_pastry_eaten and name:ratatoille and name:liriel_dawnsong
+interject name:ratatoille: That sample. Underworked crust, far too sweet, and one bite brought dreams all night. I want the recipe.
+interject name:liriel_dawnsong: Never eat a stranger's pie in a cursed valley, Ratatoille. We teach it to novices.
+interject name:ratatoille: I'll have you know I only want to study it. Professionally.
 endif
 -> END
 
 ~ banter_suspected
-if flag.morgantha_suspected and flag.bonegrinder_rumor
+if flag.morgantha_suspected and flag.bonegrinder_rumor and name:ratatoille and name:godrick_pendlebrook
+interject name:ratatoille: That crust had bone in it. I know flour, and that was not flour. And her windmill sits on the Vallaki road.
+interject name:godrick_pendlebrook: Right. Then we stop at the windmill on the way. And we don't knock.
+elif flag.morgantha_suspected and flag.bonegrinder_rumor
 interject class:wizard: A windmill on the Vallaki road, ground bone in the crust, and a smile that doesn't move. I have a hypothesis. I don't like it.
 interject tag:loyal: Then we stop at that windmill on the way. And we don't knock.
 endif
 -> END
 
 ~ banter_arik
-if flag.arik_hollow_noticed
-interject name:silvain_aster: The barkeep. There was nobody behind his eyes. Not dull, not simple: absent. I've read of such things. I'd hoped the authors were exaggerating.
-interject name:hedda_ironvow: Mm. Born without, I think. Pray for him anyway. It can't hurt him, and it might do us good.
+if flag.arik_hollow_noticed and name:ratatoille and name:thistle
+interject name:ratatoille: The barkeep. I tried to read him, the way one reads a sauce. There was nothing in the pot.
+interject name:thistle: No fear-smell on him. Everybody here stinks of fear. Not him. Nothing.
 endif
 -> END
 
-~ banter_aurel
-if flag.scholar_notes_found
-interject name:silvain_aster: He went up that road with a pen and a map of lit windows. Aurel was the bravest coward I ever knew.
-interject name:tamsin_tealeaf: Then we'll go and find him, and you can give him his pen back.
-interject name:silvain_aster: That is a ridiculous reason to visit a vampire's castle. Thank you.
+~ banter_scholar_note
+if flag.scholar_notes_found and name:ratatoille and name:godrick_pendlebrook
+interject name:ratatoille: He drew the castle from three sides, then walked up to read in its library. I admire him. I'd prefer not to be him.
+interject name:godrick_pendlebrook: You read his letter out nicely. We should send it on to his college. Somebody there's waiting.
 endif
 -> END
 
 ~ banter_raven
-if flag.holy_symbol_rumor
-interject name:hedda_ironvow: Lost, he said. Not destroyed. Stone remembers where it was put down. So will the world, if we ask it right.
-interject name:ilse_varga: Then we ask. Politely first.
+if flag.holy_symbol_rumor and name:liriel_dawnsong and name:godrick_pendlebrook
+interject name:liriel_dawnsong: Lost, he said. Not destroyed. A holy thing that is lost is only a holy thing waiting to be found.
+interject name:godrick_pendlebrook: Then we find it. Leave it to me.
+interject name:liriel_dawnsong: Gladly. Though perhaps I'll carry the map.
 endif
 -> END
 
 ~ banter_spies
-if flag.vistani_spies_suspected
-interject tag:curious: The Vistani women were counting us: heads, blades, purses. I know that look.
-interject tag:veteran: Then we give them something worth reporting. Make it expensive.
+if flag.vistani_spies_suspected and name:wren_featherfoot and name:godrick_pendlebrook
+interject name:wren_featherfoot: Those Vistani women were counting us. Heads, blades, purses. I know that look. I used to wear it.
+interject name:godrick_pendlebrook: Then let's give them something good to report. I'll wave.
 endif
 -> END
 
 ~ banter_vigil
-if flag.mansion_siege_survived
-interject tag:veteran: Six of them, two doors, one night. Nobody ran. Good.
-interject tag:cheerful: Is that a compliment? That sounded like a compliment.
-interject tag:veteran: Don't push it.
+if flag.mansion_siege_survived and name:thistle and name:kip_smudgewick
+interject name:thistle: Six of them, two doors, one night, and nobody ran. Good fight! Again?
+interject name:kip_smudgewick: Respectfully, no. Notwithstanding the excellent company, absolutely not.
 endif
 -> END
 
 ~ banter_doru_destroyed
-if flag.doru_destroyed
-interject class:cleric: At the very end, for a breath, there was a boy looking out of that face. I'll remember that longer than the fight.
-interject tag:blunt: He was somebody's son. Now he's nobody's problem. Both of those are true.
+if flag.doru_destroyed and name:liriel_dawnsong and name:kip_smudgewick
+interject name:liriel_dawnsong: At the very end, for a breath, there was a boy looking out of that face. I'll remember that longer than the fight.
+interject name:kip_smudgewick: Somebody's son. I keep thinking that. He was somebody's son.
 endif
 -> END
 
 ~ banter_doru_freed
-if flag.doru_freed
-interject tag:blunt: We let a starving vampire out of a cellar. In a village. Full of people who can't run.
-interject tag:cheerful: He said he'd go to the castle. He swore. On his mother.
-interject tag:blunt: Noted.
+if flag.doru_freed and name:thistle and name:godrick_pendlebrook
+interject name:thistle: We let a starving vampire out of a cellar. In a village. Full of slow people.
+interject name:godrick_pendlebrook: He swore he'd go to the castle. On his mother. A lad doesn't lie on his mother.
+interject name:thistle: Grandda says never take a hungry thing's word. Hungry things say anything.
 endif
 -> END
 
@@ -114,38 +113,39 @@ endif
 -> END
 
 ~ banter_strahd
-if flag.strahd_met
-interject tag:cheerful: He was taller than I expected. And politer. Why is that worse?
-interject class:wizard: Because courtesy costs him nothing, and he wants us to know it.
-interject tag:blunt: Next time he stands at a gate, I'm going through it.
+if flag.strahd_met and name:godrick_pendlebrook and name:ratatoille
+interject name:godrick_pendlebrook: He's shorter than me. Everyone is. But he talks like he's taller. How does he do that?
+interject name:ratatoille: Courtesy costs him nothing, and he wants us to know it. It's garnish. There is no meal underneath.
+interject name:godrick_pendlebrook: A bully in a good coat, then. Sir Pellam always said they fall over like anybody else.
 endif
 -> END
 
 ~ banter_strahd_courteous
-if flag.strahd_first_impression == "courteous"
-interject tag:proud: We bowed to him. I would like it recorded that I bowed ironically.
-interject tag:blunt: It didn't look ironic.
+if flag.strahd_first_impression == "courteous" and name:kip_smudgewick and name:wren_featherfoot
+interject name:kip_smudgewick: We bowed to him. I'd like it on record that I bowed ironically.
+interject name:wren_featherfoot: Didn't look ironic, Kip. Looked like you were about to offer him a sample.
+interject name:kip_smudgewick: ...I was, a bit.
 endif
 -> END
 
 ~ banter_gertruda
-if flag.gertruda_search_promised
-interject tag:loyal: We told Mary we'd look. So we look. Every house, every road.
-interject tag:curious: A girl who's never been outside, out there in all this? She'll have gone somewhere beautiful. That's the worst part.
+if flag.gertruda_search_promised and name:godrick_pendlebrook and name:thistle
+interject name:godrick_pendlebrook: We told Mary we'd look. So we look. Every house, every road.
+interject name:thistle: Never been outside? Then she walks to the prettiest thing she sees. And the castle's pretty. Bark and bones.
 endif
 -> END
 
 ~ banter_eva
-if flag.madam_eva_rumor
-interject class:wizard: A seer at Tser Pool who reads cards for strangers. I am a scholar, and I don't believe in fortune-telling. I would very much like my fortune told.
-interject class:cleric: Mm. Bring coin. Seers always want coin. So do scholars.
+if flag.madam_eva_rumor and name:ratatoille and name:kip_smudgewick
+interject name:ratatoille: A seer at Tser Pool. Card-reading is divination for people who can't spell. I would very much like my fortune told.
+interject name:kip_smudgewick: Bring coin. Seers always want coin. I'll bring apricots too, in case she barters.
 endif
 -> END
 
 ~ banter_ireena_road
-if flag.ireena_in_party
-interject tag:loyal: We've got her. Watches stay doubled at night. Nobody sleeps near a window.
-interject tag:curious: She's got a better sword than I do. Is that allowed?
+if flag.ireena_in_party and name:liriel_dawnsong and name:wren_featherfoot
+interject name:liriel_dawnsong: She's with us now. We keep a double watch at night, and nobody sleeps beside a window.
+interject name:wren_featherfoot: She's got a better sword than I have. I don't even have a sword. Is that allowed?
 endif
 -> END
 
@@ -154,8 +154,8 @@ if flag.death_house_sacrificed
 interject class:cleric: We gave that house what it asked for. I'll carry that the length of this valley, and further.
 interject tag:blunt: We got out. All of us that could.
 interject class:cleric: That's the part I'll carry.
-elif flag.death_house_children_at_rest
-interject tag:curious: The children aren't in the road anymore. I keep looking for them anyway.
-interject class:cleric: That's right and proper. Keep looking. It's how we remember them.
+elif flag.death_house_children_at_rest and name:kip_smudgewick and name:liriel_dawnsong
+interject name:kip_smudgewick: The children aren't in the road anymore. I keep looking for them anyway. I'd saved them each an apricot.
+interject name:liriel_dawnsong: Keep looking, Kip. And keep the apricots. Remembering is a kind of prayer.
 endif
 -> END

@@ -26,12 +26,15 @@ endif
 * [if flag.rictavio_suspected] You're no showman. Who are you hunting? -> hunted
 * [if flag.rictavio_journal_read] We read your journal, Doctor van Richten. -> unmask
 * [if tarokka.ally.npc == rictavio or tarokka.ally.npc == van_richten] Madam Eva's cards named a man like you. -> cards
-* [name:silvain_aster] [if quest.aurels_last_chapter and not flag.aurel_rictavio_told] Ask about a scholar named Aurel Mirescu. -> companions/aurel:rictavio
 * Goodbye. -> bye
 
 ~ wagon
 Rictavio: A beast! A marvel! A creature that would eat a horse and then complain about the seasoning. I keep it locked away for its protection as much as yours. Mostly yours.
+if name:thistle
+interject name:thistle: What kind of beast? Can I see it? Beasts like me.
+else
 interject tag:curious: What kind of beast?
+endif
 Rictavio: The hungry kind. Next question!
 -> menu
 
@@ -108,7 +111,6 @@ endif
 
 ~ hunter_menu
 * [if tarokka.ally.npc == rictavio and not guest:rictavio] Madam Eva's cards named you. Will you hunt with us? -> ally
-* [name:silvain_aster] [if quest.aurels_last_chapter and not flag.aurel_rictavio_told] Ask about a scholar named Aurel Mirescu. -> companions/aurel:rictavio
 * [if flag.bones_theft_known and not flag.bones_returned] The saint's bones are missing from St. Andral's. -> bones_advice
 * What can you tell us about Strahd? -> strahd
 * What should we make of the Baron and Lady Wachter? -> factions
@@ -152,7 +154,7 @@ Rictavio: Eva's cards. I have spent thirty years refusing to be anybody's fortun
 Rictavio: Very well. I am too old to keep hunting alone, and you are much too young to be doing it at all. I'll come. The wagon stays; the beast in it is the only creature in Barovia I trust to guard my notes.
 join rictavio
 quest find_the_ally found
-interject name:silvain_aster: I would like it recorded that I am being extremely calm about this.
+interject name:ratatoille: Rudolph van Richten. Hunting with us. I am going to need to sit down. Later. Now I am perfectly calm.
 -> END
 
 ~ ally_refused

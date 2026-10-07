@@ -1,0 +1,96 @@
+# Godrick Pendlebrook's personal quest, A Knight, More or Less (data/quests/the_ladle.json,
+# docs/story/personal_quests.md). Every scene needs Godrick: a custom hero in his place never starts it. Started from
+# into_the_mists/arrival:hooks. The sword: Sir Godfrey's menu at Argynvostholt. The deserter: Vladimir's menu. The
+# wall: Godfrey's menu again (his own charcoal, low down). The knighting: Godfrey, once he remembers the oath.
+
+# --- Sir Godfrey sees the sword (argynvostholt/godfrey:menu) -----------------------------------------------------
+
+~ sword
+set ladle_sword_shown
+Narrator: Godrick unbuckles the old sword from his back, the one he never draws, and holds it out across both palms the way a squire is taught to. The pommel is a griffin, worn almost smooth.
+interject name:godrick_pendlebrook: Sir Godrick Pendlebrook, my lord. More or less. I've brought the Order a sword. It was Sir Aldric Ashgrove's. His grandson asked me to say an Ashgrove kept faith.
+Sir Godfrey Gwilym: Ashgrove.
+Narrator: The dead knight looks at the griffin for a long time. His gauntlet comes up as if to touch it, and stops, and stays there.
+Sir Godfrey Gwilym: I know that name. It hurts, and I don't know why it hurts. That's how I know it's one of the important ones.
+Sir Godfrey Gwilym: There's something about him on my wall. I wrote it down so I'd keep it. I can't remember what I wrote.
+interject name:godrick_pendlebrook: The Order. It's... all of you are dead, aren't you, my lord. Sir Pellam never said. I don't think he knew.
+Sir Godfrey Gwilym [sad]: Four hundred years, lad. Still at our posts, though. Mostly.
+interject name:godrick_pendlebrook: Right. Well. That's harder than I'd planned for. Still. A knight's a knight. Sir Pellam always said it's the posts that matter, not the pulse.
+interject name:godrick_pendlebrook: He didn't say that. I just made it up. I think it's true, though.
+if not (quest.the_ladle >= the_order_found)
+quest the_ladle the_order_found
+endif
+-> argynvostholt/godfrey:menu
+
+# --- The bottom of the wall (argynvostholt/godfrey:menu) -----------------------------------------------------------
+
+~ wall
+Narrator: Sir Godfrey takes you to the wall and gets down on his knees in front of it, armour grinding, until his face is level with the oldest charcoal: lines gone over so many times the wall is worn shiny under them.
+Sir Godfrey Gwilym: I put the ones that mattered most down low. So I'd still be able to reach them, at the end. Read it to me. My eyes have gone the way of the rest of me.
+interject name:godrick_pendlebrook: I'll... my eyes are tired too, my lord. Somebody else'd do it better. You do the voices.
+if name:ratatoille
+interject name:ratatoille: Give it here. I mean, step aside. "Aldric Ashgrove rode for help. The dragon sent him. He did not run. Do not let Vladimir tell you otherwise."
+elif name:liriel_dawnsong
+interject name:liriel_dawnsong: "Aldric Ashgrove rode for help. The dragon sent him. He did not run. Do not let Vladimir tell you otherwise." Oh, Godrick.
+elif name:wren_featherfoot
+interject name:wren_featherfoot: Shift over, big man. "Aldric Ashgrove rode for help. The dragon sent him. He did not run. Do not let Vladimir tell you otherwise." Underlined. Twice.
+else
+Narrator: The words are big and careful and underlined twice: ALDRIC ASHGROVE RODE FOR HELP. THE DRAGON SENT HIM. HE DID NOT RUN. DO NOT LET VLADIMIR TELL YOU OTHERWISE.
+endif
+Sir Godfrey Gwilym: The night before the end. Argynvost called Aldric up to the tower and sent him out over the passes for help, because he had the fastest horse.
+Sir Godfrey Gwilym: And the mists came down behind him, and no help ever came, and Vladimir called him a coward at the table, so the rest of us would have somebody to hate who wasn't the dragon.
+Sir Godfrey Gwilym [sad]: And I let him. I wrote it on the wall so I wouldn't, and then I forgot the wall.
+interject name:godrick_pendlebrook: He didn't run.
+interject name:godrick_pendlebrook: Sir Pellam's grandad didn't run. Sir Pellam carried that his whole life. He never even knew he didn't have to.
+Narrator: Godrick sits down on the floor beside the old knight, and for a while neither of them says anything, and it is the most natural thing in the world.
+set ladle_wall_read
+if not (quest.the_ladle >= kept_faith)
+quest the_ladle kept_faith
+endif
+-> argynvostholt/godfrey:menu
+
+# --- The commander (argynvostholt/vladimir:menu) -------------------------------------------------------------------
+
+~ vladimir
+set ladle_vladimir_asked
+interject name:godrick_pendlebrook: Commander. My lord. I've brought Sir Aldric Ashgrove's sword home to the Order, and I'd be honoured to be knighted with it. Properly. There was a ladle before, but.
+Vladimir: Ashgrove.
+Narrator: Every dead head at the long table turns, at once, with a sound like a door in a storm.
+Vladimir [angry]: Every knight of this Order died at his post. Every knight but one. Ashgrove saddled the fastest horse in the stable the night before the end and rode away over the pass, and we died, and he did not.
+Vladimir: You bring his sword into this hall and ask me for an accolade. The Order does not take recruits, boy. It takes revenge.
+if flag.ladle_wall_read
+interject name:godrick_pendlebrook: He rode for help, my lord. The dragon sent him. Sir Godfrey wrote it on his wall four hundred years ago, so he'd remember. He wrote that you'd say otherwise.
+Narrator: For a moment the commander says nothing at all. Down the table, one of the dead knights sets his goblet down very carefully.
+Vladimir: Godfrey writes a great many things on that wall.
+interject name:godrick_pendlebrook: He does, my lord. All of them true, I reckon. He's that sort.
+else
+interject name:godrick_pendlebrook: With respect, my lord, I don't think he did. I don't know how I know. I just know Ashgroves, and they don't.
+Vladimir: Then you know nothing. Godfrey will show you out.
+if not (quest.the_ladle >= the_deserter)
+quest the_ladle the_deserter
+endif
+endif
+-> argynvostholt/vladimir:menu
+
+# --- The accolade (argynvostholt/godfrey:menu or :companion) --------------------------------------------------------
+
+~ knighting
+Sir Godfrey Gwilym: Kneel, then. No, the other knee. That's it.
+Narrator: Sir Godfrey takes Sir Aldric's sword from Godrick's hands. It's too light for him now; he holds it as if it might blow away.
+Sir Godfrey Gwilym: Who knighted you first, lad? Somebody did. You stand like it.
+interject name:godrick_pendlebrook: Sir Pellam Ashgrove, my lord. On his deathbed. With a soup ladle. His arms were too weak for the sword.
+Narrator: Sir Godfrey laughs. It starts low in the armour and keeps on coming, until his helmet rings with it and the dust comes down from the rafters, and he has to put a hand on the wall.
+Sir Godfrey Gwilym: A ladle. Oh, that's the best thing I've heard in four hundred years. Then you were already a knight, lad. I'm only the witness. Let's witness it properly.
+Narrator: The flat of the old blade touches one shoulder, then the other.
+Sir Godfrey Gwilym: Keep the watch. Shield the sleeper and the stranger. Lift the fallen. Take nothing not given. And when the light goes out, be the light. Rise, Sir Godrick, of the Order of the Silver Dragon.
+interject name:godrick_pendlebrook: Right then.
+interject name:godrick_pendlebrook: Sorry. I had a whole speech. It's gone. Thank you, my lord. Thank you.
+interject name:liriel_dawnsong: Morning's grace on you, Sir Godrick. Truly, now.
+interject name:thistle: BIG! Big's a knight! Again! Do it again!
+interject name:wren_featherfoot: Don't do it again, his knees can't take it.
+interject name:ratatoille: I'd like it noted that I've known a real knight since before he was one.
+interject name:kip_smudgewick: Congratulations, Sir Godrick. Apricot? On the house. Well. On the cart.
+Sir Godfrey Gwilym: Keep the sword. Aldric would want it to go on being carried by someone who comes back.
+give weapon_plus_1
+quest the_ladle knighted
+-> END

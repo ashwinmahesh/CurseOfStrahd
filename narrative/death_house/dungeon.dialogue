@@ -69,11 +69,11 @@ Narrator: Thorn waves. Then there is nobody to wave at.
 set death_house_children_at_rest
 set death_house_children_riding = false
 quest rose_and_thorn at_rest
-interject name:hedda_ironvow: Dawn comes, little ones. Go on ahead. We'll be along. Not soon, I hope.
+interject name:liriel_dawnsong: The dawn comes, little ones. Go on ahead of us. We'll follow one day, though not too soon.
 if not flag.death_house_sacrificed
-  interject name:ilse_varga: Count off. Good. Nobody left behind this time.
+  interject name:thistle: Nobody left behind. Good.
 endif
-if not name:hedda_ironvow
+if not name:liriel_dawnsong
   interject class:cleric: Go gently. Nobody will lock that door again.
 endif
 -> END
@@ -89,7 +89,7 @@ endif
 
 ~ walter_lullaby
 Narrator: The tune goes thin and strange in the stone gallery, and nothing answers. You decide that is the right answer.
-interject name:tamsin_tealeaf: Sleep tight, little one. Somebody remembered.
+interject name:wren_featherfoot: There. Somebody sang it for you. Sorry it took so long.
 -> END
 
 ~ cult_ledger
@@ -104,10 +104,10 @@ if not flag.death_house_learned_walter
   set death_house_learned_walter
   set death_house_lore += 1
 endif
-interject name:silvain_aster: Double-entry bookkeeping. They committed murder in double-entry bookkeeping.
-interject name:ilse_varga: Every name in there was somebody's.
-if not name:silvain_aster
-  interject tag:bookish: A ledger of the dead, kept neater than most temple records. That's the worst part.
+interject name:kip_smudgewick: That's a merchant's hand. Neat columns, every line tallied. They kept people like stock.
+interject name:ratatoille: "Given." As if it were a pinch of salt. Mon dieu.
+if not name:kip_smudgewick
+  interject tag:scholarly: A ledger of the dead, kept neater than most temple records. That's the worst part.
 endif
 -> END
 
@@ -115,8 +115,8 @@ endif
 narrate examine:shrine_statue
 Narrator: A painted wooden statue of a gaunt, pale man in a black cloak, one hand resting on the head of a wolf at his side. The other holds out an orb of smoky crystal, as if offering it to whoever kneels here.
 Narrator: Skeletons hang in rusty shackles around the walls, and the soot on the stones behind them is shaped like people.
-interject name:ilse_varga: That's him. Whoever carved it had seen him.
-if not name:ilse_varga
+interject name:godrick_pendlebrook: So that's the lord of this place. He looks like a bully in a good coat.
+if not name:godrick_pendlebrook
   interject class:cleric: A shrine to a lord, not a god. They knelt to the wrong one.
 endif
 if flag.death_house_took_shrine_orb

@@ -65,9 +65,9 @@
         "lesser_restoration",
         "revivify",
         "aura_of_vitality",
+        "remove_curse",
         "crusaders_mantle",
-        "magic_weapon",
-        "remove_curse"
+        "magic_weapon"
       ]
     },
     "levels": {
@@ -170,6 +170,7 @@
         "spiritual_weapon",
         "spirit_guardians",
         "revivify",
+        "remove_curse",
         "lesser_restoration",
         "aid",
         "shield_of_faith",

@@ -219,18 +219,6 @@
       "kind": "examine",
       "label": "The stream from the falls",
       "model": "reeds"
-    },
-    {
-      "id": "kestrel_tally_tser",
-      "cell": [
-        39,
-        15
-      ],
-      "kind": "examine",
-      "label": "A marked ash tree",
-      "model": "tree_marked",
-      "when": "name:ilse_varga",
-      "dialogue": "companions/kestrel:tally_tser"
     }
   ],
   "containers": [

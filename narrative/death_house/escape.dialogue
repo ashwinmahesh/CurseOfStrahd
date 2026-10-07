@@ -28,11 +28,10 @@ endif
 set death_house_completed
 quest death_house escaped_refused
 xp milestone
-interject name:ilse_varga: Through. Now. We count off on the other side.
-interject name:tamsin_tealeaf: Out. Out is my favorite direction. Out forever.
-interject name:hedda_ironvow: Go, go. Dawn's out there somewhere. Late, but out there.
-interject name:silvain_aster: I would like it noted that I said the house was hungry.
-if not name:ilse_varga
+interject name:ratatoille: Through! Everyone through! I shall go last. No, second to last. Go, go!
+interject name:thistle: Out! Air! Bark and bones, real air!
+interject name:wren_featherfoot: Watch this. Through the gap, roll, up... Ow. Don't watch that. We're out!
+if not name:ratatoille
   interject class:fighter: Move! Nobody stops until we're out!
 endif
 -> END

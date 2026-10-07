@@ -43,7 +43,11 @@ Ilinca: Still on the hill? The oven's lit. Every hour you stand about out here, 
 Ilinca: Ilinca Vrana. Forty years the midwife in the village under the castle. I brought both of those children into the world, and I'd like them to stay in it a while.
 Ilinca: The feathers? There are a few of us. We keep watch on things. We call ourselves the Keepers of the Feather, when we're feeling grand.
 if flag.keepers_of_the_feather_met
+if name:ratatoille
+interject name:ratatoille: Urwin Martikov said those very words at the Blue Water Inn. With the same face. I notice these things. Diviner.
+else
 interject tag:curious: Urwin Martikov said those same words at the Blue Water Inn. With the same face, too.
+endif
 Ilinca: Urwin's a good boy. Talks too much.
 endif
 -> menu
@@ -57,7 +61,11 @@ Ilinca: Most things in this valley are stories for novices, right up until they 
 
 ~ children
 Ilinca: Ilka and Toma Sarnov, ten and six. Their mother bought a basket of pastries every week since the baby died, to dream of her. When the coin ran out, the old woman came for the children. She calls that the custom.
+if name:thistle
+interject name:thistle: Their mam sold them. Her own pups.
+else
 interject tag:blunt: Their mother sold them.
+endif
 Ilinca [weary]: Their mother is grieving and hungry and stupid with sweet dreams. I'm not here to judge her. I'm here because the children didn't get a say.
 -> menu
 
@@ -65,14 +73,22 @@ Ilinca [weary]: Their mother is grieving and hungry and stupid with sweet dreams
 set coven_explained
 Ilinca: Three hags together are a coven. Their magic swells, they see far, and they're hard to kill. One at a time they're only very dangerous. So don't fight three.
 Ilinca: The fat one would sell her mother for a pie: feed her one of Mother's own pastries and she'll sleep like a felled ox. The pretty one hates her mother more than she loves her. Use that.
-interject tag:devout: Divide them, then. It feels like cheating.
+if name:ratatoille
+interject name:ratatoille: Divide them. Technically, that is very sound. It still feels like cheating.
+else
+interject tag:pious: Divide them, then. It feels like cheating.
+endif
 Ilinca: It's hags, dear. Cheating is the only fair fight on offer.
 -> menu
 
 ~ ravens_seen
 if treasure_at:old_bonegrinder
 Ilinca: One thing I can't make sense of. Something lies in the ashes at the back of that oven, and it shines when the fire burns low. The hags bake around it. They won't touch it. Whatever it is, it isn't theirs.
+if name:thistle
+interject name:thistle: Something a hag won't touch? Mine.
+else
 interject tag:curious: Something a hag won't touch. I want it already.
+endif
 else
 Ilinca: Morgantha takes the cart down to the village and the Vallaki road twice a week. Folk who can't pay in coin pay another way. My ravens count the households that owe. The list is long.
 endif
