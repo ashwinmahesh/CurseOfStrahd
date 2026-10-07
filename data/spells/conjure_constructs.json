@@ -4,7 +4,7 @@
   "source": {
     "book": "FRHoF",
     "checked_against": "FRHoF",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 3,
   "school": "conjuration",
@@ -28,12 +28,50 @@
     "amount": 10,
     "concentration": true
   },
-  "summary": "Reference-only: Place intangible Construct spirits within 60 feet. On casting and later Magic actions, choose a target within 5 feet of them: Dexterity save against 3d6 Force (half on success), or 1d6 + spellcasting modifier Temporary HP. Move the spirits up to 30 feet when moving on your turn. Both dice totals gain 1d6 per slot above 3.",
-  "text": "Reference-only: Place intangible Construct spirits within 60 feet. On casting and later Magic actions, choose a target within 5 feet of them: Dexterity save against 3d6 Force (half on success), or 1d6 + spellcasting modifier Temporary HP. Move the spirits up to 30 feet when moving on your turn. Both dice totals gain 1d6 per slot above 3.",
+  "summary": "Intangible Construct spirits gather beside a creature you choose within 60 feet. When you cast it and as a Magic action later, they act on a creature within 5 feet of them: an enemy makes a Dexterity save against 3d6 Force damage (half on a success); an ally gains 1d6 + your spellcasting modifier Temporary Hit Points. When you move on your turn you can move the spirits up to 30 feet too. Both rolls gain 1d6 per slot level above 3.",
+  "text": "Intangible Construct spirits gather beside a creature you choose within 60 feet. When you cast it and as a Magic action later, they act on a creature within 5 feet of them: an enemy makes a Dexterity save against 3d6 Force damage (half on a success); an ally gains 1d6 + your spellcasting modifier Temporary Hit Points. When you move on your turn you can move the spirits up to 30 feet too. Both rolls gain 1d6 per slot level above 3.",
   "tags": [
-    "damage"
+    "damage",
+    "summon",
+    "defense"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "3d6",
+      "type": "force"
+    }
+  ],
+  "upcast": {
+    "damage": "1d6"
+  },
+  "sustain": [
+    {
+      "do": "faerun",
+      "mode": "constructs",
+      "cost": "magic",
+      "not_this_turn": true,
+      "label": "Construct spirits: act",
+      "sub": "save or THP",
+      "help": "Magic action: the spirits harm an enemy (Dexterity save) or shield an ally (Temporary Hit Points) within 5 ft of them.",
+      "targeting": "creature"
+    },
+    {
+      "do": "move_object",
+      "cost": "free",
+      "move": 30,
+      "once_per_turn": true,
+      "not_this_turn": false,
+      "label": "Move the spirits",
+      "sub": "30 ft",
+      "help": "Move the spirits up to 30 feet."
+    }
+  ]
 }

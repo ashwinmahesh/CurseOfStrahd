@@ -4,7 +4,7 @@
   "source": {
     "book": "FRHoF",
     "checked_against": "FRHoF",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 4,
   "school": "conjuration",
@@ -30,12 +30,55 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: Create a 20-foot-radius Sphere of magical Darkness; strong wind disperses it. Appearance, entry, movement into a creature, or end of turn prompts a Wisdom save once per turn: 5d6 Psychic and subtract 1d6 from saves until the next turn ends on failure; half damage only on success. It moves 10 feet away from you at your turn start. Circle variant requires five secondary casters spending level 3+ slots and consumes three Pandemonium black pearls: range 1 mile, lasts until dispelled without Concentration; ends if any participant joins another Circle casting of Doomtide.",
-  "text": "Reference-only: Create a 20-foot-radius Sphere of magical Darkness; strong wind disperses it. Appearance, entry, movement into a creature, or end of turn prompts a Wisdom save once per turn: 5d6 Psychic and subtract 1d6 from saves until the next turn ends on failure; half damage only on success. It moves 10 feet away from you at your turn start. Circle variant requires five secondary casters spending level 3+ slots and consumes three Pandemonium black pearls: range 1 mile, lasts until dispelled without Concentration; ends if any participant joins another Circle casting of Doomtide.",
+  "summary": "A 20-foot-radius Sphere of churning magical Darkness fills a point within range; a strong wind (Gust of Wind) disperses it. A creature in it when it appears, when it moves onto it, entering it, or ending its turn there makes a Wisdom save once per turn: on a failure 5d6 Psychic damage and −1d6 on its saving throws until the end of its next turn; on a success half damage only. At the start of each of your turns the Sphere drifts 10 feet away from you. The Circle casting isn't in the game.",
+  "text": "A 20-foot-radius Sphere of churning magical Darkness fills a point within range; a strong wind (Gust of Wind) disperses it. A creature in it when it appears, when it moves onto it, entering it, or ending its turn there makes a Wisdom save once per turn: on a failure 5d6 Psychic damage and −1d6 on its saving throws until the end of its next turn; on a success half damage only. At the start of each of your turns the Sphere drifts 10 feet away from you. The Circle casting isn't in the game.",
   "tags": [
-    "damage"
+    "damage",
+    "control"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "area"
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 20
+  },
+  "save": "wis",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "5d6",
+      "type": "psychic"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "until": "target_turn_end",
+        "modifiers": [
+          {
+            "stat": "penalty_die",
+            "dice": "1d6",
+            "on": [
+              "save:all"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "zone": {
+    "triggers": [
+      "cast",
+      "enter",
+      "moved_into",
+      "end_turn"
+    ],
+    "darkness": true,
+    "obscured": "heavy",
+    "drift_ft": 10
+  }
 }

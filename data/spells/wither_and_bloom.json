@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 2,
   "school": "necromancy",
@@ -28,12 +28,31 @@
   "duration": {
     "kind": "instantaneous"
   },
-  "summary": "Reference-only: Chosen creatures in a 10-foot-radius Sphere save Constitution against 3d6 Necrotic, half on success; ordinary plants wither. One chosen creature there may spend one Hit Die, healing its roll + your spellcasting modifier. Each slot above 2 adds 1d6 damage and one available Hit Die; add the modifier only once.",
-  "text": "Reference-only: Chosen creatures in a 10-foot-radius Sphere save Constitution against 3d6 Necrotic, half on success; ordinary plants wither. One chosen creature there may spend one Hit Die, healing its roll + your spellcasting modifier. Each slot above 2 adds 1d6 damage and one available Hit Die; add the modifier only once.",
+  "summary": "Creatures you choose (your foes) in a 10-foot-radius Sphere make a Constitution save: 3d6 Necrotic damage, half on a success; ordinary plants there wither. Then one creature you choose in the Sphere (the most hurt of your allies there) can spend one of its Hit Dice and regain Hit Points equal to the roll plus your spellcasting modifier. Each slot level above 2 adds 1d6 damage and one more Hit Die it can spend (the modifier is added once).",
+  "text": "Creatures you choose (your foes) in a 10-foot-radius Sphere make a Constitution save: 3d6 Necrotic damage, half on a success; ordinary plants there wither. Then one creature you choose in the Sphere (the most hurt of your allies there) can spend one of its Hit Dice and regain Hit Points equal to the roll plus your spellcasting modifier. Each slot level above 2 adds 1d6 damage and one more Hit Die it can spend (the modifier is added once).",
   "tags": [
-    "damage"
+    "damage",
+    "healing"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "area"
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 10
+  },
+  "area_targets": "enemies",
+  "save": "con",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "3d6",
+      "type": "necrotic"
+    }
+  ],
+  "upcast": {
+    "damage": "1d6"
+  }
 }

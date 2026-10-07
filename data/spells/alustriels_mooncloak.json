@@ -4,7 +4,7 @@
   "source": {
     "book": "FRHoF",
     "checked_against": "FRHoF",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 5,
   "school": "abjuration",
@@ -31,12 +31,64 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: Moonlight in a 20-foot Emanation gives you and allies Half Cover and resistance to Cold, Lightning, and Radiant. End the spell either as a Reaction to succeed on a failed save against Frightened, Grappled, or Restrained, or as a Magic action to heal yourself or an ally in the area for 4d10 + your spellcasting modifier.",
-  "text": "Reference-only: Moonlight in a 20-foot Emanation gives you and allies Half Cover and resistance to Cold, Lightning, and Radiant. End the spell either as a Reaction to succeed on a failed save against Frightened, Grappled, or Restrained, or as a Magic action to heal yourself or an ally in the area for 4d10 + your spellcasting modifier.",
+  "summary": "Moonlight fills a 20-foot Emanation around you. You and your allies in it have Half Cover and Resistance to Cold, Lightning and Radiant damage. You can end the spell early: as a Reaction when you fail a save against being Frightened, Grappled or Restrained, to succeed instead (in a fight, set it to Automatic in the class tab), or as a Magic action to heal yourself or an ally in the moonlight for 4d10 + your spellcasting modifier.",
+  "text": "Moonlight fills a 20-foot Emanation around you. You and your allies in it have Half Cover and Resistance to Cold, Lightning and Radiant damage. You can end the spell early: as a Reaction when you fail a save against being Frightened, Grappled or Restrained, to succeed instead (in a fight, set it to Automatic in the class tab), or as a Magic action to heal yourself or an ally in the moonlight for 4d10 + your spellcasting modifier.",
   "tags": [
-    "damage"
+    "defense",
+    "healing"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "area"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 20
+  },
+  "zone": {
+    "triggers": [],
+    "affects": "allies",
+    "light": {
+      "bright": 0,
+      "dim": 20
+    },
+    "inside": {
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "half_cover"
+        },
+        {
+          "stat": "resistance",
+          "value": "cold"
+        },
+        {
+          "stat": "resistance",
+          "value": "lightning"
+        },
+        {
+          "stat": "resistance",
+          "value": "radiant"
+        }
+      ]
+    }
+  },
+  "sustain": [
+    {
+      "do": "heal_one",
+      "cost": "magic",
+      "range": 20,
+      "heal": {
+        "dice": "4d10",
+        "add_mod": true
+      },
+      "ends_spell": true,
+      "label": "Mooncloak: heal and end",
+      "sub": "4d10 + mod",
+      "help": "Magic action: end the spell to heal yourself or an ally in the moonlight for 4d10 + your spellcasting modifier.",
+      "not_this_turn": false
+    }
+  ],
+  "policy": "never"
 }

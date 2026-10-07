@@ -105,6 +105,11 @@ const FAERUN := {
 	"fortifying_soul": {"caster": "Hedda", "targets": [[1, 0]], "ally": "Godrick", "ability": "feature:fortifying_soul"},
 	"dragons_terror": {"caster": "Godrick", "targets": [[3, 0]], "ability": "feature:dragons_terror"},
 	"portal_step": {"caster": "Kip", "targets": [[3, 0]], "ability": "feature:portal_step", "self": true},
+	"spellfire_storm": {"caster": "Silvain", "targets": [[5, 0], [5, 1]], "cast": "spellfire_storm"},
+	"doomtide": {"caster": "Kip", "targets": [[5, 0], [6, 1]], "cast": "doomtide"},
+	"grave_ground": {"caster": "Kip", "targets": [[4, 0], [5, 1]], "cast": "grave_ground"},
+	"holy_star_of_mystra": {"caster": "Hedda", "targets": [[4, 0]], "cast": "holy_star_of_mystra"},
+	"transfix": {"caster": "Kip", "targets": [[3, 0]], "cast": "transfix"},
 }
 
 var root: Node

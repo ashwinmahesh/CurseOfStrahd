@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 7,
   "school": "enchantment",
@@ -17,7 +17,8 @@
     "unit": "action"
   },
   "range": {
-    "kind": "self"
+    "kind": "feet",
+    "feet": 60
   },
   "components": {
     "v": true,
@@ -28,12 +29,62 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: A visible creature within 60 feet saves Charisma or becomes Charmed and Incapacitated, moving directly toward you on its turns. Ending a turn within 5 feet deals 4d8 Psychic. It provokes Opportunity Attacks normally and repeats the save before entering damaging terrain. Later Magic actions target more creatures; one that saved against this casting cannot be retargeted. Add 1d8 damage per slot above 7.",
-  "text": "Reference-only: A visible creature within 60 feet saves Charisma or becomes Charmed and Incapacitated, moving directly toward you on its turns. Ending a turn within 5 feet deals 4d8 Psychic. It provokes Opportunity Attacks normally and repeats the save before entering damaging terrain. Later Magic actions target more creatures; one that saved against this casting cannot be retargeted. Add 1d8 damage per slot above 7.",
+  "summary": "A creature you can see within 60 feet makes a Charisma save or is Charmed and Incapacitated, and on its turns it moves straight toward you, provoking Opportunity Attacks as usual. If it ends a turn within 5 feet of you it takes 4d8 Psychic damage (+1d8 per slot level above 7). Later, a Magic action lets you target another creature with it; a creature that saved against this casting can't be targeted again. (The book also has it save again before walking into a harmful area; the game doesn't stop it.)",
+  "text": "A creature you can see within 60 feet makes a Charisma save or is Charmed and Incapacitated, and on its turns it moves straight toward you, provoking Opportunity Attacks as usual. If it ends a turn within 5 feet of you it takes 4d8 Psychic damage (+1d8 per slot level above 7). Later, a Magic action lets you target another creature with it; a creature that saved against this casting can't be targeted again. (The book also has it save again before walking into a harmful area; the game doesn't stop it.)",
   "tags": [
+    "control",
     "damage"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "requires_sight": true,
+  "save": "cha",
+  "upcast": {
+    "damage": "1d8"
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "charmed",
+        "primary_condition": "charmed"
+      }
+    },
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "incapacitated",
+        "primary_condition": "charmed"
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "primary_condition": "charmed",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "transfixed"
+          }
+        ]
+      }
+    }
+  ],
+  "sustain": [
+    {
+      "do": "faerun",
+      "mode": "transfix",
+      "cost": "magic",
+      "range": 60,
+      "not_this_turn": true,
+      "label": "Transfix another",
+      "sub": "Charisma save",
+      "help": "Magic action: another creature you can see within 60 ft makes the save.",
+      "targeting": "enemy"
+    }
+  ]
 }

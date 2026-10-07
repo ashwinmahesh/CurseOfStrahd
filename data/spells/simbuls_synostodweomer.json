@@ -4,7 +4,7 @@
   "source": {
     "book": "FRHoF",
     "checked_against": "FRHoF",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 7,
   "school": "transmutation",
@@ -26,12 +26,29 @@
     "kind": "hours",
     "amount": 1
   },
-  "summary": "Reference-only: For 1 hour, the touched creature can heal after casting a slotted spell: spend up to that slot’s level in unused Hit Dice, healing their total + your spellcasting modifier.",
-  "text": "Reference-only: For 1 hour, the touched creature can heal after casting a slotted spell: spend up to that slot’s level in unused Hit Dice, healing their total + your spellcasting modifier.",
+  "summary": "For 1 hour, the creature you touch can mend itself with its magic: right after it casts a spell with a spell slot, it can spend unused Hit Dice, up to the slot's level, and regain Hit Points equal to their total plus your spellcasting modifier. In a fight it spends them while it's hurt.",
+  "text": "For 1 hour, the creature you touch can mend itself with its magic: right after it casts a spell with a spell slot, it can spend unused Hit Dice, up to the slot's level, and regain Hit Points equal to their total plus your spellcasting modifier. In a fight it spends them while it's hurt.",
   "tags": [
-    "utility"
+    "healing",
+    "buff"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "ally",
+    "count": 1
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "synostodweomer"
+          }
+        ]
+      }
+    }
+  ]
 }

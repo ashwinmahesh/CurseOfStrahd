@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 4,
   "school": "enchantment",
@@ -26,12 +26,11 @@
     "kind": "minutes",
     "amount": 10
   },
-  "summary": "Reference-only: When making an ability check to influence a creature within your 60-foot Emanation, treat a natural result of 9 or lower as 10.",
-  "text": "Reference-only: When making an ability check to influence a creature within your 60-foot Emanation, treat a natural result of 9 or lower as 10.",
+  "summary": "A 60-foot Emanation of goodwill surrounds you for 10 minutes: when you make an ability check to influence a creature in it, you treat a d20 roll of 9 or lower as a 10. It has no effect in a fight; the game's conversations play it out.",
+  "text": "A 60-foot Emanation of goodwill surrounds you for 10 minutes: when you make an ability check to influence a creature in it, you treat a d20 roll of 9 or lower as a 10. It has no effect in a fight; the game's conversations play it out.",
   "tags": [
     "utility"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true
 }

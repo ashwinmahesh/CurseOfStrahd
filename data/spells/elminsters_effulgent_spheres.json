@@ -4,7 +4,7 @@
   "source": {
     "book": "FRHoF",
     "checked_against": "FRHoF",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 6,
   "school": "evocation",
@@ -29,12 +29,60 @@
     "kind": "hours",
     "amount": 1
   },
-  "summary": "Reference-only: Six orbiting spheres can be spent individually. Reaction to Acid, Cold, Fire, Lightning, or Thunder damage: resist that type until your next turn starts. Bonus Action: ranged spell attack within 120 feet for 3d6 of one of those types, spending the sphere hit or miss. Ends when all spheres are spent. Gain one more sphere per slot above 6.",
-  "text": "Reference-only: Six orbiting spheres can be spent individually. Reaction to Acid, Cold, Fire, Lightning, or Thunder damage: resist that type until your next turn starts. Bonus Action: ranged spell attack within 120 feet for 3d6 of one of those types, spending the sphere hit or miss. Ends when all spheres are spent. Gain one more sphere per slot above 6.",
+  "summary": "Six glowing spheres orbit you for 1 hour (one more per slot level above 6). Choose Acid, Cold, Fire, Lightning or Thunder when you cast it. When you take damage of one of those types you can spend a sphere as a Reaction to gain Resistance to that type until the start of your next turn (against an attack you're asked; otherwise it's used only when set to Automatic). As a Bonus Action you can hurl a sphere: a ranged spell attack against a creature within 120 feet, 3d6 damage of the chosen type, spending the sphere hit or miss. The spell ends when the last sphere is spent.",
+  "text": "Six glowing spheres orbit you for 1 hour (one more per slot level above 6). Choose Acid, Cold, Fire, Lightning or Thunder when you cast it. When you take damage of one of those types you can spend a sphere as a Reaction to gain Resistance to that type until the start of your next turn (against an attack you're asked; otherwise it's used only when set to Automatic). As a Bonus Action you can hurl a sphere: a ranged spell attack against a creature within 120 feet, 3d6 damage of the chosen type, spending the sphere hit or miss. The spell ends when the last sphere is spent.",
   "tags": [
-    "damage"
+    "damage",
+    "defense"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "self"
+  },
+  "choice": {
+    "kind": "damage_type",
+    "label": "Spheres",
+    "from": [
+      "fire",
+      "cold",
+      "lightning",
+      "thunder",
+      "acid"
+    ]
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "self",
+        "on": "cast",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "effulgent_spheres"
+          }
+        ]
+      }
+    }
+  ],
+  "sustain": [
+    {
+      "do": "faerun",
+      "cost": "bonus_action",
+      "range": 120,
+      "not_this_turn": false,
+      "requires_effect": true,
+      "label": "Hurl a sphere",
+      "sub": "3d6 · 120 ft",
+      "help": "Bonus Action: a ranged spell attack for 3d6 of the spheres' type, spending a sphere hit or miss.",
+      "targeting": "enemy"
+    }
+  ],
+  "policy": "ask",
+  "policy_modes": [
+    "ask",
+    "auto",
+    "never"
+  ]
 }

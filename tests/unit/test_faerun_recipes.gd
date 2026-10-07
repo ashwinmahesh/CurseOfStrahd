@@ -105,10 +105,10 @@ func test_festering_blast_ongoing_damage_does_not_upcast() -> void:
 
 func test_pending_spell_has_an_honest_disabled_reason() -> void:
 	var e := TestCombat.open_field()
-	var c := TestCombat.caster_with(e, ["hindsight"], Vector2i(2, 3))
+	var c := TestCombat.caster_with(e, ["battle_familiar"], Vector2i(2, 3))
 	TestCombat.punching_bag(e, Vector2i(8, 3))
 	TestCombat.start_with(e, c)
-	var a := ActionCatalog.new(e).find(c, "spell:hindsight")
+	var a := ActionCatalog.new(e).find(c, "spell:battle_familiar")
 	assert_false(bool(a["legal"]))
 	assert_eq(str(a["reason"]), "Not automated yet")
 

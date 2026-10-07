@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 5,
   "school": "necromancy",
@@ -30,12 +30,53 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: Arrange up to four contiguous 10-foot squares of skeletal hands within range; enemies treat them as Difficult Terrain. Enemies present at casting, entering, or ending a turn there save Strength once per turn: failure deals 6d6 Necrotic and subtracts 1d6 from damage rolls until their next turn ends. Add 1d6 damage per slot above 5.",
-  "text": "Reference-only: Arrange up to four contiguous 10-foot squares of skeletal hands within range; enemies treat them as Difficult Terrain. Enemies present at casting, entering, or ending a turn there save Strength once per turn: failure deals 6d6 Necrotic and subtracts 1d6 from damage rolls until their next turn ends. Add 1d6 damage per slot above 5.",
+  "summary": "Skeletal hands claw up from a 20-foot square of ground you can see within range (the book lets you arrange four 10-foot squares; the game lays them as one square). It's Difficult Terrain for your enemies. An enemy there when it appears, entering it, or ending its turn there makes a Strength save once per turn: on a failure it takes 6d6 Necrotic damage and subtracts 1d6 from its damage rolls until the end of its next turn. +1d6 damage per slot level above 5.",
+  "text": "Skeletal hands claw up from a 20-foot square of ground you can see within range (the book lets you arrange four 10-foot squares; the game lays them as one square). It's Difficult Terrain for your enemies. An enemy there when it appears, entering it, or ending its turn there makes a Strength save once per turn: on a failure it takes 6d6 Necrotic damage and subtracts 1d6 from its damage rolls until the end of its next turn. +1d6 damage per slot level above 5.",
   "tags": [
-    "damage"
+    "damage",
+    "control"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "area"
+  },
+  "area": {
+    "shape": "cube",
+    "size": 20
+  },
+  "save": "str",
+  "damage": [
+    {
+      "dice": "6d6",
+      "type": "necrotic"
+    }
+  ],
+  "upcast": {
+    "damage": "1d6"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "until": "target_turn_end",
+        "modifiers": [
+          {
+            "stat": "damage_penalty_die",
+            "dice": "1d6"
+          }
+        ]
+      }
+    }
+  ],
+  "zone": {
+    "triggers": [
+      "cast",
+      "enter",
+      "end_turn"
+    ],
+    "affects": "enemies",
+    "terrain": "difficult",
+    "terrain_affected_only": true
+  }
 }

@@ -4,7 +4,7 @@
   "source": {
     "book": "AU",
     "checked_against": "AU",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/au/chapter-2-spells.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 4,
   "school": "illusion",
@@ -29,12 +29,65 @@
     "amount": 10,
     "concentration": true
   },
-  "summary": "Reference-only: Create a 60-foot-radius Sphere. For each visible creature inside, choose a speed boost of 20 feet until its next turn ends, or an Intelligence save against 2d10 Psychic and Difficult Terrain within the Sphere until its turn ends. Repeat this choice on entry or end of turn, at most once per turn per creature.",
-  "text": "Reference-only: Create a 60-foot-radius Sphere. For each visible creature inside, choose a speed boost of 20 feet until its next turn ends, or an Intelligence save against 2d10 Psychic and Difficult Terrain within the Sphere until its turn ends. Repeat this choice on entry or end of turn, at most once per turn per creature.",
+  "summary": "Space warps inside a 60-foot-radius Sphere within range. Each creature in it when it appears, entering it, or ending its turn there is affected once per turn as you choose (in the game: your allies gain 20 feet of Speed until the end of their next turn; your enemies make an Intelligence save or take 2d10 Psychic damage and treat the Sphere as Difficult Terrain until the end of their turn).",
+  "text": "Space warps inside a 60-foot-radius Sphere within range. Each creature in it when it appears, entering it, or ending its turn there is affected once per turn as you choose (in the game: your allies gain 20 feet of Speed until the end of their next turn; your enemies make an Intelligence save or take 2d10 Psychic damage and treat the Sphere as Difficult Terrain until the end of their turn).",
   "tags": [
-    "damage"
+    "control",
+    "damage",
+    "buff"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "area"
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 60
+  },
+  "save": "int",
+  "damage": [
+    {
+      "dice": "2d10",
+      "type": "psychic"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "until": "target_turn_end",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "distorted_distance"
+          }
+        ]
+      }
+    }
+  ],
+  "zone": {
+    "triggers": [
+      "cast",
+      "enter",
+      "end_turn"
+    ],
+    "terrain": "difficult",
+    "terrain_flag": "distorted_distance",
+    "ally_effects": [
+      {
+        "effect": "modifiers",
+        "params": {
+          "on": "always",
+          "until": "target_turn_end",
+          "modifiers": [
+            {
+              "stat": "speed",
+              "value": 20
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

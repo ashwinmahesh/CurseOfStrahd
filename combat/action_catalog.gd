@@ -318,7 +318,9 @@ func _sustained(c: Combatant, out: Array[Dictionary]) -> void:
 				targeting = "enemy"
 			"heal_one":
 				targeting = "ally"
-		var cost := "bonus" if str(a["cost"]) == "bonus_action" else "action"
+			"faerun":
+				targeting = str(d.get("targeting", "creature"))
+		var cost := "bonus" if str(a["cost"]) == "bonus_action" else ("free" if str(a["cost"]) == "free" else "action")
 		var entry := _entry("sustain:" + str(a["id"]), tab, str(a["label"]), str(d.get("sub", "")), cost, str(a["reason"]), targeting,
 			str(d.get("help", "")))
 		entry["kind"] = "sustain"

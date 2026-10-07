@@ -4,7 +4,7 @@
   "source": {
     "book": "FRHoF",
     "checked_against": "FRHoF",
-    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Reference entry; bespoke effects require manual resolution. Artificer is omitted where listed because that class is not available in this game."
+    "note": "Compared with the published D&D Beyond chapter on 2026-10-06: https://www.dndbeyond.com/sources/dnd/frhof/magic-of-faerun.  Artificer is omitted where listed because that class is not available in this game."
   },
   "level": 5,
   "school": "transmutation",
@@ -30,12 +30,81 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Reference-only: Gain resistance to Acid, Cold, Fire, Lightning, or Thunder, and Fly 30 feet with hover. On casting and each turn start, chosen creatures in a 15-foot Emanation save Dexterity against 2d6 of one of those types and Prone; success takes half damage only. Circle variant takes 1 minute to cast, lasts 10 minutes with Concentration, and grants the benefits to one extra creature per secondary caster (maximum nine); each secondary caster spends a level 2+ slot.",
-  "text": "Reference-only: Gain resistance to Acid, Cold, Fire, Lightning, or Thunder, and Fly 30 feet with hover. On casting and each turn start, chosen creatures in a 15-foot Emanation save Dexterity against 2d6 of one of those types and Prone; success takes half damage only. Circle variant takes 1 minute to cast, lasts 10 minutes with Concentration, and grants the benefits to one extra creature per secondary caster (maximum nine); each secondary caster spends a level 2+ slot.",
+  "summary": "Choose Acid, Cold, Fire, Lightning or Thunder: you gain Resistance to it and a Fly Speed of 30 feet (you can hover). When you cast the spell and at the start of each of your turns, creatures you choose (your foes) in a 15-foot Emanation make a Dexterity save: 2d6 damage of that type and Prone on a failure, half damage only on a success. The Circle casting isn't in the game.",
+  "text": "Choose Acid, Cold, Fire, Lightning or Thunder: you gain Resistance to it and a Fly Speed of 30 feet (you can hover). When you cast the spell and at the start of each of your turns, creatures you choose (your foes) in a 15-foot Emanation make a Dexterity save: 2d6 damage of that type and Prone on a failure, half damage only on a success. The Circle casting isn't in the game.",
   "tags": [
-    "damage"
+    "damage",
+    "defense",
+    "movement"
   ],
   "icon": "magic_missile",
-  "automation": "reference",
-  "playable": false
+  "playable": true,
+  "targets": {
+    "kind": "area"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 15
+  },
+  "choice": {
+    "kind": "damage_type",
+    "label": "Element",
+    "from": [
+      "fire",
+      "cold",
+      "lightning",
+      "thunder",
+      "acid"
+    ]
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "2d6",
+      "type_choice": [
+        "fire",
+        "cold",
+        "lightning",
+        "thunder",
+        "acid"
+      ]
+    }
+  ],
+  "zone": {
+    "triggers": [
+      "cast",
+      "caster_start_turn"
+    ],
+    "spare_allies": true,
+    "damage_type_choice": "yes",
+    "effects": [
+      {
+        "effect": "condition",
+        "params": {
+          "condition": "prone",
+          "plain": true
+        }
+      }
+    ],
+    "caster_effects": [
+      {
+        "effect": "modifiers",
+        "params": {
+          "on": "cast",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "choice"
+            },
+            {
+              "stat": "speed_set",
+              "kind": "fly",
+              "value": 30
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

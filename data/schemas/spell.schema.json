@@ -18,6 +18,8 @@
   ],
   "additionalProperties": false,
   "properties": {
+    "policy": {"enum": ["ask", "auto", "never"], "description": "A Reaction the spell can take on its own once its caster allows it (class tab: Automatic or Off), starting at this value."},
+    "policy_modes": {"type": "array", "items": {"enum": ["ask", "auto", "never"]}, "description": "The class tab's choices when Ask can prompt too (Backlash against an attack)."},
     "playable": {"type": "boolean", "description": "False until every rule of the entry works in the game: it is then left out of character creation, level-up and spell choices and random treasure (Compendium.playable). Absent means playable."},
     "id": {
       "$ref": "common.schema.json#/$defs/id"
@@ -537,7 +539,8 @@
               "near_start_turn",
               "near_end_turn",
               "per_square",
-              "caster_end_turn"
+              "caster_end_turn",
+              "caster_start_turn"
             ]
           }
         },
@@ -610,8 +613,11 @@
         },
         "inside": {
           "type": "object",
-          "description": "What holds while a creature is inside: modifiers and conditions.",
+          "description": "What holds while a creature is inside: modifiers and conditions, and `casting_save` (an ability: casting a spell there takes that save against the spell's DC, Spellfire Storm).",
           "properties": {
+            "casting_save": {
+              "$ref": "common.schema.json#/$defs/ability"
+            },
             "modifiers": {
               "type": "array",
               "items": {
@@ -668,6 +674,18 @@
         "side_ft": {
           "type": "integer",
           "description": "Wall of Fire: depth of the burning side."
+        },
+        "terrain_flag": {
+          "type": "string",
+          "description": "The area is Difficult Terrain only for creatures carrying this flag (Distorted Distance's failed save)."
+        },
+        "ally_effects": {
+          "type": "array",
+          "description": "Effects for the caster's side when the area triggers on them, instead of its save (Distorted Distance's Speed)."
+        },
+        "drift_ft": {
+          "type": "integer",
+          "description": "The area moves this many feet straight away from its caster as the caster's turn starts (Doomtide)."
         },
         "storm_radius": {
           "type": "integer",
@@ -797,7 +815,8 @@
               "volley",
               "eyebite",
               "repeat",
-              "bigby"
+              "bigby",
+              "faerun"
             ]
           },
           "cost": {
@@ -865,6 +884,18 @@
           },
           "upkeep": {
             "type": "boolean"
+          },
+          "mode": {
+            "type": "string",
+            "description": "Which of a `faerun` spell's sustained actions this is (Spirit Lantern's harm, mend or veil)."
+          },
+          "targeting": {
+            "type": "string",
+            "description": "What a `faerun` sustained action targets on the hotbar: enemy, creature, ally, point."
+          },
+          "ends_spell": {
+            "type": "boolean",
+            "description": "Using it ends the spell (Alustriel's Mooncloak's healing)."
           },
           "auto": {
             "type": "string"

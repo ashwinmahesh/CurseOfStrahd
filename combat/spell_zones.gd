@@ -178,6 +178,16 @@ func turn_start(c: Combatant) -> void:
 			o.rounds_left -= 1
 	prune()
 	for o: FieldObject in objects.duplicate():
+		if o.expired() or o.caster_id != c.id:
+			continue
+		# Doomtide: the area drifts away from its caster as the caster's turn starts.
+		if int(o.rule("drift_ft", 0)) > 0:
+			_drift(o, c, int(o.rule("drift_ft", 0)))
+		# Songal's Elemental Suffusion: everyone it affects in the area, as its caster's turn starts.
+		if o.has_trigger("caster_start_turn"):
+			for t in _inside(o):
+				_affect(o, t, "caster_start_turn", CombatResult.new(), {})
+	for o: FieldObject in objects.duplicate():
 		if o.expired():
 			continue
 		# Mordenkainen's Faithful Hound bites an enemy beside it at the start of its caster's turn.
@@ -238,6 +248,24 @@ func _bite(o: FieldObject, caster: Combatant) -> void:
 		_affect(o, best, "bite", CombatResult.new(), {})
 
 
+## Moves an area `feet` straight away from its caster, and resolves what it moves onto.
+func _drift(o: FieldObject, c: Combatant, feet: int) -> void:
+	var away := o.origin - enc().center_of(c)
+	if away.length() < 0.01:
+		away = Vector2(0, 1)
+	var dv := Vector2i((away.normalized() * float(feet / CombatGrid.FEET)).round())
+	if dv == Vector2i.ZERO:
+		return
+	var moved: Array[Vector2i] = []
+	for cl in o.cells:
+		moved.append(cl + dv)
+	o.cells = moved
+	o.cell += dv
+	o.origin += Vector2(dv)
+	enc().log.add("spell", "%s drifts %d ft" % [o.name, feet], c.id)
+	moved_object(o, CombatResult.new())
+
+
 ## Within the object's reach (Flaming Sphere: within 5 ft of the sphere).
 func _near(o: FieldObject, c: Combatant) -> bool:
 	return enc().grid.distance_ft(o.cell, 1, c.cell, c.size_cells) <= int(o.rule("reach", 5))
@@ -265,6 +293,13 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 		var got := t.creature.heal(int(hp["total"]), o.name)
 		e.log.add("heal", "%s regains %d Hit Points (%s)" % [t.name(), got, o.name], t.id, [str(hp["text"])])
 		e.events.append({"type": "heal", "id": t.id, "amount": got})
+		return
+	# Distorted Distance: the caster's side gets the area's boon instead of its save.
+	if o.rules.has("ally_effects") and ctx.has("c") and ((ctx["c"] as Combatant) == t or (ctx["c"] as Combatant).allied_with(t)):
+		if str(o.hit_on_turn.get(t.id, "")) == turn_key:
+			return
+		o.hit_on_turn[t.id] = turn_key
+		spells().apply_effect_entries(ctx, t, o.rules["ally_effects"] as Array, "cast", r)
 		return
 	var label := "%s (%s)" % [o.name, _trigger_words(trigger)]
 	# Hunger of Hadar's cold at the start of a turn: damage with no save, apart from the end-of-turn acid.
@@ -354,6 +389,8 @@ static func _trigger_words(trigger: String) -> String:
 			return "ending a turn there"
 		"per_square":
 			return "moving through it"
+		"caster_start_turn":
+			return "as its caster's turn starts"
 		"bite":
 			return "its bite"
 	return trigger
@@ -416,7 +453,10 @@ func refresh_auras() -> void:
 				fx.modifiers.append(Modifier.make((md as Dictionary).duplicate(true), o.name, &"spell", o.spell_id))
 			for cond: Variant in inside.get("conditions", []):
 				fx.conditions.append(StringName(str(cond)))
-			if not fx.modifiers.is_empty() or not fx.conditions.is_empty():
+			# Spellfire Storm: casting a spell inside takes a save first (SpellCaster.casting_gate).
+			if inside.has("casting_save"):
+				fx.data["casting_save"] = {"ability": str(inside["casting_save"]), "dc": o.save_dc}
+			if not fx.modifiers.is_empty() or not fx.conditions.is_empty() or fx.data.has("casting_save"):
 				t.creature.add_effect(fx)
 	e.class_features.refresh_auras()
 	spells().specials.high.refresh_antimagic()
@@ -432,6 +472,9 @@ func difficult_cells(c: Combatant) -> Dictionary:
 		if o.expired() or str(o.rule("terrain", "")) != "difficult":
 			continue
 		if bool(o.rule("terrain_affected_only", false)) and not _affects(o, c):
+			continue
+		# Distorted Distance: Difficult Terrain only for those who failed its save.
+		if o.rules.has("terrain_flag") and not c.creature.has_flag(str(o.rules["terrain_flag"])):
 			continue
 		var cost: Variant = true
 		if o.rules.has("terrain_cost"):
