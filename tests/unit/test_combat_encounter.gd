@@ -306,6 +306,11 @@ func test_undead_fortitude_and_radiant_damage() -> void:
 	e.deal_damage(h, z, [{"amount": 4, "type": "bludgeoning"}], false, "test")
 	assert_true(z.is_alive(), "Con save DC 9 succeeds on a natural 20 (+3)")
 	assert_eq(z.creature.hp, 1)
+	assert_false(z.is_down(), "it never falls: still standing")
+	var kinds: Array = e.events.map(func(x: Dictionary) -> String: return str(x["type"]))
+	assert_false("down" in kinds or "death" in kinds, "no fall, no death on a successful save")
+	assert_true("trait" in kinds, "the board shows Undead Fortitude over it")
+	assert_false(e.log.dump().contains("Zombie falls unconscious"))
 	e.deal_damage(h, z, [{"amount": 4, "type": "radiant"}], false, "test")
 	assert_false(z.is_alive(), "no save against Radiant damage")
 
