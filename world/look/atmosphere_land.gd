@@ -100,6 +100,7 @@ static func build(board_: ArenaBoard, mood: Dictionary, rng_: RandomNumberGenera
 	t = l._lap("fields", t)
 	if GroundRelief.enabled():
 		l.relief = GroundRelief.build(board_, loc)
+		Clutter.ruts(board_, l.relief.roads())   # wheel-rut decals along its roads (lane 7's W10)
 	t = l._lap("relief", t)
 	l._terrain()
 	t = l._lap("terrain", t)

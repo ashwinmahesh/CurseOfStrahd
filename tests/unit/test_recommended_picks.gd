@@ -79,21 +79,60 @@ func test_a_subclass_and_spells_for_a_new_hero() -> void:
 	assert_true("fireball" in book and "counterspell" in book, "a level 5 Wizard's book has Fireball and Counterspell: %s" % [book])
 
 
-## The picks stay the player's: changing one after recommend() keeps the change, and Recommended puts them back.
-func test_recommendations_can_be_changed_and_restored() -> void:
+## The picks stay the player's: a pick made before Use Recommended stays, and what it asks for is filled for it.
+func test_use_recommended_keeps_the_players_picks() -> void:
 	var ch := TestChars.custom("cleric", "human", 2)
 	var up := LevelUpController.new(ch)
 	up.choose_class("cleric")
-	up.recommend()
 	up.choose("cleric.3.cleric_subclass", ["war_domain"])
 	up.recommend()
-	assert_eq(up.preview().picks_for("cleric.3.cleric_subclass"), ["war_domain"] as Array[String], "a pick made is left alone")
-	up.reset_picks()
-	up.recommend()
-	assert_eq(up.preview().picks_for("cleric.3.cleric_subclass"), ["life_domain"] as Array[String], "Recommended puts it back")
+	assert_eq(up.preview().picks_for("cleric.3.cleric_subclass"), ["war_domain"] as Array[String], "the War Domain stays")
+	assert_eq(up.errors(), [] as Array[String], "and the rest is filled around it")
 
 
-func test_the_level_up_screen_opens_filled_in() -> void:
+## Owner question (2026-10-07): with a subclass other than the recommended one, does Use Recommended still work? Every
+## subclass of every class, picked by hand at its level, then Use Recommended at that level and the next three: nothing
+## is left blank or illegal, and the subclass stays.
+func test_use_recommended_with_every_subclass() -> void:
+	var checked := 0
+	for cid: String in MagicItems.CLASSES:
+		var at := int(Compendium.shared().class_data(cid).get("subclass_level", 3))
+		var probe := TestChars.custom(cid, "human", at - 1)
+		var up0 := LevelUpController.new(probe)
+		up0.choose_class(cid)
+		var sub: Choice = null
+		for c in up0.level_choices():
+			if c.kind == "subclass":
+				sub = c
+		assert_true(sub != null, "%s asks for a subclass at level %d" % [cid, at])
+		if sub == null:
+			continue
+		for o in sub.options:
+			if not o.legal:
+				continue
+			var ch := TestChars.custom(cid, "human", at - 1)
+			var up := LevelUpController.new(ch)
+			up.choose_class(cid)
+			up.choose(sub.key, [o.id])
+			up.recommend()
+			var errors := up.errors()
+			assert_eq(errors, [] as Array[String], "%s with %s: %s" % [cid, o.id, errors])
+			if not errors.is_empty() or not up.confirm():
+				continue
+			assert_eq(ch.picks_for(sub.key), [o.id] as Array[String], "%s kept %s" % [cid, o.id])
+			while ch.character_level() < mini(at + 3, StoryState.LEVEL_CAP):
+				var next := LevelUpController.new(ch)
+				next.choose_class(cid)
+				next.recommend()
+				var errs := next.errors()
+				assert_eq(errs, [] as Array[String], "%s (%s) level %d: %s" % [cid, o.id, ch.character_level() + 1, errs])
+				if not errs.is_empty() or not next.confirm():
+					break
+			checked += 1
+	assert_true(checked >= 50, "every subclass checked (%d)" % checked)
+
+
+func test_the_level_up_screen_opens_blank_until_use_recommended() -> void:
 	Compendium.shared().tables["locations"]["rec_hall"] = {"id": "rec_hall", "name": "Rec Hall", "region": "test", "summary": "",
 		"map": {"rows": ["#####", "#...#", "#...#", "#####"]}, "spawns": {"default": [1, 1]}, "rest": "safe"}
 	GameState.reset()
@@ -109,14 +148,26 @@ func test_the_level_up_screen_opens_filled_in() -> void:
 	root.call("open_screen", "level_up", 0)
 	await get_tree().process_frame
 	var screen := root.get("screen") as LevelUpScreen
-	assert_eq(screen.ctl.errors(), [] as Array[String], "nothing left to pick")
-	var text := ""
-	for l in screen.find_children("*", "Label", true, false):
-		text += (l as Label).text + "\n"
-	assert_true(text.contains("Filled in"), "the card says the picks were filled in")
+	assert_false(screen.ctl.errors().is_empty(), "level 4 opens with its picks blank (owner, 2026-10-07)")
+	var use: Button = null
 	var confirm: Button = null
 	for b in screen.find_children("*", "Button", true, false):
+		if (b as Button).text == "Use Recommended":
+			use = b as Button
 		if (b as Button).text.begins_with("Confirm level"):
 			confirm = b as Button
-	assert_true(confirm != null and not confirm.disabled, "Confirm is ready straight away")
+	assert_true(confirm != null and confirm.disabled, "Confirm waits for the picks")
+	assert_true(use != null and not use.disabled, "Use Recommended is offered")
+	use.pressed.emit()
+	await get_tree().process_frame
+	assert_eq(screen.ctl.errors(), [] as Array[String], "every pick filled")
+	var text := ""
+	confirm = null
+	for n in screen.find_children("*", "", true, false):
+		if n is Label and not n.is_queued_for_deletion():
+			text += (n as Label).text + "\n"
+		if n is Button and not n.is_queued_for_deletion() and (n as Button).text.begins_with("Confirm level"):
+			confirm = n as Button
+	assert_true(text.contains("Filled in"), "the card says what was filled in")
+	assert_true(confirm != null and not confirm.disabled, "Confirm is ready")
 	root.queue_free()

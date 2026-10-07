@@ -8,6 +8,7 @@ art/sprites/**/*.png filter=lfs diff=lfs merge=lfs -text
 art/portraits/**/*.png filter=lfs diff=lfs merge=lfs -text
 art/creator/**/*.png filter=lfs diff=lfs merge=lfs -text
 art/textures/**/*.png filter=lfs diff=lfs merge=lfs -text
+art/textures/**/*.webp filter=lfs diff=lfs merge=lfs -text
 audio/voice/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
 # Sound packs (art/sourced/<pack>/, read by core/audio.gd through art/audio.json): new or changed clips go to LFS too.
 art/sourced/**/*.wav filter=lfs diff=lfs merge=lfs -text
@@ -17,3 +18,5 @@ art/sourced/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
 art/plants/**/*.png filter=lfs diff=lfs merge=lfs -text
 # The painted backdrops past a map's edge (tools/art/build_vistas.py).
 art/vistas/**/*.png filter=lfs diff=lfs merge=lfs -text
+# Story cutscenes' full-screen pictures (story/cutscenes.gd, docs/ui/cutscenes.md).
+art/cutscenes/**/*.png filter=lfs diff=lfs merge=lfs -text
