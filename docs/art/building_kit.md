@@ -31,6 +31,31 @@ House, the mansions) and `timber` (inns, shops, houses, attics). In that style:
   a dark wood rail, an oak plate, rough capstones), and where no panelling covers it the style's face: the castle's
   blind arcade on colonnettes over a plinth course, a church's plinth and string course (`ModelPiece.dress_wall`).
 
+## Rooms that sit in the world (W8, `world/look/interior_walls.gd`)
+
+In the Modern look (`building_kit.interiors.full_walls`), a room's walls stand a full storey instead of the cut-away
+height: 3.0 in the castle and the Amber Temple, 2.8 in a church, 2.5 in a manor, 2.4 in a dungeon, 2.3 in a timber
+house (`InteriorWalls.HEIGHTS`; a place in `interiors.outside` can set its own `height`). `ArenaBoard._wall` hands
+every wall square of an interior or dungeon to `BuildingKit.interior_wall`, which makes it one of:
+
+- **A pillar**, as before (a lone wall square).
+- **A room wall** (a wall square with a room beside it): one node on its square holding a full storey (the wall, its
+  dark cap, the style's coping and faces, panelling at full height, a wainscot texture mapped over the taller wall)
+  and its cut-away version, hidden.
+- **A block** (the middle of a thick wall): the cut-away height, capped dark.
+- **Outside** (wall reached from the map's edge through solid wall): the ground the building stands on, one slab
+  reaching 10 squares past the map, in the style's `ground` or the place's own (the Death House's floors stand over
+  the village cobbles, a storey lower per floor: `below`); the outer walls of an upper floor run down to it. A
+  dungeon's outside stays rock.
+- **A doorway's header**: the wall over a doorway between two wall squares, from the door's height to the storey's.
+
+Each frame the board's cut-away (`TownBuilder.cut_away`, through a building entry `{"interior": true}`) asks each
+room wall whether there's floor just past it, looking away from the camera, within 7 squares of the party
+(`InteriorWalls.cut`): those walls squash down to the cut-away height and their cut version takes over; the rest
+stand, so the far walls frame the party's room and rooms further off keep their walls. A header goes down with either
+wall beside it. Turning the camera turns which walls are down. The rules grid, line of sight and the Classic look are
+unchanged.
+
 ## How a house is put together (`world/look/town_builder.gd`, `world/look/building_kit.gd`)
 
 TownBuilder still finds the houses in the map's `#` squares as before (docs/art/set_dressing.md). For each house:
@@ -74,14 +99,16 @@ and the existing texture sets; the HD surfaces (W4) will give the kit its own pa
 Checks: `tests/integration/test_building_kit.gd` (every module TownBuilder asks for exists with real materials, the
 village is built of kit houses with door bays and lit windows, a house cuts away to its footing, the churches are
 stone with their towers, Vallaki is clapboard behind its palisade and Krezk is stone inside its tall wall, and lone
-wall squares are pillars in the castle, the church and the Death House's dungeon). Captures, before and after:
+wall squares are pillars in the castle, the church and the Death House's dungeon; the Death House's upper floor has
+full walls over the street a storey down, headers over its doorways, and its north wall stands or is cut away as the
+camera turns). Captures, before and after:
 
     make capture SCENE=res://tools/capture/kit_capture.tscn NAME=kit/after FRAMES=10   # KIT_SHOTS=village_close,...
 
 ## Not done yet
 
-- Interior door surrounds per style; the castle's own outer architecture comes with W19 (its silhouette), and W8
-  gives interiors their full-height outer walls.
+- Interior door surrounds per style; the castle's own outer architecture comes with W19 (its silhouette).
+- Full walls have no ceilings or upper floors over them; a room's walls are full height whatever the room's size.
 - Lights at the pillars' sconces and the lit windows (W5's, in the light lane): the window markers in `board.windows`
   carry meta `lit`, and the sconces are at 1.35 on two faces of each castle pier.
 - The kit's own HD materials (W4): timber, plaster, thatch and stone painted at 2K with normal and roughness maps.

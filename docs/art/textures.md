@@ -86,7 +86,8 @@ and wall set (49, `tools/art/surface_recipes.json`) was repainted for the Modern
 2. **Seamless** by quilting along minimum-error cuts (`blender/make_surface.py`, reusing make_texture's seams), low
    light flattened, cut from the swatch at up to 1536 px and stored at 1024 px (`crop` in a recipe takes less of the
    swatch where Gemini drew the pieces too small: the checker and marble floors). Each tile is brought to the old
-   tile's average brightness (between 0.85x and 1.8x), since the scenes' light was set by the old tiles.
+   tile's average brightness (between 0.85x and 1.8x), since the scenes' light was set by the old tiles. A recipe's
+   `lift` raises the darkest parts (the checker floor's black tiles keep their veins in a dim hall).
 3. **Variants** (organic surfaces: cobbles, mud, grass, thatch, plaster, flagstones, rock, snow ...): two more tiles
    quilted from the first tile's own content, so they keep its pieces, scale and colours in a different layout; the
    first tile's border band is cut into each along seams that follow the dark joints, so variants sit side by side in
