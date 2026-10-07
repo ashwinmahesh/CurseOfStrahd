@@ -56,3 +56,27 @@ func test_no_saving_in_combat() -> void:
 	ModeController.enter(ModeController.Mode.COMBAT)
 	assert_eq(SaveSystem.save("unit_test_combat"), ERR_UNAVAILABLE)
 	ModeController.force(ModeController.Mode.EXPLORATION)
+
+
+## The autosave (docs/plans/ui_polish.md) is never the game's own slot: it remembers the slot it was written for and
+## loading it goes back there, so F5 keeps saving where it did. It lists as an autosave, and never saves in a fight.
+func test_autosave_keeps_the_games_slot() -> void:
+	GameState.party.append({"name": "Ilse", "class": "fighter", "level": 1})
+	assert_eq(SaveSystem.save("unit_test_home"), OK)
+	assert_eq(SaveSystem.current_slot, "unit_test_home")
+	assert_eq(SaveSystem.autosave(), OK)
+	assert_eq(SaveSystem.current_slot, "unit_test_home", "autosaving doesn't move the game's slot")
+	var kinds := {}
+	for s in SaveSystem.list_slots():
+		kinds[str(s["slot"])] = str(s["kind"])
+	assert_eq(kinds.get(SaveSystem.AUTOSAVE, "?"), "autosave")
+	assert_eq(kinds.get("unit_test_home", "?"), "")
+	SaveSystem.current_slot = ""
+	assert_eq(SaveSystem.load_slot(SaveSystem.AUTOSAVE), OK)
+	assert_eq(SaveSystem.current_slot, "unit_test_home", "loading the autosave goes back to its game's slot")
+	ModeController.enter(ModeController.Mode.COMBAT)
+	assert_eq(SaveSystem.autosave(), ERR_UNAVAILABLE, "no autosave mid-fight")
+	ModeController.force(ModeController.Mode.EXPLORATION)
+	SaveSystem.delete_slot("unit_test_home")
+	SaveSystem.delete_slot(SaveSystem.AUTOSAVE)
+	SaveSystem.current_slot = ""

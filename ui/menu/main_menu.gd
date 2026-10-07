@@ -275,7 +275,8 @@ func _show_loads() -> void:
 	_box.add_child(UiKit.title("Load"))
 	for s in SaveSystem.list_slots():
 		var slot := str(s["slot"])
-		var b := UiKit.button("%s · Day %d" % [s["location"], int(s["day"])], func() -> void: _load(slot), 17)
+		var prefix := {"autosave": "Autosave · ", "round": "Fight, round start · "}.get(str(s.get("kind", "")), "") as String
+		var b := UiKit.button("%s%s · Day %d" % [prefix, s["location"], int(s["day"])], func() -> void: _load(slot), 17)
 		b.tooltip_text = "%s · %s\n%s" % [slot, str(s["saved_at"]).replace("T", " "), s["party"]]
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		_box.add_child(b)
