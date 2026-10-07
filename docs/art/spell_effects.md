@@ -84,4 +84,4 @@ A blow (a weapon, claw or bite) sounds by what struck and how hard it landed: `h
 (bludgeoning, cracking bone on heavy and critical hits), point (a melee pierce) and shot (an arrow, bolt or throw),
 each light, heavy (a quarter of the target's Hit Point maximum, or 15 damage) or critical. A spell's missile or a
 magic touch sounds through its flavour instead. Levels in art/audio.json `levels` set each sound's volume; the owner
-picked the sounds by ear (2026-10-07, two rounds of samples).
+picked the sounds by ear (2026-10-07, three rounds of samples).

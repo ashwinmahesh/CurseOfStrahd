@@ -67,23 +67,26 @@
     "air_rush": -4.0,
     "arcane_glint": -8.0,
     "blade_flesh": -0.2,
+    "blade_flesh_light": -4.2,
     "blessing": -2.0,
-    "blunt_flesh": 4.6,
+    "blood_wet": -4.0,
     "body_blow": -4.0,
+    "body_blow_hard": -1.2,
+    "body_blow_light": -8.1,
     "bone_crack": -5.0,
-    "bone_crack_0": 1.0,
-    "bone_crack_4": -3.0,
-    "bone_crack_8": -7.0,
+    "bone_crunch": -6.0,
+    "bone_crunch_hard": -2.0,
+    "bone_snap": -7.0,
     "bow": -6.8,
-    "cold_snap": -3.0,
+    "cold_impact": -2.6,
     "curse": -1.7,
     "fire_cast": -2.0,
     "fire_impact": -0.1,
     "fire_whoosh": -2.4,
-    "flesh_wet": -4.0,
-    "flesh_wet_0": -2.0,
-    "flesh_wet_4": -6.0,
+    "flesh_wet": -6.0,
+    "flesh_wet_hard": -2.0,
     "force_thump": -4.0,
+    "gore_splat": -4.0,
     "hold_chains": -2.0,
     "mind_shimmer": -6.0,
     "necrotic_pull": 2.3,
@@ -97,10 +100,12 @@
     "teleport_in": 2.5,
     "teleport_out": -4.0,
     "thud_heavy": -6.0,
+    "thump_blunt": -2.0,
     "thump_heavy": -4.0,
     "thunder_boom": 0.7,
     "touch_hit": -8.0,
     "ward": -7.6,
+    "wood_knock": -8.0,
     "zap_hit": -1.3,
     "zap_launch": 1.6
   },
@@ -292,14 +297,26 @@
       "res://art/sourced/oga_fleshy_fight_leamon/sword-1a.wav",
       "res://art/sourced/oga_fleshy_fight_leamon/sword-1b.wav"
     ],
+    "blade_flesh_light": [
+      "res://art/sourced/oga_fleshy_fight_leamon/sword-1a.wav",
+      "res://art/sourced/oga_fleshy_fight_leamon/sword-1b.wav"
+    ],
     "blessing": [
       "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_4.ogg"
     ],
-    "blunt_flesh": [
-      "res://art/sourced/oga_fleshy_fight_leamon/hammer-1a.wav",
-      "res://art/sourced/oga_fleshy_fight_leamon/hammer-1b.wav"
+    "blood_wet": [
+      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat01.ogg",
+      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat02.ogg"
     ],
     "body_blow": [
+      "res://art/sourced/oga_fleshy_fight_leamon/punch_1a.wav",
+      "res://art/sourced/oga_fleshy_fight_leamon/punch_1b.wav"
+    ],
+    "body_blow_hard": [
+      "res://art/sourced/oga_fleshy_fight_leamon/punch_alt-2a.wav",
+      "res://art/sourced/oga_fleshy_fight_leamon/punch_alt-2b.wav"
+    ],
+    "body_blow_light": [
       "res://art/sourced/oga_fleshy_fight_leamon/punch_1a.wav",
       "res://art/sourced/oga_fleshy_fight_leamon/punch_1b.wav"
     ],
@@ -315,31 +332,15 @@
       "res://art/sourced/oga_deep_bone_breaks/Deep Break 9.wav",
       "res://art/sourced/oga_deep_bone_breaks/Deep Break 10.wav"
     ],
-    "bone_crack_0": [
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 1.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 2.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 3.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 4.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 5.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 6.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 7.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 8.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 9.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 10.wav"
+    "bone_crunch": [
+      "res://art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_01.ogg",
+      "res://art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_02.ogg"
     ],
-    "bone_crack_4": [
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 1.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 2.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 3.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 4.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 5.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 6.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 7.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 8.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 9.wav",
-      "res://art/sourced/oga_deep_bone_breaks/Deep Break 10.wav"
+    "bone_crunch_hard": [
+      "res://art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_01.ogg",
+      "res://art/sourced/oga_break_pumpkin_tinyworlds/pumpkin_break_02.ogg"
     ],
-    "bone_crack_8": [
+    "bone_snap": [
       "res://art/sourced/oga_deep_bone_breaks/Deep Break 1.wav",
       "res://art/sourced/oga_deep_bone_breaks/Deep Break 2.wav",
       "res://art/sourced/oga_deep_bone_breaks/Deep Break 3.wav",
@@ -355,8 +356,10 @@
       "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Bow_Arrow_Shoot_01.wav",
       "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Bow_Arrow_Shoot_02.wav"
     ],
-    "cold_snap": [
-      "res://art/sourced/oga_ice_spells_bart/coldsnap.wav"
+    "cold_impact": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Ice Shard  Projectile_Impact_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Ice Shard  Projectile_Impact_02.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Ice Shard  Projectile_Impact_03.wav"
     ],
     "curse": [
       "res://art/sourced/oga_jc_fantasy_sfx_vol1/Seq_Fantasy SFX Pack Vol 1_Mana Drain_Start.wav"
@@ -384,11 +387,7 @@
       "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat01.ogg",
       "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat02.ogg"
     ],
-    "flesh_wet_0": [
-      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat01.ogg",
-      "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat02.ogg"
-    ],
-    "flesh_wet_4": [
+    "flesh_wet_hard": [
       "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat01.ogg",
       "res://art/sourced/oga_impact_qubodup/qubodupImpactMeat02.ogg"
     ],
@@ -398,6 +397,9 @@
       "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_002.ogg",
       "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_003.ogg",
       "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_medium_004.ogg"
+    ],
+    "gore_splat": [
+      "res://art/sourced/oga_squish_ezduzziteh/squishsplat_impact.mp3"
     ],
     "hold_chains": [
       "res://art/sourced/oga_80_cc0_rpg_sfx/chain_01.ogg",
@@ -457,6 +459,13 @@
       "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_003.ogg",
       "res://art/sourced/kenney_impact_sounds/Audio/impactSoft_heavy_004.ogg"
     ],
+    "thump_blunt": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_004.ogg"
+    ],
     "thump_heavy": [
       "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
       "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
@@ -485,6 +494,13 @@
     "ward": [
       "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Magic Shield_Activation_01.wav",
       "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Magic Shield_Activation_02.wav"
+    ],
+    "wood_knock": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactWood_heavy_004.ogg"
     ],
     "zap_hit": [
       "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Hit_01.wav",
@@ -730,7 +746,7 @@
       },
       "blood": {
         "launch": "necrotic_pull",
-        "impact": "flesh_wet"
+        "impact": "blood_wet"
       },
       "ward": {
         "impact": "ward"
@@ -749,12 +765,14 @@
       },
       "cold": {
         "impact": [
-          "cold_snap"
+          "cold_impact",
+          "thump_heavy"
         ]
       },
       "thunder": {
         "impact": [
-          "thunder_boom"
+          "thunder_boom",
+          "rumble"
         ]
       }
     },
@@ -769,32 +787,34 @@
     "hits": {
       "blade": {
         "light": [
-          "blade_flesh"
+          "blade_flesh_light",
+          "body_blow_light"
         ],
         "heavy": [
           "blade_flesh",
           "body_blow",
-          "flesh_wet_4"
+          "flesh_wet"
         ],
         "critical": [
           "blade_flesh",
-          "flesh_wet_0",
-          "thump_heavy",
-          "bone_crack"
+          "gore_splat",
+          "bone_snap",
+          "body_blow_hard"
         ]
       },
       "blunt": {
         "light": [
-          "blunt_flesh"
+          "thump_blunt",
+          "wood_knock"
         ],
         "heavy": [
-          "blunt_flesh",
-          "bone_crack_4"
+          "thump_blunt",
+          "bone_crunch"
         ],
         "critical": [
-          "blunt_flesh",
-          "bone_crack_0",
-          "thump_heavy"
+          "thump_blunt",
+          "bone_crunch_hard",
+          "bone_crack"
         ]
       },
       "point": {
@@ -803,12 +823,12 @@
         ],
         "heavy": [
           "point_flesh",
-          "flesh_wet_4"
+          "flesh_wet"
         ],
         "critical": [
           "point_flesh",
-          "flesh_wet_4",
-          "bone_crack_8"
+          "flesh_wet_hard",
+          "bone_snap"
         ]
       },
       "shot": {
@@ -817,12 +837,12 @@
         ],
         "heavy": [
           "point_flesh",
-          "flesh_wet_4"
+          "flesh_wet"
         ],
         "critical": [
           "point_flesh",
-          "flesh_wet_4",
-          "bone_crack_8"
+          "flesh_wet_hard",
+          "bone_snap"
         ]
       }
     }
