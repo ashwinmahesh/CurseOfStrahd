@@ -856,6 +856,11 @@
       "voice_id": "7m6tmMjM3T3ImDhTm1Cc",
       "name": "Barovia Wren Featherfoot",
       "description": "A small, quick halfling man in his late twenties with a bright, wry, nimble tenor and a London accent. Fast-talking, cheeky and light, always ready with a comeback, laughing at his own jokes; very calm, quiet and short when he is angry or grieving."
+    },
+    "godrick_pendlebrook": {
+      "voice_id": "WnWkMUJG5Rah5H4tplqk",
+      "name": "Barovia Godrick Pendlebrook",
+      "description": "A golden, handsome young knight with a rich, velvety baritone and a polished English accent. Arrogant charm and wry humour, relaxed and teasing, a sardonic half-smile in every line; brave and sincere when it counts, never shouting."
     }
   }
 }
