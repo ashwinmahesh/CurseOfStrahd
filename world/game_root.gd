@@ -24,6 +24,7 @@ var glow := HoverGlow.new()          ## the rim on whatever the mouse is over
 
 func _ready() -> void:
 	InputActions.ensure()
+	UiScale.playing(self)   # the interface takes the player's size (Settings, Interface) while a game is on screen
 	Cursors.install()
 	GameState.current_scene = "res://scenes/game.tscn"
 	for a in OS.get_cmdline_user_args():
@@ -167,7 +168,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		var at := (event as InputEventMouseButton).position
 		open_world_menu(view.pick_cell(view.rig.camera, at), at)
 	elif event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo:
-		match (event as InputEventKey).physical_keycode:
+		# The keys are matched as their defaults, so the player's own keys (Settings, Keys) land on the same commands.
+		match InputActions.as_default(event as InputEventKey):
 			KEY_C:
 				open_screen("sheet", 0)
 			KEY_I:

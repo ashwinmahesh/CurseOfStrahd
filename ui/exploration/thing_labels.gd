@@ -1,6 +1,6 @@
 class_name ThingLabels
 extends Control
-## Hold Alt while exploring to see what can be used (docs/plans/ui_polish.md, like BG3's highlight key): every person,
+## Hold Alt (the "show_names" key, Settings, Keys) while exploring to see what can be used (docs/plans/ui_polish.md, like BG3's highlight key): every person,
 ## door, container, thing to examine and way out in view gets its name on a small dark plate above it, in screen
 ## space so it stays sharp. A locked door or chest says so and an emptied one reads "empty". Nothing in an area the
 ## party hasn't found, no unfound secret door and no unsearched hiding place is shown (they go through
@@ -9,7 +9,7 @@ extends Control
 var view: LocationView
 ## Ways out that already carry a sign of their own (ExitSigns), so they get no second plate.
 var signed := {}
-## On while Alt is held (or `pinned` for captures and tests).
+## On while the names key is held (or `pinned` for captures and tests).
 var showing := false
 var pinned := false
 const FONT_SIZE := 14
@@ -35,7 +35,7 @@ func show_location(v: LocationView, signs: Array[Dictionary] = []) -> void:
 
 
 func _process(_delta: float) -> void:
-	var on := pinned or (Input.is_key_pressed(KEY_ALT) and is_visible_in_tree())
+	var on := pinned or (Input.is_action_pressed(&"show_names") and is_visible_in_tree())
 	if on != showing or on:
 		showing = on
 		queue_redraw()
