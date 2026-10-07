@@ -629,7 +629,7 @@ func _process(delta: float) -> void:
 	if _exit_check <= 0.0:
 		_exit_check = 0.25
 		refresh_exits()
-	if board != null and rig != null and rig.camera != null and not members.is_empty() and (not board.occluders.is_empty() or not board.buildings.is_empty()):
+	if board != null and rig != null and rig.camera != null and not members.is_empty() and (not board.occluders.is_empty() or not board.mesh_occluders.is_empty() or not board.buildings.is_empty()):
 		var focus := (tokens[leader().id] as Node3D).global_position if tokens.has(leader().id) else Vector3.ZERO
 		board.fade_occluders(rig.camera.global_position, focus, delta)
 		board.cut_buildings(rig.camera.global_position, focus, delta)
