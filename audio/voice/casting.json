@@ -915,32 +915,38 @@
     "kip_smudgewick": {
       "voice_id": "oCHQAjcoZiUR4mk6bigI",
       "name": "Barovia Kip Smudgewick",
-      "description": "A friendly, anxious tiefling man of about fifty with a warm, quick, slightly breathless baritone and a soft West Country English accent. A fast-talking market-stall salesman, polite and eager to please, apologising and selling at once; slow, careful and hard as nails when he is cornered. (Updated 2026-10-07: about fifty, Pip is his daughter; the voice is unchanged, the owner's pick.)"
+      "description": "A friendly, anxious tiefling man of about fifty with a warm, quick, slightly breathless baritone and a soft West Country English accent. A fast-talking market-stall salesman, polite and eager to please, apologising and selling at once; slow, careful and hard as nails when he is cornered. (Updated 2026-10-07: about fifty, Pip is his daughter; the voice is unchanged, the owner's pick.)",
+      "model": "eleven_v3"
     },
     "liriel_dawnsong": {
       "voice_id": "I9Au5cFrwupn8JvYBp61",
       "name": "Barovia Liriel Dawnsong",
-      "description": "A slight elven woman, ageless but young, with a soft, clear, bell-like soprano and a gentle Welsh lilt. Serene, musical and formal, unhurried and kind; a quiet steel underneath, and rare moments of dry wit. Becomes very still and precise when her faith is tested."
+      "description": "A slight elven woman, ageless but young, with a soft, clear, bell-like soprano and a gentle Welsh lilt. Serene, musical and formal, unhurried and kind; a quiet steel underneath, and rare moments of dry wit. Becomes very still and precise when her faith is tested.",
+      "model": "eleven_v3"
     },
     "ratatoille": {
       "voice_id": "ozdh3TOFkOj4aavMcQpz",
       "name": "Barovia Ratatoille",
-      "description": "A young elven man with a light, quick, slightly nasal tenor and a French accent. Fussy, precise and eager, talking fast and rising in pitch when excited, voice occasionally cracking; pompous on purpose, warm by accident, and very quiet and proud when someone loves his food."
+      "description": "A young elven man with a light, quick, slightly nasal tenor and a French accent. Fussy, precise and eager, talking fast and rising in pitch when excited, voice occasionally cracking; pompous on purpose, warm by accident, and very quiet and proud when someone loves his food.",
+      "model": "eleven_v3"
     },
     "thistle": {
       "voice_id": "FSY8XsIBUNaLJ1nyCSXE",
       "name": "Barovia Thistle",
-      "description": "A young woman in her early twenties with a loud, raspy, earthy alto and a broad rural Scottish accent. Boisterous and blunt, laughing big and talking short, a wild woodswoman with no manners and a huge heart; goes completely quiet and low when she is grieving."
+      "description": "A young woman in her early twenties with a loud, raspy, earthy alto and a broad rural Scottish accent. Boisterous and blunt, laughing big and talking short, a wild woodswoman with no manners and a huge heart; goes completely quiet and low when she is grieving.",
+      "model": "eleven_v3"
     },
     "wren_featherfoot": {
       "voice_id": "7m6tmMjM3T3ImDhTm1Cc",
       "name": "Barovia Wren Featherfoot",
-      "description": "A small, quick halfling man in his late twenties with a bright, wry, nimble tenor and a London accent. Fast-talking, cheeky and light, always ready with a comeback, laughing at his own jokes; very calm, quiet and short when he is angry or grieving."
+      "description": "A small, quick halfling man in his late twenties with a bright, wry, nimble tenor and a London accent. Fast-talking, cheeky and light, always ready with a comeback, laughing at his own jokes; very calm, quiet and short when he is angry or grieving.",
+      "model": "eleven_v3"
     },
     "godrick_pendlebrook": {
       "voice_id": "WnWkMUJG5Rah5H4tplqk",
       "name": "Barovia Godrick Pendlebrook",
-      "description": "A golden, handsome young knight with a rich, velvety baritone and a polished English accent. Arrogant charm and wry humour, relaxed and teasing, a sardonic half-smile in every line; brave and sincere when it counts, never shouting."
+      "description": "A golden, handsome young knight with a rich, velvety baritone and a polished English accent. Arrogant charm and wry humour, relaxed and teasing, a sardonic half-smile in every line; brave and sincere when it counts, never shouting.",
+      "model": "eleven_v3"
     },
     "fen_burley": {
       "voice_id": "XUJ29OW0MoYTmJxM26UZ",
