@@ -73,6 +73,8 @@ set mordenkainen_name_spoken
 interject class:wizard: That's a sword spell. A floating blade of force. It has a name in front of it, the way the great ones do. Mordenkainen's.
 Narrator: The old man flinches as if you'd thrown a cup of cold water in his face.
 mad_mage: Don't. Don't say it like that, as if it were somebody's. It hurts. Why does that hurt?
+inspire class:wizard: named the spell a mad old man keeps muttering
+approve ratatoille +2: You named Mordenkainen's own spell to him
 -> mad_menu
 
 ~ jar
@@ -124,6 +126,7 @@ Narrator: The board is set for a game already in progress, and every piece on it
 mad_mage: I play the other fellow every day. He's very good. He was always very good. I just can't remember who he is.
 interject class:fighter: You're losing on purpose.
 mad_mage: Am I? How interesting. I wonder what I'm practising for.
+approve ratatoille +1 wren_featherfoot +1: You sat down to a game of dragonchess with a mad old man
 -> mad_menu
 
 ~ mad_bye
@@ -143,6 +146,7 @@ Mordenkainen: The witch. Lysaga. She held my eyes open while she did it, and san
 endif
 interject name:kip_smudgewick: Mister Mordenkainen, sir. An honour. I've got questions, if you've a minute. Contractual ones. No rush.
 Mordenkainen: Everyone has questions. Very few have the right ones. Ask later.
+approve ratatoille +5 kip_smudgewick +1 liriel_dawnsong +1 godrick_pendlebrook +1: You gave Mordenkainen back his name
 -> restored_menu
 
 ~ restored_greeting

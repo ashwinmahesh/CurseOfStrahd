@@ -17,6 +17,7 @@ Clovin Belview: The Abbot will be disappointed. He doesn't shout when he's disap
 set clovin_befriended
 Narrator: The wheel goes back on its axle with a clunk, and the little cart rights itself. Clovin looks at it, and at you, as if nobody has ever done anything for him on purpose.
 Clovin Belview: Well. Well, now. Clovin Belview, of the Abbey of St. Markovia, up over Krezk. If you're ever that way, I'll pour you something. If there's ever anything to pour.
+approve godrick_pendlebrook +1 thistle +1 kip_smudgewick +1: You put Clovin's cart wheel back on
 -> END
 
 ~ wheel_fail
@@ -33,4 +34,5 @@ Narrator: At a bend stands a waist-high stone with a sunburst cut into it, so ol
 gold -1
 Narrator: The coin clicks into the niche beside the candle. The flame doesn't move, but for a mile after, the wind seems to be at your backs.
 interject tag:pious: The White Sun's people. Krezk's not far, then.
+approve liriel_dawnsong +1 kip_smudgewick +1: You left a coin for whoever keeps the waystone lit
 -> END

@@ -20,6 +20,7 @@ interject name:godrick_pendlebrook: He didn't say that. I just made it up. I thi
 if not (quest.the_ladle >= the_order_found)
 quest the_ladle the_order_found
 endif
+approve godrick_pendlebrook +3: You came with me to put Sir Aldric's sword in the Order's hands
 -> argynvostholt/godfrey:menu
 
 # --- The bottom of the wall (argynvostholt/godfrey:menu) -----------------------------------------------------------
@@ -47,6 +48,7 @@ set ladle_wall_read
 if not (quest.the_ladle >= kept_faith)
 quest the_ladle kept_faith
 endif
+approve godrick_pendlebrook +4: You read me what Sir Godfrey wrote on his wall
 -> argynvostholt/godfrey:menu
 
 # --- The commander (argynvostholt/vladimir:menu) -------------------------------------------------------------------
@@ -75,6 +77,11 @@ endif
 # --- The accolade (argynvostholt/godfrey:menu or :companion) --------------------------------------------------------
 
 ~ knighting
+# Approval (story/approval.gd): Strained or worse, and Godrick won't kneel until it's mended; Close or better, and he
+# names the party his fellowship, and the sword answers it.
+if approval.godrick_pendlebrook <= strained
+-> knighting_not_yet
+endif
 Sir Godfrey Gwilym: Kneel, then. No, the other knee. That's it.
 Narrator: Sir Godfrey takes Sir Aldric's sword from Godrick's hands. It's too light for him now; he holds it as if it might blow away.
 Sir Godfrey Gwilym: Who knighted you first, lad? Somebody did. You stand like it.
@@ -90,7 +97,33 @@ interject name:thistle: BIG! Big's a knight! Again! Do it again!
 interject name:wren_featherfoot: Don't do it again, his knees can't take it.
 interject name:ratatoille: I'd like it noted that I've known a real knight since before he was one.
 interject name:kip_smudgewick: Congratulations, Sir Godrick. Apricot? On the house. Well. On the cart.
+if approval.godrick_pendlebrook >= close
+-> knighting_fellowship
+endif
 Sir Godfrey Gwilym: Keep the sword. Aldric would want it to go on being carried by someone who comes back.
-give weapon_plus_1
+give weapon_plus_1 to name:godrick_pendlebrook
 quest the_ladle knighted
+approve godrick_pendlebrook +8: You stood with me while I was knighted
+-> END
+
+~ knighting_fellowship
+Sir Godfrey Gwilym: One thing more, and then I'll let you up. A knight of the Order names his fellowship. Who stands with you, Sir Godrick?
+interject name:godrick_pendlebrook: Them, my lord. All of them. They're the ones I won't leave behind.
+interject name:godrick_pendlebrook: And they're the ones who wouldn't leave me behind, either. That's the bit I never expected.
+Narrator: Sir Godfrey looks at each of you in turn: the slow, careful look of a man fixing faces in a memory that has failed him before.
+Sir Godfrey Gwilym: Then the Order knows your faces too. I've written worse things on that wall than "these were his friends".
+Narrator: He holds out Sir Aldric's sword, hilt first. It seems heavier than it was a moment ago, as if it had made up its mind about something.
+Sir Godfrey Gwilym: Keep it. It has a knight again, and a fellowship. That's all a sword was ever for.
+give weapon_plus_2 to name:godrick_pendlebrook
+quest the_ladle knighted
+inspire party: stood as Sir Godrick's fellowship
+approve godrick_pendlebrook +8: You stood with me while I was knighted, and I named you my fellowship
+-> END
+
+~ knighting_not_yet
+Sir Godfrey Gwilym: Kneel, then. No, the other knee. That's it.
+Narrator: Godrick doesn't kneel. He stands with the old sword across his palms and looks at it a long time, and then at the rest of you.
+interject name:godrick_pendlebrook: Not today, my lord, if it's all the same to you.
+interject name:godrick_pendlebrook: Shield the sleeper and the stranger. Lift the fallen. I've been riding with people who don't, lately, and standing by while it's done. I can't kneel and say those words with that on me.
+Sir Godfrey Gwilym: Then don't. An oath's no good from a man who can't say it yet. The Order's very good at waiting, lad. Come back when you can.
 -> END

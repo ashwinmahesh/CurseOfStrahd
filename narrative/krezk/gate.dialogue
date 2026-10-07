@@ -71,6 +71,7 @@ Krezk Watchman: Everyone who's ever said that to me wanted to be the door. No.
 set krezk_reason = "cowed"
 Narrator: His knuckles whiten on the spear. Behind the gate, someone shouts a question; he shouts back an answer you don't catch, and it isn't brave.
 Krezk Watchman [afraid]: All right. All right! I'm fetching the burgomaster. Stand back from the wall and keep your hands where my friends can see them.
+approve godrick_pendlebrook -1 kip_smudgewick -1: You threatened your way through Krezk's gate
 -> dmitri_comes
 
 ~ cow_fail
@@ -126,6 +127,7 @@ if not name:liriel_dawnsong
 interject class:cleric: Most days. Not always when I'd like.
 endif
 Dmitri Krezkov: That's more than mine does. My son is sick. My last son. If your god answers you in my house, you can have anything Krezk owns. Open it.
+inspire class:cleric: offered a frightened town a priest at its gate
 set krezk_reason = "cleric"
 set ilya_heard
 quest the_burgomasters_son heard

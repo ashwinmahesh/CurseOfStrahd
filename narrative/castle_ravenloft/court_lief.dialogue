@@ -59,6 +59,7 @@ Lief Lipsiege [afraid]: Don't. Don't touch the chain. The rug. The count had it 
 
 ~ free_go
 Narrator: You set to the chain. Behind you, the rug ripples like a pond someone has dropped a stone in.
+approve thistle +2 godrick_pendlebrook +1 wren_featherfoot +1: You took the chain off Strahd's accountant
 combat court_accountant_rug
 
 # ---------------------------------------------------------------- After the rug
@@ -83,6 +84,7 @@ set lief_freed
 attitude lief_lipsiege friendly
 Lief Lipsiege: Vallaki. Their tithe books are a disgrace; I have seen them. Yes. Yes, I could do something with Vallaki.
 Narrator: He tucks a ledger under each arm, thinks about it, and puts one back.
+approve kip_smudgewick +1: You sent Lief Lipsiege to put Vallaki's books in order
 -> END
 
 ~ go_free

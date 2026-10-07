@@ -6,7 +6,8 @@ extends CanvasLayer
 ## leader walks first; order matters for traps) with each member's passive Perception, Stealth and darkvision; and the
 ## party skill table (best character per skill) and gaps from PartyCoverage. Above the cards: change who travels (the
 ## roster screen) and create a character (owner, 2026-10-07: a custom character made at any time outside fights and
-## conversations, up to StoryState.CUSTOM_CAP in a game; they start at level 1 and take the party's level here).
+## conversations, up to StoryState.CUSTOM_CAP in a game; they start at level 1 and take the party's level here). Below:
+## how the six companions feel about the party (ApprovalPanel, F3).
 
 var root: Node
 var st: StoryState
@@ -49,6 +50,9 @@ func _draw() -> void:
 	page.add_child(lower)
 	lower.add_child(_marching_order())
 	lower.add_child(_skill_table())
+	var feelings := ApprovalPanel.build(st)
+	if feelings != null:
+		page.add_child(feelings)
 
 
 ## Who travels and a new custom character, both chosen outside fights and conversations. Whatever stops the create
@@ -97,6 +101,9 @@ func _column(ch: Character, i: int) -> Control:
 	n.add_theme_font_size_override("font_size", 22)
 	who.add_child(n)
 	who.add_child(UiKit.label(ch.class_summary(), 14, "gilt", 220))
+	var feeling := ApprovalPanel.tier_pill(st, ch)
+	if feeling != null:
+		who.add_child(feeling)
 	var waiting := st.levels_waiting(ch)
 	if waiting > 0:
 		var badge := UiParts.pill("▲ Level up ready" if waiting == 1 else "▲ %d level ups waiting" % waiting, "bile")

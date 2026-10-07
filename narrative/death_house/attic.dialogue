@@ -39,6 +39,7 @@ quest rose_and_thorn remains
 Narrator: The bundles weigh almost nothing. Whoever carries them will feel them all the way down.
 interject name:godrick_pendlebrook: I'll carry them. Gently. They'll not feel a single bump, I promise.
 interject name:kip_smudgewick: I've carried a lot of things to market. Never anything this light. Or this heavy.
+approve godrick_pendlebrook +2 liriel_dawnsong +2 kip_smudgewick +1: You carried the Durst children's bones out of the attic
 -> END
 
 ~ dollhouse

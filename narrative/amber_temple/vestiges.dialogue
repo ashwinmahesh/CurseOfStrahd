@@ -77,6 +77,7 @@ vestige_zantras: Then give it to one of them. Gifts can be passed along, you kno
 dark_gift gift_of_zantras
 if gift:gift_of_zantras
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name} straightens without meaning to. In the dim hall, the light finds them first now, and stays.
 vestige_zantras: There. Now they'll see you. Make sure they never stop.
 else
@@ -147,6 +148,7 @@ Narrator: The lid is crusted with something that isn't frost. You decide not to 
 dark_gift gift_of_fekre
 if gift:gift_of_fekre
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name} coughs once, hard, and then breathes easier than they have in weeks. Somewhere behind you, someone sneezes.
 vestige_fekre: There, my darling. Now you'll never be lonely again.
 else
@@ -217,6 +219,7 @@ Narrator: Most of the inscription has been clawed away, from the inside. That te
 dark_gift gift_of_taar_haak
 if gift:gift_of_taar_haak
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name}'s shoulders crack like logs on a fire. Their hands open and close, open and close, as if looking for a throat.
 vestige_taar_haak: GO. FIND SOMETHING. BREAK IT. We'll watch from the inside.
 else
@@ -286,6 +289,7 @@ Narrator: Someone has kissed the lid so often that the inscription has worn smoo
 dark_gift gift_of_shami_amourae
 if gift:gift_of_shami_amourae
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name} sighs like someone sinking into a hot bath, and doesn't notice the sound they've made.
 vestige_shami_amourae: There. Isn't that better? Don't thank me. Just come back.
 else
@@ -355,6 +359,7 @@ Narrator: The letters are cut so shallow that the stone seems to have healed ove
 dark_gift gift_of_yog
 if gift:gift_of_yog
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name}'s skin greys and tightens with the creak of old leather. When a friend touches their arm, {name} doesn't turn around.
 vestige_yog: Good. Now... endure.
 else
@@ -424,6 +429,7 @@ Narrator: Webs as fine as breath cover the lid. Under them the letters are there
 dark_gift gift_of_drizlash
 if gift:gift_of_drizlash
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name} blinks, and four small black eyes along their hairline blink a moment later.
 vestige_drizlash: Now you see. Now you see. Now you see.
 else
@@ -494,6 +500,7 @@ Narrator: The inscription has been scratched over with tiny star charts. Someone
 dark_gift gift_of_khirad
 if gift:gift_of_khirad
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name}'s pupils widen and stay wide. For a heartbeat they look at each of you as though remembering your funerals.
 vestige_khirad: There. Now you know. I'm sorry.
 else
@@ -569,6 +576,7 @@ vestige_norganas: Who? ...Oh. The careful one. He asked me to take the whisperin
 dark_gift gift_of_norganas
 if gift:gift_of_norganas
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name} opens their mouth to say something, and can't think what it was. It doesn't seem important.
 vestige_norganas: There. Lighter already.
 else
@@ -638,6 +646,7 @@ Narrator: The lid has no inscription at all, only a keyhole carved in the stone 
 dark_gift gift_of_savnok
 if gift:gift_of_savnok
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name}'s face goes smooth, like a door closing quietly at the end of a long hall.
 vestige_savnok: ...Kept.
 else
@@ -708,6 +717,7 @@ Narrator: The lid is scored all over with claw marks and scorches. If there were
 dark_gift gift_of_seriach
 if gift:gift_of_seriach
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name}'s breath smokes, though the air is no colder than before. Far off, inside the mountain, something howls.
 vestige_seriach: Run, now. They'll keep up.
 else
@@ -779,6 +789,7 @@ Narrator: The inscription has been gnawed. By teeth. Small ones, patient ones.
 dark_gift gift_of_sykane
 if gift:gift_of_sykane
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: A hunger opens in {name} like a door, and the nearest warm thing in the room is a friend.
 vestige_sykane: Yes. Yes. Now you understand.
 else
@@ -866,18 +877,21 @@ Kasimir: Then I will be brave once, and late. Take it.
 Narrator: The red amber flares. Kasimir staggers, and when he straightens, his white hair has gone the grey of old ash and there are lines at his eyes that weren't there a breath ago.
 Narrator: Far above, in the hall of echoes, the wailing stops. Later you'll find footprints in the frost: bare, narrow, walking out through the doors and down the mountain, toward the castle.
 Kasimir [sad]: She didn't wait. Of course she didn't wait. She never once waited for me.
+approve wren_featherfoot -3 liriel_dawnsong -2 kip_smudgewick -2: Kasimir bought Patrina back from the amber, and you let him
 -> END
 
 ~ tarakamedes_kasimir_no
 set kasimir_bargain = "refused"
 Kasimir: ...Yes. You're right. I know you're right. It is a terrible thing, to be talked out of the only brave thing I nearly did.
 vestige_tarakamedes: Patience, elf. Everyone comes down to me in the end. I don't need to bargain for you.
+approve wren_featherfoot +4 liriel_dawnsong +2 kip_smudgewick +1: You talked Kasimir out of buying his sister back
 -> END
 
 ~ tarakamedes_accept
 dark_gift gift_of_tarakamedes
 if gift:gift_of_tarakamedes
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name}'s breath fogs, though nobody else's does. Under the floor, something very large shifts, and settles.
 vestige_tarakamedes: I'll see you again. Everyone does.
 else
@@ -947,6 +961,7 @@ Narrator: Your light won't settle on the lid. It slides off the letters as if th
 dark_gift gift_of_tenebrous
 if gift:gift_of_tenebrous
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: When {name} steps back from the amber, their shadow follows a moment late, as if it had to be persuaded.
 vestige_tenebrous: Shh. There. Isn't that better?
 else
@@ -1015,6 +1030,7 @@ Narrator: You bend to read the lid, and feel the eye on the back of your neck th
 dark_gift gift_of_yrrga
 if gift:gift_of_yrrga
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name}'s eyes water, then clear. They look at each of you in turn, for too long, and say nothing about what they see.
 vestige_yrrga: Welcome to the world.
 else
@@ -1083,12 +1099,15 @@ Narrator: The grey light makes every letter look the same. You give up before yo
 ~ zhudun_liriel
 vestige_zhudun: No. But you haven't felt your dawn since you came through the mist, have you, little priestess? Not once. I can feel how cold you are. Let me be your light. I'm right here, and he isn't.
 Player: He isn't here. I know. That is what faith is for. You need none; you are right here. That is how I know you are not him.
+inspire name:liriel_dawnsong: told a vestige to its face that it was not the dawn
+approve liriel_dawnsong +3: You let me tell the false dawn what it was
 -> zhudun_menu
 
 ~ zhudun_accept
 dark_gift gift_of_zhudun
 if gift:gift_of_zhudun
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name} glows, faintly, grey, like a candle seen through frosted glass. It doesn't warm the room at all.
 vestige_zhudun: There. Shine for me.
 else
@@ -1158,6 +1177,7 @@ Narrator: Someone has pressed teeth into the soft stone of the lid, in rows, ove
 dark_gift gift_of_dahlver_nar
 if gift:gift_of_dahlver_nar
 set dark_gifts_taken += 1
+approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us take a Dark Gift from the amber
 Narrator: {name} winces and puts a hand to their jaw. When they take it away and smile, nobody smiles back.
 vestige_dahlver_nar: Lovely. Lovely. Say something. Ah, that's a good one.
 else

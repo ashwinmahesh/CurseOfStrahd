@@ -22,6 +22,7 @@ endif
 
 ~ honest
 Town Guard: Roof and meal: the Blue Water Inn, south of the square. Ask for Urwin; don't ask him anything else. Avoid the coffin maker's. He's jumpy lately, and so's his door.
+approve godrick_pendlebrook +1 kip_smudgewick +1: You told the gate the plain truth
 -> rules
 
 ~ ireena
@@ -35,6 +36,7 @@ endif
 
 ~ festival_ok
 Town Guard [smile]: For the festival! You hear that, Pyotr? They came for the festival. On purpose. Write that down; the Baron will want it for the speech.
+approve wren_featherfoot +1: You talked your way through Vallaki's gate
 -> rules
 
 ~ festival_fail
@@ -43,6 +45,7 @@ Town Guard: Nobody comes for the festival. Nobody comes here for anything, these
 
 ~ bully_ok
 Town Guard: Fine. Fine! In you go. But you'll smile when the Baron passes, or it's the stocks, and then I have to stand there watching you all day.
+approve godrick_pendlebrook -1 kip_smudgewick -1 thistle +1: You shoved your way through Vallaki's gate
 -> rules
 
 ~ bully_fail
@@ -146,6 +149,7 @@ Lockup Warden: The Baron's malcontents. A cobbler who said it might rain. A wido
 set malcontents_freed
 Lockup Warden: Nothing. No. They haven't, have they. Go on, the three of you. Out. If anyone asks, the lock rusted.
 Narrator: The cobbler shakes your hand on the way past, very hard, without a word.
+approve thistle +2 godrick_pendlebrook +2 wren_featherfoot +2 liriel_dawnsong +1: You talked the Baron's prisoners out of the lockup
 -> END
 
 ~ free_fail
@@ -156,12 +160,14 @@ Lockup Warden: And then I go in the stocks instead, and who lets me out? No. Sor
 gold -15
 set malcontents_freed
 Lockup Warden: Well. That's a sum. That's a rusted lock, that is. Off you go, all three. Quickly.
+approve thistle +2 wren_featherfoot +2 godrick_pendlebrook +1 kip_smudgewick +1: You bought the Baron's prisoners out of the lockup
 -> END
 
 ~ free_bribe_wary
 gold -25
 set malcontents_freed
 Lockup Warden: Twenty-five. The lads at the gate described you, see. Shouting at spears. Being memorable costs extra in this town. Off you go, all three. Quickly.
+approve thistle +2 wren_featherfoot +2 godrick_pendlebrook +1 kip_smudgewick +1: You bought the Baron's prisoners out of the lockup
 -> END
 
 ~ mansion_guard

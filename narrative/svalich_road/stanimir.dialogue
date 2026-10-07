@@ -59,6 +59,7 @@ Stanimir: Silver earring shaped like a horse's head? Black hair, too long? A lau
 
 ~ nicu_earring
 Narrator: His hand closes over the earring and stays closed.
+approve wren_featherfoot +1 liriel_dawnsong +1: You put the hanged boy's earring in Stanimir's hand
 -> nicu_told
 
 ~ nicu_told
@@ -137,6 +138,7 @@ gold -40
 set vistani_repaid
 Stanimir: Good. A guest who takes and then gives back is still a guest. Barely. Sit, but sit where I can see your hands.
 interject name:kip_smudgewick: We're very sorry. Truly. Have an apricot as well. No obligation.
+approve kip_smudgewick +2 godrick_pendlebrook +1: You gave Stanimir back what was taken from his fire
 -> menu
 
 ~ lie_ok
@@ -144,6 +146,7 @@ set stanimir_deceived
 Narrator: He looks at you for a long moment, and then at the two young men behind him, and you can see him deciding which of them to shout at later.
 Stanimir: Then one of my own owes me an apology. Sit. I'm sorry I asked.
 interject class:cleric: We'll put it right before we leave. Won't we.
+approve kip_smudgewick -2 godrick_pendlebrook -1 wren_featherfoot +1: You lied to Stanimir and let his own boys take the blame
 -> menu
 
 ~ lie_fail
@@ -167,6 +170,7 @@ Stanimir: Forty. You owe me ten and a true word, and I will never see either. Si
 
 ~ fight
 Stanimir: As you like. Nobody robs my fire twice.
+approve kip_smudgewick -3 godrick_pendlebrook -2 liriel_dawnsong -2: You fought the Vistani over what you'd stolen from them
 combat tser_pool_brawl
 
 ~ hostile
