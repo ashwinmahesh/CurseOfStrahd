@@ -1,46 +1,54 @@
 class_name GroundRelief
 extends RefCounted
 ## Ground with shape in the Modern look (Improvement Ideas W11, docs/art/atmosphere.md "Ground with shape"). On an
-## outdoor wild map the ground people walk on is drawn as one shaped skin: shallow hollows, and wheel ruts along the
-## way between its ways out. It never rises above the squares' floor level, so tokens, grid overlays and spell
-## templates still stand on the same 5 ft grid (real heights are F4's); the board's own flat floor boxes are lowered
-## out of sight under it (ArenaBoard.floor_box). Under the map's woods the ground rises into banks with mounds and
-## hollows, and the land past the edge carries on from both. Cosmetic only: the rules grid never sees any of it.
+## outdoor wild map the ground people walk on is drawn as one shaped skin with shallow hollows; it never rises above
+## the squares' floor level, so tokens, grid overlays and spell templates still stand on the same 5 ft grid (real
+## heights are F4's), and the board's own flat floor boxes under it stop drawing themselves (ArenaBoard.floor_box).
+## Under the map's woods the ground rises into banks with mounds, and the land past the edge carries on from both.
+## The roads between the map's ways out are laid here for anything that follows them (the surfaces lane's wheel-rut
+## decals). Cosmetic only: the rules grid never sees any of it.
+##
+## Built for speed (a place is built on every arrival): the height of every grid point is worked out once, from
+## distance fields over flat arrays, and the meshes index that one grid.
 
-## Samples of the distance fields per square, and quads a side of the woods' mesh per square; the walked ground's
-## skin has twice as many, so the wheel ruts have a shape.
-const RES := 4
-const SKIN_RES := 8
-## How far past the map the fields reach (squares), so the land's first rows can follow the banks.
+## Grid points per square, and how far past the map the grid reaches (squares), so the land's first rows can follow
+## the banks.
+const RES := 2
 const MARGIN := 3
 ## A bank's height (world units) a square or two into the woods, and the mounds and hollows on top of it.
 const BANK := 0.34
 const MOUNDS := 0.14
 ## How far into the woods the bank takes to rise (squares).
 const RISE := 1.8
-## The walked ground: how deep its hollows and ruts go (never deeper, so feet are at most this far above the ground),
-## and how far from a square drawn flat they take to reach full depth.
+## The walked ground: how deep its hollows go (never deeper, so feet are at most this far above the ground), and how
+## far from a square drawn flat they take to reach full depth.
 const HOLLOW := 0.08
-const RUT := 0.09
-const DEEPEST := 0.12
+const DEEPEST := 0.1
 const SETTLE := 0.7
-## How far the board's flat floor boxes are lowered under the skin.
-const SINK := 0.15
+## Each square's kind on the grid of cells.
+const FLAT := 0
+const WOODS := 1
+const SKIN := 2
+const OPEN := 3   ## empty ground the land covers, and everything past the map
 ## Set by art QA tools only, to shoot a place as it was before (tools/capture/land_capture.gd LAND_NO_RELIEF).
 static var off := false
+## Reliefs built on earlier visits, by place and board shape (a place comes out the same every time); the newest few.
+static var _kept: Dictionary = {}
+static var _kept_order: Array[String] = []
 
 var board: ArenaBoard
 var _w := 0
 var _d := 0
+## Grid points across and down (over the map and MARGIN round it).
 var _nx := 0
 var _nz := 0
 ## Squares whose ground the skin draws: cell -> the material their floor box had.
 var _skin: Dictionary = {}
-## Distance (squares) from each sample to the nearest square that isn't the woods' (walked on, built on, water), and
-## to the nearest square the skin doesn't draw.
-var _bank_d := PackedFloat32Array()
-var _skin_d := PackedFloat32Array()
-## The ways between the map's ways out, as smoothed lines through square middles (wheel ruts run along them).
+## Each map square's kind (FLAT, WOODS, SKIN, OPEN), row by row.
+var _kind := PackedByteArray()
+## The height at every grid point.
+var _h := PackedFloat32Array()
+## The ways between the map's ways out, as smoothed lines through square middles.
 var _roads: Array[PackedVector2Array] = []
 
 
@@ -48,36 +56,48 @@ static func enabled() -> bool:
 	return Look.modern() and not off
 
 
-## `loc` is the location's data (its exits lay the roads). The skin is drawn on wild outdoor maps only.
+## `loc` is the location's data (its exits lay the roads, its traps keep their squares as the board drew them). The
+## skin is drawn on wild outdoor maps only.
 static func build(board_: ArenaBoard, loc: Dictionary) -> GroundRelief:
+	var key := "%s|%dx%d|%d|%d" % [board_.place, board_.grid.width, board_.grid.depth, board_.occupied.size(),
+		board_.house_cells.size()]
 	var r := GroundRelief.new()
 	r.board = board_
 	r._w = board_.grid.width
 	r._d = board_.grid.depth
+	if _kept.has(key):
+		# Built on an earlier visit, the same then as now: share its arrays (its floors' materials are the board's
+		# own, cached by Look).
+		var k := _kept[key] as GroundRelief
+		r._skin = k._skin
+		r._kind = k._kind
+		r._h = k._h
+		r._nx = k._nx
+		r._nz = k._nz
+		r._roads = k._roads
+		return r
 	if board_.theme in ArenaBoard.WILD:
-		r._choose_skin()
+		r._choose_skin(AtmosphereLand._trap_cells(loc))
 		r._lay_roads(loc)
-	r._nx = (r._w + 2 * MARGIN) * RES + 1
-	r._nz = (r._d + 2 * MARGIN) * RES + 1
-	r._bank_d = r._field(r.is_flat)
-	r._skin_d = r._field(func(c: Vector2i) -> bool: return not r._skin.has(c))
+	r._kinds()
+	r._heights()
+	_kept[key] = r
+	_kept_order.append(key)
+	while _kept_order.size() > AtmosphereLand.KEEP:
+		_kept.erase(_kept_order.pop_front())
 	return r
 
 
 ## A square drawn at its floor level that the woods' banks rise away from: on the map and neither a tree square nor
 ## empty ground.
 func is_flat(c: Vector2i) -> bool:
-	var g := board.grid
-	if not g.in_bounds(c):
-		return false
-	if board.is_tree(c):
-		return false
-	return not (g.has_flag(c, CombatGrid.VOID) and not g.has_flag(c, CombatGrid.WATER))
+	var k := _kind_of(c)
+	return k == FLAT or k == SKIN
 
 
 ## The squares people walk on whose ground is a plain floor box at floor level in the place's floor (or mud)
-## material, and that nothing stands on.
-func _choose_skin() -> void:
+## material, that nothing stands on and no trap lies under (a pit opens its floor box).
+func _choose_skin(traps: Dictionary) -> void:
 	var g := board.grid
 	var plain := board.floor_material()
 	for z in _d:
@@ -86,7 +106,7 @@ func _choose_skin() -> void:
 			var f := g.flags(c)
 			if (f & (CombatGrid.WALL | CombatGrid.VOID | CombatGrid.WATER)) != 0 or board.floor_y(c) != 0.0:
 				continue
-			if board.occupied.has(c) or board.door_cells.has(c) or board.house_cells.has(c):
+			if board.occupied.has(c) or board.door_cells.has(c) or board.house_cells.has(c) or traps.has(c):
 				continue
 			var box := board.floor_box(c)
 			if box == null or box.material_override == null:
@@ -96,7 +116,29 @@ func _choose_skin() -> void:
 			_skin[c] = box.material_override
 
 
-## Wheel ruts run along the shortest walk between each two ways out on the map's edge that are apart.
+func _kinds() -> void:
+	var g := board.grid
+	_kind.resize(_w * _d)
+	for z in _d:
+		for x in _w:
+			var c := Vector2i(x, z)
+			var k := FLAT
+			if _skin.has(c):
+				k = SKIN
+			elif board.is_tree(c):
+				k = WOODS
+			elif g.has_flag(c, CombatGrid.VOID) and not g.has_flag(c, CombatGrid.WATER):
+				k = OPEN
+			_kind[z * _w + x] = k
+
+
+func _kind_of(c: Vector2i) -> int:
+	if c.x < 0 or c.y < 0 or c.x >= _w or c.y >= _d:
+		return OPEN
+	return _kind[c.y * _w + c.x]
+
+
+## Roads run along the shortest walk between each two ways out on the map's edge that are apart.
 func _lay_roads(loc: Dictionary) -> void:
 	var outs: Array[Vector2i] = []
 	for e: Variant in loc.get("exits", []) as Array:
@@ -159,20 +201,22 @@ static func _smoothed(pts: PackedVector2Array) -> PackedVector2Array:
 	return cur
 
 
-## A distance field (squares) from the squares `zero` says yes to, RES samples a square over the map and MARGIN.
-func _field(zero: Callable) -> PackedFloat32Array:
+## The roads between the ways out (smoothed lines through square middles), for anything that follows them.
+func roads() -> Array[PackedVector2Array]:
+	return _roads
+
+
+## Does the skin draw the ground of square `c`?
+func skinned(c: Vector2i) -> bool:
+	return _skin.has(c)
+
+
+## Distance (squares) from each grid point to the nearest point touching a square of the kinds in `zero` (a mask).
+func _field(touch: PackedInt32Array, zero: int) -> PackedFloat32Array:
 	var f := PackedFloat32Array()
 	f.resize(_nx * _nz)
-	for j in _nz:
-		for i in _nx:
-			var p := _point(i, j)
-			# A sample on such a square's edge or inside it is at distance 0 (the squares' corners are shared).
-			var on := false
-			for dz: float in [-0.001, 0.001]:
-				for dx: float in [-0.001, 0.001]:
-					if bool(zero.call(Vector2i(floori(p.x + dx), floori(p.y + dz)))):
-						on = true
-			f[j * _nx + i] = 0.0 if on else 1e6
+	for k in _nx * _nz:
+		f[k] = 0.0 if (touch[k] & zero) != 0 else 1e6
 	var s := 1.0 / RES
 	var diag := s * 1.41421
 	for j in _nz:
@@ -204,74 +248,75 @@ func _field(zero: Callable) -> PackedFloat32Array:
 	return f
 
 
-func _point(i: int, j: int) -> Vector2:
-	return Vector2(float(i) / RES - MARGIN, float(j) / RES - MARGIN)
+## Every grid point's height, once: on a point touching the walked ground, its hollows (never above 0), settling to 0
+## toward any square drawn flat; elsewhere the woods' bank rising from the flat and walked squares, with mounds.
+func _heights() -> void:
+	_nx = (_w + 2 * MARGIN) * RES + 1
+	_nz = (_d + 2 * MARGIN) * RES + 1
+	# The kinds of the squares touching each grid point, as a bit mask (1 << kind): a point on a square's edge touches
+	# the squares either side, a point inside one only that one. Worked out per column and row once.
+	var cols := PackedInt32Array()
+	cols.resize(_nx * 2)
+	for i in _nx:
+		var x := i / RES - MARGIN
+		cols[i * 2] = x - 1 if i % RES == 0 else x
+		cols[i * 2 + 1] = x
+	var rows := PackedInt32Array()
+	rows.resize(_nz * 2)
+	for j in _nz:
+		var z := j / RES - MARGIN
+		rows[j * 2] = z - 1 if j % RES == 0 else z
+		rows[j * 2 + 1] = z
+	var bit := PackedInt32Array()
+	bit.resize((_w + 2) * (_d + 2))
+	for z in _d + 2:
+		for x in _w + 2:
+			bit[z * (_w + 2) + x] = 1 << _kind_of(Vector2i(x - 1, z - 1))
+	var touch := PackedInt32Array()
+	touch.resize(_nx * _nz)
+	var out_bit := 1 << OPEN
+	for j in _nz:
+		var z0 := rows[j * 2]
+		var z1 := rows[j * 2 + 1]
+		for i in _nx:
+			var x0 := cols[i * 2]
+			var x1 := cols[i * 2 + 1]
+			var m := 0
+			for c: Vector2i in [Vector2i(x0, z0), Vector2i(x1, z0), Vector2i(x0, z1), Vector2i(x1, z1)]:
+				if c.x < -1 or c.y < -1 or c.x > _w or c.y > _d:
+					m |= out_bit
+				else:
+					m |= bit[(c.y + 1) * (_w + 2) + c.x + 1]
+			touch[j * _nx + i] = m
+	var bank_d := _field(touch, (1 << FLAT) | (1 << SKIN))
+	var skin_d := _field(touch, (1 << FLAT) | (1 << WOODS) | (1 << OPEN))
+	_h.resize(_nx * _nz)
+	for j in _nz:
+		for i in _nx:
+			var k := j * _nx + i
+			var p := Vector2(float(i) / RES - MARGIN, float(j) / RES - MARGIN)
+			var h := 0.0
+			if (touch[k] & (1 << SKIN)) != 0:
+				var settle := smoothstep(0.0, SETTLE, skin_d[k])
+				if settle > 0.0:
+					h = maxf(-HOLLOW * smoothstep(0.42, 0.78, _noise(p * 0.8 + Vector2(11.3, 2.7))) * settle, -DEEPEST)
+			elif bank_d[k] > 0.0:
+				var d := bank_d[k]
+				var n := _noise(p * 0.55) * 0.65 + _noise(p * 1.3 + Vector2(4.7, 1.9)) * 0.35
+				h = BANK * smoothstep(0.0, RISE, d) + (n - 0.42) * MOUNDS * smoothstep(0.3, RISE, d) * 2.0
+			_h[k] = h
 
 
-func _sample(f: PackedFloat32Array, p: Vector2) -> float:
+## The ground's height at a point of the map (0 on squares drawn flat), read off the grid.
+func height(p: Vector2) -> float:
 	var fi := clampf((p.x + MARGIN) * RES, 0.0, _nx - 1.001)
 	var fj := clampf((p.y + MARGIN) * RES, 0.0, _nz - 1.001)
 	var i := floori(fi)
 	var j := floori(fj)
 	var fx := fi - i
 	var fz := fj - j
-	return lerpf(lerpf(f[j * _nx + i], f[j * _nx + i + 1], fx), lerpf(f[(j + 1) * _nx + i], f[(j + 1) * _nx + i + 1], fx), fz)
-
-
-## How far a point is from the nearest square that isn't the woods' (squares; 0 on one).
-func distance(p: Vector2) -> float:
-	return _sample(_bank_d, p)
-
-
-## The roads the wheel ruts run along (smoothed lines through square middles), for anything that follows them.
-func roads() -> Array[PackedVector2Array]:
-	return _roads
-
-
-## Does the skin draw the ground of square `c`?
-func skinned(c: Vector2i) -> bool:
-	return _skin.has(c)
-
-
-## The ground's height at a point of the map: the walked ground's hollows and ruts (never above 0), a bank rising
-## into the woods with mounds on it, 0 on squares drawn flat.
-func height(p: Vector2) -> float:
-	var c := Vector2i(floori(p.x), floori(p.y))
-	if _skin.has(c):
-		return _walked(p)
-	var d := distance(p)
-	if d <= 0.0:
-		return 0.0
-	var bank := BANK * smoothstep(0.0, RISE, d)
-	var n := _noise(p * 0.55) * 0.65 + _noise(p * 1.3 + Vector2(4.7, 1.9)) * 0.35
-	return bank + (n - 0.42) * MOUNDS * smoothstep(0.3, RISE, d) * 2.0
-
-
-## The walked ground: broad shallow hollows, a fine unevenness, and two wheel ruts along each road, settling to 0
-## toward any square drawn flat.
-func _walked(p: Vector2) -> float:
-	var settle := smoothstep(0.0, SETTLE, _sample(_skin_d, p))
-	if settle <= 0.0:
-		return 0.0
-	var broad := _noise(p * 0.8 + Vector2(11.3, 2.7))
-	var h := -HOLLOW * smoothstep(0.42, 0.78, broad) - 0.015 * _noise(p * 1.9 + Vector2(3.1, 8.4))
-	var r := _road_distance(p)
-	if r < 0.7:
-		h -= RUT * exp(-pow((r - 0.21) / 0.08, 2.0))
-	return maxf(h * settle, -DEEPEST)
-
-
-## How far a point is from the middle of the nearest road (squares; a large number with no road).
-func _road_distance(p: Vector2) -> float:
-	var best := 1e6
-	for line in _roads:
-		for i in line.size() - 1:
-			var a := line[i]
-			var b := line[i + 1]
-			var ab := b - a
-			var t := clampf((p - a).dot(ab) / maxf(ab.length_squared(), 1e-6), 0.0, 1.0)
-			best = minf(best, p.distance_to(a + ab * t))
-	return best
+	var k := j * _nx + i
+	return lerpf(lerpf(_h[k], _h[k + 1], fx), lerpf(_h[k + _nx], _h[k + _nx + 1], fx), fz)
 
 
 func _noise(p: Vector2) -> float:
@@ -285,53 +330,94 @@ static func _hash(p: Vector2) -> float:
 	return fposmod(sin(p.x * 127.1 + p.y * 311.7) * 43758.5453, 1.0)
 
 
-## The shaped ground: the woods' banks over the map's tree squares in `woods` (tucked just under the board's own
-## ground where they meet the clearing, so the two never flicker), and the skin over the walked squares in their own
-## floor's material, with the board's flat boxes there lowered out of sight. Null when there's nothing to shape.
-func meshes(woods: Material) -> Node3D:
-	var surfaces := {}   # material -> SurfaceTool
+## The walked squares' floor boxes stop drawing themselves (render layers 0): the skin draws that ground.
+func quiet_floors() -> void:
+	for c: Vector2i in _skin:
+		var box := board.floor_box(c)
+		if box != null:
+			box.layers = 0
+
+
+## The shaped ground, leaving out the `hidden` squares: the skin over the walked squares in their floor's material(s)
+## and the banks over the woods in `woods` (tucked just under the board's own ground where they meet the clearing, so
+## the two never flicker). One grid of points for both; each mesh only indexes the squares it draws.
+func meshes(woods: Material, hidden: Dictionary = {}) -> Array[MeshInstance3D]:
+	var verts := PackedVector3Array()
+	var normals := PackedVector3Array()
+	verts.resize(_nx * _nz)
+	normals.resize(_nx * _nz)
+	var e := 2.0 / RES
+	for j in _nz:
+		var row := j * _nx
+		for i in _nx:
+			var k := row + i
+			verts[k] = Vector3(float(i) / RES - MARGIN, _h[k], float(j) / RES - MARGIN)
+			var dx := _h[mini(i + 1, _nx - 1) + row] - _h[maxi(i - 1, 0) + row]
+			var dz := _h[mini(j + 1, _nz - 1) * _nx + i] - _h[maxi(j - 1, 0) * _nx + i]
+			normals[k] = Vector3(-dx, e, -dz).normalized()
+	# The materials drawn, then each one's squares in a pass of its own (an index array held in a dictionary would be
+	# copied every time it grew).
+	var mats: Array[Material] = []
+	var cell_mat: Array[Material] = []
+	cell_mat.resize(_w * _d)
 	for z in _d:
 		for x in _w:
 			var c := Vector2i(x, z)
-			var mat: Material = null
-			var lift := 0.0
-			if _skin.has(c):
-				mat = _skin[c] as Material
-				var box := board.floor_box(c)
-				box.position.y -= SINK
-			elif board.is_tree(c):
-				mat = woods
-				lift = -0.012
-			else:
+			if hidden.has(c):
 				continue
-			if not surfaces.has(mat):
-				var st := SurfaceTool.new()
-				st.begin(Mesh.PRIMITIVE_TRIANGLES)
-				surfaces[mat] = st
-			_square(surfaces[mat] as SurfaceTool, c, lift, SKIN_RES if _skin.has(c) else RES)
-	if surfaces.is_empty():
-		return null
-	var root := Node3D.new()
-	root.name = "Relief"
-	for mat: Material in surfaces:
-		var st := surfaces[mat] as SurfaceTool
-		st.generate_normals()
+			var m: Material = null
+			match _kind[z * _w + x]:
+				SKIN:
+					m = _skin[c] as Material
+				WOODS:
+					m = woods
+			cell_mat[z * _w + x] = m
+			if m != null and not m in mats:
+				mats.append(m)
+	var groups := {}
+	for m in mats:
+		var n := 0
+		for k in _w * _d:
+			if cell_mat[k] == m:
+				n += 1
+		var idx := PackedInt32Array()
+		idx.resize(n * RES * RES * 6)
+		var f := 0
+		for z in _d:
+			for x in _w:
+				if cell_mat[z * _w + x] != m:
+					continue
+				var i0 := (x + MARGIN) * RES
+				var j0 := (z + MARGIN) * RES
+				for sj in RES:
+					for si in RES:
+						var a := (j0 + sj) * _nx + i0 + si
+						idx[f] = a
+						idx[f + 1] = a + 1
+						idx[f + 2] = a + _nx
+						idx[f + 3] = a + 1
+						idx[f + 4] = a + _nx + 1
+						idx[f + 5] = a + _nx
+						f += 6
+		groups[m] = idx
+	var out: Array[MeshInstance3D] = []
+	var walked := 0
+	for mat: Material in groups:
+		var arrays := []
+		arrays.resize(Mesh.ARRAY_MAX)
+		arrays[Mesh.ARRAY_VERTEX] = verts
+		arrays[Mesh.ARRAY_NORMAL] = normals
+		arrays[Mesh.ARRAY_INDEX] = groups[mat]
+		var mesh := ArrayMesh.new()
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 		var mi := MeshInstance3D.new()
-		mi.name = "Ground%d" % root.get_child_count()
-		mi.mesh = st.commit()
+		mi.name = "Banks" if mat == woods else "Walked%d" % walked
+		if mat != woods:
+			walked += 1
+		mi.mesh = mesh
 		mi.material_override = mat
 		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		root.add_child(mi)
-	return root
-
-
-func _square(st: SurfaceTool, c: Vector2i, lift: float, res: int) -> void:
-	var q := 1.0 / res
-	for sj in res:
-		for si in res:
-			var p0 := Vector2(c.x + si * q, c.y + sj * q)
-			var v: Array[Vector3] = []
-			for p: Vector2 in [p0, p0 + Vector2(q, 0), p0 + Vector2(0, q), p0 + Vector2(q, q)]:
-				v.append(Vector3(p.x, height(p) + lift, p.y))
-			for t: Vector3 in [v[0], v[1], v[2], v[1], v[3], v[2]]:
-				st.add_vertex(t)
+		if mat == woods:
+			mi.position.y = -0.012
+		out.append(mi)
+	return out

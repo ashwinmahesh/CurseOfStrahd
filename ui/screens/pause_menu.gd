@@ -7,7 +7,8 @@ extends CanvasLayer
 ## hexagons (the selected one wine with lozenges outside its points), and a footer wave between corner brackets. The
 ## concept had two sliders and three buttons; this menu has three, five and a way to Settings (the look, the window,
 ## fight speed, narration and the respec option, docs/plans/ui_polish.md), so the arch is taller, with the concept's
-## spacing kept. The saves open in the same arch. As the game-over screen it offers only loading.
+## spacing kept. The saves are a page of their own (ui/screens/saves_screen.gd). As the game-over screen it offers only
+## loading.
 ## Quicksave (and F5, here and exploring) saves over the game's current slot (SaveSystem.current_slot).
 
 ## Concept units to pixels.
@@ -31,7 +32,6 @@ var st: StoryState
 var _frame: Control
 var _items: Array[Control] = []    ## everything placed on the frame for the current page
 var _buttons: Array[Button] = []
-var _list_box: VBoxContainer       ## the saves, when they're showing
 var _note: Label                   ## "Saved." under the buttons
 var _on_settings := false
 static var _serif: Font
@@ -63,6 +63,8 @@ static func _c(name: String) -> Color:
 func open(root_: Node, state: StoryState, _index: int) -> void:
 	root = root_
 	st = state
+	# The world as the menu opens over it: the picture for a save made from its pages (lane 16, Q9).
+	SaveSystem.hold_view(self)
 	var dim := ColorRect.new()
 	dim.color = Color(_c("arch_back"), 0.86)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -163,7 +165,6 @@ func _clear() -> void:
 		n.queue_free()
 	_items.clear()
 	_buttons.clear()
-	_list_box = null
 	_note = null
 
 
@@ -222,9 +223,9 @@ func _show_menu() -> void:
 	var quick := _button(1, "Quicksave  (F5)", _quick_save)
 	quick.disabled = not can
 	quick.tooltip_text = why if not can else ("Saves over this game's slot; F9 loads it." if SaveSystem.current_slot != "" else "Saves this game in a new slot; F5 and F9 use it from then on.")
-	var save := _button(2, "Save Game", _save_new)
+	var save := _button(2, "Save Game", func() -> void: _open_saves(SavesScreen.Mode.SAVE))
 	save.disabled = not can
-	save.tooltip_text = why if not can else "Saves in a new slot."
+	save.tooltip_text = why if not can else "Save in a new slot, or over one of your saves."
 	var load := _button(3, "Load a Save", _show_saves)
 	load.disabled = SaveSystem.list_slots().is_empty()
 	_button(4, "Quit to Title", func() -> void: leave_to(TITLE_SCENE))
@@ -364,39 +365,48 @@ func _link(text: String, on_press: Callable) -> Button:
 	return b
 
 
+## Load a Save opens the saves' own page. As the game-over screen, the arch says the party has fallen and offers the
+## way back: that page, the last autosave, or the title.
 func _show_saves() -> void:
-	_clear()
-	_title("The party has fallen" if game_over else "Load a Save")
-	var top := 132.0
-	if game_over:
-		var lost := _text("Barovia keeps what it takes. Load a save to try again.", 10.0, _c("arch_text"))
-		lost.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		lost.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		lost.position = _u(24, 126)
-		lost.size = _u(W_U - 48.0, 20)
-		_place(lost)
-		top = 154.0
-	_list_box = VBoxContainer.new()
-	_list_box.add_theme_constant_override("separation", 5)
-	var scroll := ScrollContainer.new()
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	_list_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(_list_box)
-	scroll.position = _u(26, top)
-	var last := FIRST_BUTTON_Y + BUTTON_PITCH * 3.0 - 30.0
-	scroll.size = _u(W_U - 52.0, last - top)
-	# The rows are exactly as wide as the arch's inside; nothing in them can make the list wider.
-	scroll.clip_contents = true
-	_list_box.custom_minimum_size = Vector2(_u(W_U - 52.0, 0).x - 12.0, 0)
-	_place(scroll)
-	_list()
 	if not game_over:
-		_button(3, "Back", _show_menu)
-	elif SaveSystem.has_slot(SaveSystem.AUTOSAVE):
+		_open_saves(SavesScreen.Mode.LOAD)
+		return
+	_clear()
+	_title("The party has fallen")
+	var lost := _text("Barovia keeps what it takes. Load a save to try again.", 10.0, _c("arch_text"))
+	lost.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lost.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lost.position = _u(24, 126)
+	lost.size = _u(W_U - 48.0, 20)
+	_place(lost)
+	# The last autosave, said where it was made; the buttons sit at the foot of the arch.
+	var s := SaveSystem.describe(SaveSystem.AUTOSAVE)
+	var auto := not s.is_empty()
+	if auto:
+		var at := _text("The last autosave\n%s\nDay %d · %s" % [s["location"], int(s["day"]), SavesScreen.when(s)], 11.0, _c("arch_gold_light"))
+		at.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		at.clip_text = true
+		at.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		at.position = _u(30, 200)
+		at.size = _u(W_U - 60.0, 70)
+		_place(at)
+	_button(2 if auto else 3, "Load a Save", func() -> void: _open_saves(SavesScreen.Mode.LOAD))
+	if auto:
 		_button(3, "Last Autosave", func() -> void: _load(SaveSystem.AUTOSAVE)).tooltip_text = \
 			"Back to where the game last saved itself: arriving somewhere, a rest or a won fight."
 	_button(4, "Quit to Title", func() -> void: leave_to(TITLE_SCENE))
 	_buttons[0].grab_focus.call_deferred()
+
+
+## The saves' page over the arch (lane 16's), which hides the arch until it closes. A save comes back to "Saved.".
+func _open_saves(mode: SavesScreen.Mode) -> void:
+	var page := SavesScreen.open_on(self, mode, func() -> void: leave_to(GAME_SCENE), _frame)
+	page.saved.connect(func(_slot: String) -> void:
+		_show_menu()
+		_note.text = "Saved.")
+	page.closed.connect(func() -> void:
+		if not _buttons.is_empty():
+			_buttons[0].grab_focus.call_deferred())
 
 
 # --- Sliders --------------------------------------------------------------------------------------
@@ -572,49 +582,6 @@ static func volume_row(text: String, value: float, on_change: Callable) -> HBoxC
 	return row
 
 
-func _list() -> void:
-	if _list_box == null:
-		return
-	for c in _list_box.get_children():
-		c.queue_free()
-	var slots := SaveSystem.list_slots()
-	if slots.is_empty():
-		_list_box.add_child(_text("No saves yet.", 10.0, Color(_c("arch_text"), 0.6)))
-	for s in slots:
-		var row := HBoxContainer.new()
-		row.add_theme_constant_override("separation", 6)
-		var info := VBoxContainer.new()
-		info.add_theme_constant_override("separation", 0)
-		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		# The place on the first line and what kind of save it is, the day and when on the second; both cut with an
-		# ellipsis at the row's edge so a long place name never pushes past the box or its buttons (owner report
-		# 2026-10-07: the name ran out of the box under the game-over screen's Load). The full text is in the tooltip.
-		var kind := str(s.get("kind", ""))
-		var what := {"autosave": "Autosave", "round": "Fight, round start"}.get(kind, "This game" if str(s["slot"]) == SaveSystem.current_slot else "Save") as String
-		var place := _fit_line(str(s["location"]), 10.0, _c("arch_text"))
-		info.add_child(place)
-		var when := str(s["saved_at"]).replace("T", " ")
-		when = when.substr(0, 16) if when.length() >= 16 else when
-		info.add_child(_fit_line("%s · Day %d · %s" % [what, int(s["day"]), when], 8.0, Color(_c("arch_text"), 0.6)))
-		row.add_child(info)
-		var slot := str(s["slot"])
-		row.add_child(UiParts.small_button("Load", func() -> void: _load(slot)))
-		if not game_over and kind == "":
-			row.add_child(UiParts.small_button("Overwrite", func() -> void: _save(slot)))
-		var party_text := "%s · Day %d\n%s\n%s" % [s["location"], int(s["day"]), s["party"], slot]
-		_list_box.add_child(UiParts.row(row, func() -> Control: return UiParts.rules_tip(what, "", party_text)))
-
-
-## A line of the saves list that takes no width of its own (its row decides) and ends in an ellipsis if it's too long.
-func _fit_line(text: String, size_u: float, colour: Color) -> Label:
-	var l := _text(text, size_u, colour)
-	l.clip_text = true
-	l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	l.custom_minimum_size = Vector2(1, 0)
-	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	return l
-
-
 ## F5 and the Quicksave button: over the game's current slot (a new one the first time), as the exploring F5 does.
 func _quick_save() -> void:
 	var err := SaveSystem.quick_save()
@@ -622,22 +589,6 @@ func _quick_save() -> void:
 		Audio.sfx("page")
 	if _note != null:
 		_note.text = "Saved." if err == OK else "Can't save now."
-
-
-func _save_new() -> void:
-	_save("save_%s" % Time.get_datetime_string_from_system().replace(":", "-"))
-
-
-func _save(slot: String) -> void:
-	var err := SaveSystem.save(slot)
-	if err == OK:
-		Audio.sfx("page")
-		if _list_box != null:
-			_list()
-		elif _note != null:
-			_note.text = "Saved."
-	elif _note != null:
-		_note.text = "Can't save now (in combat)."
 
 
 func _load(slot: String) -> void:
@@ -666,7 +617,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed(&"combat_cancel") and root != null:
 		get_viewport().set_input_as_handled()
-		if _list_box != null or _on_settings:
+		if _on_settings:
 			_show_menu()
 		else:
 			root.call("close_screen")

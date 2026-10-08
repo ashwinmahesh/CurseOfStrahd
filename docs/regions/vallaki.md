@@ -54,8 +54,8 @@ Eight maps (data/locations/). The exterior is a 50 x 36 walled town; the camp li
 5. **Side threads.** Izek and his dolls (Blinsky, the mansion), Victor's attic (Lydia's worry), Rictavio's secret
    (the wagon), the missing Arabelle (the camp), the lockup's malcontents, the Wachter cellar.
 6. **The night before.** The wicker sun can be soaked (for Lady Wachter) or guarded (for the Baron).
-7. **The Festival of the Blazing Sun** (§4.1): the herald starts it once the party has met the Baron, Lady Wachter or
-   Lucian. The Baron's speech, the sun (blazes, dies or smoulders), the turn, the fight.
+7. **The Festival of the Blazing Sun** (§4.1): the herald starts it at noon once the party has met the Baron, Lady
+   Wachter or Lucian. The Baron's speech, the sun (blazes, dies or smoulders), the turn, the fight.
 8. **The aftermath:** the winner holds the dais; `vallaki_backed` is set; the town changes (§5).
 
 ## 4. The big threads
@@ -63,8 +63,9 @@ Eight maps (data/locations/). The exterior is a 50 x 36 walled town; the camp li
 ### 4.1 The Festival of the Blazing Sun (the turning point)
 
 The Baron holds a festival every week; attendance and cheering are compulsory. This one burns a wicker sun taller than
-a house in the square at noon. The festival is a staged quest, not a timer: the herald (`vallaki_herald`, by the
-dais) begins it by day when asked, once the party has met at least one faction leader. Starting it sets
+a house in the square at noon. The festival is a staged quest on the clock (F2): the herald (`vallaki_herald`, by
+the dais) begins it when asked, once the party has met at least one faction leader, at noon (asked at another hour,
+the party can wait for noon: `time until 12`); his bell rings it in at 11 (data/schedule/vallaki.json). Starting it sets
 `festival_begun`; the town fills the square (festival NPC entries), and the Baron, appearing on the dais, speaks on
 approach (`festival:speech`).
 
@@ -286,10 +287,11 @@ All 85 flags are registered, set and read (`make validate`). The ones later regi
 
 ## 11. Engine needs the format can't express
 
-- **The festival as a timed event.** There is no day counter or "wait until noon"; the herald starts the festival on
-  request, by day. A `wait until <hour>` statement (or the herald advancing the clock to noon) and a festival day
-  (e.g. the second noon after arrival) would make it a real deadline. Likewise St. Andral's Feast: the spawn should
-  attack the church on their own the night after the theft is known, not only when the party keeps vigil.
+- **The festival as a timed event.** It now begins at noon (the herald waits for it) and the Baron's watch keeps a
+  clock of its own (data/schedule/vallaki.json: arrests at eight every third morning, release at the evening bell),
+  but the festival day itself is still the party's choice. A fixed festival day (e.g. the second noon after arrival)
+  would make it a real deadline. Likewise St. Andral's Feast: the spawn should attack the church on their own the
+  night after the theft is known, not only when the party keeps vigil (a Schedule event could do it).
 - **A town guard that reacts to crimes.** Picking the wagon, the Baron's strongbox, Lady Wachter's desk or Arrigal's
   chest, killing Izek in the mansion, or brawling in the square has no watch response; only the victims' dialogue
   notices. Needs a "seen committing a crime" event and a guard response (fine, lockup, fight).

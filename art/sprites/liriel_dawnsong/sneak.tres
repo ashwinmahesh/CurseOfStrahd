@@ -29,8 +29,8 @@ margin = Rect2(117, 93, 234, 106)
 
 [sub_resource type="AtlasTexture" id="s_5"]
 atlas = ExtResource("1")
-region = Rect2(2482, 0, 540, 652)
-margin = Rect2(114, 107, 228, 116)
+region = Rect2(2482, 0, 538, 652)
+margin = Rect2(115, 107, 230, 116)
 
 [sub_resource type="AtlasTexture" id="s_6"]
 atlas = ExtResource("1")

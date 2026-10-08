@@ -1,0 +1,18 @@
+{
+  "id": "krezk_woodcutter",
+  "name": "Stefan the Woodcutter",
+  "title": "Of Krezk",
+  "summary": "A broad, quiet Krezker who splits and stacks the village's firewood and walks it from the woodpile to the houses inside the wall.",
+  "portrait": "commoner",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}

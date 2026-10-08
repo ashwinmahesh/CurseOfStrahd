@@ -91,28 +91,47 @@ func _apply_setup(key: String) -> void:
 		GameState.story.set_flag(f, SETUP[key][f])
 
 
-func test_every_treasure_place_outside_the_castle_gives_its_treasure() -> void:
+## The treasure places in two halves by location, so make test can run them side by side (they took two minutes in
+## one test). Between them they visit every location that holds one.
+func test_every_treasure_place_in_the_first_half_of_their_locations_gives_its_treasure() -> void:
+	await _treasures(0)
+
+
+func test_every_treasure_place_in_the_second_half_of_their_locations_gives_its_treasure() -> void:
+	await _treasures(1)
+
+
+## Plays every treasure place in half `half` (0 or 1) of the locations that hold one, sorted by id; the first half also
+## fails for a place with no spot at all.
+func _treasures(half: int) -> void:
 	var places := treasure_places()
 	var failures: Array[String] = []
 	var by_location := {}
 	for place: String in places:
 		var s := spot_of(place)
 		if s.is_empty():
-			failures.append("%s (%s): no treasure spot in any location" % [place, places[place]])
+			if half == 0:
+				failures.append("%s (%s): no treasure spot in any location" % [place, places[place]])
 			continue
 		if not by_location.has(s["location"]):
 			by_location[s["location"]] = []
 		(by_location[s["location"]] as Array).append(place)
-	for loc: String in by_location:
+	var locs: Array = by_location.keys()
+	locs.sort()
+	var mine: Array = locs.slice(0, (locs.size() + 1) / 2) if half == 0 else locs.slice((locs.size() + 1) / 2)
+	var tried := 0
+	for loc: String in mine:
 		await _start(loc)
 		for place: String in by_location[loc]:
+			tried += 1
 			var why := await _obtain(loc, place)
 			if why != "":
 				failures.append("%s at %s: %s" % [place, loc, why])
 	for f in failures:
 		print("    ", f)
-	assert_true(failures.is_empty(), "%d of %d treasure places fail (listed above)" % [failures.size(), places.size()])
-	print("  treasure places: %d, all obtainable" % places.size() if failures.is_empty() else "")
+	assert_true(not mine.is_empty(), "locations to visit")
+	assert_true(failures.is_empty(), "%d of %d treasure places fail (listed above)" % [failures.size(), tried])
+	print("  treasure places, half %d: %d of %d, all obtainable" % [half + 1, tried, places.size()] if failures.is_empty() else "")
 
 
 ## Plays one spot with the Tome hidden there. "" when the Tome reached the party, else why not.

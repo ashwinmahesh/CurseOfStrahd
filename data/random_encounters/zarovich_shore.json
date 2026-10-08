@@ -137,6 +137,13 @@
       "when": "night and not flag.den_way_known and not flag.pack_resolved",
       "once": true,
       "dialogue": "lake_zarovich/events:howl_call"
+    },
+    {
+      "id": "strahds_eyes",
+      "weight": 2,
+      "when": "night and attention >= watched",
+      "once": true,
+      "dialogue": "strahd/attention:eyes_bats"
     }
   ]
 }
