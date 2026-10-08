@@ -42,8 +42,9 @@ env:
   GODOT_VERSION: "4.7.2"
   GODOT_ZIP_SHA512: 9aa00f7a605200940bce3027a567b782f49bd8e940dd06ae9e987bd65aee1b1467edd56ed84fcdcbdd44354bf613bdbb4e5d2913e925850368e150c59ed54c65
   TEMPLATES_SHA512: ca4d71c4d7b81dfc15d1a98baa07534aa95b03fdda78a0075b06672e1648d2e5f40980c9adc28d23e1b92e732ee7bf3461997aa804af74ec2fcd7a93ccb84079
-  RCODESIGN_VERSION: "0.29.0"
-  RCODESIGN_SHA256: dbe85cedd8ee4217b64e9a0e4c2aef92ab8bcaaa41f20bde99781ff02e600002
+  # Not RCODESIGN_*: rcodesign reads any RCODESIGN_ variable as its own setting, and fails on ones it doesn't know.
+  APPLE_CODESIGN_VERSION: "0.29.0"
+  APPLE_CODESIGN_SHA256: dbe85cedd8ee4217b64e9a0e4c2aef92ab8bcaaa41f20bde99781ff02e600002
   JSIGN_VERSION: "7.5"
   JSIGN_SHA256: 602a51c3545a6dc4fb99bd2ea7152b26d1345916d0c93ddfbd5936cb735af91c
   BUCKET: curseofstrahd-downloads
@@ -124,7 +125,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/godot-dl
-          key: godot-${{ env.GODOT_VERSION }}-${{ env.RCODESIGN_VERSION }}
+          key: godot-${{ env.GODOT_VERSION }}-${{ env.APPLE_CODESIGN_VERSION }}
 
       - name: Download Godot, its export templates and rcodesign (checksums pinned above)
         if: steps.godot-cache.outputs.cache-hit != 'true'
@@ -133,16 +134,16 @@ jobs:
           base="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable"
           curl -fsSLO "$base/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
           curl -fsSLO "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
-          rc="apple-codesign-${RCODESIGN_VERSION}-x86_64-unknown-linux-musl"
-          curl -fsSLO "https://github.com/indygreg/apple-platform-rs/releases/download/apple-codesign%2F${RCODESIGN_VERSION}/${rc}.tar.gz"
+          rc="apple-codesign-${APPLE_CODESIGN_VERSION}-x86_64-unknown-linux-musl"
+          curl -fsSLO "https://github.com/indygreg/apple-platform-rs/releases/download/apple-codesign%2F${APPLE_CODESIGN_VERSION}/${rc}.tar.gz"
 
       - name: Check the downloads and install them
         run: |
           cd ~/godot-dl
           echo "${GODOT_ZIP_SHA512}  Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip" | sha512sum -c -
           echo "${TEMPLATES_SHA512}  Godot_v${GODOT_VERSION}-stable_export_templates.tpz" | sha512sum -c -
-          rc="apple-codesign-${RCODESIGN_VERSION}-x86_64-unknown-linux-musl"
-          echo "${RCODESIGN_SHA256}  ${rc}.tar.gz" | sha256sum -c -
+          rc="apple-codesign-${APPLE_CODESIGN_VERSION}-x86_64-unknown-linux-musl"
+          echo "${APPLE_CODESIGN_SHA256}  ${rc}.tar.gz" | sha256sum -c -
           mkdir -p ~/bin "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
           unzip -o -q "Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip" -d ~/bin
           unzip -o -q -j "Godot_v${GODOT_VERSION}-stable_export_templates.tpz" "templates/version.txt" \
@@ -351,7 +352,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: ~/godot-dl
-          key: godot-${{ env.GODOT_VERSION }}-${{ env.RCODESIGN_VERSION }}
+          key: godot-${{ env.GODOT_VERSION }}-${{ env.APPLE_CODESIGN_VERSION }}
 
       - name: Read the import cache
         id: import
