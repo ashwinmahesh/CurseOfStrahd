@@ -685,7 +685,9 @@ def story_checks(data, errors, need):
                 if kinds and hangs.get("kind", "chandelier") not in kinds:
                     errors.append(f"{w}: prop {pr['id']} hangs as unknown object kind '{hangs.get('kind')}'")
                 if hangs.get("flag"):
+                    # Set when it falls and read when the place is drawn (world/combat/battle_scenery.gd).
                     flags_set.setdefault(hangs["flag"], []).append(w)
+                    read([hangs["flag"]], w)
             if pr.get("dialogue"):
                 dialogue_refs.append((pr["dialogue"], w))
         for ct in loc.get("containers", []):

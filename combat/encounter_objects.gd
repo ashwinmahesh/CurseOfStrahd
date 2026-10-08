@@ -1089,6 +1089,8 @@ func perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2) -
 	var e := enc()
 	var id := str(action["id"])
 	var cell := Vector2i(floori(point.x), floori(point.y)) if point != Vector2.INF else Vector2i(-1, -1)
+	if cell.x < 0 and not targets.is_empty() and targets[0] is Combatant:
+		cell = (targets[0] as Combatant).cell   # a square chosen by clicking whoever stands on it
 	match id:
 		"oil:throw":
 			var t: Combatant = targets[0] as Combatant if not targets.is_empty() and targets[0] is Combatant else null

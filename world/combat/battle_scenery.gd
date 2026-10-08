@@ -170,17 +170,18 @@ static func fallen(view: LocationView, prop: Dictionary) -> bool:
 	return str(spec.get("flag", "")) != "" and bool(view.st.get_flag(str(spec["flag"])))
 
 
-## LocationBuilder: a prop that hangs is drawn up over its squares on a chain, or not at all once it has fallen.
+## LocationBuilder: a prop that hangs is drawn up over its squares on its chain, or lying wrecked on the floor once it
+## has fallen.
 static func hang(view: LocationView, prop: Dictionary, node: Node3D) -> void:
 	if node == null:
-		return
-	if fallen(view, prop):
-		node.visible = false
 		return
 	var cells: Array[Vector2i] = []
 	for c: Variant in (prop["hangs"] as Dictionary)["cells"]:
 		cells.append(LocationView._cell(c))
-	ObjectView.hang_piece(view.board, node, cells, bool((prop["hangs"] as Dictionary).get("lit", false)))
+	var down := fallen(view, prop)
+	ObjectView.hang_piece(view.board, node, cells, bool((prop["hangs"] as Dictionary).get("lit", false)) and not down)
+	if down:
+		ObjectView.drop_piece(view.board, node, false)
 
 
 ## LocationTraps: a trap that is a chandelier sprang outside a fight, so the chandelier drops.
