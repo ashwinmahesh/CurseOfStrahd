@@ -22,11 +22,14 @@ child=""
 owned=""
 
 log="$(mktemp -t strahd_import)"
-keep="$(mktemp -t strahd_project)"
-cp -p project.godot "$keep"
+keep=""
 finish() {
-  cmp -s "$keep" project.godot || cp -p "$keep" project.godot
-  rm -f "$keep" "$log"
+  # Only an import that took the lock put project.godot aside, so only it puts it back.
+  if [ -n "$keep" ]; then
+    cmp -s "$keep" project.godot || cp -p "$keep" project.godot
+    rm -f "$keep"
+  fi
+  rm -f "$log"
   if [ -n "$owned" ]; then
     rm -f "$lock/pid"
     rmdir "$lock" 2> /dev/null || true
@@ -71,6 +74,10 @@ until mkdir "$lock" 2> /dev/null; do
 done
 owned=1
 echo $$ > "$lock/pid"
+# Put aside only once it's this import's turn: taken while another import's editor had rewritten it, the rewrite is
+# what would be put back (seen 2026-10-08, the owner's make run waiting on the build's make ci).
+keep="$(mktemp -t strahd_project)"
+cp -p project.godot "$keep"
 
 ## Runs a command in the background into $log and waits, so Ctrl-C reaches stop() at once. Its exit status.
 run() {

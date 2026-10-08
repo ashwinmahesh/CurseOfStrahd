@@ -29,10 +29,11 @@ static func foe(e: Encounter, id: String, cell: Vector2i) -> Combatant:
 
 
 ## Starts combat and makes `first` act first by giving it the top Initiative (order is then re-sorted). A choice offered
-## as Initiative is rolled (Tandem Footwork) is declined, as the test didn't ask for it.
+## as Initiative is rolled (Tandem Footwork) is declined, as the test didn't ask for it; one offered once a turn has
+## begun (Uncanny Metabolism's slot recovery) stays for the test to answer.
 static func start_with(e: Encounter, first: Combatant) -> void:
 	e.start()
-	while e.pending != null:
+	while e.pending != null and not e.events.any(func(ev: Variant) -> bool: return str((ev as Dictionary).get("type", "")) == "turn"):
 		e.answer_reaction(false)
 	for c in e.order:
 		c.initiative = 1 if c != first else 30
