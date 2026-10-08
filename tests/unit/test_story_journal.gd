@@ -40,6 +40,25 @@ func test_kips_freedom_scenes_need_him_free() -> void:
 	assert_false(Banter._lines("banter/party_six:kip_free_apricots", st).is_empty(), "and the apricot")
 
 
+## A save writes its keys sorted, so after a load the journal came back in alphabetical order, and the HUD's newest
+## objective (the last open quest's) became whichever open quest sorted last, not the one that moved last.
+func test_the_journal_keeps_its_order_through_a_save() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 3, "vallaki", 12)
+	st.set_quest_stage("the_priests_son", "heard")
+	st.advance_minutes(30)
+	st.set_quest_stage("escort_ireena", "departed")
+	st.advance_minutes(30)
+	st.set_quest_stage("sanctuary_for_ireena", "arrived")
+	var before := _ids(st)
+	assert_eq(before.back(), "sanctuary_for_ireena", "the quest that moved last is the newest open one")
+	var back := StoryState.from_dict(JSON.parse_string(JSON.stringify(st.to_dict())) as Dictionary)
+	assert_eq(_ids(back), before, "the same order after a save and load")
+
+
+func _ids(st: StoryState) -> Array:
+	return QuestLog.journal(st).map(func(q: Dictionary) -> String: return str(q["id"]))
+
+
 func _entry(st: StoryState, quest_id: String) -> Dictionary:
 	for q in QuestLog.journal(st):
 		if str(q["id"]) == quest_id:
