@@ -23,7 +23,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Saving throw proficiency | character.gd | tested | test_reference_party |
 | Passive scores (+5/−5) | creature.gd passive_score | tested | test_abilities, test_reference_party |
 | Initiative = Dexterity check, Alert adds PB | creature.gd initiative_bonus | tested | test_reference_party |
-| Alert's Initiative Swap (asked once Initiative is rolled: trade with a willing ally, neither Incapacitated; the class tab's rule can turn it off) | class_features.gd initiative_offers | tested | test_save_prompts |
+| Alert's Initiative Swap (once the class tab's rule is Ask, asked as Initiative is rolled: trade with a willing ally, neither Incapacitated, when an enemy acts between them; Off by default) | class_features.gd initiative_offers | tested | test_save_prompts |
 | Heroic Inspiration | character.gd (Resourceful); encounter_attacks.gd, d20_responses.gd reroll | partial: a reroll of the d20 offered on a missed attack roll, after a failed save wherever the fight can pause (spells, monsters' actions and riders, repeated and Death Saving Throws) and after a failed check in conversation (story/check_aids.gd); the saves that can't pause yet use it automatically (deviations) [F6] | test_combat_encounter, test_save_prompts |
 | Bonus/penalty dice on D20 Tests (Bless, Bane) | creature.gd roll_d20 | tested | test_effects |
 | Automatic failure (Paralyzed etc.) | creature.gd roll_d20 | tested | test_conditions |
