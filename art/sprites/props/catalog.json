@@ -418,10 +418,10 @@
       "crate"
     ],
     "tent": [
-      "crate",
-      "barrel",
-      "table",
-      "crate"
+      "cushions",
+      "trunk",
+      "cushions",
+      "chest_painted"
     ],
     "dungeon": [
       "boulder",
@@ -1191,7 +1191,19 @@
     "cauldron": 3.5,
     "bat_perch": 6,
     "great_tent": 22,
-    "stewpot": 5
+    "stewpot": 5,
+    "reading_table": 2.9,
+    "cushions": 2.1,
+    "lantern_stand": 7.25,
+    "incense_burner": 2.55,
+    "bedroll": 1.7,
+    "candle_cluster": 1.55,
+    "book_stack": 1.7,
+    "drying_herbs": 2.25,
+    "cookpot": 3.15,
+    "basket": 1.5,
+    "wine_tray": 1.45,
+    "shawl_line": 3.75
   },
   "big_width": 1.6,
   "models3d": {
@@ -1512,7 +1524,24 @@
       "roof_hatch": "roof_hatch",
       "gold_spill": "gold_spill",
       "great_tent": "great_tent",
-      "stewpot": "stewpot"
+      "stewpot": "stewpot",
+      "reading_table": "reading_table",
+      "reading_table_back": "reading_table",
+      "cushions": "cushions",
+      "cushions_back": "cushions",
+      "lantern_stand": "lantern_stand",
+      "incense_burner": "incense_burner",
+      "bedroll": "bedroll",
+      "bedroll_back": "bedroll",
+      "candle_cluster": "candle_cluster",
+      "book_stack": "book_stack",
+      "book_stack_back": "book_stack",
+      "drying_herbs": "drying_herbs",
+      "cookpot": "cookpot",
+      "cookpot_back": "cookpot",
+      "basket": "basket",
+      "wine_tray": "wine_tray",
+      "shawl_line": "shawl_line"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",
@@ -1592,7 +1621,8 @@
         "house": "timber",
         "inn": "timber",
         "manor": "manor",
-        "townhouse": "manor"
+        "townhouse": "manor",
+        "tent": "tent"
       },
       "full_walls": true,
       "ground": {
@@ -1600,7 +1630,8 @@
         "timber": "village/cobbles",
         "church": "village/grass",
         "castle": "castle/courtyard",
-        "amber": "mountain/snow"
+        "amber": "mountain/snow",
+        "tent": "village/grass"
       },
       "outside": {
         "death_house_ground": {

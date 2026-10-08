@@ -335,6 +335,16 @@
       "tile_world_units": 2.0,
       "new": true,
       "brightness": 1.0
+    },
+    "tent/canvas": {
+      "subject": "the inside wall of an old Vistani tent: dusky violet and indigo canvas sewn from panels, patched with darker and brighter scraps sewn on with coarse black stitches, faded and stained",
+      "view": "wall",
+      "variants": 1,
+      "ref": "death_house_hall_ab",
+      "tile_world_units": 2.0,
+      "new": true,
+      "brightness": 1.0,
+      "made_by": "tools/art/make_canvas_swatch.py (painted in code, no image model)"
     }
   },
   "derived": {

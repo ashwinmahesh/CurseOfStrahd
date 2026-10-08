@@ -58,6 +58,10 @@
       "difficult": "village/mud_road",
       "wall": "dungeon/stone_wall",
       "wall_alt": "dungeon/damp_brick"
+    },
+    "tent": {
+      "floor": "interior/rug",
+      "wall": "tent/canvas"
     }
   },
   "themes": {
@@ -1461,6 +1465,19 @@
             "orm_file": "art/textures/kit/plaster_2k_c_orm.webp"
           }
         ]
+      }
+    },
+    "tent": {
+      "canvas": {
+        "file": "art/textures/tent/canvas_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/tent/canvas_2k.webp",
+        "normal_file": "art/textures/tent/canvas_2k_n.webp",
+        "orm_file": "art/textures/tent/canvas_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/tent_canvas.webp"
       }
     }
   },
