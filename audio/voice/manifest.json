@@ -11414,6 +11414,13 @@
   "recipe": "ef2f9464fb",
   "text": "I'll keep it. Somebody'll need soup one day. A knight's for people who need things."
  },
+ "godrick_pendlebrook/faa040029a6d13bd": {
+  "chars": 113,
+  "direction": "[stunned, shaken, haunted]",
+  "model": "eleven_v3",
+  "recipe": "52840be837",
+  "text": "Sir Pellam? That's... that's his voice. \"Godrick, lad. Bring the sword down here. I'll do it properly this time.\""
+ },
  "godrick_pendlebrook/fb3d87c0fd2e04e0": {
   "chars": 207,
   "model": "eleven_v3",
@@ -24614,6 +24621,13 @@
   "recipe": "b7a728ee9d",
   "text": "He isn't here. I know. That is what faith is for. You need none; you are right here. That is how I know you are not him."
  },
+ "kip_smudgewick/4707ef060a8091c5": {
+  "chars": 112,
+  "direction": "[panicked, then steadying, fierce]",
+  "model": "eleven_v3",
+  "recipe": "db3ec091e2",
+  "text": "Pip? Pip, sweetheart, what are you... No. No, she's home. She's home and she's safe and that is not my daughter."
+ },
  "kip_smudgewick/47b06dea5fc1bb37": {
   "chars": 95,
   "model": "eleven_v4",
@@ -27295,6 +27309,13 @@
   "recipe": "af97fbe78c",
   "text": "We took the old man's strongbox in a war he was losing. I'd like that remembered when we're being proud of ourselves."
  },
+ "liriel_dawnsong/27dc277991695aa4": {
+  "chars": 65,
+  "direction": "[quiet, certain, compassionate]",
+  "model": "eleven_v3",
+  "recipe": "a968987b3b",
+  "text": "A curse. Someone did this to a man. Remove Curse would answer it."
+ },
  "liriel_dawnsong/27e859764aa4dbec": {
   "chars": 66,
   "model": "eleven_v4",
@@ -27342,6 +27363,13 @@
   "model": "eleven_v4",
   "recipe": "af97fbe78c",
   "text": "We left that child up there. With him. I won't pretend otherwise."
+ },
+ "liriel_dawnsong/2cf8f1542384a932": {
+  "chars": 115,
+  "direction": "[shaken, hushed, sorrowful]",
+  "model": "eleven_v3",
+  "recipe": "a968987b3b",
+  "text": "It's praying, in the voice of the old sister who taught me. It doesn't know the words. It's just making the shapes."
  },
  "liriel_dawnsong/2d109500003e6356": {
   "chars": 85,
@@ -28134,6 +28162,13 @@
   "recipe": "af97fbe78c",
   "text": "Then we shall be quiet together, and buy nothing."
  },
+ "liriel_dawnsong/7f8f2bad77f57877": {
+  "chars": 71,
+  "direction": "[alarmed, firm, low]",
+  "model": "eleven_v3",
+  "recipe": "a968987b3b",
+  "text": "That's no vine. That's a blight, and a big one, and it's all one plant."
+ },
  "liriel_dawnsong/7fcaafcc5b2950c8": {
   "chars": 110,
   "model": "eleven_v4",
@@ -28519,6 +28554,13 @@
   "model": "eleven_v4",
   "recipe": "af97fbe78c",
   "text": "Down here it's never just one. I'm praying for him as well, Godrick. Someone ought to."
+ },
+ "liriel_dawnsong/a9645f0ccf992c6f": {
+  "chars": 93,
+  "direction": "[quiet, reverent, sad]",
+  "model": "eleven_v3",
+  "recipe": "a968987b3b",
+  "text": "Pescari's priest. He stayed with the ones who wouldn't leave. That's a hard sort of faithful."
  },
  "liriel_dawnsong/a9811497e2e9a2a6": {
   "chars": 29,
@@ -63271,6 +63313,13 @@
   "recipe": "45b2eb9c71",
   "text": "Of course. Stirring. I'm very good at stirring and keeping quiet. I'd hoped to stop."
  },
+ "ratatoille/b7444d82106229c6": {
+  "chars": 103,
+  "direction": "[bitter, wistful, quiet]",
+  "model": "eleven_v3",
+  "recipe": "45b2eb9c71",
+  "text": "Maman, calling me out of the kitchen. She never once called me out of the kitchen. She needed me in it."
+ },
  "ratatoille/b7ddce138fe430b1": {
   "chars": 158,
   "model": "eleven_v3",
@@ -69107,6 +69156,13 @@
   "model": "eleven_v3",
   "recipe": "fa2dc97c56",
   "text": "He's mine now. That's decided. Nobody argue."
+ },
+ "thistle/519c640c5a15c243": {
+  "chars": 108,
+  "direction": "[trembling, fierce, repeating to herself]",
+  "model": "eleven_v3",
+  "recipe": "fa2dc97c56",
+  "text": "That's my grandda. He's saying come on, lass, it's not far. It's no' him. It's no' him. I know it's no' him."
  },
  "thistle/5391a1286c976773": {
   "chars": 94,
@@ -75176,6 +75232,13 @@
   "recipe": "a9f72efbd3",
   "text": "Report. Kestrel Company marched into the fog without me. I had a fever. It wasn't bad enough to keep me back. I was tired of the work. That's all."
  },
+ "wren_featherfoot/4e003985745c8cce": {
+  "chars": 112,
+  "direction": "[bright, comic, crowd-working]",
+  "model": "eleven_v3",
+  "recipe": "159a669b83",
+  "text": "Evening, Krezk! I've walked a long way to see a man with one dog's ear, and I'll be honest, I expected more dog."
+ },
  "wren_featherfoot/4e311558b62afd18": {
   "chars": 68,
   "model": "eleven_v4",
@@ -75536,6 +75599,13 @@
   "model": "eleven_v4",
   "recipe": "a9f72efbd3",
   "text": "She's looking at me like a ham again. Rude."
+ },
+ "wren_featherfoot/827fc6023ee7d2dd": {
+  "chars": 142,
+  "direction": "[gentle, encouraging, playful]",
+  "model": "eleven_v3",
+  "recipe": "159a669b83",
+  "text": "Nobody flies the first time. You fall, very well, in the right direction. Lean in. Don't look down; look at Krezk. Krezk isn't going anywhere."
  },
  "wren_featherfoot/835124060a9cd105": {
   "chars": 177,
@@ -76035,6 +76105,13 @@
   "model": "eleven_v4",
   "recipe": "a9f72efbd3",
   "text": "I'd like the recipe. I'd like the recipe very much."
+ },
+ "wren_featherfoot/df89359d75d931da": {
+  "chars": 132,
+  "direction": "[shaky, wry, fond, near tears]",
+  "model": "eleven_v3",
+  "recipe": "159a669b83",
+  "text": "Sorrel. It's Sorrel, telling me to stop slouching. He's been dead two years. He'd never come back just for that. He would, actually."
  },
  "wren_featherfoot/dfa6dd7a6c8d7244": {
   "chars": 31,
