@@ -6,6 +6,14 @@
   "region": "wizard_of_wines",
   "stages": [
     {
+      "id": "rumored",
+      "journal": "No cask has come from the Wizard of Wines in weeks. The vineyard west of Vallaki supplies every tavern in the valley, and the taverns are running dry. Something has happened at the winery.",
+      "objectives": [
+        "Find out what has happened at the Wizard of Wines"
+      ],
+      "ends": ""
+    },
+    {
       "id": "asked",
       "journal": "Davian Martikov, master of the Wizard of Wines, is camped under the trees with his family while druids from Yester Hill hold his winery. Three green stones keep his vines alive in this sunless valley: one was stolen to Berez, one carried to Yester Hill, and one he hid in the founder's cask at the foot of the cellar stair. He asked us to drive the druids out of the winery and the press house and bring the hidden stone up.",
       "objectives": [
