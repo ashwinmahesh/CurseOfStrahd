@@ -3,25 +3,25 @@
 # church. Unvoiced until the voice thread casts them.
 
 ~ shopper
-Goodwife Anca [afraid]: Three coppers for a candle. Three. It was one, last spring. He says the roads are bad. The roads have always been bad.
+Goodwife Viorica [afraid]: Three coppers for a candle. Three. It was one, last spring. He says the roads are bad. The roads have always been bad.
 * Do you need help? -> shopper_help
 * We'll leave you to it. -> END
 
 ~ shopper_help
-Goodwife Anca: Help? No. Nobody's ever helped by being seen helping in this village. Buy something, if you're buying. He watches who talks to whom.
+Goodwife Viorica: Help? No. Nobody's ever helped by being seen helping in this village. Buy something, if you're buying. He watches who talks to whom.
 -> END
 
 ~ mihai
 if flag.burgomaster_buried
-Old Mihai: They buried Kolyan properly. I prayed for him too. I'd not have, a year ago. You find the list gets longer as you get older, and less fussy.
+Old Florin: They buried Kolyan properly. I prayed for him too. I'd not have, a year ago. You find the list gets longer as you get older, and less fussy.
 -> END
 endif
-Old Mihai: My grandson went up the road to the castle to ask for work. That was two winters ago. I don't pray he comes back. I pray he doesn't.
+Old Florin: My grandson went up the road to the castle to ask for work. That was two winters ago. I don't pray he comes back. I pray he doesn't.
 * We're sorry. -> END
 * Why come here, if the priest can't help? -> mihai_why
 
 ~ mihai_why
-Old Mihai: The roof keeps the rain off and the Morninglord keeps His opinions to Himself. That's more than I get at home.
+Old Florin: The roof keeps the rain off and the Morninglord keeps His opinions to Himself. That's more than I get at home.
 -> END
 
 ~ sorina

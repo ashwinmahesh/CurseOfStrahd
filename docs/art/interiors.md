@@ -136,7 +136,7 @@ braziers burning in the antechamber and either side of the altar.
 ### The Village of Barovia
 
 - **Bildrath's:** a board of prices, lamp oil and candles in rows on the wall (`oil_shelf`), rope coiled to the same
-  diameter (`rope_coils`), and by day a customer counting her coppers (Goodwife Anca).
+  diameter (`rope_coils`), and by day a customer counting her coppers (Goodwife Viorica).
 - **Blood of the Vine:** the casks stacked three high behind the bar (cask racks and two hollow casks). Its narration
   counts four drinkers, so it gets no more people.
 - **The burgomaster's mansion:** every outer window boarded (the claw-scored boards), the parlor's small fire, Ireena's
@@ -145,7 +145,7 @@ braziers burning in the antechamber and either side of the altar.
 - **Mad Mary's:** the sewing basket and the folded dress by the rocking chair (`sewing_basket`), a shelf of children's
   books in Gertruda's room, and the chair pulled up to the wall in Mary's.
 - **The church:** the sunburst over the altar, gone grey with soot, cold candles either side, vestments on pegs in the
-  vestry, and by day two people praying in the pews (Old Mihai, Goodwife Sorina).
+  vestry, and by day two people praying in the pews (Old Florin, Goodwife Sorina).
 
 People in public buildings (owner, 2026-10-08: "some buildings could use a few more random people to make more
 lively"): townsfolk NPCs on lane 28's pattern (`townsfolk` tag, `hours`, `facing`, portrait = sprite), their lines in
