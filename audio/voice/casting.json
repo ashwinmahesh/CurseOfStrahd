@@ -229,20 +229,22 @@
       "released": true
     },
     "krezk_guard": {
-      "voice_id": "0tbc1gIhNXCyVSqTawpr",
-      "name": "Barovia krezk_guard",
-      "description": "A middle-aged farmer on watch with a plain, rough, wary voice and a strong, clearly audible Eastern European (Romanian) accent. Stubborn and nervous, repeating his orders, more neighbour than soldier.",
+      "voice_id": "sGcPNcpR5PikknzyXcy7",
+      "name": "Library voice: Cristi Romana",
+      "description": "Library voice chosen for krezk_guard (2026-10-08, recast on v3). Was: A middle-aged farmer on watch with a plain, rough, wary voice and a strong, clearly audible Eastern European (Romanian) accent. Stubborn and nervous, repeating his orders, more neighbour than soldier.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     },
     "vallaki_guard": {
-      "voice_id": "olcNCfsv12bIXwWp40VJ",
-      "name": "Barovia vallaki_guard",
-      "description": "A tired town watchman with an ordinary, flat, weary voice and a strong, clearly audible Eastern European (Romanian) accent. Enforces silly rules with decency; recites 'All will be well' without conviction.",
+      "voice_id": "24mnRtegLytoHN7EgEvT",
+      "name": "Library voice: Shiro",
+      "description": "Library voice chosen for vallaki_guard (2026-10-08, recast on v3). Was: A tired town watchman with an ordinary, flat, weary voice and a strong, clearly audible Eastern European (Romanian) accent. Enforces silly rules with decency; recites 'All will be well' without conviction.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     },
     "kasimir_velikov": {
       "voice_id": "O9XgmQnaZveORWl6mTHm",
@@ -262,12 +264,13 @@
       "released": true
     },
     "kasha_varo": {
-      "voice_id": "ccF7aiD61ooejIi8Fh6h",
-      "name": "Barovia kasha_varo",
-      "description": "A tiny, very old widow with a thin, quavering, sing-song voice and a strong, clearly audible Eastern European (Romanian) accent. Folksy and kind, rambling a little, superstitious and knowing.",
+      "voice_id": "neZC2DQ42NvDV1SyoMxN",
+      "name": "Library voice: Mirela",
+      "description": "Library voice chosen for kasha_varo (2026-10-08, recast on v3). Was: A tiny, very old widow with a thin, quavering, sing-song voice and a strong, clearly audible Eastern European (Romanian) accent. Folksy and kind, rambling a little, superstitious and knowing.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     },
     "bella_sunbane": {
       "voice_id": "dRLQEL9m75py76FQ7oa3",
@@ -278,12 +281,13 @@
       "released": true
     },
     "urwin_martikov": {
-      "voice_id": "kZekvi2L5p4BfcCttLYJ",
-      "name": "Barovia urwin_martikov",
-      "description": "A quiet man in his forties with a low, calm, measured voice and a strong, clearly audible Eastern European (Romanian) accent. An innkeeper who listens more than he talks; discreet, wry, careful.",
+      "voice_id": "8WRfTpaUoqZSfTerOXzI",
+      "name": "Library voice: Mihai",
+      "description": "Library voice chosen for urwin_martikov (2026-10-08, recast on v3). Was: A quiet man in his forties with a low, calm, measured voice and a strong, clearly audible Eastern European (Romanian) accent. An innkeeper who listens more than he talks; discreet, wry, careful.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     },
     "patrina_velikovna": {
       "voice_id": "2t85BBUECtLLKQzxLD95",
@@ -294,12 +298,13 @@
       "model": "eleven_v3"
     },
     "anna_krezkova": {
-      "voice_id": "us6EEv3SS9kez6glxxgB",
-      "name": "Barovia anna_krezkova",
-      "description": "A small woman in her forties with a soft, worn, gentle voice and a strong, clearly audible Eastern European (Romanian) accent. Exhausted by grief, quiet and pleading, sings softly to her sick son.",
+      "voice_id": "kZXTQfulCLOSFsxuZQHx",
+      "name": "Library voice: Gabriela - Clear and Encouraging",
+      "description": "Library voice chosen for anna_krezkova (2026-10-08, recast on v3). Was: A small woman in her forties with a soft, worn, gentle voice and a strong, clearly audible Eastern European (Romanian) accent. Exhausted by grief, quiet and pleading, sings softly to her sick son.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     },
     "lydia_petrovna": {
       "voice_id": "iZs04IbkscYTx59Wx0ui",
@@ -311,12 +316,13 @@
       "released": true
     },
     "stefania_martikov": {
-      "voice_id": "IUgHRqyiyxSgbKFn1w15",
-      "name": "Barovia stefania_martikov",
-      "description": "A woman in her thirties with a warm, firm, practical voice and a strong, clearly audible Eastern European (Romanian) accent. A capable mother and peacemaker: direct, kind, a little tired.",
+      "voice_id": "AiaoHsEWJpbfK8rXdLbb",
+      "name": "Library voice: Ioana Alexandra - Social media",
+      "description": "Library voice chosen for stefania_martikov (2026-10-08, recast on v3). Was: A woman in her thirties with a warm, firm, practical voice and a strong, clearly audible Eastern European (Romanian) accent. A capable mother and peacemaker: direct, kind, a little tired.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     },
     "mordenkainen": {
       "voice_id": "n9aouNA8Iuw6UBxT6Kja",
@@ -424,12 +430,13 @@
       "model": "eleven_v3"
     },
     "henrik": {
-      "voice_id": "VClldFNd9YlJ5rhMk7Dm",
-      "name": "Barovia henrik",
-      "description": "A thin, sweating man with a jittery, whispering, nervous voice and a strong, clearly audible Eastern European (Romanian) accent. Paranoid and fearful, glancing over his shoulder, talking in hushed bursts.",
+      "voice_id": "h3aQ5g69oxB0wpernpfx",
+      "name": "Library voice: Ciprian Pop - Friendly and Reflective",
+      "description": "Library voice chosen for henrik (2026-10-08, recast on v3). Was: A thin, sweating man with a jittery, whispering, nervous voice and a strong, clearly audible Eastern European (Romanian) accent. Paranoid and fearful, glancing over his shoulder, talking in hushed bursts.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     },
     "bluto": {
       "voice_id": "gFBOs8oHAhnhxAPWxh1R",
@@ -529,12 +536,13 @@
       "library": true
     },
     "sorvia": {
-      "voice_id": "MC4QLCcmTFY3GgoS3WMU",
-      "name": "Barovia sorvia",
-      "description": "A Vistani woman in her thirties speaking English with a very strong, thick Romanian accent, unmistakably foreign. A smoky, amused, worldly voice, slow and teasing, enjoying the gloom like a play.",
+      "voice_id": "8OkSxYl0qQH1Kg3Qzxu2",
+      "name": "Library voice: Betty",
+      "description": "Library voice chosen for sorvia (2026-10-08, recast on v3). Was: A Vistani woman in her thirties speaking English with a very strong, thick Romanian accent, unmistakably foreign. A smoky, amused, worldly voice, slow and teasing, enjoying the gloom like a play.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     },
     "vestige_fekre": {
       "voice_id": "HH3kybY6uEJ2ebSa9Vy3",
@@ -593,12 +601,13 @@
       "released": true
     },
     "luvash": {
-      "voice_id": "rU6Y7Z48FqdFy4F2y4oO",
-      "name": "Barovia luvash",
-      "description": "A huge man with a loud, booming, drunken voice and a strong, clearly audible Eastern European (Romanian) accent. Heartbroken and blustering, swinging between rage and tears.",
+      "voice_id": "t4BC7dZYcd5rQUJlgolT",
+      "name": "Library voice: Andrei",
+      "description": "Library voice chosen for luvash (2026-10-08, recast on v3). Was: A huge man with a loud, booming, drunken voice and a strong, clearly audible Eastern European (Romanian) accent. Heartbroken and blustering, swinging between rage and tears.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     },
     "order_knight": {
       "voice_id": "VC6vCXhVaI8BZefRtXZV",
@@ -610,12 +619,13 @@
       "accent_tag": "[English accent]"
     },
     "alenka": {
-      "voice_id": "gAohuspMQfhzbmfPuY9W",
-      "name": "Barovia alenka",
-      "description": "A young Vistani woman in her twenties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A bright, playful, teasing voice, quick and flirtatious, laughing at the gloom.",
+      "voice_id": "Re06WujjJplgPJjn7M6s",
+      "name": "Library voice: Oksana",
+      "description": "Library voice chosen for alenka (2026-10-08, recast on v3). Was: A young Vistani woman in her twenties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A bright, playful, teasing voice, quick and flirtatious, laughing at the gloom.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     },
     "ilka_sarnov": {
       "voice_id": "Cq8gMra8w0trADKyB4Hi",
@@ -790,20 +800,22 @@
       "model": "eleven_v3"
     },
     "mirabel": {
-      "voice_id": "HfbDhmGOIqVqCkgbxiZP",
-      "name": "Barovia mirabel",
-      "description": "A Vistani woman in her forties speaking English with a very strong, thick Romanian accent, heavy on every word. A deep, throaty, laughing voice; loves a good story and bad wine; warm and knowing.",
+      "voice_id": "wEJjJg8SheKHTwm83mZY",
+      "name": "Library voice: Roxana",
+      "description": "Library voice chosen for mirabel (2026-10-08, recast on v3). Was: A Vistani woman in her forties speaking English with a very strong, thick Romanian accent, heavy on every word. A deep, throaty, laughing voice; loves a good story and bad wine; warm and knowing.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     },
     "arik": {
-      "voice_id": "D44UPzh87e1uHfcdhhPm",
-      "name": "Barovia arik",
-      "description": "A grey, unhurried man with a flat, toneless, empty voice and a strong, clearly audible Eastern European (Romanian) accent. Answers with the fewest words possible; nobody behind the eyes.",
+      "voice_id": "CAzSgVvpn06m5gG36jRW",
+      "name": "Library voice: MRV - Conversational",
+      "description": "Library voice chosen for arik (2026-10-08, recast on v3). Was: A grey, unhurried man with a flat, toneless, empty voice and a strong, clearly audible Eastern European (Romanian) accent. Answers with the fewest words possible; nobody behind the eyes.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     },
     "elisabeth_durst": {
       "voice_id": "Nz23pYZtvzHCV8wM9uSj",
