@@ -21,7 +21,7 @@
       "#############              ~.......22###",
       "#############              ........22###",
       "#############              ..........###",
-      "#############              ..........###",
+      "#############              ........=.###",
       "#####~.......              ..........###",
       "#####........==============..........###",
       "#####................................###",
@@ -351,6 +351,46 @@
       "label": "a traveller the roc dropped",
       "model": "bone_scatter",
       "item": "wings_of_flying"
+    },
+    {
+      "id": "tsolenka_roc_nest",
+      "cell": [
+        35,
+        15
+      ],
+      "kind": "examine",
+      "label": "The roc's nest",
+      "model": "roc_nest"
+    },
+    {
+      "id": "tsolenka_bones_2",
+      "cell": [
+        33,
+        19
+      ],
+      "kind": "decor",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "tsolenka_bones_3",
+      "cell": [
+        29,
+        21
+      ],
+      "kind": "decor",
+      "model": "bones"
+    },
+    {
+      "id": "landing_roc_quill",
+      "cell": [
+        8,
+        19
+      ],
+      "kind": "search",
+      "label": "a feather as long as a man, caught on the rocks",
+      "model": "leaves",
+      "search_dc": 12,
+      "item": "ink_pen"
     }
   ],
   "containers": [

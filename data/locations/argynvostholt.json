@@ -15,7 +15,7 @@
       "#........................................#",
       "#........#......................#........#",
       "#.######.#...............................#",
-      "#......#.#...............................#",
+      "#.=....#.#...............................#",
       "#......#.#......................#........#",
       "#...............................#........#",
       "#......#........................#........#",
@@ -26,9 +26,9 @@
       "#....~...##########....##########........#",
       "#.....~...........................######.#",
       "#..............####....####.......######.#",
-      "#.................................######.#",
+      "#................................=######.#",
       "#..................................#####.#",
-      "#.................................######.#",
+      "#.................................######=#",
       "#.................................######.#",
       "#.................................######.#",
       "#..........~.............................#",
@@ -475,6 +475,121 @@
       "label": "something on a ledge down the well",
       "model": "rubble",
       "item": "cube_of_force"
+    },
+    {
+      "id": "holt_frost_scar_1",
+      "cell": [
+        12,
+        12
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "holt_frost_scar_2",
+      "cell": [
+        14,
+        12
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "holt_frost_scar_3",
+      "cell": [
+        16,
+        12
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "holt_frost_scar_4",
+      "cell": [
+        18,
+        12
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "holt_frost_scar_5",
+      "cell": [
+        20,
+        12
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "holt_stall_bones",
+      "cell": [
+        5,
+        10
+      ],
+      "kind": "decor",
+      "model": "bones"
+    },
+    {
+      "id": "holt_stall_bones_2",
+      "cell": [
+        2,
+        13
+      ],
+      "kind": "decor",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "holt_stall_names",
+      "cell": [
+        2,
+        9
+      ],
+      "kind": "examine",
+      "label": "Names over the stalls",
+      "model": "tally_board"
+    },
+    {
+      "id": "holt_mausoleum_frost_1",
+      "cell": [
+        33,
+        20
+      ],
+      "kind": "decor",
+      "model": "snowdrift"
+    },
+    {
+      "id": "holt_mausoleum_frost_2",
+      "cell": [
+        40,
+        22
+      ],
+      "kind": "decor",
+      "model": "snowdrift"
+    },
+    {
+      "id": "holt_stall_chain",
+      "cell": [
+        6,
+        12
+      ],
+      "kind": "search",
+      "label": "something in the straw of a stall",
+      "model": "straw",
+      "search_dc": 13,
+      "item": "chain"
+    },
+    {
+      "id": "holt_squire_token",
+      "cell": [
+        8,
+        24
+      ],
+      "kind": "search",
+      "label": "something left on a squire's grave",
+      "model": "rubble",
+      "search_dc": 14,
+      "item": "holy_symbol_emblem"
     }
   ],
   "containers": [
