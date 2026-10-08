@@ -587,20 +587,29 @@ func test_eldritch_blast_takes_a_pick_for_each_beam() -> void:
 	assert_true(bool(a["repeat"]), "both beams may go at one target")
 
 
-func test_eldritch_blast_beams_go_where_they_are_aimed() -> void:
+## A level 5 warlock (two beams) and two targets, on the warlock's turn: {e, kip, one, two}.
+func _blast_field() -> Dictionary:
 	var e := TestCombat.open_field(3)
 	var kip := TestCombat.hero(e, "kip_smudgewick", Vector2i(1, 3), 5)
 	var one := TestCombat.punching_bag(e, Vector2i(6, 2), 200)
 	var two := TestCombat.punching_bag(e, Vector2i(6, 5), 200)
 	TestCombat.start_with(e, kip)
+	return {"e": e, "kip": kip, "one": one, "two": two}
+
+
+func test_eldritch_blast_beams_go_where_they_are_aimed() -> void:
+	var f := _blast_field()
+	var e := f["e"] as Encounter
 	var mark := e.events.size()
-	var r := e.spells.cast(kip, "eldritch_blast", 0, [one, two])
+	var r := e.spells.cast(f["kip"] as Combatant, "eldritch_blast", 0, [f["one"], f["two"]])
 	assert_true(r.ok, r.reason)
-	assert_eq(_attacks_at(e, mark, one), 1, "a beam at the first")
-	assert_eq(_attacks_at(e, mark, two), 1, "a beam at the second")
-	kip.action_available = true
+	assert_eq(_attacks_at(e, mark, f["one"] as Combatant), 1, "a beam at the first")
+	assert_eq(_attacks_at(e, mark, f["two"] as Combatant), 1, "a beam at the second")
+	f = _blast_field()
+	e = f["e"] as Encounter
 	mark = e.events.size()
-	assert_true(e.spells.cast(kip, "eldritch_blast", 0, [one]).ok)
-	assert_eq(_attacks_at(e, mark, one), 2, "both beams at one target")
-	kip.action_available = true
-	assert_eq(e.spells.cast(kip, "eldritch_blast", 0, [one, two, one]).reason, "Eldritch Blast has 2 beams")
+	assert_true(e.spells.cast(f["kip"] as Combatant, "eldritch_blast", 0, [f["one"]]).ok)
+	assert_eq(_attacks_at(e, mark, f["one"] as Combatant), 2, "both beams at one target")
+	f = _blast_field()
+	e = f["e"] as Encounter
+	assert_eq(e.spells.cast(f["kip"] as Combatant, "eldritch_blast", 0, [f["one"], f["two"], f["one"]]).reason, "Eldritch Blast has 2 beams")
