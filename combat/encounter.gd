@@ -8,9 +8,9 @@ extends RefCounted
 ##
 ## The Encounter holds the fight's state. Its jobs live in helpers, a file each, that it makes and owns:
 ## EncounterTurns, EncounterSight, EncounterMovement, EncounterMounts, EncounterGrapples, EncounterWeapons,
-## EncounterAttacks, EncounterDamage, EncounterReactions and EncounterActions (combat/encounter_*.gd), and GroundItems
-## (what lies on the battlefield). The forwarding functions at the end are the Encounter's interface, so the HUD, the
-## AI, spells and features keep calling it.
+## EncounterAttacks, EncounterDamage, EncounterReactions and EncounterActions (combat/encounter_*.gd), GroundItems
+## (what lies on the battlefield) and EncounterObjects (what stands on it and can be broken or set alight). The
+## forwarding functions at the end are the Encounter's interface, so the HUD, the AI, spells and features keep calling it.
 
 enum State { SETUP, ACTIVE, OVER }
 
@@ -97,6 +97,8 @@ var reaction_flow: EncounterReactions
 var actions: EncounterActions
 ## Weapons and other things lying on the battlefield, and picking them up (combat/ground_items.gd).
 var ground: GroundItems
+## Doors, furniture and the like that can be attacked and broken, and fire and oil on the floor (combat/encounter_objects.gd).
+var objects: EncounterObjects
 
 
 func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
@@ -113,6 +115,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	reaction_flow = EncounterReactions.new(self)
 	actions = EncounterActions.new(self)
 	ground = GroundItems.new(self)
+	objects = EncounterObjects.new(self)
 	spells = SpellCaster.new(self)
 	features = CombatFeatures.new(self)
 	reactions = Reactions.new(self)

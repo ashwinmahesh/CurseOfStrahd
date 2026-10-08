@@ -280,6 +280,10 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		return out
 	if s.has("area") and not s.has("attack"):
 		return out
+	# Aimed at an object on the battlefield, or at oil on the floor (EncounterObjects).
+	if tgt.is_empty() and str(opts.get("object", "")) != "":
+		out["why"] = e.objects.spell_target_why(c, s, str(opts["object"]), rng)
+		return out
 	if tgt.is_empty():
 		out["why"] = "Choose a target"
 		return out

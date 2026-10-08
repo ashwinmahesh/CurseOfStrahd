@@ -89,6 +89,8 @@ static func _build_props(view: LocationView) -> void:
 		if str(prop.get("burning", "")) != "" and StoryConditions.check(str(prop["burning"]), view.st):
 			view.prop_nodes[id + "#fire"] = _flame(view, LocationView._cell(prop["cell"]), 1.6)
 		view.prop_nodes[id] = _prop_node(view, prop)
+		if prop.has("hangs"):
+			BattleScenery.hang(view, prop, view.prop_nodes[id] as Node3D)   # a chandelier on its chain (F5)
 	for c: Variant in view.loc.get("containers", []):
 		var ct := c as Dictionary
 		if not StoryConditions.check(str(ct.get("when", "")), view.st):

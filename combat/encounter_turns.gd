@@ -119,6 +119,7 @@ func _begin_turn() -> void:
 	if not c.is_alive():
 		return
 	e.spells.turn_start(c)
+	e.objects.turn_start(c)
 	e.feature_actions.turn_start(c)
 	e.class_features.turn_start(c)
 	e.ravenloft.turn_start(c)
@@ -163,6 +164,7 @@ func end_turn() -> CombatResult:
 	e.items.turn_end(c)
 	e.triggered_features.turn_end(c)
 	e.spells.turn_end(c)
+	e.objects.turn_end(c)
 	e.spells.zones.prune()
 	_check_over()
 	if e.state != Encounter.State.ACTIVE:
@@ -212,6 +214,7 @@ func _advance_index() -> void:
 			e.log.add("turn", "Round %d" % e.round_no, "")
 			e.events.append({"type": "round", "round": e.round_no})
 			e.legendary.round_started()
+			e.objects.round_started()
 		if e.current().is_alive():
 			break
 

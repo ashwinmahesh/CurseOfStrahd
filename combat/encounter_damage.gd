@@ -157,6 +157,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	if source != null and e.features.has_feat(source, "mage_slayer") and target.creature.concentration != null:
 		slayer = Effect.new("Mage Slayer", &"feature", "mage_slayer").with_modifier("disadvantage", {"on": "concentration"})
 		target.creature.add_effect(slayer)
+	parts = e.objects.adjust_incoming(target, parts)
 	var dr := target.creature.take_damage_parts(parts, critical, e.dice, label)
 	if slayer != null:
 		target.creature.remove_effect(slayer)
@@ -263,6 +264,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		e.spells.end_sanctuary(source, "dealt damage")
 	e.spells.on_damaged(source, target, dr.final, parts)
 	e.items.on_damaged(source, target, dr.final, parts)
+	e.objects.on_damaged(target, parts)
 	if dr.final > 0:
 		e.spells.specials.duel_check_damage(source, target)
 	# Thought Shield (Great Old One 10): Psychic damage dealt to the warlock hits its source too.

@@ -123,6 +123,7 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 	Difficulty.of_options(view.st.options).prepare(e)
 	EncounterSetup.bring_familiars(e, party_cbs)
 	_light_the_fight(view, e)
+	BattleScenery.for_location(view, e)   # doors, furniture and chandeliers that can be broken (F5)
 	var surprised: Array[String] = []
 	var who := str(spec.get("surprise", ""))
 	for c in e.combatants:
@@ -372,6 +373,7 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 			m.creature.remove_condition(&"grappled")
 			m.creature.remove_condition(&"prone")
 	LocationStealth.after_fight(view, e)
+	BattleScenery.after_fight(view, e)   # broken doors stay open; what else broke stays broken this visit
 	LocationPlan.resume(view)
 	for m: Combatant in view.members + view.guest_members:
 		var tok := view.tokens[m.id] as CombatToken

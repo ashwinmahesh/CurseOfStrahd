@@ -32,6 +32,8 @@ var overlay: GridOverlay
 var field: FieldView
 ## What lies on the ground (world/combat/ground_view.gd).
 var ground_view: GroundView
+## The breakable things, fire and oil (world/combat/object_view.gd).
+var objects_view: ObjectView
 ## Spell and ability effects (world/combat/fx/spell_fx.gd).
 var fx: SpellFx
 ## What enemies shout and creatures sound like (world/combat/combat_barks.gd).
@@ -85,6 +87,11 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	add_child(field)
 	ground_view = GroundView.create(board)
 	add_child(ground_view)
+	objects_view = ObjectView.create(board)
+	add_child(objects_view)
+	# The breakable things on the board's '=' squares (a location fight placed its own already).
+	if e.state == Encounter.State.SETUP:
+		BattleScenery.from_board(e, board)
 	fx = SpellFx.new()
 	add_child(fx)
 	barks = CombatBarks.new()
@@ -274,6 +281,7 @@ func _refresh_all() -> void:
 func _show_weapons() -> void:
 	field.sync(e.spells.zones.objects)
 	ground_view.sync(e.ground.items)
+	objects_view.sync(e.objects)
 
 
 func _player() -> Combatant:
@@ -502,7 +510,8 @@ func _open_square_menu(at: Vector2) -> bool:
 	for it in _menu_items:
 		shown.append({"id": it["id"], "label": it["label"], "enabled": it.get("enabled", true), "why": it.get("why", "")})
 	hud.hide_tooltip()
-	hud.open_square_menu(o.name() if o != null else "This square", shown, at)
+	var thing := e.objects.blocking_at(cell)
+	hud.open_square_menu(o.name() if o != null else (thing.title() if thing != null else "This square"), shown, at)
 	return true
 
 
@@ -586,6 +595,13 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 				_update_hover()
 		_:
 			if t == null:
+				# An object's square (a crate, a door, a chandelier's chain, oil on the floor): aim at it instead.
+				var aimed := e.objects.redirect(c, selected, hover_cell) if hover_cell.x >= 0 else {}
+				if not aimed.is_empty():
+					if not bool(aimed["legal"]):
+						hud.banner(str(aimed["reason"]), 1.4)
+						return
+					_perform(aimed, [], Vector2.INF, Vector2.ZERO)
 				return
 			var why2 := catalog.target_why(c, selected, t.combatant)
 			if why2 != "":
@@ -922,10 +938,16 @@ func _update_hover() -> void:
 			about.append_array(e.ground.describe_at(o.cell))
 			hud.show_tooltip(o.name(), about, [], at)
 		return
-	# What lies on the square (GroundItems) is named under whatever else the tooltip says.
+	# What lies on the square (GroundItems), and what hangs or burns there (EncounterObjects), is named under whatever
+	# else the tooltip says; a door or a crate filling it has a card of its own.
 	var lying: Array = []
 	if hover_cell.x >= 0:
 		lying.append_array(e.ground.describe_at(hover_cell))
+		lying.append_array(e.objects.describe_at(hover_cell))
+		var card := e.objects.tooltip(hover_cell)
+		if not card.is_empty():
+			hud.show_tooltip(str(card["title"]), card["lines"] as Array, [], at)
+			return
 	if hover_cell.x < 0 or hover_cell == c.cell:
 		if lying.is_empty():
 			hud.hide_tooltip()
@@ -978,6 +1000,14 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		hud.show_tooltip(str(selected["label"]), ["Click a square to place it (or an enemy to put it beside them)" if ok else "Out of range (%d ft)" % rng], [], at)
 		return
 	if t == null:
+		# An object's square: the chosen attack or spell aimed at it (EncounterObjects.redirect).
+		var aimed := e.objects.redirect(c, selected, hover_cell) if hover_cell.x >= 0 else {}
+		if not aimed.is_empty():
+			var thing_lines: Array = []
+			for ob in e.objects.objects_at(hover_cell):
+				thing_lines.append_array(ob.describe())
+			hud.show_tooltip(str(aimed["label"]), thing_lines, [str(aimed["reason"])] if not bool(aimed["legal"]) else [], at)
+			return
 		var hint := "Choose a target"
 		if kind == "multi":
 			hint = "Choose targets (%d chosen) · Enter casts now" % picked.size()
@@ -1076,6 +1106,9 @@ func _play_events() -> void:
 				if bool(ev.get("mounted", false)):
 					continue
 				await tw.finished
+			"object_attack", "object_throw", "object_damage", "object_broken", "object_fall":
+				_stop_walking(walking)
+				await objects_view.play(ev, e.objects, tokens, fx)
 			"attack":
 				_stop_walking(walking)
 				# An Echo Knight's blow struck from its echo plays on the echo.

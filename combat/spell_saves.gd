@@ -165,6 +165,8 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 				(ctx["conc"] as Concentration).end("successful save")
 	ctx.erase("push_queue")
 	_run_pushes(ctx, pushes)
+	# The objects in the area take the damage too, and fire lights oil and burns webs there (EncounterObjects).
+	e.objects.area_spell(ctx, ctx.get("cells", []) as Array, shared, multi, bool(s.get("ignites_objects", false)))
 
 
 ## The conditions a spell's effects impose (for saves against them: Dwarven Resilience, Fey Ancestry, Brave).

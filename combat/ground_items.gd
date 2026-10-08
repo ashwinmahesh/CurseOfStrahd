@@ -228,13 +228,13 @@ func effect_added(cr: Creature, fx: Effect) -> void:
 		drop_held(c, "Unconscious")
 
 
-## A thrown weapon comes down in its target's space (for a big target, the square nearest the thrower), hit or miss.
-## `state` is the inventory entry it left ({} for one of a stack), `slot` the hand it left (empty while more of a stack
-## is still in hand).
-func land(c: Combatant, item_id: String, state: Dictionary, slot: String, target: Combatant) -> void:
+## A thrown weapon comes down in its target's space (for a big target, the square nearest the thrower), hit or miss,
+## or by `cell` (an object it was thrown at: the nearest square something can lie on). `state` is the inventory entry
+## it left ({} for one of a stack), `slot` the hand it left (empty while more of a stack is still in hand).
+func land(c: Combatant, item_id: String, state: Dictionary, slot: String, target: Combatant, cell: Vector2i = Vector2i(-1, -1)) -> void:
 	var name := str(Compendium.shared().item_data(item_id).get("name", item_id))
-	_put({"item_id": item_id, "name": name, "qty": 1, "owner_id": c.id, "slot": slot, "state": state, "actions": []},
-		_nearest_in(target, c) if target != null else c.cell)
+	var at := cell if cell.x >= 0 else (_nearest_in(target, c) if target != null else c.cell)
+	_put({"item_id": item_id, "name": name, "qty": 1, "owner_id": c.id, "slot": slot, "state": state, "actions": []}, at)
 
 
 ## A thrown weapon that returns to its thrower's hand (a Dwarven Thrower) leaves the ground. False if it isn't there.

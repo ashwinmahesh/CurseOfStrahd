@@ -99,16 +99,18 @@ func can_see(a: Combatant, b: Combatant) -> bool:
 	return true
 
 
-## The light on a square: "bright", "dim", "dark", or "magic_dark" (Darkness), from the map's light and spells.
+## The light on a square: "bright", "dim", "dark", or "magic_dark" (Darkness), from the map's light, spells and fires
+## (burning objects and oil, EncounterObjects).
 func light_at(cell: Vector2i) -> String:
 	var e := enc()
 	if e.spells.zones.magical_darkness(cell):
 		return "magic_dark"
 	var sl := e.spells.zones.spell_light(cell)
 	var lvl := str(sl["level"])
-	if lvl == "bright" or e.ambient_light == "bright":
+	var fire := e.objects.light_at(cell)
+	if lvl == "bright" or fire == "bright" or e.ambient_light == "bright":
 		return "bright"
-	if lvl == "dim" or e.ambient_light == "dim":
+	if lvl == "dim" or fire == "dim" or e.ambient_light == "dim":
 		return "dim"
 	return "dark"
 

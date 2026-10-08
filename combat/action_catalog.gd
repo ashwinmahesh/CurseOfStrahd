@@ -515,6 +515,8 @@ static func spell_targeting(data: Dictionary) -> String:
 func _items(c: Combatant, out: Array[Dictionary]) -> void:
 	# Potions, scrolls, oils and every magic item power (combat/combat_items.gd).
 	out.append_array(e.items.list(c))
+	# Oil to throw, pour and light (EncounterObjects).
+	out.append_array(e.objects.item_entries(c))
 	# Goodberries and other heal-only consumables that aren't potions: a Bonus Action to eat one or give it away.
 	if c.creature is Character:
 		var seen := {}
@@ -946,6 +948,8 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 			return e.use_item(c, id.substr(5), t if t != null else c)
 		"pickup":
 			return e.pick_up(c, id.substr(7))
+		"object":
+			return e.objects.perform(c, action, targets, point)
 	match id:
 		"grapple":
 			return e.unarmed_special(c, t, "grapple")
@@ -1285,8 +1289,9 @@ func square_actions(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Arr
 		if why == "Occupied":
 			why = "You can move through %s's space but not stop in it" % o.name() if o != null and c.allied_with(o) else "Someone is there"
 		out.append({"id": "move", "label": "Move here (%d ft)" % int(mp["cost"]) if bool(mp["ok"]) else "Move here", "enabled": bool(mp["ok"]), "why": why})
-	# Picking up what lies there (GroundItems).
+	# Picking up what lies there (GroundItems); attacking what stands or hangs there, oil on the floor (EncounterObjects).
 	out.append_array(e.ground.square_entries(c, cell))
+	out.append_array(e.objects.square_entries(c, cell))
 	if o == null or o == c:
 		return out
 	var seen := {}

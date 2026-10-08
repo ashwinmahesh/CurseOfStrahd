@@ -401,11 +401,11 @@ func test_giant_spider_web_restrains_until_broken() -> void:
 	TestCombat.start_with(e, sp)
 	e.monster_actions.apply_riders(sp, h, (sp.creature as Monster).action("web")["on_fail"] as Array, {}, "Web")
 	assert_true(h.creature.has_condition(&"restrained"))
-	var fx: Effect = null
-	for x: Effect in h.creature.effects:
-		if not x.escape.is_empty():
-			fx = x
-	assert_true(fx != null, "an action and a check can break the web")
+	assert_false(h.creature.effects.any(func(x: Effect) -> bool: return not x.escape.is_empty()), "2025: no check breaks it")
+	var web := e.objects.objects_at(h.cell)
+	assert_eq(web.size(), 1, "the webbing is an object round it (AC 10, 5 Hit Points)")
+	e.objects.damage(web[0], [{"amount": 3, "type": "fire"}], null, "test")
+	assert_false(h.creature.has_condition(&"restrained"), "free once the web is destroyed (Vulnerability to Fire)")
 
 
 func test_rat_slips_away_without_opportunity_attacks() -> void:

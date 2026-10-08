@@ -221,6 +221,8 @@ func _secondary(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	var rolled := spells.damage._roll_spell_damage(sub, null, false)
 	sub["shared_damage"] = rolled
 	spells._save_spell(sub, victims, r)
+	# The battlefield's objects in the burst (EncounterObjects): its damage, and fire.
+	e.objects.area_spell(sub, cells, rolled, [], bool(sec.get("ignites_objects", false)))
 	if not objects.is_empty():
 		for obj in objects:
 			r.damage += spells.deal_spell_damage(sub, obj, [{"amount": int(rolled["total"]), "type": spells._damage_type(sub)}], false, str(s["name"]), [str(rolled["text"])]).final

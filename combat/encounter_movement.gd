@@ -422,6 +422,7 @@ func _after_step(c: Combatant, from: Vector2i) -> void:
 	e.spells.specials.mid.shell_moved(c)
 	e.monster_actions.entered_space(c)
 	e.spells.on_enter_cell(c, from)
+	e.objects.on_moved(c, from)
 
 
 func stand_up(c: Combatant) -> CombatResult:

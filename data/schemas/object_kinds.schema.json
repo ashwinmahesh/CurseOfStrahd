@@ -1,0 +1,113 @@
+{
+  "$id": "object_kinds.schema.json",
+  "title": "Battlefield object kinds",
+  "description": "data/objects/kinds.json: the breakable things on a fight's battlefield (F5; combat/battle_object.gd, combat/encounter_objects.gd). Armor Class by substance and Hit Points by size and sturdiness follow the 2024 rules glossary's Breaking Objects tables.",
+  "type": "object",
+  "required": ["id", "summary", "substances", "hit_points", "area_types", "fire_light", "default_kind", "themes", "doors", "kinds"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"const": "kinds"},
+    "summary": {"type": "string"},
+    "substances": {
+      "type": "object",
+      "description": "Armor Class by what an object is made of.",
+      "additionalProperties": {"type": "integer", "minimum": 1}
+    },
+    "hit_points": {
+      "type": "object",
+      "description": "Hit Points by size: fragile or resilient.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["fragile", "resilient"],
+        "additionalProperties": false,
+        "properties": {
+          "fragile": {"type": "integer", "minimum": 1},
+          "resilient": {"type": "integer", "minimum": 1}
+        }
+      }
+    },
+    "area_types": {
+      "type": "array",
+      "description": "Damage types a spell's area deals to the objects in it (deviations.md: Area spells and objects).",
+      "items": {"$ref": "common.schema.json#/$defs/damage_type"}
+    },
+    "fire_light": {
+      "type": "object",
+      "description": "The light a burning object or square sheds, in feet.",
+      "required": ["bright", "dim"],
+      "additionalProperties": false,
+      "properties": {
+        "bright": {"type": "integer", "minimum": 0},
+        "dim": {"type": "integer", "minimum": 0}
+      }
+    },
+    "default_kind": {"type": "string", "description": "A '=' square's kind when nothing else names one."},
+    "themes": {
+      "type": "object",
+      "description": "Board theme -> the kind its '=' squares default to (when the art on the square names no kind).",
+      "additionalProperties": {"type": "string"}
+    },
+    "doors": {
+      "type": "object",
+      "description": "Which kind a location's closed door is: the first rule with a word in its id or label, else the default.",
+      "required": ["default", "rules"],
+      "additionalProperties": false,
+      "properties": {
+        "default": {"type": "string"},
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["kind", "words"],
+            "additionalProperties": false,
+            "properties": {
+              "kind": {"type": "string"},
+              "words": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        }
+      }
+    },
+    "kinds": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/kind"}
+    }
+  },
+  "$defs": {
+    "kind": {
+      "type": "object",
+      "required": ["name", "blocks", "flammable", "leaves", "summary"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string"},
+        "summary": {"type": "string"},
+        "substance": {"type": "string", "description": "A key of `substances` (its Armor Class), unless `ac` is given."},
+        "size": {"enum": ["tiny", "small", "medium", "large"]},
+        "resilience": {"enum": ["fragile", "resilient"]},
+        "ac": {"type": "integer", "minimum": 1, "description": "Armor Class, overriding the substance's."},
+        "hp": {"type": "integer", "minimum": 1, "description": "Hit Points, overriding the size table's."},
+        "blocks": {"enum": ["wall", "low", "none"], "description": "What it makes its squares: a wall (doors), low cover (furniture, crates), or nothing (overhead, a web)."},
+        "flammable": {"type": "boolean"},
+        "leaves": {"enum": ["floor", "rubble", "doorway"], "description": "What its squares become when it breaks: open floor, Difficult Terrain rubble, an open doorway."},
+        "art": {"type": "array", "items": {"type": "string"}, "description": "Board and prop art (art/sprites/props) that is this kind; art no kind names isn't breakable."},
+        "immune": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/damage_type"}, "description": "Besides Poison and Psychic (every object)."},
+        "resist": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/damage_type"}},
+        "vulnerable": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/damage_type"}},
+        "hangs": {"type": "boolean", "description": "It hangs over its squares (a chandelier): only ranged attacks and spells reach it, and breaking it drops it on whoever is below."},
+        "fall": {
+          "type": "object",
+          "description": "What a hanging object does to the creatures under it as it falls: a save, damage on a failure (half on a success), and Prone on a failure.",
+          "required": ["save", "dc", "damage", "type"],
+          "additionalProperties": false,
+          "properties": {
+            "save": {"$ref": "common.schema.json#/$defs/ability"},
+            "dc": {"type": "integer", "minimum": 1},
+            "damage": {"$ref": "common.schema.json#/$defs/dice"},
+            "type": {"$ref": "common.schema.json#/$defs/damage_type"},
+            "prone": {"type": "boolean"}
+          }
+        }
+      }
+    }
+  }
+}
