@@ -1227,7 +1227,9 @@
     "tack": 4.0,
     "cheeses": 2.5,
     "umbrella_stand": 5.0,
-    "broom": 6.0
+    "broom": 6.0,
+    "rope_coils": 2.5,
+    "sewing_basket": 1.0
   },
   "big_width": 1.6,
   "models3d": {
@@ -1577,7 +1579,11 @@
       "cheeses": "cheeses",
       "umbrella_stand": "umbrella_stand",
       "broom": "broom",
-      "relics": "relics"
+      "relics": "relics",
+      "rope_coils": "rope_coils",
+      "oil_shelf": "oil_shelf",
+      "sewing_basket": "sewing_basket",
+      "valley_map": "valley_map"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",

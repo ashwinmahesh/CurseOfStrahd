@@ -256,3 +256,22 @@ func test_the_death_house_has_what_its_text_names() -> void:
 				"%s: %s is the %s" % [loc_id, id, want[loc_id][id]])
 		v.queue_free()
 		await _frames(1)
+
+
+## Owner (2026-10-08): "some buildings could use a few more random people to make more lively. Stores, churches,
+## taverns". By day the village's shop has a customer and its church two people praying; the tavern keeps the four
+## drinkers its narration counts.
+func test_village_buildings_have_people_by_day() -> void:
+	GameState.story.minute_of_day = 10 * 60
+	var want := {"bildraths_mercantile": ["barovia_shopper"],
+		"village_church": ["barovia_worshipper_mihai", "barovia_worshipper_sorina"]}
+	for loc_id: String in want:
+		var v := _view(loc_id)
+		await _frames(1)
+		for npc: String in want[loc_id]:
+			assert_true(v.npc_tokens.has(npc), "%s is in %s by day" % [npc, loc_id])
+		v.queue_free()
+		await _frames(1)
+	for npc: String in ["barovia_shopper", "barovia_worshipper_mihai", "barovia_worshipper_sorina"]:
+		var d := Compendium.shared().get_entry("npcs", npc)
+		assert_eq(str(d["portrait"]), str(d["sprite"]), "%s wears the face of the figure it walks as" % npc)

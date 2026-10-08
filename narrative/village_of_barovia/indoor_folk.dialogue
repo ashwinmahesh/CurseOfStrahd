@@ -1,0 +1,33 @@
+# The Village of Barovia's few people indoors by day (lane 29, the interiors sweep, owner 2026-10-08: "some buildings
+# could use a few more random people to make more lively"): a customer at Bildrath's, and two who still pray in the
+# church. Unvoiced until the voice thread casts them.
+
+~ shopper
+Goodwife Viorica [afraid]: Three coppers for a candle. Three. It was one, last spring. He says the roads are bad. The roads have always been bad.
+* Do you need help? -> shopper_help
+* We'll leave you to it. -> END
+
+~ shopper_help
+Goodwife Viorica: Help? No. Nobody's ever helped by being seen helping in this village. Buy something, if you're buying. He watches who talks to whom.
+-> END
+
+~ mihai
+if flag.burgomaster_buried
+Old Florin: They buried Kolyan properly. I prayed for him too. I'd not have, a year ago. You find the list gets longer as you get older, and less fussy.
+-> END
+endif
+Old Florin: My grandson went up the road to the castle to ask for work. That was two winters ago. I don't pray he comes back. I pray he doesn't.
+* We're sorry. -> END
+* Why come here, if the priest can't help? -> mihai_why
+
+~ mihai_why
+Old Florin: The roof keeps the rain off and the Morninglord keeps His opinions to Himself. That's more than I get at home.
+-> END
+
+~ sorina
+if flag.doru_destroyed or flag.doru_freed
+Goodwife Sorina: It's quiet under the floor now. Father Donavich says to give thanks. I'm giving them. I'm also keeping one eye on the door.
+-> END
+endif
+Goodwife Sorina: Shh. Father Donavich is praying, and when he stops the noise starts again from under the floor. Pray if you're staying. Or go, quietly.
+-> END

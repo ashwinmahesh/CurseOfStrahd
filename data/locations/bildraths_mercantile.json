@@ -85,6 +85,27 @@
       "model": "book",
       "codex": "bildrath_ledger",
       "text": "Bildrath's ledger, ruled in red ink. Sales this month: rope, one length (the burgomaster, for the coffin, unpaid). Candles, none. Lamp oil: one flask, every evening, to the shop's own account. Under 'Debts owed': Ismark Kolyanovich, a long column. Under 'Debts forgiven': nothing, underlined twice."
+    },
+    {
+      "id": "bildrath_price_board",
+      "cell": [12, 5],
+      "label": "A board of prices",
+      "model": "notice_papers",
+      "kind": "decor"
+    },
+    {
+      "id": "bildrath_rope",
+      "cell": [1, 8],
+      "label": "Rope coiled to the same diameter",
+      "model": "rope_coils",
+      "kind": "decor"
+    },
+    {
+      "id": "bildrath_oil_shelf",
+      "cell": [0, 3],
+      "label": "Lamp oil and candles in rows",
+      "model": "oil_shelf",
+      "kind": "decor"
     }
   ],
   "containers": [
@@ -118,6 +139,26 @@
       "cell": [10, 8],
       "dialogue": "village_of_barovia/parriwimple:start",
       "when": "not (flag.burial_procession and flag.parriwimple_pallbearer and not flag.burgomaster_buried)"
+    },
+    {
+      "npc": "barovia_shopper",
+      "cell": [4, 7],
+      "dialogue": "village_of_barovia/indoor_folk:shopper",
+      "facing": "north",
+      "hours": [9, 16],
+      "path": [
+        {
+          "at": [5, 5],
+          "wait": 6,
+          "face": "north",
+          "work": "gesture"
+        },
+        {
+          "at": [2, 6],
+          "wait": 4,
+          "face": "west"
+        }
+      ]
     }
   ],
   "narration": {

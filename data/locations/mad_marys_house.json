@@ -108,6 +108,28 @@
       "model": "book",
       "codex": "gertruda_storybook",
       "text": "A child's book of tales, read until the spine gave up. Most pages are clean. One is soft with handling: a story about a girl in a tower and a prince in a black coat who sings under her window until she climbs down to him. In the margin, in a girl's hand: real?"
+    },
+    {
+      "id": "gertruda_book_shelf",
+      "cell": [13, 4],
+      "label": "A shelf of children's books",
+      "model": "shelves_wall",
+      "kind": "decor"
+    },
+    {
+      "id": "mary_listening_chair",
+      "cell": [11, 7],
+      "label": "A chair pulled up to the wall",
+      "model": "chair_high",
+      "facing": "north",
+      "kind": "decor"
+    },
+    {
+      "id": "mary_sewing_basket",
+      "cell": [2, 5],
+      "label": "A sewing basket and a folded dress",
+      "model": "sewing_basket",
+      "kind": "decor"
     }
   ],
   "containers": [

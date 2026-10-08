@@ -4311,6 +4311,57 @@ def relics(p):
     p.cyl(0.006, 0.07, (0.18, -0.09, 1.04), "pal_sickly", segs=6)
 
 
+@model("rope_coils", "free", ["rope_coils"])
+def rope_coils(p):
+    """Rope coiled to the same diameter, stacked on a crate, each coil tied off and tagged with its price."""
+    p.box((0.5, 0.42, 0.3), (0, 0, 0.15), WOOD)
+    for k, (x, y, z) in enumerate(((-0.11, 0.0, 0.3), (0.11, 0.02, 0.3), (0.0, 0.0, 0.38))):
+        for r in (0.07, 0.1, 0.13):
+            pts = [(x + r * math.cos(a), y + r * math.sin(a), z + 0.018 + k * 0.0) for a in (2 * math.pi * j / 18 for j in range(19))]
+            p.tube(pts, 0.016, "pal_tan", segs=6)
+        p.box((0.04, 0.005, 0.03), (x + 0.13, y - 0.02, z + 0.02), "pal_vellum")
+
+
+@model("oil_shelf", "wall", ["oil_shelf"])
+def oil_shelf(p):
+    """Two shelves on the wall: flasks of lamp oil with every label facing out, and candles in rows of ten."""
+    for z in (0.95, 1.3):
+        p.box((0.86, 0.2, 0.03), (0, -0.1, z), "pal_umber")
+    for s in (-1, 1):
+        p.box((0.03, 0.2, 0.42), (s * 0.43, -0.1, 1.12), "pal_umber")
+    for k in range(7):
+        x = -0.36 + k * 0.12
+        p.lathe([(0.0, 0.0), (0.035, 0.0), (0.038, 0.1), (0.014, 0.14), (0.014, 0.17), (0.0, 0.17)], (x, -0.1, 0.965),
+                "pal_moon_blue" if k % 2 else "pal_bog", segs=10)
+        p.box((0.04, 0.004, 0.04), (x, -0.137, 1.01), "pal_vellum")
+    for k in range(10):
+        p.cyl(0.012, 0.14, (-0.36 + k * 0.08, -0.1, 1.315), "pal_ivory", segs=8)
+
+
+@model("sewing_basket", "free", ["sewing_basket"])
+def sewing_basket(p):
+    """A sewing basket with yarn and a half-mended shirt, and a girl's dress folded neatly beside it."""
+    p.lathe([(0.0, 0.0), (0.14, 0.0), (0.16, 0.12), (0.0, 0.12)], (-0.1, 0, 0), "pal_tan", segs=16)
+    for x, y, col in ((-0.14, 0.03, "pal_crimson"), (-0.06, -0.03, "pal_moon_blue"), (-0.1, 0.06, "pal_parchment")):
+        p.lathe([(0.0, 0.0), (0.035, 0.01), (0.04, 0.035), (0.03, 0.06), (0.0, 0.065)], (x, y, 0.1), col, segs=10)
+    p.box((0.14, 0.1, 0.02), (-0.16, -0.06, 0.13), "pal_bone", rot=(10, 0, 20), soft=0.01, segs=1)
+    p.box((0.26, 0.22, 0.05), (0.18, 0.02, 0.025), "pal_moss", soft=0.02, segs=2)   # the folded dress
+    p.box((0.22, 0.04, 0.012), (0.18, -0.07, 0.052), "pal_ivory")
+
+
+@model("valley_map", "wall", ["valley_map"])
+def valley_map(p):
+    """A map of the valley pinned to a board on the wall: the river, the roads, the village, and the castle inked over."""
+    p.box((0.8, 0.03, 0.56), (0, -0.015, 1.35), "pal_umber")
+    p.box((0.72, 0.006, 0.48), (0, -0.033, 1.35), "pal_parchment")
+    p.tube([(-0.32, -0.04, 1.2), (-0.1, -0.04, 1.28), (0.05, -0.04, 1.25), (0.3, -0.04, 1.4)], 0.006, "pal_moon_blue", segs=4)
+    p.tube([(-0.3, -0.04, 1.45), (0.0, -0.04, 1.35), (0.28, -0.04, 1.22)], 0.004, "pal_umber", segs=4)
+    p.box((0.05, 0.004, 0.05), (0.05, -0.04, 1.36), "pal_rust")
+    p.box((0.07, 0.004, 0.07), (0.22, -0.04, 1.5), "pal_ink")
+    for x, z in ((-0.34, 1.57), (0.34, 1.57), (-0.34, 1.13), (0.34, 1.13)):
+        p.cyl(0.01, 0.01, (x, -0.04, z), "pal_crimson", rot=(90, 0, 0), segs=6)
+
+
 @model("bedroll", "against_wall", ["bedroll", "bedroll_back"])
 def bedroll(p):
     """Madam Eva's bed: quilts folded thick on the floor, a fur over them, pillows at the wall and a shawl thrown down."""
