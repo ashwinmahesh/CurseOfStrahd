@@ -125,11 +125,12 @@ sprite:
 
 ## Walk and attack sheets for every character in art/anim/animations.json, or ONLY="id ...", from the keyframe
 ## strips in art/generated/anim (docs/art/animation.md). GENERATE=1 first draws the strips that are missing (Gemini).
+## The sheets it built get their import settings (VRAM, no mipmaps: the crisp sprite shader never reads them).
 anims:
 	$(if $(GENERATE),python3 tools/art/anim_keyframes.py --retry 2 $(if $(ONLY),--only $(ONLY),) && python3 tools/art/anim_keyframes.py --kind walk $(if $(ONLY),--only $(ONLY),),true)
 	python3 tools/art/build_anims.py $(if $(ONLY),--only $(ONLY),)
 	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
-	python3 tools/art/set_import.py --sheets $(wildcard art/sprites/*/walk.png) $(wildcard art/sprites/*/attack.png)
+	python3 tools/art/set_import.py --sheets $(foreach id,$(or $(ONLY),*),$(wildcard art/sprites/$(id)/walk.png) $(wildcard art/sprites/$(id)/attack.png))
 	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 
 ## The six heroes' HD animation sheets (set v2) from their strips: make keys [ONLY="id ..."] [KINDS="walk8 ..."]
