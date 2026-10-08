@@ -364,11 +364,11 @@ func _flat_floors_cast_no_shadow() -> void:
 ## that distance), how far it takes to come in, and whether anything near the lens blurs.
 const DOF_STRENGTHS := {
 	"old": {"amount": 0.14, "start": 1.0, "per_zoom": 0.12, "transition": 3.5, "transition_per_zoom": 0.25, "near": true},
-	"light": {"amount": 0.092, "start": 3.0, "per_zoom": 0.15, "transition": 6.0, "transition_per_zoom": 0.3, "near": false},
+	"light": {"amount": 0.129, "start": 3.0, "per_zoom": 0.15, "transition": 6.0, "transition_per_zoom": 0.3, "near": false},
 	"lighter": {"amount": 0.05, "start": 6.0, "per_zoom": 0.2, "transition": 10.0, "transition_per_zoom": 0.0, "near": false},
 }
 ## Light unless the owner picks another (2026-10-07: "old" read as a smear at the top of the screen). Its blur went up
-## 15% (0.08 to 0.092, owner request 2026-10-08); where the blur starts is unchanged.
+## 15% (0.08 to 0.092) and then 40% more (0.129), owner requests 2026-10-08; where the blur starts is unchanged.
 static var dof_strength := "light"
 var _dof: CameraAttributesPractical = null
 
