@@ -506,14 +506,15 @@ static func _is_floor_box(board: ArenaBoard, n: Node, cell: Vector2i) -> bool:
 
 
 ## What a model takes from the 2D art (manifest "decals": a painting's canvas, figurines on a mantel, cut from the
-## 2D piece by pixel region and set at a socket, facing out) and the 2D flame at a "flame" socket (a hearth's fire).
+## 2D piece by pixel region and set at a socket, facing out) and the flame at a "flame" socket (a hearth's fire;
+## SetDressing.flame, 3D in the Modern look, green in a green brazier).
 static func _extras(model: Node3D, info: Dictionary) -> void:
 	var sockets := info.get("sockets", {}) as Dictionary
 	for key: String in sockets:
 		if not key.begins_with("flame"):
 			continue
 		var at := sockets[key] as Array
-		var f := SetDressing.flame(0.32)
+		var f := SetDressing.flame(0.32, "bile" if "glow_bile" in (info.get("materials", []) as Array) else "")
 		if f != null:
 			f.position = Vector3(float(at[0]), float(at[1]), float(at[2]))
 			model.add_child(f)
