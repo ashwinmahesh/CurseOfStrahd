@@ -29,6 +29,12 @@ Status: ✅ built · ○ planned
 | ✅ | Old Svalich Road, the wayside shrine | Ring of Mind Shielding (uncommon) | Search (Investigation DC 12): a loose board at the back of the shrine |
 | ✅ | Svalich Woods, the torn carcass | Boots of the Winterlands (uncommon) | Search (Perception DC 12): a traveller's pack under the carcass |
 
+## The Gates of Barovia (side quest, levels 6 and up)
+
+| | Where | Item | How |
+|---|---|---|---|
+| ✅ | The vanguard's pay chest, the Gates | +2 Longsword (rare) | Hoard: Marshal Dragomir's blade, once he's beaten (The Last Muster, docs/story/side_quests.md) |
+
 ## Death House (level 2)
 
 Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (study chest), the children's cache.
