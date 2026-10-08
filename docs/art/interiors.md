@@ -210,8 +210,9 @@ braziers burning in the antechamber and either side of the altar.
   the holt's great hall, entry hall, west gallery and servants' hall), banners rotted to lace over the long table,
   racks of rusted weapons in the armory (`weapon_rack`), fallen frames and torn canvas in the west gallery
   (`fallen_frames`) and portraits turned to the wall (`portrait_turned`), and the servants' table still laid
-  (low_cover_rooms "servants' hall", where the servant rule had stood beds on it). The burned halls take no furnishing
-  (`furnish: false`): the hall rule had laid rugs and armchairs among the knights.
+  (low_cover_rooms "servants' hall", where the servant rule had stood beds on it). The burned halls are furnished from the
+  furnish set `burned` (fallen beams, charred furniture, ash heaps, rubble; the west gallery's `burned_gallery` adds
+  fallen frames) where the hall rule had laid rugs and armchairs among the knights.
 - **The upper floor:** the knights' dormitory has the house's boards and wainscot (the barracks rule had given it cellar
   brick), Sir Godfrey's "plain room" and the commander's "bare room" are plain boards and plaster or stone with only
   their own things, the hall of heroes keeps to its statues, and the dragon's study has a chair too big for a man.
@@ -219,6 +220,26 @@ braziers burning in the antechamber and either side of the altar.
   `stake_bundle`, and a furnish "hunter" rule along its walls), the workroom's long table buried in maps, notes,
   candle stubs and small skulls (`map_table`), and the lantern room's copper nails in a spiral across its stone floor
   (`nail_spiral`, `span: [3, 3]`; a floor piece's `span` now centres it like a standing one), with no armchairs.
+
+### The west
+
+- **Baba Lysaga's hut:** drawings of the same boy on every wall, strings of onions and mushrooms in the kitchen, a
+  mobile of little bones over the cradle, and the table laid for more guests than she ever has. (Her hearth's green
+  fire needs a light colour the location lights don't have yet.)
+- **Marina's vault:** candles and rose petals (furnish set `tended_vault`), where the crypt rule had strewn bones: it's
+  kept "the way you keep a promise".
+- **Mount Baratok:** the hut and study are stone (place_looks `keep`), not parquet and panelling; the bed of furs is in
+  the hut; the study's wall is covered in chalk and a stack of rubbed-out slates stands in the corner (`slate_stack`),
+  with the study's books but no rug (set `library_bare`).
+- **The werewolf den:** cave rock in every chamber (place_looks `keep`; the pen had nursery wallpaper and the shrine
+  church flags), straw, furs and bones round the great cave and the mouth (set `den`), straw beds in the pen, Kiril's
+  bed of furs, chains in Emil's alcove, Zuleika's real bed, candle stubs at the shrine, the scratched tally.
+- **Tsolenka's tower:** a grey cloak on every peg in the vestibule (`cloak_pegs`), and the captain's room is stone with
+  a narrow bed and the watch log on a desk.
+
+Rooms are never left barren (coordinator, 2026-10-08): a room its text calls bare keeps only its own things, but a
+ruined or wrecked one is furnished from a set of its own debris (`furnish: "<set>"` names one of the catalog's furnish
+`sets`, which may give their own fill rates).
 
 Every piece a '=' square can be dressed as names an object kind in data/objects/kinds.json, so fights can shove, wreck
 and hide behind it (tests/unit/test_battle_objects.gd checks the catalog's lists and the interiors' own pieces).

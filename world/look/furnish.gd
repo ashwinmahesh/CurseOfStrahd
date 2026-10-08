@@ -65,7 +65,7 @@ static func dress(board: ArenaBoard, loc: Dictionary) -> int:
 				var arts := _arts(rule.get("wall", []) as Array)
 				var h := _hash(board.place, c, 11)
 				if not keep_clear.has(w) and not board.used_faces.has(face) and not arts.is_empty() \
-						and h % 100 < int(float(cfg.get("wall_fill", 0.75)) * 100.0):
+						and h % 100 < int(float(rule.get("wall_fill", cfg.get("wall_fill", 0.75))) * 100.0):
 					art = arts[(h / 7) % arts.size()]
 					var root := SetDressing.place(board, {"id": "furnish_%d_%d_w" % [c.x, c.y], "cell": [c.x, c.y], "model": art})
 					if root != null:
@@ -76,10 +76,10 @@ static func dress(board: ArenaBoard, loc: Dictionary) -> int:
 			if hung or board.grid.has_flag(c, CombatGrid.LOW) or board.grid.has_flag(c, CombatGrid.DIFFICULT):
 				continue
 			var key := "floor"
-			var fill := float(cfg.get("floor_fill", 0.6))
+			var fill := float(rule.get("floor_fill", cfg.get("floor_fill", 0.6)))
 			if not _beside_wall(board, c):
 				key = "centre"
-				fill = float(cfg.get("centre_fill", 0.08))
+				fill = float(rule.get("centre_fill", cfg.get("centre_fill", 0.08)))
 				if paths.has(c) or _furnished_around(board, c) >= 2:
 					continue   # the ways between the doors stay clear, and the middle isn't packed solid
 			elif _passage(board, c):
@@ -296,7 +296,10 @@ static func _area_of(areas: Array, c: Vector2i) -> int:
 ## The furnishing rule for a room: the first `rooms` rule whose words are in its name (else its id), else the board
 ## theme's.
 static func _rule(cfg: Dictionary, board: ArenaBoard, area: Dictionary) -> Dictionary:
-	if not bool(area.get("furnish", true)):
+	var own_set: Variant = area.get("furnish", true)
+	if own_set is String:
+		return (cfg.get("sets", {}) as Dictionary).get(own_set, {}) as Dictionary   # a named set: a burned hall's debris
+	if not bool(own_set):
 		return {}   # a room its text calls bare or kept clean: only its own props (an area's `furnish: false`)
 	var own: Variant = SetDressing.room_rule(cfg.get("rooms", []) as Array, area) if not area.is_empty() else null
 	if own != null:

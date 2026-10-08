@@ -448,7 +448,7 @@ func test_argynvostholt_and_the_tower_have_what_their_text_names() -> void:
 		"argynvostholt_upper": {"holt_dragon_chair": "throne"},
 		"van_richtens_tower_interior": {"vrt_holy_water": "holy_water_crate", "vrt_stakes": "stake_bundle",
 			"vrt_map_table_1": "map_table", "vrt_nail_spiral": "nail_spiral"}}
-	var bare := {"argynvostholt_hall": [Rect2i(9, 1, 18, 11), Rect2i(1, 13, 10, 11), Rect2i(26, 13, 9, 11)],
+	var bare := {"argynvostholt_hall": [],
 		"argynvostholt_upper": [Rect2i(1, 13, 10, 8), Rect2i(25, 13, 10, 8)],
 		"van_richtens_tower_interior": [Rect2i(2, 25, 10, 9)]}
 	for loc_id: String in want:
@@ -469,10 +469,75 @@ func test_argynvostholt_and_the_tower_have_what_their_text_names() -> void:
 				var at := (rug as Node3D).global_position
 				assert_false(Rect2(r).has_point(Vector2(at.x, at.z)), "%s: no rug in %s" % [loc_id, r])
 		if loc_id == "argynvostholt_hall":
+			# The burned halls are strewn with their own wreckage (furnish set "burned"), never a rug or an armchair.
+			for r: Rect2i in [Rect2i(9, 1, 18, 11), Rect2i(1, 13, 10, 11), Rect2i(12, 13, 13, 11), Rect2i(26, 13, 9, 11)]:
+				for rug in board.find_children("FurnishRug*", "MeshInstance3D", true, false):
+					var at := (rug as Node3D).global_position
+					assert_false(Rect2(r).has_point(Vector2(at.x, at.z)), "no rug among the burned halls")
+				for n in board.get_children():
+					if not n.has_meta("furnish"):
+						continue   # the house's own things (Vladimir's winged chair) stay
+					for m in n.find_children("Model_*", "Node3D", true, false):
+						var at := (m as Node3D).global_position
+						if Rect2(r).has_point(Vector2(at.x, at.z)):
+							assert_false(str(m.get_meta("model", "")) in ["armchair", "settee", "candelabra"], "no parlour among the ashes")
 			for x in range(28, 33):
 				assert_eq(BattleScenery.art_at(board, Vector2i(x, 17)), "table_set", "the servants' table is still laid")
 		if loc_id == "argynvostholt_upper":
 			var floor := board.floor_box(Vector2i(5, 6))
 			assert_true(floor != null and _surface(floor) == "interior/wood_planks", "the knights sleep on the house's boards")
+		v.queue_free()
+		await _frames(1)
+
+
+## Every area that names a furnishing set (`furnish: "<set>"`) names one the catalog has.
+func test_furnish_sets_named_by_areas_exist() -> void:
+	var sets := (SetDressing.catalog()["furnish"] as Dictionary).get("sets", {}) as Dictionary
+	var named := 0
+	for loc_id: String in Compendium.shared().tables["locations"]:
+		for a: Variant in Compendium.shared().get_entry("locations", loc_id).get("areas", []):
+			var own: Variant = (a as Dictionary).get("furnish", true)
+			if own is String:
+				named += 1
+				assert_true(sets.has(own), "%s: %s names the furnish set %s" % [loc_id, (a as Dictionary)["id"], own])
+	assert_true(named >= 6)
+
+
+## The ruined rooms read as wrecked, not empty (coordinator, 2026-10-08: "never barren, even ruined ones"):
+## Argynvostholt's burned halls are full of fallen beams, charred furniture and ash. And the west (the audit,
+## docs/art/interiors.md): the wolves' den is cave rock in every chamber (not nursery wallpaper or church flags),
+## the mage's hut is stone with its chalk wall and slates, the tower captain's room is stone with a desk, and grey
+## cloaks hang in the tower's vestibule.
+func test_ruins_are_full_and_the_west_has_what_its_text_names() -> void:
+	Look.set_style("modern", false)
+	var hall := _view("argynvostholt_hall")
+	await _frames(1)
+	var debris := 0
+	for n in hall.board.get_children():
+		if n.has_meta("furnish"):
+			var c := Vector2i(int(str(n.name).get_slice("_", 2)), int(str(n.name).get_slice("_", 3)))
+			if Rect2i(12, 13, 13, 11).has_point(c) or Rect2i(1, 13, 10, 11).has_point(c):
+				debris += 1
+	assert_true(debris >= 12, "the entry hall and west gallery are full of wreckage (%d)" % debris)
+	hall.queue_free()
+	await _frames(1)
+	var want := {"werewolf_den_caves": {"kiril_fur_bed": "bedroll", "zuleika_bed": "bed_small", "emil_chains_north": "wall_chains"},
+		"mount_baratok_hut": {"baratok_slates": "slate_stack"},
+		"tsolenka_pass_guard_tower": {"vestibule_cloaks_1": "cloak_pegs", "tower_watch_log": "desk"},
+		"berez_baba_lysagas_hut": {"lysaga_bone_mobile": "mobile", "lysaga_table_a": "table_set"}}
+	var floors := {"werewolf_den_caves": {Vector2i(4, 4): "cave/rock_floor", Vector2i(34, 13): "cave/rock_floor"},
+		"mount_baratok_hut": {Vector2i(10, 4): "dungeon/stone_floor"},
+		"tsolenka_pass_guard_tower": {Vector2i(16, 4): "dungeon/stone_floor"}}
+	for loc_id: String in want:
+		var v := _view(loc_id)
+		await _frames(1)
+		for id: String in want[loc_id]:
+			var node := v.prop_nodes.get(id) as Node
+			var models := node.find_children("Model_*", "Node3D", true, false) if node != null else []
+			assert_true(not models.is_empty() and str(models[0].get_meta("model", "")) == str(want[loc_id][id]),
+				"%s: %s is the %s" % [loc_id, id, want[loc_id][id]])
+		for c: Vector2i in floors.get(loc_id, {}):
+			var f := v.board.floor_box(c)
+			assert_true(f != null and _surface(f) == str(floors[loc_id][c]), "%s %s is %s" % [loc_id, c, floors[loc_id][c]])
 		v.queue_free()
 		await _frames(1)

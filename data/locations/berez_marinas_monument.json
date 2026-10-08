@@ -35,7 +35,8 @@
           12,
           8
         ]
-      ]
+      ],
+      "furnish": "tended_vault"
     },
     {
       "id": "marina_vault_stair",
@@ -137,6 +138,36 @@
       "kind": "examine",
       "label": "Roses on the floor",
       "model": "leaves"
+    },
+    {
+      "id": "marina_petals_2",
+      "cell": [
+        5,
+        5
+      ],
+      "label": "Rose petals",
+      "model": "leaves",
+      "kind": "decor"
+    },
+    {
+      "id": "marina_petals_3",
+      "cell": [
+        7,
+        3
+      ],
+      "label": "Rose petals",
+      "model": "leaves",
+      "kind": "decor"
+    },
+    {
+      "id": "marina_petals_4",
+      "cell": [
+        4,
+        4
+      ],
+      "label": "Rose petals",
+      "model": "leaves",
+      "kind": "decor"
     }
   ],
   "containers": [

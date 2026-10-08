@@ -254,8 +254,9 @@ func test_room_and_place_surfaces_exist() -> void:
 		for v: Variant in ((rule as Array)[1] as Dictionary).values():
 			named.append(str(v))
 	for look: Variant in (cat.get("place_looks", {}) as Dictionary).values():
-		for v: Variant in (look as Dictionary).values():
-			named.append(str(v))
+		for k: String in look:
+			if k != "keep":   # `keep` says the look holds in every room; it isn't a surface
+				named.append(str((look as Dictionary)[k]))
 	var locs := Compendium.shared().tables["locations"] as Dictionary
 	for loc_id: String in locs:
 		for a: Variant in (locs[loc_id] as Dictionary).get("areas", []):
