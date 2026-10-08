@@ -9,8 +9,8 @@ extends RefCounted
 ## How far a Search reaches (feet), and how long its reach shows on the ground (seconds).
 const SEARCH_FT := 15
 const REACH_SHOWN := 1.6
-## How strong the Search's tint is on the ground (owner, 2026-10-08: about a quarter, so the ground shows through).
-const REACH_ALPHA := 0.25
+## How strong the Search's tint is on the ground (owner, 2026-10-08: 15%, so the ground shows through).
+const REACH_ALPHA := 0.15
 
 
 static func _mark_found_traps(view: LocationView) -> void:

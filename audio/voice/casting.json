@@ -33,10 +33,11 @@
       "name": "Barovia Ireena (2026-10-07)",
       "description": "A passionate young Eastern European woman with a thick Romanian accent in her English. A rich, expressive mid-range voice with strong emotional colour and dynamic range: defiant, frightened, tender and furious by turns, her voice breaking a little when she is afraid. Proud, brave and alive.",
       "settings": {
-        "stability": 0.35,
+        "stability": 0.5,
         "style": 0.25
       },
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]"
     },
     "ismark": {
       "voice_id": "MPsVDVcDCapCO3oxCNoC",

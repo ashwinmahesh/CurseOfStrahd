@@ -118,7 +118,7 @@ func fight() -> bool:
 
 
 ## How many times a lost fight is played in all.
-const TRIES := 5
+const TRIES := 8
 ## Where the round-start save of the fight's first round is kept for a retry.
 const FIGHT_SAVE := "storybot_fight_start"
 
