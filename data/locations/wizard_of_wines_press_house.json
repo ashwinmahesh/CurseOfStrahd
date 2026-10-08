@@ -92,12 +92,16 @@
     {
       "id": "great_press",
       "cell": [
-        8,
-        5
+        9,
+        4
       ],
       "kind": "examine",
       "label": "The great press",
-      "model": "winch"
+      "model": "wine_press",
+      "span": [
+        4,
+        3
+      ]
     },
     {
       "id": "mash_vat",
@@ -107,7 +111,7 @@
       ],
       "kind": "examine",
       "label": "A vat of mash",
-      "model": "barrel",
+      "model": "wine_vat",
       "when": "not flag.press_house_cleared"
     },
     {
@@ -118,13 +122,13 @@
       ],
       "kind": "examine",
       "label": "The wizard's casks",
-      "model": "barrel"
+      "model": "cask_rack"
     },
     {
       "id": "press_tally",
       "cell": [
-        2,
-        3
+        1,
+        11
       ],
       "kind": "book",
       "label": "A tally board",
@@ -155,6 +159,36 @@
       "label": "something behind the wizard's casks",
       "model": "broken_boards",
       "item": "decanter_of_endless_water"
+    },
+    {
+      "id": "door_tools_1",
+      "cell": [
+        3,
+        14
+      ],
+      "label": "Tools on pegs: rakes, forks, a cooper's hammer",
+      "model": "tool_rack",
+      "kind": "decor"
+    },
+    {
+      "id": "door_tools_2",
+      "cell": [
+        7,
+        14
+      ],
+      "label": "Tools on pegs: rakes, forks, a cooper's hammer",
+      "model": "tool_rack",
+      "kind": "decor"
+    },
+    {
+      "id": "door_tools_3",
+      "cell": [
+        14,
+        14
+      ],
+      "label": "Tools on pegs: rakes, forks, a cooper's hammer",
+      "model": "tool_rack",
+      "kind": "decor"
     }
   ],
   "containers": [
@@ -165,7 +199,7 @@
         12
       ],
       "label": "The wizard's rack",
-      "model": "barrel",
+      "model": "cask_rack",
       "items": [
         {
           "id": "jug",

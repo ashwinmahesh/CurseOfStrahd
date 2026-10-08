@@ -392,3 +392,47 @@ func test_krezk_and_the_abbey_have_what_their_text_names() -> void:
 				assert_false(infirmary.has_point(Vector2(at.x, at.z)), "no rug in the infirmary")
 		v.queue_free()
 		await _frames(1)
+
+
+## Old Bonegrinder and the Wizard of Wines (the audit, docs/art/interiors.md): what their text names; the winery's eight
+## great vats over their blocks, with no rug or armchairs among them; casks in the wine cellar where little tombs and
+## bones stood; the hags' nest is straw.
+func test_bonegrinder_and_the_winery_have_what_their_text_names() -> void:
+	Look.set_style("modern", false)
+	var want := {"old_bonegrinder_loft": {"morgantha_footstool": "footstool", "morgantha_knitting": "knitting_basket"},
+		"wizard_of_wines_press_house": {"door_tools_1": "tool_rack", "great_press": "wine_press"},
+		"wizard_of_wines_winery": {"fermenting_vats": "great_vat", "great_vat_8": "great_vat", "bottle_racks": "bottle_rack",
+			"tasting_cups_north": "cup_hooks"},
+		"wizard_of_wines_cellar": {"old_bottles": "bottle_rack"}}
+	for loc_id: String in want:
+		var v := _view(loc_id)
+		await _frames(1)
+		var board := v.board
+		for id: String in want[loc_id]:
+			var node := v.prop_nodes.get(id) as Node
+			var models := node.find_children("Model_*", "Node3D", true, false) if node != null else []
+			assert_true(not models.is_empty() and str(models[0].get_meta("model", "")) == str(want[loc_id][id]),
+				"%s: %s is the %s" % [loc_id, id, want[loc_id][id]])
+		if loc_id == "wizard_of_wines_winery":
+			var hall := Rect2(10, 1, 21, 7)   # the vats' rows (the tasting room starts below them)
+			for m in board.find_children("Model_*", "Node3D", true, false):
+				var at := (m as Node3D).global_position
+				if (m as Node3D).is_visible_in_tree() and hall.has_point(Vector2(at.x, at.z)):
+					assert_false(str(m.get_meta("model", "")) in ["armchair", "settee", "table_meal", "table_chairs", "candelabra"],
+						"no parlour or tavern furniture among the vats (%s)" % m.get_meta("model", ""))
+			for rug in board.find_children("FurnishRug*", "MeshInstance3D", true, false):
+				var at := (rug as Node3D).global_position
+				assert_false(hall.has_point(Vector2(at.x, at.z)), "no rug in the fermenting hall")
+		if loc_id == "wizard_of_wines_cellar":
+			for z in range(1, 13):
+				for x in range(6, 16):
+					if board.grid.has_flag(Vector2i(x, z), CombatGrid.LOW):
+						assert_true(BattleScenery.art_at(board, Vector2i(x, z)) in ["cask_rack", "barrel"],
+							"the cask vaults' %s holds casks, not %s" % [Vector2i(x, z), BattleScenery.art_at(board, Vector2i(x, z))])
+			for m in board.find_children("Model_*", "Node3D", true, false):
+				assert_false(str(m.get_meta("model", "")) in ["crypt_small", "skeleton", "bones"], "no tombs or bones among the casks")
+		if loc_id == "old_bonegrinder_loft":
+			for c: Vector2i in [Vector2i(2, 4), Vector2i(3, 5)]:
+				assert_eq(BattleScenery.art_at(board, c), "straw_pallet", "the nest's hollows are straw")
+		v.queue_free()
+		await _frames(1)

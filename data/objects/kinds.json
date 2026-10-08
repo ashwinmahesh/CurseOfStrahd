@@ -152,7 +152,8 @@
         "wine_vat",
         "cask_rack",
         "bathtub",
-        "trough"
+        "trough",
+        "great_vat"
       ],
       "summary": "Hooped barrels, casks and vats.",
       "moves": "shove",
@@ -195,7 +196,8 @@
         "straw",
         "sack_pile",
         "cushions",
-        "rope_coils"
+        "rope_coils",
+        "straw_pallet"
       ],
       "summary": "Sacks, nets and straw: cloth that tears and burns.",
       "moves": "shove",
@@ -258,7 +260,8 @@
         "music_box",
         "doll",
         "perch",
-        "festival_cloth"
+        "festival_cloth",
+        "footstool"
       ],
       "summary": "Chairs, cradles and other light furniture.",
       "moves": "shove",
@@ -305,7 +308,8 @@
         "armor_stand",
         "toy_shelf",
         "shelf_goods",
-        "oil_shelf"
+        "oil_shelf",
+        "bottle_rack"
       ],
       "summary": "Bookcases, wardrobes, cabinets and tall clocks.",
       "moves": "topple",
@@ -422,7 +426,8 @@
       "art": [
         "boulder",
         "rocks",
-        "Rubble"
+        "Rubble",
+        "millstone"
       ],
       "summary": "A boulder or a heap of fallen stone, a 5-ft section at a time.",
       "moves": "shove",

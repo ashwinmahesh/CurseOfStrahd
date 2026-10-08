@@ -174,12 +174,16 @@
     {
       "id": "fermenting_vats",
       "cell": [
-        16,
-        4
+        12,
+        2
       ],
       "kind": "examine",
       "label": "The fermenting vats",
-      "model": "barrel"
+      "model": "great_vat",
+      "span": [
+        2,
+        2
+      ]
     },
     {
       "id": "pried_floorboards",
@@ -199,7 +203,7 @@
       ],
       "kind": "examine",
       "label": "Racks of empty bottles",
-      "model": "shelves"
+      "model": "bottle_rack"
     },
     {
       "id": "druids_missed_gem",
@@ -212,6 +216,124 @@
       "label": "a board the druids didn't lift",
       "model": "gold_spill",
       "item": "elemental_gem_emerald"
+    },
+    {
+      "id": "great_vat_2",
+      "cell": [
+        17,
+        2
+      ],
+      "label": "A great vat, full, and breathing",
+      "model": "great_vat",
+      "span": [
+        2,
+        2
+      ],
+      "kind": "decor"
+    },
+    {
+      "id": "great_vat_3",
+      "cell": [
+        22,
+        2
+      ],
+      "label": "A great vat, full, and breathing",
+      "model": "great_vat",
+      "span": [
+        2,
+        2
+      ],
+      "kind": "decor"
+    },
+    {
+      "id": "great_vat_4",
+      "cell": [
+        27,
+        2
+      ],
+      "label": "A great vat, full, and breathing",
+      "model": "great_vat",
+      "span": [
+        2,
+        2
+      ],
+      "kind": "decor"
+    },
+    {
+      "id": "great_vat_5",
+      "cell": [
+        12,
+        6
+      ],
+      "label": "A great vat, full, and breathing",
+      "model": "great_vat",
+      "span": [
+        2,
+        2
+      ],
+      "kind": "decor"
+    },
+    {
+      "id": "great_vat_6",
+      "cell": [
+        17,
+        6
+      ],
+      "label": "A great vat, full, and breathing",
+      "model": "great_vat",
+      "span": [
+        2,
+        2
+      ],
+      "kind": "decor"
+    },
+    {
+      "id": "great_vat_7",
+      "cell": [
+        22,
+        6
+      ],
+      "label": "A great vat, full, and breathing",
+      "model": "great_vat",
+      "span": [
+        2,
+        2
+      ],
+      "kind": "decor"
+    },
+    {
+      "id": "great_vat_8",
+      "cell": [
+        27,
+        6
+      ],
+      "label": "A great vat, full, and breathing",
+      "model": "great_vat",
+      "span": [
+        2,
+        2
+      ],
+      "kind": "decor"
+    },
+    {
+      "id": "tasting_cups_north",
+      "cell": [
+        1,
+        10
+      ],
+      "label": "Cups on hooks, every one of them clean",
+      "model": "cup_hooks",
+      "kind": "decor"
+    },
+    {
+      "id": "tasting_cups_south",
+      "cell": [
+        1,
+        14
+      ],
+      "label": "Cups on hooks, every one of them clean",
+      "model": "cup_hooks",
+      "kind": "decor"
     }
   ],
   "containers": [

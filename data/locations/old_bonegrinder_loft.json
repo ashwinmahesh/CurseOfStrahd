@@ -231,6 +231,27 @@
       "label": "a black cloth among the little bags",
       "model": "sack",
       "item": "portable_hole"
+    },
+    {
+      "id": "morgantha_knitting",
+      "cell": [
+        9,
+        7
+      ],
+      "label": "A basket of knitting and a bowl",
+      "model": "knitting_basket",
+      "kind": "decor"
+    },
+    {
+      "id": "morgantha_footstool",
+      "cell": [
+        12,
+        7
+      ],
+      "label": "A footstool, placed where the cages can see it",
+      "model": "footstool",
+      "facing": "east",
+      "kind": "decor"
     }
   ],
   "containers": [

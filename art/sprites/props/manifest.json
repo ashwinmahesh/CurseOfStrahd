@@ -5646,6 +5646,72 @@
       "mount": "stand",
       "world_width": 0.398
     },
+    "great_vat": {
+      "file": "art/sprites/props/great_vat.png",
+      "width_px": 488,
+      "height_px": 516,
+      "world_height": 1.35,
+      "pixel_size": 0.00264,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_great_vat.png",
+      "mount": "stand",
+      "world_width": 1.277
+    },
+    "bottle_rack": {
+      "file": "art/sprites/props/bottle_rack.png",
+      "width_px": 280,
+      "height_px": 516,
+      "world_height": 1.5,
+      "pixel_size": 0.00293,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_bottle_rack.png",
+      "mount": "stand",
+      "world_width": 0.814
+    },
+    "tool_rack": {
+      "file": "art/sprites/props/tool_rack.png",
+      "width_px": 280,
+      "height_px": 516,
+      "world_height": 1.5,
+      "pixel_size": 0.00293,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_tool_rack.png",
+      "mount": "wall",
+      "world_width": 0.814
+    },
+    "cup_hooks": {
+      "file": "art/sprites/props/cup_hooks.png",
+      "width_px": 516,
+      "height_px": 300,
+      "world_height": 0.25,
+      "pixel_size": 0.00084,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_cup_hooks.png",
+      "mount": "wall",
+      "world_width": 0.43
+    },
+    "footstool": {
+      "file": "art/sprites/props/footstool.png",
+      "width_px": 444,
+      "height_px": 516,
+      "world_height": 0.28,
+      "pixel_size": 0.00055,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_footstool.png",
+      "mount": "stand",
+      "world_width": 0.241
+    },
+    "knitting_basket": {
+      "file": "art/sprites/props/knitting_basket.png",
+      "width_px": 516,
+      "height_px": 292,
+      "world_height": 0.2,
+      "pixel_size": 0.00069,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_knitting_basket.png",
+      "mount": "stand",
+      "world_width": 0.353
+    },
     "sill_sword": {
       "file": "art/sprites/props/sill_sword.png",
       "width_px": 516,
