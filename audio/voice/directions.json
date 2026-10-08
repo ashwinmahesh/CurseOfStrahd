@@ -286,6 +286,9 @@
   "afeb363c4dbf64ea": "[weary, gentle, sad]",
   "cb4f4e3311c7654a": "[urgent, then broken, quiet]"
  },
+ "doru": {
+  "734c769a8a1b7a88": "[eerie, childlike, chilling]"
+ },
  "exethanter": {
   "055dd0501cc44a2f": "[alarmed whisper]",
   "0888e9573f2ddcc4": "[pleading, fragile]",
@@ -394,11 +397,13 @@
  },
  "hero_female": {
   "3215c2ee3466397d": "[dry, knowing aside]",
-  "abd29ea262f4fec7": "[surprised, appreciative]"
+  "abd29ea262f4fec7": "[surprised, appreciative]",
+  "fc571182487d3309": "[quiet, disgusted]"
  },
  "hero_male": {
   "3215c2ee3466397d": "[dry, knowing aside]",
-  "abd29ea262f4fec7": "[surprised, appreciative]"
+  "abd29ea262f4fec7": "[surprised, appreciative]",
+  "fc571182487d3309": "[quiet, disgusted]"
  },
  "ilka_sarnov": {
   "247e96fc41d2957c": "[frightened whisper]",
@@ -418,6 +423,9 @@
   "9d5191538c6c58cd": "[excited, bursting]",
   "d45d268eef0607d7": "[determined, a little sulky]",
   "f24a29f60c38246c": "[hoarse, eager, curious]"
+ },
+ "ireena": {
+  "fb82ad34d66f23d9": "[cold, defiant]"
  },
  "ismark": {
   "c8c9b57307f74b10": "[gruff, grieving, steady]"
@@ -631,6 +639,7 @@
   "59a290369cefc927": "[tearful, grateful, fragile]"
  },
  "madam_eva": {
+  "0e37c5f63ec72ec4": "[dry, knowing, ominous]",
   "280c8cd778f8de6d": "[dry, knowing, unbothered]"
  },
  "mirabel": {
@@ -812,11 +821,13 @@
   "71ff3c5a76532a57": "[grim, quiet]",
   "72eb1a771d0da235": "[sly, knowing]",
   "746e60ffd448266e": "[dry, queasy]",
+  "76ae68c7483d7dc0": "[tense, low, chilling]",
   "76aeba777bb1b046": "[dry, flat]",
   "7736e9a4faa6a184": "[dry, bleak]",
   "78a0f152d283b54d": "[dry, wry]",
   "78c5b73ef6a3941d": "[dry, wry]",
   "79885af623af83a6": "[dry, unnerved]",
+  "7a964618f71e70d8": "[quiet, wary]",
   "7ace8a1ac69c1481": "[hushed, eerie, quoting]",
   "7c500d229b2005ba": "[hushed, uncanny]",
   "7dbe046c16f80598": "[dry, quiet]",
@@ -849,8 +860,10 @@
   "a1c46e85bce18302": "[delighted, hushed]",
   "a1c539a1e99b522b": "[delighted, gentle wonder]",
   "a2e7c0c29499b86c": "[wry, amused]",
+  "a4dab9178be5359a": "[hushed, chilling]",
   "a69e50e3a1e0acfa": "[hushed, solemn]",
   "a7967176ed2b79bb": "[sly, intrigued]",
+  "a7b424bab585f8f1": "[low, ominous]",
   "a7f5f52ec785d15b": "[wry, quoting a nervous guard]",
   "a83487f1b97c895a": "[quiet, uncertain]",
   "a96b0951e14b3b7b": "[grim, hushed]",
@@ -1152,6 +1165,51 @@
   "e818bb5d09d33bb1": "[warm, moved]",
   "f6f5166e9cd4a259": "[warm, dry]"
  },
+ "strahd": {
+  "02c747913bd13643": "[cold fury, the courtesy dropping, low and sharp]",
+  "0ac66905aabf4ae2": "[cold courtesy]",
+  "0b46b36fc75cf06d": "[calm, cold, mocking]",
+  "0f5e25038c140b4f": "[cold, slow, absolute]",
+  "1249e9f743e68b56": "[quiet, knowing, amused]",
+  "18a10370b192cd62": "[silken contempt]",
+  "1f3762f9593e2da4": "[calm certainty, possessive]",
+  "1f9fd14b0e2bd099": "[composed again, silken, patient]",
+  "26d5a340ae88f8aa": "[courtly, possessive, calm certainty]",
+  "2b6586bdb3398d5a": "[light, cruel, amused]",
+  "3ba8b481b243316d": "[mild, contemptuous]",
+  "41e59d89c83f3d27": "[silken, unforgiving]",
+  "45310951d389a74a": "[soft, intimate, menacing]",
+  "52e9243e1617ed00": "[amused, contemptuous]",
+  "576e5a270de8ad8a": "[tender tone, possessive meaning]",
+  "5ed251ecfd924b1c": "[mocking courtesy, cold]",
+  "626e96f79f62a3a1": "[warm invitation, chilling]",
+  "6412ec79a9dc9dc8": "[courtly, unhurried, possessive]",
+  "671eaa628055719b": "[solicitous, faintly hungry]",
+  "699397fff128913d": "[courtly, then intimate and menacing]",
+  "7a220416eaa457e2": "[soft, amused, threatening]",
+  "816daf00c48a3f21": "[approving, possessive, calm]",
+  "83af0e9ec2bb5465": "[calm, courtly, quietly menacing]",
+  "87dd7cca9a33e625": "[low, intent, possessive]",
+  "88f99f4ab9012b13": "[mild, certain]",
+  "9cbc2a75938be3d8": "[cold, measured, promising]",
+  "a924142741fa02f4": "[soft, cold]",
+  "ac626d122eb7d773": "[soft, knowing, possessive]",
+  "aec7473885b2d040": "[amused, sly]",
+  "b5630eb8d7c0f8dc": "[pleasant, chilling]",
+  "be145f942680b5db": "[pleasant, menacing]",
+  "c5462e9fa151b6b8": "[pleasant, quietly cruel]",
+  "c847f17d49251a7e": "[courteous, quietly cruel]",
+  "c97a30d88e01134b": "[gracious, menacing]",
+  "ce9085c451735a65": "[calm, intimate, predatory]",
+  "d6285a55bdb2add7": "[mild, cold, proud]",
+  "d68534b991118c9e": "[gracious, quiet steel]",
+  "da9777ca32523a98": "[amused, dismissive, cold]",
+  "e108de1ead6741e2": "[gracious, then softly cruel]",
+  "e7aecb0f62bbb1fd": "[gracious, calm certainty]",
+  "e910968dfb96fe53": "[gentle, possessive, chilling]",
+  "eb5e32eb7da0574b": "[courtly, warm, insincere]",
+  "ebda8d9d52f21219": "[cold, disdainful, unhurried]"
+ },
  "thorn": {
   "1c164bf19430445d": "[small, guilty]",
   "2551f0f9f5bbcfa5": "[smug, small]",
@@ -1286,6 +1344,13 @@
   "ee85b68c202e5f8f": "[sympathetic, nervous]",
   "f260a690fade5b18": "[dry, rattling off]",
   "fa2c7cc943b24e19": "[dry, rote]"
+ },
+ "vallaki_lamplighter": {
+  "6a20bb78681afd87": "[weary, haunted]",
+  "867051f76cd3284c": "[bitter, shaking]",
+  "f585f1822090d9b6": "[grieving, quiet, raw]",
+  "e7d3bb3c205dc665": "[weary, dutiful]",
+  "f851e906f49a524c": "[low, uneasy warning]"
  },
  "vestige_dahlver_nar": {
   "1f6f946c9c80e480": "[many voices, sing-song, eerie]",
