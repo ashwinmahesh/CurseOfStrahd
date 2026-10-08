@@ -2106,6 +2106,25 @@
       "library": true,
       "accent_tag": "[strong Romanian accent]",
       "shared_with": "escher"
+    },
+    "krezk_petru": {
+      "voice_id": "Xb3zeLrTi6F4ziIcXdwk",
+      "name": "Library voice: Austin - Timid and Casual",
+      "description": "Petru, eight, of the farms below Krezk, half a werewolf: chosen by Claude on the owner's go-ahead (2026-10-08), the library boy's voice Austin (a timid orphan boy) over Quang Anh and Don Kim.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
+    },
+    "the_grandsire": {
+      "voice_id": "6PwTqznVdei2pIAeBNr0",
+      "name": "Barovia The Grandsire",
+      "description": "An ancient werewolf, the eldest of a Barovian pack, a wolf the size of a cart horse, speaking English with a strong Romanian accent: rolled r's, hard consonants. An enormous, deep, slow, gravelly voice like a grave being dug, half growl, old and patient, possessive and menacing, with a wolf's snarl at the edges.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "6PwTqznVdei2pIAeBNr0",
+      "released": true
     }
   },
   "sfx": {

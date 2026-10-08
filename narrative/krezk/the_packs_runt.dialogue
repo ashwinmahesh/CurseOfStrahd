@@ -33,7 +33,7 @@ if quest.the_packs_runt == given
 -> END
 endif
 if quest.the_packs_runt == done
-Petru: I'm a boy all month now. Except I can still smell when it's going to rain. Mama says that's useful. Stelian says it's cheating.
+Little Petru: I'm a boy all month now. Except I can still smell when it's going to rain. Mama says that's useful. Stelian says it's cheating.
 -> END
 endif
 if not flag.petru_met
@@ -42,7 +42,7 @@ if not quest.the_packs_runt or quest.the_packs_runt == rumored
 quest the_packs_runt asked
 endif
 Narrator: A small boy sits in the straw of the goat pen with a goat asleep against each side of him. His eyes catch the light the way the goats' do.
-Petru: Mirela said you'd come. Mirela says I'm not to be frightened. I'm frightened anyway. I do it quietly.
+Little Petru: Mirela said you'd come. Mirela says I'm not to be frightened. I'm frightened anyway. I do it quietly.
 endif
 * What happened to you in the den? -> den
 * [if not flag.petru_seen] [Insight DC 13] (Look at him the way a goat would.) -> seen | unseen
@@ -52,8 +52,8 @@ endif
 * Goodbye. -> END
 
 ~ den
-Petru: The moon came while we were in there. Before you came. I was the only one it came for. It hurt, and then it didn't, and then I was very fast.
-Petru: The big old one, the Grandsire, licked my face after. He said I was his now. He said Kiril was his once, and look how well Kiril turned out. He said he'd come for me at the next full moon. That's tonight. Or tomorrow. It's very close; I can feel it.
+Little Petru: The moon came while we were in there. Before you came. I was the only one it came for. It hurt, and then it didn't, and then I was very fast.
+Little Petru: The big old one, the Grandsire, licked my face after. He said I was his now. He said Kiril was his once, and look how well Kiril turned out. He said he'd come for me at the next full moon. That's tonight. Or tomorrow. It's very close; I can feel it.
 -> petru
 
 ~ seen
@@ -73,7 +73,7 @@ take spell_scroll__remove_curse
 ~ cure
 set petru_cured
 Narrator: The words go into him and something goes out, the way a fever breaks. The ruff at his neck is only hair. When he looks up his eyes are a boy's eyes, brown and wet, and the goats on either side of him wake up and edge away, offended.
-Petru: It's gone. (He sniffs.) I can't smell the rain any more.
+Little Petru: It's gone. (He sniffs.) I can't smell the rain any more.
 Narrator: Out beyond the wall, very far off, something lifts its head and howls, long and low and angry, as if it has felt something taken.
 -> petru
 
@@ -110,7 +110,7 @@ combat grandsire
 quest the_packs_runt done
 Narrator: In the morning Petru's mother comes down from the south row with a basket on her arm and nothing to say. She stands in front of you for a long while. Then she puts the basket down and holds your hands, one after the other, all of you.
 if not flag.petru_cured
-Petru: (He's asleep against a goat, and wakes when the basket goes down.) Is he gone? The big one? (He sniffs.) He's gone. I can still smell the rain. I don't mind.
+Little Petru: (He's asleep against a goat, and wakes when the basket goes down.) Is he gone? The big one? (He sniffs.) He's gone. I can still smell the rain. I don't mind.
 endif
 Narrator: Dmitri Krezkov sends down what Krezk pays for a wolf that takes children: a purse, and a set of iron bands that have hung in the watch house since before his grandfather, for the wolf that never came.
 gold +300

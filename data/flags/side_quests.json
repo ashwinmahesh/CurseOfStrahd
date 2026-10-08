@@ -790,6 +790,26 @@
       "id": "grandsire_slain",
       "type": "bool",
       "summary": "The Grandsire, the werewolf pack's eldest, is dead in Krezk's square (The Pack's Runt)."
+    },
+    {
+      "id": "corvina_letter_1",
+      "type": "bool",
+      "summary": "The party found Corvina's first letter in the frost garden on Mount Baratok (The Mage's Lost Pages)."
+    },
+    {
+      "id": "corvina_letter_2",
+      "type": "bool",
+      "summary": "The party found Corvina's letter with her name in the ring of glass (The Mage's Lost Pages)."
+    },
+    {
+      "id": "corvina_letter_3",
+      "type": "bool",
+      "summary": "The party found Corvina's last letter, with the count's postscript, at the overlook (The Mage's Lost Pages)."
+    },
+    {
+      "id": "corvina_name_known",
+      "type": "bool",
+      "summary": "Mordenkainen read the letters and gave the party his apprentice's name, Corvina, to say to her in the castle (The Mage's Lost Pages)."
     }
   ]
 }
