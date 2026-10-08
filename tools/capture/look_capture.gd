@@ -13,6 +13,7 @@ extends Node
 ## - LOOK_AA=msaa2|fxaa|smaa: another anti-aliasing in place of the preset's.
 ## - LOOK_OUTLINE=off|silhouette|full: the world's ink lines.
 ## - LOOK_FADE=1: the 3D pieces near the party faded, as when they stand in front of it.
+## - LOOK_TILT=1: the camera looking out to the horizon (the sky and what lies past the map).
 ## - LOOK_BENCH=1 times each part of the renderer in turn instead of shooting (_bench), LOOK_BENCH=presets the graphics
 ##   presets, several rounds over, since other work on the machine makes one reading noisy; LOOK_BENCH=pairs what one
 ##   change saves, switching it on and off in quick turns (_bench_pairs), the steadiest under load.
@@ -28,6 +29,7 @@ const SHOTS := {
 	"castle_hall": {"loc": "castle_ravenloft_main_floor", "cells": [[25, 8], [26, 8], [25, 9], [26, 9]]},
 	"tser_pool": {"loc": "tser_pool", "hour": 18},
 	"death_house_den": {"loc": "death_house_ground", "cells": [[4, 5], [5, 5], [4, 6], [5, 6]]},
+	"tavern": {"loc": "blood_of_the_vine"},
 	"lake_dusk": {"loc": "lake_zarovich", "hour": 18, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]]},
 	"lake_night": {"loc": "lake_zarovich", "hour": 23, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]]},
 	"tser_pool_water": {"loc": "tser_pool", "hour": 23, "cells": [[15, 9], [16, 9], [15, 10], [16, 10]]},
@@ -100,8 +102,8 @@ func capture_shots(tool: Node, out: String) -> void:
 		Engine.max_fps = 60
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 		var calls := RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
-		print("look %s %s: %.2f ms a frame uncapped (%d fps), %d draw calls, rain %s, snow %s" % [Look.style(), id, ms,
-			int(1000.0 / ms), calls, view.atmosphere.weather_spec("rain"), view.atmosphere.weather_spec("snow")])
+		print("look %s %s: %.2f ms a frame uncapped (%d fps), %d draw calls, %d lights" % [Look.style(), id, ms,
+			int(1000.0 / ms), calls, view.find_children("*", "OmniLight3D", true, false).size()])
 		await tool.call("wait_frames", 10)
 		tool.call("_shot", "%s_%s.png" % [out, id])
 
@@ -150,6 +152,20 @@ func _build(shot: Dictionary) -> void:
 				t.set_meta("fade", 0.72)
 				ModelPiece.set_fade(t, 0.72)
 		view.set_process(false)
+	if OS.get_environment("LOOK_TILT") != "":
+		# Looking out to the horizon: the camera tilted all the way past its farthest zoom (CameraRig.horizon).
+		view.rig.distance = view.rig.zoom_max
+		view.rig.horizon = 1.0
+		view.rig.snap_to_target()
+	if OS.get_environment("LOOK_SDFGI") != "":
+		var env := view.atmosphere.env
+		env.sdfgi_enabled = true
+		env.sdfgi_use_occlusion = true
+		env.sdfgi_cascades = 4
+		env.sdfgi_min_cell_size = 0.2
+		env.sdfgi_bounce_feedback = 0.5
+		env.sdfgi_energy = 1.0
+		env.ssil_enabled = false
 	if OS.get_environment("LOOK_WET") != "":
 		RenderingServer.global_shader_parameter_set(&"world_wet", float(OS.get_environment("LOOK_WET")))
 	var off := OS.get_environment("LOOK_OFF").split(",", false)
@@ -167,6 +183,17 @@ func _build(shot: Dictionary) -> void:
 	if "filter" in off:
 		RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
 		RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
+	if "post" in off:
+		view.post.visible = false
+	if "weather" in off and view.atmosphere.weather != null:
+		for w in view.atmosphere.weather.follow:
+			w.visible = false
+	if "vista" in off:
+		for v in view.find_children("Vista*", "Node3D", true, false):
+			(v as Node3D).visible = false
+	if "sky" in off:
+		view.atmosphere.set_process(false)
+		post.set_shader_parameter("sky_on", false)
 	if "ssr" in off:
 		view.atmosphere.env.ssr_enabled = false
 	if "splits" in off:
@@ -299,7 +326,14 @@ func _bench_pairs(tool: Node, id: String) -> void:
 	var sun := view.atmosphere.sun
 	var vp := get_viewport()
 	# [name, on, off]: what to set for the change on, and for it off.
+	var env := view.atmosphere.env
 	var changes: Array[Array] = [
+		["SDFGI (vs SSIL)", func() -> void:
+			env.sdfgi_enabled = true
+			env.ssil_enabled = false,
+			func() -> void:
+				env.sdfgi_enabled = false
+				env.ssil_enabled = Graphics.bounce()],
 		["texture noise (vs hashed)", func() -> void: post.set_shader_parameter("fast_noise", true),
 			func() -> void: post.set_shader_parameter("fast_noise", false)],
 		["flat floors cast no shadow", func() -> void:

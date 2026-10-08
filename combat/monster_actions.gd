@@ -1033,10 +1033,8 @@ func bonus_action(c: Combatant, plan: String = "") -> CombatResult:
 					var st := save_targets(c, act)
 					if not st.is_empty():
 						c.bonus_available = false
-						var r := CombatResult.new()
-						# The AI's after-the-main-action step doesn't wait on a prompt yet, so these saves settle by rule.
-						save_action(c, act, st[0], r, false)
-						return r
+						# The saves can pause for a hero's choice: the result says so, and the AI's next step waits.
+						return save_action(c, act, st[0], CombatResult.new())
 			"rampage":
 				if plan == "rampage":
 					return _rampage(c, act)

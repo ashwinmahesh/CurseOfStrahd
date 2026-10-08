@@ -253,10 +253,10 @@ const MODERN_RELIEF := 0.9
 ## (MACRO_STRENGTH unless set). A surface's own "material" in art/textures/manifest.json wins over this, and its own
 ## "normal_file" and "orm_file" (occlusion, roughness, metal) over both.
 const MATERIALS: Array[Array] = [
-	["marble", {"roughness": 0.15, "spread": 0.3, "relief": 0.5}],
-	["black_stone", {"roughness": 0.25, "spread": 0.4, "relief": 0.6}],
-	["amber", {"roughness": 0.2, "spread": 0.3, "relief": 0.5}],
-	["tile", {"roughness": 0.3, "spread": 0.5, "relief": 0.8}],
+	["marble", {"roughness": 0.3, "spread": 0.3, "relief": 0.5}],
+	["black_stone", {"roughness": 0.32, "spread": 0.4, "relief": 0.6}],
+	["amber", {"roughness": 0.28, "spread": 0.3, "relief": 0.5}],
+	["tile", {"roughness": 0.36, "spread": 0.5, "relief": 0.8}],
 	["parquet", {"roughness": 0.3, "spread": 0.5, "relief": 0.6}],
 	["panel", {"roughness": 0.4, "spread": 0.5, "relief": 0.9}],
 	["wainscot", {"roughness": 0.45, "spread": 0.5, "relief": 0.8}],

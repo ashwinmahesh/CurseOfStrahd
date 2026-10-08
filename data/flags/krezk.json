@@ -300,6 +300,11 @@
       "id": "krezk_threatened",
       "type": "bool",
       "summary": "The party threatened Krezk's wall and was answered with an arrow (gate). Persuasion at the gate is no longer offered, and the watchman and Dmitri remember it."
+    },
+    {
+      "id": "crime_krezk",
+      "type": "int",
+      "summary": "F8: crimes somebody saw in Krezk that the watch hasn't settled (story/crime.gd counts them; narrative/watch/krezk.dialogue fines the party and clears it)."
     }
   ]
 }

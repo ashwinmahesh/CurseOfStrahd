@@ -48,6 +48,11 @@ own wild ground, and all of it sways in the place's wind. The Classic look keeps
   walk), but further apart (`tree_density`), since a spruce is fuller than the old cone. The first rows are nodes of
   their own and fade like the map's; the rest are drawn many at once in 10-square chunks, so the camera only draws
   the chunks it can see, darker further out as before.
+- **Shadows**: only trees within `SHADOW_REACH` (3) squares of where people walk cast the sun's shadow; every shadow
+  split draws every tree that casts, and the ones further out shade nothing anyone looks at (lane 6's frame budget,
+  W17, 2026-10-07).
+- **Hidden until found**: plants on squares HiddenAreas hides are left out (AtmosphereLand's HiddenWatch redraws
+  them when a secret door is found), and none grows on a trap's square, where a pit could open.
 - **Ground plants**: on the forest land out to `land_reach` squares from the map, thinning with distance, reeds and
   sedge along shores, nothing on roads; on the map, under its trees (`under`), spilling out of the woods onto the side
   of a square that faces them (`edge`), and short and sparse on its other wild squares (`open`, `open_scale`), never
@@ -71,6 +76,8 @@ Bark and leaves share one function, so a tree moves as one, and its shadow sways
   pass works from, so the leaves would miss the outlines, mist and grade. Edges are hard cut, smoothed by the
   screen-space anti-aliasing.
 - Roughness never below 0.1: the screen pass reads near-zero roughness as water.
+- Leaves and wood within `near_fade` units of the camera thin away, so the camera tilted toward the horizon (W13)
+  sees past the trees right in front of it.
 - Plant copies drawn many at once keep where they stand in their node's `origins` meta: a MultiMesh without a
   renderer (headless tests) keeps none.
 

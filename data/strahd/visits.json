@@ -222,6 +222,71 @@
           "go": "castle_ravenloft_gates:default"
         }
       ]
+    },
+    {
+      "id": "eyes_at_the_window",
+      "summary": "Once he is watching the party (attention: watched), a bat at the shutters during a Long Rest indoors at night.",
+      "trigger": {
+        "on": [
+          "rest"
+        ],
+        "night": true,
+        "outdoors": false
+      },
+      "when": "flag.strahd_watcher_seen and attention >= watched",
+      "once": true,
+      "dialogue": "strahd/attention:window"
+    },
+    {
+      "id": "letter_of_grievance",
+      "summary": "Once the party is marked (attention: marked), a raven brings his list of what they have done to him.",
+      "trigger": {
+        "on": [
+          "arrive"
+        ],
+        "outdoors": true
+      },
+      "when": "flag.strahd_watcher_seen and attention >= marked",
+      "once": true,
+      "dialogue": "strahd/attention:grievance"
+    },
+    {
+      "id": "the_hunt",
+      "summary": "Once the party is hunted (attention: hunted), his spawn and wolves fall on their camp at night, without him.",
+      "trigger": {
+        "on": [
+          "rest"
+        ],
+        "night": true,
+        "outdoors": true
+      },
+      "when": "flag.strahd_watcher_seen and attention >= hunted",
+      "cooldown_hours": 72,
+      "max": 2,
+      "dialogue": "strahd/attention:hunt",
+      "then": [
+        {
+          "encounter": {
+            "id": "strahd_the_hunt",
+            "text": "His spawn come in low and fast, the wolves at their heels.",
+            "monsters": [
+              {
+                "monster": "vampire_spawn"
+              },
+              {
+                "monster": "vampire_spawn"
+              },
+              {
+                "monster": "dire_wolf"
+              },
+              {
+                "monster": "dire_wolf"
+              }
+            ],
+            "after": "strahd/attention:hunt_after"
+          }
+        }
+      ]
     }
   ]
 }
