@@ -1,0 +1,19 @@
+{
+  "id": "krezk_petru",
+  "name": "Petru",
+  "title": "Of the Farms below Krezk",
+  "summary": "The smallest of the five children taken from the farms below Krezk to the werewolves' den, eight years old. The moon came for him in the den before he was rescued, and he sleeps in Krezk's goat pens now.",
+  "portrait": "toma_sarnov",
+  "sprite": "toma_sarnov",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "krezk",
+    "child",
+    "lycanthrope"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}

@@ -122,3 +122,8 @@ func test_the_tinkers_wagon_at_level_5() -> void:
 
 func test_the_raven_trap_at_level_6() -> void:
 	await _series("lake_zarovich_trail", 22, 6, "raven_trap", [1, 2, 3, 4], ["fowlers_ready"])
+
+
+## The sim starts at the road gate; in play the party is already by the pens, inside the open gate.
+func test_the_grandsire_at_level_8() -> void:
+	await _series("krezk", 23, 8, "grandsire", [1, 2, 3, 4], ["krezk_gate_open", "den_children_freed"], [], ["krezk_gate"])

@@ -1,0 +1,189 @@
+{
+  "id": "the_grandsire",
+  "name": "The Grandsire",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Pack's Runt, docs/story/side_quests.md), built from the 2025 Monster Manual's werewolf: bite, claws and Pack Tactics, scaled to a Large wolf of CR 9 with a howl, legendary actions and Legendary Resistance. Drawn with the werewolf's sprite at Large."
+  },
+  "size": "large",
+  "type": "monstrosity",
+  "tags": [
+    "boss",
+    "lycanthrope",
+    "shapechanger"
+  ],
+  "alignment": "chaotic evil",
+  "art": "werewolf",
+  "ac": 16,
+  "initiative": 3,
+  "hp": {
+    "average": 180,
+    "dice": "19d10+76"
+  },
+  "speed": {
+    "walk": 40
+  },
+  "abilities": {
+    "str": 20,
+    "dex": 15,
+    "con": 18,
+    "int": 10,
+    "wis": 14,
+    "cha": 12
+  },
+  "saves": {
+    "con": 8,
+    "wis": 6
+  },
+  "skills": {
+    "perception": 6,
+    "stealth": 6
+  },
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 16,
+  "languages": [
+    "Common"
+  ],
+  "cr": 9,
+  "xp": 5000,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When the Grandsire fails a saving throw, he can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "pack_tactics",
+      "name": "Pack Tactics",
+      "action": "passive",
+      "summary": "Advantage on an attack roll against a creature if an ally is within 5 ft of it and not Incapacitated.",
+      "text": "The Grandsire has Advantage on an attack roll against a creature if at least one of his allies is within 5 feet of the creature and the ally doesn't have the Incapacitated condition.",
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "bite",
+          "count": 1
+        },
+        {
+          "action": "claw",
+          "count": 2
+        }
+      ],
+      "summary": "A Bite and two Claws.",
+      "text": "The Grandsire makes one Bite attack and two Claw attacks."
+    },
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 16,
+          "dice": "2d10+5",
+          "type": "piercing"
+        }
+      ],
+      "on_hit": [
+        {
+          "do": "condition",
+          "condition": "prone",
+          "max_size": "large"
+        }
+      ],
+      "summary": "Old yellow teeth that knock a Large or smaller target Prone.",
+      "text": "Hit: 16 (2d10 + 5) Piercing damage. If the target is Large or smaller, it has the Prone condition."
+    },
+    {
+      "id": "claw",
+      "name": "Claw",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 12,
+          "dice": "2d6+5",
+          "type": "slashing"
+        }
+      ],
+      "summary": "A rake of black claws.",
+      "text": "Hit: 12 (2d6 + 5) Slashing damage."
+    },
+    {
+      "id": "moon_howl",
+      "name": "Howl at the Moon",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "wis",
+        "dc": 15,
+        "success": "none"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 60
+      },
+      "targets": {
+        "range": 60,
+        "not_types": [
+          "beast",
+          "monstrosity"
+        ]
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "source_turn_start"
+        }
+      ],
+      "summary": "Recharge 5-6: everyone within 60 ft that isn't a Beast or Monstrosity makes a DC 15 Wis save or is Frightened until his next turn.",
+      "text": "Each creature within 60 feet of the Grandsire that isn't a Beast or a Monstrosity makes a DC 15 Wisdom saving throw. Failure: the target has the Frightened condition until the start of the Grandsire's next turn."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 3,
+    "options": [
+      {
+        "id": "snap",
+        "name": "Snap",
+        "cost": 2,
+        "action": "bite",
+        "summary": "Makes one Bite."
+      },
+      {
+        "id": "lope",
+        "name": "Lope",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to his Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regions": [
+    "krezk",
+    "werewolf_den"
+  ],
+  "ai_profile": "pack_hunter",
+  "summary": "The pack's eldest: a wolf the size of a cart horse, grey to white with age, missing an ear, who taught Kiril everything and answers to nobody now. His bite knocks you down, his howl empties your nerve, and the pack fights better around him."
+}
