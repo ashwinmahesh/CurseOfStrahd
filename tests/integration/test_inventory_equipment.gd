@@ -110,3 +110,32 @@ func test_attunement_is_instant() -> void:
 	assert_false("cloak_of_protection" in ch.attuned)
 	assert_eq(GameState.story.total_minutes(), before)
 	assert_eq(Character.MAX_ATTUNED, 3, "still three at most")
+
+
+## Cursed armor its wearer is attuned to stays on and stays with them until the curse is lifted (QA FN-05): the card's
+## Unequip and the right-click menu's Take off, Give, stash and Drop are greyed with the reason, and nothing moves.
+func test_cursed_armor_stays_on_until_the_curse_is_lifted() -> void:
+	var ch := GameState.story.party[0]
+	var armor := "armor_of_vulnerability_slashing__plate_armor"
+	ch.add_item(armor)
+	assert_true(ch.equip(armor, "armor"))
+	assert_true(ch.attune(armor))
+	var inv := await _open(0, armor)
+	var b := _buttons(inv)
+	assert_true(b.has("Unequip") and (b["Unequip"] as Button).disabled, "the card's Unequip is greyed")
+	for a in inv.actions_for(ch.entry_of(armor)):
+		var label := str(a["label"])
+		if label == "Take off" or label.begins_with("Give") or label.begins_with("Send to the stash") or label == "Drop one":
+			assert_true(bool(a.get("disabled", false)), "%s is greyed" % label)
+			assert_true(str(a.get("tooltip", "")).begins_with("Cursed"), "%s says why: %s" % [label, a.get("tooltip", "")])
+	inv.call("_drop_on_pack", {"from": "slot", "id": armor, "slot": "armor", "entry": ch.entry_of(armor)})
+	inv.call("_drop_on_member", {"from": "pack", "id": armor, "entry": ch.entry_of(armor)}, 1)
+	inv.call("_drop_on_stash", {"from": "pack", "id": armor, "entry": ch.entry_of(armor)})
+	await _frames(1)
+	assert_eq(str(ch.equipped("armor").get("id", "")), armor, "dragging it off, to a friend or to the stash does nothing")
+	ch.entry_of(armor)["curse_lifted"] = true
+	root.call("close_screen")
+	inv = await _open(0, armor)
+	b = _buttons(inv)
+	assert_false((b["Unequip"] as Button).disabled, "lifted: it comes off")
+	root.call("close_screen")

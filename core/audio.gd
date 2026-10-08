@@ -2,10 +2,10 @@ extends Node
 ## Music and sound effects (owner feedback after Phase 3). The recordings are free-licensed files kept untouched in
 ## art/sourced/<pack>/ (docs/assets/LICENSES.md); art/audio.json says which file plays for each mood and each effect,
 ## and which mood each place or map theme has. A mood or effect with no file is silent, so nothing depends on audio.
-## Volumes are the player's, kept in user://settings.cfg (not in a save).
+## Volumes are the player's, kept in their settings file (GameSettings.path: user://settings.cfg, or a test's or
+## capture's own), not in a save.
 
 const MANIFEST := "res://art/audio.json"
-const SETTINGS := "user://settings.cfg"
 const FADE := 1.6
 ## How loud the music is (A2): calm while exploring, a fight's own level, and full while a boss stands on the field or
 ## someone in the party is Bloodied.
@@ -77,7 +77,7 @@ func _ready() -> void:
 	_fight_timer.timeout.connect(_check_fight)
 	add_child(_fight_timer)
 	var cfg := ConfigFile.new()
-	if cfg.load(SETTINGS) == OK:
+	if cfg.load(GameSettings.path) == OK:
 		music_volume = float(cfg.get_value("audio", "music", music_volume))
 		sfx_volume = float(cfg.get_value("audio", "sfx", sfx_volume))
 	_apply_volumes()
@@ -88,10 +88,11 @@ func set_volumes(music: float, sfx: float) -> void:
 	sfx_volume = clampf(sfx, 0.0, 1.0)
 	_apply_volumes()
 	var cfg := ConfigFile.new()
-	cfg.load(SETTINGS)
+	cfg.load(GameSettings.path)
 	cfg.set_value("audio", "music", music_volume)
 	cfg.set_value("audio", "sfx", sfx_volume)
-	cfg.save(SETTINGS)
+	DirAccess.make_dir_recursive_absolute(GameSettings.path.get_base_dir())
+	cfg.save(GameSettings.path)
 
 
 func _apply_volumes() -> void:

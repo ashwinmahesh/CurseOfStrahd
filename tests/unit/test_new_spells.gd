@@ -430,6 +430,30 @@ func test_polymorph_ends_with_concentration() -> void:
 	assert_true(a.creature is Character)
 
 
+## A bigger shape finds room (QA FN-06): Polymorph into a Huge beast beside an ally, or with a wall behind, spread
+## the beast over the ally's square and into the stone. It now stands where it's free, keeping a square it held when
+## it can.
+func test_a_bigger_shape_never_stands_on_a_neighbour_or_in_a_wall() -> void:
+	var e := TestCombat.encounter(["..........", "..........", "..........", "..........", "##########"], 1)
+	var c := TestCombat.high_caster(e, ["polymorph"], Vector2i(0, 0))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(4, 3))
+	var b := TestCombat.hero(e, "hedda_ironvow", Vector2i(5, 3))
+	TestCombat.foe(e, "wolf", Vector2i(9, 0))
+	TestCombat.start_with(e, c)
+	var big := {}
+	for f in ShapeChange.beast_forms(20.0):
+		if str(f.get("size", "")) == "huge":
+			big = f
+	assert_false(big.is_empty(), "a Huge beast to become")
+	e.shapes.transform(a, big, {"temp_hp": 10, "ends_without_temp_hp": true, "label": "Polymorph"})
+	assert_eq(a.size_cells, 3)
+	for f in a.footprint():
+		assert_false(e.grid.is_solid(f) or not e.grid.in_bounds(f), "%s: not in a wall or off the map" % f)
+		var o := e.occupant_at(f)
+		assert_true(o == null or o == a, "%s: not on %s" % [f, o.name() if o != null else ""])
+	assert_true(a.footprint().any(func(f: Vector2i) -> bool: return f.distance_to(Vector2i(4, 3)) <= 2.9), "it grows where it stood")
+
+
 func test_a_shapes_temporary_hit_points_and_the_creatures_own_dont_stack() -> void:
 	var e := _field()
 	var c := TestCombat.high_caster(e, ["polymorph"], Vector2i(2, 3))

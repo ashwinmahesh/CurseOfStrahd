@@ -187,3 +187,25 @@ func test_the_death_save_button_is_on_screen() -> void:
 	assert_true(screen.encloses(button.get_global_rect()), "the Death Saving Throw button is on screen")
 	cv.finished.emit("victory")
 	await _frames(3)
+
+
+## Lay On Hands outside a fight never spends more of the pool than the wound needs, nor any on someone at full Hit
+## Points (QA, 2026-10-08: a menu picked after someone else had healed them still spent the points it named).
+func test_lay_on_hands_spends_only_what_the_wound_needs() -> void:
+	var st := GameState.story
+	var paladin := Pregens.build("godrick_pendlebrook", 3)
+	paladin.finish_long_rest()
+	if paladin.resource_max("lay_on_hands") <= 0:
+		return
+	st.party[3] = paladin
+	root.call("rebuild")
+	await _frames(3)
+	var hurt := st.party[0]
+	hurt.hp = hurt.max_hp() - 4
+	var cell := _view().members[0].cell
+	var pool := paladin.resource_left("lay_on_hands")
+	LocationCare._lay_on_hands_out(_view(), cell, str(pool))
+	assert_eq(hurt.hp, hurt.max_hp(), "healed")
+	assert_eq(paladin.resource_left("lay_on_hands"), pool - 4, "only the 4 points the wound needed")
+	LocationCare._lay_on_hands_out(_view(), cell, "3")
+	assert_eq(paladin.resource_left("lay_on_hands"), pool - 4, "nothing spent on someone at full Hit Points")
