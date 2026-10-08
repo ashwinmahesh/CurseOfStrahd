@@ -1,0 +1,167 @@
+# Black Roses (side quest, docs/story/side_quests.md): Ilie the lamplighter's daughter Ana was taken last winter. Black
+# roses come before a girl is taken, not after, and this morning they were on the chandler's step. Ana is the visitor:
+# she comes to her father's window every night and he lets her feed so she won't go to anyone else, and it isn't
+# enough any more. Reached from Urwin's rumour (martikovs:rumors) or Ilie himself (townsfolk:lamplighter). Ana sleeps
+# in her own grave in St. Andral's churchyard. Every line here is unvoiced for now; Ana and Pyotr are new speakers.
+
+~ asks
+quest black_roses asked
+Ilie the Lamplighter: You saw them, then. Black roses on Pyotr Petrov's step. Nobody in Vallaki grows black roses. Nobody in Vallaki grows roses.
+Ilie the Lamplighter: I've counted. Three girls this year. Every one of them had roses on her step the day before. Before, not after. The card on Ana's said "with sympathy". It was a joke. It's always a joke, with him.
+Ilie the Lamplighter: Mila Petrova was Ana's best friend. They used to sit on our step and plait each other's hair.
+Ilie the Lamplighter: Watch the Petrovs' house tonight. Please. And whatever comes to Mila's window, don't hurt it. Not if you can help it.
+* [Insight DC 13] "Don't hurt it"? (Look at him properly.) -> fed | fed_missed
+* [Medicine DC 12] (He's wearing a scarf. It's summer.) -> fed | fed_missed
+* We'll watch the house tonight. -> watch
+* Not tonight. -> END
+
+~ fed_missed
+Narrator: A thin young man with a long pole and a pocket of tapers, very tired, very polite. Whatever he isn't saying, he's had a year to practise not saying it.
+* We'll watch the house tonight. -> watch
+* Not tonight. -> END
+
+~ fed
+set ilie_bitten_known
+quest black_roses fed
+Narrator: He sees you looking, and his hand goes to the scarf, and then, slowly, he lets it fall. Under it are two marks, old and new, and more below those.
+Ilie the Lamplighter: It's Ana. She knocks on my shutter. Every night since the funeral. Papa, it's cold, Papa, let me in.
+Ilie the Lamplighter [sad]: I'm her father. What was I going to do? Keep the shutter shut?
+Ilie the Lamplighter: She only takes a little. I thought if she had me, she wouldn't need anyone else. It isn't enough any more. She's growing. They don't stop growing, you know. Not like that.
+* Ilie, she's killing you. -> killing
+* We'll watch the house tonight. -> watch
+
+~ killing
+Ilie the Lamplighter: Slowly. Slower than she'd kill Mila. I'll take slowly.
+-> watch
+
+~ watch
+set roses_vigil
+Ilie the Lamplighter: The Petrovs' is at the bottom of the lower town, with the shutters nailed. I'll keep every lamp on that street lit. You'll see her coming.
+-> END
+
+# --- Ilie later, out on his rounds (townsfolk:lamplighter jumps here) ---
+
+~ ilie
+if flag.roses_spawn_destroyed
+-> ilie_after
+endif
+if flag.roses_vigil
+Ilie the Lamplighter: The lamps are lit on the Petrovs' street. Every one. Go.
+-> END
+endif
+-> asks
+
+~ ilie_after
+if flag.roses_ring_given
+Ilie the Lamplighter: I don't light the lamp outside my own window any more. There's nobody to see by it.
+-> END
+endif
+set roses_ring_given
+quest black_roses ended
+Narrator: He listens to the end without moving. Then he sets his pole down very carefully against the wall, as if it might break.
+Ilie the Lamplighter: Thank you. I couldn't. I'd have gone on opening the shutter until there was nothing left of me to open it.
+if flag.ilie_bitten_known
+Ilie the Lamplighter: Father Lucian says the marks will close, now there's nothing to open them again. I'll believe him when they do.
+endif
+Ilie the Lamplighter: This was her mother's. She bought it off a Vistana the winter before Ana was born, to keep the night out. I put it on Ana's finger in the coffin. I took it back the first night she came to my window. It didn't keep the night out for either of them. Take it.
+give ring_of_resistance_necrotic
+approve liriel_dawnsong +2 godrick_pendlebrook +2 thistle +1: You laid Ana to rest and kept her father alive
+-> END
+
+# --- The vigil at the Petrovs' (Ana comes to the party) ---
+
+~ ana
+set ana_met
+quest black_roses vigil
+Narrator: A girl comes down the lane barefoot, in a white nightgown, with an armful of black roses. She walks on the lit side of the street, the way she was taught.
+Ana: Mila? Mila, it's me. Open the shutter, silly. I've brought roses, like the gentleman does. It's polite.
+Narrator: Then she sees you, and smiles, and her smile has too many teeth at the corners.
+Ana: Oh. You're not Mila. Are you Papa's friends? Papa has lots of friends now. He lights lamps for all of them.
+-> ana_menu
+
+~ ana_menu
+* [if not flag.ana_grave_known] Where do you sleep, Ana? -> where
+* [Persuasion DC 14] Mila can't come out tonight. Go home, Ana. -> persuaded | not_persuaded
+* (Let her go home to her father.) -> let_go
+* (Attack.) -> attack
+
+~ where
+set ana_grave_known
+Ana: In my bed, silly. Papa put me in the yard at St. Andral's, under the stone with the lamb on it. It's cold, but Irina and Sorina are just next door, so we talk.
+interject tag:blunt: Irina and Sorina. The other two girls.
+-> ana_menu
+
+~ persuaded
+set ana_grave_known
+Ana: Mila's boring anyway. She cries. I'll go to bed.
+Narrator: She drops the roses on the Petrovs' step, one by one, very neatly, and goes up the wall of the house and over the roof like a spider. Toward the church.
+-> END
+
+~ not_persuaded
+Ana [angry]: You're not my papa. You can't tell me when to go to bed. Irina! Sorina! They won't let me play!
+-> attack
+
+~ attack
+Narrator: Two more girls come over the rooftops at her call, in their own nightgowns, with their own armfuls of roses.
+combat roses_street
+
+~ let_go
+set ilie_fate = "lost"
+quest black_roses ilie_lost
+Narrator: She skips away up the lit side of the street toward her father's, humming. You let her go.
+time until 7
+Narrator: In the morning the watch finds Ilie at the lake gate, sitting against the post, smiling, white as milk. Nobody finds Ana at all. Mila Petrova wakes up and eats her breakfast.
+approve godrick_pendlebrook -2 liriel_dawnsong -2 thistle -1: You let Ana go home to feed on her father
+-> END
+
+# --- Ana's grave in St. Andral's churchyard (prop ana_grave) ---
+
+~ grave
+if flag.roses_spawn_destroyed
+Narrator: Three small graves side by side, filled in properly now and tamped down hard. Someone has left a single lamp burning on the one with the lamb.
+-> END
+endif
+Narrator: Three small graves side by side at the churchyard's edge. The middle stone has a lamb carved on it and ANA in square letters. The earth on all three is loose, turned and patted down again, every night.
+if not flag.bones_returned
+interject class:cleric: This ground stopped being holy the night the saint's bones were taken. It's anybody's bed now.
+endif
+* [if day] [Athletics DC 12] Dig them up now, while it's light. -> dig_fast | dig_slow
+* [if night] Wait here for them. -> wait_graves
+* Leave them. -> END
+
+~ dig_slow
+time +120
+Narrator: The earth is packed harder than it looks, and it fights the spade. It takes hours. The light is going grey by the time the first lid shows.
+-> dig
+
+~ dig_fast
+Narrator: The spade goes in easily. They've been digging their own way out every night, and the earth hasn't had time to settle.
+-> dig
+
+~ dig
+Narrator: Three plain coffins, lids loose. Inside, three girls lie with their hands folded and roses in their hair, asleep the way the dead don't sleep. One of them opens her eyes.
+combat roses_graves
+
+~ wait_graves
+Narrator: You wait among the stones. Near midnight the earth on the three graves stirs, all at once, like something breathing under a blanket.
+combat roses_graves
+
+# --- Pyotr Petrov the chandler, by day ---
+
+~ chandler
+if flag.chandler_paid
+Pyotr Petrov: Mila's out at the market today. In daylight. Laughing at something. Thank you.
+-> END
+endif
+if flag.roses_spawn_destroyed or flag.ilie_fate == "lost"
+-> chandler_pays
+endif
+Pyotr Petrov [afraid]: Black roses on my step. Ilie said not to throw them out, it makes her angry. Who is "her"? He won't say. I've nailed Mila's shutters shut.
+-> END
+
+~ chandler_pays
+set chandler_paid
+Pyotr Petrov: Mila's alive. I know who to thank for it, even if nobody will tell me what for.
+Pyotr Petrov: Two hundred gold. It's every candle I've sold since spring. Don't argue; I'd only spend it on more nails.
+gold +200
+-> END

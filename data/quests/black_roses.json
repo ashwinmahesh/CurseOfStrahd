@@ -1,0 +1,54 @@
+{
+  "id": "black_roses",
+  "name": "Black Roses",
+  "summary": "Last winter Ilie the lamplighter's daughter Ana was found smiling and white at the lake gate, and black roses came with a card. This morning there were black roses on the chandler's step.",
+  "giver": "vallaki_lamplighter",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Urwin at the Blue Water Inn says there were black roses on Pyotr Petrov the chandler's step this morning, and that Ilie the lamplighter went white when he saw them.",
+      "objectives": [
+        "Find Ilie the lamplighter; he lights Vallaki's lamps after dark"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Ilie has counted. Every girl taken in Vallaki this year had black roses on her step the day before, not after. Tonight's roses are on the Petrovs' step, and their daughter Mila was Ana's best friend. Ilie asked us to watch the house tonight, and not to hurt whatever comes if we can help it.",
+      "objectives": [
+        "Watch the Petrovs' house in the lower town after dark"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "fed",
+      "journal": "Ilie wears a scarf in summer. Under it are bite marks, old and new. Ana is the visitor: she comes to his window every night, and he lets her in and lets her feed, so that she won't go to anyone else. It isn't enough for her any more.",
+      "objectives": [
+        "Watch the Petrovs' house in the lower town after dark"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "vigil",
+      "journal": "Ana came to Mila's window with an armful of black roses, \"like the gentleman does\". She is fourteen, and dead, and hungry, and she still talks like a girl inviting a friend to play.",
+      "objectives": [
+        "Find where Ana sleeps by day: her grave in St. Andral's churchyard",
+        "Or end it at night, when she is strongest"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "ended",
+      "journal": "Ana is at rest, and so are the two girls she brought with her. In her coffin was her mother's ring, bought from a Vistana to keep the night out. Ilie has put out one of his lamps, the one outside his own window.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "ilie_lost",
+      "journal": "We let Ana go home to her father. In the morning the watch found Ilie at the lake gate, sitting against the post, smiling, white as milk. Mila Petrova is alive. Nobody lights the lamps on his street now.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

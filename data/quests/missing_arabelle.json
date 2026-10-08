@@ -6,6 +6,14 @@
   "region": "vallaki",
   "stages": [
     {
+      "id": "rumored",
+      "journal": "The Vistani camped outside Vallaki's west gate have lost their headman's little girl. His brother Arrigal says she wandered off. Not everyone believes Arrigal.",
+      "objectives": [
+        "Visit the Vistani camp outside the west gate"
+      ],
+      "ends": ""
+    },
+    {
       "id": "asked",
       "journal": "Luvash, headman of the Vistani camp outside Vallaki, is drinking himself senseless because his daughter Arabelle has been missing since last night. His brother Arrigal runs the camp and seems in no hurry to find her.",
       "objectives": [

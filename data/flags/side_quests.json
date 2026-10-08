@@ -150,6 +150,96 @@
       "id": "mare_resolved",
       "type": "bool",
       "summary": "Radu has paid the party and The Grey Mare is over."
+    },
+    {
+      "id": "stella_rumor",
+      "type": "bool",
+      "summary": "The Vallaki watch or Lady Wachter told the party about the girl in the window at Wachterhaus (The Cat in the Window)."
+    },
+    {
+      "id": "stella_met",
+      "type": "bool",
+      "summary": "The party has been into Stella Wachter's locked bedroom and seen her."
+    },
+    {
+      "id": "stella_bound_known",
+      "type": "bool",
+      "summary": "The party found the ribbon and the bell, and heard Stella's promise: she isn't mad, she's held."
+    },
+    {
+      "id": "stella_bell_rung",
+      "type": "bool",
+      "summary": "Somebody cut Stella's ribbon without breaking the curse; the bell rang, and the ribbon tied itself again."
+    },
+    {
+      "id": "stella_shadow_beaten",
+      "type": "bool",
+      "summary": "When the curse broke, what came out of Stella's shadow was beaten (encounter stella_shadow)."
+    },
+    {
+      "id": "stella_at_church",
+      "type": "bool",
+      "summary": "Stella has gone to Father Lucian at St. Andral's."
+    },
+    {
+      "id": "stella_thanked",
+      "type": "bool",
+      "summary": "Stella gave the party her dowry and the master's cloak at St. Andral's."
+    },
+    {
+      "id": "stella_panel_told",
+      "type": "bool",
+      "summary": "Stella told the party how to open the panel behind the study bookcase at Wachterhaus."
+    },
+    {
+      "id": "lucian_scroll_given",
+      "type": "bool",
+      "summary": "Father Lucian gave the party the church's last Scroll of Remove Curse for Stella."
+    },
+    {
+      "id": "roses_rumor",
+      "type": "bool",
+      "summary": "Urwin told the party about the black roses on the chandler's step (Black Roses)."
+    },
+    {
+      "id": "ilie_bitten_known",
+      "type": "bool",
+      "summary": "The party saw the bite marks under Ilie's scarf: Ana feeds on her father."
+    },
+    {
+      "id": "roses_vigil",
+      "type": "bool",
+      "summary": "The party agreed to watch the Petrovs' house after dark."
+    },
+    {
+      "id": "ana_met",
+      "type": "bool",
+      "summary": "Ana came to Mila's window and spoke with the party."
+    },
+    {
+      "id": "ana_grave_known",
+      "type": "bool",
+      "summary": "The party knows Ana sleeps in her own grave in St. Andral's churchyard (the grave prop shows)."
+    },
+    {
+      "id": "roses_spawn_destroyed",
+      "type": "bool",
+      "summary": "Ana and the two other girls are destroyed (encounters roses_street or roses_graves)."
+    },
+    {
+      "id": "roses_ring_given",
+      "type": "bool",
+      "summary": "Ilie gave the party Ana's mother's ring; Black Roses is over."
+    },
+    {
+      "id": "ilie_fate",
+      "type": "string",
+      "summary": "lost: the party let Ana go home and she fed on Ilie until he died."
+    },
+    {
+      "id": "chandler_paid",
+      "type": "bool",
+      "summary": "Pyotr Petrov paid the party for his daughter's life."
     }
   ]
 }

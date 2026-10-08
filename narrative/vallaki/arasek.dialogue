@@ -10,7 +10,7 @@ Gunther: Back for more? Good. Steel doesn't sell itself. It mostly sits there be
 endif
 * Show us what you have. -> trade
 * Why are your prices so steep? -> prices
-* What's the news on the roads? -> roads
+* Heard anything interesting on the roads? -> roads
 * Goodbye. -> END
 
 ~ trade
@@ -33,7 +33,7 @@ endif
 
 ~ start_menu
 * Show us what you have. -> trade
-* What's the news on the roads? -> roads
+* Heard anything interesting on the roads? -> roads
 * Goodbye. -> END
 
 ~ roads
@@ -41,6 +41,10 @@ Gunther: West road to Krezk: wolves, and worse past the river. The lake road: fi
 if flag.bonegrinder_rumor
 interject tag:blunt: The windmill. We heard the old pastry woman bakes there.
 Gunther: Then you heard right. My carters won't water their horses within sight of it. Horses go in. Horses don't come out.
+endif
+if not flag.bonegrinder_rumor
+set bonegrinder_rumor
+Gunther: It's up on a crag above the road, between Tser Pool and the village. If you must see it, see it by day.
 endif
 if flag.mists_wolves_cowed
 Gunther: You came over the pass and the wolves let you by? Huh. They don't let my carts by.

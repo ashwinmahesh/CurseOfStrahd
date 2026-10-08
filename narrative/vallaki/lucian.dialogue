@@ -90,6 +90,7 @@ Father Lucian: He was a holy man, and he died here, and his bones kept the dead 
 * [if gold >= 25] Might we have holy water? We'll make a donation. -> holy_water
 * We need the church's help. Healing, or worse. -> church_help
 * Does the church sell potions or scrolls? -> church_wares
+* [if quest.cat_in_the_window == bound and not item:spell_scroll__remove_curse and not flag.lucian_scroll_given] Lady Wachter's daughter is under a curse. -> vallaki/cat_in_the_window:lucian_scroll
 * Goodbye, Father. -> bye
 
 ~ danger
