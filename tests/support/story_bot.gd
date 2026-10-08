@@ -516,6 +516,8 @@ func _go_by_map_once(location_id: String) -> bool:
 		return false
 	if view().loc_id != out_loc and not await go_to(out_loc):
 		return false
+	# Rested before the road, where the place allows it: a journey can meet a fight with no rest before it.
+	await rest_if_needed()
 	note("setting out for %s" % target)
 	if not await walk_to(_cell(out_exit["cell"])):
 		return false
@@ -582,16 +584,35 @@ func recover() -> void:
 		if ch.dead or ch.hp > 0:
 			continue
 		_heal_with_spells(ch)
+	await rest_if_needed()
+	await level_up()
+
+
+## A short rest if anyone is below half their Hit Points, then a long rest when anyone is still below 60%, the healers
+## are out of 1st-level slots, or a caster has spent half its spell slots or more (lane 22, 2026-10-08: a party that
+## left a fight above 60% but spent walked worn into the next one where it couldn't rest, Yester Hill's road home).
+func rest_if_needed() -> void:
+	var party := st().party
 	var hurt := party.filter(func(c: Character) -> bool: return not c.dead and c.hp < c.max_hp() / 2)
 	if not hurt.is_empty():
 		await rest(false)
-	# A long rest when anyone is still below 60% after that, or the healers are out of spell slots.
 	var worn := party.filter(func(c: Character) -> bool: return not c.dead and c.hp * 10 < c.max_hp() * 6)
 	var dry := party.filter(func(c: Character) -> bool:
 		return not c.dead and (c.class_level_of("cleric") > 0 or c.class_level_of("wizard") > 0) and c.slots_left(1) == 0)
-	if not worn.is_empty() or not dry.is_empty():
+	var spent := party.filter(func(c: Character) -> bool: return not c.dead and _half_spent(c))
+	if not worn.is_empty() or not dry.is_empty() or not spent.is_empty():
 		await rest(true)
-	await level_up()
+
+
+## Whether a caster has spent half its spell slots or more.
+static func _half_spent(c: Character) -> bool:
+	var total := 0
+	var left := 0
+	var slots := c.spell_slots()
+	for level in range(1, slots.size() + 1):
+		total += slots[level - 1]
+		left += c.slots_left(level)
+	return total > 0 and left * 2 <= total
 
 
 func _heal_with_spells(target: Character) -> void:
