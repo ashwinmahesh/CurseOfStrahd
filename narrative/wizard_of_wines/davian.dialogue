@@ -103,8 +103,14 @@ approve ratatoille +1 godrick_pendlebrook +1 kip_smudgewick +1: You promised Dav
 * [name:hedda_ironvow] [if quest.cold_prayers and flag.keepers_of_the_feather_met and not flag.hedda_keepers_told] Ask about a silver raven with a sunburst in its claws. -> companions/prayers:davian
 * [name:ratatoille] [if quest.a_seat_at_the_table and not (quest.a_seat_at_the_table >= a_winery)] Ask about the Wizard of Wines. -> companions/table:winery
 * [name:ratatoille] [if flag.winery_reclaimed and not flag.ratatoille_supper_cooked] Ask for the use of the kitchen tonight. -> companions/table:supper
+* [if flag.winery_wine_flows] We'd like to buy some of your wine. -> buy_wine
 * Tell us about the winery. -> lore
 * Goodbye. -> bye
+
+~ buy_wine
+Davian: The first bottles of a free harvest. You'll pay what they cost me to make and not a copper more, and you'll drink the Champagne slowly, or I'll know.
+shop
+-> menu
 
 ~ intel
 Davian: The druids sleep in the fermenting hall and feed my vats to their creatures. Their leader, a boy called Kostin, keeps to the press house with something he grew in my best vat. Some nights it sings to him.

@@ -18,7 +18,7 @@
       "##.~~wwwwwwww~~.....................==....##",
       "##.~~wwwwwwww~~.......................#...##",
       "##..~wwwwwwww~..==...........==........##.##",
-      "##..~~wwwwww~~..==...=.==.=..==.==........##",
+      "##..~~wwwwww~~..==...=.==.=..==.===.......##",
       "##...~wwwwww~...................=...==....##",
       "##....~~~~~~=............=..........==..#.##",
       "##.=....~~........................=.......##",
@@ -624,6 +624,30 @@
       "model": "satchel",
       "search_dc": 15,
       "item": "playing_card_set"
+    },
+    {
+      "id": "tser_lamp_oil",
+      "cell": [
+        34,
+        12
+      ],
+      "kind": "decor",
+      "label": "a barrel of lamp oil",
+      "model": "barrel",
+      "object": "oil_barrel"
+    },
+    {
+      "id": "ribbon_tree_cache",
+      "cell": [
+        37,
+        3
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "skill": "investigation",
+      "label": "a Vistani cache under the ribbon tree",
+      "model": "leaves",
+      "item": "boots_of_striding_and_springing"
     }
   ],
   "containers": [

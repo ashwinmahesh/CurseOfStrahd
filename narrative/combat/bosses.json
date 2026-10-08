@@ -1,0 +1,36 @@
+{
+  "_note": "G3 boss presentation (lane 21, ui/combat/boss_bar.gd): the foes that get a name plate, a health bar and an entrance shot when a fight opens with them, keyed by monster id. `title` is the line under the name; a shared stat block (night_hag, vampire_spawn) lists the `names` it counts for, each with its own title. A foe with legendary actions is a boss even when it isn't listed. Titles are our own words.",
+  "bosses": {
+    "strahd_von_zarovich": {"title": "Lord of Barovia"},
+    "baba_lysaga": {"title": "The Witch of Berez"},
+    "baba_lysagas_creeping_hut": {"title": "The Witch's Walking House"},
+    "rahadin": {"title": "Chamberlain of Castle Ravenloft"},
+    "izek_strazni": {"title": "The Baron's Enforcer"},
+    "vladimir_horngaard": {"title": "Revenant Knight of the Silver Dragon"},
+    "exethanter": {"title": "Lich of the Amber Temple"},
+    "kiril_stoyanovich": {"title": "Leader of the Werewolf Pack"},
+    "night_hag": {"names": {
+      "Morgantha": "Mother of Old Bonegrinder",
+      "Bella Sunbane": "Daughter of Old Bonegrinder",
+      "Offalia Wormwiggle": "Daughter of Old Bonegrinder"
+    }},
+    "shambling_mound": {"names": {"Lorghoth the Decayer": "Beast of the Death House"}},
+    "tree_blight": {"names": {"Wintersplinter": "The Blight of Yester Hill"}},
+    "flesh_golem": {"names": {"Vasilka": "A Bride Made for Strahd"}},
+    "deva": {"names": {"The Abbot": "Fallen Angel of Krezk"}},
+    "amber_golem": {"names": {
+      "The Amber Sentinel": "Guardian of the Amber Temple",
+      "The Vault Guardian": "Guardian of the Amber Vaults"
+    }},
+    "arcanaloth": {"names": {"Vosk, unmasked": "Fiend of the Amber Temple"}},
+    "roc": {"names": {"The Roc of Mount Ghakis": "Terror of Tsolenka Pass"}},
+    "banshee": {"names": {"Patrina Velikovna": "Kasimir's Lost Sister"}},
+    "vampire_spawn": {"names": {
+      "Doru": "The Priest's Son",
+      "Escher": "Strahd's Cast-Off Consort",
+      "Ludmilla Vilisevic": "Bride of Strahd",
+      "Volenta Popofsky": "Bride of Strahd",
+      "Anastrasya Karelova": "Bride of Strahd"
+    }}
+  }
+}

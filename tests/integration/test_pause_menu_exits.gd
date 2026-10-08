@@ -109,7 +109,7 @@ func test_the_menu_closes_cleanly_in_the_game() -> void:
 	game.call("open_screen", "menu", 0)
 	await _frames(2)
 	var menu := game.get("screen") as PauseMenu
-	menu.call("_show_settings")
+	menu.call("_show_settings", "Display")   # the Window row's page
 	await _frames(1)
 	var window := menu.find_child("Window", true, false) as Button
 	window.pressed.emit()   # Fullscreen (headless has no window to change)

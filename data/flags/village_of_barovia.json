@@ -355,6 +355,16 @@
       "id": "morgantha_threatened",
       "type": "bool",
       "summary": "The party failed to frighten Morgantha's cart out of the village (morgantha). She remembers: a mocking greeting on the lane and at the mill, and the children cost 200 gp instead of 150 at Old Bonegrinder."
+    },
+    {
+      "id": "ismark_gave_father_sword",
+      "type": "bool",
+      "summary": "Ismark gave the party his father's +1 longsword at the grave after the burial (ismark: after_burial, docs/story/found_magic_items.md)."
+    },
+    {
+      "id": "vistani_deck_tried",
+      "type": "bool",
+      "summary": "The party sang for the Vistani women in the Blood of the Vine (vistani: perform_ok / perform_fail). On a success Sorvia gave them a Deck of Illusions; either way the option is spent."
     }
   ]
 }

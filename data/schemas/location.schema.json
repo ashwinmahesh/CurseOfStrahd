@@ -45,6 +45,11 @@
             "pattern": "^[.#=~w 1-4]+$"
           }
         },
+        "ceiling_ft": {
+          "type": "integer",
+          "minimum": 10,
+          "description": "The ceiling's height in feet, which flyers can't rise above. Default: 20 indoors, the open sky outdoors."
+        },
         "drop_ft": {
           "type": "integer",
           "minimum": 10,
@@ -252,6 +257,11 @@
           "search_dc": {
             "type": "integer"
           },
+          "skill": {
+            "type": "string",
+            "enum": ["perception", "investigation"],
+            "description": "A search prop: the check that finds it (default perception; investigation for a compartment you work out). A search prop holding an item gets one try per character."
+          },
           "codex": {
             "type": "string"
           },
@@ -273,6 +283,23 @@
             "maxItems": 2,
             "items": {"type": "integer", "minimum": 1, "maximum": 4},
             "description": "[across, down]: a piece bigger than its square stands over the middle of this many squares, its own cell the north-west one (a wagon over its two-by-two block of low cover)."
+          },
+          "hangs": {
+            "type": "object",
+            "description": "A chandelier hanging over `cells` (its piece is drawn up there): in a fight its chain can be broken to drop it on whoever is below (data/objects/kinds.json chandelier; world/combat/battle_scenery.gd). `trap`: the location trap that is this chandelier falling (sprung, it's down); `flag`: set once it has fallen (it's drawn lying on the floor from then on).",
+            "required": ["cells"],
+            "additionalProperties": false,
+            "properties": {
+              "cells": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/cell"}},
+              "kind": {"type": "string", "description": "Its kind in data/objects/kinds.json (chandelier by default)."},
+              "trap": {"type": "string"},
+              "flag": {"type": "string"},
+              "lit": {"type": "boolean", "description": "Its candles burn: falling, it sets oil under it alight."}
+            }
+          },
+          "object": {
+            "type": "string",
+            "description": "What this prop is in a fight when its art alone doesn't say (a barrel of lamp oil): a kind in data/objects/kinds.json. Only a prop on a '=' square is a battlefield object (world/combat/battle_scenery.gd)."
           }
         }
       }

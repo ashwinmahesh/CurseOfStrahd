@@ -189,7 +189,7 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 	var p := option["profile"] as WeaponProfile
 	var origin_cell: Vector2i = option.get("origin_cell", c.cell)
 	var origin_size := 1 if option.has("origin_cell") else c.size_cells
-	var dist := e.grid.distance_ft(origin_cell, origin_size, target.cell, target.size_cells)
+	var dist := e.grid.distance_ft(origin_cell, origin_size, target.cell, target.size_cells, 0 if option.has("origin_cell") else c.altitude, target.altitude)
 	var melee := bool(option["melee"])
 	var duel := e.spells.specials.duel_disadvantage(c, target)
 	if duel != "":
@@ -354,6 +354,13 @@ func _consume_marks(c: Combatant, target: Combatant) -> void:
 
 
 ## Chance to hit with the d20 needed, for tooltips and the AI: {chance, needs, advantage, disadvantage}.
+## The keys an attack roll with `option` is made under: the attacker's own Advantage and Disadvantage name them
+## (Poisoned, a feature's Advantage), so the roll and its preview read them alike.
+static func roll_keys(option: Dictionary) -> Array[String]:
+	var p := option["profile"] as WeaponProfile
+	return ["attack", "attack:melee" if bool(option["melee"]) else "attack:ranged", "attack:%s" % p.ability]
+
+
 func hit_chance(c: Combatant, target: Combatant, option: Dictionary) -> Dictionary:
 	var p := option["profile"] as WeaponProfile
 	var sit := attack_situation(c, target, option)
@@ -394,6 +401,9 @@ func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: 
 		e.events.append({"type": "attack", "attacker": c.id, "from": EchoKnight.striking_from(c), "target": target.id, "hit": false, "critical": false, "action": str(option.get("id", ""))})
 		r.lines.append(e.log.add("miss", "The Wind Wall deflects %s's shot at %s" % [c.name(), target.name()], c.id))
 		return r
+	# A Ready action waiting for this enemy to attack goes off once the attack is done (the reaction queue).
+	if not bool(opts.get("reaction", false)):
+		e.reaction_flow._queue_readied(c, "attack")
 	var sit := attack_situation(c, target, option)
 	_consume_marks(c, target)
 	e.spells.specials.duel_check_attack(c, target)
@@ -423,7 +433,7 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 	var r := st["r"] as CombatResult
 	var p := option["profile"] as WeaponProfile
 	var ac := int(st["ac"])
-	var keys: Array[String] = ["attack", "attack:melee" if bool(option["melee"]) else "attack:ranged", "attack:%s" % p.ability]
+	var keys := roll_keys(option)
 	st["charge"] = e.monster_actions.charge_of(c, target, option)
 	c.clear_run()
 	var label := "%s → %s (%s)" % [c.name(), target.name(), p.name]
@@ -442,7 +452,9 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 			e.marks.erase(m)
 			break
 	if not option.get("melee", true) and c.creature is Character and not bool((st["opts"] as Dictionary).get("free_ammo", false)):
-		if str(option.get("kind", "")) == "thrown":
+		if option.has("improvised"):
+			e.objects.actions.thrown(c, option, target)   # picked up and thrown (ObjectActions)
+		elif str(option.get("kind", "")) == "thrown":
 			e.weapons.throw_item(c, p.item_id, target)
 		elif str(option.get("kind", "")) != "blade":
 			e.weapons._spend_ammo(c, p)
@@ -548,15 +560,18 @@ func _attack_missed(st: Dictionary) -> CombatResult:
 			var by := rp["by"] as Combatant
 			return _resolve_attack(by, c, rp["option"] as Dictionary, {"reaction": true,
 				"extra_dice": [{"dice": "1d%d" % int(rp["die"]), "type": str(((rp["option"] as Dictionary)["profile"] as WeaponProfile).damage_type), "label": "Riposte"}]})
-		return r, r)
+		# What waits for the attack to be done (a Ready action, a reaction to a Graze's damage) comes now, as after a hit.
+		return e.run_reaction_queue(r), r)
 
 
 func _after_hit(st: Dictionary) -> CombatResult:
 	var e := enc()
 	if not bool(st.get("hit_responses_offered", false)):
 		st["hit_responses_offered"] = true
-		return e.reactions.offer(e.feature_recipes.hit_responses(st["c"] as Combatant, st["target"] as Combatant),
-			func() -> CombatResult: return _after_hit(st), st["r"] as CombatResult)
+		var responses := e.feature_recipes.hit_responses(st["c"] as Combatant, st["target"] as Combatant)
+		# The attacker's own choice once it has hit: Divine Smite, the 2014 way.
+		responses.append_array(e.features.smite_offers(st["c"] as Combatant, st["target"] as Combatant, st["option"] as Dictionary, st))
+		return e.reactions.offer(responses, func() -> CombatResult: return _after_hit(st), st["r"] as CombatResult)
 	var c := st["c"] as Combatant
 	var target := st["target"] as Combatant
 	var option := st["option"] as Dictionary

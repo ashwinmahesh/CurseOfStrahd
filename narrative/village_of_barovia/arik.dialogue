@@ -6,6 +6,7 @@ Arik: Wine.
 
 ~ menu
 * A cup, then. (1 gp) -> wine
+* Sell us a bottle to take with us. -> bottles
 * Who's the man drinking alone by the hearth? -> ismark
 * Do you have rooms? -> rooms
 * Where does the wine come from? -> source
@@ -18,6 +19,15 @@ gold -1
 Narrator: The wine is thin, sour and faintly purple, like a bruise you can drink.
 interject tag:blunt: Had worse. Not recently.
 Arik: Wine.
+-> menu
+
+~ bottles
+if flag.winery_wine_flows
+Arik: Bottles. The cart came.
+else
+Arik: Bottles. While they last.
+endif
+shop
 -> menu
 
 ~ ismark

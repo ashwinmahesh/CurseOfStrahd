@@ -10,11 +10,17 @@
   "modifiers": [
     {
       "stat": "disadvantage",
-      "on": "attack"
+      "on": "attack",
+      "when": {
+        "fear_in_sight": true
+      }
     },
     {
       "stat": "disadvantage",
-      "on": "check:all"
+      "on": "check:all",
+      "when": {
+        "fear_in_sight": true
+      }
     },
     {
       "stat": "flag",

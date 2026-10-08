@@ -372,8 +372,8 @@ def main() -> int:
         if code != 0:
             print("make check: failed at make %s after %s (%s)" % (" ".join(s)[:60], _clock(time.monotonic() - started), " · ".join(took)))
             return 1
-    print("make check: green in %s (%s; Mac load %.0f on %d cores)" % (_clock(time.monotonic() - started), " · ".join(took),
-                                                                        os.getloadavg()[0], os.cpu_count() or 0))
+    load = "Mac load %.0f on %d cores" % (os.getloadavg()[0], os.cpu_count() or 0)
+    print("make check: green in %s (%s)" % (_clock(time.monotonic() - started), "; ".join(x for x in (" · ".join(took), load) if x)))
     return 0
 
 

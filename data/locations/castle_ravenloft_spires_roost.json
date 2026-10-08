@@ -169,6 +169,18 @@
       "kind": "decor",
       "label": "Feathers",
       "model": "leaves"
+    },
+    {
+      "id": "nest_ring",
+      "cell": [
+        23,
+        4
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "a ring in a raven's nest",
+      "model": "gold_spill",
+      "item": "ring_of_evasion"
     }
   ],
   "containers": [

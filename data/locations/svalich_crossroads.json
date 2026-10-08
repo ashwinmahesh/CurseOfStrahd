@@ -291,6 +291,31 @@
       "model": "dead_tree",
       "when": "name:thistle",
       "dialogue": "companions/fen:blaze_crossroads"
+    },
+    {
+      "id": "newer_mound",
+      "cell": [
+        14,
+        6
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a mound that isn't as old as the others",
+      "model": "rubble",
+      "item": "boots_of_elvenkind"
+    },
+    {
+      "id": "milestone_hollow",
+      "cell": [
+        33,
+        10
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "skill": "investigation",
+      "label": "a hollow behind the milestone",
+      "model": "rubble",
+      "item": "wand_of_web"
     }
   ],
   "encounters": [

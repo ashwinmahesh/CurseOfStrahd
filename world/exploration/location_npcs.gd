@@ -47,8 +47,15 @@ static func _build_npcs(view: LocationView) -> void:
 		var data := Compendium.shared().monster_data(mon_id)
 		if data.is_empty():
 			data = Compendium.shared().monster_data("commoner")
-		var m := Monster.from_data(data)
+		# The same person keeps the same creature while the party is here, so what a spell left on them (Sleep, Charm
+		# Person, Bane) stays through the rebuilds after every conversation, and Concentration still finds them.
+		var kept := _creatures(view)
+		var m := kept.get(str(spec["npc"]), null) as Monster
+		if m == null:
+			m = Monster.from_data(data)
+			kept[str(spec["npc"])] = m
 		m.name = str(npc.get("name", spec["npc"]))
+		_wake_from_story(m)
 		if bool(spec.get("asleep", false)):
 			put_to_sleep(m)
 		var cb := Combatant.new(m, &"neutral", LocationView._cell(spec["cell"]))
@@ -87,26 +94,69 @@ static func put_to_sleep(cr: Creature) -> void:
 	cr.add_condition(&"prone", "Asleep")
 
 
-## Whether an NPC shown here is asleep (its entry's `asleep`, while nothing has woken it).
+## The story's sleep comes off when an entry without `asleep` takes over (she woke and went out looking for Mother);
+## a spell's sleep stays.
+static func _wake_from_story(cr: Creature) -> void:
+	for fx: Effect in cr.effects.duplicate():
+		if fx.source_kind == &"npc" and fx.source_id == "asleep":
+			cr.remove_effect(fx)
+	cr.remove_condition(&"prone", "Asleep")
+
+
+## npc id -> the creature on the map, for as long as the party is in this place.
+static func _creatures(view: LocationView) -> Dictionary:
+	if not view.has_meta(&"npc_creatures"):
+		view.set_meta(&"npc_creatures", {})
+	return view.get_meta(&"npc_creatures") as Dictionary
+
+
+## The effect keeping a creature asleep (the story's, Sleep's: a wakeable one that carries Unconscious), or null.
+static func sleep_of(cr: Creature) -> Effect:
+	for fx in cr.effects:
+		if bool(fx.data.get("wakeable", false)) and &"unconscious" in fx.conditions:
+			return fx
+	return null
+
+
+## Whether an NPC shown here is asleep (the story's sleep or a spell's, while nothing has woken it).
 static func is_asleep(view: LocationView, npc_id: String) -> bool:
 	var tok := view.npc_tokens.get(npc_id, null) as CombatToken
-	return tok != null and tok.combatant.creature.effects.any(func(fx: Effect) -> bool: return bool(fx.data.get("wakeable", false)))
+	return tok != null and sleep_of(tok.combatant.creature) != null
 
 
-## How a shown NPC is, for the hover hint, Look and the Alt plates: "asleep, prone", or "" when nothing is the matter.
+## How a creature on the map is, for the hover hint, Look and the Alt plates: its conditions (a sleeper's "asleep" in
+## place of the Unconscious and Incapacitated it carries), then the spells on it that someone else cast, after a dot:
+## "asleep, prone", "charmed · Charm Person", "asleep, prone · Sleep", "Bane"; "" when nothing is the matter.
+static func state_of(cr: Creature) -> String:
+	var words: Array[String] = []
+	var nap := sleep_of(cr)
+	if nap != null:
+		words.append("asleep")
+	for cond in cr.active_conditions():
+		if nap != null and cond in [&"unconscious", &"incapacitated"]:
+			continue
+		words.append(str(cond))
+	var spells: Array[String] = []
+	for fx in cr.effects:
+		if fx.caster_id == "" or fx.caster_id == cr.id:
+			continue   # the story's sleep, a monster's own traits
+		var named := str(Compendium.shared().spell_data(fx.source_id).get("name", fx.name)) if fx.source_kind == &"spell" else fx.name
+		if not named in spells:
+			spells.append(named)
+	var out := ", ".join(words)
+	if not spells.is_empty():
+		out += (" · " if out != "" else "") + ", ".join(spells)
+	return out
+
+
+## How a shown NPC is (state_of), or "".
 static func state_words(view: LocationView, npc_id: String) -> String:
 	var tok := view.npc_tokens.get(npc_id, null) as CombatToken
-	if tok == null:
-		return ""
-	var words: Array[String] = []
-	if is_asleep(view, npc_id):
-		words.append("asleep")
-	if tok.combatant.creature.has_condition(&"prone"):
-		words.append("prone")
-	return ", ".join(words)
+	return state_of(tok.combatant.creature) if tok != null else ""
 
 
-## The hover hint over a person: "Talk to Ismark", or a sleeper's name and state ("Offalia Wormwiggle (asleep, prone)").
+## The hover hint over a person: "Talk to Ismark", "Talk to Ismark (charmed · Charm Person)", or a sleeper's name and
+## state ("Offalia Wormwiggle (asleep, prone)").
 static func hover_label(view: LocationView, npc_id: String, who: String) -> String:
 	var state := state_words(view, npc_id)
 	if is_asleep(view, npc_id):
@@ -114,11 +164,116 @@ static func hover_label(view: LocationView, npc_id: String, who: String) -> Stri
 	return "Talk to %s%s" % [who, " (%s)" % state if state != "" else ""]
 
 
-## What Look adds about a shown person's state: " Asleep: Unconscious and Prone." or "".
+## What Look adds about a shown person's state: " Asleep: Unconscious and Prone." for the story's sleep, else the
+## state as a sentence (" Charmed · Charm Person."), or "".
 static func look_words(view: LocationView, npc_id: String) -> String:
-	if is_asleep(view, npc_id):
+	var state := state_words(view, npc_id)
+	if state == "asleep, prone":
 		return " Asleep: Unconscious and Prone."
-	return " Prone." if state_words(view, npc_id) == "prone" else ""
+	return (" %s%s." % [state[0].to_upper(), state.substr(1)]) if state != "" else ""
+
+
+## Whether a shown person can talk: a story sleeper's entry has its own conversation (Offalia snoring); anyone else
+## asleep, held or otherwise Incapacitated can't answer.
+static func can_talk(view: LocationView, spec: Dictionary) -> bool:
+	if bool(spec.get("asleep", false)):
+		return true
+	var tok := view.npc_tokens.get(str(spec["npc"]), null) as CombatToken
+	return tok == null or not tok.combatant.creature.has_condition(&"incapacitated")
+
+
+## As time passes here (LocationClock), the spells on the people run down: Sleep's minute, Bane's.
+static func pass_minutes(view: LocationView, minutes: int) -> void:
+	for shown in view._npc_shown:
+		var tok := shown["token"] as CombatToken
+		if not is_instance_valid(tok):
+			continue
+		var before := state_of(tok.combatant.creature)
+		tok.combatant.creature.advance_minutes(minutes)
+		if state_of(tok.combatant.creature) != before:
+			tok.refresh()
+
+
+# --- Spells at the people here (FieldCasting.cast_at) ---------------------------------------------------------
+
+## The right-click menu's spells at a person: each party member's at-creature spells (Sleep, Charm Person, Hold
+## Person ...), [{id: "cast_at:<member>:<spell>", label, enabled, why}], out of range or sight shown and refused.
+static func cast_actions(view: LocationView, spec: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var at := _cell_of(view, str(spec["npc"]))
+	for i in view.members.size():
+		var m := view.members[i]
+		if not (m.creature is Character) or m.creature.hp <= 0:
+			continue
+		for o in FieldCasting.options_at(view.st.party, m.creature as Character, view.dice):
+			var why := str(o["reason"]) if not bool(o["legal"]) else ""
+			if why == "" and view.grid.distance_ft(m.cell, 1, at, 1) > int(o["range"]):
+				why = "Out of range (%d ft)" % int(o["range"])
+			if why == "" and not view.grid.can_see(m.cell, 1, at, 1):
+				why = "%s can't see them" % m.name().get_slice(" ", 0)
+			out.append({"id": "cast_at:%d:%s" % [i, o["id"]], "label": "Cast %s (%s)" % [o["name"], m.name().get_slice(" ", 0)],
+				"enabled": why == "", "why": why})
+	return out
+
+
+## A spell from the right-click menu ("cast_at:<member>:<spell>") at the person on `cell`: cast through the spell
+## engine (FieldCasting.cast_at), told in the Narrator's box, and shown on them at once.
+static func cast_from_menu(view: LocationView, cell: Vector2i, action_id: String) -> void:
+	var parts := action_id.split(":")
+	var i := int(parts[1])
+	var tok: CombatToken = null
+	for shown in view._npc_shown:
+		if shown["cell"] == cell:
+			tok = shown["token"] as CombatToken
+	if tok == null or i < 0 or i >= view.members.size():
+		return
+	var npc_id := tok.combatant.id.trim_prefix("npc_")
+	# Whoever sees the casting (LocationCrime, as for a theft: sight, earshot) remembers it.
+	var seen := LocationCrime.witnesses(view, view.members[i])
+	var res := FieldCasting.cast_at(view.st.party, view.members[i].creature as Character, parts[2], 0, tok.combatant.creature, view.dice)
+	tok.refresh()
+	view.refresh_party()
+	view.narration.emit(str(res["text"]) if bool(res["ok"]) else "%s: %s" % [Compendium.shared().spell_data(parts[2]).get("name", parts[2]), res["text"]])
+	# A spell at someone who didn't ask for it is a crime when anyone sees it (the watch answers in a town).
+	if bool(res["ok"]) and not seen.is_empty():
+		LocationCrime.caught(view, npc_id, seen[0], "spell")
+
+
+## The right-click menu's spells at a foe in plain view: casting at a foe opens the fight with the party striking first
+## (LocationStealth.strike), and the caster casts it on their turn. [{id: "strike_cast:<member>:<spell>:<fight>", ...}]
+static func cast_actions_at_foe(view: LocationView, thing: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var at := LocationView._cell((thing["spec"] as Dictionary)["cell"])
+	for i in view.members.size():
+		var m := view.members[i]
+		if not (m.creature is Character) or m.creature.hp <= 0:
+			continue
+		for o in FieldCasting.options_at(view.st.party, m.creature as Character, view.dice):
+			var why := str(o["reason"]) if not bool(o["legal"]) else ""
+			if why == "" and view.grid.distance_ft(m.cell, 1, at, 1) > int(o["range"]):
+				why = "Out of range (%d ft)" % int(o["range"])
+			if why == "" and not view.grid.can_see(m.cell, 1, at, 1):
+				why = "%s can't see them" % m.name().get_slice(" ", 0)
+			out.append({"id": "strike_cast:%d:%s:%s" % [i, o["id"], thing["id"]], "enabled": why == "", "why": why,
+				"label": "Cast %s (%s): start the fight" % [o["name"], m.name().get_slice(" ", 0)]})
+	return out
+
+
+## A spell at a foe from the menu: the fight opens with the party striking first, and the caster is told to cast it.
+static func strike_with_spell(view: LocationView, _cell: Vector2i, action_id: String) -> void:
+	var parts := action_id.split(":", true, 3)
+	var i := int(parts[1])
+	if i < 0 or i >= view.members.size() or not view.strike(parts[3]):
+		return
+	view.toast.emit("%s readies %s: cast it on their turn" % [view.members[i].name().get_slice(" ", 0),
+		Compendium.shared().spell_data(parts[2]).get("name", parts[2])])
+
+
+static func _cell_of(view: LocationView, npc_id: String) -> Vector2i:
+	for shown in view._npc_shown:
+		if str((shown["spec"] as Dictionary)["npc"]) == npc_id:
+			return shown["cell"] as Vector2i
+	return Vector2i(-1, -1)
 
 
 ## Owner report (2026-10-07): Strahd spoke at the funeral but wasn't there. A scene puts a speaker on the map for as

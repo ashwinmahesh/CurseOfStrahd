@@ -106,6 +106,11 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 	# Party members pass through each other's spaces unless the place or the fight says otherwise.
 	e.allies_block = bool(spec.get("allies_block", view.loc.get("allies_block", false)))
 	e.outdoors = bool(view.loc["map"].get("outdoors", false))
+	# The weather over a fight in the open (F12): fog and storms obscure the field, storms put out flames and feed
+	# Call Lightning.
+	if e.outdoors:
+		e.weather_id = Weather.now(view.st, view.loc_id)
+		e.weather = Weather.kind(e.weather_id)
 	e.legendary.set_withdraw(spec.get("withdraw", {}))
 	if str(spec.get("final_battle", "")) != "" and view.st.quest_stage_index("strahds_lair", view.st.quest_stage("strahds_lair")) < view.st.quest_stage_index("strahds_lair", "confronted"):
 		view.st.set_quest_stage("strahds_lair", "confronted")
@@ -123,6 +128,7 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 	Difficulty.of_options(view.st.options).prepare(e)
 	EncounterSetup.bring_familiars(e, party_cbs)
 	_light_the_fight(view, e)
+	BattleScenery.for_location(view, e)   # doors, furniture and chandeliers that can be broken (F5)
 	var surprised: Array[String] = []
 	var who := str(spec.get("surprise", ""))
 	for c in e.combatants:
@@ -185,6 +191,7 @@ static func spec_for(view: LocationView, encounter_id: String) -> Dictionary:
 
 
 static func _run_combat(view: LocationView, encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, surprised: Array[String]) -> void:
+	Bestiary.before_fight(view.st, e)   # creatures met, and those already studied show their defenses (U8)
 	view.combat_view.finished.connect(func(outcome: String) -> void: _end_encounter(view, encounter_id, spec, e, ctokens, outcome))
 	view.combat_view.round_started.connect(func(_r: int) -> void: _save_round(view, encounter_id, e))
 	view.combat_started.emit(view.combat_view)
@@ -328,6 +335,7 @@ static func _light_the_fight(view: LocationView, e: Encounter) -> void:
 static func _combat_grid(view: LocationView) -> CombatGrid:
 	var g := CombatGrid.from_rows(view.loc["map"]["rows"] as Array)
 	g.drop_ft = int(view.loc["map"].get("drop_ft", 0))
+	g.ceiling_ft = int(view.loc["map"].get("ceiling_ft", 0 if bool(view.loc["map"].get("outdoors", false)) else 20))
 	for d: Variant in view.loc.get("doors", []):
 		var door := d as Dictionary
 		g.set_flag(LocationView._cell(door["cell"]), CombatGrid.WALL, LocationLocks._door_state(view, str(door["id"])) != LocationView.DOOR_OPEN)
@@ -339,6 +347,7 @@ static func _combat_grid(view: LocationView) -> CombatGrid:
 
 static func _end_encounter(view: LocationView, encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, outcome: String) -> void:
 	view.last_encounter = spec
+	Bestiary.after_fight(view.st, e)   # who fell and what was studied, for the journal's Bestiary (U8)
 	for c in e.combatants:
 		if c.side in [&"party", &"guest"]:
 			for m: Combatant in view.members + view.guest_members:
@@ -374,6 +383,7 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 			m.creature.remove_condition(&"grappled")
 			m.creature.remove_condition(&"prone")
 	LocationStealth.after_fight(view, e)
+	BattleScenery.after_fight(view, e)   # broken doors stay open; what else broke stays broken this visit
 	LocationPlan.resume(view)
 	for m: Combatant in view.members + view.guest_members:
 		var tok := view.tokens[m.id] as CombatToken

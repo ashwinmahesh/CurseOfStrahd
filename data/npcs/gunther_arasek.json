@@ -19,7 +19,15 @@
   "shop": {
     "sells": [
       {
+        "id": "club",
+        "qty": -1
+      },
+      {
         "id": "dagger",
+        "qty": -1
+      },
+      {
+        "id": "greatclub",
         "qty": -1
       },
       {
@@ -27,7 +35,23 @@
         "qty": -1
       },
       {
+        "id": "javelin",
+        "qty": -1
+      },
+      {
+        "id": "light_hammer",
+        "qty": -1
+      },
+      {
         "id": "mace",
+        "qty": -1
+      },
+      {
+        "id": "quarterstaff",
+        "qty": -1
+      },
+      {
+        "id": "sickle",
         "qty": -1
       },
       {
@@ -35,43 +59,107 @@
         "qty": -1
       },
       {
-        "id": "shortsword",
-        "qty": 3
-      },
-      {
-        "id": "longsword",
-        "qty": 2
-      },
-      {
-        "id": "rapier",
-        "qty": 1
-      },
-      {
-        "id": "battleaxe",
-        "qty": 1
-      },
-      {
-        "id": "warhammer",
-        "qty": 1
-      },
-      {
-        "id": "greatsword",
-        "qty": 1
+        "id": "dart",
+        "qty": -1
       },
       {
         "id": "light_crossbow",
-        "qty": 2
+        "qty": -1
       },
       {
         "id": "shortbow",
-        "qty": 2
+        "qty": -1
+      },
+      {
+        "id": "sling",
+        "qty": -1
+      },
+      {
+        "id": "battleaxe",
+        "qty": -1
+      },
+      {
+        "id": "flail",
+        "qty": -1
+      },
+      {
+        "id": "glaive",
+        "qty": -1
+      },
+      {
+        "id": "greataxe",
+        "qty": -1
+      },
+      {
+        "id": "greatsword",
+        "qty": -1
+      },
+      {
+        "id": "halberd",
+        "qty": -1
+      },
+      {
+        "id": "lance",
+        "qty": -1
+      },
+      {
+        "id": "longsword",
+        "qty": -1
+      },
+      {
+        "id": "maul",
+        "qty": -1
+      },
+      {
+        "id": "morningstar",
+        "qty": -1
+      },
+      {
+        "id": "pike",
+        "qty": -1
+      },
+      {
+        "id": "rapier",
+        "qty": -1
+      },
+      {
+        "id": "scimitar",
+        "qty": -1
+      },
+      {
+        "id": "shortsword",
+        "qty": -1
+      },
+      {
+        "id": "trident",
+        "qty": -1
+      },
+      {
+        "id": "war_pick",
+        "qty": -1
+      },
+      {
+        "id": "warhammer",
+        "qty": -1
+      },
+      {
+        "id": "whip",
+        "qty": -1
+      },
+      {
+        "id": "blowgun",
+        "qty": -1
+      },
+      {
+        "id": "hand_crossbow",
+        "qty": -1
+      },
+      {
+        "id": "heavy_crossbow",
+        "qty": -1
       },
       {
         "id": "longbow",
-        "qty": 1
-      },
-      {
-        "id": "crossbow_bolt",
         "qty": -1
       },
       {
@@ -79,28 +167,68 @@
         "qty": -1
       },
       {
+        "id": "crossbow_bolt",
+        "qty": -1
+      },
+      {
+        "id": "sling_bullet",
+        "qty": -1
+      },
+      {
+        "id": "blowgun_needle",
+        "qty": -1
+      },
+      {
+        "id": "padded_armor",
+        "qty": -1
+      },
+      {
         "id": "leather_armor",
-        "qty": 2
+        "qty": -1
       },
       {
         "id": "studded_leather_armor",
-        "qty": 1
+        "qty": -1
+      },
+      {
+        "id": "hide_armor",
+        "qty": -1
       },
       {
         "id": "chain_shirt",
-        "qty": 1
+        "qty": -1
       },
       {
         "id": "scale_mail",
-        "qty": 1
+        "qty": -1
+      },
+      {
+        "id": "breastplate",
+        "qty": -1
+      },
+      {
+        "id": "half_plate_armor",
+        "qty": -1
+      },
+      {
+        "id": "ring_mail",
+        "qty": -1
       },
       {
         "id": "chain_mail",
-        "qty": 1
+        "qty": -1
+      },
+      {
+        "id": "splint_armor",
+        "qty": -1
+      },
+      {
+        "id": "plate_armor",
+        "qty": -1
       },
       {
         "id": "shield",
-        "qty": 2
+        "qty": -1
       },
       {
         "id": "rope",
@@ -152,7 +280,7 @@
       "tool",
       "treasure"
     ],
-    "markup": 2.0,
+    "markup": 1.0,
     "sell_rate": 0.5,
     "closed": "night"
   }

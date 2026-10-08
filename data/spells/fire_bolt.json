@@ -42,6 +42,7 @@
   "tags": [
     "damage"
   ],
+  "ignites_objects": true,
   "summary": "Ranged spell attack for 1d10 Fire damage; sets unattended flammable objects alight.",
   "text": "Make a ranged spell attack against one creature or object within range. On a hit it takes 1d10 Fire damage, and a flammable object that nobody is wearing or carrying catches fire. The damage becomes 2d10 at character level 5, 3d10 at level 11 and 4d10 at level 17."
 }

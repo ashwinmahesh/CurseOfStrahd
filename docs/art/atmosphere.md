@@ -86,6 +86,10 @@ anyone touching this file.
   in a blizzard; will-o'-wisps and fireflies after dark; dust hanging in shut-up rooms; crows circling overhead;
   chimney smoke bent by the wind; sparks over open fires; candlelight spilling from lit windows after dark;
   lightning flashes in a storm (and through the castle's spire windows).
+- **The world's weather** (lane 4's F12, `story/weather.gd`): outdoors, a place's mood is dressed for the weather
+  the world has now (`Weather.dress_mood`: its own rain and snow give way to the weather's, fog thickens its mist), and
+  when the weather turns during a stay, `Atmosphere.refresh_weather()` (LocationClock calls it) rebuilds the rain and
+  snow and resets the mist and the wet or snowy surfaces at once.
 - **Weather on surfaces** (W12, Modern; `shaders/world/weather_surface.gdshaderinc`, the global uniforms
   `world_wet`, `world_snow`, `world_time` and `world_sky` that Atmosphere sets from the mood's weather outdoors):
   rain darkens and glosses everything and its colour deepens, puddles gather in the low places of level ground,

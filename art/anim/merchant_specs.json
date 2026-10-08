@@ -1,0 +1,11 @@
+{
+  "vadoma": {
+    "shape": "person",
+    "expression": "shrewd, faintly amused",
+    "look": "Vadoma, a Vistani trader woman in her forties: olive skin, dark greying hair braided under a deep green headscarf, heavy gold hoop earrings and rings on every finger, a long dark blue coat embroidered with small gold suns and eyes worn open over an ochre vest and cream blouse, a wide sash hung with little pouches, a leather-bound ledger tucked into the sash, a dark brown skirt and worn travelling boots",
+    "who": "Vadoma, a Vistani trader woman",
+    "attack": "knife slash",
+    "windup": "a short curved knife drawn back beside her hip in one hand, weight on her back foot, coat swinging",
+    "strike": "the knife slashed forward across her body at the enemy, leaning in"
+  }
+}

@@ -55,10 +55,10 @@ func _ready() -> void:
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 8)
 	col.add_child(row)
-	row.add_child(_button("End round  (Space)", "plan_round", "Everyone gets their movement again; six seconds pass."))
+	row.add_child(_button("End round  (%s)" % InputActions.key_text(&"plan_round"), "plan_round", "Everyone gets their movement again; six seconds pass."))
 	_strike = _button("Attack", "strike", "")
 	row.add_child(_strike)
-	row.add_child(_button("Real time  (T)", "plan", "Back to walking freely (turn-based stays off until you switch it on again)."))
+	row.add_child(_button("Real time  (%s)" % InputActions.key_text(&"plan_mode"), "plan", "Back to walking freely (turn-based stays off until you switch it on again)."))
 	_hint = UiKit.label("", 13, "parchment")
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(_hint)

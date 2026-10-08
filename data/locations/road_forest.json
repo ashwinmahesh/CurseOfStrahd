@@ -92,6 +92,31 @@
       "kind": "examine",
       "label": "A claw-marked pine",
       "model": "tree_marked"
+    },
+    {
+      "id": "pine_satchel",
+      "cell": [
+        22,
+        11
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a satchel snagged high in the pine",
+      "model": "satchel",
+      "item": "goggles_of_night"
+    },
+    {
+      "id": "trunk_hollow",
+      "cell": [
+        16,
+        8
+      ],
+      "kind": "search",
+      "search_dc": 12,
+      "skill": "investigation",
+      "label": "a hollow in the fallen trunk",
+      "model": "leaves",
+      "item": "bag_of_tricks_rust"
     }
   ],
   "encounters": [

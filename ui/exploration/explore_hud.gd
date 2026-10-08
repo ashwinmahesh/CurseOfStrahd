@@ -41,21 +41,24 @@ var exit_signs: ExitSigns
 ## Names over everything usable while Alt is held (ui/exploration/thing_labels.gd).
 var thing_labels: ThingLabels
 
-## The exploring controls card (F1), like the one in fights.
+## The exploring controls card (F1), like the one in fights. {action} reads as the player's key for it (InputActions.fill).
 const CONTROLS: Array[String] = [
 	"Mouse: click the floor to walk there; click a person, door, chest or thing to use it (the hint says what a click will do); right-click it for everything you can do; the mouse wheel zooms.",
-	"Hold Alt to see the names of everything you can use nearby. Hold L to see what each foe in sight can see (always shown while sneaking).",
-	"Keyboard: WASD or the arrows walk · Q / E turn the camera · 1-4 or Tab pick who leads · C character · I inventory · J journal · P party · M map · R rest · F search · V sneak · G split the party · T turn-based (Space ends the round) · F5 quicksave · F9 load it · Esc menu.",
+	"Hold {show_names} to see the names of everything you can use nearby. Hold {show_sight} to see what each foe in sight can see (always shown while sneaking).",
+	"Keyboard: {walk} walk · {camera_rotate_left} / {camera_rotate_right} turn the camera · {select_member_1}-{select_member_4} or {cycle_leader} pick who leads · {open_sheet} character · {open_inventory} inventory · {open_journal} journal · {open_party} party · {open_map} map · {rest} rest · {search} search · {sneak} sneak · {split} split the party · {plan_mode} turn-based ({plan_round} ends the round) · {quick_save} quicksave · {quick_load} load it · Esc menu. Settings, Keys changes them.",
 	"In conversations: 1-9 pick an answer · Space, Enter or a click goes on · H shows what's been said.",
 	"Controller: left stick walks · A uses what's beside you · Back opens its menu · X searches · Y journal · LB / RB character and inventory · Start menu.",
 ]
 var _controls: PanelContainer
+var _control_lines: Array[Label] = []
 
-## [label, key, command, icon (art/ui/icons)]
-const BUTTONS := [["Character", "C", "sheet", "character"], ["Inventory", "I", "inventory", "inventory"],
-	["Journal", "J", "journal", "journal"], ["Party", "P", "party", "party"], ["Map", "M", "map", "map"],
-	["Rest", "R", "rest", "rest"], ["Search", "F", "search", "search"], ["Sneak", "V", "sneak", "sneak"],
-	["Split", "G", "split", "split"], ["Turn-based", "T", "plan", "plan"], ["Menu", "Esc", "menu", "menu"]]
+## [label, key (an InputActions action, or the key itself), command, icon (art/ui/icons)]
+const BUTTONS := [["Character", "open_sheet", "sheet", "character"], ["Inventory", "open_inventory", "inventory", "inventory"],
+	["Journal", "open_journal", "journal", "journal"], ["Party", "open_party", "party", "party"], ["Map", "open_map", "map", "map"],
+	["Rest", "rest", "rest", "rest"], ["Search", "search", "search", "search"], ["Sneak", "sneak", "sneak", "sneak"],
+	["Split", "split", "split", "split"], ["Turn-based", "plan_mode", "plan", "plan"], ["Menu", "Esc", "menu", "menu"]]
+## Each bar button's key mark: command -> [the mark, the BUTTONS row], so marks follow the player's keys.
+var _bar_keys: Dictionary = {}
 
 
 func _init() -> void:
@@ -150,8 +153,8 @@ func build(state: StoryState) -> void:
 	_narr.fit_content = true
 	_narr.custom_minimum_size = Vector2(680, 0)
 	_narr.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_narr.add_theme_font_size_override("italics_font_size", 19)
-	_narr.add_theme_font_size_override("normal_font_size", 19)
+	_narr.add_theme_font_size_override("italics_font_size", UiScale.text(19))
+	_narr.add_theme_font_size_override("normal_font_size", UiScale.text(19))
 	narr_col.add_child(_narr)
 	var close_hint := _label("Click or Esc to close", 12, "parchment")
 	close_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -204,7 +207,9 @@ func build(state: StoryState) -> void:
 		var l := _label(line, 15, "vellum")
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.custom_minimum_size = Vector2(820, 0)
+		l.set_meta(&"template", line)
 		cbox.add_child(l)
+		_control_lines.append(l)
 	_controls.add_child(cbox)
 	add_child(_controls)
 	var f1 := _label("F1: controls", 12, "gilt_dark")
@@ -252,15 +257,15 @@ func build(state: StoryState) -> void:
 	for b: Array in BUTTONS:
 		var cmd := str(b[2])
 		var btn := UiKit.button("", func() -> void: command.emit(cmd), 14, str(b[3]))
-		btn.tooltip_text = "%s (%s)" % [b[0], b[1]]
 		btn.name = str(b[0])
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.add_theme_constant_override("icon_max_width", 30)
 		btn.custom_minimum_size = Vector2(52, 48)
 		btn.expand_icon = false
-		# Its key in the lower corner, so the shortcuts are learned by looking.
-		var key := _label(str(b[1]), 10 if str(b[1]).length() > 1 else 12, "gilt_light")
+		# Its key in the lower corner, so the shortcuts are learned by looking (set in _show_keys; a long name grows left).
+		var key := _label("", 12, "gilt_light")
 		key.add_theme_constant_override("outline_size", 4)
+		key.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 		key.anchor_left = 1.0
 		key.anchor_right = 1.0
 		key.anchor_top = 1.0
@@ -273,6 +278,7 @@ func build(state: StoryState) -> void:
 		key.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		btn.add_child(key)
 		_bar_buttons[cmd] = btn
+		_bar_keys[cmd] = [key, b]
 		bar.add_child(btn)
 	add_child(plate)
 	refresh()
@@ -291,7 +297,10 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		s.set_content_margin_all(6)
 		s.content_margin_right = 10
 		card.add_theme_stylebox_override("panel", s)
-		card.custom_minimum_size = Vector2(236, 0)
+		card.custom_minimum_size = Vector2(CARD_W, 0)
+		# The click (lead, or the sheet) lies under the card's content, so the tags and resources on top can open
+		# their own cards.
+		card.add_child(_card_button(ch, i))
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 8)
 		row.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -317,37 +326,25 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		info.add_theme_constant_override("separation", 6)
 		info.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		info.add_child(_label("%d / %d" % [ch.hp, ch.max_hp()], 12, "vellum"))
-		var conds := ch.active_conditions()
-		var state := ""
 		if ch.dead:
-			state = "Dead"
+			info.add_child(_label("Dead", 12, "vampire_red"))
 		elif ch.hp <= 0:
-			state = "Down"
-		elif ch.is_bloodied():
-			state = "Bloodied"
-		if state != "":
-			info.add_child(_label(state, 12, "vampire_red"))
-		if not conds.is_empty():
-			info.add_child(_label(", ".join(conds.map(func(c: StringName) -> String: return str(c).capitalize())), 12, "rose"))
+			info.add_child(_label("Down", 12, "vampire_red"))
 		v.add_child(info)
+		# Resources at a glance (U9): what's on them, what's working on them (an icon each, named on hover), their spell
+		# slots and their class resources.
+		var tags := _status_tags(ch)
+		if tags != null:
+			v.add_child(tags)
+		var working := EffectIcons.row(ch, 20.0)
+		if working != null:
+			v.add_child(working)
+		var res := _resources(ch)
+		if res != null:
+			v.add_child(res)
 		if st.can_level_up(ch):
 			v.add_child(_label("▲ Level up!", 13, "bile"))
 		row.add_child(v)
-		var btn := Button.new()
-		btn.flat = true
-		btn.set_anchors_preset(Control.PRESET_FULL_RECT)
-		btn.focus_mode = Control.FOCUS_NONE
-		for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
-			btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
-		btn.tooltip_text = "%s · %s\nClick: lead · Right-click: sheet" % [ch.name, ch.class_summary()]
-		var idx := i
-		btn.gui_input.connect(func(ev: InputEvent) -> void:
-			if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed:
-				if (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
-					leader_picked.emit(idx)
-				elif (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
-					sheet_requested.emit(idx))
-		card.add_child(btn)
 		_party_box.add_child(card)
 	# Guests (story allies the player commands, ADR 0010): a smaller frame in moonlight, marked as a guest.
 	for gi in st.guests.size():
@@ -356,7 +353,7 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		var gs := UiKit.style("ui_black", "moonlight", 2, 0.85)
 		gs.set_content_margin_all(5)
 		gcard.add_theme_stylebox_override("panel", gs)
-		gcard.custom_minimum_size = Vector2(236, 0)
+		gcard.custom_minimum_size = Vector2(CARD_W, 0)
 		var grow := HBoxContainer.new()
 		grow.add_theme_constant_override("separation", 8)
 		gcard.add_child(grow)
@@ -375,19 +372,122 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 	if location_name != "":
 		_fit_where(location_name)
 	# Sneak, Split and Turn-based read as on while they are.
-	for pair: Array in [["sneak", sneaking, "Sneak", "V"], ["split", solo, "Split", "G"], ["plan", planning, "Turn-based", "T"]]:
+	for pair: Array in [["sneak", sneaking], ["split", solo], ["plan", planning]]:
 		var b := _bar_buttons.get(str(pair[0]), null) as Button
 		if b != null:
-			var on := bool(pair[1])
-			b.modulate = Color(1.25, 1.12, 0.8) if on else Color.WHITE
-			b.tooltip_text = ("%s (%s) · on" if on else "%s (%s)") % [pair[2], pair[3]]
+			b.modulate = Color(1.25, 1.12, 0.8) if bool(pair[1]) else Color.WHITE
+	_show_keys({"sneak": sneaking, "split": solo, "plan": planning})
 	# Turn-based exploring's panel takes the top of the screen: toasts drop below it.
 	_toast_panel.offset_top = 136 if planning else 70
 	_goal.text = _objective()
 	_goal.visible = _goal.text != ""
 	var hours := st.minute_of_day / 60
-	_mode.text = "Day %d · %02d:%02d%s%s%s · %d gp" % [st.day, hours, st.minute_of_day % 60, " · Sneaking" if sneaking else "",
-		" · Split party" if solo else "", " · Turn-based" if planning else "", int(st.gold)]
+	_mode.text = "Day %d · %02d:%02d%s%s%s%s · %d gp" % [st.day, hours, st.minute_of_day % 60, _weather(),
+		" · Sneaking" if sneaking else "", " · Split party" if solo else "", " · Turn-based" if planning else "", int(st.gold)]
+
+
+## " · Fog" out in the open (F12's weather, story/weather.gd); "" indoors, where it doesn't reach.
+func _weather() -> String:
+	var loc := Compendium.shared().get_entry("locations", st.location)
+	if not bool((loc.get("map", {}) as Dictionary).get("outdoors", false)):
+		return ""
+	return " · " + Weather.label(st)
+
+
+## The party card's click: lead with a left click, the sheet with a right one.
+func _card_button(ch: Character, idx: int) -> Button:
+	var btn := Button.new()
+	btn.flat = true
+	btn.focus_mode = Control.FOCUS_NONE
+	for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
+		btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
+	btn.tooltip_text = "%s · %s\nClick: lead · Right-click: sheet" % [ch.name, ch.class_summary()]
+	btn.gui_input.connect(func(ev: InputEvent) -> void:
+		if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed:
+			if (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
+				leader_picked.emit(idx)
+			elif (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
+				sheet_requested.emit(idx))
+	return btn
+
+
+## Bloodied, conditions and exhaustion as small tags; the rules words among them open their cards (U1). Null when
+## there's nothing. (Concentration and abilities switched on are icons: EffectIcons.)
+func _status_tags(ch: Character) -> Control:
+	var flow := HFlowContainer.new()
+	flow.add_theme_constant_override("h_separation", 3)
+	flow.add_theme_constant_override("v_separation", 3)
+	flow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if ch.hp > 0 and ch.is_bloodied():
+		flow.add_child(UiParts.pill("Bloodied", "vampire_red", 10))
+	for c in ch.active_conditions():
+		flow.add_child(UiParts.pill(str(c).capitalize(), "rose", 10))
+	if ch.exhaustion > 0:
+		flow.add_child(UiParts.pill("Exhaustion %d" % ch.exhaustion, "rose", 10))
+	if flow.get_child_count() == 0:
+		flow.free()
+		return null
+	return flow
+
+
+## Spell slots by level and class resources as small lozenges (filled: left), each group with its name; past
+## MAX_PIPS a resource reads "left/total". Hover: every one with its name and when it comes back. Null when none.
+func _resources(ch: Character) -> Control:
+	var flow := HFlowContainer.new()
+	flow.add_theme_constant_override("h_separation", 7)
+	flow.add_theme_constant_override("v_separation", 1)
+	flow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var lines: Array[String] = []
+	var slots := ch.spell_slots()
+	for l in slots.size():
+		if slots[l] > 0:
+			var left := ch.slots_left(l + 1)
+			flow.add_child(_pip_group(str(l + 1), slots[l], left, "moonlight"))
+			lines.append("%s-level slots: %d of %d" % [ActionCatalog._ordinal(l + 1), left, slots[l]])
+	for res_id: String in ch.resources:
+		var r := ch.resources[res_id] as Dictionary
+		var total := ch.resource_max(res_id)
+		if total <= 0:
+			continue
+		var left := ch.resource_left(res_id)
+		flow.add_child(_pip_group(str(r["name"]), total, left, "gilt_light"))
+		var back := {"short": " (back on a Short Rest)", "short_one": " (one back on a Short Rest)", "long": " (back on a Long Rest)"}.get(str(r.get("recharge", "")), "") as String
+		lines.append("%s: %d of %d%s" % [r["name"], left, total, back])
+	if flow.get_child_count() == 0:
+		flow.free()
+		return null
+	var body := "\n".join(lines)
+	return UiParts.tipped(flow, func() -> Control: return UiParts.rules_tip("Resources", ch.name, body), body)
+
+
+const MAX_PIPS := 6
+## The party card's width: wide enough for a level's slots or a resource's name beside its lozenges.
+const CARD_W := 252.0
+
+
+## "Rage ◆◆◇" or "1 ◆◆◆◇": a name in small type and a lozenge for each use, filled while it's left.
+func _pip_group(name_text: String, total: int, left: int, colour: String) -> Control:
+	var box := HBoxContainer.new()
+	box.add_theme_constant_override("separation", 3)
+	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var n := _label(name_text, 10, "parchment" if left > 0 else "bone")
+	n.add_theme_constant_override("outline_size", 3)
+	box.add_child(n)
+	if total > MAX_PIPS:
+		var count := _label("%d/%d" % [left, total], 10, colour if left > 0 else "bone")
+		count.add_theme_constant_override("outline_size", 3)
+		box.add_child(count)
+		return box
+	var step := 8.0
+	box.add_child(UiParts.drawn(Vector2(step * total, 12), func(c: Control) -> void:
+		for i in total:
+			var at := Vector2(4.0 + i * step, c.size.y / 2.0)
+			if i < left:
+				UiParts.diamond(c, at, 3.6, Look.color(colour), true)
+			else:
+				UiParts.diamond(c, at, 3.0, Look.color("gilt_dark"), false)))
+	box.get_child(1).mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return box
 
 
 ## The newest open quest's first objective ("◆ Follow the hidden stair down"), or "".
@@ -482,6 +582,22 @@ func toast(text: String) -> void:
 
 func toggle_controls() -> void:
 	_controls.visible = not _controls.visible
+
+
+## The bar's key marks and tooltips and the controls card, in the player's keys (Settings, Keys). `on`: the commands
+## lit right now ("Sneak (V) · on").
+func _show_keys(on: Dictionary = {}) -> void:
+	for cmd: String in _bar_keys:
+		var mark := (_bar_keys[cmd] as Array)[0] as Label
+		var row := (_bar_keys[cmd] as Array)[1] as Array
+		var k := str(row[1])
+		var shown := InputActions.key_text(StringName(k)) if InputActions.BINDINGS.has(StringName(k)) else k
+		mark.text = shown
+		mark.add_theme_font_size_override("font_size", 12 if shown.length() <= 1 else (10 if shown.length() <= 3 else 9))
+		var b := _bar_buttons[cmd] as Button
+		b.tooltip_text = ("%s (%s)" % [row[0], shown] if shown != "" else str(row[0])) + (" · on" if bool(on.get(cmd, false)) else "")
+	for l in _control_lines:
+		l.text = InputActions.fill(str(l.get_meta(&"template")))
 
 
 func controls_showing() -> bool:

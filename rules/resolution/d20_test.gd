@@ -36,6 +36,9 @@ var auto_failed: bool = false
 var auto_fail_reason: String = ""
 ## Text for a d20 that was rolled again (Halfling Luck): "Luck: 1 → 14".
 var reroll_note: String = ""
+## The choices that follow this roll wait for the player's answer (a Concentration save asked once the attack or
+## spell that caused it is done): whoever rolled it doesn't act on the result yet.
+var awaiting: bool = false
 
 
 ## `advantage_sources` / `disadvantage_sources` are counts so callers can just add up effects.

@@ -26,6 +26,7 @@ var env: Environment
 var sun: DirectionalLight3D
 var mood: Dictionary = {}
 var mood_id := ""
+var loc_id := ""
 var phase := ""
 var board: ArenaBoard
 var loc: Dictionary = {}
@@ -56,11 +57,31 @@ static func create(loc_id: String, loc_: Dictionary, board_: ArenaBoard) -> Atmo
 	a.board = board_
 	a.outdoors = bool((loc_.get("map", {}) as Dictionary).get("outdoors", false))
 	a.light_level = str((loc_.get("map", {}) as Dictionary).get("light", "dim"))
+	a.loc_id = loc_id
 	a.mood_id = mood_for(loc_id, loc_)
-	a.mood = resolve(a.mood_id)
+	a.mood = a._dressed()
 	a._rng.seed = hash(loc_id)   # cosmetic only, never rules
 	a._build()
 	return a
+
+
+## The place's mood dressed for the world's weather (lane 4's Weather, F12): outdoors its own rain and snow give way to
+## the weather's and fog thickens its mist; indoors it is the mood as it stands.
+func _dressed() -> Dictionary:
+	var base := resolve(mood_id)
+	if GameState.story == null:
+		return base
+	return Weather.dress_mood(GameState.story, loc_id, base, outdoors)
+
+
+## The world's weather turned while the party is here (LocationClock calls it, F12): the mood is dressed again, and its
+## rain or snow, its mist and its wet or snowy surfaces follow at once. The light by time of day is unchanged.
+func refresh_weather() -> void:
+	mood = _dressed()
+	if weather != null:
+		weather.rebuild_falling(mood, outdoors)
+	_apply_static()
+	_set_weather_on_surfaces()
 
 
 static func moods() -> Dictionary:
@@ -344,10 +365,11 @@ func _flat_floors_cast_no_shadow() -> void:
 ## that distance), how far it takes to come in, and whether anything near the lens blurs.
 const DOF_STRENGTHS := {
 	"old": {"amount": 0.14, "start": 1.0, "per_zoom": 0.12, "transition": 3.5, "transition_per_zoom": 0.25, "near": true},
-	"light": {"amount": 0.08, "start": 3.0, "per_zoom": 0.15, "transition": 6.0, "transition_per_zoom": 0.3, "near": false},
+	"light": {"amount": 0.092, "start": 3.0, "per_zoom": 0.15, "transition": 6.0, "transition_per_zoom": 0.3, "near": false},
 	"lighter": {"amount": 0.05, "start": 6.0, "per_zoom": 0.2, "transition": 10.0, "transition_per_zoom": 0.0, "near": false},
 }
-## Light unless the owner picks another (2026-10-07: "old" read as a smear at the top of the screen).
+## Light unless the owner picks another (2026-10-07: "old" read as a smear at the top of the screen). Its blur went up
+## 15% (0.08 to 0.092, owner request 2026-10-08); where the blur starts is unchanged.
 static var dof_strength := "light"
 var _dof: CameraAttributesPractical = null
 

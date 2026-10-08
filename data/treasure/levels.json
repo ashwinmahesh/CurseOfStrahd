@@ -28,6 +28,6 @@
     {"max_level": 10, "weights": {"common": 15, "uncommon": 40, "rare": 38, "very_rare": 7}},
     {"max_level": 20, "weights": {"uncommon": 25, "rare": 45, "very_rare": 25, "legendary": 5}}
   ],
-  "items_per_location": {"none": 35, "one": 50, "two": 15, "extra_if_containers": 4, "extra_chance": 30},
+  "items_per_location": {"none": 20, "one": 50, "two": 30, "extra_if_containers": 4, "extra_chance": 30},
   "group_weights": {"spell_scroll": 4, "potion": 3}
 }

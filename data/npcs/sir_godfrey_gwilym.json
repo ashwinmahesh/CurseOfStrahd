@@ -21,5 +21,94 @@
     "argynvostholt"
   ],
   "region": "argynvostholt",
-  "pronouns": "he/him"
+  "pronouns": "he/him",
+  "shop": {
+    "sells": [
+      {
+        "id": "weapon_plus_2__longsword",
+        "qty": 1
+      },
+      {
+        "id": "weapon_plus_2__greatsword",
+        "qty": 1
+      },
+      {
+        "id": "weapon_plus_2__warhammer",
+        "qty": 1
+      },
+      {
+        "id": "weapon_plus_2__lance",
+        "qty": 1
+      },
+      {
+        "id": "weapon_plus_2__longbow",
+        "qty": 1
+      },
+      {
+        "id": "weapon_plus_1__glaive",
+        "qty": 1
+      },
+      {
+        "id": "armor_plus_1__plate_armor",
+        "qty": 1
+      },
+      {
+        "id": "armor_plus_1__half_plate_armor",
+        "qty": 1
+      },
+      {
+        "id": "armor_plus_1__chain_mail",
+        "qty": 1
+      },
+      {
+        "id": "shield_plus_2__shield",
+        "qty": 1
+      },
+      {
+        "id": "armor_of_resistance_necrotic__plate_armor",
+        "qty": 1
+      },
+      {
+        "id": "potion_of_healing_superior",
+        "qty": 3
+      },
+      {
+        "id": "ring_of_free_action",
+        "qty": 1
+      },
+      {
+        "id": "bracers_of_defense",
+        "qty": 1
+      },
+      {
+        "id": "cloak_of_displacement",
+        "qty": 1
+      },
+      {
+        "id": "spell_scroll__greater_restoration",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__dispel_evil_and_good",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__death_ward",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__freedom_of_movement",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__banishment",
+        "qty": -1
+      }
+    ],
+    "buys": [],
+    "markup": 0.5,
+    "sell_rate": 0.0,
+    "closed": "not flag.godfrey_remembers",
+    "hide_closed": true
+  }
 }

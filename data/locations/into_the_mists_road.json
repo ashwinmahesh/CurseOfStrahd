@@ -194,6 +194,43 @@
       "kind": "decor",
       "label": "a crow on a barrel",
       "model": "crow"
+    },
+    {
+      "id": "mists_guard_sword",
+      "cell": [
+        18,
+        16
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "a gate guard's sword in the weeds",
+      "model": "sword_leaning",
+      "item": "weapon_of_warning__longsword"
+    },
+    {
+      "id": "mists_shrine_board",
+      "cell": [
+        19,
+        12
+      ],
+      "kind": "search",
+      "search_dc": 12,
+      "skill": "investigation",
+      "label": "a loose board behind the shrine",
+      "model": "broken_boards",
+      "item": "ring_of_mind_shielding"
+    },
+    {
+      "id": "carcass_pack",
+      "cell": [
+        27,
+        10
+      ],
+      "kind": "search",
+      "search_dc": 12,
+      "label": "a traveller's pack under the carcass",
+      "model": "satchel",
+      "item": "boots_of_the_winterlands"
     }
   ],
   "containers": [

@@ -525,6 +525,32 @@
       "model": "ledger",
       "codex": "rahadin_names",
       "text": "Name after name in a neat hand, columns of them, page after page, each with a date and nothing else. The first dates are older than the castle. The newest is last week."
+    },
+    {
+      "id": "mirror_cloak",
+      "cell": [
+        2,
+        1
+      ],
+      "kind": "search",
+      "search_dc": 17,
+      "skill": "investigation",
+      "label": "a space behind the mirror that shows no one",
+      "model": "rubble",
+      "item": "cloak_of_displacement"
+    },
+    {
+      "id": "ludmilla_grimoire",
+      "cell": [
+        3,
+        20
+      ],
+      "kind": "search",
+      "search_dc": 17,
+      "skill": "investigation",
+      "label": "a grimoire among Ludmilla's books",
+      "model": "scattered_notes",
+      "item": "arcane_grimoire_plus_3"
     }
   ],
   "containers": [

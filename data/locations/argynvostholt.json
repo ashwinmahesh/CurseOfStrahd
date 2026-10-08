@@ -429,6 +429,18 @@
       "label": "A seated knight",
       "model": "armor_stand",
       "when": "flag.argynvost_beacon_lit"
+    },
+    {
+      "id": "well_cube",
+      "cell": [
+        37,
+        9
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "something on a ledge down the well",
+      "model": "rubble",
+      "item": "cube_of_force"
     }
   ],
   "containers": [

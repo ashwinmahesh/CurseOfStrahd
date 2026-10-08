@@ -9,6 +9,10 @@ extends CanvasLayer
 ## Every number's tooltip lays its Breakdown out line by line, and long rules text lives in tooltips, not on the page.
 ## Left/right arrows (or the portrait chips) switch character, Q/E switch tab; Level up opens from here when a
 ## milestone allows it.
+##
+## In a fight (owner, 2026-10-08) the sheet opens view only, from a party frame's portrait or C: the fight waits under
+## it, nothing on it can be changed or spent (no Level up, casting, inventory or notes), and Back to the fight, Esc or C
+## close it with the turn as it was.
 
 const TABS: Array[String] = ["Actions", "Features", "Spells", "Equipment", "Effects", "Notes"]
 const TAB_ICONS := {"Actions": "attack", "Features": "character", "Spells": "spells", "Equipment": "inventory",
@@ -35,6 +39,8 @@ var _frame: VBoxContainer
 var _scroll: ScrollContainer
 var _drawn := ""
 var _cast_note := ""           ## what the last cast did, shown above the spell list
+## Opened in a fight: view only (see the top).
+var in_fight := false
 
 
 func _init() -> void:
@@ -106,15 +112,21 @@ func _party_strip(ch: Character) -> HBoxContainer:
 	var strip := UiParts.party_chips(st.party, index, func(i: int) -> void:
 		index = i
 		_draw())
-	if st.can_level_up(ch):
+	if not in_fight and st.can_level_up(ch):
 		var up := UiKit.button("Level up", func() -> void: root.call("open_screen", "level_up", index), 16)
 		up.custom_minimum_size = Vector2(0, 46)
 		up.add_theme_color_override("font_color", Look.color("gilt_light"))
 		strip.add_child(up)
 	strip.add_child(UiParts.gap())
-	var hint := UiKit.label("← →  character   ·   Q  E  tab   ·   hover a number to see where it comes from", 13, "bone")
+	var hint := UiKit.label("← →  character   ·   Q  E  tab   ·   hover a number to see where it comes from", 13, "bone") \
+		if not in_fight else UiKit.label("View only in a fight   ·   ← →  character   ·   Q  E  tab   ·   Esc or C: back", 13, "bone")
 	hint.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	strip.add_child(hint)
+	if in_fight:
+		# The way back, at the far right, clear of the title's crest.
+		var back := UiKit.button("Back to the fight", _close, 16)
+		back.custom_minimum_size = Vector2(0, 46)
+		strip.add_child(back)
 	return strip
 
 
@@ -671,11 +683,12 @@ func _spells(ch: Character) -> VBoxContainer:
 		box.add_child(_empty("%s doesn't cast spells." % ch.name.get_slice(" ", 0)))
 		return box
 	var casts := {}
-	for o in FieldCasting.options(st.party, ch, Dice.roller):
-		casts[str(o["id"])] = o
 	var utility := {}
-	for o in FieldCasting.utility_options(st.party, ch, Dice.roller):
-		utility[str(o["id"])] = o
+	if not in_fight:   # spells are cast from the hotbar in a fight
+		for o in FieldCasting.options(st.party, ch, Dice.roller):
+			casts[str(o["id"])] = o
+		for o in FieldCasting.utility_options(st.party, ch, Dice.roller):
+			utility[str(o["id"])] = o
 	var unique: Array = []
 	var seen := {}
 	for k in known:
@@ -1002,6 +1015,8 @@ func _equipment(ch: Character) -> VBoxContainer:
 			return UiParts.breakdown_tip(cap, "Carrying capacity", "%d lb" % cap.total(), "Carrying %.1f lb." % carried), 300.0))
 	load.add_child(UiKit.label("Party purse: %d gp" % int(st.gold), 15, "gilt_light"))
 	box.add_child(load)
+	if in_fight:
+		return box   # gear changes wait for the fight to end
 	var open := UiKit.button("Open inventory", func() -> void: root.call("open_screen", "inventory", index), 15, "inventory")
 	open.size_flags_horizontal = Control.SIZE_SHRINK_END
 	box.add_child(open)
@@ -1172,11 +1187,22 @@ func _notes(ch: Character) -> Control:
 	t.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
 	t.add_theme_font_size_override("font_size", 16)
 	t.text = str(ch.build.get("notes", ""))
+	t.editable = not in_fight
 	t.text_changed.connect(func() -> void: ch.build["notes"] = t.text)
 	return t
 
 
+func _close() -> void:
+	root.call("close_screen")
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	if in_fight and (event.is_action_pressed(&"combat_cancel") or event is InputEventKey \
+			and (event as InputEventKey).pressed and not (event as InputEventKey).echo and (event as InputEventKey).physical_keycode == KEY_C):
+		# In a fight the world's input waits (the tree is paused), so the sheet closes itself.
+		get_viewport().set_input_as_handled()
+		_close()
+		return
 	if event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo:
 		match (event as InputEventKey).physical_keycode:
 			KEY_RIGHT:

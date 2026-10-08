@@ -208,6 +208,19 @@
       "label": "Marks in the mud",
       "search_dc": 12,
       "flag": "arabelle_tracks_found"
+    },
+    {
+      "id": "arrigal_wagon_drawer",
+      "cell": [
+        27,
+        11
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "skill": "investigation",
+      "label": "a hidden drawer under Arrigal's wagon",
+      "model": "broken_boards",
+      "item": "dagger_of_venom__dagger"
     }
   ],
   "containers": [
@@ -351,6 +364,14 @@
       "dialogue": "vallaki/vistani_camp:bluto",
       "approach": 6,
       "when": "quest.missing_arabelle == clue or (quest.missing_arabelle == asked and flag.arabelle_tracks_found)"
+    },
+    {
+      "npc": "vadoma",
+      "cell": [
+        20,
+        6
+      ],
+      "dialogue": "vallaki/vadoma:start"
     }
   ],
   "narration": {

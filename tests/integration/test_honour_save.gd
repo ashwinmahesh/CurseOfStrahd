@@ -101,6 +101,7 @@ func test_save_game_writes_over_the_one_save() -> void:
 	await _frames(1)
 	var page := menu.find_children("*", "SavesScreen", true, false)[0] as SavesScreen
 	assert_false(_button(page, "New Save").visible, "no second save")
+	assert_true(page.find_child(slot, true, false).find_child("Delete", true, false) == null, "a live Honour run's save can't be deleted")
 	assert_eq(page.slots().map(func(s: Dictionary) -> String: return str(s["slot"])), [slot], "only the run's own save")
 	(page.find_child(slot, true, false).find_child("Act", true, false) as Button).pressed.emit()
 	assert_false(page.confirm_open(), "saving over its own one save asks nothing")

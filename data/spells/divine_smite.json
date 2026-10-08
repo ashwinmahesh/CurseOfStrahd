@@ -48,6 +48,6 @@
   "tags": [
     "damage"
   ],
-  "summary": "Right after a melee hit: the target takes an extra 2d8 Radiant damage (3d8 against Fiends and Undead).",
+  "summary": "On any melee hit, no action needed (the 2014 rule): spend a spell slot for an extra 2d8 Radiant damage, 1d8 more per slot level above 1st (at most 5d8), and 1d8 more against Fiends and Undead.",
   "text": "Bonus Action, cast right after you hit a target with a Melee weapon or an Unarmed Strike. The strike flares with holy power and the target takes an extra 2d8 Radiant damage from it; the extra damage is 1d8 higher if the target is a Fiend or an Undead. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 1."
 }

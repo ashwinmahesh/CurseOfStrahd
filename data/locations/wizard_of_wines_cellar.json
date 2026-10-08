@@ -142,6 +142,19 @@
       "kind": "examine",
       "label": "Bottles furred with dust",
       "model": "shelves"
+    },
+    {
+      "id": "founders_cask_stave",
+      "cell": [
+        3,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "skill": "investigation",
+      "label": "a stave in the founder's cask that opens",
+      "model": "broken_boards",
+      "item": "alchemy_jug"
     }
   ],
   "containers": [

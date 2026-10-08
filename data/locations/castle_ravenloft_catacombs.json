@@ -665,6 +665,32 @@
       "kind": "decor",
       "label": "Burial niches",
       "model": "wall_alcoves"
+    },
+    {
+      "id": "conjurer_wand",
+      "cell": [
+        3,
+        20
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "skill": "investigation",
+      "label": "a wand hidden in the conjurer's bier",
+      "model": "scattered_notes",
+      "item": "wand_of_the_war_mage_plus_2"
+    },
+    {
+      "id": "jester_cape",
+      "cell": [
+        4,
+        15
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "skill": "investigation",
+      "label": "a false bottom in the jester's sarcophagus",
+      "model": "satchel",
+      "item": "cape_of_the_mountebank"
     }
   ],
   "containers": [
