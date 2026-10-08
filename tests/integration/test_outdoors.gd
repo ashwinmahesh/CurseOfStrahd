@@ -410,3 +410,26 @@ func test_the_abbey_is_lived_in() -> void:
 	for p: Variant in garden["props"]:
 		if str((p as Dictionary)["id"]).begins_with("scarecrow_"):
 			assert_eq(str((p as Dictionary)["model"]), "scarecrow_stitched", "%s is a stitched scarecrow" % (p as Dictionary)["id"])
+
+
+## Berez as a drowned village (lane 28): marsh mud and black water, the mound and the witch's stump as real rises of
+## ground rather than boxes, the hut on its roots, a causeway a step above the marsh, and the scarecrow field.
+func test_berez_is_a_drowned_village() -> void:
+	var v := _view("berez")
+	await _frames(1)
+	assert_true(v.grid.has_flag(Vector2i(7, 14), CombatGrid.NATURAL), "the mound is ground, not a platform")
+	assert_true(v.grid.height(Vector2i(7, 14)) > v.grid.height(Vector2i(13, 14)), "the mound rises above the marsh")
+	assert_true(v.grid.has_flag(Vector2i(30, 16), CombatGrid.NATURAL), "the stump is ground, not a platform")
+	assert_true(v.grid.height(Vector2i(30, 16)) > v.grid.height(Vector2i(25, 16)), "the stump rises above the field")
+	assert_true(v.grid.height(Vector2i(39, 27)) > v.grid.height(Vector2i(36, 27)), "the causeway a step above the water")
+	var loc := Compendium.shared().get_entry("locations", "berez") as Dictionary
+	var scarecrows := 0
+	for p: Variant in loc["props"]:
+		var q := p as Dictionary
+		if str(q["id"]) == "berez_hut":
+			assert_eq(str(q["model"]), "hut_lysaga", "the witch's hut on its stump")
+		if str(q.get("model", "")) == "scarecrow":
+			scarecrows += 1
+	assert_true(scarecrows >= 6, "a field of scarecrows (%d)" % scarecrows)
+	assert_eq(str(v.atmosphere.mood["water"]["deep"]), "void", "black water")
+	v.queue_free()

@@ -674,7 +674,7 @@
       },
       "mist": {
         "height": 1.7,
-        "cover": 0.62,
+        "cover": 0.5,
         "thickness": 3.4,
         "open": 0.5,
         "wind": [
@@ -690,14 +690,18 @@
         "hills": 0.8
       },
       "water": {
-        "deep": "bog_deep",
-        "shallow": "bog",
+        "deep": "void",
+        "shallow": "bog_deep",
         "foam": "bone_dark",
         "glint": "moss",
         "flow": [
-          0.03,
-          0.01
-        ]
+          0.01,
+          0.0
+        ],
+        "ripples": 0.05,
+        "reflect": 0.35,
+        "map": "void",
+        "map_edge": "bog"
       },
       "weather": [
         {
@@ -714,16 +718,16 @@
       ],
       "times": {
         "day": {
-          "mist": "bone",
+          "mist": "pewter",
           "grade": {
             "shadows": "bog_deep",
-            "lights": "bone",
-            "amount": 0.4
+            "lights": "moss",
+            "amount": 0.35
           },
           "saturation": 0.75
         },
         "dusk": {
-          "mist": "bone",
+          "mist": "slate",
           "grade": {
             "shadows": "bog_deep",
             "lights": "parchment",
