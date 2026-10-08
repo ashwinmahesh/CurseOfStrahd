@@ -99,6 +99,19 @@ bolts home and the carriage comes early; failed or left alone, she is black by m
 - Back at the camp Radu pays either way (`home` if she lived, given to Radu or Luminita; `mourned` if not): 120 gp of
   the castle's gold and a Rod of the Pact Keeper, +1 (uncommon).
 
+### Called by Name (`called_by_name`, narrative/svalich_road/called_by_name.dialogue; batch 2)
+
+Big Tobar's son Nelu followed his dead mother's voice toward Tser Falls (Zora's rumour, or Tobar). **Twist:** the voices
+are will-o'-wisps in the gorge, feeding on grief and speaking in whatever voice brings you to the edge; Nelu is alive on
+a ledge, and they've been calling his father in Nelu's voice. **Escalation:** at the falls after dark (prop
+`gorge_voices` in the west glade) they call each companion by someone they lost (Godrick's Sir Pellam, Wren's Sorrel,
+Thistle's grandda, Kip's Pip, Liriel's old teacher, Ratatoille's maman), and a Wisdom check (DC 14, the party's best)
+decides whether someone is lured toward the edge, which starts the fight with the party surprised.
+
+- Fight `falls_wisps` (the west glade): level 4 four will-o'-wisps (1,800 XP, High), level 5 five, below three.
+- Then Nelu comes up (Athletics DC 13 on a rope, Misty Step or Spider Climb), and Tobar pays at the camp: 100 gp and an
+  Efficient Quiver (uncommon). Nelu stays by the fire afterwards (`tser_nelu`).
+
 ## Vallaki (level 5)
 
 Talkers: the gate watch (gate:news, renamed) and Urwin (martikovs:rumors, renamed) wire into quests already built: the
@@ -165,7 +178,9 @@ brings Sorin `home`; otherwise he stays at the pool with Kasha (`pool`) or goes 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
 (new speakers Teodor and Luca), townsfolk.dialogue's gossip and gravedigger_teodor nodes, bildrath.dialogue's
 news_grigore node and his two added lines (the windmill), and arik.dialogue's rumors node. The Tser Pool camp:
-grey_mare.dialogue in full (Radu, Luminita), and tser_camp.dialogue's two added Zora lines. Vallaki:
+grey_mare.dialogue in full (Radu, Luminita), and tser_camp.dialogue's two added Zora lines. Batch 2, Tser Pool:
+called_by_name.dialogue in full (new speaker Nelu; also Big Tobar), tser_camp.dialogue's new Zora lines (Nelu) and its
+nelu node. Vallaki:
 cat_in_the_window.dialogue and black_roses.dialogue in full (new speakers Stella Wachter, Ana and Pyotr Petrov; also
 Ilie and Father Lucian), the new lines in gate.dialogue (news: Stella), martikovs.dialogue (rumors: the roses),
 arasek.dialogue (roads: the windmill) and the polite_caller.dialogue sunrise line rewritten as a break in the mist. Krezk:

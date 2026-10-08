@@ -952,6 +952,16 @@
         ]
       ],
       "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile"
+    },
+    {
+      "npc": "tser_nelu",
+      "cell": [
+        37,
+        19
+      ],
+      "dialogue": "svalich_road/tser_camp:nelu",
+      "facing": "west",
+      "when": "flag.nelu_home and not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile"
     }
   ],
   "encounters": [
