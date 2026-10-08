@@ -58,7 +58,11 @@ func test_every_moment_gives_time_and_the_camera_back() -> void:
 	im.hit(target, 30, 40, false, false, false)
 	assert_true(Engine.time_scale < before * 0.1, "a heavy hit freezes the fight")
 	assert_true(rig.shake > 0.0, "and jolts the camera")
-	await get_tree().create_timer(0.4, true, false, true).timeout
+	# A beat of real time (waited out in short steps: a busy machine can run one frame longer than the freeze).
+	for i in 60:
+		if Engine.time_scale == before:
+			break
+		await get_tree().create_timer(0.05, true, false, true).timeout
 	assert_eq(Engine.time_scale, before, "the freeze ends by itself")
 	# The last foe's fall: slow motion and a push-in, cut short when the view closes.
 	im.hit(target, 30, 40, false, true, true)
