@@ -225,9 +225,9 @@ func _cleric_dc(c: Combatant) -> int:
 	return (c.creature as Character).spell_save_dc("cleric").total()
 
 
-## Divine Spark (Cleric 2): a creature within 30 ft regains 1d8 + Wisdom modifier Hit Points, or makes a
-## Constitution save against Necrotic or Radiant damage of that amount (half on a success), the cleric's choice of type:
-## `damage_type` "radiant", "necrotic" or "best" (whichever the target takes more of; Radiant when even).
+## Divine Spark (Cleric 2): another creature the cleric sees within 30 ft regains 1d8 + Wisdom modifier Hit Points, or
+## makes a Constitution save against Necrotic or Radiant damage of that amount (half on a success), the cleric's choice
+## of type: `damage_type` "radiant", "necrotic" or "best" (whichever the target takes more of; Radiant when even).
 func divine_spark(c: Combatant, target: Combatant, harm: bool, damage_type: String = "best") -> CombatResult:
 	var e := enc()
 	var why := _channel_check(c)
@@ -235,7 +235,9 @@ func divine_spark(c: Combatant, target: Combatant, harm: bool, damage_type: Stri
 		return CombatResult.fail(why)
 	if not has_feature(c, "channel_divinity"):
 		return CombatResult.fail("%s can't Channel Divinity" % c.name())
-	if target == null or e.distance(c, target) > 30 or (target != c and int(e.cover(c, target)["cover"]) == CombatGrid.Cover.TOTAL):
+	if target == c:
+		return CombatResult.fail("Divine Spark reaches another creature, not the cleric")
+	if target == null or e.distance(c, target) > 30 or not e.can_see(c, target) or int(e.cover(c, target)["cover"]) == CombatGrid.Cover.TOTAL:
 		return CombatResult.fail("Choose a creature within 30 ft that you can see")
 	_spend_channel(c)
 	var level := c.creature.class_level_of("cleric")
