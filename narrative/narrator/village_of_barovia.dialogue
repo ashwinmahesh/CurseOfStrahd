@@ -413,3 +413,33 @@ cooldown 30
 | You sleep in shifts. Every watch hears wolves, far off, singing to each other about you.
 | [flag.ireena_in_party] You sleep in shifts, and whoever has the watch keeps one eye on Ireena's window. Twice in the night something taps on the glass, and nobody answers.
 cooldown 60
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:barn_beams_stash
+| Under the barn's fallen beams, someone hid a javelin wrapped in sacking. Its head is etched with a lightning bolt, and the air around it smells like a coming storm.
+once
+
+~ check:perception:barn_beams_stash:failure
+| Beams, straw and a smell of old rain. If the barn hides anything, it is under more than you can shift.
+
+~ search:study_panel
+| Behind the study desk, a panel lifts away. In the hollow sits a velvet box, and in the box a silver brooch, polished recently and never worn.
+once
+
+~ check:investigation:study_panel:failure
+| A burgomaster's study: ledgers, complaints and a chair worn to his shape. Nothing more that you can see.
+
+~ search:satchel_lining
+| The satchel's lining was slit and sewn shut again. Inside: a pair of crystal lenses in a wire frame, a scholar's best tool and best-kept secret.
+once
+
+~ check:investigation:satchel_lining:failure
+| Paper, ink and a pen chewed at the end. Whatever else the scholar carried, he took it with him.
+
+~ search:undercroft_priest
+| In the oldest niche lies an old priest in rotted vestments. Round his neck, on a chain gone green, hangs a periapt of red stone that is still warm.
+once
+
+~ check:perception:undercroft_priest:failure
+| The niches go back further than your light does. Someone with sharper eyes might see more.

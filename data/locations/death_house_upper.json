@@ -390,6 +390,19 @@
       "kind": "examine",
       "label": "stained glass of singers",
       "model": "window_stained"
+    },
+    {
+      "id": "library_hollow_book",
+      "cell": [
+        1,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "skill": "investigation",
+      "label": "a hollow book among the histories",
+      "model": "scattered_notes",
+      "item": "wand_of_magic_missiles"
     }
   ],
   "containers": [

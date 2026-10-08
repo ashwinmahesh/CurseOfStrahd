@@ -83,3 +83,19 @@ once
 
 ~ trap:mists_wolf_trap:disarmed
 | The trap's jaws close slowly on a stick. Its spring sighs, disappointed.
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:mists_guard_sword
+| A sword lies in the weeds below the headless statues, and its blade is bright, as if no rain has ever touched it. Whoever kept this gate dropped it and did not come back.
+once
+
+~ check:perception:mists_guard_sword:failure
+| Weeds, mud and broken stone. Something glints, or doesn't; the mist won't say.
+
+~ search:mists_shrine_board
+| One board at the back of the shrine is newer than the rest. Under it, wrapped in oilcloth, a glass orb whose little cloud always drifts the same way: north.
+once
+
+~ check:investigation:mists_shrine_board:failure
+| The shrine is old and the boards are older. If it hides anything, it hides it well.

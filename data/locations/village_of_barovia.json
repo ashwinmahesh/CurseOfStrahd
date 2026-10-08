@@ -549,6 +549,18 @@
       "kind": "examine",
       "label": "Dead tree",
       "model": "dead_tree"
+    },
+    {
+      "id": "barn_beams_stash",
+      "cell": [
+        18,
+        25
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "a stash under the fallen beams",
+      "model": "rubble",
+      "item": "javelin_of_lightning__javelin"
     }
   ],
   "lights": [

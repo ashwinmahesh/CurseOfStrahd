@@ -202,6 +202,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 |---|---|---|---|
 | Passive Perception notices traps (within 10 ft) | location_view.gd _check_traps | tested | test_exploration |
 | Search (Wisdom (Perception)) finds traps, hidden objects and secret doors | location_view.gd search | tested | test_exploration |
+| Search also rolls Intelligence (Investigation) for a hidden compartment nearby; one look each at a hidden find; Detect Magic senses hidden magic items | location_traps.gd search, location_magic.gd | deviated (see deviations) | test_found_items |
 | Thieves' Tools (2024): Dexterity check + Proficiency Bonus with the tools, Advantage with Sleight of Hand too; pick a lock or disarm a trap | location_view.gd _unlock, _disarm | implemented | test_exploration |
 | Forcing a lock: Strength (Athletics) | location_view.gd _unlock | deviated (DC + 2, see deviations) | test_exploration |
 | Traps: save, damage (half on a success), condition | location_view.gd _spring_trap | implemented | — |

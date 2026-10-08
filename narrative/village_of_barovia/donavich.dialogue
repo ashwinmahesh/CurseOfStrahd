@@ -210,6 +210,8 @@ if flag.donavich_mercy_blessing
 Donavich [sad]: It's quiet. For the first time in weeks, it's quiet below. Thank you. I think. Ask me again in a year.
 interject class:cleric: He's at rest, Father. Truly at rest. I'd stake my faith on it.
 Donavich: Then he's farther from the castle than any of us. Go. Bury your dead. I'll bury mine.
+Donavich [sad]: Wait. Take this. A shard of the old dawn window, from before it cracked. It still holds a little of the morning. I can't look at it anymore.
+give gem_of_brightness
 -> END
 endif
 attitude donavich hostile

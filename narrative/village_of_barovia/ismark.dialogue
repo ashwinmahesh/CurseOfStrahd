@@ -169,6 +169,11 @@ Ismark [smile]: Last night. You held the door and the windows, and nobody ran. I
 
 ~ after_burial
 Ismark [weary]: He's in the ground. Properly or not, he's in it, and nobody's digging him up tonight. Now there's only her.
+if not flag.ismark_gave_father_sword
+set ismark_gave_father_sword
+Ismark: Here. This was his. He had it blessed in Vallaki when he was young and foolish, and it never once let him down. I'm keeping her. You keep this.
+give weapon_plus_1__longsword
+endif
 * Talk to Ireena about leaving. -> village_of_barovia/ireena:escort_ask
 * [if flag.parriwimple_pallbearer] Parriwimple dug a fine grave. -> parri
 * Goodbye for now. -> END
