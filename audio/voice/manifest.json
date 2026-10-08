@@ -4756,6 +4756,13 @@
   "recipe": "6db129c484",
   "text": "...Thank you, little one. I think."
  },
+ "bluto/2ed683ab78d49569": {
+  "chars": 55,
+  "direction": "[terrified, desperate, shouting]",
+  "model": "eleven_v3",
+  "recipe": "6db129c484",
+  "text": "No. No, no, I paid. I paid you. I paid you every month!"
+ },
  "bluto/300270198393fcb2": {
   "chars": 183,
   "model": "eleven_v3",
@@ -28068,6 +28075,83 @@
   "recipe": "f30946e8ec",
   "text": "Forty years I fished this water. Then the fish went deep and the men went to Vallaki, and here I am, mending nets for a lake that's stopped answering."
  },
+ "lz_old_fisher/30019da825a70812": {
+  "chars": 153,
+  "direction": "[quiet, moved, grateful]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "You stood on my step between me and the lake. Forty years I've been waiting for it to come up that shore. I never once thought anybody would stand there."
+ },
+ "lz_old_fisher/32a7f1aa83a4a971": {
+  "chars": 268,
+  "direction": "[slow, low, storytelling]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "Before the count put the dam on the Luna there was a village where the lake is. Pescari. My grandmother was from there. When the water came up, the folk came up the hill, mostly. The ones who wouldn't leave the chapel stayed in the chapel. The bell's still down there."
+ },
+ "lz_old_fisher/3887869cedad08ec": {
+  "chars": 141,
+  "direction": "[slow, troubled, thoughtful]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "You stood on my landing between the lake and a man who'd put a child in a sack. I've been thinking about that. I don't know what I think yet."
+ },
+ "lz_old_fisher/38fc71ffcb7c1826": {
+  "chars": 95,
+  "direction": "[surprised, slow, wry]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "You want to know why the fish went deep? Nobody's asked me that in forty years. Sit down, then."
+ },
+ "lz_old_fisher/3aa66b6cf38b19b7": {
+  "chars": 42,
+  "direction": "[calm, resigned, quiet]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "Well. It was always going to be one of us."
+ },
+ "lz_old_fisher/424bf74602238405": {
+  "chars": 162,
+  "direction": "[slow, weary, grim]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "After moonrise. Stand on the landing and you'll hear it. Then you'll see them. Then you decide what to do about Bluto. I've had forty years and I haven't decided."
+ },
+ "lz_old_fisher/6baca514721b5024": {
+  "chars": 169,
+  "direction": "[low, uneasy, storytelling]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "It rings when they want company. That's what my grandmother said. A sack of something every month and they'd stay down, and the fish would come up to see what was in it."
+ },
+ "lz_old_fisher/7280b45849958245": {
+  "chars": 138,
+  "direction": "[quiet, haunted, sad]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "Bluto's shack is empty. I don't go in. Some nights I think I hear him singing, out on the water, the way he used to when he'd had a catch."
+ },
+ "lz_old_fisher/d87b59855e04a239": {
+  "chars": 125,
+  "direction": "[warm, delighted, near tears]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "A pike this morning. A pike, the length of my arm. First fish in a year that wasn't too small to bother. I nearly wept on it."
+ },
+ "lz_old_fisher/e9374aa7508b549a": {
+  "chars": 106,
+  "direction": "[hushed, uneasy, listening]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "Listen. There. Every night now, after the moon's up. Under the water. You'd think water would stop a bell."
+ },
+ "lz_old_fisher/eac4d438d7ecfc5c": {
+  "chars": 216,
+  "direction": "[afraid, bitter, hushed]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "Bluto's sacks. You know what he put in them. He wasn't mad. That's the worst of it. He was paying the bell. Now he's stopped paying, and it rings every night, and it's coming up the shore a little further every time."
+ },
  "lz_old_fisher/f95ce1fe61fdf85c": {
   "chars": 157,
   "direction": "[low, uneasy warning]",
@@ -31365,6 +31449,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The fiddle is playing something slow tonight. When you come into the firelight, a few of the Vistani nod to you as if you were cousins."
+ },
+ "narrator/0a46c184b3fb5044": {
+  "chars": 184,
+  "direction": "[tense, cold, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The cold takes the breath out of you before you're a body's length down. You come up gasping, and the rope swings, and somewhere under you something patient waits for you to try again."
  },
  "narrator/0a68f7f9efa24ff5": {
   "chars": 153,
@@ -35928,6 +36019,13 @@
   "recipe": "dd92281f92",
   "text": "Two children sit on the floor beside a dollhouse, pale as frost on a window. The girl looks up first, with a hope that has had a long time to get thin."
  },
+ "narrator/3597af9e63313b1e": {
+  "chars": 217,
+  "direction": "[ominous, eerie, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The water along the shore stands up in the shape of people: the drowned of Pescari, grey and swollen, in their Sunday clothes, and behind them a tall shape in a priest's black lifting a hand like a man ringing a bell."
+ },
  "narrator/359cbaa843a3b5e6": {
   "chars": 166,
   "model": "eleven_v4",
@@ -38927,6 +39025,13 @@
   "recipe": "dd92281f92",
   "text": "The end sounds wrong when you knock: higher, emptier, a door rather than a wall. The third hoop down turns a quarter-inch further than any hoop should."
  },
+ "narrator/5398ed9e5103d272": {
+  "chars": 231,
+  "direction": "[grim, quiet, heavy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You step back. The drowned walk past you as if you were posts. They take Bluto at the end of the jetty; he doesn't fight them, in the end. They go down into the black water together, all of them, and the bell rings once, very loud."
+ },
  "narrator/53a5146745ce54cb": {
   "chars": 145,
   "model": "eleven_v4",
@@ -39731,6 +39836,13 @@
   "recipe": "dd92281f92",
   "text": "A rented room turned into a travelling showman's dressing room: costumes, a lute, a stage moustache on the washstand. Under the bed, the corner of an iron-bound sea chest."
  },
+ "narrator/5b1e79ae4659ae86": {
+  "chars": 130,
+  "direction": "[quiet, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Old Nistor comes out with his net still in his hands and sees them, and sees which way they're turning, and sits down on his step."
+ },
  "narrator/5b1f298f3686664b": {
   "chars": 125,
   "direction": "[quiet, intrigued]",
@@ -40210,6 +40322,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The cook said the lamp over the Master's table drinks from this furnace."
+ },
+ "narrator/5ea12a9ae29090cf": {
+  "chars": 203,
+  "direction": "[tense, urgent, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Bluto comes out of his shack with a lantern and sees them, and drops it, and runs for the jetty, for the boat, for anywhere. They turn toward him all together, the way a field of grass turns in the wind."
  },
  "narrator/5ebf66fbe770c35f": {
   "chars": 125,
@@ -40814,6 +40933,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "Someone takes a step toward the edge, and then another, and the voice in their ear is so glad. By the time the rest of you have hold of them, the lights are already on the ledge with you."
+ },
+ "narrator/653e35e89718a629": {
+  "chars": 105,
+  "direction": "[quiet, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Flat grey water. From the jetty's end you can see, far down, the pale square of a roof that isn't a rock."
  },
  "narrator/654b26d3fd4a9dc1": {
   "chars": 81,
@@ -41696,6 +41822,13 @@
   "recipe": "dd92281f92",
   "text": "Rot is spread across the floor in a great slick. Lorghoth the Decayer has finally decayed."
  },
+ "narrator/6d4ac74c94619b2e": {
+  "chars": 61,
+  "direction": "[calm, quiet]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Black water, flat and quiet. Somewhere far out, a fish jumps."
+ },
  "narrator/6d4d71e8c837cdc1": {
   "chars": 108,
   "model": "eleven_v4",
@@ -42218,6 +42351,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A square of mud around a dry well, and in the middle of it all a pastry cart, the only cheerful thing in the village. That should worry you more than it does."
+ },
+ "narrator/718ed01aefebb7df": {
+  "chars": 73,
+  "direction": "[hushed, horrified]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Then the water along the shore starts to stand up in the shape of people."
  },
  "narrator/71cba5b8ab11543b": {
   "chars": 93,
@@ -43647,6 +43787,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Thistle isn't in her bedroll. She's up a tree at the edge of the firelight, straddling a branch, eating something she caught."
+ },
+ "narrator/80b15eca6653b0a9": {
+  "chars": 104,
+  "direction": "[quiet, sober]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Both. Bluto is a monster and a neighbour, and he is the only other person who still lives on this shore."
  },
  "narrator/80e09088800c8d42": {
   "chars": 89,
@@ -45454,6 +45601,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The antechamber stinks of the heap. It is coming."
+ },
+ "narrator/9171d90f028e8418": {
+  "chars": 75,
+  "direction": "[quiet, observant]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "An old man with a net in his lap, mending a hole he's already mended twice."
  },
  "narrator/91b163cf069677f1": {
   "chars": 180,
@@ -47427,6 +47581,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "Ratatoille, who would usually be serving the second bowl by now, has stopped with the ladle in the air."
+ },
+ "narrator/a50db05cf33c0c01": {
+  "chars": 100,
+  "direction": "[ominous, chilling]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "And then it rings again, and the water stands up a second time. They were never coming for just one."
  },
  "narrator/a53f9fca9ed58472": {
   "chars": 201,
@@ -50169,6 +50330,13 @@
   "recipe": "dd92281f92",
   "text": "The contract in his ledger begins to smoke at one corner. Then the whole page catches, with a soft, polite sound, and burns down to his gloves, and he doesn't drop it."
  },
+ "narrator/c0ce08cf0389de86": {
+  "chars": 187,
+  "direction": "[tense, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You pull the rope, and the note that comes up out of the water is wrong: flat, angry. The water along the shore twitches. Better try something else, before it remembers what it was doing."
+ },
  "narrator/c0e0b5871fbd39d1": {
   "chars": 101,
   "model": "eleven_v4",
@@ -50332,6 +50500,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A cot of bare planks. There's no hollow in the wood where a body would lie. It has never been slept on."
+ },
+ "narrator/c2450233385c4a07": {
+  "chars": 145,
+  "direction": "[hushed, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The shore is quiet except for the water running back off the stones. Far out and far down, the bell still swings. It isn't ringing. It's waiting."
  },
  "narrator/c255b321999c970d": {
   "chars": 123,
@@ -52120,6 +52295,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "You are among the vines of the Wizard of Wines, where the barrels are empty and the family is worried."
+ },
+ "narrator/d306b5ad239e63cb": {
+  "chars": 198,
+  "direction": "[tense, ominous, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You put yourselves between the shore and the shack, and the drowned keep coming, slow and dripping, and behind them something taller in a priest's sodden black lifts a hand like it's ringing a bell."
  },
  "narrator/d319a70c891f59c2": {
   "chars": 253,
@@ -54029,6 +54211,13 @@
   "recipe": "dd92281f92",
   "text": "It's warm inside, too warm, and close, and the floor tilts a little as the hut settles its weight. Every wall is papered with drawings of the same handsome boy at every age, in charcoal, in the same loving hand."
  },
+ "narrator/e6c8cd903f0143fe": {
+  "chars": 159,
+  "direction": "[hushed, ominous, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Out on the black water, a long way under it, a bell rings. Once. Again. Each time a little louder, as if it were coming up the slope of the lakebed toward you."
+ },
  "narrator/e6e51acfd67f963f": {
   "chars": 77,
   "model": "eleven_v4",
@@ -54887,6 +55076,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "His hands are steady, but he hasn't blinked in a while. Three young men in the trees, all his kin by their noses. They are more afraid of you than you are of them, which makes them dangerous."
+ },
+ "narrator/ef7ee00339ce2a8b": {
+  "chars": 240,
+  "direction": "[quiet, relieved, wondering]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The bell goes quiet, and stays quiet. In the chapel's drowned doorway, caught on the bell's broken rope, is a priest's staff of pale wood with a sun carved at its head, and a little iron box of chapel silver nobody ever carried up the hill."
  },
  "narrator/efa5ad5a0996a659": {
   "chars": 139,
