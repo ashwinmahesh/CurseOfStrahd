@@ -182,6 +182,23 @@ been turned (Intimidation DC 14) or left at the inn.
   party members on the way. Attention mark `greytooth` (+1).
 - Yevgeni pays the whole bounty, 300 gp, and gives his father's Horn of Valhalla, Silver (rare).
 
+## Lake Zarovich (level 8)
+
+### The Bell Under the Lake (`bell_under_the_lake`, narrative/lake_zarovich/bell_under_the_lake.dialogue; batch 2)
+
+Old Nistor, the last fisherman (lane 28), tells it once the Arabelle business is over: before the count dammed the Luna,
+the hamlet of Pescari stood where the lake is, and the ones who wouldn't leave its chapel are still in it with the
+bell. **Twist:** Bluto wasn't mad; his sacks were paying the bell, and now they've stopped. **Escalation:** after
+moonrise (prop `bell_water` at the jetty's end) the drowned come up the shore for Bluto (if he's alive at the landing)
+or for Nistor. Stand in front of him, or stand aside and let them take Bluto (`bluto_fate` becomes `drowned`); they rise
+either way.
+
+- Fight `drowned_landing`: level 8 the Bellringer (a wraith), the Lake's Undertow (a water elemental), 4 ghasts and 6
+  ghouls (6,600 XP; the autopilot wins two of three and loses most of the party doing it); level 9 adds a second
+  undertow and a drowned bride (a wight); below 8 a wight, 2 ghasts and 6 ghouls.
+- Then cut the bell loose (Athletics DC 15, Water Breathing or the potion) or ring it once for the dead (Religion DC 14):
+  200 gp of chapel silver and the drowned priest's Staff of Healing (rare).
+
 ## Krezk (level 7)
 
 Talker: the watchman (gate:news, renamed). Wiring: Ilya's sickness starts `the_burgomasters_son` at `heard` (if
@@ -214,7 +231,8 @@ grey_mare.dialogue in full (Radu, Luminita), and tser_camp.dialogue's two added 
 called_by_name.dialogue in full (new speaker Nelu; also Big Tobar), tser_camp.dialogue's new Zora lines (Nelu) and its
 nelu node. Batch 2, Vallaki: ribbons.dialogue and hunters_at_the_inn.dialogue in full (new speakers Szoldar and
 Yevgeni; also Daciana, Watchman Dobre), townsfolk.dialogue's grumbler_who node and the added ribbon_refuse lines, and
-martikovs.dialogue's new rumours lines (the hunters). Vallaki:
+martikovs.dialogue's new rumours lines (the hunters). Batch 2, Lake
+Zarovich: bell_under_the_lake.dialogue in full (Old Nistor, Bluto) and old_fisher.dialogue's added option. Vallaki:
 cat_in_the_window.dialogue and black_roses.dialogue in full (new speakers Stella Wachter, Ana and Pyotr Petrov; also
 Ilie and Father Lucian), the new lines in gate.dialogue (news: Stella), martikovs.dialogue (rumors: the roses),
 arasek.dialogue (roads: the windmill) and the polite_caller.dialogue sunrise line rewritten as a break in the mist. Krezk:

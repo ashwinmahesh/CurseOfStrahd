@@ -1,0 +1,39 @@
+{
+  "id": "bell_under_the_lake",
+  "name": "The Bell Under the Lake",
+  "summary": "Old Nistor, the last fisherman on Lake Zarovich, says the fish went deep forty years ago. He knows why, and he's never told anyone.",
+  "giver": "lz_old_fisher",
+  "region": "lake_zarovich",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Before the count dammed the Luna there was a village where Lake Zarovich is now: Pescari. The ones who wouldn't leave its chapel are still in it, and so is the bell, and it rings when they want company. A sack a month kept them down; that was what Bluto's sacks were for. Now the sacks have stopped, the bell rings every night, and they're coming up the shore.",
+      "objectives": [
+        "Wait on the landing after moonrise"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_bell",
+      "journal": "The bell rang under the black water, and the drowned of Pescari came up the shore, led by a tall figure in a priest's sodden black. They came for the last living men on the landing.",
+      "objectives": [
+        "Deal with the drowned"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "risen",
+      "journal": "The drowned are back under the water, for tonight. Far out, the bell swings, waiting.",
+      "objectives": [
+        "Cut the bell loose, or ring it once for the dead"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "silenced",
+      "journal": "The bell under Lake Zarovich is quiet. In the drowned chapel's doorway we found the priest's staff and the chapel silver nobody carried up the hill. The fish are coming back.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
