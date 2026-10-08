@@ -147,7 +147,8 @@
         ]
       ],
       "floor": "interior/marble_floor",
-      "walls": "castle/ashlar"
+      "walls": "castle/ashlar",
+      "furnish": "stone_gallery"
     },
     {
       "id": "crg_chapel_access",
@@ -732,6 +733,126 @@
       "label": "a compartment behind one of the organ's stops",
       "model": "harp",
       "item": "instrument_of_the_bards_anstruth_harp"
+    },
+    {
+      "id": "east_post_armour_1",
+      "cell": [
+        32,
+        17
+      ],
+      "label": "A suit of black armour on its stand, facing the door",
+      "model": "armor_stand",
+      "kind": "decor"
+    },
+    {
+      "id": "east_post_armour_2",
+      "cell": [
+        31,
+        21
+      ],
+      "label": "A suit of black armour on its stand, facing the door",
+      "model": "armor_stand",
+      "kind": "decor"
+    },
+    {
+      "label": "A portrait of a guest who did not look happy to stay",
+      "model": "family_portrait",
+      "id": "guest_portrait_1",
+      "cell": [
+        15,
+        0
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A portrait of a guest who did not look happy to stay",
+      "model": "painting",
+      "id": "guest_portrait_2",
+      "cell": [
+        16,
+        0
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A portrait of a guest who did not look happy to stay",
+      "model": "family_portrait",
+      "id": "guest_portrait_3",
+      "cell": [
+        17,
+        0
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A carved stone face",
+      "model": "stone_faces",
+      "id": "hall_face_1",
+      "cell": [
+        41,
+        5
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A carved stone face",
+      "model": "stone_faces",
+      "id": "hall_face_2",
+      "cell": [
+        42,
+        5
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A carved stone face",
+      "model": "stone_faces",
+      "id": "hall_face_3",
+      "cell": [
+        51,
+        6
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A carved stone face",
+      "model": "stone_faces",
+      "id": "hall_face_4",
+      "cell": [
+        51,
+        7
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A carved stone face",
+      "model": "stone_faces",
+      "id": "hall_face_5",
+      "cell": [
+        51,
+        8
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A carved stone face",
+      "model": "stone_faces",
+      "id": "hall_face_6",
+      "cell": [
+        51,
+        9
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A carved stone face",
+      "model": "stone_faces",
+      "id": "hall_face_7",
+      "cell": [
+        51,
+        10
+      ],
+      "kind": "decor"
     }
   ],
   "containers": [

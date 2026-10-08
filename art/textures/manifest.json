@@ -710,6 +710,27 @@
         "normal_file": "art/textures/interior/terracotta_2k_n.webp",
         "orm_file": "art/textures/interior/terracotta_2k_orm.webp",
         "hd_source": "art/generated/surfaces/interior_terracotta.webp"
+      },
+      "wallpaper_yellow": {
+        "file": "art/textures/interior/wallpaper_yellow.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "bone",
+          "bone_dark",
+          "parchment",
+          "tan",
+          "leather",
+          "skin_shadow",
+          "skin"
+        ],
+        "source": "art/generated/textures/interior_wallpaper_yellow.png",
+        "saturate": 1.2,
+        "hd_file": "art/textures/interior/wallpaper_yellow_2k.webp",
+        "normal_file": "art/textures/interior/wallpaper_yellow_2k_n.webp",
+        "orm_file": "art/textures/interior/wallpaper_yellow_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_wallpaper_yellow.webp"
       }
     },
     "church": {

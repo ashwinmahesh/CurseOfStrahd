@@ -375,46 +375,6 @@
       "flag": "argynvost_skull_found"
     },
     {
-      "id": "court_trophy_heads",
-      "cell": [
-        35,
-        0
-      ],
-      "kind": "examine",
-      "label": "Mounted heads",
-      "model": "stag_head"
-    },
-    {
-      "id": "court_trophy_wolf",
-      "cell": [
-        40,
-        0
-      ],
-      "kind": "decor",
-      "label": "A wolf's head",
-      "model": "trophy_wolf"
-    },
-    {
-      "id": "court_trophy_bear",
-      "cell": [
-        34,
-        5
-      ],
-      "kind": "decor",
-      "label": "A stuffed wolf",
-      "model": "stuffed_wolf"
-    },
-    {
-      "id": "court_trophy_armour",
-      "cell": [
-        34,
-        8
-      ],
-      "kind": "decor",
-      "label": "Old armour",
-      "model": "armor_stand"
-    },
-    {
       "id": "court_lady_portrait",
       "cell": [
         12,
@@ -628,6 +588,106 @@
       "label": "a sword hung above the dragon's skull",
       "model": "sword_leaning",
       "item": "dragon_slayer__longsword"
+    },
+    {
+      "label": "A stag's head",
+      "model": "stag_head",
+      "id": "court_trophy_1",
+      "cell": [
+        33,
+        0
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A head on the wall",
+      "model": "trophy_wolf",
+      "id": "court_trophy_2",
+      "cell": [
+        34,
+        0
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A stag's head",
+      "model": "stag_head",
+      "id": "court_trophy_3",
+      "cell": [
+        35,
+        0
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A head on the wall",
+      "model": "trophy_wolf",
+      "id": "court_trophy_4",
+      "cell": [
+        36,
+        0
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A stag's head",
+      "model": "stag_head",
+      "id": "court_trophy_5",
+      "cell": [
+        37,
+        0
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A head on the wall",
+      "model": "trophy_wolf",
+      "id": "court_trophy_6",
+      "cell": [
+        38,
+        0
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A stag's head",
+      "model": "stag_head",
+      "id": "court_trophy_7",
+      "cell": [
+        39,
+        0
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A head on the wall",
+      "model": "trophy_wolf",
+      "id": "court_trophy_8",
+      "cell": [
+        40,
+        0
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A stag's head",
+      "model": "stag_head",
+      "id": "court_trophy_9",
+      "cell": [
+        41,
+        0
+      ],
+      "kind": "decor"
+    },
+    {
+      "label": "A head on the wall",
+      "model": "trophy_wolf",
+      "id": "court_trophy_10",
+      "cell": [
+        42,
+        0
+      ],
+      "kind": "decor"
     }
   ],
   "containers": [

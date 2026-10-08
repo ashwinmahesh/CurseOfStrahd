@@ -108,7 +108,8 @@
       ],
       "floor": "interior/kitchen_flags",
       "walls": "interior/kitchen_wall",
-      "light": "dim"
+      "light": "dim",
+      "furnish": "cauldron_room"
     },
     {
       "id": "spires_escher_suite",

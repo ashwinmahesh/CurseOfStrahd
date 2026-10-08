@@ -176,7 +176,9 @@
           21
         ]
       ],
-      "light": "dim"
+      "light": "dim",
+      "walls": "interior/wallpaper_yellow",
+      "floor": "interior/carpet"
     },
     {
       "id": "court_rahadin_chamber",
@@ -191,7 +193,8 @@
           21
         ]
       ],
-      "floor": "dungeon/stone_floor"
+      "floor": "dungeon/stone_floor",
+      "furnish": false
     }
   ],
   "spawns": {
@@ -551,6 +554,26 @@
       "label": "a grimoire among Ludmilla's books",
       "model": "scattered_notes",
       "item": "arcane_grimoire_plus_3"
+    },
+    {
+      "id": "rahadin_swords_1",
+      "cell": [
+        26,
+        13
+      ],
+      "label": "A rack of curved swords",
+      "model": "weapon_rack",
+      "kind": "decor"
+    },
+    {
+      "id": "rahadin_swords_2",
+      "cell": [
+        25,
+        18
+      ],
+      "label": "A rack of curved swords",
+      "model": "weapon_rack",
+      "kind": "decor"
     }
   ],
   "containers": [

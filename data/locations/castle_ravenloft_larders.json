@@ -156,7 +156,8 @@
           25,
           22
         ]
-      ]
+      ],
+      "furnish": "guard_pallets"
     },
     {
       "id": "larders_winch_room",

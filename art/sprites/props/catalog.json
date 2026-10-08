@@ -1693,7 +1693,8 @@
       "broad_oak_bough": "broad_oak_bough",
       "brazier_cold": "brazier_cold",
       "offering_pile": "offering_pile",
-      "chained_bookcase": "chained_bookcase"
+      "chained_bookcase": "chained_bookcase",
+      "jester_plaster": "jester_plaster"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",
@@ -4867,6 +4868,56 @@
         ],
         "floor_fill": 0.45,
         "centre_fill": 0.2
+      },
+      "guard_pallets": {
+        "floor": [
+          "straw_pallet",
+          "straw_pallet",
+          "footlocker",
+          "straw_pallet"
+        ],
+        "floor_fill": 0.8
+      },
+      "prison_cells": {
+        "wall": [
+          "wall_chains"
+        ],
+        "floor": [
+          "straw",
+          "bucket_brush",
+          "straw"
+        ],
+        "centre": [
+          "straw"
+        ],
+        "wall_fill": 1.0,
+        "floor_fill": 0.8,
+        "centre_fill": 0.4
+      },
+      "cauldron_room": {
+        "wall": [
+          "drying_herbs",
+          "pot_rack"
+        ],
+        "floor": [
+          "sack_pile",
+          "bones",
+          "basket",
+          "cookpot"
+        ],
+        "centre": [
+          "bones",
+          "basket"
+        ],
+        "floor_fill": 0.7,
+        "centre_fill": 0.3
+      },
+      "stone_gallery": {
+        "floor": [
+          "candelabra",
+          "statue_head"
+        ],
+        "floor_fill": 0.35
       }
     }
   },

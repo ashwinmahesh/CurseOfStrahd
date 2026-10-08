@@ -691,6 +691,66 @@
       "label": "a false bottom in the jester's sarcophagus",
       "model": "satchel",
       "item": "cape_of_the_mountebank"
+    },
+    {
+      "id": "mad_dog_banner_1",
+      "cell": [
+        2,
+        6
+      ],
+      "label": "A torn banner",
+      "model": "banner_regiment",
+      "kind": "decor"
+    },
+    {
+      "id": "mad_dog_banner_2",
+      "cell": [
+        5,
+        6
+      ],
+      "label": "A torn banner",
+      "model": "banner_regiment",
+      "kind": "decor"
+    },
+    {
+      "id": "mad_dog_banner_3",
+      "cell": [
+        6,
+        10
+      ],
+      "label": "A torn banner",
+      "model": "banner_regiment",
+      "kind": "decor"
+    },
+    {
+      "id": "jester_plaster_1",
+      "cell": [
+        2,
+        13
+      ],
+      "label": "Plaster painted with juggling balls, gone the colour of bruises",
+      "model": "jester_plaster",
+      "kind": "decor"
+    },
+    {
+      "id": "jester_plaster_2",
+      "cell": [
+        5,
+        13
+      ],
+      "label": "Plaster painted with juggling balls, gone the colour of bruises",
+      "model": "jester_plaster",
+      "kind": "decor"
+    },
+    {
+      "id": "jester_plaster_3",
+      "cell": [
+        6,
+        16
+      ],
+      "label": "Plaster painted with juggling balls, gone the colour of bruises",
+      "model": "jester_plaster",
+      "kind": "decor"
     }
   ],
   "containers": [
