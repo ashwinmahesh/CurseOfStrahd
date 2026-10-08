@@ -1,0 +1,15 @@
+{
+  "id": "sq_huntsman",
+  "title": "The Count's Huntsman",
+  "summary": "The Huntsman and his hounds come up the east road at moonrise.",
+  "images": [
+    {
+      "image": "sq_huntsman",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

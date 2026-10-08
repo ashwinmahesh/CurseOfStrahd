@@ -1,0 +1,15 @@
+{
+  "id": "sq_grandsire",
+  "title": "The Grandsire",
+  "summary": "The Grandsire comes over Krezk's wall at the full moon.",
+  "images": [
+    {
+      "image": "sq_grandsire",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

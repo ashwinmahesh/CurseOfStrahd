@@ -117,5 +117,6 @@ Narrator: As you come closer, its head turns all the way round to look at you.
 * (Step back out of the field.) -> END
 
 ~ wakes
+cutscene sq_rag_queen
 Narrator: It stands up off its post. It is much taller standing. Across the field, every other scarecrow lifts its head.
 combat rag_queen

@@ -53,6 +53,7 @@ endif
 # --- The crossroads at moonrise (the Huntsman stands on the east road) ---
 
 ~ stand
+cutscene sq_huntsman
 Narrator: The horn first, three notes, close enough to feel in your teeth. Then the hounds come up the east road out of the dark: grey and long and silent, more than you can count, and behind them a long grey man in a hunting coat gone black with weather, with a boar spear over his shoulder.
 if flag.hunt_quarry == "gavril"
 The Huntsman: Not you. The horse-seller.

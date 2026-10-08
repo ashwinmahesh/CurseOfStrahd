@@ -81,6 +81,7 @@ Narrator: Out beyond the wall, very far off, something lifts its head and howls,
 
 ~ wait
 Narrator: You wait by the pens with the boy between you. The moon comes up full over the hills, enormous. The goats go silent all at once.
+cutscene sq_grandsire
 Narrator: It comes over the wall on all fours and stands up in the square: a wolf the size of a cart horse, grey to white with age, scarred, missing an ear, with old wolves at its heels.
 The Grandsire: (In a voice like a grave being dug.) The runt. Mine. Mine by the moon, mine by the bite. Give him back to the pack.
 if flag.petru_cured

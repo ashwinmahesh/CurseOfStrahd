@@ -134,6 +134,7 @@ Narrator: Mouse has put on a clean apron and combed her hair with her fingers, a
 Mouse: You came! Granny's coming. I can smell her. She smells like the inside of a kettle.
 Narrator: Across the lane, something big moves in the trees and doesn't bother to be quiet about it.
 Granny Ash: Mousie. Mousie, dear. Granny's come to make you a sister.
+cutscene sq_granny_ash
 Narrator: She comes out of the trees: twice a man's height, blue-grey and bent, with iron teeth and iron nails and a basket on her arm the size of a cradle. Grey dogs as big as ponies come with her.
 if flag.mouse_named
 Mouse: (She steps behind you.) My name's Zamfira. My mother kissed my wrist. I'm not a mouse.

@@ -100,6 +100,7 @@ interject name:wren_featherfoot: Nobody flies the first time. You fall, very wel
 ~ leap
 set mother_flown
 quest mothers_ninth_improvement done
+cutscene sq_mother_flies
 Narrator: She lets go. She drops like a sack of grain, and the Belviews in the courtyard scream, and then the wings catch the air with a crack like a sail, and she is going up, and then along, and then away, very badly, in long lurching swoops, down the mountain toward Krezk.
 Narrator: Very faintly, from a long way below, comes the sound of a woman laughing who has not laughed in sixty years.
 * [Nature DC 14] (Shout down which way the wind is going.) -> soft | pens

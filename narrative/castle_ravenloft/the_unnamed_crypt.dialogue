@@ -37,12 +37,14 @@ Narrator: The lid isn't sealed. It's been opened and closed from the inside, man
 ~ named
 set corvina_named
 Narrator: You say it to the lid. The catacombs go very quiet, the way a room does when someone stops a clock.
+cutscene sq_corvina
 Narrator: The lid slides back by itself. A young woman sits up in the crypt, grey to the lips, in the rags of a scholar's coat, with ink still on her fingers after forty years.
 Corvina: (Very slowly, as if she's reading it off a page.) Corvina. That's mine. I'd put it down somewhere. (She looks at you properly.) He sent you. He remembered.
 Corvina [sad]: Tell him it's all right. Tell him I'd do it again. And then stand back, because I can't stop. I hold the master's doors. The new master's. I've held them so long I'm made of it.
 -> fight
 
 ~ lid
+cutscene sq_corvina
 Narrator: You lift the lid. A young woman lies in the crypt with her eyes open, grey to the lips, in the rags of a scholar's coat, with ink still on her fingers. She sits up as if she's been waiting.
 Corvina: You're in the wrong part of the house. This door is held. They're all held. That's what I'm for.
 -> fight

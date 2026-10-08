@@ -1,0 +1,15 @@
+{
+  "id": "sq_corvina",
+  "title": "The Unnamed Crypt",
+  "summary": "Corvina sits up in the crypt with no name.",
+  "images": [
+    {
+      "image": "sq_corvina",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

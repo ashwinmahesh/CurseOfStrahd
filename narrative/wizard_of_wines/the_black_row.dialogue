@@ -96,6 +96,7 @@ Narrator: Your blade goes into the black wood at the foot of the row, and the wh
 -> wakes
 
 ~ wakes
+cutscene sq_vine_mother
 Narrator: The earth heaves. The Seventh Row stands up out of the ground: every vine of it one plant, one great dark mass of root and vine-wood, rising twice the height of the house, dripping black wine from every branch.
 if flag.elvir_buried
 Narrator: In the bark at the heart of it there's a face, almost a young man's, almost a Martikov's. It isn't. It has only been drinking from one.

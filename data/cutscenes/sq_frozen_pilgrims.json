@@ -1,0 +1,15 @@
+{
+  "id": "sq_frozen_pilgrims",
+  "title": "The Frozen Pilgrims",
+  "summary": "Nine pilgrims kneel in the ice of the gorge wall, and the lamp is lit.",
+  "images": [
+    {
+      "image": "sq_frozen_pilgrims",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}
