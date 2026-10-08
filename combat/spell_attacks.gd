@@ -112,6 +112,8 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	var keys: Array[String] = ["attack", "attack:melee" if melee else "attack:ranged", "attack:spell"]
 	var test := c.creature.roll_d20(e.dice, D20Test.Kind.ATTACK_ROLL, atk, ac, keys, sit["advantage"] as Array[String],
 		sit["disadvantage"] as Array[String], "%s → %s (%s)" % [c.name(), t.name(), s["name"]], int(s.get("crit_range", 20)))
+	if int(sit.get("height_bonus", 0)) != 0:
+		test.add_bonus(int(sit.get("height_bonus", 0)), "High ground" if int(sit.get("height_bonus", 0)) > 0 else "Low ground")
 	t.creature.consume_attacked()
 	if not test.success and "seeking" in (ctx.get("metamagic", []) as Array) and not bool(ctx.get("seeking_used", false)):
 		ctx["seeking_used"] = true

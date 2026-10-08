@@ -14,6 +14,7 @@ const FACINGS := {"north": Vector2(0, -1), "south": Vector2(0, 1), "east": Vecto
 ## Re-reads which NPCs, props and containers are here (their `when` conditions) after a conversation or a fight
 ## changes the story.
 static func refresh_npcs(view: LocationView) -> void:
+	view.set_meta(&"npcs_built", Engine.get_process_frames())   # LocationClock never rebuilds twice in one frame
 	for id: String in view.prop_nodes:
 		(view.prop_nodes[id] as Node).queue_free()
 	view.prop_nodes.clear()

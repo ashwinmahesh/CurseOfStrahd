@@ -51,7 +51,7 @@ static func _light(root: Node3D, board: ArenaBoard, li: Dictionary) -> void:
 	elif kind == "torch" and SetDressing.has_art("torch"):
 		board.prop_sprite("torch", board.cell_center(cell))
 		omni.position.y = 1.9
-	elif kind in ["fire", "bonfire", "brazier"]:
+	elif kind in ["fire", "bonfire", "brazier"] and not ModelPiece.fire_near(board, board.cell_center(cell)):
 		var art := SetDressing.flame(0.6)
 		if art != null:
 			art.position = board.cell_center(cell)

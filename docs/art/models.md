@@ -17,7 +17,14 @@ furniture and containers with 3D on everywhere, (2) doors, gates, windows and wa
 (9) Castle Ravenloft's own pieces, once World assets had chosen them.
 
 What stays painted is flat by nature: scorch marks, bloodstains, drag and claw marks, rune and offering circles,
-puddles, a plaster seam, the flames of fires and candles. The fog bank is the world look's mist.
+puddles, a plaster seam, candle flames. The fog bank is the world look's mist.
+
+**Fires are 3D** in the Modern look (owner report 2026-10-07): the `flame` model (licking tongues over a white-hot
+heart, 1 unit tall) is every fire's flame, through `SetDressing.flame(size, tint)`: a model's `flame` socket (hearths,
+braziers, campfires, torches, the cauldron), a location light of kind fire, bonfire or brazier, a burning prop, a
+skirmish field's fires, and a prop standing for the 2D `flame` art (an oven's fire). It sways, casts no shadow, and is
+drawn unshaded in the palette's fire colours (candle, vampire red, wick), or in green in a green brazier (`bile`). The
+Classic look keeps the 2D flame.
 
 ## Where they are used
 
@@ -32,7 +39,7 @@ without a model is drawn as before.
 | desk | desk, desk_front (a container: it dims when emptied) | against the wall |
 | chair_high, armchair, table, table_chairs, candelabra | the 2D piece of the same name | free-standing |
 | settee | settee | against the wall |
-| fireplace | fireplace (the upper hall) | on the wall face; its fire is the 2D flame at the model's `flame` socket |
+| fireplace | fireplace (the upper hall) | on the wall face; its fire is the flame at the model's `flame` socket |
 | fireplace_windmill | fireplace_windmill (the library) | the same, near-black stone, and the moonlit windmill painting above it: a carved 3D frame round the canvas cut from the 2D art |
 | fireplace_dancers | fireplace_dancers (the conservatory) | the same, grey marble with an arched firebox; the dancing figurines on the mantel are cut from the 2D art, one sprite each, turning to the camera |
 | stairs_up, stairs_down | stair_riser, stair_down | stairs: the steps start on the side the party walks in from |

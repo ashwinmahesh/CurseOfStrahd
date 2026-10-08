@@ -144,7 +144,9 @@ static func _build_lights(view: LocationView) -> void:
 		elif str(li.get("kind", "")) == "torch" and SetDressing.has_art("torch"):
 			view.board.prop_sprite("torch", view.board.cell_center(LocationView._cell(li["cell"])))
 			omni.position.y = 1.9
-		elif str(li.get("kind", "")) in ["fire", "bonfire", "brazier", "torch"]:
+		elif str(li.get("kind", "")) in ["fire", "bonfire", "brazier", "torch"] \
+				and not ModelPiece.fire_near(view.board, view.board.cell_center(LocationView._cell(li["cell"]))):
+			# (a hearth, brazier or campfire beside the light burns with its own flame: not a second one on the ground)
 			_flame(view, LocationView._cell(li["cell"]), 0.6 if str(li["kind"]) != "torch" else 0.35)
 
 

@@ -314,6 +314,8 @@ static func _pillar(board: ArenaBoard, cell: Vector2i, h: float, statue: String)
 
 
 static func _frame(board: ArenaBoard, base: Vector3, along_x: bool, h: float, span: float = 1.0) -> void:
+	if CastleBuilder.frames(board, board.grid.cell_at(base)):
+		return   # a gate in a passage through the castle's walls stands in the passage's arch (W19)
 	if board.theme in ArenaBoard.TOWNS and BuildingKit.style_for(board) != "" and span <= 1.0:
 		# A gate in a kit town's yard wall hangs between the piers the wall puts at its ends (TownBuilder._kit_yard).
 		var c := board.grid.cell_at(base)
@@ -415,9 +417,13 @@ static func exit_piece(board: ArenaBoard, spec: Dictionary) -> Node3D:
 
 # --- Pieces ---------------------------------------------------------------------------------------
 
-## A fire's flame: a bright billboard (unshaded, it gives light rather than taking it) about `size` units tall,
-## swaying a little. Null without the art.
-static func flame(size: float) -> Sprite3D:
+## A fire's flame about `size` units tall, its foot at the node, swaying a little: in the Modern look the 3D flame (the
+## "flame" model, docs/art/models.md), glowing and casting no shadow, `tint` recolouring it (a green brazier's fire:
+## "bile"); in Classic a bright billboard (unshaded, it gives light rather than taking it). Null without either.
+static func flame(size: float, tint: String = "") -> Node3D:
+	if Look.modern() and ModelPiece.manifest().has("flame") \
+			and ResourceLoader.exists("res://" + str((ModelPiece.manifest()["flame"] as Dictionary).get("file", ""))):
+		return _flame_3d(size, tint)
 	if not has_art("flame"):
 		return null
 	var sp := _sprite("flame")
@@ -428,6 +434,52 @@ static func flame(size: float) -> Sprite3D:
 		t.tween_property(sp, "scale", Vector3(1.08, 0.9, 1.0), 0.23).set_trans(Tween.TRANS_SINE)
 		t.tween_property(sp, "scale", Vector3(0.95, 1.08, 1.0), 0.31).set_trans(Tween.TRANS_SINE))
 	return sp
+
+
+## The palette colours a flame's surfaces are drawn in (its body, its red tongues, its white-hot heart), as the 2D flame
+## has them; a green fire's ("bile") in its own.
+const FLAME_TINTS := {"": {"glow_flame": "candle", "glow_ember": "vampire_red", "glow_candle": "wick"},
+	"bile": {"glow_flame": "bile", "glow_ember": "moss", "glow_candle": "frost"}}
+
+
+static func _flame_3d(size: float, tint: String) -> Node3D:
+	var m := ModelPiece.instance("flame")
+	m.name = "Flame"
+	var h := float(((ModelPiece.manifest()["flame"] as Dictionary).get("size", [0.5, 1.0, 0.5]) as Array)[1])
+	var base := Vector3.ONE * size / maxf(h, 0.01)
+	m.scale = base
+	var swap := FLAME_TINTS.get(tint, FLAME_TINTS[""]) as Dictionary
+	for n: Node in m.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF   # (a light inside it would be blocked)
+		for i in mi.mesh.get_surface_count():
+			var src := mi.mesh.surface_get_material(i)
+			var name := src.resource_name if src != null else ""
+			if name.begins_with("glow_"):
+				mi.set_surface_override_material(i, _flame_material(str(swap.get(name, name.trim_prefix("glow_")))))
+	m.ready.connect(func() -> void:
+		var t := m.create_tween().set_loops()
+		t.tween_property(m, "scale", base * Vector3(1.06, 0.9, 1.06), 0.23).set_trans(Tween.TRANS_SINE)
+		t.tween_property(m, "scale", base * Vector3(0.95, 1.08, 0.95), 0.31).set_trans(Tween.TRANS_SINE))
+	return m
+
+
+## A flame's surface in palette colour `colour`: drawn as it is, unshaded like the 2D flame (it gives light rather than
+## taking it, so the fire's own light doesn't burn it white), with a little glow.
+static func _flame_material(colour: String) -> Material:
+	if _flame_mats.has(colour):
+		return _flame_mats[colour] as Material
+	var m := StandardMaterial3D.new()
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	m.albedo_color = Look.color(colour)
+	m.emission_enabled = true
+	m.emission = Look.color(colour)
+	m.emission_energy_multiplier = 0.6
+	_flame_mats[colour] = m
+	return m
+
+
+static var _flame_mats: Dictionary = {}
 
 
 ## A wall piece by itself (billboard off, seen from its front only), its foot at the node; null without art.
@@ -467,6 +519,12 @@ static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Ve
 	var model := ModelPiece.for_art(board, art, ModelPiece.hash_cell(cell))
 	if model != "":
 		return ModelPiece.stand(board, parent, model, art, cell, at_override)   # a 3D piece (docs/art/models.md)
+	if art == "flame" and Look.modern():
+		var fire := flame(float((manifest().get("flame", {}) as Dictionary).get("world_height", 0.9)) * scale_)
+		if fire != null:
+			fire.position = board.cell_center(cell) if at_override == null else at_override as Vector3
+			parent.add_child(fire)
+			return fire   # a fire standing by itself (an oven's): the 3D flame, swaying
 	scale_ *= float((catalog().get("scales", {}) as Dictionary).get(art, 1.0))
 	var at: Vector3 = board.cell_center(cell) if at_override == null else at_override as Vector3
 	var wall := wall_side(board, cell)

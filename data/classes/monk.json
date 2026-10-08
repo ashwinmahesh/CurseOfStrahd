@@ -403,7 +403,7 @@
           "summary": "Reaction when you fall: reduce the falling damage by five times your Monk level.",
           "text": "When you fall, you can take a Reaction to reduce any damage you take from the fall by an amount equal to five times your Monk level.",
           "action": "reaction",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },

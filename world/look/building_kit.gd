@@ -188,6 +188,8 @@ static func interior_style(board: ArenaBoard) -> String:
 ## Modern look, where the catalog turns them on, rooms get full-height walls that cut away toward the camera with the
 ## ground outside (InteriorWalls, W8). False leaves the square to ArenaBoard's own cut-away wall.
 static func interior_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> bool:
+	if CastleBuilder.claims(board, c):
+		return true   # Castle Ravenloft's roofs: the castle's own walls (W19)
 	var floor := board.floor_material()
 	for d in SetDressing.FACES:
 		var fb := board.floor_box(c + d) if board.grid.in_bounds(c + d) else null

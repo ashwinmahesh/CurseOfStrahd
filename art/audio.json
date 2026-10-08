@@ -1,5 +1,5 @@
 {
-  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB.",
+  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB. rises: at full fight intensity (a boss, or someone in the party Bloodied) the music crossfades to this mood's music; a music entry that is itself a list holds one piece's intensity versions, calmest first, played in step (A2). steps, loops, water, containers: the world sounds (WorldSounds, A3).",
   "themes": {
     "svalich_road": "wilds",
     "forest": "wilds",
@@ -113,6 +113,21 @@
     "wood_knock": -8.0,
     "zap_hit": -1.3,
     "zap_launch": 1.6,
+    "step_wood": -14.0,
+    "step_stone": -14.0,
+    "step_grass": -2.0,
+    "step_snow": -12.0,
+    "step_dirt": -12.0,
+    "step_gravel": -14.0,
+    "step_mud": 10.0,
+    "chest": -10.0,
+    "cupboard": -6.0,
+    "rummage": -8.0,
+    "lever": -6.0,
+    "trap": -10.0,
+    "hearth": -14.0,
+    "river": -6.0,
+    "waterfall": -6.0,
     "rage_1": -5.3,
     "rage_2": -1.1,
     "rage_3": -6.3,
@@ -556,6 +571,75 @@
       "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Launch_01.wav",
       "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Launch_02.wav",
       "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Launch_03.wav"
+    ],
+    "chest": [
+      "res://art/sourced/oga_chest_creak_spookymodem/Chest Creak.wav"
+    ],
+    "cupboard": [
+      "res://art/sourced/kenney_rpg_audio/Audio/creak1.ogg",
+      "res://art/sourced/kenney_rpg_audio/Audio/creak2.ogg",
+      "res://art/sourced/kenney_rpg_audio/Audio/creak3.ogg"
+    ],
+    "lever": [
+      "res://art/sourced/oga_mechanical_bmaczero/mechanical1.wav"
+    ],
+    "rummage": [
+      "res://art/sourced/kenney_rpg_audio/Audio/cloth1.ogg",
+      "res://art/sourced/kenney_rpg_audio/Audio/cloth2.ogg",
+      "res://art/sourced/kenney_rpg_audio/Audio/cloth3.ogg",
+      "res://art/sourced/kenney_rpg_audio/Audio/cloth4.ogg"
+    ],
+    "step_dirt": [
+      "res://art/sourced/oga_footsteps_congusbongus/boots_0.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_1.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_2.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_3.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_4.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_5.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_6.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_7.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_8.ogg"
+    ],
+    "step_grass": [
+      "res://art/sourced/oga_steps_tinyworlds/leaves01.ogg",
+      "res://art/sourced/oga_steps_tinyworlds/leaves02.ogg"
+    ],
+    "step_gravel": [
+      "res://art/sourced/oga_footsteps_congusbongus/gravel_0.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/gravel_1.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/gravel_2.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/gravel_3.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/gravel_4.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/gravel_5.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/gravel_6.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/gravel_7.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/gravel_8.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/gravel_9.ogg"
+    ],
+    "step_mud": [
+      "res://art/sourced/oga_steps_tinyworlds/mud02.ogg"
+    ],
+    "step_snow": [
+      "res://art/sourced/kenney_impact_sounds/Audio/footstep_snow_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/footstep_snow_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/footstep_snow_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/footstep_snow_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/footstep_snow_004.ogg"
+    ],
+    "step_stone": [
+      "res://art/sourced/kenney_impact_sounds/Audio/footstep_concrete_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/footstep_concrete_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/footstep_concrete_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/footstep_concrete_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/footstep_concrete_004.ogg"
+    ],
+    "step_wood": [
+      "res://art/sourced/oga_steps_tinyworlds/wood01.ogg",
+      "res://art/sourced/oga_steps_tinyworlds/wood02.ogg",
+      "res://art/sourced/oga_steps_tinyworlds/wood03.ogg"
+    ],
+    "trap": [
+      "res://art/sourced/oga_mechanical_bmaczero/clank1.wav"
     ],
     "rage_1": [
       "res://art/sourced/oga_boom_pack_dklon/boom1.wav",
@@ -1065,5 +1149,88 @@
         "concentration_break_2@0.05"
       ]
     }
+  },
+  "rises": {},
+  "loops": {
+    "hearth": [
+      "res://art/sourced/oga_fire_antumdeluge/fire-1.wav"
+    ],
+    "river": [
+      "res://art/sourced/oga_stream_kurt/stream1.ogg"
+    ],
+    "waterfall": [
+      "res://art/sourced/oga_stream_kurt/waterfall2.ogg"
+    ]
+  },
+  "water": {
+    "tser_falls": "waterfall"
+  },
+  "steps": {
+    "themes": {
+      "manor": "wood",
+      "tavern": "wood",
+      "shop": "wood",
+      "townhouse": "wood",
+      "attic": "wood",
+      "inn": "wood",
+      "house": "wood",
+      "tent": "grass",
+      "church": "stone",
+      "dungeon": "stone",
+      "shrine_yard": "stone",
+      "svalich_road": "dirt",
+      "road": "dirt",
+      "forest": "grass",
+      "camp": "grass",
+      "tser_pool": "grass",
+      "riverside": "grass",
+      "wilderness": "grass",
+      "village": "mud",
+      "vallaki": "stone",
+      "town": "stone"
+    },
+    "places": {
+      "amber_temple_road": "snow",
+      "tser_pool_eva_tent": "grass",
+      "castle_ravenloft_court": "stone",
+      "castle_ravenloft_court_treasury": "stone",
+      "castle_ravenloft_court_weeping": "stone",
+      "castle_ravenloft_main_floor": "stone",
+      "castle_ravenloft_spires_rooms": "stone",
+      "argynvostholt_hall": "stone",
+      "argynvostholt_upper": "stone",
+      "tsolenka_pass": "snow"
+    }
+  },
+  "containers": {
+    "altar_church": "cupboard",
+    "book_shelf": "cupboard",
+    "cabinet_glass": "cupboard",
+    "cabinet_small": "cupboard",
+    "cart": "chest",
+    "cart_broken": "chest",
+    "case": "chest",
+    "chest": "chest",
+    "chest_iron": "chest",
+    "chest_painted": "chest",
+    "crate": "chest",
+    "crypt": "chest",
+    "crypt_small": "chest",
+    "cupboard": "cupboard",
+    "desk": "cupboard",
+    "drawer": "cupboard",
+    "dressing_table": "cupboard",
+    "footlocker": "chest",
+    "jewel_box": "chest",
+    "shelf": "cupboard",
+    "shelves": "cupboard",
+    "shrine_small": "cupboard",
+    "sideboard": "cupboard",
+    "stove": "cupboard",
+    "strongbox": "chest",
+    "toy_chest": "chest",
+    "trunk": "chest",
+    "vardo": "chest",
+    "wardrobe": "cupboard"
   }
 }

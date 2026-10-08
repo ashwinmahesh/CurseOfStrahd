@@ -44,6 +44,7 @@ static func _check_traps(view: LocationView) -> bool:
 
 
 static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant) -> void:
+	Audio.sfx("trap")
 	if PitFall.is_pit(trap):
 		PitFall.spring(view, trap, victim)   # a real drop: catch the edge or fall in (and climb out later)
 		return
@@ -87,7 +88,7 @@ static func search(view: LocationView) -> void:
 		adv.append("Sharp Eye")
 	var sharp_eye := not adv.is_empty()
 	adv.append_array(CheckAids.before_check(who, &"perception"))
-	var t := who.roll_check(view.dice, &"perception", 0, adv, [], "%s searches" % who.name, ["search"])
+	var t := who.roll_check(view.dice, &"perception", 0, adv, Weather.sight_penalty(view.st, view.loc_id), "%s searches" % who.name, ["search"])
 	view.check_rolled.emit(t.describe())
 	view.st.advance_minutes(1)
 	var found: Array[String] = []
