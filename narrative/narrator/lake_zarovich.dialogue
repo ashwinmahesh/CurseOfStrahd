@@ -90,3 +90,22 @@ once
 ~ search:shrine_trident
 | Propped behind the fishers' shrine, a trident with a shaft of green coral. The fish in the shallows turn, all together, to look at it.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the empty landing.
+
+~ examine:lz_racks
+| Drying racks for fish, the poles grey with age and the nets on them stiff and empty. A few dried heads still hang from the top rail, picked clean by the crows.
+
+~ examine:lz_cold_fire
+| A ring of blackened stones where the fishers cooked their catch. The ashes are cold and wet, and something has dug through them looking for scraps.
+
+~ examine:lz_upturned_boat
+| A boat turned keel-up on the shingle to keep the rain out of it, a long time ago. The planks have sprung, and there is a hole in the bottom you could put your fist through.
+
+~ search:lz_glass_float
+| Tangled in the reeds, a green glass float from a fishing net, the size of a fist and hollow. {name} works it free and it sloshes; a little lake water got inside.
+once
+
+~ search:lz_hut_step_net
+| Under the empty hut's step, a folded fishing net, small and good, the kind you throw from the bank. {name} shakes the woodlice out of it.
+once

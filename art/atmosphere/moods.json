@@ -342,7 +342,22 @@
           "amount": 3,
           "height": 9.0
         }
-      ]
+      ],
+      "water": {
+        "deep": "void",
+        "shallow": "night_deep",
+        "foam": "slate",
+        "glint": "moonlight",
+        "flow": [
+          0.02,
+          0.0
+        ],
+        "ripples": 0.1,
+        "texture": 0.1,
+        "reflect": 0.45,
+        "map": "void",
+        "map_edge": "slate"
+      }
     },
     "lakeside": {
       "like": "lake_zarovich",

@@ -433,3 +433,18 @@ func test_berez_is_a_drowned_village() -> void:
 	assert_true(scarecrows >= 6, "a field of scarecrows (%d)" % scarecrows)
 	assert_eq(str(v.atmosphere.mood["water"]["deep"]), "void", "black water")
 	v.queue_free()
+
+
+## Lake Zarovich's landing (lane 28): black water, the empty racks and cold fires, a boat drawn as a boat, the last old
+## fisherman at his nets, and the shingle sloping down to the water.
+func test_the_fishers_landing() -> void:
+	GameState.story.minute_of_day = 11 * 60
+	var v := _view("lake_zarovich")
+	await _frames(2)
+	var here: Array[String] = []
+	for s: Variant in v.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	assert_true("lz_old_fisher" in here, "the last fisherman at his nets")
+	assert_eq(str(v.atmosphere.mood["water"]["deep"]), "void", "black water")
+	assert_true(v.grid.height(Vector2i(17, 20)) > v.grid.height(Vector2i(17, 10)), "the shingle slopes down to the water")
+	v.queue_free()

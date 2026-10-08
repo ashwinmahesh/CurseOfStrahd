@@ -15,12 +15,12 @@
       "#wwwwwwwwwwwwwwww..wwwwwwwwwwwwwwww#",
       "#~~~~wwwwwwwwwwww..wwwwwwwwwww~~~~~#",
       "#~~~~~~~~~~~wwwww..wwwwww~~~~~~~~~~#",
-      "#..................................#",
-      "#..................................#",
+      "#........................=.........#",
+      "#.........=..=........=............#",
       "#...........................#......#",
       "#....#........===..................#",
-      "##.................................#",
-      "##.................................#",
+      "##..............................=..#",
+      "##............................=....#",
       "#.................................##",
       "#..................................#",
       "#........#.........................#",
@@ -33,7 +33,33 @@
     ],
     "theme": "riverside",
     "light": "dim",
-    "outdoors": true
+    "outdoors": true,
+    "elevation": [
+      "000000000000000000000000000000000000",
+      "000000000000000000000000000000000000",
+      "000000000000000000000000000000000000",
+      "000000000000000000000000000000000000",
+      "000000000000000000000000000000000000",
+      "000000000000000000000000000000000000",
+      "000000000000000000000000000000000000",
+      "000000000000000000000000000000000000",
+      "000000000000000000000000000000000000",
+      "000000000000000000000000000000000000",
+      "000000000000000000000000000000000000",
+      "111111111111111111111111111111111111",
+      "111111111111111111111111111111111111",
+      "111111111111111111111111111111111111",
+      "111111111111111111111111111111111111",
+      "222222222222222222222222222222222222",
+      "222222222222222222222222222222222222",
+      "222222222222222222222222222222222222",
+      "222222222222222222222222222222222222",
+      "222222222222222222222222222222222222",
+      "222222222222222222222222222222222222",
+      "222222222222222222222222222222222222",
+      "222222222222222222222222222222222222",
+      "222222222222222222222222222222222222"
+    ]
   },
   "areas": [
     {
@@ -160,8 +186,9 @@
       ],
       "kind": "examine",
       "label": "Bluto's rowboat",
-      "model": "log",
-      "dialogue": "lake_zarovich/landing:boat"
+      "model": "rowboat",
+      "dialogue": "lake_zarovich/landing:boat",
+      "facing": "north"
     },
     {
       "id": "lz_bluto_shack",
@@ -295,6 +322,115 @@
       "label": "something behind the fishers' shrine",
       "model": "sword_leaning",
       "item": "trident_of_fish_command__trident"
+    },
+    {
+      "id": "lz_racks",
+      "cell": [
+        10,
+        10
+      ],
+      "kind": "examine",
+      "label": "Empty drying racks",
+      "model": "fishing_nets"
+    },
+    {
+      "id": "lz_racks_2",
+      "cell": [
+        13,
+        10
+      ],
+      "kind": "decor",
+      "model": "fishing_nets"
+    },
+    {
+      "id": "lz_racks_3",
+      "cell": [
+        22,
+        10
+      ],
+      "kind": "decor",
+      "model": "fishing_nets"
+    },
+    {
+      "id": "lz_cold_fire",
+      "cell": [
+        12,
+        15
+      ],
+      "kind": "examine",
+      "label": "An old cookfire ring",
+      "model": "rubble"
+    },
+    {
+      "id": "lz_cold_fire_2",
+      "cell": [
+        7,
+        15
+      ],
+      "kind": "decor",
+      "model": "rubble"
+    },
+    {
+      "id": "lz_upturned_boat",
+      "cell": [
+        25,
+        9
+      ],
+      "kind": "examine",
+      "label": "An upturned boat",
+      "model": "rowboat",
+      "facing": "east"
+    },
+    {
+      "id": "lz_fish_bones",
+      "cell": [
+        20,
+        10
+      ],
+      "kind": "decor",
+      "model": "bones"
+    },
+    {
+      "id": "lz_bluto_lamp",
+      "cell": [
+        30,
+        14
+      ],
+      "kind": "decor",
+      "model": "lantern_post"
+    },
+    {
+      "id": "lz_bluto_barrel",
+      "cell": [
+        32,
+        13
+      ],
+      "kind": "decor",
+      "model": "barrel"
+    },
+    {
+      "id": "lz_glass_float",
+      "cell": [
+        10,
+        9
+      ],
+      "kind": "search",
+      "label": "a glass float tangled in the reeds",
+      "model": "reeds",
+      "search_dc": 12,
+      "item": "glass_bottle"
+    },
+    {
+      "id": "lz_hut_step_net",
+      "cell": [
+        11,
+        18
+      ],
+      "kind": "search",
+      "label": "something under the empty hut's step",
+      "model": "rubble",
+      "search_dc": 13,
+      "item": "net"
     }
   ],
   "containers": [
@@ -394,6 +530,21 @@
       "dialogue": "lake_zarovich/arabelle_ally:start",
       "approach": 9,
       "when": "tarokka.ally.npc == arabelle and flag.arabelle_rescued and not guest:arabelle and not flag.arabelle_sent_home and flag.bluto_fate"
+    },
+    {
+      "npc": "lz_old_fisher",
+      "cell": [
+        12,
+        10
+      ],
+      "dialogue": "lake_zarovich/old_fisher:start",
+      "facing": "west",
+      "work": "swing",
+      "hours": [
+        7,
+        17
+      ],
+      "when": "not weather == storm"
     }
   ],
   "narration": {
