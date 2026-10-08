@@ -54,14 +54,16 @@ test: import
 
 ## Lane folders that cost almost no disk (tools/lane.sh): a worktree whose files and import cache are APFS clones of
 ## the main checkout's. make lane NAME=<name> BRANCH=<branch> [BASE=main] · make lane-reclone NAME=<name> (a running
-## lane's unchanged files become clones again) · make lane-done NAME=<name> (once merged)
+## lane's unchanged files become clones again) · make lane-done NAME=<name> (once merged). SSD=1 on any of them: the
+## lane is on the external SSD's disk image (/Volumes/StrahdLanes), cloned from a seed there.
+LANE = $(if $(SSD),LANE_ROOT=/Volumes/StrahdLanes )tools/lane.sh
 .PHONY: lane lane-reclone lane-done
 lane:
-	tools/lane.sh new $(NAME) $(BRANCH) $(or $(BASE),main)
+	$(LANE) new $(NAME) $(BRANCH) $(or $(BASE),main)
 lane-reclone:
-	tools/lane.sh reclone $(NAME)
+	$(LANE) reclone $(NAME)
 lane-done:
-	tools/lane.sh done $(NAME)
+	$(LANE) done $(NAME)
 
 ## The repo's git hooks (tools/git/), into the hooks folder every worktree shares: pre-push refuses a push of main
 ## unless STRAHD_PUSH_MAIN=1 (the build thread's), then runs Git LFS's own pre-push.

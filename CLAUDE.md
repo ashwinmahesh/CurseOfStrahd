@@ -39,8 +39,10 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 - A lane's folder: `make lane NAME=<name> BRANCH=<branch>` (tools/lane.sh) makes ~/Documents/CurseOfStrahdGame-<name>
   with its files and import cache as APFS clones of the main checkout's, so it costs only the files you change
   (owner, 2026-10-08). `make lane-reclone NAME=<name>` turns an older lane's unchanged files back into clones;
-  `make lane-done NAME=<name>` removes the folder once the branch is merged and clean. Never write into the main
-  checkout, and clean up your own folders and scratch files when you finish.
+  `make lane-done NAME=<name>` removes the folder once the branch is merged and clean. `SSD=1` on any of the three puts
+  the lane on the external SSD's disk image (/Volumes/StrahdLanes, attached when it isn't), cloned from a seed there
+  that `make lane` brings up to main and imports first. Never write into the main checkout, and clean up your own
+  folders and scratch files when you finish.
 
 ## Rules engine (ADR 0003, 0005, 0006)
 - Data is read through `Compendium.shared()`; modifiers follow docs/contracts/modifiers.md (add a stat to the contract
