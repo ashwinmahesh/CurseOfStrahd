@@ -182,10 +182,10 @@ func give_item(item_id: String, qty: int, ch: Character = null) -> void:
 
 ## Moves one `item_id` from `ch`'s pack to the party stash (from anywhere; things come out again at safe places, which
 ## the inventory screen checks). A magic item keeps its own state there (charges, identified, a lifted curse), and an
-## attunement to it ends.
+## attunement to it ends; a cursed item its bearer is attuned to stays with them (Character.part_blocker).
 func stash_put(item_id: String, ch: Character, entry: Dictionary = {}) -> bool:
 	if not ch.inventory.any(func(e: Dictionary) -> bool: return str(e["id"]) == item_id and int(e["qty"]) > 0 \
-			and (entry.is_empty() or is_same(e, entry))):
+			and (entry.is_empty() or is_same(e, entry))) or ch.part_blocker(item_id) != "":
 		return false
 	stash_add(item_id, 1, ch.remove_one(item_id, entry))
 	return true
@@ -527,16 +527,18 @@ func shop_sell(npc_id: String, item_id: String, ch: Character, entry: Dictionary
 	var offer := shop_offer(npc_id, item_id)
 	if offer < 0.0:
 		return "They don't buy that"
+	var why := ch.part_blocker(item_id)
+	if why != "":
+		return why
 	var lot := StoryState.shop_lot(Compendium.shared().item_data(item_id))
 	for e in ch.inventory:
 		if str(e["id"]) == item_id and int(e["qty"]) > 0 and (entry.is_empty() or is_same(e, entry)):
 			if int(e["qty"]) < lot:
 				return "They only buy these %d at a time" % lot
-			if str(e.get("slot", "")) != "" and int(e["qty"]) <= lot:
-				ch.unequip(str(e["slot"]))
-			e["qty"] = int(e["qty"]) - lot
-			if int(e["qty"]) <= 0:
-				ch.inventory.erase(e)
+			# Out of the pack as giving it away does, which takes it off and ends its attunement with the last one
+			# (QA FN-04: a sold item's attunement stayed, and its slot with it, for good).
+			for i in lot:
+				ch.remove_one(item_id, e)
 			gold += offer
 			return ""
 	return "Not carried"

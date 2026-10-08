@@ -116,8 +116,11 @@ func _draw() -> void:
 		var lot := StoryState.shop_lot(data)
 		var label := ("Sell %d for %s gp" % [lot, _money(offer)] if lot > 1 else "Sell for %s gp" % _money(offer)) if offer >= 0.0 else "Won't buy"
 		var b := UiParts.small_button(label, func() -> void: _sell(id))
-		b.disabled = offer < 0.0 or int(e["qty"]) < lot
-		if offer >= 0.0 and int(e["qty"]) < lot:
+		var stuck := ch.part_blocker(id)   # a cursed item its holder is attuned to won't leave them
+		b.disabled = offer < 0.0 or int(e["qty"]) < lot or stuck != ""
+		if stuck != "":
+			b.tooltip_text = stuck
+		elif offer >= 0.0 and int(e["qty"]) < lot:
 			b.tooltip_text = "Merchants only buy these %d at a time" % lot
 		row.add_child(b)
 		pack.add_child(UiParts.row(row, LootWindow._item_tip(data)))
@@ -180,7 +183,8 @@ func junk_for_sale() -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for m in st.party:
 		for e in m.inventory:
-			if not InventoryScreen.is_junk(e) or str(e.get("slot", "")) != "" or int(e["qty"]) <= 0:
+			if not InventoryScreen.is_junk(e) or str(e.get("slot", "")) != "" or int(e["qty"]) <= 0 \
+					or m.part_blocker(str(e["id"])) != "":
 				continue
 			var offer := st.shop_offer(npc_id, str(e["id"]))
 			var sales := int(e["qty"]) / StoryState.shop_lot(Compendium.shared().item_data(str(e["id"])))
