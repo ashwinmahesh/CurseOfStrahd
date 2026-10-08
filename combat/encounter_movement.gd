@@ -919,7 +919,7 @@ func settle_all() -> void:
 	var again := true
 	while again:
 		again = false
-		for c in e.combatants.duplicate():
+		for c: Combatant in e.combatants.duplicate():
 			if c.altitude <= 0 or c.has_meta("left_fight"):
 				continue
 			if not c.is_alive() or aloft_by(c) == "":
@@ -959,7 +959,9 @@ func _come_down(c: Combatant) -> void:
 ## A creature that came down in another creature's space lands in the nearest open square instead.
 func _make_room(c: Combatant) -> void:
 	var e := enc()
-	var under := in_the_way(c, 0) if c.is_alive() and not c.has_meta("left_fight") else null
+	if not c.is_alive() or c.has_meta("left_fight"):
+		return
+	var under := in_the_way(c, 0)
 	if under == null:
 		return
 	var was := c.cell
