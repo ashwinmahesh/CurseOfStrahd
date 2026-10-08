@@ -29,6 +29,12 @@ Status: ✅ built · ○ planned
 | ✅ | Old Svalich Road, the wayside shrine | Ring of Mind Shielding (uncommon) | Search (Investigation DC 12): a loose board at the back of the shrine |
 | ✅ | Svalich Woods, the torn carcass | Boots of the Winterlands (uncommon) | Search (Perception DC 12): a traveller's pack under the carcass |
 
+## The Gates of Barovia (side quest, levels 6 and up)
+
+| | Where | Item | How |
+|---|---|---|---|
+| ✅ | The vanguard's pay chest, the Gates | +2 Longsword (rare) | Hoard: Marshal Dragomir's blade, once he's beaten (The Last Muster, docs/story/side_quests.md) |
+
 ## Death House (level 2)
 
 Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (study chest), the children's cache.
@@ -105,6 +111,8 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Vistani camp, Arrigal's wagon | Dagger of Venom (rare) | Search (Investigation DC 16): Arrigal's hidden drawer |
 | ✅ | Stella Wachter, St. Andral's | Cloak of the Bat (rare) | Gift: the master's birthday present, once her curse is broken (The Cat in the Window, docs/story/side_quests.md) |
 | ✅ | Ilie the lamplighter | Ring of Resistance, Necrotic (rare) | Gift: Ana's mother's ring, once Ana is at rest (Black Roses) |
+| ✅ | Watchman Dobre's satchel | Arcane Grimoire, +2 (rare) | Gift: in the satchel once Dobre is beaten (Ribbons) |
+| ✅ | Yevgeni | Horn of Valhalla, Silver (rare) | Gift: his father's horn, with the bounty on Old Greytooth (The Hunters at the Inn) |
 
 ## Lake Zarovich (level 8)
 
@@ -113,6 +121,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | The rotten jetty | Ring of Water Walking (uncommon) | Search (Perception DC 14): under the boards |
 | ✅ | An empty hut | Folding Boat (rare) | Search (Investigation DC 14): a loose hearthstone |
 | ✅ | The fishers' shrine | Trident of Fish Command (uncommon) | Search (Perception DC 13) |
+| ✅ | The drowned chapel under the lake | Staff of Healing (rare) | Gift: once the bell is silenced (The Bell Under the Lake, docs/story/side_quests.md) |
 
 ## Old Bonegrinder (level 6)
 
@@ -209,6 +218,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Baba Lysaga's hut, the cradle | Wand of Polymorph (very rare) | Search (Investigation DC 17): sewn into the lining |
 | ✅ | Baba Lysaga's hut, the bundles in the beams | Potion of Speed (very rare) | Search (Investigation DC 16): the one jar that doesn't hum |
 | ✅ | Berez, a drowned house | Mantle of Spell Resistance (rare) | Search (Perception DC 15) |
+| ✅ | Berez, the Rag Queen in the scarecrow field | Dancing Sword (very rare) | Gift: Dragos, in Krezk, once she's burned (The One-Horned Billy, docs/story/side_quests.md) |
 | ✅ | Berez, the scarecrow | Staff of Swarming Insects (rare) | Search (Perception DC 15): its arm is a staff |
 | ✅ | Berez, under a fallen beam | Immovable Rod (uncommon) | Search (Perception DC 14): a drowned tinker's roll (lane 28's spot) |
 | ✅ | Marina's monument, the dowry chest | Robe of Scintillating Colors (very rare) | Hoard: Strahd's gift to her |
@@ -247,6 +257,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Chapel, under the altar's dust | Amulet of the Devout +3 (very rare) | Search (Investigation DC 17) |
 | ✅ | Court, the count's desk | Crystal Ball (very rare) | Search (Investigation DC 17) |
 | ✅ | Court, the trophy room | Dragon Slayer Longsword (rare) | Search (Perception DC 15): above the dragon's skull |
+| ✅ | Blinsky Toys, Vallaki, once Pidlwick II is brought down from the high tower | Figurine of Wondrous Power, Obsidian Steed (very rare) | Gift: Blinsky's masterwork (The Toymaker's Masterpiece, docs/story/side_quests.md) |
 | ✅ | Treasury | Manual of Gainful Exercise (very rare) | Hoard |
 | ✅ | Count's floor, the tall mirror | Cloak of Displacement (rare) | Search (Investigation DC 17): behind a mirror that shows no one |
 | ✅ | Count's floor, Ludmilla's books | +3 Arcane Grimoire (very rare) | Search (Investigation DC 17) |

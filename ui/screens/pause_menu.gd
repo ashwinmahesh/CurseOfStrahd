@@ -425,10 +425,17 @@ func _display_rows() -> void:
 	_choice_row(y, "Window", ["Windowed", "Fullscreen"], 1 if GameSettings.fullscreen() else 0, func(i: int) -> void:
 		GameSettings.set_fullscreen(i == 1), "Play in a window or fill the screen.")
 	y += ROW_PITCH
-	_choice_row(y, "Depth blur", ["On", "Off"], 0 if GameSettings.depth_blur() else 1, func(i: int) -> void:
-		GameSettings.set_depth_blur(i == 0)
-		_note.text = "From the next place you go.",
-		"Modern look: the far distance softens a little. People and things you can click always stay sharp.")
+	var reaches := Atmosphere.EDGE_BLURS.keys()
+	var blurs: Array[String] = ["Off"]
+	for id: String in reaches:
+		blurs.append(str(Atmosphere.EDGE_BLURS[id]["name"]))
+	var blur := reaches.find(Atmosphere.edge_blur()) + 1 if GameSettings.depth_blur() else 0
+	_choice_row(y, "Depth blur", blurs, blur, func(i: int) -> void:
+		GameSettings.set_depth_blur(i > 0)
+		if i > 0:
+			GameSettings.set_blur_reach(str(reaches[i - 1]))
+		_note.text = "" if Look.modern() else "The Classic look never blurs; this is for Modern.",
+		"Modern look: the world softens toward the screen's edges, most in the corners, and the middle stays sharp. Corners blurs the least, Wide the most. The interface, names and markers never blur.")
 	y += ROW_PITCH
 	var sizes := GameSettings.UI_SCALES
 	var percents: Array[String] = []

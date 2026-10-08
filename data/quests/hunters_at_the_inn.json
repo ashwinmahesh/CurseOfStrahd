@@ -1,0 +1,47 @@
+{
+  "id": "hunters_at_the_inn",
+  "name": "The Hunters at the Inn",
+  "summary": "Two hunters in the corner of the Blue Water Inn sell wolf ears to the Baron at a copper apiece, and want help with the one wolf he pays three hundred gold for.",
+  "giver": "szoldar",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Urwin says the two hunters in the corner of the Blue Water Inn, Szoldar and his son Yevgeni, sell wolf ears to the Baron. Lately they've been asking about us.",
+      "objectives": [
+        "Talk to Szoldar at the Blue Water Inn"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Szoldar wants a share of the Baron's three hundred gold for Old Greytooth, a wolf the size of a horse that has taken two shepherds and the lakeshore goats since spring. He'll find the wolf; we're to kill it. The Lake Zarovich landing, at dusk.",
+      "objectives": [
+        "Hunt Old Greytooth at the Lake Zarovich landing at dusk"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_trap",
+      "journal": "Yevgeni says Arrigal pays his father for every strong stranger he brings to the lake at dusk. The wolf belongs to the castle, and the castle wants to know how we fight. Szoldar will be on the rise behind the shacks with his bow.",
+      "objectives": [
+        "Hunt Old Greytooth at the Lake Zarovich landing at dusk, on ground of our choosing"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "hunted",
+      "journal": "Old Greytooth is dead on the shore of Lake Zarovich, with his pack around him.",
+      "objectives": [
+        "Find Yevgeni at the Blue Water Inn for the bounty"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Yevgeni collected the Baron's three hundred on Greytooth's ears and gave all of it to us, and his father's silver horn with it.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

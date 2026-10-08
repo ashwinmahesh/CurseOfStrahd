@@ -1,5 +1,5 @@
 extends Node
-## The depth blur as the game draws it now (Atmosphere.DOF_STRENGTHS at Atmosphere.dof_strength), for before-and-after
+## The depth blur as the game draws it now (Atmosphere.EDGE_BLURS at Atmosphere.edge_blur()), for before-and-after
 ## pairs: Tser Pool exploring from the road, then its brawl a few turns in, with the camera at play distance.
 ## make capture SCENE=res://tools/capture/blur_capture.tscn NAME=blur/after FRAMES=10
 

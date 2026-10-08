@@ -1,0 +1,18 @@
+{
+  "id": "szoldar",
+  "name": "Szoldar",
+  "title": "Hunter at the Blue Water Inn",
+  "summary": "A weathered hunter in a wolfskin coat who sells wolf ears to the Baron and strong strangers to Arrigal, and sits where he can see the door.",
+  "portrait": "bandit_captain",
+  "sprite": "bandit_captain",
+  "attitude": "indifferent",
+  "monster": "bandit_captain",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "hunter",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

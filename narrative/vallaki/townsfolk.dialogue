@@ -13,7 +13,17 @@ Goodwife Marta: Off to the square with you. They count the faces, you know. Mine
 endif
 Goodwife Marta [smile]: Good morning! It is a good morning. The Baron says so, and the Baron's men are standing right over there, so it is.
 * How is the market? -> market
+* Heard anything interesting? -> marta_rumor
 * Good morning to you. -> END
+
+~ marta_rumor
+Goodwife Marta: Interesting? In Vallaki? Blinsky, I suppose. The toymaker. He asks every stranger who comes through the gate if they've been up the hill to the castle.
+Goodwife Marta: Not about the count. About a toy. Some jester his old master made up there, that walked about on its own. He wants to know if it still walks. Poor man.
+if not quest.toymakers_masterpiece
+quest toymakers_masterpiece rumored
+endif
+interject tag:curious: A toy that walks. In that castle. I'd like to know too.
+-> END
 
 ~ market
 Goodwife Marta: Turnips, mostly. Turnips and Blinsky's toys, which nobody buys, and the Baron's festival bunting, which everybody buys, because it's noticed who doesn't.
@@ -68,6 +78,13 @@ Anton the Cooper: Don't look at me like that. I smiled. I smiled the whole festi
 ~ grumbler_now
 Anton the Cooper: I stand here till the evening bell, then I go home and practise in the mirror. Third time this month. My wife says I've a face built for coopering, not for joy.
 interject tag:kind: For what it's worth, it seems a perfectly good face.
+* [if not quest.ribbons] Who told the Baron you weren't smiling? -> grumbler_who
+* Chin up. -> END
+
+~ grumbler_who
+set ribbons_rumor
+quest ribbons rumored
+Anton the Cooper: Told? Nobody tells. There's a list. The girl with the ribbons writes down who won't wear one, and the next morning those are the faces in here. Ask her. Don't ask her where I can see; I'm in enough trouble.
 -> END
 
 # --- Lane 28 (2026-10-08): the town at work - the market row, the inn's porter, the square and the watch ---
@@ -99,9 +116,13 @@ if flag.festival_over
 Daciana: No more ribbons. Nobody's counting any more. I don't know what to do with my hands.
 -> END
 endif
+if quest.ribbons and quest.ribbons != rumored
+-> vallaki/ribbons:daciana
+endif
 Daciana [smile]: A ribbon for the festival! It's free. It's for the sun. Everybody wears one.
 * Take a ribbon. -> ribbon_take
 * No, thank you. -> ribbon_refuse
+* [if flag.ribbons_rumor] Who wants to know, Daciana? -> vallaki/ribbons:who
 
 ~ ribbon_take
 Narrator: She ties a yellow ribbon to your sleeve with quick, cold fingers, and the smile goes out of her eyes for a moment, with relief.
@@ -109,6 +130,10 @@ Narrator: She ties a yellow ribbon to your sleeve with quick, cold fingers, and 
 
 ~ ribbon_refuse
 Daciana: Oh. That's... I have to write that down. I'm sorry. It's not me who wants to know.
+set ribbons_rumor
+if not quest.ribbons
+quest ribbons rumored
+endif
 -> END
 
 ~ sun_painter

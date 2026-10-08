@@ -150,6 +150,95 @@ dig them up by day (Athletics DC 12; they wake surprised and weak) or wait for t
 - Rewards: Pyotr Petrov the chandler (by day in the lower town) pays 200 gp for Mila's life; Ilie gives Ana's mother's
   ring, a Ring of Resistance (Necrotic) (rare), once Ana is at rest.
 
+### Ribbons (`ribbons`, narrative/vallaki/ribbons.dialogue; batch 2)
+
+Daciana the ribbon girl writes down everyone who won't wear a festival ribbon ("it's not me who wants to know"); Anton in
+the stocks points at her. She leaves the list under the lamp on Main Street at dusk (prop `ribbon_lamp`). **Twist:**
+Watchman Dobre (lane 28's patrol) collects it and sells it three times: to the Baron's clerk (the stocks), to Wachterhaus
+(her ladies visit whoever's in the stocks) and to a rider on a black horse at the west gate (the castle). **Escalation:**
+the stake-out: follow him (Stealth DC 13) and catch the hand-off at the gate, or confront him at the lamp; Daciana can
+leave the list blank to make the rider turn on him.
+
+- Fights `ribbons_street` (Dobre and 3 of his lads, warrior veterans: 2,800 XP at level 5) and `ribbons_gate` (the same
+  plus the rider and his man: 3,350); one more lad at 6+, one fewer below 5. Dobre leaves his beat once beaten.
+- Daciana comes running after the fight: the satchel gives 250 gp of castle silver and an Arcane Grimoire, +2 (rare),
+  and the lists go to Lucian and Urwin (the stocks empty), to the Baron (+100 gp, Dobre in his own stocks) or into the
+  fire. Attention mark `lists` (+1).
+
+### The Hunters at the Inn (`hunters_at_the_inn`, narrative/vallaki/hunters_at_the_inn.dialogue; batch 2, the book's pair)
+
+Szoldar and his son Yevgeni (new NPCs in the Blue Water Inn's taproom; Urwin's rumour) offer half the Baron's 300 gp
+for Old Greytooth. **Twist:** Arrigal pays Szoldar to bring strong strangers to the lake at dusk; the wolf is the castle's,
+and the castle wants to see how you fight. Yevgeni says so (Persuasion DC 13, or a drink). **Escalation:** the hunt at
+the Lake Zarovich landing at dusk (prop `greytooth_shore`), with Szoldar's bow on the rise behind the shacks unless he's
+been turned (Intimidation DC 14) or left at the inn.
+
+- **Boss: Old Greytooth** (data/monsters/old_greytooth.json, `source.book: custom`, drawn with the dire wolf's sprite):
+  Huge, AC 15, 171 HP, two 2d10+5 bites that knock prone, a recharging howl (DC 15 Wis or Frightened), Legendary
+  Resistance (2/day) and one extra bite a round as a legendary action. CR 8.
+- Fight `greytooth_hunt`: level 6 Greytooth (150 HP), 2 dire wolves, 2 wolves; level 7 three dire wolves; level 8 adds
+  a werewolf; Szoldar (bandit captain) on the rise unless dealt with, and he runs below 25 HP (`szoldar_fled`). The
+  autopilot (tests/integration/test_side_quest_bosses.gd) wins about half its level 6 tries, losing three of four
+  party members on the way. Attention mark `greytooth` (+1).
+- Yevgeni pays the whole bounty, 300 gp, and gives his father's Horn of Valhalla, Silver (rare).
+
+## Lake Zarovich (level 8)
+
+### The Bell Under the Lake (`bell_under_the_lake`, narrative/lake_zarovich/bell_under_the_lake.dialogue; batch 2)
+
+Old Nistor, the last fisherman (lane 28), tells it once the Arabelle business is over: before the count dammed the Luna,
+the hamlet of Pescari stood where the lake is, and the ones who wouldn't leave its chapel are still in it with the
+bell. **Twist:** Bluto wasn't mad; his sacks were paying the bell, and now they've stopped. **Escalation:** after
+moonrise (prop `bell_water` at the jetty's end) the drowned come up the shore for Bluto (if he's alive at the landing)
+or for Nistor. Stand in front of him, or stand aside and let them take Bluto (`bluto_fate` becomes `drowned`); they rise
+either way.
+
+- Fight `drowned_landing`: level 8 the Bellringer (a wraith), the Lake's Undertow (a water elemental), 4 ghasts and 6
+  ghouls (6,600 XP; the autopilot wins two of three and loses most of the party doing it); level 9 adds a second
+  undertow and a drowned bride (a wight); below 8 a wight, 2 ghasts and 6 ghouls.
+- Then cut the bell loose (Athletics DC 15, Water Breathing or the potion) or ring it once for the dead (Religion DC 14):
+  200 gp of chapel silver and the drowned priest's Staff of Healing (rare).
+
+## The Gates of Barovia (levels 6 and up)
+
+### The Last Muster (`last_muster`, narrative/into_the_mists/last_muster.dialogue; batch 2, the book's skeletal riders)
+
+Zora counts twelve riders going east every night after midnight, and none coming back; Vasile and Petre (once the
+village's other two rumours are taken) hear lances knocking at the gates. **Twist:** they're the count's vanguard,
+who took the valley's gate the night he conquered it, on the order "hold the gate until I come back", and he never
+came back for them. **Escalation:** at the Gates after dark Marshal Dragomir (new NPC, the phantom warrior's sprite)
+holds the gate. History DC 14, the soldier's rite (Religion DC 15) or Persuasion DC 15 stands the riders down; the
+marshal still wants to be beaten, fairly, because only a lost battle can relieve him.
+
+- **Boss: the Bone Marshal** (data/monsters/bone_marshal.json, `source.book: custom`, drawn with the phantom warrior's
+  sprite): Large undead, AC 18, 150 HP, two grave-blade strokes (1d12+6 slashing and 1d8 necrotic, reach 10), Parry,
+  Legendary Resistance (2/day) and a charge (one more stroke) between turns. CR 8.
+- Fight `bone_marshal` at the gate: the whole column (level 6 the marshal, 2 lieutenants as wights and 6 skeleton riders,
+  5,600 XP; level 8 a third wight and 2 phantom warriors; below 6 the marshal at 110 HP, one wight, six riders), or
+  only the marshal and his lieutenants once the riders stand down. The autopilot wins 2 of 3 against the column at
+  level 6 and 1 of 3 against the marshal and three lieutenants at level 8, losing three party members a fight.
+- The pay chest: 200 gp and the marshal's blade, a +2 longsword (rare).
+
+## Vallaki and Castle Ravenloft (level 10)
+
+### The Toymaker's Masterpiece (`toymakers_masterpiece`, narrative/vallaki/toymakers_masterpiece.dialogue; batch 2, the book's Blinsky and the jester)
+
+Goodwife Marta (townsfolk:marta_rumor) says Blinsky asks every stranger whether they've been up to the castle, and
+whether a jester his old master made still walks there. Blinsky (a new menu option) tells it: Fritz von Weerg's jester
+for the count's children, and he would give his whole shop to see how von Weerg did the knees. **Twist:** the jester is
+Pidlwick II, who is afraid of toymakers ("THEY OPEN YOU UP"), and who once pushed the first Pidlwick down a stair. On
+his stair (or travelling with the party) Persuasion DC 14 talks him round, or, if the party has played with him, wound
+him or learned his secret, telling him Blinsky is as lonely as he is; he joins if he isn't with the party already. At
+Blinsky Toys he won't come past the door until he's talked round. **Escalation:** the visit goes beautifully until
+Blinsky climbs his narrow stair and Pidlwick goes still at the bottom of it. Knowing his secret, the party can step in
+and tell Blinsky (`blinsky_told`: he builds a ramp) or step in and say nothing; anyone can just watch, and Pidlwick
+doesn't push: "I DIDN'T. THAT IS NEW."
+
+- No fight: the one gentle quest in batch 2. Its cost is the trip into the castle.
+- Endings: Pidlwick stays at Blinsky Toys (`home`; he leaves the party and juggles in the window), or, when he is the
+  marionette card's ally, he stays with the party and promises to come back after the castle (`promised`).
+- Reward either way: Blinsky's masterwork, a Figurine of Wondrous Power (Obsidian Steed) (very rare).
+
 ## Krezk (level 7)
 
 Talker: the watchman (gate:news, renamed). Wiring: Ilya's sickness starts `the_burgomasters_son` at `heard` (if
@@ -173,6 +262,24 @@ brings Sorin `home`; otherwise he stays at the pool with Kasha (`pool`) or goes 
 - Rewards in every ending: Anna's 400 gp (a dowry for a daughter they never had) and Dmitri's grandfather's mail, an
   Armor, +1 (rare, chain mail).
 
+### The One-Horned Billy (`one_horned_billy`, narrative/krezk/one_horned_billy.dialogue; batch 2)
+
+Stelian the goatherd (townsfolk:goatherd) says the one-horned billy turned up last spring already grown, with a
+woman's silver ring jammed on his horn. **Twist:** the ring reads D. AND V. BEREZ (Animal Handling DC 14), and
+there's a man behind the goat's eyes (Insight DC 13, or Speak with Animals). Remove Curse, cast or from a scroll,
+turns him back into Dragos, the ferryman of Berez (new NPC, by the pens once he's freed), whom Baba Lysaga cursed for
+refusing to row her across. **Escalation:** she kept his wife Vera and stitched her into the Rag Queen, a scarecrow
+made of every drowned bride's wedding dress, which walks the scarecrow field by Lysaga's stump (prop `rag_queen_post`)
+whether Lysaga's at home or not.
+
+- **Boss: the Rag Queen** (data/monsters/rag_queen.json, `source.book: custom`): Large construct, AC 16, 260 HP, two
+  claws (3d8+6 slashing, Frightened), a glare (recharge 5-6, DC 16, Frightened and Paralyzed), Legendary Resistance
+  (2/day), a rake between turns, and Regeneration 15 that fire stops. CR 10.
+- Fight `rag_queen` in the field: level 9 the queen, 2 drowned brides (banshees) and 4 straw grooms (scarecrows), 8,900
+  XP; level 10 a third bride, 2 more grooms and a swarm of insects; below 9 the queen at 200 HP, one bride and 4
+  grooms. The autopilot wins 1 of 3 at level 9 and loses three party members a fight.
+- Dragos pays once: 500 gp of brides' dowries and a Dancing Sword (very rare, a longsword) Lysaga took off a knight.
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -180,7 +287,12 @@ New lines are unvoiced until the voice thread records them: polite_caller.dialog
 news_grigore node and his two added lines (the windmill), and arik.dialogue's rumors node. The Tser Pool camp:
 grey_mare.dialogue in full (Radu, Luminita), and tser_camp.dialogue's two added Zora lines. Batch 2, Tser Pool:
 called_by_name.dialogue in full (new speaker Nelu; also Big Tobar), tser_camp.dialogue's new Zora lines (Nelu) and its
-nelu node. Vallaki:
+nelu node. Batch 2, Vallaki: ribbons.dialogue and hunters_at_the_inn.dialogue in full (new speakers Szoldar and
+Yevgeni; also Daciana, Watchman Dobre), townsfolk.dialogue's grumbler_who node and the added ribbon_refuse lines, and
+martikovs.dialogue's new rumours lines (the hunters). Batch 2, Lake
+Zarovich: bell_under_the_lake.dialogue in full (Old Nistor, Bluto) and old_fisher.dialogue's added option. The Gates:
+last_muster.dialogue in full (new speaker Marshal Dragomir), tser_camp.dialogue's new zora_road lines (the riders) and
+townsfolk.dialogue's new gossip lines (the riders). Vallaki:
 cat_in_the_window.dialogue and black_roses.dialogue in full (new speakers Stella Wachter, Ana and Pyotr Petrov; also
 Ilie and Father Lucian), the new lines in gate.dialogue (news: Stella), martikovs.dialogue (rumors: the roses),
 arasek.dialogue (roads: the windmill) and the polite_caller.dialogue sunrise line rewritten as a break in the mist. Krezk:
@@ -188,4 +300,8 @@ six_feet.dialogue in full (new speaker Zinaida;
 also Old Mihail and Goodwife Petra), the new lines in townsfolk.dialogue (goodwife after the burial, gravedigger after it)
 and arik.dialogue (rumors: "Mihail. Digs early."). lighter_than_it_should_be.dialogue in full (new speaker Sorin; also Anna, Dmitri, Ilya, Kasha and Old Pavel), the new
 lines in krezk gate.dialogue (news: Ilya, the stolen children, the toys), kasha.dialogue (graves: the toys) and, on
-sq-krezk, black_roses.dialogue's lines naming the third girl (Daria, renamed from Sorina).
+sq-krezk, black_roses.dialogue's lines naming the third girl (Daria, renamed from Sorina). Batch 2, Krezk and
+Berez: one_horned_billy.dialogue in full (new speaker Dragos; also Stelian) and townsfolk.dialogue's two new goatherd
+lines (Stelian: the ring, and the ferryman). Batch 2, Vallaki
+and the castle: toymakers_masterpiece.dialogue in full (Blinsky, Pidlwick II) and townsfolk.dialogue's new
+marta_rumor node (Goodwife Marta: the jester).

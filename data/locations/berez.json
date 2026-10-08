@@ -537,6 +537,17 @@
       "kind": "decor",
       "model": "scarecrow",
       "when": "not flag.berez_scarecrows_burned"
+    },
+    {
+      "id": "rag_queen_post",
+      "cell": [
+        31,
+        10
+      ],
+      "kind": "examine",
+      "label": "A scarecrow taller than the others",
+      "model": "scarecrow",
+      "dialogue": "krezk/one_horned_billy:field"
     }
   ],
   "containers": [
@@ -1229,6 +1240,237 @@
       ],
       "surprise": "",
       "flag": "lysaga_slain_scorned"
+    },
+    {
+      "id": "rag_queen",
+      "trigger": "dialogue",
+      "when": "level >= 10",
+      "text": "The Rag Queen steps down off her post, twice the height of a man, all rotten silk and lace and faces in the stitching. Two of the faces tear free of her and come screaming across the field in their wedding veils.",
+      "monsters": [
+        {
+          "monster": "rag_queen",
+          "cell": [
+            32,
+            11
+          ]
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            30,
+            8
+          ],
+          "name": "A Drowned Bride"
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            35,
+            12
+          ],
+          "name": "A Drowned Bride"
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            29,
+            12
+          ],
+          "name": "A Drowned Bride"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            28,
+            10
+          ],
+          "name": "A Straw Groom"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            34,
+            13
+          ],
+          "name": "A Straw Groom"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            26,
+            12
+          ],
+          "name": "A Straw Groom"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            30,
+            14
+          ],
+          "name": "A Straw Groom"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            35,
+            9
+          ],
+          "name": "A Straw Groom"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            24,
+            15
+          ],
+          "name": "A Straw Groom"
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            29,
+            16
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "rag_queen_beaten",
+      "quest": {
+        "id": "one_horned_billy",
+        "stage": "burned"
+      }
+    },
+    {
+      "id": "rag_queen",
+      "trigger": "dialogue",
+      "when": "level >= 9",
+      "text": "The Rag Queen steps down off her post, twice the height of a man, all rotten silk and lace and faces in the stitching. Two of the faces tear free of her and come screaming across the field in their wedding veils.",
+      "monsters": [
+        {
+          "monster": "rag_queen",
+          "cell": [
+            32,
+            11
+          ]
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            30,
+            8
+          ],
+          "name": "A Drowned Bride"
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            35,
+            12
+          ],
+          "name": "A Drowned Bride"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            28,
+            10
+          ],
+          "name": "A Straw Groom"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            34,
+            13
+          ],
+          "name": "A Straw Groom"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            26,
+            12
+          ],
+          "name": "A Straw Groom"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            30,
+            14
+          ],
+          "name": "A Straw Groom"
+        }
+      ],
+      "surprise": "",
+      "flag": "rag_queen_beaten",
+      "quest": {
+        "id": "one_horned_billy",
+        "stage": "burned"
+      }
+    },
+    {
+      "id": "rag_queen",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "The Rag Queen steps down off her post, twice the height of a man, all rotten silk and lace and faces in the stitching. Two of the faces tear free of her and come screaming across the field in their wedding veils.",
+      "monsters": [
+        {
+          "monster": "rag_queen",
+          "cell": [
+            32,
+            11
+          ],
+          "hp": 200
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            30,
+            8
+          ],
+          "name": "A Drowned Bride"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            28,
+            10
+          ],
+          "name": "A Straw Groom"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            34,
+            13
+          ],
+          "name": "A Straw Groom"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            26,
+            12
+          ],
+          "name": "A Straw Groom"
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            30,
+            14
+          ],
+          "name": "A Straw Groom"
+        }
+      ],
+      "surprise": "",
+      "flag": "rag_queen_beaten",
+      "quest": {
+        "id": "one_horned_billy",
+        "stage": "burned"
+      }
     }
   ],
   "narration": {

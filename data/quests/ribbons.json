@@ -1,0 +1,47 @@
+{
+  "id": "ribbons",
+  "name": "Ribbons",
+  "summary": "Daciana gives out yellow festival ribbons in Vallaki's square and writes down everyone who won't wear one. It isn't her who wants to know.",
+  "giver": "vallaki_ribbon_girl",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Daciana, who gives out the festival ribbons in Vallaki's square, writes down the name of everyone who won't take one. \"It's not me who wants to know,\" she said. The stocks fill up with the same faces every week.",
+      "objectives": [
+        "Ask Daciana who reads her lists; she works the square by day"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Daciana writes the names of everyone who won't wear a ribbon and leaves the paper under the lamp on Main Street at dusk. In the morning it's gone and there's a coin in its place, and her brother stays out of the stocks.",
+      "objectives": [
+        "Watch the lamp on Main Street after dusk"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "sold_three_times",
+      "journal": "Watchman Dobre collects the lists and sells each one three times: to the Baron's clerk, which fills the stocks; to the back door of Wachterhaus, whose ladies visit whoever is in the stocks and tell them who put them there; and to a rider on a black horse at the west gate, for the castle. The unhappy are the ones who open their doors.",
+      "objectives": [
+        "Deal with Watchman Dobre"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "lists_taken",
+      "journal": "Dobre is beaten and his satchel is ours: three months of Vallaki's unhappy, by name.",
+      "objectives": [
+        "Decide what becomes of the lists"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "The lists are out of Dobre's hands and out of the castle's. Daciana doesn't write anything down any more.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

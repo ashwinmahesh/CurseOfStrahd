@@ -213,6 +213,16 @@
         6
       ],
       "dialogue": "vallaki/blinsky:start"
+    },
+    {
+      "npc": "pidlwick_ii",
+      "cell": [
+        9,
+        9
+      ],
+      "dialogue": "vallaki/toymakers_masterpiece:pidlwick_home",
+      "when": "flag.pidlwick_with_blinsky",
+      "facing": "south"
     }
   ],
   "narration": {

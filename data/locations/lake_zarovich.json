@@ -431,6 +431,30 @@
       "model": "rubble",
       "search_dc": 13,
       "item": "net"
+    },
+    {
+      "id": "greytooth_shore",
+      "cell": [
+        18,
+        15
+      ],
+      "kind": "examine",
+      "label": "Pawprints as wide as a plate",
+      "model": "bones",
+      "dialogue": "vallaki/hunters_at_the_inn:shore",
+      "when": "quest.hunters_at_the_inn and quest.hunters_at_the_inn != rumored"
+    },
+    {
+      "id": "bell_water",
+      "cell": [
+        18,
+        3
+      ],
+      "kind": "examine",
+      "label": "The end of the jetty, over deep water",
+      "model": "rowboat",
+      "dialogue": "lake_zarovich/bell_under_the_lake:water",
+      "when": "quest.bell_under_the_lake"
     }
   ],
   "containers": [
@@ -550,5 +574,652 @@
   "narration": {
     "enter": "enter:lake_zarovich"
   },
-  "rest": "risky"
+  "rest": "risky",
+  "encounters": [
+    {
+      "id": "greytooth_hunt",
+      "trigger": "dialogue",
+      "when": "not flag.szoldar_turned and not flag.szoldar_stays and level >= 8",
+      "text": "Old Greytooth comes down off the hill trail with his pack fanned out behind him, and the howl goes up from every throat at once.",
+      "monsters": [
+        {
+          "monster": "old_greytooth",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            14,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            10,
+            19
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            12,
+            22
+          ],
+          "name": "Castle Wolf"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            31,
+            16
+          ],
+          "name": "Szoldar"
+        }
+      ],
+      "surprise": "",
+      "flag": "greytooth_beaten",
+      "quest": {
+        "id": "hunters_at_the_inn",
+        "stage": "hunted"
+      },
+      "withdraw": {
+        "who": "bandit_captain",
+        "at_hp_below": 25,
+        "flag": "szoldar_fled"
+      }
+    },
+    {
+      "id": "greytooth_hunt",
+      "trigger": "dialogue",
+      "when": "not (not flag.szoldar_turned and not flag.szoldar_stays) and level >= 8",
+      "text": "Old Greytooth comes down off the hill trail with his pack fanned out behind him, and the howl goes up from every throat at once.",
+      "monsters": [
+        {
+          "monster": "old_greytooth",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            14,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            10,
+            19
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            12,
+            22
+          ],
+          "name": "Castle Wolf"
+        }
+      ],
+      "surprise": "",
+      "flag": "greytooth_beaten",
+      "quest": {
+        "id": "hunters_at_the_inn",
+        "stage": "hunted"
+      }
+    },
+    {
+      "id": "greytooth_hunt",
+      "trigger": "dialogue",
+      "when": "not flag.szoldar_turned and not flag.szoldar_stays and level >= 7",
+      "text": "Old Greytooth comes down off the hill trail with his pack fanned out behind him, and the howl goes up from every throat at once.",
+      "monsters": [
+        {
+          "monster": "old_greytooth",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            14,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            10,
+            19
+          ]
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            31,
+            16
+          ],
+          "name": "Szoldar"
+        }
+      ],
+      "surprise": "",
+      "flag": "greytooth_beaten",
+      "quest": {
+        "id": "hunters_at_the_inn",
+        "stage": "hunted"
+      },
+      "withdraw": {
+        "who": "bandit_captain",
+        "at_hp_below": 25,
+        "flag": "szoldar_fled"
+      }
+    },
+    {
+      "id": "greytooth_hunt",
+      "trigger": "dialogue",
+      "when": "not (not flag.szoldar_turned and not flag.szoldar_stays) and level >= 7",
+      "text": "Old Greytooth comes down off the hill trail with his pack fanned out behind him, and the howl goes up from every throat at once.",
+      "monsters": [
+        {
+          "monster": "old_greytooth",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            14,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            10,
+            19
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "greytooth_beaten",
+      "quest": {
+        "id": "hunters_at_the_inn",
+        "stage": "hunted"
+      }
+    },
+    {
+      "id": "greytooth_hunt",
+      "trigger": "dialogue",
+      "when": "not flag.szoldar_turned and not flag.szoldar_stays",
+      "text": "Old Greytooth comes down off the hill trail with his pack fanned out behind him, and the howl goes up from every throat at once.",
+      "monsters": [
+        {
+          "monster": "old_greytooth",
+          "cell": [
+            18,
+            21
+          ],
+          "hp": 150
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            14,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            20
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            16,
+            22
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            20,
+            22
+          ]
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            31,
+            16
+          ],
+          "name": "Szoldar"
+        }
+      ],
+      "surprise": "",
+      "flag": "greytooth_beaten",
+      "quest": {
+        "id": "hunters_at_the_inn",
+        "stage": "hunted"
+      },
+      "withdraw": {
+        "who": "bandit_captain",
+        "at_hp_below": 25,
+        "flag": "szoldar_fled"
+      }
+    },
+    {
+      "id": "greytooth_hunt",
+      "trigger": "dialogue",
+      "when": "not (not flag.szoldar_turned and not flag.szoldar_stays)",
+      "text": "Old Greytooth comes down off the hill trail with his pack fanned out behind him, and the howl goes up from every throat at once.",
+      "monsters": [
+        {
+          "monster": "old_greytooth",
+          "cell": [
+            18,
+            21
+          ],
+          "hp": 150
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            14,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            20
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            16,
+            22
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            20,
+            22
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "greytooth_beaten",
+      "quest": {
+        "id": "hunters_at_the_inn",
+        "stage": "hunted"
+      }
+    },
+    {
+      "id": "drowned_landing",
+      "trigger": "dialogue",
+      "when": "level >= 9",
+      "text": "The water along the shore stands up in the shape of people: the drowned of Pescari, grey and swollen, in their Sunday clothes, and behind them a tall shape in a priest's black lifting a hand like a man ringing a bell.",
+      "monsters": [
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            9
+          ],
+          "name": "The Bellringer of Pescari"
+        },
+        {
+          "monster": "water_elemental",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "The Lake's Undertow"
+        },
+        {
+          "monster": "water_elemental",
+          "cell": [
+            12,
+            9
+          ],
+          "name": "The Lake's Undertow"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            14,
+            9
+          ],
+          "name": "A Drowned Bride"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            8,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            26,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            2,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            31,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            5,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            10,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            22,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            28,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            24,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        }
+      ],
+      "surprise": "",
+      "flag": "drowned_beaten",
+      "quest": {
+        "id": "bell_under_the_lake",
+        "stage": "risen"
+      }
+    },
+    {
+      "id": "drowned_landing",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "The water along the shore stands up in the shape of people: the drowned of Pescari, grey and swollen, in their Sunday clothes, and behind them a tall shape in a priest's black lifting a hand like a man ringing a bell.",
+      "monsters": [
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            9
+          ],
+          "name": "The Bellringer of Pescari"
+        },
+        {
+          "monster": "water_elemental",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "The Lake's Undertow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            8,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            26,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            2,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            31,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            5,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            10,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            22,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            28,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            24,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        }
+      ],
+      "surprise": "",
+      "flag": "drowned_beaten",
+      "quest": {
+        "id": "bell_under_the_lake",
+        "stage": "risen"
+      }
+    },
+    {
+      "id": "drowned_landing",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "The water along the shore stands up in the shape of people: the drowned of Pescari, grey and swollen, in their Sunday clothes, and behind them a tall shape in a priest's black lifting a hand like a man ringing a bell.",
+      "monsters": [
+        {
+          "monster": "wight",
+          "cell": [
+            17,
+            9
+          ],
+          "name": "The Bellringer of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            8,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            26,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            5,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            10,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            22,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            28,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            24,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        }
+      ],
+      "surprise": "",
+      "flag": "drowned_beaten",
+      "quest": {
+        "id": "bell_under_the_lake",
+        "stage": "risen"
+      }
+    }
+  ]
 }

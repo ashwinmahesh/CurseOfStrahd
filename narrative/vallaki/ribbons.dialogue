@@ -1,0 +1,179 @@
+# Ribbons (side quest, docs/story/side_quests.md): Daciana the ribbon girl writes down everyone in Vallaki who won't
+# wear a festival ribbon, and leaves the list under the lamp on Main Street at dusk. Watchman Dobre collects it and
+# sells it three times: to the Baron, who fills the stocks; to Lady Wachter, whose book club visits whoever's in them;
+# and to Arrigal's riders, for the castle. Reached from Daciana (townsfolk:ribbon_refuse), Anton in the stocks
+# (townsfolk:grumbler_now) or Master Costel. Every line here is unvoiced for now.
+
+# --- Daciana, by day in the square (townsfolk:ribbon_girl jumps here) ---
+
+~ daciana
+if flag.ribbons_resolved
+-> daciana_after
+endif
+if flag.ribbons_list_known
+Daciana: The lamp on Main Street. Every dusk. Please don't make me watch.
+-> END
+endif
+Daciana: A ribbon? They're free. They're for the sun.
+* Who wants to know, Daciana? Who reads what you write down? -> who
+* [if not flag.ribbon_taken_once] (Take a ribbon.) -> take
+* Not today. -> END
+
+~ take
+set ribbon_taken_once
+Narrator: She ties it on with cold, quick fingers, and the smile goes out of her eyes for a moment, with relief.
+-> daciana
+
+~ who
+Daciana [afraid]: I don't know. That's the truth; I don't. I write down who won't wear one, and at dusk I fold the paper under the lamp on Main Street, and in the morning it's gone, and there's a coin there instead.
+Daciana: And my brother stays out of the stocks. That's the other half of it. Nobody said it. Nobody had to.
+* [Persuasion DC 13] Then stop. We'll see your brother comes to no harm. -> stop_ok | stop_fail
+* [Insight DC 12] (Is she telling the whole of it?) -> whole | whole_missed
+* We'll see who comes for it. -> watch
+
+~ whole
+Narrator: She is. And she's also counting, the way frightened people do: the names on her lists, and the faces in the stocks the next morning. They're the same faces.
+-> watch
+
+~ whole_missed
+Narrator: A girl with a basket of yellow ribbon and a pencil behind her ear. If she's hiding anything, it's hiding her.
+-> watch
+
+~ stop_ok
+Daciana: If you're with me. If you're really with me. Then tonight I'll leave the paper blank, and we'll see who's angry about it.
+set ribbons_list_blank
+-> watch
+
+~ stop_fail
+Daciana: You don't know what you're asking. You'll leave in a week. I live here.
+-> watch
+
+~ watch
+set ribbons_list_known
+quest ribbons asked
+Daciana: The lamp on Main Street, by the cooper's. At dusk. Please don't make me watch.
+-> END
+
+# --- The lamp on Main Street (prop ribbon_lamp) ---
+
+~ lamp
+if flag.ribbons_resolved or flag.dobre_beaten
+Narrator: An ordinary lamp. Nothing under it but mud and somebody's dropped yellow ribbon.
+-> END
+endif
+if not flag.ribbons_list_known
+Narrator: A lamp post on Main Street, with a loose stone at its foot that's been lifted a great many times.
+-> END
+endif
+Narrator: A lamp post on Main Street, with a loose stone at its foot. Under it, folded small, a paper of names in a careful round hand.
+* Wait for whoever comes for it, after dusk. -> wait
+* Leave it. -> END
+
+~ wait
+time until 20
+Narrator: The lamps come on, one by one, all down the street. The second bell rings. The square empties the way water leaves a basin.
+Narrator: Then a man in the Baron's colours comes along the row, smiling the regulation smile, lifts the stone without looking, and pockets the paper. Watchman Dobre.
+* [Stealth DC 13] (Follow him and see where it goes.) -> follow | spotted
+* Watchman. A word about that paper. -> confront
+
+~ spotted
+Narrator: He stops at the corner without turning round.
+Watchman Dobre: You can come out. Nobody walks that quietly in Vallaki unless they're up to something, and nobody's allowed to be up to anything. Lads!
+-> fight
+
+~ confront
+Watchman Dobre: Watch business, friend. Lists of the cheerless, for the Baron's attention. It's the law. Everything's the law, this week.
+* [Intimidation DC 14] Whose business, exactly? Say it, or the Baron hears you sell it twice. -> admits | denies
+* (Draw steel.) -> fight
+
+~ denies
+Watchman Dobre: Twice? I don't know what you mean, and in about one breath neither will you. Lads!
+-> fight
+
+~ admits
+set ribbons_twist_known
+quest ribbons sold_three_times
+Watchman Dobre: Twice? Three times, friend, if you must count. One copy to the Baron's clerk; that's the stocks. One to the back door of Wachterhaus; her ladies visit whoever's in the stocks and tell them who put them there. And one to a gentleman on a black horse at the west gate.
+Watchman Dobre: The unhappy ones, you see. The castle likes a list of the unhappy. They're the ones who open their doors.
+Watchman Dobre [angry]: And now you know, which is a shame for both of us. Lads!
+-> fight
+
+~ follow
+set ribbons_twist_known
+quest ribbons sold_three_times
+Narrator: You follow him at a distance. He stops at the mansion's kitchen door, and a clerk takes a copy of the paper without a word.
+Narrator: He stops at the back gate of Wachterhaus, and a gloved hand takes another.
+Narrator: Then he goes to the west gate, which should be shut, and isn't. A rider on a black horse waits outside it with his hood up. Dobre holds out the last copy.
+* (Step out now, before the rider has it.) -> fight_gate
+* [if flag.ribbons_list_blank] (Let him hand over a blank page, and watch.) -> blank
+
+~ blank
+Narrator: The rider unfolds it, holds it to the lamp, and turns it over. Then he looks at Dobre for a long time, and Dobre stops smiling.
+Narrator: The rider rides away without a word. Dobre turns round, and sees you.
+Watchman Dobre: You. You did that. Do you know what he does with a man who brings him nothing?
+-> fight_gate
+
+~ fight
+Narrator: Two watchmen come round the corner at a run, and they aren't smiling either.
+combat ribbons_street
+
+~ fight_gate
+Narrator: The rider wheels his horse in the gateway and comes back in, drawing a sabre. Dobre's lads come running up the street from the guardhouse.
+combat ribbons_gate
+
+# --- After the fight (Daciana comes to the party next morning; the prop at the lamp, or the square) ---
+
+~ after
+if flag.ribbons_resolved
+-> daciana_after
+endif
+Daciana [afraid]: I heard the fighting from the bakery. Is it... is it over? Is he...
+if not flag.ribbons_twist_known
+set ribbons_twist_known
+Narrator: In Dobre's satchel there are three copies of tonight's list, not one. Each is marked in the corner in his hand: a crown for the Baron's clerk, a W, and a little black horse.
+Daciana: Three. He sold them three times. The Baron, and Lady Wachter, and... who rides a black horse?
+interject tag:blunt: Arrigal. The castle's man at the camp. The castle buys lists of who's unhappy.
+endif
+quest ribbons lists_taken
+Narrator: In Dobre's satchel: a bundle of Daciana's lists going back to spring, a purse of old gold with a profile on every coin, and a book he took off somebody before the stocks.
+gold +250
+give arcane_grimoire_plus_2
+Narrator: And three months of names. Every one of them a person who wouldn't smile.
+* Give the lists to Father Lucian and Urwin. Let the town see what was done to it. -> to_town
+* Take them to the Baron. Dobre can stand in his own stocks. -> to_baron
+* Burn them, here, where Daciana can see. -> burn
+
+~ to_town
+set ribbons_resolved
+set ribbons_ending = "town"
+quest ribbons done
+Narrator: Lucian reads them at the church door the next morning, slowly, name by name. Urwin stands beside him with his arms folded. By noon the stocks are empty, and nobody in Vallaki wears a ribbon.
+approve godrick_pendlebrook +2 thistle +2 liriel_dawnsong +2 wren_featherfoot +1: You gave Vallaki back the names that were sold out from under it
+-> END
+
+~ to_baron
+set ribbons_resolved
+set ribbons_ending = "baron"
+quest ribbons done
+Narrator: The Baron reads them twice, purple to the ears. "Selling my lists? To that woman? To the castle?" Dobre is in the stocks by noon, in a yellow ribbon, and the Baron sends round a purse "for loyal citizens", which is you.
+gold +100
+approve kip_smudgewick +1 godrick_pendlebrook -1 thistle -1: You took the lists to the Baron
+-> END
+
+~ burn
+set ribbons_resolved
+set ribbons_ending = "burned"
+quest ribbons done
+Narrator: Daciana watches the names curl and go, every one, and doesn't say anything until the last of it is ash. Then she takes the ribbon off her own sleeve and drops it in the fire as well.
+approve wren_featherfoot +2 liriel_dawnsong +1 thistle +1: You burned Vallaki's lists in front of the girl who wrote them
+-> END
+
+~ daciana_after
+if flag.ribbons_ending == "town"
+Daciana: I sell bread now. Nobody has to wear bread.
+elif flag.ribbons_ending == "baron"
+Daciana: The Baron says I'm to go on handing out ribbons and leave the counting to him. I don't write anything down any more. I don't think he can read my hand anyway.
+else
+Daciana: I still give them out, when people ask. Hardly anybody asks.
+endif
+-> END

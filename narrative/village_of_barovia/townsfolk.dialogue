@@ -144,6 +144,17 @@ Petre: Everybody but Luca.
 elif flag.luca_awake
 Vasile: Grigore's lad is up and about. Won't go near the west road after dinner, though. Won't even look at it.
 endif
+if not quest.last_muster and quest.polite_caller and quest.cut_after_noon
+set muster_rumor
+quest last_muster rumored
+Petre: And the riders. Every night, out at the gates, after midnight. Bones on horses.
+Vasile: You can hear them from the east road if the wind's right. Lances knocking. Somebody giving orders.
+Petre: Nobody goes to see. That's the one rumour we don't take turns on.
+elif flag.bone_marshal_beaten
+Vasile: No riders at the gates any more. The wind's quiet. I don't like it.
+Petre: You didn't like the riders.
+Vasile: I knew where I was with the riders.
+endif
 if not flag.burgomaster_buried
 Vasile: And the burgomaster. Heart.
 Petre: Wasn't his heart.

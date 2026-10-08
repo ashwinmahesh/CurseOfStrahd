@@ -8,8 +8,8 @@ extends Node
 ## screen pass: no outlines, mist, land fade or grade, to see the plants' own colours), LAND_BENCH=1 (time the
 ## place with each group of plants hidden in turn, round after round, instead of shooting it), LAND_NO_FLORA=1 (the
 ## Modern look without its trees and plants: the old trees, for before-and-after pairs), LAND_NO_RELIEF=1 (without
-## the shaped ground), LAND_CLAY=1 (the shaped ground in plain clay), LAND_NO_DOF=1 (no depth of field, to judge the
-## vistas without the far blur), LAND_GIF=n (n frames a
+## the shaped ground), LAND_CLAY=1 (the shaped ground in plain clay), LAND_NO_DOF=1 (no depth blur, to judge the
+## vistas without the edge blur), LAND_GIF=n (n frames a
 ## tenth of a second apart, numbered, to show the wind).
 ## The road and village shots stand the party where the light lane's look_capture does, so frames compare across lanes.
 
@@ -134,8 +134,8 @@ func _build(shot: Dictionary) -> void:
 		view.rig.global_position = Vector3(float(at[0]), 0.0, float(at[1]))
 	if OS.get_environment("LAND_RAW") != "":
 		view.post.visible = false
-	if OS.get_environment("LAND_NO_DOF") != "" and view.rig.camera.attributes is CameraAttributesPractical:
-		(view.rig.camera.attributes as CameraAttributesPractical).dof_blur_far_enabled = false
+	if OS.get_environment("LAND_NO_DOF") != "":
+		GameSettings.set_value("depth_blur", false, false)   # cache only: never the owner's settings file
 	if OS.get_environment("LAND_CLAY") != "" and view.atmosphere.land != null:
 		# The shaped ground in plain clay, to see its shape without the texture.
 		var clay := Look.cel("stone")

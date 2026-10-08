@@ -1,0 +1,141 @@
+{
+  "id": "bone_marshal",
+  "name": "The Bone Marshal",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Last Muster, docs/story/side_quests.md), built from the 2025 Monster Manual's knight (Multiattack, Parry) and wight (necrotic blade, resistances), scaled to CR 8 with legendary actions."
+  },
+  "size": "large",
+  "type": "undead",
+  "tags": [
+    "boss",
+    "skeleton"
+  ],
+  "alignment": "lawful evil",
+  "art": "phantom_warrior",
+  "ac": 18,
+  "ac_note": "plate, and the bones of his horse",
+  "initiative": 2,
+  "hp": {
+    "average": 150,
+    "dice": "20d10+40"
+  },
+  "speed": {
+    "walk": 60
+  },
+  "abilities": {
+    "str": 20,
+    "dex": 12,
+    "con": 15,
+    "int": 11,
+    "wis": 14,
+    "cha": 16
+  },
+  "saves": {
+    "str": 9,
+    "con": 6,
+    "wis": 6
+  },
+  "skills": {
+    "athletics": 9,
+    "perception": 6
+  },
+  "resistances": [
+    "necrotic"
+  ],
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "exhaustion",
+    "frightened",
+    "poisoned"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 16,
+  "languages": [
+    "Common"
+  ],
+  "cr": 8,
+  "xp": 3900,
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When the Bone Marshal fails a saving throw, he can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "grave_blade",
+          "count": 2
+        }
+      ],
+      "summary": "Two Grave Blade attacks.",
+      "text": "The Bone Marshal makes two Grave Blade attacks."
+    },
+    {
+      "id": "grave_blade",
+      "name": "Grave Blade",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 12,
+          "dice": "1d12+6",
+          "type": "slashing"
+        },
+        {
+          "average": 4,
+          "dice": "1d8",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "A cavalry blade swung from the saddle, cold with the grave.",
+      "text": "Hit: 12 (1d12 + 6) Slashing damage plus 4 (1d8) Necrotic damage.",
+      "weapon": true
+    }
+  ],
+  "reactions": [
+    {
+      "id": "parry",
+      "name": "Parry",
+      "kind": "special",
+      "summary": "Reaction: +3 AC against one melee attack that would hit him, while holding a weapon.",
+      "trigger": "The Bone Marshal is hit by a melee attack roll while holding a weapon.",
+      "ac_bonus": 3
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 3,
+    "options": [
+      {
+        "id": "charge",
+        "name": "Charge",
+        "cost": 2,
+        "action": "grave_blade",
+        "summary": "Rides at someone and makes one Grave Blade attack (the engine only strikes)."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regions": [
+    "into_the_mists"
+  ],
+  "ai_profile": "brute",
+  "summary": "The bones of the count's vanguard marshal and his warhorse, grown together over four hundred years of holding the valley's gate: a long blade cold with the grave, a parry, and a charge between your turns."
+}

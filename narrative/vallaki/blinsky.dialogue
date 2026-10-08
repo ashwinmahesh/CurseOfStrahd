@@ -8,6 +8,13 @@ Blinsky [sad]: Customers. Real ones. Welcome to Blinsky Toys, where every toy is
 else
 Blinsky [sad]: You came back. Nobody comes back. Piccolo, put the kettle on. No, the other kettle. The one without the frog in it.
 endif
+if guest:pidlwick_ii and not flag.pidlwick_met_blinsky
+-> vallaki/toymakers_masterpiece:door
+endif
+if flag.pidlwick_with_blinsky and not flag.pidlwick_shop_seen
+set pidlwick_shop_seen
+-> vallaki/toymakers_masterpiece:shop_after
+endif
 if guest:ireena and not flag.izek_dolls_seen
 -> doll_lady
 endif
@@ -28,6 +35,7 @@ interject tag:blunt: That's two men in this valley now. I'm starting to dislike 
 * Show us your wares. -> wares
 * Who buys toys in Barovia? -> customers
 * [if flag.izek_dolls_seen] Tell us about Izek's dolls. -> dolls
+* [if not quest.toymakers_masterpiece or quest.toymakers_masterpiece == rumored] Did you ever make a toy that walks? -> vallaki/toymakers_masterpiece:dream
 * [Performance DC 12] Try to make him laugh. -> laugh_ok | laugh_fail
 * Goodbye. -> bye
 

@@ -335,6 +335,181 @@
       "id": "nelu_home",
       "type": "bool",
       "summary": "Nelu is back at the Tser Pool camp and Tobar has paid the party."
+    },
+    {
+      "id": "ribbons_rumor",
+      "type": "bool",
+      "summary": "Daciana or Anton let slip that someone reads the lists of who won't wear a festival ribbon (Ribbons)."
+    },
+    {
+      "id": "ribbon_taken_once",
+      "type": "bool",
+      "summary": "The party took one of Daciana's ribbons."
+    },
+    {
+      "id": "ribbons_list_known",
+      "type": "bool",
+      "summary": "Daciana told the party she leaves her list under the lamp on Main Street at dusk."
+    },
+    {
+      "id": "ribbons_list_blank",
+      "type": "bool",
+      "summary": "Daciana agreed to leave tonight's list blank."
+    },
+    {
+      "id": "ribbons_twist_known",
+      "type": "bool",
+      "summary": "The party knows Dobre sells each list three times: the Baron, Wachterhaus and the castle's rider."
+    },
+    {
+      "id": "dobre_beaten",
+      "type": "bool",
+      "summary": "Watchman Dobre and his lads were beaten (encounters ribbons_street or ribbons_gate)."
+    },
+    {
+      "id": "ribbons_resolved",
+      "type": "bool",
+      "summary": "The lists were dealt with and Ribbons is over."
+    },
+    {
+      "id": "ribbons_ending",
+      "type": "string",
+      "summary": "What became of the lists: town (Lucian and Urwin), baron (the Baron) or burned."
+    },
+    {
+      "id": "hunters_rumor",
+      "type": "bool",
+      "summary": "Urwin told the party about Szoldar and Yevgeni, the hunters in the corner (The Hunters at the Inn)."
+    },
+    {
+      "id": "hunt_trap_known",
+      "type": "bool",
+      "summary": "Yevgeni told the party that Arrigal pays his father to bring strong strangers to Old Greytooth."
+    },
+    {
+      "id": "szoldar_turned",
+      "type": "bool",
+      "summary": "Szoldar agreed to shoot the wolf, not the party."
+    },
+    {
+      "id": "szoldar_stays",
+      "type": "bool",
+      "summary": "Szoldar stayed at the inn instead of going to the hunt."
+    },
+    {
+      "id": "szoldar_fled",
+      "type": "bool",
+      "summary": "Szoldar fled the fight at the lake when he was hurt (withdraw in greytooth_hunt)."
+    },
+    {
+      "id": "greytooth_beaten",
+      "type": "bool",
+      "summary": "Old Greytooth and his pack were killed at the Lake Zarovich landing (encounter greytooth_hunt)."
+    },
+    {
+      "id": "greytooth_paid",
+      "type": "bool",
+      "summary": "Yevgeni paid the party the Baron's bounty and gave them the horn."
+    },
+    {
+      "id": "drowned_defended",
+      "type": "bool",
+      "summary": "The party stood between the drowned of Pescari and the man they came for (The Bell Under the Lake)."
+    },
+    {
+      "id": "bluto_given",
+      "type": "bool",
+      "summary": "The party stood aside and let the drowned take Bluto into the lake."
+    },
+    {
+      "id": "drowned_beaten",
+      "type": "bool",
+      "summary": "The drowned of Pescari were driven back under the water (encounter drowned_landing)."
+    },
+    {
+      "id": "bell_silenced",
+      "type": "bool",
+      "summary": "The bell under Lake Zarovich was cut loose or rung for the dead; the quest is over."
+    },
+    {
+      "id": "muster_rumor",
+      "type": "bool",
+      "summary": "Zora or Vasile and Petre told the party about the riders who go east to the gates every night (The Last Muster)."
+    },
+    {
+      "id": "muster_met",
+      "type": "bool",
+      "summary": "The party has met the Last Muster at the Gates of Barovia."
+    },
+    {
+      "id": "riders_stood_down",
+      "type": "bool",
+      "summary": "The party convinced the vanguard's riders that their war is over; only the marshal and his lieutenants fight."
+    },
+    {
+      "id": "bone_marshal_beaten",
+      "type": "bool",
+      "summary": "Marshal Dragomir was beaten at the gate (encounter bone_marshal)."
+    },
+    {
+      "id": "muster_paid",
+      "type": "bool",
+      "summary": "The party took the Marshal's blade and the vanguard's pay chest."
+    },
+    {
+      "id": "billy_rumor",
+      "type": "bool",
+      "summary": "Stelian the goatherd told the party the one-horned billy turned up with a ring on his horn (The One-Horned Billy)."
+    },
+    {
+      "id": "billy_ring_read",
+      "type": "bool",
+      "summary": "The party read the ring on the billy's horn: D. AND V. BEREZ."
+    },
+    {
+      "id": "billy_eyes_seen",
+      "type": "bool",
+      "summary": "The party saw the man behind the billy's eyes (Insight, or Speak with Animals)."
+    },
+    {
+      "id": "dragos_freed",
+      "type": "bool",
+      "summary": "The curse is off the billy: he's Dragos, the ferryman of Berez."
+    },
+    {
+      "id": "rag_queen_beaten",
+      "type": "bool",
+      "summary": "The Rag Queen was burned in Berez's scarecrow field (encounter rag_queen)."
+    },
+    {
+      "id": "rag_queen_paid",
+      "type": "bool",
+      "summary": "Dragos gave the party the brides' dowries and the dancing sword."
+    },
+    {
+      "id": "pidlwick_willing",
+      "type": "bool",
+      "summary": "Pidlwick II agreed to meet Blinsky the toymaker and travels with the party to Vallaki (The Toymaker's Masterpiece)."
+    },
+    {
+      "id": "pidlwick_met_blinsky",
+      "type": "bool",
+      "summary": "Pidlwick II met Blinsky in his shop; the scene at the bottom of Blinsky's stair has played (The Toymaker's Masterpiece)."
+    },
+    {
+      "id": "blinsky_told",
+      "type": "bool",
+      "summary": "The party told Blinsky what Pidlwick II did to the first Pidlwick; Blinsky is building a ramp (The Toymaker's Masterpiece)."
+    },
+    {
+      "id": "pidlwick_with_blinsky",
+      "type": "bool",
+      "summary": "Pidlwick II left the party to live at Blinsky Toys; he's in the shop, not on the castle stair (The Toymaker's Masterpiece)."
+    },
+    {
+      "id": "pidlwick_shop_seen",
+      "type": "bool",
+      "summary": "The party has seen Pidlwick II juggling in Blinsky's window once (The Toymaker's Masterpiece)."
     }
   ]
 }

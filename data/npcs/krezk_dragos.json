@@ -1,0 +1,18 @@
+{
+  "id": "krezk_dragos",
+  "name": "Dragos",
+  "title": "Ferryman of Berez",
+  "summary": "A big bearded boatman of Berez whom Baba Lysaga turned into a goat for refusing to row her; he swam the river and lived a year in Krezk's pens with his wife's ring on his horn.",
+  "portrait": "tough",
+  "sprite": "tough",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}
