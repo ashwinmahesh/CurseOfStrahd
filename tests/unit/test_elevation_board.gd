@@ -120,3 +120,9 @@ func test_the_mist_lies_on_the_hill() -> void:
 	assert_between(img.get_pixelv(crest).r, y - 0.01, y + 0.01, "the crest's own height")
 	assert_true(y > 8.0, "45 ft up the hill")
 	assert_true(b.shaped(), "so the mist follows the ground there (Atmosphere._apply_static)")
+
+
+func test_high_ground_over_a_drop_shows_rock() -> void:
+	var b := _board(["...  ", "...  "], ["334..", "334.."])
+	assert_true(b.floor_box(Vector2i(2, 0)).has_node("Cliff"), "20 ft up over an empty square: a rock face down to it")
+	assert_false(b.floor_box(Vector2i(0, 0)).has_node("Cliff"), "ground with nothing below it keeps its own sides")
