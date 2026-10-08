@@ -10,7 +10,8 @@
 # runs once more, and only the second pass's output counts. An error that's real is in both.
 # One import per folder at a time: a second one waits for the first (.godot/import.lock), since two at once race on
 # .godot (the owner's make run and the build's make ci in the main folder, 2026-10-08). Ctrl-C stops the import at
-# once: the windowed editor otherwise finishes importing before it notices.
+# once: the windowed editor otherwise finishes importing before it notices. A Godot stopped from outside (kill, or
+# Ctrl-C in another terminal) isn't imported again, headless or as a second pass: the import ends there.
 set -uo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
 godot="${GODOT:-/Applications/Godot.app/Contents/MacOS/Godot}"
@@ -49,12 +50,17 @@ stop() {
 trap stop INT TERM
 
 ## Waits its turn: the lock is a folder (made atomically), holding the PID of the import that has it. One left by an
-## import that was killed is cleared.
+## import that was killed is cleared, and so is one whose PID isn't importing this folder (a lock cloned along with
+## .godot from another folder, or a PID reused since).
+here="$(pwd -P)"
+holds() {
+  kill -0 "$1" 2> /dev/null && [ "$(lsof -a -p "$1" -d cwd -Fn 2> /dev/null | sed -n 's/^n//p')" = "$here" ]
+}
 mkdir -p .godot
 said=""
 until mkdir "$lock" 2> /dev/null; do
   holder="$(cat "$lock/pid" 2> /dev/null || true)"
-  if [ -n "$holder" ] && ! kill -0 "$holder" 2> /dev/null; then
+  if [ -n "$holder" ] && ! holds "$holder"; then
     rm -f "$lock/pid"
     rmdir "$lock" 2> /dev/null || true
     continue
@@ -76,13 +82,16 @@ run() {
   return $status
 }
 
+## Whether an exit status is Godot stopped from outside: HUP, INT, KILL or TERM (a crash is another signal).
+stopped() { case "$1" in 129|130|137|143) return 0 ;; *) return 1 ;; esac; }
+
 ## One import into $log: windowed (off screen) where it can, else headless. Exit status as Godot's.
 import_once() {
   if [ -z "${IMPORT_HEADLESS:-}" ] && [ "$(launchctl managername 2>/dev/null)" = "Aqua" ]; then
     run env NOFOCUS_HIDE=1 GODOT="$godot" tools/godot --path . --import --audio-driver Dummy
     local status=$?
-    if [ $status -eq 0 ]; then
-      return 0
+    if [ $status -eq 0 ] || stopped $status; then
+      return $status
     fi
     echo "make import: the import with a hidden window failed (exit $status); importing headless instead"
   fi
@@ -91,6 +100,11 @@ import_once() {
 
 import_once
 status=$?
+if stopped $status; then
+  cat "$log"
+  echo "make import: Godot was stopped (signal $((status - 128))) before the import finished; run make import again"
+  exit $status
+fi
 if [ $status -ne 0 ] || grep -qE "$ERRORS" "$log"; then
   echo "make import: the first pass logged errors; importing again, and the second pass is what counts"
   import_once
