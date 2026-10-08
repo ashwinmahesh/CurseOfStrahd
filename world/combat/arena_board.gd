@@ -34,12 +34,19 @@ static func build(grid_: CombatGrid, theme_: String = "shrine_yard", place_: Str
 	return b
 
 
+## The top of the floor drawn on a square (world units): its height, less what a raised prop stands on it (a podium's
+## or a tree's squares: the ground under the prop, which draws the rest; CombatGrid.raised).
 func floor_y(cell: Vector2i) -> float:
-	return grid.height(cell) / float(CombatGrid.FEET)
+	return (grid.height(cell) - int(grid.raised.get(cell, 0))) / float(CombatGrid.FEET)
 
 
+## The middle of a creature's squares on the ground as drawn: on natural ground its smoothed slope (ground_y), which
+## lies within a few feet of the rules' heights.
 func cell_center(cell: Vector2i, size_cells: int = 1) -> Vector3:
-	return grid.world_center(cell, size_cells)
+	var p := grid.world_center(cell, size_cells)
+	if not _corner_h.is_empty() and grid.has_flag(cell, CombatGrid.NATURAL):
+		p.y = ground_y(Vector2(p.x, p.z))
+	return p
 
 
 const INTERIORS := ["manor", "tavern", "shop", "townhouse", "church", "attic", "inn", "house", "tent"]
@@ -164,6 +171,7 @@ func _build() -> void:
 		if str(_look.get("rock_walls", "")) != "":
 			_rock_tex = Look.cel_textured(str(_look["rock_walls"]))
 	_floor_mat = grass
+	_plan_terrain()
 	if place != "" and Compendium.shared().has("locations", place):
 		SetDressing.reserve(self, Compendium.shared().get_entry("locations", place))
 		_plan_rooms(Compendium.shared().get_entry("locations", place))
@@ -184,20 +192,27 @@ func _build() -> void:
 			if (f & CombatGrid.WALL) != 0:
 				var first := get_child_count()
 				_wall(c)
+				if (f & CombatGrid.NATURAL) != 0:
+					_lift(first, cell_center(c).y)   # a tree or a rock stands on the hill
 				if not _has_ground.has(c):
 					_dress(c, first)
+					if h > 0.0 and (f & CombatGrid.NATURAL) != 0 and not house_cells.has(c):
+						_floors[c] = _terrain_column("Ground", c, _floor_mat)   # a wall on a hill stands on the hill
 				continue
 			var mat: Material = grass
 			if (f & CombatGrid.DIFFICULT) != 0:
 				mat = mud
-			elif h > 0.0:
-				mat = dais
+			elif h > 0.0 and (f & CombatGrid.NATURAL) == 0:
+				mat = dais   # a built dais or ledge; natural ground is the place's own ground at any height
 			elif (x + z * 3) % 7 < 3:
 				mat = stone
 			var room := _room_at(c)
 			if room.has("floor") and (f & CombatGrid.DIFFICULT) == 0 and h <= 0.0:
 				mat = room["floor"] as Material
-			_floors[c] = _box("Floor", Vector3(1, 0.2 + h, 1), Vector3(x + 0.5, (h - 0.2) / 2.0, z + 0.5), mat)
+			if (f & CombatGrid.NATURAL) != 0:
+				_floors[c] = _terrain_column("Floor", c, mat)
+			else:
+				_floors[c] = _box("Floor", Vector3(1, 0.2 + h, 1), Vector3(x + 0.5, (h - 0.2) / 2.0, z + 0.5), mat)
 			var dressed := get_child_count()
 			if (f & CombatGrid.DIFFICULT) != 0:
 				_brambles(c)
@@ -247,6 +262,13 @@ var _has_ground: Dictionary = {}     ## wall squares with a ground box of their 
 var _cleared: Dictionary = {}        ## cell -> the floor box put under a wall square a prop took
 var _floors: Dictionary = {}         ## cell -> its floor box (a stairwell down opens it)
 var _wagon_cells := {}      ## camp: '#' blocks inside the map are wagons, cell -> the block's center
+## Natural ground's corner heights (world units), four per square clockwise from its north-west corner
+## (_plan_terrain); empty when the map has none.
+var _corner_h := PackedFloat32Array()
+var _cliff_mat: Material = null
+const _CORNERS: Array[Vector2i] = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, 1)]
+## The side under each top edge (north, east, south, west), as the step to the square beyond it.
+const _SIDES: Array[Vector2i] = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
 var _wagon_drawn := {}
 
 
@@ -350,7 +372,7 @@ func _wall_room(c: Vector2i) -> Dictionary:
 ## Rock instead of trees (catalog place_looks "rock_walls"): a craggy column of cliff on each wall square, taller at
 ## the map's edge, so mountains and caves are walled by rock.
 func _rock(c: Vector2i) -> void:
-	_box("Ground", Vector3(1, 0.2, 1), Vector3(c.x + 0.5, -0.1, c.y + 0.5), _floor_mat)
+	_ground_box("Ground", c, _floor_mat)
 	_has_ground[c] = true
 	var first := get_child_count()
 	var h := (3.2 if _on_border(c) else 2.2) + _rng.randf_range(-0.6, 0.6)
@@ -442,9 +464,8 @@ func _dress(c: Vector2i, from: int) -> void:
 func clear_cell(c: Vector2i) -> void:
 	for n: Node3D in dressing.get(c, []):
 		n.visible = false
-	if grid.has_flag(c, CombatGrid.WALL) and not _has_ground.has(c) and not _cleared.has(c):
-		var h := floor_y(c)
-		_cleared[c] = _box("Floor", Vector3(1, 0.2 + h, 1), Vector3(c.x + 0.5, (h - 0.2) / 2.0, c.y + 0.5), _floor_mat)
+	if grid.has_flag(c, CombatGrid.WALL) and not _has_ground.has(c) and not _cleared.has(c) and not _floors.has(c):
+		_cleared[c] = _ground_box("Floor", c, _floor_mat)
 
 
 ## The flat floor box on square `c` (null if none), and the material plain floors are drawn in: the Modern look's
@@ -507,7 +528,7 @@ func _wagon(c: Vector2i) -> void:
 			prop_sprite("wagon", Vector3(center.x + 0.5, 0.9, center.y + 0.5), 1.3)
 		return
 	# A painted vardo standing on the ground over its block of squares (sized to the block).
-	_box("Ground", Vector3(1, 0.2, 1), Vector3(c.x + 0.5, -0.1, c.y + 0.5), _floor_mat)
+	_ground_box("Ground", c, _floor_mat)
 	_has_ground[c] = true
 	if not _wagon_drawn.has(key):
 		_wagon_drawn[key] = true
@@ -620,7 +641,7 @@ func _tree(c: Vector2i) -> void:
 	var kind := "dead_tree" if _rng.randf() < 0.22 else "pine"
 	var at := Vector3(c.x + 0.5 + _rng.randf_range(-0.12, 0.12), 0.0, c.y + 0.5 + _rng.randf_range(-0.12, 0.12))
 	var size := _rng.randf_range(0.5, 0.7)
-	_box("Ground", Vector3(1, 0.2, 1), Vector3(c.x + 0.5, -0.1, c.y + 0.5), _floor_tex if _floor_tex != null else Look.cel("bog_deep"))
+	_ground_box("Ground", c, _floor_tex if _floor_tex != null else Look.cel("bog_deep"))
 	_has_ground[c] = true
 	var first := get_child_count()
 	var pick := ModelPiece.hash_cell(c)
@@ -835,6 +856,238 @@ func _lanterns() -> void:
 				flame.material_override = fm
 				add_child(flame)
 				placed += 1
+
+
+## The ground under square `c` (beneath a tree, a rock, a wagon, a prop): natural ground's sloped column, else a box up
+## to the floor.
+func _ground_box(n: String, c: Vector2i, mat: Material) -> MeshInstance3D:
+	if grid.has_flag(c, CombatGrid.NATURAL):
+		return _terrain_column(n, c, mat)
+	var h := floor_y(c)
+	return _box(n, Vector3(1, 0.2 + h, 1), Vector3(c.x + 0.5, (h - 0.2) / 2.0, c.y + 0.5), mat)
+
+
+## Raises what was built since child `from` by `dy` (a tree or a rock on a hill), leaving the ground under it be.
+func _lift(from: int, dy: float) -> void:
+	for i in range(from, get_child_count()):
+		var n := get_child(i) as Node3D
+		if n != null and not n.has_meta("terrain"):
+			n.position.y += dy
+
+
+## Natural ground (owner, 2026-10-08): a square's column from under the floor up to a top that slopes to meet its
+## natural neighbours (ground_y), shaded smooth across them: four triangles from its corners to a middle at their
+## average, so a slope runs on smoothly instead of bending at each square's own height. Where the ground drops away
+## across a cliff (CombatGrid.is_cliff) the column's side is a rock face ("Cliff", a child, so it hides with the floor).
+func _terrain_column(n: String, c: Vector2i, mat: Material) -> MeshInstance3D:
+	var h := floor_y(c)
+	var k := _corner_index(c)
+	var top: Array[Vector3] = []
+	var normals: Array[Vector3] = []
+	for i in 4:
+		top.append(Vector3(_CORNERS[i].x, _corner_h[k + i], _CORNERS[i].y))
+		normals.append(_corner_normal(c, i))
+	var mid := Vector3(0.5, _mid_y(c), 0.5)
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var rock := SurfaceTool.new()
+	rock.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var faces := 0
+	for i in 4:
+		var j := (i + 1) % 4
+		# The top: a fan round the middle, clockwise from above (Godot's front faces).
+		_vertex(st, mid, ground_normal(c))
+		_vertex(st, top[i], normals[i])
+		_vertex(st, top[j], normals[j])
+		# The side under this edge, down to below the floor; seen from outside, the edge's far corner is on the left.
+		var o := c + _SIDES[i]
+		var side := st
+		if grid.in_bounds(o) and not grid.has_flag(o, CombatGrid.VOID) and grid.is_cliff(c, o) and floor_y(o) < h:
+			side = rock
+			faces += 1
+		var out := Vector3(_SIDES[i].x, 0.0, _SIDES[i].y)
+		var a_low := Vector3(top[i].x, -0.2, top[i].z)
+		var b_low := Vector3(top[j].x, -0.2, top[j].z)
+		for v: Vector3 in [top[j], top[i], a_low, top[j], a_low, b_low]:
+			_vertex(side, v, out)
+	var mi := MeshInstance3D.new()
+	mi.name = n
+	mi.mesh = st.commit()
+	mi.position = Vector3(c.x, 0.0, c.y)
+	mi.material_override = mat
+	mi.set_meta("terrain", true)   # already at its height (_lift passes it by)
+	add_child(mi)
+	if faces > 0:
+		var face := MeshInstance3D.new()
+		face.name = "Cliff"
+		face.mesh = rock.commit()
+		face.material_override = _cliff_material()
+		mi.add_child(face)
+	return mi
+
+
+static func _vertex(st: SurfaceTool, v: Vector3, normal: Vector3) -> void:
+	st.set_normal(normal)
+	st.set_uv(Vector2(v.x, v.z) if normal.y > 0.5 else Vector2(v.x + v.z, -v.y))
+	st.add_vertex(v)
+
+
+## Rock for cliff faces: the place's own rock walls, else mountain cliff.
+func _cliff_material() -> Material:
+	if _cliff_mat == null:
+		_cliff_mat = _rock_tex if _rock_tex != null else Look.cel_textured("mountain/cliff")
+		if _cliff_mat == null:
+			_cliff_mat = Look.cel_checker("stone", "stone_deep", "ink")
+	return _cliff_mat
+
+
+## Works out natural ground's corner heights once, before anything stands on it (empty when the map has none).
+func _plan_terrain() -> void:
+	_corner_h = PackedFloat32Array()
+	var any := false
+	for z in grid.depth:
+		for x in grid.width:
+			any = any or grid.has_flag(Vector2i(x, z), CombatGrid.NATURAL)
+	if not any:
+		return
+	_corner_h.resize(grid.width * grid.depth * 4)
+	for z in grid.depth:
+		for x in grid.width:
+			var c := Vector2i(x, z)
+			for i in 4:
+				_corner_h[_corner_index(c) + i] = _corner_y(c, _CORNERS[i])
+
+
+func _corner_index(c: Vector2i) -> int:
+	return (c.y * grid.width + c.x) * 4
+
+
+## The height (world units) of corner `k` (0 or 1 on each axis) of square `c`'s natural ground: the average of the
+## squares meeting there whose ground runs on into this one's (_joined). An empty square (hillside the land draws)
+## meets the walked ground beside it at that ground's own corner, so the two never part; away from it, its corners
+## average the empty squares round them.
+func _corner_y(c: Vector2i, k: Vector2i) -> float:
+	if not grid.has_flag(c, CombatGrid.NATURAL):
+		return floor_y(c)
+	var around: Array[Vector2i] = []
+	for d: Vector2i in [Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(0, 0)]:
+		around.append(c + k + d)
+	var total := 0.0
+	var count := 0
+	if grid.has_flag(c, CombatGrid.VOID):
+		var best := INF
+		for o in around:
+			if o != c and grid.in_bounds(o) and grid.has_flag(o, CombatGrid.NATURAL) and not grid.has_flag(o, CombatGrid.VOID):
+				var y := _corner_y(o, c + k - o)
+				if best == INF or absf(y - floor_y(c)) < absf(best - floor_y(c)):
+					best = y
+		if best != INF:
+			return best
+		for o in around:
+			if grid.in_bounds(o) and grid.has_flag(o, CombatGrid.NATURAL):
+				total += floor_y(o)
+				count += 1
+		return total / count
+	for o in around:
+		if _joined(c, o):
+			total += floor_y(o)
+			count += 1
+	return total / count
+
+
+## Whether square `o`'s ground runs on into natural square `c`'s: `c` itself, or natural ground beside it that isn't
+## empty and isn't across a cliff from it.
+func _joined(c: Vector2i, o: Vector2i) -> bool:
+	return o == c or (grid.in_bounds(o) and grid.has_flag(o, CombatGrid.NATURAL) and not grid.has_flag(o, CombatGrid.VOID)
+		and not grid.is_cliff(c, o))
+
+
+## The up vector at corner `i` of square `c`'s top, from the squares meeting there (the same on both sides of a slope,
+## so the ground shades smooth across squares).
+func _corner_normal(c: Vector2i, i: int) -> Vector3:
+	var corner := c + _CORNERS[i]
+	var y := _corner_h[_corner_index(c) + i]
+	var v: Array[float] = []
+	for d: Vector2i in [Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(0, 0)]:
+		v.append(floor_y(corner + d) if _joined(c, corner + d) else y)
+	return Vector3(-((v[1] + v[3]) - (v[0] + v[2])) / 2.0, 1.0, -((v[2] + v[3]) - (v[0] + v[1])) / 2.0).normalized()
+
+
+## The height (world units) of corner `k` (0 or 1 each way) of square `c`'s ground: natural ground's sloped corner,
+## else its floor.
+func corner_height(c: Vector2i, k: Vector2i) -> float:
+	if _corner_h.is_empty() or not grid.has_flag(c, CombatGrid.NATURAL):
+		return floor_y(c)
+	return _corner_h[_corner_index(c) + _CORNERS.find(k)]
+
+
+## The height (world units) of the ground at point `p` (x, z) of the map, where things stand: on natural ground the
+## sloped top of its square (within a few feet of its height in the rules), else the square's floor or the top of a
+## raised prop on it. A point past the edge takes the nearest square's.
+func ground_y(p: Vector2) -> float:
+	var c := Vector2i(clampi(floori(p.x), 0, grid.width - 1), clampi(floori(p.y), 0, grid.depth - 1))
+	if _corner_h.is_empty() or not grid.has_flag(c, CombatGrid.NATURAL):
+		return grid.height(c) / float(CombatGrid.FEET)   # (a raised prop's top, where creatures stand on it)
+	var u := clampf(p.x - c.x, 0.0, 1.0) - 0.5
+	var v := clampf(p.y - c.y, 0.0, 1.0) - 0.5
+	# Which of the top's four triangles (north, east, south, west of the middle) the point is in.
+	var i := (0 if v < 0.0 else 2) if absf(u) <= absf(v) else (1 if u > 0.0 else 3)
+	var j := (i + 1) % 4
+	var a := Vector2(_CORNERS[i]) - Vector2(0.5, 0.5)
+	var b := Vector2(_CORNERS[j]) - Vector2(0.5, 0.5)
+	var det := a.x * b.y - a.y * b.x
+	var sa := (u * b.y - v * b.x) / det
+	var sb := (a.x * v - a.y * u) / det
+	var h := _mid_y(c)
+	var k := _corner_index(c)
+	return h + sa * (_corner_h[k + i] - h) + sb * (_corner_h[k + j] - h)
+
+
+## The middle of natural square `c`'s top: the average of its corners.
+func _mid_y(c: Vector2i) -> float:
+	var k := _corner_index(c)
+	return (_corner_h[k] + _corner_h[k + 1] + _corner_h[k + 2] + _corner_h[k + 3]) / 4.0
+
+
+## The ground's up vector at the middle of square `c` (straight up off natural ground's slopes).
+func ground_normal(c: Vector2i) -> Vector3:
+	if _corner_h.is_empty() or not grid.in_bounds(c) or not grid.has_flag(c, CombatGrid.NATURAL):
+		return Vector3.UP
+	var k := _corner_index(c)
+	var dx := ((_corner_h[k + 1] + _corner_h[k + 2]) - (_corner_h[k] + _corner_h[k + 3])) / 2.0
+	var dz := ((_corner_h[k + 2] + _corner_h[k + 3]) - (_corner_h[k] + _corner_h[k + 1])) / 2.0
+	return Vector3(-dx, 1.0, -dz).normalized()
+
+
+## A basis lying along the ground at square `c`: marks painted on a slope tilt with it.
+func ground_basis(c: Vector2i) -> Basis:
+	var up := ground_normal(c)
+	if up.y > 0.9999:
+		return Basis.IDENTITY
+	return Basis(Vector3.UP.cross(up).normalized(), Vector3.UP.angle_to(up))
+
+
+## Whether the map has natural ground (its `elevation` rows).
+func has_terrain() -> bool:
+	return not _corner_h.is_empty()
+
+
+## Whether the ground under the mouse needs following (GridPick.ground_hit): natural ground, or props stood on above it.
+func shaped() -> bool:
+	return has_terrain() or not grid.raised.is_empty()
+
+
+## Natural ground whose every neighbour is natural ground too, none across a cliff: one rolling surface with them
+## (GroundRelief's skin can draw it).
+func rolling(c: Vector2i) -> bool:
+	if not grid.in_bounds(c) or not grid.has_flag(c, CombatGrid.NATURAL):
+		return false
+	for dz in range(-1, 2):
+		for dx in range(-1, 2):
+			var o := c + Vector2i(dx, dz)
+			if grid.in_bounds(o) and (not grid.has_flag(o, CombatGrid.NATURAL) or grid.is_cliff(c, o)):
+				return false
+	return true
 
 
 func _box(n: String, size: Vector3, pos: Vector3, mat: Material) -> MeshInstance3D:

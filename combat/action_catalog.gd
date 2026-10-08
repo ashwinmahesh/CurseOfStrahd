@@ -1085,6 +1085,8 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 			return e.release_grapple(c, e.get_c(id.get_slice(":", 1)))
 		"fly":
 			return e.fly_vertical(c, CombatGrid.FEET if id == "fly:up" else -CombatGrid.FEET)
+		"jump_down":
+			return e.movement.jump_down(c, Vector2i(int(id.get_slice(":", 1)), int(id.get_slice(":", 2))))
 	match id:
 		"grapple":
 			return e.unarmed_special(c, t, "grapple")
@@ -1437,6 +1439,12 @@ func square_actions(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Arr
 		if why == "Occupied":
 			why = "You can move through %s's space but not stop in it" % o.name() if o != null and c.allied_with(o) else "Someone is there"
 		out.append({"id": "move", "label": "Move here (%d ft)" % int(mp["cost"]) if bool(mp["ok"]) else "Move here", "enabled": bool(mp["ok"]), "why": why})
+	# Jumping down a cliff or ledge beside it, taking the fall (EncounterMovement.jump_down).
+	var drop := e.grid.height(c.cell) - e.grid.height(cell)
+	if o == null and drop > 0 and e.grid.is_cliff(c.cell, cell) and maxi(absi(cell.x - c.cell.x), absi(cell.y - c.cell.y)) == 1:
+		var jwhy := e.movement.jump_down_why(c, cell)
+		var jump := _entry("jump_down:%d:%d" % [cell.x, cell.y], COMMON, "Jump down (%d ft: %dd6)" % [drop, maxi(1, drop / 10)], "5 ft", "movement", jwhy, "none")
+		out.append({"id": "act:%s" % jump["id"], "label": str(jump["label"]), "enabled": jwhy == "", "why": jwhy, "action": jump})
 	# Picking up what lies there (GroundItems); attacking what stands or hangs there, oil on the floor (EncounterObjects).
 	out.append_array(e.ground.square_entries(c, cell))
 	out.append_array(e.objects.square_entries(c, cell))

@@ -50,7 +50,7 @@ func node_for(gid: String) -> Node3D:
 
 func _spot(cell: Vector2i, k: int) -> Vector3:
 	var off := CORNERS[k % CORNERS.size()]
-	var y := board.floor_y(cell) + 0.02
+	var y := board.ground_y(Vector2(cell.x + 0.5 + off.x, cell.y + 0.5 + off.y)) + 0.02   # (natural ground's slope)
 	if board.grid.has_flag(cell, CombatGrid.LOW):
 		y += ArenaBoard.LOW_H
 	return Vector3(cell.x + 0.5 + off.x, y, cell.y + 0.5 + off.y)

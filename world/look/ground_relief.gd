@@ -7,6 +7,9 @@ extends RefCounted
 ## Under the map's woods the ground rises into banks with mounds, and the land past the edge carries on from both.
 ## The roads between the map's ways out are laid here for anything that follows them (the surfaces lane's wheel-rut
 ## decals). Cosmetic only: the rules grid never sees any of it.
+## On a map with natural ground (map `elevation`, owner 2026-10-08) the skin also follows its slopes
+## (ArenaBoard.ground_y): it takes the rolling natural squares, and the board's own columns keep cliff edges and
+## built floors.
 ##
 ## Built for speed (a place is built on every arrival): the height of every grid point is worked out once, from
 ## distance fields over flat arrays, and the meshes index that one grid.
@@ -46,8 +49,9 @@ var _nz := 0
 var _skin: Dictionary = {}
 ## Each map square's kind (FLAT, WOODS, SKIN, OPEN), row by row.
 var _kind := PackedByteArray()
-## The height at every grid point.
+## The height at every grid point, and the natural ground's under it (0 on a map without any).
 var _h := PackedFloat32Array()
+var _b := PackedFloat32Array()
 ## The ways between the map's ways out, as smoothed lines through square middles.
 var _roads: Array[PackedVector2Array] = []
 
@@ -72,6 +76,7 @@ static func build(board_: ArenaBoard, loc: Dictionary) -> GroundRelief:
 		r._skin = k._skin
 		r._kind = k._kind
 		r._h = k._h
+		r._b = k._b
 		r._nx = k._nx
 		r._nz = k._nz
 		r._roads = k._roads
@@ -100,11 +105,16 @@ func is_flat(c: Vector2i) -> bool:
 func _choose_skin(traps: Dictionary) -> void:
 	var g := board.grid
 	var plain := board.floor_material()
+	var terrain := board.has_terrain()
 	for z in _d:
 		for x in _w:
 			var c := Vector2i(x, z)
 			var f := g.flags(c)
-			if (f & (CombatGrid.WALL | CombatGrid.VOID | CombatGrid.WATER)) != 0 or board.floor_y(c) != 0.0:
+			if (f & (CombatGrid.WALL | CombatGrid.VOID | CombatGrid.WATER)) != 0:
+				continue
+			# Raised ground only where it rolls (natural slopes); built floors and cliff edges stay the board's.
+			var level := board.rolling(c) if terrain else board.floor_y(c) == 0.0
+			if not level:
 				continue
 			if board.occupied.has(c) or board.door_cells.has(c) or board.house_cells.has(c) or traps.has(c):
 				continue
@@ -125,7 +135,7 @@ func _kinds() -> void:
 			var k := FLAT
 			if _skin.has(c):
 				k = SKIN
-			elif board.is_tree(c):
+			elif board.is_tree(c) and (not board.has_terrain() or board.rolling(c)):
 				k = WOODS
 			elif g.has_flag(c, CombatGrid.VOID) and not g.has_flag(c, CombatGrid.WATER):
 				k = OPEN
@@ -291,11 +301,14 @@ func _heights() -> void:
 	var bank_d := _field(touch, (1 << FLAT) | (1 << SKIN))
 	var skin_d := _field(touch, (1 << FLAT) | (1 << WOODS) | (1 << OPEN))
 	_h.resize(_nx * _nz)
+	_b.resize(_nx * _nz)
+	var terrain := board.has_terrain()
 	for j in _nz:
 		for i in _nx:
 			var k := j * _nx + i
 			var p := Vector2(float(i) / RES - MARGIN, float(j) / RES - MARGIN)
 			var h := 0.0
+			_b[k] = board.ground_y(p) if terrain else 0.0
 			if (touch[k] & (1 << SKIN)) != 0:
 				var settle := smoothstep(0.0, SETTLE, skin_d[k])
 				if settle > 0.0:
@@ -304,11 +317,26 @@ func _heights() -> void:
 				var d := bank_d[k]
 				var n := _noise(p * 0.55) * 0.65 + _noise(p * 1.3 + Vector2(4.7, 1.9)) * 0.35
 				h = BANK * smoothstep(0.0, RISE, d) + (n - 0.42) * MOUNDS * smoothstep(0.3, RISE, d) * 2.0
-			_h[k] = h
+			_h[k] = h + _b[k]
 
 
-## The ground's height at a point of the map (0 on squares drawn flat), read off the grid.
+## The ground's height at a point of the map (0 on squares drawn flat, else the natural ground's), read off the grid.
 func height(p: Vector2) -> float:
+	return _read(_h, p)
+
+
+## The skin's own shape at a point: its hollows and banks, without the natural ground under them.
+func shape(p: Vector2) -> float:
+	return _read(_h, p) - _read(_b, p)
+
+
+## Whether the shaped ground draws square `c` (its walked skin, or the banks under its woods).
+func draws(c: Vector2i) -> bool:
+	var k := _kind_of(c)
+	return k == SKIN or k == WOODS
+
+
+func _read(a: PackedFloat32Array, p: Vector2) -> float:
 	var fi := clampf((p.x + MARGIN) * RES, 0.0, _nx - 1.001)
 	var fj := clampf((p.y + MARGIN) * RES, 0.0, _nz - 1.001)
 	var i := floori(fi)
@@ -316,7 +344,7 @@ func height(p: Vector2) -> float:
 	var fx := fi - i
 	var fz := fj - j
 	var k := j * _nx + i
-	return lerpf(lerpf(_h[k], _h[k + 1], fx), lerpf(_h[k + _nx], _h[k + _nx + 1], fx), fz)
+	return lerpf(lerpf(a[k], a[k + 1], fx), lerpf(a[k + _nx], a[k + _nx + 1], fx), fz)
 
 
 func _noise(p: Vector2) -> float:

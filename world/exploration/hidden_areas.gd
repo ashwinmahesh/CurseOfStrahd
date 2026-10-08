@@ -103,7 +103,7 @@ static func hidden_cells(v: LocationView) -> Dictionary:
 	if shut.is_empty():
 		return out
 	# The map as authored: closed ordinary doors are open ground here, only the secret ones block.
-	var grid := CombatGrid.from_rows(v.loc["map"]["rows"] as Array)
+	var grid := LocationView.grid_for(v.loc)
 	var open := func(c: Vector2i) -> bool:
 		return grid.in_bounds(c) and not shut.has(c) and not grid.has_flag(c, CombatGrid.WALL) \
 			and (not grid.has_flag(c, CombatGrid.VOID) or grid.has_flag(c, CombatGrid.WATER))
