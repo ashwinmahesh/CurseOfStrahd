@@ -23,7 +23,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Saving throw proficiency | character.gd | tested | test_reference_party |
 | Passive scores (+5/−5) | creature.gd passive_score | tested | test_abilities, test_reference_party |
 | Initiative = Dexterity check, Alert adds PB | creature.gd initiative_bonus | tested | test_reference_party |
-| Heroic Inspiration | character.gd (Resourceful); encounter.gd reroll | partial: a reroll offered on a missed attack roll and after a failed check in conversation (story/check_aids.gd); on saves it is used automatically (deviations) [F6] | test_combat_encounter |
+| Heroic Inspiration | character.gd (Resourceful); encounter_attacks.gd, d20_responses.gd reroll | partial: a reroll of the d20 offered on a missed attack roll, after a failed save wherever the fight can pause (spells, monsters' actions and riders, repeated and Death Saving Throws) and after a failed check in conversation (story/check_aids.gd); the saves that can't pause yet use it automatically (deviations) [F6] | test_combat_encounter, test_save_prompts |
 | Bonus/penalty dice on D20 Tests (Bless, Bane) | creature.gd roll_d20 | tested | test_effects |
 | Automatic failure (Paralyzed etc.) | creature.gd roll_d20 | tested | test_conditions |
 
@@ -53,7 +53,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Blinded, Charmed, Deafened | data + creature.gd | partial (sight/hearing/charmer checks: Phase 2-3) | test_conditions |
 | Exhaustion (−2 per level to D20 Tests, −5 ft, death at 6, Long Rest −1) | data + creature.gd | tested | test_conditions |
 | Frightened | data; Turn Undead fleeing in ai_brain.gd | partial (Disadvantage always on, see deviations; can't-approach only for AI) | test_conditions, test_combat_spells |
-| Grappled (Speed 0) | data + encounter.gd | tested (Speed 0, escape, other-target Disadvantage); dragging: deviations | test_conditions, test_combat_encounter |
+| Grappled (Speed 0) | data + encounter.gd, encounter_grapples.gd | tested (Speed 0, escape, other-target Disadvantage; dragged when its grappler moves, 1 extra foot per foot unless Tiny or two sizes smaller, no Opportunity Attacks for being dragged; ends when pulled out of the grapple's range or let go) | test_conditions, test_combat_encounter, test_height_and_falls |
 | Incapacitated (no actions, breaks Concentration) | data + creature.gd | tested | test_conditions |
 | Invisible | data + encounter.gd can_see | tested (hidden creatures, attacks either way) | test_conditions, test_combat_encounter |
 | Paralyzed, Petrified, Stunned, Unconscious | data + creature.gd | tested (auto-crit within 5 ft) | test_conditions, test_attacks |
@@ -161,20 +161,21 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 |---|---|---|---|
 | Initiative: Dexterity check, surprise = Disadvantage, identical monsters share a roll, ties | encounter.gd start | tested | test_combat_encounter |
 | Turn order, rounds, the action economy (Action, Bonus Action, Reaction, movement, one free object interaction) | encounter.gd, combatant.gd | tested | test_combat_encounter |
-| Grid movement: 5 ft squares, diagonals 5 ft, no corner cutting, Difficult Terrain double, climbing | grid.gd | tested | test_combat_grid |
+| Grid movement: 5 ft squares, diagonals 5 ft, no corner cutting, Difficult Terrain double, climbing up and down (1 extra foot per foot, 2 in Difficult Terrain, none extra with a Climb Speed; a 5 ft step is stairs, deviations) | grid.gd step_cost | tested | test_combat_grid, test_height_and_falls |
 | Moving through creatures (allies, Incapacitated, Tiny, two sizes different; enemy squares are Difficult Terrain); can't end in an occupied square | encounter.gd _occupancy_for | tested | test_combat_encounter |
 | Halfling Nimbleness, Naturally Stealthy, Luck | encounter.gd, d20_test.gd reroll_ones | tested (Nimbleness, Luck through the suite) | test_combat_encounter |
 | Prone: Disadvantage to attack, Advantage within 5 ft / Disadvantage beyond against it, standing costs half Speed, crawling double | encounter.gd, action_catalog.gd | tested | test_combat_encounter, test_action_catalog |
 | Opportunity Attacks (leaving reach of a creature that can see you; Disengage; forced movement doesn't provoke) | encounter.gd _walk, _provokers | tested | test_combat_encounter |
 | Reactions: one per round, prompts for the player with per-reaction rules | encounter.gd, reaction_request.gd | tested | test_combat_encounter, test_combat_ai |
-| Attack rolls: every Advantage/Disadvantage source, cover, long range, ranged attacks in melee, unseen attackers and targets, Heavy | encounter.gd attack_situation | tested | test_combat_encounter |
+| Attack rolls: every Advantage/Disadvantage source, cover, long range, ranged attacks in melee, unseen attackers and targets, Heavy; the high-ground house rule (+2/-2 to ranged attacks from 10 ft above or below, deviations) | encounter.gd attack_situation, encounter_sight.gd height_edge | tested | test_combat_encounter, test_high_ground |
 | Cover: Half +2, Three-Quarters +5, Total untargetable; creatures give Half; Dex saves add cover | grid.gd cover_between, spell_caster.gd | tested | test_combat_grid, test_combat_encounter |
 | Critical Hits, automatic crits against Paralyzed/Unconscious within 5 ft | encounter.gd | tested | test_combat_encounter |
 | Standard actions: Attack, Dash, Disengage, Dodge, Help (attack), Hide, Search, Study, Ready (attacks), Magic, Utilize (Healer's Kit), Influence | encounter.gd, action_catalog.gd | tested (Influence has no target in the arena; readied spells: deviations) | test_combat_encounter, test_action_catalog |
-| Grapple and Shove with Unarmed Strike; escape | encounter.gd | tested | test_combat_encounter |
+| Grapple and Shove with Unarmed Strike; escape; letting go (no action); a Shove off a ledge or into a map's open drop | encounter_grapples.gd, encounter_movement.gd forced_move | tested | test_combat_encounter, test_height_and_falls |
+| Falling: 1d6 Bludgeoning per 10 ft (at most 20d6), Prone unless unharmed; forced off a ledge 10 ft or more high, or into a map's open drop (out of the fight, deviations); a push stops at a ledge 10 ft or more above; Slow Fall and Feather Fall (automatic, deviations) | encounter_movement.gd fall, fall_away, forced_move; grid.gd drop_at; map `drop_ft` | tested | test_height_and_falls |
 | Two-weapon fighting (Light) and Nick | encounter.gd offhand_attack | tested | test_combat_encounter |
 | Thrown weapons leave the hand; ammunition used up | encounter.gd | tested | test_combat_encounter |
-| Death Saving Throws on the creature's turn, stabilizing (Medicine DC 10 or Healer's Kit) | encounter.gd death_save, stabilize | tested (rules in test_death_saves) | test_death_saves, test_combat_arena_scene |
+| Death Saving Throws on the creature's turn, stabilizing (Medicine DC 10 or Healer's Kit) | encounter.gd death_save, stabilize | tested (rules in test_death_saves); the roll stops for Heroic Inspiration and the like before it counts | test_death_saves, test_combat_arena_scene, test_save_prompts |
 | Savage Attacker, Sneak Attack once per turn (any turn) | encounter.gd, features.gd | tested | test_combat_encounter |
 | Spellcasting in combat: casting time vs the action economy, one slot-spell per turn, free castings, Concentration, range and line of effect, upcasting | spell_caster.gd | tested | test_combat_spells |
 | Spell attacks, saves (damage rolled once, half on success), healing (Disciple of Life), buffs, repeated saves | spell_caster.gd | tested | test_combat_spells |
@@ -206,7 +207,9 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Surprise (2024): a creature caught unawares as a fight starts has Disadvantage on Initiative; a sneaking party surprises each foe that noticed none of them (passive Perception against each member's Stealth, 5 lower in dim light; out of sight or behind Three-Quarters Cover goes unnoticed) | location_stealth.gd surprised_at_start, notices | tested (sneaking: deviations) | test_plan_before_the_fight |
 | Hide's Invisible condition carried into a fight: a sneaking member nobody noticed, Stealth 15+ (Hide's DC) and Three-Quarters Cover from every foe, starts hidden; it ends with the fight | location_stealth.gd hide_at_start, after_fight | tested (deviations) | test_plan_before_the_fight |
 | Foes in plain view notice the party (passive Perception against Stealth while sneaking, at once otherwise), and that fight surprises no one | location_stealth.gd after_step | tested (30 ft reach: deviations) | test_plan_before_the_fight |
+| Sight cones before a fight: 120° the way a foe or townsperson faces, 10 ft hearing all round, carried into the fight's opening for Surprise | location_stealth.gd notices, in_cone | tested (facing outside fights: deviations) | test_sight_cones |
 | Turn-based exploring (F7): rounds of six seconds, each member moving up to their Speed; a companion's square costs double and can't be stopped on | location_plan.gd | tested | test_plan_before_the_fight |
+| Sleight of Hand to pick a pocket; stealing from what someone owns; witnesses; private rooms; the town watch's fine (F8) | story/crime.gd, location_crime.gd, narrative/watch/ | tested (DC, witnesses and trespass: deviations) | test_stealing_and_crime |
 | Short Rest: spend Hit Point Dice (roll + Con, minimum 1), short-rest features | rest_screen.gd, character.gd | tested | test_party_screens |
 | Long Rest: all Hit Points, Hit Point Dice, slots and features; interruption | rest_screen.gd | implemented (interruption: deviations) | — |
 | Ability checks in conversation (any skill or ability, the speaking character's bonus, Advantage sources) | story/dialogue_runner.gd | tested | test_story |
@@ -287,10 +290,10 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Summon Dinosaur; Summon Plant | Form choices, scaled stat blocks and controlled actions, conditional attacks and riders; `test_faerun_recipes` | Placement footprint/visibility and target-directed grid approach tested; arbitrary scenery objects still pending |
 | Detonate | Target-centered secondary burst, post-damage drop-to-zero check, shared damage roll for creatures and objects, primary exclusion; `test_faerun_recipes` | Arbitrary scenery without object HP |
 | Power Word Pain | Shared casting-save gate, time versus slot costs, speed cap and save exception; `test_faerun_recipes` | Source checks complete for these effects |
-| Moment of Prescience; Reweave Fate | Shared D20 replacement and reroll responses, attack defense, Advantage cancellation, THP and slot costs; `test_faerun_recipes` | Player-accessible Ask/Automatic/Off preferences; synchronous checks/saves only spend on Auto; manual continuation pending |
+| Moment of Prescience; Reweave Fate | Shared D20 replacement and reroll responses, attack defense, Advantage cancellation, THP and slot costs; `test_faerun_recipes` | Ask/Automatic/Off in the class tab: asked where the roll can pause (F6), elsewhere spent only on Automatic |
 | Conjurer | Benign/Distant Transposition, Durable Summons, Focused Conjuration, Splintered Summons; `test_faerun_features`; off-screen targeting captures | Creation spells outside the shared summon path, field-casting companions |
 | Feature activations | Shared validated targeting, costs, resources and slot restoration: Arcane Infiltrator’s Dodge, Winter Walker’s Fortifying Soul, Knowledge’s Divine Foreknowledge; `test_faerun_features` | Remaining active features |
-| Save responses | Arcane Omens, Spell Resistant, Transmuted Anatomy, Boon of Fortune’s Favor; `test_faerun_features` | Reaction-cost responses require Auto, configurable in the class abilities tab; manual synchronous and non-allied beneficiary choices pending |
+| Save responses | Arcane Omens, Spell Resistant, Transmuted Anatomy, Boon of Fortune’s Favor; `test_faerun_features` | Asked where the save can pause (F6, `test_save_prompts`); elsewhere a Reaction-cost response needs Automatic (class tab). Non-allied beneficiary choices pending |
 | Passive features | Adept slot-threshold preparation, Conjuration concentration bonus, Transmutation turn Speed, Vestige domain spells, Bountiful Health, Desperate Resilience, Iron Mind and Focused Conjuration; `test_faerun_features` | Remaining school benefits, subclass mechanics and concentration callers |
 | Knowledge Domain Mind Magic | Shared `resource_cast` recipe, base-level casting with Channel Divinity, prepared-domain filtering, class provenance and exploration controls; `test_resource_casting` | Existing exploration-only spell handlers still need their own effect audit; Unfettered Mind remains pending |
 | Warrior of the Mystic Arts | Existing third-caster progression, Wisdom casting, cantrip substitution, Focus/slot exchange windows, Focused Strike and Flurry spell substitution; `test_mystic_arts` | Rest and combat recovery UI captured; caster-specific initial/repeated saves and Pact slot recovery tested. Multiclass duplicate-spell sources use the eligible casting class; 13 focused tests cover these paths and the level-2 cap on the actual Flurry casting; full CI checkpoint recorded below |

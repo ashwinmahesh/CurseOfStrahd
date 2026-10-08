@@ -2,7 +2,8 @@
 (plan §7 steps 4-6).
 
 blender -b --python blender/render_walk.py -- --turnaround <png> --id <asset_id>
-        [--side-faces left] [--cell 384] [--frames 8] [--static] [--views 3|5] [--saturate K] [--no-clean]
+        [--side-faces left] [--cell 768] [--ss 2] [--frames 8] [--static] [--views 3|5] [--saturate K] [--no-clean]
+        [--grid] [--no-hd]
 
 The sheet shows views left to right: either 5 (front, front three-quarter, side, back three-quarter,
 back — best, gives true diagonals) or 3 (front, side, back; diagonals reuse front/back turned 25
@@ -29,6 +30,12 @@ body), lumber (a heavy rocking gait), swarm (a scurrying jitter): one plane per 
 (walk_<dir>, idle_<dir>), so DirectionalSprite loads it unchanged. Long bodies are scaled down to
 fit the cell's width as well; the printed "height fill" is the tallest view's height as a fraction
 of the band DirectionalSprite maps to height_units (1.0 for walk sheets).
+
+HD (owner 2026-10-07, every character): when <turnaround>_hd.png exists (the sheet Gemini redrew at twice the size,
+tools/art/hd_turnarounds.py) it is cut instead, into 768 px cells rendered at twice the size and area-averaged down
+(--cell and --ss override; --no-hd uses the original). Frames are trimmed to the figure and packed into one atlas, and
+the mirror-image directions are left out for the game to show flipped, as the heroes' sheets do (render_keys.py;
+--grid writes the earlier full grid).
 """
 import argparse
 import math
@@ -75,14 +82,16 @@ def args():
     p.add_argument("--turnaround", required=True)
     p.add_argument("--id", required=True)
     p.add_argument("--side-faces", default="right", choices=["left", "right"])
-    p.add_argument("--cell", type=int, default=384)
+    p.add_argument("--cell", type=int, help="cell height (default 768 with an HD turnaround, else 384)")
     p.add_argument("--frames", type=int, default=8)
     p.add_argument("--static", action="store_true", help="one still frame per direction, no rig")
     p.add_argument("--body", default="humanoid", choices=BODIES, help="how a non-humanoid body walks")
     p.add_argument("--views", type=int, choices=[3, 5], help="views on the sheet (default: detect)")
     p.add_argument("--saturate", type=float, default=1.0, help="chroma boost before quantizing (cutout.saturate)")
     p.add_argument("--no-clean", action="store_true", help="skip the smoothing and island merge (comparison only)")
-    p.add_argument("--ss", type=int, default=1, help="render at this many times the cell and area-average down")
+    p.add_argument("--ss", type=int, help="render at this many times the cell and area-average down (2 with HD)")
+    p.add_argument("--grid", action="store_true", help="the full row-per-direction grid instead of the packed atlas")
+    p.add_argument("--no-hd", action="store_true", help="cut the original turnaround even if an HD redraw exists")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
 
@@ -331,7 +340,11 @@ def main():
     a = args()
     out_dir = cutout.ROOT / "art" / "sprites" / a.id
     out_dir.mkdir(parents=True, exist_ok=True)
-    sheet = cutout.load_rgba(a.turnaround)
+    hd = Path(a.turnaround).with_name(Path(a.turnaround).stem + "_hd.png")
+    if a.no_hd or not hd.exists():
+        hd = None
+    a.cell, a.ss = anim.hd_cell(hd, a.cell, a.ss)
+    sheet = cutout.load_rgba(hd or a.turnaround)
     sheet = cutout.binarize_alpha(cutout.remove_background(sheet))
     if not a.no_clean:
         sheet = cutout.smooth_colours(sheet)
@@ -377,7 +390,10 @@ def main():
     # Frames go outside the project so an open Godot editor doesn't import them (and leave .import files).
     tmp = Path(tempfile.mkdtemp(prefix=f"walk_{a.id}_"))
     frames = []
-    for d in DIRECTIONS:
+    twins = {} if a.grid else anim.mirror_twins(dir_view)
+    directions = [d for d in DIRECTIONS if d not in twins]
+    pad = int(round(6 * a.cell / 384))
+    for d in directions:
         view, mirrored, turn = dir_view[d]
         for name, parts in views.items():
             hidden = name != view
@@ -401,7 +417,20 @@ def main():
             path = tmp / f"{d}_{f}.png"
             scene.render.filepath = str(path)
             bpy.ops.render.render(write_still=True)
-            frames.append(cutout.downsample(cutout.load_rgba(path), a.ss))
+            frame = cutout.downsample(cutout.load_rgba(path), a.ss)
+            frames.append(frame if a.grid else anim.trim(frame, pad))
+    if not a.grid:
+        walk, cell, rects = anim.pack_sheet(frames, (cell_w, a.cell), a.cell, cell_w / a.cell, pad, a.saturate)
+        cutout.save_rgba(walk, out_dir / "walk.png")
+        anim.write_sheet_tres(out_dir / "walk.tres", f"res://art/sprites/{a.id}/walk.png", cell, directions,
+                              frames_per_dir, [("walk", list(range(frames_per_dir)), [1] * frames_per_dir, 10.0, True),
+                                               ("idle", [0], [1], 1.0, True)],
+                              {"mirrored": twins} if twins else {}, rects)
+        shutil.rmtree(tmp, ignore_errors=True)
+        print(f"walk sheet: {out_dir / 'walk.png'} ({len(names)} views, {len(directions)} directions x "
+              f"{frames_per_dir} frames{', static' if a.static else ''}, body {a.body}, height fill {height_fill:.2f}, "
+              f"{cell[0]}x{cell[1]} cells{', HD' if hd else ''}, {walk.shape[1]}x{walk.shape[0]} sheet)")
+        return
     walk = cutout.pack_grid(frames, frames_per_dir)
     walk = cutout.saturate(cutout.binarize_alpha(walk), a.saturate)
     walk = cutout.quantize(walk, neutral_area=0.0 if a.no_clean else 0.5)

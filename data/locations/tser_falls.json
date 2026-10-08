@@ -31,7 +31,8 @@
     ],
     "theme": "svalich_road",
     "light": "dim",
-    "outdoors": true
+    "outdoors": true,
+    "drop_ft": 200
   },
   "areas": [
     {

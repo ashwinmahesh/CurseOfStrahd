@@ -144,6 +144,10 @@ def process(rec, key, wrap):
                 # A colour grade on the painted tile (the kit's oak darkened to the beams' near-black brown).
                 g = r["grade"]
                 albedo = Image.merge("RGB", [ch.point(lambda x, k=k: min(255, int(x * k))) for ch, k in zip(albedo.split(), g)])
+            if r.get("lift"):
+                # The darkest parts lifted (black marble that would read as holes in a dim room keeps its veins).
+                lo = float(r["lift"])
+                albedo = albedo.point(lambda x: int(lo + x * (255.0 - lo) / 255.0))
             albedo.save(ROOT / rel["file"], "WEBP", quality=92, method=6)
             Image.open(v["normal"]).convert("RGB").save(ROOT / rel["normal_file"], "WEBP", quality=95, method=6)
             orm = Image.open(v["orm"]).convert("RGB")

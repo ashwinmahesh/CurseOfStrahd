@@ -321,9 +321,13 @@ func _death_save() -> void:
 	var c := _player()
 	if c == null:
 		return
-	e.death_save(c)
+	var r := e.death_save(c)
 	await _play_events()
 	_refresh_all()
+	# Heroic Inspiration and the like can answer the roll (F6).
+	if r.is_paused() or e.pending != null:
+		mode = Mode.PROMPT
+		hud.show_prompt(e.pending)
 
 
 func _inspect(id: String) -> void:
@@ -1004,8 +1008,11 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			var opt := {"melee": str(data["attack"]) == "melee", "profile": WeaponProfile.new()}
 			var sit := e.attack_situation(c, o, opt)
 			var ac := o.creature.ac_value() + int(sit["cover_bonus"])
-			var needs := clampi(ac - (prev["attack"] as Breakdown).total(), 2, 20)
-			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [(prev["attack"] as Breakdown).total(), ac, needs])
+			var to_hit := (prev["attack"] as Breakdown).total() + int(sit.get("height_bonus", 0))
+			var needs := clampi(ac - to_hit, 2, 20)
+			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [to_hit, ac, needs])
+			if int(sit.get("height_bonus", 0)) != 0:
+				lines2.append(EncounterAttacks.height_line(int(sit.get("height_bonus", 0))))
 			var sa := sit["advantage"] as Array
 			var sd := sit["disadvantage"] as Array
 			if not sa.is_empty() and sd.is_empty():
@@ -1081,8 +1088,8 @@ func _play_events() -> void:
 				walking[tok] = true
 				var tw := create_tween()
 				tw.tween_property(tok, "position", _token_spot(tok.combatant, to), step)
-				if bool(ev.get("mounted", false)):
-					continue
+				if bool(ev.get("mounted", false)) or bool(ev.get("dragged", false)):
+					continue   # carried along: it moves with the step after it
 				await tw.finished
 			"attack":
 				_stop_walking(walking)
@@ -1290,10 +1297,20 @@ func _play_events() -> void:
 				var vt := _tok(str(ev["id"]))
 				if str(ev.get("narration", "")) != "" and vt != null:
 					_narrate(str(ev["narration"]), null, vt.combatant)
-				if vt != null:
+				if vt != null and str(ev.get("left", "")) == "fell":
+					# Over the edge: it drops out of sight.
+					var drop := create_tween()
+					drop.tween_property(vt, "position", vt.position + Vector3(0, -6, 0), 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+					drop.tween_callback(vt.hide)
+					await drop.finished
+				elif vt != null:
 					var tw3 := create_tween()
 					tw3.tween_property(vt, "scale", Vector3(0.01, 0.01, 0.01), 0.3)
 					tw3.tween_callback(vt.hide)
+			"fall":
+				var ft := _tok(str(ev["id"]))
+				if ft != null:
+					_float(ft, "FALLS %d FT" % int(ev["feet"]), "bone", 34)
 			"resize":
 				var rt := _tok(str(ev["id"]))
 				if rt != null:
