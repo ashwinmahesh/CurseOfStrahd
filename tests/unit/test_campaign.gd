@@ -195,6 +195,8 @@ func test_treasure_spots_hand_over_the_reading_once() -> void:
 	var r := DialogueRunner.new(st, DiceRoller.new(1))
 	r.start("test/hand:hand")
 	var b := r.next()
+	if str(b["kind"]) == "cutscene":   # the Sunsword's own picture first (find:sunsword), then the notice
+		b = r.next()
 	assert_eq(str(b["kind"]), "notice")
 	assert_true(str(b["text"]).contains(Compendium.shared().display_name("items", "sunsword")))
 	assert_true(st.party_has_item("sunsword"))

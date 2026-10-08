@@ -187,7 +187,10 @@ func test_every_narration_plays_through_without_a_choice() -> void:
 				var kind := str(b["kind"])
 				if kind == "end":
 					break
-				assert_eq(kind, "line", "%s: narration is lines only" % id)
+				if kind == "cutscene":   # an ending's picture (story/cutscenes.gd), shown between lines
+					assert_ne(str(b["id"]), "", id)
+					continue
+				assert_eq(kind, "line", "%s: narration is lines and pictures only" % id)
 				assert_ne(str(b["text"]), "", id)
 				assert_false(str(b["text"]).contains("{"), "%s: every placeholder filled" % id)
 				lines += 1
