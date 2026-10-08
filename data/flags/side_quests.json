@@ -840,6 +840,101 @@
       "id": "ilarion_home",
       "type": "bool",
       "summary": "Ilarion is home in the village with his children, Petra and Mihail (The Last Traveller)."
+    },
+    {
+      "id": "ghakis_keepers_slain",
+      "type": "bool",
+      "summary": "The count's keepers at the gate on the north shoulder of Ghakis are destroyed (The Warm Snow)."
+    },
+    {
+      "id": "ghakis_prisoners_freed",
+      "type": "bool",
+      "summary": "Doina and Petrache, the count's tithe, are freed from the cart on Ghakis (The Warm Snow)."
+    },
+    {
+      "id": "ghakis_log_read",
+      "type": "bool",
+      "summary": "The party read the keepers' log under Ghakis: Sarkhaza's name, the salt, the drum and the sluice (The Warm Snow)."
+    },
+    {
+      "id": "ghakis_carcass_salted",
+      "type": "bool",
+      "summary": "The party salted a carcass in the Ghakis larder well enough that a dragon won't taste it (The Warm Snow)."
+    },
+    {
+      "id": "ghakis_carcass_crude",
+      "type": "bool",
+      "summary": "The party salted a carcass in the Ghakis larder, badly (The Warm Snow)."
+    },
+    {
+      "id": "wyrm_chain_drawn",
+      "type": "bool",
+      "summary": "The party hauled Sarkhaza's chain in on the great drum: she starts the fight choking (The Warm Snow)."
+    },
+    {
+      "id": "wyrm_chain_fought",
+      "type": "bool",
+      "summary": "Sarkhaza tore her chain back out of the party's hands at the drum (The Warm Snow)."
+    },
+    {
+      "id": "ghakis_vents_cleared",
+      "type": "bool",
+      "summary": "The Vent-Fire and the burnt keepers in the vent gallery under Ghakis are destroyed (The Warm Snow)."
+    },
+    {
+      "id": "ghakis_sluice_open",
+      "type": "bool",
+      "summary": "The party opened the sluice under Ghakis and drowned the vents: her lair can't act in the fight (The Warm Snow)."
+    },
+    {
+      "id": "ghakis_gilt_seen",
+      "type": "bool",
+      "summary": "The party saw that Sarkhaza's hoard is gilt lead (The Warm Snow)."
+    },
+    {
+      "id": "ghakis_gilt_tried",
+      "type": "bool",
+      "summary": "The party looked at Sarkhaza's hoard from a distance and saw only gold (The Warm Snow)."
+    },
+    {
+      "id": "sarkhaza_slain",
+      "type": "bool",
+      "summary": "Sarkhaza, the red dragon under Ghakis, is dead (The Warm Snow)."
+    },
+    {
+      "id": "wyrm_met",
+      "type": "bool",
+      "summary": "The party has spoken with Sarkhaza (The Warm Snow)."
+    },
+    {
+      "id": "wyrm_story_heard",
+      "type": "bool",
+      "summary": "Sarkhaza told the party how she came through the mists and offered to burn the count out (The Warm Snow)."
+    },
+    {
+      "id": "wyrm_read",
+      "type": "bool",
+      "summary": "The party tried to read Sarkhaza while she talked about the castle (The Warm Snow)."
+    },
+    {
+      "id": "wyrm_lie_seen",
+      "type": "bool",
+      "summary": "The party saw through Sarkhaza: she can't fly, and wants the villages, not the count (The Warm Snow)."
+    },
+    {
+      "id": "wyrm_salted",
+      "type": "bool",
+      "summary": "Sarkhaza ate the party's salted carcass: she fights slowed, with fewer Hit Points (The Warm Snow)."
+    },
+    {
+      "id": "wyrm_fed_crude",
+      "type": "bool",
+      "summary": "Sarkhaza smelled the salt in the party's carcass and burned it (The Warm Snow)."
+    },
+    {
+      "id": "wyrm_unchained",
+      "type": "bool",
+      "summary": "The party pulled the pin from Sarkhaza's collar (The Warm Snow)."
     }
   ]
 }

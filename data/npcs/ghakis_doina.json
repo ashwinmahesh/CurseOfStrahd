@@ -1,0 +1,18 @@
+{
+  "id": "ghakis_doina",
+  "name": "Doina",
+  "title": "Charcoal-Burner from below Krezk",
+  "summary": "A charcoal-burner from the woods below Krezk, taken with her husband Petrache for a tithe to the castle they couldn't pay, and carted up Mount Ghakis in a cage.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "mount_ghakis"
+  ],
+  "region": "mount_ghakis",
+  "pronouns": "she/her",
+  "pockets": false
+}

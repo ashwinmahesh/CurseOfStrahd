@@ -1145,6 +1145,12 @@
       "pattern": "^[a-z0-9_]+$",
       "description": "Sprite and portrait id when it isn't the block's own id (art/sprites/<art>/), e.g. a named NPC's block."
     },
+    "art_height": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 8,
+      "description": "Sprite height in world units when the block borrows a smaller creature's sprite at a bigger size (CombatToken.height_of); unset, the art id's own height (CombatToken.HEIGHTS)."
+    },
     "legendary_resistance": {
       "type": "integer",
       "minimum": 1,

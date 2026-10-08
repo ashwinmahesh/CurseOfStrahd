@@ -1,0 +1,17 @@
+{
+  "id": "sarkhaza",
+  "name": "Sarkhaza",
+  "title": "The Dragon Under Ghakis",
+  "summary": "A red dragon who came through the mists forty years ago after a dead silver dragon's hoard and found the count waiting for her. She lies chained by the neck on that hoard in a cavern under Mount Ghakis, her wings riveted shut, starved on salted goat and the count's tithes.",
+  "portrait": "draconic_spirit",
+  "sprite": "draconic_spirit",
+  "attitude": "hostile",
+  "monster": "sarkhaza",
+  "guest": false,
+  "tags": [
+    "dragon",
+    "mount_ghakis"
+  ],
+  "region": "mount_ghakis",
+  "pronouns": "she/her"
+}

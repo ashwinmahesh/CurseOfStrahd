@@ -1,0 +1,232 @@
+{
+  "id": "sarkhaza",
+  "name": "Sarkhaza",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Warm Snow, docs/story/side_quests.md), built down from the 2025 Monster Manual's adult red dragon (CR 17) to fit a party of level 10 to 11: forty years chained and starved, her wings bound to her back with iron, so she can't fly and drags her chain at a crawl; fewer Hit Points, a weaker breath and two claws for three rends. Her lair still answers her. Drawn with the draconic spirit's sprite, made Huge."
+  },
+  "size": "huge",
+  "type": "dragon",
+  "tags": [
+    "boss",
+    "dragon",
+    "chromatic",
+    "red"
+  ],
+  "alignment": "chaotic evil",
+  "art": "draconic_spirit",
+  "art_height": 3.4,
+  "ac": 18,
+  "ac_note": "natural armor, scales gone dull",
+  "initiative": 4,
+  "hp": {
+    "average": 200,
+    "dice": "16d12+96"
+  },
+  "speed": {
+    "walk": 20
+  },
+  "abilities": {
+    "str": 25,
+    "dex": 10,
+    "con": 23,
+    "int": 16,
+    "wis": 13,
+    "cha": 19
+  },
+  "saves": {
+    "dex": 5,
+    "con": 11,
+    "wis": 6,
+    "cha": 9
+  },
+  "skills": {
+    "perception": 11,
+    "stealth": 5
+  },
+  "immunities": [
+    "fire"
+  ],
+  "senses": {
+    "blindsight": 60,
+    "darkvision": 120
+  },
+  "passive_perception": 21,
+  "languages": [
+    "Common",
+    "Draconic"
+  ],
+  "cr": 13,
+  "xp": 10000,
+  "proficiency_bonus": 5,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (3/Day)",
+      "action": "special",
+      "summary": "Three times a day, a failed saving throw becomes a success.",
+      "text": "When Sarkhaza fails a saving throw, she can choose to succeed instead, three times a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "chained",
+      "name": "Chained",
+      "action": "passive",
+      "summary": "A chain of the count's runs from a collar at her throat into the rock. It lets her crawl, never run.",
+      "text": "A collar of black iron sits at the base of Sarkhaza's neck, and its chain runs back into the rock to the count's anchor. It lets her drag herself about her cavern, slowly; her Speed is 20 feet.",
+      "implemented": "text"
+    },
+    {
+      "id": "wings_bound",
+      "name": "Wings Bound",
+      "action": "passive",
+      "summary": "Iron bands hold her wings shut against her back. She can't fly.",
+      "text": "Iron bands riveted through the bone hold Sarkhaza's wings folded against her back. She has no Fly Speed.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "rend",
+          "count": 2
+        }
+      ],
+      "summary": "Two Rends.",
+      "text": "Sarkhaza makes two Rend attacks."
+    },
+    {
+      "id": "rend",
+      "name": "Rend",
+      "kind": "melee",
+      "attack": {
+        "bonus": 12,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 16,
+          "dice": "2d8+7",
+          "type": "slashing"
+        },
+        {
+          "average": 3,
+          "dice": "1d6",
+          "type": "fire"
+        }
+      ],
+      "summary": "Claws and teeth hot as a forge's coals.",
+      "text": "Melee Attack Roll: +12, reach 10 ft. Hit: 16 (2d8 + 7) Slashing damage plus 3 (1d6) Fire damage."
+    },
+    {
+      "id": "fire_breath",
+      "name": "Fire Breath",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "dex",
+        "dc": 17,
+        "success": "half"
+      },
+      "area": {
+        "shape": "cone",
+        "size": 60
+      },
+      "targets": {
+        "range": 60
+      },
+      "damage": [
+        {
+          "average": 38,
+          "dice": "11d6",
+          "type": "fire"
+        }
+      ],
+      "summary": "Recharge 5-6: a 60-ft cone of fire; DC 17 Dex save, 11d6 Fire, half on a success.",
+      "text": "Dexterity Saving Throw: DC 17, each creature in a 60-foot Cone. Failure: 38 (11d6) Fire damage. Success: Half damage. Forty years of hunger have thinned it; it is still a red dragon's fire."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "rend",
+        "name": "Rend",
+        "cost": 2,
+        "action": "rend",
+        "summary": "Makes one Rend."
+      },
+      {
+        "id": "drag_the_chain",
+        "name": "Drag the Chain",
+        "cost": 1,
+        "move": true,
+        "summary": "Drags herself up to her Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "lair_actions": [
+    {
+      "id": "vents",
+      "name": "The Vents Answer",
+      "kind": "save",
+      "save": {
+        "ability": "dex",
+        "dc": 15,
+        "success": "half"
+      },
+      "targets": {
+        "range": 120,
+        "count": 2
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "2d6",
+          "type": "fire"
+        }
+      ],
+      "summary": "Two foes she can see: a vent opens under each; DC 15 Dex save, 2d6 Fire, half on a success.",
+      "text": "Forty years of her heat have cracked the floor of the mountain. The cracks under up to two creatures Sarkhaza can see blow out fire: each makes a DC 15 Dexterity saving throw, taking 7 (2d6) Fire damage on a failure or half as much on a success."
+    },
+    {
+      "id": "rockfall",
+      "name": "The Roof Comes Down",
+      "kind": "save",
+      "save": {
+        "ability": "dex",
+        "dc": 15,
+        "success": "half"
+      },
+      "targets": {
+        "range": 120,
+        "count": 1
+      },
+      "damage": [
+        {
+          "average": 9,
+          "dice": "2d8",
+          "type": "bludgeoning"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "prone"
+        }
+      ],
+      "summary": "One foe she can see: the heat-cracked roof falls on it; DC 15 Dex save, 2d8 Bludgeoning and Prone, half on a success.",
+      "text": "Sarkhaza heaves against her chain and the heat-rotten roof cracks. Rock falls on a creature she can see: it makes a DC 15 Dexterity saving throw, taking 9 (2d8) Bludgeoning damage and falling Prone on a failure, or half the damage only on a success."
+    }
+  ],
+  "legendary_resistance": 3,
+  "regions": [
+    "mount_ghakis"
+  ],
+  "ai_profile": "brute",
+  "summary": "A red dragon who came through the mists forty years ago after a dead silver dragon's gold, and found the count waiting. Chained by the neck in a cavern under Mount Ghakis, wings riveted shut, kept starving on a heap of treasure, she has had forty years to grow hungry and patient and very angry. Her claws are hot as coals and her breath still fills a cave."
+}

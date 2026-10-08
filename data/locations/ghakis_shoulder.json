@@ -1,0 +1,571 @@
+{
+  "id": "ghakis_shoulder",
+  "name": "The North Shoulder of Ghakis",
+  "region": "mount_ghakis",
+  "summary": "A shelf of steaming black rock high on Mount Ghakis, where the snow won't lie, and an iron gate in the mountain with the count's crest on it (The Warm Snow, docs/story/side_quests.md).",
+  "text": "Slush, then mud, then bare black rock that steams in the cold. At the top of the shelf, an iron gate set into the mountain, and warm air breathing out round it, slowly, in and out.",
+  "map": {
+    "rows": [
+      "##############################",
+      "##############..##############",
+      "##############..##############",
+      "##########..........##########",
+      "########..............########",
+      "#######....==.......==..######",
+      "######.....==.......==...#####",
+      "#####....................#####",
+      "####.......~~.............####",
+      "###.........~~.......=.....###",
+      "###..=.......~.............###",
+      "##............~.........=...##",
+      "##.........=...~~............#",
+      "#...............~............#",
+      "#....~~..........~...=.......#",
+      "#.....~~...=......~..........#",
+      "#......~...........~.........#",
+      "##..................~~......##",
+      "###...=...............=....###",
+      "####......................####",
+      "#####.....###########.....####",
+      "######..######################"
+    ],
+    "theme": "wilderness",
+    "light": "dim",
+    "outdoors": true,
+    "elevation": [
+      "999999999999999999999999999999",
+      "999999999999999999999999999999",
+      "888888888888888888888888888888",
+      "888888888888888888888888888888",
+      "777777777777777777777777777777",
+      "777777777777777777777777777777",
+      "666666666666666666666666666666",
+      "666666666666666666666666666666",
+      "555555555555555555555555555555",
+      "555555555555555555555555555555",
+      "444444444444444444444444444444",
+      "444444444444444444444444444444",
+      "333333333333333333333333333333",
+      "333333333333333333333333333333",
+      "222222222222222222222222222222",
+      "222222222222222222222222222222",
+      "111111111111111111111111111111",
+      "111111111111111111111111111111",
+      "000000000000000000000000000000",
+      "000000000000000000000000000000",
+      "000000000000000000000000000000",
+      "000000000000000000000000000000"
+    ]
+  },
+  "areas": [
+    {
+      "id": "ghakis_path",
+      "name": "The goat path",
+      "cells": [
+        [
+          1,
+          12
+        ],
+        [
+          28,
+          20
+        ]
+      ]
+    },
+    {
+      "id": "ghakis_slope",
+      "name": "The steaming slope",
+      "cells": [
+        [
+          3,
+          8
+        ],
+        [
+          27,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "ghakis_yard",
+      "name": "Before the gate",
+      "cells": [
+        [
+          6,
+          3
+        ],
+        [
+          24,
+          7
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      6,
+      19
+    ],
+    "from_path": [
+      6,
+      19
+    ],
+    "from_lair": [
+      14,
+      4
+    ]
+  },
+  "exits": [
+    {
+      "id": "ghakis_path_down",
+      "cell": [
+        6,
+        21
+      ],
+      "to": "travel",
+      "label": "The goat path back round the gorge"
+    },
+    {
+      "id": "ghakis_path_down_2",
+      "cell": [
+        7,
+        21
+      ],
+      "to": "travel",
+      "label": "The goat path back round the gorge"
+    },
+    {
+      "id": "ghakis_tunnel",
+      "cell": [
+        14,
+        1
+      ],
+      "to": "ghakis_lair",
+      "spawn": "from_gate",
+      "label": "Into the mountain"
+    },
+    {
+      "id": "ghakis_tunnel_2",
+      "cell": [
+        15,
+        1
+      ],
+      "to": "ghakis_lair",
+      "spawn": "from_gate",
+      "label": "Into the mountain"
+    }
+  ],
+  "doors": [
+    {
+      "id": "ghakis_gate_w",
+      "cell": [
+        14,
+        2
+      ],
+      "label": "The count's gate"
+    },
+    {
+      "id": "ghakis_gate_e",
+      "cell": [
+        15,
+        2
+      ],
+      "label": "The count's gate"
+    }
+  ],
+  "props": [
+    {
+      "id": "ghakis_gate_crest",
+      "cell": [
+        13,
+        3
+      ],
+      "kind": "examine",
+      "label": "The crest on the gate",
+      "model": "crest",
+      "dialogue": "mount_ghakis/the_warm_snow:gate"
+    },
+    {
+      "id": "ghakis_cart",
+      "cell": [
+        20,
+        5
+      ],
+      "kind": "examine",
+      "label": "The black cart",
+      "model": "wagon",
+      "span": [
+        2,
+        2
+      ],
+      "facing": "west"
+    },
+    {
+      "id": "ghakis_cage",
+      "cell": [
+        22,
+        4
+      ],
+      "kind": "examine",
+      "label": "The cage off the cart",
+      "model": "cage_covered"
+    },
+    {
+      "id": "ghakis_salt_sacks",
+      "cell": [
+        11,
+        5
+      ],
+      "kind": "examine",
+      "label": "Grey sacks",
+      "model": "sack_pile"
+    },
+    {
+      "id": "ghakis_crates",
+      "cell": [
+        12,
+        6
+      ],
+      "kind": "decor",
+      "label": "Crates",
+      "model": "crate_stack"
+    },
+    {
+      "id": "ghakis_carcasses",
+      "cell": [
+        17,
+        4
+      ],
+      "kind": "examine",
+      "label": "Goat carcasses",
+      "model": "carcass"
+    },
+    {
+      "id": "ghakis_lantern",
+      "cell": [
+        16,
+        3
+      ],
+      "kind": "decor",
+      "label": "A lantern on a pole",
+      "model": "lantern_post"
+    },
+    {
+      "id": "ghakis_scorch",
+      "cell": [
+        10,
+        4
+      ],
+      "kind": "examine",
+      "label": "Scorched rock",
+      "model": "scorch"
+    },
+    {
+      "id": "ghakis_soot",
+      "cell": [
+        19,
+        3
+      ],
+      "kind": "decor",
+      "label": "Soot",
+      "model": "soot_patch"
+    },
+    {
+      "id": "ghakis_handcart",
+      "cell": [
+        8,
+        6
+      ],
+      "kind": "decor",
+      "label": "A handcart",
+      "model": "handcart"
+    },
+    {
+      "id": "ghakis_drag_marks",
+      "cell": [
+        15,
+        9
+      ],
+      "kind": "examine",
+      "label": "Wheel ruts",
+      "model": "drag_marks"
+    },
+    {
+      "id": "ghakis_goat_bones",
+      "cell": [
+        24,
+        9
+      ],
+      "kind": "examine",
+      "label": "Goat bones",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "ghakis_bones_2",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "decor",
+      "label": "Bones",
+      "model": "bones"
+    },
+    {
+      "id": "ghakis_cairn",
+      "cell": [
+        9,
+        11
+      ],
+      "kind": "examine",
+      "label": "A cairn",
+      "model": "cairn"
+    },
+    {
+      "id": "ghakis_boulder",
+      "cell": [
+        26,
+        13
+      ],
+      "kind": "decor",
+      "label": "A boulder",
+      "model": "boulder"
+    },
+    {
+      "id": "ghakis_boulder_2",
+      "cell": [
+        3,
+        15
+      ],
+      "kind": "decor",
+      "label": "A boulder",
+      "model": "boulder"
+    },
+    {
+      "id": "ghakis_snowdrift",
+      "cell": [
+        2,
+        13
+      ],
+      "kind": "decor",
+      "label": "Old snow",
+      "model": "snowdrift"
+    },
+    {
+      "id": "ghakis_snowdrift_2",
+      "cell": [
+        27,
+        16
+      ],
+      "kind": "decor",
+      "label": "Old snow",
+      "model": "snowdrift"
+    },
+    {
+      "id": "ghakis_snowdrift_3",
+      "cell": [
+        4,
+        18
+      ],
+      "kind": "decor",
+      "label": "Old snow",
+      "model": "snowdrift"
+    },
+    {
+      "id": "ghakis_ice",
+      "cell": [
+        24,
+        18
+      ],
+      "kind": "decor",
+      "label": "Ice",
+      "model": "ice_patch"
+    },
+    {
+      "id": "ghakis_melt",
+      "cell": [
+        12,
+        14
+      ],
+      "kind": "examine",
+      "label": "Meltwater",
+      "model": "puddle"
+    },
+    {
+      "id": "ghakis_melt_2",
+      "cell": [
+        19,
+        13
+      ],
+      "kind": "decor",
+      "label": "Meltwater",
+      "model": "puddle"
+    },
+    {
+      "id": "ghakis_dead_pine",
+      "cell": [
+        3,
+        11
+      ],
+      "kind": "decor",
+      "label": "A dead pine",
+      "model": "dead_tree"
+    },
+    {
+      "id": "ghakis_dead_pine_2",
+      "cell": [
+        26,
+        11
+      ],
+      "kind": "examine",
+      "label": "A dead pine",
+      "model": "dead_tree"
+    },
+    {
+      "id": "ghakis_pine",
+      "cell": [
+        2,
+        16
+      ],
+      "kind": "decor",
+      "label": "A pine",
+      "model": "pine"
+    },
+    {
+      "id": "ghakis_pine_2",
+      "cell": [
+        27,
+        18
+      ],
+      "kind": "decor",
+      "label": "A pine",
+      "model": "pine"
+    },
+    {
+      "id": "ghakis_signpost",
+      "cell": [
+        8,
+        19
+      ],
+      "kind": "examine",
+      "label": "A broken signpost",
+      "model": "signpost_broken"
+    },
+    {
+      "id": "ghakis_dropped_flask",
+      "cell": [
+        18,
+        7
+      ],
+      "kind": "search",
+      "label": "Something in the slush",
+      "model": "rubble",
+      "item": "potion_of_resistance_fire",
+      "search_dc": 14
+    }
+  ],
+  "containers": [
+    {
+      "id": "ghakis_cart_box",
+      "cell": [
+        19,
+        6
+      ],
+      "label": "The drivers' box",
+      "model": "chest_iron",
+      "items": [
+        {
+          "id": "potion_of_resistance_fire",
+          "qty": 1
+        }
+      ],
+      "gold": 35
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        16,
+        3
+      ],
+      "kind": "lamp",
+      "bright_ft": 15,
+      "dim_ft": 30
+    },
+    {
+      "cell": [
+        10,
+        4
+      ],
+      "kind": "fire",
+      "color": "ember",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "ghakis_petrache",
+      "cell": [
+        23,
+        5
+      ],
+      "dialogue": "mount_ghakis/the_warm_snow:prisoners",
+      "when": "not flag.ghakis_prisoners_freed",
+      "facing": "west"
+    },
+    {
+      "npc": "ghakis_doina",
+      "cell": [
+        23,
+        6
+      ],
+      "dialogue": "mount_ghakis/the_warm_snow:prisoners",
+      "when": "not flag.ghakis_prisoners_freed",
+      "facing": "west"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "ghakis_keepers",
+      "trigger": "enter_area:ghakis_yard",
+      "when": "not flag.ghakis_keepers_slain",
+      "waiting": true,
+      "text": "The figures by the cart turn round all together. Under the wet hoods their faces are grey and dry as old paper, and the big one by the gate is only armour, standing up by itself.",
+      "monsters": [
+        {
+          "monster": "wight",
+          "cell": [
+            18,
+            5
+          ],
+          "name": "A Keeper",
+          "facing": "south"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            22,
+            7
+          ],
+          "name": "A Keeper",
+          "facing": "south"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            15,
+            4
+          ],
+          "name": "A Chain-Warden",
+          "facing": "south"
+        }
+      ],
+      "surprise": "",
+      "flag": "ghakis_keepers_slain"
+    }
+  ],
+  "narration": {
+    "enter": "enter:ghakis_shoulder"
+  },
+  "rest": "risky"
+}

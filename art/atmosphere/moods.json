@@ -43,6 +43,8 @@
     "van_richtens_tower": "lakeside",
     "berez": "berez",
     "mount_baratok": "high_snow",
+    "mount_ghakis": "high_snow",
+    "mount_ghakis/indoors": "cave",
     "werewolf_den": "werewolf_den",
     "yester_hill": "yester_hill",
     "castle_ravenloft": "ravenloft",

@@ -155,6 +155,23 @@ static func height_for(aid: String) -> float:
 	return HeroLook.height_for_art(aid, float(HEIGHTS.get(aid, 1.2)))
 
 
+## Sprite height for a combatant: its stat block's own `art_height` when it borrows a smaller creature's sprite at a
+## bigger size (Sarkhaza, a Huge dragon on the draconic spirit's), else its art id's (height_for).
+static func height_of(c: Combatant) -> float:
+	if c.creature is Monster and (c.creature as Monster).data.has("art_height"):
+		return float((c.creature as Monster).data["art_height"])
+	return height_for(art_id(c))
+
+
+## This token's sprite height: height_of, also for a person drawn with their own stat block's art (Sarkhaza in her
+## cavern before the fight); another art override (a commoner's block in a named NPC's look) takes that art's.
+func _height(aid: String) -> float:
+	var own := ""
+	if combatant.creature is Monster:
+		own = str((combatant.creature as Monster).data.get("art", ""))
+	return height_of(combatant) if art_override == "" or art_override == own else height_for(aid)
+
+
 ## `art` overrides which sprite to use (NPCs whose stat block is generic, like a commoner).
 static func create(c: Combatant, art: String = "") -> CombatToken:
 	var t := CombatToken.new()
@@ -173,7 +190,7 @@ func _build() -> void:
 	var frames := DirectionalSprite.frames_for(aid)
 	var size_units := float(c.size_cells)
 	if frames != null:
-		sprite = DirectionalSprite.create(frames, height_for(aid))
+		sprite = DirectionalSprite.create(frames, _height(aid))
 		sprite.play(&"idle_s")
 		if _is_echo() and sprite.material_override is ShaderMaterial:
 			(sprite.material_override as ShaderMaterial).set_shader_parameter("ghost", 1.0)
@@ -221,7 +238,7 @@ func _build() -> void:
 	# Health bar under the ring, facing up so it reads from the camera's pitch.
 	_bar_back = _bar("ink", 0.8 * size_units, 0.0)
 	_bar_fill = _bar("sickly", 0.8 * size_units, 0.005)
-	var top := height_for(aid) + 0.25
+	var top := _height(aid) + 0.25
 	_label = _text(c.name(), Vector3(0, top, 0), 30, "vellum")
 	_status = _text("", Vector3(0, top + 0.2, 0), 24, "flame")
 	_status_y = top + 0.2

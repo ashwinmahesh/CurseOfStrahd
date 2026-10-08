@@ -1,0 +1,1224 @@
+{
+  "id": "ghakis_lair",
+  "name": "Under Mount Ghakis",
+  "region": "mount_ghakis",
+  "summary": "The count's caves under the north shoulder of Mount Ghakis: the keepers' post, their larder, the anchor of a great chain, a gallery of fire-cracked rock and, at the bottom, the dragon chained on her hoard (The Warm Snow, docs/story/side_quests.md).",
+  "text": "A tunnel into the mountain, warm as a kitchen and getting warmer. The rock sweats. Every so often the whole floor trembles, very slightly, in and out, like a sleeper's chest.",
+  "map": {
+    "rows": [
+      "############################################",
+      "############.....................###########",
+      "##########.......11222222211......##########",
+      "#########........11222222211.......#########",
+      "#########..=.....11111111111.......#########",
+      "#########.....................~....#########",
+      "#########...~..................~...#########",
+      "#########....~.....................#########",
+      "#########.......................=..#########",
+      "#########......~............~~.....#########",
+      "#########..........................#########",
+      "###########......................###########",
+      "##########..################################",
+      "####..........##############################",
+      "###.........=..####........#################",
+      "###...~~.......###....==....###.........####",
+      "###............###..........##.......==..###",
+      "###.=.....~..............................###",
+      "###........~...###.......................###",
+      "###..~.........###..........##...........###",
+      "####...........###..........##...........###",
+      "##################..........##..........####",
+      "####################....####################",
+      "#####...........####....####################",
+      "####............####....####################",
+      "####....==..............####################",
+      "####....................####################",
+      "####............####....####################",
+      "####............####....####################",
+      "####...........#####....####################",
+      "####################....####################",
+      "#####################..#####################"
+    ],
+    "theme": "dungeon",
+    "light": "dark",
+    "ceiling_ft": 40
+  },
+  "areas": [
+    {
+      "id": "lair_tunnel",
+      "name": "The tunnel",
+      "cells": [
+        [
+          20,
+          22
+        ],
+        [
+          23,
+          30
+        ]
+      ]
+    },
+    {
+      "id": "keepers_post",
+      "name": "The keepers' post",
+      "cells": [
+        [
+          4,
+          23
+        ],
+        [
+          15,
+          29
+        ]
+      ]
+    },
+    {
+      "id": "anchor_room",
+      "name": "The anchor",
+      "cells": [
+        [
+          18,
+          14
+        ],
+        [
+          27,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "ghakis_larder",
+      "name": "The larder",
+      "cells": [
+        [
+          30,
+          15
+        ],
+        [
+          40,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "vent_gallery",
+      "name": "The vent gallery",
+      "cells": [
+        [
+          3,
+          13
+        ],
+        [
+          14,
+          20
+        ]
+      ]
+    },
+    {
+      "id": "hoard_hall",
+      "name": "The hoard",
+      "cells": [
+        [
+          9,
+          1
+        ],
+        [
+          34,
+          11
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      21,
+      29
+    ],
+    "from_gate": [
+      21,
+      29
+    ]
+  },
+  "exits": [
+    {
+      "id": "lair_out",
+      "cell": [
+        21,
+        31
+      ],
+      "to": "ghakis_shoulder",
+      "spawn": "from_lair",
+      "label": "Out to the gate"
+    },
+    {
+      "id": "lair_out_2",
+      "cell": [
+        22,
+        31
+      ],
+      "to": "ghakis_shoulder",
+      "spawn": "from_lair",
+      "label": "Out to the gate"
+    }
+  ],
+  "doors": [
+    {
+      "id": "ghakis_hot_door",
+      "cell": [
+        16,
+        17
+      ],
+      "label": "The hot door"
+    }
+  ],
+  "props": [
+    {
+      "id": "ghakis_keepers_desk",
+      "cell": [
+        6,
+        23
+      ],
+      "kind": "decor",
+      "label": "A desk",
+      "model": "desk"
+    },
+    {
+      "id": "ghakis_keepers_log",
+      "cell": [
+        7,
+        23
+      ],
+      "kind": "examine",
+      "label": "The keepers' log",
+      "model": "ledger",
+      "dialogue": "mount_ghakis/the_warm_snow:log"
+    },
+    {
+      "id": "ghakis_keepers_table",
+      "cell": [
+        8,
+        25
+      ],
+      "kind": "decor",
+      "label": "A table",
+      "model": "table"
+    },
+    {
+      "id": "ghakis_keepers_chairs",
+      "cell": [
+        9,
+        25
+      ],
+      "kind": "decor",
+      "label": "Chairs",
+      "model": "chairs"
+    },
+    {
+      "id": "ghakis_cloak_pegs",
+      "cell": [
+        10,
+        23
+      ],
+      "kind": "decor",
+      "label": "Hoods on pegs",
+      "model": "cloak_pegs"
+    },
+    {
+      "id": "ghakis_lantern_post",
+      "cell": [
+        14,
+        23
+      ],
+      "kind": "decor",
+      "label": "A lantern",
+      "model": "lantern_bracket"
+    },
+    {
+      "id": "ghakis_bedroll",
+      "cell": [
+        13,
+        25
+      ],
+      "kind": "decor",
+      "label": "A bedroll",
+      "model": "bedroll"
+    },
+    {
+      "id": "ghakis_bedroll_2",
+      "cell": [
+        13,
+        27
+      ],
+      "kind": "decor",
+      "label": "A bedroll",
+      "model": "bedroll"
+    },
+    {
+      "id": "ghakis_bedroll_3",
+      "cell": [
+        11,
+        28
+      ],
+      "kind": "decor",
+      "label": "A bedroll",
+      "model": "bedroll"
+    },
+    {
+      "id": "ghakis_stove",
+      "cell": [
+        5,
+        28
+      ],
+      "kind": "examine",
+      "label": "A cold stove",
+      "model": "stove"
+    },
+    {
+      "id": "ghakis_sack",
+      "cell": [
+        6,
+        29
+      ],
+      "kind": "decor",
+      "label": "A sack",
+      "model": "sack"
+    },
+    {
+      "id": "ghakis_bucket",
+      "cell": [
+        15,
+        27
+      ],
+      "kind": "decor",
+      "label": "A bucket",
+      "model": "bucket_brush"
+    },
+    {
+      "id": "ghakis_tally",
+      "cell": [
+        12,
+        29
+      ],
+      "kind": "examine",
+      "label": "Marks on the wall",
+      "model": "tally_board"
+    },
+    {
+      "id": "ghakis_tunnel_ruts",
+      "cell": [
+        21,
+        27
+      ],
+      "kind": "examine",
+      "label": "Ruts in the floor",
+      "model": "drag_marks"
+    },
+    {
+      "id": "ghakis_tunnel_lamp",
+      "cell": [
+        23,
+        24
+      ],
+      "kind": "decor",
+      "label": "A lamp bracket",
+      "model": "lantern_bracket"
+    },
+    {
+      "id": "ghakis_winch",
+      "cell": [
+        22,
+        15
+      ],
+      "kind": "examine",
+      "label": "The great drum",
+      "model": "winch",
+      "span": [
+        2,
+        1
+      ],
+      "dialogue": "mount_ghakis/the_warm_snow:winch"
+    },
+    {
+      "id": "ghakis_chain_hole",
+      "cell": [
+        24,
+        14
+      ],
+      "kind": "examine",
+      "label": "The chain",
+      "model": "wall_chains"
+    },
+    {
+      "id": "ghakis_brake",
+      "cell": [
+        19,
+        15
+      ],
+      "kind": "decor",
+      "label": "A brake wheel",
+      "model": "gear_brake"
+    },
+    {
+      "id": "ghakis_tool_rack",
+      "cell": [
+        26,
+        15
+      ],
+      "kind": "decor",
+      "label": "Tools",
+      "model": "tool_rack"
+    },
+    {
+      "id": "ghakis_lantern_stand",
+      "cell": [
+        25,
+        17
+      ],
+      "kind": "decor",
+      "label": "A lantern",
+      "model": "lantern_stand"
+    },
+    {
+      "id": "ghakis_rope",
+      "cell": [
+        26,
+        20
+      ],
+      "kind": "decor",
+      "label": "Rope",
+      "model": "rope_coils"
+    },
+    {
+      "id": "ghakis_crate",
+      "cell": [
+        19,
+        20
+      ],
+      "kind": "decor",
+      "label": "A crate",
+      "model": "crate"
+    },
+    {
+      "id": "ghakis_shackled",
+      "cell": [
+        18,
+        19
+      ],
+      "kind": "examine",
+      "label": "A skeleton in shackles",
+      "model": "skeleton_shackles"
+    },
+    {
+      "id": "ghakis_larder_carcass",
+      "cell": [
+        32,
+        16
+      ],
+      "kind": "examine",
+      "label": "Carcasses on hooks",
+      "model": "carcass",
+      "dialogue": "mount_ghakis/the_warm_snow:larder"
+    },
+    {
+      "id": "ghakis_salt_barrels",
+      "cell": [
+        37,
+        16
+      ],
+      "kind": "examine",
+      "label": "Barrels of grey salt",
+      "model": "barrel"
+    },
+    {
+      "id": "ghakis_salt_barrels_2",
+      "cell": [
+        38,
+        16
+      ],
+      "kind": "decor",
+      "label": "A barrel",
+      "model": "barrel"
+    },
+    {
+      "id": "ghakis_meat_hooks",
+      "cell": [
+        34,
+        15
+      ],
+      "kind": "decor",
+      "label": "Meat hooks",
+      "model": "pot_rack"
+    },
+    {
+      "id": "ghakis_larder_carcass_2",
+      "cell": [
+        33,
+        20
+      ],
+      "kind": "decor",
+      "label": "A carcass",
+      "model": "carcass"
+    },
+    {
+      "id": "ghakis_larder_carcass_3",
+      "cell": [
+        39,
+        19
+      ],
+      "kind": "decor",
+      "label": "A carcass",
+      "model": "carcass"
+    },
+    {
+      "id": "ghakis_block",
+      "cell": [
+        35,
+        18
+      ],
+      "kind": "decor",
+      "label": "A butcher's bench",
+      "model": "workbench"
+    },
+    {
+      "id": "ghakis_pen",
+      "cell": [
+        39,
+        17
+      ],
+      "kind": "examine",
+      "label": "An empty cage",
+      "model": "cage_hanging"
+    },
+    {
+      "id": "ghakis_straw",
+      "cell": [
+        31,
+        20
+      ],
+      "kind": "decor",
+      "label": "Straw",
+      "model": "straw"
+    },
+    {
+      "id": "ghakis_larder_crates",
+      "cell": [
+        31,
+        16
+      ],
+      "kind": "decor",
+      "label": "Crates",
+      "model": "crate_stack"
+    },
+    {
+      "id": "ghakis_larder_bucket",
+      "cell": [
+        36,
+        21
+      ],
+      "kind": "decor",
+      "label": "A bucket",
+      "model": "bucket_brush"
+    },
+    {
+      "id": "ghakis_sluice",
+      "cell": [
+        5,
+        13
+      ],
+      "kind": "examine",
+      "label": "A stone sluice gate",
+      "model": "gear_brake",
+      "dialogue": "mount_ghakis/the_warm_snow:sluice"
+    },
+    {
+      "id": "ghakis_channel",
+      "cell": [
+        5,
+        14
+      ],
+      "kind": "decor",
+      "label": "A dry channel",
+      "model": "trough"
+    },
+    {
+      "id": "ghakis_crack",
+      "cell": [
+        8,
+        16
+      ],
+      "kind": "decor",
+      "label": "A crack",
+      "model": "floor_crack"
+    },
+    {
+      "id": "ghakis_crack_2",
+      "cell": [
+        11,
+        15
+      ],
+      "kind": "decor",
+      "label": "A crack",
+      "model": "floor_crack"
+    },
+    {
+      "id": "ghakis_gallery_scorch",
+      "cell": [
+        9,
+        19
+      ],
+      "kind": "decor",
+      "label": "Scorch marks",
+      "model": "scorch"
+    },
+    {
+      "id": "ghakis_gallery_soot",
+      "cell": [
+        12,
+        19
+      ],
+      "kind": "decor",
+      "label": "Soot",
+      "model": "soot_patch"
+    },
+    {
+      "id": "ghakis_ash",
+      "cell": [
+        4,
+        19
+      ],
+      "kind": "decor",
+      "label": "Ash",
+      "model": "ash_heap"
+    },
+    {
+      "id": "ghakis_andrei",
+      "cell": [
+        13,
+        17
+      ],
+      "kind": "examine",
+      "label": "What's left of a keeper",
+      "model": "skeleton_leather"
+    },
+    {
+      "id": "ghakis_gallery_bones",
+      "cell": [
+        7,
+        18
+      ],
+      "kind": "decor",
+      "label": "Bones",
+      "model": "bones"
+    },
+    {
+      "id": "ghakis_hoard",
+      "cell": [
+        22,
+        3
+      ],
+      "kind": "examine",
+      "label": "The hoard",
+      "model": "gold_heap",
+      "dialogue": "mount_ghakis/the_warm_snow:hoard"
+    },
+    {
+      "id": "ghakis_gold_spill",
+      "cell": [
+        17,
+        5
+      ],
+      "kind": "decor",
+      "label": "Gold",
+      "model": "gold_spill"
+    },
+    {
+      "id": "ghakis_gold_spill_2",
+      "cell": [
+        27,
+        5
+      ],
+      "kind": "decor",
+      "label": "Gold",
+      "model": "gold_spill"
+    },
+    {
+      "id": "ghakis_gold_spill_3",
+      "cell": [
+        19,
+        1
+      ],
+      "kind": "decor",
+      "label": "Gold",
+      "model": "gold_spill"
+    },
+    {
+      "id": "ghakis_hoard_chest",
+      "cell": [
+        18,
+        3
+      ],
+      "kind": "decor",
+      "label": "An open chest",
+      "model": "chest"
+    },
+    {
+      "id": "ghakis_jewel_box",
+      "cell": [
+        26,
+        3
+      ],
+      "kind": "decor",
+      "label": "A jewel box",
+      "model": "jewel_box"
+    },
+    {
+      "id": "ghakis_chain_groove",
+      "cell": [
+        22,
+        10
+      ],
+      "kind": "examine",
+      "label": "A groove in the floor",
+      "model": "drag_marks"
+    },
+    {
+      "id": "ghakis_hall_bones",
+      "cell": [
+        12,
+        8
+      ],
+      "kind": "examine",
+      "label": "Bones",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "ghakis_hall_bones_2",
+      "cell": [
+        31,
+        4
+      ],
+      "kind": "decor",
+      "label": "Bones",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "ghakis_hall_bones_3",
+      "cell": [
+        14,
+        3
+      ],
+      "kind": "decor",
+      "label": "Bones",
+      "model": "bones"
+    },
+    {
+      "id": "ghakis_hall_scorch",
+      "cell": [
+        13,
+        5
+      ],
+      "kind": "decor",
+      "label": "Scorch marks",
+      "model": "scorch"
+    },
+    {
+      "id": "ghakis_hall_scorch_2",
+      "cell": [
+        29,
+        8
+      ],
+      "kind": "decor",
+      "label": "Scorch marks",
+      "model": "scorch"
+    },
+    {
+      "id": "ghakis_hall_soot",
+      "cell": [
+        16,
+        10
+      ],
+      "kind": "decor",
+      "label": "Soot",
+      "model": "soot_patch"
+    },
+    {
+      "id": "ghakis_hall_crater",
+      "cell": [
+        30,
+        2
+      ],
+      "kind": "decor",
+      "label": "A crater",
+      "model": "crater"
+    },
+    {
+      "id": "ghakis_hall_shackles",
+      "cell": [
+        33,
+        6
+      ],
+      "kind": "examine",
+      "label": "Shackles in the wall",
+      "model": "skeleton_shackles"
+    }
+  ],
+  "containers": [
+    {
+      "id": "ghakis_keepers_box",
+      "cell": [
+        11,
+        23
+      ],
+      "label": "The keepers' strongbox",
+      "model": "strongbox",
+      "lock_dc": 16,
+      "items": [
+        {
+          "id": "potion_of_resistance_fire",
+          "qty": 2
+        }
+      ],
+      "gold": 300
+    },
+    {
+      "id": "ghakis_captains_rack",
+      "cell": [
+        4,
+        25
+      ],
+      "label": "The captain's rack",
+      "model": "weapon_rack",
+      "items": [
+        {
+          "id": "dragon_slayer",
+          "qty": 1
+        }
+      ]
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        22,
+        7
+      ],
+      "kind": "fire",
+      "color": "ember",
+      "bright_ft": 10,
+      "dim_ft": 30
+    },
+    {
+      "cell": [
+        14,
+        23
+      ],
+      "kind": "lamp",
+      "bright_ft": 15,
+      "dim_ft": 30
+    },
+    {
+      "cell": [
+        23,
+        24
+      ],
+      "kind": "torch",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        25,
+        17
+      ],
+      "kind": "lamp",
+      "bright_ft": 15,
+      "dim_ft": 30
+    },
+    {
+      "cell": [
+        12,
+        6
+      ],
+      "kind": "fire",
+      "color": "ember",
+      "bright_ft": 5,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        30,
+        5
+      ],
+      "kind": "fire",
+      "color": "ember",
+      "bright_ft": 5,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        28,
+        9
+      ],
+      "kind": "fire",
+      "color": "ember",
+      "bright_ft": 5,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        6,
+        15
+      ],
+      "kind": "fire",
+      "color": "ember",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        10,
+        17
+      ],
+      "kind": "fire",
+      "color": "ember",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "sarkhaza",
+      "cell": [
+        22,
+        7
+      ],
+      "dialogue": "mount_ghakis/the_warm_snow:wyrm",
+      "when": "not flag.sarkhaza_slain",
+      "facing": "south",
+      "approach": 8
+    }
+  ],
+  "encounters": [
+    {
+      "id": "vent_fire",
+      "trigger": "enter_area:vent_gallery",
+      "when": "not flag.ghakis_vents_cleared",
+      "text": "The cracks in the floor flare white. Something climbs out of the biggest of them, shaped like a man made of a bonfire and too big for the gallery, and skulls rise out of the ash after it, burning, and laughing.",
+      "monsters": [
+        {
+          "monster": "fire_elemental",
+          "cell": [
+            8,
+            15
+          ],
+          "name": "The Vent-Fire",
+          "hp": 150
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            5,
+            18
+          ],
+          "name": "A Burnt Keeper"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            12,
+            16
+          ],
+          "name": "A Burnt Keeper"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            9,
+            13
+          ],
+          "name": "A Burnt Keeper"
+        }
+      ],
+      "surprise": "",
+      "flag": "ghakis_vents_cleared"
+    },
+    {
+      "id": "sarkhaza",
+      "trigger": "dialogue",
+      "when": "flag.wyrm_unchained and flag.wyrm_salted and flag.ghakis_sluice_open",
+      "text": "The collar falls off onto the gold. Sarkhaza rises, all of her, and the cavern is too small for her, and she doesn't care.",
+      "monsters": [
+        {
+          "monster": "sarkhaza",
+          "cell": [
+            21,
+            6
+          ],
+          "hp": 170
+        }
+      ],
+      "lair": false,
+      "surprise": "",
+      "flag": "sarkhaza_slain",
+      "quest": {
+        "id": "the_warm_snow",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "sarkhaza",
+      "trigger": "dialogue",
+      "when": "flag.wyrm_unchained and flag.wyrm_salted and not flag.ghakis_sluice_open",
+      "text": "The collar falls off onto the gold. Sarkhaza rises, all of her, and the cavern is too small for her, and she doesn't care.",
+      "monsters": [
+        {
+          "monster": "sarkhaza",
+          "cell": [
+            21,
+            6
+          ],
+          "hp": 170
+        }
+      ],
+      "lair": true,
+      "surprise": "",
+      "flag": "sarkhaza_slain",
+      "quest": {
+        "id": "the_warm_snow",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "sarkhaza",
+      "trigger": "dialogue",
+      "when": "flag.wyrm_unchained and not flag.wyrm_salted and flag.ghakis_sluice_open",
+      "text": "The collar falls off onto the gold. Sarkhaza rises, all of her, and the cavern is too small for her, and she doesn't care.",
+      "monsters": [
+        {
+          "monster": "sarkhaza",
+          "cell": [
+            21,
+            6
+          ],
+          "hp": 215
+        }
+      ],
+      "lair": false,
+      "surprise": "",
+      "flag": "sarkhaza_slain",
+      "quest": {
+        "id": "the_warm_snow",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "sarkhaza",
+      "trigger": "dialogue",
+      "when": "flag.wyrm_unchained and not flag.wyrm_salted and not flag.ghakis_sluice_open",
+      "text": "The collar falls off onto the gold. Sarkhaza rises, all of her, and the cavern is too small for her, and she doesn't care.",
+      "monsters": [
+        {
+          "monster": "sarkhaza",
+          "cell": [
+            21,
+            6
+          ],
+          "hp": 215
+        }
+      ],
+      "lair": true,
+      "surprise": "",
+      "flag": "sarkhaza_slain",
+      "quest": {
+        "id": "the_warm_snow",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "sarkhaza",
+      "trigger": "dialogue",
+      "when": "not flag.wyrm_unchained and flag.wyrm_salted and flag.wyrm_chain_drawn and flag.ghakis_sluice_open",
+      "text": "Sarkhaza lunges, and the chain, hauled short on the drum above, snaps her head back by the collar. For a moment she hangs there choking, claws scrabbling on the gold.",
+      "monsters": [
+        {
+          "monster": "sarkhaza",
+          "cell": [
+            21,
+            6
+          ],
+          "hp": 125
+        }
+      ],
+      "lair": false,
+      "surprise": "enemies",
+      "flag": "sarkhaza_slain",
+      "quest": {
+        "id": "the_warm_snow",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "sarkhaza",
+      "trigger": "dialogue",
+      "when": "not flag.wyrm_unchained and flag.wyrm_salted and flag.wyrm_chain_drawn and not flag.ghakis_sluice_open",
+      "text": "Sarkhaza lunges, and the chain, hauled short on the drum above, snaps her head back by the collar. For a moment she hangs there choking, claws scrabbling on the gold.",
+      "monsters": [
+        {
+          "monster": "sarkhaza",
+          "cell": [
+            21,
+            6
+          ],
+          "hp": 125
+        }
+      ],
+      "lair": true,
+      "surprise": "enemies",
+      "flag": "sarkhaza_slain",
+      "quest": {
+        "id": "the_warm_snow",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "sarkhaza",
+      "trigger": "dialogue",
+      "when": "not flag.wyrm_unchained and flag.wyrm_salted and not flag.wyrm_chain_drawn and flag.ghakis_sluice_open",
+      "text": "Sarkhaza comes up off the gold all at once, faster than anything that size should, and the chain goes taut across the cavern with a crack like a bell.",
+      "monsters": [
+        {
+          "monster": "sarkhaza",
+          "cell": [
+            21,
+            6
+          ],
+          "hp": 155
+        }
+      ],
+      "lair": false,
+      "surprise": "",
+      "flag": "sarkhaza_slain",
+      "quest": {
+        "id": "the_warm_snow",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "sarkhaza",
+      "trigger": "dialogue",
+      "when": "not flag.wyrm_unchained and flag.wyrm_salted and not flag.wyrm_chain_drawn and not flag.ghakis_sluice_open",
+      "text": "Sarkhaza comes up off the gold all at once, faster than anything that size should, and the chain goes taut across the cavern with a crack like a bell.",
+      "monsters": [
+        {
+          "monster": "sarkhaza",
+          "cell": [
+            21,
+            6
+          ],
+          "hp": 155
+        }
+      ],
+      "lair": true,
+      "surprise": "",
+      "flag": "sarkhaza_slain",
+      "quest": {
+        "id": "the_warm_snow",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "sarkhaza",
+      "trigger": "dialogue",
+      "when": "not flag.wyrm_unchained and not flag.wyrm_salted and flag.wyrm_chain_drawn and flag.ghakis_sluice_open",
+      "text": "Sarkhaza lunges, and the chain, hauled short on the drum above, snaps her head back by the collar. For a moment she hangs there choking, claws scrabbling on the gold.",
+      "monsters": [
+        {
+          "monster": "sarkhaza",
+          "cell": [
+            21,
+            6
+          ],
+          "hp": 170
+        }
+      ],
+      "lair": false,
+      "surprise": "enemies",
+      "flag": "sarkhaza_slain",
+      "quest": {
+        "id": "the_warm_snow",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "sarkhaza",
+      "trigger": "dialogue",
+      "when": "not flag.wyrm_unchained and not flag.wyrm_salted and flag.wyrm_chain_drawn and not flag.ghakis_sluice_open",
+      "text": "Sarkhaza lunges, and the chain, hauled short on the drum above, snaps her head back by the collar. For a moment she hangs there choking, claws scrabbling on the gold.",
+      "monsters": [
+        {
+          "monster": "sarkhaza",
+          "cell": [
+            21,
+            6
+          ],
+          "hp": 170
+        }
+      ],
+      "lair": true,
+      "surprise": "enemies",
+      "flag": "sarkhaza_slain",
+      "quest": {
+        "id": "the_warm_snow",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "sarkhaza",
+      "trigger": "dialogue",
+      "when": "not flag.wyrm_unchained and not flag.wyrm_salted and not flag.wyrm_chain_drawn and flag.ghakis_sluice_open",
+      "text": "Sarkhaza comes up off the gold all at once, faster than anything that size should, and the chain goes taut across the cavern with a crack like a bell.",
+      "monsters": [
+        {
+          "monster": "sarkhaza",
+          "cell": [
+            21,
+            6
+          ]
+        }
+      ],
+      "lair": false,
+      "surprise": "",
+      "flag": "sarkhaza_slain",
+      "quest": {
+        "id": "the_warm_snow",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "sarkhaza",
+      "trigger": "dialogue",
+      "text": "Sarkhaza comes up off the gold all at once, faster than anything that size should, and the chain goes taut across the cavern with a crack like a bell.",
+      "monsters": [
+        {
+          "monster": "sarkhaza",
+          "cell": [
+            21,
+            6
+          ]
+        }
+      ],
+      "lair": true,
+      "surprise": "",
+      "flag": "sarkhaza_slain",
+      "quest": {
+        "id": "the_warm_snow",
+        "stage": "slain"
+      }
+    }
+  ],
+  "narration": {
+    "enter": "enter:ghakis_lair"
+  },
+  "rest": "no",
+  "rest_text": "Every few minutes the floor shivers with her breathing, and the heat never lets up. Nobody sleeps in here."
+}

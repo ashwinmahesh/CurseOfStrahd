@@ -3,7 +3,8 @@
 # again. A vestige said yes; the price was to become the cold. They kneel in the ice of the gorge wall by the landing,
 # and the woman who led them, Mother Ecaterina, is still alive in it with her lamp lit. Break her out and the rest wake
 # as the Penitent (data/monsters/the_penitent.json); or give her the last rites and let them all go. Reached from
-# Sergeant Valcu's report (watch:watch_menu, watch:passed_again) and the ice itself (prop pilgrims_ice).
+# Sergeant Valcu's report (watch:watch_menu, watch:passed_again) and the ice itself (prop pilgrims_ice). Asked again,
+# the sergeant reads the next entry in his log: The Warm Snow (mount_ghakis/the_warm_snow:sergeant_log).
 # Every line here is unvoiced for now.
 
 # --- Sergeant Valcu's report ---
@@ -11,11 +12,12 @@
 ~ sergeant_news
 if quest.the_frozen_pilgrims == done or quest.the_frozen_pilgrims == rested
 tsolenka_sergeant: Log. The lamp on the landing has gone out. Logged it. First change on this road in forty years. The lads didn't know what to do with themselves.
--> END
+-> mount_ghakis/the_warm_snow:sergeant_log
 endif
-if not quest.the_frozen_pilgrims
+if quest.the_frozen_pilgrims
+-> mount_ghakis/the_warm_snow:sergeant_log
+endif
 quest the_frozen_pilgrims rumored
-endif
 tsolenka_sergeant: Report. Forty-one years back, nine pilgrims, up the road, against orders. Led by a woman with a lamp, from Vallaki. Said a winter had taken their children, and they were going up to ask the amber never to be cold again.
 tsolenka_sergeant: We stopped them. They went round by the goat path over the gorge. Three nights later the lamp came back down. The people didn't. It's on the landing, in the ice. Some nights it's lit. Logged, every one.
 -> END
