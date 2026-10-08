@@ -610,7 +610,7 @@ func test_the_wilds_have_things_to_climb() -> void:
 	var raised := {"road_forest": "forest_climbing_pine", "lake_zarovich_trail": "lzt_climbing_pine",
 		"werewolf_den": "den_climbing_pine", "into_the_mists_road": "mists_climbing_pine", "road_ambush": "ambush_lookout_tree",
 		"berez_marsh_track": "marsh_dead_tree", "argynvostholt": "holt_dead_tree_1", "van_richtens_tower": "vrt_island_tree",
-		"old_bonegrinder_track": "lane_stopped_handcart"}
+		"old_bonegrinder_track": "lane_stopped_handcart", "wizard_of_wines": "raven_oak"}
 	for loc: String in raised:
 		var d := Compendium.shared().get_entry("locations", loc) as Dictionary
 		var g := LocationView.grid_for(d)
@@ -621,3 +621,11 @@ func test_the_wilds_have_things_to_climb() -> void:
 				var c := Vector2i(int(q["cell"][0]), int(q["cell"][1]))
 				assert_eq(g.height(c) - flat.height(c), int(q["stand_ft"]), "%s: %s is stood on" % [loc, q["id"]])
 				assert_true(int(q["stand_ft"]) >= 5, "%s raised" % q["id"])
+	# Lane 29's climbing trees (2026-10-08): a hunter's stand on the hill trail and the ambush road, a broad oak bough by
+	# the Mists road and at the winery's lane foot.
+	var models := {"lake_zarovich_trail": ["lzt_climbing_pine", "hunters_tree_stand"], "road_ambush": ["ambush_lookout_tree", "hunters_tree_stand"],
+		"into_the_mists_road": ["mists_climbing_pine", "broad_oak_bough"], "wizard_of_wines": ["raven_oak", "broad_oak_bough"]}
+	for loc: String in models:
+		for p: Variant in (Compendium.shared().get_entry("locations", loc) as Dictionary)["props"]:
+			if str((p as Dictionary)["id"]) == str(models[loc][0]):
+				assert_eq(str((p as Dictionary)["model"]), str(models[loc][1]), "%s is %s" % [models[loc][0], models[loc][1]])

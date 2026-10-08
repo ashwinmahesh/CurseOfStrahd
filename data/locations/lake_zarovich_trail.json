@@ -195,8 +195,8 @@
         5
       ],
       "kind": "examine",
-      "label": "A dead tree with low branches over the trail",
-      "model": "dead_tree",
+      "label": "A hunter's stand in a pine",
+      "model": "hunters_tree_stand",
       "stand_ft": 10
     }
   ],

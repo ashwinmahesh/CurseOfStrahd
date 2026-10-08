@@ -131,8 +131,8 @@ func test_models_stay_in_their_square() -> void:
 				continue
 			var box := _bounds(m)
 			var info := ModelPiece.manifest()[str(m.get_meta("model"))] as Dictionary
-			if bool(info.get("turns", false)):
-				continue   # nature (trees, brambles, boulders) grows over its square's edges, as the 2D pieces did
+			if bool(info.get("turns", false)) or bool(info.get("nature", false)):
+				continue   # nature (trees, brambles, boulders, a broad oak's bough) grows over its square's edges, as the 2D pieces did
 			if bool(info.get("big", false)):
 				continue   # building-sized pieces (a wagon) stand over several squares, clearing trees as the 2D ones do
 			var mount := str(info["mount"])
