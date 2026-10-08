@@ -56,6 +56,39 @@ stand, so the far walls frame the party's room and rooms further off keep their 
 wall beside it. Turning the camera turns which walls are down. The rules grid, line of sight and the Classic look are
 unchanged.
 
+## Castle Ravenloft from outside (W19, `world/look/castle_builder.gd`)
+
+In the Modern look the castle's outside places are built as the castle, not as stone houses: the gates (the
+drawbridge, the gatehouse, the courtyard and the keep's front), the overlook and the roofs among the spires. Target
+frames: `art/generated/look_targets/castle_gates_ab.png` and `castle_bridge_ab.png`. Placements are per place in the
+catalog (`building_kit.castle.places`); the maps' squares are unchanged.
+
+- **Curtain walls** (every wall square in the place's `rect`) stand 6 high: the ashlar body, a battered foot under a
+  roll moulding on each face over the ground, and at the top a parapet carried out on three stepped corbels per face
+  (machicolations) with a merlon and two crenels per square, some with crossbow loops. Faces carry crossbow loops
+  and stepped buttresses by their square's hash.
+- **The keep** (`keeps` rects) stands 10.5 high with lancet windows in two storeys (some lit) between buttresses.
+  `blocks` add more of it past the map's edge (behind the overlook).
+- **Towers** (`towers`): round, a battered foot, a shaft with loops, a corbelled crenellated top, and a slated spire
+  (a cone, or a taller needle). `from` above 0 is a turret rising out of the keep; below 0, out of the drop beside the
+  roofs.
+- **Gates**: every run of up to three open squares through a wall gets a pointed arch of dressed voussoirs on jamb
+  shafts, the wall going on over it with its battlements (`kit_castle_gate_w*_d*`); a door hung there (the portcullis)
+  stands in the arch with no frame of its own. A gap in a wall too low for an arch stays open.
+- **Low walls**: `parapets` rects make the cliff road's edge a low coped wall; `heights` rects give walls their own
+  height (a raised roof's parapet). A piece under 2.5 high is never cut away.
+- **The chasm**: wherever the land meets the void, rock faces (`kit_cliff_*`) fall 21 below the edge into the mist,
+  leaning out a little as they go; a `bridges` rect (the drawbridge) gets beams and cross-timbers under it instead. On
+  the roofs (`cliffs` false) the void is the drop off the roof, the castle's masonry going on down under every square
+  beside it.
+- **Cut away**: the walls come in pieces of 4 x 4 squares, each tower and gate its own; a piece in the way of the
+  party, or of the squares beside it or just past it, squashes down to its foot (1.25, coped) and comes back when it's
+  clear, so the party and the squares round it are always in view. The walls are buildings to the board, so props on
+  them (the keep's windows, its crest) hang on their faces and go with them.
+
+`TownBuilder.plan` hands the gates and the overlook (yard boards) to `CastleBuilder.plan`; the roofs (a dungeon
+board) reach it through `BuildingKit.interior_wall`. Captures: `KIT_NO_CASTLE=1` shows the stone houses as before.
+
 ## How a house is put together (`world/look/town_builder.gd`, `world/look/building_kit.gd`)
 
 TownBuilder still finds the houses in the map's `#` squares as before (docs/art/set_dressing.md). For each house:
@@ -107,7 +140,9 @@ camera turns). Captures, before and after:
 
 ## Not done yet
 
-- Interior door surrounds per style; the castle's own outer architecture comes with W19 (its silhouette).
+- Interior door surrounds per style.
+- The castle's walls have no wall walk you can stand on, and the chasm's depth is drawn, not fallen into (lane 3's
+  `drop_ft`). The keep has no roof of its own past its battlements.
 - Full walls have no ceilings or upper floors over them; a room's walls are full height whatever the room's size.
 - Lights at the pillars' sconces and the lit windows (W5's, in the light lane): the window markers in `board.windows`
   carry meta `lit`, and the sconces are at 1.35 on two faces of each castle pier.
