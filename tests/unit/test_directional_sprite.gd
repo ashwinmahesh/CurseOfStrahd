@@ -285,3 +285,22 @@ func test_frames_are_shared_while_shown_and_freed_after() -> void:
 	b = null
 	assert_false(is_instance_id_valid(id), "freed once nothing holds them")
 	assert_true(DirectionalSprite.frames_for("villager") != null, "and loaded again when needed")
+
+
+## Owner report (2026-10-08): townsfolk's legs alternated too slowly for how fast they walked. Every walker keeps a
+## natural cadence, about a cycle (two steps) a second, with a stride between one square and four: the townsfolk on
+## their rounds, the party exploring and sneaking, a fight's walk and the gray-box villager, for people and beasts alike.
+func test_the_walk_cycle_keeps_pace_with_the_feet() -> void:
+	var paces := {"townsfolk": NpcRoutes.STEP_TIME, "party": LocationView.STEP_TIME, "sneaking": LocationView.SNEAK_STEP_TIME,
+		"a fight": CombatView.STEP_TIME, "the gray-box villager": 1.0 / NpcWalker.SPEED}
+	for art: String in ["villager", "commoner", "mastiff", "goat", "ilse_varga"]:
+		var s := DirectionalSprite.create(DirectionalSprite.frames_for(art), 1.3)
+		var native := float(s.sprite_frames.get_frame_count(&"walk_s")) / s.sprite_frames.get_animation_speed(&"walk_s")
+		for who: String in paces:
+			var step := float(paces[who])
+			s.set_step_time(step)
+			var cycle := native / s.walk_speed
+			var squares := cycle / step
+			assert_between(squares, 0.99, 4.01, "%s, %s: a cycle covers %.2f squares" % [art, who, squares])
+			assert_between(cycle, 0.6, 1.3, "%s, %s: a cycle takes %.2f s (legs at a natural cadence)" % [art, who, cycle])
+		s.free()
