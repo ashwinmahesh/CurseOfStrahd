@@ -37627,6 +37627,13 @@
   "recipe": "dd92281f92",
   "text": "He steps back from the bier. He doesn't look at you. He looks at her."
  },
+ "narrator/4a27cc043ed79663": {
+  "chars": 185,
+  "direction": "[quiet, sorrowful]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Over each stall, a board with a name painted in a careful hand: Thunder, Brightmane, Old Faithful, Vesper. Under the boards, in the straw, the bones of the horses that answered to them."
+ },
  "narrator/4a5773133c83a8b1": {
   "chars": 159,
   "model": "eleven_v4",
@@ -45792,6 +45799,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Now that you know where the blade sleeps in the floor, the whole crypt looks like a trap with a grave in it."
+ },
+ "narrator/9a3aa606b9bbf889": {
+  "chars": 191,
+  "direction": "[awed, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A nest the size of a cottage, woven from whole pine trunks stripped of their branches, wedged into the crag above the shelf. Bones stick out of it like straw: goats, horses, and a cart wheel."
  },
  "narrator/9a4d9e19bbd1f733": {
   "chars": 86,
