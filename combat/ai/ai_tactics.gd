@@ -8,7 +8,8 @@ extends RefCounted
 ##                        that's its best move (each hit is a failed Death Saving Throw, two from within 5 ft).
 ## With the mode's kit, an armed foe drinks its Potion of Healing when Bloodied (a Bonus Action); badly hurt and in
 ## reach of a foe, it Disengages and steps away first. With morale, when its side breaks (half of it down, or its
-## leader fallen) a foe that isn't mindless, fearless or a boss flees, and leaves the fight once well away.
+## leader fallen) a foe that isn't mindless, fearless or a boss flees, and leaves the fight once well away. In every
+## mode, a Bloodied humanoid that speaks a language surrenders instead when its side breaks (F13, story/captives.gd).
 
 const POTION := "potion_of_healing"
 ## How far from every standing foe a fleeing creature must get to leave the fight (ft).
@@ -213,12 +214,12 @@ func broken(c: Combatant) -> bool:
 	var down := 0
 	for id: Variant in ids:
 		var o := e.get_c(str(id))
-		if o == null or o.is_down():
+		if o == null or o.is_down() or o.creature.has_flag("surrendered"):
 			down += 1
 	if down * 2 >= ids.size():
 		return true
 	var leader := e.get_c(str(side["leader"]))
-	return leader != null and leader != c and leader.is_down()
+	return leader != null and leader != c and (leader.is_down() or leader.creature.has_flag("surrendered"))
 
 
 func _side(side: StringName) -> Dictionary:
@@ -242,6 +243,46 @@ func _side(side: StringName) -> Dictionary:
 	var entry := {"ids": ids, "leader": "" if tie or ids.size() < 2 else leader}
 	_sides[side] = entry
 	return entry
+
+
+# --- Surrender (F13) ---------------------------------------------------------------------------------------------
+
+## Whether `c` would give up when its side breaks: a humanoid foe that speaks a language, not a boss and not one of
+## Strahd's own (story/captives.gd deals with it after the fight). In every difficulty mode.
+static func can_surrender(c: Combatant) -> bool:
+	if not c.creature is Monster or c.creature.creature_type != &"humanoid" or str(c.ai_profile) in ["mindless", "strahd"]:
+		return false
+	var m := c.creature as Monster
+	if Difficulty.is_boss(m) or bool(m.data.get("never_surrenders", false)):
+		return false
+	for lang: Variant in m.data.get("languages", []):
+		if not "can't speak" in str(lang) and not "understands" in str(lang).to_lower():
+			return true
+	return false
+
+
+## A broken side's Bloodied talker throws down its weapons: it stops fighting and can't move ("Surrendered"), and the
+## fight ends once every foe is down, fled or surrendered. The party can still strike it (the companions notice).
+func surrender_turn(c: Combatant) -> CombatResult:
+	var e := enc()
+	e.ai.last_plan = {"kind": "surrender", "why": "its side broke"}
+	surrender(e, c)
+	return CombatResult.new()
+
+
+static func surrender(e: Encounter, c: Combatant) -> void:
+	if c.creature.has_flag("surrendered"):
+		return
+	var fx := Effect.new("Surrendered", &"feature", "surrendered").with_modifier("flag", {"value": "surrendered"})
+	fx = fx.with_modifier("flag", {"value": "no_actions"}).with_modifier("speed_set", {"value": 0})
+	fx.ends = Effect.Ends.NEVER
+	c.creature.add_effect(fx)
+	c.set_meta("surrendered_round", e.round_no)
+	if c.creature.concentration != null:
+		c.creature.concentration.end("surrendered")
+	e.log.add("info", "%s throws down its weapons and surrenders" % c.name(), c.id)
+	e.events.append({"type": "condition", "id": c.id})
+	e._check_over()
 
 
 ## Never flees a broken fight: mindless things, swarms, the unfrightenable, and bosses.

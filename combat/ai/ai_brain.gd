@@ -128,6 +128,9 @@ func play_turn(c: Combatant) -> CombatResult:
 	_finishing = null
 	# The difficulty's kit and morale: a Bloodied foe drinks its potion; a broken side flees (combat/ai/ai_tactics.gd).
 	if c.side == &"enemy":
+		# F13: a Bloodied talker whose side broke gives up, in every mode (story/captives.gd takes it from there).
+		if c.creature.is_bloodied() and AiTactics.can_surrender(c) and tactics.broken(c):
+			return tactics.surrender_turn(c)
 		var drank: Variant = tactics.potion_turn(c)
 		if drank != null:
 			return drank as CombatResult

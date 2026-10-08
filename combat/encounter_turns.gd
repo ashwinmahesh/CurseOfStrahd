@@ -253,7 +253,8 @@ func _check_over() -> void:
 	var party_up := false
 	var enemies_up := false
 	for c in e.combatants:
-		if not c.is_alive() or c.creature.hp <= 0 or c.creature.has_flag("spell_object"):
+		# A foe that surrendered (F13) is out of the fight.
+		if not c.is_alive() or c.creature.hp <= 0 or c.creature.has_flag("spell_object") or c.creature.has_flag("surrendered"):
 			continue
 		if c.side in [&"party", &"guest"]:
 			party_up = true
