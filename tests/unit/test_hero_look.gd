@@ -131,6 +131,58 @@ func test_tint_maps_shades_to_the_ramp() -> void:
 	assert_eq(img.get_pixel(3, 0).a8, 255, "tinted pixels are opaque")
 
 
+## The Head tab's pictures are close-ups of the head whatever the hairstyle (Tousled and Long showed a tiny figure:
+## their art carries keyed bits by the boots and hands), for both body types: with every hairstyle on every head, the
+## head (skull top to neck) fills most of the picture's height from near its top; with every beard, the picture ends
+## where a long beard does, on the chest.
+func test_head_pictures_frame_the_head_for_every_hairstyle() -> void:
+	var pictures := 0
+	for gender: String in HeroLook.offered_ids({}, "genders"):
+		var app := HeroLook.default_appearance(gender)
+		for hair: String in HeroLook.offered_ids(app, "hair"):
+			var looks: Array[Dictionary] = []
+			for head: String in HeroLook.offered_ids(app, "heads"):
+				looks.append({"head": head, "beard": "none"})
+			for beard: String in HeroLook.offered_ids(app, "beards"):
+				looks.append({"head": str(app["head"]), "beard": beard})
+			for picks in looks:
+				var look := app.duplicate()
+				look.merge(picks, true)
+				look["hair"] = hair
+				if not HeroLook.has_pieces(look):
+					continue
+				var stack := HeroLook.head_stack(look, "front34", false)
+				var img := HeroLook.head_picture(look)
+				var name_ := "%s %s head, %s hair, %s beard" % [gender, look["head"], hair, look["beard"]]
+				assert_eq(img.get_size(), (stack["image"] as Image).get_size(), name_ + ": the picture is the head stack")
+				var head := float(stack["cut"]) - float(stack["top"])
+				if str(look["beard"]) == "none":
+					assert_true(head >= 0.55 * img.get_height(), "%s: the head fills %d of %d px" % [name_, roundi(head), img.get_height()])
+					assert_true(float(stack["top"]) <= 0.35 * img.get_height(), "%s: the skull starts near the top" % name_)
+				else:
+					assert_true(img.get_height() <= 3.0 * head, "%s: %d px tall for a %d px head" % [name_, img.get_height(), roundi(head)])
+				pictures += 1
+	assert_true(pictures >= 200, "every hairstyle with every head and beard, both body types (%d)" % pictures)
+
+
+func test_stray_bits_of_a_piece_are_left_out() -> void:
+	# A blob reaching above the neck (row 4), a bit 3 px below it (a braid's tip) and one 20 px further down.
+	var img := Image.create_empty(10, 40, false, Image.FORMAT_RGBA8)
+	img.fill_rect(Rect2i(2, 0, 6, 8), Color.RED)
+	img.fill_rect(Rect2i(4, 11, 2, 2), Color.RED)
+	img.fill_rect(Rect2i(1, 33, 3, 3), Color.RED)
+	var box := HeroLook._drop_strays(img, 4)
+	assert_eq(box, Rect2i(2, 0, 6, 13), "the blob and its near tip stay")
+	assert_eq(img.get_pixel(4, 12).a8, 255, "the tip is kept")
+	assert_eq(img.get_pixel(2, 34).a8, 0, "the far bit is cleared")
+	# The pieces themselves: Tousled's front view had bits by the boots, Long's by the hands, the braided beard specks
+	# below its braids; the braids' loose tips stay.
+	assert_true((HeroLook._piece_view("hair", "tousled", "front34")["image"] as Image).get_height() < 80, "Tousled is head height")
+	assert_true((HeroLook._piece_view("hair", "long", "front")["image"] as Image).get_height() < 80, "Long's front view ends at the shoulders")
+	assert_true((HeroLook._piece_view("hair", "long", "back")["image"] as Image).get_height() > 140, "Long still falls down the back")
+	assert_true((HeroLook._piece_view("beards", "braided", "front")["image"] as Image).get_height() in range(90, 100), "braid tips kept, specks gone")
+
+
 func test_height_follows_species_and_pick() -> void:
 	var tall := HeroLook.height_units(_look({"height": "tall"}), "human")
 	var short := HeroLook.height_units(_look({"height": "short"}), "human")
