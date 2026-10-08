@@ -1368,11 +1368,13 @@
       "accent_tag": "[strong Romanian accent]"
     },
     "vallaki_grumbler": {
-      "settings": {},
-      "description": "A sour man in his fifties locked in the stocks for insufficient cheer, with a sardonic, grumbling, nasal voice and a strong, clearly audible Eastern European (Romanian) accent.",
-      "model": "eleven_v3",
       "voice_id": "eYjSZ7pQCsZ2trBBhYcN",
       "name": "Barovia vallaki_grumbler",
+      "description": "A sour man in his fifties locked in the stocks for insufficient cheer, with a sardonic, grumbling, nasal voice and a strong, clearly audible Eastern European (Romanian) accent.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "eYjSZ7pQCsZ2trBBhYcN",
       "released": true
     },
     "barovia_goodwife": {
