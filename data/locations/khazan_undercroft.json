@@ -1,0 +1,846 @@
+{
+  "id": "khazan_undercroft",
+  "name": "Under Van Richten's Tower",
+  "region": "van_richtens_tower",
+  "summary": "The undercroft the archmage Khazan cut under his tower, below the level of the tarn: a stair, a hall of shelved names, a crypt the lake has got into, and his study, where he waits to be remembered (The Name Over the Door, docs/story/side_quests.md).",
+  "text": "A stair under the hearth goes down past the level of the lake. The walls sweat cold water. Every step down, the silence gets thicker, like the inside of a library that has never been opened.",
+  "map": {
+    "rows": [
+      "##############################",
+      "###.............###.........##",
+      "##...............##.=..wwww.##",
+      "##...............##....wwww.##",
+      "##...............##....wwww.##",
+      "##..=........=...##.=.......##",
+      "##...............##.........##",
+      "#########..###########.#######",
+      "####......................####",
+      "###..............~.........###",
+      "###........................###",
+      "###.....=.....=.....=......###",
+      "###.....=.....=.....=......###",
+      "###........................###",
+      "###........~...............###",
+      "####......................####",
+      "#############....#############",
+      "############......############",
+      "###########........###########",
+      "###########........###########",
+      "###########........###########",
+      "###########........###########",
+      "##############..##############",
+      "##############..##############"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "undercroft_stair",
+      "name": "The stair foot",
+      "cells": [
+        [
+          11,
+          16
+        ],
+        [
+          18,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "hall_of_names",
+      "name": "The hall of names",
+      "cells": [
+        [
+          3,
+          8
+        ],
+        [
+          26,
+          15
+        ]
+      ]
+    },
+    {
+      "id": "drowned_crypt",
+      "name": "The drowned crypt",
+      "cells": [
+        [
+          19,
+          1
+        ],
+        [
+          27,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "khazan_study",
+      "name": "Khazan's study",
+      "cells": [
+        [
+          2,
+          1
+        ],
+        [
+          16,
+          6
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      14,
+      20
+    ],
+    "from_tower": [
+      14,
+      20
+    ]
+  },
+  "exits": [
+    {
+      "id": "undercroft_up",
+      "cell": [
+        14,
+        23
+      ],
+      "to": "van_richtens_tower_interior",
+      "spawn": "from_undercroft",
+      "label": "Up to the tower"
+    },
+    {
+      "id": "undercroft_up_2",
+      "cell": [
+        15,
+        23
+      ],
+      "to": "van_richtens_tower_interior",
+      "spawn": "from_undercroft",
+      "label": "Up to the tower"
+    }
+  ],
+  "doors": [
+    {
+      "id": "khazan_study_door_w",
+      "cell": [
+        9,
+        7
+      ],
+      "label": "The study door"
+    },
+    {
+      "id": "khazan_study_door_e",
+      "cell": [
+        10,
+        7
+      ],
+      "label": "The study door"
+    }
+  ],
+  "props": [
+    {
+      "id": "undercroft_glyphs",
+      "cell": [
+        13,
+        20
+      ],
+      "kind": "examine",
+      "label": "Letters in the steps",
+      "model": "floor_glyphs"
+    },
+    {
+      "id": "undercroft_puddle",
+      "cell": [
+        12,
+        19
+      ],
+      "kind": "decor",
+      "label": "Water",
+      "model": "puddle"
+    },
+    {
+      "id": "undercroft_ice",
+      "cell": [
+        17,
+        20
+      ],
+      "kind": "decor",
+      "label": "Ice",
+      "model": "ice_patch"
+    },
+    {
+      "id": "undercroft_lamp",
+      "cell": [
+        12,
+        18
+      ],
+      "kind": "decor",
+      "label": "A lamp bracket",
+      "model": "lantern_bracket"
+    },
+    {
+      "id": "undercroft_cobwebs",
+      "cell": [
+        17,
+        18
+      ],
+      "kind": "decor",
+      "label": "Cobwebs",
+      "model": "cobwebs"
+    },
+    {
+      "id": "names_shelves",
+      "cell": [
+        5,
+        8
+      ],
+      "kind": "examine",
+      "label": "Shelves of books",
+      "model": "book_shelf"
+    },
+    {
+      "id": "names_shelves_2",
+      "cell": [
+        12,
+        8
+      ],
+      "kind": "decor",
+      "label": "Shelves of books",
+      "model": "book_shelf"
+    },
+    {
+      "id": "names_shelves_3",
+      "cell": [
+        19,
+        8
+      ],
+      "kind": "decor",
+      "label": "Shelves of books",
+      "model": "book_shelf"
+    },
+    {
+      "id": "names_shelves_4",
+      "cell": [
+        24,
+        8
+      ],
+      "kind": "decor",
+      "label": "Shelves of books",
+      "model": "book_shelf"
+    },
+    {
+      "id": "names_wall",
+      "cell": [
+        4,
+        10
+      ],
+      "kind": "examine",
+      "label": "Names on the wall",
+      "model": "names_wall"
+    },
+    {
+      "id": "names_lectern",
+      "cell": [
+        8,
+        11
+      ],
+      "kind": "examine",
+      "label": "A lectern",
+      "model": "lectern"
+    },
+    {
+      "id": "names_lectern_2",
+      "cell": [
+        14,
+        11
+      ],
+      "kind": "decor",
+      "label": "A lectern",
+      "model": "lectern"
+    },
+    {
+      "id": "names_lectern_3",
+      "cell": [
+        20,
+        11
+      ],
+      "kind": "decor",
+      "label": "A lectern",
+      "model": "lectern"
+    },
+    {
+      "id": "names_fallen",
+      "cell": [
+        8,
+        12
+      ],
+      "kind": "decor",
+      "label": "Fallen books",
+      "model": "floor_books"
+    },
+    {
+      "id": "names_fallen_2",
+      "cell": [
+        14,
+        12
+      ],
+      "kind": "decor",
+      "label": "Fallen books",
+      "model": "book_stack"
+    },
+    {
+      "id": "names_fallen_3",
+      "cell": [
+        20,
+        12
+      ],
+      "kind": "decor",
+      "label": "Fallen books",
+      "model": "floor_books"
+    },
+    {
+      "id": "names_notes",
+      "cell": [
+        11,
+        13
+      ],
+      "kind": "decor",
+      "label": "Loose pages",
+      "model": "scattered_notes"
+    },
+    {
+      "id": "names_candles",
+      "cell": [
+        18,
+        14
+      ],
+      "kind": "decor",
+      "label": "Candles",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "names_cobwebs",
+      "cell": [
+        25,
+        13
+      ],
+      "kind": "decor",
+      "label": "Cobwebs",
+      "model": "cobwebs"
+    },
+    {
+      "id": "names_table",
+      "cell": [
+        6,
+        14
+      ],
+      "kind": "examine",
+      "label": "A table of open books",
+      "model": "table_books"
+    },
+    {
+      "id": "crypt_coffin",
+      "cell": [
+        20,
+        2
+      ],
+      "kind": "examine",
+      "label": "A stone coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "crypt_coffin_2",
+      "cell": [
+        20,
+        5
+      ],
+      "kind": "decor",
+      "label": "A stone coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "crypt_lid",
+      "cell": [
+        21,
+        4
+      ],
+      "kind": "decor",
+      "label": "A coffin lid",
+      "model": "coffin_lid"
+    },
+    {
+      "id": "crypt_bones",
+      "cell": [
+        22,
+        6
+      ],
+      "kind": "decor",
+      "label": "Bones in the water",
+      "model": "bones_water"
+    },
+    {
+      "id": "crypt_drip",
+      "cell": [
+        21,
+        2
+      ],
+      "kind": "examine",
+      "label": "The lake, coming in",
+      "model": "puddle"
+    },
+    {
+      "id": "crypt_bracers",
+      "cell": [
+        27,
+        5
+      ],
+      "kind": "search",
+      "label": "Something in the silt",
+      "model": "rubble",
+      "item": "bracers_of_defense",
+      "search_dc": 16,
+      "skill": "investigation"
+    },
+    {
+      "id": "khazan_book",
+      "cell": [
+        12,
+        2
+      ],
+      "kind": "examine",
+      "label": "The book of names",
+      "model": "lectern",
+      "dialogue": "van_richtens_tower/the_name_over_the_door:book"
+    },
+    {
+      "id": "khazan_desk",
+      "cell": [
+        4,
+        2
+      ],
+      "kind": "decor",
+      "label": "A desk",
+      "model": "desk"
+    },
+    {
+      "id": "khazan_chair",
+      "cell": [
+        10,
+        2
+      ],
+      "kind": "examine",
+      "label": "A high chair",
+      "model": "chair_high",
+      "dialogue": "van_richtens_tower/the_name_over_the_door:chair"
+    },
+    {
+      "id": "khazan_reading",
+      "cell": [
+        4,
+        5
+      ],
+      "kind": "decor",
+      "label": "A reading table",
+      "model": "reading_table"
+    },
+    {
+      "id": "khazan_reading_2",
+      "cell": [
+        13,
+        5
+      ],
+      "kind": "decor",
+      "label": "A reading table",
+      "model": "reading_table"
+    },
+    {
+      "id": "khazan_candelabra",
+      "cell": [
+        6,
+        1
+      ],
+      "kind": "decor",
+      "label": "A candelabra",
+      "model": "candelabra"
+    },
+    {
+      "id": "khazan_shelf",
+      "cell": [
+        3,
+        1
+      ],
+      "kind": "decor",
+      "label": "Shelves",
+      "model": "bookshelf"
+    },
+    {
+      "id": "khazan_shelf_2",
+      "cell": [
+        14,
+        1
+      ],
+      "kind": "decor",
+      "label": "Shelves",
+      "model": "chained_bookcase"
+    },
+    {
+      "id": "khazan_circle",
+      "cell": [
+        9,
+        4
+      ],
+      "kind": "examine",
+      "label": "A circle on the floor",
+      "model": "rune_circle"
+    },
+    {
+      "id": "khazan_floor_books",
+      "cell": [
+        7,
+        4
+      ],
+      "kind": "decor",
+      "label": "Books",
+      "model": "floor_books"
+    },
+    {
+      "id": "khazan_book_stack",
+      "cell": [
+        11,
+        5
+      ],
+      "kind": "decor",
+      "label": "Books",
+      "model": "book_stack"
+    },
+    {
+      "id": "khazan_notes",
+      "cell": [
+        3,
+        4
+      ],
+      "kind": "decor",
+      "label": "Notes",
+      "model": "scattered_notes"
+    },
+    {
+      "id": "khazan_mobile",
+      "cell": [
+        12,
+        4
+      ],
+      "kind": "examine",
+      "label": "A brass orrery",
+      "model": "mobile"
+    }
+  ],
+  "containers": [
+    {
+      "id": "khazan_coffer",
+      "cell": [
+        15,
+        5
+      ],
+      "label": "Khazan's coffer",
+      "model": "chest_iron",
+      "when": "flag.khazan_destroyed",
+      "items": [
+        {
+          "id": "wand_of_the_war_mage_plus_3",
+          "qty": 1
+        }
+      ],
+      "gold": 800
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        6,
+        1
+      ],
+      "kind": "candle",
+      "color": "frost",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        12,
+        2
+      ],
+      "kind": "magic",
+      "color": "frost",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        18,
+        14
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        12,
+        18
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        24,
+        3
+      ],
+      "kind": "magic",
+      "color": "moon_blue",
+      "bright_ft": 0,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "khazan",
+      "cell": [
+        9,
+        2
+      ],
+      "dialogue": "van_richtens_tower/the_name_over_the_door:khazan",
+      "when": "not flag.khazan_withdrawn and not flag.khazan_destroyed",
+      "facing": "south",
+      "approach": 6
+    },
+    {
+      "npc": "khazan",
+      "cell": [
+        9,
+        2
+      ],
+      "dialogue": "van_richtens_tower/the_name_over_the_door:unnamed",
+      "when": "flag.khazan_withdrawn and flag.khazan_name_broken and not flag.khazan_destroyed",
+      "facing": "south",
+      "approach": 6
+    }
+  ],
+  "encounters": [
+    {
+      "id": "remembered",
+      "trigger": "enter_area:hall_of_names",
+      "when": "not flag.remembered_laid",
+      "text": "The books on every shelf open at once with a sound like birds, and the people written in them come out of the pages: grey, thin, holding their names in their mouths.",
+      "monsters": [
+        {
+          "monster": "banshee",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "The First Visitor"
+        },
+        {
+          "monster": "ghost",
+          "cell": [
+            5,
+            13
+          ],
+          "name": "A Remembered Knight"
+        },
+        {
+          "monster": "ghost",
+          "cell": [
+            23,
+            10
+          ],
+          "name": "A Remembered Knight"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            6,
+            9
+          ],
+          "name": "A Visitor"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            12,
+            10
+          ],
+          "name": "A Visitor"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            17,
+            10
+          ],
+          "name": "A Visitor"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            24,
+            12
+          ],
+          "name": "A Visitor"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            9,
+            13
+          ],
+          "name": "The Second Visitor"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            22,
+            14
+          ],
+          "name": "A Visitor"
+        }
+      ],
+      "surprise": "",
+      "flag": "remembered_laid"
+    },
+    {
+      "id": "khazan_named",
+      "trigger": "dialogue",
+      "when": "not flag.khazan_name_broken",
+      "text": "Khazan stands up out of his chair, and every candle in the study leans toward him, and the books in the hall behind you begin to whisper.",
+      "monsters": [
+        {
+          "monster": "khazan",
+          "cell": [
+            9,
+            2
+          ],
+          "hp": 250
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            5,
+            4
+          ],
+          "name": "A Visitor"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            13,
+            3
+          ],
+          "name": "A Visitor"
+        }
+      ],
+      "lair": true,
+      "surprise": "",
+      "flag": "khazan_withdrawn",
+      "withdraw": {
+        "who": "khazan",
+        "at_hp_below": 60,
+        "flag": "khazan_withdrawn"
+      },
+      "quest": {
+        "id": "the_name_over_the_door",
+        "stage": "named"
+      }
+    },
+    {
+      "id": "khazan_unmade",
+      "trigger": "dialogue",
+      "when": "flag.khazan_name_broken and flag.khazan_said",
+      "text": "For one moment more Khazan is himself, and he doesn't lift a hand. Then the lights in his eyes go out, and something hungry comes up behind them.",
+      "monsters": [
+        {
+          "monster": "khazan",
+          "cell": [
+            9,
+            2
+          ],
+          "hp": 210
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            5,
+            4
+          ],
+          "name": "A Visitor"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            13,
+            3
+          ],
+          "name": "A Visitor"
+        }
+      ],
+      "lair": false,
+      "surprise": "enemies",
+      "flag": "khazan_destroyed",
+      "quest": {
+        "id": "the_name_over_the_door",
+        "stage": "unmade"
+      }
+    },
+    {
+      "id": "khazan_unmade",
+      "trigger": "dialogue",
+      "when": "flag.khazan_name_broken",
+      "text": "What's left of Khazan comes at you across the study with nothing in its eyes but hunger, and the candles don't lean toward it any more.",
+      "monsters": [
+        {
+          "monster": "khazan",
+          "cell": [
+            9,
+            2
+          ],
+          "hp": 210
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            5,
+            4
+          ],
+          "name": "A Visitor"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            13,
+            3
+          ],
+          "name": "A Visitor"
+        }
+      ],
+      "lair": false,
+      "surprise": "",
+      "flag": "khazan_destroyed",
+      "quest": {
+        "id": "the_name_over_the_door",
+        "stage": "unmade"
+      }
+    }
+  ],
+  "narration": {
+    "enter": "enter:khazan_undercroft"
+  },
+  "rest": "no",
+  "rest_text": "Every time you close your eyes, somebody whispers your name from the shelves. Nobody sleeps down here."
+}

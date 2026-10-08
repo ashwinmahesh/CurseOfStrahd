@@ -935,6 +935,66 @@
       "id": "wyrm_unchained",
       "type": "bool",
       "summary": "The party pulled the pin from Sarkhaza's collar (The Warm Snow)."
+    },
+    {
+      "id": "khazan_stair_open",
+      "type": "bool",
+      "summary": "The hearthstone in Van Richten's Tower is up and the stair to Khazan's undercroft is open (The Name Over the Door)."
+    },
+    {
+      "id": "khazan_book_read",
+      "type": "bool",
+      "summary": "The party read Khazan's book of names and found their own (The Name Over the Door)."
+    },
+    {
+      "id": "khazan_met",
+      "type": "bool",
+      "summary": "The party has spoken with Khazan in his study (The Name Over the Door)."
+    },
+    {
+      "id": "khazan_heard",
+      "type": "bool",
+      "summary": "Khazan told the party who he is (The Name Over the Door)."
+    },
+    {
+      "id": "khazan_jar_known",
+      "type": "bool",
+      "summary": "The party knows Khazan's phylactery is his name over the tower door (The Name Over the Door)."
+    },
+    {
+      "id": "khazan_jar_tried",
+      "type": "bool",
+      "summary": "The party tried to work out what holds Khazan in the world, and couldn't (The Name Over the Door)."
+    },
+    {
+      "id": "remembered_laid",
+      "type": "bool",
+      "summary": "The Remembered in Khazan's hall of names are laid to rest (The Name Over the Door)."
+    },
+    {
+      "id": "khazan_withdrawn",
+      "type": "bool",
+      "summary": "Khazan was driven out of his body and went back into his name over the door (The Name Over the Door)."
+    },
+    {
+      "id": "khazan_name_broken",
+      "type": "bool",
+      "summary": "The party unmade the name over the tower door: Khazan's next body is his last (The Name Over the Door)."
+    },
+    {
+      "id": "khazan_unnamed_seen",
+      "type": "bool",
+      "summary": "The party has seen Khazan without his name (The Name Over the Door)."
+    },
+    {
+      "id": "khazan_said",
+      "type": "bool",
+      "summary": "The party said Khazan's name to him once more before the end: he starts the last fight unready (The Name Over the Door)."
+    },
+    {
+      "id": "khazan_destroyed",
+      "type": "bool",
+      "summary": "Khazan is destroyed for good (The Name Over the Door)."
     }
   ]
 }

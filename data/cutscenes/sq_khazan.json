@@ -1,0 +1,15 @@
+{
+  "id": "sq_khazan",
+  "title": "The Name Over the Door",
+  "summary": "A lich in a high chair under his tower, a book of names on his knees, and every candle leaning toward him.",
+  "images": [
+    {
+      "image": "sq_khazan",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.35
+  ]
+}

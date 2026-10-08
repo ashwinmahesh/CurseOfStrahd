@@ -1,0 +1,184 @@
+# The Name Over the Door (side quest, docs/story/side_quests.md): the archmage Khazan, who built the tower on Lake
+# Baratok before the count was born, never died. He became a lich the cheap way: his phylactery is his own name, cut
+# over the tower door, and everyone who says it to get in keeps him in the world. He waits in an undercroft under the
+# hearth (data/locations/khazan_undercroft.json) with a book of every visitor's name, the party's last. While the name
+# stands he can't be destroyed, only driven back into it (data/monsters/khazan.json; the fight `khazan_named`
+# withdraws him). Unmake the name over the door and the next body is the last (`khazan_unmade`). Reached from
+# Mordenkainen's "Heard anything interesting?" (the_mages_lost_pages:news) and the cold hearthstone in the tower.
+# Every line here is unvoiced for now.
+
+# --- Mordenkainen (mount_baratok/the_mages_lost_pages:news jumps here) ---
+
+~ mordenkainen_news
+quest the_name_over_the_door rumored
+Mordenkainen: Interesting? The tower on the tarn below us. Van Richten's now. It was Khazan's first. You'll have said his name to the door; everyone does. That's what the door is for.
+Mordenkainen: Khazan was archmage to the old kings of this valley when the count's grandfather was in swaddling. The histories say he died. His sort don't die. They move downstairs.
+Mordenkainen: I've felt him waking for a month, the way you feel weather in an old break. Something under that tower is getting fat on being remembered. Look under the hearth. And mind your names.
+-> mount_baratok/mordenkainen:restored_menu
+
+# --- The tower hall: the hearthstone (prop vrt_hearthstone) ---
+
+~ hearthstone
+if flag.khazan_stair_open
+Narrator: The hearthstone stands on its edge against the wall, and the stair under it goes down into the cold.
+-> END
+endif
+Narrator: The hearthstone is cold. Not the cold of a fire gone out: the cold of a cellar, coming up through the cracks round it. There's frost in the cracks, a foot from a fire.
+* [Investigation DC 13] (Look for the edge of it.) -> stair | stair_slow
+* (Leave it.) -> END
+
+~ stair_slow
+time +30
+Narrator: It takes half an hour on your knees in the soot, but there's an edge.
+-> stair
+
+~ stair
+set khazan_stair_open
+if not quest.the_name_over_the_door or quest.the_name_over_the_door == rumored
+quest the_name_over_the_door found
+endif
+Narrator: An iron ring is set flush in the stone under the soot, worn smooth by somebody's hand a very long time ago. The stone comes up on its edge. Under it a stair goes down, past the level of the lake.
+Narrator: Cold air comes up the stair, and with it, very faint, the sound of pages turning.
+-> END
+
+# --- The book of names (prop khazan_book, in the study) ---
+
+~ book
+if flag.khazan_destroyed
+Narrator: The book of names lies open on its lectern, and every page is blank, as if nobody had ever written in it at all.
+-> END
+endif
+set khazan_book_read
+Narrator: A great book on a lectern, as thick as a doorstep, written in one patient hand. Names, nothing but names, one to a line, thousands of them, in every alphabet the valley has had.
+Narrator: The last pages are fresh. EZMERELDA D'AVENIR, in the same hand. RUDOLPH VAN RICHTEN, twice. And under them, the ink still wet: {name}.
+interject tag:blunt: It's writing us down.
+Narrator: On the first page, in larger letters, over and over, as if someone were practising: KHAZAN. KHAZAN. KHAZAN.
+-> END
+
+# --- Khazan, in his study (npc khazan) ---
+
+~ khazan
+if flag.khazan_name_broken
+-> unnamed
+endif
+if flag.khazan_met
+Khazan: Back again. I'm so glad. Say my name on your way out, would you? It's only courteous.
+-> khazan_menu
+endif
+set khazan_met
+if not quest.the_name_over_the_door or quest.the_name_over_the_door == rumored or quest.the_name_over_the_door == found
+quest the_name_over_the_door met
+endif
+cutscene sq_khazan
+Narrator: In a high chair on a step at the end of the study sits a dead man in a scholar's robe, very straight, his hands folded on a book. His skin is parchment over the bone. Two small lights move in his eyes, and turn to you.
+Khazan: Visitors. And you've come down the stair, not up it. That hasn't happened in a long time. Sit, if you can find a chair. I keep meaning to have more chairs.
+Khazan: I know your names, of course. You said mine at my door. That's the bargain the door makes: a name for a name. I've been writing you down.
+-> khazan_menu
+
+~ khazan_menu
+* Who are you? -> who
+* [if flag.khazan_book_read and not flag.khazan_jar_known] You keep yourself alive in that book. -> jar_book
+* [if flag.khazan_heard and not flag.khazan_jar_known and not flag.khazan_jar_tried] [Arcana DC 16] (Work out what's holding him in the world.) -> jar_worked | jar_missed
+* [if flag.khazan_jar_known] We're going to break the name over your door. -> threaten
+* (Leave him to his books.) -> END
+* (Draw your weapons.) -> fight
+
+~ who
+set khazan_heard
+Khazan: Khazan. You know that; you said it at the door. Archmage to the old kings of this valley, when it had kings. I built the tower on the tarn. Then the count's family came, and I came downstairs, and I've been reading ever since.
+Khazan: I'm not his. I'd like you to understand that. I was here first. He has never once said my name, which I find very rude.
+if name:ratatoille
+interject name:ratatoille: I said I'd read of him briefly. I'd like it noted that I was being generous about how briefly.
+endif
+-> khazan_menu
+
+~ jar_book
+set khazan_jar_known
+Khazan: (He's delighted.) Close! Not the book. The book is my diary. Over the door. Everyone who comes to my tower says my name to get in, and every time, I stay. Liches eat souls, you know. I found I could live on being remembered. It's so much more polite.
+-> khazan_menu
+
+~ jar_worked
+set khazan_jar_known
+Narrator: A lich keeps its soul in something: a box, a jar, a ring. Khazan has nothing on him. But the cold down here pulls upward, toward the tower, toward its door, the way smoke pulls toward a chimney. Toward the name.
+Khazan: Ah. You're clever. I do like the clever ones; they read better.
+-> khazan_menu
+
+~ jar_missed
+set khazan_jar_tried
+Narrator: There's a great deal of old magic down here, and none of it is in any shape you know.
+-> khazan_menu
+
+~ threaten
+Khazan: (The lights in his eyes go very small.) No. No, I don't think you are. I think you're going to stay down here, and I'll write you out properly, in the good ink.
+-> fight
+
+~ fight
+if flag.khazan_name_broken
+combat khazan_unmade
+endif
+combat khazan_named
+
+# --- His chair (prop khazan_chair), and what's on it after he's driven back into his name ---
+
+~ chair
+if flag.khazan_destroyed
+Narrator: An empty high chair on a step, with nothing on it but dust, and the dust isn't going anywhere.
+-> END
+endif
+if flag.khazan_withdrawn and not flag.khazan_name_broken
+Narrator: The high chair is empty. Grey dust lies on the seat and the step, and a thin trail of it runs up the wall and into a crack in the ceiling, toward the tower, toward the door.
+-> END
+endif
+Narrator: A high-backed chair of black wood on a step, its arms worn pale where hands have rested on them for a very long time.
+-> END
+
+# --- The name over the door (van_richtens_tower/tower:door jumps here once the party knows) ---
+
+~ lintel
+if not flag.khazan_jar_known
+set khazan_jar_known
+Narrator: Over the open door the name is cut deep into the lintel, and a fine grey dust is still settling into the letters: the dust that went up out of the study. The stone is warm.
+endif
+Narrator: KHAZAN, over the door, cut so deep the moss can't fill it. Every visitor this tower ever had said it to get in, and every one of them kept him.
+* [Athletics DC 16] (Break the lintel stone with whatever's to hand.) -> broken | not_broken
+* (Chisel the name out, one letter at a time.) -> chiselled
+* (Leave it.) -> END
+
+~ not_broken
+Narrator: The stone rings like a bell and doesn't crack. Your hands go numb to the elbow, and somewhere far below, someone laughs, politely.
+-> lintel
+
+~ chiselled
+time +180
+Narrator: It takes the rest of the day, in turns, with a knife and a stone and then a borrowed chisel from the hunter's stores. The letters fight you. Each one, as it goes, is a little colder than the last.
+-> broken
+
+~ broken
+set khazan_name_broken
+quest the_name_over_the_door unnamed
+Narrator: The last letter comes away in your hand as dust. From under the island, through the stone and the water, comes a sound like a very long breath let out.
+Narrator: Inside the tower, the frost round the hearthstone melts, and runs.
+approve liriel_dawnsong +2 godrick_pendlebrook +1 thistle +1 ratatoille -1: You cut a dead archmage's name off his own door
+-> END
+
+# --- Khazan, unmade (npc khazan, once the name is broken) ---
+
+~ unnamed
+if not flag.khazan_unnamed_seen
+set khazan_unnamed_seen
+Narrator: He's in his chair again, but smaller, and the lights in his eyes are dim and wandering. The book on his knees is open, and he's turning the pages fast, looking for something.
+Khazan [afraid]: There's a name. I had a name. I wrote it on the first page so I wouldn't lose it, and the first page is blank. You said it, didn't you, at the door? Say it. Please.
+endif
+* [if flag.khazan_met] Khazan. -> said
+* (Say nothing.) -> unnamed_fight
+* (Draw your weapons.) -> unnamed_fight
+
+~ said
+set khazan_said
+Khazan [sad]: (He closes his eyes.) Khazan. Yes. Thank you. That's mine.
+Khazan: (He looks at you, himself for a moment.) Be quick, while I still know it. In a minute I won't, and I'll be very hungry.
+approve liriel_dawnsong +2 thistle +1: You gave the lich his name back to die with
+-> unnamed_fight
+
+~ unnamed_fight
+combat khazan_unmade

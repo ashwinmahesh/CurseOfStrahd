@@ -3,6 +3,9 @@
 
 ~ door
 if flag.tower_door_opened
+if (flag.khazan_jar_known or flag.khazan_withdrawn) and not flag.khazan_name_broken
+-> van_richtens_tower/the_name_over_the_door:lintel
+endif
 Narrator: The door stands open on its silent hinges. Warm air comes out of the dark inside, smelling of lamp oil and old paper.
 -> END
 endif

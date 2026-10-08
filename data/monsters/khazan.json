@@ -1,0 +1,301 @@
+{
+  "id": "khazan",
+  "name": "Khazan",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Name Over the Door, docs/story/side_quests.md), built down from the 2025 Monster Manual's lich (CR 21) to fit a party of level 10 to 11: an archmage of the old kingdom who keeps himself in the world by being remembered, with the lich's touch and bursts, a short list of spells, legendary actions and a lair. While his name over the tower door stands he can't be destroyed, only driven back into it. Drawn with Exethanter's sprite."
+  },
+  "size": "medium",
+  "type": "undead",
+  "tags": [
+    "boss",
+    "lich",
+    "wizard"
+  ],
+  "alignment": "neutral evil",
+  "art": "exethanter",
+  "ac": 18,
+  "ac_note": "warded robes",
+  "initiative": 7,
+  "hp": {
+    "average": 190,
+    "dice": "20d8+100"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 11,
+    "dex": 16,
+    "con": 20,
+    "int": 21,
+    "wis": 14,
+    "cha": 16
+  },
+  "saves": {
+    "con": 10,
+    "int": 10,
+    "wis": 7
+  },
+  "skills": {
+    "arcana": 15,
+    "history": 15,
+    "insight": 7,
+    "perception": 7
+  },
+  "resistances": [
+    "cold",
+    "lightning",
+    "necrotic"
+  ],
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "poisoned"
+  ],
+  "senses": {
+    "truesight": 120
+  },
+  "passive_perception": 17,
+  "languages": [
+    "Common",
+    "Old Barovian"
+  ],
+  "cr": 14,
+  "xp": 11500,
+  "proficiency_bonus": 5,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (3/Day)",
+      "action": "special",
+      "summary": "Three times a day, a failed saving throw becomes a success.",
+      "text": "When Khazan fails a saving throw, he can choose to succeed instead, three times a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "remembered",
+      "name": "Remembered",
+      "action": "passive",
+      "summary": "His name over the tower door holds him in the world. While it stands, he can't be destroyed: at the end he comes apart into dust and goes back into it.",
+      "text": "Khazan's phylactery is his own name, cut into the lintel of his tower and spoken by everyone who opens the door. While it stands, a body destroyed comes apart into dust that goes back into the name, and he forms again below the tower. Unmake the name, and the next body is the last.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "eldritch_burst",
+          "count": 1,
+          "or": [
+            "paralyzing_touch"
+          ]
+        },
+        {
+          "action": "eldritch_burst",
+          "count": 1
+        }
+      ],
+      "summary": "Two Eldritch Bursts, or a Paralyzing Touch and an Eldritch Burst.",
+      "text": "Khazan makes two Eldritch Burst attacks, or one Paralyzing Touch and one Eldritch Burst."
+    },
+    {
+      "id": "eldritch_burst",
+      "name": "Eldritch Burst",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 10,
+        "range": [
+          120,
+          120
+        ]
+      },
+      "damage": [
+        {
+          "average": 22,
+          "dice": "4d10",
+          "type": "force"
+        }
+      ],
+      "summary": "A bolt of raw magic at a foe up to 120 ft away.",
+      "text": "Ranged Spell Attack Roll: +10, range 120 ft. Hit: 22 (4d10) Force damage."
+    },
+    {
+      "id": "paralyzing_touch",
+      "name": "Paralyzing Touch",
+      "kind": "melee",
+      "attack": {
+        "bonus": 10,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 14,
+          "dice": "4d6",
+          "type": "cold"
+        }
+      ],
+      "on_hit": [
+        {
+          "do": "condition",
+          "condition": "paralyzed",
+          "save": {
+            "ability": "con",
+            "dc": 18
+          },
+          "until": "target_turn_end"
+        }
+      ],
+      "summary": "A cold touch; DC 18 Con save or Paralyzed until the end of the target's next turn.",
+      "text": "Melee Spell Attack Roll: +10, reach 5 ft. Hit: 14 (4d6) Cold damage, and the target makes a DC 18 Constitution saving throw or has the Paralyzed condition until the end of its next turn."
+    },
+    {
+      "id": "disrupt_life",
+      "name": "Disrupt Life",
+      "kind": "save",
+      "save": {
+        "ability": "con",
+        "dc": 18,
+        "success": "half"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 20
+      },
+      "targets": {
+        "range": 20
+      },
+      "damage": [
+        {
+          "average": 14,
+          "dice": "4d6",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "Everything living within 20 ft: DC 18 Con save, 4d6 Necrotic, half on a success.",
+      "text": "Constitution Saving Throw: DC 18, each creature within 20 feet of Khazan that isn't Undead. Failure: 14 (4d6) Necrotic damage. Success: Half damage."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Casts wizard spells (Int, DC 18, +10 to hit).",
+      "text": "Khazan casts one of the following spells, using Intelligence as the spellcasting ability (spell save DC 18, +10 to hit with spell attacks): at will, Mage Hand and Ray of Frost; twice a day each, Fireball and Lightning Bolt; once a day each, Cone of Cold and Hold Monster."
+    }
+  ],
+  "spellcasting": {
+    "ability": "int",
+    "dc": 18,
+    "attack": 10,
+    "at_will": [
+      "mage_hand",
+      "ray_of_frost"
+    ],
+    "per_day": {
+      "2": [
+        "fireball",
+        "lightning_bolt"
+      ],
+      "1": [
+        "cone_of_cold",
+        "hold_monster"
+      ]
+    }
+  },
+  "legendary_actions": {
+    "per_round": 3,
+    "options": [
+      {
+        "id": "burst",
+        "name": "Burst",
+        "cost": 2,
+        "action": "eldritch_burst",
+        "summary": "Makes one Eldritch Burst."
+      },
+      {
+        "id": "disrupt",
+        "name": "Disrupt Life",
+        "cost": 3,
+        "action": "disrupt_life",
+        "summary": "Uses Disrupt Life."
+      },
+      {
+        "id": "between",
+        "name": "Between the Shelves",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to his Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "lair_actions": [
+    {
+      "id": "every_name",
+      "name": "Every Name He Knows",
+      "kind": "save",
+      "save": {
+        "ability": "wis",
+        "dc": 15,
+        "success": "none"
+      },
+      "targets": {
+        "range": 120,
+        "count": 2
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "2d6",
+          "type": "psychic"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "source_turn_start"
+        }
+      ],
+      "summary": "Two foes he can see hear their own names whispered from every shelf; DC 15 Wis save or 2d6 Psychic and Frightened until his next turn.",
+      "text": "Every book in the undercroft whispers the name of up to two creatures Khazan can see. Each makes a DC 15 Wisdom saving throw. Failure: 7 (2d6) Psychic damage, and the target has the Frightened condition until the start of Khazan's next turn."
+    },
+    {
+      "id": "the_lake",
+      "name": "The Lake Comes Through",
+      "kind": "save",
+      "save": {
+        "ability": "con",
+        "dc": 15,
+        "success": "half"
+      },
+      "targets": {
+        "range": 120,
+        "count": 2
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "cold"
+        }
+      ],
+      "summary": "Two foes he can see: the cold of the lake over them comes through the stone; DC 15 Con save, 3d6 Cold, half on a success.",
+      "text": "The cold of the lake overhead comes down through the stone onto up to two creatures Khazan can see. Each makes a DC 15 Constitution saving throw, taking 10 (3d6) Cold damage on a failure or half as much on a success."
+    }
+  ],
+  "legendary_resistance": 3,
+  "regions": [
+    "van_richtens_tower"
+  ],
+  "ai_profile": "spellcaster",
+  "summary": "The archmage who built the tower on the tarn, before the count was born. He became a lich the cheap way: not with souls but with his own name, cut over his door so that everyone who comes in says it. Courteous, curious and very old, he collects the names of his visitors. His touch freezes, his bursts tear, and his undercroft whispers your name back to you."
+}
