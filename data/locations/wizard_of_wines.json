@@ -408,7 +408,7 @@
       "label": "something behind the casks",
       "model": "barrel",
       "search_dc": 13,
-      "item": "glass_bottle"
+      "item": "eversmoking_bottle"
     },
     {
       "id": "yard_treading_vat",
@@ -466,7 +466,7 @@
       "label": "something dropped between the vines",
       "model": "basket",
       "search_dc": 12,
-      "item": "sickle"
+      "item": "moon_sickle_plus_1__sickle"
     },
     {
       "id": "camp_tent_west",
