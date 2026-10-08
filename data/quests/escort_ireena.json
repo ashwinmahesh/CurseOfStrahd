@@ -46,6 +46,12 @@
         "Follow the Old Svalich Road west"
       ],
       "ends": ""
+    },
+    {
+      "id": "arrived",
+      "journal": "We brought Ireena through the gate of Vallaki alive. For tonight, at least, there are walls between her and the castle.",
+      "objectives": [],
+      "ends": "success"
     }
   ]
 }

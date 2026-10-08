@@ -298,6 +298,16 @@ jobs:
           done
           echo "Published ${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-macos.zip and ...-windows.zip" >> "$GITHUB_STEP_SUMMARY"
 
+  # The Mac disk image (drag to Applications) from the zip just published: .github/workflows/mac-dmg.yml.
+  dmg:
+    needs: release
+    if: github.event_name == 'workflow_dispatch' && inputs.upload
+    uses: ./.github/workflows/mac-dmg.yml
+    with:
+      version: ${{ inputs.version }}
+      upload: true
+    secrets: inherit
+
   # Its own job, so only these few lines hold a token that can write to the repository.
   tag:
     needs: release

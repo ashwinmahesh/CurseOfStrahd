@@ -89,10 +89,35 @@ def generate(rec, cid, stop):
     return "gave up after retries"
 
 
+def trim_bands(img):
+    """The picture without a solid black band along any edge (a take can come back letterboxed: vosk_unmasked had 108
+    px across its top; UI QA ART-07, 2026-10-08). The game letterboxes the stills itself, so the band only shrank them."""
+    from PIL import ImageStat
+
+    def flat_black(box):
+        st = ImageStat.Stat(img.crop(box))
+        return max(st.mean) < 8 and max(st.stddev) < 4
+
+    w, h = img.size
+    top, bottom, left, right = 0, h, 0, w
+    while top < h // 4 and flat_black((0, top, w, top + 1)):
+        top += 1
+    while bottom > h - h // 4 and flat_black((0, bottom - 1, w, bottom)):
+        bottom -= 1
+    while left < w // 4 and flat_black((left, top, left + 1, bottom)):
+        left += 1
+    while right > w - w // 4 and flat_black((right - 1, top, right, bottom)):
+        right -= 1
+    # A row or two of near-black is the picture's own dark edge, not a band.
+    if top <= 2 and bottom >= h - 2 and left <= 2 and right >= w - 2:
+        return img
+    return img.crop((left, top, right, bottom))
+
+
 def jpeg(src):
     from PIL import Image
     buf = io.BytesIO()
-    Image.open(src).convert("RGB").save(buf, "JPEG", quality=92, optimize=True, progressive=False)
+    trim_bands(Image.open(src).convert("RGB")).save(buf, "JPEG", quality=92, optimize=True, progressive=False)
     return buf.getvalue()
 
 

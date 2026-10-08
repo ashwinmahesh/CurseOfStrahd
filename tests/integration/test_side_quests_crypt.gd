@@ -37,11 +37,12 @@ func test_the_name_said_before_she_rises() -> void:
 	beats = SideQuestPlay.play(st, "castle_ravenloft/the_unnamed_crypt:crypt")
 	assert_true(SideQuestPlay.text(beats).contains("CORVINA"))
 	assert_eq(roundi(st.gold), 500, "paid once")
-	# Mordenkainen hears.
+	# Mordenkainen hears. At level 10 his first news is Khazan under the tower (The Name Over the Door); she comes next.
 	st.location = "mount_baratok_hut"
 	st.set_flag("mordenkainen_met")
 	st.set_flag("mordenkainen_restored")
-	beats = SideQuestPlay.play(st, "mount_baratok/mordenkainen:start", ["Heard anything interesting?", "Goodbye"])
+	beats = SideQuestPlay.play(st, "mount_baratok/mordenkainen:start", ["Heard anything interesting?", "Heard anything interesting?", "Goodbye"])
+	assert_true(SideQuestPlay.text(beats).contains("Khazan"))
 	assert_true(SideQuestPlay.text(beats).contains("ink on her fingers"))
 
 
