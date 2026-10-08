@@ -446,8 +446,8 @@
     {
       "id": "arrigal_chest",
       "cell": [
-        26,
-        9
+        25,
+        11
       ],
       "label": "Arrigal's strongbox",
       "model": "strongbox",

@@ -14,6 +14,19 @@
       "region": "old_bonegrinder",
       "when": "flag.bonegrinder_rumor or flag.morgantha_cart_met or tarokka.tome.region == old_bonegrinder or tarokka.symbol.region == old_bonegrinder or tarokka.sword.region == old_bonegrinder",
       "summary": "A windmill on a bald crag above the Old Svalich Road, its sails tied still and its chimney always smoking, where the pastry seller bakes."
+    },
+    {
+      "id": "millers_lane",
+      "name": "The Miller's Lane",
+      "location": "old_bonegrinder_track",
+      "spawn": "default",
+      "pos": [
+        0.68,
+        0.3
+      ],
+      "region": "old_bonegrinder",
+      "when": "quest.the_fourth_sister",
+      "summary": "The lane under the windmill's crag, where a girl in an apron sells plain pastries from the step of a hut by day."
     }
   ],
   "roads": [
@@ -32,6 +45,13 @@
       "hours": 2,
       "table": "bonegrinder_lane",
       "name": "The miller's lane, over the ridge"
+    },
+    {
+      "id": "bonegrinder_to_millers_lane",
+      "from": "old_bonegrinder",
+      "to": "millers_lane",
+      "hours": 0.5,
+      "name": "Down the miller's lane"
     }
   ]
 }
