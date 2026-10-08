@@ -4,6 +4,9 @@
   "title": "Showman and Bard",
   "summary": "A loud half-elf showman in loud clothes, lodging at the Blue Water Inn with a carnival wagon he lets no one near. The tunes are cheerful; the eyes are a hunter's.",
   "portrait": "rictavio",
+  "looks": [
+    {"when": "flag.rictavio_unmasked", "portrait": "van_richten"}
+  ],
   "sprite": "rictavio",
   "attitude": "indifferent",
   "voice": "docs/voice/rictavio.md",

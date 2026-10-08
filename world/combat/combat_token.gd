@@ -100,6 +100,16 @@ static func art_id(c: Combatant) -> String:
 	return art_for(c.creature)
 
 
+## The portrait the combat HUD shows for `c`: as art_id, except a story ally whose face the story changed
+## (NpcLooks: Rictavio shows Van Richten's once unmasked, while his figure on the board stays Rictavio's).
+static func portrait_id(c: Combatant) -> String:
+	if c.creature.id.begins_with("guest_"):
+		var npc := Compendium.shared().get_entry("npcs", c.creature.id.trim_prefix("guest_"))
+		if npc.has("looks"):
+			return NpcLooks.portrait(npc, GameState.story)
+	return art_id(c)
+
+
 ## The sprite and portrait id for a creature: a story ally's own look, a monster's stat block id, a character's chosen
 ## look (creation's Appearance step), or its name.
 static func art_for(cr: Creature) -> String:

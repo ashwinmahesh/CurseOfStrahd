@@ -182,6 +182,12 @@
         "smile"
       ]
     },
+    "van_richten": {
+      "name": "Rudolph van Richten, the monster hunter (Rictavio unmasked)",
+      "ref": "art/generated/portraits/van_richten_b_portrait.png",
+      "side": "left",
+      "moods": []
+    },
     "exethanter": {
       "name": "Exethanter",
       "ref": "art/generated/characters/exethanter_turnaround.png",
