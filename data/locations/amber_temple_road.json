@@ -172,7 +172,7 @@
       "label": "something in the frozen traveller's pack",
       "model": "satchel",
       "search_dc": 12,
-      "item": "rope"
+      "item": "rope_of_climbing"
     }
   ],
   "encounters": [],

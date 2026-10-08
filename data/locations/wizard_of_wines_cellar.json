@@ -109,7 +109,7 @@
       ],
       "kind": "examine",
       "label": "The founder's cask",
-      "model": "barrel",
+      "model": "wine_vat",
       "dialogue": "wizard_of_wines/winery:founders_cask",
       "when": "not flag.winery_stone_recovered"
     },
@@ -121,7 +121,7 @@
       ],
       "kind": "examine",
       "label": "Racks of casks",
-      "model": "barrel"
+      "model": "cask_rack"
     },
     {
       "id": "dig_holes",
@@ -141,7 +141,7 @@
       ],
       "kind": "examine",
       "label": "Bottles furred with dust",
-      "model": "shelves"
+      "model": "bottle_rack"
     },
     {
       "id": "founders_cask_stave",

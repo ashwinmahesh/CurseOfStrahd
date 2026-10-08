@@ -154,7 +154,7 @@
       ],
       "kind": "examine",
       "label": "The millstone",
-      "model": "rocks"
+      "model": "millstone"
     },
     {
       "id": "bonegrinder_oven_fire",

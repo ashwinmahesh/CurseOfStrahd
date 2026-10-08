@@ -843,6 +843,10 @@
   "2e1aa45ebdd58527": "[weary, gruff, wistful]",
   "f95ce1fe61fdf85c": "[low, uneasy warning]"
  },
+ "lzt_hunter": {
+  "04e6d492bc8b9cc0": "[low, wary, plain]",
+  "d9c6bddd15bc02a0": "[dry, practical warning]"
+ },
  "mad_mage": {
   "0799847bf1f24e59": "[sly, sniffy]",
   "20f5a4e36bace942": "[quiet wonder]",
@@ -1173,10 +1177,12 @@
   "7f9c4649fb1cc23c": "[sly, knowing]",
   "7fbff5c0f7532e25": "[uneasy, hushed]",
   "7fc04fe584be875d": "[quiet, sad, observant]",
+  "80240b0cb305af14": "[hushed, cold, chilling]",
   "804cb45c5ec766da": "[hushed, eerie]",
   "81f0b0d08686b982": "[dry, amused]",
   "8289500f8d1b093f": "[intrigued, wry]",
   "83f84b30b9e68a9c": "[hushed, aching]",
+  "83fed7655c11bda7": "[dry, ominous]",
   "8410d2b2ba5bf517": "[intrigued, hushed]",
   "84c7e0f50d167690": "[dry, observant]",
   "882eb994a25c71a2": "[intrigued, pleased]",
@@ -1220,6 +1226,7 @@
   "a270a302eb950542": "[quiet, eerie]",
   "a2e7c0c29499b86c": "[wry, amused]",
   "a33569b6f69ae9eb": "[dry, amused]",
+  "a392a4658851a287": "[quiet, solemn]",
   "a4363cb858826bc0": "[low, chilling]",
   "a4dab9178be5359a": "[hushed, chilling]",
   "a69e50e3a1e0acfa": "[hushed, solemn]",
@@ -1286,6 +1293,7 @@
   "c60f103e9044aa4e": "[tender, hushed, awed]",
   "c643db6cf195f534": "[uneasy, curious]",
   "c81d6211e080162e": "[weary, tense]",
+  "c8286f8e05ff79f8": "[quiet, observant]",
   "c8aca53eb1663b08": "[dry, sardonic]",
   "c8f46c8b9872be75": "[dry, wary]",
   "c9bc08697063456f": "[grim, sympathetic]",

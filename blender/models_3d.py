@@ -4958,6 +4958,110 @@ def tack(p):
     p.tube(pts, 0.012, "pal_stone", segs=5)
 
 
+# --- Interiors: Old Bonegrinder and the Wizard of Wines (docs/art/interiors.md) ----------------------------------
+
+
+@model("great_vat", "free", ["great_vat"], big=True)
+def great_vat(p):
+    """One of the winery's eight great fermenting vats: oak staves bound in iron, two squares across, full to the brim
+    with mash that moves, and a ladder up its side."""
+    R, H = 0.82, 1.3
+    p.lathe([(0.0, 0.0), (R, 0.0), (R - 0.04, H), (R - 0.09, H), (R - 0.12, 0.1), (0.0, 0.1)], (0, 0, 0), "pal_walnut", segs=28,
+            smooth=False)
+    for k in range(14):   # the staves' joints
+        a = 2 * math.pi * k / 14
+        p.box((0.012, 0.012, H - 0.04), ((R - 0.015) * math.cos(a), (R - 0.015) * math.sin(a), H / 2), "pal_umber",
+              rot=(0, 0, math.degrees(a)))
+    for z in (0.14, 0.62, 1.12):
+        r = R - 0.04 * z / H + 0.012
+        p.lathe([(r - 0.012, -0.03), (r, -0.03), (r, 0.03), (r - 0.012, 0.03)], (0, 0, z), "pal_stone_deep", segs=28, smooth=False)
+    p.cyl(R - 0.1, 0.02, (0, 0, H - 0.1), "pal_bruise_deep", segs=28)   # the mash
+    rng = p.rng
+    for _ in range(7):   # bubbles on it
+        a, d = rng.uniform(0, 2 * math.pi), rng.uniform(0.0, R - 0.2)
+        p.cyl(rng.uniform(0.03, 0.07), 0.025, (d * math.cos(a), d * math.sin(a), H - 0.09), "pal_plum", segs=10)
+    # The ladder, leaning on its south-east side: two rails from the floor to the rim, and rungs between them.
+    foot, top = Vector((0.74, -0.62, 0.0)), Vector((0.52, -0.44, H + 0.05))
+    side = Vector((0.64, 0.77, 0.0)) * 0.14
+    for s in (-1, 1):
+        p.tube([tuple(foot + side * s), tuple(top + side * s)], 0.022, WOOD, segs=5)
+    for k in range(1, 6):
+        at = foot + (top - foot) * (k / 6.0)
+        p.tube([tuple(at - side), tuple(at + side)], 0.016, WOOD, segs=5)
+
+
+@model("bottle_rack", "free", ["bottle_rack"])
+def bottle_rack(p):
+    """A rack of empty bottles to the ceiling, row on row of dark green glass lying in their cubbies, waiting."""
+    W, D, H = 0.86, 0.36, 1.5
+    for sx in (-1, 0, 1):
+        for sy in (-1, 1):
+            p.box((0.04, 0.04, H), (sx * (W / 2 - 0.02), sy * (D / 2 - 0.02), H / 2), "pal_umber")
+    rows = 6
+    for k in range(rows + 1):
+        p.box((W, D, 0.025), (0, 0, 0.06 + k * (H - 0.1) / rows), "pal_umber")
+    for k in range(rows):
+        z = 0.06 + k * (H - 0.1) / rows + 0.075
+        for j in range(6):
+            x = -W / 2 + 0.08 + j * (W - 0.16) / 5
+            if (k * 5 + j * 3) % 11 == 4:
+                continue   # a gap where a bottle has gone
+            p.cyl(0.035, 0.26, (x, -0.14, z), "pal_bog_deep", rot=(-90, 0, 0), segs=8)
+            p.cyl(0.013, 0.06, (x, -0.19, z), "pal_bog_deep", rot=(90, 0, 0), segs=6)
+
+
+@model("tool_rack", "wall", ["tool_rack"])
+def tool_rack(p):
+    """A wall of tools on pegs just inside the press house door: a rake, a fork, a cooper's hammer and a coil of rope."""
+    p.box((0.9, 0.03, 0.08), (0, -0.015, 1.55), "pal_umber")
+    for x in (-0.32, -0.08, 0.16, 0.36):
+        p.cyl(0.012, 0.08, (x, 0.0, 1.55), "pal_walnut", rot=(90, 0, 0), segs=6)
+    p.box((0.03, 0.03, 1.3), (-0.32, -0.07, 0.9), WOOD)   # the rake
+    p.box((0.32, 0.04, 0.04), (-0.32, -0.08, 0.26), "pal_walnut")
+    for k in range(7):
+        p.box((0.012, 0.012, 0.08), (-0.46 + k * 0.047, -0.08, 0.2), "pal_walnut")
+    p.box((0.03, 0.03, 1.2), (-0.08, -0.07, 0.95), WOOD)   # the pitchfork
+    for k in (-1, 0, 1):
+        p.box((0.012, 0.012, 0.3), (-0.08 + k * 0.05, -0.075, 0.24), "pal_ink")
+    p.box((0.13, 0.012, 0.012), (-0.08, -0.075, 0.39), "pal_ink")
+    p.box((0.025, 0.025, 0.42), (0.16, -0.07, 1.3), "pal_walnut")   # the cooper's hammer
+    p.box((0.16, 0.06, 0.06), (0.16, -0.07, 1.08), "pal_ink")
+    p.lathe([(0.1, -0.03), (0.13, -0.03), (0.13, 0.03), (0.1, 0.03)], (0.36, -0.06, 1.38), "pal_tan", rot=(90, 0, 0), segs=14)
+
+
+@model("cup_hooks", "wall", ["cup_hooks"])
+def cup_hooks(p):
+    """A row of tasting cups hung on hooks, every one of them clean."""
+    p.box((0.86, 0.03, 0.06), (0, -0.015, 1.38), "pal_walnut")
+    for k in range(6):
+        x = -0.35 + k * 0.14
+        p.tube([(x, -0.03, 1.38), (x, -0.06, 1.38), (x, -0.07, 1.34)], 0.006, "pal_ink", segs=4)
+        p.lathe([(0.0, 0.0), (0.03, 0.0), (0.04, 0.09), (0.034, 0.09), (0.0, 0.012)], (x, -0.07, 1.33), "pal_pewter" if k % 2 else
+                "pal_ivory", rot=(180, 0, 0), segs=10)
+        p.tube(curve((x + 0.03, -0.07, 1.31), (x + 0.065, -0.07, 1.28), (x + 0.032, -0.07, 1.25), n=5), 0.006, "pal_ivory", segs=4)
+
+
+@model("footstool", "free", ["footstool"])
+def footstool(p):
+    """A low footstool, placed exactly where a child in a cage could see it."""
+    p.cyl(0.17, 0.05, (0, 0, 0.2), "pal_walnut", segs=16)
+    p.cyl(0.15, 0.03, (0, 0, 0.25), "pal_crimson", segs=16)   # a worn cushion
+    for k in range(3):
+        a = 2 * math.pi * k / 3 + 0.3
+        p.tube([(0.1 * math.cos(a), 0.1 * math.sin(a), 0.2), (0.15 * math.cos(a), 0.15 * math.sin(a), 0.0)], 0.018, "pal_umber", segs=6)
+
+
+@model("knitting_basket", "free", ["knitting_basket"])
+def knitting_basket(p):
+    """A basket of knitting with the needles stuck through something small and half done, and a wooden bowl beside it."""
+    p.lathe([(0.0, 0.0), (0.13, 0.0), (0.15, 0.13), (0.0, 0.13)], (-0.08, 0.0, 0.0), "pal_tan", segs=16)
+    for x, y, col in ((-0.12, 0.03, "pal_moss"), (-0.04, -0.03, "pal_bone"), (-0.09, 0.07, "pal_plum")):
+        p.lathe([(0.0, 0.0), (0.035, 0.01), (0.04, 0.035), (0.03, 0.06), (0.0, 0.065)], (x, y, 0.11), col, segs=10)
+    p.box((0.1, 0.07, 0.02), (-0.02, -0.06, 0.15), "pal_moss", rot=(12, 0, 20), soft=0.008, segs=1)   # a small sock
+    for s in (-1, 1):
+        p.cyl(0.005, 0.26, (-0.02 + s * 0.02, -0.06, 0.12), "pal_bone", rot=(60, 0, 20 + s * 12), segs=5)
+    p.lathe([(0.0, 0.0), (0.06, 0.0), (0.1, 0.06), (0.09, 0.06), (0.05, 0.012), (0.0, 0.012)], (0.18, 0.04, 0.0), "pal_walnut", segs=14)
+    p.cyl(0.07, 0.01, (0.18, 0.04, 0.035), "pal_parchment", segs=12)   # what's left in the bowl
 # --- Interiors: Krezk and the Abbey (docs/art/interiors.md) -----------------------------------------------------
 
 
