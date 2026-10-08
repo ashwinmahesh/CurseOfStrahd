@@ -17,9 +17,9 @@
       "#...........######...........#",
       "#...........######....###....#",
       "#...........######....###....#",
-      "#............####......=.....#",
+      "#............####......=.=...#",
       "#..................~~........#",
-      "#..................~~~.......#",
+      "#.................=~~~=...=..#",
       "#............................#",
       "#.....==..............==.....#",
       "#........~~.......~~.........#",
@@ -90,7 +90,8 @@
           20,
           14
         ]
-      ]
+      ],
+      "floor": "village/mud_road"
     },
     {
       "id": "hill_shed",
@@ -266,6 +267,95 @@
       "label": "a raven's hoard in the dead oak",
       "model": "gold_spill",
       "item": "figurine_of_wondrous_power_silver_raven"
+    },
+    {
+      "id": "bone_heap_more_1",
+      "cell": [
+        21,
+        4
+      ],
+      "kind": "decor",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "bone_heap_more_2",
+      "cell": [
+        25,
+        5
+      ],
+      "kind": "decor",
+      "model": "bones"
+    },
+    {
+      "id": "bone_heap_more_3",
+      "cell": [
+        24,
+        2
+      ],
+      "kind": "decor",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "hag_garden_bed_2",
+      "cell": [
+        18,
+        13
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "hag_garden_bed_3",
+      "cell": [
+        22,
+        13
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "shed_sacks",
+      "cell": [
+        25,
+        11
+      ],
+      "kind": "examine",
+      "label": "Labelled sacks",
+      "model": "sack"
+    },
+    {
+      "id": "shed_handcart",
+      "cell": [
+        26,
+        13
+      ],
+      "kind": "decor",
+      "model": "handcart",
+      "facing": "west"
+    },
+    {
+      "id": "shed_rope",
+      "cell": [
+        25,
+        12
+      ],
+      "kind": "search",
+      "label": "A coil of rope on a peg",
+      "model": "satchel",
+      "search_dc": 12,
+      "item": "rope"
+    },
+    {
+      "id": "lookout_bell",
+      "cell": [
+        17,
+        3
+      ],
+      "kind": "search",
+      "label": "Something glinting in the scree",
+      "model": "satchel",
+      "search_dc": 13,
+      "item": "bell"
     }
   ],
   "containers": [

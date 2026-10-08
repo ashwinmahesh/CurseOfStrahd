@@ -247,3 +247,23 @@ once
 ~ search:bags_black_cloth
 | Folded among the little whispering bags is a circle of black cloth. Unfold it on the floor, and it's a hole.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the shed, the lookout and the lane
+
+~ examine:shed_sacks
+| Sacks stacked by size, each labelled in a careful, loopy hand: FLOUR, MORE FLOUR, DREAMS (BEST), DREAMS (SECONDS). The last sack is labelled with a name.
+
+~ search:shed_rope
+| A coil of good rope on a peg, labelled ROPE. Whoever lives here labels everything, and takes nothing for granted.
+
+~ search:lookout_bell
+| In the scree at the crag's edge, a little brass bell on a broken strap, the kind tied round a goat's neck, or a child's wrist.
+
+~ examine:lane_stopped_handcart
+| A handcart tipped in the ruts with one wheel cracked through. The load is gone. Drag marks go off into the trees, and stop.
+
+~ examine:lane_lost_doll
+| A rag doll face down in the mud of the ruts. Its stitched smile has been unpicked and sewn back on upside down.
+
+~ search:lane_ditch_knife
+| At the bottom of the ditch, a small knife with a bone handle, dropped in a hurry by someone who needed it more than they knew.
