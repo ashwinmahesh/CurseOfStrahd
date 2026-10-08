@@ -154,9 +154,8 @@ Ireena [afraid]: I don't know what he means. I don't. Don't look at me like that
 ~ defiant
 set strahd_first_impression = "defiant"
 Strahd [smile]: Under your protection. Kolyan said the same, from his doorway, with a lamp. It held for a month. Let us see whether yours does better.
-Narrator: He lifts one gloved hand, as if to summon a waiter. All around the churchyard, the earth begins to split.
 approve godrick_pendlebrook +2 thistle +2 wren_featherfoot +1 kip_smudgewick -1: You told Strahd to his face that Ireena was under your protection
--> rise
+-> ismark_choked
 
 ~ threat_ok
 set strahd_first_impression = "defiant"
@@ -166,16 +165,14 @@ Strahd: Yes. You did well in that house. Let us see you do well here.
 else
 Strahd: Perhaps you are. Let us find out.
 endif
-Narrator: He lifts one hand, and the churchyard earth begins to split.
 approve thistle +2 kip_smudgewick -2 ratatoille -1: You threatened Strahd across a grave
--> rise
+-> ismark_choked
 
 ~ threat_fail
 set strahd_first_impression = "defiant"
 Strahd [smile]: Well said. The last man who shouted at me is in that grave. Allow me to return the courtesy.
-Narrator: He lifts one hand, and the churchyard earth begins to split.
 approve thistle +2 kip_smudgewick -2 ratatoille -1: You threatened Strahd across a grave
--> rise
+-> ismark_choked
 
 ~ courteous
 set strahd_first_impression = "courteous"
@@ -190,16 +187,27 @@ approve liriel_dawnsong +1 kip_smudgewick +1 ratatoille +1 thistle -2 wren_feath
 set strahd_first_impression = "violent"
 Narrator: Steel and spell reach the lych-gate together and pass through cold mist. His laughter comes from everywhere at once.
 Strahd: Steel, at a funeral. Here, then: something you are allowed to kill. They were this village's grandmothers once. Do be gentle.
-Narrator: All around the churchyard, the earth begins to split.
 approve thistle +1 kip_smudgewick -3 ratatoille -2: You attacked Strahd at the lych-gate
--> rise
+-> ismark_choked
 
 ~ silent
 set strahd_first_impression = "silent"
 Strahd: Silence. Wise. Keep it; I will learn what you love without asking. Ireena. Latch the window, if it helps you sleep. It will not stop me.
-Narrator: The mist thickens at the gate, and he is gone.
+-> ismark_choked
+
+~ ismark_choked
+set ismark_choked
+Narrator: Strahd turns his eyes on Ismark. Nothing more. Ismark's hand flies to his throat, and he goes down on his knees in the grave dirt, mouth working, blood running from his nose into his beard.
+Strahd: Your father held his door for a month with a lamp, Ismark. You could not hold a cup.
+Ireena [afraid]: Stop it! Please. Please, he can't breathe!
+Strahd: Since you ask it, my dear. You see how easily I give you things, when you ask.
+if flag.strahd_first_impression == "silent"
+Narrator: Ismark drags in a breath like a man pulled out of a river. When he can lift his head, the gate is empty and the mist is thinning.
 vanish strahd
 -> after_strahd
+endif
+Narrator: Ismark drags in a breath like a man pulled out of a river. Before he can get up off his knees, all around the churchyard the earth begins to split.
+-> rise
 
 ~ after_strahd
 if flag.burial_method == "hasty"

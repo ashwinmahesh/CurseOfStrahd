@@ -1,6 +1,29 @@
 # Ilse Varga's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each plays
 # once. Quest: Count Off (narrative/companions/kestrel.dialogue).
 
+# --- After Strahd called Ilse to kneel at the night visit (strahd/visits:night_kneel) ---------------------------------
+
+~ talk_knelt
+if name:ilse_varga and flag.strahd_knelt == "ilse_varga"
+-> knelt
+endif
+-> END
+
+~ knelt
+Narrator: Ilse is cleaning her greatsword by the fire, the same stretch of blade, over and over.
+interject name:ilse_varga: He said fall in. Your company did, at the end. So I fell in. Twenty years of drill, and the first order I obey in this valley is his.
+interject name:ilse_varga: That's how he did it, isn't it. My lot. He didn't need swords. He just gave the order.
+* Then the next order is yours, Sergeant. -> knelt_order
+* You're not on your own in this. -> knelt_alone
+
+~ knelt_order
+interject name:ilse_varga: Aye. And it'll be the one he gave them, turned round. Fall in. On him.
+-> END
+
+~ knelt_alone
+interject name:ilse_varga: I know. It's the only reason I slept at all after. Don't make me say it twice.
+-> END
+
 ~ talk_fever
 if name:ilse_varga and quest.kestrel_company >= the_host and flag.eva_truth_teller != "ilse_varga" and not flag.kestrel_fever_shared
 -> fever

@@ -91,6 +91,17 @@ func test_conditions() -> void:
 	assert_true(StoryConditions.check("attitude.ismark == friendly", st))
 
 
+func test_leader_picks_out_the_one_speaking_for_the_party() -> void:
+	var st := _party()
+	st.leader = 0
+	assert_true(StoryConditions.check("leader:name:hedda_ironvow", st))
+	assert_false(StoryConditions.check("leader:name:silvain_aster", st), "Silvain is along, but not speaking")
+	assert_true(StoryConditions.check("name:silvain_aster and not leader:name:silvain_aster", st))
+	st.leader = 1
+	assert_false(StoryConditions.check("name:silvain_aster and not leader:name:silvain_aster", st), "now he is")
+	assert_false(StoryConditions.check("leader:name:hedda_ironvow", StoryState.new()), "nobody leads an empty party")
+
+
 func test_runner_lines_interjections_and_options() -> void:
 	var st := _party()
 	var r := DialogueRunner.new(st, DiceRoller.new(1))

@@ -2,6 +2,32 @@
 # Quest: Grandda's Trail (narrative/companions/fen.dialogue). The file offers its first talk that holds: when she's
 # Strained or Doubtful (story/approval.gd), those first; then the quest's; then Warm, Close and Devoted.
 
+# --- After Strahd called Thistle to kneel at the night visit (strahd/visits:night_kneel) ------------------------------
+
+~ talk_knelt
+if name:thistle and flag.strahd_knelt == "thistle"
+-> knelt
+endif
+-> END
+
+~ knelt
+Narrator: Thistle hasn't slept. She's sitting with her back to a tree, chewing the end of her bowstring, watching the dark where he stood.
+interject name:thistle: He said heel. And I went. Like a dog. Like one of his dogs.
+interject name:thistle: Grandda's dogs never heel for strangers. Never. I did.
+* You're nobody's dog, Thistle. -> knelt_dog
+* Pack sleeps close from now on. -> knelt_pack
+
+~ knelt_dog
+interject name:thistle: No. I'm a wolf. Wolves heel once, maybe. Then they bite the hand.
+interject name:thistle: Next time he holds out his hand, I'm having fingers.
+approve thistle +3: You told me I was nobody's dog
+-> END
+
+~ knelt_pack
+interject name:thistle: Pack sleeps close. Back to back. Then if one of us gets up, the others feel it.
+approve thistle +2: You said the pack would sleep close
+-> END
+
 # --- When she's lost faith in the party (approval) ----------------------------------------------------------------
 
 ~ talk_strained

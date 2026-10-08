@@ -3,6 +3,32 @@
 # that holds, so the approval talks come in this order (story/approval.gd): when he's Strained or Doubtful, those
 # first; then the quest's; then Warm, Close and Devoted as the campaign goes on.
 
+# --- After Strahd called Godrick to kneel at the night visit (strahd/visits:night_kneel) ------------------------------
+
+~ talk_knelt
+if name:godrick_pendlebrook and flag.strahd_knelt == "godrick_pendlebrook"
+-> knelt
+endif
+-> END
+
+~ knelt
+Narrator: Godrick has tied his sword to his wrist with a bootlace. He has been sitting up with it like that since before dawn.
+interject name:godrick_pendlebrook: He called me squire, and I got up. Just like that. Like it was Sir Pellam calling.
+interject name:godrick_pendlebrook: I left my sword in the grass. A knight doesn't leave his sword. A knight doesn't kneel to... I knelt.
+* Your oath is still yours, Godrick. -> knelt_oath
+* The bootlace is a good idea. -> knelt_lace
+
+~ knelt_oath
+interject name:godrick_pendlebrook: Then I'll say it every night, out loud, so it's the last thing in my head when I sleep. You'll have to put up with that.
+interject name:godrick_pendlebrook: It's quite long. Sir Pellam added bits.
+approve godrick_pendlebrook +3: You told me my oath was still mine
+-> END
+
+~ knelt_lace
+interject name:godrick_pendlebrook: It's daft. I know it's daft. Next time he calls me, he can have the sword too, and see how he likes the end of it.
+approve godrick_pendlebrook +2: You let me keep my sword tied to my wrist
+-> END
+
 # --- When he's lost faith in the party (approval) ----------------------------------------------------------------
 
 ~ talk_strained
