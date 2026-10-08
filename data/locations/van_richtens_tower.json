@@ -211,6 +211,18 @@
       "kind": "examine",
       "label": "A lookout rock",
       "model": "boulder"
+    },
+    {
+      "id": "lookout_satchel",
+      "cell": [
+        25,
+        22
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a satchel wedged behind the lookout rock",
+      "model": "satchel",
+      "item": "eyes_of_the_eagle"
     }
   ],
   "containers": [

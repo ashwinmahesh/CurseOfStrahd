@@ -139,49 +139,49 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 
 | | Where | Item | How |
 |---|---|---|---|
-| ○ | Krezk, the cairn by the track | Ring of Warmth (uncommon) | Search (Perception DC 14) |
-| ○ | Krezk, the watch fire | Sentinel Shield (uncommon) | Search (Perception DC 14): under the woodpile |
-| ○ | Burgomaster's house, the eldest son's room | Ioun Stone of Awareness (rare) | Search (Investigation DC 15): a box under the bed |
-| ○ | Pool of the White Sun, the candle box | Scroll of Protection from Undead (rare) | Search (Investigation DC 14) |
-| ○ | Anna Krezkova | Amulet of Health (rare) | Gift: once Ilya is well |
+| ✅ | Krezk, the cairn by the track | Ring of Warmth (uncommon) | Search (Perception DC 14) |
+| ✅ | Krezk, the watch fire | Sentinel Shield (uncommon) | Search (Perception DC 14): under the woodpile |
+| ✅ | Burgomaster's house, the eldest son's room | Ioun Stone of Awareness (rare) | Search (Investigation DC 15): a box under the bed |
+| ✅ | Pool of the White Sun, the candle box | Scroll of Protection from Undead (rare) | Search (Investigation DC 14) |
+| ✅ | Anna Krezkova | Amulet of Health (rare) | Gift: once Ilya is well |
 
 ## The Abbey of St. Markovia (level 7)
 
 | | Where | Item | How |
 |---|---|---|---|
-| ○ | The bell tower | Chime of Opening (rare) | Search (Perception DC 15): a little chime hung inside the great bell |
-| ○ | Wards, the foundling cots | Figurine of Wondrous Power, Golden Lions (rare) | Search (Perception DC 14): a child's hidden treasure |
-| ○ | Wards, the matron's room | Robe of Useful Items (uncommon) | Search (Investigation DC 14): sewn into the trunk's lining |
-| ○ | Wards, the instrument cabinet | Periapt of Proof against Poison (rare) | Search (Investigation DC 15) |
-| ○ | Church, the Abbot's cot | Ioun Stone of Protection (rare) | Search (Investigation DC 16) |
-| ○ | Garden, the tool shed | Bag of Beans (rare) | Search (Investigation DC 13) |
+| ✅ | The bell tower | Chime of Opening (rare) | Search (Perception DC 15): a little chime hung inside the great bell |
+| ✅ | Wards, the foundling cots | Figurine of Wondrous Power, Golden Lions (rare) | Search (Perception DC 14): a child's hidden treasure |
+| ✅ | Wards, the matron's room | Robe of Useful Items (uncommon) | Search (Investigation DC 14): sewn into the trunk's lining |
+| ✅ | Wards, the instrument cabinet | Periapt of Proof against Poison (rare) | Search (Investigation DC 15) |
+| ✅ | Church, the Abbot's cot | Ioun Stone of Protection (rare) | Search (Investigation DC 16) |
+| ✅ | Garden, the tool shed | Bag of Beans (rare) | Search (Investigation DC 13) |
 
 ## Argynvostholt (level 8)
 
 | | Where | Item | How |
 |---|---|---|---|
-| ○ | Courtyard, the well | Cube of Force (rare) | Search (Perception DC 15) |
-| ○ | Hall, the armour stands | Flame Tongue Longsword (rare) | Search (Perception DC 15) |
-| ○ | Hall, the chapel altar | Amulet of the Devout +2 (rare) | Search (Investigation DC 15): a reliquary behind the altar |
-| ○ | Upper floor, the empty plinth | Ring of Resistance, Cold (rare) | Search (Investigation DC 16) |
-| ○ | Upper floor, the dragon's desk | Wand of Enemy Detection (rare) | Search (Investigation DC 16) |
-| ○ | Beacon | Lantern of Revealing (uncommon) | Search (Perception DC 14): the lamp-keeper's niche |
-| ○ | Argynvost's mausoleum | +2 Shield (rare) | Tip: when the skull is back, the offering niches open |
-| ○ | Sir Godfrey | +1 Plate Armor (rare) | Gift: if he takes up the Order's oath again |
+| ✅ | Courtyard, the well | Cube of Force (rare) | Search (Perception DC 15) |
+| ✅ | Hall, the armour stands | Flame Tongue Longsword (rare) | Search (Perception DC 15) |
+| ✅ | Hall, the chapel altar | Amulet of the Devout +2 (rare) | Search (Investigation DC 15): a reliquary behind the altar |
+| ✅ | Upper floor, the empty plinth | Ring of Resistance, Cold (rare) | Search (Investigation DC 16) |
+| ✅ | Upper floor, the dragon's desk | Wand of Enemy Detection (rare) | Search (Investigation DC 16) |
+| ✅ | Beacon | Lantern of Revealing (uncommon) | Search (Perception DC 14): the lamp-keeper's niche |
+| ✅ | Argynvost's mausoleum | +2 Shield (rare) | Tip: once the beacon is lit, a niche at the bier opens |
+| ✅ | Sir Godfrey | +1 Plate Armor (rare) | Gift: if he takes up the Order's oath again |
 
 ## Van Richten's Tower and the Werewolf Den (level 8)
 
 | | Where | Item | How |
 |---|---|---|---|
-| ○ | Van Richten's island, the lookout rock | Eyes of the Eagle (uncommon) | Search (Perception DC 14) |
-| ○ | Van Richten's tower, the wall of trophies | Wand of Binding (rare) | Search (Investigation DC 16) |
-| ○ | Van Richten's tower, the jars and bottles | Oil of Etherealness (rare) | Search (Investigation DC 15) |
-| ○ | Ezmerelda | Glamoured Studded Leather (rare) | Gift: once she trusts you |
-| ○ | Werewolf den slope, something in the mud | Boots of Speed (rare) | Search (Perception DC 13): a hunter's boots |
-| ○ | Werewolf caves, Kiril's trophies | Sword of Wounding (rare) | Search (Perception DC 15) |
-| ○ | Werewolf caves, the shrine of Mother Night | +2 Moon Sickle (rare) | Search (Perception DC 15): an offering hidden under the shrine |
-| ○ | Werewolf caves, the drying herbs | Elixir of Health (rare) | Search (Investigation DC 14) |
-| ○ | Emil and Zuleika | Ring of Free Action (rare) | Gift: when Emil is free of his chains |
+| ✅ | Van Richten's island, the lookout rock | Eyes of the Eagle (uncommon) | Search (Perception DC 14) |
+| ✅ | Van Richten's tower, the wall of trophies | Wand of Binding (rare) | Search (Investigation DC 16) |
+| ✅ | Van Richten's tower, the jars and bottles | Oil of Etherealness (rare) | Search (Investigation DC 15) |
+| ✅ | Ezmerelda | Glamoured Studded Leather (rare) | Gift: once she trusts you |
+| ✅ | Werewolf den slope, something in the mud | Boots of Speed (rare) | Search (Perception DC 13): a hunter's boots |
+| ✅ | Werewolf caves, Kiril's trophies | Sword of Wounding (rare) | Search (Perception DC 15) |
+| ✅ | Werewolf caves, the shrine of Mother Night | +2 Moon Sickle (rare) | Search (Perception DC 15): an offering hidden under the shrine |
+| ✅ | Werewolf caves, the drying herbs | Elixir of Health (rare) | Search (Investigation DC 14) |
+| ✅ | Zuleika | Ring of Free Action (rare) | Gift: once Emil is free of his chains |
 
 ## Berez, Mount Baratok, the Tsolenka Pass (level 9)
 

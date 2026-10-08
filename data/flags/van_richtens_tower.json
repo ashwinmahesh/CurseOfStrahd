@@ -326,6 +326,11 @@
       "id": "kiril_price_raised",
       "type": "bool",
       "summary": "The party failed to stare Kiril down over the stolen children (kiril: kids). His price for the pups rises from 100 to 150 gp."
+    },
+    {
+      "id": "zuleika_ring_given",
+      "type": "bool",
+      "summary": "Zuleika gave the party her Ring of Free Action once Emil was free (werewolf_den/zuleika: inside, docs/story/found_magic_items.md)."
     }
   ]
 }
