@@ -107,3 +107,16 @@ func test_a_raised_prop_is_drawn_from_the_ground() -> void:
 	assert_true(b.shaped(), "the mouse follows its top")
 	var hit: Variant = GridPick.ground_hit(b, Vector3(2.5, 20.0, 1.5), Vector3.DOWN)
 	assert_true(hit != null and is_equal_approx((hit as Vector3).y, 3.0), "pointing at it finds its top: %s" % [hit])
+
+
+## The ground mist lies over raised ground as it does over level ground: the post shader measures it from the
+## ground's height (Atmosphere.ground_heights, one texel per square), so Yester Hill's crest is as misty as its foot.
+func test_the_mist_lies_on_the_hill() -> void:
+	var b := ArenaBoard.build(LocationView.grid_for(Compendium.shared().get_entry("locations", "yester_hill")), "wilderness")
+	add_child(b)
+	var img := Atmosphere.ground_heights(b).get_image()
+	var crest := Vector2i(20, 3)
+	var y := b.cell_center(crest).y
+	assert_between(img.get_pixelv(crest).r, y - 0.01, y + 0.01, "the crest's own height")
+	assert_true(y > 8.0, "45 ft up the hill")
+	assert_true(b.shaped(), "so the mist follows the ground there (Atmosphere._apply_static)")

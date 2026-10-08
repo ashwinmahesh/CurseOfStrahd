@@ -356,10 +356,16 @@ func _update_lamp_shadows() -> void:
 
 ## A level floor or ground square can't shadow anything (nothing stands under it), yet each is its own box that every
 ## shadow map would draw again: the sun's splits and every shadowed lamp's six faces (W17: the sun's shadows doubled
-## the draw calls). Raised floors (a dais, steps) keep their shadows.
+## the draw calls). Raised floors (a dais, steps) keep their shadows, and so do natural ground's slopes and cliffs.
 func _flat_floors_cast_no_shadow() -> void:
 	for n in board.get_children():
 		var mi := n as MeshInstance3D
+		if mi != null and mi.has_meta("terrain"):
+			# Natural ground (lane 3): a square level with all those round it shadows nothing either; a slope, a bank
+			# or a cliff keeps its shadow.
+			if board.level_ground(mi.get_meta("terrain") as Vector2i):
+				mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			continue
 		if mi == null or not (mi.mesh is BoxMesh):
 			continue
 		var name_ := str(mi.name)
@@ -764,6 +770,10 @@ func _apply_static() -> void:
 		_post.set_shader_parameter("mist_mask", mist_mask(board.grid, float(mist.get("open", 0.35)), roads_out(),
 			float(mist.get("roads", 0.0))))
 		_post.set_shader_parameter("use_mist_mask", true)
+		# Where the ground isn't level (natural elevation, raised props) the mist lies over it, not at y = 0.
+		_post.set_shader_parameter("use_ground_height", board.shaped())
+		if board.shaped():
+			_post.set_shader_parameter("ground_height", ground_heights(board))
 	var clouds := mood.get("clouds", {}) as Dictionary
 	_post.set_shader_parameter("cloud_cover", float(clouds.get("cover", 0.5)))
 	_post.set_shader_parameter("cloud_scale", float(clouds.get("scale", 0.035)))
@@ -841,6 +851,16 @@ static func mist_mask(grid: CombatGrid, open: float, ways_out: Array[Vector2i] =
 			for road in ways_out:
 				w = maxf(w, roads * clampf(1.0 - Vector2(c - road).length() / 5.0, 0.0, 1.0))
 			img.set_pixel(x, z, Color(w, w, w))
+	return ImageTexture.create_from_image(img)
+
+
+## The ground's height at each square's middle (world units), for the mist to lie over raised ground (natural
+## elevation, raised props): one texel per square, like mist_mask.
+static func ground_heights(board_: ArenaBoard) -> ImageTexture:
+	var img := Image.create(board_.grid.width, board_.grid.depth, false, Image.FORMAT_RF)
+	for z in board_.grid.depth:
+		for x in board_.grid.width:
+			img.set_pixel(x, z, Color(board_.ground_y(Vector2(x + 0.5, z + 0.5)), 0.0, 0.0))
 	return ImageTexture.create_from_image(img)
 
 
