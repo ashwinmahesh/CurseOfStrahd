@@ -559,8 +559,10 @@ func _after_hit(st: Dictionary) -> CombatResult:
 	var e := enc()
 	if not bool(st.get("hit_responses_offered", false)):
 		st["hit_responses_offered"] = true
-		return e.reactions.offer(e.feature_recipes.hit_responses(st["c"] as Combatant, st["target"] as Combatant),
-			func() -> CombatResult: return _after_hit(st), st["r"] as CombatResult)
+		var responses := e.feature_recipes.hit_responses(st["c"] as Combatant, st["target"] as Combatant)
+		# The attacker's own choice once it has hit: Divine Smite, the 2014 way.
+		responses.append_array(e.features.smite_offers(st["c"] as Combatant, st["target"] as Combatant, st["option"] as Dictionary, st))
+		return e.reactions.offer(responses, func() -> CombatResult: return _after_hit(st), st["r"] as CombatResult)
 	var c := st["c"] as Combatant
 	var target := st["target"] as Combatant
 	var option := st["option"] as Dictionary

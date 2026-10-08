@@ -445,6 +445,12 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 	if not c.creature is Character:
 		return out
 	var seen := {}
+	# Divine Smite, the 2014 way (CombatFeatures.smite_offers): asked after each melee hit, used on every one, or only
+	# when armed on the hotbar.
+	if enc().spells.castable(c).any(func(k: Dictionary) -> bool: return str(k["id"]) == CombatFeatures.DIVINE_SMITE):
+		seen[CombatFeatures.DIVINE_SMITE] = true
+		out.append({"id": CombatFeatures.DIVINE_SMITE, "name": "Divine Smite", "cost": "A spell slot", "modes": ["ask", "auto", "never"], "default": "never",
+			"help": "Ask: after each melee hit you're asked whether to smite. Automatic: every melee hit smites while spell slots last. Off: only when armed on the Spells tab (then every hit that turn)."})
 	for known in (c.creature as Character).known_spells():
 		var spell := Compendium.shared().spell_data(str(known["id"]))
 		# A spell that acts on its own once allowed (Alustriel's Mooncloak's Reaction): Automatic or Off.

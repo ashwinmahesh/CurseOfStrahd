@@ -51,6 +51,69 @@ func test_divine_smite_adds_radiant_dice_and_more_against_undead() -> void:
 		return (x.get("details", []) as Array).any(func(d: Variant) -> bool: return str(d).contains("Divine Smite (undead)"))), "the undead die")
 
 
+## A level 5 paladin (Extra Attack, the free use of Divine Smite and level 1 slots) beside a 300 Hit Point dummy of
+## `kind`, its turn begun.
+func _paladin(e: Encounter, kind: String = "humanoid") -> Array[Combatant]:
+	var p := e.add(TestChars.custom("paladin", "human", 5), &"party", Vector2i(2, 3))
+	p.reaction_rules["heroic_inspiration"] = "never"
+	var t := TestCombat.punching_bag(e, Vector2i(3, 3), 300, kind)
+	TestCombat.start_with(e, p)
+	return [p, t]
+
+
+func test_divine_smite_armed_smites_every_hit_without_a_bonus_action() -> void:
+	var e := _field()
+	var pt := _paladin(e)
+	var p := pt[0]
+	var ch := p.creature as Character
+	var free := ch.resource_left("spell:divine_smite")
+	var slots := ch.slots_left(1)
+	assert_true(e.features.toggle_rider(p, "smite:divine_smite").ok)
+	for i in 2:
+		TestCombat.next_d20(e, 19)
+		assert_true(e.attack(p, pt[1], _melee(e, p)).hit, "attack %d" % i)
+	assert_eq(ch.resource_left("spell:divine_smite"), free - 1, "the free use first")
+	assert_eq(ch.slots_left(1), slots - 1, "then a slot: two hits, two smites")
+	assert_true(p.bonus_available, "no Bonus Action spent")
+	assert_false(p.cast_slot_spell_this_turn, "not a spell cast")
+	assert_true("smite:divine_smite" in p.armed, "armed for the rest of the turn")
+
+
+func test_divine_smite_can_be_asked_after_each_hit() -> void:
+	var e := _field()
+	var pt := _paladin(e)
+	var p := pt[0]
+	var ch := p.creature as Character
+	p.reaction_rules["divine_smite"] = "ask"
+	var free := ch.resource_left("spell:divine_smite")
+	var slots := ch.slots_left(1)
+	TestCombat.next_d20(e, 19)
+	var r := e.attack(p, pt[1], _melee(e, p))
+	assert_true(r.is_paused(), "asked once the attack hits")
+	assert_eq(e.pending.kind, "divine_smite")
+	assert_false(e.pending.spends_reaction)
+	e.answer_reaction(true)
+	assert_eq(ch.resource_left("spell:divine_smite"), free - 1, "smitten with the free use")
+	assert_false("smite:divine_smite" in p.armed, "for that hit only")
+	TestCombat.next_d20(e, 19)
+	assert_true(e.attack(p, pt[1], _melee(e, p)).is_paused(), "asked again on the second hit")
+	e.answer_reaction(false)
+	assert_eq(ch.slots_left(1), slots, "declined: no slot spent")
+	assert_true(p.bonus_available)
+
+
+func test_divine_smite_is_off_until_asked_for_and_caps_at_five_dice() -> void:
+	var e := _field()
+	var pt := _paladin(e, "undead")
+	var p := pt[0]
+	TestCombat.next_d20(e, 19)
+	assert_false(e.attack(p, pt[1], _melee(e, p)).is_paused(), "Off by default: no question")
+	var smite := Compendium.shared().spell_data("divine_smite")
+	var dice := e.features.smite_dice({"c": p, "s": smite, "slot": 5}, pt[1])
+	assert_eq(str(dice[0]["dice"]), "5d8", "at most 5d8 from the slot")
+	assert_eq(str(dice[1]["dice"]), "1d8", "and 1d8 more against the Undead")
+
+
 func test_thunderous_smite_pushes_and_knocks_prone_on_a_failed_save() -> void:
 	var e := _field()
 	var c := TestCombat.caster_with(e, ["thunderous_smite"], Vector2i(2, 3))
