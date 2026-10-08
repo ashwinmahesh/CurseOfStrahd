@@ -381,13 +381,12 @@ func open_services(npc_id: String, from_dialogue: bool = false) -> void:
 ## personality kept), keeps their belongings, and levels back up with the party's milestones.
 func respec(index: int) -> void:
 	var old := st.party[index]
-	var start := {"name": old.name, "identity": (old.build.get("identity", {}) as Dictionary).duplicate(true),
-		"appearance": (old.build.get("appearance", {}) as Dictionary).duplicate(true)}
-	var starting: Array[Dictionary] = [start]
+	var starting: Array[Dictionary] = [CreationScreen.rebuild_start(old)]
 	var cs := CreationScreen.new()
 	add_child(cs)
 	cs.open_with(starting, 1)
 	cs.finished.connect(func(made: Array[Character]) -> void:
+		st.last_check = true   # the conversation goes on knowing someone was rebuilt (`check.last`)
 		st.respec_member(old, made[0])
 		cs.queue_free()
 		view.rebuild_party()
@@ -395,6 +394,7 @@ func respec(index: int) -> void:
 		if dialogue != null:
 			dialogue.resume())
 	cs.cancelled.connect(func() -> void:
+		st.last_check = false   # backed out: nobody was rebuilt
 		cs.queue_free()
 		if dialogue != null:
 			dialogue.resume())
