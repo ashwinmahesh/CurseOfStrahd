@@ -1,0 +1,592 @@
+{
+  "id": "kinds",
+  "summary": "Breakable things on the battlefield (F5, 2024 PHB Breaking Objects): Armor Class by substance, Hit Points by size and sturdiness, what each kind blocks and leaves when it breaks, which board art each kind is, and the kind a board's '=' squares default to by theme.",
+  "substances": {
+    "cloth": 11,
+    "paper": 11,
+    "rope": 11,
+    "crystal": 13,
+    "glass": 13,
+    "ice": 13,
+    "wood": 15,
+    "stone": 17,
+    "iron": 19,
+    "steel": 19,
+    "mithral": 21,
+    "adamantine": 23
+  },
+  "hit_points": {
+    "tiny": {
+      "fragile": 2,
+      "resilient": 5
+    },
+    "small": {
+      "fragile": 3,
+      "resilient": 10
+    },
+    "medium": {
+      "fragile": 4,
+      "resilient": 18
+    },
+    "large": {
+      "fragile": 5,
+      "resilient": 27
+    }
+  },
+  "area_types": [
+    "acid",
+    "bludgeoning",
+    "cold",
+    "fire",
+    "force",
+    "lightning",
+    "piercing",
+    "slashing",
+    "thunder"
+  ],
+  "fire_light": {
+    "bright": 10,
+    "dim": 10
+  },
+  "default_kind": "crate",
+  "themes": {
+    "shrine_yard": "gravestone",
+    "manor": "table",
+    "tavern": "table",
+    "inn": "table",
+    "townhouse": "table",
+    "house": "table",
+    "shop": "crate",
+    "attic": "crate",
+    "tent": "crate",
+    "church": "pew",
+    "village": "crate",
+    "vallaki": "crate",
+    "town": "crate",
+    "camp": "crate",
+    "svalich_road": "boulder",
+    "forest": "boulder",
+    "road": "boulder",
+    "tser_pool": "boulder",
+    "riverside": "boulder",
+    "wilderness": "boulder",
+    "dungeon": "boulder"
+  },
+  "doors": {
+    "default": "door_wood",
+    "rules": [
+      {
+        "kind": "door_iron",
+        "words": [
+          "iron",
+          "gate",
+          "portcullis",
+          "bronze",
+          "steel",
+          "bars",
+          "barred",
+          "cell gate"
+        ]
+      }
+    ]
+  },
+  "kinds": {
+    "door_wood": {
+      "name": "door",
+      "substance": "wood",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "wall",
+      "flammable": true,
+      "leaves": "doorway",
+      "summary": "A wooden door (one 5-ft section): breaking it leaves the doorway open."
+    },
+    "door_iron": {
+      "name": "iron door",
+      "substance": "iron",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "wall",
+      "flammable": false,
+      "leaves": "doorway",
+      "summary": "An iron door, gate or portcullis section: breaking it leaves the way open."
+    },
+    "crate": {
+      "name": "crate",
+      "substance": "wood",
+      "size": "medium",
+      "resilience": "fragile",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "rubble",
+      "art": [
+        "crate",
+        "trunk",
+        "toy_chest",
+        "footlocker",
+        "dollhouse",
+        "puppet_theatre",
+        "market_stall",
+        "chest_painted"
+      ],
+      "summary": "Slatted crates, trunks and stalls: they splinter at a blow.",
+      "moves": "shove",
+      "move_dc": 8
+    },
+    "barrel": {
+      "name": "barrel",
+      "substance": "wood",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "rubble",
+      "art": [
+        "barrel",
+        "barrel_spigot",
+        "crow_barrel",
+        "tub_wooden",
+        "wine_vat",
+        "cask_rack",
+        "bathtub"
+      ],
+      "summary": "Hooped barrels, casks and vats.",
+      "moves": "shove",
+      "move_dc": 10
+    },
+    "oil_barrel": {
+      "name": "barrel of lamp oil",
+      "substance": "wood",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "floor",
+      "moves": "shove",
+      "move_dc": 12,
+      "bursts": {
+        "radius": 10,
+        "save": "dex",
+        "dc": 12,
+        "damage": "2d6",
+        "type": "fire",
+        "oil": true
+      },
+      "summary": "A barrel of lamp oil: fire bursts it open in a sheet of flame and leaves the floor around it burning."
+    },
+    "sacks": {
+      "name": "sacks",
+      "substance": "cloth",
+      "size": "medium",
+      "resilience": "fragile",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "floor",
+      "art": [
+        "sack",
+        "soul_bags",
+        "hay_bale",
+        "fishing_nets",
+        "coats",
+        "straw"
+      ],
+      "summary": "Sacks, nets and straw: cloth that tears and burns.",
+      "moves": "shove",
+      "move_dc": 8
+    },
+    "table": {
+      "name": "table",
+      "substance": "wood",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "rubble",
+      "art": [
+        "table",
+        "table_chairs",
+        "table_set",
+        "letters_table",
+        "receipt_table",
+        "surgery_table",
+        "workbench",
+        "desk",
+        "bar_counter",
+        "counter_front",
+        "bar_front",
+        "shop_counter",
+        "sideboard",
+        "dressing_table",
+        "cabinet_small",
+        "chest_of_drawers_front",
+        "spinning_wheel",
+        "harpsichord",
+        "bier",
+        "Furniture"
+      ],
+      "summary": "Tables, counters and the heavier furniture, a 5-ft section at a time.",
+      "moves": "shove",
+      "move_dc": 10
+    },
+    "chair": {
+      "name": "chair",
+      "substance": "wood",
+      "size": "small",
+      "resilience": "fragile",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "floor",
+      "art": [
+        "armchair",
+        "settee",
+        "rocking_chair",
+        "chair_high",
+        "rocking_horse",
+        "crib",
+        "crib_shroud",
+        "music_box",
+        "doll",
+        "perch"
+      ],
+      "summary": "Chairs, cradles and other light furniture.",
+      "moves": "shove",
+      "move_dc": 5,
+      "throwable": true
+    },
+    "bed": {
+      "name": "bed",
+      "substance": "wood",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "rubble",
+      "art": [
+        "bed",
+        "bed_small",
+        "bed_canopy",
+        "sheeted_furniture"
+      ],
+      "summary": "Beds and sheeted furniture.",
+      "moves": "shove",
+      "move_dc": 12
+    },
+    "shelves": {
+      "name": "shelves",
+      "substance": "wood",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "rubble",
+      "art": [
+        "book_shelf",
+        "bookshelf",
+        "shelves",
+        "wardrobe",
+        "linen_shelves",
+        "wine_shelf",
+        "cabinet_glass",
+        "clock_standing",
+        "clock_tall",
+        "pipe_organ",
+        "armor_stand"
+      ],
+      "summary": "Bookcases, wardrobes, cabinets and tall clocks.",
+      "moves": "topple",
+      "move_dc": 12,
+      "topple": {
+        "dc": 12,
+        "damage": "1d10",
+        "type": "bludgeoning",
+        "length": 2
+      }
+    },
+    "pew": {
+      "name": "pew",
+      "substance": "wood",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "rubble",
+      "art": [
+        "pew"
+      ],
+      "summary": "A church pew, a 5-ft section at a time.",
+      "moves": "shove",
+      "move_dc": 12
+    },
+    "coffin": {
+      "name": "coffin",
+      "substance": "wood",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "rubble",
+      "art": [
+        "coffin"
+      ],
+      "summary": "A wooden coffin.",
+      "moves": "shove",
+      "move_dc": 12
+    },
+    "gravestone": {
+      "name": "gravestone",
+      "substance": "stone",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": false,
+      "leaves": "rubble",
+      "art": [
+        "gravestone",
+        "grave_mound",
+        "milestone",
+        "crypt_small",
+        "cairn",
+        "stone_bench",
+        "shrine_small",
+        "Gravestone",
+        "Plinth"
+      ],
+      "summary": "Gravestones, milestones and little stone shrines."
+    },
+    "low_wall": {
+      "name": "low wall",
+      "substance": "stone",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": false,
+      "leaves": "rubble",
+      "art": [
+        "wall_low",
+        "LowWall"
+      ],
+      "summary": "A low stone wall, a 5-ft section at a time."
+    },
+    "statue": {
+      "name": "statue",
+      "substance": "stone",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": false,
+      "leaves": "rubble",
+      "art": [
+        "statue_saint",
+        "statue_knight",
+        "statue_head",
+        "statue_faceless",
+        "statue_mother_night",
+        "saint_defaced",
+        "gargoyle"
+      ],
+      "summary": "A stone statue (each 5-ft section of a bigger one).",
+      "moves": "topple",
+      "move_dc": 15,
+      "topple": {
+        "dc": 13,
+        "damage": "2d10",
+        "type": "bludgeoning",
+        "length": 2
+      }
+    },
+    "boulder": {
+      "name": "boulder",
+      "substance": "stone",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": false,
+      "leaves": "rubble",
+      "art": [
+        "boulder",
+        "rocks",
+        "Rubble"
+      ],
+      "summary": "A boulder or a heap of fallen stone, a 5-ft section at a time.",
+      "moves": "shove",
+      "move_dc": 15
+    },
+    "stump": {
+      "name": "stump",
+      "substance": "wood",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "floor",
+      "art": [
+        "stump",
+        "log",
+        "woodpile",
+        "druid_totem",
+        "scarecrow",
+        "scarecrow_stitched"
+      ],
+      "summary": "A stump, a fallen log, a woodpile, a scarecrow."
+    },
+    "brambles": {
+      "name": "brambles",
+      "substance": "rope",
+      "size": "medium",
+      "resilience": "fragile",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "floor",
+      "art": [
+        "bramble_a",
+        "vines",
+        "reeds"
+      ],
+      "summary": "A thicket of brambles or vines (rope-like stems)."
+    },
+    "cart": {
+      "name": "cart",
+      "substance": "wood",
+      "size": "large",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "rubble",
+      "art": [
+        "wagon",
+        "cart_broken",
+        "handcart",
+        "vardo"
+      ],
+      "summary": "A cart or wagon (the 2024 table's example of a Large object).",
+      "moves": "shove",
+      "move_dc": 15
+    },
+    "fence": {
+      "name": "fence",
+      "substance": "wood",
+      "size": "medium",
+      "resilience": "fragile",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "floor",
+      "art": [
+        "fence",
+        "stocks",
+        "stocks_broken"
+      ],
+      "summary": "A fence, the stocks."
+    },
+    "ironwork": {
+      "name": "ironwork",
+      "substance": "iron",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": false,
+      "leaves": "floor",
+      "art": [
+        "cage_covered",
+        "cage_hanging",
+        "iron_maiden",
+        "cauldron",
+        "lift_cage",
+        "lantern_post"
+      ],
+      "summary": "Cages, cauldrons, braziers and other ironwork."
+    },
+    "brazier": {
+      "name": "brazier",
+      "substance": "iron",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": false,
+      "leaves": "floor",
+      "art": [
+        "brazier",
+        "brazier_green"
+      ],
+      "moves": "topple",
+      "move_dc": 10,
+      "topple": {
+        "dc": 12,
+        "damage": "1d10",
+        "type": "fire",
+        "length": 1,
+        "coals": true
+      },
+      "summary": "An iron fire basket on legs: pushed over, it spills burning coals across the next square."
+    },
+    "candelabra": {
+      "name": "candelabra",
+      "substance": "iron",
+      "size": "small",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": false,
+      "leaves": "floor",
+      "art": [
+        "candelabra",
+        "oil_lamp"
+      ],
+      "summary": "A standing candelabra or lamp.",
+      "moves": "shove",
+      "move_dc": 5,
+      "throwable": true
+    },
+    "bones": {
+      "name": "bones",
+      "substance": "wood",
+      "size": "medium",
+      "resilience": "fragile",
+      "blocks": "low",
+      "flammable": false,
+      "leaves": "rubble",
+      "art": [
+        "bones",
+        "bone_table",
+        "bone_chair",
+        "carcass",
+        "refuse_mound"
+      ],
+      "summary": "Heaped bones and refuse (as hard as wood)."
+    },
+    "chandelier": {
+      "name": "chandelier",
+      "substance": "iron",
+      "size": "tiny",
+      "resilience": "resilient",
+      "blocks": "none",
+      "flammable": false,
+      "leaves": "rubble",
+      "hangs": true,
+      "fall": {
+        "save": "dex",
+        "dc": 12,
+        "damage": "2d6",
+        "type": "bludgeoning",
+        "prone": true
+      },
+      "summary": "A chandelier on its chain: the chain (Tiny, iron) is what an attack breaks, and the chandelier drops on whoever is under it."
+    },
+    "spider_web": {
+      "name": "web",
+      "ac": 10,
+      "hp": 5,
+      "size": "small",
+      "blocks": "none",
+      "flammable": false,
+      "leaves": "floor",
+      "vulnerable": [
+        "fire"
+      ],
+      "immune": [
+        "bludgeoning",
+        "poison",
+        "psychic"
+      ],
+      "summary": "A giant spider's webbing holding its prey (2025 MM: AC 10, 5 Hit Points, Vulnerability to Fire)."
+    }
+  }
+}

@@ -129,6 +129,9 @@ func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: 
 		# A conjured object (Bigby's Hand) is only hurt by what targets it.
 		if v.creature.has_flag("spell_object"):
 			continue
+		# A creature in the air above the area (flying, levitating) is out of it.
+		if not reaches_height(c, s, v):
+			continue
 		match mode:
 			"others":
 				if v == c:
@@ -147,6 +150,35 @@ func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: 
 		out.sort_custom(func(a: Combatant, b: Combatant) -> bool: return enc().distance(c, a) < enc().distance(c, b))
 		out.resize(cap)
 	return out
+
+
+## Whether an area that covers `v`'s squares also reaches as high as `v` is off its floor (flying, levitating): an area
+## laid on the ground reaches as high as its own size (a sphere's radius, a cube's side, a cylinder's or wall's height);
+## one from the caster reaches from the caster's own height (an emanation as far as its size, a cone half as wide as
+## its distance there, a line its width). Creatures all on the floor are always in.
+func reaches_height(c: Combatant, s: Dictionary, v: Combatant) -> bool:
+	if v.altitude <= 0 and c.altitude <= 0:
+		return true
+	var area := s.get("area", {}) as Dictionary
+	var size := int(area.get("size", 0))
+	var from_caster := str((s.get("range", {}) as Dictionary).get("kind", "")) == "self"
+	var gap := v.altitude - (c.altitude if from_caster else 0)
+	match str(area.get("shape", "")):
+		"sphere":
+			return absi(gap) <= size
+		"cylinder":
+			return gap >= 0 and gap < int(area.get("height", size))
+		"cube":
+			return gap >= 0 and gap < size
+		"wall":
+			return gap >= 0 and gap < int(area.get("height", 10))
+		"emanation":
+			return absi(gap) <= size
+		"cone":
+			return absi(gap) <= enc().distance(c, v) / 2 + CombatGrid.FEET
+		"line":
+			return absi(gap) < maxi(CombatGrid.FEET, int(area.get("width", 5)))
+	return true
 
 
 ## A cast-time choice ("choice": {kind, from}) resolved from opts: the picked value, or the first option.
@@ -279,6 +311,10 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 			out["why"] = "That point is out of range (%d ft)" % rng
 		return out
 	if s.has("area") and not s.has("attack"):
+		return out
+	# Aimed at an object on the battlefield, or at oil on the floor (EncounterObjects).
+	if tgt.is_empty() and str(opts.get("object", "")) != "":
+		out["why"] = e.objects.spell_target_why(c, s, str(opts["object"]), rng)
 		return out
 	if tgt.is_empty():
 		out["why"] = "Choose a target"

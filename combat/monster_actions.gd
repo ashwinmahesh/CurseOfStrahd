@@ -249,6 +249,9 @@ func _timed_condition(src: Combatant, t: Combatant, cond: String, until: String,
 			fx.ends = Effect.Ends.NEVER
 	if t.creature.add_effect(fx):
 		e.log.add("condition", ("%s is %s (%s)" % [t.name(), cond.capitalize(), label]) if cond != "" else "%s is hindered (%s)" % [t.name(), label], t.id)
+		# A giant spider's Web: held until the webbing (an object on the battlefield) is broken.
+		if rd.has("object"):
+			e.objects.hold(t, str(rd["object"]), fx)
 		if cond in ["incapacitated", "paralyzed", "stunned", "unconscious"]:
 			e.features.end_turning_from(t)
 

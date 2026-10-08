@@ -1,9 +1,10 @@
 class_name EncounterUndo
 extends RefCounted
-## Taking back a move (Encounter): a player-controlled creature's move on its own turn (move, free_move, jump) can be
-## undone while nothing came of it: no die was rolled, no reaction was offered (even one declined or passed up),
-## nothing was queued, no other creature, zone, spell object, mark or grapple changed, nothing was logged but the move's
-## own lines, and nothing new was seen (the mover wasn't spotted, and no foe the party couldn't see before is in sight).
+## Taking back a move (Encounter): a player-controlled creature's move on its own turn (move, free_move, jump, flying up
+## or down) can be undone while nothing came of it: no die was rolled, no reaction was offered (even one declined or
+## passed up), nothing was queued, no other creature, zone, spell object, mark or grapple changed, nothing was logged but
+## the move's own lines, and nothing new was seen (the mover wasn't spotted, and no foe the party couldn't see before is
+## in sight).
 ## Undos stack: the last move comes back first, back to the last thing that wasn't a move. Anything else (an attack, a
 ## spell, an item, Dash, a feature, a reaction, the turn ending) ends them: the fight as it stood after the last move is
 ## kept with the stack, and any difference at undo time means something else happened. Not saved (fights save at the
@@ -72,6 +73,7 @@ func undo_move(c: Combatant) -> CombatResult:
 	for i in rec.who.size():
 		var m := rec.who[i]
 		var from := m.cell
+		var up := m.altitude
 		var conditions := m.creature.conditions.duplicate(true)
 		_put_back(m, rec.saved[i])
 		if m.cell != from:
@@ -84,6 +86,8 @@ func undo_move(c: Combatant) -> CombatResult:
 				moves.append(ev)
 		if m.creature.conditions != conditions:
 			changed.append({"type": "condition", "id": m.id})
+		if m.altitude != up:
+			changed.append({"type": "altitude", "id": m.id, "from": up, "to": m.altitude})
 	e.events.append_array(moves)
 	e.events.append_array(changed)
 	e.spells.zones.refresh_auras()

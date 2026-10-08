@@ -201,6 +201,17 @@
       "model": "barrel"
     },
     {
+      "id": "tser_lamp_oil",
+      "cell": [
+        28,
+        18
+      ],
+      "kind": "decor",
+      "label": "a barrel of lamp oil",
+      "model": "barrel",
+      "object": "oil_barrel"
+    },
+    {
       "id": "ribbon_tree",
       "cell": [
         36,

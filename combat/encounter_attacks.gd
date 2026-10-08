@@ -189,7 +189,7 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 	var p := option["profile"] as WeaponProfile
 	var origin_cell: Vector2i = option.get("origin_cell", c.cell)
 	var origin_size := 1 if option.has("origin_cell") else c.size_cells
-	var dist := e.grid.distance_ft(origin_cell, origin_size, target.cell, target.size_cells)
+	var dist := e.grid.distance_ft(origin_cell, origin_size, target.cell, target.size_cells, 0 if option.has("origin_cell") else c.altitude, target.altitude)
 	var melee := bool(option["melee"])
 	var duel := e.spells.specials.duel_disadvantage(c, target)
 	if duel != "":
@@ -442,7 +442,9 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 			e.marks.erase(m)
 			break
 	if not option.get("melee", true) and c.creature is Character and not bool((st["opts"] as Dictionary).get("free_ammo", false)):
-		if str(option.get("kind", "")) == "thrown":
+		if option.has("improvised"):
+			e.objects.actions.thrown(c, option, target)   # picked up and thrown (ObjectActions)
+		elif str(option.get("kind", "")) == "thrown":
 			e.weapons.throw_item(c, p.item_id, target)
 		elif str(option.get("kind", "")) != "blade":
 			e.weapons._spend_ammo(c, p)

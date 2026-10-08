@@ -8,9 +8,10 @@ extends RefCounted
 ##
 ## The Encounter holds the fight's state. Its jobs live in helpers, a file each, that it makes and owns:
 ## EncounterTurns, EncounterSight, EncounterMovement, EncounterMounts, EncounterGrapples, EncounterWeapons,
-## EncounterAttacks, EncounterDamage, EncounterReactions, EncounterActions and EncounterUndo (combat/encounter_*.gd), and
-## GroundItems (what lies on the battlefield). The forwarding functions at the end are the Encounter's interface, so
-## the HUD, the AI, spells and features keep calling it.
+## EncounterAttacks, EncounterDamage, EncounterReactions, EncounterActions and EncounterUndo (combat/encounter_*.gd),
+## GroundItems (what lies on the battlefield) and EncounterObjects (what stands on it and can be broken or set
+## alight). The forwarding functions at the end are the Encounter's interface, so the HUD, the AI, spells and
+## features keep calling it.
 
 enum State { SETUP, ACTIVE, OVER }
 
@@ -99,6 +100,8 @@ var reaction_flow: EncounterReactions
 var actions: EncounterActions
 ## Weapons and other things lying on the battlefield, and picking them up (combat/ground_items.gd).
 var ground: GroundItems
+## Doors, furniture and the like that can be attacked and broken, and fire and oil on the floor (combat/encounter_objects.gd).
+var objects: EncounterObjects
 ## Taking back a move (combat/encounter_undo.gd).
 var undo: EncounterUndo
 
@@ -117,6 +120,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	reaction_flow = EncounterReactions.new(self)
 	actions = EncounterActions.new(self)
 	ground = GroundItems.new(self)
+	objects = EncounterObjects.new(self)
 	spells = SpellCaster.new(self)
 	features = CombatFeatures.new(self)
 	reactions = Reactions.new(self)
@@ -160,6 +164,7 @@ func add(creature: Creature, side: StringName, cell: Vector2i) -> Combatant:
 func _effect_added(cr: Creature, fx: Effect) -> void:
 	faerun.effect_added(cr, fx)
 	echo_knight.effect_added(cr, fx)
+	movement.effect_added(cr, fx)
 	ground.effect_added(cr, fx)
 
 
@@ -209,7 +214,7 @@ func occupant_at(cell: Vector2i) -> Combatant:
 
 
 func distance(a: Combatant, b: Combatant) -> int:
-	return grid.distance_ft(a.cell, a.size_cells, b.cell, b.size_cells)
+	return grid.distance_ft(a.cell, a.size_cells, b.cell, b.size_cells, a.altitude, b.altitude)
 
 
 ## Whether this fight is at `place`: its location, or a place inside it.
@@ -456,6 +461,10 @@ func center_of(c: Combatant) -> Vector2:
 
 func fall(c: Combatant, feet: int, why: String = "Falling") -> int:
 	return movement.fall(c, feet, why)
+
+
+func fly_vertical(c: Combatant, delta: int) -> CombatResult:
+	return movement.fly_vertical(c, delta)
 
 
 # --- Mounted combat (EncounterMounts) -------------------------------------------------------------

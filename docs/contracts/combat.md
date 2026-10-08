@@ -22,6 +22,7 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | Standard actions, hiding, effects' actions (escape, douse, wake), Haste's action | `encounter_actions.gd` (`actions`) |
 | Things lying on the battlefield: dropped and thrown weapons, picking them up, gathering them after the fight | `ground_items.gd` (`ground`) |
 | Taking back a move | `encounter_undo.gd` (`undo`) |
+| Things standing on the battlefield that break and burn (doors, furniture, chandeliers, a spider's web), oil and fire on the floor; doors, shoving, pushing over and throwing them, fire spreading and barrels bursting | `encounter_objects.gd` (`objects`), with `object_actions.gd` (`objects.actions`) and `object_fire.gd` (`objects.fire`) |
 | Casting: paying, checking targets, resolving the recipe | `spell_casting.gd` (`casting`) |
 | What can be cast, casting numbers, Metamagic | `spell_options.gd` (`options`) |
 | Reaction spells, releasing a readied spell | `spell_reactions.gd` (`reaction_spells`) |
@@ -56,6 +57,7 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `ready_attack(c, option_id)` | Readied attack, triggers when an enemy comes into reach |
 | `unarmed_special(c, t, "grapple" / "shove_prone" / "shove")`, `escape_grapple(c)`, `release_grapple(c, t)` | a grappler drags what it holds when it moves (1 extra foot per foot); letting go is free |
 | `stand_up(c)`, `drop_prone(c)`, `stabilize(c, t, use_kit)`, `death_save(c)` | |
+| `fly_vertical(c, feet)` | up (+) or down (−) where it stands, 5 ft at a time, 1 ft of movement per foot (a rider flies its mount); `movement.vertical_why(c, feet)` says why not; `Combatant.altitude` is feet off the floor, `Encounter.distance` counts it, and `movement.settle_all()` brings down whoever nothing holds up |
 | `fall(c, feet)` | 1d6 per 10 ft (20d6 at most), Prone unless unharmed; Slow Fall and Feather Fall answer it. `forced_move` calls it for a ledge, and `movement.fall_away` for a map's open drop (`grid.drop_ft`, from the map's `drop_ft`): the creature leaves the grid (`left_fight` meta) |
 | `spells.cast(c, spell_id, slot, targets, point, direction, opts)` | `point` for spheres, `direction` for cones, cubes and lines from the caster; opts: `word` (Command), `damage_type` |
 | `spells.use_sustained(c, action_id, targets, point, direction)` | a sustained spell action (`spells.sustained_actions(c)`): Spiritual Weapon's strike, Witch Bolt's arc, Flaming Sphere's roll... |
@@ -67,6 +69,9 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `undo_move(c)`, `can_undo_move(c)` | Takes back `c`'s last move (`move`, `free_move`, `jump`, with the mount or rider that went along) while nothing came of it: no die rolled, no reaction offered (even one declined or passed up), nothing queued, no other creature, zone, spell object, mark or grapple changed, no log line but the move's own, and nothing new seen (the mover not spotted, no foe the party couldn't see in sight now). Moves come back one by one, to the last thing that wasn't a move; anything else ends them. Player-controlled creatures on their own turn only; not saved |
 | `escape_effect(c, effect_id)`, `wake(c, t)`, `haste_action_use(c, what, t, option_id)`, `use_item(c, item_id, t)` | breaking free of Web/Entangle, shaking a sleeper awake, Haste's extra action, potions and Goodberries |
 | `pick_up(c, gid)` | picks up the pile `gid` (`ground.items`) from within 5 ft: the free object interaction, else a Bonus Action (Fast Hands) or the Utilize action |
+| `objects.attack(c, object_id, option_id)` | one attack of the Attack action against a battlefield object (`objects.list`) |
+| `spells.cast(c, spell_id, 0, [], Vector2.INF, Vector2.ZERO, {"object": id})` | a cantrip that can target objects (Fire Bolt) aimed at an object, or at oil on the floor (`"square:x_y"`) |
+| `objects.throw_oil(c, creature, object)`, `objects.pour_oil(c, cell)`, `objects.light_oil(c, cell)` | Oil (2024 PHB): one attack of the Attack action; the Utilize action; a Bonus Action with a Tinderbox |
 | `items.use(c, item_id, power_id, targets, point, direction, level, opts)` | a magic item's power (ADR 0012, docs/contracts/magic_items.md): a wand's spell at a level paid in charges, a potion, a toggle, a custom power; `items.list(c)` is the Items tab |
 | `features.second_wind / action_surge / steady_aim / turn_undead / divine_spark / preserve_life` | |
 | `end_turn()` | Rolls a pending Death Saving Throw, end-of-turn effects and repeated saves, next creature |
@@ -113,6 +118,7 @@ steps can pause. `run_reaction_queue` called while a prompt is open waits for it
 | type | fields |
 |---|---|
 | move | id, from, to, forced, mounted (a rider carried along), dragged (pulled along by its grappler: it moves with the step before it), undo (a move taken back: the token goes back to `to`) |
+| altitude | id, from, to: feet off the floor before and after (flying up or down, Levitate, coming down) |
 | fall | id, feet: a creature falls (off a ledge, into a drop) |
 | attack | attacker, target, hit, critical, action (the attack option's id: `weapon:longsword`, `monster:claw`; `spell:fire_bolt` for a spell attack), from (the token the blow comes from: the attacker, or an Echo Knight's echo) |
 | damage / heal | id, amount (critical) |
@@ -150,6 +156,54 @@ free) and half the mundane ammunition it shot (`ammo_spent`); the foes' weapons 
 LocationFights adds to the fight's loot. A round's save keeps it all (`EncounterSnapshot` key `ground`). The scene draws
 the piles with `GroundView.sync(e.ground.items)` (world/combat/ground_view.gd) and names them on hover
 (`describe_at(cell)`).
+
+## Things that break and burn (`EncounterObjects`, `e.objects`)
+
+`list`: BattleObjects (combat/battle_object.gd) `{id, kind, name, cells, ac, hp, hp_max, blocks (CombatGrid.WALL, LOW or 0),
+flammable, burning, leaves (floor, rubble, doorway), immune, resist, vulnerable, door_id, prop_id, art, hangs, fall, holds,
+hold_source, oil_rounds, destroyed, open, locked (doors), moves ("shove", "topple"), move_dc, topple, throwable, bursts,
+wreck (where its wreckage lies, if not its squares), home (where it stood at the start)}`, made from `data/objects/kinds.json` (Armor Class by substance, Hit Points by size and
+sturdiness, the 2024 tables; what each kind blocks and leaves; which board art each kind is; the default kind per board
+theme; door kinds by words). `add(kind, cells, extra)` places one (setting its grid flag); `objects_at(cell)`,
+`blocking_at(cell)`, `cells_of(o)` (a web is where its prey stands) find them. `damage(o, parts, by, label)` applies
+Poison and Psychic Immunity, the kind's Resistance and Vulnerability, oil's 5 more Fire and Siege Monster; at 0 Hit Points
+`_break` clears its flag (WALL or LOW), leaves rubble (DIFFICULT) by kind, drops a chandelier (`fall`: a save, damage,
+Prone, on everyone under it) or frees a web's prey, and clears `Encounter._cover_cache`. `ignite(o)` sets a flammable
+object burning (1d4 Fire at `round_started`, firelight through `light_at`, which EncounterSight.light_at reads).
+`squares`: oil on the floor and squares on fire `{cell, oil, lit, web, until_round, until_index, damage, on, hit}` (lit oil:
+5 Fire on entering or ending a turn there, once a turn, until the end of the turn 2 rounds after it was lit; a burning web
+cube: 2d4 Fire at the start of a turn, for a round). Hooks: `turn_start`/`turn_end` (EncounterTurns), `round_started`
+(a new round), `on_moved` (EncounterMovement._after_step), `adjust_incoming`/`on_damaged` (deal_damage: oil on a creature,
+fire reaching oil and webs), `resolve_spell` (SpellCasting._resolve, opts.object), `area_spell` (SpellSaves._save_spell and
+SpellAttacks._secondary: an area's damage to the objects in it; spell data `ignites_objects`), `spell_target_why`
+(SpellTargeting._check_targets), `hold(t, kind, fx)` (a stat block rider's `object`: the giant spider's Web).
+The hotbar's Items tab has Oil (`item_entries`, kind `object`: `oil:throw`, `oil:pour`, `oil:light`); the square menu lists
+attacks, cantrips and Oil at what stands or hangs on a square and fire at oil on it (`square_entries`, ids
+`act:object:<id>:attack:<option>`, `...:spell:<spell>`, `...:oil`, `act:square:x_y:...`); a hotbar attack or cantrip
+clicked on an object's square aims at it (`redirect`); `perform` carries them out. `tooltip(cell)` and `describe_at(cell)`
+are the hover text. A round's save keeps it all (EncounterSnapshot key `objects`). Events: `object_attack` {by, id, hit,
+critical, action}, `object_damage` {id, amount}, `object_broken` {id}, `object_fall` {id}, `object_burning` {id},
+`object_fire` {cell, out?, poured?}, `object_throw` {by, cell, item}; the scene plays them with ObjectView
+(world/combat/object_view.gd). BattleScenery (world/combat/battle_scenery.gd) places the objects: `from_board(e, board)`
+for any board's '=' squares (CombatView.begin, once: `objects.placed`), `for_location(view, e)` for a location's closed
+doors, '=' squares and props that `hang` (chandeliers), and `after_fight(view, e)`.
+
+What creatures do with them (`ObjectActions`, `e.objects.actions`): `toggle_door(c, oid)` (the free object interaction,
+else Utilize or Fast Hands; `door_why`; `set_door(o, open)` flips the WALL flag), `shove(c, oid)` (one attack of the
+Attack action and an Athletics check; `shove_to(c, o)` says where it goes `{cell, who, fall, gone, why}`, `push(o, to, by)`
+moves it: a knock, a fall onto whoever is below, gone over a drop), `topple(c, oid)` (Utilize and an Athletics check;
+`topple_line(c, o)`, `fall_over(o, line, by, details)`), and throwing: `throw_options(c)` are attack options
+(EncounterWeapons.attack_options) `{id "improvised:g:<pile>" or "improvised:o:<object>", kind "thrown", improvised: ref}`,
+`throw_why(c, option)` (attack_legal), `thrown(c, option, target, cell)` (EncounterAttacks and the object attack: the
+pickup is paid, a pile lands by the target, a chair breaks). Lines: the Common tab's `door:<id>` (`entries`), the square
+menu's `act:door:<id>`, `act:shove:<id>`, `act:topple:<id>` (`square_entries`), carried out by `perform(c, id)`. Fire
+(`ObjectFire`, `e.objects.fire`): `spread()` as each round begins (from `round_started`), `burst(o, by)` for a barrel of
+lamp oil (from `damage`, `ignite` and `expose_to_fire`). `on_floor(cell)` is the creature standing on a square's floor:
+only those are hit by what is shoved, pushed over or falls, or burns on the floor. Events: `object_door` {id, open},
+`object_move` {id, from, to, fall, gone?}, `object_bump` {id, target}, `object_topple` {id, cells}, `object_burst` {id,
+cells}. A location door is a door object open or shut as the place left it (`locked` from its lock), except one the story
+watches (BattleScenery.watched_door: a flag, a fight or a narrator line on opening it), which stays shut; a location prop's
+`object` names its kind (a barrel of lamp oil); what a shove moved carries `moved_cell` on its art for the rest of the visit.
 
 ## The hotbar (`ActionCatalog`)
 

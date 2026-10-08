@@ -164,10 +164,21 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 		out.append(_entry("stand", COMMON, "Stand Up", "%d ft" % (c.speed() / 2), "movement", stand_why, "none"))
 	else:
 		out.append(_entry("drop_prone", COMMON, "Drop Prone", "free", "movement", e._turn_check(c), "none"))
+	# Flying (F4): up or down 5 ft where it stands, at 1 ft of movement per foot; a rider flies its mount.
+	var flyer := e.movement.flyer_of(c)
+	if e.movement.can_fly(flyer) or e.movement.self_levitating(flyer) or flyer.altitude > 0:
+		var here := ("%d ft up" % flyer.altitude) if flyer.altitude > 0 else "on the floor"
+		for step: int in [5, -5]:
+			var fwhy := e._turn_check(c)
+			if fwhy == "":
+				fwhy = e.movement.vertical_why(flyer, step)
+			out.append(_entry("fly:%s" % ("up" if step > 0 else "down"), COMMON, "Fly up 5 ft" if step > 0 else "Fly down 5 ft", here,
+				"movement", fwhy, "none", "Rise or sink where you are: 5 ft of movement for 5 ft. Out of reach of creatures on the floor 10 ft up; leaving a foe's reach this way draws its Opportunity Attack."))
 	out.append(_entry("influence", COMMON, "Influence", "talk", "action", "Wolves and the walking dead can't be reasoned with", "none"))
 	out.append(_entry("utilize", COMMON, "Utilize", "use an object", "action", "Nothing to use here (Healer's Kit is on Items)", "none"))
-	# Things lying within reach (GroundItems): picking each up.
+	# Things lying within reach (GroundItems): picking each up. Doors within reach: opening or shutting each.
 	out.append_array(e.ground.entries(c))
+	out.append_array(e.objects.actions.entries(c))
 
 
 ## FeatureActions' entries as hotbar actions.
@@ -519,6 +530,8 @@ static func spell_targeting(data: Dictionary) -> String:
 func _items(c: Combatant, out: Array[Dictionary]) -> void:
 	# Potions, scrolls, oils and every magic item power (combat/combat_items.gd).
 	out.append_array(e.items.list(c))
+	# Oil to throw, pour and light (EncounterObjects).
+	out.append_array(e.objects.item_entries(c))
 	# Goodberries and other heal-only consumables that aren't potions: a Bonus Action to eat one or give it away.
 	if c.creature is Character:
 		var seen := {}
@@ -869,6 +882,7 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 	var mark := e.events.size()
 	e.faerun.before_action(c)
 	var r := _perform(c, action, targets, point, dir, slot, opts)
+	e.movement.settle_all()   # a flyer the action grounded comes down
 	if r.ok:
 		e.faerun.after_action(c, action, targets)
 	# A class feature in use: an `ability` event ahead of what it did, for the view's effect (emit-only).
@@ -950,8 +964,12 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 			return e.use_item(c, id.substr(5), t if t != null else c)
 		"pickup":
 			return e.pick_up(c, id.substr(7))
+		"object":
+			return e.objects.perform(c, action, targets, point)
 		"let_go":
 			return e.release_grapple(c, e.get_c(id.get_slice(":", 1)))
+		"fly":
+			return e.fly_vertical(c, CombatGrid.FEET if id == "fly:up" else -CombatGrid.FEET)
 	match id:
 		"grapple":
 			return e.unarmed_special(c, t, "grapple")
@@ -1293,8 +1311,9 @@ func square_actions(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Arr
 		if why == "Occupied":
 			why = "You can move through %s's space but not stop in it" % o.name() if o != null and c.allied_with(o) else "Someone is there"
 		out.append({"id": "move", "label": "Move here (%d ft)" % int(mp["cost"]) if bool(mp["ok"]) else "Move here", "enabled": bool(mp["ok"]), "why": why})
-	# Picking up what lies there (GroundItems).
+	# Picking up what lies there (GroundItems); attacking what stands or hangs there, oil on the floor (EncounterObjects).
 	out.append_array(e.ground.square_entries(c, cell))
+	out.append_array(e.objects.square_entries(c, cell))
 	if o == null or o == c:
 		return out
 	var seen := {}

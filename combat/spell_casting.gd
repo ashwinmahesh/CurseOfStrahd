@@ -430,6 +430,9 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 	var spells := sp()
 	var s := ctx["s"] as Dictionary
 	var c := ctx["c"] as Combatant
+	# Aimed at an object or at oil on the floor (opts.object): EncounterObjects resolves it.
+	if enc().objects.resolve_spell(ctx, r):
+		return r
 	# Rod of Absorption, Staff of the Magi: a spell aimed at one creature alone can be soaked up.
 	if enc().items.absorbs_spell(ctx, tgt, cells, r):
 		return r

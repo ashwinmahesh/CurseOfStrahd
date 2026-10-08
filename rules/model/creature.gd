@@ -1205,8 +1205,10 @@ func speed(kind: String = "walk") -> Breakdown:
 		var pct := mod_value(m, ctx)
 		var now := b.sum()
 		b.add(m.source_name, now * pct / 100 - now)
+	# Speed 0 with no kind (Grappled, Restrained, Paralyzed...) stops every speed, flying too; with a kind, only that
+	# one (Gaseous Form's walking).
 	for m in modifiers_for(&"speed_set"):
-		if m.text("kind", "walk") == kind and _speed_set_value(m, ctx, kind) == 0:
+		if m.text("kind", kind) == kind and _speed_set_value(m, ctx, kind) == 0:
 			b.set_override(0, m.source_name)
 	for m in modifiers_for(&"speed_cap"):
 		if m.text("kind", "all") in ["all", kind] and b.total() > mod_value(m, ctx):

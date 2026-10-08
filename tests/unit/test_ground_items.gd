@@ -3,7 +3,8 @@ extends TestCase
 ## picking up with the free object interaction and then the Utilize action, thrown weapons coming down by their
 ## target (a returning one flying back, the Hammer of Thunderbolts staying), Heat Metal, the Unconscious condition and
 ## Command's "Drop" letting go, the party gathering its things (and half its arrows) after the fight while the foes'
-## weapons become loot, a saved fight keeping all of it, and the view drawing it.
+## weapons become loot, what goes over the edge of a map's drop going down (and fetched afterwards), a saved fight
+## keeping all of it, and the view drawing it.
 
 
 ## A swordsman that fails every save (its abilities as low as they go): a scimitar, and a light crossbow unless
@@ -219,6 +220,41 @@ func test_unconscious_and_command_drop_let_go_of_what_is_held() -> void:
 	b2.creature.add_effect(Effect.new("Command", &"spell", "command").with_modifier("flag", {"value": "command_drop"}))
 	e.ai.play_turn(b2)
 	assert_eq(e.ground.at(b2.cell).size(), 1, "Command: Drop")
+
+
+func test_what_goes_over_the_edge_goes_down_and_is_fetched_after_the_fight() -> void:
+	var e := TestCombat.encounter(["......", "......", "      ", "      "], 5)
+	e.grid.drop_ft = 200
+	var g := TestCombat.hero(e, "godrick_pendlebrook", Vector2i(2, 1))
+	var t := TestCombat.hero(e, "tamsin_tealeaf", Vector2i(4, 0))
+	var w := TestCombat.foe(e, "dire_wolf", Vector2i(2, 0))
+	TestCombat.start_with(e, w)
+	var ch := g.creature as Character
+	var sword := str(ch.equipped("main_hand").get("id", ""))
+	assert_ne(sword, "")
+	# Going over the edge (EncounterMovement.fall_away puts him over the drop as he falls): his sword goes with him.
+	g.cell = Vector2i(2, 2)
+	assert_true(e.ground.goes_down(g))
+	e.ground.drop_held(g, "Unconscious")
+	assert_eq(str(ch.equipped("main_hand").get("id", "")), sword, "still in his hand")
+	assert_true(e.ground.items.is_empty() and e.ground.fallen.is_empty(), "nothing left on a square over the drop")
+	e.movement.leave_grid(g, "fell")
+	e.ground.drop_held(g, "Unconscious")
+	assert_true(e.ground.items.is_empty(), "out of the fight, nothing of his lands anywhere")
+	# A thing that comes down over the drop falls out of reach, a saved fight keeps it, and it's fetched afterwards.
+	var daggers := e.item_count(t, "dagger")
+	assert_true(daggers > 0)
+	e.weapons.throw_item(t, "dagger", null, Vector2i(4, 2))
+	assert_eq(e.item_count(t, "dagger"), daggers - 1)
+	assert_true(e.ground.items.is_empty(), "no pile over the drop")
+	assert_eq(e.ground.fallen.size(), 1, "it fell over the edge")
+	var back := JSON.parse_string(JSON.stringify(EncounterSnapshot.capture(e))) as Dictionary
+	var e2 := EncounterSnapshot.restore(back, DiceRoller.new(1))
+	assert_eq(e2.ground.fallen.size(), 1, "a saved fight keeps it")
+	e.deal_damage(t, w, [{"amount": 500, "type": "slashing"}], false, "test")
+	assert_true(e.is_over())
+	assert_eq(e.item_count(t, "dagger"), daggers, "fetched from below with the rest")
+	assert_eq(str(ch.equipped("main_hand").get("id", "")), sword, "he comes back up with his sword")
 
 
 func test_after_the_fight_the_party_gathers_its_things_and_the_foes_weapons_are_loot() -> void:
