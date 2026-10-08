@@ -1,0 +1,18 @@
+{
+  "id": "goodwife_sarnov",
+  "name": "Goodwife Sarnov",
+  "title": "Of the Village of Barovia",
+  "summary": "Ilka and Toma's mother, a worn-out village woman who bought dream pastries every week to dream of the baby she lost, and sold her other two children when the coin ran out.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}

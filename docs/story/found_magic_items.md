@@ -134,6 +134,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | The crag, the dead oak | Figurine of Wondrous Power, Silver Raven (uncommon) | Search (Perception DC 14): a raven's hoard in the hollow |
 | ✅ | The track, the wayside shrine | Restorative Ointment (uncommon) | Search (Perception DC 13) |
 | ✅ | The track, the ditch | Vicious Dagger (rare) | Search (Perception DC 13): a knife dropped in a hurry (lane 28's spot) |
+| ✅ | The track, Granny Ash's basket | Robe of Eyes (rare) | Hoard: once Granny Ash is dead (The Fourth Sister, docs/story/side_quests.md) |
 
 ## The Wizard of Wines (level 6)
 

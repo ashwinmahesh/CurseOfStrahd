@@ -152,6 +152,18 @@
       "model": "satchel",
       "search_dc": 13,
       "item": "vicious_weapon__dagger"
+    },
+    {
+      "id": "mouse_hut",
+      "cell": [
+        23,
+        12
+      ],
+      "kind": "examine",
+      "label": "A hut by the millrace",
+      "model": "crate",
+      "dialogue": "old_bonegrinder/the_fourth_sister:hut_prop",
+      "when": "flag.mouse_met"
     }
   ],
   "encounters": [
@@ -228,10 +240,355 @@
       ],
       "surprise": "",
       "flag": "offalia_slain"
+    },
+    {
+      "id": "granny_ash",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "Granny Ash comes across the lane with her dogs at her heels, and in the hag garden behind her the blights pull their roots up out of the beds.",
+      "monsters": [
+        {
+          "monster": "granny_ash",
+          "cell": [
+            26,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            24,
+            3
+          ],
+          "name": "Granny's Dog"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            3
+          ],
+          "name": "Granny's Dog"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            20,
+            4
+          ],
+          "name": "Granny's Dog"
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            10,
+            3
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            14,
+            4
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            18,
+            2
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            29,
+            2
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            6,
+            4
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            12,
+            2
+          ]
+        },
+        {
+          "monster": "tree_blight",
+          "cell": [
+            8,
+            3
+          ],
+          "name": "The Hag Garden's Elm"
+        }
+      ],
+      "surprise": "",
+      "flag": "granny_ash_slain",
+      "quest": {
+        "id": "the_fourth_sister",
+        "stage": "granny_slain"
+      }
+    },
+    {
+      "id": "granny_ash",
+      "trigger": "dialogue",
+      "when": "level >= 7",
+      "text": "Granny Ash comes across the lane with her dogs at her heels, and in the hag garden behind her the blights pull their roots up out of the beds.",
+      "monsters": [
+        {
+          "monster": "granny_ash",
+          "cell": [
+            26,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            24,
+            3
+          ],
+          "name": "Granny's Dog"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            3
+          ],
+          "name": "Granny's Dog"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            20,
+            4
+          ],
+          "name": "Granny's Dog"
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            10,
+            3
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            14,
+            4
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            18,
+            2
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            29,
+            2
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            6,
+            4
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            12,
+            2
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "granny_ash_slain",
+      "quest": {
+        "id": "the_fourth_sister",
+        "stage": "granny_slain"
+      }
+    },
+    {
+      "id": "granny_ash",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "Granny Ash comes across the lane with her dogs at her heels, and in the hag garden behind her the blights pull their roots up out of the beds.",
+      "monsters": [
+        {
+          "monster": "granny_ash",
+          "cell": [
+            26,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            24,
+            3
+          ],
+          "name": "Granny's Dog"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            3
+          ],
+          "name": "Granny's Dog"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            20,
+            4
+          ],
+          "name": "Granny's Dog"
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            10,
+            3
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            14,
+            4
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            18,
+            2
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            29,
+            2
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "granny_ash_slain",
+      "quest": {
+        "id": "the_fourth_sister",
+        "stage": "granny_slain"
+      }
+    },
+    {
+      "id": "granny_ash",
+      "trigger": "dialogue",
+      "text": "Granny Ash comes across the lane with her dogs at her heels, and in the hag garden behind her the blights pull their roots up out of the beds.",
+      "monsters": [
+        {
+          "monster": "granny_ash",
+          "cell": [
+            26,
+            4
+          ],
+          "hp": 130
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            24,
+            3
+          ],
+          "name": "Granny's Dog"
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            10,
+            3
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            14,
+            4
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            18,
+            2
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "granny_ash_slain",
+      "quest": {
+        "id": "the_fourth_sister",
+        "stage": "granny_slain"
+      }
     }
   ],
   "narration": {
     "enter": "enter:old_bonegrinder_track"
   },
-  "rest": "risky"
+  "rest": "risky",
+  "npcs": [
+    {
+      "npc": "bonegrinder_mouse",
+      "cell": [
+        16,
+        6
+      ],
+      "dialogue": "old_bonegrinder/the_fourth_sister:mouse",
+      "when": "flag.morgantha_slain and not flag.granny_ash_slain and not flag.mouse_fate",
+      "hours": [
+        7,
+        19
+      ],
+      "facing": "south"
+    },
+    {
+      "npc": "bonegrinder_mouse",
+      "cell": [
+        22,
+        11
+      ],
+      "dialogue": "old_bonegrinder/the_fourth_sister:birthday",
+      "when": "quest.the_fourth_sister == granny and not flag.mouse_fate",
+      "hours": [
+        19,
+        7
+      ],
+      "facing": "north"
+    },
+    {
+      "npc": "bonegrinder_mouse",
+      "cell": [
+        22,
+        11
+      ],
+      "dialogue": "old_bonegrinder/the_fourth_sister:dawn",
+      "when": "flag.granny_ash_slain and not flag.mouse_fate",
+      "facing": "north"
+    }
+  ]
 }

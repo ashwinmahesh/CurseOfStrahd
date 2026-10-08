@@ -1,0 +1,60 @@
+{
+  "id": "the_fourth_sister",
+  "name": "The Fourth Sister",
+  "summary": "Once Morgantha is dead, a girl sells plain pastries on the miller's lane below Old Bonegrinder, and says her Granny is coming for her thirteenth birthday.",
+  "giver": "bonegrinder_mouse",
+  "region": "old_bonegrinder",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Vasile and Petre say Goodwife Sarnov walks up the miller's lane every morning for one plain pastry, from a girl who sells them there, and that the girl has her husband's eyes.",
+      "objectives": [
+        "Find the girl on the miller's lane below Old Bonegrinder"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "met",
+      "journal": "A girl called Mouse sells plain pastries on the miller's lane. She calls Morgantha Mother, and says she's to be a sister when she's thirteen.",
+      "objectives": [
+        "Find out what Mouse is waiting for"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "granny",
+      "journal": "Mouse turns thirteen on the next dark night, when Morgantha's own mother, Granny Ash, comes out of the deep wood to make her a hag. The iron is already coming in at her gums.",
+      "objectives": [
+        "Be at Mouse's hut on the miller's lane after dark",
+        "Optional: find out who Mouse was before she was Mouse"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "granny_slain",
+      "journal": "Granny Ash is dead in the miller's lane. Mouse is waiting by her hut.",
+      "objectives": [
+        "Talk to Mouse"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "home",
+      "journal": "Mouse is Zamfira Sarnov again, home with her mother, Ilka and Toma in the village. She makes plain pastries for Bildrath's, and nobody has dreamed anything yet.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "keepers",
+      "journal": "Granny didn't finish what she started, and Mouse has grey teeth partway. Ilinca Vrana took her to the Keepers of the Feather, who have had odder members.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "given",
+      "journal": "We gave Mouse to Granny Ash for a basket of coins and a hag's word never to come back to the valley.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

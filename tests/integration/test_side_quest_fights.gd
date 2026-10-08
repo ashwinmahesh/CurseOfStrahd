@@ -183,3 +183,15 @@ func test_the_rag_queen_steps_off_her_post() -> void:
 	await _fight(v, "rag_queen", ["The Rag Queen", "A Straw Groom"])
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("one_horned_billy"), "burned")
+
+
+func test_granny_ash_comes_out_of_the_trees_with_her_dogs() -> void:
+	for level: int in [5, 6, 7, 8]:
+		var v := await _boot("old_bonegrinder_track", 23, level, ["morgantha_slain"])
+		await _fight(v, "granny_ash", ["Granny Ash", "Granny's Dog"])
+		await _end(v)
+		assert_eq(GameState.story.quest_stage("the_fourth_sister"), "granny_slain")
+		assert_true(bool(GameState.story.get_flag("granny_ash_slain", false)))
+		root.queue_free()
+		root = null
+		await _frames(2)
