@@ -365,7 +365,7 @@
       "label": "something left at the foot of the cairn",
       "model": "rubble",
       "search_dc": 12,
-      "item": "candle"
+      "item": "candle_of_invocation"
     }
   ],
   "containers": [
