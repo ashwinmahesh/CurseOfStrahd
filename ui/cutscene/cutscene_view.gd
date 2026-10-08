@@ -167,6 +167,7 @@ func show_caption(on: bool) -> void:
 func set_paused(on: bool) -> void:
 	paused = on
 	_pause.visible = on
+	VoiceOver.set_paused(on)   # the Narrator waits with the picture (UI QA SND-03)
 	if _fade != null and _fade.is_valid():
 		if on:
 			_fade.pause()

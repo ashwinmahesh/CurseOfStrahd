@@ -1,5 +1,5 @@
 {
- "_doc": "Which way each dialogue bust faces as drawn (art/busts/<id>[_<mood>].webp; a mood shares its person's facing unless listed by its own name). DialogueBusts mirrors a bust that faces away from the other side (docs/ui/busts.md). Judged from the art, 2026-10-08.",
+ "_doc": "Which way each dialogue bust faces as drawn (art/busts/<id>[_<mood>].webp; a mood shares its person's facing unless listed by its own name). DialogueBusts mirrors a bust that faces away from the other side (docs/ui/busts.md). Judged by the face (where the face looks), not the body, from the art, 2026-10-08 (Ireena corrected by UI QA ART-02).",
  "facing": {
   "godrick_pendlebrook": "right",
   "hedda_ironvow": "right",
@@ -11,7 +11,7 @@
   "tamsin_tealeaf": "left",
   "thistle": "left",
   "wren_featherfoot": "left",
-  "ireena": "right",
+  "ireena": "left",
   "strahd": "right",
   "madam_eva": "right",
   "ezmerelda": "right",
