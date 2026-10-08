@@ -15,5 +15,15 @@ own (the castle above the village), and `tips` are short lines in our own words,
 controls (core/input_actions.gd, world/game_root.gd).
 
 ## Code
-- `ui/screens/loading_card.gd` (`LoadingCard`): the card, `picture_for(region)`, `tips()`, `show_for(parent, loc)`.
-- `world/game_root.gd`: `enter_location` shows the card when the region changes (`_card_region`).
+- `ui/screens/loading_card.gd` (`LoadingCard`): the card, `picture_for(region)`, `tips()`, `show_for(parent, loc)`,
+  and `cover(parent, loc, hold)` with `lift()` for a card that waits for the place to be built (and goes after
+  `MAX_COVER` seconds whatever happens).
+- `world/game_root.gd`: `_covered(to, change)` makes a change of place behind the cover (`CARD_MS`, `took_ms`,
+  `expected_ms`); `enter_location` stays synchronous and still shows the card itself when the region changes outside a
+  cover (`_card_region`).
+- `world/exploration/place_preload.gd` (`PlacePreload`): the party's and the place's people's sprite sheets read on
+  worker threads while the cover is up.
+- `world/exploration/npc_routes.gd`: a walking route's legs are searched once per session and with a growing budget
+  (the whole-map search per leg was 0.85 s of Vallaki's build).
+- `tools/perf/perf_run.py --only transitions [--cover] [--headless]` times each change of place on a route through
+  the village, the Death House, Vallaki and the castle.

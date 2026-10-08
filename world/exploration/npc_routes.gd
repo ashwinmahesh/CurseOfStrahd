@@ -47,11 +47,10 @@ static func route_for(v: LocationView, spec: Dictionary) -> Array[Dictionary]:
 	# Home again at the end: the entry's own facing and work.
 	stops.append({"at": [start.x, start.y], "face": str(spec.get("facing", "")), "work": str(spec.get("work", ""))})
 	var from := start
-	var no := func(_c: Vector2i) -> bool: return false
 	for s: Variant in stops:
 		var stop := _stop(s, spec)
 		var to := stop["cell"] as Vector2i
-		var leg := CombatGrid.path_to(v.grid.reachable(from, 1, 4000, no, no, no), to)
+		var leg := leg_path(v.grid, from, to)
 		if leg.is_empty() and to != from:
 			return [] as Array[Dictionary]
 		for i in range(1, leg.size()):
@@ -62,6 +61,37 @@ static func route_for(v: LocationView, spec: Dictionary) -> Array[Dictionary]:
 			out.append(e)
 		from = to
 	return out
+
+
+## The farthest a leg's search goes, in feet of walking.
+const LEG_FEET := 4000
+
+## Legs searched this session, by the grid they were searched on and their ends: a place's people walk the same legs
+## on every visit, and searching a town's took most of a second (the loading lane).
+static var _legs: Dictionary = {}
+
+
+## The squares of the shortest walk from `from` to `to`, both ends included; [] when there's none within LEG_FEET.
+## Searching the whole map for every leg took 0.85 s of building Vallaki (the loading lane), so a leg is searched once
+## per session for the grid as it stands (its squares and heights; an opened door makes another grid), and the search
+## starts with a budget a little over the straight distance, doubling it until `to` is in reach. The path is the one a
+## whole-map search finds, since a smaller budget only leaves out squares that cost more than it.
+static func leg_path(grid: CombatGrid, from: Vector2i, to: Vector2i) -> Array[Vector2i]:
+	var key := "%d|%s|%s" % [hash([grid.width, grid.depth, grid._flags, grid._height]), from, to]
+	if _legs.has(key):
+		return (_legs[key] as Array[Vector2i]).duplicate()
+	var no := func(_c: Vector2i) -> bool: return false
+	var budget := (maxi(absi(to.x - from.x), absi(to.y - from.y)) + 4) * CombatGrid.FEET * 2
+	var path: Array[Vector2i] = []
+	while true:
+		budget = mini(budget, LEG_FEET)
+		var reach := grid.reachable(from, 1, budget, no, no, no)
+		if reach.has(to) or budget >= LEG_FEET:
+			path = CombatGrid.path_to(reach, to)
+			break
+		budget *= 2
+	_legs[key] = path
+	return path.duplicate()
 
 
 ## A waypoint as {cell, wait, face, work}, from [x, y], [x, y, seconds] or {"at", "wait", "face", "work"}.
