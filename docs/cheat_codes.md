@@ -1,13 +1,13 @@
 # Cheat codes
 
-Every code the game's Cheat codes page accepts: 743 items, 542 of them magic, as of main `efefaa69` (2026-10-08).
-Each code gives that item to the hero you pick, as many times as you like.
+Every code the game's Cheat codes page accepts: 743 items, 542 of them magic.
+Each code gives that item to the hero you pick, as many times as you like. `make cheat-codes` rewrites this file
+(and the vault's Cheat Codes.md) from the item data, so run it after adding items rather than editing this by
+hand; `python3 tools/data/cheat_codes.py --check` says whether it's behind.
 
 The codes come from `story/cheat_codes.gd`: the first six hex digits of sha256("cheat:<item id>"), in upper case, with
 any clash settled in id order. They don't change when items are added, so a new item only adds a row here. Only
-playable items answer to a code; an entry marked `"playable": false` keeps its code for later but isn't given. The
-vault's Cheat Codes.md holds the same list and `make cheat-codes` rewrites it; `python3 tools/data/cheat_codes.py
---stdout` prints the current list.
+playable items answer to a code; an entry marked `"playable": false` keeps its code for later but isn't given.
 
 ## How to use a code
 
