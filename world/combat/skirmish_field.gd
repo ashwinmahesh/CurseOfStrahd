@@ -22,7 +22,10 @@ static func dress(root: Node3D, board: ArenaBoard, loc_id: String, loc: Dictiona
 		var prop := p as Dictionary
 		if str(prop.get("kind", "")) == "search" or not StoryConditions.check(str(prop.get("when", "")), st):
 			continue
-		if SetDressing.place(board, prop) == null:
+		var piece := SetDressing.place(board, prop)
+		if piece != null:
+			SetDressing.tint_flames(piece, str(prop.get("flame", "")))
+		else:
 			var art := LocationBuilder._prop_art(prop)
 			if art != "":
 				board.prop_sprite(art, board.cell_center(_cell(prop["cell"])), 0.8)
@@ -40,7 +43,7 @@ static func _light(root: Node3D, board: ArenaBoard, li: Dictionary) -> void:
 	var cell := _cell(li["cell"])
 	var kind := str(li.get("kind", ""))
 	var omni := CandleFlicker.new()
-	omni.light_color = Look.color("candle")
+	omni.light_color = SetDressing.light_colour(li)
 	omni.omni_range = maxf(2.0, float(li.get("dim_ft", 20)) / 5.0)
 	omni.base_energy = 1.4 if kind in ["candle", "lamp"] else 2.2
 	omni.position = board.cell_center(cell) + Vector3(0, 1.2, 0)
@@ -52,7 +55,7 @@ static func _light(root: Node3D, board: ArenaBoard, li: Dictionary) -> void:
 		board.prop_sprite("torch", board.cell_center(cell))
 		omni.position.y = 1.9
 	elif kind in ["fire", "bonfire", "brazier"] and not ModelPiece.fire_near(board, board.cell_center(cell)):
-		var art := SetDressing.flame(0.6)
+		var art := SetDressing.flame(0.6, str(li.get("color", "")) if SetDressing.FLAME_TINTS.has(str(li.get("color", ""))) else "")
 		if art != null:
 			art.position = board.cell_center(cell)
 			root.add_child(art)

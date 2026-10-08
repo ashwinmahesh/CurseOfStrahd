@@ -7954,6 +7954,81 @@
       ],
       "triangles": 1026,
       "nature": true
+    },
+    "brazier_cold": {
+      "file": "art/models/brazier_cold.glb",
+      "mount": "free",
+      "stands_for": [
+        "brazier_cold"
+      ],
+      "size": [
+        0.677,
+        0.589,
+        0.707
+      ],
+      "materials": [
+        "pal_ash_violet",
+        "pal_frost",
+        "pal_ink",
+        "pal_slate"
+      ],
+      "triangles": 858
+    },
+    "offering_pile": {
+      "file": "art/models/offering_pile.glb",
+      "mount": "free",
+      "stands_for": [
+        "offering_pile"
+      ],
+      "size": [
+        0.85,
+        0.213,
+        0.803
+      ],
+      "materials": [
+        "pal_candle",
+        "pal_crimson",
+        "pal_moss",
+        "pal_silver",
+        "pal_skin",
+        "pal_tan",
+        "pal_umber",
+        "pal_wick"
+      ],
+      "triangles": 880,
+      "turns": true
+    },
+    "chained_bookcase": {
+      "file": "art/models/chained_bookcase.glb",
+      "mount": "wall",
+      "stands_for": [
+        "chained_bookcase"
+      ],
+      "size": [
+        0.92,
+        1.9,
+        0.31
+      ],
+      "materials": [
+        "pal_ash_violet",
+        "pal_blood",
+        "pal_blood_deep",
+        "pal_bog",
+        "pal_bone_dark",
+        "pal_frost",
+        "pal_ink",
+        "pal_leather",
+        "pal_moon_blue",
+        "pal_night",
+        "pal_night_deep",
+        "pal_parchment",
+        "pal_pewter",
+        "pal_rust",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 1032
     }
   }
 }

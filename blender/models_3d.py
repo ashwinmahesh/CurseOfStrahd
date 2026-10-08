@@ -5436,6 +5436,83 @@ def broad_oak_bough(p):
               r2=0.2, segs=9)
 
 
+# --- Interiors: the Amber Temple (docs/art/interiors.md) -------------------------------------------------------
+
+
+@model("brazier_cold", "free", ["brazier_cold"])
+def brazier_cold(p):
+    """A cold brazier: the iron basket on its three scrolled legs, full of grey ash gone hard with frost."""
+    R, H = 0.3, 0.58
+    for k in range(3):
+        a = math.radians(90 + k * 120)
+        c, s = math.cos(a), math.sin(a)
+        p.tube([(R * 0.5 * c, R * 0.5 * s, H * 0.55), (R * 0.95 * c, R * 0.95 * s, H * 0.3), (R * c, R * s, 0.03)], 0.018, "pal_ink")
+        p.tube(curve((R * c, R * s, 0.03), (R * 1.25 * c, R * 1.25 * s, 0.0), (R * 1.25 * c, R * 1.25 * s, 0.08), n=4), 0.014, "pal_ink")
+    bowl = [(0.0, H * 0.55), (R * 0.6, H * 0.57), (R, H * 0.85), (R * 1.05, H), (R * 0.95, H), (R * 0.85, H * 0.86),
+            (R * 0.5, H * 0.62), (0.0, H * 0.6)]
+    p.lathe(bowl, (0, 0, 0), "pal_ink", segs=14, smooth=False)
+    for k in range(10):
+        a = 2 * math.pi * k / 10
+        p.box((0.02, 0.02, H * 0.45), (R * 0.99 * math.cos(a), R * 0.99 * math.sin(a), H * 0.78), "pal_ink",
+              rot=(0, 0, math.degrees(a)))
+    p.cyl(R * 0.86, 0.03, (0, 0, H * 0.8), "pal_slate", segs=14)   # the ash, gone hard
+    p.lathe([(0.0, H * 0.82), (R * 0.4, H * 0.82), (R * 0.2, H * 0.88), (0.0, H * 0.9)], (0.04, -0.03, 0), "pal_ash_violet", segs=10)
+    p.tube([(R * 1.02 * math.cos(2 * math.pi * k / 16), R * 1.02 * math.sin(2 * math.pi * k / 16), H + 0.005) for k in range(17)],
+           0.014, "pal_frost", segs=5)   # frost on the rim
+    for k in range(4):
+        a = 2 * math.pi * k / 4 + 0.4
+        p.box((0.1, 0.03, 0.03), (0.12 * math.cos(a), 0.12 * math.sin(a), H * 0.92), "pal_ink", rot=(0, 15, math.degrees(a)))
+
+
+@model("offering_pile", "free", ["offering_pile"], turns=True)
+def offering_pile(p):
+    """Offerings heaped where they were left: coins and rings, a crown, swords, and children's toys, a wooden horse and a
+    rag doll. Everything anyone ever brought down here to bargain with."""
+    rng = p.rng
+    p.lathe([(0.0, 0.0), (0.36, 0.0), (0.28, 0.06), (0.14, 0.12), (0.0, 0.14)], (0, 0, 0), "pal_wick", segs=16)   # coins
+    for _ in range(14):
+        a, r = rng.uniform(0, 2 * math.pi), rng.uniform(0.0, 0.38)
+        p.cyl(0.035, 0.008, (r * math.cos(a), r * math.sin(a), 0.12 - r * 0.3), "pal_candle", rot=(rng.uniform(-30, 30), 0, 0), segs=8)
+    p.lathe([(0.075, 0.0), (0.085, 0.0), (0.085, 0.05), (0.075, 0.05)], (0.05, 0.02, 0.12), "pal_wick", segs=14)   # the crown
+    for k in range(6):
+        a = 2 * math.pi * k / 6
+        p.cyl(0.012, 0.04, (0.05 + 0.08 * math.cos(a), 0.02 + 0.08 * math.sin(a), 0.17), "pal_wick", r2=0.002, segs=5)
+    p.cyl(0.015, 0.015, (0.05 + 0.08, 0.02, 0.15), "pal_crimson", segs=6)
+    for k, (x, y, a) in enumerate(((-0.25, -0.1, 30), (0.2, -0.22, -60))):   # swords
+        p.box((0.5, 0.03, 0.012), (x, y, 0.05 + k * 0.02), "pal_silver", rot=(0, 8, a))
+        p.box((0.03, 0.14, 0.02), (x - 0.22 * math.cos(math.radians(a)), y - 0.22 * math.sin(math.radians(a)), 0.06 + k * 0.02),
+              "pal_candle", rot=(0, 8, a))
+    p.box((0.16, 0.06, 0.08), (-0.18, 0.24, 0.1), "pal_tan", rot=(0, 0, 20))   # the wooden horse
+    p.box((0.05, 0.05, 0.08), (-0.11, 0.27, 0.17), "pal_tan", rot=(0, 0, 20))
+    for dx in (-0.06, 0.06):
+        p.cyl(0.025, 0.012, (-0.18 + dx, 0.21, 0.04), "pal_umber", rot=(90, 0, 20), segs=8)
+    p.box((0.06, 0.12, 0.04), (0.25, 0.2, 0.05), "pal_moss", rot=(0, 0, -30))   # the rag doll
+    p.cyl(0.03, 0.04, (0.25, 0.28, 0.05), "pal_skin", rot=(90, 0, -30), segs=8)
+
+
+@model("chained_bookcase", "wall", ["chained_bookcase"])
+def chained_bookcase(p):
+    """A bookcase in the temple's stacks: every book chained to its shelf, the chains run through a ring on each spine and
+    padlocked at the end, all of it furred with frost."""
+    W, D, H = 0.92, 0.3, 1.9
+    for s in (-1, 1):
+        p.box((0.05, D, H), (s * (W / 2 - 0.025), -D / 2, H / 2), "pal_night_deep")
+    p.box((W, 0.03, H), (0, -0.015, H / 2), "pal_night_deep")
+    rng = p.rng
+    for k in range(5):
+        z = 0.08 + k * 0.37
+        p.box((W, D, 0.04), (0, -D / 2, z), "pal_night_deep")
+        x = -W / 2 + 0.06
+        while x < W / 2 - 0.08:
+            w = rng.uniform(0.04, 0.07)
+            h = rng.uniform(0.22, 0.3)
+            p.box((w, D * 0.8, h), (x + w / 2, -D * 0.45, z + 0.02 + h / 2), _book_colour(rng))
+            x += w + 0.005
+        p.box((W - 0.1, 0.012, 0.012), (0, -D * 0.9, z + 0.15), "pal_pewter")   # the chain across the spines
+        p.box((0.04, 0.02, 0.05), (W / 2 - 0.08, -D * 0.92, z + 0.12), "pal_ink")   # its padlock
+    p.box((W, 0.02, 0.02), (0, -D, H - 0.01), "pal_frost")   # frost along the top
+
+
 # --- Export and preview ----------------------------------------------------------------------------------------
 
 def bounds(ob):

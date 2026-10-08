@@ -39,7 +39,9 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   jumped down; docs/rules/deviations.md). The board draws them as one sloped ground with rock under cliffs; empty
   squares given a height are the hillside the land draws round the walked ones. Yester Hill and Krezk's road and abbey
   track are the first maps that use it.
-- **Light:** `bright`, `dim` or `dark` for the map and each area; `lights` add bright and dim radii. (Vision rules —
+- **Light:** `bright`, `dim` or `dark` for the map and each area; `lights` add bright and dim radii, and an optional
+  `color` (a palette colour: Baba Lysaga's green hearth is "bile"; a fire's own flame takes it too). A prop's `flame`
+  colours the fire burning in its piece (a hearth), as SetDressing.FLAME_TINTS has it. (Vision rules —
   what Darkvision and darkness do to checks and attacks — belong to the spell and ability audit; the world only
   reports each square's light level.)
 - **Encounter triggers:** `enter_area:<area>`, `open:<door_or_container>`, `examine:<prop>`, `flag:<flag>` (when a

@@ -97,7 +97,8 @@
       ],
       "kind": "examine",
       "label": "The hearth",
-      "model": "fireplace"
+      "model": "fireplace",
+      "flame": "bile"
     },
     {
       "id": "lysaga_poppet",
@@ -388,7 +389,8 @@
       ],
       "kind": "fire",
       "bright_ft": 10,
-      "dim_ft": 20
+      "dim_ft": 20,
+      "color": "bile"
     },
     {
       "cell": [

@@ -299,6 +299,11 @@
             "enum": ["north", "south", "east", "west", "northeast", "northwest", "southeast", "southwest"],
             "description": "Which way the piece's front looks (north is up the map), instead of away from the wall beside it or south: wagons round a fire, horses in a pen."
           },
+          "flame": {
+            "type": "string",
+            "enum": ["bile"],
+            "description": "The colour of the fire burning in the piece (a hearth's flame), as SetDressing.FLAME_TINTS has it: bile is a green fire."
+          },
           "span": {
             "type": "array",
             "minItems": 2,
@@ -414,6 +419,11 @@
               "window",
               "magic"
             ]
+          },
+          "color": {
+            "type": "string",
+            "pattern": "^[a-z_]+$",
+            "description": "Optional: the light's palette colour (art/palette/palette.json), and a fire's flame in it where the flame has that tint (\"bile\": a green fire). Unset, candlelight."
           },
           "bright_ft": {
             "type": "integer",

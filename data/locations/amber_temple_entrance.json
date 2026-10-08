@@ -108,7 +108,8 @@
           8
         ]
       ],
-      "light": "dark"
+      "light": "dark",
+      "furnish": "amber_hall"
     },
     {
       "id": "west_guardroom",
@@ -366,6 +367,16 @@
       "model": "rubble",
       "search_dc": 12,
       "item": "candle_of_invocation"
+    },
+    {
+      "id": "west_cold_brazier",
+      "cell": [
+        4,
+        5
+      ],
+      "label": "A cold brazier",
+      "model": "brazier_cold",
+      "kind": "decor"
     }
   ],
   "containers": [

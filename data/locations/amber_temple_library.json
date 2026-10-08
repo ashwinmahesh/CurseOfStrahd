@@ -43,7 +43,8 @@
           28,
           18
         ]
-      ]
+      ],
+      "furnish": "library_stacks"
     },
     {
       "id": "reading_room",
@@ -57,7 +58,8 @@
           11,
           7
         ]
-      ]
+      ],
+      "furnish": "frozen_reading"
     },
     {
       "id": "restricted_stacks",
@@ -71,7 +73,8 @@
           17,
           7
         ]
-      ]
+      ],
+      "furnish": "library_stacks"
     },
     {
       "id": "exethanter_study",
@@ -85,7 +88,8 @@
           28,
           7
         ]
-      ]
+      ],
+      "furnish": "buried_study"
     }
   ],
   "spawns": {
@@ -238,6 +242,166 @@
       "label": "a chained book that isn't what its spine says",
       "model": "scattered_notes",
       "item": "tome_of_clear_thought"
+    },
+    {
+      "id": "stacks_chained_1",
+      "cell": [
+        5,
+        10
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_2",
+      "cell": [
+        10,
+        10
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_3",
+      "cell": [
+        19,
+        10
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_4",
+      "cell": [
+        25,
+        10
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_5",
+      "cell": [
+        5,
+        12
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_6",
+      "cell": [
+        10,
+        12
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_7",
+      "cell": [
+        19,
+        12
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_8",
+      "cell": [
+        25,
+        12
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_9",
+      "cell": [
+        5,
+        14
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_10",
+      "cell": [
+        10,
+        14
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_11",
+      "cell": [
+        19,
+        14
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_12",
+      "cell": [
+        25,
+        14
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_13",
+      "cell": [
+        5,
+        16
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_14",
+      "cell": [
+        10,
+        16
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_15",
+      "cell": [
+        19,
+        16
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
+    },
+    {
+      "id": "stacks_chained_16",
+      "cell": [
+        25,
+        16
+      ],
+      "label": "Books chained to their shelves",
+      "model": "chained_bookcase",
+      "kind": "decor"
     }
   ],
   "containers": [

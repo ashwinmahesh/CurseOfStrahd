@@ -541,3 +541,81 @@ func test_ruins_are_full_and_the_west_has_what_its_text_names() -> void:
 			assert_true(f != null and _surface(f) == str(floors[loc_id][c]), "%s %s is %s" % [loc_id, c, floors[loc_id][c]])
 		v.queue_free()
 		await _frames(1)
+
+
+## Baba Lysaga's hearth burns green, as her hut's text has it: its light (a location light's `color`) and the flame in
+## the hearth (the prop's `flame`). Every light colour in the data is a palette colour.
+func test_baba_lysagas_fire_is_green() -> void:
+	Look.set_style("modern", false)
+	var palette := JSON.parse_string(FileAccess.get_file_as_string("res://art/palette/palette.json")) as Dictionary
+	for loc_id: String in Compendium.shared().tables["locations"]:
+		for l: Variant in Compendium.shared().get_entry("locations", loc_id).get("lights", []):
+			if (l as Dictionary).has("color"):
+				assert_true(palette.has(str((l as Dictionary)["color"])), "%s: a light's colour is a palette colour" % loc_id)
+	var v := _view("berez_baba_lysagas_hut")
+	await _frames(1)
+	var green := Look.color("bile")
+	var lit := false
+	for n in v.find_children("*", "CandleFlicker", true, false):
+		var l := n as OmniLight3D
+		if v.board.grid.cell_at(l.global_position) == Vector2i(11, 1) and l.light_color.is_equal_approx(green):
+			lit = true
+	assert_true(lit, "the hearth's light is green")
+	var hearth := v.prop_nodes.get("lysaga_hearth") as Node
+	var flames := hearth.find_children("Flame", "Node3D", true, false) if hearth != null else []
+	assert_false(flames.is_empty(), "a fire burns in the hearth")
+	var body := false
+	for f: Node in flames:
+		for n in f.find_children("*", "MeshInstance3D", true, false):
+			var mi := n as MeshInstance3D
+			for i in mi.mesh.get_surface_count():
+				var m := mi.get_surface_override_material(i) as StandardMaterial3D
+				if m != null and m.albedo_color.is_equal_approx(green):
+					body = true
+	assert_true(body, "and its flame is green")
+	v.queue_free()
+	await _frames(1)
+
+
+## The Amber Temple (the audit, docs/art/interiors.md): black stone and amber in every room (place_looks `keep`), not
+## parquet, panelling or marble; its great hall plays its own line, not the Vallaki mansion's bunting; desks in the hall
+## of echoes and lecterns in the reading room; books chained in the stacks, cold braziers, and no rug or armchair.
+func test_the_amber_temple_keeps_its_own_look() -> void:
+	Look.set_style("modern", false)
+	var god := Compendium.shared().get_entry("locations", "amber_temple_faceless_god")
+	var hall_ids: Array = (god["areas"] as Array).map(func(a: Variant) -> String: return str((a as Dictionary)["id"]))
+	assert_true("amber_great_hall" in hall_ids and not "great_hall" in hall_ids, "the temple's great hall has its own id")
+	var text := FileAccess.get_file_as_string("res://narrative/narrator/amber_temple.dialogue")
+	assert_true(text.contains("~ enter:amber_great_hall") and not text.contains("~ enter:great_hall\n"), "and its own line")
+	var want := {"amber_temple_library": {"stacks_chained_1": "chained_bookcase"},
+		"amber_temple_entrance": {"west_cold_brazier": "brazier_cold"},
+		"amber_temple_vault": {"sanctum_braziers": "brazier_cold"}}
+	var floors := {"amber_temple_library": [Vector2i(6, 3), Vector2i(23, 5)], "amber_temple_faceless_god": [Vector2i(20, 14), Vector2i(5, 14)],
+		"amber_temple_vault": [Vector2i(20, 12)]}
+	for loc_id: String in ["amber_temple_library", "amber_temple_entrance", "amber_temple_vault", "amber_temple_faceless_god"]:
+		var v := _view(loc_id)
+		await _frames(1)
+		var board := v.board
+		for id: String in want.get(loc_id, {}):
+			var node := v.prop_nodes.get(id) as Node
+			var models := node.find_children("Model_*", "Node3D", true, false) if node != null else []
+			assert_true(not models.is_empty() and str(models[0].get_meta("model", "")) == str(want[loc_id][id]),
+				"%s: %s is the %s" % [loc_id, id, want[loc_id][id]])
+		for c: Vector2i in floors.get(loc_id, []):
+			var f := board.floor_box(c)
+			assert_true(f != null and _surface(f) == "amber/black_stone", "%s %s is the temple's black stone" % [loc_id, c])
+		for rug in board.find_children("FurnishRug*", "MeshInstance3D", true, false):
+			assert_true(false, "%s: no rug in the temple" % loc_id)
+		for n in board.get_children():
+			if n.has_meta("furnish"):
+				for m in n.find_children("Model_*", "Node3D", true, false):
+					assert_false(str(m.get_meta("model", "")) in ["armchair", "settee", "candelabra", "table_chairs"],
+						"%s: no parlour furniture in the temple (%s)" % [loc_id, m.get_meta("model", "")])
+		if loc_id == "amber_temple_faceless_god":
+			for c: Vector2i in [Vector2i(2, 8), Vector2i(4, 10), Vector2i(6, 17)]:
+				assert_eq(BattleScenery.art_at(board, c), "desk", "the hall of echoes' %s is a reading desk" % c)
+		if loc_id == "amber_temple_library":
+			for c: Vector2i in [Vector2i(5, 2), Vector2i(2, 5), Vector2i(8, 5)]:
+				assert_eq(BattleScenery.art_at(board, c), "lectern", "the reading room's %s is a lectern" % c)
+		v.queue_free()
+		await _frames(1)
