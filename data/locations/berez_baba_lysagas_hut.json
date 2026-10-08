@@ -192,6 +192,32 @@
       "model": "jars",
       "dialogue": "berez/hut:jar",
       "when": "(flag.lysaga_dead or flag.lysaga_left_broken) and not flag.mordenkainen_memory_jar_taken"
+    },
+    {
+      "id": "cradle_lining_wand",
+      "cell": [
+        6,
+        9
+      ],
+      "kind": "search",
+      "search_dc": 17,
+      "skill": "investigation",
+      "label": "something sewn into the cradle's lining",
+      "model": "sack",
+      "item": "wand_of_polymorph"
+    },
+    {
+      "id": "silent_jar",
+      "cell": [
+        5,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "skill": "investigation",
+      "label": "the one jar that doesn't hum",
+      "model": "glass_vessels",
+      "item": "potion_of_speed"
     }
   ],
   "containers": [

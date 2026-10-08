@@ -200,6 +200,31 @@
       "kind": "examine",
       "label": "A crest over the bed",
       "model": "crest"
+    },
+    {
+      "id": "unrusted_hauberk",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "skill": "investigation",
+      "label": "a hauberk that never rusted",
+      "model": "sack",
+      "item": "armor_plus_2__chain_mail"
+    },
+    {
+      "id": "watch_horn",
+      "cell": [
+        4,
+        3
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "the watch horn behind the winch",
+      "model": "satchel",
+      "item": "horn_of_blasting"
     }
   ],
   "containers": [

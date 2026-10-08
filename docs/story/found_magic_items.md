@@ -187,32 +187,32 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 
 | | Where | Item | How |
 |---|---|---|---|
-| ○ | Baba Lysaga's hut, the cradle | Wand of Polymorph (very rare) | Search (Investigation DC 17): sewn into the lining |
-| ○ | Baba Lysaga's hut, the bundles in the beams | Potion of Speed (very rare) | Search (Investigation DC 16): the one jar that doesn't hum |
-| ○ | Berez, a drowned house | Mantle of Spell Resistance (rare) | Search (Perception DC 15) |
-| ○ | Berez, the scarecrow | Staff of Swarming Insects (rare) | Search (Perception DC 15): its arm is a staff |
-| ○ | Marina's monument, the dowry chest | Robe of Scintillating Colors (very rare) | Hoard: Strahd's gift to her |
-| ○ | Mount Baratok, the ring of glass | Wand of Lightning Bolts (rare) | Search (Perception DC 15): fused into the glass |
-| ○ | Mount Baratok, the opened cairn | Ioun Stone of Intellect (very rare) | Search (Perception DC 16) |
-| ○ | The Mad Mage's hut, the dragonchess board | Figurine of Wondrous Power, Serpentine Owl (rare) | Search (Investigation DC 17): one piece isn't a piece |
-| ○ | The Mad Mage's hut, the shelves of blank books | Tome of Understanding (very rare) | Search (Investigation DC 17) |
-| ○ | Mordenkainen | Ring of Spell Storing (rare) | Gift: once he remembers who he is |
-| ○ | Tsolenka Pass, the bones on the shelf | Wings of Flying (rare) | Search (Perception DC 15): a traveller the roc dropped |
-| ○ | Tsolenka Pass, the roc's nest | +2 Greatsword (rare) | Hoard |
-| ○ | Tsolenka guard tower, the rack of old mail | +2 Chain Mail (very rare) | Search (Investigation DC 16): a hauberk that never rusted |
-| ○ | Tsolenka guard tower | Horn of Blasting (rare) | Search (Perception DC 14): the watch horn behind the winch |
+| ✅ | Baba Lysaga's hut, the cradle | Wand of Polymorph (very rare) | Search (Investigation DC 17): sewn into the lining |
+| ✅ | Baba Lysaga's hut, the bundles in the beams | Potion of Speed (very rare) | Search (Investigation DC 16): the one jar that doesn't hum |
+| ✅ | Berez, a drowned house | Mantle of Spell Resistance (rare) | Search (Perception DC 15) |
+| ✅ | Berez, the scarecrow | Staff of Swarming Insects (rare) | Search (Perception DC 15): its arm is a staff |
+| ✅ | Marina's monument, the dowry chest | Robe of Scintillating Colors (very rare) | Hoard: Strahd's gift to her |
+| ✅ | Mount Baratok, the ring of glass | Wand of Lightning Bolts (rare) | Search (Perception DC 15): fused into the glass |
+| ✅ | Mount Baratok, the opened cairn | Ioun Stone of Intellect (very rare) | Search (Perception DC 16) |
+| ✅ | The Mad Mage's hut, the dragonchess board | Figurine of Wondrous Power, Serpentine Owl (rare) | Search (Investigation DC 17): one piece isn't a piece |
+| ✅ | The Mad Mage's hut, the shelves of blank books | Tome of Understanding (very rare) | Search (Investigation DC 17) |
+| ✅ | Mordenkainen | Ring of Spell Storing (rare) | Gift: once he remembers who he is |
+| ✅ | Tsolenka Pass, the bones on the shelf | Wings of Flying (rare) | Search (Perception DC 15): a traveller the roc dropped |
+| ✅ | Tsolenka Pass, the roc's nest | +2 Greatsword (rare) | Hoard |
+| ✅ | Tsolenka guard tower, the rack of old mail | +2 Chain Mail (very rare) | Search (Investigation DC 16): a hauberk that never rusted |
+| ✅ | Tsolenka guard tower | Horn of Blasting (rare) | Search (Perception DC 14): the watch horn behind the winch |
 
 ## The Amber Temple (level 10)
 
 | | Where | Item | How |
 |---|---|---|---|
-| ○ | Entrance, the frozen traveller | Frost Brand Longsword (very rare) | Search (Perception DC 14): clutched in a frozen hand |
-| ○ | Entrance, the rack of halberds | +3 Halberd (very rare) | Search (Investigation DC 16) |
-| ○ | Great hall, a warden's cell | Ioun Stone of Insight (very rare) | Search (Investigation DC 17) |
-| ○ | Great hall, the desk kept clear of frost | Tome of Leadership and Influence (very rare) | Search (Investigation DC 17) |
-| ○ | Library, the books in chains | Tome of Clear Thought (very rare) | Search (Investigation DC 18): a book chained shut that isn't what its spine says |
-| ○ | Vault, the heap of offerings | Staff of Power (very rare) | Search (Perception DC 16) |
-| ○ | Exethanter | Robe of Stars (very rare) | Gift: if you help him remember |
+| ✅ | Entrance, the frozen traveller | Frost Brand Longsword (very rare) | Search (Perception DC 14): clutched in a frozen hand |
+| ✅ | Entrance, the rack of halberds | +3 Halberd (very rare) | Search (Investigation DC 16) |
+| ✅ | Great hall, a warden's cell | Ioun Stone of Insight (very rare) | Search (Investigation DC 17) |
+| ✅ | Great hall, the desk kept clear of frost | Tome of Leadership and Influence (very rare) | Search (Investigation DC 17) |
+| ✅ | Library, the books in chains | Tome of Clear Thought (very rare) | Search (Investigation DC 18): a book chained shut that isn't what its spine says |
+| ✅ | Vault, the heap of offerings | Staff of Power (very rare) | Search (Perception DC 16) |
+| ✅ | Exethanter | Robe of Stars (very rare) | Gift: if you help him remember |
 
 ## Castle Ravenloft (level 10)
 

@@ -148,6 +148,8 @@ Mordenkainen: The witch. Lysaga. She held my eyes open while she did it, and san
 endif
 interject name:kip_smudgewick: Mister Mordenkainen, sir. An honour. I've got questions, if you've a minute. Contractual ones. No rush.
 Mordenkainen: Everyone has questions. Very few have the right ones. Ask later.
+Mordenkainen: Here. I've been wearing this for forty years without knowing what it was for. It holds a spell or two for whoever wears it. Put something nasty in it before you meet him.
+give ring_of_spell_storing
 approve ratatoille +5 kip_smudgewick +1 liriel_dawnsong +1 godrick_pendlebrook +1: You gave Mordenkainen back his name
 -> restored_menu
 

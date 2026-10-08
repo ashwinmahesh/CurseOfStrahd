@@ -148,7 +148,12 @@
       ],
       "label": "A painted dowry chest",
       "model": "chest_painted",
-      "items": [],
+      "items": [
+        {
+          "id": "robe_of_scintillating_colors",
+          "qty": 1
+        }
+      ],
       "gold": 150
     },
     {

@@ -226,3 +226,38 @@ once
 | [flag.amber_temple_sealed] For the first time since the stair, you sleep. The temple is cold and silent and, for one night, only a building.
 | [flag.dark_gifts_taken >= 1] Whoever carries a gift sleeps soundly, and wakes rested. Nobody else does, and nobody mentions it.
 cooldown 0
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:frozen_hand_sword
+| Clutched in the frozen pilgrim's hand, a sword whose blade is rimed with frost that never melts. It kept him cold. It didn't keep him alive.
+once
+
+~ search:rack_halberd
+| One halberd on the rack carries no frost at all. Its blade is bright, and it hums when it touches stone.
+once
+
+~ check:investigation:rack_halberd:failure
+| Old halberds, frozen to their rack. The wardens' guards left them here, and the cold has kept them.
+
+~ search:cell_ioun
+| A stone in the warden's cell is loose. Behind it, a stone of pearly white lifts from your palm and starts a slow circle round your head.
+once
+
+~ search:clear_desk_tome
+| The desk kept clear of frost has a drawer, and in the drawer a book that someone kept reading here for a long time after everyone else had stopped.
+once
+
+~ check:investigation:clear_desk_tome:failure
+| Notes, in a hand that gets smaller and smaller down the page. Nothing you can use.
+
+~ search:chained_tome
+| One chained book doesn't match its spine. Inside, page after page of exercises for the mind, and the chain falls open when you finish the first.
+once
+
+~ check:investigation:chained_tome:failure
+| Books in chains, all of them warnings. You read enough spines to decide the chains are a mercy.
+
+~ search:offerings_staff
+| Under the heap of offerings lies a staff of black wood capped in iron, left by someone who wanted something more than power. The amber took it anyway.
+once

@@ -289,6 +289,32 @@
       "label": "Scratches on the cell wall",
       "model": "scorch",
       "search_dc": 14
+    },
+    {
+      "id": "cell_ioun",
+      "cell": [
+        7,
+        1
+      ],
+      "kind": "search",
+      "search_dc": 17,
+      "skill": "investigation",
+      "label": "a loose stone in a warden's cell",
+      "model": "broken_boards",
+      "item": "ioun_stone_insight"
+    },
+    {
+      "id": "clear_desk_tome",
+      "cell": [
+        7,
+        8
+      ],
+      "kind": "search",
+      "search_dc": 17,
+      "skill": "investigation",
+      "label": "a drawer in the desk kept clear of frost",
+      "model": "scattered_notes",
+      "item": "tome_of_leadership_and_influence"
     }
   ],
   "containers": [
