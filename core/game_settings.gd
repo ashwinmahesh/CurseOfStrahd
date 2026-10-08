@@ -81,13 +81,22 @@ static func set_narration_stays(on: bool) -> void:
 	set_value("narration_stays", on)
 
 
-## The Modern look's depth of field (on by default; it only ever softens the far distance).
+## The Modern look's depth blur (on by default): the world softens toward the screen's edges, most in the corners.
 static func depth_blur() -> bool:
 	return bool(value("depth_blur", true))
 
 
 static func set_depth_blur(on: bool) -> void:
 	set_value("depth_blur", on)
+
+
+## How far in from the edges the depth blur reaches: an Atmosphere.EDGE_BLURS id, or "" for the look's default.
+static func blur_reach() -> String:
+	return str(value("blur_reach", ""))
+
+
+static func set_blur_reach(id: String) -> void:
+	set_value("blur_reach", id)
 
 
 ## Whether exploring runs in rounds, one party member at a time (turn-based mode, F7: LocationPlan). Off by default;
