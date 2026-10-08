@@ -123,6 +123,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 		LayerFade.fade(self, hud, false, 0.25)   # the combat HUD fades up in its place
 		Audio.play_music("combat")
 		_boss_music.call_deferred(cv)   # the fight is set up just after this signal
+		Audio.follow_fight.call_deferred(cv)   # the music swells while a boss stands or someone is Bloodied (A2)
 		Achievements.watch(cv, st, hud.toast)   # the run's record for the ending, and achievements (N8)
 		cv.menu_requested.connect(func() -> void:
 			if screen is PauseMenu:

@@ -1,0 +1,65 @@
+# Narrator: "Previously in Barovia" (Q3, docs/ui/saves.md, ui/exploration/recap.gd). When a game saved a while ago is
+# loaded, the Narrator opens with recap:open and says where the party is with the line for its region (recap:where:<the
+# location's region>). The party's road ahead and its last big choice follow in the box as text.
+
+~ recap:open
+| Previously, in Barovia.
+| Where were we? Ah, yes. Barovia, and you, still in it.
+| The mists part again, and the story picks up where you set it down.
+
+~ recap:where:into_the_mists
+| You are on the road in the mists, and the mists have closed behind you like a door.
+
+~ recap:where:svalich_road
+| You are on the Old Svalich Road, where the trees lean in to hear what travellers say.
+
+~ recap:where:village_of_barovia
+| You are in the village of Barovia, where every shutter is closed and every door is listening.
+
+~ recap:where:death_house
+| You are in the tall house on Mournful Lane. It has been very patient with you so far.
+
+~ recap:where:vallaki
+| You are in Vallaki, behind its sharpened palisade, where everyone is happy by order of the Baron.
+
+~ recap:where:lake_zarovich
+| You are on the shore of Lake Zarovich, where the grey water lies as still as a held breath.
+
+~ recap:where:old_bonegrinder
+| You are at the windmill on the crag, where something sweet is always in the oven.
+
+~ recap:where:wizard_of_wines
+| You are among the vines of the Wizard of Wines, where the barrels are empty and the family is worried.
+
+~ recap:where:krezk
+| You are at Krezk, behind walls built by people who meant to keep something out.
+
+~ recap:where:abbey_of_st_markovia
+| You are at the abbey above Krezk, where the bell rings for no service you would want to attend.
+
+~ recap:where:berez
+| You are in the drowned ruins of Berez, the marsh up to every windowsill.
+
+~ recap:where:mount_baratok
+| You are on Mount Baratok, where the weather has opinions and voices them.
+
+~ recap:where:yester_hill
+| You are on Yester Hill, where the ground is scorched and the wind smells of old smoke.
+
+~ recap:where:tsolenka_pass
+| You are high in the Tsolenka Pass, where the wind keeps trying to take you off the mountain.
+
+~ recap:where:amber_temple
+| You are in the Amber Temple, where the things sealed in the walls have not stopped talking.
+
+~ recap:where:argynvostholt
+| You are at Argynvostholt, a cold house of a fallen order whose armour still stands to attention.
+
+~ recap:where:werewolf_den
+| You are in the hills by the den, and the wolves know your scent by now.
+
+~ recap:where:van_richtens_tower
+| You are at the tower on Lake Baratok, standing on its island like a finger raised for silence.
+
+~ recap:where:castle_ravenloft
+| You are inside Castle Ravenloft. Its master is a gracious host, which is the worst thing about him.
