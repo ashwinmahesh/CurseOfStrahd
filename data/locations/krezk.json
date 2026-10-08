@@ -943,6 +943,16 @@
         21
       ],
       "facing": "south"
+    },
+    {
+      "npc": "krezk_petru",
+      "cell": [
+        4,
+        21
+      ],
+      "dialogue": "krezk/the_packs_runt:petru",
+      "when": "flag.den_children_freed and quest.the_packs_runt != given",
+      "facing": "east"
     }
   ],
   "encounters": [
@@ -1059,6 +1069,180 @@
         }
       ],
       "surprise": ""
+    },
+    {
+      "id": "grandsire",
+      "trigger": "dialogue",
+      "when": "level >= 9",
+      "text": "The Grandsire comes over Krezk's wall in the moonlight with the old wolves of the pack at his heels.",
+      "monsters": [
+        {
+          "monster": "the_grandsire",
+          "cell": [
+            16,
+            19
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            14,
+            17
+          ],
+          "name": "An Old Wolf of the Pack"
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            21
+          ],
+          "name": "An Old Wolf of the Pack"
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            20,
+            17
+          ],
+          "name": "An Old Wolf of the Pack"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            20,
+            19
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            13,
+            21
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "grandsire_slain"
+    },
+    {
+      "id": "grandsire",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "The Grandsire comes over Krezk's wall in the moonlight with the old wolves of the pack at his heels.",
+      "monsters": [
+        {
+          "monster": "the_grandsire",
+          "cell": [
+            16,
+            19
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            14,
+            17
+          ],
+          "name": "An Old Wolf of the Pack"
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            21
+          ],
+          "name": "An Old Wolf of the Pack"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            20,
+            19
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            13,
+            21
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "grandsire_slain"
+    },
+    {
+      "id": "grandsire",
+      "trigger": "dialogue",
+      "when": "level >= 7",
+      "text": "The Grandsire comes over Krezk's wall in the moonlight with the old wolves of the pack at his heels.",
+      "monsters": [
+        {
+          "monster": "the_grandsire",
+          "cell": [
+            16,
+            19
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            14,
+            17
+          ],
+          "name": "An Old Wolf of the Pack"
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            21
+          ],
+          "name": "An Old Wolf of the Pack"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            20,
+            19
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "grandsire_slain"
+    },
+    {
+      "id": "grandsire",
+      "trigger": "dialogue",
+      "text": "The Grandsire comes over Krezk's wall in the moonlight with the old wolves of the pack at his heels.",
+      "monsters": [
+        {
+          "monster": "the_grandsire",
+          "cell": [
+            16,
+            19
+          ],
+          "hp": 140
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            14,
+            17
+          ],
+          "name": "An Old Wolf of the Pack"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            20,
+            19
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "grandsire_slain"
     }
   ],
   "narration": {

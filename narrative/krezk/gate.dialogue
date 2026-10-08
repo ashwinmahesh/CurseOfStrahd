@@ -224,6 +224,9 @@ endif
 if flag.mother_flown
 Krezk Watchman: And an angel came down off the mountain and landed on Old Pavel's roof. It was a Belview. Krezk has decided to be very calm about it.
 endif
+if flag.den_children_freed
+-> krezk/the_packs_runt:watch_news
+endif
 -> END
 
 ~ about_abbey

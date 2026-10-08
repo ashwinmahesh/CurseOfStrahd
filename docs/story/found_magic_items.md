@@ -183,6 +183,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Krezk, the watch fire | Sentinel Shield (uncommon) | Search (Perception DC 14): under the woodpile |
 | ✅ | Krezk, a loose stone in the wall | +1 Sling (uncommon) | Search (Perception DC 14): a boy's treasure (lane 28's spot) |
 | ✅ | Krezk, the square by the shrine | Ring of the Ram (rare) | Gift: Old Pavel's father's ring, after Clovin's show (Clovin's Audience, docs/story/side_quests.md) |
+| ✅ | Krezk, the watch house | Iron Bands of Bilarro (rare) | Gift: Krezk's bounty from Dmitri, once the Grandsire is dead (The Pack's Runt, docs/story/side_quests.md) |
 | ✅ | Burgomaster's house, the eldest son's room | Ioun Stone of Awareness (rare) | Search (Investigation DC 15): a box under the bed |
 | ✅ | Pool of the White Sun, the candle box | Scroll of Protection from Undead (rare) | Search (Investigation DC 14) |
 | ✅ | Pool of the White Sun, the pool's edge | Amulet of the Devout +1 (uncommon) | Search (Perception DC 13): a mourner's offering (lane 28's spot) |

@@ -1,0 +1,119 @@
+# The Pack's Runt (side quest, docs/story/side_quests.md): of the five children brought home from the werewolf den,
+# the smallest, Petru, came home different: he went through his first moon in the den. He sleeps in Krezk's goat pens,
+# and the goats don't mind him. The pack's eldest, the Grandsire, who taught Kiril everything and answers to nobody
+# now, says the runt is his and comes for him at the full moon (data/monsters/the_grandsire.json). Cure the boy or
+# don't; stand by the pens either way, or take the Grandsire's bargain. Reached from the Krezk
+# watchman's news and Petru in the pens. Every line here is unvoiced for now.
+
+# --- The Krezk watchman's news (krezk/gate:news jumps here) ---
+
+~ watch_news
+if quest.the_packs_runt == done
+Krezk Watchman: Nothing circling the farms these nights. Petru sleeps in a bed. The goats are said to be very hurt about it.
+-> END
+endif
+if quest.the_packs_runt == given
+Krezk Watchman: No more children gone from the farms. Not one. Nobody talks about Petru. Nobody talks about why.
+-> END
+endif
+if not quest.the_packs_runt
+quest the_packs_runt rumored
+Krezk Watchman: The smallest of the five children who came home from the hills, Petru, eight years old. He sleeps in the goat pens at night now. The goats don't mind him. That's the part that frightens his mother.
+Krezk Watchman: And something big has been circling the farms below the wall these three nights. Bigger than a wolf. It isn't one of ours, whatever that means now.
+endif
+-> END
+
+# --- Petru, in the goat pens ---
+
+~ petru
+if flag.grandsire_slain and quest.the_packs_runt != done
+-> after
+endif
+if quest.the_packs_runt == given
+-> END
+endif
+if quest.the_packs_runt == done
+Petru: I'm a boy all month now. Except I can still smell when it's going to rain. Mama says that's useful. Stelian says it's cheating.
+-> END
+endif
+if not flag.petru_met
+set petru_met
+if not quest.the_packs_runt or quest.the_packs_runt == rumored
+quest the_packs_runt asked
+endif
+Narrator: A small boy sits in the straw of the goat pen with a goat asleep against each side of him. His eyes catch the light the way the goats' do.
+Petru: Mirela said you'd come. Mirela says I'm not to be frightened. I'm frightened anyway. I do it quietly.
+endif
+* What happened to you in the den? -> den
+* [if not flag.petru_seen] [Insight DC 13] (Look at him the way a goat would.) -> seen | unseen
+* [if flag.petru_seen and not flag.petru_cured] [knows:remove_curse] (Lift the curse from him.) -> cure
+* [if flag.petru_seen and not flag.petru_cured and item:spell_scroll__remove_curse] (Read a Scroll of Remove Curse over him.) -> cure_scroll
+* [if night and quest.the_packs_runt == asked] (Wait with him by the pens for the moon.) -> wait
+* Goodbye. -> END
+
+~ den
+Petru: The moon came while we were in there. Before you came. I was the only one it came for. It hurt, and then it didn't, and then I was very fast.
+Petru: The big old one, the Grandsire, licked my face after. He said I was his now. He said Kiril was his once, and look how well Kiril turned out. He said he'd come for me at the next full moon. That's tonight. Or tomorrow. It's very close; I can feel it.
+-> petru
+
+~ seen
+set petru_seen
+Narrator: Under the straw his nails are thick and dark, and there's a ruff of grey hair at the back of his neck that his mother has been cutting. He isn't sick. He's a wolf, nearly all the way, at eight years old.
+-> petru
+
+~ unseen
+set petru_seen
+Narrator: A small frightened boy who smells of goat. That's all you can tell.
+-> petru
+
+~ cure_scroll
+take spell_scroll__remove_curse
+-> cure
+
+~ cure
+set petru_cured
+Narrator: The words go into him and something goes out, the way a fever breaks. The ruff at his neck is only hair. When he looks up his eyes are a boy's eyes, brown and wet, and the goats on either side of him wake up and edge away, offended.
+Petru: It's gone. (He sniffs.) I can't smell the rain any more.
+Narrator: Out beyond the wall, very far off, something lifts its head and howls, long and low and angry, as if it has felt something taken.
+-> petru
+
+# --- The farms below the wall, at night ---
+
+~ wait
+Narrator: You wait by the pens with the boy between you. The moon comes up full over the hills, enormous. The goats go silent all at once.
+Narrator: It comes over the wall on all fours and stands up in the square: a wolf the size of a cart horse, grey to white with age, scarred, missing an ear, with old wolves at its heels.
+The Grandsire: (In a voice like a grave being dug.) The runt. Mine. Mine by the moon, mine by the bite. Give him back to the pack.
+if flag.petru_cured
+The Grandsire: (It sniffs the air, and its lips come back from its teeth.) What have you done to him. What have you done to my runt.
+endif
+* (Stand in front of the boy.) -> fight
+* (Hear what it wants.) -> offer
+
+~ offer
+The Grandsire: Give me the runt and the pack takes no more Krezk children. Not one. Not for as long as I hold the pack. You have my word. Wolves keep their word. It's men who don't.
+* (Give Petru to the Grandsire.) -> given
+* No. -> fight
+
+~ given
+quest the_packs_runt given
+Narrator: Petru looks at you once. Then he walks out of the light toward the old wolf, and the old wolf puts its great head down beside his, and they go off into the dark together, the boy running on all fours before they reach the trees.
+approve godrick_pendlebrook -3 liriel_dawnsong -3 thistle -2 wren_featherfoot -2 ratatoille -2: You gave a child to the wolves
+-> END
+
+~ fight
+The Grandsire: Then the pack will have him back over your bones.
+combat grandsire
+
+# --- After (Petru, by the pens) ---
+
+~ after
+quest the_packs_runt done
+Narrator: In the morning Petru's mother comes down from the south row with a basket on her arm and nothing to say. She stands in front of you for a long while. Then she puts the basket down and holds your hands, one after the other, all of you.
+if not flag.petru_cured
+Petru: (He's asleep against a goat, and wakes when the basket goes down.) Is he gone? The big one? (He sniffs.) He's gone. I can still smell the rain. I don't mind.
+endif
+Narrator: Dmitri Krezkov sends down what Krezk pays for a wolf that takes children: a purse, and a set of iron bands that have hung in the watch house since before his grandfather, for the wolf that never came.
+gold +300
+give iron_bands_of_bilarro
+approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +2 wren_featherfoot +1 ratatoille +1: You stood by Krezk's pens for Petru
+-> END

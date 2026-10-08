@@ -770,6 +770,26 @@
       "id": "bray_cleared",
       "type": "bool",
       "summary": "The fowlers' charm on Bray is broken (The Ravens' Ransom)."
+    },
+    {
+      "id": "petru_met",
+      "type": "bool",
+      "summary": "The party met Petru in Krezk's goat pens (The Pack's Runt)."
+    },
+    {
+      "id": "petru_seen",
+      "type": "bool",
+      "summary": "The party looked closely at Petru and saw the wolf in him (The Pack's Runt)."
+    },
+    {
+      "id": "petru_cured",
+      "type": "bool",
+      "summary": "The party lifted the curse of lycanthropy from Petru (The Pack's Runt)."
+    },
+    {
+      "id": "grandsire_slain",
+      "type": "bool",
+      "summary": "The Grandsire, the werewolf pack's eldest, is dead in Krezk's square (The Pack's Runt)."
     }
   ]
 }
