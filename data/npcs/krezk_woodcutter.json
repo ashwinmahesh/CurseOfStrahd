@@ -3,7 +3,7 @@
   "name": "Stefan the Woodcutter",
   "title": "Of Krezk",
   "summary": "A broad, quiet Krezker who splits and stacks the village's firewood and walks it from the woodpile to the houses inside the wall.",
-  "portrait": "commoner",
+  "portrait": "villager",
   "sprite": "villager",
   "attitude": "indifferent",
   "monster": "commoner",

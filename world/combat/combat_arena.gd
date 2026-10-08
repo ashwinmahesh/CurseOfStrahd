@@ -22,7 +22,7 @@ var post: MeshInstance3D
 var tokens: Dictionary = {}
 var view: CombatView
 ## The pause menu while it's open (Escape): resume, load a save, or quit to the title. The fight waits meanwhile.
-var screen: PauseMenu = null
+var screen: CanvasLayer = null   ## the pause menu, or a character sheet (view only)
 ## The Skirmish setup this fight is playing (null for the Phase 2 arena).
 var played: SkirmishSetup = null
 ## A Skirmish fight on a location's map: the place's light and weather (null on the arena map).
@@ -90,6 +90,7 @@ func _ready() -> void:
 		view.finished.connect(_skirmish_over)
 	view.begin(e, board, rig, tokens, surprised)
 	view.menu_requested.connect(toggle_menu)
+	view.sheet_requested.connect(open_sheet)
 	rig.snap_to_target()
 
 
@@ -132,14 +133,35 @@ func toggle_menu() -> void:
 	if screen != null:
 		close_screen()
 		return
-	screen = PauseMenu.new()
-	screen.process_mode = Node.PROCESS_MODE_ALWAYS
-	add_child(screen)
-	screen.open(self, GameState.story, 0)
+	var menu := PauseMenu.new()
+	menu.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(menu)
+	menu.open(self, GameState.story, 0)
+	screen = menu
 	get_tree().paused = true
 
 
-## The pause menu calls this to close itself (Resume, Escape).
+## A hero's character sheet, view only, while the fight waits (owner, 2026-10-08): the party's sheets, flipped through
+## with the arrows as in the story game.
+func open_sheet(who: Character) -> void:
+	if screen != null:
+		return
+	var st := StoryState.new()
+	for c in e.combatants:
+		if c.side == &"party" and c.creature is Character and not EchoKnight.is_echo(c):
+			st.party.append(c.creature as Character)
+	if not st.party.has(who):
+		return
+	var sheet := CharacterSheetScreen.new()
+	sheet.in_fight = true
+	sheet.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(sheet)
+	sheet.open(self, st, st.party.find(who))
+	screen = sheet
+	get_tree().paused = true
+
+
+## The pause menu or a sheet calls this to close itself (Resume, Escape).
 func close_screen() -> void:
 	get_tree().paused = false
 	if screen != null:

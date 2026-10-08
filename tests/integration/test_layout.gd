@@ -509,6 +509,30 @@ func test_the_boss_plates() -> void:
 	await _frames(3)
 
 
+## A hero's character sheet opened from their portrait in a fight: view only, with Back to the fight (owner, 2026-10-08).
+func test_the_character_sheet_in_a_fight() -> void:
+	Compendium.shared().tables["locations"]["test_layout_ward"] = ARENA.duplicate(true)
+	if not await _game(LATE):
+		return
+	root.call("enter_location", "test_layout_ward", "default")
+	await _frames(3)
+	var view := root.get("view") as LocationView
+	assert_true(view.start_encounter("rat"), "the fight starts")
+	await _frames(3)
+	var cv := view.combat_view
+	for tab: String in ["Actions", "Spells", "Equipment"]:
+		await _check("the character sheet in a fight (%s)" % tab, func() -> Variant:
+			cv.hud.sheet_requested.emit(cv.e.combatants.filter(func(c: Combatant) -> bool: return c.creature is Character)[0].id)
+			await _frames(2)
+			var sheet := root.get("screen") as CharacterSheetScreen
+			if sheet != null:
+				sheet.show_tab(tab)
+				await _frames(1)
+			return sheet, _close_screen)
+	cv.finished.emit("victory")
+	await _frames(3)
+
+
 func test_the_ending() -> void:
 	if not await _game(FINISHED):
 		return
