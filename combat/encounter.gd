@@ -592,8 +592,8 @@ func mirror_image_takes(t: Combatant, attacker: Combatant, _total: int) -> bool:
 	return attacks.mirror_image_takes(t, attacker, _total)
 
 
-func _opportunity_attack(p: Combatant, target: Combatant) -> CombatResult:
-	return attacks._opportunity_attack(p, target)
+func _opportunity_attack(p: Combatant, target: Combatant, choice: String = "") -> CombatResult:
+	return attacks._opportunity_attack(p, target, choice)
 
 
 func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary = {}) -> CombatResult:

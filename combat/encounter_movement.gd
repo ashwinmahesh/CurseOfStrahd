@@ -283,9 +283,23 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 					var req := ReactionRequest.new("opportunity_attack", p.id, c.id)
 					req.title = "Opportunity Attack?"
 					req.text = "%s is leaving %s's reach. %s can spend a Reaction to make one melee attack now." % [c.name(), e.echo_knight.reach_name(p, c), p.name()]
+					# War Caster's Reactive Spell: a spell at it instead, picked from the list (no pick: the attack).
+					var war := e.attacks.reactive_spells(p, c)
+					var armed_hand := not e.best_melee_option(p, c).is_empty()
+					if not war.is_empty():
+						req.title = "Opportunity Attack or a spell?"
+						req.text += " War Caster: or cast a spell at it instead; pick one below (no pick makes the attack)."
+						if armed_hand:
+							req.target_choices.append({"id": "attack", "label": "Melee attack"})
+						for w in war:
+							req.target_choices.append({"id": "spell:%s" % w["id"], "label": "%s (%s)" % [w["name"], "cantrip" if int(w["level"]) == 0 else "level %d slot" % int(w["level"])]})
+						req.max_targets = 1
+					var req_ref: WeakRef = weakref(req)
 					req.continuation = func(use: bool) -> CombatResult:
 						if use:
-							return e.then(e._opportunity_attack(p, c), resume)
+							var rq := req_ref.get_ref() as ReactionRequest
+							var pick := str(rq.selected_ids[0]) if rq != null and not rq.selected_ids.is_empty() else ("attack" if armed_hand else "")
+							return e.then(e._opportunity_attack(p, c, pick), resume)
 						return resume.call() as CombatResult
 					e.pending = req
 					r.pending = req
