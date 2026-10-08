@@ -20,7 +20,9 @@
 # an APFS disk image on the SSD, /Volumes/ASH-SSD/Worktrees/StrahdLanes.sparsebundle, attached here when it isn't.
 # The SSD itself is exFAT with 1 MB clusters (a lane straight on it would take about 95 GB), and clones can't cross
 # volumes, so lanes there clone from a seed inside the image: <LANE_ROOT>/seed, a locked detached worktree at main
-# with its own import, which `new` brings up to main first (one make lane at a time: the others wait for it). Each
+# with its own import, which `new` brings up to main first (one make lane at a time: the others wait for it). While
+# it changes the seed or clones a lane from it, make lane holds the seed's make import lock, so an import started there
+# meanwhile (another lane's, or a make import run in the seed) waits for it, and it waits for one that's running. Each
 # lane there is locked too, so `git worktree prune` keeps it while the drive is unplugged; `done` unlocks it before
 # removing it. Unplugging the drive stops any Godot or git run in those lanes mid-write: plug it back in and re-run
 # `make lane` or `hdiutil attach` to get them back. reclone and done need SSD=1 for those lanes as well.
@@ -68,7 +70,29 @@ lock_seed() {
   seed_lock="$lock"
   trap 'unlock_seed' EXIT
 }
-unlock_seed() { [ -z "$seed_lock" ] || rm -rf "$seed_lock"; seed_lock=""; }
+unlock_seed() { release_seed_import; [ -z "$seed_lock" ] || rm -rf "$seed_lock"; seed_lock=""; }
+
+## Holds the seed's make import lock (.godot/import.lock, taken as tools/import.sh takes it: a folder holding the PID
+## of a process working in the seed, so this shell moves there), waiting for an import that's running in the seed.
+seed_import_lock=""
+hold_seed_import() {
+  local lock="$source_dir/.godot/import.lock" pid told=""
+  cd "$source_dir"
+  mkdir -p .godot
+  until mkdir "$lock" 2> /dev/null; do
+    pid="$(cat "$lock/pid" 2> /dev/null || true)"
+    if [ -n "$pid" ] && ! kill -0 "$pid" 2> /dev/null; then
+      rm -rf "$lock"
+      continue
+    fi
+    [ -n "$told" ] || say "an import is running in the seed (PID ${pid:-?}); waiting for it"
+    told=1
+    sleep 5
+  done
+  echo $$ > "$lock/pid"
+  seed_import_lock="$lock"
+}
+release_seed_import() { [ -z "$seed_import_lock" ] || rm -rf "$seed_import_lock"; seed_import_lock=""; }
 
 ## The seed on the other volume, made or brought up to main, then imported there once for all its lanes.
 ## LANE_NO_IMPORT=1 skips the import (each lane then imports what changed on its own first make import).
@@ -78,10 +102,12 @@ refresh_seed() {
   if [ ! -d "$source_dir" ]; then
     quiet git -C "$main" worktree add -q --detach "$source_dir" main
     git -C "$main" worktree lock --reason "seed for lanes on the removable SSD" "$source_dir"
+    hold_seed_import
     # main's import cache: a plain copy, since clones can't cross volumes.
-    mkdir -p "$source_dir/.godot" && cp -Rp "$main/.godot/imported" "$source_dir/.godot/"
+    cp -Rp "$main/.godot/imported" "$source_dir/.godot/"
     say "made the seed at $source_dir"
   else
+    hold_seed_import
     # -f: the seed holds nothing of anyone's, and an import stopped part-way can leave project.godot rewritten.
     quiet git -C "$source_dir" checkout -q -f --detach main
   fi
@@ -92,6 +118,7 @@ refresh_seed() {
   git -C "$main" ls-files -z --others --ignored --exclude-standard -- '*.import' ':!captures/' ':!builds/' \
     | rsync --ignore-existing --from0 --files-from=- "$main/" "$source_dir/" \
     || say "some of main's .import files weren't copied (one changed or went away meanwhile); the seed imports those"
+  release_seed_import   # the seed's own import takes it
   if [ -z "${LANE_NO_IMPORT:-}" ] && ! make -C "$source_dir" import; then
     say "the seed's import logged errors (make -C $source_dir import); the lane gets them too"
   fi
@@ -132,6 +159,7 @@ new_lane() {
   dest="$(lane_dir "$name")"
   [ -e "$dest" ] && { say "$dest already exists"; exit 1; }
   refresh_seed
+  [ "$source_dir" = "$main" ] || hold_seed_import   # until the lane is cloned
   before="$(free_gb)"
   if git -C "$main" show-ref --verify --quiet "refs/heads/$branch"; then
     git -C "$main" worktree add --no-checkout "$dest" "$branch" > /dev/null
@@ -142,13 +170,25 @@ new_lane() {
   [ "$source_dir" = "$main" ] || git -C "$main" worktree lock --reason "on the removable SSD" "$dest"
   # Everything in the main checkout (or the seed) but its .git: tracked files, LFS art as checked out there, .godot
   # (the import cache), and ignored folders such as captures/. cp -c makes copy-on-write clones, so nothing is copied.
-  local item
+  # A file that goes away mid-copy (main's checkout or import moving on: lanes never lock main) is only reported: git
+  # puts back the tracked ones below, and the lane's first make import the rest. Any other failure stops here.
+  local item copy_errors
+  copy_errors="$(mktemp -t strahd_lane)"
   for item in "$source_dir"/* "$source_dir"/.[!.]*; do
     case "$(basename "$item")" in .git|.DS_Store) continue ;; esac
     [ -e "$item" ] || continue
-    cp -Rpc "$item" "$dest/"
+    cp -Rpc "$item" "$dest/" 2>> "$copy_errors" || true
   done
   unlock_seed
+  if grep -v 'No such file or directory' "$copy_errors" | grep -q .; then
+    cat "$copy_errors" >&2
+    rm -f "$copy_errors"
+    say "copying $source_dir into $dest failed; to start again: git -C $main worktree unlock $dest;" \
+      "git -C $main worktree remove --force $dest" >&2
+    exit 1
+  fi
+  [ ! -s "$copy_errors" ] || say "files went away in $source_dir while it was copied ($(grep -c . "$copy_errors") cp message(s))"
+  rm -f "$copy_errors"
   rm -rf "$dest/.godot/import.lock"   # make import's, if the folder cloned from was importing: never this lane's
   cd "$dest"
   git reset -q
