@@ -42,6 +42,17 @@ func test_every_bust_in_the_recipes_is_in_the_game() -> void:
 			assert_eq(DialogueBusts.path_for(id, str(mood)), "%s%s_%s.webp" % [DialogueBusts.DIR, id, mood], "%s looks %s" % [id, mood])
 
 
+## Owner report (2026-10-08): white was left in Kip's bust where the outline closed it off from the edges, inside a horn's
+## curl and between his arms and body. The cut-out (tools/art/build_busts.py clear_pockets) keys those pockets out too.
+func test_white_closed_off_by_the_outline_is_cut_out() -> void:
+	var img := Image.load_from_file(ProjectSettings.globalize_path("res://art/busts/kip_smudgewick.webp"))
+	assert_true(img != null and img.get_width() > 0, "Kip's bust loads")
+	for spot: Array in [[Vector2i(484, 124), "inside the horn's curl"], [Vector2i(479, 224), "between horn and hair"],
+			[Vector2i(555, 782), "between his arm and body"], [Vector2i(134, 877), "between the other arm and body"]]:
+		assert_true(img.get_pixelv(spot[0] as Vector2i).a < 0.05, "%s is see-through" % spot[1])
+	assert_true(img.get_pixelv(Vector2i(342, 212)).a > 0.99, "his face isn't")
+
+
 func test_a_mood_without_its_own_bust_uses_the_neutral_one() -> void:
 	assert_eq(DialogueBusts.path_for("ireena", "angry"), "res://art/busts/ireena_angry.webp")
 	assert_eq(DialogueBusts.path_for("ireena", "sly"), "res://art/busts/ireena.webp", "no sly Ireena: her neutral bust")

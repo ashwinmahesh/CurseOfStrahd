@@ -8,8 +8,11 @@ spend ledger counts every call) for each person's neutral bust that has no take 
 turnaround. With --moods it draws each of their moods instead, from the neutral take the recipe uses, so the face and
 clothes stay the same. Takes are art/generated/busts/<id>_<mood>_<a, b ...>.png; `use` in the recipes picks one by
 "<id>_<mood>" (the first take otherwise). Then every take in use is cut out of its white background (a flood fill from
-the edges, stopped by the ink outline) and saved as art/busts/<id>.webp (neutral) or <id>_<mood>.webp, with alpha
-(Git LFS). After new busts: make import, then tools/art/set_import.py on them and `git add -f` their .import files.
+the edges, stopped by the ink outline, then every pocket of the same flat white the outline closed off: inside a
+horn's curl, between an arm and the body, between arrows; owner report 2026-10-08) and saved as art/busts/<id>.webp
+(neutral) or <id>_<mood>.webp, with alpha (Git LFS). `keep_white` in the recipes names points of white to keep (teeth,
+an eye's white) by "<id>_<mood>"; whites smaller than POCKET_MIN pixels always stay. --recut cuts every take in use
+again, not only those newer than their bust. After new busts: make import, then tools/art/set_import.py on them and `git add -f` their .import files.
 At most --jobs calls run at once (default 3). --sheet draws a contact sheet of the newest takes for review (Pillow).
 """
 import argparse
@@ -30,6 +33,8 @@ TAKES = ROOT / "art" / "generated" / "busts"
 OUT = ROOT / "art" / "busts"
 ## The game's copy is at most this tall (Gemini's 2:3 at 1K is 848 x 1264).
 HEIGHT = 1264
+## A closed-off pocket of white smaller than this (pixels at HEIGHT) is part of the figure (a glint, an eye's white).
+POCKET_MIN = 40
 
 
 def takes(key):
@@ -89,9 +94,44 @@ def generate(key, prompt, refs, stop):
     return "gave up after retries"
 
 
-def cut_out(src, dst, flip=False):
+def clear_pockets(work, key, keep=()):
+    """Keys out the background the edge fill couldn't reach: each region of near-white, unsaturated pixels the outline
+    closed off that is as flat and bright as the background (a mean of 248 or more, little spread) and at least
+    POCKET_MIN pixels, unless a `keep` point lies in it. Returns how many pockets it cleared."""
+    from PIL import Image, ImageDraw, ImageStat
+    w, h = work.size
+    px = work.load()
+    cand = Image.new("L", (w, h), 0)
+    cp = cand.load()
+    for y in range(h):
+        for x in range(w):
+            r, g, b = px[x, y]
+            if (r, g, b) != key and min(r, g, b) >= 232 and max(r, g, b) - min(r, g, b) <= 16:
+                cp[x, y] = 255
+    grey = work.convert("L")
+    keep = [tuple(k) for k in keep]
+    cleared = 0
+    for y in range(0, h, 2):
+        for x in range(0, w, 2):
+            if cp[x, y] != 255:
+                continue
+            ImageDraw.floodfill(cand, (x, y), 128)
+            region = cand.point(lambda v: 255 if v == 128 else 0)
+            n = region.histogram()[255]
+            if n >= POCKET_MIN and not any(region.getpixel(k) == 255 for k in keep):
+                st = ImageStat.Stat(grey, mask=region)
+                if st.mean[0] >= 248 and st.stddev[0] <= 6:
+                    work.paste(key, mask=region)
+                    cleared += 1
+            cand.paste(64, mask=region)   # looked at
+            cp = cand.load()
+    return cleared
+
+
+def cut_out(src, dst, flip=False, keep=()):
     """The figure on its white background, cut out: a flood fill from near-white edge pixels (the ink outline stops it),
-    eroded a pixel and feathered so no white fringe is left."""
+    then the pockets of background it closed off (clear_pockets), eroded a pixel and feathered so no white fringe is
+    left."""
     from PIL import Image, ImageChops, ImageDraw, ImageFilter
     img = Image.open(src).convert("RGB")
     if img.height > HEIGHT:
@@ -105,6 +145,7 @@ def cut_out(src, dst, flip=False):
         px = work.getpixel(xy)
         if px != key and min(px) > 225:
             ImageDraw.floodfill(work, xy, key, thresh=40)
+    clear_pockets(work, key, keep)
     diff = ImageChops.difference(work, Image.new("RGB", work.size, key)).convert("L")
     alpha = diff.point(lambda v: 255 if v > 8 else 0).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(0.8))
     out = img.convert("RGBA")
@@ -137,6 +178,7 @@ def main():
     p.add_argument("--only", nargs="*", default=[])
     p.add_argument("--jobs", type=int, default=3)
     p.add_argument("--sheet", default="")
+    p.add_argument("--recut", action="store_true")
     a = p.parse_args()
     rec = json.loads(RECIPES.read_text())
     people = a.only or list(rec["people"])
@@ -167,9 +209,9 @@ def main():
             if src is None:
                 continue
             dst = OUT / (f"{pid}.webp" if mood == "neutral" else f"{pid}_{mood}.webp")
-            if dst.exists() and dst.stat().st_mtime >= src.stat().st_mtime:
+            if not a.recut and dst.exists() and dst.stat().st_mtime >= src.stat().st_mtime:
                 continue
-            cut_out(src, dst, bool(person.get("flip", False)))
+            cut_out(src, dst, bool(person.get("flip", False)), rec.get("keep_white", {}).get(f"{pid}_{mood}", []))
             saved += 1
     print(f"{saved} busts saved to art/busts")
     if a.sheet:

@@ -119,7 +119,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | carriage_ride | Up into the Cloud | `strahd/letters` | 1 |
 | castle_chasm | The Castle Across the Chasm | `enter:castle_ravenloft_gates` | 2 |
 | castle_glimpse | The Castle on Its Pillar | `examine:castle_glimpse` | 1 |
-| castle_road_west | The Castle on Its Pillar | `enter:village_road_west` | 1 |
+| castle_road_west | The Castle on Its Pillar | `village_of_barovia/road_west` (the first try at the west posts, alone; once) | 1 |
 | chapel_dawn | Dawn in the Chapel | `castle_ravenloft/personal_prayers`, `companions/dawn` | 1 |
 | children_freed | Five Children Walk Past the Wolves | `werewolf_den/kiril` | 1 |
 | church_gate | At the Churchyard Gate | `strahd/ireena` | 1 |
