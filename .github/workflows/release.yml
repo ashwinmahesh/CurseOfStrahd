@@ -7,7 +7,10 @@
 # Secrets (Settings → Secrets and variables → Actions): COS_CLOUDFLARE_R2_API_TOKEN, COS_CLOUDFLARE_ACCOUNT_ID. Once there's
 # an Apple Developer account, APPLE_DEVELOPER_ID_P12 (the Developer ID Application certificate's .p12, base64),
 # APPLE_DEVELOPER_ID_P12_PASSWORD, APPLE_API_KEY_ID, APPLE_API_ISSUER_ID and APPLE_API_KEY_P8 (an App Store Connect
-# API key) make the Mac download signed and notarized; without them it's signed ad hoc.
+# API key) make the Mac download signed and notarized; without them it's signed ad hoc. Likewise AZURE_TENANT_ID,
+# AZURE_CLIENT_ID and AZURE_CLIENT_SECRET (an app registration allowed to sign) with ARTIFACT_SIGNING_ENDPOINT,
+# ARTIFACT_SIGNING_ACCOUNT and ARTIFACT_SIGNING_PROFILE (as secrets or variables) sign the Windows .exe with Azure
+# Artifact Signing; without them it ships unsigned.
 # The first run imports every asset (about 2 hours); later runs start from the cached import and LFS objects. GitHub
 # drops a cache nobody has read for 7 days, so a scheduled keep-warm job reads the three caches twice a week (weekly
 # would sit right on the 7-day line, and scheduled runs can start hours late).
@@ -41,6 +44,8 @@ env:
   TEMPLATES_SHA512: ca4d71c4d7b81dfc15d1a98baa07534aa95b03fdda78a0075b06672e1648d2e5f40980c9adc28d23e1b92e732ee7bf3461997aa804af74ec2fcd7a93ccb84079
   RCODESIGN_VERSION: "0.29.0"
   RCODESIGN_SHA256: dbe85cedd8ee4217b64e9a0e4c2aef92ab8bcaaa41f20bde99781ff02e600002
+  JSIGN_VERSION: "7.5"
+  JSIGN_SHA256: 602a51c3545a6dc4fb99bd2ea7152b26d1345916d0c93ddfbd5936cb735af91c
   BUCKET: curseofstrahd-downloads
   DOWNLOADS: https://downloads.curseofstrahd.app
 
@@ -193,6 +198,43 @@ jobs:
           make release OUT="$RUNNER_TEMP/release" VERSION="$VERSION"
           ls -la "$RUNNER_TEMP/release" "$RUNNER_TEMP/release/macos"
           rm -rf "$RUNNER_TEMP/apple"
+
+      # Off until the Azure Artifact Signing secrets exist (owner's call): without them the .exe ships unsigned, as
+      # before. Signed here, after make release, so the Azure secret never reaches the build; only the .exe is replaced
+      # in the zip. The access token is fetched now, since the import before it can outlast one.
+      - name: Sign the Windows build
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ENDPOINT: ${{ vars.ARTIFACT_SIGNING_ENDPOINT || secrets.ARTIFACT_SIGNING_ENDPOINT }}
+          ACCOUNT: ${{ vars.ARTIFACT_SIGNING_ACCOUNT || secrets.ARTIFACT_SIGNING_ACCOUNT }}
+          PROFILE: ${{ vars.ARTIFACT_SIGNING_PROFILE || secrets.ARTIFACT_SIGNING_PROFILE }}
+        run: |
+          if [ -z "$AZURE_CLIENT_SECRET" ]; then
+            echo "No Artifact Signing secrets: the Windows build is unsigned"
+            exit 0
+          fi
+          for v in AZURE_TENANT_ID AZURE_CLIENT_ID ENDPOINT ACCOUNT PROFILE; do
+            if [ -z "${!v}" ]; then echo "::error::${v} is missing"; exit 1; fi
+          done
+          jar="$RUNNER_TEMP/jsign.jar"
+          curl -fsSL -o "$jar" "https://github.com/ebourg/jsign/releases/download/${JSIGN_VERSION}/jsign-${JSIGN_VERSION}.jar"
+          echo "${JSIGN_SHA256}  ${jar}" | sha256sum -c -
+          token="$(curl -fsS -X POST "https://login.microsoftonline.com/${AZURE_TENANT_ID}/oauth2/v2.0/token" \
+            --data-urlencode grant_type=client_credentials --data-urlencode "client_id=${AZURE_CLIENT_ID}" \
+            --data-urlencode "client_secret=${AZURE_CLIENT_SECRET}" \
+            --data-urlencode scope=https://codesigning.azure.net/.default |
+            python3 -c 'import json,sys; print(json.load(sys.stdin)["access_token"])')"
+          echo "::add-mask::${token}"
+          host="${ENDPOINT#https://}"
+          host="${host%%/*}"
+          out="$RUNNER_TEMP/release/windows"
+          # Artifact Signing's certificates last days, so jsign always timestamps its signatures.
+          java -jar "$jar" --storetype TRUSTEDSIGNING --keystore "$host" --storepass "$token" \
+            --alias "${ACCOUNT}/${PROFILE}" "$out/CurseOfStrahd.exe"
+          (cd "$out" && zip -q -6 ../CurseOfStrahd-windows.zip CurseOfStrahd.exe)
+          echo "Signed CurseOfStrahd.exe with Azure Artifact Signing (${ACCOUNT}/${PROFILE})" >> "$GITHUB_STEP_SUMMARY"
 
       # Saved even when the export fails, since the import is the slow part.
       - name: Save the import cache
