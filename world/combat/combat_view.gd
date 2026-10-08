@@ -910,7 +910,7 @@ func _update_hover() -> void:
 				hud.show_tooltip(str(pv0["title"]), pv0["lines"] as Array, ["Out of reach: move closer, or pick a ranged attack"], at)
 			else:
 				var pv := catalog.attack_preview(c, a, o)
-				hud.show_tooltip(str(pv["title"]), pv["lines"] as Array, [], at)
+				hud.show_tooltip(str(pv["title"]), pv["lines"] as Array, [], at, str(pv.get("edge", "")))
 		else:
 			hud.show_tooltip(o.name(), ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)], [], at)
 		return
@@ -971,11 +971,12 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 	var o := t.combatant
 	if str(selected["kind"]) in ["attack", "offhand"]:
 		var pv2 := catalog.attack_preview(c, selected, o)
-		hud.show_tooltip(str(pv2["title"]), pv2["lines"] as Array, [], at)
+		hud.show_tooltip(str(pv2["title"]), pv2["lines"] as Array, [], at, str(pv2.get("edge", "")))
 		return
 	var why := catalog.target_why(c, selected, o)
 	var lines2: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()]]
 	var tip_title := o.name()
+	var edge := ""   # a spell attack's Advantage or Disadvantage, for the box's outline
 	if str(selected["kind"]) in ["spell", "item_spell"]:
 		var data := Compendium.shared().spell_data(str(selected["spell_id"]))
 		var prev := catalog.cast_preview(c, selected, slot_level)
@@ -985,15 +986,19 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			var ac := o.creature.ac_value() + int(sit["cover_bonus"])
 			var needs := clampi(ac - (prev["attack"] as Breakdown).total(), 2, 20)
 			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [(prev["attack"] as Breakdown).total(), ac, needs])
-			var sa := sit["advantage"] as Array
-			var sd := sit["disadvantage"] as Array
+			# With the caster's own Advantage and Disadvantage (Poisoned...), as the spell attack's roll counts them.
+			var own := c.creature.d20_sources(["attack", "attack:melee" if bool(opt["melee"]) else "attack:ranged", "attack:spell"])
+			var sa: Array = (sit["advantage"] as Array) + (own["advantage"] as Array)
+			var sd: Array = (sit["disadvantage"] as Array) + (own["disadvantage"] as Array)
 			if not sa.is_empty() and sd.is_empty():
 				tip_title = "%s · ADVANTAGE" % o.name()
+				edge = "advantage"
 			elif not sd.is_empty() and sa.is_empty():
 				tip_title = "%s · DISADVANTAGE" % o.name()
-			for s: Variant in sit["advantage"]:
+				edge = "disadvantage"
+			for s: Variant in sa:
 				lines2.append("Advantage: %s" % s)
-			for s: Variant in sit["disadvantage"]:
+			for s: Variant in sd:
 				lines2.append("Disadvantage: %s" % s)
 		if data.has("save") and prev.has("save_dc"):
 			var ab := StringName(str(data["save"]))
@@ -1006,7 +1011,7 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			lines2.append("Heals %s %+d" % [prev["heal_dice"], (prev["heal_bonus"] as Breakdown).total()])
 	if kind == "multi":
 		lines2.append("Chosen: %d" % picked.count(o))
-	hud.show_tooltip(tip_title, lines2, [why] if why != "" else [], at)
+	hud.show_tooltip(tip_title, lines2, [why] if why != "" else [], at, edge)
 
 
 # --- Playing events -------------------------------------------------------------------------------

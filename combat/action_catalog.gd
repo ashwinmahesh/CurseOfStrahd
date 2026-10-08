@@ -1107,8 +1107,20 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 	var o := e.option_by_id(c, str(action["option_id"]))
 	var p := o["profile"] as WeaponProfile
 	var hc := e.echo_knight.hit_chance(c, t, o, str(action["kind"]) == "attack" or str(action["cost"]) == "free")
-	out["chance"] = float(hc["chance"])
-	lines.append("%s: hit %d%% (needs %d+ on the d20)" % [p.name, roundi(float(hc["chance"]) * 100.0), int(hc["needs"])])
+	var sit := hc["situation"] as Dictionary
+	# The roll also counts the attacker's own Advantage and Disadvantage (Poisoned, a feature's), as
+	# EncounterAttacks._roll_attack does, so the odds and the edge here match the roll.
+	var own := c.creature.d20_sources(EncounterAttacks.roll_keys(o))
+	var adv: Array = (sit["advantage"] as Array) + (own["advantage"] as Array)
+	var dis: Array = (sit["disadvantage"] as Array) + (own["disadvantage"] as Array)
+	var single := (21 - int(hc["needs"])) / 20.0
+	var chance := single
+	if not adv.is_empty() and dis.is_empty():
+		chance = 1.0 - pow(1.0 - single, 2)
+	elif not dis.is_empty() and adv.is_empty():
+		chance = single * single
+	out["chance"] = chance
+	lines.append("%s: hit %d%% (needs %d+ on the d20)" % [p.name, roundi(chance * 100.0), int(hc["needs"])])
 	if hc.has("from"):
 		lines.append("From %s's space" % str(hc["from"]))
 	var bonus := p.damage_bonus.total() if str(action["kind"]) == "attack" else mini(0, p.damage_bonus.total())
@@ -1116,9 +1128,6 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 		p.average_damage() - (p.damage_bonus.total() - bonus), (" · %s" % p.mastery.capitalize()) if p.mastery != "" else ""])
 	if p.mastery == "graze":
 		lines.append("Graze: %d damage even on a miss" % maxi(0, c.creature.ability_mod(p.ability)))
-	var sit := hc["situation"] as Dictionary
-	var adv := sit["advantage"] as Array
-	var dis := sit["disadvantage"] as Array
 	if adv.is_empty() and dis.is_empty():
 		lines.append("No Advantage or Disadvantage")
 	elif not adv.is_empty() and not dis.is_empty():
