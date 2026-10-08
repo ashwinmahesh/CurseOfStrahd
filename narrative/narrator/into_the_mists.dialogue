@@ -103,3 +103,9 @@ once
 ~ search:carcass_pack
 | Under the torn carcass, half trampled into the mud, a traveller's pack. The boots inside are lined with white fur and warm to the touch, even here.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the ferns by the road.
+
+~ search:mists_fern_pack
+| In the ferns beside the road, a traveller's pack, sodden and torn open by something with claws. Most of it is ruined. A carved bone whistle on a cord is not. {name} takes it.
+once

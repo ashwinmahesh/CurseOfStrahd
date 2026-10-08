@@ -270,3 +270,7 @@ once
 ~ search:frozen_traveller_rope
 | The frozen traveller's pack opens with a crack of ice. Inside, a coil of silk rope that isn't frozen at all; it stirs in {name}'s hands like something waking. He got this far with it. He won't need it now.
 once
+
+~ search:name_cairn_candle
+| At the foot of the name cairn, half buried in snow, a fat wax candle left as an offering by someone who climbed this far and lit it for the names. It never burned down. {name} takes it.
+once

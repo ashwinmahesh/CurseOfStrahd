@@ -8,7 +8,7 @@
     "rows": [
       "                        ############",
       "###################     #1111111111#",
-      "#.................#     #1111111111#",
+      "#...............=.#     #1111111111#",
       "#.................#     #1111111111#",
       "#.......##........#     #1111111111#",
       "#.......##...............1111111111#",
@@ -234,6 +234,33 @@
       "kind": "examine",
       "label": "The parapet, facing the courtyard",
       "model": "wall_low"
+    },
+    {
+      "id": "spires_ridge_crow",
+      "cell": [
+        10,
+        2
+      ],
+      "kind": "decor",
+      "model": "crow"
+    },
+    {
+      "id": "spires_ridge_crow_2",
+      "cell": [
+        15,
+        8
+      ],
+      "kind": "decor",
+      "model": "crow"
+    },
+    {
+      "id": "spires_ridge_gargoyle",
+      "cell": [
+        16,
+        2
+      ],
+      "kind": "decor",
+      "model": "gargoyle"
     }
   ],
   "containers": [
