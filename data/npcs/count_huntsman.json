@@ -1,0 +1,17 @@
+{
+  "id": "count_huntsman",
+  "name": "The Huntsman",
+  "title": "Master of the Count's Hounds",
+  "summary": "Toader, a poacher run down in the count's first winter, who stood and turned at the crossroads, and was made the count's huntsman for it. Every quarry he has run down since has become one of his hounds.",
+  "portrait": "revenant",
+  "sprite": "revenant",
+  "attitude": "hostile",
+  "monster": "count_huntsman",
+  "guest": false,
+  "tags": [
+    "undead",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him"
+}

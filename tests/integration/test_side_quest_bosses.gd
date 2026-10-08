@@ -83,3 +83,11 @@ func test_the_rag_queen_at_level_9() -> void:
 
 func test_granny_ash_at_level_6() -> void:
 	await _series("old_bonegrinder_track", 23, 6, "granny_ash", [1, 2, 3, 4], ["morgantha_slain"])
+
+
+func test_the_counts_huntsman_at_level_8() -> void:
+	await _series("svalich_crossroads", 23, 8, "the_hunt", [1, 2, 3, 4])
+
+
+func test_the_counts_huntsman_with_his_hounds_called_at_level_8() -> void:
+	await _series("svalich_crossroads", 23, 8, "the_hunt", [1, 2, 3], ["hounds_called"])

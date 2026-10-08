@@ -1,0 +1,114 @@
+# The Count's Huntsman (side quest, docs/story/side_quests.md): on cold nights a horn sounds in the Svalich woods, and
+# in the morning whoever the count is displeased with lies under the crossroads gallows, run to death. The Huntsman
+# is Toader, a poacher the count ran down himself in his first winter, who stood and turned at the crossroads and was
+# made huntsman for it; every quarry since has become one of his hounds. A quarry who stands at the crossroads at
+# moonrise and beats him ends the hunt. Whose scent he has follows Strahd's attention (data/strahd/attention.json):
+# the party's, once he has marked them, or else Gavril the Vistani groom's. The boss is our own
+# (data/monsters/count_huntsman.json). Reached from Old Paraschiva at the Vistani camp (camp_folk:cook), the quarry
+# stones and the Huntsman at the crossroads. Every line here is unvoiced for now.
+
+# --- Old Paraschiva, the camp cook (camp_folk:cook jumps here) ---
+
+~ cook_news
+if quest.the_counts_huntsman == ended
+Old Paraschiva: No horn in the woods. Three cold nights now, and nothing. Gavril's taken to sleeping outside the wagon just to hear the quiet.
+-> END
+endif
+if quest.the_counts_huntsman
+Old Paraschiva: You know what I know. The crossroads, moonrise, and stand when you get there. And learn their names first, the ones under the stones.
+-> END
+endif
+Old Paraschiva: Interesting? There's a horn in the Svalich woods on cold nights. Three notes, and then the hounds. In the morning somebody's lying under the gallows at the crossroads, run to death. Boots worn through. Not a mark on them.
+Old Paraschiva: The count gives his huntsman a scent, and the huntsman runs it down. He has to blow three nights first, so the quarry can say its prayers. He's particular. They say the count likes rules he thinks can't be kept.
+if attention >= marked
+set hunt_quarry = "party"
+quest the_counts_huntsman hunted
+Old Paraschiva: It blew three times last night, on the road you came in by. (She looks at you over the pot for a long moment.) Three notes is for strangers. You've made somebody up at the castle very angry.
+else
+set hunt_quarry = "gavril"
+quest the_counts_huntsman hunted
+Old Paraschiva: And it blew for Gavril, our groom. He sold the castle's stable master a horse with a painted blaze, the fool. He hasn't slept for two nights.
+endif
+Old Paraschiva: The hunt ends under the crossroads gallows at moonrise. The rule is, if the quarry is standing there and turns and faces him, he has to fight it out, fair. If the quarry wins, it's done. Nobody has ever stood.
+Old Paraschiva: And the hounds. Every one of them was quarry once. Their names are on the stones by the crossroads, the ones we put up. A dog knows its name. Even that kind.
+-> END
+
+# --- Gavril, the quarry (when it isn't the party) ---
+
+~ gavril_waits
+Gavril: You came. You actually came. I've got a knife and a horseshoe, and I'm not sure what either of them is for.
+Gavril: If I run, I die tired. Paraschiva says stand. So I'm standing. Next to you, if it's all the same.
+-> END
+
+# --- The quarry stones (prop quarry_stones, by the crossroads) ---
+
+~ stones
+Narrator: Small cairns along the verge, each with a flat stone on top and a name scratched into it by somebody with a Vistani knife: Mihai. Old Dorota. The Lupescu twins. A tinker, no name, only a pot drawn in the stone. Dozens more, back into the grass, the oldest worn smooth.
+if not flag.hounds_named
+set hounds_named
+interject tag:kind: We should say them. Out loud. Somebody should.
+endif
+-> END
+
+# --- The crossroads at moonrise (the Huntsman stands on the east road) ---
+
+~ stand
+Narrator: The horn first, three notes, close enough to feel in your teeth. Then the hounds come up the east road out of the dark: grey and long and silent, more than you can count, and behind them a long grey man in a hunting coat gone black with weather, with a boar spear over his shoulder.
+if flag.hunt_quarry == "gavril"
+The Huntsman: Not you. The horse-seller.
+Narrator: Gavril, behind you, makes a small noise and doesn't run.
+endif
+The Huntsman: Quarry. You stood. Nobody stands. (He looks at you, and there's something in it you weren't expecting. It looks like relief.) Well. Rules are rules. He made them.
+-> stand_menu
+
+~ stand_menu
+* [if not flag.huntsman_seen] [Insight DC 15] (Look at him, not at the hounds.) -> seen | unseen
+* [if not flag.huntsman_asked] Who were you, before you were his? -> who
+* [if flag.hounds_named and not flag.hounds_called] (Call the hounds by the names on the stones.) -> called
+* (Draw steel.) -> fight
+
+~ seen
+set huntsman_seen
+Narrator: He's tired. Not the way the dead are tired; the way a man is, at the end of a long day's walking, who would like very much to sit down and isn't allowed. He keeps his eyes off the hounds.
+-> stand_menu
+
+~ unseen
+set huntsman_seen
+Narrator: A dead man with a spear. That's all you can make out in the dark.
+-> stand_menu
+
+~ who
+set huntsman_asked
+The Huntsman: Toader. I took a deer out of his woods, his first winter, when the valley was still new to him. He ran me down himself, for the sport of it, and I got as far as here, and I turned round.
+The Huntsman: He laughed. He said, you run well. Now you'll run them. And every one I've run since is in the pack. That one was a tinker. That one, a girl who said no to him at a dance.
+-> stand_menu
+
+~ called
+set hounds_called
+Narrator: You say the names. Mihai. Old Dorota. The Lupescu twins. The ones worn smooth, as near as you can guess them.
+Narrator: Here and there in the pack a hound stops, and sits down in the road, and looks at you with eyes that are nearly a person's. Then it lies down with its head on its paws and doesn't get up.
+The Huntsman: (Very quietly.) Nobody's ever said them.
+-> stand_menu
+
+~ fight
+The Huntsman: Run if you like. It's better sport. (He doesn't wait to see if you will.)
+combat the_hunt
+
+# --- After (prop huntsman_saddlebag at the crossroads) ---
+
+~ saddlebag
+if flag.hunt_paid
+Narrator: The cairns by the crossroads have a new stone at the end of the row, with no name on it, only a horn scratched into the face.
+-> END
+endif
+set hunt_paid
+quest the_counts_huntsman ended
+Narrator: Where the hounds fell there's nothing left but grey mist lying low in the road. As you watch it lifts, in shapes that might be people, a tinker and a girl and twins and an old woman, and goes off in every direction at a walk, as if there's all the time in the world.
+Narrator: The Huntsman's coat lies in the road with nothing in it. His saddlebag holds four hundred years of quarry's purses, and a plain iron ring he called the pack with.
+gold +300
+give ring_of_animal_influence
+if flag.hunt_quarry == "gavril"
+Gavril: I stood. I actually stood. (He sits down in the road very suddenly.) Don't tell Paraschiva I'm sitting.
+endif
+approve thistle +3 godrick_pendlebrook +2 liriel_dawnsong +1 wren_featherfoot +1 ratatoille +1: You stood at the crossroads and ended the count's hunt
+-> END

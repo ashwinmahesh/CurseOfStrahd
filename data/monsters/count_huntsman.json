@@ -1,0 +1,214 @@
+{
+  "id": "count_huntsman",
+  "name": "The Count's Huntsman",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Count's Huntsman, docs/story/side_quests.md), built from the 2025 Monster Manual's revenant and wight: necrotic arrows and a hunting spear, scaled to CR 9 with a horn, legendary actions and Legendary Resistance. Drawn with the revenant's sprite."
+  },
+  "size": "medium",
+  "type": "undead",
+  "tags": [
+    "boss",
+    "hunter"
+  ],
+  "alignment": "lawful evil",
+  "art": "revenant",
+  "ac": 17,
+  "initiative": 5,
+  "hp": {
+    "average": 165,
+    "dice": "22d8+66"
+  },
+  "speed": {
+    "walk": 40
+  },
+  "abilities": {
+    "str": 16,
+    "dex": 20,
+    "con": 16,
+    "int": 12,
+    "wis": 16,
+    "cha": 14
+  },
+  "saves": {
+    "dex": 9,
+    "wis": 7
+  },
+  "skills": {
+    "perception": 7,
+    "stealth": 9,
+    "survival": 11
+  },
+  "resistances": [
+    "necrotic"
+  ],
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "poisoned"
+  ],
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 17,
+  "languages": [
+    "Common"
+  ],
+  "cr": 9,
+  "xp": 5000,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When the Huntsman fails a saving throw, he can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "the_rules_of_the_hunt",
+      "name": "The Rules of the Hunt",
+      "action": "passive",
+      "summary": "He must sound his horn three nights before a hunt, and a quarry who stands at the crossroads and beats him ends the hunt for good.",
+      "text": "The Huntsman sounds his horn on three nights before he runs a quarry down, and the hunt ends under the crossroads gallows at moonrise. A quarry who stands there and beats him in a fair fight ends the hunt for good: the count's own rule, made because he thought it could never be kept.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "hunting_spear",
+          "count": 1,
+          "or": [
+            "black_arrow"
+          ]
+        },
+        {
+          "action": "hunting_spear",
+          "count": 1,
+          "or": [
+            "black_arrow"
+          ]
+        }
+      ],
+      "summary": "Two attacks with Hunting Spear or Black Arrow in any mix.",
+      "text": "The Huntsman makes two attacks, using Hunting Spear or Black Arrow in any combination."
+    },
+    {
+      "id": "hunting_spear",
+      "name": "Hunting Spear",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "1d10+5",
+          "type": "piercing"
+        },
+        {
+          "average": 9,
+          "dice": "2d8",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "A long boar spear, reach 10 ft, cold with the grave.",
+      "text": "Hit: 10 (1d10 + 5) Piercing damage plus 9 (2d8) Necrotic damage.",
+      "weapon": true
+    },
+    {
+      "id": "black_arrow",
+      "name": "Black Arrow",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 9,
+        "range": [
+          150,
+          600
+        ]
+      },
+      "damage": [
+        {
+          "average": 9,
+          "dice": "1d8+5",
+          "type": "piercing"
+        },
+        {
+          "average": 9,
+          "dice": "2d8",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "A black-fletched arrow that never misses its quarry's scent.",
+      "text": "Hit: 9 (1d8 + 5) Piercing damage plus 9 (2d8) Necrotic damage.",
+      "weapon": true
+    },
+    {
+      "id": "horn_of_the_hunt",
+      "name": "Horn of the Hunt",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "wis",
+        "dc": 16,
+        "success": "none"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 60
+      },
+      "targets": {
+        "range": 60,
+        "not_types": [
+          "undead",
+          "beast"
+        ]
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "source_turn_end"
+        }
+      ],
+      "summary": "Recharge 5-6: every creature within 60 ft that isn't Undead or a Beast makes a DC 16 Wis save or is Frightened until the end of his next turn.",
+      "text": "The Huntsman sounds his horn. Each creature within 60 feet of him that isn't an Undead or a Beast makes a DC 16 Wisdom saving throw. Failure: the target has the Frightened condition until the end of the Huntsman's next turn."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 3,
+    "options": [
+      {
+        "id": "loose",
+        "name": "Loose",
+        "cost": 2,
+        "action": "black_arrow",
+        "summary": "Makes one Black Arrow attack."
+      },
+      {
+        "id": "into_the_trees",
+        "name": "Into the Trees",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to his Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regions": [
+    "svalich_road"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "The master of the count's hounds, four hundred years dead: a long grey man in a hunting coat gone black with weather, with a horn, a boar spear and a quiver of black arrows. He runs down whoever the count gives him, and every quarry he runs down becomes one of his hounds."
+}
