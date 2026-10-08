@@ -1,0 +1,38 @@
+{
+  "id": "the_packs_runt",
+  "name": "The Pack's Runt",
+  "summary": "Of the five children brought home from the werewolves' den, the smallest came home different, and something big circles the farms below Krezk's wall.",
+  "giver": "krezk_petru",
+  "region": "krezk",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Krezk's watchman says Petru, the smallest of the five children who came home from the den, sleeps in the goat pens now, and something bigger than a wolf has been circling the farms below the wall.",
+      "objectives": [
+        "Find Petru in Krezk's goat pens"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "The moon came for Petru in the den before we got the children out. The pack's eldest, the Grandsire, says the runt is his and will come for him at the full moon.",
+      "objectives": [
+        "Optional: lift the curse from him",
+        "Wait with Petru by the pens after dark"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "The Grandsire came over Krezk's wall for Petru at the full moon, and he's dead in the square. Dmitri paid what Krezk pays for a wolf that takes children.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "given",
+      "journal": "We gave Petru to the Grandsire for the old wolf's word that the pack would take no more Krezk children.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

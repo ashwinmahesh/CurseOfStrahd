@@ -470,6 +470,26 @@ DC 14, or a cleric's) let all nine go quietly; breaking her out wakes the other 
 - The rites: 400 gp of the pilgrims' offerings. Breaking her out: 500 gp, and her frosted lamp-pole with all the cold
   in it, a Staff of Frost (very rare).
 
+### The Pack's Runt (`the_packs_runt`, narrative/krezk/the_packs_runt.dialogue; batch 4, level 8)
+
+Once the den's children are home (`den_children_freed`), the Krezk watchman's news says Petru (new NPC), the smallest
+of the five, sleeps in the goat pens now and the goats don't mind him, and something bigger than a wolf circles the
+farms below the wall. **Twist:** the moon came for Petru in the den before the rescue; he's a wolf nearly all the way
+(Insight DC 13), and the pack's eldest, the Grandsire, licked his face after and said the runt was his. Remove Curse
+(cast, or a scroll) lifts it, and far off something howls at the loss. **Escalation:** at night by the pens the
+Grandsire comes over the wall with the old wolves; he offers the pack's word to take no more Krezk children in
+exchange for the runt (`given`: the quest fails and the companions disapprove), or he fights.
+
+- **Boss: the Grandsire** (data/monsters/the_grandsire.json, `source.book: custom`, from the 2025 Monster Manual's
+  werewolf, drawn with its sprite at Large): Large monstrosity, AC 16, 180 HP, a bite that knocks you Prone and two
+  claws, Pack Tactics, a howl that frightens (recharge 5-6), Legendary Resistance (2/day), and a bite or a lope
+  between turns. CR 9.
+- Fight `grandsire` in Krezk's square: level 8 the Grandsire, 2 old wolves of the pack (werewolves) and 2 dire wolves,
+  6,800 XP (the autopilot wins 2 of 4 and loses two or three party members a fight); level 9 three werewolves; level 7
+  one dire wolf fewer; below 7 the Grandsire at 140 HP with one of each.
+- Krezk's bounty, from Dmitri: 300 gp and the iron bands that have hung in the watch house for the wolf that never
+  came, Iron Bands of Bilarro (rare).
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -508,4 +528,5 @@ Argynvostholt: the_squire.dialogue in full (new speaker Cosmin; also Sir Godfrey
 Tsolenka Pass: the_frozen_pilgrims.dialogue in full (new speaker Mother Ecaterina; also Sergeant Valcu). Batch 4, the
 Village of Barovia: the_burgomasters_hound.dialogue in full (Bildrath; companions and Ireena's interjects; Lupu
 doesn't speak). Batch 4, the
-crossroads by day: the_tinkers_wagon.dialogue in full (new speaker Iosif the Tinker; also Zora's three new lines).
+crossroads by day: the_tinkers_wagon.dialogue in full (new speaker Iosif the Tinker; also Zora's three new lines). Batch 4,
+Krezk: the_packs_runt.dialogue in full (new speakers Petru and the Grandsire; also the Krezk watchman).

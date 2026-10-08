@@ -277,3 +277,14 @@ func test_the_tinkers_wagon_stands_up_off_its_wheels() -> void:
 		root.queue_free()
 		root = null
 		await _frames(2)
+
+
+func test_the_grandsire_comes_over_krezks_wall() -> void:
+	for level: int in [7, 8, 9]:
+		var v := await _boot("krezk", 23, level, ["krezk_gate_open", "den_children_freed"])
+		await _fight(v, "grandsire", ["The Grandsire", "An Old Wolf of the Pack"])
+		await _end(v)
+		assert_true(bool(GameState.story.get_flag("grandsire_slain", false)))
+		root.queue_free()
+		root = null
+		await _frames(2)
