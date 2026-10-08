@@ -449,3 +449,34 @@ func test_the_weather_dresses_the_place() -> void:
 	v.queue_free()
 	Weather.use({})
 	Look.set_style(was, false)
+
+
+## Owner report (2026-10-08): "Not sure if we're supposed to have a fog effect, but if we do it's not showing." Barovia's
+## mists hang over every outdoor place, low and plain to see by day: lighter in a town's streets than in the woods,
+## thick on the roads out, heavier when fog comes down; none indoors.
+func test_the_mists_show_outdoors() -> void:
+	var woods := _view("tser_pool")
+	await get_tree().process_frame
+	var post := (woods.post.mesh as QuadMesh).material as ShaderMaterial
+	assert_true(float(post.get_shader_parameter("mist_strength")) >= 0.6, "the woods' mist is plain to see")
+	assert_true(float(post.get_shader_parameter("mist_height")) <= 1.2, "and lies low, under head height")
+	var town := _view("village_of_barovia")
+	await get_tree().process_frame
+	assert_true(town.atmosphere.mist_scale() < woods.atmosphere.mist_scale(), "lighter in a town's streets")
+	var mask := Atmosphere.mist_mask(woods.grid, 0.4, woods.atmosphere.roads_out(), 0.9).get_image()
+	var road := woods.atmosphere.roads_out()
+	assert_false(road.is_empty(), "Tser Pool has roads out")
+	assert_true(mask.get_pixelv(road[0]).r >= 0.85, "thick on the road out")
+	var d := Weather.data().duplicate(true)
+	for c: String in d["climates"]:
+		d["climates"][c] = {"fog": 1}
+	Weather.use(d)
+	var fog := Weather.dress_mood(GameState.story, "tser_pool", Atmosphere.resolve("tser_pool"), true)
+	Weather.use({})
+	assert_true(float((fog["mist"] as Dictionary).get("strength", 1.0)) > 1.0, "heavier in fog")
+	var inside := _view("vallaki_blue_water_inn")
+	await get_tree().process_frame
+	var inside_post := (inside.post.mesh as QuadMesh).material as ShaderMaterial
+	assert_eq(float(inside_post.get_shader_parameter("mist_strength")), 0.0, "none indoors")
+	for v: LocationView in [woods, town, inside]:
+		v.queue_free()
