@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""Writes Cheat Codes.md in the vault: every playable item's cheat code, from the item data (`make cheat-codes`).
+"""Writes every playable item's cheat code, from the item data (`make cheat-codes`): docs/cheat_codes.md in the repo and
+Cheat Codes.md in the vault (skipped when there's no vault, as on another machine).
 
 The codes are story/cheat_codes.gd's (the game's Cheat codes page): the first six hex digits of sha256("cheat:<id>"),
 upper case. Two ids that share a code are settled in id order over every item file, playable or not: the first keeps
 it, the next hashes "cheat:<id>#1" (then #2...). Only playable items are listed, since only they answer to a code. An
 item built on a base (a +1 Weapon, a Spell Scroll) has one code, and the player picks the base in the game.
 
-    python3 tools/data/cheat_codes.py [--out <path>] [--stdout]
+The repo's copy is the same for the same data (no date), so `--check` can tell when it's behind the items.
+
+    python3 tools/data/cheat_codes.py [--check] [--stdout] [--out <path>]
 """
 import argparse
 import datetime
@@ -16,6 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = Path.home() / "Documents" / "Obsidian Vault" / "CurseOfStrahd" / "Cheat Codes.md"
+REPO_OUT = ROOT / "docs" / "cheat_codes.md"
 FOLDERS = ["items", "magic_items"]
 SALT = "cheat:"
 LENGTH = 6
@@ -74,32 +78,54 @@ def esc(text):
     return str(text).replace("|", "\\|")
 
 
-def render(items, magic, codes):
+HOW_TO = [
+    "## How to use a code",
+    "",
+    "1. Press **Esc** for the pause menu and choose **Cheat codes** (beside Settings; it shows once you have a party).",
+    "2. Pick the hero to get the item (the one you have selected is picked already), type the code and press **Give** or",
+    "   Enter. Case, spaces and dashes don't matter.",
+    "3. Each press gives the item again. Ammunition comes as a bundle (20 Arrows), and magic items arrive identified.",
+    "4. A code marked *pick* is an item built on a base, like a +1 Weapon or a Spell Scroll: choose the weapon, armor or",
+    "   spell in the box before you give it. Spell Scroll (Cantrip) and Spell Scroll (Level 1) give a scroll of a random",
+    "   spell of that level instead.",
+    "",
+    "Story items such as the Sunsword count as found for the story too, so giving them early can skip ahead.",
+    "",
+]
+
+
+def render(items, magic, codes, repo=False):
+    """The list for the repo (`repo`: the same for the same data) or the vault (dated, linked to its notes)."""
     gear = sorted((d for d in items.values() if playable(d)), key=lambda d: str(d.get("name", d["id"])))
     wonders = [d for d in magic.values() if playable(d)]
-    lines = [
-        "# Cheat Codes",
-        "",
-        f"Every item in the game and its code: {len(gear) + len(wonders)} items, {len(wonders)} of them magic. Rebuilt "
-        f"from the game's item data by `make cheat-codes` on {datetime.date.today().isoformat()}; the next run "
-        "rewrites this note, so don't edit it by hand.",
-        "See also: [[Current State]]",
-        "",
-        "## How to use a code",
-        "",
-        "1. Press **Esc** for the pause menu and choose **Cheat codes**.",
-        "2. Pick the hero to get the item (the one you have selected is picked already), type the code and press "
-        "**Give** or Enter.",
-        "3. A code works as many times as you like. Ammunition comes as a bundle (20 Arrows), and magic items arrive "
-        "identified.",
-        "4. A code marked *pick* is an item built on a base, like a +1 Weapon or a Spell Scroll: choose the weapon, "
-        "armor or spell in the box before you give it.",
-        "",
-        "Codes never change when new items are added. Story items such as the Sunsword count as found for the story "
-        "too, so giving them early can skip ahead.",
-        "",
-        "## Magic items",
-    ]
+    count = f"{len(gear) + len(wonders)} items, {len(wonders)} of them magic"
+    if repo:
+        lines = [
+            "# Cheat codes",
+            "",
+            f"Every code the game's Cheat codes page accepts: {count}.",
+            "Each code gives that item to the hero you pick, as many times as you like. `make cheat-codes` rewrites this file",
+            "(and the vault's Cheat Codes.md) from the item data, so run it after adding items rather than editing this by",
+            "hand; `python3 tools/data/cheat_codes.py --check` says whether it's behind.",
+            "",
+            "The codes come from `story/cheat_codes.gd`: the first six hex digits of sha256(\"cheat:<item id>\"), in upper case, with",
+            "any clash settled in id order. They don't change when items are added, so a new item only adds a row here. Only",
+            "playable items answer to a code; an entry marked `\"playable\": false` keeps its code for later but isn't given.",
+            "",
+        ]
+    else:
+        lines = [
+            "# Cheat Codes",
+            "",
+            f"Every item in the game and its code: {count}. Rebuilt from the game's item data by `make cheat-codes` on "
+            f"{datetime.date.today().isoformat()}, which also rewrites docs/cheat_codes.md in the game's repo; the next run "
+            "rewrites this note, so don't edit it by hand.",
+            "See also: [[Current State]]",
+            "",
+            "Codes never change when new items are added.",
+            "",
+        ]
+    lines += HOW_TO + ["## Magic items"]
     for rarity in RARITIES:
         group = sorted((d for d in wonders if str((d.get("magic") or {}).get("rarity", "")) == rarity),
                        key=lambda d: str(d.get("name", d["id"])))
@@ -122,8 +148,9 @@ def render(items, magic, codes):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--out", type=Path, default=OUT, help="where to write the note (default: the vault's Cheat Codes.md)")
-    ap.add_argument("--stdout", action="store_true", help="print the note instead of writing it")
+    ap.add_argument("--check", action="store_true", help="only check that docs/cheat_codes.md is up to date (exit 1 if not)")
+    ap.add_argument("--stdout", action="store_true", help="print the repo's list instead of writing anything")
+    ap.add_argument("--out", type=Path, help="write the vault's note here instead of the vault (the repo's copy too)")
     args = ap.parse_args()
     items, magic = load("items"), load("magic_items")
     codes = assign(list(items) + list(magic))
@@ -131,14 +158,25 @@ def main():
         if codes.get(item_id) != code:
             raise SystemExit(f"cheat_codes.py: {item_id} came out {codes.get(item_id)}, not {code}: the game and this "
                              "tool no longer agree (story/cheat_codes.gd)")
-    text = render(items, magic, codes)
+    repo_text = render(items, magic, codes, repo=True)
     if args.stdout:
-        print(text, end="")
+        print(repo_text, end="")
         return
-    args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(text)
+    rel = REPO_OUT.relative_to(ROOT)
+    if args.check:
+        if not REPO_OUT.exists() or REPO_OUT.read_text() != repo_text:
+            raise SystemExit(f"{rel} is behind the item data: run make cheat-codes and commit it")
+        print(f"{rel} is up to date")
+        return
     listed = sum(1 for d in list(items.values()) + list(magic.values()) if playable(d))
-    print(f"Wrote {listed} cheat codes to {args.out}")
+    REPO_OUT.write_text(repo_text)
+    print(f"Wrote {listed} cheat codes to {rel}")
+    vault = args.out or OUT
+    if not vault.parent.is_dir():
+        print(f"No folder {vault.parent}: the vault's note was skipped")
+        return
+    vault.write_text(render(items, magic, codes))
+    print(f"Wrote {listed} cheat codes to {vault}")
 
 
 if __name__ == "__main__":

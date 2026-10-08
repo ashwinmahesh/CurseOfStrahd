@@ -8,6 +8,10 @@
 # --- Mordenkainen (mordenkainen:restored_menu jumps here) ---
 
 ~ news
+if quest.the_unnamed_crypt == done
+Mordenkainen: You found her. (He doesn't ask how it went. He looks at your faces and doesn't need to.) Did she have ink on her fingers still? She always did. Thank you. Now go away for a while. I'd like to be old in private.
+-> mount_baratok/mordenkainen:restored_menu
+endif
 if flag.corvina_name_known
 Mordenkainen: Corvina. I say it every morning, so I don't lose it again. If you find her before I do, say it to her. Names matter to the dead in this valley. They're very nearly all the dead have left.
 -> mount_baratok/mordenkainen:restored_menu

@@ -810,6 +810,16 @@
       "id": "corvina_name_known",
       "type": "bool",
       "summary": "Mordenkainen read the letters and gave the party his apprentice's name, Corvina, to say to her in the castle (The Mage's Lost Pages)."
+    },
+    {
+      "id": "corvina_named",
+      "type": "bool",
+      "summary": "The party said Corvina's name at the unnamed crypt before she rose (The Unnamed Crypt)."
+    },
+    {
+      "id": "corvina_slain",
+      "type": "bool",
+      "summary": "Corvina, the Doorkeeper, is at rest in the castle's catacombs (The Unnamed Crypt)."
     }
   ]
 }
