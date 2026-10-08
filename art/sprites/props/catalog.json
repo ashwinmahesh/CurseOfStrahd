@@ -443,6 +443,12 @@
     ],
     "tser_pool_run": [
       "fence"
+    ],
+    "road_ambush": [
+      "wall_low"
+    ],
+    "road_ambush_run": [
+      "wall_low"
     ]
   },
   "difficult": {
@@ -3710,7 +3716,8 @@
     "heart_of_sorrow"
   ],
   "runs_along": [
-    "fence"
+    "fence",
+    "wall_low"
   ],
   "map_marks": {
     "great_tent": {

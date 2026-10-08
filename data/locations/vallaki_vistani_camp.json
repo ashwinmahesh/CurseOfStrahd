@@ -26,7 +26,7 @@
       "#..#####................#####..#",
       "#..............................#",
       "#..........===.................#",
-      "#..............................#",
+      "#.........==.==................#",
       "#..............................#",
       "###############..###############"
     ],
@@ -221,6 +221,54 @@
       "label": "a hidden drawer under Arrigal's wagon",
       "model": "broken_boards",
       "item": "dagger_of_venom__dagger"
+    },
+    {
+      "id": "camp_horse_bay",
+      "cell": [
+        10,
+        19
+      ],
+      "kind": "decor",
+      "model": "horse",
+      "facing": "south",
+      "span": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "camp_horse_grey",
+      "cell": [
+        13,
+        19
+      ],
+      "kind": "decor",
+      "model": "horse",
+      "facing": "south",
+      "span": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "arrigal_black_horse",
+      "cell": [
+        29,
+        9
+      ],
+      "kind": "examine",
+      "label": "A saddled black horse",
+      "model": "black_horse",
+      "facing": "east"
+    },
+    {
+      "id": "camp_pot",
+      "cell": [
+        16,
+        12
+      ],
+      "kind": "decor",
+      "model": "stewpot"
     }
   ],
   "containers": [
