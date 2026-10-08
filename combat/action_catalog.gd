@@ -13,6 +13,9 @@ const COMMON := "Common"
 const SPELLS := "Spells"
 const ITEMS := "Items"
 const PASSIVES := "Passives"
+## What a Ready action waits for (EncounterActions.READY_TRIGGERS), as the hotbar's right-click choices.
+const READY_CHOICES := [{"value": "approach", "label": "When an enemy comes within reach"},
+	{"value": "attack", "label": "When an enemy within reach attacks"}, {"value": "spell", "label": "When an enemy within reach casts a spell"}]
 
 var e: Encounter
 
@@ -145,10 +148,13 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 	if ready_why == "" and best.is_empty():
 		ready_why = "No attack to ready"
 	var rd := _entry("ready", COMMON, "Ready", "attack on approach", "action", ready_why, "none",
-		"Hold an attack (%s) for your Reaction when an enemy comes within reach." % (best.get("label", "") if not best.is_empty() else ""))
+		"Hold an attack (%s) for your Reaction when an enemy comes within reach (right-click: or when one within reach attacks or casts a spell)." % (best.get("label", "") if not best.is_empty() else ""))
 	rd["option_id"] = str(best.get("id", ""))
+	rd["choices"] = READY_CHOICES
+	rd["choice_label"] = "Trigger"
+	rd["opts"] = {"choice": "approach"}
 	out.append(rd)
-	var stab := _entry("stabilize", COMMON, "Stabilize", "DC 10 Medicine", "action", why, "dying", "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable.")
+	var stab := _entry("stabilize", COMMON, "Stabilize", "DC 10 Medicine", "action", why, "dying", "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable (or brings round one that was knocked out).")
 	stab["range"] = 5
 	out.append(stab)
 	if e.grapples.has(c.id):
@@ -225,8 +231,12 @@ func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 		var heal := _entry("divine_spark_heal", tab, "Divine Spark: Heal", "%d left · 1d8+%d" % [n, ch.ability_mod(&"wis")], "action", cw, "ally")
 		heal["range"] = 30
 		out.append(heal)
-		var harm := _entry("divine_spark_harm", tab, "Divine Spark: Harm", "Con DC %d · radiant" % e.features._cleric_dc(c), "action", cw, "enemy")
+		var harm := _entry("divine_spark_harm", tab, "Divine Spark: Harm", "Con DC %d · best for the target" % e.features._cleric_dc(c), "action", cw, "enemy")
 		harm["range"] = 30
+		# Necrotic or Radiant, the cleric's choice (right-click); "best" takes whichever the target resists less.
+		harm["choices"] = [{"value": "best", "label": "Best for the target"}, {"value": "radiant", "label": "Radiant"}, {"value": "necrotic", "label": "Necrotic"}]
+		harm["choice_label"] = "Damage type"
+		harm["opts"] = {"choice": "best"}
 		out.append(harm)
 		var tw := cw
 		if tw == "":
@@ -606,8 +616,8 @@ const ACTION_TEXT := {
 	"hide": "A DC 15 Dexterity (Stealth) check while out of every enemy's sight (Three-Quarters or Total Cover). On a success you're Invisible until you attack, cast a spell aloud, or an enemy finds you.",
 	"search": "A Wisdom (Perception) check to find hidden creatures; it beats their Stealth total to find them.",
 	"study": "An Intelligence check (Arcana, History, Nature or Religion by the creature's type) to recall what a creature is: its defenses and traits.",
-	"ready": "Hold an attack: when an enemy you can see comes within reach, you make it with your Reaction. Lasts until the start of your next turn. To ready a spell, right-click it on the Spells tab: it's cast now (spending the slot) and held with Concentration until it's released.",
-	"stabilize": "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable.",
+	"ready": "Hold an attack: when an enemy you can see comes within reach (or, picked with a right-click, when one within reach attacks or casts a spell), you make it with your Reaction. Lasts until the start of your next turn. To ready a spell, right-click it on the Spells tab: it's cast now (spending the slot) and held with Concentration until it's released.",
+	"stabilize": "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable. The same first aid brings round a creature that was knocked out.",
 	"healers_kit": "Spend one use of the kit to make a dying creature within 5 ft Stable, no check needed.",
 	"grapple": "One of your attacks: the target (no more than one size larger) makes a Strength or Dexterity save against 8 + Str + Proficiency or is Grappled (Speed 0).",
 	"shove_prone": "One of your attacks: the target makes a Strength or Dexterity save or falls Prone.",
@@ -924,7 +934,7 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 			all_opts.merge(opts, true)
 			return e.spells.cast(c, str(action["spell_id"]), slot, targets, point, dir, all_opts)
 		"ready_spell":
-			return e.ready_spell(c, str(action["spell_id"]), slot)
+			return e.ready_spell(c, str(action["spell_id"]), slot, str((action.get("opts", {}) as Dictionary).get("trigger", "approach")))
 		"feat":
 			var fchoice := str((action.get("opts", {}) as Dictionary).get("choice", opts.get("choice", "")))
 			return e.feature_actions.perform(c, id.substr(5), t, point if point != Vector2.INF else (Vector2(dir.x, dir.y) + e.center_of(c) if dir != Vector2.ZERO else Vector2.INF), fchoice, targets)
@@ -974,7 +984,7 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 		"study":
 			return e.study(c, t)
 		"ready":
-			return e.ready_attack(c, str(action["option_id"]))
+			return e.ready_attack(c, str(action["option_id"]), str((action.get("opts", {}) as Dictionary).get("choice", "approach")))
 		"stabilize":
 			return e.stabilize(c, t, false)
 		"healers_kit":
@@ -1002,7 +1012,8 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 		"divine_spark_heal":
 			return e.features.divine_spark(c, t, false)
 		"divine_spark_harm":
-			return e.features.divine_spark(c, t, true, str(opts.get("damage_type", "radiant")))
+			var spark := str((action.get("opts", {}) as Dictionary).get("choice", opts.get("choice", opts.get("damage_type", "best"))))
+			return e.features.divine_spark(c, t, true, spark)
 		"turn_undead":
 			return e.features.turn_undead(c)
 		"preserve_life":
@@ -1046,8 +1057,8 @@ func target_why(c: Combatant, action: Dictionary, t: Combatant) -> String:
 			if c.hostile_to(t):
 				return "Choose an ally"
 		"dying":
-			if t.creature.hp > 0 or t.creature.dead:
-				return "Choose a dying creature"
+			if (t.creature.hp > 0 and not t.creature.has_flag("knocked_out")) or t.creature.dead:
+				return "Choose a dying creature (or one knocked out)"
 		"dead":
 			if not t.creature.dead:
 				return "Choose a creature that died"

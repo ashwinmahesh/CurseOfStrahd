@@ -257,6 +257,7 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 			_after_cast_features(ctx, use_free)
 			spells.zones.prune()
 			e._check_over()
+			_queue_readied(c, s)
 			return e.run_reaction_queue(r)))
 
 
@@ -348,7 +349,19 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 			_finish_concentration(ctx)
 			spells.zones.prune()
 			e._check_over()
+			_queue_readied(c, s)
 			return e.run_reaction_queue(r)))
+
+
+## A Ready action waiting for this enemy to cast a spell (or to attack, when the spell makes attack rolls) goes off now
+## that the spell is done.
+func _queue_readied(c: Combatant, s: Dictionary) -> void:
+	var e := enc()
+	if e.state != Encounter.State.ACTIVE:
+		return
+	e.reaction_flow._queue_readied(c, "spell")
+	if s.has("attack"):
+		e.reaction_flow._queue_readied(c, "attack")
 
 
 ## Casts a spell without a slot or the usual action (War God's Blessing, features that cast spells): opts may say
@@ -435,7 +448,7 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 		return r
 	# Cube of Force (spells face), Scroll of Protection: creatures the spell can't reach.
 	tgt.assign(tgt.filter(func(t: Combatant) -> bool: return enc().items.spell_blocked(c, t) == ""))
-	if spells.specials.resolve(ctx, tgt, cells, r):
+	if spells.specials.resolve(ctx, tgt, cells, r, pausable):
 		return r
 	if enc().faerun.resolve_spell(ctx, tgt, cells, r):
 		return r
@@ -444,12 +457,14 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 			spells.handlers._magic_missile(ctx, tgt, r)
 			return r
 		"sleep":
-			spells.handlers._sleep(ctx, cells, r)
-			return r
+			return spells.handlers._sleep(ctx, cells, r, pausable)
 		"command":
-			for t in tgt:
-				spells._command(ctx, t, str(ctx["choice"]) if str(ctx["choice"]) != "" else str((ctx["opts"] as Dictionary).get("word", "grovel")), r)
-			return r
+			var word := str(ctx["choice"]) if str(ctx["choice"]) != "" else str((ctx["opts"] as Dictionary).get("word", "grovel"))
+			if not pausable:
+				for t in tgt:
+					spells._command(ctx, t, word, r)
+				return r
+			return enc().each(tgt, func(t: Variant) -> CombatResult: return spells._command(ctx, t as Combatant, word, r, true), func() -> CombatResult: return r)
 		"sanctuary":
 			spells.handlers._sanctuary(ctx, tgt[0], r)
 			return r

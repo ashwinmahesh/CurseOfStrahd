@@ -23,6 +23,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Saving throw proficiency | character.gd | tested | test_reference_party |
 | Passive scores (+5/−5) | creature.gd passive_score | tested | test_abilities, test_reference_party |
 | Initiative = Dexterity check, Alert adds PB | creature.gd initiative_bonus | tested | test_reference_party |
+| Alert's Initiative Swap (once the class tab's rule is Ask, asked as Initiative is rolled: trade with a willing ally, neither Incapacitated, when an enemy acts between them; Off by default) | class_features.gd initiative_offers | tested | test_save_prompts |
 | Heroic Inspiration | character.gd (Resourceful); encounter_attacks.gd, d20_responses.gd reroll | partial: a reroll of the d20 offered on a missed attack roll, after a failed save wherever the fight can pause (spells, monsters' actions and riders, repeated and Death Saving Throws) and after a failed check in conversation (story/check_aids.gd); the saves that can't pause yet use it automatically (deviations) [F6] | test_combat_encounter, test_save_prompts |
 | Bonus/penalty dice on D20 Tests (Bless, Bane) | creature.gd roll_d20 | tested | test_effects |
 | Automatic failure (Paralyzed etc.) | creature.gd roll_d20 | tested | test_conditions |
@@ -35,7 +36,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Damage order: bonuses, Resistance, Vulnerability; Immunity | creature.gd take_damage_parts | tested | test_damage |
 | Resistance/Vulnerability don't stack | creature.gd | tested | test_damage |
 | Several damage types in one instance | creature.gd take_damage_parts | tested | test_damage, test_attacks |
-| Temporary Hit Points: absorb first, don't stack | creature.gd | tested (engine keeps the higher; see deviations) | test_damage |
+| Temporary Hit Points: absorb first, don't stack (a change of shape too) | creature.gd, shape_change.gd | tested (engine keeps the larger; see deviations) | test_damage, test_new_spells, test_class_combat |
 | Healing can't exceed maximum | creature.gd heal | tested | test_damage |
 | Monsters die at 0 HP | creature.gd | tested | test_damage |
 | Massive Damage | creature.gd | tested | test_damage |
@@ -43,6 +44,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Death Saving Throws (10+, nat 1, nat 20, 3/3) | creature.gd roll_death_save | tested | test_death_saves |
 | Damage at 0 HP = failure (crit = 2) | creature.gd | tested | test_damage |
 | Stabilizing, Stable creatures | creature.gd stabilize | tested | test_death_saves |
+| Knocking Out a Creature: a party member's melee weapon attack or Unarmed Strike that would drop a creature to 0 leaves it at 1 and Unconscious until a Short Rest, Hit Points regained or first aid (DC 10 Medicine); the class tab's Knock Out rule (Off by default); a fight whose foes are down or knocked out is won (F13) | encounter_damage.gd knocks_out, knock_out, _first_aid; creature.gd heal | tested (melee spell attacks don't knock out: deviations) | test_knock_out |
 | Knocking a creature out | — | not started | — (no Improvement Ideas item yet) |
 | Critical Hits: roll damage dice twice | resolution/attack_resolver.gd | tested | test_attacks |
 
@@ -52,7 +54,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 |---|---|---|---|
 | Blinded, Charmed, Deafened | data + creature.gd | partial (sight/hearing/charmer checks: Phase 2-3) | test_conditions |
 | Exhaustion (−2 per level to D20 Tests, −5 ft, death at 6, Long Rest −1) | data + creature.gd | tested | test_conditions |
-| Frightened | data; Turn Undead fleeing in ai_brain.gd | partial (Disadvantage always on, see deviations; can't-approach only for AI) | test_conditions, test_combat_spells |
+| Frightened | data (`when: fear_in_sight`); encounter.gd fear_in_sight; Turn Undead fleeing in ai_brain.gd | tested (Disadvantage only while a source is within line of sight) | test_conditions, test_combat_spells, test_combat_encounter |
 | Grappled (Speed 0) | data + encounter.gd, encounter_grapples.gd | tested (Speed 0, escape, other-target Disadvantage; dragged when its grappler moves, 1 extra foot per foot unless Tiny or two sizes smaller, no Opportunity Attacks for being dragged; ends when pulled out of the grapple's range or let go) | test_conditions, test_combat_encounter, test_height_and_falls |
 | Incapacitated (no actions, breaks Concentration) | data + creature.gd | tested | test_conditions |
 | Invisible | data + encounter.gd can_see | tested (hidden creatures, attacks either way) | test_conditions, test_combat_encounter |
@@ -69,7 +71,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Same effect doesn't stack (most potent, then most recent) | creature.gd all_modifiers | tested (potency is approximate; see deviations) | test_effects |
 | Durations: rounds, start/end of turn, minutes, hours, rests | effect.gd | tested | test_effects |
 | Concentration: one at a time, ends linked effects | model/concentration.gd | tested | test_effects |
-| Concentration save after damage (DC 10 or half, max 30) | creature.gd | tested | test_damage, test_effects |
+| Concentration save after damage (DC 10 or half, max 30) | creature.gd; encounter_damage.gd holds a failure the player could answer (deviations) | tested | test_damage, test_effects, test_save_prompts |
 | Concentration ends when Incapacitated or dead | creature.gd | tested | test_conditions |
 
 ## Creating a Character and Level Advancement
@@ -170,7 +172,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Attack rolls: every Advantage/Disadvantage source, cover, long range, ranged attacks in melee, unseen attackers and targets, Heavy; the high-ground house rule (+2/-2 to ranged attacks from 10 ft above or below, deviations) | encounter.gd attack_situation, encounter_sight.gd height_edge | tested | test_combat_encounter, test_high_ground |
 | Cover: Half +2, Three-Quarters +5, Total untargetable; creatures give Half; Dex saves add cover | grid.gd cover_between, spell_caster.gd | tested | test_combat_grid, test_combat_encounter |
 | Critical Hits, automatic crits against Paralyzed/Unconscious within 5 ft | encounter.gd | tested | test_combat_encounter |
-| Standard actions: Attack, Dash, Disengage, Dodge, Help (attack), Hide, Search, Study, Ready (attacks), Magic, Utilize (Healer's Kit), Influence | encounter.gd, action_catalog.gd | tested (Influence has no target in the arena; readied spells: deviations) | test_combat_encounter, test_action_catalog |
+| Standard actions: Attack, Dash, Disengage, Dodge, Help (attack), Hide, Search, Study, Ready (attacks and spells, for an enemy coming within reach or range, attacking or casting a spell), Magic, Utilize (Healer's Kit), Influence | encounter.gd, encounter_reactions.gd, action_catalog.gd | tested (Influence has no target in the arena; Ready's triggers: deviations) | test_combat_encounter, test_action_catalog, test_spell_recipes |
 | Grapple and Shove with Unarmed Strike; escape; letting go (no action); a Shove off a ledge or into a map's open drop | encounter_grapples.gd, encounter_movement.gd forced_move | tested | test_combat_encounter, test_height_and_falls |
 | Falling: 1d6 Bludgeoning per 10 ft (at most 20d6), Prone unless unharmed; forced off a ledge 10 ft or more high, or into a map's open drop (out of the fight, deviations); a push stops at a ledge 10 ft or more above; Slow Fall and Feather Fall (automatic, deviations) | encounter_movement.gd fall, fall_away, forced_move; grid.gd drop_at; map `drop_ft` | tested | test_height_and_falls |
 | Two-weapon fighting (Light) and Nick | encounter.gd offhand_attack | tested | test_combat_encounter |
@@ -182,7 +184,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Spell attacks, saves (damage rolled once, half on success), healing (Disciple of Life), buffs, repeated saves | spell_caster.gd | tested | test_combat_spells |
 | Reactions before a spell's attack rolls (Shadow Martyr, Warding Flare, Protection, Lucky against you): offered for each roll the spell will make, pausing for the player as a weapon attack does, before the spell resolves | spell_caster.gd `_before_attack_rolls` (cast, cast_with_numbers, cast_free) | tested: Warding Flare and Shadow Martyr against Fire Bolt | test_feature_combat, test_echo_knight |
 | Spell secondary effects: pushes and pulls (farthest first), lingering areas (Spirit Guardians, Cloud of Daggers, Web, Grease, Entangle, Fog Cloud, Darkness, Silence, Stinking Cloud, Sleet Storm, Gust of Wind), spell objects (Spiritual Weapon, Flaming Sphere, Dancing Lights, Mage Hand), sustained actions (Witch Bolt, Vampiric Touch, Dragon's Breath, Produce Flame), effect durations and triggers, repeated saves, escape checks, summons (Summon Fey/Undead), teleports, Haste and Slow, Mirror Image, Blink, Invisibility ending, cast-time choices, readied spells, Command's five words | spell_caster.gd, spell_zones.gd | tested | test_spell_recipes, test_combat_spells |
-| Channel Divinity: Turn Undead (Sear Undead), Divine Spark, Preserve Life | features.gd | tested | test_combat_spells |
+| Channel Divinity: Turn Undead (Sear Undead), Divine Spark (another creature in sight; Necrotic or Radiant, picked on the hotbar or else whichever the target resists less), Preserve Life | features.gd | tested | test_combat_spells |
 | Monster stat blocks in combat: attacks, Multiattack choices, timed riders with exceptions, real grapples (restraining, held damage), save actions (area cones and spaces, immunity on success), Recharge, drains, swarms, flyers, Parry, auras (end-of-turn too), sunlight, Lightning Absorption, Incorporeal Movement, Loathsome Limbs, lycanthropy, spellcasting, charges, Bloodied Fury/Frenzy, Burning, Possession, Whelm, Whirlwind, Swoop, Trample, Rampage, Berserk, Aversion to Fire, Freeze, Consume Life, Vanish, Slow; Deathly Wail, Vow of Revenge, gripping roots and vines, Gnash, the Soul Tome prison, recharge spell actions; every block marked with its edition (2025 MM preferred; the non-SRD ones read from the owner's D&D Beyond) | encounter.gd, monster_actions.gd | tested | test_monster_actions, test_combat_encounter |
 | Enemy AI: pack_hunter, brute, mindless, cowardly, skirmisher, swarm, spellcaster, support; obeys Command, Fear, Crown of Madness, Calm Emotions | ai/ai_brain.gd | tested | test_combat_ai, test_arena_fight, test_monster_actions |
 | Legendary actions (per round, cost, at the end of another creature's turn, refreshed on its own, not while Incapacitated), Legendary Resistance | legendary.gd, encounter.gd end_turn, ai/boss_brain.gd | tested | test_boss_mechanics |
@@ -194,7 +196,8 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Mounted combat: mounting and dismounting (half Speed), a controlled mount carrying its rider and limited to Dash, Disengage and Dodge, falling off when the mount is moved or drops | encounter.gd mount, dismount, _forced_mount_check; combat_view.gd | tested | test_new_spells |
 | Spells of levels 5-9 in combat: summons (Celestial, Dragon, Fiend, Animate Objects), Swift Quiver, Eyebite, Bigby's Hand's four hands (the hand an attackable AC 20 object), Shapechange keeping the caster's spells, Earthquake's fissures, Antimagic Field suppressing magic items, Telekinesis, Conjure Elemental, Cloudkill and Incendiary Cloud drifting, three-save Contagion and Flesh to Stone, Otto's saving action, Harm, Heal, Sunbeam's sunlight, Circle of Power, Globe of Invulnerability, Antilife Shell, Wall of Force and Stone; the Power Words, Divine Word, Mass Heal, Prismatic Spray and Wall, Maze, Forcecage, Time Stop, Reverse Gravity, True Polymorph, Shapechange, Animal Shapes, Delayed Blast Fireball, Storm of Vengeance, Tsunami, Earthquake, Conjure Celestial, Regenerate, Antimagic Field, Holy Aura, Fire Storm and Meteor Swarm's several areas | high_magic.gd, mid_magic.gd, spell_caster.gd, spell_zones.gd, summon_blocks.gd | tested; the spell sweep casts every combat spell of every level (6-9 with stat-block numbers) | test_high_magic, test_spell_sweep |
 | Class features of levels 8-11 in combat: Brutal Strike, Relentless Rage, Abjure Foes, Acrobatic Movement, Roving Aim, Retaliation, Battering Roots, Zealous Presence, Moonlight Step, Stormborn, Beguiling Defenses, Eldritch Hex, Thought Shield, Flurry of Healing and Harm, Improved Shadow Step, Stride of the Elements, Fleet Step, Bestial Fury, Superior Hunter's Prey, Fey Reinforcements, Stalker's Flurry, Guarded Mind, Spell Breaker | class_features.gd, features.gd, encounter.gd, spell_caster.gd | tested: Brutal Strike, Relentless Rage, Abjure Foes, Zealous Presence, Thought Shield, Spell Breaker, Moonlight Step | test_class_combat |
-| Light, darkness and obscurement in combat | encounter.gd can_see / light_at, spell_zones.gd | implemented: map light (bright/dim/dark), Darkvision, Blindsight and Truesight, light from spells, magical Darkness, Heavily Obscured areas, sunlight | test_spell_recipes |
+| Light, darkness and obscurement in combat | encounter.gd can_see / light_at / weather_obscures, encounter_actions.gd search, spell_zones.gd | implemented: map light (bright/dim/dark), Darkvision, Blindsight and Truesight, light from spells, magical Darkness, Heavily Obscured areas, sunlight; tested: Lightly Obscured (dim light out of Darkvision's reach, fog or a storm over the open field) gives a Search Disadvantage (F12) | test_spell_recipes, test_weather_in_fights |
+| Weather in fights (F12): Call Lightning's storm (+1d10), a storm putting out burning creatures | encounter.gd stormy, spell_damage.gd, spell_turns.gd; world/exploration/location_fights.gd sets it | tested | test_weather_in_fights |
 
 ## Exploration and rests (Phase 3: world/exploration, story/, ADR 0008, ADR 0009)
 

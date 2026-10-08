@@ -60,7 +60,7 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `spells.cast(c, spell_id, slot, targets, point, direction, opts)` | `point` for spheres, `direction` for cones, cubes and lines from the caster; opts: `word` (Command), `damage_type` |
 | `spells.use_sustained(c, action_id, targets, point, direction)` | a sustained spell action (`spells.sustained_actions(c)`): Spiritual Weapon's strike, Witch Bolt's arc, Flaming Sphere's roll... |
 | `spells.spiritual_weapon_attack(c, t, cell)` | shortcut for the weapon's strike |
-| `ready_spell(c, spell_id, slot)` | Ready a one-action spell: cast now, held with Concentration, released at the first enemy in range |
+| `ready_spell(c, spell_id, slot, trigger)` / `ready_attack(c, option_id, trigger)` | Ready a one-action spell (cast now, held with Concentration) or an attack, released with the Reaction when an enemy sets off `trigger`: `approach` (comes within range or reach; a move pauses for it), `attack` or `spell` (one within range attacks or casts a spell; the reaction queue asks once that's done, kind `readied_attack`) |
 | `features.toggle_rider(c, rider_id)` | arm a rider for this turn's next hit (`features.rider_options(c)`): maneuvers, Cunning Strike, Giant Ancestry, Psionic Strike |
 | `feature_actions.perform(c, id, t, point)` | a class, subclass, feat or species action (`feature_actions.list(c)`); the eight Phase 4 classes' actions are `cf:<id>`, run by combat/class_features.gd |
 | `free_move(c, cell)`, `jump(c, cell)` | movement without Opportunity Attacks from a feature; Jump's 30 ft leap |
@@ -103,10 +103,30 @@ steps of its own, as attacks do): the offers are asked one by one and `after(tes
 These pause today: spells' saves (`SpellSaves._save_spell(..., pausable)` from `cast`, `cast_with_numbers`,
 `cast_free`, item spells, readied spells and reaction spells; `_resolve`/`_generic` return a CombatResult and take
 `pausable`), monsters' save actions (`MonsterActions.save_action`, which returns `r` and takes `pausable`, true by
-default), the riders on a monster's hit and their saves (`apply_riders(..., pausable)`), Topple, repeated saves at the
+default; Trample and other save Bonus Actions return the paused result from `bonus_action`), the riders on a monster's hit and their saves (`apply_riders(..., pausable)`), Topple, repeated saves at the
 end of a turn (`end_turn` carries on with `Encounter.then`), Death Saving Throws (`death_save(c, pausable)`) and attack
-rolls. Any other roll settles its offers at once (`run_now`). `Encounter.each(list, body, done)` runs a loop whose
-steps can pause. `run_reaction_queue` called while a prompt is open waits for its answer.
+rolls, plus Sleep, Command, Polymorph, Banishment and Resilient Sphere (`SpellSpecials.resolve(..., pausable)` and
+`_resist_then`), monsters' auras (`MonsterActions.turn_start`), the areas a creature starts or ends its turn in
+(`SpellZones._affect(..., pausable)`), repeated saves at the start of a turn and lair actions (`Legendary.lair_turn`,
+whose round-end call can't wait and passes false). Any other roll settles its offers at once (`run_now`).
+`Encounter.each(list, body, done)` runs a loop whose steps can pause. `run_reaction_queue` called while a prompt is
+open waits for its answer.
+
+The turn itself can wait on a prompt: `_begin_turn`, `_lair_then_begin`, `_next_turn` and the end of a turn
+(`_turn_end_effects`) return a CombatResult and run their parts one after another, so a save or a Reaction there
+(Branches of the Tree as a creature starts its turn, Inspiring Movement as an enemy ends one) stops the turn until it's
+answered; the reaction queue runs as a turn starts and ends. `start()` stays void: Initiative choices
+(`ClassFeatures.initiative_offers`: Tandem Footwork, Alert's swap) leave `pending` set for the view, then the order is sorted again and
+the first turn begins. `TestCombat.start_with` declines them.
+
+A failed Concentration save is rolled where the damage lands, inside a held collector (`collect(target, true)`): when a
+choice could still save it, the roll is marked `awaiting` (Creature.take_damage_parts doesn't end Concentration) and a
+`concentration_save` entry with the offers joins the reaction queue, which asks them once the attack or spell is done
+and then keeps or ends Concentration; with nothing to ask the offers are settled at once. After the fight is over the
+entry settles by rule.
+
+A party member's prompt rules live on its Character (`Character.reaction_rules`, saved with it): the Combatant shares
+that Dictionary, so an Automatic or Off chosen in one fight holds in the next.
 
 ## Events (`Encounter.drain_events()`)
 

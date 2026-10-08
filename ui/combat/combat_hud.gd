@@ -923,7 +923,9 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 			items.append({"id": "meta:%s" % (mm as Dictionary)["id"], "label": str((mm as Dictionary)["label"]), "enabled": usable, "why": why})
 	if str(action["kind"]) == "spell" and str(action["cost"]) == "action" and shown != null and str((action.get("opts", {}) as Dictionary).get("resource_cast", "")) == "":
 		items.append({"separator": "Ready"})
-		items.append({"id": "ready", "label": "Ready %s: release it when an enemy comes in range" % action["label"], "enabled": usable, "why": why})
+		for trig: String in ["approach", "attack", "spell"]:
+			var when := {"approach": "an enemy comes within range", "attack": "an enemy within range attacks", "spell": "an enemy within range casts a spell"}[trig] as String
+			items.append({"id": "ready:%s" % trig, "label": "Ready %s: release it when %s" % [action["label"], when], "enabled": usable, "why": why})
 	if str(action["kind"]) == "item_spell" and shown != null:
 		var ilevels := catalog.level_choices(shown, action)
 		if not ilevels.is_empty():
@@ -968,10 +970,13 @@ func _on_menu(id: String) -> void:
 		if id.substr(5) == "quickened":
 			shaped["cost"] = "bonus"
 		action_chosen.emit(shaped)
-	elif id == "ready":
+	elif id.begins_with("ready"):
 		var ready := action.duplicate(true)
 		ready["kind"] = "ready_spell"
 		ready["targeting"] = "none"
+		var ro := (ready.get("opts", {}) as Dictionary).duplicate()
+		ro["trigger"] = id.get_slice(":", 1) if id.contains(":") else "approach"
+		ready["opts"] = ro
 		action_chosen.emit(ready)
 	elif id.begins_with("choice:"):
 		var picked := action.duplicate(true)

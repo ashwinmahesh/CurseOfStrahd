@@ -64,7 +64,7 @@ static func capture(e: Encounter) -> Dictionary:
 	return {"version": 1, "rows": rows, "combatants": cbs, "order": order, "round": e.round_no, "marks": e.marks.duplicate(true),
 		"grapples": e.grapples.duplicate(), "studied": e.studied.duplicate(), "title": e.title, "log": log,
 		"spells": e.spells.to_dict(), "shapes": e.shapes.to_dict(), "light": e.ambient_light, "sunlit": e.sunlit,
-		"location_id": e.location_id, "places": e.places.duplicate(), "lair": e.lair, "outdoors": e.outdoors, "boss": e.legendary.to_dict(),
+		"location_id": e.location_id, "places": e.places.duplicate(), "lair": e.lair, "outdoors": e.outdoors, "weather_id": e.weather_id, "weather": e.weather.duplicate(), "boss": e.legendary.to_dict(),
 		"drop_ft": e.grid.drop_ft, "difficulty": e.difficulty.id, "ground": e.ground.to_dict()}
 
 
@@ -103,7 +103,12 @@ static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [
 		c.initiative = int(cd["initiative"])
 		c.initiative_group = str(cd["group"])
 		c.surprised = bool(cd["surprised"])
-		c.reaction_rules = (cd.get("reaction_rules", {}) as Dictionary).duplicate()
+		# A character keeps sharing its own rules with the fight (Character.reaction_rules).
+		if creature is Character:
+			c.reaction_rules = (creature as Character).reaction_rules
+			c.reaction_rules.merge(cd.get("reaction_rules", {}) as Dictionary, true)
+		else:
+			c.reaction_rules = (cd.get("reaction_rules", {}) as Dictionary).duplicate()
 		c.reaction_available = bool(cd.get("reaction_available", true))
 		c.hidden = bool(cd.get("hidden", false))
 		c.stealth_total = int(cd.get("stealth_total", 0))
@@ -136,6 +141,8 @@ static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [
 		e.places.append(str(pl))
 	e.lair = bool(d.get("lair", false))
 	e.outdoors = bool(d.get("outdoors", false))
+	e.weather_id = str(d.get("weather_id", ""))
+	e.weather = (d.get("weather", {}) as Dictionary).duplicate()
 	e.legendary.from_dict(d.get("boss", {}) as Dictionary)
 	e.legendary.after_restore()
 	Difficulty.named(str(d.get("difficulty", Difficulty.DEFAULT))).arm(e)

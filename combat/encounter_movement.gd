@@ -391,6 +391,8 @@ func _readied_triggers(mover: Combatant, from: Vector2i, to: Vector2i) -> Array[
 	for p in e.hostiles_of(mover):
 		if p.readied.is_empty() or not p.reaction_available or not p.can_act() or p.creature.has_flag("no_reactions") or not e.can_see(p, mover):
 			continue
+		if str(p.readied.get("trigger", "approach")) != "approach":
+			continue   # readied for an attack or a spell instead (EncounterReactions._queue_readied)
 		var reach := 0
 		if p.readied.has("spell"):
 			reach = e.spells.range_ft(Compendium.shared().spell_data(str(p.readied["spell"])), p)

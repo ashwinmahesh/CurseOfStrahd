@@ -394,6 +394,9 @@ func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: 
 		e.events.append({"type": "attack", "attacker": c.id, "from": EchoKnight.striking_from(c), "target": target.id, "hit": false, "critical": false, "action": str(option.get("id", ""))})
 		r.lines.append(e.log.add("miss", "The Wind Wall deflects %s's shot at %s" % [c.name(), target.name()], c.id))
 		return r
+	# A Ready action waiting for this enemy to attack goes off once the attack is done (the reaction queue).
+	if not bool(opts.get("reaction", false)):
+		e.reaction_flow._queue_readied(c, "attack")
 	var sit := attack_situation(c, target, option)
 	_consume_marks(c, target)
 	e.spells.specials.duel_check_attack(c, target)
@@ -548,7 +551,8 @@ func _attack_missed(st: Dictionary) -> CombatResult:
 			var by := rp["by"] as Combatant
 			return _resolve_attack(by, c, rp["option"] as Dictionary, {"reaction": true,
 				"extra_dice": [{"dice": "1d%d" % int(rp["die"]), "type": str(((rp["option"] as Dictionary)["profile"] as WeaponProfile).damage_type), "label": "Riposte"}]})
-		return r, r)
+		# What waits for the attack to be done (a Ready action, a reaction to a Graze's damage) comes now, as after a hit.
+		return e.run_reaction_queue(r), r)
 
 
 func _after_hit(st: Dictionary) -> CombatResult:

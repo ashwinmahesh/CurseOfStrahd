@@ -451,6 +451,72 @@ func test_a_readied_spell_goes_off_when_an_enemy_comes_in_range() -> void:
 	assert_true(s.creature.concentration == null)
 
 
+func test_a_spell_readied_for_an_attack_waits_for_one() -> void:
+	var rows: Array[String] = []
+	for z in 6:
+		rows.append(".".repeat(32))
+	var e := TestCombat.encounter(rows, 3)
+	var s := TestCombat.hero(e, "silvain_aster", Vector2i(1, 3))
+	s.reaction_rules["readied_attack"] = "auto"
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(12, 3))
+	(ilse.creature as Character).heroic_inspiration = false
+	var w := TestCombat.foe(e, "wolf", Vector2i(28, 3))
+	w.creature.hp = 100
+	TestCombat.start_with(e, s)
+	var r := e.ready_spell(s, "fire_bolt", 0, "attack")
+	assert_true(r.ok, r.reason)
+	while e.current() != w:
+		e.end_turn()
+	w.movement_left = 90
+	e.move(w, Vector2i(11, 3))
+	assert_true(s.reaction_available, "coming within range isn't the trigger")
+	e.monster_attack(w, ilse, "bite")
+	while e.pending != null:   # a choice of the wolf's target (none expected) is declined
+		e.answer_reaction(false)
+	assert_false(s.reaction_available, "released at the wolf once its bite was done")
+	assert_true(s.creature.concentration == null)
+	assert_true(e.log.texts().any(func(t: String) -> bool: return t.contains("releases the readied Fire Bolt at Wolf")))
+
+
+## Ilse with an attack readied for a spell (her rule for it: `rule`) beside an enemy mage whose turn it is.
+func _readied_for_a_spell(rule: String) -> Dictionary:
+	var e := TestCombat.open_field(3)
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(2, 3))
+	ilse.reaction_rules["readied_attack"] = rule
+	var mage := TestCombat.caster_with(e, ["mage_armor"], Vector2i(3, 3))
+	mage.side = &"enemy"
+	mage.controller = &"ai"
+	TestCombat.start_with(e, ilse)
+	assert_true(e.ready_attack(ilse, str(e.best_melee_option(ilse, null)["id"]), "spell").ok)
+	while e.current() != mage:
+		e.end_turn()
+	return {"e": e, "ilse": ilse, "mage": mage}
+
+
+func test_an_attack_readied_for_a_spell_goes_off_after_it() -> void:
+	var f := _readied_for_a_spell("auto")
+	var e := f["e"] as Encounter
+	var ilse := f["ilse"] as Combatant
+	var mage := f["mage"] as Combatant
+	assert_true(e.spells.cast(mage, "mage_armor", 1, [mage]).ok)
+	assert_false(ilse.reaction_available, "the readied attack went off")
+	assert_true(e.log.texts().any(func(t: String) -> bool: return t.contains("readied attack goes off against")))
+
+
+func test_a_readied_trigger_can_be_ignored() -> void:
+	var f := _readied_for_a_spell("ask")
+	var e := f["e"] as Encounter
+	var ilse := f["ilse"] as Combatant
+	var mage := f["mage"] as Combatant
+	var r := e.spells.cast(mage, "mage_armor", 1, [mage])
+	assert_true(r.is_paused())
+	assert_eq(e.pending.kind, "readied_attack")
+	assert_true(e.pending.text.contains("casts a spell"), e.pending.text)
+	e.answer_reaction(false)
+	assert_true(ilse.reaction_available, "ignored")
+	assert_false(ilse.readied.is_empty(), "still readied for the next one")
+
+
 func test_a_saved_fight_keeps_lingering_spells_and_summons() -> void:
 	var e := _setup(["spirit_guardians", "summon_undead"], 4)
 	var c := _caster(e)

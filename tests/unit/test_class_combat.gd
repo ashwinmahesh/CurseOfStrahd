@@ -169,6 +169,7 @@ func test_wild_shape_turns_the_druid_into_a_beast_and_back() -> void:
 	d.bonus_available = true
 	assert_true(_act(e, d, "revert_shape").ok)
 	assert_true(d.creature is Character)
+	assert_eq(d.creature.temp_hp, 2, "Wild Shape's Temporary Hit Points outlast the shape")
 
 
 # --- Sorcerer ----------------------------------------------------------------------------------------------
