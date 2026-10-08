@@ -3,7 +3,8 @@ extends RefCounted
 ## Spoken lines (ADR 0013). A line plays its recorded clip if it has one: res://audio/voice/<speaker>/<key>.mp3, made
 ## by tools/audio/generate_voice.py, where the key is a hash of the line's text. A line nobody has voiced yet (or one
 ## edited since it was) is simply silent, so nothing depends on audio. One voice speaks at a time: a new line, or
-## moving on, cuts the last. The volume is the player's, kept beside music and effects in user://settings.cfg.
+## moving on, cuts the last. The volume is the player's, kept beside music and effects in their settings file
+## (GameSettings.path).
 
 const DIR := "res://audio/voice/"
 const NARRATOR := "narrator"
@@ -14,7 +15,6 @@ const HEROES: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistl
 	"kip_smudgewick", "hedda_ironvow", "ilse_varga", "silvain_aster", "tamsin_tealeaf"]
 const HERO_VOICES: Array[String] = ["hero_female", "hero_male"]
 const BUS := &"Voice"
-const SETTINGS := "user://settings.cfg"
 
 static var _player: AudioStreamPlayer
 static var _volume := -1.0
@@ -121,7 +121,7 @@ static func is_speaking() -> bool:
 static func volume() -> float:
 	if _volume < 0.0:
 		var cfg := ConfigFile.new()
-		_volume = float(cfg.get_value("audio", "voice", 1.0)) if cfg.load(SETTINGS) == OK else 1.0
+		_volume = float(cfg.get_value("audio", "voice", 1.0)) if cfg.load(GameSettings.path) == OK else 1.0
 	return _volume
 
 
@@ -129,9 +129,10 @@ static func set_volume(v: float) -> void:
 	_volume = clampf(v, 0.0, 1.0)
 	_apply_volume()
 	var cfg := ConfigFile.new()
-	cfg.load(SETTINGS)
+	cfg.load(GameSettings.path)
 	cfg.set_value("audio", "voice", _volume)
-	cfg.save(SETTINGS)
+	DirAccess.make_dir_recursive_absolute(GameSettings.path.get_base_dir())
+	cfg.save(GameSettings.path)
 
 
 ## The player lives under the scene tree's root, so it outlives scenes and keeps speaking while the game is paused.
