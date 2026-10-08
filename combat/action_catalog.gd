@@ -372,6 +372,16 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 			a["targeting"] = "none"
 			a["sub"] = sub + " · arms your next hit"
 			a["help"] = "Arms it: it's cast on your next hit with a weapon, spending its slot (or free use) only then. Choose it again to disarm."
+			# Divine Smite, the 2014 way: no Bonus Action, and armed it smites every melee hit this turn while slots last.
+			if str(s["id"]) == CombatFeatures.DIVINE_SMITE:
+				var smite_why := e._turn_check(c)
+				if smite_why == "" and not bool(s["free"]) and e.spells._lowest_slot(e.spells.caster_char(c), 1) == 0:
+					smite_why = "No spell slots left"
+				a["legal"] = smite_why == ""
+				a["reason"] = smite_why
+				a["cost"] = "free"
+				a["sub"] = sub + " · arms every hit this turn"
+				a["help"] = "Arms it for this turn: each melee hit smites, spending a spell slot (the free use first). No Bonus Action, and it isn't a spell cast. Choose it again to disarm, or set it to Ask in the class tab to decide after each hit."
 		a["spell_id"] = str(s["id"])
 		a["slot"] = level
 		a["range"] = e.spells.range_ft(data)

@@ -459,6 +459,12 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 			continue
 		seen[str(f["id"])] = true
 		out.append({"id": str(f["id"]), "name": str(f["name"]), "cost": "Reaction and a feature use"})
+	# Divine Smite, the 2014 way (CombatFeatures.smite_offers): asked after each melee hit, used on every one, or only
+	# when armed on the hotbar.
+	if not seen.has(CombatFeatures.DIVINE_SMITE) and enc().spells.castable(c).any(func(k: Dictionary) -> bool: return str(k["id"]) == CombatFeatures.DIVINE_SMITE):
+		seen[CombatFeatures.DIVINE_SMITE] = true
+		out.append({"id": CombatFeatures.DIVINE_SMITE, "name": "Divine Smite", "cost": "A spell slot", "modes": ["ask", "auto", "never"], "default": "never",
+			"help": "Ask: after each melee hit you're asked whether to smite. Automatic: every melee hit smites while spell slots last. Off: only when armed on the Spells tab (then every hit that turn)."})
 	# The choices after a D20 Test this creature can make (Indomitable, Heroic Inspiration, Bend Luck...).
 	for policy in enc().d20.policies(c):
 		if not seen.has(str(policy["id"])):
