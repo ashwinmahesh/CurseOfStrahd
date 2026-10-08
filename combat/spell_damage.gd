@@ -28,6 +28,10 @@ func _damage_dice(ctx: Dictionary, target: Combatant = null) -> String:
 	var dice := Spellcasting.damage_dice(s, c.creature.character_level(), int(ctx["slot"]))
 	if str(s["id"]) == "toll_the_dead" and target != null and target.creature.hp < target.creature.max_hp():
 		dice = dice.replace("d8", "d12")
+	# Call Lightning out in a storm (2024): the caster takes control of the storm, and each bolt deals 1d10 more.
+	if str(s["id"]) == "call_lightning" and enc().stormy():
+		var pm := DiceRoller.parse_expr(dice)
+		dice = "%dd%d%s" % [int(pm["count"]) + 1, int(pm["sides"]), ("%+d" % int(pm["modifier"])) if int(pm["modifier"]) != 0 else ""]
 	return dice
 
 

@@ -89,6 +89,12 @@ func _cursed_dodge(c: Combatant) -> CombatResult:
 ## Points (`turn_temp_hp`).
 func _turn_start_effects(c: Combatant) -> void:
 	var e := enc()
+	# Heavy rain or snow out in the open (a storm, a blizzard: F12) puts out a burning creature's flames before they bite.
+	if e.outdoors and bool(e.weather.get("flames_out", false)):
+		for fb: Effect in c.creature.effects.duplicate():
+			if bool(fb.data.get("douse", false)):
+				c.creature.remove_effect(fb)
+				e.log.add("info", "The %s puts out the flames on %s" % [str(e.weather.get("label", "weather")).to_lower(), c.name()], c.id)
 	for fx: Effect in c.creature.effects.duplicate():
 		if not fx in c.creature.effects or not c.is_alive():
 			continue

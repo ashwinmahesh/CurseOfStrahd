@@ -106,6 +106,11 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 	# Party members pass through each other's spaces unless the place or the fight says otherwise.
 	e.allies_block = bool(spec.get("allies_block", view.loc.get("allies_block", false)))
 	e.outdoors = bool(view.loc["map"].get("outdoors", false))
+	# The weather over a fight in the open (F12): fog and storms obscure the field, storms put out flames and feed
+	# Call Lightning.
+	if e.outdoors:
+		e.weather_id = Weather.now(view.st, view.loc_id)
+		e.weather = Weather.kind(e.weather_id)
 	e.legendary.set_withdraw(spec.get("withdraw", {}))
 	if str(spec.get("final_battle", "")) != "" and view.st.quest_stage_index("strahds_lair", view.st.quest_stage("strahds_lair")) < view.st.quest_stage_index("strahds_lair", "confronted"):
 		view.st.set_quest_stage("strahds_lair", "confronted")

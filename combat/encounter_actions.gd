@@ -411,18 +411,37 @@ func search(c: Combatant) -> CombatResult:
 	e.spend_action(c)
 	var t := c.creature.roll_check(e.dice, &"perception", 0, [], [], "", ["search"])
 	var found: Array[String] = []
-	# Cloak of Elvenkind: Perception to find its wearer has Disadvantage (a second roll, the lower kept, for them).
+	# Disadvantage to find some of them (a second roll, the lower kept, for those): a Cloak of Elvenkind's wearer, or one
+	# in a Lightly Obscured spot (dim light the searcher's Darkvision doesn't reach, fog or a storm over the field).
 	var t_hard: D20Test = null
 	for h0 in e.hostiles_of(c):
-		if h0.hidden and h0.creature.has_flag("hard_to_perceive") and t_hard == null:
-			t_hard = c.creature.roll_check(e.dice, &"perception", 0, [], ["Cloak of Elvenkind"])
+		var why := _hard_to_spot(c, h0)
+		if h0.hidden and why != "" and t_hard == null:
+			t_hard = c.creature.roll_check(e.dice, &"perception", 0, [], [why])
 	for h in e.hostiles_of(c):
-		var total := t.total if not (h.creature.has_flag("hard_to_perceive") and t_hard != null) else mini(t.total, t_hard.total)
+		var total := t.total if not (_hard_to_spot(c, h) != "" and t_hard != null) else mini(t.total, t_hard.total)
 		if h.hidden and total >= h.stealth_total:
 			reveal(h, "%s finds them" % c.name())
 			found.append(h.name())
-	e.log.add("info", "%s searches (Perception %d)%s" % [c.name(), t.total, ": finds " + ", ".join(found) if not found.is_empty() else ""], c.id, [t.describe()])
+	var rolls: Array[String] = [t.describe()]
+	if t_hard != null:
+		rolls.append(t_hard.describe())
+	e.log.add("info", "%s searches (Perception %d)%s" % [c.name(), t.total, ": finds " + ", ".join(found) if not found.is_empty() else ""], c.id, rolls)
 	return CombatResult.new()
+
+
+## Why `searcher` has Disadvantage on Perception to spot `h` by sight, or "": a Cloak of Elvenkind, or `h` in a Lightly
+## Obscured spot (2024: dim light, unless the searcher's Darkvision reaches it, or weather that obscures the open field).
+func _hard_to_spot(searcher: Combatant, h: Combatant) -> String:
+	var e := enc()
+	if h.creature.has_flag("hard_to_perceive"):
+		return "Cloak of Elvenkind"
+	var weather := e.weather_obscures()
+	if weather != "":
+		return weather
+	if e.light_at(h.cell) == "dim" and searcher.creature.darkvision() < e.distance(searcher, h):
+		return "Dim light"
+	return ""
 
 
 ## Study (2024): an Intelligence check to recall what a creature is (Arcana, History, Nature or Religion by its

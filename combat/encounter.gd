@@ -84,6 +84,11 @@ var location_id: String = ""
 var places: Array[String] = []
 var lair: bool = false
 var outdoors: bool = false
+## The weather over a fight in the open (F12, set by the place's fight from story/weather.gd): its kind id ("fog",
+## "storm"...) and what the kind does (`obscures`: the field is Lightly Obscured; `flames_out`: rain or snow puts out
+## open flames). "" and {} under a roof.
+var weather_id: String = ""
+var weather: Dictionary = {}
 ## Legendary and lair actions, Regeneration, shapes, Misty Escape, withdrawing (combat/legendary.gd).
 var legendary: Legendary
 ## The fight's jobs, a helper each (made first in _init: the other helpers may call them while they're being made).
@@ -405,6 +410,17 @@ func move_mode(c: Combatant) -> int:
 
 func fear_sources(c: Combatant) -> Array[Combatant]:
 	return movement.fear_sources(c)
+
+
+## In a storm out in the open (a thunderstorm or a blizzard): Call Lightning takes control of it (+1d10).
+func stormy() -> bool:
+	return outdoors and weather_id in ["storm", "blizzard"]
+
+
+## The weather that Lightly Obscures the whole field (fog, a storm, a blizzard in the open), as a Disadvantage source
+## for Perception that relies on sight, or "".
+func weather_obscures() -> String:
+	return str(weather.get("label", weather_id.capitalize())) if outdoors and bool(weather.get("obscures", false)) else ""
 
 
 ## Frightened (2024): Disadvantage on ability checks and attack rolls only while a source of the fear is within line
