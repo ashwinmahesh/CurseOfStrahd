@@ -1,0 +1,224 @@
+# Clovin's Audience (side quest, docs/story/side_quests.md): Clovin Belview, the abbey's errand-runner, has written
+# jokes on the backs of the Abbot's letters for forty years and wants to tell them once to people who could choose not
+# to laugh. Krezk won't open its gate to a Belview. Get him one evening in the square by the shrine, see him through
+# it, and find out why Old Pavel has carved a sun every day for sixty years. Reached from the Krezk watchman's news
+# (gate:news), Clovin (abbey_of_st_markovia/clovin:menu and :after), Dmitri (dmitri:menu) and Clovin in Krezk at dusk.
+# Every line here is unvoiced for now.
+
+# --- Clovin at the abbey ---
+
+~ bucket
+Clovin Belview: The bucket. Yes. That was me. It was a very good bucket. Krezk has excellent buckets. I said so at the time.
+-> ask
+
+~ ask
+quest clovins_audience asked
+Clovin Belview: Can I tell you something? I'm funny. I think I'm funny. Mother laughs at everything, but that's the improvements. The loud ones in the cells laugh at nothing. The Abbot says I'm not funny. He says it kindly.
+Clovin Belview: Forty years I've written jokes on the backs of his letters. I want to tell them once to people who could choose not to laugh. Real people. Krezk.
+Clovin Belview [sad]: Krezk won't open its gate for a Belview. We were Krezk folk once, Grandmother said. She taught me a Krezk joke. I've never told it to anyone from Krezk.
+interject tag:kind: Then we'll get you through that gate.
+Clovin Belview: Would you? The burgomaster's the one who says yes. He's never said yes to anything. I've watched.
+-> END
+
+~ hood
+Clovin Belview: No? No. Well. That's the burgomaster. He's very consistent. It's his best quality.
+Clovin Belview: A hood, then. Monks go down sometimes, to the shrine. Nobody looks under a monk's hood. They're afraid of what's under there, and they're right.
+set clovin_hooded
+quest clovins_audience booked
+interject tag:blunt: And when somebody does look?
+Clovin Belview: Then it's a very short show, and you carry me home.
+-> END
+
+~ clovin_after
+Clovin Belview: Great-uncle Pavel comes up on Sundays with soup. Mother came out to meet him. She hasn't come out in eleven years. They sat on the step and didn't say much, and he held the hand with the claws on it.
+Clovin Belview: I'm writing new material. It's all about soup now. The cells think it's hilarious. The cells think everything's hilarious.
+-> END
+
+## Clovin's menu once the Abbot's business is settled (clovin:after jumps here when there's something to say).
+~ abbey_menu
+* [if quest.clovins_audience == rumored] The Krezk watch says a Belview came down to their gate to tell a joke. -> bucket
+* [if flag.clovin_befriended and not quest.clovins_audience] You've gone quiet, Clovin. Something on your mind? -> ask
+* [if quest.clovins_audience == refused] Dmitri won't open the gate for you. -> hood
+* [if flag.clovin_family_found] How's your great-uncle? -> clovin_after
+* Goodbye, Clovin. -> END
+
+# --- Dmitri (dmitri:menu jumps here) ---
+
+~ dmitri
+Dmitri Krezkov: Jokes. A Belview wants to come down the mountain and tell Krezk jokes.
+Narrator: He rubs his face with both hands, for a long time.
+if flag.ilya_fate == "healed" or flag.sorin_fate == "home"
+Dmitri Krezkov: You gave me back a son. I suppose I can give a Belview an evening.
+-> booked
+endif
+* [Persuasion DC 15] They were Krezk folk once. Two doors down. You told us so yourself. -> persuaded | refused
+* We'll think of something else. -> krezk/dmitri:menu
+
+~ persuaded
+Dmitri Krezkov: Two doors down. Yes. I said that. I hate it when people listen.
+-> booked
+
+~ booked
+quest clovins_audience booked
+Dmitri Krezkov: One evening. Dusk, in the square by the shrine, and he's back up the mountain before the gate's barred. And if anyone throws a bucket, it isn't on my word.
+-> krezk/dmitri:menu
+
+~ refused
+quest clovins_audience refused
+Dmitri Krezkov: No. I'm sorry. If I open the gate for one Belview, I open it for the Abbot's errands, and then for the Abbot. No.
+-> krezk/dmitri:menu
+
+# --- The show, in the square by the shrine (Clovin in krezk.json at dusk) ---
+
+~ show
+time +60
+if flag.clovin_hooded
+Narrator: Krezk lets one more monk through the gate at dusk without much interest: a stooped one in a deep hood, carrying a bell. A few dozen people drift into the square to see what a monk could possibly have to say.
+Clovin Belview: (From somewhere in the hood, very quietly.) If this goes badly, I was never here. I'm a rumour. Nobody throws a bucket at a rumour.
+else
+Narrator: Half of Krezk is in the square by the shrine, because the burgomaster said they could come, and the other half is at the windows, because he didn't say they couldn't.
+Narrator: Clovin stands on an upturned water trough with his hat in his feathered hand. His hound's ear is flat to his head. Nobody is standing near the front.
+Clovin Belview: I've changed my mind. I'd like to go home. Which way's home? Up? It's always up.
+endif
+* [if name:wren_featherfoot] (Let Wren warm them up.) -> wren_warms
+* [Performance DC 13] (Warm them up yourself.) -> warmed | cold_open
+* (Just introduce him.) -> introduced
+
+~ wren_warms
+set clovin_laughs += 1
+interject name:wren_featherfoot: Evening, Krezk! I've walked a long way to see a man with one dog's ear, and I'll be honest, I expected more dog.
+Narrator: Wren does five minutes on Krezk's gate, and the goats, and the watchman's hat, and by the end someone at the back has laughed and been elbowed for it, and someone else has laughed at the elbowing.
+-> opener
+
+~ warmed
+set clovin_laughs += 1
+Narrator: It isn't your finest work, but it's warm, and Krezk hasn't had warm in a long time. By the end two children are sitting at the front, and their mother hasn't pulled them back.
+-> opener
+
+~ cold_open
+Narrator: Your best story dies somewhere in the middle. A goat bleats into the silence. Somebody coughs, in a way that is clearly a review.
+-> opener
+
+~ introduced
+Narrator: You tell Krezk his name and step back. It is the quietest square you have ever stood in.
+-> opener
+
+~ opener
+if flag.clovin_hooded
+Clovin Belview: Good evening. I've come down from the abbey. Yes. That one. I won't keep you. I know you've all got gates to get behind.
+else
+Clovin Belview: Good evening. I'm Clovin. I'm a Belview. I know. You can tell by the ear. If you can't tell by the ear, I'll show you the hand.
+endif
+Clovin Belview: So the Abbot says to me, Clovin, every creature can be improved. And I say, Father, what about the wine? And he says: especially the wine.
+Narrator: Nothing. Not a breath. He tries another, about the Abbot and a hymn, and it goes the same way. His ear goes flatter. He looks at you.
+-> advice
+
+~ advice
+* [if not flag.clovin_crowd_tried] [Insight DC 13] (Read the crowd first.) -> crowd_read | crowd_missed
+* (Mouth to him: "Krezk. Do Krezk.") -> about_krezk
+* (Mouth to him: "Yourself. Do yourself.") -> about_himself
+* (Mouth to him: "Keep going. They'll come round.") -> about_abbey
+
+~ crowd_read
+set clovin_crowd_tried
+Narrator: They aren't frightened of him. They're frightened of the abbey. Every one of those jokes is about the man who has their dead. Nobody in this square is going to laugh at the Abbot. They might laugh at a man who's had a hard time of it.
+-> advice
+
+~ crowd_missed
+set clovin_crowd_tried
+Narrator: They look bored, mostly. Or cold. It's hard to tell in Krezk; it might be both.
+-> advice
+
+~ about_krezk
+Clovin Belview: Krezk! Lovely town. Big wall. I've seen a great deal of the outside of it.
+Narrator: A few faces close like shutters. A Belview making fun of the wall is a Belview at the wall, and that's what the wall's for.
+-> heckler
+
+~ about_abbey
+Clovin Belview: And then the Abbot says...
+Narrator: He keeps going. Three more about the Abbot. The square gets smaller somehow, people drawing in on themselves, and a woman near the shrine makes the sign against the evil eye, not at Clovin.
+-> heckler
+
+~ about_himself
+set clovin_laughs += 1
+Clovin Belview: I've had three improvements. You can see two of them. The third, I'll be honest, I'm not sure about either. Some mornings I wake up and I bark. Mother says that isn't an improvement. That's just me.
+Narrator: Somebody snorts. Then somebody else does, and is ashamed, and does it again. A child asks, loudly, which morning, and Clovin barks for her, and that's the first real laugh.
+-> heckler
+
+~ heckler
+if flag.clovin_hooded
+Narrator: Watchman Lazar pushes through from the wall with his spear, frowning at the hood, and before anyone can stop him he flips it back. The ear. The hand. The whole square takes one step away.
+Watchman Lazar: A Belview. In the square. Who opened the gate to a Belview?
+else
+Watchman Lazar: (From the back, by the wall.) Go back up your mountain, dog-ear. We've had enough of what comes down it.
+endif
+Narrator: Clovin stands on his trough with his hat in his feathered hand, and doesn't say anything at all.
+* [Performance DC 14] (Heckle the heckler.) -> heckled | heckle_lost
+* [Persuasion DC 14] (Speak to the square: he's the same man they were listening to a minute ago.) -> pleaded | plea_lost
+* (Let Clovin answer him.) -> clovin_answers
+
+~ heckled
+set clovin_laughs += 1
+Narrator: You ask Lazar whether he guards the wall from the outside or the inside, and whether the wall knows. It's not much, but Krezk has been waiting years for somebody to say something to Lazar, and the square laughs at him instead of at Clovin.
+-> closer
+
+~ heckle_lost
+Narrator: Lazar has an answer, and it's better than yours. Nobody laughs. Nobody leaves, either, which in Krezk counts as manners.
+-> closer
+
+~ pleaded
+set clovin_laughs += 1
+Narrator: You don't say much. That he's the same man. That he came down a mountain for this. That nobody here has laughed in a long time, and he's the first person who's tried to make them. Rodica from the well tells Lazar to hush, and Lazar hushes.
+-> closer
+
+~ plea_lost
+Narrator: You make your case, and Krezk listens to it with its arms folded, which is how Krezk listens to everything.
+-> closer
+
+~ clovin_answers
+Clovin Belview: I will, sir. I'll go back up. Only I've got one joke left, and it's yours. It's a Krezk joke. Let me give it back and I'll go.
+-> closer
+
+~ closer
+Clovin Belview: My grandmother taught me this one. Floarea. She said it was a Krezk joke. She said it was the only thing she brought up the mountain, apart from the cough.
+Clovin Belview: A Krezker dies and goes up to the gate of the morning. The saint on the gate says, "Who's there?" And the Krezker says, "Who's asking?"
+Clovin Belview: And they're both still standing there.
+if flag.clovin_laughs >= 2
+Narrator: Krezk laughs. Properly, the whole square, the kind of laugh that has been kept in a cellar for years. Children laugh because their parents are laughing. A goat leaves.
+elif flag.clovin_laughs == 1
+Narrator: There's a laugh, a real one, from half the square, and the other half are smiling as if they'd rather not be seen to.
+else
+Narrator: Silence. Clovin nods to himself, as if he'd expected it, and steps down off the trough.
+endif
+Narrator: And at the back, on the carver's doorstep, one old man is laughing so hard he has to hold the doorpost. Old Pavel, with tears running into his beard. He can't stop.
+Old Pavel: That's my father's joke. Where did you get my father's joke?
+-> pavel
+
+~ pavel
+Clovin Belview: My grandmother. Floarea Belview, two doors down from the burgomaster's. She went up the mountain with the cough when she was a girl.
+Narrator: Old Pavel stops laughing.
+Old Pavel: Floarea was my sister. The whole house took the cough the winter I was twelve, all but me. They went up to the abbey for the cure, and the burgomaster told the watch to bar the gate behind them.
+Old Pavel [sad]: I was the boy on the gate that night. I barred it. My mother told me to, through the boards. She said it was a good gate and I should mind it. I went to the neighbours and took their name, and never said Belview again.
+Old Pavel: A sun for the shrine every day since. Sixty years. I thought I was asking for the morning. I think I was asking for the gate.
+Narrator: Nobody in the square says anything. Then Dumitru, the gate boy, who is twelve, fetches a stool and puts it next to Pavel's, and looks at Clovin until he sits on it.
+Clovin Belview: A great-uncle. I've got a great-uncle. Mother will want to meet you. She doesn't come out much. She's had nine improvements.
+Old Pavel: Then I'll go up. I'm old. I don't frighten.
+-> paid
+
+~ paid
+set clovin_family_found
+quest clovins_audience done
+if flag.clovin_laughs >= 2
+Clovin Belview: There's money in the hat. Real money. Krezk paid to laugh. Nobody up there's going to believe me. Take it. You got me through the gate.
+gold +250
+elif flag.clovin_laughs == 1
+Clovin Belview: There's money in the hat. Not a lot. More than the Abbot ever paid. Take it. You got me through the gate.
+gold +150
+else
+Narrator: There's nothing in the hat but a goat's tooth, until Pavel empties his own pockets into it, and then Rodica from the well does, and then her neighbour.
+gold +75
+endif
+Old Pavel: And this. It was our father's. He found it in the high pasture the year Floarea was born and swore it butted back if you were rude to it. I kept it for the day the gate opened. You opened it.
+give ring_of_the_ram
+approve wren_featherfoot +3 ratatoille +2 godrick_pendlebrook +2 liriel_dawnsong +1 thistle +1 kip_smudgewick +1: You got Clovin his audience in Krezk
+-> END

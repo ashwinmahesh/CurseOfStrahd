@@ -280,6 +280,25 @@ whether Lysaga's at home or not.
   grooms. The autopilot wins 1 of 3 at level 9 and loses three party members a fight.
 - Dragos pays once: 500 gp of brides' dowries and a Dancing Sword (very rare, a longsword) Lysaga took off a knight.
 
+### Clovin's Audience (`clovins_audience`, narrative/krezk/clovins_audience.dialogue; batch 2)
+
+The Krezk watchman's news: a Belview came down from the abbey at midsummer and asked to tell them a joke, and Lazar
+threw a bucket of water over him. Clovin (new options at the abbey, also once the Abbot's fate is settled) has written
+jokes on the backs of the Abbot's letters for forty years and wants one audience that could choose not to laugh.
+Dmitri says yes without a roll if the party gave him back a son (`ilya_fate` healed or `sorin_fate` home), otherwise
+Persuasion DC 15; refused, Clovin comes down in a monk's hood. **Escalation:** the show at dusk in the square by the
+shrine (Clovin stands there from 17:00 to 21:00 while it's booked). Three beats can land, counted in `clovin_laughs`:
+the warm-up (Wren, if he's in the party, or Performance DC 13), the advice when his Abbot jokes die (Insight DC 13
+reads the crowd: they'll laugh at a man who's had a hard time, never at the Abbot), and Watchman Lazar's heckling
+(Performance or Persuasion DC 14; in a hood, Lazar pulls it off). **Twist:** Clovin's last joke is his grandmother
+Floarea's, and Old Pavel laughs until he cries: it was their father's. Pavel was the boy who barred Krezk's gate behind
+the sick Belviews sixty years ago, took the neighbours' name, and has carved a sun every day since.
+
+- No fight.
+- The hat: 250 gp if two beats landed, 150 gp for one, 75 gp (Pavel's own pockets) for none; and in every ending
+  Pavel's father's Ring of the Ram (rare).
+- Afterwards Pavel goes up the mountain with soup on Sundays, and the watchman is told to let Clovin in on feast days.
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -304,4 +323,6 @@ sq-krezk, black_roses.dialogue's lines naming the third girl (Daria, renamed fro
 Berez: one_horned_billy.dialogue in full (new speaker Dragos; also Stelian) and townsfolk.dialogue's two new goatherd
 lines (Stelian: the ring, and the ferryman). Batch 2, Vallaki
 and the castle: toymakers_masterpiece.dialogue in full (Blinsky, Pidlwick II) and townsfolk.dialogue's new
-marta_rumor node (Goodwife Marta: the jester).
+marta_rumor node (Goodwife Marta: the jester). Batch 2, Krezk and
+the abbey: clovins_audience.dialogue in full (Clovin Belview, Dmitri, Old Pavel, Watchman Lazar; Wren's interject),
+gate.dialogue's two new news lines (the bucket, feast days) and townsfolk.dialogue's new carver line (Old Pavel: soup).

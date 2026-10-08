@@ -44,7 +44,11 @@ Cezar: The billy breaks a rail, I mend a rail. He breaks another. I think he lik
 -> END
 
 ~ carver
+if flag.clovin_family_found
+Old Pavel: A sun a day, still. But on Sundays I go up the mountain with soup, so on Saturdays I carve two.
+else
 Old Pavel: A sun for the shrine. One every day. When the shrine is full, I start on the windows. Somebody has to keep asking for the morning.
+endif
 * [if quest.lighter_than_it_should_be and not flag.sorin_known] The toys on the Krezkov graves. Are they yours? -> krezk/lighter_than_it_should_be:pavel
 * Good day. -> END
 
