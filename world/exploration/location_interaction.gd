@@ -39,16 +39,17 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 		"npc":
 			var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
 			title = str(npc.get("name", spec["npc"]))
-			out.append({"id": "talk", "label": "Talk", "enabled": str(spec.get("dialogue", "")) != "",
+			out.append({"id": "talk", "label": "Approach" if LocationNpcs.is_asleep(view, str(spec["npc"])) else "Talk", "enabled": str(spec.get("dialogue", "")) != "",
 				"why": "" if str(spec.get("dialogue", "")) != "" else "Nothing to say"})
 			if npc.has("shop"):
 				var closed := str((npc["shop"] as Dictionary).get("closed", ""))
 				var open := closed == "" or not StoryConditions.check(closed, view.st)
 				out.append({"id": "trade", "label": "Trade", "enabled": open, "why": "" if open else "Closed for now"})
+			out.append(LocationCrime.pickpocket_action(view, str(spec["npc"])))   # F8
 			out.append({"id": "walk", "label": "Walk over"})
 		"door", "container":
 			title = str(spec.get("label", "the door" if str(thing["kind"]) == "door" else "the chest")).capitalize()
-			var verb := "Open" if str(thing["kind"]) == "door" else "Open and look inside"
+			var verb := "Open" if str(thing["kind"]) == "door" else "Open and look inside" + LocationCrime.owned_note(spec)
 			if str(thing["kind"]) == "door" and not StoryConditions.check(str(spec.get("when", "")), view.st):
 				out.append({"id": "open", "label": verb, "enabled": false, "why": "It won't budge"})
 			elif view._locked(spec):
@@ -70,6 +71,10 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 			else:
 				out.append({"id": "disarm", "label": "Disarm", "enabled": false, "why": "Nobody has thieves' tools"})
 			out.append({"id": "avoid", "label": "Walk around it (the party already does)", "enabled": false})
+		"foe":
+			# A foe waiting in plain view (LocationStealth): the party can open the fight from where it stands.
+			title = str(thing["name"])
+			out.append({"id": "strike", "label": "Attack: start the fight%s" % (" (sneaking: Surprise)" if view.sneaking else "")})
 		"exit":
 			title = str(spec.get("label", "The way on"))
 			var open := StoryConditions.check(str(spec.get("when", "")), view.st)
@@ -112,6 +117,10 @@ static func act(view: LocationView, cell: Vector2i, action_id: String) -> void:
 		"climb":
 			PitFall.climb_out(view, cell)
 			return
+		"strike":
+			if not thing.is_empty() and str(thing["kind"]) == "foe":
+				view.strike(str(thing["id"]))
+			return
 	if thing.is_empty():
 		return
 	var spec := thing["spec"] as Dictionary
@@ -126,6 +135,8 @@ static func act(view: LocationView, cell: Vector2i, action_id: String) -> void:
 				then = func() -> void: _use_container(view, spec, action_id)
 		"disarm":
 			then = func() -> void: LocationTraps._disarm(view, spec)
+		"pickpocket":
+			then = func() -> void: LocationCrime.pickpocket(view, str(spec["npc"]))
 	if not then.is_valid():
 		return
 	var stand := _adjacent_free(view, cell)
@@ -147,8 +158,8 @@ static func _look(view: LocationView, cell: Vector2i, thing: Dictionary) -> void
 		"npc":
 			var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
 			var att := view.st.attitude(str(spec["npc"]))
-			view.narration.emit("%s%s. %s%s" % [npc.get("name", spec["npc"]), (", " + str(npc["title"])) if str(npc.get("title", "")) != "" else "",
-				str(npc.get("summary", "")), (" (%s)" % att) if att != "" else ""])
+			view.narration.emit("%s%s. %s%s%s" % [npc.get("name", spec["npc"]), (", " + str(npc["title"])) if str(npc.get("title", "")) != "" else "",
+				str(npc.get("summary", "")), (" (%s)" % att) if att != "" else "", LocationNpcs.look_words(view, str(spec["npc"]))])
 		"door", "container":
 			var state := "locked" if view._locked(spec) else "unlocked"
 			if str(thing["kind"]) == "container" and bool((view.st.loc_state(view.loc_id)["looted"] as Dictionary).get(str(spec["id"]), false)):
@@ -161,6 +172,8 @@ static func _look(view: LocationView, cell: Vector2i, thing: Dictionary) -> void
 				(" and %s damage" % spec["damage"]) if spec.has("damage") else ""])
 		"exit":
 			view.narration.emit("%s, to %s." % [spec.get("label", "A way on"), Compendium.shared().get_entry("locations", str(spec["to"])).get("name", spec["to"])])
+		"foe":
+			view.narration.emit("%s. It hasn't seen you yet." % str(thing["name"]))
 		_:
 			if not view._say("look:" + str(spec.get("id", "")), view.leader().creature as Character):
 				view.narration.emit(str(spec.get("label", "Something")).capitalize() + ".")
@@ -187,6 +200,9 @@ static func _pickables(view: LocationView) -> Array:
 	for m: Combatant in view.members + view.guest_members:
 		if view.tokens.has(m.id):
 			out.append([view.tokens[m.id], m.cell])
+	for w in view.waiting:
+		if LocationStealth.is_shown(w):
+			out.append([w["token"], (w["foe"] as Combatant).cell])
 	# Nothing in an area the party hasn't found yet can be hovered or clicked (HiddenAreas).
 	for shown in view._npc_shown:
 		if not HiddenAreas.hides(view, shown["cell"] as Vector2i):
@@ -205,11 +221,15 @@ static func _pickables(view: LocationView) -> Array:
 static func thing_at(view: LocationView, cell: Vector2i) -> Dictionary:
 	if HiddenAreas.hides(view, cell):
 		return {}
+	var w := LocationStealth.foe_at(view, cell)
+	if not w.is_empty():
+		var foe := w["foe"] as Combatant
+		return {"kind": "foe", "id": str(w["encounter"]), "name": foe.name(), "label": "Attack %s" % foe.name(), "spec": {"cell": [foe.cell.x, foe.cell.y]}}
 	for shown in view._npc_shown:
 		var spec := shown["spec"] as Dictionary
 		if shown["cell"] == cell:
 			var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
-			return {"kind": "npc", "id": str(spec["npc"]), "label": "Talk to %s" % npc.get("name", spec["npc"]), "spec": spec}
+			return {"kind": "npc", "id": str(spec["npc"]), "label": LocationNpcs.hover_label(view, str(spec["npc"]), str(npc.get("name", spec["npc"]))), "spec": spec}
 	for d: Variant in view.loc.get("doors", []):
 		var door := d as Dictionary
 		if LocationView._cell(door["cell"]) == cell and (view.door_nodes[str(door["id"])] as Node3D).visible:
@@ -220,7 +240,8 @@ static func thing_at(view: LocationView, cell: Vector2i) -> Dictionary:
 	for c: Variant in view.loc.get("containers", []):
 		var ct := c as Dictionary
 		if LocationView._cell(ct["cell"]) == cell and view.container_nodes.has(str(ct["id"])):
-			return {"kind": "container", "id": str(ct["id"]), "label": "Open %s%s" % [ct.get("label", "the chest"), " (locked)" if view._locked(ct) else ""], "spec": ct}
+			return {"kind": "container", "id": str(ct["id"]), "label": "Open %s%s%s" % [ct.get("label", "the chest"), " (locked)" if view._locked(ct) else "",
+				LocationCrime.owned_note(ct)], "spec": ct}
 	for p: Variant in view.loc.get("props", []):
 		var prop := p as Dictionary
 		if LocationView._cell(prop["cell"]) == cell and view.prop_nodes.has(str(prop["id"])):
@@ -246,6 +267,9 @@ static func click(view: LocationView, cell: Vector2i) -> void:
 	var thing := thing_at(view, cell)
 	if thing.is_empty() or str(thing["kind"]) == "exit":
 		view.walk_to(cell)
+		return
+	if str(thing["kind"]) == "foe" and view.planning:
+		view.strike(str(thing["id"]))   # turn-based: the party is placed, and a click on a foe opens the fight
 		return
 	var stand := _adjacent_free(view, cell)
 	if stand == Vector2i(-1, -1):
@@ -288,6 +312,8 @@ static func interact(view: LocationView, thing: Dictionary) -> void:
 			_use_prop(view, spec)
 		"trap":
 			LocationTraps._disarm(view, spec)
+		"foe":
+			view.strike(str(thing["id"]))
 
 
 static func _use_container(view: LocationView, ct: Dictionary, method: String = "auto") -> void:

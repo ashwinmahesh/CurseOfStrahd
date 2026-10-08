@@ -10,6 +10,7 @@ var narrator: Narrator
 var banter: Banter
 var view: LocationView
 var hud: ExploreHud
+var plan_bar: PlanBar                ## turn-based exploring's panel (F7)
 var screen: Node = null              ## the open full-screen panel (sheet, inventory ...), if any
 var dialogue: DialogueUI = null
 var loot: LootWindow = null
@@ -44,6 +45,10 @@ func _ready() -> void:
 		_refresh())
 	hud.sheet_requested.connect(func(i: int) -> void: open_screen("sheet", i))
 	hud.command.connect(_command)
+	plan_bar = PlanBar.new()
+	plan_bar.hud = hud
+	plan_bar.command.connect(_command)
+	add_child(plan_bar)
 	var menu_layer := CanvasLayer.new()
 	menu_layer.layer = 25
 	add_child(menu_layer)
@@ -126,6 +131,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 				open_screen("menu", 0)))
 	view.combat_ended.connect(_after_combat)
 	add_child(view)
+	plan_bar.view = view
 	hud.show_location(view)
 	_refresh()
 	if spawn != "":
@@ -139,7 +145,7 @@ func _refresh() -> void:
 	view.update_daylight()
 	if not view.in_combat:
 		view.refresh_party()   # healed outside a fight: back on their feet, chips up to date
-	hud.refresh(str(view.loc.get("name", "")), view.sneaking, view.solo)
+	hud.refresh(str(view.loc.get("name", "")), view.sneaking, view.solo and not view.planning, view.planning)
 
 
 # --- Input ----------------------------------------------------------------------------------------
@@ -158,7 +164,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		var pick := view.pick_cell(view.rig.camera, (event as InputEventMouseMotion).position)
 		_hover = pick
 		var thing := view.thing_at(pick) if pick.x >= 0 else {}
-		hud.hint(str(thing.get("label", "")), (event as InputEventMouseMotion).position)
+		# Turn-based: the floor's hint is the walk's cost against this round's movement, its trail drawn on the ground.
+		var label := str(thing.get("label", ""))
+		if thing.is_empty() and view.planning:
+			label = LocationPlan.hover_text(view, pick)
+		elif thing.is_empty() and view.sneaking and pick.x >= 0:
+			label = LocationStealth.hover_warning(view, pick)   # who can see you (U10)
+		LocationPlan.preview(view, pick if thing.is_empty() else Vector2i(-1, -1))
+		hud.hint(label, (event as InputEventMouseMotion).position)
 		Cursors.show(Cursors.for_thing(thing))
 		glow.show(view, pick, thing)
 	elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
@@ -184,6 +197,11 @@ func _unhandled_input(event: InputEvent) -> void:
 				view.search()
 			KEY_V:
 				_command("sneak")
+			KEY_T:
+				_command("plan")
+			KEY_SPACE:
+				if view.planning:
+					_command("plan_round")
 			KEY_G:
 				_command("split")
 			KEY_ESCAPE:
@@ -300,11 +318,22 @@ func world_action(cell: Vector2i, id: String) -> void:
 func _command(name_: String) -> void:
 	match name_:
 		"sneak":
-			view.sneaking = not view.sneaking
-			hud.toast("Sneaking" if view.sneaking else "Walking normally")
+			view.set_sneaking(not view.sneaking)
+			if not view.in_combat:
+				hud.toast("Sneaking" if view.sneaking else "Walking normally")
+		"plan":
+			view.toggle_plan()
+		"plan_round":
+			view.next_round()
+		"strike":
+			if not view.strike():
+				hud.toast("No foes in sight")
 		"split":
-			view.solo = not view.solo
-			hud.toast("Only %s moves" % st.party[0].name if view.solo else "The party moves together")
+			if view.planning:
+				hud.toast("Turn-based already moves one of you at a time")
+			else:
+				view.solo = not view.solo
+				hud.toast("Only %s moves" % st.party[0].name if view.solo else "The party moves together")
 		"search":
 			view.search()
 		"map":
@@ -405,11 +434,18 @@ func _dialogue_ended(combat: String) -> void:
 
 
 func _open_loot(container_id: String, items: Array, gold: float) -> void:
+	# Taking from something someone owns is stealing, if anybody sees (F8, LocationCrime).
+	var worth := Crime.value_of(items, gold)
+	if view != null:
+		LocationCrime.opened(view, container_id)
 	loot = LootWindow.new()
 	add_child(loot)
 	loot.closed.connect(func() -> void:
+		var taken := worth - Crime.value_of(loot.items, loot.gold)
 		loot = null
-		_refresh())
+		_refresh()
+		if view != null:
+			LocationCrime.after_loot(view, container_id, taken))
 	loot.show_loot(st, container_id, items, gold, view)
 
 

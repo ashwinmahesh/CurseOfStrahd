@@ -26,14 +26,13 @@ func _comp() -> Compendium:
 ## Saving-throw spells: damage rolled once for all targets; each target saves (Dexterity saves add cover from
 ## the point of origin, except Sacred Flame; creature-type Disadvantage like Shatter against Constructs); half
 ## damage on a success when the spell says so (or for Potent Cantrip); effects on a failure or a success; pushes
-## and pulls afterwards, farthest creature first so a pack isn't blocked by its own back row.
-func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) -> void:
+## and pulls afterwards, farthest creature first so a pack isn't blocked by its own back row. `pausable`: the caller
+## carries on after a prompt (Encounter.then), so each save stops for the choices after its roll (Indomitable, an ally's
+## Bend Luck...); otherwise they follow their rules at once.
+func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult, pausable: bool = false) -> CombatResult:
 	var spells := sp()
 	var c := ctx["c"] as Combatant
 	var s := ctx["s"] as Dictionary
-	var e := enc()
-	var dc := (ctx["nums"]["dc"] as Breakdown).total()
-	var ab := StringName(str(s["save"]))
 	var has_damage := s.has("damage") and not (s["damage"] as Array).is_empty()
 	var shared := ctx.get("shared_damage", {}) as Dictionary
 	# Several damage types at once (Ice Storm's Bludgeoning and Cold): each part rolled once, halved on its own.
@@ -50,121 +49,156 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 			multi.append(pr)
 	elif has_damage and str(s["id"]) != "toll_the_dead" and shared.is_empty():
 		shared = spells.damage._roll_spell_damage(ctx, null, false)
-	var half_on_success := str(s.get("save_success", "none")) == "half" or (int(s.get("level", 0)) == 0 and c.creature.has_flag("potent_cantrip"))
 	var pushes: Array[Dictionary] = []
 	ctx["push_queue"] = pushes
-	for t in victims:
-		if not t.is_alive():
-			continue
-		if c.hostile_to(t):
-			e.class_features.kept_rage(c)
-		var bonus_text := ""
-		var save_bd := t.creature.save_bonus(ab)
-		if ab == &"dex" and str(s["id"]) != "sacred_flame":
-			var cov := e.grid.cover_between(c.cell, c.size_cells, t.cell, t.size_cells, e.creature_cells([c, t]))
-			var cb := CombatGrid.COVER_BONUS[int(cov["cover"])]
-			if cb > 0:
-				save_bd.add(CombatGrid.COVER_NAMES[int(cov["cover"])], cb)
-				bonus_text = " (cover +%d)" % cb
-		var keys := t.creature.save_keys(ab)
-		for cond in _conditions_in(s.get("effects", []) as Array, str(ctx.get("choice", ""))):
-			keys.append("save_vs:%s" % cond)
-		keys.append_array(spell_save_keys(c.id))
-		var dis: Array[String] = []
-		dis.assign(ctx.get("save_disadvantage", []))
-		var adv: Array[String] = []
-		if t.creature.has_flag("eldritch_struck:%s" % c.id):
-			dis.append("Eldritch Strike")
-		if CombatFeatures.has_feature(c, "magical_ambush") and (c.hidden or c.creature.has_condition(&"invisible")):
-			dis.append("Magical Ambush")
-		if c.creature.has_flag("corona") and e.in_sunlight(t) and c.hostile_to(t) and spells._damage_type_safe(ctx) in ["fire", "radiant"]:
-			dis.append("Corona of Light")
-		var sculpted := _sculpted(ctx, t) or _careful(ctx, t) or e.items.specials.fr.banded(ctx, t)
-		if str(ctx.get("heightened", "")) == t.id:
-			dis.append("Heightened Spell")
-		var vs := s.get("save_disadvantage_for", "") as String
-		if vs != "" and str(t.creature.creature_type) == vs:
-			dis.append("%s against %s" % [vs.capitalize(), s["name"]])
-		if bool(s.get("save_advantage_if_fighting", false)) and c.hostile_to(t):
-			adv.append("you're fighting it")
-		var min_size := str(s.get("save_advantage_min_size", ""))
-		if min_size != "" and Creature.SIZES.find(t.creature.size) >= Creature.SIZES.find(StringName(min_size)):
-			adv.append("%s or larger" % min_size.capitalize())
-		if str(s["id"]) == "sleep" and t.creature.is_condition_immune(&"exhaustion"):
-			r.lines.append(e.log.add("info", "%s doesn't sleep: unaffected" % t.name(), t.id))
-			continue
-		var willing := bool(s.get("willing_skip_save", false)) and c.allied_with(t)
-		# Enthrall: a creature you or your companions are fighting succeeds automatically.
-		if bool(s.get("fighting_auto_success", false)) and c.hostile_to(t):
-			r.lines.append(e.log.add("info", "%s is too caught up in the fight to be enthralled" % t.name(), t.id))
-			continue
-		var auto_fail := str(t.creature.creature_type) in (s.get("auto_fail_types", []) as Array)
-		if sculpted:
-			r.lines.append(e.log.add("info", "%s is sculpted out of %s" % [t.name(), s["name"]], t.id))
-			continue
-		var test: D20Test = null
-		var success := false
-		var details: Array[String] = []
-		if str(t.creature.creature_type) in (s.get("auto_success_types", []) as Array):
-			success = true
-			details.append("%s succeeds automatically (%s)" % [t.name(), str(t.creature.creature_type).capitalize()])
-		elif auto_fail:
-			details.append("%s fails automatically (%s)" % [t.name(), str(t.creature.creature_type).capitalize()])
-		elif not willing:
-			test = t.creature.roll_d20(e.dice, D20Test.Kind.SAVING_THROW, save_bd, dc, keys, adv, dis,
-				"%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], s["name"], t.name()])
-			success = test.success
-			details.append(test.describe() + bonus_text)
+	var st := {"has_damage": has_damage, "shared": shared, "multi": multi,
+		"half": str(s.get("save_success", "none")) == "half" or (int(s.get("level", 0)) == 0 and c.creature.has_flag("potent_cantrip"))}
+	var done := func() -> CombatResult:
+		ctx.erase("push_queue")
+		_run_pushes(ctx, pushes)
+		return r
+	if not pausable:
+		for t in victims:
+			_save_victim(ctx, t, victims, st, r, false)
+		return done.call() as CombatResult
+	return enc().each(victims, func(t: Variant) -> CombatResult: return _save_victim(ctx, t as Combatant, victims, st, r, true), done)
+
+
+## One creature's save against the spell, then what it does to that creature (_after_save).
+func _save_victim(ctx: Dictionary, t: Combatant, victims: Array[Combatant], st: Dictionary, r: CombatResult, pausable: bool) -> CombatResult:
+	var e := enc()
+	var c := ctx["c"] as Combatant
+	var s := ctx["s"] as Dictionary
+	var spells := sp()
+	if not t.is_alive():
+		return r
+	var dc := (ctx["nums"]["dc"] as Breakdown).total()
+	var ab := StringName(str(s["save"]))
+	if c.hostile_to(t):
+		e.class_features.kept_rage(c)
+	var bonus_text := ""
+	var save_bd := t.creature.save_bonus(ab)
+	if ab == &"dex" and str(s["id"]) != "sacred_flame":
+		var cov := e.grid.cover_between(c.cell, c.size_cells, t.cell, t.size_cells, e.creature_cells([c, t]))
+		var cb := CombatGrid.COVER_BONUS[int(cov["cover"])]
+		if cb > 0:
+			save_bd.add(CombatGrid.COVER_NAMES[int(cov["cover"])], cb)
+			bonus_text = " (cover +%d)" % cb
+	var keys := t.creature.save_keys(ab)
+	for cond in _conditions_in(s.get("effects", []) as Array, str(ctx.get("choice", ""))):
+		keys.append("save_vs:%s" % cond)
+	keys.append_array(spell_save_keys(c.id))
+	var dis: Array[String] = []
+	dis.assign(ctx.get("save_disadvantage", []))
+	var adv: Array[String] = []
+	if t.creature.has_flag("eldritch_struck:%s" % c.id):
+		dis.append("Eldritch Strike")
+	if CombatFeatures.has_feature(c, "magical_ambush") and (c.hidden or c.creature.has_condition(&"invisible")):
+		dis.append("Magical Ambush")
+	if c.creature.has_flag("corona") and e.in_sunlight(t) and c.hostile_to(t) and spells._damage_type_safe(ctx) in ["fire", "radiant"]:
+		dis.append("Corona of Light")
+	var sculpted := _sculpted(ctx, t) or _careful(ctx, t) or e.items.specials.fr.banded(ctx, t)
+	if str(ctx.get("heightened", "")) == t.id:
+		dis.append("Heightened Spell")
+	var vs := s.get("save_disadvantage_for", "") as String
+	if vs != "" and str(t.creature.creature_type) == vs:
+		dis.append("%s against %s" % [vs.capitalize(), s["name"]])
+	if bool(s.get("save_advantage_if_fighting", false)) and c.hostile_to(t):
+		adv.append("you're fighting it")
+	var min_size := str(s.get("save_advantage_min_size", ""))
+	if min_size != "" and Creature.SIZES.find(t.creature.size) >= Creature.SIZES.find(StringName(min_size)):
+		adv.append("%s or larger" % min_size.capitalize())
+	if str(s["id"]) == "sleep" and t.creature.is_condition_immune(&"exhaustion"):
+		r.lines.append(e.log.add("info", "%s doesn't sleep: unaffected" % t.name(), t.id))
+		return r
+	var willing := bool(s.get("willing_skip_save", false)) and c.allied_with(t)
+	# Enthrall: a creature you or your companions are fighting succeeds automatically.
+	if bool(s.get("fighting_auto_success", false)) and c.hostile_to(t):
+		r.lines.append(e.log.add("info", "%s is too caught up in the fight to be enthralled" % t.name(), t.id))
+		return r
+	var auto_fail := str(t.creature.creature_type) in (s.get("auto_fail_types", []) as Array)
+	if sculpted:
+		r.lines.append(e.log.add("info", "%s is sculpted out of %s" % [t.name(), s["name"]], t.id))
+		return r
+	var details: Array[String] = []
+	if str(t.creature.creature_type) in (s.get("auto_success_types", []) as Array):
+		details.append("%s succeeds automatically (%s)" % [t.name(), str(t.creature.creature_type).capitalize()])
+		return _after_save(ctx, t, true, details, victims, st, r)
+	if auto_fail:
+		details.append("%s fails automatically (%s)" % [t.name(), str(t.creature.creature_type).capitalize()])
+		return _after_save(ctx, t, false, details, victims, st, r)
+	if willing:
+		details.append("%s doesn't resist" % t.name())
+		return _after_save(ctx, t, false, details, victims, st, r)
+	var roll := func() -> D20Test:
+		return t.creature.roll_d20(e.dice, D20Test.Kind.SAVING_THROW, save_bd, dc, keys, adv, dis,
+			"%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], s["name"], t.name()])
+	var after := func(test: D20Test) -> CombatResult:
+		details.append(test.describe() + bonus_text)
+		return _after_save(ctx, t, test.success, details, victims, st, r)
+	if pausable:
+		return e.d20.then_after(t, roll, after, r)
+	return after.call(roll.call() as D20Test) as CombatResult
+
+
+## What the spell does to `t` once its save is settled: Spell Turning and reflection, damage (whole or half), the
+## effects on a failure or a success, and a spell that ends on a successful save.
+func _after_save(ctx: Dictionary, t: Combatant, success: bool, details: Array[String], victims: Array[Combatant], st: Dictionary, r: CombatResult) -> CombatResult:
+	var e := enc()
+	var c := ctx["c"] as Combatant
+	var s := ctx["s"] as Dictionary
+	var spells := sp()
+	var ab := StringName(str(s["save"]))
+	var half_on_success := bool(st["half"])
+	var multi := st["multi"] as Array[Dictionary]
+	var shared := st["shared"] as Dictionary
+	# Ring of Spell Turning: a saved-against spell of level 7 or lower has no effect (and may go back at its caster).
+	if success and e.items.turns_spell(c, t, ctx, victims, r):
+		return r
+	if success:
+		e.faerun.reflects_spell(c, t, ctx, victims, r)
+	if bool(st["has_damage"]) and not multi.is_empty():
+		var parts: Array = []
+		for pr in multi:
+			var amt := int(pr["total"])
+			amt = t.creature.damage_after_save(amt, ab, success, half_on_success, true)
+			parts.append({"amount": amt, "type": str(pr["type"]), "spell": true})
+			details.append(str(pr["text"]))
+		if parts.any(func(x: Dictionary) -> bool: return int(x["amount"]) > 0):
+			var drm := spells.deal_spell_damage(ctx, t, parts, false, str(s["name"]), details)
+			r.damage += drm.final
 		else:
-			details.append("%s doesn't resist" % t.name())
-		# Ring of Spell Turning: a saved-against spell of level 7 or lower has no effect (and may go back at its caster).
-		if success and e.items.turns_spell(c, t, ctx, victims, r):
-			continue
-		if success:
-			e.faerun.reflects_spell(c, t, ctx, victims, r)
-		if has_damage and not multi.is_empty():
-			var parts: Array = []
-			for pr in multi:
-				var amt := int(pr["total"])
-				amt = t.creature.damage_after_save(amt, ab, success, half_on_success, true)
-				parts.append({"amount": amt, "type": str(pr["type"]), "spell": true})
-				details.append(str(pr["text"]))
-			if parts.any(func(x: Dictionary) -> bool: return int(x["amount"]) > 0):
-				var drm := spells.deal_spell_damage(ctx, t, parts, false, str(s["name"]), details)
-				r.damage += drm.final
-			else:
-				r.lines.append(e.log.add("info", "%s saves against %s" % [t.name(), s["name"]], t.id, details))
-		elif has_damage:
-			var rolled := shared if not shared.is_empty() else spells.damage._roll_spell_damage(ctx, t, false)
-			var amount := int(rolled["total"])
-			amount = t.creature.damage_after_save(amount, ab, success, half_on_success, true)
-			# Shield Master's Interpose Shield: a Reaction turns a successful Dexterity save's half damage into none.
-			if success and ab == &"dex" and half_on_success and e.features.has_feat(t, "shield_master") and e.features.wields_shield(t) and spells.can_react(t) \
-					and e._reaction_decision(t, "interpose_shield") != "never":
-				t.reaction_available = false
-				amount = 0
-				details.append("Interpose Shield: no damage")
-			details.append(str(rolled["text"]))
-			if amount > 0:
-				var dr := spells.deal_spell_damage(ctx, t, [{"amount": amount, "type": spells._damage_type(ctx), "spell": true}], false, str(s["name"]), details)
-				r.damage += dr.final
-				# Harm: a failed save lowers the Hit Point maximum by the Necrotic damage taken (never below 1).
-				if bool(s.get("reduce_max_hp", false)) and not success and dr.final > 0 and t.is_alive():
-					var cut := mini(dr.final, t.creature.max_hp() - 1)
-					if cut > 0:
-						e.monster_actions.drain_max_hp(t, cut, str(s["name"]))
-			else:
-				r.lines.append(e.log.add("info", "%s saves against %s" % [t.name(), s["name"]], t.id, details))
+			r.lines.append(e.log.add("info", "%s saves against %s" % [t.name(), s["name"]], t.id, details))
+	elif bool(st["has_damage"]):
+		var rolled := shared if not shared.is_empty() else spells.damage._roll_spell_damage(ctx, t, false)
+		var amount := int(rolled["total"])
+		amount = t.creature.damage_after_save(amount, ab, success, half_on_success, true)
+		# Shield Master's Interpose Shield: a Reaction turns a successful Dexterity save's half damage into none.
+		if success and ab == &"dex" and half_on_success and e.features.has_feat(t, "shield_master") and e.features.wields_shield(t) and spells.can_react(t) \
+				and e._reaction_decision(t, "interpose_shield") != "never":
+			t.reaction_available = false
+			amount = 0
+			details.append("Interpose Shield: no damage")
+		details.append(str(rolled["text"]))
+		if amount > 0:
+			var dr := spells.deal_spell_damage(ctx, t, [{"amount": amount, "type": spells._damage_type(ctx), "spell": true}], false, str(s["name"]), details)
+			r.damage += dr.final
+			# Harm: a failed save lowers the Hit Point maximum by the Necrotic damage taken (never below 1).
+			if bool(s.get("reduce_max_hp", false)) and not success and dr.final > 0 and t.is_alive():
+				var cut := mini(dr.final, t.creature.max_hp() - 1)
+				if cut > 0:
+					e.monster_actions.drain_max_hp(t, cut, str(s["name"]))
 		else:
-			r.lines.append(e.log.add("info", "%s %s the %s save" % [t.name(), "succeeds on" if success else "fails", s["name"]], t.id, details))
-		if t.is_alive():
-			spells.apply_effect_entries(ctx, t, s.get("effects", []) as Array, "success" if success else "fail", r)
-		if success and bool(s.get("ends_on_save", false)):
-			ctx["ended_on_save"] = true
-			if ctx["conc"] != null:
-				(ctx["conc"] as Concentration).end("successful save")
-	ctx.erase("push_queue")
-	_run_pushes(ctx, pushes)
+			r.lines.append(e.log.add("info", "%s saves against %s" % [t.name(), s["name"]], t.id, details))
+	else:
+		r.lines.append(e.log.add("info", "%s %s the %s save" % [t.name(), "succeeds on" if success else "fails", s["name"]], t.id, details))
+	if t.is_alive():
+		spells.apply_effect_entries(ctx, t, s.get("effects", []) as Array, "success" if success else "fail", r)
+	if success and bool(s.get("ends_on_save", false)):
+		ctx["ended_on_save"] = true
+		if ctx["conc"] != null:
+			(ctx["conc"] as Concentration).end("successful save")
+	return r
 
 
 ## The conditions a spell's effects impose (for saves against them: Dwarven Resilience, Fey Ancestry, Brave).
@@ -236,35 +270,52 @@ func end_of_turn_saves(c: Combatant) -> void:
 
 
 ## Effects with a repeated save at the start or end of the creature's turn (Hold Person, Slow, Fear, Sleep's
-## drowsiness, Tasha's Hideous Laughter).
-func _repeat_saves(c: Combatant, when: String) -> void:
-	var spells := sp()
+## drowsiness, Tasha's Hideous Laughter). `pausable`: the turn carries on after a prompt (EncounterTurns), so each save
+## stops for the choices after its roll (Indomitable, Heroic Inspiration...).
+func _repeat_saves(c: Combatant, when: String, pausable: bool = false) -> CombatResult:
 	var e := enc()
-	for fx: Effect in c.creature.effects.duplicate():
-		if fx.repeat_save.is_empty() or str(fx.repeat_save.get("when", "end")) != when:
-			continue
-		if not fx in c.creature.effects:
-			continue
+	var r := CombatResult.new()
+	var one := func(raw: Variant) -> CombatResult:
+		var fx := raw as Effect
+		if fx.repeat_save.is_empty() or str(fx.repeat_save.get("when", "end")) != when or not fx in c.creature.effects:
+			return r
 		if str(fx.repeat_save.get("if", "")) == "no_sight_of_caster":
 			var caster := e.get_c(fx.caster_id)
 			if caster != null and e.can_see(c, caster):
-				continue
+				return r
 		# Illusory Dragon: only while the dragon is out of sight.
 		if str(fx.repeat_save.get("if", "")) == "no_sight_of_object":
-			var obj := spells.zones.object_of(fx.caster_id, fx.source_id)
+			var obj := sp().zones.object_of(fx.caster_id, fx.source_id)
 			if obj != null and e.can_see_space(c, obj.cell):
-				continue
-		_repeat_save(c, fx, [])
+				return r
+		return _repeat_save(c, fx, [], pausable)
+	var due := c.creature.effects.duplicate()
+	if not pausable:
+		for fx: Effect in due:
+			one.call(fx)
+		return r
+	return e.each(due, one, func() -> CombatResult: return r)
 
 
-func _repeat_save(c: Combatant, fx: Effect, adv: Array[String]) -> void:
+## One repeated save against `fx` (also on taking damage, with `adv`), then what it settles.
+func _repeat_save(c: Combatant, fx: Effect, adv: Array[String], pausable: bool = false) -> CombatResult:
 	var e := enc()
 	var ab := StringName(str(fx.repeat_save.get("ability", "wis")))
 	var dc := int(fx.repeat_save.get("dc", 10))
 	var keys: Array[String] = []
 	if fx.source_kind == &"spell":
 		keys = spell_save_keys(fx.caster_id)
-	var test := c.creature.roll_save(e.dice, ab, dc, adv, [], "%s save to end %s (%s)" % [Creature.ABILITY_NAMES[ab], fx.name, c.name()], keys)
+	var roll := func() -> D20Test:
+		return c.creature.roll_save(e.dice, ab, dc, adv, [], "%s save to end %s (%s)" % [Creature.ABILITY_NAMES[ab], fx.name, c.name()], keys)
+	var after := func(test: D20Test) -> CombatResult: return _repeat_settled(c, fx, test)
+	if pausable:
+		return e.d20.then_after(c, roll, after, CombatResult.new())
+	return after.call(roll.call() as D20Test) as CombatResult
+
+
+func _repeat_settled(c: Combatant, fx: Effect, test: D20Test) -> CombatResult:
+	var e := enc()
+	var r := CombatResult.new()
 	var then_kind := str(fx.repeat_save.get("then", ""))
 	# Contagion and Flesh to Stone: three successes end it; three failures settle it (lasting, or Petrified).
 	var three := str(fx.repeat_save.get("three", ""))
@@ -283,7 +334,7 @@ func _repeat_save(c: Combatant, fx: Effect, adv: Array[String]) -> void:
 			else:
 				e.log.add("condition", "%s succumbs to %s for its full course" % [c.name(), fx.name], c.id)
 		e.events.append({"type": "condition", "id": c.id})
-		return
+		return r
 	if test.success:
 		c.creature.remove_effect(fx)
 		e.log.add("info", "%s shakes off %s" % [c.name(), fx.name], c.id, [test.describe()])
@@ -316,6 +367,7 @@ func _repeat_save(c: Combatant, fx: Effect, adv: Array[String]) -> void:
 		if not fd.is_empty():
 			var rolled := e._roll_damage_dice(str(fd["dice"]), false, 0, fx.name)
 			e.deal_damage(e.get_c(fx.caster_id), c, [{"amount": int(rolled["total"]), "type": str(fd["type"]), "spell": true}], false, fx.name, [str(rolled["text"])])
+	return r
 
 
 static func spell_save_keys(caster_id: String) -> Array[String]:

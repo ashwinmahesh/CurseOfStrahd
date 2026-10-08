@@ -15,6 +15,10 @@ static func walk_to(view: LocationView, cell: Vector2i, then: Callable = Callabl
 	if path.is_empty():
 		view.toast.emit("Can't get there")
 		return false
+	var too_far := LocationPlan.why_not(view, path)   # turn-based: this round's movement
+	if too_far != "":
+		view.toast.emit(too_far)
+		return false
 	view._queue = path.slice(1)
 	view._on_arrive = then
 	if view._queue.is_empty():
@@ -73,6 +77,11 @@ static func step(view: LocationView, dir: Vector2i) -> void:
 	var to := view.leader().cell + dir
 	if view.grid.step_cost(view.leader().cell, to, 1, func(_c: Vector2i) -> bool: return false, func(_c: Vector2i) -> bool: return false) < 0:
 		return
+	var one: Array[Vector2i] = [view.leader().cell, to]
+	var too_far := LocationPlan.why_not(view, one)
+	if too_far != "":
+		view.toast.emit(too_far)
+		return
 	view._queue = [to]
 
 
@@ -97,8 +106,11 @@ static func tick(view: LocationView, delta: float) -> void:
 			view._queue.clear()
 			view._on_arrive = Callable()
 			return
+	var was := view.leader().cell
 	_advance_party(view, next)
-	if _check_cell_events(view):
+	LocationPlan.spend(view, was, next)
+	# Foes in plain view may notice the party (LocationStealth); a private room's people may see it (LocationCrime).
+	if _check_cell_events(view) or LocationStealth.after_step(view) or LocationCrime.check_trespass(view):
 		view._queue.clear()
 		view._on_arrive = Callable()
 		return

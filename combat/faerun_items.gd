@@ -620,47 +620,80 @@ func prismatic(ctx: Dictionary) -> void:
 
 ## After a D20 Test: the Lucky Foot rerolls a natural 1 on a save or check (and is used up); the Ring of Dedicated
 ## Focus adds Hit Dice to a failed Concentration save; the Scholar's Anchoring Bangle floors a Study check at 10 and,
-## once a day, saves a Concentration; the Thespian's Playbill adds Charisma to Study.
+## once a day, saves a Concentration; the Thespian's Playbill adds Charisma to Study. Settled now by each item's rule.
 func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
+	var out: Array = []
+	d20_offers(c, t, keys, out)
+	enc().d20.run_now(out)
+
+
+## The same as offers (D20Responses): the Playbill and the Bangle's floor simply happen; the rest are choices.
+func d20_offers(c: Combatant, t: D20Test, keys: Array[String], out: Array) -> void:
 	var e := enc()
 	var ch := CombatItems.ch_of(c)
 	if ch == null or t.kind == D20Test.Kind.ATTACK_ROLL:
 		return
 	if "study" in keys:
 		if items().has_active(c, "thespians_playbill"):
-			t.add_bonus(maxi(1, c.creature.ability_mod(&"cha")), "Thespian's Playbill")
+			out.append({"kind": "thespians_playbill", "reactor": c, "forced": true,
+				"use": func() -> void: t.add_bonus(maxi(1, c.creature.ability_mod(&"cha")), "Thespian's Playbill")})
 		var skill_key := keys.filter(func(k: String) -> bool: return k.begins_with("check:") and Abilities.SKILLS.has(StringName(k.substr(6))))
 		var proficient := skill_key.any(func(k: String) -> bool: return ch.skill_rank(StringName(k.substr(6))) >= 1)
-		if items().has_active(c, "scholars_anchoring_bangle") and proficient and t.kept < 10:
-			t.floor_natural(10, "Scholar's Anchoring Bangle")
-	if t.success or t.target <= 0:
+		if items().has_active(c, "scholars_anchoring_bangle") and proficient:
+			out.append({"kind": "scholars_anchoring_bangle_floor", "reactor": c, "forced": true,
+				"use": func() -> void: t.floor_natural(10, "Scholar's Anchoring Bangle")})
+	if t.target <= 0:
 		return
-	if t.kept == 1 and not t.auto_failed:
-		for it in items().carried(c):
-			if str(it["id"]) == "lucky_foot":
+	var has_foot := func() -> bool: return items().carried(c).any(func(it: Dictionary) -> bool: return str(it["id"]) == "lucky_foot")
+	if not t.auto_failed and has_foot.call():
+		out.append({"kind": "lucky_foot", "reactor": c, "title": "Lucky Foot?",
+			"text": func() -> String: return "%s. Rub the Lucky Foot and roll the 1 again? The charm is used up." % D20Responses.line(c, t),
+			"cost": "The Lucky Foot", "spends_reaction": false,
+			"still": func() -> bool: return not t.success and t.kept == 1 and has_foot.call(),
+			"helps": func() -> bool: return D20Responses.could_reach(t),
+			"use": func() -> void:
 				ch.remove_one("lucky_foot")
 				var n := e.dice.d20("Lucky Foot")
-				t.set_natural(n, "Lucky Foot")
-				_log("info", "%s rubs the Lucky Foot and tries again: %d" % [c.name(), n], c)
-				break
-		if t.success:
-			return
-	if t.kind == D20Test.Kind.SAVING_THROW and "concentration" in keys:
-		if items().has_active(c, "ring_of_dedicated_focus") and str(c.reaction_rules.get("ring_of_dedicated_focus", "auto")) != "never":
-			for i in 2:
-				if t.success:
-					break
-				var hd := _spend_hit_die(ch, "Ring of Dedicated Focus")
-				if hd <= 0:
-					break
-				t.add_bonus(hd, "Ring of Dedicated Focus")
-		var p := items().find_power(c, "scholars_anchoring_bangle", "anchor")
-		if not t.success and not p.is_empty() and items().has_active(c, "scholars_anchoring_bangle") and e.spells.can_react(c) \
-				and CombatItems.uses_spent(p) < CombatItems.use_count(p) and str(c.reaction_rules.get("scholars_anchoring_bangle", "auto")) != "never":
-			CombatItems.spend_use(p)
-			c.reaction_available = false
-			t.add_bonus(maxi(0, t.target - t.total), "Scholar's Anchoring Bangle")
-			_log("reaction", "%s's bangle anchors the spell in place" % c.name(), c)
+				t.reroll_one(n, "Lucky Foot")
+				_log("info", "%s rubs the Lucky Foot and tries again: %d" % [c.name(), n], c)})
+	if t.kind != D20Test.Kind.SAVING_THROW or not "concentration" in keys:
+		return
+	if items().has_active(c, "ring_of_dedicated_focus"):
+		out.append({"kind": "ring_of_dedicated_focus", "reactor": c, "title": "Ring of Dedicated Focus?",
+			"text": func() -> String: return "%s. Spend up to two Hit Dice and add them to keep Concentration?" % D20Responses.line(c, t),
+			"cost": "Up to two Hit Dice", "spends_reaction": false,
+			"still": func() -> bool: return not t.success and _free_hit_die(ch) > 0,
+			"helps": func() -> bool: return t.total + 2 * _free_hit_die(ch) >= t.target,
+			"use": func() -> void:
+				for i in 2:
+					if t.success:
+						break
+					var hd := _spend_hit_die(ch, "Ring of Dedicated Focus")
+					if hd <= 0:
+						break
+					t.add_bonus(hd, "Ring of Dedicated Focus")})
+	var p := items().find_power(c, "scholars_anchoring_bangle", "anchor")
+	if not p.is_empty() and items().has_active(c, "scholars_anchoring_bangle"):
+		out.append({"kind": "scholars_anchoring_bangle", "reactor": c, "title": "Reaction: Scholar's Anchoring Bangle?",
+			"text": func() -> String: return "%s. Anchor the spell and keep Concentration (once a day)?" % D20Responses.line(c, t),
+			"cost": "Reaction and the Bangle's daily use",
+			"still": func() -> bool: return not t.success and e.spells.can_react(c) and CombatItems.uses_spent(p) < CombatItems.use_count(p),
+			"use": func() -> void:
+				CombatItems.spend_use(p)
+				c.reaction_available = false
+				t.add_bonus(maxi(0, t.target - t.total), "Scholar's Anchoring Bangle")
+				_log("reaction", "%s's bangle anchors the spell in place" % c.name(), c)})
+
+
+## The biggest unspent Hit Die (0 when none are left), without spending it.
+func _free_hit_die(ch: Character) -> int:
+	var pool := ch.hit_dice()
+	var best := 0
+	for die: String in pool:
+		var entry := pool[die] as Dictionary
+		if int(entry["spent"]) < int(entry["total"]) and int(die) > best:
+			best = int(die)
+	return best
 
 
 ## Rolls the biggest unspent Hit Die (spending it), or 0 when none are left.

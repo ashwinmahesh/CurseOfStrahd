@@ -18,6 +18,9 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
   screen. Batch screenshots into few runs.
 - Any other Godot run that opens a window goes through `tools/godot` (same arguments as Godot), never the Godot.app
   path: it loads tools/macos/nofocus.m so Godot can't activate itself (owner decision 2026-10-06).
+- `make import` (and every target that imports) runs the editor through tools/import.sh with its window never on
+  screen (NOFOCUS_HIDE=1 in tools/godot): textures import about twice as fast as headless, and the project.godot the
+  editor rewrites is put back. IMPORT_HEADLESS=1 imports headless.
 - `make run` and `make arena` are for the owner to play: run them only when asked. `make play` is his stable copy
   (~/Documents/CurseOfStrahdGame-play, tools/play/play.sh): it only moves to a main the build thread marked after a
   clean `make ci` (refs/play/green). Never edit or check out anything in it; PLAY_NO_RUN=1 updates it without a window.
@@ -92,12 +95,10 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   options and books are never voiced.
 
 ## Done means
-- `make check` while working: it runs only what covers the files changed since main (tools/check.py, `DRY=1` shows
-  the plan). Docs alone run nothing; art and audio files only re-import; data and dialogue run the validators and
-  the tests that name the changed ids; scripts and scenes run lint and the tests that use them.
-- `make check` green is enough to hand over docs, art, audio, data, dialogue, captures, tools, Makefile targets
-  outside `make ci` (it dry-runs them), and ui/ or world/ scripts. Changes to rules/, combat/, story/, core/,
-  tests/support or the ci targets need `make ci` green with a clean log.
-  The build thread runs `make ci` before every merge to main either way.
+- Hand off with `make check` green and a clean log (owner's quick check, 2026-10-07): lint, a compile of every script,
+  make validate when data, dialogue or the rules docs changed, and the test files you added or changed, never the whole
+  suite (tools/check.py; `DRY=1` shows the plan, and it prints each step's time). Run the tests your change is about
+  with `make test FILES=...` while you work. The build thread runs the full suite once for each batch of hand-offs
+  and bisects a failure. `make check DEPTH=1` (or 2, or all) runs the tests that use what changed instead.
 - A new screen or panel goes into tests/integration/test_layout.gd, which fails on text or buttons spilling out.
 - A capture for anything visual. Never weaken tests to pass. Never mark an owner sign-off as passed.

@@ -1,8 +1,14 @@
 class_name LocationNpcs
 extends RefCounted
-## The people in a location (LocationView): who stands here now (each NPC entry's `when`), figures a conversation
-## brings on and takes off again (the dialogue statements `appear` and `vanish`), people who step aside when their talk
-## ends in a fight, and those who speak first when the party comes near.
+## The people in a location (LocationView): who stands here now (each NPC entry's `when` and `hours`, re-checked as the
+## clock moves by LocationClock), who walks a route (`path`, NpcRoutes), figures a conversation brings on and takes
+## off again (the dialogue statements `appear` and `vanish`), people who step aside when their talk ends in a fight,
+## and those who speak first when the party comes near.
+
+
+## An entry's `facing` as a ground direction (x, z): north is up the map.
+const FACINGS := {"north": Vector2(0, -1), "south": Vector2(0, 1), "east": Vector2(1, 0), "west": Vector2(-1, 0),
+	"northeast": Vector2(1, -1), "northwest": Vector2(-1, -1), "southeast": Vector2(1, 1), "southwest": Vector2(-1, 1)}
 
 
 ## Re-reads which NPCs, props and containers are here (their `when` conditions) after a conversation or a fight
@@ -31,7 +37,7 @@ static func refresh_npcs(view: LocationView) -> void:
 static func _build_npcs(view: LocationView) -> void:
 	for n: Variant in view.loc.get("npcs", []):
 		var spec := n as Dictionary
-		if not StoryConditions.check(str(spec.get("when", "")), view.st):
+		if not StoryConditions.check(str(spec.get("when", "")), view.st) or not Schedule.in_hours(spec, view.st):
 			continue
 		if view.npc_tokens.has(str(spec["npc"])):
 			continue   # one entry per NPC at a time: the first whose condition holds
@@ -42,14 +48,76 @@ static func _build_npcs(view: LocationView) -> void:
 			data = Compendium.shared().monster_data("commoner")
 		var m := Monster.from_data(data)
 		m.name = str(npc.get("name", spec["npc"]))
+		if bool(spec.get("asleep", false)):
+			put_to_sleep(m)
 		var cb := Combatant.new(m, &"neutral", LocationView._cell(spec["cell"]))
 		cb.id = "npc_" + str(spec["npc"])
 		var tok := _npc_token(cb, str(npc.get("sprite", spec["npc"])))
 		tok.position = view.board.cell_center(cb.cell)
 		view.add_child(tok)
+		if FACINGS.has(str(spec.get("facing", ""))):
+			tok.face(FACINGS[str(spec["facing"])] as Vector2, false)   # where they look (and lane 25's sight cones)
 		view.npc_tokens[str(spec["npc"])] = tok
 		view._npc_shown.append({"spec": spec, "token": tok, "cell": cb.cell, "low_before": view.grid.has_flag(cb.cell, CombatGrid.LOW)})
 		view.grid.set_flag(cb.cell, CombatGrid.LOW, true)   # an NPC blocks the square while standing there
+	LocationClock.of(view)   # people keep their hours, and the day's events happen, as the clock moves
+	# People with a `path` walk it (NpcRoutes), round everyone standing still; each starts after its first pause.
+	for shown in view._npc_shown:
+		var spec := shown["spec"] as Dictionary
+		if not spec.has("path"):
+			continue
+		var own := shown["cell"] as Vector2i
+		view.grid.set_flag(own, CombatGrid.LOW, bool(shown["low_before"]))
+		shown["route"] = NpcRoutes.route_for(view, spec)
+		view.grid.set_flag(own, CombatGrid.LOW, true)
+		shown["wait"] = float(spec.get("pause", NpcRoutes.PAUSE))
+		if not (shown["route"] as Array).is_empty():
+			NpcRoutes.of(view)
+
+
+## Owner report (2026-10-07): Offalia ate her mother's pastry and stood on at the oven. An entry with `asleep: true`
+## lies asleep: Unconscious, as the 2024 rules have a sleeper (Incapacitated and Prone, unaware), so the token draws
+## the figure lying down and lists the conditions. A blow or a shake (the Wake action) ends the sleep, still Prone.
+static func put_to_sleep(cr: Creature) -> void:
+	var nap := Effect.new("Asleep", &"npc", "asleep").with_condition(&"unconscious")
+	nap.ends_on_damage = true
+	nap.data["wakeable"] = true
+	cr.add_effect(nap)
+	cr.add_condition(&"prone", "Asleep")
+
+
+## Whether an NPC shown here is asleep (its entry's `asleep`, while nothing has woken it).
+static func is_asleep(view: LocationView, npc_id: String) -> bool:
+	var tok := view.npc_tokens.get(npc_id, null) as CombatToken
+	return tok != null and tok.combatant.creature.effects.any(func(fx: Effect) -> bool: return bool(fx.data.get("wakeable", false)))
+
+
+## How a shown NPC is, for the hover hint, Look and the Alt plates: "asleep, prone", or "" when nothing is the matter.
+static func state_words(view: LocationView, npc_id: String) -> String:
+	var tok := view.npc_tokens.get(npc_id, null) as CombatToken
+	if tok == null:
+		return ""
+	var words: Array[String] = []
+	if is_asleep(view, npc_id):
+		words.append("asleep")
+	if tok.combatant.creature.has_condition(&"prone"):
+		words.append("prone")
+	return ", ".join(words)
+
+
+## The hover hint over a person: "Talk to Ismark", or a sleeper's name and state ("Offalia Wormwiggle (asleep, prone)").
+static func hover_label(view: LocationView, npc_id: String, who: String) -> String:
+	var state := state_words(view, npc_id)
+	if is_asleep(view, npc_id):
+		return "%s (%s)" % [who, state]
+	return "Talk to %s%s" % [who, " (%s)" % state if state != "" else ""]
+
+
+## What Look adds about a shown person's state: " Asleep: Unconscious and Prone." or "".
+static func look_words(view: LocationView, npc_id: String) -> String:
+	if is_asleep(view, npc_id):
+		return " Asleep: Unconscious and Prone."
+	return " Prone." if state_words(view, npc_id) == "prone" else ""
 
 
 ## Owner report (2026-10-07): Strahd spoke at the funeral but wasn't there. A scene puts a speaker on the map for as

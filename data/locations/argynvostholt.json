@@ -470,7 +470,23 @@
       ],
       "dialogue": "argynvostholt/knights:yard",
       "when": "flag.order_fate == \"ride\" or flag.order_fate == \"grudge\"",
-      "facing": "south"
+      "facing": "south",
+      "path": [
+        [
+          26,
+          15
+        ],
+        [
+          12,
+          15,
+          4
+        ],
+        [
+          12,
+          9
+        ]
+      ],
+      "pause": 4
     }
   ],
   "encounters": [

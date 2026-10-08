@@ -30,8 +30,8 @@ func test_villager_sprite_frames_have_every_direction() -> void:
 	if frames == null:
 		return
 	for d in DirectionalSprite.DIRECTIONS:
-		assert_eq(frames.get_frame_count(StringName("walk_" + d)), 8, "walk_" + d)
-		assert_eq(frames.get_frame_count(StringName("idle_" + d)), 1, "idle_" + d)
+		assert_eq(frames.get_frame_count(DirectionalSprite.anim_for(frames, "walk", d)[0] as StringName), 8, "walk_" + d)
+		assert_eq(frames.get_frame_count(DirectionalSprite.anim_for(frames, "idle", d)[0] as StringName), 1, "idle_" + d)
 
 
 ## Every character sprite sheet (art/sprites/<id>/walk.tres) and the animations the game plays from it.
@@ -273,3 +273,15 @@ func test_motion_between_frames_breathing_lean_and_recoil() -> void:
 		s._move_between_frames(0.05, cam)
 	assert_true(absf(float(_param(s, "push"))) < 0.01, "and it springs back")
 	root.queue_free()
+
+
+## Sheets stay loaded only while something shows them (Performance pass: video memory climbed over a session).
+func test_frames_are_shared_while_shown_and_freed_after() -> void:
+	var a := DirectionalSprite.frames_for("villager")
+	var b := DirectionalSprite.frames_for("villager")
+	assert_true(a == b, "the same frames while in use")
+	var id := a.get_instance_id()
+	a = null
+	b = null
+	assert_false(is_instance_id_valid(id), "freed once nothing holds them")
+	assert_true(DirectionalSprite.frames_for("villager") != null, "and loaded again when needed")

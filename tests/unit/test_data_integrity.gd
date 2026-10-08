@@ -28,11 +28,48 @@ func test_phase_1_content_counts() -> void:
 		assert_true(c.spells_for("wizard", level).size() >= 20, "wizard level %d spells" % level)
 
 
-func test_every_class_and_subclass_builds_and_levels_to_11() -> void:
+## The class-and-subclass builds in slices by class, so make test can run them side by side (they took three minutes
+## in one test). Together they cover every class.
+const CLASS_SLICES := [["barbarian", "bard", "cleric"], ["druid", "fighter", "monk"], ["paladin", "ranger", "rogue"],
+	["sorcerer", "warlock", "wizard"]]
+
+
+func test_the_class_slices_cover_every_class() -> void:
+	var sliced := {}
+	for slice: Array in CLASS_SLICES:
+		for cls: String in slice:
+			assert_false(sliced.has(cls), "%s is in one slice only" % cls)
+			sliced[cls] = true
+	for sub in Compendium.shared().all_playable("subclasses"):
+		assert_true(sliced.has(str(sub["class"])), "%s's class %s is built" % [sub["id"], sub["class"]])
+
+
+func test_every_barbarian_bard_and_cleric_subclass_builds_and_levels_to_11() -> void:
+	_build_to_11(CLASS_SLICES[0])
+
+
+func test_every_druid_fighter_and_monk_subclass_builds_and_levels_to_11() -> void:
+	_build_to_11(CLASS_SLICES[1])
+
+
+func test_every_paladin_ranger_and_rogue_subclass_builds_and_levels_to_11() -> void:
+	_build_to_11(CLASS_SLICES[2])
+
+
+func test_every_sorcerer_warlock_and_wizard_subclass_builds_and_levels_to_11() -> void:
+	_build_to_11(CLASS_SLICES[3])
+
+
+## Builds every playable subclass of `classes` from level 1 and levels it to 11 with automatic picks.
+func _build_to_11(classes: Array) -> void:
 	var c := Compendium.shared()
+	var built := 0
 	# Every subclass a player can pick (entries marked "playable": false aren't offered yet, docs/tasks/FR-AU-01.md).
 	for sub in c.all_playable("subclasses"):
 		var cls := str(sub["class"])
+		if not cls in classes:
+			continue
+		built += 1
 		var b := CharacterBuilder.new()
 		b.set_class(cls)
 		b.set_background("soldier" if cls in ["fighter", "rogue"] else "sage")
@@ -61,6 +98,7 @@ func test_every_class_and_subclass_builds_and_levels_to_11() -> void:
 		assert_true(ch.max_hp() > 0)
 		for f in ch.features:
 			assert_ne(str(f["name"]), "", "%s feature names" % sub["id"])
+	assert_true(built >= classes.size(), "built the subclasses of %s (%d)" % [classes, built])
 
 
 func test_every_species_and_background_builds() -> void:

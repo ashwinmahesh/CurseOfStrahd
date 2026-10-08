@@ -642,6 +642,9 @@ static func cut_away(board: ArenaBoard, camera_pos: Vector3, focus: Vector3, del
 	for b: Dictionary in board.buildings:
 		if bool(b.get("hidden", false)):
 			continue
+		if b.has("interior"):
+			InteriorWalls.cut(board, b, camera_pos, focus, delta)   # an interior's full-height walls (W8)
+			continue
 		var aabb := b["aabb"] as AABB
 		var hides: bool = aabb.intersects_segment(camera_pos, target) != null and not aabb.has_point(target)
 		var h := float(b["height"])

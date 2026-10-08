@@ -670,6 +670,33 @@
       ],
       "dialogue": "village_of_barovia/ismark:after_burial",
       "when": "flag.burgomaster_buried and not flag.ireena_escort"
+    },
+    {
+      "npc": "barovia_goodwife",
+      "cell": [
+        16,
+        13
+      ],
+      "dialogue": "village_of_barovia/townsfolk:goodwife",
+      "path": [
+        [
+          22,
+          12
+        ],
+        [
+          34,
+          13,
+          4
+        ],
+        [
+          22,
+          14
+        ]
+      ],
+      "hours": [
+        8,
+        17
+      ]
     }
   ],
   "encounters": [
@@ -759,6 +786,7 @@
     {
       "id": "night_streets_dead",
       "trigger": "enter_area:village_square",
+      "waiting": true,
       "when": "night and flag.ismark_met and not flag.night_dead_cleared and level >= 3",
       "text": "Shapes stand in the square, swaying like washing on a line. They turn toward you all at once.",
       "monsters": [
@@ -811,6 +839,7 @@
     {
       "id": "night_streets_dead",
       "trigger": "enter_area:village_square",
+      "waiting": true,
       "when": "night and flag.ismark_met and not flag.night_dead_cleared",
       "text": "Shapes stand in the square, swaying like washing on a line. They turn toward you all at once.",
       "monsters": [

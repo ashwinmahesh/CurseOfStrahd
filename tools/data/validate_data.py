@@ -27,7 +27,8 @@ FOLDERS = {
     "random_encounters": "random_table", "dark_gifts": "dark_gift",
     "endings": "ending",
     "cutscenes": "cutscene",
-    "strahd": {"visits": "strahd_visits"},
+    "strahd": {"visits": "strahd_visits", "attention": "strahd_attention"},
+    "schedule": "schedule",
 }
 
 TYPES = {
@@ -375,6 +376,23 @@ def campaign_checks(data, errors, pending):
 
 
 OPEN_FLOOR = ".~1234"
+
+
+def _floor_reach(rows, start):
+    """Open-floor squares reachable from `start` in 8 directions (an NPC's walking route)."""
+    seen = {start}
+    todo = [start]
+    while todo:
+        x, z = todo.pop()
+        for dx in (-1, 0, 1):
+            for dz in (-1, 0, 1):
+                n = (x + dx, z + dz)
+                if n in seen or n[1] < 0 or n[1] >= len(rows) or n[0] < 0 or n[0] >= len(rows[n[1]]):
+                    continue
+                if rows[n[1]][n[0]] in OPEN_FLOOR:
+                    seen.add(n)
+                    todo.append(n)
+    return seen
 pending_list = []
 
 
@@ -506,6 +524,25 @@ def castle_checks(data, parsed, errors, cond, flags_set, dialogue_refs):
                     errors.append(f"{w}: {lid} has no spawn '{spawn}'")
             if step.get("dialogue"):
                 dialogue_refs.append((step["dialogue"], w))
+
+
+def schedule_checks(data, errors, cond, flags_set, dialogue_refs):
+    """Things that happen on a day and an hour (story/schedule.gd, F2): their conditions and places, the
+    conversations they start and the flags they set."""
+    ids = set()
+    for sid, sch in data.get("schedule", {}).items():
+        for e in sch.get("events", []):
+            w = f"schedule/{sid}.json {e['id']}"
+            if e["id"] in ids:
+                errors.append(f"{w}: another schedule event has this id")
+            ids.add(e["id"])
+            cond(e.get("when", ""), w)
+            if e.get("location") and e["location"] not in data["locations"]:
+                errors.append(f"{w}: unknown location '{e['location']}'")
+            if e.get("dialogue"):
+                dialogue_refs.append((e["dialogue"], w))
+            for fid in e.get("set", {}):
+                flags_set.setdefault(fid, []).append(w)
 
 
 def cutscene_checks(data, parsed, errors):
@@ -642,6 +679,13 @@ def story_checks(data, errors, need):
                 flags_set.setdefault(tr["flag"], []).append(w)
         for n in loc.get("npcs", []):
             on_floor(n["cell"], f"npc {n['npc']}")
+            for p in n.get("path", []):
+                on_floor([int(p[0]), int(p[1])], f"npc {n['npc']} path waypoint")
+            if n.get("path"):
+                walkable = _floor_reach(rows, tuple(n["cell"]))
+                for p in n["path"]:
+                    if (int(p[0]), int(p[1])) not in walkable:
+                        errors.append(f"{w}: npc {n['npc']} path waypoint {p[:2]} can't be walked to from {n['cell']}")
             if n["npc"] not in npcs:
                 errors.append(f"{w}: unknown npc '{n['npc']}'")
             if n.get("dialogue"):
@@ -719,6 +763,15 @@ def story_checks(data, errors, need):
     treasure_checks(data, parsed, errors, pending_list)
     cutscene_checks(data, parsed, errors)
     castle_checks(data, parsed, errors, cond, flags_set, dialogue_refs)
+    schedule_checks(data, errors, cond, flags_set, dialogue_refs)
+    attention = data.get("strahd", {}).get("attention", {})
+    for m in attention.get("marks", []):
+        cond(m["when"], f"strahd/attention.json {m['id']}")
+        if re.search(r"\battention\b", m["when"]):
+            errors.append(f"strahd/attention.json {m['id']}: a mark can't read attention itself")
+    tier_ids = [t["id"] for t in attention.get("tiers", [])]
+    if attention and sorted(t["min"] for t in attention["tiers"]) != [t["min"] for t in attention["tiers"]]:
+        errors.append("strahd/attention.json: tiers go from the lowest min to the highest")
     for ref, w in dialogue_refs:
         fkey, _, node = ref.rpartition(":")
         if fkey not in parsed:

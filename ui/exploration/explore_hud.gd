@@ -3,7 +3,7 @@ extends CanvasLayer
 ## The exploration screen (plan §5.2): party cards with framed portraits, Hit Points bars, conditions and the
 ## level-up badge (click to lead, right-click for the sheet), the location and time, the Narrator's box, the hover hint
 ## for what a click will do, toasts and the last roll on dark plates, and the command bar for the character,
-## inventory, journal, rest, search, sneak and split.
+## inventory, journal, rest, search, sneak, split and turn-based exploring.
 
 signal leader_picked(index: int)
 signal sheet_requested(index: int)
@@ -44,8 +44,8 @@ var thing_labels: ThingLabels
 ## The exploring controls card (F1), like the one in fights.
 const CONTROLS: Array[String] = [
 	"Mouse: click the floor to walk there; click a person, door, chest or thing to use it (the hint says what a click will do); right-click it for everything you can do; the mouse wheel zooms.",
-	"Hold Alt to see the names of everything you can use nearby.",
-	"Keyboard: WASD or the arrows walk · Q / E turn the camera · 1-4 or Tab pick who leads · C character · I inventory · J journal · P party · M map · R rest · F search · V sneak · G split the party · F5 quicksave · F9 load it · Esc menu.",
+	"Hold Alt to see the names of everything you can use nearby. Hold L to see what each foe in sight can see (always shown while sneaking).",
+	"Keyboard: WASD or the arrows walk · Q / E turn the camera · 1-4 or Tab pick who leads · C character · I inventory · J journal · P party · M map · R rest · F search · V sneak · G split the party · T turn-based (Space ends the round) · F5 quicksave · F9 load it · Esc menu.",
 	"In conversations: 1-9 pick an answer · Space, Enter or a click goes on · H shows what's been said.",
 	"Controller: left stick walks · A uses what's beside you · Back opens its menu · X searches · Y journal · LB / RB character and inventory · Start menu.",
 ]
@@ -55,7 +55,7 @@ var _controls: PanelContainer
 const BUTTONS := [["Character", "C", "sheet", "character"], ["Inventory", "I", "inventory", "inventory"],
 	["Journal", "J", "journal", "journal"], ["Party", "P", "party", "party"], ["Map", "M", "map", "map"],
 	["Rest", "R", "rest", "rest"], ["Search", "F", "search", "search"], ["Sneak", "V", "sneak", "sneak"],
-	["Split", "G", "split", "split"], ["Menu", "Esc", "menu", "menu"]]
+	["Split", "G", "split", "split"], ["Turn-based", "T", "plan", "plan"], ["Menu", "Esc", "menu", "menu"]]
 
 
 func _init() -> void:
@@ -278,7 +278,7 @@ func build(state: StoryState) -> void:
 	refresh()
 
 
-func refresh(location_name: String = "", sneaking: bool = false, solo: bool = false) -> void:
+func refresh(location_name: String = "", sneaking: bool = false, solo: bool = false, planning: bool = false) -> void:
 	if st == null:
 		return
 	for c in _party_box.get_children():
@@ -374,18 +374,20 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		_party_box.add_child(gcard)
 	if location_name != "":
 		_fit_where(location_name)
-	# Sneak and Split read as on while they are.
-	for pair: Array in [["sneak", sneaking], ["split", solo]]:
+	# Sneak, Split and Turn-based read as on while they are.
+	for pair: Array in [["sneak", sneaking, "Sneak", "V"], ["split", solo, "Split", "G"], ["plan", planning, "Turn-based", "T"]]:
 		var b := _bar_buttons.get(str(pair[0]), null) as Button
 		if b != null:
 			var on := bool(pair[1])
 			b.modulate = Color(1.25, 1.12, 0.8) if on else Color.WHITE
-			b.tooltip_text = ("%s (%s) · on" if on else "%s (%s)") % [str(pair[0]).capitalize(), "V" if pair[0] == "sneak" else "G"]
+			b.tooltip_text = ("%s (%s) · on" if on else "%s (%s)") % [pair[2], pair[3]]
+	# Turn-based exploring's panel takes the top of the screen: toasts drop below it.
+	_toast_panel.offset_top = 136 if planning else 70
 	_goal.text = _objective()
 	_goal.visible = _goal.text != ""
 	var hours := st.minute_of_day / 60
-	_mode.text = "Day %d · %02d:%02d%s%s · %d gp" % [st.day, hours, st.minute_of_day % 60, " · Sneaking" if sneaking else "",
-		" · Split party" if solo else "", int(st.gold)]
+	_mode.text = "Day %d · %02d:%02d%s%s%s · %d gp" % [st.day, hours, st.minute_of_day % 60, " · Sneaking" if sneaking else "",
+		" · Split party" if solo else "", " · Turn-based" if planning else "", int(st.gold)]
 
 
 ## The newest open quest's first objective ("◆ Follow the hidden stair down"), or "".

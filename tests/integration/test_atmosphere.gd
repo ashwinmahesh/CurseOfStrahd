@@ -206,7 +206,7 @@ func test_lamps_nearest_the_party_cast_shadows() -> void:
 	Look.set_style(was, false)
 
 
-## The Modern sun's shadows reach only as far as the camera sees, so they follow the zoom, in four splits.
+## The Modern sun's shadows reach only as far as the camera sees, so they follow the zoom, in the preset's splits.
 func test_sun_shadows_follow_the_zoom() -> void:
 	var was := Look.style()
 	Look.set_style("modern", false)
@@ -218,7 +218,15 @@ func test_sun_shadows_follow_the_zoom() -> void:
 	v.rig.distance = 25.0
 	v.atmosphere.call("_fit_sun_shadows")
 	assert_true(v.atmosphere.sun.directional_shadow_max_distance > close, "zoomed out, the shadows reach further")
-	assert_eq(v.atmosphere.sun.directional_shadow_mode, DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS, "four splits")
+	var splits := DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS if Graphics.sun_splits() == 4 \
+		else DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
+	assert_eq(v.atmosphere.sun.directional_shadow_mode, splits, "the preset's splits")
+	var flat := 0
+	for n in v.board.get_children():
+		if n is MeshInstance3D and str(n.name).begins_with("Floor") and (n as MeshInstance3D).position.y < 0.0 \
+				and (n as MeshInstance3D).cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF:
+			flat += 1
+	assert_true(flat > 0, "level floor squares cast no shadow")
 	v.queue_free()
 	Look.set_style(was, false)
 
@@ -287,4 +295,132 @@ func test_each_mood_has_its_own_grade() -> void:
 		for t: String in ["day", "dusk", "night", "dawn", "any"]:
 			assert_true(Look.color(str(a._tone(t)["shade"])) is Color, "%s %s" % [id, t])
 		a.free()
+	Look.set_style(was, false)
+
+
+## The presets step down the heavy effects (W17): Low draws the world smaller and drops the haze and bounced light,
+## and a change of preset reaches the place on screen at once.
+func test_presets_reach_the_place_on_screen() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	Graphics.set_preset("high", false)
+	var v := _view("village_of_barovia")
+	await get_tree().process_frame
+	assert_true(v.atmosphere.env.volumetric_fog_enabled and v.atmosphere.env.ssil_enabled, "High: haze and bounce")
+	Graphics.set_preset("low", false)
+	assert_false(v.atmosphere.env.volumetric_fog_enabled, "Low drops the haze at once")
+	assert_false(v.atmosphere.env.ssil_enabled, "and the bounced light")
+	assert_true(get_viewport().scaling_3d_scale < 1.0, "and draws the world smaller")
+	assert_eq(v.atmosphere.sun.light_angular_distance, 0.0, "with plain sun shadows")
+	Graphics.set_preset(Graphics.DEFAULT_PRESET, false)
+	assert_true(is_equal_approx(get_viewport().scaling_3d_scale, 1.0), "High draws it full size again")
+	v.queue_free()
+	Look.set_style(was, false)
+
+
+## The frame-time meter (W17) sits on the window, hidden until F3.
+func test_the_frame_meter_waits_for_f3() -> void:
+	var v := _view("village_of_barovia")
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var meter := get_tree().root.get_node_or_null(FrameMeter.NODE_NAME) as FrameMeter
+	assert_true(meter != null, "on the window")
+	var meters := 0
+	for n in get_tree().root.get_children():
+		if n is FrameMeter:
+			meters += 1
+	assert_eq(meters, 1, "just one, however many places open")
+	assert_eq(meter.visible, FrameMeter.shown(), "shown as the setting says")
+	v.queue_free()
+
+
+## Weather lies on the surfaces in the Modern finish (W12): rain wets Vallaki's streets, snow lies at the Abbey, and
+## a dry place is dry; Classic is frozen without it.
+func test_weather_on_surfaces() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var expect := {"vallaki": [true, false], "abbey_of_st_markovia": [false, true], "village_of_barovia": [false, false]}
+	for loc_id: String in expect:
+		var v := _view(loc_id)
+		await get_tree().process_frame
+		var e := expect[loc_id] as Array
+		assert_eq(v.atmosphere.wetness > 0.0, bool(e[0]), "%s wet" % loc_id)
+		assert_eq(v.atmosphere.snow_cover > 0.0, bool(e[1]), "%s snowy" % loc_id)
+		v.queue_free()
+		await get_tree().process_frame
+	Look.set_style("classic", false)
+	var c := _view("vallaki")
+	await get_tree().process_frame
+	assert_eq(c.atmosphere.wetness, 0.0, "Classic stays as it was")
+	c.queue_free()
+	Look.set_style(was, false)
+
+
+## The party leaves footprints on ground that takes them (W12): mud, snow, marsh and bare earth, not cobbles.
+func test_footprints_on_soft_ground() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var v := _view("berez")
+	var soft := Vector2i(-1, -1)
+	for z in v.grid.depth:
+		for x in v.grid.width:
+			if soft.x < 0 and v.atmosphere._ground_at(Vector2i(x, z)) != "":
+				soft = Vector2i(x, z)
+	assert_true(soft.x >= 0, "Berez has ground that takes footprints")
+	var tok := v.tokens[v.members[0].id] as Node3D
+	tok.global_position = v.board.cell_center(soft)
+	v.atmosphere._footprints()
+	tok.global_position = v.board.cell_center(soft) + Vector3(0.4, 0, 0)
+	v.atmosphere._footprints()
+	assert_true(v.atmosphere._prints.size() >= 1, "a step leaves a print")
+	v.queue_free()
+	Look.set_style(was, false)
+
+
+
+
+## The castle's carved piers light their sconces in the Modern finish (the flames found in the kit's own meshes).
+func test_castle_piers_light_their_sconces() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var v := _view("castle_ravenloft_main_floor")
+	var named := 0
+	for n in v.board.find_children("*", "OmniLight3D", true, false):
+		if str(n.get_meta("light_kind", "")) == "candle" and n.get_parent() is MeshInstance3D:
+			named += 1
+	assert_true(named >= 2, "the piers' sconces are lit (%d)" % named)
+	v.queue_free()
+	Look.set_style(was, false)
+
+
+## The Death House's hearths light the room in the Modern finish (their modelled fire, W5).
+func test_hearths_light_the_room() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var v := _view("death_house_ground")
+	var fires := 0
+	for n in v.find_children("*", "OmniLight3D", true, false):
+		if str(n.get_meta("light_kind", "")) == "fire":
+			fires += 1
+	assert_true(fires >= 2, "its hearths burn (%d)" % fires)
+	v.queue_free()
+	Look.set_style(was, false)
+
+
+## Barovia's sky (W13) is drawn outdoors in the Modern finish, and the moon shows plainest at night.
+func test_the_sky_outdoors() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	GameState.story.minute_of_day = 23 * 60
+	var v := _view("village_of_barovia")
+	await get_tree().process_frame
+	var post := (v.post.mesh as QuadMesh).material as ShaderMaterial
+	assert_true(bool(post.get_shader_parameter("sky_on")), "the sky over the village")
+	assert_eq(float(post.get_shader_parameter("sky_moon")), 1.0, "the moon at night")
+	v.queue_free()
+	var inside := _view("death_house_ground")
+	await get_tree().process_frame
+	var ipost := (inside.post.mesh as QuadMesh).material as ShaderMaterial
+	assert_false(bool(ipost.get_shader_parameter("sky_on")), "no sky indoors")
+	inside.queue_free()
 	Look.set_style(was, false)

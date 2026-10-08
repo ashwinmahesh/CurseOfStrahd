@@ -74,6 +74,42 @@ bands blend, with the swatch's own fine shading laid back over them, at the snap
 the entry's `hd_file` in the manifest; `Look.cel_textured` uses it when the look is Modern, else the snapped tile.
 No new images are generated for it. The snapped tiles are not touched.
 
+## The HD surface sets (Improvement Ideas W4)
+
+Owner decision (2026-10-07): HD surfaces may leave the palette; Classic keeps its snapped tiles, frozen. Every floor
+and wall set (49, `tools/art/surface_recipes.json`) was repainted for the Modern look:
+
+1. **Painted at 2K.** One Gemini swatch per surface, `--size 2K`, with `art/prompts/surface_preamble.txt` (hand-painted
+   HD-2D, no ink lines, dark and cold, lit flat) and one of the look target frames
+   (`art/generated/look_targets/*_ab.png`, at 1376 px) as the style reference. Swatches are kept as WebP in
+   `art/generated/surfaces/` (ignored by Godot).
+2. **Seamless** by quilting along minimum-error cuts (`blender/make_surface.py`, reusing make_texture's seams), low
+   light flattened, cut from the swatch at up to 1536 px and stored at 1024 px (`crop` in a recipe takes less of the
+   swatch where Gemini drew the pieces too small: the checker and marble floors). Each tile is brought to the old
+   tile's average brightness (between 0.85x and 1.8x), since the scenes' light was set by the old tiles. A recipe's
+   `lift` raises the darkest parts (the checker floor's black tiles keep their veins in a dim hall).
+3. **Variants** (organic surfaces: cobbles, mud, grass, thatch, plaster, flagstones, rock, snow ...): two more tiles
+   quilted from the first tile's own content, so they keep its pieces, scale and colours in a different layout; the
+   first tile's border band is cut into each along seams that follow the dark joints, so variants sit side by side in
+   any order. Boards, tiles, courses and printed patterns keep one tile (a quilt would break their lines).
+4. **Normal map** (OpenGL, green up) from the tile's brightness at two scales, and an **ORM map** (occlusion from how
+   much darker a pixel is than its surroundings, roughness from `Look.MATERIALS` and the tile's brightness, no metal)
+   at half size.
+5. Written as WebP (albedo q92, normal q95, ORM q90) as `art/textures/<theme>/<surface>_2k[_b|_c][_n|_orm].webp`; the
+   manifest entry's `hd_file`, `normal_file`, `orm_file`, `variants` and `hd_source` point at them.
+   `art/textures/macro_noise.png` is the macro noise (`macro_file`). Imports: VRAM with mipmaps, S3TC rather than
+   BPTC (BPTC took about an hour for the sets on the busy Mac; S3TC under a minute), normal maps compressed as normal
+   maps (`tools/art/set_import.py --fast [--normal]`).
+
+    python3 tools/art/build_surfaces.py [--generate] [--only village/cobbles ...] [--jobs 4] [--macro]
+    make import && python3 tools/art/set_import.py --fast <the new albedo and ORM files> && python3 tools/art/set_import.py --fast --normal <the _n files> && make import
+
+The kit's own surfaces are new sets here too: `kit/oak` (beams, darkened by the recipe's `grade`; `kit/oak_v` is it
+turned a quarter so posts have their grain running up, `derived` in the recipes), `kit/plaster` (the timber houses'
+lime plaster), `kit/painted_wood` (weathered paint with no board seams, tinted per Vallaki house by
+`BuildingKit.painted`) and `kit/dressed_stone` (trims). Gemini draws at its own scale: check a new swatch's pieces against
+the old tile's (a recipe's `pieces` can recut it, but its spectral count mistakes mortar lines for pieces, so check).
+
 ## How a surface takes the light (the Modern finish, Improvement Ideas W3)
 
 In the Modern finish `Look.cel_textured` gives a surface `shaders/world/lit_world.gdshader` and `Look.cel` gives
@@ -95,8 +131,8 @@ At the top level of the manifest, `macro_file` names a tileable soft noise (W4):
 lightened, and its roughness nudged, by it over about nine squares (`macro_units`), `Look.MACRO_STRENGTH` (0.35)
 unless the surface's `macro` says otherwise.
 
-Without any of these a surface takes the row of `Look.MATERIALS` whose word its name holds (marble 0.15, tile and
-parquet 0.3, cobbles 0.4 with a wide spread so the stone tops glint, flagstones 0.5, stone 0.65, plaster 0.9,
+Without any of these a surface takes the row of `Look.MATERIALS` whose word its name holds (marble 0.3, tile
+parquet 0.36 and 0.3, cobbles 0.4 with a wide spread so the stone tops glint, flagstones 0.5, stone 0.65, plaster 0.9,
 rugs and thatch 1.0), else roughness 0.8. Flat colours: `Look.COLOUR_MATERIALS` (pewter and silver are metal,
 ivory, bone and polished walnut take a soft highlight, cloth colours stay dull), else 0.75. Roughness never goes
 below 0.1, which the screen pass keeps for water.

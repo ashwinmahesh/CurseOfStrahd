@@ -154,8 +154,10 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 	m.set_shader_parameter("wall_band", str(info.get("wrap", "xy")) == "x")
 	m.set_shader_parameter("grid_strength", grid)
 	m.set_shader_parameter("grid_line", color("ink"))
+	m.set_meta("surface", surface)   # what the ground is, for footprints (Atmosphere)
 	if modern():
 		var spec := material_for(surface)
+		var relief := MODERN_RELIEF * float(spec.get("relief", 1.0))
 		var nm: Texture2D = null
 		if info.has("normal_file") and ResourceLoader.exists("res://" + str(info["normal_file"])):
 			nm = load("res://" + str(info["normal_file"])) as Texture2D
@@ -163,7 +165,7 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 			nm = normal_map(path)
 		if nm != null:
 			m.set_shader_parameter("normal_tex", nm)
-			m.set_shader_parameter("normal_strength", MODERN_RELIEF * float(spec.get("relief", 1.0)))
+			m.set_shader_parameter("normal_strength", relief)
 		if info.has("orm_file") and ResourceLoader.exists("res://" + str(info["orm_file"])):
 			m.set_shader_parameter("orm_tex", load("res://" + str(info["orm_file"])) as Texture2D)
 			m.set_shader_parameter("use_orm", true)
@@ -251,10 +253,10 @@ const MODERN_RELIEF := 0.9
 ## (MACRO_STRENGTH unless set). A surface's own "material" in art/textures/manifest.json wins over this, and its own
 ## "normal_file" and "orm_file" (occlusion, roughness, metal) over both.
 const MATERIALS: Array[Array] = [
-	["marble", {"roughness": 0.15, "spread": 0.3, "relief": 0.5}],
-	["black_stone", {"roughness": 0.25, "spread": 0.4, "relief": 0.6}],
-	["amber", {"roughness": 0.2, "spread": 0.3, "relief": 0.5}],
-	["tile", {"roughness": 0.3, "spread": 0.5, "relief": 0.8}],
+	["marble", {"roughness": 0.3, "spread": 0.3, "relief": 0.5}],
+	["black_stone", {"roughness": 0.32, "spread": 0.4, "relief": 0.6}],
+	["amber", {"roughness": 0.28, "spread": 0.3, "relief": 0.5}],
+	["tile", {"roughness": 0.36, "spread": 0.5, "relief": 0.8}],
 	["parquet", {"roughness": 0.3, "spread": 0.5, "relief": 0.6}],
 	["panel", {"roughness": 0.4, "spread": 0.5, "relief": 0.9}],
 	["wainscot", {"roughness": 0.45, "spread": 0.5, "relief": 0.8}],
@@ -304,31 +306,61 @@ static var _normals: Dictionary = {}
 
 
 ## A normal map made from a texture's own brightness (dark ink lines and mortar read as grooves), softened first so
-## it gives bevels rather than noise; made once per texture and kept. Null if the image can't be read.
+## it gives bevels rather than noise. Made once per texture and kept, in memory and on disk (user://look_cache: every
+## first visit made them on the spot, up to 290 ms in the castle, P3; now only the first ever does), as two channels
+## (the shader rebuilds z). Null if the image can't be read.
 static func normal_map(path: String) -> Texture2D:
 	if _normals.has(path):
 		return _normals[path] as Texture2D
+	var cached := _cached_normal(path)
+	if cached != null:
+		_normals[path] = cached
+		return cached
 	var tex := load(path) as Texture2D
-	var img := tex.get_image() if tex != null else null
-	if img == null:
-		_normals[path] = null
+	var img := _normal_image(tex.get_image() if tex != null else null)
+	var out: ImageTexture = ImageTexture.create_from_image(img) if img != null else null
+	_normals[path] = out
+	if out != null:
+		DirAccess.make_dir_recursive_absolute(NORMAL_CACHE)
+		ResourceSaver.save(out, _normal_cache_path(path))
+	return out
+
+
+const NORMAL_CACHE := "user://look_cache/normals/"
+
+
+## The normal map image for a texture's image: decompressed, softened, turned to normals, mipmapped and compressed to
+## two channels.
+static func _normal_image(src: Image) -> Image:
+	if src == null:
 		return null
-	img = img.duplicate() as Image
+	var img := src.duplicate() as Image
 	if img.is_compressed() and img.decompress() != OK:
-		_normals[path] = null
 		return null
 	img.clear_mipmaps()
 	var w := img.get_width()
 	var h := img.get_height()
 	img.convert(Image.FORMAT_L8)
-	# A cheap blur: down to a quarter and back up, so lines become soft grooves.
+	# A cheap blur: down to a third and back up, so lines become soft grooves.
 	img.resize(maxi(8, w / 3), maxi(8, h / 3), Image.INTERPOLATE_BILINEAR)
 	img.resize(w, h, Image.INTERPOLATE_CUBIC)
 	img.bump_map_to_normal_map(6.0)
 	img.generate_mipmaps()
-	var out := ImageTexture.create_from_image(img)
-	_normals[path] = out
-	return out
+	img.compress(Image.COMPRESS_S3TC, Image.COMPRESS_SOURCE_NORMAL)   # two channels (RGTC) for a normal map
+	return img
+
+
+## Where a texture's normal map is kept on disk: by its path and when its image last changed.
+static func _normal_cache_path(path: String) -> String:
+	var stamp := FileAccess.get_modified_time(path)
+	return NORMAL_CACHE + "%s_%d.res" % [path.md5_text(), stamp]
+
+
+static func _cached_normal(path: String) -> Texture2D:
+	var file := _normal_cache_path(path)
+	if not FileAccess.file_exists(file):
+		return null
+	return ResourceLoader.load(file, "", ResourceLoader.CACHE_MODE_IGNORE) as Texture2D
 
 
 static func cel_checker(a: String, b: String, line: String) -> ShaderMaterial:
@@ -337,6 +369,24 @@ static func cel_checker(a: String, b: String, line: String) -> ShaderMaterial:
 	m.set_shader_parameter("checker_alt", color(b))
 	m.set_shader_parameter("grid_line", color(line))
 	return m
+
+
+static var _noise: ImageTexture = null
+
+
+## A 256 x 256 tile of random values for the screen pass's noise in the Modern finish (strahd_post.gdshader
+## fast_noise): its own fixed seed, so the mist is the same from run to run (cosmetic, never Dice).
+static func noise_texture() -> ImageTexture:
+	if _noise == null:
+		var rng := RandomNumberGenerator.new()
+		rng.seed = 0x5742A
+		var img := Image.create(256, 256, false, Image.FORMAT_R8)
+		for y in 256:
+			for x in 256:
+				var v := rng.randf()
+				img.set_pixel(x, y, Color(v, v, v))
+		_noise = ImageTexture.create_from_image(img)
+	return _noise
 
 
 ## Where the screen pass draws among blended things: before all of them (they draw at 0 and above).
@@ -381,4 +431,7 @@ static func style_post(mat: ShaderMaterial) -> void:
 	mat.set_shader_parameter("keep_hdr", m)
 	mat.set_shader_parameter("outlines", not m)
 	mat.set_shader_parameter("tone_split", m)
+	mat.set_shader_parameter("fast_noise", m)
+	if m:
+		mat.set_shader_parameter("noise_tex", noise_texture())
 	mat.set_shader_parameter("outline_width", 1.2 if m else 1.5)

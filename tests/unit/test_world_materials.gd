@@ -39,7 +39,7 @@ func test_classic_keeps_its_cel_bands() -> void:
 
 ## A surface's own "material" in the texture manifest wins over the table, and an unknown surface is plain stone.
 func test_material_settings_resolve() -> void:
-	assert_eq(float(Look.material_for("castle/black_marble")["roughness"]), 0.15, "marble by its name")
+	assert_eq(float(Look.material_for("castle/black_marble")["roughness"]), 0.3, "marble by its name")
 	assert_eq(float(Look.material_for("nowhere/unknown")["roughness"]), 0.8, "an unknown surface is matte")
 
 

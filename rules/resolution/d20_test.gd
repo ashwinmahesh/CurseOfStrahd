@@ -129,6 +129,59 @@ func floor_natural(floor: int, source: String) -> void:
 		set_natural(floor, source)
 
 
+## One die rolled again (Heroic Inspiration, 2024: "reroll any die ... you must use the new roll"): the die worth
+## rolling again is the lower one, so with Advantage the better of the two still counts and with Disadvantage the worse.
+func reroll_one(natural: int, source: String) -> void:
+	var before := kept
+	if rolls.size() == 2 and (advantage or disadvantage):
+		var low := 0 if rolls[0] <= rolls[1] else 1
+		rolls[low] = natural
+		kept = maxi(rolls[0], rolls[1]) if advantage else mini(rolls[0], rolls[1])
+	else:
+		rolls = [natural]
+		kept = natural
+	_note_reroll(source, "%d → %d" % [before, kept])
+
+
+## The whole roll made again (Indomitable, Countercharm, a Luck Blade): its Advantage and Disadvantage as before, plus
+## `add_advantage` (Countercharm's new roll has Advantage), and the bonuses already counted (Bless, the save's modifier)
+## stay. `luck`: Halfling Luck rerolls a 1 again.
+func reroll(dice: DiceRoller, source: String, add_advantage: bool = false, luck: bool = false) -> void:
+	var before := kept
+	var has_adv := advantage or not advantage_sources.is_empty() or add_advantage
+	var has_dis := disadvantage or not disadvantage_sources.is_empty()
+	advantage = has_adv and not has_dis
+	disadvantage = has_dis and not has_adv
+	if add_advantage and not source in advantage_sources:
+		advantage_sources.append(source)
+	if advantage or disadvantage:
+		rolls = dice.roll(20, 2, source)
+		kept = maxi(rolls[0], rolls[1]) if advantage else mini(rolls[0], rolls[1])
+	else:
+		rolls = dice.roll(20, 1, source)
+		kept = rolls[0]
+	_note_reroll(source, "%d → %s" % [before, str(kept) if rolls.size() == 1 else "%d (%d, %d)" % [kept, rolls[0], rolls[1]]])
+	if luck and 1 in rolls:
+		var note := reroll_note
+		reroll_ones(dice, "Luck")
+		reroll_note = "%s; %s" % [note, reroll_note]
+
+
+func _note_reroll(source: String, what: String) -> void:
+	reroll_note = ("%s; " % reroll_note if reroll_note != "" else "") + "%s: %s" % [source, what]
+	auto_failed = false
+	_resolve()
+
+
+## Whether the roll would succeed with `natural` on the d20 instead (Restore Balance weighing the straight roll).
+func would_succeed_with(natural: int) -> bool:
+	if kind == Kind.ATTACK_ROLL and natural >= crit_range:
+		return true
+	if kind == Kind.ATTACK_ROLL and natural == 1:
+		return false
+	return natural + modifier + extra >= target
+
+
 func _resolve() -> void:
 	total = kept + modifier + extra
 	critical = kind == Kind.ATTACK_ROLL and kept >= crit_range

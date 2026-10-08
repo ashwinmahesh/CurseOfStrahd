@@ -28,9 +28,22 @@ var mesh_occluders: Array[Node3D] = []   ## 3D trees (ModelPiece, or Flora's) in
 var flora: Flora = null
 ## The Modern look's shaped ground under the map's woods (GroundRelief, W11); null in Classic, which stays flat.
 var relief: GroundRelief = null
-## The roads out of the map (W11): each edge square of a way out -> Vector2(the middle of its run of open squares
-## along that edge, half the run's width).
-var _roads: Dictionary = {}
+## What lies past the edge, seen when the camera tilts toward the horizon (Vista, W13); null in Classic.
+var vista: Vista = null
+## What building this land took, phase by phase (milliseconds), for the frame budget's checks.
+var build_ms: Dictionary = {}
+## A place's land is built on every arrival, and comes out the same each time (its randomness is seeded by the
+## place): what a build works out is kept for the newest KEEP places and drawn again from that on the next visit.
+## Each entry: its key (the place, the look, the board's shape) -> {"fields", "terrain", "map", "trees", "plants"}.
+const KEEP := 8
+static var _kept: Dictionary = {}
+static var _kept_order: Array[String] = []
+var _key := ""
+## What this build reuses (from an earlier visit) or works out and keeps.
+var _snap: Dictionary = {}
+var _woods_material: Material = null
+var _ground: Array[MeshInstance3D] = []
+var _map_plants: Array[Node] = []
 var _edge: Dictionary = {}      ## border cell -> Edge
 var _w := 0
 var _d := 0
@@ -41,6 +54,9 @@ var _void_land := true
 ## squares (`_dist`) and from the squares people walk on (`_walk`), in squares.
 var _dist := PackedFloat32Array()
 var _walk := PackedFloat32Array()
+## Each cell's kind (Edge, or -1 on the map's own squares) and its distance from the roads out, in squares.
+var _kinds := PackedInt32Array()
+var _road_d := PackedFloat32Array()
 var _nx := 0
 var _nz := 0
 ## The land mesh's corner heights ((_nx + 1) x (_nz + 1), from (-REACH, -REACH)), so plants stand on it exactly.
@@ -61,30 +77,82 @@ static func build(board_: ArenaBoard, mood: Dictionary, rng_: RandomNumberGenera
 	l._w = board_.grid.width
 	l._d = board_.grid.depth
 	l._void_land = str(l.spec.get("void", "land")) == "land"
-	l._classify()
-	l._distances()
+	var t := Time.get_ticks_usec()
+	l._key = "%s|%s|%dx%d|%d|%d" % [board_.place, Look.style(), l._w, l._d, board_.occupied.size(),
+		board_.house_cells.size()]
+	var known := _kept.has(l._key)
+	l._snap = _kept.get(l._key, {}) as Dictionary
+	if l._snap.has("fields"):
+		var f := l._snap["fields"] as Array
+		l._edge = f[0] as Dictionary
+		l._dist = f[1] as PackedFloat32Array
+		l._walk = f[2] as PackedFloat32Array
+		l._kinds = f[3] as PackedInt32Array
+		l._road_d = f[4] as PackedFloat32Array
+		l._nx = int(f[5])
+		l._nz = int(f[6])
+	else:
+		l._classify()
+		l._distances()
+		l._snap["fields"] = [l._edge, l._dist, l._walk, l._kinds, l._road_d, l._nx, l._nz]
 	var loc := Compendium.shared().get_entry("locations", board_.place) if board_.place != "" \
 		and Compendium.shared().has("locations", board_.place) else {}
+	t = l._lap("fields", t)
 	if GroundRelief.enabled():
 		l.relief = GroundRelief.build(board_, loc)
-		l._find_roads()
+		Clutter.ruts(board_, l.relief.roads())   # wheel-rut decals along its roads (lane 7's W10)
+	t = l._lap("relief", t)
 	l._terrain()
+	t = l._lap("terrain", t)
 	if l.relief != null:
-		var shaped := l.relief.meshes(Look.cel_textured(str(l.spec.get("ground", "village/grass"))))
-		if shaped != null:
-			l.root.add_child(shaped)
+		l.relief.quiet_floors()
+		l._woods_material = Look.cel_textured(str(l.spec.get("ground", "village/grass")))
+		l._ground = l.relief.meshes(l._woods_material)
+		for mi in l._ground:
+			l.root.add_child(mi)
+	t = l._lap("shaped_ground", t)
+	var mood_id := Atmosphere.mood_for(board_.place, loc) if not loc.is_empty() else ""
 	if Flora.enabled():
-		l.flora = Flora.for_place(board_, Atmosphere.mood_for(board_.place, loc) if not loc.is_empty() else "", mood)
+		l.flora = Flora.for_place(board_, mood_id, mood)
 		l._flora_board_trees()
-		l.flora.dress_map(board_, l.root, l.map_y)
+		t = l._lap("map_trees", t)
+		if l._snap.has("map"):
+			l.flora.map_items = (l._snap["map"] as Array)[0] as Dictionary
+			l.flora.map_made = (l._snap["map"] as Array)[1] as Array
+		else:
+			l.flora.dress_map(board_, l.map_y, _trap_cells(loc))
+		l._map_plants = l.flora.plant_map(l.root)
+		l._snap["map"] = [l.flora.map_items, l.flora.map_made]
+		t = l._lap("map_plants", t)
 	if float(l.spec.get("trees", 0.0)) > 0.0:
 		if l.flora != null:
 			l._flora_trees()
 		else:
 			l._trees()
+	t = l._lap("land_trees", t)
 	if l.flora != null:
 		l._flora_ground()
+	t = l._lap("land_plants", t)
+	if l.relief != null or l.flora != null:
+		l.root.add_child(HiddenWatch.new(l))
+	if Look.modern():
+		# The mountains, Castle Ravenloft and the lake past the edge, seen when the camera tilts up (W13).
+		l.vista = Vista.build(board_, Flora.set_for(mood_id))
+		if l.vista != null:
+			l.root.add_child(l.vista)
+	l._lap("vista", t)
+	if not known:
+		_kept[l._key] = l._snap
+		_kept_order.append(l._key)
+		while _kept_order.size() > KEEP:
+			_kept.erase(_kept_order.pop_front())
 	return l
+
+
+func _lap(phase: String, since: int) -> int:
+	var now := Time.get_ticks_usec()
+	build_ms[phase] = float(now - since) / 1000.0
+	return now
 
 
 ## Is a map square empty ground the land covers (a plain ' ' square)?
@@ -172,6 +240,23 @@ func _distances() -> void:
 			_walk[j * _nx + i] = 0.0 if walk else 1e6
 	_dist = _chamfered(_dist)
 	_walk = _chamfered(_walk)
+	# What each cell of the land is, once (the trees and plants ask for it thousands of times), and how far each is
+	# from a road out (the land's trees keep off them).
+	var r := int(REACH)
+	_kinds.resize(_nx * _nz)
+	_road_d.resize(_nx * _nz)
+	for j in _nz:
+		for i in _nx:
+			var c := Vector2i(i - r, j - r)
+			var k := -1
+			if g.in_bounds(c):
+				if _is_void(c):
+					k = Edge.FOREST if _void_land else Edge.DROP
+			else:
+				k = edge_at(Vector2(i - r + 0.5, j - r + 0.5))
+			_kinds[j * _nx + i] = k
+			_road_d[j * _nx + i] = 0.0 if k == Edge.OPEN else 1e6
+	_road_d = _chamfered(_road_d)
 
 
 func _chamfered(f: PackedFloat32Array) -> PackedFloat32Array:
@@ -239,24 +324,17 @@ static func _hash(p: Vector2) -> float:
 ## Shared corners, so the ground dips to the waterline at a shore, flattens along a road and meets the map's floor
 ## level at its squares.
 func _terrain() -> void:
+	if _snap.has("terrain"):
+		var kept := _snap["terrain"] as Array
+		_corner_h = kept[0] as PackedFloat32Array
+		_land_node(kept[1] as ArrayMesh, kept[2] as Array)
+		return
 	var r := int(REACH)
 	var nx := _nx
 	var nz := _nz
-	var kinds := PackedInt32Array()
-	kinds.resize(nx * nz)
-	for j in nz:
-		for i in nx:
-			var p := Vector2(i - r + 0.5, j - r + 0.5)
-			var c := Vector2i(i - r, j - r)
-			if board.grid.in_bounds(c):
-				if _is_void(c):
-					kinds[j * nx + i] = Edge.FOREST if _void_land else Edge.DROP
-				else:
-					kinds[j * nx + i] = -1
-			else:
-				kinds[j * nx + i] = edge_at(p)
+	var kinds := _kinds
 	# Corner heights: water or a drop next to a corner pins it down; a road beside it flattens it; a corner touching
-	# the map's own squares sits level with its floor.
+	# the map's own squares sits level with its floor (or the shaped ground's, W11).
 	var heights := PackedFloat32Array()
 	heights.resize((nx + 1) * (nz + 1))
 	for j in nz + 1:
@@ -266,22 +344,21 @@ func _terrain() -> void:
 			var road := 0
 			var on_map := false
 			var near := 1e6
-			for dj: int in [-1, 0]:
-				for di: int in [-1, 0]:
-					var qi: int = i + di
-					var qj: int = j + dj
-					if qi < 0 or qj < 0 or qi >= nx or qj >= nz:
-						continue
-					var k := kinds[qj * nx + qi]
-					near = minf(near, _dist[qj * nx + qi])
-					if k == -1:
-						on_map = true
-						continue
-					water = water or k == Edge.WATER or k == Edge.DROP
-					if k == Edge.OPEN:
-						road += 1
+			for q in 4:
+				var qi: int = i - 1 + (q & 1)
+				var qj: int = j - 1 + (q >> 1)
+				if qi < 0 or qj < 0 or qi >= nx or qj >= nz:
+					continue
+				var k := kinds[qj * nx + qi]
+				near = minf(near, _dist[qj * nx + qi])
+				if k == -1:
+					on_map = true
+					continue
+				water = water or k == Edge.WATER or k == Edge.DROP
+				if k == Edge.OPEN:
+					road += 1
 			var h := _height_at(p, near)
-			if relief != null and not water:
+			if relief != null and not water and near < 3.5:
 				# The banks under the map's woods carry on past its edge and settle into the land.
 				var bank := relief.height(p.clamp(Vector2.ZERO, Vector2(_w, _d)))
 				h += bank * (1.0 - smoothstep(0.5, 3.5, near)) * (1.0 - float(road) / 4.0)
@@ -293,54 +370,82 @@ func _terrain() -> void:
 				h *= 1.0 - 0.8 * float(road) / 4.0
 			heights[j * (nx + 1) + i] = h
 	_corner_h = heights
-	var tools := {Edge.FOREST: SurfaceTool.new(), Edge.OPEN: SurfaceTool.new(), Edge.WATER: SurfaceTool.new()}
-	var used := {}
-	for st: SurfaceTool in tools.values():
-		st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for j in nz:
-		for i in nx:
-			var k := kinds[j * nx + i]
-			if k == -1 or k == Edge.DROP:
-				continue
-			var st := tools[k] as SurfaceTool
-			used[k] = true
-			var y00 := heights[j * (nx + 1) + i]
-			var y10 := heights[j * (nx + 1) + i + 1]
-			var y01 := heights[(j + 1) * (nx + 1) + i]
-			var y11 := heights[(j + 1) * (nx + 1) + i + 1]
-			if k == Edge.WATER:
-				y00 = WATER_Y
-				y10 = WATER_Y
-				y01 = WATER_Y
-				y11 = WATER_Y
-			if k == Edge.OPEN and relief != null:
-				_rutted(st, i - r, j - r, y00, y10, y01, y11)
-				continue
-			var a := Vector3(i - r, y00, j - r)
-			var b := Vector3(i - r + 1, y10, j - r)
-			var c := Vector3(i - r, y01, j - r + 1)
-			var e := Vector3(i - r + 1, y11, j - r + 1)
-			for v: Vector3 in [a, b, c, b, e, c]:
-				st.add_vertex(v)
+	# One grid of corners, smooth normals across it, and a list of squares per surface (ground, road, water): built
+	# as arrays rather than vertex by vertex, since a place is built on every arrival.
+	var w1 := nx + 1
+	var verts := PackedVector3Array()
+	var normals := PackedVector3Array()
+	verts.resize(w1 * (nz + 1))
+	normals.resize(w1 * (nz + 1))
+	for j in nz + 1:
+		for i in w1:
+			var k := j * w1 + i
+			verts[k] = Vector3(i - r, heights[k], j - r)
+			var dx := heights[j * w1 + mini(i + 1, nx)] - heights[j * w1 + maxi(i - 1, 0)]
+			var dz := heights[mini(j + 1, nz) * w1 + i] - heights[maxi(j - 1, 0) * w1 + i]
+			normals[k] = Vector3(-dx, 2.0, -dz).normalized()
+	var flat := verts.duplicate()
+	var up := PackedVector3Array()
+	up.resize(flat.size())
+	for k in flat.size():
+		var v := flat[k]
+		v.y = WATER_Y
+		flat[k] = v
+		up[k] = Vector3.UP
 	var mesh := ArrayMesh.new()
 	var mats: Array[Material] = []
 	var ground := Look.cel_textured(str(spec.get("ground", "village/grass")))
 	var road := Look.cel_textured(str(spec.get("road", spec.get("ground", "village/mud_road"))))
-	for k: int in [Edge.FOREST, Edge.OPEN, Edge.WATER]:
-		if not used.has(k):
+	for kind: int in [Edge.FOREST, Edge.OPEN, Edge.WATER]:
+		var idx := _quads(kinds, kind, nx, nz)
+		if idx.is_empty():
 			continue
-		var st := tools[k] as SurfaceTool
-		st.generate_normals()
-		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, st.commit_to_arrays())
-		var m: Material = ground if k == Edge.FOREST else (road if k == Edge.OPEN else water_material)
+		var arrays := []
+		arrays.resize(Mesh.ARRAY_MAX)
+		arrays[Mesh.ARRAY_VERTEX] = flat if kind == Edge.WATER else verts
+		arrays[Mesh.ARRAY_NORMAL] = up if kind == Edge.WATER else normals
+		arrays[Mesh.ARRAY_INDEX] = idx
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+		var m: Material = ground if kind == Edge.FOREST else (road if kind == Edge.OPEN else water_material)
 		mats.append(m if m != null else Look.cel("bog_deep"))
+	_snap["terrain"] = [heights, mesh, mats]
+	_land_node(mesh, mats)
+
+
+func _land_node(mesh: ArrayMesh, mats: Array) -> void:
 	var mi := MeshInstance3D.new()
 	mi.name = "Land"
 	mi.mesh = mesh
-	for s in mats.size():
-		mi.set_surface_override_material(s, mats[s])
+	for i in mats.size():
+		mi.set_surface_override_material(i, mats[i] as Material)
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	root.add_child(mi)
+
+
+## The corner indices of every square of `kind`, two triangles each (one pass to count, one to fill, so the array is
+## never copied as it grows).
+static func _quads(kinds: PackedInt32Array, kind: int, nx: int, nz: int) -> PackedInt32Array:
+	var n := 0
+	for k in nx * nz:
+		if kinds[k] == kind:
+			n += 1
+	var idx := PackedInt32Array()
+	idx.resize(n * 6)
+	var f := 0
+	var w1 := nx + 1
+	for j in nz:
+		for i in nx:
+			if kinds[j * nx + i] != kind:
+				continue
+			var a := j * w1 + i
+			idx[f] = a
+			idx[f + 1] = a + 1
+			idx[f + 2] = a + w1
+			idx[f + 3] = a + 1
+			idx[f + 4] = a + w1 + 1
+			idx[f + 5] = a + w1
+			f += 6
+	return idx
 
 
 ## Trees on a jittered grid over the forest land, never within two squares of where people walk: the first rows as
@@ -463,75 +568,85 @@ func _tree_models(kind: String, items: Array) -> bool:
 
 # --- Ground with shape (Improvement Ideas W11) --------------------------------------------------------------------
 
-## Pieces a road square is cut into across, for its ruts.
-const RUT_STEPS := 6
-
-
-## The ways out: runs of open squares along each edge of the map, each run's middle and half its width.
-func _find_roads() -> void:
-	for side: int in 4:
-		var n := _w if side < 2 else _d
-		var run: Array[Vector2i] = []
-		for t in n + 1:
-			var c := Vector2i(-1, -1)
-			if t < n:
-				c = Vector2i(t, 0 if side == 0 else _d - 1) if side < 2 else Vector2i(0 if side == 2 else _w - 1, t)
-			if t < n and int(_edge.get(c, -1)) == Edge.OPEN:
-				run.append(c)
-				continue
-			if not run.is_empty():
-				var a := float(run[0].x if side < 2 else run[0].y)
-				var b := float(run[-1].x if side < 2 else run[-1].y) + 1.0
-				for rc in run:
-					var info := Vector2((a + b) / 2.0, (b - a) / 2.0)
-					# A corner square is on two edges: keep the wider way out.
-					if not _roads.has(rc) or (_roads[rc] as Vector2).y < info.y:
-						_roads[rc] = info
-				run.clear()
-
-
-## The ruts' height at a point on a road out: a raised crown down the middle, two wheel ruts, the verges rising at
-## the sides; nothing where the road leaves the map, so it meets the map's own flat squares.
-func _rut(p: Vector2) -> float:
-	var c := Vector2i(clampi(floori(p.x), 0, _w - 1), clampi(floori(p.y), 0, _d - 1))
-	if not _roads.has(c):
-		return 0.0
-	var info := _roads[c] as Vector2
-	var ox := maxf(-p.x, p.x - _w)
-	var oz := maxf(-p.y, p.y - _d)
-	# Beyond the left or right edge the road runs along x, so its width lies along z, and the other way round.
-	var across := p.y if ox > oz else p.x
-	var u := (across - info.x) / maxf(info.y, 0.5)
-	var au := absf(u)
-	var h := 0.03 * exp(-pow(u / 0.18, 2.0)) - 0.055 * exp(-pow((au - 0.48) / 0.14, 2.0)) + 0.07 * smoothstep(0.78, 1.1, au)
-	return h * smoothstep(0.2, 1.6, maxf(ox, oz))
-
-
-## A road square of the land cut into strips with ruts in them, on top of its corner heights.
-func _rutted(st: SurfaceTool, x: float, z: float, y00: float, y10: float, y01: float, y11: float) -> void:
-	var q := 1.0 / RUT_STEPS
-	for sj in RUT_STEPS:
-		for si in RUT_STEPS:
-			var v: Array[Vector3] = []
-			for corner: Vector2 in [Vector2(si, sj), Vector2(si + 1, sj), Vector2(si, sj + 1), Vector2(si + 1, sj + 1)]:
-				var fx := corner.x * q
-				var fz := corner.y * q
-				var y := lerpf(lerpf(y00, y10, fx), lerpf(y01, y11, fx), fz)
-				var p := Vector2(x + fx, z + fz)
-				v.append(Vector3(p.x, y + _rut(p), p.y))
-			for t: Vector3 in [v[0], v[1], v[2], v[1], v[3], v[2]]:
-				st.add_vertex(t)
-
-
 ## The ground's height at a point on the map's own squares: its banks (0 where people walk, and in Classic).
 func map_y(p: Vector2) -> float:
 	return relief.height(p) if relief != null else 0.0
 
 
+## Squares a location's traps lie on (a pit opens there): no plant grows on them.
+static func _trap_cells(loc: Dictionary) -> Dictionary:
+	var out := {}
+	for t: Variant in loc.get("traps", []) as Array:
+		var trap := t as Dictionary
+		var cells := trap.get("cells", []) as Array
+		if trap.has("cell"):
+			cells = cells + [trap["cell"]]
+		for c: Variant in cells:
+			var a := c as Array
+			if a.size() >= 2:
+				out[Vector2i(int(a[0]), int(a[1]))] = true
+	return out
+
+
+## Redraws what the land puts on the map's own squares (the shaped ground, the ground plants), leaving out the squares
+## HiddenAreas hides.
+func respect_hidden(hidden: Dictionary) -> void:
+	if relief != null:
+		for mi in _ground:
+			if is_instance_valid(mi):
+				root.remove_child(mi)
+				mi.queue_free()
+		_ground = relief.meshes(_woods_material, hidden)
+		for mi in _ground:
+			root.add_child(mi)
+	if flora != null:
+		for n in _map_plants:
+			if is_instance_valid(n):
+				root.remove_child(n)
+				n.queue_free()
+		_map_plants = flora.plant_map(root, hidden)
+
+
+## Watches the place's hidden areas (rooms behind secret doors nobody has found, "hidden until found") and keeps the
+## land's own pieces on those squares out of sight, as HiddenAreas does the board's.
+class HiddenWatch extends Node:
+	var land: AtmosphereLand
+	var _seen := 0
+	var _wait := 0.0
+
+	func _init(l: AtmosphereLand) -> void:
+		land = l
+		name = "HiddenWatch"
+		_seen = hash([])
+
+	func _process(delta: float) -> void:
+		_wait -= delta
+		if _wait > 0.0:
+			return
+		_wait = HiddenAreas.CHECK_EVERY
+		var atmo := land.root.get_parent()
+		var view := atmo.get_parent() as LocationView if atmo != null else null
+		var areas := HiddenAreas.of(view)
+		var hidden := areas.hidden if areas != null else {}
+		var seen := hash(hidden.keys())
+		if seen != _seen:
+			_seen = seen
+			land.respect_hidden(hidden)
+
+
 # --- The Modern look's trees and plants (Flora, Improvement Ideas W9) -----------------------------------------------
 
-## Beyond this many squares from the map the land's trees are their lighter far copies and cast no shadow.
+## Beyond this many squares from the map the land's trees are their lighter far copies.
 const FAR_DETAIL := 9.0
+## Only trees within this many squares of where people walk cast the sun's shadow: the rest are too far out to shade
+## anything anyone looks at, and every shadow split draws every tree that casts (lane 6's frame budget, W17).
+const SHADOW_REACH := 3.0
+
+
+## How far a point is from the squares people walk on (squares).
+func walk_distance(p: Vector2) -> float:
+	var k := _cell(p)
+	return REACH if k < 0 else _walk[k]
 
 
 ## The ground's height at a point exactly as the land mesh has it (its corners, each square split as the mesh splits
@@ -557,11 +672,9 @@ func surface_y(p: Vector2) -> float:
 
 ## What the land is at a point: one of Edge, or -1 on the map's own squares.
 func _land_kind(p: Vector2) -> int:
-	var c := Vector2i(floori(p.x), floori(p.y))
-	if board.grid.in_bounds(c):
-		if _is_void(c):
-			return Edge.FOREST if _void_land else Edge.DROP
-		return -1
+	var k := _cell(p)
+	if k >= 0:
+		return _kinds[k]
 	return edge_at(p)
 
 
@@ -582,26 +695,26 @@ func _flora_board_trees() -> void:
 		for c in holder.get_children():
 			holder.remove_child(c)
 			c.queue_free()
-		holder.add_child(Flora.instance(id, flora.tree_scale(id, "map", pick)))
+		var tree := Flora.instance(id, flora.tree_scale(id, "map", pick))
+		if walk_distance(Vector2(holder.position.x, holder.position.z)) > SHADOW_REACH:
+			tree.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		holder.add_child(tree)
 		holder.set_meta("model", id)
 		# Up on the bank under the woods (W11), a little sunk so its foot never shows a gap.
 		holder.position.y = map_y(Vector2(holder.position.x, holder.position.z)) - 0.05
-
-
-## Is land of kind `kind` within `r` squares of a point (sampled round it)?
-func _near(p: Vector2, kind: int, r: float) -> bool:
-	for i in 12:
-		var a := TAU * i / 12.0
-		for f: float in [0.5, 1.0]:
-			if _land_kind(p + Vector2(cos(a), sin(a)) * r * f) == kind:
-				return true
-	return false
 
 
 ## The land's trees as _trees() places them, from Flora: the first rows each a node of its own that fades like the
 ## map's trees, the rest drawn many at once (the furthest as their lighter copies), darker further out as before.
 ## Flora's trees are fuller than the old ones, so they stand further apart (the set's tree_density).
 func _flora_trees() -> void:
+	if _snap.has("trees"):
+		var kept := _snap["trees"] as Array
+		for rec: Array in kept[0] as Array:
+			_ring_tree(str(rec[0]), rec[1] as Vector3, float(rec[2]), float(rec[3]), bool(rec[4]))
+		Flora.replant(root, kept[1] as Array)
+		return
+	var ring := []
 	var density := float(spec.get("trees", 0.8)) * float(flora.spec.get("tree_density", 0.45))
 	var dead := float(spec.get("dead", 0.2))
 	var kinds := spec.get("tree_kinds", ["pine", "dead_tree"]) as Array
@@ -624,7 +737,7 @@ func _flora_trees() -> void:
 				continue
 			var kind := str(kinds[1 if kinds.size() > 1 and rng.randf() < dead else 0])
 			# A spruce's crown is wide: keep it off the roads out so they stay open lanes through the woods.
-			if _near(p, Edge.OPEN, 1.3):
+			if _road_d[k] < 1.6:
 				continue
 			var pick := ModelPiece.hash_cell(Vector2i(floori(p.x * 3.0), floori(p.y * 3.0)))
 			var id := flora.tree_for(kind, pick)
@@ -634,9 +747,8 @@ func _flora_trees() -> void:
 			var yaw := float(pick % 360) * PI / 180.0
 			var at := Vector3(p.x, surface_y(p) - 0.05, p.y)
 			if out < NEAR_RING:
-				var tree := flora.node(id, at, s, yaw)
-				root.add_child(tree)
-				mesh_occluders.append(tree)
+				ring.append([id, at, s, yaw, _walk[k] <= SHADOW_REACH])
+				_ring_tree(id, at, s, yaw, _walk[k] <= SHADOW_REACH)
 				continue
 			var shade := clampf(1.0 - (out - NEAR_RING) / (REACH - NEAR_RING) * 0.45, 0.5, 1.0)
 			var v := shade * (0.9 + float(pick % 17) / 80.0)
@@ -648,13 +760,27 @@ func _flora_trees() -> void:
 				bucket[id] = []
 			(bucket[id] as Array).append([Transform3D(Basis(Vector3.UP, yaw).scaled(Vector3.ONE * s), at), Color(v, v, v)])
 		y += step
-	Flora.plant_all(root, near, true, "Trees")
-	Flora.plant_all(root, far, false, "FarTrees")
+	# Every tree drawn many at once stands at least NEAR_RING squares out, past SHADOW_REACH: none casts.
+	var made := Flora.plant_all(root, near, false, "Trees")
+	made.append_array(Flora.plant_all(root, far, false, "FarTrees"))
+	_snap["trees"] = [ring, made]
+
+
+## One of the land's first rows of trees, a node of its own that fades like the map's.
+func _ring_tree(id: String, at: Vector3, s: float, yaw: float, shadow: bool) -> void:
+	var tree := flora.node(id, at, s, yaw)
+	if not shadow:
+		(tree.get_child(0) as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	root.add_child(tree)
+	mesh_occluders.append(tree)
 
 
 ## Ground plants over the land near the map: ferns, grass and undergrowth on the forest ground, thinning out to the
 ## set's land_reach, reeds and sedge along the shores, nothing on the roads.
 func _flora_ground() -> void:
+	if _snap.has("plants"):
+		Flora.replant(root, _snap["plants"] as Array)
+		return
 	var land := flora.spec.get("land", []) as Array
 	var shore := flora.spec.get("shore", []) as Array
 	var reach := float(flora.spec.get("land_reach", 14.0))
@@ -682,7 +808,7 @@ func _flora_ground() -> void:
 				if not items.has(id):
 					items[id] = []
 				(items[id] as Array).append(flora.ground_item(Vector3(at.x, surface_y(at) - 0.02, at.y), 1.0))
-	Flora.plant_all(root, items, false, "Plants")
+	_snap["plants"] = Flora.plant_all(root, items, false, "Plants")
 
 
 ## Where the map's water is, for the water's shore and depth: one texel per square, 0 on land rising to 1 four

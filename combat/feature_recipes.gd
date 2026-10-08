@@ -210,10 +210,18 @@ func perform(c: Combatant, id: String, targets: Array, restore_slot: int = 0, ce
 	return r
 
 
-## Saving throws resolve synchronously: Reaction costs require explicit Auto; free responses default to Auto.
-## The feature declares its trigger, range, cost, and adjustment instead of requiring an id-specific branch.
+## A feature's `roll_response` to a failed D20 Test (its own or an ally's within range it can see): a reroll or a die
+## added. Settled now: a Reaction-cost response only on Automatic, a free one unless Off.
 func after_d20(roller: Combatant, test: D20Test, keys: Array[String]) -> void:
-	if test.success or test.target <= 0 or test.auto_failed:
+	var out: Array = []
+	d20_offers(roller, test, keys, out)
+	enc().d20.run_now(out)
+
+
+## The same as offers (D20Responses): asked about where the roll can pause. The feature declares its trigger, range,
+## cost and adjustment instead of needing an id-specific branch.
+func d20_offers(roller: Combatant, test: D20Test, keys: Array[String], out: Array) -> void:
+	if test.target <= 0 or test.auto_failed:
 		return
 	var e := enc()
 	for c in e.combatants:
@@ -221,8 +229,6 @@ func after_d20(roller: Combatant, test: D20Test, keys: Array[String]) -> void:
 			continue
 		var ch := c.creature as Character
 		for f in ch.features:
-			if test.success:
-				return
 			if not f.has("roll_response"):
 				continue
 			var def := f["roll_response"] as Dictionary
@@ -234,22 +240,28 @@ func after_d20(roller: Combatant, test: D20Test, keys: Array[String]) -> void:
 				continue
 			if c != roller and (str(def.get("scope", "self")) == "self" or not c.allied_with(roller)):
 				continue
-			if c != roller and (e.distance(c, roller) > int(def.get("range", 0)) or not e.can_see(c, roller)):
-				continue
 			var resource := str(def["resource"])
 			var reaction := str(def.get("cost", "free")) == "reaction"
-			var permitted := e._reaction_decision(c, str(f["id"])) == "auto" if reaction else str(c.reaction_rules.get(str(f["id"]), "auto")) != "never"
-			if ch.resource_left(resource) <= 0 or (reaction and not e.spells.can_react(c)) or not permitted:
-				continue
-			ch.spend_resource(resource)
-			if reaction:
-				c.reaction_available = false
-			if str(def.get("do", "add_die")) == "reroll":
-				var again := D20Test.roll(e.dice, test.kind, test.modifier, test.target, 1 if test.advantage else 0, 1 if test.disadvantage else 0, str(f["name"]), test.crit_range)
-				test.set_natural(again.kept, str(f["name"]))
-			else:
-				test.add_bonus(int(e.dice.roll_expr(str(def.get("dice", "1d4")), str(f["name"]))["total"]), str(f["name"]))
-			e.log.add("reaction" if reaction else "info", "%s uses %s for %s" % [c.name(), f["name"], roller.name()], c.id, [test.describe()])
+			var helper := c
+			var feature := f
+			var reroll := str(def.get("do", "add_die")) == "reroll"
+			out.append({"kind": str(f["id"]), "reactor": c, "trigger": roller.id, "sync": "decision" if reaction else "auto",
+				"spends_reaction": reaction, "title": ("Reaction: %s?" if reaction else "%s?") % f["name"],
+				"text": func() -> String: return "%s. %s: %s?" % [D20Responses.line(roller, test), feature["name"],
+					"reroll it and use the new roll" if reroll else "add %s to the roll" % str(def.get("dice", "1d4"))],
+				"cost": ("Reaction and a use of %s" if reaction else "A use of %s") % f["name"],
+				"still": func() -> bool: return not test.success and ch.resource_left(resource) > 0 and (not reaction or e.spells.can_react(helper)) \
+					and (helper == roller or (e.distance(helper, roller) <= int(def.get("range", 0)) and e.can_see(helper, roller))),
+				"helps": func() -> bool: return D20Responses.could_reach(test) if reroll else test.total + D20Responses.most(str(def.get("dice", "1d4"))) >= test.target,
+				"use": func() -> void:
+					ch.spend_resource(resource)
+					if reaction:
+						helper.reaction_available = false
+					if reroll:
+						test.reroll(e.dice, str(feature["name"]))
+					else:
+						test.add_bonus(int(e.dice.roll_expr(str(def.get("dice", "1d4")), str(feature["name"]))["total"]), str(feature["name"]))
+					e.log.add("reaction" if reaction else "info", "%s uses %s for %s" % [helper.name(), feature["name"], roller.name()], helper.id, [test.describe()])})
 
 
 ## Benefits attached to a newly summoned creature can depend on the school and actual slot expenditure.
