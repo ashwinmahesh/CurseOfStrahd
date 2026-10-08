@@ -4509,6 +4509,117 @@ def shelf_goods(p):
         p.lathe([(0.0, 0.0), (0.035, 0.0), (0.04, 0.1), (0.015, 0.14), (0.0, 0.14)], (x, -0.11, 1.355), "pal_moss" if x else "pal_night", segs=10)
 
 
+# --- Vallaki's interiors (docs/art/interiors.md) -----------------------------------------------------------------
+
+@model("washstand", "against_wall", ["washstand"])
+def washstand(p):
+    """A washstand against the wall: a basin and a jug on a small stand, a towel on its rail."""
+    W, D, H = 0.5, 0.36, 0.72
+    p.box((W, D, 0.04), (0, -D / 2, H), WOOD)
+    for sx in (-1, 1):
+        for sy in (0, 1):
+            p.box((0.04, 0.04, H), (sx * (W / 2 - 0.03), -0.04 - sy * (D - 0.08), H / 2), "pal_walnut")
+    p.box((W - 0.06, D - 0.06, 0.02), (0, -D / 2, 0.15), "pal_walnut")
+    p.lathe([(0.0, 0.0), (0.06, 0.0), (0.15, 0.07), (0.16, 0.08), (0.0, 0.08)], (-0.06, -D / 2, H + 0.02), "pal_ivory", segs=16)
+    p.lathe([(0.0, 0.0), (0.05, 0.0), (0.06, 0.1), (0.035, 0.16), (0.045, 0.19), (0.0, 0.19)], (0.16, -D / 2 + 0.04, H + 0.02),
+            "pal_ivory", segs=12)
+    p.cyl(0.01, W, (-W / 2, -D - 0.01, H - 0.12), "pal_walnut", rot=(0, 90, 0), segs=6)
+    p.box((0.18, 0.012, 0.22), (0.05, -D - 0.02, H - 0.22), "pal_bone", soft=0.004, segs=1)
+
+
+@model("bunting", "wall", ["bunting"])
+def bunting(p):
+    """Yellow festival bunting looped along the wall: pennants and a sun badge, gay and a little desperate."""
+    pts = curve((-0.46, -0.04, 1.55), (0.0, -0.04, 1.32), (0.46, -0.04, 1.55), n=12)
+    p.tube(pts, 0.008, "pal_tan", segs=5)
+    for k in range(1, 12, 2):
+        x, y, z = pts[k]
+        tri = [(-0.045, 0.0), (0.045, 0.0), (0.0, -0.12)]
+        p.prism(tri, 0.006, (x, y - 0.004, z - 0.005), "pal_wick" if k % 4 == 1 else "pal_flame", rot=(0, 0, 0))
+    p.cyl(0.08, 0.02, (0.0, -0.05, 1.18), "pal_wick", rot=(90, 0, 0), segs=16)
+    for k in range(10):
+        a = 2 * math.pi * k / 10
+        p.box((0.025, 0.01, 0.07), (0.11 * math.cos(a), -0.05, 1.18 + 0.11 * math.sin(a)), "pal_flame", rot=(0, math.degrees(-a) + 90, 0))
+
+
+@model("festival_cloth", "free", ["festival_cloth"])
+def festival_cloth(p):
+    """A chair drowned in yellow cloth: half-sewn suns, swallows and sashes heaped on it and spilling to the floor."""
+    Y = 0.12   # the cloth spills forward, so the chair sits back a little to keep the whole heap in its square
+    p.box((0.42, 0.4, 0.04), (0, Y, 0.42), "pal_walnut")
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((0.04, 0.04, 0.42), (sx * 0.18, Y + sy * 0.17, 0.21), "pal_walnut")
+    p.box((0.42, 0.04, 0.5), (0, Y + 0.18, 0.69), "pal_walnut")
+    p.box((0.5, 0.46, 0.12), (0.02, Y - 0.02, 0.5), "pal_wick", rot=(0, 6, 8), soft=0.05, segs=3)
+    p.box((0.46, 0.12, 0.42), (0.04, Y - 0.24, 0.3), "pal_flame", rot=(-20, 0, 6), soft=0.04, segs=2)
+    p.box((0.34, 0.28, 0.05), (0.08, Y - 0.3, 0.025), "pal_wick", rot=(0, 0, 20), soft=0.02, segs=2)
+    for x, y in ((-0.08, -0.05), (0.12, 0.08)):
+        p.cyl(0.07, 0.01, (x, Y + y, 0.57), "pal_candle", segs=12)
+        for k in range(8):
+            a = 2 * math.pi * k / 8
+            p.box((0.03, 0.012, 0.006), (x + 0.09 * math.cos(a), Y + y + 0.09 * math.sin(a), 0.57), "pal_candle",
+                  rot=(0, 0, math.degrees(a)))
+
+
+@model("toy_shelf", "wall", ["toy_shelf"])
+def toy_shelf(p):
+    """Shelves of wooden toys, every one turned to face the door: soldiers, a horse on wheels, dolls, a top and a drum."""
+    for z in (0.9, 1.25, 1.6):
+        p.box((0.86, 0.2, 0.03), (0, -0.1, z), "pal_umber")
+    for s in (-1, 1):
+        p.box((0.03, 0.2, 0.75), (s * 0.43, -0.1, 1.24), "pal_umber")
+    rng = p.rng
+    for k in range(5):   # wooden soldiers
+        x = -0.36 + k * 0.08
+        p.cyl(0.022, 0.12, (x, -0.1, 0.915), "pal_crimson", segs=8)
+        p.cyl(0.018, 0.04, (x, -0.1, 1.035), "pal_skin", segs=8)
+        p.cyl(0.02, 0.05, (x, -0.1, 1.075), "pal_ink", segs=8)
+    p.box((0.16, 0.07, 0.08), (0.24, -0.1, 0.98), "pal_bone", soft=0.01, segs=1)   # a horse on wheels
+    p.box((0.05, 0.04, 0.08), (0.31, -0.1, 1.05), "pal_bone")
+    for x in (0.18, 0.3):
+        p.cyl(0.025, 0.012, (x, -0.06, 0.94), "pal_ink", rot=(90, 0, 0), segs=10)
+    for k in range(3):   # dolls with too-wide smiles
+        x = -0.3 + k * 0.14
+        p.lathe([(0.0, 0.0), (0.04, 0.0), (0.03, 0.1), (0.0, 0.11)], (x, -0.1, 1.265), rng.choice(["pal_rose", "pal_lilac", "pal_moss"]), segs=10)
+        p.lathe([(0.0, 0.0), (0.03, 0.01), (0.03, 0.04), (0.0, 0.06)], (x, -0.1, 1.37), "pal_vellum", segs=10)
+    p.lathe([(0.0, 0.0), (0.05, 0.04), (0.06, 0.06), (0.0, 0.1)], (0.14, -0.1, 1.265), "pal_candle", segs=12)   # a top
+    p.cyl(0.07, 0.08, (0.3, -0.1, 1.265), "pal_crimson", segs=14)   # a drum
+    p.cyl(0.071, 0.01, (0.3, -0.1, 1.345), "pal_vellum", segs=14)
+    for k in range(4):
+        p.box((0.06, 0.06, 0.06), (-0.3 + k * 0.17, -0.1, 1.645), rng.choice(["pal_moon_blue", "pal_candle", "pal_crimson", "pal_moss"]))
+
+
+@model("coffin_lid", "against_wall", ["coffin_lid"])
+def coffin_lid(p):
+    """A coffin lid leaning against the wall like a door to nowhere, freshly planed."""
+    # Its foot stands out from the wall and its head rests against it, nothing behind the wall's face.
+    pts = [(-0.18, 0.0), (0.18, 0.0), (0.27, 1.1), (0.0, 1.32), (-0.27, 1.1)]
+    p.prism(pts, 0.05, (0, -0.27, 0.0), WOOD, rot=(-8, 0, 0))
+    p.prism([(-0.02, 0.6), (0.02, 0.6), (0.02, 1.0), (-0.02, 1.0)], 0.01, (0, -0.3, 0.0), "pal_umber", rot=(-8, 0, 0))
+    p.prism([(-0.1, 0.84), (0.1, 0.84), (0.1, 0.88), (-0.1, 0.88)], 0.01, (0, -0.3, 0.0), "pal_umber", rot=(-8, 0, 0))
+
+
+@model("crucifix", "wall", ["crucifix"])
+def crucifix(p):
+    """A crucifix nailed to the wall, the sun of the Morninglord at its heart."""
+    p.box((0.05, 0.03, 0.42), (0, -0.015, 1.42), "pal_walnut")
+    p.box((0.26, 0.03, 0.05), (0, -0.015, 1.5), "pal_walnut")
+    p.cyl(0.03, 0.01, (0, -0.035, 1.5), "pal_wick", rot=(90, 0, 0), segs=12)
+
+
+@model("lute", "free", ["lute"])
+def lute(p):
+    """A lute propped on its stand, its belly painted with a showman's flourishes."""
+    p.tube([(-0.12, 0.05, 0.0), (0.0, 0.05, 0.3)], 0.012, "pal_walnut", segs=5)
+    p.tube([(0.12, 0.05, 0.0), (0.0, 0.05, 0.3)], 0.012, "pal_walnut", segs=5)
+    p.lathe([(0.0, 0.0), (0.13, 0.05), (0.15, 0.16), (0.1, 0.28), (0.04, 0.32), (0.0, 0.33)], (0, 0.0, 0.08), "pal_tan",
+            rot=(-20, 0, 0), segs=16)
+    p.box((0.05, 0.02, 0.36), (0, -0.07, 0.55), "pal_umber", rot=(-20, 0, 0))
+    p.box((0.07, 0.03, 0.1), (0, -0.13, 0.75), "pal_umber", rot=(-50, 0, 0))
+    p.cyl(0.03, 0.006, (0, -0.06, 0.24), "pal_ink", rot=(70, 0, 0), segs=10)
+
+
 @model("bedroll", "against_wall", ["bedroll", "bedroll_back"])
 def bedroll(p):
     """Madam Eva's bed: quilts folded thick on the floor, a fur over them, pillows at the wall and a shawl thrown down."""

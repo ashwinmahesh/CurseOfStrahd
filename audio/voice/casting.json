@@ -1380,6 +1380,7 @@
       "model": "eleven_v3",
       "voice_id": "haD60kChENZhuoOFiC80",
       "name": "Barovia barovia_goodwife",
+      "accent_tag": "[strong Romanian accent]",
       "released": true
     },
     "vadoma": {

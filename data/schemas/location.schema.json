@@ -802,6 +802,21 @@
     "allies_block": {
       "type": "boolean",
       "description": "Party members can't move through each other's spaces anywhere in this location."
+    },
+    "wall_styles": {
+      "type": "array",
+      "description": "Wall squares built in a style of their own (docs/art/interiors.md): every wall square inside `cells` ([corner, corner]) is painted wood in the palette colour `paint`, with a band of `trim` along its outer faces and, with `wheels`, cart wheels on its long sides. Rictavio's carnival wagon in the Blue Water Inn's yard.",
+      "items": {
+        "type": "object",
+        "required": ["cells"],
+        "additionalProperties": false,
+        "properties": {
+          "cells": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/cell"}},
+          "paint": {"type": "string"},
+          "trim": {"type": "string"},
+          "wheels": {"type": "boolean"}
+        }
+      }
     }
   },
   "$defs": {

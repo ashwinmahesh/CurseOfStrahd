@@ -466,6 +466,86 @@
       "kind": "decor",
       "label": "A lantern",
       "model": "lantern_stand"
+    },
+    {
+      "id": "inn_kitchen_cauldron",
+      "cell": [
+        23,
+        2
+      ],
+      "label": "A cauldron over the fire, big enough to bathe in",
+      "model": "cauldron",
+      "kind": "decor"
+    },
+    {
+      "id": "guest_bed_a",
+      "cell": [
+        13,
+        6
+      ],
+      "label": "A clean bed",
+      "model": "bed_small",
+      "kind": "decor"
+    },
+    {
+      "id": "guest_bed_b",
+      "cell": [
+        13,
+        7
+      ],
+      "label": "A clean bed",
+      "model": "bed_small",
+      "kind": "decor"
+    },
+    {
+      "id": "guest_bed_c",
+      "cell": [
+        13,
+        10
+      ],
+      "label": "A clean bed",
+      "model": "bed_small",
+      "kind": "decor"
+    },
+    {
+      "id": "rictavio_costumes",
+      "cell": [
+        24,
+        6
+      ],
+      "label": "A rack of costumes",
+      "model": "coats",
+      "kind": "decor"
+    },
+    {
+      "id": "rictavio_washstand",
+      "cell": [
+        24,
+        7
+      ],
+      "label": "A washstand with a stage moustache on it",
+      "model": "washstand",
+      "kind": "decor"
+    },
+    {
+      "id": "rictavio_lute",
+      "cell": [
+        20,
+        9
+      ],
+      "label": "A lute",
+      "model": "lute",
+      "kind": "decor"
+    },
+    {
+      "id": "wagon_lantern",
+      "cell": [
+        14,
+        15
+      ],
+      "label": "A lantern by the wagon's steps",
+      "model": "lantern_stand",
+      "kind": "decor"
     }
   ],
   "containers": [
@@ -555,6 +635,15 @@
       "kind": "lamp",
       "bright_ft": 10,
       "dim_ft": 25
+    },
+    {
+      "cell": [
+        14,
+        15
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
     }
   ],
   "npcs": [
@@ -634,6 +723,32 @@
         19,
         23
       ]
+    },
+    {
+      "npc": "vallaki_patron_dragan",
+      "cell": [
+        2,
+        8
+      ],
+      "dialogue": "vallaki/indoor_folk:dragan",
+      "facing": "east",
+      "hours": [
+        11,
+        23
+      ]
+    },
+    {
+      "npc": "vallaki_patron_oana",
+      "cell": [
+        10,
+        8
+      ],
+      "dialogue": "vallaki/indoor_folk:oana",
+      "facing": "west",
+      "hours": [
+        11,
+        22
+      ]
     }
   ],
   "narration": {
@@ -644,5 +759,22 @@
     "vallaki_blue_water_inn:rictavio_wagon": {
       "container": "wagon_lockbox"
     }
-  }
+  },
+  "wall_styles": [
+    {
+      "cells": [
+        [
+          15,
+          13
+        ],
+        [
+          21,
+          15
+        ]
+      ],
+      "paint": "crimson",
+      "trim": "candle",
+      "wheels": true
+    }
+  ]
 }

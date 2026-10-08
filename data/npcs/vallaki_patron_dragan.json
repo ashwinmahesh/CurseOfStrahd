@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_patron_dragan",
+  "name": "Dragan",
+  "title": "A drinker at the Blue Water Inn",
+  "summary": "A broad Vallakian cooper who drinks at the same table every evening and says the same thing about the Baron every evening, quietly.",
+  "portrait": "villager",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

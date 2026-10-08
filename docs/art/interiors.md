@@ -157,6 +157,26 @@ braziers burning in the antechamber and either side of the altar.
 - **The church:** the sunburst over the altar, gone grey with soot, cold candles either side, vestments on pegs in the
   vestry, and by day two people praying in the pews (Old Florin, Goodwife Sorina).
 
+### Vallaki
+
+- **The Blue Water Inn:** a cauldron over the kitchen fire big enough to bathe in, beds on the guest rooms' squares
+  (they were tavern tables), Rictavio's costume rack, washstand and lute, two regulars at the taproom's tables of an
+  evening (Dragan, Oana), and in the yard Rictavio's carnival wagon: its walls painted red with gold trim and wheels
+  (location `wall_styles`), a lantern by its steps, where it was a dark block of wall.
+- **The burgomaster's mansion:** yellow bunting on the great hall's walls and in Lady Lydia's parlour, the Baron's
+  chair, a coat stand and the sign in the foyer, chairs drowned in half-sewn festival cloth in the parlour
+  (`festival_cloth`), a basin and a sword in Izek's room, candles in Victor's attic (now attic boards and damp plaster,
+  by the new `attic` room rule, where it had the manor's wainscot).
+- **St. Andral's:** candelabra either side of the altar dais, the altar cloth folded on a chair, a cot and robes in the
+  vestry, and by day an old woman praying in the pews (Old Varvara).
+- **The Wachterhaus:** benches facing the cellar shrine where the cult kneels, and candles.
+- **Blinsky's:** shelves of toys on three walls (`toy_shelf`).
+- **The coffin maker's:** coffin lids leaning on the workshop walls (`coffin_lid`) and Henrik's crucifixes, one over
+  his bed and one by his door (`crucifix`).
+
+Every piece a '=' square can be dressed as names an object kind in data/objects/kinds.json, so fights can shove, wreck
+and hide behind it (tests/unit/test_battle_objects.gd checks the catalog's lists and the interiors' own pieces).
+
 People in public buildings (owner, 2026-10-08: "some buildings could use a few more random people to make more
 lively"): townsfolk NPCs on lane 28's pattern (`townsfolk` tag, `hours`, `facing`, portrait = sprite), their lines in
 `narrative/<region>/indoor_folk.dialogue`, unvoiced until the voice thread casts them; only where the narration

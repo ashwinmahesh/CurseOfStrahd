@@ -129,7 +129,8 @@
         "market_stall",
         "chest_painted",
         "crate_stack",
-        "chest"
+        "chest",
+        "chest_iron"
       ],
       "summary": "Slatted crates, trunks and stalls: they splinter at a blow.",
       "moves": "shove",
@@ -193,7 +194,8 @@
         "coats",
         "straw",
         "sack_pile",
-        "cushions"
+        "cushions",
+        "rope_coils"
       ],
       "summary": "Sacks, nets and straw: cloth that tears and burns.",
       "moves": "shove",
@@ -229,7 +231,9 @@
         "bier",
         "Furniture",
         "table_books",
-        "table_meal"
+        "table_meal",
+        "washstand",
+        "reading_table"
       ],
       "summary": "Tables, counters and the heavier furniture, a 5-ft section at a time.",
       "moves": "shove",
@@ -253,7 +257,8 @@
         "crib_shroud",
         "music_box",
         "doll",
-        "perch"
+        "perch",
+        "festival_cloth"
       ],
       "summary": "Chairs, cradles and other light furniture.",
       "moves": "shove",
@@ -297,7 +302,10 @@
         "clock_standing",
         "clock_tall",
         "pipe_organ",
-        "armor_stand"
+        "armor_stand",
+        "toy_shelf",
+        "shelf_goods",
+        "oil_shelf"
       ],
       "summary": "Bookcases, wardrobes, cabinets and tall clocks.",
       "moves": "topple",
@@ -318,7 +326,8 @@
       "flammable": true,
       "leaves": "rubble",
       "art": [
-        "pew"
+        "pew",
+        "bench"
       ],
       "summary": "A church pew, a 5-ft section at a time.",
       "moves": "shove",
@@ -333,7 +342,8 @@
       "flammable": true,
       "leaves": "rubble",
       "art": [
-        "coffin"
+        "coffin",
+        "coffin_lid"
       ],
       "summary": "A wooden coffin.",
       "moves": "shove",

@@ -268,6 +268,70 @@
       "label": "the cult's tithe under the shrine",
       "model": "gold_spill",
       "item": "rod_of_rulership"
+    },
+    {
+      "id": "cellar_candles_west",
+      "cell": [
+        8,
+        15
+      ],
+      "label": "Candles",
+      "model": "candle_cluster",
+      "kind": "decor"
+    },
+    {
+      "id": "cellar_candles_east",
+      "cell": [
+        21,
+        15
+      ],
+      "label": "Candles",
+      "model": "candle_cluster",
+      "kind": "decor"
+    },
+    {
+      "id": "cellar_bench_1",
+      "cell": [
+        9,
+        18
+      ],
+      "label": "A bench facing the shrine",
+      "model": "bench",
+      "facing": "north",
+      "kind": "decor"
+    },
+    {
+      "id": "cellar_bench_2",
+      "cell": [
+        12,
+        18
+      ],
+      "label": "A bench facing the shrine",
+      "model": "bench",
+      "facing": "north",
+      "kind": "decor"
+    },
+    {
+      "id": "cellar_bench_3",
+      "cell": [
+        17,
+        18
+      ],
+      "label": "A bench facing the shrine",
+      "model": "bench",
+      "facing": "north",
+      "kind": "decor"
+    },
+    {
+      "id": "cellar_bench_4",
+      "cell": [
+        20,
+        18
+      ],
+      "label": "A bench facing the shrine",
+      "model": "bench",
+      "facing": "north",
+      "kind": "decor"
     }
   ],
   "containers": [
@@ -327,6 +391,24 @@
       "kind": "candle",
       "bright_ft": 5,
       "dim_ft": 10
+    },
+    {
+      "cell": [
+        8,
+        15
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        21,
+        15
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
     }
   ],
   "npcs": [

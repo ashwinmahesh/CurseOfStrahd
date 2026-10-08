@@ -258,6 +258,56 @@
       "model": "crypt",
       "search_dc": 12,
       "flag": "lid_scrapes_found"
+    },
+    {
+      "id": "chancel_candles_west",
+      "cell": [
+        8,
+        1
+      ],
+      "label": "Candles",
+      "model": "candelabra",
+      "kind": "decor"
+    },
+    {
+      "id": "chancel_candles_east",
+      "cell": [
+        15,
+        1
+      ],
+      "label": "Candles",
+      "model": "candelabra",
+      "kind": "decor"
+    },
+    {
+      "id": "altar_cloth_chair",
+      "cell": [
+        15,
+        2
+      ],
+      "label": "The altar cloth, folded on a chair",
+      "model": "chair_high",
+      "kind": "decor"
+    },
+    {
+      "id": "vestry_cot",
+      "cell": [
+        1,
+        4
+      ],
+      "label": "A cot",
+      "model": "bed_small",
+      "kind": "decor"
+    },
+    {
+      "id": "vestry_robes",
+      "cell": [
+        0,
+        2
+      ],
+      "label": "Robes on pegs",
+      "model": "robe_pegs",
+      "kind": "decor"
     }
   ],
   "containers": [
@@ -382,6 +432,20 @@
       ],
       "dialogue": "vallaki/victor:sanctuary",
       "when": "flag.vallaki_backed == \"wachter\" and not flag.victor_vanished and not guest:victor_vallakovich"
+    },
+    {
+      "npc": "vallaki_parishioner_varvara",
+      "cell": [
+        19,
+        8
+      ],
+      "dialogue": "vallaki/indoor_folk:varvara",
+      "facing": "north",
+      "work": "gesture",
+      "hours": [
+        8,
+        18
+      ]
     },
     {
       "npc": "stella_wachter",

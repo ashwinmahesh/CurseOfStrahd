@@ -349,3 +349,7 @@ func test_every_low_cover_piece_is_a_fight_object() -> void:
 	assert_true(arts.size() > 20)
 	for a in arts:
 		assert_ne(BattleScenery.kind_for_art(a, table), "", "a '=' square's %s is something a fight can use" % a)
+	# And the pieces the interiors stand on '=' squares by name (a guest room's washstand, Eva's reading table).
+	for a: String in ["washstand", "reading_table", "rope_coils", "chest_iron", "festival_cloth", "coffin_lid", "toy_shelf",
+			"shelf_goods", "oil_shelf", "bench"]:
+		assert_ne(BattleScenery.kind_for_art(a, table), "", "%s is something a fight can use" % a)

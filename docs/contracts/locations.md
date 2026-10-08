@@ -84,6 +84,10 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   (docs/story/found_magic_items.md): each character gets one look, and one who misses it can't find it later; the
   Narrator's `check:<skill>:<id>:failure` line, if any, plays on a miss. Detect Magic senses one holding a magic
   item within 30 ft without saying where.
+- **Wall styles:** `wall_styles` (optional) `[{cells: [[x0, y0], [x1, y1]], paint, trim, wheels}]` paints the walls
+  inside that block in a palette colour (`paint`, on the painted-wood planks) with two trim bands in `trim` round its
+  outside faces, and `wheels: true` puts two wheels on each long side: a walled block that is a vehicle, not a building
+  (Rictavio's carnival wagon in the Blue Water Inn's yard). The rules grid is unchanged (docs/art/interiors.md).
 
 ## data/npcs/<id>.json (schema: npc.schema.json)
 

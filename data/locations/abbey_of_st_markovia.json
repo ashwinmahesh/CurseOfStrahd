@@ -345,7 +345,7 @@
       "label": "a stone bench heaped with feathers",
       "model": "stone_bench",
       "search_dc": 12,
-      "item": "ink_pen"
+      "item": "feather_token_whip"
     },
     {
       "id": "chapel_lamp_w",
