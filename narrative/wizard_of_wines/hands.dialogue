@@ -1,0 +1,36 @@
+# The winery's hands (lane 28, 2026-10-08: "more people walking around and doing things"). While the winery is lost,
+# Ionel keeps watch over the lane, Tereza keeps the camp's washing and Horia splits wood; once the family is home,
+# Ovidiu dresses the vines, Andrei picks the east rows and Old Silviu is back at his casks. And the ravens, always.
+# Unvoiced for now.
+
+~ watch
+Ionel: Keep your voice down. They come up the rows at dusk, the twig things, and I'd like to hear them before they hear me. If you're going up to the winery, go now, while there's light.
+-> END
+
+~ washer
+Tereza: I came out from Vallaki to pick grapes for one season. That was four years ago. Hand me that peg. No, the other one.
+-> END
+
+~ woodsplitter
+Horia: I used to split staves for the casks. Now it's firewood. Same axe, same arms, worse smell. When we're home I'll make you a cask, if you like.
+-> END
+
+~ pruner
+Ovidiu: Dead, dead, dead, and this one's thinking about it. You cut away what won't come back, and you wait. That's all a vine-dresser is. Somebody good at waiting.
+-> END
+
+~ picker
+Andrei: These are the last good rows. Taste one. Sour, yes? The wine will be sweet. Don't ask me how. Ask the old man.
+-> END
+
+~ cooper
+if flag.winery_wine_flows
+Old Silviu [smile]: Hear that? That's a cask that holds. Davian's wine is going down the road again, in my casks. I could weep.
+-> END
+endif
+Old Silviu: Every hoop loose, every stave dry. The druids didn't touch the casks. They just let them die of neglect, which is worse.
+-> END
+
+~ raven
+Narrator: The raven tilts its head and looks at you with one black eye, then the other, as if it is comparing notes. When you move, it hops after you, just far enough to keep watching.
+-> END

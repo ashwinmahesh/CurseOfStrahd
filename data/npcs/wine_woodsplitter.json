@@ -1,0 +1,18 @@
+{
+  "id": "wine_woodsplitter",
+  "name": "Horia",
+  "title": "Of the Martikov Camp",
+  "summary": "A broad young hand splitting wood for the camp fire, who used to split staves for the casks and would like to again.",
+  "portrait": "villager",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "wizard_of_wines"
+  ],
+  "region": "wizard_of_wines",
+  "pronouns": "he/him"
+}

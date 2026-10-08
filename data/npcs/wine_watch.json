@@ -1,0 +1,18 @@
+{
+  "id": "wine_watch",
+  "name": "Ionel",
+  "title": "Watch of the Martikov Camp",
+  "summary": "An old hand of the winery who keeps watch over the lane from a plank platform with a crossbow across his knees, and has not slept a whole night since the druids came.",
+  "portrait": "scout",
+  "sprite": "scout",
+  "attitude": "indifferent",
+  "monster": "scout",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "wizard_of_wines"
+  ],
+  "region": "wizard_of_wines",
+  "pronouns": "he/him"
+}

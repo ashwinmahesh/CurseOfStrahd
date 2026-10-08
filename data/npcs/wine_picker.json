@@ -1,0 +1,18 @@
+{
+  "id": "wine_picker",
+  "name": "Andrei",
+  "title": "Of the Wizard of Wines",
+  "summary": "A big, quiet hand picking what little fruit the east rows give, and eating more of it than he puts in the basket.",
+  "portrait": "tough",
+  "sprite": "tough",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "wizard_of_wines"
+  ],
+  "region": "wizard_of_wines",
+  "pronouns": "he/him"
+}

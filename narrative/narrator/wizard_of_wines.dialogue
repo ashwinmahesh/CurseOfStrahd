@@ -242,3 +242,19 @@ once
 ~ search:roost_hoard
 | The ravens' hoard in the dead tree: buttons, a thimble, a spoon, and a plain ring that drifts down to your palm like a feather instead of falling.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the yard, the rows and the camp.
+
+~ examine:yard_cask_1
+| Casks stacked by the winery door, the Martikov sign burned into each head: a raven with a grape in its beak. Most of them ring hollow.
+
+~ examine:yard_treading_vat
+| A wide wooden vat for treading grapes, stained purple to the brim with a hundred harvests. Something has been nesting in it.
+
+~ search:cask_bottle
+| Wedged behind the casks, a stoppered glass bottle, empty and clean, as if someone set it aside for something special. {name} keeps it.
+once
+
+~ search:vine_sickle
+| Half buried between two rows, a vine-dresser's sickle, rusted at the edge but sound. {name} knocks the earth off it.
+once
