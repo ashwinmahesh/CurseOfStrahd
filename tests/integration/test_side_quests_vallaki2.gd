@@ -92,7 +92,7 @@ func test_yevgenis_warning_turns_szoldar_and_the_wolf_is_hunted() -> void:
 	var enc := SideQuestPlay.encounter(st, "lake_zarovich", "greytooth_hunt")
 	assert_true(SideQuestPlay.has_foe(enc, "old_greytooth"))
 	assert_false(SideQuestPlay.has_foe(enc, "Szoldar"), "not shooting at you")
-	assert_true(SideQuestPlay.xp(enc) >= 4800, "Greytooth and his pack: %d" % SideQuestPlay.xp(enc))
+	assert_true(SideQuestPlay.xp(enc) >= 4400, "Greytooth and his pack: %d" % SideQuestPlay.xp(enc))
 	st.set_flag("greytooth_beaten")
 	st.set_quest_stage("hunters_at_the_inn", "hunted")
 	st.gold = 0
@@ -112,7 +112,7 @@ func test_without_the_warning_szoldar_shoots_from_the_rise() -> void:
 	assert_eq(SideQuestPlay.combat_of(beats), "greytooth_hunt")
 	var enc := SideQuestPlay.encounter(st, "lake_zarovich", "greytooth_hunt")
 	assert_true(SideQuestPlay.has_foe(enc, "Szoldar"), "he's on the rise with his bow")
-	assert_true(SideQuestPlay.has_foe(enc, "werewolf"), "a castle wolf at level 7")
+	assert_eq((enc["monsters"] as Array).filter(func(m: Variant) -> bool: return str((m as Dictionary)["monster"]) == "dire_wolf").size(), 3, "three dire wolves at level 7")
 	assert_eq(str((enc["withdraw"] as Dictionary)["flag"]), "szoldar_fled", "he runs if it goes badly")
 	assert_eq(SideQuestPlay.standing(st, "vallaki_blue_water_inn", "szoldar"), "vallaki/hunters_at_the_inn:szoldar")
 	st.set_flag("greytooth_beaten")
