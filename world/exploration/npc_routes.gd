@@ -55,7 +55,7 @@ static func route_for(v: LocationView, spec: Dictionary) -> Array[Dictionary]:
 
 
 func _process(delta: float) -> void:
-	for tok: CombatToken in _glides.keys():
+	for tok: Variant in _glides.keys():   # untyped: a person's figure may be gone (the people were rebuilt)
 		if not is_instance_valid(tok) or (_glides[tok] as PartyGlide).update(delta):
 			_glides.erase(tok)
 	if view == null or view.in_combat or view.members.is_empty() or ModeController.mode != ModeController.Mode.EXPLORATION:

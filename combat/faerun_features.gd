@@ -341,8 +341,8 @@ func resolve_spell(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i
 	return spell_code.resolve_spell(ctx, tgt, cells, r)
 
 
-func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
-	spell_code.after_d20(c, t, keys)
+func d20_offers(c: Combatant, t: D20Test, keys: Array[String], out: Array) -> void:
+	spell_code.d20_offers(c, t, keys, out)
 
 
 func sustained_why(c: Combatant, a: Dictionary, d: Dictionary, t: Combatant, point: Vector2) -> String:

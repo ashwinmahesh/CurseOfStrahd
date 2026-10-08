@@ -632,11 +632,11 @@ func cast(c: Combatant, spell: Dictionary, level: int, targets: Array, point: Ve
 	if opts.has("dis_unless") and not tgt.is_empty() and not str(tgt[0].creature.creature_type) in (opts["dis_unless"] as Array):
 		ctx["save_disadvantage"] = [label]
 	var r := CombatResult.new()
-	sp._resolve(ctx, tgt, cells, r)
-	sp._finish_concentration(ctx)
-	sp.zones.prune()
-	e._check_over()
-	return e.then(r, func() -> CombatResult: return e.run_reaction_queue(r))
+	return e.then(sp._resolve(ctx, tgt, cells, r, true), func() -> CombatResult:
+		sp._finish_concentration(ctx)
+		sp.zones.prune()
+		e._check_over()
+		return e.run_reaction_queue(r))
 
 
 # --- Toggles (a Flame Tongue set ablaze, Boots of Speed clicked on) ---------------------------------
@@ -1073,9 +1073,14 @@ func before_d20(c: Combatant, kind: D20Test.Kind, keys: Array[String]) -> Array[
 	return specials.before_d20(c, kind, keys)
 
 
-## After a D20 Test: items that turn a failure (Ring of Evasion, a Luck Blade's reroll).
+## After a D20 Test: items that turn a failure (Ring of Evasion, a Luck Blade's reroll), settled now.
 func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
 	specials.after_d20(c, t, keys)
+
+
+## The same as offers (D20Responses), asked about where the roll can pause.
+func d20_offers(c: Combatant, t: D20Test, keys: Array[String], out: Array) -> void:
+	specials.d20_offers(c, t, keys, out)
 
 
 # --- Turns and the start of a fight --------------------------------------------------------------

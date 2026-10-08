@@ -103,77 +103,100 @@ func charge_of(c: Combatant, target: Combatant, option: Dictionary) -> Dictionar
 	return {}
 
 
-## Applies `riders` from `src` to `t` after damage `by_type` ({type: amount taken}).
-func apply_riders(src: Combatant, t: Combatant, riders: Array, by_type: Dictionary, act_name: String) -> void:
+## Applies `riders` from `src` to `t` after damage `by_type` ({type: amount taken}). `pausable`: the caller carries on
+## after a prompt (Encounter.then), so a rider's save stops for the choices after its roll (Indomitable, Heroic
+## Inspiration...); otherwise they follow their rules at once.
+func apply_riders(src: Combatant, t: Combatant, riders: Array, by_type: Dictionary, act_name: String, pausable: bool = false) -> CombatResult:
 	var e := enc()
-	for raw: Variant in riders:
+	var r := CombatResult.new()
+	var one := func(raw: Variant) -> CombatResult:
 		var rd := raw as Dictionary
 		if not t.is_alive():
-			return
+			return r
 		if rd.has("unless_condition") and t.creature.has_condition(StringName(str(rd["unless_condition"]))):
-			continue
+			return r
 		if rd.has("not_types") and str(t.creature.creature_type) in (rd["not_types"] as Array):
-			continue
+			return r
 		if rd.has("only_types") and not str(t.creature.creature_type) in (rd["only_types"] as Array):
-			continue
+			return r
 		if rd.has("not_species") and t.creature is Character and str((t.creature as Character).build.get("species", "")) in (rd["not_species"] as Array):
 			e.log.add("info", "%s is unaffected (%s)" % [t.name(), str((t.creature as Character).build.get("species", "")).capitalize()], t.id)
-			continue
+			return r
 		if rd.has("max_size") and Creature.SIZES.find(t.creature.size) > Creature.SIZES.find(StringName(str(rd["max_size"]))):
-			continue
+			return r
 		if bool(rd.get("immune_on_success", false)) and t.has_meta(ClassFeatures.meta_key("immune_%s_%s" % [src.id, act_name])):
-			continue
-		if rd.has("save"):
-			var sv := rd["save"] as Dictionary
-			var cond := str(rd.get("condition", ""))
-			var keys: Array[String] = []
-			if cond != "":
-				keys.append("save_vs:%s" % cond)
-			var ab := StringName(str(sv["ability"]))
-			var test := t.creature.roll_save(e.dice, ab, int(sv["dc"]), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], act_name, t.name()], keys)
+			return r
+		if not rd.has("save"):
+			_rider(src, t, rd, by_type, act_name)
+			return r
+		var sv := rd["save"] as Dictionary
+		var cond := str(rd.get("condition", ""))
+		var keys: Array[String] = []
+		if cond != "":
+			keys.append("save_vs:%s" % cond)
+		var ab := StringName(str(sv["ability"]))
+		var roll := func() -> D20Test:
+			return t.creature.roll_save(e.dice, ab, int(sv["dc"]), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], act_name, t.name()], keys)
+		var after := func(test: D20Test) -> CombatResult:
 			if test.success:
 				e.log.add("info", "%s resists %s" % [t.name(), act_name], t.id, [test.describe()])
 				if bool(rd.get("immune_on_success", false)):
 					t.set_meta(ClassFeatures.meta_key("immune_%s_%s" % [src.id, act_name]), true)
-				continue
-		match str(rd["do"]):
-			"condition":
-				_timed_condition(src, t, str(rd["condition"]), str(rd.get("until", "permanent")), act_name, rd.get("modifiers", []) as Array, rd)
-			"grapple":
-				grapple(src, t, int(rd.get("escape_dc", 10)), int(rd.get("limit", 1)), act_name, bool(rd.get("restrain", false)))
-				if e.grapples.has(t.id) and rd.has("hold_damage"):
-					t.set_meta("hold_damage", rd["hold_damage"])
-				if e.grapples.has(t.id) and rd.has("grip_damage"):
-					t.set_meta("grip_damage", rd["grip_damage"])
-			"burning":
-				set_burning(src, t)
-			"possess":
-				possess(src, t, act_name)
-			"pull", "push":
-				var moved := e.forced_move(t, e.center_of(src), int(rd.get("feet", 5)), str(rd["do"]) == "pull")
-				if moved > 0:
-					e.log.add("info", "%s is %s %d ft" % [t.name(), "pulled" if str(rd["do"]) == "pull" else "pushed", moved * 5], t.id)
-			"drain_max_hp":
-				var amount := int(by_type.get(str(rd.get("type", "necrotic")), 0))
-				if amount > 0:
-					drain_max_hp(t, amount, act_name)
-			"heal_self":
-				var amount2 := int(by_type.get(str(rd.get("type", "necrotic")), 0))
-				if amount2 > 0:
-					var healed := src.creature.heal(amount2, act_name)
-					if healed > 0:
-						e.log.add("heal", "%s drinks %d Hit Points" % [src.name(), healed], src.id)
-						e.events.append({"type": "heal", "id": src.id, "amount": healed})
-			"ability_drain":
-				ability_drain(t, StringName(str(rd["ability"])), int(e._roll_damage_dice(str(rd.get("dice", "1d4")), false, 0, act_name)["total"]), act_name)
-			"curse":
-				var fx := Effect.new("Cursed: %s" % str(rd["curse"]).capitalize(), &"monster", str(rd["curse"])).with_modifier("flag", {"value": "curse:%s" % rd["curse"]})
-				fx.ends = Effect.Ends.NEVER
-				t.creature.add_effect(fx)
-				e.log.add("condition", "%s is cursed with %s" % [t.name(), rd["curse"]], t.id)
-			"engulf":
-				engulf(src, t, rd, act_name)
-		e.events.append({"type": "condition", "id": t.id})
+				return r
+			_rider(src, t, rd, by_type, act_name)
+			return r
+		if pausable:
+			return e.d20.then_after(t, roll, after, r)
+		return after.call(roll.call() as D20Test) as CombatResult
+	if not pausable:
+		for raw: Variant in riders:
+			one.call(raw)
+		return r
+	return e.each(riders, one, func() -> CombatResult: return r)
+
+
+## What one rider does once it lands: a condition for a while, a grapple, burning, possession, a push or pull, drained
+## Hit Points or abilities, a curse, being engulfed.
+func _rider(src: Combatant, t: Combatant, rd: Dictionary, by_type: Dictionary, act_name: String) -> void:
+	var e := enc()
+	match str(rd["do"]):
+		"condition":
+			_timed_condition(src, t, str(rd["condition"]), str(rd.get("until", "permanent")), act_name, rd.get("modifiers", []) as Array, rd)
+		"grapple":
+			grapple(src, t, int(rd.get("escape_dc", 10)), int(rd.get("limit", 1)), act_name, bool(rd.get("restrain", false)))
+			if e.grapples.has(t.id) and rd.has("hold_damage"):
+				t.set_meta("hold_damage", rd["hold_damage"])
+			if e.grapples.has(t.id) and rd.has("grip_damage"):
+				t.set_meta("grip_damage", rd["grip_damage"])
+		"burning":
+			set_burning(src, t)
+		"possess":
+			possess(src, t, act_name)
+		"pull", "push":
+			var moved := e.forced_move(t, e.center_of(src), int(rd.get("feet", 5)), str(rd["do"]) == "pull")
+			if moved > 0:
+				e.log.add("info", "%s is %s %d ft" % [t.name(), "pulled" if str(rd["do"]) == "pull" else "pushed", moved * 5], t.id)
+		"drain_max_hp":
+			var amount := int(by_type.get(str(rd.get("type", "necrotic")), 0))
+			if amount > 0:
+				drain_max_hp(t, amount, act_name)
+		"heal_self":
+			var amount2 := int(by_type.get(str(rd.get("type", "necrotic")), 0))
+			if amount2 > 0:
+				var healed := src.creature.heal(amount2, act_name)
+				if healed > 0:
+					e.log.add("heal", "%s drinks %d Hit Points" % [src.name(), healed], src.id)
+					e.events.append({"type": "heal", "id": src.id, "amount": healed})
+		"ability_drain":
+			ability_drain(t, StringName(str(rd["ability"])), int(e._roll_damage_dice(str(rd.get("dice", "1d4")), false, 0, act_name)["total"]), act_name)
+		"curse":
+			var fx := Effect.new("Cursed: %s" % str(rd["curse"]).capitalize(), &"monster", str(rd["curse"])).with_modifier("flag", {"value": "curse:%s" % rd["curse"]})
+			fx.ends = Effect.Ends.NEVER
+			t.creature.add_effect(fx)
+			e.log.add("condition", "%s is cursed with %s" % [t.name(), rd["curse"]], t.id)
+		"engulf":
+			engulf(src, t, rd, act_name)
+	e.events.append({"type": "condition", "id": t.id})
 
 
 ## A condition that lasts as the stat block says: until the end or start of the target's (or the source's) next
@@ -444,8 +467,10 @@ func _nothing_new(act: Dictionary, t: Combatant) -> bool:
 
 
 ## A save action (Bite, Engulf, Cacophony): the target saves; on a failure damage and the riders. An area action
-## (`area.shape`) rolls its damage once for everyone it catches.
-func save_action(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult) -> void:
+## (`area.shape`) rolls its damage once for everyone it catches. Each save stops for the choices after its roll
+## (Indomitable, Heroic Inspiration, an ally's Bend Luck: D20Responses), so `r` may come back paused: callers carry on
+## with Encounter.then. `pausable` false settles those choices by rule instead, for a caller that can't wait.
+func save_action(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult, pausable: bool = true) -> CombatResult:
 	var e := enc()
 	spend(c, act)
 	var victims := save_victims(c, act, t)
@@ -454,11 +479,13 @@ func save_action(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult) -
 	e.events.append({"type": "ability", "source": "monster", "by": c.id, "key": action_key(c, act),
 		"targets": victims.map(func(v: Combatant) -> String: return v.id), "cells": []})
 	var rolled_once := {}
-	for v in victims:
-		_save_one(c, act, v, r, rolled_once)
+	if not pausable:
+		for v in victims:
+			_save_one(c, act, v, r, rolled_once, false)
+		return r
+	return e.each(victims, func(v: Variant) -> CombatResult: return _save_one(c, act, v as Combatant, r, rolled_once, true), func() -> CombatResult: return r)
 
 
-## A stat-block action's key for the view's effects: "<monster id>.<action id>" (art/vfx/effects.json).
 ## What's added to the DCs a monster's own actions set: its `spell_dc` modifiers (Tactician's +2, combat/difficulty.gd).
 func dc_bonus(c: Combatant) -> int:
 	var total := 0
@@ -468,12 +495,13 @@ func dc_bonus(c: Combatant) -> int:
 	return total
 
 
+## A stat-block action's key for the view's effects: "<monster id>.<action id>" (art/vfx/effects.json).
 static func action_key(c: Combatant, act: Dictionary) -> String:
 	var mid := str((c.creature as Monster).data.get("id", "")) if c.creature is Monster else ""
 	return "%s.%s" % [mid, str(act.get("id", ""))]
 
 
-func _save_one(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult, rolled_once: Dictionary) -> void:
+func _save_one(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult, rolled_once: Dictionary, pausable: bool = false) -> CombatResult:
 	var e := enc()
 	var sv := act["save"] as Dictionary
 	var ab := StringName(str(sv["ability"]))
@@ -481,11 +509,24 @@ func _save_one(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult, rol
 	var immune_key := ClassFeatures.meta_key("immune_%s_%s" % [c.id, str(act.get("name", ""))])
 	if t.has_meta(immune_key):
 		e.log.add("info", "%s is unmoved by %s" % [t.name(), act.get("name", "")], t.id)
-		return
+		return r
 	var keys: Array[String] = []
 	if bool(act.get("magical", false)):
 		keys.append("save_vs:magic")
-	var test := t.creature.roll_save(e.dice, ab, int(sv["dc"]) + dc_bonus(c), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], act.get("name", ""), t.name()], keys)
+	var roll := func() -> D20Test:
+		return t.creature.roll_save(e.dice, ab, int(sv["dc"]) + dc_bonus(c), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], act.get("name", ""), t.name()], keys)
+	if not pausable:
+		return _after_save_one(c, act, t, roll.call() as D20Test, pre_hp, r, rolled_once, false)
+	return e.d20.then_after(t, roll, func(test: D20Test) -> CombatResult: return _after_save_one(c, act, t, test, pre_hp, r, rolled_once, true), r)
+
+
+## What a save action does to `t` once its save is settled: damage (rolled once for the whole area), the riders on a
+## failure, a banshee's wail dropping the weak.
+func _after_save_one(c: Combatant, act: Dictionary, t: Combatant, test: D20Test, pre_hp: int, r: CombatResult, rolled_once: Dictionary, pausable: bool) -> CombatResult:
+	var e := enc()
+	var sv := act["save"] as Dictionary
+	var ab := StringName(str(sv["ability"]))
+	var immune_key := ClassFeatures.meta_key("immune_%s_%s" % [c.id, str(act.get("name", ""))])
 	var by_type := {}
 	var parts: Array = []
 	var texts: Array[String] = [test.describe()]
@@ -515,7 +556,8 @@ func _save_one(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult, rol
 		e.log.add("condition", "%s collapses (%s)" % [t.name(), act.get("name", "")], t.id)
 		e.deal_damage(c, t, [{"amount": t.creature.hp + t.creature.temp_hp, "type": "psychic"}], false, str(act.get("name", "")))
 	if not test.success and t.is_alive():
-		apply_riders(c, t, act.get("on_fail", []) as Array, by_type, str(act.get("name", "")))
+		apply_riders(c, t, act.get("on_fail", []) as Array, by_type, str(act.get("name", "")), pausable)
+	return r
 
 
 ## How much of each damage type a creature actually took (after Resistance, Immunity, Vulnerability).
@@ -563,10 +605,6 @@ func cast(c: Combatant, spell_id: String, targets: Array, point: Vector2 = Vecto
 	var s := Compendium.shared().spell_data(spell_id)
 	if s.is_empty():
 		return CombatResult.fail("Unknown spell")
-	var per_day := sc.get("per_day", {}) as Dictionary
-	for n: String in per_day:
-		if spell_id in (per_day[n] as Array):
-			c.set_meta("cast_%s" % spell_id, int(c.get_meta("cast_%s" % spell_id, 0)) + 1)
 	var levels := sc.get("levels", {}) as Dictionary
 	var level := int(levels.get(spell_id, maxi(slot, int(s.get("level", 0)))))
 	var ab := StringName(str(sc.get("ability", "int")))
@@ -578,7 +616,14 @@ func cast(c: Combatant, spell_id: String, targets: Array, point: Vector2 = Vecto
 		dc.add_nonzero(m.source_name, c.creature.mod_value(m, ctx))
 	for m2 in c.creature.modifiers_for(&"spell_attack"):
 		atk.add_nonzero(m2.source_name, c.creature.mod_value(m2, ctx))
-	return e.spells.cast_with_numbers(c, spell_id, level, targets, point, {"dc": dc, "attack": atk, "mod": c.creature.ability_mod(ab), "ability": ab}, opts)
+	var r := e.spells.cast_with_numbers(c, spell_id, level, targets, point, {"dc": dc, "attack": atk, "mod": c.creature.ability_mod(ab), "ability": ab}, opts)
+	# A per-day spell is used up once it's cast, not when the cast was refused (no target in range, no action left).
+	if r.ok:
+		var per_day := sc.get("per_day", {}) as Dictionary
+		for n: String in per_day:
+			if spell_id in (per_day[n] as Array):
+				c.set_meta("cast_%s" % spell_id, int(c.get_meta("cast_%s" % spell_id, 0)) + 1)
+	return r
 
 
 # --- Turn hooks -----------------------------------------------------------------------------------
@@ -972,7 +1017,8 @@ func bonus_action(c: Combatant, plan: String = "") -> CombatResult:
 					if not st.is_empty():
 						c.bonus_available = false
 						var r := CombatResult.new()
-						save_action(c, act, st[0], r)
+						# The AI's after-the-main-action step doesn't wait on a prompt yet, so these saves settle by rule.
+						save_action(c, act, st[0], r, false)
 						return r
 			"rampage":
 				if plan == "rampage":

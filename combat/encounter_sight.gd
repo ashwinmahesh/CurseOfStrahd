@@ -124,3 +124,23 @@ func in_sunlight(c: Combatant) -> bool:
 		if bool(e.spells.zones.spell_light(cell)["sunlight"]) and not e.spells.zones.magical_darkness(cell):
 			return true
 	return false
+
+
+## High ground (owner's house rule, 2026-10-07, from Baldur's Gate 3): a ranged attack from 10 ft or more above its
+## target gets +2 to hit, one from 10 ft or more below gets -2. Heights count the floor and how far each is off it.
+## Returns the bonus (+2, -2 or 0).
+func height_edge(c: Combatant, target: Combatant, option: Dictionary) -> int:
+	var e := enc()
+	if bool(option.get("melee", true)):
+		return 0
+	var from: Vector2i = option.get("origin_cell", c.cell)
+	var up := 0 if option.has("origin_cell") else c.altitude
+	var rise := (e.grid.height(from) + up) - (e.grid.height(target.cell) + target.altitude)
+	if rise > CombatGrid.FEET:
+		return HIGH_GROUND
+	if rise < -CombatGrid.FEET:
+		return -HIGH_GROUND
+	return 0
+
+
+const HIGH_GROUND := 2

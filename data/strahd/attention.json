@@ -1,0 +1,160 @@
+{
+  "id": "attention",
+  "summary": "Strahd's attention (F9): how much he has noticed the party, never shown. Each mark adds its points while its condition holds; the tier it reaches brings his visits closer together (gap: a share of the usual wait between visits) and raises the chance of meeting something on the roads (road_day, road_night). Conditions read it as `attention >= <number or tier>`.",
+  "tiers": [
+    {
+      "id": "unnoticed",
+      "min": 0,
+      "gap": 1.0,
+      "road_day": 0.0,
+      "road_night": 0.0,
+      "summary": "A few more travellers lost in his valley."
+    },
+    {
+      "id": "watched",
+      "min": 3,
+      "gap": 0.85,
+      "road_day": 0.0,
+      "road_night": 0.05,
+      "summary": "He has asked about them. Bats and ravens follow, and the Vistani who sell to him remember their faces."
+    },
+    {
+      "id": "marked",
+      "min": 7,
+      "gap": 0.65,
+      "road_day": 0.05,
+      "road_night": 0.1,
+      "summary": "He has taken it personally. His wolves pace the roads they travel, and a letter may find them."
+    },
+    {
+      "id": "hunted",
+      "min": 12,
+      "gap": 0.5,
+      "road_day": 0.05,
+      "road_night": 0.15,
+      "summary": "He sends his spawn after them at night."
+    }
+  ],
+  "marks": [
+    {
+      "id": "doru",
+      "when": "flag.doru_destroyed",
+      "points": 1,
+      "summary": "Doru, one of his spawn, destroyed under the village church."
+    },
+    {
+      "id": "coffin_spawn",
+      "when": "flag.coffin_spawn_destroyed",
+      "points": 1,
+      "summary": "The spawn hidden in Vallaki's coffin shop, destroyed by day."
+    },
+    {
+      "id": "gulthias_tree",
+      "when": "flag.gulthias_tree_burned",
+      "points": 2,
+      "summary": "The Gulthias tree burned on Yester Hill, and his druids' blights with it."
+    },
+    {
+      "id": "kiril",
+      "when": "flag.kiril_defeated",
+      "points": 1,
+      "summary": "Kiril, whose pack hunts for him, dead."
+    },
+    {
+      "id": "baba_lysaga",
+      "when": "flag.lysaga_dead",
+      "points": 1,
+      "summary": "Baba Lysaga, who has served him since he was born, dead."
+    },
+    {
+      "id": "anatol",
+      "when": "flag.larders_anatol_destroyed",
+      "points": 1,
+      "summary": "The false Brother Anatol and his spawn, destroyed in his own larders."
+    },
+    {
+      "id": "sleepers",
+      "when": "flag.cat_sleepers_slain",
+      "points": 1,
+      "summary": "The spawn sleeping in his crypts, destroyed."
+    },
+    {
+      "id": "keepers",
+      "when": "flag.cat_keepers_defeated",
+      "points": 1,
+      "summary": "The spawn who keep his tomb, destroyed."
+    },
+    {
+      "id": "rahadin",
+      "when": "flag.rahadin_defeated",
+      "points": 2,
+      "summary": "Rahadin, his chamberlain, beaten."
+    },
+    {
+      "id": "sunsword",
+      "when": "item:sunsword",
+      "points": 3,
+      "summary": "The Sunsword, the blade that was his brother's, in the party's hands."
+    },
+    {
+      "id": "holy_symbol",
+      "when": "item:holy_symbol_of_ravenkind",
+      "points": 3,
+      "summary": "The Holy Symbol of Ravenkind carried against him."
+    },
+    {
+      "id": "tome",
+      "when": "item:tome_of_strahd",
+      "points": 2,
+      "summary": "His own history, the Tome of Strahd, read by strangers."
+    },
+    {
+      "id": "ireena_kept",
+      "when": "guest:ireena",
+      "points": 1,
+      "summary": "Ireena walking at the party's side."
+    },
+    {
+      "id": "grave_defiance",
+      "when": "flag.strahd_first_impression == \"defiant\" or flag.strahd_road_encounter == \"defiant\"",
+      "points": 1,
+      "summary": "Defied him to his face, at the grave or on the road."
+    },
+    {
+      "id": "raised_a_hand",
+      "when": "flag.strahd_first_impression == \"violent\" or flag.strahd_road_encounter == \"violent\" or flag.strahd_night_visit == \"attacked\"",
+      "points": 2,
+      "summary": "Raised a hand against him."
+    },
+    {
+      "id": "night_turned",
+      "when": "flag.strahd_night_visit == \"warded\" or flag.strahd_night_visit == \"shield\"",
+      "points": 1,
+      "summary": "Turned him away at their fire with faith or a body in the way."
+    },
+    {
+      "id": "tested",
+      "when": "flag.strahd_test == \"fought\"",
+      "points": 1,
+      "summary": "Stood up to his test of strength on the road."
+    },
+    {
+      "id": "window_held",
+      "when": "flag.strahd_window and flag.strahd_window != \"taken\"",
+      "points": 2,
+      "summary": "Kept Ireena from him where she sheltered."
+    },
+    {
+      "id": "invitation_declined",
+      "when": "flag.strahd_invitation == \"declined\"",
+      "points": 1,
+      "summary": "Sent his black carriage away empty."
+    },
+    {
+      "id": "withdrew",
+      "when": "flag.strahd_withdrew",
+      "points": 1,
+      "summary": "Made him leave a fight."
+    }
+  ]
+}

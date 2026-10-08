@@ -52,6 +52,12 @@ import:
 test: import
 	python3 tools/run_tests.py --godot $(GODOT) $(if $(JOBS),--jobs $(JOBS),) $(if $(ONLY),--only=$(ONLY),) $(if $(FILES),--files=$(FILES),) 2>&1 | $(LOGCHK)
 
+## The repo's git hooks (tools/git/), into the hooks folder every worktree shares: pre-push refuses a push of main
+## unless STRAHD_PUSH_MAIN=1 (the build thread's), then runs Git LFS's own pre-push.
+.PHONY: hooks
+hooks:
+	cp tools/git/pre-push "$$(git rev-parse --git-common-dir)/hooks/pre-push"
+
 ## Golden saves (P4): the playthrough tests keep a save at the start of each chapter in tests/saves
 ## (v<save version>_<chapter>.json, tests/support/golden_saves.gd); one already there is never made again.
 .PHONY: golden-saves
@@ -123,7 +129,7 @@ anims:
 	$(if $(GENERATE),python3 tools/art/anim_keyframes.py --retry 2 $(if $(ONLY),--only $(ONLY),) && python3 tools/art/anim_keyframes.py --kind walk $(if $(ONLY),--only $(ONLY),),true)
 	python3 tools/art/build_anims.py $(if $(ONLY),--only $(ONLY),)
 	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
-	python3 tools/art/set_import.py $(wildcard art/sprites/*/walk.png) $(wildcard art/sprites/*/attack.png)
+	python3 tools/art/set_import.py --sheets $(wildcard art/sprites/*/walk.png) $(wildcard art/sprites/*/attack.png)
 	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 
 ## The six heroes' HD animation sheets (set v2) from their strips: make keys [ONLY="id ..."] [KINDS="walk8 ..."]

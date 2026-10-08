@@ -19,6 +19,8 @@ static func capture(e: Encounter) -> Dictionary:
 			cd["monster"] = str(m.data.get("id", ""))
 			cd["name"] = m.name
 			cd["state"] = m.state_to_dict()
+			# A fight can set a monster's Hit Point maximum apart from its stat block (a tougher spawn).
+			cd["hp_max_base"] = m.hp_max_base
 			# Summoned creatures' stat blocks are built when they're cast (Summon Fey), so they travel with the save.
 			if Compendium.shared().monster_data(str(m.data.get("id", ""))).is_empty() or m.data.has("shape_of"):
 				cd["monster_data"] = m.data.duplicate(true)
@@ -41,7 +43,9 @@ static func capture(e: Encounter) -> Dictionary:
 		var row := ""
 		for x in e.grid.width:
 			var cell := Vector2i(x, z)
-			if e.grid.has_flag(cell, CombatGrid.VOID):
+			if e.grid.has_flag(cell, CombatGrid.WATER):
+				row += "w"
+			elif e.grid.has_flag(cell, CombatGrid.VOID):
 				row += " "
 			elif e.grid.has_flag(cell, CombatGrid.WALL):
 				row += "#"
@@ -61,12 +65,13 @@ static func capture(e: Encounter) -> Dictionary:
 		"grapples": e.grapples.duplicate(), "studied": e.studied.duplicate(), "title": e.title, "log": log,
 		"spells": e.spells.to_dict(), "shapes": e.shapes.to_dict(), "light": e.ambient_light, "sunlit": e.sunlit,
 		"location_id": e.location_id, "places": e.places.duplicate(), "lair": e.lair, "outdoors": e.outdoors, "boss": e.legendary.to_dict(),
-		"difficulty": e.difficulty.id, "ground": e.ground.to_dict(), "objects": e.objects.to_dict()}
+		"drop_ft": e.grid.drop_ft, "difficulty": e.difficulty.id, "ground": e.ground.to_dict(), "objects": e.objects.to_dict()}
 
 
 ## Rebuilds the fight; `party` supplies the party's Character objects (from the loaded story) by id when present.
 static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = []) -> Encounter:
 	var e := Encounter.new(CombatGrid.from_rows(d["rows"] as Array), dice)
+	e.grid.drop_ft = int(d.get("drop_ft", 0))
 	e.title = str(d.get("title", ""))
 	var by_id := {}
 	for ch in party:
@@ -86,6 +91,7 @@ static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [
 			var mdata := cd["monster_data"] as Dictionary if cd.has("monster_data") else Compendium.shared().monster_data(str(cd["monster"]))
 			var m := Monster.from_data(mdata)
 			m.name = str(cd["name"])
+			m.hp_max_base = int(cd.get("hp_max_base", m.hp_max_base))
 			m.state_from_dict(cd["state"] as Dictionary)
 			creature = m
 		var a := cd["cell"] as Array

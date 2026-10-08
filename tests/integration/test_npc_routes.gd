@@ -16,7 +16,7 @@ const LOC := {
 	"spawns": {"default": [1, 4]},
 	"npcs": [
 		{"npc": "ismark", "cell": [3, 1], "dialogue": "test/lane:start", "path": [[10, 1]], "pause": 0.2},
-		{"npc": "ireena", "cell": [6, 3], "dialogue": "test/lane:start"},
+		{"npc": "ireena", "cell": [6, 3], "dialogue": "test/lane:start", "facing": "west"},
 		{"npc": "donavich", "cell": [3, 3], "dialogue": "test/lane:start", "path": [[8, 3]], "asleep": true}]
 }
 
@@ -157,3 +157,14 @@ func test_every_authored_route_can_be_walked() -> void:
 			var route := NpcRoutes.route_for(v, spec)
 			v.grid.set_flag(own, CombatGrid.LOW, low)
 			assert_false(route.is_empty(), "%s in %s can walk every leg of its path" % [spec["npc"], id])
+
+
+## Lane 25's sight cones read each figure's facing: a person stands facing their entry's `facing`, and a walker turns
+## to the way it walks.
+func test_people_face_their_way_and_walkers_turn_as_they_go() -> void:
+	var v := _view()
+	var ireena := v.npc_tokens["ireena"] as CombatToken
+	assert_true(ireena.sprite.facing.distance_to(Vector3(-1, 0, 0)) < 0.01, "she faces west (%s)" % ireena.sprite.facing)
+	var ismark := v.npc_tokens["ismark"] as CombatToken
+	await _run(2.0)
+	assert_true(ismark.sprite.facing.x > 0.7, "walking east, he faces east (%s)" % ismark.sprite.facing)

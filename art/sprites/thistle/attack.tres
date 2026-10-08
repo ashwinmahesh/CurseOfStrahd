@@ -4,278 +4,278 @@
 
 [sub_resource type="AtlasTexture" id="s_0"]
 atlas = ExtResource("1")
-region = Rect2(3120, 769, 306, 695)
-margin = Rect2(231, 74, 462, 107)
+region = Rect2(3386, 768, 306, 694)
+margin = Rect2(231, 74, 462, 106)
 
 [sub_resource type="AtlasTexture" id="s_1"]
 atlas = ExtResource("1")
-region = Rect2(1758, 1478, 380, 685)
-margin = Rect2(194, 84, 388, 117)
+region = Rect2(1758, 1477, 378, 685)
+margin = Rect2(195, 83, 390, 115)
 
 [sub_resource type="AtlasTexture" id="s_2"]
 atlas = ExtResource("1")
-region = Rect2(512, 2845, 460, 651)
-margin = Rect2(154, 118, 308, 151)
+region = Rect2(0, 2843, 460, 651)
+margin = Rect2(154, 117, 308, 149)
 
 [sub_resource type="AtlasTexture" id="s_3"]
 atlas = ExtResource("1")
-region = Rect2(0, 2845, 512, 652)
-margin = Rect2(128, 117, 256, 150)
+region = Rect2(460, 2843, 512, 651)
+margin = Rect2(128, 117, 256, 149)
 
 [sub_resource type="AtlasTexture" id="s_4"]
 atlas = ExtResource("1")
-region = Rect2(1452, 0, 398, 745)
-margin = Rect2(185, 24, 370, 57)
+region = Rect2(1450, 0, 398, 744)
+margin = Rect2(185, 24, 370, 56)
 
 [sub_resource type="AtlasTexture" id="s_5"]
 atlas = ExtResource("1")
-region = Rect2(2996, 0, 592, 711)
-margin = Rect2(88, 58, 176, 91)
+region = Rect2(2992, 0, 590, 711)
+margin = Rect2(89, 57, 178, 89)
 
 [sub_resource type="AtlasTexture" id="s_6"]
 atlas = ExtResource("1")
-region = Rect2(3588, 0, 482, 709)
-margin = Rect2(143, 60, 286, 93)
+region = Rect2(3582, 0, 482, 709)
+margin = Rect2(143, 59, 286, 91)
 
 [sub_resource type="AtlasTexture" id="s_7"]
 atlas = ExtResource("1")
-region = Rect2(314, 2169, 492, 673)
-margin = Rect2(138, 96, 276, 129)
+region = Rect2(314, 2168, 492, 673)
+margin = Rect2(138, 95, 276, 127)
 
 [sub_resource type="AtlasTexture" id="s_8"]
 atlas = ExtResource("1")
-region = Rect2(1310, 2169, 290, 670)
-margin = Rect2(239, 99, 478, 132)
+region = Rect2(1310, 2168, 290, 669)
+margin = Rect2(239, 99, 478, 131)
 
 [sub_resource type="AtlasTexture" id="s_9"]
 atlas = ExtResource("1")
-region = Rect2(972, 2845, 502, 648)
-margin = Rect2(133, 121, 266, 154)
+region = Rect2(972, 2843, 502, 648)
+margin = Rect2(133, 120, 266, 152)
 
 [sub_resource type="AtlasTexture" id="s_10"]
 atlas = ExtResource("1")
-region = Rect2(1854, 769, 264, 699)
-margin = Rect2(252, 70, 504, 103)
+region = Rect2(1854, 768, 264, 698)
+margin = Rect2(252, 70, 504, 102)
 
 [sub_resource type="AtlasTexture" id="se_0"]
 atlas = ExtResource("1")
-region = Rect2(3304, 1478, 476, 680)
-margin = Rect2(146, 89, 292, 122)
+region = Rect2(2938, 1477, 476, 680)
+margin = Rect2(146, 88, 292, 120)
 
 [sub_resource type="AtlasTexture" id="se_1"]
 atlas = ExtResource("1")
-region = Rect2(734, 769, 434, 702)
-margin = Rect2(167, 68, 334, 100)
+region = Rect2(734, 768, 434, 702)
+margin = Rect2(167, 67, 334, 98)
 
 [sub_resource type="AtlasTexture" id="se_2"]
 atlas = ExtResource("1")
-region = Rect2(2138, 1478, 328, 681)
-margin = Rect2(220, 89, 440, 121)
+region = Rect2(2136, 1477, 328, 681)
+margin = Rect2(220, 88, 440, 119)
 
 [sub_resource type="AtlasTexture" id="se_3"]
 atlas = ExtResource("1")
-region = Rect2(1960, 2169, 436, 663)
-margin = Rect2(166, 105, 332, 139)
+region = Rect2(1960, 2168, 436, 663)
+margin = Rect2(166, 104, 332, 137)
 
 [sub_resource type="AtlasTexture" id="se_4"]
 atlas = ExtResource("1")
-region = Rect2(464, 0, 496, 760)
-margin = Rect2(136, 7, 272, 42)
+region = Rect2(462, 0, 496, 760)
+margin = Rect2(136, 6, 272, 40)
 
 [sub_resource type="AtlasTexture" id="se_5"]
 atlas = ExtResource("1")
-region = Rect2(3692, 769, 454, 693)
-margin = Rect2(157, 73, 314, 109)
+region = Rect2(3692, 768, 454, 693)
+margin = Rect2(157, 72, 314, 107)
 
 [sub_resource type="AtlasTexture" id="se_6"]
 atlas = ExtResource("1")
-region = Rect2(3780, 1478, 446, 680)
-margin = Rect2(161, 83, 322, 122)
+region = Rect2(3414, 1477, 446, 680)
+margin = Rect2(161, 82, 322, 120)
 
 [sub_resource type="AtlasTexture" id="se_7"]
 atlas = ExtResource("1")
-region = Rect2(254, 769, 480, 704)
-margin = Rect2(144, 72, 288, 98)
+region = Rect2(254, 768, 480, 704)
+margin = Rect2(144, 71, 288, 96)
 
 [sub_resource type="AtlasTexture" id="se_8"]
 atlas = ExtResource("1")
-region = Rect2(1600, 2169, 360, 664)
-margin = Rect2(204, 106, 408, 138)
+region = Rect2(1600, 2168, 360, 664)
+margin = Rect2(204, 105, 408, 136)
 
 [sub_resource type="AtlasTexture" id="se_9"]
 atlas = ExtResource("1")
-region = Rect2(1542, 3497, 456, 597)
-margin = Rect2(156, 171, 312, 205)
+region = Rect2(1542, 3494, 456, 597)
+margin = Rect2(156, 170, 312, 203)
 
 [sub_resource type="AtlasTexture" id="se_10"]
 atlas = ExtResource("1")
-region = Rect2(0, 769, 254, 709)
-margin = Rect2(257, 60, 514, 93)
+region = Rect2(0, 768, 254, 709)
+margin = Rect2(257, 59, 514, 91)
 
 [sub_resource type="AtlasTexture" id="e_0"]
 atlas = ExtResource("1")
-region = Rect2(1886, 2845, 552, 641)
-margin = Rect2(108, 128, 216, 161)
+region = Rect2(1886, 2843, 552, 641)
+margin = Rect2(108, 127, 216, 159)
 
 [sub_resource type="AtlasTexture" id="e_1"]
 atlas = ExtResource("1")
-region = Rect2(1474, 2845, 412, 645)
-margin = Rect2(178, 125, 356, 157)
+region = Rect2(1474, 2843, 412, 645)
+margin = Rect2(178, 124, 356, 155)
 
 [sub_resource type="AtlasTexture" id="e_2"]
 atlas = ExtResource("1")
-region = Rect2(1998, 3497, 530, 591)
-margin = Rect2(119, 178, 238, 211)
+region = Rect2(1998, 3494, 530, 591)
+margin = Rect2(119, 177, 238, 209)
 
 [sub_resource type="AtlasTexture" id="e_3"]
 atlas = ExtResource("1")
-region = Rect2(1060, 3497, 482, 600)
-margin = Rect2(143, 168, 286, 202)
+region = Rect2(1060, 3494, 482, 600)
+margin = Rect2(143, 167, 286, 200)
 
 [sub_resource type="AtlasTexture" id="e_4"]
 atlas = ExtResource("1")
-region = Rect2(960, 0, 492, 750)
-margin = Rect2(138, 25, 276, 52)
+region = Rect2(958, 0, 492, 750)
+margin = Rect2(138, 24, 276, 50)
 
 [sub_resource type="AtlasTexture" id="e_5"]
 atlas = ExtResource("1")
-region = Rect2(806, 2169, 504, 671)
-margin = Rect2(132, 104, 264, 131)
+region = Rect2(806, 2168, 504, 671)
+margin = Rect2(132, 103, 264, 129)
 
 [sub_resource type="AtlasTexture" id="e_6"]
 atlas = ExtResource("1")
-region = Rect2(1182, 1478, 576, 687)
-margin = Rect2(96, 91, 192, 115)
+region = Rect2(1182, 1477, 576, 687)
+margin = Rect2(96, 90, 192, 113)
 
 [sub_resource type="AtlasTexture" id="e_7"]
 atlas = ExtResource("1")
-region = Rect2(0, 3497, 644, 617)
-margin = Rect2(62, 155, 124, 185)
+region = Rect2(0, 3494, 644, 617)
+margin = Rect2(62, 154, 124, 183)
 
 [sub_resource type="AtlasTexture" id="e_8"]
 atlas = ExtResource("1")
-region = Rect2(2852, 2845, 328, 625)
-margin = Rect2(220, 140, 440, 177)
+region = Rect2(2852, 2843, 328, 625)
+margin = Rect2(220, 139, 440, 175)
 
 [sub_resource type="AtlasTexture" id="e_9"]
 atlas = ExtResource("1")
-region = Rect2(3180, 2845, 388, 620)
-margin = Rect2(190, 147, 380, 182)
+region = Rect2(3180, 2843, 388, 620)
+margin = Rect2(190, 146, 380, 180)
 
 [sub_resource type="AtlasTexture" id="e_10"]
 atlas = ExtResource("1")
-region = Rect2(2118, 769, 218, 698)
-margin = Rect2(275, 71, 550, 104)
+region = Rect2(2118, 768, 218, 698)
+margin = Rect2(275, 70, 550, 102)
 
 [sub_resource type="AtlasTexture" id="ne_0"]
 atlas = ExtResource("1")
-region = Rect2(0, 1478, 410, 691)
-margin = Rect2(179, 78, 358, 111)
+region = Rect2(0, 1477, 410, 691)
+margin = Rect2(179, 77, 358, 109)
 
 [sub_resource type="AtlasTexture" id="ne_1"]
 atlas = ExtResource("1")
-region = Rect2(410, 1478, 310, 691)
-margin = Rect2(229, 78, 458, 111)
+region = Rect2(410, 1477, 310, 691)
+margin = Rect2(229, 77, 458, 109)
 
 [sub_resource type="AtlasTexture" id="ne_2"]
 atlas = ExtResource("1")
-region = Rect2(2836, 2169, 342, 657)
-margin = Rect2(213, 112, 426, 145)
+region = Rect2(2836, 2168, 342, 657)
+margin = Rect2(213, 111, 426, 143)
 
 [sub_resource type="AtlasTexture" id="ne_3"]
 atlas = ExtResource("1")
-region = Rect2(3530, 2169, 378, 654)
-margin = Rect2(195, 115, 390, 148)
+region = Rect2(3530, 2168, 378, 654)
+margin = Rect2(195, 114, 390, 146)
 
 [sub_resource type="AtlasTexture" id="ne_4"]
 atlas = ExtResource("1")
-region = Rect2(1850, 0, 394, 731)
-margin = Rect2(187, 40, 374, 71)
+region = Rect2(1848, 0, 394, 731)
+margin = Rect2(187, 39, 374, 69)
 
 [sub_resource type="AtlasTexture" id="ne_5"]
 atlas = ExtResource("1")
-region = Rect2(720, 1478, 462, 690)
-margin = Rect2(153, 80, 306, 112)
+region = Rect2(720, 1477, 462, 690)
+margin = Rect2(153, 79, 306, 110)
 
 [sub_resource type="AtlasTexture" id="ne_6"]
 atlas = ExtResource("1")
-region = Rect2(1168, 769, 442, 701)
-margin = Rect2(163, 70, 326, 101)
+region = Rect2(1168, 768, 442, 700)
+margin = Rect2(163, 70, 326, 100)
 
 [sub_resource type="AtlasTexture" id="ne_7"]
 atlas = ExtResource("1")
-region = Rect2(2466, 1478, 476, 681)
-margin = Rect2(146, 88, 292, 121)
+region = Rect2(2464, 1477, 474, 681)
+margin = Rect2(147, 87, 294, 119)
 
 [sub_resource type="AtlasTexture" id="ne_8"]
 atlas = ExtResource("1")
-region = Rect2(2942, 1478, 362, 681)
-margin = Rect2(203, 89, 406, 121)
+region = Rect2(3860, 1477, 360, 680)
+margin = Rect2(204, 89, 408, 120)
 
 [sub_resource type="AtlasTexture" id="ne_9"]
 atlas = ExtResource("1")
-region = Rect2(0, 2169, 314, 676)
-margin = Rect2(227, 94, 454, 126)
+region = Rect2(0, 2168, 314, 675)
+margin = Rect2(227, 94, 454, 125)
 
 [sub_resource type="AtlasTexture" id="ne_10"]
 atlas = ExtResource("1")
-region = Rect2(1610, 769, 244, 700)
-margin = Rect2(262, 69, 524, 102)
+region = Rect2(1610, 768, 244, 699)
+margin = Rect2(262, 69, 524, 101)
 
 [sub_resource type="AtlasTexture" id="n_0"]
 atlas = ExtResource("1")
-region = Rect2(2754, 769, 366, 696)
-margin = Rect2(201, 73, 402, 106)
+region = Rect2(2754, 768, 366, 696)
+margin = Rect2(201, 72, 402, 104)
 
 [sub_resource type="AtlasTexture" id="n_1"]
 atlas = ExtResource("1")
-region = Rect2(2336, 769, 418, 697)
-margin = Rect2(175, 72, 350, 105)
+region = Rect2(2336, 768, 418, 697)
+margin = Rect2(175, 71, 350, 103)
 
 [sub_resource type="AtlasTexture" id="n_2"]
 atlas = ExtResource("1")
-region = Rect2(2668, 0, 328, 723)
-margin = Rect2(220, 46, 440, 79)
+region = Rect2(2666, 0, 326, 723)
+margin = Rect2(221, 45, 442, 77)
 
 [sub_resource type="AtlasTexture" id="n_3"]
 atlas = ExtResource("1")
-region = Rect2(2244, 0, 424, 727)
-margin = Rect2(172, 42, 344, 75)
+region = Rect2(2242, 0, 424, 726)
+margin = Rect2(172, 42, 344, 74)
 
 [sub_resource type="AtlasTexture" id="n_4"]
 atlas = ExtResource("1")
-region = Rect2(0, 0, 464, 769)
-margin = Rect2(152, 0, 304, 33)
+region = Rect2(0, 0, 462, 768)
+margin = Rect2(153, 0, 306, 32)
 
 [sub_resource type="AtlasTexture" id="n_5"]
 atlas = ExtResource("1")
-region = Rect2(2396, 2169, 440, 663)
-margin = Rect2(164, 106, 328, 139)
+region = Rect2(2396, 2168, 440, 663)
+margin = Rect2(164, 105, 328, 137)
 
 [sub_resource type="AtlasTexture" id="n_6"]
 atlas = ExtResource("1")
-region = Rect2(3178, 2169, 352, 657)
-margin = Rect2(208, 112, 416, 145)
+region = Rect2(3178, 2168, 352, 656)
+margin = Rect2(208, 112, 416, 144)
 
 [sub_resource type="AtlasTexture" id="n_7"]
 atlas = ExtResource("1")
-region = Rect2(2438, 2845, 414, 626)
-margin = Rect2(177, 143, 354, 176)
+region = Rect2(2438, 2843, 414, 626)
+margin = Rect2(177, 142, 354, 174)
 
 [sub_resource type="AtlasTexture" id="n_8"]
 atlas = ExtResource("1")
-region = Rect2(3568, 2845, 374, 619)
-margin = Rect2(197, 150, 394, 183)
+region = Rect2(3568, 2843, 374, 619)
+margin = Rect2(197, 149, 394, 181)
 
 [sub_resource type="AtlasTexture" id="n_9"]
 atlas = ExtResource("1")
-region = Rect2(644, 3497, 416, 610)
-margin = Rect2(176, 159, 352, 192)
+region = Rect2(644, 3494, 416, 610)
+margin = Rect2(176, 158, 352, 190)
 
 [sub_resource type="AtlasTexture" id="n_10"]
 atlas = ExtResource("1")
-region = Rect2(3426, 769, 266, 695)
-margin = Rect2(251, 74, 502, 107)
+region = Rect2(3120, 768, 266, 695)
+margin = Rect2(251, 73, 502, 105)
 
 [resource]
 animations = [{

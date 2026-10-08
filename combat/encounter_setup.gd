@@ -16,6 +16,7 @@ static func load_id(encounter_id: String, dice: DiceRoller, errors: Array[String
 static func from_data(entry: Dictionary, dice: DiceRoller, errors: Array[String] = []) -> Encounter:
 	var map := entry["map"] as Dictionary
 	var grid := CombatGrid.from_rows(map["rows"] as Array)
+	grid.drop_ft = int(map.get("drop_ft", 0))
 	var e := Encounter.new(grid, dice)
 	e.title = str(entry.get("name", ""))
 	e.intro = str(entry.get("text", ""))

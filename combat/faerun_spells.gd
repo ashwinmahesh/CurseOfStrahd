@@ -95,28 +95,33 @@ func _raise_zombie(c: Combatant, z: Dictionary) -> void:
 	e.log.add("spell", "A Zombie rises to serve %s (Negative Energy Flood)" % c.name(), c.id)
 
 
-## Alustriel's Mooncloak (Automatic only): a failed save against being Frightened, Grappled or Restrained succeeds
-## and the spell ends, spending the Reaction.
-func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
+## After a D20 Test (D20Responses): Modify Magic's Unravel, Shared Resilience, Noble Scion and Alustriel's Mooncloak.
+func d20_offers(c: Combatant, t: D20Test, keys: Array[String], out: Array) -> void:
 	var fr := faerun()
-	fr.subclasses._unravel(c, t, keys)
-	fr.subclasses._shared_resilience(c, t)
-	fr.subclasses._noble_scion_save(c, t)
-	_mooncloak(c, t, keys)
+	fr.subclasses.unravel_offers(c, t, keys, out)
+	fr.subclasses.shared_resilience_offers(c, t, out)
+	fr.subclasses.noble_scion_offers(c, t, out)
+	_mooncloak_offers(c, t, keys, out)
 
 
-func _mooncloak(c: Combatant, t: D20Test, keys: Array[String]) -> void:
+## Alustriel's Mooncloak: a Reaction turns a failed save against being Frightened, Grappled or Restrained into a success
+## and ends the spell. It asks where the save can pause (its class-tab rule otherwise).
+func _mooncloak_offers(c: Combatant, t: D20Test, keys: Array[String], out: Array) -> void:
 	var e := enc()
-	if t.success or t.kind != D20Test.Kind.SAVING_THROW or c.creature.concentration == null:
+	if t.kind != D20Test.Kind.SAVING_THROW or c.creature.concentration == null or c.creature.concentration.source_id != "alustriels_mooncloak":
 		return
-	if c.creature.concentration.source_id != "alustriels_mooncloak" or str(c.reaction_rules.get("alustriels_mooncloak", "never")) != "auto":
+	if not keys.any(func(k: String) -> bool: return k in ["save_vs:frightened", "save_vs:grappled", "save_vs:restrained"]):
 		return
-	if not keys.any(func(k: String) -> bool: return k in ["save_vs:frightened", "save_vs:grappled", "save_vs:restrained"]) or not e.spells.can_react(c):
-		return
-	c.reaction_available = false
-	t.add_bonus(maxi(0, t.target - t.total), "Alustriel's Mooncloak")
-	c.creature.concentration.end("its moonlight steadies %s" % c.name())
-	_log("reaction", "%s spends the Mooncloak's moonlight to shrug it off" % c.name(), c)
+	out.append({"kind": "alustriels_mooncloak", "reactor": c, "sync": "explicit", "title": "Reaction: Alustriel's Mooncloak?",
+		"text": func() -> String: return "%s. Spend the Mooncloak's moonlight to succeed instead (the spell ends)?" % D20Responses.line(c, t),
+		"cost": "Reaction, and the spell ends",
+		"still": func() -> bool: return not t.success and e.spells.can_react(c) and c.creature.concentration != null \
+			and c.creature.concentration.source_id == "alustriels_mooncloak",
+		"use": func() -> void:
+			c.reaction_available = false
+			t.add_bonus(maxi(0, t.target - t.total), "Alustriel's Mooncloak")
+			c.creature.concentration.end("its moonlight steadies %s" % c.name())
+			_log("reaction", "%s spends the Mooncloak's moonlight to shrug it off" % c.name(), c)})
 
 
 ## Why a `do: faerun` sustained action can't be used now ("" if it can); checked before its cost is paid.

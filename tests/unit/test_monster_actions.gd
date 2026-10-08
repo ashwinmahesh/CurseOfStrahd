@@ -512,3 +512,32 @@ func test_wereraven_curse_raises_a_wereraven() -> void:
 	assert_true(e.monster_actions.lycanthrope(h))
 	var raised := e.combatants.filter(func(c: Combatant) -> bool: return c.creature.name.contains("wereraven"))
 	assert_eq(raised.size(), 1, "it rises as a wereraven")
+
+
+func test_a_refused_per_day_spell_isnt_used_up() -> void:
+	var e := _field(23)
+	var skull := TestCombat.foe(e, "flameskull", Vector2i(2, 2))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(9, 7))
+	TestCombat.start_with(e, skull)
+	var far := e.monster_actions.cast(skull, "fireball", [], Vector2(600.5, 600.5))
+	assert_false(far.ok, "nowhere it can reach")
+	assert_eq(int(skull.get_meta("cast_fireball", 0)), 0, "so the day's Fireball is still there")
+	assert_true(e.monster_actions.spells_now(skull).any(func(s: Dictionary) -> bool: return str(s["id"]) == "fireball"))
+	var r := e.monster_actions.cast(skull, "fireball", [], e.center_of(h))
+	assert_true(r.ok, r.reason)
+	assert_eq(int(skull.get_meta("cast_fireball", 0)), 1, "cast: used up")
+
+
+func test_a_saved_fight_keeps_a_tuned_hit_point_maximum() -> void:
+	var e := _field(24)
+	var spawn := TestCombat.foe(e, "vampire_spawn", Vector2i(3, 3))
+	TestCombat.hero(e, "ilse_varga", Vector2i(6, 3))
+	var m := spawn.creature as Monster
+	m.hp_max_base = m.hp_max_base + 20
+	m.hp = m.max_hp()
+	TestCombat.start_with(e, spawn)
+	var saved := JSON.parse_string(JSON.stringify(EncounterSnapshot.capture(e))) as Dictionary
+	var back := EncounterSnapshot.restore(saved, DiceRoller.new(4))
+	var again := back.get_c(spawn.id).creature as Monster
+	assert_eq(again.max_hp(), m.max_hp(), "the fight's maximum, not the stat block's")
+	assert_eq(again.hp, m.hp)
