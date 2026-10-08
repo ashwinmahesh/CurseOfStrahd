@@ -60,6 +60,23 @@ static func for_art(board: ArenaBoard, art: String, pick: int = 0) -> String:
 	return id if has_model(id) else ""
 
 
+## Is a model with a fire of its own (a `flame` socket: a hearth, a brazier, a campfire, a torch) standing under `root`
+## within `reach` of `at` on the ground (both in `root`'s space)? A fire light there would burn a second flame.
+static func fire_near(root: Node, at: Vector3, reach: float = 1.5) -> bool:
+	for n: Node in root.find_children("Model_*", "Node3D", true, false):
+		var id := str(n.get_meta("model", ""))
+		if not ((manifest().get(id, {}) as Dictionary).get("sockets", {}) as Dictionary).has("flame"):
+			continue
+		var xf := (n as Node3D).transform
+		var up := n.get_parent()
+		while up != null and up != root and up is Node3D:
+			xf = (up as Node3D).transform * xf
+			up = up.get_parent()
+		if Vector2(xf.origin.x - at.x, xf.origin.z - at.z).length() <= reach:
+			return true
+	return false
+
+
 ## A number for a square, to pick a variant and a heading that stay the same every time the place is built.
 static func hash_cell(cell: Vector2i) -> int:
 	return absi(cell.x * 73856093 ^ cell.y * 19349663)

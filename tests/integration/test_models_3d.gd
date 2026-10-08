@@ -331,3 +331,20 @@ func test_a_looted_desk_dims() -> void:
 		var b := ModelPiece.colour_of(m.get_shader_parameter(key))
 		assert_true(b.v < a.v, "surface %d is darker once looted" % i)
 	v.queue_free()
+
+
+## A fire light beside a hearth, brazier or campfire doesn't burn a second flame on the ground under it (Krezk's
+## brazier drew two).
+func test_a_fire_burns_once() -> void:
+	var v := _view("krezk")
+	await _frames(1)
+	var at := v.board.cell_center(Vector2i(29, 17))
+	var flames := 0
+	for n: Node in v.find_children("*", "Node3D", true, false):
+		var flat := n is Sprite3D and (n as Sprite3D).texture != null and (n as Sprite3D).texture.resource_path.ends_with("/flame.png")
+		if flat or str(n.get_meta("model", "")) == "flame":
+			var p := (n as Node3D).global_position
+			if Vector2(p.x - at.x, p.z - at.z).length() <= 1.5:
+				flames += 1
+	assert_eq(flames, 1, "Krezk's brazier burns with one flame")
+	v.queue_free()
