@@ -60,7 +60,9 @@ row that waits on a plan phase fails `make validate` once that phase is built (t
 | Banishment | The banished creature leaves the grid; a native of another plane banished for 10 rounds doesn't return | Same as the rule, counted in rounds | — |
 | Conjure Animals | The caster's free move of the pack is a separate free action once per turn; Advantage on Strength saves within 5 ft of the pack is applied | The pack moving "when you move" needs a combined move | — |
 | Conjure Minor Elementals | The extra damage type is picked for you each attack: whichever the target doesn't resist | Saves a prompt per attack | — |
-| Call Lightning | No stormy weather bonus | The game has no weather yet | With weather |
+| Call Lightning | No stormy weather bonus | Weather exists now (story/weather.gd, F12) but fights don't read it yet | F12 fight half, lane 2: `Weather.now(st) == "storm"` |
+| Weather and travel | A storm or snow makes a leg of a journey take a quarter longer and a blizzard twice as long; fog, a storm at night and Strahd's attention add to the chance of meeting something on the road | The 2024 rules leave weather's effect on travel to the DM (snow lying as Difficult Terrain halves pace); these are the table's rulings, in data/weather/barovia.json | — |
+| Weather and sight | Fog, a storm or a blizzard in the open makes the whole place Lightly Obscured for Perception outside fights: Disadvantage on a Search and -5 to passive Perception for noticing traps | Treats the weather as everywhere at once; fights don't read it yet | F12 fight half, lane 2: obscured squares in fights |
 | Wall of Fire | A straight wall along the cast direction or a ring 20 ft across (burning on its inside); a straight wall burns on the side its direction points left of | Free-form wall shapes need a drawing tool | With the targeting polish |
 | Dissonant Whispers, Confusion, Compulsion | The fleeing or compelled creature takes the farthest square along its path, provoking Opportunity Attacks as it goes | "Safest path" is the DM's call | — |
 | Heat Metal | What's heated is picked for you: a held metal weapon first, else worn metal armor | Saves a choice of object | — |

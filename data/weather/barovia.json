@@ -1,0 +1,127 @@
+{
+  "id": "barovia",
+  "summary": "Barovia's weather (F12, story/weather.gd): what each kind does, how often each climate has it (weights for each six-hour spell), which regions have which climate, and how Strahd's attention brings more storms.",
+  "kinds": {
+    "overcast": {
+      "label": "Overcast",
+      "travel": 1.0,
+      "road_day": 0.0,
+      "road_night": 0.0,
+      "obscures": false,
+      "look": {},
+      "line": "The cloud closes over again, low and grey, the way Barovia likes it."
+    },
+    "fog": {
+      "label": "Fog",
+      "travel": 1.0,
+      "road_day": 0.05,
+      "road_night": 0.05,
+      "obscures": true,
+      "look": {
+        "mist": {
+          "cover": 0.75,
+          "thickness": 1.8
+        }
+      },
+      "line": "Fog comes down off the hills and fills the place to the eaves. You can hear further than you can see."
+    },
+    "rain": {
+      "label": "Rain",
+      "travel": 1.0,
+      "road_day": 0.0,
+      "road_night": 0.0,
+      "obscures": false,
+      "look": {
+        "rain": 260
+      },
+      "line": "Rain sets in, cold and steady, the kind that means to stay."
+    },
+    "storm": {
+      "label": "Storm",
+      "travel": 1.25,
+      "road_day": 0.0,
+      "road_night": 0.05,
+      "obscures": true,
+      "flames_out": true,
+      "look": {
+        "rain": 460,
+        "mist": {
+          "wind": [
+            1.6,
+            0.5
+          ]
+        }
+      },
+      "line": "Thunder rolls down the valley, and the rain comes sideways after it. Open flames gutter and die."
+    },
+    "snow": {
+      "label": "Snow",
+      "travel": 1.25,
+      "road_day": 0.0,
+      "road_night": 0.0,
+      "obscures": false,
+      "look": {
+        "snow": 260
+      },
+      "line": "Snow begins to fall, soft and thick and silent."
+    },
+    "blizzard": {
+      "label": "Blizzard",
+      "travel": 2.0,
+      "road_day": 0.0,
+      "road_night": 0.0,
+      "obscures": true,
+      "flames_out": true,
+      "look": {
+        "snow": 460,
+        "mist": {
+          "wind": [
+            2.2,
+            0.6
+          ]
+        }
+      },
+      "line": "The wind rises to a scream and the snow goes white and sideways. You can barely see the person beside you."
+    }
+  },
+  "climates": {
+    "valley": {
+      "overcast": 4,
+      "fog": 3,
+      "rain": 3,
+      "storm": 1
+    },
+    "highland": {
+      "overcast": 4,
+      "fog": 2,
+      "rain": 1,
+      "snow": 3,
+      "storm": 1
+    },
+    "mountain": {
+      "overcast": 2,
+      "fog": 2,
+      "snow": 4,
+      "blizzard": 2
+    },
+    "castle": {
+      "overcast": 2,
+      "fog": 3,
+      "rain": 3,
+      "storm": 3
+    }
+  },
+  "default_climate": "valley",
+  "regions": {
+    "krezk": "highland",
+    "abbey_of_st_markovia": "highland",
+    "tsolenka_pass": "mountain",
+    "mount_baratok": "mountain",
+    "amber_temple": "mountain",
+    "castle_ravenloft": "castle"
+  },
+  "storm_by_attention": {
+    "marked": 1.5,
+    "hunted": 2.0
+  }
+}
