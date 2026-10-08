@@ -227,10 +227,46 @@ static func cast_from_menu(view: LocationView, cell: Vector2i, action_id: String
 			tok = shown["token"] as CombatToken
 	if tok == null or i < 0 or i >= view.members.size():
 		return
+	var npc_id := tok.combatant.id.trim_prefix("npc_")
+	# Whoever sees the casting (LocationCrime, as for a theft: sight, earshot) remembers it.
+	var seen := LocationCrime.witnesses(view, view.members[i])
 	var res := FieldCasting.cast_at(view.st.party, view.members[i].creature as Character, parts[2], 0, tok.combatant.creature, view.dice)
 	tok.refresh()
 	view.refresh_party()
 	view.narration.emit(str(res["text"]) if bool(res["ok"]) else "%s: %s" % [Compendium.shared().spell_data(parts[2]).get("name", parts[2]), res["text"]])
+	# A spell at someone who didn't ask for it is a crime when anyone sees it (the watch answers in a town).
+	if bool(res["ok"]) and not seen.is_empty():
+		LocationCrime.caught(view, npc_id, seen[0], "spell")
+
+
+## The right-click menu's spells at a foe in plain view: casting at a foe opens the fight with the party striking first
+## (LocationStealth.strike), and the caster casts it on their turn. [{id: "strike_cast:<member>:<spell>:<fight>", ...}]
+static func cast_actions_at_foe(view: LocationView, thing: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var at := LocationView._cell((thing["spec"] as Dictionary)["cell"])
+	for i in view.members.size():
+		var m := view.members[i]
+		if not (m.creature is Character) or m.creature.hp <= 0:
+			continue
+		for o in FieldCasting.options_at(view.st.party, m.creature as Character, view.dice):
+			var why := str(o["reason"]) if not bool(o["legal"]) else ""
+			if why == "" and view.grid.distance_ft(m.cell, 1, at, 1) > int(o["range"]):
+				why = "Out of range (%d ft)" % int(o["range"])
+			if why == "" and not view.grid.can_see(m.cell, 1, at, 1):
+				why = "%s can't see them" % m.name().get_slice(" ", 0)
+			out.append({"id": "strike_cast:%d:%s:%s" % [i, o["id"], thing["id"]], "enabled": why == "", "why": why,
+				"label": "Cast %s (%s): start the fight" % [o["name"], m.name().get_slice(" ", 0)]})
+	return out
+
+
+## A spell at a foe from the menu: the fight opens with the party striking first, and the caster is told to cast it.
+static func strike_with_spell(view: LocationView, _cell: Vector2i, action_id: String) -> void:
+	var parts := action_id.split(":", true, 3)
+	var i := int(parts[1])
+	if i < 0 or i >= view.members.size() or not view.strike(parts[3]):
+		return
+	view.toast.emit("%s readies %s: cast it on their turn" % [view.members[i].name().get_slice(" ", 0),
+		Compendium.shared().spell_data(parts[2]).get("name", parts[2])])
 
 
 static func _cell_of(view: LocationView, npc_id: String) -> Vector2i:

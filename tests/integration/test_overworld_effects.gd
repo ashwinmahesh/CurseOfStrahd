@@ -3,7 +3,8 @@ extends TestCase
 ## any enemy or NPC an effect, that should show in the game UI"). A party member casts Sleep at someone from the
 ## right-click menu (FieldCasting.cast_at, the spell engine on a peaceful board): it shows on them (lying down, the
 ## chips, the hover hint, Look), they can't answer while asleep, it lasts through the rebuilds after a conversation,
-## and it runs down as time passes.
+## and it runs down as time passes. Someone who sees it cast reports it (in a town, the watch comes); a spell at a foe in
+## plain view opens the fight instead, and what's on a foe shows on its hover hint too.
 
 const LOC := {
 	"id": "test_square", "name": "Test Square", "region": "test", "summary": "A fixture.",
@@ -123,3 +124,56 @@ func test_the_sleep_lasts_through_a_rebuild_and_runs_down_with_time() -> void:
 	assert_false(LocationNpcs.is_asleep(v, "ismark"), "awake once the minute is up")
 	assert_false(_ismark().combatant.creature.has_condition(&"unconscious"))
 	assert_true(LocationNpcs.can_talk(v, v.thing_at(AT)["spec"] as Dictionary), "and he can talk again")
+
+
+## Rebuilds the game in another fixture place (the party as it is).
+func _go(loc: Dictionary) -> void:
+	Compendium.shared().tables["locations"][str(loc["id"])] = loc.duplicate(true)
+	root.queue_free()
+	await _frames(1)
+	GameState.story.location = str(loc["id"])
+	GameState.story.positions.clear()
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	await _frames(3)
+	(root.get("hud") as ExploreHud).close_narration()
+
+
+func test_a_spell_someone_sees_is_a_crime_and_the_watch_comes() -> void:
+	var market := LOC.duplicate(true)
+	market["id"] = "test_market"
+	market["region"] = "vallaki"   # a town that keeps a watch (Crime.WATCH)
+	market["npcs"] = [{"npc": "ismark", "cell": [6, 2], "dialogue": "test/square:start"},
+		{"npc": "ireena", "cell": [3, 3], "dialogue": "test/square:start"}]   # right beside the caster: she sees it
+	await _go(market)
+	var before := GameState.story.attitude("ismark")
+	_view().act(AT, "cast_at:0:sleep")
+	await _frames(2)
+	assert_eq(int(GameState.story.get_flag("crime_vallaki", 0)), 1, "the offence counts in Vallaki")
+	assert_ne(GameState.story.attitude("ismark"), before, "Ismark thinks less of the party")
+	assert_true(root.get("dialogue") != null, "the watch comes over about it")
+	Compendium.shared().tables["locations"].erase("test_market")
+
+
+func test_effects_show_on_a_foe_and_a_spell_at_it_opens_the_fight() -> void:
+	var field := {"id": "test_field", "name": "Test Field", "region": "test", "summary": "A fixture.",
+		"map": {"rows": ["################", "#..............#", "#..............#", "#..............#", "################"], "light": "bright"},
+		"spawns": {"default": [2, 2]},
+		"areas": [{"id": "far", "name": "Far end", "cells": [[10, 1], [14, 3]]}],
+		"encounters": [{"id": "field_wolf", "trigger": "enter_area:far", "waiting": true,
+			"monsters": [{"monster": "wolf", "cell": [11, 2], "facing": "east"}]}]}
+	await _go(field)
+	var v := _view()
+	LocationStealth.refresh_waiting(v)
+	await _frames(2)
+	var thing := v.thing_at(Vector2i(11, 2))
+	assert_eq(str(thing.get("kind", "")), "foe", "the wolf waits in plain view")
+	var wolf := v.waiting[0]["foe"] as Combatant
+	wolf.creature.add_condition(&"prone", "test")
+	assert_eq(str(v.thing_at(Vector2i(11, 2))["label"]), "%s (prone)" % ("Attack " + wolf.name()), "what's on it shows on hover")
+	var ids: Array = (v.actions_at(Vector2i(11, 2))["actions"] as Array).map(func(a: Dictionary) -> String: return str(a["id"]))
+	assert_true("strike_cast:0:sleep:field_wolf" in ids, "Sleep at the wolf is offered (got %s)" % [ids])
+	v.act(Vector2i(11, 2), "strike_cast:0:sleep:field_wolf")
+	await _frames(3)
+	assert_true(v.in_combat, "a spell at a foe opens the fight")
+	Compendium.shared().tables["locations"].erase("test_field")

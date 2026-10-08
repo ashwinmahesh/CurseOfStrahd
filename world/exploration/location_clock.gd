@@ -51,6 +51,9 @@ func _process(_delta: float) -> void:
 	var weather := Weather.now(view.st, view.loc_id)
 	if _weather != "" and weather != _weather and bool((view.loc.get("map", {}) as Dictionary).get("outdoors", false)):
 		view.narration.emit(str(Weather.kind(weather).get("line", "")))
+		# The look follows (lane 6's Atmosphere.refresh_weather: the rain or snow, the mist, wet stone and drifts).
+		if view.atmosphere != null and view.atmosphere.has_method("refresh_weather"):
+			view.atmosphere.call("refresh_weather")
 	_weather = weather
 	var talked := false
 	for p in plays:
