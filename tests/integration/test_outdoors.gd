@@ -563,3 +563,22 @@ func test_the_mists_bank_is_soft() -> void:
 	for d: Node in v.board.find_children("Dressing_mists_wall", "Node3D", true, false):
 		assert_eq(d.find_children("*", "Sprite3D", true, false).size(), 0, "no drawn cloud")
 	v.queue_free()
+
+
+## Raised things to stand on in the settlements (lane 28, Ashwin: "larger things that change elevation and can be
+## interacted with"): a vardo's roof at Tser Pool and by the lake, the raven oak at Old Bonegrinder, a hay cart in
+## Barovia's square, the treading vat at the winery and a wall walk inside Krezk's gate.
+func test_settlements_have_things_to_stand_on() -> void:
+	var raised := {"tser_pool": [Vector2i(29, 11), 10], "vallaki_vistani_camp": [Vector2i(18, 18), 10],
+		"old_bonegrinder_hill": [Vector2i(7, 12), 10], "village_of_barovia": [Vector2i(24, 16), 5],
+		"wizard_of_wines": [Vector2i(27, 8), 5], "krezk": [Vector2i(30, 14), 10]}
+	for loc: String in raised:
+		var d := Compendium.shared().get_entry("locations", loc) as Dictionary
+		var g := LocationView.grid_for(d)
+		var flat := CombatGrid.from_rows(d["map"]["rows"] as Array, d["map"].get("elevation", []) as Array)
+		var c := (raised[loc] as Array)[0] as Vector2i
+		var ft := int((raised[loc] as Array)[1])
+		if loc == "krezk":
+			assert_eq(g.height(c) - g.height(Vector2i(28, 14)), ft, "Krezk's wall walk stands %d ft up" % ft)
+		else:
+			assert_eq(g.height(c) - flat.height(c), ft, "%s: %s is stood on %d ft up" % [loc, c, ft])

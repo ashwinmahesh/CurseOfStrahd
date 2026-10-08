@@ -911,6 +911,22 @@
       "model": "grave_open",
       "dialogue": "village_of_barovia/six_feet:grave",
       "when": "quest.six_feet and quest.six_feet != rumored and not flag.bride_buried"
+    },
+    {
+      "id": "square_hay_cart",
+      "cell": [
+        23,
+        16
+      ],
+      "kind": "examine",
+      "label": "A broken hay cart",
+      "model": "cart_broken",
+      "span": [
+        2,
+        1
+      ],
+      "facing": "east",
+      "stand_ft": 5
     }
   ],
   "lights": [
