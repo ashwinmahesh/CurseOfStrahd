@@ -1,0 +1,155 @@
+# The Hunters at the Inn (side quest, docs/story/side_quests.md; the book's Szoldar and Yevgeni, in our own words):
+# two hunters at the Blue Water Inn offer the Baron's bounty on Old Greytooth, a wolf the size of a horse. Szoldar is
+# paid by Arrigal to bring strong strangers to the lake at dusk; the hunt is the wolf's. His son Yevgeni hates it.
+# The boss, Old Greytooth, is our own (data/monsters/old_greytooth.json). Reached from Urwin's rumour
+# (martikovs:rumors) or the hunters themselves. Every line here is unvoiced for now; both hunters are new speakers.
+
+# --- Szoldar, in the taproom ---
+
+~ szoldar
+if flag.greytooth_beaten
+-> szoldar_after
+endif
+if flag.szoldar_turned
+Szoldar: Dusk, at the landing. I'll be on the rise with the bow, pointed the right way. You have my word, which you've already had to buy once.
+-> END
+endif
+if quest.hunters_at_the_inn == asked or quest.hunters_at_the_inn == the_trap
+-> szoldar_waiting
+endif
+Narrator: A weathered man in a wolfskin coat sits in the corner with his back to the wall, where he can see the door, the stairs and you. A string of dried wolf ears hangs off his belt.
+if flag.hunters_rumor
+interject tag:blunt: Urwin says you've been asking which of his guests can fight.
+Szoldar: Urwin says a great deal for a man who pours drinks. He's right, though.
+endif
+Szoldar: Szoldar Szoldarovich. Hunter. That's my boy Yevgeni, who is meant to be mending his bowstring and is instead staring at you. Sit, if you're the strangers everyone's been not talking about.
+Szoldar: The Baron pays a copper an ear for wolves. He pays three hundred gold for one wolf in particular. Old Greytooth. Big as a horse, grey to the gums, and he's had two shepherds and the lakeshore goats since spring.
+Szoldar: I can find him. I can't kill him; not with the boy. You can, by the look of you. We split it down the middle.
+* We're in. Where and when? -> agree
+* [Insight DC 14] (Watch him while he talks.) -> read | unread
+* Not now. -> END
+
+~ read
+Narrator: He's telling the truth about the wolf; you can see the old fear in how he says its name. He isn't telling you why he chose you, and he never once looks at his son.
+-> szoldar_menu
+
+~ unread
+Narrator: A hunter making a hunter's offer. If there's a hook in it, he's hidden it as well as he hides himself in a blind.
+-> szoldar_menu
+
+~ szoldar_menu
+* We're in. Where and when? -> agree
+* Not now. -> END
+
+~ agree
+quest hunters_at_the_inn asked
+Szoldar: The landing at Lake Zarovich, where the fisherman's shack is. Dusk, any day you like; he comes down to drink when the light goes. I'll be on the rise with my bow. You stand on the shore and look like dinner.
+-> END
+
+~ szoldar_waiting
+Szoldar: Dusk. The landing. Don't keep him waiting; he isn't patient, and nor am I.
+* [if flag.hunt_trap_known] We know who pays you, Szoldar. Arrigal. The castle. -> confront
+* Goodbye. -> END
+
+~ confront
+Szoldar [angry]: Who told you that? ...Yevgeni. Of course.
+Szoldar: Yes. Arrigal pays. A purse for every strong stranger I bring to the lake at dusk, and the wolf does the rest, and the castle learns what you're made of. You think I had a choice? You think anybody in this valley has a choice?
+* [Intimidation DC 14] You've got one now. Shoot the wolf, not us, or the Baron hears where your purses come from. -> turned | not_turned
+* Then don't come. We'll hunt your wolf without you. -> stays_home
+
+~ turned
+set szoldar_turned
+quest hunters_at_the_inn the_trap
+Szoldar: The wolf, then. God help me. If the castle asks, the wolf ate me.
+-> END
+
+~ not_turned
+Szoldar: Threaten me in the Baron's town with the Baron? Go and tell him. He'll put you both in the stocks for spreading gloom.
+-> stays_home
+
+~ stays_home
+set szoldar_stays
+quest hunters_at_the_inn the_trap
+Szoldar: Go, then. I'll drink here, where it's warm, and the castle can count its wolves itself.
+-> END
+
+~ szoldar_after
+Szoldar: Three hundred gold and an empty purse from Arrigal. The boy says that's a good trade. The boy's soft. He's also right.
+-> END
+
+# --- Yevgeni, mending a bowstring ---
+
+~ yevgeni
+if flag.greytooth_beaten
+-> yevgeni_after
+endif
+if flag.hunt_trap_known
+Yevgeni: Go early. Choose your ground. And if you see my father on the rise with his bow, please don't kill him unless you have to.
+-> END
+endif
+Yevgeni: Father does the talking. I mend the string.
+* [if quest.hunters_at_the_inn] [Persuasion DC 13] You look like a man who wants to say something. -> tells | silent
+* [if quest.hunters_at_the_inn and gold >= 2] (Buy him a drink and wait.) -> drink
+* Goodbye. -> END
+
+~ drink
+gold -2
+Narrator: He looks at the cup for a long time. Then at his father, across the room. Then at the cup.
+-> tells
+
+~ silent
+Narrator: He bends over the bowstring and doesn't look up again.
+-> END
+
+~ tells
+set hunt_trap_known
+quest hunters_at_the_inn the_trap
+Yevgeni: Don't go to the lake at dusk. Or go, but go early, and not where he tells you to stand.
+Yevgeni: A man from the Vistani camp pays him. Arrigal. A purse for every strong stranger who goes down to the landing at dusk. The wolf isn't ours to hunt; it's the castle's. The castle wants to know how you fight.
+Yevgeni [sad]: Father will be on the rise with his bow. He says he'll shoot the wolf. He's said that before, and he never has.
+-> END
+
+~ yevgeni_after
+if flag.greytooth_paid
+Yevgeni: I go out with Father again now. We take wolves, ordinary ones, a copper an ear. It's honest. It's very boring. I like it.
+-> END
+endif
+set greytooth_paid
+quest hunters_at_the_inn done
+Yevgeni: You did it. The Baron's clerk paid out on the ears without even looking at me. Here: the whole three hundred. Father says half; I say all of it. Father isn't here.
+gold +300
+if flag.szoldar_turned or flag.szoldar_stays
+Yevgeni: And this was Father's horn. He blew it once, in the hills, and men came out of the air to fight beside him. He said it was for the end of the world. He says you've seen more of that than he has. He wants you to have it. He'd never say so.
+elif flag.szoldar_fled
+Yevgeni [sad]: Father ran when the wolf went down. Toward the camp, toward Arrigal's fire. He left his horn on the rise. I think he meant to. He blew it once, in the hills, and men came out of the air to fight beside him. Take it.
+else
+Yevgeni [sad]: He chose his side, up on that rise. I chose mine, too late to help him. This was his horn. He blew it once, in the hills, and men came out of the air to fight beside him. I'd rather you had it than the castle.
+endif
+give horn_of_valhalla_silver
+approve thistle +2 godrick_pendlebrook +1 wren_featherfoot +1: You hunted down Old Greytooth
+-> END
+
+# --- At the landing (prop greytooth_shore) ---
+
+~ shore
+if flag.greytooth_beaten
+Narrator: The shore is churned to mud, and the reeds are flattened in a track as wide as a cart where something huge came down to drink for the last time.
+-> END
+endif
+Narrator: The landing, the empty shacks, the black water. Pawprints in the mud as wide as a dinner plate, going down to the lake and coming back.
+if flag.hunt_trap_known
+Narrator: Yevgeni said not to stand where his father told you to. The rise behind the shacks is the only good shot at the shore; the shore is the only place a horse-sized wolf can come at you from three sides.
+endif
+* Wait here for the wolf until dusk. -> wait
+* Leave. -> END
+
+~ wait
+time until 19
+Narrator: The light goes grey, then brown, then nothing. Out on the hill trail, a howl starts low and goes on getting louder for longer than anything's breath should last.
+if flag.szoldar_turned
+Narrator: On the rise behind the shacks, a bow creaks. Pointed at the hill, not at you.
+elif not flag.hunt_trap_known
+Narrator: On the rise behind the shacks, a bow creaks. You don't think much of it, then.
+endif
+Narrator: Old Greytooth comes down the trail at a walk, with his pack spread out behind him like a hunt in the old days, and stops at the edge of the light to look at you.
+combat greytooth_hunt

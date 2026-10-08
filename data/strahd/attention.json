@@ -79,6 +79,18 @@
       "summary": "Three spawn he made of Vallaki's girls, destroyed (Black Roses)."
     },
     {
+      "id": "greytooth",
+      "when": "flag.greytooth_beaten",
+      "points": 1,
+      "summary": "Old Greytooth, the wolf he keeps for his own hunts, killed at Lake Zarovich (The Hunters at the Inn)."
+    },
+    {
+      "id": "lists",
+      "when": "flag.dobre_beaten",
+      "points": 1,
+      "summary": "Vallaki's lists of the unhappy, bought by his rider, taken away (Ribbons)."
+    },
+    {
       "id": "gulthias_tree",
       "when": "flag.gulthias_tree_burned",
       "points": 2,

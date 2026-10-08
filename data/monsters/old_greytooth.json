@@ -1,0 +1,157 @@
+{
+  "id": "old_greytooth",
+  "name": "Old Greytooth",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Hunters at the Inn, docs/story/side_quests.md), built from the 2025 Monster Manual's dire wolf: its bite, Pack Tactics and senses, scaled to a Huge wolf of CR 8 with legendary actions."
+  },
+  "size": "huge",
+  "type": "monstrosity",
+  "tags": [
+    "wolf",
+    "boss"
+  ],
+  "alignment": "neutral evil",
+  "art": "dire_wolf",
+  "ac": 15,
+  "initiative": 3,
+  "hp": {
+    "average": 171,
+    "dice": "18d12+54"
+  },
+  "speed": {
+    "walk": 50
+  },
+  "abilities": {
+    "str": 20,
+    "dex": 16,
+    "con": 17,
+    "int": 7,
+    "wis": 14,
+    "cha": 10
+  },
+  "saves": {
+    "dex": 6,
+    "wis": 5
+  },
+  "skills": {
+    "perception": 8,
+    "stealth": 6
+  },
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 18,
+  "languages": [],
+  "cr": 8,
+  "xp": 3900,
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "id": "pack_tactics",
+      "name": "Pack Tactics",
+      "action": "passive",
+      "summary": "Advantage on attack rolls against a target that has a non-Incapacitated ally of this creature within 5 ft.",
+      "text": "Old Greytooth has Advantage on an attack roll against a creature when at least one of its allies is within 5 feet of that creature and that ally doesn't have the Incapacitated condition.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "pack_tactics"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When Old Greytooth fails a saving throw, it can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "bite",
+          "count": 2
+        }
+      ],
+      "summary": "Two Bites.",
+      "text": "Old Greytooth makes two Bite attacks."
+    },
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 8,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 16,
+          "dice": "2d10+5",
+          "type": "piercing"
+        }
+      ],
+      "conditions": [
+        "prone"
+      ],
+      "summary": "Bites a target within 10 ft; a Large or smaller target is knocked Prone.",
+      "text": "Hit: 16 (2d10 + 5) Piercing damage. If the target is Large or smaller, it has the Prone condition."
+    },
+    {
+      "id": "howl",
+      "name": "Howl of the Castle Hills",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "wis",
+        "dc": 15,
+        "success": "none"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 30
+      },
+      "targets": {
+        "range": 30,
+        "not_types": [
+          "beast"
+        ]
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "source_turn_start"
+        }
+      ],
+      "summary": "Recharge 5-6: everyone but beasts within 30 ft makes a DC 15 Wis save or is Frightened until its next turn.",
+      "text": "Each creature within 30 feet of Old Greytooth that isn't a Beast makes a DC 15 Wisdom saving throw. Failure: the target has the Frightened condition until the start of Old Greytooth's next turn."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 3,
+    "options": [
+      {
+        "id": "snap",
+        "name": "Snap",
+        "cost": 2,
+        "action": "bite",
+        "summary": "Makes one Bite."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regions": [
+    "lake_zarovich"
+  ],
+  "ai_profile": "pack_hunter",
+  "summary": "A wolf the size of a horse, grey to the roots of its teeth, that the castle keeps for its own hunts: bites that knock you down, a howl that empties your nerve, and one more bite whenever you think you've stepped clear."
+}
