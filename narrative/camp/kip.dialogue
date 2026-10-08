@@ -4,6 +4,31 @@
 # that holds: when he's Strained or Doubtful (story/approval.gd), those first; then the quest's; then Warm, Close and
 # Devoted.
 
+# --- After Strahd called Kip to kneel at the night visit (strahd/visits:night_kneel) ----------------------------------
+
+~ talk_knelt
+if name:kip_smudgewick and flag.strahd_knelt == "kip_smudgewick"
+-> knelt
+endif
+-> END
+
+~ knelt
+Narrator: Kip is sitting by the fire with his contract unrolled across his knees, not reading it. He has been holding the same corner for an hour.
+interject name:kip_smudgewick: He said he wanted to inspect the goods. I know that voice. Mister Quillon uses it. Now two of them have looked me over.
+interject name:kip_smudgewick: And I was smiling. Pip says my smile's the only honest thing about me. It wasn't mine.
+* You're nobody's stock, Kip. -> knelt_stock
+* We'll keep watch in pairs from now on. -> knelt_pairs
+
+~ knelt_stock
+interject name:kip_smudgewick: Tell that to the paperwork. But... thank you. I'll write it in the margin. In ink.
+approve kip_smudgewick +3: You told me I was nobody's stock
+-> END
+
+~ knelt_pairs
+interject name:kip_smudgewick: Pairs. Yes. Two signatures on everything. Very sound practice.
+approve kip_smudgewick +2: You said we'd keep watch in pairs
+-> END
+
 # --- When he's lost faith in the party (approval) ----------------------------------------------------------------
 
 ~ talk_strained

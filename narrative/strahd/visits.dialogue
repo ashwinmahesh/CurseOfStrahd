@@ -54,6 +54,59 @@ Narrator: Ireena is sitting up, quite still, her eyes on him. Her hand is on her
 Strahd [smile]: Ireena. Such late hours. Shall I wait while you decide whether to scream?
 Ireena [angry]: I've decided. Get away from us.
 endif
+-> night_kneel
+
+# He calls one sleeping companion to him (never the one on watch: leader:), lets them go, and asks them nothing. Their
+# camp talk the next time the party rests: narrative/camp/<them>.dialogue, `knelt`.
+~ night_kneel
+if name:liriel_dawnsong and not leader:name:liriel_dawnsong
+set strahd_knelt = "liriel_dawnsong"
+Strahd: Liriel. Wake up, priestess. Come here and kneel. You know how; you do it every morning.
+Narrator: Liriel opens her eyes. She gets up out of her blankets and crosses the camp to him barefoot over the cold ground, and her face is calm and quite empty, the way it is at prayer.
+elif name:godrick_pendlebrook and not leader:name:godrick_pendlebrook
+set strahd_knelt = "godrick_pendlebrook"
+Strahd: Godrick. Up, squire. Your lord is calling you.
+Narrator: Godrick gets up at once, the way he would for Sir Pellam, and walks to him across the camp with his sword left lying in the grass. His eyes are open. Nobody is behind them.
+elif name:thistle and not leader:name:thistle
+set strahd_knelt = "thistle"
+Strahd: Thistle. Here, girl. Heel.
+Narrator: Thistle comes up out of sleep on all fours and goes to him low and quick, the way a dog goes to its master. Her eyes are open and empty.
+elif name:wren_featherfoot and not leader:name:wren_featherfoot
+set strahd_knelt = "wren_featherfoot"
+Strahd: Wren. Little monk. Your master is not here to tell you no. Come.
+Narrator: Wren rolls out of his blanket and walks to him, perfectly balanced, perfectly silent, his face as blank as a fresh page.
+elif name:kip_smudgewick and not leader:name:kip_smudgewick
+set strahd_knelt = "kip_smudgewick"
+Strahd: Kip. Merchant. Come here. I want to inspect the goods.
+Narrator: Kip gets up and walks to him with his straw hat in his hands, the way he'd go to a customer, smiling a little. The smile is the worst part. It isn't his.
+elif name:ratatoille and not leader:name:ratatoille
+set strahd_knelt = "ratatoille"
+Strahd: Ratatoille. Come here, little cook. I am told you wish to be taken seriously.
+Narrator: Ratatoille sits up, folds his blanket into a neat square, and walks to him across the camp with his face as smooth and empty as a clean plate.
+elif name:tamsin_tealeaf and not leader:name:tamsin_tealeaf
+set strahd_knelt = "tamsin_tealeaf"
+Strahd: Tamsin. Bring me what you stole, little thief.
+Narrator: Tamsin gets up with the silver locket already open in his hand. He walks to Strahd and holds it up on his flat palm, the way you'd offer a horse a sugar lump, and his eyes are empty.
+elif name:ilse_varga and not leader:name:ilse_varga
+set strahd_knelt = "ilse_varga"
+Strahd: Sergeant Varga. Fall in. Your company did, at the end.
+Narrator: Ilse is on her feet before she is awake. She marches to him in step, halts, and goes down on one knee as stiffly as a soldier at a graveside.
+elif name:hedda_ironvow and not leader:name:hedda_ironvow
+set strahd_knelt = "hedda_ironvow"
+Strahd: Hedda. Healer. Come here, and bring your hands.
+Narrator: Hedda gets up, mail and all, and walks to him with her hands held out in front of her, open and empty, like her eyes.
+elif name:silvain_aster and not leader:name:silvain_aster
+set strahd_knelt = "silvain_aster"
+Strahd: Silvain. Scholar. Come here. You may take notes, if you like.
+Narrator: Silvain rises and walks to him with the slow, careful steps of someone carrying a full cup, and their face is as empty as a page nobody has written on.
+else
+set strahd_knelt = "someone"
+Strahd: You. The one asleep nearest the fire. Come here.
+Narrator: One of the sleepers rises and walks to him across the camp with open, empty eyes.
+endif
+Narrator: At his feet they kneel, and tilt their head to one side to bare their throat to him, as patient as a horse waiting for the bridle.
+Strahd: There. That is how little it takes. I wanted you to see it, before you decide to fight me.
+Narrator: He lays two fingers on the pulse in their neck, the way a buyer feels a horse's leg, and takes his hand away. They wake on their knees on the cold ground with a hand at their throat, and scramble back to the fire.
 -> night_menu
 
 ~ night_menu

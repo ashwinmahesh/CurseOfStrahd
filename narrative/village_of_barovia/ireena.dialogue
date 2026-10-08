@@ -206,6 +206,9 @@ Ireena [angry]: You bowed to him. Over my father's grave. I suppose it kept us a
 elif flag.strahd_first_impression == "silent"
 Ireena: You said nothing to him. Maybe that was wise. It felt like losing.
 endif
+if flag.ismark_choked
+Ireena [angry]: He made me beg him for my brother's breath, and I did. I'd do it again, and he knows it. That was the lesson.
+endif
 if flag.doru_freed
 Ireena [afraid]: And that was Donavich's boy on the wall. You let him out. You'll have to live with that, and so will the rest of us.
 endif

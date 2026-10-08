@@ -5698,6 +5698,13 @@
   "recipe": "aefb995146",
   "text": "Still here. Still hungry. Have you come to watch?"
  },
+ "doru/734c769a8a1b7a88": {
+  "chars": 105,
+  "direction": "[eerie, childlike, chilling]",
+  "model": "eleven_v3",
+  "recipe": "aefb995146",
+  "text": "I'll tell him. He'll smile. He smiled at us too, all through dinner. He sent a gift, in case you said it."
+ },
  "doru/8536d13d64a39aad": {
   "chars": 86,
   "model": "eleven_v3",
@@ -5763,12 +5770,6 @@
   "model": "eleven_v3",
   "recipe": "aefb995146",
   "text": "No. No! Come back! I'm better now! I'm better!"
- },
- "doru/ed3216072f30a7cc": {
-  "chars": 95,
-  "model": "eleven_v3",
-  "recipe": "aefb995146",
-  "text": "I'll tell him. He'll be delighted; he loves being told no. He sent a gift, in case you said it."
  },
  "doru/eede6669c4ff8b7b": {
   "chars": 90,
@@ -14118,6 +14119,13 @@
   "recipe": "956cd23797",
   "text": "Better than burying anyone else."
  },
+ "hero_female/fc571182487d3309": {
+  "chars": 31,
+  "direction": "[quiet, disgusted]",
+  "model": "eleven_v3",
+  "recipe": "8fecc463c3",
+  "text": "He sent flowers. To her father."
+ },
  "hero_female/fcb9763dc4f0ea83": {
   "chars": 26,
   "model": "eleven_v4",
@@ -17984,6 +17992,13 @@
   "recipe": "66638cecb8",
   "text": "Better than burying anyone else."
  },
+ "hero_male/fc571182487d3309": {
+  "chars": 31,
+  "direction": "[quiet, disgusted]",
+  "model": "eleven_v3",
+  "recipe": "b19ebda604",
+  "text": "He sent flowers. To her father."
+ },
  "hero_male/fcb9763dc4f0ea83": {
   "chars": 26,
   "model": "eleven_v4",
@@ -19667,12 +19682,6 @@
   "recipe": "df56431f79",
   "text": "Finished looking? Twice. He's come to my window twice, and twice I woke with these and no memory of opening the shutters. That's the part I can't forgive. Not him. Me."
  },
- "ireena/6b442cc06818bbd3": {
-  "chars": 22,
-  "model": "eleven_v3",
-  "recipe": "df56431f79",
-  "text": "Better than you would."
- },
  "ireena/6b8df6c0d391f760": {
   "chars": 120,
   "model": "eleven_v3",
@@ -20428,6 +20437,13 @@
   "model": "eleven_v3",
   "recipe": "df56431f79",
   "text": "Tser Pool first, then. If this Madam Eva reads cards for strangers, she can read a few for me."
+ },
+ "ireena/fb82ad34d66f23d9": {
+  "chars": 28,
+  "direction": "[cold, defiant]",
+  "model": "eleven_v3",
+  "recipe": "df56431f79",
+  "text": "I'd sooner walk off a cliff."
  },
  "ireena/fec5c736bcda575f": {
   "chars": 158,
@@ -26744,6 +26760,13 @@
   "recipe": "0145fab7b8",
   "text": "The Morninglord's light is a long way from here, priestess. It still reaches you. Ask why it reaches, not why it's cold."
  },
+ "madam_eva/0e37c5f63ec72ec4": {
+  "chars": 167,
+  "direction": "[dry, knowing, ominous]",
+  "model": "eleven_v3",
+  "recipe": "0145fab7b8",
+  "text": "Go. Stanimir will feed you if you let him. And when you meet the devil on the road, as you will, be polite. He forgives rudeness least of all, and he forgives nothing."
+ },
  "madam_eva/0f41f1d8ec1b60e3": {
   "chars": 116,
   "model": "eleven_v3",
@@ -27356,12 +27379,6 @@
   "model": "eleven_v3",
   "recipe": "0145fab7b8",
   "text": "Stanimir has told the castle you went east. He thinks I don't know. Let him think it."
- },
- "madam_eva/b3e110d307b4c214": {
-  "chars": 124,
-  "model": "eleven_v3",
-  "recipe": "0145fab7b8",
-  "text": "Go. Stanimir will feed you if you let him. And when you meet the devil on the road, as you will, be polite. It confuses him."
  },
  "madam_eva/b5890d59171b3506": {
   "chars": 176,
@@ -28941,12 +28958,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Out of the wolf, his wrists are thin enough to work out of the cuffs. Thistle catches him before he hits the straw."
- },
- "narrator/02bbe5a473195875": {
-  "chars": 87,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "It suggests the writer may come to dinner one day. It is signed with a single ornate S."
  },
  "narrator/02f74107542eda66": {
   "chars": 151,
@@ -32340,12 +32351,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Tamsin snaps the locket shut and puts it back inside his shirt, where it sits over his heart like a stone that's been in the sun."
- },
- "narrator/2602358819da40b4": {
-  "chars": 118,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "After a moment the rider lifts a gloved hand in return, slow and correct, like a host seeing guests off from his door."
  },
  "narrator/2605a64f2940cc95": {
   "chars": 130,
@@ -36355,6 +36360,13 @@
   "recipe": "dd92281f92",
   "text": "You break a seal stamped with a pointed hat. Somewhere, you hope, a wizard is not keeping count."
  },
+ "narrator/5074d421f1ba5009": {
+  "chars": 189,
+  "direction": "[wry, intrigued]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Among the reeds, half sunk in the mud: a little leather bag of bone dice, and among them a smooth grey stone that is always warm. Somebody lost a game here, which is strange, carrying that."
+ },
  "narrator/507aa298f8797dc5": {
   "chars": 129,
   "model": "eleven_v3",
@@ -36499,13 +36511,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A narrow bedroom with a crucifix nailed over the bed and another nailed over the door, facing the storeroom."
- },
- "narrator/5251d767ce59f644": {
-  "chars": 137,
-  "direction": "[sly, amused]",
-  "model": "eleven_v3",
-  "recipe": "f60908d226",
-  "text": "The old stump at the camp's edge is hollow. Inside, wrapped in a rag, is a corked flask that someone did not want Stanimir to know about."
  },
  "narrator/52582eceb6a9ba75": {
   "chars": 148,
@@ -40145,6 +40150,13 @@
   "recipe": "dd92281f92",
   "text": "The coffins are only boxes of earth now. You close their lids anyway."
  },
+ "narrator/76ae68c7483d7dc0": {
+  "chars": 232,
+  "direction": "[tense, low, chilling]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He rides on through the middle of you. The black horse never breaks its walk, and you find you have stepped aside without meaning to. The one who spoke has a thin cut across one cheek, neat as a quill stroke, and never saw the hand."
+ },
  "narrator/76aeba777bb1b046": {
   "chars": 69,
   "direction": "[dry, flat]",
@@ -40533,6 +40545,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A stair without a rail climbs the inside of a tower so tall its top is lost in the dark. In the middle there is nothing at all: a well of black air going straight down."
+ },
+ "narrator/7a964618f71e70d8": {
+  "chars": 76,
+  "direction": "[quiet, wary]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A short letter in an elegant, unhurried hand, signed with a single ornate S."
  },
  "narrator/7aa3830cd66d004c": {
   "chars": 133,
@@ -44538,6 +44557,13 @@
   "recipe": "dd92281f92",
   "text": "Feathers come down out of the cloud for a long time afterwards."
  },
+ "narrator/a4dab9178be5359a": {
+  "chars": 124,
+  "direction": "[hushed, chilling]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "For one breath the courtesy is gone from his face, and what is under it has teeth. Then it is back, as if it had never left."
+ },
  "narrator/a4deeea3c3de5beb": {
   "chars": 117,
   "model": "eleven_v4",
@@ -44815,6 +44841,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Webs as fine as breath cover the lid. Under them the letters are there, but the webs move when you try to read."
+ },
+ "narrator/a7b424bab585f8f1": {
+  "chars": 126,
+  "direction": "[low, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "After a moment the rider lifts a gloved hand in return. Then he closes it, one finger at a time, as if around something small."
  },
  "narrator/a7e881d3f4740d20": {
   "chars": 94,
@@ -45793,13 +45826,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A hut of fitted stones without a speck of mortar, raised by somebody who knew exactly how and has since forgotten. The door is shut. Something inside is talking to itself."
- },
- "narrator/b2a5b6559d2b09e6": {
-  "chars": 117,
-  "direction": "[wry, intrigued]",
-  "model": "eleven_v3",
-  "recipe": "f60908d226",
-  "text": "Among the reeds, half sunk in the mud: a little leather bag of bone dice. Somebody lost a game here, or ran from one."
  },
  "narrator/b2a9a1b5998bb0ae": {
   "chars": 152,
@@ -47647,12 +47673,6 @@
   "recipe": "dd92281f92",
   "text": "A low vault at the foot of a narrow stair. Coin lies on the floor in drifts, with chests and caskets sunk in it like rocks in snow."
  },
- "narrator/c743512909bc7a4e": {
-  "chars": 143,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "A short letter in an elegant, unhurried hand. It notes Gustav Durst's devotion and declines it, mocks the cult's candles, and promises nothing."
- },
  "narrator/c7845c859c0c0a02": {
   "chars": 160,
   "model": "eleven_v4",
@@ -48032,12 +48052,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The bow comes down. A whistle, and three young men drop out of the trees, all with the same nose."
- },
- "narrator/cb1b28e83d76e9a1": {
-  "chars": 133,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "He rides on through the middle of you. The black horse never breaks its walk, and you find you have stepped aside without meaning to."
  },
  "narrator/cb2b779378942bcf": {
   "chars": 146,
@@ -50302,6 +50316,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "One small cask for every year, set by for a wizard who never came. One of them, low on the rack, is colder to the touch than the rest."
+ },
+ "narrator/e3b800b360b98daa": {
+  "chars": 192,
+  "direction": "[sly, then intrigued]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The old stump at the camp's edge is hollow. Inside, wrapped in a rag, is a corked flask that someone did not want Stanimir to know about. The cork is hot, and a thread of smoke leaks round it."
  },
  "narrator/e3d2d434b65d4322": {
   "chars": 147,
@@ -58658,6 +58679,13 @@
   "recipe": "71f51bdb43",
   "text": "I built it to be seen from everywhere in the valley. I have been looking out of it ever since."
  },
+ "strahd/02c747913bd13643": {
+  "chars": 44,
+  "direction": "[cold fury, the courtesy dropping, low and sharp]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "You do not say no to me. Not you. Not again."
+ },
  "strahd/02ce2bc8628a9310": {
   "chars": 59,
   "model": "eleven_v3",
@@ -58675,12 +58703,6 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "The little monk. My chamberlain tells me you have a teacher's manners. He did not enjoy them. Nobody has unsettled Rahadin in two hundred years."
- },
- "strahd/05aebb0eb18ca49f": {
-  "chars": 107,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "You found your way out of the house on the hill. Most do not. I have the house to thank for introducing us."
  },
  "strahd/0786fac98fe1a6d0": {
   "chars": 78,
@@ -58706,11 +58728,19 @@
   "recipe": "71f51bdb43",
   "text": "Ireena. You came to see her. Of course you did."
  },
- "strahd/0be5f7bc1ad00c67": {
-  "chars": 113,
+ "strahd/0ac66905aabf4ae2": {
+  "chars": 92,
+  "direction": "[cold courtesy]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "And a little monk who stands like a dusk elf. I knew a whole people who stood like that. I wonder who taught you."
+  "text": "Well said. The last man who shouted at me is in that grave. Allow me to return the courtesy."
+ },
+ "strahd/0b46b36fc75cf06d": {
+  "chars": 134,
+  "direction": "[calm, cold, mocking]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Under your protection. Kolyan said the same, from his doorway, with a lamp. It held for a month. Let us see whether yours does better."
  },
  "strahd/0bf5992e35745ebf": {
   "chars": 65,
@@ -58736,17 +58766,38 @@
   "recipe": "71f51bdb43",
   "text": "Leave Ireena with me, freely, and walk out of my house with your lives. The mists will even let you go. I can be generous when I am happy."
  },
+ "strahd/0f5e25038c140b4f": {
+  "chars": 72,
+  "direction": "[cold, slow, absolute]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Off my road. In my land. Under my sky. Let me show you whose road it is."
+ },
  "strahd/0fdc90b4b676f77b": {
   "chars": 128,
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "Do not get up. We have not been introduced. I am Strahd von Zarovich, and you are sleeping in my house. All of this is my house."
  },
+ "strahd/1249e9f743e68b56": {
+  "chars": 76,
+  "direction": "[quiet, knowing, amused]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "You had my letter, I trust. You read it twice. You thought I would not know."
+ },
  "strahd/174534c6b3882921": {
   "chars": 10,
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "Thank you."
+ },
+ "strahd/18a10370b192cd62": {
+  "chars": 134,
+  "direction": "[silken contempt]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Your friends may keep their candles in the cellar. I find them touching, the way a dog is touching when it brings home something dead."
  },
  "strahd/18a66b14ce08559c": {
   "chars": 71,
@@ -58766,12 +58817,6 @@
   "recipe": "71f51bdb43",
   "text": "Dead. Lysaga. And you tell me she did this."
  },
- "strahd/1ad03e8f4325d722": {
-  "chars": 100,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "And a scholar. My library would delight you. You must come up and see it. Everyone does, eventually."
- },
  "strahd/1c405d08001d31de": {
   "chars": 137,
   "model": "eleven_v3",
@@ -58784,11 +58829,19 @@
   "recipe": "71f51bdb43",
   "text": "Thank you. That was courageous, and very foolish, and I shall remember both. Now go home, all of you. I have to see to my house."
  },
- "strahd/24f5e6c03f927435": {
-  "chars": 116,
+ "strahd/1f3762f9593e2da4": {
+  "chars": 129,
+  "direction": "[calm certainty, possessive]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "My guests, on my road. The ones who told me no across a graveside. I have thought about it often. It was refreshing."
+  "text": "What is mine. Ireena knows the way home. She has always known it; she has only forgotten. I will remind her, one night at a time."
+ },
+ "strahd/1f9fd14b0e2bd099": {
+  "chars": 67,
+  "direction": "[composed again, silken, patient]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Not tonight, then. I can wait. I have had a great deal of practice."
  },
  "strahd/2533a4980ffacb58": {
   "chars": 157,
@@ -58808,11 +58861,25 @@
   "recipe": "71f51bdb43",
   "text": "Afraid? Of a box of bones and a tired priest? I am disappointed in you. I had thought you clever."
  },
+ "strahd/26d5a340ae88f8aa": {
+  "chars": 207,
+  "direction": "[courtly, possessive, calm certainty]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Go where you like. Every road is mine, and every door you knock on opens on a house that pays me rent. When you are ready, we will dine. Until then I remain your host, and your landlord, Strahd von Zarovich."
+ },
  "strahd/28f23544b94930f9": {
   "chars": 96,
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "There. You're mine now, a little. Don't look so worried. I'm very patient with the things I own."
+ },
+ "strahd/2b6586bdb3398d5a": {
+  "chars": 125,
+  "direction": "[light, cruel, amused]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "You found your way out of the house on the hill. Most do not. I listened for your screams. There were fewer than I had hoped."
  },
  "strahd/2c2b4a9816ead25b": {
   "chars": 122,
@@ -58826,12 +58893,6 @@
   "recipe": "71f51bdb43",
   "text": "My quiet guests. You said nothing at the graveside. Let us see whether the road has loosened your tongues."
  },
- "strahd/2db13c1f1f1d4b27": {
-  "chars": 53,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "Well said. I shall have to find a less learned house."
- },
  "strahd/2fe7ad289c11dc72": {
   "chars": 61,
   "model": "eleven_v3",
@@ -58844,23 +58905,11 @@
   "recipe": "71f51bdb43",
   "text": "You have read my book. Then you know I was not always this. Do not pity me for it. I never pitied anyone."
  },
- "strahd/312bde15c86c4833": {
-  "chars": 125,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "What every man wants, in the end. To be welcomed home. Ireena knows the way. She has always known it; she has only forgotten."
- },
  "strahd/324aab210d00e5ef": {
   "chars": 73,
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "Tell her I asked after her. She will pretend not to care. She always did."
- },
- "strahd/3264679a2bcacd78": {
-  "chars": 94,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "Gallant. Do you know how many gallant men have stood exactly there? I kept count, for a while."
  },
  "strahd/32a41a7ff8985412": {
   "chars": 112,
@@ -58874,12 +58923,6 @@
   "recipe": "71f51bdb43",
   "text": "Holy ground. Bones in a box. You will not stay inside a church forever, my dear. Nobody does."
  },
- "strahd/364bcf03d8d64ae7": {
-  "chars": 90,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "Ireena. The road suits you; the cold puts colour in your face. Are they treating you well?"
- },
  "strahd/37ffbfb835ab5970": {
   "chars": 95,
   "model": "eleven_v3",
@@ -58892,17 +58935,18 @@
   "recipe": "71f51bdb43",
   "text": "Perhaps you are. Let us find out."
  },
- "strahd/3a598decbe21f0a3": {
-  "chars": 95,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "Ah. The ones who drew steel at a funeral. I keep the memory the way one keeps a pressed flower."
- },
  "strahd/3a98352f4a9464ee": {
   "chars": 34,
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "You haven't given me any apricots."
+ },
+ "strahd/3ba8b481b243316d": {
+  "chars": 121,
+  "direction": "[mild, contemptuous]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Gallant. Do you know how many gallant men have stood exactly there? I stopped counting them. I did not stop killing them."
  },
  "strahd/3cebfdb52efbb4ae": {
   "chars": 86,
@@ -58934,17 +58978,25 @@
   "recipe": "71f51bdb43",
   "text": "Keep me interested. In this house, it is the only thing that has ever kept anyone safe."
  },
- "strahd/437baeb9a2091e2e": {
-  "chars": 88,
+ "strahd/41e59d89c83f3d27": {
+  "chars": 106,
+  "direction": "[silken, unforgiving]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "The little thief carries her portrait. Keep it close. It cost more than you can imagine."
+  "text": "Ah. The ones who drew steel at a funeral. I keep the memory the way one keeps a pressed flower, or a debt."
  },
  "strahd/4480f3fce954e3f4": {
   "chars": 64,
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "Upstairs. I will not say where. Finding it is half the pleasure."
+ },
+ "strahd/45310951d389a74a": {
+  "chars": 112,
+  "direction": "[soft, intimate, menacing]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Do not get up. I only came to see how my guests are sleeping. Badly, I see. I have taken some trouble over that."
  },
  "strahd/47388ab03dc973ff": {
   "chars": 110,
@@ -59042,23 +59094,19 @@
   "recipe": "71f51bdb43",
   "text": "You stood between Tatyana and me at her window. I remember every face that has done that. There have not been many, and they did not stay long."
  },
- "strahd/530a6ddeae7d0359": {
-  "chars": 61,
+ "strahd/52e9243e1617ed00": {
+  "chars": 150,
+  "direction": "[amused, contemptuous]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "Silence. How restful. Keep it; I have a great deal of my own."
+  "text": "How gallant. She hardly needs you; she has been refusing me on her own for centuries. It has never once saved anyone who stood where you are standing."
  },
- "strahd/53561d74e7168c5c": {
-  "chars": 138,
+ "strahd/576e5a270de8ad8a": {
+  "chars": 141,
+  "direction": "[tender tone, possessive meaning]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "Go where you like. See what my land has to show you. When you are ready, we will dine. Until then I remain your host, Strahd von Zarovich."
- },
- "strahd/55d912948ec16338": {
-  "chars": 154,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "I came to welcome you to my land, all of you. You have been so busy since you arrived. I do hope you will stay. I have arranged for it to be a long visit."
+  "text": "Ireena. They have you walking in the mud like a pedlar's wife. Let them. Every road in this valley ends at my door. I had them laid that way."
  },
  "strahd/5c2dfe614cce729e": {
   "chars": 41,
@@ -59072,11 +59120,12 @@
   "recipe": "71f51bdb43",
   "text": "I have left a fight with you before. You may have taken it for weakness. It was manners."
  },
- "strahd/60128056595f69d1": {
-  "chars": 64,
+ "strahd/5ed251ecfd924b1c": {
+  "chars": 125,
+  "direction": "[mocking courtesy, cold]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "You saw me on the ridge. You looked well. A little thin. Do eat."
+  "text": "Steel, at a funeral. Here, then: something you are allowed to kill. They were this village's grandmothers once. Do be gentle."
  },
  "strahd/60915f440c5b066b": {
   "chars": 65,
@@ -59089,6 +59138,13 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "My guests. You came. Sit, please. I trust the carriage was comfortable."
+ },
+ "strahd/626e96f79f62a3a1": {
+  "chars": 150,
+  "direction": "[warm invitation, chilling]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "And a scholar. My library would delight you. You must come up and see it. The last scholar who came is up there still. He has stopped asking to leave."
  },
  "strahd/62ec74282f72eaec": {
   "chars": 90,
@@ -59107,6 +59163,13 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "At last. Some conversation."
+ },
+ "strahd/6412ec79a9dc9dc8": {
+  "chars": 206,
+  "direction": "[courtly, unhurried, possessive]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Good evening. You will be the guests my wolves keep telling me about. I am Strahd von Zarovich. This is my road, those are my wolves in the trees, and the mist behind you is mine as well. Do enjoy the walk."
  },
  "strahd/6482f78f6089eb43": {
   "chars": 163,
@@ -59131,6 +59194,20 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "You bled me at her window. I have thought of it fondly since."
+ },
+ "strahd/671eaa628055719b": {
+  "chars": 78,
+  "direction": "[solicitous, faintly hungry]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "You saw me on the ridge. You looked thin. Do eat. I prefer my guests well fed."
+ },
+ "strahd/699397fff128913d": {
+  "chars": 183,
+  "direction": "[courtly, then intimate and menacing]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Manners. Good. You will need them at my table, and my guests do not always leave it. We will speak again. Ireena. Leave the window unlatched tonight. I should hate to break the glass."
  },
  "strahd/6a4424c891eeea09": {
   "chars": 64,
@@ -59174,12 +59251,6 @@
   "recipe": "71f51bdb43",
   "text": "One of you has been up the mountain, to the temple. I can tell. We have more in common than you would like."
  },
- "strahd/74d286efd03edb7f": {
-  "chars": 80,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "Off my road. In my land. Under my sky. You have a gift for comedy. Good evening."
- },
  "strahd/752aa915e4cc7b1b": {
   "chars": 22,
   "model": "eleven_v3",
@@ -59192,17 +59263,19 @@
   "recipe": "71f51bdb43",
   "text": "Close the lid. Walk away. Come back in a hundred years and we will do this again. It will be the most interesting thing that ever happens to any of you."
  },
- "strahd/7a445f6e6c8d603e": {
-  "chars": 111,
+ "strahd/7a220416eaa457e2": {
+  "chars": 133,
+  "direction": "[soft, amused, threatening]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "You have been to see the old woman at the pool. She always did love an audience. Did she tell you where to dig?"
+  "text": "The little thief carries her portrait. Keep it close, child. When I want it back, I will come for it, and for the hand that holds it."
  },
- "strahd/833797f298aa83b3": {
-  "chars": 103,
+ "strahd/816daf00c48a3f21": {
+  "chars": 128,
+  "direction": "[approving, possessive, calm]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "Do not stop on my account. It is so rare that I attend a funeral I did not arrange. Well. Not directly."
+  "text": "Beneath me. Yes. You are learning how I think, and that is the first step to being mine. Another night, then, with better light."
  },
  "strahd/8359c15ebdc7b1de": {
   "chars": 127,
@@ -59210,17 +59283,18 @@
   "recipe": "71f51bdb43",
   "text": "You will find the valley very quiet without me. Very small. You will go home, and nothing there will ever be as large as I was."
  },
+ "strahd/83af0e9ec2bb5465": {
+  "chars": 125,
+  "direction": "[calm, courtly, quietly menacing]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "I promise you nothing. Perhaps one evening I will come to dinner. Do not trouble to set a place for me. I will choose my own."
+ },
  "strahd/840f52bc09a90b09": {
   "chars": 74,
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "My brother's sword. I threw that sword as far as a man can throw anything."
- },
- "strahd/845f0f344f51a437": {
-  "chars": 95,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "Hm. You are right, and I dislike it. Another night, then, with better light. Do keep improving."
  },
  "strahd/868dacd5aaa0cb01": {
   "chars": 71,
@@ -59240,17 +59314,25 @@
   "recipe": "71f51bdb43",
   "text": "And the soldier who kept my invitation. I am touched. Your company asked after you, you know. Near the end."
  },
- "strahd/8847d355b891430d": {
-  "chars": 102,
+ "strahd/87dd7cca9a33e625": {
+  "chars": 141,
+  "direction": "[low, intent, possessive]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "My dear guests. Forgive a host for writing when he might call. The daylight is so inconvenient for me."
+  "text": "My guests, on my road. The ones who told me no across a graveside. I have thought about it every night since. I think about very little else."
  },
  "strahd/8860b09fd454bb02": {
   "chars": 117,
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "I have been a generous host. I can be other things. Consider this the last of my courtesy, and consider it carefully."
+ },
+ "strahd/88f99f4ab9012b13": {
+  "chars": 34,
+  "direction": "[mild, certain]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "You did, once. It changed nothing."
  },
  "strahd/8a8eaecd19012b56": {
   "chars": 51,
@@ -59330,6 +59412,13 @@
   "recipe": "71f51bdb43",
   "text": "How brave. Your god has not eaten at this table in a very long time. Do tell him the soup was excellent."
  },
+ "strahd/9cbc2a75938be3d8": {
+  "chars": 107,
+  "direction": "[cold, measured, promising]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "In a man's own house. I will remember that. Sleep, if you can. I will be watching to see which of you does."
+ },
  "strahd/9d106733b2d0fbdd": {
   "chars": 63,
   "model": "eleven_v3",
@@ -59342,23 +59431,11 @@
   "recipe": "71f51bdb43",
   "text": "Better than I hoped. Not yet what you will need. Do keep practising."
  },
- "strahd/9f1e1856e3b35d60": {
-  "chars": 127,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "Tonight? Only to look at you. A man may admire his guests. Tomorrow, who can say. I have had a very long time to collect whims."
- },
  "strahd/9fa4f17f36a01da1": {
   "chars": 63,
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "And a merchant, with ink on his soul. I can smell it from here."
- },
- "strahd/a200716a14fcbbb9": {
-  "chars": 52,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "Rude, in a man's own house. Sleep, then. If you can."
  },
  "strahd/a3e17d0de5c32d99": {
   "chars": 55,
@@ -59390,11 +59467,12 @@
   "recipe": "71f51bdb43",
   "text": "You have refused my carriage. I am told it was a fine evening for a drive."
  },
- "strahd/ab32549c1df7b336": {
-  "chars": 140,
+ "strahd/a924142741fa02f4": {
+  "chars": 59,
+  "direction": "[soft, cold]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "I am not in, my dear. Observe: the gate. I keep my manners even where others have forgotten theirs. Ireena. You look tired. You need not be."
+  "text": "Silence. Keep it. It will be all you have left, in the end."
  },
  "strahd/abb4e2d87a25dd31": {
   "chars": 94,
@@ -59402,11 +59480,19 @@
   "recipe": "71f51bdb43",
   "text": "You carried her home, thief. All that way, and you never once dropped her. Now give her to me."
  },
- "strahd/ac38eb375c512d78": {
-  "chars": 58,
+ "strahd/ac626d122eb7d773": {
+  "chars": 136,
+  "direction": "[soft, knowing, possessive]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "Keep it lit. It will be dark a long while yet. Good night."
+  "text": "Silence. Wise. Keep it; I will learn what you love without asking. Ireena. Latch the window, if it helps you sleep. It will not stop me."
+ },
+ "strahd/aec7473885b2d040": {
+  "chars": 127,
+  "direction": "[amused, sly]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "And you, merchant. You smell of brimstone and apricots. Someone already holds your paper. I wonder what they would take for it."
  },
  "strahd/b17fe32796769947": {
   "chars": 127,
@@ -59426,23 +59512,25 @@
   "recipe": "71f51bdb43",
   "text": "You gave it to my brother. How very like him to accept."
  },
+ "strahd/b5630eb8d7c0f8dc": {
+  "chars": 122,
+  "direction": "[pleasant, chilling]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Well said. There are other windows in this town, and other people asleep behind them. I wonder which I will visit instead."
+ },
  "strahd/bbdf977c74200841": {
   "chars": 152,
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "You burned my tree on Yester Hill. It was older than your nations. I do not expect you to understand what that means; I only want you to know that I do."
  },
- "strahd/bdc7866686b62ae2": {
-  "chars": 143,
+ "strahd/be145f942680b5db": {
+  "chars": 95,
+  "direction": "[pleasant, menacing]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "Silence. The wise answer, and the dull one. We will speak again when you have found your tongues. Ireena. Do keep the window latched. Or don't."
- },
- "strahd/bed56043a6e9a1dd": {
-  "chars": 99,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "Do not get up. I only came to see how my guests are sleeping. Badly, I think. The valley does that."
+  "text": "My guests, on my road, and still so well mannered. Good. Polite guests are the easiest to keep."
  },
  "strahd/c08600511b9b27c2": {
   "chars": 48,
@@ -59456,11 +59544,12 @@
   "recipe": "71f51bdb43",
   "text": "Someone lit the old dragon's lamp on the ridge. I watched it from my window. It is very pretty."
  },
- "strahd/c6b11a1f0907c485": {
-  "chars": 121,
+ "strahd/c5462e9fa151b6b8": {
+  "chars": 157,
+  "direction": "[pleasant, quietly cruel]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "Oh, well said. Truly. I have been threatened by better, but rarely with such conviction. Allow me to return the courtesy."
+  "text": "And my thanks for the boy from under the church. He came home to me starving, so I let him have the first family he passed on the road. He was very grateful."
  },
  "strahd/c7cca6e507559fe8": {
   "chars": 93,
@@ -59468,11 +59557,25 @@
   "recipe": "71f51bdb43",
   "text": "You have left Ireena with a priest and his saint. How touching. Saints are so rarely at home."
  },
+ "strahd/c847f17d49251a7e": {
+  "chars": 153,
+  "direction": "[courteous, quietly cruel]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Do not stop on my account. Kolyan shouted at my wolves from his doorway every night for a month. Let him have a little quiet now. He had none at the end."
+ },
  "strahd/c8e3a9ff9856aea6": {
   "chars": 133,
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "You have Ireena with you. Keep her warm and keep her close. I should be desolate if anything happened to her that I had not arranged."
+ },
+ "strahd/c97a30d88e01134b": {
+  "chars": 104,
+  "direction": "[gracious, menacing]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Keep it lit. It is the only light for a mile, and every hungry thing in my woods can see it. Good night."
  },
  "strahd/cbed612c9fcf2c4b": {
   "chars": 134,
@@ -59480,11 +59583,12 @@
   "recipe": "71f51bdb43",
   "text": "The village hid her from me, and in the morning she was dead in their chapel. So I sent the river to ask them why. It is still asking."
  },
- "strahd/cec57bb061ccb2ea": {
-  "chars": 56,
+ "strahd/ce9085c451735a65": {
+  "chars": 157,
+  "direction": "[calm, intimate, predatory]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "That is not a high bar, I grant you. I am working on it."
+  "text": "Tonight? To learn you. Which of you sleeps lightly. Which sleeps with a hand on a knife. Which one the others would die for. I will need to know that, later."
  },
  "strahd/cec6c8d8354e7454": {
   "chars": 65,
@@ -59516,17 +59620,25 @@
   "recipe": "71f51bdb43",
   "text": "Explain."
  },
+ "strahd/d6285a55bdb2add7": {
+  "chars": 134,
+  "direction": "[mild, cold, proud]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "And a little monk who stands like a dusk elf. I knew a whole people who stood like that. There are very few of them left. I saw to it."
+ },
  "strahd/d65b6b807ca064de": {
   "chars": 99,
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "Good evening. I hear you are becoming formidable. I like to see such things for myself. Indulge me."
  },
- "strahd/d68982128f27c294": {
+ "strahd/d68534b991118c9e": {
   "chars": 99,
+  "direction": "[gracious, quiet steel]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "My guests, on my road, and still so well mannered. I did hope the village would not cure you of it."
+  "text": "There. Civilised. We will dine together, one evening. I insist, and I am not used to being refused."
  },
  "strahd/d7d86cccffdde693": {
   "chars": 107,
@@ -59540,12 +59652,6 @@
   "recipe": "71f51bdb43",
   "text": "Ah. There it is. I had forgotten what it looked like."
  },
- "strahd/da2e646897d9f2c7": {
-  "chars": 143,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "Good evening. You will be the guests my wolves keep telling me about. I am Strahd von Zarovich. This is my road. I do hope you are enjoying it."
- },
  "strahd/da5b747519fac5b3": {
   "chars": 76,
   "model": "eleven_v3",
@@ -59558,11 +59664,12 @@
   "recipe": "71f51bdb43",
   "text": "Ireena. Such late hours. Shall I wait while you decide whether to scream?"
  },
- "strahd/dd752dce32294053": {
-  "chars": 95,
+ "strahd/da9777ca32523a98": {
+  "chars": 143,
+  "direction": "[amused, dismissive, cold]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "There. You see? Civilisation survives, even here. We will dine together, one evening. I insist."
+  "text": "You have been to see the old woman at the pool. Did she tell you where to dig? Dig, by all means. I have outlived everyone who found something."
  },
  "strahd/e036fa57fcb31948": {
   "chars": 97,
@@ -59570,17 +59677,12 @@
   "recipe": "71f51bdb43",
   "text": "Before whatever you are planning. You are planning something. Everyone who sits at this table is."
  },
- "strahd/e0d45c7a828a7a42": {
-  "chars": 98,
+ "strahd/e108de1ead6741e2": {
+  "chars": 126,
+  "direction": "[gracious, then softly cruel]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "And you, merchant. You smell of brimstone and apricots. Someone holds your paper. How interesting."
- },
- "strahd/e23e45a95101e032": {
-  "chars": 105,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "And my thanks for the boy from under the church. He arrived hungry and grateful. Such a rare combination."
+  "text": "As my guests wish. I only wanted her to hear the bell. Bells are for funerals, Ireena. Listen to it, and wonder whose is next."
  },
  "strahd/e404e9707d4c26db": {
   "chars": 7,
@@ -59606,23 +59708,12 @@
   "recipe": "71f51bdb43",
   "text": "You wear the Morninglord's trinket where I can see it. I have seen it before. I watched its last bearer's light go out."
  },
- "strahd/e7ffae2b02167605": {
-  "chars": 130,
+ "strahd/e7aecb0f62bbb1fd": {
+  "chars": 181,
+  "direction": "[gracious, calm certainty]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "Manners. In Barovia. You have made an old man very happy. We will speak again, my guests, at my table, I hope. Ireena. Sleep well."
- },
- "strahd/e808943ff041373b": {
-  "chars": 122,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "How gallant. She hardly needs you there; she can refuse me perfectly well on her own. She has been doing it for centuries."
- },
- "strahd/e80e31a6dad341c9": {
-  "chars": 81,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "As my guests wish. I was leaving in any case. I only wanted her to hear the bell."
+  "text": "I came to welcome you to my land, all of you. You have been busy since you came, and I know every door you have knocked on. Stay as long as you like. The mists will see that you do."
  },
  "strahd/e85b87b64212da26": {
   "chars": 167,
@@ -59636,11 +59727,26 @@
   "recipe": "71f51bdb43",
   "text": "Well. Here we are. I confess I had imagined this room with more candles."
  },
- "strahd/e9a06b6f37f38f19": {
-  "chars": 66,
+ "strahd/e910968dfb96fe53": {
+  "chars": 181,
+  "direction": "[gentle, possessive, chilling]",
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
-  "text": "Rude. But spirited. Here, then: something you are allowed to kill."
+  "text": "I am at the gate, my dear, as a guest should be. Everything past it is mine: the yard, the grave, the man in it. And you. Keep the scarf on. I know what is under it. I put it there."
+ },
+ "strahd/eb5e32eb7da0574b": {
+  "chars": 116,
+  "direction": "[courtly, warm, insincere]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "My dear guests. Forgive a host for writing when he might call. My nights are spoken for, and my days are not my own."
+ },
+ "strahd/ebda8d9d52f21219": {
+  "chars": 137,
+  "direction": "[cold, disdainful, unhurried]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Gustav. You write again to offer me your devotion, as if it were a coin I had dropped. I did not ask for it, and I do not owe you for it."
  },
  "strahd/efe4734935ec7eec": {
   "chars": 221,
@@ -59660,12 +59766,6 @@
   "recipe": "71f51bdb43",
   "text": "She sang to me, when I was small. She was the only one who did."
  },
- "strahd/f69cb62cb242e296": {
-  "chars": 46,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "Not tonight. I can wait. I am very good at it."
- },
  "strahd/f9a1d7a48e209f7e": {
   "chars": 41,
   "model": "eleven_v3",
@@ -59678,23 +59778,11 @@
   "recipe": "71f51bdb43",
   "text": "My soul is not mine to sell. It was sold long ago, at a better price than your devil could imagine. So my name costs me nothing. I'll give it to you."
  },
- "strahd/fa41f524ea0b0b20": {
-  "chars": 145,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "Under your protection. How splendid. Then let us see what your protection is worth. Do try to keep her alive. I should hate for this to be short."
- },
  "strahd/fae1039500bf8ef1": {
   "chars": 79,
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "Ireena is upstairs, dressing for dinner. She asks after you. Less than she did."
- },
- "strahd/fde75ce7aa9731b1": {
-  "chars": 67,
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "You had my letter, I trust. I write so few now. Nobody writes back."
  },
  "strahd/fe8fb04432964b55": {
   "chars": 102,
@@ -63219,16 +63307,39 @@
   "recipe": "12d62db559",
   "text": "Well. That's a sum. That's a rusted lock, that is. Off you go, all three. Quickly."
  },
+ "vallaki_lamplighter/6a20bb78681afd87": {
+  "chars": 129,
+  "direction": "[weary, haunted]",
+  "model": "eleven_v3",
+  "recipe": "5c319ee602",
+  "text": "He always does. I light every lamp on this street now. It doesn't keep him out. It only means I see whose window he's looking at."
+ },
+ "vallaki_lamplighter/867051f76cd3284c": {
+  "chars": 162,
+  "direction": "[bitter, shaking]",
+  "model": "eleven_v3",
+  "recipe": "5c319ee602",
+  "text": "The Baron called it a chill. The next day there were black roses on our step, and a card in a very fine hand: \"With sympathy, from her neighbour across the lake.\""
+ },
  "vallaki_lamplighter/e7d3bb3c205dc665": {
   "chars": 108,
+  "direction": "[weary, dutiful]",
   "model": "eleven_v3",
-  "recipe": "75a94f5c73",
+  "recipe": "5c319ee602",
   "text": "Evening. Every lamp lit by the last bell, or I answer for it. The Baron says a lit street is a happy street."
+ },
+ "vallaki_lamplighter/f585f1822090d9b6": {
+  "chars": 199,
+  "direction": "[grieving, quiet, raw]",
+  "model": "eleven_v3",
+  "recipe": "5c319ee602",
+  "text": "For my girl, Ana. Last winter she slept with her window open a crack, for the stove smoke. Three mornings later the watch found her at the lake gate, sitting against the post, smiling, white as milk."
  },
  "vallaki_lamplighter/f851e906f49a524c": {
   "chars": 105,
+  "direction": "[low, uneasy warning]",
   "model": "eleven_v3",
-  "recipe": "75a94f5c73",
+  "recipe": "5c319ee602",
   "text": "Your friend should keep her hood up. The dark has eyes on this town, and some of them are at the windows."
  },
  "vasilka/03e96dd870a44093": {

@@ -2,6 +2,32 @@
 # plays once. Quest: Carry the Dawn (narrative/companions/dawn.dialogue). The file offers its first talk that holds:
 # when she's Strained or Doubtful (story/approval.gd), those first; then the quest's; then Warm, Close and Devoted.
 
+# --- After Strahd called Liriel to kneel at the night visit (strahd/visits:night_kneel) -------------------------------
+
+~ talk_knelt
+if name:liriel_dawnsong and flag.strahd_knelt == "liriel_dawnsong"
+-> knelt
+endif
+-> END
+
+~ knelt
+Narrator: Liriel is up before anyone, kneeling in the cold grass with her holy symbol in both hands. She isn't praying. She is staring at her own knees.
+interject name:liriel_dawnsong: I knelt to him. I kneel every morning of my life, and last night my knees didn't know the difference.
+interject name:liriel_dawnsong: My faith has never once been asked to bend. He didn't ask. He just bent it, and handed it back.
+* You didn't choose it, Liriel. -> knelt_choose
+* Then we make sure he never gets that close again. -> knelt_close
+
+~ knelt_choose
+interject name:liriel_dawnsong: No. That's what frightens me. Faith was always the thing I chose. Every morning, I chose it.
+interject name:liriel_dawnsong: So I'll choose it again tomorrow. And the day after. He can't take a thing I keep picking up.
+approve liriel_dawnsong +3: You told me I didn't choose to kneel to Strahd
+-> END
+
+~ knelt_close
+interject name:liriel_dawnsong: Wake me if he comes. Wake me first. I want to be standing when he looks at me again.
+approve liriel_dawnsong +2: You promised he'd never get that close to me again
+-> END
+
 # --- When she's lost faith in the party (approval) ----------------------------------------------------------------
 
 ~ talk_strained

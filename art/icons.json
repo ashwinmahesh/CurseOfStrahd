@@ -46,7 +46,7 @@
   },
   "ui": {
     "create": "lorc/quill-ink",
-    "plan": "lorc/hourglass"
+    "plan": "lorc/hourglass", "wait": "skoll/pocket-watch"
   },
   "spells": {
     "acid_splash": "lorc/acid-blob@acid",

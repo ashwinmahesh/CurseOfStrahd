@@ -60,6 +60,11 @@
       "id": "strahd_parley",
       "type": "string",
       "summary": "The answer to Strahd's price before the final battle (strahd/final:parley, ADR 0014): fight (the battle starts), yield (Strahd triumphant) or ireena (she is given to him). The engine and the endings read it."
+    },
+    {
+      "id": "strahd_knelt",
+      "type": "string",
+      "summary": "At the night visit (strahd/visits:night_kneel) Strahd called a sleeping companion to kneel and bare their throat, then let them go: the companion's id (never the one speaking for the party), or \"someone\" when no pregenerated companion was along. Their camp talk `knelt` reads it."
     }
   ]
 }

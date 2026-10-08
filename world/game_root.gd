@@ -203,6 +203,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				open_screen("party", 0)
 			KEY_R:
 				open_screen("rest", 0)
+			KEY_H:
+				open_screen("wait", 0)
 			KEY_F:
 				view.search()
 			KEY_V:
@@ -749,6 +751,8 @@ func open_screen(kind: String, index: int) -> void:
 			screen = CreationScreen.new()
 		"rest":
 			screen = RestScreen.new()
+		"wait":
+			screen = WaitScreen.new()
 		"menu":
 			screen = PauseMenu.new()
 		"game_over":

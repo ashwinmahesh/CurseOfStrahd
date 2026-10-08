@@ -447,6 +447,9 @@ once
 ~ examine:arrigal_wagon_door
 | A neat black wagon with silver trim and a small locked strongbox under the step. The window has a black curtain drawn tight.
 
+~ examine:arrigal_black_horse
+| A tall black horse, saddled and bridled, tied short beside Arrigal's wagon. It is the only horse in the camp ready to leave at a moment's notice, and it knows it.
+
 ~ examine:jetty
 | A rotten jetty with half its planks gone. At the end, a mooring post, and a fresh rope tied to it with nothing on the other end.
 

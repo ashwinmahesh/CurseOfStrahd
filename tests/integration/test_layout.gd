@@ -355,6 +355,25 @@ func test_madam_evas_rebuild() -> void:
 				d.queue_free())
 
 
+## Wait (owner, 2026-10-08): the hours picker, and the screen when foes in sight stop it.
+func test_the_wait_screen() -> void:
+	if not await _game(LATE):
+		return
+	await _check("the wait screen", func() -> Variant:
+		root.call("open_screen", "wait", 0)
+		await _frames(2)
+		(root.get("screen") as WaitScreen).set_hours(24)
+		return root.get("screen"), _close_screen)
+	await _check("the wait screen, blocked", func() -> Variant:
+		var w := WaitScreen.new()
+		root.add_child(w)
+		w.build(root, GameState.story, "Not with foes in sight. Deal with them, or get out of their sight first.")
+		return w,
+		func() -> void:
+			for w in root.find_children("*", "WaitScreen", false, false):
+				w.queue_free())
+
+
 func test_the_travel_map() -> void:
 	if not await _game(LATE):
 		return

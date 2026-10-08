@@ -3,6 +3,31 @@
 # file offers its first talk that holds: when he's Strained or Doubtful (story/approval.gd), those first; then the
 # quest's; then Warm, Close and Devoted.
 
+# --- After Strahd called Ratatoille to kneel at the night visit (strahd/visits:night_kneel) ---------------------------
+
+~ talk_knelt
+if name:ratatoille and flag.strahd_knelt == "ratatoille"
+-> knelt
+endif
+-> END
+
+~ knelt
+Narrator: Ratatoille is cooking breakfast with tremendous concentration, though there's very little to cook and nobody is hungry.
+interject name:ratatoille: He said I wished to be taken seriously. Then he had me fold my blanket and walk to him like a waiter with an empty plate.
+interject name:ratatoille: I am a diviner. I saw nothing coming. Nothing.
+* Nobody could have foreseen that. -> knelt_foresee
+* Next time we'll be ready for him. -> knelt_ready
+
+~ knelt_foresee
+interject name:ratatoille: I can foresee breakfast. Breakfast I will foresee, and it will be excellent, and you will all eat it. Sit.
+approve ratatoille +3: You told me nobody could have foreseen Strahd's visit
+-> END
+
+~ knelt_ready
+interject name:ratatoille: Next time I sleep with the skillet. I want to see his face when I take him seriously.
+approve ratatoille +2: You said we'd be ready for Strahd next time
+-> END
+
 # --- When he's lost faith in the party (approval) ----------------------------------------------------------------
 
 ~ talk_strained

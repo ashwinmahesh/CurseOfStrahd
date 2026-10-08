@@ -1,5 +1,28 @@
 # Silvain Aster's camp talks (story/camp_talk.gd). Quest: Aurel's Last Chapter (narrative/companions/aurel.dialogue).
 
+# --- After Strahd called Silvain to kneel at the night visit (strahd/visits:night_kneel) ------------------------------
+
+~ talk_knelt
+if name:silvain_aster and flag.strahd_knelt == "silvain_aster"
+-> knelt
+endif
+-> END
+
+~ knelt
+Narrator: Silvain is writing by the last of the firelight, small and fast, crossing out almost as much as they keep.
+interject name:silvain_aster: He told me I could take notes. So I am. Everything I remember. It comes to half a page. I was there for all of it, and I have half a page.
+interject name:silvain_aster: I would like to understand how he did it. I'd like that more than I'd like to sleep, which is probably the point.
+* Then study it. Find the weakness. -> knelt_study
+* Don't look too closely, Silvain. -> knelt_look
+
+~ knelt_study
+interject name:silvain_aster: Already started. He needed my name and my sleep, and nothing else. It's a thin thread. Thin threads cut.
+-> END
+
+~ knelt_look
+interject name:silvain_aster: Everyone has said that to me about every book I ever wanted. It never once worked.
+-> END
+
 ~ talk_cipher
 if name:silvain_aster and flag.scholar_notes_found and not flag.aurel_cipher_read
 -> cipher

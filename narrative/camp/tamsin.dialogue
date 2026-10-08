@@ -1,6 +1,29 @@
 # Tamsin Tealeaf's camp talks (story/camp_talk.gd). Quest: The Woman in the Locket
 # (narrative/companions/locket.dialogue).
 
+# --- After Strahd called Tamsin to kneel at the night visit (strahd/visits:night_kneel) -------------------------------
+
+~ talk_knelt
+if name:tamsin_tealeaf and flag.strahd_knelt == "tamsin_tealeaf"
+-> knelt
+endif
+-> END
+
+~ knelt
+Narrator: Tamsin is sitting with the locket closed in his fist, so tight his knuckles have gone white.
+interject name:tamsin_tealeaf: I held it up to him. Open, like an offering. He didn't even take it. He looked at her face and smiled like she was already home.
+interject name:tamsin_tealeaf: She calls my name in my dreams. Last night it was his voice doing it.
+* Then we keep it safe from him, together. -> knelt_keep
+* Maybe it's time to get rid of it. -> knelt_rid
+
+~ knelt_keep
+interject name:tamsin_tealeaf: Together. It's in my pocket, and he can walk me to him like a dog on a lead. ...Fine. Together.
+-> END
+
+~ knelt_rid
+interject name:tamsin_tealeaf: No. That's what he wants. I'm not giving him anything he didn't take himself.
+-> END
+
 ~ talk_inscription
 if name:tamsin_tealeaf and quest.the_locket >= her_face and not flag.locket_inscription_read
 -> inscription

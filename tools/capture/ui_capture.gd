@@ -4,7 +4,8 @@ extends Node
 ## spell preparation (after a rest and after an item's Long Rest), journal, loot, shop, pause menu and character creation,
 ## one shot each, plus sample tooltips, the sheet for a level 7 warlock, monk and druid, and creating a character from the
 ## party screen (UI_ONLY=create), Madam Eva's rebuild (UI_ONLY=rebuild), a sheet opened in a fight (UI_ONLY=fight_sheet),
-## a cutscene still (UI_ONLY=cutscene) and busts before and after they face each other (UI_ONLY=busts).
+## a cutscene still (UI_ONLY=cutscene), busts before and after they face each other (UI_ONLY=busts) and the Wait
+## screen (UI_ONLY=wait).
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -234,6 +235,13 @@ func capture_shots(tool: Node, out: String) -> void:
 			await tool.call("wait_frames", 2)
 	if _wants("create"):
 		await _create_shots(tool, out)
+	if _wants("wait"):
+		# Wait (owner, 2026-10-08): the bar with its Wait button, then the hours picker set to six.
+		await _shoot(tool, "%s_wait_1_bar.png" % out)
+		root.call("open_screen", "wait", 0)
+		(root.get("screen") as WaitScreen).set_hours(6)
+		await _shoot(tool, "%s_wait_2_screen.png" % out)
+		root.call("close_screen")
 	if _wants("cutscene"):
 		# A cutscene still is drawn whole with black bars (owner, 2026-10-08); run with ARGS="--size=1512x982" (a Mac
 		# laptop's full screen) or "--size=2150x900" (ultrawide) to see the bars.

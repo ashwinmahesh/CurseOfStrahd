@@ -365,6 +365,16 @@
       "id": "vistani_deck_tried",
       "type": "bool",
       "summary": "The party sang for the Vistani women in the Blood of the Vine (vistani: perform_ok / perform_fail). On a success Sorvia gave them a Deck of Illusions; either way the option is spent."
+    },
+    {
+      "id": "ismark_choked",
+      "type": "bool",
+      "summary": "Strahd choked Ismark to his knees at the burial with a look, until Ireena begged him to stop (village_of_barovia/burial:ismark_choked). Every answer but a bow brings it."
+    },
+    {
+      "id": "ismark_spoke_of_choking",
+      "type": "bool",
+      "summary": "Ismark has talked about Strahd choking him at the burial (village_of_barovia/ismark:after_burial), so he says it once."
     }
   ]
 }
