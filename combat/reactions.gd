@@ -24,7 +24,11 @@ func feats() -> CombatFeatures:
 	return enc().features
 
 
-## Runs the offers in `chain` one after another, then `done`. Pauses on each one the player is asked about.
+## Runs the offers in `chain` one after another, then `done`. Pauses on each one the player is asked about. An offer may
+## also be `forced` (no choice: it happens when reached), say `ask: false` (never asked: its rule settles it, as
+## D20Responses.sync_allows does), name the `default` rule its creature has until one is set, give `text` and `cost` as
+## Callables (worded when asked, after earlier offers changed the roll), and give `helps`: when it says the offer can't
+## change the outcome, the player isn't asked (a reroll that can't reach the DC).
 func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 	var e := enc()
 	while not chain.is_empty():
@@ -33,8 +37,12 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 		if o.has("still") and not (o["still"] as Callable).call():
 			continue
 		var kind := str(o["kind"])
-		var decision := e._reaction_decision(reactor, kind)
-		if decision == "never":
+		var decision := e._reaction_decision(reactor, kind, str(o.get("default", "")))
+		if bool(o.get("forced", false)):
+			decision = "auto"
+		elif decision == "ask" and not bool(o.get("ask", true)):
+			decision = "auto" if e.d20.sync_allows(o) else "never"
+		if decision == "never" or (decision == "ask" and o.has("helps") and not (o["helps"] as Callable).call()):
 			continue
 		if decision == "auto":
 			(o["use"] as Callable).call()
@@ -43,8 +51,9 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 			continue
 		var req := ReactionRequest.new(kind, reactor.id, str(o.get("trigger", "")))
 		req.title = str(o["title"])
-		req.text = str(o["text"])
-		req.cost = str(o.get("cost", "Reaction"))
+		req.text = str((o["text"] as Callable).call()) if o["text"] is Callable else str(o["text"])
+		var cost: Variant = o.get("cost", "Reaction")
+		req.cost = str((cost as Callable).call()) if cost is Callable else str(cost)
 		req.spends_reaction = bool(o.get("spends_reaction", true))
 		req.target_choices.assign(o.get("target_choices", []))
 		req.selected_ids.assign(o.get("selected_ids", []))
@@ -450,6 +459,11 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 			continue
 		seen[str(f["id"])] = true
 		out.append({"id": str(f["id"]), "name": str(f["name"]), "cost": "Reaction and a feature use"})
+	# The choices after a D20 Test this creature can make (Indomitable, Heroic Inspiration, Bend Luck...).
+	for policy in enc().d20.policies(c):
+		if not seen.has(str(policy["id"])):
+			seen[str(policy["id"])] = true
+			out.append(policy)
 	return out
 
 func list_policies(c: Combatant, out: Array[Dictionary]) -> void:
@@ -460,7 +474,7 @@ func list_policies(c: Combatant, out: Array[Dictionary]) -> void:
 				"label": "%s: %s" % [policy["name"], {"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]],
 				"sub": str({"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]) + (" · selected" if current == mode else ""),
 				"cost": "free", "why": enc()._turn_check(c), "targeting": "none", "range": 0,
-				"help": ("%s. Automatic: it happens whenever it can. Off: never." % policy["cost"]) if policy.has("default") and not "ask" in (policy.get("modes", []) as Array) else \
+				"help": str(policy["help"]) if policy.has("help") else ("%s. Automatic: it happens whenever it can. Off: never." % policy["cost"]) if policy.has("default") and not "ask" in (policy.get("modes", []) as Array) else \
 					("%s. Automatic permits spending whenever eligible. Ask prompts where supported; synchronous rolls/spell hits do not spend until you choose Automatic. Off never spends." % policy["cost"])})
 
 func set_policy(c: Combatant, id: String, mode: String) -> CombatResult:

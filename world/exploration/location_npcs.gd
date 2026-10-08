@@ -1,8 +1,14 @@
 class_name LocationNpcs
 extends RefCounted
-## The people in a location (LocationView): who stands here now (each NPC entry's `when`), figures a conversation
-## brings on and takes off again (the dialogue statements `appear` and `vanish`), people who step aside when their talk
-## ends in a fight, and those who speak first when the party comes near.
+## The people in a location (LocationView): who stands here now (each NPC entry's `when` and `hours`, re-checked as the
+## clock moves by LocationClock), who walks a route (`path`, NpcRoutes), figures a conversation brings on and takes
+## off again (the dialogue statements `appear` and `vanish`), people who step aside when their talk ends in a fight,
+## and those who speak first when the party comes near.
+
+
+## An entry's `facing` as a ground direction (x, z): north is up the map.
+const FACINGS := {"north": Vector2(0, -1), "south": Vector2(0, 1), "east": Vector2(1, 0), "west": Vector2(-1, 0),
+	"northeast": Vector2(1, -1), "northwest": Vector2(-1, -1), "southeast": Vector2(1, 1), "southwest": Vector2(-1, 1)}
 
 
 ## Re-reads which NPCs, props and containers are here (their `when` conditions) after a conversation or a fight
@@ -31,7 +37,7 @@ static func refresh_npcs(view: LocationView) -> void:
 static func _build_npcs(view: LocationView) -> void:
 	for n: Variant in view.loc.get("npcs", []):
 		var spec := n as Dictionary
-		if not StoryConditions.check(str(spec.get("when", "")), view.st):
+		if not StoryConditions.check(str(spec.get("when", "")), view.st) or not Schedule.in_hours(spec, view.st):
 			continue
 		if view.npc_tokens.has(str(spec["npc"])):
 			continue   # one entry per NPC at a time: the first whose condition holds
@@ -49,9 +55,24 @@ static func _build_npcs(view: LocationView) -> void:
 		var tok := _npc_token(cb, str(npc.get("sprite", spec["npc"])))
 		tok.position = view.board.cell_center(cb.cell)
 		view.add_child(tok)
+		if FACINGS.has(str(spec.get("facing", ""))):
+			tok.face(FACINGS[str(spec["facing"])] as Vector2, false)   # where they look (and lane 25's sight cones)
 		view.npc_tokens[str(spec["npc"])] = tok
 		view._npc_shown.append({"spec": spec, "token": tok, "cell": cb.cell, "low_before": view.grid.has_flag(cb.cell, CombatGrid.LOW)})
 		view.grid.set_flag(cb.cell, CombatGrid.LOW, true)   # an NPC blocks the square while standing there
+	LocationClock.of(view)   # people keep their hours, and the day's events happen, as the clock moves
+	# People with a `path` walk it (NpcRoutes), round everyone standing still; each starts after its first pause.
+	for shown in view._npc_shown:
+		var spec := shown["spec"] as Dictionary
+		if not spec.has("path"):
+			continue
+		var own := shown["cell"] as Vector2i
+		view.grid.set_flag(own, CombatGrid.LOW, bool(shown["low_before"]))
+		shown["route"] = NpcRoutes.route_for(view, spec)
+		view.grid.set_flag(own, CombatGrid.LOW, true)
+		shown["wait"] = float(spec.get("pause", NpcRoutes.PAUSE))
+		if not (shown["route"] as Array).is_empty():
+			NpcRoutes.of(view)
 
 
 ## Owner report (2026-10-07): Offalia ate her mother's pastry and stood on at the oven. An entry with `asleep: true`

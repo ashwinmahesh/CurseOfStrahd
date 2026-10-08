@@ -1584,7 +1584,7 @@
         "manor": "manor",
         "townhouse": "manor"
       },
-      "full_walls": false,
+      "full_walls": true,
       "ground": {
         "manor": "village/grass",
         "timber": "village/cobbles",

@@ -5,8 +5,11 @@ extends RefCounted
 ## The party crouches while it sneaks, and each of them keeps the Stealth total they rolled on starting (as the Hide
 ## action notes its total). Foes waiting in plain view (an encounter marked `waiting`) stand where their fight puts
 ## them and show once the party can see them. A waiting foe notices a party member it can see clearly within
-## NOTICE_FT: at once if the party isn't sneaking, else when its passive Perception (5 lower when that member is in
-## dim light to it) is at least the member's total. Being noticed starts the fight, and nobody is surprised.
+## NOTICE_FT, if the member is inside its sight cone (CONE_DEG of the way it faces), or hears them within HEAR_FT
+## whatever way it faces: at once if the party isn't sneaking, else when its passive Perception (5 lower when that
+## member is in dim light to it, for sight) is at least the member's total. Being noticed starts the fight, and nobody
+## is surprised. The cones hold only before a fight (owner, 2026-10-07, after Baldur's Gate 3); fights keep the 2024
+## rules, which have no facing.
 ##
 ## When the party opens a fight (striking a waiting foe, or stepping into a fight's area) while sneaking, every foe
 ## that notices none of them is surprised (2024: Disadvantage on Initiative), and a member nobody noticed, with a
@@ -18,6 +21,13 @@ extends RefCounted
 const NOTICE_FT := 30
 ## The Hide action's DC (2024): a sneaking member's total must reach it to start a fight hidden.
 const HIDE_DC := 15
+## Before a fight a watcher sees only this wide an arc ahead of it (degrees), and hears the party all round within
+## HEAR_FT (owner, 2026-10-07: Baldur's Gate 3's sight cones, outside fights only).
+const CONE_DEG := 120.0
+const HEAR_FT := 10
+## Directions a location's data can give a figure's `facing` (grid x right, y down: north is up the map).
+const DIRECTIONS := {"north": Vector2(0, -1), "south": Vector2(0, 1), "east": Vector2(1, 0), "west": Vector2(-1, 0),
+	"northeast": Vector2(1, -1), "northwest": Vector2(-1, -1), "southeast": Vector2(1, 1), "southwest": Vector2(-1, 1)}
 
 
 ## The party crouches while sneaking (CombatToken.sneaking; sprites with the fuller animation set show it).
@@ -106,12 +116,13 @@ static func refresh_waiting(view: LocationView) -> void:
 	for id: String in ids:
 		if have.has(id):
 			continue
-		var i := 0
-		for mo: Dictionary in LocationFights.monsters_for(view, ids[id] as Dictionary):
+		var monsters := LocationFights.monsters_for(view, ids[id] as Dictionary)
+		for i in monsters.size():
+			var mo := monsters[i]
 			var foe := Combatant.new(mo["creature"] as Monster, mo["side"] as StringName, mo["cell"] as Vector2i)
 			foe.id = "waiting_%s_%d" % [id, i]
-			i += 1
-			view.waiting.append({"encounter": id, "foe": foe, "token": null, "low": []})
+			view.waiting.append({"encounter": id, "foe": foe, "token": null, "low": [],
+				"facing": waiting_facing(view, ids[id] as Dictionary, i, monsters)})
 	if view.waiting.is_empty() or view.members.is_empty() or view.waiting.all(func(w: Dictionary) -> bool: return w["token"] != null):
 		return
 	# Sight is costly to work out for a character, so only when something that changes it has: where the party
@@ -164,6 +175,7 @@ static func _show(view: LocationView, w: Dictionary) -> void:
 	var tok := LocationFights._combat_token(foe)
 	tok.position = view.board.cell_center(foe.cell, foe.size_cells)
 	view.add_child(tok)
+	tok.face(w["facing"] as Vector2, false)   # its sight cone points the way it looks
 	tok.emerge(0.0, 0.5)
 	w["token"] = tok
 	# Nobody walks through them; the squares go back to how they were with the fight or when they leave.
@@ -208,6 +220,68 @@ static func claim_token(view: LocationView, c: Combatant) -> CombatToken:
 
 # --- Who notices whom --------------------------------------------------------------------------------
 
+## Which way a waiting foe faces before its fight: its entry's `facing`, else toward the middle of its group (gathered
+## round a fire, a cauldron, a dig), else toward the middle of its fight's area, else toward where the party arrives.
+static func waiting_facing(view: LocationView, spec: Dictionary, i: int, monsters: Array[Dictionary]) -> Vector2:
+	var given := str(((spec["monsters"] as Array)[i] as Dictionary).get("facing", ""))
+	if DIRECTIONS.has(given):
+		return (DIRECTIONS[given] as Vector2).normalized()
+	var me := Vector2(monsters[i]["cell"] as Vector2i)
+	if monsters.size() >= 2:
+		var mid := Vector2.ZERO
+		for mo in monsters:
+			mid += Vector2(mo["cell"] as Vector2i)
+		mid /= monsters.size()
+		if me.distance_to(mid) > 0.5:
+			return (mid - me).normalized()
+	for a: Variant in view.loc.get("areas", []):
+		var area := a as Dictionary
+		if "enter_area:" + str(area["id"]) == str(spec["trigger"]):
+			var lo := LocationView._cell((area["cells"] as Array)[0])
+			var hi := LocationView._cell((area["cells"] as Array)[1])
+			var centre := (Vector2(lo) + Vector2(hi)) / 2.0
+			if me.distance_to(centre) > 0.5:
+				return (centre - me).normalized()
+	var spawn := Vector2(LocationView._cell((view.loc.get("spawns", {}) as Dictionary).get("default", [0, 0])))
+	return (spawn - me).normalized() if spawn.distance_to(me) > 0.5 else Vector2(0, 1)
+
+
+## Which way a figure faces on the grid (x right, y down), from its sprite; Vector2.ZERO without one.
+static func token_facing(tok: CombatToken) -> Vector2:
+	if tok == null or not is_instance_valid(tok) or tok.sprite == null:
+		return Vector2.ZERO
+	var f := tok.sprite.facing
+	return Vector2(f.x, f.z).normalized()
+
+
+## Gives `who` a sight cone pointing along `facing` for the notice rules (Vector2.ZERO: it sees all round).
+static func set_cone(who: Combatant, facing: Vector2) -> void:
+	if facing.length() < 0.01:
+		if who.has_meta("watch_facing"):
+			who.remove_meta("watch_facing")
+	else:
+		who.set_meta("watch_facing", facing.normalized())
+
+
+## Whether the square `cell` (a creature `size` squares across there) is inside `watcher`'s sight cone; always, for a
+## watcher without one.
+static func in_cone(watcher: Combatant, cell: Vector2i, size: int = 1) -> bool:
+	if not watcher.has_meta("watch_facing"):
+		return true
+	var to := (Vector2(cell) + Vector2.ONE * (size / 2.0)) - (Vector2(watcher.cell) + Vector2.ONE * (watcher.size_cells / 2.0))
+	if to.length() < 0.01:
+		return true
+	return (watcher.get_meta("watch_facing") as Vector2).dot(to.normalized()) >= cos(deg_to_rad(CONE_DEG / 2.0)) - 0.0001
+
+
+## The way a waiting foe looks now: its figure's (so a foe that turns, or walks a route, turns its cone), else the way
+## it was set to face.
+static func cone_of(w: Dictionary) -> Vector2:
+	var tok := w["token"] as CombatToken
+	var f := token_facing(tok)
+	return f if f.length() > 0.01 else w.get("facing", Vector2.ZERO) as Vector2
+
+
 ## A fight-free Encounter that only answers who can see whom here now (the fight's own sight rules: walls and closed
 ## doors, the light of the hour, lamps and the lantern, Darkvision): the party (its own combatants, so nothing is
 ## rebound to it) and the waiting foes.
@@ -217,6 +291,7 @@ static func watch(view: LocationView) -> Encounter:
 	for m: Combatant in view.members + view.guest_members:
 		e.combatants.append(m)
 	for w in view.waiting:
+		set_cone(w["foe"] as Combatant, cone_of(w))
 		e.combatants.append(w["foe"] as Combatant)
 	LocationFights._light_the_fight(view, e)
 	return e
@@ -231,27 +306,41 @@ static func _watchers(view: LocationView) -> Array[Combatant]:
 	return out
 
 
-## Whether `foe` notices `who` in encounter `e`: it's up, within NOTICE_FT, sees them with less than Three-Quarters
-## Cover, and either the party isn't sneaking or its passive Perception (5 lower when `who` stands in dim light to it,
-## which Lightly Obscures them) is at least `total`.
+## Whether `foe` notices `who` in encounter `e`: it's up and within NOTICE_FT. Within HEAR_FT it hears them whatever
+## way it faces and whatever the light, unless a wall is between them. Farther off, `who` must be inside its sight cone
+## (if it has one: before a fight), seen with less than Three-Quarters Cover. Either way, a sneaking party is noticed
+## only when its passive Perception is at least `total` (5 lower, for sight, when `who` stands in dim light to it,
+## which Lightly Obscures them).
 static func notices(e: Encounter, foe: Combatant, who: Combatant, sneaking: bool, total: int) -> bool:
 	if not foe.can_act() or who.creature.hp <= 0:
 		return false
-	# Cheapest first: distance, then sight, then the Stealth contest, and cover (the costly trace) last. Creatures
+	var dist := e.distance(foe, who)
+	if dist > NOTICE_FT:
+		return false
+	if dist <= HEAR_FT:
+		if not e.grid.can_see(foe.cell, foe.size_cells, who.cell, who.size_cells):
+			return false   # through a wall or a closed door
+		return not sneaking or passive_score(foe) >= total
+	# Cheapest first: the cone, then sight, then the Stealth contest, and cover (the costly trace) last. Creatures
 	# give at most Half Cover, so only walls and the like are traced.
-	if e.distance(foe, who) > NOTICE_FT or not sees(e, foe, who):
+	if not in_cone(foe, who.cell, who.size_cells) or not sees(e, foe, who):
 		return false
 	if sneaking and passive_perception(e, foe, who) < total:
 		return false
 	return int(e.grid.cover_between(foe.cell, foe.size_cells, who.cell, who.size_cells)["cover"]) < CombatGrid.Cover.THREE_QUARTERS
 
 
+## `foe`'s passive Perception, worked out once and kept on it.
+static func passive_score(foe: Combatant) -> int:
+	if not foe.has_meta("passive_perception"):
+		foe.set_meta("passive_perception", foe.creature.passive_score(&"perception").total())
+	return int(foe.get_meta("passive_perception"))
+
+
 ## `foe`'s passive Perception against `who`: 5 lower when `who` stands in dim light as `foe` sees it (Darkvision
 ## sees darkness as dim light, and dim light as bright).
 static func passive_perception(e: Encounter, foe: Combatant, who: Combatant) -> int:
-	if not foe.has_meta("passive_perception"):
-		foe.set_meta("passive_perception", foe.creature.passive_score(&"perception").total())
-	var score := int(foe.get_meta("passive_perception"))
+	var score := passive_score(foe)
 	var light := e.sight.light_at(who.cell)
 	var dv := foe.creature.darkvision()
 	if dv > 0 and dv >= e.distance(foe, who):
@@ -292,22 +381,32 @@ static func after_step(view: LocationView) -> bool:
 	return false
 
 
-## Who can see you (U10): what a foe in plain view would make of the leader standing on `cell` now ("<foe> would
-## see <name> there"), or "". The lantern goes with them, and a foe asleep (`surprise: enemies`) sees nobody.
+## Who can see you (U10): what a foe in plain view, or (while the party sneaks) anyone standing here, would make of
+## the leader standing on `cell` now ("<who> would see <name> there"), or "". The lantern goes with them, and a foe
+## asleep (`surprise: enemies`) sees nobody.
 static func hover_warning(view: LocationView, cell: Vector2i) -> String:
-	if view.in_combat or view.members.is_empty() or view.waiting.is_empty() or not view.grid.in_bounds(cell):
+	if view.in_combat or view.members.is_empty() or not view.grid.in_bounds(cell):
+		return ""
+	if view.waiting.is_empty() and not view.sneaking:
 		return ""
 	var who := view.leader()
 	var was := who.cell
 	who.cell = cell
 	var e := watch(view)
-	var out := ""
+	var total := total_for(view, who.creature) if view.sneaking else 0
+	var watchers: Array[Combatant] = []
 	for w in view.waiting:
-		if not is_shown(w) or str(LocationFights.spec_for(view, str(w["encounter"])).get("surprise", "")) == "enemies":
-			continue
-		var foe := w["foe"] as Combatant
-		if notices(e, foe, who, view.sneaking, total_for(view, who.creature) if view.sneaking else 0):
-			out = "%s would see %s there" % [foe.name(), who.name().get_slice(" ", 0)]
+		if is_shown(w) and str(LocationFights.spec_for(view, str(w["encounter"])).get("surprise", "")) != "enemies":
+			watchers.append(w["foe"] as Combatant)
+	if view.sneaking:
+		# The people here would see a theft or a trespass (F8).
+		for npc_id: String in LocationCrime.people(view):
+			if not npc_id in view.st.guest_ids:
+				watchers.append(LocationCrime.person(view, npc_id))
+	var out := ""
+	for watcher in watchers:
+		if notices(e, watcher, who, view.sneaking, total):
+			out = "%s would see %s there" % [watcher.name(), who.name().get_slice(" ", 0)]
 			break
 	who.cell = was
 	return out
@@ -345,6 +444,7 @@ static func surprised_at_start(view: LocationView, e: Encounter) -> Array[String
 	var out: Array[String] = []
 	if not view.sneaking or view._foes_alerted:
 		return out
+	_carry_cones(view, e)
 	for c in e.combatants:
 		if c.side == &"enemy" and noticed_by(view, e, c) == null:
 			out.append(c.id)
@@ -356,6 +456,7 @@ static func surprised_at_start(view: LocationView, e: Encounter) -> Array[String
 static func hide_at_start(view: LocationView, e: Encounter) -> void:
 	if not view.sneaking or view._foes_alerted:
 		return
+	_carry_cones(view, e)
 	var seen := {}
 	for foe in e.combatants:
 		if foe.side == &"enemy":
@@ -372,6 +473,20 @@ static func hide_at_start(view: LocationView, e: Encounter) -> void:
 		c.stealth_total = total
 		c.creature.add_condition(&"invisible", "Hidden")
 		e.log.add("info", "%s starts the fight hidden (Stealth %d)" % [c.name(), total], c.id)
+
+
+## The moment a fight opens is still before it: each foe that was waiting in plain view keeps its sight cone for who
+## it noticed (the fight's own rules, with no facing, take over from its first turn). A foe that wasn't in view sees
+## all round.
+static func _carry_cones(view: LocationView, e: Encounter) -> void:
+	for c in e.combatants:
+		if c.side != &"enemy" or c.has_meta("watch_facing"):
+			continue
+		for w in view.waiting:
+			var foe := w["foe"] as Combatant
+			if foe.cell == c.cell and foe.creature.name == c.creature.name:
+				set_cone(c, cone_of(w))
+				break
 
 
 ## The fight is over: nobody stays hidden out of it (the Invisible condition Hide gave ends).

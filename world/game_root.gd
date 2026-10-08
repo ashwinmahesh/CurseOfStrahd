@@ -436,11 +436,18 @@ func _dialogue_ended(combat: String) -> void:
 
 
 func _open_loot(container_id: String, items: Array, gold: float) -> void:
+	# Taking from something someone owns is stealing, if anybody sees (F8, LocationCrime).
+	var worth := Crime.value_of(items, gold)
+	if view != null:
+		LocationCrime.opened(view, container_id)
 	loot = LootWindow.new()
 	add_child(loot)
 	loot.closed.connect(func() -> void:
+		var taken := worth - Crime.value_of(loot.items, loot.gold)
 		loot = null
-		_refresh())
+		_refresh()
+		if view != null:
+			LocationCrime.after_loot(view, container_id, taken))
 	loot.show_loot(st, container_id, items, gold, view)
 
 

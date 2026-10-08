@@ -1,0 +1,60 @@
+# Krezk's watch answers a crime somebody saw inside the wall (F8 and F2's town watch; docs/rules/stealth.md,
+# docs/voice/krezk_guard.md). story/crime.gd counts the offence in crime_krezk and stages a Krezk Watchman beside the
+# party, then plays theft or trespass. Every way out clears the count: a fine, a word that works, or a fight.
+
+~ theft
+Krezk Watchman [angry]: That's far enough. Put it back. We let you in, and this is how you thank us? Krezk is a village. Everybody saw.
+-> charge
+
+~ trespass
+Krezk Watchman [angry]: You were told that house isn't yours. In Krezk we knock, and we leave when we're asked.
+-> charge
+
+~ charge
+if flag.crime_krezk >= 2
+Krezk Watchman: Twice now. Twenty-five gold for the people you took from, or out of the gate, and you can explain yourselves to the wolves.
+else
+Krezk Watchman: Ten gold, for the trouble. The burgomaster would want more. I'm not the burgomaster.
+endif
+* [if flag.crime_krezk < 2 and gold >= 10] Pay the ten gold. -> pay_small
+* [if flag.crime_krezk >= 2 and gold >= 25] Pay the twenty-five gold. -> pay_large
+* [if flag.crime_krezk < 2 and gold < 10] We haven't got ten gold. -> empty_purse
+* [if flag.crime_krezk >= 2 and gold < 25] We haven't got twenty-five gold. -> empty_purse
+* [Persuasion DC 15] We meant no harm. It won't happen again. -> let_off | not_buying
+* [Intimidation DC 17] You're one man with a spear. Walk away. -> let_off | not_buying
+* Refuse. -> refuse
+
+~ not_buying
+Krezk Watchman: No. I know everyone in Krezk by their cough, and none of them would believe that either.
+* [if flag.crime_krezk < 2 and gold >= 10] Pay the ten gold. -> pay_small
+* [if flag.crime_krezk >= 2 and gold >= 25] Pay the twenty-five gold. -> pay_large
+* [if flag.crime_krezk < 2 and gold < 10] We haven't got ten gold. -> empty_purse
+* [if flag.crime_krezk >= 2 and gold < 25] We haven't got twenty-five gold. -> empty_purse
+* Refuse. -> refuse
+
+~ pay_small
+gold -10
+set crime_krezk = 0
+Krezk Watchman: Good. That's done, then. Don't make me do it again; I've got sheep.
+-> END
+
+~ pay_large
+gold -25
+set crime_krezk = 0
+Krezk Watchman: Paid. Next time it's the gate, and the gate doesn't take coin.
+-> END
+
+~ empty_purse
+gold -25
+set crime_krezk = 0
+Krezk Watchman: Then whatever's in your purse. Out with it. All of it. Shelter's for Krezk, and so is that, now.
+-> END
+
+~ let_off
+set crime_krezk = 0
+Krezk Watchman: Fine. Go. And if the Abbot asks, I never saw you. I'd rather he didn't ask.
+-> END
+
+~ refuse
+Krezk Watchman [angry]: Then I'll do it the hard way. Up on the wall! To me!
+combat watch_arrest

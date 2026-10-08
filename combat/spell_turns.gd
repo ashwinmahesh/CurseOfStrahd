@@ -85,7 +85,9 @@ func _turn_start_effects(c: Combatant) -> void:
 				e.log.add("heal", "%s gains %d Temporary Hit Points (%s)" % [c.name(), amount, fx.name], c.id)
 
 
-func turn_end(c: Combatant) -> void:
+## The end of `c`'s turn for spells: areas it ends in, the high-level spells' hooks, repeated saves (which can stop for
+## the choices after each roll, so the rest waits on Encounter.then), sustained spells, Blink.
+func turn_end(c: Combatant) -> CombatResult:
 	var spells := sp()
 	var e := enc()
 	spells.zones.turn_end(c)
@@ -93,7 +95,14 @@ func turn_end(c: Combatant) -> void:
 	spells.specials.high.prism_turn_end(c)
 	spells.specials.high.tick_suppressed(c.id, false)
 	spells.specials.turn_end(c)
-	spells.saves._repeat_saves(c, "end")
+	return e.then(spells.saves._repeat_saves(c, "end", true), func() -> CombatResult:
+		_after_repeat_saves(c)
+		return CombatResult.new())
+
+
+func _after_repeat_saves(c: Combatant) -> void:
+	var spells := sp()
+	var e := enc()
 	spells.sustain._sustained_turn_end(c)
 	if c.creature.has_flag("blink") and c.can_act():
 		var roll := int(e.dice.roll(6, 1, "Blink")[0])
