@@ -496,36 +496,53 @@ func before_d20(c: Combatant, kind: D20Test.Kind, keys: Array[String]) -> Array[
 	return out
 
 
-## A failed D20 Test: a Ring of Evasion turns a failed Dex save into a success; a Luck Blade rerolls a failure once a
-## day (used automatically, like the game's other mid-roll choices; deviations.md).
+## A failed D20 Test: a Ring of Evasion turns a failed Dex save into a success (a Reaction and a charge); a Luck Blade
+## rerolls a failure once a day. Settled now by each item's rule (tests and rolls that can't pause).
 func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
-	fr.after_d20(c, t, keys)
+	var out: Array = []
+	d20_offers(c, t, keys, out)
+	enc().d20.run_now(out)
+
+
+## The same as offers (D20Responses), after the Faerûn items' (FaerunItems.d20_offers).
+func d20_offers(c: Combatant, t: D20Test, keys: Array[String], out: Array) -> void:
+	fr.d20_offers(c, t, keys, out)
 	var e := enc()
 	var ch := ch_of(c)
-	if ch == null or t.success or t.target <= 0:
+	if ch == null or t.target <= 0:
 		return
-	if t.kind == D20Test.Kind.SAVING_THROW and "save:dex" in keys and e.spells.can_react(c) and str(c.reaction_rules.get("ring_of_evasion", "auto")) != "never":
+	if t.kind == D20Test.Kind.SAVING_THROW and "save:dex" in keys:
 		for it in items().active(c):
-			if str(it["id"]) == "ring_of_evasion" and int((it["entry"] as Dictionary).get("charges", 0)) > 0:
-				(it["entry"] as Dictionary)["charges"] = int((it["entry"] as Dictionary)["charges"]) - 1
-				c.reaction_available = false
-				t.add_bonus(maxi(0, t.target - t.total), "Ring of Evasion")
-				e.log.add("reaction", "%s's Ring of Evasion turns the failed save into a success" % c.name(), c.id)
-				return
+			if str(it["id"]) != "ring_of_evasion":
+				continue
+			var entry := it["entry"] as Dictionary
+			out.append({"kind": "ring_of_evasion", "reactor": c, "title": "Reaction: Ring of Evasion?",
+				"text": func() -> String: return "%s. Spend a charge to succeed instead?" % D20Responses.line(c, t),
+				"cost": func() -> String: return "Reaction and a charge (%d left)" % int(entry.get("charges", 0)),
+				"still": func() -> bool: return not t.success and int(entry.get("charges", 0)) > 0 and e.spells.can_react(c),
+				"use": func() -> void:
+					entry["charges"] = int(entry["charges"]) - 1
+					c.reaction_available = false
+					t.add_bonus(maxi(0, t.target - t.total), "Ring of Evasion")
+					e.log.add("reaction", "%s's Ring of Evasion turns the failed save into a success" % c.name(), c.id)})
+			break
 	for it2 in items().carried(c):
 		var d := it2["data"] as Dictionary
 		if str(d.get("template_id", "")) != "luck_blade" or not str(it2["id"]) in ch.attuned:
 			continue
-		var entry := it2["entry"] as Dictionary
-		if int((entry.get("uses", {}) as Dictionary).get("luck", 0)) >= 1 or str(c.reaction_rules.get("luck_blade", "auto")) == "never":
-			continue
-		if not entry.has("uses"):
-			entry["uses"] = {}
-		(entry["uses"] as Dictionary)["luck"] = 1
-		var before := t.describe()
-		t.set_natural(e.dice.d20("Luck Blade"), "Luck Blade")
-		e.log.add("info", "%s calls on the Luck Blade's luck and rerolls" % c.name(), c.id, [before, t.describe()])
-		return
+		var blade := it2["entry"] as Dictionary
+		out.append({"kind": "luck_blade", "reactor": c, "title": "Luck Blade?",
+			"text": func() -> String: return "%s. Call on the Luck Blade's luck to reroll it (once a day)?" % D20Responses.line(c, t),
+			"cost": "The Luck Blade's reroll (once a day)", "spends_reaction": false,
+			"still": func() -> bool: return not t.success and int((blade.get("uses", {}) as Dictionary).get("luck", 0)) < 1,
+			"helps": func() -> bool: return D20Responses.could_reach(t),
+			"use": func() -> void:
+				if not blade.has("uses"):
+					blade["uses"] = {}
+				(blade["uses"] as Dictionary)["luck"] = 1
+				var before := t.describe()
+				t.reroll(e.dice, "Luck Blade", false, c.creature.has_flag("luck"))
+				e.log.add("info", "%s calls on the Luck Blade's luck and rerolls" % c.name(), c.id, [before, t.describe()])})
 
 
 # --- Turns -----------------------------------------------------------------------------------------

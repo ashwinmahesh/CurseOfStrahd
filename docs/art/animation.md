@@ -100,6 +100,23 @@ VRAM-compressed without mipmaps (`tools/art/set_import.py --sheets`; the crisp s
 `make keys [ONLY="id ..."] [KINDS="walk8 ..."]` renders them (`make anims` leaves the heroes alone);
 `tools/art/preview/hd_compare.tscn` shows sheets side by side at any zoom.
 
+**Everyone else in HD (owner 2026-10-07: "lets do it").** `tools/art/hd_turnarounds.py` asks Gemini to redraw each
+character's turnaround at 2K, then `blender/hd_colour.py` gives the redraw the original's colours and rejects it (to
+be drawn again) if the views, their sizes or the picture itself differ. The colours are matched region by region
+(each area between the redraw's ink lines shifts by the median difference from the original under it), so a garment
+Gemini recoloured gets its colour back and no line moves. The cut-out is decided against the original's and stored
+as the redraw's alpha (the renderers use it as it is): Gemini's 2K backgrounds are often a faint lavender, and a pale
+area inside a figure (Godrick's sun, a ghost's robe) would otherwise be taken for a hole and drawn see-through. (The first match added a blurred difference, which left soft halos round the figures;
+`blender/hd_restore.py` recovered the raw redraws from it.) Redraws still need a look by eye: a few changed a design
+(a skull made solid, text on an apron, an added helmet) and were drawn again or dropped. Characters without an
+`_hd.png` (the elephant, the will-o'-wisp, the air elemental, the saber-toothed tiger and the djinni, which Gemini
+won't draw) keep their original art at 384 px, packed the same way. `render_walk.py` and `render_attack.py` cut
+the HD turnaround when there is one: 768 px cells rendered at twice the size, frames trimmed and packed, mirror-image
+directions shown flipped, exactly as the heroes' sheets. The attack's wind-up and strike still come from the 1K
+strips, which are drawn at about the size they're shown. Packing alone makes a walk sheet several times smaller (the
+villager's went from 9.4 to 1.2 megapixels at 384 px), so HD sheets end up about the size of the old grids. The title
+screen's travellers, drawn some 20 times smaller, average their sheet through `shaders/ui/sprite_small.gdshader`.
+
 In game, `DirectionalSprite.frames_for` merges every sheet a sprite folder has (walk, attack, hurt, ride, sneak,
 cast) and picks the loop from its `pose`: "" (on foot), "sneak", "ride" or "down". `CombatToken` sets the pose from
 the fight (riding when `Encounter.mount_of` has a mount, crouched when hidden or when the party sneaks while

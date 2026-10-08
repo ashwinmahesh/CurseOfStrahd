@@ -98,9 +98,10 @@
         "id": "banneret_shared_resilience",
         "name": "Shared Resilience",
         "summary": "Reaction when a visible ally within 60 feet fails a save: spend Indomitable to let the ally reroll with a bonus equal to your Fighter level; it must keep the new roll.",
-        "text": "When an ally you can see within 60 feet fails a saving throw, you can take a Reaction and spend a use of Indomitable to let it reroll with a bonus equal to your Fighter level; it must use the new roll. In a fight it's off until you set it to Automatic in the class tab.",
+        "text": "When an ally you can see within 60 feet fails a saving throw, you can take a Reaction and spend a use of Indomitable to let it reroll with a bonus equal to your Fighter level; it must use the new roll. In a fight you're asked when it could save the roll, unless the class tab sets it to Automatic or Off.",
         "implemented": "engine",
-        "policy": "never",
+        "policy": "ask",
+        "policy_modes": ["ask", "auto", "never"],
         "policy_cost": "Your Reaction and a use of Indomitable"
       }
     },

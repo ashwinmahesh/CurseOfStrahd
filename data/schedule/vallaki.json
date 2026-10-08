@@ -1,0 +1,39 @@
+{
+  "id": "vallaki",
+  "region": "vallaki",
+  "summary": "Vallaki on the Baron's clock: the herald's call before the festival, the watch's arrests for too little cheer, and the evening release from the stocks.",
+  "events": [
+    {
+      "id": "vallaki_herald_call",
+      "summary": "The herald rings the festival in, an hour before noon, once the party knows who's who in town.",
+      "hour": 11,
+      "location": "vallaki",
+      "when": "flag.vallaki_arrived and not flag.festival_begun and (flag.baron_met or flag.lady_wachter_met or flag.lucian_met)",
+      "narration": "A handbell clangs across the square, and the herald's voice after it: \"The Festival of the Blazing Sun! Noon, by order of the Baron! Faces cheerful, please!\""
+    },
+    {
+      "id": "vallaki_arrest",
+      "summary": "Every third morning while the Baron rules, the watch puts someone in the stocks for not being happy enough.",
+      "hour": 8,
+      "every_days": 3,
+      "first_day": 2,
+      "location": "vallaki",
+      "when": "flag.vallaki_arrived and (not flag.festival_over or flag.vallaki_backed == \"baron\")",
+      "set": {
+        "vallaki_stocks_grumbler": true
+      },
+      "narration": "A drum, then boots on the cobbles. Two of the Baron's watchmen march a man in a patched coat to the stocks and lock him in by the neck. His crime, the sergeant tells the street, is insufficient cheer."
+    },
+    {
+      "id": "vallaki_release",
+      "summary": "At the evening bell the watch lets the day's grumbler out.",
+      "hour": 20,
+      "location": "vallaki",
+      "when": "flag.vallaki_stocks_grumbler",
+      "set": {
+        "vallaki_stocks_grumbler": false
+      },
+      "narration": "The evening bell. A watchman unlocks the stocks without a word, and the man in the patched coat limps home, rubbing his neck and smiling very hard."
+    }
+  ]
+}
