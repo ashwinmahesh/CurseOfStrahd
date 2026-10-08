@@ -11,7 +11,13 @@ extends CanvasLayer
 const ICON := 26
 const LAYER := 118
 
+## What the pad does in the world when no screen is in front (exploring: PadExplore; fights): [place, text] pairs.
+static var world: Array = []
+
 var _bar: HBoxContainer
+var _plate: PanelContainer
+## How far the bar stands above the bottom edge over the world, clear of the HUD's command bar.
+const WORLD_RAISE := 78.0
 var _key := ""
 
 
@@ -24,6 +30,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	var plate := PanelContainer.new()
+	_plate = plate
 	plate.name = "Plate"
 	plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	plate.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_MINSIZE, 12)
@@ -85,9 +92,19 @@ static func _has_marked(root: Node, key: StringName) -> bool:
 func _process(_delta: float) -> void:
 	var nav := PadNav.current
 	var scope := nav.scope if nav != null and nav.pad else null
+	# Over the world (or a HUD's own buttons) the bar stands above the command bar; over a screen, in the corner.
+	var raised := scope == null or scope is CanvasLayer and (scope as CanvasLayer).layer < PadNav.LAYER_MIN
+	_plate.offset_bottom = -12.0 - (WORLD_RAISE if raised else 0.0)
+	_plate.offset_top = _plate.offset_bottom - _plate.get_combined_minimum_size().y
 	if scope == null:
-		visible = false
-		_key = ""
+		var shown := nav != null and nav.pad and not world.is_empty() and nav.popup_open() == null
+		visible = shown
+		var wkey := "world:%s:%s" % [str(world), PadGlyphs.family()]
+		if shown and wkey != _key:
+			_key = wkey
+			show_prompts(world)
+		elif not shown:
+			_key = ""
 		return
 	var focus := get_viewport().gui_get_focus_owner()
 	var key := "%d:%d:%s" % [scope.get_instance_id(), focus.get_instance_id() if focus != null else 0, PadGlyphs.family()]
