@@ -9,6 +9,11 @@ extends Control
 var view: LocationView
 var signs: Array[Dictionary] = []
 var _time := 0.0
+## The HUD's panels showing now (the Narrator's box, the last roll, the command bar): a plaque that would sit on one
+## is lifted above it, since the panels are see-through and a plaque read through them muddles both (ExploreHud sets it).
+var keep_clear: Array[Rect2] = []
+## Where each plaque was drawn last, for tests.
+var plaque_rects: Array[Rect2] = []
 
 
 func _init() -> void:
@@ -64,6 +69,7 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	plaque_rects.clear()
 	if view == null or not is_instance_valid(view) or view.rig == null or view.in_combat:
 		return
 	var cam := view.rig.camera
@@ -183,7 +189,7 @@ func _plaque(cam: Camera3D, e: Dictionary, at: Vector3, out_dir: Vector3, glow: 
 	var r := Rect2()
 	if on_screen:
 		var shown := p.clamp(screen.position + Vector2(box.x / 2.0 + 12.0, box.y + 12.0), screen.end - Vector2(box.x / 2.0 + 12.0, 12.0))
-		r = Rect2(shown - Vector2(box.x / 2.0, box.y), box)
+		r = _clear_of_panels(Rect2(shown - Vector2(box.x / 2.0, box.y), box))
 		# The arrow points the way out as the camera sees it (down at the square for a way out inside the map).
 		var ahead := cam.unproject_position(at + out_dir) - p
 		d = ahead.normalized() if out_dir != Vector3.ZERO and ahead.length() > 0.01 else Vector2.DOWN
@@ -191,7 +197,8 @@ func _plaque(cam: Camera3D, e: Dictionary, at: Vector3, out_dir: Vector3, glow: 
 		draw_line(Vector2(shown.x, r.end.y), cam.unproject_position(at - Vector3(0, 1.6, 0)), Color(glow, 0.6), 1.5, true)
 	else:
 		d = (p - screen.get_center()).normalized() if not behind else _toward(Vector2(at.x, at.z))
-		r = Rect2(_edge_spot(d, box) - box / 2.0, box)
+		r = _clear_of_panels(Rect2(_edge_spot(d, box) - box / 2.0, box))
+	plaque_rects.append(r)
 	draw_rect(r.grow(2.0), Color(Look.color("void"), 0.45), true)
 	draw_rect(r, Color(Look.color("ui_black"), 0.9 if on_screen else 0.8), true)
 	draw_rect(r, glow, false, 1.5)
@@ -203,6 +210,15 @@ func _plaque(cam: Camera3D, e: Dictionary, at: Vector3, out_dir: Vector3, glow: 
 	var c := r.position + Vector2(16, box.y / 2.0)
 	draw_colored_polygon(PackedVector2Array([c + d * 8.0, c - d * 6.0 + d.orthogonal() * 6.0, c - d * 3.0,
 		c - d * 6.0 - d.orthogonal() * 6.0]), glow)
+
+
+## A plaque's box lifted above any HUD panel it would sit on (keep_clear), never off the top of the screen.
+func _clear_of_panels(r: Rect2) -> Rect2:
+	for _pass in 2:   # lifted off one panel onto another (the roll above the Narrator's box) moves again
+		for panel in keep_clear:
+			if r.intersects(panel.grow(4.0)):
+				r.position.y = maxf(12.0, panel.position.y - 8.0 - r.size.y)
+	return r
 
 
 ## The screen direction of a ground point from where the camera looks (works behind the camera too).
