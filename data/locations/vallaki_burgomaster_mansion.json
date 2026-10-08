@@ -358,7 +358,8 @@
           "qty": 1
         }
       ],
-      "flag": "baron_strongbox_opened"
+      "flag": "baron_strongbox_opened",
+      "owner": "baron_vargas"
     },
     {
       "id": "attic_trunk",
@@ -378,7 +379,8 @@
           "qty": 4
         }
       ],
-      "gold": 3
+      "gold": 3,
+      "owner": "baron_vargas"
     },
     {
       "id": "izek_doll_chest",
@@ -389,7 +391,8 @@
       "label": "Izek's chest",
       "model": "chest",
       "items": [],
-      "gold": 0
+      "gold": 0,
+      "owner": "izek"
     }
   ],
   "traps": [

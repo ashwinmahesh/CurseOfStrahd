@@ -170,9 +170,9 @@
       "library": true
     },
     "ilinca_vrana": {
-      "voice_id": "RM2Tz70cwPazALBxFh0g",
-      "name": "Barovia ilinca_vrana",
-      "description": "A brisk woman of seventy with a dry, quick, no-nonsense voice and a strong, clearly audible Eastern European (Romanian) accent. A village midwife: short sentences, unsentimental, wry, calls people 'dear' while giving orders.",
+      "voice_id": "LJylQFwR903OigY5UG7p",
+      "name": "Barovia Ilinca Vrana (2026-10-07)",
+      "description": "An old Eastern European village midwife, about seventy, with a thick Romanian accent in her English. A low, warm, weathered voice with a dry crackle; practical, sharp-tongued and kind underneath, no time for fools.",
       "settings": {},
       "model": "eleven_v3",
       "released": true

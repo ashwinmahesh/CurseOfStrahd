@@ -1,0 +1,10 @@
+# Krezk's townsfolk inside the wall (lane 4, F2): Stefan the woodcutter walking firewood from the pile to the houses.
+# He walks his route (the location's `path`) and stops when someone comes up to him.
+
+~ woodcutter
+if flag.ilya_fate == "healed"
+Stefan the Woodcutter [smile]: Ilya's up and about. Took a cord of wood off me this morning to prove it. You did that, I hear. Thank you.
+-> END
+endif
+Stefan the Woodcutter: The Burgomaster let you in, so I'll say good day. Wood for the winter. It's always winter for the wood.
+-> END
