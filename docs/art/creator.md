@@ -22,8 +22,10 @@ darker lime shading and normal black ink lines. Edits of that figure keep the fi
 | Portrait | the usual bust portrait (art/prompts/portrait.txt), then `make portrait` | 10 |
 
 `tools/art/creator_art.py --generate` draws whatever is missing in that order; `--process` (or `make creator`)
-cuts the pieces. Art lives in `art/generated/creator/` (sources) and `art/creator/pieces/` (what the game reads;
-hidden from Godot's importer by a `.gdignore`, which would compress the keys away).
+cuts the pieces. Art lives in `art/generated/creator/` (sources) and `art/creator/pieces/` (what the game reads). Each
+piece PNG has an `.import` set to "Keep File (exported as is)" (`importer="keep"`): the importer would compress the
+keys away, and a `.gdignore` (the old way) left the pieces out of exported builds. A new piece needs the same `.import`
+(`git add -f`, since `*.import` is ignored).
 
 ## Cutting the pieces (blender/creator_pieces.py, blender/lib/creator.py)
 
