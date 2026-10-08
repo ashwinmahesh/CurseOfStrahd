@@ -3,13 +3,22 @@ extends Node
 ## party frames with their resources and conditions at three interface sizes (U4, U9), a conversation at the normal
 ## and the largest text size (U4), and the journal's Bestiary (U8). The party is the level 9 one from the Amber Temple
 ## golden save, read straight from tests/saves (nothing is written to the player's saves), and the settings this run
-## changes go to a file of its own, removed at the end.
+## changes go to a file of its own, removed at the end. Last, the party in a fight: what's working on each of them as
+## icons on the combat HUD's frames too.
 ## make capture SCENE=res://tools/capture/settings_capture.tscn NAME=settings/shot FRAMES=10
 
 const SAVE := "res://tests/saves/v2_amber_temple.json"
 const SETTINGS := "user://capture_settings.cfg"
 
 var root: Node
+
+## A room for the fight shot (not saved anywhere: the Compendium only holds it for this run).
+const WARD := {
+	"id": "capture_ward", "name": "Capture Ward", "region": "test", "summary": "A capture fixture.",
+	"map": {"rows": ["############", "#..........#", "#..........#", "#..........#", "#..........#", "############"], "light": "dim"},
+	"spawns": {"default": [2, 2]},
+	"encounters": [{"id": "rats", "trigger": "manual", "monsters": [{"monster": "rat", "cell": [9, 3]}, {"monster": "rat", "cell": [9, 4]}]}],
+}
 
 
 func _ready() -> void:
@@ -27,6 +36,13 @@ func _ready() -> void:
 		break
 	st.party[3].concentration = Concentration.new(st.party[3], "bless", "Bless")
 	st.party[3].hp = int(st.party[3].max_hp() * 0.4)
+	# Abilities switched on and spells on them, for the effect icons.
+	st.party[0].add_effect(Effect.new("Rage", &"feature", "rage").lasting_rounds(9))
+	st.party[0].add_effect(Effect.new("Bless", &"spell", "bless").lasting_rounds(7))
+	st.party[2].add_effect(Effect.new("Vow of Enmity", &"feature", "vow_of_enmity").lasting_rounds(10))
+	st.party[2].add_effect(Effect.new("Sacred Weapon", &"feature", "sacred_weapon").lasting_rounds(10))
+	st.party[3].add_effect(Effect.new("Bladesong", &"feature", "bladesong").lasting_rounds(10))
+	st.party[3].add_effect(Effect.new("Mage Armor", &"spell", "mage_armor"))
 	# A bestiary as a party at the Amber Temple might have it (U8).
 	var n := 0
 	for m: Array in [["wolf", 1, 3, true], ["zombie", 1, 5, false], ["strahd_zombie", 2, 2, false],
@@ -94,4 +110,10 @@ func capture_shots(tool: Node, out: String) -> void:
 	j.call("_draw")
 	await _shoot(tool, "%s_bestiary_felled.png" % out)
 	root.call("close_screen")
+	# The same party in a fight: the effect icons on the combat HUD's frames.
+	Compendium.shared().tables["locations"]["capture_ward"] = WARD.duplicate(true)
+	root.call("enter_location", "capture_ward", "default")
+	await tool.call("wait_frames", 20)
+	(root.get("view") as LocationView).start_encounter("rats")
+	await _shoot(tool, "%s_combat_effects.png" % out, 90)
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(SETTINGS))
