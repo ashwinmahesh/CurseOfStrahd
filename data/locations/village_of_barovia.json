@@ -9,12 +9,12 @@
       "########################################",
       "##..########..#.####.###.#....#######..#",
       "##=.########.=#.####.###.#.=.=#######=.#",
-      "##..########..#.####.###.#....#######..#",
+      "##.=########..#.####.###.#=...#######..#",
       "##..########..#.####.....#.=..#######=.#",
-      "##..########..#..........#.............#",
+      "##.=########=.#..........#=............#",
       "##............#.###..==..#.=...~.....=.#",
-      "##=~........~=#.###......#...=...=.=...#",
-      "##............#..........#.............#",
+      "##=~........~=#.###......#...=...=.==..#",
+      "##............#..........#............=#",
       "########.######..........###.###########",
       "#......................................#",
       "#...~~............................~~...#",
@@ -30,10 +30,10 @@
       "######.........########.#####.#........#",
       "######..#####..########.#####.#=.......#",
       "######..#####..########.#####.#........#",
+      "######..#####.~.......=.#####.#..#######",
       "######..#####.~.........#####.#..#######",
-      "######..#####.~.........#####.#..#######",
-      "######..#####...######..#####.#~~#######",
-      "######..#####...######.~......#~~#######",
+      "######..#####..=######..#####.#~~#######",
+      "######..#####.=.######.~.=....#~~#######",
       "#...............######........#~~#######",
       "########################################"
     ],
@@ -573,6 +573,142 @@
       "label": "a grave dug up and filled in again",
       "model": "rubble",
       "item": "wand_of_secrets"
+    },
+    {
+      "id": "back_lane_fence_1",
+      "cell": [
+        15,
+        26
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "back_lane_fence_2",
+      "cell": [
+        14,
+        27
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "back_lane_fence_3",
+      "cell": [
+        25,
+        27
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "east"
+    },
+    {
+      "id": "back_lane_rain_barrel",
+      "cell": [
+        22,
+        24
+      ],
+      "kind": "examine",
+      "label": "A rain barrel",
+      "model": "barrel"
+    },
+    {
+      "id": "mansion_dead_hedge_1",
+      "cell": [
+        3,
+        3
+      ],
+      "kind": "decor",
+      "model": "bramble_a"
+    },
+    {
+      "id": "mansion_dead_hedge_2",
+      "cell": [
+        3,
+        5
+      ],
+      "kind": "decor",
+      "model": "bramble_b"
+    },
+    {
+      "id": "mansion_dead_hedge_3",
+      "cell": [
+        12,
+        5
+      ],
+      "kind": "decor",
+      "model": "bramble_a"
+    },
+    {
+      "id": "churchyard_grave_1",
+      "cell": [
+        26,
+        3
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "churchyard_grave_2",
+      "cell": [
+        26,
+        5
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "churchyard_grave_3",
+      "cell": [
+        28,
+        5
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "churchyard_grave_4",
+      "cell": [
+        36,
+        7
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "churchyard_grave_5",
+      "cell": [
+        38,
+        8
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "rain_barrel_oil",
+      "cell": [
+        23,
+        24
+      ],
+      "kind": "search",
+      "label": "Something kept dry behind the rain barrel",
+      "model": "satchel",
+      "search_dc": 12,
+      "item": "oil"
+    },
+    {
+      "id": "lychgate_holy_water",
+      "cell": [
+        26,
+        8
+      ],
+      "kind": "search",
+      "label": "A crack in the lych-gate post",
+      "model": "satchel",
+      "search_dc": 14,
+      "item": "holy_water"
     }
   ],
   "lights": [
@@ -722,6 +858,45 @@
         17
       ],
       "when": "not weather == storm"
+    },
+    {
+      "npc": "barovia_woodcutter",
+      "cell": [
+        6,
+        11
+      ],
+      "dialogue": "village_of_barovia/townsfolk:woodcutter",
+      "facing": "east",
+      "path": [
+        [
+          13,
+          13,
+          3
+        ],
+        [
+          6,
+          11,
+          3
+        ]
+      ],
+      "hours": [
+        8,
+        17
+      ],
+      "when": "not weather == storm"
+    },
+    {
+      "npc": "barovia_widow",
+      "cell": [
+        27,
+        7
+      ],
+      "dialogue": "village_of_barovia/townsfolk:widow",
+      "facing": "north",
+      "hours": [
+        9,
+        16
+      ]
     }
   ],
   "encounters": [

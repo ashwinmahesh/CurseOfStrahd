@@ -52,6 +52,8 @@ static func build(parent: Node, board: ArenaBoard, mood: Dictionary, outdoors: b
 				w._crows(spec)
 			"chimney_smoke":
 				w._chimney_smoke()
+			"smoke":
+				w._smoke_at(spec)
 			"window_light":
 				w._window_light()
 			"embers":
@@ -288,36 +290,52 @@ func _chimney_smoke() -> void:
 			if mi == null or not (mi.mesh is BoxMesh) or absf((mi.mesh as BoxMesh).size.x - 0.38) > 0.01:
 				continue
 			var top := mi.position + Vector3(0, (mi.mesh as BoxMesh).size.y / 2.0, 0)
-			var p := GPUParticles3D.new()
-			p.name = "ChimneySmoke"
-			p.amount = 7
-			p.lifetime = 4.5
-			p.preprocess = 4.5
-			p.local_coords = false
-			p.visibility_aabb = AABB(Vector3(-4, -1, -4), Vector3(8, 8, 8))
-			p.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-			var pm := ParticleProcessMaterial.new()
-			pm.direction = Vector3(0, 1, 0)
-			pm.spread = 12.0
-			pm.initial_velocity_min = 0.35
-			pm.initial_velocity_max = 0.55
-			pm.gravity = Vector3(_wind.x * 0.35, 0.04, _wind.y * 0.35)
-			pm.damping_min = 0.05
-			pm.damping_max = 0.1
-			pm.scale_min = 0.8
-			pm.scale_max = 1.15
-			pm.scale_curve = _swell_curve()
-			p.process_material = pm
-			var quad := QuadMesh.new()
-			quad.size = Vector2(0.8, 0.8)
-			var mat := ShaderMaterial.new()
-			mat.shader = SMOKE_SHADER
-			mat.set_shader_parameter("light_tone", Look.color("silver"))
-			mat.set_shader_parameter("dark_tone", Look.color("pewter"))
-			quad.material = mat
-			p.draw_pass_1 = quad
-			p.position = top
-			upper.add_child(p)
+			upper.add_child(_plume(top, "ChimneySmoke"))
+
+
+## Smoke rising from fixed points (a mood's weather {"kind": "smoke", "at": [[x, y, z], ...]}, world units): Old
+## Bonegrinder's pipe, a camp's cookfire. Lane 28, 2026-10-08.
+func _smoke_at(spec: Dictionary) -> void:
+	if _board == null:
+		return
+	for a: Variant in spec.get("at", []):
+		var at := a as Array
+		if at.size() == 3:
+			_board.add_child(_plume(Vector3(float(at[0]), float(at[1]), float(at[2])), "Smoke"))
+
+
+## One plume of smoke drifting up on the wind from `top`.
+func _plume(top: Vector3, name_: String) -> GPUParticles3D:
+	var p := GPUParticles3D.new()
+	p.name = name_
+	p.amount = 7
+	p.lifetime = 4.5
+	p.preprocess = 4.5
+	p.local_coords = false
+	p.visibility_aabb = AABB(Vector3(-4, -1, -4), Vector3(8, 8, 8))
+	p.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var pm := ParticleProcessMaterial.new()
+	pm.direction = Vector3(0, 1, 0)
+	pm.spread = 12.0
+	pm.initial_velocity_min = 0.35
+	pm.initial_velocity_max = 0.55
+	pm.gravity = Vector3(_wind.x * 0.35, 0.04, _wind.y * 0.35)
+	pm.damping_min = 0.05
+	pm.damping_max = 0.1
+	pm.scale_min = 0.8
+	pm.scale_max = 1.15
+	pm.scale_curve = _swell_curve()
+	p.process_material = pm
+	var quad := QuadMesh.new()
+	quad.size = Vector2(0.8, 0.8)
+	var mat := ShaderMaterial.new()
+	mat.shader = SMOKE_SHADER
+	mat.set_shader_parameter("light_tone", Look.color("silver"))
+	mat.set_shader_parameter("dark_tone", Look.color("pewter"))
+	quad.material = mat
+	p.draw_pass_1 = quad
+	p.position = top
+	return p
 
 
 static func _swell_curve() -> CurveTexture:

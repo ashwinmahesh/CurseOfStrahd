@@ -625,7 +625,7 @@
     "indoor_default": "door_wood"
   },
   "floors": {
-    "old_bonegrinder_hill": "village/grass",
+    "old_bonegrinder_hill": "mountain/scree",
     "wizard_of_wines": "village/grass",
     "argynvostholt": "village/grass",
     "abbey_of_st_markovia": "church/stone_flags"

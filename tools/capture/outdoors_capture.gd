@@ -4,7 +4,8 @@ extends Node3D
 ## objects and triangles (and, with OUTDOORS_TIME=1, its frame time uncapped). Not part of the game.
 ##   make capture SCENE=res://tools/capture/outdoors_capture.tscn NAME=outdoors/before FRAMES=10
 ## Environment: OUTDOORS_SHOTS=tser_road,tser_tent (default: every shot), OUTDOORS_TIME=1, OUTDOORS_LOCS=krezk,berez
-## (instead: each place from its arrival, near and far, to check it against its descriptions).
+## (instead: each place from its arrival, near and far, to check it against its descriptions), OUTDOORS_WEATHER=overcast
+## (the same weather everywhere, so a fog day doesn't hide the place).
 
 ## Each shot: the place, the hour, where the leader stands (the others beside them), the camera's distance, its
 ## quarter turns and how far it tilts toward the horizon (CameraRig.horizon, 0 to 1).
@@ -68,6 +69,11 @@ func capture_shots(tool: Node, out: String) -> void:
 
 
 func _build(shot: Dictionary) -> void:
+	if OS.get_environment("OUTDOORS_WEATHER") != "":
+		var d := Weather.data().duplicate(true)
+		for c: String in d["climates"]:
+			d["climates"][c] = {OS.get_environment("OUTDOORS_WEATHER"): 1}
+		Weather.use(d)
 	if view != null:
 		view.queue_free()
 		view = null

@@ -3,7 +3,7 @@ extends TestCase
 ## and known weather, the land around an outdoor map leaves its ways out open and stays off the map, nothing the
 ## atmosphere adds is a square's piece for HiddenAreas, and the time of day changes the light.
 
-const WEATHER := ["leaves", "rain", "snow", "wisps", "dust", "crows", "chimney_smoke", "window_light", "embers"]
+const WEATHER := ["leaves", "rain", "snow", "wisps", "dust", "crows", "chimney_smoke", "window_light", "embers", "smoke"]
 
 
 func before_each() -> void:

@@ -1,5 +1,6 @@
 # The Village of Barovia's few people out by day (lane 4, F2): Goodwife Petra carrying water from the well. She walks
-# her route (the location's `path`) and is indoors long before dark.
+# her route (the location's `path`) and is indoors long before dark. Lane 28 (2026-10-08) added Grigore hauling his
+# firewood in from the west road and Widow Ileana at her husband's grave.
 
 ~ goodwife
 if flag.burgomaster_buried
@@ -12,4 +13,28 @@ Goodwife Petra [afraid]: Strangers. Don't stand so close to the well. Folk will 
 
 ~ poison
 Goodwife Petra: Nobody. That's the point. There's nothing left here worth the trouble. Only the water, and the walk to it, and being home before the light goes.
+-> END
+
+~ woodcutter
+Grigore: Out of the road, out of the road. This load won't carry itself, and the light won't wait for it.
+* Why the hurry? -> woodcutter_hurry
+* Sorry. -> END
+
+~ woodcutter_hurry
+Grigore: The trees by the west road, you cut what you need by noon and you go. After noon they're not the same trees. Ask anyone who stayed to cut a bit more.
+Grigore: Nobody? No. That's my point.
+-> END
+
+~ widow
+if flag.burgomaster_buried
+Widow Ileana: The burgomaster has a proper grave now, over there. My Teodor will be glad of the company. He never liked him, mind.
+-> END
+endif
+Widow Ileana: I'm telling him the news. There's never any news. He doesn't mind; he was always a good listener, and now he's a better one.
+* Who was he? -> widow_who
+* We'll leave you to it. -> END
+
+~ widow_who
+Widow Ileana: Teodor. A cooper. He went to fetch a barrel from the crossroads one evening and came back the next morning, quite well, only very pale and very polite. Father Donavich made me shut the door on him.
+Widow Ileana: I did. I still don't know if I was right.
 -> END
