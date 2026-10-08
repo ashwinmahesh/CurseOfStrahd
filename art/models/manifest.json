@@ -6494,6 +6494,115 @@
         "glow_flame"
       ],
       "triangles": 1236
+    },
+    "reading_table": {
+      "file": "art/models/reading_table.glb",
+      "mount": "free",
+      "stands_for": [
+        "reading_table",
+        "reading_table_back"
+      ],
+      "size": [
+        0.972,
+        0.584,
+        0.961
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_blood",
+        "pal_blood_deep",
+        "pal_candle",
+        "pal_crimson",
+        "pal_ivory",
+        "pal_skin",
+        "pal_tan",
+        "pal_umber",
+        "pal_vellum"
+      ],
+      "triangles": 1930,
+      "sockets": {
+        "candle_0": [
+          -0.28,
+          0.556,
+          -0.15
+        ],
+        "candle_1": [
+          0.29,
+          0.516,
+          0.11
+        ],
+        "candle_2": [
+          -0.22,
+          0.536,
+          0.25
+        ]
+      }
+    },
+    "cushions": {
+      "file": "art/models/cushions.glb",
+      "mount": "free",
+      "stands_for": [
+        "cushions",
+        "cushions_back"
+      ],
+      "size": [
+        0.667,
+        0.42,
+        0.579
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_candle",
+        "pal_crimson",
+        "pal_plum"
+      ],
+      "triangles": 1224
+    },
+    "lantern_stand": {
+      "file": "art/models/lantern_stand.glb",
+      "mount": "free",
+      "stands_for": [
+        "lantern_stand"
+      ],
+      "size": [
+        0.477,
+        1.41,
+        0.275
+      ],
+      "materials": [
+        "glow_candle",
+        "pal_ink",
+        "pal_stone",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 504,
+      "sockets": {
+        "candle": [
+          0.24,
+          1.08,
+          0
+        ]
+      }
+    },
+    "incense_burner": {
+      "file": "art/models/incense_burner.glb",
+      "mount": "free",
+      "stands_for": [
+        "incense_burner"
+      ],
+      "size": [
+        0.25,
+        0.511,
+        0.265
+      ],
+      "materials": [
+        "glow_ember",
+        "pal_candle",
+        "pal_ink",
+        "pal_tan"
+      ],
+      "triangles": 570
     }
   }
 }

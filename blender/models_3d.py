@@ -3987,6 +3987,141 @@ def roof_hatch(p):
         p.box((0.36, 0.03, 0.03), (0, 0.2, -0.05 - k * 0.15), "pal_umber")
 
 
+# --- Interiors: Madam Eva's tent (docs/art/interiors.md) --------------------------------------------------------
+
+def _skirt(p, r_top, r_foot, h, folds, depth, mat, z0=0.0, segs=48):
+    """A cloth falling from a round top (radius r_top at z0 + h) to the floor (r_foot at z0), in `folds` folds that
+    deepen toward the hem (`depth` at the foot), with the top closed: a tablecloth over a round table."""
+    t = bmesh.new()
+    rows = 6
+    rings = []
+    for j in range(rows + 1):
+        v = j / rows                       # 0 at the top, 1 at the hem
+        z = z0 + h * (1.0 - v) if j > 0 else z0 + h
+        ring = []
+        for k in range(segs):
+            a = 2 * math.pi * k / segs
+            r = r_top + (r_foot - r_top) * (v ** 0.8) + depth * (v ** 1.4) * math.sin(a * folds)
+            ring.append(t.verts.new((r * math.cos(a), r * math.sin(a), z)))
+        rings.append(ring)
+    for lo, hi in zip(rings[1:], rings):
+        for k in range(segs):
+            t.faces.new([lo[k], lo[(k + 1) % segs], hi[(k + 1) % segs], hi[k]])
+    t.faces.new(list(reversed(rings[0])))
+    bmesh.ops.recalc_face_normals(t, faces=t.faces)
+    p._append(t, mat, True)
+
+
+def _candle(p, at, h, wax="pal_ivory", drip="pal_vellum"):
+    """A tallow candle `h` tall on `at`, dripping, lit."""
+    x, y, z = at
+    p.cyl(0.026, 0.008, (x, y, z), "pal_tan", segs=12)
+    p.cyl(0.018, h, (x, y, z + 0.008), wax, segs=10)
+    for k in range(3):
+        a = math.radians(40 + k * 125)
+        p.box((0.008, 0.008, h * (0.3 + 0.15 * k)), (x + 0.018 * math.cos(a), y + 0.018 * math.sin(a), z + h - h * (0.15 + 0.075 * k)),
+              drip, soft=0.003, segs=1)
+    p.lathe([(0.0, 0.0), (0.009, 0.008), (0.011, 0.02), (0.006, 0.034), (0.0, 0.046)], (x, y, z + h + 0.012), "glow_flame",
+            segs=8)
+
+
+def _card(p, at, yaw, face_up=False):
+    """A Tarokka card lying on the cloth (drawn larger than life so it reads from the camera): a dark red back with a
+    gilt border and diamond, or face up, a figure in a gilt frame."""
+    x, y, z = at
+    W, L = 0.075, 0.115
+    p.box((W, L, 0.004), (x, y, z + 0.002), "pal_tan", rot=(0, 0, yaw))
+    m = Matrix.Translation((x, y, z)) @ _rot((0, 0, yaw))
+    if face_up:
+        p.box((W - 0.012, L - 0.012, 0.004), tuple(m @ Vector((0, 0, 0.003))), "pal_vellum", rot=(0, 0, yaw))
+        p.box((0.022, 0.05, 0.004), tuple(m @ Vector((0, -0.006, 0.0045))), "pal_crimson", rot=(0, 0, yaw))
+        p.box((0.016, 0.016, 0.004), tuple(m @ Vector((0, 0.03, 0.0045))), "pal_skin", rot=(0, 0, yaw))
+    else:
+        p.box((W - 0.012, L - 0.012, 0.004), tuple(m @ Vector((0, 0, 0.003))), "pal_blood_deep", rot=(0, 0, yaw))
+        p.box((0.03, 0.03, 0.004), tuple(m @ Vector((0, 0, 0.0045))), "pal_candle", rot=(0, 0, yaw + 45))
+
+
+@model("reading_table", "free", ["reading_table", "reading_table_back"])
+def reading_table(p):
+    """Madam Eva's low round table, as in her reading (art/cutscenes/madam_eva_reading.jpg): a deep red cloth to the
+    floor, the five cards of a reading laid in a cross with the deck beside them, and three dripping candles."""
+    R, H = 0.41, 0.38
+    p.cyl(R - 0.02, 0.03, (0, 0, H - 0.03), "pal_umber", segs=32, smooth=False)   # the board under the cloth's top
+    _skirt(p, R, R + 0.06, H, 9, 0.022, "pal_blood")   # (it stays inside its square)
+    p.cyl(R + 0.004, 0.006, (0, 0, H), "pal_blood", segs=48)
+    top = H + 0.006
+    # The reading: a card above, below, left and right of the middle one, the querent's side toward the front (-Y).
+    for (cx, cy), up in (((0.0, 0.0), False), ((0.0, 0.14), False), ((-0.12, 0.0), False), ((0.12, 0.0), False),
+                         ((0.0, -0.15), True)):
+        _card(p, (cx, cy, top), p.rng.uniform(-6, 6), face_up=up)
+    p.box((0.075, 0.115, 0.03), (0.25, 0.13, top + 0.015), "pal_blood_deep", rot=(0, 0, 20))   # the deck
+    p.box((0.079, 0.119, 0.004), (0.25, 0.13, top + 0.032), "pal_tan", rot=(0, 0, 20))
+    for k, (cx, cy, h) in enumerate(((-0.28, 0.15, 0.14), (0.29, -0.11, 0.1), (-0.22, -0.25, 0.12))):
+        _candle(p, (cx, cy, top), h)
+        p.socket("candle_%d" % k, (cx, cy, top + h + 0.03))
+
+
+@model("cushions", "free", ["cushions", "cushions_back"])
+def cushions(p):
+    """Floor cushions for those who come to have their cards read: three, heaped, in velvets of the tent's reds and
+    violets, with gold tassels at their corners."""
+    heap = (((0.64, 0.54, 0.16), (0.0, 0.0, 0.08), 4, "pal_blood"),
+            ((0.52, 0.46, 0.15), (0.04, -0.03, 0.22), -10, "pal_plum"),
+            ((0.4, 0.36, 0.14), (-0.05, 0.03, 0.35), 16, "pal_crimson"))
+    for size, at, yaw, col in heap:
+        p.box(size, at, col, rot=(0, 0, yaw), soft=0.068, segs=4)
+        m = Matrix.Translation(at) @ _rot((0, 0, yaw))
+        for sx in (-1, 1):
+            for sy in (-1, 1):
+                corner = m @ Vector((sx * (size[0] / 2 - 0.02), sy * (size[1] / 2 - 0.02), 0.0))
+                p.lathe([(0.0, 0.0), (0.016, 0.004), (0.01, 0.03), (0.0, 0.036)], (corner.x, corner.y, corner.z - 0.035),
+                        "pal_candle", segs=6)
+        p.box((size[0] * 0.92, 0.012, 0.012), tuple(m @ Vector((0, -size[1] / 2 + 0.02, size[2] / 2 - 0.01))), "pal_candle",
+              rot=(0, 0, yaw))
+
+
+@model("lantern_stand", "free", ["lantern_stand"])
+def lantern_stand(p):
+    """A brass lantern hanging from an iron crook on three feet, candlelight behind its glass (the reading's lantern)."""
+    iron = "pal_ink"
+    for k in range(3):
+        a = math.radians(90 + k * 120)
+        c, s = math.cos(a), math.sin(a)
+        p.tube([(0.015 * c, 0.015 * s, 0.12), (0.12 * c, 0.12 * s, 0.04), (0.17 * c, 0.17 * s, 0.0)], 0.014, iron)
+    p.cyl(0.016, 1.3, (0, 0, 0.04), iron, segs=8)
+    p.tube(curve((0.0, 0.0, 1.3), (0.02, 0.0, 1.42), (0.2, 0.0, 1.38), n=10), 0.013, iron)
+    p.tube(curve((0.2, 0.0, 1.38), (0.25, 0.0, 1.36), (0.24, 0.0, 1.3), n=6), 0.011, iron)
+    for k in range(3):
+        p.cyl(0.006, 0.035, (0.24, 0.0, 1.27 - k * 0.04), "pal_stone", segs=6)     # the chain's links
+    x, z0, w, h = 0.24, 0.98, 0.13, 0.17
+    p.box((w + 0.03, w + 0.03, 0.025), (x, 0, z0), "pal_tan")
+    p.box((w - 0.02, w - 0.02, h - 0.02), (x, 0, z0 + 0.0125 + h / 2), "glow_candle")
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((0.016, 0.016, h), (x + sx * w / 2, sy * w / 2, z0 + 0.0125 + h / 2), "pal_umber")
+    p.cyl(w * 0.78, 0.07, (x, 0, z0 + h + 0.0125), "pal_tan", r2=0.012, segs=4, rot=(0, 0, 45), smooth=False)
+    p.cyl(0.02, 0.025, (x, 0, z0 + h + 0.08), "pal_tan", segs=8)
+    p.socket("candle", (x, 0, z0 + 0.1))
+
+
+@model("incense_burner", "free", ["incense_burner"])
+def incense_burner(p):
+    """A brass censer on three legs with coals glowing under its pierced, domed lid: the tent is thick with incense."""
+    for k in range(3):
+        a = math.radians(90 + k * 120)
+        c, s = math.cos(a), math.sin(a)
+        p.tube([(0.07 * c, 0.07 * s, 0.32), (0.13 * c, 0.13 * s, 0.16), (0.12 * c, 0.12 * s, 0.0)], 0.012, "pal_ink")
+    p.lathe([(0.0, 0.26), (0.09, 0.27), (0.12, 0.31), (0.125, 0.35), (0.11, 0.36), (0.0, 0.36)], (0, 0, 0), "pal_tan",
+            segs=16)
+    p.cyl(0.1, 0.012, (0, 0, 0.355), "glow_ember", segs=16)
+    p.lathe([(0.11, 0.0), (0.105, 0.03), (0.08, 0.075), (0.04, 0.1), (0.02, 0.11), (0.0, 0.11)], (0, 0, 0.36), "pal_candle",
+            segs=16)
+    p.lathe([(0.0, 0.0), (0.015, 0.005), (0.012, 0.03), (0.0, 0.04)], (0, 0, 0.47), "pal_candle", segs=8)
+    for k in range(8):
+        a = 2 * math.pi * k / 8
+        p.box((0.022, 0.006, 0.022), (0.09 * math.cos(a), 0.09 * math.sin(a), 0.405), "glow_ember", rot=(0, 0, math.degrees(a) + 90))
+
+
 # --- Export and preview ----------------------------------------------------------------------------------------
 
 def bounds(ob):

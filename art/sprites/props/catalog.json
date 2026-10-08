@@ -418,10 +418,10 @@
       "crate"
     ],
     "tent": [
-      "crate",
-      "barrel",
-      "table",
-      "crate"
+      "cushions",
+      "trunk",
+      "cushions",
+      "chest_painted"
     ],
     "dungeon": [
       "boulder",
@@ -1183,7 +1183,11 @@
     "stone_font": 3.5,
     "throne": 6,
     "cauldron": 3.5,
-    "bat_perch": 6
+    "bat_perch": 6,
+    "reading_table": 2.9,
+    "cushions": 2.1,
+    "lantern_stand": 7.25,
+    "incense_burner": 2.55
   },
   "big_width": 1.6,
   "models3d": {
@@ -1502,7 +1506,13 @@
       "great_doors": "great_doors",
       "drawbridge": "drawbridge",
       "roof_hatch": "roof_hatch",
-      "gold_spill": "gold_spill"
+      "gold_spill": "gold_spill",
+      "reading_table": "reading_table",
+      "reading_table_back": "reading_table",
+      "cushions": "cushions",
+      "cushions_back": "cushions",
+      "lantern_stand": "lantern_stand",
+      "incense_burner": "incense_burner"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",
@@ -1582,7 +1592,8 @@
         "house": "timber",
         "inn": "timber",
         "manor": "manor",
-        "townhouse": "manor"
+        "townhouse": "manor",
+        "tent": "tent"
       },
       "full_walls": true,
       "ground": {
@@ -1590,7 +1601,8 @@
         "timber": "village/cobbles",
         "church": "village/grass",
         "castle": "castle/courtyard",
-        "amber": "mountain/snow"
+        "amber": "mountain/snow",
+        "tent": "village/grass"
       },
       "outside": {
         "death_house_ground": {

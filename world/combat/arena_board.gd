@@ -69,7 +69,7 @@ func _surface_theme() -> String:
 		return "village"
 	if theme in ["inn"]:
 		return "tavern"
-	if theme in ["house", "tent"]:
+	if theme == "house":
 		return "townhouse"
 	if theme == "town":
 		return "vallaki"
@@ -481,7 +481,7 @@ func wall_material() -> Material:
 	if _wall_tex != null and theme not in WILD:
 		return _wall_tex
 	var colour := {"manor": "umber", "tavern": "walnut", "shop": "walnut", "townhouse": "umber", "church": "slate",
-		"attic": "peat", "dungeon": "stone_deep"}.get(theme, "walnut") as String
+		"attic": "peat", "dungeon": "stone_deep", "tent": "bruise"}.get(theme, "walnut") as String
 	return Look.cel(colour)
 
 
@@ -530,7 +530,7 @@ func _wall(c: Vector2i) -> void:
 	if theme in INTERIORS or theme == "dungeon":
 		# Cut-away walls (low enough to see over from the camera), capped with a darker band.
 		var colour := {"manor": "umber", "tavern": "walnut", "shop": "walnut", "townhouse": "umber", "church": "slate",
-			"attic": "peat"}.get(theme, "stone_deep") as String
+			"attic": "peat", "tent": "bruise"}.get(theme, "stone_deep") as String
 		var h := 1.15
 		var room_wall := _wall_room(c)
 		var wall_mat: Material = room_wall["wall"] as Material if room_wall.has("wall") else (_wall_tex if _wall_tex != null else Look.cel(colour))

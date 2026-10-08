@@ -5068,6 +5068,68 @@
       "mount": "stand",
       "source": "art/generated/props/sheet_pair_coffin_plinth_statue_young_strahd.png",
       "slot": 3
+    },
+    "reading_table": {
+      "file": "art/sprites/props/reading_table.png",
+      "width_px": 516,
+      "height_px": 420,
+      "world_height": 0.58,
+      "pixel_size": 0.0014,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_reading_table.png",
+      "mount": "stand",
+      "back": "reading_table_back"
+    },
+    "reading_table_back": {
+      "file": "art/sprites/props/reading_table_back.png",
+      "width_px": 516,
+      "height_px": 480,
+      "world_height": 0.58,
+      "pixel_size": 0.00122,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_reading_table_back.png",
+      "mount": "stand"
+    },
+    "cushions": {
+      "file": "art/sprites/props/cushions.png",
+      "width_px": 516,
+      "height_px": 412,
+      "world_height": 0.43,
+      "pixel_size": 0.00106,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_cushions.png",
+      "mount": "stand",
+      "back": "cushions_back"
+    },
+    "cushions_back": {
+      "file": "art/sprites/props/cushions_back.png",
+      "width_px": 516,
+      "height_px": 424,
+      "world_height": 0.43,
+      "pixel_size": 0.00103,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_cushions_back.png",
+      "mount": "stand"
+    },
+    "lantern_stand": {
+      "file": "art/sprites/props/lantern_stand.png",
+      "width_px": 164,
+      "height_px": 516,
+      "world_height": 1.45,
+      "pixel_size": 0.00283,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_lantern_stand.png",
+      "mount": "stand"
+    },
+    "incense_burner": {
+      "file": "art/sprites/props/incense_burner.png",
+      "width_px": 276,
+      "height_px": 516,
+      "world_height": 0.51,
+      "pixel_size": 0.001,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_incense_burner.png",
+      "mount": "stand"
     }
   }
 }

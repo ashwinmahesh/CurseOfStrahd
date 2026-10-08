@@ -16,7 +16,7 @@
       "#...........#",
       "#############"
     ],
-    "theme": "tavern",
+    "theme": "tent",
     "light": "dim"
   },
   "areas": [
@@ -63,7 +63,7 @@
       ],
       "kind": "examine",
       "label": "The reading table",
-      "model": "table_round"
+      "model": "reading_table"
     },
     {
       "id": "eva_chest",
@@ -73,7 +73,7 @@
       ],
       "kind": "examine",
       "label": "An iron-bound chest",
-      "model": "chest"
+      "model": "chest_iron"
     },
     {
       "id": "tent_charms",
@@ -94,26 +94,85 @@
       "kind": "decor",
       "label": "A brazier",
       "model": "brazier"
+    },
+    {
+      "id": "querent_cushions_west",
+      "cell": [
+        5,
+        3
+      ],
+      "kind": "decor",
+      "label": "Floor cushions",
+      "model": "cushions"
+    },
+    {
+      "id": "querent_cushions_east",
+      "cell": [
+        7,
+        3
+      ],
+      "kind": "decor",
+      "label": "Floor cushions",
+      "model": "cushions"
+    },
+    {
+      "id": "tent_incense",
+      "cell": [
+        4,
+        1
+      ],
+      "kind": "decor",
+      "label": "A brass censer",
+      "model": "incense_burner"
+    },
+    {
+      "id": "tent_lantern_east",
+      "cell": [
+        9,
+        2
+      ],
+      "kind": "decor",
+      "label": "A hanging lantern",
+      "model": "lantern_stand"
+    },
+    {
+      "id": "tent_lantern_west",
+      "cell": [
+        3,
+        7
+      ],
+      "kind": "decor",
+      "label": "A hanging lantern",
+      "model": "lantern_stand"
     }
   ],
   "lights": [
     {
       "cell": [
-        4,
+        6,
         3
       ],
       "kind": "candle",
       "bright_ft": 5,
-      "dim_ft": 10
+      "dim_ft": 15
     },
     {
       "cell": [
-        8,
-        3
+        9,
+        2
       ],
-      "kind": "candle",
-      "bright_ft": 5,
-      "dim_ft": 10
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        3,
+        7
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
     },
     {
       "cell": [
@@ -149,7 +208,7 @@
         1
       ],
       "label": "Madam Eva's painted chest",
-      "model": "chest",
+      "model": "chest_painted",
       "items": [],
       "gold": 0
     }

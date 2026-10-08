@@ -12,7 +12,7 @@ extends RefCounted
 
 const CUT := ModelPiece.CUT_TOP
 ## How tall a room's walls stand, by interior style (BuildingKit.interior_style); a place can set its own.
-const HEIGHTS := {"castle": 3.0, "church": 2.8, "amber": 3.0, "dungeon": 2.4, "manor": 2.5, "timber": 2.3}
+const HEIGHTS := {"castle": 3.0, "church": 2.8, "amber": 3.0, "dungeon": 2.4, "manor": 2.5, "timber": 2.3, "tent": 2.4}
 ## A storey, for an upper floor's drop to the ground outside.
 const STOREY := 2.5
 ## How far the outside ground reaches past the map.
@@ -25,14 +25,17 @@ const NEAR := 7.0
 
 
 ## Builds wall square `c` (wall material `wall_mat`, as ArenaBoard picked it): a pillar, a room wall (a full and a cut
-## version), a solid block, or outside ground. False where W8 isn't on for this board (its walls stay as before).
+## version), a solid block, or outside ground; a tent's canvas (TentWalls). False where W8 isn't on for this board
+## (its walls stay as before).
 static func build(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> bool:
 	var st := _state(board)
-	if st.is_empty():
-		return false
-	if (st["outside"] as Dictionary).has(c):
+	if not st.is_empty() and (st["outside"] as Dictionary).has(c):
 		_outside(board, c, st)
 		return true
+	if TentWalls.is_tent(board):
+		return TentWalls.build(board, c, wall_mat, st)   # canvas, not walls (in Classic too, at the cut-away height)
+	if st.is_empty():
+		return false
 	if _open_faces(board, c).is_empty():
 		_block(board, c, wall_mat, st)
 		return true
