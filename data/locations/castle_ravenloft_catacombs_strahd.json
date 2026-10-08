@@ -181,6 +181,10 @@
         {
           "id": "candle",
           "qty": 3
+        },
+        {
+          "id": "potion_of_healing_supreme",
+          "qty": 2
         }
       ],
       "gold": 150

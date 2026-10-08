@@ -408,6 +408,18 @@
       "kind": "examine",
       "label": "An arrow-slit window",
       "model": "window_shuttered"
+    },
+    {
+      "id": "cauldron_wand",
+      "cell": [
+        6,
+        15
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "something in the cauldron's ashes",
+      "model": "soot_patch",
+      "item": "wand_of_fear"
     }
   ],
   "containers": [

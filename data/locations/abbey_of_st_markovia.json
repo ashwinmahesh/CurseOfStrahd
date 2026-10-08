@@ -270,6 +270,18 @@
       "kind": "examine",
       "label": "The barred windows of the wards",
       "model": "shutters"
+    },
+    {
+      "id": "bell_chime",
+      "cell": [
+        12,
+        14
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "a little chime hung inside the great bell",
+      "model": "gold_spill",
+      "item": "chime_of_opening"
     }
   ],
   "containers": [

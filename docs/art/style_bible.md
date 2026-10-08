@@ -21,7 +21,8 @@ silhouettes, and a small saturated palette in the spirit of *Castlevania: Sympho
   On walk sheets the grey-ramp rule applies only inside mostly grey areas, so thin warm lines on skin stay warm
   (docs/art/p4_cast_art_pass.md). `make sprites` re-renders every sheet with it.
 - Character sprites are the exception (owner, 2026-10-06: they read blurry and grainy through the pass): their
-  sheets are rendered at 384 px cells, mipmapped, and drawn after the pass at full screen resolution. They keep the
+  sheets are rendered at 384 px cells, imported without mipmaps (the crisp shader below supersamples the full sheet
+  instead), and drawn after the pass at full screen resolution. They keep the
   palette because the pipeline already quantized them.
 - In game every character sprite draws through `shaders/world/sprite_crisp.gdshader` (owner 2026-10-07: "crisp
   lines and high definition"): a 4x4 grid of samples across each screen pixel on the full sheet (sharp without the

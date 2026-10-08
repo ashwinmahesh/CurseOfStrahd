@@ -65,6 +65,11 @@
       "id": "crg_turret_guard_broken",
       "type": "bool",
       "summary": "The animated armour guarding the east turret post is destroyed (crg_turret_guard)."
+    },
+    {
+      "id": "crg_dining_chandelier_down",
+      "type": "bool",
+      "summary": "The great chandelier over the castle's dining table was brought down in a fight (BattleScenery); it stays down."
     }
   ]
 }

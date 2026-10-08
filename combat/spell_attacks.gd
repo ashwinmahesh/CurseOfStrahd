@@ -223,6 +223,8 @@ func _secondary(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	var rolled := spells.damage._roll_spell_damage(sub, null, false)
 	sub["shared_damage"] = rolled
 	spells._save_spell(sub, victims, r)
+	# The battlefield's objects in the burst (EncounterObjects): its damage, and fire.
+	e.objects.area_spell(sub, cells, rolled, [], bool(sec.get("ignites_objects", false)))
 	if not objects.is_empty():
 		for obj in objects:
 			r.damage += spells.deal_spell_damage(sub, obj, [{"amount": int(rolled["total"]), "type": spells._damage_type(sub)}], false, str(s["name"]), [str(rolled["text"])]).final
@@ -242,7 +244,7 @@ func _orb_leap(ctx: Dictionary, last: Combatant, rolled: Dictionary, r: CombatRe
 	var next: Combatant = null
 	var best := 1 << 30
 	for o in e.hostiles_of(c):
-		if o.id in hitlist or o.is_down() or e.grid.distance_ft(last.cell, last.size_cells, o.cell, o.size_cells) > 30:
+		if o.id in hitlist or o.is_down() or e.distance(last, o) > 30:
 			continue
 		var d := e.distance(c, o)
 		if d < best:

@@ -217,6 +217,19 @@
       "kind": "decor",
       "label": "Bench",
       "model": "chair"
+    },
+    {
+      "id": "eldest_bed_box",
+      "cell": [
+        2,
+        1
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "skill": "investigation",
+      "label": "a box under the eldest son's bed",
+      "model": "jewel_box",
+      "item": "ioun_stone_awareness"
     }
   ],
   "containers": [

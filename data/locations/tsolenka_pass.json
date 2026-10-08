@@ -303,6 +303,18 @@
       "kind": "examine",
       "label": "A cold brazier",
       "model": "brazier"
+    },
+    {
+      "id": "roc_dropped_wings",
+      "cell": [
+        30,
+        19
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "a traveller the roc dropped",
+      "model": "bone_scatter",
+      "item": "wings_of_flying"
     }
   ],
   "containers": [
@@ -325,6 +337,10 @@
         },
         {
           "id": "potion_of_healing",
+          "qty": 1
+        },
+        {
+          "id": "weapon_plus_2__greatsword",
           "qty": 1
         }
       ],

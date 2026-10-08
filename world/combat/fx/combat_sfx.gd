@@ -28,10 +28,34 @@ static func data() -> Dictionary:
 ## A spell or ability's effect begins (`cue` from SpellFx): its family's sound, or the plain spell sound for a family
 ## with none.
 static func cast(cue: Dictionary) -> void:
-	if not (data().get("families", {}) as Dictionary).has(str(cue.get("family", ""))):
+	if not (data().get("families", {}) as Dictionary).has(str(cue.get("family", ""))) and not own(str(cue.get("key", ""))).has("cast"):
 		Audio.sfx("spell")
 		return
 	_play(cue, "cast")
+
+
+## A class ability switched on that has no effect of its own to show (Bladesong, Vow of Enmity): its own sound, if it
+## has one. True when one played.
+static func feature(key: String) -> bool:
+	var ids := _list(own(key).get("cast", []))
+	for id in ids:
+		sound(id)
+	return not ids.is_empty()
+
+
+## A hero starts concentrating on a spell (`started`), or a blow breaks it.
+static func concentration(started: bool) -> void:
+	for id in _list((data().get("concentration", {}) as Dictionary).get("start" if started else "break", [])):
+		sound(id)
+
+
+## A spell's, feature's or monster action's own sounds (`keys`): its id's, else its kind's for an id with a choice in
+## it ("wild_shape:wolf" plays wild_shape's).
+static func own(key: String) -> Dictionary:
+	var keys := data().get("keys", {}) as Dictionary
+	if keys.has(key):
+		return keys[key] as Dictionary
+	return keys.get(key.get_slice(":", 0), {}) as Dictionary
 
 
 ## A missile leaves the caster's hand (a bolt, ray or beam; an arrow).
@@ -52,18 +76,29 @@ static func arrive(cue: Dictionary) -> void:
 ## The effects one moment of `cue` plays: its spell's or ability's own (`keys`), else its family's, with "@" entries
 ## taken from its flavour.
 static func ids_for(cue: Dictionary, moment: String) -> Array[String]:
-	var own := (data().get("keys", {}) as Dictionary).get(str(cue.get("key", "")), {}) as Dictionary
+	var mine := own(str(cue.get("key", "")))
 	var fam := (data().get("families", {}) as Dictionary).get(str(cue.get("family", "")), {}) as Dictionary
 	var flavour := (data().get("flavours", {}) as Dictionary).get(str(cue.get("flavour", "")), {}) as Dictionary
 	var out: Array[String] = []
-	for id in _list(own.get(moment, fam.get(moment, []))):
+	for id in _list(mine.get(moment, fam.get(moment, []))):
 		out.append_array(_list(flavour.get(id.substr(1), "")) if id.begins_with("@") else [id] as Array[String])
 	return out
 
 
 static func _play(cue: Dictionary, moment: String) -> void:
 	for id in ids_for(cue, moment):
+		sound(id)
+
+
+## One effect: "<id>", or "<id>@<seconds>" to come in a moment after the others (a roar after the change of shape).
+static func sound(entry: String) -> void:
+	var id := entry.get_slice("@", 0)
+	var after := float(entry.get_slice("@", 1)) if entry.contains("@") else 0.0
+	var tree := Engine.get_main_loop() as SceneTree
+	if after <= 0.0 or tree == null:
 		Audio.sfx(id)
+		return
+	tree.create_timer(after).timeout.connect(func() -> void: Audio.sfx(id))
 
 
 # --- Blows --------------------------------------------------------------------------------------------

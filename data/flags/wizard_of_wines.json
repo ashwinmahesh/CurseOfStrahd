@@ -290,6 +290,11 @@
       "id": "davian_pledged",
       "type": "bool",
       "summary": "The party promised Davian to clear the winery (davian:pledge); the Wizard of Wines scene returns to his main menu after that."
+    },
+    {
+      "id": "stefania_gift_given",
+      "type": "bool",
+      "summary": "Stefania gave the party her grandmother's Periapt of Wound Closure once the winery was reclaimed (stefania: kitchen_back, docs/story/found_magic_items.md)."
     }
   ]
 }

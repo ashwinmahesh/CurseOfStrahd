@@ -497,8 +497,8 @@ func _light(ctx: Dictionary, t: Combatant, params: Dictionary) -> void:
 
 # --- Spells with handlers of their own (SpellHandlers) --------------------------------------------
 
-func _command(ctx: Dictionary, t: Combatant, word: String, r: CombatResult) -> void:
-	handlers._command(ctx, t, word, r)
+func _command(ctx: Dictionary, t: Combatant, word: String, r: CombatResult, pausable: bool = false) -> CombatResult:
+	return handlers._command(ctx, t, word, r, pausable)
 
 
 func end_sanctuary(t: Combatant, why: String) -> void:
@@ -617,8 +617,8 @@ func _room_for(cell: Vector2i, size: int) -> bool:
 
 # --- Turn and damage hooks (SpellTurns) -----------------------------------------------------------
 
-func turn_start(c: Combatant) -> void:
-	turn_hooks.turn_start(c)
+func turn_start(c: Combatant) -> CombatResult:
+	return turn_hooks.turn_start(c)
 
 
 func _turn_start_effects(c: Combatant) -> void:

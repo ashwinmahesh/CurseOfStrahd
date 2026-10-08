@@ -230,6 +230,43 @@
       "kind": "examine",
       "label": "A cairn of bones",
       "model": "cairn"
+    },
+    {
+      "id": "cairn_bracers",
+      "cell": [
+        23,
+        12
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "something under the bone cairn",
+      "model": "bone_scatter",
+      "item": "bracers_of_archery"
+    },
+    {
+      "id": "cage_floor_sword",
+      "cell": [
+        7,
+        14
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "a sword under the cage floor",
+      "model": "bone_scatter",
+      "item": "sword_of_life_stealing__longsword"
+    },
+    {
+      "id": "gully_cache",
+      "cell": [
+        2,
+        23
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "skill": "investigation",
+      "label": "a druid's cache in the gully",
+      "model": "satchel",
+      "item": "wand_of_paralysis"
     }
   ],
   "containers": [
@@ -243,7 +280,7 @@
       "model": "chest",
       "items": [
         {
-          "id": "greataxe",
+          "id": "berserker_axe__greataxe",
           "qty": 1
         },
         {

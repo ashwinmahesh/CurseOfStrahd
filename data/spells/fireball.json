@@ -47,6 +47,7 @@
   "tags": [
     "damage"
   ],
+  "ignites_objects": true,
   "summary": "20-foot-radius explosion: Dexterity save, 8d6 Fire damage, half on a success.",
   "text": "A bright streak flies from you to a point within 150 feet and explodes into flame. Each creature in a 20-foot-radius Sphere centered on that point makes a Dexterity saving throw, taking 8d6 Fire damage on a failure or half as much on a success. Flammable objects in the area that nobody is wearing or carrying catch fire. Using a Higher-Level Spell Slot: the damage increases by 1d6 for each slot level above 3."
 }

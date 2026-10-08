@@ -19,7 +19,9 @@ all of it under "System Data", and du counts clones in full, so neither shows wh
       --godot, the files in .godot/imported too. The worktree's files read exactly as before, so git and Godot see no
       change; then its index is refreshed (the LFS filter, and again without it as make lfs-quiet does). The main
       checkout is only read. --godot refuses while a Godot process runs in the worktree, since an import there could
-      be rewriting the cache. A file that changes while it runs is left alone.
+      be rewriting the cache. A file that changes while it runs is left alone. It refuses the play copy
+      (CurseOfStrahdGame-play, which only tools/play/play.sh changes), any locked worktree, and a worktree on another
+      volume (an external drive), where clones can't reach.
 
 Stdlib only; macOS (getattrlist, clonefile).
 """
@@ -246,6 +248,12 @@ def reshare_file(src: str, dst: str, min_bytes: int, dry_run: bool) -> tuple[str
 def reshare(main: Path, target: Path, with_godot: bool, dry_run: bool, min_kb: int) -> None:
     if target == main:
         raise SystemExit("disk: that's the main checkout, the source of the clones; run this in a worktree")
+    # The play copy is the owner's, changed only by tools/play/play.sh; a locked worktree is one someone set aside.
+    gitdir = Path(git(target, "rev-parse", "--path-format=absolute", "--git-dir").strip())
+    if target.name == "CurseOfStrahdGame-play" or (gitdir / "locked").exists():
+        raise SystemExit(f"disk: {target} is the play copy or a locked worktree; reshare leaves it alone")
+    if os.stat(target).st_dev != os.stat(main).st_dev:
+        raise SystemExit(f"disk: {target} is on another volume than the main checkout, and clones can't cross volumes")
     if with_godot:
         busy = godot_running_in(target)
         if busy:

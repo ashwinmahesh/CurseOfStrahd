@@ -22,6 +22,7 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | Standard actions, hiding, effects' actions (escape, douse, wake), Haste's action | `encounter_actions.gd` (`actions`) |
 | Things lying on the battlefield: dropped and thrown weapons, picking them up, gathering them after the fight | `ground_items.gd` (`ground`) |
 | Taking back a move | `encounter_undo.gd` (`undo`) |
+| Things standing on the battlefield that break and burn (doors, furniture, chandeliers, a spider's web), oil and fire on the floor; doors, shoving, pushing over and throwing them, fire spreading and barrels bursting | `encounter_objects.gd` (`objects`), with `object_actions.gd` (`objects.actions`) and `object_fire.gd` (`objects.fire`) |
 | Casting: paying, checking targets, resolving the recipe | `spell_casting.gd` (`casting`) |
 | What can be cast, casting numbers, Metamagic | `spell_options.gd` (`options`) |
 | Reaction spells, releasing a readied spell | `spell_reactions.gd` (`reaction_spells`) |
@@ -56,17 +57,22 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `ready_attack(c, option_id)` | Readied attack, triggers when an enemy comes into reach |
 | `unarmed_special(c, t, "grapple" / "shove_prone" / "shove")`, `escape_grapple(c)`, `release_grapple(c, t)` | a grappler drags what it holds when it moves (1 extra foot per foot); letting go is free |
 | `stand_up(c)`, `drop_prone(c)`, `stabilize(c, t, use_kit)`, `death_save(c)` | |
+| `fly_vertical(c, feet)` | up (+) or down (−) where it stands, 5 ft at a time, 1 ft of movement per foot (a rider flies its mount); `movement.vertical_why(c, feet)` says why not; `Combatant.altitude` is feet off the floor, `Encounter.distance` counts it, and `movement.settle_all()` brings down whoever nothing holds up |
 | `fall(c, feet)` | 1d6 per 10 ft (20d6 at most), Prone unless unharmed; Slow Fall and Feather Fall answer it. `forced_move` calls it for a ledge, and `movement.fall_away` for a map's open drop (`grid.drop_ft`, from the map's `drop_ft`): the creature leaves the grid (`left_fight` meta) |
-| `spells.cast(c, spell_id, slot, targets, point, direction, opts)` | `point` for spheres, `direction` for cones, cubes and lines from the caster; opts: `word` (Command), `damage_type` |
-| `spells.use_sustained(c, action_id, targets, point, direction)` | a sustained spell action (`spells.sustained_actions(c)`): Spiritual Weapon's strike, Witch Bolt's arc, Flaming Sphere's roll... |
+| `spells.cast(c, spell_id, slot, targets, point, direction, opts)` | `point` for spheres, `direction` for cones, cubes and lines from the caster; opts: `word` (Command), `damage_type`, `path` (a wall's squares in drawing order, see below), `side` (a drawn Wall of Fire's burning side: `left`, `right` or a square on it), `crown_victim` (Crown of Madness: the id of the creature the crowned one must attack, `""` for no one) |
+| `spells.use_sustained(c, action_id, targets, point, direction)` | a sustained spell action (`spells.sustained_actions(c)`): Spiritual Weapon's strike, Witch Bolt's arc, Flaming Sphere's roll... Crown of Madness's keep-control takes the next victim as its target (none: no one) |
 | `spells.spiritual_weapon_attack(c, t, cell)` | shortcut for the weapon's strike |
-| `ready_spell(c, spell_id, slot)` | Ready a one-action spell: cast now, held with Concentration, released at the first enemy in range |
+| `ready_spell(c, spell_id, slot, trigger)` / `ready_attack(c, option_id, trigger)` | Ready a one-action spell (cast now, held with Concentration) or an attack, released with the Reaction when an enemy sets off `trigger`: `approach` (comes within range or reach; a move pauses for it), `attack` or `spell` (one within range attacks or casts a spell; the reaction queue asks once that's done, kind `readied_attack`) |
 | `features.toggle_rider(c, rider_id)` | arm a rider for this turn's next hit (`features.rider_options(c)`): maneuvers, Cunning Strike, Giant Ancestry, Psionic Strike |
-| `feature_actions.perform(c, id, t, point)` | a class, subclass, feat or species action (`feature_actions.list(c)`); the eight Phase 4 classes' actions are `cf:<id>`, run by combat/class_features.gd |
+| `feature_actions.perform(c, id, t, point, choice, targets)` | a class, subclass, feat or species action (`feature_actions.list(c)`); the eight Phase 4 classes' actions are `cf:<id>`, run by combat/class_features.gd. Commander's Strike: `t` the ally, `targets[1]` the creature it attacks (left out: the best one in its reach) |
 | `free_move(c, cell)`, `jump(c, cell)` | movement without Opportunity Attacks from a feature; Jump's 30 ft leap |
+| `reaction_move(c, cell)` | the move a hit offers an ally (Maneuvering Attack, `movement.offer_reaction_move`): `c` spends its Reaction and walks up to half its Speed, the creature hit making no Opportunity Attack; `movement.open_reaction_move()` is the open offer (it lapses when the turn moves on), `movement.reaction_mover_why(c)` who can take it, `movement.decline_reaction_move()` passes |
 | `undo_move(c)`, `can_undo_move(c)` | Takes back `c`'s last move (`move`, `free_move`, `jump`, with the mount or rider that went along) while nothing came of it: no die rolled, no reaction offered (even one declined or passed up), nothing queued, no other creature, zone, spell object, mark or grapple changed, no log line but the move's own, and nothing new seen (the mover not spotted, no foe the party couldn't see in sight now). Moves come back one by one, to the last thing that wasn't a move; anything else ends them. Player-controlled creatures on their own turn only; not saved |
 | `escape_effect(c, effect_id)`, `wake(c, t)`, `haste_action_use(c, what, t, option_id)`, `use_item(c, item_id, t)` | breaking free of Web/Entangle, shaking a sleeper awake, Haste's extra action, potions and Goodberries |
 | `pick_up(c, gid)` | picks up the pile `gid` (`ground.items`) from within 5 ft: the free object interaction, else a Bonus Action (Fast Hands) or the Utilize action |
+| `objects.attack(c, object_id, option_id)` | one attack of the Attack action against a battlefield object (`objects.list`) |
+| `spells.cast(c, spell_id, 0, [], Vector2.INF, Vector2.ZERO, {"object": id})` | a cantrip that can target objects (Fire Bolt) aimed at an object, or at oil on the floor (`"square:x_y"`) |
+| `objects.throw_oil(c, creature, object)`, `objects.pour_oil(c, cell)`, `objects.light_oil(c, cell)` | Oil (2024 PHB): one attack of the Attack action; the Utilize action; a Bonus Action with a Tinderbox |
 | `items.use(c, item_id, power_id, targets, point, direction, level, opts)` | a magic item's power (ADR 0012, docs/contracts/magic_items.md): a wand's spell at a level paid in charges, a potion, a toggle, a custom power; `items.list(c)` is the Items tab |
 | `features.second_wind / action_surge / steady_aim / turn_undead / divine_spark / preserve_life` | |
 | `end_turn()` | Rolls a pending Death Saving Throw, end-of-turn effects and repeated saves, next creature |
@@ -103,16 +109,37 @@ steps of its own, as attacks do): the offers are asked one by one and `after(tes
 These pause today: spells' saves (`SpellSaves._save_spell(..., pausable)` from `cast`, `cast_with_numbers`,
 `cast_free`, item spells, readied spells and reaction spells; `_resolve`/`_generic` return a CombatResult and take
 `pausable`), monsters' save actions (`MonsterActions.save_action`, which returns `r` and takes `pausable`, true by
-default), the riders on a monster's hit and their saves (`apply_riders(..., pausable)`), Topple, repeated saves at the
+default; Trample and other save Bonus Actions return the paused result from `bonus_action`), the riders on a monster's hit and their saves (`apply_riders(..., pausable)`), Topple, repeated saves at the
 end of a turn (`end_turn` carries on with `Encounter.then`), Death Saving Throws (`death_save(c, pausable)`) and attack
-rolls. Any other roll settles its offers at once (`run_now`). `Encounter.each(list, body, done)` runs a loop whose
-steps can pause. `run_reaction_queue` called while a prompt is open waits for its answer.
+rolls, plus Sleep, Command, Polymorph, Banishment and Resilient Sphere (`SpellSpecials.resolve(..., pausable)` and
+`_resist_then`), monsters' auras (`MonsterActions.turn_start`), the areas a creature starts or ends its turn in
+(`SpellZones._affect(..., pausable)`), repeated saves at the start of a turn and lair actions (`Legendary.lair_turn`,
+whose round-end call can't wait and passes false). Any other roll settles its offers at once (`run_now`).
+`Encounter.each(list, body, done)` runs a loop whose steps can pause. `run_reaction_queue` called while a prompt is
+open waits for its answer.
+
+The turn itself can wait on a prompt: `_begin_turn`, `_lair_then_begin`, `_next_turn` and the end of a turn
+(`_turn_end_effects`) return a CombatResult and run their parts one after another, so a save or a Reaction there
+(Branches of the Tree as a creature starts its turn, Inspiring Movement as an enemy ends one) stops the turn until it's
+answered; the reaction queue runs as a turn starts and ends. `start()` stays void: Initiative choices
+(`ClassFeatures.initiative_offers`: Tandem Footwork, Alert's swap) leave `pending` set for the view, then the order is sorted again and
+the first turn begins. `TestCombat.start_with` declines them.
+
+A failed Concentration save is rolled where the damage lands, inside a held collector (`collect(target, true)`): when a
+choice could still save it, the roll is marked `awaiting` (Creature.take_damage_parts doesn't end Concentration) and a
+`concentration_save` entry with the offers joins the reaction queue, which asks them once the attack or spell is done
+and then keeps or ends Concentration; with nothing to ask the offers are settled at once. After the fight is over the
+entry settles by rule.
+
+A party member's prompt rules live on its Character (`Character.reaction_rules`, saved with it): the Combatant shares
+that Dictionary, so an Automatic or Off chosen in one fight holds in the next.
 
 ## Events (`Encounter.drain_events()`)
 
 | type | fields |
 |---|---|
 | move | id, from, to, forced, mounted (a rider carried along), dragged (pulled along by its grappler: it moves with the step before it), undo (a move taken back: the token goes back to `to`) |
+| altitude | id, from, to: feet off the floor before and after (flying up or down, Levitate, coming down) |
 | fall | id, feet: a creature falls (off a ledge, into a drop) |
 | attack | attacker, target, hit, critical, action (the attack option's id: `weapon:longsword`, `monster:claw`; `spell:fire_bolt` for a spell attack), from (the token the blow comes from: the attacker, or an Echo Knight's echo) |
 | damage / heal | id, amount (critical) |
@@ -151,6 +178,54 @@ LocationFights adds to the fight's loot. A round's save keeps it all (`Encounter
 the piles with `GroundView.sync(e.ground.items)` (world/combat/ground_view.gd) and names them on hover
 (`describe_at(cell)`).
 
+## Things that break and burn (`EncounterObjects`, `e.objects`)
+
+`list`: BattleObjects (combat/battle_object.gd) `{id, kind, name, cells, ac, hp, hp_max, blocks (CombatGrid.WALL, LOW or 0),
+flammable, burning, leaves (floor, rubble, doorway), immune, resist, vulnerable, door_id, prop_id, art, hangs, fall, holds,
+hold_source, oil_rounds, destroyed, open, locked (doors), moves ("shove", "topple"), move_dc, topple, throwable, bursts,
+wreck (where its wreckage lies, if not its squares), home (where it stood at the start)}`, made from `data/objects/kinds.json` (Armor Class by substance, Hit Points by size and
+sturdiness, the 2024 tables; what each kind blocks and leaves; which board art each kind is; the default kind per board
+theme; door kinds by words). `add(kind, cells, extra)` places one (setting its grid flag); `objects_at(cell)`,
+`blocking_at(cell)`, `cells_of(o)` (a web is where its prey stands) find them. `damage(o, parts, by, label)` applies
+Poison and Psychic Immunity, the kind's Resistance and Vulnerability, oil's 5 more Fire and Siege Monster; at 0 Hit Points
+`_break` clears its flag (WALL or LOW), leaves rubble (DIFFICULT) by kind, drops a chandelier (`fall`: a save, damage,
+Prone, on everyone under it) or frees a web's prey, and clears `Encounter._cover_cache`. `ignite(o)` sets a flammable
+object burning (1d4 Fire at `round_started`, firelight through `light_at`, which EncounterSight.light_at reads).
+`squares`: oil on the floor and squares on fire `{cell, oil, lit, web, until_round, until_index, damage, on, hit}` (lit oil:
+5 Fire on entering or ending a turn there, once a turn, until the end of the turn 2 rounds after it was lit; a burning web
+cube: 2d4 Fire at the start of a turn, for a round). Hooks: `turn_start`/`turn_end` (EncounterTurns), `round_started`
+(a new round), `on_moved` (EncounterMovement._after_step), `adjust_incoming`/`on_damaged` (deal_damage: oil on a creature,
+fire reaching oil and webs), `resolve_spell` (SpellCasting._resolve, opts.object), `area_spell` (SpellSaves._save_spell and
+SpellAttacks._secondary: an area's damage to the objects in it; spell data `ignites_objects`), `spell_target_why`
+(SpellTargeting._check_targets), `hold(t, kind, fx)` (a stat block rider's `object`: the giant spider's Web).
+The hotbar's Items tab has Oil (`item_entries`, kind `object`: `oil:throw`, `oil:pour`, `oil:light`); the square menu lists
+attacks, cantrips and Oil at what stands or hangs on a square and fire at oil on it (`square_entries`, ids
+`act:object:<id>:attack:<option>`, `...:spell:<spell>`, `...:oil`, `act:square:x_y:...`); a hotbar attack or cantrip
+clicked on an object's square aims at it (`redirect`); `perform` carries them out. `tooltip(cell)` and `describe_at(cell)`
+are the hover text. A round's save keeps it all (EncounterSnapshot key `objects`). Events: `object_attack` {by, id, hit,
+critical, action}, `object_damage` {id, amount}, `object_broken` {id}, `object_fall` {id}, `object_burning` {id},
+`object_fire` {cell, out?, poured?}, `object_throw` {by, cell, item}; the scene plays them with ObjectView
+(world/combat/object_view.gd). BattleScenery (world/combat/battle_scenery.gd) places the objects: `from_board(e, board)`
+for any board's '=' squares (CombatView.begin, once: `objects.placed`), `for_location(view, e)` for a location's closed
+doors, '=' squares and props that `hang` (chandeliers), and `after_fight(view, e)`.
+
+What creatures do with them (`ObjectActions`, `e.objects.actions`): `toggle_door(c, oid)` (the free object interaction,
+else Utilize or Fast Hands; `door_why`; `set_door(o, open)` flips the WALL flag), `shove(c, oid)` (one attack of the
+Attack action and an Athletics check; `shove_to(c, o)` says where it goes `{cell, who, fall, gone, why}`, `push(o, to, by)`
+moves it: a knock, a fall onto whoever is below, gone over a drop), `topple(c, oid)` (Utilize and an Athletics check;
+`topple_line(c, o)`, `fall_over(o, line, by, details)`), and throwing: `throw_options(c)` are attack options
+(EncounterWeapons.attack_options) `{id "improvised:g:<pile>" or "improvised:o:<object>", kind "thrown", improvised: ref}`,
+`throw_why(c, option)` (attack_legal), `thrown(c, option, target, cell)` (EncounterAttacks and the object attack: the
+pickup is paid, a pile lands by the target, a chair breaks). Lines: the Common tab's `door:<id>` (`entries`), the square
+menu's `act:door:<id>`, `act:shove:<id>`, `act:topple:<id>` (`square_entries`), carried out by `perform(c, id)`. Fire
+(`ObjectFire`, `e.objects.fire`): `spread()` as each round begins (from `round_started`), `burst(o, by)` for a barrel of
+lamp oil (from `damage`, `ignite` and `expose_to_fire`). `on_floor(cell)` is the creature standing on a square's floor:
+only those are hit by what is shoved, pushed over or falls, or burns on the floor. Events: `object_door` {id, open},
+`object_move` {id, from, to, fall, gone?}, `object_bump` {id, target}, `object_topple` {id, cells}, `object_burst` {id,
+cells}. A location door is a door object open or shut as the place left it (`locked` from its lock), except one the story
+watches (BattleScenery.watched_door: a flag, a fight or a narrator line on opening it), which stays shut; a location prop's
+`object` names its kind (a barrel of lamp oil); what a shove moved carries `moved_cell` on its art for the rest of the visit.
+
 ## The hotbar (`ActionCatalog`)
 
 `actions_for(c)` returns entries `{id, tab, label, sub, cost, legal, reason, targeting, count, repeat, range,
@@ -159,6 +234,11 @@ Picking up a pile within reach is kind `pickup` (`pickup:<gid>`, targeting none,
 square menu lists `act:pickup:<gid>` for what lies on a square.
 Previews: `attack_preview(c, action, t)`, `spell_preview(c, action, point, direction, slot)`,
 `move_preview(c, cell, move_reach(c))`, `slot_choices(c, spell_id)`, `target_why(c, action, t)`.
+The player's arrangement (U2) lives on the character (`Character.hotbar`: `{order: {tab: [ids]}, favourites: [ids],
+hidden: [ids]}`, saved): `arranged(c, tab)` gives a tab's entries in the player's order without the hidden ones (the
+`FAVOURITES` tab gathers the starred entries from every tab, `HIDDEN` the hidden ones; `tabs_for` adds each only while
+it has something). `set_favourite`, `set_hidden` and `move_action(c, tab, id, index)` change it; the HUD drives them
+from a slot's right-click menu and by dragging one slot onto another.
 
 ## Bosses: legendary and lair actions, forms, Misty Escape, withdrawing (ADR 0014, combat/legendary.gd)
 
@@ -221,6 +301,8 @@ The initiative tracker shows a legendary creature's actions left (◆◇) and th
 `FeatureRecipes` supplies data-defined activations and synchronous failed-D20 responses through `FeatureActions`. Save-based damage reduction is shared by ordinary spells, zones and monster actions. Magical monster saves carry a magic key when the action declares `magical`.
 
 Reaction offers may provide `stop_if` alongside `stop`: after `use`, the continuation stops only when the predicate is true. This allows an interrupted Shield to spend its Reaction while the original hit continues. Spell casting gates run after casting time is consumed and before slot payment or concentration replacement.
+
+Action targeting `wall` (`ActionCatalog.spell_targeting` for a wall with a length whose cast-time choice isn't a ring, globe or dome, `SpellTargeting.drawn_wall`) collects the wall's squares into `opts.path`, one at a time, each touching the last: `spells.targeting.wall_step_why` checks a square (solid squares, a wall's corner, the spell's length `wall_squares`, range: every square, or only the first for Wind Wall, Wall of Stone and Wall of Force; straight for Blade Barrier and Prismatic Wall) and `wall_path_why` the whole path; `wall_cells` is the casting hook that turns the path, a ring or a globe into the squares. A wall with `zone.side_ft` (Wall of Fire) then takes `opts.side`: `spells.placement.side_of(path, cell)` says which side a square is on, `path_side(path, side, feet)` the squares that burn. Without `opts.path` a wall is the straight one through `point` along `direction` (east-west without one), as the AI casts it. The view's picks after the first click (the wall's squares and side, Commander's Strike's target, Crown of Madness's victim, Maneuvering Attack's ally and square) are world/combat/target_picker.gd; the engine checks each: `weapons.strike_ally_why` and `weapons.strike_option(c, t)` (Commander's Strike), `spells.targeting.crown_victim_why` and `crown_attack` (the crowned creature's forced attack, read by the AI), `movement.reaction_move_reach`.
 
 Action targeting `points` collects `count` distinct grid positions into `opts.points`; selecting an already chosen position deselects it. Invalid summon spaces are rejected during selection. Multi-creature feature and sustained-action selections read the action's own `count` instead of a spell's target count. `Combatant.record_step` retains the voluntary path. Charge checks count trailing steps that each close distance to the current target, allowing angled approaches on a square grid. Sideways/retreating steps break the counted approach; attacks, teleports, forced movement and new turns clear it.
 

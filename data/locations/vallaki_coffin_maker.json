@@ -148,6 +148,19 @@
       "kind": "examine",
       "label": "A narrow bed",
       "model": "bed"
+    },
+    {
+      "id": "coffin_false_bottom",
+      "cell": [
+        13,
+        9
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "skill": "investigation",
+      "label": "a coffin with a false bottom",
+      "model": "broken_boards",
+      "item": "slippers_of_spider_climbing"
     }
   ],
   "containers": [

@@ -1,7 +1,8 @@
 class_name GameSettings
 extends RefCounted
 ## The player's own settings, kept in user://settings.cfg beside the volumes and never in a save (docs/plans/ui_polish.md):
-## the window, how fast fights play, how long the Narrator's box stays up, and the world's look (read through Look.style).
+## the window, how fast fights play, how long the Narrator's box stays up, the world's look (read through Look.style),
+## the interface and text sizes, and the keys (InputActions).
 
 ## Tests point this at a file of their own run (tests/test_runner.gd), so they never change the player's.
 static var path := "user://settings.cfg":
@@ -97,3 +98,36 @@ static func turn_based() -> bool:
 
 static func set_turn_based(on: bool) -> void:
 	set_value("turn_based", on)
+
+
+## How big the interface draws while playing (Settings, Interface: U4): the HUD, conversations, the Narrator's box and
+## rules cards. Menus and other full screens stay at 1.0 (UiScale).
+const UI_SCALES: Array[float] = [0.85, 1.0, 1.1, 1.2]
+## How big the reading text is (Settings, Text: U4): conversations, the Narrator's box and the journal (UiScale.text).
+const TEXT_SCALES: Array[float] = [1.0, 1.15, 1.3]
+
+
+static func ui_scale() -> float:
+	return _nearest(float(value("ui_scale", 1.0)), UI_SCALES)
+
+
+## The window takes it at once through UiScale.apply().
+static func set_ui_scale(v: float) -> void:
+	set_value("ui_scale", v)
+
+
+static func text_scale() -> float:
+	return _nearest(float(value("text_scale", 1.0)), TEXT_SCALES)
+
+
+static func set_text_scale(v: float) -> void:
+	set_value("text_scale", v)
+
+
+## A hand-edited or older settings file can hold any number: the closest choice the page offers.
+static func _nearest(v: float, choices: Array[float]) -> float:
+	var best := choices[0]
+	for c in choices:
+		if absf(c - v) < absf(best - v):
+			best = c
+	return best

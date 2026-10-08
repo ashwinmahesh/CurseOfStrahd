@@ -318,3 +318,39 @@ once
 | [flag.argynvost_beacon_lit] You sleep under the beacon's light, and for the first time since the mists closed behind you, nobody has a dream worth mentioning.
 | [flag.order_fate == "ride" or flag.order_fate == "grudge"] You sleep while dead knights stand guard at your door. It is very safe. It is not very restful.
 cooldown 60
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:well_cube
+| A little way down the well, on a ledge where a squire once hid his treasures, a cube of ivory no bigger than a die. Every face is carved with a different shield.
+once
+
+~ search:armory_flame_tongue
+| Behind the armour stands, a sword still in its scabbard. Draw an inch of it and the blade catches light from nowhere, a flicker of fire along the steel.
+once
+
+~ check:perception:armory_flame_tongue:failure
+| Empty armour, dented and patient. If any of it is hiding something, it's better at standing guard than you are at looking.
+
+~ search:altar_reliquary
+| Behind the chapel altar, a small silver reliquary in the shape of a dragon's claw. Inside lies a holy amulet, its chain still bright after four hundred years.
+once
+
+~ search:plinth_ring
+| The empty plinth isn't solid. In a hollow under its top lies a silver ring, cold as frost. The dragon's hoard was carried off; this one piece, someone saved.
+once
+
+~ check:investigation:plinth_ring:failure
+| Stone, and the outline in the dust of whatever stood here. Nothing else.
+
+~ search:dragon_desk_wand
+| The dragon's desk has a drawer a human hand would never find. In it, a wand of pale wood that twitches toward the door when you hold it.
+once
+
+~ search:lampkeeper_niche
+| In the lamp-keeper's niche, a hooded lantern under a skin of soot. Light it and the room shows you more than it did a moment ago.
+once
+
+~ open:dragon_gift_niche
+| With the beacon burning, a niche you never noticed stands open at the foot of the bier. In it lies a shield worked with silver scales, left by the dragon for whoever would finish what his knights began.
+once

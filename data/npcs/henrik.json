@@ -15,5 +15,59 @@
     "vallaki"
   ],
   "region": "vallaki",
-  "pronouns": "he/him"
+  "pronouns": "he/him",
+  "shop": {
+    "sells": [
+      {
+        "id": "coffin",
+        "qty": 1,
+        "price": 0,
+        "if": "not flag.henrik_free_coffin",
+        "sets": "henrik_free_coffin"
+      },
+      {
+        "id": "coffin",
+        "qty": -1,
+        "if": "flag.henrik_free_coffin"
+      },
+      {
+        "id": "club",
+        "qty": -1
+      },
+      {
+        "id": "quarterstaff",
+        "qty": -1
+      },
+      {
+        "id": "pole",
+        "qty": -1
+      },
+      {
+        "id": "ladder",
+        "qty": 2
+      },
+      {
+        "id": "chest",
+        "qty": 2
+      },
+      {
+        "id": "barrel",
+        "qty": 2
+      },
+      {
+        "id": "woodcarvers_tools",
+        "qty": 1
+      },
+      {
+        "id": "carpenters_tools",
+        "qty": 1
+      }
+    ],
+    "buys": [
+      "tool"
+    ],
+    "markup": 1.0,
+    "sell_rate": 0.4,
+    "closed": "not (flag.coffin_spawn_destroyed or flag.church_siege_survived)"
+  }
 }

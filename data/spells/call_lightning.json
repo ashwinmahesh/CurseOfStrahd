@@ -44,7 +44,7 @@
   ],
   "upcast": {
     "damage": "1d10",
-    "text": "Cast outdoors in a storm, the spell controls that storm and its damage is 1d10 higher."
+    "text": "The damage rises by 1d10 for each slot level above 3."
   },
   "zone": {
     "triggers": [],

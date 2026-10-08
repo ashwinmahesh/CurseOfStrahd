@@ -267,6 +267,8 @@ func run(max_rounds: int = 30) -> Dictionary:
 	e.default_player_reaction = "auto"
 	if e.state == Encounter.State.SETUP:
 		e.start()
+	while e.pending != null:   # choices as Initiative is rolled (Tandem Footwork, Alert's swap), before the first turn
+		e.answer_reaction(true)
 	var downs := 0
 	var guard := 0
 	while e.state == Encounter.State.ACTIVE and e.round_no <= max_rounds and guard < 2000:

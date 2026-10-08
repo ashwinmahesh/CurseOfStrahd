@@ -470,3 +470,70 @@ cooldown 10
 | [flag.festival_climax and not flag.festival_over] The square goes quiet. Somewhere at the back of the crowd, very hesitantly, somebody claps.
 | [flag.church_siege_survived and not flag.bones_returned and not flag.festival_climax] The candles stand up straight again, one by one, as if they'd been hiding.
 cooldown 10
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:stocks_mud
+| Trodden into the mud beside the stocks, a silver ring. Whoever sat in the stocks last lost it, and it didn't protect them from the Baron.
+once
+
+~ search:desk_hidden_drawer
+| Lady Wachter's desk has one drawer more than it shows. In it, a pair of rose-tinted lenses and a list of names, some of them crossed out.
+once
+
+~ check:investigation:desk_hidden_drawer:failure
+| Letters, invitations and accounts, all in a neat, cold hand. If the desk keeps secrets, it keeps them from you.
+
+~ search:circle_loose_board
+| Under the chalk circle, one board lifts. Victor hid his best tool where his father would never kneel: a wand of polished bone, warm from the floor.
+once
+
+~ check:investigation:circle_loose_board:failure
+| Chalk, scorch marks and ash. The circle tells you only that Victor practises, and that it goes badly.
+
+~ search:guest_bed_board
+| Under one of the guest beds, a board is loose. In the hollow beneath it, a pair of supple grey gloves some earlier guest decided not to pay for.
+once
+
+~ check:perception:guest_bed_board:failure
+| Clean floors, aired sheets. Danika keeps a good house, and it keeps its secrets.
+
+~ search:coffin_false_bottom
+| One empty coffin rings hollow under your knuckles. Under its false bottom, a pair of soft black slippers, their soles cold and faintly sticky.
+once
+
+~ check:investigation:coffin_false_bottom:failure
+| Coffins, all empty, all waiting. Henrik's work is good. That's all you can say for it.
+
+~ search:arrigal_wagon_drawer
+| Under the step of Arrigal's wagon, a drawer that only opens if you lift it first. Inside, a black dagger in an oiled sheath, and the sheath smells of something bitter.
+once
+
+~ check:investigation:arrigal_wagon_drawer:failure
+| Painted wood, good hinges and a lock you could pick with a hairpin. Arrigal's wagon looks too honest to be honest.
+
+~ open:st_andral_niche
+| The saint's bones are home, and the niche below his sarcophagus stands open, as if it had been waiting. In it lies a mace with a sunburst head, polished by old hands.
+once
+
+~ search:hovel_step_sack
+| Under the hovel's step, someone keeps a scuffed leather haversack. It holds far more than it should and somehow always has the thing you reach for on top.
+once
+
+~ search:shrine_tithe
+| Under the cult's little shrine lies their tithe to the devil they serve: coins, rings and a short rod of black iron with a crown worked into its head.
+once
+
+~ check:perception:shrine_tithe:failure
+| Candle wax, scorch marks and a smell like hot tin. Whatever they worship here, it isn't telling you where it keeps its money.
+
+~ search:ledger_fireworks
+| Behind the festival ledger, a velvet case the Baron must have been saving for the big night: a necklace of small glowing beads, each one hot to the touch.
+once
+
+~ check:investigation:ledger_fireworks:failure
+| Festival accounts, festival rotas, festival penalties. The Baron's study holds a great deal of festival and nothing else.
+
+~ search:hearth_loose_brick
+| One brick by the taproom hearth isn't mortared. Behind it, a small black bead that is heavier than it looks.
+once

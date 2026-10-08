@@ -109,7 +109,7 @@ func fallen_plan(c: Combatant, options: Array[Dictionary], reach: Dictionary, th
 				var keep := c.cell
 				c.cell = cell
 				var chance := float(e.hit_chance(c, t, o)["chance"])
-				var close := e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells) <= 5
+				var close := e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) <= 5
 				c.cell = keep
 				var fails := 2 if close else 1
 				var value := 9.0 if t.creature.death_failures + fails >= 3 else 4.0 * fails
@@ -126,13 +126,13 @@ func fallen_plan(c: Combatant, options: Array[Dictionary], reach: Dictionary, th
 func _cells_in_reach(c: Combatant, t: Combatant, max_d: int, reach: Dictionary) -> Array[Vector2i]:
 	var e := enc()
 	var out: Array[Vector2i] = []
-	if e.grid.distance_ft(c.cell, c.size_cells, t.cell, t.size_cells) <= max_d:
+	if e.grid.distance_ft(c.cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) <= max_d:
 		out.append(c.cell)
 	if c.movement_left <= 0:
 		return out
 	for cell: Vector2i in reach:
 		if cell != c.cell and not bool((reach[cell] as Dictionary)["occupied"]) \
-				and e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells) <= max_d:
+				and e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) <= max_d:
 			out.append(cell)
 	return out
 

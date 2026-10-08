@@ -36,7 +36,7 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 | `damage` | value, when | bonus to damage rolls. Dueling: `{"stat":"damage","value":2,"when":{"weapon":"one_handed_alone"}}` |
 | `spell_dc`, `spell_attack` | value | bonus to spell save DC / spell attack rolls |
 | `speed` | value, kind (default walk), when | +value ft; `when` sees the armor worn (Fast Movement: `{"armor":"not_heavy"}`, Unarmored Movement: `{"armor":"none","shield":false}`) |
-| `speed_set` | value, kind | speed becomes value (Grappled: 0). `kind` may be `fly` etc. to grant a speed; value `"walk"` = equal to the walking Speed (Potion of Flying) |
+| `speed_set` | value, kind | speed becomes value (Grappled: 0). `kind` may be `fly` etc. to grant a speed; value `"walk"` = equal to the walking Speed (Potion of Flying). A value of 0 without `kind` stops every speed, flying too (Speed 0); with `kind`, only that one |
 | `hp_max` | value | + to Hit Point maximum (formulas recompute on level up) |
 | `proficiency` | kind, value | kind = skill, save, armor, weapon, tool, language. value = id (`heavy`, `martial`, `thieves_tools`, `perception`, `str`, `common`) |
 | `expertise` | value | double Proficiency Bonus with that skill or tool |
@@ -81,7 +81,9 @@ hand), `two_handed` (melee weapon held in two hands), `light`, `unarmed`. `spell
 for Unarmed Strikes), `base_item`: the mundane weapon underneath (Bracers of Archery: `longbow`). `spell_class`: the class whose spell it is (Potent Spellcasting: cleric). `spell_id`: one spell
 (Agonizing Blast: `"@cantrip"`, the pick of the feature's own choice). `damage_type`: the spell's damage type
 (Elemental Affinity: `"@element"`). `incapacitated`: false (Danger Sense; Advantage and Disadvantage sources see
-the armor worn and whether the creature is Incapacitated). `armor` also takes `not_heavy`. A `when` value starting
+the armor worn and whether the creature is Incapacitated). `fear_in_sight`: true (Frightened's Disadvantage: a source of
+the creature's fear is within its line of sight; the fight answers through `Creature.fear_seen`, and without a fight it
+counts as true). `armor` also takes `not_heavy`. A `when` value starting
 with `@` names a pick of the same feature, like `value` does. Several keys = all must hold.
 
 ### `at_level`, `at_class_level`

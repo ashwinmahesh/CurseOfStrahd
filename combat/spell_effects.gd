@@ -291,6 +291,8 @@ func _apply_group(ctx: Dictionary, t: Combatant, params: Dictionary, entries: Ar
 			_haste_lethargy(t, fxo)
 		if m.stat == &"flag" and m.text("value") == "crowned":
 			t.set_meta("crowned_by", c.id)
+			# The creature its caster picked for it to attack, or no one (SpellTargeting.crown_attack).
+			sp().targeting.set_crown_victim(t, str((ctx.get("opts", {}) as Dictionary).get("crown_victim", "")))
 	if str(s["id"]) == "aid":
 		var gain := 5 * (slot - 1) if slot >= 2 else 5
 		t.creature.add_effect(fxo)

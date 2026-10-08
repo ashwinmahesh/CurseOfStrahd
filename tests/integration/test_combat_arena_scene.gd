@@ -152,3 +152,33 @@ func test_right_click_menu_info_and_casting_level() -> void:
 	assert_eq(int(_v().get("slot_level")), 2, "cast at level 2 from the menu")
 	assert_eq(str((_v().get("selected") as Dictionary).get("spell_id", "")), "magic_missile")
 
+
+
+func test_the_hotbar_can_be_arranged_from_a_slots_menu() -> void:
+	await _until_player_turn()
+	var e := _enc()
+	if e.state != Encounter.State.ACTIVE:
+		return
+	var hud := _v().get("hud") as CombatHud
+	var c := e.current()
+	hud.shown = c
+	hud.set_tab(ActionCatalog.COMMON)
+	var second := hud.slot_action(1)
+	hud.open_slot_menu(second, Vector2(400, 400))
+	hud._menu.hide()
+	hud._on_menu("bar:fav")
+	hud.set_tab(ActionCatalog.FAVOURITES)
+	assert_eq(hud.slot_count(), 1, "a Favourites tab with the starred action")
+	assert_eq(str(hud.slot_action(0)["id"]), str(second["id"]))
+	hud.set_tab(ActionCatalog.COMMON)
+	hud.open_slot_menu(second, Vector2(400, 400))
+	hud._menu.hide()
+	hud._on_menu("bar:earlier")
+	assert_eq(str(hud.slot_action(0)["id"]), str(second["id"]), "moved to the first slot (hotkey 1)")
+	hud.open_slot_menu(second, Vector2(400, 400))
+	hud._menu.hide()
+	hud._on_menu("bar:hide")
+	assert_false(range(hud.slot_count()).any(func(i: int) -> bool: return str(hud.slot_action(i)["id"]) == str(second["id"])), "hidden from Common")
+	hud.set_tab(ActionCatalog.HIDDEN)
+	assert_eq(str(hud.slot_action(0)["id"]), str(second["id"]), "on the Hidden tab")
+	(c.creature as Character).hotbar = {}
