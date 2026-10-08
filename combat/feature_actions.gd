@@ -312,7 +312,9 @@ func _perform_creature(c: Combatant, act_id: String, t: Combatant, cell: Vector2
 		var healed := t.creature.heal(int(rolled["total"]), str(act["name"]))
 		e.log.add("heal", "%s: %s regains %d Hit Points" % [act["name"], t.name(), healed], c.id, [str(rolled["text"])])
 		e.events.append({"type": "heal", "id": t.id, "amount": healed})
-	ma.spend(c, act)
+	# A save action spends its uses itself (MonsterActions.save_action).
+	if not act.has("save"):
+		ma.spend(c, act)
 	if cost == "bonus":
 		c.bonus_available = false
 	else:
@@ -906,84 +908,15 @@ func before_d20(cr: Creature, kind: D20Test.Kind, keys: Array[String], _target: 
 	return out
 
 
-## After a D20 Test: Reliable Talent, Indomitable, Stroke of Luck, Mage Slayer's Guarded Mind, Heroic Inspiration on a
-## failed save, Psi-Bolstered Knack and Tactical Mind on failed checks. Player-controlled creatures follow their rule
-## for each (default: use it), since a save can't pause the fight.
+## After a D20 Test: everything that can change the roll now (D20Responses: Indomitable, Heroic Inspiration on a save,
+## an ally's Bend Luck, Legendary Resistance...), asked about where the roll can pause and settled by rule elsewhere.
 func after_d20(cr: Creature, t: D20Test, keys: Array[String]) -> void:
-	_after_d20_features(cr, t, keys)
-	var e := enc()
-	if e != null:
-		var c := e.get_c(cr.id)
-		if c != null:
-			e.spells.after_failed_d20(c, t)
-
-
-func _after_d20_features(cr: Creature, t: D20Test, keys: Array[String]) -> void:
 	var e := enc()
 	if e == null:
 		return
 	var c := e.get_c(cr.id)
-	if c == null:
-		return
-	e.feature_recipes.after_d20(c, t, keys)
-	e.class_features.after_d20(c, t)
-	e.ravenloft.after_d20(c, t, keys)
-	e.faerun.after_d20(c, t, keys)
-	e.items.after_d20(c, t, keys)
-	e.legendary.after_d20(c, t)
-	if not cr is Character:
-		return
-	# A die someone gave this creature (Bardic Inspiration): added to a failed D20 Test, then gone.
-	if not t.success and t.target > 0 and t.kind == D20Test.Kind.SAVING_THROW:
-		e.class_features.after_failed_save(c, t, keys)
-	if not t.success and t.target > 0:
-		for fx: Effect in cr.effects.duplicate():
-			for m in fx.modifiers:
-				if m.stat == &"inspiration_die" and str(c.reaction_rules.get("inspiration", "auto")) != "never":
-					var v := e.dice.roll_expr(m.text("dice", "1d6"), m.source_name)
-					t.add_bonus(int(v["total"]), m.source_name)
-					cr.remove_effect(fx)
-					e.log.add("info", "%s adds %s (%d)" % [c.name(), m.source_name, int(v["total"])], c.id)
-					break
-			if t.success:
-				break
-	var ch := cr as Character
-	var rule := func(kind: String) -> bool: return str(c.reaction_rules.get(kind, "auto")) != "never"
-	if t.kind == D20Test.Kind.ABILITY_CHECK:
-		if has(c, "reliable_talent"):
-			for k in keys:
-				if k.begins_with("check:") and Abilities.SKILLS.has(StringName(k.substr(6))) and ch.skill_rank(StringName(k.substr(6))) > 0:
-					t.floor_natural(10, "Reliable Talent")
-					break
-		if not t.success and t.target > 0 and has(c, "tactical_mind") and ch.resource_left("second_wind") > 0 and rule.call("tactical_mind"):
-			var v := e.dice.roll_one(10, "Tactical Mind")
-			if t.total + v >= t.target:
-				ch.spend_resource("second_wind")
-				t.add_bonus(v, "Tactical Mind")
-		return
-	if t.kind != D20Test.Kind.SAVING_THROW or t.success or t.target <= 0:
-		return
-	if has(c, "indomitable") and ch.resource_left("indomitable") > 0 and rule.call("indomitable"):
-		ch.spend_resource("indomitable")
-		var again := D20Test.from_natural(D20Test.Kind.SAVING_THROW, e.dice.d20("Indomitable"), t.modifier + ch.class_level_of("fighter"), t.target)
-		t.set_natural(again.kept, "Indomitable")
-		t.add_bonus(ch.class_level_of("fighter"), "Indomitable")
-		e.log.add("info", "%s refuses to fall: Indomitable reroll" % c.name(), c.id, [t.describe()])
-		if t.success:
-			return
-	if f().has_feat(c, "mage_slayer") and ch.resource_left("guarded_mind") > 0 and ("save:int" in keys or "save:wis" in keys or "save:cha" in keys) and rule.call("guarded_mind"):
-		ch.spend_resource("guarded_mind")
-		t.add_bonus(maxi(0, t.target - t.total), "Guarded Mind")
-		e.log.add("info", "%s's Guarded Mind turns the failure into a success" % c.name(), c.id)
-		return
-	if has(c, "stroke_of_luck") and ch.resource_left("stroke_of_luck") > 0 and rule.call("stroke_of_luck"):
-		ch.spend_resource("stroke_of_luck")
-		t.set_natural(20, "Stroke of Luck")
-		return
-	if ch.heroic_inspiration and str(c.reaction_rules.get("heroic_inspiration", "ask")) != "never":
-		ch.heroic_inspiration = false
-		t.set_natural(e.dice.d20("Heroic Inspiration"), "Heroic Inspiration")
-		e.log.add("info", "%s spends Heroic Inspiration on the save" % c.name(), c.id, [t.describe()])
+	if c != null:
+		e.d20.after_d20(c, t, keys)
 
 
 ## Start of a creature's turn: Heroic Warrior, Survivor, Unarmed Fighting's grapple damage.

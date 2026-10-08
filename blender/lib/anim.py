@@ -459,3 +459,48 @@ def pack_atlas(crops):
         c = unique[i]
         atlas[y:y + c.shape[0], x:x + c.shape[1]] = c
     return atlas, [(*spots[i], unique[i].shape[1], unique[i].shape[0]) for i in index]
+
+
+def mirror_twins(dir_view):
+    """{direction: the direction it mirrors}: each mirrored direction's twin shows the same view, unmirrored, turned the
+    other way, so its frames are the twin's flipped left to right."""
+    return {d: e for d, (v, m, turn) in dir_view.items() if m
+            for e, (v2, m2, turn2) in dir_view.items() if v2 == v and not m2 and turn2 == -turn}
+
+
+def write_sheet_tres(path, texture, cell, directions, cols, anims, meta, rects=None):
+    """SpriteFrames with several animations per direction: row = direction, column = rendered frame. `rects`
+    (packed sheets): per frame, row by row, (x, y, w, h) on the atlas and (left, top), where it sits in its cell."""
+    w, h = cell
+    subs, out = [], []
+    for row, d in enumerate(directions):
+        for c in range(cols):
+            if rects is None:
+                region = f"region = Rect2({c * w}, {row * h}, {w}, {h})\n"
+            else:
+                (x, y, rw_, rh), (left, top) = rects[row * cols + c]
+                region = (f"region = Rect2({x}, {y}, {rw_}, {rh})\n"
+                          f"margin = Rect2({left}, {top}, {w - rw_}, {h - rh})\n")
+            subs.append(f'[sub_resource type="AtlasTexture" id="{d}_{c}"]\natlas = ExtResource("1")\n' + region)
+        for name, idx, durs, fps, loop in anims:
+            entries = ", ".join(f'{{"duration": {float(du)}, "texture": SubResource("{d}_{i}")}}' for i, du in zip(idx, durs))
+            out.append(f'{{\n"frames": [{entries}],\n"loop": {"true" if loop else "false"},\n'
+                       f'"name": &"{name}_{d}",\n"speed": {float(fps)}\n}}')
+    meta_lines = "".join(f"metadata/{k} = {json.dumps(v)}\n" for k, v in meta.items())
+    Path(path).write_text('[gd_resource type="SpriteFrames" format=3]\n\n'
+                          f'[ext_resource type="Texture2D" path="{texture}" id="1"]\n\n' + "\n".join(subs)
+                          + "\n[resource]\nanimations = [" + ", ".join(out) + "]\n" + meta_lines)
+
+
+def pack_sheet(trimmed, size, cell, min_wide, margin, saturate=1.0):
+    """Trimmed frames (trim()) of renders `size` (w, h) -> (atlas, (cell w, cell h), rects for write_sheet_tres): the
+    logical cell that holds them all (even_cell), each frame palette-cleaned (finish_sheet) and packed (pack_atlas)."""
+    (cw, ch), placed = even_cell(trimmed, size, cell, min_wide, margin)
+    sheet, spots = pack_atlas([finish_sheet(crop, saturate) for crop, _ in placed])
+    return sheet, (cw, ch), [(spot, at) for spot, (_crop, at) in zip(spots, placed)]
+
+
+def hd_cell(turnaround_hd, cell=None, ss=None):
+    """The cell and supersampling for a sheet: 768 px rendered at twice the size when the character has an HD
+    turnaround (<turnaround>_hd.png), else the earlier 384 px; either can be given."""
+    return cell or (768 if turnaround_hd else 384), ss or (2 if turnaround_hd else 1)

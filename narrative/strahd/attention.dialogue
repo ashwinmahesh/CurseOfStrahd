@@ -1,0 +1,78 @@
+# Strahd's attention (F9, data/strahd/attention.json): what he does once he has noticed the party. A face at the
+# window at a night's rest once he is watching; a letter of grievances once they are marked; his spawn and wolves at
+# their camp once they are hunted (data/strahd/visits.json). On the roads (data/random_encounters): his eyes once he
+# is watching, his wolves at night once they are marked.
+
+# ---------------------------------------------------------------- At the window (watched)
+
+~ window
+Narrator: Somewhere past midnight the one on watch hears a soft knock at the shutters. Just one, polite as a guest.
+Narrator: When they look, a bat hangs from the eaves, upside down and perfectly still, watching the room. It stays until they move toward it, then drops away into the dark without a sound.
+if guest:ireena
+interject guest:ireena: He used to send them to my window too. One every night. Father thought it was a kind of joke.
+endif
+interject tag:nervous: That wasn't a bat. Or it was, but it was also somebody.
+-> END
+
+# ---------------------------------------------------------------- A letter of grievance (marked)
+
+~ grievance
+Narrator: A raven lands on the nearest post with a scroll tied to its leg in black ribbon. It waits, head cocked, for someone to take it, then flies off toward the mountains.
+Strahd: My guests. I have kept a list. It is a habit of the old, and of the patient.
+if flag.gulthias_tree_burned
+Strahd: You burned my tree on Yester Hill. It was older than your nations. I do not expect you to understand what that means; I only want you to know that I do.
+endif
+if item:sunsword
+Strahd: You carry my brother's sword. It did not save him either.
+endif
+if item:holy_symbol_of_ravenkind
+Strahd: You wear the Morninglord's trinket where I can see it. I have seen it before. I watched its last bearer's light go out.
+endif
+if flag.lysaga_dead
+Strahd: Baba Lysaga is dead. She held me when I was born. Whatever else she was, that was hers to keep, and you took it.
+endif
+if flag.kiril_defeated
+Strahd: My wolves have a new leader. They will want to make a good impression.
+endif
+if flag.strahd_window and flag.strahd_window != "taken"
+Strahd: You stood between Tatyana and me at her window. I remember every face that has done that. There have not been many, and they did not stay long.
+endif
+if flag.strahd_invitation == "declined"
+Strahd: You have refused my carriage. I am told it was a fine evening for a drive.
+endif
+Strahd: I have been a generous host. I can be other things. Consider this the last of my courtesy, and consider it carefully.
+interject tag:fierce: Good. I was getting tired of the courtesy.
+interject tag:pious: He's afraid. A man who isn't afraid doesn't write lists.
+-> END
+
+# ---------------------------------------------------------------- The hunt (hunted)
+
+~ hunt
+Narrator: The fire gutters in no wind. Out past the light, the wolves stop howling all at once, and in the silence something laughs: not him, but something that learned how from him.
+Narrator: Pale shapes come out of the trees on all fours, and the wolves come with them.
+-> END
+
+~ hunt_after
+Narrator: The last of them goes still. Far up the valley a single wolf howls, and is not answered. Nobody sleeps much after that.
+-> END
+
+# ---------------------------------------------------------------- His eyes on the roads (watched)
+
+~ eyes_bats
+Narrator: A swarm of bats crosses the road ahead of you, turns back, and crosses again, low enough to stir your hair. Then it does it a third time, slower, as if counting.
+interject tag:nervous: They're counting us. Don't let them count us.
+-> END
+
+~ eyes_wolves
+Narrator: For a mile a grey wolf keeps pace with you just inside the treeline, never closer, never farther, never looking anywhere but at you. When the road bends, it is simply gone.
+-> END
+
+~ eyes_raven
+Narrator: A black bird sits on a fence post and watches you pass. It is not one of the Keepers' ravens; those look away when you meet their eyes. This one doesn't.
+-> END
+
+~ eyes_vistana
+Narrator: A Vistani wagon pulls aside to let you by, and the driver tips his hat, and asks where you are bound, and where you slept, and whether the lady with you is well, and how many you are, exactly.
+interject tag:blunt: That's a lot of questions for a man with a horse to see to.
+Narrator: He laughs, and drives on, and you notice he turns back the way you came.
+-> END

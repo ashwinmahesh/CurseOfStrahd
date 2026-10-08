@@ -28,12 +28,12 @@ const _QUEUED_TEXT := {
 
 
 ## What a creature does with a Reaction opportunity: AI creatures always take Opportunity Attacks; players
-## follow their per-reaction rule (plan §5.3), default "ask".
-func _reaction_decision(reactor: Combatant, kind: String) -> String:
+## follow their per-reaction rule (plan §5.3), default "ask" (or `fallback`, a feature's own starting rule).
+func _reaction_decision(reactor: Combatant, kind: String, fallback: String = "") -> String:
 	var e := enc()
 	if not reactor.is_player_controlled():
 		return "auto" if e.ai.wants_reaction(reactor, kind) else "never"
-	return str(reactor.reaction_rules.get(kind, e.default_player_reaction))
+	return str(reactor.reaction_rules.get(kind, fallback if fallback != "" else e.default_player_reaction))
 
 
 ## Answers the pending reaction prompt and continues whatever was paused.
@@ -49,8 +49,10 @@ func answer_reaction(use: bool) -> CombatResult:
 			invalid.pending = req
 			return invalid
 	e.pending = null
-	var verbs := ["spends Heroic Inspiration", "keeps Heroic Inspiration"] if req.kind == "heroic_inspiration" else ["uses its Reaction", "holds its Reaction"]
-	if not req.spends_reaction:
+	var verbs := ["uses its Reaction", "holds its Reaction"]
+	if req.kind == "heroic_inspiration":
+		verbs = ["spends Heroic Inspiration", "keeps Heroic Inspiration"]
+	elif not req.spends_reaction:
 		verbs = ["confirms " + req.title, "declines " + req.title]
 	e.log.add("reaction" if req.spends_reaction else "info", "%s %s" % [e.get_c(req.reactor_id).name(), verbs[0] if use else verbs[1]], req.reactor_id)
 	var res := req.continuation.call(use) as CombatResult
@@ -179,9 +181,11 @@ func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> Comb
 
 
 ## Offers the queued reactions one by one (asking the player, or the AI deciding), then the queued Cleave attacks,
-## then returns `r`.
+## then returns `r`. Called while a prompt is still open (a save action that paused), it waits for the answer.
 func run_reaction_queue(r: CombatResult) -> CombatResult:
 	var e := enc()
+	if e.pending != null:
+		return e.then(r, func() -> CombatResult: return run_reaction_queue(r))
 	while not e.reaction_queue.is_empty():
 		var q := e.reaction_queue.pop_front() as Dictionary
 		var reactor := e.get_c(str(q["reactor"]))

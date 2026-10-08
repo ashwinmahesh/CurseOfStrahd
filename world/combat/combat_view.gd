@@ -312,9 +312,13 @@ func _death_save() -> void:
 	var c := _player()
 	if c == null:
 		return
-	e.death_save(c)
+	var r := e.death_save(c)
 	await _play_events()
 	_refresh_all()
+	# Heroic Inspiration and the like can answer the roll (F6).
+	if r.is_paused() or e.pending != null:
+		mode = Mode.PROMPT
+		hud.show_prompt(e.pending)
 
 
 func _inspect(id: String) -> void:

@@ -224,17 +224,25 @@ func _after_main(c: Combatant) -> CombatResult:
 	var e := enc()
 	if e.state != Encounter.State.ACTIVE or e.current() != c or not c.can_act():
 		return CombatResult.new()
-	var prof := profile(c)
 	if c.creature is Monster:
 		e.monster_actions.bonus_action(c, "hide")
 		e.monster_actions.bonus_action(c, "swoop")
 		e.monster_actions.bonus_action(c, "consume_life")
-		e.monster_actions.bonus_action(c, "trample")
-		e.monster_actions.bonus_action(c, "bonus_save")
-		var rampage := e.monster_actions.bonus_action(c, "rampage")
-		if rampage.is_paused():
-			return rampage
+		# A save Bonus Action (Trample, a bonus save) or Rampage can pause for a hero's prompt: the pull-back waits.
+		for plan: String in ["trample", "bonus_save", "rampage"]:
+			var r := e.monster_actions.bonus_action(c, plan)
+			if r.is_paused():
+				return e.then(r, func() -> CombatResult: return _pull_back(c))
 		e.monster_actions.bonus_action(c, "vanish")
+	return _pull_back(c)
+
+
+## A skirmisher's step back after its main action (Deathless Agility's Disengage, or a flyby).
+func _pull_back(c: Combatant) -> CombatResult:
+	var e := enc()
+	if e.state != Encounter.State.ACTIVE or e.current() != c or not c.can_act():
+		return CombatResult.new()
+	var prof := profile(c)
 	if bool(prof.get("retreat", false)) and c.movement_left > 0:
 		var near := _nearest_enemy(c)
 		if near != null and e.distance(c, near) <= 5:

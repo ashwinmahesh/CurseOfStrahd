@@ -38,37 +38,50 @@ func begin_reaction_spell(c: Combatant, spell_id: String) -> bool:
 	return true
 
 
-## A synchronous D20 resolver cannot pause. Reaction spells require an explicit automatic decision.
+## Reaction spells that answer a failed d20 roll (Reweave Fate: the roll again with Advantage; Moment of Prescience: a
+## 20), settled now: only when the creature's rule for the spell is Automatic.
 func after_failed_d20(roller: Combatant, test: D20Test) -> void:
+	var out: Array = []
+	d20_offers(roller, test, out)
+	enc().d20.run_now(out)
+
+
+## The same as offers (D20Responses): asked about where the roll can pause.
+func d20_offers(roller: Combatant, test: D20Test, out: Array) -> void:
 	var spells := sp()
-	if test.success or test.target <= 0 or test.auto_failed:
+	var e := enc()
+	if test.target <= 0 or test.auto_failed:
 		return
-	for c in enc().living():
+	for c in e.living():
 		var ch := spells.caster_char(c)
 		if ch == null or (c != roller and not c.allied_with(roller)):
 			continue
 		for known in ch.known_spells():
-			if test.success:
-				return
 			var s := _comp().spell_data(str(known["id"]))
 			var response := s.get("roll_response", {}) as Dictionary
 			if response.is_empty() or (str(response.get("scope", "self")) == "self" and c != roller):
 				continue
-			if str(response.get("scope", "self")) == "visible" and (enc().distance(c, roller) > spells.range_ft(s, c) or not enc().can_see(c, roller)):
-				continue
-			if enc()._reaction_decision(c, str(s["id"])) != "auto" or not begin_reaction_spell(c, str(s["id"])):
-				continue
-			if response.has("natural"):
-				test.set_natural(int(response["natural"]), str(s["name"]))
-			else:
-				var again := D20Test.roll(enc().dice, test.kind, test.modifier, test.target, 1, 1 if test.disadvantage else 0, str(s["name"]), test.crit_range, test.extra, test.extra_label)
-				test.set_natural(again.kept, str(s["name"]))
-				test.rolls = again.rolls
-				test.advantage = again.advantage
-				test.disadvantage = again.disadvantage
-			if test.success and response.has("success_temp_hp"):
-				roller.creature.add_temp_hp(int(enc().dice.roll_expr(str(response["success_temp_hp"]), str(s["name"]))["total"]), str(s["name"]))
-			enc().log.add("save", test.describe(), roller.id)
+			var visible := str(response.get("scope", "self")) == "visible"
+			var caster := c
+			var sid := str(s["id"])
+			var sname := str(s["name"])
+			out.append({"kind": sid, "reactor": c, "trigger": roller.id, "sync": "decision", "title": "Reaction: %s?" % sname,
+				"text": func() -> String: return "%s. %s %s?" % [D20Responses.line(roller, test), caster.name() + " can cast " + sname if caster != roller else "Cast " + sname,
+					"so the roll is a 20" if response.has("natural") else "so it's rolled again with Advantage"],
+				"cost": "Reaction and a spell slot",
+				"still": func() -> bool: return not test.success and can_cast_reaction(caster, sid) \
+					and (not visible or (e.distance(caster, roller) <= spells.range_ft(s, caster) and e.can_see(caster, roller))),
+				"helps": func() -> bool: return D20Responses.could_reach(test, int(response.get("natural", 20))),
+				"use": func() -> void:
+					if not begin_reaction_spell(caster, sid):
+						return
+					if response.has("natural"):
+						test.set_natural(int(response["natural"]), sname)
+					else:
+						test.reroll(e.dice, sname, true)
+					if test.success and response.has("success_temp_hp"):
+						roller.creature.add_temp_hp(int(e.dice.roll_expr(str(response["success_temp_hp"]), sname)["total"]), sname)
+					e.log.add("save", test.describe(), roller.id)})
 
 
 ## Spell attack resolution is synchronous; weapon/monster attacks offer the same response interactively.
@@ -177,9 +190,9 @@ func cast_reaction_spell(c: Combatant, spell_id: String, trigger: Combatant) -> 
 	var ctx := {"c": c, "s": s, "slot": slot, "nums": nums, "conc": null, "opts": {}, "choice": "", "point": Vector2.INF}
 	var r := CombatResult.new()
 	var tgt: Array[Combatant] = [trigger]
-	spells._generic(ctx, tgt, [], r)
-	e._check_over()
-	return r
+	return e.then(spells._generic(ctx, tgt, [], r, true), func() -> CombatResult:
+		e._check_over()
+		return r)
 
 
 ## Releases a readied spell at `target` (the creature that triggered it) with the Reaction: its slot was spent when
@@ -212,9 +225,9 @@ func release_readied(c: Combatant, held: Dictionary, target: Combatant) -> Comba
 		"point": point, "cells": cells, "choice": SpellCaster.choice_of(s, {}), "direction": dir, "cell": target.cell}
 	var r := CombatResult.new()
 	var tgt: Array[Combatant] = [target]
-	spells._resolve(ctx, tgt, cells, r)
-	spells.check_tethers()
-	spells._finish_concentration(ctx)
-	spells.zones.prune()
-	e._check_over()
-	return r
+	return e.then(spells._resolve(ctx, tgt, cells, r, true), func() -> CombatResult:
+		spells.check_tethers()
+		spells._finish_concentration(ctx)
+		spells.zones.prune()
+		e._check_over()
+		return r)

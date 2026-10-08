@@ -143,13 +143,6 @@ def args():
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
 
-def mirror_twins(dir_view):
-    """{direction: the direction it mirrors}: each mirrored direction's twin shows the same view, unmirrored, turned the
-    other way, so its frames are the twin's flipped left to right."""
-    return {d: e for d, (v, m, turn) in dir_view.items() if m
-            for e, (v2, m2, turn2) in dir_view.items() if v2 == v and not m2 and turn2 == -turn}
-
-
 def strip_count(kind, strip=None):
     """Figures on one strip of `kind` (the reference redraw included); `strip` picks one of a multi-strip kind."""
     plan = PLANS[kind]
@@ -161,30 +154,6 @@ def strip_count(kind, strip=None):
 
 # Strip kinds that feed a multi-strip plan, so --check and anim_keyframes.py can ask about one strip.
 STRIP_OF = {k: (plan_name, k) for plan_name, plan in PLANS.items() for k in plan.get("strips", [])}
-
-
-def write_tres(path, texture, cell, directions, cols, anims, meta, rects=None):
-    """SpriteFrames with several animations per direction: row = direction, column = rendered frame. `rects`
-    (packed sheets): per frame, row by row, (x, y, w, h) on the atlas and (left, top), where it sits in its cell."""
-    w, h = cell
-    subs, out = [], []
-    for row, d in enumerate(directions):
-        for c in range(cols):
-            if rects is None:
-                region = f"region = Rect2({c * w}, {row * h}, {w}, {h})\n"
-            else:
-                (x, y, rw_, rh), (left, top) = rects[row * cols + c]
-                region = (f"region = Rect2({x}, {y}, {rw_}, {rh})\n"
-                          f"margin = Rect2({left}, {top}, {w - rw_}, {h - rh})\n")
-            subs.append(f'[sub_resource type="AtlasTexture" id="{d}_{c}"]\natlas = ExtResource("1")\n' + region)
-        for name, idx, durs, fps, loop in anims:
-            entries = ", ".join(f'{{"duration": {float(du)}, "texture": SubResource("{d}_{i}")}}' for i, du in zip(idx, durs))
-            out.append(f'{{\n"frames": [{entries}],\n"loop": {"true" if loop else "false"},\n'
-                       f'"name": &"{name}_{d}",\n"speed": {float(fps)}\n}}')
-    meta_lines = "".join(f"metadata/{k} = {json.dumps(v)}\n" for k, v in meta.items())
-    Path(path).write_text('[gd_resource type="SpriteFrames" format=3]\n\n'
-                          f'[ext_resource type="Texture2D" path="{texture}" id="1"]\n\n' + "\n".join(subs)
-                          + "\n[resource]\nanimations = [" + ", ".join(out) + "]\n" + meta_lines)
 
 
 def main():
@@ -257,7 +226,7 @@ def main():
                                             root)
         views[name] = (root, planes)
 
-    twins = {} if a.grid else mirror_twins(dir_view)
+    twins = {} if a.grid else anim.mirror_twins(dir_view)
     directions = [d for d in rw.DIRECTIONS if d not in twins]
     tmp = Path(tempfile.mkdtemp(prefix=f"{a.kind}_{a.id}_"))
     frames, clipped = [], set()
@@ -297,10 +266,7 @@ def main():
         frames, (cw, ch) = anim.crop_even(frames, a.cell, MIN_WIDE, margin)
         sheet_out = anim.finish_sheet(cutout.pack_grid(frames, cols), flags["saturate"])
     else:
-        (cw, ch), placed = anim.even_cell(frames, (cw, ch), a.cell, MIN_WIDE, margin)
-        crops = [anim.finish_sheet(crop, flags["saturate"]) for crop, _ in placed]
-        sheet_out, spots = anim.pack_atlas(crops)
-        rects = [(spot, at) for spot, (_crop, at) in zip(spots, placed)]
+        sheet_out, (cw, ch), rects = anim.pack_sheet(frames, (cw, ch), a.cell, MIN_WIDE, margin, flags["saturate"])
     cutout.save_rgba(sheet_out, out_dir / f"{stem}.png")
     s = anim.spec(a.id)
     meta = {"hit_frames": plan.get("hits", {}), "anim_set": 2}
@@ -308,7 +274,7 @@ def main():
         meta["mirrored"] = twins
     if a.kind in ("attack5", "attack10"):
         meta.update(hit_frame=plan["hits"]["attack"], casts=bool(s.get("casts", False)))
-    write_tres(out_dir / f"{stem}.tres", f"res://art/sprites/{a.id}/{stem}.png", (cw, ch), directions, cols,
+    anim.write_sheet_tres(out_dir / f"{stem}.tres", f"res://art/sprites/{a.id}/{stem}.png", (cw, ch), directions, cols,
                plan["anims"], meta, rects)
     shutil.rmtree(tmp, ignore_errors=True)
     for v, ws in problems.items():

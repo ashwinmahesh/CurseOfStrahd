@@ -78,6 +78,24 @@ party or he holds her), or kneel and serve, or fight. The answer is `strahd_parl
 `yield` (Strahd triumphant) or `ireena` (the bride). Optional lines: "You can't leave this valley either"
 (`strahd_seen_trapped`), Insight DC 18 (spent on failure; never needed).
 
+## His attention (F9, data/strahd/attention.json)
+
+A hidden measure of how much he has noticed the party, never shown and never saved: `StrahdPresence.attention(st)`
+adds the points of every mark whose condition holds now (his spawn and servants destroyed, the Gulthias tree burned,
+the Sunsword, the Holy Symbol or the Tome carried, Ireena at their side, defying or striking him, holding Ireena's
+window, refusing his carriage, making him leave a fight). Because it is worked out from the story, a save, an old save
+or a mark taken back (he took Ireena after all) always reads true.
+
+| Tier | From | Between visits | Roads (day / night) | What it brings |
+|---|---|---|---|---|
+| unnoticed | 0 | 12 h | +0 / +0 | |
+| watched | 3 | ×0.85 | +0 / +5% | a bat at the shutters at a night's rest (`eyes_at_the_window`); his eyes on four roads (`strahds_eyes`, once each) |
+| marked | 7 | ×0.65 | +5% / +10% | a raven with his list of grievances (`letter_of_grievance`); his wolves on the Svalich road, the woods and the vineyard road at night (`strahds_wolves`) |
+| hunted | 12 | ×0.5 | +5% / +15% | his spawn and wolves at an outdoor camp at night, without him (`the_hunt`, twice at most, 72 h apart) |
+
+Any condition can read it: `attention >= marked` (a tier) or `attention >= 7` (story/story_conditions.gd). Marks may not
+read attention themselves (the validator checks). Lines: narrative/strahd/attention.dialogue.
+
 ## Flags (data/flags/strahd.json)
 
 `strahd_watcher_seen`, `strahd_letter_read`, `strahd_letter_kept`, `strahd_night_visit` (woke, shield, warded,
