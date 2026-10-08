@@ -508,6 +508,23 @@ exchange for the runt (`given`: the quest fails and the companions disapprove), 
 - Krezk's bounty, from Dmitri: 300 gp and the iron bands that have hung in the watch house for the wolf that never
   came, Iron Bands of Bilarro (rare).
 
+## Mount Baratok (level 9)
+
+### The Mage's Lost Pages (`the_mages_lost_pages`, narrative/mount_baratok/the_mages_lost_pages.dialogue; batch 4)
+
+Once Mordenkainen is himself (`mordenkainen_restored`), he gets "Heard anything interesting?" (the mountain's
+rumour-giver): the witch's jar gave him back almost everything, but there are pages missing, letters in a small
+slanted hand he knows better than his own, with no name to it. The storm he forgot he'd ordered blew them out of the
+hut. Three on the mountain (props `corvina_letter_birds`, `corvina_letter_ring`, `corvina_letter_overlook`): Perception
+DC 14 finds each, or digging out the ice, glass or drift finds it in half an hour. **Twist:** they're from Corvina, his
+apprentice, and the last, in pencil, says "Master, go. I'll hold the door." He didn't lose to the count; he ran while
+she held it. Under it, in the count's hand: "She holds my doors still." **Escalation:** he wants to go up the road
+tonight; his promise to come with the party (or Persuasion DC 16) holds him, or he rages and the hut freezes from the
+inside.
+
+- No fight. It leads to The Unnamed Crypt (batch 4, the castle).
+- Corvina's first ring, which he took off her desk the night they went up: a Ring of Telekinesis (very rare).
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -548,4 +565,5 @@ Village of Barovia: the_burgomasters_hound.dialogue in full (Bildrath; companion
 doesn't speak). Batch 4, the
 crossroads by day: the_tinkers_wagon.dialogue in full (new speaker Iosif the Tinker; also Zora's three new lines). Batch 4,
 Vallaki: the_ravens_ransom.dialogue in full (new speakers Bray and the Fowler; also Urwin and Danika). Batch 4,
-Krezk: the_packs_runt.dialogue in full (new speakers Petru and the Grandsire; also the Krezk watchman).
+Krezk: the_packs_runt.dialogue in full (new speakers Petru and the Grandsire; also the Krezk watchman). Batch 4,
+Mount Baratok: the_mages_lost_pages.dialogue in full (Mordenkainen; the letters are Narrator).

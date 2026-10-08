@@ -1,0 +1,112 @@
+# The Mage's Lost Pages (side quest, docs/story/side_quests.md): Mordenkainen's memory came back from the witch's jar
+# with pages missing: someone's handwriting he knows better than his own, and no name with it. Letters from his
+# apprentice, blown out of the hut by the storm he forgot he'd ordered, are frozen into the mountain. They give her
+# name, Corvina, and the truth he lost: he didn't lose a fight with the count; he ran, while she held the door behind
+# him. The last letter has a postscript in the count's hand. It leads to The Unnamed Crypt in the castle. Reached from
+# Mordenkainen's "Heard anything interesting?" once he is himself. Every line here is unvoiced for now.
+
+# --- Mordenkainen (mordenkainen:restored_menu jumps here) ---
+
+~ news
+if flag.corvina_name_known
+Mordenkainen: Corvina. I say it every morning, so I don't lose it again. If you find her before I do, say it to her. Names matter to the dead in this valley. They're very nearly all the dead have left.
+-> mount_baratok/mordenkainen:restored_menu
+endif
+if flag.corvina_letter_1 and flag.corvina_letter_2 and flag.corvina_letter_3
+-> letters_back
+endif
+if not quest.the_mages_lost_pages
+quest the_mages_lost_pages asked
+endif
+Mordenkainen: Interesting. The witch's jar gave me back almost everything. Almost. There are pages missing. Not from the book. From me.
+Mordenkainen: A hand I know better than my own. Small, slanted, impatient, always running out of margin. Letters, written to me. I can see the handwriting when I close my eyes, and I can't see the name.
+Mordenkainen: They were in my coat the night the witch took me. Since then this hut has been blown inside out by a storm I forgot I'd ordered, for forty years. They'll be in the snow somewhere. In the ice. Bring them to me.
+-> mount_baratok/mordenkainen:restored_menu
+
+# --- The letters, on the mountain ---
+
+~ letter_birds
+if flag.corvina_letter_1
+Narrator: The frozen birds hang in the frost garden where they've always hung. One has a gap in the ice beside it where a letter used to be.
+-> END
+endif
+Narrator: Birds hang in the air of the frost garden, frozen mid-flight, each in its own clear shell of ice. In one shell, beside a sparrow, there's a fold of paper.
+* [Perception DC 14] (Find the place where the ice is thinnest.) -> letter_1 | chip_1
+* (Chip the whole shell away, slowly.) -> chip_1
+
+~ chip_1
+time +30
+-> letter_1
+
+~ letter_1
+set corvina_letter_1
+Narrator: The paper is stiff with frost and the ink has run, but the hand is the one he described: small, slanted, running out of margin.
+Narrator: Master. The mists are thick here and the people thicker. I've started a list of the count's servants and what they're afraid of. It's a long list and a short one at the same time. C.
+-> END
+
+~ letter_ring
+if flag.corvina_letter_2
+Narrator: The ring of glass where the lightning keeps striking. A letter-shaped hole in the ice at its edge.
+-> END
+endif
+Narrator: At the edge of the ring of glass, where the lightning keeps striking the same spot, something pale is fused into the glass itself, as if the bolt cooked it in.
+* [Perception DC 14] (Look for an edge you can work loose.) -> letter_2 | chip_2
+* (Break the glass around it, carefully.) -> chip_2
+
+~ chip_2
+time +30
+-> letter_2
+
+~ letter_2
+set corvina_letter_2
+Narrator: Scorched at the corners. The same small hand.
+Narrator: You'll remember your apprentice's name when you need it, you said, when I asked you to stop calling me "girl". So I'm writing it at the bottom of every letter, in case you don't. Corvina. Corvina. Corvina.
+-> END
+
+~ letter_overlook
+if flag.corvina_letter_3
+Narrator: The overlook, and the lake far below, and nothing in the snow at the edge any more.
+-> END
+endif
+Narrator: At the overlook, where the snow drifts against the low stones, the corner of a page sticks up out of the drift like a flag.
+* [Perception DC 14] (Ease it out without tearing it.) -> letter_3 | chip_3
+* (Dig the whole drift out by hand.) -> chip_3
+
+~ chip_3
+time +30
+-> letter_3
+
+~ letter_3
+set corvina_letter_3
+Narrator: This one was written fast, in pencil, on a page torn out of something.
+Narrator: Master, go. I'll hold the door. He's coming up the stair and he's laughing. Don't come back for me. I mean it. Corvina.
+Narrator: Under it, in a different hand altogether, black and beautifully formed:
+Narrator: She held it very well. She holds my doors still. S.
+interject tag:blunt: He didn't lose. He ran. And she stayed.
+-> END
+
+# --- The letters brought back ---
+
+~ letters_back
+Narrator: You lay the three letters on his chessboard. He reads them in order, once each, and doesn't touch them.
+Mordenkainen: Corvina.
+Mordenkainen: I told everyone he beat me. I told myself. He didn't. I was beaten, and I knew it on the stair, and she said go, and I went. I left a girl of twenty-two holding a door against him so that I could be ashamed of losing instead of ashamed of running.
+Mordenkainen [angry]: "She holds my doors still." He wrote that for me to find. He knew I'd come looking one day. He's been waiting forty years for me to read it.
+Narrator: He stands up, and the snow outside the window starts again, all at once, hard.
+* [if flag.mordenkainen_promised_aid or guest:mordenkainen or quest.the_mad_mage == joined] You promised to come with us when we go up. Keep that promise, not this one. -> stays
+* [Persuasion DC 16] If you go up that road tonight, you'll die on his stair, and she'll have held that door for nothing. -> stays | storms
+* (Let him rage.) -> storms
+
+~ storms
+Narrator: He rages. It isn't loud. The windows frost over from the inside, and every candle in the hut goes out and relights itself, twice. When it's finished he's sitting down again, older.
+-> stays
+
+~ stays
+quest the_mages_lost_pages named
+set corvina_name_known
+Mordenkainen: No. You're right. I'd go up there as exactly the man who ran. I need to be someone else first, and that takes longer than a night.
+Mordenkainen: But you'll be in that castle before I am. If you find her, and you will, he'll have seen to that, say her name to her. Corvina. Names matter to the dead in this valley. They're very nearly all the dead have left.
+Mordenkainen: And take this. She made it, her first year, to fetch my books down without asking. I took it off her desk the night we went up, because I thought I'd need it more. I didn't. I needed her.
+give ring_of_telekinesis
+approve ratatoille +3 liriel_dawnsong +2 godrick_pendlebrook +1 wren_featherfoot +1: You brought Mordenkainen his apprentice's letters
+-> mount_baratok/mordenkainen:restored_menu

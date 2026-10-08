@@ -1,0 +1,24 @@
+{
+  "id": "the_mages_lost_pages",
+  "name": "The Mage's Lost Pages",
+  "summary": "Mordenkainen's memory came back from the witch's jar with pages missing: letters in a hand he knows better than his own, and no name with it.",
+  "giver": "mordenkainen",
+  "region": "mount_baratok",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Mordenkainen remembers a small, slanted hand that wrote him letters, but not whose. The letters blew out of his hut in the storm he forgot he'd ordered, and they're somewhere in the snow and ice of Mount Baratok.",
+      "objectives": [
+        "Find the letters on Mount Baratok: the frost garden, the ring of glass, the overlook",
+        "Bring them to Mordenkainen"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "named",
+      "journal": "The letters were from Corvina, Mordenkainen's apprentice. He didn't lose to the count; he ran, while she held the door behind him. The last letter has a postscript in the count's hand: she holds his doors still. If we find her in the castle, we're to say her name.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
