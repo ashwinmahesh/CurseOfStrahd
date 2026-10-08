@@ -164,6 +164,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | | Where | Item | How |
 |---|---|---|---|
 | ✅ | The bell tower | Chime of Opening (rare) | Search (Perception DC 15): a little chime hung inside the great bell |
+| ✅ | The courtyard, a bench heaped with feathers | Feather Token, Whip (rare) | Search (Perception DC 12): one feather from no bird (lane 28's spot) |
 | ✅ | Wards, the foundling cots | Figurine of Wondrous Power, Golden Lions (rare) | Search (Perception DC 14): a child's hidden treasure |
 | ✅ | Wards, the matron's room | Robe of Useful Items (uncommon) | Search (Investigation DC 14): sewn into the trunk's lining |
 | ✅ | Wards, the instrument cabinet | Periapt of Proof against Poison (rare) | Search (Investigation DC 15) |
