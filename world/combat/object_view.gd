@@ -4,8 +4,11 @@ extends Node3D
 ## dressing on its squares (the board's own piece, a location prop or door) until it breaks, when that art hides and
 ## wreckage lies there instead (left on the board: it stays for the rest of the visit); a burning object has a flame
 ## and its light; oil on the floor is a dark slick, and burning oil or webbing burns; a spider's web wraps the
-## creature it holds; a chandelier hangs on its chain over its squares and drops when the chain breaks. It only shows
-## state (`sync`), and plays the encounter's object events (`play`: a blow landing, the damage, a break, a fall).
+## creature it holds; a chandelier hangs on its chain over its squares and drops when the chain breaks; a location
+## door's leaf shows while it's shut; a shoved thing's art slides (or drops) to its new square, and carries the move
+## with it (meta `moved_cell`, for the rest of the visit: BattleScenery); a pushed-over thing tips and lies across the
+## squares it fell on; a barrel of lamp oil goes up in a fireball. It only shows state (`sync`), and plays the encounter's
+## object events (`play`: a blow landing, the damage, a break, a fall, a door, a shove, a topple, a burst).
 
 const FLOAT_TIME := 1.1
 ## A chandelier hangs this high over the floor.
@@ -16,6 +19,7 @@ var _broken: Dictionary = {}     ## object id -> true once its break is shown
 var _flames: Dictionary = {}     ## object id or square key -> Node3D
 var _webs: Dictionary = {}       ## object id -> Node3D (its squares in meta "cells")
 var _hung: Dictionary = {}       ## object id -> the chandelier drawn here (no location prop draws it)
+var _moved_to: Dictionary = {}   ## object id -> the square its art stands on, once a shove has moved it
 var _rng := RandomNumberGenerator.new()
 
 
@@ -30,6 +34,13 @@ static func create(board_: ArenaBoard) -> ObjectView:
 ## Matches what's drawn to the encounter's objects and squares on fire.
 func sync(objects: EncounterObjects) -> void:
 	for o in objects.list:
+		# Shoved since the board was built (a fight resumed from a save): its art goes where it is now.
+		if o.home.x >= 0 and o.cells.size() == 1 and (_moved_to.get(o.id, o.home) as Vector2i) != o.cells[0]:
+			_slide_now(o, _moved_to.get(o.id, o.home) as Vector2i, o.cells[0])
+		if o.door_id != "" and not o.destroyed:
+			var leaf := board.get_node_or_null("Door_" + o.door_id) as Node3D
+			if leaf != null:
+				leaf.visible = not o.open
 		if o.destroyed:
 			if not _broken.has(o.id):
 				_show_broken(o, objects, false)
@@ -102,6 +113,25 @@ func play(ev: Dictionary, objects: EncounterObjects, tokens: Dictionary, fx: Spe
 			if o != null and not _broken.has(o.id):
 				_show_broken(o, objects, true)
 				await get_tree().create_timer(0.35).timeout
+		"object_door":
+			if o != null and o.door_id != "":
+				var leaf := board.get_node_or_null("Door_" + o.door_id) as Node3D
+				if leaf != null:
+					leaf.visible = not bool(ev.get("open", false))
+				Audio.sfx("door")
+		"object_move":
+			if o != null:
+				await _slide(o, ev["from"] as Vector2i, ev["to"] as Vector2i)
+		"object_topple":
+			if o != null and not _broken.has(o.id):
+				await _tip(o, ev)
+				_show_broken(o, objects, true)
+		"object_burst":
+			if o != null:
+				_burst(o, fx)
+				if not _broken.has(o.id):
+					_show_broken(o, objects, true)
+				await get_tree().create_timer(0.5).timeout
 
 
 ## Where `o` is for a missile or a number: up on its chain while a chandelier still hangs, else on its squares.
@@ -147,7 +177,9 @@ func _show_broken(o: BattleObject, objects: EncounterObjects, animate: bool) -> 
 		for n: Variant in board.dressing.get(cell, []):
 			if is_instance_valid(n) and n is Node3D:
 				(n as Node3D).visible = false
-		_wreckage(cell, o.substance, animate)
+	for cell2 in (o.wreck if not o.wreck.is_empty() else o.cells):
+		if board.grid.in_bounds(cell2) and not board.grid.has_flag(cell2, CombatGrid.VOID):
+			_wreckage(cell2, o.substance, animate)
 
 
 ## Broken bits on a square, in the colours of what it was made of, flat on the floor (no shadows).
@@ -166,6 +198,119 @@ func _wreckage(cell: Vector2i, substance: String, animate: bool) -> void:
 		if animate:
 			bit.scale = Vector3(0.1, 0.1, 0.1)
 			bit.create_tween().tween_property(bit, "scale", Vector3.ONE, 0.18).set_trans(Tween.TRANS_BACK)
+
+
+## The art standing for `o` on `cell`: the board's pieces there and the location prop that dresses it.
+func _art(o: BattleObject, cell: Vector2i) -> Array[Node3D]:
+	var out: Array[Node3D] = []
+	for n: Variant in board.dressing.get(cell, []):
+		if is_instance_valid(n) and n is Node3D:
+			out.append(n as Node3D)
+	var prop := _prop_piece(o)
+	if prop != null and not prop in out:
+		out.append(prop)
+	return out
+
+
+## A shove: the art slides to the new square (and drops to a lower floor), or over the edge and out of sight.
+func _slide(o: BattleObject, from: Vector2i, to: Vector2i) -> void:
+	var nodes := _art(o, from)
+	var shift := Vector3(to.x - from.x, 0, to.y - from.y)
+	var drop := _drop_to(from, to)
+	_drop(_flames, o.id)
+	var tw: Tween = null
+	for n in nodes:
+		if not n.is_inside_tree():
+			n.position += shift + Vector3(0, drop, 0)
+			continue
+		if tw == null:
+			tw = n.create_tween().set_parallel(true)
+		tw.tween_property(n, "position", n.position + shift, 0.25).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		if absf(drop) > 0.01:
+			tw.tween_property(n, "position:y", n.position.y + drop, 0.3).set_delay(0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	_moved(o, from, to, nodes)
+	if tw != null:
+		await tw.finished
+	if _gone(to):
+		for n2 in nodes:
+			n2.visible = false
+
+
+## A shove the board hasn't shown (a fight resumed from a save): the art is put where the thing is now, at once.
+func _slide_now(o: BattleObject, from: Vector2i, to: Vector2i) -> void:
+	var nodes := _art(o, from)
+	var shift := Vector3(to.x - from.x, _drop_to(from, to), to.y - from.y)
+	for n in nodes:
+		n.position += shift
+		n.visible = n.visible and not _gone(to)
+	_drop(_flames, o.id)
+	_moved(o, from, to, nodes)
+
+
+## Over the map's open drop or into deep water: out of sight.
+func _gone(cell: Vector2i) -> bool:
+	return not board.grid.in_bounds(cell) or board.grid.has_flag(cell, CombatGrid.VOID)
+
+
+func _drop_to(from: Vector2i, to: Vector2i) -> float:
+	return -4.0 if _gone(to) else board.floor_y(to) - board.floor_y(from)
+
+
+## The board's record of a shove: the pieces belong to the new square, and each carries where it went (and as what) for
+## the rest of the visit (BattleScenery); gone over the edge, it carries nothing.
+func _moved(o: BattleObject, from: Vector2i, to: Vector2i, nodes: Array[Node3D]) -> void:
+	_moved_to[o.id] = to
+	for n in nodes:
+		if _gone(to):
+			n.remove_meta("moved_cell")
+			continue
+		n.set_meta("moved_cell", to)
+		n.set_meta("moved_kind", o.kind)
+		n.set_meta("moved_art", o.art)
+		n.set_meta("moved_prop", o.prop_id)
+	var pieces: Array = board.dressing.get(from, [])
+	if not pieces.is_empty():
+		board.dressing.erase(from)
+		if not _gone(to):
+			board.dressing[to] = pieces
+
+
+## Pushed over: the art tips away from the pusher, toward the squares it falls across, and goes (its wreckage follows).
+func _tip(o: BattleObject, ev: Dictionary) -> void:
+	var line := ev.get("cells", []) as Array
+	var nodes := _art(o, o.cells[0])
+	if line.is_empty() or nodes.is_empty():
+		return
+	var d := (line[0] as Vector2i) - o.cells[0]
+	var axis := Vector3(d.y, 0, -d.x).normalized()
+	var tw: Tween = null
+	for n in nodes:
+		var start := n.transform.basis
+		if tw == null:
+			tw = n.create_tween().set_parallel(true)
+		tw.tween_method(func(a: float) -> void: n.transform.basis = start.rotated(axis, a), 0.0, PI * 0.45, 0.3) \
+			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	await tw.finished
+
+
+## A barrel of lamp oil goes up: the fireball's explosion over its burst (SpellFx), else a flash of light.
+func _burst(o: BattleObject, fx: SpellFx) -> void:
+	var at := _centre(o.cells)
+	var radius := float(o.bursts.get("radius", 10)) / 5.0
+	if SpellFx.enabled and fx != null:
+		var cue := SpellFx.spell_cue("fireball")
+		if not cue.is_empty():
+			FxAreas.explode(fx, cue, at + Vector3(0, 0.6, 0), board.floor_y(o.cells[0]), radius)
+			return
+	var light := OmniLight3D.new()
+	light.light_color = Look.color("flame")
+	light.light_energy = 6.0
+	light.omni_range = radius * 2.5
+	light.position = at + Vector3(0, 1.0, 0)
+	add_child(light)
+	var tw := light.create_tween()
+	tw.tween_property(light, "light_energy", 0.0, 0.6)
+	tw.tween_callback(light.queue_free)
 
 
 ## The location prop that dresses `o` (SetDressing.place names it Dressing_<id>), or null.

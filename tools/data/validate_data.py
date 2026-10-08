@@ -730,6 +730,14 @@ def story_checks(data, errors, need):
                     # Set when it falls and read when the place is drawn (world/combat/battle_scenery.gd).
                     flags_set.setdefault(hangs["flag"], []).append(w)
                     read([hangs["flag"]], w)
+            # What it is in a fight (F5): a real kind, standing on a '=' square (only those become battlefield objects).
+            if pr.get("object"):
+                kinds = data.get("objects", {}).get("kinds", {}).get("kinds", {})
+                if kinds and pr["object"] not in kinds:
+                    errors.append(f"{w}: prop {pr['id']} is unknown object kind '{pr['object']}'")
+                x, z = pr["cell"]
+                if z >= len(rows) or x >= len(rows[z]) or rows[z][x] != "=":
+                    errors.append(f"{w}: prop {pr['id']} names an object kind but doesn't stand on a '=' square")
             if pr.get("dialogue"):
                 dialogue_refs.append((pr["dialogue"], w))
         for ct in loc.get("containers", []):

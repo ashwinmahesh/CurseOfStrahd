@@ -94,6 +94,36 @@
         "resist": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/damage_type"}},
         "vulnerable": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/damage_type"}},
         "hangs": {"type": "boolean", "description": "It hangs over its squares (a chandelier): only ranged attacks and spells reach it, and breaking it drops it on whoever is below."},
+        "moves": {"enum": ["shove", "topple"], "description": "What a creature beside it can do to it (ObjectActions): shove it 5 ft (one attack of the Attack action), or push it over (the Utilize action), each with a Strength (Athletics) check against move_dc."},
+        "move_dc": {"type": "integer", "minimum": 1, "description": "The Strength (Athletics) DC to shove it or push it over."},
+        "throwable": {"type": "boolean", "description": "Small enough to pick up and throw as an improvised weapon; it breaks where it lands."},
+        "topple": {
+          "type": "object",
+          "description": "Pushed over, it falls across `length` squares: each creature on the floor there makes a Dexterity save against `dc` or takes `damage` and falls Prone; rubble is left (and burning coals, with `coals`).",
+          "required": ["dc", "damage", "type", "length"],
+          "additionalProperties": false,
+          "properties": {
+            "dc": {"type": "integer", "minimum": 1},
+            "damage": {"$ref": "common.schema.json#/$defs/dice"},
+            "type": {"$ref": "common.schema.json#/$defs/damage_type"},
+            "length": {"type": "integer", "minimum": 1, "maximum": 4},
+            "coals": {"type": "boolean"}
+          }
+        },
+        "bursts": {
+          "type": "object",
+          "description": "Fire sets it off (a barrel of lamp oil): everyone within `radius` feet makes the save against `dc`, taking `damage` on a failure and half on a success; with `oil` the floor around it is left burning.",
+          "required": ["radius", "save", "dc", "damage", "type"],
+          "additionalProperties": false,
+          "properties": {
+            "radius": {"type": "integer", "minimum": 5},
+            "save": {"$ref": "common.schema.json#/$defs/ability"},
+            "dc": {"type": "integer", "minimum": 1},
+            "damage": {"$ref": "common.schema.json#/$defs/dice"},
+            "type": {"$ref": "common.schema.json#/$defs/damage_type"},
+            "oil": {"type": "boolean"}
+          }
+        },
         "fall": {
           "type": "object",
           "description": "What a hanging object does to the creatures under it as it falls: a save, damage on a failure (half on a success), and Prone on a failure.",

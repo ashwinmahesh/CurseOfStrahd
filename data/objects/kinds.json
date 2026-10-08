@@ -129,7 +129,9 @@
         "market_stall",
         "chest_painted"
       ],
-      "summary": "Slatted crates, trunks and stalls: they splinter at a blow."
+      "summary": "Slatted crates, trunks and stalls: they splinter at a blow.",
+      "moves": "shove",
+      "move_dc": 8
     },
     "barrel": {
       "name": "barrel",
@@ -148,7 +150,29 @@
         "cask_rack",
         "bathtub"
       ],
-      "summary": "Hooped barrels, casks and vats."
+      "summary": "Hooped barrels, casks and vats.",
+      "moves": "shove",
+      "move_dc": 10
+    },
+    "oil_barrel": {
+      "name": "barrel of lamp oil",
+      "substance": "wood",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": true,
+      "leaves": "floor",
+      "moves": "shove",
+      "move_dc": 12,
+      "bursts": {
+        "radius": 10,
+        "save": "dex",
+        "dc": 12,
+        "damage": "2d6",
+        "type": "fire",
+        "oil": true
+      },
+      "summary": "A barrel of lamp oil: fire bursts it open in a sheet of flame and leaves the floor around it burning."
     },
     "sacks": {
       "name": "sacks",
@@ -166,7 +190,9 @@
         "coats",
         "straw"
       ],
-      "summary": "Sacks, nets and straw: cloth that tears and burns."
+      "summary": "Sacks, nets and straw: cloth that tears and burns.",
+      "moves": "shove",
+      "move_dc": 8
     },
     "table": {
       "name": "table",
@@ -198,7 +224,9 @@
         "bier",
         "Furniture"
       ],
-      "summary": "Tables, counters and the heavier furniture, a 5-ft section at a time."
+      "summary": "Tables, counters and the heavier furniture, a 5-ft section at a time.",
+      "moves": "shove",
+      "move_dc": 10
     },
     "chair": {
       "name": "chair",
@@ -220,7 +248,10 @@
         "doll",
         "perch"
       ],
-      "summary": "Chairs, cradles and other light furniture."
+      "summary": "Chairs, cradles and other light furniture.",
+      "moves": "shove",
+      "move_dc": 5,
+      "throwable": true
     },
     "bed": {
       "name": "bed",
@@ -236,7 +267,9 @@
         "bed_canopy",
         "sheeted_furniture"
       ],
-      "summary": "Beds and sheeted furniture."
+      "summary": "Beds and sheeted furniture.",
+      "moves": "shove",
+      "move_dc": 12
     },
     "shelves": {
       "name": "shelves",
@@ -259,7 +292,15 @@
         "pipe_organ",
         "armor_stand"
       ],
-      "summary": "Bookcases, wardrobes, cabinets and tall clocks."
+      "summary": "Bookcases, wardrobes, cabinets and tall clocks.",
+      "moves": "topple",
+      "move_dc": 12,
+      "topple": {
+        "dc": 12,
+        "damage": "1d10",
+        "type": "bludgeoning",
+        "length": 2
+      }
     },
     "pew": {
       "name": "pew",
@@ -272,7 +313,9 @@
       "art": [
         "pew"
       ],
-      "summary": "A church pew, a 5-ft section at a time."
+      "summary": "A church pew, a 5-ft section at a time.",
+      "moves": "shove",
+      "move_dc": 12
     },
     "coffin": {
       "name": "coffin",
@@ -285,7 +328,9 @@
       "art": [
         "coffin"
       ],
-      "summary": "A wooden coffin."
+      "summary": "A wooden coffin.",
+      "moves": "shove",
+      "move_dc": 12
     },
     "gravestone": {
       "name": "gravestone",
@@ -339,7 +384,15 @@
         "saint_defaced",
         "gargoyle"
       ],
-      "summary": "A stone statue (each 5-ft section of a bigger one)."
+      "summary": "A stone statue (each 5-ft section of a bigger one).",
+      "moves": "topple",
+      "move_dc": 15,
+      "topple": {
+        "dc": 13,
+        "damage": "2d10",
+        "type": "bludgeoning",
+        "length": 2
+      }
     },
     "boulder": {
       "name": "boulder",
@@ -354,7 +407,9 @@
         "rocks",
         "Rubble"
       ],
-      "summary": "A boulder or a heap of fallen stone, a 5-ft section at a time."
+      "summary": "A boulder or a heap of fallen stone, a 5-ft section at a time.",
+      "moves": "shove",
+      "move_dc": 15
     },
     "stump": {
       "name": "stump",
@@ -403,7 +458,9 @@
         "handcart",
         "vardo"
       ],
-      "summary": "A cart or wagon (the 2024 table's example of a Large object)."
+      "summary": "A cart or wagon (the 2024 table's example of a Large object).",
+      "moves": "shove",
+      "move_dc": 15
     },
     "fence": {
       "name": "fence",
@@ -434,11 +491,32 @@
         "iron_maiden",
         "cauldron",
         "lift_cage",
-        "brazier",
-        "brazier_green",
         "lantern_post"
       ],
       "summary": "Cages, cauldrons, braziers and other ironwork."
+    },
+    "brazier": {
+      "name": "brazier",
+      "substance": "iron",
+      "size": "medium",
+      "resilience": "resilient",
+      "blocks": "low",
+      "flammable": false,
+      "leaves": "floor",
+      "art": [
+        "brazier",
+        "brazier_green"
+      ],
+      "moves": "topple",
+      "move_dc": 10,
+      "topple": {
+        "dc": 12,
+        "damage": "1d10",
+        "type": "fire",
+        "length": 1,
+        "coals": true
+      },
+      "summary": "An iron fire basket on legs: pushed over, it spills burning coals across the next square."
     },
     "candelabra": {
       "name": "candelabra",
@@ -452,7 +530,10 @@
         "candelabra",
         "oil_lamp"
       ],
-      "summary": "A standing candelabra or lamp."
+      "summary": "A standing candelabra or lamp.",
+      "moves": "shove",
+      "move_dc": 5,
+      "throwable": true
     },
     "bones": {
       "name": "bones",

@@ -22,7 +22,7 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | Standard actions, hiding, effects' actions (escape, douse, wake), Haste's action | `encounter_actions.gd` (`actions`) |
 | Things lying on the battlefield: dropped and thrown weapons, picking them up, gathering them after the fight | `ground_items.gd` (`ground`) |
 | Taking back a move | `encounter_undo.gd` (`undo`) |
-| Things standing on the battlefield that break and burn (doors, furniture, chandeliers, a spider's web), oil and fire on the floor | `encounter_objects.gd` (`objects`) |
+| Things standing on the battlefield that break and burn (doors, furniture, chandeliers, a spider's web), oil and fire on the floor; doors, shoving, pushing over and throwing them, fire spreading and barrels bursting | `encounter_objects.gd` (`objects`), with `object_actions.gd` (`objects.actions`) and `object_fire.gd` (`objects.fire`) |
 | Casting: paying, checking targets, resolving the recipe | `spell_casting.gd` (`casting`) |
 | What can be cast, casting numbers, Metamagic | `spell_options.gd` (`options`) |
 | Reaction spells, releasing a readied spell | `spell_reactions.gd` (`reaction_spells`) |
@@ -182,7 +182,8 @@ the piles with `GroundView.sync(e.ground.items)` (world/combat/ground_view.gd) a
 
 `list`: BattleObjects (combat/battle_object.gd) `{id, kind, name, cells, ac, hp, hp_max, blocks (CombatGrid.WALL, LOW or 0),
 flammable, burning, leaves (floor, rubble, doorway), immune, resist, vulnerable, door_id, prop_id, art, hangs, fall, holds,
-hold_source, oil_rounds, destroyed}`, made from `data/objects/kinds.json` (Armor Class by substance, Hit Points by size and
+hold_source, oil_rounds, destroyed, open, locked (doors), moves ("shove", "topple"), move_dc, topple, throwable, bursts,
+wreck (where its wreckage lies, if not its squares), home (where it stood at the start)}`, made from `data/objects/kinds.json` (Armor Class by substance, Hit Points by size and
 sturdiness, the 2024 tables; what each kind blocks and leaves; which board art each kind is; the default kind per board
 theme; door kinds by words). `add(kind, cells, extra)` places one (setting its grid flag); `objects_at(cell)`,
 `blocking_at(cell)`, `cells_of(o)` (a web is where its prey stands) find them. `damage(o, parts, by, label)` applies
@@ -207,6 +208,23 @@ critical, action}, `object_damage` {id, amount}, `object_broken` {id}, `object_f
 (world/combat/object_view.gd). BattleScenery (world/combat/battle_scenery.gd) places the objects: `from_board(e, board)`
 for any board's '=' squares (CombatView.begin, once: `objects.placed`), `for_location(view, e)` for a location's closed
 doors, '=' squares and props that `hang` (chandeliers), and `after_fight(view, e)`.
+
+What creatures do with them (`ObjectActions`, `e.objects.actions`): `toggle_door(c, oid)` (the free object interaction,
+else Utilize or Fast Hands; `door_why`; `set_door(o, open)` flips the WALL flag), `shove(c, oid)` (one attack of the
+Attack action and an Athletics check; `shove_to(c, o)` says where it goes `{cell, who, fall, gone, why}`, `push(o, to, by)`
+moves it: a knock, a fall onto whoever is below, gone over a drop), `topple(c, oid)` (Utilize and an Athletics check;
+`topple_line(c, o)`, `fall_over(o, line, by, details)`), and throwing: `throw_options(c)` are attack options
+(EncounterWeapons.attack_options) `{id "improvised:g:<pile>" or "improvised:o:<object>", kind "thrown", improvised: ref}`,
+`throw_why(c, option)` (attack_legal), `thrown(c, option, target, cell)` (EncounterAttacks and the object attack: the
+pickup is paid, a pile lands by the target, a chair breaks). Lines: the Common tab's `door:<id>` (`entries`), the square
+menu's `act:door:<id>`, `act:shove:<id>`, `act:topple:<id>` (`square_entries`), carried out by `perform(c, id)`. Fire
+(`ObjectFire`, `e.objects.fire`): `spread()` as each round begins (from `round_started`), `burst(o, by)` for a barrel of
+lamp oil (from `damage`, `ignite` and `expose_to_fire`). `on_floor(cell)` is the creature standing on a square's floor:
+only those are hit by what is shoved, pushed over or falls, or burns on the floor. Events: `object_door` {id, open},
+`object_move` {id, from, to, fall, gone?}, `object_bump` {id, target}, `object_topple` {id, cells}, `object_burst` {id,
+cells}. A location door is a door object open or shut as the place left it (`locked` from its lock), except one the story
+watches (BattleScenery.watched_door: a flag, a fight or a narrator line on opening it), which stays shut; a location prop's
+`object` names its kind (a barrel of lamp oil); what a shove moved carries `moved_cell` on its art for the rest of the visit.
 
 ## The hotbar (`ActionCatalog`)
 
