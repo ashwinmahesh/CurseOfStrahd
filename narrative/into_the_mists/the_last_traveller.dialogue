@@ -1,55 +1,55 @@
 # The Last Traveller (side quest, docs/story/side_quests.md): a young man sits at the edge of the mists on the Old
-# Svalich Road, in clothes gone to rags and good boots, asking what day it is. Costin went into the mists from the
+# Svalich Road, in clothes gone to rags and good boots, asking what day it is. Ilarion went into the mists from the
 # village one night to fetch a doctor over the mountains for his wife's fever, and the mists turned him round till
 # morning. For him it was one night. For the valley it was fifty years: his children, Petra who carries the water and
 # Mihail the sexton, are old. The count's wolves come for anyone who walks out of the mists; walk him home anyway.
-# Reached from Costin by the mists and in the village. Every line here is unvoiced for now.
+# Reached from Ilarion by the mists and in the village. Every line here is unvoiced for now.
 
-# --- Costin, by the mists ---
+# --- Ilarion, by the mists ---
 
-~ costin
+~ ilarion
 if quest.the_last_traveller == done
 -> END
 endif
-if flag.costin_wolves_beaten
+if flag.ilarion_wolves_beaten
 -> walk_home
 endif
-if not flag.costin_met
-set costin_met
+if not flag.ilarion_met
+set ilarion_met
 quest the_last_traveller met
 Narrator: A young man sits on a stone at the edge of the fog, rubbing his arms. His coat is rags, his shirt is rags, his hat has no crown left, and his boots are beautiful: soft grey leather, without a mark on them.
-Costin: Is this the road down to the village? Only the fog turned me round all night. I was going over the mountains for the doctor. My wife has a fever. What day is it?
+Ilarion: Is this the road down to the village? Only the fog turned me round all night. I was going over the mountains for the doctor. My wife has a fever. What day is it?
 endif
 * What's your name? -> name
-* [if not flag.costin_seen] [Insight DC 11] (Look at him properly.) -> seen | unseen
+* [if not flag.ilarion_seen] [Insight DC 11] (Look at him properly.) -> seen | unseen
 * We'll walk you down to the village. -> walk
 * Goodbye. -> END
 
 ~ name
-Costin: Costin. From the village under the castle, the house with the blue door by the well. My wife's Aurica. Two little ones, Petra and Mihail. Petra carries water already; she's six and she thinks she's the mother.
+Ilarion: Ilarion. From the village under the castle, the house with the blue door by the well. My wife's Aurica. Two little ones, Petra and Mihail. Petra carries water already; she's six and she thinks she's the mother.
 interject tag:curious: Petra and Mihail. Isn't the old sexton in the village called Mihail?
--> costin
+-> ilarion
 
 ~ seen
-set costin_seen
+set ilarion_seen
 Narrator: The rags are years old, many years. There's moss in the seams of his coat. But his face is a young man's, and his hands, and he's frightened in the plain way of somebody who has been out in the cold one night and wants his bed.
 Narrator: Whatever happened to him, it happened to everything but him.
--> costin
+-> ilarion
 
 ~ unseen
-set costin_seen
+set ilarion_seen
 Narrator: A cold, frightened young man in a very old coat. Barovians don't throw anything away.
--> costin
+-> ilarion
 
 ~ walk
 quest the_last_traveller walking
 Narrator: He gets up gladly. You haven't gone a dozen steps when the fog behind you opens like a mouth, and out of it, low and quick and silent, come the count's wolves.
-Costin [afraid]: They followed me. All night they followed me. They never came close. Why are they coming close now?
-combat costin_wolves
+Ilarion [afraid]: They followed me. All night they followed me. They never came close. Why are they coming close now?
+combat ilarion_wolves
 
 ~ walk_home
 if quest.the_last_traveller == home
-Costin: The well's this way. I know the way from the well. Go on, I'll follow. I'd rather follow.
+Ilarion: The well's this way. I know the way from the well. Go on, I'll follow. I'd rather follow.
 -> END
 endif
 quest the_last_traveller home
@@ -60,17 +60,17 @@ Narrator: You walk him down the Old Svalich Road toward the village. He talks th
 
 ~ well
 if quest.the_last_traveller == done
-Costin: Petra's put me in the back room, where her grandmother slept. My granddaughter, I mean. Her granddaughter. I can't count it. I don't try. I carry the water now, and she lets me.
+Ilarion: Petra's put me in the back room, where her grandmother slept. My granddaughter, I mean. Her granddaughter. I can't count it. I don't try. I carry the water now, and she lets me.
 -> END
 endif
-Narrator: Costin stands by the well and looks at the blue door, which is grey, and at the old woman coming across the square with two buckets, who stops dead when she sees him and lets them both go.
+Narrator: Ilarion stands by the well and looks at the blue door, which is grey, and at the old woman coming across the square with two buckets, who stops dead when she sees him and lets them both go.
 Goodwife Petra: (Very quietly.) Tata?
-Costin: Petra? (He looks at her face for a long time, and at her grey hair, and at her hands.) Petra. I only went for the doctor. I only went one night.
+Ilarion: Petra? (He looks at her face for a long time, and at her grey hair, and at her hands.) Petra. I only went for the doctor. I only went one night.
 Goodwife Petra: Fifty years, Tata. Mama waited at that door till she died. Mihail dug you a grave. It's been empty all this time. He'll be so angry. He'll be so glad.
 Narrator: She holds her father's young face in her old hands, and neither of them says anything clever.
-set costin_home
+set ilarion_home
 quest the_last_traveller done
-Costin: (He sits on the edge of the well and pulls his boots off, one and then the other, and holds them out to you.) Aurica's grandmother's. They walk on air, a little, if you ask them. I put them on to run for the doctor. I won't be running anywhere now.
+Ilarion: (He sits on the edge of the well and pulls his boots off, one and then the other, and holds them out to you.) Aurica's grandmother's. They walk on air, a little, if you ask them. I put them on to run for the doctor. I won't be running anywhere now.
 give winged_boots
-approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +1 wren_featherfoot +1 kip_smudgewick +1: You walked Costin home to his children
+approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +1 wren_featherfoot +1 kip_smudgewick +1: You walked Ilarion home to his children
 -> END
