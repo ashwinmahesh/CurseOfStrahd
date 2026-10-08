@@ -134,7 +134,8 @@ func _use_pad(on: bool, device: int) -> void:
 		return
 	pad = on
 	if on:
-		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+		# Only a window the player is in hides the pointer (a capture's window never has focus).
+		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE and get_window() != null and get_window().has_focus():
 			Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	else:
 		if Input.mouse_mode == Input.MOUSE_MODE_HIDDEN:
