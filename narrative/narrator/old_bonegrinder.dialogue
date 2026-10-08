@@ -236,3 +236,14 @@ once
 ~ search:lane_shrine_tin
 | Behind the wayside shrine, someone left a tin of salve for whoever needed it next. It smells of mint and clean linen.
 once
+
+~ search:oven_ash
+| Something lies cooling in the oven's ash: a squat iron brazier, still glowing, though nothing in it burns.
+once
+
+~ check:investigation:oven_ash:failure
+| Ash, bone meal and the smell of baking. You decide not to dig any deeper.
+
+~ search:bags_black_cloth
+| Folded among the little whispering bags is a circle of black cloth. Unfold it on the floor, and it's a hole.
+once

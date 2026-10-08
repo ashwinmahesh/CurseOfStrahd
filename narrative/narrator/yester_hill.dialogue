@@ -109,3 +109,14 @@ once
 
 ~ check:investigation:heartwood_staff:failure
 | Splintered wood, sap like old blood. If the heartwood hides anything, the tree is keeping it.
+
+~ search:cage_floor_sword
+| Under the floor of the last wicker cage, a prisoner hid a sword the druids never found. The blade is black and thirsty.
+once
+
+~ search:gully_cache
+| Up the gully, under an overhang, a druid's cache wrapped in hide: dried herbs and a wand of yellowed bone.
+once
+
+~ check:investigation:gully_cache:failure
+| Scree, roots and old fire-scars. If the druids hid anything up here, they hid it from you too.

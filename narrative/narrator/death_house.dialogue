@@ -755,7 +755,7 @@ cooldown 10
 # --- Hidden finds (docs/story/found_magic_items.md) ---
 
 ~ search:den_cabinet_board
-| One board under the card cabinet lifts at a touch. Beneath it, a brass amulet ticks quietly to itself, still keeping time for a card game nobody finished.
+| One board under the card cabinet lifts at a touch. Beneath it, a silver medallion on a chain. Gustav Durst never lost at cards, and now you know why.
 once
 
 ~ check:investigation:den_cabinet_board:failure
@@ -776,14 +776,14 @@ once
 | Dry histories, shelved by someone who never read them. They keep their secrets, if they have any.
 
 ~ search:dressing_table_drawer
-| The drawer is shallower than the table. Under its false bottom, a crystal bottle of perfume that smells of roses, in a house where nothing has bloomed for years.
+| The drawer is shallower than the table. Under its false bottom lies a slim gold circlet set with a red stone, warm as a coal and twice as dangerous.
 once
 
 ~ check:investigation:dressing_table_drawer:failure
 | Powder, combs and a mirror that shows you looking tired. Nothing else worth the trouble.
 
 ~ search:nursemaid_mattress
-| Under the nursemaid's mattress, folded with care, lies a fine cloak that was never worn. A card is pinned to it, with a single initial: G.
+| Under the nursemaid's mattress, folded with care, lies a grey-green cloak that was never worn. Its edges blur when you look at them. A card is pinned to it, with a single initial: G.
 once
 
 ~ check:perception:nursemaid_mattress:failure
@@ -809,3 +809,18 @@ once
 
 ~ check:investigation:reliquary_pipes:failure
 | Bones, teeth and the dust of both. If any of these relics is more than it seems, it isn't telling you.
+
+~ search:harp_lute_case
+| Behind the standing harp, a lute case nobody has opened in years. The lute inside is perfectly in tune.
+once
+
+~ check:investigation:harp_lute_case:failure
+| Strings, dust and a smell of old varnish. The conservatory has nothing more to play for you.
+
+~ search:servant_bed_gloves
+| Under a servant's bed, wrapped in a clean rag, a pair of thick leather gloves. Whoever owned them caught things that were thrown at them, by the look of the palms.
+once
+
+~ search:pallet_gem
+| Under a straw pallet, where an initiate hid it from the others, a red stone the size of a hen's egg. It is hot, and something inside it is moving.
+once

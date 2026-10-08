@@ -103,6 +103,18 @@
       "label": "a false floor in the broken cart",
       "model": "broken_boards",
       "item": "bag_of_holding"
+    },
+    {
+      "id": "field_wall_cache",
+      "cell": [
+        20,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a farmer's cache behind the field wall",
+      "model": "rubble",
+      "item": "gauntlets_of_ogre_power"
     }
   ],
   "encounters": [

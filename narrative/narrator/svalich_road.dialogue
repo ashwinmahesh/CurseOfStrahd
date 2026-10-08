@@ -226,3 +226,19 @@ once
 
 ~ check:investigation:ribbon_tree_cache:failure
 | Ribbons, roots and wishes. If the Vistani hide things here, they hide them where outsiders don't think to dig.
+
+~ search:field_wall_cache
+| Behind the field wall, under a flat stone, a farmer hid what he valued most: a pair of heavy iron gauntlets that make your arms feel like a bull's.
+once
+
+~ search:trunk_hollow
+| The fallen trunk is hollow at one end. Inside, a small bag of rust-coloured cloth, and at the bottom something soft and warm, like fur.
+once
+
+~ search:milestone_hollow
+| Behind the milestone, a hollow packed with moss. In it lies a stubby wand of grey wood wound with something like spider silk.
+once
+
+~ search:cairn_necklace
+| Among the names scratched on the cairn's stones hangs a necklace of glass beads, each one with a bubble of air trapped inside.
+once

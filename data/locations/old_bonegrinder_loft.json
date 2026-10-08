@@ -219,6 +219,18 @@
       "label": "a broom up in the rafters",
       "model": "straw",
       "item": "broom_of_flying"
+    },
+    {
+      "id": "bags_black_cloth",
+      "cell": [
+        3,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "a black cloth among the little bags",
+      "model": "sack",
+      "item": "portable_hole"
     }
   ],
   "containers": [

@@ -474,7 +474,7 @@ cooldown 10
 # --- Hidden finds (docs/story/found_magic_items.md) ---
 
 ~ search:stocks_mud
-| Trodden into the mud beside the stocks, a little wand of painted wood. Whoever was cheered up here dropped it on the way out.
+| Trodden into the mud beside the stocks, a silver ring. Whoever sat in the stocks last lost it, and it didn't protect them from the Baron.
 once
 
 ~ search:desk_hidden_drawer
@@ -514,4 +514,26 @@ once
 
 ~ open:st_andral_niche
 | The saint's bones are home, and the niche below his sarcophagus stands open, as if it had been waiting. In it lies a mace with a sunburst head, polished by old hands.
+once
+
+~ search:hovel_step_sack
+| Under the hovel's step, someone keeps a scuffed leather haversack. It holds far more than it should and somehow always has the thing you reach for on top.
+once
+
+~ search:shrine_tithe
+| Under the cult's little shrine lies their tithe to the devil they serve: coins, rings and a short rod of black iron with a crown worked into its head.
+once
+
+~ check:perception:shrine_tithe:failure
+| Candle wax, scorch marks and a smell like hot tin. Whatever they worship here, it isn't telling you where it keeps its money.
+
+~ search:ledger_fireworks
+| Behind the festival ledger, a velvet case the Baron must have been saving for the big night: a necklace of small glowing beads, each one hot to the touch.
+once
+
+~ check:investigation:ledger_fireworks:failure
+| Festival accounts, festival rotas, festival penalties. The Baron's study holds a great deal of festival and nothing else.
+
+~ search:hearth_loose_brick
+| One brick by the taproom hearth isn't mortared. Behind it, a small black bead that is heavier than it looks.
 once

@@ -233,6 +233,19 @@
       "label": "a sack of \"flour\" that isn't",
       "model": "sack",
       "item": "dust_of_sneezing_and_choking"
+    },
+    {
+      "id": "oven_ash",
+      "cell": [
+        15,
+        11
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "skill": "investigation",
+      "label": "something cooling in the oven's ash",
+      "model": "soot_patch",
+      "item": "brazier_of_commanding_fire_elementals"
     }
   ],
   "containers": [

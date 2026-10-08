@@ -234,3 +234,11 @@ once
 
 ~ check:perception:druids_missed_gem:failure
 | Splinters and nail holes. Whatever the druids were looking for, they dug for it here, and so do you.
+
+~ search:winery_well_rope
+| Just below the well's lip, a coil of silk rope is tied off to an iron ring. It shifts in your hands, eager to climb.
+once
+
+~ search:roost_hoard
+| The ravens' hoard in the dead tree: buttons, a thimble, a spoon, and a plain ring that drifts down to your palm like a feather instead of falling.
+once
