@@ -235,6 +235,7 @@ func _draw_strip() -> void:
 	if st != null:
 		finish_text = "Join the company"
 	var go := UiParts.primary_button(finish_text, _finish)
+	go.name = "Finish"
 	go.disabled = not all_done
 	go.tooltip_text = "" if all_done else "Confirm every character on their Review step first."
 	_strip.add_child(go)
@@ -294,6 +295,7 @@ func _draw_rest() -> void:
 		var next := UiKit.button("Next", func() -> void:
 			step += 1
 			_draw())
+		next.name = "Next"
 		UiParts.light_up(next)
 		nav.add_child(next)
 	_body.add_child(nav)
@@ -302,6 +304,32 @@ func _draw_rest() -> void:
 func _changed() -> void:
 	confirmed[slot] = false
 	_draw()
+
+
+## The pad (PadNav; the controller map in docs/ui/character_creation.md): LB/RB the previous or next step.
+func pad_tab(dir: int) -> void:
+	step = clampi(step + dir, 0, CharacterBuilder.Step.REVIEW)
+	_draw()
+
+
+## LT/RT: the previous or next character being made.
+func pad_character(dir: int) -> void:
+	if builders.size() > 1:
+		slot = posmod(slot + dir, builders.size())
+		_draw()
+
+
+## Start: the step's Next; on Review its Confirm, then the finish once every character is confirmed.
+func pad_confirm() -> void:
+	var name_ := "Next" if step < CharacterBuilder.Step.REVIEW else ("Finish" if confirmed[slot] else "Confirm")
+	var b_ := find_child(name_, true, false) as Button
+	if b_ != null and b_.is_visible_in_tree() and not b_.disabled:
+		b_.pressed.emit()
+
+
+func pad_prompts() -> Array:
+	var next := "Next" if step < CharacterBuilder.Step.REVIEW else ("Finish" if confirmed[slot] else "Confirm")
+	return [["lb+rb", "Steps"], ["start", next]] + ([["lt+rt", "Character"]] if builders.size() > 1 else [])
 
 
 ## Escape steps back one creation step, and from the first step leaves the creator (as its Back button does). A text
@@ -720,6 +748,7 @@ func _review_step() -> void:
 			slot = next
 			step = 0
 		_draw())
+	confirm.name = "Confirm"
 	confirm.disabled = not errs.is_empty()
 	_body.add_child(confirm)
 	var built: Array[Character] = []

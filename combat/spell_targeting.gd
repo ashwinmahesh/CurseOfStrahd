@@ -48,9 +48,9 @@ func range_ft(s: Dictionary, caster: Combatant = null) -> int:
 			if caster != null and ft >= 10 and ((s.has("attack") and enc().features.has_feat(caster, "spell_sniper")) \
 					or (str(s.get("school", "")) == "illusion" and CombatFeatures.has_feature(caster, "improved_illusions"))):
 				ft += 60
-			# Eldritch Spear: a damaging Warlock cantrip reaches 30 ft × Warlock level.
-			if caster != null and int(s.get("level", 0)) == 0 and s.has("damage") and ClassFeatures.knows_invocation(caster, "eldritch_spear") and "warlock" in (s.get("classes", []) as Array):
-				ft = maxi(ft, 30 * ClassFeatures.level_of(caster, "warlock"))
+			# Eldritch Spear: a damaging Warlock cantrip of 10 ft or more reaches 30 ft × Warlock level farther.
+			if caster != null and ft >= 10 and int(s.get("level", 0)) == 0 and s.has("damage") and ClassFeatures.knows_invocation(caster, "eldritch_spear") and "warlock" in (s.get("classes", []) as Array):
+				ft += 30 * ClassFeatures.level_of(caster, "warlock")
 			var sc := s.get("cantrip_scaling", {}) as Dictionary
 			if sc.has("range_doubles") and caster != null:
 				ft *= int(pow(2, Spellcasting.cantrip_tier(caster.creature.character_level())))

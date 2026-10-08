@@ -89,6 +89,12 @@ func set_view(v: String) -> void:
 	_draw()
 
 
+## The pad's LT/RT (PadNav): the previous or next of the party.
+func pad_character(step: int) -> void:
+	index = posmod(index + step, st.party.size())
+	_draw()
+
+
 func _ch() -> Character:
 	return st.party[index]
 

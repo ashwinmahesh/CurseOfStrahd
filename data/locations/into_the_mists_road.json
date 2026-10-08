@@ -419,12 +419,12 @@
       "when": "night and quest.last_muster and not flag.bone_marshal_beaten"
     },
     {
-      "npc": "costin",
+      "npc": "ilarion",
       "cell": [
         28,
         13
       ],
-      "dialogue": "into_the_mists/the_last_traveller:costin",
+      "dialogue": "into_the_mists/the_last_traveller:ilarion",
       "when": "quest.the_last_traveller != home and quest.the_last_traveller != done",
       "facing": "west"
     }
@@ -844,7 +844,7 @@
       }
     },
     {
-      "id": "costin_wolves",
+      "id": "ilarion_wolves",
       "trigger": "dialogue",
       "when": "level >= 3",
       "text": "The fog behind you opens like a mouth, and the count's wolves come out of it low and quick, for the man who walked out of the mists.",
@@ -887,10 +887,10 @@
         }
       ],
       "surprise": "",
-      "flag": "costin_wolves_beaten"
+      "flag": "ilarion_wolves_beaten"
     },
     {
-      "id": "costin_wolves",
+      "id": "ilarion_wolves",
       "trigger": "dialogue",
       "when": "level >= 2",
       "text": "The fog behind you opens like a mouth, and the count's wolves come out of it low and quick, for the man who walked out of the mists.",
@@ -939,10 +939,10 @@
         }
       ],
       "surprise": "",
-      "flag": "costin_wolves_beaten"
+      "flag": "ilarion_wolves_beaten"
     },
     {
-      "id": "costin_wolves",
+      "id": "ilarion_wolves",
       "trigger": "dialogue",
       "text": "The fog behind you opens like a mouth, and the count's wolves come out of it low and quick, for the man who walked out of the mists.",
       "monsters": [
@@ -983,7 +983,7 @@
         }
       ],
       "surprise": "",
-      "flag": "costin_wolves_beaten"
+      "flag": "ilarion_wolves_beaten"
     }
   ],
   "narration": {

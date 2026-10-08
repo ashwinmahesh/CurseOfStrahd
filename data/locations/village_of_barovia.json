@@ -1321,7 +1321,7 @@
       "facing": "north"
     },
     {
-      "npc": "costin",
+      "npc": "ilarion",
       "cell": [
         19,
         12
@@ -1331,13 +1331,13 @@
       "facing": "south"
     },
     {
-      "npc": "costin",
+      "npc": "ilarion",
       "cell": [
         19,
         12
       ],
       "dialogue": "into_the_mists/the_last_traveller:well",
-      "when": "flag.costin_home and not weather == storm",
+      "when": "flag.ilarion_home and not weather == storm",
       "hours": [
         8,
         18

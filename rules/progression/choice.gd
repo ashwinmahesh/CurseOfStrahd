@@ -70,3 +70,32 @@ func to_dict() -> Dictionary:
 
 func describe() -> String:
 	return "%s (%s): %d of %d chosen" % [label, source, picks.size(), count]
+
+
+# --- Repeatable options (2024 Eldritch Invocations: Agonizing Blast, Lessons of the First Ones) --------------------
+# A later copy of a repeatable inline option is picked as "<id>#2", "<id>#3"; its own choice is keyed after it
+# ("warlock.1.eldritch_invocations/agonizing_blast#2"), so each copy picks its own cantrip or feat.
+
+## The option a pick, or the choice key of a copy, repeats: "agonizing_blast#2" -> "agonizing_blast"; anything else
+## is returned as it is.
+static func repeat_base(s: String) -> String:
+	var cut := s.rfind("#")
+	if cut < 0 or not s.substr(cut + 1).is_valid_int():
+		return s
+	return s.substr(0, cut)
+
+
+## Which copy a pick or a copy's choice key is: 1 for the option itself, n for "<id>#n".
+static func copy_number(s: String) -> int:
+	var base := repeat_base(s)
+	return 1 if base == s else int(s.substr(base.length() + 1))
+
+
+## How a copy reads: "Agonizing Blast (2nd)".
+static func copy_label(name_: String, n: int) -> String:
+	if n <= 1:
+		return name_
+	var suffix := "th"
+	if n % 100 < 11 or n % 100 > 13:
+		suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th") as String
+	return "%s (%d%s)" % [name_, n, suffix]

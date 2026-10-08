@@ -24,13 +24,13 @@ what the region's other quests pay. Each quest's items are listed there as Gifts
 ### The Last Traveller (`the_last_traveller`, narrative/into_the_mists/the_last_traveller.dialogue; batch 5)
 
 The first side quest a new party can find: on the Old Svalich Road, at the edge of the fog the party came out of,
-Costin (new NPC) sits on a stone in rags many years old and beautiful grey boots, asking what day it is. He went into
+Ilarion (new NPC) sits on a stone in rags many years old and beautiful grey boots, asking what day it is. He went into
 the fog last night to fetch a doctor over the mountains for his wife's fever, and it turned him round. **Twist:** his
 night was fifty years; his little ones, Petra and Mihail, are Goodwife Petra who carries the water and Old Mihail the
 sexton (Insight DC 11 sees the moss in his seams). **Escalation:** the moment he sets off, the count's wolves come out
 of the fog for him.
 
-- Fight `costin_wolves` on the road: level 1 five wolves, 250 XP (the autopilot wins 3 of 4 and loses two or three
+- Fight `ilarion_wolves` on the road: level 1 five wolves, 250 XP (the autopilot wins 3 of 4 and loses two or three
   party members); level 2 six; level 3 a dire wolf leader and four wolves.
 - At the well, Petra knows her father. He gives the party his wife's grandmother's boots, which walk on air a little:
   Winged Boots (uncommon). Old Mihail fills in the grave he dug fifty years ago.
@@ -606,5 +606,5 @@ Krezk: the_packs_runt.dialogue in full (new speakers Little Petru and the Grands
 Mount Baratok: the_mages_lost_pages.dialogue in full (Mordenkainen; the letters are Narrator). Batch 4,
 Castle Ravenloft: the_unnamed_crypt.dialogue in full (new speaker Corvina; also Pidlwick II) and Mordenkainen's new
 line in the_mages_lost_pages.dialogue. Batch 5,
-Into the Mists: the_last_traveller.dialogue in full (new speaker Costin; also Goodwife Petra) and Old Mihail's new
+Into the Mists: the_last_traveller.dialogue in full (new speaker Ilarion; also Goodwife Petra) and Old Mihail's new
 gravedigger line in the village townsfolk.dialogue.

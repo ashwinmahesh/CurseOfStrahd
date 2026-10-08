@@ -914,8 +914,9 @@ func _apply_picks(c: Choice, src: Dictionary, scope: Dictionary) -> void:
 				else:
 					_walk_feat(p, "%s/%s" % [c.key, p], src)
 			"invocation":
-				if not p in invocations:
-					invocations.append(p)
+				# A repeatable invocation's later copy ("agonizing_blast#2") is the same invocation.
+				if not Choice.repeat_base(p) in invocations:
+					invocations.append(Choice.repeat_base(p))
 				_walk_inline_option(c, p, src, scope)
 			"metamagic":
 				if not p in metamagic:
@@ -950,10 +951,17 @@ func _apply_picks(c: Choice, src: Dictionary, scope: Dictionary) -> void:
 				pass # read by _build_spellcasting / modifiers
 
 
+## A repeatable option's later copy ("agonizing_blast#2") walks the option again under its own key and name, so its
+## choice is its own.
 func _walk_inline_option(c: Choice, pick: String, src: Dictionary, scope: Dictionary) -> void:
+	var base := Choice.repeat_base(pick)
 	for o in c.inline_options:
-		if str(o.get("id", "")) == pick:
-			_walk_feature(o, "%s/%s" % [c.key, pick], src, scope)
+		if str(o.get("id", "")) == base:
+			var f := o
+			if pick != base:
+				f = o.duplicate()
+				f["name"] = Choice.copy_label(str(o.get("name", "")), Choice.copy_number(pick))
+			_walk_feature(f, "%s/%s" % [c.key, pick], src, scope)
 
 
 func _has_inline_option(c: Choice, pick: String) -> bool:

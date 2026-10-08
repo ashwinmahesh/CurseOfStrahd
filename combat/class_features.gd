@@ -58,7 +58,8 @@ static func picks(c: Combatant, key: String) -> Array[String]:
 	return out
 
 
-## Picks of a kind of choice (invocation, beast_form, metamagic).
+## Picks of a kind of choice (invocation, beast_form, metamagic); a repeatable invocation's later copy
+## ("agonizing_blast#2") reads as the invocation.
 static func picks_of_kind(c: Combatant, kind: String) -> Array[String]:
 	var out: Array[String] = []
 	var ch := _ch(c)
@@ -67,7 +68,7 @@ static func picks_of_kind(c: Combatant, kind: String) -> Array[String]:
 	for cd in ch.choice_defs:
 		if cd.kind == kind:
 			for p: Variant in cd.picks:
-				out.append(str(p))
+				out.append(Choice.repeat_base(str(p)))
 	return out
 
 

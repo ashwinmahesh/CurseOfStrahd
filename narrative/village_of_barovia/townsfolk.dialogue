@@ -61,7 +61,7 @@ Widow Ileana: I did. I still don't know if I was right.
 * We're sorry. -> END
 
 ~ gravedigger
-if flag.costin_home
+if flag.ilarion_home
 Old Mihail: My father's home. He's younger than I was when I dug his grave. I filled it in this morning and stood on it, and I don't know what I felt. Petra says that's allowed.
 -> END
 endif
