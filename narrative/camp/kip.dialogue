@@ -238,7 +238,7 @@ approve kip_smudgewick +8: You stood by me while I settled up with Mister Quillo
 -> END
 
 ~ talk_home
-if name:kip_smudgewick and quest.the_fine_print >= free and flag.eva_truth_teller != "kip_smudgewick"
+if name:kip_smudgewick and quest.the_fine_print == free and flag.eva_truth_teller != "kip_smudgewick"
 -> home
 endif
 -> END

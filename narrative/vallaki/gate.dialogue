@@ -61,6 +61,10 @@ set vallaki_arrived
 quest festival_of_the_blazing_sun announced
 if guest:ireena
 quest sanctuary_for_ireena arrived
+# The road west is behind her: the escort is over (Sanctuary for Ireena goes on from here).
+if quest.escort_ireena
+quest escort_ireena arrived
+endif
 endif
 Town Guard: The rules, quick. The Festival of the Blazing Sun is in the square; the Baron lights the sun at noon and everyone attends. Lamps out at the second bell. Nobody frowns at the Baron.
 Town Guard: If you've a grievance, keep it indoors. If you've a dead relative, Father Lucian at St. Andral's. If you've a live one who frowns, keep them indoors as well.
