@@ -32,6 +32,9 @@ var _flags: PackedInt32Array
 var _height: PackedInt32Array
 ## Movable obstacles that occupy a square, set by the encounter: cell -> occupant id.
 var occupant: Dictionary = {}
+## How far the map's open void falls (a chasm, a tower's well), from the map's `drop_ft`: a creature forced over
+## the edge into a void square falls this far and out of the fight. 0: the void is the map's edge and nothing crosses.
+var drop_ft: int = 0
 ## can_see results by footprints (walls don't move; cleared when the map changes).
 var _sight_cache: Dictionary = {}
 
@@ -162,9 +165,9 @@ static func _axis_gap(a: int, a_size: int, b: int, b_size: int) -> int:
 
 ## Feet to step from `from` to the adjacent `to` for a creature of `size_cells`, or -1 if it can't.
 ## `blocked(cell)` says whether another creature bars the square; `slowed(cell)` whether one makes it
-## Difficult Terrain. Climbing up more than 5 ft costs 1 extra foot per foot climbed; drops over 10 ft are refused.
-## Movement modes for step costs: flying ignores ground Difficult Terrain and heights; climbing (Spider Climb)
-## pays nothing extra to go up.
+## Difficult Terrain. A rise or drop of more than 5 ft is climbed: 1 extra foot per foot climbed.
+## Movement modes for step costs: flying ignores ground Difficult Terrain and heights; climbing (a Climb Speed,
+## Spider Climb) pays nothing extra to climb.
 const MOVE_FLY := 1
 const MOVE_CLIMB := 2
 ## Incorporeal Movement: through walls and creatures, as Difficult Terrain.
@@ -217,12 +220,17 @@ func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable,
 	var cost := FEET * mult
 	if (mode & MOVE_FLY) != 0:
 		return cost
-	var rise := height(to) - height(from)
-	if rise > FEET and (mode & MOVE_CLIMB) == 0:
-		cost += rise * 2
-	elif rise < -2 * FEET:
-		return -1
+	# Climbing (2024): every foot climbed, up or down, costs 1 extra foot (2 extra in Difficult Terrain), nothing extra
+	# with a Climb Speed. A rise or drop of 5 ft is a step (stairs, a dais) and costs nothing more.
+	var climb := absi(height(to) - height(from))
+	if climb > FEET:
+		cost += climb * (mult if (mode & MOVE_CLIMB) != 0 else mult + 1)
 	return cost
+
+
+## How far a creature falls going over into `c`: the map's drop for an open void square inside the map, else 0.
+func drop_at(c: Vector2i) -> int:
+	return drop_ft if in_bounds(c) and (flags(c) & (VOID | WATER)) == VOID else 0
 
 
 ## Every square reachable within `budget` feet: {cell: {"cost": int, "prev": Vector2i}}. Squares other creatures

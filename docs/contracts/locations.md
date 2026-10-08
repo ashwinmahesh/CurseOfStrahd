@@ -48,14 +48,17 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
 - **Crime (F8, docs/rules/stealth.md):** a container's `owner` (an npc id) makes taking from it stealing when somebody
   sees; an area's `private` (an npc id) makes it a private room, with `open` (a condition) for when it may be entered;
   the location's `watch` names the guard who answers a crime here ("" for nobody; unset, the region's watch).
-- **NPCs:** `{npc, cell, dialogue, when, facing, approach, asleep, path, pause}`. The first entry per NPC whose
+- **NPCs:** `{npc, cell, dialogue, when, hours, facing, approach, asleep, path, pause}`. The first entry per NPC whose
   `when` holds stands there; the game re-checks after every conversation and fight. `approach: n` makes the NPC speak
   first, once, when the leader comes within n squares and can see them. `asleep: true` lays the NPC down asleep
   (Unconscious, so Incapacitated and Prone, as the 2024 rules have a sleeper); the hover hint, Look and the Alt plates
   say so. `path: [[x, y], [x, y, seconds], ...]` walks the NPC from its cell through each waypoint and back, standing
   `pause` seconds (default 3, or a waypoint's own) at each (NpcRoutes): it holds while anyone talks or fights, while
   the leader stands beside it and while its next square is taken, and under turn-based exploring walks only as a
-  round ends; a sleeper never walks. Waypoints must be open floor reachable without opening a door.
+  round ends; a sleeper never walks. Waypoints must be open floor reachable without opening a door. `hours: [from,
+  to]` keeps the NPC here only between those hours (`[19, 6]` passes midnight), so townsfolk go to work, the tavern
+  and home: a person may have an entry in each place. The people re-check who stands where whenever the hour turns
+  while the party is in the location (LocationClock).
 - **Prop kinds:** `examine` (Narrator line `examine:<id>`), `book` (`codex` entry), `search` (a hidden thing found
   with `search_dc`), `lever` (sets `flag`), `decor` (no interaction). Optional `when`, `dialogue`, `item`, `flag`.
 

@@ -31,8 +31,8 @@
     "amount": 1,
     "concentration": true
   },
-  "summary": "Moonlight fills a 20-foot Emanation around you. You and your allies in it have Half Cover and Resistance to Cold, Lightning and Radiant damage. You can end the spell early: as a Reaction when you fail a save against being Frightened, Grappled or Restrained, to succeed instead (in a fight, set it to Automatic in the class tab), or as a Magic action to heal yourself or an ally in the moonlight for 4d10 + your spellcasting modifier.",
-  "text": "Moonlight fills a 20-foot Emanation around you. You and your allies in it have Half Cover and Resistance to Cold, Lightning and Radiant damage. You can end the spell early: as a Reaction when you fail a save against being Frightened, Grappled or Restrained, to succeed instead (in a fight, set it to Automatic in the class tab), or as a Magic action to heal yourself or an ally in the moonlight for 4d10 + your spellcasting modifier.",
+  "summary": "Moonlight fills a 20-foot Emanation around you. You and your allies in it have Half Cover and Resistance to Cold, Lightning and Radiant damage. You can end the spell early: as a Reaction when you fail a save against being Frightened, Grappled or Restrained, to succeed instead (in a fight you are asked, unless the class tab sets it to Automatic or Off), or as a Magic action to heal yourself or an ally in the moonlight for 4d10 + your spellcasting modifier.",
+  "text": "Moonlight fills a 20-foot Emanation around you. You and your allies in it have Half Cover and Resistance to Cold, Lightning and Radiant damage. You can end the spell early: as a Reaction when you fail a save against being Frightened, Grappled or Restrained, to succeed instead (in a fight you are asked, unless the class tab sets it to Automatic or Off), or as a Magic action to heal yourself or an ally in the moonlight for 4d10 + your spellcasting modifier.",
   "tags": [
     "defense",
     "healing"
@@ -90,5 +90,10 @@
       "not_this_turn": false
     }
   ],
-  "policy": "never"
+  "policy": "ask",
+  "policy_modes": [
+    "ask",
+    "auto",
+    "never"
+  ]
 }

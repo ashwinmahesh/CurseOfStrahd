@@ -8,9 +8,9 @@ extends RefCounted
 ##
 ## The Encounter holds the fight's state. Its jobs live in helpers, a file each, that it makes and owns:
 ## EncounterTurns, EncounterSight, EncounterMovement, EncounterMounts, EncounterGrapples, EncounterWeapons,
-## EncounterAttacks, EncounterDamage, EncounterReactions and EncounterActions (combat/encounter_*.gd), and GroundItems
-## (what lies on the battlefield). The forwarding functions at the end are the Encounter's interface, so the HUD, the
-## AI, spells and features keep calling it.
+## EncounterAttacks, EncounterDamage, EncounterReactions, EncounterActions and EncounterUndo (combat/encounter_*.gd), and
+## GroundItems (what lies on the battlefield). The forwarding functions at the end are the Encounter's interface, so
+## the HUD, the AI, spells and features keep calling it.
 
 enum State { SETUP, ACTIVE, OVER }
 
@@ -62,6 +62,8 @@ var echo_knight: EchoKnight
 var hit_context: Dictionary = {}
 ## Magic items: the Items tab, item powers and the hooks below (combat/combat_items.gd, ADR 0012).
 var items: CombatItems
+## What can change a D20 Test after its roll, and rolls that pause to ask (combat/d20_responses.gd, F6).
+var d20: D20Responses
 var _cover_cache: Dictionary = {}
 ## Savage Attacker is once per turn, any creature's turn: creature id -> the turn it was used on.
 var _savage_turn: Dictionary = {}
@@ -97,6 +99,8 @@ var reaction_flow: EncounterReactions
 var actions: EncounterActions
 ## Weapons and other things lying on the battlefield, and picking them up (combat/ground_items.gd).
 var ground: GroundItems
+## Taking back a move (combat/encounter_undo.gd).
+var undo: EncounterUndo
 
 
 func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
@@ -129,6 +133,8 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	triggered_features = TriggeredFeatures.new(self)
 	items = CombatItems.new(self)
 	legendary = Legendary.new(self)
+	undo = EncounterUndo.new(self)
+	d20 = D20Responses.new(self)
 
 
 # --- Setup ----------------------------------------------------------------------------------------
@@ -271,6 +277,20 @@ func then(result: CombatResult, next: Callable) -> CombatResult:
 		return then(rr, next)
 	result.pending = req
 	return result
+
+
+## Runs `body` (item -> CombatResult) for each item of `list` in turn, then `done`; when a body pauses for a prompt,
+## the rest of the list waits for the answer. For loops whose steps can ask (each target's saving throw).
+func each(list: Array, body: Callable, done: Callable, from: int = 0) -> CombatResult:
+	var i := from
+	while i < list.size():
+		var item: Variant = list[i]
+		i += 1
+		var res := body.call(item) as CombatResult
+		if pending != null:
+			var at := i
+			return then(res, func() -> CombatResult: return each(list, body, done, at))
+	return done.call() as CombatResult
 
 
 # --- For the scene --------------------------------------------------------------------------------
@@ -434,6 +454,10 @@ func center_of(c: Combatant) -> Vector2:
 	return movement.center_of(c)
 
 
+func fall(c: Combatant, feet: int, why: String = "Falling") -> int:
+	return movement.fall(c, feet, why)
+
+
 # --- Mounted combat (EncounterMounts) -------------------------------------------------------------
 
 func mount_of(c: Combatant) -> Combatant:
@@ -472,6 +496,10 @@ func escape_grapple(c: Combatant) -> CombatResult:
 
 func _release_grapples_by(grappler: Combatant) -> void:
 	grappling._release_grapples_by(grappler)
+
+
+func release_grapple(c: Combatant, target: Combatant) -> CombatResult:
+	return grappling.release(c, target)
 
 
 # --- Weapons and attack options (EncounterWeapons) ------------------------------------------------
@@ -568,8 +596,8 @@ func begin_multiattack(c: Combatant) -> Array[Dictionary]:
 
 # --- Damage, healing and dying (EncounterDamage) --------------------------------------------------
 
-func death_save(c: Combatant) -> CombatResult:
-	return damage.death_save(c)
+func death_save(c: Combatant, pausable: bool = true) -> CombatResult:
+	return damage.death_save(c, pausable)
 
 
 func needs_death_save(c: Combatant) -> bool:
@@ -602,8 +630,8 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 
 # --- Reaction prompts and the reaction queue (EncounterReactions) ---------------------------------
 
-func _reaction_decision(reactor: Combatant, kind: String) -> String:
-	return reaction_flow._reaction_decision(reactor, kind)
+func _reaction_decision(reactor: Combatant, kind: String, fallback: String = "") -> String:
+	return reaction_flow._reaction_decision(reactor, kind, fallback)
 
 
 func answer_reaction(use: bool) -> CombatResult:
@@ -704,3 +732,13 @@ func can_disengage(c: Combatant) -> bool:
 
 func pick_up(c: Combatant, gid: String) -> CombatResult:
 	return ground.pick_up(c, gid)
+
+
+# --- Taking back a move (EncounterUndo) -----------------------------------------------------------
+
+func can_undo_move(c: Combatant) -> bool:
+	return undo.can_undo_move(c)
+
+
+func undo_move(c: Combatant) -> CombatResult:
+	return undo.undo_move(c)

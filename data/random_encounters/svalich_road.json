@@ -304,6 +304,77 @@
         }
       ],
       "text": "A howl ends in a word. Something tall comes out of the field on two legs, still wearing the shreds of a coat."
+    },
+    {
+      "id": "strahds_eyes",
+      "weight": 2,
+      "when": "night and attention >= watched",
+      "once": true,
+      "dialogue": "strahd/attention:eyes_bats"
+    },
+    {
+      "id": "strahds_wolves",
+      "weight": 2,
+      "when": "night and attention >= marked",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            25,
+            11
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            2
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            8,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            3,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            24,
+            14
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            9,
+            2
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            19,
+            15
+          ]
+        }
+      ],
+      "text": "Grey shapes come out of the dark in a line, too orderly for a hunting pack. Somebody sent them, and they know whom they were sent for."
     }
   ]
 }

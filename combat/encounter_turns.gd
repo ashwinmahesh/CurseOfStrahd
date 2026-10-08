@@ -135,7 +135,7 @@ func _begin_turn() -> void:
 		c.bonus_available = false
 		e.log.add("info", "%s can't take an action or a Bonus Action this turn" % c.name(), c.id)
 	if e.needs_death_save(c) and not c.is_player_controlled():
-		e.death_save(c)
+		e.death_save(c, false)
 
 
 ## Ends the current creature's turn: end-of-turn effects and repeated saves, then the next creature (and round).
@@ -146,10 +146,21 @@ func end_turn() -> CombatResult:
 	if e.state != Encounter.State.ACTIVE:
 		return CombatResult.fail("Combat is over")
 	var c := e.current()
+	# A Death Saving Throw and the repeated saves can stop for the choices after their rolls (Heroic Inspiration,
+	# Indomitable): the rest of the turn's end waits for the answer.
 	if e.needs_death_save(c):
-		e.death_save(c)
+		var ds := e.death_save(c)
+		if e.pending != null:
+			return e.then(ds, func() -> CombatResult: return _turn_end_effects(c))
 		if e.state != Encounter.State.ACTIVE:
 			return CombatResult.new()
+	return _turn_end_effects(c)
+
+
+func _turn_end_effects(c: Combatant) -> CombatResult:
+	var e := enc()
+	if e.state != Encounter.State.ACTIVE:
+		return CombatResult.new()
 	for o in e.combatants:
 		o.creature.on_turn_end(c.id)
 	e._expire_marks(c.id, "end")
@@ -162,17 +173,17 @@ func end_turn() -> CombatResult:
 	e.monster_actions.turn_end(c)
 	e.items.turn_end(c)
 	e.triggered_features.turn_end(c)
-	e.spells.turn_end(c)
-	e.spells.zones.prune()
-	_check_over()
-	if e.state != Encounter.State.ACTIVE:
-		return CombatResult.new()
-	# Legendary actions at the end of another creature's turn (not while time is stopped).
-	var stopped := c.has_meta("time_stop") and int(c.get_meta("time_stop")) > 0
-	var lr := e.legendary.after_turn(c) if not stopped else CombatResult.new()
-	if e.pending != null:
-		return e.then(lr, func() -> CombatResult: return _next_turn(c))
-	return _next_turn(c)
+	return e.then(e.spells.turn_end(c), func() -> CombatResult:
+		e.spells.zones.prune()
+		_check_over()
+		if e.state != Encounter.State.ACTIVE:
+			return CombatResult.new()
+		# Legendary actions at the end of another creature's turn (not while time is stopped).
+		var stopped := c.has_meta("time_stop") and int(c.get_meta("time_stop")) > 0
+		var lr := e.legendary.after_turn(c) if not stopped else CombatResult.new()
+		if e.pending != null:
+			return e.then(lr, func() -> CombatResult: return _next_turn(c))
+		return _next_turn(c))
 
 
 ## After `c`'s turn (and any legendary actions): the next creature, a new round, the lair's turn.
@@ -212,7 +223,7 @@ func _advance_index() -> void:
 			e.log.add("turn", "Round %d" % e.round_no, "")
 			e.events.append({"type": "round", "round": e.round_no})
 			e.legendary.round_started()
-		if e.current().is_alive():
+		if e.current().is_alive() and not e.current().has_meta("left_fight"):
 			break
 
 
@@ -250,7 +261,8 @@ func _check_over() -> void:
 	var party_up := false
 	var enemies_up := false
 	for c in e.combatants:
-		if not c.is_alive() or c.creature.hp <= 0 or c.creature.has_flag("spell_object"):
+		# A creature that fell out of the fight (EncounterMovement.leave_grid) no longer counts for either side.
+		if not c.is_alive() or c.creature.hp <= 0 or c.creature.has_flag("spell_object") or c.has_meta("left_fight"):
 			continue
 		if c.side in [&"party", &"guest"]:
 			party_up = true
