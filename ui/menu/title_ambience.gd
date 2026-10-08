@@ -25,6 +25,8 @@ const ROAD: Array[Vector2] = [Vector2(796.0, 676.0), Vector2(850.0, 655.0), Vect
 	Vector2(1083.0, 449.0)]
 ## Who walks the road: a sprite with a walk sheet, whether they carry a lantern, and which way they go (1 up to the
 ## castle, -1 down from it; owner: "more travellers, and someone leaving the castle").
+## Travellers' sheets are drawn some 20 times smaller than rendered (shaders/ui/sprite_small.gdshader).
+const SMALL_SPRITE := preload("res://shaders/ui/sprite_small.gdshader")
 const WALKERS := [["luvash", true, 1], ["commoner", false, 1], ["arabelle", false, 1], ["villager", false, 1],
 	["vistana", true, -1], ["noble", false, -1]]
 ## Pine forests in the key art (min and max corner, in its pixels): the wind sways them.
@@ -285,17 +287,22 @@ func _bat(c: CanvasItem, at: Vector2, half_span: float, beat: float, tilt: float
 
 # --- Travellers on the road -------------------------------------------------------------------------
 
-## A traveller: their walk sheet (8 frames a direction, 384 px cells), darkened to the night, starting partway along
-## the road so the road is never empty; `way` 1 climbs to the castle, -1 comes down from it.
+## A traveller: their walk sheet (sized by its cell, which is 384 or, for HD sheets, 768 px), darkened to the night,
+## starting partway along the road so the road is never empty; `way` 1 climbs to the castle, -1 comes down from it.
 func _add_walker(sprite_id: String, lantern: bool, way: int, i: int) -> void:
 	var path := "res://art/sprites/%s/walk.tres" % sprite_id
 	if not ResourceLoader.exists(path):
 		return
 	var s := AnimatedSprite2D.new()
 	s.sprite_frames = load(path) as SpriteFrames
-	s.animation = &"walk_e"
-	s.offset = Vector2(0, -168)
-	s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	var cell := float(DirectionalSprite.cell_size(s.sprite_frames))
+	s.animation = DirectionalSprite.anim_for(s.sprite_frames, "walk", "e")[0] as StringName
+	# The figure stands about 7/8 of its cell tall, its feet 7/16 of a cell below the centre.
+	s.offset = Vector2(0, -cell * 0.4375)
+	s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	var mat := ShaderMaterial.new()
+	mat.shader = SMALL_SPRITE
+	s.material = mat
 	s.modulate = Look.color("silver").lerp(Look.color("moon_blue"), 0.3)
 	add_child(s)
 	var glow: TextureRect = null
@@ -305,6 +312,7 @@ func _add_walker(sprite_id: String, lantern: bool, way: int, i: int) -> void:
 	var total := _road_length()
 	var start := 0.08 + 0.23 * i if way > 0 else 0.9 - 0.4 * i
 	_walkers.append({"sprite": s, "glow": glow, "d": total * start, "speed": _rng.randf_range(8.5, 12.0), "way": way,
+		"figure": cell * 0.875,
 		"wait": 0.0, "phase": _rng.randf_range(0.0, 8.0)})
 
 
@@ -355,10 +363,12 @@ func _step_walkers(delta: float) -> void:
 		var fade := clampf(u * 12.0, 0.0, 1.0) * clampf((1.0 - u) * 10.0, 0.0, 1.0)
 		sprite.visible = true
 		sprite.position = to_screen(p)
-		sprite.scale = Vector2.ONE * height * s / 336.0
-		sprite.flip_h = dir.x > 0.0
-		sprite.animation = &"walk_ne" if dir.y < -0.75 else (&"walk_se" if dir.y > 0.75 else &"walk_e")
-		sprite.frame = int(float(w["d"]) / 3.2) % 8
+		sprite.scale = Vector2.ONE * height * s / float(w["figure"])
+		# HD sheets draw only one of each mirror pair of directions (DirectionalSprite.anim_for).
+		var shown := DirectionalSprite.anim_for(sprite.sprite_frames, "walk", "ne" if dir.y < -0.75 else ("se" if dir.y > 0.75 else "e"))
+		sprite.flip_h = (dir.x > 0.0) != bool(shown[1])
+		sprite.animation = shown[0] as StringName
+		sprite.frame = int(float(w["d"]) / 3.2) % sprite.sprite_frames.get_frame_count(sprite.animation)
 		sprite.modulate.a = fade
 		if glow != null:
 			var hand := p + Vector2(4.0 * (1.0 if dir.x > 0.0 else -1.0), -height * 0.42) * (height / 30.0)

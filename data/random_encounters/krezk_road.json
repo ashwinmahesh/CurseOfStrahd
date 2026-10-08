@@ -231,6 +231,13 @@
         }
       ],
       "text": "Pilgrims, by their coats: people who set out for the abbey's healing a long time ago, and are still walking."
+    },
+    {
+      "id": "strahds_eyes",
+      "weight": 2,
+      "when": "day and attention >= watched",
+      "once": true,
+      "dialogue": "strahd/attention:eyes_vistana"
     }
   ]
 }

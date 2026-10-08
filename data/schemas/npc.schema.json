@@ -125,6 +125,33 @@
           "type": "string"
         }
       }
+    },
+    "pockets": {
+      "description": "F8: what a picked pocket holds beyond the coins their tags give: items [{id, qty}], or false for a pocket nobody can pick.",
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "$ref": "common.schema.json#/$defs/id"
+              },
+              "qty": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

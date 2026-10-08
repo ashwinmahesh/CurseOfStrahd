@@ -376,3 +376,51 @@ func test_footprints_on_soft_ground() -> void:
 	v.queue_free()
 	Look.set_style(was, false)
 
+
+
+
+## The castle's carved piers light their sconces in the Modern finish (the flames found in the kit's own meshes).
+func test_castle_piers_light_their_sconces() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var v := _view("castle_ravenloft_main_floor")
+	var named := 0
+	for n in v.board.find_children("*", "OmniLight3D", true, false):
+		if str(n.get_meta("light_kind", "")) == "candle" and n.get_parent() is MeshInstance3D:
+			named += 1
+	assert_true(named >= 2, "the piers' sconces are lit (%d)" % named)
+	v.queue_free()
+	Look.set_style(was, false)
+
+
+## The Death House's hearths light the room in the Modern finish (their modelled fire, W5).
+func test_hearths_light_the_room() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var v := _view("death_house_ground")
+	var fires := 0
+	for n in v.find_children("*", "OmniLight3D", true, false):
+		if str(n.get_meta("light_kind", "")) == "fire":
+			fires += 1
+	assert_true(fires >= 2, "its hearths burn (%d)" % fires)
+	v.queue_free()
+	Look.set_style(was, false)
+
+
+## Barovia's sky (W13) is drawn outdoors in the Modern finish, and the moon shows plainest at night.
+func test_the_sky_outdoors() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	GameState.story.minute_of_day = 23 * 60
+	var v := _view("village_of_barovia")
+	await get_tree().process_frame
+	var post := (v.post.mesh as QuadMesh).material as ShaderMaterial
+	assert_true(bool(post.get_shader_parameter("sky_on")), "the sky over the village")
+	assert_eq(float(post.get_shader_parameter("sky_moon")), 1.0, "the moon at night")
+	v.queue_free()
+	var inside := _view("death_house_ground")
+	await get_tree().process_frame
+	var ipost := (inside.post.mesh as QuadMesh).material as ShaderMaterial
+	assert_false(bool(ipost.get_shader_parameter("sky_on")), "no sky indoors")
+	inside.queue_free()
+	Look.set_style(was, false)

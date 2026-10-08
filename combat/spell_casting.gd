@@ -251,13 +251,13 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	ctx["targets"] = tgt
 	e.faerun.before_resolve(ctx)
 	return spells._before_attack_rolls(ctx, tgt, r, func() -> CombatResult:
-		_resolve(ctx, tgt, cells, r)
-		spells.check_tethers()
-		_finish_concentration(ctx)
-		_after_cast_features(ctx, use_free)
-		spells.zones.prune()
-		e._check_over()
-		return e.then(r, func() -> CombatResult: return e.run_reaction_queue(r)))
+		return e.then(_resolve(ctx, tgt, cells, r, true), func() -> CombatResult:
+			spells.check_tethers()
+			_finish_concentration(ctx)
+			_after_cast_features(ctx, use_free)
+			spells.zones.prune()
+			e._check_over()
+			return e.run_reaction_queue(r)))
 
 
 ## After a spell with a slot: the Abjurer's Arcane Ward (made or recharged by Abjuration spells), the Diviner's
@@ -343,12 +343,12 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 		"choice": SpellCaster.choice_of(s, opts), "direction": opts.get("direction", Vector2.ZERO), "cell": check["cell"]}
 	var r := CombatResult.new()
 	return spells._before_attack_rolls(ctx, tgt, r, func() -> CombatResult:
-		_resolve(ctx, tgt, cells, r)
-		spells.check_tethers()
-		_finish_concentration(ctx)
-		spells.zones.prune()
-		e._check_over()
-		return e.then(r, func() -> CombatResult: return e.run_reaction_queue(r)))
+		return e.then(_resolve(ctx, tgt, cells, r, true), func() -> CombatResult:
+			spells.check_tethers()
+			_finish_concentration(ctx)
+			spells.zones.prune()
+			e._check_over()
+			return e.run_reaction_queue(r)))
 
 
 ## Casts a spell without a slot or the usual action (War God's Blessing, features that cast spells): opts may say
@@ -392,12 +392,12 @@ func cast_free(c: Combatant, spell_id: String, targets: Array, point: Vector2, o
 		"choice": SpellCaster.choice_of(s, opts), "direction": Vector2.ZERO, "cell": check["cell"]}
 	var r := CombatResult.new()
 	return spells._before_attack_rolls(ctx, tgt, r, func() -> CombatResult:
-		_resolve(ctx, tgt, cells, r)
-		spells.check_tethers()
-		_finish_concentration(ctx)
-		spells.zones.prune()
-		e._check_over()
-		return r)
+		return e.then(_resolve(ctx, tgt, cells, r, true), func() -> CombatResult:
+			spells.check_tethers()
+			_finish_concentration(ctx)
+			spells.zones.prune()
+			e._check_over()
+			return r))
 
 
 ## Concentration with nothing to keep ends at once (a Hold Person everyone saved against); spells that leave an
@@ -424,52 +424,54 @@ func _finish_concentration(ctx: Dictionary) -> void:
 	conc.end("no one was affected")
 
 
-func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult) -> void:
+## Resolves the spell's recipe on its targets. `pausable`: the caller carries on after a prompt (Encounter.then), so
+## the targets' saves can stop for the choices after their rolls (SpellSaves._save_spell).
+func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult, pausable: bool = false) -> CombatResult:
 	var spells := sp()
 	var s := ctx["s"] as Dictionary
 	var c := ctx["c"] as Combatant
 	# Rod of Absorption, Staff of the Magi: a spell aimed at one creature alone can be soaked up.
 	if enc().items.absorbs_spell(ctx, tgt, cells, r):
-		return
+		return r
 	# Cube of Force (spells face), Scroll of Protection: creatures the spell can't reach.
 	tgt.assign(tgt.filter(func(t: Combatant) -> bool: return enc().items.spell_blocked(c, t) == ""))
 	if spells.specials.resolve(ctx, tgt, cells, r):
-		return
+		return r
 	if enc().faerun.resolve_spell(ctx, tgt, cells, r):
-		return
+		return r
 	match str(s["id"]):
 		"magic_missile":
 			spells.handlers._magic_missile(ctx, tgt, r)
-			return
+			return r
 		"sleep":
 			spells.handlers._sleep(ctx, cells, r)
-			return
+			return r
 		"command":
 			for t in tgt:
 				spells._command(ctx, t, str(ctx["choice"]) if str(ctx["choice"]) != "" else str((ctx["opts"] as Dictionary).get("word", "grovel")), r)
-			return
+			return r
 		"sanctuary":
 			spells.handlers._sanctuary(ctx, tgt[0], r)
-			return
+			return r
 		"spare_the_dying":
 			spells.handlers._spare_the_dying(ctx, tgt[0], r)
-			return
+			return r
 		"misty_step":
 			if spells.specials.high.teleport_blocked(ctx, c):
-				return
+				return r
 			var start := c.cell
 			spells._teleport(c, ctx["cell"] as Vector2i, r)
 			enc().class_features.fey_step_rider(c, start)
-			return
+			return r
 		"revivify":
 			spells.handlers._revivify(ctx, tgt[0], r)
-			return
+			return r
 		"arcane_vigor":
 			spells.handlers._arcane_vigor(ctx, r)
-			return
+			return r
 		"dispel_magic":
 			spells._dispel(ctx, tgt[0], r)
-			return
+			return r
 		"find_familiar":
 			if ClassFeatures.knows_invocation(c, "pact_of_the_chain"):
 				var form := str((ctx["opts"] as Dictionary).get("choice", "imp"))
@@ -483,17 +485,17 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 				if oldf != null and oldf.is_alive() and oldf.creature is Monster and bool((oldf.creature as Monster).data.get("familiar", false)):
 					spells._dismiss(oldf.id)
 			spells._summon(ctx, ctx["cell"] as Vector2i, r)
-			return
+			return r
 		"summon_fey", "summon_undead", "find_steed", "summon_beast", "giant_insect", "summon_aberration", "summon_construct", "summon_elemental", \
 				"summon_celestial", "summon_dragon", "summon_fiend", "summon_dinosaur", "summon_plant":
 			spells._summon(ctx, ctx["cell"] as Vector2i, r)
-			return
+			return r
 		"true_strike":
 			spells.handlers._true_strike(ctx, tgt[0], r)
-			return
+			return r
 		"booming_blade", "green_flame_blade":
 			spells.handlers._blade_cantrip(ctx, tgt[0], r)
-			return
+			return r
 		"remove_curse":
 			var t0 := tgt[0]
 			var gone := 0
@@ -502,26 +504,37 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 					t0.creature.remove_effect(fx)
 					gone += 1
 			r.lines.append(enc().log.add("spell", "%s: %s" % [s["name"], "%d curse%s lifted from %s" % [gone, "" if gone == 1 else "s", t0.name()] if gone > 0 else "%s bears no curse" % t0.name()], c.id))
-			return
+			return r
 		"etherealness", "plane_shift":
 			c.creature.dead = true
 			enc().events.append({"type": "vanish", "id": c.id})
 			r.lines.append(enc().log.add("info", "%s slips away (%s)" % [c.name(), s["name"]], c.id))
-			return
+			return r
 		"expeditious_retreat":
 			c.movement_left += c.speed()
 			enc().log.add("info", "%s Dashes (+%d ft)" % [c.name(), c.speed()], c.id)
 	if s.has("object"):
 		spells.placement._place_object(ctx, tgt, r)
-		return
+		return r
+	var sub := r
 	if s.has("zone"):
 		spells._place_zone(ctx, cells, r)
 		spells.apply_effect_entries(ctx, c, (s["zone"] as Dictionary).get("caster_effects", []) as Array, "cast", r)
 		# The spell resolves as usual and leaves an area behind (Ice Storm's hail on the ground).
 		if bool((s["zone"] as Dictionary).get("resolve_on_cast", false)):
-			_generic(ctx, tgt, cells, r)
+			sub = _generic(ctx, tgt, cells, r, pausable)
 	else:
-		_generic(ctx, tgt, cells, r)
+		sub = _generic(ctx, tgt, cells, r, pausable)
+	if not pausable:
+		return _after_generic(ctx, tgt, r)
+	return enc().then(sub, func() -> CombatResult: return _after_generic(ctx, tgt, r))
+
+
+## After the recipe: the actions a sustained spell grants (unless a save ended it) and Eldritch Hex.
+func _after_generic(ctx: Dictionary, tgt: Array[Combatant], r: CombatResult) -> CombatResult:
+	var spells := sp()
+	var s := ctx["s"] as Dictionary
+	var c := ctx["c"] as Combatant
 	if s.has("sustain") and not bool(ctx.get("ended_on_save", false)):
 		spells._grant_sustained(ctx, tgt)
 	# Eldritch Hex (Great Old One 10): the hexed creature also has Disadvantage on saves of the chosen ability.
@@ -535,9 +548,12 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 			hc.attach(tgt[0].creature, eh)
 		else:
 			tgt[0].creature.add_effect(eh)
+	return r
 
 
-func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult) -> void:
+## A spell's recipe in general: attack rolls, or saves (then a secondary burst), or healing, or damage and effects.
+## `pausable` as for _resolve.
+func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult, pausable: bool = false) -> CombatResult:
 	var spells := sp()
 	var c := ctx["c"] as Combatant
 	var s := ctx["s"] as Dictionary
@@ -548,24 +564,26 @@ func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 		for t in spells.attack_shots(ctx, tgt):
 			if t.is_alive():
 				spells.spell_attack(ctx, t, r)
-		return
+		return r
 	if s.has("save"):
 		var prior_hp := {}
 		for victim in victims:
 			prior_hp[victim.id] = victim.creature.hp
-		spells._save_spell(ctx, victims, r)
-		if s.has("secondary"):
-			for victim in victims:
-				var follow := ctx.duplicate()
-				follow["reduced_to_zero"] = int(prior_hp[victim.id]) > 0 and victim.creature.hp == 0
-				spells._secondary(follow, victim, r)
-		return
+		var secondary := func() -> CombatResult:
+			if s.has("secondary"):
+				for victim in victims:
+					var follow := ctx.duplicate()
+					follow["reduced_to_zero"] = int(prior_hp[victim.id]) > 0 and victim.creature.hp == 0
+					spells._secondary(follow, victim, r)
+			return r
+		var saved := spells._save_spell(ctx, victims, r, pausable)
+		return enc().then(saved, secondary) if pausable else secondary.call() as CombatResult
 	if s.has("heal"):
 		for t in victims:
 			spells.damage._heal(ctx, t, r)
 		for t in victims:
 			spells.apply_effect_entries(ctx, t, s.get("effects", []) as Array, "cast", r)
-		return
+		return r
 	# A self-targeted spell whose damage comes from a later action (Produce Flame's hurl) doesn't burn the caster.
 	var self_held := str((s.get("targets", {}) as Dictionary).get("kind", "")) == "self" and s.has("sustain")
 	if s.has("damage") and not self_held:
@@ -576,3 +594,4 @@ func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 		if s.has("temp_hp"):
 			spells.damage._temp_hp(ctx, t, r)
 		spells.apply_effect_entries(ctx, t, s.get("effects", []) as Array, "cast", r)
+	return r

@@ -424,6 +424,33 @@
       ],
       "dialogue": "krezk/anna:ilya_well",
       "when": "flag.ilya_fate == \"healed\" and day"
+    },
+    {
+      "npc": "krezk_woodcutter",
+      "cell": [
+        12,
+        12
+      ],
+      "dialogue": "krezk/townsfolk:woodcutter",
+      "path": [
+        [
+          24,
+          14
+        ],
+        [
+          24,
+          21,
+          4
+        ],
+        [
+          12,
+          20
+        ]
+      ],
+      "hours": [
+        7,
+        18
+      ]
     }
   ],
   "encounters": [
@@ -516,6 +543,30 @@
       ],
       "surprise": "",
       "flag": "krezk_wolves_driven_off"
+    },
+    {
+      "id": "watch_arrest",
+      "trigger": "dialogue",
+      "text": "The watch closes in, spears levelled.",
+      "monsters": [
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            32,
+            18
+          ],
+          "name": "Watchman 1"
+        },
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            34,
+            18
+          ],
+          "name": "Watchman 2"
+        }
+      ],
+      "surprise": ""
     }
   ],
   "narration": {
