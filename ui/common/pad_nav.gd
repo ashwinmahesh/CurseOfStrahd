@@ -5,7 +5,8 @@ extends Node
 ## `family` for its button pictures), and while the pad is in use it drives the screen in front:
 ## - The scope is the topmost visible screen layer (CanvasLayers LAYER_MIN to LAYER_MAX, or any layer whose
 ##   "pad_scope" meta is true; false leaves one out) with something to choose, else a scene that is itself a menu (a
-##   Control at the top of the tree: the title screen, Skirmish). Focus lands on its first choice when it
+##   Control at the top of the tree: the title screen, Skirmish). A panel with the "pad_modal" meta (a fight's reaction
+##   prompt) takes the pad alone while it shows. Focus lands on its first choice when it
 ##   comes up (a control with the "pad_first" meta, else the first in reading order) and goes back to where it was
 ##   when a page over it closes, or to the nearest choice when a screen rebuilds under it.
 ## - The D-pad and left stick move focus to the nearest choice that way inside the scope only, repeating while held,
@@ -62,6 +63,8 @@ var scope: Node = null
 var _layers: Array[CanvasLayer] = []
 ## Pop-up menus as they're made (item menus, the world's right-click menu), for driving the one that's open.
 var _popups: Array[PopupMenu] = []
+## Panels that take the pad alone while they show ("pad_modal" meta: a fight's reaction prompt and end-turn check).
+var _modals: Array[Control] = []
 ## Scope instance id -> WeakRef of the control that had focus there.
 var _remember: Dictionary = {}
 ## Where focus last was (viewport coordinates), for landing near it when a screen rebuilds.
@@ -109,6 +112,8 @@ func _on_node_added(n: Node) -> void:
 		_layers.append(n as CanvasLayer)
 	elif n is PopupMenu:
 		_popups.append(n as PopupMenu)
+	elif n is Control and n.has_meta(&"pad_modal"):
+		_modals.append(n as Control)
 
 
 ## Back to the mouse and keyboard with nothing held (tests call it between cases).
@@ -436,12 +441,30 @@ func scope_now() -> Node:
 			open.append(l)
 	open.sort_custom(func(a: CanvasLayer, b: CanvasLayer) -> bool:
 		return a.layer > b.layer if a.layer != b.layer else a.is_greater_than(b))
+	var modal := _modal_open()
 	for l in open:
 		if not choices(l).is_empty():
+			# A panel that takes the pad alone wins over the screens under it.
+			if modal != null and (modal.get_canvas_layer_node().layer if modal.get_canvas_layer_node() != null else 0) >= l.layer:
+				return modal
 			return l
+	if modal != null:
+		return modal
 	var scene := get_tree().current_scene as Control
 	if scene != null and scene.is_visible_in_tree() and not choices(scene).is_empty():
 		return scene
+	return null
+
+
+## The newest "pad_modal" panel showing with something to choose, or null.
+func _modal_open() -> Control:
+	for i in range(_modals.size() - 1, -1, -1):
+		var m := _modals[i]
+		if not is_instance_valid(m):
+			_modals.remove_at(i)
+			continue
+		if m.is_inside_tree() and m.is_visible_in_tree() and not choices(m).is_empty():
+			return m
 	return null
 
 

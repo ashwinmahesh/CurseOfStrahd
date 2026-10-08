@@ -75,6 +75,8 @@ var _reach: Dictionary = {}
 var _target_cycle := 0
 ## Captures and scene tests turn off the mouse so a stray pointer can't act.
 var input_locked := false
+## The pad's own part of a fight (U6): the menu, controls, undo, the square's menu, death saves, the camera and prompts.
+var pad := PadCombat.new(self)
 ## The story's Narrator speaks rarely in combat (crits, falls, kills, victory; plan §5.7); none in the arena.
 var narrator: Narrator = null
 var story: StoryState = null
@@ -883,8 +885,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_entrance_tw.custom_step(BossBar.ENTRANCE)   # cuts the boss's entrance short
 		get_viewport().set_input_as_handled()
 		return
-	if event is InputEventKey and (event as InputEventKey).pressed and (event as InputEventKey).physical_keycode == KEY_F1 \
-			or event is InputEventJoypadButton and (event as InputEventJoypadButton).pressed and (event as InputEventJoypadButton).button_index == JOY_BUTTON_START:
+	if event is InputEventKey and (event as InputEventKey).pressed and (event as InputEventKey).physical_keycode == KEY_F1:
 		hud.toggle_controls()
 		return
 	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
@@ -914,6 +915,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			hud.close_confirm()
 			_confirmed_end = false
 		return
+	if pad.handle(event):   # the pad's menu, controls, undo, square menu and death saves (U6)
+		get_viewport().set_input_as_handled()
+		return
 	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed and hud.hide_details():
 		return
 	if event.is_action_pressed(&"combat_radial"):
@@ -939,11 +943,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event is InputEventKey and (event as InputEventKey).pressed and (event as InputEventKey).physical_keycode == KEY_BACKSPACE:
 		_undo_pick()
 	elif event.is_action_pressed(&"combat_confirm"):
-		if mode == Mode.TARGET and str(selected.get("targeting", "")) == "multi" and not picked.is_empty() and not using_pad:
-			_perform(selected, picked.duplicate(), Vector2.INF, Vector2.ZERO)
-		elif mode == Mode.TARGET and picker.active() and not using_pad:
-			_run_pick(picker.confirm())
-		else:
+		if using_pad or not confirm_early():
 			_confirm_at()
 	elif event.is_action_pressed(&"combat_cancel"):
 		if hud.hide_details():
@@ -991,6 +991,17 @@ func _unhandled_input(event: InputEvent) -> void:
 				return
 
 
+## Casts what's being aimed with the targets picked so far (Enter; Y on a pad). False when nothing is being picked.
+func confirm_early() -> bool:
+	if mode == Mode.TARGET and str(selected.get("targeting", "")) == "multi" and not picked.is_empty():
+		_perform(selected, picked.duplicate(), Vector2.INF, Vector2.ZERO)
+	elif mode == Mode.TARGET and picker.active():
+		_run_pick(picker.confirm())
+	else:
+		return false
+	return true
+
+
 func _change_slot(step: int) -> void:
 	if hud.slot_levels.is_empty():
 		return
@@ -1023,6 +1034,7 @@ func _next_target() -> void:
 	_target_cycle = (_target_cycle + 1) % list.size()
 	cursor_cell = list[_target_cycle].cell
 	using_pad = true
+	pad.follow_cursor = true
 	_pad_hover()
 
 
@@ -1042,11 +1054,13 @@ func _process(delta: float) -> void:
 			var world := basis[0] * -stick.y + basis[1] * stick.x
 			var step := Vector2i(roundi(world.x), roundi(world.z))
 			cursor_cell = Vector2i(clampi(cursor_cell.x + step.x, 0, e.grid.width - 1), clampi(cursor_cell.y + step.y, 0, e.grid.depth - 1))
+			pad.follow_cursor = true
 			_pad_hover()
 	else:
 		_pad_repeat = 0.0
-	# Camera pan with WASD / arrows (the camera stops following until the next turn).
-	var pan := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_back")
+	pad.tick(delta)
+	# Camera pan with WASD / arrows (the camera stops following until the next turn); on a pad it follows the cursor.
+	var pan := Vector2.ZERO if using_pad else Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_back")
 	if pan.length() > 0.1:
 		var b := rig.ground_basis()
 		rig.follow = null

@@ -508,3 +508,27 @@ func test_typing_a_cheat_code_on_a_pad() -> void:
 	if is_instance_valid(f) and f is LineEdit:
 		assert_eq((f as LineEdit).text, "E", "with what was typed")
 	root.call("close_screen")
+
+
+## A cutscene on a pad: A goes on (never Skip), B pauses it and the pause card takes the pad, A on Resume goes back.
+func test_a_cutscene_on_a_pad() -> void:
+	if not await _game(LATE):
+		return
+	Cutscenes.register({"id": "test_pad_cut", "title": "Test", "summary": "A fixture.",
+		"images": [{"image": "strahd_watcher", "when": ""}]})
+	var p := CutscenePlayer.new()
+	root.add_child(p)
+	p.play("test_pad_cut", ["The first line.", "The second line."] as Array[String], GameState.story)
+	await _frames(3)
+	await _press(JOY_BUTTON_A)
+	assert_false(p.done, "A doesn't skip it")
+	assert_eq(p.index, 1, "A goes on to the next line")
+	await _press(JOY_BUTTON_B)
+	assert_true(p.view.paused, "B pauses it")
+	var f := get_viewport().gui_get_focus_owner()
+	assert_eq(str(f.name) if f != null else "", "Resume", "the pause card opens on Resume")
+	await _press(JOY_BUTTON_A)
+	assert_false(p.view.paused, "A on it goes back to the scene")
+	p.queue_free()
+	Cutscenes.clear_cache()
+	await _frames(1)
