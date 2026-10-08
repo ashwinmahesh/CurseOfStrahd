@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_ribbon_girl",
+  "name": "Daciana",
+  "title": "Festival Ribbon Girl",
+  "summary": "A girl the Baron's men pay a copper a day to hand out festival ribbons in the square, and to remember who refuses one.",
+  "portrait": "priest_acolyte",
+  "sprite": "priest_acolyte",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

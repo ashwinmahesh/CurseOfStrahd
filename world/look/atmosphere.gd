@@ -199,7 +199,7 @@ func _build() -> void:
 		_flat_floors_cast_no_shadow()
 	if mood.has("water"):
 		_build_water()
-	var lines := mood.get("lines", []) as Array
+	var lines := (mood.get("lines", []) as Array) if outdoors else []
 	for i in lines.size():
 		# Washing hung out between two posts (a lived-in village): WashingLine.
 		var line := WashingLine.build(lines[i] as Dictionary, _rng)

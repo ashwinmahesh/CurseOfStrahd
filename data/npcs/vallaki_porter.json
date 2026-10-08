@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_porter",
+  "name": "Matei",
+  "title": "Porter of the Blue Water Inn",
+  "summary": "A huge, cheerful porter who carries Urwin's sacks and barrels between the inn and the market and is the only person in Vallaki whose smile is real.",
+  "portrait": "tough",
+  "sprite": "tough",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_dog",
+  "name": "A Big Dog",
+  "title": "Of the Town Square",
+  "summary": "A big, scarred dog that belongs to nobody, wearing a festival ribbon somebody tied on it.",
+  "portrait": "mastiff",
+  "sprite": "mastiff",
+  "attitude": "indifferent",
+  "monster": "mastiff",
+  "guest": false,
+  "tags": [
+    "animal",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "it/its",
+  "pockets": false
+}
