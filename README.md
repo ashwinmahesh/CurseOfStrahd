@@ -2,17 +2,18 @@
 
 ![The title screen: Castle Ravenloft under a full moon](docs/screenshots/title.jpg)
 
-A single-player tactical RPG that plays the *Curse of Strahd* campaign on the 2024 Dungeons & Dragons rules. You
-lead a party of four through the valley of Barovia: walk its villages, roads and haunted houses in an isometric view,
-talk your way through conversations that roll real skill checks, and fight turn-based battles on a 5-foot grid
-wherever trouble finds you. The rules engine follows the 2024 Player's Handbook closely, and every number on screen
-can show where it came from.
+A single-player, turn-based tactical RPG that plays the whole *Curse of Strahd* campaign on the 2024 Dungeons &
+Dragons rules. You lead a party of four through the valley of Barovia: walk its villages, roads and haunted houses in a
+lit 3D world, talk your way through voiced conversations that roll real skill checks, and fight turn-based battles on
+a 5-foot grid wherever trouble finds you. You control every member of the party, in and out of fights. The rules
+engine follows the 2024 Player's Handbook closely, and every number on screen can show where it came from.
+
+The whole campaign is playable, from the road where the mists close in to Castle Ravenloft: 86 places in 19 regions,
+six voiced companions, a Tarokka reading that reshuffles each playthrough, and five endings. A full list of what's in
+the game is in the vault note *Gameplay Features*.
 
 It's built in Godot 4 with typed GDScript, for personal use only. It isn't distributed, and it's an unofficial fan
 project: *Curse of Strahd* and *Dungeons & Dragons* belong to Wizards of the Coast.
-
-The whole campaign is playable, from the road where the story begins to Castle Ravenloft, where it ends: Strahd's
-castle in five parts, his parley and final battle in the room the Tarokka names, and five endings.
 
 ## Screenshots
 
@@ -71,6 +72,9 @@ make run
 The first run imports every asset, which takes a while. After that `make run` only re-imports when files have
 changed since the last import, so a merge that adds scripts or images doesn't stop the game at a parse error.
 
+`make play` runs a stable copy of the game instead (`~/Documents/CurseOfStrahdGame-play`), which only moves forward
+to a `main` that passed the full checks, so a half-finished merge can't stop a play session.
+
 Before merging anything into `main`, run the local CI:
 
 ```bash
@@ -86,6 +90,8 @@ Godot). All three must pass with a clean log.
 | Command | What it does |
 |---|---|
 | `make run` | Starts the game at the title screen. |
+| `make play` | Updates the stable play copy to the newest `main` that passed `make ci`, then starts it. |
+| `make check` | The quick check while working: lint, a compile of every script, and the tests and data checks that cover what changed. |
 | `make arena` | Opens the combat test arena: four level 3 pregens against wolves and zombies. |
 | `make ci` | `validate`, `lint` and `test` together. |
 | `make test [ONLY=substr]` | Imports, then runs the test suites, or only the tests whose names contain `substr`. |
@@ -93,6 +99,8 @@ Godot). All three must pass with a clean log.
 | `make lint` | Compiles `rules/` and `combat/` standalone, so a stray autoload reference fails. |
 | `make import` | Re-imports assets headlessly. Run it after adding a `class_name`. |
 | `make capture SCENE=… NAME=…` | Opens a window for a few seconds and saves screenshots to `captures/`. Options: `LOCATION=<id>` starts the story there, `ENCOUNTER=<id>` starts a fight, `DIALOGUE=<file:node> [BEATS=n]` plays a conversation, `MAP=1` opens the travel map, `SHOP=<npc>` opens a shop, `LOAD=<slot>` starts from a save, `FOCUS=<node>` takes close-ups of one node as it walks. |
+| `make golden-saves` | Adds the current save version's chapter saves to `tests/saves`, which every test run loads. |
+| `make lane NAME=… BRANCH=…` | A worktree for parallel work whose files and import cache are clones of the main checkout's. |
 | `make palette` | Rebuilds the colour palettes after editing their lists. |
 | `make voice [SPEAKER="…"] [LIMIT=n] [DRY=1] [MAX_USD=n]` | Generates the missing spoken lines with the pinned ElevenLabs voices. |
 | `make sprite TURNAROUND=<png> ID=<id>` | Turns a character turnaround sheet into an 8-direction walking sprite. |
@@ -112,7 +120,8 @@ The screenshots in this README came from `make capture` with the scenes in `tool
 
 ## Controls
 
-In a fight, press **F1** (or Start on a controller) for the full list of combat controls.
+Every key can be changed under Settings → Keys. In a fight, press **F1** (or Start on a controller) for the full list
+of combat controls.
 
 **Exploring**
 
@@ -121,13 +130,18 @@ In a fight, press **F1** (or Start on a controller) for the full list of combat 
 | Left-click | Walk there, or walk up to a person or thing and use it |
 | Right-click | Everything you can do with that person, thing or party member |
 | WASD or arrows | Step the party leader |
-| Q / E, mouse wheel | Turn the camera, zoom |
+| Q / E, mouse wheel | Turn the camera, zoom (zoom out past the farthest step to look to the horizon) |
 | Tab, 1 to 4 | Next party leader, or pick one |
 | C · I · J · P | Character sheet · Inventory · Journal · Party |
-| M · R | Travel map · Rest |
+| M · R · H | Travel map · Rest · Wait |
 | F · V · G | Search · Sneak · Split the party |
+| T, then Space | Turn-based exploring on or off, then end the round |
+| L (hold) | Show what each foe in sight can see |
+| Alt (hold) | Show the names of everything you can use |
 | F5 · F9 | Quicksave · Quickload |
 | Esc | Close the open panel, or open the pause menu |
+
+In a conversation, Tab picks which hero speaks for the party.
 
 On a controller: the left stick walks, A uses the nearest thing, X searches, Y opens the journal, LB the sheet, RB the
 inventory, Back the menu for whatever is beside you, and Start pauses.
@@ -142,60 +156,92 @@ inventory, Back the menu for whatever is beside you, and Start pauses.
 | [ and ] | Change the spell slot level |
 | Enter · Esc · Space | Confirm · Cancel · End the turn |
 | T · Tab · L | Next target · Inspect the next party member · Show or hide the log |
+| Ctrl or Cmd + Z | Undo a move that nothing came of |
 | WASD, Q / E, wheel | Pan, turn and zoom the camera |
 
 On a controller, hold LB for a radial menu of actions. Reactions ask first unless you set a rule for them.
 
 ## Features
 
+**The adventure**
+
+- The whole campaign, from the misty road in through the Death House, the Village of Barovia and Vallaki, across the
+  valley and up to Castle Ravenloft: 86 places in 19 regions, 61 quests and over 120 named people to meet.
+- After the opening chapters the regions can be played in any order; each gives a level milestone, up to level 11.
+- Madam Eva's Tarokka reading, drawn once per playthrough, moves the three treasures, the party's ally and the room of
+  the final battle.
+- Strahd watches from the start: eight visits across the campaign, and a hidden measure of his attention that brings
+  his spies, his visits and the road's dangers closer.
+- Five endings with epilogue slides; choices set in one region are read in another.
+
+**Your party**
+
+- Six voiced companions, each with their own art, accent, personal quest, camp talks and banter: Sir Godrick
+  Pendlebrook (Goliath Paladin), Liriel Dawnsong (High Elf Cleric), Thistle (Human Ranger), Ratatoille (High Elf
+  Wizard), Wren Featherfoot (Halfling Monk) and Kip Smudgewick (Tiefling Warlock).
+- Up to four travel at once, swapped outside fights; benched companions keep their level.
+- Companion approval with romances, and Heroic Inspiration for playing in character.
+- One optional custom hero with a full appearance creator, portraits and a voice.
+- You control every party member and every guest who joins you, such as Ireena and Ismark. The AI only runs enemies
+  and bystanders.
+- Step-by-step creation with recommendations, level up with every 2024 swap and recommended picks, a BG3-style
+  character sheet, an inventory with a paper doll, weapon sets and quick slots, and a respec at Madam Eva.
+
 **The 2024 rules**
 
 - A rules engine that keeps to the 2024 Player's Handbook, with each rule's status tracked in
   [docs/rules/coverage.md](docs/rules/coverage.md) and every departure explained in
   [docs/rules/deviations.md](docs/rules/deviations.md).
-- 12 classes and 54 subclasses, 14 species, 16 backgrounds, 86 feats and 390 spells, including the
-  *Ravenloft: The Horrors Within* options (the Dhampir, Hexblood, Lupin and Reborn) and Dark Gifts, among them the
-  Amber Temple's vestiges.
-- Every die goes through one roller, and every number the UI shows carries its breakdown.
-- The party levels at story milestones, up to level 11 for the content built so far.
-
-**Your party**
-
-- Four pregenerated heroes (a fighter, a rogue, a cleric and a wizard), or a step-by-step creator for your own four,
-  with recommendations at each step and a check on what the party is missing.
-- You control every party member and every guest who joins you, such as Ireena and Ismark. The AI only runs enemies
-  and bystanders.
-- A full character sheet, inventory with attunement, spell preparation, short and long rests, and a level-up screen.
+- 12 classes and 69 subclasses, 14 species, 48 backgrounds, 147 feats and 443 spells, including the *Ravenloft: The
+  Horrors Within* options (the Dhampir, Hexblood, Lupin and Reborn, and Dark Gifts) and the playable Faerûn and Arcana
+  Unleashed entries. Every spell and ability does all its text says, secondary effects included.
+- Every die goes through one roller, every number the UI shows carries its breakdown, and rules words open their
+  definitions on hover and can be pinned.
 
 **Barovia**
 
-- 69 locations across 18 regions, from the Death House and the Village of Barovia to Vallaki, Krezk, the Wizard of
-  Wines, Argynvostholt, Van Richten's Tower and the Amber Temple.
-- A 3D board with 8-direction sprites, day and night lighting, a minimap, and signs on every exit.
-- Doors, locks, traps, containers and hidden things to search for; sneaking, splitting the party, and banter between
-  party members.
-- A travel map with road times, a clock, and random encounters on the roads that get worse after dark.
-- 40 quests in the journal, shops that buy and sell, books collected into a codex, and 104 people to meet.
+- A lit 3D world with hand-drawn characters that walk and attack in 8 directions (the HD-2D look): lamps that cast
+  shadows, sprites that catch the light, rain and snow on surfaces, water, 3D trees, Blender-built towns and interiors
+  that cut away toward the camera, and vistas past the map's edge.
+- Doors, locks, traps and hidden things to search for; sneaking with sight cones, surprise on either side,
+  turn-based exploring, splitting the party, stealing and a town watch.
+- Townsfolk schedules, town hours and seeded weather that slows travel and obscures squares in fights.
+- A travel map with road times, a clock and random encounters that get worse after dark.
+- A journal of quests, a codex of found books, a bestiary, shops in every town with haggling, temple services
+  including Raise Dead, inn rooms, and a party stash.
 
 **Conversations**
 
-- Branching dialogue with portraits and skill checks that show who will roll and their chance before you choose.
-- Madam Eva's Tarokka reading, drawn once per playthrough, moves the Tome, the Holy Symbol, the Sunsword, the ally and
-  Strahd's final room.
-- 5,232 voiced lines across the cast and the Narrator, generated with ElevenLabs.
+- Branching dialogue with large busts, a BG3-style Narrator, and skill checks that show who will roll and their chance
+  before you choose, then roll a big animated d20. Failed social checks can't be retried.
+- Voiced lines for the Narrator, the cast and the party, generated with ElevenLabs (Barovians, the Vistani and Strahd
+  in Eastern European accents).
+- 123 storybook cutscene stills, loading screens with each region's art, and a "Previously in Barovia" recap on load.
 
 **Combat**
 
-- Turn-based fights on a 5-foot grid that start where you are, with Initiative, a turn order strip, and surprise
-  on either side (sneak up on enemies, or be ambushed).
-- Action, Bonus Action, Reaction and movement shown at a glance; a hotbar of weapons, spells, items and class
-  features.
-- Hit odds before you attack, area templates that warn about friendly fire, and a combat log where you can click any
-  line to see its math.
-- Weapon Mastery, Heroic Inspiration, Concentration, opportunity attacks, reactions with your own rules, and death
-  saves.
-- 113 monsters, and 475 magic items from the 2024 Dungeon Master's Guide, from potions to the Deck of Many Things.
-- A save at the start of every round, so loading puts you back into the fight.
+- Turn-based fights on a 5-foot grid that start where you are, with Initiative, a turn order strip, and surprise on
+  either side.
+- Hit odds with Advantage and its reasons before you attack, area templates that warn about friendly fire, and a
+  combat log where any line shows its math. A hotbar you can arrange per hero.
+- Weapon Mastery, Heroic Inspiration, Concentration, opportunity attacks, real lines of cover, death saves, mounted
+  combat, summons, lingering zones, legendary and lair actions. Reactions and roll-changing features ask first.
+- Height and flight, objects that break and burn, spreading fire, shoving and thrown items; knocking foes out,
+  surrender and captives.
+- Enemy AI that scores every move by expected damage, with nine behaviour profiles and Strahd's own boss brain.
+- 3D effects for every spell and ability, combat sounds, enemy voices, impact on heavy hits and critical hits, boss
+  name plates and health bars, music that rises with the fight.
+- 125 monsters and over 540 magic items, every one from the 2024 Dungeon Master's Guide.
+- Undo a move, and a save at the start of every round.
+
+**Modes, saves and settings**
+
+- Story, Balanced, Tactician and Honour difficulties (Honour keeps one save; a wipe ends the run).
+- Skirmish and the Character Lab (any party at levels 1 to 20 against any stat blocks on any map), an encounter
+  editor, 21 achievements and run stats.
+- Five autosaves, save pictures and notes, backups, quicksave, and jump-in saves for 13 chapters.
+- Settings for difficulty, graphics presets, keys, text size and UI scale, fight speed, narration, depth blur, the
+  Modern or Classic look, and the respec.
 
 ## Project layout
 
@@ -203,27 +249,28 @@ On a controller, hold LB for a radial menu of actions. Reactions ask first unles
 |---|---|
 | `rules/` | The rules engine: a pure library with no nodes, scenes or UI. |
 | `combat/` | Grid, encounters, spells, features, AI and the action catalog, also pure logic. |
-| `story/` | Story state, dialogue runner, quests, travel, the Tarokka and treasure. |
-| `world/`, `ui/`, `scenes/` | What you see: the board, the HUDs and screens, and the thin scene roots. |
-| `core/` | Autoloads: dice, game state, saving, input, audio and voice. |
-| `data/` | Classes, spells, monsters, items, locations, NPCs, quests and more, as JSON with schemas. |
+| `story/` | Story state, dialogue runner, quests, travel, weather, schedules, the Tarokka and treasure. |
+| `world/`, `ui/`, `scenes/` | What you see: the board, the look, the HUDs and screens (Skirmish in `ui/skirmish/`), and the thin scene roots. |
+| `shaders/` | The world, sprite, water, atmosphere and screen shaders. |
+| `core/` | Autoloads: dice, game state, settings, saving, input, audio, voice and achievements. |
+| `data/` | Classes, spells, monsters, items, locations, NPCs, quests, cutscenes and more, as JSON with schemas. |
 | `narrative/` | The conversations, one `.dialogue` file per scene. |
 | `art/`, `audio/`, `blender/` | Art, voices and the pipelines that build them. |
-| `tests/` | Unit and integration tests. |
-| `tools/` | Data checks, captures, and the art and audio scripts. |
+| `tests/` | Unit and integration tests, and the golden saves in `tests/saves/`. |
+| `tools/` | Data checks, captures, the play copy, lanes, and the art and audio scripts. |
 | `docs/` | Decisions in `adr/`, interface contracts in `contracts/`, rules coverage, region notes, UI and art guides. |
 
 ## Credits
 
 The full list, with links and licence files, is in [docs/assets/LICENSES.md](docs/assets/LICENSES.md), and the game
-shows it under Credits on the title screen.
+shows it under Credits on the title screen (from `art/credits.json`).
 
 **Rules.** This work includes material from the System Reference Document 5.2.1 ("SRD 5.2.1") by Wizards of the Coast
 LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0
 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode. Content beyond the SRD is
 used for personal play only; the data files hold mechanics and our own descriptions, not the books' text.
 
-**Icons.** Spell and item icons by Lorc, Delapouite, Skoll, Sbed, Caro Asercion, Willdabeast, Cathelineau,
+**Icons.** Spell, item and cursor icons by Lorc, Delapouite, Skoll, Sbed, Caro Asercion, Willdabeast, Cathelineau,
 DarkZaitzev, Carl Olsen, Zajkonur and Faithtoken from [game-icons.net](https://game-icons.net/), under
 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/), and by Zeromancer (CC0). They were framed and coloured for
 this game.
@@ -231,17 +278,45 @@ this game.
 **Music.**
 
 - Kevin MacLeod ([incompetech.com](https://incompetech.com/)): "Ossuary 6 - Air", "Oppressive Gloom", "Folk Round",
-  "Duet Musette", "Darkling", "Darkest Child" and "Unholy Knight", under
-  [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-- Toccata and Fugue in D minor, BWV 565 (J. S. Bach), played by Norbert Schenk, CC BY 4.0, via Wikimedia Commons.
-- "Fanfares" (victory and defeat) by Spring Spring, CC BY 4.0, via OpenGameArt.org.
-- Csárdás (Vittorio Monti), played by the United States Air Force Band, public domain, via Wikimedia Commons.
+  "Duet Musette", "Darkling", "Darkest Child", "Unholy Knight", "Lightless Dawn", "Night Vigil", "Gypsy Shoegazer",
+  "Minstrel Guild", "Clash Defiant", "Nightmare Machine", "Final Count", "Danse Macabre", "Achaidh Cheide", "Agnus
+  Dei X", "Ancient Rite", "Baba Yaga", "Black Vortex", "Bump in the Night", "Celtic Impulse", "Children's Theme",
+  "Come Play with Me", "Dama-May", "Dark Walk", "Death and Axes", "Echoes of Time", "Gloom Horizon", "Gregorian
+  Chant", "Grim Idol", "Ice Demon", "Inner Sanctum", "Land of the Dead", "Long Road Ahead", "Lord of the Land", "Lost
+  Frontier", "Malicious", "Midnight Tale", "Mirage", "Moorland", "Mystery Bazaar", "Ossuary 2 - Turn", "Pippin the
+  Hunchback", "Relent", "Rites", "Shadowlands 1 - Horizon", "Teller of the Tales", "Tenebrous Brothers Carnival -
+  Snake Lady", "Thatched Villagers", "The Britons", "Virtutes Instrumenti", "Volatile Reaction" and "Willow and the
+  Light", under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+- Scott Buckley ([scottbuckley.com.au](https://www.scottbuckley.com.au/)): "Memories Of Stone", "Anabasis I", "Eyes
+  In The Void", "Nightfall", "Penumbra" and "Unraveling", under CC BY 4.0.
+- Toccata and Fugue in D minor, BWV 565 (J. S. Bach), played by Norbert Schenk. CC BY 4.0, via Wikimedia Commons.
+- Csárdás (Vittorio Monti), played by the United States Air Force Band. Public domain, via Wikimedia Commons.
+- Fugue in G minor, BWV 542 (J. S. Bach), played by Herbert Collum on the Silbermann organ at Reinhardtsgrimma. CC BY
+  1.0, via Wikimedia Commons.
+- Marche funèbre (Chopin) and Night on Bald Mountain (Mussorgsky), recordings from Musopen. CC0 and public domain,
+  via Wikimedia Commons.
+- "Dark Gothic Haunted Masquerade", "Dark Solemn Choral with Organ" and "Final Boss Appearance Dark Fantasy" by ISAo
+  (airyluvs.com). OGA-BY 3.0, via OpenGameArt.org.
+- "In Darkness" by Of Far Different Nature (fardifferent.carrd.co). CC BY 4.0, via OpenGameArt.org.
+- "Fanfares" (victory and defeat) by Spring Spring. CC BY 4.0, via OpenGameArt.org.
 
-**Sound effects.** Kenney's RPG Audio, Impact Sounds and Interface Sounds (CC0). From OpenGameArt.org, all CC0:
-80 CC0 RPG SFX by rubberduck, sword sounds by StarNinjas, swishes by artisticdude, Magic Spell SFX by JaggedStone,
-fire-1 by AntumDeluge and crow caw by zeroisnotnull. From Wikimedia Commons: howling wind by Tvabutzku1234 (CC0),
-wolf howls by the US Fish and Wildlife Service and rain and thunder by ezwa (both public domain).
+**Sound effects.**
 
-**Art and voices.** Characters, portraits, textures, props, menu art and the title art were drawn for this game with
-Google Gemini and finished in Blender. The spoken lines were generated with ElevenLabs. The menus use fonts that ship
-with macOS.
+- Kenney (kenney.nl): RPG Audio, Impact Sounds and Interface Sounds. CC0.
+- Fantasy SFX Pack Vol 1 by JC Sounds. CC BY 4.0 - Credit: JC Sounds, via OpenGameArt.org.
+- Additional Sound FX by Will Leamon (Fleshy Fight Sounds). OGA-BY 3.0, via OpenGameArt.org.
+- Boom Pack 1 by dklon. CC BY 3.0, via OpenGameArt.org.
+- OpenGameArt.org, CC0: 80 CC0 RPG SFX and 100 CC0 SFX #2 by rubberduck; sword sounds by StarNinjas; swishes by
+  artisticdude; Magic Spell SFX by JaggedStone; fire-1 by AntumDeluge; crow caw by zeroisnotnull; Deep Bone
+  Crack/Break by Zane Little Music; Impact by qubodup; squish sounds by EZduzziteh; Break Pumpkin by TinyWorlds.
+- Wikimedia Commons: Howling wind by Tvabutzku1234 (CC0); Wolf howls by the US Fish and Wildlife Service and Rain and
+  thunder by ezwa (public domain).
+- "Footsteps on different surfaces" by congusbongus. CC BY 3.0, via OpenGameArt.org.
+- "Stream Sounds" by kurt. CC BY 3.0, via OpenGameArt.org.
+- "Open Chest" by spookymodem. CC BY 3.0, via OpenGameArt.org.
+- OpenGameArt.org, CC0 (world sounds): Different steps on wood, stone, leaves, gravel and mud by TinyWorlds;
+  Mechanical Sounds by BMacZero.
+
+**Art and voices.** Characters, portraits, busts, cutscene stills, textures, props, menu art and the title art were
+drawn for this game with Google Gemini and finished in Blender. The spoken lines and the enemies' battle voices were
+generated with ElevenLabs. The menus use fonts that ship with macOS.

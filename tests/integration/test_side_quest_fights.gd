@@ -130,3 +130,11 @@ func test_the_bride_rises_out_of_the_well() -> void:
 	await _fight(v, "well_bride", ["Zinaida"])
 	await _end(v)
 	assert_true(bool(GameState.story.get_flag("bride_beaten", false)))
+
+
+func test_the_lights_come_up_out_of_the_gorge() -> void:
+	var v := await _boot("tser_falls", 22, 4, ["wisps_lured"])
+	var e := await _fight(v, "falls_wisps", [])
+	assert_eq(e.combatants.filter(func(c: Combatant) -> bool: return c.side == &"enemy").size(), 4, "four will-o'-wisps")
+	await _end(v)
+	assert_true(bool(GameState.story.get_flag("wisps_beaten", false)))
