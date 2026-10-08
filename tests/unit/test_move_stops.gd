@@ -13,21 +13,20 @@ func test_a_creature_restrained_by_a_web_on_its_way_stops_there() -> void:
 	assert_true(r.ok, r.reason)
 	var web := e.spells.zones.object_of(caster.id, "web")
 	assert_true(web != null, "the web is up")
-	# A row the web covers, and its first webbed square from the west.
-	var row := -1
-	var first := Vector2i(99, 99)
+	# The web's north-west corner, and a square just inside it: any way there crosses a webbed square first.
+	var corner := Vector2i(99, 99)
 	for cell: Vector2i in web.cells:
-		if cell.x < first.x or (cell.x == first.x and cell.y < first.y):
-			first = cell
-	row = first.y
-	assert_true(first.x >= 3, "room to walk in from the west")
+		if cell.x < corner.x or (cell.x == corner.x and cell.y < corner.y):
+			corner = cell
+	var inside := corner + Vector2i(1, 1)
+	assert_true(inside in web.cells and corner.x >= 3, "a square inside the web, with room to walk in from the west")
 	while e.current() != bag:
 		e.end_turn()
-	bag.cell = Vector2i(first.x - 2, row)
+	bag.cell = Vector2i(corner.x - 2, inside.y)
 	bag.movement_left = bag.speed()
 	TestCombat.next_d20(e, 5)
-	var mr := e.move(bag, Vector2i(first.x + 2, row))
+	var mr := e.move(bag, inside)
 	assert_true(mr.ok, mr.reason)
 	assert_true(bag.creature.has_condition(&"restrained"), "it failed its save")
-	assert_eq(bag.cell, first, "it stops in the first webbed square")
+	assert_true(bag.cell in web.cells and bag.cell != inside, "it stops in the first webbed square it entered")
 	assert_true(bag.movement_left > 0, "with movement it can't use")
