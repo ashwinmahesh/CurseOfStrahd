@@ -276,6 +276,9 @@ func _long_rest(rule: String) -> void:
 			if not g.dead:
 				g.finish_long_rest()
 		_log.text = "Eight hours pass. Everyone wakes rested, if not refreshed."
+		var room := Services.after_long_rest(st)   # a room booked at the inn (F14)
+		if room != "":
+			_log.text += " " + room
 		_narrate("rest:long")
 		var region := str(Compendium.shared().get_entry("locations", st.location).get("region", ""))
 		_narrate("dream:" + region)

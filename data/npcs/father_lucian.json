@@ -16,5 +16,23 @@
     "vallaki"
   ],
   "region": "vallaki",
-  "pronouns": "he/him"
+  "pronouns": "he/him",
+  "services": [
+    {
+      "id": "cure_wounds",
+      "scroll": true
+    },
+    {
+      "id": "lesser_restoration",
+      "scroll": true
+    },
+    {
+      "id": "remove_curse",
+      "scroll": true
+    },
+    {
+      "id": "raise_dead",
+      "scroll": true
+    }
+  ]
 }

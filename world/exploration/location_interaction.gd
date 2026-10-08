@@ -45,6 +45,9 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 				var closed := str((npc["shop"] as Dictionary).get("closed", ""))
 				var open := closed == "" or not StoryConditions.check(closed, view.st)
 				out.append({"id": "trade", "label": "Trade", "enabled": open, "why": "" if open else "Closed for now"})
+			if npc.has("services"):
+				var rooms := (npc["services"] as Array).all(func(s: Variant) -> bool: return str((s as Dictionary)["id"]).begins_with("room_"))
+				out.append({"id": "services", "label": "Rooms" if rooms else "Services"})
 			out.append(LocationCrime.pickpocket_action(view, str(spec["npc"])))   # F8
 			out.append({"id": "walk", "label": "Walk over"})
 		"door", "container":

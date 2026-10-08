@@ -232,6 +232,42 @@
           }
         }
       ]
+    },
+    "services": {
+      "type": "array",
+      "description": "F14: services this person sells on the services screen (story/services.gd defines each kind).",
+      "items": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "enum": [
+              "cure_wounds",
+              "lesser_restoration",
+              "remove_curse",
+              "raise_dead",
+              "room_modest",
+              "room_wealthy"
+            ]
+          },
+          "price": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Overrides the kind's price (for one hero, or each for a room)."
+          },
+          "scroll": {
+            "type": "boolean",
+            "description": "Read from the seller's scroll rather than cast."
+          },
+          "if": {
+            "type": "string",
+            "description": "A story condition; offered only while it holds."
+          }
+        }
+      }
     }
   }
 }
