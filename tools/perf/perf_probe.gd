@@ -38,6 +38,7 @@ var report := {"samples": [], "loads": [], "memory": [], "transitions": [], "met
 var _last_usec := 0
 var _draw_start := 0
 var _draw_ms := 0.0                 ## ms drawing since the last frame began
+var _frame_draw_ms := 0.0           ## ms the frame that just ended spent drawing
 var _rec: Array[Dictionary] = []     ## the frames of the sample being taken
 var _recording := false
 var _vp: RID
@@ -285,14 +286,18 @@ func _transitions(p: int) -> void:
 func _timed_move(p: int, root: Node, from: String, to: String, first_visit: bool, change: Callable) -> void:
 	var t0 := Time.get_ticks_usec()
 	change.call()
+	var call_ms := (Time.get_ticks_usec() - t0) / 1000.0
 	await get_tree().process_frame   # the frame the change was asked for in has now been drawn
 	var first := Time.get_ticks_usec()
 	var block := (first - t0) / 1000.0
+	var block_draw := _frame_draw_ms
 	var last := first
 	while cover and (bool(root.get("moving")) or root.get("view") == null) and last - t0 < 30000000:
 		await get_tree().process_frame
 		var now := Time.get_ticks_usec()
-		block = maxf(block, (now - last) / 1000.0)
+		if (now - last) / 1000.0 > block:
+			block = (now - last) / 1000.0
+			block_draw = _frame_draw_ms
 		last = now
 	var ready := last
 	_close_popups(root)
@@ -312,7 +317,8 @@ func _timed_move(p: int, root: Node, from: String, to: String, first_visit: bool
 	var row := {"pass": p, "from": from, "to": to, "first_visit": first_visit, "cover": cover,
 		"outdoors": bool((loc.get("map", {}) as Dictionary).get("outdoors", false)),
 		"region": str(loc.get("region", "")),
-		"block_ms": block, "first_frame_ms": (first - t0) / 1000.0, "ready_ms": (ready - t0) / 1000.0,
+		"block_ms": block, "block_draw_ms": block_draw, "call_ms": call_ms,
+		"first_frame_ms": (first - t0) / 1000.0, "ready_ms": (ready - t0) / 1000.0,
 		"stuck_ms": (stuck_end - t0) / 1000.0, "worst_after_ms": worst, "slow_after": slow, "load": _loadavg()}
 	report["transitions"].append(row)
 	print("PERF transition %d %-30s -> %-30s %s block %6.0f | first frame %6.0f | ready %6.0f | stuck %6.0f | worst after %5.0f (%d slow)" % [
@@ -750,6 +756,7 @@ func _on_frame() -> void:
 			"rcpu": RenderingServer.viewport_get_measured_render_time_cpu(_vp),
 			"proc": Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0})
 	_last_usec = now
+	_frame_draw_ms = _draw_ms
 	_draw_ms = 0.0
 
 

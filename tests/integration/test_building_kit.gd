@@ -302,3 +302,44 @@ func test_castle_ravenloft_from_outside() -> void:
 	for b: Dictionary in c.board.buildings:
 		assert_false(b.has("castle"), "Classic keeps the stone houses")
 	c.queue_free()
+
+
+## The loading lane: merging appends each module from its arrays held in memory (BuildingKit.Arrays) instead of reading
+## the module's mesh back from the GPU every time; the merged house is the same, vertex for vertex.
+func test_merging_from_memory_matches_merging_from_the_mesh() -> void:
+	var parts: Array = []
+	var ids: Array[String] = ["kit_timber_corner", "kit_clap_low_a", "kit_palisade"]
+	for i in ids.size():
+		assert_true(BuildingKit.has(ids[i]), "the kit has %s" % ids[i])
+		parts.append([ids[i], Transform3D(Basis(Vector3.UP, 0.7 * i), Vector3(i * 2.0, 0.0, 1.0))])
+	var cap := BoxMesh.new()
+	parts.append([cap, Transform3D(Basis(), Vector3(0, 3, 0)), "pal_bone"])
+	var merged := BuildingKit.merge(parts, "crimson")
+	# The same merge the old way: SurfaceTool reading each mesh itself.
+	var tools := {}
+	var order: Array[String] = []
+	for part: Array in parts:
+		var m: Mesh = part[0] as Mesh if part[0] is Mesh else BuildingKit.mesh(str(part[0]))
+		var repaint := "" if part[0] is Mesh else str((BuildingKit.manifest().get(str(part[0]), {}) as Dictionary).get("paint", ""))
+		for i in m.get_surface_count():
+			var name := str(part[2]) if part[0] is Mesh else (m.surface_get_material(i).resource_name if m.surface_get_material(i) != null else "pal_pewter")
+			if repaint != "" and name == repaint:
+				name = "paint:crimson"
+			if not tools.has(name):
+				var st := SurfaceTool.new()
+				st.begin(Mesh.PRIMITIVE_TRIANGLES)
+				tools[name] = st
+				order.append(name)
+			(tools[name] as SurfaceTool).append_from(m, i, part[1] as Transform3D)
+	var am := merged.mesh as ArrayMesh
+	var old := ArrayMesh.new()
+	for name in order:
+		(tools[name] as SurfaceTool).commit(old)
+	assert_eq(am.get_surface_count(), order.size(), "one surface per material")
+	for s in order.size():
+		var want := old.surface_get_arrays(s)
+		var got := am.surface_get_arrays(s)
+		assert_eq(got[Mesh.ARRAY_VERTEX], want[Mesh.ARRAY_VERTEX], "%s: the same vertices" % order[s])
+		assert_eq(got[Mesh.ARRAY_NORMAL], want[Mesh.ARRAY_NORMAL], "%s: the same normals" % order[s])
+		assert_eq(got[Mesh.ARRAY_INDEX], want[Mesh.ARRAY_INDEX], "%s: the same triangles" % order[s])
+	merged.free()
