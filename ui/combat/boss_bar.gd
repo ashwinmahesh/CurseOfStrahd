@@ -20,8 +20,11 @@ const STEPS := 4
 const LETTERBOX := 92.0
 const BARS_IN := 0.45
 const ENTRANCE := 2.6
-## The sound over the music as the name shows, unless a boss names its own (`sting`): several play together.
-const STING: Array[String] = ["toll", "thunder_boom"]
+## The sting over the music as the name shows (owner pick 2026-10-08): the heavy bell rung STING_RINGS times, with
+## STING_GAP seconds of quiet after each ring.
+const STING := "boss_bell"
+const STING_RINGS := 3
+const STING_GAP := 0.3
 
 ## The screens and captures that turn the entrance off; headless runs (the tests) never play it.
 static var entrances := true
@@ -62,9 +65,9 @@ static func entry(c: Combatant) -> Dictionary:
 	if spec.has("names"):
 		var names := spec["names"] as Dictionary
 		if names.has(c.name()):
-			return {"title": str(names[c.name()]), "sting": spec.get("sting", [])}
+			return {"title": str(names[c.name()])}
 	elif not spec.is_empty():
-		return {"title": str(spec.get("title", "")), "sting": spec.get("sting", [])}
+		return {"title": str(spec.get("title", ""))}
 	if not (m.data.get("legendary_actions", {}) as Dictionary).is_empty():
 		return {"title": ""}
 	return {}
@@ -252,7 +255,7 @@ func show_entrance(c: Combatant) -> void:
 	# The name drifts up a little as it shows.
 	tw.tween_property(_card, "offset_top", _card.offset_top - 14.0, 1.6).set_delay(0.35)
 	tw.tween_property(_card, "offset_bottom", _card.offset_bottom - 14.0, 1.6).set_delay(0.35)
-	tw.tween_callback(func() -> void: BossBar.sting(c)).set_delay(0.35)
+	tw.tween_callback(sting).set_delay(0.35)
 
 
 ## The bars open and the name fades; the plates above the hotbar come up in their place.
@@ -286,13 +289,19 @@ func _letterbox(top: bool) -> ColorRect:
 	return r
 
 
-## The sting over the music as `c`'s name shows: its own sounds, or STING.
-static func sting(c: Combatant) -> void:
-	var ids: Array = entry(c).get("sting", []) as Array
-	if ids.is_empty():
-		ids = STING
-	for i in ids.size():
-		if i == 0:
-			Audio.sting(str(ids[i]))
-		else:
-			Audio.sfx(str(ids[i]), 0.0)
+## Rings the sting: the bell STING_RINGS times, the music ducking under the first, STING_GAP seconds of quiet after
+## each ring. The rings stop if the fight's view goes first.
+func sting() -> void:
+	Audio.sting(STING)
+	var tw := create_tween()
+	for _ring in STING_RINGS - 1:
+		tw.tween_interval(ring_seconds() + STING_GAP)
+		tw.tween_callback(func() -> void: Audio.sfx(STING, 0.0))
+
+
+## How long one ring of the bell lasts.
+static func ring_seconds() -> float:
+	var files := Audio.files("sfx", STING)
+	if files.is_empty() or not ResourceLoader.exists(files[0]):
+		return 1.0
+	return (load(files[0]) as AudioStream).get_length()

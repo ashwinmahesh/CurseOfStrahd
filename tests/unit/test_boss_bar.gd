@@ -2,7 +2,7 @@ extends TestCase
 ## Boss presentation (G3, ui/combat/boss_bar.gd, narrative/combat/bosses.json): every boss listed is a real monster,
 ## and every name listed is one a fight in the game gives it; who counts as a boss (listed, named, or with legendary
 ## actions; only foes), the greatest first and at most three; the bar's quarter steps, never exact Hit Points; the
-## line under it; and a sting that has its sounds.
+## line under it; and the sting, three rings of the heavy bell.
 
 
 func _named(id: String, as_name: String, e: Encounter, cell: Vector2i) -> Combatant:
@@ -88,9 +88,8 @@ func test_the_line_under_the_bar() -> void:
 	bar.free()
 
 
-func test_the_sting_has_its_sounds() -> void:
-	for id in BossBar.STING:
-		assert_false(Audio.files("sfx", id).is_empty(), "the sting's %s has a recording" % id)
-	for spec: Variant in (BossBar.data()["bosses"] as Dictionary).values():
-		for id: Variant in (spec as Dictionary).get("sting", []) as Array:
-			assert_false(Audio.files("sfx", str(id)).is_empty(), "a boss's sting %s has a recording" % id)
+func test_the_sting_is_three_bell_rings() -> void:
+	assert_eq(Audio.files("sfx", BossBar.STING).size(), 1, "one bell, the same every time")
+	assert_true(ResourceLoader.exists(Audio.files("sfx", BossBar.STING)[0]), "the bell has its recording")
+	assert_eq([BossBar.STING_RINGS, BossBar.STING_GAP], [3, 0.3], "three rings, 0.3 s of quiet after each (owner, 2026-10-08)")
+	assert_between(BossBar.ring_seconds(), 1.0, 2.0, "a ring is the heavy bell's whole sound")

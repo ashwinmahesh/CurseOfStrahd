@@ -308,6 +308,9 @@
       "res://art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_003.ogg",
       "res://art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_004.ogg"
     ],
+    "boss_bell": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactBell_heavy_000.ogg"
+    ],
     "enemy_death": [
       "res://art/sourced/oga_80_cc0_rpg_sfx/creature_die_01.ogg"
     ],
