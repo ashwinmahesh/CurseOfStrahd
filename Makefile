@@ -52,6 +52,12 @@ import:
 test: import
 	python3 tools/run_tests.py --godot $(GODOT) $(if $(JOBS),--jobs $(JOBS),) $(if $(ONLY),--only=$(ONLY),) $(if $(FILES),--files=$(FILES),) 2>&1 | $(LOGCHK)
 
+## The repo's git hooks (tools/git/), into the hooks folder every worktree shares: pre-push refuses a push of main
+## unless STRAHD_PUSH_MAIN=1 (the build thread's), then runs Git LFS's own pre-push.
+.PHONY: hooks
+hooks:
+	cp tools/git/pre-push "$$(git rev-parse --git-common-dir)/hooks/pre-push"
+
 ## Golden saves (P4): the playthrough tests keep a save at the start of each chapter in tests/saves
 ## (v<save version>_<chapter>.json, tests/support/golden_saves.gd); one already there is never made again.
 .PHONY: golden-saves

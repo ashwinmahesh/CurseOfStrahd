@@ -12,6 +12,10 @@ func before_each() -> void:
 		GameState.story.party.append(ch)
 
 
+func after_each() -> void:
+	Look.set_style(Look.DEFAULT_STYLE, false)
+
+
 func _view(loc_id: String) -> LocationView:
 	var v := LocationView.create(loc_id, GameState.story, null, Dice.roller, "default")
 	add_child(v)
@@ -330,4 +334,53 @@ func test_a_looted_desk_dims() -> void:
 		var a := ModelPiece.colour_of((before[i] as ShaderMaterial).get_shader_parameter(key))
 		var b := ModelPiece.colour_of(m.get_shader_parameter(key))
 		assert_true(b.v < a.v, "surface %d is darker once looted" % i)
+	v.queue_free()
+
+
+## Fires are 3D (owner report 2026-10-07: 2D flame sprites stood in the world): a campfire's, a hearth's, a brazier's
+## and a fire's own flames are the 3D flame model, casting no shadow, with no 2D flame left; Classic keeps its 2D flames.
+func test_fires_are_3d() -> void:
+	Look.set_style("modern", false)
+	for loc_id: String in ["vallaki_vistani_camp", "vallaki_blue_water_inn", "krezk"]:
+		var v := _view(loc_id)
+		await _frames(1)
+		var flames := v.find_children("Flame*", "Node3D", true, false)
+		assert_true(flames.size() >= 1, "%s's fires burn (%d)" % [loc_id, flames.size()])
+		for f: Node in flames:
+			assert_eq(str(f.get_meta("model", "")), "flame", "%s's fire is the 3D flame" % loc_id)
+			for mi: Node in f.find_children("*", "MeshInstance3D", true, false):
+				assert_eq((mi as MeshInstance3D).cast_shadow, GeometryInstance3D.SHADOW_CASTING_SETTING_OFF, "with no shadow")
+		assert_eq(_flat_flames(v), 0, "%s has no 2D flame left" % loc_id)
+		v.queue_free()
+		await _frames(1)
+	Look.set_style("classic", false)
+	var c := _view("vallaki_vistani_camp")
+	await _frames(1)
+	assert_true(_flat_flames(c) > 0, "Classic keeps its 2D flames")
+	c.queue_free()
+
+
+func _flat_flames(n: Node) -> int:
+	var count := 0
+	for s: Node in n.find_children("*", "Sprite3D", true, false):
+		var sp := s as Sprite3D
+		if sp.texture != null and sp.texture.resource_path.ends_with("/flame.png"):
+			count += 1
+	return count
+
+
+## A fire light beside a hearth, brazier or campfire doesn't burn a second flame on the ground under it (Krezk's
+## brazier drew two).
+func test_a_fire_burns_once() -> void:
+	var v := _view("krezk")
+	await _frames(1)
+	var at := v.board.cell_center(Vector2i(29, 17))
+	var flames := 0
+	for n: Node in v.find_children("*", "Node3D", true, false):
+		var flat := n is Sprite3D and (n as Sprite3D).texture != null and (n as Sprite3D).texture.resource_path.ends_with("/flame.png")
+		if flat or str(n.get_meta("model", "")) == "flame":
+			var p := (n as Node3D).global_position
+			if Vector2(p.x - at.x, p.z - at.z).length() <= 1.5:
+				flames += 1
+	assert_eq(flames, 1, "Krezk's brazier burns with one flame")
 	v.queue_free()
