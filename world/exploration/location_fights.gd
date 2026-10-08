@@ -419,6 +419,7 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 	view.combat_ended.emit(outcome)
 	# A foe that withdrew or fled as mist leaves nothing behind (a Tarokka treasure here is still found).
 	if talk != "":
+		Captives.forget_spent(view.st)
 		view.dialogue_requested.emit(talk, "")
 	elif outcome == "victory":
 		_spoils(view, encounter_id, spec, not e.legendary.no_loot(), AiTactics.leftovers(e))

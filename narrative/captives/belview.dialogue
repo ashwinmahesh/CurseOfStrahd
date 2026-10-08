@@ -1,0 +1,37 @@
+# Belviews who gave up after a fight at the abbey (F13, story/captives.gd). The mongrelfolk are the Abbot's making.
+
+~ start
+Narrator: The mongrelfolk curls up small in a corner, a goat's ear folded down over a child's hand, and whimpers. 'Not the cells,' it says. 'Please. Not back in the cells.'
+-> choose
+
+~ choose
+* [Persuasion DC 11] Kneel and promise it no one will hurt it. -> bride | hidden
+* [Intimidation DC 10] Ask what the Abbot is doing up there. -> angry | hidden
+* Let them go. -> release
+* Kill them. -> kill
+
+~ bride
+Narrator: 'The Abbot is making a bride,' it whispers, 'for the lord on the hill. Sewn so beautiful. We are not to look at her. We look anyway.'
+-> after_talk
+
+~ angry
+Narrator: 'The Abbot will be angry,' it sobs. 'He is always angry, since the bride.' It won't say more.
+-> after_talk
+
+~ hidden
+Narrator: It hides its face and rocks, back and forth, and doesn't answer.
+-> after_talk
+
+~ after_talk
+* Let them go. -> release
+* Kill them. -> kill
+
+~ release
+Narrator: It scuttles away along the wall and is gone, out toward the mountain, faster than you'd think on those mismatched legs.
+approve thistle +2 liriel_dawnsong +2 wren_featherfoot +1: You let a frightened Belview go free
+-> END
+
+~ kill
+Narrator: The abbey is very quiet afterward. Somewhere below, another of them starts to cry.
+approve thistle -4 liriel_dawnsong -4 godrick_pendlebrook -4 wren_featherfoot -3 kip_smudgewick -2: You killed a Belview who begged for its life
+-> END

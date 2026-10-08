@@ -59,5 +59,13 @@ static func conversation(captives: Array[Combatant], encounter_id: String) -> St
 	return "captives/%s:start" % kind
 
 
+## A failed Persuasion or Intimidation is spent for good (owner rule, 2026-10-06), but every fight's captives are new
+## people: what failed with the last ones doesn't carry over to these. Forgets the captives' spent checks.
+static func forget_spent(st: StoryState) -> void:
+	for k: Variant in st.flags.keys():
+		if str(k).begins_with("_failed/captives/"):
+			st.flags.erase(k)
+
+
 static func _cr(c: Combatant) -> float:
 	return float((c.creature as Monster).data.get("cr", 0)) if c.creature is Monster else 0.0
