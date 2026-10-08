@@ -102,6 +102,7 @@ Narrator: He polishes a cup that doesn't need polishing and gives you nothing. H
 ~ keepers
 set keepers_of_the_feather_met
 set wizard_of_wines_hook
+cutscene keepers_ravens
 Narrator: Urwin closes the shutters, one after another, and when he turns round there are ravens on every beam of the taproom: a dozen, two dozen, silent, all watching you.
 if flag.raven_fed
 Urwin: A friend of ours walked beside you on the road and you fed him. Then you stood by this town. That makes you friends of ours.

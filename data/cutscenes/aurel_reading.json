@@ -1,0 +1,11 @@
+{
+  "id": "aurel_reading",
+  "title": "Reading to an Empty Chair",
+  "summary": "Silvain's friend Aurel reads aloud to Strahd's empty armchair.",
+  "images": [
+    {
+      "image": "aurel_reading",
+      "when": ""
+    }
+  ]
+}

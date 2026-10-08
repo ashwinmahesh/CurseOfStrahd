@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bplk1h3mrtlmd"
-path="res://.godot/imported/castle_glimpse.jpg-262e733712ec7a4c4592b96cc20be488.ctex"
+path.bptc="res://.godot/imported/castle_glimpse.jpg-262e733712ec7a4c4592b96cc20be488.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/castle_glimpse.jpg"
-dest_files=["res://.godot/imported/castle_glimpse.jpg-262e733712ec7a4c4592b96cc20be488.ctex"]
+dest_files=["res://.godot/imported/castle_glimpse.jpg-262e733712ec7a4c4592b96cc20be488.bptc.ctex"]
 
 [params]
 

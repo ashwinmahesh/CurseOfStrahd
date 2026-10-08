@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://botmdcr5m21fa"
-path="res://.godot/imported/castle_chasm_carriage.jpg-938e74288c30b378d510695a7f35971f.ctex"
+path.bptc="res://.godot/imported/castle_chasm_carriage.jpg-938e74288c30b378d510695a7f35971f.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/castle_chasm_carriage.jpg"
-dest_files=["res://.godot/imported/castle_chasm_carriage.jpg-938e74288c30b378d510695a7f35971f.ctex"]
+dest_files=["res://.godot/imported/castle_chasm_carriage.jpg-938e74288c30b378d510695a7f35971f.bptc.ctex"]
 
 [params]
 

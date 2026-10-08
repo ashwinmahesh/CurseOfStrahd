@@ -8,6 +8,7 @@
 set strahd_letter_read
 Narrator: A rider in Vistani colours reins in beside you, holds out a letter sealed in black wax, and is gone back up the road before anyone can ask who sent it.
 Narrator: The seal is one letter, a Z, pressed deep.
+cutscene strahd_letter
 Strahd: My dear guests. Forgive a host for writing when he might call. The daylight is so inconvenient for me.
 if flag.strahd_watcher_seen
 Strahd: You saw me on the ridge. You looked well. A little thin. Do eat.

@@ -24,6 +24,7 @@ interject name:ratatoille: That is a master's book. Not a clever student's. A ma
 -> END
 
 ~ lightning_ridge
+cutscene lightning_ridge
 set baratok_storm_seen
 Narrator: The trail crosses a bare ridge as the light goes, and a single cloud, no bigger than a barn, slides up over Mount Baratok on its own and stops overhead.
 Narrator: Lightning comes down, once, into a ring of black glass on the ridge where it has plainly come down every evening for years. The thunder rolls off down the valley and doesn't come back.

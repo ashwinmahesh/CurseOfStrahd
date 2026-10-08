@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b65ac6akyqnox"
-path="res://.godot/imported/crossroads_dead.jpg-d5e498dfa06af925ecb4685a7f45f217.ctex"
+path.bptc="res://.godot/imported/crossroads_dead.jpg-d5e498dfa06af925ecb4685a7f45f217.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/crossroads_dead.jpg"
-dest_files=["res://.godot/imported/crossroads_dead.jpg-d5e498dfa06af925ecb4685a7f45f217.ctex"]
+dest_files=["res://.godot/imported/crossroads_dead.jpg-d5e498dfa06af925ecb4685a7f45f217.bptc.ctex"]
 
 [params]
 

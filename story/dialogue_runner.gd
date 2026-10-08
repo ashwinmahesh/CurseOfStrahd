@@ -225,7 +225,15 @@ func next() -> Dictionary:
 					st.give_item(item, 1, taker)
 				for item: Variant in got.slice(1):
 					_queued.append({"kind": "notice", "text": "%s receives %s" % [_first(taker), Compendium.shared().display_name("items", str(item))]})
-				return {"kind": "notice", "text": "%s receives %s" % [_first(taker), Compendium.shared().display_name("items", got[0])]}
+				var found := {"kind": "notice", "text": "%s receives %s" % [_first(taker), Compendium.shared().display_name("items", got[0])]}
+				# The treasure's own picture first (story/cutscenes.gd `find:<item>`), the notices over it.
+				for item in got:
+					var cut := Cutscenes.for_trigger("find:" + item, st)
+					if cut != "":
+						Cutscenes.mark_played(cut, st)
+						_queued.push_front(found)
+						return {"kind": "cutscene", "id": cut, "image": Cutscenes.image(cut, st), "focus": Cutscenes.focus(cut)}
+				return found
 			"dark_gift":
 				pc += 1
 				if Compendium.shared().has("dark_gifts", str(s["gift"])) and not _living().is_empty():

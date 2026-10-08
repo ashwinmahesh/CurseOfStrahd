@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://nx0lowvcrml5"
-path="res://.godot/imported/crossroads_gallows.jpg-8156719b9deab42edb25b4687f20f389.ctex"
+path.bptc="res://.godot/imported/crossroads_gallows.jpg-8156719b9deab42edb25b4687f20f389.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/crossroads_gallows.jpg"
-dest_files=["res://.godot/imported/crossroads_gallows.jpg-8156719b9deab42edb25b4687f20f389.ctex"]
+dest_files=["res://.godot/imported/crossroads_gallows.jpg-8156719b9deab42edb25b4687f20f389.bptc.ctex"]
 
 [params]
 

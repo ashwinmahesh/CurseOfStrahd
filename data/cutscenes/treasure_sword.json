@@ -1,0 +1,17 @@
+{
+  "id": "treasure_sword",
+  "title": "The Sunsword",
+  "summary": "A bladeless hilt whose blade of sunlight springs out at a touch.",
+  "images": [
+    {
+      "image": "treasure_sword",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "trigger": "find:sunsword",
+  "once": true
+}

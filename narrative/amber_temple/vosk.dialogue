@@ -148,6 +148,7 @@ Vosk: No one? You came all this way down to say no one. Well. I've been told no 
 
 ~ refuse
 Vosk: Nothing? Not even something small for the road? A pity. I do hate a wasted trip.
+cutscene vosk_unmasked
 Narrator: He takes off his spectacles, and his face comes away with them.
 approve kip_smudgewick +2 liriel_dawnsong +1: You told Master Vosk you'd take nothing from him
 combat vosk_unmasked

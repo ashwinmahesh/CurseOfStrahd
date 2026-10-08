@@ -175,6 +175,7 @@ combat bride_defends
 
 ~ kneeling
 set vasilka_fate = "destroyed"
+cutscene abbot_holds_hand
 Narrator: Vasilka lies in the ruin of her wedding with the dress torn and her careful seams undone. The Abbot kneels beside her. He hasn't moved since she fell. He is holding her hand.
 Abbot: She asked me, this morning, what being married was like. I told her it was like being kept warm. I had never been married. I had never been warm.
 * [if flag.markovia_letter_read] Read him Markovia's letter. -> letter_after

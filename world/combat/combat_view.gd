@@ -1351,6 +1351,15 @@ func _narrate(key: String, actor: Combatant, target: Combatant) -> void:
 	if text != "":
 		e.log.add("narr", text, "")
 		hud.refresh_log()
+		# A story cutscene for this moment (story/cutscenes.gd): its picture over the fight, the line as its caption.
+		var cut := Cutscenes.for_trigger(key, story)
+		if cut != "":
+			var player := CutscenePlayer.new()
+			add_child(player)
+			if player.play(cut, [text] as Array[String], story):
+				Cutscenes.mark_played(cut, story)
+				return
+			player.queue_free()
 		if VoiceOver.say(VoiceOver.NARRATOR, text) > 0.0:
 			barks.hush()   # the Narrator speaks over no one
 

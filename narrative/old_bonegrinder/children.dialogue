@@ -122,6 +122,7 @@ Ilinca: The Keepers owe you for this. We pay our debts slowly, in odd coin. Tell
 if guest:ilinca_vrana
 leave ilinca_vrana
 endif
+cutscene ilinca_children
 Narrator: She takes a child by each hand and goes down the stair with them, slowly, talking about soup the whole way.
 if name:thistle
 interject name:thistle: Bye, Toma! Bye, Ilka! Whistle like this if anyone bothers you!

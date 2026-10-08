@@ -21,6 +21,7 @@ Abbot: Children. You came back. Sit, if you like. The pews are hard, but they ar
 ~ first
 set abbot_met
 quest the_abbots_bride met
+cutscene abbot_candles
 Narrator: A young monk in a plain brown habit is lighting the candles along the altar rail. He doesn't use a taper. He touches each wick with a fingertip, and each one lights.
 Narrator: He turns. Golden hair, a face like a saint carved by someone who had only heard saints described. For a moment the light in the chapel seems to arrange itself around him, and then it remembers itself.
 Abbot: Welcome. I hoped you would come today. I am the Abbot of this house. You are cold, and tired, and a little afraid of me. All three are sensible. Two of them I can help with.

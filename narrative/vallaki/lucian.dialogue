@@ -96,6 +96,7 @@ Father Lucian: Tonight, or any night now. If whoever took the saint means the ch
 
 ~ vigil
 set church_vigil
+cutscene church_vigil
 Narrator: Lucian bars the doors and lights every candle he owns. You take your places in the nave. For hours there is nothing but the wax burning down and the priest's voice saying the long prayers under his breath.
 Father Lucian: Whatever happens, they don't reach the altar. Not while I'm breathing.
 approve liriel_dawnsong +2 godrick_pendlebrook +2 thistle +1: You kept vigil at St. Andral's with Father Lucian

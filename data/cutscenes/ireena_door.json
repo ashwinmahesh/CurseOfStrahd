@@ -1,0 +1,15 @@
+{
+  "id": "ireena_door",
+  "title": "Three Bolts Slide Back",
+  "summary": "The mansion's barred door opens on Ireena with her sword drawn.",
+  "images": [
+    {
+      "image": "ireena_door",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

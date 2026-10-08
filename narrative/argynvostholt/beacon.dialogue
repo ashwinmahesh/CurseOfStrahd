@@ -139,6 +139,7 @@ if tarokka.ally.npc == sir_godfrey_gwilym
 -> godfrey_asks
 endif
 if flag.godfrey_met
+cutscene godfrey_rests
 Narrator: In a small room downstairs, under a wall of charcoal names, a big knight in dented plate sits down on his cot and is still.
 endif
 -> farewell

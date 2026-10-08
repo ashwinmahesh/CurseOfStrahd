@@ -153,6 +153,7 @@ Ireena: Then come back soon. And next time, knock louder.
 appear strahd
 set strahd_window = "church"
 Narrator: Past midnight the bell of St. Andral's starts to toll on its own, slow and uneven. You find Ireena at the church door, wide awake.
+cutscene church_gate
 Narrator: At the churchyard gate stands Strahd, one gloved hand on the gatepost, coming no further.
 Strahd: Ireena. Come out. The night is fine, and the company in there is very old and very dead.
 Ireena [angry]: The company in here is a saint. Go home.

@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dxroo4r8xey86"
-path="res://.godot/imported/chapel_dawn.jpg-0e4c5e8f5a2370907dfa838f775f9b8c.ctex"
+path.bptc="res://.godot/imported/chapel_dawn.jpg-0e4c5e8f5a2370907dfa838f775f9b8c.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/chapel_dawn.jpg"
-dest_files=["res://.godot/imported/chapel_dawn.jpg-0e4c5e8f5a2370907dfa838f775f9b8c.ctex"]
+dest_files=["res://.godot/imported/chapel_dawn.jpg-0e4c5e8f5a2370907dfa838f775f9b8c.bptc.ctex"]
 
 [params]
 

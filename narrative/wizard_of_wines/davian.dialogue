@@ -269,6 +269,7 @@ endif
 
 ~ burial
 set elvir_buried
+cutscene elvir_burial
 Narrator: They bury Elvir at the end of the last green row, under the cairn they raised for him when there was nothing to put beneath it. Stefania sings. Davian doesn't. Adrian digs, and won't let anyone else hold the spade.
 Davian: He's home. That's the thing. Whatever else is true, he's home.
 if flag.elvir_truth_known and not flag.martikovs_reconciled

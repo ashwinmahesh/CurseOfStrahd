@@ -1,0 +1,15 @@
+{
+  "id": "strahd_resting",
+  "title": "Strahd, Beaten",
+  "summary": "Strahd in his coffin, grey and still, only his eyes moving.",
+  "images": [
+    {
+      "image": "strahd_resting",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

@@ -143,10 +143,10 @@ def main():
         if not src.exists():
             failed[cid] = f"no take {src.name}"
             continue
-        data = jpeg(src)
-        if not dst.exists() or dst.read_bytes() != data:
-            dst.write_bytes(data)
-            copied += 1
+        if dst.exists() and dst.stat().st_mtime >= src.stat().st_mtime:
+            continue   # already saved from this take (re-encoding all of them takes minutes)
+        dst.write_bytes(jpeg(src))
+        copied += 1
     print(f"{copied} pictures saved to art/cutscenes")
     if a.sheet:
         contact_sheet(ids, Path(a.sheet))

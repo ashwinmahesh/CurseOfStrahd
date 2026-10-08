@@ -110,6 +110,7 @@ approve thistle +1 kip_smudgewick -1: You swung at Strahd by the campfire
 
 ~ test
 appear strahd
+cutscene wolves_part
 Narrator: Eyes in the dark ahead, a dozen pairs, low to the ground. The wolves part, and a man in black walks out between them as if through a garden.
 Strahd: Good evening. I hear you are becoming formidable. I like to see such things for myself. Indulge me.
 if guest:ireena

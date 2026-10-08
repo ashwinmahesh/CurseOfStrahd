@@ -10,6 +10,7 @@ endif
 if flag.ismark_joins_escort and flag.ireena_in_party and not guest:ismark
 join ismark
 endif
+cutscene vallaki_palisade
 Narrator: The road ends at a palisade of sharpened logs twice a man's height. Most of the points face outward. A few, you notice, face in. Two watchmen with festival ribbons on their spears step into the gateway.
 Town Guard: Halt. Names, business, and how long you mean to stay. And smile, please. It's the law this week.
 if night

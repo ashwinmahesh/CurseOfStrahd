@@ -1,0 +1,15 @@
+{
+  "id": "vosk_unmasked",
+  "title": "Vosk Takes Off His Face",
+  "summary": "The temple's broker lifts away his face and shows the jackal beneath.",
+  "images": [
+    {
+      "image": "vosk_unmasked",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

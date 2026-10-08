@@ -56,6 +56,7 @@ combat lysaga_at_monument
 # ---------------------------------------------------------------- Marina's bier (prop in the vault)
 
 ~ bier
+cutscene marina_bier
 Narrator: She lies on a bier of white stone under a veil of lace, a girl of perhaps nineteen, with red hair braided over one shoulder. She looks asleep. She has looked asleep for a very long time. There is no smell at all.
 if guest:ireena
 Narrator: Ireena stands at the foot of the bier and doesn't move. The girl on it has her face, too.

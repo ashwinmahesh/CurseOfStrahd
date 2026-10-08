@@ -4,7 +4,9 @@ extends TestCase
 ## which read as captions, the box comes back for options, Skip runs the captions on to the next choice, Esc pauses and
 ## `cutscene end` takes it away; looking at a place's trigger shows its picture with the narrator's words, closes on a
 ## click and keeps the world still meanwhile; a `once` one comes back no more. An ending's narration shows its picture
-## behind the words. The rider on the ridge plays on the first journey out, with Ireena in it when she's along.
+## behind the words. The rider on the ridge plays on the first journey out, with Ireena in it when she's along. A
+## Tarokka treasure shows its picture once, in a conversation or before the loot window; a fight's narrator key can
+## have one too (Strahd fleeing to his coffin as mist).
 
 const LOC := {
 	"id": "test_crag", "name": "Test Crag", "region": "test", "summary": "A fixture.",
@@ -34,6 +36,11 @@ Narrator: He lifts a hand.
 ~ gone
 cutscene end
 Narrator: The ridge is bare.
+-> END
+
+~ treasure
+tarokka give argynvostholt_vladimir
+Narrator: It is heavier than it looks.
 -> END
 
 ~ ending
@@ -290,6 +297,44 @@ func test_an_ending_shows_its_picture_behind_the_narration() -> void:
 	assert_eq(screen.lines_shown[-1], "The sun comes up.", "the statement doesn't end the narration")
 	assert_eq(art.texture.resource_path, "res://art/cutscenes/strahd_watcher.jpg", "the picture behind the words")
 	screen.queue_free()
+
+
+func test_a_treasure_shows_its_picture_once_in_a_conversation() -> void:
+	var st := _story(false)
+	st.tarokka = {"tome": "swords_1"}   # the Tome waits with Vladimir (data/tarokka/outcomes.json)
+	var r := DialogueRunner.new(st, DiceRoller.new(3))
+	assert_true(r.start("test/cut:treasure"))
+	var cut := r.next()
+	assert_eq(str(cut["kind"]), "cutscene", "the picture comes first")
+	assert_eq(str(cut["id"]), "treasure_tome")
+	assert_true(str(r.next()["text"]).contains("Tome of Strahd"), "then the notice, over it")
+	assert_true(Cutscenes.played("treasure_tome", st), "and it won't show again")
+	assert_eq(Cutscenes.for_trigger("find:tome_of_strahd", st), "")
+
+
+func test_a_treasure_in_the_spoils_shows_its_picture_before_the_loot_window() -> void:
+	await _game(false)
+	root.call("_open_loot", "test_chest", [{"id": "sunsword", "qty": 1}], 0.0)
+	await _frames(2)
+	var player := root.get("screen") as CutscenePlayer
+	assert_true(player != null and player.id == "treasure_sword", "the Sunsword's picture")
+	assert_true(root.get("loot") == null, "the loot window waits for it")
+	assert_true(player.view.caption_text().begins_with("The Sunsword"), player.view.caption_text())
+	player.advance()
+	await _frames(3)
+	assert_true(root.get("loot") != null, "then the loot window opens")
+	(root.get("loot") as Node).queue_free()
+	root.set("loot", null)
+	root.call("_open_loot", "test_chest", [{"id": "sunsword", "qty": 1}], 0.0)
+	await _frames(2)
+	assert_true(not root.get("screen") is CutscenePlayer, "only the first time")
+
+
+func test_strahd_fleeing_as_mist_has_its_picture() -> void:
+	var st := _story(false)
+	assert_eq(Cutscenes.for_trigger("strahd:fled_to_coffin", st), "strahd_mist_flight")
+	Cutscenes.clear_cache()
+	assert_eq(Cutscenes.for_trigger("strahd:fled_to_coffin", st), "strahd_mist_flight", "from the data")
 
 
 func test_skip_closes_a_places_cutscene() -> void:

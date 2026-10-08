@@ -3,6 +3,7 @@
 # or turn on both (den_reckoning). `after` is Kiril ruling the den, if the party let him.
 
 ~ challenge
+cutscene kiril_eyes
 Narrator: Kiril comes up the passage from the cave mouth without hurrying: a huge, bare-chested man with a wolf pelt worn like a cloak and a grin full of long teeth. Behind him, in the dark, eyes. A great many eyes.
 Kiril [smile]: Emil! Out of your jewellery. And you've made friends. Meat with swords. The master's guests, if I'm not mistaken.
 Emil: I howled the challenge, Kiril. By the old law, you answer it.
@@ -115,6 +116,7 @@ approve kip_smudgewick +2 godrick_pendlebrook +1 thistle +1: You bought the stol
 ~ kids_freed
 set den_children_freed
 quest the_stolen_children freed
+cutscene children_freed
 Narrator: Somebody unbars the pen. Five children come out holding hands in a line, the eldest at the front, and walk past the wolves with their eyes on the floor and their chins up.
 -> kiril_resolve
 

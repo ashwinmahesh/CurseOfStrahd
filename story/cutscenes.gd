@@ -71,6 +71,11 @@ static func for_trigger(key: String, st: StoryState) -> String:
 	return ""
 
 
+## The caption under a treasure's picture (`find:<item>`), in our own words.
+static func found_line(item_id: String) -> String:
+	return "%s, in your hands at last." % Compendium.shared().display_name("magic_items", item_id)
+
+
 ## Records that a place's cutscene has played (kept with the story, so a `once` one never comes back).
 static func mark_played(id: String, st: StoryState) -> void:
 	st.flags[PLAYED % id] = true
