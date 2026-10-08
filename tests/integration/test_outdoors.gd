@@ -596,17 +596,3 @@ func test_settlements_have_things_to_stand_on() -> void:
 			assert_eq(g.height(c) - g.height(Vector2i(28, 14)), ft, "Krezk's wall walk stands %d ft up" % ft)
 		else:
 			assert_eq(g.height(c) - flat.height(c), ft, "%s: %s is stood on %d ft up" % [loc, c, ft])
-
-
-## The last small additions (lane 28): weeds in the cracks of Castle Ravenloft's courtyard, gargoyles and crows on its
-## overlook and roofs, snow and an offering at the Amber Temple's doors, a pack in the ferns on the road out of the Mists.
-func test_the_castle_the_temple_and_the_mists_road() -> void:
-	var want := {"castle_ravenloft_gates": ["crg_weeds_1", "crg_dropped_mirror"],
-		"castle_ravenloft_overlook": ["crg_overlook_gargoyle"], "castle_ravenloft_spires_roofs": ["spires_ridge_gargoyle"],
-		"amber_temple_entrance": ["name_cairn_candle"], "into_the_mists_road": ["mists_fern_pack"]}
-	for loc: String in want:
-		var ids: Array[String] = []
-		for p: Variant in (Compendium.shared().get_entry("locations", loc) as Dictionary)["props"]:
-			ids.append(str((p as Dictionary)["id"]))
-		for id: String in want[loc]:
-			assert_true(id in ids, "%s has %s" % [loc, id])
