@@ -230,6 +230,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | The road up, another frozen traveller | Rope of Climbing (uncommon) | Search (Perception DC 12): in his pack (lane 28's spot) |
 | ✅ | Entrance, the frozen traveller | Frost Brand Longsword (very rare) | Search (Perception DC 14): clutched in a frozen hand |
 | ✅ | Entrance, the rack of halberds | +3 Halberd (very rare) | Search (Investigation DC 16) |
+| ✅ | The ledge, the cairn of names | Candle of Invocation (very rare) | Search (Perception DC 12): an offering that never burned down (lane 28's spot) |
 | ✅ | Great hall, a warden's cell | Ioun Stone of Insight (very rare) | Search (Investigation DC 17) |
 | ✅ | Great hall, the desk kept clear of frost | Tome of Leadership and Influence (very rare) | Search (Investigation DC 17) |
 | ✅ | Library, the books in chains | Tome of Clear Thought (very rare) | Search (Investigation DC 18): a book chained shut that isn't what its spine says |
