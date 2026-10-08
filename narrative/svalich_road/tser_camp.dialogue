@@ -68,10 +68,14 @@ Petru: Don't draw steel near the fire, guest. Everyone here would forget your na
 -> END
 
 ~ tobar
+if quest.called_by_name and quest.called_by_name != rumored
+-> svalich_road/called_by_name:tobar
+endif
 Narrator: A man as big as a doorway is fitting a new spoke into a cracked wheel, humming to it.
 Big Tobar: Hold still, you. Hold still. There. Oh! Hello. Sorry. I was talking to the wheel.
 * What happened to it? -> tobar_wheel
 * Is the road east safe? -> tobar_road
+* [if flag.nelu_rumor] Zora says your son went after a voice. -> svalich_road/called_by_name:asks
 * Carry on. -> END
 
 ~ tobar_wheel
@@ -104,6 +108,13 @@ Zora: Tonight he walked his grey down the road toward the crossroads. He came ba
 elif flag.carriage_beaten
 Zora: It went back up the castle road the other night, empty, faster than it came. I counted that too.
 endif
+if not quest.called_by_name
+set nelu_rumor
+quest called_by_name rumored
+Zora: And Big Tobar's boy, Nelu. Three nights ago he stood up from the fire and said "that's Mama", and walked off toward the falls track. Tobar's wife has been dead six years. One went out. None came back. I counted.
+elif flag.nelu_home
+Zora: Nelu came back. The numbers match again. I like it when the numbers match.
+endif
 -> END
 
 # Lane 28 (2026-10-08, "more people walking around and doing things"): Lavinia dancing on the plank stage, Iancu
@@ -119,6 +130,10 @@ Iancu: Ten paces. I hit the knot nine times in ten. Stanimir says that tenth one
 
 ~ marin
 Old Marin: One deer, and I walked half the night for it. The wolves had the rest. They don't share, and nor do I, unless you're hungry. Are you hungry?
+-> END
+
+~ nelu
+Nelu: I sing now, when anything calls from the trees. Badly, on purpose. Things that use your mother's voice can't stand bad singing. That's my theory.
 -> END
 
 ~ dog

@@ -1,0 +1,128 @@
+# Called by Name (side quest, docs/story/side_quests.md): Big Tobar's son Nelu went into the trees after his dead
+# mother's voice. The voices are will-o'-wisps in the gorge under Tser Falls, feeding on grief and speaking with the
+# voices of the dead; Nelu is alive on a ledge, and they've been calling his father in Nelu's voice. At the falls
+# after dark they call the party too, each by someone they lost. Reached from Zora's rumour (tser_camp:zora_road) or
+# Tobar himself (tser_camp:tobar). Every line here is unvoiced for now; Nelu is a new speaker.
+
+~ asks
+quest called_by_name asked
+Big Tobar: You heard. Zora counts everything, even the things you'd rather she didn't.
+Big Tobar: Three nights ago my boy Nelu was sitting up by the fire, and he stood up and said: that's Mama. And he walked off toward the falls track. His mother's been in the ground six years.
+Big Tobar [sad]: I went after him. Halfway to the falls I heard him. "Da. Da, I'm down here. Da, come down." Out of the gorge, out of the dark. I'd have gone over the edge after him if Petru hadn't sat on me.
+Big Tobar: Nobody here will go to the falls at night. I'm not asking anybody here. I'm asking you.
+* [Insight DC 12] (Does he think the boy is alive?) -> hope | no_read
+* We'll go to the falls after dark. -> agree
+* Not yet. -> END
+
+~ hope
+Narrator: He doesn't. Not really. He's asking you to bring something back so there's something to bury, and he hates himself for it.
+-> agree
+
+~ no_read
+Narrator: A big man holding a spoke so tightly it's bending.
+-> agree
+
+~ agree
+Big Tobar: Whatever calls you, don't answer it. Whoever it sounds like. Especially then. I said that to strangers on the road for twenty years, and I never once thought to say it to my own son.
+-> END
+
+# --- Tobar afterwards (tser_camp:tobar jumps here) ---
+
+~ tobar
+if flag.nelu_home
+-> tobar_after
+endif
+if flag.nelu_saved
+-> tobar_return
+endif
+Big Tobar: The falls. After dark. Don't answer.
+-> END
+
+~ tobar_return
+set nelu_home
+quest called_by_name home
+Narrator: Nelu comes into the firelight a step behind you, filthy, shaking, alive. Big Tobar drops the wheel he's holding on his own foot and doesn't notice.
+Big Tobar: Nelu. Nelu. You great idiot. You great, beautiful idiot.
+Nelu: It was her voice, Da. It knew how she said my name.
+Big Tobar: I know, boy. I know. It used yours on me.
+Big Tobar: I've a little money put by for his wedding. He can earn it again. And this, off a dead archer on the road last winter; it holds more arrows than a quiver should, and I can't shoot to save my life.
+gold +100
+give efficient_quiver
+approve thistle +2 godrick_pendlebrook +2 kip_smudgewick +1 wren_featherfoot +1: You brought Big Tobar's son home from the falls
+-> END
+
+~ tobar_after
+Big Tobar: Nelu sits with his back to the falls now, and sings over anything that calls. Badly. It works.
+-> END
+
+# --- At the falls after dark (prop gorge_voices) ---
+
+~ falls
+if flag.wisps_beaten
+-> ledge
+endif
+if not night
+Narrator: By day the gorge is only a gorge: wet black rock, the falls roaring down into mist, and nothing calling out of it at all.
+-> END
+endif
+quest called_by_name voices
+Narrator: Down in the gorge there are lights: small, pale, drifting like lanterns carried by people who are taking their time. Under the roar of the water, somebody is calling.
+Narrator: Then they're calling you. Each of you. By name.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Sir Pellam? That's... that's his voice. "Godrick, lad. Bring the sword down here. I'll do it properly this time."
+endif
+if name:wren_featherfoot
+interject name:wren_featherfoot: Sorrel. It's Sorrel, telling me to stop slouching. He's been dead two years. He'd never come back just for that. He would, actually.
+endif
+if name:thistle
+interject name:thistle: That's my grandda. He's saying come on, lass, it's not far. It's no' him. It's no' him. I know it's no' him.
+endif
+if name:kip_smudgewick
+interject name:kip_smudgewick: Pip? Pip, sweetheart, what are you... No. No, she's home. She's home and she's safe and that is not my daughter.
+endif
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: It's praying, in the voice of the old sister who taught me. It doesn't know the words. It's just making the shapes.
+endif
+if name:ratatoille
+interject name:ratatoille: Maman, calling me out of the kitchen. She never once called me out of the kitchen. She needed me in it.
+endif
+Narrator: And under all of it, a boy's voice, hoarse from shouting: Da. Da, come down.
+check Wisdom DC 14 -> steady | lured
+
+~ steady
+Narrator: You hold. Whatever the voices are, they've noticed you're not coming down to them, and they're coming up.
+combat falls_wisps
+
+~ lured
+set wisps_lured
+Narrator: Someone takes a step toward the edge, and then another, and the voice in their ear is so glad. By the time the rest of you have hold of them, the lights are already on the ledge with you.
+combat falls_wisps
+
+# --- After the lights are out (the same prop) ---
+
+~ ledge
+if flag.nelu_saved
+Narrator: The gorge is dark and loud and empty. Nothing down there knows your name.
+-> END
+endif
+Narrator: The lights are gone. Under the roar of the water there's still one voice, hoarse and very real: "Da? Is somebody there? I can't climb it. I've tried."
+* [Athletics DC 13] (Rope off a pine and go down for him.) -> climb | climb_fail
+* [knows:misty_step] (Step down to his ledge and back with him.) -> carried
+* [knows:spider_climb] (Walk down the rock with Spider Climb.) -> carried
+* Shout that you'll be back. -> END
+
+~ climb_fail
+time +30
+Narrator: The rock is slick with spray and the rope burns through your hands. You come back up empty and bleeding, and the boy's voice says: it's all right. It's all right. Try again.
+-> END
+
+~ climb
+-> carried
+
+~ carried
+set nelu_saved
+quest called_by_name nelu_found
+Narrator: He's on a shelf of wet rock no wider than a cart, twenty feet down, soaked and shaking and three days hungry, with his knees pulled up and his hands over his ears.
+Nelu: Is it you? Really you? They used everybody's voice. They used my Da's.
+Nelu: Get me home. Please. And don't let anything say my name on the way.
+-> END
