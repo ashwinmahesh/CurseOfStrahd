@@ -324,6 +324,7 @@ func test_ending_strahd_triumphant_when_the_party_falls() -> void:
 	await _start(str(fb["location"]), 2)
 	_foretell("executioner")
 	var bot := _bot(["We came to end you."])
+	bot.fight_tries = 1   # the loss is the point: no replays
 	assert_true(_view()._trigger_encounter(str(fb["trigger"])), "the parley begins")
 	await bot.settle(3000)
 	assert_true(bot.defeated, "a level 2 party falls to Strahd")
