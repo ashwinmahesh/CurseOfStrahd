@@ -52,8 +52,12 @@ user://settings.cfg through `GameSettings`, never in a save (the respec box is t
 
 ## The party frames (ui/exploration/explore_hud.gd, U9)
 
-Each party card shows Bloodied, conditions, exhaustion and Concentration as small tags (the rules words open their
-glossary cards, U1), then spell slots by level and class resources as small lozenges (past six a resource reads
+Each party card shows Bloodied, conditions and exhaustion as small tags (the rules words open their glossary cards,
+U1); then what's working on the hero as icons, each named on hover with how long it has left (`EffectIcons`, owner
+request 2026-10-08, on the combat HUD's frames too): the spell they concentrate on, ringed in moonlight; abilities
+switched on, in art/icons.json's "features" tiles (Rage, Bladesong, Vow of Enmity, Sacred Weapon, Reckless Attack,
+Dodge, Innate Sorcery, Form of Dread and 20 more; a rune tile for the rest; `make icons KIND=features`); spells and item
+powers on them in their own icons; a beast's shape. Then spell slots by level and class resources as small lozenges (past six a resource reads
 "left/total"); hovering them gives every one by name, with when it comes back. The card's click (lead, or the sheet
 on a right-click) lies under its content, so the tags take the pointer.
 

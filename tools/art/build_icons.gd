@@ -1,7 +1,8 @@
 extends SceneTree
-## Spell and item icons: make icons. Each key in art/icons.json names a game-icons.net silhouette
+## Spell, item and ability icons: make icons. Each key in art/icons.json names a game-icons.net silhouette
 ## (art/sourced/game_icons, CC BY 3.0, credited on the Credits screen), optionally "@<tint>", and this paints it as a
-## framed tile in art/icons/<spells|items>/<key>.png. A tint (the catalog's "tints") gives the silhouette's colours top
+## framed tile in art/icons/<spells|items|features>/<key>.png (features: the abilities a hero switches on, shown on the
+## party frames, ui/common/effect_icons.gd). A tint (the catalog's "tints") gives the silhouette's colours top
 ## to bottom, the background glow and, for spells, a halo: spells by flavour (fire, frost, necrotic...), items in
 ## their natural colours (steel, wood, leather...). Every tile shares the gilt frame of the menus. Tiles whose key left
 ## the catalog are removed.
@@ -9,19 +10,20 @@ extends SceneTree
 ## The catalog's "ui" keys are menu glyphs instead: the silhouette as a plain white shape, like the menu icons
 ## `make ui_art` writes, which buttons tint gilt. They go beside those in art/ui/icons (UiKit.icon), and nothing else
 ## there is touched.
-## Run: godot --headless --path . --script res://tools/art/build_icons.gd [-- --ui]
+## Run: godot --headless --path . --script res://tools/art/build_icons.gd [-- --ui | --kind=<spells|items|features>]
 
 const CATALOG := "res://art/icons.json"
 const PACK := "res://art/sourced/game_icons/icons/ffffff/transparent/1x1/"
 const OUT := "res://art/icons/"
 const SIZE := 128
-const KINDS: Array[String] = ["spells", "items"]
+const KINDS: Array[String] = ["spells", "items", "features"]
 ## The tint an entry without "@<tint>" gets.
-const DEFAULT_TINT := {"spells": "arcane", "items": "cloth"}
+const DEFAULT_TINT := {"spells": "arcane", "items": "cloth", "features": "arcane"}
 const UI_OUT := "res://art/ui/icons/"
 const UI_SIZE := 96
 ## Backgrounds when a tint names none: a crimson glow for spells, near black for items.
-const DEFAULT_BG := {"spells": ["blood", "blood_deep", "ui_black"], "items": ["ui_oxblood", "ui_black", "ui_black"]}
+const DEFAULT_BG := {"spells": ["blood", "blood_deep", "ui_black"], "items": ["ui_oxblood", "ui_black", "ui_black"],
+	"features": ["blood", "blood_deep", "ui_black"]}
 
 static var _colours: Dictionary = {}
 
@@ -34,10 +36,14 @@ func _init() -> void:
 	var tints := catalog.get("tints", {}) as Dictionary
 	var missing: Array[String] = []
 	var written := 0
-	# `-- --ui` writes only the menu glyphs.
+	# `-- --ui` writes only the menu glyphs, `-- --kind=<kind>` only that kind's tiles.
 	var kinds: Array[String] = []
+	var only := ""
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--kind="):
+			only = a.get_slice("=", 1)
 	if not "--ui" in OS.get_cmdline_user_args():
-		kinds = KINDS
+		kinds = KINDS if only == "" else [only] as Array[String]
 	for kind in kinds:
 		var keys := catalog.get(kind, {}) as Dictionary
 		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT + kind))
@@ -62,7 +68,7 @@ func _init() -> void:
 			if f.ends_with(".png") and not keys.has(f.get_basename()):
 				DirAccess.remove_absolute(ProjectSettings.globalize_path(OUT + kind.path_join(f)))
 				DirAccess.remove_absolute(ProjectSettings.globalize_path(OUT + kind.path_join(f + ".import")))
-	var glyphs := catalog.get("ui", {}) as Dictionary
+	var glyphs := catalog.get("ui", {}) as Dictionary if only == "" else {}
 	for key: String in glyphs:
 		var glyph_path := PACK + str(glyphs[key]) + ".svg"
 		var img := Image.new()

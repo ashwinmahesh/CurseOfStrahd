@@ -331,10 +331,14 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		elif ch.hp <= 0:
 			info.add_child(_label("Down", 12, "vampire_red"))
 		v.add_child(info)
-		# Resources at a glance (U9): what's on them, their spell slots and their class resources.
+		# Resources at a glance (U9): what's on them, what's working on them (an icon each, named on hover), their spell
+		# slots and their class resources.
 		var tags := _status_tags(ch)
 		if tags != null:
 			v.add_child(tags)
+		var working := EffectIcons.row(ch, 20.0)
+		if working != null:
+			v.add_child(working)
 		var res := _resources(ch)
 		if res != null:
 			v.add_child(res)
@@ -399,8 +403,8 @@ func _card_button(ch: Character, idx: int) -> Button:
 	return btn
 
 
-## Bloodied, conditions, exhaustion and Concentration as small tags; the rules words among them open their cards
-## (U1). Null when there's nothing.
+## Bloodied, conditions and exhaustion as small tags; the rules words among them open their cards (U1). Null when
+## there's nothing. (Concentration and abilities switched on are icons: EffectIcons.)
 func _status_tags(ch: Character) -> Control:
 	var flow := HFlowContainer.new()
 	flow.add_theme_constant_override("h_separation", 3)
@@ -412,13 +416,6 @@ func _status_tags(ch: Character) -> Control:
 		flow.add_child(UiParts.pill(str(c).capitalize(), "rose", 10))
 	if ch.exhaustion > 0:
 		flow.add_child(UiParts.pill("Exhaustion %d" % ch.exhaustion, "rose", 10))
-	if ch.concentration != null:
-		var conc := UiParts.pill("Concentration", "moonlight", 10)
-		conc.tooltip_text = "Concentrating on %s" % ch.concentration.name
-		flow.add_child(conc)
-		var what := _label(ch.concentration.name, 10, "moonlight")
-		what.add_theme_constant_override("outline_size", 3)
-		flow.add_child(what)
 	if flow.get_child_count() == 0:
 		flow.free()
 		return null
