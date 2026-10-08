@@ -86,7 +86,10 @@
           11,
           33
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall",
+      "furnish": false
     }
   ],
   "spawns": {
@@ -304,6 +307,70 @@
       "label": "a flask among the jars that isn't labelled",
       "model": "glass_vessels",
       "item": "oil_of_etherealness"
+    },
+    {
+      "id": "vrt_holy_water",
+      "cell": [
+        3,
+        4
+      ],
+      "label": "Crates of holy water",
+      "model": "holy_water_crate",
+      "kind": "decor"
+    },
+    {
+      "id": "vrt_stakes",
+      "cell": [
+        3,
+        5
+      ],
+      "label": "Bundles of stakes",
+      "model": "stake_bundle",
+      "kind": "decor"
+    },
+    {
+      "id": "vrt_map_table_1",
+      "cell": [
+        6,
+        17
+      ],
+      "label": "Maps and notes, weighted down with candle stubs and small skulls",
+      "model": "map_table",
+      "kind": "decor"
+    },
+    {
+      "id": "vrt_map_table_2",
+      "cell": [
+        7,
+        17
+      ],
+      "label": "Maps and notes, weighted down with candle stubs and small skulls",
+      "model": "map_table",
+      "kind": "decor"
+    },
+    {
+      "id": "vrt_map_table_3",
+      "cell": [
+        8,
+        17
+      ],
+      "label": "Maps and notes, weighted down with candle stubs and small skulls",
+      "model": "map_table",
+      "kind": "decor"
+    },
+    {
+      "id": "vrt_nail_spiral",
+      "cell": [
+        5,
+        28
+      ],
+      "label": "Copper nails in a careful spiral",
+      "model": "nail_spiral",
+      "span": [
+        3,
+        3
+      ],
+      "kind": "decor"
     }
   ],
   "containers": [

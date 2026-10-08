@@ -63,7 +63,8 @@
           26,
           11
         ]
-      ]
+      ],
+      "furnish": false
     },
     {
       "id": "holt_armory",
@@ -91,7 +92,8 @@
           10,
           23
         ]
-      ]
+      ],
+      "furnish": false
     },
     {
       "id": "holt_entry_hall",
@@ -105,7 +107,8 @@
           24,
           23
         ]
-      ]
+      ],
+      "furnish": false
     },
     {
       "id": "holt_servants_hall",
@@ -119,7 +122,8 @@
           34,
           23
         ]
-      ]
+      ],
+      "furnish": false
     }
   ],
   "spawns": {
@@ -290,7 +294,7 @@
       ],
       "kind": "examine",
       "label": "Rotted banners",
-      "model": "tapestry"
+      "model": "banner_dragon"
     },
     {
       "id": "holt_resting_knights",
@@ -411,6 +415,126 @@
       "label": "a reliquary behind the chapel altar",
       "model": "jewel_box",
       "item": "amulet_of_the_devout_plus_2"
+    },
+    {
+      "id": "holt_hall_banner_2",
+      "cell": [
+        14,
+        0
+      ],
+      "label": "A banner rotted to lace",
+      "model": "banner_dragon",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_hall_banner_3",
+      "cell": [
+        19,
+        0
+      ],
+      "label": "A banner rotted to lace",
+      "model": "banner_dragon",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_hall_banner_4",
+      "cell": [
+        25,
+        0
+      ],
+      "label": "A banner rotted to lace",
+      "model": "banner_dragon",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_weapon_rack_2",
+      "cell": [
+        34,
+        4
+      ],
+      "label": "A rack of weapons gone to rust",
+      "model": "weapon_rack",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_weapon_rack_3",
+      "cell": [
+        34,
+        10
+      ],
+      "label": "A rack of weapons gone to rust",
+      "model": "weapon_rack",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_weapon_rack_4",
+      "cell": [
+        28,
+        9
+      ],
+      "label": "A rack of weapons gone to rust",
+      "model": "weapon_rack",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_fallen_frames_1",
+      "cell": [
+        3,
+        15
+      ],
+      "label": "Fallen frames and torn canvas",
+      "model": "fallen_frames",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_fallen_frames_2",
+      "cell": [
+        7,
+        18
+      ],
+      "label": "Fallen frames and torn canvas",
+      "model": "fallen_frames",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_fallen_frames_3",
+      "cell": [
+        4,
+        21
+      ],
+      "label": "Fallen frames and torn canvas",
+      "model": "fallen_frames",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_turned_portrait_1",
+      "cell": [
+        0,
+        15
+      ],
+      "label": "A portrait turned to face the wall",
+      "model": "portrait_turned",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_turned_portrait_2",
+      "cell": [
+        0,
+        19
+      ],
+      "label": "A portrait turned to face the wall",
+      "model": "portrait_turned",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_turned_portrait_3",
+      "cell": [
+        5,
+        24
+      ],
+      "label": "A portrait turned to face the wall",
+      "model": "portrait_turned",
+      "kind": "decor"
     }
   ],
   "containers": [
@@ -421,7 +545,7 @@
         2
       ],
       "label": "Weapon rack",
-      "model": "shelf",
+      "model": "weapon_rack",
       "items": [
         {
           "id": "longsword",
