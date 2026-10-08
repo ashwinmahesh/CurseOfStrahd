@@ -576,6 +576,30 @@
       "model": "wagon",
       "facing": "north",
       "when": "flag.carriage_came and not flag.carriage_beaten"
+    },
+    {
+      "id": "quarry_stones",
+      "cell": [
+        25,
+        15
+      ],
+      "kind": "examine",
+      "label": "Cairns with names",
+      "model": "cairn",
+      "dialogue": "svalich_road/the_counts_huntsman:stones",
+      "when": "quest.the_counts_huntsman"
+    },
+    {
+      "id": "huntsman_saddlebag",
+      "cell": [
+        30,
+        13
+      ],
+      "kind": "examine",
+      "label": "The Huntsman's saddlebag",
+      "model": "satchel",
+      "dialogue": "svalich_road/the_counts_huntsman:saddlebag",
+      "when": "flag.huntsman_slain"
     }
   ],
   "encounters": [
@@ -1164,6 +1188,471 @@
         "id": "the_grey_mare",
         "stage": "carriage_beaten"
       }
+    },
+    {
+      "id": "the_hunt",
+      "trigger": "dialogue",
+      "when": "flag.hounds_called and level >= 10",
+      "text": "The Huntsman sets the pack on you with one note of the horn, and the hounds come up the road in silence.",
+      "monsters": [
+        {
+          "monster": "count_huntsman",
+          "cell": [
+            33,
+            12
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            35,
+            13
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            29,
+            11
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            15
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            13
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            33,
+            15
+          ],
+          "name": "Hound of the Hunt"
+        }
+      ],
+      "surprise": "",
+      "flag": "huntsman_slain",
+      "quest": {
+        "id": "the_counts_huntsman",
+        "stage": "stood"
+      }
+    },
+    {
+      "id": "the_hunt",
+      "trigger": "dialogue",
+      "when": "level >= 10",
+      "text": "The Huntsman sets the pack on you with one note of the horn, and the hounds come up the road in silence.",
+      "monsters": [
+        {
+          "monster": "count_huntsman",
+          "cell": [
+            33,
+            12
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            35,
+            13
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            29,
+            11
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            15
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            13
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            33,
+            15
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            33,
+            10
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            11
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            14
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            35,
+            11
+          ],
+          "name": "Hound of the Hunt"
+        }
+      ],
+      "surprise": "",
+      "flag": "huntsman_slain",
+      "quest": {
+        "id": "the_counts_huntsman",
+        "stage": "stood"
+      }
+    },
+    {
+      "id": "the_hunt",
+      "trigger": "dialogue",
+      "when": "flag.hounds_called and level >= 9",
+      "text": "The Huntsman sets the pack on you with one note of the horn, and the hounds come up the road in silence.",
+      "monsters": [
+        {
+          "monster": "count_huntsman",
+          "cell": [
+            33,
+            12
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            35,
+            13
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            29,
+            11
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            15
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            13
+          ],
+          "name": "Hound of the Hunt"
+        }
+      ],
+      "surprise": "",
+      "flag": "huntsman_slain",
+      "quest": {
+        "id": "the_counts_huntsman",
+        "stage": "stood"
+      }
+    },
+    {
+      "id": "the_hunt",
+      "trigger": "dialogue",
+      "when": "level >= 9",
+      "text": "The Huntsman sets the pack on you with one note of the horn, and the hounds come up the road in silence.",
+      "monsters": [
+        {
+          "monster": "count_huntsman",
+          "cell": [
+            33,
+            12
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            35,
+            13
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            29,
+            11
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            15
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            13
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            33,
+            15
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            33,
+            10
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            11
+          ],
+          "name": "Hound of the Hunt"
+        }
+      ],
+      "surprise": "",
+      "flag": "huntsman_slain",
+      "quest": {
+        "id": "the_counts_huntsman",
+        "stage": "stood"
+      }
+    },
+    {
+      "id": "the_hunt",
+      "trigger": "dialogue",
+      "when": "flag.hounds_called and level >= 8",
+      "text": "The Huntsman sets the pack on you with one note of the horn, and the hounds come up the road in silence.",
+      "monsters": [
+        {
+          "monster": "count_huntsman",
+          "cell": [
+            33,
+            12
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            35,
+            13
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            29,
+            11
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            15
+          ],
+          "name": "Hound of the Hunt"
+        }
+      ],
+      "surprise": "",
+      "flag": "huntsman_slain",
+      "quest": {
+        "id": "the_counts_huntsman",
+        "stage": "stood"
+      }
+    },
+    {
+      "id": "the_hunt",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "The Huntsman sets the pack on you with one note of the horn, and the hounds come up the road in silence.",
+      "monsters": [
+        {
+          "monster": "count_huntsman",
+          "cell": [
+            33,
+            12
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            35,
+            13
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            29,
+            11
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            15
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            13
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            33,
+            15
+          ],
+          "name": "Hound of the Hunt"
+        }
+      ],
+      "surprise": "",
+      "flag": "huntsman_slain",
+      "quest": {
+        "id": "the_counts_huntsman",
+        "stage": "stood"
+      }
+    },
+    {
+      "id": "the_hunt",
+      "trigger": "dialogue",
+      "when": "flag.hounds_called",
+      "text": "The Huntsman sets the pack on you with one note of the horn, and the hounds come up the road in silence.",
+      "monsters": [
+        {
+          "monster": "count_huntsman",
+          "cell": [
+            33,
+            12
+          ],
+          "hp": 130
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            29,
+            11
+          ],
+          "name": "Hound of the Hunt"
+        }
+      ],
+      "surprise": "",
+      "flag": "huntsman_slain",
+      "quest": {
+        "id": "the_counts_huntsman",
+        "stage": "stood"
+      }
+    },
+    {
+      "id": "the_hunt",
+      "trigger": "dialogue",
+      "text": "The Huntsman sets the pack on you with one note of the horn, and the hounds come up the road in silence.",
+      "monsters": [
+        {
+          "monster": "count_huntsman",
+          "cell": [
+            33,
+            12
+          ],
+          "hp": 130
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            29,
+            11
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            15
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            13
+          ],
+          "name": "Hound of the Hunt"
+        }
+      ],
+      "surprise": "",
+      "flag": "huntsman_slain",
+      "quest": {
+        "id": "the_counts_huntsman",
+        "stage": "stood"
+      }
     }
   ],
   "narration": {
@@ -1181,6 +1670,27 @@
       "when": "night and name:ilse_varga and quest.kestrel_company >= the_count and level >= 5 and not flag.kestrel_vell_rests",
       "facing": "north",
       "approach": 6
+    },
+    {
+      "npc": "count_huntsman",
+      "cell": [
+        31,
+        12
+      ],
+      "dialogue": "svalich_road/the_counts_huntsman:stand",
+      "when": "night and quest.the_counts_huntsman == hunted",
+      "facing": "west",
+      "approach": 6
+    },
+    {
+      "npc": "camp_groom",
+      "cell": [
+        20,
+        13
+      ],
+      "dialogue": "svalich_road/the_counts_huntsman:gavril_waits",
+      "when": "night and quest.the_counts_huntsman == hunted and flag.hunt_quarry == \"gavril\"",
+      "facing": "east"
     }
   ]
 }
