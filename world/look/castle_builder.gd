@@ -16,8 +16,9 @@ const CHUNK := 4            ## wall squares per cut-away piece along each axis
 const CUT := 1.25           ## a cut-away castle piece's height: its battered foot and roll moulding
 const CORE := "castle/ashlar"
 const COPING := "kit/dressed_stone"
-const PARAPET := 1.0       ## a low wall's height (catalog `parapets`: the cliff road's edge)
-const DEEP := 27.0          ## how far the chasm's cliffs fall
+const PARAPET := 1.0        ## a low wall's height (catalog `parapets`: the cliff road's edge)
+const LOW := 2.5            ## a piece lower than this is never in the way (a roof's parapet)
+const DEEP := 21.0          ## how far the chasm's cliffs fall (the mist has them long before)
 const CLIFF := 3.0          ## one cliff module's height
 ## Around the party, where a piece in the way of these points (beside the party, and past it) is cut too: a castle wall
 ## 6 high hides the ground five squares behind it.
@@ -62,6 +63,10 @@ static func plan(board: ArenaBoard) -> bool:
 			for k in low:
 				if k.has_point(c):
 					h = PARAPET
+			for hr: Variant in cfg.get("heights", []):
+				var a := hr as Array
+				if Rect2i(int(a[0]), int(a[1]), int(a[2]), int(a[3])).has_point(c):
+					h = float(a[4])
 			cells[c] = h
 	# Blocks of the castle past the map's edge (the keep behind the overlook): wall squares with no square on the map.
 	for blk: Variant in cfg.get("blocks", []):
@@ -73,7 +78,7 @@ static func plan(board: ArenaBoard) -> bool:
 					cells[c] = float(a[4])
 	if cells.is_empty():
 		return false
-	var st := {"cells": cells, "gates": {}, "keep": keep_h, "wall": wall_h}
+	var st := {"cells": cells, "gates": {}, "keep": keep_h, "wall": wall_h, "below": float(cfg.get("below", 0.0))}
 	board.set_meta("castle", st)
 	var gates := _gates(board, cells)
 	# The walls in pieces of CHUNK x CHUNK squares, each cut away on its own.
@@ -119,7 +124,8 @@ static func _piece(board: ArenaBoard, name: String, cells: Array, group: int, h:
 		r = Rect2i(c, Vector2i.ONE) if first else r.merge(Rect2i(c, Vector2i.ONE))
 		first = false
 	var b := {"root": root, "walls": null, "stub": null, "upper": upper, "height": h, "extras": [], "cut": false,
-		"aabb": aabb, "rect": r, "group": group, "kit": "castle", "castle": true}
+		"aabb": aabb, "rect": r, "group": group, "kit": "castle", "castle": true, "part": name.trim_prefix("Castle").to_lower(),
+		"low": h < LOW}
 	var idx := board.buildings.size()
 	board.buildings.append(b)
 	for c: Vector2i in cells:
@@ -199,7 +205,7 @@ static func _walls(board: ArenaBoard, st: Dictionary, cells: Array, group: int) 
 			var yaw := atan2(nv.x, nv.z)
 			var pick := ModelPiece.hash_cell(c * 5 + d)
 			var chasm := board.grid.in_bounds(n) and board.grid.has_flag(n, CombatGrid.VOID)
-			if not chasm:
+			if not chasm and h >= LOW:   # (a roof's parapet stands on the roof, with no battered foot)
 				parts.append(["kit_castle_wall_foot", BuildingKit.face_xf(base, yaw)])
 				stub.append(["kit_castle_wall_foot", BuildingKit.face_xf(base, yaw)])
 			parts.append(["kit_castle_wall_top_b" if pick % 3 == 0 else "kit_castle_wall_top_a",
@@ -292,6 +298,9 @@ static func _gate(board: ArenaBoard, st: Dictionary, gate: Dictionary, group: in
 	var h := maxf(float(heights.get(first - step, 6.0)), 0.0)
 	var centre := gate["centre"] as Vector3
 	var span := Vector3(w, 0, d) if along_x else Vector3(d, 0, w)
+	var top := float((((BuildingKit.manifest()[id] as Dictionary).get("sockets", {}) as Dictionary).get("top", [0, 3.5, 0]) as Array)[1])
+	if h < top + 0.4:
+		return   # a gap in a wall too low for an arch (a roof's parapet) stays open to the sky
 	var b := _piece(board, "CastleGate", [], group, h, AABB(centre - span / 2.0 - Vector3(0.3, 0, 0.3), span + Vector3(0.6, h + 1.3, 0.6)))
 	(st["gates"] as Dictionary)[first] = b
 	for c: Vector2i in cells:
@@ -302,7 +311,6 @@ static func _gate(board: ArenaBoard, st: Dictionary, gate: Dictionary, group: in
 	var sz := float(d) / float(mini(d, 2))
 	var xf := Transform3D(Basis(Vector3.UP, yaw) * Basis.from_scale(Vector3(sx, 1.0, sz)), centre)
 	var parts: Array = [[id, xf]]
-	var top := float((((BuildingKit.manifest()[id] as Dictionary).get("sockets", {}) as Dictionary).get("top", [0, 3.5, 0]) as Array)[1])
 	if h > top:
 		parts.append(_box(Vector3(span.x, h - top, span.z), centre + Vector3(0, (h + top) / 2.0, 0), CORE))
 	var across := Vector2i(0, 1) if along_x else Vector2i(1, 0)
@@ -315,8 +323,8 @@ static func _gate(board: ArenaBoard, st: Dictionary, gate: Dictionary, group: in
 	_finish(b, parts, [])
 
 
-## A round tower from the catalog: {at: [x, z] (squares), r, h, from (its foot's height, for a turret rising out of the
-## keep), spire ("cone" or "needle", or "" for none)}.
+## A round tower from the catalog: {at: [x, z] (squares), r, h, from (its foot's height: above 0 a turret rising out
+## of the keep, below 0 a tower rising out of the drop beside the roofs), spire ("cone", "needle" or "none")}.
 static func _tower(board: ArenaBoard, t: Dictionary, group: int) -> void:
 	var at := t.get("at", [0, 0]) as Array
 	var p := Vector3(float(at[0]), 0, float(at[1]))
@@ -324,7 +332,7 @@ static func _tower(board: ArenaBoard, t: Dictionary, group: int) -> void:
 	var h := float(t.get("h", 9.0))
 	var from := float(t.get("from", 0.0))
 	var spire := str(t.get("spire", "cone"))
-	var spire_id := "kit_castle_spire_needle" if spire == "needle" else ("kit_castle_spire" if spire != "" else "")
+	var spire_id := "kit_castle_spire_needle" if spire == "needle" else ("" if spire in ["", "none"] else "kit_castle_spire")
 	var spire_h := float((BuildingKit.manifest().get(spire_id, {}) as Dictionary).get("height", 0.0)) * r if spire_id != "" else 0.0
 	var cells: Array = []
 	for z in range(floori(p.z - r), ceili(p.z + r)):
@@ -339,9 +347,10 @@ static func _tower(board: ArenaBoard, t: Dictionary, group: int) -> void:
 	var parts: Array = []
 	var stub: Array = []
 	if from <= 0.0:
-		parts.append(["kit_castle_tower_foot", Transform3D(sc, p)])
-		stub.append(["kit_castle_tower_foot", Transform3D(sc, p)])
-	var shaft_from := foot if from <= 0.0 else from
+		# Its battered foot on the ground, or far down in the drop off the castle's roofs.
+		parts.append(["kit_castle_tower_foot", Transform3D(sc, p + Vector3(0, from, 0))])
+		stub.append(["kit_castle_tower_foot", Transform3D(sc, p + Vector3(0, from, 0))])
+	var shaft_from := from + foot if from <= 0.0 else from
 	var cyl := CylinderMesh.new()
 	cyl.top_radius = r
 	cyl.bottom_radius = r
@@ -371,8 +380,12 @@ static func _tower(board: ArenaBoard, t: Dictionary, group: int) -> void:
 
 
 ## The chasm: each edge where the land meets the void gets cliffs falling DEEP below it, facing into the void; a
-## bridge (catalog `bridges`) spans it on its timbers instead.
+## bridge (catalog `bridges`) spans it on its timbers instead. On the castle's roofs (catalog `cliffs` false) the void
+## is the drop off the roof: the castle's masonry goes on down under every square beside it, `below` deep.
 static func _chasm(board: ArenaBoard, cfg: Dictionary) -> void:
+	if not bool(cfg.get("cliffs", true)):
+		_drop(board, float(cfg.get("below", 12.0)))
+		return
 	var g := board.grid
 	var bridges: Array[Rect2i] = []
 	for r: Variant in cfg.get("bridges", []):
@@ -413,6 +426,26 @@ static func _chasm(board: ArenaBoard, cfg: Dictionary) -> void:
 		board.add_child(mi)
 
 
+static func _drop(board: ArenaBoard, below: float) -> void:
+	var g := board.grid
+	var parts: Array = []
+	for z in g.depth:
+		for x in g.width:
+			var c := Vector2i(x, z)
+			if g.has_flag(c, CombatGrid.VOID):
+				continue
+			for d in SetDressing.FACES:
+				var n := c + d
+				if g.in_bounds(n) and g.has_flag(n, CombatGrid.VOID):
+					parts.append(_box(Vector3(1, below, 1), Vector3(x + 0.5, -0.2 - below / 2.0, z + 0.5), CORE))
+					break
+	var mi := BuildingKit.merge(parts)
+	if mi != null:
+		mi.name = "Chasm"
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		board.add_child(mi)
+
+
 ## Under a drawbridge: two great beams along it and cross-timbers, iron-strapped, so it spans the chasm.
 static func _bridge_timbers(r: Rect2i, parts: Array) -> void:
 	var along_z := r.size.y >= r.size.x
@@ -433,6 +466,8 @@ static func _bridge_timbers(r: Rect2i, parts: Array) -> void:
 ## Each frame (TownBuilder.cut_away): a castle piece in the way of the party, or of the squares beside and just past
 ## it, squashes down to its foot; it stands again when it's clear.
 static func cut(b: Dictionary, camera_pos: Vector3, focus: Vector3, delta: float) -> void:
+	if bool(b["low"]):
+		return
 	var aabb := b["aabb"] as AABB
 	var view := Vector3(focus.x - camera_pos.x, 0, focus.z - camera_pos.z)
 	if view.length() < 0.01:
@@ -462,6 +497,16 @@ static func cut(b: Dictionary, camera_pos: Vector3, focus: Vector3, delta: float
 		for e: Variant in b["extras"]:
 			if is_instance_valid(e):
 				(e as Node3D).visible = not hides
+
+
+## On a castle place whose walls the board builds as an interior's (the roofs among the spires, a dungeon theme): the
+## castle takes wall square `c` (BuildingKit.interior_wall asks), planning the whole castle the first time.
+static func claims(board: ArenaBoard, c: Vector2i) -> bool:
+	if not board.has_meta("castle_tried"):
+		board.set_meta("castle_tried", true)
+		if not board.has_meta("castle"):
+			plan(board)
+	return board.has_meta("castle") and board.house_cells.has(c)
 
 
 ## A door hung in a passage through the castle's walls stands in its arch, with no frame of its own.

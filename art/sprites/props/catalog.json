@@ -1647,7 +1647,7 @@
       }
     },
     "castle": {
-      "about": "Castle Ravenloft from outside (W19, CastleBuilder, Modern look only), by place: rect is the castle's part of the map [x, z, w, d] (its wall squares are the castle; walls outside it stay as they were); wall and keep are the curtain walls' and the keep's heights; keeps are rects of keep squares; blocks are more of the castle past the map's edge [x, z, w, d, height]; towers are round towers {at: [x, z] in squares, r, h, from (a turret rising out of the keep), spire: cone, needle or none}; parapets are rects whose wall squares are a low wall (the cliff road's edge); bridges are rects of the squares that span the chasm (timbers under them, no cliffs).",
+      "about": "Castle Ravenloft from outside (W19, CastleBuilder, Modern look only), by place: rect is the castle's part of the map [x, z, w, d] (its wall squares are the castle; walls outside it stay as they were); wall and keep are the curtain walls' and the keep's heights; keeps are rects of keep squares; blocks are more of the castle past the map's edge [x, z, w, d, height]; towers are round towers {at: [x, z] in squares, r, h, from (above 0 a turret rising out of the keep, below 0 a tower rising out of the drop), spire: cone, needle or none}; parapets are rects whose wall squares are a low wall (the cliff road's edge); heights are rects [x, z, w, d, height] of walls of their own height (a raised roof's parapet); cliffs false makes the void a drop off the castle's roofs, its masonry going down `below` under every square beside it instead of rock; bridges are rects of the squares that span the chasm (timbers under them, no cliffs).",
       "places": {
         "castle_ravenloft_gates": {
           "rect": [
@@ -1901,6 +1901,97 @@
               "r": 0.8,
               "h": 15.0,
               "from": 12.0,
+              "spire": "needle"
+            }
+          ]
+        },
+        "castle_ravenloft_spires_roofs": {
+          "wall": 1.6,
+          "keep": 1.6,
+          "heights": [
+            [
+              24,
+              0,
+              12,
+              13,
+              2.6
+            ]
+          ],
+          "cliffs": false,
+          "below": 16.0,
+          "towers": [
+            {
+              "at": [
+                9.0,
+                5.0
+              ],
+              "r": 0.95,
+              "h": 6.5,
+              "spire": "needle"
+            },
+            {
+              "at": [
+                14.0,
+                9.5
+              ],
+              "r": 0.5,
+              "h": 4.2
+            },
+            {
+              "at": [
+                21.5,
+                1.6
+              ],
+              "r": 1.4,
+              "h": 13.0,
+              "from": -16.0,
+              "spire": "needle"
+            },
+            {
+              "at": [
+                21.5,
+                9.4
+              ],
+              "r": 1.3,
+              "h": 11.0,
+              "from": -16.0
+            },
+            {
+              "at": [
+                16.6,
+                18.0
+              ],
+              "r": 2.0,
+              "h": 15.0,
+              "from": -16.0
+            },
+            {
+              "at": [
+                30.0,
+                17.2
+              ],
+              "r": 2.2,
+              "h": 19.0,
+              "from": -16.0,
+              "spire": "needle"
+            },
+            {
+              "at": [
+                -2.0,
+                6.0
+              ],
+              "r": 1.5,
+              "h": 12.0,
+              "from": -16.0
+            },
+            {
+              "at": [
+                38.0,
+                6.0
+              ],
+              "r": 1.6,
+              "h": 14.0,
+              "from": -16.0,
               "spire": "needle"
             }
           ]

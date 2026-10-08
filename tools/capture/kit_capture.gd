@@ -5,7 +5,8 @@ extends Node
 ##   make capture SCENE=res://tools/capture/kit_capture.tscn NAME=kit/before FRAMES=10
 ## Environment: KIT_SHOTS=village_dusk,vallaki_noon (default: every shot); KIT_OFF=1 builds the towns without the kit
 ## (the plain boxes), for the same shots before and after under the same light; KIT_LOW_WALLS=1 keeps rooms' walls at
-## the cut-away height (before W8); KIT_FLAT_FIRE=1 keeps fires' flames 2D; KIT_LIT=1 adds a work light.
+## the cut-away height (before W8); KIT_NO_CASTLE=1 leaves Castle Ravenloft's outside as stone houses (before W19);
+## KIT_FLAT_FIRE=1 keeps fires' flames 2D; KIT_LIT=1 adds a work light.
 
 ## Each shot: the place, the hour, where the party stands (empty: the place's own spawn), and optionally the square
 ## the camera looks at, how far it is, and how many 90-degree steps it is turned from the opening heading.
@@ -69,6 +70,8 @@ func _ready() -> void:
 		SetDressing.catalog().erase("building_kit")
 	elif OS.get_environment("KIT_LOW_WALLS") != "":
 		((SetDressing.catalog()["building_kit"] as Dictionary)["interiors"] as Dictionary)["full_walls"] = false
+	if OS.get_environment("KIT_NO_CASTLE") != "" and SetDressing.catalog().has("building_kit"):
+		(SetDressing.catalog()["building_kit"] as Dictionary).erase("castle")   # the castle as stone houses (before W19)
 	if OS.get_environment("KIT_FLAT_FIRE") != "":
 		ModelPiece.manifest().erase("flame")   # the 2D flame, as before its 3D model
 
