@@ -97,6 +97,7 @@ func test_knocked_prone_in_the_air_it_falls_unless_it_hovers() -> void:
 func test_the_fly_spell_hovers() -> void:
 	var e := TestCombat.open_field(3)
 	var c := TestCombat.caster_with(e, ["fly"], Vector2i(2, 2))
+	TestCombat.foe(e, "zombie", Vector2i(10, 6))
 	TestCombat.start_with(e, c)
 	var r := e.spells.cast(c, "fly", 3, [c])
 	assert_true(r.ok, r.reason)
@@ -129,6 +130,7 @@ func test_an_area_on_the_ground_reaches_only_so_high() -> void:
 	var c := TestCombat.caster_with(e, ["fireball"], Vector2i(0, 0))
 	var low := TestCombat.punching_bag(e, Vector2i(6, 4), 300)
 	var high := TestCombat.punching_bag(e, Vector2i(7, 4), 300)
+	high.creature.base_speed["hover"] = true
 	high.altitude = 30
 	TestCombat.start_with(e, c)
 	var s := Compendium.shared().spell_data("fireball")

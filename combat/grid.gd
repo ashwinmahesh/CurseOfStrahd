@@ -226,8 +226,8 @@ func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable,
 					return -1
 	var cost := FEET * mult
 	if (mode & MOVE_FLY) != 0:
-		# Keeping its height over the floor, a flyer rises and sinks with it: a step that also climbs 10 ft costs 10.
-		return maxi(cost, absi(height(to) - height(from)))
+		# A flyer keeps its height over the floor, following it up and down for nothing extra (deviations.md).
+		return cost
 	# Climbing (2024): every foot climbed, up or down, costs 1 extra foot (2 extra in Difficult Terrain), nothing extra
 	# with a Climb Speed. A rise or drop of 5 ft is a step (stairs, a dais) and costs nothing more.
 	var climb := absi(height(to) - height(from))
