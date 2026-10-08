@@ -5361,6 +5361,79 @@ def cloak_pegs(p):
         p.cyl(0.012, 0.08, (x, 0.0, 1.62), "pal_walnut", rot=(90, 0, 0), segs=6)
         p.prism([(x - 0.07, 1.6), (x + 0.07, 1.6), (x + 0.13, 0.92), (x - 0.13, 0.92)], 0.04, (0, -0.07, 0), "pal_pewter")
         p.prism([(x - 0.06, 1.6), (x + 0.06, 1.6), (x, 1.5)], 0.045, (0, -0.075, 0), "pal_slate")   # the hood, folded
+# --- Climbable trees (lane 28's raised structures: a location prop's `stand_ft`, docs/contracts/locations.md) ---------
+# Each one's stood-on top sits exactly at 10 ft (2 units) above its foot: the board raises the prop's squares by its
+# stand_ft and draws the model from the ground up.
+
+
+@model("hunters_tree_stand", "free", ["hunters_tree_stand"], turns=True)
+def hunters_tree_stand(p):
+    """A pine about 20 ft tall with a hunter's plank platform lashed into it at 10 ft, one square across, and a ladder of
+    rungs nailed up the trunk. Stood on at 10 ft (stand_ft 10) over its one square."""
+    TOP = 2.0
+    tx, ty = 0.3, 0.3   # the trunk rises through the platform's corner
+    rng = p.rng
+    p.lathe([(0.13, 0.0), (0.1, 0.2), (0.085, 1.2), (0.05, 3.2), (0.0, 3.6)], (tx, ty, 0), "pal_peat", segs=9, smooth=False)
+    for k in range(4):   # roots
+        a = rng.uniform(0, 2 * math.pi)
+        p.tube([(tx + 0.07 * math.cos(a), ty + 0.07 * math.sin(a), 0.1), (tx + 0.24 * math.cos(a), ty + 0.24 * math.sin(a), -0.02)],
+               0.03, "pal_peat", segs=5, radii=[0.04, 0.012])
+    for k in range(7):   # the platform's planks, lashed square
+        p.box((0.9, 0.12, 0.05), (0.0, -0.39 + k * 0.13, TOP - 0.025), WOOD)
+    for s in (-1, 1):   # its joists and the braces down to the trunk
+        p.box((0.06, 0.92, 0.07), (s * 0.4, 0.0, TOP - 0.085), "pal_umber")
+    for x, y in ((-0.38, -0.38), (0.38, -0.38), (-0.38, 0.38)):
+        p.tube([(x, y, TOP - 0.1), (tx + (x - tx) * 0.2, ty + (y - ty) * 0.2, TOP - 0.85)], 0.025, "pal_umber", segs=5)
+    for x in (-0.44, 0.44):   # a low rail on two sides
+        p.box((0.03, 0.03, 0.4), (x, -0.44, TOP + 0.2), "pal_umber")
+    p.box((0.9, 0.03, 0.03), (0.0, -0.44, TOP + 0.38), "pal_umber")
+    p.box((0.03, 0.9, 0.03), (-0.44, 0.0, TOP + 0.38), "pal_umber")
+    p.box((0.03, 0.03, 0.4), (-0.44, 0.44, TOP + 0.2), "pal_umber")
+    for k in range(7):   # the ladder: rungs nailed up the trunk's south side
+        p.box((0.24, 0.035, 0.03), (tx, ty - 0.11, 0.25 + k * 0.25), WOOD)
+        p.cyl(0.006, 0.02, (tx - 0.08, ty - 0.13, 0.25 + k * 0.25), "pal_ink", rot=(90, 0, 0), segs=4)
+    for i in range(5):   # the crown above the platform
+        f = i / 4
+        z = TOP + 0.55 + f * 1.15
+        r = 0.85 * (1.0 - f * 0.75)
+        p.tier((tx, ty, z), r, 0.5 * (1.0 - f * 0.3), "pal_bog_deep" if i % 2 == 0 else "pal_bog", "pal_void",
+               points=rng.choice([7, 8, 9]), droop=0.06, twist=rng.uniform(0, 1))
+    for k in range(3):   # stubs where the lower branches were sawn off for the stand
+        a = rng.uniform(0, 2 * math.pi)
+        z = 0.9 + k * 0.35
+        p.tube([(tx, ty, z), (tx + 0.18 * math.cos(a), ty + 0.18 * math.sin(a), z + 0.05)], 0.025, "pal_peat", segs=5)
+
+
+@model("broad_oak_bough", "free", ["broad_oak_bough"], nature=True)
+def broad_oak_bough(p):
+    """An oak about 22 ft tall, its crown over three squares by three, with one thick bough grown level at 10 ft that
+    you could walk along. Its origin is the middle of the bough's two squares (place it with span [2, 1], or [1, 2]
+    turned with `facing`), the trunk standing on the square west of them; the bough's top is exactly 10 ft up."""
+    TOP = 2.0
+    rng = p.rng
+    trunk = "pal_umber"
+    tx = -1.5   # the trunk's square, west of the bough's two
+    p.lathe([(0.38, 0.0), (0.3, 0.25), (0.26, 1.2), (0.24, 2.4), (0.2, 3.2), (0.0, 3.5)], (tx, 0, 0), trunk, segs=12, smooth=False)
+    for k in range(6):   # great roots
+        a = 2 * math.pi * k / 6 + rng.uniform(-0.2, 0.2)
+        p.tube([(tx + 0.25 * math.cos(a), 0.25 * math.sin(a), 0.2), (tx + 0.62 * math.cos(a), 0.62 * math.sin(a), -0.02)],
+               0.06, trunk, segs=6, radii=[0.1, 0.03])
+    # The bough: out from the trunk and level over both squares, its top flat enough to walk along at exactly 10 ft.
+    p.tube([(tx + 0.1, 0.0, TOP - 0.45), (-0.95, 0.0, TOP - 0.2), (-0.6, 0.0, TOP - 0.17)], 0.17, trunk, segs=10,
+           radii=[0.24, 0.19, 0.17])
+    p.box((2.0, 0.36, 0.3), (0.0, 0.0, TOP - 0.15), trunk, soft=0.08, segs=2)   # the walked length, its top at TOP
+    p.box((1.9, 0.26, 0.01), (0.0, 0.0, TOP - 0.004), "pal_moss")   # moss worn on the top where feet go
+    p.tube([(0.95, 0.0, TOP - 0.15), (1.25, 0.05, TOP - 0.08), (1.5, 0.1, TOP + 0.15)], 0.1, trunk, segs=8, radii=[0.14, 0.09, 0.05])
+    for x, side in ((-0.5, 1), (0.2, -1), (0.7, 1)):   # twigs off the bough, up and away from the walk
+        p.tube([(x, side * 0.15, TOP - 0.1), (x + 0.15, side * 0.55, TOP + 0.5)], 0.035, trunk, segs=5, radii=[0.05, 0.015])
+    for a, z in ((2.2, 2.6), (4.0, 2.4), (5.4, 2.9)):   # the other limbs, higher up
+        p.tube([(tx, 0.0, z), (tx + 0.9 * math.cos(a), 0.9 * math.sin(a), z + 0.8)], 0.1, trunk, segs=7, radii=[0.14, 0.04])
+    for _ in range(14):   # the crown: clumps of leaves over three squares by three
+        cx = tx + rng.uniform(-0.2, 1.9)
+        cy = rng.uniform(-1.2, 1.2)
+        cz = rng.uniform(TOP + 1.0, TOP + 2.3)
+        p.cyl(rng.uniform(0.45, 0.7), rng.uniform(0.35, 0.55), (cx, cy, cz), rng.choice(["pal_bog", "pal_bog_deep", "pal_moss"]),
+              r2=0.2, segs=9)
 
 
 # --- Export and preview ----------------------------------------------------------------------------------------
@@ -5425,6 +5498,8 @@ def export(built, subdir="", extra_keys=()):
             entry["big"] = True
         if spec.get("turns"):
             entry["turns"] = True
+        if spec.get("nature"):
+            entry["nature"] = True
         if spec.get("sculpted"):
             entry["sculpted"] = True
         for k in extra_keys:
