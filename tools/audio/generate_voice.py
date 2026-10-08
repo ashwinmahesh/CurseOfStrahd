@@ -27,6 +27,7 @@ prompt for ElevenLabs' sound effects, made at the line's length in seconds and b
 import argparse
 import hashlib
 import json
+import re
 import sys
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -72,6 +73,14 @@ def accent_tag(c, speaker):
 
 
 def spoken(c, speaker, text, direction=""):
+    """What ElevenLabs is asked to say: the accent tag and the line's direction, then the line without its stage
+    directions ("(He spins on one toe.)" is read, not heard). A speaker cast with "sentence_case" (Pidlwick II, who
+    writes in capitals on a slate) is spoken in ordinary case, so v3 doesn't shout every word."""
+    if speaker != voice_lines.NARRATOR:
+        text = re.sub(r"\s+", " ", re.sub(r"\([^)]*\)", "", text)).strip()
+    if c["voices"].get(speaker, {}).get("sentence_case"):
+        text = re.sub(r"(^|[.!?]\s+)([a-z])", lambda m: m.group(1) + m.group(2).upper(), text.lower())
+        text = re.sub(r"\bi\b", "I", text)
     tags = " ".join(t for t in (accent_tag(c, speaker), direction) if t)
     return f"{tags} {text}" if tags else text
 
@@ -211,6 +220,9 @@ def main():
         else:
             audio, headers = el.tts(vid, spoken(c, speaker, text, direction), model_for(c, speaker), c["output_format"],
                                     settings_for(c, speaker))
+        if not audio:
+            # v3 can return nothing for a line that is only "..."; keep the clip there was, if any.
+            raise RuntimeError("ElevenLabs returned no audio")
         out = el.VOICE_DIR / speaker / f"{key}.mp3"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_bytes(audio)
