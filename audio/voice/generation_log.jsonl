@@ -17792,3 +17792,6 @@
 {"time": "2026-10-08T04:27:11", "audition": "design", "speaker": "vallaki_patron_dragan", "chars": 266, "model": "eleven_ttv_v3", "previews": 3}
 {"time": "2026-10-08T04:27:24", "audition": "design", "speaker": "vallaki_patron_oana", "chars": 219, "model": "eleven_ttv_v3", "previews": 3}
 {"time": "2026-10-08T04:27:40", "audition": "design", "speaker": "vallaki_parishioner_varvara", "chars": 260, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:35:31", "speaker": "narrator", "key": "c06066dee5edb483", "chars": 163, "voice_id": "6fBYCfuBa6CZSLGNhKol", "model": "eleven_v3", "format": "mp3_44100_64", "direction": "[low, grim, chilling]", "usd_est": 0.01304, "billed_chars": "81", "request_id": "hqQaMpoOlqsxVmh3aE6T"}
+{"time": "2026-10-08T04:35:31", "speaker": "narrator", "key": "ae3d9c4e26913c99", "chars": 179, "voice_id": "6fBYCfuBa6CZSLGNhKol", "model": "eleven_v3", "format": "mp3_44100_64", "direction": "[bleak, dry]", "usd_est": 0.01432, "billed_chars": "84", "request_id": "KOtwFUaDZ3HGLC2s47Jf"}
+{"time": "2026-10-08T04:35:31", "speaker": "narrator", "key": "4cbc6b960165e89c", "chars": 200, "voice_id": "6fBYCfuBa6CZSLGNhKol", "model": "eleven_v3", "format": "mp3_44100_64", "direction": "[quiet, tender, uneasy]", "usd_est": 0.016, "billed_chars": "99", "request_id": "1fPPyfy7ACyaden5TfPk"}
