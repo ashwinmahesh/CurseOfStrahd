@@ -218,19 +218,19 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 
 | | Where | Item | How |
 |---|---|---|---|
-| ○ | Gates, the dry well | Rope of Entanglement (rare) | Search (Perception DC 15) |
-| ○ | Main floor, the organ | Instrument of the Bards, Anstruth Harp (very rare) | Search (Investigation DC 16): a stop that opens a compartment |
-| ○ | Chapel, under the altar's dust | Amulet of the Devout +3 (very rare) | Search (Investigation DC 17) |
-| ○ | Court, the count's desk | Crystal Ball (very rare) | Search (Investigation DC 17) |
-| ○ | Court, the trophy room | Dragon Slayer Longsword (rare) | Search (Perception DC 15): above the dragon's skull |
-| ○ | Treasury | Manual of Gainful Exercise (very rare) | Hoard |
-| ○ | Count's floor, the tall mirror | Cloak of Displacement (rare) | Search (Investigation DC 17): behind a mirror that shows no one |
-| ○ | Count's floor, Ludmilla's books | +3 Arcane Grimoire (very rare) | Search (Investigation DC 17) |
-| ○ | Tower rooms, the witches' cauldron | Wand of Fear (rare) | Search (Perception DC 15) |
-| ○ | The roost, a glint of brass | Ring of Evasion (rare) | Search (Perception DC 15): a raven's nest |
-| ○ | Catacombs, the conjurer's bier | +2 Wand of the War Mage (rare) | Search (Investigation DC 16) |
-| ○ | Catacombs, the jester's sarcophagus | Cape of the Mountebank (rare) | Search (Investigation DC 15) |
-| ○ | Strahd's tomb, the chest at the dais | Potion of Supreme Healing, two (very rare) | Hoard |
-| ○ | Dungeon, the throne of bones | Ring of Regeneration (very rare) | Search (Perception DC 16) |
-| ○ | Cyrus Belview | Ioun Stone of Sustenance (rare) | Gift: if you compliment his cooking |
-| ○ | Pidlwick II | Figurine of Wondrous Power, Ebony Fly (rare) | Gift: if you befriend him |
+| ✅ | Gates, the dry well | Rope of Entanglement (rare) | Search (Perception DC 15) |
+| ✅ | Dining hall, the organ | Instrument of the Bards, Anstruth Harp (very rare) | Search (Investigation DC 16): a stop that opens a compartment |
+| ✅ | Chapel, under the altar's dust | Amulet of the Devout +3 (very rare) | Search (Investigation DC 17) |
+| ✅ | Court, the count's desk | Crystal Ball (very rare) | Search (Investigation DC 17) |
+| ✅ | Court, the trophy room | Dragon Slayer Longsword (rare) | Search (Perception DC 15): above the dragon's skull |
+| ✅ | Treasury | Manual of Gainful Exercise (very rare) | Hoard |
+| ✅ | Count's floor, the tall mirror | Cloak of Displacement (rare) | Search (Investigation DC 17): behind a mirror that shows no one |
+| ✅ | Count's floor, Ludmilla's books | +3 Arcane Grimoire (very rare) | Search (Investigation DC 17) |
+| ✅ | Tower rooms, the witches' cauldron | Wand of Fear (rare) | Search (Perception DC 15) |
+| ✅ | The roost, a glint of brass | Ring of Evasion (rare) | Search (Perception DC 15): a raven's nest |
+| ✅ | Catacombs, the conjurer's bier | +2 Wand of the War Mage (rare) | Search (Investigation DC 16) |
+| ✅ | Catacombs, the jester's sarcophagus | Cape of the Mountebank (rare) | Search (Investigation DC 15) |
+| ✅ | Strahd's tomb, the chest at the dais | Potion of Supreme Healing, two (very rare) | Hoard |
+| ✅ | Dungeon, the throne of bones | Ring of Regeneration (very rare) | Search (Perception DC 16) |
+| ✅ | Cyrus Belview | Ioun Stone of Sustenance (rare) | Gift: when you bring news of his family |
+| ✅ | Pidlwick II | Figurine of Wondrous Power, Ebony Fly (rare) | Gift: when you bring back his key |

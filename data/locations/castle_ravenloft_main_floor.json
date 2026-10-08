@@ -694,6 +694,19 @@
       "model": "coats",
       "when": "name:ilse_varga and quest.kestrel_company >= the_deserter and not flag.kestrel_merrow_counted",
       "dialogue": "castle_ravenloft/personal_kestrel:coats"
+    },
+    {
+      "id": "organ_harp",
+      "cell": [
+        4,
+        4
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "skill": "investigation",
+      "label": "a compartment behind one of the organ's stops",
+      "model": "harp",
+      "item": "instrument_of_the_bards_anstruth_harp"
     }
   ],
   "containers": [
