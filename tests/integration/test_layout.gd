@@ -268,6 +268,31 @@ func test_a_shop() -> void:
 				s.queue_free())
 
 
+func test_a_temple_with_a_hero_to_raise() -> void:
+	if not await _game(LATE):
+		return
+	var st := GameState.story
+	st.party[st.party.size() - 1].hp = 0
+	st.party[st.party.size() - 1].dead = true
+	st.party[0].hp = 1
+	await _check("St. Andral's services", func() -> Variant:
+		root.call("open_services", "father_lucian")
+		await _frames(2)
+		var found := root.find_children("*", "ServicesScreen", false, false)
+		return found.back() if not found.is_empty() else null,
+		func() -> void:
+			for s in root.find_children("*", "ServicesScreen", false, false):
+				s.queue_free())
+	await _check("the inn's rooms", func() -> Variant:
+		root.call("open_services", "urwin_martikov")
+		await _frames(2)
+		var found := root.find_children("*", "ServicesScreen", false, false)
+		return found.back() if not found.is_empty() else null,
+		func() -> void:
+			for s in root.find_children("*", "ServicesScreen", false, false):
+				s.queue_free())
+
+
 func test_a_loot_window() -> void:
 	if not await _game(LATE):
 		return

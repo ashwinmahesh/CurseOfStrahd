@@ -2,8 +2,8 @@ class_name Travel
 extends RefCounted
 ## Travelling Barovia (plan §5.2, ADR 0010): places joined by roads on data/travel/barovia.json. A journey follows
 ## the quickest known roads; each road takes its hours off the clock and rolls its random encounter table (the
-## day or night chance, raised by Strahd's attention, then a weighted entry whose condition holds). Pure logic: the
-## game root moves the party.
+## day or night chance, raised by Strahd's attention and by fog, then a weighted entry whose condition holds); bad
+## weather lengthens a leg (Weather, F12). Pure logic: the game root moves the party.
 
 const MAP := "barovia"
 
@@ -116,8 +116,10 @@ static func route(from: String, to: String, st: StoryState) -> Array[Dictionary]
 	while at != from:
 		var p := prev[at] as Dictionary
 		var road := p["road"] as Dictionary
-		# Magic that speeds journeys (a Carpet of Flying, Horseshoes of Speed, a Feather Token's roc): fewer hours.
-		out.push_front({"road": road, "from": str(p["from"]), "to": at, "hours": float(road["hours"]) / FieldItems.travel_mult(st)})
+		# Magic that speeds journeys (a Carpet of Flying, Horseshoes of Speed, a Feather Token's roc): fewer hours. Bad
+		# weather where the leg sets out (a storm, snow, a blizzard; Weather, F12): more.
+		var weather := Weather.travel_mult(st, str(place(str(p["from"])).get("location", "")).get_slice(":", 0))
+		out.push_front({"road": road, "from": str(p["from"]), "to": at, "hours": float(road["hours"]) / FieldItems.travel_mult(st) * weather})
 		at = str(p["from"])
 	return out
 
@@ -141,7 +143,7 @@ static func roll(road: Dictionary, st: StoryState, dice: DiceRoller) -> Dictiona
 	var chance := float(table["chance_night"]) if st.is_night() else float(table["chance_day"])
 	# Strahd's attention (F9): the more he has noticed the party, the more of his eyes and patrols are on the roads.
 	var watch := StrahdPresence.tier(st)
-	chance = minf(0.95, chance + float(watch.get("road_night" if st.is_night() else "road_day", 0.0)))
+	chance = minf(0.95, chance + float(watch.get("road_night" if st.is_night() else "road_day", 0.0)) + Weather.road_bonus(st))
 	var d100 := dice.roll_one(100, "Random encounter on %s" % road.get("name", road["id"]))
 	if d100 > roundi(chance * 100.0):
 		return {}

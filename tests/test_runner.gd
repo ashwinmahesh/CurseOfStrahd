@@ -178,9 +178,16 @@ func _drop_added_data(before: Dictionary) -> void:
 
 ## Removes this run's save folder.
 func _clear_saves() -> void:
-	var dir := DirAccess.open(SaveSystem.save_dir)
+	_remove_tree(SaveSystem.save_dir)
+
+
+## Deletes a folder and everything in it (a test may leave subfolders, such as error reports, in its save folder).
+static func _remove_tree(path: String) -> void:
+	var dir := DirAccess.open(path)
 	if dir == null:
 		return
+	for d in dir.get_directories():
+		_remove_tree(path.path_join(d))
 	for f in dir.get_files():
 		dir.remove(f)
-	DirAccess.remove_absolute(SaveSystem.save_dir)
+	DirAccess.remove_absolute(path)
