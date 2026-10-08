@@ -99,6 +99,20 @@ uniform float tone_amount : hint_range(0.0, 1.0) = 0.55;
 uniform float tone_shade_saturation : hint_range(0.0, 1.5) = 0.6;
 uniform float tone_black : hint_range(0.0, 0.2) = 0.03;
 uniform float tone_pivot : hint_range(0.05, 1.0) = 0.42;
+// Barovia's sky (Improvement Ideas W13, the Modern finish; Atmosphere sets it by the time of day): seen where the view
+// looks out over the land past everything (the camera tilted toward the horizon, lane 8's CameraRig.horizon). A
+// gradient from the land's haze at the horizon up to the sky colour, a low ceiling of cloud drifting with the wind,
+// lit from beneath towards the moon or the low sun, and the moon glowing through where the cloud is thin. Never clear.
+uniform bool sky_on = false;
+uniform vec3 sky_zenith : source_color = vec3(0.1, 0.12, 0.2);
+uniform vec3 sky_cloud_lit : source_color = vec3(0.5, 0.48, 0.55);
+uniform vec3 sky_cloud_shade : source_color = vec3(0.15, 0.14, 0.2);
+// Towards the moon or the sun (world space), its colour, and how strongly it shows (0 by day: only a brighter patch).
+uniform vec3 sky_moon_dir = vec3(0.3, 0.6, -0.7);
+uniform vec3 sky_moon_colour : source_color = vec3(0.85, 0.9, 0.95);
+uniform float sky_moon = 1.0;
+uniform float sky_cover : hint_range(0.0, 1.0) = 0.7;
+uniform vec2 sky_wind = vec2(0.6, 0.25);
 // The screen's edges sink towards this colour.
 uniform float vignette : hint_range(0.0, 1.0) = 0.0;
 uniform vec3 vignette_color : source_color = vec3(0.051, 0.039, 0.071);
@@ -203,6 +217,27 @@ float mist_density(vec3 p) {
 	return h * h * max(patch * 0.75 + wisp * mist_wisps, wall * 1.6);
 }
 
+// The sky along a view direction (sRGB, before the grade): see sky_on.
+vec3 sky_colour(vec3 d) {
+	float up = clamp(d.y, 0.0, 1.0);
+	vec3 col = mix(to_srgb(land_color), to_srgb(sky_zenith), pow(smoothstep(0.0, 0.6, up), 0.7));
+	vec3 md = normalize(sky_moon_dir);
+	float c = dot(d, md);
+	float disc = smoothstep(0.9993, 0.9997, c) * sky_moon;
+	float halo = pow(max(c, 0.0), 40.0) * 0.35 * mix(0.4, 1.0, sky_moon);
+	col += to_srgb(sky_moon_colour) * halo;
+	// The cloud ceiling: the ray's point on a flat layer overhead, so the cloud shrinks into the distance.
+	vec2 p = d.xz / (d.y + 0.12) * 0.9 + sky_wind * atmo_time * 0.02;
+	float n = fbm(p) * 0.75 + fbm(p * 2.7 + 13.1) * 0.25;
+	float density = smoothstep(1.0 - sky_cover - 0.15, 1.0 - sky_cover + 0.3, n);
+	float towards = clamp(dot(normalize(d.xz + 1e-4), normalize(md.xz + 1e-4)) * 0.5 + 0.5, 0.0, 1.0);
+	float lit = smoothstep(0.35, 0.8, n) * 0.5 + towards * 0.5 * halo * 4.0;
+	vec3 cloud = mix(to_srgb(sky_cloud_shade), to_srgb(sky_cloud_lit), clamp(lit, 0.0, 1.0));
+	// The moon shows through thin cloud; thick cloud hides it.
+	col = mix(col + to_srgb(sky_moon_colour) * disc * (1.0 - density * 0.85), cloud, density * smoothstep(0.0, 0.15, d.y));
+	return col;
+}
+
 void fragment() {
 	vec2 vp = VIEWPORT_SIZE;
 	vec2 cell = floor(FRAGCOORD.xy / pixel_size);
@@ -237,11 +272,15 @@ void fragment() {
 	vpos.xyz /= vpos.w;
 	vec3 wpos = (INV_VIEW_MATRIX * vec4(vpos.xyz, 1.0)).xyz;
 	vec3 cam = INV_VIEW_MATRIX[3].xyz;
+	vec3 sky_dir = vec3(0.0, -1.0, 0.0);
 	if (empty) {
 		// Past everything: carry the ray down to the ground so the mist still lies there.
 		vec3 dir = normalize(wpos - cam);
+		sky_dir = dir;
 		wpos = cam + dir * ((mist_floor - cam.y) / min(dir.y, -0.05));
 	}
+	// How much of this pixel is open sky (0 below the horizon and for anything drawn).
+	float sky_amount = (sky_on && empty) ? smoothstep(-0.02, 0.1, sky_dir.y) : 0.0;
 
 	// Water marks itself with zero roughness: it keeps its own colours through the grade and the ground patches.
 	float own_colour = empty ? 0.0 : 1.0 - step(0.08, texture(normal_tex, uv).a);
@@ -305,7 +344,11 @@ void fragment() {
 		col = mix(col, to_srgb(land_color), soft_bands ? f : floor(f * 4.0 + 0.5) / 4.0);
 	}
 
-	if (mist_strength > 0.0 && (!empty || mist_beyond)) {
+	if (sky_amount > 0.0) {
+		col = mix(col, sky_colour(sky_dir), sky_amount);
+	}
+
+	if (mist_strength > 0.0 && (!empty || mist_beyond) && sky_amount < 1.0) {
 		// March the part of the view ray inside the mist layer (from where it comes down through the top to the
 		// surface), so the mist floats over the ground and shifts with the camera like a real layer.
 		vec3 dir = wpos - cam;
@@ -342,7 +385,10 @@ void fragment() {
 		m = max(m, in_wall);
 		vec3 mc = mix(to_srgb(mist_color) + glow / float(STEPS), to_srgb(mist_wall_color), in_wall);
 		// Over water the mist thins so the lake keeps its face.
-		float strength = mix(mist_strength * (1.0 - own_colour * 0.55), 1.0, in_wall);
+		// Under an open sky, the mist past everything thins out toward the horizon instead of painting the gaps
+		// between the far trees.
+		float out_there = (sky_on && empty) ? smoothstep(-0.005, -0.08, sky_dir.y) : 1.0;
+		float strength = mix(mist_strength * (1.0 - own_colour * 0.55), 1.0, in_wall) * (1.0 - sky_amount) * out_there;
 		col = mix(col, mc, clamp(m * strength, 0.0, 1.0));
 		if (mist_wall.w > 0.0) {
 			float fw = max(fwidth(wa), 1e-4);
@@ -353,7 +399,7 @@ void fragment() {
 	if (vignette > 0.0) {
 		vec2 q = (uv - 0.5) * vec2(vp.x / vp.y, 1.0);
 		float v = smoothstep(0.45, 1.05, length(q) * 1.15);
-		col = mix(col, to_srgb(vignette_color), v * vignette);
+		col = mix(col, to_srgb(vignette_color), v * vignette * (1.0 - sky_amount * 0.7));
 	}
 
 	if (quantize) {

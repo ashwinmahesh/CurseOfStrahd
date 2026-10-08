@@ -17,17 +17,27 @@ func enc() -> Encounter:
 
 ## A Death Saving Throw for a dying character on its turn (2024: 10+ succeeds, three successes stabilize, three
 ## failures kill, a 20 brings it back with 1 HP). The player rolls it from the HUD; if not, it's rolled at the end
-## of the turn. AI-controlled dying creatures roll at the start of their turn.
-func death_save(c: Combatant) -> CombatResult:
+## of the turn. AI-controlled dying creatures roll at the start of their turn. The roll stops for the choices after
+## it (Heroic Inspiration...) unless `pausable` is false.
+func death_save(c: Combatant, pausable: bool = true) -> CombatResult:
 	var e := enc()
 	if e.current() != c or c.death_save_rolled:
 		return CombatResult.fail("Not now")
 	if c.creature.dead or c.creature.hp > 0 or c.creature.stable or not c.creature.uses_death_saves:
 		return CombatResult.fail("%s isn't dying" % c.name())
 	c.death_save_rolled = true
-	var t := c.creature.roll_death_save(e.dice)
+	var roll := func() -> D20Test: return c.creature.roll_death_save_d20(e.dice)
+	var after := func(t: D20Test) -> CombatResult: return _death_save_counted(c, t)
+	if pausable:
+		return e.d20.then_after(c, roll, after, CombatResult.new())
+	return after.call(roll.call() as D20Test) as CombatResult
+
+
+func _death_save_counted(c: Combatant, t: D20Test) -> CombatResult:
+	var e := enc()
 	if t == null:
 		return CombatResult.fail("No Death Saving Throw needed")
+	c.creature.apply_death_save(t)
 	var status := "dies" if c.creature.dead else ("is Stable" if c.creature.stable else ("regains 1 Hit Point" if c.creature.hp > 0 else "%d ✓ %d ✗" % [c.creature.death_successes, c.creature.death_failures]))
 	e.log.add("roll", "%s makes a Death Saving Throw: %s" % [c.name(), status], c.id, [t.describe()])
 	e.events.append({"type": "death_save", "id": c.id, "success": t.success})

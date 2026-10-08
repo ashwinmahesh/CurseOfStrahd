@@ -13,6 +13,7 @@ extends Node
 ## - LOOK_AA=msaa2|fxaa|smaa: another anti-aliasing in place of the preset's.
 ## - LOOK_OUTLINE=off|silhouette|full: the world's ink lines.
 ## - LOOK_FADE=1: the 3D pieces near the party faded, as when they stand in front of it.
+## - LOOK_TILT=1: the camera looking out to the horizon (the sky and what lies past the map).
 ## - LOOK_BENCH=1 times each part of the renderer in turn instead of shooting (_bench), LOOK_BENCH=presets the graphics
 ##   presets, several rounds over, since other work on the machine makes one reading noisy; LOOK_BENCH=pairs what one
 ##   change saves, switching it on and off in quick turns (_bench_pairs), the steadiest under load.
@@ -151,6 +152,11 @@ func _build(shot: Dictionary) -> void:
 				t.set_meta("fade", 0.72)
 				ModelPiece.set_fade(t, 0.72)
 		view.set_process(false)
+	if OS.get_environment("LOOK_TILT") != "":
+		# Looking out to the horizon: the camera tilted all the way past its farthest zoom (CameraRig.horizon).
+		view.rig.distance = view.rig.zoom_max
+		view.rig.horizon = 1.0
+		view.rig.snap_to_target()
 	if OS.get_environment("LOOK_SDFGI") != "":
 		var env := view.atmosphere.env
 		env.sdfgi_enabled = true
@@ -177,6 +183,17 @@ func _build(shot: Dictionary) -> void:
 	if "filter" in off:
 		RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
 		RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
+	if "post" in off:
+		view.post.visible = false
+	if "weather" in off and view.atmosphere.weather != null:
+		for w in view.atmosphere.weather.follow:
+			w.visible = false
+	if "vista" in off:
+		for v in view.find_children("Vista*", "Node3D", true, false):
+			(v as Node3D).visible = false
+	if "sky" in off:
+		view.atmosphere.set_process(false)
+		post.set_shader_parameter("sky_on", false)
 	if "ssr" in off:
 		view.atmosphere.env.ssr_enabled = false
 	if "splits" in off:

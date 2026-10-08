@@ -678,7 +678,6 @@
         13
       ],
       "dialogue": "village_of_barovia/townsfolk:goodwife",
-      "when": "day",
       "path": [
         [
           22,
@@ -693,6 +692,10 @@
           22,
           14
         ]
+      ],
+      "hours": [
+        8,
+        17
       ]
     }
   ],
