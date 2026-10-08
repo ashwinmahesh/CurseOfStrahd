@@ -1,0 +1,133 @@
+# The Burgomaster's Hound (side quest, docs/story/side_quests.md): Kolyan's old wolfhound, Lupu, howls at the
+# mansion's study wall every night, not at the wolves. Behind the wall, under new plaster and old garlic, Kolyan bricked
+# up his first son, Sergiu, who let the thing at the window in during the siege winter years ago and came back hungry.
+# Lupu was Sergiu's dog. Seal the wall again, or open it and face the Tenant with the hound beside you. Reached from
+# Bildrath's news, Lupu by the mansion and the study wall (prop study_bricks). Every line here is unvoiced for now.
+
+# --- Bildrath's news (bildrath:news jumps here) ---
+
+~ bildrath_news
+if not quest.the_burgomasters_hound
+quest the_burgomasters_hound rumored
+endif
+Bildrath: The burgomaster's dog. Big grey wolfhound, Lupu. He sits under the mansion's study window every night and howls at the wall. Not at the wolves. At the wall.
+Bildrath: Ismark says it's grief. I've sold rope to grieving men. They don't howl at walls.
+-> village_of_barovia/bildrath:news
+
+# --- Lupu, by the mansion ---
+
+~ lupu
+if quest.the_burgomasters_hound == done or quest.the_burgomasters_hound == sealed
+Narrator: Lupu is asleep on the mansion step in the middle of the day, like an ordinary dog, with one ear turned toward the house. He thumps his tail twice when he hears you.
+-> END
+endif
+if not quest.the_burgomasters_hound
+quest the_burgomasters_hound rumored
+endif
+if night
+Narrator: A big grey wolfhound stands with his front feet against the mansion's side wall, under the boarded study window, and howls at the bricks. When you come close he stops, and looks at you, and goes back to it.
+else
+Narrator: A big grey wolfhound lies across the mansion's side step with his chin on his paws, watching the study window. Grey at the muzzle. A good collar, too good for a dog, with a name burned into the leather: LUPU.
+endif
+* [if not flag.lupu_friend] [Animal Handling DC 12] (Crouch down and let him come to you.) -> friend | wary
+* [if flag.lupu_friend] (Follow where he's looking.) -> follow
+* (Leave him be.) -> END
+
+~ friend
+set lupu_friend
+Narrator: He comes, after a while, and pushes his big head under your hand. Then he takes your sleeve in his teeth, very gently, and pulls you toward the house. Toward the study.
+-> follow
+
+~ wary
+Narrator: He shows you the edge of a lip, not quite a snarl, and doesn't take his eyes off the study window. Not now, that means. Maybe later.
+-> END
+
+~ follow
+if not quest.the_burgomasters_hound or quest.the_burgomasters_hound == rumored
+quest the_burgomasters_hound asked
+endif
+Narrator: He leads you round to the study window, and sits, and looks at the wall, and then at you, as if he has been waiting a long time for somebody to understand something simple.
+if guest:ireena
+interject guest:ireena: He hasn't come inside since Father died. He used to sleep under the study desk. He'd never go near that corner, though. The cold corner, we called it.
+endif
+-> END
+
+# --- The study wall (prop study_bricks, in the mansion) ---
+
+~ bricks
+if flag.tenant_slain and quest.the_burgomasters_hound != done
+-> after
+endif
+if quest.the_burgomasters_hound == done
+Narrator: The cold corner of the study is an open doorway now, with a short stair going down into a little room that has been swept, and a fresh grave in the garden outside its window.
+-> END
+endif
+if quest.the_burgomasters_hound == sealed
+Narrator: New plaster over the cold corner, and a string of fresh garlic nailed above it. The room is warmer than it was.
+-> END
+endif
+Narrator: The cold corner of the study. The wallpaper here is newer than the rest, and under it the plaster is newer, and under that, where the plaster has cracked, there is brick, laid in a hurry. Garlic has been pushed into the cracks, dried to paper.
+Narrator: Something on the other side scratches, once, very slowly, the way you'd scratch to see if anyone was listening.
+* [if not flag.sergiu_known] [Investigation DC 12] (Look for anything pushed in among the bricks.) -> note | no_note
+* [Athletics DC 11] (Break the bricks open.) -> open | open_hard
+* [Religion DC 12] (Bless the bricks and pack fresh garlic into every crack.) -> seal | seal_failed
+* (Leave it.) -> END
+
+~ note
+set sergiu_known
+Narrator: Folded small and pushed into the mortar, a page in the burgomaster's heavy hand:
+Narrator: Sergiu. My first. The siege winter, the thing at the window asked to come in, and he let it. He came back to us hungry. I could not do what had to be done. God forgive me, I could not. I have bricked him in with the garlic and his dog will not leave the wall.
+if guest:ireena
+interject guest:ireena: Father always said I was the daughter he got back. I never once asked him what he'd lost.
+endif
+-> bricks
+
+~ no_note
+Narrator: Brick, garlic and dust. Whoever laid this wanted it to stay laid.
+-> bricks
+
+~ seal
+quest the_burgomasters_hound sealed
+Narrator: You say the words over the bricks, and push fresh garlic into every crack, and plaster over all of it. The scratching stops. Outside, for the first time in a long while, the dog stops howling.
+Narrator: In the desk drawer, under the complaints, a purse the burgomaster kept for the day he could bear to do it properly.
+gold +60
+approve liriel_dawnsong +1 godrick_pendlebrook +1: You sealed the burgomaster's cold corner
+-> END
+
+~ seal_failed
+Narrator: The words don't seem to take, and the garlic crumbles in your fingers. The scratching goes on.
+-> bricks
+
+~ open
+-> opened
+
+~ open_hard
+Narrator: It takes longer than it should, and somebody's knuckles pay for it, but the bricks go in the end.
+-> opened
+
+~ opened
+Narrator: The wall comes down into a short stair and a small dark room, and out of the dark comes a smell like a cellar full of old meat, and a thin grey young man with a burgomaster's jaw, who used to be somebody's son.
+if flag.sergiu_known
+Narrator: Sergiu. He's been in there for years. He's been hungry for all of them.
+endif
+Narrator: There's a scrabble of claws behind you, and Lupu comes through the study door like a grey storm and plants himself between you and the stair, and growls at the boy he used to sleep beside.
+join lupu
+combat hound_tenant
+
+# --- After (talk to the study wall again) ---
+
+~ after
+quest the_burgomasters_hound done
+if guest:lupu
+leave lupu
+endif
+Narrator: When it's over, Lupu goes down the little stair alone and lies down on the floor of the swept room with his head on his paws, for a long while. Then he comes back up, and out, and lies down on the mansion's step in the daylight, and goes to sleep.
+if flag.sergiu_known
+Narrator: At the back of the little room, folded on a shelf where a boy would keep his good things, a shirt of fine silver rings, too small for a man. His father must have bought it for him before the siege, against exactly this.
+else
+Narrator: At the back of the little room, folded on a shelf where a boy would keep his good things, a shirt of fine silver rings, too small for a man, and a purse.
+endif
+give mithral_armor
+gold +60
+approve godrick_pendlebrook +2 thistle +2 liriel_dawnsong +1: You opened the burgomaster's cold corner and put his son to rest
+-> END

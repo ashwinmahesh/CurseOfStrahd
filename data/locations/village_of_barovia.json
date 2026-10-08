@@ -1309,6 +1309,16 @@
         18
       ],
       "facing": "east"
+    },
+    {
+      "npc": "lupu",
+      "cell": [
+        7,
+        7
+      ],
+      "dialogue": "village_of_barovia/the_burgomasters_hound:lupu",
+      "when": "not guest:lupu",
+      "facing": "north"
     }
   ],
   "encounters": [

@@ -1,0 +1,37 @@
+{
+  "id": "the_burgomasters_hound",
+  "name": "The Burgomaster's Hound",
+  "summary": "The dead burgomaster's wolfhound howls every night at the mansion's study wall, not at the wolves.",
+  "giver": "lupu",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Bildrath says the burgomaster's wolfhound, Lupu, sits under the mansion's study window every night and howls at the wall.",
+      "objectives": [
+        "Find Lupu by the burgomaster's mansion"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Lupu led us to the mansion's study, to the cold corner. Somebody has bricked something up behind the wallpaper, with garlic in the cracks, and something on the other side scratches.",
+      "objectives": [
+        "Look at the cold corner of the burgomaster's study"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "sealed",
+      "journal": "We blessed the bricks in the burgomaster's study and plastered them over. The scratching has stopped, and so has the howling.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "done",
+      "journal": "Behind the bricks was Sergiu, the burgomaster's first son, who let the thing at the window in during the siege winter and came back hungry. Kolyan couldn't end it and walled him up. Lupu, his dog, stood with us when we did.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
