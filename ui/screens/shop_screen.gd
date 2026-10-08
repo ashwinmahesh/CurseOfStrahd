@@ -3,7 +3,9 @@ extends CanvasLayer
 ## Trading with a merchant (plan §5.6, ADR 0010): their wares with prices and stock on the left, the chosen
 ## character's pack with what the merchant would pay on the right, the purse between. Prices and stock live in
 ## StoryState; this screen only shows them and sends buy and sell. Sell all junk (U3) sells everything the party has
-## marked as junk (InventoryScreen) that this merchant buys, from every pack at once.
+## marked as junk (InventoryScreen) that this merchant buys, from every pack at once. Under the purse, the terms at
+## this counter (Trade: the merchant's attitude and a haggle won) and the Haggle button, which rolls the chosen
+## character's Persuasion in the open. The purse counts up or down to its new sum (UiMotion.roll).
 
 signal closed
 
@@ -13,6 +15,11 @@ var npc_id := ""
 var index := 0
 var _frame: VBoxContainer
 var _note := ""
+var _note_colour := "bile"
+
+## The UiMotion.roll key the purse counts from (the services screen shares it).
+const PURSE_KEY := "party_purse"
+const ATTITUDE_COLOURS := {"friendly": "bile", "indifferent": "moonlight", "hostile": "rose"}
 
 
 func _init() -> void:
@@ -41,15 +48,18 @@ func _draw() -> void:
 	var purse := HBoxContainer.new()
 	purse.add_theme_constant_override("separation", 6)
 	purse.add_child(UiParts.caption("Purse", 12))
-	purse.add_child(UiParts.figure("%s gp" % _money(st.gold), 22, "gilt_light"))
+	var sum := UiParts.figure("", 22, "gilt_light")
+	UiMotion.roll(sum, PURSE_KEY, st.gold, func(v: float) -> String: return "%s gp" % _money(snappedf(v, 0.01)))
+	purse.add_child(sum)
 	purse.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	top.add_child(purse)
 	var done := UiKit.button("Done", _close, 16)
 	done.custom_minimum_size = Vector2(0, 46)
 	top.add_child(done)
 	_frame.add_child(top)
+	_frame.add_child(_terms_row())
 	if _note != "":
-		_frame.add_child(UiParts.row(UiKit.label(_note, 15, "bile")))
+		_frame.add_child(UiParts.row(UiKit.label(_note, 15, _note_colour)))
 	var cols := HBoxContainer.new()
 	cols.add_theme_constant_override("separation", 18)
 	cols.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -107,6 +117,44 @@ func _draw() -> void:
 		row.add_child(b)
 		pack.add_child(UiParts.row(row, LootWindow._item_tip(data)))
 	cols.add_child(_side("%s's pack" % ch.name.get_slice(" ", 0), pack, _junk_button()))
+
+
+## The terms at this counter and the Haggle button: "Friendly · You pay ×0.9 · they pay ×1.1 ... Haggle (Persuasion
+## DC 15, Kip +5)".
+func _terms_row() -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	var att := st.attitude(npc_id)
+	row.add_child(UiParts.pill(att.capitalize(), str(ATTITUDE_COLOURS.get(att, "moonlight")), 13))
+	row.add_child(UiKit.label(Trade.terms(st, npc_id), 14, "vellum"))
+	if Trade.haggle_state(st, npc_id) == "won":
+		row.add_child(UiParts.pill("Good customers: 10% better", "gilt", 13))
+	row.add_child(UiParts.gap())
+	var ch := st.party[index]
+	var b := UiParts.small_button("Haggle (Persuasion DC %d, %s %s)" % [Trade.haggle_dc(npc_id), ch.name.get_slice(" ", 0),
+		ch.skill_bonus(&"persuasion").signed()], haggle, "trade")
+	var why := Trade.why_no_haggle(st, npc_id)
+	if why == "" and ch.hp <= 0:
+		why = "%s can't speak for the party now" % ch.name.get_slice(" ", 0)
+	b.disabled = why != ""
+	b.tooltip_text = why if why != "" else "One Persuasion check. Win it, and %s gives the party 10%% off and pays 10%% more from now on; lose it, and that's final." % \
+		Compendium.shared().display_name("npcs", npc_id).get_slice(" ", 0)
+	row.add_child(b)
+	return UiParts.row(row)
+
+
+## The chosen character haggles (Trade.haggle); the roll and its result go in the note.
+func haggle() -> void:
+	var ch := st.party[index]
+	var test := Trade.haggle(st, npc_id, ch, Dice.roller)
+	if test == null:
+		return
+	_note_colour = "bile" if test.success else "rose"
+	var who := Compendium.shared().display_name("npcs", npc_id).get_slice(" ", 0)
+	_note = "%s haggles: %s. %s" % [ch.name.get_slice(" ", 0), test.describe(),
+		("%s gives you the good-customer price." % who) if test.success else ("%s won't budge." % who)]
+	_draw()
+	_note_colour = "bile"
 
 
 func _side(title: String, list: VBoxContainer, right: Control = null) -> Control:

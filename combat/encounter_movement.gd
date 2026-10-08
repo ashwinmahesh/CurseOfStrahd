@@ -42,12 +42,11 @@ func in_running_water(c: Combatant) -> bool:
 
 
 ## Squares `c` can reach with its movement (or `budget` feet). A Prone creature crawls (double cost) unless
-## `standing` says it will stand up first.
+## `standing` says it will stand up first; dragging a grappled creature costs 1 extra foot per foot too.
 func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Dictionary:
 	var e := enc()
 	var feet := c.movement_left if budget < 0 else budget
-	if c.creature.has_condition(&"prone") and not standing:
-		feet = feet / 2   # crawling: every foot costs 1 extra
+	feet = feet / extra_cost(c, standing)
 	var occ := _occupancy_for(c)
 	var blocked := occ["blocked"] as Dictionary
 	# Frightened: no square closer to a source of fear the creature can see (a stricter, per-square reading of
@@ -74,6 +73,15 @@ func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Di
 					blocked[cell2] = true
 	return e.grid.reachable(c.cell, c.size_cells, feet, _has_fn(blocked),
 		_value_fn(occ["slowed"] as Dictionary), _has_fn(occ["occupied"] as Dictionary), move_mode(c))
+
+
+## What each foot of `c`'s movement costs (2024: the extra feet add up): 1, plus 1 crawling while Prone (unless it
+## stands up first) and 1 dragging a grappled creature that isn't Tiny or two sizes smaller.
+func extra_cost(c: Combatant, standing: bool = false) -> int:
+	var per_foot := 1 + enc().grappling.drag_extra(c)
+	if c.creature.has_condition(&"prone") and not standing:
+		per_foot += 1
+	return per_foot
 
 
 ## How `c` moves: flying (a fly speed at least its walking speed, Fly, Gaseous Form) or climbing (Spider Climb).
@@ -170,6 +178,8 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 		return CombatResult.fail(why)
 	if c.creature.hp <= 0:
 		return CombatResult.fail("%s is down" % c.name())
+	# What the move may change, so it can be taken back if nothing comes of it (EncounterUndo).
+	var undo := e.undo.before_move(c)
 	# Riding: the controlled mount carries its rider, spending its own movement.
 	var steed := e.controlled_mount(c)
 	if steed != null:
@@ -179,7 +189,7 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 		if bool((sreach[dest] as Dictionary)["occupied"]):
 			return CombatResult.fail("Your mount can't end its move in an occupied space")
 		c.moved = true
-		return _walk(steed, CombatGrid.path_to(sreach, dest), 1, CombatResult.new(), {"willing": true})
+		return e.undo.after_move(undo, _walk(steed, CombatGrid.path_to(sreach, dest), 1, CombatResult.new(), undo.handled))
 	# Freedom of Movement: 5 ft of movement slips any grapple.
 	if c.creature.has_flag("freedom_of_movement") and e.grapples.has(c.id) and c.movement_left >= 5:
 		e.grapples.erase(c.id)
@@ -199,7 +209,7 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 		return CombatResult.fail("You can't end your move in an occupied space")
 	var path := CombatGrid.path_to(reach, dest)
 	var r := CombatResult.new()
-	return _walk(c, path, 1, r, {"willing": true})
+	return e.undo.after_move(undo, _walk(c, path, 1, r, undo.handled))
 
 
 ## Moves `c` (not on its own turn) up to `feet` toward the reachable square that best follows `dir` (Confusion,
@@ -271,8 +281,8 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 						return r
 		var occ := _occupancy_for(c)
 		var step := e.grid.step_cost(c.cell, to, c.size_cells, _has_fn(occ["blocked"] as Dictionary), _value_fn(occ["slowed"] as Dictionary), move_mode(c))
-		if c.creature.has_condition(&"prone"):
-			step *= 2
+		if step > 0:
+			step *= extra_cost(c)   # crawling, dragging someone
 		if c.has_meta("jumping"):
 			step = 0
 		if step < 0 or step > c.movement_left:
@@ -289,6 +299,7 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 			var rfrom := carried.cell
 			carried.cell = to
 			e.events.append({"type": "move", "id": carried.id, "from": rfrom, "to": to, "mounted": true})
+		e.grappling.drag_along(c, from)
 		_after_step(c, from)
 		# Booming Blade: 5 ft moved of the creature's own will (`handled.willing`, set by move, free_move, jump and a
 		# legendary move) sets off the energy around it.
@@ -454,13 +465,14 @@ func free_move(c: Combatant, dest: Vector2i) -> CombatResult:
 	var path := CombatGrid.path_to(reach, dest)
 	var keep_move := c.movement_left
 	var keep_dis := c.disengaged
+	var undo := e.undo.before_move(c)
 	c.movement_left = c.free_move_ft
 	c.disengaged = true
-	var r := _walk(c, path, 1, CombatResult.new(), {"willing": true})
+	var r := _walk(c, path, 1, CombatResult.new(), undo.handled)
 	c.free_move_ft = 0
 	c.movement_left = keep_move
 	c.disengaged = keep_dis
-	return r
+	return e.undo.after_move(undo, r)
 
 
 ## Jump (the spell): once on each of its turns, a leap of up to 30 ft for 10 ft of movement, over creatures and
@@ -476,6 +488,8 @@ func jump(c: Combatant, dest: Vector2i) -> CombatResult:
 		return CombatResult.fail("Already jumped this turn")
 	if c.movement_left < 10:
 		return CombatResult.fail("Needs 10 ft of movement")
+	if e.grappling.drag_extra(c) > 0:
+		return CombatResult.fail("Can't leap while dragging someone: let go first")
 	if e.grid.distance_ft(c.cell, c.size_cells, dest, c.size_cells) > 30:
 		return CombatResult.fail("At most 30 ft")
 	for cell in CombatGrid.footprint(dest, c.size_cells):
@@ -494,13 +508,14 @@ func jump(c: Combatant, dest: Vector2i) -> CombatResult:
 			path.append(cell)
 	if path[path.size() - 1] != dest:
 		path.append(dest)
+	var undo := e.undo.before_move(c)
 	c.movement_left -= 10
 	c.set_meta("jumped_round", e.round_no)
 	c.set_meta("jumping", true)
 	e.log.add("move", "%s leaps %d ft (Jump)" % [c.name(), e.grid.distance_ft(c.cell, c.size_cells, dest, c.size_cells)], c.id)
-	var r := _walk(c, path, 1, CombatResult.new(), {"willing": true})
+	var r := _walk(c, path, 1, CombatResult.new(), undo.handled)
 	c.remove_meta("jumping")
-	return r
+	return e.undo.after_move(undo, r)
 
 
 func drop_prone(c: Combatant) -> CombatResult:
@@ -514,7 +529,9 @@ func drop_prone(c: Combatant) -> CombatResult:
 
 ## Moves a creature without using its movement (Push, Shove, Thunderwave, Thorn Whip): no Opportunity Attacks.
 ## It goes in a straight line away from (or, with `toward`, toward) the grid point `origin`, square by square, and
-## stops at walls and other creatures. Areas it's moved into still affect it. Returns the squares moved.
+## stops at walls, other creatures and ledges 10 ft or more above it. Areas it's moved into still affect it. Pushed
+## off a ledge 10 ft or more high it falls; pushed into the map's open drop (a chasm) it falls out of the fight.
+## Returns the squares moved.
 func forced_move(target: Combatant, origin: Vector2, feet: int, toward: bool = false) -> int:
 	var e := enc()
 	# Stand as One (Tyro of the Gauntlet): an ally beside it spends a Reaction and it doesn't budge.
@@ -535,22 +552,148 @@ func forced_move(target: Combatant, origin: Vector2, feet: int, toward: bool = f
 		if nxt == target.cell:
 			continue
 		var ok := true
+		var over := 0
 		var partner := e.mount_of(target) if e.mount_of(target) != null else e.rider_of(target)
 		for cell in CombatGrid.footprint(nxt, target.size_cells):
 			var o := e.occupant_at(cell)
-			if not e.grid.in_bounds(cell) or e.grid.is_solid(cell) or (o != null and o != target and o != partner):
+			if e.grid.drop_at(cell) > 0:
+				over = maxi(over, e.grid.drop_at(cell))
+			elif not e.grid.in_bounds(cell) or e.grid.is_solid(cell) or (o != null and o != target and o != partner):
 				ok = false
-		if not ok:
+		var rise := e.grid.height(nxt) - e.grid.height(target.cell)
+		if not ok or (over == 0 and rise > CombatGrid.FEET):
+			break
+		var falls := over > 0 or rise < -CombatGrid.FEET
+		if falls and catches_itself(target):
 			break
 		e.events.append({"type": "move", "id": target.id, "from": target.cell, "to": nxt, "forced": true})
 		var was := target.cell
 		target.cell = nxt
 		target.clear_run()
 		moved += 1
+		if over > 0:
+			fall_away(target, over)
+			return moved
 		_after_step(target, was)
+		if falls:
+			fall(target, -rise)
+			break
 	if moved > 0:
 		e.mounts._forced_mount_check(target)
+		e.grappling.check_range(target)
 	return moved
+
+
+# --- Falling ----------------------------------------------------------------------------------------
+
+## Whether `c`, forced over an edge, stops at it instead: it can fly (a Fly Speed it can use) or cling to a sheer face
+## (a Climb Speed, Spider Climb). The 2024 rules leave catching yourself to the DM (deviations.md).
+func catches_itself(c: Combatant) -> bool:
+	if not c.can_act() or c.creature.has_condition(&"prone") or c.speed() <= 0:
+		return false
+	return c.creature.speed("fly").total() > 0 or (move_mode(c) & CombatGrid.MOVE_CLIMB) != 0
+
+
+## `c` falls `feet` (2024): 1d6 Bludgeoning for every 10 ft, at most 20d6, landing Prone unless the fall did it no harm.
+## A caster's Feather Fall (it lands on its feet, unharmed, if it reaches the ground within the minute: 600 ft) and a
+## monk's Slow Fall answer it as Reactions, used when they help unless the reactor's rule for them is Never (a fall
+## can't wait for a prompt). Returns the damage taken.
+func fall(c: Combatant, feet: int, why: String = "Falling") -> int:
+	var e := enc()
+	if feet < 10 or not c.is_alive():
+		return 0
+	e.events.append({"type": "fall", "id": c.id, "feet": feet})
+	var hurts := feet
+	if _feather_fall(c, feet):
+		hurts = maxi(0, feet - 600)
+		if hurts < 10:
+			e.log.add("move", "%s drifts down %d ft and lands on its feet" % [c.name(), feet], c.id)
+			return 0
+	var rolled := e._roll_damage_dice("%dd6" % mini(20, hurts / 10), false, 0, why)
+	var amount := int(rolled["total"])
+	amount -= _slow_fall(c, amount)
+	if amount <= 0:
+		e.log.add("move", "%s falls %d ft and lands unharmed" % [c.name(), feet], c.id, [str(rolled["text"])])
+		return 0
+	var dr := e.deal_damage(null, c, [{"amount": amount, "type": "bludgeoning"}], false, "%s %d ft" % [why, feet], [str(rolled["text"])])
+	if dr.final > 0 and c.is_alive() and not c.creature.has_condition(&"prone"):
+		c.creature.add_condition(&"prone", "Fell %d ft" % feet)
+		e.events.append({"type": "condition", "id": c.id})
+	return dr.final
+
+
+## Feather Fall (2024 Reaction spell, 60 ft, a falling creature the caster can see): the falling creature's own, or the
+## nearest ally's who has it and its Reaction. Used for a fall that could hurt (20 ft or more, or enough to drop it).
+func _feather_fall(c: Combatant, feet: int) -> bool:
+	var e := enc()
+	if feet < 20 and feet / 10 * 6 < c.creature.hp:
+		return false
+	var casters: Array[Combatant] = [c]
+	var near := e.allies_of(c)
+	near.sort_custom(func(a: Combatant, b: Combatant) -> bool: return e.distance(a, c) < e.distance(b, c))
+	casters.append_array(near)
+	for caster in casters:
+		if caster != c and (e.distance(caster, c) > 60 or not e.can_see(caster, c)):
+			continue
+		if e._reaction_decision(caster, "feather_fall") == "never" or not e.spells.reaction_spells.can_cast_reaction(caster, "feather_fall"):
+			continue
+		if e.spells.reaction_spells.begin_reaction_spell(caster, "feather_fall"):
+			e.log.add("reaction", "%s slows %s's fall (Feather Fall)" % [caster.name(), "its own" if caster == c else c.name() + "'s"], caster.id)
+			return true
+	return false
+
+
+## Slow Fall (Monk 4, 2024): a Reaction takes five times the monk's level off the falling damage. Returns the damage
+## it takes off.
+func _slow_fall(c: Combatant, amount: int) -> int:
+	var e := enc()
+	if amount <= 0 or not CombatFeatures.has_feature(c, "slow_fall") or not e.spells.can_react(c) \
+			or e._reaction_decision(c, "slow_fall") == "never":
+		return 0
+	c.reaction_available = false
+	var cut := mini(amount, 5 * ClassFeatures.level_of(c, "monk"))
+	e.log.add("reaction", "%s twists in the air and takes %d less from the fall (Slow Fall)" % [c.name(), cut], c.id)
+	return cut
+
+
+## `c` goes over the edge into the map's open drop (a chasm, a tower's well): it falls `feet` and is out of the fight,
+## off the grid, with whoever rides it. A foe that lives through it is gone; a party member comes back to the party
+## once the fight is over (it climbs back up, or the others fetch it).
+func fall_away(c: Combatant, feet: int) -> void:
+	var e := enc()
+	e.log.add("move", "%s goes over the edge" % c.name(), c.id)
+	var rider := e.rider_of(c)
+	var mount := e.mount_of(c)
+	if mount != null:
+		c.remove_meta("mounted_on")
+		mount.remove_meta("ridden_by")
+	fall(c, feet)
+	leave_grid(c, "fell")
+	if rider != null:
+		rider.remove_meta("mounted_on")
+		c.remove_meta("ridden_by")
+		fall_away(rider, feet)
+
+
+## Takes `c` off the grid for the rest of the fight (`how`: "fell"): no space, no turns, no target, and it doesn't count
+## for the end of the fight. Its grapples and Concentration end.
+func leave_grid(c: Combatant, how: String) -> void:
+	var e := enc()
+	e._release_grapples_by(c)
+	if e.grapples.has(c.id):
+		e.grapples.erase(c.id)
+		c.creature.remove_condition(&"grappled")
+	if c.creature.concentration != null:
+		c.creature.concentration.end("out of the fight")
+	c.set_meta("left_fight", how)
+	c.cell = SpellSpecials.BANISHED_CELL
+	var at := e.order.find(c)
+	if at >= 0 and at != e.turn_index:
+		e.order.remove_at(at)
+		if at < e.turn_index:
+			e.turn_index -= 1
+	e.events.append({"type": "vanish", "id": c.id, "left": how})
+	e._check_over()
 
 
 ## The middle of a creature's space, in grid units.

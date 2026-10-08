@@ -241,10 +241,10 @@ func next() -> Dictionary:
 					_pick_purpose = "dark_gift"
 					_gift = str(s["gift"])
 					return _pick_beat()
-			"shop":
+			"shop", "services":
 				pc += 1
 				if npc_id != "":
-					return {"kind": "shop", "npc": npc_id}
+					return {"kind": str(s["t"]), "npc": npc_id}
 			"appear", "vanish":
 				pc += 1
 				return {"kind": "stage", "what": str(s["t"]), "npc": str(s["npc"]), "at": str(s.get("at", ""))}

@@ -8,7 +8,8 @@ extends RefCounted
 ## `final_room:<room>` (the room Strahd waits in: the enemy card's, or the roam pick for `mists`, ADR 0014), `guest:ireena`,
 ## `treasure_at:<place>` (a treasure the reading put there, not yet found) and `gift:<dark gift>` (ADR 0011),
 ## `approval.thistle >= close` (a companion's approval tier, or a score; story/approval.gd),
-## `attention >= marked` (Strahd's attention, a number or a tier; story/strahd_presence.gd),
+## `attention >= marked` (Strahd's attention, a number or a tier; story/strahd_presence.gd), `weather == fog` (where
+## the party is; story/weather.gd),
 ## `check.last`, `true`, `false`, with `and`, `or`, `not` and parentheses. An empty condition is true.
 
 var st: StoryState
@@ -181,6 +182,12 @@ func _term() -> bool:
 			var named := StrahdPresence.tier_min(rhs)
 			want = named if named >= 0 else _literal(rhs)
 		return _compare(StrahdPresence.attention(st), op if op != "" else ">", want)
+	if t == "weather":
+		# The weather where the party is (F12, story/weather.gd): `weather == fog`; bare `weather` is anything but overcast.
+		var now := Weather.now(st)
+		if op == "":
+			return now != "overcast"
+		return (now == rhs) == (op == "==")
 	if t == "gold":
 		return _compare(st.gold, op if op != "" else ">", _literal(rhs) if op != "" else 0)
 	if t == "level":

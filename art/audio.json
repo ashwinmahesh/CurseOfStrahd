@@ -115,19 +115,19 @@
     "zap_launch": 1.6,
     "step_wood": -14.0,
     "step_stone": -14.0,
-    "step_grass": -12.0,
+    "step_grass": -2.0,
     "step_snow": -12.0,
     "step_dirt": -12.0,
     "step_gravel": -14.0,
-    "step_mud": -12.0,
-    "chest": -4.0,
+    "step_mud": 10.0,
+    "chest": -10.0,
     "cupboard": -6.0,
     "rummage": -8.0,
-    "lever": -4.0,
-    "trap": -2.0,
-    "hearth": -4.0,
+    "lever": -6.0,
+    "trap": -10.0,
+    "hearth": -14.0,
     "river": -6.0,
-    "waterfall": -4.0
+    "waterfall": -6.0
   },
   "music": {
     "title": [
@@ -554,7 +554,7 @@
       "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Electric Spell_Launch_03.wav"
     ],
     "chest": [
-      "res://art/sourced/oga_open_chest_oiboo/open chest_0.wav"
+      "res://art/sourced/oga_chest_creak_spookymodem/Chest Creak.wav"
     ],
     "cupboard": [
       "res://art/sourced/kenney_rpg_audio/Audio/creak1.ogg",
@@ -562,8 +562,7 @@
       "res://art/sourced/kenney_rpg_audio/Audio/creak3.ogg"
     ],
     "lever": [
-      "res://art/sourced/oga_mechanical_bmaczero/lightclunk1.wav",
-      "res://art/sourced/oga_mechanical_bmaczero/clank1.wav"
+      "res://art/sourced/oga_mechanical_bmaczero/mechanical1.wav"
     ],
     "rummage": [
       "res://art/sourced/kenney_rpg_audio/Audio/cloth1.ogg",
@@ -572,23 +571,19 @@
       "res://art/sourced/kenney_rpg_audio/Audio/cloth4.ogg"
     ],
     "step_dirt": [
-      "res://art/sourced/kenney_rpg_audio/Audio/footstep00.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/footstep01.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/footstep02.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/footstep03.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/footstep04.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/footstep05.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/footstep06.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/footstep07.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/footstep08.ogg",
-      "res://art/sourced/kenney_rpg_audio/Audio/footstep09.ogg"
+      "res://art/sourced/oga_footsteps_congusbongus/boots_0.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_1.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_2.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_3.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_4.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_5.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_6.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_7.ogg",
+      "res://art/sourced/oga_footsteps_congusbongus/boots_8.ogg"
     ],
     "step_grass": [
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_grass_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_grass_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_grass_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_grass_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_grass_004.ogg"
+      "res://art/sourced/oga_steps_tinyworlds/leaves01.ogg",
+      "res://art/sourced/oga_steps_tinyworlds/leaves02.ogg"
     ],
     "step_gravel": [
       "res://art/sourced/oga_footsteps_congusbongus/gravel_0.ogg",
@@ -603,14 +598,7 @@
       "res://art/sourced/oga_footsteps_congusbongus/gravel_9.ogg"
     ],
     "step_mud": [
-      "res://art/sourced/oga_mud_rubberduck/mud_01.ogg",
-      "res://art/sourced/oga_mud_rubberduck/mud_05.ogg",
-      "res://art/sourced/oga_mud_rubberduck/mud_09.ogg",
-      "res://art/sourced/oga_mud_rubberduck/mud_12.ogg",
-      "res://art/sourced/oga_mud_rubberduck/mud_13.ogg",
-      "res://art/sourced/oga_mud_rubberduck/mud_14.ogg",
-      "res://art/sourced/oga_mud_rubberduck/mud_21.ogg",
-      "res://art/sourced/oga_mud_rubberduck/mud_23.ogg"
+      "res://art/sourced/oga_steps_tinyworlds/mud02.ogg"
     ],
     "step_snow": [
       "res://art/sourced/kenney_impact_sounds/Audio/footstep_snow_000.ogg",
@@ -627,15 +615,12 @@
       "res://art/sourced/kenney_impact_sounds/Audio/footstep_concrete_004.ogg"
     ],
     "step_wood": [
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_wood_000.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_wood_001.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_wood_002.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_wood_003.ogg",
-      "res://art/sourced/kenney_impact_sounds/Audio/footstep_wood_004.ogg"
+      "res://art/sourced/oga_steps_tinyworlds/wood01.ogg",
+      "res://art/sourced/oga_steps_tinyworlds/wood02.ogg",
+      "res://art/sourced/oga_steps_tinyworlds/wood03.ogg"
     ],
     "trap": [
-      "res://art/sourced/oga_mechanical_bmaczero/mechanical2.wav",
-      "res://art/sourced/oga_mechanical_bmaczero/rattle1.wav"
+      "res://art/sourced/oga_mechanical_bmaczero/clank1.wav"
     ]
   },
   "ambient": {
@@ -975,13 +960,13 @@
   "rises": {},
   "loops": {
     "hearth": [
-      "res://art/sourced/oga_fireplace_pagdev/fire.wav"
+      "res://art/sourced/oga_fire_antumdeluge/fire-1.wav"
     ],
     "river": [
       "res://art/sourced/oga_stream_kurt/stream1.ogg"
     ],
     "waterfall": [
-      "res://art/sourced/oga_stream_kurt/waterfall1.ogg"
+      "res://art/sourced/oga_stream_kurt/waterfall2.ogg"
     ]
   },
   "water": {

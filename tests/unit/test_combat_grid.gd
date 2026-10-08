@@ -38,9 +38,9 @@ func test_no_cutting_wall_corners() -> void:
 
 func test_climbing_onto_a_platform_costs_extra() -> void:
 	var g := CombatGrid.from_rows([".2", ".."])
-	# 10 ft up: 5 ft for the square plus 2 ft per foot of rise beyond the first 5 (the climb).
+	# 10 ft up: 5 ft for the square plus the 10 ft climbed at 2 ft per foot (1 extra, 2024 Climbing).
 	assert_eq(g.step_cost(Vector2i(0, 0), Vector2i(1, 0), 1, _none, _none), 25)
-	assert_eq(g.step_cost(Vector2i(1, 0), Vector2i(0, 0), 1, _none, _none), 5, "dropping 10 ft is allowed")
+	assert_eq(g.step_cost(Vector2i(1, 0), Vector2i(0, 0), 1, _none, _none), 25, "climbing down 10 ft costs the same")
 
 
 func test_reachable_and_path() -> void:

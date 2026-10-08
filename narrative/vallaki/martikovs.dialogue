@@ -25,6 +25,7 @@ endif
 
 ~ urwin_menu
 * Let's see what you're selling. -> trade
+* We'd like a room for the night. -> room
 * What's the talk in town? -> rumors
 * [if guest:ireena and not flag.bones_returned] Can Ireena stay here for now? -> ireena_room
 * [if flag.vallaki_pledge != "town" and not flag.festival_begun] Whose side are you on, the Baron's or Lady Wachter's? -> sides
@@ -34,6 +35,11 @@ endif
 ~ trade
 Urwin: Bread, candles, oil, rope. One potion; a traveller paid his bill with it and then didn't need it. Prices are fair. Fairer than Bildrath's, anyway.
 shop
+-> urwin_menu
+
+~ room
+Urwin: Upstairs. A room with a bed, or the room over the kitchen with the copper bath. Danika heats the water. Pay first.
+services
 -> urwin_menu
 
 ~ rumors

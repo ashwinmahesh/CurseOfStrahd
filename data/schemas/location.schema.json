@@ -45,6 +45,11 @@
             "pattern": "^[.#=~w 1-4]+$"
           }
         },
+        "drop_ft": {
+          "type": "integer",
+          "minimum": 10,
+          "description": "How far the open void beside the floor falls (a chasm, a tower's well): a creature forced over the edge falls this far and out of the fight. Without it, the void is the map's edge and nothing crosses it."
+        },
         "theme": {
           "type": "string"
         },
