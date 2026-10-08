@@ -1,7 +1,8 @@
 extends Node
 ## How the interface feels to use (autoload UiFeel): it holds the rules-card layer (TipCards, U1), ticks softly when
 ## the pointer comes onto a button (A4), puts a quill to the page when the journal gains an entry or the codex a book
-## (A4), and runs the tweens of screens that are closing (UiMotion.dismiss, G9), which outlive the screens themselves.
+## (A4), runs the tweens of screens that are closing (UiMotion.dismiss, G9), which outlive the screens themselves, and
+## holds the controller's navigation of every screen (PadNav, U6).
 
 ## The softest gap between two hover ticks, so sweeping across a list doesn't rattle.
 const TICK_GAP := 0.06
@@ -9,6 +10,7 @@ const TICK_GAP := 0.06
 const JOURNAL_EVERY := 0.4
 
 var cards: TipCards
+var pad: PadNav
 var _last_hover: Control = null
 var _tick_cool := 0.0
 var _journal_cool := 0.0
@@ -20,6 +22,8 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	cards = TipCards.new()
 	add_child(cards)
+	pad = PadNav.new()
+	add_child(pad)
 	EventBus.game_loaded.connect(func(_slot: String) -> void: _journal_count = -1)
 	# Pinned cards belong to what you were reading: leaving for another scene (the title, a new game) clears them.
 	EventBus.scene_changed.connect(func(_path: String) -> void: cards.clear())

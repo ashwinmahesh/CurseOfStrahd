@@ -2,8 +2,8 @@ class_name InputActions
 extends RefCounted
 ## Registers the game's input actions in code so every agent sees them in one place, with the player's own keys laid
 ## over the defaults (Settings, Keys: Improvement Ideas U5; kept in user://settings.cfg as "keys", action -> keys, only
-## where they differ). Keyboard and mouse everywhere; the controller for combat (plan §5.3 acceptance: playable with
-## the controller only). The full controller pass comes with accessibility (plan §13 Q5).
+## where they differ). Keyboard and mouse everywhere, and the controller too (U6, docs/ui/controller.md): combat's
+## buttons here, the screens' (pad_*) read by PadNav.
 ## Escape (menus, back, cancel) and F1 (the controls card) can't be changed, so there's always a way back.
 
 ## The default keys: the first is an action's key, the second its alternate.
@@ -126,6 +126,14 @@ const PAD_BUTTONS := {
 	&"camera_rotate_left": [JOY_BUTTON_LEFT_STICK],
 	&"camera_rotate_right": [JOY_BUTTON_RIGHT_STICK],
 	&"cycle_leader": [JOY_BUTTON_BACK],
+	# Every screen (ui/common/pad_nav.gd): A chooses and B goes back (the engine gives its menu actions only keys),
+	# X the item's menu, Y explain, LB/RB tabs.
+	&"ui_accept": [JOY_BUTTON_A],
+	&"ui_cancel": [JOY_BUTTON_B],
+	&"pad_context": [JOY_BUTTON_X],
+	&"pad_explain": [JOY_BUTTON_Y],
+	&"pad_tab_prev": [JOY_BUTTON_LEFT_SHOULDER],
+	&"pad_tab_next": [JOY_BUTTON_RIGHT_SHOULDER],
 }
 
 ## Controller triggers and sticks: action -> [axis, direction].
@@ -141,6 +149,13 @@ const PAD_AXES := {
 	&"move_right": [JOY_AXIS_LEFT_X, 1.0],
 	&"move_forward": [JOY_AXIS_LEFT_Y, -1.0],
 	&"move_back": [JOY_AXIS_LEFT_Y, 1.0],
+	# Every screen: LT/RT the character, the right stick scrolls.
+	&"pad_char_prev": [JOY_AXIS_TRIGGER_LEFT, 1.0],
+	&"pad_char_next": [JOY_AXIS_TRIGGER_RIGHT, 1.0],
+	&"pad_scroll_left": [JOY_AXIS_RIGHT_X, -1.0],
+	&"pad_scroll_right": [JOY_AXIS_RIGHT_X, 1.0],
+	&"pad_scroll_up": [JOY_AXIS_RIGHT_Y, -1.0],
+	&"pad_scroll_down": [JOY_AXIS_RIGHT_Y, 1.0],
 }
 
 ## Key names that read better as the mark on the key.
