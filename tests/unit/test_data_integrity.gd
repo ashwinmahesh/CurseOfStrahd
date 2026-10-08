@@ -154,3 +154,16 @@ func test_monster_stat_blocks_are_self_consistent() -> void:
 				var dp := DiceRoller.parse_expr(str(dd["dice"]))
 				var davg := floori(int(dp["count"]) * (int(dp["sides"]) + 1) / 2.0) + int(dp["modifier"])
 				assert_eq(int(dd["average"]), davg, "%s %s damage average" % [id, act["id"]])
+
+
+## A speaker's name picks its NPC (DialogueRunner._npc_for), so two NPCs with one display name share a portrait and a
+## voice. Only interchangeable extras may share one.
+func test_npc_display_names_are_unique() -> void:
+	const SHARED := ["A Goat", "Belview", "A Camp Dog", "A Raven"]
+	var seen := {}
+	for n in Compendium.shared().all("npcs"):
+		var name := str(n["name"])
+		if name in SHARED:
+			continue
+		assert_false(seen.has(name), "%s and %s are both called %s" % [seen.get(name, ""), n["id"], name])
+		seen[name] = str(n["id"])

@@ -490,9 +490,9 @@ DC 14, or a cleric's) let all nine go quietly; breaking her out wakes the other 
 
 ### The Pack's Runt (`the_packs_runt`, narrative/krezk/the_packs_runt.dialogue; batch 4, level 8)
 
-Once the den's children are home (`den_children_freed`), the Krezk watchman's news says Petru (new NPC), the smallest
-of the five, sleeps in the goat pens now and the goats don't mind him, and something bigger than a wolf circles the
-farms below the wall. **Twist:** the moon came for Petru in the den before the rescue; he's a wolf nearly all the way
+Once the den's children are home (`den_children_freed`), the Krezk watchman's news says Petru (new NPC, speaking as
+Little Petru so his lines don't go to the Tser Pool knife-grinder), the smallest of the five, sleeps in the goat pens
+now and the goats don't mind him, and something bigger than a wolf circles the farms below the wall. **Twist:** the moon came for Petru in the den before the rescue; he's a wolf nearly all the way
 (Insight DC 13), and the pack's eldest, the Grandsire, licked his face after and said the runt was his. Remove Curse
 (cast, or a scroll) lifts it, and far off something howls at the loss. **Escalation:** at night by the pens the
 Grandsire comes over the wall with the old wolves; he offers the pack's word to take no more Krezk children in
@@ -565,5 +565,5 @@ Village of Barovia: the_burgomasters_hound.dialogue in full (Bildrath; companion
 doesn't speak). Batch 4, the
 crossroads by day: the_tinkers_wagon.dialogue in full (new speaker Iosif the Tinker; also Zora's three new lines). Batch 4,
 Vallaki: the_ravens_ransom.dialogue in full (new speakers Bray and the Fowler; also Urwin and Danika). Batch 4,
-Krezk: the_packs_runt.dialogue in full (new speakers Petru and the Grandsire; also the Krezk watchman). Batch 4,
+Krezk: the_packs_runt.dialogue in full (new speakers Little Petru and the Grandsire; also the Krezk watchman). Batch 4,
 Mount Baratok: the_mages_lost_pages.dialogue in full (Mordenkainen; the letters are Narrator).
