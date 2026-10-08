@@ -211,6 +211,10 @@ things to find, more people to talk to", and "the great tent... should be wayyy 
 - **Facing and span.** A prop's `facing` (north, south, east, west or between) turns its piece to look that way, and
   `span` ([across, down] squares, its own cell the north-west one) stands a piece bigger than its square over the middle
   of its block of low cover. Tser Pool's wagons ring the fire facing it, each over two squares by two.
+- **Things to stand on** (Ashwin: "larger things that change elevation and can be interacted with"). A prop's
+  `stand_ft` on a piece whose top sits at that height (a vardo's roof at 10 ft, a broken cart or a treading vat at 5, a
+  dead tree climbed into at 10) makes its squares high ground; built digits make platforms and walks (Krezk's wall
+  walk, the winery's watch platform, Tser Pool's stage).
 - **Big pieces clear what's under them.** A building-sized 3D piece hides the trees and the board's own furniture on
   every square its footprint covers, however big (it was two squares each way at most).
 - **Fences run along their rails** (catalog `runs_along`): a pen's east and west rails go up the map. A place's
