@@ -55,7 +55,23 @@ static func populate(c: Choice, ch: Character) -> void:
 		_:
 			for v in c.from:
 				c.options.append(ChoiceOption.make(v, v.replace("_", " ").capitalize()))
+	_repeat_limits(c, ch)
 	_swap_limits(c)
+
+
+## The copies of a repeatable option each choose differently (2024: each Agonizing Blast its own cantrip, each Lessons
+## of the First Ones its own Origin feat): what another copy chose is blocked here; a pick two copies share is the
+## later copy's to change.
+static func _repeat_limits(c: Choice, ch: Character) -> void:
+	var family := Choice.repeat_base(c.key)
+	var mine := Choice.copy_number(c.key)
+	for d in ch.choice_defs:
+		if d.key == c.key or d.kind != c.kind or not d.key.begins_with(family) or Choice.repeat_base(d.key) != family:
+			continue
+		var earlier := Choice.copy_number(d.key) < mine
+		for o in c.options:
+			if o.legal and o.id in d.picks and (earlier or not o.id in c.picks):
+				o.block("Already chosen for %s" % d.label)
 
 
 ## Problems with a choice's picks, as sentences the player can act on. Incomplete choices are reported too.
@@ -543,17 +559,49 @@ static func _abilities(c: Choice, ch: Character) -> void:
 
 
 ## Eldritch Invocations: each option may list prerequisites {level, invocation, cantrip: "damage"|"attack"}; the
-## level is the invoking class's level, an invocation counts if picked here or elsewhere.
+## level is the invoking class's level, an invocation counts if picked here or elsewhere. A repeatable one (Agonizing
+## Blast, Lessons of the First Ones) is offered again after the list (_invocation_copies).
 static func _invocations(c: Choice, ch: Character) -> void:
+	var copies: Array[ChoiceOption] = []
 	for o in c.inline_options:
 		var opt := ChoiceOption.make(str(o.get("id", "")), str(o.get("name", "")), str(o.get("summary", "")))
 		var why := invocation_problem(o, c, ch)
 		if why != "":
 			opt.block(why)
 		c.options.append(opt)
+		if bool(o.get("repeatable", false)):
+			copies.append_array(_invocation_copies(o, c, ch))
+	c.options.append_array(copies)
 
 
-static func invocation_problem(o: Dictionary, c: Choice, ch: Character) -> String:
+## A repeatable invocation's later copies, "<id>#2", "<id>#3"...: every copy picked, then the next one, which waits
+## for an earlier copy. Each copy makes its own choice (_repeat_limits keeps it different from the others'), so one
+## that needs a damaging cantrip needs one more of them per copy.
+static func _invocation_copies(o: Dictionary, c: Choice, ch: Character) -> Array[ChoiceOption]:
+	var id := str(o.get("id", ""))
+	var taken := 0
+	var last := 1
+	for p in c.picks:
+		if Choice.repeat_base(p) == id:
+			taken += 1
+			last = maxi(last, Choice.copy_number(p))
+	var noun := str((o.get("choice", {}) as Dictionary).get("kind", "choice"))
+	var out: Array[ChoiceOption] = []
+	for n in range(2, last + 2):
+		var copy := "%s#%d" % [id, n]
+		var opt := ChoiceOption.make(copy, Choice.copy_label(str(o.get("name", id)), n),
+			"%s Taken again for a different %s." % [o.get("summary", ""), noun])
+		var picked := copy in c.picks
+		var why: String = "Take %s first" % o.get("name", id) if taken == 0 else invocation_problem(o, c, ch, taken if picked else taken + 1)
+		if why != "":
+			opt.block(why)
+		out.append(opt)
+	return out
+
+
+## Why invocation `o` can't be taken, or "". `copies`: how many of a repeatable one there would be, each needing its
+## own damaging cantrip when the invocation needs one.
+static func invocation_problem(o: Dictionary, c: Choice, ch: Character, copies: int = 1) -> String:
 	var pre := o.get("prerequisites", {}) as Dictionary
 	if pre.is_empty():
 		return ""
@@ -570,7 +618,7 @@ static func invocation_problem(o: Dictionary, c: Choice, ch: Character) -> Strin
 			return "Requires %s" % label
 	if pre.has("cantrip"):
 		var want := str(pre["cantrip"])
-		var ok := false
+		var fits := {}
 		for k in ch.known_spells():
 			if str(k.get("class_id", "")) != c.class_id:
 				continue
@@ -579,9 +627,10 @@ static func invocation_problem(o: Dictionary, c: Choice, ch: Character) -> Strin
 				continue
 			if want == "attack" and not s.has("attack"):
 				continue
-			ok = true
-		if not ok:
-			return "Requires a %s cantrip that deals damage%s" % [cls_name, " with an attack roll" if want == "attack" else ""]
+			fits[str(k["id"])] = true
+		if fits.size() < copies:
+			return "Requires %s %s cantrip that deals damage%s" % ["another" if not fits.is_empty() else "a", cls_name,
+				" with an attack roll" if want == "attack" else ""]
 	return ""
 
 
