@@ -3587,6 +3587,13 @@
   "recipe": "0406f3ad6a",
   "text": "Good morning. Father Donavich says a swept path is a prayer you can walk on. I sweep it twice, to be sure."
  },
+ "barovia_goodwife/10ecb6559a8ce9e8": {
+  "chars": 150,
+  "direction": "[tearful, laughing, overwhelmed]",
+  "model": "eleven_v3",
+  "recipe": "2fe94cdeab",
+  "text": "Fifty years, Tata. Mama waited at that door till she died. Mihail dug you a grave. It's been empty all this time. He'll be so angry. He'll be so glad."
+ },
  "barovia_goodwife/35726aa871192e5e": {
   "chars": 138,
   "direction": "[low, bitter, ashamed]",
@@ -3633,6 +3640,13 @@
   "recipe": "2fe94cdeab",
   "text": "The bride. Our grandmother told it. Forty years back, a girl called Zinaida was promised to a man the castle sent down with a carriage and a ring. The night before the wedding she went down the well instead."
  },
+ "barovia_goodwife/b60727e8071a7270": {
+  "chars": 21,
+  "direction": "[whispered, disbelieving]",
+  "model": "eleven_v3",
+  "recipe": "2fe94cdeab",
+  "text": "(Very quietly.) Tata?"
+ },
  "barovia_goodwife/c8bb448db7473da5": {
   "chars": 74,
   "direction": "[weary, fond]",
@@ -3667,6 +3681,13 @@
   "model": "eleven_v3",
   "recipe": "33c3142235",
   "text": "No grave this week. I keep picking up the spade and putting it down again. Petra says I'm to dig her a herb bed instead. Herbs don't need six feet."
+ },
+ "barovia_gravedigger/638c573567d4ab36": {
+  "chars": 165,
+  "direction": "[gruff, bewildered, quietly moved]",
+  "model": "eleven_v3",
+  "recipe": "33c3142235",
+  "text": "My father's home. He's younger than I was when I dug his grave. I filled it in this morning and stood on it, and I don't know what I felt. Petra says that's allowed."
  },
  "barovia_gravedigger/6db234a86e7e4090": {
   "chars": 96,
@@ -20433,6 +20454,55 @@
   "recipe": "66638cecb8",
   "text": "We're just going to leave the coffin there? In the road? All right."
  },
+ "ilarion/2f3229f4708b2447": {
+  "chars": 177,
+  "direction": "[quiet, bewildered, content]",
+  "model": "eleven_v3",
+  "recipe": "828901fdb9",
+  "text": "Petra's put me in the back room, where her grandmother slept. My granddaughter, I mean. Her granddaughter. I can't count it. I don't try. I carry the water now, and she lets me."
+ },
+ "ilarion/4b97daca8ed378ac": {
+  "chars": 89,
+  "direction": "[nervous, eager, quiet]",
+  "model": "eleven_v3",
+  "recipe": "828901fdb9",
+  "text": "The well's this way. I know the way from the well. Go on, I'll follow. I'd rather follow."
+ },
+ "ilarion/5aae8817c0ed24ae": {
+  "chars": 161,
+  "direction": "[confused, gentle, anxious]",
+  "model": "eleven_v3",
+  "recipe": "828901fdb9",
+  "text": "Is this the road down to the village? Only the fog turned me round all night. I was going over the mountains for the doctor. My wife has a fever. What day is it?"
+ },
+ "ilarion/d06b9e6e5faa2d57": {
+  "chars": 248,
+  "direction": "[quiet, gentle, resigned]",
+  "model": "eleven_v3",
+  "recipe": "828901fdb9",
+  "text": "(He sits on the edge of the well and pulls his boots off, one and then the other, and holds them out to you.) Aurica's grandmother's. They walk on air, a little, if you ask them. I put them on to run for the doctor. I won't be running anywhere now."
+ },
+ "ilarion/e355058db0b250b5": {
+  "chars": 210,
+  "direction": "[warm, fond, proud]",
+  "model": "eleven_v3",
+  "recipe": "828901fdb9",
+  "text": "Ilarion. From the village under the castle, the house with the blue door by the well. My wife's Aurica. Two little ones, Petra and Mihail. Petra carries water already; she's six and she thinks she's the mother."
+ },
+ "ilarion/f8c4023856bd2092": {
+  "chars": 144,
+  "direction": "[stunned, breaking, tender]",
+  "model": "eleven_v3",
+  "recipe": "828901fdb9",
+  "text": "Petra? (He looks at her face for a long time, and at her grey hair, and at her hands.) Petra. I only went for the doctor. I only went one night."
+ },
+ "ilarion/ff6698f3cbccc896": {
+  "chars": 99,
+  "direction": "[afraid, breathless, confused]",
+  "model": "eleven_v3",
+  "recipe": "828901fdb9",
+  "text": "They followed me. All night they followed me. They never came close. Why are they coming close now?"
+ },
  "ilinca_vrana/06f0ac5b8abbae6c": {
   "chars": 218,
   "model": "eleven_v3",
@@ -35483,6 +35553,13 @@
   "recipe": "dd92281f92",
   "text": "She seems entirely, dazzlingly happy. Perhaps she is."
  },
+ "narrator/1f04f6b93f779b71": {
+  "chars": 205,
+  "direction": "[quiet, observant, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A young man sits on a stone at the edge of the fog, rubbing his arms. His coat is rags, his shirt is rags, his hat has no crown left, and his boots are beautiful: soft grey leather, without a mark on them."
+ },
  "narrator/1f059bc9ca92401a": {
   "chars": 184,
   "model": "eleven_v4",
@@ -36764,6 +36841,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You lay a hand on the coffin lid and speak the old words. Ireena stands very straight and doesn't cry, though it costs her something."
+ },
+ "narrator/2aa3da15e3dde67d": {
+  "chars": 159,
+  "direction": "[tense, sudden, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He gets up gladly. You haven't gone a dozen steps when the fog behind you opens like a mouth, and out of it, low and quick and silent, come the count's wolves."
  },
  "narrator/2aa5262512ea0e37": {
   "chars": 152,
@@ -39270,6 +39354,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You let him lead you to the amber, and at the last moment you aren't there. His hands close on air, and the hollow takes the only thing within reach: his own shadow, with its two tall ears."
+ },
+ "narrator/4146fc1d92297172": {
+  "chars": 189,
+  "direction": "[quiet, moved, tense]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Ilarion stands by the well and looks at the blue door, which is grey, and at the old woman coming across the square with two buckets, who stops dead when she sees him and lets them both go."
  },
  "narrator/414b79432434798a": {
   "chars": 123,
@@ -44361,6 +44452,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "A drawer hides in the base of the toy chest, the kind a boy finds and tells nobody about. Inside, a grey cloth bag, and at the bottom of it something soft and warm, like fur."
+ },
+ "narrator/6e1161ab614f660a": {
+  "chars": 227,
+  "direction": "[quiet, uneasy, gentle]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The rags are years old, many years. There's moss in the seams of his coat. But his face is a young man's, and his hands, and he's frightened in the plain way of somebody who has been out in the cold one night and wants his bed."
  },
  "narrator/6e153f80776f5902": {
   "chars": 57,
@@ -50509,6 +50607,13 @@
   "recipe": "dd92281f92",
   "text": "Burial niches along the wall, most of them sealed. Three have been opened from the inside."
  },
+ "narrator/a6344a5bc6068807": {
+  "chars": 93,
+  "direction": "[soft, tender, moved]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She holds her father's young face in her old hands, and neither of them says anything clever."
+ },
  "narrator/a63a6d19941fc887": {
   "chars": 181,
   "model": "eleven_v4",
@@ -51771,6 +51876,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Gustav and Elisabeth in oils, younger, dressed for a ball. The dust on the canvas has settled thickest on her face."
+ },
+ "narrator/b1e60c01571e2814": {
+  "chars": 243,
+  "direction": "[quiet, sad, gentle]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You walk him down the Old Svalich Road toward the village. He talks the whole way, about Aurica's fever and the doctor and the price of a cart, and every so often he stops talking and looks at the houses, which are all wrong, and starts again."
  },
  "narrator/b1e83d30d7f6b9a1": {
   "chars": 145,
@@ -56588,6 +56700,13 @@
   "recipe": "dd92281f92",
   "text": "A board of prices in neat black letters, each number roughly ten times what it should be. Underneath, smaller: \"Browsing: free, for now.\""
  },
+ "narrator/df3e0b41224abc17": {
+  "chars": 132,
+  "direction": "[tense, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The fog behind you opens like a mouth, and the count's wolves come out of it low and quick, for the man who walked out of the mists."
+ },
  "narrator/df492ca2eeefa22b": {
   "chars": 85,
   "model": "eleven_v4",
@@ -57031,6 +57150,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Someone has kissed the lid so often that the inscription has worn smooth. The prints of lips are still in the frost."
+ },
+ "narrator/e2c52883c2f045d0": {
+  "chars": 85,
+  "direction": "[light, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A cold, frightened young man in a very old coat. Barovians don't throw anything away."
  },
  "narrator/e2d0c2145cef604c": {
   "chars": 94,
@@ -58298,6 +58424,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The Belviews say he went down the mountain once, at dawn, laid a hand on the burgomaster's boy, and climbed back up without a word. That was the last thing he did."
+ },
+ "narrator/ee7f8462ef477aa1": {
+  "chars": 60,
+  "direction": "[quiet, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Whatever happened to him, it happened to everything but him."
  },
  "narrator/eea8f456e1e86daa": {
   "chars": 190,
