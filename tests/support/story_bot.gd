@@ -182,6 +182,8 @@ func _drop_fight_start() -> void:
 ## party is back in the fight.
 func _reload_fight(n: int) -> bool:
 	var story := st()
+	# A fight that isn't in the location's data (a random encounter on the road) is added again after the load.
+	var spec := LocationFights.spec_for(view(), str(GameState.combat_snapshot.get("encounter", "")))
 	root.queue_free()
 	await frames(1)
 	if SaveSystem.load_slot(FIGHT_SAVE) != OK:
@@ -192,11 +194,15 @@ func _reload_fight(n: int) -> bool:
 	test.add_child(root)
 	if "root" in test:
 		test.set("root", root)
-	for i in 30:
+	for i in 40:
 		await frames(1)
 		if view() != null and view().in_combat and view().combat_view != null:
 			await frames(2)
 			return true
+		if i == 10 and view() != null and not view().in_combat and not spec.is_empty() \
+				and LocationFights.spec_for(view(), str(spec["id"])).is_empty():
+			(view().loc.get_or_add("encounters", []) as Array).append(spec.duplicate(true))
+			view().resume_encounter(GameState.combat_snapshot)
 	return false
 
 
