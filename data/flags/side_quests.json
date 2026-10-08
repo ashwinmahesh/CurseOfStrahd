@@ -810,6 +810,26 @@
       "id": "corvina_name_known",
       "type": "bool",
       "summary": "Mordenkainen read the letters and gave the party his apprentice's name, Corvina, to say to her in the castle (The Mage's Lost Pages)."
+    },
+    {
+      "id": "costin_met",
+      "type": "bool",
+      "summary": "The party met Costin at the edge of the mists on the Old Svalich Road (The Last Traveller)."
+    },
+    {
+      "id": "costin_seen",
+      "type": "bool",
+      "summary": "The party looked properly at Costin's rags (The Last Traveller)."
+    },
+    {
+      "id": "costin_wolves_beaten",
+      "type": "bool",
+      "summary": "The count's wolves that came out of the fog for Costin are dead (The Last Traveller)."
+    },
+    {
+      "id": "costin_home",
+      "type": "bool",
+      "summary": "Costin is home in the village with his children, Petra and Mihail (The Last Traveller)."
     }
   ]
 }

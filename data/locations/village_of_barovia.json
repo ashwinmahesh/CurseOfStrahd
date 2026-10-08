@@ -1319,6 +1319,30 @@
       "dialogue": "village_of_barovia/the_burgomasters_hound:lupu",
       "when": "not guest:lupu",
       "facing": "north"
+    },
+    {
+      "npc": "costin",
+      "cell": [
+        19,
+        12
+      ],
+      "dialogue": "into_the_mists/the_last_traveller:well",
+      "when": "quest.the_last_traveller == home",
+      "facing": "south"
+    },
+    {
+      "npc": "costin",
+      "cell": [
+        19,
+        12
+      ],
+      "dialogue": "into_the_mists/the_last_traveller:well",
+      "when": "flag.costin_home and not weather == storm",
+      "hours": [
+        8,
+        18
+      ],
+      "facing": "south"
     }
   ],
   "encounters": [

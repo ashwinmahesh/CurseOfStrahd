@@ -19,6 +19,22 @@ are in the vault note "Side Quests - Audit and Plan". This page is what's built.
 Rarity follows docs/story/found_magic_items.md (uncommon up to level 4, rare from 5, no commons). Gold is set against
 what the region's other quests pay. Each quest's items are listed there as Gifts or Tips.
 
+## Into the Mists (level 1)
+
+### The Last Traveller (`the_last_traveller`, narrative/into_the_mists/the_last_traveller.dialogue; batch 5)
+
+The first side quest a new party can find: on the Old Svalich Road, at the edge of the fog the party came out of,
+Costin (new NPC) sits on a stone in rags many years old and beautiful grey boots, asking what day it is. He went into
+the fog last night to fetch a doctor over the mountains for his wife's fever, and it turned him round. **Twist:** his
+night was fifty years; his little ones, Petra and Mihail, are Goodwife Petra who carries the water and Old Mihail the
+sexton (Insight DC 11 sees the moss in his seams). **Escalation:** the moment he sets off, the count's wolves come out
+of the fog for him.
+
+- Fight `costin_wolves` on the road: level 1 five wolves, 250 XP (the autopilot wins 3 of 4 and loses two or three
+  party members); level 2 six; level 3 a dire wolf leader and four wolves.
+- At the well, Petra knows her father. He gives the party his wife's grandmother's boots, which walk on air a little:
+  Winged Boots (uncommon). Old Mihail fills in the grave he dug fifty years ago.
+
 ## The Village of Barovia (level 3)
 
 Talkers: Vasile and Petre (townsfolk:gossip, the village's three rumours), Arik (arik:rumors, one word at a time),
@@ -566,4 +582,6 @@ doesn't speak). Batch 4, the
 crossroads by day: the_tinkers_wagon.dialogue in full (new speaker Iosif the Tinker; also Zora's three new lines). Batch 4,
 Vallaki: the_ravens_ransom.dialogue in full (new speakers Bray and the Fowler; also Urwin and Danika). Batch 4,
 Krezk: the_packs_runt.dialogue in full (new speakers Little Petru and the Grandsire; also the Krezk watchman). Batch 4,
-Mount Baratok: the_mages_lost_pages.dialogue in full (Mordenkainen; the letters are Narrator).
+Mount Baratok: the_mages_lost_pages.dialogue in full (Mordenkainen; the letters are Narrator). Batch 5,
+Into the Mists: the_last_traveller.dialogue in full (new speaker Costin; also Goodwife Petra) and Old Mihail's new
+gravedigger line in the village townsfolk.dialogue.
