@@ -462,6 +462,7 @@ func _alert(e: Encounter) -> Array[Combatant]:
 	var silvain := TestCombat.hero(e, "silvain_aster", Vector2i(3, 4))
 	var foe := TestCombat.punching_bag(e, Vector2i(10, 3))
 	TestCombat.start_with(e, rogue)
+	rogue.reaction_rules["initiative_swap"] = "ask"
 	for pair: Array in [[rogue, 20], [foe, 10], [ilse, 5], [silvain, 15]]:
 		(pair[0] as Combatant).initiative = int(pair[1])
 	return [rogue, ilse, silvain, foe]
@@ -502,9 +503,9 @@ func test_alert_without_a_pick_trades_with_the_ally_furthest_behind() -> void:
 func test_alert_isnt_asked_with_its_rule_off_or_nobody_to_trade_with() -> void:
 	var e := TestCombat.open_field(3)
 	var party := _alert(e)
-	party[0].reaction_rules["initiative_swap"] = "never"
-	assert_false(_offer_initiative(e).is_paused(), "the rule is Off")
 	party[0].reaction_rules.erase("initiative_swap")
+	assert_false(_offer_initiative(e).is_paused(), "Off until the class tab turns it on: it would come up nearly every fight")
+	party[0].reaction_rules["initiative_swap"] = "ask"
 	party[1].creature.add_condition(&"incapacitated", "test")
 	assert_false(_offer_initiative(e).is_paused(), "Ilse is Incapacitated and Silvain acts before the foe too")
 
