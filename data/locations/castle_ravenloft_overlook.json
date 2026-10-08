@@ -22,7 +22,8 @@
     ],
     "theme": "shrine_yard",
     "light": "dim",
-    "outdoors": true
+    "outdoors": true,
+    "drop_ft": 1000
   },
   "areas": [
     {

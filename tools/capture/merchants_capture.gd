@@ -36,8 +36,8 @@ func _wants(what: String) -> bool:
 	return _only.is_empty() or what in _only
 
 
-func _shoot(tool: Node, path: String) -> void:
-	await tool.call("wait_frames", 8)
+func _shoot(tool: Node, path: String, frames: int = 8) -> void:
+	await tool.call("wait_frames", frames)
 	tool.call("_shot", path)
 
 
@@ -75,3 +75,22 @@ func capture_shots(tool: Node, out: String) -> void:
 		await _shoot(tool, "%s_shop_hostile.png" % out)
 		_close("ShopScreen")
 		st.attitudes.erase("bildrath")
+	if _wants("services"):
+		# St. Andral's: Ratatoille fell two days ago, Godrick is hurt and poisoned.
+		var fallen := st.party[3]
+		fallen.hp = 0
+		fallen.dead = true
+		Services.note_deaths(st, st.total_minutes())
+		st.day += 2   # without the clock's fade, which would cover the shot
+		st.party[0].hp = 9
+		st.party[0].add_effect(Effect.new("Poisoned", &"monster", "capture_poison").with_condition(&"poisoned"))
+		root.call("open_services", "father_lucian")
+		await _shoot(tool, "%s_services_temple.png" % out)
+		var sv := root.find_children("*", "ServicesScreen", false, false).back() as ServicesScreen
+		sv.call("buy", "raise_dead")
+		await _shoot(tool, "%s_services_raised.png" % out, 150)   # after "An hour later" fades
+		_close("ServicesScreen")
+	if _wants("rooms"):
+		root.call("open_services", "urwin_martikov")
+		await _shoot(tool, "%s_services_rooms.png" % out)
+		_close("ServicesScreen")

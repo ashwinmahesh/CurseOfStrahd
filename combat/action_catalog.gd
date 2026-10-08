@@ -153,6 +153,10 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 	out.append(stab)
 	if e.grapples.has(c.id):
 		out.append(_entry("escape", COMMON, "Escape Grapple", "Athletics or Acrobatics", "action", why, "none"))
+	# Whoever it holds: it drags them as it moves (1 extra foot per foot), or lets go for free.
+	for held in e.grappling.held_by(c):
+		out.append(_entry("let_go:" + held.id, COMMON, "Let go of %s" % held.name(), "free", "free", e._turn_check(c), "none",
+			"End the grapple. While you hold it, %s comes along when you move%s." % [held.name(), ", each foot costing 1 extra" if e.grappling.drag_extra(c) > 0 else ""]))
 	if c.creature.has_condition(&"prone"):
 		var stand_why := e._turn_check(c)
 		if stand_why == "" and c.movement_left < c.speed() / 2:
@@ -162,6 +166,8 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 		out.append(_entry("drop_prone", COMMON, "Drop Prone", "free", "movement", e._turn_check(c), "none"))
 	out.append(_entry("influence", COMMON, "Influence", "talk", "action", "Wolves and the walking dead can't be reasoned with", "none"))
 	out.append(_entry("utilize", COMMON, "Utilize", "use an object", "action", "Nothing to use here (Healer's Kit is on Items)", "none"))
+	# Things lying within reach (GroundItems): picking each up.
+	out.append_array(e.ground.entries(c))
 
 
 ## FeatureActions' entries as hotbar actions.
@@ -942,6 +948,10 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 			return e.items.perform(c, action, targets, point, dir, slot, opts)
 		"consumable":
 			return e.use_item(c, id.substr(5), t if t != null else c)
+		"pickup":
+			return e.pick_up(c, id.substr(7))
+		"let_go":
+			return e.release_grapple(c, e.get_c(id.get_slice(":", 1)))
 	match id:
 		"grapple":
 			return e.unarmed_special(c, t, "grapple")
@@ -1133,6 +1143,8 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 		lines.append("Disadvantage: %s" % s)
 	if int(sit["cover"]) > 0:
 		lines.append("%s (+%d AC) from %s" % [CombatGrid.COVER_NAMES[int(sit["cover"])], int(sit["cover_bonus"]), sit["cover_by"]])
+	if int(sit.get("height_bonus", 0)) != 0:
+		lines.append(EncounterAttacks.height_line(int(sit.get("height_bonus", 0))))
 	lines.append("AC %d%s" % [int(hc["ac"]), _known_defenses(t)])
 	for fxm: Effect in t.creature.effects:
 		if fxm.data.has("mark_by"):
@@ -1281,6 +1293,8 @@ func square_actions(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Arr
 		if why == "Occupied":
 			why = "You can move through %s's space but not stop in it" % o.name() if o != null and c.allied_with(o) else "Someone is there"
 		out.append({"id": "move", "label": "Move here (%d ft)" % int(mp["cost"]) if bool(mp["ok"]) else "Move here", "enabled": bool(mp["ok"]), "why": why})
+	# Picking up what lies there (GroundItems).
+	out.append_array(e.ground.square_entries(c, cell))
 	if o == null or o == c:
 		return out
 	var seen := {}
@@ -1311,8 +1325,10 @@ func move_preview(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Dicti
 		return out
 	path = CombatGrid.path_to(r, cell)
 	var cost := int(info["cost"])
-	if c.creature.has_condition(&"prone") and c.movement_left < c.speed() / 2:
-		cost *= 2
+	# What each foot costs on top (crawling, dragging a grappled creature); move_reach already added standing up.
+	var standing := c.creature.has_condition(&"prone") and c.movement_left >= c.speed() / 2
+	var per_foot := e.movement.extra_cost(c, standing)
+	cost = (cost - c.speed() / 2) * per_foot + c.speed() / 2 if standing else cost * per_foot
 	out["ok"] = true
 	out["cost"] = cost
 	out["left"] = c.movement_left - cost
@@ -1331,5 +1347,11 @@ func move_preview(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Dicti
 		if e.grid.has_flag(cc, CombatGrid.DIFFICULT):
 			warnings.append("Difficult Terrain costs double")
 			break
+	for i in range(1, path.size()):
+		if absi(e.grid.height(path[i]) - e.grid.height(path[i - 1])) > CombatGrid.FEET and (e.move_mode(c) & CombatGrid.MOVE_FLY) == 0:
+			warnings.append("Climbing costs 1 extra foot per foot")
+			break
+	for held in e.grappling.held_by(c):
+		warnings.append("Drags %s along%s" % [held.name(), " (1 extra foot per foot)" if e.grappling.drag_extra(c) > 0 else ""])
 	out["warnings"] = warnings
 	return out
