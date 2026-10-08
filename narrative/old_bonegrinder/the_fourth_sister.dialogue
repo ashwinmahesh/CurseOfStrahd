@@ -1,0 +1,227 @@
+# The Fourth Sister (side quest, docs/story/side_quests.md): Mouse, the girl who sells plain pastries on the miller's
+# lane once Morgantha is dead, is the coven's fourth, raised to become a hag on her thirteenth birthday. She is also
+# the Sarnovs' first baby, Zamfira, who "died" in her cradle twelve years ago the night Morgantha sat up with her.
+# Morgantha's own mother, Granny Ash, comes out of the deep wood to finish the change (the boss,
+# data/monsters/granny_ash.json). Reached from Vasile and Petre (townsfolk:gossip), Mouse on the lane by day and at
+# her hut by night, and Goodwife Sarnov in the village. Every line here is unvoiced for now.
+
+# --- Mouse on the lane, by day ---
+
+~ mouse
+if not flag.mouse_met
+set mouse_met
+if not quest.the_fourth_sister or quest.the_fourth_sister == rumored
+quest the_fourth_sister met
+endif
+Narrator: A thin girl of twelve or so sits on an upturned bucket by the lane with a basket of pastries on her knees. She has flour on her nose, and her sleeves pulled down over her hands.
+Mouse: Pastries! Plain ones. A copper. Mother said I mustn't put the dreams in till I'm a sister.
+if flag.bonegrinder_fate == "bella"
+Mouse: Bella says I'm her problem now. Bella doesn't like problems. She says I can sell plain ones till Granny comes.
+endif
+interject tag:curious: Till Granny comes?
+else
+Mouse: Pastries! Still plain. Still a copper.
+endif
+-> menu
+
+~ menu
+* Who are you? -> who
+* Heard anything interesting? -> granny
+* [if not flag.mouse_iron_seen] [Insight DC 13] (Watch her while she talks.) -> iron | iron_missed
+* (Buy a plain pastry.) -> pastry
+* [if flag.mouse_name_known and not flag.mouse_named] Show us your left wrist. -> wrist
+* Goodbye. -> END
+
+~ who
+Mouse: Mouse. I'm Mother's fourth. Mother Morgantha. You can't be a sister till you're thirteen, so I live in the hut down by the millrace, out from under feet.
+if flag.morgantha_slain
+Mouse [sad]: Mother's gone. Somebody killed her. (She looks at you, and you can't tell how much she knows.) Granny says that's how it goes with hags. Somebody always does, in the end.
+endif
+Mouse: A lady comes up from the village every morning and buys one. I always give her the best in the basket. I don't know why I do that.
+-> menu
+
+~ granny
+Mouse: Interesting? Granny's coming! For my birthday. I'm thirteen the next dark night, and Granny comes out of the deep wood to make me a sister, and then I'll never be hungry again.
+Mouse: Granny's Mother's mother. She's very old and very big, and her teeth are iron. Mine are coming in. Look.
+Narrator: She pulls her lip down with one finger. Behind her milk teeth the gums are dark, and something hard and grey is pushing through.
+set mouse_iron_seen
+if not quest.the_fourth_sister or quest.the_fourth_sister < granny
+quest the_fourth_sister granny
+endif
+interject tag:kind: She's a child. Whatever they've made of her, she's still a child.
+-> menu
+
+~ iron
+set mouse_iron_seen
+Narrator: When her sleeve rides up you see why she keeps it down: her nails are grey at the roots, the colour of an old kettle. And every time a cart comes up from the village she looks down the lane, as if somebody's late.
+-> menu
+
+~ iron_missed
+Narrator: A thin, cheerful girl with flour on her nose. That's all you see.
+-> menu
+
+~ pastry
+gold -1
+Narrator: It's very good. It tastes of butter and apple and nothing else at all, which in Barovia is a luxury.
+-> menu
+
+~ wrist
+Narrator: She looks at you for a long moment, then pushes her left sleeve up. On the inside of her wrist is a mark like a thumbprint of jam.
+Narrator: You tell her about the woman who buys a pastry every morning, and a baby who died in its cradle the night the kind old pastry woman sat up with it, and the baby's name.
+Mouse: Zamfira.
+Narrator: She says it again, slowly, as if she's tasting it.
+Mouse: It's very long. Mouse is shorter. (She pulls the sleeve back down.) It tastes like soup, though. The good kind.
+set mouse_named
+interject tag:kind: You don't have to choose today.
+Mouse: Granny comes the next dark night. So I sort of do.
+-> menu
+
+# --- Goodwife Sarnov, on her step in the village ---
+
+~ mother
+if flag.mouse_fate == "home"
+Goodwife Sarnov: Three. I've three again. I don't deserve one of them. I'm going to try to, every day, till I do.
+-> END
+endif
+if not flag.sarnov_mother_met
+set sarnov_mother_met
+Narrator: A worn woman sits on the step of a narrow house with a bowl of beans in her lap, not shelling them.
+if flag.bonegrinder_children_fate == "home"
+Narrator: Inside, a small boy is singing, badly, and a girl's voice tells him to stop. Ilka and Toma, home.
+Goodwife Sarnov: You're the ones who brought them down. Ilka told me what I did. She said somebody told her the truth. I'm glad somebody did.
+else
+Goodwife Sarnov: I know who you are. You found my children. They're in Vallaki, at the inn. It's better. I'd sell them again; that's what I am.
+endif
+endif
+* [if flag.mouse_met and not flag.mouse_name_known] There's a girl selling pastries on the miller's lane. -> the_girl
+* Goodbye. -> END
+
+~ the_girl
+Goodwife Sarnov: The plain ones. Yes. I go up every morning. I stopped buying the other kind, after. But I go up for a plain one, and she gives me the best in the basket. I don't know why.
+Goodwife Sarnov [sad]: She has my husband's eyes. That's a foolish thing to say. He had the ordinary kind.
+* Tell us about the baby. -> baby
+* Goodbye. -> END
+
+~ baby
+set mouse_name_known
+Goodwife Sarnov: My first. A girl. Zamfira, for my mother. She was eight days old and fretful, and the old pastry woman came down from the mill to sit up with her so I could sleep. Everybody said Morgantha was kind.
+Goodwife Sarnov: In the morning she was cold in the cradle, already wrapped. Morgantha said not to look; it was a mercy not to look. So I didn't. We buried the bundle by the church.
+Goodwife Sarnov: She had a mark on her left wrist like a thumbprint of jam. I used to kiss it.
+interject tag:blunt: She never looked in the bundle.
+Narrator: Goodwife Sarnov looks up at you. The bowl tips off her lap, and she doesn't pick it up.
+Goodwife Sarnov: Why do you want to know about her wrist?
+* (Tell her.) -> told
+* (Not yet. Not until it's safe.) -> not_told
+
+~ told
+set sarnov_told
+Narrator: You tell her. She doesn't cry. She stands up, and the beans go everywhere, and she starts for the lane, and you have to tell her the rest: Granny, and the next dark night.
+Goodwife Sarnov: Then you bring her home. Whatever she is by then. Whatever they've made of her. Bring her home.
+-> END
+
+~ not_told
+Goodwife Sarnov: Nothing. You'll say nothing. (She picks up one bean, and then another.) I've had twelve years of nothing. I can manage a few more days.
+-> END
+
+# --- Mouse's hut, at night (her birthday) ---
+
+~ hut_prop
+Narrator: A hut of wattle and old millstones by the millrace, with a door the size of a child, and a step swept very clean.
+-> END
+
+~ birthday
+Narrator: Mouse has put on a clean apron and combed her hair with her fingers, and there's a candle in a hollowed turnip on the step of the hut. It's her birthday.
+Mouse: You came! Granny's coming. I can smell her. She smells like the inside of a kettle.
+Narrator: Across the lane, something big moves in the trees and doesn't bother to be quiet about it.
+Granny Ash: Mousie. Mousie, dear. Granny's come to make you a sister.
+Narrator: She comes out of the trees: twice a man's height, blue-grey and bent, with iron teeth and iron nails and a basket on her arm the size of a cradle. Grey dogs as big as ponies come with her.
+if flag.mouse_named
+Mouse: (She steps behind you.) My name's Zamfira. My mother kissed my wrist. I'm not a mouse.
+Granny Ash: Names! Names are for eating, dearie. Granny ate that one twelve years ago, and it was delicious.
+else
+Mouse: (She takes a step toward the trees, and looks back at you.) It only hurts a bit, Granny says. Then I'll never be hungry again.
+endif
+-> standoff
+
+~ standoff
+* [if not flag.mouse_named and not flag.mouse_called] [Persuasion DC 15] Mouse. You don't have to go to her. Stay with us. -> stays | goes
+* (Hear what Granny's offering.) -> offer
+* (Stand between them.) -> fight
+
+~ stays
+set mouse_called
+set mouse_stayed
+Narrator: Mouse stops in the middle of the lane. Then she comes back, slowly, and stands behind you, and holds on to your belt with both hands.
+Granny Ash: Oh, Mousie.
+-> standoff
+
+~ goes
+set mouse_called
+Narrator: She goes. Granny puts one huge grey hand on her head, gently, the way you'd hold a cup, and Mouse stands very still under it.
+-> standoff
+
+~ offer
+Granny Ash: Clever ones. Granny likes clever ones. Here's Granny's offer. The girl comes with Granny, and you have this. (She shakes the basket, and it clinks.) And Granny goes back to the deep wood and never comes to this valley again. Never ever. Granny's word.
+* (Take the basket and let her go.) -> given
+* No. -> fight
+
+~ given
+set mouse_fate = "given"
+quest the_fourth_sister given
+gold +300
+Narrator: Granny takes the girl by the hand. Mouse looks back once, over her shoulder, and doesn't say anything, and then the trees close behind them both.
+approve godrick_pendlebrook -3 liriel_dawnsong -3 thistle -3 wren_featherfoot -2 ratatoille -2 kip_smudgewick -1: You sold a child to a hag
+-> END
+
+~ fight
+Granny Ash: (She sighs, like a kettle coming off the boil.) Heroes. Mousie, dear, stand back by the hut. Granny's going to be a while.
+combat granny_ash
+
+# --- After Granny ---
+
+~ dawn
+Narrator: Mouse comes out from behind the hut when it's quiet, and walks all the way round Granny at a distance, the way you'd walk round a dead horse.
+if flag.mouse_named
+-> home
+endif
+-> keepers
+
+~ home
+set mouse_fate = "home"
+quest the_fourth_sister home
+Mouse: Zamfira. I've been practising. Can I go and see her now? The lady who buys the plain ones?
+if flag.sarnov_told
+Narrator: She doesn't have to go far. Goodwife Sarnov is already coming up the lane at a run, in the dark, with her shawl falling off.
+else
+Narrator: You walk her down to the village in the grey before morning. Goodwife Sarnov is on her step, waiting for nothing, the way she has waited every morning for twelve years.
+endif
+Narrator: Nobody says anything clever. The girl holds out her left wrist, and her mother kisses it.
+if flag.bonegrinder_children_fate == "home"
+Narrator: Ilka comes to the door and looks at the girl for a long time, and says, "You've got Toma's ears." Toma says he has his own ears.
+endif
+-> basket
+
+~ keepers
+set mouse_fate = "keepers"
+quest the_fourth_sister keepers
+Narrator: When she smiles at you, her teeth are grey. Not all the way; partway. Granny didn't finish, and nobody else knows how.
+Narrator: A raven lands on the roof of the hut, shakes itself, and is an old woman in a black shawl.
+Ilinca: I'll take her. The Keepers have had odder members than a girl with iron teeth. I delivered her, you know. I should have looked in that bundle.
+if flag.mouse_stayed
+Mouse: I chose. Didn't I? I chose you.
+endif
+-> basket
+
+~ basket
+Narrator: Granny's basket lies in the lane where she dropped it. Under a cloth that smells of kettle there is a sack of old coins and a robe folded small, sewn all over with eyes. Some of them blink.
+gold +300
+give robe_of_eyes
+approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +2 wren_featherfoot +1 ratatoille +1: You stood between a child and Granny Ash
+-> END
+
+# --- Zamfira at home (the village, beside her mother) ---
+
+~ zamfira
+Narrator: Zamfira sits on the step beside her mother, shelling beans much faster than her mother does, with grey-rooted nails.
+Mouse: I make the pastries for Bildrath's now. Plain ones. People buy them. Nobody's dreamed anything yet.
+-> END

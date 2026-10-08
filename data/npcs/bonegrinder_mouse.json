@@ -1,0 +1,17 @@
+{
+  "id": "bonegrinder_mouse",
+  "name": "Mouse",
+  "title": "Morgantha's Fourth",
+  "summary": "A thin girl of twelve with a basket of plain pastries on the miller's lane, raised in a hut below the mill by Morgantha, who called her the fourth daughter and kept her apart for her thirteenth birthday. She is the Sarnovs' first child, Zamfira, taken from her cradle as a baby.",
+  "portrait": "ilka_sarnov",
+  "sprite": "ilka_sarnov",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "child",
+    "old_bonegrinder"
+  ],
+  "region": "old_bonegrinder",
+  "pronouns": "she/her"
+}
