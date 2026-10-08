@@ -187,16 +187,9 @@ func buy(id: String) -> void:
 		return
 
 
-## A price in coins: "2 gp", "5 sp", "1 gp 5 sp".
+## A price in whole gold pieces (Trade.whole_gp): "2 gp", "0 gp".
 static func coins(gp: float) -> String:
-	var cp := roundi(gp * 100.0)
-	var parts: Array[String] = []
-	for c: Array in [[100, "gp"], [10, "sp"], [1, "cp"]]:
-		var n := cp / int(c[0])
-		cp -= n * int(c[0])
-		if n > 0:
-			parts.append("%d %s" % [n, c[1]])
-	return " ".join(parts) if not parts.is_empty() else "0 gp"
+	return "%d gp" % int(Trade.whole_gp(gp))
 
 
 func _close() -> void:

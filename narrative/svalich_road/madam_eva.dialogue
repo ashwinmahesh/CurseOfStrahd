@@ -472,7 +472,7 @@ if flag.eva_reading_paid == "forced"
 Madam Eva: Now get out of my tent.
 -> END
 endif
-Madam Eva: Go. Stanimir will feed you if you let him. And when you meet the devil on the road, as you will, be polite. It confuses him.
+Madam Eva: Go. Stanimir will feed you if you let him. And when you meet the devil on the road, as you will, be polite. He forgives rudeness least of all, and he forgives nothing.
 -> END
 
 # --- Later visits ---

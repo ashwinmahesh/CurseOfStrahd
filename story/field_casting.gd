@@ -284,11 +284,22 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 			return {"ok": false, "text": "No spell slots left"}
 	if not payment.is_empty():
 		caster.spend_resource(str(payment["resource"]), int(payment["cost"]))
+	var used := "" if omit_material else caster.use_component(data)
+	var res := _take_effect(st, caster, spell_id, data, as_ritual, payment.is_empty())
+	if used != "":
+		res["text"] = str(res["text"]).trim_suffix(".") + ", using up %s." % used
+	return res
+
+
+## What casting an exploring spell does once it's paid for (a slot, a Ritual's time, a feature's use, or a Spell
+## Scroll): the casting time passes, the spell is recorded for its duration, and Find Familiar's familiar is with the
+## caster. `own_time` false: a feature casting it with its Magic action, which takes a minute whatever the spell says.
+static func _take_effect(st: StoryState, caster: Character, spell_id: String, data: Dictionary, as_ritual: bool, own_time: bool) -> Dictionary:
 	var minutes := 10 if as_ritual else 1
 	# A casting time of minutes or hours takes that long (a Ritual adds its 10 minutes): Find Familiar's hour. A
 	# feature that casts the spell with its Magic action keeps the minute.
 	var ct := data.get("casting_time", {}) as Dictionary
-	if payment.is_empty() and str(ct.get("unit", "")) in ["minute", "hour"]:
+	if own_time and str(ct.get("unit", "")) in ["minute", "hour"]:
 		minutes = int(ct.get("amount", 1)) * (60 if str(ct["unit"]) == "hour" else 1) + (10 if as_ritual else 0)
 	var dur := data.get("duration", {}) as Dictionary
 	var lasting := 0
@@ -300,7 +311,6 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 		"days":
 			lasting = int(dur.get("amount", 1)) * 24 * 60
 	st.advance_minutes(minutes)
-	var used := "" if omit_material else caster.use_component(data)
 	# A longer Ritual for one spell (Emerald Enclave Fledgling: Speak with Animals for 8 hours).
 	if as_ritual:
 		for m in caster.modifiers_for(&"ritual_duration"):
@@ -311,5 +321,16 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 	# Find Familiar: the familiar is with the caster from now on (it joins fights until it's lost or dismissed).
 	if spell_id == "find_familiar":
 		caster.familiar = "here"
-	return {"ok": true, "effect": spell_id, "text": "%s casts %s%s%s." % [caster.name.get_slice(" ", 0), data["name"],
-		" as a Ritual" if as_ritual else "", ", using up %s" % used if used != "" else ""]}
+	return {"ok": true, "effect": spell_id, "text": "%s casts %s%s." % [caster.name.get_slice(" ", 0), data["name"],
+		" as a Ritual" if as_ritual else ""]}
+
+
+## Casts an exploring spell from a Spell Scroll (story/field_items.gd): no slot and no preparation, in the spell's own
+## casting time. The scroll's own rules (the class list, the check for a level above the reader's) come first, there.
+static func cast_from_scroll(st: StoryState, caster: Character, spell_id: String) -> Dictionary:
+	var data := Compendium.shared().spell_data(spell_id)
+	if data.is_empty():
+		return {"ok": false, "text": "Unknown spell"}
+	var r := _take_effect(st, caster, spell_id, data, false, true)
+	r["text"] = "%s reads the scroll aloud and casts %s." % [caster.name.get_slice(" ", 0), data["name"]]
+	return r

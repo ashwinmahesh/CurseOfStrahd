@@ -35,6 +35,14 @@ Ilie the Lamplighter: Evening. Every lamp lit by the last bell, or I answer for 
 if guest:ireena
 Ilie the Lamplighter: Your friend should keep her hood up. The dark has eyes on this town, and some of them are at the windows.
 endif
+* Who are the lamps really for? -> lamplighter_ana
+* Good evening. -> END
+
+~ lamplighter_ana
+Ilie the Lamplighter: For my girl, Ana. Last winter she slept with her window open a crack, for the stove smoke. Three mornings later the watch found her at the lake gate, sitting against the post, smiling, white as milk.
+Ilie the Lamplighter [sad]: The Baron called it a chill. The next day there were black roses on our step, and a card in a very fine hand: "With sympathy, from her neighbour across the lake."
+interject tag:blunt: He sent flowers. To her father.
+Ilie the Lamplighter: He always does. I light every lamp on this street now. It doesn't keep him out. It only means I see whose window he's looking at.
 -> END
 
 # --- Evenings at the Blue Water Inn (their `hours`), and the stocks (data/schedule/vallaki.json) ---

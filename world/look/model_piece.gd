@@ -209,7 +209,9 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 		var depth := float((info.get("size", [1, 1, 0.3]) as Array)[2])
 		holder.set_meta("against_wall", true)
 		if back != Vector2i.ZERO:
-			model.position = Vector3(0, 0, -0.5 + GAP)
+			model.position = Vector3(0, 0, -0.5 + GAP + board.wall_inset)
+			if board.wall_inset > 0.0 and depth + board.wall_inset > 1.0 - GAP:
+				model.scale.z *= (1.0 - GAP - board.wall_inset) / depth   # stood off a tent's canvas, still in its square
 			board.used_faces["%d,%d,%d,%d" % [cell.x + back.x, cell.y + back.y, -back.x, -back.y]] = true   # no portrait behind it
 		else:
 			model.position = Vector3(0, 0, -depth / 2.0)
@@ -376,6 +378,7 @@ static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall:
 	if str(info.get("mount", "wall")) != "wall":
 		# A piece modelled round its middle (a door leaf hung as a picture) stands just in front of the face.
 		model.position = Vector3(0, 0, depth / 2.0)
+	model.position.z += board.wall_inset   # off a tent's canvas (ArenaBoard.wall_inset)
 	_extras(model, info)
 	return holder
 
