@@ -269,12 +269,12 @@ func _finish_concentration(ctx: Dictionary) -> void:
 	casting._finish_concentration(ctx)
 
 
-func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult) -> void:
-	casting._resolve(ctx, tgt, cells, r)
+func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult, pausable: bool = false) -> CombatResult:
+	return casting._resolve(ctx, tgt, cells, r, pausable)
 
 
-func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult) -> void:
-	casting._generic(ctx, tgt, cells, r)
+func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult, pausable: bool = false) -> CombatResult:
+	return casting._generic(ctx, tgt, cells, r, pausable)
 
 
 # --- What can be cast (SpellOptions) --------------------------------------------------------------
@@ -335,6 +335,10 @@ func begin_reaction_spell(c: Combatant, spell_id: String) -> bool:
 
 func after_failed_d20(roller: Combatant, test: D20Test) -> void:
 	reaction_spells.after_failed_d20(roller, test)
+
+
+func d20_offers(roller: Combatant, test: D20Test, out: Array) -> void:
+	reaction_spells.d20_offers(roller, test, out)
 
 
 func answer_incoming_roll(c: Combatant, test: D20Test, spell_id: String) -> bool:
@@ -441,8 +445,8 @@ func deal_spell_damage(ctx: Dictionary, target: Combatant, parts: Array, critica
 
 # --- Saving throws (SpellSaves) -------------------------------------------------------------------
 
-func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) -> void:
-	saves._save_spell(ctx, victims, r)
+func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult, pausable: bool = false) -> CombatResult:
+	return saves._save_spell(ctx, victims, r, pausable)
 
 
 static func _conditions_in(entries: Array, choice: String) -> Array[String]:
@@ -621,8 +625,8 @@ func _turn_start_effects(c: Combatant) -> void:
 	turn_hooks._turn_start_effects(c)
 
 
-func turn_end(c: Combatant) -> void:
-	turn_hooks.turn_end(c)
+func turn_end(c: Combatant) -> CombatResult:
+	return turn_hooks.turn_end(c)
 
 
 func on_damaged(source: Combatant, target: Combatant, amount: int, parts: Array) -> void:

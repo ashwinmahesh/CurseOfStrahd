@@ -19,6 +19,10 @@ walk cell's width.
 
 Writes art/sprites/<id>/attack.png (rows = directions, cols = frames) and attack.tres (attack_<dir>, not looping,
 metadata hit_frame, and casts: the attack is a spell gesture, so the game also plays it when the character casts). The game merges attack.tres into walk.tres's animations (DirectionalSprite.frames_for).
+
+HD, as render_walk.py: with an HD turnaround the standing frame is cut from it, cells are 768 px rendered at twice the
+size, frames are trimmed and packed and the mirror-image directions left out (--grid for the earlier grid). The
+wind-up and strike poses come from the same 1K strips, drawn at about the size they're shown.
 """
 import argparse
 import json
@@ -64,7 +68,9 @@ DEPTH = {"front": 0.03, "back": -0.03}
 def args():
     p = argparse.ArgumentParser()
     p.add_argument("--id", required=True)
-    p.add_argument("--cell", type=int, default=384)
+    p.add_argument("--cell", type=int, help="walk cell height (default 768 with an HD turnaround, else 384)")
+    p.add_argument("--ss", type=int, help="render at this many times the size and area-average down (2 with HD)")
+    p.add_argument("--grid", action="store_true", help="the full row-per-direction grid instead of the packed atlas")
     p.add_argument("--check", action="store_true")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
@@ -78,7 +84,9 @@ def main():
     a = args()
     s = anim.spec(a.id)
     flags = anim.walk_flags(a.id)
-    sheet = anim.clean_source(cutout.load_rgba(cutout.ROOT / flags["turnaround"]))
+    # HD (as render_walk.py): the turnaround redrawn at twice the size when there is one, 768 px cells, packed frames.
+    a.cell, a.ss = anim.hd_cell(flags["turnaround_hd"], a.cell, a.ss)
+    sheet = anim.clean_source(cutout.load_rgba(cutout.ROOT / (flags["turnaround_hd"] or flags["turnaround"])))
     figures = cutout.find_figures(sheet, flags["views"] or rw.view_count(sheet))
     names, dir_view = (rw.VIEWS5, rw.DIR_VIEW5) if len(figures) == 5 else (rw.VIEWS3, rw.DIR_VIEW3)
     if flags["side_faces"] == "left":
@@ -114,7 +122,7 @@ def main():
     warnings += [f"{v}: {w}" for v, ws in problems.items() for w in ws]
     # Even sizes keep the walk cell's centre on a pixel boundary.
     ch, cw = 2 * int(round(a.cell * MAX_TALL / 2)), 2 * int(round(a.cell * MAX_WIDE / 2))
-    scene = cutout.reset_scene(cw, ch)
+    scene = cutout.reset_scene(cw * a.ss, ch * a.ss)
     cam = cutout.ortho_camera(scene, (0, -10, rw.FIGURE_HEIGHT * 0.52), (math.radians(90), 0, 0),
                               rw.FIGURE_HEIGHT * 1.12 * ch / a.cell)
     cam.data.sensor_fit = "VERTICAL"
@@ -139,7 +147,10 @@ def main():
     tmp = Path(tempfile.mkdtemp(prefix=f"attack_{a.id}_"))
     frames = []
     clipped = set()
-    for d in rw.DIRECTIONS:
+    twins = {} if a.grid else anim.mirror_twins(dir_view)
+    directions = [d for d in rw.DIRECTIONS if d not in twins]
+    margin = int(round(MARGIN * a.cell / 384))
+    for d in directions:
         view, mirrored, turn = dir_view[d]
         for name, (root, planes) in views.items():
             for p in planes.values():
@@ -157,26 +168,35 @@ def main():
             path = tmp / f"{d}_{i}.png"
             scene.render.filepath = str(path)
             bpy.ops.render.render(write_still=True)
-            frame = cutout.load_rgba(path)
+            frame = cutout.downsample(cutout.load_rgba(path), a.ss)
             edges = anim.edge_touch(frame)
             if edges:
                 clipped.add(f"{d} ({edges})")
-            frames.append(frame)
-    frames, (cw, ch) = anim.crop_even(frames, a.cell, MIN_WIDE, MARGIN)
+            frames.append(frame if a.grid else anim.trim(frame, margin))
     out_dir = cutout.ROOT / "art" / "sprites" / a.id
     out_dir.mkdir(parents=True, exist_ok=True)
-    sheet_out = anim.finish_sheet(cutout.pack_grid(frames, len(FRAMES)), flags["saturate"])
-    cutout.save_rgba(sheet_out, out_dir / "attack.png")
-    anim.write_frames_tres(out_dir / "attack.tres", f"res://art/sprites/{a.id}/attack.png", (cw, ch),
-                           rw.DIRECTIONS, [f[4] for f in FRAMES], "attack", FPS, False,
-                           {"hit_frame": HIT_FRAME, "casts": bool(s.get("casts", False))})
+    meta = {"hit_frame": HIT_FRAME, "casts": bool(s.get("casts", False))}
+    if a.grid:
+        frames, (cw, ch) = anim.crop_even(frames, a.cell, MIN_WIDE, margin)
+        sheet_out = anim.finish_sheet(cutout.pack_grid(frames, len(FRAMES)), flags["saturate"])
+        cutout.save_rgba(sheet_out, out_dir / "attack.png")
+        anim.write_frames_tres(out_dir / "attack.tres", f"res://art/sprites/{a.id}/attack.png", (cw, ch),
+                               rw.DIRECTIONS, [f[4] for f in FRAMES], "attack", FPS, False, meta)
+    else:
+        sheet_out, (cw, ch), rects = anim.pack_sheet(frames, (cw, ch), a.cell, MIN_WIDE, margin, flags["saturate"])
+        cutout.save_rgba(sheet_out, out_dir / "attack.png")
+        if twins:
+            meta["mirrored"] = twins
+        anim.write_sheet_tres(out_dir / "attack.tres", f"res://art/sprites/{a.id}/attack.png", (cw, ch), directions,
+                              len(FRAMES), [("attack", list(range(len(FRAMES))), [f[4] for f in FRAMES], FPS, False)],
+                              meta, rects)
     shutil.rmtree(tmp, ignore_errors=True)
     if clipped:
         warnings.append(f"frames reach the cell edge in {', '.join(sorted(clipped))}")
     for w in warnings:
         print(f"WARNING {a.id}: {w}")
-    print(f"attack sheet: {out_dir / 'attack.png'} ({len(names)} views, {len(rw.DIRECTIONS)} directions x "
-          f"{len(FRAMES)} frames, {cw}x{ch} cells)")
+    print(f"attack sheet: {out_dir / 'attack.png'} ({len(names)} views, {len(directions)} directions x "
+          f"{len(FRAMES)} frames, {cw}x{ch} cells, {sheet_out.shape[1]}x{sheet_out.shape[0]} sheet)")
 
 
 if __name__ == "__main__":
