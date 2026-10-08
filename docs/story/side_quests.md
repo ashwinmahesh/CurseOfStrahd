@@ -61,6 +61,21 @@ load, talk Grigore into burning his winter (Persuasion DC 12 or 10 gp) and burn 
 - Rewards: Grigore's 40 gp (or refuse it); Bildrath's hush money, the Wraps of Unarmed Power, +1 (uncommon) and his 10%
   discount if the party hasn't haggled it.
 
+### Six Feet (`six_feet`, narrative/village_of_barovia/six_feet.dialogue)
+
+Old Mihail digs a grave every week before anybody dies, because a woman's voice comes up the village well at night
+and says a name; this week it's his sister, Goodwife Petra. Arik's third rumour or Mihail himself starts it. **Twist:**
+Petra tells the story (Zinaida went down the well forty years ago rather than marry the man the castle sent), and the
+voice was never predicting deaths: she has been asking for a grave, and every grave Mihail dug was hers. **Escalation:**
+bring her bones up from the bottom (prop `well_lip`, Athletics DC 13, by day or night) and she rises behind you. Her
+name talks her down; so may Persuasion DC 14; otherwise she screams and fights (`well_bride`). Then lay her in the
+grave Mihail dug for Petra (prop `sixfeet_grave`); he cuts her name on the back of the board.
+
+- Fight `well_bride` (the well): level 3 Zinaida (banshee, her Deathly Wail drops anyone at 25 HP or less) and 2
+  shadows (1,300 XP, High-ish with the wail); level 4 adds 2 specters; below, Zinaida at 40 HP and a shadow.
+- Rewards: 60 gp in her silver coins and the charm she wore so the castle couldn't find her, an Amulet of Proof against
+  Detection and Location (uncommon).
+
 ## The Tser Pool camp (level 4)
 
 Talker: Zora ("Heard anything interesting?" is her old road question renamed). Radu's Nicu line now starts
@@ -154,6 +169,8 @@ grey_mare.dialogue in full (Radu, Luminita), and tser_camp.dialogue's two added 
 cat_in_the_window.dialogue and black_roses.dialogue in full (new speakers Stella Wachter, Ana and Pyotr Petrov; also
 Ilie and Father Lucian), the new lines in gate.dialogue (news: Stella), martikovs.dialogue (rumors: the roses),
 arasek.dialogue (roads: the windmill) and the polite_caller.dialogue sunrise line rewritten as a break in the mist. Krezk:
-lighter_than_it_should_be.dialogue in full (new speaker Sorin; also Anna, Dmitri, Ilya, Kasha and Old Pavel), the new
+six_feet.dialogue in full (new speaker Zinaida;
+also Old Mihail and Goodwife Petra), the new lines in townsfolk.dialogue (goodwife after the burial, gravedigger after it)
+and arik.dialogue (rumors: "Mihail. Digs early."). lighter_than_it_should_be.dialogue in full (new speaker Sorin; also Anna, Dmitri, Ilya, Kasha and Old Pavel), the new
 lines in krezk gate.dialogue (news: Ilya, the stolen children, the toys), kasha.dialogue (graves: the toys) and, on
 sq-krezk, black_roses.dialogue's lines naming the third girl (Daria, renamed from Sorina).

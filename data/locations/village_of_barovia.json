@@ -887,6 +887,30 @@
       "model": "log",
       "dialogue": "village_of_barovia/cut_after_noon:pile",
       "when": "quest.cut_after_noon and quest.cut_after_noon != rumored and not flag.late_wood_burned and not flag.woodpile_beaten"
+    },
+    {
+      "id": "well_lip",
+      "cell": [
+        21,
+        15
+      ],
+      "kind": "examine",
+      "label": "Names scratched on the well's lip",
+      "model": "well_stone",
+      "dialogue": "village_of_barovia/six_feet:well",
+      "when": "quest.six_feet and quest.six_feet != rumored"
+    },
+    {
+      "id": "sixfeet_grave",
+      "cell": [
+        38,
+        7
+      ],
+      "kind": "examine",
+      "label": "The grave Mihail dug this week",
+      "model": "grave_open",
+      "dialogue": "village_of_barovia/six_feet:grave",
+      "when": "quest.six_feet and quest.six_feet != rumored and not flag.bride_buried"
     }
   ],
   "lights": [
@@ -1944,6 +1968,110 @@
         "id": "cut_after_noon",
         "stage": "burned"
       }
+    },
+    {
+      "id": "well_bride",
+      "trigger": "dialogue",
+      "when": "level >= 4",
+      "text": "The water in the well climbs the shaft on its own. She comes up out of it in her wedding veil, screaming, and the shadows in the square crawl toward her as if she's called them in to supper.",
+      "monsters": [
+        {
+          "monster": "banshee",
+          "cell": [
+            21,
+            13
+          ],
+          "name": "Zinaida"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            17,
+            15
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            23,
+            12
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            18,
+            12
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            24,
+            15
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "bride_beaten"
+    },
+    {
+      "id": "well_bride",
+      "trigger": "dialogue",
+      "when": "level >= 3",
+      "text": "The water in the well climbs the shaft on its own. She comes up out of it in her wedding veil, screaming, and the shadows in the square crawl toward her as if she's called them in to supper.",
+      "monsters": [
+        {
+          "monster": "banshee",
+          "cell": [
+            21,
+            13
+          ],
+          "name": "Zinaida"
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            18,
+            12
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            24,
+            15
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "bride_beaten"
+    },
+    {
+      "id": "well_bride",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "The water in the well climbs the shaft on its own. She comes up out of it in her wedding veil, screaming, and the shadows in the square crawl toward her as if she's called them in to supper.",
+      "monsters": [
+        {
+          "monster": "banshee",
+          "cell": [
+            21,
+            13
+          ],
+          "name": "Zinaida",
+          "hp": 40
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            18,
+            12
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "bride_beaten"
     }
   ],
   "narration": {

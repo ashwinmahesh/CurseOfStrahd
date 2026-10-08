@@ -64,6 +64,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Mad Mary | Necklace of Prayer Beads (rare) | Gift: when Gertruda comes home (late in the game) |
 | ✅ | Teodor's empty grave, the churchyard | Shield, +1 (uncommon) | Tip: Teodor tells you at dawn (The Polite Caller, docs/story/side_quests.md) |
 | ✅ | Bildrath | Wraps of Unarmed Power, +1 (uncommon) | Gift: his hush money after the walking firewood (Cut After Noon) |
+| ✅ | Old Mihail | Amulet of Proof against Detection and Location (uncommon) | Gift: the bride's charm, once she's buried (Six Feet) |
 
 ## Svalich Road (level 4)
 

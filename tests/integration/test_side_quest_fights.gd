@@ -123,3 +123,10 @@ func test_the_abbey_comes_for_sorin_at_the_pool() -> void:
 	await _fight(v, "sorin_pursuers", ["A Bride Before Vasilka", "Belview Brute"])
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("lighter_than_it_should_be"), "pursued")
+
+
+func test_the_bride_rises_out_of_the_well() -> void:
+	var v := await _boot("village_of_barovia", 16, 3, ["bride_bones_raised"])
+	await _fight(v, "well_bride", ["Zinaida"])
+	await _end(v)
+	assert_true(bool(GameState.story.get_flag("bride_beaten", false)))
