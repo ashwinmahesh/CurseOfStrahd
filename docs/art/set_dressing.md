@@ -203,6 +203,24 @@ the names the 3D pieces take in `models3d`): `throne`, `gargoyle` (the roof guar
 doors, one pair across the two squares of its doorway (catalog `double_doors`; inside the keep that doorway stays
 open), a hatch is a hatch in the floor, and the lift cage's exit draws nothing (the cage beside it is the way down).
 
+## Livelier outdoor places (lane 28, 2026-10-08)
+
+"The Tser pool encampment looks really boring... more tents, carts, things to interact, more interesting scenery,
+things to find, more people to talk to", and "the great tent... should be wayyy bigger based on its description".
+
+- **Facing and span.** A prop's `facing` (north, south, east, west or between) turns its piece to look that way, and
+  `span` ([across, down] squares, its own cell the north-west one) stands a piece bigger than its square over the middle
+  of its block of low cover. Tser Pool's wagons ring the fire facing it, each over two squares by two.
+- **Big pieces clear what's under them.** A building-sized 3D piece hides the trees and the board's own furniture on
+  every square its footprint covers, however big (it was two squares each way at most).
+- **Fences run along their rails** (catalog `runs_along`): a pen's east and west rails go up the map. A place's
+  `low_cover.<place>` makes its '=' squares fences (Tser Pool's horse pen).
+- **On the map.** Catalog `map_marks` draws building-sized pieces on the minimap over their squares: the great tent a
+  striped round of its canvas colours, tents smaller rounds, wagons in their paint.
+- **Madam Eva's great tent** is its own model (`great_tent`, blender/models_3d.py): patched canvas on two poles, seven
+  squares by five, painted with suns, moons and eyes, glowing at its flap. Its 2D fallback is a render of the model.
+  The camp's stew pot (`stewpot`) is a black pot of stew on a tripod over coals, not the witch's cauldron.
+
 ## Not right yet
 
 - A long piece (a bar, a pew) drawn on each square of a run reads as a row of pieces rather than one long one.

@@ -60,7 +60,10 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   and home: a person may have an entry in each place. The people re-check who stands where whenever the hour turns
   while the party is in the location (LocationClock).
 - **Prop kinds:** `examine` (Narrator line `examine:<id>`), `book` (`codex` entry), `search` (a hidden thing found
-  with `search_dc`), `lever` (sets `flag`), `decor` (no interaction). Optional `when`, `dialogue`, `item`, `flag`.
+  with `search_dc`), `lever` (sets `flag`), `decor` (no interaction). Optional `when`, `dialogue`, `item`, `flag`, and
+  `facing` (north, south, east, west or between: which way the piece's front looks, instead of away from the wall
+  beside it or south) and `span` ([across, down] squares, its own cell the north-west one: a wagon stands over the middle
+  of its two-by-two block of low cover).
   A search prop's `skill` is the check that finds it: `perception` (default) or `investigation` (a compartment you
   work out; Search rolls it as well when one is within 15 ft). A search prop with an `item` is a hidden find
   (docs/story/found_magic_items.md): each character gets one look, and one who misses it can't find it later; the

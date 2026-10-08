@@ -101,8 +101,8 @@ tsolenka_sergeant: Travellers. You've passed. The winch is in the gatehouse. Not
 # ---------------------------------------------------------------- The watchman at his post
 
 ~ watchman
-Narrator: The grey soldier at his post doesn't look at you. His eyes are on the door to the road, exactly where they have been for centuries.
-tsolenka_watchman: Talk to the sergeant.
+Narrator [away]: The grey soldier at his post doesn't look at you. His eyes are on the door to the road, exactly where they have been for centuries.
+tsolenka_watchman [away]: Talk to the sergeant.
 -> END
 
 # ---------------------------------------------------------------- The gate winch (prop in the gatehouse)

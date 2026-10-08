@@ -23,6 +23,14 @@ static func shop(npc_id: String) -> Dictionary:
 
 # --- Prices ---------------------------------------------------------------------------------------
 
+## Every price is a whole number of gold pieces (owner, 2026-10-08): rounded up after the attitude and the haggle, so
+## anything worth less than 1 gp costs, or fetches, 1 gp. Free things stay free. Shops, the trader, temples and inns
+## all price through here.
+static func whole_gp(gp: float) -> float:
+	var v := snappedf(gp, 0.01)
+	return 0.0 if v <= 0.0 else ceilf(v)
+
+
 ## What the party pays for something whose shop price (markup or set price included) is `base`.
 static func buy_price(st: StoryState, npc_id: String, base: float) -> float:
 	var f := float((ATTITUDE.get(st.attitude(npc_id), [1.0, 1.0]) as Array)[0])
@@ -32,7 +40,7 @@ static func buy_price(st: StoryState, npc_id: String, base: float) -> float:
 		var p := pf as Dictionary
 		if base >= float(p.get("min_price", 0)) and StoryConditions.check(str(p["if"]), st):
 			f *= float(p.get("buy", 1.0))
-	return snappedf(base * f, 0.01)
+	return whole_gp(base * f)
 
 
 ## What the merchant pays for something they'd give `base` for at an indifferent counter.
@@ -40,7 +48,7 @@ static func sell_price(st: StoryState, npc_id: String, base: float) -> float:
 	var f := float((ATTITUDE.get(st.attitude(npc_id), [1.0, 1.0]) as Array)[1])
 	if haggle_state(st, npc_id) == "won":
 		f *= HAGGLED[1]
-	return snappedf(base * f, 0.01)
+	return whole_gp(base * f)
 
 
 ## The terms at this counter in a few words, for the shop screen: "You pay ×0.9 · they pay ×1.1".

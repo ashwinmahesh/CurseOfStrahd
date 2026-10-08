@@ -1,0 +1,18 @@
+{
+  "id": "tser_dorina",
+  "name": "Old Dorina",
+  "title": "Cook of the Tser Pool Camp",
+  "summary": "The camp's cook, older than anyone will say, who has kept the same pot of plum stew going over the coals for longer than most of the camp has been alive and feeds anyone who sits down, friend or stranger.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "voice": "docs/voice/tser_dorina.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "she/her"
+}

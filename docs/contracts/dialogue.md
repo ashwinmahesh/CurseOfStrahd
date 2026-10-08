@@ -22,6 +22,9 @@ Speaker: Text                      A line. Speaker = an npc id from data/npcs (s
                                    "Narrator" (art/portraits/narrator.png), or "Player" (the character currently
                                    speaking for the party). A roll shows the portrait of whoever makes it.
 Speaker [mood]: Text               Picks a portrait expression (neutral, smile, angry, afraid, sad, sly).
+Speaker [away]: Text               The speaker turns their back on the other side for this line (busts,
+                                   docs/ui/busts.md); with a mood: [sad, away]. On a Narrator line [away] turns
+                                   the one being spoken to and [away:party] the party's speaker, until they speak.
 * Option text -> node              A player option. Options collected after the last line form one menu.
 * [Persuasion DC 14] Text -> ok_node | fail_node
                                    A skill check option. It rolls in the open with the speaking character's

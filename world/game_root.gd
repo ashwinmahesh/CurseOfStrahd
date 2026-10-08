@@ -444,7 +444,7 @@ func _dialogue_ended(combat: String) -> void:
 		show_ending()
 		return
 	hud.visible = true
-	if view.guest_members.size() != st.guests.size():
+	if view.guest_members.filter(func(g: Combatant) -> bool: return not g.has_meta("familiar_of")).size() != st.guests.size():
 		view.place_guests()
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	view.refresh_npcs()
