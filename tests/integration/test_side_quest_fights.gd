@@ -266,3 +266,14 @@ func test_the_tenant_comes_up_the_little_stair_and_lupu_stands_with_the_party() 
 		root.queue_free()
 		root = null
 		await _frames(2)
+
+
+func test_the_tinkers_wagon_stands_up_off_its_wheels() -> void:
+	for level: int in [4, 5, 6]:
+		var v := await _boot("svalich_crossroads", 12, level)
+		await _fight(v, "tinkers_wagon", ["The Tinker's Wagon", "A Trinket"])
+		await _end(v)
+		assert_true(bool(GameState.story.get_flag("wagon_slain", false)))
+		root.queue_free()
+		root = null
+		await _frames(2)

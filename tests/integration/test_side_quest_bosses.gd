@@ -111,7 +111,10 @@ func test_the_penitent_at_level_10() -> void:
 	await _series("tsolenka_pass", 20, 10, "the_penitent", [1, 2, 3, 4])
 
 
-
 ## Lupu fights beside the party, and the study door is open: the fight starts at the bricks.
 func test_the_tenant_at_level_2() -> void:
 	await _series("burgomaster_mansion", 22, 2, "hound_tenant", [1, 2, 3, 4], [], ["lupu"], ["study_door"])
+
+
+func test_the_tinkers_wagon_at_level_5() -> void:
+	await _series("svalich_crossroads", 12, 5, "tinkers_wagon", [1, 2, 3, 4])
