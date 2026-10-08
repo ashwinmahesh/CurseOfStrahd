@@ -400,6 +400,27 @@ func test_a_lair_save_waits_for_the_choice() -> void:
 	assert_eq(e.current(), boss, "then the first turn begins")
 
 
+func test_a_trample_waits_for_the_choice() -> void:
+	var e := TestCombat.open_field(3)
+	var hero := _hero(e, Vector2i(5, 3), true)
+	var dc := hero.creature.save_bonus(&"dex").total() + 12
+	var el := _foe(e, "elephant", Vector2i(2, 2), func(d: Dictionary) -> void:
+		for a: Variant in d["bonus_actions"]:
+			if str((a as Dictionary)["id"]) == "trample":
+				((a as Dictionary)["save"] as Dictionary)["dc"] = dc)
+	TestCombat.start_with(e, el)
+	hero.creature.add_condition(&"prone", "test")
+	var hp := hero.creature.hp
+	TestCombat.next_d20(e, 2)
+	var r := e.monster_actions.bonus_action(el, "trample")
+	assert_true(r.is_paused(), "asked: %s" % _asked(e))
+	assert_eq(_asked(e), "heroic_inspiration")
+	assert_eq(hero.creature.hp, hp, "the trample waits for the answer")
+	assert_false(el.bonus_available, "the Bonus Action is used")
+	e.answer_reaction(false)
+	assert_true(hero.creature.hp < hp, "declined: the trample lands")
+
+
 func test_branches_of_the_tree_is_asked_as_a_foe_starts_its_turn() -> void:
 	var e := TestCombat.open_field(3)
 	var barb := e.add(TestChars.custom("barbarian", "human", 6, {"barbarian_subclass": ["path_of_the_world_tree"]}), &"party", Vector2i(2, 3))

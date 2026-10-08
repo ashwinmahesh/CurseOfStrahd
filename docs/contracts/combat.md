@@ -98,7 +98,7 @@ steps of its own, as attacks do): the offers are asked one by one and `after(tes
 These pause today: spells' saves (`SpellSaves._save_spell(..., pausable)` from `cast`, `cast_with_numbers`,
 `cast_free`, item spells, readied spells and reaction spells; `_resolve`/`_generic` return a CombatResult and take
 `pausable`), monsters' save actions (`MonsterActions.save_action`, which returns `r` and takes `pausable`, true by
-default), the riders on a monster's hit and their saves (`apply_riders(..., pausable)`), Topple, repeated saves at the
+default; Trample and other save Bonus Actions return the paused result from `bonus_action`), the riders on a monster's hit and their saves (`apply_riders(..., pausable)`), Topple, repeated saves at the
 end of a turn (`end_turn` carries on with `Encounter.then`), Death Saving Throws (`death_save(c, pausable)`) and attack
 rolls, plus Sleep, Command, Polymorph, Banishment and Resilient Sphere (`SpellSpecials.resolve(..., pausable)` and
 `_resist_then`), monsters' auras (`MonsterActions.turn_start`), the areas a creature starts or ends its turn in
