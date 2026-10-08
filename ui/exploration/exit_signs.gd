@@ -84,7 +84,7 @@ func _draw() -> void:
 		var sq := _ground_poly(cam, [Vector2(cell.x, cell.y), Vector2(cell.x + 1, cell.y), Vector2(cell.x + 1, cell.y + 1),
 			Vector2(cell.x, cell.y + 1)], y)
 		if sq.size() == 4:
-			if not stood.has(cell):
+			if not stood.has(cell) and not Geometry2D.triangulate_polygon(sq).is_empty():
 				draw_colored_polygon(sq, Color(glow, (0.2 + 0.18 * pulse) if open else 0.16))
 			var ring := sq.duplicate()
 			ring.append(sq[0])
@@ -118,7 +118,8 @@ func _chevron(cam: Camera3D, centre: Vector2, dir: Vector2, y: float, colour: Co
 	var back := centre - dir * 0.2
 	var thick := dir * 0.14
 	var pts := _ground_poly(cam, [back + side, tip, back - side, back - side - thick, tip - thick, back + side - thick], y)
-	if pts.size() == 6:
+	# On sloped ground each point takes its own height, so the projected shape can fold over itself: skip that frame.
+	if pts.size() == 6 and not Geometry2D.triangulate_polygon(pts).is_empty():
 		draw_colored_polygon(pts, colour)
 
 

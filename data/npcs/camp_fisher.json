@@ -1,0 +1,17 @@
+{
+  "id": "camp_fisher",
+  "name": "Stoica",
+  "title": "Fisherman of the Lake Camp",
+  "summary": "A heavy, patient Vistani fisherman mending his nets on the shore of Lake Zarovich, who has fished it all his life and caught nothing he'd talk about.",
+  "portrait": "tough",
+  "sprite": "tough",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "vallaki_vistani_camp"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

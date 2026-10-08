@@ -1,0 +1,17 @@
+{
+  "id": "tser_marin",
+  "name": "Old Marin",
+  "title": "Hunter of the Tser Pool Camp",
+  "summary": "The camp's old hunter, skinning the deer he brought in at dawn and grumbling that the woods have fewer every year.",
+  "portrait": "scout",
+  "sprite": "scout",
+  "attitude": "indifferent",
+  "monster": "scout",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "tser_pool"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him"
+}

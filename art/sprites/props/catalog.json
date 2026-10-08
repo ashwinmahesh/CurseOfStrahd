@@ -343,7 +343,7 @@
       "woodpile"
     ],
     "manor": [
-      "table",
+      "table_books",
       "armchair",
       "table_chairs",
       "settee",
@@ -384,13 +384,14 @@
       "table_chairs",
       "armchair",
       "book_shelf",
-      "sideboard"
+      "sideboard",
+      "table_books"
     ],
     "house": [
-      "table",
+      "table_meal",
       "bed",
       "barrel",
-      "table"
+      "table_meal"
     ],
     "attic": [
       "crate",
@@ -400,19 +401,21 @@
       "barrel"
     ],
     "tavern": [
-      "table_chairs",
+      "table_meal",
       "table_chairs",
       "barrel",
-      "table"
+      "table_chairs",
+      "table_meal"
     ],
     "inn": [
+      "table_meal",
       "table_chairs",
-      "table",
       "barrel",
-      "table_chairs"
+      "table_chairs",
+      "table_meal"
     ],
     "shop": [
-      "crate",
+      "crate_stack",
       "barrel",
       "shop_counter",
       "crate"
@@ -1229,7 +1232,14 @@
     "umbrella_stand": 5.0,
     "broom": 6.0,
     "rope_coils": 2.5,
-    "sewing_basket": 1.0
+    "sewing_basket": 1.0,
+    "crate_stack": 3.3,
+    "sack_pile": 2.0,
+    "table_meal": 3.0,
+    "table_books": 2.9,
+    "bench": 2.1,
+    "floor_books": 0.6,
+    "bucket_brush": 1.6
   },
   "big_width": 1.6,
   "models3d": {
@@ -1583,7 +1593,17 @@
       "rope_coils": "rope_coils",
       "oil_shelf": "oil_shelf",
       "sewing_basket": "sewing_basket",
-      "valley_map": "valley_map"
+      "valley_map": "valley_map",
+      "crate_stack": "crate_stack",
+      "sack_pile": "sack_pile",
+      "table_meal": "table_meal",
+      "table_books": "table_books",
+      "bench": "bench",
+      "lantern_bracket": "lantern_bracket",
+      "floor_books": "floor_books",
+      "bucket_brush": "bucket_brush",
+      "shelf_goods": "shelf_goods",
+      "bench_back": "bench"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",
@@ -3844,9 +3864,7 @@
     }
   },
   "furnish": {
-    "about": "Lived-in rooms (world/look/furnish.gd, docs/art/interiors.md): what a room of its kind holds, besides the things its location names. rooms: [[words in the area's name or id], {wall: [art], floor: [art]}], first match; themes: the board theme's set where no room matches. A wall piece goes on about one free wall face in wall_every, a floor piece on about one free square along a wall in floor_every, never two side by side; never beside doors, exits, spawns or people, nor on a wall square holding the location's own things.",
-    "wall_every": 2,
-    "floor_every": 3,
+    "about": "Lived-in rooms (world/look/furnish.gd, docs/art/interiors.md): what a room of its kind holds, besides the things its location names. rooms: [[words in the area's name, else its id], {wall, floor, centre: [art], rug: surface}], first match; themes: the board theme's set where no room matches. A wall piece goes on about `wall_fill` of the free wall faces, a floor piece on about `floor_fill` of the free squares along a wall (never in a passage one square wide), a low thing on about `centre_fill` of the open floor (never two side by side), a rug under the middle of a room whose rule names one; never beside doors, exits, spawns, lights or people, nor on a wall square holding the location's own things. Pieces in `lit` (lanterns, candles) give a little light, at most `lights_per_room` in a room.",
     "rooms": [
       [
         [
@@ -3856,12 +3874,19 @@
         ],
         {
           "wall": [
-            "tack"
+            "tack",
+            "lantern_bracket"
           ],
           "floor": [
             "hay_bale",
-            "sack",
-            "barrel"
+            "sack_pile",
+            "barrel",
+            "bucket_brush"
+          ],
+          "centre": [
+            "hay_bale",
+            "bucket_brush",
+            "sack_pile"
           ]
         }
       ],
@@ -3875,15 +3900,24 @@
         {
           "wall": [
             "drying_herbs",
+            "pot_rack",
+            "shelf_goods",
             "jars",
             "shelves_wall"
           ],
           "floor": [
-            "sack",
+            "sack_pile",
             "basket",
             "barrel",
             "tub_wooden",
-            "crate"
+            "crate_stack",
+            "bucket_brush"
+          ],
+          "centre": [
+            "table_meal",
+            "basket",
+            "sack_pile",
+            "bucket_brush"
           ]
         }
       ],
@@ -3900,13 +3934,20 @@
         {
           "wall": [
             "jars",
+            "shelf_goods",
             "shelves_wall"
           ],
           "floor": [
             "barrel",
-            "crate",
+            "crate_stack",
+            "sack_pile",
             "sack",
-            "basket"
+            "cheeses"
+          ],
+          "centre": [
+            "crate_stack",
+            "sack_pile",
+            "barrel"
           ]
         }
       ],
@@ -3923,13 +3964,21 @@
           "wall": [
             "painting",
             "painting_row",
-            "family_portrait"
+            "family_portrait",
+            "lantern_bracket"
           ],
           "floor": [
             "book_stack",
+            "table_books",
             "candelabra",
             "book_stack"
-          ]
+          ],
+          "centre": [
+            "table_books",
+            "floor_books",
+            "armchair"
+          ],
+          "rug": "interior/carpet"
         }
       ],
       [
@@ -3940,13 +3989,20 @@
         ],
         {
           "wall": [
-            "painting"
+            "painting",
+            "drawings"
           ],
           "floor": [
             "doll",
             "rocking_horse",
             "toy_chest"
-          ]
+          ],
+          "centre": [
+            "doll",
+            "rocking_horse",
+            "floor_books"
+          ],
+          "rug": "interior/rug"
         }
       ],
       [
@@ -3961,12 +4017,19 @@
         {
           "wall": [
             "robe_pegs",
-            "uniforms"
+            "uniforms",
+            "lantern_bracket"
           ],
           "floor": [
             "footlocker",
             "chest",
-            "sack"
+            "sack",
+            "bench"
+          ],
+          "centre": [
+            "bench",
+            "bucket_brush",
+            "footlocker"
           ]
         }
       ],
@@ -3984,14 +4047,22 @@
             "painting",
             "mirror",
             "portrait_couple",
-            "robe_pegs"
+            "robe_pegs",
+            "shawl_line"
           ],
           "floor": [
             "trunk",
             "chest",
             "candle_cluster",
-            "footlocker"
-          ]
+            "footlocker",
+            "bench"
+          ],
+          "centre": [
+            "floor_books",
+            "basket",
+            "bench"
+          ],
+          "rug": "interior/rug"
         }
       ],
       [
@@ -4007,13 +4078,21 @@
             "painting",
             "portrait_couple",
             "mirror",
-            "family_portrait"
+            "family_portrait",
+            "lantern_bracket"
           ],
           "floor": [
             "candelabra",
             "book_stack",
-            "armchair"
-          ]
+            "armchair",
+            "table_books"
+          ],
+          "centre": [
+            "table_books",
+            "armchair",
+            "floor_books"
+          ],
+          "rug": "interior/carpet"
         }
       ],
       [
@@ -4026,11 +4105,18 @@
           "wall": [
             "painting",
             "tapestry",
-            "painting_row"
+            "painting_row",
+            "lantern_bracket"
           ],
           "floor": [
             "candelabra",
-            "wine_tray"
+            "wine_tray",
+            "bench"
+          ],
+          "rug": "interior/carpet",
+          "centre": [
+            "table_meal",
+            "bench"
           ]
         }
       ],
@@ -4046,12 +4132,21 @@
             "stag_head",
             "painting",
             "notice_papers",
-            "robe_pegs"
+            "robe_pegs",
+            "lantern_bracket",
+            "shelf_goods"
           ],
           "floor": [
             "barrel",
-            "crate",
-            "sack"
+            "crate_stack",
+            "sack_pile",
+            "bench",
+            "table_meal"
+          ],
+          "centre": [
+            "table_meal",
+            "bench",
+            "table_chairs"
           ]
         }
       ],
@@ -4066,13 +4161,21 @@
         {
           "wall": [
             "shelves_wall",
-            "robe_pegs"
+            "robe_pegs",
+            "shelf_goods",
+            "lantern_bracket"
           ],
           "floor": [
-            "crate",
+            "crate_stack",
             "woodpile",
             "barrel",
-            "sack"
+            "sack_pile",
+            "bucket_brush"
+          ],
+          "centre": [
+            "crate_stack",
+            "sack_pile",
+            "bucket_brush"
           ]
         }
       ],
@@ -4085,13 +4188,22 @@
         {
           "wall": [
             "shelves_wall",
-            "jars"
+            "jars",
+            "shelf_goods",
+            "oil_shelf"
           ],
           "floor": [
-            "crate",
+            "crate_stack",
             "barrel",
-            "sack",
-            "basket"
+            "sack_pile",
+            "basket",
+            "rope_coils"
+          ],
+          "centre": [
+            "crate_stack",
+            "barrel",
+            "basket",
+            "sack_pile"
           ]
         }
       ],
@@ -4106,9 +4218,14 @@
           "chancel"
         ],
         {
+          "wall": [
+            "lantern_bracket"
+          ],
           "floor": [
-            "candle_cluster",
-            "candelabra"
+            "bench",
+            "candelabra",
+            "floor_books",
+            "bench"
           ]
         }
       ],
@@ -4129,7 +4246,12 @@
           "floor": [
             "bones",
             "candle_cluster",
-            "bones"
+            "bones",
+            "bone_scatter"
+          ],
+          "centre": [
+            "bone_scatter",
+            "candle_cluster"
           ]
         }
       ],
@@ -4150,7 +4272,12 @@
           "floor": [
             "bones",
             "sack",
-            "bones"
+            "bucket_brush",
+            "bone_scatter"
+          ],
+          "centre": [
+            "bone_scatter",
+            "bucket_brush"
           ]
         }
       ],
@@ -4165,10 +4292,17 @@
             "cobwebs"
           ],
           "floor": [
-            "crate",
+            "crate_stack",
             "trunk",
-            "sack",
-            "sheeted_furniture"
+            "sack_pile",
+            "sheeted_furniture",
+            "crate"
+          ],
+          "centre": [
+            "crate_stack",
+            "sheeted_furniture",
+            "trunk",
+            "floor_books"
           ]
         }
       ],
@@ -4186,11 +4320,18 @@
             "painting",
             "painting_row",
             "family_portrait",
-            "tapestry"
+            "tapestry",
+            "lantern_bracket"
           ],
           "floor": [
             "candelabra",
-            "chair_high"
+            "chair_high",
+            "bench"
+          ],
+          "rug": "interior/carpet",
+          "centre": [
+            "candelabra",
+            "armchair"
           ]
         }
       ],
@@ -4205,7 +4346,12 @@
             "mirror"
           ],
           "floor": [
-            "candelabra"
+            "candelabra",
+            "armchair"
+          ],
+          "rug": "interior/rug",
+          "centre": [
+            "armchair"
           ]
         }
       ]
@@ -4216,72 +4362,117 @@
           "painting",
           "family_portrait",
           "portrait_couple",
-          "mirror"
+          "mirror",
+          "lantern_bracket"
         ],
         "floor": [
           "candelabra",
           "chair_high",
-          "chest"
+          "chest",
+          "book_stack"
+        ],
+        "centre": [
+          "table_books",
+          "armchair",
+          "floor_books"
         ]
       },
       "townhouse": {
         "wall": [
           "painting",
           "portrait_couple",
-          "mirror"
+          "mirror",
+          "shelf_goods"
         ],
         "floor": [
           "chest",
           "candle_cluster",
-          "basket"
+          "basket",
+          "bench"
+        ],
+        "centre": [
+          "basket",
+          "bench"
         ]
       },
       "house": {
         "wall": [
           "drying_herbs",
           "robe_pegs",
-          "shelves_wall"
+          "shelves_wall",
+          "shelf_goods",
+          "pot_rack"
         ],
         "floor": [
-          "sack",
+          "sack_pile",
           "basket",
           "barrel",
-          "chest"
+          "chest",
+          "bench",
+          "bucket_brush"
+        ],
+        "centre": [
+          "table_meal",
+          "basket",
+          "bucket_brush",
+          "sack_pile"
         ]
       },
       "tavern": {
         "wall": [
           "stag_head",
           "painting",
-          "robe_pegs"
+          "robe_pegs",
+          "lantern_bracket",
+          "shelf_goods"
         ],
         "floor": [
           "barrel",
-          "crate",
-          "sack"
+          "crate_stack",
+          "sack_pile",
+          "bench"
+        ],
+        "centre": [
+          "table_meal",
+          "bench"
         ]
       },
       "inn": {
         "wall": [
           "stag_head",
           "painting",
-          "robe_pegs"
+          "robe_pegs",
+          "lantern_bracket",
+          "shelf_goods"
         ],
         "floor": [
           "barrel",
-          "crate",
-          "sack"
+          "crate_stack",
+          "sack_pile",
+          "bench"
+        ],
+        "centre": [
+          "table_meal",
+          "bench"
         ]
       },
       "shop": {
         "wall": [
           "shelves_wall",
-          "jars"
+          "jars",
+          "shelf_goods",
+          "oil_shelf"
         ],
         "floor": [
-          "crate",
+          "crate_stack",
           "barrel",
-          "sack",
+          "sack_pile",
+          "basket",
+          "rope_coils"
+        ],
+        "centre": [
+          "crate_stack",
+          "barrel",
           "basket"
         ]
       },
@@ -4290,19 +4481,38 @@
           "cobwebs"
         ],
         "floor": [
-          "crate",
+          "crate_stack",
           "trunk",
-          "sack",
+          "sack_pile",
           "sheeted_furniture"
+        ],
+        "centre": [
+          "crate_stack",
+          "trunk",
+          "floor_books"
         ]
       },
       "church": {
+        "wall": [
+          "lantern_bracket"
+        ],
         "floor": [
           "candle_cluster",
-          "candelabra"
+          "candelabra",
+          "bench"
         ]
       }
-    }
+    },
+    "wall_fill": 0.9,
+    "floor_fill": 0.8,
+    "centre_fill": 0.28,
+    "lights_per_room": 2,
+    "lit": [
+      "lantern_bracket",
+      "candle_cluster",
+      "lantern_stand",
+      "candelabra"
+    ]
   },
   "theme_rooms": {
     "about": "Room styles for one board theme, checked before the general `rooms`: a farmhouse's bedrooms are plaster and planks, not a manor's carpet and wallpaper.",
@@ -4370,7 +4580,8 @@
           "workbench",
           "barrel",
           "tub_wooden",
-          "sack"
+          "sack_pile",
+          "table_meal"
         ],
         "run": [
           "workbench"
@@ -4389,8 +4600,8 @@
       {
         "single": [
           "barrel",
-          "crate",
-          "sack"
+          "crate_stack",
+          "sack_pile"
         ],
         "run": [
           "crate"
@@ -4413,6 +4624,7 @@
         "single": [
           "desk",
           "armchair",
+          "table_books",
           "letters_table"
         ],
         "run": [
@@ -4486,6 +4698,7 @@
       ],
       {
         "single": [
+          "table_meal",
           "table_chairs",
           "sideboard"
         ],
@@ -4503,6 +4716,7 @@
       ],
       {
         "single": [
+          "table_meal",
           "table_chairs",
           "barrel",
           "table_chairs"

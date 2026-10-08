@@ -1,0 +1,17 @@
+{
+  "id": "tser_iancu",
+  "name": "Iancu",
+  "title": "Knife-Thrower",
+  "summary": "A hooded young knife-thrower who puts blade after blade into the same stump from ten paces and is never satisfied with where they land.",
+  "portrait": "bandit",
+  "sprite": "bandit",
+  "attitude": "indifferent",
+  "monster": "bandit",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "tser_pool"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him"
+}

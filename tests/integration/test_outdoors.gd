@@ -301,3 +301,34 @@ func test_krezk_is_lived_in() -> void:
 	v.queue_free()
 	Weather.use({})
 	Look.set_style(was, false)
+
+
+## The two Vistani camps lived in (lane 28): at Tser Pool a dancer on a plank stage, a knife-thrower, a hunter and a
+## dog, the cook and the smiths at their work, the pool down in its hollow and Madam Eva's tent up on its knoll; by
+## Lake Zarovich a fisherman, a cook, a horse-keeper, a lookout and a dog, the camp a step above the shore.
+func test_the_vistani_camps_are_lived_in() -> void:
+	GameState.story.minute_of_day = 11 * 60
+	var v := _view("tser_pool")
+	await _frames(2)
+	var here: Array[String] = []
+	for s: Variant in v.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	for id: String in ["tser_lavinia", "tser_iancu", "tser_marin", "tser_dog", "tser_dorina", "tser_petru", "tser_tobar"]:
+		assert_true(id in here, "%s is about" % id)
+	var pool := v.grid.height(Vector2i(8, 12))
+	var fire := v.grid.height(Vector2i(22, 14))
+	assert_true(pool < fire, "the pool lies in a hollow below the fire")
+	assert_true(v.grid.height(Vector2i(36, 6)) > fire, "Madam Eva's tent stands on a knoll")
+	assert_true(v.grid.height(Vector2i(29, 16)) > fire, "the dancer's stage stands above the ground")
+	v.queue_free()
+	await _frames(1)
+	var c := _view("vallaki_vistani_camp")
+	await _frames(2)
+	here.clear()
+	for s: Variant in c.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	for id: String in ["camp_fisher", "camp_cook", "camp_groom", "camp_lookout", "camp_dog"]:
+		assert_true(id in here, "%s is about" % id)
+	assert_true(c.grid.height(Vector2i(15, 6)) < c.grid.height(Vector2i(15, 12)), "the camp a step above the shore")
+	assert_true(c.grid.height(Vector2i(26, 12)) > c.grid.height(Vector2i(15, 12)), "Arrigal's wagons on the higher ground")
+	c.queue_free()

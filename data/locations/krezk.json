@@ -552,7 +552,7 @@
       "label": "a loose stone low in the wall",
       "model": "rubble",
       "search_dc": 14,
-      "item": "sling"
+      "item": "weapon_plus_1__sling"
     }
   ],
   "containers": [
