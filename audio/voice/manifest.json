@@ -2764,35 +2764,20 @@
   "recipe": "472bc6b008",
   "text": "Visitors! Visitors! Mother, visitors! Mother doesn't come out. Mother has had nine gifts."
  },
- "bildrath/0dde71569a453445": {
-  "chars": 68,
+ "bildrath/0dcdcbc9cce484e0": {
+  "chars": 59,
   "recipe": "b411de1800",
-  "text": "Forty-five. I want you to know this hurts me more than it hurts you."
+  "text": "For you, the special price. Nine times. I'll never recover."
  },
- "bildrath/2935a11084e429cb": {
-  "chars": 115,
+ "bildrath/23da5158d4f18907": {
+  "chars": 101,
   "recipe": "b411de1800",
-  "text": "Five hundred gold. In twenty years nobody has bought it. I'd come to think of it as family. Goodbye, little bottle."
+  "text": "For you, the rude price. The dear things carry ten percent for the tone of voice. Menace is itemized."
  },
  "bildrath/2e80e2e2754bb47f": {
   "chars": 89,
   "recipe": "b411de1800",
   "text": "Back again. The prices haven't changed. They never change. That's what makes them prices."
- },
- "bildrath/3ec70704b607fbf2": {
-  "chars": 162,
-  "recipe": "b411de1800",
-  "text": "Rope, ten gold. Torches, one gold for five. Rations, five gold a day. Lamp oil, one gold a flask. A healer's kit, fifty. And the potion in the case, five hundred."
- },
- "bildrath/4b94b4cfb8a637ce": {
-  "chars": 152,
-  "recipe": "b411de1800",
-  "text": "For you, the rude price. Rope, torches, rations and oil as posted. The healer's kit, fifty-five. The potion, five hundred and fifty. Menace is itemized."
- },
- "bildrath/51698f085c4c6767": {
-  "chars": 79,
-  "recipe": "b411de1800",
-  "text": "One gold. They burn an hour apiece, which is more than most things here manage."
  },
  "bildrath/5226bfbeae109635": {
   "chars": 46,
@@ -2814,30 +2799,15 @@
   "recipe": "b411de1800",
   "text": "Lower them? No. I'll raise them. Ten percent on the dear things, for menacing the proprietor. Parriwimple, the ledger. Under \"Customers, Rude\"."
  },
- "bildrath/5c79a4332393a6e5": {
-  "chars": 93,
+ "bildrath/5922a29baf2ac592": {
+  "chars": 94,
   "recipe": "b411de1800",
-  "text": "Fifty gold. Bandages, splints, salve. The burgomaster used one up in a month, before the end."
- },
- "bildrath/5f927153374f2e4d": {
-  "chars": 89,
-  "recipe": "b411de1800",
-  "text": "Five hundred and fifty. The extra fifty is for threatening the proprietor. I'll frame it."
+  "text": "Everything is on the shelf, and every price is on its tag. The tags are correct. I wrote them."
  },
  "bildrath/71f69fb69ef5baba": {
   "chars": 117,
   "recipe": "b411de1800",
   "text": "Thirty gold. I'll note that you returned it. I'll also note that you took it. My ledger has two columns for a reason."
- },
- "bildrath/757d5ea144cefde8": {
-  "chars": 75,
-  "recipe": "b411de1800",
-  "text": "One gold. Somebody will want to hide behind it. Everybody does, eventually."
- },
- "bildrath/818778893cc42e03": {
-  "chars": 90,
-  "recipe": "b411de1800",
-  "text": "Seven gold. Heavy. I'll have Parriwimple carry it. I'll have Parriwimple carry everything."
  },
  "bildrath/81cbd2affeb2f69f": {
   "chars": 149,
@@ -2849,20 +2819,10 @@
   "recipe": "b411de1800",
   "text": "Out. Thieves aren't customers. They're weather."
  },
- "bildrath/8a5281ae43b0842e": {
-  "chars": 38,
-  "recipe": "b411de1800",
-  "text": "One gold. I'll put it with the others."
- },
  "bildrath/96ea6e3539afe493": {
   "chars": 147,
   "recipe": "b411de1800",
   "text": "Parriwimple's time is five gold an hour. A coffin takes an hour. A grave takes two. Fifteen gold, and he brings his own shovel, which is also mine."
- },
- "bildrath/9b42f2b9ec0deaff": {
-  "chars": 122,
-  "recipe": "b411de1800",
-  "text": "Fifty-five. Fifty for the kit, five for the tone of voice. Parriwimple, note that the account is settled. The tone is not."
  },
  "bildrath/9e33d4f29978a9be": {
   "chars": 134,
@@ -2894,11 +2854,6 @@
   "recipe": "b411de1800",
   "text": "He offered. For free. Parriwimple, we will be having a talk about the concept of value. Go, then. Go! Bring the shovel back clean."
  },
- "bildrath/cd7c830b3e841d4e": {
-  "chars": 74,
-  "recipe": "b411de1800",
-  "text": "One gold, and that's generous. It has a nick in it. Everything does, here."
- },
  "bildrath/cfd82cd10db950c6": {
   "chars": 98,
   "recipe": "b411de1800",
@@ -2913,21 +2868,6 @@
   "chars": 104,
   "recipe": "b411de1800",
   "text": "Parriwimple! The customers have purchased three hours of you. Take the good shovel. Bring it back clean."
- },
- "bildrath/db5cadfcd75164c9": {
-  "chars": 72,
-  "recipe": "b411de1800",
-  "text": "Four hundred and fifty. Take it before I change my mind. Take it. Go on."
- },
- "bildrath/e332f35567d1a599": {
-  "chars": 89,
-  "recipe": "b411de1800",
-  "text": "Ten gold. Hempen, fifty feet, guaranteed to hold anything you can afford to hang from it."
- },
- "bildrath/e3aa042145d9250a": {
-  "chars": 189,
-  "recipe": "b411de1800",
-  "text": "For you, the special price. Nine times. I'll never recover. Rope ten, torches one for five, rations five a day, oil one a flask. Healer's kit forty-five. The potion, four hundred and fifty."
  },
  "bildrath/e4b3308982ef4fe9": {
   "chars": 140,
@@ -2944,20 +2884,10 @@
   "recipe": "b411de1800",
   "text": "Morgantha. Comes through every few weeks with that cart. I don't sell pastries; I have standards. Folk who can't pay her settle up some other way. I don't ask how. I don't give credit, and I suspect neither does she."
  },
- "bildrath/f467e0fc97966bcf": {
-  "chars": 82,
-  "recipe": "b411de1800",
-  "text": "One gold. Lamp oil. Also burns other things, which I mention for no reason at all."
- },
  "bildrath/f4ff00f8501546aa": {
   "chars": 132,
   "recipe": "b411de1800",
   "text": "Thirty gold, and an apology. The gold, I accept. The apology I'll take under advisement. Browse. Touch nothing you haven't paid for."
- },
- "bildrath/f75ec8c13459b311": {
-  "chars": 75,
-  "recipe": "b411de1800",
-  "text": "Fifteen gold. Hard bread, harder cheese, and a sausage of no fixed species."
  },
  "bildrath/fa3a37cfa25935d3": {
   "chars": 50,
