@@ -156,6 +156,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Krezk, a loose stone in the wall | +1 Sling (uncommon) | Search (Perception DC 14): a boy's treasure (lane 28's spot) |
 | ✅ | Burgomaster's house, the eldest son's room | Ioun Stone of Awareness (rare) | Search (Investigation DC 15): a box under the bed |
 | ✅ | Pool of the White Sun, the candle box | Scroll of Protection from Undead (rare) | Search (Investigation DC 14) |
+| ✅ | Pool of the White Sun, the pool's edge | Amulet of the Devout +1 (uncommon) | Search (Perception DC 13): a mourner's offering (lane 28's spot) |
 | ✅ | Anna Krezkova | Amulet of Health (rare) | Gift: once Ilya is well |
 | ✅ | Dmitri Krezkov | Armor, +1 (rare; chain mail) | Gift: his grandfather's mail, once Sorin is found (Lighter Than It Should Be, docs/story/side_quests.md) |
 
