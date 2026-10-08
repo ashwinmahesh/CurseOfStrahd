@@ -5068,6 +5068,24 @@
       "mount": "stand",
       "source": "art/generated/props/sheet_pair_coffin_plinth_statue_young_strahd.png",
       "slot": 3
+    },
+    "great_tent": {
+      "file": "art/sprites/props/great_tent.png",
+      "width_px": 516,
+      "height_px": 388,
+      "world_height": 4.4,
+      "pixel_size": 0.01155,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/great_tent_render.png"
+    },
+    "stewpot": {
+      "file": "art/sprites/props/stewpot.png",
+      "width_px": 388,
+      "height_px": 516,
+      "world_height": 1.0,
+      "pixel_size": 0.00195,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/stewpot_render.png"
     }
   }
 }

@@ -112,6 +112,40 @@ once
 ~ examine:tser_stream
 | A cold stream comes down from the north, from Tser Falls, and slides into the pool without a ripple.
 
+~ examine:tser_trough
+| A trough of stream water for the horses, scrubbed clean. It is the only water in the camp that anyone drinks without thinking twice.
+
+~ examine:tser_stewpot
+| A black iron pot sits in the coals, and has sat there long enough to have a ring of soot like a tree has rings. It smells of plums and pepper.
+
+~ examine:tser_grindstone
+| A grinding wheel on a bench, worked by a foot treadle. A row of knives waits beside it, every one of them already sharp.
+
+~ examine:tser_broken_cart
+| A cart tipped on its side, one wheel cracked through and half rebuilt with new spokes. Fresh shavings lie in the mud around it.
+
+~ examine:tser_charms
+| A cord strung across the track, hung with bells, bones and little mirrors. Anyone who comes in from the road rings it, whether they want to or not.
+| [class:cleric] {name} recognises a few of the charms: wards against the dead walking, and one that only asks the night to look elsewhere.
+
+~ examine:tser_cairn
+| A cairn of flat stones at the water's edge, each one scratched with a mark. The Vistani add a stone when the pool takes somebody. The cairn is taller than you are.
+
+~ examine:tser_shrine
+| A small wooden shrine at the water's edge, with candle stubs on its shelf and coins pressed into the wax. The candles face away from the pool.
+
+~ search:tser_reed_dice
+| Among the reeds, half sunk in the mud: a little leather bag of bone dice. Somebody lost a game here, or ran from one.
+
+~ search:tser_pen_whistle
+| Trodden into the mud of the pen, a horse-tender's whistle on a frayed cord. {name} rinses it off in the trough.
+
+~ search:tser_stump_flask
+| The old stump at the camp's edge is hollow. Inside, wrapped in a rag, is a corked flask that someone did not want Stanimir to know about.
+
+~ search:tser_wagon_cards
+| Tucked up under the wagon's step on a nail: a deck of playing cards. Run a thumb along the edges and some of them are a little rougher than the rest.
+
 # ---------------------------------------------------------------- Madam Eva's tent
 
 ~ enter:tser_pool_eva_tent

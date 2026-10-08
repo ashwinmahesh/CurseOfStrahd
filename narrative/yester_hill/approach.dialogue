@@ -78,6 +78,6 @@ Kostin: The black-eyed one. I took him water in the cage. He wasn't afraid of Mo
 
 ~ kostin_go
 Kostin: Home. I'll have to find out where that is. Somewhere the trees only drink rain.
-Narrator: He gets up, carefully, and walks away along the track without looking at the hill once.
+Narrator [away]: He gets up, carefully, and walks away along the track without looking at the hill once.
 approve liriel_dawnsong +1 wren_featherfoot +1: You sent Kostin home instead of up the hill
 -> END

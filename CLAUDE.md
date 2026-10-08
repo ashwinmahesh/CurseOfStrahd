@@ -6,7 +6,7 @@ Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log 
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
 ## Commands (add new ones to the Makefile)
-make run | arena | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd JOBS=n] | golden-saves | validate | lint | check [DRY=1] | ci | lfs-quiet | art-spend | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
+make run | arena | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd JOBS=n] | golden-saves | validate | lint | check [DRY=1] | ci | lfs-quiet | disk [FAST=1] | art-spend | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
 make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | keys [ONLY="id …"] [KINDS=…] | creator [GENERATE=1] | pregens [ONLY="id …"] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
@@ -21,7 +21,8 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
   path: it loads tools/macos/nofocus.m so Godot can't activate itself (owner decision 2026-10-06).
 - `make import` (and every target that imports) runs the editor through tools/import.sh with its window never on
   screen (NOFOCUS_HIDE=1 in tools/godot): textures import about twice as fast as headless, and the project.godot the
-  editor rewrites is put back. IMPORT_HEADLESS=1 imports headless.
+  editor rewrites is put back. IMPORT_HEADLESS=1 imports headless. A folder with no import cache yet starts from an
+  APFS clone of the main checkout's (same volume only); a full import with under 20 GB free is refused (exit 75).
 - `make run` and `make arena` are for the owner to play: run them only when asked. `make play` is his stable copy
   (~/Documents/CurseOfStrahdGame-play, tools/play/play.sh): it only moves to a main the build thread marked after a
   clean `make ci` (refs/play/green). Never edit or check out anything in it; PLAY_NO_RUN=1 updates it without a window.

@@ -70,17 +70,19 @@
       "shadow_opacity": 0.7,
       "ambient_occlusion": 1.6,
       "mist": {
-        "height": 1.3,
-        "cover": 0.5,
+        "height": 1.0,
+        "cover": 0.6,
         "scale": 0.22,
         "stretch": 0.5,
         "wind": [
           0.35,
           0.12
         ],
-        "thickness": 1.3,
+        "thickness": 2.6,
         "bands": 4,
-        "open": 0.3
+        "open": 0.4,
+        "wisps": 1.3,
+        "roads": 0.9
       },
       "clouds": {
         "strength": 0.22,
@@ -120,7 +122,7 @@
           "key_energy": 0.95,
           "mist": "pewter",
           "mists": "silver",
-          "mist_strength": 0.45,
+          "mist_strength": 0.8,
           "clouds": 1.0,
           "fog": "slate",
           "grade": {
@@ -141,7 +143,7 @@
           ],
           "mist": "lilac",
           "mists": "pewter",
-          "mist_strength": 0.45,
+          "mist_strength": 0.62,
           "clouds": 0.6,
           "fog": "ash_violet",
           "grade": {
@@ -162,7 +164,7 @@
           ],
           "mist": "lilac",
           "mists": "pewter",
-          "mist_strength": 0.55,
+          "mist_strength": 0.75,
           "clouds": 0.5,
           "fog": "ash_violet",
           "grade": {
@@ -183,7 +185,7 @@
           ],
           "mist": "moonlight",
           "mists": "slate",
-          "mist_strength": 0.45,
+          "mist_strength": 0.55,
           "clouds": 0.5,
           "fog": "night_deep",
           "exposure": 1.05,
@@ -216,7 +218,7 @@
       "mist": {
         "height": 1.8,
         "cover": 0.62,
-        "thickness": 1.6,
+        "thickness": 3.2,
         "open": 0.5
       },
       "surround": {
@@ -232,6 +234,21 @@
     },
     "tser_pool": {
       "like": "svalich_woods",
+      "water": {
+        "deep": "void",
+        "shallow": "ink",
+        "foam": "ink",
+        "glint": "moonlight",
+        "flow": [
+          0.0,
+          0.0
+        ],
+        "ripples": 0.0,
+        "texture": 0.06,
+        "reflect": 0.3,
+        "map": "void",
+        "map_edge": "slate"
+      },
       "mist": {
         "open": 0.45
       },
@@ -252,7 +269,7 @@
       "mist": {
         "height": 1.5,
         "cover": 0.6,
-        "thickness": 1.5,
+        "thickness": 3.0,
         "open": 0.4,
         "wind": [
           0.25,
@@ -278,7 +295,7 @@
       "mist": {
         "height": 1.8,
         "cover": 0.68,
-        "thickness": 1.8
+        "thickness": 3.4
       }
     },
     "barovia_village": {
@@ -291,8 +308,9 @@
           0.25,
           0.1
         ],
-        "thickness": 1.5,
-        "open": 0.6
+        "thickness": 2.0,
+        "open": 0.6,
+        "strength": 0.7
       },
       "ground_variation": 0.08,
       "surround": {
@@ -371,7 +389,8 @@
         "wind": [
           0.9,
           0.3
-        ]
+        ],
+        "strength": 0.9
       },
       "surround": {
         "ground": "mountain/scree",
@@ -461,7 +480,10 @@
           "kind": "crows",
           "amount": 7
         }
-      ]
+      ],
+      "mist": {
+        "strength": 0.85
+      }
     },
     "bonegrinder": {
       "like": "barovia_village",
@@ -488,6 +510,9 @@
             "amount": 0.35
           }
         }
+      },
+      "mist": {
+        "strength": 1.0
       }
     },
     "argynvostholt": {
@@ -495,8 +520,9 @@
       "mist": {
         "height": 1.7,
         "cover": 0.62,
-        "thickness": 1.7,
-        "open": 0.55
+        "thickness": 3.0,
+        "open": 0.55,
+        "strength": 1.0
       },
       "surround": {
         "trees": 0.6,
@@ -547,7 +573,7 @@
       "mist": {
         "height": 1.7,
         "cover": 0.62,
-        "thickness": 1.9,
+        "thickness": 3.4,
         "open": 0.5,
         "wind": [
           0.15,
@@ -694,7 +720,7 @@
           2.2,
           0.6
         ],
-        "thickness": 1.6
+        "thickness": 2.8
       },
       "weather": [
         {
@@ -783,7 +809,7 @@
           1.2,
           0.4
         ],
-        "thickness": 1.6
+        "thickness": 2.8
       },
       "surround": {
         "ground": "mountain/scree",

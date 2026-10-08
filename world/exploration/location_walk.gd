@@ -1,6 +1,6 @@
 class_name LocationWalk
 extends RefCounted
-## Walking in a location (LocationView): paths that open doors on the way and go round found traps, a square at a
+## Walking in a location (LocationView): paths that open doors on the way and go round open pits, a square at a
 ## time with WASD, the marching order (each follower steps into the square ahead of it), and what each step sets off:
 ## traps, areas (narration, fights, banter), people who speak first, and the ways out.
 
@@ -35,7 +35,8 @@ static func _path(view: LocationView, from: Vector2i, to: Vector2i, around_traps
 		for t: Variant in view.loc.get("traps", []):
 			var trap := t as Dictionary
 			var tstate := str((view.st.loc_state(view.loc_id)["traps"] as Dictionary).get(str(trap["id"]), ""))
-			if tstate == "found" or PitFall.open_hole(trap, tstate):
+			# An open pit is a hole and is walked round; a trap, found or not, is walked over (owner, 2026-10-08).
+			if PitFall.open_hole(trap, tstate):
 				for c: Variant in trap["cells"]:
 					avoid[LocationView._cell(c)] = true
 	avoid.erase(to)
@@ -56,8 +57,7 @@ static func _path(view: LocationView, from: Vector2i, to: Vector2i, around_traps
 	if low_exit:
 		view.grid.set_flag(to, CombatGrid.LOW, true)
 	var way := CombatGrid.path_to(reach, to)
-	# A found trap that fills the only way (a corridor) is crossed rather than leaving the party stuck; stepping
-	# on it springs it as usual unless it's disarmed first.
+	# An open pit that fills the only way (a corridor) is crossed (jumped) rather than leaving the party stuck.
 	if way.is_empty() and around_traps and not avoid.is_empty():
 		return _path(view, from, to, false)
 	return way

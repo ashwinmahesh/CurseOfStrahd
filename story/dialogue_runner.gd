@@ -118,7 +118,9 @@ func next() -> Dictionary:
 		match str(s["t"]):
 			"line":
 				pc += 1
-				return _line_beat(str(s["speaker"]), str(s["mood"]), str(s["text"]))
+				var beat := _line_beat(str(s["speaker"]), str(s["mood"]), str(s["text"]))
+				beat["away"] = str(s.get("away", ""))   # the `[away]` cue: who turns their back (DialogueBusts)
+				return beat
 			"interject":
 				pc += 1
 				var sel := str(s["selector"])

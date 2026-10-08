@@ -1,0 +1,41 @@
+# The Baron's watch who gave up after a fight in Vallaki (F13, story/captives.gd).
+
+~ start
+Narrator: The watchman lets his spear fall. His festival ribbon has come loose and hangs from his breastplate like a wilted flower. 'All right,' he says. 'All will be well.' He doesn't sound as if he believes it.
+-> choose
+
+~ choose
+* [Intimidation DC 12] Ask where Izek goes when he isn't at the Baron's side. -> izek | mute
+* [Persuasion DC 13] Ask how the gates are watched at night. -> gates | shrug
+* Let them go. -> release
+* Kill them. -> kill
+
+~ izek
+Narrator: 'The mansion, mostly. He keeps a room up there nobody goes into. Nobody. The last man who knocked lost a finger for it.'
+-> after_talk
+
+~ mute
+Narrator: He looks past you at the rooftops, as if Izek might be standing on one of them, and says nothing.
+-> after_talk
+
+~ gates
+Narrator: 'Two at each gate, changed at dusk and at midnight. The midnight pair drink.' He winces. 'Don't tell them it was me.'
+-> after_talk
+
+~ shrug
+Narrator: 'I just hold the spear,' he says. 'Nobody tells me anything.'
+-> after_talk
+
+~ after_talk
+* Let them go. -> release
+* Kill them. -> kill
+
+~ release
+Narrator: He backs away, then runs, ribbon flapping. By morning he'll swear he was never on duty.
+approve liriel_dawnsong +2 wren_featherfoot +2 godrick_pendlebrook +1: You let the Baron's beaten watchmen go
+-> END
+
+~ kill
+Narrator: Somewhere in the town a festival lantern goes out, and nobody relights it.
+approve godrick_pendlebrook -5 liriel_dawnsong -4 wren_featherfoot -4 thistle -2 kip_smudgewick -1: You killed watchmen who had given up
+-> END

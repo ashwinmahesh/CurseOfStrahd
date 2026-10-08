@@ -6494,6 +6494,58 @@
         "glow_flame"
       ],
       "triangles": 1236
+    },
+    "great_tent": {
+      "file": "art/models/great_tent.glb",
+      "mount": "free",
+      "stands_for": [
+        "great_tent"
+      ],
+      "size": [
+        7.144,
+        4.63,
+        5.057
+      ],
+      "materials": [
+        "glow_candle",
+        "pal_blood",
+        "pal_bone",
+        "pal_bone_dark",
+        "pal_bruise",
+        "pal_bruise_deep",
+        "pal_candle",
+        "pal_crimson",
+        "pal_flame",
+        "pal_ink",
+        "pal_ivory",
+        "pal_night",
+        "pal_peat",
+        "pal_plum",
+        "pal_rust",
+        "pal_umber"
+      ],
+      "triangles": 2252,
+      "big": true
+    },
+    "stewpot": {
+      "file": "art/models/stewpot.glb",
+      "mount": "free",
+      "stands_for": [
+        "stewpot"
+      ],
+      "size": [
+        0.756,
+        1.015,
+        0.787
+      ],
+      "materials": [
+        "glow_ember",
+        "pal_ink",
+        "pal_rust",
+        "pal_slate",
+        "pal_umber"
+      ],
+      "triangles": 560
     }
   }
 }

@@ -281,6 +281,9 @@ func refresh() -> void:
 		chips.append("◎ " + cr.concentration.name)
 	if combatant.hidden:
 		chips.append("Hidden")
+	# F13: a foe that gave up (combat/ai/ai_tactics.gd).
+	if cr.has_flag("surrendered") and not cr.dead:
+		chips.append("Surrendered")
 	# Hex, Hunter's Mark: who marked it.
 	for fx in cr.effects:
 		if fx.data.has("mark_by"):

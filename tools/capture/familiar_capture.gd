@@ -1,39 +1,41 @@
 extends Node
-## make capture SCENE=res://tools/capture/familiar_capture.tscn NAME=familiar FRAMES=10
-## A summoned familiar in a real location fight (EncounterSetup.bring_familiars): Silvain's owl beside him as the
-## fight starts, then the map after the fight with no owl left standing on it.
+## Find Familiar cast while exploring (owner's playtest, 2026-10-08): the owl appears at the back of the party's line in
+## Bildrath's Mercantile, then follows as the party walks.
+## make capture SCENE=res://tools/capture/familiar_capture.tscn NAME=familiar FRAMES=40
 
-const LOC := {
-	"id": "capture_den", "name": "Capture Den", "region": "test", "summary": "A fixture.",
-	"map": {"rows": [
-		"##########",
-		"#........#",
-		"#........#",
-		"#........#",
-		"#........#",
-		"##########"], "light": "dim"},
-	"spawns": {"default": [3, 2]},
-	"encounters": [{"id": "rats", "trigger": "manual",
-		"monsters": [{"monster": "rat", "cell": [7, 2]}, {"monster": "rat", "cell": [7, 4]}]}],
-}
+var root: Node
 
 
-func capture_shots(tool: Node, out: String) -> void:
-	Compendium.shared().tables["locations"]["capture_den"] = LOC.duplicate(true)
+func _ready() -> void:
 	GameState.reset()
-	for id: String in ["silvain_aster", "godrick_pendlebrook", "thistle"]:
+	for id: String in ["silvain_aster", "ilse_varga", "hedda_ironvow"]:
 		var ch := Pregens.build(id, 3)
 		ch.finish_long_rest()
 		GameState.story.party.append(ch)
-	GameState.story.party[0].familiar = "here"
-	GameState.story.location = "capture_den"
-	var game := (load("res://scenes/game.tscn") as PackedScene).instantiate()
-	add_child(game)
+	GameState.story.location = "bildraths_mercantile"
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+
+
+func capture_shots(tool: Node, out: String) -> void:
+	var view := root.get("view") as LocationView
+	var hud := root.get("hud") as ExploreHud
+	hud.close_narration()
+	var wizard := GameState.story.party[0]
+	# Into the room first, away from the wall by the door that would hide the owl.
+	await _walk(tool, view, Vector2i(6, 6))
+	FieldCasting.cast_utility(GameState.story, wizard, "find_familiar", true)
+	view.apply_spell_effect("find_familiar")
+	await tool.call("wait_frames", 90)   # past the "An hour later" card
+	tool.call("_shot", out + "_1_cast.png")
+	await _walk(tool, view, Vector2i(4, 3))
 	await tool.call("wait_frames", 20)
-	var view := game.get("view") as LocationView
-	view.start_encounter("rats")
-	await tool.call("wait_frames", 40)
-	tool.call("_shot", out + "_1_fight.png")
-	view.combat_view.finished.emit("victory")
-	await tool.call("wait_frames", 40)
-	tool.call("_shot", out + "_2_after.png")
+	tool.call("_shot", out + "_2_follows.png")
+
+
+func _walk(tool: Node, view: LocationView, to: Vector2i) -> void:
+	view.walk_to(to)
+	for i in 600:
+		if view._queue.is_empty():
+			break
+		await tool.call("wait_frames", 1)

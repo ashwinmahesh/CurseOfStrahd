@@ -1,0 +1,49 @@
+# Lady Wachter's people who gave up after a fight in Vallaki (F13, story/captives.gd).
+
+~ start
+Narrator: The cultist drops his blade and goes down on his knees, hands raised, eyes on the stones. 'I only came for the wine and the company,' he says. 'Everyone comes for the wine.'
+-> choose
+
+~ choose
+* [Intimidation DC 12] Ask what Lady Wachter wants. -> plot | mute
+* [Persuasion DC 14] Ask who else comes to her meetings. -> names | lie
+* [if at:vallaki or at:vallaki_wachter_house or at:vallaki_burgomaster_mansion] Hand them to the Baron's watch. -> hand_over
+* Let them go. -> release
+* Kill them. -> kill
+
+~ plot
+Narrator: 'The Baron's chair,' he whispers. 'She says the lord on the hill will give the town to the ones who stayed loyal. No more festivals. No more being told to be happy.'
+-> after_talk
+
+~ mute
+Narrator: He presses his lips together and shakes his head. He is more afraid of her than he is of you.
+-> after_talk
+
+~ names
+Narrator: He gives you names: a cooper, a lamplighter, two of the Baron's own watchmen. Small people, every one of them, who wanted to be on the winning side.
+-> after_talk
+
+~ lie
+Narrator: He gives you names, quickly and too many. Half of them are dead, and the rest are the Baron's friends.
+-> after_talk
+
+~ after_talk
+* [if at:vallaki or at:vallaki_wachter_house or at:vallaki_burgomaster_mansion] Hand them to the Baron's watch. -> hand_over
+* Let them go. -> release
+* Kill them. -> kill
+
+~ hand_over
+Narrator: The watch hauls them off toward the stocks in the square, where the Baron's justice is very public and very cheerful. A watchman tips his helmet and pays the bounty.
+gold +15
+approve godrick_pendlebrook +1 kip_smudgewick +1 thistle -2 wren_featherfoot -1: You gave Lady Wachter's people to the Baron's stocks
+-> END
+
+~ release
+Narrator: He scrambles up and is gone up the cellar stair, or round the corner, or wherever frightened men go in Vallaki.
+approve liriel_dawnsong +2 wren_featherfoot +2: You let Lady Wachter's frightened followers go
+-> END
+
+~ kill
+Narrator: It is quick. It is not justice, and everyone here knows it.
+approve godrick_pendlebrook -5 liriel_dawnsong -4 wren_featherfoot -4 thistle -2 kip_smudgewick -1: You killed Lady Wachter's people after they gave up
+-> END
