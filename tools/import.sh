@@ -8,32 +8,85 @@
 # The first import after a big drop of new files can log errors that a second pass doesn't (scripts read before the
 # art they name is imported: seen on a fresh worktree and after the W4 textures arrived), so an import that logs errors
 # runs once more, and only the second pass's output counts. An error that's real is in both.
+# One import per folder at a time: a second one waits for the first (.godot/import.lock), since two at once race on
+# .godot (the owner's make run and the build's make ci in the main folder, 2026-10-08). Ctrl-C stops the import at
+# once: the windowed editor otherwise finishes importing before it notices.
 set -uo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
 godot="${GODOT:-/Applications/Godot.app/Contents/MacOS/Godot}"
 cd "$root"
 ERRORS='SCRIPT ERROR|ERROR:|Parse Error|Failed loading'   # what tools/logcheck.sh fails on
+lock=".godot/import.lock"
+child=""
+owned=""
 
 log="$(mktemp -t strahd_import)"
 keep="$(mktemp -t strahd_project)"
 cp -p project.godot "$keep"
-restore() {
+finish() {
   cmp -s "$keep" project.godot || cp -p "$keep" project.godot
   rm -f "$keep" "$log"
+  if [ -n "$owned" ]; then
+    rm -f "$lock/pid"
+    rmdir "$lock" 2> /dev/null || true
+  fi
 }
-trap restore EXIT
+trap finish EXIT
+
+## Ctrl-C or a kill: stop Godot now (a polite TERM, then KILL after three seconds) and leave.
+stop() {
+  if [ -n "$child" ] && kill -0 "$child" 2> /dev/null; then
+    kill -TERM "$child" 2> /dev/null || true
+    for _ in 1 2 3; do
+      kill -0 "$child" 2> /dev/null || break
+      sleep 1
+    done
+    kill -KILL "$child" 2> /dev/null || true
+  fi
+  echo "make import: stopped" >&2
+  exit 130
+}
+trap stop INT TERM
+
+## Waits its turn: the lock is a folder (made atomically), holding the PID of the import that has it. One left by an
+## import that was killed is cleared.
+mkdir -p .godot
+said=""
+until mkdir "$lock" 2> /dev/null; do
+  holder="$(cat "$lock/pid" 2> /dev/null || true)"
+  if [ -n "$holder" ] && ! kill -0 "$holder" 2> /dev/null; then
+    rm -f "$lock/pid"
+    rmdir "$lock" 2> /dev/null || true
+    continue
+  fi
+  [ -n "$said" ] || echo "make import: another import is running in this folder (PID ${holder:-?}); waiting for it"
+  said=1
+  sleep 2
+done
+owned=1
+echo $$ > "$lock/pid"
+
+## Runs a command in the background into $log and waits, so Ctrl-C reaches stop() at once. Its exit status.
+run() {
+  "$@" > "$log" 2>&1 &
+  child=$!
+  wait "$child"
+  local status=$?
+  child=""
+  return $status
+}
 
 ## One import into $log: windowed (off screen) where it can, else headless. Exit status as Godot's.
 import_once() {
   if [ -z "${IMPORT_HEADLESS:-}" ] && [ "$(launchctl managername 2>/dev/null)" = "Aqua" ]; then
-    NOFOCUS_HIDE=1 GODOT="$godot" tools/godot --path . --import --audio-driver Dummy > "$log" 2>&1
+    run env NOFOCUS_HIDE=1 GODOT="$godot" tools/godot --path . --import --audio-driver Dummy
     local status=$?
     if [ $status -eq 0 ]; then
       return 0
     fi
     echo "make import: the import with a hidden window failed (exit $status); importing headless instead"
   fi
-  "$godot" --path . --headless --import > "$log" 2>&1
+  run "$godot" --path . --headless --import
 }
 
 import_once
