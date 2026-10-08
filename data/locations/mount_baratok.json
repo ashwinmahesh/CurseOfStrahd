@@ -343,6 +343,42 @@
       "model": "scattered_notes",
       "search_dc": 13,
       "item": "spell_scroll__cone_of_cold"
+    },
+    {
+      "id": "corvina_letter_birds",
+      "cell": [
+        22,
+        13
+      ],
+      "kind": "examine",
+      "label": "A letter in the ice",
+      "model": "ice_patch",
+      "dialogue": "mount_baratok/the_mages_lost_pages:letter_birds",
+      "when": "quest.the_mages_lost_pages"
+    },
+    {
+      "id": "corvina_letter_ring",
+      "cell": [
+        12,
+        17
+      ],
+      "kind": "examine",
+      "label": "Paper fused into the glass",
+      "model": "scattered_notes",
+      "dialogue": "mount_baratok/the_mages_lost_pages:letter_ring",
+      "when": "quest.the_mages_lost_pages"
+    },
+    {
+      "id": "corvina_letter_overlook",
+      "cell": [
+        3,
+        15
+      ],
+      "kind": "examine",
+      "label": "A page in the drift",
+      "model": "snowdrift",
+      "dialogue": "mount_baratok/the_mages_lost_pages:letter_overlook",
+      "when": "quest.the_mages_lost_pages"
     }
   ],
   "containers": [

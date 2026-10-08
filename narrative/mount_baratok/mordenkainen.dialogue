@@ -163,6 +163,7 @@ Mordenkainen: You again. Good. I've been rebuilding my spells from the bottom up
 * What do you know about Strahd? -> about_strahd
 * [if not flag.tsolenka_watchword_known] The gate in the Tsolenka Pass is held by dead men. -> watchword
 * What waits at the Amber Temple? -> temple
+* Heard anything interesting? -> mount_baratok/the_mages_lost_pages:news
 * [name:ratatoille] [if quest.a_seat_at_the_table >= a_winery and not (quest.a_seat_at_the_table >= the_masters_word)] Ask to become his apprentice. -> companions/table:apprentice
 * Goodbye. -> bye
 
