@@ -742,7 +742,8 @@
   "861377174da00d79": "[sheepish, then grim resolve]",
   "ad6fb43460ac6bd1": "[sheepish, warm]",
   "e8132e0bd3f69c72": "[shaken, ashamed]",
-  "ef44b2d45b858fc8": "[stubborn, earnest]"
+  "ef44b2d45b858fc8": "[stubborn, earnest]",
+  "faa040029a6d13bd": "[stunned, shaken, haunted]"
  },
  "goodwife_sarnov": {
   "04598ecc522ff691": "[flat, grieving, hollow]",
@@ -949,6 +950,7 @@
   "1fb546cb5e2b42ca": "[weary, haunted, dry]"
  },
  "kip_smudgewick": {
+  "4707ef060a8091c5": "[panicked, then steadying, fierce]",
   "4d66206db97560d4": "[wry, then grateful]",
   "7659324dae0f54ff": "[shaken, quiet]",
   "c5d1f53fad2faedd": "[flustered, grateful]",
@@ -1086,13 +1088,17 @@
   "da65623ed9274e63": "[panicked whisper]"
  },
  "liriel_dawnsong": {
+  "27dc277991695aa4": "[quiet, certain, compassionate]",
+  "2cf8f1542384a932": "[shaken, hushed, sorrowful]",
   "4503a76638b93b89": "[shaken, quiet]",
   "4d8455c78fc689a3": "[firm, reassuring]",
   "6243477b5611229c": "[shaken, hurt]",
   "72f14888a0adcbfd": "[focused, certain]",
   "7bd553d4f3057a4d": "[frightened, honest]",
+  "7f8f2bad77f57877": "[alarmed, firm, low]",
   "9c97d70225b5675d": "[resolute, quiet faith]",
   "a4a216598c627ad9": "[quiet, grave]",
+  "a9645f0ccf992c6f": "[quiet, reverent, sad]",
   "b9b3928aa3eff45a": "[determined, quiet]",
   "c1dacf3daf3c8513": "[sorrowful, grave]",
   "cc0b9b8bb7f76a78": "[rueful, wry]",
@@ -2206,6 +2212,7 @@
   "6a3bd3711c95c92d": "[firm, practical]",
   "94b1fc0421690a76": "[shaken, bitter]",
   "b2eff5f66061c3c5": "[grim, wry resolve]",
+  "b7444d82106229c6": "[bitter, wistful, quiet]",
   "c6263baf8234cf21": "[forcefully cheerful, bossy]"
  },
  "rictavio": {
@@ -2527,6 +2534,7 @@
  "thistle": {
   "032a1e85fd9e4b1d": "[ashamed, quiet]",
   "3ba7d22e9bbf0232": "[fierce, defiant]",
+  "519c640c5a15c243": "[trembling, fierce, repeating to herself]",
   "57bdf3f694e3fa8d": "[fierce, vicious]",
   "63c822b0b5216765": "[soothing, low, gentle]",
   "731a4630da257603": "[angry, ashamed]",
@@ -3217,8 +3225,11 @@
  },
  "wren_featherfoot": {
   "208b3e2df888474d": "[quiet, tired]",
+  "4e003985745c8cce": "[bright, comic, crowd-working]",
   "64205f8e076fc813": "[flat, shaken, wry]",
+  "827fc6023ee7d2dd": "[gentle, encouraging, playful]",
   "ca7e7b7b783bfcca": "[quiet, haunted]",
+  "df89359d75d931da": "[shaky, wry, fond, near tears]",
   "f28c02cbcf8e77a6": "[weak attempt at humour]"
  },
  "yevgeni": {
