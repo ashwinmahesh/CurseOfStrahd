@@ -187,6 +187,8 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 		return CombatResult.fail(why)
 	if c.creature.hp <= 0:
 		return CombatResult.fail("%s is down" % c.name())
+	# What the move may change, so it can be taken back if nothing comes of it (EncounterUndo).
+	var undo := e.undo.before_move(c)
 	# Riding: the controlled mount carries its rider, spending its own movement.
 	var steed := e.controlled_mount(c)
 	if steed != null:
@@ -196,7 +198,7 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 		if bool((sreach[dest] as Dictionary)["occupied"]):
 			return CombatResult.fail("Your mount can't end its move in an occupied space")
 		c.moved = true
-		return _walk(steed, CombatGrid.path_to(sreach, dest), 1, CombatResult.new(), {"willing": true})
+		return e.undo.after_move(undo, _walk(steed, CombatGrid.path_to(sreach, dest), 1, CombatResult.new(), undo.handled))
 	# Freedom of Movement: 5 ft of movement slips any grapple.
 	if c.creature.has_flag("freedom_of_movement") and e.grapples.has(c.id) and c.movement_left >= 5:
 		e.grapples.erase(c.id)
@@ -216,7 +218,7 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 		return CombatResult.fail("You can't end your move in an occupied space")
 	var path := CombatGrid.path_to(reach, dest)
 	var r := CombatResult.new()
-	return _walk(c, path, 1, r, {"willing": true})
+	return e.undo.after_move(undo, _walk(c, path, 1, r, undo.handled))
 
 
 ## Moves `c` (not on its own turn) up to `feet` toward the reachable square that best follows `dir` (Confusion,
@@ -474,13 +476,14 @@ func free_move(c: Combatant, dest: Vector2i) -> CombatResult:
 	var path := CombatGrid.path_to(reach, dest)
 	var keep_move := c.movement_left
 	var keep_dis := c.disengaged
+	var undo := e.undo.before_move(c)
 	c.movement_left = c.free_move_ft
 	c.disengaged = true
-	var r := _walk(c, path, 1, CombatResult.new(), {"willing": true})
+	var r := _walk(c, path, 1, CombatResult.new(), undo.handled)
 	c.free_move_ft = 0
 	c.movement_left = keep_move
 	c.disengaged = keep_dis
-	return r
+	return e.undo.after_move(undo, r)
 
 
 ## Jump (the spell): once on each of its turns, a leap of up to 30 ft for 10 ft of movement, over creatures and
@@ -516,13 +519,14 @@ func jump(c: Combatant, dest: Vector2i) -> CombatResult:
 			path.append(cell)
 	if path[path.size() - 1] != dest:
 		path.append(dest)
+	var undo := e.undo.before_move(c)
 	c.movement_left -= 10
 	c.set_meta("jumped_round", e.round_no)
 	c.set_meta("jumping", true)
 	e.log.add("move", "%s leaps %d ft (Jump)" % [c.name(), e.grid.distance_ft(c.cell, c.size_cells, dest, c.size_cells)], c.id)
-	var r := _walk(c, path, 1, CombatResult.new(), {"willing": true})
+	var r := _walk(c, path, 1, CombatResult.new(), undo.handled)
 	c.remove_meta("jumping")
-	return r
+	return e.undo.after_move(undo, r)
 
 
 func drop_prone(c: Combatant) -> CombatResult:

@@ -8,8 +8,9 @@ extends RefCounted
 ##
 ## The Encounter holds the fight's state. Its jobs live in helpers, a file each, that it makes and owns:
 ## EncounterTurns, EncounterSight, EncounterMovement, EncounterMounts, EncounterGrapples, EncounterWeapons,
-## EncounterAttacks, EncounterDamage, EncounterReactions and EncounterActions (combat/encounter_*.gd). The forwarding
-## functions at the end are the Encounter's interface, so the HUD, the AI, spells and features keep calling it.
+## EncounterAttacks, EncounterDamage, EncounterReactions, EncounterActions and EncounterUndo (combat/encounter_*.gd), and
+## GroundItems (what lies on the battlefield). The forwarding functions at the end are the Encounter's interface, so
+## the HUD, the AI, spells and features keep calling it.
 
 enum State { SETUP, ACTIVE, OVER }
 
@@ -96,6 +97,10 @@ var attacks: EncounterAttacks
 var damage: EncounterDamage
 var reaction_flow: EncounterReactions
 var actions: EncounterActions
+## Weapons and other things lying on the battlefield, and picking them up (combat/ground_items.gd).
+var ground: GroundItems
+## Taking back a move (combat/encounter_undo.gd).
+var undo: EncounterUndo
 
 
 func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
@@ -111,6 +116,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	damage = EncounterDamage.new(self)
 	reaction_flow = EncounterReactions.new(self)
 	actions = EncounterActions.new(self)
+	ground = GroundItems.new(self)
 	spells = SpellCaster.new(self)
 	features = CombatFeatures.new(self)
 	reactions = Reactions.new(self)
@@ -127,6 +133,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	triggered_features = TriggeredFeatures.new(self)
 	items = CombatItems.new(self)
 	legendary = Legendary.new(self)
+	undo = EncounterUndo.new(self)
 	d20 = D20Responses.new(self)
 
 
@@ -154,6 +161,7 @@ func _effect_added(cr: Creature, fx: Effect) -> void:
 	faerun.effect_added(cr, fx)
 	echo_knight.effect_added(cr, fx)
 	movement.effect_added(cr, fx)
+	ground.effect_added(cr, fx)
 
 
 func get_c(id: String) -> Combatant:
@@ -723,3 +731,19 @@ func study(c: Combatant, target: Combatant) -> CombatResult:
 
 func can_disengage(c: Combatant) -> bool:
 	return actions.can_disengage(c)
+
+
+# --- Things on the ground (GroundItems) -----------------------------------------------------------
+
+func pick_up(c: Combatant, gid: String) -> CombatResult:
+	return ground.pick_up(c, gid)
+
+
+# --- Taking back a move (EncounterUndo) -----------------------------------------------------------
+
+func can_undo_move(c: Combatant) -> bool:
+	return undo.can_undo_move(c)
+
+
+func undo_move(c: Combatant) -> CombatResult:
+	return undo.undo_move(c)

@@ -30,6 +30,8 @@ var catalog: ActionCatalog
 var board: ArenaBoard
 var overlay: GridOverlay
 var field: FieldView
+## What lies on the ground (world/combat/ground_view.gd).
+var ground_view: GroundView
 ## Spell and ability effects (world/combat/fx/spell_fx.gd).
 var fx: SpellFx
 ## What enemies shout and creatures sound like (world/combat/combat_barks.gd).
@@ -81,6 +83,8 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	add_child(overlay)
 	field = FieldView.create(board)
 	add_child(field)
+	ground_view = GroundView.create(board)
+	add_child(ground_view)
 	fx = SpellFx.new()
 	add_child(fx)
 	barks = CombatBarks.new()
@@ -90,6 +94,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	hud.build(e, catalog)
 	hud.action_chosen.connect(_choose)
 	hud.end_turn_pressed.connect(_end_turn)
+	hud.undo_move_pressed.connect(_undo_move)
 	hud.reaction_answered.connect(_answer)
 	hud.inspect_requested.connect(_inspect)
 	hud.death_save_pressed.connect(_death_save)
@@ -303,6 +308,7 @@ func _show_heights() -> void:
 ## Spell objects and lingering areas on the field (Spiritual Weapon, Flaming Sphere, Spirit Guardians, Web...).
 func _show_weapons() -> void:
 	field.sync(e.spells.zones.objects)
+	ground_view.sync(e.ground.items)
 
 
 func _player() -> Combatant:
@@ -332,6 +338,22 @@ func _end_turn() -> void:
 
 
 var _confirmed_end := false
+
+
+## Takes back the current creature's last move (the HUD's Undo move, or Ctrl+Z): it goes back with its movement.
+func _undo_move() -> void:
+	var c := _player()
+	if c == null or mode not in [Mode.IDLE, Mode.TARGET]:
+		return
+	var r := e.undo_move(c)
+	if not r.ok:
+		hud.banner(r.reason, 1.6)
+		return
+	_cancel_targeting()
+	mode = Mode.BUSY
+	overlay.clear_all()
+	await _play_events()
+	_advance()
 
 
 func _death_save() -> void:
@@ -556,8 +578,9 @@ func _square_picked(id: String) -> void:
 			hud.show_details(o.name(), ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)])
 		return
 	for it in _menu_items:
-		if str(it["id"]) == id and it.has("action") and o != null:
-			_perform(it["action"] as Dictionary, [o], Vector2.INF, Vector2.ZERO)
+		# Picking something up needs no one standing there.
+		if str(it["id"]) == id and it.has("action") and (o != null or str((it["action"] as Dictionary)["targeting"]) == "none"):
+			_perform(it["action"] as Dictionary, [o] if o != null else [], Vector2.INF, Vector2.ZERO)
 			return
 
 
@@ -756,6 +779,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			menu_requested.emit()
 	elif event.is_action_pressed(&"combat_end_turn"):
 		_end_turn()
+	elif event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo \
+			and (event as InputEventKey).physical_keycode == KEY_Z \
+			and ((event as InputEventKey).ctrl_pressed or (event as InputEventKey).meta_pressed):
+		_undo_move()   # Ctrl+Z (Cmd+Z on a Mac), ahead of plain Z, which changes the tab
 	elif event.is_action_pressed(&"combat_tab_prev"):
 		hud.cycle_tab(-1)
 	elif event.is_action_pressed(&"combat_tab_next"):
@@ -950,10 +977,19 @@ func _update_hover() -> void:
 				var pv := catalog.attack_preview(c, a, o)
 				hud.show_tooltip(str(pv["title"]), pv["lines"] as Array, [], at)
 		else:
-			hud.show_tooltip(o.name(), ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)], [], at)
+			var about: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)]
+			about.append_array(e.ground.describe_at(o.cell))
+			hud.show_tooltip(o.name(), about, [], at)
 		return
+	# What lies on the square (GroundItems) is named under whatever else the tooltip says.
+	var lying: Array = []
+	if hover_cell.x >= 0:
+		lying.append_array(e.ground.describe_at(hover_cell))
 	if hover_cell.x < 0 or hover_cell == c.cell:
-		hud.hide_tooltip()
+		if lying.is_empty():
+			hud.hide_tooltip()
+		else:
+			hud.show_tooltip("Here", lying, [], at)
 		return
 	var mp := catalog.move_preview(c, hover_cell, _reach)
 	if bool(mp["ok"]):
@@ -964,9 +1000,9 @@ func _update_hover() -> void:
 			provokes = provokes or w.contains("Opportunity")
 		overlay.clear("cursor")
 		overlay.show_cells("danger" if provokes else "goal", [hover_cell])
-		hud.show_tooltip("Move %d ft · %d ft left after" % [int(mp["cost"]), int(mp["left"])], [], mp["warnings"] as Array, at)
+		hud.show_tooltip("Move %d ft · %d ft left after" % [int(mp["cost"]), int(mp["left"])], lying, mp["warnings"] as Array, at)
 	else:
-		hud.show_tooltip(str(mp["reason"]), [], [], at)
+		hud.show_tooltip(str(mp["reason"]), lying, [], at)
 
 
 func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
@@ -1096,7 +1132,9 @@ func _play_events() -> void:
 				var from: Vector2i = ev["from"]
 				var to: Vector2i = ev["to"]
 				var step := STEP_TIME * GameSettings.combat_pace()   # the fast combat speed (Settings)
-				tok.face(Vector2(to - from), not bool(ev.get("forced", false)), step)
+				# A move taken back (undo) glides home like a rewind: no walking, no turning round.
+				var back := bool(ev.get("undo", false))
+				tok.face(Vector2.ZERO if back else Vector2(to - from), not bool(ev.get("forced", false)) and not back, step)
 				walking[tok] = true
 				var tw := create_tween()
 				tw.tween_property(tok, "position", _token_spot(tok.combatant, to), step)

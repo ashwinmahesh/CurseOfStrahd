@@ -80,9 +80,12 @@ void fragment() {
 			vec3 c = mix(shade, haze, rs[i].w);
 			// The sky's light along the ridge's crest, fading down its face.
 			c = mix(c, rim, (1.0 - smoothstep(0.0, 0.8 + rs[i].y * 0.05, below)) * 0.3 * rs[i].w);
-			// Snow on the far, high peaks, in streaks down their faces.
-			if (i <= 1 && h > snow_line - vnoise(vec2(atan(d.y, d.x) * 40.0, h * 0.4)) * 6.0) {
-				c = mix(c, mix(snow, haze, rs[i].w * 0.55), 0.8);
+			// Snow on the far, high peaks: caps that break into streaks down their faces, rock showing between.
+			float above = h - snow_line + vnoise(vec2(atan(d.y, d.x) * 30.0, 0.5)) * 3.0;
+			if (i <= 1 && above > 0.0) {
+				float streak = smoothstep(0.4, 0.62, vnoise(vec2(atan(d.y, d.x) * 140.0, h * 0.6)));
+				float cover = max(streak, smoothstep(1.5, 4.0, above)) * smoothstep(0.0, 0.8, above);
+				c = mix(c, mix(snow, haze, rs[i].w * 0.55), 0.75 * cover);
 			}
 			col = c;
 		}

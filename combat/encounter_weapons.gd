@@ -2,7 +2,8 @@ class_name EncounterWeapons
 extends RefCounted
 ## What a creature in a fight can attack with (Encounter): its weapon, thrown and unarmed options and stat-block
 ## attacks, Soulknife blades, how many attacks an Attack action gives, whether an attack is legal from where it stands
-## (range, reach, sight, charm), and ammunition and thrown weapons leaving the hand.
+## (range, reach, sight, charm, a monster's weapon knocked from its hand), and ammunition and thrown weapons leaving the
+## hand (a thrown one lands by its target, GroundItems).
 
 var _enc: WeakRef
 
@@ -90,7 +91,7 @@ func best_melee_option(c: Combatant, _target: Combatant) -> Dictionary:
 	var best := {}
 	var best_avg := -1.0
 	for o in attack_options(c):
-		if not bool(o["melee"]):
+		if not bool(o["melee"]) or _weapon_gone(c, o) != "":
 			continue
 		var avg := (o["profile"] as WeaponProfile).average_damage()
 		if avg > best_avg:
@@ -147,6 +148,9 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 	var charm := charm_blocks(c, target)
 	if charm != "":
 		return charm
+	var gone := _weapon_gone(c, option)
+	if gone != "":
+		return gone
 	# A stat-block attack only some targets qualify for (a vampire's Bite: grappled, incapacitated or restrained).
 	if c.creature is Monster and option.has("action_id"):
 		var needs := ((c.creature as Monster).action(str(option["action_id"])).get("targets", {}) as Dictionary).get("requires", []) as Array
@@ -181,12 +185,41 @@ func item_count(c: Combatant, item_id: String) -> int:
 	return n
 
 
-## A thrown weapon leaves the hand (it lands near the target; picking it up again is for after the fight).
+## A stat-block attack whose weapon is out of the monster's hands (GroundItems): why it can't be made, else "".
+func _weapon_gone(c: Combatant, option: Dictionary) -> String:
+	if not c.creature is Monster or not option.has("action_id"):
+		return ""
+	return enc().ground.weapon_gone(c, (c.creature as Monster).action(str(option["action_id"])))
+
+
+## One of a consumable used up (a Goodberry).
 func _spend_item(c: Combatant, item_id: String) -> void:
 	for e in (c.creature as Character).inventory:
 		if str(e["id"]) == item_id and int(e["qty"]) > 0:
 			e["qty"] = int(e["qty"]) - 1
 			return
+
+
+## A thrown weapon leaves the hand and comes down in its target's space (GroundItems), to be picked up again. The last
+## of a stack leaves the inventory; a weapon that doesn't stack (a magic one) lies there with its own entry, so a
+## charge its power spends as it flies (Hammer of Thunderbolts) still comes off it.
+func throw_item(c: Combatant, item_id: String, target: Combatant) -> void:
+	var ch := c.creature as Character
+	for en in ch.inventory:
+		if str(en["id"]) != item_id or int(en["qty"]) <= 0:
+			continue
+		var slot := str(en.get("slot", ""))
+		en["qty"] = int(en["qty"]) - 1
+		var state := {}
+		if int(en["qty"]) <= 0:
+			ch.inventory.erase(en)
+			if not bool(Compendium.shared().item_data(item_id).get("stackable", false)):
+				state = en
+		else:
+			slot = ""   # more of the stack is still in hand
+		ch.items_changed()
+		enc().ground.land(c, item_id, state, slot, target)
+		return
 
 
 ## Whether `c` carries ammunition of `ammo`'s kind (`specific`: that magic ammunition, "" = ordinary).
@@ -208,4 +241,5 @@ func _spend_ammo(c: Combatant, p: WeaponProfile) -> void:
 	for e in ch.inventory:
 		if str(e["id"]) == want and int(e["qty"]) > 0:
 			e["qty"] = int(e["qty"]) - 1
+			enc().ground.ammo_spent(c, want)
 			return

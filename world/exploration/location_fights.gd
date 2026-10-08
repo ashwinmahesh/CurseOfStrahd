@@ -409,7 +409,10 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 	view.combat_ended.emit(outcome)
 	# A foe that withdrew or fled as mist leaves nothing behind (a Tarokka treasure here is still found).
 	if outcome == "victory":
-		_spoils(view, encounter_id, spec, not e.legendary.no_loot(), AiTactics.leftovers(e))
+		# What the fallen foes still carried, and their weapons left lying on the ground (GroundItems).
+		var left := AiTactics.leftovers(e)
+		left.append_array(e.ground.spoils)
+		_spoils(view, encounter_id, spec, not e.legendary.no_loot(), left)
 
 
 ## What a won fight leaves (the encounter's `loot`, what the fallen foes still carried, and a Tarokka treasure if this

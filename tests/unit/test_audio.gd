@@ -27,3 +27,54 @@ func test_the_effects_the_game_plays_exist() -> void:
 	for mood: String in (Audio._data["ambient"] as Dictionary):
 		for id: Variant in (Audio._data["ambient"] as Dictionary)[mood]:
 			assert_false(Audio.files("sfx", str(id)).is_empty(), "ambient %s" % id)
+
+
+# --- Music that follows the fight (A2) ---------------------------------------------------------------------------
+
+func test_intensity_versions_by_level() -> void:
+	var I := Audio.Intensity
+	assert_eq(Audio.version_for(3, I.CALM), 0, "three versions: calm plays the first")
+	assert_eq(Audio.version_for(3, I.FIGHT), 1, "a fight the middle one")
+	assert_eq(Audio.version_for(3, I.FULL), 2, "full the last")
+	assert_eq(Audio.version_for(2, I.FIGHT), 0, "two versions: a fight stays on the first")
+	assert_eq(Audio.version_for(2, I.FULL), 1)
+	assert_eq(Audio.version_for(1, I.FULL), 0, "one recording has nothing to swell to")
+
+
+## The free way to swell: at full intensity the music crossfades to the mood "rises" names, and back as the danger
+## passes; a mood with recordings made at several intensities swells inside its own recording instead.
+func test_full_intensity_rises_to_the_harder_mood() -> void:
+	var saved := [Audio._data, Audio.mood, Audio.intensity, Audio.playing_id]
+	Audio._data = {"music": {"combat": ["res://a.ogg"], "combat_hard": ["res://b.ogg"], "boss": [["res://c1.ogg", "res://c2.ogg"]]},
+		"rises": {"combat": "combat_hard", "boss": "combat_hard", "wilds": "combat_hard"}}
+	Audio.mood = ""
+	Audio.play_music("combat")
+	assert_eq(Audio.intensity, Audio.Intensity.FIGHT, "a fight starts at its own intensity")
+	assert_eq(Audio.playing_id, "combat")
+	Audio.set_intensity(Audio.Intensity.FULL)
+	assert_eq(Audio.playing_id, "combat_hard", "full intensity crossfades to the harder mood")
+	Audio.set_intensity(Audio.Intensity.FIGHT)
+	assert_eq(Audio.playing_id, "combat", "and back once the danger passes")
+	assert_true(Audio.has_versions("boss"))
+	assert_eq(Audio.music_for("boss", Audio.Intensity.FULL), "boss", "a recording with versions swells in itself")
+	assert_eq(Audio.files("music", "boss"), ["res://c1.ogg", "res://c2.ogg"] as Array[String], "every version is listed")
+	Audio.play_music("wilds")
+	assert_eq(Audio.intensity, Audio.Intensity.CALM, "leaving the fight calms the music")
+	Audio._data = saved[0]
+	Audio.mood = saved[1]
+	Audio.intensity = saved[2]
+	Audio.playing_id = saved[3]
+
+
+func test_danger_rises_with_a_bloodied_hero_or_a_boss() -> void:
+	var e := TestCombat.open_field()
+	var hero := TestCombat.hero(e, "hedda_ironvow", Vector2i(1, 1))
+	TestCombat.foe(e, "zombie", Vector2i(5, 1))
+	assert_eq(Audio.danger(e.combatants), Audio.Intensity.FIGHT, "a fresh party against zombies")
+	hero.creature.hp = floori(hero.creature.max_hp() / 2.0)
+	assert_eq(Audio.danger(e.combatants), Audio.Intensity.FULL, "a Bloodied hero")
+	hero.creature.hp = hero.creature.max_hp()
+	var strahd := TestCombat.foe(e, "strahd_von_zarovich", Vector2i(8, 4))
+	assert_eq(Audio.danger(e.combatants), Audio.Intensity.FULL, "Strahd on the field")
+	strahd.creature.hp = 0
+	assert_eq(Audio.danger(e.combatants), Audio.Intensity.FIGHT, "a fallen boss no longer counts")

@@ -869,8 +869,8 @@ func after_miss(c: Combatant, target: Combatant, option: Dictionary, _r: CombatR
 	after_attack(c, target, option, false)
 
 
-## Any attack, hit or miss: a thrown weapon that returns to its wielder's hand (Dwarven Thrower, Hammer of
-## Thunderbolts, a weapon with the `returns` rule) comes back.
+## Any attack, hit or miss: a thrown weapon that returns to its wielder's hand (a weapon with the `returns` rule: a
+## Dwarven Thrower, Whelm) comes back off the ground (GroundItems).
 func after_attack(c: Combatant, _target: Combatant, option: Dictionary, _hit: bool) -> void:
 	var ch := ch_of(c)
 	if ch == null or str(option.get("kind", "")) != "thrown":
@@ -878,12 +878,8 @@ func after_attack(c: Combatant, _target: Combatant, option: Dictionary, _hit: bo
 	var p := option["profile"] as WeaponProfile
 	var data := comp().item_data(p.item_id)
 	if bool(_rules(data).get("returns", false)) and (not MagicItems.needs_attunement(data) or p.item_id in ch.attuned):
-		for e in ch.inventory:
-			if str(e["id"]) == p.item_id:
-				e["qty"] = int(e["qty"]) + 1
-				enc().log.add("info", "%s flies back to %s's hand" % [data.get("name", ""), c.name()], c.id)
-				return
-		ch.add_item(p.item_id)
+		if enc().ground.fly_back(c, p.item_id):
+			enc().log.add("info", "%s flies back to %s's hand" % [data.get("name", ""), c.name()], c.id)
 
 
 ## One `on_hit` rule: a save against the item's DC with effects on a failure (and damage, half or none on a success).

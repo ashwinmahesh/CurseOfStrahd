@@ -446,7 +446,7 @@ func metal_of(t: Combatant) -> String:
 		if note.contains(word):
 			return "armor"
 	for a: Variant in m.data.get("actions", []):
-		if bool((a as Dictionary).get("weapon", false)):
+		if bool((a as Dictionary).get("weapon", false)) and enc().ground.weapon_gone(t, a as Dictionary) == "":
 			return "weapon"
 	return ""
 
@@ -470,11 +470,7 @@ func heat_metal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	var dc := (ctx["nums"]["dc"] as Breakdown).total()
 	var sv := t.creature.roll_save(e.dice, &"con", dc, [], [], "Constitution save vs Heat Metal (%s)" % t.name(), SpellCaster.spell_save_keys((ctx["c"] as Combatant).id))
 	if not sv.success and metal == "weapon":
-		if t.creature is Character:
-			(t.creature as Character).unequip("main_hand")
-		else:
-			t.set_meta("disarmed", true)
-		e.log.add("info", "%s drops the searing weapon" % t.name(), t.id, [sv.describe()])
+		e.ground.disarm(t, null, "Heat Metal", [sv.describe()])
 		return
 	var fx := Effect.new("Searing metal", &"spell", "heat_metal").with_modifier("disadvantage", {"on": "attack"}).with_modifier("disadvantage", {"on": "check:all"})
 	fx.caster_id = c.id

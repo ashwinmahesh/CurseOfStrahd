@@ -2306,6 +2306,31 @@ def _brazier(p, R, H, fire):
     p.socket("flame", (0.0, 0.0, H * 0.88))
 
 
+@model("flame", "free", ["flame"])
+def flame(p):
+    """A fire's flames, the 2D flame's 3D stand-in: 1 unit tall, scaled to each fire by SetDressing.flame (fires,
+    braziers, hearths, torches, burning things). A tall licking tongue of flame over a white-hot heart, with shorter
+    tongues curling up round it, some of them red. Every surface glows; the game draws it without a shadow."""
+    rng = p.rng
+
+    def tongue(x0, y0, h, r, lean, phase, mat, n=9):
+        pts, radii = [], []
+        for i in range(n + 1):
+            t = i / n
+            sway = math.sin(t * 3.4 + phase) * 0.05 * t
+            out = lean * math.sin(t * math.pi * 0.85)
+            pts.append((x0 * (1 + out) + sway, y0 * (1 + out) + sway * 0.6, t * h))
+            radii.append(r * (1.0 - t) ** 0.75 * (0.7 + 0.3 * math.sin(t * math.pi + 0.4)))
+        p.tube(pts, r, mat, segs=8, radii=radii)
+
+    p.lathe([(0.0, 0.0), (0.2, 0.0), (0.24, 0.07), (0.19, 0.18), (0.09, 0.3), (0.0, 0.36)], (0, 0, 0), "glow_candle", segs=12)
+    tongue(0.0, 0.0, 1.0, 0.2, 0.0, 0.0, "glow_flame", n=12)
+    for k in range(6):
+        a = 2 * math.pi * k / 6 + rng.uniform(-0.3, 0.3)
+        tongue(0.12 * math.cos(a), 0.12 * math.sin(a), rng.uniform(0.4, 0.7), rng.uniform(0.07, 0.1), rng.uniform(0.4, 0.9),
+               rng.uniform(0, 6.28), "glow_ember" if k % 3 == 0 else "glow_flame")
+
+
 @model("brazier", "free", ["brazier"])
 def brazier(p):
     """The 2D brazier: a wrought-iron basket of glowing coals on three scrolled legs."""
