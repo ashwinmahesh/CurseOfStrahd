@@ -276,3 +276,15 @@ once
 ~ search:cairn_necklace
 | Among the names scratched on the cairn's stones hangs a necklace of glass beads, each one with a bubble of air trapped inside.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the Tser Pool camp at work.
+
+~ examine:tser_knife_stump
+| An old stump chewed to splinters, with a knot dead in its middle that is chewed worst of all. Two knives are still in it.
+
+~ examine:tser_deer
+| A young deer hung by its back legs from a branch, half skinned, with the hide pegged out on the ground beside it to scrape.
+
+~ search:tser_stage_bell
+| In the mud behind the stage, a little brass bell on a broken ankle-string, the kind a dancer wears. {name} wipes it clean.
+once

@@ -1,0 +1,17 @@
+{
+  "id": "camp_lookout",
+  "name": "Mihnea",
+  "title": "Lookout of the Lake Camp",
+  "summary": "A hooded young man walking the camp's edge and watching the road to Vallaki, with a knife he keeps touching.",
+  "portrait": "bandit",
+  "sprite": "bandit",
+  "attitude": "indifferent",
+  "monster": "bandit",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "vallaki_vistani_camp"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

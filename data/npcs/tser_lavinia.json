@@ -1,0 +1,17 @@
+{
+  "id": "tser_lavinia",
+  "name": "Lavinia",
+  "title": "Dancer of the Tser Pool Camp",
+  "summary": "A Vistani dancer with green paint on her face and her hair loose, practising on the plank stage for whoever is listening, and for whoever isn't.",
+  "portrait": "druid",
+  "sprite": "druid",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "tser_pool"
+  ],
+  "region": "svalich_road",
+  "pronouns": "she/her"
+}

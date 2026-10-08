@@ -1,0 +1,18 @@
+{
+  "id": "camp_dog",
+  "name": "A Camp Dog",
+  "title": "Of the Vistani",
+  "summary": "A lean grey camp dog that follows whoever is carrying food.",
+  "portrait": "mastiff",
+  "sprite": "mastiff",
+  "attitude": "indifferent",
+  "monster": "mastiff",
+  "guest": false,
+  "tags": [
+    "animal",
+    "vallaki_vistani_camp"
+  ],
+  "region": "vallaki",
+  "pronouns": "it/its",
+  "pockets": false
+}

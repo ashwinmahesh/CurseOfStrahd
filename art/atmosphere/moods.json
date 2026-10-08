@@ -293,6 +293,28 @@
           "rim": "flame",
           "size": 0.08
         }
+      ],
+      "lines": [
+        {
+          "from": [
+            19.6,
+            7.5
+          ],
+          "to": [
+            23.4,
+            7.5
+          ]
+        },
+        {
+          "from": [
+            38.5,
+            4.6
+          ],
+          "to": [
+            38.5,
+            7.4
+          ]
+        }
       ]
     },
     "lake_zarovich": {
@@ -506,7 +528,29 @@
         "reflect": 0.5,
         "map": "void",
         "map_edge": "slate"
-      }
+      },
+      "lines": [
+        {
+          "from": [
+            1.6,
+            7.5
+          ],
+          "to": [
+            7.4,
+            7.5
+          ]
+        },
+        {
+          "from": [
+            24.6,
+            7.5
+          ],
+          "to": [
+            30.4,
+            7.5
+          ]
+        }
+      ]
     },
     "wizard_of_wines": {
       "like": "barovia_village",

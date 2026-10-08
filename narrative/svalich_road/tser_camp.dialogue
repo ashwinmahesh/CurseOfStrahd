@@ -105,3 +105,22 @@ elif flag.carriage_beaten
 Zora: It went back up the castle road the other night, empty, faster than it came. I counted that too.
 endif
 -> END
+
+# Lane 28 (2026-10-08, "more people walking around and doing things"): Lavinia dancing on the plank stage, Iancu
+# throwing knives at a stump, Old Marin skinning a deer by the trees, and the camp dog. Unvoiced for now.
+
+~ lavinia
+Lavinia [smile]: Clap or don't, the steps are the same. My grandmother danced this for a prince once. He was dead by morning, but she said he'd enjoyed it.
+-> END
+
+~ iancu
+Iancu: Ten paces. I hit the knot nine times in ten. Stanimir says that tenth one is the one that kills you. So I keep throwing.
+-> END
+
+~ marin
+Old Marin: One deer, and I walked half the night for it. The wolves had the rest. They don't share, and nor do I, unless you're hungry. Are you hungry?
+-> END
+
+~ dog
+Narrator: The camp dog noses at your pack, finds nothing worth stealing, and wanders back to the fire to wait for Dorina to drop something.
+-> END
