@@ -751,6 +751,17 @@
       "label": "Plaster painted with juggling balls, gone the colour of bruises",
       "model": "jester_plaster",
       "kind": "decor"
+    },
+    {
+      "id": "unnamed_crypt",
+      "cell": [
+        41,
+        21
+      ],
+      "kind": "examine",
+      "label": "A crypt with no name",
+      "model": "crypt_small",
+      "dialogue": "castle_ravenloft/the_unnamed_crypt:crypt"
     }
   ],
   "containers": [
@@ -1078,6 +1089,151 @@
           ]
         }
       ]
+    },
+    {
+      "id": "corvina",
+      "trigger": "dialogue",
+      "when": "flag.corvina_named and level >= 10",
+      "text": "Corvina stands up out of her crypt, and the iron gates along the row swing shut by themselves, one after another, like a house being locked for the night.",
+      "monsters": [
+        {
+          "monster": "corvina",
+          "cell": [
+            39,
+            22
+          ],
+          "hp": 105
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            38,
+            20
+          ],
+          "name": "A Door-Warden"
+        }
+      ],
+      "surprise": "",
+      "flag": "corvina_slain"
+    },
+    {
+      "id": "corvina",
+      "trigger": "dialogue",
+      "when": "level >= 10",
+      "text": "Corvina stands up out of her crypt, and the iron gates along the row swing shut by themselves, one after another, like a house being locked for the night.",
+      "monsters": [
+        {
+          "monster": "corvina",
+          "cell": [
+            39,
+            22
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            38,
+            20
+          ],
+          "name": "A Door-Warden"
+        }
+      ],
+      "surprise": "",
+      "flag": "corvina_slain"
+    },
+    {
+      "id": "corvina",
+      "trigger": "dialogue",
+      "when": "flag.corvina_named and level >= 9",
+      "text": "Corvina stands up out of her crypt, and the iron gates along the row swing shut by themselves, one after another, like a house being locked for the night.",
+      "monsters": [
+        {
+          "monster": "corvina",
+          "cell": [
+            39,
+            22
+          ],
+          "hp": 100
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            38,
+            20
+          ],
+          "name": "A Door-Warden"
+        }
+      ],
+      "surprise": "",
+      "flag": "corvina_slain"
+    },
+    {
+      "id": "corvina",
+      "trigger": "dialogue",
+      "when": "level >= 9",
+      "text": "Corvina stands up out of her crypt, and the iron gates along the row swing shut by themselves, one after another, like a house being locked for the night.",
+      "monsters": [
+        {
+          "monster": "corvina",
+          "cell": [
+            39,
+            22
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            38,
+            20
+          ],
+          "name": "A Door-Warden"
+        }
+      ],
+      "surprise": "",
+      "flag": "corvina_slain"
+    },
+    {
+      "id": "corvina",
+      "trigger": "dialogue",
+      "when": "flag.corvina_named",
+      "text": "Corvina stands up out of her crypt, and the iron gates along the row swing shut by themselves, one after another, like a house being locked for the night.",
+      "monsters": [
+        {
+          "monster": "corvina",
+          "cell": [
+            39,
+            22
+          ],
+          "hp": 95
+        }
+      ],
+      "surprise": "",
+      "flag": "corvina_slain"
+    },
+    {
+      "id": "corvina",
+      "trigger": "dialogue",
+      "text": "Corvina stands up out of her crypt, and the iron gates along the row swing shut by themselves, one after another, like a house being locked for the night.",
+      "monsters": [
+        {
+          "monster": "corvina",
+          "cell": [
+            39,
+            22
+          ],
+          "hp": 130
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            38,
+            20
+          ],
+          "name": "A Door-Warden"
+        }
+      ],
+      "surprise": "",
+      "flag": "corvina_slain"
     }
   ],
   "narration": {

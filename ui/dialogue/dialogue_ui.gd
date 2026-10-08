@@ -165,6 +165,7 @@ func _ready() -> void:
 	go.set_meta(&"pad_first", true)   # a pad lands on it, so A goes on as it always has (PadNav)
 	_continue_row.add_child(go)
 	_hint = _label("or click, Space, Enter or Esc", 13, "parchment")
+	PadGlyphs.hint(_hint, _hint.text, "or {a}")
 	_continue_row.add_child(_hint)
 	right.add_child(_continue_row)
 	# The scroll-back of what's been said: a button under the speaker's name, and H.

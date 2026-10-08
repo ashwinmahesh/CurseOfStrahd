@@ -1,0 +1,67 @@
+# The Unnamed Crypt (side quest, docs/story/side_quests.md): one crypt in Castle Ravenloft's catacombs has no name on
+# it. In it is Corvina, Mordenkainen's apprentice, who held a door against the count forty years ago so her master
+# could run, and was made one of his spawn for it: she holds his doors now (data/monsters/corvina.json). Her name,
+# from The Mage's Lost Pages, reaches her before the fight and weakens what holds her; the fight comes anyway. Reached
+# from Pidlwick II's "Heard anything interesting?" and the crypt itself (prop unnamed_crypt). Every line here is
+# unvoiced for now.
+
+# --- Pidlwick II (spires_pidlwick:menu and :companion jump here) ---
+
+~ pidlwick_news
+if not quest.the_unnamed_crypt
+quest the_unnamed_crypt rumored
+endif
+Pidlwick II: (He writes, rubs it out, writes again.) A LADY IN THE CELLARS. THE BIG CELLARS, WITH THE DEAD.
+Pidlwick II: SHE HOLDS DOORS FOR HIM. ALL NIGHT. SHE HAS NO NAME ON HER BOX. (He taps the slate, very serious.) EVERYBODY HAS A NAME ON THEIR BOX. EVEN THE HORSE.
+-> END
+
+# --- The crypt with no name (prop unnamed_crypt, in the catacombs) ---
+
+~ crypt
+if quest.the_unnamed_crypt == done
+Narrator: The crypt at the end of the row has a name on it now, scratched into the stone with a knife: CORVINA. Somebody has left a candle.
+-> END
+endif
+if flag.corvina_slain
+-> after
+endif
+if not quest.the_unnamed_crypt or quest.the_unnamed_crypt == rumored
+quest the_unnamed_crypt found
+endif
+Narrator: A small crypt at the end of the row, with a lid of plain black stone and no name cut into it: not worn away, never cut. Every other crypt in the catacombs has a name. Even the horse's.
+Narrator: The lid isn't sealed. It's been opened and closed from the inside, many times; the dust on it has handprints.
+* [if flag.corvina_name_known] Corvina. -> named
+* (Lift the lid.) -> lid
+* (Leave it shut.) -> END
+
+~ named
+set corvina_named
+Narrator: You say it to the lid. The catacombs go very quiet, the way a room does when someone stops a clock.
+Narrator: The lid slides back by itself. A young woman sits up in the crypt, grey to the lips, in the rags of a scholar's coat, with ink still on her fingers after forty years.
+Corvina: (Very slowly, as if she's reading it off a page.) Corvina. That's mine. I'd put it down somewhere. (She looks at you properly.) He sent you. He remembered.
+Corvina [sad]: Tell him it's all right. Tell him I'd do it again. And then stand back, because I can't stop. I hold the master's doors. The new master's. I've held them so long I'm made of it.
+-> fight
+
+~ lid
+Narrator: You lift the lid. A young woman lies in the crypt with her eyes open, grey to the lips, in the rags of a scholar's coat, with ink still on her fingers. She sits up as if she's been waiting.
+Corvina: You're in the wrong part of the house. This door is held. They're all held. That's what I'm for.
+-> fight
+
+~ fight
+combat corvina
+
+# --- After ---
+
+~ after
+quest the_unnamed_crypt done
+if flag.corvina_named
+Narrator: She doesn't fall the way his spawn fall. She sits down on the edge of her crypt, and looks at her inky fingers, and is gone, a little at a time, like a page left in the sun.
+Corvina: Corvina. Put it on the box. Everybody has a name on their box.
+else
+Narrator: She falls the way his spawn fall, all at once, into dust and an old scholar's coat. In the coat there's a slip of paper with a few lines of small, slanted handwriting and a name at the bottom: Corvina.
+endif
+Narrator: In the crypt, under where she lay, are the things the count let her keep: a purse of old coins in a currency nobody in this valley has seen, and a short black rod with a brass cap, warm to the touch, that drinks the magic out of the air near it.
+gold +500
+give rod_of_absorption
+approve ratatoille +3 liriel_dawnsong +2 godrick_pendlebrook +2 wren_featherfoot +1 thistle +1: You put Corvina's name on her crypt
+-> END

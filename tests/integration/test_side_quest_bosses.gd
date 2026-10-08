@@ -129,5 +129,14 @@ func test_the_grandsire_at_level_8() -> void:
 	await _series("krezk", 23, 8, "grandsire", [1, 2, 3, 4], ["krezk_gate_open", "den_children_freed"], [], ["krezk_gate"])
 
 
+## The sim boots at the catacombs' gate stair; in play the party is at her crypt, inside the open gate.
+func test_corvina_at_level_10() -> void:
+	await _series("castle_ravenloft_catacombs", 23, 10, "corvina", [1, 2, 3, 4], [], [], ["cat_e3_gate"])
+
+
+func test_corvina_named_at_level_10() -> void:
+	await _series("castle_ravenloft_catacombs", 23, 10, "corvina", [1, 2, 3], ["corvina_named"], [], ["cat_e3_gate"])
+
+
 func test_costins_wolves_at_level_1() -> void:
 	await _series("into_the_mists_road", 9, 1, "costin_wolves", [1, 2, 3, 4], ["mists_wolves_resolved"])

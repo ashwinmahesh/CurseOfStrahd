@@ -1,0 +1,31 @@
+{
+  "id": "the_unnamed_crypt",
+  "name": "The Unnamed Crypt",
+  "summary": "One crypt in Castle Ravenloft's catacombs has no name on it, and something in it holds the count's doors.",
+  "giver": "pidlwick_ii",
+  "region": "castle_ravenloft",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Pidlwick II says there's a lady in the catacombs who holds doors for the count all night, and has no name on her box. Everybody has a name on their box. Even the horse.",
+      "objectives": [
+        "Find the crypt with no name in the castle's catacombs"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "At the end of a row in the catacombs, a small crypt with no name ever cut into it, and handprints in the dust on the lid from the inside.",
+      "objectives": [
+        "Open it, and say a name if you have one"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "The crypt was Corvina's, Mordenkainen's apprentice, who held a door against the count forty years ago and held his doors ever since. Her name is on her crypt now.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

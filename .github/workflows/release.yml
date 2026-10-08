@@ -2,11 +2,17 @@
 # published to the downloads bucket (Cloudflare R2, downloads.curseofstrahd.app), so they don't upload from home.
 # Run it from the Actions tab (Release builds → Run workflow) or: gh workflow run release.yml -f version=1.0.1 -f upload=true
 # With upload off it's a dry run: everything is built and checked, nothing is published.
+# A run that publishes also tags the commit it built as vX.Y.Z (owner, 2026-10-08); it stops before building if that
+# tag is already on another commit. Dry runs make no tag.
 # Secrets (Settings → Secrets and variables → Actions): COS_CLOUDFLARE_R2_API_TOKEN, COS_CLOUDFLARE_ACCOUNT_ID.
-# The first run imports every asset (about 2 hours); later runs start from the cached import and LFS objects.
+# The first run imports every asset (about 2 hours); later runs start from the cached import and LFS objects. GitHub
+# drops a cache nobody has read for 7 days, so a scheduled keep-warm job reads the three caches twice a week (weekly
+# would sit right on the 7-day line, and scheduled runs can start hours late).
 name: Release builds
 
 on:
+  schedule:
+    - cron: "23 7 * * 1,4"
   workflow_dispatch:
     inputs:
       version:
@@ -22,7 +28,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: release
+  # One release at a time; the keep-warm job has its own group, so it never displaces a queued release.
+  group: release-${{ github.event_name }}
   cancel-in-progress: false
 
 env:
@@ -36,9 +43,22 @@ env:
 
 jobs:
   release:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 350
+    permissions:
+      contents: read
+      actions: write   # to drop the import caches this run's own replaces
+    env:
+      VERSION: ${{ inputs.version }}
     steps:
+      - name: Check the version
+        run: |
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::The version must look like 1.0.1, not '$VERSION'"
+            exit 1
+          fi
+
       - name: Make room on the runner
         run: |
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
@@ -48,18 +68,45 @@ jobs:
         with:
           lfs: false
 
+      - name: Check the tag is free
+        if: inputs.upload
+        run: |
+          tag="v${VERSION}"
+          if git ls-remote --exit-code --tags origin "refs/tags/${tag}" > /dev/null; then
+            git fetch -q --no-tags origin "refs/tags/${tag}:refs/tags/${tag}"
+            at="$(git rev-parse "${tag}^{commit}")"
+            if [ "$at" != "$GITHUB_SHA" ]; then
+              echo "::error::${tag} is already on ${at}, not on ${GITHUB_SHA}. Pick a new version."
+              exit 1
+            fi
+            echo "${tag} is already on this commit"
+          fi
+
       - name: List the LFS files the game needs
-        run: git lfs ls-files -l -X "art/generated/**" | cut -d' ' -f1 | sort > "$RUNNER_TEMP/lfs-ids.txt"
+        id: lfs
+        run: |
+          # hashFiles can't read outside the workspace, so the key's hash is made here.
+          ids="$(git lfs ls-files -l -X "art/generated/**" | cut -d' ' -f1 | sort | sha256sum | cut -c1-16)"
+          echo "ids=${ids}" >> "$GITHUB_OUTPUT"
 
       - name: Restore LFS objects
-        uses: actions/cache@v4
+        id: lfs-cache
+        uses: actions/cache/restore@v4
         with:
           path: .git/lfs/objects
-          key: lfs-${{ hashFiles(format('{0}/lfs-ids.txt', runner.temp)) }}
+          key: lfs-${{ steps.lfs.outputs.ids }}
           restore-keys: lfs-
 
       - name: Fetch LFS files (the raw generated art isn't used by the game)
         run: git lfs pull -X "art/generated/**"
+
+      - name: Save LFS objects
+        id: lfs-save
+        if: steps.lfs-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .git/lfs/objects
+          key: lfs-${{ steps.lfs.outputs.ids }}
 
       - name: Keep the importer out of folders the game never loads
         run: touch art/generated/.gdignore art/sourced/game_icons/.gdignore
@@ -98,7 +145,8 @@ jobs:
           echo "GODOT=$HOME/bin/Godot_v${GODOT_VERSION}-stable_linux.x86_64" >> "$GITHUB_ENV"
 
       - name: Restore the import cache
-        uses: actions/cache@v4
+        id: import-cache
+        uses: actions/cache/restore@v4
         with:
           path: .godot
           key: import-${{ env.GODOT_VERSION }}-${{ github.sha }}
@@ -109,15 +157,46 @@ jobs:
           IMPORT_HEADLESS: "1"
         run: |
           sudo apt-get install -y -qq zip > /dev/null
-          make release OUT="$RUNNER_TEMP/release" VERSION="${{ inputs.version }}"
+          make release OUT="$RUNNER_TEMP/release" VERSION="$VERSION"
           ls -la "$RUNNER_TEMP/release" "$RUNNER_TEMP/release/macos"
+
+      # Saved even when the export fails, since the import is the slow part.
+      - name: Save the import cache
+        id: import-save
+        if: ${{ !cancelled() && steps.import-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v4
+        with:
+          path: .godot
+          key: import-${{ env.GODOT_VERSION }}-${{ github.sha }}
+
+      # Each commit's import and each set of LFS files gets its own cache, a few GB of the repository's 10 GB, so once
+      # a new one is saved the older ones on main go. Otherwise GitHub makes room by dropping whichever cache was read
+      # least recently, which can be the one the next run needs.
+      - name: Drop the caches this run replaced
+        if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LFS_SAVED: ${{ steps.lfs-save.outcome == 'success' }}
+          LFS_KEY: lfs-${{ steps.lfs.outputs.ids }}
+          IMPORT_SAVED: ${{ steps.import-save.outcome == 'success' }}
+          IMPORT_KEY: import-${{ env.GODOT_VERSION }}-${{ github.sha }}
+        run: |
+          drop() {   # drop <prefix> <key to keep>
+            KEEP="$2" gh cache list -R "$GITHUB_REPOSITORY" --key "$1" --limit 100 --json id,key,ref \
+              --jq '.[] | select(.ref == "refs/heads/main" and .key != env.KEEP) | "\(.id) \(.key)"' |
+            while read -r id key; do
+              echo "Dropping ${key}"
+              gh cache delete "$id" -R "$GITHUB_REPOSITORY"
+            done
+          }
+          if [ "$LFS_SAVED" = true ]; then drop lfs- "$LFS_KEY"; fi
+          if [ "$IMPORT_SAVED" = true ]; then drop import- "$IMPORT_KEY"; fi
 
       - name: Publish to the downloads bucket
         if: inputs.upload
         env:
           COS_CLOUDFLARE_R2_API_TOKEN: ${{ secrets.COS_CLOUDFLARE_R2_API_TOKEN }}
           COS_CLOUDFLARE_ACCOUNT_ID: ${{ secrets.COS_CLOUDFLARE_ACCOUNT_ID }}
-          VERSION: ${{ inputs.version }}
         run: |
           sudo apt-get install -y -qq rclone > /dev/null
           # An R2 token's S3 credentials: its id, and the SHA-256 of its value. Never printed.
@@ -138,3 +217,82 @@ jobs:
             curl -fsSI "${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-${os}.zip" | head -1
           done
           echo "Published ${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-macos.zip and ...-windows.zip" >> "$GITHUB_STEP_SUMMARY"
+
+  # Its own job, so only these few lines hold a token that can write to the repository.
+  tag:
+    needs: release
+    if: github.event_name == 'workflow_dispatch' && inputs.upload
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      VERSION: ${{ inputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - name: Tag the commit that was published
+        run: |
+          tag="v${VERSION}"
+          if git ls-remote --exit-code --tags origin "refs/tags/${tag}" > /dev/null; then
+            git fetch -q --no-tags origin "refs/tags/${tag}:refs/tags/${tag}"
+            at="$(git rev-parse "${tag}^{commit}")"
+            if [ "$at" != "$GITHUB_SHA" ]; then
+              echo "::error::${tag} is already on ${at}, not on ${GITHUB_SHA}"
+              exit 1
+            fi
+            echo "${tag} is already on this commit"
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            tag -a "$tag" "$GITHUB_SHA" -m "Curse of Strahd ${VERSION}" \
+            -m "Downloads: ${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-macos.zip and -windows.zip"
+          git push origin "refs/tags/${tag}"
+          echo "Tagged ${GITHUB_SHA} as ${tag}" >> "$GITHUB_STEP_SUMMARY"
+
+  # Reads the three caches so GitHub keeps them (see the top of the file). Nothing is built.
+  keep-warm:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Make room on the runner
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
+
+      # The paths must match the release job's exactly, or the caches don't match.
+      - name: Read the LFS cache
+        id: lfs
+        uses: actions/cache/restore@v4
+        with:
+          path: .git/lfs/objects
+          key: lfs-keep-warm
+          restore-keys: lfs-
+
+      - name: Read the Godot cache
+        id: godot
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/godot-dl
+          key: godot-${{ env.GODOT_VERSION }}-${{ env.RCODESIGN_VERSION }}
+
+      - name: Read the import cache
+        id: import
+        uses: actions/cache/restore@v4
+        with:
+          path: .godot
+          key: import-${{ env.GODOT_VERSION }}-keep-warm
+          restore-keys: import-${{ env.GODOT_VERSION }}-
+
+      - name: Report
+        env:
+          LFS: ${{ steps.lfs.outputs.cache-matched-key }}
+          GODOT: ${{ steps.godot.outputs.cache-matched-key }}
+          IMPORT: ${{ steps.import.outputs.cache-matched-key }}
+        run: |
+          {
+            echo "LFS cache: ${LFS:-none}"
+            echo "Godot cache: ${GODOT:-none}"
+            echo "Import cache: ${IMPORT:-none}"
+          } | tee -a "$GITHUB_STEP_SUMMARY"

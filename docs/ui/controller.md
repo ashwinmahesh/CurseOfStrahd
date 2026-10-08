@@ -34,6 +34,22 @@ so hover cards and tooltips work, and hides while the pad is in use; moving the 
 A screen can add `pad_tab(step)` (LB/RB) and `pad_character(step)` (LT/RT) methods; without `pad_tab`, a
 TabContainer, TabBar or group of toggle buttons is stepped instead.
 
+## Button pictures, the prompt bar and hints (`ui/common/pad_glyphs.gd`, `pad_prompts.gd`)
+
+The pictures are Kenney's Input Prompts (CC0, `art/sourced/kenney_input_prompts/`, only the ones used): Xbox,
+PlayStation and Nintendo. The family follows the pad in use (by its name or vendor), or Settings > Game > Button icons
+fixes one. A button is named by its place: `PadGlyphs.texture("a")` is Cross on a PlayStation pad and B on a Nintendo
+one.
+
+While the pad is in use on a screen, the prompt bar at the bottom right shows what its buttons do there: A Choose,
+B Back, X with the focused control's `pad_menu` meta (the menu's name), Y Explain when it has a rules card, LB/RB
+Tabs and LT/RT Character when the screen has them, plus anything its `pad_prompts()` returns ([place, text] pairs).
+
+Text that names keys switches too: `PadGlyphs.hint(label, "Esc: close", "{b}: close")` shows the keys while the
+mouse and keyboard are in use and the pad's words otherwise ("Circle: close" on a PlayStation pad), and follows the
+device as it changes. The screens' "Esc: close", the rules cards' pin hint, the conversation's and the ending's
+continue hints use it.
+
 ## Exploring and fights
 
 Exploring and fights read the pad themselves (`world/game_root.gd`, `world/combat/combat_view.gd`); see

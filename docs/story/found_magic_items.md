@@ -292,3 +292,4 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Dungeon, the throne of bones | Ring of Regeneration (very rare) | Search (Perception DC 16) |
 | ✅ | Cyrus Belview | Ioun Stone of Sustenance (rare) | Gift: when you bring news of his family |
 | ✅ | Pidlwick II | Figurine of Wondrous Power, Ebony Fly (rare) | Gift: when you bring back his key |
+| ✅ | The catacombs, the crypt with no name | Rod of Absorption (very rare) | Hoard: in Corvina's crypt, once she's at rest (The Unnamed Crypt, docs/story/side_quests.md) |

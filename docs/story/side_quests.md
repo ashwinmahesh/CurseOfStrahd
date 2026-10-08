@@ -541,6 +541,27 @@ inside.
 - No fight. It leads to The Unnamed Crypt (batch 4, the castle).
 - Corvina's first ring, which he took off her desk the night they went up: a Ring of Telekinesis (very rare).
 
+## Castle Ravenloft (level 10)
+
+### The Unnamed Crypt (`the_unnamed_crypt`, narrative/castle_ravenloft/the_unnamed_crypt.dialogue; batch 4)
+
+Pidlwick II gets "Heard anything interesting?" (the castle's rumour-giver, in his stair menu and when he travels with
+the party): a lady in the catacombs holds doors for the count all night and has no name on her box; everybody has a
+name on their box, even the horse. The crypt at the end of the east row (prop `unnamed_crypt`) has no name cut into it
+and handprints in the dust on the lid from the inside. **Twist:** it's Corvina, Mordenkainen's apprentice (The Mage's
+Lost Pages), made one of the count's spawn for holding the door while her master ran; she holds the count's doors now.
+**Escalation:** with her name from Mordenkainen (`corvina_name_known`), saying it before she rises weakens what holds her
+(`corvina_named`), but she can't stop; without it, the lid is all there is.
+
+- **Boss: Corvina, the Doorkeeper** (data/monsters/corvina.json, `source.book: custom`, from the 2025 Monster Manual's
+  vampire spawn and mage, drawn with the vampire spawn's sprite): Medium undead, AC 16, 165 HP, claws with necrotic
+  chill or arcane bolts of force, Slam the Door (recharge 5-6, a 30-ft cone that pushes), Regeneration 10 that radiant
+  stops, Legendary Resistance (2/day), and a bolt or a step between turns. CR 12.
+- Fight `corvina` in her crypt: level 10 Corvina and a door-warden (a helmed horror); named, she's down to 105 HP (the
+  autopilot wins 2 of 3 named, 1 of 4 not, losing two to four party members a fight); level 9 and below, lighter.
+- In her crypt: 500 gp in a currency nobody here has seen, and a Rod of Absorption (very rare). Her name goes on the
+  crypt, and Mordenkainen has a line for it.
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -582,6 +603,8 @@ doesn't speak). Batch 4, the
 crossroads by day: the_tinkers_wagon.dialogue in full (new speaker Iosif the Tinker; also Zora's three new lines). Batch 4,
 Vallaki: the_ravens_ransom.dialogue in full (new speakers Bray and the Fowler; also Urwin and Danika). Batch 4,
 Krezk: the_packs_runt.dialogue in full (new speakers Little Petru and the Grandsire; also the Krezk watchman). Batch 4,
-Mount Baratok: the_mages_lost_pages.dialogue in full (Mordenkainen; the letters are Narrator). Batch 5,
+Mount Baratok: the_mages_lost_pages.dialogue in full (Mordenkainen; the letters are Narrator). Batch 4,
+Castle Ravenloft: the_unnamed_crypt.dialogue in full (new speaker Corvina; also Pidlwick II) and Mordenkainen's new
+line in the_mages_lost_pages.dialogue. Batch 5,
 Into the Mists: the_last_traveller.dialogue in full (new speaker Costin; also Goodwife Petra) and Old Mihail's new
 gravedigger line in the village townsfolk.dialogue.

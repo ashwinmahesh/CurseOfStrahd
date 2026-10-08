@@ -161,6 +161,7 @@ static func screen_frame(root: CanvasLayer, title_text: String, size: Vector2 = 
 	p.add_child(box)
 	# The way out is noted just under the bottom border, clear of the corners.
 	var esc := label("Esc: close", 13, "parchment")
+	PadGlyphs.hint(esc, "Esc: close", "{b}: close")
 	esc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_centre(esc, Vector2(-100, size.y / 2.0 + 4.0), Vector2(100, size.y / 2.0 + 24.0))
 	root.add_child(esc)

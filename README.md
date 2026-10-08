@@ -9,11 +9,30 @@ a 5-foot grid wherever trouble finds you. You control every member of the party,
 engine follows the 2024 Player's Handbook closely, and every number on screen can show where it came from.
 
 The whole campaign is playable, from the road where the mists close in to Castle Ravenloft: 86 places in 19 regions,
-six voiced companions, a Tarokka reading that reshuffles each playthrough, and five endings. A full list of what's in
-the game is in the vault note *Gameplay Features*.
+six voiced companions, a Tarokka reading that reshuffles each playthrough, and five endings. The [Features](#features)
+below list what's in it, and [curseofstrahd.app](https://curseofstrahd.app) has the trailer, screenshots and an FAQ.
 
-It's built in Godot 4 with typed GDScript, for personal use only. It isn't distributed, and it's an unofficial fan
-project: *Curse of Strahd* and *Dungeons & Dragons* belong to Wizards of the Coast.
+It's built in Godot 4 with typed GDScript.
+
+> **An unofficial fan game.** Curse of Strahd (this game) is a free, non-commercial fan project made by one fan. It is
+> not made, approved, endorsed or sponsored by Wizards of the Coast LLC or Hasbro, Inc., and it is not affiliated with
+> them in any way. It is not for sale and never will be. *Dungeons & Dragons*, *D&D*, *Curse of Strahd* and
+> *Ravenloft* are trademarks of Wizards of the Coast LLC, and the characters, places and story of *Curse of Strahd*
+> are their property; they are named here only to say what the game is based on, with no claim of ownership. Rights
+> holders with a concern can [open an issue](https://github.com/ashwinmahesh/CurseOfStrahd/issues).
+
+## Download
+
+The game is free for macOS (Apple silicon) and Windows 10 and 11 (64-bit), from
+[curseofstrahd.app](https://curseofstrahd.app/#download). Each download is about 3 GB, and about 8.5 GB once unzipped.
+
+- **macOS:** unzip it and open *Curse of Strahd*. It isn't notarized by Apple, so the first time macOS won't open it:
+  go to System Settings → Privacy & Security and choose **Open Anyway**.
+- **Windows:** unzip the whole folder and run `CurseOfStrahd.exe`. It isn't code-signed, so if SmartScreen appears,
+  choose **More info → Run anyway**.
+
+Every published version is tagged in this repo on the commit it was built from ([tags](https://github.com/ashwinmahesh/CurseOfStrahd/tags);
+`v1.0.0` is the first). Problems and bug reports go in [Issues](https://github.com/ashwinmahesh/CurseOfStrahd/issues).
 
 ## Screenshots
 
@@ -40,9 +59,9 @@ project: *Curse of Strahd* and *Dungeons & Dragons* belong to Wizards of the Coa
 | ![Skirmish and the Character Lab](docs/screenshots/skirmish.jpg) | |
 | Skirmish and the Character Lab: any party at any level against any stat blocks. | |
 
-## Running the game
+## Running from source
 
-You need:
+The project is made and tested on a Mac, and the make targets expect a Unix shell. You need:
 
 - macOS on Apple Silicon.
 - Godot 4.7.2 at `/Applications/Godot.app`. Elsewhere, point `GODOT` at the binary (`make run GODOT=/path/to/Godot`).
@@ -105,7 +124,7 @@ Godot). All three must pass with a clean log.
 | `make lint` | Compiles `rules/` and `combat/` standalone, so a stray autoload reference fails. |
 | `make import` | Re-imports assets headlessly. Run it after adding a `class_name`. |
 | `make capture SCENE=… NAME=…` | Opens a window for a few seconds and saves screenshots to `captures/`. Options: `LOCATION=<id>` starts the story there, `ENCOUNTER=<id>` starts a fight, `DIALOGUE=<file:node> [BEATS=n]` plays a conversation, `MAP=1` opens the travel map, `SHOP=<npc>` opens a shop, `LOAD=<slot>` starts from a save, `FOCUS=<node>` takes close-ups of one node as it walks. |
-| `make release [OUT=…] [VERSION=…]` | The Windows and Mac downloads: the Windows export, the Mac app built around the same pack (`tools/release/mac_app.py`), both zipped. Needs Godot's 4.7.2 export templates. The **Release builds** workflow (Actions tab, `.github/workflows/release.yml`) runs it on GitHub and publishes to downloads.curseofstrahd.app. |
+| `make release [OUT=…] [VERSION=…]` | The Windows and Mac downloads: the Windows export, the Mac app built around the same pack (`tools/release/mac_app.py`), both zipped. Needs Godot's 4.7.2 export templates. The **Release builds** workflow (Actions tab, `.github/workflows/release.yml`) runs it on GitHub, publishes to downloads.curseofstrahd.app and tags the commit vX.Y.Z; with upload off it only builds. |
 | `make golden-saves` | Adds the current save version's chapter saves to `tests/saves`, which every test run loads. |
 | `make lane NAME=… BRANCH=…` | A worktree for parallel work whose files and import cache are clones of the main checkout's. |
 | `make palette` | Rebuilds the colour palettes after editing their lists. |
@@ -122,9 +141,18 @@ Godot). All three must pass with a clean log.
 | `make standin` | Renders a stand-in villager so the sprite pipeline runs without generated art. |
 | `make wireframes` | Redraws the UI flow wireframes in `docs/ui/wireframes/`. |
 
+### Releases
+
+`make release` builds both downloads locally. The **Release builds** workflow (`.github/workflows/release.yml`) does
+the same on GitHub: run it from the Actions tab with a version such as `1.0.1`. With **upload** on, it publishes the two
+zips to downloads.curseofstrahd.app and tags the commit it built as `v1.0.1`; it stops before building if that tag is
+already on another commit. With upload off it's a dry run that only builds. It needs the repository secrets
+`COS_CLOUDFLARE_R2_API_TOKEN` and `COS_CLOUDFLARE_ACCOUNT_ID`. The first run imports every asset (about two hours);
+later runs start from the cached import, which a scheduled job keeps warm.
+
 The screenshots in this README were taken off screen from the game at 1920x1080 on the High preset, by capture scenes
-kept with the showcase site (`~/Documents/CurseOfStrahdSite/tools/godot`) run through `tools/capture/capture.tscn` as
-`make capture` does, then shrunk to 1280 px JPEGs.
+kept with the showcase site ([curseofstrahd-site](https://github.com/ashwinmahesh/curseofstrahd-site), in
+`tools/godot`) run through `tools/capture/capture.tscn` as `make capture` does, then shrunk to 1280 px JPEGs.
 
 ## Controls
 
@@ -275,8 +303,10 @@ shows it under Credits on the title screen (from `art/credits.json`).
 
 **Rules.** This work includes material from the System Reference Document 5.2.1 ("SRD 5.2.1") by Wizards of the Coast
 LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0
-International License, available at https://creativecommons.org/licenses/by/4.0/legalcode. Content beyond the SRD is
-used for personal play only; the data files hold mechanics and our own descriptions, not the books' text.
+International License, available at https://creativecommons.org/licenses/by/4.0/legalcode. Content beyond the SRD
+(the *Curse of Strahd* adventure and options from other books) belongs to Wizards of the Coast; this free fan game
+uses it without their endorsement (see the notice at the top), and the data files hold mechanics and our own
+descriptions, not the books' text.
 
 **Icons.** Spell, item and cursor icons by Lorc, Delapouite, Skoll, Sbed, Caro Asercion, Willdabeast, Cathelineau,
 DarkZaitzev, Carl Olsen, Zajkonur and Faithtoken from [game-icons.net](https://game-icons.net/), under
