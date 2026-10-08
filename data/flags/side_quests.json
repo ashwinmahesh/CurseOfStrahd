@@ -485,6 +485,31 @@
       "id": "rag_queen_paid",
       "type": "bool",
       "summary": "Dragos gave the party the brides' dowries and the dancing sword."
+    },
+    {
+      "id": "pidlwick_willing",
+      "type": "bool",
+      "summary": "Pidlwick II agreed to meet Blinsky the toymaker and travels with the party to Vallaki (The Toymaker's Masterpiece)."
+    },
+    {
+      "id": "pidlwick_met_blinsky",
+      "type": "bool",
+      "summary": "Pidlwick II met Blinsky in his shop; the scene at the bottom of Blinsky's stair has played (The Toymaker's Masterpiece)."
+    },
+    {
+      "id": "blinsky_told",
+      "type": "bool",
+      "summary": "The party told Blinsky what Pidlwick II did to the first Pidlwick; Blinsky is building a ramp (The Toymaker's Masterpiece)."
+    },
+    {
+      "id": "pidlwick_with_blinsky",
+      "type": "bool",
+      "summary": "Pidlwick II left the party to live at Blinsky Toys; he's in the shop, not on the castle stair (The Toymaker's Masterpiece)."
+    },
+    {
+      "id": "pidlwick_shop_seen",
+      "type": "bool",
+      "summary": "The party has seen Pidlwick II juggling in Blinsky's window once (The Toymaker's Masterpiece)."
     }
   ]
 }

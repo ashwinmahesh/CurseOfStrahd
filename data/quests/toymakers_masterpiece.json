@@ -1,0 +1,45 @@
+{
+  "id": "toymakers_masterpiece",
+  "name": "The Toymaker's Masterpiece",
+  "summary": "Gadof Blinsky, Vallaki's toymaker, has wanted all his life to see the clockwork jester his master's master made for the count's children.",
+  "giver": "blinsky",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Goodwife Marta says Blinsky the toymaker asks every stranger if they've been up to the castle, and whether a jester his old master made still walks there.",
+      "objectives": [
+        "Ask Blinsky about the jester, at Blinsky Toys in Vallaki"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Fritz von Weerg, Blinsky's master's master, made a jester for the count's children that walked and juggled and bowed. Blinsky would give everything in his shop to see it once. They say it still walks the castle stairs.",
+      "objectives": [
+        "Find von Weerg's jester in Castle Ravenloft"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "willing",
+      "journal": "Von Weerg's jester is Pidlwick II, of the castle's high stair. He's afraid of toymakers, but he's agreed to meet this one.",
+      "objectives": [
+        "Bring Pidlwick II to Blinsky Toys in Vallaki"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "home",
+      "journal": "Pidlwick II lives at Blinsky Toys now, juggling in the window for the children of Vallaki. Blinsky finished his masterwork for us: a black stone horse with the knees exactly right.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "promised",
+      "journal": "Pidlwick II met Blinsky, and will go back to him once the castle is done with; the cards say he's needed first. Blinsky finished his masterwork for us: a black stone horse with the knees exactly right.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

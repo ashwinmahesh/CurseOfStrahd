@@ -35,6 +35,7 @@ Pidlwick II: (He wipes the slate with his sleeve and writes again, quickly.) PLA
 * [if not flag.pidlwick_played] Play a game with him. -> play
 * [if not quest.the_jesters_key] You're ticking slowly. Are you all right? -> winding
 * You know this castle. Show us its secrets. -> secrets
+* [if quest.toymakers_masterpiece and not flag.pidlwick_willing] There's a toymaker in Vallaki who'd like to meet you. -> vallaki/toymakers_masterpiece:pidlwick_asked
 * Goodbye, Pidlwick. -> bye
 
 ~ maker
@@ -177,6 +178,7 @@ Pidlwick II: (He tugs your sleeve and holds up the slate.) WHERE NOW?
 * [if flag.pidlwick_key_found and not flag.pidlwick_wound] We found your key. -> key_back
 * Show us the castle's secrets. -> secrets
 * How are you holding up? -> companion_how
+* [if quest.toymakers_masterpiece and not flag.pidlwick_willing] There's a toymaker in Vallaki who'd like to meet you. -> vallaki/toymakers_masterpiece:pidlwick_asked
 * Wait for us on the stair. -> companion_wait
 * Nothing. Let's go. -> END
 

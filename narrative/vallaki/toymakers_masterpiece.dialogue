@@ -1,0 +1,155 @@
+# The Toymaker's Masterpiece (side quest, docs/story/side_quests.md; the book's Blinsky and the clockwork jester, in
+# our own words): Gadof Blinsky's master's master, Fritz von Weerg, made one toy that walked, for the count's children.
+# Blinsky would give anything to see it. It's Pidlwick II, who is afraid of toymakers, and who pushed the first
+# Pidlwick down a stair. Bring him to Blinsky Toys and see what happens at the bottom of Blinsky's stair. Reached from
+# Goodwife Marta (townsfolk:market), Blinsky (blinsky:menu, blinsky:start) and Pidlwick II (spires_pidlwick:menu and
+# :companion). Every line here is unvoiced for now.
+
+# --- Blinsky's dream (blinsky:menu jumps here) ---
+
+~ dream
+if not quest.toymakers_masterpiece or quest.toymakers_masterpiece == rumored
+quest toymakers_masterpiece asked
+endif
+Blinsky: A toy that walks? Ha. No. Nobody makes a toy that walks. Except once. Once, somebody did.
+Blinsky: My master's master, Fritz von Weerg. He made a jester for the count's children, up the hill, long ago. It walked. It juggled. It bowed. They say it is still up there, in the castle, walking the stairs.
+Blinsky [sad]: I would give everything in this shop to see it. Once. To see how he did the knees. Nobody knows how he did the knees.
+interject tag:curious: You'd want to take it apart.
+Blinsky: Never. I would want to shake its hand. Then, perhaps, if it permitted, to look at the knees.
+-> vallaki/blinsky:menu
+
+# --- Asking Pidlwick II (spires_pidlwick:menu and :companion jump here) ---
+
+~ pidlwick_asked
+if flag.pidlwick_willing
+Pidlwick II: (He taps the slate, where it already says so.) BLINSKY. VALLAKI. I REMEMBER.
+-> END
+endif
+Narrator: You tell him about a toymaker in Vallaki with a jester's cap and a monkey and no customers, who has wanted to meet him all his life.
+Pidlwick II: (He backs up a step and holds his cap on with both hands.) NO. TOYMAKERS OPEN YOU UP. TO SEE.
+-> persuade
+
+~ persuade
+* [Persuasion DC 14] He only wants to say hello. He promised not to open anything. -> willing | not_yet
+* [if flag.pidlwick_played or flag.pidlwick_wound or flag.pidlwick_truth_known] He's lonely, Pidlwick. As lonely as you. -> lonely
+* [if not flag.pidlwick_played] (Toss him a pebble, the way he tossed you the ball.) -> catch
+* Never mind. -> not_yet
+
+~ catch
+set pidlwick_played
+time +10
+Narrator: He catches it without looking. He throws it back, and then a second one from nowhere, and for ten minutes nobody says anything about toymakers at all.
+-> persuade
+
+~ not_yet
+Pidlwick II: (He writes very slowly.) NOT YET.
+if at:vallaki_blinsky_toys
+Narrator: He sits down on the step outside the shop with his back to the window.
+-> vallaki/blinsky:menu
+endif
+-> END
+
+~ lonely
+Narrator: The ticking inside him stops, and starts again. He looks at the slate for a long while before he writes.
+Pidlwick II: LONELY HOW LONG?
+Narrator: You tell him: a long time. All of his life, more or less.
+Pidlwick II: (He wipes the slate.) OK. BUT HE ASKS ABOUT MY KNEES, I LEAVE.
+-> willing
+
+~ willing
+set pidlwick_willing
+quest toymakers_masterpiece willing
+if not guest:pidlwick_ii
+join pidlwick_ii
+Pidlwick II: (He fetches a very small bag from behind a pillar, already packed.) READY. FOR A HUNDRED YEARS.
+endif
+interject tag:kind: He'll be thrilled. You'll be the best thing that's walked into that shop in years.
+if at:vallaki_blinsky_toys
+-> meeting
+endif
+-> END
+
+# --- Blinsky Toys with Pidlwick in the party (blinsky:start jumps here) ---
+
+~ door
+if flag.pidlwick_willing
+-> meeting
+endif
+Narrator: Pidlwick II won't come past the door. He stands on the step outside, his cap held on with both hands, staring at the jester's cap on the tall man behind the counter.
+Pidlwick II: (He writes small, and shows only you.) TOYMAKER. NO. THEY OPEN YOU UP. TO SEE.
+-> persuade
+
+~ meeting
+set pidlwick_met_blinsky
+Narrator: Blinsky sees what is standing behind your legs, and sits down on the floor of his own shop. Piccolo climbs onto his head to see better.
+Blinsky: Oh. Oh. Von Weerg's jester. You are real. You are real, and you are so much smaller than I imagined, and so much better.
+Pidlwick II: (He comes out from behind you, step by careful step, and bows, very low.) HELLO. I AM PIDLWICK. THE SECOND.
+Blinsky: Blinsky. The first. The only, sadly. Would you like some tea? I have two kettles. One of them has a frog in it.
+Narrator: For a while it goes beautifully. Pidlwick juggles three of Blinsky's marbles and drops none. Blinsky laughs, actually laughs, and Piccolo applauds without charging anyone.
+Narrator: Then Blinsky goes up the narrow stair to his workshop to fetch his best puppet, talking all the way, and Pidlwick goes very still at the bottom of the stair, looking up at the back of him.
+if flag.pidlwick_truth_known
+interject tag:blunt: Pidlwick. Look at me. Not the stair.
+endif
+* [if flag.pidlwick_truth_known] (Step between Pidlwick and the stair, and tell Blinsky what happened to the first Pidlwick.) -> truth
+* [if flag.pidlwick_truth_known] (Step between Pidlwick and the stair, and say nothing.) -> silence
+* (Watch him.) -> watch
+
+~ watch
+Narrator: Pidlwick puts one hand on the banister, and takes it off again. Then he writes on his slate and holds it up so only you can see.
+Pidlwick II: I WAS GOING TO. I DIDN'T. THAT IS NEW.
+if not flag.pidlwick_truth_known
+set pidlwick_truth_known
+Narrator: He wipes it and writes the rest, small: the first Pidlwick, a stair at the castle, a push. A hundred years of being sorry.
+endif
+-> stays
+
+~ truth
+set blinsky_told
+Narrator: Blinsky comes down the stair with the puppet in his arms and listens to all of it: the first Pidlwick, the stair, the hundred years of sorry.
+Blinsky [sad]: So. He was jealous, and he was lonely, and he was made too well. I know about all three of those.
+Blinsky: I will build a ramp. Piccolo, we are getting rid of the stairs.
+-> stays
+
+~ silence
+Narrator: Blinsky comes down safely with his puppet, chattering, and never knows how close the bottom step came. Pidlwick watches you watching him, and writes nothing at all.
+-> stays
+
+~ stays
+if tarokka.ally.npc == pidlwick_ii
+-> promised
+endif
+Pidlwick II: (He looks round the shop: the toys, the monkey, the two kettles, the tall sad man.) CAN I STAY?
+Blinsky: Can he stay? He is asking me if he can stay. Piccolo. Piccolo, he is asking.
+leave pidlwick_ii
+set pidlwick_with_blinsky
+quest toymakers_masterpiece home
+-> reward
+
+~ promised
+quest toymakers_masterpiece promised
+Pidlwick II: (He writes, and underlines it twice.) AFTER THE CASTLE. THE CARDS SAY I'M NEEDED. THEN I COME BACK.
+Blinsky: After. Yes. Everything good in this valley is after. I will keep the kettle on. The one without the frog.
+-> reward
+
+~ reward
+Blinsky: And for you. I have been making this for twenty years and never finished it, because I could not get the knees right. Now I have seen his knees.
+Narrator: He brings down a black stone horse no longer than your hand, every hair of the mane cut separately, the knees exactly right.
+Blinsky: Say the word to it, and it is a horse. A real one, a black one, very fast. Do not ask me how. I am not sure I know.
+give figurine_of_wondrous_power_obsidian_steed
+approve wren_featherfoot +2 liriel_dawnsong +2 godrick_pendlebrook +1 thistle +1 ratatoille +2: You brought von Weerg's jester to Blinsky
+-> END
+
+# --- Afterwards: Blinsky (blinsky:start) and Pidlwick in the shop window ---
+
+~ shop_after
+Narrator: Pidlwick II is juggling in the window, and there are three children outside watching him, which may be the most customers Blinsky Toys has ever had at once.
+if flag.blinsky_told
+Narrator: Half the stair has become a ramp, nailed together out of crate lids. Blinsky has painted it with stars.
+endif
+Blinsky [smile]: He has written me an order on his slate: one hour of happiness a day, by decree. He signed it. I am obeying it. The Baron would be so proud.
+-> vallaki/blinsky:menu
+
+~ pidlwick_home
+Pidlwick II: (He drops two of his three balls to wave at you with both hands, and doesn't mind at all.) HELLO. I WORK HERE NOW.
+Pidlwick II: (He wipes the slate and writes again.) HE NEVER ASKED ABOUT MY KNEES. NOT ONCE. I LET HIM LOOK ANYWAY.
+-> END

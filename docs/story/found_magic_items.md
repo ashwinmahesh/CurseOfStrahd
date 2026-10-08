@@ -257,6 +257,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Chapel, under the altar's dust | Amulet of the Devout +3 (very rare) | Search (Investigation DC 17) |
 | ✅ | Court, the count's desk | Crystal Ball (very rare) | Search (Investigation DC 17) |
 | ✅ | Court, the trophy room | Dragon Slayer Longsword (rare) | Search (Perception DC 15): above the dragon's skull |
+| ✅ | Blinsky Toys, Vallaki, once Pidlwick II is brought down from the high tower | Figurine of Wondrous Power, Obsidian Steed (very rare) | Gift: Blinsky's masterwork (The Toymaker's Masterpiece, docs/story/side_quests.md) |
 | ✅ | Treasury | Manual of Gainful Exercise (very rare) | Hoard |
 | ✅ | Count's floor, the tall mirror | Cloak of Displacement (rare) | Search (Investigation DC 17): behind a mirror that shows no one |
 | ✅ | Count's floor, Ludmilla's books | +3 Arcane Grimoire (very rare) | Search (Investigation DC 17) |
