@@ -10,6 +10,9 @@ signal finished(outcome: String)
 signal round_started(round: int)
 ## Escape with nothing to cancel: the game opens its pause menu (the arena has none).
 signal menu_requested
+## The player asked for a party member's character sheet (their frame's portrait, or C for the one shown): the host
+## opens it view only while the fight waits.
+signal sheet_requested(who: Character)
 
 ## Seconds per square for a token moving on the board (owner 2026-10-06: half the old speed, it read unnaturally fast).
 const STEP_TIME := 0.37   # seconds a square (owner 2026-10-07: about 30% slower than 0.26)
@@ -97,6 +100,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	hud.undo_move_pressed.connect(_undo_move)
 	hud.reaction_answered.connect(_answer)
 	hud.inspect_requested.connect(_inspect)
+	hud.sheet_requested.connect(_sheet)
 	hud.death_save_pressed.connect(_death_save)
 	hud.slot_level_changed.connect(func(l: int) -> void:
 		slot_level = l
@@ -345,6 +349,17 @@ func _inspect(id: String) -> void:
 	if c != null and c.is_player_controlled():
 		hud.shown = c
 		hud.refresh()
+
+
+func _sheet(id: String) -> void:
+	var c := e.get_c(id) if id != "" else hud.shown
+	if c == null:
+		for each in e.combatants:
+			if each.side == &"party" and each.creature is Character:
+				c = each
+				break
+	if c != null and c.creature is Character:
+		sheet_requested.emit(c.creature as Character)
 
 
 func _answer(use: bool, rule: String) -> void:
@@ -745,6 +760,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			menu_requested.emit()
 	elif event.is_action_pressed(&"combat_end_turn"):
 		_end_turn()
+	elif event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo \
+			and (event as InputEventKey).physical_keycode == KEY_C:
+		_sheet("")   # the sheet of whoever the hotbar shows, view only
 	elif event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo \
 			and (event as InputEventKey).physical_keycode == KEY_Z \
 			and ((event as InputEventKey).ctrl_pressed or (event as InputEventKey).meta_pressed):

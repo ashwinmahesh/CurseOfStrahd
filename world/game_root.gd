@@ -133,7 +133,10 @@ func enter_location(location_id: String, spawn: String) -> void:
 			if screen is PauseMenu:
 				close_screen()
 			else:
-				open_screen("menu", 0)))
+				open_screen("menu", 0))
+		cv.sheet_requested.connect(func(who: Character) -> void:
+			if st.party.has(who):
+				open_screen("sheet", st.party.find(who))))
 	view.combat_ended.connect(_after_combat)
 	add_child(view)
 	plan_bar.view = view
@@ -754,9 +757,12 @@ func open_screen(kind: String, index: int) -> void:
 		_:
 			return
 	add_child(screen)
+	var fighting := view != null and view.in_combat
+	if screen is CharacterSheetScreen:
+		(screen as CharacterSheetScreen).in_fight = fighting   # view only in a fight (owner, 2026-10-08)
 	screen.call("open", self, st, index)
-	if kind == "menu" and view != null and view.in_combat:
-		# The fight waits while the menu is open.
+	if kind in ["menu", "sheet"] and fighting:
+		# The fight waits while the menu or a character sheet is open.
 		screen.process_mode = Node.PROCESS_MODE_ALWAYS
 		get_tree().paused = true
 

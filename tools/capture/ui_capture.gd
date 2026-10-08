@@ -3,7 +3,7 @@ extends Node
 ## Second Wind and spell slot, Shield of Faith, Poisoned), then the sheet's tabs, party, inventory, level up, rests,
 ## spell preparation (after a rest and after an item's Long Rest), journal, loot, shop, pause menu and character creation,
 ## one shot each, plus sample tooltips, the sheet for a level 7 warlock, monk and druid, and creating a character from the
-## party screen (UI_ONLY=create), and Madam Eva's rebuild (UI_ONLY=rebuild).
+## party screen (UI_ONLY=create), Madam Eva's rebuild (UI_ONLY=rebuild) and a sheet opened in a fight (UI_ONLY=fight_sheet).
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -233,6 +233,8 @@ func capture_shots(tool: Node, out: String) -> void:
 			await tool.call("wait_frames", 2)
 	if _wants("create"):
 		await _create_shots(tool, out)
+	if _wants("fight_sheet"):
+		await _fight_sheet_shots(tool, out)
 	# Last: the Long Rest fades to black for a while.
 	if _wants("rest"):
 		root.call("open_screen", "rest", 0)
@@ -240,6 +242,28 @@ func capture_shots(tool: Node, out: String) -> void:
 		(root.get("screen") as RestScreen).call("_long_rest", "safe")
 		await _shoot(tool, "%s_rest_after.png" % out)
 		root.call("close_screen")
+
+
+## A fight with one rat, then a hero's character sheet opened from their portrait: view only (owner, 2026-10-08).
+func _fight_sheet_shots(tool: Node, out: String) -> void:
+	Compendium.shared().tables["locations"]["sheet_ward"] = {"id": "sheet_ward", "name": "Sheet Ward", "region": "test",
+		"summary": "", "map": {"rows": ["##########", "#........#", "#........#", "#........#", "##########"], "light": "dim"},
+		"spawns": {"default": [2, 2]}, "encounters": [{"id": "rat", "trigger": "manual", "monsters": [{"monster": "rat", "cell": [8, 3]}]}]}
+	root.call("enter_location", "sheet_ward", "default")
+	await tool.call("wait_frames", 4)
+	var view := root.get("view") as LocationView
+	if not view.start_encounter("rat"):
+		return
+	await tool.call("wait_frames", 4)
+	var cv := view.combat_view
+	await _shoot(tool, "%s_fight_sheet_1_hud.png" % out)
+	cv.hud.sheet_requested.emit(cv.e.combatants.filter(func(c: Combatant) -> bool: return c.creature is Character)[1].id)
+	await _shoot(tool, "%s_fight_sheet_2_actions.png" % out)
+	(root.get("screen") as CharacterSheetScreen).show_tab("Spells")
+	await _shoot(tool, "%s_fight_sheet_3_spells.png" % out)
+	root.call("close_screen")
+	cv.finished.emit("victory")
+	await tool.call("wait_frames", 4)
 
 
 ## Creating a character from the party screen (owner, 2026-10-07): the party at level 5 with Ratatoille and the
