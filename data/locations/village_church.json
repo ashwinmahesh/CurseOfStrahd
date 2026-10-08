@@ -437,6 +437,17 @@
       "hours": [
         7,
         18
+      ],
+      "path": [
+        {
+          "at": [
+            9,
+            4
+          ],
+          "wait": 8,
+          "face": "north",
+          "work": "gesture"
+        }
       ]
     },
     {
@@ -450,7 +461,8 @@
       "hours": [
         8,
         17
-      ]
+      ],
+      "work": "gesture"
     }
   ],
   "encounters": [

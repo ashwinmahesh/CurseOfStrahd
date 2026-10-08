@@ -145,7 +145,20 @@
       "cell": [4, 7],
       "dialogue": "village_of_barovia/indoor_folk:shopper",
       "facing": "north",
-      "hours": [9, 16]
+      "hours": [9, 16],
+      "path": [
+        {
+          "at": [5, 5],
+          "wait": 6,
+          "face": "north",
+          "work": "gesture"
+        },
+        {
+          "at": [2, 6],
+          "wait": 4,
+          "face": "west"
+        }
+      ]
     }
   ],
   "narration": {
