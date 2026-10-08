@@ -725,6 +725,17 @@
   "d4a9068611182184": "[gentle, firm, sad]",
   "f571e83ef2b5d369": "[grim, firm]"
  },
+ "ghakis_doina": {
+  "7c1e34d3214e3722": "[stunned, relieved, breathless]",
+  "a037e5c52c16e846": "[steady, grateful, worried]",
+  "ce83c0860b86b8fb": "[bitter, practical, shaken]"
+ },
+ "ghakis_petrache": {
+  "0b2132e347722a5d": "[dry, deadpan]",
+  "2c6f8f3fec84a5bb": "[low, uneasy, pointed]",
+  "864d00200f524aa5": "[low, uneasy, grim]",
+  "d852e0aec3ceec30": "[dry, low, wry]"
+ },
  "godrick_pendlebrook": {
   "749ad33145e91a88": "[ashamed, breaking]",
   "861377174da00d79": "[sheepish, then grim resolve]",
@@ -821,6 +832,15 @@
   "f05954db63ba6b36": "[uneasy, wry]",
   "f2d7df5f4edda223": "[gentle, sympathetic]",
   "fc571182487d3309": "[quiet, disgusted]"
+ },
+ "ilarion": {
+  "2f3229f4708b2447": "[quiet, bewildered, content]",
+  "4b97daca8ed378ac": "[nervous, eager, quiet]",
+  "5aae8817c0ed24ae": "[confused, gentle, anxious]",
+  "d06b9e6e5faa2d57": "[quiet, gentle, resigned]",
+  "e355058db0b250b5": "[warm, fond, proud]",
+  "f8c4023856bd2092": "[stunned, breaking, tender]",
+  "ff6698f3cbccc896": "[afraid, breathless, confused]"
  },
  "ilinca_vrana": {
   "2ea80cde81cc8c1e": "[dry, matter-of-fact, regretful]"
@@ -1494,6 +1514,7 @@
   "4067d605d8ba3609": "[gentle, wry, sad]",
   "40d11d57ef5df46e": "[wry, amused, building]",
   "40e87570c1c7fc41": "[hushed, eerie, tense]",
+  "4146fc1d92297172": "[quiet, moved, tense]",
   "41b38fdaa4450b05": "[quiet, weary]",
   "420628c9bd2f54c7": "[dry, then chilling]",
   "42b26b11ca54bc33": "[quiet, uneasy]",
@@ -2093,8 +2114,7 @@
   "fe7ea43c6b1ed806": "[quiet, tense]",
   "feadac1b6e19e649": "[knowing, low]",
   "febcb29da16304e3": "[dry, wry]",
-  "ff767341d78f5e39": "[hushed, eerie]",
-  "4146fc1d92297172": "[quiet, moved, tense]"
+  "ff767341d78f5e39": "[hushed, eerie]"
  },
  "order_knight": {
   "033e22728e7133ad": "[hollow, almost cheerful]",
@@ -2268,6 +2288,24 @@
   "f05ac2cb9de1a4ce": "[uneasy, confiding]",
   "fcc9d4870ef4d655": "[bossy, gentle]",
   "fdbae4415f24bdd8": "[anxious, hopeful]"
+ },
+ "sarkhaza": {
+  "01a1e5761bb42aa5": "[low, hungry, menacing]",
+  "0d27ccfc06a9c6d2": "[bitter, scornful]",
+  "13ce3d794fcb5db3": "[mocking, amused]",
+  "1d94467702dfeef7": "[warm, gracious, then ravenous]",
+  "248c5be7e0decca0": "[quiet, cold, seething]",
+  "309f4a05ef3db01e": "[deep laugh, bitter, disbelieving]",
+  "370797f74edbdbe5": "[remembering, greedy, savoring]",
+  "5e3cc97bbeea153e": "[contemptuous, amused, menacing]",
+  "701c3212148e4b2a": "[curious, sly, appraising]",
+  "90bdd21331f7aec0": "[imperious, slow, warning]",
+  "a5a30f8b417a66c9": "[persuasive, urgent, silky]",
+  "ac18a11a609fb3c0": "[slowing, drowsy, furious, slurring]",
+  "bd5b75f9780a0b5b": "[low, bitter, haunted]",
+  "be2f2712d44c6f8c": "[cold, resolute, rising]",
+  "ec7e22c882f9d006": "[sly, imperious, warning]",
+  "f5774c19aa276361": "[slow, purring, weary amusement]"
  },
  "sir_godfrey_gwilym": {
   "64b6962d94bd738d": "[earnest, urgent, grave]",
@@ -2624,9 +2662,15 @@
   "e93e90dc560c2d73": "[low, watchful, uneasy]"
  },
  "tsolenka_sergeant": {
+  "23937c47bc593b87": "[clipped, grim, ashamed]",
   "4b72ba82022591ba": "[clipped, formal, reporting]",
+  "5400786770dc2d89": "[clipped, formal, uneasy]",
+  "81c8ff71ea90ec3e": "[clipped, formal, quietly kind]",
   "8de287f6a56807c2": "[clipped, grim, formal]",
-  "b29f479eac7e6ff7": "[clipped, formal, faintly bewildered]"
+  "9510af16b7dc095a": "[clipped, formal, faintly amazed]",
+  "b29f479eac7e6ff7": "[clipped, formal, faintly bewildered]",
+  "c68446e15b7fd138": "[clipped, formal, flat]",
+  "cfa6e8b17ac90026": "[clipped, grim, reporting]"
  },
  "urwin_martikov": {
   "001aff385e72021d": "[low, confiding]",
@@ -3197,14 +3241,5 @@
  },
  "zuleika_toranescu": {
   "88f4131e2df9a2ab": "[urgent, then grieving, quiet]"
- },
- "ilarion": {
-  "5aae8817c0ed24ae": "[confused, gentle, anxious]",
-  "ff6698f3cbccc896": "[afraid, breathless, confused]",
-  "4b97daca8ed378ac": "[nervous, eager, quiet]",
-  "2f3229f4708b2447": "[quiet, bewildered, content]",
-  "f8c4023856bd2092": "[stunned, breaking, tender]",
-  "d06b9e6e5faa2d57": "[quiet, gentle, resigned]",
-  "e355058db0b250b5": "[warm, fond, proud]"
  }
 }
