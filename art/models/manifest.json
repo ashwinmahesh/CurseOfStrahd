@@ -7451,6 +7451,123 @@
       ],
       "triangles": 220
     },
+    "great_vat": {
+      "file": "art/models/great_vat.glb",
+      "mount": "free",
+      "stands_for": [
+        "great_vat"
+      ],
+      "size": [
+        1.677,
+        1.359,
+        1.655
+      ],
+      "materials": [
+        "pal_bruise_deep",
+        "pal_plum",
+        "pal_stone_deep",
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 1524,
+      "big": true
+    },
+    "bottle_rack": {
+      "file": "art/models/bottle_rack.glb",
+      "mount": "free",
+      "stands_for": [
+        "bottle_rack"
+      ],
+      "size": [
+        0.86,
+        1.5,
+        0.43
+      ],
+      "materials": [
+        "pal_bog_deep",
+        "pal_umber"
+      ],
+      "triangles": 1692
+    },
+    "tool_rack": {
+      "file": "art/models/tool_rack.glb",
+      "mount": "wall",
+      "stands_for": [
+        "tool_rack"
+      ],
+      "size": [
+        0.97,
+        1.5,
+        0.1
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 392
+    },
+    "cup_hooks": {
+      "file": "art/models/cup_hooks.glb",
+      "mount": "wall",
+      "stands_for": [
+        "cup_hooks"
+      ],
+      "size": [
+        0.86,
+        0.17,
+        0.108
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_ivory",
+        "pal_pewter",
+        "pal_walnut"
+      ],
+      "triangles": 756
+    },
+    "footstool": {
+      "file": "art/models/footstool.glb",
+      "mount": "free",
+      "stands_for": [
+        "footstool"
+      ],
+      "size": [
+        0.34,
+        0.284,
+        0.34
+      ],
+      "materials": [
+        "pal_crimson",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 180
+    },
+    "knitting_basket": {
+      "file": "art/models/knitting_basket.glb",
+      "mount": "free",
+      "stands_for": [
+        "knitting_basket"
+      ],
+      "size": [
+        0.51,
+        0.254,
+        0.435
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moss",
+        "pal_parchment",
+        "pal_plum",
+        "pal_tan",
+        "pal_walnut"
+      ],
+      "triangles": 476
+    },
     "sill_sword": {
       "file": "art/models/sill_sword.glb",
       "mount": "wall",

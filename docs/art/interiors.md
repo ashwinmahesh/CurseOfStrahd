@@ -189,6 +189,21 @@ braziers burning in the antechamber and either side of the altar.
   corridor (`charcoal_suns`), the Belviews' stew pot (`cookpot`), straw and gnawed bones in their kitchen, and the
   surgeon's instruments on a tray (`instrument_tray`).
 
+### Old Bonegrinder and the Wizard of Wines
+
+- **Old Bonegrinder:** flour dusted over the bakery and round the millstone (a `floor_dust` clutter rule kept to rooms
+  named bakery or millstone); in the loft, Morgantha's basket of knitting and bowl (`knitting_basket`) and the footstool
+  turned toward the cages (`footstool`), and the nest's hollows are straw (`straw_pallet` by low_cover_rooms "nest",
+  loose straw by a furnish "nest" rule) where crates and trunks stood.
+- **The press house:** the great press over the middle of the floor (spanning its block, with vats round it by
+  low_cover_rooms "press floor", where shop counters stood), and tools on pegs inside the door (`tool_rack`).
+- **The winery:** the eight great vats, one over each block of the fermenting hall (`great_vat`, `span: [2, 2]`), where
+  tavern tables, a rug and armchairs stood (the furnish larder rule now names fermenting, bottling, cask and vintage
+  rooms); free-standing racks of empty bottles (`bottle_rack`, also low_cover_rooms "bottling"); cups on hooks in the
+  tasting room (`cup_hooks`).
+- **The cellar:** casks and cask racks in the cask vaults (low_cover_rooms "cask") where the crypt rules had laid little
+  tombs, skulls and bones.
+
 Every piece a '=' square can be dressed as names an object kind in data/objects/kinds.json, so fights can shove, wreck
 and hide behind it (tests/unit/test_battle_objects.gd checks the catalog's lists and the interiors' own pieces).
 

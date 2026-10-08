@@ -137,7 +137,7 @@
     "mash_vat": "wine_vat",
     "wizards_casks": "cask_rack",
     "wizards_rack": "cask_rack",
-    "fermenting_vats": "wine_vat",
+    "fermenting_vats": "great_vat",
     "cask_racks": "cask_rack",
     "wicker_cages": "wicker_cage",
     "cage_post": "wicker_cage",
@@ -192,14 +192,8 @@
       "building": true,
       "scale": 1.3
     },
-    "bottle_racks": {
-      "art": "shelves",
-      "front": "wine_shelf_front"
-    },
-    "old_bottles": {
-      "art": "shelves",
-      "front": "wine_shelf_front"
-    },
+    "bottle_racks": "bottle_rack",
+    "old_bottles": "bottle_rack",
     "bottling_shelf": {
       "art": "shelves",
       "front": "wine_shelf_front"
@@ -1262,6 +1256,10 @@
     "festival_cloth": 4.7,
     "coffin_lid": 6.5,
     "lute": 4.2,
+    "great_vat": 7.0,
+    "bottle_rack": 7.5,
+    "footstool": 1.4,
+    "knitting_basket": 1.0,
     "instrument_tray": 3.3
   },
   "big_width": 1.6,
@@ -1634,6 +1632,12 @@
       "coffin_lid": "coffin_lid",
       "crucifix": "crucifix",
       "lute": "lute",
+      "great_vat": "great_vat",
+      "bottle_rack": "bottle_rack",
+      "tool_rack": "tool_rack",
+      "cup_hooks": "cup_hooks",
+      "footstool": "footstool",
+      "knitting_basket": "knitting_basket",
       "sill_sword": "sill_sword",
       "sill_cups": "sill_cups",
       "surplice": "surplice",
@@ -3225,6 +3229,22 @@
             1.0
           ],
           "max": 8
+        },
+        {
+          "decals": [
+            "floor_dust"
+          ],
+          "on": "floor",
+          "chance": 0.45,
+          "size": [
+            0.8,
+            1.5
+          ],
+          "max": 70,
+          "rooms": [
+            "bakery",
+            "millstone"
+          ]
         }
       ],
       "inn": [
@@ -3975,7 +3995,11 @@
           "store room",
           "storage",
           "cellar",
-          "stores"
+          "stores",
+          "fermenting",
+          "bottling",
+          "cask",
+          "vintage"
         ],
         {
           "wall": [
@@ -4400,6 +4424,19 @@
           "rug": "interior/rug",
           "centre": [
             "armchair"
+          ]
+        }
+      ],
+      [
+        [
+          "nest"
+        ],
+        {
+          "floor": [
+            "straw"
+          ],
+          "centre": [
+            "straw"
           ]
         }
       ]
@@ -4839,6 +4876,72 @@
         ],
         "run": [
           "crypt_small"
+        ]
+      }
+    ],
+    [
+      [
+        "fermenting"
+      ],
+      {
+        "single": [
+          "wine_vat"
+        ],
+        "run": [
+          "wine_vat"
+        ]
+      }
+    ],
+    [
+      [
+        "bottling"
+      ],
+      {
+        "single": [
+          "bottle_rack"
+        ],
+        "run": [
+          "bottle_rack"
+        ]
+      }
+    ],
+    [
+      [
+        "cask"
+      ],
+      {
+        "single": [
+          "cask_rack",
+          "barrel"
+        ],
+        "run": [
+          "cask_rack"
+        ]
+      }
+    ],
+    [
+      [
+        "nest"
+      ],
+      {
+        "single": [
+          "straw_pallet"
+        ],
+        "run": [
+          "straw_pallet"
+        ]
+      }
+    ],
+    [
+      [
+        "press floor"
+      ],
+      {
+        "single": [
+          "wine_vat"
+        ],
+        "run": [
+          "wine_vat"
         ]
       }
     ]
