@@ -176,3 +176,10 @@ func test_the_last_muster_at_the_gates() -> void:
 	await _fight(v, "bone_marshal", ["The Bone Marshal", "Rider of the Last Muster"])
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("last_muster"), "released")
+
+
+func test_the_rag_queen_steps_off_her_post() -> void:
+	var v := await _boot("berez", 14, 9, ["dragos_freed", "lysaga_guests"])
+	await _fight(v, "rag_queen", ["The Rag Queen", "A Straw Groom"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("one_horned_billy"), "burned")

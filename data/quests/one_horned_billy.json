@@ -1,0 +1,55 @@
+{
+  "id": "one_horned_billy",
+  "name": "The One-Horned Billy",
+  "summary": "The one-horned billy goat in Krezk's pens belongs to nobody, because nobody is brave enough. He turned up last spring, already grown, with a ring on his horn.",
+  "giver": "krezk_dragos",
+  "region": "krezk",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Stelian the goatherd says the one-horned billy in Krezk's pens turned up last spring already grown, with a woman's silver ring jammed down on his one horn. Nobody's been brave enough to take it off.",
+      "objectives": [
+        "Have a look at the billy in Krezk's goat pens"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "The one-horned billy guards the gap in Krezk's pens, with a thin silver ring jammed down on his horn.",
+      "objectives": [
+        "Get close enough to see the ring, or look the goat in the eye"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_ring",
+      "journal": "Inside the ring on the billy's horn: D. AND V. BEREZ. And behind the goat's square eyes there's a man, begging. Somebody did this to him.",
+      "objectives": [
+        "Lift the curse: Remove Curse, or a scroll of it"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "dragos",
+      "journal": "The billy is Dragos, the ferryman of Berez. Baba Lysaga turned him into a goat for refusing to row her across the river. His wife Vera she kept, and stitched into the Rag Queen, a scarecrow she made from the dresses of every drowned bride of Berez. It walks the scarecrow field by her stump, whether she's there or not.",
+      "objectives": [
+        "Burn the Rag Queen in Berez's scarecrow field"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "burned",
+      "journal": "The Rag Queen is a heap of burned silk and straw in the scarecrow field at Berez, and whatever was stitched into her is out.",
+      "objectives": [
+        "Tell Dragos, in Krezk"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "vera_freed",
+      "journal": "Dragos felt it when the Rag Queen burned: like a hand taking hold of his, and letting go. He gave us everything that was stitched into her, the drowned brides' dowries and a sword Lysaga stole from a knight.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
