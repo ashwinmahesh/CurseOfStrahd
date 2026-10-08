@@ -1,0 +1,18 @@
+{
+  "id": "belview_mother",
+  "name": "Mother",
+  "title": "Matriarch of the Belviews",
+  "summary": "Clovin's mother, carried up the mountain as a baby with the coughing sickness sixty years ago and improved nine times since: a cat's eyes, a heron's legs, and a pair of great grey wings the Abbot stitched shut with silver wire. She sits in the darkest corner of the wards kitchen.",
+  "portrait": "belview",
+  "sprite": "belview",
+  "attitude": "indifferent",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "mongrelfolk",
+    "belview",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "she/her"
+}

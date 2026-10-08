@@ -91,6 +91,12 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Big Tobar, Tser Pool | Efficient Quiver (uncommon) | Gift: once his son is home (Called by Name, docs/story/side_quests.md) |
 | ✅ | Radu, Tser Pool | Rod of the Pact Keeper, +1 (uncommon) | Gift: once the carriage's escort is beaten (The Grey Mare, docs/story/side_quests.md) |
 
+## The crossroads at night (side quest, level 8)
+
+| | Where | Item | How |
+|---|---|---|---|
+| ✅ | The River Ivlis crossroads, the Huntsman's saddlebag | Ring of Animal Influence (rare) | Hoard: once the Huntsman is beaten (The Count's Huntsman, docs/story/side_quests.md) |
+
 ## Vallaki (level 5)
 
 | | Where | Item | How |
@@ -148,6 +154,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Press house, the wizard's casks | Decanter of Endless Water (uncommon) | Search (Perception DC 14) |
 | ✅ | Winery, the pried-up floorboards | Elemental Gem, Emerald (uncommon) | Search (Perception DC 15): what the druids missed |
 | ✅ | Stefania Martikov | Periapt of Wound Closure (uncommon) | Gift: once the winery is reclaimed |
+| ✅ | Davian Martikov | Wand of Fireballs (rare) | Gift: the Wizard of Wines' wand from the press-house rack, once the Black Row is cut out (The Black Row, docs/story/side_quests.md) |
 
 ## Yester Hill (level 7)
 
@@ -185,6 +192,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Wards, the instrument cabinet | Periapt of Proof against Poison (rare) | Search (Investigation DC 15) |
 | ✅ | Church, the Abbot's cot | Ioun Stone of Protection (rare) | Search (Investigation DC 16) |
 | ✅ | Garden, the tool shed | Bag of Beans (rare) | Search (Investigation DC 13) |
+| ✅ | Mother, on the courtyard wall | Boots of Levitation (rare) | Gift: her eighth gift, once she flies (Mother's Ninth Improvement, docs/story/side_quests.md) |
 
 ## Argynvostholt (level 8)
 

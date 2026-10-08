@@ -137,8 +137,10 @@ hit and fall (about 15 images each; they keep the flash and the flattened fall).
 `DirectionalSprite.frames_for(id)` merges `attack.tres` into the walk frames. `CombatToken.start_attack(dir)` plays
 it facing the target, `wait_for_strike()` waits for the hit frame, and the combat view shows the hit or miss then,
 with a short step toward the target. Without an attack sheet the old lunge plays. Walking is paced to the step time
-(`set_step_time`): one cycle covers four squares in exploration and combat alike (about 0.7 s a cycle exploring,
-1 s in combat, where tokens move at half the exploration speed).
+(`set_step_time`): legs keep a natural cadence of about a cycle (two steps) a second, with the stride as long as the
+pace makes it, from one square (townsfolk strolling at 0.7 s a square) to four (the party's quick pace); past four the
+legs speed up rather than skate (owner 2026-10-06), below one they slow with the feet on the ground (owner 2026-10-08:
+townsfolk had been held to four squares a cycle, so their legs alternated far too slowly).
 
 **Lit by the scene (Improvement Ideas W6, the Modern finish).** `sprite_crisp.gdshader` (`lit`, set from
 `Look.modern()`) lights each figure by the lamps near it, the sun or moon and the sky, so a figure takes a lantern's

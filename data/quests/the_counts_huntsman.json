@@ -1,0 +1,32 @@
+{
+  "id": "the_counts_huntsman",
+  "name": "The Count's Huntsman",
+  "summary": "On cold nights a horn sounds in the Svalich woods, and in the morning whoever the count is displeased with lies under the crossroads gallows, run to death.",
+  "giver": "camp_cook",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "hunted",
+      "journal": "The count's huntsman has been given a scent: ours, or Gavril the Vistani groom's. The Vistani say the hunt ends under the crossroads gallows at moonrise, and a quarry who stands there and beats him ends it for good. Nobody ever has. The names of his hounds, every one of them quarry once, are on the stones by the crossroads.",
+      "objectives": [
+        "Be at the River Ivlis crossroads after dark, and stand",
+        "Optional: read the names on the quarry stones"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "stood",
+      "journal": "We stood at the crossroads, and the Huntsman and his hounds are down.",
+      "objectives": [
+        "See what he left in the road"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "ended",
+      "journal": "The count's hunt is over. The Huntsman was Toader, a poacher the count ran down in his first winter and made his huntsman, and his hounds were all his quarry. They walked off in every direction when he fell.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

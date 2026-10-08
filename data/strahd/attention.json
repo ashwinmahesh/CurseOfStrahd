@@ -91,6 +91,12 @@
       "summary": "Vallaki's lists of the unhappy, bought by his rider, taken away (Ribbons)."
     },
     {
+      "id": "huntsman",
+      "when": "flag.huntsman_slain",
+      "points": 1,
+      "summary": "His huntsman of four hundred years, beaten at the crossroads by the count's own rule (The Count's Huntsman)."
+    },
+    {
       "id": "gulthias_tree",
       "when": "flag.gulthias_tree_burned",
       "points": 2,

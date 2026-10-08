@@ -185,6 +185,18 @@ func test_the_rag_queen_steps_off_her_post() -> void:
 	assert_eq(GameState.story.quest_stage("one_horned_billy"), "burned")
 
 
+func test_the_seventh_row_stands_up() -> void:
+	for level: int in [5, 6, 7, 8]:
+		var v := await _boot("wizard_of_wines", 1, level, ["winery_reclaimed"])
+		await _fight(v, "vine_mother", ["The Vine Mother", "Vine Blight 1"])
+		await _end(v)
+		assert_eq(GameState.story.quest_stage("the_black_row"), "cut_out")
+		assert_true(bool(GameState.story.get_flag("vine_mother_slain", false)))
+		root.queue_free()
+		root = null
+		await _frames(2)
+
+
 func test_granny_ash_comes_out_of_the_trees_with_her_dogs() -> void:
 	for level: int in [5, 6, 7, 8]:
 		var v := await _boot("old_bonegrinder_track", 23, level, ["morgantha_slain"])
@@ -195,3 +207,19 @@ func test_granny_ash_comes_out_of_the_trees_with_her_dogs() -> void:
 		root.queue_free()
 		root = null
 		await _frames(2)
+
+
+func test_the_huntsman_and_his_hounds_come_up_the_east_road() -> void:
+	for level: int in [7, 8, 9, 10]:
+		for called: bool in [false, true]:
+			var flags: Array[String] = []
+			if called:
+				flags.append("hounds_called")
+			var v := await _boot("svalich_crossroads", 23, level, flags)
+			await _fight(v, "the_hunt", ["The Count's Huntsman", "Hound of the Hunt"])
+			await _end(v)
+			assert_eq(GameState.story.quest_stage("the_counts_huntsman"), "stood")
+			assert_true(bool(GameState.story.get_flag("huntsman_slain", false)))
+			root.queue_free()
+			root = null
+			await _frames(2)

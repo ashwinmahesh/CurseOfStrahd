@@ -21,6 +21,12 @@ Ovidiu: Dead, dead, dead, and this one's thinking about it. You cut away what wo
 
 ~ picker
 Andrei: These are the last good rows. Taste one. Sour, yes? The wine will be sweet. Don't ask me how. Ask the old man.
+if not quest.the_black_row
+quest the_black_row rumored
+Andrei: Not the Seventh Row, though. Don't taste those. They come up black in the night and they're gone by morning, and I don't pick anything I didn't see grow.
+elif quest.the_black_row == done
+Andrei: The Seventh Row's young vines again. Sour as anything. I've never been so glad of sour.
+endif
 -> END
 
 ~ cooper

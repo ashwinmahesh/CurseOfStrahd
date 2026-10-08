@@ -182,6 +182,31 @@ been turned (Intimidation DC 14) or left at the inn.
   party members on the way. Attention mark `greytooth` (+1).
 - Yevgeni pays the whole bounty, 300 gp, and gives his father's Horn of Valhalla, Silver (rare).
 
+## The River Ivlis crossroads at night (level 8)
+
+### The Count's Huntsman (`the_counts_huntsman`, narrative/svalich_road/the_counts_huntsman.dialogue; batch 3)
+
+Old Paraschiva, the cook at the Vistani camp outside Vallaki, is the camp's rumour-giver: on cold nights a horn sounds
+in the Svalich woods, and in the morning whoever the count is displeased with lies under the crossroads gallows, run
+to death. Whose scent the Huntsman has follows Strahd's attention: once the party is `marked` (data/strahd/attention.json)
+it's theirs ("three notes is for strangers"), otherwise Gavril the groom's, who sold the castle a painted horse
+(`hunt_quarry`). The rule: the hunt ends under the gallows at moonrise, and a quarry who stands there and beats him
+ends it for good. **Twist:** the Huntsman is Toader, a poacher the count ran down himself in his first winter, who stood
+and turned at this crossroads and was made huntsman for it; every quarry since has become one of his hounds, and the
+Vistani have scratched their names on cairns by the road (prop `quarry_stones`). **Escalation:** at night he stands on
+the east road (Gavril waits by the junction if it's his scent). Reading the stones first lets the party call the
+hounds by name, and most of the pack lies down (`hounds_called`).
+
+- **Boss: the Count's Huntsman** (data/monsters/count_huntsman.json, `source.book: custom`, from the 2025 Monster
+  Manual's revenant and wight, drawn with the revenant's sprite): Medium undead, AC 17, 165 HP, two attacks with a boar
+  spear (reach 10) or black arrows (1d8+5 and 2d8 necrotic), a horn that frightens (recharge 5-6, 60 ft), Legendary
+  Resistance (2/day), and a loosed arrow or a step into the trees between turns. CR 9.
+- Fight `the_hunt` on the east road: level 8 the Huntsman, his mare (a nightmare) and 4 hounds (dire wolves), 6,500 XP,
+  or 2 hounds once they're called (the autopilot wins 1 of 4 against the whole pack and 2 of 3 with the hounds called);
+  level 9 six hounds (three called); level 10 eight (four called); below 8 the Huntsman at 130 HP with 3 hounds (1).
+- Beating him is a mark on Strahd's attention (`huntsman`, 1 point).
+- His saddlebag: 300 gp of quarry's purses and the iron ring he called the pack with, a Ring of Animal Influence (rare).
+
 ## Lake Zarovich (level 8)
 
 ### The Bell Under the Lake (`bell_under_the_lake`, narrative/lake_zarovich/bell_under_the_lake.dialogue; batch 2)
@@ -245,6 +270,30 @@ DC 15 holds her (`mouse_stayed`). Granny offers the girl for a basket of coins a
   `keepers` (unnamed: Ilinca takes the girl with half-iron teeth) or `given` (the basket; the quest fails and the
   companions disapprove).
 - Granny's basket: 300 gp and a Robe of Eyes (rare). The basket alone pays the 300 gp.
+
+## The Wizard of Wines (level 6)
+
+### The Black Row (`the_black_row`, narrative/wizard_of_wines/the_black_row.dialogue; batch 3)
+
+Once the Martikovs are home, Andrei the picker won't touch the Seventh Row (it comes up black in the night and is gone
+by morning), and Davian, the region's new rumour-giver ("Heard anything interesting?" in his menu once the winery is
+reclaimed), asks the party to find out who picks it. By day the row (prop `seventh_row`) shows what it is to Nature DC
+13 (one blight grown up into every rootstock) and who visits it to Investigation DC 13 (raven feathers, a man's bare
+feet). **Twist:** after midnight the picker is Adrian, who eats the black grapes because they make him dream of Elvir
+alive and not angry, and the veins on his hands are going dark like the leaves. The row is a cutting of the Gulthias
+tree Kostin planted on Ruxandra's last order; it has its own roots now, so it lives even if the tree on the hill burned,
+and if Elvir is buried at the end of the row it has been drinking from his grave. **Escalation:** the reconciliation, or
+the truth of Elvir's order, or Persuasion DC 15 brings Adrian round, and he fights beside the party (`adrian_against_row`,
+a guest until Davian's report); otherwise he flies off and the party cuts the root alone. Either way the row stands up.
+
+- **Boss: the Vine Mother** (data/monsters/vine_mother.json, `source.book: custom`, from the 2025 Monster Manual's tree
+  and vine blights, drawn with the tree blight's sprite): Huge plant, AC 15, 210 HP, two branches (reach 15) and a
+  grasping vine that drags and crushes, a cone of black wine (recharge 5-6, Poisoned), Legendary Resistance (2/day), a
+  lash and a creeping move between turns. CR 8.
+- Fight `vine_mother` at the foot of the row: level 6 the Vine Mother, 4 vine blights and 4 needle blights (4,500 XP; the
+  autopilot wins 2 of 4 and loses three party members a fight); level 7 six vine and six needle blights; level 8 the
+  same and the Sixth Row (a tree blight), 7,700 XP; below 6 the Vine Mother at 150 HP, 2 vine and 3 needle blights.
+- Davian pays once: 250 gp and the wand the Wizard of Wines left in the press-house rack, a Wand of Fireballs (rare).
 
 ## Vallaki and Castle Ravenloft (level 10)
 
@@ -326,6 +375,23 @@ the sick Belviews sixty years ago, took the neighbours' name, and has carved a s
   Pavel's father's Ring of the Ram (rare).
 - Afterwards Pavel goes up the mountain with soup on Sundays, and the watchman is told to let Clovin in on feast days.
 
+### Mother's Ninth Improvement (`mothers_ninth_improvement`, narrative/abbey_of_st_markovia/mothers_ninth_improvement.dialogue; batch 3)
+
+Clovin gets "Heard anything interesting?" (the abbey's rumour-giver): Mother has been talking about Krezk, and, if
+Pavel is family, he's asked her to Sunday soup. Mother (new NPC, in the darkest corner of the wards kitchen) won't
+talk while the Abbot is improving; once `abbot_fate` is set she takes off her blanket. **Twist:** she is the baby
+carried up the mountain sixty years ago (Pavel's niece), her nine gifts include a heron's legs that won't take the
+mountain, and the ninth is a pair of great grey wings the Abbot stitched shut with silver wire so she wouldn't fly to
+heaven early. She doesn't want heaven; she wants Krezk. **Escalation:** her boys in the cells first (the abbey's own
+cells scene, either way: freed, she's glad; fought, she grieves and goes anyway); then the wire (Sleight of Hand DC 14
+or Medicine DC 13; a failure still gets it out, painfully); then the courtyard wall, where she has to believe the one
+thing the Abbot told her that might be true (Persuasion DC 13, Wren's advice, or a held hand). Nature DC 14 shouts her
+down onto Pavel's roof; otherwise she lands in Krezk's goat pens.
+
+- No fight.
+- Her eighth gift, which Clovin brings up to the wall: Boots of Levitation (rare). Afterwards she lands on Pavel's roof
+  on Sundays, and Krezk's watchman has decided to be very calm about it.
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -354,4 +420,9 @@ marta_rumor node (Goodwife Marta: the jester). Batch 2, Krezk and
 the abbey: clovins_audience.dialogue in full (Clovin Belview, Dmitri, Old Pavel, Watchman Lazar; Wren's interject),
 gate.dialogue's two new news lines (the bucket, feast days) and townsfolk.dialogue's new carver line (Old Pavel: soup). Batch 3, Old
 Bonegrinder: the_fourth_sister.dialogue in full (new speakers Mouse, Granny Ash and Goodwife Sarnov; also Ilinca) and
-the village townsfolk.dialogue's new gossip lines (Vasile and Petre: the Sarnov woman, and three children again).
+the village townsfolk.dialogue's new gossip lines (Vasile and Petre: the Sarnov woman, and three children again). Batch 3, the
+Wizard of Wines: the_black_row.dialogue in full (Davian, Adrian; companions' interjects), hands.dialogue's two new
+picker lines (Andrei) and davian.dialogue's two new menu options. Batch 3, the
+crossroads: the_counts_huntsman.dialogue in full (new speaker the Huntsman; also Old Paraschiva and Gavril). Batch 3, the
+abbey: mothers_ninth_improvement.dialogue in full (new speaker Mother; also Clovin and Wren's interject), Pavel's new
+carver line and the watchman's new news line in Krezk (the roof).
