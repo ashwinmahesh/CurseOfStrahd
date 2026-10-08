@@ -47,7 +47,7 @@ const CONTROLS: Array[String] = [
 	"Hold {show_names} to see the names of everything you can use nearby. Hold {show_sight} to see what each foe in sight can see (always shown while sneaking).",
 	"Keyboard: {walk} walk · {camera_rotate_left} / {camera_rotate_right} turn the camera · {select_member_1}-{select_member_4} or {cycle_leader} pick who leads · {open_sheet} character · {open_inventory} inventory · {open_journal} journal · {open_party} party · {open_map} map · {rest} rest · {wait} wait some hours · {search} search · {sneak} sneak · {split} split the party · {plan_mode} turn-based ({plan_round} ends the round) · {quick_save} quicksave · {quick_load} load it · Esc menu. Settings, Keys changes them.",
 	"In conversations: 1-9 pick an answer · Space, Enter or a click goes on · H shows what's been said.",
-	"Controller: left stick walks · right stick turns and zooms the camera · D-pad left / right marks the next thing nearby · {a} uses it · {y} everything you can do with it · {x} searches · {lb} / {rb} who leads · {ls} sneak · {rs} turn-based ({rt} ends the round) · hold {lt} for names and what foes see · D-pad up: the bar's buttons · D-pad down: these controls · {back} map · {start} menu.",
+	"Controller: left stick walks · right stick turns and zooms the camera · {@mark_prev} / {@mark_next} mark the thing before or next · {@use_marked} uses it · {@marked_menu} everything you can do with it · {@search} searches · {@leader_prev} / {@leader_next} who leads · {@sneak} sneak · {@plan_mode} turn-based ({@plan_round} ends the round) · hold {@show_names} for names and what foes see · {@hud_bar}: the bar's buttons · {@show_controls}: these controls · {@open_map} map · {start} menu. Settings, Keys, Controller moves them.",
 ]
 var _controls: PanelContainer
 var _control_lines: Array[Label] = []
@@ -213,7 +213,7 @@ func build(state: StoryState) -> void:
 	_controls.add_child(cbox)
 	add_child(_controls)
 	var f1 := _label("F1: controls", 12, "gilt_dark")
-	PadGlyphs.hint(f1, "F1: controls", "D-pad down: controls")
+	PadGlyphs.hint(f1, "F1: controls", "{@show_controls}: controls")
 	f1.anchor_top = 1.0
 	f1.anchor_bottom = 1.0
 	f1.offset_left = 16
@@ -595,7 +595,7 @@ func _show_keys(on: Dictionary = {}) -> void:
 		var row := (_bar_keys[cmd] as Array)[1] as Array
 		var k := str(row[1])
 		var shown := InputActions.key_text(StringName(k)) if InputActions.BINDINGS.has(StringName(k)) else k
-		mark.text = shown
+		PadGlyphs.hint(mark, shown, "")   # the keys' marks go while a pad is in use (it steps along the bar instead)
 		mark.add_theme_font_size_override("font_size", 12 if shown.length() <= 1 else (10 if shown.length() <= 3 else 9))
 		var b := _bar_buttons[cmd] as Button
 		b.tooltip_text = ("%s (%s)" % [row[0], shown] if shown != "" else str(row[0])) + (" · on" if bool(on.get(cmd, false)) else "")

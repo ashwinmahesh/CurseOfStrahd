@@ -250,11 +250,11 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	var exploring := not moving and view != null and not view.in_combat and dialogue == null and screen == null \
 		and loot == null and ending == null
-	if view != null:
-		view.rig.pad_look = exploring   # the right stick turns and zooms the camera (a fight's radial needs it)
+	if view != null and not view.in_combat:
+		view.rig.pad_look = exploring   # the right stick turns and zooms the camera (a fight sets its own)
 	if exploring and PadNav.active():
 		pad.tick(delta)
-	elif pad.marked.x >= 0 or not PadPrompts.world.is_empty():
+	elif pad.marked.x >= 0 or PadPrompts.owns(pad):
 		pad.clear()
 		glow.clear()
 	if not exploring:

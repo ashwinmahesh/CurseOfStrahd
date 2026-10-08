@@ -32,7 +32,7 @@ const CONTROLS: Array[String] = [
 	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
 	"Keyboard: {combat_toggle_log} minimizes or restores the combat log · {combat_slot_1}-{combat_slot_10} use hotbar slots · {combat_tab_prev} / {combat_tab_next} change tab · {combat_confirm} confirms (casts early with fewer targets) · Esc cancels · {combat_end_turn} ends the turn · Ctrl+Z takes back the last move · {combat_slot_level_down} and {combat_slot_level_up} change the spell slot · {combat_next_target} jumps to the next target · {cycle_leader} inspects the next party member · C opens the character sheet of the one shown (view only; or click a party portrait) · {quick_save} quicksaves and {quick_load} loads the quicksave (outside a fight; in one, the game saves at each round's start).",
 	"Camera: {walk} pan · {camera_rotate_left} / {camera_rotate_right} rotate · mouse wheel zooms.",
-	"Controller: left stick moves the cursor · A confirms · B cancels · X next target · Y ends the turn · hold LB for the radial menu (right stick picks, release to choose) · LT / RT pick a hotbar slot · RB uses it · d-pad left/right changes the spell slot · View inspects the next party member.",
+	"Controller: left stick moves the cursor (the camera follows) · right stick turns and zooms the camera · {a} confirms · {b} cancels · {@combat_next_target} next target · {@combat_end_turn} ends the turn (while picking targets, casts with those picked) · hold {@combat_radial} for the radial menu (right stick picks, release to choose) · {@combat_slot_prev} / {@combat_slot_next} pick a hotbar slot · {@combat_use_slot} uses it · {@combat_tab_prev} / {@combat_tab_next} change tab · {@combat_slot_level_down} / {@combat_slot_level_up} change the spell slot · {@combat_undo} takes back the last move · {@combat_square_menu} the square's menu at the cursor · {@combat_controls} these controls · {start} menu. Settings, Keys, Controller moves them.",
 	"Reactions always ask unless you set a rule in the prompt (Next time: Ask me / Always use it / Never).",
 ]
 
@@ -145,9 +145,11 @@ func build(encounter: Encounter, catalog_: ActionCatalog) -> void:
 	_controls.visible = false
 	var cbox := VBoxContainer.new()
 	_controls.add_child(cbox)
-	cbox.add_child(_label("Controls (F1 or Start to close)", 20, "gilt_light"))
+	var head := _label("", 20, "gilt_light")
+	PadGlyphs.hint(head, "Controls (F1 to close)", "Controls ({@combat_controls} to close)")
+	cbox.add_child(head)
 	for line: String in CONTROLS:
-		var l := _label(InputActions.fill(line), 15, "vellum")
+		var l := _label(PadGlyphs.names(InputActions.fill(line)), 15, "vellum")
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.custom_minimum_size = Vector2(800, 0)
 		cbox.add_child(l)
@@ -156,6 +158,11 @@ func build(encounter: Encounter, catalog_: ActionCatalog) -> void:
 
 func toggle_controls() -> void:
 	_controls.visible = not _controls.visible
+
+
+## Whether the hero whose turn it is has only a Death Saving Throw to roll (the pad's A rolls it).
+func death_save_shown() -> bool:
+	return _death_button.visible
 
 
 # --- Building -------------------------------------------------------------------------------------
@@ -176,7 +183,9 @@ func _build_strip() -> void:
 	head.add_child(_round_label)
 	head.add_child(_label("turn order", 14, "parchment"))
 	# The controls card's key sits here, out of the way of the party frames (a guest's frame used to cover it).
-	head.add_child(_label("F1: controls", 12, "gilt_dark"))
+	var f1 := _label("F1: controls", 12, "gilt_dark")
+	PadGlyphs.hint(f1, "F1: controls", "{@combat_controls}: controls")
+	head.add_child(f1)
 	row.add_child(head)
 	_strip = HBoxContainer.new()
 	_strip.add_theme_constant_override("separation", 6)
@@ -409,6 +418,7 @@ func _build_tooltip() -> void:
 
 func _build_prompt() -> void:
 	_prompt = _panel("gilt_light")
+	_prompt.set_meta(&"pad_modal", true)   # while it's up the pad moves over it alone (PadNav)
 	_prompt.anchor_left = 0.5
 	_prompt.anchor_right = 0.5
 	_prompt.anchor_top = 0.5
@@ -448,10 +458,11 @@ func _build_prompt() -> void:
 	buttons.add_theme_constant_override("separation", 12)
 	var use := Button.new()
 	_prompt_use = use
-	use.text = "Use Reaction (A / Enter)"
+	PadGlyphs.hint(use, "Use Reaction (Enter)", "Use Reaction ({a})")
+	use.set_meta(&"pad_first", true)
 	use.pressed.connect(func() -> void: answer_prompt(true))
 	var skip := Button.new()
-	skip.text = "Skip (B / Esc)"
+	PadGlyphs.hint(skip, "Skip (Esc)", "Skip ({b})")
 	skip.pressed.connect(func() -> void: answer_prompt(false))
 	buttons.add_child(use)
 	buttons.add_child(skip)
@@ -473,6 +484,7 @@ func _build_details() -> void:
 
 func _build_confirm() -> void:
 	_confirm = _panel("gilt_light")
+	_confirm.set_meta(&"pad_modal", true)
 	_confirm.anchor_left = 0.5
 	_confirm.anchor_right = 0.5
 	_confirm.anchor_top = 0.5
@@ -488,12 +500,13 @@ func _build_confirm() -> void:
 	box.add_child(_confirm_text)
 	var row := HBoxContainer.new()
 	var yes := Button.new()
-	yes.text = "End turn (%s / A)" % InputActions.key_text(&"combat_end_turn")
+	PadGlyphs.hint(yes, "End turn (%s)" % InputActions.key_text(&"combat_end_turn"), "End turn ({a})")
+	yes.set_meta(&"pad_first", true)
 	yes.pressed.connect(func() -> void:
 		_confirm.visible = false
 		end_turn_pressed.emit())
 	var no := Button.new()
-	no.text = "Keep going (Esc / B)"
+	PadGlyphs.hint(no, "Keep going (Esc)", "Keep going ({b})")
 	no.pressed.connect(func() -> void: _confirm.visible = false)
 	row.add_child(yes)
 	row.add_child(no)

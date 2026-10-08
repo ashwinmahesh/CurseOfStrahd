@@ -52,6 +52,12 @@ and the hair (hair colour; scaled by the skull's width and set on its top). West
 stack. Skin tones and hair colours are four-shade ramps of palette colours. A whole look (walk and attack, 8
 directions) takes about 0.2 s and is cached per look.
 
+Each piece's view leaves out bits not attached to the head: an island of pixels stays if it reaches above the neck
+or comes within 8 px of one that does (a braid's loose tip). The edits sometimes put the key colour elsewhere on the
+figure, and the cutting keeps it: Tousled's magenta by the boots, Long's by the hands, specks under the braided beard,
+all 48 px or more away. Without this they showed on the sprite's legs and shrank the Head tab's pictures
+(`HeroLook.head_picture`, the three-quarter head stack) to a tiny figure.
+
 A custom character's `build.appearance` holds the picks plus `custom: true` and `art` (the portrait id).
 `CombatToken.art_for` registers it with `HeroLook`, `DirectionalSprite.frames_for` returns its frames for that id,
 and `CombatToken.height_for` gives its height (the species' usual height times the height pick), so tokens, the

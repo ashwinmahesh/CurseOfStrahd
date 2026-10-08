@@ -59,6 +59,12 @@ func capture_shots(tool: Node, out: String) -> void:
 	for b: JoyButton in [JOY_BUTTON_DPAD_UP, JOY_BUTTON_DPAD_UP, JOY_BUTTON_DPAD_UP]:
 		await _press(tool, b)
 	await _shoot(tool, out + "_3_settings.png")
+	(root.get("screen") as PauseMenu).call("_show_settings", "Keys")
+	await tool.call("wait_frames", 4)
+	for b: JoyButton in [JOY_BUTTON_DPAD_DOWN, JOY_BUTTON_DPAD_DOWN, JOY_BUTTON_DPAD_DOWN, JOY_BUTTON_A]:
+		await _press(tool, b)
+	await _shoot(tool, out + "_9_controller_keys.png")
+	await _press(tool, JOY_BUTTON_B)
 	root.call("close_screen")
 	await tool.call("wait_frames", 10)
 	root.call("open_screen", "sheet", 0)

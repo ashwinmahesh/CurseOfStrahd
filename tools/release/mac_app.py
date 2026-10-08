@@ -10,8 +10,16 @@ macOS template (from the installed 4.7.2 export templates), fills in Info.plist,
 won't run unsigned code; Gatekeeper still asks on first open, since it isn't notarized) and zips it. On a Mac that's
 codesign and ditto; elsewhere (the release workflow's Linux runner) rcodesign and zip.
 Writes <out>/Curse of Strahd.app and <out>/CurseOfStrahd-macos.zip.
+
+With a Developer ID it signs and notarizes instead (owner, 2026-10-08: ready for when there's an Apple Developer
+account), so the app opens with no Open Anyway step. Set MAC_SIGN_P12 and MAC_SIGN_P12_PASSWORD_FILE (paths to the
+Developer ID Application certificate and a file holding its password) to sign with the hardened runtime, and also
+MAC_NOTARY_KEY (an App Store Connect API key from rcodesign encode-app-store-connect-api-key) to have Apple notarize it
+and staple the ticket to the app before it's zipped. Both use rcodesign, on a Mac too. The game loads no native plugins,
+so the hardened runtime needs no entitlements.
 """
 import argparse
+import os
 import shutil
 import subprocess
 import zipfile
@@ -67,7 +75,21 @@ def main() -> None:
 	shutil.copyfile(args.pck, app / "Contents/Resources" / (NAME + ".pck"))
 	archive = out / "CurseOfStrahd-macos.zip"
 	archive.unlink(missing_ok=True)
-	if shutil.which("codesign"):
+	p12 = os.environ.get("MAC_SIGN_P12", "")
+	notary = os.environ.get("MAC_NOTARY_KEY", "")
+	if notary and not p12:
+		raise SystemExit("mac_app: MAC_NOTARY_KEY needs MAC_SIGN_P12: Apple only notarizes Developer ID signed apps")
+	if p12:
+		subprocess.run(["rcodesign", "sign", "--p12-file", p12, "--p12-password-file",
+			os.environ["MAC_SIGN_P12_PASSWORD_FILE"], "--code-signature-flags", "runtime", str(app)], check=True)
+		if notary:
+			# Waits for Apple's verdict (a few minutes for a build this size), then staples the ticket to the app.
+			subprocess.run(["rcodesign", "notary-submit", "--api-key-file", notary, "--staple", str(app)], check=True)
+		if shutil.which("ditto"):
+			subprocess.run(["ditto", "-c", "-k", "--sequesterRsrc", "--keepParent", str(app), str(archive)], check=True)
+		else:
+			subprocess.run(["zip", "-q", "-r", "-y", str(archive), app.name], cwd=out, check=True)
+	elif shutil.which("codesign"):
 		subprocess.run(["codesign", "--force", "--deep", "--timestamp=none", "--sign", "-", str(app)], check=True)
 		subprocess.run(["codesign", "--verify", "--deep", "--strict", str(app)], check=True)
 		subprocess.run(["ditto", "-c", "-k", "--sequesterRsrc", "--keepParent", str(app), str(archive)], check=True)
@@ -75,7 +97,8 @@ def main() -> None:
 		# rcodesign with no certificate signs ad hoc, as codesign --sign - does.
 		subprocess.run(["rcodesign", "sign", str(app)], check=True)
 		subprocess.run(["zip", "-q", "-r", "-y", str(archive), app.name], cwd=out, check=True)
-	print("mac_app: %s (%.2f GB zipped)" % (archive, archive.stat().st_size / 1e9))
+	how = "notarized" if notary else "Developer ID signed" if p12 else "signed ad hoc"
+	print("mac_app: %s (%s, %.2f GB zipped)" % (archive, how, archive.stat().st_size / 1e9))
 
 
 if __name__ == "__main__":
