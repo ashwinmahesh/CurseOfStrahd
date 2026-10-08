@@ -18,8 +18,8 @@ func test_from_ireena_to_vallaki_with_no_cheats() -> void:
 	bot.prefer.assign(["We'll help you bury your father.", "Will you bury the burgomaster?",
 		"We're ready to carry him to the church.", "Wait for him to find his voice.",
 		"Ireena is under our protection. Leave.", "Yes. We'll take you to Vallaki.",
-		"Someone should stay and keep the house standing.", "Set out west.", "Pay ten gold.", "One of us will tell you something true.", "Lean close and tell her", "How is he destroyed?",
-		"This is Ireena Kolyana"])
+		"Someone should stay and keep the house standing.", "Set out west.", "Pay ten gold.",
+		"One of us will tell you something true.", "Lean close and tell her", "How is he destroyed?", "This is Ireena Kolyana"])
 	bot.avoid.assign(["Attack", "Draw steel", "Kill", "Intimidation", "Fill in the grave", "No. We can't take you",
 		"Not yet", "Krezk", "without the priest", "stand watch", "We'll hold the house", "Unbar", "Lift the bar",
 		"end his suffering", "Deception", "Turn the cards"])
