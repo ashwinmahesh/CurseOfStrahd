@@ -21,7 +21,8 @@ consequences. Knocking a creature out instead of killing it (the 2024 rule) is l
 ## After the fight (`story/captives.gd`, `world/exploration/location_fights.gd`)
 
 - **Captives** (`Captives.taken`): enemies alive at a won fight's end that surrendered, or that lane 2's knock-out
-  rule left with the `knocked_out` flag and at least 1 Hit Point. Strongest first.
+  rule left with the `knocked_out` flag and at least 1 Hit Point and who could have surrendered (a knocked-out wolf
+  or boss is left where it lies). Strongest first.
 - **The conversation** (`Captives.conversation`): `narrative/captives/<kind>.dialogue`, by the fight
   (`Captives.BY_FIGHT`), then by the leading captive's stat block (`BY_MONSTER`), else `plain`. Kinds: `vistani`
   (Tser Pool), `wachter` (Lady Wachter's people), `vallaki_watch` (the Baron's watch, when the party sided against

@@ -22,9 +22,14 @@ const CRUELTY := [["godrick_pendlebrook", -4], ["liriel_dawnsong", -3], ["wren_f
 const CRUELTY_WHY := "You cut down a foe who had thrown down their weapons"
 
 
-## Whether `c` gave up: surrendered, or knocked out and still at 1 Hit Point or more.
+## Whether `c` is a captive: surrendered, or knocked out (still at 1 Hit Point or more) and one who could talk and give
+## up (AiTactics.can_surrender: a knocked-out wolf or boss is left where it lies).
 static func gave_up(c: Combatant) -> bool:
-	return c.is_alive() and (c.creature.has_flag("surrendered") or (c.creature.has_flag("knocked_out") and c.creature.hp > 0))
+	if not c.is_alive():
+		return false
+	if c.creature.has_flag("surrendered"):
+		return true
+	return c.creature.has_flag("knocked_out") and c.creature.hp > 0 and AiTactics.can_surrender(c)
 
 
 ## The captives a won fight leaves: its foes who gave up, the strongest first.

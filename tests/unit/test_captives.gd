@@ -145,3 +145,19 @@ func test_the_watch_pays_for_prisoners_in_vallaki() -> void:
 	var beats := _talk(away, "captives/plain:start", "Hand them")
 	assert_eq(away.gold, 0.0, "no watch to hand them to on the road")
 	assert_eq(str(beats[-1]["kind"]), "end")
+
+
+func test_a_knocked_out_talker_is_a_captive_and_a_knocked_out_wolf_isnt() -> void:
+	var e := TestCombat.open_field()
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(2, 3))
+	var bandit := TestCombat.foe(e, "bandit", Vector2i(6, 3))
+	var wolf := TestCombat.foe(e, "wolf", Vector2i(8, 3))
+	_encounters.append(e)
+	TestCombat.start_with(e, h)
+	e.damage.knock_out(bandit, h)
+	e.damage.knock_out(wolf, h)
+	e._check_over()
+	assert_eq(e.outcome, "victory", "both are out of the fight")
+	var taken := Captives.taken(e)
+	assert_eq(taken.size(), 1)
+	assert_eq(taken[0], bandit, "the bandit wakes up a prisoner; the wolf is left where it lies")
