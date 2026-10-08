@@ -45,7 +45,7 @@ var thing_labels: ThingLabels
 const CONTROLS: Array[String] = [
 	"Mouse: click the floor to walk there; click a person, door, chest or thing to use it (the hint says what a click will do); right-click it for everything you can do; the mouse wheel zooms.",
 	"Hold {show_names} to see the names of everything you can use nearby. Hold {show_sight} to see what each foe in sight can see (always shown while sneaking).",
-	"Keyboard: {walk} walk · {camera_rotate_left} / {camera_rotate_right} turn the camera · {select_member_1}-{select_member_4} or {cycle_leader} pick who leads · {open_sheet} character · {open_inventory} inventory · {open_journal} journal · {open_party} party · {open_map} map · {rest} rest · {search} search · {sneak} sneak · {split} split the party · {plan_mode} turn-based ({plan_round} ends the round) · {quick_save} quicksave · {quick_load} load it · Esc menu. Settings, Keys changes them.",
+	"Keyboard: {walk} walk · {camera_rotate_left} / {camera_rotate_right} turn the camera · {select_member_1}-{select_member_4} or {cycle_leader} pick who leads · {open_sheet} character · {open_inventory} inventory · {open_journal} journal · {open_party} party · {open_map} map · {rest} rest · {wait} wait some hours · {search} search · {sneak} sneak · {split} split the party · {plan_mode} turn-based ({plan_round} ends the round) · {quick_save} quicksave · {quick_load} load it · Esc menu. Settings, Keys changes them.",
 	"In conversations: 1-9 pick an answer · Space, Enter or a click goes on · H shows what's been said.",
 	"Controller: left stick walks · A uses what's beside you · Back opens its menu · X searches · Y journal · LB / RB character and inventory · Start menu.",
 ]
@@ -55,7 +55,7 @@ var _control_lines: Array[Label] = []
 ## [label, key (an InputActions action, or the key itself), command, icon (art/ui/icons)]
 const BUTTONS := [["Character", "open_sheet", "sheet", "character"], ["Inventory", "open_inventory", "inventory", "inventory"],
 	["Journal", "open_journal", "journal", "journal"], ["Party", "open_party", "party", "party"], ["Map", "open_map", "map", "map"],
-	["Rest", "rest", "rest", "rest"], ["Search", "search", "search", "search"], ["Sneak", "sneak", "sneak", "sneak"],
+	["Rest", "rest", "rest", "rest"], ["Wait", "wait", "wait", "wait"], ["Search", "search", "search", "search"], ["Sneak", "sneak", "sneak", "sneak"],
 	["Split", "split", "split", "split"], ["Turn-based", "plan_mode", "plan", "plan"], ["Menu", "Esc", "menu", "menu"]]
 ## Each bar button's key mark: command -> [the mark, the BUTTONS row], so marks follow the player's keys.
 var _bar_keys: Dictionary = {}
