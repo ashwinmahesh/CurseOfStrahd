@@ -1,0 +1,420 @@
+{
+  "note": "Dialogue busts (Improvement Ideas G1; docs/ui/busts.md), built by tools/art/build_busts.py: a half-body bust per person from their turnaround (the HD redraw where there is one), then each mood their lines use drawn from that bust. Heroes stand on the left facing right, everyone else on the right facing left. Owner-approved look and cast, 2026-10-08 (the ten heroes and the 40 NPCs with the most lines; moods used by 2 or more lines).",
+  "prompt": "Half-body character portrait of {NAME}, drawn exactly as the reference sheet shows them (same face, hair, clothes, colours and proportions), from the waist up, turned three-quarters toward the {SIDE} of the picture and looking {SIDE}, {EXPRESSION}. Large and clear, filling the frame from the top of the head to the waist with a small margin, as if talking to someone standing to the {SIDE}. Soft warm candlelight from the {SIDE}, cool shade on the other side. Plain flat white background, no shadow, no floor, no frame, no text.",
+  "mood_prompt": "The same character as the reference image: identical face, hair, clothes, colours, pose, framing, size and lighting, still on a plain flat white background with no shadow; change only the expression (and the hands, if it helps) so they look {EXPRESSION}.",
+  "expressions": {
+    "neutral": "with a calm, neutral resting expression",
+    "angry": "angry, brows drawn down and jaw set",
+    "afraid": "afraid, eyes wide, drawing back a little",
+    "sad": "sad, eyes lowered and mouth softened",
+    "smile": "smiling warmly",
+    "sly": "sly, with a knowing half-smile",
+    "weary": "weary, with tired eyes and sagging shoulders"
+  },
+  "people": {
+    "godrick_pendlebrook": {
+      "name": "Godrick Pendlebrook",
+      "ref": "art/generated/characters/godrick_pendlebrook_turnaround_hd.png",
+      "side": "left",
+      "moods": []
+    },
+    "hedda_ironvow": {
+      "name": "Hedda Ironvow",
+      "ref": "art/generated/characters/hedda_ironvow_turnaround.png",
+      "side": "left",
+      "moods": []
+    },
+    "ilse_varga": {
+      "name": "Ilse Varga",
+      "ref": "art/generated/characters/ilse_varga_turnaround.png",
+      "side": "left",
+      "moods": []
+    },
+    "kip_smudgewick": {
+      "name": "Kip Smudgewick",
+      "ref": "art/generated/characters/kip_smudgewick_turnaround_hd.png",
+      "side": "left",
+      "moods": []
+    },
+    "liriel_dawnsong": {
+      "name": "Liriel Dawnsong",
+      "ref": "art/generated/characters/liriel_dawnsong_turnaround_hd.png",
+      "side": "left",
+      "moods": []
+    },
+    "ratatoille": {
+      "name": "Ratatoille",
+      "ref": "art/generated/characters/ratatoille_turnaround_hd.png",
+      "side": "left",
+      "moods": []
+    },
+    "silvain_aster": {
+      "name": "Silvain Aster",
+      "ref": "art/generated/characters/silvain_aster_turnaround.png",
+      "side": "left",
+      "moods": []
+    },
+    "tamsin_tealeaf": {
+      "name": "Tamsin Tealeaf",
+      "ref": "art/generated/characters/tamsin_tealeaf_turnaround.png",
+      "side": "left",
+      "moods": []
+    },
+    "thistle": {
+      "name": "Thistle",
+      "ref": "art/generated/characters/thistle_turnaround_hd.png",
+      "side": "left",
+      "moods": []
+    },
+    "wren_featherfoot": {
+      "name": "Wren Featherfoot",
+      "ref": "art/generated/characters/wren_featherfoot_turnaround_hd.png",
+      "side": "left",
+      "moods": []
+    },
+    "ireena": {
+      "name": "Ireena Kolyana",
+      "ref": "art/generated/characters/ireena_turnaround.png",
+      "side": "right",
+      "moods": [
+        "afraid",
+        "angry",
+        "sad",
+        "smile"
+      ]
+    },
+    "strahd": {
+      "name": "Strahd von Zarovich",
+      "ref": "art/generated/characters/strahd_turnaround.png",
+      "side": "right",
+      "moods": [
+        "angry",
+        "smile"
+      ]
+    },
+    "madam_eva": {
+      "name": "Madam Eva",
+      "ref": "art/generated/characters/madam_eva_turnaround.png",
+      "side": "right",
+      "moods": [
+        "sad",
+        "sly"
+      ]
+    },
+    "ezmerelda": {
+      "name": "Ezmerelda d'Avenir",
+      "ref": "art/generated/characters/ezmerelda_turnaround.png",
+      "side": "right",
+      "moods": [
+        "angry",
+        "smile"
+      ]
+    },
+    "abbot": {
+      "name": "The Abbot",
+      "ref": "art/generated/characters/abbot_turnaround.png",
+      "side": "right",
+      "moods": [
+        "sad",
+        "smile"
+      ]
+    },
+    "ismark": {
+      "name": "Ismark Kolyanovich",
+      "ref": "art/generated/characters/ismark_turnaround.png",
+      "side": "right",
+      "moods": [
+        "afraid",
+        "sad",
+        "sly",
+        "smile",
+        "weary"
+      ]
+    },
+    "davian_martikov": {
+      "name": "Davian Martikov",
+      "ref": "art/generated/characters/davian_martikov_turnaround.png",
+      "side": "right",
+      "moods": [
+        "angry"
+      ]
+    },
+    "vladimir_horngaard": {
+      "name": "Vladimir Horngaard",
+      "ref": "art/generated/characters/vladimir_horngaard_turnaround.png",
+      "side": "right",
+      "moods": []
+    },
+    "baron_vargas": {
+      "name": "Baron Vargas Vallakovich",
+      "ref": "art/generated/characters/baron_vargas_turnaround.png",
+      "side": "right",
+      "moods": [
+        "afraid",
+        "angry",
+        "sad",
+        "smile"
+      ]
+    },
+    "sir_godfrey_gwilym": {
+      "name": "Sir Godfrey Gwilym",
+      "ref": "art/generated/characters/sir_godfrey_gwilym_turnaround.png",
+      "side": "right",
+      "moods": [
+        "sad"
+      ]
+    },
+    "morgantha": {
+      "name": "Morgantha",
+      "ref": "art/generated/characters/morgantha_turnaround.png",
+      "side": "right",
+      "moods": [
+        "sad",
+        "sly",
+        "smile"
+      ]
+    },
+    "rictavio": {
+      "name": "Rictavio",
+      "ref": "art/generated/characters/rictavio_turnaround.png",
+      "side": "right",
+      "moods": [
+        "smile"
+      ]
+    },
+    "exethanter": {
+      "name": "Exethanter",
+      "ref": "art/generated/characters/exethanter_turnaround.png",
+      "side": "right",
+      "moods": [
+        "sad"
+      ]
+    },
+    "lady_wachter": {
+      "name": "Lady Wachter",
+      "ref": "art/generated/characters/lady_wachter_turnaround.png",
+      "side": "right",
+      "moods": [
+        "sly",
+        "smile"
+      ]
+    },
+    "baba_lysaga": {
+      "name": "Baba Lysaga",
+      "ref": "art/generated/characters/baba_lysaga_turnaround.png",
+      "side": "right",
+      "moods": [
+        "angry",
+        "sly",
+        "smile"
+      ]
+    },
+    "dmitri_krezkov": {
+      "name": "Dmitri Krezkov",
+      "ref": "art/generated/characters/dmitri_krezkov_turnaround.png",
+      "side": "right",
+      "moods": [
+        "angry"
+      ]
+    },
+    "donavich": {
+      "name": "Father Donavich",
+      "ref": "art/generated/characters/donavich_turnaround.png",
+      "side": "right",
+      "moods": [
+        "afraid",
+        "angry",
+        "sad",
+        "weary"
+      ]
+    },
+    "cyrus_belview": {
+      "name": "Cyrus Belview",
+      "ref": "art/generated/characters/cyrus_belview_turnaround.png",
+      "side": "right",
+      "moods": [
+        "afraid",
+        "sad",
+        "smile"
+      ]
+    },
+    "father_lucian": {
+      "name": "Father Lucian",
+      "ref": "art/generated/characters/father_lucian_turnaround.png",
+      "side": "right",
+      "moods": [
+        "sad",
+        "smile"
+      ]
+    },
+    "krezk_guard": {
+      "name": "Krezk Watchman",
+      "ref": "art/generated/characters/krezk_guard_turnaround.png",
+      "side": "right",
+      "moods": [
+        "angry"
+      ]
+    },
+    "vosk": {
+      "name": "Master Vosk",
+      "ref": "art/generated/characters/vosk_turnaround.png",
+      "side": "right",
+      "moods": [
+        "smile"
+      ]
+    },
+    "bildrath": {
+      "name": "Bildrath Cantemir",
+      "ref": "art/generated/characters/bildrath_turnaround.png",
+      "side": "right",
+      "moods": [
+        "angry",
+        "weary"
+      ]
+    },
+    "stanimir": {
+      "name": "Stanimir",
+      "ref": "art/generated/characters/stanimir_turnaround.png",
+      "side": "right",
+      "moods": [
+        "angry",
+        "sad",
+        "smile"
+      ]
+    },
+    "emil_toranescu": {
+      "name": "Emil Toranescu",
+      "ref": "art/generated/characters/emil_toranescu_turnaround.png",
+      "side": "right",
+      "moods": [
+        "angry"
+      ]
+    },
+    "vallaki_guard": {
+      "name": "Town Guard",
+      "ref": "art/generated/characters/vallaki_guard_turnaround.png",
+      "side": "right",
+      "moods": [
+        "angry",
+        "smile"
+      ]
+    },
+    "izek": {
+      "name": "Izek Strazni",
+      "ref": "art/generated/characters/izek_turnaround.png",
+      "side": "right",
+      "moods": [
+        "angry"
+      ]
+    },
+    "zuleika_toranescu": {
+      "name": "Zuleika Toranescu",
+      "ref": "art/generated/characters/zuleika_toranescu_turnaround.png",
+      "side": "right",
+      "moods": []
+    },
+    "argynvost": {
+      "name": "Argynvost, a noble silver dragon, drawn as a translucent ghostly echo in pale silver and frost blue (head, long neck and chest; not red)",
+      "ref": "art/generated/characters/argynvost_echo_turnaround.png",
+      "side": "right",
+      "moods": [
+        "sad"
+      ],
+      "flip": true
+    },
+    "adrian_martikov": {
+      "name": "Adrian Martikov",
+      "ref": "art/generated/characters/adrian_martikov_turnaround.png",
+      "side": "right",
+      "moods": [
+        "sad"
+      ]
+    },
+    "rose": {
+      "name": "Rose",
+      "ref": "art/generated/characters/rose_turnaround.png",
+      "side": "right",
+      "moods": [
+        "afraid",
+        "angry",
+        "sad",
+        "smile"
+      ]
+    },
+    "victor_vallakovich": {
+      "name": "Victor Vallakovich",
+      "ref": "art/generated/characters/victor_vallakovich_turnaround.png",
+      "side": "right",
+      "moods": [
+        "angry",
+        "sad"
+      ]
+    },
+    "kasimir_velikov": {
+      "name": "Kasimir Velikov",
+      "ref": "art/generated/characters/kasimir_velikov_turnaround.png",
+      "side": "right",
+      "moods": []
+    },
+    "ilinca_vrana": {
+      "name": "Ilinca Vrana",
+      "ref": "art/generated/characters/ilinca_vrana_turnaround.png",
+      "side": "right",
+      "moods": []
+    },
+    "kiril_stoyanovich": {
+      "name": "Kiril Stoyanovich",
+      "ref": "art/generated/characters/kiril_stoyanovich_turnaround.png",
+      "side": "right",
+      "moods": [
+        "smile"
+      ]
+    },
+    "clovin_belview": {
+      "name": "Clovin Belview",
+      "ref": "art/generated/characters/clovin_belview_turnaround.png",
+      "side": "right",
+      "moods": [
+        "sad"
+      ]
+    },
+    "rahadin": {
+      "name": "Rahadin",
+      "ref": "art/generated/characters/rahadin_turnaround.png",
+      "side": "right",
+      "moods": []
+    },
+    "arabelle": {
+      "name": "Arabelle",
+      "ref": "art/generated/characters/arabelle_turnaround.png",
+      "side": "right",
+      "moods": [
+        "sad"
+      ]
+    },
+    "escher": {
+      "name": "Escher",
+      "ref": "art/generated/characters/escher_turnaround.png",
+      "side": "right",
+      "moods": [
+        "angry",
+        "sly"
+      ]
+    },
+    "pidlwick_ii": {
+      "name": "Pidlwick II",
+      "ref": "art/generated/characters/pidlwick_ii_turnaround.png",
+      "side": "right",
+      "moods": []
+    },
+    "urwin_martikov": {
+      "name": "Urwin Martikov",
+      "ref": "art/generated/characters/urwin_martikov_turnaround.png",
+      "side": "right",
+      "moods": []
+    }
+  },
+  "use": {
+    "argynvost_neutral": "b"
+  }
+}

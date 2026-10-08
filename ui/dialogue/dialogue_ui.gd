@@ -43,6 +43,8 @@ var _options_scroll: ScrollContainer
 const OPTIONS_SHARE := 0.45
 ## The cutscene's picture behind the conversation, while one is up (`cutscene <id>` until `cutscene end`).
 var cutscene: CutsceneView = null
+## The big busts either side of the box (G1): the party's speaker on the left, the one they're talking to on the right.
+var busts: DialogueBusts
 
 
 func _init() -> void:
@@ -83,6 +85,8 @@ func _ready() -> void:
 	_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	_panel.gui_input.connect(_clicked)
+	busts = DialogueBusts.new()
+	add_child(busts)   # over the scene's dim, under the box
 	add_child(_panel)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 18)
@@ -314,6 +318,7 @@ func _show(beat: Dictionary) -> void:
 			queue_free()
 		"line":
 			_line(beat)
+			busts.line(beat, DialogueRunner.portrait_of(runner.speaker) if runner != null and runner.speaker != null else "")
 			_waiting_continue = true
 		"notice":
 			_text.text = "[color=#%s]◆ %s[/color]" % [Look.color("bile").to_html(false), _esc(str(beat["text"]))]
