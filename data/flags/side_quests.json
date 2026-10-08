@@ -410,6 +410,26 @@
       "id": "greytooth_paid",
       "type": "bool",
       "summary": "Yevgeni paid the party the Baron's bounty and gave them the horn."
+    },
+    {
+      "id": "drowned_defended",
+      "type": "bool",
+      "summary": "The party stood between the drowned of Pescari and the man they came for (The Bell Under the Lake)."
+    },
+    {
+      "id": "bluto_given",
+      "type": "bool",
+      "summary": "The party stood aside and let the drowned take Bluto into the lake."
+    },
+    {
+      "id": "drowned_beaten",
+      "type": "bool",
+      "summary": "The drowned of Pescari were driven back under the water (encounter drowned_landing)."
+    },
+    {
+      "id": "bell_silenced",
+      "type": "bool",
+      "summary": "The bell under Lake Zarovich was cut loose or rung for the dead; the quest is over."
     }
   ]
 }

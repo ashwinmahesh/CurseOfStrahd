@@ -162,3 +162,10 @@ func test_old_greytooth_comes_down_to_the_landing() -> void:
 	assert_true(boss != null and boss.creature.max_hp() >= 150, "the boss at full size")
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("hunters_at_the_inn"), "hunted")
+
+
+func test_the_drowned_come_up_the_landing() -> void:
+	var v := await _boot("lake_zarovich", 23, 8, ["arabelle_rescued"])
+	await _fight(v, "drowned_landing", ["The Bellringer of Pescari", "The Lake's Undertow"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("bell_under_the_lake"), "risen")

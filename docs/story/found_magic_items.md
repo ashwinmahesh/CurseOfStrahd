@@ -115,6 +115,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | The rotten jetty | Ring of Water Walking (uncommon) | Search (Perception DC 14): under the boards |
 | ✅ | An empty hut | Folding Boat (rare) | Search (Investigation DC 14): a loose hearthstone |
 | ✅ | The fishers' shrine | Trident of Fish Command (uncommon) | Search (Perception DC 13) |
+| ✅ | The drowned chapel under the lake | Staff of Healing (rare) | Gift: once the bell is silenced (The Bell Under the Lake, docs/story/side_quests.md) |
 
 ## Old Bonegrinder (level 6)
 

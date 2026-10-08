@@ -443,6 +443,18 @@
       "model": "bones",
       "dialogue": "vallaki/hunters_at_the_inn:shore",
       "when": "quest.hunters_at_the_inn and quest.hunters_at_the_inn != rumored"
+    },
+    {
+      "id": "bell_water",
+      "cell": [
+        18,
+        3
+      ],
+      "kind": "examine",
+      "label": "The end of the jetty, over deep water",
+      "model": "rowboat",
+      "dialogue": "lake_zarovich/bell_under_the_lake:water",
+      "when": "quest.bell_under_the_lake"
     }
   ],
   "containers": [
@@ -885,6 +897,328 @@
       "quest": {
         "id": "hunters_at_the_inn",
         "stage": "hunted"
+      }
+    },
+    {
+      "id": "drowned_landing",
+      "trigger": "dialogue",
+      "when": "level >= 9",
+      "text": "The water along the shore stands up in the shape of people: the drowned of Pescari, grey and swollen, in their Sunday clothes, and behind them a tall shape in a priest's black lifting a hand like a man ringing a bell.",
+      "monsters": [
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            9
+          ],
+          "name": "The Bellringer of Pescari"
+        },
+        {
+          "monster": "water_elemental",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "The Lake's Undertow"
+        },
+        {
+          "monster": "water_elemental",
+          "cell": [
+            12,
+            9
+          ],
+          "name": "The Lake's Undertow"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            14,
+            9
+          ],
+          "name": "A Drowned Bride"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            8,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            26,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            2,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            31,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            5,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            10,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            22,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            28,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            24,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        }
+      ],
+      "surprise": "",
+      "flag": "drowned_beaten",
+      "quest": {
+        "id": "bell_under_the_lake",
+        "stage": "risen"
+      }
+    },
+    {
+      "id": "drowned_landing",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "The water along the shore stands up in the shape of people: the drowned of Pescari, grey and swollen, in their Sunday clothes, and behind them a tall shape in a priest's black lifting a hand like a man ringing a bell.",
+      "monsters": [
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            9
+          ],
+          "name": "The Bellringer of Pescari"
+        },
+        {
+          "monster": "water_elemental",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "The Lake's Undertow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            8,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            26,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            2,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            31,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            5,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            10,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            22,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            28,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            24,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        }
+      ],
+      "surprise": "",
+      "flag": "drowned_beaten",
+      "quest": {
+        "id": "bell_under_the_lake",
+        "stage": "risen"
+      }
+    },
+    {
+      "id": "drowned_landing",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "The water along the shore stands up in the shape of people: the drowned of Pescari, grey and swollen, in their Sunday clothes, and behind them a tall shape in a priest's black lifting a hand like a man ringing a bell.",
+      "monsters": [
+        {
+          "monster": "wight",
+          "cell": [
+            17,
+            9
+          ],
+          "name": "The Bellringer of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            8,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            26,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            5,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            10,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            22,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            28,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            24,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        }
+      ],
+      "surprise": "",
+      "flag": "drowned_beaten",
+      "quest": {
+        "id": "bell_under_the_lake",
+        "stage": "risen"
       }
     }
   ]
