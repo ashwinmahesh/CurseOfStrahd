@@ -190,6 +190,32 @@ func test_his_fights_find_open_floor_near_the_party() -> void:
 
 # --- What the conversations decide ----------------------------------------------------------------
 
+func test_at_the_night_visit_he_calls_someone_who_isnt_on_watch_to_kneel() -> void:
+	var st := _party()
+	st.set_flag("strahd_watcher_seen", true)
+	st.leader = 0
+	_play(st, "strahd/visits:night", ["Wake the others"])
+	assert_eq(str(st.get_flag("strahd_knelt", "")), "hedda_ironvow", "Ilse is the one awake, so he calls Hedda")
+	var refs := CampTalk.available(st).map(func(t: Dictionary) -> String: return str(t["ref"]))
+	assert_true("camp/hedda:talk_knelt" in refs, "Hedda talks about it at the next camp")
+	assert_false("camp/ilse:talk_knelt" in refs)
+	var other := _party()
+	other.set_flag("strahd_watcher_seen", true)
+	other.leader = 1
+	_play(other, "strahd/visits:night", ["Wake the others"])
+	assert_eq(str(other.get_flag("strahd_knelt", "")), "ilse_varga", "with Hedda on watch, he calls Ilse")
+
+
+func test_every_answer_at_the_burial_but_a_bow_costs_ismark_his_breath() -> void:
+	for pick: String in ["under our protection", "Attack him", "Say nothing"]:
+		var st := _party()
+		_play(st, "village_of_barovia/burial:strahd_arrives", [pick])
+		assert_true(bool(st.get_flag("ismark_choked", false)), pick)
+	var bowed := _party()
+	_play(bowed, "village_of_barovia/burial:strahd_arrives", ["Bow"])
+	assert_false(bool(bowed.get_flag("ismark_choked", false)), "a bow spares him")
+
+
 func test_letting_ireena_go_at_the_inn_gives_her_to_him() -> void:
 	var st := _party()
 	st.set_flag("ireena_sanctuary", "inn")
