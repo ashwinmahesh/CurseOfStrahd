@@ -52,6 +52,8 @@ const SHOTS := {
 		"dist": 16.0, "flags": {"strahd_invitation": "accepted"}},
 	"castle_court_turned": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 19], [20, 19], [19, 20], [20, 20]],
 		"dist": 16.0, "yaw": 2, "flags": {"strahd_invitation": "accepted"}},
+	"castle_keep": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 12], [20, 12], [19, 13], [20, 13]],
+		"dist": 15.0, "flags": {"strahd_invitation": "accepted"}},
 	"castle_bridge": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 26], [20, 26], [19, 27], [20, 27]],
 		"dist": 12.0, "yaw": 1},
 	"castle_overlook": {"loc": "castle_ravenloft_overlook", "hour": 21, "cells": [[10, 3], [11, 3], [10, 4], [11, 4]],

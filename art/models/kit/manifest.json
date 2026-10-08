@@ -5001,6 +5001,22 @@
       ],
       "triangles": 200,
       "part": "cliff"
+    },
+    "kit_castle_wall_top_c": {
+      "file": "art/models/kit/kit_castle_wall_top_c.glb",
+      "mount": "kit",
+      "stands_for": [],
+      "size": [
+        1.0,
+        1.33,
+        0.36
+      ],
+      "materials": [
+        "tex_castle__ashlar",
+        "tex_kit__dressed_stone"
+      ],
+      "triangles": 92,
+      "part": "castle_top"
     }
   },
   "constants": {

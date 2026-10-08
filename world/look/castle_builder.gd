@@ -208,8 +208,13 @@ static func _walls(board: ArenaBoard, st: Dictionary, cells: Array, group: int) 
 			if not chasm and h >= LOW:   # (a roof's parapet stands on the roof, with no battered foot)
 				parts.append(["kit_castle_wall_foot", BuildingKit.face_xf(base, yaw)])
 				stub.append(["kit_castle_wall_foot", BuildingKit.face_xf(base, yaw)])
-			parts.append(["kit_castle_wall_top_b" if pick % 3 == 0 else "kit_castle_wall_top_a",
-				BuildingKit.face_xf(base + Vector3(0, h, 0), yaw)])
+			# Machicolations on the faces looking out (over the chasm, off the map, the keep's); a plain parapet
+			# on a curtain wall's inner face and on a roof's.
+			var inner := h < LOW or (h <= float(st["wall"]) + 0.01 and board.grid.in_bounds(n) and not chasm \
+				and not board.grid.has_flag(n, CombatGrid.WALL) and _inside(board, st, c, d))
+			var top_id := "kit_castle_wall_top_c" if inner and BuildingKit.has("kit_castle_wall_top_c") \
+				else ("kit_castle_wall_top_b" if pick % 3 == 0 else "kit_castle_wall_top_a")
+			parts.append([top_id, BuildingKit.face_xf(base + Vector3(0, h, 0), yaw)])
 			# What stands on the face: on the keep, windows in two storeys between buttresses; on the curtain
 			# walls, a loop on every third face and a buttress on some of the faces over the chasm and the yards.
 			var keep := h > float(st["wall"]) + 0.01
@@ -228,6 +233,19 @@ static func _walls(board: ArenaBoard, st: Dictionary, cells: Array, group: int) 
 			elif pick % 3 == 2 and h >= 4.0:
 				parts.append(["kit_castle_slit", BuildingKit.face_xf(base + Vector3(0, h * 0.55, 0), yaw)])
 	_finish(b, parts, stub)
+
+
+## Does the face of wall square `c` looking along `d` look into the castle (a yard closed in by its walls) rather than
+## out of it? Walking from the face's square away from the wall, there's more wall within a few squares.
+static func _inside(board: ArenaBoard, st: Dictionary, c: Vector2i, d: Vector2i) -> bool:
+	var cells := st["cells"] as Dictionary
+	for k: int in range(2, 40):
+		var n := c + d * k
+		if not board.grid.in_bounds(n) or board.grid.has_flag(n, CombatGrid.VOID):
+			return false
+		if cells.has(n):
+			return true
+	return false
 
 
 ## The passages through the castle's walls: a run of up to three open squares between two wall squares, as deep as

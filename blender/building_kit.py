@@ -1083,27 +1083,33 @@ def kit_castle_wall_foot(p):
              -0.5, 0.5, DRESSED)
 
 
-def _castle_top(p, loop):
+def _castle_top(p, loop, corbels=True):
     """The top of a curtain wall's face, from the wall's top edge (z = 0): three stepped corbels carrying a parapet
     out over the face (machicolations, dark slots between them), a merlon over the middle of the face with a crenel
-    either side, coped in dressed stone."""
-    for x in (-0.34, 0.0, 0.34):
-        p.box((0.13, 0.16, 0.24), (x, -0.08, -0.6), DRESSED, soft=0.01, segs=1)
-        p.box((0.15, 0.3, 0.26), (x, -0.15, -0.36), DRESSED, soft=0.01, segs=1)
-    for x in (-0.17, 0.17):
-        p.box((0.16, 0.012, 0.18), (x, -0.012, -0.32), "pal_void")
-    p.box((1.0, 0.32, 0.16), (0, -0.16, -0.12), DRESSED)
-    p.box((1.0, 0.3, 0.62), (0, -0.15, 0.27), ASHLAR)
-    p.box((1.0, 0.34, 0.05), (0, -0.15, 0.6), DRESSED)
-    p.box((0.5, 0.3, 0.56), (0, -0.15, 0.9), ASHLAR)
-    p.box((0.54, 0.34, 0.06), (0, -0.15, 1.2), DRESSED, soft=0.01, segs=1)
+    either side, coped in dressed stone. Without corbels (a wall's inner face, a roof's parapet) the parapet stands
+    flush on a plain string course."""
+    if corbels:
+        for x in (-0.34, 0.0, 0.34):
+            p.box((0.13, 0.16, 0.24), (x, -0.08, -0.6), DRESSED, soft=0.01, segs=1)
+            p.box((0.15, 0.3, 0.26), (x, -0.15, -0.36), DRESSED, soft=0.01, segs=1)
+        for x in (-0.17, 0.17):
+            p.box((0.16, 0.012, 0.18), (x, -0.012, -0.32), "pal_void")
+        p.box((1.0, 0.32, 0.16), (0, -0.16, -0.12), DRESSED)
+    else:
+        p.box((1.0, 0.06, 0.08), (0, -0.03, -0.06), DRESSED)
+    y = -0.15 if corbels else 0.13   # out over the corbels, or standing on the wall's top at its edge
+    p.box((1.0, 0.3, 0.62), (0, y, 0.27), ASHLAR)
+    p.box((1.0, 0.34, 0.05), (0, y, 0.6), DRESSED)
+    p.box((0.5, 0.3, 0.56), (0, y, 0.9), ASHLAR)
+    p.box((0.54, 0.34, 0.06), (0, y, 1.2), DRESSED, soft=0.01, segs=1)
     if loop:
-        p.box((0.05, 0.012, 0.3), (0, -0.302, 0.88), "pal_void")
-        p.box((0.16, 0.012, 0.05), (0, -0.302, 0.92), "pal_void")
+        p.box((0.05, 0.012, 0.3), (0, y - 0.152, 0.88), "pal_void")
+        p.box((0.16, 0.012, 0.05), (0, y - 0.152, 0.92), "pal_void")
 
 
 kit("kit_castle_wall_top_a", part="castle_top")(lambda p: _castle_top(p, False))
 kit("kit_castle_wall_top_b", part="castle_top")(lambda p: _castle_top(p, True))
+kit("kit_castle_wall_top_c", part="castle_top")(lambda p: _castle_top(p, False, corbels=False))
 
 
 @kit("kit_castle_slit", part="castle_slit")
