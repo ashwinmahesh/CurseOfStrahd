@@ -1,0 +1,140 @@
+# Release builds (owner, 2026-10-08): the Windows and Mac downloads, built on GitHub's runners with make release and
+# published to the downloads bucket (Cloudflare R2, downloads.curseofstrahd.app), so they don't upload from home.
+# Run it from the Actions tab (Release builds → Run workflow) or: gh workflow run release.yml -f version=1.0.1 -f upload=true
+# With upload off it's a dry run: everything is built and checked, nothing is published.
+# Secrets (Settings → Secrets and variables → Actions): COS_CLOUDFLARE_R2_API_TOKEN, COS_CLOUDFLARE_ACCOUNT_ID.
+# The first run imports every asset (about 2 hours); later runs start from the cached import and LFS objects.
+name: Release builds
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version for the download names (e.g. 1.0.1)
+        required: true
+        default: "1.0.0"
+      upload:
+        description: Publish to downloads.curseofstrahd.app (off = a dry run that only builds)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+env:
+  GODOT_VERSION: "4.7.2"
+  GODOT_ZIP_SHA512: 9aa00f7a605200940bce3027a567b782f49bd8e940dd06ae9e987bd65aee1b1467edd56ed84fcdcbdd44354bf613bdbb4e5d2913e925850368e150c59ed54c65
+  TEMPLATES_SHA512: ca4d71c4d7b81dfc15d1a98baa07534aa95b03fdda78a0075b06672e1648d2e5f40980c9adc28d23e1b92e732ee7bf3461997aa804af74ec2fcd7a93ccb84079
+  RCODESIGN_VERSION: "0.29.0"
+  RCODESIGN_SHA256: dbe85cedd8ee4217b64e9a0e4c2aef92ab8bcaaa41f20bde99781ff02e600002
+  BUCKET: curseofstrahd-downloads
+  DOWNLOADS: https://downloads.curseofstrahd.app
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - name: Make room on the runner
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
+          df -h /
+
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - name: List the LFS files the game needs
+        run: git lfs ls-files -l -X "art/generated/**" | cut -d' ' -f1 | sort > "$RUNNER_TEMP/lfs-ids.txt"
+
+      - name: Restore LFS objects
+        uses: actions/cache@v4
+        with:
+          path: .git/lfs/objects
+          key: lfs-${{ hashFiles(format('{0}/lfs-ids.txt', runner.temp)) }}
+          restore-keys: lfs-
+
+      - name: Fetch LFS files (the raw generated art isn't used by the game)
+        run: git lfs pull -X "art/generated/**"
+
+      - name: Keep the importer out of folders the game never loads
+        run: touch art/generated/.gdignore art/sourced/game_icons/.gdignore
+
+      - name: Restore Godot and its export templates
+        id: godot-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/godot-dl
+          key: godot-${{ env.GODOT_VERSION }}-${{ env.RCODESIGN_VERSION }}
+
+      - name: Download Godot, its export templates and rcodesign (checksums pinned above)
+        if: steps.godot-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/godot-dl && cd ~/godot-dl
+          base="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable"
+          curl -fsSLO "$base/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          curl -fsSLO "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          rc="apple-codesign-${RCODESIGN_VERSION}-x86_64-unknown-linux-musl"
+          curl -fsSLO "https://github.com/indygreg/apple-platform-rs/releases/download/apple-codesign%2F${RCODESIGN_VERSION}/${rc}.tar.gz"
+
+      - name: Check the downloads and install them
+        run: |
+          cd ~/godot-dl
+          echo "${GODOT_ZIP_SHA512}  Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip" | sha512sum -c -
+          echo "${TEMPLATES_SHA512}  Godot_v${GODOT_VERSION}-stable_export_templates.tpz" | sha512sum -c -
+          rc="apple-codesign-${RCODESIGN_VERSION}-x86_64-unknown-linux-musl"
+          echo "${RCODESIGN_SHA256}  ${rc}.tar.gz" | sha256sum -c -
+          mkdir -p ~/bin "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
+          unzip -o -q "Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip" -d ~/bin
+          unzip -o -q -j "Godot_v${GODOT_VERSION}-stable_export_templates.tpz" "templates/version.txt" \
+            "templates/macos.zip" "templates/windows_release_x86_64.exe" "templates/windows_release_x86_64_console.exe" \
+            -d "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
+          tar -xzf "${rc}.tar.gz" -C ~/bin --strip-components=1 "${rc}/rcodesign"
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+          echo "GODOT=$HOME/bin/Godot_v${GODOT_VERSION}-stable_linux.x86_64" >> "$GITHUB_ENV"
+
+      - name: Restore the import cache
+        uses: actions/cache@v4
+        with:
+          path: .godot
+          key: import-${{ env.GODOT_VERSION }}-${{ github.sha }}
+          restore-keys: import-${{ env.GODOT_VERSION }}-
+
+      - name: Import, export and package (make release)
+        env:
+          IMPORT_HEADLESS: "1"
+        run: |
+          sudo apt-get install -y -qq zip > /dev/null
+          make release OUT="$RUNNER_TEMP/release" VERSION="${{ inputs.version }}"
+          ls -la "$RUNNER_TEMP/release" "$RUNNER_TEMP/release/macos"
+
+      - name: Publish to the downloads bucket
+        if: inputs.upload
+        env:
+          COS_CLOUDFLARE_R2_API_TOKEN: ${{ secrets.COS_CLOUDFLARE_R2_API_TOKEN }}
+          COS_CLOUDFLARE_ACCOUNT_ID: ${{ secrets.COS_CLOUDFLARE_ACCOUNT_ID }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          sudo apt-get install -y -qq rclone > /dev/null
+          # An R2 token's S3 credentials: its id, and the SHA-256 of its value. Never printed.
+          token_id="$(curl -fsS -H "Authorization: Bearer ${COS_CLOUDFLARE_R2_API_TOKEN}" \
+            https://api.cloudflare.com/client/v4/user/tokens/verify | python3 -c 'import json,sys; print(json.load(sys.stdin)["result"]["id"])')"
+          secret="$(printf '%s' "${COS_CLOUDFLARE_R2_API_TOKEN}" | sha256sum | cut -d' ' -f1)"
+          echo "::add-mask::${token_id}"
+          echo "::add-mask::${secret}"
+          export RCLONE_CONFIG_R2_TYPE=s3 RCLONE_CONFIG_R2_PROVIDER=Cloudflare RCLONE_CONFIG_R2_NO_CHECK_BUCKET=true
+          export RCLONE_CONFIG_R2_ACCESS_KEY_ID="${token_id}" RCLONE_CONFIG_R2_SECRET_ACCESS_KEY="${secret}"
+          export RCLONE_CONFIG_R2_ENDPOINT="https://${COS_CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com"
+          out="$RUNNER_TEMP/release"
+          rclone copyto "$out/macos/CurseOfStrahd-macos.zip" "r2:${BUCKET}/${VERSION}/CurseOfStrahd-${VERSION}-macos.zip" \
+            --s3-chunk-size 64M --s3-upload-concurrency 8
+          rclone copyto "$out/CurseOfStrahd-windows.zip" "r2:${BUCKET}/${VERSION}/CurseOfStrahd-${VERSION}-windows.zip" \
+            --s3-chunk-size 64M --s3-upload-concurrency 8
+          for os in macos windows; do
+            curl -fsSI "${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-${os}.zip" | head -1
+          done
+          echo "Published ${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-macos.zip and ...-windows.zip" >> "$GITHUB_STEP_SUMMARY"

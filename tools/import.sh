@@ -27,7 +27,7 @@ lock=".godot/import.lock"
 child=""
 owned=""
 
-log="$(mktemp -t strahd_import)"
+log="$(mktemp "${TMPDIR:-/tmp}/strahd_import.XXXXXX")"   # portable: the release workflow runs on Linux
 keep=""
 finish() {
   # Only an import that took the lock put project.godot aside, so only it puts it back.
@@ -107,7 +107,7 @@ if cache_empty; then
 fi
 # Put aside only once it's this import's turn: taken while another import's editor had rewritten it, the rewrite is
 # what would be put back (seen 2026-10-08, the owner's make run waiting on the build's make ci).
-keep="$(mktemp -t strahd_project)"
+keep="$(mktemp "${TMPDIR:-/tmp}/strahd_project.XXXXXX")"
 cp -p project.godot "$keep"
 
 ## Runs a command in the background into $log and waits, so Ctrl-C reaches stop() at once. Its exit status.
