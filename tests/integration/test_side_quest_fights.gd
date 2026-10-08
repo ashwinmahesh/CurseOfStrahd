@@ -114,5 +114,12 @@ func test_ana_and_the_girls_in_the_street_and_in_their_graves() -> void:
 	root.queue_free()
 	root = null
 	v = await _boot("vallaki", 11, 5, ["ana_grave_known"])
-	await _fight(v, "roses_graves", ["Ana", "Irina", "Sorina"])
+	await _fight(v, "roses_graves", ["Ana", "Irina", "Daria"])
 	await _end(v)
+
+
+func test_the_abbey_comes_for_sorin_at_the_pool() -> void:
+	var v := await _boot("krezk_pool_of_the_white_sun", 1, 7, ["sorin_vigil", "sorin_seen", "sorin_known", "krezk_gate_open"])
+	await _fight(v, "sorin_pursuers", ["A Bride Before Vasilka", "Belview Brute"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("lighter_than_it_should_be"), "pursued")

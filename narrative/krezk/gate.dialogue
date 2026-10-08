@@ -173,7 +173,7 @@ Krezk Watchman: Gate's barred for the night. If you're inside, stay inside. If y
 else
 Krezk Watchman: Still in one piece? Good. Krezk likes visitors who stay that way. Fewer graves.
 endif
-* What's the news in Krezk? -> news
+* Heard anything interesting? -> news
 * Tell us about the Abbey. -> about_abbey
 * Goodbye. -> END
 
@@ -190,9 +190,30 @@ elif flag.ilya_fate == "frail"
 Krezk Watchman: The burgomaster's boy is out of bed. Pale as milk, but out of bed. Anna carries him to the well and back every morning so he can see the sky.
 elif flag.ilya_heard
 Krezk Watchman: The burgomaster's boy is no better. People go quiet passing that house. You can hear Anna singing through the shutters, and you can hear her stop.
+else
+set ilya_heard
+quest the_burgomasters_son heard
+Krezk Watchman: The burgomaster's boy is sick. A fever since the spring. His last son, Dmitri says. You can hear Anna singing to him through the shutters every night, and you can hear her stop.
 endif
 if not flag.wizard_of_wines_hook and not flag.wine_shortage_heard
 Krezk Watchman: And the wine's stopped. The Martikovs' cart came every autumn. Not this one.
+if not quest.wizard_of_wines
+quest wizard_of_wines rumored
+endif
+endif
+if not flag.werewolf_rumor and not flag.den_children_freed
+set werewolf_rumor
+if not quest.wolves_in_the_hills
+quest wolves_in_the_hills heard
+endif
+Krezk Watchman: Five children gone from the farms below the wall this year. Wolves, they say. Wolves don't lift latches. There's a den up in the hills over the lake, the shepherds say, and the shepherds don't go up there any more.
+endif
+if not quest.lighter_than_it_should_be
+set krezk_toys_rumor
+quest lighter_than_it_should_be rumored
+Krezk Watchman: And there are toys on the Krezkov graves at the pool every morning. Carved ones: horses, wolves. Nobody in Krezk carves like that. Dmitri smashes them. Anna keeps them.
+elif flag.sorin_fate == "home"
+Krezk Watchman: The burgomaster's got a son home who went up the mountain twenty years ago. I don't understand it and I'm not asking. Anna's singing again. All day.
 endif
 -> END
 
