@@ -166,8 +166,8 @@ approve liriel_dawnsong -6 godrick_pendlebrook -5 thistle -3 wren_featherfoot -3
 
 ~ stop
 Abbot: I will not raise a hand in this house. I have done enough with my hands.
-Narrator: He steps back from the bier. He doesn't look at you. He looks at her.
-Abbot: Vasilka. Child. Defend your wedding.
+Narrator [away]: He steps back from the bier. He doesn't look at you. He looks at her.
+Abbot [away]: Vasilka. Child. Defend your wedding.
 Narrator: She rises from the bier in one smooth movement, like a dancer, and the Belviews reach under their rags for cleavers and pruning hooks.
 Vasilka: I am sorry. I am told this is important.
 approve godrick_pendlebrook +3 liriel_dawnsong +2 thistle +2 wren_featherfoot +1: You stopped the Abbot's wedding

@@ -11,7 +11,7 @@ if not flag.pidlwick_met
 -> first
 endif
 if flag.pidlwick_refused
-Narrator: Pidlwick II sits on the top step with his back to you. When you come close he shuffles along to make room, without turning round.
+Narrator [away]: Pidlwick II sits on the top step with his back to you. When you come close he shuffles along to make room, without turning round.
 else
 Narrator: Pidlwick II bounces up off the step, bells jingling, and bows so low that his cap brushes the stone.
 endif
@@ -83,7 +83,7 @@ approve wren_featherfoot +2: You played catch with a clockwork jester on a vampi
 -> menu
 
 ~ winding
-Narrator: He sags a little, as if the question let the air out of him, and turns round to show you a keyhole in his back. It is empty.
+Narrator [away]: He sags a little, as if the question let the air out of him, and turns round to show you a keyhole in his back. It is empty.
 Pidlwick II: KEY. THE BIRDS TOOK IT. UP UNDER THE ROOF.
 Pidlwick II: I WIND MYSELF WITH A NAIL. IT IS NOT THE SAME.
 quest the_jesters_key asked
@@ -151,7 +151,7 @@ Narrator: He nods, very politely, and sits down on the top step with the slate i
 ~ key_back
 set pidlwick_wound
 quest the_jesters_key returned
-Narrator: You hold out the brass key. He goes perfectly still, then turns his back to you and waits.
+Narrator [away]: You hold out the brass key. He goes perfectly still, then turns his back to you and waits.
 Narrator: It takes a long time to wind him: forty turns, fifty. With every turn his ticking grows steadier.
 Pidlwick II: (He spins on one toe.) THANK YOU. THANK YOU. THANK YOU.
 Pidlwick II: A PRESENT. I KEPT IT IN MY HAT FOR A HUNDRED YEARS. (He holds out a fly carved of black wood.) IT GROWS. DON'T TELL ANYONE.
