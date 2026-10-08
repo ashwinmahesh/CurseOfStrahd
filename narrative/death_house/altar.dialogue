@@ -138,8 +138,12 @@ interject name:wren_featherfoot: I'm not joking now. Nobody lies down on that. N
 * No. Not this. -> choose
 
 ~ sacrifice_done
-# The player picks a living party member, who dies for good (the `sacrifice` statement).
+# The player picks a living party member, who dies for good (the `sacrifice` statement), or backs out.
 sacrifice
+if not check.last
+  Narrator: No one moves toward the table. The chant waits, patient as stone.
+  -> choose
+endif
 set death_house_sacrificed
 Narrator: It is quick, and it is quiet, and afterward none of you can remember who held the knife.
 cult_shades: One has died. The house is satisfied.

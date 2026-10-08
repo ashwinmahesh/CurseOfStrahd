@@ -312,6 +312,44 @@ func test_the_creator() -> void:
 	await _check("the character creator", _screen("create", 0), _close_screen)
 
 
+## Madam Eva's rebuild (owner, 2026-10-08): the creator for one hero, on its Equipment step (every option, with its
+## gold) and its Appearance step (a prebuilt hero keeps their look); and the hero picker with its way back.
+func test_madam_evas_rebuild() -> void:
+	if not await _game(LATE):
+		return
+	var hero := GameState.story.party[0]
+	for step: int in [CharacterBuilder.Step.EQUIPMENT, CharacterBuilder.Step.APPEARANCE]:
+		await _check("the rebuild's %s step" % CharacterBuilder.STEP_NAMES[step], func() -> Variant:
+			var cs := CreationScreen.new()
+			root.add_child(cs)
+			var start: Array[Dictionary] = [CreationScreen.rebuild_start(hero)]
+			cs.open_with(start, 1)
+			cs.b().set_class("wizard")
+			cs.b().set_background("acolyte")
+			cs.step = step
+			cs.call("_draw")
+			await _frames(2)
+			return cs,
+			func() -> void:
+				for cs in root.find_children("*", "CreationScreen", false, false):
+					cs.queue_free())
+	var names: Array[String] = []
+	for ch in GameState.story.party:
+		names.append(ch.name)
+	names.append(str(DialogueRunner.BACK_OUT["respec"]))
+	await _check("the rebuild's hero picker", func() -> Variant:
+		var d := DialogueUI.new()
+		root.add_child(d)
+		await _frames(1)
+		d.call("_show", {"kind": "pick_member", "purpose": "respec", "members": names,
+			"text": "Whose fate will the cards read anew? (They return to level 1 and are built again; they keep their belongings.)"})
+		await _frames(2)
+		return d,
+		func() -> void:
+			for d in root.find_children("*", "DialogueUI", false, false):
+				d.queue_free())
+
+
 func test_the_travel_map() -> void:
 	if not await _game(LATE):
 		return

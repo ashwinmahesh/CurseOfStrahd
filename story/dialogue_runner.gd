@@ -17,6 +17,9 @@ const NARRATOR_PORTRAIT := "narrator"
 const ABILITIES := {"strength": &"str", "dexterity": &"dex", "constitution": &"con", "intelligence": &"int",
 	"wisdom": &"wis", "charisma": &"cha"}
 
+## The way back out of each party picker (its last option).
+const BACK_OUT := {"sacrifice": "No one. Not this.", "respec": "Never mind. No one sits."}
+
 var st: StoryState
 var dice: DiceRoller
 var narrator: Narrator = null
@@ -258,12 +261,14 @@ func next() -> Dictionary:
 					return {"kind": "notice", "text": "%s leaves the party" % Compendium.shared().display_name("npcs", str(s["npc"]))}
 			"sacrifice":
 				pc += 1
+				st.last_check = true   # skipped with one left alive: the scene goes on as before
 				if _living().size() >= 2:
 					_picking = true
 					_pick_purpose = "sacrifice"
 					return _pick_beat()
 			"respec":
 				pc += 1
+				st.last_check = false   # skipped (respec switched off): nobody was rebuilt
 				if bool(st.options.get("respec", true)) and not _living().is_empty():
 					_picking = true
 					_pick_purpose = "respec"
@@ -322,19 +327,28 @@ func _pick_beat() -> Dictionary:
 		var g := Compendium.shared().get_entry("dark_gifts", _gift)
 		text = "Who accepts %s? %s It can never be given back." % [g.get("name", _gift), g.get("summary", "")]
 		names.append("No one")
+	else:
+		names.append(BACK_OUT[_pick_purpose])   # every picker has a way back (owner, 2026-10-08)
 	return {"kind": "pick_member", "text": text, "members": names, "purpose": _pick_purpose}
 
 
-## Answers a `sacrifice` beat: the `i`th living party member dies for good and leaves the party.
+## Answers a `pick_member` beat: the `i`th living party member is the one (sacrificed, rebuilt or given the gift).
+## The option after them backs out: no one is picked, `check.last` is false and the conversation goes on, so the
+## dialogue can return to its menu. Picking someone sets `check.last` true.
 func pick_member(i: int) -> Dictionary:
 	var living := _living()
 	if _picking and _pick_purpose == "dark_gift" and i == living.size():
 		_picking = false
 		st.set_flag("refused_" + _gift, true)
 		return {"kind": "notice", "text": "No one takes it."}
+	if _picking and i == living.size():
+		_picking = false
+		st.last_check = false
+		return next()
 	if not _picking or i < 0 or i >= living.size():
 		return next()
 	_picking = false
+	st.last_check = true
 	var ch := living[i]
 	if _pick_purpose == "dark_gift":
 		ch.accept_dark_gift(_gift)
