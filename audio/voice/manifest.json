@@ -35298,6 +35298,13 @@
   "recipe": "dd92281f92",
   "text": "The ground floor waits exactly as you left it, every chair squared to its table. Houses are not supposed to be this patient."
  },
+ "narrator/3296c47fa020f5f3": {
+  "chars": 137,
+  "direction": "[low, wary]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A dead tree beside the road, its bark worn smooth in places by hands and boots. Someone has sat up in it before, watching for travellers."
+ },
  "narrator/32b1fb6ac53304e6": {
   "chars": 81,
   "model": "eleven_v4",
@@ -37754,6 +37761,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A kitchen with a cauldron big enough to bathe in, and two small boys underfoot who vanish the moment you look straight at them."
+ },
+ "narrator/4b74765e24ed2050": {
+  "chars": 137,
+  "direction": "[observant, practical]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A dead tree leaning out over the trail with branches like a ladder. From up there you'd see the lake, and anything coming along the path."
  },
  "narrator/4b7e2d9902804659": {
   "chars": 142,
@@ -41212,6 +41226,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "She stops fighting the cord and stands, shivering all over, and lets you put a hand on her neck. Under your palm the hide is hot as a kettle."
+ },
+ "narrator/6c5478a2b0dc2546": {
+  "chars": 133,
+  "direction": "[quiet, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "An old dead tree by the road with low, broad branches. Climb it and you'd see the road both ways, and how close the Mists really are."
  },
  "narrator/6c55fa8b7d413a5f": {
   "chars": 118,
@@ -47205,6 +47226,13 @@
   "recipe": "f60908d226",
   "text": "'Two at each gate, changed at dusk and at midnight. The midnight pair drink.' He winces. 'Don't tell them it was me.'"
  },
+ "narrator/a80dc5d18edaf1dd": {
+  "chars": 164,
+  "direction": "[low, ominous, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A pine scored with claw marks far higher than a wolf could reach on four legs. Its branches start low enough to climb, if you don't think about who climbed it last."
+ },
  "narrator/a8153a9dec2f54a6": {
   "chars": 194,
   "model": "eleven_v4",
@@ -50820,6 +50848,13 @@
   "recipe": "dd92281f92",
   "text": "She lies down and folds her hands, and closes her eyes, and does not open them when you do what has to be done. It is very quick. Afterwards the room smells, very faintly, of bread."
  },
+ "narrator/cc6a496808ed7659": {
+  "chars": 151,
+  "direction": "[quiet, bleak]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A tree drowned where it stood when the marsh came up, grey and bare, its lower branches still strong enough to hold someone looking out over the reeds."
+ },
  "narrator/cc76bd9b1c5656b8": {
   "chars": 129,
   "model": "eleven_v4",
@@ -52443,6 +52478,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Ireena pushes through the crowd to you with her sword already belted on and her bag over her shoulder."
+ },
+ "narrator/ddef136ef6bb532a": {
+  "chars": 138,
+  "direction": "[observant, wary]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "An old pine scored by claws, with branches low and thick enough to climb. Ten feet up, you'd see over the brush to both bends of the road."
  },
  "narrator/ddf6e2b7814c3059": {
   "chars": 109,
