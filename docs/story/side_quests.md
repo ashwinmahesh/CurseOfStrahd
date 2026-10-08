@@ -182,6 +182,31 @@ been turned (Intimidation DC 14) or left at the inn.
   party members on the way. Attention mark `greytooth` (+1).
 - Yevgeni pays the whole bounty, 300 gp, and gives his father's Horn of Valhalla, Silver (rare).
 
+## The River Ivlis crossroads at night (level 8)
+
+### The Count's Huntsman (`the_counts_huntsman`, narrative/svalich_road/the_counts_huntsman.dialogue; batch 3)
+
+Old Paraschiva, the cook at the Vistani camp outside Vallaki, is the camp's rumour-giver: on cold nights a horn sounds
+in the Svalich woods, and in the morning whoever the count is displeased with lies under the crossroads gallows, run
+to death. Whose scent the Huntsman has follows Strahd's attention: once the party is `marked` (data/strahd/attention.json)
+it's theirs ("three notes is for strangers"), otherwise Gavril the groom's, who sold the castle a painted horse
+(`hunt_quarry`). The rule: the hunt ends under the gallows at moonrise, and a quarry who stands there and beats him
+ends it for good. **Twist:** the Huntsman is Toader, a poacher the count ran down himself in his first winter, who stood
+and turned at this crossroads and was made huntsman for it; every quarry since has become one of his hounds, and the
+Vistani have scratched their names on cairns by the road (prop `quarry_stones`). **Escalation:** at night he stands on
+the east road (Gavril waits by the junction if it's his scent). Reading the stones first lets the party call the
+hounds by name, and most of the pack lies down (`hounds_called`).
+
+- **Boss: the Count's Huntsman** (data/monsters/count_huntsman.json, `source.book: custom`, from the 2025 Monster
+  Manual's revenant and wight, drawn with the revenant's sprite): Medium undead, AC 17, 165 HP, two attacks with a boar
+  spear (reach 10) or black arrows (1d8+5 and 2d8 necrotic), a horn that frightens (recharge 5-6, 60 ft), Legendary
+  Resistance (2/day), and a loosed arrow or a step into the trees between turns. CR 9.
+- Fight `the_hunt` on the east road: level 8 the Huntsman, his mare (a nightmare) and 4 hounds (dire wolves), 6,500 XP,
+  or 2 hounds once they're called (the autopilot wins 1 of 4 against the whole pack and 2 of 3 with the hounds called);
+  level 9 six hounds (three called); level 10 eight (four called); below 8 the Huntsman at 130 HP with 3 hounds (1).
+- Beating him is a mark on Strahd's attention (`huntsman`, 1 point).
+- His saddlebag: 300 gp of quarry's purses and the iron ring he called the pack with, a Ring of Animal Influence (rare).
+
 ## Lake Zarovich (level 8)
 
 ### The Bell Under the Lake (`bell_under_the_lake`, narrative/lake_zarovich/bell_under_the_lake.dialogue; batch 2)
@@ -380,4 +405,5 @@ gate.dialogue's two new news lines (the bucket, feast days) and townsfolk.dialog
 Bonegrinder: the_fourth_sister.dialogue in full (new speakers Mouse, Granny Ash and Goodwife Sarnov; also Ilinca) and
 the village townsfolk.dialogue's new gossip lines (Vasile and Petre: the Sarnov woman, and three children again). Batch 3, the
 Wizard of Wines: the_black_row.dialogue in full (Davian, Adrian; companions' interjects), hands.dialogue's two new
-picker lines (Andrei) and davian.dialogue's two new menu options.
+picker lines (Andrei) and davian.dialogue's two new menu options. Batch 3, the
+crossroads: the_counts_huntsman.dialogue in full (new speaker the Huntsman; also Old Paraschiva and Gavril).
