@@ -108,7 +108,8 @@ switch), and `interject guest:ireena: Text` for a story ally travelling with the
 `approval.thistle >= close` (a companion's approval tier, compared by rank, so `<= strained` is Strained or worse;
 or a number), `attention >= marked` (Strahd's attention: a number or a tier from data/strahd/attention.json, F9),
 `gold >= 25` (the party's purse), `level >= 3`
-(the lowest character level in the party), `check.last` (the last check succeeded), joined with `and`, `or`, `not`
+(the lowest character level in the party), `leader:name:thistle` (the one speaking for the party matches the selector
+after `leader:`; `name:thistle and not leader:name:thistle` is Thistle when she isn't the one speaking), `check.last` (the last check succeeded), joined with `and`, `or`, `not`
 and parentheses.
 
 `gold -N` never takes the purse below zero: guard a purchase with `[if gold >= N]` and offer a "can't afford" line.

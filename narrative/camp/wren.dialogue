@@ -3,6 +3,31 @@
 # holds: when he's Strained or Doubtful (story/approval.gd), those first; then the quest's; then Warm, Close and
 # Devoted.
 
+# --- After Strahd called Wren to kneel at the night visit (strahd/visits:night_kneel) ---------------------------------
+
+~ talk_knelt
+if name:wren_featherfoot and flag.strahd_knelt == "wren_featherfoot"
+-> knelt
+endif
+-> END
+
+~ knelt
+Narrator: Wren is doing his forms by the dead fire, very slowly, over and over, the same three moves.
+interject name:wren_featherfoot: I don't remember walking. I remember the cold, and his fingers on my neck, and thinking: this is it. This is the last lesson. Don't get up when the wrong voice calls.
+interject name:wren_featherfoot: I've got no joke for this. First time ever. Somebody write it down.
+* You don't need a joke, Wren. -> knelt_joke
+* Then we'll find you one together. -> knelt_find
+
+~ knelt_joke
+interject name:wren_featherfoot: Good. Because I'm out. I'll just do my forms. Forms don't need you to be funny.
+approve wren_featherfoot +3: You told me I didn't need a joke for what Strahd did
+-> END
+
+~ knelt_find
+interject name:wren_featherfoot: Something about bats. There's definitely something about bats. Give me a day.
+approve wren_featherfoot +2: You offered to find me a joke after Strahd's visit
+-> END
+
 # --- When he's lost faith in the party (approval) ----------------------------------------------------------------
 
 ~ talk_strained

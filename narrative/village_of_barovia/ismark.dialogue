@@ -169,6 +169,11 @@ Ismark [smile]: Last night. You held the door and the windows, and nobody ran. I
 
 ~ after_burial
 Ismark [weary]: He's in the ground. Properly or not, he's in it, and nobody's digging him up tonight. Now there's only her.
+if flag.ismark_choked and not flag.ismark_spoke_of_choking
+set ismark_spoke_of_choking
+Ismark [weary]: My throat still feels like there's a hand on it. He never touched me. He never had to. Father faced that every night, alone, with a lamp.
+Ismark [angry]: And he made Ireena beg him for my breath. That's what he came for. Not me. Her, begging. I won't forget it.
+endif
 if not flag.ismark_gave_father_sword
 set ismark_gave_father_sword
 Ismark: Here. This was his. He had it blessed in Vallaki when he was young and foolish, and it never once let him down. I'm keeping her. You keep this.

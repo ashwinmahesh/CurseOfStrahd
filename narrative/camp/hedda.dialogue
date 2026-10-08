@@ -1,5 +1,28 @@
 # Hedda Ironvow's camp talks (story/camp_talk.gd). Quest: Cold Prayers (narrative/companions/prayers.dialogue).
 
+# --- After Strahd called Hedda to kneel at the night visit (strahd/visits:night_kneel) --------------------------------
+
+~ talk_knelt
+if name:hedda_ironvow and flag.strahd_knelt == "hedda_ironvow"
+-> knelt
+endif
+-> END
+
+~ knelt
+Narrator: Hedda is washing her hands in a pot of cold water, and has been for some time. They are very clean.
+interject name:hedda_ironvow: He told me to bring my hands. Healer's hands. I held them out to him like I was offering to mend something.
+interject name:hedda_ironvow: Gods help me, if he'd been bleeding, I'd have mended him.
+* Your hands are still yours, Hedda. -> knelt_hands
+* Let the rest of us keep watch tonight. -> knelt_watch
+
+~ knelt_hands
+interject name:hedda_ironvow: They are. And the next time he's in reach of them, they'll prove it.
+-> END
+
+~ knelt_watch
+interject name:hedda_ironvow: No. I'll keep it. If he comes, I want to be awake, and I want my hands busy.
+-> END
+
 ~ talk_cold
 if name:hedda_ironvow and flag.burgomaster_buried and flag.eva_truth_teller != "hedda_ironvow" and not (quest.cold_prayers >= cold)
 -> cold

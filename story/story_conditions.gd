@@ -10,6 +10,7 @@ extends RefCounted
 ## `approval.thistle >= close` (a companion's approval tier, or a score; story/approval.gd),
 ## `attention >= marked` (Strahd's attention, a number or a tier; story/strahd_presence.gd), `weather == fog` (where
 ## the party is; story/weather.gd),
+## `leader:name:thistle` (the party member speaking for the party matches the selector after `leader:`),
 ## `check.last`, `true`, `false`, with `and`, `or`, `not` and parentheses. An empty condition is true.
 
 var st: StoryState
@@ -217,6 +218,10 @@ func _term() -> bool:
 		return st.visited.has(t.substr(8))
 	if t.begins_with("approval."):
 		return Approval.compare(st, t.substr(9), op, rhs)
+	if t.begins_with("leader:"):
+		# The party member speaking for the party: `leader:name:thistle` (so a scene can pick someone else).
+		var lead := st.leader_character()
+		return lead != null and StoryState.member_matches(lead, t.substr(7))
 	if t.contains(":"):
 		if t.begins_with("item:"):
 			return st.party_has_item(t.substr(5))
