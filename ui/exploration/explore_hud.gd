@@ -358,7 +358,7 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		grow.add_theme_constant_override("separation", 8)
 		gcard.add_child(grow)
 		var npc := Compendium.shared().get_entry("npcs", st.guest_ids[gi])
-		grow.add_child(UiParts.framed_portrait(str(npc.get("portrait", st.guest_ids[gi])), 42.0, g.hp <= 0))
+		grow.add_child(UiParts.framed_portrait(NpcLooks.portrait(npc, st) if not npc.is_empty() else st.guest_ids[gi], 42.0, g.hp <= 0))
 		var gv := VBoxContainer.new()
 		gv.add_theme_constant_override("separation", 3)
 		var ghead := HBoxContainer.new()

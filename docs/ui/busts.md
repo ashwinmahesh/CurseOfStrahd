@@ -70,3 +70,11 @@ someone else), vallaki/aftermath.dialogue:62 (Izek turns away, but the Baron is 
 van_richtens_tower/van_richten.dialogue:41 (he looks away from Ezmerelda, not the party) and companions/dawn.dialogue:55
 (Liriel turns from the sun to face the windows).
 
+## Faces the story changes
+An NPC's data can list `looks` (story/npc_looks.gd, NpcLooks): `[{when, portrait}]`, the first whose dialogue condition
+holds wins, else their `portrait`. The id names their small portrait and their bust. Rictavio has one (owner,
+2026-10-08): once he admits he is Rudolph van Richten (`flag.rictavio_unmasked`), his portrait, bust and combat HUD
+portrait (CombatToken.portrait_id) become `van_richten` (Ashwin's pick B: long grey hair tied back, full beard,
+spectacles, a scar, in Rictavio's coat), while his name, his sprite on the map and the board and his stat block stay
+Rictavio's. His bust was drawn facing left, so it isn't mirrored; it has no moods yet, so every mood shows it.
+

@@ -554,7 +554,7 @@ func _refresh_strip() -> void:
 		var v := VBoxContainer.new()
 		v.add_theme_constant_override("separation", 2)
 		card.add_child(v)
-		v.add_child(UiParts.framed_portrait(CombatToken.art_id(c), 72.0 if active else 54.0, c.is_down(), c.creature.dead))
+		v.add_child(UiParts.framed_portrait(CombatToken.portrait_id(c), 72.0 if active else 54.0, c.is_down(), c.creature.dead))
 		var short := c.name().get_slice(" ", 0) if c.side != &"enemy" else c.name().replace("Dire Wolf", "Dire")
 		var sl := _label(short, 13 if not active else 15, "gilt_light" if active else "vellum")
 		sl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -605,7 +605,7 @@ func _refresh_party() -> void:
 		row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row.add_theme_constant_override("separation", 8)
 		card.add_child(row)
-		row.add_child(UiParts.framed_portrait(CombatToken.art_id(c), 64.0, c.is_down(), c.creature.dead))
+		row.add_child(UiParts.framed_portrait(CombatToken.portrait_id(c), 64.0, c.is_down(), c.creature.dead))
 		var v := VBoxContainer.new()
 		v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		v.add_theme_constant_override("separation", 3)
@@ -1306,7 +1306,7 @@ func _process(delta: float) -> void:
 # --- Helpers --------------------------------------------------------------------------------------
 
 func _portrait_for(c: Combatant) -> Texture2D:
-	var aid := CombatToken.art_id(c)
+	var aid := CombatToken.portrait_id(c)
 	if _portraits.has(aid):
 		return _portraits[aid] as Texture2D
 	var path := "res://art/portraits/%s.png" % aid

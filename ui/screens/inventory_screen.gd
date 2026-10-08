@@ -739,9 +739,10 @@ func _stash(ch: Character) -> Control:
 	zone.accepts = func(d: Dictionary) -> bool: return str(d.get("from", "")) in ["pack", "slot"] \
 		and not InventoryScreen.is_quest(Compendium.shared().item_data(str(d.get("id", ""))))
 	zone.dropped = func(d: Dictionary) -> void: _drop_on_stash(d)
-	var flow: Container = HFlowContainer.new()
+	# The list view stacks rows; the doll view flows tiles. Made as one or the other: a container made and dropped for
+	# the other is never freed (test_inventory_doll leaked one per list-view draw).
+	var flow: Container = VBoxContainer.new() if view == "list" else HFlowContainer.new()
 	if view == "list":
-		flow = VBoxContainer.new()
 		flow.add_theme_constant_override("separation", 4)
 	flow.add_theme_constant_override("h_separation", 5)
 	flow.add_theme_constant_override("v_separation", 5)
