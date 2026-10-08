@@ -23,6 +23,7 @@ endif
 ~ first
 set godfrey_met
 quest the_order_of_the_silver_dragon met
+cutscene godfrey_steps
 Narrator: A knight in dented plate waits on the broken front steps with his helmet under his arm. His face is grey and quite plainly dead, and he is doing his best to smile with it.
 Sir Godfrey Gwilym: Welcome to Argynvostholt. Mind the steps. The third one's gone, and the fourth, and honestly most of the house.
 Sir Godfrey Gwilym: Sir Godfrey Gwilym, of the Order of the Silver Dragon, or what's left of it. You'll want the commander. Everyone does, eventually. Then they wish they hadn't.
@@ -43,10 +44,16 @@ Sir Godfrey Gwilym: One thing, and then I'll stop fussing. Don't cross the court
 * [if flag.phantom_ride_seen] We saw riders on the road at night. Grey ones. -> ride_seen
 * [if flag.vallaki_backed] We've come from Vallaki. -> vallaki
 * What do you remember of being alive? -> alive
+* [if flag.godfrey_remembers and flag.order_fate != "rest"] Is anything left in the Order's armory? -> armory
 * [name:godrick_pendlebrook] [if quest.the_ladle and not flag.ladle_sword_shown] Present Sir Aldric Ashgrove's sword. -> companions/ladle:sword
 * [name:godrick_pendlebrook] [if flag.ladle_sword_shown and not flag.ladle_wall_read] Ask what his wall says about Aldric Ashgrove. -> companions/ladle:wall
 * [name:godrick_pendlebrook] [if quest.the_ladle >= kept_faith and flag.godfrey_remembers and not (quest.the_ladle >= knighted)] Ask Sir Godfrey to knight him. -> companions/ladle:knighting
 * Goodbye, Sir Godfrey. -> bye
+
+~ armory
+Sir Godfrey Gwilym: The Order's steel waits in the vault, polished by dead hands for a war we forgot. Take what you need for the castle. We ask only enough coin to light candles for the fallen. We have no other use for it now.
+shop
+-> menu
 
 ~ order
 Sir Godfrey Gwilym: The Order of the Silver Dragon. Lord Argynvost founded us: a silver dragon who liked people enough to look like one at dinner. We kept a watch over the valley. Farms, roads, the passes.
@@ -136,6 +143,8 @@ set godfrey_remembers
 quest the_order_of_the_silver_dragon remembering
 attitude sir_godfrey_gwilym friendly
 Sir Godfrey Gwilym: Ask the commander to call the muster. All of us at the table, the way it was. Say your piece to the Order, not to him. I'll stand up when you do. I promise, and I'll remember promising.
+Sir Godfrey Gwilym: And take my armour. Not the rust I'm wearing: the good plate, in my chest upstairs, that I kept polished for a war that ended four hundred years ago. A knight of the Order should wear it, and you said the oath better than I did.
+give armor_plus_1__plate_armor
 approve godrick_pendlebrook +4 liriel_dawnsong +1: You gave Sir Godfrey back the Order's oath
 -> menu
 

@@ -1,0 +1,15 @@
+{
+  "id": "bonegrinder_burns",
+  "title": "Old Bonegrinder Burns",
+  "summary": "The windmill burns, its sails turning at last, ravens wheeling round the fire.",
+  "images": [
+    {
+      "image": "bonegrinder_burns",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

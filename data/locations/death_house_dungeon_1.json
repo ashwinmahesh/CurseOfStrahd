@@ -586,6 +586,30 @@
       "model": "stair_down"
     },
     {
+      "id": "shrine_statue_base",
+      "cell": [
+        5,
+        19
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a hollow in the statue's base",
+      "model": "rubble",
+      "item": "dust_of_disappearance"
+    },
+    {
+      "id": "pallet_gem",
+      "cell": [
+        3,
+        8
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "something under a straw pallet",
+      "model": "straw",
+      "item": "elemental_gem_red_corundum"
+    },
+    {
       "id": "refectory_lamp_oil",
       "cell": [
         26,

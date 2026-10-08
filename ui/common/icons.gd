@@ -1,8 +1,9 @@
 class_name Icons
 extends RefCounted
-## Spell and item icons: framed tiles in art/icons/<spells|items>/<key>.png (make icons, from art/icons.json; the
-## silhouettes are game-icons.net, CC BY 3.0). A spell or item names its key with "icon" in its data, or is keyed by
-## its own id. A magic item built on a mundane one ("+1 Longsword") takes its template's icon, else its base item's.
+## Spell, item and ability icons: framed tiles in art/icons/<spells|items|features>/<key>.png (make icons, from
+## art/icons.json; the silhouettes are game-icons.net, CC BY 3.0). A spell or item names its key with "icon" in its
+## data, or is keyed by its own id. A magic item built on a mundane one ("+1 Longsword") takes its template's icon,
+## else its base item's.
 ## The tiles carry their own colours, so they're drawn untinted (the theme tints plain button icons gilt).
 
 const DIR := "res://art/icons/"
@@ -16,6 +17,13 @@ static func spell(id: String) -> Texture2D:
 
 static func item(id: String) -> Texture2D:
 	return _load("items", item_key(id))
+
+
+## An ability a hero switches on (Rage, Bladesong; art/icons.json "features"), or the plain rune tile for one without
+## its own (EffectIcons).
+static func feature(id: String) -> Texture2D:
+	var tex := _load("features", id)
+	return tex if tex != null else _load("features", "_any")
 
 
 static func spell_key(id: String) -> String:

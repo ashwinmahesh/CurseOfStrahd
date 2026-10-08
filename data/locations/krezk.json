@@ -333,6 +333,30 @@
       "kind": "examine",
       "label": "The abbey above",
       "model": "ledge"
+    },
+    {
+      "id": "track_cairn_ring",
+      "cell": [
+        35,
+        17
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "something under the cairn by the track",
+      "model": "rubble",
+      "item": "ring_of_warmth"
+    },
+    {
+      "id": "woodpile_shield",
+      "cell": [
+        28,
+        18
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a shield under the watch's woodpile",
+      "model": "rubble",
+      "item": "sentinel_shield__shield"
     }
   ],
   "containers": [

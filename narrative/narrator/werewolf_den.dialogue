@@ -119,3 +119,27 @@ once
 | [at:werewolf_den_caves] The den erupts in yellow eyes and snapping, and the cave is suddenly much too small.
 | [at:lake_zarovich_trail and night] Grey shapes come through the pines at a run, low and fast, and the ones behind are already standing up on two legs.
 | [at:van_richtens_tower] The pale figures on the shore move all at once, faster than anything dead has a right to.
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:mud_boots
+| Half sunk in the mud by the trail, a pair of good boots. The hunter who wore them ran very fast, for a while.
+once
+
+~ check:perception:mud_boots:failure
+| Tracks, and more tracks, most of them with claws. Nothing you want to follow.
+
+~ search:trophy_sword
+| Among Kiril's trophies hangs a sword he took from someone who hurt him. The blade is notched and still somehow wet.
+once
+
+~ search:shrine_sickle
+| Under the shrine of Mother Night, an offering nobody came back for: a silver sickle shaped like the new moon.
+once
+
+~ check:perception:shrine_sickle:failure
+| Bones, candle wax and dried flowers. Mother Night keeps what she's given.
+
+~ search:herb_elixir
+| Tucked into the bundles of drying herbs, a flask of something clear and faintly gold. It smells of spring, which is strange in these caves.
+once

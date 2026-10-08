@@ -89,6 +89,7 @@ Father Lucian: He was a holy man, and he died here, and his bones kept the dead 
 * [if flag.vallaki_pledge == "town" and not flag.festival_begun] What should we do at the festival? -> festival_plan
 * [if gold >= 25] Might we have holy water? We'll make a donation. -> holy_water
 * We need the church's help. Healing, or worse. -> church_help
+* Does the church sell potions or scrolls? -> church_wares
 * Goodbye, Father. -> bye
 
 ~ danger
@@ -97,6 +98,7 @@ Father Lucian: Tonight, or any night now. If whoever took the saint means the ch
 
 ~ vigil
 set church_vigil
+cutscene church_vigil
 Narrator: Lucian bars the doors and lights every candle he owns. You take your places in the nave. For hours there is nothing but the wax burning down and the priest's voice saying the long prayers under his breath.
 Father Lucian: Whatever happens, they don't reach the altar. Not while I'm breathing.
 approve liriel_dawnsong +2 godrick_pendlebrook +2 thistle +1: You kept vigil at St. Andral's with Father Lucian
@@ -233,6 +235,11 @@ Father Lucian: The town should hear this, from my mouth, in the square. Not as a
 gold -25
 give holy_water 2
 Father Lucian: Blessed this morning. Throw it, don't drink it, and don't miss.
+-> menu
+
+~ church_wares
+Father Lucian: The sisters brew healing draughts, and I copy out prayers onto scrolls in the evenings, when the lamps are lit and the town is quiet. What we sell keeps the roof on. What the roof keeps out, you know as well as I do.
+shop
 -> menu
 
 ~ church_help

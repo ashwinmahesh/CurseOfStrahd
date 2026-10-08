@@ -113,6 +113,8 @@ if not flag.arabelle_reward_given
 set arabelle_reward_given
 gold +50
 Luvash: Take this. It's not enough. Nothing would be enough.
+Luvash: And this. My grandmother swam the Luna in it, all the way to the falls and back. In the water it makes you a fish. The lake took my girl once; let it never take you.
+give cloak_of_the_manta_ray
 endif
 -> END
 
@@ -183,6 +185,7 @@ Narrator: The lakebed goes out from under your feet. By the time you're up again
 -> dive
 
 ~ dive
+cutscene arabelle_dive
 Narrator: Someone has to go in after it. The water is black and cold enough to stop a heart.
 check Athletics DC 13 -> rescued | dive_again
 

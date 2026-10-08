@@ -3,7 +3,8 @@
 
 Two `make voice` runs at once each write the manifest they started with, so the last one to finish drops the
 other's entries; the clips and the log are always complete. This puts the manifest back: every clip on disk, with
-the text of the line it voices and the recipe (voice, model, format, settings) the log says made it."""
+the text of the line it voices, the recipe (voice, model, format, settings) the log says made it, and its model and
+direction (audio/voice/directions.json) as logged."""
 import hashlib
 import json
 import sys
@@ -38,7 +39,9 @@ def main():
         if e.get("accent_tag"):
             blob.append(e["accent_tag"])
         recipe = hashlib.sha1(json.dumps(blob, sort_keys=True).encode()).hexdigest()[:10]
-        manifest[clip] = {"text": text, "recipe": recipe, "chars": len(text)}
+        manifest[clip] = {"text": text, "recipe": recipe, "chars": len(text),
+                          **({"model": e["model"]} if e.get("model") else {}),
+                          **({"direction": e["direction"]} if e.get("direction") else {})}
     MANIFEST.write_text(json.dumps(manifest, indent=1, sort_keys=True, ensure_ascii=False) + "\n")
     print(f"{len(manifest)} clips indexed" + (f"; {len(unknown)} clip(s) voice no current line: {unknown[:5]}" if unknown else ""))
 

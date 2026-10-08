@@ -134,6 +134,7 @@ endif
 -> END
 
 ~ at_home
+cutscene izek_doll
 Narrator: Izek sits on his cot in the dark with a doll in his ordinary hand, turning it so the candlelight moves across its painted face. He doesn't get up.
 Izek: You're in my room.
 * We know about the dolls. And about her. -> home_dolls

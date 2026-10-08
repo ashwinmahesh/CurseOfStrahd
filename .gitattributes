@@ -20,3 +20,6 @@ art/plants/**/*.png filter=lfs diff=lfs merge=lfs -text
 art/vistas/**/*.png filter=lfs diff=lfs merge=lfs -text
 # Story cutscenes' full-screen pictures (story/cutscenes.gd, docs/ui/cutscenes.md).
 art/cutscenes/**/*.png filter=lfs diff=lfs merge=lfs -text
+art/cutscenes/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+# Dialogue busts (ui/dialogue/dialogue_busts.gd, docs/ui/busts.md): cut-out WebP with alpha.
+art/busts/**/*.webp filter=lfs diff=lfs merge=lfs -text

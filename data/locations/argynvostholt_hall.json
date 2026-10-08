@@ -386,6 +386,31 @@
       "model": "rubble",
       "search_dc": 14,
       "item": "potion_of_healing"
+    },
+    {
+      "id": "armory_flame_tongue",
+      "cell": [
+        33,
+        7
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "a sword behind the armour stands",
+      "model": "sword_leaning",
+      "item": "flame_tongue__longsword"
+    },
+    {
+      "id": "altar_reliquary",
+      "cell": [
+        6,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "skill": "investigation",
+      "label": "a reliquary behind the chapel altar",
+      "model": "jewel_box",
+      "item": "amulet_of_the_devout_plus_2"
     }
   ],
   "containers": [

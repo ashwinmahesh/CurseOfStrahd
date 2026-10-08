@@ -1,0 +1,15 @@
+{
+  "id": "festival_sun_blazes",
+  "title": "The Blazing Sun",
+  "summary": "Vallaki's wicker sun bursts into flame over the festival crowd.",
+  "images": [
+    {
+      "image": "festival_sun_blazes",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.3
+  ]
+}

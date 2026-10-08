@@ -85,6 +85,11 @@ var location_id: String = ""
 var places: Array[String] = []
 var lair: bool = false
 var outdoors: bool = false
+## The weather over a fight in the open (F12, set by the place's fight from story/weather.gd): its kind id ("fog",
+## "storm"...) and what the kind does (`obscures`: the field is Lightly Obscured; `flames_out`: rain or snow puts out
+## open flames). "" and {} under a roof.
+var weather_id: String = ""
+var weather: Dictionary = {}
 ## Legendary and lair actions, Regeneration, shapes, Misty Escape, withdrawing (combat/legendary.gd).
 var legendary: Legendary
 ## The fight's jobs, a helper each (made first in _init: the other helpers may call them while they're being made).
@@ -157,6 +162,7 @@ func add(creature: Creature, side: StringName, cell: Vector2i) -> Combatant:
 	creature.d20_before = feature_actions.before_d20
 	creature.d20_after = feature_actions.after_d20
 	creature.effect_added = _effect_added
+	creature.fear_seen = fear_in_sight
 	combatants.append(c)
 	# A foe that joins mid-fight (Children of the Night) comes at the difficulty's Hit Points and +2s too.
 	if state == State.ACTIVE and side == &"enemy" and creature is Monster:
@@ -318,16 +324,16 @@ func start(surprised_ids: Array = []) -> void:
 	turns.start(surprised_ids)
 
 
-func _begin_turn() -> void:
-	turns._begin_turn()
+func _begin_turn() -> CombatResult:
+	return turns._begin_turn()
 
 
 func end_turn() -> CombatResult:
 	return turns.end_turn()
 
 
-func _lair_then_begin() -> void:
-	turns._lair_then_begin()
+func _lair_then_begin() -> CombatResult:
+	return turns._lair_then_begin()
 
 
 func _check_over() -> void:
@@ -414,6 +420,37 @@ func fear_sources(c: Combatant) -> Array[Combatant]:
 	return movement.fear_sources(c)
 
 
+## In a storm out in the open (a thunderstorm or a blizzard): Call Lightning takes control of it (+1d10).
+func stormy() -> bool:
+	return outdoors and weather_id in ["storm", "blizzard"]
+
+
+## The weather that Lightly Obscures the whole field (fog, a storm, a blizzard in the open), as a Disadvantage source
+## for Perception that relies on sight, or "".
+func weather_obscures() -> String:
+	return str(weather.get("label", weather_id.capitalize())) if outdoors and bool(weather.get("obscures", false)) else ""
+
+
+## Frightened (2024): Disadvantage on ability checks and attack rolls only while a source of the fear is within line
+## of sight (walls block it; darkness and invisibility don't). A fear with no known source, or one from a creature
+## outside the fight, counts as in sight; a source that has died frightens no more.
+func fear_in_sight(cr: Creature) -> bool:
+	var c := get_c(cr.id)
+	if c == null or c.creature != cr or cr.conditions.has(&"frightened"):
+		return true
+	var known := false
+	for fx in cr.effects:
+		if not &"frightened" in fx.conditions:
+			continue
+		var src := get_c(fx.caster_id) if fx.caster_id != "" else null
+		if src == null or src == c:
+			return true
+		known = true
+		if src.is_alive() and grid.can_see(c.cell, c.size_cells, src.cell, src.size_cells):
+			return true
+	return not known
+
+
 func move(c: Combatant, dest: Vector2i) -> CombatResult:
 	return movement.move(c, dest)
 
@@ -444,6 +481,10 @@ func stand_up(c: Combatant) -> CombatResult:
 
 func free_move(c: Combatant, dest: Vector2i) -> CombatResult:
 	return movement.free_move(c, dest)
+
+
+func reaction_move(c: Combatant, dest: Vector2i) -> CombatResult:
+	return movement.reaction_move(c, dest)
 
 
 func jump(c: Combatant, dest: Vector2i) -> CombatResult:
@@ -656,12 +697,12 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 
 # --- Standard actions (EncounterActions) ----------------------------------------------------------
 
-func ready_attack(c: Combatant, option_id: String) -> CombatResult:
-	return actions.ready_attack(c, option_id)
+func ready_attack(c: Combatant, option_id: String, trigger: String = "approach") -> CombatResult:
+	return actions.ready_attack(c, option_id, trigger)
 
 
-func ready_spell(c: Combatant, spell_id: String, slot: int) -> CombatResult:
-	return actions.ready_spell(c, spell_id, slot)
+func ready_spell(c: Combatant, spell_id: String, slot: int, trigger: String = "approach") -> CombatResult:
+	return actions.ready_spell(c, spell_id, slot, trigger)
 
 
 func use_item(c: Combatant, item_id: String, target: Combatant) -> CombatResult:

@@ -1,0 +1,39 @@
+# Vadoma, trader of the painted wagon, at the Vistani camp outside Vallaki (docs/voice/vadoma.md). Her wares change
+# every few days (the shop's rotating stock, story/trade.gd); she buys treasure, potions and scrolls.
+
+~ start
+if flag.tser_pool_brawl_won
+Vadoma [angry]: No. Not today, not for your gold. Every wagon in the valley knows what you did. Walk on.
+-> END
+endif
+if not flag.vadoma_met
+set vadoma_met
+Narrator: A wagon painted with suns and eyes stands apart from the others, its side let down into a counter. Bottles, bundles and little boxes crowd the shelves behind a woman who is counting coins without looking at them.
+Vadoma: Strangers, and with clean boots. Come closer. Nothing here bites, unless you pay extra.
+interject tag:curious: Where does a wagon find all this, in a valley with no way out?
+Vadoma [sly]: The roads are closed to you, friend. Not to us. The mists let us pass, and things that pass with us end up on my shelf.
+else
+Vadoma: Back again. The shelf has changed since you looked. It always does.
+endif
+-> menu
+
+~ menu
+* Show us your wares. -> wares
+* Where does it all come from? -> source
+* Why don't you sell the same things twice? -> rotation
+* Goodbye. -> END
+
+~ wares
+Vadoma: Look with your eyes first, your purse second. Anything you break, you bought.
+shop
+-> menu
+
+~ source
+Vadoma: Dead men's packs. Wizards who left in a hurry. A lady in Krezk who wanted her late husband's things gone and asked no questions about the price. Everything here has a story, and the story isn't for sale.
+interject class:paladin: Things taken from the dead should go back to their families.
+Vadoma: Then bring me a family, and I'll make them a very fair offer.
+-> menu
+
+~ rotation
+Vadoma: A wagon that sells the same thing twice is a shop, and a shop is a place where the wolves know where to find you. Come back in a few days. Everything will be different. Except me.
+-> menu

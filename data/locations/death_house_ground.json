@@ -475,6 +475,31 @@
       "model": "window_tall",
       "when": "flag.death_house_refused and not flag.death_house_completed",
       "dialogue": "death_house/escape:window"
+    },
+    {
+      "id": "den_cabinet_board",
+      "cell": [
+        7,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "skill": "investigation",
+      "label": "a loose board under the card cabinet",
+      "model": "broken_boards",
+      "item": "medallion_of_thoughts"
+    },
+    {
+      "id": "dumbwaiter_soot",
+      "cell": [
+        22,
+        1
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "something in the soot under the dumbwaiter",
+      "model": "soot_patch",
+      "item": "driftglobe"
     }
   ],
   "containers": [

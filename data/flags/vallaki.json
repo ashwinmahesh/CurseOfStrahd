@@ -440,6 +440,21 @@
       "id": "vallaki_stocks_grumbler",
       "type": "bool",
       "summary": "A townsman is in the stocks for insufficient cheer: put there at 8 every third morning while the Baron rules, let out at the evening bell (data/schedule/vallaki.json)."
+    },
+    {
+      "id": "vadoma_met",
+      "type": "bool",
+      "summary": "The party has met Vadoma, the Vistani trader of the painted wagon at the camp outside Vallaki (vadoma)."
+    },
+    {
+      "id": "henrik_thanked",
+      "type": "bool",
+      "summary": "Henrik thanked the party for freeing his shop of Strahd's spawn (henrik:freed); his later visits go straight to his wares."
+    },
+    {
+      "id": "henrik_free_coffin",
+      "type": "bool",
+      "summary": "The party took the one coffin Henrik gives for nothing, from his shop screen (data/npcs/henrik.json)."
     }
   ]
 }

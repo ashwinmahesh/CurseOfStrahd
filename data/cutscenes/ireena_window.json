@@ -1,0 +1,15 @@
+{
+  "id": "ireena_window",
+  "title": "At Ireena's Window",
+  "summary": "Strahd stands on empty air outside Ireena's window, holding out his hand.",
+  "images": [
+    {
+      "image": "ireena_window",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.6,
+    0.4
+  ]
+}

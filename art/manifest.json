@@ -6122,14 +6122,25 @@
       "kind": "cutscene",
       "status": "generated",
       "source": "art/generated/cutscenes/strahd_watcher_a.png",
-      "sprites": "art/cutscenes/strahd_watcher.png",
+      "sprites": "art/cutscenes/strahd_watcher.jpg",
       "model": "gemini-3.1-flash-image",
       "prompt": "The first time the party leaves the village of Barovia escorting Ireena Kolyana west along the Old Svalich Road, Strahd von Zarovich watches them from a ridge. Low camera on the road looking up past the travellers toward the ridge. Foreground, seen from behind and a little to one side: four small travellers walking the muddy road between dead, twisted trees, cloaked and hooded adventurers whose faces we cannot see (one in plate armour with a sword on the back, one holding up a lantern that throws warm orange light across the mud and the trunks, one hooded with a staff). With them walks Ireena, drawn exactly as the second reference image shows her: long wavy auburn hair, a cream scarf, a dark plum cloak over a blue-grey laced dress, brown boots. She has stopped and turned her head to look up at the ridge, afraid. Above them, high on a bare rocky ridge against a cold, moonlit, cloud-torn sky, Strahd sits perfectly still on a huge, powerful black warhorse whose eyes glow like banked coals. Strahd is drawn exactly as the first reference image shows him: pale gaunt face, slicked black hair, a black high-collared coat with silver frogging, a long black cape lined in blood red, its high red collar standing up; one gloved hand rests on the reins and he looks down at the road, patient and amused. He and his horse are a sharp, clearly readable silhouette rimmed by cold moonlight, the cape stirring in the wind. Far behind him, tiny and faint on a distant cliff in the mist, the spires of Castle Ravenloft with one red-lit window. Grey-green mist pools in the hollows along the road. 16:9 widescreen.",
       "reference": [
         "art/generated/characters/strahd_turnaround.png",
         "art/generated/characters/ireena_turnaround.png"
       ],
-      "notes": "Story cutscene (docs/ui/cutscenes.md), 16:9 at 2K with art/prompts/cutscene_preamble.txt. Two takes (2026-10-07); take a is used: Strahd small and clear on the ridge with the castle behind, the party hooded from behind so any heroes fit. Take b put him beside the road rather than on the ridge. The owner approved the style on take a."
+      "notes": "Story cutscene (docs/ui/cutscenes.md), 16:9 at 2K with art/prompts/cutscene_preamble.txt. Two takes (2026-10-07); take a is used: Strahd small and clear on the ridge with the castle behind, the party hooded from behind so any heroes fit. Take b put him beside the road rather than on the ridge. The owner approved the style on take a. Every other cutscene picture's prompt, references and chosen take are in tools/art/cutscene_recipes.json (tools/art/build_cutscenes.py); the game's copies are quality-92 JPEGs in art/cutscenes."
+    },
+    {
+      "id": "vadoma",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/vadoma_turnaround.png",
+      "sprites": "art/sprites/vadoma/walk.tres",
+      "portrait": "art/portraits/vadoma.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Vadoma, a Vistani trader woman in her forties: olive skin, dark greying hair braided under a deep green headscarf, heavy gold hoop earrings and rings on every finger, a long dark blue coat embroidered with small gold suns and eyes worn open over an ochre vest and cream blouse, a wide sash hung with little pouches, a leather-bound ledger tucked into the sash, a dark brown skirt and worn travelling boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Lane 23, the Vistani trader (F14, 2026-10-08). Needs art QA before final."
     }
   ],
   "image_provider": "gemini"

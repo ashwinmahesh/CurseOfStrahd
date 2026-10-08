@@ -90,6 +90,31 @@
       "kind": "decor",
       "label": "A tumbled field wall",
       "model": "wall_low"
+    },
+    {
+      "id": "cart_false_floor",
+      "cell": [
+        13,
+        5
+      ],
+      "kind": "search",
+      "search_dc": 12,
+      "skill": "investigation",
+      "label": "a false floor in the broken cart",
+      "model": "broken_boards",
+      "item": "bag_of_holding"
+    },
+    {
+      "id": "field_wall_cache",
+      "cell": [
+        20,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a farmer's cache behind the field wall",
+      "model": "rubble",
+      "item": "gauntlets_of_ogre_power"
     }
   ],
   "encounters": [

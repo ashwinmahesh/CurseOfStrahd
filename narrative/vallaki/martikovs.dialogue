@@ -26,6 +26,7 @@ endif
 ~ urwin_menu
 * Let's see what you're selling. -> trade
 * We'd like a room for the night. -> room
+* [if flag.keepers_allied] The Keepers' stores, Urwin. What can you spare? -> keepers_stores
 * What's the talk in town? -> rumors
 * [if guest:ireena and not flag.bones_returned] Can Ireena stay here for now? -> ireena_room
 * [if flag.vallaki_pledge != "town" and not flag.festival_begun] Whose side are you on, the Baron's or Lady Wachter's? -> sides
@@ -34,6 +35,11 @@ endif
 
 ~ trade
 Urwin: Bread, candles, oil, rope. One potion; a traveller paid his bill with it and then didn't need it. Prices are fair. Fairer than Bildrath's, anyway.
+shop
+-> urwin_menu
+
+~ keepers_stores
+Urwin: Down in the cellar, behind the casks nobody drinks. Draughts that close a wound in a breath, prayers for the bad nights, a silver bird my father carved. For the Keepers' friends, at what it cost us. Nobody else ever hears about this room.
 shop
 -> urwin_menu
 
@@ -108,6 +114,7 @@ Narrator: He polishes a cup that doesn't need polishing and gives you nothing. H
 ~ keepers
 set keepers_of_the_feather_met
 set wizard_of_wines_hook
+cutscene keepers_ravens
 Narrator: Urwin closes the shutters, one after another, and when he turns round there are ravens on every beam of the taproom: a dozen, two dozen, silent, all watching you.
 if flag.raven_fed
 Urwin: A friend of ours walked beside you on the road and you fed him. Then you stood by this town. That makes you friends of ours.

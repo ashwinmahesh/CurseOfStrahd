@@ -53,16 +53,38 @@ if [ ! -e "$play/.git" ]; then
   fresh=1
 fi
 
+# A play copy with changes in it: if they're all copies of main's (tools/play/copies_only.py), check <commit> out over
+# them and let git clean remove the untracked ones (never ignored files); otherwise stop and say which aren't.
+tidy() {
+  local target="$1" leftovers
+  [ -z "$(git -C "$play" status --porcelain --untracked-files=all)" ] && return 0
+  leftovers="$(mktemp -t strahd_play)"
+  if ! python3 "$src/tools/play/copies_only.py" "$play" "$target" > "$leftovers"; then
+    rm -f "$leftovers"
+    exit 1
+  fi
+  say "putting back $(git -C "$play" status --porcelain --untracked-files=all | wc -l | tr -d ' ') file(s) that were copies of main's (or empty)."
+  quiet git -C "$play" checkout -q -f --detach "$target"
+  if [ -s "$leftovers" ]; then
+    xargs -0 git -C "$play" clean -fq -- < "$leftovers"
+  fi
+  rm -f "$leftovers"
+}
+
 here="$(git -C "$play" rev-parse HEAD)"
 if [ "$here" != "$green" ]; then
   if git -C "$src" merge-base --is-ancestor "$here" "$green"; then
     n="$(git -C "$src" rev-list --first-parent --count "$here..$green")"
     say "moving forward $(short "$here") -> $(short "$green") ($n change$([ "$n" = 1 ] || echo s) on main)."
+    tidy "$green"
     quiet git -C "$play" checkout -q --detach "$green"
     fresh=1
   else
     say "the play copy is at $(short "$here"), which $ref doesn't follow from; leaving it there."
   fi
+elif [ -n "$(git -C "$play" status --porcelain --untracked-files=all)" ]; then
+  tidy "$green"
+  fresh=1
 fi
 
 if [ -n "$fresh" ] || [ ! -f "$play/.godot/.last_import" ] || [ ! -f "$play/builds/play_build.json" ]; then

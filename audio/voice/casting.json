@@ -1,8 +1,8 @@
 {
   "provider": "elevenlabs",
-  "model": "eleven_v4",
+  "model": "eleven_v3",
   "output_format": "mp3_44100_64",
-  "price_per_1k_usd": 0.022,
+  "price_per_1k_usd": 0.08,
   "price_note": "eleven_v4 API list price is $0.08 per 1K characters; 72% off ($0.022) until 2026-10-12 (elevenlabs.io/pricing/api, read 2026-10-06). Set this back to 0.08 after the sale.",
   "default_settings": {
     "stability": 0.5,
@@ -49,7 +49,8 @@
       "voice_id": "jT0ufcOturgnHnyxzjS0",
       "name": "Barovia The Abbot",
       "description": "A young man with a soft, luminous, perfectly serene tenor and a neutral, cultured accent. Gentle, unhurried and kind in a way that is deeply wrong; never raises his voice, speaks of horrors as acts of love. Faint, airy, almost ethereal resonance.",
-      "settings": {}
+      "settings": {},
+      "model": "eleven_v3"
     },
     "ezmerelda": {
       "voice_id": "cwrfPUlbf5fNAZi1O1Dw",
@@ -59,11 +60,12 @@
       "model": "eleven_v3"
     },
     "baron_vargas": {
-      "voice_id": "kHWijpmRqGPRU7sjEAcn",
-      "name": "Barovia Baron Vargas Vallakovich",
-      "description": "A round, florid man in his fifties with a loud, plummy, booming voice and a light Eastern European accent. Desperately cheerful and pompous, proclaiming rather than talking; forced brightness that cracks into panic. 'All will be well!'",
+      "voice_id": "pgQrrxrvRHxS13dQlEKa",
+      "name": "Barovia Baron Vargas Vallakovich (2026-10-08)",
+      "description": "A round, florid Barovian nobleman in his fifties speaking English with a thick Romanian accent. A loud, plummy, booming voice, pompous and desperately cheerful, proclaiming everything; the brightness cracks into panic.",
       "settings": {},
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "accent_tag": "[Romanian accent]"
     },
     "davian_martikov": {
       "voice_id": "M9KGJWNbMiNbJ9UAd6Vo",
@@ -80,17 +82,21 @@
       "model": "eleven_v3"
     },
     "exethanter": {
-      "voice_id": "oXIJMW5UjOOMx1NJehjt",
-      "name": "Barovia Exethanter",
-      "description": "A very old man with a thin, dry, papery voice and a faded English accent, an ancient lich who keeps forgetting. Wandering, polite and confused, trailing off mid-sentence, occasionally sharp and grand for a moment before it slips away.",
+      "voice_id": "6sFKzaJr574YWVu4UuJF",
+      "name": "Library voice: Cornelius",
+      "description": "Library voice chosen for exethanter (2026-10-08, v3 re-record). Was: A very old man with a thin, dry, papery voice and a faded English accent, an ancient lich who keeps forgetting. Wandering, polite and confused, trailing off mid-sentence, occasionally sharp and grand for a moment before it slips away.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[faded English accent]"
     },
     "vladimir_horngaard": {
       "voice_id": "rsvRsXb5tBuGivd20vw8",
       "name": "Barovia Vladimir Horngaard",
       "description": "A man with a deep, hollow, iron-hard voice and an English accent, a dead knight-commander. Cold, clipped and absolute; every sentence an order, grief turned to stone. Faint echo, as if speaking inside armour.",
-      "settings": {}
+      "settings": {},
+      "accent_tag": "[English accent]",
+      "model": "eleven_v3"
     },
     "lady_wachter": {
       "voice_id": "LHSMrecFL1EFazWSPHaY",
@@ -103,7 +109,9 @@
       "voice_id": "XmHSvnTPu7n04QlhMJRk",
       "name": "Barovia rictavio",
       "description": "An old man performing a showman: a big, booming carnival barker's voice with a clear, noticeable Dutch accent, theatrical and florid, rolling his words, laughing too loudly. Under the bluster, flashes of a tired, precise, sombre scholar.",
-      "settings": {}
+      "settings": {},
+      "accent_tag": "[Dutch accent]",
+      "model": "eleven_v3"
     },
     "dmitri_krezkov": {
       "voice_id": "hmltLA3C24WM4meHdxdu",
@@ -167,7 +175,9 @@
       "name": "James - Clear, Polished and Steady",
       "description": "A man with a mild, precise, soft-spoken English accent, a scholar with impeccable manners: dry, reasonable and pleasant, like a solicitor explaining a contract. A faint purr of hunger beneath the politeness.",
       "settings": {},
-      "library": true
+      "library": true,
+      "accent_tag": "[English accent]",
+      "model": "eleven_v3"
     },
     "ilinca_vrana": {
       "voice_id": "LJylQFwR903OigY5UG7p",
@@ -185,11 +195,12 @@
       "model": "eleven_v3"
     },
     "stanimir": {
-      "voice_id": "Z9PoGEiEEL23Z08FAwzB",
-      "name": "Barovia stanimir",
-      "description": "A huge, grey-bearded man in his sixties with a big, warm, jovial bass voice and a strong, clearly audible Eastern European (Romanian) accent. Hearty and welcoming, laughing easily, a fiddler and storyteller; a shrewd merchant under the warmth.",
+      "voice_id": "ygr7cyu4bi4NLKu5k2az",
+      "name": "Barovia Stanimir (2026-10-08)",
+      "description": "An old Vistani man in his sixties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A deep, rich, warm bass voice, booming and jovial; a fiddler and storyteller who laughs from the belly, theatrical and sweeping, a shrewd merchant underneath.",
       "settings": {},
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]"
     },
     "adrian_martikov": {
       "voice_id": "DjU0AczwuXPRF9hmf8i3",
@@ -200,11 +211,13 @@
       "released": true
     },
     "argynvost": {
-      "voice_id": "VukLTeVXFTevRA66Vs4N",
-      "name": "Barovia Argynvost",
-      "description": "An immense, ancient voice, deep, warm and resonant, with an English accent: a fading silver dragon speaking as a gentle echo. Slow, noble and kind, with a soft reverb as if heard through frost and stone.",
+      "voice_id": "HAvvFKatz0uu0Fv55Riy",
+      "name": "Library voice: Matthew Schmitz - Ancient Sage Dragon Wizard",
+      "description": "Library voice chosen for argynvost (2026-10-08, v3 re-record). Was: An immense, ancient voice, deep, warm and resonant, with an English accent: a fading silver dragon speaking as a gentle echo. Slow, noble and kind, with a soft reverb as if heard through frost and stone.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[English accent]"
     },
     "clovin_belview": {
       "voice_id": "a1lj0JSfXtrZroyMha2R",
@@ -239,11 +252,12 @@
       "model": "eleven_v3"
     },
     "victor_vallakovich": {
-      "voice_id": "QQ5VtaotKT72Jt2Jk8DC",
-      "name": "Barovia victor_vallakovich",
-      "description": "A young man in his early twenties with a thin, sharp, sullen voice and a strong, clearly audible Eastern European (Romanian) accent. Furious and contemptuous, clever and scared; quick, bitter sentences.",
+      "voice_id": "egtZ15cBfFMi3QlBJdxk",
+      "name": "Barovia Victor Vallakovich (2026-10-08)",
+      "description": "A thin young Barovian man in his early twenties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A sharp, sneering, brittle voice, precise and sarcastic, that cracks into a frightened boy when cornered.",
       "settings": {},
       "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
       "released": true
     },
     "kasha_varo": {
@@ -263,7 +277,7 @@
       "released": true
     },
     "urwin_martikov": {
-      "voice_id": "xPXCf4GCCDu3JcVSsv9u",
+      "voice_id": "kZekvi2L5p4BfcCttLYJ",
       "name": "Barovia urwin_martikov",
       "description": "A quiet man in his forties with a low, calm, measured voice and a strong, clearly audible Eastern European (Romanian) accent. An innkeeper who listens more than he talks; discreet, wry, careful.",
       "settings": {},
@@ -287,11 +301,12 @@
       "released": true
     },
     "lydia_petrovna": {
-      "voice_id": "0T96PXI1VrSkiHOWY3nJ",
-      "name": "Barovia lydia_petrovna",
-      "description": "A small woman in her forties with a bright, quick, nervous voice and a strong, clearly audible Eastern European (Romanian) accent. Chirpy and anxious, smiling hard, talking too fast to keep bad things out.",
+      "voice_id": "iZs04IbkscYTx59Wx0ui",
+      "name": "Barovia Lydia Petrovna (2026-10-08)",
+      "description": "A small, bright Barovian woman in her forties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A quick, chirpy, nervous voice, rushing her words together, smiling hard to keep the fear out; breathless and sweet.",
       "settings": {},
       "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
       "released": true
     },
     "stefania_martikov": {
@@ -306,15 +321,17 @@
       "voice_id": "n9aouNA8Iuw6UBxT6Kja",
       "name": "Barovia Mordenkainen",
       "description": "An old archwizard with a rich, imperious, eccentric English voice: brilliant and scattered, lurching between grandeur, confusion and sudden sharp lucidity. Funny and sad.",
-      "settings": {}
+      "settings": {},
+      "accent_tag": "[English accent]",
+      "model": "eleven_v3"
     },
     "izek": {
-      "voice_id": "4IjoQ3bzTOlXcxXg9vJ3",
-      "name": "Barovia izek",
-      "description": "A big, scarred man with a deep, harsh, menacing voice and a strong, clearly audible Eastern European (Romanian) accent. A brute enforcer: blunt, threatening, few words; strangely soft and broken when he speaks of the woman in his dreams.",
+      "voice_id": "AjDdGgaSakcuUyenSiqW",
+      "name": "Barovia Izek (2026-10-08)",
+      "description": "A huge, scarred Barovian enforcer in his thirties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A deep, gruff, gravelly bass, flat and menacing, few words; when he speaks of the woman in his dreams it drops to a low, haunted, almost gentle rasp.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "accent_tag": "[strong Romanian accent]"
     },
     "kiril_stoyanovich": {
       "voice_id": "XaEUesE01wKIKaa0xI0h",
@@ -329,14 +346,17 @@
       "name": "Emmaline - young British girl",
       "description": "A girl of about ten with a bright, earnest, polite child's voice and a faint ghostly echo. A good big sister, trying to be brave and grown-up, sad underneath.",
       "settings": {},
-      "library": true
+      "library": true,
+      "model": "eleven_v3"
     },
     "arabelle": {
       "voice_id": "PiBXZZuiwjbPrmxGgRi3",
       "name": "Delicate Fairy - Whimsical and Light",
       "description": "A girl of about seven with a calm, flat, solemn child's voice and a strong, clearly audible Eastern European (Romanian) accent. Unsurprised and unsettling, says strange things plainly, like the weather.",
       "settings": {},
-      "library": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "model": "eleven_v3"
     },
     "mad_mage": {
       "voice_id": "",
@@ -346,11 +366,12 @@
       "shares": "mordenkainen"
     },
     "luminita": {
-      "voice_id": "HSGVSLzg2cqoySZDPZGj",
-      "name": "Barovia luminita",
-      "description": "A young woman in her early twenties with a sharp, quick, sharp-tongued voice and a strong, clearly audible Eastern European (Romanian) accent. Tough, impatient and worried, happier with horses than people.",
+      "voice_id": "QZdK444I5gePjl8kDFcM",
+      "name": "Barovia Luminita (2026-10-08)",
+      "description": "A young Vistani woman in her early twenties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A sharp, quick, dry voice with a sarcastic edge; tough and impatient, happier with horses than people, grief turning to anger.",
       "settings": {},
       "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
       "released": true
     },
     "offalia_wormwiggle": {
@@ -430,7 +451,9 @@
       "name": "Tilly - Bright, Spirited, Naive, Scrappy",
       "description": "A girl of about ten with a brave, serious, practical child's voice and a strong, clearly audible Eastern European (Romanian) accent. Steady for the little ones, scared underneath.",
       "settings": {},
-      "library": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "model": "eleven_v3"
     },
     "doru": {
       "voice_id": "Ntd0iVwICtUtA6Fvx27M",
@@ -449,11 +472,12 @@
       "released": true
     },
     "vestige_tarakamedes": {
-      "voice_id": "A9UXq1ykct0RIdUKyipY",
-      "name": "Barovia vestige_tarakamedes",
-      "description": "A slow, enormous, patient voice of death from inside amber, a dragon in its grave. Deep and calm. Inhuman resonance.",
+      "voice_id": "Vs5CmVCVJwW4odQS2pVf",
+      "name": "Library voice: Branok - Evil & Villainous",
+      "description": "Library voice chosen for vestige_tarakamedes (2026-10-08, v3 re-record). Was: A slow, enormous, patient voice of death from inside amber, a dragon in its grave. Deep and calm. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "ruxandra": {
       "voice_id": "IDdxXROhQY3P3BnY9QEi",
@@ -484,7 +508,8 @@
       "name": "Eldrin - Wise Ancient Wizard Storyteller",
       "description": "A theatrical monarch's voice from inside amber: grand, flattering and hungry for adoration, playing to an audience. Inhuman resonance.",
       "settings": {},
-      "library": true
+      "library": true,
+      "model": "eleven_v3"
     },
     "gunther_arasek": {
       "voice_id": "ZkXP5wk7VMhzOLXcPVmv",
@@ -495,11 +520,12 @@
       "released": true
     },
     "vestige_shami_amourae": {
-      "voice_id": "HlKWwqWYnbJf95PcimNe",
-      "name": "Barovia vestige_shami_amourae",
-      "description": "A warm, intimate, honeyed whisper from inside amber that never raises its voice; seductive and indulgent. Inhuman resonance.",
+      "voice_id": "YDCfZMLWcUmsGvqHq0rS",
+      "name": "Library voice: Blondie - Femme Fatale",
+      "description": "Library voice chosen for vestige_shami_amourae (2026-10-08, v3 re-record). Was: A warm, intimate, honeyed whisper from inside amber that never raises its voice; seductive and indulgent. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "sorvia": {
       "voice_id": "MC4QLCcmTFY3GgoS3WMU",
@@ -510,39 +536,44 @@
       "released": true
     },
     "vestige_fekre": {
-      "voice_id": "KT19rQUNndAK0RATsxy0",
-      "name": "Barovia vestige_fekre",
-      "description": "A cooing, motherly, feverish whisper from inside amber, sweet and sick: 'my lamb', 'sweetling'. Inhuman resonance.",
+      "voice_id": "HH3kybY6uEJ2ebSa9Vy3",
+      "name": "Library voice: Agatha - Villainous, Ancient Witch",
+      "description": "Library voice chosen for vestige_fekre (2026-10-08, v3 re-record). Was: A cooing, motherly, feverish whisper from inside amber, sweet and sick: 'my lamb', 'sweetling'. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "vestige_khirad": {
-      "voice_id": "WWAHEBR8pS2LVWOaccSz",
-      "name": "Barovia vestige_khirad",
-      "description": "A weary, regretful astronomer's voice from inside amber, always sorry afterwards. Inhuman resonance.",
+      "voice_id": "jvcMcno3QtjOzGtfpjoI",
+      "name": "Library voice: David - Deep Documentary Narrator",
+      "description": "Library voice chosen for vestige_khirad (2026-10-08, v3 re-record). Was: A weary, regretful astronomer's voice from inside amber, always sorry afterwards. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "vestige_taar_haak": {
-      "voice_id": "QqRwCijTvVte9ruCu6XR",
-      "name": "Barovia vestige_taar_haak",
-      "description": "Several harsh, booming war voices from inside amber, interrupting each other, betting on blood. Inhuman resonance.",
+      "voice_id": "ysswSXp8U9dFpzPJqFje",
+      "name": "Library voice: Azazel - Menacing and Gravelly Demon",
+      "description": "Library voice chosen for vestige_taar_haak (2026-10-08, v3 re-record). Was: Several harsh, booming war voices from inside amber, interrupting each other, betting on blood. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "vestige_norganas": {
-      "voice_id": "YFNSXpYBe5U8ixdvxPfA",
-      "name": "Barovia vestige_norganas",
-      "description": "A gentle, soft voice from inside amber that trails off and forgets its own sentences. Inhuman resonance.",
+      "voice_id": "GV0xwb2daa6wTpBCpuhM",
+      "name": "Library voice: Midnight",
+      "description": "Library voice chosen for vestige_norganas (2026-10-08, v3 re-record). Was: A gentle, soft voice from inside amber that trails off and forgets its own sentences. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "vestige_zhudun": {
-      "voice_id": "dvGHV1ZyT75b9ft7vlZf",
-      "name": "Barovia vestige_zhudun",
-      "description": "A grand, lonely, fading voice from inside amber: 'I was a sun once'. Inhuman resonance.",
+      "voice_id": "tHX3st5GOLcIi8WJRtqa",
+      "name": "Library voice: Deep Ray - Deep Voice of God ",
+      "description": "Library voice chosen for vestige_zhudun (2026-10-08, v3 re-record). Was: A grand, lonely, fading voice from inside amber: 'I was a sun once'. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "bogdan": {
       "voice_id": "EUcVZFcx99BuUYS1efZM",
@@ -569,11 +600,13 @@
       "released": true
     },
     "order_knight": {
-      "voice_id": "M7xON2omsEcjkFc6qa0p",
-      "name": "Barovia order_knight",
-      "description": "A hollow, distant, iron voice with an English accent, a dead knight: flat, dutiful and joyless, reciting posts and orders.",
+      "voice_id": "VC6vCXhVaI8BZefRtXZV",
+      "name": "Library voice: Grant Gravitas - Rich, warm, cinematic",
+      "description": "Library voice chosen for order_knight (2026-10-08, v3 re-record). Was: A hollow, distant, iron voice with an English accent, a dead knight: flat, dutiful and joyless, reciting posts and orders.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[English accent]"
     },
     "alenka": {
       "voice_id": "gAohuspMQfhzbmfPuY9W",
@@ -588,14 +621,17 @@
       "name": "Riley - Soft-Spoken and Curious",
       "description": "A small girl of about six with a frightened, tearful child's voice and a strong, clearly audible Eastern European (Romanian) accent.",
       "settings": {},
-      "library": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "model": "eleven_v3"
     },
     "vestige_dahlver_nar": {
-      "voice_id": "jAjOsod3vR2dFUcgJ0v1",
-      "name": "Barovia vestige_dahlver_nar",
-      "description": "Many borrowed voices from inside amber, overlapping, repeating words in threes. Inhuman resonance.",
+      "voice_id": "chQx45TGebwefgePtdqT",
+      "name": "Library voice: Matthew Schmitz - Creepy Liminal Entity",
+      "description": "Library voice chosen for vestige_dahlver_nar (2026-10-08, v3 re-record). Was: Many borrowed voices from inside amber, overlapping, repeating words in threes. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "grigor": {
       "voice_id": "036gohzyN4lq5UptIdnx",
@@ -614,46 +650,52 @@
       "released": true
     },
     "vestige_drizlash": {
-      "voice_id": "ZWMjkuzVbzSwdaMTuqwF",
-      "name": "Barovia vestige_drizlash",
-      "description": "A skittering, whispering, repetitive voice from inside the walls: 'I see, I see, I see'. Inhuman resonance.",
+      "voice_id": "qhH5VOAvpCwvNpmn2srO",
+      "name": "Library voice: Lex - Sinister, Whispering Goblin",
+      "description": "Library voice chosen for vestige_drizlash (2026-10-08, v3 re-record). Was: A skittering, whispering, repetitive voice from inside the walls: 'I see, I see, I see'. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "vestige_sykane": {
-      "voice_id": "XmFsQIKpvjr1rRKmx41y",
-      "name": "Barovia vestige_sykane",
-      "description": "A whining, gasping, hungry voice from inside amber, polite until it isn't. Inhuman resonance.",
+      "voice_id": "6aO1exAR9bDruq155LzQ",
+      "name": "Library voice: Monika Sogam – Sinister Creepy Voice",
+      "description": "Library voice chosen for vestige_sykane (2026-10-08, v3 re-record). Was: A whining, gasping, hungry voice from inside amber, polite until it isn't. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "vestige_yrrga": {
-      "voice_id": "VnQqEJRN7n7XYte5UWcJ",
-      "name": "Barovia vestige_yrrga",
-      "description": "A cold, clinical voice from inside amber, full of pity for the blind. Inhuman resonance.",
+      "voice_id": "Qbw4VpyUrHEG7NigKzty",
+      "name": "Library voice: Kristen – Cold Evil Queen Villain",
+      "description": "Library voice chosen for vestige_yrrga (2026-10-08, v3 re-record). Was: A cold, clinical voice from inside amber, full of pity for the blind. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "vestige_seriach": {
-      "voice_id": "DBoQEmThbd6Ph9FgwUWL",
-      "name": "Barovia vestige_seriach",
-      "description": "A huntsman's proud, growling voice from inside amber, boasting of its burning hounds. Inhuman resonance.",
+      "voice_id": "rCYFsCX2waxtHCgVD0e8",
+      "name": "Library voice: Matthew Schmitz - Unholy, Wicked Demon",
+      "description": "Library voice chosen for vestige_seriach (2026-10-08, v3 re-record). Was: A huntsman's proud, growling voice from inside amber, boasting of its burning hounds. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "vestige_tenebrous": {
-      "voice_id": "4zFWekI8y2UUGR2cg9nJ",
-      "name": "Barovia vestige_tenebrous",
-      "description": "A hushing whisper from the dark inside amber, 'shh', hating light like noise. Inhuman resonance.",
+      "voice_id": "uCAKWh24Y93ESUjKwRGP",
+      "name": "Library voice: Matthew Schmitz - The Whispering Spirit of the Gentle Calm",
+      "description": "Library voice chosen for vestige_tenebrous (2026-10-08, v3 re-record). Was: A hushing whisper from the dark inside amber, 'shh', hating light like noise. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "vestige_savnok": {
-      "voice_id": "yMKLeEFosc1jdN1eDPPc",
-      "name": "Barovia vestige_savnok",
-      "description": "Almost silence: a breathy, secretive voice from inside amber speaking in ellipses. Inhuman resonance.",
+      "voice_id": "80POrI92mU3QZbdwHl4r",
+      "name": "Library voice: Glenn - SleepStory, Whisper & Gravely",
+      "description": "Library voice chosen for vestige_savnok (2026-10-08, v3 re-record). Was: Almost silence: a breathy, secretive voice from inside amber speaking in ellipses. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "gustav_durst": {
       "voice_id": "fQeB7AMBo5tPtb5esTQY",
@@ -668,14 +710,17 @@
       "name": "Ryan Quin",
       "description": "A boy of eight with a hoarse, feverish but lively, curious child's voice and a strong, clearly audible Eastern European (Romanian) accent.",
       "settings": {},
-      "library": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "model": "eleven_v3"
     },
     "thorn": {
       "voice_id": "bA58y3FqVI6b6gTNh0oT",
       "name": "Kavya - Cute & Engaging Character",
       "description": "A boy of about seven with a small, whimpering, clingy child's voice and a faint ghostly echo. Frightened of being left alone.",
       "settings": {},
-      "library": true
+      "library": true,
+      "model": "eleven_v3"
     },
     "durst_nursemaid": {
       "voice_id": "TR7JvJ0sju6b7g0Aw317",
@@ -686,11 +731,13 @@
       "released": true
     },
     "phantom_warden": {
-      "voice_id": "VJEMTrvyHyOToHva8qh6",
-      "name": "Barovia phantom_warden",
-      "description": "A man's hollow, ghostly, stern voice with an English accent, a gate guard demanding the right words; weary and suspicious.",
+      "voice_id": "tXxkePQsw0G69D8VeDzp",
+      "name": "Library voice: Jim Executive - Authoritative, British & Warm",
+      "description": "Library voice chosen for phantom_warden (2026-10-08, v3 re-record). Was: A man's hollow, ghostly, stern voice with an English accent, a gate guard demanding the right words; weary and suspicious.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[English accent]"
     },
     "vistana": {
       "voice_id": "HUxegdbOiMUdgRSlEJW0",
@@ -725,11 +772,12 @@
       "released": true
     },
     "vestige_yog": {
-      "voice_id": "KYnnpRNJATrk1WN5VKnA",
-      "name": "Barovia vestige_yog",
-      "description": "An enormous, slow, monosyllabic voice through the floor, with long pauses; immovable. Inhuman resonance.",
+      "voice_id": "cQrSgU1CeOOz73lBM5Cb",
+      "name": "Library voice: K. V. Hagen - Exceptionally Deep Bass",
+      "description": "Library voice chosen for vestige_yog (2026-10-08, v3 re-record). Was: An enormous, slow, monosyllabic voice through the floor, with long pauses; immovable. Inhuman resonance.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "sergei_von_zarovich": {
       "voice_id": "WczBIOau2qV9z7nLeDqq",
@@ -768,14 +816,17 @@
       "name": "Teddy Twinkle - Cute Cartoon",
       "description": "A small boy of about five with a frightened, whispery child's voice and a strong, clearly audible Eastern European (Romanian) accent.",
       "settings": {},
-      "library": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "model": "eleven_v3"
     },
     "amber_sentinel": {
-      "voice_id": "0CjuPz7jvXKLfaaSTf5d",
-      "name": "Barovia amber_sentinel",
-      "description": "A vast, booming, inhuman voice speaking in short commands, like stone grinding under a mountain; slow, absolute, echoing.",
+      "voice_id": "wXvR48IpOq9HACltTmt7",
+      "name": "Library voice: Dante - Growly and Menacing Monster",
+      "description": "Library voice chosen for amber_sentinel (2026-10-08, v3 re-record). Was: A vast, booming, inhuman voice speaking in short commands, like stone grinding under a mountain; slow, absolute, echoing.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true
     },
     "tsolenka_watchman": {
       "voice_id": "0s9GTYcLxh8HoEj7IyHj",
@@ -860,14 +911,18 @@
       "description": "Library voice chosen for Pidlwick Ii: Gert - High and Childlike Clown.",
       "voice_id": "PtJWpiWfVrCfOmNdkFpr",
       "name": "Gert - High and Childlike Clown",
-      "library": true
+      "library": true,
+      "sentence_case": true,
+      "model": "eleven_v3"
     },
     "lief_lipsiege": {
       "settings": {},
       "description": "Library voice chosen for Lief Lipsiege: Alexei – Eastern European Business Voice.",
       "voice_id": "NQJnREzQtnAHHZnia0tY",
       "name": "Alexei – Eastern European Business Voice",
-      "library": true
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "model": "eleven_v3"
     },
     "gertruda": {
       "settings": {},
@@ -966,18 +1021,22 @@
       "model_since": "2026-10-07"
     },
     "fen_burley": {
-      "voice_id": "XUJ29OW0MoYTmJxM26UZ",
-      "name": "Barovia fen_burley",
-      "description": "An old man in his seventies with a rough, low, gravelly voice and a rural Scottish accent like Thistle's, a woodsman of very few words. Slow and plain, long silences, tender underneath; a wolf's growl rising under the words when he struggles.",
+      "voice_id": "U5UjeJMsOvyhYhXfZdvZ",
+      "name": "Library voice: Adam - Classic Scottish Storyteller",
+      "description": "Library voice chosen for fen_burley (2026-10-08, v3 re-record). Was: An old man in his seventies with a rough, low, gravelly voice and a rural Scottish accent like Thistle's, a woodsman of very few words. Slow and plain, long silences, tender underneath; a wolf's growl rising under the words when he struggles.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[rural Scottish accent]"
     },
     "mister_quillon": {
-      "voice_id": "NyIsA0PuEuE4hyIQ8wMX",
-      "name": "Barovia mister_quillon",
-      "description": "A slim, ageless gentleman with a soft, smooth, precise tenor and a crisp, upper-class English accent, a devil playing a solicitor. Courteous, patient and faintly amused, never raising his voice; thin and very quiet when cornered.",
+      "voice_id": "agL69Vji082CshT65Tcy",
+      "name": "Library voice: Lance Blackwood - Sinister, Posh & British",
+      "description": "Library voice chosen for mister_quillon (2026-10-08, v3 re-record). Was: A slim, ageless gentleman with a soft, smooth, precise tenor and a crisp, upper-class English accent, a devil playing a solicitor. Courteous, patient and faintly amused, never raising his voice; thin and very quiet when cornered.",
       "settings": {},
-      "released": true
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[crisp upper-class English accent]"
     },
     "bark_bandit": {
       "voice_id": "Xh5OictnmgRO4dff7pLm",
@@ -1284,6 +1343,14 @@
       "model": "eleven_v3",
       "voice_id": "haD60kChENZhuoOFiC80",
       "name": "Barovia barovia_goodwife",
+      "released": true
+    },
+    "vadoma": {
+      "voice_id": "dZSe33sPffmACziRpFlg",
+      "name": "Barovia Vadoma (2026-10-08)",
+      "description": "A Vistani trader woman in her forties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A warm, low, slightly husky voice; dry, quick and amused, a merchant's patter with a knife inside it.",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
       "released": true
     }
   },

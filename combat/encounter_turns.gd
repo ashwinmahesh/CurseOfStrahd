@@ -56,31 +56,13 @@ func start(surprised_ids: Array = []) -> void:
 	e.ravenloft.initiative_rolled()
 	e.faerun.initiative_rolled()
 	e.echo_knight.initiative_rolled()
-	e.order = e.combatants.duplicate()
-	e.order.sort_custom(func(a: Combatant, b: Combatant) -> bool:
-		if a.initiative != b.initiative:
-			return a.initiative > b.initiative
-		var da := a.creature.ability_score(&"dex")
-		var db := b.creature.ability_score(&"dex")
-		if da != db:
-			return da > db
-		return a.side == &"party" and b.side != &"party")
+	_order_by_initiative()
 	# Portent (Diviner): the two (Greater Portent: three) foreseen d20s for this fight.
 	for c in e.combatants:
 		if CombatFeatures.has_feature(c, "portent") and c.creature is Character:
 			var n := 3 if CombatFeatures.has_feature(c, "greater_portent") else 2
 			c.set_meta("portent_rolls", e.dice.roll(20, n, "Portent"))
 			e.log.add("info", "%s foresees: %s (Portent)" % [c.name(), str(c.get_meta("portent_rolls"))], c.id)
-	# Thief's Reflexes (Thief 17): a second turn in the first round, at Initiative − 10.
-	for c: Combatant in e.combatants.duplicate():
-		if CombatFeatures.has_feature(c, "thiefs_reflexes"):
-			var at := e.order.size()
-			for i in e.order.size():
-				if e.order[i].initiative < c.initiative - 10:
-					at = i
-					break
-			e.order.insert(at, c)
-			c.set_meta("reflex_turn", true)
 	e.state = Encounter.State.ACTIVE
 	for cc in e.combatants:
 		e.class_features.prepare(cc)
@@ -92,14 +74,50 @@ func start(surprised_ids: Array = []) -> void:
 	e.events.append({"type": "round", "round": 1})
 	e.legendary.combat_started()
 	e.turn_index = 0
-	_lair_then_begin()
+	# Choices once Initiative is rolled (Tandem Footwork): asked before the first turn, which then begins with the order
+	# they settle. A prompt here leaves `pending` set for the view, as any other does.
+	var offers := e.class_features.initiative_offers()
+	if offers.is_empty():
+		_lair_then_begin()
+		return
+	e.reactions.offer(offers, func() -> CombatResult:
+		_order_by_initiative()
+		e.turn_index = 0
+		return _lair_then_begin(), CombatResult.new())
 
 
-func _begin_turn() -> void:
+## The turn order from Initiative: highest first; ties go to higher Dexterity, then the party. Thief's Reflexes (Thief
+## 17) adds a second turn in the first round at Initiative − 10.
+func _order_by_initiative() -> void:
+	var e := enc()
+	e.order = e.combatants.duplicate()
+	e.order.sort_custom(func(a: Combatant, b: Combatant) -> bool:
+		if a.initiative != b.initiative:
+			return a.initiative > b.initiative
+		var da := a.creature.ability_score(&"dex")
+		var db := b.creature.ability_score(&"dex")
+		if da != db:
+			return da > db
+		return a.side == &"party" and b.side != &"party")
+	for c: Combatant in e.combatants.duplicate():
+		if CombatFeatures.has_feature(c, "thiefs_reflexes"):
+			var at := e.order.size()
+			for i in e.order.size():
+				if e.order[i].initiative < c.initiative - 10:
+					at = i
+					break
+			e.order.insert(at, c)
+			c.set_meta("reflex_turn", true)
+
+
+## Begins the current creature's turn: effects that end, a readied spell let go, the turn's resources, then each part
+## of the game that acts as a turn starts. Saves and Reactions there can stop for the player's answer (F6), so the
+## parts run one after another (Encounter.each) and the queued reactions run last.
+func _begin_turn() -> CombatResult:
 	var e := enc()
 	var c := e.current()
 	if c == null:
-		return
+		return CombatResult.new()
 	for o in e.combatants:
 		o.cast_slot_spell_this_turn = false
 		o.creature.on_turn_start(c.id)
@@ -118,17 +136,37 @@ func _begin_turn() -> void:
 	# Legendary actions come back; Regeneration (before anything else starts this turn); a foe whose time is up leaves.
 	e.legendary.turn_start(c)
 	if not c.is_alive():
+		return CombatResult.new()
+	var none := CombatResult.new()
+	var steps: Array = [
+		func() -> CombatResult: return e.spells.turn_start(c),
+		func() -> CombatResult:
+			e.objects.turn_start(c)
+			e.feature_actions.turn_start(c)
+			return none,
+		func() -> CombatResult: return e.class_features.turn_start(c),
+		func() -> CombatResult:
+			e.ravenloft.turn_start(c)
+			e.faerun.turn_start(c)
+			e.echo_knight.turn_start(c)
+			return none,
+		func() -> CombatResult: return e.monster_actions.turn_start(c),
+		func() -> CombatResult:
+			e.items.turn_start(c)
+			e.triggered_features.turn_start(c)
+			return none,
+	]
+	return e.each(steps, func(step: Variant) -> CombatResult: return (step as Callable).call() as CombatResult, func() -> CombatResult:
+		_turn_start_flags(c)
+		return e.run_reaction_queue(CombatResult.new()))
+
+
+## The last of a turn's start: Dazed, a dropped weapon picked up, a turn without an action, an AI creature's Death
+## Saving Throw.
+func _turn_start_flags(c: Combatant) -> void:
+	var e := enc()
+	if not c.is_alive() or e.current() != c:
 		return
-	e.spells.turn_start(c)
-	e.objects.turn_start(c)
-	e.feature_actions.turn_start(c)
-	e.class_features.turn_start(c)
-	e.ravenloft.turn_start(c)
-	e.faerun.turn_start(c)
-	e.echo_knight.turn_start(c)
-	e.monster_actions.turn_start(c)
-	e.items.turn_start(c)
-	e.triggered_features.turn_start(c)
 	if c.creature.has_flag("dazed"):
 		c.bonus_available = false
 		e.log.add("info", "%s is Dazed: it can move or act this turn, not both" % c.name(), c.id)
@@ -168,7 +206,14 @@ func _turn_end_effects(c: Combatant) -> CombatResult:
 	e._expire_marks(c.id, "end")
 	c.armed.clear()
 	e.feature_actions.turn_end(c)
-	e.class_features.turn_end(c)
+	return e.then(e.class_features.turn_end(c), func() -> CombatResult: return _turn_end_rest(c))
+
+
+## The rest of the end of `c`'s turn, once Inspiring Movement (or another Reaction there) is answered.
+func _turn_end_rest(c: Combatant) -> CombatResult:
+	var e := enc()
+	if e.state != Encounter.State.ACTIVE:
+		return CombatResult.new()
 	e.ravenloft.turn_end(c)
 	e.faerun.turn_end(c)
 	e.echo_knight.turn_end(c)
@@ -182,12 +227,17 @@ func _turn_end_effects(c: Combatant) -> CombatResult:
 		_check_over()
 		if e.state != Encounter.State.ACTIVE:
 			return CombatResult.new()
-		# Legendary actions at the end of another creature's turn (not while time is stopped).
-		var stopped := c.has_meta("time_stop") and int(c.get_meta("time_stop")) > 0
-		var lr := e.legendary.after_turn(c) if not stopped else CombatResult.new()
-		if e.pending != null:
-			return e.then(lr, func() -> CombatResult: return _next_turn(c))
-		return _next_turn(c))
+		# Reactions the turn's end queued (damage from an area): offered before the next turn.
+		return e.then(e.run_reaction_queue(CombatResult.new()), func() -> CombatResult:
+			_check_over()
+			if e.state != Encounter.State.ACTIVE:
+				return CombatResult.new()
+			# Legendary actions at the end of another creature's turn (not while time is stopped).
+			var stopped := c.has_meta("time_stop") and int(c.get_meta("time_stop")) > 0
+			var lr := e.legendary.after_turn(c) if not stopped else CombatResult.new()
+			if e.pending != null:
+				return e.then(lr, func() -> CombatResult: return _next_turn(c))
+			return _next_turn(c)))
 
 
 ## After `c`'s turn (and any legendary actions): the next creature, a new round, the lair's turn.
@@ -200,14 +250,12 @@ func _next_turn(c: Combatant) -> CombatResult:
 	if c.has_meta("time_stop") and int(c.get_meta("time_stop")) > 0 and c.is_alive() and c.can_act():
 		c.set_meta("time_stop", int(c.get_meta("time_stop")) - 1)
 		e.log.add("turn", "Time is still stopped: another turn for %s" % c.name(), c.id)
-		_begin_turn()
-		return CombatResult.new()
+		return _begin_turn()
 	c.remove_meta("time_stop")
 	_advance_index()
 	if e.state != Encounter.State.ACTIVE:
 		return CombatResult.new()
-	_lair_then_begin()
-	return CombatResult.new()
+	return _lair_then_begin()
 
 
 ## Moves `turn_index` to the next living creature, starting a new round past the end of the order (a lair that hasn't
@@ -233,18 +281,19 @@ func _advance_index() -> void:
 
 
 ## The lair acts on initiative count 20 (losing ties) before the first creature below 20; then the turn begins.
-func _lair_then_begin() -> void:
+func _lair_then_begin() -> CombatResult:
 	var e := enc()
-	if e.legendary.lair_due():
-		e.legendary.lair_turn()
+	if not e.legendary.lair_due():
+		return _begin_turn()
+	return e.then(e.legendary.lair_turn(), func() -> CombatResult:
 		_check_over()
 		if e.state != Encounter.State.ACTIVE:
-			return
+			return CombatResult.new()
 		if not e.current().is_alive():
 			_advance_index()
 			if e.state != Encounter.State.ACTIVE:
-				return
-	_begin_turn()
+				return CombatResult.new()
+		return _begin_turn())
 
 
 ## After round 1, Thief's Reflexes' extra turns leave the order.
@@ -266,8 +315,10 @@ func _check_over() -> void:
 	var party_up := false
 	var enemies_up := false
 	for c in e.combatants:
-		# A creature that fell out of the fight (EncounterMovement.leave_grid) no longer counts for either side.
-		if not c.is_alive() or c.creature.hp <= 0 or c.creature.has_flag("spell_object") or c.has_meta("left_fight"):
+		# A creature that fell out of the fight (EncounterMovement.leave_grid) no longer counts for either side, nor one
+		# knocked out (it's out until a Short Rest is over).
+		if not c.is_alive() or c.creature.hp <= 0 or c.creature.has_flag("spell_object") or c.has_meta("left_fight") \
+				or c.creature.has_flag("knocked_out"):
 			continue
 		if c.side in [&"party", &"guest"]:
 			party_up = true

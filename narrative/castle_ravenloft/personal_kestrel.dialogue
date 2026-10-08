@@ -24,6 +24,7 @@ Captain Merrow: Still here, sergeant? Finish it, then. You've one name left.
 -> merrow_menu
 endif
 set kestrel_roll_called
+cutscene forty_chairs
 Narrator: Forty chairs down the long table, a grey coat over the back of every one. At the head sits a broad man with a captain's knot on his shoulder and nothing in his glass.
 Captain Merrow: Sergeant Varga. You're a year late. I kept your chair.
 interject name:ilse_varga: You kept forty chairs, Merrow.

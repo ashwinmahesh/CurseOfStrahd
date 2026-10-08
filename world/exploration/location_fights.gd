@@ -106,6 +106,11 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 	# Party members pass through each other's spaces unless the place or the fight says otherwise.
 	e.allies_block = bool(spec.get("allies_block", view.loc.get("allies_block", false)))
 	e.outdoors = bool(view.loc["map"].get("outdoors", false))
+	# The weather over a fight in the open (F12): fog and storms obscure the field, storms put out flames and feed
+	# Call Lightning.
+	if e.outdoors:
+		e.weather_id = Weather.now(view.st, view.loc_id)
+		e.weather = Weather.kind(e.weather_id)
 	e.legendary.set_withdraw(spec.get("withdraw", {}))
 	if str(spec.get("final_battle", "")) != "" and view.st.quest_stage_index("strahds_lair", view.st.quest_stage("strahds_lair")) < view.st.quest_stage_index("strahds_lair", "confronted"):
 		view.st.set_quest_stage("strahds_lair", "confronted")
@@ -187,6 +192,7 @@ static func spec_for(view: LocationView, encounter_id: String) -> Dictionary:
 
 
 static func _run_combat(view: LocationView, encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, surprised: Array[String]) -> void:
+	Bestiary.before_fight(view.st, e)   # creatures met, and those already studied show their defenses (U8)
 	view.combat_view.finished.connect(func(outcome: String) -> void: _end_encounter(view, encounter_id, spec, e, ctokens, outcome))
 	view.combat_view.round_started.connect(func(_r: int) -> void: _save_round(view, encounter_id, e))
 	view.combat_started.emit(view.combat_view)
@@ -342,6 +348,7 @@ static func _combat_grid(view: LocationView) -> CombatGrid:
 
 static func _end_encounter(view: LocationView, encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, outcome: String) -> void:
 	view.last_encounter = spec
+	Bestiary.after_fight(view.st, e)   # who fell and what was studied, for the journal's Bestiary (U8)
 	for c in e.combatants:
 		if c.side in [&"party", &"guest"]:
 			for m: Combatant in view.members + view.guest_members:

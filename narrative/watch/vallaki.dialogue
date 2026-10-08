@@ -1,6 +1,7 @@
 # The Baron's watch answers a crime somebody saw in Vallaki (F8 and F2's town watch; docs/rules/stealth.md,
 # docs/voice/vallaki_guard.md). story/crime.gd counts the offence in crime_vallaki and stages a Town Guard beside the
-# party, then plays theft or trespass. Every way out clears the count: a fine, a word that works, or a fight.
+# party, then plays theft, trespass or spell (a spell cast at someone; world/exploration/location_npcs.gd). Every way
+# out clears the count: a fine, a word that works, or a fight.
 
 ~ theft
 Town Guard [angry]: You there. Stop. Hands where I can see them. Stealing, in Vallaki, in festival week. The Baron will want that in the speech.
@@ -8,6 +9,10 @@ Town Guard [angry]: You there. Stop. Hands where I can see them. Stealing, in Va
 
 ~ trespass
 Town Guard [angry]: That's a private house, and you were told to get out of it. In Vallaki that's a fine. The Baron is very fond of fines.
+-> charge
+
+~ spell
+Town Guard [angry]: Hexing people in the street, are we? In Vallaki, in festival week? Witchcraft is a fine at best and a bonfire at worst, and the Baron is short of wicker.
 -> charge
 
 ~ charge

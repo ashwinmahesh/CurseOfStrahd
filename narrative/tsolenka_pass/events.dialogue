@@ -20,6 +20,7 @@ Narrator: A low door in the tower's side, left of the gate, stands closed but no
 
 ~ roc_shadow
 set roc_seen
+cutscene roc_shadow
 Narrator: The light goes, all at once, as if a lid has been put on the valley. Then it comes back. High above the road something the size of a ship's sail banks over the ridge, turns its head to look down at you, and decides you are too small to bother with. Today.
 interject tag:blunt: Count the wingspan. Then don't.
 interject class:wizard: A roc. They nest on high crags and take cattle the way an owl takes mice. The Tsolenka Pass is said to have one.

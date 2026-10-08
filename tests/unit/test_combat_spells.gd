@@ -196,6 +196,48 @@ func test_divine_spark_harms_with_a_con_save() -> void:
 	assert_true(z.creature.hp < z.creature.max_hp())
 
 
+func test_divine_spark_picks_the_type_the_target_resists_less() -> void:
+	var e := TestCombat.open_field(8)
+	TestCombat.hero(e, "hedda_ironvow", Vector2i(1, 3))
+	var deva := TestCombat.foe(e, "deva", Vector2i(4, 1))
+	var shadow := TestCombat.foe(e, "shadow", Vector2i(4, 4))
+	var zombie := TestCombat.foe(e, "zombie", Vector2i(4, 6))
+	assert_eq(CombatFeatures.spark_type(deva), "necrotic", "a deva resists Radiant")
+	assert_eq(CombatFeatures.spark_type(shadow), "radiant", "a shadow is immune to Necrotic")
+	assert_eq(CombatFeatures.spark_type(zombie), "radiant", "Radiant when they're even")
+
+
+func test_divine_spark_deals_the_type_picked_on_the_hotbar() -> void:
+	for pick: String in ["necrotic", "best"]:
+		var e := TestCombat.open_field(8)
+		var h := TestCombat.hero(e, "hedda_ironvow", Vector2i(1, 3))
+		var shadow := TestCombat.foe(e, "shadow", Vector2i(4, 3))
+		TestCombat.start_with(e, h)
+		var catalog := ActionCatalog.new(e)
+		var harm := catalog.find(h, "divine_spark_harm").duplicate(true)
+		assert_eq(str((harm["opts"] as Dictionary)["choice"]), "best", "a plain click takes the better type")
+		(harm["opts"] as Dictionary)["choice"] = pick
+		var r := catalog.perform(h, harm, [shadow])
+		assert_true(r.ok, r.reason)
+		if pick == "necrotic":
+			assert_eq(shadow.creature.hp, shadow.creature.max_hp(), "a shadow is immune to Necrotic")
+		else:
+			assert_true(shadow.creature.hp < shadow.creature.max_hp(), "Radiant, which a shadow is vulnerable to")
+
+
+func test_divine_spark_reaches_another_creature_only() -> void:
+	var e := TestCombat.open_field(8)
+	var h := TestCombat.hero(e, "hedda_ironvow", Vector2i(1, 3))
+	TestCombat.foe(e, "zombie", Vector2i(6, 3))
+	TestCombat.start_with(e, h)
+	var ch := h.creature as Character
+	var uses := ch.resource_left("channel_divinity")
+	h.creature.hp -= 5
+	assert_false(e.features.divine_spark(h, h, false).ok, "not the cleric itself")
+	assert_eq(ch.resource_left("channel_divinity"), uses, "nothing spent")
+	assert_true(h.action_available)
+
+
 func test_sanctuary_stops_an_attacker_that_fails() -> void:
 	var e := TestCombat.open_field(10)
 	var h := TestCombat.hero(e, "hedda_ironvow", Vector2i(3, 3))

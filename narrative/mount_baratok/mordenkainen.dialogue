@@ -78,6 +78,7 @@ approve ratatoille +2: You named Mordenkainen's own spell to him
 -> mad_menu
 
 ~ jar
+cutscene mordenkainen_jar
 Narrator: The wax comes away. Something silver pours up out of the jar like smoke going the wrong way, hangs in the cold air between you, and then goes into him through the eyes.
 -> restored
 
@@ -136,6 +137,7 @@ mad_mage: Goodbye! Mind the birds. Don't believe a word they say.
 # ---------------------------------------------------------------- Restored
 
 ~ restored
+cutscene end
 set mordenkainen_restored
 quest the_mad_mage restored
 Narrator: He sits very still. The snow stops. Something comes back into his face, one piece at a time, like furniture being carried into an empty house: a hard mouth, a scholar's frown, an old and specific anger.
@@ -146,6 +148,8 @@ Mordenkainen: The witch. Lysaga. She held my eyes open while she did it, and san
 endif
 interject name:kip_smudgewick: Mister Mordenkainen, sir. An honour. I've got questions, if you've a minute. Contractual ones. No rush.
 Mordenkainen: Everyone has questions. Very few have the right ones. Ask later.
+Mordenkainen: Here. I've been wearing this for forty years without knowing what it was for. It holds a spell or two for whoever wears it. Put something nasty in it before you meet him.
+give ring_of_spell_storing
 approve ratatoille +5 kip_smudgewick +1 liriel_dawnsong +1 godrick_pendlebrook +1: You gave Mordenkainen back his name
 -> restored_menu
 

@@ -150,6 +150,30 @@
       "kind": "examine",
       "label": "A weathered marker stone",
       "model": "milestone"
+    },
+    {
+      "id": "humming_token",
+      "cell": [
+        11,
+        8
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "a token that hums",
+      "model": "gold_spill",
+      "item": "pearl_of_power"
+    },
+    {
+      "id": "cairn_necklace",
+      "cell": [
+        8,
+        16
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "a necklace among the names on the cairn",
+      "model": "gold_spill",
+      "item": "necklace_of_adaptation"
     }
   ],
   "containers": [

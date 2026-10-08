@@ -94,6 +94,11 @@ Zuleika: Go carefully. These hills are full of people who used to be people.
 ~ inside
 if flag.emil_freed
 Zuleika: He's out. I heard him howl; the whole hill heard him. Go to the great cave and stand where Kiril can see you. Don't make him come looking.
+if not flag.zuleika_ring_given
+set zuleika_ring_given
+Zuleika: Wait. Take this. Emil gave it to me the winter we met: a ring no chain can hold. I've worn it every day he wore silver. I won't need it now.
+give ring_of_free_action
+endif
 -> END
 endif
 if not flag.zuleika_met

@@ -63,6 +63,9 @@ var d20_before: Callable = Callable()
 var d20_after: Callable = Callable()
 ## Told of every effect that lands (creature, effect): the encounter's book hooks (Inspired by Fear).
 var effect_added: Callable = Callable()
+## Asked whether a source of this creature's fear is within its line of sight (creature) -> bool: Frightened's
+## Disadvantage holds only then. The fight installs it; without it the source counts as in sight.
+var fear_seen: Callable = Callable()
 
 
 func _init() -> void:
@@ -470,6 +473,8 @@ func d20_sources(keys: Array[String]) -> Dictionary:
 	var situation := armor_situation()
 	situation["incapacitated"] = has_condition(&"incapacitated")
 	situation["bloodied"] = is_bloodied()
+	if has_condition(&"frightened"):
+		situation["fear_in_sight"] = not fear_seen.is_valid() or bool(fear_seen.call(self))
 	for m in modifiers_for(&"advantage"):
 		if m.matches_any(keys) and not m.source_name in adv and m.applies_when(situation):
 			adv.append(m.source_name)
@@ -748,7 +753,8 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 		if dice != null:
 			var t := roll_save(dice, &"con", r.concentration_dc, [], [], "Concentration (%s)" % name, ["concentration"])
 			r.concentration_save = t
-			if not t.success:
+			# A failure the player can still answer (Heroic Inspiration, Indomitable) is settled later (awaiting).
+			if not t.success and not t.awaiting:
 				r.concentration_broken = true
 				concentration.end("failed a Concentration save")
 	_log_damage(r)
@@ -786,11 +792,16 @@ func heal(amount: int, source: String = "") -> int:
 	hp = maxi(before, mini(cap, hp + amount))
 	if before == 0 and hp > 0:
 		_wake_from_zero()
+	# Knocked out (2024): any Hit Points regained bring the creature round.
+	if hp > before:
+		for fx: Effect in effects.duplicate():
+			if bool(fx.data.get("ends_on_heal", false)):
+				remove_effect(fx)
 	log_event({"type": "healed", "creature": id, "amount": hp - before, "source": source})
 	return hp - before
 
 
-## Temporary Hit Points don't stack: the higher amount is kept (the player may choose in the UI).
+## Temporary Hit Points don't stack: the higher amount is kept (deviations.md: nothing makes the lower one better).
 func add_temp_hp(amount: int, source: String = "") -> bool:
 	if amount <= 0:
 		return false

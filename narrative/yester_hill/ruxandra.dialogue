@@ -3,6 +3,7 @@
 # decides who is in it (encounter summit_ritual's variants). fallen: after the fight, her fate.
 
 ~ summit
+cutscene yester_effigy
 if flag.yester_sneaked and not flag.yester_struck_first
 Narrator: The whole crown lies before you: druids swaying in a ring round the black tree, an old woman with both hands pressed to the effigy's chest, and nobody, nobody at all, looking your way.
 * Strike now, while they chant. -> strike_first
@@ -12,6 +13,7 @@ endif
 
 ~ strike_first
 set yester_struck_first
+cutscene yester_wintersplinter
 Narrator: You're across the ring before the first druid turns her head.
 combat summit_ritual
 
@@ -57,10 +59,12 @@ endif
 -> summit_menu
 
 ~ fight
+cutscene yester_wintersplinter
 Ruxandra: Then come and take it, children. Sing, all of you. Sing him awake.
 combat summit_ritual
 
 ~ rux_scorn
+cutscene yester_wintersplinter
 Ruxandra: No. I don't think so. Sing, children. Louder.
 combat summit_ritual
 
@@ -68,6 +72,7 @@ combat summit_ritual
 set yester_druids_fate = "fled"
 Narrator: It isn't you they fear; it's the doubt, arriving all at once in a circle that never had any. One druid runs, then three. Ruxandra shrieks after them, gives you a look of perfectly polite hatred, and follows.
 Ruxandra: The tree remembers faces!
+cutscene yester_wintersplinter
 Narrator: The chant stops half sung. In the silence, the effigy's chest cracks open anyway.
 combat summit_ritual
 
@@ -75,6 +80,7 @@ combat summit_ritual
 set yester_circle_broken
 Ruxandra: Clever. Unkind, but clever.
 Narrator: Around the ring the humming falters. One druid lowers her hands, then another; they back away from the tree as if it had spoken their names, and go stumbling down the slope. Only Ruxandra stays, both hands on the effigy.
+cutscene yester_wintersplinter
 Ruxandra: Cowards. It doesn't matter. He has heart enough for all of us.
 combat summit_ritual
 

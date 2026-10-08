@@ -60,13 +60,14 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `stand_up(c)`, `drop_prone(c)`, `stabilize(c, t, use_kit)`, `death_save(c)` | |
 | `fly_vertical(c, feet)` | up (+) or down (−) where it stands, 5 ft at a time, 1 ft of movement per foot (a rider flies its mount); `movement.vertical_why(c, feet)` says why not; `Combatant.altitude` is feet off the floor, `Encounter.distance` counts it, and `movement.settle_all()` brings down whoever nothing holds up |
 | `fall(c, feet)` | 1d6 per 10 ft (20d6 at most), Prone unless unharmed; Slow Fall and Feather Fall answer it. `forced_move` calls it for a ledge, and `movement.fall_away` for a map's open drop (`grid.drop_ft`, from the map's `drop_ft`): the creature leaves the grid (`left_fight` meta) |
-| `spells.cast(c, spell_id, slot, targets, point, direction, opts)` | `point` for spheres, `direction` for cones, cubes and lines from the caster; opts: `word` (Command), `damage_type` |
-| `spells.use_sustained(c, action_id, targets, point, direction)` | a sustained spell action (`spells.sustained_actions(c)`): Spiritual Weapon's strike, Witch Bolt's arc, Flaming Sphere's roll... |
+| `spells.cast(c, spell_id, slot, targets, point, direction, opts)` | `point` for spheres, `direction` for cones, cubes and lines from the caster; opts: `word` (Command), `damage_type`, `path` (a wall's squares in drawing order, see below), `side` (a drawn Wall of Fire's burning side: `left`, `right` or a square on it), `crown_victim` (Crown of Madness: the id of the creature the crowned one must attack, `""` for no one) |
+| `spells.use_sustained(c, action_id, targets, point, direction)` | a sustained spell action (`spells.sustained_actions(c)`): Spiritual Weapon's strike, Witch Bolt's arc, Flaming Sphere's roll... Crown of Madness's keep-control takes the next victim as its target (none: no one) |
 | `spells.spiritual_weapon_attack(c, t, cell)` | shortcut for the weapon's strike |
-| `ready_spell(c, spell_id, slot)` | Ready a one-action spell: cast now, held with Concentration, released at the first enemy in range |
+| `ready_spell(c, spell_id, slot, trigger)` / `ready_attack(c, option_id, trigger)` | Ready a one-action spell (cast now, held with Concentration) or an attack, released with the Reaction when an enemy sets off `trigger`: `approach` (comes within range or reach; a move pauses for it), `attack` or `spell` (one within range attacks or casts a spell; the reaction queue asks once that's done, kind `readied_attack`) |
 | `features.toggle_rider(c, rider_id)` | arm a rider for this turn's next hit (`features.rider_options(c)`): maneuvers, Cunning Strike, Giant Ancestry, Psionic Strike |
-| `feature_actions.perform(c, id, t, point)` | a class, subclass, feat or species action (`feature_actions.list(c)`); the eight Phase 4 classes' actions are `cf:<id>`, run by combat/class_features.gd |
+| `feature_actions.perform(c, id, t, point, choice, targets)` | a class, subclass, feat or species action (`feature_actions.list(c)`); the eight Phase 4 classes' actions are `cf:<id>`, run by combat/class_features.gd. Commander's Strike: `t` the ally, `targets[1]` the creature it attacks (left out: the best one in its reach) |
 | `free_move(c, cell)`, `jump(c, cell)` | movement without Opportunity Attacks from a feature; Jump's 30 ft leap |
+| `reaction_move(c, cell)` | the move a hit offers an ally (Maneuvering Attack, `movement.offer_reaction_move`): `c` spends its Reaction and walks up to half its Speed, the creature hit making no Opportunity Attack; `movement.open_reaction_move()` is the open offer (it lapses when the turn moves on), `movement.reaction_mover_why(c)` who can take it, `movement.decline_reaction_move()` passes |
 | `undo_move(c)`, `can_undo_move(c)` | Takes back `c`'s last move (`move`, `free_move`, `jump`, with the mount or rider that went along) while nothing came of it: no die rolled, no reaction offered (even one declined or passed up), nothing queued, no other creature, zone, spell object, mark or grapple changed, no log line but the move's own, and nothing new seen (the mover not spotted, no foe the party couldn't see in sight now). Moves come back one by one, to the last thing that wasn't a move; anything else ends them. Player-controlled creatures on their own turn only; not saved |
 | `escape_effect(c, effect_id)`, `wake(c, t)`, `haste_action_use(c, what, t, option_id)`, `use_item(c, item_id, t)` | breaking free of Web/Entangle, shaking a sleeper awake, Haste's extra action, potions and Goodberries |
 | `pick_up(c, gid)` | picks up the pile `gid` (`ground.items`) from within 5 ft: the free object interaction, else a Bonus Action (Fast Hands) or the Utilize action |
@@ -109,10 +110,30 @@ steps of its own, as attacks do): the offers are asked one by one and `after(tes
 These pause today: spells' saves (`SpellSaves._save_spell(..., pausable)` from `cast`, `cast_with_numbers`,
 `cast_free`, item spells, readied spells and reaction spells; `_resolve`/`_generic` return a CombatResult and take
 `pausable`), monsters' save actions (`MonsterActions.save_action`, which returns `r` and takes `pausable`, true by
-default), the riders on a monster's hit and their saves (`apply_riders(..., pausable)`), Topple, repeated saves at the
+default; Trample and other save Bonus Actions return the paused result from `bonus_action`), the riders on a monster's hit and their saves (`apply_riders(..., pausable)`), Topple, repeated saves at the
 end of a turn (`end_turn` carries on with `Encounter.then`), Death Saving Throws (`death_save(c, pausable)`) and attack
-rolls. Any other roll settles its offers at once (`run_now`). `Encounter.each(list, body, done)` runs a loop whose
-steps can pause. `run_reaction_queue` called while a prompt is open waits for its answer.
+rolls, plus Sleep, Command, Polymorph, Banishment and Resilient Sphere (`SpellSpecials.resolve(..., pausable)` and
+`_resist_then`), monsters' auras (`MonsterActions.turn_start`), the areas a creature starts or ends its turn in
+(`SpellZones._affect(..., pausable)`), repeated saves at the start of a turn and lair actions (`Legendary.lair_turn`,
+whose round-end call can't wait and passes false). Any other roll settles its offers at once (`run_now`).
+`Encounter.each(list, body, done)` runs a loop whose steps can pause. `run_reaction_queue` called while a prompt is
+open waits for its answer.
+
+The turn itself can wait on a prompt: `_begin_turn`, `_lair_then_begin`, `_next_turn` and the end of a turn
+(`_turn_end_effects`) return a CombatResult and run their parts one after another, so a save or a Reaction there
+(Branches of the Tree as a creature starts its turn, Inspiring Movement as an enemy ends one) stops the turn until it's
+answered; the reaction queue runs as a turn starts and ends. `start()` stays void: Initiative choices
+(`ClassFeatures.initiative_offers`: Tandem Footwork, Alert's swap) leave `pending` set for the view, then the order is sorted again and
+the first turn begins. `TestCombat.start_with` declines them.
+
+A failed Concentration save is rolled where the damage lands, inside a held collector (`collect(target, true)`): when a
+choice could still save it, the roll is marked `awaiting` (Creature.take_damage_parts doesn't end Concentration) and a
+`concentration_save` entry with the offers joins the reaction queue, which asks them once the attack or spell is done
+and then keeps or ends Concentration; with nothing to ask the offers are settled at once. After the fight is over the
+entry settles by rule.
+
+A party member's prompt rules live on its Character (`Character.reaction_rules`, saved with it): the Combatant shares
+that Dictionary, so an Automatic or Off chosen in one fight holds in the next.
 
 ## Events (`Encounter.drain_events()`)
 
@@ -214,6 +235,11 @@ Picking up a pile within reach is kind `pickup` (`pickup:<gid>`, targeting none,
 square menu lists `act:pickup:<gid>` for what lies on a square.
 Previews: `attack_preview(c, action, t)`, `spell_preview(c, action, point, direction, slot)`,
 `move_preview(c, cell, move_reach(c))`, `slot_choices(c, spell_id)`, `target_why(c, action, t)`.
+The player's arrangement (U2) lives on the character (`Character.hotbar`: `{order: {tab: [ids]}, favourites: [ids],
+hidden: [ids]}`, saved): `arranged(c, tab)` gives a tab's entries in the player's order without the hidden ones (the
+`FAVOURITES` tab gathers the starred entries from every tab, `HIDDEN` the hidden ones; `tabs_for` adds each only while
+it has something). `set_favourite`, `set_hidden` and `move_action(c, tab, id, index)` change it; the HUD drives them
+from a slot's right-click menu and by dragging one slot onto another.
 
 ## Bosses: legendary and lair actions, forms, Misty Escape, withdrawing (ADR 0014, combat/legendary.gd)
 
@@ -276,6 +302,8 @@ The initiative tracker shows a legendary creature's actions left (◆◇) and th
 `FeatureRecipes` supplies data-defined activations and synchronous failed-D20 responses through `FeatureActions`. Save-based damage reduction is shared by ordinary spells, zones and monster actions. Magical monster saves carry a magic key when the action declares `magical`.
 
 Reaction offers may provide `stop_if` alongside `stop`: after `use`, the continuation stops only when the predicate is true. This allows an interrupted Shield to spend its Reaction while the original hit continues. Spell casting gates run after casting time is consumed and before slot payment or concentration replacement.
+
+Action targeting `wall` (`ActionCatalog.spell_targeting` for a wall with a length whose cast-time choice isn't a ring, globe or dome, `SpellTargeting.drawn_wall`) collects the wall's squares into `opts.path`, one at a time, each touching the last: `spells.targeting.wall_step_why` checks a square (solid squares, a wall's corner, the spell's length `wall_squares`, range: every square, or only the first for Wind Wall, Wall of Stone and Wall of Force; straight for Blade Barrier and Prismatic Wall) and `wall_path_why` the whole path; `wall_cells` is the casting hook that turns the path, a ring or a globe into the squares. A wall with `zone.side_ft` (Wall of Fire) then takes `opts.side`: `spells.placement.side_of(path, cell)` says which side a square is on, `path_side(path, side, feet)` the squares that burn. Without `opts.path` a wall is the straight one through `point` along `direction` (east-west without one), as the AI casts it. The view's picks after the first click (the wall's squares and side, Commander's Strike's target, Crown of Madness's victim, Maneuvering Attack's ally and square) are world/combat/target_picker.gd; the engine checks each: `weapons.strike_ally_why` and `weapons.strike_option(c, t)` (Commander's Strike), `spells.targeting.crown_victim_why` and `crown_attack` (the crowned creature's forced attack, read by the AI), `movement.reaction_move_reach`.
 
 Action targeting `points` collects `count` distinct grid positions into `opts.points`; selecting an already chosen position deselects it. Invalid summon spaces are rejected during selection. Multi-creature feature and sustained-action selections read the action's own `count` instead of a spell's target count. `Combatant.record_step` retains the voluntary path. Charge checks count trailing steps that each close distance to the current target, allowing angled approaches on a square grid. Sideways/retreating steps break the counted approach; attacks, teleports, forced movement and new turns clear it.
 

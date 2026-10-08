@@ -1,0 +1,15 @@
+{
+  "id": "abbey_bride",
+  "title": "The Bride Opens Her Eyes",
+  "summary": "The Abbot lays his hands on Vasilka, the candles burn white, and her eyes open.",
+  "images": [
+    {
+      "image": "abbey_bride",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

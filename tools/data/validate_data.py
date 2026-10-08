@@ -404,12 +404,20 @@ def campaign_checks(data, errors, pending):
                     errors.append(f"{w} road {r['id']}: unknown place '{end}'")
             if r.get("table") and r["table"] not in tables:
                 errors.append(f"{w} road {r['id']}: unknown random encounter table '{r['table']}'")
+
+    def item_known(iid):
+        # A template item on a base ("spell_scroll__daylight", "weapon_plus_1__longsword") needs both halves.
+        t, _, base = iid.partition("__")
+        return iid in items or iid in data.get("magic_items", {}) or bool(
+            base and t in data.get("magic_items", {}) and (base in items or base in data.get("spells", {})))
+
     for nid, n in npcs.items():
         for e in n.get("shop", {}).get("sells", []):
-            if e["id"] not in items and e["id"] not in data.get("magic_items", {}):
+            if not item_known(e["id"]):
                 errors.append(f"npcs/{nid}: shop sells unknown item '{e['id']}'")
-        for iid in n.get("shop", {}).get("rotating", {}).get("pool", []):
-            if iid not in items and iid not in data.get("magic_items", {}):
+        rot = n.get("shop", {}).get("rotating", {})
+        for iid in rot.get("pool", []) + [i for g in rot.get("groups", []) for i in g.get("pool", [])]:
+            if not item_known(iid):
                 errors.append(f"npcs/{nid}: shop's rotating pool has unknown item '{iid}'")
         gb = n.get("guest_build", {})
         if gb.get("monster") and gb["monster"] not in monsters:
@@ -595,10 +603,14 @@ def cutscene_checks(data, parsed, errors):
     for cid, c in data.get("cutscenes", {}).items():
         w = f"data/cutscenes/{cid}.json"
         for take in c["images"]:
-            if not (ROOT / "art" / "cutscenes" / f"{take['image']}.png").exists():
-                errors.append(f"{w}: no picture art/cutscenes/{take['image']}.png")
-        if c.get("trigger") and c["trigger"] not in narrator_keys:
-            errors.append(f"{w}: trigger '{c['trigger']}' isn't a node in any narrative/narrator file")
+            if not (ROOT / "art" / "cutscenes" / f"{take['image']}.jpg").exists():
+                errors.append(f"{w}: no picture art/cutscenes/{take['image']}.jpg")
+        trig = c.get("trigger", "")
+        if trig.startswith("find:"):
+            if trig[5:] not in data.get("magic_items", {}):
+                errors.append(f"{w}: trigger '{trig}' names no magic item")
+        elif trig and trig not in narrator_keys:
+            errors.append(f"{w}: trigger '{trig}' isn't a node in any narrative/narrator file")
     for key, p in parsed.items():
         for cid, where in p["cutscenes"]:
             if cid != "end" and cid not in data.get("cutscenes", {}):

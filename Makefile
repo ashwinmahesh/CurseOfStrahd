@@ -52,6 +52,19 @@ import:
 test: import
 	python3 tools/run_tests.py --godot $(GODOT) $(if $(JOBS),--jobs $(JOBS),) $(if $(ONLY),--only=$(ONLY),) $(if $(FILES),--files=$(FILES),) 2>&1 | $(LOGCHK)
 
+## Lane folders that cost almost no disk (tools/lane.sh): a worktree whose files and import cache are APFS clones of
+## the main checkout's. make lane NAME=<name> BRANCH=<branch> [BASE=main] · make lane-reclone NAME=<name> (a running
+## lane's unchanged files become clones again) · make lane-done NAME=<name> (once merged). SSD=1 on any of them: the
+## lane is on the external SSD's disk image (/Volumes/StrahdLanes), cloned from a seed there.
+LANE = $(if $(SSD),LANE_ROOT=/Volumes/StrahdLanes )tools/lane.sh
+.PHONY: lane lane-reclone lane-done
+lane:
+	$(LANE) new $(NAME) $(BRANCH) $(or $(BASE),main)
+lane-reclone:
+	$(LANE) reclone $(NAME)
+lane-done:
+	$(LANE) done $(NAME)
+
 ## The repo's git hooks (tools/git/), into the hooks folder every worktree shares: pre-push refuses a push of main
 ## unless STRAHD_PUSH_MAIN=1 (the build thread's), then runs Git LFS's own pre-push.
 .PHONY: hooks
@@ -68,6 +81,11 @@ golden-saves:
 ## Git LFS noise: old art and clips that only changed timestamp stop showing as modified (tools/lfs_quiet.sh).
 lfs-quiet:
 	@sh tools/lfs_quiet.sh
+
+## Cheat Codes.md in the vault: every playable item's cheat code, rebuilt from the item data (tools/data/cheat_codes.py).
+.PHONY: cheat-codes
+cheat-codes:
+	python3 tools/data/cheat_codes.py
 
 validate:
 	python3 tools/data/validate_data.py
@@ -91,7 +109,7 @@ ci: validate lint test
 ## The quick check while working (CLAUDE.md says when it is enough): only what covers the files changed since main,
 ## from validate to the tests that use them (tools/check.py). make check [BASE=<branch>] [DEPTH=n|all] [DRY=1]
 check:
-	@$(FRESH)
+	@$(if $(DRY),,$(FRESH))
 	python3 tools/check.py $(if $(BASE),--base $(BASE),) $(if $(DEPTH),--depth $(DEPTH),) $(if $(DRY),--dry-run,)
 
 palette:
@@ -125,11 +143,12 @@ sprite:
 
 ## Walk and attack sheets for every character in art/anim/animations.json, or ONLY="id ...", from the keyframe
 ## strips in art/generated/anim (docs/art/animation.md). GENERATE=1 first draws the strips that are missing (Gemini).
+## The sheets it built get their import settings (VRAM, no mipmaps: the crisp sprite shader never reads them).
 anims:
 	$(if $(GENERATE),python3 tools/art/anim_keyframes.py --retry 2 $(if $(ONLY),--only $(ONLY),) && python3 tools/art/anim_keyframes.py --kind walk $(if $(ONLY),--only $(ONLY),),true)
 	python3 tools/art/build_anims.py $(if $(ONLY),--only $(ONLY),)
 	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
-	python3 tools/art/set_import.py --sheets $(wildcard art/sprites/*/walk.png) $(wildcard art/sprites/*/attack.png)
+	python3 tools/art/set_import.py --sheets $(foreach id,$(or $(ONLY),*),$(wildcard art/sprites/$(id)/walk.png) $(wildcard art/sprites/$(id)/attack.png))
 	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
 
 ## The six heroes' HD animation sheets (set v2) from their strips: make keys [ONLY="id ..."] [KINDS="walk8 ..."]
@@ -197,7 +216,7 @@ ui_art:
 
 ## Spell and item icons (game-icons.net silhouettes framed in the menu colours; keys in art/icons.json): make icons
 icons:
-	$(G) --headless --script res://tools/art/build_icons.gd 2>&1 | $(LOGCHK)
+	$(G) --headless --script res://tools/art/build_icons.gd $(if $(KIND),-- --kind=$(KIND),) 2>&1 | $(LOGCHK)
 	$(MAKE) import
 
 ## Mouse cursors from the game-icons silhouettes (tools/art/build_cursors.gd -> art/ui/cursors).

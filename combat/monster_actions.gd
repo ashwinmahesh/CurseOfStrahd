@@ -630,7 +630,10 @@ func cast(c: Combatant, spell_id: String, targets: Array, point: Vector2 = Vecto
 
 ## Start of `c`'s turn: Recharge, auras of nearby monsters (Stench, Festering Aura), Engulf damage, Sunlight
 ## Hypersensitivity.
-func turn_start(c: Combatant) -> void:
+## Start of `c`'s turn: Recharge, Berserk, the auras of nearby monsters reaching it (Stench, Festering Aura) and its own
+## (Whispering Aura), Regeneration, grips, Engulf and Sunlight Hypersensitivity. An aura's save stops for the choices
+## after its roll, so the rest waits on Encounter.then.
+func turn_start(c: Combatant) -> CombatResult:
 	var e := enc()
 	if c.creature is Monster:
 		roll_recharges(c)
@@ -643,6 +646,7 @@ func turn_start(c: Combatant) -> void:
 			if roll == 6:
 				c.set_meta("berserk", true)
 				e.log.add("condition", "%s goes berserk (d6: 6)" % c.name(), c.id)
+	var auras: Array = []
 	for o in e.living():
 		if o == c or o.is_down():
 			continue
@@ -650,7 +654,7 @@ func turn_start(c: Combatant) -> void:
 			var aura := (tr as Dictionary).get("aura", {}) as Dictionary
 			if aura.is_empty() or str(aura.get("trigger", "start_turn")) != "start_turn":
 				continue
-			_aura_on(o, c, tr as Dictionary)
+			auras.append([o, c, tr])
 	# Auras that act at the start of their owner's turn (the Aberrant Spirit's Whispering Aura).
 	if c.can_act():
 		for tr2: Variant in traits(c):
@@ -659,75 +663,92 @@ func turn_start(c: Combatant) -> void:
 				continue
 			for o2 in e.living():
 				if o2 != c and not o2.is_down():
-					_aura_on(c, o2, tr2 as Dictionary)
-	# Regeneration (the Slaad spirit): Hit Points back at the start of its turn while it has at least 1.
-	for tr3: Variant in traits(c):
-		var regen := int((tr3 as Dictionary).get("regenerate", 0))
-		if regen > 0 and c.creature.hp >= 1 and not c.creature.has_flag("cant_regain_hp"):
-			var healed := c.creature.heal(regen, str((tr3 as Dictionary).get("name", "Regeneration")))
-			if healed > 0:
-				e.log.add("heal", "%s regenerates %d Hit Points" % [c.name(), healed], c.id)
-				e.events.append({"type": "heal", "id": c.id, "amount": healed})
-	# A vine blight's or tree blight's grip: the held creature takes damage at the start of its own turn.
-	if c.has_meta("grip_damage"):
-		var by := e.get_c(str(e.grapples.get(c.id, "")))
-		if by == null or not by.is_alive():
-			c.remove_meta("grip_damage")
-		else:
-			var gd := c.get_meta("grip_damage") as Dictionary
-			var gr := e._roll_damage_dice(str(gd["dice"]), false, 0, "Grip")
-			e.deal_damage(by, c, [{"amount": int(gr["total"]), "type": str(gd["type"])}], false, "%s's grip" % by.name(), [str(gr["text"])])
-	# Whelm (water elemental): each creature it holds takes damage at the start of its turn.
-	for k: String in e.grapples.keys():
-		var held := e.get_c(k)
-		if str(e.grapples[k]) == c.id and held != null and held.is_alive() and held.has_meta("hold_damage"):
-			var hd := held.get_meta("hold_damage") as Dictionary
-			var hr := e._roll_damage_dice(str(hd["dice"]), false, 0, "Held")
-			e.deal_damage(c, held, [{"amount": int(hr["total"]), "type": str(hd["type"])}], false, "%s's grip" % c.name(), [str(hr["text"])])
-	if c.has_meta("engulfed_by"):
-		var by := e.get_c(str(c.get_meta("engulfed_by")))
-		if by == null or by.is_down() or not e.grapples.has(c.id):
-			release_engulf(c)
-		else:
-			var dmg := c.get_meta("engulf_damage", {}) as Dictionary
-			if not dmg.is_empty():
-				var rolled := e._roll_damage_dice(str(dmg["dice"]), false, 0, "Engulf")
-				e.deal_damage(by, c, [{"amount": int(rolled["total"]), "type": str(dmg["type"])}], false, "Engulf", [str(rolled["text"])])
-	if sunlight(c) == "hypersensitivity" and e.in_sunlight(c):
-		e.deal_damage(null, c, [{"amount": 20, "type": "radiant"}], false, "Sunlight", ["Sunlight Hypersensitivity"])
+					auras.append([c, o2, tr2])
+	var rest := func() -> CombatResult:
+		# Regeneration (the Slaad spirit): Hit Points back at the start of its turn while it has at least 1.
+		for tr3: Variant in traits(c):
+			var regen := int((tr3 as Dictionary).get("regenerate", 0))
+			if regen > 0 and c.creature.hp >= 1 and not c.creature.has_flag("cant_regain_hp"):
+				var healed := c.creature.heal(regen, str((tr3 as Dictionary).get("name", "Regeneration")))
+				if healed > 0:
+					e.log.add("heal", "%s regenerates %d Hit Points" % [c.name(), healed], c.id)
+					e.events.append({"type": "heal", "id": c.id, "amount": healed})
+		# A vine blight's or tree blight's grip: the held creature takes damage at the start of its own turn.
+		if c.has_meta("grip_damage"):
+			var by := e.get_c(str(e.grapples.get(c.id, "")))
+			if by == null or not by.is_alive():
+				c.remove_meta("grip_damage")
+			else:
+				var gd := c.get_meta("grip_damage") as Dictionary
+				var gr := e._roll_damage_dice(str(gd["dice"]), false, 0, "Grip")
+				e.deal_damage(by, c, [{"amount": int(gr["total"]), "type": str(gd["type"])}], false, "%s's grip" % by.name(), [str(gr["text"])])
+		# Whelm (water elemental): each creature it holds takes damage at the start of its turn.
+		for k: String in e.grapples.keys():
+			var held := e.get_c(k)
+			if str(e.grapples[k]) == c.id and held != null and held.is_alive() and held.has_meta("hold_damage"):
+				var hd := held.get_meta("hold_damage") as Dictionary
+				var hr := e._roll_damage_dice(str(hd["dice"]), false, 0, "Held")
+				e.deal_damage(c, held, [{"amount": int(hr["total"]), "type": str(hd["type"])}], false, "%s's grip" % c.name(), [str(hr["text"])])
+		if c.has_meta("engulfed_by"):
+			var by := e.get_c(str(c.get_meta("engulfed_by")))
+			if by == null or by.is_down() or not e.grapples.has(c.id):
+				release_engulf(c)
+			else:
+				var dmg := c.get_meta("engulf_damage", {}) as Dictionary
+				if not dmg.is_empty():
+					var rolled := e._roll_damage_dice(str(dmg["dice"]), false, 0, "Engulf")
+					e.deal_damage(by, c, [{"amount": int(rolled["total"]), "type": str(dmg["type"])}], false, "Engulf", [str(rolled["text"])])
+		if sunlight(c) == "hypersensitivity" and e.in_sunlight(c):
+			e.deal_damage(null, c, [{"amount": 20, "type": "radiant"}], false, "Sunlight", ["Sunlight Hypersensitivity"])
+		return CombatResult.new()
+	return e.each(auras, func(a: Variant) -> CombatResult:
+		var at := a as Array
+		var src := at[0] as Combatant
+		if src.is_down() or not src.is_alive():
+			return CombatResult.new()
+		return _aura_on(src, at[1] as Combatant, at[2] as Dictionary, true), rest)
 
 
 ## One aura from `o` reaching `c`: a save, then a timed condition or hindrance (Stench, Festering Aura, Stony Lethargy)
 ## or damage (Whispering Aura).
-func _aura_on(o: Combatant, c: Combatant, tr: Dictionary) -> void:
+func _aura_on(o: Combatant, c: Combatant, tr: Dictionary, pausable: bool = false) -> CombatResult:
 	var e := enc()
+	var r := CombatResult.new()
 	var aura := tr.get("aura", {}) as Dictionary
 	if str(aura.get("affects", "others")) == "enemies" and not o.hostile_to(c):
-		return
+		return r
 	if e.distance(o, c) > int(aura.get("radius", 5)):
-		return
+		return r
 	var label := str(tr.get("name", "Aura"))
 	if c.has_meta(ClassFeatures.meta_key("immune_%s_%s" % [o.id, label])):
-		return
-	if aura.has("damage"):
-		var details: Array[String] = []
-		if aura.has("save"):
-			var sv := aura["save"] as Dictionary
-			var ab := StringName(str(sv["ability"]))
-			var test := c.creature.roll_save(e.dice, ab, int(sv["dc"]), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], label, c.name()])
-			if test.success:
-				e.log.add("info", "%s resists %s" % [c.name(), label], c.id, [test.describe()])
-				return
-			details.append(test.describe())
+		return r
+	if not aura.has("damage"):
+		return apply_riders(o, c, [{"do": "condition", "condition": str(aura.get("condition", "")), "save": aura["save"], "until": str(aura.get("until", "target_turn_start")),
+			"immune_on_success": bool(aura.get("immune_on_success", false)), "modifiers": aura.get("modifiers", [])}], {}, label, pausable)
+	var hurt := func(details: Array[String]) -> CombatResult:
 		var dmg := aura["damage"] as Dictionary
 		var rolled := e._roll_damage_dice(str(dmg["dice"]), false, 0, label)
 		details.append(str(rolled["text"]))
 		e.deal_damage(o, c, [{"amount": int(rolled["total"]), "type": str(dmg["type"])}], false, label, details)
 		if c.is_alive():
-			apply_riders(o, c, aura.get("riders", []) as Array, {}, label)
-		return
-	apply_riders(o, c, [{"do": "condition", "condition": str(aura.get("condition", "")), "save": aura["save"], "until": str(aura.get("until", "target_turn_start")),
-		"immune_on_success": bool(aura.get("immune_on_success", false)), "modifiers": aura.get("modifiers", [])}], {}, label)
+			return apply_riders(o, c, aura.get("riders", []) as Array, {}, label, pausable)
+		return r
+	if not aura.has("save"):
+		var plain: Array[String] = []
+		return hurt.call(plain) as CombatResult
+	var sv := aura["save"] as Dictionary
+	var ab := StringName(str(sv["ability"]))
+	var roll := func() -> D20Test:
+		return c.creature.roll_save(e.dice, ab, int(sv["dc"]), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], label, c.name()])
+	var after := func(test: D20Test) -> CombatResult:
+		if test.success:
+			e.log.add("info", "%s resists %s" % [c.name(), label], c.id, [test.describe()])
+			return r
+		var details: Array[String] = [test.describe()]
+		return hurt.call(details) as CombatResult
+	if pausable:
+		return e.d20.then_after(c, roll, after, r)
+	return after.call(roll.call() as D20Test) as CombatResult
 
 
 ## End of `c`'s turn: Incorporeal Movement inside an object (a wall square) costs 1d10 Force.
@@ -1016,10 +1037,8 @@ func bonus_action(c: Combatant, plan: String = "") -> CombatResult:
 					var st := save_targets(c, act)
 					if not st.is_empty():
 						c.bonus_available = false
-						var r := CombatResult.new()
-						# The AI's after-the-main-action step doesn't wait on a prompt yet, so these saves settle by rule.
-						save_action(c, act, st[0], r, false)
-						return r
+						# The saves can pause for a hero's choice: the result says so, and the AI's next step waits.
+						return save_action(c, act, st[0], CombatResult.new())
 			"rampage":
 				if plan == "rampage":
 					return _rampage(c, act)

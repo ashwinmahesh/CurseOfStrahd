@@ -31,6 +31,8 @@ var _deck := 0
 var _deck_tweens: Array[Tween] = [null, null]
 ## The music id on the current deck: the mood's own, or at full intensity the harder mood "rises" names for it.
 var playing_id := ""
+## The current deck's volume: its music id's level plus its recording's own ("track_levels").
+var _playing_db := 0.0
 ## The current recording's intensity versions playing in step, when it was recorded at several intensities.
 var _versions: AudioStreamSynchronized = null
 var _swell_tween: Tween = null
@@ -115,11 +117,16 @@ func entries(section: String, id: String) -> Array:
 	return (_data.get(section, {}) as Dictionary).get(id, []) as Array
 
 
-## The mood for a place: its own entry, else its map theme's, else "wilds".
+## The mood for a place: its own entry, else its region's theme (art/audio.json "regions", unless its map theme keeps
+## its own mood there, like a tavern, or the region's theme has no music yet), else its map theme's, else "wilds".
 func mood_for(location_id: String, theme: String) -> String:
 	var places := _data.get("places", {}) as Dictionary
 	if places.has(location_id):
 		return str(places[location_id])
+	var region := str(Compendium.shared().get_entry("locations", location_id).get("region", ""))
+	var own := str((_data.get("regions", {}) as Dictionary).get(region, ""))
+	if own != "" and not (_data.get("region_keeps", []) as Array).has(theme) and not entries("music", own).is_empty():
+		return own
 	return str((_data.get("themes", {}) as Dictionary).get(theme, "wilds"))
 
 
@@ -129,12 +136,28 @@ func play_music(next_mood: String) -> void:
 	if next_mood == mood or not is_inside_tree():
 		return
 	mood = next_mood
-	if next_mood not in FIGHT_MOODS:
+	if not is_fight_mood(next_mood):
 		_fight = null
 		_fight_timer.stop()
-	intensity = Intensity.FIGHT if next_mood in FIGHT_MOODS else Intensity.CALM
+	intensity = Intensity.FIGHT if is_fight_mood(next_mood) else Intensity.CALM
 	_ambience.start(_rng.randf_range(12.0, 30.0))
 	_crossfade_to(music_for(next_mood, intensity))
+
+
+## A fight's mood: "combat", "boss", or a foe's own (art/audio.json "boss_music", Strahd's theme).
+func is_fight_mood(m: String) -> bool:
+	return m in FIGHT_MOODS or (_data.get("boss_music", {}) as Dictionary).values().has(m)
+
+
+## The mood a foe on the field has for its own fights (art/audio.json "boss_music": Strahd's theme), or "".
+func fight_mood(combatants: Array[Combatant]) -> String:
+	var own := _data.get("boss_music", {}) as Dictionary
+	for c in combatants:
+		if c.side == &"enemy" and c.creature is Monster and c.creature.hp > 0:
+			var id := str((c.creature as Monster).data.get("id", ""))
+			if own.has(id):
+				return str(own[id])
+	return ""
 
 
 ## Which music id plays for a mood at an intensity: its own, or at full intensity the harder mood art/audio.json
@@ -205,10 +228,13 @@ static func danger(combatants: Array[Combatant]) -> int:
 
 func _check_fight() -> void:
 	var cv := _fight.get_ref() as CombatView if _fight != null else null
-	if cv == null or cv.e == null or mood not in FIGHT_MOODS:
+	if cv == null or cv.e == null or not is_fight_mood(mood):
 		if cv == null:
 			_fight_timer.stop()
 		return
+	var own := fight_mood(cv.e.combatants)
+	if own != "" and own != mood:
+		play_music(own)
 	var level := danger(cv.e.combatants)
 	if level >= intensity:
 		_calm_checks = 0
@@ -236,13 +262,15 @@ func _crossfade_to(id: String) -> void:
 	tw.tween_callback(old.stop)
 	if choices.is_empty() or _silent:
 		return
-	var stream := _music_stream(choices[_rng.randi_range(0, choices.size() - 1)])
+	var entry: Variant = choices[_rng.randi_range(0, choices.size() - 1)]
+	var stream := _music_stream(entry)
 	if stream == null:
 		return
+	_playing_db = level_db(id) + track_level(str((entry as Array)[0]) if entry is Array else str(entry))
 	new.stream = stream
 	new.volume_db = -30.0
 	new.play()
-	_deck_tween(_deck).tween_property(new, "volume_db", level_db(id), FADE)
+	_deck_tween(_deck).tween_property(new, "volume_db", _playing_db, FADE)
 
 
 ## A deck's fresh tween, replacing whatever fade or dip it had running.
@@ -251,6 +279,12 @@ func _deck_tween(index: int) -> Tween:
 		_deck_tweens[index].kill()
 	_deck_tweens[index] = create_tween()
 	return _deck_tweens[index]
+
+
+## A recording's own volume offset in dB (art/audio.json "track_levels"), so the pieces a mood picks between sound
+## about as loud as each other.
+func track_level(path: String) -> float:
+	return float((_data.get("track_levels", {}) as Dictionary).get(path, 0.0))
 
 
 ## A music mood's or an effect's volume offset in dB (art/audio.json "levels").
@@ -344,7 +378,7 @@ func sting(id: String) -> void:
 		var tw := _deck_tween(_deck)
 		tw.tween_property(deck, "volume_db", -18.0, 0.3)
 		tw.tween_interval(3.0)
-		tw.tween_property(deck, "volume_db", level_db(playing_id), 2.0)
+		tw.tween_property(deck, "volume_db", _playing_db, 2.0)
 	sfx(id, 0.0)
 
 

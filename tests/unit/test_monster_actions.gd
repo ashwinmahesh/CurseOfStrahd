@@ -315,6 +315,8 @@ func test_elephant_tramples_a_prone_creature() -> void:
 	h.creature.add_condition(&"prone", "test")
 	var hp := h.creature.hp
 	e.monster_actions.bonus_action(el, "trample")
+	while e.pending != null:  # a choice after a failed save (Heroic Inspiration, Indomitable) is declined
+		e.answer_reaction(false)
 	assert_true(h.creature.hp < hp, "Trample hits a Prone creature")
 	assert_false(el.bonus_available)
 

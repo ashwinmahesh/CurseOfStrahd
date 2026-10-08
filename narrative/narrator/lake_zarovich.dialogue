@@ -70,3 +70,23 @@ cooldown 20
 
 ~ examine:lzt_claw_pine
 | Five deep gouges in the bark, higher than a tall man can reach, still weeping sap. Fresh. Something stood up tall here to sharpen its claws, and wanted you to see.
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:jetty_boards
+| Under the jetty's last boards, tied to a post below the waterline, a ring on a string. It is dry when you pull it up, though the string is soaked.
+once
+
+~ check:perception:jetty_boards:failure
+| Black water, rotten boards and the smell of fish that aren't there anymore. Nothing else.
+
+~ search:hut_hearthstone
+| The empty hut's hearthstone lifts away. Under it, a small wooden box with a fisherman's knot carved on the lid. Say the right word and it will be a boat.
+once
+
+~ check:investigation:hut_hearthstone:failure
+| Cold ashes and a stone that won't move. The fishers who lived here took everything with them.
+
+~ search:shrine_trident
+| Propped behind the fishers' shrine, a trident with a shaft of green coral. The fish in the shallows turn, all together, to look at it.
+once

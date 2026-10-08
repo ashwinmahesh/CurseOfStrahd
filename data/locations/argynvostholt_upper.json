@@ -391,6 +391,32 @@
       "kind": "examine",
       "label": "A cot that was never slept in",
       "model": "bed_small"
+    },
+    {
+      "id": "plinth_ring",
+      "cell": [
+        30,
+        10
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "skill": "investigation",
+      "label": "a hollow in the empty plinth",
+      "model": "floor_crack",
+      "item": "ring_of_resistance_cold"
+    },
+    {
+      "id": "dragon_desk_wand",
+      "cell": [
+        16,
+        4
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "skill": "investigation",
+      "label": "a hidden drawer in the dragon's desk",
+      "model": "scattered_notes",
+      "item": "wand_of_enemy_detection"
     }
   ],
   "containers": [

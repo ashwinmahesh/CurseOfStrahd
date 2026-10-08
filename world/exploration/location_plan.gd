@@ -25,7 +25,7 @@ static func toggle(view: LocationView) -> void:
 		view.toast.emit("Real time")
 	else:
 		start(view)
-		view.toast.emit("Turn-based: move each of the party in turn; Space ends the round")
+		view.toast.emit(InputActions.fill("Turn-based: move each of the party in turn; {plan_round} ends the round"))
 
 
 ## Starts the rounds: whoever is walking stops where they are, and each member gets their Speed for round 1.
@@ -124,7 +124,8 @@ static func why_not(view: LocationView, path: Array[Vector2i]) -> String:
 	var need := path_ft(view, walker, path)
 	var left := left_ft(view, walker)
 	if need > left:
-		return "Too far: %d ft, and %s has %d ft left this round (Space: next round)" % [need, walker.name().get_slice(" ", 0), left]
+		return "Too far: %d ft, and %s has %d ft left this round (%s: next round)" % [need, walker.name().get_slice(" ", 0), left,
+			InputActions.key_text(&"plan_round")]
 	return ""
 
 

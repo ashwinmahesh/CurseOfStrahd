@@ -22,5 +22,110 @@
   "guest_build": {
     "monster": "rictavio",
     "note": "Rictavio's own stat block (Rudolph van Richten in disguise); joins only if the Tarokka names him."
+  },
+  "shop": {
+    "sells": [
+      {
+        "id": "holy_water",
+        "qty": -1
+      },
+      {
+        "id": "potion_of_healing_greater",
+        "qty": -1
+      },
+      {
+        "id": "potion_of_healing_superior",
+        "qty": 2
+      },
+      {
+        "id": "potion_of_resistance_necrotic",
+        "qty": 2
+      },
+      {
+        "id": "mace_of_disruption__mace",
+        "qty": 1
+      },
+      {
+        "id": "weapon_plus_2__longsword",
+        "qty": 1
+      },
+      {
+        "id": "weapon_plus_2__rapier",
+        "qty": 1
+      },
+      {
+        "id": "weapon_plus_2__mace",
+        "qty": 1
+      },
+      {
+        "id": "weapon_plus_2__light_crossbow",
+        "qty": 1
+      },
+      {
+        "id": "weapon_plus_2__longbow",
+        "qty": 1
+      },
+      {
+        "id": "armor_of_resistance_necrotic__studded_leather_armor",
+        "qty": 1
+      },
+      {
+        "id": "armor_of_resistance_necrotic__chain_mail",
+        "qty": 1
+      },
+      {
+        "id": "periapt_of_proof_against_poison",
+        "qty": 1
+      },
+      {
+        "id": "amulet_of_proof_against_detection_and_location",
+        "qty": 1
+      },
+      {
+        "id": "ring_of_protection",
+        "qty": 1
+      },
+      {
+        "id": "spell_scroll__daylight",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__remove_curse",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__revivify",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__death_ward",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__banishment",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__greater_restoration",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__dispel_evil_and_good",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__raise_dead",
+        "qty": -1
+      }
+    ],
+    "buys": [
+      "potion",
+      "scroll",
+      "treasure"
+    ],
+    "markup": 1.0,
+    "sell_rate": 0.5,
+    "closed": "not (flag.rictavio_unmasked or flag.van_richten_met_at_tower)",
+    "hide_closed": true
   }
 }

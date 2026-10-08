@@ -257,6 +257,11 @@
           "search_dc": {
             "type": "integer"
           },
+          "skill": {
+            "type": "string",
+            "enum": ["perception", "investigation"],
+            "description": "A search prop: the check that finds it (default perception; investigation for a compartment you work out). A search prop holding an item gets one try per character."
+          },
           "codex": {
             "type": "string"
           },

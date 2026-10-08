@@ -148,6 +148,7 @@ Doru: There isn't one. There's the hunger and there's the stake. I've asked the 
 set larders_doru_fate = "rest"
 Doru: Yes. Please. Before he wants me again.
 interject class:cleric: Close your eyes, Doru. Think of the church with the candles lit.
+cutscene doru_rest
 Narrator: It is quick. The hunger goes out of his face, and for a moment he is only a tired boy. Then he is dust in the chains.
 interject tag:pious: We'll tell his father he was brave at the end. It's even true.
 approve liriel_dawnsong +2 thistle +1 godrick_pendlebrook +1: You gave Doru his rest at last

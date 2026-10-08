@@ -111,11 +111,14 @@ leave gertruda
 set gertruda_home
 quest find_gertruda home
 attitude mad_mary friendly
+cutscene gertruda_home
 Narrator: Mary is on her feet before the door is fully open. For a moment neither of them moves. Then Gertruda says "Mother", very small, and Mary has her.
 Mad Mary [sad]: You're cold. You're so cold. Where are your good shoes? Never mind. Never mind the shoes.
 Gertruda: I'm sorry. I'm sorry, I'm sorry.
 Mad Mary: Hush. The door's unlocked. It's staying unlocked. We'll learn how, the two of us.
 Mad Mary: You brought her home. I said nobody listens. I was wrong, and I'm glad to be wrong. Sit. Let me mend something for you. Let me do something.
+Mad Mary: These were my mother's beads. I said a prayer on every one, every night she was gone. Take them. I've no more prayers left to say, only thank-yous.
+give necklace_of_prayer_beads
 interject class:cleric: Bless this house, and its door, and the two of you in it.
 -> END
 

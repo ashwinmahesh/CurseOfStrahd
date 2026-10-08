@@ -1,0 +1,13 @@
+{
+  "id": "krezk_wall",
+  "title": "The Wall of Krezk",
+  "summary": "Krezk's ancient wall and the mountain climbing behind it.",
+  "images": [
+    {
+      "image": "krezk_wall",
+      "when": ""
+    }
+  ],
+  "trigger": "enter:krezk",
+  "once": true
+}

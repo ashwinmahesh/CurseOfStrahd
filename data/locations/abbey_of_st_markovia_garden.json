@@ -184,6 +184,19 @@
       "kind": "examine",
       "label": "The tool shed",
       "model": "door"
+    },
+    {
+      "id": "shed_beans",
+      "cell": [
+        7,
+        14
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "skill": "investigation",
+      "label": "a pouch hidden in the tool shed",
+      "model": "sack",
+      "item": "bag_of_beans"
     }
   ],
   "containers": [

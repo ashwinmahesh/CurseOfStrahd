@@ -281,6 +281,22 @@
       ],
       "gold": 0,
       "owner": "father_lucian"
+    },
+    {
+      "id": "st_andral_niche",
+      "cell": [
+        14,
+        18
+      ],
+      "label": "the saint's niche",
+      "model": "reliquary_sealed",
+      "when": "flag.bones_returned",
+      "items": [
+        {
+          "id": "mace_of_disruption__mace",
+          "qty": 1
+        }
+      ]
     }
   ],
   "lights": [
