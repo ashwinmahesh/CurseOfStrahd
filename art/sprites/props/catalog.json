@@ -318,7 +318,23 @@
     "larders_bone_chair_4": "bone_chair",
     "crg_faces_relief_5": "stone_faces",
     "larders_bone_table_5": "bone_table",
-    "larders_bone_chair_5": "bone_chair"
+    "larders_bone_chair_5": "bone_chair",
+    "mists_climbing_pine": {
+      "art": "broad_oak_bough",
+      "fade": true
+    },
+    "raven_oak": {
+      "art": "broad_oak_bough",
+      "fade": true
+    },
+    "lzt_climbing_pine": {
+      "art": "hunters_tree_stand",
+      "fade": true
+    },
+    "ambush_lookout_tree": {
+      "art": "hunters_tree_stand",
+      "fade": true
+    }
   },
   "low_cover": {
     "wild": [

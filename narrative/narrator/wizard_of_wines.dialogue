@@ -258,3 +258,6 @@ once
 ~ search:vine_sickle
 | Half buried between two rows, a sickle with a pale crescent blade. The earth falls off it, and no rust ever took hold. {name} has the feeling the druids dropped it, and want it back.
 once
+
+~ examine:raven_oak
+| An old oak at the foot of the lane with one great bough grown out level ten feet up, wide enough to walk along. Ravens crowd the upper branches and watch you climb with great interest.

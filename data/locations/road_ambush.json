@@ -144,8 +144,8 @@
         16
       ],
       "kind": "examine",
-      "label": "A dead tree with a good view of the road",
-      "model": "dead_tree",
+      "label": "A platform up a pine by the road",
+      "model": "hunters_tree_stand",
       "stand_ft": 10
     }
   ],

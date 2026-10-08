@@ -523,6 +523,21 @@
       ],
       "kind": "decor",
       "model": "woodpile"
+    },
+    {
+      "id": "raven_oak",
+      "cell": [
+        25,
+        28
+      ],
+      "kind": "examine",
+      "label": "An old oak full of ravens",
+      "model": "broad_oak_bough",
+      "span": [
+        2,
+        1
+      ],
+      "stand_ft": 10
     }
   ],
   "lights": [
