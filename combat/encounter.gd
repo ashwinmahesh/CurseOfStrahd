@@ -649,12 +649,12 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 
 # --- Standard actions (EncounterActions) ----------------------------------------------------------
 
-func ready_attack(c: Combatant, option_id: String) -> CombatResult:
-	return actions.ready_attack(c, option_id)
+func ready_attack(c: Combatant, option_id: String, trigger: String = "approach") -> CombatResult:
+	return actions.ready_attack(c, option_id, trigger)
 
 
-func ready_spell(c: Combatant, spell_id: String, slot: int) -> CombatResult:
-	return actions.ready_spell(c, spell_id, slot)
+func ready_spell(c: Combatant, spell_id: String, slot: int, trigger: String = "approach") -> CombatResult:
+	return actions.ready_spell(c, spell_id, slot, trigger)
 
 
 func use_item(c: Combatant, item_id: String, target: Combatant) -> CombatResult:

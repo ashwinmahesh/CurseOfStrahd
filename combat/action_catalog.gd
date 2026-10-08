@@ -13,6 +13,9 @@ const COMMON := "Common"
 const SPELLS := "Spells"
 const ITEMS := "Items"
 const PASSIVES := "Passives"
+## What a Ready action waits for (EncounterActions.READY_TRIGGERS), as the hotbar's right-click choices.
+const READY_CHOICES := [{"value": "approach", "label": "When an enemy comes within reach"},
+	{"value": "attack", "label": "When an enemy within reach attacks"}, {"value": "spell", "label": "When an enemy within reach casts a spell"}]
 
 var e: Encounter
 
@@ -145,8 +148,11 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 	if ready_why == "" and best.is_empty():
 		ready_why = "No attack to ready"
 	var rd := _entry("ready", COMMON, "Ready", "attack on approach", "action", ready_why, "none",
-		"Hold an attack (%s) for your Reaction when an enemy comes within reach." % (best.get("label", "") if not best.is_empty() else ""))
+		"Hold an attack (%s) for your Reaction when an enemy comes within reach (right-click: or when one within reach attacks or casts a spell)." % (best.get("label", "") if not best.is_empty() else ""))
 	rd["option_id"] = str(best.get("id", ""))
+	rd["choices"] = READY_CHOICES
+	rd["choice_label"] = "Trigger"
+	rd["opts"] = {"choice": "approach"}
 	out.append(rd)
 	var stab := _entry("stabilize", COMMON, "Stabilize", "DC 10 Medicine", "action", why, "dying", "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable.")
 	stab["range"] = 5
@@ -604,7 +610,7 @@ const ACTION_TEXT := {
 	"hide": "A DC 15 Dexterity (Stealth) check while out of every enemy's sight (Three-Quarters or Total Cover). On a success you're Invisible until you attack, cast a spell aloud, or an enemy finds you.",
 	"search": "A Wisdom (Perception) check to find hidden creatures; it beats their Stealth total to find them.",
 	"study": "An Intelligence check (Arcana, History, Nature or Religion by the creature's type) to recall what a creature is: its defenses and traits.",
-	"ready": "Hold an attack: when an enemy you can see comes within reach, you make it with your Reaction. Lasts until the start of your next turn. To ready a spell, right-click it on the Spells tab: it's cast now (spending the slot) and held with Concentration until it's released.",
+	"ready": "Hold an attack: when an enemy you can see comes within reach (or, picked with a right-click, when one within reach attacks or casts a spell), you make it with your Reaction. Lasts until the start of your next turn. To ready a spell, right-click it on the Spells tab: it's cast now (spending the slot) and held with Concentration until it's released.",
 	"stabilize": "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable.",
 	"healers_kit": "Spend one use of the kit to make a dying creature within 5 ft Stable, no check needed.",
 	"grapple": "One of your attacks: the target (no more than one size larger) makes a Strength or Dexterity save against 8 + Str + Proficiency or is Grappled (Speed 0).",
@@ -922,7 +928,7 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 			all_opts.merge(opts, true)
 			return e.spells.cast(c, str(action["spell_id"]), slot, targets, point, dir, all_opts)
 		"ready_spell":
-			return e.ready_spell(c, str(action["spell_id"]), slot)
+			return e.ready_spell(c, str(action["spell_id"]), slot, str((action.get("opts", {}) as Dictionary).get("trigger", "approach")))
 		"feat":
 			var fchoice := str((action.get("opts", {}) as Dictionary).get("choice", opts.get("choice", "")))
 			return e.feature_actions.perform(c, id.substr(5), t, point if point != Vector2.INF else (Vector2(dir.x, dir.y) + e.center_of(c) if dir != Vector2.ZERO else Vector2.INF), fchoice, targets)
@@ -968,7 +974,7 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 		"study":
 			return e.study(c, t)
 		"ready":
-			return e.ready_attack(c, str(action["option_id"]))
+			return e.ready_attack(c, str(action["option_id"]), str((action.get("opts", {}) as Dictionary).get("choice", "approach")))
 		"stabilize":
 			return e.stabilize(c, t, false)
 		"healers_kit":

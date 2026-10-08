@@ -257,6 +257,7 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 			_after_cast_features(ctx, use_free)
 			spells.zones.prune()
 			e._check_over()
+			_queue_readied(c, s)
 			return e.run_reaction_queue(r)))
 
 
@@ -348,7 +349,19 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 			_finish_concentration(ctx)
 			spells.zones.prune()
 			e._check_over()
+			_queue_readied(c, s)
 			return e.run_reaction_queue(r)))
+
+
+## A Ready action waiting for this enemy to cast a spell (or to attack, when the spell makes attack rolls) goes off now
+## that the spell is done.
+func _queue_readied(c: Combatant, s: Dictionary) -> void:
+	var e := enc()
+	if e.state != Encounter.State.ACTIVE:
+		return
+	e.reaction_flow._queue_readied(c, "spell")
+	if s.has("attack"):
+		e.reaction_flow._queue_readied(c, "attack")
 
 
 ## Casts a spell without a slot or the usual action (War God's Blessing, features that cast spells): opts may say

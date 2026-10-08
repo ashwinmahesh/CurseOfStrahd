@@ -15,9 +15,15 @@ func enc() -> Encounter:
 	return _enc.get_ref() as Encounter
 
 
-## Ready (2024), attacks only: choose an attack to make with your Reaction when a hostile creature you can see
-## comes within its reach (or normal range), before the start of your next turn. (Readied spells: deviations.md.)
-func ready_attack(c: Combatant, option_id: String) -> CombatResult:
+## The triggers a Ready action can wait for (2024: any circumstance the creature can perceive): an enemy it can see
+## coming within the attack's reach or the spell's range ("approach"), or one already within it making an attack
+## ("attack") or casting a spell ("spell"). The Reaction comes right after the trigger.
+const READY_TRIGGERS := {"approach": "comes within %s", "attack": "attacks within %s", "spell": "casts a spell within %s"}
+
+
+## Ready (2024) with an attack: choose an attack to make with your Reaction when a hostile creature you can see sets
+## off `trigger` (READY_TRIGGERS) before the start of your next turn.
+func ready_attack(c: Combatant, option_id: String, trigger: String = "approach") -> CombatResult:
 	var e := enc()
 	var why := e._action_check(c)
 	if why != "":
@@ -25,17 +31,19 @@ func ready_attack(c: Combatant, option_id: String) -> CombatResult:
 	var option := e.option_by_id(c, option_id)
 	if option.is_empty():
 		return CombatResult.fail("Choose an attack to ready")
+	if not READY_TRIGGERS.has(trigger):
+		trigger = "approach"
 	e.spend_action(c)
-	c.readied = {"option": option_id}
-	e.log.add("info", "%s readies an attack (%s) for the first enemy to come within reach" % [c.name(), option["label"]], c.id)
+	c.readied = {"option": option_id, "trigger": trigger}
+	e.log.add("info", "%s readies an attack (%s) for the first enemy that %s" % [c.name(), option["label"], str(READY_TRIGGERS[trigger]) % "reach"], c.id)
 	e.faerun.after_ready(c)
 	return CombatResult.new()
 
 
 ## Ready (2024) with a spell: cast it now (the slot is spent), hold its energy with Concentration, and release it
-## with your Reaction when an enemy comes within the spell's range before the start of your next turn. If
-## Concentration breaks first, the spell is lost.
-func ready_spell(c: Combatant, spell_id: String, slot: int) -> CombatResult:
+## with your Reaction when an enemy within the spell's range sets off `trigger` (READY_TRIGGERS) before the start of
+## your next turn. If Concentration breaks first, the spell is lost.
+func ready_spell(c: Combatant, spell_id: String, slot: int, trigger: String = "approach") -> CombatResult:
 	var e := enc()
 	var why := e._action_check(c)
 	if why != "":
@@ -66,8 +74,10 @@ func ready_spell(c: Combatant, spell_id: String, slot: int) -> CombatResult:
 		ch.expend_slot(slot)
 		c.cast_slot_spell_this_turn = true
 	var conc := c.creature.begin_concentration("readied:" + spell_id, "a readied %s" % s["name"])
-	c.readied = {"spell": spell_id, "slot": slot, "conc": conc}
-	e.log.add("spell", "%s readies %s for the first enemy to come within %d ft" % [c.name(), s["name"], e.spells.range_ft(s, c)], c.id)
+	if not READY_TRIGGERS.has(trigger):
+		trigger = "approach"
+	c.readied = {"spell": spell_id, "slot": slot, "conc": conc, "trigger": trigger}
+	e.log.add("spell", "%s readies %s for the first enemy that %s" % [c.name(), s["name"], str(READY_TRIGGERS[trigger]) % ("%d ft" % e.spells.range_ft(s, c))], c.id)
 	return CombatResult.new()
 
 
