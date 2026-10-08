@@ -114,7 +114,7 @@ func _key(code: Key) -> void:
 func test_the_first_place_comes_up_behind_its_card() -> void:
 	await _game("village_of_barovia")
 	assert_eq(str((root.get("view") as LocationView).loc_id), "village_of_barovia")
-	assert_eq(_cards().size(), 1, "a new game's first place: its region's card")
+	assert_eq(root.find_children("*", "LoadingCard", false, false).size(), 1, "a new game's first place: its region's card")
 
 
 func test_a_move_puts_the_cover_up_before_the_place_is_built() -> void:
@@ -169,6 +169,25 @@ func test_escape_during_the_card_is_swallowed_and_the_card_still_lifts() -> void
 	await get_tree().process_frame
 	assert_true(card._closing, "a key now sends it away")
 	assert_false(root.get("screen") is PauseMenu, "still no menu")
+
+
+## A first visit's arrival picture pauses the game as it opens under the cover: the card makes way for it at once and
+## the black lifts over it, paused or not (Ashwin's first walk into the village showed a black screen until a click).
+func test_an_arrival_picture_takes_over_from_the_cover() -> void:
+	await _game("bildraths_mercantile")
+	for c in _cards():
+		c.close()
+	(root.get_script().get("took_ms") as Dictionary)["village_of_barovia"] = 1400.0   # slow enough for the card
+	root.call("_covered", "village_of_barovia", Callable(root, "enter_location").bind("village_of_barovia", "default"))
+	var card := _cards()[0]
+	await _until_moved()
+	assert_true(root.get("screen") is CutscenePlayer, "the village's picture opened on arrival")
+	assert_true(get_tree().paused, "and paused the game")
+	await get_tree().create_timer(LoadingCard.FADE_SECONDS + 0.2).timeout   # a timer that runs while paused
+	assert_true(get_tree().paused, "the picture is still up")
+	assert_false(is_instance_valid(card) and not card._closing, "the card made way for it")
+	assert_true((root.get("_place_fade") as ColorRect).color.a < 0.05, "and the black is gone from over it (%s)" % (root.get("_place_fade") as ColorRect).color.a)
+	_close_popups()
 
 
 ## A change that goes nowhere (a load that fails) still lifts the cover, and the old place carries on.
