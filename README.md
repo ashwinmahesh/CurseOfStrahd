@@ -278,6 +278,8 @@ On a controller, hold LB for a radial menu of actions. Reactions ask first unles
 - Five autosaves, save pictures and notes, backups, quicksave, and jump-in saves for 13 chapters.
 - Settings for difficulty, graphics presets, keys, text size and UI scale, fight speed, narration, depth blur, the
   Modern or Classic look, and the respec.
+- Cheat codes (pause menu → Cheat codes) that give any item to a hero; every code is in
+  [docs/cheat_codes.md](docs/cheat_codes.md).
 
 ## Project layout
 
