@@ -82,6 +82,18 @@
               "price": {
                 "type": "number",
                 "minimum": 0
+              },
+              "if": {
+                "type": "string",
+                "description": "A story condition; the line is for sale only while it holds."
+              },
+              "sets": {
+                "$ref": "common.schema.json#/$defs/id",
+                "description": "A flag set when the party buys one (Bildrath's one potion)."
+              },
+              "counts": {
+                "$ref": "common.schema.json#/$defs/id",
+                "description": "An int flag that counts the pieces bought (Morgantha's pastries)."
               }
             }
           }
@@ -103,6 +115,74 @@
         },
         "closed": {
           "type": "string"
+        },
+        "haggle": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "U11: the Persuasion haggle (story/trade.gd). dc defaults to 15; won/lost name flags the shop's dialogue shares, and a lost flag makes a failure final.",
+          "properties": {
+            "dc": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30
+            },
+            "won": {
+              "$ref": "common.schema.json#/$defs/id"
+            },
+            "lost": {
+              "$ref": "common.schema.json#/$defs/id"
+            }
+          }
+        },
+        "price_flags": {
+          "type": "array",
+          "description": "Price changes while a condition holds: buy is a factor on what the party pays, for wares whose shop price is at least min_price.",
+          "items": {
+            "type": "object",
+            "required": [
+              "if",
+              "buy"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "if": {
+                "type": "string"
+              },
+              "buy": {
+                "type": "number",
+                "minimum": 0
+              },
+              "min_price": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "rotating": {
+          "type": "object",
+          "required": [
+            "pool"
+          ],
+          "additionalProperties": false,
+          "description": "F14: stock that changes: count things from pool, one of each, picked again every days days.",
+          "properties": {
+            "pool": {
+              "type": "array",
+              "items": {
+                "$ref": "common.schema.json#/$defs/id"
+              },
+              "minItems": 1
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "days": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
         }
       }
     },
