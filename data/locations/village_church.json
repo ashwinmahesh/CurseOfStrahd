@@ -185,7 +185,7 @@
       "locked": true,
       "lock_dc": 15,
       "label": "Barred undercroft door",
-      "when": "not flag.undercroft_unbarred"
+      "unlocked_when": "flag.undercroft_unbarred"
     }
   ],
   "props": [

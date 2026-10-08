@@ -216,7 +216,12 @@
             "type": "string"
           },
           "when": {
-            "type": "string"
+            "type": "string",
+            "description": "The door opens only while this condition holds; until then it won't budge (a portcullis raised by a story flag)."
+          },
+          "unlocked_when": {
+            "type": "string",
+            "description": "While this condition holds the door's lock is off, so it opens like an unlocked door (the church undercroft's bar, once Donavich lifts it); until then it can be unlocked as any lock can."
           },
           "flag": {
             "type": "string"

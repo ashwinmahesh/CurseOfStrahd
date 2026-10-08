@@ -420,6 +420,9 @@
       "moods": []
     }
   },
+  "keep_white": {
+    "morgantha_smile": [[523, 320]]
+  },
   "use": {
     "argynvost_neutral": "b"
   }

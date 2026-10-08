@@ -179,6 +179,26 @@ func test_the_rider_on_the_ridge_shows_on_the_first_journey_with_or_without_iree
 		assert_true(shown, "a cutscene in the watcher: %s" % [kinds])
 
 
+## Owner report (2026-10-08): the castle on its cliff played as soon as the party walked toward the village's west side.
+## It belongs to the first try at leaving by the west road: the posts' conversation, once, and walking in shows none.
+func test_the_road_west_castle_waits_for_the_first_try_at_leaving() -> void:
+	Cutscenes.clear_cache()
+	assert_eq(str(Cutscenes.get_cutscene("castle_road_west").get("trigger", "")), "", "no picture on walking into the west road")
+	assert_eq(Cutscenes.for_trigger("enter:village_road_west", _story(false)), "", "nor any other picture")
+	var st := _story(false)
+	var seen: Array[String] = []
+	for attempt in 2:
+		var r := DialogueRunner.new(st, DiceRoller.new(3))
+		assert_true(r.start("village_of_barovia/road_west:start"))
+		for i in 4:
+			var b := r.next()
+			if str(b["kind"]) == "cutscene":
+				seen.append("%d:%s" % [attempt, b["id"]])
+			if str(b["kind"]) == "options":
+				break
+	assert_eq(seen, ["0:castle_road_west"] as Array[String], "the castle shows at the posts the first time only")
+
+
 func test_every_cutscene_statement_names_a_cutscene_with_a_picture() -> void:
 	Cutscenes.clear_cache()
 	var named := {}

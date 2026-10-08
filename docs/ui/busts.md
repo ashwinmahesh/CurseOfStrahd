@@ -25,6 +25,10 @@ is drawn from that neutral bust with only the expression changed, so the face an
 `art/generated/busts/<id>_<mood>_<a, b ...>.png` (not imported, `.gdignore`); `use` picks one by `<id>_<mood>`.
 
 The tool cuts each take out of its plain white background with a flood fill from the edges (the ink outline stops it),
+then keys out every pocket of the same flat white that the outline closed off from the edges (inside a horn's curl,
+between an arm and the body, between arrows or hair curls; owner report on Kip, 2026-10-08): a near-white region of 40
+pixels or more as bright and flat as the background. Whites that belong to the figure and match that test (Morgantha's
+smiling teeth) are named in the recipes' `keep_white`; `build_busts.py --recut` cuts every bust again. Then it
 erodes a pixel and feathers the edge, and saves `art/busts/<portrait id>.webp` (neutral) or `<id>_<mood>.webp`: WebP with
 alpha, quality 90, about 0.15 MB each, in Git LFS, imported with VRAM compression and mipmaps (`tools/art/set_import.py`,
 force-add the `.import`).

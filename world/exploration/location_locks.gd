@@ -27,6 +27,9 @@ static func _openable_doors(view: LocationView) -> Dictionary:
 static func _locked(view: LocationView, spec: Dictionary) -> bool:
 	if not bool(spec.get("locked", false)) and int(spec.get("lock_dc", 0)) <= 0:
 		return false
+	# A lock the story takes off (`unlocked_when`: the undercroft door once Father Donavich lifts its bar).
+	if spec.has("unlocked_when") and StoryConditions.check(str(spec["unlocked_when"]), view.st):
+		return false
 	var state := str((view.st.loc_state(view.loc_id)["doors"] as Dictionary).get(str(spec["id"]), ""))
 	return state != "unlocked" and state != LocationView.DOOR_OPEN
 

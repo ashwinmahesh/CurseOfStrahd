@@ -297,8 +297,14 @@ func next() -> Dictionary:
 				# A full-screen picture behind the lines that follow (story/cutscenes.gd); `cutscene end` takes it away.
 				pc += 1
 				var cut := "" if str(s["id"]) == "end" else str(s["id"])
+				# A `once` picture shows the first time only (the road west's castle: the first try at the posts).
+				var once := cut != "" and bool(Cutscenes.get_cutscene(cut).get("once", false))
+				if once and Cutscenes.played(cut, st):
+					continue
 				var img := Cutscenes.image(cut, st) if cut != "" else ""
 				if cut == "" or img != "":
+					if once:
+						Cutscenes.mark_played(cut, st)
 					return {"kind": "cutscene", "id": cut, "image": img, "focus": Cutscenes.focus(cut)}
 			"end_game":
 				# The campaign ends here (ADR 0014): the ending that holds now is recorded; the game plays it when the

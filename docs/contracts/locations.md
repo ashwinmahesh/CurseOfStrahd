@@ -33,6 +33,11 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
 - **Map rows** use the combat legend: `.` floor, `#` wall, `=` low obstacle (furniture, Half Cover), `~` Difficult
   Terrain, `1`-`4` raised floor, `w` deep water (not walkable, doesn't block sight), space = void. Doors are cells listed in `doors` (drawn as a closed door; a closed
   door blocks movement and sight until opened).
+- **Doors:** `locked` or a `lock_dc` makes a lock, opened by its `key`, by picking (thieves' tools, `lock_dc`), forcing
+  (Athletics, `lock_dc` + 2) or Knock; `secret_dc` hides the door until it's found. `when` is a condition the door
+  needs before it opens at all (a portcullis a story flag raises; until then it won't budge), and `unlocked_when` one
+  that takes its lock off (the church undercroft's bar once Father Donavich lifts it; until then it can be picked or
+  forced). `flag` is set when the door opens.
 - **Natural ground:** `map.elevation` (optional), rows beside `rows`, lays hills and hollows under the squares: one
   character a square, `0`-`9` then `a`-`z` for 0 to 175 ft in 5 ft steps, `.` or a space for a square left as built.
   Neighbouring natural squares 5 ft apart are a gentle slope, 10 ft a steep one, 15 ft or more a cliff (climbed or
