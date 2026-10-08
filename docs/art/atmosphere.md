@@ -76,7 +76,9 @@ anyone touching this file.
   lapping along the shore, thin highlight lines riding the current and the sky's light on the surface. Water keeps
   its own colours through the grade (it marks itself in the normal buffer for the screen pass), so a lake never
   turns the colour of the road. A row of the map's frame trees standing across a lake becomes open water (the rules
-  still wall the edge off).
+  still wall the edge off). A mood's water can be still and dark (lane 28, owner report 2026-10-08: "Tser Pool is
+  black and perfectly still"): `ripples` (0 for none), `texture` (how much of the water texture's colour shows),
+  `reflect` (how much of the sky it shows), and `map` / `map_edge` for its colour on the minimap.
 - **Cloud shadows** drift over the ground; broad light and dark patches break up the ground texture so it doesn't
   read as tiles.
 - **Contact shadows** (Godot's SSAO) ground props, walls and houses.

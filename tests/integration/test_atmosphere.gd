@@ -46,7 +46,7 @@ func test_mood_names_resolve() -> void:
 func test_moods_use_palette_colours_and_known_weather() -> void:
 	var palette := JSON.parse_string(FileAccess.get_file_as_string("res://art/palette/palette.json")) as Dictionary
 	var colour_keys := ["sky", "ambient", "key", "mist", "mists", "fog", "shadows", "lights", "deep", "shallow", "foam",
-		"glint", "core", "rim", "colour", "splash_colour", "shade"]
+		"glint", "core", "rim", "colour", "splash_colour", "shade", "map", "map_edge"]
 	var bad: Array[String] = []
 	for id: String in Atmosphere.moods()["moods"] as Dictionary:
 		var mood := Atmosphere.resolve(id)

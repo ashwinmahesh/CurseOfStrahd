@@ -35,6 +35,7 @@ var light_level := "dim"
 var land: AtmosphereLand = null
 var weather: AtmosphereWeather = null
 var water: ShaderMaterial = null
+var _water_reflect := 1.0          ## how much of the sky the water shows (the mood's water `reflect`)
 
 var _post: ShaderMaterial = null
 var _rig: CameraRig = null
@@ -655,6 +656,13 @@ func _build_water() -> void:
 	water.set_shader_parameter("foam", Look.color(str(spec.get("foam", "frost"))))
 	water.set_shader_parameter("glint", Look.color(str(spec.get("glint", "moonlight"))))
 	water.set_shader_parameter("flow", _vec2(spec.get("flow", [0.12, 0.05])))
+	# A still, dark water (Tser Pool, "black and perfectly still"): no ripples, little of the texture's colour, and a
+	# dimmer sky in it. Unset, the shaders' own defaults.
+	if spec.has("ripples"):
+		water.set_shader_parameter("ripple_strength", float(spec["ripples"]))
+	if spec.has("texture"):
+		water.set_shader_parameter("tex_amount", float(spec["texture"]))
+	_water_reflect = float(spec.get("reflect", 1.0))
 	water.set_shader_parameter("water_mask", AtmosphereLand.water_mask(board.grid))
 	water.set_shader_parameter("map_rect", Vector4(0, 0, board.grid.width, board.grid.depth))
 	water.set_shader_parameter("use_mask", true)
@@ -918,7 +926,7 @@ func _apply(k: float) -> void:
 	var sky_light := (v["sky"] as Color).lerp(Look.color("moon_blue"), 0.5)
 	RenderingServer.global_shader_parameter_set(&"world_sky", sky_light)
 	if water != null:
-		water.set_shader_parameter("reflection", sky_light)
+		water.set_shader_parameter("reflection", sky_light * _water_reflect)
 	if _post == null:
 		return
 	_post.set_shader_parameter("land_color", v["fog"] as Color)

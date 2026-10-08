@@ -1,0 +1,89 @@
+# The people of the Tser Pool camp (lane 28, 2026-10-08: "more people to talk to"): Old Dorina at the stew pot,
+# Radu the horse-master by the pen, Petru at his grinding bench, Big Tobar mending a wheel, and Zora walking the track
+# to the road. All of them answer to Stanimir, and through him to the castle; none of them will say so. They are gone
+# once the camp has turned on the party (the location's `when`). Unvoiced for now: the voice thread casts them.
+
+~ dorina
+Old Dorina: Sit, sit. Nobody walks past my pot hungry, not even strangers. Strangers least of all; they never know when they'll eat next.
+* What's in the pot? -> dorina_pot
+* Have you been with the camp long? -> dorina_long
+* We can't stay. -> END
+
+~ dorina_pot
+Old Dorina: Plums, onions, a hare Zora shot, and whatever the last pot left behind. This pot has not been empty since before Stanimir had teeth.
+Narrator: She ladles out a bowl without asking. It is hot, sweet and peppery, and it is the first thing in this valley that has tasted of anything.
+interject tag:blunt: That's good. That's actually good.
+Old Dorina: Of course it is. Eat, and then go and see the old woman in the big tent. She has been looking at the road for you.
+-> END
+
+~ dorina_long
+Old Dorina: Long enough to have buried a husband, two sisters and a horse I liked better than the husband. The road takes and the road gives. Mostly it takes.
+-> dorina
+
+~ radu
+Radu: Ah! Travellers with good boots and no horse. Tragic. I have a cure for that.
+* What do you have? -> radu_horses
+* Have you seen anyone on the road? -> radu_road
+* Not today. -> END
+
+~ radu_horses
+Radu: Look at them. Plaited, brushed, fed better than the burgomaster of Vallaki. That grey one would carry you to the mountains and back and never complain.
+Radu: Not for sale, of course. None of them are for sale today. But tomorrow, who knows? Come back tomorrow.
+interject class:rogue: He's not selling. He's pricing us.
+-> END
+
+~ radu_road
+if flag.nicu_kin_told
+Radu: Nobody on the road worth knowing. Not since Nicu. We tied a ribbon for him, and the fiddle plays slow, and I have nobody to cheat at dice.
+-> END
+endif
+Radu: Young Nicu rode out for Vallaki with a mare to sell, four days gone now. He'll be back with a new song and no money, the way he always is.
+Radu: His sister watches the road for him. Don't tell her I said four days. She counts them herself.
+-> END
+
+~ petru
+Narrator: The grinding wheel keeps turning under his foot. He looks at your weapons before he looks at your faces.
+Petru: Good steel. Badly kept. You've been using it on things that bleed black.
+* Can you sharpen our blades? -> petru_sharpen
+* Who do you sharpen for? -> petru_who
+* Goodbye. -> END
+
+~ petru_sharpen
+Petru: For you, no. For the camp, yes. A knife I have sharpened is a knife I know. I like to know every knife in this camp.
+-> END
+
+~ petru_who
+Petru: For Stanimir. For the camp. For whoever Stanimir says.
+Petru: Don't draw steel near the fire, guest. Everyone here would forget your name very quickly.
+-> END
+
+~ tobar
+Narrator: A man as big as a doorway is fitting a new spoke into a cracked wheel, humming to it.
+Big Tobar: Hold still, you. Hold still. There. Oh! Hello. Sorry. I was talking to the wheel.
+* What happened to it? -> tobar_wheel
+* Is the road east safe? -> tobar_road
+* Carry on. -> END
+
+~ tobar_wheel
+Big Tobar: The road to the crossroads happened to it. Roots under the mud, stones under the roots. Every wheel in this camp is half new spokes, like me.
+-> END
+
+~ tobar_road
+Big Tobar: Safe? It's the Svalich Road. The wolves keep to the trees in the day, mostly. At night they keep to wherever you are.
+Big Tobar: Walk in the middle. Don't stop to help anyone who calls from the trees. Even if they know your name. Especially then.
+-> END
+
+~ zora
+Zora: Strangers off the road. I'll remember your faces, and how many of you there are.
+* Why do you count us? -> zora_count
+* Anything on the road we should know about? -> zora_road
+* Goodbye. -> END
+
+~ zora_count
+Zora: I count everyone. People coming, people going. Most nights the numbers match.
+Zora: When they don't, Stanimir wants to know which way the missing ones went.
+-> END
+
+~ zora_road
+Zora: A black carriage went by two nights ago with nobody driving it. We all stood very still until it was gone. You'll want to do the same if you see it.
+-> END

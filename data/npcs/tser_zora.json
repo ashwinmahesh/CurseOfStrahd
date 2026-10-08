@@ -1,0 +1,18 @@
+{
+  "id": "tser_zora",
+  "name": "Zora",
+  "title": "Lookout of the Tser Pool Camp",
+  "summary": "A watchful young archer who walks the track between the camp and the road and counts everyone who passes, coming or going.",
+  "portrait": "scout",
+  "sprite": "scout",
+  "attitude": "indifferent",
+  "voice": "docs/voice/tser_zora.md",
+  "monster": "scout",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "she/her"
+}
