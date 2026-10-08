@@ -100,8 +100,28 @@ These pause today: spells' saves (`SpellSaves._save_spell(..., pausable)` from `
 `pausable`), monsters' save actions (`MonsterActions.save_action`, which returns `r` and takes `pausable`, true by
 default), the riders on a monster's hit and their saves (`apply_riders(..., pausable)`), Topple, repeated saves at the
 end of a turn (`end_turn` carries on with `Encounter.then`), Death Saving Throws (`death_save(c, pausable)`) and attack
-rolls. Any other roll settles its offers at once (`run_now`). `Encounter.each(list, body, done)` runs a loop whose
-steps can pause. `run_reaction_queue` called while a prompt is open waits for its answer.
+rolls, plus Sleep, Command, Polymorph, Banishment and Resilient Sphere (`SpellSpecials.resolve(..., pausable)` and
+`_resist_then`), monsters' auras (`MonsterActions.turn_start`), the areas a creature starts or ends its turn in
+(`SpellZones._affect(..., pausable)`), repeated saves at the start of a turn and lair actions (`Legendary.lair_turn`,
+whose round-end call can't wait and passes false). Any other roll settles its offers at once (`run_now`).
+`Encounter.each(list, body, done)` runs a loop whose steps can pause. `run_reaction_queue` called while a prompt is
+open waits for its answer.
+
+The turn itself can wait on a prompt: `_begin_turn`, `_lair_then_begin`, `_next_turn` and the end of a turn
+(`_turn_end_effects`) return a CombatResult and run their parts one after another, so a save or a Reaction there
+(Branches of the Tree as a creature starts its turn, Inspiring Movement as an enemy ends one) stops the turn until it's
+answered; the reaction queue runs as a turn starts and ends. `start()` stays void: Initiative choices
+(`ClassFeatures.initiative_offers`: Tandem Footwork) leave `pending` set for the view, then the order is sorted again and
+the first turn begins. `TestCombat.start_with` declines them.
+
+A failed Concentration save is rolled where the damage lands, inside a held collector (`collect(target, true)`): when a
+choice could still save it, the roll is marked `awaiting` (Creature.take_damage_parts doesn't end Concentration) and a
+`concentration_save` entry with the offers joins the reaction queue, which asks them once the attack or spell is done
+and then keeps or ends Concentration; with nothing to ask the offers are settled at once. After the fight is over the
+entry settles by rule.
+
+A party member's prompt rules live on its Character (`Character.reaction_rules`, saved with it): the Combatant shares
+that Dictionary, so an Automatic or Off chosen in one fight holds in the next.
 
 ## Events (`Encounter.drain_events()`)
 

@@ -69,7 +69,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Same effect doesn't stack (most potent, then most recent) | creature.gd all_modifiers | tested (potency is approximate; see deviations) | test_effects |
 | Durations: rounds, start/end of turn, minutes, hours, rests | effect.gd | tested | test_effects |
 | Concentration: one at a time, ends linked effects | model/concentration.gd | tested | test_effects |
-| Concentration save after damage (DC 10 or half, max 30) | creature.gd | tested | test_damage, test_effects |
+| Concentration save after damage (DC 10 or half, max 30) | creature.gd; encounter_damage.gd holds a failure the player could answer (deviations) | tested | test_damage, test_effects, test_save_prompts |
 | Concentration ends when Incapacitated or dead | creature.gd | tested | test_conditions |
 
 ## Creating a Character and Level Advancement

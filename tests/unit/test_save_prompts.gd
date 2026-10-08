@@ -460,3 +460,72 @@ func test_a_heros_rules_carry_into_the_next_fight_and_the_save() -> void:
 	assert_eq(str(c2.reaction_rules.get("opportunity_attack", "")), "never", "the next fight remembers")
 	var back := Character.from_dict(JSON.parse_string(JSON.stringify(ch.to_dict())) as Dictionary)
 	assert_eq(str(back.reaction_rules.get("opportunity_attack", "")), "never", "and so does a save")
+
+
+# --- Spells with code of their own, Concentration -----------------------------------------------------
+
+func _enemy_caster(e: Encounter, spells: Array, cell: Vector2i) -> Combatant:
+	var mage := TestCombat.caster_with(e, spells, cell)
+	mage.side = &"enemy"
+	mage.controller = &"ai"
+	return mage
+
+
+func _numbers(dc: int) -> Dictionary:
+	return {"dc": Breakdown.new("Spell save DC").add("Stat block", dc), "attack": Breakdown.new("Spell attack").add("Stat block", 5)}
+
+
+func test_sleep_command_and_polymorph_wait_for_the_choice() -> void:
+	for spell: String in ["sleep", "command", "polymorph"]:
+		var e := TestCombat.open_field(3)
+		var hero := _hero(e, Vector2i(2, 2), false)
+		var mage := _enemy_caster(e, [spell], Vector2i(6, 2))
+		TestCombat.start_with(e, mage)
+		(hero.creature as Character).heroic_inspiration = true
+		var dc := hero.creature.save_bonus(&"wis").total() + 20
+		TestCombat.next_d20(e, 2)
+		var r := e.spells.cast_with_numbers(mage, spell, 4, [hero], e.center_of(hero), _numbers(dc))
+		assert_true(r.is_paused(), "%s: asked %s (%s)" % [spell, _asked(e), r.reason])
+		assert_eq(_asked(e), "heroic_inspiration", spell)
+		e.answer_reaction(false)
+		assert_eq(e.pending, null, spell)
+		match spell:
+			"sleep":
+				assert_true(hero.creature.has_condition(&"incapacitated"), "declined: drowsy")
+			"command":
+				assert_true(hero.creature.effects.any(func(fx: Effect) -> bool: return fx.source_id == "command"), "declined: commanded")
+			"polymorph":
+				assert_true(hero.creature is Monster or hero.creature.has_flag("polymorphed"), "declined: a beast")
+
+
+func test_a_failed_concentration_save_is_asked_once_the_hit_is_done() -> void:
+	var e := TestCombat.open_field(3)
+	var hero := _hero(e, Vector2i(2, 2), false)
+	var foe := TestCombat.punching_bag(e, Vector2i(3, 2))
+	TestCombat.start_with(e, foe)
+	var conc := hero.creature.begin_concentration("bless", "Bless")
+	(hero.creature as Character).heroic_inspiration = true
+	var damage := 2 * (hero.creature.save_bonus(&"con").total() + 12)
+	TestCombat.next_d20(e, 2)
+	e.deal_damage(foe, hero, [{"amount": damage, "type": "slashing"}], false, "test")
+	assert_true(hero.creature.concentration == conc and not conc.ended, "held while the attack finishes")
+	var r := e.run_reaction_queue(CombatResult.new())
+	assert_true(r.is_paused(), "asked: %s" % _asked(e))
+	assert_eq(_asked(e), "heroic_inspiration")
+	e.answer_reaction(false)
+	assert_true(conc.ended, "declined: Concentration is lost")
+	assert_true(e.log.texts().any(func(x: String) -> bool: return x.contains("loses Concentration")))
+
+
+func test_a_concentration_save_with_nothing_to_ask_settles_at_once() -> void:
+	var e := TestCombat.open_field(3)
+	var hero := _hero(e, Vector2i(2, 2), false)
+	var foe := TestCombat.punching_bag(e, Vector2i(3, 2))
+	TestCombat.start_with(e, foe)
+	var conc := hero.creature.begin_concentration("bless", "Bless")
+	(hero.creature as Character).heroic_inspiration = true
+	hero.reaction_rules["heroic_inspiration"] = "never"
+	var damage := 2 * (hero.creature.save_bonus(&"con").total() + 12)
+	TestCombat.next_d20(e, 2)
+	e.deal_damage(foe, hero, [{"amount": damage, "type": "slashing"}], false, "test")
+	assert_true(conc.ended, "a rule of Off settles it at once: nothing to ask")
