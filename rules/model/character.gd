@@ -66,6 +66,9 @@ var reaction_rules: Dictionary = {}
 ## Spells the player wants this character to cast on itself as each Long Rest ends (story/rest_casts.gd): spell id ->
 ## true or false. A spell not set follows RestCasts' default (on when it costs no spell slot).
 var rest_casts: Dictionary = {}
+## How the player arranged this character's hotbar in fights (U2, ActionCatalog): {order: {tab: [action ids]},
+## favourites: [action ids], hidden: [action ids]}.
+var hotbar: Dictionary = {}
 var currency: Dictionary = {"cp": 0, "sp": 0, "ep": 0, "gp": 0, "pp": 0}
 ## die size (as String) -> spent count
 var hit_dice_spent: Dictionary = {}
@@ -2133,7 +2136,7 @@ func to_dict() -> Dictionary:
 		"slots_used": slots_used.duplicate(), "pact_slots_used": pact_slots_used,
 		"heroic_inspiration": heroic_inspiration, "id": id, "attuned": attuned.duplicate(), "familiar": familiar,
 		"weapon_set_2": weapon_set_2.duplicate(), "quick_slots": quick_slots.duplicate(), "reaction_rules": reaction_rules.duplicate(),
-		"rest_casts": rest_casts.duplicate()}
+		"rest_casts": rest_casts.duplicate(), "hotbar": hotbar.duplicate(true)}
 
 
 static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Character:
@@ -2163,6 +2166,7 @@ static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Characte
 		c.quick_slots.append(str(q))
 	c.reaction_rules = (d.get("reaction_rules", {}) as Dictionary).duplicate()
 	c.rest_casts = (d.get("rest_casts", {}) as Dictionary).duplicate()
+	c.hotbar = (d.get("hotbar", {}) as Dictionary).duplicate(true)
 	return c
 
 
