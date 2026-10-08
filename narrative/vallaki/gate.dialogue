@@ -128,6 +128,9 @@ Town Guard: And there's a girl in a window at Wachterhaus who washes her face wi
 elif flag.stella_at_church
 Town Guard: Lady Wachter's girl is up at St. Andral's now. Walked out of that house in broad daylight, in her stockings, and spat on the step. Nobody's said a word to her mother. Everybody's said a word to everybody else.
 endif
+if not quest.the_squire and flag.order_fate != "rest"
+Town Guard: The cooper's boy, Cosmin, ran off north a week back with his father's old blanket and a wooden sword. Says he's gone to the dragon's house to join the dead knights. His mother's at the north gate every night with a lamp.
+endif
 Town Guard: And the festival, of course. Always the festival.
 -> END
 

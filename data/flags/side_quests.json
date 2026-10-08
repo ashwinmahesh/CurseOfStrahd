@@ -640,6 +640,26 @@
       "id": "hunt_paid",
       "type": "bool",
       "summary": "The party took the Huntsman's saddlebag and the hounds walked free (The Count's Huntsman)."
+    },
+    {
+      "id": "cosmin_met",
+      "type": "bool",
+      "summary": "The party met Cosmin on the squires' graves at Argynvostholt (The Squire)."
+    },
+    {
+      "id": "ioan_stone_read",
+      "type": "bool",
+      "summary": "The party read Ioan's words on the back of the last squire's headstone (The Squire)."
+    },
+    {
+      "id": "ioan_cleared",
+      "type": "bool",
+      "summary": "Sir Godfrey remembered sending Ioan with the dragon's last words; Ioan didn't flee (The Squire)."
+    },
+    {
+      "id": "squires_vigil_won",
+      "type": "bool",
+      "summary": "The party stood the squire's vigil with Cosmin against the men-at-arms (The Squire)."
     }
   ]
 }

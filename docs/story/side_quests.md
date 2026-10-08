@@ -207,6 +207,27 @@ hounds by name, and most of the pack lies down (`hounds_called`).
 - Beating him is a mark on Strahd's attention (`huntsman`, 1 point).
 - His saddlebag: 300 gp of quarry's purses and the iron ring he called the pack with, a Ring of Animal Influence (rare).
 
+## Argynvostholt (level 8)
+
+### The Squire (`the_squire`, narrative/argynvostholt/the_squire.dialogue; batch 3)
+
+The Vallaki gate's news: Cosmin, a cooper's boy, ran north with a wooden sword to join the dead knights, and his
+mother waits at the north gate every night. Sir Godfrey gets "Heard anything interesting?" (Argynvostholt's
+rumour-giver): the boy sleeps on the squires' graves, because Vladimir told him the Order doesn't take the living,
+and he said he'd wait until he wasn't. Cosmin (new NPC, on the last grave until the quest is done; at the gatehouse
+after) wants the oath to clear his ancestor Ioan, written "fled" in the Order's chronicle. **Twist:** on the back of the
+last headstone (Investigation DC 13) Ioan cut his own words: he made his brothers' stones, then rode with the dragon's
+last word for the valley. Shown that, or once the party knows the dragon's last words, Godfrey remembers: he sent
+Ioan on his own horse, and Vladimir wrote "fled". **Escalation:** the oath was never a squire's first; the vigil was. A
+night at the graves with the banner, while the dead squires stand at their stones, and the men-at-arms of the last
+battle come out of the courtyard for the only living things on the ridge.
+
+- Fight `squires_vigil` at the graves: level 8 the Gate Warden and two Knights Who Forgot (revenants) with 4
+  men-at-arms (phantom warriors), 8,200 XP (the autopilot wins 2 of 4 and loses three party members a fight); level 9
+  eight men-at-arms; level 7 one knight and five; below 7 the Warden at 90 HP and four.
+- Godfrey writes Ioan's name right and Cosmin's under it, and gives the party Ioan's shield, left at the gate the night
+  he rode: an Arrow-Catching Shield (rare), and 150 gp from the Order's chest. Not offered once the Order rests.
+
 ## Lake Zarovich (level 8)
 
 ### The Bell Under the Lake (`bell_under_the_lake`, narrative/lake_zarovich/bell_under_the_lake.dialogue; batch 2)
@@ -406,4 +427,5 @@ Bonegrinder: the_fourth_sister.dialogue in full (new speakers Mouse, Granny Ash 
 the village townsfolk.dialogue's new gossip lines (Vasile and Petre: the Sarnov woman, and three children again). Batch 3, the
 Wizard of Wines: the_black_row.dialogue in full (Davian, Adrian; companions' interjects), hands.dialogue's two new
 picker lines (Andrei) and davian.dialogue's two new menu options. Batch 3, the
-crossroads: the_counts_huntsman.dialogue in full (new speaker the Huntsman; also Old Paraschiva and Gavril).
+crossroads: the_counts_huntsman.dialogue in full (new speaker the Huntsman; also Old Paraschiva and Gavril). Batch 3,
+Argynvostholt: the_squire.dialogue in full (new speaker Cosmin; also Sir Godfrey) and the Vallaki gate's new news line.

@@ -223,3 +223,14 @@ func test_the_huntsman_and_his_hounds_come_up_the_east_road() -> void:
 			root.queue_free()
 			root = null
 			await _frames(2)
+
+
+func test_the_men_at_arms_come_for_the_squires_vigil() -> void:
+	for level: int in [7, 8, 9]:
+		var v := await _boot("argynvostholt", 2, level, ["godfrey_met", "courtyard_phantoms_defeated"])
+		await _fight(v, "squires_vigil", ["The Gate Warden", "Man-at-Arms"])
+		await _end(v)
+		assert_true(bool(GameState.story.get_flag("squires_vigil_won", false)))
+		root.queue_free()
+		root = null
+		await _frames(2)

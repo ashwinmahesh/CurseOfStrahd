@@ -205,6 +205,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Beacon | Lantern of Revealing (uncommon) | Search (Perception DC 14): the lamp-keeper's niche |
 | ✅ | Argynvost's mausoleum | +2 Shield (rare) | Tip: once the beacon is lit, a niche at the bier opens |
 | ✅ | Sir Godfrey | +1 Plate Armor (rare) | Gift: if he takes up the Order's oath again |
+| ✅ | Sir Godfrey, at the squires' graves | Arrow-Catching Shield (rare) | Gift: Ioan's shield, once Cosmin stands the vigil (The Squire, docs/story/side_quests.md) |
 
 ## Van Richten's Tower and the Werewolf Den (level 8)
 

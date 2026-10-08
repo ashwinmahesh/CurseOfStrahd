@@ -95,3 +95,7 @@ func test_the_counts_huntsman_at_level_8() -> void:
 
 func test_the_counts_huntsman_with_his_hounds_called_at_level_8() -> void:
 	await _series("svalich_crossroads", 23, 8, "the_hunt", [1, 2, 3], ["hounds_called"])
+
+
+func test_the_squires_vigil_at_level_8() -> void:
+	await _series("argynvostholt", 2, 8, "squires_vigil", [1, 2, 3, 4], ["godfrey_met", "courtyard_phantoms_defeated"])
