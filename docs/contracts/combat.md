@@ -22,6 +22,7 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | Standard actions, hiding, effects' actions (escape, douse, wake), Haste's action | `encounter_actions.gd` (`actions`) |
 | Things lying on the battlefield: dropped and thrown weapons, picking them up, gathering them after the fight | `ground_items.gd` (`ground`) |
 | Taking back a move | `encounter_undo.gd` (`undo`) |
+| A location's traps in a fight: whoever moves onto one springs it (save, damage, condition, or a pit's fall); LocationTraps arms them and marks the sprung ones after | `encounter_traps.gd` (`traps`) |
 | Things standing on the battlefield that break and burn (doors, furniture, chandeliers, a spider's web), oil and fire on the floor; doors, shoving, pushing over and throwing them, fire spreading and barrels bursting | `encounter_objects.gd` (`objects`), with `object_actions.gd` (`objects.actions`) and `object_fire.gd` (`objects.fire`) |
 | Casting: paying, checking targets, resolving the recipe | `spell_casting.gd` (`casting`) |
 | What can be cast, casting numbers, Metamagic | `spell_options.gd` (`options`) |

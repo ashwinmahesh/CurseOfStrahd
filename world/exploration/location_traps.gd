@@ -1,8 +1,14 @@
 class_name LocationTraps
 extends RefCounted
 ## Traps and searching in a location (LocationView): found traps shown on the board, a member stepping on a trap
-## springs it, a Search (a Wisdom (Perception) check) finds traps, hidden props and secret doors nearby, and thieves'
-## tools disarm. Noticing a trap by passive Perception is TrapSight's; pits are PitFall's.
+## springs it (found or not), a Search (a Wisdom (Perception) check) finds traps, hidden props and secret doors nearby
+## and shows how far it reached, a found trap can be set off on purpose from within 5 ft, and thieves' tools disarm
+## one when the player chooses to. Nothing notices a trap passively and nothing disarms one on its own (owner,
+## 2026-10-08). How a found trap looks is TrapSight's; pits are PitFall's.
+
+## How far a Search reaches (feet), and how long its reach shows on the ground (seconds).
+const SEARCH_FT := 15
+const REACH_SHOWN := 1.6
 
 
 static func _mark_found_traps(view: LocationView) -> void:
@@ -19,7 +25,7 @@ static func _show_trap(view: LocationView, trap: Dictionary) -> void:
 	view.trap_marks[str(trap["id"])] = TrapSight.dress(view, trap)   # its own piece and a red border that doesn't cover it
 
 
-## Passive Perception notices traps in sight (TrapSight); a member stepping on an unnoticed trap springs it.
+## A member stepping on a trap springs it, whether or not the party found it (a found one isn't walked round).
 static func _check_traps(view: LocationView) -> bool:
 	var states := view.st.loc_state(view.loc_id)["traps"] as Dictionary
 	for t: Variant in view.loc.get("traps", []):
@@ -27,22 +33,50 @@ static func _check_traps(view: LocationView) -> bool:
 		var id := str(trap["id"])
 		if not StoryConditions.check(str(trap.get("when", "")), view.st):
 			continue
-		var state := str(states.get(id, ""))
-		if state in ["disarmed", "triggered"]:
+		if str(states.get(id, "")) in ["disarmed", "triggered"]:
 			continue
-		var cells: Array[Vector2i] = []
-		for c: Variant in trap["cells"]:
-			cells.append(LocationView._cell(c))
-		if state == "" and TrapSight.notice(view, trap):
-			return true
-		if str(states.get(id, "")) == "":
-			for m in view.members:
-				if m.cell in cells:
-					_spring_trap(view, trap, m)
-					return true
+		var cells := _cells(trap)
+		for m in view.members:
+			if m.cell in cells:
+				_spring_trap(view, trap, m)
+				return true
 	return false
 
 
+static func _cells(trap: Dictionary) -> Array[Vector2i]:
+	var cells: Array[Vector2i] = []
+	for c: Variant in trap["cells"]:
+		cells.append(LocationView._cell(c))
+	return cells
+
+
+## Why the leader can't set off the found trap `trap` on purpose ("" if they can): from within 5 ft of one of its
+## squares, or standing in one.
+static func activate_why(view: LocationView, trap: Dictionary) -> String:
+	var at := view.leader().cell
+	for c in _cells(trap):
+		if view.grid.distance_ft(at, 1, c, 1) <= 5:
+			return ""
+	return "Get within 5 ft of it first"
+
+
+## Sets a found trap off on purpose (owner, 2026-10-08): whoever stands in its squares takes it; with nobody there it
+## goes off harmlessly (a pit opens).
+static func activate(view: LocationView, trap: Dictionary) -> void:
+	var why := activate_why(view, trap)
+	if why != "":
+		view.toast.emit(why)
+		return
+	var cells := _cells(trap)
+	var victim: Combatant = null
+	for m in view.members:
+		if m.cell in cells:
+			victim = m
+			break
+	_spring_trap(view, trap, victim)
+
+
+## Springs `trap` on `victim` (null: set off with nobody in it). Its marks go: a sprung trap is spent.
 static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant) -> void:
 	Audio.sfx("trap")
 	if PitFall.is_pit(trap):
@@ -51,6 +85,12 @@ static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant
 	var id := str(trap["id"])
 	(view.st.loc_state(view.loc_id)["traps"] as Dictionary)[id] = "triggered"
 	BattleScenery.trap_sprung(view, id)   # a chandelier that is this trap comes down
+	_clear_marks(view, id)
+	if victim == null:
+		if trap.has("flag"):
+			view.st.set_flag(str(trap["flag"]))
+		view.narration.emit("%s goes off with nobody in it." % str(trap.get("label", "The trap")).capitalize())
+		return
 	var lines: Array[String] = []
 	var save := trap.get("save", {}) as Dictionary
 	var success := false
@@ -97,24 +137,26 @@ static func search(view: LocationView) -> void:
 	var t := who.roll_check(view.dice, &"perception", 0, adv, Weather.sight_penalty(view.st, view.loc_id), "%s searches" % who.name, ["search"])
 	view.check_rolled.emit(t.describe())
 	var study: D20Test = null
-	if hidden_within(view, c, 15, who).any(func(p: Dictionary) -> bool: return search_skill(p) == &"investigation"):
+	if hidden_within(view, c, SEARCH_FT, who).any(func(p: Dictionary) -> bool: return search_skill(p) == &"investigation"):
 		study = who.roll_check(view.dice, &"investigation", 0, CheckAids.before_check(who, &"investigation"), [], "%s looks for hidden compartments" % who.name, ["search"])
 		view.check_rolled.emit(study.describe())
 	view.st.advance_minutes(1)
 	var found: Array[String] = []
 	var found_ids: Array[String] = []
 	var missed_ids: Array[String] = []   # their own failure lines' keys
+	show_reach(view, c, SEARCH_FT)
 	for tr: Variant in view.loc.get("traps", []):
 		var trap := tr as Dictionary
-		if str((states["traps"] as Dictionary).get(str(trap["id"]), "")) != "":
+		# Not one that isn't set yet (its `when` doesn't hold: Death House's blades before the party refuses).
+		if str((states["traps"] as Dictionary).get(str(trap["id"]), "")) != "" or not StoryConditions.check(str(trap.get("when", "")), view.st):
 			continue
 		for tc: Variant in trap["cells"]:
-			if view.grid.distance_ft(c, 1, LocationView._cell(tc), 1) <= 15 and t.total >= int(trap["detect_dc"]):
+			if view.grid.distance_ft(c, 1, LocationView._cell(tc), 1) <= SEARCH_FT and t.total >= int(trap["detect_dc"]):
 				(states["traps"] as Dictionary)[str(trap["id"])] = "found"
 				_show_trap(view, trap)
 				found.append(str(trap.get("label", "a trap")))
 				break
-	for prop in hidden_within(view, c, 15, who):
+	for prop in hidden_within(view, c, SEARCH_FT, who):
 		var roll := study if search_skill(prop) == &"investigation" else t
 		if roll.total >= int(prop.get("search_dc", 10)):
 			(states["found"] as Dictionary)[str(prop["id"])] = true
@@ -128,7 +170,7 @@ static func search(view: LocationView) -> void:
 		var door := d as Dictionary
 		if int(door.get("secret_dc", 0)) <= 0 or bool((states["found"] as Dictionary).get(str(door["id"]), false)):
 			continue
-		if view.grid.distance_ft(c, 1, LocationView._cell(door["cell"]), 1) <= 15 and t.total >= int(door["secret_dc"]):
+		if view.grid.distance_ft(c, 1, LocationView._cell(door["cell"]), 1) <= SEARCH_FT and t.total >= int(door["secret_dc"]):
 			(states["found"] as Dictionary)[str(door["id"])] = true
 			SetDressing.reveal_door(view.door_nodes[str(door["id"])] as Node3D)
 			found.append(str(door.get("label", "a hidden door")))
@@ -185,7 +227,7 @@ static func _missed_key(prop: Dictionary, who: Character) -> String:
 static func _disarm(view: LocationView, trap: Dictionary) -> void:
 	var who := LocationLocks._lock_picker(view)
 	if who == null:
-		view.narration.emit("Without thieves' tools you can only walk around it.")
+		view.narration.emit("Without thieves' tools you can't disarm it. Walk around it, or set it off from a safe distance.")
 		return
 	var bonus := who.ability_check_bonus(&"dex")
 	if who.has_proficiency("tools", "thieves_tools"):
@@ -194,9 +236,7 @@ static func _disarm(view: LocationView, trap: Dictionary) -> void:
 	view.check_rolled.emit(t.describe())
 	if t.success:
 		(view.st.loc_state(view.loc_id)["traps"] as Dictionary)[str(trap["id"])] = "disarmed"
-		for n: Node3D in view.trap_marks.get(str(trap["id"]), []):
-			n.queue_free()
-		view.trap_marks.erase(str(trap["id"]))
+		_clear_marks(view, str(trap["id"]))
 		view._say("trap:%s:disarmed" % trap["id"], who, "Disarmed.")
 	elif t.total <= int(trap.get("disarm_dc", 15)) - 5:
 		var m: Combatant = null
@@ -206,3 +246,73 @@ static func _disarm(view: LocationView, trap: Dictionary) -> void:
 		_spring_trap(view, trap, m if m != null else view.leader())
 	else:
 		view._say("trap:%s:failed" % trap["id"], who, "Not yet. Careful.")
+
+
+static func _clear_marks(view: LocationView, id: String) -> void:
+	for n: Node3D in view.trap_marks.get(id, []):
+		n.queue_free()
+	view.trap_marks.erase(id)
+
+
+## Shows for a moment, on the ground, how far a Search from `center` reached (owner, 2026-10-08): the open squares within
+## `feet`, tinted, fading after REACH_SHOWN seconds. What it found is marked as usual.
+static func show_reach(view: LocationView, center: Vector2i, feet: int) -> void:
+	if view.board == null:
+		return
+	var cells: Array = []
+	for x in range(center.x - feet / CombatGrid.FEET, center.x + feet / CombatGrid.FEET + 1):
+		for y in range(center.y - feet / CombatGrid.FEET, center.y + feet / CombatGrid.FEET + 1):
+			var cell := Vector2i(x, y)
+			if view.grid.in_bounds(cell) and not view.grid.has_flag(cell, CombatGrid.WALL) \
+					and view.grid.distance_ft(center, 1, cell, 1) <= feet:
+				cells.append(cell)
+	var reach := GridOverlay.create(view.board)
+	reach.name = "SearchReach"
+	view.add_child(reach)
+	reach.show_cells("area", cells)
+	var layer := reach.get_node("Layer_area") as MultiMeshInstance3D
+	var mat := layer.material_override as StandardMaterial3D
+	var tw := reach.create_tween()
+	tw.tween_interval(REACH_SHOWN * 0.4)
+	tw.tween_property(mat, "albedo_color:a", 0.0, REACH_SHOWN * 0.6)
+	tw.tween_callback(reach.queue_free)
+
+
+# --- Traps in a fight (EncounterTraps) ---------------------------------------------------------------
+
+## A fight here (LocationFights): every trap that hasn't gone off is armed in it, found or not.
+static func into_fight(view: LocationView, e: Encounter) -> void:
+	var states := view.st.loc_state(view.loc_id)["traps"] as Dictionary
+	for t: Variant in view.loc.get("traps", []):
+		var trap := t as Dictionary
+		var state := str(states.get(str(trap["id"]), ""))
+		if state in ["disarmed", "triggered"] or not StoryConditions.check(str(trap.get("when", "")), view.st):
+			continue
+		if _hangs(view, str(trap["id"])):
+			continue   # a chandelier that is a trap is a thing in the fight (BattleScenery): break its chain to drop it
+		e.traps.add(trap, state == "found")
+
+
+## Whether a hanging prop (a chandelier) is this trap.
+static func _hangs(view: LocationView, id: String) -> bool:
+	for p: Variant in view.loc.get("props", []):
+		if str(((p as Dictionary).get("hangs", {}) as Dictionary).get("trap", "")) == id:
+			return true
+	return false
+
+
+## After a fight here: the traps that went off in it are spent, as if sprung outside one (a pit stays open).
+static func after_fight(view: LocationView, e: Encounter) -> void:
+	var states := view.st.loc_state(view.loc_id)["traps"] as Dictionary
+	for id in e.traps.sprung_ids():
+		states[id] = "triggered"
+		BattleScenery.trap_sprung(view, id)
+		_clear_marks(view, id)
+		for t: Variant in view.loc.get("traps", []):
+			var trap := t as Dictionary
+			if str(trap["id"]) != id:
+				continue
+			if trap.has("flag"):
+				view.st.set_flag(str(trap["flag"]))
+			if PitFall.is_pit(trap):
+				PitFall._redress(view, trap)
