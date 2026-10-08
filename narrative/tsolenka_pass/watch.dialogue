@@ -73,6 +73,7 @@ quest the_tsolenka_gate watch_passed
 Narrator: The sergeant listens. His men listen. When it's done, nobody moves for a while.
 tsolenka_sergeant: Gone. All of it. The crown, the valley we kept it for. And us.
 tsolenka_sergeant: Well. Somebody might have said. Lads: stand down.
+cutscene watch_stands_down
 Narrator: They go one at a time, the youngest first, like candles at the end of a long night. The sergeant goes last. He looks at the gate, and then at you, and nods once, as if signing something over.
 interject class:cleric: Rest. You kept it long enough.
 approve liriel_dawnsong +2 godrick_pendlebrook +2: You let the dead watch of Tsolenka stand down

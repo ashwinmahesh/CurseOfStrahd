@@ -1,0 +1,15 @@
+{
+  "id": "dead_feast",
+  "title": "A Feast Nobody Dismissed",
+  "summary": "The Order's dead sit at their table, and only Vladimir turns his head.",
+  "images": [
+    {
+      "image": "dead_feast",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.35
+  ]
+}

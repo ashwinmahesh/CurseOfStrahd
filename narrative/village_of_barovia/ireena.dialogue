@@ -17,6 +17,7 @@ Ireena: Travelers. Nobody travels here; the mists see to that. If you want to he
 
 ~ door_open
 set ireena_door_opened
+cutscene ireena_door
 Narrator: Three bolts slide back, one after another. The door opens on a tall red-haired woman with a drawn sword and very tired eyes.
 if flag.death_house_completed
 Ireena: You're the ones who came out of the house at the end of the lane. People don't come out of that house. Come in, quickly, before the dark notices the door is open.
@@ -27,6 +28,7 @@ endif
 
 ~ door_cleric
 set ireena_door_opened
+cutscene ireena_door
 Narrator: There's a long silence, and then the bolts, one after another.
 Ireena [sad]: A priest. Father wanted a priest at the end, and there wasn't one. Come in.
 inspire class:cleric: offered to pray over a dead man at a barred door
@@ -165,6 +167,7 @@ Ireena: You'd do that? Then listen: the parlor window is the weakest, the front 
 
 ~ vigil_start
 set mansion_vigil
+cutscene mansion_siege
 Narrator: You bar the door and wait while the fire burns down to embers. Then, all at once, every board on every window begins to creak.
 approve godrick_pendlebrook +2 thistle +2 wren_featherfoot +1: You barred the door and held the house with Ireena
 -> END

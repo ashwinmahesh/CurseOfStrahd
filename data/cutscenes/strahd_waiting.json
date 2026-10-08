@@ -1,0 +1,59 @@
+{
+  "id": "strahd_waiting",
+  "title": "He Is Waiting for You",
+  "summary": "Strahd waits in the room the Tarokka foretold.",
+  "images": [
+    {
+      "image": "final_chapel",
+      "when": "final_room:castle_ravenloft_chapel"
+    },
+    {
+      "image": "final_audience_hall",
+      "when": "final_room:castle_ravenloft_audience_hall"
+    },
+    {
+      "image": "final_sergeis_tomb",
+      "when": "final_room:castle_ravenloft_sergeis_tomb"
+    },
+    {
+      "image": "final_strahds_tomb",
+      "when": "final_room:castle_ravenloft_strahds_tomb"
+    },
+    {
+      "image": "final_hall_of_bones",
+      "when": "final_room:castle_ravenloft_hall_of_bones"
+    },
+    {
+      "image": "final_overlook",
+      "when": "final_room:castle_ravenloft_overlook"
+    },
+    {
+      "image": "final_royal_tomb",
+      "when": "final_room:castle_ravenloft_tomb_of_barov_and_ravenovia"
+    },
+    {
+      "image": "final_catacombs",
+      "when": "final_room:castle_ravenloft_catacombs"
+    },
+    {
+      "image": "final_heart",
+      "when": "final_room:castle_ravenloft_heart_of_sorrow"
+    },
+    {
+      "image": "final_study",
+      "when": "final_room:castle_ravenloft_study"
+    },
+    {
+      "image": "final_treasury",
+      "when": "final_room:castle_ravenloft_treasury"
+    },
+    {
+      "image": "final_overlook",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

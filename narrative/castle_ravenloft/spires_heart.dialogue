@@ -4,6 +4,7 @@
 # §6), and Strahd comes up as mist to see who did it (heart_strahd_test, which withdraws).
 
 ~ heart
+cutscene heart_beats
 if not flag.heart_of_sorrow_seen
 set heart_of_sorrow_seen
 if not (quest.the_heart_of_sorrow >= found)
@@ -54,6 +55,7 @@ combat heart_guardians
 
 ~ shatter
 time +10
+cutscene heart_breaks
 Narrator: It takes time. The crystal is hard, and it mends a little between blows. But the cracks spread, and at last, with a sound like a church window breaking, the heart comes apart.
 Narrator: Red light pours out of it and is gone. The pieces that hit the floor are only glass.
 Narrator: Far below, deep in the castle, something draws a long breath, and the whole tower seems to listen.

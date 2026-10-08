@@ -1,0 +1,15 @@
+{
+  "id": "marina_bier",
+  "title": "Marina on Her Bier",
+  "summary": "Under the statue, a dead girl with Ireena's face lies on a white bier.",
+  "images": [
+    {
+      "image": "marina_bier_ireena",
+      "when": "guest:ireena"
+    },
+    {
+      "image": "marina_bier",
+      "when": ""
+    }
+  ]
+}

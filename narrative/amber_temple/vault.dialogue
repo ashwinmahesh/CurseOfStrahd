@@ -64,6 +64,7 @@ Narrator: A thick book chained to a stone lectern, its pages beaten from copper 
 * Leave it. -> END
 
 ~ pact_text
+cutscene amber_pact
 Narrator: The last entry is scratched into the copper in two hands. The first is a warden's. The second is very fine and very sure, and you have seen it before, on letters.
 Narrator: "Petitioner: Strahd, son of Barov, a prince of the western wars. He asks to stay young for as long as he wants anything, and to keep whatever he has taken. Brought before the one whose name we do not write."
 Narrator: "Terms, as the Thirst set them: one life he loves, given by his own hand on the day he most wants to be happy."

@@ -1,11 +1,15 @@
 {
   "id": "strahd_watcher",
   "title": "The Rider on the Ridge",
-  "summary": "The first journey out of the village with Ireena: high on a bare ridge above the road, Strahd sits his black horse and watches the party go by, his castle faint in the mist behind him.",
+  "summary": "The first journey after the burial: high on a bare ridge above the road, Strahd sits his black horse and watches the party go by, his castle faint in the mist behind him.",
   "images": [
     {
       "image": "strahd_watcher",
       "when": "guest:ireena"
+    },
+    {
+      "image": "strahd_watcher_alone",
+      "when": ""
     }
   ],
   "focus": [

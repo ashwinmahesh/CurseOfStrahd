@@ -1,0 +1,19 @@
+{
+  "id": "strahd_end",
+  "title": "Like Old Paper",
+  "summary": "Strahd comes apart in his coffin, edges first.",
+  "images": [
+    {
+      "image": "strahd_end_ireena",
+      "when": "flag.cat_staked_by == \"ireena\""
+    },
+    {
+      "image": "strahd_end_sun",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.45
+  ]
+}

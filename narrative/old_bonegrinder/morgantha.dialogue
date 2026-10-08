@@ -223,6 +223,7 @@ else
 set bonegrinder_fate = "broken"
 set pastry_trade = "dwindling"
 endif
+cutscene bonegrinder_hag
 Morgantha [angry]: Then Morgantha will have you for the oven, and your bones for the stone, and your dreams for supper. Waste not, dearies.
 combat coven_last_stand
 

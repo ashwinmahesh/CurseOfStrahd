@@ -1,0 +1,11 @@
+{
+  "id": "black_carriage",
+  "title": "The Black Carriage",
+  "summary": "A driverless black carriage waits on the road with its door open.",
+  "images": [
+    {
+      "image": "black_carriage",
+      "when": "flag.strahd_invitation != \"declined\""
+    }
+  ]
+}

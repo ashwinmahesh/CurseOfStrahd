@@ -1,0 +1,15 @@
+{
+  "id": "death_house_window",
+  "title": "The House Shuts Its Mouth",
+  "summary": "Death House bricks up its last window row by row as the party runs for the gap.",
+  "images": [
+    {
+      "image": "death_house_window",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.3
+  ]
+}

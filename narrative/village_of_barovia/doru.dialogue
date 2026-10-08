@@ -5,6 +5,7 @@ set doru_spoken_to
 if flag.donavich_mercy_blessing
 -> blessed
 endif
+cutscene doru_ceiling
 Narrator: Something crosses the ceiling, quick and flat as a spider, and settles above you. A young man's face hangs upside down in the dark, smiling.
 Doru [sly]: Father? No. You smell like outside. Like rain and roads. I'd forgotten roads. Come closer; I can't see you properly.
 interject class:cleric: Stay back from him. He's starving, and he's looking at our throats.

@@ -1,0 +1,15 @@
+{
+  "id": "argynvost_frost",
+  "title": "A Dragon in the Frost",
+  "summary": "Frost draws Argynvost's head on the chapel's coloured glass.",
+  "images": [
+    {
+      "image": "argynvost_frost",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.35
+  ]
+}

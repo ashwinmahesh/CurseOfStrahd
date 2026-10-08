@@ -1,6 +1,7 @@
 # Things in Baba Lysaga's hut that start a conversation: the doll over the hearth, and the jar with a label.
 
 ~ poppet
+cutscene lysaga_poppet
 Narrator: Over the hearth, on a black thread, hangs a little doll of rag and straw with a head of real red hair. A tiny M is stitched on its breast. Through the M goes a long black thorn, pushed in and drawn out so many times the cloth around it has worn to lace.
 if not flag.lysaga_dead and not flag.lysaga_left_broken and flag.lysaga_guests and not flag.strahd_knows_marina_truth
 Baba Lysaga [angry]: Leave that be! That's a keepsake. That's mine.
