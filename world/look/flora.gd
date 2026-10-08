@@ -345,8 +345,8 @@ func dress_map(board: ArenaBoard, ground_y: Callable, bare: Dictionary = {}) -> 
 			var items := {}
 			if board.is_tree(c):
 				_scatter_square(items, c, under, 1.0, 0.0, 0.0)
-			elif (f & CombatGrid.WALL) != 0 or not wild or board.floor_y(c) > 0.0:
-				continue
+			elif (f & CombatGrid.WALL) != 0 or not wild or (board.floor_y(c) > 0.0 and not board.rolling(c)):
+				continue   # (natural slopes grow plants; a built ledge or a cliff's edge stays bare)
 			elif board.dressing.has(c) and not (board.dressing[c] as Array).is_empty():
 				continue
 			else:

@@ -16,6 +16,9 @@ const LAYERS := {
 	"weapon": {"colour": "lilac", "alpha": 0.6, "lift": 0.019, "size": 0.6},
 }
 
+## How much higher a mark sits on a slope (natural ground), so the ground's bends don't swallow its corners.
+const SLOPE_LIFT := 0.03
+
 var board: ArenaBoard
 var _layers: Dictionary = {}
 
@@ -89,6 +92,11 @@ func show_trail(key: String, cells: Array) -> void:
 		var here := _spot(cells[i] as Vector2i)
 		var mid := (_spot(cells[i - 1] as Vector2i) + here) / 2.0
 		mid.y = maxf(here.y, _spot(cells[i - 1] as Vector2i).y)   # on the edge of a step up, not in the air
+		if board.has_terrain():
+			# On natural ground: the slope between them (or the top of a cliff), from each side of the edge.
+			var m := Vector2(mid.x, mid.z)
+			var back := _spot(cells[i - 1] as Vector2i)
+			mid.y = maxf(board.ground_y(m.lerp(Vector2(here.x, here.z), 0.02)), board.ground_y(m.lerp(Vector2(back.x, back.z), 0.02)))
 		spots.append(mid)
 		if i < cells.size() - 1:
 			spots.append(here)
@@ -107,7 +115,7 @@ func clear_all() -> void:
 
 ## Where a mark sits on a square: its centre, on the floor or on top of a low wall.
 func _spot(cell: Vector2i) -> Vector3:
-	var y := board.floor_y(cell)
+	var y := board.cell_center(cell).y   # (on natural ground, its slope)
 	if board.grid.has_flag(cell, CombatGrid.LOW):
 		y += ArenaBoard.LOW_H
 	return Vector3(cell.x + 0.5, y, cell.y + 0.5)
@@ -117,5 +125,11 @@ func _place(key: String, spots: Array[Vector3]) -> void:
 	var mm := (_layers[key] as MultiMeshInstance3D).multimesh
 	var lift := float((LAYERS[key] as Dictionary)["lift"])
 	mm.instance_count = spots.size()
+	var terrain := board.has_terrain()
 	for i in spots.size():
-		mm.set_instance_transform(i, Transform3D(Basis.IDENTITY, spots[i] + Vector3(0, lift, 0)))
+		var basis := Basis.IDENTITY
+		if terrain:
+			# Lying along natural ground's slope, a little higher so its corners stay above the ground.
+			basis = board.ground_basis(Vector2i(floori(spots[i].x), floori(spots[i].z)))
+		var up := lift + (SLOPE_LIFT if basis != Basis.IDENTITY else 0.0)
+		mm.set_instance_transform(i, Transform3D(basis, spots[i] + basis.y * up))

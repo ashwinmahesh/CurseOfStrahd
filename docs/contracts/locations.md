@@ -33,6 +33,12 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
 - **Map rows** use the combat legend: `.` floor, `#` wall, `=` low obstacle (furniture, Half Cover), `~` Difficult
   Terrain, `1`-`4` raised floor, `w` deep water (not walkable, doesn't block sight), space = void. Doors are cells listed in `doors` (drawn as a closed door; a closed
   door blocks movement and sight until opened).
+- **Natural ground:** `map.elevation` (optional), rows beside `rows`, lays hills and hollows under the squares: one
+  character a square, `0`-`9` then `a`-`z` for 0 to 175 ft in 5 ft steps, `.` or a space for a square left as built.
+  Neighbouring natural squares 5 ft apart are a gentle slope, 10 ft a steep one, 15 ft or more a cliff (climbed or
+  jumped down; docs/rules/deviations.md). The board draws them as one sloped ground with rock under cliffs; empty
+  squares given a height are the hillside the land draws round the walked ones. Yester Hill and Krezk's road and abbey
+  track are the first maps that use it.
 - **Light:** `bright`, `dim` or `dark` for the map and each area; `lights` add bright and dim radii. (Vision rules —
   what Darkvision and darkness do to checks and attacks — belong to the spell and ability audit; the world only
   reports each square's light level.)
@@ -64,6 +70,12 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   `facing` (north, south, east, west or between: which way the piece's front looks, instead of away from the wall
   beside it or south) and `span` ([across, down] squares, its own cell the north-west one: a wagon stands over the middle
   of its two-by-two block of low cover).
+  A prop's `stand_ft` (5 to 60, in 5 ft steps) makes it something stood on: its squares (its cell, or all its `span`)
+  are that many feet above the ground underneath (LocationView.grid_for, CombatGrid.raise). 5 ft is a step up (a
+  podium); 10 ft or more is a ledge: climbed (1 extra foot per foot), jumped down from (5 ft and the fall), high ground
+  for ranged attacks, and it hides what is behind it like a wall that high. Put it on `.` squares, not `=`. Its model
+  is the raised thing (a platform, a gallows, a great tree with a perch) and is drawn from the ground up, so its top
+  should sit about `stand_ft` high; the board draws only the ground under it. It is always there (no `when`).
   A search prop's `skill` is the check that finds it: `perception` (default) or `investigation` (a compartment you
   work out; Search rolls it as well when one is within 15 ft). A search prop with an `item` is a hidden find
   (docs/story/found_magic_items.md): each character gets one look, and one who misses it can't find it later; the

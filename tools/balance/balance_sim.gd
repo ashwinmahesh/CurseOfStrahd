@@ -83,7 +83,7 @@ static func location_fight(loc_id: String, fight_id: String, level: int, party: 
 		errors.append("No fight '%s' in %s" % [fight_id, loc_id])
 		return null
 	var map := loc["map"] as Dictionary
-	var grid := CombatGrid.from_rows(map["rows"] as Array)
+	var grid := CombatGrid.from_rows(map["rows"] as Array, map.get("elevation", []) as Array)
 	var e := Encounter.new(grid, dice)
 	e.title = "%s: %s" % [loc.get("name", loc_id), fight_id]
 	e.location_id = loc_id

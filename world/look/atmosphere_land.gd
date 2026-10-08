@@ -13,6 +13,8 @@ const REACH := 30.0
 const NEAR_RING := 4.0
 ## The top of the board's water (ArenaBoard._water).
 const WATER_Y := -0.13
+## How far past the edge (squares) natural ground at the map's edge takes to settle into the land.
+const TERRAIN_SETTLE := 8.0
 
 enum Edge { FOREST, OPEN, WATER, DROP }
 
@@ -333,6 +335,7 @@ func _terrain() -> void:
 	var nx := _nx
 	var nz := _nz
 	var kinds := _kinds
+	var terrain := board.has_terrain()
 	# Corner heights: water or a drop next to a corner pins it down; a road beside it flattens it; a corner touching
 	# the map's own squares sits level with its floor (or the shaped ground's, W11).
 	var heights := PackedFloat32Array()
@@ -358,16 +361,24 @@ func _terrain() -> void:
 				if k == Edge.OPEN:
 					road += 1
 			var h := _height_at(p, near)
+			var edge := p.clamp(Vector2.ZERO, Vector2(_w, _d))
 			if relief != null and not water and near < 3.5:
 				# The banks under the map's woods carry on past its edge and settle into the land.
-				var bank := relief.height(p.clamp(Vector2.ZERO, Vector2(_w, _d)))
+				var bank := relief.shape(edge)
 				h += bank * (1.0 - smoothstep(0.5, 3.5, near)) * (1.0 - float(road) / 4.0)
 			if on_map:
-				h = relief.height(p) if relief != null else 0.0
+				h = _map_corner(Vector2i(i - r, j - r))
 			elif water:
 				h = WATER_Y
-			elif road > 0:
-				h *= 1.0 - 0.8 * float(road) / 4.0
+			else:
+				if road > 0:
+					h *= 1.0 - 0.8 * float(road) / 4.0
+				var cell := Vector2i(clampi(floori(edge.x), 0, _w - 1), clampi(floori(edge.y), 0, _d - 1))
+				if terrain and board.grid.has_flag(cell, CombatGrid.NATURAL):
+					# Natural ground (an empty hillside square on the map, or the map's edge: a slope, a climbing road)
+					# carries on past the edge and settles into the land.
+					var out := maxf(absf(p.x - edge.x), absf(p.y - edge.y))
+					h = lerpf(board.ground_y(edge), h, smoothstep(0.0, TERRAIN_SETTLE, out))
 			heights[j * (nx + 1) + i] = h
 	_corner_h = heights
 	# One grid of corners, smooth normals across it, and a list of squares per surface (ground, road, water): built
@@ -568,9 +579,28 @@ func _tree_models(kind: String, items: Array) -> bool:
 
 # --- Ground with shape (Improvement Ideas W11) --------------------------------------------------------------------
 
-## The ground's height at a point on the map's own squares: its banks (0 where people walk, and in Classic).
+## The ground's height at a point on the map's own squares: its banks (0 where people walk, and in Classic), on
+## natural ground's slopes where the map has them (the board's own columns where the shaped ground doesn't draw).
 func map_y(p: Vector2) -> float:
-	return relief.height(p) if relief != null else 0.0
+	if not board.has_terrain():
+		return relief.height(p) if relief != null else 0.0
+	var c := Vector2i(clampi(floori(p.x), 0, _w - 1), clampi(floori(p.y), 0, _d - 1))
+	return relief.height(p) if relief != null and relief.draws(c) else board.ground_y(p)
+
+
+## Where the land meets the map at grid point `p`: on the map's own floor or shaped ground; on a map with natural
+## ground, level with the lowest of the map's own squares there (the others' sides fill the step), so the land never
+## hangs above an edge.
+func _map_corner(p: Vector2i) -> float:
+	if not board.has_terrain():
+		return relief.height(Vector2(p)) if relief != null else 0.0
+	var low := INF
+	for o: Vector2i in [p + Vector2i(-1, -1), p + Vector2i(0, -1), p + Vector2i(-1, 0), p]:
+		if not board.grid.in_bounds(o) or _is_void(o):
+			continue
+		var y := relief.height(Vector2(p)) if relief != null and relief.draws(o) else board.corner_height(o, p - o)
+		low = minf(low, y)
+	return low if low < INF else map_y(Vector2(p))
 
 
 ## Squares a location's traps lie on (a pit opens there): no plant grows on them.

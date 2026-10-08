@@ -55,12 +55,14 @@ static func capture(e: Encounter) -> Dictionary:
 				row += "="
 			elif e.grid.has_flag(cell, CombatGrid.DIFFICULT):
 				row += "~"
-			elif e.grid.height(cell) > 0:
+			elif e.grid.height(cell) > 0 and not e.grid.has_flag(cell, CombatGrid.NATURAL):
 				row += str(mini(4, e.grid.height(cell) / CombatGrid.FEET))
 			else:
 				row += "."
 			# A raised square its letter can't show (a crate shoved up a step, rubble on a dais, over 20 ft): its height.
-			if e.grid.height(cell) > 0 and not row.ends_with(str(e.grid.height(cell) / CombatGrid.FEET)):
+			# Natural ground comes back from the "elevation" rows instead.
+			if e.grid.height(cell) > 0 and not e.grid.has_flag(cell, CombatGrid.NATURAL) \
+					and not row.ends_with(str(e.grid.height(cell) / CombatGrid.FEET)):
 				heights["%d,%d" % [x, z]] = e.grid.height(cell)
 		rows.append(row)
 	var log: Array = []
@@ -71,12 +73,12 @@ static func capture(e: Encounter) -> Dictionary:
 		"spells": e.spells.to_dict(), "shapes": e.shapes.to_dict(), "light": e.ambient_light, "sunlit": e.sunlit,
 		"location_id": e.location_id, "places": e.places.duplicate(), "lair": e.lair, "outdoors": e.outdoors, "weather_id": e.weather_id, "weather": e.weather.duplicate(), "boss": e.legendary.to_dict(),
 		"drop_ft": e.grid.drop_ft, "ceiling_ft": e.grid.ceiling_ft, "difficulty": e.difficulty.id, "ground": e.ground.to_dict(),
-		"objects": e.objects.to_dict(), "heights": heights, "traps": e.traps.to_dict()}
+		"objects": e.objects.to_dict(), "heights": heights, "traps": e.traps.to_dict(), "elevation": e.grid.elevation_rows()}
 
 
 ## Rebuilds the fight; `party` supplies the party's Character objects (from the loaded story) by id when present.
 static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = []) -> Encounter:
-	var e := Encounter.new(CombatGrid.from_rows(d["rows"] as Array), dice)
+	var e := Encounter.new(CombatGrid.from_rows(d["rows"] as Array, d.get("elevation", []) as Array), dice)
 	e.grid.drop_ft = int(d.get("drop_ft", 0))
 	e.grid.ceiling_ft = int(d.get("ceiling_ft", 0))
 	for k: String in (d.get("heights", {}) as Dictionary):

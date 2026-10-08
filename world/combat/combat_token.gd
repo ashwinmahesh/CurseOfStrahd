@@ -83,6 +83,10 @@ var _ring: MeshInstance3D
 var _active_ring: MeshInstance3D
 var _bar_fill: MeshInstance3D
 var _bar_back: MeshInstance3D
+var _ground: ArenaBoard = null      ## the board with natural ground under the token (_lie_on_ground)
+var _ground_looked := false
+var _ground_cell := Vector2i(-99999, -99999)
+var _built_at: Dictionary = {}       ## base pieces -> where they were built (before a slope tilted them)
 var _label: Label3D
 var _status: Label3D
 var _status_y := 0.0   ## the chips' height over a standing figure; a figure lying down has them just above it
@@ -502,6 +506,35 @@ func flash(colour: Color, seconds: float = 0.25) -> void:
 
 ## The health bar shows in fights only: out of combat the bars under the party read as stray boards lying on the floor
 ## (owner report 2026-10-06).
+## On natural ground's slopes (ArenaBoard.ground_normal) the base ring, the turn ring and the health bar lie along
+## the ground under the token, a little above it; on level ground they stay as built. The board is the one beside the
+## token (or beside one of its parents), looked for once.
+func _lie_on_ground() -> void:
+	if not _ground_looked:
+		_ground_looked = true
+		var p := get_parent()
+		while p != null and _ground == null:
+			_ground = p.get_node_or_null("ArenaBoard") as ArenaBoard
+			p = p.get_parent()
+		if _ground != null and not _ground.has_terrain():
+			_ground = null
+	if _ground == null or not is_instance_valid(_ground):
+		return
+	var cell := Vector2i(floori(global_position.x), floori(global_position.z))
+	if cell == _ground_cell:
+		return
+	_ground_cell = cell
+	var up := _ground.ground_normal(cell)
+	var tilt := Basis.IDENTITY if up.y > 0.9999 else Basis(Vector3.UP.cross(up).normalized(), Vector3.UP.angle_to(up))
+	for n: MeshInstance3D in [_ring, _active_ring, _bar_back, _bar_fill]:
+		if n == null:
+			continue
+		if not _built_at.has(n):
+			_built_at[n] = n.position
+		n.quaternion = tilt.get_rotation_quaternion()
+		n.position = tilt * (_built_at[n] as Vector3) + (Vector3(0, 0.03, 0) if tilt != Basis.IDENTITY else Vector3.ZERO)
+
+
 func _bar_wanted() -> bool:
 	return not combatant.creature.dead and _fade >= 1.0 and ModeController.mode == ModeController.Mode.COMBAT
 
@@ -509,6 +542,7 @@ func _bar_wanted() -> bool:
 func _process(delta: float) -> void:
 	if _bar_back != null and _bar_back.visible != _bar_wanted():
 		_show_fade()
+	_lie_on_ground()
 	if sprite == null:
 		return
 	if _flash > 0.0 and not combatant.creature.dead:
