@@ -1,0 +1,104 @@
+# The Frozen Pilgrims (side quest, docs/story/side_quests.md): forty years ago nine pilgrims from Vallaki went round the
+# Tsolenka watch by the goat path, after a winter that killed their children, to ask the Amber Temple never to be cold
+# again. A vestige said yes; the price was to become the cold. They kneel in the ice of the gorge wall by the landing,
+# and the woman who led them, Mother Ecaterina, is still alive in it with her lamp lit. Break her out and the rest wake
+# as the Penitent (data/monsters/the_penitent.json); or give her the last rites and let them all go. Reached from
+# Sergeant Valcu's report (watch:watch_menu, watch:passed_again) and the ice itself (prop pilgrims_ice).
+# Every line here is unvoiced for now.
+
+# --- Sergeant Valcu's report ---
+
+~ sergeant_news
+if quest.the_frozen_pilgrims == done or quest.the_frozen_pilgrims == rested
+tsolenka_sergeant: Log. The lamp on the landing has gone out. Logged it. First change on this road in forty years. The lads didn't know what to do with themselves.
+-> END
+endif
+if not quest.the_frozen_pilgrims
+quest the_frozen_pilgrims rumored
+endif
+tsolenka_sergeant: Report. Forty-one years back, nine pilgrims, up the road, against orders. Led by a woman with a lamp, from Vallaki. Said a winter had taken their children, and they were going up to ask the amber never to be cold again.
+tsolenka_sergeant: We stopped them. They went round by the goat path over the gorge. Three nights later the lamp came back down. The people didn't. It's on the landing, in the ice. Some nights it's lit. Logged, every one.
+-> END
+
+# --- The ice of the gorge wall (prop pilgrims_ice, at the landing) ---
+
+~ ice
+if quest.the_frozen_pilgrims == done
+Narrator: The gorge wall is bare rock and old meltwater stains. The ice has gone, and the shapes in it.
+-> END
+endif
+if quest.the_frozen_pilgrims == rested
+Narrator: The gorge wall is clear ice, and empty. At the foot of it, on a ledge, a lamp with no oil in it, set down carefully, the way you'd leave it for somebody coming home late.
+-> END
+endif
+if flag.penitent_slain
+-> thaw
+endif
+if not flag.pilgrims_found
+set pilgrims_found
+if not quest.the_frozen_pilgrims or quest.the_frozen_pilgrims == rumored
+quest the_frozen_pilgrims found
+endif
+Narrator: The ice of the gorge wall above the landing is clear as a window, and there are people in it. Nine of them, kneeling in a row, facing up the pass toward the temple, frozen in the middle of a prayer.
+Narrator: The woman at the front holds a tin lamp in both hands. The lamp is lit. As you look at her, her eyes move, slowly, and find you.
+endif
+-> ice_menu
+
+~ ice_menu
+* [if not flag.pilgrims_read] [Arcana DC 16] (Work out what's holding them.) -> read | unread
+* Can you hear us? -> speak
+* [if flag.pilgrims_spoke] (Break her out of the ice.) -> break
+* [if flag.pilgrims_spoke] [Religion DC 14] (Say the last rites for all nine, and let them go.) -> rites | rites_failed
+* [if flag.pilgrims_spoke] [Cleric] (Say the rites of the dead for all nine.) -> rites
+* (Leave them.) -> END
+
+~ read
+set pilgrims_read
+Narrator: Not weather. A gift, from up there, the kind the amber gives: they asked for something and were answered exactly. The woman with the lamp is the knot it's all tied to. Free her, and it lets go of all of them at once.
+Narrator: And all that cold will have to go somewhere.
+-> ice_menu
+
+~ unread
+set pilgrims_read
+Narrator: Old ice, and something in it that hums like the amber up the pass. That's as far as you get.
+-> ice_menu
+
+~ speak
+set pilgrims_spoke
+Mother Ecaterina: (Her voice comes through the ice, very small and very slow, a word at a time.) Yes. Ecaterina. From Vallaki. We had a winter. It took the little ones. All of them.
+Mother Ecaterina: We asked the amber never to be cold again. It said yes. It said the price was to be the cold. So we are. They're all in here with me. They're so cold. Forty years and they're still so cold.
+Mother Ecaterina: Don't break the ice. If you wake me, they wake. And they'll want to be warm, and you're warm.
+interject tag:kind: Is there anything you want?
+Mother Ecaterina: To stop. All of us. Or to see the valley in spring once, from the bottom. I'd take either. I've had a long time to decide, and I can't.
+-> ice_menu
+
+~ rites
+quest the_frozen_pilgrims rested
+Narrator: You say the words for nine people whose names you only half know. Somewhere in the middle of them the lamp in her hands goes out.
+Narrator: The ice doesn't crack. It clears. The shapes in it go thin, and pale, and are gone, the way breath goes off a window, and the lamp drops out of the ice into the snow on the ledge, still warm.
+Narrator: Under the ledge, where they left their bundles for the climb, there are nine purses of temple offerings nobody ever made.
+gold +400
+approve liriel_dawnsong +3 godrick_pendlebrook +2 thistle +1: You gave the frozen pilgrims their rest
+-> END
+
+~ rites_failed
+Narrator: The words come out wrong, or the ice doesn't care for them. The lamp burns on.
+-> ice_menu
+
+~ break
+Narrator: The first blow cracks the ice from top to bottom. Mother Ecaterina falls out of it into your arms, light as a bundle of sticks and burning hot to the touch, and the lamp rolls away across the landing.
+Narrator: Behind her the other eight come out of the wall together, and they don't stop being one thing: knees and hands and faces fused in grey ice into a kneeling giant three times the height of a man, that stands up, and turns its many heads toward the warmest thing on the mountain.
+Mother Ecaterina: (Very faintly.) I'm sorry. They were so cold.
+combat the_penitent
+
+~ thaw
+quest the_frozen_pilgrims done
+Narrator: Where the Penitent fell there's only meltwater running off the landing into the gorge, and nine small heaps of grey cloth, and the lamp, which somebody has stood upright.
+Mother Ecaterina: (She's wrapped in somebody's cloak by the shrine, holding her hands over the lamp.) It's out. They're out. I felt them go, one at a time, like coins out of a purse.
+Mother Ecaterina: I'll go down. Slowly. I'll see the valley in spring once, from the bottom, and then I'll see about the rest.
+Narrator: Under the ledge, where the pilgrims left their bundles for the climb, there are nine purses of offerings for the temple, and the lamp-pole Mother Ecaterina carried up the pass, white with frost that doesn't melt.
+Mother Ecaterina: Take it. It's the cold. All of it. The amber put it in there when it took us. Better in your hands than mine.
+gold +500
+give staff_of_frost
+approve liriel_dawnsong +2 godrick_pendlebrook +2 thistle +2 wren_featherfoot +1 ratatoille +1: You broke Mother Ecaterina out of the ice and stood against the Penitent
+-> END

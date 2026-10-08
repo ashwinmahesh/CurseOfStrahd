@@ -223,3 +223,57 @@ func test_the_huntsman_and_his_hounds_come_up_the_east_road() -> void:
 			root.queue_free()
 			root = null
 			await _frames(2)
+
+
+func test_the_men_at_arms_come_for_the_squires_vigil() -> void:
+	for level: int in [7, 8, 9]:
+		var v := await _boot("argynvostholt", 2, level, ["godfrey_met", "courtyard_phantoms_defeated"])
+		await _fight(v, "squires_vigil", ["The Gate Warden", "Man-at-Arms"])
+		await _end(v)
+		assert_true(bool(GameState.story.get_flag("squires_vigil_won", false)))
+		root.queue_free()
+		root = null
+		await _frames(2)
+
+
+func test_the_penitent_stands_up_out_of_the_gorge_wall() -> void:
+	for level: int in [8, 9, 10, 11]:
+		var v := await _boot("tsolenka_pass", 20, level)
+		await _fight(v, "the_penitent", ["The Penitent", "A Pilgrim's Shadow"])
+		await _end(v)
+		assert_true(bool(GameState.story.get_flag("penitent_slain", false)))
+		root.queue_free()
+		root = null
+		await _frames(2)
+
+
+func test_the_tenant_comes_up_the_little_stair_and_lupu_stands_with_the_party() -> void:
+	for level: int in [1, 2, 3]:
+		var v := await _boot("burgomaster_mansion", 22, level, [], ["lupu"])
+		var e := await _fight(v, "hound_tenant", ["The Tenant", "A Siege-Winter Servant"])
+		var lupu: Combatant = null
+		var tenant: Combatant = null
+		for c in e.combatants:
+			if c.name() == "Lupu":
+				lupu = c
+			elif c.name() == "The Tenant":
+				tenant = c
+		assert_true(lupu != null, "Lupu is on the board")
+		if lupu != null and tenant != null:
+			assert_ne(lupu.side, tenant.side, "on the other side from the Tenant")
+		await _end(v)
+		assert_true(bool(GameState.story.get_flag("tenant_slain", false)))
+		root.queue_free()
+		root = null
+		await _frames(2)
+
+
+func test_the_tinkers_wagon_stands_up_off_its_wheels() -> void:
+	for level: int in [4, 5, 6]:
+		var v := await _boot("svalich_crossroads", 12, level)
+		await _fight(v, "tinkers_wagon", ["The Tinker's Wagon", "A Trinket"])
+		await _end(v)
+		assert_true(bool(GameState.story.get_flag("wagon_slain", false)))
+		root.queue_free()
+		root = null
+		await _frames(2)

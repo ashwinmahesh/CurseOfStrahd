@@ -1,0 +1,31 @@
+{
+  "id": "the_tinkers_wagon",
+  "name": "The Tinker's Wagon",
+  "summary": "A Vistani tinker sells trinkets from a green wagon at the crossroads, and the travellers who buy from him don't come back down the road.",
+  "giver": "tinker_iosif",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Zora at the Tser Pool camp says Iosif, a tinker who used to be one of theirs, sells pots and Death House trinkets from a green wagon at the crossroads. Four travellers who bought from him didn't come past the camp after, and the wagon gets fatter.",
+      "objectives": [
+        "Find Iosif's wagon at the River Ivlis crossroads, by day"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "met",
+      "journal": "Iosif the Tinker sells from his green wagon at the crossroads and never gets down off the board. He smiles a great deal.",
+      "objectives": [
+        "Find out what's wrong with Iosif and his wagon"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Iosif's wagon was a mimic the size of a wagon, and it kept him chained to its board for seven years to sell its bait. It's dead in the road, and Iosif is back at the Tser Pool camp, sitting on the ground.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "the_frozen_pilgrims",
+  "name": "The Frozen Pilgrims",
+  "summary": "Nine pilgrims from Vallaki went up the Tsolenka Pass forty years ago to ask the Amber Temple never to be cold again. Their lamp came back down. They didn't.",
+  "giver": "tsolenka_sergeant",
+  "region": "tsolenka_pass",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Sergeant Valcu of the Tsolenka watch logged nine pilgrims going round his gate by the goat path, forty-one years ago, to ask the amber never to be cold again. Their lamp is on the landing, in the ice, and some nights it's lit.",
+      "objectives": [
+        "Look at the ice of the gorge wall by the landing"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "Nine pilgrims kneel in the ice of the gorge wall above the landing, frozen mid-prayer. The woman at the front, Mother Ecaterina, holds a lit lamp, and her eyes move. The amber gave them what they asked: never to be cold again, by becoming the cold.",
+      "objectives": [
+        "Break her out, or give all nine the last rites"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "rested",
+      "journal": "We said the last rites for the nine pilgrims in the ice, and they went, the way breath goes off a window. The lamp is on the ledge.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "done",
+      "journal": "We broke Mother Ecaterina out of the ice. The other eight woke as the Penitent, and it's meltwater now. She's going down to see the valley in spring, slowly. She gave us the lamp-pole she carried up the pass, with all the cold in it.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

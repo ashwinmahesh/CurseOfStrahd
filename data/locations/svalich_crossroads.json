@@ -600,6 +600,17 @@
       "model": "satchel",
       "dialogue": "svalich_road/the_counts_huntsman:saddlebag",
       "when": "flag.huntsman_slain"
+    },
+    {
+      "id": "tinker_wagon",
+      "cell": [
+        16,
+        20
+      ],
+      "kind": "decor",
+      "label": "A green painted wagon",
+      "model": "wagon",
+      "when": "not flag.wagon_slain"
     }
   ],
   "encounters": [
@@ -1653,6 +1664,105 @@
         "id": "the_counts_huntsman",
         "stage": "stood"
       }
+    },
+    {
+      "id": "tinkers_wagon",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "The green wagon stands up off its wheels, and two of the trinkets on its hooks open their own small mouths.",
+      "monsters": [
+        {
+          "monster": "tinkers_wagon",
+          "cell": [
+            16,
+            20
+          ]
+        },
+        {
+          "monster": "mimic",
+          "cell": [
+            13,
+            18
+          ],
+          "name": "A Trinket"
+        },
+        {
+          "monster": "mimic",
+          "cell": [
+            20,
+            22
+          ],
+          "name": "A Trinket"
+        },
+        {
+          "monster": "mimic",
+          "cell": [
+            14,
+            22
+          ],
+          "name": "A Trinket"
+        }
+      ],
+      "surprise": "",
+      "flag": "wagon_slain"
+    },
+    {
+      "id": "tinkers_wagon",
+      "trigger": "dialogue",
+      "when": "level >= 5",
+      "text": "The green wagon stands up off its wheels, and two of the trinkets on its hooks open their own small mouths.",
+      "monsters": [
+        {
+          "monster": "tinkers_wagon",
+          "cell": [
+            16,
+            20
+          ]
+        },
+        {
+          "monster": "mimic",
+          "cell": [
+            13,
+            18
+          ],
+          "name": "A Trinket"
+        },
+        {
+          "monster": "mimic",
+          "cell": [
+            20,
+            22
+          ],
+          "name": "A Trinket"
+        }
+      ],
+      "surprise": "",
+      "flag": "wagon_slain"
+    },
+    {
+      "id": "tinkers_wagon",
+      "trigger": "dialogue",
+      "text": "The green wagon stands up off its wheels, and two of the trinkets on its hooks open their own small mouths.",
+      "monsters": [
+        {
+          "monster": "tinkers_wagon",
+          "cell": [
+            16,
+            20
+          ],
+          "hp": 110
+        },
+        {
+          "monster": "mimic",
+          "cell": [
+            13,
+            18
+          ],
+          "name": "A Trinket"
+        }
+      ],
+      "surprise": "",
+      "flag": "wagon_slain"
     }
   ],
   "narration": {
@@ -1691,6 +1801,30 @@
       "dialogue": "svalich_road/the_counts_huntsman:gavril_waits",
       "when": "night and quest.the_counts_huntsman == hunted and flag.hunt_quarry == \"gavril\"",
       "facing": "east"
+    },
+    {
+      "npc": "tinker_iosif",
+      "cell": [
+        18,
+        19
+      ],
+      "dialogue": "svalich_road/the_tinkers_wagon:iosif",
+      "when": "quest.the_tinkers_wagon != done and not flag.wagon_slain",
+      "hours": [
+        8,
+        18
+      ],
+      "facing": "north"
+    },
+    {
+      "npc": "tinker_iosif",
+      "cell": [
+        18,
+        19
+      ],
+      "dialogue": "svalich_road/the_tinkers_wagon:iosif",
+      "when": "flag.wagon_slain and quest.the_tinkers_wagon != done",
+      "facing": "north"
     }
   ]
 }

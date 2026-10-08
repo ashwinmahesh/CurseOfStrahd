@@ -18,7 +18,8 @@ func _frames(n: int) -> void:
 
 
 ## Boots `location` at `hour` with the four pregens at `level`, starts `encounter` and plays it with the autopilot.
-func _play(location: String, hour: int, level: int, encounter: String, seed_value: int, flags: Array[String] = []) -> Dictionary:
+func _play(location: String, hour: int, level: int, encounter: String, seed_value: int, flags: Array[String] = [],
+		guests: Array[String] = [], open_doors: Array[String] = []) -> Dictionary:
 	GameState.reset()
 	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]:
 		var ch := Pregens.build(id, level)
@@ -26,6 +27,10 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 		GameState.story.party.append(ch)
 	for f in flags:
 		GameState.story.set_flag(f, true)
+	for g in guests:
+		GameState.story.add_guest(g)
+	for d in open_doors:
+		(GameState.story.loc_state(location)["doors"] as Dictionary)[d] = LocationView.DOOR_OPEN
 	GameState.story.location = location
 	GameState.story.minute_of_day = hour * 60
 	Dice.reseed(seed_value)
@@ -45,12 +50,13 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 	return res
 
 
-func _series(location: String, hour: int, level: int, encounter: String, seeds: Array, flags: Array[String] = []) -> void:
+func _series(location: String, hour: int, level: int, encounter: String, seeds: Array, flags: Array[String] = [],
+		guests: Array[String] = [], open_doors: Array[String] = []) -> void:
 	var wins := 0
 	var downs := 0
 	var rounds := 0
 	for s: int in seeds:
-		var res := await _play(location, hour, level, encounter, s, flags)
+		var res := await _play(location, hour, level, encounter, s, flags, guests, open_doors)
 		assert_ne(str(res["outcome"]), "timeout", "%s seed %d finished" % [encounter, s])
 		if str(res["outcome"]) == "victory":
 			wins += 1
@@ -95,3 +101,20 @@ func test_the_counts_huntsman_at_level_8() -> void:
 
 func test_the_counts_huntsman_with_his_hounds_called_at_level_8() -> void:
 	await _series("svalich_crossroads", 23, 8, "the_hunt", [1, 2, 3], ["hounds_called"])
+
+
+func test_the_squires_vigil_at_level_8() -> void:
+	await _series("argynvostholt", 2, 8, "squires_vigil", [1, 2, 3, 4], ["godfrey_met", "courtyard_phantoms_defeated"])
+
+
+func test_the_penitent_at_level_10() -> void:
+	await _series("tsolenka_pass", 20, 10, "the_penitent", [1, 2, 3, 4])
+
+
+## Lupu fights beside the party, and the study door is open: the fight starts at the bricks.
+func test_the_tenant_at_level_2() -> void:
+	await _series("burgomaster_mansion", 22, 2, "hound_tenant", [1, 2, 3, 4], [], ["lupu"], ["study_door"])
+
+
+func test_the_tinkers_wagon_at_level_5() -> void:
+	await _series("svalich_crossroads", 12, 5, "tinkers_wagon", [1, 2, 3, 4])
