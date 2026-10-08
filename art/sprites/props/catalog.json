@@ -113,7 +113,7 @@
     "holt_dragon_scar": "crater",
     "holt_beacon_cradle": "beacon_cradle",
     "holt_long_table": "table_set",
-    "holt_servants_table": "table_chairs",
+    "holt_servants_table": "table_set",
     "holt_dragon_bones": "dragon_bones",
     "holt_kneeling_marks": "offering_circle",
     "holt_dragon_window": "window_stained",
@@ -1260,7 +1260,11 @@
     "bottle_rack": 7.5,
     "footstool": 1.4,
     "knitting_basket": 1.0,
-    "instrument_tray": 3.3
+    "instrument_tray": 3.3,
+    "weapon_rack": 9.0,
+    "holy_water_crate": 2.3,
+    "stake_bundle": 3.5,
+    "map_table": 4.0
   },
   "big_width": 1.6,
   "models3d": {
@@ -1643,7 +1647,14 @@
       "surplice": "surplice",
       "curtain_hooks": "curtain_hooks",
       "charcoal_suns": "charcoal_suns",
-      "instrument_tray": "instrument_tray"
+      "instrument_tray": "instrument_tray",
+      "weapon_rack": "weapon_rack",
+      "fallen_frames": "fallen_frames",
+      "portrait_turned": "portrait_turned",
+      "holy_water_crate": "holy_water_crate",
+      "stake_bundle": "stake_bundle",
+      "map_table": "map_table",
+      "nail_spiral": "nail_spiral"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",
@@ -3002,6 +3013,29 @@
             1.0
           ],
           "max": 10
+        },
+        {
+          "decals": [
+            "floor_dust"
+          ],
+          "on": "floor",
+          "chance": 0.3,
+          "size": [
+            0.8,
+            1.5
+          ],
+          "max": 60,
+          "tint": [
+            0.42,
+            0.4,
+            0.38
+          ],
+          "rooms": [
+            "holt great",
+            "holt entry",
+            "holt west",
+            "holt servants"
+          ]
         }
       ],
       "townhouse": [
@@ -3924,6 +3958,19 @@
     "rooms": [
       [
         [
+          "hunter"
+        ],
+        {
+          "floor": [
+            "holy_water_crate",
+            "stake_bundle",
+            "crate",
+            "holy_water_crate"
+          ]
+        }
+      ],
+      [
+        [
           "infirmary"
         ],
         {
@@ -4636,6 +4683,21 @@
     ]
   },
   "low_cover_rooms": [
+    [
+      [
+        "servants' hall",
+        "refectory",
+        "mess hall"
+      ],
+      {
+        "single": [
+          "table_set"
+        ],
+        "run": [
+          "table_set"
+        ]
+      }
+    ],
     [
       [
         "foundling",
