@@ -79,6 +79,10 @@ func capture_shots(tool: Node, out: String) -> void:
 	tool.call("_shot", out + "_2_burning_side.png")
 	view._confirm_target(caster, null)
 	await tool.call("wait_frames", 150)
+	view.hover_cell = Vector2i(-1, -1)
+	view.hud.hide_tooltip()
+	_frame()
+	await tool.call("wait_frames", 20)
 	tool.call("_shot", out + "_3_wall_cast.png")
 	# The Battle Master's turn: Commander's Strike picks Hedda, then the zombie she strikes.
 	e.end_turn()
@@ -89,6 +93,7 @@ func capture_shots(tool: Node, out: String) -> void:
 	view._confirm_target(fighter, tokens[ally.id] as CombatToken)
 	view.hover_cell = near_foe.cell
 	view._target_hover(fighter, tokens[near_foe.id] as CombatToken, Vector2(980, 420))
+	_frame_on(Vector2i(5, 5), 12.0)
 	await tool.call("wait_frames", 20)
 	print("targeting capture: strike step %s, current %s" % [view.picker.step, e.current().name()])
 	tool.call("_shot", out + "_4_strike_pick.png")
@@ -96,6 +101,10 @@ func capture_shots(tool: Node, out: String) -> void:
 
 ## The camera over the field between the party and the zombies.
 func _frame() -> void:
+	_frame_on(Vector2i(6, 3), 15.0)
+
+
+func _frame_on(cell: Vector2i, distance: float) -> void:
 	rig.follow = null
-	rig.position = board.cell_center(Vector2i(6, 3), 1)
-	rig.distance = 15.0
+	rig.position = board.cell_center(cell, 1)
+	rig.distance = distance
