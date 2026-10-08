@@ -5369,6 +5369,27 @@
   "recipe": "690f16cc6f",
   "text": "I chose. Didn't I? I chose you."
  },
+ "bray_martikov/25275dadac2e1916": {
+  "chars": 98,
+  "direction": "[cheeky, proud, quick]",
+  "model": "eleven_v3",
+  "recipe": "82a970a103",
+  "text": "Brom says I was brave. Mama says I was an idiot. Papa says both, and that it's a family tradition."
+ },
+ "bray_martikov/6cdaffb2ea3f922b": {
+  "chars": 18,
+  "direction": "[small, tearful, quiet]",
+  "model": "eleven_v3",
+  "recipe": "82a970a103",
+  "text": "I want to go home."
+ },
+ "bray_martikov/987ba974cc7c3573": {
+  "chars": 68,
+  "direction": "[shivering, small, awed]",
+  "model": "eleven_v3",
+  "recipe": "82a970a103",
+  "text": "I only wanted to see it. Brom said I wouldn't. I did. It's very big."
+ },
  "brother_anatol/2a1c8e2cad5a2293": {
   "chars": 95,
   "model": "eleven_v3",
@@ -5920,6 +5941,13 @@
   "recipe": "efd7d52c86",
   "text": "He sits. In the chapel. He doesn't talk. I bring him water and he doesn't drink it, and I take it away and bring more. Somebody has to carry things."
  },
+ "count_fowler/44f415f37d529fab": {
+  "chars": 128,
+  "direction": "[pleasant, silky, menacing]",
+  "model": "eleven_v3",
+  "recipe": "db24af9d10",
+  "text": "(Pleasantly, from the branches.) Ah. We wondered who the birds would bring us. The master will be so pleased to know your faces."
+ },
  "count_huntsman/21b1c97b688c8fa1": {
   "chars": 186,
   "direction": "[weary, low, remembering]",
@@ -6293,12 +6321,26 @@
   "recipe": "a782ea314e",
   "text": "Father is dead. Then nobody will improve the Belviews any more."
  },
+ "danika_martikov/0e3a0e0278dc90df": {
+  "chars": 126,
+  "direction": "[fierce, furious, loving]",
+  "model": "eleven_v3",
+  "recipe": "a29c7280e8",
+  "text": "(She doesn't stop kneading. She is kneading very hard.) Bring him home. Then I'll kill him. Then I'll feed him. In that order."
+ },
  "danika_martikov/34af58d1d7d7a6bd": {
   "chars": 118,
   "direction": "[alarmed, practical]",
   "model": "eleven_v3",
   "recipe": "a29c7280e8",
   "text": "Then it's not just us. Then something's wrong at the vineyard. I'll tell Urwin. He'll want to know where you heard it."
+ },
+ "danika_martikov/47f616ee554b211a": {
+  "chars": 117,
+  "direction": "[low, worried, certain]",
+  "model": "eleven_v3",
+  "recipe": "a29c7280e8",
+  "text": "He listens at the cellar door. He's never once cared about the cellar. Somebody's listening through him, aren't they."
  },
  "danika_martikov/5b9860d8788e61c4": {
   "chars": 101,
@@ -32482,6 +32524,13 @@
   "recipe": "dd92281f92",
   "text": "Tall white candles in iron stands. They burn, and they don't get any shorter. He wants it always to be the first night."
  },
+ "narrator/060332afbe4838f3": {
+  "chars": 126,
+  "direction": "[quiet, gentle, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Bray sits at the kitchen window with a blanket round him and watches the castle road. Danika sits beside him and watches Bray."
+ },
  "narrator/061a140be9076375": {
   "chars": 151,
   "direction": "[quiet, tense]",
@@ -34676,6 +34725,13 @@
   "recipe": "f60908d226",
   "text": "Ilse is on her feet before she is awake. She marches to him in step, halts, and goes down on one knee as stiffly as a soldier at a graveside."
  },
+ "narrator/1a3b4a56a735eed1": {
+  "chars": 65,
+  "direction": "[hushed, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The branches above it are heavy with something that isn't leaves."
+ },
  "narrator/1a418d82219a62a7": {
   "chars": 152,
   "direction": "[uneasy, quiet]",
@@ -36721,6 +36777,13 @@
   "recipe": "dd92281f92",
   "text": "Ruxandra presses her forehead to the effigy and shouts one word into the earth. The chest splits like a log in frost, and out of it, unfolding, comes a tree that walks."
  },
+ "narrator/2c22b668a2883268": {
+  "chars": 105,
+  "direction": "[quiet, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Somebody gets a cloak round him. He keeps looking past you, up the valley, toward the castle on its rock."
+ },
  "narrator/2c24cb09cf4e4bee": {
   "chars": 174,
   "model": "eleven_v4",
@@ -38426,6 +38489,13 @@
   "recipe": "dd92281f92",
   "text": "The wardens' word is the last line of the carving. Now that you know it, you can't stop seeing it."
  },
+ "narrator/3c466d9a3593e0fc": {
+  "chars": 114,
+  "direction": "[warm, wry, amused]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He shivers once, all over, and gets up from the window for the first time in a day, and goes and hits his brother."
+ },
  "narrator/3c4be6137e042db2": {
   "chars": 166,
   "model": "eleven_v4",
@@ -38714,6 +38784,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "Every jar on the shelf hums, except one. Inside the silent jar, a potion that fizzes like shaken wine and makes your heartbeat hurry just looking at it."
+ },
+ "narrator/3e95a4dc6b1397da": {
+  "chars": 194,
+  "direction": "[hushed, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Bats. Hundreds, hanging in the dead pine in black bunches. And in the crook of the trunk, very still, two pale shapes in good coats that are not asleep, with their eyes open, watching the trail."
  },
  "narrator/3e9e9190d8dea260": {
   "chars": 130,
@@ -39543,6 +39620,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The hut turns its door away from you, the way a cat turns its back. There is no ladder, and the stump is slick as a fish."
+ },
+ "narrator/4734a055e365432e": {
+  "chars": 168,
+  "direction": "[gentle, moved, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You open the cage. The raven comes out onto your arm, and shakes, and all at once there's a skinny boy of ten in its place, naked and blue with cold, holding on to you."
  },
  "narrator/4736930e01064d33": {
   "chars": 68,
@@ -40768,6 +40852,13 @@
   "recipe": "f60908d226",
   "text": "You walk her down to the village in the grey before morning. Goodwife Sarnov is on her step, waiting for nothing, the way she has waited every morning for twelve years."
  },
+ "narrator/5318f69d917310b0": {
+  "chars": 120,
+  "direction": "[tense, sudden, menacing]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Then the branches unfold, and the two in the good coats drop out of the pine like dropped coats, and land on their feet."
+ },
  "narrator/532329786bcad382": {
   "chars": 112,
   "model": "eleven_v4",
@@ -41049,6 +41140,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "He bows to her, and to each of you, and is gone between the trees before the sun clears them. Ileana watches the treeline until it is full light."
+ },
+ "narrator/5536bee6b7d6c243": {
+  "chars": 129,
+  "direction": "[quiet, warm]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You bring him down off the hill trail and in through the Blue Water Inn's kitchen door after dark, the way the Keepers do things."
  },
  "narrator/553a3e5dfb8d0d41": {
   "chars": 90,
@@ -42418,6 +42516,13 @@
   "recipe": "dd92281f92",
   "text": "A crypt cut with the name Gustav Durst and the year of his birth, its slab set ready and never closed. Nobody ever got around to dying properly."
  },
+ "narrator/60cb7b7b42fd5fe0": {
+  "chars": 141,
+  "direction": "[gentle, moved, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The raven in your hands shakes itself, and all at once there's a skinny boy of ten in its place, naked and blue with cold, holding on to you."
+ },
  "narrator/610141688cacbf30": {
   "chars": 190,
   "model": "eleven_v4",
@@ -43774,6 +43879,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "Round white goat cheeses set out on a board to firm in the cold, each pressed with a little sun on top."
+ },
+ "narrator/6cc03d4ef84670d6": {
+  "chars": 181,
+  "direction": "[gentle, relieved, warm]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The words go into him like warm water. He shivers once, all over, and looks at you, and then down at his own wrist, and then, for the first time, back down the trail toward Vallaki."
  },
  "narrator/6cc3543491d4dba8": {
   "chars": 149,
@@ -45923,6 +46035,13 @@
   "recipe": "dd92281f92",
   "text": "Thorn hears the word and doesn't understand it. Then he does."
  },
+ "narrator/813da5f4a7ff7c96": {
+  "chars": 80,
+  "direction": "[quiet, uneasy, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Hours of it, and his eyes still go to the road when he thinks nobody's watching."
+ },
  "narrator/814065652eb39424": {
   "chars": 139,
   "model": "eleven_v4",
@@ -47543,6 +47662,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Afterwards she carries him out herself, and won't be helped, and buries him under a rowan on the hillside with a crow feather in the bark above him."
+ },
+ "narrator/8f6f4cf2aa4666f0": {
+  "chars": 84,
+  "direction": "[quiet, relieved]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "An empty silver cage swings from the dead pine, door open. Nobody's watching it now."
  },
  "narrator/8f75f1c24228ca65": {
   "chars": 63,
@@ -50857,6 +50983,13 @@
   "recipe": "f60908d226",
   "text": "The curse comes off him like a wet coat. One moment there's a goat in the gap of the pen; the next there's a big bearded man on his hands and knees in the straw, naked and shaking."
  },
+ "narrator/ad9c402f3dbc14e7": {
+  "chars": 172,
+  "direction": "[hushed, tense]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You come in under the branches one step at a time. The latch is silver and very cold. It opens. The raven drops into your hands, light as a glove, and doesn't make a sound."
+ },
  "narrator/ad9c5ef372669b84": {
   "chars": 101,
   "model": "eleven_v4",
@@ -50966,6 +51099,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You set the point over his heart and lean on it with all your weight. For a moment the wood will not go in. Then it does."
+ },
+ "narrator/aee243c1e9885522": {
+  "chars": 215,
+  "direction": "[quiet, chilling]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "His eyes go to the castle the way a compass goes to north. And when the cloak slips, there are two small marks on the inside of his wrist, neat as a sewing needle's. Not enough to hurt him. Enough to listen through."
  },
  "narrator/aee549f2710d39dc": {
   "chars": 161,
@@ -52336,6 +52476,13 @@
   "recipe": "dd92281f92",
   "text": "He watches the windows more than the door. Each time a bird lands on the sill, he glances at it the way a man glances at a friend, and once you'd swear it nodded back."
  },
+ "narrator/bd39ba964e3d008f": {
+  "chars": 103,
+  "direction": "[tense, hushed]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A dead twig goes under somebody's boot like a snapped bone. Up in the pine, a hundred small heads turn."
+ },
  "narrator/bd47308377c02a17": {
   "chars": 114,
   "direction": "[sly, wry]",
@@ -52559,6 +52706,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You can see the whole Svalich road from here, and the village, and the lane to the mill. Anyone sitting up here would know who was coming long before they knocked."
+ },
+ "narrator/bf555cebd62f8ade": {
+  "chars": 64,
+  "direction": "[gentle, plain]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A cold, frightened boy who wants his mother. That's all you see."
  },
  "narrator/bf67d3be9ef04880": {
   "chars": 115,
@@ -53424,6 +53578,13 @@
   "recipe": "dd92281f92",
   "text": "The flagstone tips, and the dark beneath it is ten feet deep and full of spikes."
  },
+ "narrator/c660bfe0f5576df4": {
+  "chars": 105,
+  "direction": "[quiet, uneasy, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Hours in the thin sun, and prayers, and his eyes still go to the castle when he thinks nobody's watching."
+ },
  "narrator/c662bdefa9605ed6": {
   "chars": 100,
   "direction": "[warm, wry]",
@@ -53521,6 +53682,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Letters from Gustav Durst to the household's nursemaid, tied in blue ribbon. They begin politely and stop being polite."
+ },
+ "narrator/c7c04e681897c5ad": {
+  "chars": 68,
+  "direction": "[plain, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Dead branches, a lot of them. It's hard to see much against the sky."
  },
  "narrator/c7c1999ced2a25ed": {
   "chars": 93,
@@ -55245,6 +55413,13 @@
   "recipe": "dd92281f92",
   "text": "Two burning skulls rise from the coal heaps, and the fire in the furnace stands up on legs of its own."
  },
+ "narrator/d6df23f9ddcd2443": {
+  "chars": 115,
+  "direction": "[quiet, tense, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The cage door is easy to reach. That was the idea. As your hand closes on the latch, the branches above you unfold."
+ },
  "narrator/d6eec4f054ea0a1d": {
   "chars": 124,
   "direction": "[hushed, eerie]",
@@ -55658,6 +55833,13 @@
   "recipe": "dd92281f92",
   "text": "The inscription, in plain words: \"Yrrga, the eye that opened outside. Its priests put out their own eyes. It was a mercy, and they knew it.\""
  },
+ "narrator/dc1c7db408212d31": {
+  "chars": 148,
+  "direction": "[warm, gentle, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A long day by the window in the light, with prayers every hour. By evening he's stopped watching the castle road, and is watching the bread instead."
+ },
  "narrator/dc26207e97616f7b": {
   "chars": 85,
   "model": "eleven_v4",
@@ -55676,6 +55858,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The sigils run round the walls in one unbroken line, and every one of them points at the iron reliquary in the corner."
+ },
+ "narrator/dc40e5c3d814024d": {
+  "chars": 156,
+  "direction": "[quiet, sad, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A dead pine by the trail, and a silver cage hung from its lowest branch. Inside, a young raven with every feather on end, beak open, making no sound at all."
  },
  "narrator/dc4a2b4a313e7eba": {
   "chars": 135,
@@ -56080,6 +56269,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The flat of the old blade touches one shoulder, then the other."
+ },
+ "narrator/e0004dc818b62aab": {
+  "chars": 111,
+  "direction": "[tense, sudden, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The count's fowlers drop out of the dead pine, and the bats come down after them like a black sheet shaken out."
  },
  "narrator/e009bfeeb0a45a9e": {
   "chars": 72,
@@ -57534,6 +57730,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "Anna opens the door with a candle, and sees what's behind you, and the candle goes out."
+ },
+ "narrator/ed3fee72670fa00b": {
+  "chars": 193,
+  "direction": "[gentle, patient, warm]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "It takes the rest of the day, sitting in the one patch of sun on the trail, with a prayer said over him every hour. Toward evening he stops looking at the castle, and asks if there's any bread."
  },
  "narrator/ed46b956d7909bf5": {
   "chars": 200,
@@ -70382,6 +70585,13 @@
   "recipe": "1fae5c6eba",
   "text": "Down in the cellar, behind the casks nobody drinks. Draughts that close a wound in a breath, prayers for the bad nights, a silver bird my father carved. For the Keepers' friends, at what it cost us. Nobody else ever hears about this room."
  },
+ "urwin_martikov/0fc9b6a2312a4df6": {
+  "chars": 199,
+  "direction": "[warm, quiet, wry]",
+  "model": "eleven_v3",
+  "recipe": "1fae5c6eba",
+  "text": "My grandfather flew in this, the night the house on the hill fell. It's from the cellar the castle still doesn't know about, thanks to you. And money, which Danika says I'm to give you and not argue."
+ },
  "urwin_martikov/110838260fc16742": {
   "chars": 124,
   "direction": "[low, thoughtful]",
@@ -70417,6 +70627,13 @@
   "recipe": "1fae5c6eba",
   "text": "We'll still give you a bed. Danika says it's what you do. We won't sell you anything. I say that's what you do."
  },
+ "urwin_martikov/3ec83e5c72af60fc": {
+  "chars": 138,
+  "direction": "[low, grim]",
+  "model": "eleven_v3",
+  "recipe": "1fae5c6eba",
+  "text": "The birds found him at dawn. A silver cage hung in a dead pine on the hill trail above the lake, and a raven in it that won't change back."
+ },
  "urwin_martikov/40f10d460547ab0e": {
   "chars": 206,
   "direction": "[low, confiding, wary]",
@@ -70430,6 +70647,13 @@
   "model": "eleven_v3",
   "recipe": "1fae5c6eba",
   "text": "Probably. Don't encourage him."
+ },
+ "urwin_martikov/4de34a5c8a404903": {
+  "chars": 198,
+  "direction": "[low, urgent, worried]",
+  "model": "eleven_v3",
+  "recipe": "1fae5c6eba",
+  "text": "(He leans in and speaks under the noise of the room.) Bray didn't come home. He went out of the window after dark, to look at the castle, because his brother dared him. Danika hasn't sat down since."
  },
  "urwin_martikov/5ca4c68ca07fe3a5": {
   "chars": 84,
@@ -70529,6 +70753,13 @@
   "recipe": "1fae5c6eba",
   "text": "You heard him. Go home, Vargas."
  },
+ "urwin_martikov/9771d258fcea2a85": {
+  "chars": 188,
+  "direction": "[low, tense, measured]",
+  "model": "eleven_v3",
+  "recipe": "1fae5c6eba",
+  "text": "It's a trap, and not for him. For whoever comes for him. If I go, the castle knows what I am. If Danika goes, the same. They've been trying to learn the Keepers' names for a hundred years."
+ },
  "urwin_martikov/9d49ef1fc54c55d8": {
   "chars": 146,
   "direction": "[plain, dry]",
@@ -70542,6 +70773,13 @@
   "model": "eleven_v3",
   "recipe": "1fae5c6eba",
   "text": "It's a strange inn."
+ },
+ "urwin_martikov/c8e51f1333bd35a0": {
+  "chars": 135,
+  "direction": "[moved, quiet, grateful]",
+  "model": "eleven_v3",
+  "recipe": "1fae5c6eba",
+  "text": "(He comes round the bar, which he never does, and takes your hand in both of his, which he has never done.) Our boy. Home, and himself."
  },
  "urwin_martikov/d200bdc3350b4880": {
   "chars": 147,
@@ -70564,6 +70802,13 @@
   "recipe": "1fae5c6eba",
   "text": "It won't get the chance."
  },
+ "urwin_martikov/d829994a4f515659": {
+  "chars": 153,
+  "direction": "[weary, worried, humble]",
+  "model": "eleven_v3",
+  "recipe": "1fae5c6eba",
+  "text": "He's home. But he isn't all ours yet; Danika says something's listening through him. Sit with him, if you can. I can't. He's my son, and I'd do it wrong."
+ },
  "urwin_martikov/dce6362d3d0598b4": {
   "chars": 23,
   "direction": "[quiet, firm]",
@@ -70577,6 +70822,13 @@
   "model": "eleven_v3",
   "recipe": "1fae5c6eba",
   "text": "The room over ours. Nothing comes in through our windows that we don't let in."
+ },
+ "urwin_martikov/e671bd8d7c84b34a": {
+  "chars": 67,
+  "direction": "[quiet, pleading]",
+  "model": "eleven_v3",
+  "recipe": "1fae5c6eba",
+  "text": "You're strangers. Strangers go up hill trails all the time. Please."
  },
  "urwin_martikov/ebac9da5dae65691": {
   "chars": 89,
