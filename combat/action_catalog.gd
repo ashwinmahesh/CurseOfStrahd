@@ -219,8 +219,12 @@ func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 		var heal := _entry("divine_spark_heal", tab, "Divine Spark: Heal", "%d left · 1d8+%d" % [n, ch.ability_mod(&"wis")], "action", cw, "ally")
 		heal["range"] = 30
 		out.append(heal)
-		var harm := _entry("divine_spark_harm", tab, "Divine Spark: Harm", "Con DC %d · radiant" % e.features._cleric_dc(c), "action", cw, "enemy")
+		var harm := _entry("divine_spark_harm", tab, "Divine Spark: Harm", "Con DC %d · best for the target" % e.features._cleric_dc(c), "action", cw, "enemy")
 		harm["range"] = 30
+		# Necrotic or Radiant, the cleric's choice (right-click); "best" takes whichever the target resists less.
+		harm["choices"] = [{"value": "best", "label": "Best for the target"}, {"value": "radiant", "label": "Radiant"}, {"value": "necrotic", "label": "Necrotic"}]
+		harm["choice_label"] = "Damage type"
+		harm["opts"] = {"choice": "best"}
 		out.append(harm)
 		var tw := cw
 		if tw == "":
@@ -992,7 +996,8 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 		"divine_spark_heal":
 			return e.features.divine_spark(c, t, false)
 		"divine_spark_harm":
-			return e.features.divine_spark(c, t, true, str(opts.get("damage_type", "radiant")))
+			var spark := str((action.get("opts", {}) as Dictionary).get("choice", opts.get("choice", opts.get("damage_type", "best"))))
+			return e.features.divine_spark(c, t, true, spark)
 		"turn_undead":
 			return e.features.turn_undead(c)
 		"preserve_life":

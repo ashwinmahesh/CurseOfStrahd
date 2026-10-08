@@ -226,8 +226,9 @@ func _cleric_dc(c: Combatant) -> int:
 
 
 ## Divine Spark (Cleric 2): a creature within 30 ft regains 1d8 + Wisdom modifier Hit Points, or makes a
-## Constitution save against Necrotic or Radiant damage of that amount (half on a success).
-func divine_spark(c: Combatant, target: Combatant, harm: bool, damage_type: String = "radiant") -> CombatResult:
+## Constitution save against Necrotic or Radiant damage of that amount (half on a success), the cleric's choice of type:
+## `damage_type` "radiant", "necrotic" or "best" (whichever the target takes more of; Radiant when even).
+func divine_spark(c: Combatant, target: Combatant, harm: bool, damage_type: String = "best") -> CombatResult:
 	var e := enc()
 	var why := _channel_check(c)
 	if why != "":
@@ -254,10 +255,18 @@ func divine_spark(c: Combatant, target: Combatant, harm: bool, damage_type: Stri
 	var s := target.creature.roll_save(e.dice, &"con", dc, [], [], "Constitution save vs Divine Spark (%s)" % target.name())
 	if s.success:
 		amount /= 2
-	var ty := damage_type if damage_type in ["radiant", "necrotic"] else "radiant"
+	var ty := damage_type if damage_type in ["radiant", "necrotic"] else spark_type(target)
 	e.events.append({"type": "spell", "caster": c.id, "spell": "divine_spark", "cells": [], "targets": [target.id]})
 	e.deal_damage(c, target, [{"amount": amount, "type": ty}], false, "Divine Spark", [s.describe(), text])
 	return r
+
+
+## Divine Spark's better damage type against `target`: the one it takes more of (Immunity, Resistance and
+## Vulnerability weighed on a test amount), Radiant when they're even.
+static func spark_type(target: Combatant) -> String:
+	var radiant := target.creature.preview_damage_parts([{"amount": 20, "type": "radiant"}]).final
+	var necrotic := target.creature.preview_damage_parts([{"amount": 20, "type": "necrotic"}]).final
+	return "necrotic" if necrotic > radiant else "radiant"
 
 
 ## Turn Undead (Cleric 2): each Undead enemy within 30 ft makes a Wisdom save or is Frightened and Incapacitated for
