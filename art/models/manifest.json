@@ -6934,6 +6934,104 @@
         "pal_umber"
       ],
       "triangles": 1674
+    },
+    "pot_rack": {
+      "file": "art/models/pot_rack.glb",
+      "mount": "wall",
+      "stands_for": [
+        "pot_rack"
+      ],
+      "size": [
+        0.931,
+        0.315,
+        0.225
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_pewter",
+        "pal_rust",
+        "pal_stone",
+        "pal_umber"
+      ],
+      "triangles": 568
+    },
+    "cheeses": {
+      "file": "art/models/cheeses.glb",
+      "mount": "free",
+      "stands_for": [
+        "cheeses"
+      ],
+      "size": [
+        0.62,
+        0.45,
+        0.42
+      ],
+      "materials": [
+        "pal_candle",
+        "pal_ivory",
+        "pal_parchment",
+        "pal_umber",
+        "pal_vellum",
+        "pal_walnut"
+      ],
+      "triangles": 360
+    },
+    "umbrella_stand": {
+      "file": "art/models/umbrella_stand.glb",
+      "mount": "free",
+      "stands_for": [
+        "umbrella_stand"
+      ],
+      "size": [
+        0.288,
+        0.993,
+        0.2
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_tan",
+        "pal_walnut"
+      ],
+      "triangles": 294
+    },
+    "broom": {
+      "file": "art/models/broom.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "broom"
+      ],
+      "size": [
+        0.22,
+        1.261,
+        0.371
+      ],
+      "materials": [
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 200
+    },
+    "relics": {
+      "file": "art/models/relics.glb",
+      "mount": "wall",
+      "stands_for": [
+        "relics"
+      ],
+      "size": [
+        0.7,
+        0.244,
+        0.18
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_bone_dark",
+        "pal_frost",
+        "pal_sickly",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 232
     }
   }
 }

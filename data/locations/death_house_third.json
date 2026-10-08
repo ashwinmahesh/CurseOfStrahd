@@ -453,6 +453,46 @@
       "label": "a bundle under the nursemaid's mattress",
       "model": "satchel",
       "item": "cloak_of_elvenkind"
+    },
+    {
+      "id": "bathroom_stove",
+      "cell": [
+        5,
+        14
+      ],
+      "label": "A small iron stove with a kettle",
+      "model": "stove",
+      "kind": "decor"
+    },
+    {
+      "id": "nursemaid_writing_table",
+      "cell": [
+        21,
+        4
+      ],
+      "label": "A writing table",
+      "model": "letters_table",
+      "kind": "decor"
+    },
+    {
+      "id": "nursery_rocking_chair",
+      "cell": [
+        20,
+        13
+      ],
+      "label": "A rocking chair",
+      "model": "rocking_chair",
+      "kind": "decor"
+    },
+    {
+      "id": "storage_broom",
+      "cell": [
+        13,
+        14
+      ],
+      "label": "A broom in the corner",
+      "model": "broom",
+      "kind": "decor"
     }
   ],
   "containers": [
@@ -558,6 +598,15 @@
       "kind": "window",
       "bright_ft": 0,
       "dim_ft": 10
+    },
+    {
+      "cell": [
+        22,
+        10
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
     }
   ],
   "traps": [
