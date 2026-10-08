@@ -561,3 +561,46 @@ func test_the_view_picks_the_maneuvering_ally_and_its_square() -> void:
 	e.movement.offer_reaction_move(f, target, "Maneuvering Attack")
 	assert_false(picker2.begin_move(f), "the ally's Reaction is spent: no one can take it")
 	assert_true(e.movement.open_reaction_move().is_empty(), "and the offer is passed on")
+
+
+# --- Eldritch Blast ------------------------------------------------------------------------------------
+
+## The attack rolls made at `t` since event `from`.
+func _attacks_at(e: Encounter, from: int, t: Combatant) -> int:
+	var n := 0
+	for i in range(from, e.events.size()):
+		var ev := e.events[i] as Dictionary
+		if str(ev.get("type", "")) == "attack" and str(ev.get("target", "")) == t.id:
+			n += 1
+	return n
+
+
+func test_eldritch_blast_takes_a_pick_for_each_beam() -> void:
+	var e := TestCombat.open_field(3)
+	var kip := TestCombat.hero(e, "kip_smudgewick", Vector2i(1, 3), 5)
+	TestCombat.punching_bag(e, Vector2i(6, 3), 200)
+	TestCombat.start_with(e, kip)
+	var a := ActionCatalog.new(e).find(kip, "spell:eldritch_blast")
+	assert_false(a.is_empty(), "Kip knows Eldritch Blast")
+	assert_eq(str(a["targeting"]), "multi")
+	assert_eq(int(a["count"]), 2, "two beams at character level 5")
+	assert_true(bool(a["repeat"]), "both beams may go at one target")
+
+
+func test_eldritch_blast_beams_go_where_they_are_aimed() -> void:
+	var e := TestCombat.open_field(3)
+	var kip := TestCombat.hero(e, "kip_smudgewick", Vector2i(1, 3), 5)
+	var one := TestCombat.punching_bag(e, Vector2i(6, 2), 200)
+	var two := TestCombat.punching_bag(e, Vector2i(6, 5), 200)
+	TestCombat.start_with(e, kip)
+	var mark := e.events.size()
+	var r := e.spells.cast(kip, "eldritch_blast", 0, [one, two])
+	assert_true(r.ok, r.reason)
+	assert_eq(_attacks_at(e, mark, one), 1, "a beam at the first")
+	assert_eq(_attacks_at(e, mark, two), 1, "a beam at the second")
+	kip.action_available = true
+	mark = e.events.size()
+	assert_true(e.spells.cast(kip, "eldritch_blast", 0, [one]).ok)
+	assert_eq(_attacks_at(e, mark, one), 2, "both beams at one target")
+	kip.action_available = true
+	assert_eq(e.spells.cast(kip, "eldritch_blast", 0, [one, two, one]).reason, "Eldritch Blast has 2 beams")

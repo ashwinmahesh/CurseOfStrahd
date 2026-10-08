@@ -674,6 +674,7 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 			else:
 				picked.append(t.combatant)
 			var need := e.spells.target_count(Compendium.shared().spell_data(str(selected["spell_id"])), slot_level + (1 if str((selected.get("opts", {}) as Dictionary).get("slot_boost", "")) != "" else 0)) if str(selected["kind"]) == "spell" else int(selected.get("count", 1))
+			need = maxi(need, int(selected.get("count", 1)))   # Eldritch Blast: one pick per beam
 			if picked.size() >= need:
 				_perform(selected, picked.duplicate(), Vector2.INF, Vector2.ZERO)
 			else:

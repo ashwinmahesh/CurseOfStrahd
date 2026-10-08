@@ -303,6 +303,10 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 	if tgt.size() > target_count(s, slot) and not id in ["magic_missile", "scorching_ray", "eldritch_blast"]:
 		out["why"] = "Too many targets (%d max)" % target_count(s, slot)
 		return out
+	if id == "eldritch_blast" and tgt.size() > spells.specials.beams(c):
+		var beams := spells.specials.beams(c)
+		out["why"] = "Eldritch Blast has %d beam%s" % [beams, "" if beams == 1 else "s"]
+		return out
 	for t in tgt:
 		if bool(s.get("requires_sight", false)) and not e.can_see(from, t) and not e.can_see(c, t):
 			out["why"] = "You must see the target"

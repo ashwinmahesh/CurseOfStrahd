@@ -379,6 +379,10 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 		var t := data.get("targets", {}) as Dictionary
 		a["count"] = int(t.get("count", 1))
 		a["repeat"] = str(s["id"]) in ["magic_missile", "scorching_ray"] or bool(data.get("repeat_targets", false))
+		# Eldritch Blast (2024): a pick for each beam, at the same target or different ones.
+		if str(s["id"]) == "eldritch_blast":
+			a["count"] = e.spells.specials.beams(c)
+			a["repeat"] = true
 		a["concentration"] = bool((data.get("duration", {}) as Dictionary).get("concentration", false))
 		if c.creature is Character:
 			var mm: Array = []
