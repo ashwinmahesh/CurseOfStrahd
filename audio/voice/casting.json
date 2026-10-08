@@ -110,8 +110,8 @@
       "name": "Barovia rictavio",
       "description": "An old man performing a showman: a big, booming carnival barker's voice with a clear, noticeable Dutch accent, theatrical and florid, rolling his words, laughing too loudly. Under the bluster, flashes of a tired, precise, sombre scholar.",
       "settings": {},
-      "accent_tag": "[Dutch accent]",
-      "model": "eleven_v3"
+      "model": "eleven_v4",
+      "keep_original": "owner 2026-10-08: \"I like Rictavio's voice, whatever the original was\"; stays on eleven_v4 without tags"
     },
     "dmitri_krezkov": {
       "voice_id": "hmltLA3C24WM4meHdxdu",
@@ -192,7 +192,8 @@
       "name": "Barovia emil_toranescu",
       "description": "A big, grey-bearded man with a deep, rumbling, patient voice and a strong, clearly audible Eastern European (Romanian) accent. Slow and steady like a farmer, with a wolf's growl underneath; pained and proud, few words, great weight.",
       "settings": {},
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "released": true
     },
     "stanimir": {
       "voice_id": "ygr7cyu4bi4NLKu5k2az",
@@ -642,11 +643,12 @@
       "released": true
     },
     "danika_martikov": {
-      "voice_id": "3rGWfmjM9hcAtEIJr1sC",
-      "name": "Barovia danika_martikov",
-      "description": "A woman in her forties with a warm, brisk, motherly voice and a strong, clearly audible Eastern European (Romanian) accent. Friendly to guests, frosty to bullies.",
+      "voice_id": "JmEsJ3zlTWU8eVXGmWfk",
+      "name": "Barovia Danika Martikova (2026-10-08)",
+      "description": "A Barovian innkeeper's wife in her forties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A warm, brisk, practical motherly voice, quick and dry, that turns frosty with bullies and loud when shouting at her boys.",
       "settings": {},
       "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
       "released": true
     },
     "vestige_drizlash": {
