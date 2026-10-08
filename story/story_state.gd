@@ -362,6 +362,7 @@ func advance_minutes(minutes: int) -> void:
 	if minutes >= 30:
 		time_passed.emit(minutes)
 	var start := total_minutes()
+	Services.note_deaths(self, start)   # when each fallen hero died, for Raise Dead's 10 days
 	minute_of_day += minutes
 	while minute_of_day >= 24 * 60:
 		minute_of_day -= 24 * 60

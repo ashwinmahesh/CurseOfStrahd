@@ -15,5 +15,10 @@
     "village_of_barovia"
   ],
   "region": "village_of_barovia",
-  "pronouns": "he/him"
+  "pronouns": "he/him",
+  "services": [
+    {
+      "id": "room_modest"
+    }
+  ]
 }

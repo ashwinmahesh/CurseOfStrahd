@@ -11,6 +11,7 @@ extends CanvasLayer
 signal ended(combat: String)
 ## A `shop` line: the game opens the shop for `npc` and calls resume() when it closes.
 signal shop_requested(npc: String)
+signal services_requested(npc: String)
 ## Someone steps into or out of the scene on the map (`appear`, `vanish`).
 signal stage_requested(what: String, npc: String, at: String)
 ## A `respec` pick: the game rebuilds party member `index` and calls resume() when it's done.
@@ -360,6 +361,10 @@ func _show(beat: Dictionary) -> void:
 		"shop":
 			visible = false
 			shop_requested.emit(str(beat["npc"]))
+			return
+		"services":
+			visible = false
+			services_requested.emit(str(beat["npc"]))
 			return
 		"respec":
 			visible = false

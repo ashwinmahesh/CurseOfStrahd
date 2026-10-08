@@ -328,6 +328,7 @@ static func _light_the_fight(view: LocationView, e: Encounter) -> void:
 ## The location's grid as it stands now (closed doors are walls; NPC squares are blocked).
 static func _combat_grid(view: LocationView) -> CombatGrid:
 	var g := CombatGrid.from_rows(view.loc["map"]["rows"] as Array)
+	g.drop_ft = int(view.loc["map"].get("drop_ft", 0))
 	for d: Variant in view.loc.get("doors", []):
 		var door := d as Dictionary
 		g.set_flag(LocationView._cell(door["cell"]), CombatGrid.WALL, LocationLocks._door_state(view, str(door["id"])) != LocationView.DOOR_OPEN)
@@ -342,7 +343,8 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 	for c in e.combatants:
 		if c.side in [&"party", &"guest"]:
 			for m: Combatant in view.members + view.guest_members:
-				if m.creature == c.creature:
+				# One that fell out of the fight (a chasm) climbs back to where it stood before it.
+				if m.creature == c.creature and not c.has_meta("left_fight"):
 					m.cell = c.cell
 		elif c.creature.dead and not e.legendary.departed.has(c.id):
 			var stain := LocationBuilder._box(view, Vector3(0.6, 0.02, 0.4), view.board.cell_center(c.cell, c.size_cells) + Vector3(0, 0.015, 0), "blood_deep")
@@ -413,7 +415,7 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 	var talk := Captives.conversation(captives, encounter_id)
 	if talk != "":
 		_after_talk = {"view": view.get_instance_id(), "id": encounter_id, "spec": spec, "loot": not e.legendary.no_loot(),
-			"carried": AiTactics.leftovers(e), "journey": view.st.travel_resume}
+			"carried": _left_behind(e), "journey": view.st.travel_resume}
 		view.st.travel_resume = {}
 	view._save_positions()
 	view.combat_ended.emit(outcome)
@@ -422,7 +424,14 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 		Captives.forget_spent(view.st)
 		view.dialogue_requested.emit(talk, "")
 	elif outcome == "victory":
-		_spoils(view, encounter_id, spec, not e.legendary.no_loot(), AiTactics.leftovers(e))
+		_spoils(view, encounter_id, spec, not e.legendary.no_loot(), _left_behind(e))
+
+
+## What the fallen foes still carried, and their weapons left lying on the ground (GroundItems).
+static func _left_behind(e: Encounter) -> Array[Dictionary]:
+	var left := AiTactics.leftovers(e)
+	left.append_array(e.ground.spoils)
+	return left
 
 
 ## A won fight's spoils and journey, held while its captives are dealt with (F13): {view (instance id), id, spec,
