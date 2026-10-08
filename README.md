@@ -236,7 +236,7 @@ On a controller, hold LB for a radial menu of actions. Reactions ask first unles
 
 **Barovia**
 
-- A lit 3D world with hand-drawn characters that walk and attack in 8 directions (the HD-2D look): lamps that cast
+- A lit 3D world with storybook-style 2D characters that walk and attack in 8 directions (the HD-2D look): lamps that cast
   shadows, sprites that catch the light, rain and snow on surfaces, water, 3D trees, Blender-built towns and interiors
   that cut away toward the camera, and vistas past the map's edge.
 - Doors, locks, traps and hidden things to search for; sneaking with sight cones, surprise on either side,
@@ -278,6 +278,8 @@ On a controller, hold LB for a radial menu of actions. Reactions ask first unles
 - Five autosaves, save pictures and notes, backups, quicksave, and jump-in saves for 13 chapters.
 - Settings for difficulty, graphics presets, keys, text size and UI scale, fight speed, narration, depth blur, the
   Modern or Classic look, and the respec.
+- Cheat codes (pause menu → Cheat codes) that give any item to a hero; every code is in
+  [docs/cheat_codes.md](docs/cheat_codes.md).
 
 ## Project layout
 
@@ -356,5 +358,5 @@ this game.
   Mechanical Sounds by BMacZero.
 
 **Art and voices.** Characters, portraits, busts, cutscene stills, textures, props, menu art and the title art were
-drawn for this game with Google Gemini and finished in Blender. The spoken lines and the enemies' battle voices were
+made for this game with Google Gemini and finished in Blender. The spoken lines and the enemies' battle voices were
 generated with ElevenLabs. The menus use fonts that ship with macOS.

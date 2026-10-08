@@ -2125,6 +2125,16 @@
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "6PwTqznVdei2pIAeBNr0",
       "released": true
+    },
+    "corvina": {
+      "voice_id": "rg9y8vYqUtgvP9tOq4vh",
+      "name": "Barovia Corvina",
+      "description": "A young woman of about twenty-two, a wizard's apprentice from beyond the mists, forty years a vampire spawn, speaking with a crisp, educated English accent. A clear, dry, quick and clever voice gone cold and hollow, slow now as if reading words off a page, with flashes of her old impatience and wit; tired, gentle, haunted.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[English accent]",
+      "generated_voice_id": "rg9y8vYqUtgvP9tOq4vh",
+      "released": true
     }
   },
   "sfx": {

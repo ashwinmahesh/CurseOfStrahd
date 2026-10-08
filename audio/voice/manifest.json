@@ -5941,6 +5941,34 @@
   "recipe": "efd7d52c86",
   "text": "He sits. In the chapel. He doesn't talk. I bring him water and he doesn't drink it, and I take it away and bring more. Somebody has to carry things."
  },
+ "corvina/69065b4fe65d0aea": {
+  "chars": 155,
+  "direction": "[slow, wondering, then moved]",
+  "model": "eleven_v3",
+  "recipe": "80bbb3dc07",
+  "text": "(Very slowly, as if she's reading it off a page.) Corvina. That's mine. I'd put it down somewhere. (She looks at you properly.) He sent you. He remembered."
+ },
+ "corvina/940dc4a62c69147f": {
+  "chars": 177,
+  "direction": "[sad, tender, then cold warning]",
+  "model": "eleven_v3",
+  "recipe": "80bbb3dc07",
+  "text": "Tell him it's all right. Tell him I'd do it again. And then stand back, because I can't stop. I hold the master's doors. The new master's. I've held them so long I'm made of it."
+ },
+ "corvina/f303b317219fa3eb": {
+  "chars": 62,
+  "direction": "[faint, fading, gentle, a little wry]",
+  "model": "eleven_v3",
+  "recipe": "80bbb3dc07",
+  "text": "Corvina. Put it on the box. Everybody has a name on their box."
+ },
+ "corvina/f822dcad285c2314": {
+  "chars": 96,
+  "direction": "[cold, flat, hollow, formal]",
+  "model": "eleven_v3",
+  "recipe": "80bbb3dc07",
+  "text": "You're in the wrong part of the house. This door is held. They're all held. That's what I'm for."
+ },
  "count_fowler/44f415f37d529fab": {
   "chars": 128,
   "direction": "[pleasant, silky, menacing]",
@@ -31157,6 +31185,13 @@
   "recipe": "b6ee845820",
   "text": "No. You're right. I'd go up there as exactly the man who ran. I need to be someone else first, and that takes longer than a night."
  },
+ "mordenkainen/493f773ae43fc076": {
+  "chars": 210,
+  "direction": "[quiet, grieving, tender, then gruff]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "You found her. (He doesn't ask how it went. He looks at your faces and doesn't need to.) Did she have ink on her fingers still? She always did. Thank you. Now go away for a while. I'd like to be old in private."
+ },
  "mordenkainen/4df1cb73c1b61922": {
   "chars": 212,
   "direction": "[earnest, tender, grave]",
@@ -32864,6 +32899,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "An old standing stone, carved long ago with spirals worn almost smooth. Somebody newer has daubed a crude castle over the spirals in red clay."
+ },
+ "narrator/07facd000a35db4e": {
+  "chars": 201,
+  "direction": "[quiet, grim, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She falls the way his spawn fall, all at once, into dust and an old scholar's coat. In the coat there's a slip of paper with a few lines of small, slanted handwriting and a name at the bottom: Corvina."
  },
  "narrator/080df9420473340f": {
   "chars": 101,
@@ -39198,6 +39240,13 @@
   "recipe": "dd92281f92",
   "text": "A painted sign of blue water under a black bird. Somebody has repainted the bird recently, with real care."
  },
+ "narrator/40e87570c1c7fc41": {
+  "chars": 189,
+  "direction": "[hushed, eerie, tense]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You lift the lid. A young woman lies in the crypt with her eyes open, grey to the lips, in the rags of a scholar's coat, with ink still on her fingers. She sits up as if she's been waiting."
+ },
  "narrator/40f8ab28e4d3e062": {
   "chars": 51,
   "model": "eleven_v4",
@@ -40097,6 +40146,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The altar step is only stone again. The dust has a faint warm colour to it still, if you look for it."
+ },
+ "narrator/49be4ec67b627847": {
+  "chars": 109,
+  "direction": "[hushed, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The lid isn't sealed. It's been opened and closed from the inside, many times; the dust on it has handprints."
  },
  "narrator/49c1a539c3d612bd": {
   "chars": 202,
@@ -42543,6 +42599,13 @@
   "recipe": "dd92281f92",
   "text": "Frost has softened the lid's letters to dimples. You make out the name, and the word \"crowd\", and nothing kind."
  },
+ "narrator/5e9ed5b0ff05b1e2": {
+  "chars": 245,
+  "direction": "[quiet, observant]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "In the crypt, under where she lay, are the things the count let her keep: a purse of old coins in a currency nobody in this valley has seen, and a short black rod with a brass cap, warm to the touch, that drinks the magic out of the air near it."
+ },
  "narrator/5ea1212d88cd86ad": {
   "chars": 72,
   "model": "eleven_v4",
@@ -43166,6 +43229,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Izek hasn't been dreaming of a woman all these years. He's been remembering a child."
+ },
+ "narrator/64ef185f255f889d": {
+  "chars": 184,
+  "direction": "[quiet, eerie, observant]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A small crypt at the end of the row, with a lid of plain black stone and no name cut into it: not worn away, never cut. Every other crypt in the catacombs has a name. Even the horse's."
  },
  "narrator/6501c04db599cb05": {
   "chars": 155,
@@ -44265,6 +44335,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The attic again. The dust shows your footprints, and some smaller ones that aren't yours."
+ },
+ "narrator/6dd63524b39bb8b1": {
+  "chars": 173,
+  "direction": "[quiet, tender, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She doesn't fall the way his spawn fall. She sits down on the edge of her crypt, and looks at her inky fingers, and is gone, a little at a time, like a page left in the sun."
  },
  "narrator/6de23905a806a481": {
   "chars": 88,
@@ -51831,6 +51908,13 @@
   "recipe": "f60908d226",
   "text": "Up the gully, under an overhang, a druid's cache wrapped in hide: dried herbs and a wand of yellowed bone."
  },
+ "narrator/b31c6c3f5264353e": {
+  "chars": 154,
+  "direction": "[ominous, tense, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Corvina stands up out of her crypt, and the iron gates along the row swing shut by themselves, one after another, like a house being locked for the night."
+ },
  "narrator/b322f1cd6722ded1": {
   "chars": 135,
   "model": "eleven_v4",
@@ -53360,6 +53444,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The grey soldier at his post doesn't look at you. His eyes are on the door to the road, exactly where they have been for centuries."
+ },
+ "narrator/c1d463da58692dd4": {
+  "chars": 166,
+  "direction": "[hushed, eerie, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The lid slides back by itself. A young woman sits up in the crypt, grey to the lips, in the rags of a scholar's coat, with ink still on her fingers after forty years."
  },
  "narrator/c1f4a9bc6011b253": {
   "chars": 98,
@@ -56984,6 +57075,13 @@
   "recipe": "dd92281f92",
   "text": "The chest is full of oiled cloth, and in the cloth, two flasks of holy water and the Order's last pay chest, counted out to the coin."
  },
+ "narrator/e35d000b1449137a": {
+  "chars": 99,
+  "direction": "[hushed, awed]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You say it to the lid. The catacombs go very quiet, the way a room does when someone stops a clock."
+ },
  "narrator/e380415294f54b90": {
   "chars": 146,
   "model": "eleven_v3",
@@ -59794,6 +59892,13 @@
   "recipe": "dd92281f92",
   "text": "The rod comes out of its socket with a squeal. Somewhere far overhead something goes tok, and the air in the whole tower loses a taste you hadn't noticed it had: the taste of a coming storm."
  },
+ "narrator/fd62731271513425": {
+  "chars": 129,
+  "direction": "[quiet, gentle]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The crypt at the end of the row has a name on it now, scratched into the stone with a knife: CORVINA. Somebody has left a candle."
+ },
  "narrator/fd662f6837027d08": {
   "chars": 88,
   "model": "eleven_v3",
@@ -61483,6 +61588,13 @@
   "recipe": "f8628ac829",
   "text": "(He points across, toward the tower rooms.) SAD MAN IN THE LOCKED ROOM. STAIR BEHIND HIS CUPBOARD. UP TO THE BIRDS."
  },
+ "pidlwick_ii/4ea0a2cf738c8427": {
+  "chars": 149,
+  "direction": "[serious, earnest, indignant]",
+  "model": "eleven_v3",
+  "recipe": "f8628ac829",
+  "text": "SHE HOLDS DOORS FOR HIM. ALL NIGHT. SHE HAS NO NAME ON HER BOX. (He taps the slate, very serious.) EVERYBODY HAS A NAME ON THEIR BOX. EVEN THE HORSE."
+ },
  "pidlwick_ii/53cac7ab463ec08b": {
   "chars": 102,
   "direction": "[happy, tender]",
@@ -61601,6 +61713,13 @@
   "model": "eleven_v3",
   "recipe": "f8628ac829",
   "text": "(He taps the slate, where it already says so.) BLINSKY. VALLAKI. I REMEMBER."
+ },
+ "pidlwick_ii/b1763cc5f6d8512c": {
+  "chars": 94,
+  "direction": "[hushed, nervous, careful]",
+  "model": "eleven_v3",
+  "recipe": "f8628ac829",
+  "text": "(He writes, rubs it out, writes again.) A LADY IN THE CELLARS. THE BIG CELLARS, WITH THE DEAD."
  },
  "pidlwick_ii/c749c89f1bf26172": {
   "chars": 79,
