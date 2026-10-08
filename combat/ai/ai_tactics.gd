@@ -247,13 +247,17 @@ func _side(side: StringName) -> Dictionary:
 
 # --- Surrender (F13) ---------------------------------------------------------------------------------------------
 
-## Whether `c` would give up when its side breaks: a humanoid foe that speaks a language, not a boss and not one of
-## Strahd's own (story/captives.gd deals with it after the fight). In every difficulty mode.
+## Whether `c` would give up when its side breaks: a humanoid foe that speaks a language, not a boss, not a story
+## character the fight names, and not one of Strahd's own (story/captives.gd deals with it after the fight). In every
+## difficulty mode.
 static func can_surrender(c: Combatant) -> bool:
 	if not c.creature is Monster or c.creature.creature_type != &"humanoid" or str(c.ai_profile) in ["mindless", "strahd"]:
 		return false
 	var m := c.creature as Monster
 	if Difficulty.is_boss(m) or bool(m.data.get("never_surrenders", false)):
+		return false
+	# A story character the fight names (Mother Ruxandra, Nikolai Wachter): what becomes of them is the story's.
+	if not m.name.begins_with(str(m.data.get("name", m.name))):
 		return false
 	for lang: Variant in m.data.get("languages", []):
 		if not "can't speak" in str(lang) and not "understands" in str(lang).to_lower():

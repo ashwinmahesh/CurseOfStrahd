@@ -7,7 +7,8 @@ consequences. Knocking a creature out instead of killing it (the 2024 rule) is l
 ## In the fight (`combat/ai/ai_tactics.gd`)
 
 - **Who surrenders** (`AiTactics.can_surrender`): a humanoid foe that speaks a language, not a boss (legendary
-  actions or CR 5 and up, `Difficulty.is_boss`), not mindless and not Strahd. A stat block can opt out with
+  actions or CR 5 and up, `Difficulty.is_boss`), not a story character the fight names (Mother Ruxandra, Nikolai
+  Wachter: their fate is the story's), not mindless and not Strahd. A stat block can opt out with
   `"never_surrenders": true`. Beasts flee instead (Tactician and Honour); undead, constructs and fiends fight on.
 - **When**: on its turn, Bloodied, with its side broken (`AiTactics.broken`: half of those who began the fight down,
   fled or surrendered, or its leader fallen). In every difficulty mode; it's checked before potions and fleeing.

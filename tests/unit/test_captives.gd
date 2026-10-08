@@ -49,6 +49,10 @@ func test_only_talkers_surrender() -> void:
 		assert_false(f[0].creature.has_flag("surrendered"), "%s doesn't surrender" % id)
 	assert_true(AiTactics.can_surrender(TestCombat.foe(TestCombat.open_field(), "cultist", Vector2i.ZERO)))
 	assert_false(AiTactics.can_surrender(TestCombat.foe(TestCombat.open_field(), "izek_strazni", Vector2i.ZERO)), "a boss fights on")
+	var ruxandra := TestCombat.monster("druid")
+	ruxandra.name = "Mother Ruxandra"
+	assert_false(AiTactics.can_surrender(TestCombat.open_field().add(ruxandra, &"enemy", Vector2i.ZERO)), "a named story character's fate is the story's")
+	assert_true(AiTactics.can_surrender(TestCombat.foe(TestCombat.open_field(), "druid", Vector2i.ZERO)), "a druid of her circle can give up")
 
 
 func test_a_whole_side_giving_up_ends_the_fight() -> void:

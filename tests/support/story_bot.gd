@@ -147,6 +147,12 @@ func converse() -> void:
 			await frames(1)
 			continue
 		var pick := _pick(opts)
+		# Captives after a fight (F13, story/captives.gd): let them go, which rolls nothing, so the run's later dice
+		# don't move with whether a foe gave up.
+		if d.runner.file != null and d.runner.file.key.begins_with("captives/"):
+			for j in opts.size():
+				if str((opts[j] as Dictionary)["text"]) == "Let them go.":
+					pick = j
 		var text := str((opts[pick] as Dictionary)["text"])
 		_chosen[text] = int(_chosen.get(text, 0)) + 1
 		note("says: %s" % text)
