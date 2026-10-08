@@ -288,3 +288,12 @@ once
 ~ search:tser_stage_bell
 | In the mud behind the stage, a little brass bell on a broken ankle-string, the kind a dancer wears. {name} wipes it clean.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the Svalich Woods.
+
+~ examine:forest_log_2
+| A pine brought down across the clearing by some old storm, its roots in the air like a hand. Moss has had years to climb it.
+
+~ search:forest_cutter_stump
+| A woodcutter's stump with a hand axe still bitten into it, the handle grey with weather. Whoever left it didn't come back to finish. {name} works the axe free.
+once

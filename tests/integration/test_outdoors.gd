@@ -492,3 +492,25 @@ func test_villagers_wait_at_the_mill() -> void:
 		here.append(str((s as Dictionary)["spec"]["npc"]))
 	assert_false("pastry_customer_man" in here, "no one waits once the baking stops")
 	after.queue_free()
+
+
+## The emptiest wilderness paths dressed (lane 28, on lane 3's ground): boulders, cairns, logs and reeds, a frozen
+## traveller on the Ice Stair, a hunter on the hill trail, and a thing to find on each.
+func test_the_empty_paths_are_dressed() -> void:
+	for loc: String in ["lake_zarovich_trail", "berez_marsh_track", "mount_baratok_trail", "amber_temple_road", "road_forest"]:
+		var d := Compendium.shared().get_entry("locations", loc) as Dictionary
+		var props := d.get("props", []) as Array
+		var finds := 0
+		for p: Variant in props:
+			if str((p as Dictionary)["kind"]) == "search":
+				finds += 1
+		assert_true(props.size() >= 6, "%s is dressed (%d props)" % [loc, props.size()])
+		assert_true(finds >= 1, "%s has something to find" % loc)
+	GameState.story.minute_of_day = 11 * 60
+	var v := _view("lake_zarovich_trail")
+	await _frames(2)
+	var here: Array[String] = []
+	for s: Variant in v.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	assert_true("lzt_hunter" in here, "a hunter on the hill trail")
+	v.queue_free()
