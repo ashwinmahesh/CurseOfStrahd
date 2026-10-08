@@ -56,37 +56,51 @@ func _magic_missile(ctx: Dictionary, tgt: Array[Combatant], r: CombatResult) -> 
 
 ## Sleep (2024): creatures of your choice in the Sphere make a Wisdom save or are Incapacitated until the end of
 ## their next turn, then repeat the save; a second failure means Unconscious for the duration. Ends on damage or
-## when someone shakes them awake. Creatures that don't sleep or are immune to Exhaustion are unaffected.
-func _sleep(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> void:
+## when someone shakes them awake. Creatures that don't sleep or are immune to Exhaustion are unaffected. `pausable`:
+## each save stops for the choices after its roll (Heroic Inspiration...), the caller carrying on with Encounter.then.
+func _sleep(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult, pausable: bool = false) -> CombatResult:
 	var spells := sp()
 	var c := ctx["c"] as Combatant
 	var e := enc()
 	var dc := (ctx["nums"]["dc"] as Breakdown).total()
 	var conc := ctx["conc"] as Concentration
-	for t in spells.creatures_in(cells):
+	var one := func(raw: Variant) -> CombatResult:
+		var t := raw as Combatant
 		if t == c or c.allied_with(t):
-			continue
+			return r
 		if t.creature.is_condition_immune(&"exhaustion") or t.creature.has_flag("trance") or t.creature.creature_type in [&"undead", &"construct"]:
 			r.lines.append(e.log.add("info", "%s doesn't sleep: unaffected" % t.name(), t.id))
-			continue
-		var test := t.creature.roll_save(e.dice, &"wis", dc, [], [], "Wisdom save vs Sleep (%s)" % t.name(), SpellCaster.spell_save_keys(c.id))
-		if test.success:
-			r.lines.append(e.log.add("info", "%s shrugs off Sleep" % t.name(), t.id, [test.describe()]))
-			continue
-		var fx := Effect.new("Drowsy (Sleep)", &"spell", "sleep").with_condition(&"incapacitated")
-		fx.caster_id = c.id
-		fx.ends_on_damage = true
-		fx.repeat_save = {"ability": "wis", "dc": dc, "then": "sleep_unconscious", "when": "end"}
-		fx.stack_key = "sleep:%s" % t.id
-		fx.data = {"wakeable": true}
-		conc.attach(t.creature, fx)
-		r.lines.append(e.log.add("condition", "%s is Incapacitated by Sleep" % t.name(), t.id, [test.describe()]))
+			return r
+		var roll := func() -> D20Test:
+			return t.creature.roll_save(e.dice, &"wis", dc, [], [], "Wisdom save vs Sleep (%s)" % t.name(), SpellCaster.spell_save_keys(c.id))
+		var after := func(test: D20Test) -> CombatResult:
+			if test.success:
+				r.lines.append(e.log.add("info", "%s shrugs off Sleep" % t.name(), t.id, [test.describe()]))
+				return r
+			var fx := Effect.new("Drowsy (Sleep)", &"spell", "sleep").with_condition(&"incapacitated")
+			fx.caster_id = c.id
+			fx.ends_on_damage = true
+			fx.repeat_save = {"ability": "wis", "dc": dc, "then": "sleep_unconscious", "when": "end"}
+			fx.stack_key = "sleep:%s" % t.id
+			fx.data = {"wakeable": true}
+			conc.attach(t.creature, fx)
+			r.lines.append(e.log.add("condition", "%s is Incapacitated by Sleep" % t.name(), t.id, [test.describe()]))
+			return r
+		if pausable:
+			return e.d20.then_after(t, roll, after, r)
+		return after.call(roll.call() as D20Test) as CombatResult
+	var sleepers := spells.creatures_in(cells)
+	if not pausable:
+		for t in sleepers:
+			one.call(t)
+		return r
+	return e.each(sleepers, one, func() -> CombatResult: return r)
 
 
 ## Command (2024): one word; on a failed Wisdom save the target obeys on its next turn. Approach: moves toward you
 ## by the shortest route and ends its turn within 5 ft. Drop: drops what it holds and ends its turn. Flee: spends
-## its turn moving away. Grovel: falls Prone and ends its turn. Halt: doesn't move or act.
-func _command(ctx: Dictionary, t: Combatant, word: String, r: CombatResult) -> void:
+## its turn moving away. Grovel: falls Prone and ends its turn. Halt: doesn't move or act. `pausable` as for Sleep.
+func _command(ctx: Dictionary, t: Combatant, word: String, r: CombatResult, pausable: bool = false) -> CombatResult:
 	var c := ctx["c"] as Combatant
 	var e := enc()
 	if not word in SpellCaster.COMMAND_WORDS:
@@ -94,18 +108,24 @@ func _command(ctx: Dictionary, t: Combatant, word: String, r: CombatResult) -> v
 	var dc := (ctx["nums"]["dc"] as Breakdown).total()
 	if t.creature.is_condition_immune(&"charmed"):
 		r.lines.append(e.log.add("info", "%s can't be commanded (immune to Charmed)" % t.name(), t.id))
-		return
-	var test := t.creature.roll_save(e.dice, &"wis", dc, [], [], "Wisdom save vs Command (%s)" % t.name(), SpellCaster.spell_save_keys(c.id))
-	if test.success:
-		r.lines.append(e.log.add("info", "%s ignores the command" % t.name(), t.id, [test.describe()]))
-		return
-	var fx := Effect.new("Commanded: %s" % word.capitalize(), &"spell", "command").with_modifier("flag", {"value": "command_" + word})
-	fx.caster_id = c.id
-	fx.ends = Effect.Ends.END_OF_TURN
-	fx.turn_owner_id = t.id
-	fx.stack_key = "spell:command"
-	t.creature.add_effect(fx)
-	r.lines.append(e.log.add("condition", "%s obeys: %s" % [t.name(), word.capitalize()], t.id, [test.describe()]))
+		return r
+	var roll := func() -> D20Test:
+		return t.creature.roll_save(e.dice, &"wis", dc, [], [], "Wisdom save vs Command (%s)" % t.name(), SpellCaster.spell_save_keys(c.id))
+	var after := func(test: D20Test) -> CombatResult:
+		if test.success:
+			r.lines.append(e.log.add("info", "%s ignores the command" % t.name(), t.id, [test.describe()]))
+			return r
+		var fx := Effect.new("Commanded: %s" % word.capitalize(), &"spell", "command").with_modifier("flag", {"value": "command_" + word})
+		fx.caster_id = c.id
+		fx.ends = Effect.Ends.END_OF_TURN
+		fx.turn_owner_id = t.id
+		fx.stack_key = "spell:command"
+		t.creature.add_effect(fx)
+		r.lines.append(e.log.add("condition", "%s obeys: %s" % [t.name(), word.capitalize()], t.id, [test.describe()]))
+		return r
+	if pausable:
+		return e.d20.then_after(t, roll, after, r)
+	return after.call(roll.call() as D20Test) as CombatResult
 
 
 func _sanctuary(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:

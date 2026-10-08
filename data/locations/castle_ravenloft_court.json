@@ -603,6 +603,31 @@
       "model": "candelabra",
       "when": "name:tamsin_tealeaf and not flag.locket_portrait_seen and not (quest.the_locket >= given_to_strahd)",
       "dialogue": "castle_ravenloft/personal_locket:start"
+    },
+    {
+      "id": "count_desk_ball",
+      "cell": [
+        9,
+        3
+      ],
+      "kind": "search",
+      "search_dc": 17,
+      "skill": "investigation",
+      "label": "a hidden drawer in the count's desk",
+      "model": "glass_vessels",
+      "item": "crystal_ball"
+    },
+    {
+      "id": "trophy_dragon_slayer",
+      "cell": [
+        38,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "a sword hung above the dragon's skull",
+      "model": "sword_leaning",
+      "item": "dragon_slayer__longsword"
     }
   ],
   "containers": [

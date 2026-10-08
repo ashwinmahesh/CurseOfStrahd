@@ -53,7 +53,9 @@ gold +25 / gold -10                Party money in gp.
 attitude npc_id friendly           Sets an NPC's attitude (hostile, indifferent, friendly; 2024 Influence).
 xp milestone                       Milestone advancement: every party member may level up (plan §5.6).
 sacrifice                          The player picks a living party member, who dies for good and leaves the
-                                   party (StoryState.fallen keeps their name). Skipped if only one is alive.
+                                   party (StoryState.fallen keeps their name). Skipped if only one is alive. The
+                                   last option backs out ("No one. Not this."): check.last is false after it, true
+                                   after a pick, so the node can return to its menu.
 tarokka draw                       Draws Madam Eva's reading (once per playthrough; docs/contracts/campaign.md).
 tarokka read tome [speaker]        Turns the card for a slot (tome, symbol, sword, ally, enemy): a notice with
                                    the card, then the verse spoken by `speaker` (default madam_eva).
@@ -63,8 +65,10 @@ services                           Opens the services of the NPC being spoken to
 join ireena / leave ireena         A story ally joins or leaves the party as a guest (ADR 0010).
 time +60 / time until 12           Time passes in the scene (minutes), or until the given hour comes round.
 respec                             The player picks a party member to rebuild from level 1 in the creator (they
-                                   keep their belongings and level back up with milestones). Skipped when the
-                                   owner switched respec off (pause menu).
+                                   keep their belongings and level back up with milestones; a prebuilt hero keeps
+                                   their look). Skipped when the owner switched respec off (pause menu). The last
+                                   option ("Never mind") and the creator's Back both leave check.last false;
+                                   a finished rebuild leaves it true.
 check Skill DC n -> ok | fail      A check with no choice (e.g. a passive moment). Uses the best party member.
 interject <selector>: Text         A party member matching the selector says Text, if one is present (the first
                                    match in marching order): class:rogue, species:elf, background:criminal,

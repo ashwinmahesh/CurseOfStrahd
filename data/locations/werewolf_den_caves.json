@@ -291,6 +291,43 @@
       "kind": "examine",
       "label": "Gnawed bones",
       "model": "bones"
+    },
+    {
+      "id": "trophy_sword",
+      "cell": [
+        19,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "a sword among Kiril's trophies",
+      "model": "sword_leaning",
+      "item": "sword_of_wounding__longsword"
+    },
+    {
+      "id": "shrine_sickle",
+      "cell": [
+        36,
+        14
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "an offering hidden under the shrine",
+      "model": "bone_scatter",
+      "item": "moon_sickle_plus_2__sickle"
+    },
+    {
+      "id": "herb_elixir",
+      "cell": [
+        35,
+        4
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "skill": "investigation",
+      "label": "a flask in the drying herbs",
+      "model": "satchel",
+      "item": "elixir_of_health"
     }
   ],
   "containers": [

@@ -189,3 +189,56 @@ cooldown 0
 ~ examine:claw_marked_pine
 | Five long grooves in the bark, higher than a tall man can reach, and sap still beading in them. Fresh.
 | [class:ranger] {name} lays a palm flat beside the marks. A wolf's claws, spread like a hand's. Whatever left them was standing up.
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:cart_false_floor
+| The broken cart's floor is a hand's width too high. Under the false boards, wrapped in sacking, lies a plain cloth bag that is much bigger on the inside than the out.
+once
+
+~ check:investigation:cart_false_floor:failure
+| Splinters, a cracked axle and a smell of old turnips. Whoever drove this cart left nothing worth having. Or hid it well.
+
+~ search:pine_satchel
+| High in the claw-marked pine, a satchel hangs by its strap where something tore it from its owner. Inside, a pair of smoked-glass goggles that make the dark look like dusk.
+once
+
+~ check:perception:pine_satchel:failure
+| Claw marks, sap and needles. Whatever climbed this tree, it didn't leave a note.
+
+~ search:newer_mound
+| One mound in the hanged men's field is newer than the rest, and shallow. Under a skin of earth, a pair of soft boots that make no sound when you set them down.
+once
+
+~ check:perception:newer_mound:failure
+| Mounds and more mounds, all the same grey under the grass. Someone with sharper eyes might tell them apart.
+
+~ search:humming_token
+| Among the tokens left for the drowned, one is a pearl, and it hums against your palm like a held note.
+once
+
+~ check:perception:humming_token:failure
+| Coins, ribbons, buttons and a child's tooth. Every token here was somebody's whole heart, and none of them is yours.
+
+~ search:ribbon_tree_cache
+| The roots of the ribbon tree have been dug under and packed back. In the hollow, wrapped in a Vistani shawl, a pair of boots with springs worked into the heels.
+once
+
+~ check:investigation:ribbon_tree_cache:failure
+| Ribbons, roots and wishes. If the Vistani hide things here, they hide them where outsiders don't think to dig.
+
+~ search:field_wall_cache
+| Behind the field wall, under a flat stone, a farmer hid what he valued most: a pair of heavy iron gauntlets that make your arms feel like a bull's.
+once
+
+~ search:trunk_hollow
+| The fallen trunk is hollow at one end. Inside, a small bag of rust-coloured cloth, and at the bottom something soft and warm, like fur.
+once
+
+~ search:milestone_hollow
+| Behind the milestone, a hollow packed with moss. In it lies a stubby wand of grey wood wound with something like spider silk.
+once
+
+~ search:cairn_necklace
+| Among the names scratched on the cairn's stones hangs a necklace of glass beads, each one with a bubble of air trapped inside.
+once

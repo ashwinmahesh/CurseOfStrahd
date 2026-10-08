@@ -272,3 +272,27 @@ cooldown 1
 
 ~ rest:long:castle_ravenloft_court
 | You sleep in shifts in a locked room off the long hall. Twice in the night footsteps stop outside the door, and wait, and go away.
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:count_desk_ball
+| The count's desk has a drawer no servant was meant to find. In it, on a cushion of black velvet, a crystal sphere with a mist moving slowly inside it.
+once
+
+~ check:investigation:count_desk_ball:failure
+| Letters in an old, beautiful hand, all to the same woman, none of them sent. The desk keeps its other secrets.
+
+~ search:trophy_dragon_slayer
+| Above the dragon's skull, as if to remind it, hangs the sword that killed it. Its blade is dull blue and runs cold when you hold it near the bones.
+once
+
+~ search:mirror_cloak
+| The tall mirror shows the room and not you. Behind it, in a narrow space against the wall, hangs a cloak whose edges never seem to be quite where you look.
+once
+
+~ check:investigation:mirror_cloak:failure
+| The mirror shows an empty room. You don't like what that says about the room.
+
+~ search:ludmilla_grimoire
+| Among Ludmilla's books is a grimoire bound in grey leather, its margins full of her notes. The spells in it feel stronger just for being read.
+once

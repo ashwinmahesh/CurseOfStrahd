@@ -46,8 +46,15 @@ static func apply_spell_effect(view: LocationView, spell_id: String) -> void:
 				var pr := p as Dictionary
 				if bool(pr.get("magic", false)) and view.prop_nodes.has(str(pr["id"])) and view.grid.distance_ft(view.leader().cell, 1, LocationView._cell(pr["cell"]), 1) <= 30:
 					found.append(str(pr.get("label", "something")))
+			# A hidden find holding a magic item: the spell senses it through the plaster, but not where to look.
+			var hidden := LocationTraps.hidden_within(view, view.leader().cell, 30).any(func(pr2: Dictionary) -> bool:
+				return pr2.has("item") and MagicItems.is_magic(Compendium.shared().item_data(str(pr2["item"]))))
+			if hidden:
+				found.append("something hidden from sight")
 			if not view._say("detect_magic:%s" % view.loc_id, view.leader().creature as Character):
 				view.narration.emit("Magic within 30 ft: %s." % (", ".join(found) if not found.is_empty() else "nothing you can sense"))
+			elif hidden:
+				view.toast.emit("Detect Magic: something magical is hidden within 30 ft")
 		"secrets":
 			_wand_of_secrets(view)
 		"find_traps":

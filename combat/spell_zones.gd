@@ -172,53 +172,78 @@ func moved_object(o: FieldObject, r: CombatResult) -> void:
 	refresh_auras()
 
 
-func turn_start(c: Combatant) -> void:
+## The start of `c`'s turn: its areas count down and drift, act on whoever is inside as their caster's turn starts
+## (Songal's), the hound bites, the Aura of Life stirs the fallen, and the areas `c` starts in act on it. The saves
+## stop for the choices after their rolls, so the rest waits on Encounter.then.
+func turn_start(c: Combatant) -> CombatResult:
+	var e := enc()
 	for o in objects:
 		if o.caster_id == c.id and o.rounds_left > 0:
 			o.rounds_left -= 1
 	prune()
+	var none := CombatResult.new()
+	var work: Array = []
 	for o: FieldObject in objects.duplicate():
 		if o.expired() or o.caster_id != c.id:
 			continue
+		var own := o
 		# Doomtide: the area drifts away from its caster as the caster's turn starts.
-		if int(o.rule("drift_ft", 0)) > 0:
-			_drift(o, c, int(o.rule("drift_ft", 0)))
+		work.append(func() -> CombatResult:
+			if not own.expired() and int(own.rule("drift_ft", 0)) > 0:
+				_drift(own, c, int(own.rule("drift_ft", 0)))
+			return none)
 		# Songal's Elemental Suffusion: everyone it affects in the area, as its caster's turn starts.
 		if o.has_trigger("caster_start_turn"):
-			for t in _inside(o):
-				_affect(o, t, "caster_start_turn", CombatResult.new(), {})
+			work.append(func() -> CombatResult:
+				if own.expired():
+					return none
+				return e.each(_inside(own), func(t: Variant) -> CombatResult: return _affect(own, t as Combatant, "caster_start_turn", CombatResult.new(), {}, true),
+					func() -> CombatResult: return none))
 	for o: FieldObject in objects.duplicate():
-		if o.expired():
-			continue
-		# Mordenkainen's Faithful Hound bites an enemy beside it at the start of its caster's turn.
-		if o.caster_id == c.id and bool(o.rule("bite", false)):
-			_bite(o, c)
-		# Aura of Life: an ally at 0 Hit Points starting its turn in the aura regains 1.
-		if int(o.rule("revive_downed", 0)) > 0 and o.covers(c) and _affects(o, c) and c.creature.hp <= 0 and not c.creature.dead:
-			c.creature.heal(int(o.rule("revive_downed", 1)), o.name)
-			c.creature.remove_condition(&"unconscious", "0 Hit Points")
-			enc().log.add("heal", "%s stirs back to 1 Hit Point (%s)" % [c.name(), o.name], c.id)
-			enc().events.append({"type": "heal", "id": c.id, "amount": 1})
-		if o.has_trigger("start_turn") and o.covers(c) and _affects(o, c):
-			_affect(o, c, "start_turn", CombatResult.new(), {})
-		if o.has_trigger("near_start_turn") and _near(o, c) and _affects(o, c):
-			_affect(o, c, "start_turn", CombatResult.new(), {})
+		var here := o
+		work.append(func() -> CombatResult:
+			if here.expired():
+				return none
+			# Mordenkainen's Faithful Hound bites an enemy beside it at the start of its caster's turn.
+			if here.caster_id == c.id and bool(here.rule("bite", false)):
+				_bite(here, c)
+			# Aura of Life: an ally at 0 Hit Points starting its turn in the aura regains 1.
+			if int(here.rule("revive_downed", 0)) > 0 and here.covers(c) and _affects(here, c) and c.creature.hp <= 0 and not c.creature.dead:
+				c.creature.heal(int(here.rule("revive_downed", 1)), here.name)
+				c.creature.remove_condition(&"unconscious", "0 Hit Points")
+				e.log.add("heal", "%s stirs back to 1 Hit Point (%s)" % [c.name(), here.name], c.id)
+				e.events.append({"type": "heal", "id": c.id, "amount": 1})
+			if here.has_trigger("start_turn") and here.covers(c) and _affects(here, c):
+				return _affect(here, c, "start_turn", CombatResult.new(), {}, true)
+			return none)
+		work.append(func() -> CombatResult:
+			if not here.expired() and here.has_trigger("near_start_turn") and _near(here, c) and _affects(here, c):
+				return _affect(here, c, "start_turn", CombatResult.new(), {}, true)
+			return none)
+	return e.each(work, func(step: Variant) -> CombatResult: return (step as Callable).call() as CombatResult, func() -> CombatResult: return none)
 
 
-func turn_end(c: Combatant) -> void:
+## The end of `c`'s turn: its areas' last turns tick away, and the areas it ends in act on it (their saves can stop
+## for a choice, as at the start).
+func turn_end(c: Combatant) -> CombatResult:
+	var e := enc()
 	for o in objects:
 		if o.caster_id == c.id and o.rules.has("caster_turn_ends"):
 			o.rules["caster_turn_ends"] = int(o.rules["caster_turn_ends"]) - 1
 			if int(o.rules["caster_turn_ends"]) <= 0:
 				o.ended = true
 	prune()
-	for o: FieldObject in objects.duplicate():
+	var none := CombatResult.new()
+	var areas: Array = objects.duplicate()
+	return e.each(areas, func(raw: Variant) -> CombatResult:
+		var o := raw as FieldObject
 		if o.expired():
-			continue
+			return none
 		if o.has_trigger("end_turn") and (o.covers(c) or _on_side(o, c)) and _affects(o, c):
-			_affect(o, c, "end_turn", CombatResult.new(), {})
+			return _affect(o, c, "end_turn", CombatResult.new(), {}, true)
 		elif o.has_trigger("near_end_turn") and _near(o, c) and _affects(o, c):
-			_affect(o, c, "end_turn", CombatResult.new(), {})
+			return _affect(o, c, "end_turn", CombatResult.new(), {}, true)
+		return none, func() -> CombatResult: return none)
 
 
 ## Wall of Fire's burning side: squares within 10 ft of the wall on the side the caster chose.
@@ -273,69 +298,84 @@ func _near(o: FieldObject, c: Combatant) -> bool:
 
 ## One creature caught by a zone: the save, damage (rolled once per trigger for everyone when `shared` is passed
 ## in), effects on a failure. Most areas affect a creature no more than once per turn.
-func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, shared: Dictionary) -> void:
+## What the area does to `t` when `trigger` fires: its save, then damage and effects (_affected). `pausable`: the caller
+## carries on after a prompt (Encounter.then), so the save stops for the choices after its roll (Indomitable...).
+func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, shared: Dictionary, pausable: bool = false) -> CombatResult:
 	var e := enc()
 	if not t.is_alive():
-		return
+		return r
 	var turn_key := "%d:%d" % [e.round_no, e.turn_index]
 	# Nothing reaches into an Antimagic Field.
 	if spells().specials.high.in_antimagic(t) and o.spell_id != "antimagic_field":
-		return
+		return r
 	var ctx := spells().context_for_object(o)
 	if ctx.is_empty():
-		return
+		return r
 	# Conjure Celestial: the light heals the caster's side instead of burning it.
 	if o.rules.has("heal_allies") and ctx.has("c") and ((ctx["c"] as Combatant) == t or (ctx["c"] as Combatant).allied_with(t)):
 		if str(o.hit_on_turn.get(t.id, "")) == turn_key:
-			return
+			return r
 		o.hit_on_turn[t.id] = turn_key
 		var hp := spells().roll_damage_parts(ctx, [o.rules["heal_allies"]], false, t, e.heal_floor(t))
 		var got := t.creature.heal(int(hp["total"]), o.name)
 		e.log.add("heal", "%s regains %d Hit Points (%s)" % [t.name(), got, o.name], t.id, [str(hp["text"])])
 		e.events.append({"type": "heal", "id": t.id, "amount": got})
-		return
+		return r
 	# Distorted Distance: the caster's side gets the area's boon instead of its save.
 	if o.rules.has("ally_effects") and ctx.has("c") and ((ctx["c"] as Combatant) == t or (ctx["c"] as Combatant).allied_with(t)):
 		if str(o.hit_on_turn.get(t.id, "")) == turn_key:
-			return
+			return r
 		o.hit_on_turn[t.id] = turn_key
 		spells().apply_effect_entries(ctx, t, o.rules["ally_effects"] as Array, "cast", r)
-		return
+		return r
 	var label := "%s (%s)" % [o.name, _trigger_words(trigger)]
 	# Hunger of Hadar's cold at the start of a turn: damage with no save, apart from the end-of-turn acid.
 	if trigger == "start_turn" and o.rules.has("start_damage"):
 		var cold := spells().roll_damage_parts(ctx, o.rules["start_damage"] as Array, false, t)
 		spells().deal_spell_damage(ctx, t, [{"amount": int(cold["total"]), "type": str(cold["type"]), "spell": true}], false, label, [str(cold["text"])])
-		return
+		return r
 	if trigger != "per_square" and bool(o.rule("once_per_turn", true)) and str(o.hit_on_turn.get(t.id, "")) == turn_key:
-		return
+		return r
 	# Conjure Elemental: while it holds someone, it doesn't grab anyone else.
 	if bool(o.rule("hold_one", false)):
 		for h in e.living():
 			if h.creature.effects.any(func(fx: Effect) -> bool: return fx.source_id == o.spell_id and fx.caster_id == o.caster_id and not fx.conditions.is_empty()):
-				return
+				return r
 	var has_save := o.rules.has("save")
 	var has_damage := not (o.rule("damage", []) as Array).is_empty()
 	var effects := o.rule("effects", []) as Array
 	if not has_save and not has_damage and effects.is_empty():
-		return
+		return r
 	o.hit_on_turn[t.id] = turn_key
 	# Cordon of Arrows: each strike uses up one piece of ammunition.
 	if o.rules.has("charges"):
 		o.rules["charges"] = int(o.rules["charges"]) - 1
 		if int(o.rules["charges"]) <= 0:
 			o.ended = true
-	var failed := true
-	var details: Array[String] = []
-	if has_save:
-		var ab := StringName(str(o.rules["save"]))
-		# Necklace of Adaptation: harmful gases (Stinking Cloud, Cloudkill, Incendiary Cloud) are saved against with Advantage.
-		var gas := SpellCaster.spell_save_keys(o.caster_id)
-		if o.spell_id in ["stinking_cloud", "cloudkill", "incendiary_cloud", "dust_of_sneezing_and_choking__cloud"]:
-			gas.append("save_vs:gas")
-		var test := t.creature.roll_save(e.dice, ab, o.save_dc, [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], o.name, t.name()], gas)
-		failed = not test.success
-		details.append(test.describe())
+	if not has_save:
+		return _affected(o, t, trigger, r, shared, ctx, label, true, [])
+	var ab := StringName(str(o.rules["save"]))
+	# Necklace of Adaptation: harmful gases (Stinking Cloud, Cloudkill, Incendiary Cloud) are saved against with Advantage.
+	var gas := SpellCaster.spell_save_keys(o.caster_id)
+	if o.spell_id in ["stinking_cloud", "cloudkill", "incendiary_cloud", "dust_of_sneezing_and_choking__cloud"]:
+		gas.append("save_vs:gas")
+	var roll := func() -> D20Test:
+		return t.creature.roll_save(e.dice, ab, o.save_dc, [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], o.name, t.name()], gas)
+	var after := func(test: D20Test) -> CombatResult:
+		var seen: Array[String] = [test.describe()]
+		return _affected(o, t, trigger, r, shared, ctx, label, not test.success, seen)
+	if pausable:
+		return e.d20.then_after(t, roll, after, r)
+	return after.call(roll.call() as D20Test) as CombatResult
+
+
+## The area's damage and effects on `t` once its save (if any) is settled.
+func _affected(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, shared: Dictionary, ctx: Dictionary, label: String,
+		failed: bool, details: Array[String]) -> CombatResult:
+	var e := enc()
+	var has_save := o.rules.has("save")
+	var has_damage := not (o.rule("damage", []) as Array).is_empty()
+	var effects := o.rule("effects", []) as Array
 	var dparts := o.rule("damage", []) as Array
 	if has_damage and dparts.size() > 1:
 		# Several damage types (Jallarzi's Storm of Radiance): each part rolled and halved on its own.
@@ -376,6 +416,7 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 		enc().faerun.zone_failed_save(o, t)
 	if t.is_alive():
 		spells().apply_effect_entries(ctx, t, effects, "fail" if failed else "success", r)
+	return r
 
 
 static func _trigger_words(trigger: String) -> String:

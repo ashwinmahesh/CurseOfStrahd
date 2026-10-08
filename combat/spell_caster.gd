@@ -373,6 +373,10 @@ func release_readied(c: Combatant, held: Dictionary, target: Combatant) -> Comba
 	return reaction_spells.release_readied(c, held, target)
 
 
+func cast_reactive_spell(c: Combatant, spell_id: String, target: Combatant) -> CombatResult:
+	return reaction_spells.cast_reactive_spell(c, spell_id, target)
+
+
 # --- Range, targets and areas (SpellTargeting) ----------------------------------------------------
 
 func range_ft(s: Dictionary, caster: Combatant = null) -> int:
@@ -497,8 +501,8 @@ func _light(ctx: Dictionary, t: Combatant, params: Dictionary) -> void:
 
 # --- Spells with handlers of their own (SpellHandlers) --------------------------------------------
 
-func _command(ctx: Dictionary, t: Combatant, word: String, r: CombatResult) -> void:
-	handlers._command(ctx, t, word, r)
+func _command(ctx: Dictionary, t: Combatant, word: String, r: CombatResult, pausable: bool = false) -> CombatResult:
+	return handlers._command(ctx, t, word, r, pausable)
 
 
 func end_sanctuary(t: Combatant, why: String) -> void:
@@ -617,8 +621,8 @@ func _room_for(cell: Vector2i, size: int) -> bool:
 
 # --- Turn and damage hooks (SpellTurns) -----------------------------------------------------------
 
-func turn_start(c: Combatant) -> void:
-	turn_hooks.turn_start(c)
+func turn_start(c: Combatant) -> CombatResult:
+	return turn_hooks.turn_start(c)
 
 
 func _turn_start_effects(c: Combatant) -> void:

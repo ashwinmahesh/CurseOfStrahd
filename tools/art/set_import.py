@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Sets 3D-friendly import settings on images Godot has already imported: VRAM compression (BPTC/S3TC) with
-mipmaps, the same as the character walk sheets. Used for art/textures, art/sprites/props and new walk sheets.
+"""Sets 3D-friendly import settings on images Godot has already imported: VRAM compression (BPTC/S3TC) with mipmaps
+for art/textures and art/sprites/props (drawn with mipmapped filtering), or, with --sheets, without mipmaps for the
+character walk, attack and hero sheets.
 
 Usage: tools/art/set_import.py [--sheets | --normal] [--fast] <image> [<image> ...]      then: make import
 
 --sheets: character sheets drawn through the crisp sprite shader (shaders/world/sprite_crisp.gdshader), which samples
-the full-size sheet and never its mipmaps: VRAM compression without mipmaps (a quarter less memory).
+the full-size sheet and never its mipmaps (nor does the title screen's sprite_small.gdshader): VRAM compression without
+mipmaps (a quarter less memory). Every committed character sheet's .import says so; make anims and make keys set it
+only on the sheets they build (ONLY=), so they never touch the rest.
 
 Edits each <png>.import [params] and removes the cached .md5 under .godot/imported so the next import redoes it
 (Godot does not notice a params change by itself). Stdlib only.

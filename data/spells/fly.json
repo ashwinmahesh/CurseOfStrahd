@@ -45,6 +45,10 @@
             "stat": "speed_set",
             "kind": "fly",
             "value": 60
+          },
+          {
+            "stat": "flag",
+            "value": "hover"
           }
         ]
       }

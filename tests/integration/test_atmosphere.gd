@@ -334,25 +334,27 @@ func test_the_frame_meter_waits_for_f3() -> void:
 	v.queue_free()
 
 
-## Weather lies on the surfaces in the Modern finish (W12): rain wets Vallaki's streets, snow lies at the Abbey, and
-## a dry place is dry; Classic is frozen without it.
+## Weather lies on the surfaces in the Modern finish (W12), as the world's weather has it (F12's Weather): a downpour
+## wets the streets, a snowfall whitens them, clear weather leaves them dry; Classic is frozen without it.
 func test_weather_on_surfaces() -> void:
 	var was := Look.style()
 	Look.set_style("modern", false)
-	var expect := {"vallaki": [true, false], "abbey_of_st_markovia": [false, true], "village_of_barovia": [false, false]}
-	for loc_id: String in expect:
-		var v := _view(loc_id)
+	var kinds := {"downpour": {"look": {"rain": 460}}, "snowfall": {"look": {"snow": 460}}, "clear": {}}
+	for case: Array in [["downpour", true, false], ["snowfall", false, true], ["clear", false, false]]:
+		Weather.use({"kinds": kinds, "climates": {"valley": {str(case[0]): 1.0}}, "default_climate": "valley"})
+		var v := _view("vallaki")
 		await get_tree().process_frame
-		var e := expect[loc_id] as Array
-		assert_eq(v.atmosphere.wetness > 0.0, bool(e[0]), "%s wet" % loc_id)
-		assert_eq(v.atmosphere.snow_cover > 0.0, bool(e[1]), "%s snowy" % loc_id)
+		assert_eq(v.atmosphere.wetness > 0.0, bool(case[1]), "%s: wet" % case[0])
+		assert_eq(v.atmosphere.snow_cover > 0.0, bool(case[2]), "%s: snowy" % case[0])
 		v.queue_free()
 		await get_tree().process_frame
+	Weather.use({"kinds": kinds, "climates": {"valley": {"downpour": 1.0}}, "default_climate": "valley"})
 	Look.set_style("classic", false)
 	var c := _view("vallaki")
 	await get_tree().process_frame
 	assert_eq(c.atmosphere.wetness, 0.0, "Classic stays as it was")
 	c.queue_free()
+	Weather.use({})
 	Look.set_style(was, false)
 
 
@@ -423,6 +425,29 @@ func test_the_sky_outdoors() -> void:
 	var ipost := (inside.post.mesh as QuadMesh).material as ShaderMaterial
 	assert_false(bool(ipost.get_shader_parameter("sky_on")), "no sky indoors")
 	inside.queue_free()
+	Look.set_style(was, false)
+
+
+## The world's weather dresses a place (lane 4's F12): rain falls and wets the village when the weather is a downpour,
+## and when the weather clears mid-stay the rain stops and the streets dry at once (refresh_weather).
+func test_the_weather_dresses_the_place() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	Weather.use({"kinds": {"downpour": {"look": {"rain": 460}}, "clear": {}},
+		"climates": {"valley": {"downpour": 1.0}}, "default_climate": "valley"})
+	var v := _view("village_of_barovia")
+	await get_tree().process_frame
+	assert_false(v.atmosphere.weather_spec("rain").is_empty(), "a downpour rains on the village")
+	assert_true(v.atmosphere.wetness > 0.9, "and soaks it")
+	assert_false(v.atmosphere.weather.falling.is_empty(), "rain falls")
+	Weather.use({"kinds": {"downpour": {"look": {"rain": 460}}, "clear": {}},
+		"climates": {"valley": {"clear": 1.0}}, "default_climate": "valley"})
+	v.atmosphere.refresh_weather()
+	assert_true(v.atmosphere.weather_spec("rain").is_empty(), "the weather clears")
+	assert_eq(v.atmosphere.wetness, 0.0, "the streets dry")
+	assert_true(v.atmosphere.weather.falling.is_empty(), "the rain stops")
+	v.queue_free()
+	Weather.use({})
 	Look.set_style(was, false)
 
 

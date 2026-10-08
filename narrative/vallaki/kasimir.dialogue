@@ -19,6 +19,7 @@ endif
 * [if flag.kasimir_sister_told] Tell us about the temple in the mountains. -> temple
 * [if tarokka.ally.npc == kasimir_velikov and not guest:kasimir_velikov] Madam Eva's cards named you as our ally. -> ally
 * [name:wren_featherfoot] [if quest.the_last_lesson and not flag.wren_letter_given] Give him Master Sorrel's letter. -> companions/lesson:kasimir
+* We heard you have spells to spare. Scrolls? -> scrolls
 * Goodbye. -> bye
 
 ~ who
@@ -68,6 +69,11 @@ Kasimir: I will come. Somewhere along your road is the castle, and beneath it, m
 join kasimir_velikov
 quest find_the_ally found
 -> END
+
+~ scrolls
+Kasimir: I write them out at night, when I can't sleep, which is every night. Lesser spells; the ones that matter I keep. Take what you can pay for. Gold buys passage, and I have a long way to go.
+shop
+-> menu
 
 ~ bye
 Kasimir: Walk in the light while there is any. It goes quickly here.

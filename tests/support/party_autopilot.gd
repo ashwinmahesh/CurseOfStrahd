@@ -39,7 +39,8 @@ func play(c: Combatant) -> CombatResult:
 func _enemies(c: Combatant) -> Array[Combatant]:
 	var out: Array[Combatant] = []
 	for h in e.hostiles_of(c):
-		if not h.is_down() and e.can_see(c, h):
+		# A foe who surrendered is out of the fight (lane 22's captives), though not down.
+		if not h.is_down() and e.can_see(c, h) and not h.creature.has_flag("surrendered"):
 			out.append(h)
 	return out
 
@@ -260,12 +261,20 @@ func _warlock(c: Combatant) -> CombatResult:
 	return _melee_turn(c)
 
 
+## The autopilot's answer to a prompt: yes to everything, except Divine Smite after a hit (it keeps its paladin's slots
+## for spells, as the fights it was tuned on did before smiting was asked about).
+static func _takes(req: ReactionRequest) -> bool:
+	return req.kind != CombatFeatures.DIVINE_SMITE
+
+
 ## Plays the encounter to the end (or `max_rounds`): the autopilot for the party, AiBrain for everyone else.
 ## Every reaction is taken automatically. Returns {outcome, rounds, downs}.
 func run(max_rounds: int = 30) -> Dictionary:
 	e.default_player_reaction = "auto"
 	if e.state == Encounter.State.SETUP:
 		e.start()
+	while e.pending != null:   # choices as Initiative is rolled (Tandem Footwork, Alert's swap), before the first turn
+		e.answer_reaction(true)
 	var downs := 0
 	var guard := 0
 	while e.state == Encounter.State.ACTIVE and e.round_no <= max_rounds and guard < 2000:
@@ -275,13 +284,13 @@ func run(max_rounds: int = 30) -> Dictionary:
 		if c.is_player_controlled():
 			r = play(c)
 			while e.pending != null:
-				r = e.answer_reaction(true)
+				r = e.answer_reaction(_takes(e.pending))
 			if e.state == Encounter.State.ACTIVE and e.current() == c:
 				e.end_turn()
 		else:
 			r = e.run_ai_turn()
 			while e.pending != null:
-				r = e.answer_reaction(true)
+				r = e.answer_reaction(_takes(e.pending))
 	for c in e.combatants:
 		if c.side == &"party" and e.log.texts().any(func(t: String) -> bool: return t == "%s falls unconscious" % c.name()):
 			downs += 1

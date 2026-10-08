@@ -214,6 +214,30 @@
       "label": "The opened cairn",
       "model": "rocks",
       "when": "flag.mordenkainen_spellbook_found"
+    },
+    {
+      "id": "glass_ring_wand",
+      "cell": [
+        14,
+        19
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "a wand fused into the ring of glass",
+      "model": "glass_ring",
+      "item": "wand_of_lightning_bolts"
+    },
+    {
+      "id": "summit_ioun",
+      "cell": [
+        9,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "label": "a stone that isn't part of the cairn",
+      "model": "rubble",
+      "item": "ioun_stone_intellect"
     }
   ],
   "containers": [

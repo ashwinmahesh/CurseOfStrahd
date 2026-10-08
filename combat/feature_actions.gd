@@ -431,11 +431,14 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 			_ac_until_turn(c, t if t.creature.ac_value() <= c.creature.ac_value() else c, v2, "Bait and Switch")
 			e.log.add("move", "%s and %s swap places (Bait and Switch, +%d AC)" % [c.name(), t.name(), v2], c.id)
 		"commanders_strike":
-			if t == null or not c.allied_with(t) or t == c or not e.spells.can_react(t):
-				return CombatResult.fail("Choose an ally who still has its Reaction")
-			var best := e.ai._best_in_reach(t)
+			var ally_why := e.weapons.strike_ally_why(c, t)
+			if ally_why != "":
+				return CombatResult.fail(ally_why)
+			# The creature it strikes: the one the player picked (targets[1]), else the best target in its reach.
+			var foe: Combatant = targets[1] as Combatant if targets.size() > 1 and targets[1] is Combatant else null
+			var best := e.ai._best_in_reach(t) if foe == null else e.weapons.strike_at(t, foe)
 			if best.is_empty():
-				return CombatResult.fail("%s has no enemy in reach" % t.name())
+				return CombatResult.fail("%s has no enemy in reach" % t.name() if foe == null else "%s can't reach %s with an attack" % [t.name(), foe.name()])
 			ch.spend_resource("superiority_dice")
 			e.use_one_attack(c)
 			t.reaction_available = false

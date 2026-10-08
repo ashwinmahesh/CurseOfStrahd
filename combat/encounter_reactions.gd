@@ -102,6 +102,40 @@ func _queue_sentinels(attacker: Combatant, target: Combatant) -> void:
 		e.reaction_queue.append({"kind": "sentinel", "reactor": p.id, "trigger": attacker.id})
 
 
+## A Ready action waiting for an enemy's attack or spell (EncounterActions.READY_TRIGGERS): `actor` just made one, so
+## each hostile creature readied for `on` ("attack" or "spell") gets its Reaction once that's done.
+func _queue_readied(actor: Combatant, on: String) -> void:
+	var e := enc()
+	for p in e.hostiles_of(actor):
+		if p.readied.is_empty() or str(p.readied.get("trigger", "approach")) != on:
+			continue
+		if e.reaction_queue.any(func(q: Dictionary) -> bool: return str(q["kind"]) == "readied_attack" and str(q["reactor"]) == p.id):
+			continue
+		e.reaction_queue.append({"kind": "readied_attack", "reactor": p.id, "trigger": actor.id, "on": on})
+
+
+## How far a readied attack or spell reaches: the spell's range, or the attack's reach (melee) or normal range.
+func readied_reach(p: Combatant) -> int:
+	var e := enc()
+	if p.readied.has("spell"):
+		return e.spells.range_ft(Compendium.shared().spell_data(str(p.readied["spell"])), p)
+	var option := e.option_by_id(p, str(p.readied.get("option", "")))
+	if option.is_empty():
+		return -1
+	var prof := option["profile"] as WeaponProfile
+	return prof.reach if bool(option["melee"]) else prof.normal_range
+
+
+## The prompt for a queued readied attack or spell: [title, text (trigger's name, then the reactor's), cost].
+func _readied_words(q: Dictionary, reactor: Combatant) -> Array:
+	var what := "attack"
+	if reactor.readied.has("spell"):
+		what = str(Compendium.shared().spell_data(str(reactor.readied["spell"])).get("name", "spell"))
+	var did := "attacks" if str(q.get("on", "")) == "attack" else "casts a spell"
+	return ["Readied %s?" % ("spell" if reactor.readied.has("spell") else "attack"),
+		"%%s %s. %%s readied %s for that: use the Reaction now?" % [did, what if reactor.readied.has("spell") else "an attack"], "Reaction"]
+
+
 func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
 	var e := enc()
 	if str(q["kind"]).begins_with("rh_"):
@@ -123,6 +157,12 @@ func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
 			return e.spells.can_react(reactor) and reactor.creature.hp > 0
 		"retaliation":
 			return e.spells.can_react(reactor) and reactor.creature.hp > 0 and e.get_c(str(q["trigger"])) != null and e.distance(reactor, e.get_c(str(q["trigger"]))) <= 5
+		"readied_attack":
+			var foe := e.get_c(str(q["trigger"]))
+			var held := reactor.readied.get("conc") as Concentration
+			return not reactor.readied.is_empty() and str(reactor.readied.get("trigger", "approach")) == str(q.get("on", "")) \
+				and (held == null or not held.ended) and e.spells.can_react(reactor) and foe != null and not foe.is_down() \
+				and e.can_see(reactor, foe) and e.distance(reactor, foe) <= readied_reach(reactor)
 	return false
 
 
@@ -149,6 +189,8 @@ func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> Comb
 			return e.class_features.misty_escape(reactor, trigger)
 		"retaliation":
 			return e._opportunity_attack(reactor, trigger)
+		"readied_attack":
+			return e.attacks._readied_attack(reactor, trigger)
 		"fount_of_moonlight":
 			reactor.reaction_available = false
 			var dc := (e.spells.numbers(reactor, e.spells._entry_any(reactor, "fount_of_moonlight"))["dc"] as Breakdown).total()
@@ -188,6 +230,17 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 		return e.then(r, func() -> CombatResult: return run_reaction_queue(r))
 	while not e.reaction_queue.is_empty():
 		var q := e.reaction_queue.pop_front() as Dictionary
+		# A roll's choices that waited for this moment (a Concentration save): asked in turn, then the roll is settled.
+		if q.has("offers"):
+			var settle := q["settle"] as Callable
+			# Once the fight is over nobody is asked: each choice follows its rule.
+			if e.state != Encounter.State.ACTIVE:
+				e.d20.run_now(q["offers"] as Array)
+				settle.call()
+				continue
+			return e.reactions.offer((q["offers"] as Array).duplicate(), func() -> CombatResult:
+				settle.call()
+				return run_reaction_queue(r), r)
 		var reactor := e.get_c(str(q["reactor"]))
 		var trigger := e.get_c(str(q["trigger"]))
 		if reactor == null or trigger == null or not trigger.is_alive() or not _queued_ok(q, reactor):
@@ -202,7 +255,8 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 			if e.pending != null:
 				return e.then(sub, func() -> CombatResult: return run_reaction_queue(r))
 			continue
-		var words := e.ravenloft.queued_text(kind) if kind.begins_with("rh_") else (e.faerun.queued_text(kind) if kind.begins_with("fr_") else _QUEUED_TEXT[kind] as Array)
+		var words: Array = _readied_words(q, reactor) if kind == "readied_attack" else (e.ravenloft.queued_text(kind) if kind.begins_with("rh_") \
+			else (e.faerun.queued_text(kind) if kind.begins_with("fr_") else _QUEUED_TEXT[kind] as Array))
 		var req := ReactionRequest.new(kind, reactor.id, trigger.id)
 		req.title = str(words[0])
 		req.text = str(words[1]) % [trigger.name(), reactor.name()]

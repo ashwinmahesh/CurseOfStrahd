@@ -94,3 +94,20 @@ once
 
 ~ rest:long:van_richtens_tower
 | You sleep on the shore with the tower at your backs. Twice in the night, out on the ridge, eyes catch the firelight and then think better of it.
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:lookout_satchel
+| Wedged behind the lookout rock, a satchel some watcher left behind. In it, a pair of round lenses that make the far shore look close enough to touch.
+once
+
+~ search:trophy_wand
+| Behind one of the trophies, a wand sits in a spring clip, where an old hunter could reach it without looking. It feels heavy, like a set of manacles.
+once
+
+~ check:investigation:trophy_wand:failure
+| Teeth, horns and claws, each labelled in a neat old hand. If the wall hides anything, the hunter hid it from hunters.
+
+~ search:jars_oil
+| Among the jars and bottles, one flask has no label. The oil inside is grey, and your hand looks faintly see-through behind the glass.
+once

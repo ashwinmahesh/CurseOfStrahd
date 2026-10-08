@@ -200,6 +200,18 @@
       "label": "Something small in the mud",
       "model": "doll",
       "flag": "den_doll_found"
+    },
+    {
+      "id": "mud_boots",
+      "cell": [
+        4,
+        21
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "a hunter's boots in the mud",
+      "model": "leaves",
+      "item": "boots_of_speed"
     }
   ],
   "containers": [

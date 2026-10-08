@@ -202,3 +202,35 @@ cooldown 10
 
 ~ rest:long:abbey_of_st_markovia
 | You sleep in the cart shed with a watch at the door. All night, something walks the cloister in slow, even steps, and every hour it stops outside and listens, and goes on.
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:bell_chime
+| Inside the great bell, hung from its crown where the clapper can't reach it, a little silver chime. It rings once when you touch it, and somewhere below, a lock clicks open.
+once
+
+~ search:foundling_treasure
+| Under the last cot, where a child once hid the best things in the world, a pair of gold lions no bigger than your thumb. They are warm, and one of them is purring.
+once
+
+~ check:perception:foundling_treasure:failure
+| Little cots in rows, each with a name scratched on the frame. The children took their treasures with them, or never had any.
+
+~ search:matron_trunk_lining
+| The matron's trunk has a second lining, and between the two a robe covered in cloth patches: a lantern, a dagger, a ladder, a window. Each one feels like it could come away in your hand.
+once
+
+~ search:cabinet_periapt
+| The instrument cabinet has a false back. Behind it, on a black cord, a glass vial with something green and still inside.
+once
+
+~ check:investigation:cabinet_periapt:failure
+| Saws, probes, needles and a jar of leeches that watches you. You close the cabinet quickly.
+
+~ search:abbot_cot_stone
+| Under the Abbot's cot, one stone lifts. In the hollow, a dusty blue stone that rises from your hand and settles into a slow orbit round your head.
+once
+
+~ search:shed_beans
+| Behind the tool shed's door, in a pouch of heavy cloth, a handful of dry beans. They are warm, and one of them is trying to sprout.
+once

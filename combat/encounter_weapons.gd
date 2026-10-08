@@ -1,9 +1,10 @@
 class_name EncounterWeapons
 extends RefCounted
 ## What a creature in a fight can attack with (Encounter): its weapon, thrown and unarmed options and stat-block
-## attacks, Soulknife blades, how many attacks an Attack action gives, whether an attack is legal from where it stands
-## (range, reach, sight, charm, a monster's weapon knocked from its hand), and ammunition and thrown weapons leaving the
-## hand (a thrown one lands by its target, GroundItems).
+## attacks, Soulknife blades, improvised weapons within reach (ObjectActions: a thing on the ground, a chair), how many
+## attacks an Attack action gives, whether an attack is legal from where it stands (range, reach, sight, charm, a
+## monster's weapon knocked from its hand), and ammunition and thrown weapons leaving the hand (a thrown one lands by
+## its target, GroundItems).
 
 var _enc: WeakRef
 
@@ -54,6 +55,7 @@ func attack_options(c: Combatant) -> Array[Dictionary]:
 				out.append({"id": ("blade:thrown" if thrown else "blade:melee"), "label": pb.name, "kind": "blade",
 					"profile": pb, "melee": not thrown, "range": [pb.normal_range, pb.long_range], "reach": pb.reach})
 		out.append_array(e.ravenloft.attack_options(c))
+		out.append_array(e.objects.actions.throw_options(c))
 	elif c.creature is Monster:
 		var m := c.creature as Monster
 		for a: Variant in m.data.get("actions", []):
@@ -100,6 +102,45 @@ func best_melee_option(c: Combatant, _target: Combatant) -> Dictionary:
 	return best
 
 
+## Why `ally` can't make Commander's Strike's attack for `by` ("" if it can): a willing creature (one of `by`'s allies)
+## who can see or hear it and still has its Reaction.
+func strike_ally_why(by: Combatant, ally: Combatant) -> String:
+	var e := enc()
+	if ally == null or ally == by or not by.allied_with(ally) or EchoKnight.is_echo(ally) or not e.spells.can_react(ally):
+		return "Choose an ally who still has its Reaction"
+	if not e.spells.can_see_or_hear(ally, by):
+		return "%s can't see or hear %s" % [ally.name(), by.name()]
+	return ""
+
+
+## The attack `c` makes against `t` when a feature gives it one attack (Commander's Strike: a weapon, an Unarmed Strike
+## or a stat-block attack): the option it could use from where it stands with the best hit chance times average damage,
+## or {} when none reaches.
+func strike_option(c: Combatant, t: Combatant) -> Dictionary:
+	var e := enc()
+	var best := {}
+	var best_score := -1.0
+	if t == null:
+		return best
+	for o in attack_options(c):
+		if c.creature is Monster and e.monster_actions.why_not(c, (c.creature as Monster).action(str(o.get("action_id", "")))) != "":
+			continue
+		if attack_legal(c, t, o) != "" or not has_ammo_for(c, o):
+			continue
+		var score := float(e.hit_chance(c, t, o)["chance"]) * (o["profile"] as WeaponProfile).average_damage()
+		if score > best_score:
+			best_score = score
+			best = o
+	return best
+
+
+## Commander's Strike's attack on the creature the player picked: {target, option: its id}, or {} when `c` can't
+## reach it with any attack.
+func strike_at(c: Combatant, t: Combatant) -> Dictionary:
+	var o := strike_option(c, t)
+	return {} if o.is_empty() else {"target": t, "option": str(o["id"])}
+
+
 ## How many attacks one Attack action gives (Extra Attack; the highest source wins, 2024 multiclass rule).
 func attacks_per_action(c: Combatant) -> int:
 	if c.creature.has_flag("slowed"):
@@ -143,7 +184,7 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 	if c.creature.has_flag("cant_attack"):
 		return "%s can't attack in this form" % c.name()
 	if bool(option["melee"]) and c.creature.has_flag("levitating") != target.creature.has_flag("levitating") \
-			and (option["profile"] as WeaponProfile).reach < 20:
+			and c.altitude == 0 and target.altitude == 0 and (option["profile"] as WeaponProfile).reach < 20:
 		return "Out of reach: one of you is floating 20 ft up (Levitate)"
 	var charm := charm_blocks(c, target)
 	if charm != "":
@@ -156,7 +197,11 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 		var needs := ((c.creature as Monster).action(str(option["action_id"])).get("targets", {}) as Dictionary).get("requires", []) as Array
 		if not needs.is_empty() and not needs.any(func(n: Variant) -> bool: return Legendary.meets(c, target, str(n))):
 			return "%s must be %s" % [target.name(), " or ".join(needs.filter(func(n: Variant) -> bool: return str(n) != "willing").map(func(n: Variant) -> String: return str(n).capitalize()))]
-	if c.creature is Character and option["kind"] in ["thrown", "weapon"] and item_count(c, p.item_id) <= 0:
+	if option.has("improvised"):
+		var thrown_why := e.objects.actions.throw_why(c, option)
+		if thrown_why != "":
+			return thrown_why
+	elif c.creature is Character and option["kind"] in ["thrown", "weapon"] and item_count(c, p.item_id) <= 0:
 		return "No %s left" % p.name.replace(" (thrown)", "")
 	if c.creature is Character and option["kind"] in ["thrown", "weapon"] and not bool(option["melee"]):
 		var w := (c.creature as Character).compendium.item_data(p.item_id)
@@ -200,10 +245,11 @@ func _spend_item(c: Combatant, item_id: String) -> void:
 			return
 
 
-## A thrown weapon leaves the hand and comes down in its target's space (GroundItems), to be picked up again. The last
-## of a stack leaves the inventory; a weapon that doesn't stack (a magic one) lies there with its own entry, so a
-## charge its power spends as it flies (Hammer of Thunderbolts) still comes off it.
-func throw_item(c: Combatant, item_id: String, target: Combatant) -> void:
+## A thrown weapon leaves the hand and comes down in its target's space (GroundItems), or by `cell` (an object it was
+## thrown at), to be picked up again. The last of a stack leaves the inventory; a weapon that doesn't stack (a magic
+## one) lies there with its own entry, so a charge its power spends as it flies (Hammer of Thunderbolts) still comes
+## off it.
+func throw_item(c: Combatant, item_id: String, target: Combatant, cell: Vector2i = Vector2i(-1, -1)) -> void:
 	var ch := c.creature as Character
 	for en in ch.inventory:
 		if str(en["id"]) != item_id or int(en["qty"]) <= 0:
@@ -218,7 +264,7 @@ func throw_item(c: Combatant, item_id: String, target: Combatant) -> void:
 		else:
 			slot = ""   # more of the stack is still in hand
 		ch.items_changed()
-		enc().ground.land(c, item_id, state, slot, target)
+		enc().ground.land(c, item_id, state, slot, target, cell)
 		return
 
 

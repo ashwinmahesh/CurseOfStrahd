@@ -37,6 +37,8 @@ func _process(_delta: float) -> void:
 	if now == _minute:
 		return
 	var turned := _minute >= 0 and floori(now / 60.0) != floori(_minute / 60.0)
+	if _minute >= 0 and now > _minute:
+		LocationNpcs.pass_minutes(view, now - _minute)   # spells on the people run down (Sleep's minute)
 	_minute = now
 	var before := str(Schedule.memory(view.st)["fired"])
 	var plays := Schedule.catch_up(view.st, view.loc_id)
@@ -49,6 +51,9 @@ func _process(_delta: float) -> void:
 	var weather := Weather.now(view.st, view.loc_id)
 	if _weather != "" and weather != _weather and bool((view.loc.get("map", {}) as Dictionary).get("outdoors", false)):
 		view.narration.emit(str(Weather.kind(weather).get("line", "")))
+		# The look follows (lane 6's Atmosphere.refresh_weather: the rain or snow, the mist, wet stone and drifts).
+		if view.atmosphere != null and view.atmosphere.has_method("refresh_weather"):
+			view.atmosphere.call("refresh_weather")
 	_weather = weather
 	var talked := false
 	for p in plays:

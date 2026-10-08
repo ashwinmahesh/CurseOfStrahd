@@ -4,6 +4,7 @@ extends TestCase
 ## own (ui/screens/saves_screen.gd) over the pause menu, the game-over screen and the title, the list scrolls, and
 ## Back or Escape returns to whatever opened it. Q9: a picture and the player's note with each save, sorting, the
 ## newest five autosaves, and a copy of every save kept before each update. Q12: a jump-in save for each chapter.
+## Deleting a save from the page (owner, 2026-10-08), after a question.
 
 var root: Node
 var _real_dir := ""
@@ -445,3 +446,65 @@ func test_a_chapter_starts_a_game_without_a_slot() -> void:
 	for ch: Character in st.party + st.bench:
 		assert_eq(ch.character_level(), int(chapter["level"]), "%s at the chapter's level" % ch.name)
 	root.call("close_screen")
+
+
+func test_a_save_can_be_deleted_after_a_question() -> void:
+	var shot := Image.create(64, 36, false, Image.FORMAT_RGB8)
+	assert_eq(SaveSystem.save("older"), OK)
+	SaveSystem._write_thumb("older", shot)
+	assert_eq(SaveSystem.save("mine"), OK)
+	assert_eq(SaveSystem.current_slot, "mine")
+	var menu := await _menu()
+	await _press(menu, "Load a Save")
+	var page := _page(menu)
+	var gone := page.find_child("older", true, false).find_child("Delete", true, false) as Button
+	assert_true(gone != null, "each save has a Delete")
+	gone.pressed.emit()
+	await _frames(1)
+	assert_true(page.confirm_open() and _shows(page.find_child("Confirm", true, false), "Delete this save?"), "asked first")
+	await _press(page, "Cancel")
+	assert_true(SaveSystem.has_slot("older"), "Cancel keeps it")
+	(page.find_child("older", true, false).find_child("Delete", true, false) as Button).pressed.emit()
+	await _frames(1)
+	await _press(page.find_child("Confirm", true, false), "Delete")
+	assert_false(SaveSystem.has_slot("older"), "the save is gone")
+	assert_false(FileAccess.file_exists(SaveSystem.thumb_path("older")), "with its picture")
+	assert_true(page.find_child("older", true, false) == null, "and from the list")
+	assert_true(SaveSystem.has_slot("mine"), "the others stay")
+	assert_true(_shows(page, "Deleted."))
+	# The game's own slot can go too: the next save then makes a new one.
+	(page.find_child("mine", true, false).find_child("Delete", true, false) as Button).pressed.emit()
+	await _frames(1)
+	await _press(page.find_child("Confirm", true, false), "Delete")
+	assert_eq(SaveSystem.current_slot, "", "no slot of its own any more")
+	assert_eq(SaveSystem.quick_save(), OK)
+	assert_true(SaveSystem.current_slot not in ["", "mine"], "F5 makes a new one")
+	root.call("close_screen")
+
+
+func test_saving_also_offers_delete() -> void:
+	assert_eq(SaveSystem.save("older"), OK)
+	var menu := await _menu()
+	await _press(menu, "Save Game")
+	assert_true(_page(menu).find_child("older", true, false).find_child("Delete", true, false) is Button)
+	root.call("close_screen")
+
+
+func test_the_title_redraws_after_a_delete() -> void:
+	assert_eq(SaveSystem.save("only"), OK)
+	root.queue_free()
+	root = null
+	var title := (load("res://scenes/main_menu.tscn") as PackedScene).instantiate()
+	add_child(title)
+	await _frames(2)
+	await _press(title, "Load")
+	var page := _page(title)
+	(page.find_child("only", true, false).find_child("Delete", true, false) as Button).pressed.emit()
+	await _frames(1)
+	await _press(page.find_child("Confirm", true, false), "Delete")
+	await _escape()
+	await _frames(1)
+	var cont := _button(title, "Continue")
+	assert_true(cont != null and cont.disabled, "nothing left to continue")
+	assert_true(_button(title, "Load").disabled, "nor to load")
+	title.queue_free()

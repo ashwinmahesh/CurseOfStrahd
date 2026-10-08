@@ -462,6 +462,31 @@
       "model": "candelabra"
     },
     {
+      "id": "crg_dining_chandelier",
+      "cell": [
+        6,
+        7
+      ],
+      "kind": "decor",
+      "label": "the great chandelier",
+      "model": "candelabra",
+      "text": "A great chandelier of black iron and guttering candles hangs over the count's table on a single chain.",
+      "hangs": {
+        "cells": [
+          [
+            6,
+            7
+          ],
+          [
+            7,
+            7
+          ]
+        ],
+        "flag": "crg_dining_chandelier_down",
+        "lit": true
+      }
+    },
+    {
       "id": "crg_dining_portrait",
       "cell": [
         13,
@@ -694,6 +719,19 @@
       "model": "coats",
       "when": "name:ilse_varga and quest.kestrel_company >= the_deserter and not flag.kestrel_merrow_counted",
       "dialogue": "castle_ravenloft/personal_kestrel:coats"
+    },
+    {
+      "id": "organ_harp",
+      "cell": [
+        4,
+        4
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "skill": "investigation",
+      "label": "a compartment behind one of the organ's stops",
+      "model": "harp",
+      "item": "instrument_of_the_bards_anstruth_harp"
     }
   ],
   "containers": [

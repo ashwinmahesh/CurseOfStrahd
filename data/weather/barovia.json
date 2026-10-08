@@ -112,10 +112,10 @@
       "blizzard": 2
     },
     "castle": {
-      "overcast": 2,
-      "fog": 3,
+      "overcast": 1,
+      "fog": 2,
       "rain": 3,
-      "storm": 3
+      "storm": 5
     }
   },
   "default_climate": "valley",

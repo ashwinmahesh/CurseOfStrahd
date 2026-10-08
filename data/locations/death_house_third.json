@@ -428,6 +428,31 @@
       "kind": "decor",
       "label": "a mobile of tin birds",
       "model": "mobile"
+    },
+    {
+      "id": "dressing_table_drawer",
+      "cell": [
+        4,
+        1
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "skill": "investigation",
+      "label": "a false bottom in the dressing-table drawer",
+      "model": "scattered_notes",
+      "item": "circlet_of_blasting"
+    },
+    {
+      "id": "nursemaid_mattress",
+      "cell": [
+        25,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a bundle under the nursemaid's mattress",
+      "model": "satchel",
+      "item": "cloak_of_elvenkind"
     }
   ],
   "containers": [

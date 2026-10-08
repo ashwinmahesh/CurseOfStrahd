@@ -103,18 +103,23 @@ static func haggle(st: StoryState, npc_id: String, ch: Character, dice: DiceRoll
 
 ## A shop's `rotating` stock as it stands this stretch of days: `count` things from its `pool`, one of each, picked
 ## again every `days` days (the same picks for the same days in a playthrough). Each line's stock_id carries the
-## stretch, so what the party bought comes back with the next stretch's picks.
+## stretch, so what the party bought comes back with the next stretch's picks. A shop can split its pool into
+## `groups` ([{pool, count}]) so every stretch brings some of each kind (Vadoma: curios, arms, scrolls).
 static func rotation(st: StoryState, npc_id: String) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var rot := shop(npc_id).get("rotating", {}) as Dictionary
-	var pool: Array = (rot.get("pool", []) as Array).duplicate()
-	if pool.is_empty():
+	if rot.is_empty():
 		return out
 	var stretch := stretch_of(st, npc_id)
-	var rng := DiceRoller.new(hash("%d:rotation:%s:%d" % [st.playthrough_seed, npc_id, stretch]))
-	for i in mini(int(rot.get("count", 3)), pool.size()):
-		var id := str(pool.pop_at(rng.roll_one(pool.size(), "Trader's stock") - 1))
-		out.append({"id": id, "qty": 1, "stock_id": "%s@%d" % [id, stretch]})
+	var groups: Array = rot.get("groups", [rot]) as Array
+	for gi in groups.size():
+		var g := groups[gi] as Dictionary
+		var pool: Array = (g.get("pool", []) as Array).duplicate()
+		var key := "%d:rotation:%s:%d" % [st.playthrough_seed, npc_id, stretch] + (":%d" % gi if gi > 0 else "")
+		var rng := DiceRoller.new(hash(key))
+		for i in mini(int(g.get("count", 3)), pool.size()):
+			var id := str(pool.pop_at(rng.roll_one(pool.size(), "Trader's stock") - 1))
+			out.append({"id": id, "qty": 1, "stock_id": "%s@%d" % [id, stretch]})
 	return out
 
 

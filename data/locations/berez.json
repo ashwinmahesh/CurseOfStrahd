@@ -316,6 +316,30 @@
       "model": "sack",
       "search_dc": 14,
       "item": "antitoxin"
+    },
+    {
+      "id": "drowned_house_mantle",
+      "cell": [
+        17,
+        13
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "something in the drowned house",
+      "model": "broken_boards",
+      "item": "mantle_of_spell_resistance"
+    },
+    {
+      "id": "scarecrow_staff",
+      "cell": [
+        26,
+        20
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "the scarecrow's arm, which is a staff",
+      "model": "sword_leaning",
+      "item": "staff_of_swarming_insects__quarterstaff"
     }
   ],
   "containers": [

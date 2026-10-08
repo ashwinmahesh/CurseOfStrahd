@@ -132,6 +132,32 @@
       "kind": "examine",
       "label": "A bed of furs",
       "model": "bed"
+    },
+    {
+      "id": "chess_owl",
+      "cell": [
+        1,
+        4
+      ],
+      "kind": "search",
+      "search_dc": 17,
+      "skill": "investigation",
+      "label": "a chess piece that isn't a piece",
+      "model": "jewel_box",
+      "item": "figurine_of_wondrous_power_serpentine_owl"
+    },
+    {
+      "id": "blank_books_tome",
+      "cell": [
+        11,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 17,
+      "skill": "investigation",
+      "label": "one book on the shelf that isn't blank",
+      "model": "scattered_notes",
+      "item": "tome_of_understanding"
     }
   ],
   "containers": [

@@ -2,7 +2,18 @@ class_name SpellTargeting
 extends RefCounted
 ## Where a spell reaches in a fight (SpellCaster): its range (with Spell Sniper and the like), how many targets it
 ## takes, the squares its area covers, the creatures in them, and checking a cast's targets and point before anything is
-## spent.
+## spent. Walls are drawn square by square (opts.path); Crown of Madness's caster names the creature the crowned one
+## must attack (opts.crown_victim, and again when keeping control).
+
+## Walls with a length are drawn square by square, unless the cast-time choice makes a ring, a globe or a dome; a
+## Tsunami is aimed at a point instead (it rolls away from its caster).
+const NOT_DRAWN := ["tsunami"]
+const RING_CHOICES := ["ring", "globe", "dome"]
+## Straight walls: Blade Barrier's, and Prismatic Wall's flat plane. Every step goes the way the first one went.
+const STRAIGHT_WALLS := ["blade_barrier", "prismatic_wall"]
+## Walls that rise "from a point you choose within range": only their first square has to be in range. Every square
+## of the others (on a surface "within range", or appearing "within range") must be.
+const FROM_A_POINT := ["wind_wall", "wall_of_stone", "wall_of_force"]
 
 var _enc: WeakRef
 
@@ -129,6 +140,9 @@ func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: 
 		# A conjured object (Bigby's Hand) is only hurt by what targets it.
 		if v.creature.has_flag("spell_object"):
 			continue
+		# A creature in the air above the area (flying, levitating) is out of it.
+		if not reaches_height(c, s, v):
+			continue
 		match mode:
 			"others":
 				if v == c:
@@ -147,6 +161,35 @@ func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: 
 		out.sort_custom(func(a: Combatant, b: Combatant) -> bool: return enc().distance(c, a) < enc().distance(c, b))
 		out.resize(cap)
 	return out
+
+
+## Whether an area that covers `v`'s squares also reaches as high as `v` is off its floor (flying, levitating): an area
+## laid on the ground reaches as high as its own size (a sphere's radius, a cube's side, a cylinder's or wall's height);
+## one from the caster reaches from the caster's own height (an emanation as far as its size, a cone half as wide as
+## its distance there, a line its width). Creatures all on the floor are always in.
+func reaches_height(c: Combatant, s: Dictionary, v: Combatant) -> bool:
+	if v.altitude <= 0 and c.altitude <= 0:
+		return true
+	var area := s.get("area", {}) as Dictionary
+	var size := int(area.get("size", 0))
+	var from_caster := str((s.get("range", {}) as Dictionary).get("kind", "")) == "self"
+	var gap := v.altitude - (c.altitude if from_caster else 0)
+	match str(area.get("shape", "")):
+		"sphere":
+			return absi(gap) <= size
+		"cylinder":
+			return gap >= 0 and gap < int(area.get("height", size))
+		"cube":
+			return gap >= 0 and gap < size
+		"wall":
+			return gap >= 0 and gap < int(area.get("height", 10))
+		"emanation":
+			return absi(gap) <= size
+		"cone":
+			return absi(gap) <= enc().distance(c, v) / 2 + CombatGrid.FEET
+		"line":
+			return absi(gap) < maxi(CombatGrid.FEET, int(area.get("width", 5)))
+	return true
 
 
 ## A cast-time choice ("choice": {kind, from}) resolved from opts: the picked value, or the first option.
@@ -270,6 +313,12 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		tgt = [c]
 		out["targets"] = tgt
 		return out
+	# A wall drawn square by square: its squares, and a Wall of Fire's burning side, instead of a point.
+	if opts.has("path") and drawn_wall(s, choice_of(s, opts)):
+		out["why"] = wall_path_why(c, s, slot, path_of(opts), opts)
+		if str(out["why"]) == "" and opts.has("side") and sp().placement.chosen_side(path_of(opts), opts) == "":
+			out["why"] = "Choose a square on one side of the wall"
+		return out
 	if s.has("area") and str((s.get("range", {}) as Dictionary).get("kind", "")) != "self" and not s.has("attack"):
 		if point == Vector2.INF:
 			out["why"] = "Choose a point"
@@ -280,11 +329,19 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		return out
 	if s.has("area") and not s.has("attack"):
 		return out
+	# Aimed at an object on the battlefield, or at oil on the floor (EncounterObjects).
+	if tgt.is_empty() and str(opts.get("object", "")) != "":
+		out["why"] = e.objects.spell_target_why(c, s, str(opts["object"]), rng)
+		return out
 	if tgt.is_empty():
 		out["why"] = "Choose a target"
 		return out
 	if tgt.size() > target_count(s, slot) and not id in ["magic_missile", "scorching_ray", "eldritch_blast"]:
 		out["why"] = "Too many targets (%d max)" % target_count(s, slot)
+		return out
+	if id == "eldritch_blast" and tgt.size() > spells.specials.beams(c):
+		var beams := spells.specials.beams(c)
+		out["why"] = "Eldritch Blast has %d beam%s" % [beams, "" if beams == 1 else "s"]
 		return out
 	for t in tgt:
 		if bool(s.get("requires_sight", false)) and not e.can_see(from, t) and not e.can_see(c, t):
@@ -333,4 +390,137 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 			if charm != "":
 				out["why"] = charm
 				return out
+	# Crown of Madness: the creature the crowned one must attack ("" is no one).
+	var victim_id := str(opts.get("crown_victim", ""))
+	if victim_id != "" and not tgt.is_empty():
+		out["why"] = crown_victim_why(c, tgt[0], e.get_c(victim_id))
 	return out
+
+
+# --- Walls drawn square by square ------------------------------------------------------------------
+
+## Whether a wall spell is drawn square by square (opts.path) with this cast-time choice: a wall with a length, not
+## its ring, globe or dome, and not a Tsunami.
+static func drawn_wall(s: Dictionary, choice: String = "") -> bool:
+	return str((s.get("area", {}) as Dictionary).get("shape", "")) == "wall" and not str(s.get("id", "")) in NOT_DRAWN \
+		and not choice in RING_CHOICES
+
+
+## The squares drawn for a wall (opts.path: squares as Vector2i, or [x, y] pairs), in drawing order.
+static func path_of(opts: Dictionary) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	for v: Variant in opts.get("path", []):
+		if v is Vector2i:
+			out.append(v as Vector2i)
+		elif v is Vector2:
+			out.append(Vector2i(floori((v as Vector2).x), floori((v as Vector2).y)))
+		elif v is Array and (v as Array).size() >= 2:
+			out.append(Vector2i(int((v as Array)[0]), int((v as Array)[1])))
+	return out
+
+
+## How many squares long a wall can be: its length in feet (a Wall of Stone's or Force's ten 10-ft panels laid end to
+## end are 100 ft) over 5 ft a square, diagonal steps included (the grid counts them as 5 ft).
+func wall_squares(s: Dictionary, slot: int) -> int:
+	var area := s.get("area", {}) as Dictionary
+	var feet := int(area.get("size", 0)) + int((s.get("upcast", {}) as Dictionary).get("area", 0)) * maxi(0, slot - int(s.get("level", 0)))
+	return maxi(1, feet / CombatGrid.FEET)
+
+
+## Why `cell` can't be the next square of the wall `path` being drawn ("" if it can): a square of the map that isn't
+## solid, not in the wall yet, touching the last square (diagonally too, but not across the corner of a wall or other
+## solid square), the wall no longer than the spell allows, within range (only the first square for a wall that rises
+## from a point), and for a straight wall in line with its first step.
+func wall_step_why(c: Combatant, s: Dictionary, slot: int, path: Array[Vector2i], cell: Vector2i, opts: Dictionary = {}) -> String:
+	var e := enc()
+	if not e.grid.in_bounds(cell) or e.grid.is_solid(cell):
+		return "The wall can't go through a solid square"
+	if cell in path:
+		return "That square is already part of the wall"
+	var most := wall_squares(s, slot)
+	if path.size() >= most:
+		return "The wall is already as long as it gets (%d ft)" % (most * CombatGrid.FEET)
+	if path.is_empty() or not str(s.get("id", "")) in FROM_A_POINT:
+		var rng := range_ft(s, c)
+		if bool(opts.get("range_mult", false)):
+			rng *= 2
+		var from := e.class_features.cast_origin(c)
+		if e.grid.distance_ft(c.cell, c.size_cells, cell, 1) > rng and e.grid.distance_ft(from.cell, from.size_cells, cell, 1) > rng:
+			return "That square is out of range (%d ft)" % rng
+	if path.is_empty():
+		return ""
+	var last := path[path.size() - 1]
+	var step := cell - last
+	if maxi(absi(step.x), absi(step.y)) != 1:
+		return "Each square must touch the last one"
+	if step.x != 0 and step.y != 0 and (e.grid.is_solid(last + Vector2i(step.x, 0)) or e.grid.is_solid(last + Vector2i(0, step.y))):
+		return "The wall can't pass the corner of a solid square"
+	if str(s.get("id", "")) in STRAIGHT_WALLS and path.size() >= 2 and step != path[1] - path[0]:
+		return "%s is a straight wall" % str(s.get("name", "The wall"))
+	return ""
+
+
+## Why the drawn wall `path` can't be cast ("" if it can): every square checked as if added one at a time.
+func wall_path_why(c: Combatant, s: Dictionary, slot: int, path: Array[Vector2i], opts: Dictionary = {}) -> String:
+	if path.is_empty():
+		return "Draw the wall: choose its squares"
+	var so_far: Array[Vector2i] = []
+	for cell in path:
+		var why := wall_step_why(c, s, slot, so_far, cell, opts)
+		if why != "":
+			return why
+		so_far.append(cell)
+	return ""
+
+
+## A wall spell's squares from its cast-time shape (the hook in SpellCasting's and CombatItems' casts): the squares
+## drawn (opts.path), a ring around the point (`area.ring` ft across from it, 10 when left out) or a globe (15 ft),
+## else `cells` (a straight wall through the point, along the cast's direction: east-west without one).
+func wall_cells(s: Dictionary, opts: Dictionary, point: Vector2, cells: Array[Vector2i]) -> Array[Vector2i]:
+	var area := s.get("area", {}) as Dictionary
+	if str(area.get("shape", "")) != "wall":
+		return cells
+	var choice := choice_of(s, opts)
+	if choice in ["ring", "globe"] and point != Vector2.INF:
+		return sp()._ring(point, int(area.get("ring", 10)) if choice == "ring" else 15)
+	var path := path_of(opts)
+	if not path.is_empty() and drawn_wall(s, choice):
+		return path
+	return cells
+
+
+# --- Crown of Madness ------------------------------------------------------------------------------
+
+## Why `victim` can't be the creature Crown of Madness's `crowned` must attack ("" if it can; null is no one): any
+## creature but the crowned one, and not the caster, whom the Charmed creature can't attack.
+func crown_victim_why(caster: Combatant, crowned: Combatant, victim: Combatant) -> String:
+	if victim == null:
+		return ""
+	if not victim.is_alive():
+		return "%s is dead" % victim.name()
+	if victim == crowned:
+		return "It must attack a creature other than itself"
+	if victim == caster:
+		return "It is Charmed by you and can't attack you"
+	return ""
+
+
+## Names the creature `crowned` must attack on its turns (an id, or "" for no one): at casting (opts.crown_victim) and
+## each time its caster keeps control.
+func set_crown_victim(crowned: Combatant, victim_id: String) -> void:
+	crowned.set_meta("crown_victim", victim_id)
+
+
+## The attack Crown of Madness forces on `crowned` this turn, by the choice of a player's caster: {target, option}
+## when the chosen creature is alive and within reach of one of its melee attacks, else {} (it acts normally).
+func crown_attack(crowned: Combatant) -> Dictionary:
+	var e := enc()
+	var victim := e.get_c(str(crowned.get_meta("crown_victim", "")))
+	if victim == null or not victim.is_alive() or victim == crowned:
+		return {}
+	var best := {}
+	for o in e.attack_options(crowned):
+		if bool(o["melee"]) and e.weapons.attack_legal(crowned, victim, o) == "" \
+				and (best.is_empty() or (o["profile"] as WeaponProfile).average_damage() > (best["profile"] as WeaponProfile).average_damage()):
+			best = o
+	return {} if best.is_empty() else {"target": victim, "option": best}

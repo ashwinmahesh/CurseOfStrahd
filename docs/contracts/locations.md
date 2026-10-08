@@ -61,6 +61,11 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   while the party is in the location (LocationClock).
 - **Prop kinds:** `examine` (Narrator line `examine:<id>`), `book` (`codex` entry), `search` (a hidden thing found
   with `search_dc`), `lever` (sets `flag`), `decor` (no interaction). Optional `when`, `dialogue`, `item`, `flag`.
+  A search prop's `skill` is the check that finds it: `perception` (default) or `investigation` (a compartment you
+  work out; Search rolls it as well when one is within 15 ft). A search prop with an `item` is a hidden find
+  (docs/story/found_magic_items.md): each character gets one look, and one who misses it can't find it later; the
+  Narrator's `check:<skill>:<id>:failure` line, if any, plays on a miss. Detect Magic senses one holding a magic
+  item within 30 ft without saying where.
 
 ## data/npcs/<id>.json (schema: npc.schema.json)
 

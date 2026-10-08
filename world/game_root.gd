@@ -25,6 +25,7 @@ var glow := HoverGlow.new()          ## the rim on whatever the mouse is over
 
 func _ready() -> void:
 	InputActions.ensure()
+	UiScale.playing(self)   # the interface takes the player's size (Settings, Interface) while a game is on screen
 	Cursors.install()
 	GameState.current_scene = "res://scenes/game.tscn"
 	for a in OS.get_cmdline_user_args():
@@ -95,6 +96,10 @@ func enter_location(location_id: String, spawn: String) -> void:
 		view = null
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	view = LocationView.create(location_id, st, narrator, Dice.roller, spawn)
+	# Arriving in a new region: its loading card (G5, ui/screens/loading_card.gd) while the place settles in behind.
+	if str(view.loc.get("region", "")) != _card_region:
+		_card_region = str(view.loc.get("region", ""))
+		LoadingCard.show_for(self, view.loc)
 	Audio.play_music(_place_mood())
 	view.banter_player = banter
 	view.banter.connect(func(lines: Array) -> void:
@@ -129,7 +134,10 @@ func enter_location(location_id: String, spawn: String) -> void:
 			if screen is PauseMenu:
 				close_screen()
 			else:
-				open_screen("menu", 0)))
+				open_screen("menu", 0))
+		cv.sheet_requested.connect(func(who: Character) -> void:
+			if st.party.has(who):
+				open_screen("sheet", st.party.find(who))))
 	view.combat_ended.connect(_after_combat)
 	add_child(view)
 	plan_bar.view = view
@@ -183,7 +191,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		var at := (event as InputEventMouseButton).position
 		open_world_menu(view.pick_cell(view.rig.camera, at), at)
 	elif event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo:
-		match (event as InputEventKey).physical_keycode:
+		# The keys are matched as their defaults, so the player's own keys (Settings, Keys) land on the same commands.
+		match InputActions.as_default(event as InputEventKey):
 			KEY_C:
 				open_screen("sheet", 0)
 			KEY_I:
@@ -377,13 +386,12 @@ func open_services(npc_id: String, from_dialogue: bool = false) -> void:
 ## personality kept), keeps their belongings, and levels back up with the party's milestones.
 func respec(index: int) -> void:
 	var old := st.party[index]
-	var start := {"name": old.name, "identity": (old.build.get("identity", {}) as Dictionary).duplicate(true),
-		"appearance": (old.build.get("appearance", {}) as Dictionary).duplicate(true)}
-	var starting: Array[Dictionary] = [start]
+	var starting: Array[Dictionary] = [CreationScreen.rebuild_start(old)]
 	var cs := CreationScreen.new()
 	add_child(cs)
 	cs.open_with(starting, 1)
 	cs.finished.connect(func(made: Array[Character]) -> void:
+		st.last_check = true   # the conversation goes on knowing someone was rebuilt (`check.last`)
 		st.respec_member(old, made[0])
 		cs.queue_free()
 		view.rebuild_party()
@@ -391,6 +399,7 @@ func respec(index: int) -> void:
 		if dialogue != null:
 			dialogue.resume())
 	cs.cancelled.connect(func() -> void:
+		st.last_check = false   # backed out: nobody was rebuilt
 		cs.queue_free()
 		if dialogue != null:
 			dialogue.resume())
@@ -645,6 +654,7 @@ func _strahd_step(step: Dictionary) -> void:
 var _fade: ColorRect = null
 var _fade_label: Label = null
 var _place_fade: ColorRect = null
+var _card_region := ""   ## the region whose loading card was shown last
 
 
 ## A new place comes up out of black instead of cutting to it (docs/plans/ui_polish.md): the screen goes dark at once
@@ -749,9 +759,12 @@ func open_screen(kind: String, index: int) -> void:
 		_:
 			return
 	add_child(screen)
+	var fighting := view != null and view.in_combat
+	if screen is CharacterSheetScreen:
+		(screen as CharacterSheetScreen).in_fight = fighting   # view only in a fight (owner, 2026-10-08)
 	screen.call("open", self, st, index)
-	if kind == "menu" and view != null and view.in_combat:
-		# The fight waits while the menu is open.
+	if kind in ["menu", "sheet"] and fighting:
+		# The fight waits while the menu or a character sheet is open.
 		screen.process_mode = Node.PROCESS_MODE_ALWAYS
 		get_tree().paused = true
 

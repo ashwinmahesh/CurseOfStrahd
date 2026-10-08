@@ -72,6 +72,8 @@ approve kip_smudgewick +1 wren_featherfoot +1: You told Cyrus his family sends t
 ~ family_gift
 Narrator: He ladles soup into a crock, seals it with wax, and presses it on you along with a loaf. It smells, against all the odds, delicious.
 give ration 3
+Cyrus Belview: And this. A little stone. Master gave it so Cyrus would never stop cooking to eat. But Cyrus likes eating. You take it.
+give ioun_stone_sustenance
 -> menu
 
 ~ father

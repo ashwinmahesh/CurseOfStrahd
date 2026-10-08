@@ -3,7 +3,7 @@
   "name": "Ilie the Lamplighter",
   "title": "Keeper of Vallaki's Lamps",
   "summary": "A thin young man with a long pole and a pocket of tapers, who walks the streets after dark lighting the lamps the Baron says keep the town happy.",
-  "portrait": "commoner",
+  "portrait": "villager",
   "sprite": "villager",
   "attitude": "indifferent",
   "monster": "commoner",
