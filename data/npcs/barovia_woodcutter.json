@@ -3,7 +3,7 @@
   "name": "Grigore",
   "title": "Woodcutter of the Village of Barovia",
   "summary": "A stooped woodcutter who hauls his firewood in from the edge of the trees before noon every day and is behind a barred door long before the light goes.",
-  "portrait": "commoner",
+  "portrait": "villager",
   "sprite": "villager",
   "attitude": "indifferent",
   "monster": "commoner",
