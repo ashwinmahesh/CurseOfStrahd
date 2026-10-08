@@ -534,3 +534,18 @@ func test_the_tarn_the_den_and_the_hill() -> void:
 	await _frames(2)
 	assert_true(h.board.find_children("Smoke*", "GPUParticles3D", true, false).size() > 0, "smoke from the druids' fire")
 	h.queue_free()
+
+
+## Mount Baratok, Argynvostholt and the Tsolenka Pass dressed (lane 28, on lane 3's ground): frost round the summit
+## cairn, the dragon's frost scar across Argynvostholt's courtyard and names over the stables, the roc's nest on the
+## Tsolenka crag.
+func test_baratok_argynvostholt_and_tsolenka() -> void:
+	var want := {"mount_baratok": ["summit_frost_1", "hut_yard_notes"],
+		"argynvostholt": ["holt_frost_scar_3", "holt_stall_names", "holt_squire_token"],
+		"tsolenka_pass": ["tsolenka_roc_nest", "landing_roc_quill"]}
+	for loc: String in want:
+		var ids: Array[String] = []
+		for p: Variant in (Compendium.shared().get_entry("locations", loc) as Dictionary)["props"]:
+			ids.append(str((p as Dictionary)["id"]))
+		for id: String in want[loc]:
+			assert_true(id in ids, "%s has %s" % [loc, id])

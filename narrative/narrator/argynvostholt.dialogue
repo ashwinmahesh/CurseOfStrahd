@@ -354,3 +354,16 @@ once
 ~ open:dragon_gift_niche
 | With the beacon burning, a niche you never noticed stands open at the foot of the bier. In it lies a shield worked with silver scales, left by the dragon for whoever would finish what his knights began.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the stables, the scar, the squires.
+
+~ examine:holt_stall_names
+| Over each stall, a board with a name painted in a careful hand: Thunder, Brightmane, Old Faithful, Vesper. Under the boards, in the straw, the bones of the horses that answered to them.
+
+~ search:holt_stall_chain
+| Under the rotten straw of a stall, a length of good iron chain, a horse's tether, its ring still fixed to the wall. {name} works it loose.
+once
+
+~ search:holt_squire_token
+| On a squire's small grave, under a fallen leaf, a dragon-sun badge of the Order, left by someone who still remembers. {name} takes it gently.
+once
