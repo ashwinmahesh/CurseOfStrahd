@@ -380,6 +380,12 @@
   "dd7451958b55a92b": "[gruff, moved, grudging]",
   "fbf6e01514f900d5": "[anxious, gruff]"
  },
+ "belview": {
+  "0597e89ea0e3eca2": "[skittish, repeating, eerie]",
+  "62df06329425d658": "[sing-song, muttering]",
+  "8201ba8ab455b433": "[anxious, repeating, sing-song]",
+  "f4d3c28e6c99f340": "[childlike, serious, sing-song]"
+ },
  "bildrath": {
   "00bad157f0730049": "[smug, prim]",
   "227ac5ce221c28ef": "[low, conspiratorial, prim]",
@@ -1013,6 +1019,7 @@
   "2b8acb7477c33c02": "[grim, ominous]",
   "2c97c30f36d9c70a": "[hushed, moved, aching]",
   "2d5fc3502342cfb5": "[dry, wry]",
+  "2d862c708a2837fb": "[hushed, eerie]",
   "2f10f8abba0448f5": "[dry, wry]",
   "2f5f347782780eb1": "[low, grim]",
   "2f9d0f56afd228c9": "[quiet, sad]",
@@ -1210,6 +1217,7 @@
   "a69e50e3a1e0acfa": "[hushed, solemn]",
   "a74546372a5abcdb": "[hushed, eerie]",
   "a7967176ed2b79bb": "[sly, intrigued]",
+  "a7972d48165362c7": "[quiet, sad]",
   "a7b424bab585f8f1": "[low, ominous]",
   "a7f5f52ec785d15b": "[wry, quoting a nervous guard]",
   "a83487f1b97c895a": "[quiet, uncertain]",
@@ -1349,6 +1357,7 @@
   "ee33dc92b34fa370": "[shaken, quiet]",
   "ee3a471470e65566": "[grim, then warmer]",
   "ee4d5cd3ffd45992": "[cold, dry]",
+  "ee5b9b726f388832": "[gentle, wry]",
   "eedad812f8b39f8b": "[quiet, uneasy]",
   "ef39591485e55647": "[intrigued, storytelling]",
   "efa8e2b5621df613": "[sudden, shrill tension]",
