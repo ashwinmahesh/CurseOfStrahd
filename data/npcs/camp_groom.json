@@ -1,0 +1,17 @@
+{
+  "id": "camp_groom",
+  "name": "Gavril",
+  "title": "Horse-Keeper of the Lake Camp",
+  "summary": "An old horse-keeper who talks to the camp's horses in a language nobody else in the camp speaks.",
+  "portrait": "scout",
+  "sprite": "scout",
+  "attitude": "indifferent",
+  "monster": "scout",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "vallaki_vistani_camp"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

@@ -1,0 +1,24 @@
+# The rest of Arrigal's camp by the lake (lane 28, 2026-10-08: "more people walking around and doing things"): Stoica
+# mending his nets on the shore, Old Paraschiva at the pot, Gavril with the horses, Mihnea walking the camp's edge, and
+# a camp dog. Unvoiced for now.
+
+~ fisher
+Stoica: Nets tear. You mend them. The lake's the same. It takes a little and you mend what's left.
+Stoica: Don't wade in past your knees. The bottom drops away, and nothing that goes down there comes back up the same.
+-> END
+
+~ cook
+Old Paraschiva: Sit if you want to eat, stand if you want to be looked at. Luvash's wine is for Luvash, and for me when he isn't looking.
+-> END
+
+~ groom
+Gavril: This one bites, that one kicks, and the black one is Arrigal's, so don't touch it at all. The others are good horses. They know the way out of the valley. They just can't take it.
+-> END
+
+~ lookout
+Mihnea: Keep to the fire, stranger. I watch the road so you don't have to. And so I see who comes down it.
+-> END
+
+~ dog
+Narrator: The camp dog trots after you for a few steps, decides you aren't carrying anything to eat, and goes back to sitting very hopefully beside the pot.
+-> END

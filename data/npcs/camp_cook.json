@@ -1,0 +1,17 @@
+{
+  "id": "camp_cook",
+  "name": "Old Paraschiva",
+  "title": "Cook of the Lake Camp",
+  "summary": "An old woman who keeps the camp's pot going and the young men fed, and who disapproves of Luvash's wine and drinks it anyway.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "vallaki_vistani_camp"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

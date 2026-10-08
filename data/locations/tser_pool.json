@@ -17,17 +17,17 @@
       "##.~~wwwwwwww~~.....................==..=.##",
       "##.~~wwwwwwww~~.....................==....##",
       "##.~~wwwwwwww~~.......................#...##",
-      "##..~wwwwwwww~..==...........==........##.##",
+      "##..~wwwwwwww~..==...........==......=.##.##",
       "##..~~wwwwww~~..==...=.==.=..==.===.......##",
       "##...~wwwwww~...................=...==....##",
       "##....~~~~~~=............=..........==..#.##",
       "##.=....~~........................=.......##",
-      "##.......~~...#....................~~...=.##",
-      "####..............................~.=..#..##",
+      "##.......~~...#............=1111=..~~...=.##",
+      "####........................1111..~.=..#..##",
       "##...=========....==.......==...........#.##",
-      "##...=.=.==.=....===.......==.............##",
+      "##...=.=.==.=....===.......==..........=..##",
       "##...=.==.==.=....................==......##",
-      "##...=========......~....~.........#..#...##",
+      "##...=========......~....~.........#..#.=.##",
       "####........#...#...=.....##........#..#..##",
       "#####################...####################",
       "#####################...####################",
@@ -39,7 +39,39 @@
     ],
     "theme": "svalich_road",
     "light": "dim",
-    "outdoors": true
+    "outdoors": true,
+    "elevation": [
+      "00000000000001222223333333333333333333333333",
+      "00000000000001222223333333333333333333333333",
+      "00000000000001222223333333333333333333333333",
+      "00000000000001222223333333333333333333333333",
+      "00000000000001222223333333333333333333333333",
+      "00000000000001122223333333333333333333333333",
+      "00000000000000122222222222222333333333333333",
+      "00000000000000112222222222222333333333333333",
+      "00000000000000012222222222222333333333333333",
+      "00000000000000012222222222222333333333333333",
+      "00000000000000012222222222222222222222222222",
+      "00000000000000112222222222222222222222222222",
+      "00000000000000122222222222222222222222222222",
+      "00000000000001122222222222222222222222222222",
+      "00000000000001222222222222222222222222222222",
+      "00000000000001222222222222222222222222222222",
+      "00000000000001222222222222222222222222222222",
+      "00000000000001222222222222222222222222222222",
+      "00000000000001222222222222222222222222222222",
+      "00000000000001222222222222222222222222222222",
+      "00000000000001222222222222222222222222222222",
+      "00000000000001222222222222222222222222222222",
+      "00000000000001111111111111111111111111111111",
+      "00000000000000000000000000000000000000000000",
+      "00000000000000000000000000000000000000000000",
+      "00000000000000000000000000000000000000000000",
+      "00000000000000000000000000000000000000000000",
+      "00000000000000000000000000000000000000000000",
+      "00000000000000000000000000000000000000000000",
+      "00000000000000000000000000000000000000000000"
+    ]
   },
   "areas": [
     {
@@ -648,6 +680,65 @@
       "label": "a Vistani cache under the ribbon tree",
       "model": "leaves",
       "item": "boots_of_striding_and_springing"
+    },
+    {
+      "id": "tser_stage_lamp_w",
+      "cell": [
+        27,
+        16
+      ],
+      "kind": "decor",
+      "model": "lantern_stand"
+    },
+    {
+      "id": "tser_stage_lamp_e",
+      "cell": [
+        32,
+        16
+      ],
+      "kind": "decor",
+      "model": "lantern_stand"
+    },
+    {
+      "id": "tser_stage_bell",
+      "cell": [
+        27,
+        17
+      ],
+      "kind": "search",
+      "label": "something dropped behind the stage",
+      "model": "satchel",
+      "search_dc": 12,
+      "item": "bell"
+    },
+    {
+      "id": "tser_knife_stump",
+      "cell": [
+        37,
+        11
+      ],
+      "kind": "examine",
+      "label": "A stump stuck with knives",
+      "model": "stump"
+    },
+    {
+      "id": "tser_deer",
+      "cell": [
+        39,
+        19
+      ],
+      "kind": "examine",
+      "label": "A deer hung for skinning",
+      "model": "carcass"
+    },
+    {
+      "id": "tser_hides",
+      "cell": [
+        40,
+        21
+      ],
+      "kind": "decor",
+      "model": "sack"
     }
   ],
   "containers": [
@@ -729,7 +820,8 @@
       ],
       "dialogue": "svalich_road/tser_camp:dorina",
       "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile",
-      "facing": "north"
+      "facing": "north",
+      "work": "gesture"
     },
     {
       "npc": "tser_radu",
@@ -761,7 +853,8 @@
       ],
       "dialogue": "svalich_road/tser_camp:petru",
       "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile",
-      "facing": "east"
+      "facing": "east",
+      "work": "swing"
     },
     {
       "npc": "tser_tobar",
@@ -771,7 +864,8 @@
       ],
       "dialogue": "svalich_road/tser_camp:tobar",
       "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile",
-      "facing": "north"
+      "facing": "north",
+      "work": "swing"
     },
     {
       "npc": "tser_zora",
@@ -789,6 +883,73 @@
           5
         ]
       ]
+    },
+    {
+      "npc": "tser_lavinia",
+      "cell": [
+        29,
+        16
+      ],
+      "dialogue": "svalich_road/tser_camp:lavinia",
+      "facing": "north",
+      "work": "gesture",
+      "hours": [
+        10,
+        23
+      ],
+      "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile"
+    },
+    {
+      "npc": "tser_iancu",
+      "cell": [
+        34,
+        11
+      ],
+      "dialogue": "svalich_road/tser_camp:iancu",
+      "facing": "east",
+      "work": "swing",
+      "hours": [
+        8,
+        18
+      ],
+      "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile"
+    },
+    {
+      "npc": "tser_marin",
+      "cell": [
+        38,
+        19
+      ],
+      "dialogue": "svalich_road/tser_camp:marin",
+      "facing": "east",
+      "work": "swing",
+      "hours": [
+        7,
+        17
+      ],
+      "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile"
+    },
+    {
+      "npc": "tser_dog",
+      "cell": [
+        20,
+        16
+      ],
+      "dialogue": "svalich_road/tser_camp:dog",
+      "facing": "east",
+      "path": [
+        [
+          26,
+          13,
+          3
+        ],
+        [
+          20,
+          14,
+          4
+        ]
+      ],
+      "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile"
     }
   ],
   "encounters": [
