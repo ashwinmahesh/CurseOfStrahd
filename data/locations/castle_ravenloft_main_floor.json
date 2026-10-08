@@ -462,6 +462,31 @@
       "model": "candelabra"
     },
     {
+      "id": "crg_dining_chandelier",
+      "cell": [
+        6,
+        7
+      ],
+      "kind": "decor",
+      "label": "the great chandelier",
+      "model": "candelabra",
+      "text": "A great chandelier of black iron and guttering candles hangs over the count's table on a single chain.",
+      "hangs": {
+        "cells": [
+          [
+            6,
+            7
+          ],
+          [
+            7,
+            7
+          ]
+        ],
+        "flag": "crg_dining_chandelier_down",
+        "lit": true
+      }
+    },
+    {
       "id": "crg_dining_portrait",
       "cell": [
         13,

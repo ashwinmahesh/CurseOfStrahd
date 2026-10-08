@@ -45,6 +45,7 @@
   "tags": [
     "damage"
   ],
+  "ignites_objects": true,
   "summary": "15-foot Cone of flame: Dexterity save, 3d6 Fire damage, half on a success.",
   "text": "Flames sweep out from you in a 15-foot Cone. Every creature in the Cone makes a Dexterity saving throw, taking 3d6 Fire damage on a failure or half as much on a success. Flammable objects in the Cone that nobody is wearing or carrying catch fire. Using a Higher-Level Spell Slot: the damage increases by 1d6 for each slot level above 1."
 }

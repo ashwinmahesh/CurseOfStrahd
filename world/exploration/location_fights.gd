@@ -128,6 +128,7 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 	Difficulty.of_options(view.st.options).prepare(e)
 	EncounterSetup.bring_familiars(e, party_cbs)
 	_light_the_fight(view, e)
+	BattleScenery.for_location(view, e)   # doors, furniture and chandeliers that can be broken (F5)
 	var surprised: Array[String] = []
 	var who := str(spec.get("surprise", ""))
 	for c in e.combatants:
@@ -334,6 +335,7 @@ static func _light_the_fight(view: LocationView, e: Encounter) -> void:
 static func _combat_grid(view: LocationView) -> CombatGrid:
 	var g := CombatGrid.from_rows(view.loc["map"]["rows"] as Array)
 	g.drop_ft = int(view.loc["map"].get("drop_ft", 0))
+	g.ceiling_ft = int(view.loc["map"].get("ceiling_ft", 0 if bool(view.loc["map"].get("outdoors", false)) else 20))
 	for d: Variant in view.loc.get("doors", []):
 		var door := d as Dictionary
 		g.set_flag(LocationView._cell(door["cell"]), CombatGrid.WALL, LocationLocks._door_state(view, str(door["id"])) != LocationView.DOOR_OPEN)
@@ -381,6 +383,7 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 			m.creature.remove_condition(&"grappled")
 			m.creature.remove_condition(&"prone")
 	LocationStealth.after_fight(view, e)
+	BattleScenery.after_fight(view, e)   # broken doors stay open; what else broke stays broken this visit
 	LocationPlan.resume(view)
 	for m: Combatant in view.members + view.guest_members:
 		var tok := view.tokens[m.id] as CombatToken

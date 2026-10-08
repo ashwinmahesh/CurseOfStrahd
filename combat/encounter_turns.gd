@@ -122,6 +122,7 @@ func _begin_turn() -> CombatResult:
 		o.cast_slot_spell_this_turn = false
 		o.creature.on_turn_start(c.id)
 	e._expire_marks(c.id, "start")
+	e.movement.settle_all()   # a flyer whose flight ended comes down (F4)
 	if c.readied.has("conc"):
 		var held := c.readied["conc"] as Concentration
 		if held != null and not held.ended:
@@ -140,6 +141,7 @@ func _begin_turn() -> CombatResult:
 	var steps: Array = [
 		func() -> CombatResult: return e.spells.turn_start(c),
 		func() -> CombatResult:
+			e.objects.turn_start(c)
 			e.feature_actions.turn_start(c)
 			return none,
 		func() -> CombatResult: return e.class_features.turn_start(c),
@@ -219,7 +221,9 @@ func _turn_end_rest(c: Combatant) -> CombatResult:
 	e.items.turn_end(c)
 	e.triggered_features.turn_end(c)
 	return e.then(e.spells.turn_end(c), func() -> CombatResult:
+		e.objects.turn_end(c)
 		e.spells.zones.prune()
+		e.movement.settle_all()   # a flyer whose flight ended comes down (F4)
 		_check_over()
 		if e.state != Encounter.State.ACTIVE:
 			return CombatResult.new()
@@ -271,6 +275,7 @@ func _advance_index() -> void:
 			e.log.add("turn", "Round %d" % e.round_no, "")
 			e.events.append({"type": "round", "round": e.round_no})
 			e.legendary.round_started()
+			e.objects.round_started()
 		if e.current().is_alive() and not e.current().has_meta("left_fight"):
 			break
 

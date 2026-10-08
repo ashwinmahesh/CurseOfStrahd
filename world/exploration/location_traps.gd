@@ -50,6 +50,7 @@ static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant
 		return
 	var id := str(trap["id"])
 	(view.st.loc_state(view.loc_id)["traps"] as Dictionary)[id] = "triggered"
+	BattleScenery.trap_sprung(view, id)   # a chandelier that is this trap comes down
 	var lines: Array[String] = []
 	var save := trap.get("save", {}) as Dictionary
 	var success := false

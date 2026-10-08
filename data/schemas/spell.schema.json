@@ -484,6 +484,10 @@
       "type": "boolean",
       "description": "No effect on Undead or Constructs."
     },
+    "ignites_objects": {
+      "type": "boolean",
+      "description": "A flammable object it hits, or that is in its area, catches fire if nobody wears or carries it (Fire Bolt, Fireball; combat/encounter_objects.gd)."
+    },
     "secondary": {
       "type": "object",
       "description": "A save-based burst after the primary spell attack or saving throw.",

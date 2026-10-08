@@ -182,7 +182,7 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 	if c.creature.has_flag("cant_attack"):
 		return "%s can't attack in this form" % c.name()
 	if bool(option["melee"]) and c.creature.has_flag("levitating") != target.creature.has_flag("levitating") \
-			and (option["profile"] as WeaponProfile).reach < 20:
+			and c.altitude == 0 and target.altitude == 0 and (option["profile"] as WeaponProfile).reach < 20:
 		return "Out of reach: one of you is floating 20 ft up (Levitate)"
 	var charm := charm_blocks(c, target)
 	if charm != "":
@@ -239,10 +239,11 @@ func _spend_item(c: Combatant, item_id: String) -> void:
 			return
 
 
-## A thrown weapon leaves the hand and comes down in its target's space (GroundItems), to be picked up again. The last
-## of a stack leaves the inventory; a weapon that doesn't stack (a magic one) lies there with its own entry, so a
-## charge its power spends as it flies (Hammer of Thunderbolts) still comes off it.
-func throw_item(c: Combatant, item_id: String, target: Combatant) -> void:
+## A thrown weapon leaves the hand and comes down in its target's space (GroundItems), or by `cell` (an object it was
+## thrown at), to be picked up again. The last of a stack leaves the inventory; a weapon that doesn't stack (a magic
+## one) lies there with its own entry, so a charge its power spends as it flies (Hammer of Thunderbolts) still comes
+## off it.
+func throw_item(c: Combatant, item_id: String, target: Combatant, cell: Vector2i = Vector2i(-1, -1)) -> void:
 	var ch := c.creature as Character
 	for en in ch.inventory:
 		if str(en["id"]) != item_id or int(en["qty"]) <= 0:
@@ -257,7 +258,7 @@ func throw_item(c: Combatant, item_id: String, target: Combatant) -> void:
 		else:
 			slot = ""   # more of the stack is still in hand
 		ch.items_changed()
-		enc().ground.land(c, item_id, state, slot, target)
+		enc().ground.land(c, item_id, state, slot, target, cell)
 		return
 
 

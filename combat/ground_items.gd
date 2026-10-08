@@ -7,7 +7,11 @@ extends RefCounted
 ## back in hand when that hand is free, else into its pack. A monster's weapon is a set of stat-block attacks: while
 ## the weapon is out of its hands those attacks can't be made, and the AI takes it back when it lies within reach.
 ## When the fight ends the party gathers its own things and half the ammunition it shot, and the foes' dropped
-## weapons are left for the loot. Encounter.ground; the scene draws the piles (world/combat/ground_view.gd).
+## weapons are left for the loot. What a creature lets go of lands on the floor of its square, however high it flew
+## (the scene draws it there). A creature going over the edge into a map's open drop (EncounterMovement.fall_away)
+## keeps hold of what it carries: it all goes down with it. A thing that comes down over the drop falls out of reach
+## for the rest of the fight, and is fetched from below with the rest when it ends (deviations.md).
+## Encounter.ground; the scene draws the piles (world/combat/ground_view.gd).
 
 ## How far a creature reaches for something on the ground.
 const REACH := 5
@@ -23,6 +27,8 @@ var lost: Dictionary = {}
 var ammo_used: Dictionary = {}
 ## The foes' weapons still lying there when the fight ended, for its loot: [{id, qty}].
 var spoils: Array[Dictionary] = []
+## Things that came down over the map's open drop (a pile without a square), out of reach until the fight is over.
+var fallen: Array[Dictionary] = []
 var _next_id := 1
 
 
@@ -163,6 +169,9 @@ func weapon_gone(c: Combatant, act: Dictionary) -> String:
 	for g in items:
 		if str(g["owner_id"]) == c.id and id in (g["actions"] as Array):
 			return "Disarmed: its %s lies on the ground" % noun(g)
+	for g2 in fallen:
+		if str(g2["owner_id"]) == c.id and id in (g2["actions"] as Array):
+			return "Disarmed: its %s fell over the edge" % noun(g2)
 	return "Disarmed: someone took its weapon"
 
 
@@ -174,8 +183,10 @@ func empty_handed(c: Combatant) -> bool:
 # --- Dropping -------------------------------------------------------------------------------------
 
 ## `c` lets go of `what` (one of held(c)), which lands on `cell` (its own square by default); logged with `why`.
-## Returns the pile it joined.
+## Returns the pile it joined ({} when nothing landed: a creature going over the edge keeps hold of it).
 func drop(c: Combatant, what: Dictionary, why: String, details: Array = [], cell: Vector2i = Vector2i(-1, -1)) -> Dictionary:
+	if goes_down(c):
+		return {}
 	var g := {"item_id": str(what["item_id"]), "name": str(what["name"]), "qty": 1, "owner_id": c.id,
 		"slot": str(what.get("slot", "")), "state": {}, "actions": (what.get("actions", []) as Array).duplicate()}
 	if what.has("entry"):
@@ -196,9 +207,17 @@ func drop(c: Combatant, what: Dictionary, why: String, details: Array = [], cell
 			if not a in gone:
 				gone.append(a)
 		lost[c.id] = gone
-	var pile := _put(g, cell if cell.x >= 0 else c.cell)
 	enc().log.add("info", "%s drops the %s (%s)" % [c.name(), noun(g), why], c.id, details)
-	return pile
+	return _put(g, cell if cell.x >= 0 else c.cell)
+
+
+## Whether `c` is going over the edge into the map's open drop (only a creature falling is ever over it: no one can
+## stand or hover there) or has already left the fight that way: what it carries goes down with it.
+func goes_down(c: Combatant) -> bool:
+	var e := enc()
+	if c.has_meta("left_fight") or not e.grid.in_bounds(c.cell):
+		return true
+	return c.footprint().any(func(sq: Vector2i) -> bool: return e.grid.drop_at(sq) > 0)
 
 
 ## Disarming Attack (2024): the target drops one object it's holding, which lands in its space (for a big target, the
@@ -228,13 +247,13 @@ func effect_added(cr: Creature, fx: Effect) -> void:
 		drop_held(c, "Unconscious")
 
 
-## A thrown weapon comes down in its target's space (for a big target, the square nearest the thrower), hit or miss.
-## `state` is the inventory entry it left ({} for one of a stack), `slot` the hand it left (empty while more of a stack
-## is still in hand).
-func land(c: Combatant, item_id: String, state: Dictionary, slot: String, target: Combatant) -> void:
+## A thrown weapon comes down in its target's space (for a big target, the square nearest the thrower), hit or miss,
+## or by `cell` (an object it was thrown at: the nearest square something can lie on). `state` is the inventory entry
+## it left ({} for one of a stack), `slot` the hand it left (empty while more of a stack is still in hand).
+func land(c: Combatant, item_id: String, state: Dictionary, slot: String, target: Combatant, cell: Vector2i = Vector2i(-1, -1)) -> void:
 	var name := str(Compendium.shared().item_data(item_id).get("name", item_id))
-	_put({"item_id": item_id, "name": name, "qty": 1, "owner_id": c.id, "slot": slot, "state": state, "actions": []},
-		_nearest_in(target, c) if target != null else c.cell)
+	var at := cell if cell.x >= 0 else (_nearest_in(target, c) if target != null else c.cell)
+	_put({"item_id": item_id, "name": name, "qty": 1, "owner_id": c.id, "slot": slot, "state": state, "actions": []}, at)
 
 
 ## A thrown weapon that returns to its thrower's hand (a Dwarven Thrower) leaves the ground. False if it isn't there.
@@ -260,8 +279,12 @@ func ammo_spent(c: Combatant, ammo_id: String) -> void:
 
 
 ## Puts pile `g` down on `cell` (or the nearest square something can lie on), joining a pile of the same thing from
-## the same owner there. Returns the pile.
+## the same owner there. Returns the pile, or {} when `cell` is over the map's open drop: it falls out of reach.
 func _put(g: Dictionary, cell: Vector2i) -> Dictionary:
+	if enc().grid.drop_at(cell) > 0:
+		fallen.append(g)
+		enc().log.add("info", "The %s falls over the edge" % noun(g), str(g["owner_id"]))
+		return {}
 	var spot := _floor_near(cell)
 	var iid := str(g["item_id"])
 	if iid != "" and (g["state"] as Dictionary).is_empty() and bool(Compendium.shared().item_data(iid).get("stackable", false)):
@@ -499,6 +522,11 @@ func _character_of(c: Combatant) -> Character:
 ## are items are left in `spoils` for the fight's loot.
 func fight_over() -> void:
 	var e := enc()
+	# What fell over the edge is fetched from below with the rest.
+	for g0 in fallen:
+		g0["cell"] = Vector2i(-1, -1)
+		items.append(g0)
+	fallen.clear()
 	for g: Dictionary in items.duplicate():
 		var who := e.get_c(str(g["owner_id"]))
 		var ch := _character_of(who)
@@ -540,7 +568,8 @@ func to_dict() -> Dictionary:
 		var d := g.duplicate(true)
 		d["cell"] = [(g["cell"] as Vector2i).x, (g["cell"] as Vector2i).y]
 		piles.append(d)
-	return {"items": piles, "lost": lost.duplicate(true), "ammo": ammo_used.duplicate(true), "next": _next_id}
+	return {"items": piles, "lost": lost.duplicate(true), "ammo": ammo_used.duplicate(true), "next": _next_id,
+		"fallen": fallen.duplicate(true)}
 
 
 func from_dict(d: Dictionary) -> void:
@@ -551,6 +580,11 @@ func from_dict(d: Dictionary) -> void:
 		g["cell"] = Vector2i(int(a[0]), int(a[1]))
 		g["qty"] = int(g["qty"])
 		items.append(g)
+	fallen.clear()
+	for f: Variant in d.get("fallen", []):
+		var g2 := (f as Dictionary).duplicate(true)
+		g2["qty"] = int(g2["qty"])
+		fallen.append(g2)
 	lost = (d.get("lost", {}) as Dictionary).duplicate(true)
 	ammo_used = (d.get("ammo", {}) as Dictionary).duplicate(true)
 	_next_id = int(d.get("next", items.size() + 1))

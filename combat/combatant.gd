@@ -25,6 +25,9 @@ var reaction_rules: Dictionary = {}
 
 # --- Turn state (reset at the start of each of its turns) ---
 var movement_left: int = 0
+## The Speed this turn began with (reset_turn): a faster Fly Speed gained later in the turn adds the difference
+## (switching speeds, EncounterMovement.effect_added).
+var turn_speed: int = 0
 var action_available: bool = true
 var bonus_available: bool = true
 var reaction_available: bool = true
@@ -163,6 +166,7 @@ func reset_turn() -> void:
 	remove_meta("attack_cantrip_used")
 	remove_meta("sequence_attacks")
 	movement_left = speed()
+	turn_speed = movement_left
 	turn_start_cell = cell
 	clear_run()
 	action_available = true

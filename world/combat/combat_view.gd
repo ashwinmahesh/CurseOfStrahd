@@ -32,6 +32,8 @@ var overlay: GridOverlay
 var field: FieldView
 ## What lies on the ground (world/combat/ground_view.gd).
 var ground_view: GroundView
+## The breakable things, fire and oil (world/combat/object_view.gd).
+var objects_view: ObjectView
 ## Spell and ability effects (world/combat/fx/spell_fx.gd).
 var fx: SpellFx
 ## What enemies shout and creatures sound like (world/combat/combat_barks.gd).
@@ -91,6 +93,11 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	add_child(field)
 	ground_view = GroundView.create(board)
 	add_child(ground_view)
+	objects_view = ObjectView.create(board)
+	add_child(objects_view)
+	# The breakable things on the board's '=' squares (a location fight placed its own already).
+	if e.state == Encounter.State.SETUP:
+		BattleScenery.from_board(e, board)
 	fx = SpellFx.new()
 	add_child(fx)
 	barks = CombatBarks.new()
@@ -279,12 +286,47 @@ func _refresh_all() -> void:
 		t.set_active(cur != null and t.combatant == cur and e.state == Encounter.State.ACTIVE)
 	hud.refresh()
 	_show_weapons()
+	_show_heights()
+
+
+## A dark disc on the floor under each creature in the air (flying, levitating, carried), so its square reads at a
+## glance, and nothing under the rest.
+var _air_marks: Dictionary = {}
+
+
+func _show_heights() -> void:
+	for id: String in _air_marks.keys():
+		var c := e.get_c(id)
+		if c == null or c.altitude <= 0 or not c.is_alive() or c.has_meta("left_fight"):
+			(_air_marks[id] as Node3D).queue_free()
+			_air_marks.erase(id)
+	for c in e.living():
+		if c.altitude <= 0 or c.has_meta("left_fight"):
+			continue
+		var mark := _air_marks.get(c.id) as MeshInstance3D
+		if mark == null:
+			mark = MeshInstance3D.new()
+			var disc := CylinderMesh.new()
+			disc.height = 0.02
+			disc.top_radius = 0.38 * c.size_cells
+			disc.bottom_radius = 0.38 * c.size_cells
+			mark.mesh = disc
+			var m := StandardMaterial3D.new()
+			m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+			m.albedo_color = Color(Look.color("ink"), 0.45)
+			mark.material_override = m
+			mark.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			board.add_child(mark)
+			_air_marks[c.id] = mark
+		mark.position = board.cell_center(c.cell, c.size_cells) + Vector3(0, 0.03, 0)
 
 
 ## Spell objects and lingering areas on the field (Spiritual Weapon, Flaming Sphere, Spirit Guardians, Web...).
 func _show_weapons() -> void:
 	field.sync(e.spells.zones.objects)
 	ground_view.sync(e.ground.items)
+	objects_view.sync(e.objects)
 
 
 func _player() -> Combatant:
@@ -590,7 +632,8 @@ func _open_square_menu(at: Vector2) -> bool:
 	for it in _menu_items:
 		shown.append({"id": it["id"], "label": it["label"], "enabled": it.get("enabled", true), "why": it.get("why", "")})
 	hud.hide_tooltip()
-	hud.open_square_menu(o.name() if o != null else "This square", shown, at)
+	var thing := e.objects.blocking_at(cell)
+	hud.open_square_menu(o.name() if o != null else (thing.title() if thing != null else "This square"), shown, at)
 	return true
 
 
@@ -684,6 +727,13 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 				_update_hover()
 		_:
 			if t == null:
+				# An object's square (a crate, a door, a chandelier's chain, oil on the floor): aim at it instead.
+				var aimed := e.objects.redirect(c, selected, hover_cell) if hover_cell.x >= 0 else {}
+				if not aimed.is_empty():
+					if not bool(aimed["legal"]):
+						hud.banner(str(aimed["reason"]), 1.4)
+						return
+					_perform(aimed, [], Vector2.INF, Vector2.ZERO)
 				return
 			var why2 := catalog.target_why(c, selected, t.combatant)
 			if why2 != "":
@@ -1036,10 +1086,16 @@ func _update_hover() -> void:
 			about.append_array(e.ground.describe_at(o.cell))
 			hud.show_tooltip(o.name(), about, [], at)
 		return
-	# What lies on the square (GroundItems) is named under whatever else the tooltip says.
+	# What lies on the square (GroundItems), and what hangs or burns there (EncounterObjects), is named under whatever
+	# else the tooltip says; a door or a crate filling it has a card of its own.
 	var lying: Array = []
 	if hover_cell.x >= 0:
 		lying.append_array(e.ground.describe_at(hover_cell))
+		lying.append_array(e.objects.describe_at(hover_cell))
+		var card := e.objects.tooltip(hover_cell)
+		if not card.is_empty():
+			hud.show_tooltip(str(card["title"]), card["lines"] as Array, [], at)
+			return
 	if hover_cell.x < 0 or hover_cell == c.cell:
 		if lying.is_empty():
 			hud.hide_tooltip()
@@ -1097,6 +1153,14 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		hud.show_tooltip(str(selected["label"]), ["Click a square to place it (or an enemy to put it beside them)" if ok else "Out of range (%d ft)" % rng], [], at)
 		return
 	if t == null:
+		# An object's square: the chosen attack or spell aimed at it (EncounterObjects.redirect).
+		var aimed := e.objects.redirect(c, selected, hover_cell) if hover_cell.x >= 0 else {}
+		if not aimed.is_empty():
+			var thing_lines: Array = []
+			for ob in e.objects.objects_at(hover_cell):
+				thing_lines.append_array(ob.describe())
+			hud.show_tooltip(str(aimed["label"]), thing_lines, [str(aimed["reason"])] if not bool(aimed["legal"]) else [], at)
+			return
 		var hint := "Choose a target"
 		if kind == "multi":
 			hint = "Choose targets (%d chosen) · Enter casts now" % picked.size()
@@ -1182,14 +1246,15 @@ func _concentration_kept(c: Combatant) -> void:
 	CombatSfx.concentration(false)
 
 
-## Where a token stands: its square's centre, raised onto the mount's back for a rider.
+## Where a token stands: its square's centre, raised onto the mount's back for a rider, and as high off the floor as
+## it flies (1 unit = 5 ft).
 func _token_spot(c: Combatant, cell: Vector2i) -> Vector3:
 	var p := board.cell_center(cell, c.size_cells)
 	var m := e.mount_of(c)
 	if m != null:
 		var h := CombatToken.height_for(CombatToken.art_id(m)) * (m.size_cells if m.size_cells > 1 else 1)
 		p = board.cell_center(m.cell, m.size_cells) + Vector3(0, h * 0.8, 0)
-	return p
+	return p + Vector3(0, c.altitude / float(CombatGrid.FEET), 0)
 
 
 func _play_events() -> void:
@@ -1222,6 +1287,9 @@ func _play_events() -> void:
 				if bool(ev.get("mounted", false)) or bool(ev.get("dragged", false)):
 					continue   # carried along: it moves with the step after it
 				await tw.finished
+			"object_attack", "object_throw", "object_damage", "object_broken", "object_fall":
+				_stop_walking(walking)
+				await objects_view.play(ev, e.objects, tokens, fx)
 			"attack":
 				_stop_walking(walking)
 				# An Echo Knight's blow struck from its echo plays on the echo.
@@ -1448,6 +1516,16 @@ func _play_events() -> void:
 				var ft := _tok(str(ev["id"]))
 				if ft != null:
 					_float(ft, "FALLS %d FT" % int(ev["feet"]), "bone", 34)
+			"altitude":
+				# Rising or sinking where it stands (F4): the token glides to the height the event names.
+				var at := _tok(str(ev["id"]))
+				if at != null:
+					var spot := _token_spot(at.combatant, at.combatant.cell)
+					spot.y += (int(ev["to"]) - at.combatant.altitude) / float(CombatGrid.FEET)
+					var up := create_tween()
+					up.tween_property(at, "position", spot, STEP_TIME * GameSettings.combat_pace())
+					await up.finished
+				_show_heights()
 			"resize":
 				var rt := _tok(str(ev["id"]))
 				if rt != null:

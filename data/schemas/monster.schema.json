@@ -516,6 +516,10 @@
           },
           "description": "condition: an action and this check ends it."
         },
+        "object": {
+          "type": "string",
+          "description": "condition: it lasts until this object (a kind in data/objects/kinds.json, placed round the target) is destroyed: a giant spider's web."
+        },
         "hold_damage": {
           "type": "object",
           "required": [

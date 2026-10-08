@@ -268,7 +268,7 @@ func _safety(c: Combatant, cell: Vector2i) -> float:
 	for h in e.hostiles_of(c):
 		if h.is_down():
 			continue
-		var gap := float(e.grid.distance_ft(cell, c.size_cells, h.cell, h.size_cells) - h.reach_ft())
+		var gap := float(e.grid.distance_ft(cell, c.size_cells, h.cell, h.size_cells, c.altitude, h.altitude) - h.reach_ft())
 		nearest = minf(nearest, gap)
 	return minf(nearest, 30.0)
 
@@ -281,7 +281,7 @@ func _cell_beside(c: Combatant, t: Combatant) -> Vector2i:
 	var best_cost := 1 << 30
 	for cell: Vector2i in reach:
 		var info := reach[cell] as Dictionary
-		if bool(info["occupied"]) or e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells) > 5:
+		if bool(info["occupied"]) or e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) > 5:
 			continue
 		if int(info["cost"]) < best_cost:
 			best_cost = int(info["cost"])

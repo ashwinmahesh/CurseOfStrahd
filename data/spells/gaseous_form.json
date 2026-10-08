@@ -43,6 +43,7 @@
         "modifiers": [
           {
             "stat": "speed_set",
+            "kind": "walk",
             "value": 0
           },
           {

@@ -246,6 +246,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	# spell that caused it is done, then asks (the reaction queue); Concentration holds until then.
 	var held := e.d20.collect(target, true)
 	var conc := target.creature.concentration
+	parts = e.objects.adjust_incoming(target, parts)
 	var dr := target.creature.take_damage_parts(parts, critical, e.dice, label)
 	var waiting := e.d20.collected(held)
 	if dr.concentration_save != null and dr.concentration_save.awaiting:
@@ -362,6 +363,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		e.spells.end_sanctuary(source, "dealt damage")
 	e.spells.on_damaged(source, target, dr.final, parts)
 	e.items.on_damaged(source, target, dr.final, parts)
+	e.objects.on_damaged(target, parts)
 	if dr.final > 0:
 		e.spells.specials.duel_check_damage(source, target)
 	# Thought Shield (Great Old One 10): Psychic damage dealt to the warlock hits its source too.

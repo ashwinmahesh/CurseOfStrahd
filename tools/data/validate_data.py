@@ -29,6 +29,7 @@ FOLDERS = {
     "cutscenes": "cutscene",
     "strahd": {"visits": "strahd_visits", "attention": "strahd_attention"},
     "schedule": "schedule",
+    "objects": {"kinds": "object_kinds"},
     "weather": "weather",
 }
 
@@ -277,10 +278,48 @@ def semantic_checks(data):
             if band != enc["difficulty"]:
                 errors.append(f"encounters/{eid}: {xp} XP is a {band} encounter for {len(enc['party'])} level {level} characters, not {enc['difficulty']}")
     story_checks(data, errors, need)
+    object_checks(data, errors)
     pending.extend(pending_list)
     pending_list.clear()
     campaign_checks(data, errors, pending)
     return errors, pending
+
+
+def object_checks(data, errors):
+    """data/objects/kinds.json (F5): every kind it names exists, and each kind's numbers come from its tables."""
+    ok = data.get("objects", {}).get("kinds")
+    if not ok:
+        return
+    kinds, w = ok["kinds"], "data/objects/kinds.json"
+    named = [("default_kind", ok["default_kind"]), ("doors.default", ok["doors"]["default"])]
+    named += [(f"themes.{t}", k) for t, k in ok["themes"].items()]
+    named += [(f"doors.rules[{i}]", r["kind"]) for i, r in enumerate(ok["doors"]["rules"])]
+    for where, kid in named:
+        if kid not in kinds:
+            errors.append(f"{w}: {where} names unknown kind '{kid}'")
+    seen = {}
+    for kid, k in kinds.items():
+        if "ac" not in k and k.get("substance") not in ok["substances"]:
+            errors.append(f"{w}: kind {kid} needs an ac or a substance from substances")
+        if "hp" not in k and (k.get("size") not in ok["hit_points"] or k.get("resilience") not in ("fragile", "resilient")):
+            errors.append(f"{w}: kind {kid} needs hp, or a size from hit_points and a resilience")
+        if k.get("hangs") and "fall" not in k:
+            errors.append(f"{w}: kind {kid} hangs but has no fall")
+        if k.get("moves") and "move_dc" not in k:
+            errors.append(f"{w}: kind {kid} can be moved but has no move_dc")
+        if k.get("moves") == "topple" and "topple" not in k:
+            errors.append(f"{w}: kind {kid} topples but says nothing of how it falls (topple)")
+        if k.get("throwable") and k.get("size") not in ("tiny", "small"):
+            errors.append(f"{w}: kind {kid} is throwable but bigger than Small")
+        for art in k.get("art", []):
+            if art in seen:
+                errors.append(f"{w}: art '{art}' is both {seen[art]} and {kid}")
+            seen[art] = kid
+    for mid, m in data["monsters"].items():
+        for a in m.get("actions", []) + m.get("bonus_actions", []):
+            for rd in a.get("on_fail", []) + a.get("on_hit", []):
+                if rd.get("object") and rd["object"] not in kinds:
+                    errors.append(f"monsters/{mid}: {a['id']} holds its target with unknown object kind '{rd['object']}'")
 
 
 # Regions later phases build (plan §6). References into them are pending, not errors.
@@ -670,12 +709,27 @@ def story_checks(data, errors, need):
                 need("item", data["items"], d["key"], f"{w} door {d['id']} key")
             if d.get("flag"):
                 flags_set.setdefault(d["flag"], []).append(w)
+        trap_ids = {t["id"] for t in loc.get("traps", [])}
         for pr in loc.get("props", []):
             cond(pr.get("when", ""), w)
             if pr.get("item"):
                 need("item", data["items"], pr["item"], f"{w} prop {pr['id']}")
             if pr.get("flag"):
                 flags_set.setdefault(pr["flag"], []).append(w)
+            # A chandelier (F5): its squares on open floor, its trap here, its kind real; its flag is set when it falls.
+            hangs = pr.get("hangs")
+            if hangs:
+                for c in hangs["cells"]:
+                    on_floor(c, f"prop {pr['id']} (hangs)")
+                if hangs.get("trap") and hangs["trap"] not in trap_ids:
+                    errors.append(f"{w}: prop {pr['id']} hangs from unknown trap '{hangs['trap']}'")
+                kinds = data.get("objects", {}).get("kinds", {}).get("kinds", {})
+                if kinds and hangs.get("kind", "chandelier") not in kinds:
+                    errors.append(f"{w}: prop {pr['id']} hangs as unknown object kind '{hangs.get('kind')}'")
+                if hangs.get("flag"):
+                    # Set when it falls and read when the place is drawn (world/combat/battle_scenery.gd).
+                    flags_set.setdefault(hangs["flag"], []).append(w)
+                    read([hangs["flag"]], w)
             if pr.get("dialogue"):
                 dialogue_refs.append((pr["dialogue"], w))
         for ct in loc.get("containers", []):

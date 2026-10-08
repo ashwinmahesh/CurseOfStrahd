@@ -287,6 +287,31 @@
       "model": "oil_lamp"
     },
     {
+      "id": "hall_chandelier_hung",
+      "cell": [
+        13,
+        7
+      ],
+      "kind": "decor",
+      "label": "the chandelier",
+      "model": "candelabra",
+      "text": "An iron wheel of candles hangs on a chain over the hall, swaying a little in a draught nobody feels.",
+      "hangs": {
+        "cells": [
+          [
+            13,
+            7
+          ],
+          [
+            14,
+            7
+          ]
+        ],
+        "trap": "hall_chandelier",
+        "lit": true
+      }
+    },
+    {
       "id": "den_stag_head",
       "cell": [
         5,
