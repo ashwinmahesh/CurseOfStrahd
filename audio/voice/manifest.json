@@ -15357,6 +15357,12 @@
   "recipe": "956cd23797",
   "text": "Oh. Oh, look at that."
  },
+ "hero_female/ad17b9d9d09f69de": {
+  "chars": 21,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "It's writing us down."
+ },
  "hero_female/ad4275b5060323f1": {
   "chars": 94,
   "model": "eleven_v4",
@@ -19556,6 +19562,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "Oh. Oh, look at that."
+ },
+ "hero_male/ad17b9d9d09f69de": {
+  "chars": 21,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "It's writing us down."
  },
  "hero_male/ad4275b5060323f1": {
   "chars": 94,
@@ -24590,6 +24602,83 @@
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "I stood at the back. I have stood at the back for three hundred years. I came up here to stop."
+ },
+ "khazan/0eb5006722199d80": {
+  "chars": 226,
+  "direction": "[proud, wistful, scholarly]",
+  "model": "eleven_v3",
+  "recipe": "e68a14d6ae",
+  "text": "Khazan. You know that; you said it at the door. Archmage to the old kings of this valley, when it had kings. I built the tower on the tarn. Then the count's family came, and I came downstairs, and I've been reading ever since."
+ },
+ "khazan/2299677feb77eb4c": {
+  "chars": 119,
+  "direction": "[prim, offended, dry]",
+  "model": "eleven_v3",
+  "recipe": "e68a14d6ae",
+  "text": "I'm not his. I'd like you to understand that. I was here first. He has never once said my name, which I find very rude."
+ },
+ "khazan/269a92f74cfb4e2d": {
+  "chars": 119,
+  "direction": "[urgent, lucid, warning]",
+  "model": "eleven_v3",
+  "recipe": "e68a14d6ae",
+  "text": "(He looks at you, himself for a moment.) Be quick, while I still know it. In a minute I won't, and I'll be very hungry."
+ },
+ "khazan/2c5a85caec7ed4e5": {
+  "chars": 155,
+  "direction": "[delighted, courteous, lonely]",
+  "model": "eleven_v3",
+  "recipe": "e68a14d6ae",
+  "text": "Visitors. And you've come down the stair, not up it. That hasn't happened in a long time. Sit, if you can find a chair. I keep meaning to have more chairs."
+ },
+ "khazan/3efb8ec9f7396f24": {
+  "chars": 63,
+  "direction": "[pleased, sly, appreciative]",
+  "model": "eleven_v3",
+  "recipe": "e68a14d6ae",
+  "text": "Ah. You're clever. I do like the clever ones; they read better."
+ },
+ "khazan/5cea93d5222c85f7": {
+  "chars": 137,
+  "direction": "[pleasant, matter-of-fact, faintly menacing]",
+  "model": "eleven_v3",
+  "recipe": "e68a14d6ae",
+  "text": "I know your names, of course. You said mine at my door. That's the bargain the door makes: a name for a name. I've been writing you down."
+ },
+ "khazan/6e57ba16ff98fd9e": {
+  "chars": 58,
+  "direction": "[quiet, relieved, grateful]",
+  "model": "eleven_v3",
+  "recipe": "e68a14d6ae",
+  "text": "(He closes his eyes.) Khazan. Yes. Thank you. That's mine."
+ },
+ "khazan/7a40cb2d3ef3016c": {
+  "chars": 160,
+  "direction": "[cold, quiet, menacing]",
+  "model": "eleven_v3",
+  "recipe": "e68a14d6ae",
+  "text": "(The lights in his eyes go very small.) No. No, I don't think you are. I think you're going to stay down here, and I'll write you out properly, in the good ink."
+ },
+ "khazan/933c15cc79c076bb": {
+  "chars": 250,
+  "direction": "[delighted, chatty, scholarly]",
+  "model": "eleven_v3",
+  "recipe": "e68a14d6ae",
+  "text": "(He's delighted.) Close! Not the book. The book is my diary. Over the door. Everyone who comes to my tower says my name to get in, and every time, I stay. Liches eat souls, you know. I found I could live on being remembered. It's so much more polite."
+ },
+ "khazan/cea64c4b766f26b8": {
+  "chars": 164,
+  "direction": "[afraid, confused, pleading]",
+  "model": "eleven_v3",
+  "recipe": "e68a14d6ae",
+  "text": "There's a name. I had a name. I wrote it on the first page so I wouldn't lose it, and the first page is blank. You said it, didn't you, at the door? Say it. Please."
+ },
+ "khazan/d0cd1bf768758fcb": {
+  "chars": 85,
+  "direction": "[warm, courteous, wheedling]",
+  "model": "eleven_v3",
+  "recipe": "e68a14d6ae",
+  "text": "Back again. I'm so glad. Say my name on your way out, would you? It's only courteous."
  },
  "kip_smudgewick/02b71c1a4f30a756": {
   "chars": 9,
@@ -31678,6 +31767,13 @@
   "recipe": "b6ee845820",
   "text": "Go on. And stay out of jars."
  },
+ "mordenkainen/1da8112931c4a8aa": {
+  "chars": 169,
+  "direction": "[dry, knowing]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "Interesting? The tower on the tarn below us. Van Richten's now. It was Khazan's first. You'll have said his name to the door; everyone does. That's what the door is for."
+ },
  "mordenkainen/271c430769a22da9": {
   "chars": 144,
   "direction": "[incredulous, exasperated]",
@@ -31846,6 +31942,13 @@
   "recipe": "b6ee845820",
   "text": "I'll come. My spells are rusty and my pride is worse. Keep me away from mirrors and from anyone who says \"hush\"."
  },
+ "mordenkainen/92b9a4e4d228ed8a": {
+  "chars": 167,
+  "direction": "[dry, grave, wry]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "Khazan was archmage to the old kings of this valley when the count's grandfather was in swaddling. The histories say he died. His sort don't die. They move downstairs."
+ },
  "mordenkainen/9b8c61be49a53a21": {
   "chars": 187,
   "direction": "[quiet, tender, resolute]",
@@ -31880,6 +31983,13 @@
   "model": "eleven_v3",
   "recipe": "b6ee845820",
   "text": "I came to this valley to kill him, and he beat me, and then he had his witch take everything I was and put it on her shelf, so I would live up here forever and not even know enough to be ashamed. He thought that was funny. He was right."
+ },
+ "mordenkainen/a831a3edb6634711": {
+  "chars": 182,
+  "direction": "[low, uneasy, warning]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "I've felt him waking for a month, the way you feel weather in an old break. Something under that tower is getting fat on being remembered. Look under the hearth. And mind your names."
  },
  "mordenkainen/aadfb61cb42cdd6a": {
   "chars": 130,
@@ -32572,6 +32682,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Every panel in the hall stands open. Four of Kestrel Company come out of the walls in step, and their captain draws his sword."
+ },
+ "narrator/00e8df1d67e1b95e": {
+  "chars": 142,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An open book on a lectern. Every name on the open pages has been crossed out in red ink, carefully, with a ruler. At the bottom: \"Read. Kept.\""
  },
  "narrator/00f531e1d2853b50": {
   "chars": 140,
@@ -33797,6 +33913,12 @@
   "recipe": "dd92281f92",
   "text": "His eyes go to the empty place at the end of the pen and come back quickly."
  },
+ "narrator/0bc1c043fbca20bc": {
+  "chars": 69,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "It takes half an hour on your knees in the soot, but there's an edge."
+ },
  "narrator/0bcb420be5a991c9": {
   "chars": 116,
   "model": "eleven_v4",
@@ -34312,6 +34434,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Yevgeni said not to stand where his father told you to. The rise behind the shacks is the only good shot at the shore; the shore is the only place a horse-sized wolf can come at you from three sides."
+ },
+ "narrator/10bb765f55aeecfb": {
+  "chars": 198,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The stair under the hearth goes down past the level of the lake. The walls sweat cold water. Every step down, the silence gets thicker, like the inside of a library nobody has opened in a long time."
  },
  "narrator/10bd4ce7ad84e7d5": {
   "chars": 167,
@@ -35267,6 +35395,12 @@
   "recipe": "dd92281f92",
   "text": "Vladimir Horngaard sits down with his back to the parapet, like a man at the end of a long march, and lays his sword across his knees, and doesn't get up."
  },
+ "narrator/1897f97a4e9f59a1": {
+  "chars": 143,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "KHAZAN, over the door, cut so deep the moss can't fill it. Every visitor this tower ever had said it to get in, and every one of them kept him."
+ },
  "narrator/18a9c957ef852099": {
   "chars": 94,
   "model": "eleven_v4",
@@ -36137,6 +36271,12 @@
   "recipe": "dd92281f92",
   "text": "The camp dog noses at your pack, finds nothing worth stealing, and wanders back to the fire to wait for Dorina to drop something."
  },
+ "narrator/201fd9f8e4e8768b": {
+  "chars": 135,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The steps are worn in the middle into shallow bowls, by one pair of feet going up and down them for a very long time, and then by none."
+ },
  "narrator/20298d8b6973a46b": {
   "chars": 110,
   "model": "eleven_v4",
@@ -36911,6 +37051,12 @@
   "recipe": "dd92281f92",
   "text": "He says \"the Abbot\" the way people say the name of a river that has drowned someone they knew."
  },
+ "narrator/26f4c56f9c45242e": {
+  "chars": 177,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A great book on a lectern, as thick as a doorstep, written in one patient hand. Names, nothing but names, one to a line, thousands of them, in every alphabet the valley has had."
+ },
  "narrator/2710ba6f1d891d41": {
   "chars": 153,
   "model": "eleven_v4",
@@ -36964,6 +37110,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Under it, two marks: a warden's signature, Exethanter, and a small, neat sketch of a jackal's head."
+ },
+ "narrator/2752b99fb6b53443": {
+  "chars": 172,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Over the open door the name is cut deep into the lintel, and a fine grey dust is still settling into the letters: the dust that went up out of the study. The stone is warm."
  },
  "narrator/275c5b4bd153b79d": {
   "chars": 133,
@@ -37577,6 +37729,12 @@
   "recipe": "dd92281f92",
   "text": "It's her own voice, from twenty years ago, saying her son's name to him, and then it's a small boy's. Anna doesn't scream. She sits down on the step as if her legs have been taken away, and holds out both arms."
  },
+ "narrator/2ca532d09ea3f1d6": {
+  "chars": 173,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The high chair is empty. Grey dust lies on the seat and the step, and a thin trail of it runs up the wall and into a crack in the ceiling, toward the tower, toward the door."
+ },
  "narrator/2cb8073128ffe667": {
   "chars": 91,
   "model": "eleven_v4",
@@ -37654,6 +37812,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Candle stubs crowd the statue's feet, dozens of them, burnt down to puddles. Someone keeps lighting new ones. The wax has run into the shapes of hands."
+ },
+ "narrator/2d93f4220711cd64": {
+  "chars": 145,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The lake has got in here. Black water stands in the far half of the crypt, perfectly still, and the stone coffins at its edge are wet to the lid."
  },
  "narrator/2dab710622ec3d1f": {
   "chars": 120,
@@ -38081,6 +38245,12 @@
   "recipe": "dd92281f92",
   "text": "For a moment he leans toward the amber. You see exactly how much he wants it."
  },
+ "narrator/31bc4ce2c94bb555": {
+  "chars": 136,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Letters cut into every step, small, one word to a step, all the way down. The same word. You don't need to read it to know what it says."
+ },
  "narrator/31bdaeb459d766d9": {
   "chars": 120,
   "model": "eleven_v4",
@@ -38134,6 +38304,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "There's something here, a pattern in the woods and the wolves and the red hair, but it slips away before you can hold it."
+ },
+ "narrator/324a5d7f23835283": {
+  "chars": 117,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A high-backed chair of black wood on a step, its arms worn pale where hands have rested on them for a very long time."
  },
  "narrator/325390fc45aeb010": {
   "chars": 31,
@@ -38296,6 +38472,18 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The empty hut's hearthstone lifts away. Under it, a small wooden box with a fisherman's knot carved on the lid. Say the right word and it will be a boat."
+ },
+ "narrator/33a325535d9b5e58": {
+  "chars": 81,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Cold air comes up the stair, and with it, very faint, the sound of pages turning."
+ },
+ "narrator/33a717ceda7fd75e": {
+  "chars": 112,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The book of names lies open on its lectern, and every page is blank, as if nobody had ever written in it at all."
  },
  "narrator/33b106ebeba4b48e": {
   "chars": 150,
@@ -39599,6 +39787,12 @@
   "recipe": "dd92281f92",
   "text": "Stella screams, and it is a girl's scream, all of it. But her shadow on the wall doesn't scream with her. Her shadow stands up, and so do all the others in the room."
  },
+ "narrator/3f7de7ca5061260a": {
+  "chars": 145,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "For one moment more Khazan is himself, and he doesn't lift a hand. Then the lights in his eyes go out, and something hungry comes up behind them."
+ },
  "narrator/3f8b4c8d3cbd29e7": {
   "chars": 36,
   "model": "eleven_v4",
@@ -39713,6 +39907,12 @@
   "recipe": "dd92281f92",
   "text": "She rises from the bier in one smooth movement, like a dancer, and the Belviews reach under their rags for cleavers and pruning hooks."
  },
+ "narrator/408c87fdc5bbb9c7": {
+  "chars": 88,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The undercroft is only a cellar now: cold, wet, full of old books. Nothing turns a page."
+ },
  "narrator/40a966c1bd56a416": {
   "chars": 126,
   "model": "eleven_v4",
@@ -39748,6 +39948,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "For a heartbeat the tea stops halfway to her mouth."
+ },
+ "narrator/4100200f023e173e": {
+  "chars": 100,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The hearthstone stands on its edge against the wall, and the stair under it goes down into the cold."
  },
  "narrator/4109af1ea9c8011c": {
   "chars": 110,
@@ -40493,6 +40699,12 @@
   "recipe": "dd92281f92",
   "text": "Every hearth on the floor exhales at once."
  },
+ "narrator/484626877b1d7bc0": {
+  "chars": 192,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A long low hall with shelves floor to ceiling, and every shelf full. The books have no titles on their spines. There's a smell of old paper and cold water, and under it, something like breath."
+ },
  "narrator/484d64d3368a8760": {
   "chars": 156,
   "model": "eleven_v4",
@@ -40804,6 +41016,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The man behind the bar has black hair, black eyes and the stillness of somebody who has been listening to the room since before you came into it."
+ },
+ "narrator/4b4c0723dad6ad7c": {
+  "chars": 66,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Inside the tower, the frost round the hearthstone melts, and runs."
  },
  "narrator/4b61f9c95e646bc3": {
   "chars": 113,
@@ -41170,6 +41388,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Four roads meet here, and none of them looks as if it wants you on it."
+ },
+ "narrator/4e5f0f679c238537": {
+  "chars": 30,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Silt, and bones, and the cold."
  },
  "narrator/4e67e82948414448": {
   "chars": 88,
@@ -42227,6 +42451,12 @@
   "recipe": "dd92281f92",
   "text": "The vault is quiet now. Somewhere in the stone, very faintly, a sentry is still saying the challenge to nobody."
  },
+ "narrator/586b21fe3de1d7ea": {
+  "chars": 196,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "It takes the rest of the day, in turns, with a knife and a stone and then a borrowed chisel from the hunter's stores. The letters fight you. Each one, as it goes, is a little colder than the last."
+ },
  "narrator/586d4e6f4ea722f1": {
   "chars": 133,
   "model": "eleven_v4",
@@ -42881,6 +43111,12 @@
   "recipe": "dd92281f92",
   "text": "You sleep inside Van Richten's wards, on his floor, under his maps. For the first time in Barovia nothing scratches at the door all night. It turns out to be very hard to sleep without it."
  },
+ "narrator/5d825119163556a1": {
+  "chars": 141,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A brass orrery, the size of a cartwheel, of a sky that isn't this one: more moons, and one star that's been taken out and its arm left empty."
+ },
  "narrator/5d8e027dd465d78d": {
   "chars": 136,
   "model": "eleven_v4",
@@ -43282,6 +43518,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He doesn't look up. His eyes are red to the rims, and his voice is hoarse and lovely and does not stop, not to breathe, not for you."
+ },
+ "narrator/609a766d99aa4a13": {
+  "chars": 107,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "On the first page, in larger letters, over and over, as if someone were practising: KHAZAN. KHAZAN. KHAZAN."
  },
  "narrator/60afb2b6179ac47d": {
   "chars": 119,
@@ -43804,6 +44046,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Baba Lysaga sits in the reeds by her broken hut, singing something without a tune to nobody. She doesn't look up."
+ },
+ "narrator/658f16c6e021a47e": {
+  "chars": 151,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The last letter comes away in your hand as dust. From under the island, through the stone and the water, comes a sound like a very long breath let out."
  },
  "narrator/65961825719890fb": {
   "chars": 129,
@@ -45407,6 +45655,12 @@
   "recipe": "dd92281f92",
   "text": "He says a word under his breath, and the door swings open. Then he lays his palm flat on the frame and murmurs again, and somewhere high in the tower something goes quiet, like a held breath let out."
  },
+ "narrator/7381053b30e6358d": {
+  "chars": 130,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The stone rings like a bell and doesn't crack. Your hands go numb to the elbow, and somewhere far below, someone laughs, politely."
+ },
  "narrator/738cec3c08d2fd91": {
   "chars": 102,
   "model": "eleven_v4",
@@ -45760,6 +46014,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A low door in the tower's side, left of the gate, stands closed but not barred. A thin grey light shows under it, the colour of a lantern seen through fog."
+ },
+ "narrator/77110a0c54fa4920": {
+  "chars": 135,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "What's left of Khazan comes at you across the study with nothing in its eyes but hunger, and the candles don't lean toward it any more."
  },
  "narrator/771644254b21ca58": {
   "chars": 86,
@@ -47801,6 +48061,12 @@
   "recipe": "dd92281f92",
   "text": "An old oak at the foot of the lane with one great bough grown out level ten feet up, wide enough to walk along. Ravens crowd the upper branches and watch you climb with great interest."
  },
+ "narrator/8a736557dac0849b": {
+  "chars": 200,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You take down a book. Names, one to a line, page after page, in a small neat hand, with a date beside each in a reckoning nobody uses any more. You put it back. It seems to settle, the way a cat does."
+ },
  "narrator/8a7dd6a948f06b78": {
   "chars": 203,
   "model": "eleven_v4",
@@ -48293,6 +48559,12 @@
   "recipe": "dd92281f92",
   "text": "The stair comes up into the loft between the rafters. Every board you step on announces you."
  },
+ "narrator/8ddf4f3bd949fe65": {
+  "chars": 211,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A lich keeps its soul in something: a box, a jar, a ring. Khazan has nothing on him. But the cold down here pulls upward, toward the tower, toward its door, the way smoke pulls toward a chimney. Toward the name."
+ },
  "narrator/8df2f0d33f6d9ec1": {
   "chars": 147,
   "model": "eleven_v4",
@@ -48352,6 +48624,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You are among them before the chant can end. The effigy cracks too soon, and what drags itself out of its chest is half-made and furious."
+ },
+ "narrator/8e7e06586ef3aed9": {
+  "chars": 174,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He's in his chair again, but smaller, and the lights in his eyes are dim and wandering. The book on his knees is open, and he's turning the pages fast, looking for something."
  },
  "narrator/8e80f94165612378": {
   "chars": 126,
@@ -48845,6 +49123,12 @@
   "recipe": "dd92281f92",
   "text": "A stag's head over the hearth, antlers dusted, glass eyes fixed on the door. The only thing in the den that isn't a wolf."
  },
+ "narrator/9335f9b483cea865": {
+  "chars": 85,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "There's a great deal of old magic down here, and none of it is in any shape you know."
+ },
  "narrator/9343fcc9cafbca42": {
   "chars": 110,
   "model": "eleven_v4",
@@ -49259,6 +49543,12 @@
   "recipe": "dd92281f92",
   "text": "Fear shuts their mouth instead of opening it. They stare at the mud and say nothing at all."
  },
+ "narrator/972897d26f0cfc33": {
+  "chars": 218,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In a high chair on a step at the end of the study sits a dead man in a scholar's robe, very straight, his hands folded on a book. His skin is parchment over the bone. Two small lights move in his eyes, and turn to you."
+ },
  "narrator/974f7b5e9857db6f": {
   "chars": 73,
   "model": "eleven_v4",
@@ -49366,6 +49656,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Three plain coffins, lids loose. Inside, three girls lie with their hands folded and roses in their hair, asleep the way the dead don't sleep. One of them opens her eyes."
+ },
+ "narrator/983f7e23ac40f0f3": {
+  "chars": 94,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An empty high chair on a step, with nothing on it but dust, and the dust isn't going anywhere."
  },
  "narrator/984c50b277276d4f": {
   "chars": 176,
@@ -50212,6 +50508,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The house on the ridge is black against a blacker sky, and in the courtyard something grey moves in ranks, back and forth, the way a tide does."
+ },
+ "narrator/a01a57abc5d228ca": {
+  "chars": 167,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The hearthstone is cold. Not the cold of a fire gone out: the cold of a cellar, coming up through the cracks round it. There's frost in the cracks, a foot from a fire."
  },
  "narrator/a0206ddb1d5153aa": {
   "chars": 96,
@@ -51689,6 +51991,12 @@
   "recipe": "dd92281f92",
   "text": "At the bottom is a room with a tiny stone table, and beside it a lump of grey clay, shaped like a sleeping heap."
  },
+ "narrator/aceb92095fdb6bae": {
+  "chars": 195,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An iron ring is set flush in the stone under the soot, worn smooth by somebody's hand a very long time ago. The stone comes up on its edge. Under it a stair goes down, past the level of the lake."
+ },
  "narrator/acebf3b9660dc221": {
   "chars": 144,
   "model": "eleven_v4",
@@ -52312,6 +52620,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You tell her about the woman who buys a pastry every morning, and a baby who died in its cradle the night the kind old pastry woman sat up with it, and the baby's name."
+ },
+ "narrator/b277b5c0c071964a": {
+  "chars": 121,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A stone coffin with no name on it. That's the only one down here without a name, and it's the only one with nobody in it."
  },
  "narrator/b295c1b995b48718": {
   "chars": 171,
@@ -53272,6 +53586,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The lounge is empty. A book lies open on a chair; cards lie in a ring of patience with no queens in it."
+ },
+ "narrator/bcba082e15e4cf11": {
+  "chars": 144,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The lake comes through the ceiling in a slow drip, and the drip has worn a hole in the floor as round as a bowl. The water is so cold it smokes."
  },
  "narrator/bcdb12ffeb1d6c3c": {
   "chars": 115,
@@ -54869,6 +55189,12 @@
   "recipe": "dd92281f92",
   "text": "The top of the watch rock is polished smooth by a great many patient bellies. There's a good view, and a fine collection of fleas."
  },
+ "narrator/caa5d318b575a885": {
+  "chars": 128,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Kolyan sits on his own grave with the board across his knees. The gravedigger is working at the far end of the churchyard today."
+ },
  "narrator/cab192f865aa89a7": {
   "chars": 131,
   "model": "eleven_v4",
@@ -55366,6 +55692,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He ties a black ribbon to the gate, and doesn't say anything for a long time."
+ },
+ "narrator/ceeecde897cbb7a8": {
+  "chars": 132,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A study, warm with candles that give no heat, crowded with reading tables and books. At the far end, on a step, a high-backed chair."
  },
  "narrator/cef1a91b3506196e": {
   "chars": 130,
@@ -56261,6 +56593,12 @@
   "recipe": "dd92281f92",
   "text": "The blaze points up the slope, toward the hills above the lake where, at night, the wolves are loudest."
  },
+ "narrator/d7643380ac9219b0": {
+  "chars": 190,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A stair under the hearth goes down past the level of the lake. The walls sweat cold water. Every step down, the silence gets thicker, like the inside of a library that has never been opened."
+ },
  "narrator/d764efa50c61ad9c": {
   "chars": 112,
   "model": "eleven_v4",
@@ -56584,6 +56922,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A great bowl of yellow bone by the door, with a pole for steering. It is the top of a skull, and the skull was the size of a cart."
+ },
+ "narrator/db7c741a8c6304c8": {
+  "chars": 137,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Khazan stands up out of his chair, and every candle in the study leans toward him, and the books in the hall behind you begin to whisper."
  },
  "narrator/db8bf48bb0386f84": {
   "chars": 91,
@@ -57065,6 +57409,12 @@
   "recipe": "dd92281f92",
   "text": "A crow sits on a rain barrel and watches you with professional interest."
  },
+ "narrator/e037ac7787a66dc8": {
+  "chars": 122,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Books open on a table, each at a different page, as if someone had been reading them all at once and got up in the middle."
+ },
  "narrator/e037dd9b27a2672c": {
   "chars": 81,
   "model": "eleven_v4",
@@ -57262,6 +57612,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Her whole face changes. It goes soft and pink and dreadful, like a girl's."
+ },
+ "narrator/e18ced689d7c4e19": {
+  "chars": 191,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Names scratched into the wall at shoulder height, by different hands, in different years. Some are prayers. One is a list of a family. The last one just says HELP, and then a name, and stops."
  },
  "narrator/e1994c1526e1c22c": {
   "chars": 133,
@@ -57952,6 +58308,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A workshop that smells of pine and varnish. Henrik's rooms open off one side; the storeroom off the other, its door scored where the bolt has been forced and mended more than once."
+ },
+ "narrator/e7e0f830aabee9e1": {
+  "chars": 139,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A circle drawn on the floor in something that was silver once, with nothing in the middle of it. When you step near, the candles lean away."
  },
  "narrator/e7e153f039cc4877": {
   "chars": 69,
@@ -59482,6 +59844,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You sleep under the Krezkovs' roof with the shutters barred. Twice in the night you hear Anna singing upstairs, and once you hear Dmitri on the stair, stopping to listen, then going back down."
+ },
+ "narrator/f67715292b5cff56": {
+  "chars": 165,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The books on every shelf open at once with a sound like birds, and the people written in them come out of the pages: grey, thin, holding their names in their mouths."
  },
  "narrator/f67eabe9e0bb9875": {
   "chars": 224,
@@ -62505,6 +62873,13 @@
   "model": "eleven_v4",
   "recipe": "eaa6a8f9c8",
   "text": "You see? Divination is only paying attention. Nobody in this house expected us to pay attention."
+ },
+ "ratatoille/21b0ea0aa5a8c387": {
+  "chars": 94,
+  "direction": "[dry, prim, faintly embarrassed]",
+  "model": "eleven_v3",
+  "recipe": "45b2eb9c71",
+  "text": "I said I'd read of him briefly. I'd like it noted that I was being generous about how briefly."
  },
  "ratatoille/22374b43ca4ae77c": {
   "chars": 55,

@@ -6141,6 +6141,20 @@
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Vadoma, a Vistani trader woman in her forties: olive skin, dark greying hair braided under a deep green headscarf, heavy gold hoop earrings and rings on every finger, a long dark blue coat embroidered with small gold suns and eyes worn open over an ochre vest and cream blouse, a wide sash hung with little pouches, a leather-bound ledger tucked into the sash, a dark brown skirt and worn travelling boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
       "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Lane 23, the Vistani trader (F14, 2026-10-08). Needs art QA before final."
+    },
+    {
+      "id": "beholder",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/beholder_turnaround.png",
+      "sprites": "art/sprites/beholder/walk.tres",
+      "portrait": "art/portraits/beholder.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a beholder: one huge floating round body of thick mottled purple and umber hide, nearly as wide as a cart, with a single enormous central eye with a pale amber iris, a wide jagged mouth full of sharp teeth below the eye, and ten long thin writhing eyestalks rising from the top of the body, each ending in a small glaring eye; no arms, no legs, no clothes, flat cartoon colours. Exactly five full-body views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Floating a little above the ground, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (21:9) -> make sprite BODY=float -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=float"
+      ]
     }
   ],
   "image_provider": "gemini"
