@@ -141,7 +141,7 @@ endif
 -> END
 
 ~ kip_free_apricots
-if name:kip_smudgewick and quest.the_fine_print >= free
+if name:kip_smudgewick and quest.the_fine_print == free
 interject name:kip_smudgewick: Look. Look at this one. Mouldy. Proper mould. Green and everything.
 if name:thistle
 interject name:thistle: Why are you so happy about a rotten apricot?
