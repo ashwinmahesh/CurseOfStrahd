@@ -26001,6 +26001,13 @@
   "recipe": "1d8817fed7",
   "text": "The wall's very good. Thank you for asking. And now nobody up there will believe a sweet word out of you, so don't waste one."
  },
+ "krezk_guard/6393782adb0c9072": {
+  "chars": 147,
+  "direction": "[low, wary, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "And something big has been circling the farms below the wall these three nights. Bigger than a wolf. It isn't one of ours, whatever that means now."
+ },
  "krezk_guard/6b0cb1765da87309": {
   "chars": 146,
   "direction": "[sad, quiet]",
@@ -26021,6 +26028,13 @@
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "We don't take strangers. Not for coin, not for pity, not for stories. The burgomaster opens that gate when there's a reason, and he decides what a reason is."
+ },
+ "krezk_guard/6ebbf5eb35ab597f": {
+  "chars": 96,
+  "direction": "[low, uneasy, grim]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "No more children gone from the farms. Not one. Nobody talks about Petru. Nobody talks about why."
  },
  "krezk_guard/71c3bebc0077d5a9": {
   "chars": 136,
@@ -26085,6 +26099,13 @@
   "recipe": "1d8817fed7",
   "text": "Up the mountain. The Abbey of St. Markovia. The track leaves the road just there, by the cairn, and climbs till your knees complain."
  },
+ "krezk_guard/9016554849f215ca": {
+  "chars": 197,
+  "direction": "[low, gossiping, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "The smallest of the five children who came home from the hills, Petru, eight years old. He sleeps in the goat pens at night now. The goats don't mind him. That's the part that frightens his mother."
+ },
  "krezk_guard/93d7e7048bcda96f": {
   "chars": 96,
   "direction": "[hard, impatient]",
@@ -26119,6 +26140,13 @@
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "Then I'll do it the hard way. Up on the wall! To me!"
+ },
+ "krezk_guard/b8280a929cd1cb8a": {
+  "chars": 108,
+  "direction": "[dry, relieved, wry]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "Nothing circling the farms these nights. Petru sleeps in a bed. The goats are said to be very hurt about it."
  },
  "krezk_guard/b856a76ea9a6889f": {
   "chars": 141,
@@ -26245,6 +26273,48 @@
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "Still in one piece? Good. Krezk likes visitors who stay that way. Fewer graves."
+ },
+ "krezk_petru/07e873f2ced08c40": {
+  "chars": 249,
+  "direction": "[frightened, hushed, rambling]",
+  "model": "eleven_v3",
+  "recipe": "c67bd6139d",
+  "text": "The big old one, the Grandsire, licked my face after. He said I was his now. He said Kiril was his once, and look how well Kiril turned out. He said he'd come for me at the next full moon. That's tonight. Or tomorrow. It's very close; I can feel it."
+ },
+ "krezk_petru/115f8e1bf645cc6d": {
+  "chars": 101,
+  "direction": "[frightened, quiet, brave]",
+  "model": "eleven_v3",
+  "recipe": "c67bd6139d",
+  "text": "Mirela said you'd come. Mirela says I'm not to be frightened. I'm frightened anyway. I do it quietly."
+ },
+ "krezk_petru/2d5751628f04fa52": {
+  "chars": 141,
+  "direction": "[quiet, frightened, matter-of-fact]",
+  "model": "eleven_v3",
+  "recipe": "c67bd6139d",
+  "text": "The moon came while we were in there. Before you came. I was the only one it came for. It hurt, and then it didn't, and then I was very fast."
+ },
+ "krezk_petru/3282bff40dad69e3": {
+  "chars": 56,
+  "direction": "[wondering, a little sad, small]",
+  "model": "eleven_v3",
+  "recipe": "c67bd6139d",
+  "text": "It's gone. (He sniffs.) I can't smell the rain any more."
+ },
+ "krezk_petru/eb759d22e6ff008c": {
+  "chars": 127,
+  "direction": "[cheerful, proud, small]",
+  "model": "eleven_v3",
+  "recipe": "c67bd6139d",
+  "text": "I'm a boy all month now. Except I can still smell when it's going to rain. Mama says that's useful. Stelian says it's cheating."
+ },
+ "krezk_petru/eee85352467602d1": {
+  "chars": 157,
+  "direction": "[sleepy, then relieved, small]",
+  "model": "eleven_v3",
+  "recipe": "c67bd6139d",
+  "text": "(He's asleep against a goat, and wakes when the basket goes down.) Is he gone? The big one? (He sniffs.) He's gone. I can still smell the rain. I don't mind."
  },
  "krezk_wall_watch/8463bf04b51b8772": {
   "chars": 59,
@@ -34096,6 +34166,13 @@
   "recipe": "dd92281f92",
   "text": "The scarecrows turn their sacking heads all together, with a noise like dry leaves, and climb down off their poles."
  },
+ "narrator/149a5efec102875a": {
+  "chars": 138,
+  "direction": "[quiet, gentle, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A small boy sits in the straw of the goat pen with a goat asleep against each side of him. His eyes catch the light the way the goats' do."
+ },
  "narrator/14a2652ab2cfe477": {
   "chars": 87,
   "model": "eleven_v4",
@@ -38223,6 +38300,13 @@
   "recipe": "dd92281f92",
   "text": "The silver flame leans toward the cradle on its own. You swore an oath over Vladimir's table that this house would go on watching."
  },
+ "narrator/39bc5d50ba175037": {
+  "chars": 232,
+  "direction": "[gentle, relieved, wondering]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The words go into him and something goes out, the way a fever breaks. The ruff at his neck is only hair. When he looks up his eyes are a boy's eyes, brown and wet, and the goats on either side of him wake up and edge away, offended."
+ },
  "narrator/39c1eb8308bf204b": {
   "chars": 103,
   "model": "eleven_v4",
@@ -38610,6 +38694,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The straw drops away under you into a shaft, and the shaft has a bottom."
+ },
+ "narrator/3d12be87a1e38be4": {
+  "chars": 176,
+  "direction": "[ominous, awed, slow]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "It comes over the wall on all fours and stands up in the square: a wolf the size of a cart horse, grey to white with age, scarred, missing an ear, with old wolves at its heels."
  },
  "narrator/3d1e076e46472d0b": {
   "chars": 56,
@@ -39471,6 +39562,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "If the beacon burns tonight, they lie down tonight, and they won't march."
+ },
+ "narrator/45a2002924fa1c16": {
+  "chars": 128,
+  "direction": "[hushed, tense, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You wait by the pens with the boy between you. The moon comes up full over the hills, enormous. The goats go silent all at once."
  },
  "narrator/45a8a784390b3227": {
   "chars": 74,
@@ -40579,6 +40677,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A spinning wheel, turning. The thread's coming on again, fine and even."
+ },
+ "narrator/4fdd50d69a7af1b5": {
+  "chars": 67,
+  "direction": "[plain, gentle]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A small frightened boy who smells of goat. That's all you can tell."
  },
  "narrator/4fed16f4ba8b8522": {
   "chars": 137,
@@ -42184,6 +42289,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Inside the palisade, Vallaki is all steep roofs, swept streets and festival bunting in a yellow that nobody here would choose for themselves. Every face you pass is smiling. None of the smiles reach the eyes, and several of them are watching you."
+ },
+ "narrator/5df96ddbd6514b61": {
+  "chars": 234,
+  "direction": "[quiet, moved, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "In the morning Petru's mother comes down from the south row with a basket on her arm and nothing to say. She stands in front of you for a long while. Then she puts the basket down and holds your hands, one after the other, all of you."
  },
  "narrator/5e0580f85bb9a713": {
   "chars": 143,
@@ -49027,6 +49139,13 @@
   "recipe": "dd92281f92",
   "text": "The fiddle goes down on the log beside him, very carefully, as if it might break."
  },
+ "narrator/9c6a7744faaa2c10": {
+  "chars": 129,
+  "direction": "[hushed, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Out beyond the wall, very far off, something lifts its head and howls, long and low and angry, as if it has felt something taken."
+ },
  "narrator/9c7f4214af06c090": {
   "chars": 154,
   "model": "eleven_v4",
@@ -51132,6 +51251,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A workbench covered in wooden heads waiting for faces. One of them already has a face, and it's a red-haired woman's."
+ },
+ "narrator/af07993682ad2580": {
+  "chars": 203,
+  "direction": "[quiet, grave, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Under the straw his nails are thick and dark, and there's a ruff of grey hair at the back of his neck that his mother has been cutting. He isn't sick. He's a wolf, nearly all the way, at eight years old."
  },
  "narrator/af1081b722061fab": {
   "chars": 105,
@@ -55527,6 +55653,13 @@
   "recipe": "dd92281f92",
   "text": "A slab of black stone, its grooved edges running to a drain. The drain is not dry."
  },
+ "narrator/d837addf2a956154": {
+  "chars": 200,
+  "direction": "[quiet, solemn]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Dmitri Krezkov sends down what Krezk pays for a wolf that takes children: a purse, and a set of iron bands that have hung in the watch house since before his grandfather, for the wolf that never came."
+ },
  "narrator/d83eeedc7e01db8e": {
   "chars": 71,
   "model": "eleven_v4",
@@ -55606,6 +55739,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The bunting sags. Somebody has turned half the Baron's portraits to the wall and then, out of kindness, turned a few of them back."
+ },
+ "narrator/d945324250ae2595": {
+  "chars": 228,
+  "direction": "[quiet, sad, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Petru looks at you once. Then he walks out of the light toward the old wolf, and the old wolf puts its great head down beside his, and they go off into the dark together, the boy running on all fours before they reach the trees."
  },
  "narrator/d945334955d7c2f3": {
   "chars": 147,
@@ -56488,6 +56628,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A round window of colored glass, a rising sun in reds and golds. It's the brightest thing in the church, and it is the color of dusk."
+ },
+ "narrator/e19e096a9be9aca1": {
+  "chars": 100,
+  "direction": "[ominous, tense]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The Grandsire comes over Krezk's wall in the moonlight with the old wolves of the pack at his heels."
  },
  "narrator/e1c2f052c44dcdc3": {
   "chars": 106,
@@ -68104,6 +68251,34 @@
   "model": "eleven_v3",
   "recipe": "4d71c8957c",
   "text": "He gave me three winters to get Ileana to ask. Tonight he sent word that he's done waiting. If I don't bring him a door by morning, he'll send someone who doesn't knock."
+ },
+ "the_grandsire/49a6d5ba29486433": {
+  "chars": 115,
+  "direction": "[deep, growling, possessive]",
+  "model": "eleven_v3",
+  "recipe": "b0b6438c5d",
+  "text": "(In a voice like a grave being dug.) The runt. Mine. Mine by the moon, mine by the bite. Give him back to the pack."
+ },
+ "the_grandsire/4d31f93a5719bee3": {
+  "chars": 166,
+  "direction": "[deep, slow, solemn, contemptuous]",
+  "model": "eleven_v3",
+  "recipe": "b0b6438c5d",
+  "text": "Give me the runt and the pack takes no more Krezk children. Not one. Not for as long as I hold the pack. You have my word. Wolves keep their word. It's men who don't."
+ },
+ "the_grandsire/4d56336f7c396b05": {
+  "chars": 117,
+  "direction": "[snarling, furious, low]",
+  "model": "eleven_v3",
+  "recipe": "b0b6438c5d",
+  "text": "(It sniffs the air, and its lips come back from its teeth.) What have you done to him. What have you done to my runt."
+ },
+ "the_grandsire/97739e849b76c795": {
+  "chars": 49,
+  "direction": "[cold, growling, final]",
+  "model": "eleven_v3",
+  "recipe": "b0b6438c5d",
+  "text": "Then the pack will have him back over your bones."
  },
  "thistle/01e81a8f5565a344": {
   "chars": 33,
