@@ -257,6 +257,18 @@
       "label": "a traveller's pack under the carcass",
       "model": "satchel",
       "item": "boots_of_the_winterlands"
+    },
+    {
+      "id": "mists_fern_pack",
+      "cell": [
+        5,
+        12
+      ],
+      "kind": "search",
+      "label": "a traveller's pack in the ferns",
+      "model": "satchel",
+      "search_dc": 12,
+      "item": "signal_whistle"
     }
   ],
   "containers": [

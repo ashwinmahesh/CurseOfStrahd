@@ -7,7 +7,7 @@
   "map": {
     "rows": [
       "##########################",
-      "#.......#.......#........#",
+      "#......=#.......#.......=#",
       "#........................#",
       ".........................#",
       ".........................#",
@@ -139,6 +139,42 @@
       "kind": "decor",
       "label": "A shuttered window",
       "model": "window_shuttered"
+    },
+    {
+      "id": "crg_overlook_gargoyle",
+      "cell": [
+        7,
+        1
+      ],
+      "kind": "decor",
+      "model": "gargoyle"
+    },
+    {
+      "id": "crg_overlook_gargoyle_2",
+      "cell": [
+        24,
+        1
+      ],
+      "kind": "decor",
+      "model": "gargoyle"
+    },
+    {
+      "id": "crg_overlook_crow",
+      "cell": [
+        3,
+        5
+      ],
+      "kind": "decor",
+      "model": "crow"
+    },
+    {
+      "id": "crg_overlook_crow_2",
+      "cell": [
+        23,
+        5
+      ],
+      "kind": "decor",
+      "model": "crow"
     }
   ],
   "encounters": [

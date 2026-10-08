@@ -238,3 +238,9 @@ once
 
 ~ check:investigation:altar_dust_amulet:failure
 | Dust, and dust under the dust. This altar has been forgotten more thoroughly than anything you've seen.
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the courtyard's cracks.
+
+~ search:crg_dropped_mirror
+| Wedged between two flagstones, a little silver hand mirror, its glass unbroken. Someone who came here dropped it and never came back for it, and nobody who lives here has any use for one. {name} pockets it.
+once

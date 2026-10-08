@@ -529,6 +529,63 @@
       "label": "something tangled at the bottom of the dry well",
       "model": "rubble",
       "item": "rope_of_entanglement"
+    },
+    {
+      "id": "crg_weeds_1",
+      "cell": [
+        12,
+        13
+      ],
+      "kind": "decor",
+      "model": "leaves"
+    },
+    {
+      "id": "crg_weeds_2",
+      "cell": [
+        20,
+        17
+      ],
+      "kind": "decor",
+      "model": "leaves"
+    },
+    {
+      "id": "crg_weeds_3",
+      "cell": [
+        26,
+        18
+      ],
+      "kind": "decor",
+      "model": "leaves"
+    },
+    {
+      "id": "crg_weeds_4",
+      "cell": [
+        10,
+        14
+      ],
+      "kind": "decor",
+      "model": "leaves"
+    },
+    {
+      "id": "crg_weeds_5",
+      "cell": [
+        29,
+        15
+      ],
+      "kind": "decor",
+      "model": "leaves"
+    },
+    {
+      "id": "crg_dropped_mirror",
+      "cell": [
+        23,
+        19
+      ],
+      "kind": "search",
+      "label": "something wedged between the flagstones",
+      "model": "rubble",
+      "search_dc": 13,
+      "item": "mirror"
     }
   ],
   "containers": [
