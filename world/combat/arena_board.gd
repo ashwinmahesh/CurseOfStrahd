@@ -34,10 +34,18 @@ static func build(grid_: CombatGrid, theme_: String = "shrine_yard", place_: Str
 	return b
 
 
-## The top of the floor drawn on a square (world units): its height, less what a raised prop stands on it (a podium's
-## or a tree's squares: the ground under the prop, which draws the rest; CombatGrid.raised).
+## The top of the floor drawn on a square (world units), where its dressing stands: its height, less what a raised
+## prop stands on it (a podium's or a tree's squares: the ground under the prop, which draws the rest;
+## CombatGrid.raised); on natural ground the middle of its smoothed slope (within a few feet of its rules height).
 func floor_y(cell: Vector2i) -> float:
+	if not _corner_h.is_empty() and grid.in_bounds(cell) and grid.has_flag(cell, CombatGrid.NATURAL):
+		return _mid_y(cell)
 	return (grid.height(cell) - int(grid.raised.get(cell, 0))) / float(CombatGrid.FEET)
+
+
+## A square's height in the rules (world units), which natural ground's corners are worked out from.
+func _rules_y(cell: Vector2i) -> float:
+	return grid.height(cell) / float(CombatGrid.FEET)
 
 
 ## The middle of a creature's squares on the ground as drawn: on natural ground its smoothed slope (ground_y), which
@@ -968,7 +976,7 @@ func _corner_index(c: Vector2i) -> int:
 ## average the empty squares round them.
 func _corner_y(c: Vector2i, k: Vector2i) -> float:
 	if not grid.has_flag(c, CombatGrid.NATURAL):
-		return floor_y(c)
+		return _rules_y(c)
 	var around: Array[Vector2i] = []
 	for d: Vector2i in [Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(0, 0)]:
 		around.append(c + k + d)
@@ -979,18 +987,18 @@ func _corner_y(c: Vector2i, k: Vector2i) -> float:
 		for o in around:
 			if o != c and grid.in_bounds(o) and grid.has_flag(o, CombatGrid.NATURAL) and not grid.has_flag(o, CombatGrid.VOID):
 				var y := _corner_y(o, c + k - o)
-				if best == INF or absf(y - floor_y(c)) < absf(best - floor_y(c)):
+				if best == INF or absf(y - _rules_y(c)) < absf(best - _rules_y(c)):
 					best = y
 		if best != INF:
 			return best
 		for o in around:
 			if grid.in_bounds(o) and grid.has_flag(o, CombatGrid.NATURAL):
-				total += floor_y(o)
+				total += _rules_y(o)
 				count += 1
 		return total / count
 	for o in around:
 		if _joined(c, o):
-			total += floor_y(o)
+			total += _rules_y(o)
 			count += 1
 	return total / count
 
@@ -1009,7 +1017,7 @@ func _corner_normal(c: Vector2i, i: int) -> Vector3:
 	var y := _corner_h[_corner_index(c) + i]
 	var v: Array[float] = []
 	for d: Vector2i in [Vector2i(-1, -1), Vector2i(0, -1), Vector2i(-1, 0), Vector2i(0, 0)]:
-		v.append(floor_y(corner + d) if _joined(c, corner + d) else y)
+		v.append(_rules_y(corner + d) if _joined(c, corner + d) else y)
 	return Vector3(-((v[1] + v[3]) - (v[0] + v[2])) / 2.0, 1.0, -((v[2] + v[3]) - (v[0] + v[1])) / 2.0).normalized()
 
 

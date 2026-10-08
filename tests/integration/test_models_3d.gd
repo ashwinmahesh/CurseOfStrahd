@@ -293,8 +293,12 @@ func test_the_woods_are_3d_trees() -> void:
 	assert_true(v.board.mesh_occluders.size() > 50, "3D trees in and around the map (%d)" % v.board.mesh_occluders.size())
 	var tree := v.board.mesh_occluders[0]
 	var box := AABB()
+	var first := true
 	for n in tree.find_children("*", "MeshInstance3D", true, false):
-		box = box.merge((n as MeshInstance3D).global_transform * (n as MeshInstance3D).mesh.get_aabb())
+		# From the tree's own first piece, not the world's origin: a tree stands on a hill now and then (lane 3).
+		var b := (n as MeshInstance3D).global_transform * (n as MeshInstance3D).mesh.get_aabb()
+		box = b if first else box.merge(b)
+		first = false
 	assert_true(box.size.y > 2.0 and box.size.y < 4.0, "a tree 10 to 20 ft tall (%.2f)" % box.size.y)
 	var far := 0
 	for n in v.find_children("Trees_*", "MultiMeshInstance3D", true, false):
