@@ -231,6 +231,19 @@
       "model": "tree_marked",
       "when": "name:ilse_varga",
       "dialogue": "companions/kestrel:tally_tser"
+    },
+    {
+      "id": "ribbon_tree_cache",
+      "cell": [
+        37,
+        3
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "skill": "investigation",
+      "label": "a Vistani cache under the ribbon tree",
+      "model": "leaves",
+      "item": "boots_of_striding_and_springing"
     }
   ],
   "containers": [

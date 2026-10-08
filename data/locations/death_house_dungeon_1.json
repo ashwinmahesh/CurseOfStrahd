@@ -584,6 +584,18 @@
       "kind": "examine",
       "label": "the stair down",
       "model": "stair_down"
+    },
+    {
+      "id": "shrine_statue_base",
+      "cell": [
+        5,
+        19
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a hollow in the statue's base",
+      "model": "rubble",
+      "item": "dust_of_disappearance"
     }
   ],
   "containers": [

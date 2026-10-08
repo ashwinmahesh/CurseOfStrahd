@@ -751,3 +751,61 @@ cooldown 3
 | [visited:death_house_ground and not flag.death_house_completed] The silence afterward is yours. Keep it as long as you can.
 | [visited:death_house_ground and not flag.death_house_completed] Quiet, again. The house is already thinking about what to try next.
 cooldown 10
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:den_cabinet_board
+| One board under the card cabinet lifts at a touch. Beneath it, a brass amulet ticks quietly to itself, still keeping time for a card game nobody finished.
+once
+
+~ check:investigation:den_cabinet_board:failure
+| Cards, glasses and dust. If Gustav cheated at cards, he hid it better than this.
+
+~ search:dumbwaiter_soot
+| At the foot of the dumbwaiter shaft, half-buried in soot, a glass globe the size of a fist. Breathe on it and a soft light wakes inside.
+once
+
+~ check:perception:dumbwaiter_soot:failure
+| The dumbwaiter's shaft goes up into the dark. Soot comes down it. Nothing else does.
+
+~ search:library_hollow_book
+| One of the histories weighs nothing at all. Its pages have been cut into a hollow, and in the hollow lies a slim wand of black wood.
+once
+
+~ check:investigation:library_hollow_book:failure
+| Dry histories, shelved by someone who never read them. They keep their secrets, if they have any.
+
+~ search:dressing_table_drawer
+| The drawer is shallower than the table. Under its false bottom, a crystal bottle of perfume that smells of roses, in a house where nothing has bloomed for years.
+once
+
+~ check:investigation:dressing_table_drawer:failure
+| Powder, combs and a mirror that shows you looking tired. Nothing else worth the trouble.
+
+~ search:nursemaid_mattress
+| Under the nursemaid's mattress, folded with care, lies a fine cloak that was never worn. A card is pinned to it, with a single initial: G.
+once
+
+~ check:perception:nursemaid_mattress:failure
+| A narrow bed, made tight. Whatever she kept close, she kept it close.
+
+~ search:toy_chest_drawer
+| A drawer hides in the base of the toy chest, the kind a boy finds and tells nobody about. Inside, a grey cloth bag, and at the bottom of it something soft and warm, like fur.
+once
+
+~ check:investigation:toy_chest_drawer:failure
+| Wooden soldiers, a top, a ball gone flat. Thorn's treasures, or most of them.
+
+~ search:shrine_statue_base
+| The statue's base is hollow. Inside, a twist of paper holds a pinch of grey dust that makes your fingertips hard to look at.
+once
+
+~ check:perception:shrine_statue_base:failure
+| Paint, wood and the faces of saints nobody prays to. The statue gives you nothing.
+
+~ search:reliquary_pipes
+| Among the knucklebones and teeth, one relic has been carved: a set of bone pipes. Even unplayed, they make the room colder.
+once
+
+~ check:investigation:reliquary_pipes:failure
+| Bones, teeth and the dust of both. If any of these relics is more than it seems, it isn't telling you.

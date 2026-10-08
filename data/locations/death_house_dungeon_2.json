@@ -271,6 +271,19 @@
       "kind": "examine",
       "label": "wall reliefs",
       "model": "relief"
+    },
+    {
+      "id": "reliquary_pipes",
+      "cell": [
+        6,
+        0
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "skill": "investigation",
+      "label": "a relic in the niches that isn't bone",
+      "model": "wall_alcoves",
+      "item": "pipes_of_haunting"
     }
   ],
   "containers": [

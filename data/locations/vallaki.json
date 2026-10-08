@@ -588,6 +588,18 @@
       "kind": "examine",
       "label": "Watch fire",
       "model": "brazier"
+    },
+    {
+      "id": "stocks_mud",
+      "cell": [
+        17,
+        16
+      ],
+      "kind": "search",
+      "search_dc": 12,
+      "label": "something trodden into the mud by the stocks",
+      "model": "straw",
+      "item": "wand_of_smiles"
     }
   ],
   "lights": [

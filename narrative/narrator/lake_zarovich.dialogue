@@ -70,3 +70,12 @@ cooldown 20
 
 ~ examine:lzt_claw_pine
 | Five deep gouges in the bark, higher than a tall man can reach, still weeping sap. Fresh. Something stood up tall here to sharpen its claws, and wanted you to see.
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:jetty_boards
+| Under the jetty's last boards, tied to a post below the waterline, a ring on a string. It is dry when you pull it up, though the string is soaked.
+once
+
+~ check:perception:jetty_boards:failure
+| Black water, rotten boards and the smell of fish that aren't there anymore. Nothing else.

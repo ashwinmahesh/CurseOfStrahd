@@ -470,3 +470,48 @@ cooldown 10
 | [flag.festival_climax and not flag.festival_over] The square goes quiet. Somewhere at the back of the crowd, very hesitantly, somebody claps.
 | [flag.church_siege_survived and not flag.bones_returned and not flag.festival_climax] The candles stand up straight again, one by one, as if they'd been hiding.
 cooldown 10
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:stocks_mud
+| Trodden into the mud beside the stocks, a little wand of painted wood. Whoever was cheered up here dropped it on the way out.
+once
+
+~ search:desk_hidden_drawer
+| Lady Wachter's desk has one drawer more than it shows. In it, a pair of rose-tinted lenses and a list of names, some of them crossed out.
+once
+
+~ check:investigation:desk_hidden_drawer:failure
+| Letters, invitations and accounts, all in a neat, cold hand. If the desk keeps secrets, it keeps them from you.
+
+~ search:circle_loose_board
+| Under the chalk circle, one board lifts. Victor hid his best tool where his father would never kneel: a wand of polished bone, warm from the floor.
+once
+
+~ check:investigation:circle_loose_board:failure
+| Chalk, scorch marks and ash. The circle tells you only that Victor practises, and that it goes badly.
+
+~ search:guest_bed_board
+| Under one of the guest beds, a board is loose. In the hollow beneath it, a pair of supple grey gloves some earlier guest decided not to pay for.
+once
+
+~ check:perception:guest_bed_board:failure
+| Clean floors, aired sheets. Danika keeps a good house, and it keeps its secrets.
+
+~ search:coffin_false_bottom
+| One empty coffin rings hollow under your knuckles. Under its false bottom, a pair of soft black slippers, their soles cold and faintly sticky.
+once
+
+~ check:investigation:coffin_false_bottom:failure
+| Coffins, all empty, all waiting. Henrik's work is good. That's all you can say for it.
+
+~ search:arrigal_wagon_drawer
+| Under the step of Arrigal's wagon, a drawer that only opens if you lift it first. Inside, a black dagger in an oiled sheath, and the sheath smells of something bitter.
+once
+
+~ check:investigation:arrigal_wagon_drawer:failure
+| Painted wood, good hinges and a lock you could pick with a hairpin. Arrigal's wagon looks too honest to be honest.
+
+~ open:st_andral_niche
+| The saint's bones are home, and the niche below his sarcophagus stands open, as if it had been waiting. In it lies a mace with a sunburst head, polished by old hands.
+once

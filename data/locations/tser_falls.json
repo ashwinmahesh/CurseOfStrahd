@@ -150,6 +150,18 @@
       "kind": "examine",
       "label": "A weathered marker stone",
       "model": "milestone"
+    },
+    {
+      "id": "humming_token",
+      "cell": [
+        11,
+        8
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "a token that hums",
+      "model": "gold_spill",
+      "item": "pearl_of_power"
     }
   ],
   "containers": [

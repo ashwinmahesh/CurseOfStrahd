@@ -88,6 +88,8 @@ Narrator: The showman goes out of him like air out of a bladder. What's left is 
 Rictavio: Not that name. Not here. Rudolph van Richten made a great many enemies, and some of them have extremely long lives. Rictavio has none. I would like to keep it that way.
 Rictavio: Take these. I've more than I need, and you, I suspect, have less.
 give holy_water 2
+Rictavio: And this. The hat has been a great many people over the years. Let it be one of you for a while; I find I'm tired of being anyone else.
+give hat_of_disguise
 * Your secret is safe with us. -> keep_secret
 * What are you doing in Vallaki? -> why
 
