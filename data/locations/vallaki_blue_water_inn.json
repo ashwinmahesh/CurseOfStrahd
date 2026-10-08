@@ -296,6 +296,176 @@
       "label": "a loose brick by the hearth",
       "model": "rubble",
       "item": "bead_of_force"
+    },
+    {
+      "id": "stable_stall_bay",
+      "cell": [
+        2,
+        12
+      ],
+      "kind": "decor",
+      "label": "A horse in its stall",
+      "model": "stall_horse"
+    },
+    {
+      "id": "stable_stall_grey",
+      "cell": [
+        4,
+        12
+      ],
+      "kind": "decor",
+      "label": "A horse in its stall",
+      "model": "stall_horse"
+    },
+    {
+      "id": "stable_stall_empty_1",
+      "cell": [
+        9,
+        12
+      ],
+      "kind": "decor",
+      "label": "An empty stall",
+      "model": "stall"
+    },
+    {
+      "id": "stable_stall_empty_2",
+      "cell": [
+        11,
+        12
+      ],
+      "kind": "decor",
+      "label": "An empty stall",
+      "model": "stall"
+    },
+    {
+      "id": "stable_stall_empty_3",
+      "cell": [
+        13,
+        12
+      ],
+      "kind": "decor",
+      "label": "An empty stall",
+      "model": "stall"
+    },
+    {
+      "id": "stable_trough",
+      "cell": [
+        9,
+        13
+      ],
+      "kind": "decor",
+      "label": "A water trough",
+      "model": "trough"
+    },
+    {
+      "id": "stable_hay_1",
+      "cell": [
+        10,
+        13
+      ],
+      "kind": "decor",
+      "label": "Hay bales",
+      "model": "hay_bale"
+    },
+    {
+      "id": "stable_hay_2",
+      "cell": [
+        2,
+        15
+      ],
+      "kind": "decor",
+      "label": "Hay bales",
+      "model": "hay_bale"
+    },
+    {
+      "id": "stable_hay_3",
+      "cell": [
+        3,
+        15
+      ],
+      "kind": "decor",
+      "label": "Hay bales",
+      "model": "hay_bale"
+    },
+    {
+      "id": "stable_tack_west",
+      "cell": [
+        0,
+        14
+      ],
+      "kind": "decor",
+      "label": "Saddle and bridles",
+      "model": "tack"
+    },
+    {
+      "id": "stable_tack_south",
+      "cell": [
+        7,
+        17
+      ],
+      "kind": "decor",
+      "label": "Saddle and bridles",
+      "model": "tack"
+    },
+    {
+      "id": "stable_feed_sacks",
+      "cell": [
+        12,
+        16
+      ],
+      "kind": "decor",
+      "label": "Sacks of oats",
+      "model": "sack"
+    },
+    {
+      "id": "stable_barrel",
+      "cell": [
+        13,
+        16
+      ],
+      "kind": "decor",
+      "label": "A rain barrel",
+      "model": "barrel"
+    },
+    {
+      "id": "stable_lantern",
+      "cell": [
+        7,
+        15
+      ],
+      "kind": "decor",
+      "label": "A lantern",
+      "model": "lantern_stand"
+    },
+    {
+      "id": "stable_hay_east",
+      "cell": [
+        24,
+        12
+      ],
+      "kind": "decor",
+      "label": "Hay bales",
+      "model": "hay_bale"
+    },
+    {
+      "id": "stable_handcart",
+      "cell": [
+        23,
+        16
+      ],
+      "kind": "decor",
+      "label": "A muck cart",
+      "model": "handcart"
+    },
+    {
+      "id": "stable_lantern_west",
+      "cell": [
+        1,
+        14
+      ],
+      "kind": "decor",
+      "label": "A lantern",
+      "model": "lantern_stand"
     }
   ],
   "containers": [
@@ -358,6 +528,33 @@
       "kind": "candle",
       "bright_ft": 5,
       "dim_ft": 10
+    },
+    {
+      "cell": [
+        7,
+        15
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 25
+    },
+    {
+      "cell": [
+        22,
+        14
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        1,
+        14
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 25
     }
   ],
   "npcs": [

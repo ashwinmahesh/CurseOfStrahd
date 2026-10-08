@@ -130,3 +130,44 @@ func test_madam_evas_things() -> void:
 	assert_true(not found.is_empty() and str(found[0].get_meta("model", "")) == "chest_painted", "her painted chest")
 	v.queue_free()
 	await _frames(1)
+
+
+## Owner report (2026-10-08): "The stable at the Blue Water Inn doesnt resemble a stable at all." Its yard is packed
+## earth strewn with straw inside rough board walls, with box stalls (horses in the two furthest from Rictavio's
+## wagon), a trough, hay, tack on the walls, and no tavern furniture.
+func test_the_blue_water_inns_stable_is_a_stable() -> void:
+	Look.set_style("modern", false)
+	var v := _view("vallaki_blue_water_inn")
+	await _frames(2)
+	var board := v.board
+	var floor := board.floor_box(Vector2i(7, 14))
+	assert_true(floor != null and _surface(floor) == "dungeon/packed_earth", "an earth floor")
+	var boards := 0
+	for w: Dictionary in (board.get_meta("interior_walls", {}) as Dictionary).get("walls", []):
+		var c := w["cell"] as Vector2i
+		if c.y == 17 and c.x >= 1 and c.x <= 14:
+			for mi in (w["full"] as Node).find_children("*", "MeshInstance3D", true, false):
+				if _surface(mi) == "interior/attic_boards":
+					boards += 1
+					break
+	assert_true(boards >= 10, "rough board walls (%d)" % boards)
+	var want := {"stable_stall_bay": "stall_horse", "stable_stall_grey": "stall_horse", "stable_stall_empty_1": "stall",
+		"stable_trough": "trough", "stable_hay_1": "hay_bale", "stable_tack_west": "tack", "stable_lantern": "lantern_stand"}
+	for id: String in want:
+		var node := v.prop_nodes.get(id) as Node
+		var models := node.find_children("Model_*", "Node3D", true, false) if node != null else []
+		assert_true(not models.is_empty() and str(models[0].get_meta("model", "")) == want[id], "%s is the %s" % [id, want[id]])
+	var straw := 0
+	for d in board.find_children("*", "Decal", true, false):
+		var at := (d as Decal).global_position
+		var tex := (d as Decal).texture_albedo
+		if tex != null and tex.resource_path.contains("floor_straw") and Rect2(1, 12, 24, 5).has_point(Vector2(at.x, at.z)):
+			straw += 1
+	assert_true(straw >= 15, "straw strewn over the yard (%d)" % straw)
+	for m in board.find_children("Model_*", "Node3D", true, false):
+		var at := (m as Node3D).global_position
+		if (m as Node3D).is_visible_in_tree() and Rect2(1, 12, 24, 5).has_point(Vector2(at.x, at.z)):
+			assert_false(str(m.get_meta("model", "")) in ["table_chairs", "bar_counter", "table"],
+				"no tavern furniture in the yard (%s at %s)" % [m.get_meta("model", ""), board.grid.cell_at(at)])
+	v.queue_free()
+	await _frames(1)

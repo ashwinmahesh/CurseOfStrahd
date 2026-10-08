@@ -5243,6 +5243,79 @@
       "anchor": "bottom_center",
       "source": "art/generated/props/model_shawl_line.png",
       "mount": "wall"
+    },
+    "stall": {
+      "file": "art/sprites/props/stall.png",
+      "width_px": 516,
+      "height_px": 492,
+      "world_height": 1.3,
+      "pixel_size": 0.00267,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_stall.png",
+      "mount": "stand",
+      "back": "stall_back"
+    },
+    "stall_back": {
+      "file": "art/sprites/props/stall_back.png",
+      "width_px": 516,
+      "height_px": 460,
+      "world_height": 1.3,
+      "pixel_size": 0.00287,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_stall_back.png",
+      "mount": "stand"
+    },
+    "stall_horse": {
+      "file": "art/sprites/props/stall_horse.png",
+      "width_px": 516,
+      "height_px": 492,
+      "world_height": 1.42,
+      "pixel_size": 0.00293,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_stall_horse.png",
+      "mount": "stand",
+      "back": "stall_horse_back"
+    },
+    "stall_horse_back": {
+      "file": "art/sprites/props/stall_horse_back.png",
+      "width_px": 516,
+      "height_px": 456,
+      "world_height": 1.42,
+      "pixel_size": 0.00314,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_stall_horse_back.png",
+      "mount": "stand"
+    },
+    "trough": {
+      "file": "art/sprites/props/trough.png",
+      "width_px": 516,
+      "height_px": 396,
+      "world_height": 0.42,
+      "pixel_size": 0.00107,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_trough.png",
+      "mount": "stand",
+      "back": "trough_back"
+    },
+    "trough_back": {
+      "file": "art/sprites/props/trough_back.png",
+      "width_px": 516,
+      "height_px": 396,
+      "world_height": 0.42,
+      "pixel_size": 0.00107,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_trough_back.png",
+      "mount": "stand"
+    },
+    "tack": {
+      "file": "art/sprites/props/tack.png",
+      "width_px": 488,
+      "height_px": 516,
+      "world_height": 0.8,
+      "pixel_size": 0.00156,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_tack.png",
+      "mount": "wall"
     }
   }
 }

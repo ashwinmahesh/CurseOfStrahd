@@ -78,9 +78,28 @@ like a painted prop. No image model was used.
 Then add `mount` and `back` to the new manifest entries, map the art to the model in `models3d.art`, give it `feet`,
 and `make models ONLY=...`.
 
+## The Blue Water Inn's stable (vallaki_blue_water_inn, the Stable yard)
+
+Owner report (2026-10-08): "The stable at the Blue Water Inn doesnt resemble a stable at all." What the text says: a
+stable yard where a carnival wagon takes up most of the space, and every horse in the stable stands at the far end of
+its stall, away from it. It was dressed as the taproom: planks, plaster, tavern tables on its '=' squares, no light.
+
+| Before | After |
+|---|---|
+| Plank floor, plaster walls, unlit | Packed earth strewn with straw, rough board walls (catalog `rooms`: an area named stable, stall or byre), two lanterns |
+| Tavern tables and chairs | Box stalls along the north wall (`stall`, `stall_horse`: plank partitions, posts, manger, hay rack, straw, a bucket), horses in the two at the far west end, away from the wagon; a trough, hay bales, sacks of oats, a rain barrel, a muck cart, tack on the walls (`tack`: saddle, stirrups, bridles, a coil of rope, a horseshoe) |
+
+- **Straw** is a decal rule kept to rooms: a clutter rule's `rooms` (words in an area's name or id) keeps it inside
+  those areas (`Clutter._room_rects`), so the yard is strewn with straw and the taproom isn't.
+- **Stalls are two squares wide** so a horse stands side on in one. They are building-sized pieces backed onto the wall
+  (`big` and `against_wall`); `ModelPiece.stand` now sets such a piece back on its wall face before measuring how
+  much room it has, so it only shrinks for things really in its way.
+- The horse in a stall is sculpted from the horse's 2D art inside the stall model (`inflate`), so it's one piece.
+
 ## Checking it
 
     make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=tser_pool_eva_tent NAME=tent ARGS="--hour=20 --shots=2"
 
 `tests/integration/test_interiors.gd`: the tent is canvas with poles and charms and no house walls, its floor is rugs,
-it cuts away toward the camera, Classic keeps it low, and her things are the models the narration names.
+it cuts away toward the camera, Classic keeps it low, and her things are the models the narration names; the inn's
+stable yard is earth and straw inside board walls, with stalls, horses, a trough, hay and tack, and no tavern furniture.
