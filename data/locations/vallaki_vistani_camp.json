@@ -208,6 +208,19 @@
       "label": "Marks in the mud",
       "search_dc": 12,
       "flag": "arabelle_tracks_found"
+    },
+    {
+      "id": "arrigal_wagon_drawer",
+      "cell": [
+        27,
+        11
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "skill": "investigation",
+      "label": "a hidden drawer under Arrigal's wagon",
+      "model": "broken_boards",
+      "item": "dagger_of_venom__dagger"
     }
   ],
   "containers": [

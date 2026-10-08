@@ -57,27 +57,27 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 
 | | Where | Item | How |
 |---|---|---|---|
-| ○ | Road (open stretch), the broken cart | Bag of Holding (uncommon) | Search (Investigation DC 12): a false floor in the cart |
-| ○ | Svalich Woods, the claw-marked pine | Goggles of Night (uncommon) | Search (Perception DC 14): a satchel snagged high in the branches |
-| ○ | Crossroads, the unmarked mounds | Boots of Elvenkind (uncommon) | Search (Perception DC 14): a mound that isn't as old as the others |
-| ○ | Tser Falls, the stone of tokens | Pearl of Power (uncommon) | Search (Perception DC 13): one token among the many that hums |
-| ○ | Tser Pool, the marked ash tree | Boots of Striding and Springing (uncommon) | Search (Investigation DC 14): a Vistani cache in the roots |
+| ✅ | Road (open stretch), the broken cart | Bag of Holding (uncommon) | Search (Investigation DC 12): a false floor in the cart |
+| ✅ | Svalich Woods, the claw-marked pine | Goggles of Night (uncommon) | Search (Perception DC 14): a satchel snagged high in the branches |
+| ✅ | Crossroads, the unmarked mounds | Boots of Elvenkind (uncommon) | Search (Perception DC 14): a mound that isn't as old as the others |
+| ✅ | Tser Falls, the stone of tokens | Pearl of Power (uncommon) | Search (Perception DC 13): one token among the many that hums |
+| ✅ | Tser Pool, the marked ash tree | Boots of Striding and Springing (uncommon) | Search (Investigation DC 14): a Vistani cache in the roots |
 
 ## Vallaki (level 5)
 
 | | Where | Item | How |
 |---|---|---|---|
-| ○ | Town, the broken stocks | Wand of Smiles (common) | Search (Perception DC 12): dropped by someone who was "cheered up" |
-| ○ | Wachterhaus, Lady Wachter's desk | Eyes of Charming (uncommon) | Search (Investigation DC 15): a hidden drawer |
-| ○ | Burgomaster's mansion, Victor's attic | +1 Wand of the War Mage (uncommon) | Search (Investigation DC 15): under the chalk circle's loose board |
-| ○ | Burgomaster's mansion, Izek's chest | Potion of Hill Giant Strength (uncommon) | Hoard |
-| ○ | Blue Water Inn, the rooms upstairs | Gloves of Thievery (uncommon) | Search (Perception DC 15): a loose board under a bed |
-| ○ | Rictavio (Van Richten) | Hat of Disguise (uncommon) | Gift: once he trusts you with who he is |
-| ○ | St. Andral's crypt | Mace of Disruption (rare) | Tip: when the bones are back, the saint's niche opens |
-| ○ | Coffin maker's storeroom | Slippers of Spider Climbing (uncommon) | Search (Investigation DC 14): a coffin with a false bottom |
-| ○ | Vistani camp, Luvash | Cloak of the Manta Ray (uncommon) | Gift: when Arabelle comes home |
-| ○ | Vistani camp, Arrigal's wagon | Dagger of Venom (rare) | Search (Investigation DC 16): Arrigal's hidden drawer |
-| ○ | Lake Zarovich, the rotten jetty | Ring of Water Walking (uncommon) | Search (Perception DC 14): under the boards |
+| ✅ | Town, the broken stocks | Wand of Smiles (common) | Search (Perception DC 12): dropped by someone who was "cheered up" |
+| ✅ | Wachterhaus, Lady Wachter's desk | Eyes of Charming (uncommon) | Search (Investigation DC 15): a hidden drawer |
+| ✅ | Burgomaster's mansion, Victor's attic | +1 Wand of the War Mage (uncommon) | Search (Investigation DC 15): under the chalk circle's loose board |
+| ✅ | Burgomaster's mansion, Izek's chest | Potion of Hill Giant Strength (uncommon) | Hoard |
+| ✅ | Blue Water Inn, the rooms upstairs | Gloves of Thievery (uncommon) | Search (Perception DC 15): a loose board under a bed |
+| ✅ | Rictavio (Van Richten) | Hat of Disguise (uncommon) | Gift: once he trusts you with who he is |
+| ✅ | St. Andral's crypt | Mace of Disruption (rare) | Tip: when the bones are back, the saint's niche opens |
+| ✅ | Coffin maker's storeroom | Slippers of Spider Climbing (uncommon) | Search (Investigation DC 14): a coffin with a false bottom |
+| ✅ | Vistani camp, Luvash | Cloak of the Manta Ray (uncommon) | Gift: when Arabelle comes home |
+| ✅ | Vistani camp, Arrigal's wagon | Dagger of Venom (rare) | Search (Investigation DC 16): Arrigal's hidden drawer |
+| ✅ | Lake Zarovich, the rotten jetty | Ring of Water Walking (uncommon) | Search (Perception DC 14): under the boards |
 
 ## Old Bonegrinder (level 6)
 
