@@ -2,8 +2,8 @@ extends Node
 ## The performance probe (P3): times loads (the data, the title, a new game, every move between places, saving and
 ## loading) and measures frame time, draw calls and memory in the heavy places, at 1080p in a window that never shows.
 ## Writes one JSON report; tools/perf/perf_run.py launches it and prints the summary.
-## Args after --: --out=/abs/report.json [--frames=N] [--warm=N] [--passes=N] [--only=title,newgame,places,saveload,combat]
-## [--places=id,id] [--size=1920x1080]
+## Args after --: --out=/abs/report.json [--frames=N] [--warm=N] [--passes=N]
+## [--only=title,newgame,places,saveload,combat,transitions] [--places=id,id] [--size=1920x1080] [--cover=1]
 
 const PLACES := ["village_of_barovia", "vallaki", "castle_ravenloft_gates", "castle_ravenloft_main_floor",
 	"castle_ravenloft_court", "castle_ravenloft_catacombs", "wizard_of_wines", "krezk", "argynvostholt", "berez",
@@ -17,13 +17,24 @@ const EFFECT_PLACES := ["village_of_barovia@night", "vallaki@day", "castle_raven
 const EFFECTS := ["msaa", "edge_aa", "ssr", "ssao", "ssil", "volumetric_fog", "glow", "dof", "sun_shadows", "lamp_shadows",
 	"screen_pass", "lamps", "half_res", "metalfx_75", "all"]
 const DAY := 12 * 60
+## The transitions phase: the way a player goes, in one game from a new game's first place: out of doors and in, room
+## to room, back the way they came, and on to another region. The first pass is a cold start; later ones go the same
+## way again with what the first one left cached.
+const ROUTE := ["village_of_barovia", "bildraths_mercantile", "village_of_barovia", "death_house_ground",
+	"death_house_upper", "death_house_third", "death_house_upper", "death_house_ground", "village_of_barovia",
+	"vallaki", "vallaki_blue_water_inn", "vallaki", "castle_ravenloft_gates", "castle_ravenloft_main_floor",
+	"castle_ravenloft_court", "castle_ravenloft_main_floor"]
+## A frame this slow reads as the game hanging; a move counts as stuck until the last such frame in the SETTLE_S after.
+const STUCK_MS := 100.0
+const SETTLE_S := 2.0
 
 var frames := 240                    ## measured frames per sample
 var warm := 90                       ## frames let pass before measuring (shaders compile, tweens settle)
 var passes := 2
 var pairs := 3                       ## on/off pairs per effect in the effects phase
 var cycles := 10                     ## off/on switches per effect in the effects_fast phase
-var report := {"samples": [], "loads": [], "memory": [], "meta": {}}
+var cover := false                   ## the transitions phase goes through the game's loading cover (--cover=1)
+var report := {"samples": [], "loads": [], "memory": [], "transitions": [], "meta": {}}
 var _last_usec := 0
 var _draw_start := 0
 var _draw_ms := 0.0                 ## ms drawing since the last frame began
@@ -42,6 +53,12 @@ func _ready() -> void:
 	passes = int(args.get("passes", passes))
 	pairs = int(args.get("pairs", pairs))
 	cycles = int(args.get("cycles", cycles))
+	cover = str(args.get("cover", "")) == "1"
+	if cover:
+		# The cover only runs with the interface's motion on, which a run with --out= (and a headless one) turns off.
+		UiMotion._checked = true
+		UiMotion.reduced = false
+		PlacePreload.headless_too = true
 	var only := str(args.get("only", "title,newgame,places,saveload,combat,effects")).split(",")
 	var places: Array = PLACES if str(args.get("places", "")) == "" else Array(str(args["places"]).split(","))
 	var out := str(args.get("out", "user://perf_report.json"))
@@ -85,6 +102,8 @@ func _ready() -> void:
 			await _effects_fast(p)
 		if "presets" in only:
 			await _presets(p)
+		if "transitions" in only:
+			await _transitions(p)
 	if "memory" in only:
 		await _memory(places)
 	var f := FileAccess.open(out, FileAccess.WRITE)
@@ -224,6 +243,81 @@ func _save_load(p: int) -> void:
 	_load("load_game", "vallaki", t3, sync)
 	root2.queue_free()
 	await _wait(2)
+
+
+## How long each change of place keeps the screen stuck (the loading lane): a new game's first place, then ROUTE.
+## With --cover=1 each change goes the way the game makes it, behind the black or the loading card (game_root's
+## `_covered`, motion on), and the run also times how soon the cover is up and when the place is ready under it.
+func _transitions(p: int) -> void:
+	_phase("transition: new game")
+	GameState.reset()
+	var st := GameState.story
+	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille", "wren_featherfoot", "kip_smudgewick"]:
+		var ch := Pregens.build(id, 5)
+		ch.finish_long_rest()
+		if st.party.size() < StoryState.PARTY_CAP:
+			st.party.append(ch)
+		else:
+			st.bench.append(ch)
+	var root := (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	root.set("autosaves", true)   # as in play: arriving somewhere writes the autosave
+	await _timed_move(p, root, "new game", "", true, func() -> void: add_child(root))
+	var from := str(root.get("view").get("loc_id"))
+	report["transitions"][-1]["to"] = from
+	var visited := {from: true}
+	for id: String in ROUTE:
+		st.minute_of_day = DAY
+		_phase("transition: %s -> %s" % [from, id])
+		var change := func() -> void: root.call("enter_location", id, "default")
+		if cover:
+			change = func() -> void: root.call("_covered", id, Callable(root, "enter_location").bind(id, "default"))
+		await _timed_move(p, root, from, id, not visited.has(id), change)
+		visited[id] = true
+		from = id
+	root.queue_free()
+	await _wait(2)
+
+
+## Times one change of place (`change`), from the moment it's asked for: `block` is the longest frame until the place
+## is ready (the build), `first` when the next frame is drawn (the old place frozen till then, or the cover up), `ready`
+## when the place is (behind a cover: when it starts to lift), and `stuck` the end of the last frame over STUCK_MS in
+## the SETTLE_S after that.
+func _timed_move(p: int, root: Node, from: String, to: String, first_visit: bool, change: Callable) -> void:
+	var t0 := Time.get_ticks_usec()
+	change.call()
+	await get_tree().process_frame   # the frame the change was asked for in has now been drawn
+	var first := Time.get_ticks_usec()
+	var block := (first - t0) / 1000.0
+	var last := first
+	while cover and (bool(root.get("moving")) or root.get("view") == null) and last - t0 < 30000000:
+		await get_tree().process_frame
+		var now := Time.get_ticks_usec()
+		block = maxf(block, (now - last) / 1000.0)
+		last = now
+	var ready := last
+	_close_popups(root)
+	var stuck_end := ready
+	var worst := 0.0
+	var slow := 0
+	while last - ready < int(SETTLE_S * 1000000.0):
+		await get_tree().process_frame
+		var now := Time.get_ticks_usec()
+		var ms := (now - last) / 1000.0
+		worst = maxf(worst, ms)
+		if ms > STUCK_MS:
+			stuck_end = now
+			slow += 1
+		last = now
+	var loc: Dictionary = Compendium.shared().get_entry("locations", to) if Compendium.shared().has("locations", to) else {}
+	var row := {"pass": p, "from": from, "to": to, "first_visit": first_visit, "cover": cover,
+		"outdoors": bool((loc.get("map", {}) as Dictionary).get("outdoors", false)),
+		"region": str(loc.get("region", "")),
+		"block_ms": block, "first_frame_ms": (first - t0) / 1000.0, "ready_ms": (ready - t0) / 1000.0,
+		"stuck_ms": (stuck_end - t0) / 1000.0, "worst_after_ms": worst, "slow_after": slow, "load": _loadavg()}
+	report["transitions"].append(row)
+	print("PERF transition %d %-30s -> %-30s %s block %6.0f | first frame %6.0f | ready %6.0f | stuck %6.0f | worst after %5.0f (%d slow)" % [
+		p, from, to, "new  " if first_visit else "again", block, row["first_frame_ms"], row["ready_ms"], row["stuck_ms"],
+		worst, slow])
 
 
 ## The vineyard ambush with every side on the AI, start to finish (or `frames * 8` frames).
