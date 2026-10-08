@@ -102,12 +102,18 @@ func test_divine_smite_can_be_asked_after_each_hit() -> void:
 	assert_true(p.bonus_available)
 
 
-func test_divine_smite_is_off_until_asked_for_and_caps_at_five_dice() -> void:
+func test_divine_smite_is_asked_by_default_and_caps_at_five_dice() -> void:
 	var e := _field()
 	var pt := _paladin(e, "undead")
 	var p := pt[0]
 	TestCombat.next_d20(e, 19)
-	assert_false(e.attack(p, pt[1], _melee(e, p)).is_paused(), "Off by default: no question")
+	assert_true(e.attack(p, pt[1], _melee(e, p)).is_paused(), "asked after the hit by default")
+	assert_eq(e.pending.kind, "divine_smite")
+	assert_true(e.pending.text.contains("1d8 more against the Undead"), e.pending.text)
+	e.answer_reaction(false)
+	p.reaction_rules["divine_smite"] = "never"
+	TestCombat.next_d20(e, 19)
+	assert_false(e.attack(p, pt[1], _melee(e, p)).is_paused(), "Off: no question")
 	var smite := Compendium.shared().spell_data("divine_smite")
 	var dice := e.features.smite_dice({"c": p, "s": smite, "slot": 5}, pt[1])
 	assert_eq(str(dice[0]["dice"]), "5d8", "at most 5d8 from the slot")

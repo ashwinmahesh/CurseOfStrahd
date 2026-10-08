@@ -437,7 +437,7 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 	# when armed on the hotbar.
 	if enc().spells.castable(c).any(func(k: Dictionary) -> bool: return str(k["id"]) == CombatFeatures.DIVINE_SMITE):
 		seen[CombatFeatures.DIVINE_SMITE] = true
-		out.append({"id": CombatFeatures.DIVINE_SMITE, "name": "Divine Smite", "cost": "A spell slot", "modes": ["ask", "auto", "never"], "default": "never",
+		out.append({"id": CombatFeatures.DIVINE_SMITE, "name": "Divine Smite", "cost": "A spell slot", "modes": ["ask", "auto", "never"], "default": "ask",
 			"help": "Ask: after each melee hit you're asked whether to smite. Automatic: every melee hit smites while spell slots last. Off: only when armed on the Spells tab (then every hit that turn)."})
 	for known in (c.creature as Character).known_spells():
 		var spell := Compendium.shared().spell_data(str(known["id"]))

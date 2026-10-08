@@ -373,6 +373,10 @@ func release_readied(c: Combatant, held: Dictionary, target: Combatant) -> Comba
 	return reaction_spells.release_readied(c, held, target)
 
 
+func cast_reactive_spell(c: Combatant, spell_id: String, target: Combatant) -> CombatResult:
+	return reaction_spells.cast_reactive_spell(c, spell_id, target)
+
+
 # --- Range, targets and areas (SpellTargeting) ----------------------------------------------------
 
 func range_ft(s: Dictionary, caster: Combatant = null) -> int:

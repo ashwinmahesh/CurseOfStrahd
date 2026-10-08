@@ -688,9 +688,9 @@ func cast_armed_smite(c: Combatant, melee: bool, missed: bool) -> Dictionary:
 	return {}
 
 
-## Divine Smite offered once an attack hits (the 2014 way: the paladin decides after the hit, a Critical Hit included),
-## when it isn't armed for the turn already. Its creature's rule ("divine_smite") is Off until the class tab sets Ask
-## or Automatic.
+## Divine Smite offered once a melee attack hits, an Opportunity Attack included (the 2014 way: the paladin decides
+## after the hit, a Critical Hit included), when it isn't armed for the turn already. Its creature's rule
+## ("divine_smite") starts at Ask; the class tab can make it Automatic or Off.
 func smite_offers(c: Combatant, target: Combatant, option: Dictionary, st: Dictionary) -> Array:
 	var e := enc()
 	if not c.creature is Character or not bool(option.get("melee", false)) or ("smite:" + DIVINE_SMITE) in c.armed:
@@ -709,7 +709,7 @@ func smite_offers(c: Combatant, target: Combatant, option: Dictionary, st: Dicti
 	var extra := " (1d8 more against %s)" % ("a Fiend" if str(target.creature.creature_type) == "fiend" else "the Undead") \
 		if str(target.creature.creature_type) in ["fiend", "undead"] else ""
 	return [{"kind": DIVINE_SMITE, "reactor": c, "trigger": target.id, "title": "Divine Smite?", "spends_reaction": false,
-		"default": "never",
+		"default": "ask",
 		"text": "%s hits %s%s. Smite for %dd8 more Radiant damage%s?" % [c.name(), target.name(),
 			" with a Critical Hit, so the smite's dice double too" if bool(st.get("critical", false)) else "", dice, extra],
 		"cost": "Its free use (Paladin's Smite)" if free else "A level %d spell slot" % slot,
