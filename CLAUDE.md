@@ -95,7 +95,8 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
 ## Voice (ADR 0013)
 - Spoken lines: ElevenLabs via `make voice` only; model, format and each speaker's voice pinned in
   audio/voice/casting.json. Every line is on `eleven_v3` with the speaker's accent tag and its own delivery in
-  audio/voice/directions.json (owner, 2026-10-08). Key: ELEVENLABS_API_KEY, sent as a header. A clip is
+  audio/voice/directions.json (owner, 2026-10-08), except the Narrator, who stays on `eleven_v4` without tags to
+  match his originals (owner, 2026-10-08 22:21). Key: ELEVENLABS_API_KEY, sent as a header. A clip is
   audio/voice/<speaker>/<sha1(text)[:16]>.mp3, so editing a line leaves it silent until `make voice` runs again;
   `VoiceOver.say` plays it (party lines in the speaker's voice: `VoiceOver.beat_voice`). Lines with {name},
   options and books are never voiced.

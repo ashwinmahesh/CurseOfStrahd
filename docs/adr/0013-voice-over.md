@@ -83,6 +83,9 @@ line that hasn't changed, and the game must work with any mix of voiced and unvo
   the mood of the moment, how hard it's pushed and the speaker's vibe, read from the scene and the voice bible. A
   speaker's accent tag (`accent_tag`, "[strong Romanian accent]") goes before it. Neither is spoken or part of the
   clip's key; the manifest records each clip's direction, so `--recast` redoes a line whose direction changed.
+- The Narrator is the exception (owner, 2026-10-08 22:21: the v3 Narrator lines were "horrible" next to the
+  originals). He speaks on `eleven_v4` in the voice of his original 3,636 lines, and the 939 lines made on v3 were
+  re-recorded there. Direction tags are sent on `eleven_v3` only, since other models read them aloud.
 
 ## Consequences
 

@@ -17,9 +17,10 @@
       "name": "Barovia Narrator",
       "description": "A mature English woman with a rich, low alto voice, a refined received pronunciation accent and precise, elegant diction. An unseen storyteller narrating a gothic role-playing game: intimate and confiding, dryly witty, ominous but warm, savouring each word with a hint of a smile. Slow, deliberate rhythm with dramatic pauses. Clean, close studio recording.",
       "settings": {},
-      "model": "eleven_v3",
-      "earlier_model": "eleven_v4",
-      "model_since": "2026-10-07"
+      "model": "eleven_v4",
+      "earlier_model": "eleven_v3",
+      "model_since": "2026-10-08",
+      "model_note": "Owner, 2026-10-08 22:21: the v3 Narrator lines sounded far worse than the v4 originals; every Narrator line is on v4, same voice, no direction tags."
     },
     "madam_eva": {
       "voice_id": "19wUuwPVysIy2RmEm9cY",
