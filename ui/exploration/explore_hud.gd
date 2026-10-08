@@ -382,8 +382,16 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 	_goal.text = _objective()
 	_goal.visible = _goal.text != ""
 	var hours := st.minute_of_day / 60
-	_mode.text = "Day %d · %02d:%02d%s%s%s · %d gp" % [st.day, hours, st.minute_of_day % 60, " · Sneaking" if sneaking else "",
-		" · Split party" if solo else "", " · Turn-based" if planning else "", int(st.gold)]
+	_mode.text = "Day %d · %02d:%02d%s%s%s%s · %d gp" % [st.day, hours, st.minute_of_day % 60, _weather(),
+		" · Sneaking" if sneaking else "", " · Split party" if solo else "", " · Turn-based" if planning else "", int(st.gold)]
+
+
+## " · Fog" out in the open (F12's weather, story/weather.gd); "" indoors, where it doesn't reach.
+func _weather() -> String:
+	var loc := Compendium.shared().get_entry("locations", st.location)
+	if not bool((loc.get("map", {}) as Dictionary).get("outdoors", false)):
+		return ""
+	return " · " + Weather.label(st)
 
 
 ## The party card's click: lead with a left click, the sheet with a right one.
