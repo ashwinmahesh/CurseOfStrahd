@@ -18,7 +18,7 @@ func before_each() -> void:
 
 
 func after_each() -> void:
-	for id: String in ["test_trader", "test_stubborn", "test_wanderer"]:
+	for id: String in ["test_trader", "test_stubborn", "test_wanderer", "test_fletcher"]:
 		(Compendium.shared().tables["npcs"] as Dictionary).erase(id)
 
 
@@ -180,3 +180,40 @@ func test_bildrath_sells_from_the_shop_screen() -> void:
 		if str(beat["kind"]) == "shop":
 			break
 	assert_true("shop" in kinds, "his wares open the shop screen: %s" % str(kinds))
+
+
+## Ammunition is traded by its bundle (QA FN-03): 20 Arrows for 1 gp, as the PHB prices them, not 1 gp an arrow after
+## the whole-gold rounding; and a merchant buys whole bundles only, so a bundle bought and sold again a piece at a time
+## can't make money.
+func test_ammunition_is_traded_by_the_bundle() -> void:
+	(Compendium.shared().tables["npcs"] as Dictionary)["test_fletcher"] = {"id": "test_fletcher", "name": "Test Fletcher",
+		"summary": "", "shop": {"sells": [{"id": "arrow", "qty": -1}, {"id": "rope", "qty": -1}], "markup": 1.0, "sell_rate": 0.5}}
+	var st := _party()
+	var ch := st.party[0]
+	var arrows := func() -> int:
+		var n := 0
+		for e in ch.inventory:
+			if str(e["id"]) == "arrow":
+				n += int(e["qty"])
+		return n
+	var before: int = arrows.call()
+	assert_eq(_price(st, "test_fletcher", "arrow"), 1.0, "a bundle of 20 for 1 gp")
+	for w in st.shop_wares("test_fletcher"):
+		if str(w["id"]) == "arrow":
+			assert_eq(int(w["lot"]), 20)
+			assert_true(str(w["name"]).ends_with("×20"), "the list says how many: %s" % w["name"])
+	assert_eq(st.shop_buy("test_fletcher", "arrow", ch), "")
+	assert_eq(arrows.call(), before + 20, "the bundle comes whole")
+	assert_eq(st.gold, 999.0)
+	assert_eq(st.shop_offer("test_fletcher", "arrow"), 1.0, "half of 1 gp for a bundle, rounded up")
+	assert_eq(st.shop_sell("test_fletcher", "arrow", ch), "")
+	assert_eq(st.gold, 1000.0, "bought and sold back: nothing gained")
+	assert_eq(arrows.call(), before, "the whole bundle went")
+	ch.add_item("arrow", 5)
+	var loose: int = arrows.call()
+	if loose < 20:
+		assert_ne(st.shop_sell("test_fletcher", "arrow", ch), "", "fewer than a bundle: they won't buy")
+		assert_eq(st.gold, 1000.0)
+	assert_eq(StoryState.shop_lot(Compendium.shared().item_data("rope")), 1, "everything else one at a time")
+	assert_eq(StoryState.shop_lot(Compendium.shared().item_data("blowgun_needle")), 50)
+

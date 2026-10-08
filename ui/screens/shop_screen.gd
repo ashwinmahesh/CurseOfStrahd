@@ -112,8 +112,13 @@ func _draw() -> void:
 			row.add_child(UiParts.pill("Junk", "bone"))
 		if str(e.get("slot", "")) != "":
 			row.add_child(UiParts.pill("Equipped", "moonlight"))
-		var b := UiParts.small_button("Sell for %s gp" % _money(offer) if offer >= 0.0 else "Won't buy", func() -> void: _sell(id))
-		b.disabled = offer < 0.0
+		# Ammunition goes by the bundle (StoryState.shop_lot): "Sell 20 for 1 gp", and not fewer than that.
+		var lot := StoryState.shop_lot(data)
+		var label := ("Sell %d for %s gp" % [lot, _money(offer)] if lot > 1 else "Sell for %s gp" % _money(offer)) if offer >= 0.0 else "Won't buy"
+		var b := UiParts.small_button(label, func() -> void: _sell(id))
+		b.disabled = offer < 0.0 or int(e["qty"]) < lot
+		if offer >= 0.0 and int(e["qty"]) < lot:
+			b.tooltip_text = "Merchants only buy these %d at a time" % lot
 		row.add_child(b)
 		pack.add_child(UiParts.row(row, LootWindow._item_tip(data)))
 	cols.add_child(_side("%s's pack" % ch.name.get_slice(" ", 0), pack, _junk_button()))
@@ -169,7 +174,8 @@ func _side(title: String, list: VBoxContainer, right: Control = null) -> Control
 	return col
 
 
-## The party's junk this merchant buys: [{ch, e (the inventory entry), offer (each), qty}]; equipped things are left out.
+## The party's junk this merchant buys: [{ch, e (the inventory entry), offer (each sale), qty (sales: pieces, or whole
+## bundles of ammunition)}]; equipped things are left out.
 func junk_for_sale() -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for m in st.party:
@@ -177,8 +183,9 @@ func junk_for_sale() -> Array[Dictionary]:
 			if not InventoryScreen.is_junk(e) or str(e.get("slot", "")) != "" or int(e["qty"]) <= 0:
 				continue
 			var offer := st.shop_offer(npc_id, str(e["id"]))
-			if offer >= 0.0:
-				out.append({"ch": m, "e": e, "offer": offer, "qty": int(e["qty"])})
+			var sales := int(e["qty"]) / StoryState.shop_lot(Compendium.shared().item_data(str(e["id"])))
+			if offer >= 0.0 and sales > 0:
+				out.append({"ch": m, "e": e, "offer": offer, "qty": sales})
 	return out
 
 
@@ -186,7 +193,7 @@ func _junk_button() -> Control:
 	var count := 0
 	var total := 0.0
 	for j in junk_for_sale():
-		count += int(j["qty"])
+		count += int(j["qty"]) * StoryState.shop_lot(Compendium.shared().item_data(str((j["e"] as Dictionary)["id"])))
 		total += float(j["offer"]) * int(j["qty"])
 	var b := UiParts.small_button("Sell all junk · %d for %s gp" % [count, _money(total)] if count > 0 else "Sell all junk",
 		sell_all_junk, "trade")
@@ -206,7 +213,7 @@ func sell_all_junk() -> void:
 			var before := st.gold
 			if st.shop_sell(npc_id, str((j["e"] as Dictionary)["id"]), j["ch"] as Character, j["e"] as Dictionary) != "":
 				break
-			sold += 1
+			sold += StoryState.shop_lot(Compendium.shared().item_data(str((j["e"] as Dictionary)["id"])))
 			gained += st.gold - before
 	if sold > 0:
 		Audio.sfx("coins")
