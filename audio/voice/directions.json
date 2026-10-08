@@ -483,6 +483,14 @@
   "f47b06a3914585fc": "[small, wondering, proud]"
  },
  "camp_cook": {
+  "310b389ee0656dad": "[dry, relieved, wry]",
+  "68dcfb423592125e": "[dry, knowing, ominous]",
+  "856bae785cd4996c": "[grave, measured, low]",
+  "a8da5d5067bcf5dc": "[quiet, solemn, knowing]",
+  "b271a160d9140946": "[low, ominous, storytelling]",
+  "d0b450d923640a31": "[grave, pointed, low]",
+  "ec6309c63896ee55": "[exasperated, worried]",
+  "f549bc6299571a24": "[tart, brisk, firm]",
   "f9f779412d12e717": "[tart, bossy, sly]"
  },
  "camp_fisher": {
@@ -490,7 +498,10 @@
   "ef9b2336e0db18da": "[slow, calm, weathered]"
  },
  "camp_groom": {
-  "1cfd2dbddc144d32": "[gentle, dry]"
+  "1cfd2dbddc144d32": "[gentle, dry]",
+  "b3d679034f317d33": "[shaky, brave, wry]",
+  "e252f61e78c76165": "[breathless, giddy, relieved]",
+  "e9d7201a34a1ef49": "[nervous, relieved, babbling]"
  },
  "camp_lookout": {
   "d6565abd9726a895": "[tense, watchful, low]"
@@ -522,6 +533,14 @@
   "eb5c2a167a4e37ac": "[quiet, hopeful, shaky]",
   "f714489ff17b29b8": "[sad, wistful]",
   "fc28a315c1b1a159": "[deadpan, self-deprecating, comic timing]"
+ },
+ "count_huntsman": {
+  "21b1c97b688c8fa1": "[weary, low, remembering]",
+  "83baa3aa5635214e": "[very quiet, stunned, hollow]",
+  "8a1fb0db0336671b": "[cold, curt, formal]",
+  "d583ed79e6ecb2d6": "[surprised, then weary, relieved]",
+  "ea5fabd1a4819b9d": "[cold, flat, formal]",
+  "ecdacec6523125f4": "[weary, bitter, quiet]"
  },
  "cyrus_belview": {
   "43ca20635558b657": "[slow, simple, proud, mumbling]"
@@ -1198,6 +1217,7 @@
   "080df9420473340f": "[dry, wry]",
   "086b4fa82800c526": "[quiet, bleak]",
   "087607ea546c3ac1": "[wry, brisk]",
+  "08a2590e2992f30c": "[tense, ominous]",
   "08abd1627e33bf5e": "[hushed, disturbing]",
   "08c0a9e1a8acf984": "[grave, slow, solemn]",
   "092281967231b288": "[tense, eerie]",
@@ -1294,6 +1314,7 @@
   "30f53cb9bf007be2": "[dry, wistful]",
   "314ba7b3405807d4": "[intrigued, quiet]",
   "31522a81843ba33a": "[grim, dry]",
+  "31acdcbe5ba341ad": "[quiet, grim]",
   "31bdaeb459d766d9": "[dry, wry]",
   "328e319e3e53c837": "[tense, urgent]",
   "3328450382cdb853": "[hushed, eerie]",
@@ -1306,6 +1327,7 @@
   "34e1b626ca0f554f": "[soft, wondering]",
   "34ec08e7ef94686e": "[dry, wry]",
   "35282f5c47004d97": "[low, disturbed]",
+  "3558cb169fea40a1": "[quiet, solemn]",
   "3597af9e63313b1e": "[ominous, eerie, building]",
   "35ecf4e48ac0076c": "[warm, wry]",
   "3667212c7e50ba1b": "[hushed, chilling]",
@@ -1434,6 +1456,7 @@
   "653cb270e4cf23e7": "[eerie, tense, building]",
   "653e35e89718a629": "[quiet, eerie]",
   "65b75bf66900a30d": "[dry, amused]",
+  "669d9e4d4c77b0e6": "[quiet, solemn, sad]",
   "673c46207952a239": "[quiet, wry, sad]",
   "679956a29fd5c442": "[dry, admiring]",
   "6812f014ea00f420": "[eerie, chilling]",
@@ -1441,6 +1464,7 @@
   "691be0c68d80a2a8": "[low, tense, watchful]",
   "692a8d3f910d80a6": "[quiet, wry]",
   "6938e4b534de55a9": "[quiet, tender, sad]",
+  "69d5e73d7591d9e3": "[hushed, ominous, building]",
   "69dee761fa04e605": "[grim, quiet]",
   "6a1ef9846281181b": "[quiet, sympathetic]",
   "6a2a17786326dac8": "[grim, ominous]",
@@ -1483,6 +1507,7 @@
   "78f6ee7c0cbd0c94": "[dry, observant]",
   "79832c71eb47c78b": "[quiet, tender]",
   "79885af623af83a6": "[dry, unnerved]",
+  "7a86185301faac8f": "[hushed, uneasy]",
   "7a964618f71e70d8": "[quiet, wary]",
   "7ace8a1ac69c1481": "[hushed, eerie, quoting]",
   "7c500d229b2005ba": "[hushed, uncanny]",
@@ -1536,6 +1561,7 @@
   "91e2da0594dff2de": "[sly, delighted]",
   "92208adab43b7ab2": "[gentle, quiet]",
   "92737cfd4b0dbfab": "[quiet, sad]",
+  "92d507c4262b0183": "[quiet, solemn]",
   "92e1695c84944cf7": "[eerie, low]",
   "94efa484d505b429": "[warm, gently delighted]",
   "951915140d5baec8": "[hushed, ominous]",
@@ -1671,6 +1697,7 @@
   "c10438a4de61021b": "[quiet, tense]",
   "c194d96e600b0a75": "[intrigued, quiet]",
   "c2450233385c4a07": "[hushed, eerie]",
+  "c2a60d3dc2f9be07": "[quiet, wry]",
   "c3f2a34b21ecac7a": "[low, uneasy, quoting]",
   "c43bf96e555e4a4c": "[dry, amused]",
   "c4af3582b47a9ae0": "[reverent, warm]",
@@ -1749,6 +1776,7 @@
   "deac40691b9b58b6": "[warm, amused]",
   "deec05efa429cf50": "[wry, dry]",
   "df8c608e5a332940": "[dry, observant]",
+  "dfa6a08b57c3d805": "[hushed, wondering, gentle]",
   "dfaf80a4a03c9e00": "[quiet, moved]",
   "dfb5909534bc8893": "[plain, uneasy]",
   "e0ea0505fbc21ba6": "[soft, melancholy]",
@@ -1793,8 +1821,10 @@
   "ebf817515d36e16c": "[dry, amused]",
   "ec7136f21d871203": "[hushed, troubled]",
   "ed3db54527bb3037": "[hushed, tense]",
+  "ed65dd642d2589e8": "[hushed, moved, sad]",
   "ed97fade1ba2c3a7": "[uneasy, dry]",
   "edcf36d5ebcc8774": "[gentle, wondering]",
+  "edf09f4249539034": "[quiet, sad, observant]",
   "ee33dc92b34fa370": "[shaken, quiet]",
   "ee3a471470e65566": "[grim, then warmer]",
   "ee4d5cd3ffd45992": "[cold, dry]",

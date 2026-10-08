@@ -5290,11 +5290,67 @@
   "recipe": "f6d71b65ad",
   "text": "Bless you. Truly. Now hold still."
  },
+ "camp_cook/310b389ee0656dad": {
+  "chars": 126,
+  "direction": "[dry, relieved, wry]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "No horn in the woods. Three cold nights now, and nothing. Gavril's taken to sleeping outside the wagon just to hear the quiet."
+ },
+ "camp_cook/68dcfb423592125e": {
+  "chars": 211,
+  "direction": "[dry, knowing, ominous]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "The count gives his huntsman a scent, and the huntsman runs it down. He has to blow three nights first, so the quarry can say its prayers. He's particular. They say the count likes rules he thinks can't be kept."
+ },
+ "camp_cook/856bae785cd4996c": {
+  "chars": 209,
+  "direction": "[grave, measured, low]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "The hunt ends under the crossroads gallows at moonrise. The rule is, if the quarry is standing there and turns and faces him, he has to fight it out, fair. If the quarry wins, it's done. Nobody has ever stood."
+ },
+ "camp_cook/a8da5d5067bcf5dc": {
+  "chars": 157,
+  "direction": "[quiet, solemn, knowing]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "And the hounds. Every one of them was quarry once. Their names are on the stones by the crossroads, the ones we put up. A dog knows its name. Even that kind."
+ },
+ "camp_cook/b271a160d9140946": {
+  "chars": 221,
+  "direction": "[low, ominous, storytelling]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "Interesting? There's a horn in the Svalich woods on cold nights. Three notes, and then the hounds. In the morning somebody's lying under the gallows at the crossroads, run to death. Boots worn through. Not a mark on them."
+ },
+ "camp_cook/d0b450d923640a31": {
+  "chars": 190,
+  "direction": "[grave, pointed, low]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "It blew three times last night, on the road you came in by. (She looks at you over the pot for a long moment.) Three notes is for strangers. You've made somebody up at the castle very angry."
+ },
+ "camp_cook/ec6309c63896ee55": {
+  "chars": 141,
+  "direction": "[exasperated, worried]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "And it blew for Gavril, our groom. He sold the castle's stable master a horse with a painted blaze, the fool. He hasn't slept for two nights."
+ },
+ "camp_cook/f549bc6299571a24": {
+  "chars": 133,
+  "direction": "[tart, brisk, firm]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "You know what I know. The crossroads, moonrise, and stand when you get there. And learn their names first, the ones under the stones."
+ },
  "camp_cook/f9f779412d12e717": {
   "chars": 121,
   "direction": "[tart, bossy, sly]",
   "model": "eleven_v3",
-  "recipe": "d64ca4ba28",
+  "recipe": "12362f8ba4",
   "text": "Sit if you want to eat, stand if you want to be looked at. Luvash's wine is for Luvash, and for me when he isn't looking."
  },
  "camp_fisher/68c99771b2d4663c": {
@@ -5315,8 +5371,29 @@
   "chars": 179,
   "direction": "[gentle, dry]",
   "model": "eleven_v3",
-  "recipe": "1d8817fed7",
+  "recipe": "1f27e5ff75",
   "text": "This one bites, that one kicks, and the black one is Arrigal's, so don't touch it at all. The others are good horses. They know the way out of the valley. They just can't take it."
+ },
+ "camp_groom/b3d679034f317d33": {
+  "chars": 97,
+  "direction": "[shaky, brave, wry]",
+  "model": "eleven_v3",
+  "recipe": "1f27e5ff75",
+  "text": "If I run, I die tired. Paraschiva says stand. So I'm standing. Next to you, if it's all the same."
+ },
+ "camp_groom/e252f61e78c76165": {
+  "chars": 103,
+  "direction": "[breathless, giddy, relieved]",
+  "model": "eleven_v3",
+  "recipe": "1f27e5ff75",
+  "text": "I stood. I actually stood. (He sits down in the road very suddenly.) Don't tell Paraschiva I'm sitting."
+ },
+ "camp_groom/e9d7201a34a1ef49": {
+  "chars": 107,
+  "direction": "[nervous, relieved, babbling]",
+  "model": "eleven_v3",
+  "recipe": "1f27e5ff75",
+  "text": "You came. You actually came. I've got a knife and a horseshoe, and I'm not sure what either of them is for."
  },
  "camp_lookout/d6565abd9726a895": {
   "chars": 98,
@@ -5674,6 +5751,48 @@
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "He sits. In the chapel. He doesn't talk. I bring him water and he doesn't drink it, and I take it away and bring more. Somebody has to carry things."
+ },
+ "count_huntsman/21b1c97b688c8fa1": {
+  "chars": 186,
+  "direction": "[weary, low, remembering]",
+  "model": "eleven_v3",
+  "recipe": "94553989bb",
+  "text": "Toader. I took a deer out of his woods, his first winter, when the valley was still new to him. He ran me down himself, for the sport of it, and I got as far as here, and I turned round."
+ },
+ "count_huntsman/83baa3aa5635214e": {
+  "chars": 40,
+  "direction": "[very quiet, stunned, hollow]",
+  "model": "eleven_v3",
+  "recipe": "94553989bb",
+  "text": "(Very quietly.) Nobody's ever said them."
+ },
+ "count_huntsman/8a1fb0db0336671b": {
+  "chars": 26,
+  "direction": "[cold, curt, formal]",
+  "model": "eleven_v3",
+  "recipe": "94553989bb",
+  "text": "Not you. The horse-seller."
+ },
+ "count_huntsman/d583ed79e6ecb2d6": {
+  "chars": 162,
+  "direction": "[surprised, then weary, relieved]",
+  "model": "eleven_v3",
+  "recipe": "94553989bb",
+  "text": "Quarry. You stood. Nobody stands. (He looks at you, and there's something in it you weren't expecting. It looks like relief.) Well. Rules are rules. He made them."
+ },
+ "count_huntsman/ea5fabd1a4819b9d": {
+  "chars": 73,
+  "direction": "[cold, flat, formal]",
+  "model": "eleven_v3",
+  "recipe": "94553989bb",
+  "text": "Run if you like. It's better sport. (He doesn't wait to see if you will.)"
+ },
+ "count_huntsman/ecdacec6523125f4": {
+  "chars": 171,
+  "direction": "[weary, bitter, quiet]",
+  "model": "eleven_v3",
+  "recipe": "94553989bb",
+  "text": "He laughed. He said, you run well. Now you'll run them. And every one I've run since is in the pack. That one was a tinker. That one, a girl who said no to him at a dance."
  },
  "cult_shades/51cd446083782875": {
   "chars": 56,
@@ -32343,6 +32462,13 @@
   "recipe": "dd92281f92",
   "text": "At the head of the bier there is a hollow in the stone, smooth and round, made for something that isn't here. Someone has laid a single dried flower in it."
  },
+ "narrator/08a2590e2992f30c": {
+  "chars": 104,
+  "direction": "[tense, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The Huntsman sets the pack on you with one note of the horn, and the hounds come up the road in silence."
+ },
  "narrator/08abd1627e33bf5e": {
   "chars": 136,
   "direction": "[hushed, disturbing]",
@@ -36716,6 +36842,13 @@
   "recipe": "dd92281f92",
   "text": "Old graves lean in the long grass, and the church watches them from its rise like a tired shepherd. The lych-gate creaks shut behind you on its own."
  },
+ "narrator/31acdcbe5ba341ad": {
+  "chars": 162,
+  "direction": "[quiet, grim]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The Huntsman's coat lies in the road with nothing in it. His saddlebag holds four hundred years of quarry's purses, and a plain iron ring he called the pack with."
+ },
  "narrator/31b93412b5e25e38": {
   "chars": 77,
   "model": "eleven_v4",
@@ -37093,6 +37226,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Adrian walks into the yard ahead of you and stops in front of his father. Neither of them says a word. Then Davian takes his son by the shoulder, once, hard, and lets go."
+ },
+ "narrator/3558cb169fea40a1": {
+  "chars": 125,
+  "direction": "[quiet, solemn]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The cairns by the crossroads have a new stone at the end of the row, with no name on it, only a horn scratched into the face."
  },
  "narrator/355ddd06db693967": {
   "chars": 227,
@@ -42352,6 +42492,13 @@
   "recipe": "dd92281f92",
   "text": "The colossus steps down off its plinth, and the whole ledge shakes."
  },
+ "narrator/669d9e4d4c77b0e6": {
+  "chars": 268,
+  "direction": "[quiet, solemn, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Small cairns along the verge, each with a flat stone on top and a name scratched into it by somebody with a Vistani knife: Mihai. Old Dorota. The Lupescu twins. A tinker, no name, only a pot drawn in the stone. Dozens more, back into the grass, the oldest worn smooth."
+ },
  "narrator/66ba60d345a05724": {
   "chars": 127,
   "model": "eleven_v4",
@@ -42718,6 +42865,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The attic hall. The humming stops as you come in, like children caught out of bed."
+ },
+ "narrator/69d5e73d7591d9e3": {
+  "chars": 282,
+  "direction": "[hushed, ominous, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The horn first, three notes, close enough to feel in your teeth. Then the hounds come up the east road out of the dark: grey and long and silent, more than you can count, and behind them a long grey man in a hunting coat gone black with weather, with a boar spear over his shoulder."
  },
  "narrator/69d7af6df6950ffa": {
   "chars": 191,
@@ -44554,6 +44708,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The floor round the press is stained to the knee with what's left of the Mash."
+ },
+ "narrator/7a86185301faac8f": {
+  "chars": 65,
+  "direction": "[hushed, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A dead man with a spear. That's all you can make out in the dark."
  },
  "narrator/7a89adcd14db0608": {
   "chars": 107,
@@ -47133,6 +47294,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Steps cut into the ice by hands that have been dead for centuries, worn into shallow bowls by the feet of everyone who climbed up after them."
+ },
+ "narrator/92d507c4262b0183": {
+  "chars": 109,
+  "direction": "[quiet, solemn]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You say the names. Mihai. Old Dorota. The Lupescu twins. The ones worn smooth, as near as you can guess them."
  },
  "narrator/92dd25ac3a2f2b76": {
   "chars": 136,
@@ -52177,6 +52345,13 @@
   "recipe": "dd92281f92",
   "text": "She rocks, and hums, and scrapes the pot. If she is hiding anything, she has had a very long time to practise."
  },
+ "narrator/c2a60d3dc2f9be07": {
+  "chars": 56,
+  "direction": "[quiet, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Gavril, behind you, makes a small noise and doesn't run."
+ },
  "narrator/c2a8d8fa2209f7c1": {
   "chars": 87,
   "model": "eleven_v4",
@@ -55135,6 +55310,13 @@
   "recipe": "f60908d226",
   "text": "Casks stacked by the winery door, the Martikov sign burned into each head: a raven with a grape in its beak. Most of them ring hollow."
  },
+ "narrator/dfa6a08b57c3d805": {
+  "chars": 266,
+  "direction": "[hushed, wondering, gentle]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Where the hounds fell there's nothing left but grey mist lying low in the road. As you watch it lifts, in shapes that might be people, a tinker and a girl and twins and an old woman, and goes off in every direction at a walk, as if there's all the time in the world."
+ },
  "narrator/dfadaef52042938d": {
   "chars": 185,
   "model": "eleven_v4",
@@ -56643,6 +56825,13 @@
   "recipe": "f60908d226",
   "text": "Ratatoille has made something small tonight, on a plate by itself: two honey cakes, still warm, and nothing else. He sets it down in front of Liriel and stands there holding a page of notes he isn't reading."
  },
+ "narrator/ed65dd642d2589e8": {
+  "chars": 187,
+  "direction": "[hushed, moved, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Here and there in the pack a hound stops, and sits down in the road, and looks at you with eyes that are nearly a person's. Then it lies down with its head on its paws and doesn't get up."
+ },
  "narrator/ed7f9788b18923da": {
   "chars": 134,
   "model": "eleven_v4",
@@ -56686,6 +56875,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "Tucked into the bundles of drying herbs, a flask of something clear and faintly gold. It smells of spring, which is strange in these caves."
+ },
+ "narrator/edf09f4249539034": {
+  "chars": 187,
+  "direction": "[quiet, sad, observant]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He's tired. Not the way the dead are tired; the way a man is, at the end of a long day's walking, who would like very much to sit down and isn't allowed. He keeps his eyes off the hounds."
  },
  "narrator/ee1677a25702477f": {
   "chars": 154,
