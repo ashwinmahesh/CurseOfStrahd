@@ -1,8 +1,9 @@
 extends TestCase
-## Traps the party can and can't see (owner playtest 2026-10-06): a noticed trap shows its own piece with a red border
-## that doesn't cover it (no red box); passive Perception notices any trap in sight whose DC it meets, the moment the
-## party arrives; a trap above it, or out of sight, stays hidden until a Search finds it. A pit is a real hole: the one
-## who springs it falls in and climbs out with a rope (or an Athletics check).
+## Traps the party can and can't see (owner playtests 2026-10-06 and 10-08): a found trap shows its own piece with a red
+## border that doesn't cover it (no red box); nothing is noticed passively, only a Search (15 ft, its reach shown on the
+## ground for a moment) finds a trap; a found trap isn't walked round and still goes off when walked onto, and can be
+## set off on purpose from within 5 ft. A pit is a real hole: the one who springs it falls in and climbs out with a rope
+## (or an Athletics check).
 
 var root: Node
 
@@ -42,14 +43,17 @@ func _state(id: String) -> String:
 	return str((GameState.story.loc_state("test_trap_hall")["traps"] as Dictionary).get(id, ""))
 
 
-func test_passive_perception_notices_traps_in_sight_on_arrival() -> void:
-	assert_eq(_state("plain_wolf_trap"), "found", "in sight and under everyone's passive Perception: noticed at once, ten squares off")
-	assert_eq(_state("subtle_tripwire"), "", "in sight but above it: still hidden")
-	assert_eq(_state("walled_pit"), "", "behind a wall: nobody can see it, however easy")
+func test_nothing_is_noticed_passively_on_arrival() -> void:
+	assert_eq(_state("plain_wolf_trap"), "", "in sight and under everyone's passive Perception, yet only a Search finds it")
+	assert_eq(_state("subtle_tripwire"), "")
+	assert_eq(_state("walled_pit"), "")
 
 
-func test_a_noticed_trap_shows_its_piece_and_a_border_not_a_box() -> void:
+func test_a_found_trap_shows_its_piece_and_a_border_not_a_box() -> void:
 	var view := root.get("view") as LocationView
+	view.leader().cell = Vector2i(9, 1)
+	view.search()
+	assert_eq(_state("plain_wolf_trap"), "found", "a Search beside it finds it")
 	var marks := view.trap_marks.get("plain_wolf_trap", []) as Array
 	var names: Array = marks.map(func(n: Node3D) -> String: return str(n.name))
 	assert_true(names.has("Dressing_trap_plain_wolf_trap_0"), "the wolf trap itself is drawn")
@@ -61,12 +65,54 @@ func test_a_noticed_trap_shows_its_piece_and_a_border_not_a_box() -> void:
 	assert_false(view.trap_marks.has("subtle_tripwire"), "an unnoticed trap shows nothing")
 
 
-func test_a_search_finds_what_passive_perception_missed() -> void:
+func test_a_search_finds_traps_within_15_ft_and_shows_its_reach() -> void:
 	var view := root.get("view") as LocationView
 	view.search()
-	assert_eq(_state("walled_pit"), "found", "the Search's Perception check meets the pit's DC")
+	assert_eq(_state("walled_pit"), "found", "the Search's Perception check meets the pit's DC, 15 ft off")
 	assert_true(view.trap_marks.has("walled_pit"))
+	assert_eq(_state("plain_wolf_trap"), "", "40 ft off: past the Search's reach")
 	assert_eq(_state("subtle_tripwire"), "", "no roll finds a DC 40 tripwire")
+	assert_true(view.has_node("SearchReach"), "the squares it reached show on the ground for a moment")
+	await get_tree().create_timer(LocationTraps.REACH_SHOWN + 0.5).timeout
+	await get_tree().process_frame
+	assert_false(view.has_node("SearchReach"), "and fade")
+
+
+func test_a_found_trap_isnt_walked_round_and_still_goes_off() -> void:
+	var view := root.get("view") as LocationView
+	(GameState.story.loc_state("test_trap_hall")["traps"] as Dictionary)["plain_wolf_trap"] = "found"
+	var to := Vector2i(10, 2)
+	assert_eq(view._path(Vector2i(8, 1), to), view._path(Vector2i(8, 1), to, false), "a found trap doesn't change the way")
+	assert_eq(str(view.thing_at(Vector2i(10, 1)).get("kind", "")), "trap", "the found trap is a thing to point at")
+	view.walk_to(Vector2i(10, 1))
+	for i in 300:
+		if _state("plain_wolf_trap") == "triggered":
+			break
+		await get_tree().process_frame
+	assert_eq(_state("plain_wolf_trap"), "triggered", "found, and walked onto: it goes off")
+	assert_false(view.trap_marks.has("plain_wolf_trap"), "a spent trap loses its marks")
+
+
+func _action(view: LocationView, cell: Vector2i, id: String) -> Dictionary:
+	for a: Variant in view.actions_at(cell)["actions"] as Array:
+		if str((a as Dictionary)["id"]) == id:
+			return a as Dictionary
+	return {}
+
+
+func test_a_found_trap_can_be_set_off_on_purpose_from_within_5_ft() -> void:
+	var view := root.get("view") as LocationView
+	(GameState.story.loc_state("test_trap_hall")["traps"] as Dictionary)["plain_wolf_trap"] = "found"
+	var far := _action(view, Vector2i(10, 1), "activate")
+	assert_false(far.is_empty(), "right-click offers to set it off")
+	assert_false(bool(far.get("enabled", true)), "but not from across the hall")
+	assert_false(_action(view, Vector2i(10, 1), "disarm").is_empty(), "disarming stays a choice")
+	view.leader().cell = Vector2i(9, 1)
+	assert_true(bool(_action(view, Vector2i(10, 1), "activate").get("enabled", true)), "from beside it")
+	var hp := view.leader().creature.hp
+	view.act(Vector2i(10, 1), "activate")
+	assert_eq(_state("plain_wolf_trap"), "triggered")
+	assert_eq(view.leader().creature.hp, hp, "nobody in it: it snaps shut on nothing")
 
 
 func _pit_hall() -> void:

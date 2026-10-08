@@ -1,0 +1,46 @@
+# Captives after a fight (F13, story/captives.gd, docs/plans/captives.md): foes who gave up and have no conversation
+# of their own. Question them once, then let them go, hand them to a town's watch, or kill them.
+
+~ start
+Narrator: The last of them lets the weapon fall and shows you empty hands. Whatever they were paid, it wasn't enough to die for.
+-> choose
+
+~ choose
+* [Intimidation DC 12] Ask who else waits along this road, and make them believe you'll ask twice. -> told | silent
+* [Persuasion DC 14] Promise them their lives for the truth. -> told | doubted
+* [if at:vallaki or at:vallaki_wachter_house or at:vallaki_burgomaster_mansion or at:krezk] Hand them to the town watch. -> hand_over
+* Let them go. -> release
+* Kill them. -> kill
+
+~ told
+Narrator: The words come out in a rush: how many more are out there, where they sleep, which way they came. None of it is grand, and all of it is useful.
+-> after_talk
+
+~ silent
+Narrator: Fear shuts their mouth instead of opening it. They stare at the mud and say nothing at all.
+-> after_talk
+
+~ doubted
+Narrator: They have heard promises in Barovia before. They don't believe yours.
+-> after_talk
+
+~ after_talk
+* [if at:vallaki or at:vallaki_wachter_house or at:vallaki_burgomaster_mansion or at:krezk] Hand them to the town watch. -> hand_over
+* Let them go. -> release
+* Kill them. -> kill
+
+~ hand_over
+Narrator: The watch takes them in irons, and a sergeant counts a few coins into your palm for the trouble you have saved the town.
+gold +10
+approve godrick_pendlebrook +2 kip_smudgewick +1 thistle -1: You handed prisoners to a town's watch
+-> END
+
+~ release
+Narrator: They back away three steps, then turn and run, and never once look back.
+approve liriel_dawnsong +2 wren_featherfoot +2 godrick_pendlebrook +1: You let beaten enemies go
+-> END
+
+~ kill
+Narrator: It is over quickly. It does not feel clean.
+approve godrick_pendlebrook -5 liriel_dawnsong -4 wren_featherfoot -4 thistle -2 kip_smudgewick -1: You killed prisoners who had given up
+-> END

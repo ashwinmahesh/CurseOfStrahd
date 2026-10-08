@@ -1,0 +1,41 @@
+# Vistani who gave up after a fight at Tser Pool (F13, story/captives.gd).
+
+~ start
+Narrator: The last of the Vistani throws her knife into the mud between you and spits after it. 'Take the knife, then. You won't have my name.'
+-> choose
+
+~ choose
+* [Intimidation DC 13] Ask who set them on you. -> who | spat
+* [Persuasion DC 13] Tell her you never came for Vistani blood. -> roads | shrug
+* Let them go. -> release
+* Kill them. -> kill
+
+~ who
+Narrator: 'Set on you?' She laughs, then sees your face and stops. 'The lord on the hill pays well to know who walks his roads. Some of us take his coin. Not all of us. Not Madam Eva.'
+-> after_talk
+
+~ spat
+Narrator: She spits again, closer to your boots this time. Whatever she knows, she will carry into the mists with her.
+-> after_talk
+
+~ roads
+Narrator: She looks at you a long moment, then jerks her chin at the road. 'Then keep off it after dark. Not everything that howls down by the river is a wolf.'
+-> after_talk
+
+~ shrug
+Narrator: She shrugs, as if your words were weather.
+-> after_talk
+
+~ after_talk
+* Let them go. -> release
+* Kill them. -> kill
+
+~ release
+Narrator: They gather their wounded and slip away between the wagons without a word. The Vistani remember a debt.
+approve wren_featherfoot +2 liriel_dawnsong +2 godrick_pendlebrook +1: You let the Vistani go after the brawl
+-> END
+
+~ kill
+Narrator: Nobody plays the fiddle at Tser Pool again.
+approve godrick_pendlebrook -5 liriel_dawnsong -4 wren_featherfoot -4 kip_smudgewick -2 thistle -2: You killed Vistani who had given up
+-> END

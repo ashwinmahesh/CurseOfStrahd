@@ -18,7 +18,8 @@ Every line is spoken on eleven_v3 (owner, 2026-10-08: "use v3 for voices from no
 emotional tone of each line"). audio/voice/directions.json gives a line its delivery as v3 audio tags, keyed by
 speaker and clip key ("[gruff, threatening] [low]"): its mood, strength and the moment it's said in. They're sent
 after the speaker's accent tag and aren't spoken or part of the key; the manifest keeps each clip's direction, so
---recast also redoes clips whose direction changed.
+--recast also redoes clips whose direction changed. A speaker's "keep_keys" are clips the owner chose to keep as they
+are, which --recast never touches.
 
 A speaker cast with "sfx": true (a creature's noises in fights, noise_<kind>) has no voice: each of its lines is a
 prompt for ElevenLabs' sound effects, made at the line's length in seconds and billed by the second (casting.json
@@ -189,6 +190,8 @@ def main():
             uncast.add(speaker)
             continue
         out = el.VOICE_DIR / speaker / f"{key}.mp3"
+        if out.exists() and key in c["voices"][speaker].get("keep_keys", []):
+            continue  # a clip the owner chose to keep as it is (Rictavio the showman's originals)
         made = manifest.get(f"{speaker}/{key}", {})
         stale = a.recast and (made.get("recipe") != recipe(c, speaker)
                               or made.get("direction", "") != lead.get(speaker, {}).get(key, ""))

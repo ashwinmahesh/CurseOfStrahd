@@ -1,0 +1,44 @@
+# The druids' people who gave up after a fight at the Wizard of Wines or on Yester Hill (F13, story/captives.gd).
+
+~ start
+Narrator: The last of the druids' people sits down hard in the dirt, spent, chest heaving. Mud and berry juice streak the paint on his face.
+-> choose
+
+~ choose
+* [Intimidation DC 13] Ask what the druids want with the winery. -> hill | mute
+* [Persuasion DC 13] Ask what they are building on the hill. -> hill | shrug
+* [if at:wizard_of_wines or at:wizard_of_wines_winery or at:wizard_of_wines_press_house or at:wizard_of_wines_cellar] Leave them to the Martikovs. -> hand_over
+* Let them go. -> release
+* Kill them. -> kill
+
+~ hill
+Narrator: 'A body for the lord in the castle,' he says, 'a giant of earth and thorn on Yester Hill. It needs a heart. The stone from your vintner's vines is that heart. When the chant is finished, it walks.'
+-> after_talk
+
+~ mute
+Narrator: He starts to hum, low and tuneless, and won't stop. It sounds like wind in dry branches.
+-> after_talk
+
+~ shrug
+Narrator: 'You'll see it,' he says, almost kindly. 'Everyone in the valley will see it.'
+-> after_talk
+
+~ after_talk
+* [if at:wizard_of_wines or at:wizard_of_wines_winery or at:wizard_of_wines_press_house or at:wizard_of_wines_cellar] Leave them to the Martikovs. -> hand_over
+* Let them go. -> release
+* Kill them. -> kill
+
+~ hand_over
+Narrator: The Martikovs bind them with vine-cord and lock them in an empty vat to wait for a cart to Vallaki. The ravens on the press-house roof watch with interest.
+approve godrick_pendlebrook +2 kip_smudgewick +1: You left the druids' people to the Martikovs' judgement
+-> END
+
+~ release
+Narrator: He goes, limping, toward the hills. Whether he goes home or back to the chant, you can't tell.
+approve liriel_dawnsong +2 wren_featherfoot +2 thistle +1: You let the druids' beaten people go
+-> END
+
+~ kill
+Narrator: The crows come down before you have even cleaned your blade.
+approve godrick_pendlebrook -5 liriel_dawnsong -4 wren_featherfoot -4 thistle -2 kip_smudgewick -1: You killed the druids' people after they gave up
+-> END

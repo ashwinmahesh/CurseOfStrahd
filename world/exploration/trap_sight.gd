@@ -1,10 +1,9 @@
 class_name TrapSight
 extends RefCounted
-## Traps the party has noticed, and how it notices them (owner ask 2026-10-06, docs/ui/travel_map.md "Traps").
-## A noticed trap shows its own piece (a wolf trap, rotten boards, a tripwire ...; art/sprites/props) with a red dashed
-## border round its squares that never covers it. Every living party member's passive Perception is checked against
-## every trap square they can see, on arriving and after every step (2024: meeting the DC is enough). A trap above
-## everyone's passive Perception stays hidden until a Search (a Wisdom (Perception) check) or magic finds it.
+## How a found trap looks (owner ask 2026-10-06, docs/ui/travel_map.md "Traps"): its own piece (a wolf trap, rotten
+## boards, a tripwire ...; art/sprites/props) with a red dashed border round its squares that never covers it. Traps
+## aren't noticed passively (owner, 2026-10-08): a trap stays hidden until a Search (a Wisdom (Perception) check) or
+## magic finds it.
 
 ## The piece a trap shows, by a word in its id or label; a trap's `model` names one directly. First match wins.
 const LOOKS: Array[Array] = [
@@ -53,49 +52,11 @@ static func look_for(trap: Dictionary) -> String:
 	return ""
 
 
-## Can this party member see any of these squares? (Walls and closed doors, secret ones included, block the view.)
-static func in_sight(view: LocationView, m: Combatant, cells: Array[Vector2i]) -> bool:
-	for c in cells:
-		if view.grid.can_see(m.cell, 1, c, 1):
-			return true
-	return false
-
-
-## Passive Perception against one unnoticed trap: the first living member who can see it and whose passive
-## Perception meets its DC notices it (it's marked found, shown and its line said). True if someone did.
-static func notice(view: LocationView, trap: Dictionary) -> bool:
-	var cells: Array[Vector2i] = []
-	for c: Variant in trap["cells"]:
-		cells.append(Vector2i(int((c as Array)[0]), int((c as Array)[1])))
-	# Fog, a storm or a blizzard in the open (Weather, F12): Disadvantage on sight, so -5 to passive Perception.
-	var murk := -5 if not Weather.sight_penalty(view.st, view.loc_id).is_empty() else 0
-	for m in view.members:
-		if m.creature.hp <= 0:
-			continue
-		var passive := m.creature.passive_score(&"perception").total() + murk
-		if passive >= int(trap["detect_dc"]) and in_sight(view, m, cells):
-			var id := str(trap["id"])
-			(view.st.loc_state(view.loc_id)["traps"] as Dictionary)[id] = "found"
-			view.call("_show_trap", trap)
-			if trap.has("flag"):
-				view.st.set_flag(str(trap["flag"]))
-			view.call("_say", "trap:%s:found" % id, m.creature as Character, "%s spots something: %s (passive Perception %d)." % [
-				m.name().get_slice(" ", 0), str(trap.get("label", "a trap")), passive])
-			return true
-	return false
-
-
-## On arriving: open pits put back (and anyone in them), then every trap the party can already see and whose DC its
-## passive Perception meets.
+## On arriving: open pits put back (and anyone in them). Nothing is noticed passively (owner, 2026-10-08).
 static func notice_all(view: LocationView) -> void:
 	if view == null or not is_instance_valid(view) or view.in_combat:
 		return
 	PitFall.restore(view)
-	var states := view.st.loc_state(view.loc_id)["traps"] as Dictionary
-	for t: Variant in view.loc.get("traps", []):
-		var trap := t as Dictionary
-		if str(states.get(str(trap["id"]), "")) == "" and StoryConditions.check(str(trap.get("when", "")), view.st):
-			notice(view, trap)
 
 
 ## What a noticed trap shows: its piece on each square (unless something already stands there) and the border.
