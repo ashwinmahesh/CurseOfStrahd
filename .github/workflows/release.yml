@@ -196,6 +196,9 @@ jobs:
           IMPORT_HEADLESS: "1"
         run: |
           sudo apt-get install -y -qq zip > /dev/null
+          # The .exe's file and product versions come from the preset (1.0.0.0 there); this checkout is thrown away.
+          sed -i -E "s/^application\/(file|product)_version=.*/application\/\1_version=\"${VERSION}.0\"/" export_presets.cfg
+          grep -E "^application/(file|product)_version=" export_presets.cfg
           make release OUT="$RUNNER_TEMP/release" VERSION="$VERSION"
           ls -la "$RUNNER_TEMP/release" "$RUNNER_TEMP/release/macos"
           rm -rf "$RUNNER_TEMP/apple"
