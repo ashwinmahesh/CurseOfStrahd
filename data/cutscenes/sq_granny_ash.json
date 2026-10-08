@@ -1,0 +1,15 @@
+{
+  "id": "sq_granny_ash",
+  "title": "Granny Ash",
+  "summary": "Granny Ash comes out of the trees for Mouse's birthday.",
+  "images": [
+    {
+      "image": "sq_granny_ash",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

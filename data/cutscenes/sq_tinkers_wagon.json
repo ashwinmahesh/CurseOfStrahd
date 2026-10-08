@@ -1,0 +1,15 @@
+{
+  "id": "sq_tinkers_wagon",
+  "title": "The Tinker's Wagon",
+  "summary": "Iosif's wagon stands up off its wheels.",
+  "images": [
+    {
+      "image": "sq_tinkers_wagon",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

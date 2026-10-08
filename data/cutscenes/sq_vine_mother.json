@@ -1,0 +1,15 @@
+{
+  "id": "sq_vine_mother",
+  "title": "The Vine Mother",
+  "summary": "The Seventh Row stands up out of the Martikovs' vineyard.",
+  "images": [
+    {
+      "image": "sq_vine_mother",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

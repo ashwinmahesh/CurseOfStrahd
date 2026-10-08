@@ -1,0 +1,15 @@
+{
+  "id": "sq_mother_flies",
+  "title": "Mother Flies",
+  "summary": "Mother jumps from the abbey wall, and her wings catch.",
+  "images": [
+    {
+      "image": "sq_mother_flies",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

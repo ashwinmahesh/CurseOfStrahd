@@ -1,0 +1,15 @@
+{
+  "id": "sq_rag_queen",
+  "title": "The Rag Queen",
+  "summary": "The Rag Queen steps down off her post in Berez's scarecrow field.",
+  "images": [
+    {
+      "image": "sq_rag_queen",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

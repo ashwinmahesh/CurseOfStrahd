@@ -3,7 +3,7 @@
   "name": "Corvina, the Doorkeeper",
   "source": {
     "book": "custom",
-    "note": "A side quest boss of our own (The Unnamed Crypt, docs/story/side_quests.md), built from the 2025 Monster Manual's vampire spawn and mage: claws, an arcane bolt and a thunderous slam of force, scaled to CR 12 with regeneration, legendary actions and Legendary Resistance. Drawn with the vampire spawn's sprite."
+    "note": "A side quest boss of our own (The Unnamed Crypt, docs/story/side_quests.md), built from the 2025 Monster Manual's vampire spawn and mage: claws, an arcane bolt and a thunderous slam of force, scaled to CR 12 with regeneration, legendary actions and Legendary Resistance. Drawn with the vampire's sprite (a woman, as she is)."
   },
   "size": "medium",
   "type": "undead",
@@ -13,7 +13,7 @@
     "wizard"
   ],
   "alignment": "neutral evil",
-  "art": "vampire_spawn",
+  "art": "vampire",
   "ac": 16,
   "initiative": 4,
   "hp": {

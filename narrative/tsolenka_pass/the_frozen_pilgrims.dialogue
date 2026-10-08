@@ -39,6 +39,7 @@ set pilgrims_found
 if not quest.the_frozen_pilgrims or quest.the_frozen_pilgrims == rumored
 quest the_frozen_pilgrims found
 endif
+cutscene sq_frozen_pilgrims
 Narrator: The ice of the gorge wall above the landing is clear as a window, and there are people in it. Nine of them, kneeling in a row, facing up the pass toward the temple, frozen in the middle of a prayer.
 Narrator: The woman at the front holds a tin lamp in both hands. The lamp is lit. As you look at her, her eyes move, slowly, and find you.
 endif

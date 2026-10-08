@@ -1,0 +1,15 @@
+{
+  "id": "sq_bone_marshal",
+  "title": "The Last Muster",
+  "summary": "The skeletal vanguard forms up across the Gates of Barovia.",
+  "images": [
+    {
+      "image": "sq_bone_marshal",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

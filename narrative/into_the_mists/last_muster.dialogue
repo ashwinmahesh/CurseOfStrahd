@@ -22,6 +22,7 @@ endif
 if flag.muster_rumor
 interject tag:blunt: Bones on horses, every night. The rumour was right.
 endif
+cutscene sq_bone_marshal
 Narrator: They come out of the mist on the east road in a column of twos: horses that are only bones and harness, riders that are only bones and rust, a pennant on a lance that is only a pole and a few threads. They don't make a sound. They form up across the gate.
 Narrator: Their marshal rides forward alone. His horse's ribs and his own have grown together over the years, so you can't tell where one ends.
 Marshal Dragomir: Halt. This gate is held. No one passes in, no one passes out, until the count returns to relieve us.
