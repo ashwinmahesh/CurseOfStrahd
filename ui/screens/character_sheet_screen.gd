@@ -728,8 +728,11 @@ func _spell_row(ch: Character, k: Dictionary, s: Dictionary, cast: Dictionary, u
 	var left := VBoxContainer.new()
 	left.add_theme_constant_override("separation", 0)
 	left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var head := HBoxContainer.new()
-	head.add_theme_constant_override("separation", 7)
+	# The name's tags wrap under it when the row is full, so a spell with many (Hunter's Mark: Favored Enemy, Bonus
+	# Action, Conc.) beside a slot picker and Cast on… no longer widens the tab past the sheet's frame (UI QA UI-02).
+	var head := HFlowContainer.new()
+	head.add_theme_constant_override("h_separation", 7)
+	head.add_theme_constant_override("v_separation", 2)
 	head.add_child(UiKit.label(str(s.get("name", id)), 16, "vellum"))
 	var how := str(k["kind"])
 	if how == "always":

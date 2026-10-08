@@ -24,6 +24,12 @@ static func problems(node: Node, screen: Rect2) -> Array[String]:
 	var out: Array[String] = []
 	for n in node.find_children("*", "Control", true, false):
 		var c := n as Control
+		# A screen's frame (UiKit.screen_frame) that its content pushed past its design size: it grows right and down,
+		# so its border and corners end up under the content or off the screen (UI QA, 2026-10-08: Level Up).
+		if c.has_meta(&"design_size") and c.is_visible_in_tree():
+			var want := c.get_meta(&"design_size") as Vector2
+			if c.size.x > want.x + SLACK or c.size.y > want.y + SLACK:
+				out.append("%s grew past its design size (%dx%d, not %dx%d)" % [_name(c, node), c.size.x, c.size.y, want.x, want.y])
 		if not _matters(c) or not c.is_visible_in_tree() or c.size.x < 1.0 or c.size.y < 1.0 or _hidden_by_scroll(c):
 			continue
 		var r := c.get_global_rect()

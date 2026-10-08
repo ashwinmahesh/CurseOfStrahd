@@ -9,6 +9,8 @@ var root: Node
 var st: StoryState
 var _box: VBoxContainer
 var _log: Label
+## The log's card, hidden until there's something in it (an empty bordered box sat under the party; UI QA UI-16).
+var _log_card: PanelContainer
 var _short_done := false   ## Arcane Recovery comes after a finished Short Rest
 var _long_done := false    ## after a Long Rest, casters may change their prepared spells
 var _prepared_before: Dictionary = {}  ## PrepareScreen.snapshot() as the Long Rest ended: what its swap limits count from
@@ -45,10 +47,10 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	var scroll := UiParts.fill_scroll(_box)
 	frame.add_child(scroll)
 	_log = UiKit.label("", 15, "gilt_light", 1040)
-	var log_card := UiParts.card("ui_black", "gilt_dark", 0.85, 10)
-	log_card.custom_minimum_size = Vector2(0, 64)
-	log_card.add_child(_log)
-	frame.add_child(log_card)
+	_log_card = UiParts.card("ui_black", "gilt_dark", 0.85, 10)
+	_log_card.custom_minimum_size = Vector2(0, 64)
+	_log_card.add_child(_log)
+	frame.add_child(_log_card)
 	_draw()
 
 
@@ -72,6 +74,7 @@ func _rest_card(title: String, length: String, text: String, button: Button, ris
 
 
 func _draw() -> void:
+	_log_card.visible = _log.text != ""
 	for c in _box.get_children():
 		c.queue_free()
 	if _long_done and not PrepareScreen.preparable(st).is_empty():
@@ -327,6 +330,7 @@ func _narrate(key: String) -> void:
 		text = str(root.call("narrate_key", key))
 	if text != "":
 		_log.text += "\n" + text
+		_log_card.visible = true
 
 
 ## Arcane Recovery (Wizard 1, 2024): once per Long Rest, after a Short Rest, recover expended slots whose levels add up

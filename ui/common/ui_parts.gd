@@ -39,7 +39,10 @@ static func caps_font() -> Font:
 	if _caps_font == null:
 		var f := SystemFont.new()
 		f.font_names = PackedStringArray(["Copperplate", "Palatino", "Georgia"])
-		f.font_weight = 600
+		# Drawn from a distance field, a size heavier: these captions are 9 to 12 px, and rasterised at a 1280x720
+		# window's 0.8 scale Copperplate's hinting garbled them ("HIT PCINTS", "STR ENGTH"; UI QA UI-05).
+		f.font_weight = 700
+		f.multichannel_signed_distance_field = true
 		f.fallbacks = [ThemeDB.fallback_font]
 		_caps_font = f
 	return _caps_font
@@ -721,7 +724,10 @@ static func chip(ch: Character, lit: bool, on_press: Callable, width: float = 13
 	var path := "res://art/portraits/%s.png" % CombatToken.art_for(ch)
 	if ResourceLoader.exists(path):
 		b.icon = load(path) as Texture2D
-	b.expand_icon = true
+	# The portrait keeps its own square, whatever the name: stretched into what a long name left (Ratatoille) it was
+	# a sliver a few pixels wide (UI QA UI-04). A long name widens the chip instead.
+	b.expand_icon = false
+	b.add_theme_constant_override("icon_max_width", 30)
 	b.custom_minimum_size = Vector2(width, 46)
 	b.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	var tint := Look.color("pewter") if ch.hp <= 0 else Color.WHITE
