@@ -90,13 +90,44 @@ func settle(max_frames: int = 4000) -> bool:
 	return true
 
 
-## Plays the current fight to its end with the autopilot. True on victory.
+## Plays the current fight to its end with the autopilot. True on victory. A fight the party loses is played again from
+## the start of its first round with other dice, as a player would reload, up to TRIES times in all (lane 22,
+## 2026-10-08, folding in lane 15's Yester Hill retry): any change to how many dice a run draws can flip a close fight.
+## Only a loss acts, so a run that wins never moves.
 func fight() -> bool:
 	await frames(2)
+	var kept := _keep_fight_start()
+	for attempt in TRIES:
+		var last := attempt == TRIES - 1 or not kept
+		var outcome := await _play_fight(last)
+		if outcome == "victory":
+			_drop_fight_start()
+			await recover()
+			return true
+		if last:
+			_drop_fight_start()
+			return false
+		note("lost; the fight again from its first round with other dice (try %d of %d)" % [attempt + 2, TRIES])
+		if not await _reload_fight(attempt + 1):
+			note("couldn't pick the fight up again from its save")
+			defeated = true
+			return false
+	return false
+
+
+## How many times a lost fight is played in all.
+const TRIES := 5
+## Where the round-start save of the fight's first round is kept for a retry.
+const FIGHT_SAVE := "storybot_fight_start"
+
+
+## The autopilot plays the fight once: "victory", or anything else for a loss. Only the last try ends the fight in the
+## game (a loss shows its log in the trace); an earlier loss is left for the reload.
+func _play_fight(last: bool) -> String:
 	var v := view()
 	var cv := v.combat_view
 	if cv == null:
-		return true
+		return "victory"
 	var e := cv.e
 	var foes: Array[String] = []
 	for c in e.combatants:
@@ -106,6 +137,8 @@ func fight() -> bool:
 	fights.append({"where": v.loc_id, "foes": foes, "outcome": str(res["outcome"]), "rounds": int(res["rounds"]),
 		"downs": int(res["downs"])})
 	note("fight vs %s: %s in %d rounds, %d down" % [", ".join(foes), res["outcome"], int(res["rounds"]), int(res["downs"])])
+	if str(res["outcome"]) != "victory" and not last:
+		return str(res["outcome"])
 	await frames(2)
 	if v.in_combat and v.combat_view != null:
 		v.combat_view.finished.emit(e.outcome if e.state == Encounter.State.OVER else "defeat")
@@ -121,9 +154,65 @@ func fight() -> bool:
 		for c in e.combatants:
 			trace.append("      @ %s at %s, %d HP%s" % [c.name(), c.cell, c.creature.hp, " (dead)" if c.creature.dead else ""])
 		defeated = true
+	return str(res["outcome"])
+
+
+## Keeps the round-start save the game wrote as this fight's first round began. False if there's none to keep (then a
+## loss is final).
+func _keep_fight_start() -> bool:
+	var data := GameState.combat_snapshot.get("data", {}) as Dictionary
+	var src := SaveSystem.slot_path(SaveSystem.ROUND_START)
+	if int(data.get("round", 0)) != 1 or not FileAccess.file_exists(src):
 		return false
-	await recover()
+	var out := FileAccess.open(SaveSystem.slot_path(FIGHT_SAVE), FileAccess.WRITE)
+	if out == null:
+		return false
+	out.store_string(FileAccess.get_file_as_string(src))
+	out.close()
 	return true
+
+
+func _drop_fight_start() -> void:
+	if FileAccess.file_exists(SaveSystem.slot_path(FIGHT_SAVE)):
+		DirAccess.remove_absolute(SaveSystem.slot_path(FIGHT_SAVE))
+
+
+## Loads the fight's first-round save into a fresh game scene with seeded dice (1000 + `n`), the way a player reloads.
+## The story object the test holds stays the same one, and the test's `root` follows the new scene. True once the
+## party is back in the fight.
+func _reload_fight(n: int) -> bool:
+	var story := st()
+	# A fight that isn't in the location's data (a random encounter on the road) is added again after the load.
+	var spec := LocationFights.spec_for(view(), str(GameState.combat_snapshot.get("encounter", "")))
+	root.queue_free()
+	await frames(1)
+	if SaveSystem.load_slot(FIGHT_SAVE) != OK:
+		return false
+	Dice.reseed(1000 + n)
+	_adopt(story)
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	test.add_child(root)
+	if "root" in test:
+		test.set("root", root)
+	for i in 40:
+		await frames(1)
+		if view() != null and view().in_combat and view().combat_view != null:
+			await frames(2)
+			return true
+		if i == 10 and view() != null and not view().in_combat and not spec.is_empty() \
+				and LocationFights.spec_for(view(), str(spec["id"])).is_empty():
+			(view().loc.get_or_add("encounters", []) as Array).append(spec.duplicate(true))
+			view().resume_encounter(GameState.combat_snapshot)
+	return false
+
+
+## The loaded story's state, moved into the story object the test already holds (GameState.story points at it again).
+static func _adopt(story: StoryState) -> void:
+	var loaded := GameState.story
+	for p: Dictionary in loaded.get_property_list():
+		if int(p["usage"]) & PROPERTY_USAGE_SCRIPT_VARIABLE:
+			story.set(str(p["name"]), loaded.get(str(p["name"])))
+	GameState.story = story
 
 
 ## Answers the open conversation: preferred options first, then options not taken yet, then the last one.

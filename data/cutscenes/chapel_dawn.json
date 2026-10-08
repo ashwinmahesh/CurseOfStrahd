@@ -1,0 +1,11 @@
+{
+  "id": "chapel_dawn",
+  "title": "Dawn in the Chapel",
+  "summary": "Real dawn pours through the castle chapel's stained glass on the hymn's third verse.",
+  "images": [
+    {
+      "image": "chapel_dawn",
+      "when": ""
+    }
+  ]
+}

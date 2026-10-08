@@ -1,0 +1,15 @@
+{
+  "id": "izek_doll",
+  "title": "Izek and the Doll",
+  "summary": "Izek alone in the dark with a red-haired doll.",
+  "images": [
+    {
+      "image": "izek_doll",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.45
+  ]
+}

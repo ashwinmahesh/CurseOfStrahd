@@ -1,0 +1,17 @@
+{
+  "id": "castle_road_west",
+  "title": "The Castle on Its Pillar",
+  "summary": "The same view of the castle, the first time the party reaches the village's west road.",
+  "images": [
+    {
+      "image": "castle_glimpse",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.6,
+    0.35
+  ],
+  "trigger": "enter:village_road_west",
+  "once": true
+}

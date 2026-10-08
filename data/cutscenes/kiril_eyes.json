@@ -1,0 +1,15 @@
+{
+  "id": "kiril_eyes",
+  "title": "Eyes Behind Kiril",
+  "summary": "Kiril strolls up the passage with his pack's eyes shining in the dark behind him.",
+  "images": [
+    {
+      "image": "kiril_eyes",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

@@ -14,6 +14,7 @@ if not flag.crossroads_gallows_seen
 set crossroads_gallows_seen
 quest the_hanged_vistana found
 endif
+cutscene crossroads_gallows
 Narrator: A young man turns slowly on the rope, black hair across his face, a silver earring catching what light there is. A board hung round his neck says HORSE THIEF, in large and careful letters.
 if night
 Narrator: His fingers twitch. It could be the wind. There is no wind.

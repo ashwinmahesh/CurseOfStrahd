@@ -50,6 +50,7 @@ set ezmerelda_trust += 2
 set tower_ward_lowered
 quest the_hunters_tower reunited
 Narrator: He takes a long time to stand up, and longer to put his coat on, and longest of all on the stairs. From the lantern room above, something hums and goes quiet as he passes the hearth rod: the ward is down.
+cutscene vr_reunion
 if guest:ezmerelda
 Narrator: The two of them go down the stairs together, arguing in low voices about whose fault the last twelve years were.
 else

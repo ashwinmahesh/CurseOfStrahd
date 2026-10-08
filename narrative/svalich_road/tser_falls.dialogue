@@ -2,6 +2,7 @@
 # stir a memory that is not hers (Tatyana's fall from the castle wall). Read later: ireena_falls_memory.
 
 ~ overlook
+cutscene tser_falls
 Narrator: The river goes over the edge in one long white rope and vanishes into its own spray. The rock under your boots shivers with it.
 if guest:ireena and not flag.ireena_falls_memory
 -> ireena_memory
@@ -14,6 +15,7 @@ interject species:dwarf: Good stone. Old stone. It has heard that water every da
 
 ~ ireena_memory
 set ireena_falls_memory
+cutscene tser_falls_ireena
 Narrator: Ireena walks to the very lip and stands there, too still, the spray beading in her hair.
 Ireena [afraid]: I know this. Not this place. A height, and white cloth, and somebody shouting a name that isn't mine, and then I stepped...
 * Pull her back from the edge. -> pull_back

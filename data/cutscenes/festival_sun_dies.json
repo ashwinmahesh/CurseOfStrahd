@@ -1,0 +1,15 @@
+{
+  "id": "festival_sun_dies",
+  "title": "The Sun That Wouldn't Burn",
+  "summary": "The festival's wicker sun sits black and dripping on its pole.",
+  "images": [
+    {
+      "image": "festival_sun_dies",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.3
+  ]
+}

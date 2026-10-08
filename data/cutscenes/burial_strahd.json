@@ -1,0 +1,15 @@
+{
+  "id": "burial_strahd",
+  "title": "A Mourner Who Came Late",
+  "summary": "Strahd waits at the lych-gate during the burgomaster's burial.",
+  "images": [
+    {
+      "image": "burial_strahd",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.65,
+    0.4
+  ]
+}

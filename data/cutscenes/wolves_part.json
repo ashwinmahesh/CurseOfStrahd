@@ -1,0 +1,15 @@
+{
+  "id": "wolves_part",
+  "title": "The Wolves Part",
+  "summary": "Strahd walks out between his wolves to test the party himself.",
+  "images": [
+    {
+      "image": "wolves_part",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

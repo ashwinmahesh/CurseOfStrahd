@@ -321,6 +321,8 @@ func test_wizard_of_wines_saved_and_yester_hill_broken() -> void:
 	if not _ok(await bot.go_to("yester_hill_gulthias_tree"), "up Yester Hill", bot):
 		return
 	await bot.settle()
+	# A lost summit is played again from its first round with other dice (StoryBot.fight): it's a close fight for the
+	# autopilot's party.
 	await bot.talk("ruxandra")
 	await bot.settle()
 	await bot.use(Vector2i(21, 10))

@@ -17,6 +17,7 @@ endif
 * Not yet. -> END
 
 ~ with_ireena
+cutscene ireena_looks_back
 Narrator: The road leaves the village between two leaning posts and runs west toward the crossroads. Ireena stops at the last post and looks back once.
 if flag.ismark_joins_escort
 Ismark: Well. The Lesser goes adventuring. If I'm killed, tell the tavern I was the Greater. They won't check.

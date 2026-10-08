@@ -1,0 +1,15 @@
+{
+  "id": "beacon_lit",
+  "title": "The Beacon Is Lit",
+  "summary": "The beacon of Argynvostholt burns silver and lays a road of light across the valley to the castle.",
+  "images": [
+    {
+      "image": "beacon_lit_vladimir",
+      "when": "flag.vladimir_fate == \"made_peace\""
+    },
+    {
+      "image": "beacon_lit",
+      "when": ""
+    }
+  ]
+}

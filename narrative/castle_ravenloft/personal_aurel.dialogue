@@ -13,6 +13,7 @@ Narrator: Aurel reads on by the fire, to the empty chair. He didn't notice you l
 -> wake_menu
 endif
 set aurel_found
+cutscene aurel_reading
 Narrator: Lamplight, a low fire, and the one window in the castle that never goes dark. By the fire a thin man in an ink-stained coat sits reading aloud to an empty armchair.
 interject name:silvain_aster: Not a library. A study. He miscounted the floors; he always did.
 if quest.aurels_last_chapter >= still_reading

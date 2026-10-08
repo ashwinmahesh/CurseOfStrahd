@@ -556,10 +556,14 @@ def cutscene_checks(data, parsed, errors):
     for cid, c in data.get("cutscenes", {}).items():
         w = f"data/cutscenes/{cid}.json"
         for take in c["images"]:
-            if not (ROOT / "art" / "cutscenes" / f"{take['image']}.png").exists():
-                errors.append(f"{w}: no picture art/cutscenes/{take['image']}.png")
-        if c.get("trigger") and c["trigger"] not in narrator_keys:
-            errors.append(f"{w}: trigger '{c['trigger']}' isn't a node in any narrative/narrator file")
+            if not (ROOT / "art" / "cutscenes" / f"{take['image']}.jpg").exists():
+                errors.append(f"{w}: no picture art/cutscenes/{take['image']}.jpg")
+        trig = c.get("trigger", "")
+        if trig.startswith("find:"):
+            if trig[5:] not in data.get("magic_items", {}):
+                errors.append(f"{w}: trigger '{trig}' names no magic item")
+        elif trig and trig not in narrator_keys:
+            errors.append(f"{w}: trigger '{trig}' isn't a node in any narrative/narrator file")
     for key, p in parsed.items():
         for cid, where in p["cutscenes"]:
             if cid != "end" and cid not in data.get("cutscenes", {}):
