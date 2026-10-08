@@ -33573,6 +33573,13 @@
   "recipe": "dd92281f92",
   "text": "The amber in the walls glows here, faintly, like honey held up to a candle. It is the only warm colour for a mile."
  },
+ "narrator/225e41fa1a7f3fa3": {
+  "chars": 174,
+  "direction": "[low, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Bedrolls of stitched hides laid round the fire, smelling of smoke and old blood. Bundles of twigs tied in the shape of men are stuck in the earth at their heads, like guards."
+ },
  "narrator/225ef4a92f573865": {
   "chars": 99,
   "model": "eleven_v4",
@@ -50516,6 +50523,13 @@
   "recipe": "dd92281f92",
   "text": "Offalia snores on the bakery floor with crumbs on her chin, smiling at whatever she's dreaming. Now and then her fingers twitch, kneading."
  },
+ "narrator/c9e57b49cab5daa7": {
+  "chars": 180,
+  "direction": "[quiet, observant, faintly uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A shaggy draft horse hobbled in the reeds, cropping the thin grass with the patience of an animal that has pulled a wagon a long way. It watches the tower more than it watches you."
+ },
  "narrator/c9e765f6ce99e9f9": {
   "chars": 90,
   "model": "eleven_v4",
@@ -52293,6 +52307,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "His body comes apart into grey mist that pours away across the floor, through the cracks, and down. A vampire beaten goes home to its coffin. His lies under the castle, at the bottom of everything."
+ },
+ "narrator/dc5ad64570090bb6": {
+  "chars": 164,
+  "direction": "[low, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A clay pot of rendered fat, a skinning knife beside it and a basket of rags. Somebody here keeps a household, of a kind. The knife has been sharpened very recently."
  },
  "narrator/dc67628e140ea197": {
   "chars": 112,
