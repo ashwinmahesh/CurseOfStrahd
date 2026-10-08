@@ -696,7 +696,8 @@
       "hours": [
         8,
         17
-      ]
+      ],
+      "when": "not weather == storm"
     }
   ],
   "encounters": [
