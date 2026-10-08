@@ -55,6 +55,8 @@ func capture_shots(tool: Node, out: String) -> void:
 		view._perform(view.catalog.find(silvain, "fly:up"), [], Vector2.INF, Vector2.ZERO)
 		await tool.call("wait_frames", 60)
 	print("flight capture: Silvain %d ft up, %d ft of movement left" % [silvain.altitude, silvain.movement_left])
+	_frame()
+	await tool.call("wait_frames", 20)
 	tool.call("_shot", out + "_1_up_out_of_reach.png")
 	# Over the low wall, keeping his height.
 	view.hover_cell = Vector2i(7, 3)
@@ -66,8 +68,8 @@ func capture_shots(tool: Node, out: String) -> void:
 	tool.call("_shot", out + "_2_over_the_wall.png")
 
 
-## The camera across the low wall, from the zombie to the wraith.
+## The camera across the low wall, from the zombie to the wraith, looking a little up at the flyers.
 func _frame() -> void:
 	rig.follow = null
-	rig.position = board.cell_center(Vector2i(6, 3), 1)
-	rig.distance = 13.0
+	rig.position = board.cell_center(Vector2i(6, 3), 1) + Vector3(0, 1.5, 0)
+	rig.distance = 16.0

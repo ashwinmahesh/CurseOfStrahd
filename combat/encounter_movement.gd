@@ -999,10 +999,15 @@ func _fall_into_water(c: Combatant, feet: int) -> void:
 ## when the spell ends (settle_all). Called when an effect lands on a creature (Encounter._effect_added).
 func effect_added(cr: Creature, fx: Effect) -> void:
 	var e := enc()
-	if fx.source_id != "levitate":
-		return
 	var c := e.get_c(cr.id)
 	if c == null:
+		return
+	# Switching speeds (2024): a Fly Speed gained on the creature's own turn (Fly cast on itself) is usable at once, the
+	# new Speed less what it has already moved.
+	if c == e.current() and _grants_fly(fx) and c.turn_speed > 0 and c.speed() > c.turn_speed:
+		c.movement_left += c.speed() - c.turn_speed
+		c.turn_speed = c.speed()
+	if fx.source_id != "levitate":
 		return
 	if c.altitude > 0:
 		c.set_meta("levitated", true)   # already up: it hangs where it is, and floats down when the spell ends
@@ -1013,3 +1018,11 @@ func effect_added(cr: Creature, fx: Effect) -> void:
 	c.altitude = up
 	c.set_meta("levitated", true)
 	e.events.append({"type": "altitude", "id": c.id, "from": 0, "to": up})
+
+
+## Whether an effect grants a Fly Speed (Fly, a Potion of Flying, wings).
+static func _grants_fly(fx: Effect) -> bool:
+	for m in fx.modifiers:
+		if m.stat == &"speed_set" and m.text("kind") == "fly":
+			return true
+	return false

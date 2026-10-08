@@ -102,7 +102,7 @@ func test_the_fly_spell_hovers() -> void:
 	var r := e.spells.cast(c, "fly", 3, [c])
 	assert_true(r.ok, r.reason)
 	assert_true(e.movement.can_fly(c))
-	c.movement_left = c.speed()
+	assert_eq(c.movement_left, 60, "cast on its own turn, the new Fly Speed is there at once (switching speeds)")
 	assert_true(e.fly_vertical(c, 15).ok)
 	c.creature.add_condition(&"prone", "test")
 	e.movement.settle_all()
