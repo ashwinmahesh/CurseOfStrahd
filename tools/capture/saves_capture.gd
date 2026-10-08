@@ -1,7 +1,8 @@
 extends Node
 ## The saves' own page (ui/screens/saves_screen.gd, lane 16) from a late party, with the golden saves as the list:
-## Save Game, the question before writing over a save, Load a Save with its Backups and Chapters tabs, the game-over
-## screen and the title's Load. Saves of the capture's own only, so the owner's never show or change.
+## the recap on loading (Q3), Save Game, the question before writing over a save, Load a Save with its Backups and
+## Chapters tabs, the game-over screen and the title's Load. Saves of the capture's own only, so the owner's never show
+## or change.
 ## make capture SCENE=res://tools/capture/saves_capture.tscn NAME=saves FRAMES=30
 
 const LATE := "v2_amber_temple.json"
@@ -42,6 +43,17 @@ func _page() -> SavesScreen:
 
 
 func capture_shots(tool: Node, out: String) -> void:
+	# The recap a game saved a while ago opens with (Q3): this one was loaded from a golden save hours old. The
+	# auto-player's saves hold no quests or companions' memories, so it is given two of each to show.
+	var st := GameState.story
+	for q: String in ["find_the_sunsword", "the_amber_temple"]:
+		st.set_quest_stage(q, str(((Compendium.shared().get_entry("quests", q)["stages"] as Array)[0] as Dictionary)["id"]))
+		st.advance_minutes(10)
+	Approval.change(st, "thistle", 2, "You talked a grieving ghost into resting")
+	Recap.always = true
+	Recap.show_on(root)
+	Recap.always = false
+	await _shoot(tool, out + "_0_recap.png")
 	(root.get("hud") as ExploreHud).close_narration()
 	# Saves with pictures (Q9): a few places, each saved as a player would, one with a note; how long the picture takes.
 	for at: Array in [["village_of_barovia", "The square at dusk"], ["vallaki", ""], ["krezk", "Before the Abbey"]]:
