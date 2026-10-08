@@ -569,6 +569,13 @@
   "recipe": "c0fe071a64",
   "text": "Three months ago the druids came up the lane at dusk with half the forest walking behind them. We fought a while. Then Father said fly, so we flew. They've been pulling up our floors ever since."
  },
+ "adrian_martikov/1c0d279a323cab93": {
+  "chars": 51,
+  "direction": "[quiet, resolute, shaky]",
+  "model": "eleven_v3",
+  "recipe": "c0fe071a64",
+  "text": "Then help me pull it up. All of it. Whatever it is."
+ },
  "adrian_martikov/22bb4595c872dd66": {
   "chars": 125,
   "model": "eleven_v3",
@@ -611,6 +618,20 @@
   "recipe": "c0fe071a64",
   "text": "With the people who put me in a ditch? ...Yes. Fine. I've wanted to see that hill burn for a year, and you're the only ones going."
  },
+ "adrian_martikov/4a698e213a98d9d4": {
+  "chars": 75,
+  "direction": "[afraid, bitter, defensive]",
+  "model": "eleven_v3",
+  "recipe": "c0fe071a64",
+  "text": "You. Of course you. Don't tell Father. Or tell him. He'll only say he knew."
+ },
+ "adrian_martikov/5627f89914c9ab75": {
+  "chars": 55,
+  "direction": "[desperate, stubborn, quiet]",
+  "model": "eleven_v3",
+  "recipe": "c0fe071a64",
+  "text": "No. Not yet. One more night. You'd want one more night."
+ },
  "adrian_martikov/6268295ed58b0fbc": {
   "chars": 86,
   "model": "eleven_v3",
@@ -634,6 +655,13 @@
   "model": "eleven_v3",
   "recipe": "c0fe071a64",
   "text": "You knocked me into a ditch on the Svalich road. The wing still clicks when I fly. Adrian Martikov. I'm only talking to you because we're short of choices."
+ },
+ "adrian_martikov/81d57d74e01d38cf": {
+  "chars": 142,
+  "direction": "[quiet, aching, pleading]",
+  "model": "eleven_v3",
+  "recipe": "c0fe071a64",
+  "text": "When I eat them I dream of Elvir. He's alive, and he's on the hill, and he isn't angry with me. That's all. That's all it is. One hat a night."
  },
  "adrian_martikov/82f8e82b1496c721": {
   "chars": 84,
@@ -4525,6 +4553,69 @@
   "recipe": "7c64a77153",
   "text": "This one is yours. You're a good one. The grey ones are for the bad ones. I have a lot of grey ones."
  },
+ "belview_mother/252383360a5d1e81": {
+  "chars": 93,
+  "direction": "[hushed, wary, urgent]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "Not while he's improving. Come back when he's done improving. Go on. He listens at the walls."
+ },
+ "belview_mother/45d115d457ecada6": {
+  "chars": 135,
+  "direction": "[quiet, longing, resolute]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "I'm ready now. Only I don't want heaven. I want Krezk. I was born there, two doors down from the burgomaster's. I want to see the door."
+ },
+ "belview_mother/5e469f8b7c044c58": {
+  "chars": 177,
+  "direction": "[sad, quiet, heavy]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "My boys in the cells. They're dead. I heard it. (She is quiet for a long time.) They were never going to get better. I'll still go. There's nothing to stay for now but the fire."
+ },
+ "belview_mother/622b9a76091ef195": {
+  "chars": 72,
+  "direction": "[afraid, dry, defiant]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "He said they'd work if I believed. I've never believed anything he said."
+ },
+ "belview_mother/869e93ab691ef312": {
+  "chars": 175,
+  "direction": "[warm, grateful, wistful]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "My boys in the cells. Somebody let them out, gently, and they ran up the mountain. Was it you? Thank you. They'll come back for the winter, or they won't. That's what boys do."
+ },
+ "belview_mother/956b9885d0137af7": {
+  "chars": 193,
+  "direction": "[calm, low, remembering]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "Nine gifts. The eyes, to see in the dark. The legs, to wade. The wings, to go up to heaven when I'm ready, he said. He'd finish them when I was ready. He sewed them shut so I wouldn't go early."
+ },
+ "belview_mother/bc21cf6defbe58ad": {
+  "chars": 219,
+  "direction": "[firm, protective, low]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "My boys first. The loud ones, in the cells along the corridor. He forgets them. I don't. I won't go and leave them behind bars. Let them out, and gently. They bite when they're frightened, and they're always frightened."
+ },
+ "belview_mother/cb2c2e5e0dd6c6f7": {
+  "chars": 69,
+  "direction": "[pained, fierce, through gritted teeth]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "Never mind. Never mind. They're mine now. They can hurt if they like."
+ },
+ "belview_mother/d314c03feee173fb": {
+  "chars": 118,
+  "direction": "[warm, wondering, wry]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "And my uncle Pavel's asked me to Sunday soup. I've never had an uncle. I've never had soup I didn't have to fight for."
+ },
  "bildrath/00bad157f0730049": {
   "chars": 133,
   "direction": "[smug, prim]",
@@ -5262,11 +5353,67 @@
   "recipe": "f6d71b65ad",
   "text": "Bless you. Truly. Now hold still."
  },
+ "camp_cook/310b389ee0656dad": {
+  "chars": 126,
+  "direction": "[dry, relieved, wry]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "No horn in the woods. Three cold nights now, and nothing. Gavril's taken to sleeping outside the wagon just to hear the quiet."
+ },
+ "camp_cook/68dcfb423592125e": {
+  "chars": 211,
+  "direction": "[dry, knowing, ominous]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "The count gives his huntsman a scent, and the huntsman runs it down. He has to blow three nights first, so the quarry can say its prayers. He's particular. They say the count likes rules he thinks can't be kept."
+ },
+ "camp_cook/856bae785cd4996c": {
+  "chars": 209,
+  "direction": "[grave, measured, low]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "The hunt ends under the crossroads gallows at moonrise. The rule is, if the quarry is standing there and turns and faces him, he has to fight it out, fair. If the quarry wins, it's done. Nobody has ever stood."
+ },
+ "camp_cook/a8da5d5067bcf5dc": {
+  "chars": 157,
+  "direction": "[quiet, solemn, knowing]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "And the hounds. Every one of them was quarry once. Their names are on the stones by the crossroads, the ones we put up. A dog knows its name. Even that kind."
+ },
+ "camp_cook/b271a160d9140946": {
+  "chars": 221,
+  "direction": "[low, ominous, storytelling]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "Interesting? There's a horn in the Svalich woods on cold nights. Three notes, and then the hounds. In the morning somebody's lying under the gallows at the crossroads, run to death. Boots worn through. Not a mark on them."
+ },
+ "camp_cook/d0b450d923640a31": {
+  "chars": 190,
+  "direction": "[grave, pointed, low]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "It blew three times last night, on the road you came in by. (She looks at you over the pot for a long moment.) Three notes is for strangers. You've made somebody up at the castle very angry."
+ },
+ "camp_cook/ec6309c63896ee55": {
+  "chars": 141,
+  "direction": "[exasperated, worried]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "And it blew for Gavril, our groom. He sold the castle's stable master a horse with a painted blaze, the fool. He hasn't slept for two nights."
+ },
+ "camp_cook/f549bc6299571a24": {
+  "chars": 133,
+  "direction": "[tart, brisk, firm]",
+  "model": "eleven_v3",
+  "recipe": "12362f8ba4",
+  "text": "You know what I know. The crossroads, moonrise, and stand when you get there. And learn their names first, the ones under the stones."
+ },
  "camp_cook/f9f779412d12e717": {
   "chars": 121,
   "direction": "[tart, bossy, sly]",
   "model": "eleven_v3",
-  "recipe": "d64ca4ba28",
+  "recipe": "12362f8ba4",
   "text": "Sit if you want to eat, stand if you want to be looked at. Luvash's wine is for Luvash, and for me when he isn't looking."
  },
  "camp_fisher/68c99771b2d4663c": {
@@ -5287,8 +5434,29 @@
   "chars": 179,
   "direction": "[gentle, dry]",
   "model": "eleven_v3",
-  "recipe": "1d8817fed7",
+  "recipe": "1f27e5ff75",
   "text": "This one bites, that one kicks, and the black one is Arrigal's, so don't touch it at all. The others are good horses. They know the way out of the valley. They just can't take it."
+ },
+ "camp_groom/b3d679034f317d33": {
+  "chars": 97,
+  "direction": "[shaky, brave, wry]",
+  "model": "eleven_v3",
+  "recipe": "1f27e5ff75",
+  "text": "If I run, I die tired. Paraschiva says stand. So I'm standing. Next to you, if it's all the same."
+ },
+ "camp_groom/e252f61e78c76165": {
+  "chars": 103,
+  "direction": "[breathless, giddy, relieved]",
+  "model": "eleven_v3",
+  "recipe": "1f27e5ff75",
+  "text": "I stood. I actually stood. (He sits down in the road very suddenly.) Don't tell Paraschiva I'm sitting."
+ },
+ "camp_groom/e9d7201a34a1ef49": {
+  "chars": 107,
+  "direction": "[nervous, relieved, babbling]",
+  "model": "eleven_v3",
+  "recipe": "1f27e5ff75",
+  "text": "You came. You actually came. I've got a knife and a horseshoe, and I'm not sure what either of them is for."
  },
  "camp_lookout/d6565abd9726a895": {
   "chars": 98,
@@ -5351,6 +5519,13 @@
   "recipe": "efd7d52c86",
   "text": "This? Found it under a loose board in the saint's old room, when I was a lad. Pretty writing. Nobody's ever read it to me. The Abbot says it's nothing. He said it very quickly."
  },
+ "clovin_belview/34d21c9fba730902": {
+  "chars": 154,
+  "direction": "[quiet, sad, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Great-uncle Pavel's asked her to Sunday soup. He can't stay up here for ever, and she can't walk down. She sits by the kitchen fire and looks at the door."
+ },
  "clovin_belview/4884c1ea727a848c": {
   "chars": 49,
   "model": "eleven_v3",
@@ -5381,6 +5556,13 @@
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "You again. Gate's open. Everything's open. The Abbot doesn't believe in locks, except on the wards. He believes in those a great deal."
+ },
+ "clovin_belview/4e5faa7f2751b229": {
+  "chars": 261,
+  "direction": "[warm, comic, grateful]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "She said to give you these. Her eighth gift. Before the wings he tried boots. She floated about on the ceiling for a year, and we used her to fetch things off the top shelf. She said you'd know what to do with them. She said you'd been very kind about the wire."
  },
  "clovin_belview/51e891ba54ed660a": {
   "chars": 168,
@@ -5575,6 +5757,27 @@
   "recipe": "efd7d52c86",
   "text": "And then the Abbot says..."
  },
+ "clovin_belview/d4341cc40cc02549": {
+  "chars": 144,
+  "direction": "[hushed, nervous, conspiratorial]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Interesting? Mother's talking about Krezk again. She doesn't talk about Krezk while he's improving. She thinks he listens at the walls. He does."
+ },
+ "clovin_belview/dc8f67107b3130a9": {
+  "chars": 164,
+  "direction": "[delighted, wry, proud]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Mother comes down to Krezk on Sundays now. Lands on Great-uncle Pavel's roof. He's had it mended twice and he says he's never been happier. The roof says otherwise."
+ },
+ "clovin_belview/dce965d1827331b7": {
+  "chars": 223,
+  "direction": "[earnest, rambling, wistful]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Interesting? Mother's been talking about Krezk. She was born there, before she was carried up here in a basket. She says she'll go down if somebody can tell her how, and nobody can, because of the legs. And the other thing."
+ },
  "clovin_belview/e5385cd8e8191da1": {
   "chars": 155,
   "direction": "[quiet, tender]",
@@ -5646,6 +5849,48 @@
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "He sits. In the chapel. He doesn't talk. I bring him water and he doesn't drink it, and I take it away and bring more. Somebody has to carry things."
+ },
+ "count_huntsman/21b1c97b688c8fa1": {
+  "chars": 186,
+  "direction": "[weary, low, remembering]",
+  "model": "eleven_v3",
+  "recipe": "94553989bb",
+  "text": "Toader. I took a deer out of his woods, his first winter, when the valley was still new to him. He ran me down himself, for the sport of it, and I got as far as here, and I turned round."
+ },
+ "count_huntsman/83baa3aa5635214e": {
+  "chars": 40,
+  "direction": "[very quiet, stunned, hollow]",
+  "model": "eleven_v3",
+  "recipe": "94553989bb",
+  "text": "(Very quietly.) Nobody's ever said them."
+ },
+ "count_huntsman/8a1fb0db0336671b": {
+  "chars": 26,
+  "direction": "[cold, curt, formal]",
+  "model": "eleven_v3",
+  "recipe": "94553989bb",
+  "text": "Not you. The horse-seller."
+ },
+ "count_huntsman/d583ed79e6ecb2d6": {
+  "chars": 162,
+  "direction": "[surprised, then weary, relieved]",
+  "model": "eleven_v3",
+  "recipe": "94553989bb",
+  "text": "Quarry. You stood. Nobody stands. (He looks at you, and there's something in it you weren't expecting. It looks like relief.) Well. Rules are rules. He made them."
+ },
+ "count_huntsman/ea5fabd1a4819b9d": {
+  "chars": 73,
+  "direction": "[cold, flat, formal]",
+  "model": "eleven_v3",
+  "recipe": "94553989bb",
+  "text": "Run if you like. It's better sport. (He doesn't wait to see if you will.)"
+ },
+ "count_huntsman/ecdacec6523125f4": {
+  "chars": 171,
+  "direction": "[weary, bitter, quiet]",
+  "model": "eleven_v3",
+  "recipe": "94553989bb",
+  "text": "He laughed. He said, you run well. Now you'll run them. And every one I've run since is in the pack. That one was a tinker. That one, a girl who said no to him at a dance."
  },
  "cult_shades/51cd446083782875": {
   "chars": 56,
@@ -6110,6 +6355,13 @@
   "recipe": "6eeb2cd7e9",
   "text": "...I sent them. I sent them to that hill. And I couldn't look at the one who came home, because then I'd have to look at the one who sent them."
  },
+ "davian_martikov/3e6d620a0659bde1": {
+  "chars": 131,
+  "direction": "[sad, gruff, tender]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "A hat a night, for a dream. You could have told me. I'd have sat in the row with you. I dream of him too, boy. I don't need grapes."
+ },
  "davian_martikov/425880c667ec1953": {
   "chars": 129,
   "model": "eleven_v3",
@@ -6164,6 +6416,13 @@
   "recipe": "6eeb2cd7e9",
   "text": "The druids sleep in the fermenting hall and feed my vats to their creatures. Their leader, a boy called Kostin, keeps to the press house with something he grew in my best vat. Some nights it sings to him."
  },
+ "davian_martikov/5d3a4576e5431408": {
+  "chars": 130,
+  "direction": "[gruff, fond, dry]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "The Seventh Row's in again. Young vines. Adrian waters them himself and won't let anyone else hold the can. It's a family failing."
+ },
  "davian_martikov/5e055893fd771cf1": {
   "chars": 267,
   "model": "eleven_v3",
@@ -6193,6 +6452,20 @@
   "model": "eleven_v3",
   "recipe": "6eeb2cd7e9",
   "text": "A vine in winter has no leaves, no fruit, and no warmth you can feel with your hand. You prune it anyway, and you wait. That is faith, priestess. The rest is weather."
+ },
+ "davian_martikov/6a2161fca8ab3566": {
+  "chars": 84,
+  "direction": "[grim, approving]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "My grandfather's row, and you cut it out by the roots. Good. It wasn't his any more."
+ },
+ "davian_martikov/6c86fde58ecaf410": {
+  "chars": 179,
+  "direction": "[stern, grim, determined]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "Somebody picks it in the dark. My pickers won't go near it. Find out who. If it's druids, I want them. If it isn't, I want to know what it is before I burn my grandfather's vines."
  },
  "davian_martikov/72c8f059be314d06": {
   "chars": 59,
@@ -6242,6 +6515,13 @@
   "recipe": "6eeb2cd7e9",
   "text": "Whichever annoys the enemy more."
  },
+ "davian_martikov/888f0f7d82eafac7": {
+  "chars": 3,
+  "direction": "[gruff, grudging]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "Hm."
+ },
  "davian_martikov/8997baf4dc2b8a0f": {
   "chars": 121,
   "model": "eleven_v3",
@@ -6278,6 +6558,13 @@
   "recipe": "6eeb2cd7e9",
   "text": "The figure broken and the druids scattered. And the tree? Still standing, the ravens say. Hm. Trees are patient. So are ravens."
  },
+ "davian_martikov/9663837b68445e83": {
+  "chars": 191,
+  "direction": "[gruff, troubled, low]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "Interesting. Hm. The Seventh Row. My grandfather planted it, and Elvir pruned it from the day he could hold the knife. It's coming up black. Black grapes every night, and every morning, bare."
+ },
  "davian_martikov/9735213fc88d9874": {
   "chars": 92,
   "model": "eleven_v3",
@@ -6296,6 +6583,13 @@
   "recipe": "6eeb2cd7e9",
   "text": "Then we'll find out when I count it, won't we. I'll count it later, alone, like a miser. It's a family tradition."
  },
+ "davian_martikov/a9021a11974952e4": {
+  "chars": 71,
+  "direction": "[gruff, curt]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "The Seventh Row. You know as much as I do. Go and sit in it after dark."
+ },
  "davian_martikov/ab6bc8bfa8d12887": {
   "chars": 91,
   "model": "eleven_v3",
@@ -6313,6 +6607,13 @@
   "model": "eleven_v3",
   "recipe": "6eeb2cd7e9",
   "text": "Someone in Vallaki misses my wine, then. Good. So do I. Sit."
+ },
+ "davian_martikov/b153146082bb74f8": {
+  "chars": 100,
+  "direction": "[gruff, weary, gentle]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "He told me. Some of it. Enough. We'll talk about the rest when we've both drunk enough to manage it."
  },
  "davian_martikov/b23c9a6aa58d7411": {
   "chars": 227,
@@ -6487,6 +6788,13 @@
   "model": "eleven_v3",
   "recipe": "6eeb2cd7e9",
   "text": "Two. Two in the ground. My grandfather had only two for a while, when he was a boy, and he swore the wine was better for having to try."
+ },
+ "davian_martikov/ffb205836f61f052": {
+  "chars": 227,
+  "direction": "[gruff, wry, grateful]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "The wizard who gave us the stones left this in the press-house rack a hundred years ago, against the day something in the vines needed burning. I always thought it was a joke. It turns out he was a better farmer than he looked."
  },
  "dmitri_krezkov/064e7686dee8c1a1": {
   "chars": 128,
@@ -25273,14 +25581,23 @@
   "recipe": "d64ca4ba28",
   "text": "Water to the south row, a word at the shrine, and back. Thirty times a day. My arms are as strong as Cezar's and my knees are holier than the abbot's."
  },
+ "krezk_carver/1d00eb93b945d51b": {
+  "chars": 150,
+  "direction": "[warm, gruff, happy]",
+  "model": "eleven_v3",
+  "recipe": "0cd2d416e1",
+  "text": "A sun a day, still. And on Sundays my niece comes down off the mountain and lands on my roof. I've had it mended twice. I'd have it mended every week."
+ },
  "krezk_carver/1e56cb8e3a2171fa": {
   "chars": 125,
+  "direction": "[quiet, rueful, tender]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "A sun for the shrine every day since. Sixty years. I thought I was asking for the morning. I think I was asking for the gate."
  },
  "krezk_carver/1ff0e9d6896afbaa": {
   "chars": 95,
+  "direction": "[warm, wry, content]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "A sun a day, still. But on Sundays I go up the mountain with soup, so on Saturdays I carve two."
@@ -25308,30 +25625,35 @@
  },
  "krezk_carver/8c6df0a455cf8315": {
   "chars": 191,
+  "direction": "[warm, gruff, moved]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "And this. It was our father's. He found it in the high pasture the year Floarea was born and swore it butted back if you were rude to it. I kept it for the day the gate opened. You opened it."
  },
  "krezk_carver/8dd8089a19a49b00": {
   "chars": 60,
+  "direction": "[stunned, shaky, laughing through tears]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "That's my father's joke. Where did you get my father's joke?"
  },
  "krezk_carver/9f5b2d2ac721e68b": {
   "chars": 194,
+  "direction": "[quiet, heavy, remembering]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "Floarea was my sister. The whole house took the cough the winter I was twelve, all but me. They went up to the abbey for the cure, and the burgomaster told the watch to bar the gate behind them."
  },
  "krezk_carver/c84af2a3f7a1c606": {
   "chars": 43,
+  "direction": "[gruff, resolute, wry]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "Then I'll go up. I'm old. I don't frighten."
  },
  "krezk_carver/ee07dbb273aab999": {
   "chars": 218,
+  "direction": "[sad, low, ashamed]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "I was the boy on the gate that night. I barred it. My mother told me to, through the boards. She said it was a good gate and I should mind it. I went to the neighbours and took their name, and never said Belview again."
@@ -25496,6 +25818,13 @@
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "You were told that house isn't yours. In Krezk we knock, and we leave when we're asked."
+ },
+ "krezk_guard/3c7f29aac052b66b": {
+  "chars": 133,
+  "direction": "[dry, deadpan, bemused]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "And an angel came down off the mountain and landed on Old Pavel's roof. It was a Belview. Krezk has decided to be very calm about it."
  },
  "krezk_guard/40d5fb78b6ae639d": {
   "chars": 62,
@@ -31326,6 +31655,13 @@
   "recipe": "dd92281f92",
   "text": "The mirror in the corner is cracked clean across. Morgantha doesn't look at it."
  },
+ "narrator/00b4cdb648dce4f1": {
+  "chars": 210,
+  "direction": "[ominous, building, awed]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The earth heaves. The Seventh Row stands up out of the ground: every vine of it one plant, one great dark mass of root and vine-wood, rising twice the height of the house, dripping black wine from every branch."
+ },
  "narrator/00b8233055edd7a0": {
   "chars": 129,
   "model": "eleven_v4",
@@ -31434,6 +31770,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "A thin girl of twelve or so sits on an upturned bucket by the lane with a basket of pastries on her knees. She has flour on her nose, and her sleeves pulled down over her hands."
+ },
+ "narrator/01a6afbb7d0f2276": {
+  "chars": 175,
+  "direction": "[hushed, awed]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "When the last stitch is out the wings open by themselves, slowly, the way a hand does when you stop making a fist. They fill the kitchen. Every Belview in the room goes quiet."
  },
  "narrator/01ace6cdc529fe5a": {
   "chars": 106,
@@ -31549,6 +31892,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "You go easy. She stops pushing at once and looks at you, deeply offended."
+ },
+ "narrator/026a105b45091f35": {
+  "chars": 115,
+  "direction": "[gentle, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Davian takes his son's hands and turns them over in his own. The dark veins are fading already, back to plain blue."
  },
  "narrator/02784ad3a8aed606": {
   "chars": 178,
@@ -32238,6 +32588,13 @@
   "recipe": "dd92281f92",
   "text": "At the head of the bier there is a hollow in the stone, smooth and round, made for something that isn't here. Someone has laid a single dried flower in it."
  },
+ "narrator/08a2590e2992f30c": {
+  "chars": 104,
+  "direction": "[tense, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The Huntsman sets the pack on you with one note of the horn, and the hounds come up the road in silence."
+ },
  "narrator/08abd1627e33bf5e": {
   "chars": 136,
   "direction": "[hushed, disturbing]",
@@ -32354,13 +32711,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A spreading slick of rot. Lorghoth the Decayer has decayed."
- },
- "narrator/0a0080d40795921e": {
-  "chars": 129,
-  "direction": "[dry, amused]",
-  "model": "eleven_v3",
-  "recipe": "f60908d226",
-  "text": "The one-horned billy plants his feet in the gap of the pen and lowers his head at you. He does not move. He is not going to move."
  },
  "narrator/0a0528ceed6d0730": {
   "chars": 160,
@@ -33640,6 +33990,13 @@
   "recipe": "dd92281f92",
   "text": "On a boulder at the top of the switchback, a woman with a spyglass is watching the abbey roof: a long dark coat, a rapier across her knees, and below her right knee a fitted brace of oak and steel."
  },
+ "narrator/160be6aac5385128": {
+  "chars": 177,
+  "direction": "[gentle, wondering, warm]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She hears you. She tips one wing, and turns, and comes down on the roof of Old Pavel's house as gently as a heron coming down on a pond. Somebody in Krezk rings the shrine bell."
+ },
  "narrator/1629d89fe8f5eca8": {
   "chars": 208,
   "model": "eleven_v4",
@@ -33711,6 +34068,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The yard is swept, the doors stand open on purpose now, and a raven sits on the well-head like a sentry who takes the job seriously."
+ },
+ "narrator/16fc339abc084eb5": {
+  "chars": 232,
+  "direction": "[quiet, sad, wondering]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Under it is a broad grey-haired woman with a cat's eyes and a heron's long thin legs, and on her back, folded and folded again, a pair of great grey wings. They are bound shut with silver wire, stitch after stitch, all the way down."
  },
  "narrator/16fe1a4b89040c47": {
   "chars": 151,
@@ -34163,6 +34527,13 @@
   "recipe": "f60908d226",
   "text": "Little cots in rows, each with a name scratched on the frame. The children took their treasures with them, or never had any."
  },
+ "narrator/1ab84e5d6938da37": {
+  "chars": 131,
+  "direction": "[quiet, wry, warm]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Adrian looks at his hands for a long time. Then he puts his hat back on, which is the most decided thing you have ever seen him do."
+ },
  "narrator/1aec4aa2d04cd564": {
   "chars": 86,
   "model": "eleven_v4",
@@ -34348,6 +34719,13 @@
   "recipe": "dd92281f92",
   "text": "The second stone has a dark thread through it now, fine as a hair. Davian holds it up to the light for a long moment."
  },
+ "narrator/1d2248635509e80a": {
+  "chars": 195,
+  "direction": "[quiet, uneasy, observant]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Black feathers in the furrow, a lot of them, and footprints: bare feet, a man's, that start in the middle of the row from nothing, as if he'd dropped out of the sky, and walk to the end and back."
+ },
  "narrator/1d237944bffe8bef": {
   "chars": 183,
   "model": "eleven_v4",
@@ -34512,6 +34890,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Wet slates slide out from under you and you go skidding down the roof toward the parapet."
+ },
+ "narrator/1e36330b789a2ab6": {
+  "chars": 67,
+  "direction": "[grim, quiet]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "It did. This one had its own roots by then, and something to drink."
  },
  "narrator/1e72060f268be2b7": {
   "chars": 112,
@@ -35739,6 +36124,13 @@
   "recipe": "dd92281f92",
   "text": "North, the mountains, white at the top. Somewhere out there a ruined house on a ridge."
  },
+ "narrator/295ae35d11b35316": {
+  "chars": 136,
+  "direction": "[hushed, tense]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "In the darkest corner of the kitchen something very large sits under a blanket of sewn-together habits. The blanket moves. It comes off."
+ },
  "narrator/2982caf9c96536f4": {
   "chars": 165,
   "model": "eleven_v4",
@@ -35775,6 +36167,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She opens her mouth to answer, and the answer is in her face before she can stop it: pride, and something like devotion. The crowd sees it. A woman spits at her feet. Then another."
+ },
+ "narrator/29e61160f31fddc3": {
+  "chars": 241,
+  "direction": "[grim, quiet, sympathetic]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The wire comes out, but not cleanly; there's blood on the grey feathers, and Mother hisses like a cat through her teeth, and says nothing. When the last stitch is out the wings open by themselves, slowly, and she winces every time they move."
  },
  "narrator/29efe77d89f6fcfb": {
   "chars": 152,
@@ -36597,6 +36996,13 @@
   "recipe": "dd92281f92",
   "text": "Old graves lean in the long grass, and the church watches them from its rise like a tired shepherd. The lych-gate creaks shut behind you on its own."
  },
+ "narrator/31acdcbe5ba341ad": {
+  "chars": 162,
+  "direction": "[quiet, grim]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The Huntsman's coat lies in the road with nothing in it. His saddlebag holds four hundred years of quarry's purses, and a plain iron ring he called the pack with."
+ },
  "narrator/31b93412b5e25e38": {
   "chars": 77,
   "model": "eleven_v4",
@@ -36743,6 +37149,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "Under the shrine of Mother Night, an offering nobody came back for: a silver sickle shaped like the new moon."
+ },
+ "narrator/33334efaf91b3bd6": {
+  "chars": 167,
+  "direction": "[quiet, gentle, wistful]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The Seventh Row is young vines on new stakes, and a long scar of turned earth where something was dug out by the roots. Somebody has planted rosemary at the end of it."
  },
  "narrator/3343480972c5d8bd": {
   "chars": 103,
@@ -36968,6 +37381,13 @@
   "recipe": "dd92281f92",
   "text": "Adrian walks into the yard ahead of you and stops in front of his father. Neither of them says a word. Then Davian takes his son by the shoulder, once, hard, and lets go."
  },
+ "narrator/3558cb169fea40a1": {
+  "chars": 125,
+  "direction": "[quiet, solemn]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The cairns by the crossroads have a new stone at the end of the row, with no name on it, only a horn scratched into the face."
+ },
  "narrator/355ddd06db693967": {
   "chars": 227,
   "model": "eleven_v4",
@@ -37048,6 +37468,13 @@
   "recipe": "f60908d226",
   "text": "Clean floors, aired sheets. Danika keeps a good house, and it keeps its secrets."
  },
+ "narrator/35f31d266c38b184": {
+  "chars": 193,
+  "direction": "[wry, comic, warm]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She comes down in Krezk's goat pens, all at once, in a burst of goats. When the shouting stops you can hear Stelian saying that he's seen worse, and that he has, in fact, seen worse, this year."
+ },
  "narrator/362d8a072c7c872f": {
   "chars": 100,
   "model": "eleven_v4",
@@ -37084,6 +37511,13 @@
   "recipe": "dd92281f92",
   "text": "You stumble through the old prayer, half-remembered from church doors in other countries, and Ireena mouths the parts you miss. Between you, it's whole."
  },
+ "narrator/3667212c7e50ba1b": {
+  "chars": 135,
+  "direction": "[hushed, chilling]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "In the bark at the heart of it there's a face, almost a young man's, almost a Martikov's. It isn't. It has only been drinking from one."
+ },
  "narrator/368fc38f45cd1875": {
   "chars": 82,
   "direction": "[dry, unsettled]",
@@ -37115,6 +37549,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "You walk her home along the churchyard wall. Her cottage is two rooms and a fire, and the shutter by the hearth stands open the width of a hand."
+ },
+ "narrator/3711db4df0ad4147": {
+  "chars": 216,
+  "direction": "[quiet, tense, awed]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Getting her up the stair to the courtyard takes six Belviews and most of the afternoon. At the top of the abbey wall she stands on her long legs with the whole valley under her, the wings half open, and doesn't move."
  },
  "narrator/3719609ecaab5e11": {
   "chars": 199,
@@ -37238,6 +37679,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The roots give him up slowly, one at a time. You wrap what's left of him in a cloak. He weighs almost nothing."
+ },
+ "narrator/383a23479fe820ca": {
+  "chars": 79,
+  "direction": "[quiet, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He's a raven before you can answer, going away over the vines toward the house."
  },
  "narrator/38507f476e554479": {
   "chars": 153,
@@ -37833,6 +38281,13 @@
   "recipe": "dd92281f92",
   "text": "The voices in the walls go quiet. Merrow doesn't answer."
  },
+ "narrator/3d29587d61cebb90": {
+  "chars": 114,
+  "direction": "[tense, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Your blade goes into the black wood at the foot of the row, and the whole row flinches, from one end to the other."
+ },
  "narrator/3d59335aed308cb1": {
   "chars": 104,
   "model": "eleven_v4",
@@ -38389,6 +38844,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Down here the amber in the walls glows, faintly, like honey held up to a candle. It is the only warm colour for a mile in any direction, and it is not warm."
+ },
+ "narrator/42b26b11ca54bc33": {
+  "chars": 179,
+  "direction": "[quiet, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The last row before the camp. The leaves are veined dark, like the back of an old hand, and the grapes hang in heavy black clusters, far too many and far too ripe for this valley."
  },
  "narrator/42bab163ba982d70": {
   "chars": 187,
@@ -39220,6 +39682,13 @@
   "recipe": "dd92281f92",
   "text": "The man behind the bar has black hair, black eyes and the stillness of somebody who has been listening to the room since before you came into it."
  },
+ "narrator/4b61f9c95e646bc3": {
+  "chars": 113,
+  "direction": "[quiet, gentle]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Clovin comes up beside you on the wall with a pair of old boots in his hands, soft grey leather, soles worn thin."
+ },
  "narrator/4b640d9192060409": {
   "chars": 109,
   "model": "eleven_v4",
@@ -40010,6 +40479,13 @@
   "recipe": "f60908d226",
   "text": "Under the heap of offerings lies a staff of black wood capped in iron, left by someone who wanted something more than power. The amber took it anyway."
  },
+ "narrator/534064a5c254e7bb": {
+  "chars": 194,
+  "direction": "[hushed, eerie, unsettled]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "These aren't the Martikovs' vines any more. Something has grown up into every rootstock in the row and is wearing the vines like sleeves. The wood under the bark is black and wet, and it's warm."
+ },
  "narrator/534800187ba6d7c0": {
   "chars": 125,
   "model": "eleven_v4",
@@ -40168,6 +40644,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "East along the road a carriage lamp swings out of the mist. No horse snorts. No wheel creaks. Along the fences, every wolf in the valley has stopped howling at once."
+ },
+ "narrator/54449fd83a579b03": {
+  "chars": 102,
+  "direction": "[quiet, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Adrian is waiting by his father's chair when you come in, black sap on his cuffs, and doesn't look up."
  },
  "narrator/546a2785820c19aa": {
   "chars": 136,
@@ -41799,6 +42282,13 @@
   "recipe": "dd92281f92",
   "text": "The shackle is old iron. Its chain runs to a ring bolted deep into the stone."
  },
+ "narrator/62f4a5a60f71aea2": {
+  "chars": 163,
+  "direction": "[hushed, sad, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Then he walks to the end of the row, where his brother is buried, and sits down with his back to the cairn, and talks, very quietly, as if somebody were answering."
+ },
  "narrator/6303be6f6994b5e0": {
   "chars": 150,
   "model": "eleven_v4",
@@ -42177,6 +42667,13 @@
   "recipe": "dd92281f92",
   "text": "The colossus steps down off its plinth, and the whole ledge shakes."
  },
+ "narrator/669d9e4d4c77b0e6": {
+  "chars": 268,
+  "direction": "[quiet, solemn, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Small cairns along the verge, each with a flat stone on top and a name scratched into it by somebody with a Vistani knife: Mihai. Old Dorota. The Lupescu twins. A tinker, no name, only a pot drawn in the stone. Dozens more, back into the grass, the oldest worn smooth."
+ },
  "narrator/66ba60d345a05724": {
   "chars": 127,
   "model": "eleven_v4",
@@ -42543,6 +43040,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The attic hall. The humming stops as you come in, like children caught out of bed."
+ },
+ "narrator/69d5e73d7591d9e3": {
+  "chars": 282,
+  "direction": "[hushed, ominous, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The horn first, three notes, close enough to feel in your teeth. Then the hounds come up the east road out of the dark: grey and long and silent, more than you can count, and behind them a long grey man in a hunting coat gone black with weather, with a boar spear over his shoulder."
  },
  "narrator/69d7af6df6950ffa": {
   "chars": 191,
@@ -44379,6 +44883,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The floor round the press is stained to the knee with what's left of the Mash."
+ },
+ "narrator/7a86185301faac8f": {
+  "chars": 65,
+  "direction": "[hushed, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A dead man with a spear. That's all you can make out in the dark."
  },
  "narrator/7a89adcd14db0608": {
   "chars": 107,
@@ -46959,6 +47470,13 @@
   "recipe": "dd92281f92",
   "text": "Steps cut into the ice by hands that have been dead for centuries, worn into shallow bowls by the feet of everyone who climbed up after them."
  },
+ "narrator/92d507c4262b0183": {
+  "chars": 109,
+  "direction": "[quiet, solemn]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You say the names. Mihai. Old Dorota. The Lupescu twins. The ones worn smooth, as near as you can guess them."
+ },
  "narrator/92dd25ac3a2f2b76": {
   "chars": 136,
   "model": "eleven_v4",
@@ -47660,6 +48178,13 @@
   "recipe": "dd92281f92",
   "text": "A carved warning, repeated in nine scripts and a set of pictures for those who couldn't read: a hand reaching toward a box, and the same hand without its fingers."
  },
+ "narrator/99bbb2cdbbfba2f0": {
+  "chars": 108,
+  "direction": "[quiet, moved, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Very faintly, from a long way below, comes the sound of a woman laughing who has not laughed in sixty years."
+ },
  "narrator/99bd57f355c5700a": {
   "chars": 116,
   "model": "eleven_v4",
@@ -47924,6 +48449,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A narrow camp cot with the blanket folded square and tucked tight. Under the pillow, a stake. Under the stake, a little bag of lavender."
+ },
+ "narrator/9c02c00253f328ac": {
+  "chars": 178,
+  "direction": "[hushed, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "In the darkest corner of the kitchen something very large sits under a blanket of sewn-together habits, with a pair of long thin bird's legs folded under it, and doesn't look up."
  },
  "narrator/9c2c51b4c6f7cfce": {
   "chars": 157,
@@ -50473,6 +51005,20 @@
   "recipe": "f60908d226",
   "text": "The words come out wrong, or the wrong way round, and the column doesn't move. The marshal's hand goes to his blade."
  },
+ "narrator/b3bf19fc1a626748": {
+  "chars": 266,
+  "direction": "[tense, then soaring, joyful]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She lets go. She drops like a sack of grain, and the Belviews in the courtyard scream, and then the wings catch the air with a crack like a sail, and she is going up, and then along, and then away, very badly, in long lurching swoops, down the mountain toward Krezk."
+ },
+ "narrator/b3c2c01f4ce1a0c6": {
+  "chars": 151,
+  "direction": "[hushed, eerie, surprised]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "An hour past midnight a raven comes down into the Seventh Row, and shakes itself, and is Adrian Martikov in his shirtsleeves, with his hat in his hand."
+ },
  "narrator/b3e2a01be8435d82": {
   "chars": 85,
   "model": "eleven_v4",
@@ -51995,6 +52541,13 @@
   "recipe": "dd92281f92",
   "text": "She rocks, and hums, and scrapes the pot. If she is hiding anything, she has had a very long time to practise."
  },
+ "narrator/c2a60d3dc2f9be07": {
+  "chars": 56,
+  "direction": "[quiet, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Gavril, behind you, makes a small noise and doesn't run."
+ },
  "narrator/c2a8d8fa2209f7c1": {
   "chars": 87,
   "model": "eleven_v4",
@@ -52276,6 +52829,13 @@
   "recipe": "f60908d226",
   "text": "He's on a shelf of wet rock no wider than a cart, twenty feet down, soaked and shaking and three days hungry, with his knees pulled up and his hands over his ears."
  },
+ "narrator/c546f1c520c8a0ba": {
+  "chars": 127,
+  "direction": "[quiet, moved]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Adrian walks in beside you, black sap to the elbows, and stands in front of his father, and tells him all of it before you can."
+ },
  "narrator/c54816e5a9bb728a": {
   "chars": 57,
   "model": "eleven_v4",
@@ -52393,6 +52953,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "He puts his helmet back on, though there's nothing to fight, and goes back to the fire."
+ },
+ "narrator/c69e59e77a4deaf7": {
+  "chars": 99,
+  "direction": "[quiet, grim]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A long trench of torn earth and black splinters where the Seventh Row was. It smells of spilt wine."
  },
  "narrator/c6b22a11c2caf294": {
   "chars": 157,
@@ -54939,6 +55506,13 @@
   "recipe": "f60908d226",
   "text": "Casks stacked by the winery door, the Martikov sign burned into each head: a raven with a grape in its beak. Most of them ring hollow."
  },
+ "narrator/dfa6a08b57c3d805": {
+  "chars": 266,
+  "direction": "[hushed, wondering, gentle]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Where the hounds fell there's nothing left but grey mist lying low in the road. As you watch it lifts, in shapes that might be people, a tinker and a girl and twins and an old woman, and goes off in every direction at a walk, as if there's all the time in the world."
+ },
  "narrator/dfadaef52042938d": {
   "chars": 185,
   "model": "eleven_v4",
@@ -54957,6 +55531,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "Daciana watches the names curl and go, every one, and doesn't say anything until the last of it is ash. Then she takes the ribbon off her own sleeve and drops it in the fire as well."
+ },
+ "narrator/dfb5909534bc8893": {
+  "chars": 48,
+  "direction": "[plain, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Black grapes. Too many. That's all you can tell."
  },
  "narrator/dfbca9462290d8cc": {
   "chars": 199,
@@ -55660,6 +56241,13 @@
   "recipe": "dd92281f92",
   "text": "She steps into another of you, apologizing as she goes. Now someone in the party is humming a nursery tune that none of you started."
  },
+ "narrator/e5d11c8106760b82": {
+  "chars": 51,
+  "direction": "[plain, dry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Trodden earth and fallen leaves. Pickers, probably."
+ },
  "narrator/e5d25c2f24162d8c": {
   "chars": 190,
   "direction": "[solemn, gentle, moved]",
@@ -56163,6 +56751,13 @@
   "recipe": "f60908d226",
   "text": "The niches go back further than your light does. Someone with sharper eyes might see more."
  },
+ "narrator/eb46b7159c23360a": {
+  "chars": 115,
+  "direction": "[ominous, building, urgent]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The Seventh Row stands up out of the ground, and the vines in the rows on either side pull their roots up after it."
+ },
  "narrator/eb5822c3be5a52c5": {
   "chars": 163,
   "model": "eleven_v4",
@@ -56426,6 +57021,13 @@
   "recipe": "f60908d226",
   "text": "Ratatoille has made something small tonight, on a plate by itself: two honey cakes, still warm, and nothing else. He sets it down in front of Liriel and stands there holding a page of notes he isn't reading."
  },
+ "narrator/ed65dd642d2589e8": {
+  "chars": 187,
+  "direction": "[hushed, moved, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Here and there in the pack a hound stops, and sits down in the road, and looks at you with eyes that are nearly a person's. Then it lies down with its head on its paws and doesn't get up."
+ },
  "narrator/ed7f9788b18923da": {
   "chars": 134,
   "model": "eleven_v4",
@@ -56469,6 +57071,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "Tucked into the bundles of drying herbs, a flask of something clear and faintly gold. It smells of spring, which is strange in these caves."
+ },
+ "narrator/edf09f4249539034": {
+  "chars": 187,
+  "direction": "[quiet, sad, observant]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He's tired. Not the way the dead are tired; the way a man is, at the end of a long day's walking, who would like very much to sit down and isn't allowed. He keeps his eyes off the hounds."
  },
  "narrator/ee1677a25702477f": {
   "chars": 154,
@@ -57005,6 +57614,13 @@
   "recipe": "dd92281f92",
   "text": "A grey wolf stands square in the narrows, head low, while more shapes wait in the fog beyond it and something shifts in the trees behind you. None of them growl; they are waiting to see what you do."
  },
+ "narrator/f2d9ea2b0583e49f": {
+  "chars": 106,
+  "direction": "[hushed, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Then he lies down in the furrow between the vines, and talks, very quietly, as if somebody were answering."
+ },
  "narrator/f30ab8c4b102f87a": {
   "chars": 100,
   "model": "eleven_v4",
@@ -57353,6 +57969,20 @@
   "recipe": "dd92281f92",
   "text": "You sleep under the Krezkovs' roof with the shutters barred. Twice in the night you hear Anna singing upstairs, and once you hear Dmitri on the stair, stopping to listen, then going back down."
  },
+ "narrator/f67eabe9e0bb9875": {
+  "chars": 224,
+  "direction": "[quiet, patient, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "It takes the better part of an hour. The wire comes out stitch by stitch, bright as the day he put it in, and Mother holds very still and tells you about every one of the nine gifts, in order, without once raising her voice."
+ },
+ "narrator/f6839674bca8711b": {
+  "chars": 162,
+  "direction": "[quiet, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He holds up his hands to show you he's harmless, and in the moonlight you can see the veins on the backs of them. They are dark, and they branch, like the leaves."
+ },
  "narrator/f6872b919f4ec0fb": {
   "chars": 115,
   "model": "eleven_v4",
@@ -57444,6 +58074,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Behind the servants' hearth, one stone sits a finger's width proud of the others. Behind it, wrapped in a rag, somebody's careful little savings."
+ },
+ "narrator/f739fe526b580d98": {
+  "chars": 137,
+  "direction": "[hushed, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He picks the black grapes by feel, without looking, a whole hat full. He eats them standing there, one after another, with his eyes shut."
  },
  "narrator/f74c0aaef80fb8cd": {
   "chars": 141,
@@ -72433,12 +73070,26 @@
   "recipe": "b37cf3c360",
   "text": "Hear that? That's a cask that holds. Davian's wine is going down the road again, in my casks. I could weep."
  },
+ "wine_picker/036b69dc3e5f2426": {
+  "chars": 87,
+  "direction": "[relieved, wry, warm]",
+  "model": "eleven_v3",
+  "recipe": "62f49b2835",
+  "text": "The Seventh Row's young vines again. Sour as anything. I've never been so glad of sour."
+ },
  "wine_picker/a1771a643dea3fc0": {
   "chars": 110,
   "direction": "[slow, gentle, amused]",
   "model": "eleven_v3",
   "recipe": "62f49b2835",
   "text": "These are the last good rows. Taste one. Sour, yes? The wine will be sweet. Don't ask me how. Ask the old man."
+ },
+ "wine_picker/efa965fb81eb83c2": {
+  "chars": 153,
+  "direction": "[low, uneasy, firm]",
+  "model": "eleven_v3",
+  "recipe": "62f49b2835",
+  "text": "Not the Seventh Row, though. Don't taste those. They come up black in the night and they're gone by morning, and I don't pick anything I didn't see grow."
  },
  "wine_pruner/5e3279419c0670af": {
   "chars": 156,

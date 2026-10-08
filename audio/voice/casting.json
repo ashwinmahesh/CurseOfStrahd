@@ -231,6 +231,7 @@
       "description": "A lean man in his thirties with a quiet, dry, sardonic voice and a strong, clearly audible Eastern European (Romanian) accent. Understated and guarded, short sentences, bitter humour, carrying guilt he won't explain.",
       "settings": {},
       "model": "eleven_v3",
+      "generated_voice_id": "DjU0AczwuXPRF9hmf8i3",
       "released": true
     },
     "argynvost": {
@@ -1518,14 +1519,14 @@
       "shared_with": "sorvia"
     },
     "camp_cook": {
-      "voice_id": "8OkSxYl0qQH1Kg3Qzxu2",
-      "name": "Library voice: Betty",
-      "description": "Old Paraschiva, cook of the lake camp: a generic townsperson on a shared voice, Betty (also Sorvia's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "d90np8fxRBxUcXZAKL70",
+      "name": "Barovia Old Paraschiva",
+      "description": "An old Vistani woman in her seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A tart, crackly, bossy old cook's voice with a sly humour.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "sorvia"
+      "generated_voice_id": "d90np8fxRBxUcXZAKL70",
+      "released": true
     },
     "pool_mourner": {
       "voice_id": "wEJjJg8SheKHTwm83mZY",
@@ -1658,14 +1659,14 @@
       "shared_with": "urwin_martikov"
     },
     "camp_groom": {
-      "voice_id": "sGcPNcpR5PikknzyXcy7",
-      "name": "Library voice: Cristi Romana",
-      "description": "Gavril, horse-keeper of the lake camp: a generic townsperson on a shared voice, Cristi Romana (also Krezk Watchman's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "mDzEpb1CJDGMhJHYrU2N",
+      "name": "Barovia Gavril",
+      "description": "An old Vistani horse-keeper in his sixties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A low, gentle, dry old voice, more at ease with horses.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "krezk_guard"
+      "generated_voice_id": "mDzEpb1CJDGMhJHYrU2N",
+      "released": true
     },
     "pastry_customer_man": {
       "voice_id": "sGcPNcpR5PikknzyXcy7",
@@ -2032,6 +2033,26 @@
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "57GJuoa2OCxQGWKIS8Qp",
+      "released": true
+    },
+    "count_huntsman": {
+      "voice_id": "iziiCZD5hx1Ox65VTGmS",
+      "name": "Barovia The Huntsman",
+      "description": "A long-dead Barovian huntsman, a revenant four hundred years in the saddle, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A low, dry, hoarse man's voice, cold and formal like an old servant reciting rules, bone-weary under it, with a faint echo of the grave.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "iziiCZD5hx1Ox65VTGmS",
+      "released": true
+    },
+    "belview_mother": {
+      "voice_id": "SRrttc9MKhkw7HcNbu4r",
+      "name": "Barovia Mother (Belview)",
+      "description": "A broad, grey-haired Barovian woman of about sixty, born in Krezk, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A low, husky, slow and very calm voice that never rises, with a faint feline purr and rasp in it; motherly, weary, quietly stubborn, strange.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "SRrttc9MKhkw7HcNbu4r",
       "released": true
     }
   },
