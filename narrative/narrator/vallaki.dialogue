@@ -540,3 +540,18 @@ once
 ~ search:hearth_loose_brick
 | One brick by the taproom hearth isn't mortared. Behind it, a small black bead that is heavier than it looks.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the market row and the square
+
+~ examine:market_herb_stall
+| Bunches of dried sage and thyme, garlic in braids, and a basket of wolfsbane under a cloth. The wolfsbane sells best, and nobody asks for it out loud.
+
+~ examine:market_cloth_stall
+| Bolts of cloth in every colour, and yellow bunting by the yard heaped twice as high as everything else. The bolt of black at the back has not been touched in months.
+
+~ examine:wicker_bundles
+| Bundles of cut willow and straw, stacked for the wicker sun. Somebody has tucked a little straw doll into the top bundle, with a yellow ribbon round its neck.
+
+~ search:bench_dropped_purse
+| Under the bench, a ball of good twine dropped by some festival worker. {name} winds it up and pockets it; Vallaki won't miss it, and it was never smiling anyway.
+

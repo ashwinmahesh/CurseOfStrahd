@@ -257,3 +257,25 @@ func test_barovia_is_lived_in() -> void:
 	assert_true(swung, "the sexton digs")
 	assert_true(mihail.sprite.facing.x > 0.7, "facing his grave, east (%s)" % mihail.sprite.facing)
 	v.queue_free()
+
+
+## Vallaki lived in (lane 28): "festival bunting in a yellow that nobody here would choose", stalls on the market row,
+## and the town at work - the porter, the raker, the ribbon girl, the painter at the wicker sun, a patrol, a dog.
+func test_vallaki_is_lived_in() -> void:
+	GameState.story.minute_of_day = 10 * 60
+	var v := _view("vallaki")
+	await _frames(2)
+	var bunting := 0
+	for n in v.board.find_children("WashingLine*", "Node3D", true, false):
+		if n.find_children("*", "MeshInstance3D", true, false).size() > 10:
+			bunting += 1
+	assert_true(bunting >= 6, "bunting over the streets and the square (%d)" % bunting)
+	var here: Array[String] = []
+	for s: Variant in v.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	for id: String in ["vallaki_herbwife", "vallaki_cloth_merchant", "vallaki_porter", "vallaki_ribbon_girl",
+			"vallaki_sun_painter", "vallaki_patrol", "vallaki_raker", "vallaki_dog"]:
+		assert_true(id in here, "%s is about" % id)
+	assert_true(v.grid.height(Vector2i(40, 9)) > v.grid.height(Vector2i(24, 21)), "St. Andral's stands on its rise")
+	assert_true(v.grid.height(Vector2i(24, 21)) > v.grid.height(Vector2i(24, 30)), "the lower town a step down")
+	v.queue_free()
