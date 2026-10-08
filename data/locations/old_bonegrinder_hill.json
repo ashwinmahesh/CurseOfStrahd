@@ -429,6 +429,46 @@
       "approach": 7,
       "when": "not flag.ilinca_joined and not flag.children_rescued",
       "facing": "east"
+    },
+    {
+      "npc": "pastry_customer_man",
+      "cell": [
+        12,
+        12
+      ],
+      "dialogue": "old_bonegrinder/customers:man",
+      "facing": "east",
+      "hours": [
+        9,
+        16
+      ],
+      "when": "not flag.morgantha_slain and not flag.bonegrinder_burned"
+    },
+    {
+      "npc": "pastry_customer_woman",
+      "cell": [
+        16,
+        13
+      ],
+      "dialogue": "old_bonegrinder/customers:woman",
+      "facing": "west",
+      "path": [
+        [
+          15,
+          13,
+          4
+        ],
+        [
+          17,
+          14,
+          3
+        ]
+      ],
+      "hours": [
+        9,
+        16
+      ],
+      "when": "not flag.morgantha_slain and not flag.bonegrinder_burned"
     }
   ],
   "narration": {

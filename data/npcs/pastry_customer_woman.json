@@ -1,0 +1,18 @@
+{
+  "id": "pastry_customer_woman",
+  "name": "Lucia",
+  "title": "Waiting at the Mill",
+  "summary": "A villager pacing by the mill door with an empty basket, who came for one pastry for her husband and means to buy two.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}

@@ -469,3 +469,26 @@ func test_the_pool_of_the_white_sun() -> void:
 		ids.append(str((p as Dictionary)["id"]))
 	assert_true("krezkov_toys" in ids, "the side quest's toys are kept")
 	v.queue_free()
+
+
+## Old Bonegrinder lived in (lane 28): villagers wait at the mill's door for dream pastries while the hags still bake,
+## and are gone once Morgantha is dead.
+func test_villagers_wait_at_the_mill() -> void:
+	GameState.story.minute_of_day = 11 * 60
+	var v := _view("old_bonegrinder_hill")
+	await _frames(2)
+	var here: Array[String] = []
+	for s: Variant in v.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	for id: String in ["pastry_customer_man", "pastry_customer_woman"]:
+		assert_true(id in here, "%s waits at the mill" % id)
+	v.queue_free()
+	await _frames(1)
+	GameState.story.set_flag("morgantha_slain")
+	var after := _view("old_bonegrinder_hill")
+	await _frames(2)
+	here.clear()
+	for s: Variant in after.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	assert_false("pastry_customer_man" in here, "no one waits once the baking stops")
+	after.queue_free()
