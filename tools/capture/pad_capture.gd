@@ -1,7 +1,9 @@
 extends Node
 ## The controller on screens (U6, ui/common/pad_nav.gd) over a late party, driven by synthetic pad presses: the pause
-## menu with the focus frame on its second button, the character sheet with a row's rules card opened by Y, and the
-## inventory after a few D-pad steps. The game is loaded in the capture's own save folder (tools/capture/capture.gd).
+## menu with the focus frame on its second button and the prompt bar, the Game settings with focus on a row, the
+## character sheet with a row's rules card opened by Y, and the inventory after a few D-pad steps. The game is loaded
+## in the capture's own save folder (tools/capture/capture.gd), and its settings go to a file of its own, so a row the
+## pad touches never changes the owner's.
 ## make capture SCENE=res://tools/capture/pad_capture.tscn NAME=pad FRAMES=30
 
 const LATE := "v2_amber_temple.json"
@@ -10,6 +12,7 @@ var root: Node
 
 
 func _ready() -> void:
+	GameSettings.path = "user://capture_saves/%d/settings.cfg" % OS.get_process_id()
 	var out := FileAccess.open(SaveSystem.slot_path("capture_game"), FileAccess.WRITE)
 	out.store_string(FileAccess.get_file_as_string(GoldenSaves.DIR + LATE))
 	out.close()
@@ -41,6 +44,11 @@ func capture_shots(tool: Node, out: String) -> void:
 	await _press(tool, JOY_BUTTON_DPAD_DOWN)
 	await _press(tool, JOY_BUTTON_DPAD_DOWN)
 	await _shoot(tool, out + "_0_menu.png")
+	(root.get("screen") as PauseMenu).call("_show_settings", "Game")
+	await tool.call("wait_frames", 4)
+	for b: JoyButton in [JOY_BUTTON_DPAD_UP, JOY_BUTTON_DPAD_UP, JOY_BUTTON_DPAD_UP]:
+		await _press(tool, b)
+	await _shoot(tool, out + "_3_settings.png")
 	root.call("close_screen")
 	await tool.call("wait_frames", 10)
 	root.call("open_screen", "sheet", 0)

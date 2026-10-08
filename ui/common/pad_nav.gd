@@ -51,6 +51,7 @@ var pad := false
 ## The pad's family, for its pictures: "xbox", "playstation" or "nintendo".
 var family := "xbox"
 var ring: FocusRing
+var prompts: PadPrompts
 ## The scope this frame (null when nothing is in front).
 var scope: CanvasLayer = null
 
@@ -88,6 +89,8 @@ func _exit_tree() -> void:
 func _ready() -> void:
 	ring = FocusRing.new()
 	add_child(ring)
+	prompts = PadPrompts.new()
+	add_child(prompts)
 	get_tree().node_added.connect(_on_node_added)
 	for n: Node in get_tree().root.find_children("*", "CanvasLayer", true, false):
 		_on_node_added(n)
@@ -128,11 +131,15 @@ static func family_of(joy_name: String, vendor: int = 0) -> String:
 func _use_pad(on: bool, device: int) -> void:
 	if on and device in Input.get_connected_joypads():
 		var info := Input.get_joy_info(device)
+		var was := family
 		family = family_of(Input.get_joy_name(device), int(info.get("vendor_id", 0)))
+		if family != was:
+			PadGlyphs.refresh_hints()
 	_mouse_travel = 0.0
 	if on == pad:
 		return
 	pad = on
+	PadGlyphs.refresh_hints()
 	if on:
 		# Only a window the player is in hides the pointer (a capture's window never has focus).
 		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE and get_window() != null and get_window().has_focus():
@@ -192,7 +199,8 @@ func _drive(event: InputEvent) -> bool:
 	if event.is_action_pressed(&"ui_accept"):
 		if f is BaseButton or f is LineEdit or f is TextEdit:
 			return false   # the engine presses buttons and lets fields take it
-		click(f, MOUSE_BUTTON_LEFT)
+		if not f.has_method(&"pad_adjust"):
+			click(f, MOUSE_BUTTON_LEFT)   # a drawn slider isn't clicked in its middle
 		return true
 	if _pressed(event, &"pad_context"):
 		click(f, MOUSE_BUTTON_RIGHT)

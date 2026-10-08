@@ -220,8 +220,10 @@ func _build() -> void:
 	_go = UiParts.small_button("Continue", advance)
 	_go.name = "Continue"
 	_go.focus_mode = Control.FOCUS_NONE
+	_go.set_meta(&"pad_first", true)   # a pad lands on it (PadNav)
 	_footer.add_child(_go)
 	var hint := UiKit.label("or click, Space or Enter · Esc skips", 13, "parchment")
+	PadGlyphs.hint(hint, hint.text, "or {a} · {b} skips")
 	hint.name = "Hint"
 	_footer.add_child(hint)
 

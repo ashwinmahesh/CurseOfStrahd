@@ -88,6 +88,7 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	art.size = size
 	_frame.add_child(art)
 	var esc := _text("Esc: close", 8.5, Color(_c("arch_text"), 0.55))
+	PadGlyphs.hint(esc, "Esc: close", "{b}: close")
 	esc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	esc.position = Vector2(0, size.y + 6.0)
 	esc.size = Vector2(size.x, 18)
@@ -339,6 +340,16 @@ func _game_rows() -> void:
 		_set_turn_based(i == 1),
 		InputActions.fill("Turn-based: outside fights the party moves in rounds, one of you at a time, to set up an ambush. {plan_mode} switches it too."))
 	y += ROW_PITCH
+	# The controller's button pictures (U6, PadGlyphs): the pad in use, or a family picked here.
+	var icons: Array[String] = ["auto"]
+	icons.append_array(PadGlyphs.FAMILIES)
+	var icon_names: Array[String] = ["Automatic", "Xbox", "PlayStation", "Nintendo"]
+	_choice_row(y, "Button icons", icon_names, maxi(0, icons.find(str(GameSettings.value("pad_icons", "auto")))),
+		func(i: int) -> void:
+			GameSettings.set_value("pad_icons", icons[i])
+			PadGlyphs.refresh_hints(),
+		"The controller's buttons as they're shown: Automatic follows the pad you play with.")
+	y += ROW_PITCH
 	var respec := CheckBox.new()
 	respec.text = "Allow rebuilding a character at Madam Eva"
 	respec.add_theme_font_override("font", serif())
@@ -501,12 +512,15 @@ func _choice_row(y: float, text: String, options: Array[String], current: int, o
 		var mb := ev as InputEventMouseButton
 		if mb != null and mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
 			at[1] = mb.position.x < b.size.x * 0.3)
-	b.pressed.connect(func() -> void:
+	var turn := func(step: int) -> void:
 		Audio.sfx("click")
-		at[0] = posmod(int(at[0]) + (-1 if bool(at[1]) else 1), options.size())
-		at[1] = false
+		at[0] = posmod(int(at[0]) + step, options.size())
 		b.text = "‹  %s  ›" % options[int(at[0])]
-		on_change.call(int(at[0])))
+		on_change.call(int(at[0]))
+	b.pressed.connect(func() -> void:
+		turn.call(-1 if bool(at[1]) else 1)
+		at[1] = false)
+	b.set_meta(&"pad_adjust", turn)   # the pad's left and right turn it (PadNav)
 	b.position = _u(130, y - 11.0)
 	b.size = _u(127, 22)
 	# A fine gold rule under the choice, like the sliders' tracks.
@@ -697,6 +711,12 @@ class ConceptSlider extends Control:
 		var sp := _span()
 		value = snappedf(clampf((x - sp.x) / maxf(sp.y - sp.x, 1.0), 0.0, 1.0), 0.05)
 		queue_redraw()
+
+	## The pad's left and right (PadNav): a step down or up.
+	func pad_adjust(step: int) -> void:
+		value = snappedf(clampf(value + 0.05 * step, 0.0, 1.0), 0.05)
+		queue_redraw()
+		changed.emit(value)
 
 
 # --- Buttons --------------------------------------------------------------------------------------
