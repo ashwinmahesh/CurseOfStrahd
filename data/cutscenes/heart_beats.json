@@ -1,0 +1,15 @@
+{
+  "id": "heart_beats",
+  "title": "The Heart of Sorrow",
+  "summary": "A heart of red crystal taller than a man beats at the top of the tower.",
+  "images": [
+    {
+      "image": "heart_beats",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

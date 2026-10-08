@@ -1,0 +1,17 @@
+{
+  "id": "strahd_mist_flight",
+  "title": "He Goes Home to His Coffin",
+  "summary": "Beaten, Strahd comes apart into mist and pours away toward his coffin.",
+  "images": [
+    {
+      "image": "strahd_mist_flight",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.45
+  ],
+  "trigger": "strahd:fled_to_coffin",
+  "once": true
+}

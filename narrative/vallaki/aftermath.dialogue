@@ -162,6 +162,7 @@ Lady Wachter: A hundred and fifty, as agreed, and the thanks of the burgomistres
 if flag.victor_circle != "broken" and flag.victor_circle != "persuaded" and flag.victor_circle != "reported"
 set victor_vanished
 quest victors_circle vanished
+cutscene attic_flash
 Narrator: Behind the dais, an attic window in the Baron's mansion flashes white, once, like lightning that forgot the thunder. Lady Lydia turns toward it and screams her son's name.
 if tarokka.ally.npc == victor_vallakovich
 quest find_the_ally lost

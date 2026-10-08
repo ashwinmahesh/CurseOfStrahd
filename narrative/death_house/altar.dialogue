@@ -13,6 +13,7 @@ endif
 -> start
 
 ~ start
+cutscene death_house_cult
 Narrator: Robed figures made of shadow stand around the stone altar, faces hidden, voices joined. The chant has been rising since the stairs, and here, at last, you can make out the words.
 cult_shades: One must die. One must die. One must die.
 interject name:kip_smudgewick: "Must" is a very strong word. Is there a clause? There's always a clause.
@@ -118,6 +119,7 @@ Narrator: Lorghoth the Decayer is too vast for the narrow ways and too slow for 
 -> END
 
 ~ stand
+cutscene death_house_lorghoth
 if flag.death_house_head_start
   Narrator: You have a moment to choose your ground before it reaches you. Use it.
   combat lorghoth_rises_late

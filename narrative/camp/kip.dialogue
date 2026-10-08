@@ -83,6 +83,7 @@ endif
 ~ quillon
 Narrator: Kip is sitting very close to the fire, closer than is comfortable, with his straw hat pulled down over his horns.
 interject name:kip_smudgewick: Did anyone else... has anyone else seen a man? In a grey coat? Just there? At the edge of the light?
+cutscene quillon_fire
 Narrator: There's nobody at the edge of the light. Then there is: a slim gentleman in a grey coat and grey gloves, a ledger under his arm, standing exactly where the firelight stops as if it were a line painted on a floor.
 Mister Quillon: Good evening. Please, nobody get up. Mister Smudgewick. I happened to be passing.
 interject name:kip_smudgewick: Nobody happens to be passing here. There's no here to pass. It's surrounded by fog.

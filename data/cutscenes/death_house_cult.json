@@ -1,0 +1,11 @@
+{
+  "id": "death_house_cult",
+  "title": "The Ring of Shadows",
+  "summary": "Shadow cultists chant round the altar under Death House while something vast sleeps in the dark behind it.",
+  "images": [
+    {
+      "image": "death_house_cult",
+      "when": ""
+    }
+  ]
+}

@@ -111,6 +111,7 @@ set argynvost_beacon_lit
 set order_fate = "rest"
 quest the_dark_beacon lit
 quest the_order_of_the_silver_dragon rest
+cutscene beacon_lit
 Narrator: The flame touches the old ash, and the beacon takes it like a long-held breath let go.
 Narrator: Silver light goes up out of the cradle and over the parapet, over the treetops and the whole dark valley, all the way to the castle on its rock.
 Argynvost: There. There it is. Oh, look at it.
@@ -138,6 +139,7 @@ if tarokka.ally.npc == sir_godfrey_gwilym
 -> godfrey_asks
 endif
 if flag.godfrey_met
+cutscene godfrey_rests
 Narrator: In a small room downstairs, under a wall of charcoal names, a big knight in dented plate sits down on his cot and is still.
 endif
 -> farewell

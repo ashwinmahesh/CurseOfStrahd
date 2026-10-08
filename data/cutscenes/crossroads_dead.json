@@ -1,0 +1,12 @@
+{
+  "id": "crossroads_dead",
+  "title": "The Gallows Field Wakes",
+  "summary": "At night the hanged man lifts his head and the graves around the gallows split.",
+  "images": [
+    {
+      "image": "crossroads_dead",
+      "when": "night and not flag.nicu_cut_down and not flag.crossroads_dead_cleared"
+    }
+  ],
+  "trigger": "enter:crossroads_gallows"
+}

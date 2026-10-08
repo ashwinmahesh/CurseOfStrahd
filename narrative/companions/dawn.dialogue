@@ -54,6 +54,7 @@ interject name:liriel_dawnsong: I'd like to try something. It may not work. It's
 set liriel_dawn_prayed
 Narrator: Liriel climbs the step, turns her back on the upside-down sun, faces the dark windows and begins the morning hymn: the one the novices sing every dawn on the temple wall, the one she has sung every morning of her life.
 Narrator: The first verse goes up into the cold and nothing happens. She doesn't stop. The second verse, and the dark in the windows thins, like a curtain held up to a lamp.
+cutscene chapel_dawn
 Narrator: On the third verse the dawn comes. Real dawn, gold first and then white, pouring through the stained glass, laying coloured light over the dust and the pews and the altar, warm on your faces. Things in the walls cry out and go quiet.
 if name:godrick_pendlebrook
 interject name:godrick_pendlebrook: Oh. Oh, that's the sun. I'd forgotten it was that colour.

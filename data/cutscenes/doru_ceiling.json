@@ -1,0 +1,15 @@
+{
+  "id": "doru_ceiling",
+  "title": "The Face on the Ceiling",
+  "summary": "Doru clings upside down to the undercroft's vault, smiling down.",
+  "images": [
+    {
+      "image": "doru_ceiling",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.3
+  ]
+}

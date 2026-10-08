@@ -3,7 +3,10 @@ extends TestCase
 ## first of its takes whose condition holds or is skipped; in a conversation `cutscene <id>` puts it under the lines,
 ## which read as captions, the box comes back for options, Skip runs the captions on to the next choice, Esc pauses and
 ## `cutscene end` takes it away; looking at a place's trigger shows its picture with the narrator's words, closes on a
-## click and keeps the world still meanwhile. The rider on the ridge plays on the first journey out with Ireena.
+## click and keeps the world still meanwhile; a `once` one comes back no more. An ending's narration shows its picture
+## behind the words. The rider on the ridge plays on the first journey out, with Ireena in it when she's along. A
+## Tarokka treasure shows its picture once, in a conversation or before the loot window; a fight's narrator key can
+## have one too (Strahd fleeing to his coffin as mist).
 
 const LOC := {
 	"id": "test_crag", "name": "Test Crag", "region": "test", "summary": "A fixture.",
@@ -34,6 +37,17 @@ Narrator: He lifts a hand.
 cutscene end
 Narrator: The ridge is bare.
 -> END
+
+~ treasure
+tarokka give argynvostholt_vladimir
+Narrator: It is heavier than it looks.
+-> END
+
+~ ending
+Narrator: The castle is quiet.
+cutscene test_view
+Narrator: The sun comes up.
+-> END
 """
 
 ## A picture the game already has, so the tests need no art of their own.
@@ -47,11 +61,14 @@ func before_each() -> void:
 		"focus": [0.5, 0.3]})
 	Cutscenes.register({"id": "test_view", "title": "Test view", "summary": "A fixture.",
 		"images": [{"image": "strahd_watcher", "when": ""}], "trigger": "examine:test_lookout"})
+	Cutscenes.register({"id": "test_once", "title": "Test once", "summary": "A fixture.",
+		"images": [{"image": "strahd_watcher", "when": ""}], "trigger": "enter:test_ledge", "once": true})
 	DialogueFile.register(DialogueFile.parse(DIALOGUE, "test/cut"))
 	Compendium.shared().tables["locations"]["test_crag"] = LOC.duplicate(true)
 
 
 func after_each() -> void:
+	get_tree().paused = false
 	if is_instance_valid(root):
 		root.queue_free()
 		root = null
@@ -111,13 +128,18 @@ func test_every_cutscene_has_a_picture_the_game_can_load() -> void:
 
 
 func test_the_first_take_that_holds_is_shown_and_none_skips_it() -> void:
-	assert_eq(Cutscenes.image("test_ridge", _story(true)), "res://art/cutscenes/strahd_watcher.png")
+	assert_eq(Cutscenes.image("test_ridge", _story(true)), "res://art/cutscenes/strahd_watcher.jpg")
 	assert_eq(Cutscenes.image("test_ridge", _story(false)), "", "the picture shows Ireena, so it waits for her")
 	assert_eq(Cutscenes.image("no_such_cutscene", _story(true)), "")
 	assert_eq(Cutscenes.focus("test_ridge"), Vector2(0.5, 0.3))
 	assert_eq(Cutscenes.focus("test_view"), Vector2(0.5, 0.5), "the centre by default")
 	assert_eq(Cutscenes.for_trigger("examine:test_lookout", _story(false)), "test_view")
 	assert_eq(Cutscenes.for_trigger("examine:something_else", _story(false)), "")
+	var st := _story(false)
+	assert_eq(Cutscenes.for_trigger("enter:test_ledge", st), "test_once")
+	Cutscenes.mark_played("test_once", st)
+	assert_eq(Cutscenes.for_trigger("enter:test_ledge", st), "", "a `once` cutscene plays once")
+	assert_eq(Cutscenes.for_trigger("examine:test_lookout", st), "test_view", "the others every time")
 
 
 func test_the_runner_gives_the_picture_then_the_lines_and_takes_it_away() -> void:
@@ -126,7 +148,7 @@ func test_the_runner_gives_the_picture_then_the_lines_and_takes_it_away() -> voi
 	assert_eq(str(r.next()["text"]), "Before the picture.")
 	var cut := r.next()
 	assert_eq(str(cut["kind"]), "cutscene")
-	assert_eq(str(cut["image"]), "res://art/cutscenes/strahd_watcher.png")
+	assert_eq(str(cut["image"]), "res://art/cutscenes/strahd_watcher.jpg")
 	assert_eq(str(r.next()["text"]), "The rider waits on the ridge.")
 	# Without Ireena the statement is passed over and the scene plays as before.
 	var alone := DialogueRunner.new(_story(false), DiceRoller.new(3))
@@ -140,19 +162,41 @@ func test_the_runner_gives_the_picture_then_the_lines_and_takes_it_away() -> voi
 	assert_eq(str(end["image"]), "", "`cutscene end` takes it away")
 
 
-func test_the_rider_on_the_ridge_shows_on_the_first_journey_with_ireena() -> void:
-	var st := _story(true)
-	var r := DialogueRunner.new(st, DiceRoller.new(3))
-	assert_true(r.start("strahd/visits:watcher"))
-	var kinds: Array[String] = []
-	for i in 6:
-		var b := r.next()
-		kinds.append(str(b["kind"]))
-		if str(b["kind"]) == "cutscene":
-			assert_eq(str(b["image"]), "res://art/cutscenes/strahd_watcher.png")
-			assert_eq(str(r.next()["text"]).get_slice(".", 0), "The road bends under a bare ridge", "the narrator's line is its caption")
-			return
-	fail("no cutscene in the watcher: %s" % [kinds])
+func test_the_rider_on_the_ridge_shows_on_the_first_journey_with_or_without_ireena() -> void:
+	for with_ireena: bool in [true, false]:
+		var r := DialogueRunner.new(_story(with_ireena), DiceRoller.new(3))
+		assert_true(r.start("strahd/visits:watcher"))
+		var kinds: Array[String] = []
+		var shown := false
+		for i in 6:
+			var b := r.next()
+			kinds.append(str(b["kind"]))
+			if str(b["kind"]) == "cutscene":
+				assert_eq(str(b["image"]), "res://art/cutscenes/%s.jpg" % ("strahd_watcher" if with_ireena else "strahd_watcher_alone"))
+				assert_eq(str(r.next()["text"]).get_slice(".", 0), "The road bends under a bare ridge", "the narrator's line is its caption")
+				shown = true
+				break
+		assert_true(shown, "a cutscene in the watcher: %s" % [kinds])
+
+
+func test_every_cutscene_statement_names_a_cutscene_with_a_picture() -> void:
+	Cutscenes.clear_cache()
+	var named := {}
+	var dir := "res://narrative/"
+	var stack: Array[String] = [dir]
+	while not stack.is_empty():
+		var d: String = stack.pop_back()
+		for sub in DirAccess.get_directories_at(d):
+			stack.append(d.path_join(sub))
+		for f in DirAccess.get_files_at(d):
+			if f.ends_with(".dialogue"):
+				for line in FileAccess.get_file_as_string(d.path_join(f)).split("\n"):
+					if line.strip_edges().begins_with("cutscene "):
+						named[line.strip_edges().substr(9)] = d.path_join(f)
+	assert_true(named.size() > 40, "the story's cutscenes are placed (%d)" % named.size())
+	for id: String in named:
+		if id != "end":
+			assert_true(not Cutscenes.get_cutscene(id).is_empty(), "%s names cutscene %s" % [named[id], id])
 
 
 # --- In a conversation ----------------------------------------------------------------------------
@@ -167,7 +211,7 @@ func test_a_conversation_reads_its_lines_over_the_picture_and_brings_the_box_bac
 	d.call("_advance")
 	await _frames(1)
 	var view := d.cutscene
-	assert_true(view != null and view.image_path == "res://art/cutscenes/strahd_watcher.png", "the picture is up")
+	assert_true(view != null and view.image_path == "res://art/cutscenes/strahd_watcher.jpg", "the picture is up")
 	assert_true(view.captioning, "a caption")
 	assert_eq(view.caption_text(), "The rider waits on the ridge.")
 	var panel := d.get("_panel") as Control
@@ -220,8 +264,9 @@ func test_looking_at_a_places_trigger_shows_its_picture_with_the_narrators_words
 	await _frames(2)
 	var player := root.get("screen") as CutscenePlayer
 	assert_true(player != null, "the cutscene opens in place of a screen, so the world waits")
+	assert_true(get_tree().paused, "the game waits under it")
 	assert_eq(player.view.caption_text(), "The whole valley lies open below.")
-	assert_eq(player.view.image_path, "res://art/cutscenes/strahd_watcher.png")
+	assert_eq(player.view.image_path, "res://art/cutscenes/strahd_watcher.jpg")
 	player._unhandled_input(_esc())
 	assert_true(player.view.paused, "Esc pauses")
 	player.advance()
@@ -231,6 +276,65 @@ func test_looking_at_a_places_trigger_shows_its_picture_with_the_narrators_words
 	assert_true(player.done, "a click after the last caption closes it")
 	await _frames(2)
 	assert_true(root.get("screen") == null, "and the world is back")
+	assert_true(not get_tree().paused, "unpaused")
+
+
+func test_an_ending_shows_its_picture_behind_the_narration() -> void:
+	await _game(false)
+	var screen := EndingScreen.new()
+	screen.save_on_finish = false
+	screen.to_title = false
+	root.add_child(screen)
+	screen.play(GameState.story, {"id": "test_end", "title": "Test", "summary": "A fixture.", "priority": 0, "when": "",
+		"narration": "test/cut:ending", "epilogue": []})
+	await _frames(1)
+	var art := screen.get("_art") as TextureRect
+	var castle := art.texture
+	screen.advance()
+	assert_eq(screen.lines_shown[-1], "The castle is quiet.")
+	assert_true(art.texture == castle, "the castle until the statement")
+	screen.advance()
+	assert_eq(screen.lines_shown[-1], "The sun comes up.", "the statement doesn't end the narration")
+	assert_eq(art.texture.resource_path, "res://art/cutscenes/strahd_watcher.jpg", "the picture behind the words")
+	screen.queue_free()
+
+
+func test_a_treasure_shows_its_picture_once_in_a_conversation() -> void:
+	var st := _story(false)
+	st.tarokka = {"tome": "swords_1"}   # the Tome waits with Vladimir (data/tarokka/outcomes.json)
+	var r := DialogueRunner.new(st, DiceRoller.new(3))
+	assert_true(r.start("test/cut:treasure"))
+	var cut := r.next()
+	assert_eq(str(cut["kind"]), "cutscene", "the picture comes first")
+	assert_eq(str(cut["id"]), "treasure_tome")
+	assert_true(str(r.next()["text"]).contains("Tome of Strahd"), "then the notice, over it")
+	assert_true(Cutscenes.played("treasure_tome", st), "and it won't show again")
+	assert_eq(Cutscenes.for_trigger("find:tome_of_strahd", st), "")
+
+
+func test_a_treasure_in_the_spoils_shows_its_picture_before_the_loot_window() -> void:
+	await _game(false)
+	root.call("_open_loot", "test_chest", [{"id": "sunsword", "qty": 1}], 0.0)
+	await _frames(2)
+	var player := root.get("screen") as CutscenePlayer
+	assert_true(player != null and player.id == "treasure_sword", "the Sunsword's picture")
+	assert_true(root.get("loot") == null, "the loot window waits for it")
+	assert_true(player.view.caption_text().begins_with("The Sunsword"), player.view.caption_text())
+	player.advance()
+	await _frames(3)
+	assert_true(root.get("loot") != null, "then the loot window opens")
+	(root.get("loot") as Node).queue_free()
+	root.set("loot", null)
+	root.call("_open_loot", "test_chest", [{"id": "sunsword", "qty": 1}], 0.0)
+	await _frames(2)
+	assert_true(not root.get("screen") is CutscenePlayer, "only the first time")
+
+
+func test_strahd_fleeing_as_mist_has_its_picture() -> void:
+	var st := _story(false)
+	assert_eq(Cutscenes.for_trigger("strahd:fled_to_coffin", st), "strahd_mist_flight")
+	Cutscenes.clear_cache()
+	assert_eq(Cutscenes.for_trigger("strahd:fled_to_coffin", st), "strahd_mist_flight", "from the data")
 
 
 func test_skip_closes_a_places_cutscene() -> void:

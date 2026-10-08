@@ -1,0 +1,15 @@
+{
+  "id": "vines_gem",
+  "title": "The Vines Remember",
+  "summary": "Davian presses a gem into the soil and a dead vine puts out a new leaf.",
+  "images": [
+    {
+      "image": "vines_gem",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.45,
+    0.55
+  ]
+}
