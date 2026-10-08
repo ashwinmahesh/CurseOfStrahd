@@ -223,3 +223,18 @@ func test_the_huntsman_and_his_hounds_come_up_the_east_road() -> void:
 			root.queue_free()
 			root = null
 			await _frames(2)
+
+
+func test_the_fowlers_drop_out_of_the_dead_pine() -> void:
+	for level: int in [5, 6, 7]:
+		for ready: bool in [false, true]:
+			var flags: Array[String] = []
+			if ready:
+				flags.append("fowlers_ready")
+			var v := await _boot("lake_zarovich_trail", 22, level, flags)
+			await _fight(v, "raven_trap", ["The Count's Fowler"])
+			await _end(v)
+			assert_true(bool(GameState.story.get_flag("fowlers_slain", false)))
+			root.queue_free()
+			root = null
+			await _frames(2)

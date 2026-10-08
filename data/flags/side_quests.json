@@ -660,6 +660,41 @@
       "id": "mother_flown",
       "type": "bool",
       "summary": "Mother flew down the mountain to Krezk (Mother's Ninth Improvement)."
+    },
+    {
+      "id": "cage_branches_seen",
+      "type": "bool",
+      "summary": "The party looked at the dead pine's branches above the raven cage (The Ravens' Ransom)."
+    },
+    {
+      "id": "bray_freed_first",
+      "type": "bool",
+      "summary": "The party crept in and opened the cage before the fowlers moved (The Ravens' Ransom)."
+    },
+    {
+      "id": "fowlers_ready",
+      "type": "bool",
+      "summary": "The count's fowlers heard the party coming, or saw them walk up to the cage (The Ravens' Ransom)."
+    },
+    {
+      "id": "fowlers_slain",
+      "type": "bool",
+      "summary": "The count's fowlers on the hill trail are dead (The Ravens' Ransom)."
+    },
+    {
+      "id": "bray_charm_seen",
+      "type": "bool",
+      "summary": "The party looked closely at Bray after the cage (The Ravens' Ransom)."
+    },
+    {
+      "id": "bray_charmed",
+      "type": "bool",
+      "summary": "Bray went home with the fowlers' charm still in him; something listens through him (The Ravens' Ransom)."
+    },
+    {
+      "id": "bray_cleared",
+      "type": "bool",
+      "summary": "The fowlers' charm on Bray is broken (The Ravens' Ransom)."
     }
   ]
 }

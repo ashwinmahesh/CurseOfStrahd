@@ -1,0 +1,166 @@
+# The Ravens' Ransom (side quest, docs/story/side_quests.md): Urwin and Danika's younger boy, Bray, flew out after dark
+# on a dare to look at the castle and didn't come home. A silver cage hangs in a dead pine on the hill trail above Lake
+# Zarovich with a raven in it that won't change back: a trap, not for him but for whoever comes, because the castle has
+# wanted the Keepers' names for a hundred years, and Urwin can't be seen to go. The count's fowlers wait in the branches.
+# And the boy they let you take home has two small marks on his wrist. Reached from Urwin's rumours (once the party
+# knows what the Martikovs are), Danika, the cage (prop raven_cage) and Bray at the inn. Every line here is unvoiced
+# for now.
+
+# --- Urwin, low across the bar (martikovs:rumors jumps here) ---
+
+~ urwin_news
+quest the_ravens_ransom asked
+Urwin: (He leans in and speaks under the noise of the room.) Bray didn't come home. He went out of the window after dark, to look at the castle, because his brother dared him. Danika hasn't sat down since.
+Urwin: The birds found him at dawn. A silver cage hung in a dead pine on the hill trail above the lake, and a raven in it that won't change back.
+Urwin: It's a trap, and not for him. For whoever comes for him. If I go, the castle knows what I am. If Danika goes, the same. They've been trying to learn the Keepers' names for a hundred years.
+Urwin: You're strangers. Strangers go up hill trails all the time. Please.
+-> vallaki/martikovs:urwin_menu
+
+# --- Danika, in the kitchen (martikovs:danika's menu) ---
+
+~ danika_waits
+Danika: (She doesn't stop kneading. She is kneading very hard.) Bring him home. Then I'll kill him. Then I'll feed him. In that order.
+-> END
+
+# --- The cage on the hill trail (prop raven_cage) ---
+
+~ cage
+if flag.fowlers_slain
+-> after_fight
+endif
+Narrator: A dead pine by the trail, and a silver cage hung from its lowest branch. Inside, a young raven with every feather on end, beak open, making no sound at all.
+Narrator: The branches above it are heavy with something that isn't leaves.
+* [if not flag.cage_branches_seen] [Perception DC 13] (Look at the branches before you go any closer.) -> branches | no_branches
+* [Stealth DC 15] (Creep in under the branches and open the cage first.) -> crept | heard
+* (Walk up and open the cage.) -> spring
+* (Back off down the trail.) -> END
+
+~ branches
+set cage_branches_seen
+Narrator: Bats. Hundreds, hanging in the dead pine in black bunches. And in the crook of the trunk, very still, two pale shapes in good coats that are not asleep, with their eyes open, watching the trail.
+-> cage
+
+~ no_branches
+set cage_branches_seen
+Narrator: Dead branches, a lot of them. It's hard to see much against the sky.
+-> cage
+
+~ crept
+set bray_freed_first
+Narrator: You come in under the branches one step at a time. The latch is silver and very cold. It opens. The raven drops into your hands, light as a glove, and doesn't make a sound.
+Narrator: Then the branches unfold, and the two in the good coats drop out of the pine like dropped coats, and land on their feet.
+-> fight
+
+~ heard
+set fowlers_ready
+Narrator: A dead twig goes under somebody's boot like a snapped bone. Up in the pine, a hundred small heads turn.
+-> fight
+
+~ spring
+set fowlers_ready
+Narrator: The cage door is easy to reach. That was the idea. As your hand closes on the latch, the branches above you unfold.
+-> fight
+
+~ fight
+The Fowler: (Pleasantly, from the branches.) Ah. We wondered who the birds would bring us. The master will be so pleased to know your faces.
+combat raven_trap
+
+# --- After the fowlers ---
+
+~ after_fight
+if quest.the_ravens_ransom != asked
+Narrator: An empty silver cage swings from the dead pine, door open. Nobody's watching it now.
+-> END
+endif
+if not flag.bray_freed_first
+Narrator: You open the cage. The raven comes out onto your arm, and shakes, and all at once there's a skinny boy of ten in its place, naked and blue with cold, holding on to you.
+else
+Narrator: The raven in your hands shakes itself, and all at once there's a skinny boy of ten in its place, naked and blue with cold, holding on to you.
+endif
+Bray: I only wanted to see it. Brom said I wouldn't. I did. It's very big.
+Narrator: Somebody gets a cloak round him. He keeps looking past you, up the valley, toward the castle on its rock.
+* [if not flag.bray_charm_seen] [Insight DC 14] (Watch where he keeps looking.) -> charm_seen | charm_missed
+* [if flag.bray_charm_seen] [knows:remove_curse] (Break it with Remove Curse.) -> cleared
+* [if flag.bray_charm_seen] [Religion DC 14] (Keep him in the daylight and pray over him till it lets go.) -> cleared_slow | not_cleared
+* (Take him home.) -> home
+
+~ charm_seen
+set bray_charm_seen
+Narrator: His eyes go to the castle the way a compass goes to north. And when the cloak slips, there are two small marks on the inside of his wrist, neat as a sewing needle's. Not enough to hurt him. Enough to listen through.
+interject tag:blunt: They didn't want him. They wanted to send him home.
+-> after_fight
+
+~ charm_missed
+set bray_charm_seen
+Narrator: A cold, frightened boy who wants his mother. That's all you see.
+-> after_fight
+
+~ cleared
+set bray_cleared
+Narrator: The words go into him like warm water. He shivers once, all over, and looks at you, and then down at his own wrist, and then, for the first time, back down the trail toward Vallaki.
+Bray: I want to go home.
+-> home
+
+~ cleared_slow
+set bray_cleared
+time +360
+Narrator: It takes the rest of the day, sitting in the one patch of sun on the trail, with a prayer said over him every hour. Toward evening he stops looking at the castle, and asks if there's any bread.
+-> home
+
+~ not_cleared
+Narrator: Hours in the thin sun, and prayers, and his eyes still go to the castle when he thinks nobody's watching.
+-> after_fight
+
+~ home
+quest the_ravens_ransom home
+if not flag.bray_cleared
+set bray_charmed
+endif
+Narrator: You bring him down off the hill trail and in through the Blue Water Inn's kitchen door after dark, the way the Keepers do things.
+-> END
+
+# --- Bray at the inn, once he's home ---
+
+~ bray
+if flag.bray_charmed and not flag.bray_cleared
+Narrator: Bray sits at the kitchen window with a blanket round him and watches the castle road. Danika sits beside him and watches Bray.
+Danika: He listens at the cellar door. He's never once cared about the cellar. Somebody's listening through him, aren't they.
+* [knows:remove_curse] (Break it with Remove Curse.) -> inn_cleared
+* [Religion DC 14] (Sit with him through a day of daylight and prayer.) -> inn_cleared_slow | inn_not_cleared
+* Goodbye. -> END
+endif
+Bray: Brom says I was brave. Mama says I was an idiot. Papa says both, and that it's a family tradition.
+-> END
+
+~ inn_cleared
+set bray_cleared
+Narrator: He shivers once, all over, and gets up from the window for the first time in a day, and goes and hits his brother.
+-> paid
+
+~ inn_cleared_slow
+set bray_cleared
+time +360
+Narrator: A long day by the window in the light, with prayers every hour. By evening he's stopped watching the castle road, and is watching the bread instead.
+-> paid
+
+~ inn_not_cleared
+Narrator: Hours of it, and his eyes still go to the road when he thinks nobody's watching.
+-> END
+
+# --- Urwin pays (martikovs:urwin_menu jumps here once Bray is home) ---
+
+~ urwin_thanks
+if flag.bray_charmed and not flag.bray_cleared
+Urwin: He's home. But he isn't all ours yet; Danika says something's listening through him. Sit with him, if you can. I can't. He's my son, and I'd do it wrong.
+-> vallaki/martikovs:urwin_menu
+endif
+-> paid
+
+~ paid
+quest the_ravens_ransom done
+Urwin: (He comes round the bar, which he never does, and takes your hand in both of his, which he has never done.) Our boy. Home, and himself.
+Urwin: My grandfather flew in this, the night the house on the hill fell. It's from the cellar the castle still doesn't know about, thanks to you. And money, which Danika says I'm to give you and not argue.
+give elven_chain
+gold +200
+approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +2 wren_featherfoot +1 ratatoille +1: You brought Bray Martikov home, and himself
+-> END
