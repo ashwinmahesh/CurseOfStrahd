@@ -5158,6 +5158,132 @@ def instrument_tray(p):
     p.box((0.12, 0.2, 0.03), (0.13, 0.0, 0.655), "pal_ivory", soft=0.01, segs=1)   # the folded cloth
 
 
+# --- Interiors: Argynvostholt and Van Richten's tower (docs/art/interiors.md) -------------------------------------
+
+
+@model("weapon_rack", "against_wall", ["weapon_rack"])
+def weapon_rack(p):
+    """A rack of weapons gone to rust: spears and halberds upright in their slots, swords hung by the crossguard."""
+    W, D = 0.9, 0.32
+    for sx in (-1, 1):
+        p.box((0.05, 0.05, 1.5), (sx * (W / 2 - 0.025), -D + 0.05, 0.75), "pal_umber")
+        p.box((0.05, D, 0.05), (sx * (W / 2 - 0.025), -D / 2, 0.08), "pal_umber")
+    p.box((W, 0.06, 0.05), (0, -D + 0.05, 1.3), "pal_umber")   # the upper bar, slotted
+    p.box((W, D, 0.04), (0, -D / 2, 0.1), "pal_umber")   # the foot rail
+    rng = p.rng
+    for k in range(5):   # spears and halberds
+        x = -0.32 + k * 0.16
+        p.cyl(0.014, 1.7, (x, -D + 0.08, 0.1), "pal_walnut", segs=6, rot=(rng.uniform(-3, 3), rng.uniform(-3, 3), 0))
+        if k % 2:
+            p.prism([(-0.03, 0.0), (0.03, 0.0), (0.0, 0.16)], 0.012, (x, -D + 0.08, 1.8), "pal_rust")
+        else:
+            p.prism([(0.0, 0.0), (0.11, 0.06), (0.11, -0.06)], 0.012, (x, -D + 0.08, 1.68), "pal_rust")
+            p.prism([(-0.02, 0.0), (0.02, 0.0), (0.0, 0.14)], 0.012, (x, -D + 0.08, 1.78), "pal_rust")
+    for k in range(3):   # swords hung by the crossguard
+        x = -0.26 + k * 0.26
+        p.box((0.045, 0.014, 0.62), (x, -D + 0.02, 0.92), "pal_rust")
+        p.box((0.16, 0.03, 0.025), (x, -D + 0.02, 1.25), "pal_ink")
+        p.box((0.03, 0.03, 0.12), (x, -D + 0.02, 1.32), "pal_leather")
+
+
+@model("fallen_frames", "free", ["fallen_frames"])
+def fallen_frames(p):
+    """Picture frames fallen from the wall: one face down, one split at the corner, a canvas torn to hang in a flap."""
+    p.box((0.5, 0.38, 0.04), (-0.12, 0.08, 0.02), "pal_umber", rot=(0, 0, 18))   # face down, its back to the room
+    p.box((0.44, 0.32, 0.01), (-0.12, 0.08, 0.042), "pal_tan", rot=(0, 0, 18))
+    for s in (-1, 1):   # the split one: two long sides and a short one, apart
+        p.box((0.46, 0.05, 0.04), (0.14, -0.12 + s * 0.15, 0.02), "pal_candle", rot=(0, 0, -10 + s * 6))
+    p.box((0.05, 0.3, 0.04), (0.36, -0.13, 0.02), "pal_candle", rot=(0, 0, -10))
+    p.box((0.34, 0.22, 0.008), (0.12, -0.12, 0.012), "pal_bog_deep", rot=(0, 0, -12))   # the painted canvas
+    p.box((0.16, 0.12, 0.008), (0.0, -0.02, 0.06), "pal_bog_deep", rot=(-50, 0, 25))   # its torn flap, curling up
+
+
+@model("portrait_turned", "wall", ["portrait_turned"])
+def portrait_turned(p):
+    """A portrait turned to face the wall: the bare back of the canvas, its stretcher bars and the hanging wire."""
+    W, H, z = 0.5, 0.64, 1.3
+    p.box((W, 0.03, H), (0, -0.04, z), "pal_tan")   # the canvas back
+    for x in (-W / 2 + 0.02, W / 2 - 0.02, 0.0):
+        p.box((0.04, 0.035, H), (x, -0.06, z), "pal_walnut")
+    for zz in (z - H / 2 + 0.02, z + H / 2 - 0.02, z):
+        p.box((W, 0.035, 0.04), (0, -0.06, zz), "pal_walnut")
+    p.tube([(-0.16, -0.08, z + 0.2), (0.0, -0.08, z + 0.36), (0.16, -0.08, z + 0.2)], 0.004, "pal_ink", segs=4)
+    p.cyl(0.012, 0.03, (0.0, 0.0, z + 0.36), "pal_ink", rot=(90, 0, 0), segs=6)   # the nail
+
+
+@model("holy_water_crate", "free", ["holy_water_crate"])
+def holy_water_crate(p):
+    """An open crate of holy water: rows of stoppered vials packed in straw, a sun burned into its side."""
+    S, H = 0.6, 0.4
+    p.box((S, S, 0.03), (0, 0, 0.015), WOOD)
+    for s in (-1, 1):
+        p.box((S, 0.03, H), (0, s * (S / 2 - 0.015), H / 2), WOOD)
+        p.box((0.03, S, H), (s * (S / 2 - 0.015), 0, H / 2), WOOD)
+    p.box((S - 0.06, S - 0.06, 0.02), (0, 0, H - 0.1), "pal_tan")   # the straw
+    for j in range(4):
+        for k in range(4):
+            x, y = -0.18 + j * 0.12, -0.18 + k * 0.12
+            p.cyl(0.03, 0.16, (x, y, H - 0.12), "pal_mist_blue", segs=8)
+            p.cyl(0.016, 0.03, (x, y, H + 0.04), "pal_bone", segs=6)
+    p.cyl(0.08, 0.004, (0, -S / 2 - 0.002, H / 2), "pal_ember_deep", rot=(90, 0, 0), segs=12)   # the sun mark
+    for k in range(8):
+        a = 2 * math.pi * k / 8
+        p.box((0.06, 0.004, 0.012), (0.12 * math.cos(a), -S / 2 - 0.003, H / 2 + 0.12 * math.sin(a)), "pal_ember_deep",
+              rot=(0, -math.degrees(a), 0))
+
+
+@model("stake_bundle", "free", ["stake_bundle"])
+def stake_bundle(p):
+    """Bundles of stakes, whittled sharp and tied with cord, one bundle standing and one lying beside it."""
+    rng = p.rng
+    for k in range(9):   # the standing bundle
+        a = 2 * math.pi * k / 9
+        x, y = -0.12 + 0.06 * math.cos(a), 0.05 + 0.06 * math.sin(a)
+        p.cyl(0.022, 0.62, (x, y, 0.0), "pal_tan", segs=6, rot=(rng.uniform(-4, 4), rng.uniform(-4, 4), 0))
+        p.cyl(0.022, 0.08, (x, y, 0.62), "pal_tan", r2=0.002, segs=6)
+    for z in (0.18, 0.46):
+        p.cyl(0.095, 0.03, (-0.12, 0.05, z), "pal_umber", segs=12)
+    for k in range(7):   # the one lying down
+        y = -0.18 + (k % 4) * 0.045
+        z = 0.022 + (k // 4) * 0.04
+        p.cyl(0.02, 0.56, (0.32, y, z), "pal_tan", rot=(0, -90, rng.uniform(-3, 3)), segs=6)
+        p.cyl(0.02, 0.07, (0.32 - 0.56, y, z), "pal_tan", r2=0.002, rot=(0, -90, 0), segs=6)
+    p.cyl(0.07, 0.03, (0.05, -0.12, 0.05), "pal_umber", rot=(0, 90, 0), segs=12)
+
+
+@model("map_table", "free", ["map_table"])
+def map_table(p):
+    """A table buried in maps, notes and books, weighted down with candle stubs and small skulls. Not human. Mostly."""
+    S, H = 0.9, 0.7
+    p.box((S, S, 0.05), (0, 0, H), "pal_walnut")
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((0.06, 0.06, H), (sx * (S / 2 - 0.05), sy * (S / 2 - 0.05), H / 2), "pal_umber")
+    rng = p.rng
+    for k in range(5):   # maps and notes
+        p.box((rng.uniform(0.28, 0.42), rng.uniform(0.22, 0.32), 0.004), (rng.uniform(-0.22, 0.22), rng.uniform(-0.22, 0.22),
+              H + 0.027 + k * 0.002), rng.choice(["pal_parchment", "pal_vellum", "pal_tan"]), rot=(0, 0, rng.uniform(-30, 30)))
+    p.box((0.2, 0.15, 0.06), (0.26, 0.24, H + 0.06), "pal_crimson", rot=(0, 0, 12))   # a book
+    _candle(p, (-0.3, 0.28, H + 0.03), 0.05)
+    _candle(p, (0.3, -0.3, H + 0.03), 0.09)
+    for x, y in ((-0.25, -0.2), (0.05, 0.3)):   # small skulls
+        p.lathe([(0.0, 0.0), (0.04, 0.005), (0.05, 0.04), (0.035, 0.075), (0.0, 0.085)], (x, y, H + 0.03), "pal_bone", segs=10)
+        p.box((0.05, 0.03, 0.02), (x, y - 0.045, H + 0.04), "pal_bone")
+
+
+@model("nail_spiral", "free", ["nail_spiral"], big=True)
+def nail_spiral(p):
+    """Copper nails studding the floor in a careful spiral, three squares across, from the walls in to the middle."""
+    k = 0
+    t = 0.0
+    while t < 7.2 * math.pi:
+        r = 0.08 + 1.36 * t / (7.2 * math.pi)
+        x, y = r * math.cos(t), r * math.sin(t)
+        p.cyl(0.018, 0.012, (x, y, 0.0), "pal_ember" if k % 9 else "pal_rust", segs=6)
+        t += 0.11 / max(r, 0.15)
+        k += 1
+
+
 # --- Export and preview ----------------------------------------------------------------------------------------
 
 def bounds(ob):

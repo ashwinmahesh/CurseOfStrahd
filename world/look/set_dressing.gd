@@ -125,7 +125,8 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 				_take_square(board, root, cell)   # it lies in place of the board's furniture there
 			var model := ModelPiece.for_art(board, art, ModelPiece.hash_cell(cell))
 			if model != "":
-				ModelPiece.stand(board, root, model, art, cell, null, 1.0, facing_yaw(spec))   # a 3D piece (docs/art/models.md)
+				# A 3D piece (docs/art/models.md), over the middle of the squares it spans (a spiral of nails across a floor).
+				ModelPiece.stand(board, root, model, art, cell, null, 1.0, facing_yaw(spec), span_centre(board, spec))
 			else:
 				_lay(board, root, art, cell, scale_)
 		_:

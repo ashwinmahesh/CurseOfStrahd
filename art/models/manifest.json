@@ -7681,6 +7681,142 @@
         "pal_walnut"
       ],
       "triangles": 272
+    },
+    "weapon_rack": {
+      "file": "art/models/weapon_rack.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "weapon_rack"
+      ],
+      "size": [
+        0.9,
+        1.96,
+        0.32
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_leather",
+        "pal_rust",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 344
+    },
+    "fallen_frames": {
+      "file": "art/models/fallen_frames.glb",
+      "mount": "free",
+      "stands_for": [
+        "fallen_frames"
+      ],
+      "size": [
+        0.827,
+        0.109,
+        0.695
+      ],
+      "materials": [
+        "pal_bog_deep",
+        "pal_candle",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 84
+    },
+    "portrait_turned": {
+      "file": "art/models/portrait_turned.glb",
+      "mount": "wall",
+      "stands_for": [
+        "portrait_turned"
+      ],
+      "size": [
+        0.5,
+        0.692,
+        0.084
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_tan",
+        "pal_walnut"
+      ],
+      "triangles": 124
+    },
+    "holy_water_crate": {
+      "file": "art/models/holy_water_crate.glb",
+      "mount": "free",
+      "stands_for": [
+        "holy_water_crate"
+      ],
+      "size": [
+        0.6,
+        0.47,
+        0.606
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_ember_deep",
+        "pal_mist_blue",
+        "pal_tan",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 980
+    },
+    "stake_bundle": {
+      "file": "art/models/stake_bundle.glb",
+      "mount": "free",
+      "stands_for": [
+        "stake_bundle"
+      ],
+      "size": [
+        0.631,
+        0.72,
+        0.37
+      ],
+      "materials": [
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 772
+    },
+    "map_table": {
+      "file": "art/models/map_table.glb",
+      "mount": "free",
+      "stands_for": [
+        "map_table"
+      ],
+      "size": [
+        0.9,
+        0.878,
+        0.9
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_bone",
+        "pal_crimson",
+        "pal_ivory",
+        "pal_parchment",
+        "pal_tan",
+        "pal_umber",
+        "pal_vellum",
+        "pal_walnut"
+      ],
+      "triangles": 796
+    },
+    "nail_spiral": {
+      "file": "art/models/nail_spiral.glb",
+      "mount": "free",
+      "stands_for": [
+        "nail_spiral"
+      ],
+      "size": [
+        2.649,
+        0.012,
+        2.465
+      ],
+      "materials": [
+        "pal_ember",
+        "pal_rust"
+      ],
+      "triangles": 3120,
+      "big": true
     }
   }
 }

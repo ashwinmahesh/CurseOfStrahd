@@ -45,7 +45,9 @@
           10,
           11
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/wainscot_wall"
     },
     {
       "id": "holt_study",
@@ -74,7 +76,8 @@
           34,
           11
         ]
-      ]
+      ],
+      "furnish": false
     },
     {
       "id": "holt_godfrey_quarters",
@@ -88,7 +91,10 @@
           10,
           20
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/plaster_wall",
+      "furnish": false
     },
     {
       "id": "holt_landing",
@@ -116,7 +122,10 @@
           34,
           20
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "dungeon/stone_wall",
+      "furnish": false
     }
   ],
   "spawns": {
@@ -417,6 +426,17 @@
       "label": "a hidden drawer in the dragon's desk",
       "model": "scattered_notes",
       "item": "wand_of_enemy_detection"
+    },
+    {
+      "id": "holt_dragon_chair",
+      "cell": [
+        17,
+        3
+      ],
+      "label": "A chair too big for a man",
+      "model": "throne",
+      "facing": "south",
+      "kind": "decor"
     }
   ],
   "containers": [

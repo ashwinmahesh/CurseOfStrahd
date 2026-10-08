@@ -204,6 +204,22 @@ braziers burning in the antechamber and either side of the altar.
 - **The cellar:** casks and cask racks in the cask vaults (low_cover_rooms "cask") where the crypt rules had laid little
   tombs, skulls and bones.
 
+### Argynvostholt and Van Richten's tower
+
+- **Argynvostholt's ground floor:** cold ash underfoot in the burned halls (a dark `floor_dust` clutter rule kept to
+  the holt's great hall, entry hall, west gallery and servants' hall), banners rotted to lace over the long table,
+  racks of rusted weapons in the armory (`weapon_rack`), fallen frames and torn canvas in the west gallery
+  (`fallen_frames`) and portraits turned to the wall (`portrait_turned`), and the servants' table still laid
+  (low_cover_rooms "servants' hall", where the servant rule had stood beds on it). The burned halls take no furnishing
+  (`furnish: false`): the hall rule had laid rugs and armchairs among the knights.
+- **The upper floor:** the knights' dormitory has the house's boards and wainscot (the barracks rule had given it cellar
+  brick), Sir Godfrey's "plain room" and the commander's "bare room" are plain boards and plaster or stone with only
+  their own things, the hall of heroes keeps to its statues, and the dragon's study has a chair too big for a man.
+- **Van Richten's tower:** crates of holy water and bundles of stakes in the hunter's storeroom (`holy_water_crate`,
+  `stake_bundle`, and a furnish "hunter" rule along its walls), the workroom's long table buried in maps, notes,
+  candle stubs and small skulls (`map_table`), and the lantern room's copper nails in a spiral across its stone floor
+  (`nail_spiral`, `span: [3, 3]`; a floor piece's `span` now centres it like a standing one), with no armchairs.
+
 Every piece a '=' square can be dressed as names an object kind in data/objects/kinds.json, so fights can shove, wreck
 and hide behind it (tests/unit/test_battle_objects.gd checks the catalog's lists and the interiors' own pieces).
 

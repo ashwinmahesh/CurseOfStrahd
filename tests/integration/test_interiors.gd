@@ -436,3 +436,43 @@ func test_bonegrinder_and_the_winery_have_what_their_text_names() -> void:
 				assert_eq(BattleScenery.art_at(board, c), "straw_pallet", "the nest's hollows are straw")
 		v.queue_free()
 		await _frames(1)
+
+
+## Argynvostholt and Van Richten's tower (the audit, docs/art/interiors.md): what their text names; the burned halls and
+## the rooms their text calls plain or bare hold only their own things (no rug or armchairs among the knights); the
+## servants' table is still laid, not a row of beds; the knights' dormitory is the house's, not a cellar's brick.
+func test_argynvostholt_and_the_tower_have_what_their_text_names() -> void:
+	Look.set_style("modern", false)
+	var want := {"argynvostholt_hall": {"holt_hall_banner_2": "banner_dragon", "holt_weapon_rack_2": "weapon_rack",
+			"holt_fallen_frames_1": "fallen_frames", "holt_turned_portrait_1": "portrait_turned"},
+		"argynvostholt_upper": {"holt_dragon_chair": "throne"},
+		"van_richtens_tower_interior": {"vrt_holy_water": "holy_water_crate", "vrt_stakes": "stake_bundle",
+			"vrt_map_table_1": "map_table", "vrt_nail_spiral": "nail_spiral"}}
+	var bare := {"argynvostholt_hall": [Rect2i(9, 1, 18, 11), Rect2i(1, 13, 10, 11), Rect2i(26, 13, 9, 11)],
+		"argynvostholt_upper": [Rect2i(1, 13, 10, 8), Rect2i(25, 13, 10, 8)],
+		"van_richtens_tower_interior": [Rect2i(2, 25, 10, 9)]}
+	for loc_id: String in want:
+		var v := _view(loc_id)
+		await _frames(1)
+		var board := v.board
+		for id: String in want[loc_id]:
+			var node := v.prop_nodes.get(id) as Node
+			var models := node.find_children("Model_*", "Node3D", true, false) if node != null else []
+			assert_true(not models.is_empty() and str(models[0].get_meta("model", "")) == str(want[loc_id][id]),
+				"%s: %s is the %s" % [loc_id, id, want[loc_id][id]])
+		for r: Rect2i in bare[loc_id]:
+			for n in board.get_children():
+				if n.has_meta("furnish"):
+					var c := Vector2i(int(str(n.name).get_slice("_", 2)), int(str(n.name).get_slice("_", 3)))
+					assert_false(r.has_point(c), "%s: nothing furnished in %s" % [loc_id, r])
+			for rug in board.find_children("FurnishRug*", "MeshInstance3D", true, false):
+				var at := (rug as Node3D).global_position
+				assert_false(Rect2(r).has_point(Vector2(at.x, at.z)), "%s: no rug in %s" % [loc_id, r])
+		if loc_id == "argynvostholt_hall":
+			for x in range(28, 33):
+				assert_eq(BattleScenery.art_at(board, Vector2i(x, 17)), "table_set", "the servants' table is still laid")
+		if loc_id == "argynvostholt_upper":
+			var floor := board.floor_box(Vector2i(5, 6))
+			assert_true(floor != null and _surface(floor) == "interior/wood_planks", "the knights sleep on the house's boards")
+		v.queue_free()
+		await _frames(1)

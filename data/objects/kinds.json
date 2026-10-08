@@ -130,7 +130,8 @@
         "chest_painted",
         "crate_stack",
         "chest",
-        "chest_iron"
+        "chest_iron",
+        "holy_water_crate"
       ],
       "summary": "Slatted crates, trunks and stalls: they splinter at a blow.",
       "moves": "shove",
@@ -197,7 +198,8 @@
         "sack_pile",
         "cushions",
         "rope_coils",
-        "straw_pallet"
+        "straw_pallet",
+        "stake_bundle"
       ],
       "summary": "Sacks, nets and straw: cloth that tears and burns.",
       "moves": "shove",
@@ -235,7 +237,8 @@
         "table_books",
         "table_meal",
         "washstand",
-        "reading_table"
+        "reading_table",
+        "map_table"
       ],
       "summary": "Tables, counters and the heavier furniture, a 5-ft section at a time.",
       "moves": "shove",
@@ -309,7 +312,8 @@
         "toy_shelf",
         "shelf_goods",
         "oil_shelf",
-        "bottle_rack"
+        "bottle_rack",
+        "weapon_rack"
       ],
       "summary": "Bookcases, wardrobes, cabinets and tall clocks.",
       "moves": "topple",

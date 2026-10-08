@@ -5777,6 +5777,83 @@
       "source": "art/generated/props/model_instrument_tray.png",
       "mount": "stand",
       "world_width": 0.455
+    },
+    "weapon_rack": {
+      "file": "art/sprites/props/weapon_rack.png",
+      "width_px": 252,
+      "height_px": 516,
+      "world_height": 1.9,
+      "pixel_size": 0.00371,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_weapon_rack.png",
+      "mount": "stand",
+      "world_width": 0.928
+    },
+    "fallen_frames": {
+      "file": "art/sprites/props/fallen_frames.png",
+      "width_px": 516,
+      "height_px": 196,
+      "world_height": 0.28,
+      "pixel_size": 0.00147,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_fallen_frames.png",
+      "mount": "floor",
+      "world_width": 0.737
+    },
+    "portrait_turned": {
+      "file": "art/sprites/props/portrait_turned.png",
+      "width_px": 320,
+      "height_px": 516,
+      "world_height": 0.7,
+      "pixel_size": 0.00137,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_portrait_turned.png",
+      "mount": "wall",
+      "world_width": 0.434
+    },
+    "holy_water_crate": {
+      "file": "art/sprites/props/holy_water_crate.png",
+      "width_px": 516,
+      "height_px": 484,
+      "world_height": 0.45,
+      "pixel_size": 0.00094,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_holy_water_crate.png",
+      "mount": "stand",
+      "world_width": 0.48
+    },
+    "stake_bundle": {
+      "file": "art/sprites/props/stake_bundle.png",
+      "width_px": 408,
+      "height_px": 516,
+      "world_height": 0.7,
+      "pixel_size": 0.00137,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_stake_bundle.png",
+      "mount": "stand",
+      "world_width": 0.553
+    },
+    "map_table": {
+      "file": "art/sprites/props/map_table.png",
+      "width_px": 516,
+      "height_px": 496,
+      "world_height": 0.85,
+      "pixel_size": 0.00173,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_map_table.png",
+      "mount": "stand",
+      "world_width": 0.884
+    },
+    "nail_spiral": {
+      "file": "art/sprites/props/nail_spiral.png",
+      "width_px": 516,
+      "height_px": 272,
+      "world_height": 1.5,
+      "pixel_size": 0.00566,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_nail_spiral.png",
+      "mount": "floor",
+      "world_width": 2.846
     }
   }
 }
