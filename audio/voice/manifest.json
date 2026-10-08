@@ -36360,6 +36360,13 @@
   "recipe": "dd92281f92",
   "text": "You break a seal stamped with a pointed hat. Somewhere, you hope, a wizard is not keeping count."
  },
+ "narrator/5074d421f1ba5009": {
+  "chars": 189,
+  "direction": "[wry, intrigued]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Among the reeds, half sunk in the mud: a little leather bag of bone dice, and among them a smooth grey stone that is always warm. Somebody lost a game here, which is strange, carrying that."
+ },
  "narrator/507aa298f8797dc5": {
   "chars": 129,
   "model": "eleven_v3",
@@ -36504,13 +36511,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A narrow bedroom with a crucifix nailed over the bed and another nailed over the door, facing the storeroom."
- },
- "narrator/5251d767ce59f644": {
-  "chars": 137,
-  "direction": "[sly, amused]",
-  "model": "eleven_v3",
-  "recipe": "f60908d226",
-  "text": "The old stump at the camp's edge is hollow. Inside, wrapped in a rag, is a corked flask that someone did not want Stanimir to know about."
  },
  "narrator/52582eceb6a9ba75": {
   "chars": 148,
@@ -45827,13 +45827,6 @@
   "recipe": "dd92281f92",
   "text": "A hut of fitted stones without a speck of mortar, raised by somebody who knew exactly how and has since forgotten. The door is shut. Something inside is talking to itself."
  },
- "narrator/b2a5b6559d2b09e6": {
-  "chars": 117,
-  "direction": "[wry, intrigued]",
-  "model": "eleven_v3",
-  "recipe": "f60908d226",
-  "text": "Among the reeds, half sunk in the mud: a little leather bag of bone dice. Somebody lost a game here, or ran from one."
- },
  "narrator/b2a9a1b5998bb0ae": {
   "chars": 152,
   "model": "eleven_v4",
@@ -50323,6 +50316,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "One small cask for every year, set by for a wizard who never came. One of them, low on the rack, is colder to the touch than the rest."
+ },
+ "narrator/e3b800b360b98daa": {
+  "chars": 192,
+  "direction": "[sly, then intrigued]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The old stump at the camp's edge is hollow. Inside, wrapped in a rag, is a corked flask that someone did not want Stanimir to know about. The cork is hot, and a thread of smoke leaks round it."
  },
  "narrator/e3d2d434b65d4322": {
   "chars": 147,
