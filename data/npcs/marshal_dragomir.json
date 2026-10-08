@@ -1,0 +1,18 @@
+{
+  "id": "marshal_dragomir",
+  "name": "Marshal Dragomir",
+  "title": "Marshal of the Count's Vanguard",
+  "summary": "The bones of the marshal who took the valley's gate for the count four hundred years ago, grown into the bones of his horse, still holding the gate on an order nobody ever countermanded.",
+  "portrait": "phantom_warrior",
+  "sprite": "phantom_warrior",
+  "attitude": "hostile",
+  "monster": "bone_marshal",
+  "guest": false,
+  "tags": [
+    "undead",
+    "skeleton",
+    "into_the_mists"
+  ],
+  "region": "into_the_mists",
+  "pronouns": "he/him"
+}

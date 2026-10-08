@@ -115,6 +115,13 @@ Zora: And Big Tobar's boy, Nelu. Three nights ago he stood up from the fire and 
 elif flag.nelu_home
 Zora: Nelu came back. The numbers match again. I like it when the numbers match.
 endif
+if not quest.last_muster
+set muster_rumor
+quest last_muster rumored
+Zora: And every night after midnight, riders go east along the road toward the gates. Twelve of them. Bones on bones, horses and men. None of them ever comes back, and the next night there are twelve again. I've stopped counting them. They don't change.
+elif flag.bone_marshal_beaten
+Zora: No riders, these three nights. Twelve nights in a row I counted none. I miss them, a little. They were very regular.
+endif
 -> END
 
 # Lane 28 (2026-10-08, "more people walking around and doing things"): Lavinia dancing on the plank stage, Iancu

@@ -1,0 +1,39 @@
+{
+  "id": "last_muster",
+  "name": "The Last Muster",
+  "summary": "Every night, riders made of bones go east along the Old Svalich Road to the Gates of Barovia, and none of them comes back.",
+  "giver": "marshal_dragomir",
+  "region": "into_the_mists",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Zora, who counts everyone on the road, says riders go east past the Tser Pool camp after midnight, every night: twelve of them, bones on bones, toward the Gates of Barovia. None ever comes back. They go again the next night anyway.",
+      "objectives": [
+        "Go to the Gates of Barovia after dark"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "mustered",
+      "journal": "At the Gates of Barovia after dark, a column of skeletal riders forms up across the road. They are the count's vanguard, who took the valley's gate the night he conquered it, and their marshal holds it still on his last order: hold the gate until I come back. He never came back.",
+      "objectives": [
+        "Convince the riders their war is over, or fight them for the gate"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "stood_down",
+      "journal": "The riders believed us, and stood down by their horses' heads. Their marshal didn't. An officer is relieved by his commander or by defeat, and his commander will never come. He wants to be beaten, fairly, at the gate.",
+      "objectives": [
+        "Beat Marshal Dragomir at the gate"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "released",
+      "journal": "Marshal Dragomir fell at the gate he was told to hold, and his whole column went down with him in a long rattle of bones. Four hundred years of guard duty, relieved. We took his blade and the vanguard's pay chest.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
