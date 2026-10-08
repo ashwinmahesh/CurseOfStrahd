@@ -1,0 +1,18 @@
+{
+  "id": "tser_dog",
+  "name": "A Camp Dog",
+  "title": "Of the Vistani",
+  "summary": "The camp's big shaggy dog, who belongs to everyone and steals from everyone equally.",
+  "portrait": "mastiff",
+  "sprite": "mastiff",
+  "attitude": "indifferent",
+  "monster": "mastiff",
+  "guest": false,
+  "tags": [
+    "animal",
+    "tser_pool"
+  ],
+  "region": "svalich_road",
+  "pronouns": "it/its",
+  "pockets": false
+}

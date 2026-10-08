@@ -1,0 +1,18 @@
+{
+  "id": "stella_wachter",
+  "name": "Stella Wachter",
+  "title": "Lady Wachter's Daughter",
+  "summary": "Lady Wachter's daughter, twenty, clever and wilful, who made a laughing promise to a stranger in black at one of her mother's soirees and has believed she is a cat ever since.",
+  "portrait": "nadia_boteanu",
+  "sprite": "nadia_boteanu",
+  "attitude": "indifferent",
+  "monster": "noble",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "noble",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

@@ -84,9 +84,50 @@ bolts home and the carriage comes early; failed or left alone, she is black by m
 - Back at the camp Radu pays either way (`home` if she lived, given to Radu or Luminita; `mourned` if not): 120 gp of
   the castle's gold and a Rod of the Pact Keeper, +1 (uncommon).
 
+## Vallaki (level 5)
+
+Talkers: the gate watch (gate:news, renamed) and Urwin (martikovs:rumors, renamed) wire into quests already built: the
+bones start `bones_of_st_andral` and Arabelle starts `missing_arabelle` at new `rumored` stages, and the book club
+starts `wachter_plot` at its own `rumored`. Arasek's road news (renamed "Heard anything interesting on the roads?")
+puts Old Bonegrinder on the map. The watch adds Stella's rumour, Urwin the black roses.
+
+### The Cat in the Window (`cat_in_the_window`, narrative/vallaki/cat_in_the_window.dialogue)
+
+Lady Wachter's daughter Stella, locked in the bedroom at Wachterhaus, believes she's a cat. **Twist:** she isn't mad,
+she's held (Insight DC 13, Arcana DC 14 or Detect Magic): at one of her mother's soirees she promised a stranger in
+black she'd follow him like a cat follows cream, a black velvet ribbon with a silver bell holds the promise, and what
+she sees, he sees; her mother ties the bow fresh every morning. **Breaking it:** Remove Curse (Liriel from level 6), a
+Scroll of Remove Curse (Urwin's cellar, Vadoma, Rictavio, Lucian's services, or the scroll Lucian gives for her), not a
+knife (cutting it rings the bell, an attention mark, and it ties itself again). **Escalation:** the master looks out of
+her shadow one last time (`stella_shadow` in her bedroom).
+
+- Fight `stella_shadow`: level 5 two wraiths ("The Master's Gaze", one at 50 HP) and 2 shadows (3,800 XP, High-ish);
+  level 4 a wraith and 3 shadows (2,100, High); level 6+ two wraiths and 4 shadows; below, a wraith at 45 HP and 2
+  shadows. Attention marks `stella_eyes` (+1) and, if the ribbon was cut, `stella_bell` (+1).
+- Stella then goes to Father Lucian; in the vestry she gives 250 gp (her dowry), the Cloak of the Bat (rare; the
+  master's present for her sixteenth birthday) and how the cellar panel at Wachterhaus opens.
+
+### Black Roses (`black_roses`, narrative/vallaki/black_roses.dialogue)
+
+Ilie the lamplighter's daughter Ana was taken last winter. **Twist one:** black roses come before a girl is taken, not
+after, and they are on the chandler's step. **Twist two:** Ilie's scarf hides bite marks (Insight DC 13 or Medicine DC
+12); Ana is the visitor and he has been feeding her so she won't go to anyone else. **The vigil:** at night Ana comes to
+Mila Petrova's window in the lower town. Ask where she sleeps, talk her home to her grave (Persuasion DC 14), fight her
+and the two girls she calls (`roses_street`), or let her go home to her father, who is found dead at the lake gate in
+the morning (`ilie_fate` lost). **The grave:** three graves at the edge of St. Andral's churchyard (prop `ana_grave`):
+dig them up by day (Athletics DC 12; they wake surprised and weak) or wait for them at night (`roses_graves`).
+
+- Fights: `roses_street` at level 5 is Ana (50 HP), Irina and a swarm of bats; `roses_graves` by day has all three girls
+  surprised at reduced HP, by night at full strength. Attention mark `roses` (+1).
+- Rewards: Pyotr Petrov the chandler (by day in the lower town) pays 200 gp for Mila's life; Ilie gives Ana's mother's
+  ring, a Ring of Resistance (Necrotic) (rare), once Ana is at rest.
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
 (new speakers Teodor and Luca), townsfolk.dialogue's gossip and gravedigger_teodor nodes, bildrath.dialogue's
 news_grigore node and his two added lines (the windmill), and arik.dialogue's rumors node. The Tser Pool camp:
-grey_mare.dialogue in full (Radu, Luminita), and tser_camp.dialogue's two added Zora lines.
+grey_mare.dialogue in full (Radu, Luminita), and tser_camp.dialogue's two added Zora lines. Vallaki:
+cat_in_the_window.dialogue and black_roses.dialogue in full (new speakers Stella Wachter, Ana and Pyotr Petrov; also
+Ilie and Father Lucian), the new lines in gate.dialogue (news: Stella), martikovs.dialogue (rumors: the roses),
+arasek.dialogue (roads: the windmill) and the polite_caller.dialogue sunrise line rewritten as a break in the mist.

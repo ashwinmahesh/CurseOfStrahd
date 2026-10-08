@@ -97,3 +97,22 @@ func test_the_carriage_escort_at_the_crossroads_with_and_without_steaua() -> voi
 	v = await _boot("svalich_crossroads", 0, 4, ["mare_lost", "carriage_came"])
 	await _fight(v, "carriage_escort", ["The Lead Horse", "Steaua"])
 	await _end(v)
+
+
+func test_stellas_shadow_stands_up_in_her_bedroom() -> void:
+	var v := await _boot("vallaki_wachter_house", 14, 5, ["stella_bound_known", "stella_met"])
+	await _fight(v, "stella_shadow", ["The Master's Gaze"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("cat_in_the_window"), "freed")
+
+
+func test_ana_and_the_girls_in_the_street_and_in_their_graves() -> void:
+	var v := await _boot("vallaki", 22, 5, ["roses_vigil", "ana_met"])
+	await _fight(v, "roses_street", ["Ana", "Irina"])
+	await _end(v)
+	assert_true(bool(GameState.story.get_flag("roses_spawn_destroyed", false)))
+	root.queue_free()
+	root = null
+	v = await _boot("vallaki", 11, 5, ["ana_grave_known"])
+	await _fight(v, "roses_graves", ["Ana", "Irina", "Sorina"])
+	await _end(v)

@@ -1,0 +1,19 @@
+{
+  "id": "ana",
+  "name": "Ana",
+  "title": "The Lamplighter's Daughter",
+  "summary": "Ilie the lamplighter's daughter, fourteen, found at the lake gate last winter smiling and white as milk. She still visits her friends' windows, with roses.",
+  "portrait": "ilka_sarnov",
+  "sprite": "ilka_sarnov",
+  "attitude": "indifferent",
+  "monster": "vampire_spawn",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "undead",
+    "vampire_spawn",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

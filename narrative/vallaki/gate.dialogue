@@ -94,7 +94,7 @@ Town Guard: Gate's shut. If you're going out, I didn't see you. If you're coming
 else
 Town Guard: Still here? Good. The Baron counts heads at the festival. More heads, better festival.
 endif
-* What's the news in town? -> news
+* Heard anything interesting? -> news
 * Who should we know in Vallaki? -> whos_who
 * Goodbye. -> END
 
@@ -105,12 +105,28 @@ Town Guard: News? You are the news. Has been for days.
 endif
 if not flag.bones_returned
 Town Guard: Something's wrong up at St. Andral's. Father Lucian stripped the altar cloth two days back and hasn't put it back. Priests don't do that for nothing.
+if not quest.bones_of_st_andral
+quest bones_of_st_andral rumored
+endif
 endif
 if not flag.arabelle_rescued and not flag.arabelle_lost
 Town Guard: The Vistani outside the west gate are in an uproar. The headman's little girl's gone missing. Their brother Arrigal says she wandered. Arrigal says a lot of things.
+if not quest.missing_arabelle
+quest missing_arabelle rumored
+endif
 endif
 if not flag.wachter_cult_broken
 Town Guard: Lady Wachter's book club met again last night. Lamps lit in her cellar till dawn. That's a lot of reading.
+if not quest.wachter_plot
+quest wachter_plot rumored
+endif
+endif
+if not quest.cat_in_the_window
+set stella_rumor
+quest cat_in_the_window rumored
+Town Guard: And there's a girl in a window at Wachterhaus who washes her face with the back of her hand. All day. Two years, and nobody's seen her come out. The Wachters say she's delicate.
+elif flag.stella_at_church
+Town Guard: Lady Wachter's girl is up at St. Andral's now. Walked out of that house in broad daylight, in her stockings, and spat on the step. Nobody's said a word to her mother. Everybody's said a word to everybody else.
 endif
 Town Guard: And the festival, of course. Always the festival.
 -> END

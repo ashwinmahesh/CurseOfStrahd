@@ -404,6 +404,7 @@ once
 
 ~ examine:stella_bed
 | A young woman curls on the bed with her chin on her knees, licking the back of one hand and smoothing her hair with it. She watches you without blinking, and purrs when you come no closer.
+| [flag.stella_at_church] The bed is stripped. Someone has slashed the black velvet bows on the canopy to ribbons, very thoroughly, and left them on the floor.
 
 ~ examine:dark_shrine
 | A shrine draped in black velvet, with a silver S worked into the cloth and a crystal goblet at its foot, rinsed clean. There is a faint red ring inside it anyway.
@@ -556,3 +557,15 @@ once
 | Under the bench, a ball of good twine dropped by some festival worker. {name} winds it up and pockets it; Vallaki won't miss it, and it was never smiling anyway.
 once
 
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): Arrigal's camp at work.
+
+~ examine:camp_nets
+| Fishing nets spread on the stones to mend, stinking of the lake. The knots are older than the men who tie them.
+
+~ examine:luvash_wine_1
+| Casks of strong red wine with Luvash's mark burned into the staves. One of them is already mostly empty.
+
+~ search:camp_reed_whistle
+| Caught in the reeds at the water's edge, a bone whistle on a cord, washed up from somewhere. {name} shakes the lake out of it.
+once

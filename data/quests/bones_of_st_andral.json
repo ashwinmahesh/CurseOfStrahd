@@ -6,6 +6,14 @@
   "region": "vallaki",
   "stages": [
     {
+      "id": "rumored",
+      "journal": "Vallaki says Father Lucian has stripped the altar at St. Andral's and won't say why, and that Milivoj the gravedigger has been spending more than he earns. Something has gone from the church that shouldn't have.",
+      "objectives": [
+        "Ask Father Lucian at St. Andral's what has happened"
+      ],
+      "ends": ""
+    },
+    {
       "id": "asked",
       "journal": "Father Lucian of St. Andral's told us the saint's bones have been stolen from the crypt beneath his altar. While they lay there, the dead could not set foot in the church. Without them, he fears for his flock and for anyone sheltering under his roof.",
       "objectives": [

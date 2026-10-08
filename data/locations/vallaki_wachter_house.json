@@ -338,6 +338,27 @@
       ],
       "dialogue": "vallaki/lady_wachter:start",
       "when": "not (flag.festival_begun and not flag.festival_over) and flag.vallaki_backed != \"wachter\" and flag.wachter_fate != \"stocks\" and flag.wachter_fate != \"exposed\" and flag.wachter_fate != \"exiled\""
+    },
+    {
+      "npc": "stella_wachter",
+      "cell": [
+        20,
+        10
+      ],
+      "dialogue": "vallaki/cat_in_the_window:after_fight",
+      "facing": "north",
+      "approach": 6,
+      "when": "flag.stella_shadow_beaten and not flag.stella_at_church"
+    },
+    {
+      "npc": "stella_wachter",
+      "cell": [
+        20,
+        9
+      ],
+      "dialogue": "vallaki/cat_in_the_window:stella",
+      "facing": "west",
+      "when": "not flag.stella_at_church"
     }
   ],
   "encounters": [
@@ -549,6 +570,189 @@
       "quest": {
         "id": "wachter_plot",
         "stage": "cult_broken"
+      }
+    },
+    {
+      "id": "stella_shadow",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "Stella's shadow peels off the wall and stands up, and the shadows under the bed and behind the door stand up with it. Something looks out of them that has been looking out of her for two years, and it doesn't want to stop.",
+      "monsters": [
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            8
+          ],
+          "name": "The Master's Gaze"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "The Master's Gaze"
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            16,
+            11
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            22,
+            8
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            16,
+            12
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            18,
+            12
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "stella_shadow_beaten",
+      "quest": {
+        "id": "cat_in_the_window",
+        "stage": "freed"
+      }
+    },
+    {
+      "id": "stella_shadow",
+      "trigger": "dialogue",
+      "when": "level >= 5",
+      "text": "Stella's shadow peels off the wall and stands up, and the shadows under the bed and behind the door stand up with it. Something looks out of them that has been looking out of her for two years, and it doesn't want to stop.",
+      "monsters": [
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            8
+          ],
+          "name": "The Master's Gaze"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "The Master's Gaze",
+          "hp": 50
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            16,
+            11
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            22,
+            8
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "stella_shadow_beaten",
+      "quest": {
+        "id": "cat_in_the_window",
+        "stage": "freed"
+      }
+    },
+    {
+      "id": "stella_shadow",
+      "trigger": "dialogue",
+      "when": "level >= 4",
+      "text": "Stella's shadow peels off the wall and stands up, and the shadows under the bed and behind the door stand up with it. Something looks out of them that has been looking out of her for two years, and it doesn't want to stop.",
+      "monsters": [
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            8
+          ],
+          "name": "The Master's Gaze"
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            16,
+            11
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            22,
+            8
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            22,
+            12
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "stella_shadow_beaten",
+      "quest": {
+        "id": "cat_in_the_window",
+        "stage": "freed"
+      }
+    },
+    {
+      "id": "stella_shadow",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "Stella's shadow peels off the wall and stands up, and the shadows under the bed and behind the door stand up with it. Something looks out of them that has been looking out of her for two years, and it doesn't want to stop.",
+      "monsters": [
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            8
+          ],
+          "name": "The Master's Gaze",
+          "hp": 45
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            16,
+            11
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            22,
+            8
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "stella_shadow_beaten",
+      "quest": {
+        "id": "cat_in_the_window",
+        "stage": "freed"
       }
     }
   ],

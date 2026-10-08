@@ -135,6 +135,10 @@ endif
 ~ stella_ok
 Narrator: For a heartbeat the tea stops halfway to her mouth.
 Lady Wachter: My daughter, Stella. She was a clever, wilful girl, and she made a promise to someone she shouldn't have, and he took it very literally. Now she believes she's a cat. She's quite happy. Happier than most of us. Leave her be.
+if not quest.cat_in_the_window
+set stella_rumor
+quest cat_in_the_window rumored
+endif
 -> menu
 
 ~ stella_fail

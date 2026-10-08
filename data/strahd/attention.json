@@ -61,6 +61,24 @@
       "summary": "His carriage's escort broken at the Ivlis crossroads, and a horse he had paid for taken back (The Grey Mare)."
     },
     {
+      "id": "stella_bell",
+      "when": "flag.stella_bell_rung",
+      "points": 1,
+      "summary": "Somebody cut Stella Wachter's ribbon and rang his bell (The Cat in the Window)."
+    },
+    {
+      "id": "stella_eyes",
+      "when": "flag.stella_shadow_beaten",
+      "points": 1,
+      "summary": "His eyes in Vallaki, Stella Wachter at her window, put out (The Cat in the Window)."
+    },
+    {
+      "id": "roses",
+      "when": "flag.roses_spawn_destroyed",
+      "points": 1,
+      "summary": "Three spawn he made of Vallaki's girls, destroyed (Black Roses)."
+    },
+    {
       "id": "gulthias_tree",
       "when": "flag.gulthias_tree_burned",
       "points": 2,

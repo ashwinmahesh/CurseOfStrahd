@@ -179,7 +179,8 @@ set teodor_fate = "dawn"
 set teodor_resolved
 quest polite_caller dawn
 time until 6
-Narrator: They stand on the step together, her hand in his, and watch the grey go gold behind the church. He doesn't make a sound. When the first light comes over the wall he is smoke, and then he is nothing, and she is holding her own hand.
+Narrator: They stand on the step together, her hand in his. In the east the mist does something it hasn't done in weeks: it thins, and one blade of true sun comes over the church wall.
+Narrator: He doesn't make a sound. When the light reaches the step he is smoke, and then he is nothing, and she is holding her own hand.
 Widow Ileana: He was always late. Not this once.
 Widow Ileana: Go and look in his grave. And thank you. I know what I'd have done tonight if you hadn't come. I'd have asked him in.
 inspire party: stood with Ileana at sunrise
