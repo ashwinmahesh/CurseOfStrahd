@@ -211,3 +211,26 @@ cooldown 10
 | [at:wizard_of_wines] The vines lie down again. Some of them, you're nearly sure, look relieved.
 | [at:wizard_of_wines_press_house] The Mash goes still in a spreading stain. The great press stands over it like a judge who has heard enough.
 cooldown 10
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:founders_cask_stave
+| One stave of the founder's cask is a door. Behind it, packed in straw, a fat ceramic jug that sloshes, though when you look inside it's empty.
+once
+
+~ check:investigation:founders_cask_stave:failure
+| Oak, iron hoops and a century of wine soaked into both. The founder's cask is just a cask, as far as you can tell.
+
+~ search:wizard_cask_decanter
+| Behind the wizard's casks, in a nest of old corks, a stoppered decanter. Pull the stopper and water runs out of it, and keeps running.
+once
+
+~ check:perception:wizard_cask_decanter:failure
+| Casks set aside for a wizard who never comes to collect them. Dust, and the smell of the vintage.
+
+~ search:druids_missed_gem
+| The druids pried up half the floor looking for something. Under the last board they didn't lift lies an emerald with a little green storm turning inside it.
+once
+
+~ check:perception:druids_missed_gem:failure
+| Splinters and nail holes. Whatever the druids were looking for, they dug for it here, and so do you.

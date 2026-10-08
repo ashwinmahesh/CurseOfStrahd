@@ -83,27 +83,27 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 
 | | Where | Item | How |
 |---|---|---|---|
-| ○ | Ground floor, the pantry | Dust of Sneezing and Choking (uncommon) | Search (Investigation DC 15): a jar of "flour" that isn't |
-| ○ | Loft, up in the rafters | Broom of Flying (uncommon) | Search (Perception DC 15): a broom far too clean for this house |
-| ○ | The crag, the dead oak | Figurine of Wondrous Power, Silver Raven (uncommon) | Search (Perception DC 14): a raven's hoard in the hollow |
-| ○ | The track, the wayside shrine | Restorative Ointment (uncommon) | Search (Perception DC 13) |
+| ✅ | Ground floor, the pantry | Dust of Sneezing and Choking (uncommon) | Search (Investigation DC 15): a jar of "flour" that isn't |
+| ✅ | Loft, up in the rafters | Broom of Flying (uncommon) | Search (Perception DC 15): a broom far too clean for this house |
+| ✅ | The crag, the dead oak | Figurine of Wondrous Power, Silver Raven (uncommon) | Search (Perception DC 14): a raven's hoard in the hollow |
+| ✅ | The track, the wayside shrine | Restorative Ointment (uncommon) | Search (Perception DC 13) |
 
 ## The Wizard of Wines (level 6)
 
 | | Where | Item | How |
 |---|---|---|---|
-| ○ | Cellar, the founder's cask | Alchemy Jug (uncommon) | Search (Investigation DC 14) |
-| ○ | Press house, the wizard's casks | Decanter of Endless Water (uncommon) | Search (Perception DC 14) |
-| ○ | Winery, the pried-up floorboards | Elemental Gem, Emerald (uncommon) | Search (Perception DC 15): what the druids missed |
-| ○ | Stefania Martikov | Periapt of Wound Closure (uncommon) | Gift: when the gem is back |
+| ✅ | Cellar, the founder's cask | Alchemy Jug (uncommon) | Search (Investigation DC 14) |
+| ✅ | Press house, the wizard's casks | Decanter of Endless Water (uncommon) | Search (Perception DC 14) |
+| ✅ | Winery, the pried-up floorboards | Elemental Gem, Emerald (uncommon) | Search (Perception DC 15): what the druids missed |
+| ✅ | Stefania Martikov | Periapt of Wound Closure (uncommon) | Gift: when the gem is back |
 
 ## Yester Hill (level 7)
 
 | | Where | Item | How |
 |---|---|---|---|
-| ○ | The hill, a cairn of bones | Bracers of Archery (uncommon) | Search (Perception DC 15) |
-| ○ | Gulthias Tree, the splintered heartwood | Staff of Withering (rare) | Search (Investigation DC 16) |
-| ○ | The wardens' hoard | Berserker Axe (rare, cursed) | Hoard |
+| ✅ | The hill, a cairn of bones | Bracers of Archery (uncommon) | Search (Perception DC 15) |
+| ✅ | Gulthias Tree, the splintered heartwood | Staff of Withering (rare) | Search (Investigation DC 16) |
+| ✅ | The wardens' hoard | Berserker Axe (rare, cursed) | Hoard |
 
 ## Krezk and the Abbey (level 7)
 

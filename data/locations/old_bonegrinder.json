@@ -220,6 +220,19 @@
       "model": "shelves",
       "search_dc": 12,
       "item": "antitoxin"
+    },
+    {
+      "id": "pantry_odd_flour",
+      "cell": [
+        2,
+        3
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "skill": "investigation",
+      "label": "a sack of \"flour\" that isn't",
+      "model": "sack",
+      "item": "dust_of_sneezing_and_choking"
     }
   ],
   "containers": [

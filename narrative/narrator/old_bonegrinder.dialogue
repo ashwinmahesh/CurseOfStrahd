@@ -209,3 +209,30 @@ once
 ~ combat:victory
 | [at:old_bonegrinder_loft and flag.morgantha_slain] Whatever is left of her goes into the grey between worlds, and it won't come back whole. Under the floor, the oven ticks as it cools.
 | [at:old_bonegrinder and flag.offalia_slain and not flag.morgantha_slain] Upstairs, the rocking chair creaks once, and stops, and starts again. Nobody comes down.
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:pantry_odd_flour
+| One sack in the pantry is labelled FLOUR in a hand that has never baked. Inside, a little tin of grey powder that tickles your nose from an arm's length away.
+once
+
+~ check:investigation:pantry_odd_flour:failure
+| Flour, more flour, and jars you'd rather not open. The hags keep a tidy larder.
+
+~ search:rafters_broom
+| Tucked up among the rafters, a broom far too clean for this house. When you take it down, it pulls gently upward, like a dog straining at a lead.
+once
+
+~ check:perception:rafters_broom:failure
+| Straw, cobwebs and the creak of the sails. Nothing up there but the dark.
+
+~ search:oak_raven_hoard
+| In a hollow of the dead oak the ravens keep their treasures: buttons, a spoon, a ring of keys and, at the bottom, a raven carved from silver, warm as a living bird.
+once
+
+~ check:perception:oak_raven_hoard:failure
+| The ravens watch you looking. They know exactly what's up there, and they aren't telling.
+
+~ search:lane_shrine_tin
+| Behind the wayside shrine, someone left a tin of salve for whoever needed it next. It smells of mint and clean linen.
+once

@@ -93,3 +93,19 @@ cooldown 10
 | [at:yester_hill_gulthias_tree] The crown goes quiet. Somewhere below, on the moor, a bird starts to sing, and stops as if surprised at itself.
 | [at:yester_hill] The fire crackles. The cages creak. Nobody comes to see what the noise was.
 cooldown 10
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:cairn_bracers
+| At the foot of the bone cairn, under the last stones, a pair of archer's bracers on a forearm that no longer needs them.
+once
+
+~ check:perception:cairn_bracers:failure
+| Bones on bones, stacked with care. The druids built this for someone. Not you.
+
+~ search:heartwood_staff
+| Inside the splintered heartwood, grown into the grain as if the tree made it, lies a staff of black wood that drinks the warmth from your hands.
+once
+
+~ check:investigation:heartwood_staff:failure
+| Splintered wood, sap like old blood. If the heartwood hides anything, the tree is keeping it.

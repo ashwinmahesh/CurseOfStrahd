@@ -230,6 +230,18 @@
       "kind": "examine",
       "label": "A cairn of bones",
       "model": "cairn"
+    },
+    {
+      "id": "cairn_bracers",
+      "cell": [
+        23,
+        12
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "something under the bone cairn",
+      "model": "bone_scatter",
+      "item": "bracers_of_archery"
     }
   ],
   "containers": [
@@ -243,7 +255,7 @@
       "model": "chest",
       "items": [
         {
-          "id": "greataxe",
+          "id": "berserker_axe__greataxe",
           "qty": 1
         },
         {

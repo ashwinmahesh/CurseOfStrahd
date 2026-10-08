@@ -88,6 +88,18 @@
       "kind": "examine",
       "label": "A wayside shrine",
       "model": "shrine_small"
+    },
+    {
+      "id": "lane_shrine_tin",
+      "cell": [
+        23,
+        3
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "a tin behind the wayside shrine",
+      "model": "satchel",
+      "item": "restorative_ointment"
     }
   ],
   "encounters": [
