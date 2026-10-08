@@ -16,7 +16,7 @@ var leader: int = 0
 var gold: float = 0.0
 var stash: Array[Dictionary] = []          ## [{id, qty}] at safe places
 var flags: Dictionary = {}
-var quests: Dictionary = {}                ## quest id -> {stage, history: [stage ids]}
+var quests: Dictionary = {}                ## quest id -> {stage, history: [stage ids], at: game minute it last moved}
 var attitudes: Dictionary = {}             ## npc id -> hostile | indifferent | friendly
 var visited: Dictionary = {}               ## location or area id -> true
 var codex: Array[String] = []              ## lore read (book props, letters)
@@ -86,6 +86,7 @@ func set_quest_stage(quest_id: String, stage: String) -> bool:
 	if not stage in hist:
 		hist.append(stage)
 	entry["history"] = hist
+	entry["at"] = total_minutes()   # when it last moved: the recap's road ahead names the newest first (Q3, lane 16)
 	quests[quest_id] = entry
 	return true
 

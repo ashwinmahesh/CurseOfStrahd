@@ -1,0 +1,13 @@
+#!/bin/sh
+# The repo's pre-push hook (installed by make hooks into the hooks folder every worktree shares). Only the build thread
+# pushes main (coordinator rule, 2026-10-07): worktrees share refs, and a `git push origin main` from a lane's worktree
+# moved GitHub main to the build thread's unfinished batch. The build thread pushes with STRAHD_PUSH_MAIN=1; anyone
+# else pushes their own branch. Then Git LFS's own pre-push, which this hook replaces, uploads the art.
+refs=$(cat)
+if [ "${STRAHD_PUSH_MAIN:-}" != "1" ] && printf '%s\n' "$refs" | awk '{ print $3 }' | grep -qx 'refs/heads/main'; then
+  printf >&2 '\n%s\n%s\n\n' "pre-push: only the build thread pushes main (it sets STRAHD_PUSH_MAIN=1)." \
+    "Push your own branch instead: git push -u origin <branch>"
+  exit 1
+fi
+command -v git-lfs >/dev/null 2>&1 || { printf >&2 "\n%s\n\n" "This repository is configured for Git LFS but 'git-lfs' was not found on your path."; exit 2; }
+printf '%s\n' "$refs" | git lfs pre-push "$@"

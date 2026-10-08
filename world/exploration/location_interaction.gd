@@ -362,6 +362,7 @@ static func _use_prop(view: LocationView, prop: Dictionary) -> void:
 				view.st.codex.append(codex)
 				view.toast.emit("Added to the codex: %s" % prop.get("label", id))
 		"lever":
+			Audio.sfx("lever")
 			if prop.has("flag"):
 				view.st.set_flag(str(prop["flag"]), not bool(view.st.get_flag(str(prop["flag"]))))
 		_:
