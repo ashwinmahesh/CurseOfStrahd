@@ -101,7 +101,7 @@ func test_detect_magic_senses_a_hidden_magic_item() -> void:
 
 
 ## Every hidden find, tip and gift in the game's data is a real, playable item; the magic ones come from the 2024 DMG
-## (or the story's own), are no rarer than very rare, and fit the level of the region they're in.
+## (the PHB's potions, or the story's own), are no rarer than very rare, and fit the level of the region they're in.
 func test_placed_finds_are_playable_and_fit_their_region() -> void:
 	var comp := Compendium.shared()
 	var max_rank := {1: 2, 2: 2, 3: 2, 4: 2, 5: 3, 6: 3, 7: 3, 8: 3, 9: 4, 10: 4}   # 2 uncommon, 3 rare, 4 very rare
@@ -122,7 +122,7 @@ func test_placed_finds_are_playable_and_fit_their_region() -> void:
 			n += 1
 			assert_true(Compendium.playable(item), "%s %s: %s isn't playable yet" % [loc["id"], prop["id"], prop["item"]])
 			var book := str((item.get("source", {}) as Dictionary).get("book", ""))
-			assert_true(book in ["DMG2024", "CoS", ""], "%s %s: %s is from %s" % [loc["id"], prop["id"], prop["item"], book])
+			assert_true(book in ["DMG2024", "PHB2024", "CoS", ""], "%s %s: %s is from %s" % [loc["id"], prop["id"], prop["item"], book])
 			var level := Treasure.level_for(str(loc["id"]))
 			var rank := int(ranks.get(MagicItems.rarity(item), 0))
 			assert_true(rank <= int(max_rank.get(level, 4)), "%s %s: %s is too rare for level %d" % [loc["id"], prop["id"], prop["item"], level])
