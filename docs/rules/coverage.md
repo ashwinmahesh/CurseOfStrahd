@@ -23,6 +23,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Saving throw proficiency | character.gd | tested | test_reference_party |
 | Passive scores (+5/−5) | creature.gd passive_score | tested | test_abilities, test_reference_party |
 | Initiative = Dexterity check, Alert adds PB | creature.gd initiative_bonus | tested | test_reference_party |
+| Alert's Initiative Swap (asked once Initiative is rolled: trade with a willing ally, neither Incapacitated; the class tab's rule can turn it off) | class_features.gd initiative_offers | tested | test_save_prompts |
 | Heroic Inspiration | character.gd (Resourceful); encounter_attacks.gd, d20_responses.gd reroll | partial: a reroll of the d20 offered on a missed attack roll, after a failed save wherever the fight can pause (spells, monsters' actions and riders, repeated and Death Saving Throws) and after a failed check in conversation (story/check_aids.gd); the saves that can't pause yet use it automatically (deviations) [F6] | test_combat_encounter, test_save_prompts |
 | Bonus/penalty dice on D20 Tests (Bless, Bane) | creature.gd roll_d20 | tested | test_effects |
 | Automatic failure (Paralyzed etc.) | creature.gd roll_d20 | tested | test_conditions |
@@ -52,7 +53,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 |---|---|---|---|
 | Blinded, Charmed, Deafened | data + creature.gd | partial (sight/hearing/charmer checks: Phase 2-3) | test_conditions |
 | Exhaustion (−2 per level to D20 Tests, −5 ft, death at 6, Long Rest −1) | data + creature.gd | tested | test_conditions |
-| Frightened | data; Turn Undead fleeing in ai_brain.gd | partial (Disadvantage always on, see deviations; can't-approach only for AI) | test_conditions, test_combat_spells |
+| Frightened | data (`when: fear_in_sight`); encounter.gd fear_in_sight; Turn Undead fleeing in ai_brain.gd | tested (Disadvantage only while a source is within line of sight) | test_conditions, test_combat_spells, test_combat_encounter |
 | Grappled (Speed 0) | data + encounter.gd | tested (Speed 0, escape, other-target Disadvantage); dragging: deviations | test_conditions, test_combat_encounter |
 | Incapacitated (no actions, breaks Concentration) | data + creature.gd | tested | test_conditions |
 | Invisible | data + encounter.gd can_see | tested (hidden creatures, attacks either way) | test_conditions, test_combat_encounter |

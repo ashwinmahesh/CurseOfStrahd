@@ -453,6 +453,49 @@ func test_tandem_footwork_is_asked_once_initiative_is_rolled() -> void:
 	assert_eq(e.order[0].initiative, e.order.map(func(c: Combatant) -> int: return c.initiative).max(), "in the new order")
 
 
+## A rogue with Alert (the criminal background's feat) and one ally.
+func _alert(e: Encounter) -> Array[Combatant]:
+	var rogue := e.add(TestChars.custom("rogue", "human", 3, {}, "criminal"), &"party", Vector2i(2, 3))
+	var ally := _hero(e, Vector2i(3, 3), false)
+	ally.reaction_rules["initiative_swap"] = "never"
+	TestCombat.punching_bag(e, Vector2i(10, 3))
+	return [rogue, ally]
+
+
+func test_alert_trades_initiative_with_the_ally_picked() -> void:
+	var e := TestCombat.open_field(3)
+	var pair := _alert(e)
+	var rogue := pair[0]
+	var ally := pair[1]
+	e.start()
+	assert_eq(_asked(e), "initiative_swap")
+	assert_eq(e.pending.reactor_id, rogue.id)
+	assert_false(e.pending.spends_reaction)
+	assert_eq(e.pending.target_choices.size(), 1, "the one ally")
+	assert_true(str(e.pending.target_choices[0]["label"]).contains("Initiative %d" % ally.initiative))
+	var mine := rogue.initiative
+	var theirs := ally.initiative
+	e.pending.selected_ids.assign([ally.id])
+	e.answer_reaction(true)
+	assert_eq(rogue.initiative, theirs)
+	assert_eq(ally.initiative, mine)
+	assert_true(e.current() != null and e.pending == null, "then the first turn begins")
+	assert_eq(e.order[0].initiative, maxi(mine, theirs), "in the new order")
+
+
+func test_alert_isnt_asked_with_its_rule_off_or_an_incapacitated_ally() -> void:
+	var e := TestCombat.open_field(3)
+	var pair := _alert(e)
+	pair[0].reaction_rules["initiative_swap"] = "never"
+	e.start()
+	assert_ne(_asked(e), "initiative_swap", "the rule is Off")
+	var e2 := TestCombat.open_field(3)
+	var pair2 := _alert(e2)
+	pair2[1].creature.add_condition(&"incapacitated", "test")
+	e2.start()
+	assert_ne(_asked(e2), "initiative_swap", "nobody able to trade")
+
+
 func test_inspiring_movement_is_asked_when_a_foe_ends_its_turn_beside_the_bard() -> void:
 	var e := TestCombat.open_field(3)
 	var bard := e.add(TestChars.custom("bard", "human", 6, {"bard_subclass": ["college_of_dance"]}), &"party", Vector2i(4, 3))

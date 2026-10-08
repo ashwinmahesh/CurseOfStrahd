@@ -111,7 +111,7 @@ The turn itself can wait on a prompt: `_begin_turn`, `_lair_then_begin`, `_next_
 (`_turn_end_effects`) return a CombatResult and run their parts one after another, so a save or a Reaction there
 (Branches of the Tree as a creature starts its turn, Inspiring Movement as an enemy ends one) stops the turn until it's
 answered; the reaction queue runs as a turn starts and ends. `start()` stays void: Initiative choices
-(`ClassFeatures.initiative_offers`: Tandem Footwork) leave `pending` set for the view, then the order is sorted again and
+(`ClassFeatures.initiative_offers`: Tandem Footwork, Alert's swap) leave `pending` set for the view, then the order is sorted again and
 the first turn begins. `TestCombat.start_with` declines them.
 
 A failed Concentration save is rolled where the damage lands, inside a held collector (`collect(target, true)`): when a

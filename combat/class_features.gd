@@ -1883,6 +1883,48 @@ func initiative_offers() -> Array:
 					if a == bard or (a.allied_with(bard) and e.distance(a, bard) <= 30):
 						a.initiative += roll
 				e.log.add("info", "%s leads the dance: +%d Initiative to nearby allies (Tandem Footwork)" % [bard.name(), roll], bard.id)})
+	# Alert (2024 feat): right after Initiative is rolled, trade Initiative with one willing ally, neither of them
+	# Incapacitated. Asked after Tandem Footwork, so the numbers offered are the final ones.
+	for a in e.combatants:
+		if not has(a, "initiative_swap") or not a.is_player_controlled():
+			continue
+		var holder := a
+		var partners := func() -> Array[Combatant]:
+			var list: Array[Combatant] = []
+			for o in e.combatants:
+				if o != holder and o.allied_with(holder) and o.is_player_controlled() and not o.is_down() \
+						and not o.creature.has_condition(&"incapacitated") and o.initiative != holder.initiative:
+					list.append(o)
+			return list
+		var picked := {"id": ""}
+		out.append({"kind": "initiative_swap", "reactor": a, "title": "Alert: swap Initiative?", "spends_reaction": false,
+			"default": "ask", "cost": "Nothing",
+			"text": func() -> String: return "Initiative is rolled: %s at %d. Trade Initiative with a willing ally?" % [holder.name(), holder.initiative],
+			"target_choices": func() -> Array:
+				var choices: Array = []
+				for o in partners.call() as Array[Combatant]:
+					choices.append({"id": o.id, "label": "%s · Initiative %d" % [o.name(), o.initiative]})
+				return choices,
+			"min_targets": 1, "max_targets": 1,
+			"still": func() -> bool: return not holder.creature.has_condition(&"incapacitated") and not (partners.call() as Array[Combatant]).is_empty(),
+			"select": func(ids: Array) -> void: picked["id"] = str(ids[0]) if not ids.is_empty() else "",
+			"use": func() -> void:
+				var mates := partners.call() as Array[Combatant]
+				var mate: Combatant = null
+				for o in mates:
+					if o.id == str(picked["id"]):
+						mate = o
+				# Without a pick (the rule is Automatic): the ally furthest behind moves up.
+				if mate == null:
+					for o in mates:
+						if o.initiative < holder.initiative and (mate == null or o.initiative < mate.initiative):
+							mate = o
+				if mate == null:
+					return
+				var mine := holder.initiative
+				holder.initiative = mate.initiative
+				mate.initiative = mine
+				e.log.add("info", "%s trades Initiative with %s: %d and %d (Alert)" % [holder.name(), mate.name(), holder.initiative, mate.initiative], holder.id)})
 	return out
 
 

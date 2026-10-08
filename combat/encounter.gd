@@ -143,6 +143,7 @@ func add(creature: Creature, side: StringName, cell: Vector2i) -> Combatant:
 	creature.d20_before = feature_actions.before_d20
 	creature.d20_after = feature_actions.after_d20
 	creature.effect_added = _effect_added
+	creature.fear_seen = fear_in_sight
 	combatants.append(c)
 	# A foe that joins mid-fight (Children of the Night) comes at the difficulty's Hit Points and +2s too.
 	if state == State.ACTIVE and side == &"enemy" and creature is Monster:
@@ -396,6 +397,26 @@ func move_mode(c: Combatant) -> int:
 
 func fear_sources(c: Combatant) -> Array[Combatant]:
 	return movement.fear_sources(c)
+
+
+## Frightened (2024): Disadvantage on ability checks and attack rolls only while a source of the fear is within line
+## of sight (walls block it; darkness and invisibility don't). A fear with no known source, or one from a creature
+## outside the fight, counts as in sight; a source that has died frightens no more.
+func fear_in_sight(cr: Creature) -> bool:
+	var c := get_c(cr.id)
+	if c == null or c.creature != cr or cr.conditions.has(&"frightened"):
+		return true
+	var known := false
+	for fx in cr.effects:
+		if not &"frightened" in fx.conditions:
+			continue
+		var src := get_c(fx.caster_id) if fx.caster_id != "" else null
+		if src == null or src == c:
+			return true
+		known = true
+		if src.is_alive() and grid.can_see(c.cell, c.size_cells, src.cell, src.size_cells):
+			return true
+	return not known
 
 
 func move(c: Combatant, dest: Vector2i) -> CombatResult:

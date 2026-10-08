@@ -81,7 +81,9 @@ hand), `two_handed` (melee weapon held in two hands), `light`, `unarmed`. `spell
 for Unarmed Strikes), `base_item`: the mundane weapon underneath (Bracers of Archery: `longbow`). `spell_class`: the class whose spell it is (Potent Spellcasting: cleric). `spell_id`: one spell
 (Agonizing Blast: `"@cantrip"`, the pick of the feature's own choice). `damage_type`: the spell's damage type
 (Elemental Affinity: `"@element"`). `incapacitated`: false (Danger Sense; Advantage and Disadvantage sources see
-the armor worn and whether the creature is Incapacitated). `armor` also takes `not_heavy`. A `when` value starting
+the armor worn and whether the creature is Incapacitated). `fear_in_sight`: true (Frightened's Disadvantage: a source of
+the creature's fear is within its line of sight; the fight answers through `Creature.fear_seen`, and without a fight it
+counts as true). `armor` also takes `not_heavy`. A `when` value starting
 with `@` names a pick of the same feature, like `value` does. Several keys = all must hold.
 
 ### `at_level`, `at_class_level`

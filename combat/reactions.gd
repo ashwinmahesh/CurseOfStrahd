@@ -26,8 +26,8 @@ func feats() -> CombatFeatures:
 
 ## Runs the offers in `chain` one after another, then `done`. Pauses on each one the player is asked about. An offer may
 ## also be `forced` (no choice: it happens when reached), say `ask: false` (never asked: its rule settles it, as
-## D20Responses.sync_allows does), name the `default` rule its creature has until one is set, give `text` and `cost` as
-## Callables (worded when asked, after earlier offers changed the roll), and give `helps`: when it says the offer can't
+## D20Responses.sync_allows does), name the `default` rule its creature has until one is set, give `text`, `cost` and
+## `target_choices` as Callables (worded when asked, after earlier offers changed the roll), and give `helps`: when it says the offer can't
 ## change the outcome, the player isn't asked (a reroll that can't reach the DC).
 func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 	var e := enc()
@@ -51,7 +51,8 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 		var cost: Variant = o.get("cost", "Reaction")
 		req.cost = str((cost as Callable).call()) if cost is Callable else str(cost)
 		req.spends_reaction = bool(o.get("spends_reaction", true))
-		req.target_choices.assign(o.get("target_choices", []))
+		var choices: Variant = o.get("target_choices", [])
+		req.target_choices.assign((choices as Callable).call() if choices is Callable else choices)
 		req.selected_ids.assign(o.get("selected_ids", []))
 		req.min_targets = int(o.get("min_targets", 0))
 		req.max_targets = int(o.get("max_targets", 0))

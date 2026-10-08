@@ -63,6 +63,9 @@ var d20_before: Callable = Callable()
 var d20_after: Callable = Callable()
 ## Told of every effect that lands (creature, effect): the encounter's book hooks (Inspired by Fear).
 var effect_added: Callable = Callable()
+## Asked whether a source of this creature's fear is within its line of sight (creature) -> bool: Frightened's
+## Disadvantage holds only then. The fight installs it; without it the source counts as in sight.
+var fear_seen: Callable = Callable()
 
 
 func _init() -> void:
@@ -470,6 +473,8 @@ func d20_sources(keys: Array[String]) -> Dictionary:
 	var situation := armor_situation()
 	situation["incapacitated"] = has_condition(&"incapacitated")
 	situation["bloodied"] = is_bloodied()
+	if has_condition(&"frightened"):
+		situation["fear_in_sight"] = not fear_seen.is_valid() or bool(fear_seen.call(self))
 	for m in modifiers_for(&"advantage"):
 		if m.matches_any(keys) and not m.source_name in adv and m.applies_when(situation):
 			adv.append(m.source_name)

@@ -74,6 +74,7 @@ func transform(c: Combatant, beast: Dictionary, opts: Dictionary = {}) -> Monste
 	m.concentration = orig.concentration
 	m.d20_before = orig.d20_before
 	m.d20_after = orig.d20_after
+	m.fear_seen = orig.fear_seen
 	var tmp := int(opts.get("temp_hp", 0))
 	# Boon of Fluid Forms: 20 more Temporary Hit Points from any change of shape.
 	if tmp > 0:
@@ -169,5 +170,6 @@ func from_dict(d: Dictionary, party: Dictionary) -> void:
 		if c != null:
 			orig.d20_before = c.creature.d20_before
 			orig.d20_after = c.creature.d20_after
+			orig.fear_seen = c.creature.fear_seen
 		originals[id] = {"creature": orig, "ai_profile": str(cd["ai_profile"]), "ends_without_temp_hp": bool(cd["ends_without_temp_hp"]),
 			"label": str(cd["label"])}
