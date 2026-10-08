@@ -1,0 +1,136 @@
+# The Mac disk image (owner, 2026-10-08): opening the download shows a window to drag the game into Applications.
+# It wraps a published release's Mac app (downloads.curseofstrahd.app/<version>/CurseOfStrahd-<version>-macos.zip) in
+# a DMG laid out by tools/release/dmg_settings.py, signs it and has Apple notarize it when the Apple secrets exist,
+# and uploads it beside the zip as CurseOfStrahd-<version>-macos.dmg. The release workflow runs it after publishing;
+# run it by hand for a version that's already out: gh workflow run mac-dmg.yml -f version=1.0.1 -f upload=true
+# It runs on macOS for hdiutil, codesign and notarytool; nothing is built, so it takes minutes.
+name: Mac disk image
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        type: string
+        required: true
+      upload:
+        type: boolean
+        default: true
+  workflow_dispatch:
+    inputs:
+      version:
+        description: A published version (e.g. 1.0.1)
+        required: true
+      upload:
+        description: Upload the DMG beside the zip (off = build and check only)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+env:
+  DOWNLOADS: https://downloads.curseofstrahd.app
+  BUCKET: curseofstrahd-downloads
+  DMGBUILD_VERSION: "1.6.7"
+  APPLE_CA_SHA256: f16cd3c54c7f83cea4bf1a3e6a0819c8aaa8e4a1528fd144715f350643d2df3a
+
+jobs:
+  dmg:
+    runs-on: macos-15
+    timeout-minutes: 90
+    env:
+      VERSION: ${{ inputs.version }}
+    steps:
+      - name: Check the version
+        run: |
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::The version must look like 1.0.1, not '$VERSION'"
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+          sparse-checkout: tools/release
+
+      - name: Fetch the published Mac app
+        run: |
+          # The query skips any copy Cloudflare cached before the upload finished.
+          curl -fsSL -o "$RUNNER_TEMP/mac.zip" "${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-macos.zip?dmg=${GITHUB_RUN_ID}"
+          mkdir -p "$RUNNER_TEMP/app"
+          ditto -x -k "$RUNNER_TEMP/mac.zip" "$RUNNER_TEMP/app"
+          rm "$RUNNER_TEMP/mac.zip"
+          codesign --verify --deep --strict "$RUNNER_TEMP/app/Curse of Strahd.app"
+          # Says "Notarized Developer ID" once the Apple secrets are in; an ad hoc app is rejected here, which is
+          # expected without them.
+          spctl --assess --type execute -vv "$RUNNER_TEMP/app/Curse of Strahd.app" || true
+
+      - name: Lay out the disk image
+        run: |
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install -q "dmgbuild==${DMGBUILD_VERSION}"
+          "$RUNNER_TEMP/venv/bin/dmgbuild" -s tools/release/dmg_settings.py \
+            -D app="$RUNNER_TEMP/app/Curse of Strahd.app" -D release="$PWD/tools/release" \
+            "Curse of Strahd" "$RUNNER_TEMP/CurseOfStrahd-macos.dmg"
+          ls -la "$RUNNER_TEMP/CurseOfStrahd-macos.dmg"
+
+      # Off until the Apple secrets exist: the DMG then stays unsigned, which is fine for an unnotarized app inside.
+      - name: Sign and notarize the disk image
+        env:
+          P12: ${{ secrets.APPLE_DEVELOPER_ID_P12 }}
+          P12_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_P12_PASSWORD }}
+          KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          ISSUER_ID: ${{ secrets.APPLE_API_ISSUER_ID }}
+          KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
+        run: |
+          if [ -z "$P12" ] || [ -z "$KEY_P8" ]; then
+            echo "No Apple Developer ID secrets: the disk image isn't signed or notarized"
+            exit 0
+          fi
+          d="$RUNNER_TEMP/apple"
+          mkdir -p "$d" && chmod 700 "$d"
+          printf '%s' "$P12" | base64 -D > "$d/developer_id.p12"
+          printf '%s\n' "$KEY_P8" > "$d/key.p8"
+          # A throwaway keychain holding the Developer ID and Apple's intermediate certificate.
+          kc="$d/signing.keychain-db"
+          kcpass="$(uuidgen)"
+          security create-keychain -p "$kcpass" "$kc"
+          security set-keychain-settings -lut 3600 "$kc"
+          security unlock-keychain -p "$kcpass" "$kc"
+          security import "$d/developer_id.p12" -k "$kc" -P "$P12_PASSWORD" -T /usr/bin/codesign
+          curl -fsSL -o "$d/ca.cer" https://www.apple.com/certificateauthority/DeveloperIDG2CA.cer
+          echo "${APPLE_CA_SHA256}  $d/ca.cer" | shasum -a 256 -c -
+          security import "$d/ca.cer" -k "$kc"
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$kcpass" "$kc" > /dev/null
+          security list-keychains -d user -s "$kc" $(security list-keychains -d user | tr -d '"')
+          identity="$(security find-identity -v -p codesigning "$kc" | awk '/Developer ID Application/ {print $2; exit}')"
+          if [ -z "$identity" ]; then echo "::error::No Developer ID Application identity in the certificate"; exit 1; fi
+          dmg="$RUNNER_TEMP/CurseOfStrahd-macos.dmg"
+          codesign --sign "$identity" --timestamp --keychain "$kc" "$dmg"
+          # Waits for Apple's verdict, then attaches the ticket so it opens offline too.
+          xcrun notarytool submit "$dmg" --key "$d/key.p8" --key-id "$KEY_ID" --issuer "$ISSUER_ID" --wait --timeout 1h
+          xcrun stapler staple "$dmg"
+          spctl --assess --type open --context context:primary-signature -vv "$dmg"
+          security delete-keychain "$kc"
+          rm -rf "$d"
+
+      - name: Upload beside the zip
+        if: inputs.upload
+        env:
+          COS_CLOUDFLARE_R2_API_TOKEN: ${{ secrets.COS_CLOUDFLARE_R2_API_TOKEN }}
+          COS_CLOUDFLARE_ACCOUNT_ID: ${{ secrets.COS_CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          brew install -q rclone > /dev/null
+          # An R2 token's S3 credentials: its id, and the SHA-256 of its value. Never printed.
+          token_id="$(curl -fsS -H "Authorization: Bearer ${COS_CLOUDFLARE_R2_API_TOKEN}" \
+            https://api.cloudflare.com/client/v4/user/tokens/verify | python3 -c 'import json,sys; print(json.load(sys.stdin)["result"]["id"])')"
+          secret="$(printf '%s' "${COS_CLOUDFLARE_R2_API_TOKEN}" | shasum -a 256 | cut -d' ' -f1)"
+          echo "::add-mask::${token_id}"
+          echo "::add-mask::${secret}"
+          export RCLONE_CONFIG_R2_TYPE=s3 RCLONE_CONFIG_R2_PROVIDER=Cloudflare RCLONE_CONFIG_R2_NO_CHECK_BUCKET=true
+          export RCLONE_CONFIG_R2_ACCESS_KEY_ID="${token_id}" RCLONE_CONFIG_R2_SECRET_ACCESS_KEY="${secret}"
+          export RCLONE_CONFIG_R2_ENDPOINT="https://${COS_CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com"
+          rclone copyto "$RUNNER_TEMP/CurseOfStrahd-macos.dmg" "r2:${BUCKET}/${VERSION}/CurseOfStrahd-${VERSION}-macos.dmg" \
+            --s3-chunk-size 64M --s3-upload-concurrency 8
+          curl -fsSI "${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-macos.dmg?check=${GITHUB_RUN_ID}" | head -1
+          echo "Published ${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-macos.dmg" >> "$GITHUB_STEP_SUMMARY"
