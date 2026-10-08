@@ -145,7 +145,8 @@
           18,
           10
         ]
-      ]
+      ],
+      "furnish": "prison_cells"
     },
     {
       "id": "larders_cell_passage",
@@ -175,7 +176,8 @@
           18,
           17
         ]
-      ]
+      ],
+      "furnish": "prison_cells"
     },
     {
       "id": "larders_lift_foot",

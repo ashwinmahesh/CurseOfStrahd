@@ -5511,6 +5511,27 @@ def chained_bookcase(p):
         p.box((W - 0.1, 0.012, 0.012), (0, -D * 0.9, z + 0.15), "pal_pewter")   # the chain across the spines
         p.box((0.04, 0.02, 0.05), (W / 2 - 0.08, -D * 0.92, z + 0.12), "pal_ink")   # its padlock
     p.box((W, 0.02, 0.02), (0, -D, H - 0.01), "pal_frost")   # frost along the top
+# --- Interiors: Castle Ravenloft (docs/art/interiors.md) ------------------------------------------------------
+
+
+@model("jester_plaster", "wall", ["jester_plaster"])
+def jester_plaster(p):
+    """A crypt wall's old plaster, painted with juggling balls and harlequin diamonds once, in colours gone the shade of
+    old bruises, cracked and flaking at its edges."""
+    p.box((0.86, 0.02, 1.2), (0, -0.01, 0.95), "pal_parchment")
+    rng = p.rng
+    for k in range(5):   # the balls, mid-throw, in an arc
+        a = math.pi * (0.15 + 0.7 * k / 4)
+        x, z = 0.32 * math.cos(a), 1.0 + 0.32 * math.sin(a)
+        p.cyl(0.06, 0.006, (x, -0.022, z), ["pal_bruise", "pal_plum", "pal_bog", "pal_rust", "pal_ash_violet"][k], rot=(90, 0, 0),
+              segs=14)
+    for k in range(6):   # harlequin diamonds along the foot
+        x = -0.36 + k * 0.145
+        p.prism([(x, 0.42), (x + 0.07, 0.52), (x, 0.62), (x - 0.07, 0.52)], 0.006, (0, -0.023, 0),
+                "pal_bruise_deep" if k % 2 else "pal_plum")
+    for _ in range(9):   # where it has flaked away
+        p.box((rng.uniform(0.04, 0.12), 0.008, rng.uniform(0.03, 0.08)),
+              (rng.choice([-1, 1]) * rng.uniform(0.3, 0.42), -0.024, rng.uniform(0.4, 1.5)), "pal_stone_deep")
 
 
 # --- Export and preview ----------------------------------------------------------------------------------------

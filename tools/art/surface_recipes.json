@@ -345,6 +345,12 @@
       "new": true,
       "brightness": 1.0,
       "made_by": "tools/art/make_canvas_swatch.py (painted in code, no image model)"
+    },
+    "interior/wallpaper_yellow": {
+      "subject": "faded yellow damask wallpaper with a pale gold fleur pattern (wallpaper_green's swatch recoloured by tools/art/recolour_swatch.py)",
+      "view": "wall",
+      "variants": 1,
+      "ref": "death_house_hall_ab"
     }
   },
   "derived": {

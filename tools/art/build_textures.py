@@ -50,6 +50,7 @@ ARENA_THEMES = {
     "church": {"floor": "church/stone_flags", "wall": "church/stone_wall"},
     "dungeon": {"floor": "dungeon/stone_floor", "difficult": "village/mud_road", "wall": "dungeon/stone_wall",
                 "wall_alt": "dungeon/damp_brick"},
+    "tent": {"floor": "interior/rug", "wall": "tent/canvas"},
 }
 
 

@@ -619,3 +619,59 @@ func test_the_amber_temple_keeps_its_own_look() -> void:
 				assert_eq(BattleScenery.art_at(board, c), "lectern", "the reading room's %s is a lectern" % c)
 		v.queue_free()
 		await _frames(1)
+
+
+## Castle Ravenloft (the audit, docs/art/interiors.md): the guest bedroom is the yellow room its text says (a yellow
+## damask, recoloured from the green), heads on the trophy room's walls, torn banners in the Mad Dog's crypt and the
+## jester's painted plaster, prisoners' straw and chains in the cells and pallets in the guardroom, and no rug or
+## armchairs in the hall of faces or the cauldron room.
+func test_castle_ravenloft_has_what_its_text_names() -> void:
+	Look.set_style("modern", false)
+	var want := {"castle_ravenloft_court": {"court_trophy_1": "stag_head", "court_trophy_2": "trophy_wolf"},
+		"castle_ravenloft_catacombs": {"mad_dog_banner_1": "banner_regiment", "jester_plaster_1": "jester_plaster"},
+		"castle_ravenloft_main_floor": {"hall_face_1": "stone_faces", "east_post_armour_1": "armor_stand"}}
+	var no_parlour := {"castle_ravenloft_main_floor": Rect2(34, 6, 17, 5), "castle_ravenloft_spires_rooms": Rect2(1, 10, 10, 9)}
+	var sets := {"castle_ravenloft_larders_dungeon": [Rect2i(4, 8, 15, 3), ["straw", "bucket_brush", "wall_chains"]],
+		"castle_ravenloft_larders": [Rect2i(16, 12, 10, 11), ["straw_pallet", "footlocker"]]}
+	for loc_id: String in ["castle_ravenloft_court", "castle_ravenloft_catacombs", "castle_ravenloft_main_floor",
+			"castle_ravenloft_spires_rooms", "castle_ravenloft_larders_dungeon", "castle_ravenloft_larders", "castle_ravenloft_court_weeping"]:
+		var v := _view(loc_id)
+		await _frames(1)
+		var board := v.board
+		for id: String in want.get(loc_id, {}):
+			var node := v.prop_nodes.get(id) as Node
+			var models := node.find_children("Model_*", "Node3D", true, false) if node != null else []
+			assert_true(not models.is_empty() and str(models[0].get_meta("model", "")) == str(want[loc_id][id]),
+				"%s: %s is the %s" % [loc_id, id, want[loc_id][id]])
+		if no_parlour.has(loc_id):
+			var r := no_parlour[loc_id] as Rect2
+			for rug in board.find_children("FurnishRug*", "MeshInstance3D", true, false):
+				var at := (rug as Node3D).global_position
+				assert_false(r.has_point(Vector2(at.x, at.z)), "%s: no rug in %s" % [loc_id, r])
+			for n in board.get_children():
+				if n.has_meta("furnish"):
+					for m in n.find_children("Model_*", "Node3D", true, false):
+						var at := (m as Node3D).global_position
+						if r.has_point(Vector2(at.x, at.z)):
+							assert_false(str(m.get_meta("model", "")) in ["armchair", "settee"], "%s: no armchairs in %s" % [loc_id, r])
+		if sets.has(loc_id):
+			var r2 := (sets[loc_id] as Array)[0] as Rect2i
+			var found := 0
+			for n in board.get_children():
+				if n.has_meta("furnish"):
+					var c := Vector2i(int(str(n.name).get_slice("_", 2)), int(str(n.name).get_slice("_", 3)))
+					if r2.has_point(c):
+						for m in n.find_children("Model_*", "Node3D", true, false):
+							found += 1 if str(m.get_meta("model", "")) in ((sets[loc_id] as Array)[1] as Array) else 0
+			assert_true(found >= 4, "%s: the room holds its own things (%d)" % [loc_id, found])
+		if loc_id == "castle_ravenloft_court_weeping":
+			var yellow := 0
+			for w: Dictionary in (board.get_meta("interior_walls", {}) as Dictionary).get("walls", []):
+				if Rect2i(15, 12, 10, 11).has_point(w["cell"] as Vector2i):
+					for mi in (w["full"] as Node).find_children("*", "MeshInstance3D", true, false):
+						if _surface(mi) == "interior/wallpaper_yellow":
+							yellow += 1
+							break
+			assert_true(yellow >= 8, "the guest bedroom is a yellow room (%d)" % yellow)
+		v.queue_free()
+		await _frames(1)

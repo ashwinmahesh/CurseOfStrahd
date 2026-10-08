@@ -250,6 +250,19 @@ braziers burning in the antechamber and either side of the altar.
   each hold a cot; the vault of offerings is heaped with coins, crowns, swords and toys (`offering_pile`, set
   `offerings`); the guardroom and the sanctum have cold braziers (`brazier_cold`; the sanctum's had been lit green).
 
+### Castle Ravenloft
+
+- The guest bedroom is the yellow room its text describes: `interior/wallpaper_yellow`, the green damask recoloured
+  (tools/art/recolour_swatch.py, then make textures and tools/art/build_surfaces.py; no image generation), on a carpet.
+- Heads on the trophy room's walls; torn banners in the Mad Dog's crypt; the jester's crypt's plaster painted with
+  juggling balls gone the colour of bruises (`jester_plaster`); carved faces down the hall of faces, which keeps to its
+  candelabra and stone heads (set `stone_gallery`) where the hall rule had laid a rug and armchairs; portraits of guests
+  in the guests' hall; the east turret post's two suits of armour; candle stubs in the chapel.
+- The cells have straw, a bucket and chains (set `prison_cells`), the larders' guardroom pallets along its walls
+  (`guard_pallets`), the spires' cauldron room herbs, pots, sacks and bones (`cauldron_room`) instead of armchairs, and
+  Rahadin's room only its cot, ledger and racks of curved swords.
+- Wall pieces go on the walls the camera faces (north and east): the ones nearest it are cut away.
+
 Rooms are never left barren (coordinator, 2026-10-08): a room its text calls bare keeps only its own things, but a
 ruined or wrecked one is furnished from a set of its own debris (`furnish: "<set>"` names one of the catalog's furnish
 `sets`, which may give their own fill rates).

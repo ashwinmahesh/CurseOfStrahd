@@ -207,6 +207,13 @@
         "tile_world_units": 2.0,
         "axis": "both",
         "saturate": 1.1
+      },
+      "wallpaper_yellow": {
+        "subject": "faded yellow damask wallpaper with a pale gold fleur pattern (made from wallpaper_green's swatch, recoloured: tools/art/recolour_swatch.py)",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "saturate": 1.2
       }
     },
     "church": {

@@ -235,6 +235,36 @@
       "label": "something under the altar's dust",
       "model": "gold_spill",
       "item": "amulet_of_the_devout_plus_3"
+    },
+    {
+      "id": "chapel_candle_stubs_1",
+      "cell": [
+        2,
+        1
+      ],
+      "label": "Candle stubs, long cold",
+      "model": "candle_cluster",
+      "kind": "decor"
+    },
+    {
+      "id": "chapel_candle_stubs_2",
+      "cell": [
+        5,
+        1
+      ],
+      "label": "Candle stubs, long cold",
+      "model": "candle_cluster",
+      "kind": "decor"
+    },
+    {
+      "id": "chapel_candle_stubs_3",
+      "cell": [
+        17,
+        1
+      ],
+      "label": "Candle stubs, long cold",
+      "model": "candle_cluster",
+      "kind": "decor"
     }
   ],
   "containers": [

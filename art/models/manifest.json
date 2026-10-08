@@ -8029,6 +8029,29 @@
         "pal_walnut"
       ],
       "triangles": 1032
+    },
+    "jester_plaster": {
+      "file": "art/models/jester_plaster.glb",
+      "mount": "wall",
+      "stands_for": [
+        "jester_plaster"
+      ],
+      "size": [
+        0.908,
+        1.2,
+        0.028
+      ],
+      "materials": [
+        "pal_ash_violet",
+        "pal_bog",
+        "pal_bruise",
+        "pal_bruise_deep",
+        "pal_parchment",
+        "pal_plum",
+        "pal_rust",
+        "pal_stone_deep"
+      ],
+      "triangles": 452
     }
   }
 }

@@ -5964,6 +5964,17 @@
       "source": "art/generated/props/model_chained_bookcase.png",
       "mount": "wall",
       "world_width": 0.884
+    },
+    "jester_plaster": {
+      "file": "art/sprites/props/jester_plaster.png",
+      "width_px": 300,
+      "height_px": 516,
+      "world_height": 1.2,
+      "pixel_size": 0.00234,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_jester_plaster.png",
+      "mount": "wall",
+      "world_width": 0.698
     }
   }
 }
