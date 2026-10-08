@@ -17,6 +17,8 @@ const STRIP := 22.0
 const TERM_WIDTH := 340.0
 const HINT := "Rest on a gilded word for its rules · right-click pins"
 const HINT_PLAIN := "Right-click pins this card"
+## The same on a pad (PadGlyphs.words): Y opens a card, pins it, then closes it.
+const HINT_PAD := "{y} pins this card · {y} again closes it"
 
 ## "term:<id>" or "tip:<instance id of the control>".
 var key := ""
@@ -58,6 +60,7 @@ func setup(content: Control, key_: String, source_: Control, parent_: TipCard, t
 		return (n as TermText).text.contains("[url=term:")).is_empty()
 	var w := maxf(content.get_combined_minimum_size().x, 220.0)
 	_hint = UiParts.wrapped(HINT if words else HINT_PLAIN, 12, "parchment", w)
+	PadGlyphs.hint(_hint, _hint.text, HINT_PAD)
 	_hint.modulate.a = 0.75
 	_body.add_child(_hint)
 	_restyle()
