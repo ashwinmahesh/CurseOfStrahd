@@ -160,7 +160,7 @@
       "label": "an axe left in a woodcutter's stump",
       "model": "stump",
       "search_dc": 12,
-      "item": "handaxe"
+      "item": "weapon_plus_1__handaxe"
     },
     {
       "id": "forest_cutter_wood",

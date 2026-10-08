@@ -74,6 +74,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Road (open stretch), the field wall | Gauntlets of Ogre Power (uncommon) | Search (Perception DC 14): a farmer's cache behind the wall |
 | ✅ | Svalich Woods, the claw-marked pine | Goggles of Night (uncommon) | Search (Perception DC 14): a satchel snagged high in the branches |
 | ✅ | Svalich Woods, the fallen trunk | Bag of Tricks, Rust (uncommon) | Search (Investigation DC 12): a hollow in the trunk |
+| ✅ | Svalich Woods, a woodcutter's stump | +1 Handaxe (uncommon) | Search (Perception DC 12): an axe left in the stump (lane 28's spot) |
 | ✅ | Crossroads, the unmarked mounds | Boots of Elvenkind (uncommon) | Search (Perception DC 14): a mound that isn't as old as the others |
 | ✅ | Crossroads, the carved milestone | Wand of Web (uncommon) | Search (Investigation DC 14): a hollow behind the stone |
 | ✅ | Tser Falls, the stone of tokens | Pearl of Power (uncommon) | Search (Perception DC 13): one token among the many that hums |
@@ -223,6 +224,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 
 | | Where | Item | How |
 |---|---|---|---|
+| ✅ | The road up, another frozen traveller | Rope of Climbing (uncommon) | Search (Perception DC 12): in his pack (lane 28's spot) |
 | ✅ | Entrance, the frozen traveller | Frost Brand Longsword (very rare) | Search (Perception DC 14): clutched in a frozen hand |
 | ✅ | Entrance, the rack of halberds | +3 Halberd (very rare) | Search (Investigation DC 16) |
 | ✅ | Great hall, a warden's cell | Ioun Stone of Insight (very rare) | Search (Investigation DC 17) |
