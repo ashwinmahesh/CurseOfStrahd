@@ -297,3 +297,11 @@ once
 ~ search:forest_cutter_stump
 | A woodcutter's stump with a hand axe still bitten into it, the handle grey with weather but the blade as bright as the day it was forged. Whoever left it didn't come back to finish. {name} works the axe free.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): trees worth climbing.
+
+~ examine:forest_climbing_pine
+| An old pine scored by claws, with branches low and thick enough to climb. Ten feet up, you'd see over the brush to both bends of the road.
+
+~ examine:ambush_lookout_tree
+| A dead tree beside the road, its bark worn smooth in places by hands and boots. Someone has sat up in it before, watching for travellers.

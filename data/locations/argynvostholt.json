@@ -321,7 +321,8 @@
       ],
       "kind": "decor",
       "label": "Dead tree",
-      "model": "dead_tree"
+      "model": "dead_tree",
+      "stand_ft": 10
     },
     {
       "id": "holt_dead_tree_2",

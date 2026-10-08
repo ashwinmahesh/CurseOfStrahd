@@ -191,6 +191,17 @@
       "model": "reeds",
       "search_dc": 12,
       "item": "rope"
+    },
+    {
+      "id": "marsh_dead_tree",
+      "cell": [
+        2,
+        6
+      ],
+      "kind": "examine",
+      "label": "A drowned tree standing out of the marsh",
+      "model": "dead_tree",
+      "stand_ft": 10
     }
   ]
 }

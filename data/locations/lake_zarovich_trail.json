@@ -187,6 +187,17 @@
       "model": "stump",
       "search_dc": 13,
       "item": "hunting_trap"
+    },
+    {
+      "id": "lzt_climbing_pine",
+      "cell": [
+        6,
+        5
+      ],
+      "kind": "examine",
+      "label": "A dead tree with low branches over the trail",
+      "model": "dead_tree",
+      "stand_ft": 10
     }
   ],
   "narration": {

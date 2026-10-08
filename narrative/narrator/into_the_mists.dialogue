@@ -109,3 +109,6 @@ once
 ~ search:mists_fern_pack
 | In the ferns beside the road, a traveller's pack, sodden and torn open by something with claws. Most of it is ruined. A carved bone whistle on a cord is not. {name} takes it.
 once
+
+~ examine:mists_climbing_pine
+| An old dead tree by the road with low, broad branches. Climb it and you'd see the road both ways, and how close the Mists really are.

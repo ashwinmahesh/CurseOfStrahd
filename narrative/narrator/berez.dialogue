@@ -496,3 +496,6 @@ once
 ~ search:landing_roc_quill
 | Caught on the rocks of the landing, a single feather as long as a tall man, its quill as thick as a wrist. Too big to carry; but tucked in the hollow quill is one small feather that thrums like wings. {name} takes that.
 once
+
+~ examine:marsh_dead_tree
+| A tree drowned where it stood when the marsh came up, grey and bare, its lower branches still strong enough to hold someone looking out over the reeds.

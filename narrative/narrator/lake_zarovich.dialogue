@@ -113,3 +113,6 @@ once
 ~ search:lzt_trapper_cache
 | Under a rotten stump, wrapped in greased leather, a trapper's spare snare: iron jaws and a chain, cached for the winter by someone who never came back for it. {name} takes it.
 once
+
+~ examine:lzt_climbing_pine
+| A dead tree leaning out over the trail with branches like a ladder. From up there you'd see the lake, and anything coming along the path.
