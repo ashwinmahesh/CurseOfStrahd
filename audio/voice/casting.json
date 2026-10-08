@@ -1485,6 +1485,424 @@
       "model": "eleven_v3",
       "library": true,
       "accent_tag": "[strong Romanian accent]"
+    },
+    "krezk_bucket_wife": {
+      "voice_id": "8OkSxYl0qQH1Kg3Qzxu2",
+      "name": "Library voice: Betty",
+      "description": "Goodwife Sanda, of krezk: a generic townsperson on a shared voice, Betty (also Sorvia's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "sorvia"
+    },
+    "wine_washer": {
+      "voice_id": "8OkSxYl0qQH1Kg3Qzxu2",
+      "name": "Library voice: Betty",
+      "description": "Tereza, of the martikov camp: a generic townsperson on a shared voice, Betty (also Sorvia's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "sorvia"
+    },
+    "camp_cook": {
+      "voice_id": "8OkSxYl0qQH1Kg3Qzxu2",
+      "name": "Library voice: Betty",
+      "description": "Old Paraschiva, cook of the lake camp: a generic townsperson on a shared voice, Betty (also Sorvia's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "sorvia"
+    },
+    "pool_mourner": {
+      "voice_id": "wEJjJg8SheKHTwm83mZY",
+      "name": "Library voice: Roxana",
+      "description": "Widow Catrina, at the pool of the white sun: a generic townsperson on a shared voice, Roxana (also Mirabel's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "mirabel"
+    },
+    "vallaki_patron_oana": {
+      "voice_id": "wEJjJg8SheKHTwm83mZY",
+      "name": "Library voice: Roxana",
+      "description": "Oana, a drinker at the blue water inn: a generic townsperson on a shared voice, Roxana (also Mirabel's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "mirabel"
+    },
+    "krezk_well_wife": {
+      "voice_id": "AiaoHsEWJpbfK8rXdLbb",
+      "name": "Library voice: Ioana Alexandra - Social media",
+      "description": "Goodwife Rodica, of krezk: a generic townsperson on a shared voice, Ioana Alexandra - Social media (also Stefania Martikov's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "stefania_martikov"
+    },
+    "pastry_customer_woman": {
+      "voice_id": "AiaoHsEWJpbfK8rXdLbb",
+      "name": "Library voice: Ioana Alexandra - Social media",
+      "description": "Lucia, waiting at the mill: a generic townsperson on a shared voice, Ioana Alexandra - Social media (also Stefania Martikov's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "stefania_martikov"
+    },
+    "vallaki_parishioner_varvara": {
+      "voice_id": "neZC2DQ42NvDV1SyoMxN",
+      "name": "Library voice: Mirela",
+      "description": "Old Varvara, praying at st. andral's: a generic townsperson on a shared voice, Mirela (also Kasha Varo's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "kasha_varo"
+    },
+    "camp_fisher": {
+      "voice_id": "8nBBDfYxYXmDNaqTCxPH",
+      "name": "Library voice: Serban Popescu - Professional Narrator",
+      "description": "Stoica, fisherman of the lake camp: a generic townsperson on a shared voice, Serban Popescu - Professional Narrator (also Big Tobar's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "tser_tobar"
+    },
+    "lz_old_fisher": {
+      "voice_id": "8nBBDfYxYXmDNaqTCxPH",
+      "name": "Library voice: Serban Popescu - Professional Narrator",
+      "description": "Old Nistor, the last fisherman: a generic townsperson on a shared voice, Serban Popescu - Professional Narrator (also Big Tobar's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "tser_tobar"
+    },
+    "krezk_fence_mender": {
+      "voice_id": "8nBBDfYxYXmDNaqTCxPH",
+      "name": "Library voice: Serban Popescu - Professional Narrator",
+      "description": "Cezar, of krezk: a generic townsperson on a shared voice, Serban Popescu - Professional Narrator (also Big Tobar's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "tser_tobar"
+    },
+    "krezk_wall_watch": {
+      "voice_id": "5BZv9Z02hAMUmkkcd5Hj",
+      "name": "Library voice: Paul - Engaging, Friendly and Mysterious",
+      "description": "Watchman Lazar, of the krezk watch: a generic townsperson on a shared voice, Paul - Engaging, Friendly and Mysterious (also Petru's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "tser_petru"
+    },
+    "wine_watch": {
+      "voice_id": "5BZv9Z02hAMUmkkcd5Hj",
+      "name": "Library voice: Paul - Engaging, Friendly and Mysterious",
+      "description": "Ionel, watch of the martikov camp: a generic townsperson on a shared voice, Paul - Engaging, Friendly and Mysterious (also Petru's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "tser_petru"
+    },
+    "lzt_hunter": {
+      "voice_id": "5BZv9Z02hAMUmkkcd5Hj",
+      "name": "Library voice: Paul - Engaging, Friendly and Mysterious",
+      "description": "Ilarie, a hunter on the hill trail: a generic townsperson on a shared voice, Paul - Engaging, Friendly and Mysterious (also Petru's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "tser_petru"
+    },
+    "krezk_goatherd": {
+      "voice_id": "8WRfTpaUoqZSfTerOXzI",
+      "name": "Library voice: Mihai",
+      "description": "Stelian, goatherd of krezk: a generic townsperson on a shared voice, Mihai (also Urwin Martikov's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "urwin_martikov"
+    },
+    "wine_pruner": {
+      "voice_id": "8WRfTpaUoqZSfTerOXzI",
+      "name": "Library voice: Mihai",
+      "description": "Ovidiu, vine-dresser of the wizard of wines: a generic townsperson on a shared voice, Mihai (also Urwin Martikov's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "urwin_martikov"
+    },
+    "camp_groom": {
+      "voice_id": "sGcPNcpR5PikknzyXcy7",
+      "name": "Library voice: Cristi Romana",
+      "description": "Gavril, horse-keeper of the lake camp: a generic townsperson on a shared voice, Cristi Romana (also Krezk Watchman's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "krezk_guard"
+    },
+    "pastry_customer_man": {
+      "voice_id": "sGcPNcpR5PikknzyXcy7",
+      "name": "Library voice: Cristi Romana",
+      "description": "Iulian, waiting at the mill: a generic townsperson on a shared voice, Cristi Romana (also Krezk Watchman's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "krezk_guard"
+    },
+    "tser_marin": {
+      "voice_id": "sGcPNcpR5PikknzyXcy7",
+      "name": "Library voice: Cristi Romana",
+      "description": "Old Marin, hunter of the tser pool camp: a generic townsperson on a shared voice, Cristi Romana (also Krezk Watchman's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "krezk_guard"
+    },
+    "wine_woodsplitter": {
+      "voice_id": "AEPS4amQpAYS3CULyGRe",
+      "name": "Library voice: Doru",
+      "description": "Horia, of the martikov camp: a generic townsperson on a shared voice, Doru (also Radu's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "tser_radu"
+    },
+    "vallaki_patron_dragan": {
+      "voice_id": "AEPS4amQpAYS3CULyGRe",
+      "name": "Library voice: Doru",
+      "description": "Dragan, a drinker at the blue water inn: a generic townsperson on a shared voice, Doru (also Radu's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "tser_radu"
+    },
+    "wine_cooper": {
+      "voice_id": "h3aQ5g69oxB0wpernpfx",
+      "name": "Library voice: Ciprian Pop - Friendly and Reflective",
+      "description": "Old Silviu, cooper of the wizard of wines: a generic townsperson on a shared voice, Ciprian Pop - Friendly and Reflective (also Henrik van der Voort's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "henrik"
+    },
+    "camp_lookout": {
+      "voice_id": "kwajW3Xh5svCeKU5ky2S",
+      "name": "Library voice: Dmitry - Clear and Energetic",
+      "description": "Mihnea, lookout of the lake camp: a generic townsperson on a shared voice, Dmitry - Clear and Energetic (also Escher's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "escher"
+    },
+    "krezk_gate_boy": {
+      "voice_id": "bA58y3FqVI6b6gTNh0oT",
+      "name": "Library voice: Kavya - Cute & Engaging Character",
+      "description": "Dumitru, a boy of krezk: a generic townsperson on a shared voice, Kavya - Cute & Engaging Character (also Thorn's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "thorn"
+    },
+    "ana": {
+      "voice_id": "6tPpQd1OMENsZ3qD7FSl",
+      "name": "Library voice: Yoana - Fresh, bright, and engaging",
+      "description": "Ana, the lamplighter's daughter: the owner's casting-room pick (2026-10-08), library voice Yoana.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
+    },
+    "vallaki_ribbon_girl": {
+      "voice_id": "6tPpQd1OMENsZ3qD7FSl",
+      "name": "Library voice: Yoana - Fresh, bright, and engaging",
+      "description": "Daciana, festival ribbon seller: the owner's casting-room pick (2026-10-08), library voice Yoana.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
+    },
+    "barovia_shopper": {
+      "voice_id": "oahoHc2oSeUmVidh3IkX",
+      "name": "Barovia Goodwife Viorica",
+      "description": "A thin, anxious Barovian goodwife in her forties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A tight, worried, complaining voice that drops low and wary.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "oahoHc2oSeUmVidh3IkX",
+      "released": true
+    },
+    "barovia_worshipper_mihai": {
+      "voice_id": "GaE126iVJzF6zd29rX3G",
+      "name": "Barovia Old Florin",
+      "description": "An old Barovian man in his seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A thin, dry, cracked voice, sad and wry, a churchgoer with no illusions.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "GaE126iVJzF6zd29rX3G",
+      "released": true
+    },
+    "barovia_worshipper_sorina": {
+      "voice_id": "dd0PByHmASFtIDUDBAsf",
+      "name": "Barovia Goodwife Sorina",
+      "description": "A Barovian goodwife in her fifties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A soft, hushed, nervous church voice, devout and watchful.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "dd0PByHmASFtIDUDBAsf",
+      "released": true
+    },
+    "vallaki_herbwife": {
+      "voice_id": "TDFj1ooIYqzqhbK7aGnW",
+      "name": "Barovia Old Smaranda",
+      "description": "A bent old Vallaki herbwife in her seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A cracked, sweet, conspiratorial old voice, smiling hard and talking low.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "TDFj1ooIYqzqhbK7aGnW",
+      "released": true
+    },
+    "vallaki_cloth_merchant": {
+      "voice_id": "eQvqrV02SmhuXXk8kzNY",
+      "name": "Barovia Master Costel",
+      "description": "A plump Vallaki cloth merchant in his fifties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A loud, jolly, salesman's voice with a nervous edge underneath.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "eQvqrV02SmhuXXk8kzNY",
+      "released": true
+    },
+    "vallaki_porter": {
+      "voice_id": "hTrAwHrubhIyiZISmtKP",
+      "name": "Barovia Matei",
+      "description": "A huge, cheerful Vallaki porter in his thirties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A big, warm, breathless, genuinely happy voice.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "hTrAwHrubhIyiZISmtKP",
+      "released": true
+    },
+    "vallaki_raker": {
+      "voice_id": "Agtn2Ybo5e8bHlzRTfaf",
+      "name": "Barovia Gheorghe",
+      "description": "A hooded Vallaki street raker in his forties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A flat, weary, deadpan voice, worn down by pointless orders.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "Agtn2Ybo5e8bHlzRTfaf",
+      "released": true
+    },
+    "vallaki_patrol": {
+      "voice_id": "EExfHTyijptsPAZoUC93",
+      "name": "Barovia Watchman Dobre",
+      "description": "A Vallaki town watchman in his thirties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A brusque, bored, officious voice with a forced smile in it.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "EExfHTyijptsPAZoUC93",
+      "released": true
+    },
+    "vallaki_sun_painter": {
+      "voice_id": "LBibs9hR5kJOpqiehPAJ",
+      "name": "Barovia Tudor",
+      "description": "A hooded Vallaki painter in his forties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A dry, sardonic, tired craftsman's voice.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "LBibs9hR5kJOpqiehPAJ",
+      "released": true
+    },
+    "teodor": {
+      "voice_id": "Njq0fHOVeFMWLl6zMgoQ",
+      "name": "Barovia Teodor",
+      "description": "A Barovian cooper turned vampire spawn, in his forties, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A quiet, courteous, hollow voice, starving underneath, gentle and sad, with a cold edge.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "Njq0fHOVeFMWLl6zMgoQ",
+      "released": true
+    },
+    "barovia_luca": {
+      "voice_id": "6hZ8iVP39x7DyKoVrUoX",
+      "name": "Barovia Luca",
+      "description": "A broad-shouldered Barovian woodcutter's son, nineteen, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A young, earnest, slightly hoarse voice, shaken and sheepish.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "6hZ8iVP39x7DyKoVrUoX",
+      "released": true
+    },
+    "stella_wachter": {
+      "voice_id": "KGlq0PeEh6ZzxdpcY7sN",
+      "name": "Barovia Stella Wachter",
+      "description": "A clever, wilful young Vallaki noblewoman of twenty speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A bright, sharp, well-bred voice, fierce and shaken after two years under a curse.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "KGlq0PeEh6ZzxdpcY7sN",
+      "released": true
+    },
+    "vallaki_chandler": {
+      "voice_id": "fvNOw42LTTMJ9Bhfr2wS",
+      "name": "Barovia Pyotr Petrov",
+      "description": "A broad, anxious Vallaki chandler in his forties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A worried, breathless, earnest father's voice.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "fvNOw42LTTMJ9Bhfr2wS",
+      "released": true
+    },
+    "tser_lavinia": {
+      "voice_id": "DaSn52f4qtEGsqmgWWu9",
+      "name": "Barovia Lavinia",
+      "description": "A Vistani dancer in her twenties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A bright, sly, teasing, breathless voice.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "DaSn52f4qtEGsqmgWWu9",
+      "released": true
+    },
+    "tser_iancu": {
+      "voice_id": "5hZay5Bb3Ipg5jHFrQtU",
+      "name": "Barovia Iancu",
+      "description": "A young Vistani knife-thrower speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A cool, intense, quiet young man's voice, never satisfied.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "5hZay5Bb3Ipg5jHFrQtU",
+      "released": true
+    },
+    "wine_picker": {
+      "voice_id": "JFi5VYSKHgASRUbNFTyF",
+      "name": "Barovia Andrei",
+      "description": "A big, quiet Barovian grape picker in his thirties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A deep, slow, gentle voice with a mouth half full.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "JFi5VYSKHgASRUbNFTyF",
+      "released": true
     }
   },
   "sfx": {
