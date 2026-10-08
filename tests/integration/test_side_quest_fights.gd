@@ -84,3 +84,16 @@ func test_the_late_wood_burns_by_day() -> void:
 	await _fight(v, "woodpile_burns", [])
 	await _end(v)
 	assert_true(bool(GameState.story.get_flag("late_wood_burned", false)))
+
+
+func test_the_carriage_escort_at_the_crossroads_with_and_without_steaua() -> void:
+	var v := await _boot("svalich_crossroads", 0, 4, ["mare_saved", "carriage_came"])
+	var e := await _fight(v, "carriage_escort", ["The Lead Horse", "The Footman"])
+	assert_false(e.combatants.any(func(c: Combatant) -> bool: return c.name() == "Steaua"), "saved, she isn't there")
+	await _end(v)
+	assert_true(bool(GameState.story.get_flag("carriage_beaten", false)))
+	root.queue_free()
+	root = null
+	v = await _boot("svalich_crossroads", 0, 4, ["mare_lost", "carriage_came"])
+	await _fight(v, "carriage_escort", ["The Lead Horse", "Steaua"])
+	await _end(v)

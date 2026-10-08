@@ -1,0 +1,207 @@
+# The Grey Mare (side quest, docs/story/side_quests.md): the black carriage that drives itself stopped by Radu's pen
+# and left a purse. Radu sold it his grey mare, Steaua, because the voice in the carriage promised Nicu would ride
+# home. She is tied at the Ivlis crossroads milestone, being finished into one of the castle's black horses, and the
+# carriage fetches her at midnight. Reached from Zora's rumour (tser_camp:zora_road) and Radu (tser_camp:radu).
+# Every line here is unvoiced for now.
+
+~ asks
+quest the_grey_mare asked
+Narrator: Radu's smile arrives a moment late, like a man coming back from somewhere else.
+Radu: Zora counts too much. Yes, I walked her down. Sold. A buyer came by, a buyer paid, and the horse goes to the buyer. That's horse-trading.
+Radu: The buyer has a carriage and no driver, and you would like to know why I said yes. Everyone says yes to that carriage, friend. One day you'll say yes to it too.
+* [Insight DC 14] It isn't the money, is it? -> why_read | why_unread
+* [Persuasion DC 13] Why did you really sell her, Radu? -> why_read | why_unread
+* Where is she now? -> where
+
+~ why_unread
+Narrator: He laughs and slaps the rail of the pen, and the laugh is good enough to fool a stranger, which is what you are.
+-> where
+
+~ why_read
+set radu_bargain_known
+quest the_grey_mare bargain
+Radu [sad]: No. It isn't the money.
+Radu: There was a voice in the carriage. Very kind. It said: give us the grey, and Nicu rides home tomorrow. Four days gone, my friend's boy, and the castle says he rides home if the grey goes to the crossroads tonight.
+Radu: The castle doesn't lie about small things. That's how it gets you to believe it about the big ones.
+* [if flag.crossroads_gallows_seen or flag.nicu_kin_told] (Tell him what hangs at the crossroads.) -> nicu_truth
+* Where is she now? -> where
+
+~ nicu_truth
+set radu_knows_nicu
+Narrator: You tell him about the gallows at the crossroads, and the board, and the two words on it. He listens with his hands flat on the rail.
+Radu [angry]: Then I sold her for a rope. For a rope he was already wearing.
+Radu: Bring her back. Bring her back and let the castle come and ask me why.
+-> where
+
+~ where
+Radu: She's tied at the old milestone on the east side of the crossroads, where the roads meet. They fetch her at midnight. That's the bargain.
+Radu: She won't stay grey, you understand. The carriage horses are black all through. They take a horse and they... finish it.
+Radu: Her name's Steaua. She likes her ears scratched and she hates priests. If you're going, go.
+-> END
+
+# --- Radu at the camp, once the quest is under way (tser_camp:radu jumps here) ---
+
+~ radu
+if flag.mare_resolved
+-> radu_after
+endif
+if flag.carriage_beaten and flag.mare_saved
+-> return_saved
+endif
+if flag.carriage_beaten
+-> return_lost
+endif
+if flag.mare_saved
+Radu: She came down the road at a gallop an hour ago and went straight into the pen like she'd never left. Grey. All grey. What did you do? No, don't tell me. The carriage will be wanting a word with somebody.
+-> END
+endif
+Radu: Midnight, friend. The old milestone, east side. Go, if you're going.
+-> END
+
+~ horses_without
+Radu: Look at them. Plaited, brushed, fed better than the burgomaster of Vallaki.
+Narrator: His eyes go to the empty place at the end of the pen and come back quickly.
+Radu: Not for sale. None of them. Not today, not tomorrow.
+-> END
+
+~ return_saved
+Narrator: Steaua is in the pen when you come back, grey as river stone, with Luminita's face pressed into her neck.
+Radu: You broke the castle's bargain. Everyone in this camp is pretending they don't know who did it. That's the nicest thing Vistani can do for you.
+if flag.radu_knows_nicu
+Radu: And you told me the truth about Nicu, when the castle wouldn't. I owe you for that more than for the horse.
+elif flag.radu_bargain_known
+Radu: And still no Nicu on the road. The castle's promises keep about as well as its horses.
+endif
+Radu: Now. She was sold, so she isn't mine. And she was bought, so she isn't the castle's. Whose is she?
+* She's yours, Radu. Never sell her again. -> to_radu
+* Luminita's. She loves her best. -> to_luminita
+
+~ to_radu
+set mare_owner = "radu"
+Radu: Mine. Then nobody gets her, ever, for any price. Not even for a good one.
+approve godrick_pendlebrook +1 thistle +2: You brought Steaua home to Radu
+-> reward
+
+~ to_luminita
+set mare_owner = "luminita"
+attitude luminita friendly
+Luminita: She was Nicu's favourite. He used to ride her bareback in the river and pretend he couldn't hear Radu shouting.
+Luminita: Thank you. I'll keep her far away from the road.
+Radu: That's fair. That's more than fair. That's the first fair thing to happen in this camp all week.
+approve thistle +2 liriel_dawnsong +1 wren_featherfoot +1: You gave Steaua to Luminita, who loved her best
+-> reward
+
+~ return_lost
+Narrator: Radu is standing at the empty end of the pen when you come back. He knows from your faces.
+Radu: She's black now. Isn't she. And you had to put her down.
+if flag.radu_knows_nicu
+Radu: The castle took my friend's boy and my mare in one week, and it paid me in old gold for the mare. Not for the boy. It doesn't pay for those.
+endif
+Narrator: He ties a black ribbon to the gate, and doesn't say anything for a long time.
+-> reward
+
+~ reward
+set mare_resolved
+if flag.mare_saved
+quest the_grey_mare home
+else
+quest the_grey_mare mourned
+endif
+Radu: Take the castle's gold. All of it. I don't want it in the camp.
+gold +120
+Radu: And this. A trader from over the mountains paid it for her, years ago, before I knew I'd never sell her. A bride price, he called it. It turns curses back, or so he swore. Better it goes with you.
+give rod_of_the_pact_keeper_plus_1
+-> END
+
+~ radu_after
+if flag.mare_owner == "radu"
+Radu: She bit me this morning. First time ever. I deserved it.
+elif flag.mare_owner == "luminita"
+Radu: Luminita won't let me near her. Quite right.
+else
+Radu: Still no grey in the pen. I keep looking at the end where she stood.
+endif
+-> END
+
+# --- Steaua at the crossroads milestone (prop grey_mare_milestone) ---
+
+~ mare
+if flag.mare_lost
+Narrator: She is black from muzzle to tail now, and her eyes are coals in a banked fire. She stands very still at the milestone, waiting for her new master, and doesn't look at you at all.
+* Wait here for the carriage. -> wait
+* Leave her. -> END
+endif
+if quest.the_grey_mare == rumored
+quest the_grey_mare asked
+endif
+Narrator: A grey mare is tied to the milestone by a halter of black cord. Smoke curls from her mane where it lies on her neck, and when she turns her head there are embers coming up in the backs of her eyes, like fire under ash.
+Narrator: On her flank, burned in fresh, is a mark you have seen before: the arms over the gates of the castle on its rock.
+if flag.mare_calmed
+-> cure_menu
+endif
+* [if not flag.mare_calm_tried] [Animal Handling DC 14] Calm her before anything else. (one try) -> calm_ok | calm_fail
+* [class:ranger] (Talk to her the way you talk to anything wild.) -> calm_ok
+* [class:druid] (Talk to her in the old way.) -> calm_ok
+* [knows:animal_friendship] (Cast Animal Friendship.) -> calm_ok
+* Wait here for the carriage. -> wait
+* Leave her for now. -> END
+
+~ calm_ok
+set mare_calmed
+Narrator: She stops fighting the cord and stands, shivering all over, and lets you put a hand on her neck. Under your palm the hide is hot as a kettle.
+interject name:thistle: There, lass. There. Nobody's finishing you tonight.
+-> cure_menu
+
+~ calm_fail
+set mare_calm_tried
+set mare_lost
+quest the_grey_mare lost
+Narrator: She screams and throws her weight against the cord, and the brand on her flank flares white. When she comes down on all four hooves again there's no grey left in her at all.
+Narrator: The coals in her eyes settle and brighten. She looks at you the way the castle looks at the valley.
+* Wait here for the carriage. -> wait
+* Leave her. -> END
+
+~ cure_menu
+Narrator: The brand on her flank is still smoking. Whatever it's doing to her, it isn't finished.
+* [knows:remove_curse] (Cast Remove Curse on the brand.) -> cured
+* [knows:protection_from_evil_and_good] (Cast Protection from Evil and Good on her.) -> cured
+* [if item:holy_water] (Pour a flask of holy water over the brand.) -> cured_water
+* [if not flag.mare_rite_tried] [Religion DC 15] (Press a holy symbol to the brand and pray.) (one try) -> cured | rite_failed
+* Wait here for the carriage. -> wait
+* Leave her for now. -> END
+
+~ cured_water
+take holy_water
+-> cured
+
+~ rite_failed
+set mare_rite_tried
+set mare_lost
+quest the_grey_mare lost
+Narrator: The prayer catches on the brand like a match in lamp oil. Steaua screams, and the white flare runs out from the mark over her whole body and leaves it black.
+interject class:cleric: She hates priests. He did say.
+* Wait here for the carriage. -> wait
+* Leave her. -> END
+
+~ cured
+set mare_saved
+quest the_grey_mare saved
+Narrator: The brand hisses like a doused coal and goes out. The embers in her eyes sink and go dark, and she is grey, all grey, and shaking, and very much a horse.
+Narrator: You slip the black halter. She doesn't wait to be thanked: she's a pale streak down the west road toward the camp before the cord hits the ground.
+interject tag:kind: Go home, girl.
+Narrator: Hooves on the castle road behind you. Too early. A carriage lamp swings up out of the dark, and the black horse in the traces is coming at a gallop.
+set carriage_came
+approve thistle +2 godrick_pendlebrook +1 liriel_dawnsong +1: You broke the castle's brand on a stolen horse
+combat carriage_escort
+
+~ wait
+time until 0
+set carriage_came
+Narrator: Midnight. The carriage comes up the castle road with its lamp swinging and no hand on the reins: one black horse in the traces, and an empty harness beside it, waiting.
+if not flag.mare_saved and not flag.mare_lost
+Narrator: At the milestone, Steaua stops shivering. When she lifts her head the grey has burned out of her, and her eyes are coals.
+set mare_lost
+quest the_grey_mare lost
+endif
+Narrator: The carriage door opens on nothing. Something gets out anyway. Several somethings.
+combat carriage_escort
