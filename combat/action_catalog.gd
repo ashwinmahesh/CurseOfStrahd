@@ -14,6 +14,9 @@ const COMMON := "Common"
 const SPELLS := "Spells"
 const ITEMS := "Items"
 const PASSIVES := "Passives"
+## The player's own tabs (U2): the actions they starred, gathered from every tab, and the ones they put away.
+const FAVOURITES := "Favourites"
+const HIDDEN := "Hidden"
 ## What a Ready action waits for (EncounterActions.READY_TRIGGERS), as the hotbar's right-click choices.
 const READY_CHOICES := [{"value": "approach", "label": "When an enemy comes within reach"},
 	{"value": "attack", "label": "When an enemy within reach attacks"}, {"value": "spell", "label": "When an enemy within reach casts a spell"}]
@@ -31,7 +34,93 @@ func tabs_for(c: Combatant) -> Array[String]:
 		out.append(SPELLS)
 	out.append(ITEMS)
 	out.append(PASSIVES)
+	var lay := layout(c)
+	if not (lay.get("favourites", []) as Array).is_empty():
+		out.insert(0, FAVOURITES)
+	if not (lay.get("hidden", []) as Array).is_empty():
+		out.append(HIDDEN)
 	return out
+
+
+# --- The player's arrangement (U2) ------------------------------------------------------------------
+
+## The hotbar layout a hero keeps from fight to fight (Character.hotbar): {order: {tab: [ids]}, favourites: [ids],
+## hidden: [ids]}. A creature without one (a monster, a summon) gets a fresh {} that isn't kept.
+static func layout(c: Combatant) -> Dictionary:
+	return (c.creature as Character).hotbar if c.creature is Character else {}
+
+
+## The actions on `tab` as the player arranged them: the order they dragged them into (actions they never moved keep
+## their places after those), without the ones they hid. Favourites gathers the starred actions from every tab, in
+## their own order; Hidden holds the hidden ones. `all`: actions_for(c), when the caller has it already.
+func arranged(c: Combatant, tab: String, all: Array[Dictionary] = []) -> Array[Dictionary]:
+	var acts := all if not all.is_empty() else actions_for(c)
+	var lay := layout(c)
+	var hidden := lay.get("hidden", []) as Array
+	var out: Array[Dictionary] = []
+	if tab == FAVOURITES or tab == HIDDEN:
+		for id: Variant in lay.get("favourites" if tab == FAVOURITES else "hidden", []):
+			for a in acts:
+				if str(a["id"]) == str(id) and not a in out:
+					out.append(a)
+		return out
+	var order := (lay.get("order", {}) as Dictionary).get(tab, []) as Array
+	for id: Variant in order:
+		for a in acts:
+			if str(a["id"]) == str(id) and str(a["tab"]) == tab and not str(id) in hidden and not a in out:
+				out.append(a)
+	for a in acts:
+		if str(a["tab"]) == tab and not str(a["id"]) in hidden and not a in out:
+			out.append(a)
+	return out
+
+
+## Stars an action for the Favourites tab, or takes its star away.
+func set_favourite(c: Combatant, action_id: String, on: bool) -> void:
+	_mark(c, "favourites", action_id, on)
+
+
+func is_favourite(c: Combatant, action_id: String) -> bool:
+	return action_id in (layout(c).get("favourites", []) as Array)
+
+
+## Puts an action away on the Hidden tab (it still works from there), or brings it back.
+func set_hidden(c: Combatant, action_id: String, on: bool) -> void:
+	_mark(c, "hidden", action_id, on)
+
+
+func is_hidden(c: Combatant, action_id: String) -> bool:
+	return action_id in (layout(c).get("hidden", []) as Array)
+
+
+func _mark(c: Combatant, list: String, action_id: String, on: bool) -> void:
+	if not c.creature is Character:
+		return
+	var lay := layout(c)
+	var ids := (lay.get(list, []) as Array).duplicate()
+	ids.erase(action_id)
+	if on:
+		ids.append(action_id)
+	lay[list] = ids
+
+
+## Moves an action to `index` on `tab` (a drag on the hotbar, or "Move earlier/later" from its menu); the slot numbers,
+## and so the hotkeys, follow.
+func move_action(c: Combatant, tab: String, action_id: String, index: int) -> void:
+	if not c.creature is Character:
+		return
+	var lay := layout(c)
+	var ids: Array = arranged(c, tab).map(func(a: Dictionary) -> String: return str(a["id"]))
+	if not action_id in ids:
+		return
+	ids.erase(action_id)
+	ids.insert(clampi(index, 0, ids.size()), action_id)
+	if tab == FAVOURITES or tab == HIDDEN:
+		lay["favourites" if tab == FAVOURITES else "hidden"] = ids
+		return
+	var order := (lay.get("order", {}) as Dictionary).duplicate()
+	order[tab] = ids
+	lay["order"] = order
 
 
 func class_tab(c: Combatant) -> String:

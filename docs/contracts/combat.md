@@ -216,6 +216,11 @@ Picking up a pile within reach is kind `pickup` (`pickup:<gid>`, targeting none,
 square menu lists `act:pickup:<gid>` for what lies on a square.
 Previews: `attack_preview(c, action, t)`, `spell_preview(c, action, point, direction, slot)`,
 `move_preview(c, cell, move_reach(c))`, `slot_choices(c, spell_id)`, `target_why(c, action, t)`.
+The player's arrangement (U2) lives on the character (`Character.hotbar`: `{order: {tab: [ids]}, favourites: [ids],
+hidden: [ids]}`, saved): `arranged(c, tab)` gives a tab's entries in the player's order without the hidden ones (the
+`FAVOURITES` tab gathers the starred entries from every tab, `HIDDEN` the hidden ones; `tabs_for` adds each only while
+it has something). `set_favourite`, `set_hidden` and `move_action(c, tab, id, index)` change it; the HUD drives them
+from a slot's right-click menu and by dragging one slot onto another.
 
 ## Bosses: legendary and lair actions, forms, Misty Escape, withdrawing (ADR 0014, combat/legendary.gd)
 
