@@ -538,6 +538,18 @@
         1
       ],
       "stand_ft": 10
+    },
+    {
+      "id": "seventh_row",
+      "cell": [
+        30,
+        24
+      ],
+      "kind": "examine",
+      "label": "The Seventh Row",
+      "model": "basket",
+      "dialogue": "wizard_of_wines/the_black_row:row",
+      "when": "flag.winery_reclaimed"
     }
   ],
   "lights": [
@@ -1116,6 +1128,350 @@
       ],
       "surprise": "party",
       "flag": "vineyard_cleared"
+    },
+    {
+      "id": "vine_mother",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "The Seventh Row stands up out of the ground, and the vines in the rows on either side pull their roots up after it.",
+      "monsters": [
+        {
+          "monster": "vine_mother",
+          "cell": [
+            30,
+            28
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            26,
+            22
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            36,
+            22
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            30,
+            26
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            40,
+            22
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            24,
+            24
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            34,
+            26
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            40,
+            26
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            28,
+            22
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            38,
+            26
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            42,
+            24
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            42,
+            22
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            22,
+            26
+          ]
+        },
+        {
+          "monster": "tree_blight",
+          "cell": [
+            33,
+            20
+          ],
+          "name": "The Sixth Row"
+        }
+      ],
+      "surprise": "",
+      "flag": "vine_mother_slain",
+      "quest": {
+        "id": "the_black_row",
+        "stage": "cut_out"
+      }
+    },
+    {
+      "id": "vine_mother",
+      "trigger": "dialogue",
+      "when": "level >= 7",
+      "text": "The Seventh Row stands up out of the ground, and the vines in the rows on either side pull their roots up after it.",
+      "monsters": [
+        {
+          "monster": "vine_mother",
+          "cell": [
+            30,
+            28
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            26,
+            22
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            36,
+            22
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            30,
+            26
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            24,
+            24
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            34,
+            26
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            40,
+            26
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            28,
+            22
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            38,
+            26
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            42,
+            24
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            40,
+            22
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            22,
+            26
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "vine_mother_slain",
+      "quest": {
+        "id": "the_black_row",
+        "stage": "cut_out"
+      }
+    },
+    {
+      "id": "vine_mother",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "The Seventh Row stands up out of the ground, and the vines in the rows on either side pull their roots up after it.",
+      "monsters": [
+        {
+          "monster": "vine_mother",
+          "cell": [
+            30,
+            28
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            26,
+            22
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            36,
+            22
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            30,
+            26
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            40,
+            22
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            24,
+            24
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            34,
+            26
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            40,
+            26
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            28,
+            22
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "vine_mother_slain",
+      "quest": {
+        "id": "the_black_row",
+        "stage": "cut_out"
+      }
+    },
+    {
+      "id": "vine_mother",
+      "trigger": "dialogue",
+      "text": "The Seventh Row stands up out of the ground, and the vines in the rows on either side pull their roots up after it.",
+      "monsters": [
+        {
+          "monster": "vine_mother",
+          "cell": [
+            30,
+            28
+          ],
+          "hp": 150
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            26,
+            22
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            36,
+            22
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            24,
+            24
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            34,
+            26
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            40,
+            26
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "vine_mother_slain",
+      "quest": {
+        "id": "the_black_row",
+        "stage": "cut_out"
+      }
     }
   ],
   "narration": {

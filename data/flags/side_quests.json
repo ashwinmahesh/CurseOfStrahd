@@ -580,6 +580,31 @@
       "id": "granny_ash_slain",
       "type": "bool",
       "summary": "Granny Ash, Morgantha's mother, is dead in the miller's lane (The Fourth Sister)."
+    },
+    {
+      "id": "black_row_nature",
+      "type": "bool",
+      "summary": "The party saw that the Seventh Row's vines are all one blight grown up into the rootstock (The Black Row)."
+    },
+    {
+      "id": "black_row_feathers",
+      "type": "bool",
+      "summary": "The party found raven feathers and a man's bare footprints in the Seventh Row (The Black Row)."
+    },
+    {
+      "id": "adrian_against_row",
+      "type": "bool",
+      "summary": "Adrian agreed to help pull up the Seventh Row and fought the Vine Mother beside the party (The Black Row)."
+    },
+    {
+      "id": "vine_mother_slain",
+      "type": "bool",
+      "summary": "The Vine Mother, the Gulthias cutting under the Seventh Row, is dead (The Black Row)."
+    },
+    {
+      "id": "black_row_paid",
+      "type": "bool",
+      "summary": "Davian paid the party for cutting out the Seventh Row (The Black Row)."
     }
   ]
 }

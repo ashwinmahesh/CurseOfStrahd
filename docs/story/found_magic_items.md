@@ -148,6 +148,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Press house, the wizard's casks | Decanter of Endless Water (uncommon) | Search (Perception DC 14) |
 | ✅ | Winery, the pried-up floorboards | Elemental Gem, Emerald (uncommon) | Search (Perception DC 15): what the druids missed |
 | ✅ | Stefania Martikov | Periapt of Wound Closure (uncommon) | Gift: once the winery is reclaimed |
+| ✅ | Davian Martikov | Wand of Fireballs (rare) | Gift: the Wizard of Wines' wand from the press-house rack, once the Black Row is cut out (The Black Row, docs/story/side_quests.md) |
 
 ## Yester Hill (level 7)
 
