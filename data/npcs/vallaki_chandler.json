@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_chandler",
+  "name": "Pyotr Petrov",
+  "title": "Chandler of Vallaki",
+  "summary": "Vallaki's chandler, a broad, anxious man who smells of tallow and keeps his daughter Mila's shutters nailed at night since the roses came.",
+  "portrait": "villager",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

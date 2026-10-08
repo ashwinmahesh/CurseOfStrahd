@@ -1,0 +1,134 @@
+# The Cat in the Window (side quest, docs/story/side_quests.md): Lady Wachter's daughter Stella believes she is a cat.
+# She promised a stranger in black at one of her mother's soirees that she'd follow him like a cat follows cream, and
+# he took her at her word: a velvet ribbon with a silver bell holds the promise, and what she sees, he sees. Reached
+# from the gate watch's rumour (gate:news), Lady Wachter's tea (lady_wachter:stella_ok) or the locked bedroom itself.
+# Stella speaks only once she's free. Every line here is unvoiced for now.
+
+~ stella
+if flag.stella_shadow_beaten
+-> after_fight
+endif
+if not flag.stella_met
+set stella_met
+if not quest.cat_in_the_window or quest.cat_in_the_window == rumored
+quest cat_in_the_window met
+endif
+Narrator: She is crouched at the foot of the bed with her knees drawn up, a young woman of twenty in a good dress gone soft with wear. She looks at you without blinking. Then she looks past you, at the window, the way a cat looks at a bird it has already decided about.
+Narrator: Round her throat is a black velvet ribbon tied in a neat bow, with a small silver bell on it that doesn't ring when she moves.
+if flag.stella_rumor
+interject tag:curious: The girl in the window. The watch said two years.
+endif
+else
+Narrator: Stella turns her head toward you, slowly, and then back toward the window. The bell at her throat stays silent.
+endif
+-> stella_menu
+
+~ stella_menu
+* [if not flag.stella_bound_known] [Insight DC 13] (Watch her, not the cat she's playing.) -> held | held_missed
+* [if not flag.stella_bound_known] [Arcana DC 14] (Is there magic on her?) -> ribbon | ribbon_missed
+* [knows:detect_magic] [if not flag.stella_bound_known] (Cast Detect Magic.) -> ribbon
+* [if flag.stella_bound_known] (Free her.) -> break_menu
+* Stella? Can you hear us? -> talk
+* Leave her be. -> END
+
+~ talk
+Narrator: At her name her ears, if she had a cat's ears, would go flat. She opens her mouth, and what comes out is a long, low, perfectly made yowl.
+interject tag:blunt: That's a no.
+-> stella_menu
+
+~ held_missed
+Narrator: She washes the back of her hand and smooths her hair with it, and watches the window. If there's a person in there, she's very far back.
+-> stella_menu
+
+~ ribbon_missed
+Narrator: Nothing you can put a name to. The room smells of dust and lavender and, faintly, of a cold hearth that was never lit.
+-> stella_menu
+
+~ held
+Narrator: She isn't mad. Every few breaths her hand goes up to the ribbon at her throat and stops short, the way a hand stops at a pane of glass. Her eyes, under the cat, are a person's eyes, and they are frightened.
+-> bound
+
+~ ribbon
+Narrator: The magic is in the ribbon, not in her: an enchantment woven into the velvet and knotted into the bow, and the little bell is its eye. It isn't looking at you. It's looking out of the window.
+-> bound
+
+~ bound
+set stella_bound_known
+quest cat_in_the_window bound
+Narrator: You touch the bell. For one breath Stella's face is entirely her own.
+Stella Wachter [afraid]: I told him I'd follow him like a cat follows cream. At Mother's party. I was laughing. He said: then you shall.
+Stella Wachter [afraid]: He looks out of my eyes. Every day. Mother ties the bow fresh every morning, so it's neat for him. Get it off. Get it off me.
+Narrator: Then she's gone again, back behind the cat, and she bites your hand, not hard.
+interject class:cleric: A vow held by a curse. Remove Curse would break it.
+interject class:wizard: Cut it, and it'll only tie itself again. Break it.
+-> stella_menu
+
+~ break_menu
+* [knows:remove_curse] (Cast Remove Curse on the ribbon.) -> break
+* [if item:spell_scroll__remove_curse] (Read a Scroll of Remove Curse over the ribbon.) -> break_scroll
+* (Cut the ribbon.) -> cut
+* Not yet. -> END
+
+~ cut
+set stella_bell_rung
+Narrator: The knife goes through the velvet like it isn't there. The bell falls, and rings once as it hits the floor: one small, clear note that goes on much too long, and somewhere across the lake something turns its head.
+Narrator: Stella hisses at you and gets under the bed. When she comes out again, the ribbon is round her throat, tied in a neat bow, and the bell is on it.
+-> END
+
+~ break_scroll
+take spell_scroll__remove_curse
+-> break
+
+~ break
+Narrator: The ribbon smokes. The bow crawls, trying to tie itself tighter, and comes apart in your fingers like wet ash. The bell rings once.
+Narrator: Stella screams, and it is a girl's scream, all of it. But her shadow on the wall doesn't scream with her. Her shadow stands up, and so do all the others in the room.
+combat stella_shadow
+
+# --- After the fight (Stella comes to the party) ---
+
+~ after_fight
+if flag.stella_at_church
+-> END
+endif
+quest cat_in_the_window freed
+Stella Wachter: Two years. Two years I've sat at that window and watched the square for him. Who went into the Baron's. Who went to church. Who looked up.
+Stella Wachter [angry]: And Mother knew. Mother tied the bow every morning and told callers I was delicate.
+interject tag:kind: You're free of it now.
+Stella Wachter: I'm free of him. I'm not free of her. I'm going to Father Lucian. I know the way; I've watched it from that window every day for two years.
+Stella Wachter: Come and find me there. I'll have something for you, when I've stopped shaking.
+set stella_at_church
+approve liriel_dawnsong +2 godrick_pendlebrook +2 wren_featherfoot +2: You broke the curse on Stella Wachter
+-> END
+
+# --- At St. Andral's ---
+
+~ church
+if flag.stella_thanked
+-> church_after
+endif
+set stella_thanked
+set stella_panel_told
+quest cat_in_the_window with_lucian
+Stella Wachter: Father Lucian has given me a cot behind the vestry and a great many blankets. He keeps asking if I'm cold. I'm not cold. I'm furious.
+Stella Wachter: Mother's book club meets in the cellar, under the study. The way down is a panel behind the bookcase: push the third shelf, not the second. They don't read. They pray. To him.
+Stella Wachter: And this was my dowry. Mother would only spend it on him. Take it.
+gold +250
+Stella Wachter: And this. He sent it for my sixteenth birthday, with a card that said "for flying". I never put it on. You should. Let him see it on somebody who isn't afraid of him.
+give cloak_of_the_bat
+-> END
+
+~ church_after
+if flag.stella_panel_told
+Stella Wachter: The third shelf, not the second. Did you look? Don't tell me what's down there. I've heard them singing.
+endif
+Stella Wachter: I sleep with the shutters open now. Father Lucian thinks it's for the air.
+-> END
+
+# --- Father Lucian, asked for help (lucian:menu jumps here) ---
+
+~ lucian_scroll
+set lucian_scroll_given
+Father Lucian [sad]: Stella. Poor child. I married her parents. I baptised her. I've prayed outside that door.
+Father Lucian: Take this; it's the church's last one. Read it over whatever holds her, and bring her to me afterwards. She'll need somewhere her mother can't tie a bow.
+give spell_scroll__remove_curse
+-> END

@@ -766,6 +766,18 @@
       "model": "satchel",
       "search_dc": 13,
       "item": "string"
+    },
+    {
+      "id": "ana_grave",
+      "cell": [
+        45,
+        7
+      ],
+      "kind": "examine",
+      "label": "Three small graves",
+      "model": "grave_mound",
+      "dialogue": "vallaki/black_roses:grave",
+      "when": "flag.ana_grave_known or flag.roses_spawn_destroyed"
     }
   ],
   "lights": [
@@ -1257,7 +1269,8 @@
       "hours": [
         19,
         6
-      ]
+      ],
+      "when": "flag.ilie_fate != \"lost\""
     },
     {
       "npc": "vallaki_grumbler",
@@ -1463,6 +1476,31 @@
           3
         ]
       ]
+    },
+    {
+      "npc": "ana",
+      "cell": [
+        11,
+        28
+      ],
+      "dialogue": "vallaki/black_roses:ana",
+      "facing": "west",
+      "approach": 8,
+      "when": "night and flag.roses_vigil and not flag.ana_met"
+    },
+    {
+      "npc": "vallaki_chandler",
+      "cell": [
+        12,
+        25
+      ],
+      "dialogue": "vallaki/black_roses:chandler",
+      "facing": "south",
+      "hours": [
+        8,
+        18
+      ],
+      "when": "quest.black_roses and not weather == storm"
     }
   ],
   "encounters": [
@@ -2559,6 +2597,335 @@
         }
       ],
       "surprise": ""
+    },
+    {
+      "id": "roses_street",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "Two more girls come over the rooftops at Ana's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            11,
+            28
+          ],
+          "name": "Ana",
+          "hp": 60
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            26
+          ],
+          "name": "Irina"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            16,
+            32
+          ],
+          "name": "Sorina"
+        }
+      ],
+      "surprise": "",
+      "flag": "roses_spawn_destroyed"
+    },
+    {
+      "id": "roses_street",
+      "trigger": "dialogue",
+      "when": "level >= 5",
+      "text": "Two more girls come over the rooftops at Ana's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            11,
+            28
+          ],
+          "name": "Ana",
+          "hp": 50
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            26
+          ],
+          "name": "Irina"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            8,
+            33
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "roses_spawn_destroyed"
+    },
+    {
+      "id": "roses_street",
+      "trigger": "dialogue",
+      "when": "level >= 4",
+      "text": "Two more girls come over the rooftops at Ana's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            11,
+            28
+          ],
+          "name": "Ana",
+          "hp": 45
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            26
+          ],
+          "name": "Irina",
+          "hp": 55
+        }
+      ],
+      "surprise": "",
+      "flag": "roses_spawn_destroyed"
+    },
+    {
+      "id": "roses_street",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "Two more girls come over the rooftops at Ana's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            11,
+            28
+          ],
+          "name": "Ana",
+          "hp": 40
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            14,
+            26
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            8,
+            33
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "roses_spawn_destroyed"
+    },
+    {
+      "id": "roses_graves",
+      "trigger": "dialogue",
+      "when": "day and level >= 6",
+      "text": "The lids come up slowly. The three of them climb out into the grey daylight blinking and slow, like children woken too early, and very, very hungry.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            46,
+            6
+          ],
+          "name": "Ana",
+          "hp": 40
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            45,
+            5
+          ],
+          "name": "Irina",
+          "hp": 50
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            46,
+            8
+          ],
+          "name": "Sorina",
+          "hp": 50
+        }
+      ],
+      "surprise": "enemies",
+      "flag": "roses_spawn_destroyed"
+    },
+    {
+      "id": "roses_graves",
+      "trigger": "dialogue",
+      "when": "day and level >= 5",
+      "text": "The lids come up slowly. The three of them climb out into the grey daylight blinking and slow, like children woken too early, and very, very hungry.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            46,
+            6
+          ],
+          "name": "Ana",
+          "hp": 35
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            45,
+            5
+          ],
+          "name": "Irina",
+          "hp": 45
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            46,
+            8
+          ],
+          "name": "Sorina",
+          "hp": 45
+        }
+      ],
+      "surprise": "enemies",
+      "flag": "roses_spawn_destroyed"
+    },
+    {
+      "id": "roses_graves",
+      "trigger": "dialogue",
+      "when": "day",
+      "text": "The lids come up slowly. The three of them climb out into the grey daylight blinking and slow, like children woken too early, and very, very hungry.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            46,
+            6
+          ],
+          "name": "Ana",
+          "hp": 30
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            45,
+            5
+          ],
+          "name": "Irina",
+          "hp": 35
+        }
+      ],
+      "surprise": "enemies",
+      "flag": "roses_spawn_destroyed"
+    },
+    {
+      "id": "roses_graves",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "The three graves open from underneath. Ana climbs out first, and brushes the earth off her nightgown, and smiles at you with all her teeth.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            46,
+            6
+          ],
+          "name": "Ana",
+          "hp": 60
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            45,
+            5
+          ],
+          "name": "Irina"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            46,
+            8
+          ],
+          "name": "Sorina"
+        }
+      ],
+      "surprise": "",
+      "flag": "roses_spawn_destroyed"
+    },
+    {
+      "id": "roses_graves",
+      "trigger": "dialogue",
+      "when": "level >= 5",
+      "text": "The three graves open from underneath. Ana climbs out first, and brushes the earth off her nightgown, and smiles at you with all her teeth.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            46,
+            6
+          ],
+          "name": "Ana",
+          "hp": 50
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            45,
+            5
+          ],
+          "name": "Irina"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            46,
+            8
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "roses_spawn_destroyed"
+    },
+    {
+      "id": "roses_graves",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "The three graves open from underneath. Ana climbs out first, and brushes the earth off her nightgown, and smiles at you with all her teeth.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            46,
+            6
+          ],
+          "name": "Ana",
+          "hp": 45
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            45,
+            5
+          ],
+          "name": "Irina",
+          "hp": 55
+        }
+      ],
+      "surprise": "",
+      "flag": "roses_spawn_destroyed"
     }
   ],
   "narration": {

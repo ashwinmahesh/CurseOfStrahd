@@ -1,0 +1,47 @@
+{
+  "id": "cat_in_the_window",
+  "name": "The Cat in the Window",
+  "summary": "Lady Wachter keeps her daughter Stella locked in a bedroom at Wachterhaus. Stella believes she is a cat. Nobody in Vallaki believes she's ill.",
+  "giver": "stella_wachter",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Vallaki says a young woman sits all day at a window of Wachterhaus, washing her face with the back of her hand. The Wachters say she's ill. Nobody has seen her come out in two years. Lady Wachter says it's her daughter, Stella, and that she believes she's a cat.",
+      "objectives": [
+        "Find a way into the locked bedroom at Wachterhaus"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "met",
+      "journal": "Stella Wachter, Lady Wachter's daughter, crouches on her bed and behaves in every way like a cat: she purrs, she hisses, she washes, she watches. She doesn't answer to anything human.",
+      "objectives": [
+        "Find out what is wrong with Stella"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "bound",
+      "journal": "Stella isn't mad. She is held. At one of her mother's soirees she told a handsome stranger in black that she'd follow him like a cat follows cream, and he said: then you shall. A black velvet ribbon with a silver bell holds the promise at her throat, and what Stella sees, he sees. Lady Wachter keeps her at the window because her master likes the view.",
+      "objectives": [
+        "Break the binding: Remove Curse, a scroll of it, or Father Lucian's help"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "freed",
+      "journal": "The ribbon is ash. When it broke, the master looked out of her shadow one last time, and we drove what came out of it back into the dark. Stella is herself again, and very angry. She is going to Father Lucian at St. Andral's.",
+      "objectives": [
+        "Find Stella at St. Andral's"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "with_lucian",
+      "journal": "Stella is staying at St. Andral's with Father Lucian. She told us what her mother's book club really reads, and where the panel behind the study bookcase opens, and gave us the cloak the master sent her for her sixteenth birthday. She never wore it.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

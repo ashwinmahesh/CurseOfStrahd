@@ -382,6 +382,16 @@
       ],
       "dialogue": "vallaki/victor:sanctuary",
       "when": "flag.vallaki_backed == \"wachter\" and not flag.victor_vanished and not guest:victor_vallakovich"
+    },
+    {
+      "npc": "stella_wachter",
+      "cell": [
+        2,
+        3
+      ],
+      "dialogue": "vallaki/cat_in_the_window:church",
+      "facing": "east",
+      "when": "flag.stella_at_church"
     }
   ],
   "encounters": [

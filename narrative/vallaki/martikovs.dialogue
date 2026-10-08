@@ -27,7 +27,7 @@ endif
 * Let's see what you're selling. -> trade
 * We'd like a room for the night. -> room
 * [if flag.keepers_allied] The Keepers' stores, Urwin. What can you spare? -> keepers_stores
-* What's the talk in town? -> rumors
+* Heard anything interesting? -> rumors
 * [if guest:ireena and not flag.bones_returned] Can Ireena stay here for now? -> ireena_room
 * [if flag.vallaki_pledge != "town" and not flag.festival_begun] Whose side are you on, the Baron's or Lady Wachter's? -> sides
 * [Insight DC 15] There's something he's not saying. -> insight_ok | insight_fail
@@ -51,12 +51,28 @@ services
 ~ rumors
 if not flag.bones_returned
 Urwin: Lucian's stripped his altar. Something's gone from the church that shouldn't have. Milivoj the gravedigger is spending more on bread than he earns.
+if not quest.bones_of_st_andral
+quest bones_of_st_andral rumored
+endif
 endif
 if not flag.wachter_cult_broken and not flag.festival_over
 Urwin: Lady Wachter's cellar lamps burn till dawn. Her book club. Nobody's ever seen a book go in.
+if not quest.wachter_plot
+quest wachter_plot rumored
+endif
 endif
 if not flag.arabelle_rescued and not flag.arabelle_lost
 Urwin: The Vistani headman outside the walls has lost his girl. His brother doesn't seem to mind much. That's worth thinking about.
+if not quest.missing_arabelle
+quest missing_arabelle rumored
+endif
+endif
+if not quest.black_roses
+set roses_rumor
+quest black_roses rumored
+Urwin: Black roses on Pyotr Petrov's step this morning, the chandler's. Ilie the lamplighter saw them on his way home and went white as his tapers. He lost his girl last winter. There were roses then, too.
+elif flag.roses_ring_given
+Urwin: Ilie's put out the lamp outside his own window. The birds say he sleeps at night now. It's been a year.
 endif
 Urwin: And the coffin maker's had a delivery he won't talk about. Big crates. In the night.
 -> urwin_menu
