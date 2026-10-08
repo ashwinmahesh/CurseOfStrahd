@@ -73,10 +73,8 @@ func test_a_search_finds_traps_within_15_ft_and_shows_its_reach() -> void:
 	assert_eq(_state("plain_wolf_trap"), "", "40 ft off: past the Search's reach")
 	assert_eq(_state("subtle_tripwire"), "", "no roll finds a DC 40 tripwire")
 	assert_true(view.has_node("SearchReach"), "the squares it reached show on the ground for a moment")
-	for i in 150:
-		if not view.has_node("SearchReach"):
-			break
-		await get_tree().process_frame
+	await get_tree().create_timer(LocationTraps.REACH_SHOWN + 0.5).timeout
+	await get_tree().process_frame
 	assert_false(view.has_node("SearchReach"), "and fade")
 
 
