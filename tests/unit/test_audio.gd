@@ -78,3 +78,29 @@ func test_danger_rises_with_a_bloodied_hero_or_a_boss() -> void:
 	assert_eq(Audio.danger(e.combatants), Audio.Intensity.FULL, "Strahd on the field")
 	strahd.creature.hp = 0
 	assert_eq(Audio.danger(e.combatants), Audio.Intensity.FIGHT, "a fallen boss no longer counts")
+
+
+## Fights stay on free recordings (owner, 2026-10-08): a Bloodied hero crossfades an ordinary fight to the harder
+## track, and Strahd brings his own theme.
+func test_fights_rise_and_strahd_has_his_theme() -> void:
+	assert_eq(Audio.music_for("combat", Audio.Intensity.FULL), "combat_hard", "a Bloodied hero swells an ordinary fight")
+	assert_false(Audio.files("music", "combat_hard").is_empty())
+	var e := TestCombat.open_field()
+	TestCombat.hero(e, "hedda_ironvow", Vector2i(1, 1))
+	TestCombat.foe(e, "zombie", Vector2i(5, 1))
+	assert_eq(Audio.fight_mood(e.combatants), "", "zombies have no theme of their own")
+	var strahd := TestCombat.foe(e, "strahd_von_zarovich", Vector2i(8, 4))
+	assert_eq(Audio.fight_mood(e.combatants), "strahd", "Strahd brings his own")
+	assert_true(Audio.is_fight_mood("strahd"))
+	assert_false(Audio.files("music", "strahd").is_empty())
+	strahd.creature.hp = 0
+	assert_eq(Audio.fight_mood(e.combatants), "")
+
+
+func test_every_track_level_names_a_listed_recording() -> void:
+	var listed := {}
+	for id: String in (Audio._data["music"] as Dictionary):
+		for path in Audio.files("music", id):
+			listed[path] = true
+	for path: String in (Audio._data.get("track_levels", {}) as Dictionary):
+		assert_true(listed.has(path), "track_levels names %s, which no mood plays" % path)

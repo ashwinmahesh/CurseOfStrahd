@@ -1,5 +1,5 @@
 {
-  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB. rises: at full fight intensity (a boss, or someone in the party Bloodied) the music crossfades to this mood's music; a music entry that is itself a list holds one piece's intensity versions, calmest first, played in step (A2). steps, loops, water, containers: the world sounds (WorldSounds, A3).",
+  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB; track_levels: one recording's own offset on top of its mood's, so the pieces a mood picks between sound about as loud as each other. rises: at full fight intensity (a boss, or someone in the party Bloodied) the music crossfades to this mood's music; a music entry that is itself a list holds one piece's intensity versions, calmest first, played in step (A2). boss_music: a foe whose fight has its own mood (Strahd's). steps, loops, water, containers: the world sounds (WorldSounds, A3).",
   "themes": {
     "svalich_road": "wilds",
     "forest": "wilds",
@@ -127,48 +127,72 @@
     "trap": -10.0,
     "hearth": -14.0,
     "river": -6.0,
-    "waterfall": -6.0
+    "waterfall": -6.0,
+    "combat_hard": -4.0,
+    "strahd": -2.0
   },
   "music": {
     "title": [
       "res://art/sourced/wikimedia_commons/Bach,_Toccata_und_Fuge_d-moll_BWV_565,_Norbert_Schenk.mp3"
     ],
     "church": [
-      "res://art/sourced/wikimedia_commons/Bach,_Toccata_und_Fuge_d-moll_BWV_565,_Norbert_Schenk.mp3"
+      "res://art/sourced/wikimedia_commons/Bach,_Toccata_und_Fuge_d-moll_BWV_565,_Norbert_Schenk.mp3",
+      "res://art/sourced/kevin_macleod/Night Vigil.mp3",
+      "res://art/sourced/oga_isao/demo_Beyond Redemption_master_0.mp3"
     ],
     "wilds": [
-      "res://art/sourced/kevin_macleod/Ossuary 6 - Air.mp3"
+      "res://art/sourced/kevin_macleod/Ossuary 6 - Air.mp3",
+      "res://art/sourced/kevin_macleod/Lightless Dawn.mp3"
     ],
     "village": [
-      "res://art/sourced/kevin_macleod/Oppressive Gloom.mp3"
+      "res://art/sourced/kevin_macleod/Oppressive Gloom.mp3",
+      "res://art/sourced/scott_buckley/MemoriesOfStone.mp3"
     ],
     "town": [
       "res://art/sourced/kevin_macleod/Folk Round.mp3"
     ],
     "tavern": [
-      "res://art/sourced/kevin_macleod/Folk Round.mp3"
+      "res://art/sourced/kevin_macleod/Folk Round.mp3",
+      "res://art/sourced/kevin_macleod/Minstrel Guild.mp3"
     ],
     "camp": [
       "res://art/sourced/wikimedia_commons/USAFB_Czardas.ogg",
-      "res://art/sourced/kevin_macleod/Duet Musette.mp3"
+      "res://art/sourced/kevin_macleod/Duet Musette.mp3",
+      "res://art/sourced/kevin_macleod/Gypsy Shoegazer.mp3"
     ],
     "tarokka": [
       "res://art/sourced/kevin_macleod/Duet Musette.mp3"
     ],
     "haunted": [
-      "res://art/sourced/kevin_macleod/Darkest Child.mp3"
+      "res://art/sourced/kevin_macleod/Darkest Child.mp3",
+      "res://art/sourced/scott_buckley/Anabasis_I.mp3",
+      "res://art/sourced/oga_of_far_different_nature/Of Far Different Nature - In Darkness (CC-BY)_0.mp3"
     ],
     "combat": [
-      "res://art/sourced/kevin_macleod/Darkling.mp3"
+      "res://art/sourced/kevin_macleod/Darkling.mp3",
+      "res://art/sourced/kevin_macleod/Nightmare Machine.mp3"
     ],
     "boss": [
-      "res://art/sourced/kevin_macleod/Unholy Knight.mp3"
+      "res://art/sourced/kevin_macleod/Unholy Knight.mp3",
+      "res://art/sourced/kevin_macleod/Final Count.mp3",
+      "res://art/sourced/scott_buckley/EyesInTheVoid.mp3"
     ],
     "castle": [
-      "res://art/sourced/wikimedia_commons/Bach,_Toccata_und_Fuge_d-moll_BWV_565,_Norbert_Schenk.mp3"
+      "res://art/sourced/wikimedia_commons/Bach,_Toccata_und_Fuge_d-moll_BWV_565,_Norbert_Schenk.mp3",
+      "res://art/sourced/kevin_macleod/Danse Macabre.mp3",
+      "res://art/sourced/wikimedia_commons/Johann_Sebastian_Bach_BWV_542_fugue_Reinhardtsgrimma_Herbert_Collum.ogg",
+      "res://art/sourced/oga_isao/short_The Enchanting Haunted Ballroom_0.mp3"
     ],
     "ending": [
-      "res://art/sourced/kevin_macleod/Ossuary 6 - Air.mp3"
+      "res://art/sourced/kevin_macleod/Ossuary 6 - Air.mp3",
+      "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg"
+    ],
+    "combat_hard": [
+      "res://art/sourced/kevin_macleod/Clash Defiant.mp3"
+    ],
+    "strahd": [
+      "res://art/sourced/wikimedia_commons/Modest_Mussorgsky_-_night_on_bald_mountain.ogg",
+      "res://art/sourced/oga_isao/dova_mary_only_knows.mp3"
     ]
   },
   "sfx": {
@@ -957,7 +981,9 @@
       }
     }
   },
-  "rises": {},
+  "rises": {
+    "combat": "combat_hard"
+  },
   "loops": {
     "hearth": [
       "res://art/sourced/oga_fire_antumdeluge/fire-1.wav"
@@ -1039,5 +1065,25 @@
     "trunk": "chest",
     "vardo": "chest",
     "wardrobe": "cupboard"
+  },
+  "boss_music": {
+    "strahd_von_zarovich": "strahd"
+  },
+  "track_levels": {
+    "res://art/sourced/kevin_macleod/Night Vigil.mp3": -2.5,
+    "res://art/sourced/oga_isao/demo_Beyond Redemption_master_0.mp3": -3.3,
+    "res://art/sourced/kevin_macleod/Lightless Dawn.mp3": 2.4,
+    "res://art/sourced/scott_buckley/MemoriesOfStone.mp3": -2.6,
+    "res://art/sourced/kevin_macleod/Minstrel Guild.mp3": -9.8,
+    "res://art/sourced/scott_buckley/Anabasis_I.mp3": 3.1,
+    "res://art/sourced/oga_of_far_different_nature/Of Far Different Nature - In Darkness (CC-BY)_0.mp3": -2.5,
+    "res://art/sourced/kevin_macleod/Nightmare Machine.mp3": 4.0,
+    "res://art/sourced/scott_buckley/EyesInTheVoid.mp3": 1.0,
+    "res://art/sourced/kevin_macleod/Danse Macabre.mp3": -2.9,
+    "res://art/sourced/wikimedia_commons/Johann_Sebastian_Bach_BWV_542_fugue_Reinhardtsgrimma_Herbert_Collum.ogg": 8.0,
+    "res://art/sourced/oga_isao/short_The Enchanting Haunted Ballroom_0.mp3": -7.5,
+    "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg": 4.4,
+    "res://art/sourced/wikimedia_commons/Modest_Mussorgsky_-_night_on_bald_mountain.ogg": 2.1,
+    "res://art/sourced/oga_isao/dova_mary_only_knows.mp3": -2.6
   }
 }
