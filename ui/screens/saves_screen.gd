@@ -137,10 +137,14 @@ func _build() -> void:
 
 
 ## The saves this page offers, sorted: to save over, only the player's own games still being played (the autosave and
-## a fight's round start are the game's, and a finished game is kept as its ending); to load, every one.
+## a fight's round start are the game's, and a finished game is kept as its ending), and in an Honour run only its own
+## one save; to load, every one.
 func slots(dir: String = "") -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
+	var honour := mode == Mode.SAVE and SaveSystem.honour()
 	for s in SaveSystem.list_slots(dir):
+		if honour and str(s["slot"]) != SaveSystem.current_slot:
+			continue   # an Honour run saves only over its own one save
 		if mode == Mode.LOAD or (str(s["kind"]) == "" and str(s["finished"]) == ""):
 			out.append(s)
 	return sorted(out, sort_id())
@@ -204,7 +208,10 @@ func _fill() -> void:
 	for c in _list.get_children():
 		_list.remove_child(c)
 		c.queue_free()
-	if mode == Mode.SAVE:
+	if mode == Mode.SAVE and SaveSystem.honour():
+		_hint.text = "An Honour run keeps one save, and the game keeps it up to date. Saving writes over it."
+		_new.visible = SaveSystem.current_slot == "" or not SaveSystem.has_slot(SaveSystem.current_slot)
+	elif mode == Mode.SAVE:
 		_hint.text = "Choose a save to save over, or start a new one. Every other save stays as it is."
 	elif _tab == "Chapters":
 		_hint.text = "Begin at the start of any chapter, the party at its level and gear. Its first save makes a new slot."
@@ -310,7 +317,9 @@ func _row(s: Dictionary) -> Control:
 	var place := _fit(str(s["location"]), 19, "gilt_light")
 	place.add_theme_font_override("font", UiKit.display_font())
 	info.add_child(place)
-	info.add_child(_fit("%s · Day %d · Level %d · %s" % [kind_of(s), int(s["day"]), int(s.get("level", 1)), when(s)], 14, "vellum"))
+	var difficulty := str(s.get("mode", ""))
+	info.add_child(_fit("%s%s · Day %d · Level %d · %s" % [kind_of(s), " · " + difficulty if difficulty != "" else "",
+		int(s["day"]), int(s.get("level", 1)), when(s)], 14, "vellum"))
 	info.add_child(_fit(str(s["party"]), 13, "parchment"))
 	var note := str(s.get("note", ""))
 	if note != "":
@@ -319,7 +328,9 @@ func _row(s: Dictionary) -> Control:
 		info.add_child(n)
 	line.add_child(info)
 	var act := UiParts.small_button("Save Here" if mode == Mode.SAVE else "Load", func() -> void:
-		if mode == Mode.SAVE:
+		if mode == Mode.SAVE and SaveSystem.honour():
+			_save(slot)   # the run's own one save: nothing else to lose
+		elif mode == Mode.SAVE:
 			_confirm(s)
 		else:
 			_load(s))
