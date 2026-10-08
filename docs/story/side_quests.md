@@ -246,6 +246,30 @@ DC 15 holds her (`mouse_stayed`). Granny offers the girl for a basket of coins a
   companions disapprove).
 - Granny's basket: 300 gp and a Robe of Eyes (rare). The basket alone pays the 300 gp.
 
+## The Wizard of Wines (level 6)
+
+### The Black Row (`the_black_row`, narrative/wizard_of_wines/the_black_row.dialogue; batch 3)
+
+Once the Martikovs are home, Andrei the picker won't touch the Seventh Row (it comes up black in the night and is gone
+by morning), and Davian, the region's new rumour-giver ("Heard anything interesting?" in his menu once the winery is
+reclaimed), asks the party to find out who picks it. By day the row (prop `seventh_row`) shows what it is to Nature DC
+13 (one blight grown up into every rootstock) and who visits it to Investigation DC 13 (raven feathers, a man's bare
+feet). **Twist:** after midnight the picker is Adrian, who eats the black grapes because they make him dream of Elvir
+alive and not angry, and the veins on his hands are going dark like the leaves. The row is a cutting of the Gulthias
+tree Kostin planted on Ruxandra's last order; it has its own roots now, so it lives even if the tree on the hill burned,
+and if Elvir is buried at the end of the row it has been drinking from his grave. **Escalation:** the reconciliation, or
+the truth of Elvir's order, or Persuasion DC 15 brings Adrian round, and he fights beside the party (`adrian_against_row`,
+a guest until Davian's report); otherwise he flies off and the party cuts the root alone. Either way the row stands up.
+
+- **Boss: the Vine Mother** (data/monsters/vine_mother.json, `source.book: custom`, from the 2025 Monster Manual's tree
+  and vine blights, drawn with the tree blight's sprite): Huge plant, AC 15, 210 HP, two branches (reach 15) and a
+  grasping vine that drags and crushes, a cone of black wine (recharge 5-6, Poisoned), Legendary Resistance (2/day), a
+  lash and a creeping move between turns. CR 8.
+- Fight `vine_mother` at the foot of the row: level 6 the Vine Mother, 4 vine blights and 4 needle blights (4,500 XP; the
+  autopilot wins 2 of 4 and loses three party members a fight); level 7 six vine and six needle blights; level 8 the
+  same and the Sixth Row (a tree blight), 7,700 XP; below 6 the Vine Mother at 150 HP, 2 vine and 3 needle blights.
+- Davian pays once: 250 gp and the wand the Wizard of Wines left in the press-house rack, a Wand of Fireballs (rare).
+
 ## Vallaki and Castle Ravenloft (level 10)
 
 ### The Toymaker's Masterpiece (`toymakers_masterpiece`, narrative/vallaki/toymakers_masterpiece.dialogue; batch 2, the book's Blinsky and the jester)
@@ -354,4 +378,6 @@ marta_rumor node (Goodwife Marta: the jester). Batch 2, Krezk and
 the abbey: clovins_audience.dialogue in full (Clovin Belview, Dmitri, Old Pavel, Watchman Lazar; Wren's interject),
 gate.dialogue's two new news lines (the bucket, feast days) and townsfolk.dialogue's new carver line (Old Pavel: soup). Batch 3, Old
 Bonegrinder: the_fourth_sister.dialogue in full (new speakers Mouse, Granny Ash and Goodwife Sarnov; also Ilinca) and
-the village townsfolk.dialogue's new gossip lines (Vasile and Petre: the Sarnov woman, and three children again).
+the village townsfolk.dialogue's new gossip lines (Vasile and Petre: the Sarnov woman, and three children again). Batch 3, the
+Wizard of Wines: the_black_row.dialogue in full (Davian, Adrian; companions' interjects), hands.dialogue's two new
+picker lines (Andrei) and davian.dialogue's two new menu options.

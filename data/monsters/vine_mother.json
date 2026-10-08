@@ -1,0 +1,186 @@
+{
+  "id": "vine_mother",
+  "name": "The Vine Mother",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Black Row, docs/story/side_quests.md), built from the 2025 Monster Manual's tree blight and vine blight: branches with reach, a grasping vine that drags and holds, scaled to CR 8 with legendary actions and a spray of black wine."
+  },
+  "size": "huge",
+  "type": "plant",
+  "tags": [
+    "blight",
+    "boss"
+  ],
+  "alignment": "neutral evil",
+  "art": "tree_blight",
+  "ac": 15,
+  "initiative": 0,
+  "hp": {
+    "average": 210,
+    "dice": "20d12+80"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 22,
+    "dex": 8,
+    "con": 19,
+    "int": 6,
+    "wis": 12,
+    "cha": 4
+  },
+  "saves": {
+    "con": 8,
+    "wis": 5
+  },
+  "condition_immunities": [
+    "blinded",
+    "deafened"
+  ],
+  "senses": {
+    "blindsight": 60
+  },
+  "passive_perception": 11,
+  "languages": [],
+  "cr": 8,
+  "xp": 3900,
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When the Vine Mother fails a saving throw, she can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "branch",
+          "count": 2
+        },
+        {
+          "action": "grasping_vine",
+          "count": 1
+        }
+      ],
+      "summary": "Two Branch attacks and a Grasping Vine.",
+      "text": "The Vine Mother makes two Branch attacks and uses Grasping Vine."
+    },
+    {
+      "id": "branch",
+      "name": "Branch",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 15
+      },
+      "damage": [
+        {
+          "average": 17,
+          "dice": "2d10+6",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "A sweep of black vine-wood with 15 ft reach.",
+      "text": "Hit: 17 (2d10 + 6) Bludgeoning damage."
+    },
+    {
+      "id": "grasping_vine",
+      "name": "Grasping Vine",
+      "kind": "save",
+      "save": {
+        "ability": "str",
+        "dc": 16,
+        "success": "none"
+      },
+      "targets": {
+        "range": 20,
+        "max_size": "large"
+      },
+      "on_fail": [
+        {
+          "do": "pull",
+          "feet": 15
+        },
+        {
+          "do": "grapple",
+          "escape_dc": 15,
+          "limit": 2,
+          "grip_damage": {
+            "dice": "2d6+6",
+            "type": "bludgeoning"
+          }
+        }
+      ],
+      "summary": "DC 16 Str save by a Large or smaller creature within 20 ft: dragged 15 ft closer and held by a vine (escape DC 15), crushed 2d6+6 at the start of each of her turns.",
+      "text": "One Large or smaller creature the Vine Mother can sense within 20 feet makes a DC 16 Strength saving throw. Failure: the target is pulled up to 15 feet toward her and has the Grappled condition (escape DC 15). Until the grapple ends, the target takes 13 (2d6 + 6) Bludgeoning damage at the start of each of her turns. She can hold two creatures this way."
+    },
+    {
+      "id": "black_wine",
+      "name": "Black Wine",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "con",
+        "dc": 15,
+        "success": "half"
+      },
+      "area": {
+        "shape": "cone",
+        "size": 30
+      },
+      "targets": {
+        "range": 30
+      },
+      "damage": [
+        {
+          "average": 18,
+          "dice": "4d8",
+          "type": "poison"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "poisoned",
+          "until": "source_turn_end"
+        }
+      ],
+      "summary": "Recharge 5-6: a 30-ft cone of fermenting black sap; DC 15 Con save, 4d8 Poison and Poisoned until the end of her next turn, half damage on a success.",
+      "text": "Constitution Saving Throw: DC 15, each creature in a 30-foot Cone. Failure: 18 (4d8) Poison damage, and the target has the Poisoned condition until the end of the Vine Mother's next turn. Success: Half damage only."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 3,
+    "options": [
+      {
+        "id": "lash",
+        "name": "Lash",
+        "cost": 2,
+        "action": "branch",
+        "summary": "Makes one Branch attack."
+      },
+      {
+        "id": "creep",
+        "name": "Creeping Roots",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to her Speed through the soil, without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regions": [
+    "wizard_of_wines"
+  ],
+  "ai_profile": "brute",
+  "summary": "A cutting of the Gulthias tree, planted under the Martikovs' Seventh Row by the druids and grown into the row itself: a heaving mass of black vine-wood twice the height of a house. Her branches reach, her vines drag you in and squeeze, and she spits fermenting black wine."
+}
