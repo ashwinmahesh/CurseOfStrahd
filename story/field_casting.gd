@@ -201,6 +201,11 @@ static func cast_at(party: Array[Character], caster: Character, spell_id: String
 
 # --- Spells for exploring (no effect in a fight) ----------------------------------------------------
 
+## Whether one of `caster`'s features casts `spell_id` without its Material component (Knowledge Domain's Channel
+## Divinity): then a costly one isn't asked for when it's cast that way.
+static func _waives_material(caster: Character, spell_id: String) -> bool:
+	return caster.resource_casts(spell_id).any(func(f: Dictionary) -> bool: return bool((f["resource_cast"] as Dictionary).get("omit_material", false)))
+
 ## Spells whose effect is on exploring rather than fighting (Light, Detect Magic, Find Traps, Comprehend Languages,
 ## Speak with Animals ...): [{id, name, level, ritual, slots, legal, reason}]. A Ritual spell can be cast as a Ritual
 ## (10 minutes longer, no slot) by a caster who has it prepared (2024).
@@ -226,6 +231,10 @@ static func utility_options(party: Array[Character], caster: Character, dice: Di
 		if level > 0 and slots.is_empty() and not ritual:
 			entry["legal"] = false
 			entry["reason"] = "No spell slots left"
+		# A costly material component (2024): carried, even for a Ritual (Find Familiar's incense).
+		if caster.component_why(data) != "" and not _waives_material(caster, id):
+			entry["legal"] = false
+			entry["reason"] = caster.component_why(data)
 		if caster.hp <= 0 or caster.dead:
 			entry["legal"] = false
 			entry["reason"] = "%s can't act" % caster.name
@@ -249,6 +258,10 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 		return {"ok": false, "text": "%s can't cast" % caster.name}
 	if bool((data.get("components", {}) as Dictionary).get("v", false)) and caster.has_flag("speechless"):
 		return {"ok": false, "text": "Can't speak"}
+	var omit_material := resource_feature != "" and caster.resource_casts(spell_id).any(func(f: Dictionary) -> bool:
+		return str(f["id"]) == resource_feature and bool((f["resource_cast"] as Dictionary).get("omit_material", false)))
+	if not omit_material and caster.component_why(data) != "":
+		return {"ok": false, "text": caster.component_why(data)}
 	var payment: Dictionary = {}
 	if resource_feature != "":
 		if as_ritual or slot > int(data.get("level", 0)):
@@ -271,7 +284,11 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 			return {"ok": false, "text": "No spell slots left"}
 	if not payment.is_empty():
 		caster.spend_resource(str(payment["resource"]), int(payment["cost"]))
-	return _take_effect(st, caster, spell_id, data, as_ritual, payment.is_empty())
+	var used := "" if omit_material else caster.use_component(data)
+	var res := _take_effect(st, caster, spell_id, data, as_ritual, payment.is_empty())
+	if used != "":
+		res["text"] = str(res["text"]).trim_suffix(".") + ", using up %s." % used
+	return res
 
 
 ## What casting an exploring spell does once it's paid for (a slot, a Ritual's time, a feature's use, or a Spell

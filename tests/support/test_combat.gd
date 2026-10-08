@@ -47,6 +47,17 @@ static func next_d20(e: Encounter, value: int) -> void:
 	e.dice.reseed(TestChars.seed_for_d20(value))
 
 
+## Gives `ch` the costly material components `spell_ids` ask for (Revivify's diamonds, Find Familiar's incense), enough
+## for `times` castings: the items named after each spell's material kind.
+static func give_components(ch: Character, spell_ids: Array, times: int = 1) -> void:
+	for sid: Variant in spell_ids:
+		var cc := Character.costly_component(Compendium.shared().spell_data(str(sid)))
+		if cc.is_empty():
+			continue
+		var unit := maxf(0.01, float(Compendium.shared().item_data(str(cc["material"])).get("cost_gp", 1.0)))
+		ch.add_item(str(cc["material"]), ceili(float(cc["cost_gp"]) / unit) * times)
+
+
 ## A pregen that also knows `spell_ids` (added to its first spellcasting entry's prepared list), for testing spells
 ## no pregen has.
 static func caster_with(e: Encounter, spell_ids: Array, cell: Vector2i, level: int = 9, id: String = "silvain_aster") -> Combatant:

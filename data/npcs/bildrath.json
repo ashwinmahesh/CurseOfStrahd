@@ -19,6 +19,38 @@
   "shop": {
     "sells": [
       {
+        "id": "incense",
+        "qty": -1
+      },
+      {
+        "id": "ink",
+        "qty": -1
+      },
+      {
+        "id": "gold_dust",
+        "qty": 2
+      },
+      {
+        "id": "jade_dust",
+        "qty": 2
+      },
+      {
+        "id": "silver_dust",
+        "qty": 4
+      },
+      {
+        "id": "ruby_dust",
+        "qty": 1
+      },
+      {
+        "id": "pearl",
+        "qty": 1
+      },
+      {
+        "id": "onyx",
+        "qty": 1
+      },
+      {
         "id": "rope",
         "qty": -1
       },

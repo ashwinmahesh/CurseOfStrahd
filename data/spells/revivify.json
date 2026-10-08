@@ -23,6 +23,7 @@
     "v": true,
     "s": true,
     "m": "a diamond worth 300+ GP, which the spell consumes",
+    "m_material": "diamond",
     "m_cost_gp": 300,
     "m_consumed": true
   },

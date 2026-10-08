@@ -186,6 +186,10 @@
         },
         "m_consumed": {
           "type": "boolean"
+        },
+        "m_material": {
+          "type": "string",
+          "description": "The item kind (items' `material`) the caster must carry, worth m_cost_gp in all, used up when m_consumed. Without it a costly component counts as part of the caster's focus."
         }
       }
     },

@@ -1,0 +1,14 @@
+{
+  "id": "onyx",
+  "name": "Onyx",
+  "source": {
+    "book": "custom"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 50,
+  "stackable": true,
+  "material": "onyx",
+  "summary": "A black onyx worth 50 gp, used up by Death Armor.",
+  "text": "A polished black onyx worth 50 gp."
+}

@@ -11,6 +11,7 @@ func _war_caster() -> Dictionary:
 	var prepared := (ch.spellcasting[0] as Dictionary)["prepared"] as Array
 	if not "chromatic_orb" in prepared:
 		prepared.append("chromatic_orb")
+	TestCombat.give_components(ch, ["chromatic_orb"])   # its 50 gp diamond, kept
 	var w := e.add(ch, &"party", Vector2i(3, 3))
 	var z := TestCombat.foe(e, "zombie", Vector2i(4, 3))
 	z.creature.hp = 200

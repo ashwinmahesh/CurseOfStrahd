@@ -27,6 +27,7 @@
     "v": true,
     "s": true,
     "m": "ruby dust worth 1,500+ GP, which the spell consumes",
+    "m_material": "ruby_dust",
     "m_cost_gp": 1500,
     "m_consumed": true
   },

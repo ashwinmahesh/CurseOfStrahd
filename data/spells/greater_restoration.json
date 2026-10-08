@@ -24,6 +24,7 @@
     "v": true,
     "s": true,
     "m": "diamond dust worth 100+ GP, which the spell consumes",
+    "m_material": "diamond_dust",
     "m_cost_gp": 100,
     "m_consumed": true
   },

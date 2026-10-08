@@ -1,0 +1,14 @@
+{
+  "id": "incense",
+  "name": "Incense",
+  "source": {
+    "book": "custom"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 10,
+  "stackable": true,
+  "material": "incense",
+  "summary": "A block of incense worth 10 gp, burned by Find Familiar, Divination and Legend Lore.",
+  "text": "A block of rare, resinous incense worth 10 gp. Blocks count together toward a spell's cost."
+}

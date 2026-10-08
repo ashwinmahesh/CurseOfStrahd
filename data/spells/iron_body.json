@@ -23,6 +23,7 @@
     "v": true,
     "s": true,
     "m": "diamond dust worth 250 GP, consumed",
+    "m_material": "diamond_dust",
     "m_cost_gp": 250,
     "m_consumed": true
   },

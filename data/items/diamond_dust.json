@@ -1,0 +1,14 @@
+{
+  "id": "diamond_dust",
+  "name": "Diamond Dust",
+  "source": {
+    "book": "custom"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 25,
+  "stackable": true,
+  "material": "diamond_dust",
+  "summary": "A pinch of diamond dust worth 25 gp, for Nondetection, Greater Restoration, Stoneskin or Glyph of Warding, which use it up.",
+  "text": "A twist of paper holding a pinch of crushed diamond, worth 25 gp. Several pinches count together toward a spell's cost."
+}

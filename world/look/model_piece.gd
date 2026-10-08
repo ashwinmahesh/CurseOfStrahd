@@ -188,9 +188,21 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 	var back := backing_side(board, cell)
 	var faces := Vector2i(0, 1) if back == Vector2i.ZERO else -back
 	holder.rotation.y = atan2(float(faces.x), float(faces.y)) if yaw == null else float(yaw)   # a prop's own `facing`
+	if mount == "against_wall" or mount == "wall":
+		# A wall piece with no wall face free beside it stands on its square like furniture against a wall.
+		var depth := float((info.get("size", [1, 1, 0.3]) as Array)[2])
+		holder.set_meta("against_wall", true)
+		if back != Vector2i.ZERO:
+			model.position = Vector3(0, 0, -0.5 + GAP + board.wall_inset)
+			if board.wall_inset > 0.0 and depth + board.wall_inset > 1.0 - GAP:
+				model.scale.z *= (1.0 - GAP - board.wall_inset) / depth   # stood off a tent's canvas, still in its square
+			board.used_faces["%d,%d,%d,%d" % [cell.x + back.x, cell.y + back.y, -back.x, -back.y]] = true   # no portrait behind it
+		else:
+			model.position = Vector3(0, 0, -depth / 2.0)
 	if bool(info.get("big", false)) and at_override == null:
 		# Building-sized (a wagon, a market stall): it keeps its size and clears the trees it stands among, as the
-		# 2D big pieces do, but shrinks where it would reach something else standing near it (no overlaps).
+		# 2D big pieces do, but shrinks where it would reach something else standing near it (no overlaps). (Measured
+		# where it stands: a big piece against a wall, a stall, is set back on the wall face first.)
 		var size := info.get("size", [1, 1, 1]) as Array
 		var foot := footprint_of(model, holder.rotation.y)
 		var mid := Vector2(holder.position.x, holder.position.z)
@@ -204,17 +216,6 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 			if is_instance_valid(board):
 				(board.get_meta("big_feet", []) as Array).erase(mine))   # props rebuilt after a talk stand again
 		SetDressing._clear_trees_around(board, parent, cell, maxf(float(size[0]), float(size[2])) * fit, mine[1] as Rect2)
-	if mount == "against_wall" or mount == "wall":
-		# A wall piece with no wall face free beside it stands on its square like furniture against a wall.
-		var depth := float((info.get("size", [1, 1, 0.3]) as Array)[2])
-		holder.set_meta("against_wall", true)
-		if back != Vector2i.ZERO:
-			model.position = Vector3(0, 0, -0.5 + GAP + board.wall_inset)
-			if board.wall_inset > 0.0 and depth + board.wall_inset > 1.0 - GAP:
-				model.scale.z *= (1.0 - GAP - board.wall_inset) / depth   # stood off a tent's canvas, still in its square
-			board.used_faces["%d,%d,%d,%d" % [cell.x + back.x, cell.y + back.y, -back.x, -back.y]] = true   # no portrait behind it
-		else:
-			model.position = Vector3(0, 0, -depth / 2.0)
 	_extras(model, info)
 	return holder
 

@@ -22,6 +22,7 @@
     "v": true,
     "s": true,
     "m": "jade dust worth 25+ GP",
+    "m_material": "jade_dust",
     "m_cost_gp": 25
   },
   "duration": {

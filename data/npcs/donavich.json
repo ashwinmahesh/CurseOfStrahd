@@ -20,6 +20,10 @@
   "shop": {
     "sells": [
       {
+        "id": "incense",
+        "qty": -1
+      },
+      {
         "id": "potion_of_healing",
         "qty": -1
       },

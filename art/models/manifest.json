@@ -6835,6 +6835,105 @@
         "pal_tan"
       ],
       "triangles": 846
+    },
+    "stall": {
+      "file": "art/models/stall.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "stall",
+        "stall_back"
+      ],
+      "size": [
+        1.95,
+        1.264,
+        1.033
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_ink",
+        "pal_moon_blue",
+        "pal_parchment",
+        "pal_peat",
+        "pal_stone_deep",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 3860,
+      "big": true
+    },
+    "stall_horse": {
+      "file": "art/models/stall_horse.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "stall_horse",
+        "stall_horse_back"
+      ],
+      "size": [
+        1.962,
+        1.413,
+        1.149
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_ink",
+        "pal_moon_blue",
+        "pal_parchment",
+        "pal_peat",
+        "pal_stone_deep",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut",
+        "spr_horse",
+        "spr_horse_back",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 9372,
+      "big": true
+    },
+    "trough": {
+      "file": "art/models/trough.glb",
+      "mount": "free",
+      "stands_for": [
+        "trough",
+        "trough_back"
+      ],
+      "size": [
+        0.92,
+        0.427,
+        0.432
+      ],
+      "materials": [
+        "pal_moon_blue",
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 144
+    },
+    "tack": {
+      "file": "art/models/tack.glb",
+      "mount": "wall",
+      "stands_for": [
+        "tack"
+      ],
+      "size": [
+        0.9,
+        0.799,
+        0.356
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_leather",
+        "pal_peat",
+        "pal_rust",
+        "pal_silver",
+        "pal_stone",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 1674
     }
   }
 }

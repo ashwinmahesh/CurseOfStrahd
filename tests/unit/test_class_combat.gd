@@ -289,6 +289,7 @@ func test_psychic_spells_turn_eldritch_blast_psychic() -> void:
 func test_pact_of_the_chain_familiar_attacks_in_place_of_an_attack() -> void:
 	var e := TestCombat.open_field(3)
 	var w := _warlock(e, ["pact_of_the_chain"])
+	TestCombat.give_components(w.creature as Character, ["find_familiar"])   # the incense, still needed (2024)
 	var t := TestCombat.punching_bag(e, Vector2i(4, 3), 300)
 	TestCombat.start_with(e, w)
 	var cast := e.spells.cast(w, "find_familiar", 1, [], Vector2(3.5, 2.5), Vector2.ZERO, {"choice": "imp"})

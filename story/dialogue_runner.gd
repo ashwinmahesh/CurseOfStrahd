@@ -556,7 +556,7 @@ func _line_beat(speaker_name: String, mood: String, text: String) -> Dictionary:
 		return _party_line(speaker, text)
 	var npc := _npc_for(low)
 	var nid := str(npc.get("id", low))
-	var portrait := str(npc.get("portrait", nid))
+	var portrait := NpcLooks.portrait(npc, st) if not npc.is_empty() else nid   # Rictavio becomes Van Richten
 	if mood != "" and mood != "neutral" and ResourceLoader.exists("res://art/portraits/%s_%s.png" % [portrait, mood]):
 		portrait = "%s_%s" % [portrait, mood]
 	return {"kind": "line", "speaker_id": nid, "name": str(npc.get("name", speaker_name)), "portrait": portrait, "mood": mood,

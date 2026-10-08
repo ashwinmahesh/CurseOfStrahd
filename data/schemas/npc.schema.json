@@ -24,6 +24,16 @@
     "portrait": {
       "type": "string"
     },
+    "looks": {
+      "type": "array",
+      "description": "Portraits the story switches to (story/npc_looks.gd): the first whose dialogue condition holds wins.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["when", "portrait"],
+        "properties": {"when": {"type": "string"}, "portrait": {"type": "string"}}
+      }
+    },
     "sprite": {
       "type": "string"
     },

@@ -30,6 +30,7 @@
     "v": true,
     "s": true,
     "m": "salt and powdered silver worth 100+ GP, which the spell consumes",
+    "m_material": "silver_dust",
     "m_cost_gp": 100,
     "m_consumed": true
   },
