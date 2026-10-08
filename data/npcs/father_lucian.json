@@ -38,6 +38,18 @@
   "shop": {
     "sells": [
       {
+        "id": "incense",
+        "qty": -1
+      },
+      {
+        "id": "diamond",
+        "qty": 3
+      },
+      {
+        "id": "diamond_dust",
+        "qty": 6
+      },
+      {
         "id": "potion_of_healing",
         "qty": -1
       },

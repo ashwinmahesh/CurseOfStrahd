@@ -1,0 +1,14 @@
+{
+  "id": "ruby_dust",
+  "name": "Ruby Dust",
+  "source": {
+    "book": "custom"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 50,
+  "stackable": true,
+  "material": "ruby_dust",
+  "summary": "A vial of ruby dust worth 50 gp, used up by Continual Flame.",
+  "text": "A stoppered vial of powdered ruby worth 50 gp."
+}

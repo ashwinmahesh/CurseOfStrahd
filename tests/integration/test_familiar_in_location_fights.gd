@@ -125,6 +125,7 @@ func test_a_familiar_cast_while_exploring_appears_and_follows_the_party() -> voi
 	var v := _view()
 	var wizard := GameState.story.party[0]
 	wizard.familiar = ""
+	TestCombat.give_components(wizard, ["find_familiar"], 2)   # incense for two castings
 	assert_eq(_world_familiars(v).size(), 0)
 	var res := FieldCasting.cast_utility(GameState.story, wizard, "find_familiar", true)
 	assert_true(bool(res["ok"]), str(res["text"]))

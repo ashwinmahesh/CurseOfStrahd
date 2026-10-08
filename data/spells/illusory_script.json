@@ -23,6 +23,7 @@
   "components": {
     "s": true,
     "m": "ink worth 10+ GP, which the spell consumes",
+    "m_material": "ink",
     "m_cost_gp": 10,
     "m_consumed": true
   },

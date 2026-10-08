@@ -191,6 +191,10 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		e.log.add("info", "%s raises %s to effective level %d (%s; level %d slot spent)" % [c.name(), s["name"], slot, boost["name"], paid_slot], c.id)
 	if bool(opts.get("splintered", false)):
 		ch.spend_resource("splintered_summons")
+	# A costly material component the spell uses up (2024: Revivify's diamond; checked with the rest in castable).
+	var used := ch.use_component(s) if ch != null else ""
+	if used != "":
+		e.log.add("info", "%s uses up %s (%s)" % [c.name(), used, s["name"]], c.id)
 	if c.hidden and bool((s.get("components", {}) as Dictionary).get("v", false)) and not e.faerun.sneaky_casting(c) \
 			and not (level > 0 and c.creature.has_flag("waive_components:%s" % str(s.get("school", "")))) and not e.faerun.waives_components(c, spell_id):
 		e.reveal(c, "cast a spell aloud")

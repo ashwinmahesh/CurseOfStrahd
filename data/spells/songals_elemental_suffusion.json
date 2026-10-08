@@ -23,6 +23,7 @@
     "v": true,
     "s": true,
     "m": "a pearl worth 100 GP",
+    "m_material": "pearl",
     "m_cost_gp": 100
   },
   "duration": {

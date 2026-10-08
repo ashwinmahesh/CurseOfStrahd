@@ -1,0 +1,14 @@
+{
+  "id": "jade_dust",
+  "name": "Jade Dust",
+  "source": {
+    "book": "custom"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 10,
+  "stackable": true,
+  "material": "jade_dust",
+  "summary": "A pinch of jade dust worth 10 gp, used up by Magic Mouth.",
+  "text": "A twist of paper holding green jade dust worth 10 gp."
+}

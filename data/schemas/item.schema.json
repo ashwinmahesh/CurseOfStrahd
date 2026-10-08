@@ -215,6 +215,10 @@
         }
       }
     },
+    "material": {
+      "type": "string",
+      "description": "The kind of costly material component this item is (a spell's components.m_material): items of one kind count together toward a spell's cost."
+    },
     "focus": {
       "type": "string",
       "enum": [

@@ -1,0 +1,14 @@
+{
+  "id": "diamond",
+  "name": "Diamond",
+  "source": {
+    "book": "custom"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 100,
+  "stackable": true,
+  "material": "diamond",
+  "summary": "A cut diamond worth 100 gp: what Revivify, Raise Dead and Chromatic Orb ask for. Diamonds count together toward a spell's cost.",
+  "text": "A clear cut stone worth 100 gp. Spells that call for a diamond of some worth take as many as add up to it (three for Revivify's 300 gp), and some use them up."
+}

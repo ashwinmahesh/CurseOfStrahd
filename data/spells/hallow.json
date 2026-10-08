@@ -21,6 +21,7 @@
     "v": true,
     "s": true,
     "m": "incense worth 1,000+ GP, which the spell consumes",
+    "m_material": "incense",
     "m_cost_gp": 1000,
     "m_consumed": true
   },

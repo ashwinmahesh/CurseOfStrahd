@@ -24,6 +24,7 @@
     "v": true,
     "s": true,
     "m": "a diamond worth 25 GP",
+    "m_material": "diamond",
     "m_cost_gp": 25
   },
   "duration": {

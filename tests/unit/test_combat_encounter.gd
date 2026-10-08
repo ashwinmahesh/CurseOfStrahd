@@ -475,6 +475,7 @@ func test_party_members_move_through_each_other_as_difficult_terrain() -> void:
 func test_concentration_runs_out_with_the_spell_in_rounds_and_over_a_rest() -> void:
 	var e := TestCombat.open_field()
 	var c := TestCombat.caster_with(e, ["protection_from_evil_and_good"], Vector2i(2, 2), 5, "hedda_ironvow")
+	TestCombat.give_components(c.creature as Character, ["protection_from_evil_and_good"], 2)   # a flask of Holy Water each
 	TestCombat.foe(e, "zombie", Vector2i(10, 6))
 	TestCombat.start_with(e, c)
 	assert_true(e.spells.cast(c, "protection_from_evil_and_good", 1, [c]).ok)

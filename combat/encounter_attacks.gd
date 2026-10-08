@@ -77,6 +77,8 @@ func reactive_spells(p: Combatant, target: Combatant) -> Array[Dictionary]:
 		var level := int(sp["level"])
 		if level > 0 and (ch == null or e.spells._lowest_slot(ch, level) == 0):
 			continue
+		if ch != null and ch.component_why(data) != "":
+			continue   # its costly material component isn't carried
 		if e.spells.range_ft(data, p) < e.distance(p, target):
 			continue
 		out.append({"id": str(sp["id"]), "name": str(data["name"]), "level": level})

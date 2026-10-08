@@ -1,0 +1,14 @@
+{
+  "id": "gold_dust",
+  "name": "Gold Dust",
+  "source": {
+    "book": "custom"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 25,
+  "stackable": true,
+  "material": "gold_dust",
+  "summary": "A pouch of gold dust worth 25 gp, used up by Arcane Lock.",
+  "text": "A small pouch of gold dust worth 25 gp."
+}

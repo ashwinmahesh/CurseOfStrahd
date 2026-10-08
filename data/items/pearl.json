@@ -1,0 +1,14 @@
+{
+  "id": "pearl",
+  "name": "Pearl",
+  "source": {
+    "book": "custom"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 100,
+  "stackable": true,
+  "material": "pearl",
+  "summary": "A pearl worth 100 gp: Identify needs one in hand.",
+  "text": "A lustrous pearl worth 100 gp."
+}

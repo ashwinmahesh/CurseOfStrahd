@@ -20,6 +20,7 @@
     "v": true,
     "s": true,
     "m": "gem dust worth 5,000+ GP, which the spell consumes",
+    "m_material": "diamond_dust",
     "m_cost_gp": 5000,
     "m_consumed": true
   },
