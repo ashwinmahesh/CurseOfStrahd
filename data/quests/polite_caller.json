@@ -1,0 +1,67 @@
+{
+  "id": "polite_caller",
+  "name": "The Polite Caller",
+  "summary": "Widow Ileana's husband Teodor died three winters ago and still knocks at her shutter every night. He has never once asked to be let in.",
+  "giver": "barovia_widow",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Vasile and Petre, who stand outside the tavern all day trading the same three rumours, say Widow Ileana leaves her shutter open a crack every night. She says it's for the smoke. They say it isn't.",
+      "objectives": [
+        "Ask Widow Ileana about her husband; she tends his grave in the churchyard by day"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Teodor the cooper went to fetch a barrel from the crossroads three winters ago and came back the next morning pale and very polite. Father Donavich made Ileana shut the door on him. He still comes to her shutter every night, knocks twice and tells her the news of the road. He has never asked to come in. She wants to know what he is now, and whether she was right.",
+      "objectives": [
+        "Sit up with Ileana after dark at her cottage by the churchyard gate"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "vigil",
+      "journal": "Teodor came to the shutter after dark: courteous, hollow in the cheeks, careful to stay out of the firelight. He remembers everything, including how Ileana takes her tea.",
+      "objectives": [
+        "Hear Teodor out"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_errand",
+      "journal": "Teodor's master wants a door in the village opened from the inside, by an invitation, and gave Teodor until tonight to bring him one. Teodor came to say goodbye. Something less polite is on its way to take his place.",
+      "objectives": [
+        "Hold Ileana's door until dawn"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "held",
+      "journal": "The master's coachman and his dead came for Ileana's door, and we turned them back. The east is going grey.",
+      "objectives": [
+        "Decide, with Ileana, what becomes of Teodor at sunrise"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "dawn",
+      "journal": "Teodor watched one more sunrise with Ileana, holding her hand, and was gone before it cleared the trees. She buried what the light left of him in the grave Old Mihail dug three winters ago. Before he went, he told us he had filled that grave with what he couldn't give back.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "woods",
+      "journal": "Teodor went into the trees before the sun came up, still starving, still polite. Ileana watched the treeline until it was full light. Before he went, he told us he had filled his own empty grave with what he couldn't give back.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "ended",
+      "journal": "We ended Teodor ourselves. He never raised a hand. Ileana hasn't said a word to us since. His last words were about his own empty grave, and what he had filled it with: everything he couldn't give back.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

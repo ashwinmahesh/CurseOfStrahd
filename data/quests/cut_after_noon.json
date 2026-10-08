@@ -1,0 +1,56 @@
+{
+  "id": "cut_after_noon",
+  "name": "Cut After Noon",
+  "summary": "The woodcutters of Barovia cut what they need by noon and go home. Grigore's son stayed late, and brought something back.",
+  "giver": "barovia_woodcutter",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Vasile and Petre say Grigore the woodcutter's lad, Luca, went out for the last load two days ago, came home after dark, said nothing and went to bed. He hasn't got up since.",
+      "objectives": [
+        "Ask Grigore about his son; he hauls wood on the west road by day"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Luca stayed in the woods by the west road to cut a bit more after noon, which his father has told him a hundred times not to do. He came home late with a load of pale wood and has slept ever since. Grigore sold the load to Bildrath for the price of the medicine he couldn't afford.",
+      "objectives": [
+        "Look at the wood Luca cut: Grigore's woodpile on the west road, or Bildrath's back room"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "seedwood",
+      "journal": "The late wood isn't firewood. The sap runs red and the grain runs the wrong way: it is seedwood, the kind that grows up into blights. Luca has a splinter of it in his palm, working its way in. The wood wants him.",
+      "objectives": [
+        "Burn every stick of the late wood by day, Bildrath's load too",
+        "Or wait in Grigore's yard for whatever comes at dusk"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "burned",
+      "journal": "We burned the late wood in Grigore's yard. It screamed in the fire, and what crawled out of the ashes we finished with steel.",
+      "objectives": [
+        "Get the splinter out of Luca's hand"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "stood_up",
+      "journal": "At dusk the late wood walked. Bildrath's load rolled up the street on its own, and Grigore's woodpile stood up as one thing and reached for the boy. We cut it down in the yard.",
+      "objectives": [
+        "Get the splinter out of Luca's hand"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "luca_woke",
+      "journal": "Luca is awake. The late trees by the west road grew where a man in a bear's hide planted seeds in the spring, singing to them. He told Luca the hill wants the valley back. The hill must be Yester Hill, west of the Wizard of Wines.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

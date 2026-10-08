@@ -913,6 +913,9 @@ func _terrain_column(n: String, c: Vector2i, mat: Material) -> MeshInstance3D:
 		if grid.in_bounds(o) and not grid.has_flag(o, CombatGrid.VOID) and grid.is_cliff(c, o) and floor_y(o) < h:
 			side = rock
 			faces += 1
+		elif _over_a_drop(o, minf(top[i].y, top[j].y)):
+			side = rock   # high ground over a drop, a lake or the land past an empty square: a rock face down to it
+			faces += 1
 		var out := Vector3(_SIDES[i].x, 0.0, _SIDES[i].y)
 		var a_low := Vector3(top[i].x, -0.2, top[i].z)
 		var b_low := Vector3(top[j].x, -0.2, top[j].z)
@@ -932,6 +935,14 @@ func _terrain_column(n: String, c: Vector2i, mat: Material) -> MeshInstance3D:
 		face.material_override = _cliff_material()
 		mi.add_child(face)
 	return mi
+
+
+## Whether the side over square `o` drops 15 ft or more to empty ground there (a gorge, a lake, the land drawn over an
+## empty square that has no natural ground of its own), from an edge `edge_y` high.
+func _over_a_drop(o: Vector2i, edge_y: float) -> bool:
+	if not grid.in_bounds(o) or not grid.has_flag(o, CombatGrid.VOID) or grid.has_flag(o, CombatGrid.NATURAL):
+		return false
+	return edge_y >= float(CombatGrid.CLIFF_FT) / CombatGrid.FEET
 
 
 static func _vertex(st: SurfaceTool, v: Vector3, normal: Vector3) -> void:

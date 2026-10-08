@@ -875,6 +875,18 @@
       "model": "satchel",
       "search_dc": 13,
       "item": "mirror"
+    },
+    {
+      "id": "late_wood",
+      "cell": [
+        8,
+        12
+      ],
+      "kind": "examine",
+      "label": "Pale logs on the woodpile",
+      "model": "log",
+      "dialogue": "village_of_barovia/cut_after_noon:pile",
+      "when": "quest.cut_after_noon and quest.cut_after_noon != rumored and not flag.late_wood_burned and not flag.woodpile_beaten"
     }
   ],
   "lights": [
@@ -1028,6 +1040,17 @@
     {
       "npc": "barovia_woodcutter",
       "cell": [
+        4,
+        12
+      ],
+      "dialogue": "village_of_barovia/cut_after_noon:splinter",
+      "facing": "west",
+      "approach": 10,
+      "when": "(flag.late_wood_burned or flag.woodpile_beaten) and not flag.luca_awake"
+    },
+    {
+      "npc": "barovia_woodcutter",
+      "cell": [
         6,
         11
       ],
@@ -1051,6 +1074,27 @@
       ],
       "when": "not weather == storm",
       "work": "swing"
+    },
+    {
+      "npc": "barovia_widow",
+      "cell": [
+        28,
+        10
+      ],
+      "dialogue": "village_of_barovia/polite_caller:dawn",
+      "facing": "east",
+      "approach": 12,
+      "when": "flag.teodor_errand_beaten and not flag.teodor_resolved"
+    },
+    {
+      "npc": "barovia_widow",
+      "cell": [
+        27,
+        10
+      ],
+      "dialogue": "village_of_barovia/polite_caller:night_door",
+      "facing": "east",
+      "when": "night and (quest.polite_caller == asked or quest.polite_caller == vigil)"
     },
     {
       "npc": "barovia_widow",
@@ -1162,6 +1206,41 @@
           4
         ]
       ]
+    },
+    {
+      "npc": "teodor",
+      "cell": [
+        32,
+        11
+      ],
+      "dialogue": "village_of_barovia/polite_caller:teodor",
+      "facing": "west",
+      "approach": 8,
+      "when": "night and flag.teodor_vigil and not flag.teodor_met"
+    },
+    {
+      "npc": "barovia_luca",
+      "cell": [
+        2,
+        11
+      ],
+      "dialogue": "village_of_barovia/cut_after_noon:luca_look",
+      "asleep": true,
+      "when": "quest.cut_after_noon and quest.cut_after_noon != rumored and not flag.luca_awake"
+    },
+    {
+      "npc": "barovia_luca",
+      "cell": [
+        5,
+        13
+      ],
+      "dialogue": "village_of_barovia/cut_after_noon:luca_after",
+      "facing": "east",
+      "hours": [
+        8,
+        17
+      ],
+      "when": "flag.luca_awake and not weather == storm"
     }
   ],
   "encounters": [
@@ -1332,6 +1411,539 @@
       ],
       "surprise": "",
       "flag": "night_dead_cleared"
+    },
+    {
+      "id": "teodor_errand",
+      "trigger": "dialogue",
+      "when": "level >= 4",
+      "text": "The carriage lamp stops at the end of the lane. Its door opens on nothing, and a tall shape in a coachman's cape steps down, with the village dead shuffling behind it as if they've been called in to supper.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            37,
+            11
+          ],
+          "name": "The Coachman"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            36,
+            13
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            38,
+            13
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            35,
+            10
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            38,
+            10
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            34,
+            13
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            33,
+            10
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "teodor_errand_beaten",
+      "quest": {
+        "id": "polite_caller",
+        "stage": "held"
+      }
+    },
+    {
+      "id": "teodor_errand",
+      "trigger": "dialogue",
+      "when": "level >= 3",
+      "text": "The carriage lamp stops at the end of the lane. Its door opens on nothing, and a tall shape in a coachman's cape steps down, with the village dead shuffling behind it as if they've been called in to supper.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            37,
+            11
+          ],
+          "name": "The Coachman",
+          "hp": 60
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            36,
+            13
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            38,
+            13
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            34,
+            10
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "teodor_errand_beaten",
+      "quest": {
+        "id": "polite_caller",
+        "stage": "held"
+      }
+    },
+    {
+      "id": "teodor_errand",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "The carriage lamp stops at the end of the lane. Its door opens on nothing, and a tall shape in a coachman's cape steps down, with the village dead shuffling behind it as if they've been called in to supper.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            37,
+            11
+          ],
+          "name": "The Coachman",
+          "hp": 45
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            36,
+            13
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            38,
+            13
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            34,
+            10
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "teodor_errand_beaten",
+      "quest": {
+        "id": "polite_caller",
+        "stage": "held"
+      }
+    },
+    {
+      "id": "woodpile_wakes",
+      "trigger": "dialogue",
+      "when": "level >= 4",
+      "text": "The woodpile stands up. It is taller than Grigore's house, logs for ribs and roots for fingers, and the little pale sticks of Bildrath's load come scuttling up the road to join it.",
+      "monsters": [
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            8,
+            13
+          ],
+          "name": "The Woodpile"
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            5,
+            10
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            12,
+            11
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            9,
+            10
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            4,
+            13
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            12,
+            13
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            13,
+            12
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "woodpile_beaten",
+      "quest": {
+        "id": "cut_after_noon",
+        "stage": "stood_up"
+      }
+    },
+    {
+      "id": "woodpile_wakes",
+      "trigger": "dialogue",
+      "when": "level >= 3",
+      "text": "The woodpile stands up. It is taller than Grigore's house, logs for ribs and roots for fingers, and the little pale sticks of Bildrath's load come scuttling up the road to join it.",
+      "monsters": [
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            8,
+            13
+          ],
+          "name": "The Woodpile",
+          "hp": 85
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            5,
+            10
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            11
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            9,
+            10
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            13
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            4,
+            13
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            13,
+            12
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "woodpile_beaten",
+      "quest": {
+        "id": "cut_after_noon",
+        "stage": "stood_up"
+      }
+    },
+    {
+      "id": "woodpile_wakes",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "The woodpile stands up. It is taller than Grigore's house, logs for ribs and roots for fingers, and the little pale sticks of Bildrath's load come scuttling up the road to join it.",
+      "monsters": [
+        {
+          "monster": "vine_blight",
+          "cell": [
+            8,
+            13
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            9,
+            10
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            4,
+            13
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            13,
+            12
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            5,
+            10
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            11
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            13
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "woodpile_beaten",
+      "quest": {
+        "id": "cut_after_noon",
+        "stage": "stood_up"
+      }
+    },
+    {
+      "id": "woodpile_burns",
+      "trigger": "dialogue",
+      "when": "level >= 4",
+      "text": "The logs split in the fire, and things crawl out of the splits: pale, thorned, too many legs, and very angry about the fire.",
+      "monsters": [
+        {
+          "monster": "vine_blight",
+          "cell": [
+            5,
+            10
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            12,
+            11
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            9,
+            10
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            4,
+            13
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            12,
+            13
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            13,
+            12
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            6,
+            10
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            13
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "late_wood_burned",
+      "quest": {
+        "id": "cut_after_noon",
+        "stage": "burned"
+      }
+    },
+    {
+      "id": "woodpile_burns",
+      "trigger": "dialogue",
+      "when": "level >= 3",
+      "text": "The logs split in the fire, and things crawl out of the splits: pale, thorned, too many legs, and very angry about the fire.",
+      "monsters": [
+        {
+          "monster": "vine_blight",
+          "cell": [
+            12,
+            11
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            9,
+            10
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            4,
+            13
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            13,
+            12
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            5,
+            10
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            13
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            6,
+            10
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            13
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "late_wood_burned",
+      "quest": {
+        "id": "cut_after_noon",
+        "stage": "burned"
+      }
+    },
+    {
+      "id": "woodpile_burns",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "The logs split in the fire, and things crawl out of the splits: pale, thorned, too many legs, and very angry about the fire.",
+      "monsters": [
+        {
+          "monster": "needle_blight",
+          "cell": [
+            9,
+            10
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            4,
+            13
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            5,
+            10
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            13
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            11
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "late_wood_burned",
+      "quest": {
+        "id": "cut_after_noon",
+        "stage": "burned"
+      }
     }
   ],
   "narration": {
@@ -1349,6 +1961,28 @@
       "model": "chest",
       "items": [],
       "gold": 0
+    },
+    {
+      "id": "teodor_grave",
+      "cell": [
+        34,
+        6
+      ],
+      "label": "Teodor's empty grave",
+      "model": "grave",
+      "items": [
+        {
+          "id": "shield_plus_1",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_healing",
+          "qty": 2
+        }
+      ],
+      "gold": 90,
+      "lock_dc": 0,
+      "when": "flag.teodor_cache_known"
     }
   ],
   "treasure_spots": {

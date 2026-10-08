@@ -23,7 +23,9 @@ interject background:criminal: What a lovely, sturdy counter. Very... sturdy.
 * Show us what you have. -> buy
 * We have things to sell. -> sell
 * [if not flag.bildrath_discount and not flag.bildrath_haggle_failed] Surely we can come to a better arrangement. -> haggle
-* Any news in the village? -> news
+* Heard anything interesting? -> news
+* [if quest.cut_after_noon and not flag.bildrath_wood_taken and not flag.late_wood_burned and not flag.woodpile_beaten] The wood you bought from Grigore. Show us. -> village_of_barovia/cut_after_noon:bildrath_wood
+* [if (flag.late_wood_burned or flag.woodpile_beaten) and not flag.bildrath_hush] About that firewood. -> village_of_barovia/cut_after_noon:hush
 * [if flag.burial_agreed and not flag.parriwimple_pallbearer and not flag.burgomaster_buried] We need help carrying a coffin. -> hire
 * Goodbye. -> END
 
@@ -76,10 +78,15 @@ Bildrath: News costs nothing, which is what it's worth. Ask.
 * Ismark. -> news_ismark
 * The church. -> news_church
 * The woman weeping down the lane. -> news_mary
+* [if not quest.cut_after_noon or quest.cut_after_noon == rumored] Grigore the woodcutter. -> news_grigore
 * Enough news. -> menu
 
 ~ news_morgantha
 Bildrath: Morgantha. Comes through every few weeks with that cart. I don't sell pastries; I have standards. Folk who can't pay her settle up some other way. I don't ask how. I don't give credit, and I suspect neither does she.
+if not flag.bonegrinder_rumor
+set bonegrinder_rumor
+Bildrath: She bakes at the old windmill on the Vallaki road, up on the crag. Nobody I'd lend money to has gone up there to check.
+endif
 -> news
 
 ~ news_ismark
@@ -92,6 +99,18 @@ Bildrath: Father Donavich stopped buying candles. A priest who prays in the dark
 
 ~ news_mary
 Bildrath: Mary bought three locks from me this year. Good locks. Her daughter went out of the window. You can't sell a lock for a window. Believe me, I've tried.
+if not quest.find_gertruda
+quest find_gertruda heard
+endif
+-> news
+
+~ news_grigore
+if not quest.cut_after_noon
+set luca_rumor
+quest cut_after_noon rumored
+endif
+Bildrath: Grigore sold me a load of firewood at a price I could not refuse, being very nearly nothing. Beautiful wood. White. It's in the back.
+Bildrath: It creaks at night. Wood creaks; I've told Parriwimple so. Parriwimple tells me it doesn't usually creak toward the door.
 -> news
 
 ~ hire

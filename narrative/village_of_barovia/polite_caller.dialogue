@@ -1,0 +1,229 @@
+# The Polite Caller (side quest, docs/story/side_quests.md): Widow Ileana's husband Teodor, a vampire spawn three
+# winters dead, knocks at her shutter every night and has never asked to be let in. He is why the dead leave her door
+# alone, and tonight his master sends someone less polite to take his place. Reached from the widow at the grave
+# (townsfolk:widow), Vasile and Petre's rumour or Old Mihail's open grave. Teodor and every line here are unvoiced
+# for now: the voice thread casts them.
+
+~ asks
+quest polite_caller asked
+Widow Ileana: He still comes. You'll have heard. Every night after the second bell: two knocks on the shutter, soft, the way he knocked when he came in late and didn't want to wake the street.
+Widow Ileana: He never asks to come in. Not once in three winters. He asks if I've eaten. He tells me who went by on the road, and which of the wolves is lame this week.
+Widow Ileana [sad]: Father Donavich says it's a dead thing wearing my husband, waiting for me to forget. Maybe so. But I've watched this street for three winters, and the dead walk up to every door in the village except mine.
+interject tag:kind: You've been afraid of him all this time.
+Widow Ileana: Of him? No. Of being wrong. One way or the other.
+Widow Ileana: Sit up with me tonight. You've seen more of the world than this lane. Look at him, and tell me what he is.
+* We'll sit up with you tonight. -> agree
+* [Insight DC 12] (Is she thinking of letting him in?) -> asks_read | asks_unread
+* Not tonight. -> later
+
+~ asks_read
+Narrator: She has thought about it every night for three winters. When she talks about the shutter her hand goes to the latch of her own coat, and stays there.
+* We'll sit up with you tonight. -> agree
+* Not tonight. -> later
+
+~ asks_unread
+Narrator: A tired woman in a grey hood, holding herself very straight. Whatever she means to do, she has had a long time to practise keeping it off her face.
+* We'll sit up with you tonight. -> agree
+* Not tonight. -> later
+
+~ agree
+Widow Ileana: After dark, then. Mine's the cottage by the churchyard gate, with the shutter that doesn't shut. Knock twice, so I know it's you.
+-> END
+
+~ later
+Widow Ileana: He'll come tomorrow too. He always does. I'm the one who's running out of nights.
+-> END
+
+# --- By day at the grave, once she has asked (townsfolk:widow jumps here) ---
+
+~ day
+if flag.teodor_resolved
+-> after
+endif
+Widow Ileana: Tonight, then? I've left the shutter as it is.
+* Walk her home and wait with her until dark. -> wait_dark
+* Not yet. -> END
+
+~ wait_dark
+time until 21
+set teodor_vigil
+Narrator: You walk her home along the churchyard wall. Her cottage is two rooms and a fire, and the shutter by the hearth stands open the width of a hand.
+Narrator: She makes tea nobody drinks. The light goes. Down the hill the second bell rings, and the street goes quiet the way the woods go quiet before something comes out of them.
+-> END
+
+# --- At her door after dark ---
+
+~ night_door
+if flag.teodor_vigil
+Widow Ileana: Any time now. He's never late. He was late for everything when he was alive, and now he's never late.
+-> END
+endif
+set teodor_vigil
+Widow Ileana: You came. Good. Sit away from the fire; he won't come into the light, and you'll see him better from the dark.
+-> END
+
+# --- Teodor at the shutter (he speaks first) ---
+
+~ teodor
+set teodor_met
+quest polite_caller vigil
+Narrator: Two knocks on the shutter, soft as a knuckle on a cask to hear if it's full.
+Narrator: The man outside stands just past the reach of the firelight, hat in his hands: tall, very pale, his coat brushed and his collar buttoned to the throat. He bows to Ileana, and then, one by one, to each of you.
+Teodor: Good evening, my heart. You have company. Good evening to your company.
+Teodor: Teodor Cozma, cooper, of this village, formerly. Forgive me for not coming in. It isn't that I don't want to.
+-> teodor_menu
+
+~ teodor_menu
+* What are you now, Teodor? -> what
+* [if not flag.teodor_starving_seen] [Insight DC 13] (Look at him properly, past the manners.) -> look_ok | look_fail
+* Why do you come here every night? -> why
+* (Draw steel.) We know what you are. -> draw
+
+~ what
+Teodor: Dead. Hungry. Polite. In that order, most nights, though I work hard to keep the third one at the front.
+Teodor: I went to the crossroads for a barrel, and a gentleman in a carriage offered me a lift home. I said yes. That's all it takes, in this valley: one yes.
+interject class:cleric: A vampire's spawn. He made you.
+Teodor: He did. And he keeps me, the way you keep a dog you haven't decided to drown yet.
+-> teodor_menu
+
+~ look_ok
+set teodor_starving_seen
+Narrator: Under the courtesy he is starving. His cheeks have fallen in to the bone, and his hands shake whenever they aren't holding his hat. There is grey wolf hair on his cuffs, and none of it is his.
+interject tag:blunt: You've been eating wolves.
+Teodor: They're very rude, wolves, and nobody misses them. I can't recommend the flavour.
+-> teodor_menu
+
+~ look_fail
+Narrator: A pale man with good manners, standing in the dark. Whatever he is underneath, he keeps it buttoned to the throat.
+-> teodor_menu
+
+~ why
+set teodor_guard_known
+Teodor: To tell her the news. And to stand here.
+Teodor: You'll have noticed the dead walk this village after the second bell. Perhaps you noticed they never scratch at this shutter. They know whose door it is. So does everything else that walks at night.
+Widow Ileana: Three winters. I thought it was the garlic.
+Teodor: It was never the garlic, my heart. You never once hung it up.
+-> errand
+
+~ draw
+Teodor: Yes. I thought one of you might. You've the look of people who've walked a long way and would like something to show for it.
+Teodor: I won't fight you in front of her. But hear me first, because there isn't much night left, and none of it is mine.
+-> errand
+
+~ errand
+quest polite_caller the_errand
+Teodor: My master wants a door in this village. Not broken: opened, from the inside, by somebody who asks him in. One door in, and he can walk to any door he likes. The burgomaster's, for instance, and the girl behind it.
+Teodor: He gave me three winters to get Ileana to ask. Tonight he sent word that he's done waiting. If I don't bring him a door by morning, he'll send someone who doesn't knock.
+Widow Ileana [afraid]: Then go, Teo. Go now, and he'll think you failed and leave it.
+Teodor: He'll know I failed, my heart. That's rather the point. I came to say goodbye.
+Narrator: East along the road a carriage lamp swings out of the mist. No horse snorts. No wheel creaks. Along the fences, every wolf in the valley has stopped howling at once.
+* Then we hold this door together. Stand with us, Teodor. -> stand
+* [if flag.teodor_starving_seen] You can barely stand. Stay at our backs. -> stand_weak
+* Keep away from her. We'll deal with your master's errand ourselves. -> alone
+* (End him now, before the others get here.) -> end_now
+
+~ stand
+join teodor
+Teodor: I haven't had anyone at my back since the cooperage. Mind the bats; they bite low. And if I go for a throat tonight, it will be one of theirs. You have my word, for what a dead man's word is worth.
+approve godrick_pendlebrook +2 liriel_dawnsong +1 thistle +1: You stood beside a vampire to hold a widow's door
+combat teodor_errand
+
+~ stand_weak
+join teodor
+Teodor: At your backs? I've stood politely at the back for three winters. Very well. One more night of it.
+approve liriel_dawnsong +2 godrick_pendlebrook +1: You stood beside a starving vampire to hold a widow's door
+combat teodor_errand
+
+~ alone
+Teodor: As you like. I'll be at the churchyard wall, being no help at all. I've become quite good at it.
+combat teodor_errand
+
+~ end_now
+set teodor_fate = "ended"
+set teodor_cache_known
+Narrator: He doesn't raise a hand. He looks at Ileana the whole time, and he is still looking at her when he goes down.
+Teodor: The grave Mihail dug for me. Look in it. I filled it with what I couldn't give back.
+Narrator: Then there is only a brushed coat on the step, and the carriage lamp coming closer, and Ileana's door is a door like any other.
+approve godrick_pendlebrook -2 liriel_dawnsong -3 wren_featherfoot -1 kip_smudgewick +1: You destroyed Teodor in front of his wife while he stood still
+combat teodor_errand
+
+# --- After the fight, before dawn (Ileana comes to the party) ---
+
+~ dawn
+quest polite_caller held
+if flag.teodor_fate == "ended"
+-> dawn_ended
+endif
+Narrator: Nothing else comes. You keep the fire up until the sky in the east goes the colour of dishwater.
+if guest:teodor
+Teodor: It's coming up. I can feel it in my teeth, like frost.
+else
+Narrator: Teodor comes back from the churchyard wall with his hat in his hands and stops at the edge of the light.
+endif
+Teodor: Before I forget, and I have been forgetting things: the grave Mihail dug for me, by the east wall. I filled it with what I couldn't give back. Purses off the road, mostly, from people I reached too late.
+Teodor: And a shield. A traveller carried it all the way from the mists, and it didn't help him. It might help you.
+set teodor_cache_known
+Teodor: Ileana. The sun's coming. I'd like to see one more, if you'll stand with me while I do.
+if flag.teodor_guard_known
+Widow Ileana: Three winters you kept them off my door, and I thought it was the garlic.
+endif
+Widow Ileana [sad]: You'll burn.
+Teodor: I'll be warm. It's been three winters.
+* Let him watch the sunrise with her. -> sunrise
+* Go into the woods, Teodor, before it clears the trees. Live, if that's living. -> woods
+* (End it yourselves, quickly, while he's willing.) -> ended
+
+~ sunrise
+leave teodor
+set teodor_fate = "dawn"
+set teodor_resolved
+quest polite_caller dawn
+time until 6
+Narrator: They stand on the step together, her hand in his, and watch the grey go gold behind the church. He doesn't make a sound. When the first light comes over the wall he is smoke, and then he is nothing, and she is holding her own hand.
+Widow Ileana: He was always late. Not this once.
+Widow Ileana: Go and look in his grave. And thank you. I know what I'd have done tonight if you hadn't come. I'd have asked him in.
+inspire party: stood with Ileana at sunrise
+approve liriel_dawnsong +3 godrick_pendlebrook +2 thistle +2 wren_featherfoot +1: You let Teodor see the sun with his wife
+-> END
+
+~ woods
+leave teodor
+set teodor_fate = "woods"
+set teodor_resolved
+quest polite_caller woods
+Teodor: The woods, then. The wolves will be pleased; they've missed me.
+Teodor: I'll knock, now and then. You needn't answer, my heart.
+Narrator: He bows to her, and to each of you, and is gone between the trees before the sun clears them. Ileana watches the treeline until it is full light.
+Widow Ileana: He'll knock. He always does. I'll leave the shutter as it is.
+approve kip_smudgewick +2 thistle +1 liriel_dawnsong -1: You let Teodor go into the woods alive
+-> END
+
+~ ended
+leave teodor
+set teodor_fate = "ended"
+set teodor_resolved
+quest polite_caller ended
+attitude barovia_widow hostile
+Narrator: He kneels on the step and takes his hat off for the last time. It's quick. Ileana doesn't look away, and she doesn't say anything at all.
+approve godrick_pendlebrook -2 liriel_dawnsong -2 kip_smudgewick +1: You destroyed Teodor at dawn while he knelt
+-> END
+
+~ dawn_ended
+set teodor_resolved
+quest polite_caller ended
+attitude barovia_widow hostile
+Narrator: Nothing else comes. You keep the fire up until the sky in the east goes the colour of dishwater.
+Widow Ileana: You held my door. I'll grant you that. Now go away from it.
+-> END
+
+# --- Afterwards, by day at the grave ---
+
+~ after
+if flag.teodor_fate == "dawn"
+Widow Ileana: I tell them both the news now, Teodor and the burgomaster. There's still never any news. Thank you for that.
+elif flag.teodor_fate == "woods"
+Widow Ileana: Two knocks, the night before last. Just two. I didn't open the shutter. He didn't ask.
+else
+Narrator: Ileana keeps her eyes on the grave and doesn't answer you.
+endif
+-> END

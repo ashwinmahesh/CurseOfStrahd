@@ -49,6 +49,12 @@
       "summary": "The spawn hidden in Vallaki's coffin shop, destroyed by day."
     },
     {
+      "id": "coachman",
+      "when": "flag.teodor_errand_beaten",
+      "points": 1,
+      "summary": "The coachman he sent to open a door in the Village of Barovia, destroyed at a widow's step (The Polite Caller)."
+    },
+    {
       "id": "gulthias_tree",
       "when": "flag.gulthias_tree_burned",
       "points": 2,

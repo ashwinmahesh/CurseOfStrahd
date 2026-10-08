@@ -11,6 +11,7 @@ Arik: Wine.
 * Do you have rooms? -> rooms
 * Where does the wine come from? -> source
 * Has anyone else come through lately? Travelers? -> travelers
+* Heard anything interesting? -> rumors
 * [Insight DC 12] Study him properly. -> insight_ok | insight_fail
 * Goodbye. -> END
 
@@ -51,6 +52,9 @@ if flag.wine_shortage_heard
 Arik: Still none.
 else
 set wine_shortage_heard
+if not quest.wizard_of_wines
+quest wizard_of_wines rumored
+endif
 Arik: Wizard of Wines. No cask in three weeks. Last barrel.
 interject class:fighter: A tavern running dry. That's how you know a siege is going badly.
 endif
@@ -62,6 +66,20 @@ Arik: Scholar. You found the bag.
 else
 Arik: Scholar. Wrote a lot. Went up the castle road. Left a bag. Back room.
 interject name:ratatoille: A scholar! Here! Notes, in a bag, in the back room. Nobody touch anything until I have looked.
+endif
+-> menu
+
+~ rumors
+if not quest.cut_after_noon
+set luca_rumor
+quest cut_after_noon rumored
+Arik: Grigore. Cut late. Bildrath bought it.
+elif not quest.polite_caller
+set teodor_rumor
+quest polite_caller rumored
+Arik: Ileana. Shutter. Every night.
+else
+Arik: No.
 endif
 -> menu
 
