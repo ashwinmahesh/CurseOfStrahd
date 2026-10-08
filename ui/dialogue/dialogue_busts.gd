@@ -66,6 +66,11 @@ func line(beat: Dictionary, party_art: String) -> void:
 		_light("right" if right_id != "" else "")
 
 
+## Q13: the player picked another party member to speak; their bust takes the left side.
+func party_speaker(art_id: String) -> void:
+	_show_side(true, art_id, "")
+
+
 func _show_side(on_left: bool, art_id: String, mood: String) -> void:
 	var rect := left if on_left else right
 	var path := path_for(art_id, mood)

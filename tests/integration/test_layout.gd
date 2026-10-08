@@ -394,6 +394,29 @@ func test_the_ending() -> void:
 		await _check("the ending", func() -> Variant: return root.get("ending"))
 
 
+## The big d20 over a conversation (G11): a failed check with Advantage, every bonus part and two aids on offer.
+func test_a_conversation_check_with_the_big_d20() -> void:
+	if not await _game(LATE):
+		return
+	var beat := {"kind": "check", "who": "Godrick Pendlebrook", "portrait": "godrick_pendlebrook", "skill": "Persuasion",
+		"dc": 18, "total": 13, "success": false, "said": "We mean no harm, and we will pay for the trouble.",
+		"detail": "Persuasion (Godrick Pendlebrook): d20 adv (6, 4) + 7 = 13 vs DC 18, failure", "rolls": [6, 4], "kept": 6,
+		"modifier": 7, "extra": 0, "extra_label": "", "advantage": true, "disadvantage": false, "auto_failed": false,
+		"parts": [{"label": "Charisma", "value": 3}, {"label": "Proficiency", "value": 3}, {"label": "Ring of Persuasive Courtesy", "value": 1}],
+		"aids": [{"id": "heroic_inspiration", "label": "Heroic Inspiration: reroll the d20"},
+			{"id": "tactical_mind", "label": "Tactical Mind: add 1d10 (a Second Wind use, kept if it still fails)"}]}
+	await _check("a conversation check", func() -> Variant:
+		var d := DialogueUI.new()
+		root.add_child(d)
+		await _frames(1)
+		d.call("_show", beat)
+		await _frames(2)
+		return d,
+		func() -> void:
+			for d in root.find_children("*", "DialogueUI", false, false):
+				d.queue_free())
+
+
 ## A story cutscene (docs/ui/cutscenes.md) with the longest caption a line may have (60 words), and its pause card.
 func test_a_cutscene_with_the_longest_caption() -> void:
 	if not await _game(LATE):

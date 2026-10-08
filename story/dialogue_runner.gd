@@ -403,14 +403,8 @@ func _collect_options() -> void:
 				who = st.find_member(str(s["selector"]))
 				if who == null:
 					continue
-			var shown := who if who != null else speaker
 			var check := s["check"] as Dictionary
-			var info := {}
-			if not check.is_empty() and shown != null:
-				var bonus := _bonus(shown, str(check["skill"]))
-				var dc := int(check["dc"])
-				info = {"skill": str(check["skill"]), "dc": dc, "bonus": bonus,
-					"chance": clampf((21.0 - (dc - bonus)) / 20.0, 0.05, 1.0), "who": shown.name}
+			var info := _check_info(who if who != null else speaker, check)
 			var tags := ""
 			for tag: String in s["tags"]:
 				tags += "[%s] " % tag
@@ -435,6 +429,27 @@ func _collect_options() -> void:
 				_skip_to_endif()
 		else:
 			break
+
+
+## An option's check as the menu shows it: who rolls, their bonus and the chance.
+func _check_info(shown: Character, check: Dictionary) -> Dictionary:
+	if check.is_empty() or shown == null:
+		return {}
+	var bonus := _bonus(shown, str(check["skill"]))
+	var dc := int(check["dc"])
+	return {"skill": str(check["skill"]), "dc": dc, "bonus": bonus,
+		"chance": clampf((21.0 - (dc - bonus)) / 20.0, 0.05, 1.0), "who": shown.name}
+
+
+## Q13: the player picks who speaks for the party. Party lines and the menu's checks (those no tag gives to someone
+## else) go to them, and the options on screen show their bonus and chance.
+func set_speaker(who: Character) -> void:
+	if who == null or who.dead:
+		return
+	speaker = who
+	for o in _options:
+		if o["who"] == null:
+			o["check_info"] = _check_info(who, o["check"] as Dictionary)
 
 
 ## What going to `ref` costs: the gold paid by its first statements (before any line or option), or 0.
@@ -603,9 +618,17 @@ func _roll(who: Character, skill: String, dc: int, said: String) -> Dictionary:
 func _check_beat() -> Dictionary:
 	var who := _last_check["who"] as Character
 	var test := _last_check["test"] as D20Test
+	var parts: Array = []
+	if test.breakdown != null:
+		for part: Dictionary in test.breakdown.parts:
+			parts.append({"label": str(part["label"]), "value": int(part["value"])})
 	return {"kind": "check", "who": who.name, "portrait": portrait_of(who),
 		"skill": str(_last_check["skill"]).replace("_", " ").capitalize(), "dc": test.target, "total": test.total, "success": test.success, "detail": test.describe(), "said": str(_last_check["said"]),
-		"aids": CheckAids.options(who, test)}
+		"aids": CheckAids.options(who, test),
+		# The dice themselves, for the big d20 (G11): both dice under Advantage or Disadvantage, the one kept, the bonuses.
+		"rolls": test.rolls.duplicate(), "kept": test.kept, "modifier": test.modifier, "parts": parts, "extra": test.extra,
+		"extra_label": test.extra_label, "advantage": test.advantage, "disadvantage": test.disadvantage,
+		"auto_failed": test.auto_failed}
 
 
 ## Spends an aid on the last (failed) check: Heroic Inspiration or Tactical Mind. The branch follows the new result.

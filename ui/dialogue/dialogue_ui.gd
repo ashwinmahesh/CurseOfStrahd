@@ -45,6 +45,10 @@ const OPTIONS_SHARE := 0.45
 var cutscene: CutsceneView = null
 ## The big busts either side of the box (G1): the party's speaker on the left, the one they're talking to on the right.
 var busts: DialogueBusts
+## The big d20 at the top of the screen while a check's result is up (G11).
+var d20: D20Roll = null
+## Q13: who speaks for the party, shown while there's a choice to make; it (or Tab) cycles the living party.
+var _speaker_button: Button
 
 
 func _init() -> void:
@@ -168,6 +172,13 @@ func _ready() -> void:
 	hist.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	hist.modulate = Color(1, 1, 1, 0.8)
 	left.add_child(hist)
+	_speaker_button = UiParts.small_button("", cycle_speaker)
+	_speaker_button.name = "Speaker"
+	_speaker_button.focus_mode = Control.FOCUS_NONE
+	_speaker_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_speaker_button.tooltip_text = "Who speaks for the party: their lines, and the checks below (Tab)"
+	_speaker_button.visible = false
+	left.add_child(_speaker_button)
 	_build_history()
 	# The Tarokka spread: each card Madam Eva turns stays face up above the conversation.
 	_spread = HBoxContainer.new()
@@ -312,6 +323,14 @@ func _show(beat: Dictionary) -> void:
 		var captioned := str(beat["kind"]) == "line"
 		_panel.visible = not captioned
 		cutscene.show_caption(captioned)
+	if str(beat["kind"]) == "check":
+		if d20 == null:
+			d20 = D20Roll.new()
+			add_child(d20)
+		d20.show_check(beat)
+	elif d20 != null and str(beat["kind"]) not in ["stage", "cutscene"]:
+		d20.queue_free()
+		d20 = null
 	match str(beat["kind"]):
 		"end":
 			ended.emit(str(beat.get("combat", "")))
@@ -412,6 +431,7 @@ func _show_portrait(art_id: String) -> void:
 
 
 func _show_options(options: Array) -> void:
+	_refresh_speaker(options)
 	_option_buttons.clear()
 	_option_keys.clear()
 	options_shown = options
@@ -511,7 +531,40 @@ func _option_key(text: String) -> String:
 	return "%s|%s" % [runner.file.key if runner != null and runner.file != null else "", text]
 
 
+## Q13: the next living party member speaks for the party; the options on screen show their chances.
+func cycle_speaker() -> void:
+	if runner == null or options_shown.is_empty():
+		return
+	var living := _speakers()
+	if living.size() < 2:
+		return
+	var next := living[(living.find(runner.speaker) + 1) % living.size()]
+	Audio.sfx("click")
+	runner.set_speaker(next)
+	busts.party_speaker(DialogueRunner.portrait_of(next))
+	_clear_options()
+	_show(runner.next())
+
+
+func _speakers() -> Array[Character]:
+	var out: Array[Character] = []
+	if runner != null and runner.st != null:
+		for ch in runner.st.party:
+			if not ch.dead:
+				out.append(ch)
+	return out
+
+
+func _refresh_speaker(options: Array) -> void:
+	var picking := options.any(func(o: Variant) -> bool: return bool((o as Dictionary).get("member", false)))
+	_speaker_button.visible = not picking and runner != null and runner.speaker != null and _speakers().size() >= 2
+	if _speaker_button.visible:
+		_speaker_button.text = "Speaks: %s (Tab)" % runner.speaker.name.get_slice(" ", 0)
+
+
 func _clear_options() -> void:
+	if _speaker_button != null:
+		_speaker_button.visible = false
 	options_shown = []
 	for c in _options.get_children():
 		c.queue_free()
@@ -529,6 +582,15 @@ func _clicked(event: InputEvent) -> void:
 		return
 	if runner != null and _waiting_continue:
 		_advance()
+
+
+## Tab picks who speaks (Q13), before the option buttons can take it to move their focus.
+func _input(event: InputEvent) -> void:
+	var k := event as InputEventKey
+	if k != null and k.pressed and not k.echo and k.physical_keycode == KEY_TAB and not options_shown.is_empty() \
+			and _speaker_button != null and _speaker_button.visible:
+		get_viewport().set_input_as_handled()
+		cycle_speaker()
 
 
 func _unhandled_input(event: InputEvent) -> void:
