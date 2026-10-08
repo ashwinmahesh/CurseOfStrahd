@@ -219,6 +219,26 @@ marshal still wants to be beaten, fairly, because only a lost battle can relieve
   level 6 and 1 of 3 against the marshal and three lieutenants at level 8, losing three party members a fight.
 - The pay chest: 200 gp and the marshal's blade, a +2 longsword (rare).
 
+## Vallaki and Castle Ravenloft (level 10)
+
+### The Toymaker's Masterpiece (`toymakers_masterpiece`, narrative/vallaki/toymakers_masterpiece.dialogue; batch 2, the book's Blinsky and the jester)
+
+Goodwife Marta (townsfolk:marta_rumor) says Blinsky asks every stranger whether they've been up to the castle, and
+whether a jester his old master made still walks there. Blinsky (a new menu option) tells it: Fritz von Weerg's jester
+for the count's children, and he would give his whole shop to see how von Weerg did the knees. **Twist:** the jester is
+Pidlwick II, who is afraid of toymakers ("THEY OPEN YOU UP"), and who once pushed the first Pidlwick down a stair. On
+his stair (or travelling with the party) Persuasion DC 14 talks him round, or, if the party has played with him, wound
+him or learned his secret, telling him Blinsky is as lonely as he is; he joins if he isn't with the party already. At
+Blinsky Toys he won't come past the door until he's talked round. **Escalation:** the visit goes beautifully until
+Blinsky climbs his narrow stair and Pidlwick goes still at the bottom of it. Knowing his secret, the party can step in
+and tell Blinsky (`blinsky_told`: he builds a ramp) or step in and say nothing; anyone can just watch, and Pidlwick
+doesn't push: "I DIDN'T. THAT IS NEW."
+
+- No fight: the one gentle quest in batch 2. Its cost is the trip into the castle.
+- Endings: Pidlwick stays at Blinsky Toys (`home`; he leaves the party and juggles in the window), or, when he is the
+  marionette card's ally, he stays with the party and promises to come back after the castle (`promised`).
+- Reward either way: Blinsky's masterwork, a Figurine of Wondrous Power (Obsidian Steed) (very rare).
+
 ## Krezk (level 7)
 
 Talker: the watchman (gate:news, renamed). Wiring: Ilya's sickness starts `the_burgomasters_son` at `heard` (if
@@ -282,4 +302,6 @@ and arik.dialogue (rumors: "Mihail. Digs early."). lighter_than_it_should_be.dia
 lines in krezk gate.dialogue (news: Ilya, the stolen children, the toys), kasha.dialogue (graves: the toys) and, on
 sq-krezk, black_roses.dialogue's lines naming the third girl (Daria, renamed from Sorina). Batch 2, Krezk and
 Berez: one_horned_billy.dialogue in full (new speaker Dragos; also Stelian) and townsfolk.dialogue's two new goatherd
-lines (Stelian: the ring, and the ferryman).
+lines (Stelian: the ring, and the ferryman). Batch 2, Vallaki
+and the castle: toymakers_masterpiece.dialogue in full (Blinsky, Pidlwick II) and townsfolk.dialogue's new
+marta_rumor node (Goodwife Marta: the jester).

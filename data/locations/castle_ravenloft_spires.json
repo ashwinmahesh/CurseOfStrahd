@@ -379,7 +379,7 @@
         2
       ],
       "dialogue": "castle_ravenloft/spires_pidlwick:start",
-      "when": "not guest:pidlwick_ii",
+      "when": "not guest:pidlwick_ii and not flag.pidlwick_with_blinsky",
       "facing": "south",
       "approach": 5
     }

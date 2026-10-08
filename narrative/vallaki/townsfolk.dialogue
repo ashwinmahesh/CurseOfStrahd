@@ -13,7 +13,17 @@ Goodwife Marta: Off to the square with you. They count the faces, you know. Mine
 endif
 Goodwife Marta [smile]: Good morning! It is a good morning. The Baron says so, and the Baron's men are standing right over there, so it is.
 * How is the market? -> market
+* Heard anything interesting? -> marta_rumor
 * Good morning to you. -> END
+
+~ marta_rumor
+Goodwife Marta: Interesting? In Vallaki? Blinsky, I suppose. The toymaker. He asks every stranger who comes through the gate if they've been up the hill to the castle.
+Goodwife Marta: Not about the count. About a toy. Some jester his old master made up there, that walked about on its own. He wants to know if it still walks. Poor man.
+if not quest.toymakers_masterpiece
+quest toymakers_masterpiece rumored
+endif
+interject tag:curious: A toy that walks. In that castle. I'd like to know too.
+-> END
 
 ~ market
 Goodwife Marta: Turnips, mostly. Turnips and Blinsky's toys, which nobody buys, and the Baron's festival bunting, which everybody buys, because it's noticed who doesn't.
