@@ -269,6 +269,17 @@
       "model": "satchel",
       "search_dc": 12,
       "item": "signal_whistle"
+    },
+    {
+      "id": "mists_climbing_pine",
+      "cell": [
+        11,
+        16
+      ],
+      "kind": "examine",
+      "label": "An old dead tree with low branches",
+      "model": "dead_tree",
+      "stand_ft": 10
     }
   ],
   "containers": [

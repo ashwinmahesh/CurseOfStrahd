@@ -11,7 +11,7 @@
       "#....##.............===.......##",
       "###...........................##",
       "##.....................~~......#",
-      "#...........===................#",
+      "#...........=.=................#",
       "#.~~~.~~~~.~~~~.~~~~.~~~~.~~~~.#",
       "................................",
       "................................",
@@ -99,7 +99,8 @@
       ],
       "kind": "examine",
       "label": "A broken cart",
-      "model": "cart_broken"
+      "model": "cart_broken",
+      "stand_ft": 5
     },
     {
       "id": "field_wall",
@@ -135,6 +136,17 @@
       "label": "a farmer's cache behind the field wall",
       "model": "rubble",
       "item": "gauntlets_of_ogre_power"
+    },
+    {
+      "id": "ambush_lookout_tree",
+      "cell": [
+        10,
+        16
+      ],
+      "kind": "examine",
+      "label": "A dead tree with a good view of the road",
+      "model": "dead_tree",
+      "stand_ft": 10
     }
   ],
   "encounters": [

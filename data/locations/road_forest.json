@@ -197,6 +197,17 @@
       ],
       "kind": "decor",
       "model": "leaves"
+    },
+    {
+      "id": "forest_climbing_pine",
+      "cell": [
+        14,
+        13
+      ],
+      "kind": "examine",
+      "label": "A clawed pine with low branches",
+      "model": "pine_clawed",
+      "stand_ft": 10
     }
   ],
   "encounters": [

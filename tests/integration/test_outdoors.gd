@@ -596,3 +596,22 @@ func test_settlements_have_things_to_stand_on() -> void:
 			assert_eq(g.height(c) - g.height(Vector2i(28, 14)), ft, "Krezk's wall walk stands %d ft up" % ft)
 		else:
 			assert_eq(g.height(c) - flat.height(c), ft, "%s: %s is stood on %d ft up" % [loc, c, ft])
+
+
+## Things to stand on in the wilds (lane 28): a tree to climb into or a cart to get up on, on most of the wilderness
+## maps, each high ground.
+func test_the_wilds_have_things_to_climb() -> void:
+	var raised := {"road_forest": "forest_climbing_pine", "lake_zarovich_trail": "lzt_climbing_pine",
+		"werewolf_den": "den_climbing_pine", "into_the_mists_road": "mists_climbing_pine", "road_ambush": "ambush_lookout_tree",
+		"berez_marsh_track": "marsh_dead_tree", "argynvostholt": "holt_dead_tree_1", "van_richtens_tower": "vrt_island_tree",
+		"old_bonegrinder_track": "lane_stopped_handcart"}
+	for loc: String in raised:
+		var d := Compendium.shared().get_entry("locations", loc) as Dictionary
+		var g := LocationView.grid_for(d)
+		var flat := CombatGrid.from_rows(d["map"]["rows"] as Array, d["map"].get("elevation", []) as Array)
+		for p: Variant in d["props"]:
+			var q := p as Dictionary
+			if str(q["id"]) == raised[loc]:
+				var c := Vector2i(int(q["cell"][0]), int(q["cell"][1]))
+				assert_eq(g.height(c) - flat.height(c), int(q["stand_ft"]), "%s: %s is stood on" % [loc, q["id"]])
+				assert_true(int(q["stand_ft"]) >= 5, "%s raised" % q["id"])

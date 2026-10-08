@@ -14,7 +14,7 @@
       "#wwwwwwwww...######...wwwwwwwww#",
       "#wwwwwwww....######.=..wwwwwwww#",
       "#wwwwwwww....######....wwwwwwww#",
-      "#wwwwwwww....######..=.wwwwwwww#",
+      "#wwwwwwww....######....wwwwwwww#",
       "#wwwwwwww....######....wwwwwwww#",
       "#wwwwwwww....######....wwwwwwww#",
       "#wwwwwwwww=...........wwwwwwwww#",
@@ -332,7 +332,8 @@
         8
       ],
       "kind": "decor",
-      "model": "dead_tree"
+      "model": "dead_tree",
+      "stand_ft": 10
     },
     {
       "id": "vrt_path_caltrops",
