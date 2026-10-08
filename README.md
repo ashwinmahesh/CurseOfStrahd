@@ -150,6 +150,12 @@ already on another commit. With upload off it's a dry run that only builds. It n
 `COS_CLOUDFLARE_R2_API_TOKEN` and `COS_CLOUDFLARE_ACCOUNT_ID`. The first run imports every asset (about two hours);
 later runs start from the cached import, which a scheduled job keeps warm.
 
+The Mac app is signed ad hoc, so macOS asks the first time it opens. Once there's an Apple Developer account, five
+more secrets make the workflow sign it with a Developer ID and have Apple notarize it: `APPLE_DEVELOPER_ID_P12` (the
+Developer ID Application certificate as a base64 .p12), `APPLE_DEVELOPER_ID_P12_PASSWORD`, and an App Store Connect
+API key as `APPLE_API_KEY_ID`, `APPLE_API_ISSUER_ID` and `APPLE_API_KEY_P8`. `tools/release/mac_app.py` does the same
+locally from `MAC_SIGN_P12`, `MAC_SIGN_P12_PASSWORD_FILE` and `MAC_NOTARY_KEY`.
+
 The screenshots in this README were taken off screen from the game at 1920x1080 on the High preset, by capture scenes
 kept with the showcase site ([curseofstrahd-site](https://github.com/ashwinmahesh/curseofstrahd-site), in
 `tools/godot`) run through `tools/capture/capture.tscn` as `make capture` does, then shrunk to 1280 px JPEGs.
