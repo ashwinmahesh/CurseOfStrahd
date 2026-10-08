@@ -47,7 +47,7 @@ const CONTROLS: Array[String] = [
 	"Hold {show_names} to see the names of everything you can use nearby. Hold {show_sight} to see what each foe in sight can see (always shown while sneaking).",
 	"Keyboard: {walk} walk · {camera_rotate_left} / {camera_rotate_right} turn the camera · {select_member_1}-{select_member_4} or {cycle_leader} pick who leads · {open_sheet} character · {open_inventory} inventory · {open_journal} journal · {open_party} party · {open_map} map · {rest} rest · {wait} wait some hours · {search} search · {sneak} sneak · {split} split the party · {plan_mode} turn-based ({plan_round} ends the round) · {quick_save} quicksave · {quick_load} load it · Esc menu. Settings, Keys changes them.",
 	"In conversations: 1-9 pick an answer · Space, Enter or a click goes on · H shows what's been said.",
-	"Controller: left stick walks · A uses what's beside you · Back opens its menu · X searches · Y journal · LB / RB character and inventory · Start menu.",
+	"Controller: left stick walks · right stick turns and zooms the camera · D-pad left / right marks the next thing nearby · {a} uses it · {y} everything you can do with it · {x} searches · {lb} / {rb} who leads · {ls} sneak · {rs} turn-based ({rt} ends the round) · hold {lt} for names and what foes see · D-pad up: the bar's buttons · D-pad down: these controls · {back} map · {start} menu.",
 ]
 var _controls: PanelContainer
 var _control_lines: Array[Label] = []
@@ -213,6 +213,7 @@ func build(state: StoryState) -> void:
 	_controls.add_child(cbox)
 	add_child(_controls)
 	var f1 := _label("F1: controls", 12, "gilt_dark")
+	PadGlyphs.hint(f1, "F1: controls", "D-pad down: controls")
 	f1.anchor_top = 1.0
 	f1.anchor_bottom = 1.0
 	f1.offset_left = 16
@@ -256,7 +257,9 @@ func build(state: StoryState) -> void:
 	plate.add_child(bar)
 	for b: Array in BUTTONS:
 		var cmd := str(b[2])
-		var btn := UiKit.button("", func() -> void: command.emit(cmd), 14, str(b[3]))
+		var btn := UiKit.button("", func() -> void:
+			pad_bar(false)   # a button pressed from the bar on a pad hands the pad back to the world
+			command.emit(cmd), 14, str(b[3]))
 		btn.name = str(b[0])
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.add_theme_constant_override("icon_max_width", 30)
@@ -559,7 +562,7 @@ func close_narration() -> void:
 
 
 func hint(text: String, at: Vector2) -> void:
-	_hint.text = (text + "\nRight-click: more") if text != "" else ""
+	_hint.text = (text + "\n" + PadGlyphs.words("Right-click: more", "{a}: this · {y}: more")) if text != "" else ""
 	_hint_panel.visible = text != ""
 	_hint_panel.reset_size()
 	_hint_panel.position = at + Vector2(18, 14)
@@ -597,7 +600,7 @@ func _show_keys(on: Dictionary = {}) -> void:
 		var b := _bar_buttons[cmd] as Button
 		b.tooltip_text = ("%s (%s)" % [row[0], shown] if shown != "" else str(row[0])) + (" · on" if bool(on.get(cmd, false)) else "")
 	for l in _control_lines:
-		l.text = InputActions.fill(str(l.get_meta(&"template")))
+		l.text = PadGlyphs.names(InputActions.fill(str(l.get_meta(&"template"))))
 
 
 func controls_showing() -> bool:
@@ -632,7 +635,52 @@ func _plate(content: Control, margin: int) -> PanelContainer:
 	return p
 
 
+# --- The bar on a pad (U6, PadNav) ----------------------------------------------------------------
+
+## D-pad up while exploring (PadExplore): the bar's buttons take the pad, as a screen's would, until B, D-pad down or
+## a button pressed.
+func pad_bar(on: bool) -> void:
+	if on == pad_bar_on():
+		return
+	if on:
+		set_meta(&"pad_scope", true)
+		var first := _bar_buttons.get("sheet") as Button
+		if first != null:
+			first.set_meta(&"pad_first", true)
+	else:
+		remove_meta(&"pad_scope")
+		var f := get_viewport().gui_get_focus_owner() if get_viewport() != null else null
+		if f != null and is_ancestor_of(f):
+			f.release_focus()
+
+
+func pad_bar_on() -> bool:
+	return has_meta(&"pad_scope")
+
+
+## B leaves the bar (PadNav asks the screen in front first).
+func pad_button(button: JoyButton) -> bool:
+	if button == JOY_BUTTON_B and pad_bar_on():
+		pad_bar(false)
+		return true
+	return false
+
+
+## D-pad down leaves the bar too.
+func pad_step(_f: Control, dir: Vector2i) -> bool:
+	if dir == Vector2i.DOWN and pad_bar_on():
+		pad_bar(false)
+		return true
+	return false
+
+
+func pad_prompts() -> Array:
+	return [["dpad_down", "Back to the world"]]
+
+
 func _process(delta: float) -> void:
+	if pad_bar_on() and not PadNav.active():
+		pad_bar(false)   # the mouse took over
 	if _narr_time > 0.0:
 		_narr_time -= delta
 		if _narr_time <= 0.0:

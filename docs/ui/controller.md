@@ -82,10 +82,39 @@ mouse and keyboard are in use and the pad's words otherwise ("Circle: close" on 
 device as it changes. The screens' "Esc: close", the rules cards' pin hint, the conversation's and the ending's
 continue hints use it.
 
-## Exploring and fights
+## Exploring (`world/exploration/pad_explore.gd`)
 
-Exploring and fights read the pad themselves (`world/game_root.gd`, `world/combat/combat_view.gd`); see
-`combat_view.md` for the fight's map. Both get their full pass in later steps of the plan.
+With no screen in front, game_root hands pad events to PadExplore. The nearest thing the party can use within 8
+squares (a person, door, chest, thing, way out, or a foe in sight) is marked as the mouse's hover marks it, with its
+glow and hint, and the mark follows the party as it walks until the player picks one.
+
+| Button | Does |
+|---|---|
+| Left stick | Walk |
+| Right stick | Left or right: turn the camera a quarter (a flick); up or down: zoom (CameraRig.pad_look) |
+| D-pad left / right | Mark the previous / next thing round the leader, as the screen shows them |
+| A | Use the marked thing, walking there first as a click does |
+| Y | Everything that can be done with it (the right-click menu) |
+| X | Search |
+| LB / RB | Who leads: the one before / the next, round the party |
+| L3 | Sneak |
+| R3 | Turn-based exploring; RT ends its round |
+| LT (hold) | Names of everything usable, and what foes in sight can see |
+| D-pad up | Step into the HUD's bar (Character, Inventory, Journal, Party, Map, Rest, Wait ...): D-pad along it, A presses, B or D-pad down leaves |
+| D-pad down | The controls card |
+| B | Close the controls card or the Narrator's box |
+| Back (View) | The map |
+| Start (Menu) | The menu |
+
+The prompt bar shows the world's buttons too (`PadPrompts.world`). Each is an InputMap action (`use_marked`,
+`marked_menu`, `mark_prev`, `mark_next`, `leader_prev`, `leader_next`, `hud_bar`, `show_controls`, `pause_menu`, and
+pad events on `search`, `sneak`, `plan_mode`, `plan_round`, `open_map`, `show_names`, `show_sight`, `look_*`), so
+Settings can rebind them.
+
+## Fights
+
+Fights read the pad themselves (`world/combat/combat_view.gd`); see `combat_view.md` for the fight's map. Their full
+pass is the next step of the plan.
 
 ## Tests
 

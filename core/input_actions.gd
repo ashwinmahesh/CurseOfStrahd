@@ -135,6 +135,20 @@ const PAD_BUTTONS := {
 	&"pad_tab_prev": [JOY_BUTTON_LEFT_SHOULDER],
 	&"pad_tab_next": [JOY_BUTTON_RIGHT_SHOULDER],
 	&"pad_confirm": [JOY_BUTTON_START],
+	# Exploring (world/exploration/pad_explore.gd): the marked thing, who leads, and the rest of the bar.
+	&"use_marked": [JOY_BUTTON_A],
+	&"marked_menu": [JOY_BUTTON_Y],
+	&"mark_prev": [JOY_BUTTON_DPAD_LEFT],
+	&"mark_next": [JOY_BUTTON_DPAD_RIGHT],
+	&"search": [JOY_BUTTON_X],
+	&"leader_prev": [JOY_BUTTON_LEFT_SHOULDER],
+	&"leader_next": [JOY_BUTTON_RIGHT_SHOULDER],
+	&"sneak": [JOY_BUTTON_LEFT_STICK],
+	&"plan_mode": [JOY_BUTTON_RIGHT_STICK],
+	&"open_map": [JOY_BUTTON_BACK],
+	&"pause_menu": [JOY_BUTTON_START],
+	&"hud_bar": [JOY_BUTTON_DPAD_UP],
+	&"show_controls": [JOY_BUTTON_DPAD_DOWN],
 }
 
 ## Controller triggers and sticks: action -> [axis, direction].
@@ -157,6 +171,15 @@ const PAD_AXES := {
 	&"pad_scroll_right": [JOY_AXIS_RIGHT_X, 1.0],
 	&"pad_scroll_up": [JOY_AXIS_RIGHT_Y, -1.0],
 	&"pad_scroll_down": [JOY_AXIS_RIGHT_Y, 1.0],
+	# Exploring: the right stick turns and zooms the camera (CameraRig.pad_look), RT ends a turn-based round, LT held
+	# shows names and what foes see.
+	&"look_left": [JOY_AXIS_RIGHT_X, -1.0],
+	&"look_right": [JOY_AXIS_RIGHT_X, 1.0],
+	&"look_up": [JOY_AXIS_RIGHT_Y, -1.0],
+	&"look_down": [JOY_AXIS_RIGHT_Y, 1.0],
+	&"plan_round": [JOY_AXIS_TRIGGER_RIGHT, 1.0],
+	&"show_names": [JOY_AXIS_TRIGGER_LEFT, 1.0],
+	&"show_sight": [JOY_AXIS_TRIGGER_LEFT, 1.0],
 }
 
 ## Key names that read better as the mark on the key.

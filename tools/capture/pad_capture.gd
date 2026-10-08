@@ -1,5 +1,6 @@
 extends Node
-## The controller on screens (U6, ui/common/pad_nav.gd) over a late party, driven by synthetic pad presses: the pause
+## The controller (U6, docs/ui/controller.md) over a late party, driven by synthetic pad presses: exploring with a thing
+## marked and the HUD's bar stepped into (world/exploration/pad_explore.gd); then on screens (ui/common/pad_nav.gd): the pause
 ## menu with the focus frame on its second button and the prompt bar, the Game settings with focus on a row, the
 ## character sheet with a row's rules card opened by Y, the inventory after a few D-pad steps and an item's menu (X),
 ## the travel map with a place picked, and the on-screen keyboard on the cheat code's field. The game is loaded
@@ -42,6 +43,12 @@ func _shoot(tool: Node, path: String, frames: int = 10) -> void:
 func capture_shots(tool: Node, out: String) -> void:
 	(root.get("hud") as ExploreHud).close_narration()
 	await tool.call("wait_frames", 10)
+	await _press(tool, JOY_BUTTON_DPAD_RIGHT)
+	await _shoot(tool, out + "_7_exploring.png", 12)
+	await _press(tool, JOY_BUTTON_DPAD_UP)
+	await _press(tool, JOY_BUTTON_DPAD_RIGHT)
+	await _shoot(tool, out + "_8_hud_bar.png", 8)
+	await _press(tool, JOY_BUTTON_B)
 	root.call("open_screen", "menu", 0)
 	await tool.call("wait_frames", 10)
 	await _press(tool, JOY_BUTTON_DPAD_DOWN)

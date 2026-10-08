@@ -22,6 +22,9 @@ const SHAKE_FADE := 3.0
 
 var follow: Node3D
 var camera: Camera3D
+## The pad's right stick turns the camera (a flick left or right is a quarter turn) and zooms it (up and down) while
+## this is on: exploring turns it on (game_root); a fight's radial menu aims with the stick instead (U6).
+var pad_look := false
 var distance := 13.0
 var zoom_min := ZOOM_MIN
 var zoom_max := ZOOM_MAX
@@ -91,13 +94,24 @@ func _unhandled_input(event: InputEvent) -> void:
 				horizon = minf(horizon + 1.0 / HORIZON_STEPS, 1.0)
 			else:
 				distance = clampf(distance + 1.0, zoom_min, zoom_max)
+	if pad_look and event is InputEventJoypadButton:
+		return   # exploring, the stick clicks sneak and switch turn-based; the right stick turns the camera
 	if event.is_action_pressed(&"camera_rotate_left"):
 		rotate_step(-1)
 	elif event.is_action_pressed(&"camera_rotate_right"):
 		rotate_step(1)
 
 
+## How far the right stick must lean to turn the camera, and come back before it turns it again; zoom per second.
+const LOOK_FLICK := 0.7
+const LOOK_REST := 0.3
+const LOOK_ZOOM := 14.0
+var _flicked := false
+
+
 func _process(delta: float) -> void:
+	if pad_look:
+		_look(delta)
 	if follow:
 		global_position = global_position.lerp(follow.global_position, clampf(delta * 6.0, 0.0, 1.0))
 	var goal := deg_to_rad(45.0) + _yaw_steps * PI / 2.0
@@ -105,6 +119,20 @@ func _process(delta: float) -> void:
 	horizon_shown = move_toward(horizon_shown, horizon, delta * 1.6)
 	_shake(delta)
 	_apply()
+
+
+## The right stick (pad_look): a flick turns a quarter, up and down zoom within the play range.
+func _look(delta: float) -> void:
+	if not InputMap.has_action(&"look_left"):
+		return
+	var v := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
+	if absf(v.x) >= LOOK_FLICK and not _flicked and absf(v.x) > absf(v.y):
+		_flicked = true
+		rotate_step(1 if v.x > 0.0 else -1)
+	elif absf(v.x) < LOOK_REST:
+		_flicked = false
+	if absf(v.y) > 0.25 and horizon <= 0.0:
+		distance = clampf(distance + v.y * LOOK_ZOOM * delta, zoom_min, zoom_max)
 
 
 ## The shake's jolt for this frame, on the camera's own offsets so the rig's point and the shot stay put.

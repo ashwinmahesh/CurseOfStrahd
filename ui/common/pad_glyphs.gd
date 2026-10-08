@@ -174,9 +174,13 @@ static var _hints: Array = []
 ## {rs}, {start} and {back} as the pad family's names for those buttons ("{b}: close" reads "Circle: close" on a
 ## PlayStation pad).
 static func words(keys: String, pad: String) -> String:
-	if not PadNav.active():
-		return keys
-	var out := pad
+	return names(pad) if PadNav.active() else keys
+
+
+## `text` with {a}, {b} ... as the pad family's names for those buttons, whatever the device (a controls card's
+## controller line).
+static func names(text: String) -> String:
+	var out := text
 	for place: String in ["a", "b", "x", "y", "lb", "rb", "lt", "rt", "ls", "rs", "start", "back"]:
 		out = out.replace("{%s}" % place, name_of(place))
 	return out

@@ -21,6 +21,7 @@ var menu: ContextMenu                ## the right-click menu on things in the wo
 var _menu_cell := Vector2i(-1, -1)
 var ending: EndingScreen = null      ## the campaign's last screen, once the game has ended (ADR 0014)
 var glow := HoverGlow.new()          ## the rim on whatever the mouse is over
+var pad := PadExplore.new(self)      ## exploring on a controller (U6): the marked thing and the pad's buttons
 
 
 func _ready() -> void:
@@ -172,6 +173,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if loot != null:
 		return
+	if pad.handle(event):
+		get_viewport().set_input_as_handled()
+		return
 	if event is InputEventMouseMotion:
 		var pick := view.pick_cell(view.rig.camera, (event as InputEventMouseMotion).position)
 		_hover = pick
@@ -234,22 +238,6 @@ func _unhandled_input(event: InputEvent) -> void:
 				_quick_save()
 			KEY_F9:
 				_quick_load()
-	if event is InputEventJoypadButton and (event as InputEventJoypadButton).pressed:
-		match (event as InputEventJoypadButton).button_index:
-			JOY_BUTTON_A:
-				_interact_nearby()
-			JOY_BUTTON_X:
-				view.search()
-			JOY_BUTTON_Y:
-				open_screen("journal", 0)
-			JOY_BUTTON_START:
-				open_screen("menu", 0)
-			JOY_BUTTON_BACK:
-				_menu_nearby()
-			JOY_BUTTON_LEFT_SHOULDER:
-				open_screen("sheet", 0)
-			JOY_BUTTON_RIGHT_SHOULDER:
-				open_screen("inventory", 0)
 	if event.is_action_pressed(&"cycle_leader"):
 		view.set_leader(1)
 		_refresh()
@@ -260,7 +248,16 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
-	if moving or view == null or view.in_combat or dialogue != null or screen != null or loot != null or ending != null:
+	var exploring := not moving and view != null and not view.in_combat and dialogue == null and screen == null \
+		and loot == null and ending == null
+	if view != null:
+		view.rig.pad_look = exploring   # the right stick turns and zooms the camera (a fight's radial needs it)
+	if exploring and PadNav.active():
+		pad.tick(delta)
+	elif pad.marked.x >= 0 or not PadPrompts.world.is_empty():
+		pad.clear()
+		glow.clear()
+	if not exploring:
 		return
 	var v := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_back")
 	if v.length() < 0.3:
@@ -275,17 +272,6 @@ func _process(delta: float) -> void:
 	view.step(Vector2i(roundi(w.x), roundi(w.z)))
 
 
-## Controller A: use the nearest interactable within a square of the leader.
-func _interact_nearby() -> void:
-	var c := view.leader().cell
-	for d: Vector2i in [Vector2i.ZERO] + CombatGrid.DIRS:
-		var thing := view.thing_at(c + d)
-		if not thing.is_empty() and str(thing["kind"]) != "exit":
-			view.interact(thing)
-			return
-	hud.toast("Nothing to use here")
-
-
 ## The right-click menu for a square: what can be done with the person, thing, party member or floor there.
 func open_world_menu(cell: Vector2i, at: Vector2) -> void:
 	if cell.x < 0 or view.busy:
@@ -297,16 +283,6 @@ func open_world_menu(cell: Vector2i, at: Vector2) -> void:
 	var items: Array[Dictionary] = []
 	items.assign(m["actions"] as Array)
 	menu.show_actions(str(m["title"]), items, at)
-
-
-## Controller Back: the menu for the nearest thing beside the leader, at the middle of the screen.
-func _menu_nearby() -> void:
-	var c := view.leader().cell
-	for d: Vector2i in [Vector2i.ZERO] + CombatGrid.DIRS:
-		if not view.thing_at(c + d).is_empty():
-			open_world_menu(c + d, get_viewport().get_visible_rect().size / 2.0)
-			return
-	hud.toast("Nothing to use here")
 
 
 func world_action(cell: Vector2i, id: String) -> void:
