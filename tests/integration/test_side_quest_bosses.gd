@@ -67,3 +67,11 @@ func test_old_greytooth_at_level_6() -> void:
 
 func test_the_drowned_of_pescari_at_level_8() -> void:
 	await _series("lake_zarovich", 23, 8, "drowned_landing", [1, 2, 3])
+
+
+func test_the_bone_marshal_and_his_column_at_level_6() -> void:
+	await _series("into_the_mists_road", 23, 6, "bone_marshal", [1, 2, 3])
+
+
+func test_the_bone_marshal_duel_at_level_8() -> void:
+	await _series("into_the_mists_road", 23, 8, "bone_marshal", [1, 2, 3], ["riders_stood_down"])

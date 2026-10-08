@@ -430,6 +430,31 @@
       "id": "bell_silenced",
       "type": "bool",
       "summary": "The bell under Lake Zarovich was cut loose or rung for the dead; the quest is over."
+    },
+    {
+      "id": "muster_rumor",
+      "type": "bool",
+      "summary": "Zora or Vasile and Petre told the party about the riders who go east to the gates every night (The Last Muster)."
+    },
+    {
+      "id": "muster_met",
+      "type": "bool",
+      "summary": "The party has met the Last Muster at the Gates of Barovia."
+    },
+    {
+      "id": "riders_stood_down",
+      "type": "bool",
+      "summary": "The party convinced the vanguard's riders that their war is over; only the marshal and his lieutenants fight."
+    },
+    {
+      "id": "bone_marshal_beaten",
+      "type": "bool",
+      "summary": "Marshal Dragomir was beaten at the gate (encounter bone_marshal)."
+    },
+    {
+      "id": "muster_paid",
+      "type": "bool",
+      "summary": "The party took the Marshal's blade and the vanguard's pay chest."
     }
   ]
 }

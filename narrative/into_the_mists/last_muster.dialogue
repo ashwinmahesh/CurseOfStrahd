@@ -1,0 +1,107 @@
+# The Last Muster (side quest, docs/story/side_quests.md; the book's skeletal riders, in our own words): the bones of
+# the count's vanguard ride east every night to the Gates of Barovia, which they took the night he conquered the valley.
+# His last order was "hold the gate until I come back", and he never came back for them. Their marshal holds it still,
+# and only a lost battle can release him. The boss, the Bone Marshal, is our own (data/monsters/bone_marshal.json).
+# Reached from Zora (tser_camp:zora_road) or Vasile and Petre (townsfolk:gossip). Every line here is unvoiced for now.
+
+# --- At the Gates after midnight (the Marshal comes to the party) ---
+
+~ marshal
+if flag.riders_stood_down
+-> rematch
+endif
+if flag.muster_met
+Narrator: The column forms up across the gate again, as it has every night for four hundred years. The marshal rides forward.
+Marshal Dragomir: You again. The gate is still held.
+-> news_menu
+endif
+set muster_met
+if quest.last_muster == rumored or not quest.last_muster
+quest last_muster mustered
+endif
+if flag.muster_rumor
+interject tag:blunt: Bones on horses, every night. The rumour was right.
+endif
+Narrator: They come out of the mist on the east road in a column of twos: horses that are only bones and harness, riders that are only bones and rust, a pennant on a lance that is only a pole and a few threads. They don't make a sound. They form up across the gate.
+Narrator: Their marshal rides forward alone. His horse's ribs and his own have grown together over the years, so you can't tell where one ends.
+Marshal Dragomir: Halt. This gate is held. No one passes in, no one passes out, until the count returns to relieve us.
+Marshal Dragomir: State your names and your lord.
+* We have no lord. Your count is in his castle. He isn't coming. -> news
+* [History DC 14] (Tell him what year it is, and what happened to his war.) -> war_over | war_doubted
+* [Religion DC 15] (Speak the soldier's rite for the dead, the one that relieves a man of his post.) -> rite | rite_fails
+* [Persuasion DC 15] Your riders have held long enough. Stand them down. -> stood_down | not_stood_down
+* (Draw steel.) -> fight
+
+~ rematch
+Marshal Dragomir: You came back. Good. My men are relieved and I am not. On guard, then, when you're ready.
+* Then on guard, Marshal. -> fight
+* Not tonight. -> later
+
+~ news
+Marshal Dragomir: The count is in his castle. Yes. We see its lights from the gate, some nights. He has never once sent a rider down to relieve us.
+Marshal Dragomir: An order is an order until it is countermanded. Four hundred years. We hold.
+-> news_menu
+
+~ news_menu
+* [History DC 14] (Tell him what year it is, and what happened to his war.) -> war_over | war_doubted
+* [Religion DC 15] (Speak the soldier's rite for the dead, the one that relieves a man of his post.) -> rite | rite_fails
+* [Persuasion DC 15] Your riders have held long enough. Stand them down. -> stood_down | not_stood_down
+* (Draw steel.) -> fight
+
+~ war_over
+Narrator: You tell him: the kingdom his count came from has no name any more, the war that brought him here is four centuries done, and there's nobody left on either side of it but the count, and the valley, and the dead.
+Marshal Dragomir: Done. The war is done. ...Then what have my men been holding?
+-> stood_down
+
+~ war_doubted
+Marshal Dragomir: Lies are a scout's work. I have heard them all.
+-> news_menu
+
+~ rite
+Narrator: You say the old words, the ones soldiers say over the ones who don't march out with them in the morning. Down the column, one skull and then another bows forward over the pommel of a saddle.
+-> stood_down
+
+~ rite_fails
+Narrator: The words come out wrong, or the wrong way round, and the column doesn't move. The marshal's hand goes to his blade.
+-> news_menu
+
+~ not_stood_down
+Marshal Dragomir: My men will stand down when I am relieved, and not one hour before. Who are you to relieve me?
+-> news_menu
+
+~ stood_down
+set riders_stood_down
+quest last_muster stood_down
+Narrator: The marshal turns his horse and looks at his column for a long time. Then he lifts his blade, and the riders dismount, all at once, the way they were drilled to, and stand by their horses' heads, and are still.
+Marshal Dragomir: They are relieved. I am not. An officer is relieved by his commander, or by defeat. My commander will not come.
+Marshal Dragomir: So. Beat me. Fairly, at the gate I was told to hold. Then I can tell him, when I see him, that I held it until I couldn't.
+* Then on guard, Marshal. -> fight
+* Not tonight. -> later
+
+~ later
+Marshal Dragomir: Tomorrow night, then. We have time. We have had nothing but.
+-> END
+
+~ fight
+if flag.riders_stood_down
+Narrator: He salutes you with his blade, the old cavalry salute, and his two lieutenants walk their bone horses out of the column to his flanks. Nobody else moves.
+else
+Narrator: The marshal lowers his blade, and the whole column lowers its lances with him, and the gate is full of bones coming at you.
+endif
+combat bone_marshal
+
+# --- After the fight (prop muster_field) ---
+
+~ after
+if flag.muster_paid
+Narrator: The Gates of Barovia, and the mist, and nothing on the east road but the road.
+-> END
+endif
+set muster_paid
+quest last_muster released
+Narrator: When the marshal falls, the column falls with him: every rider, every horse, a long rattle of bones going down together in the mud, and then nothing but harness and rust.
+Narrator: His blade is still bright under the rust. And behind the statues, where the gatehouse was, there's an iron pay chest that four hundred years of vanguard never got around to spending.
+gold +200
+give weapon_plus_2
+approve godrick_pendlebrook +3 thistle +1 wren_featherfoot +1: You relieved the last of the count's vanguard from his post
+-> END
