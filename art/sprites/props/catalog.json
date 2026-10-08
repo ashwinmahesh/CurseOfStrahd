@@ -1,5 +1,5 @@
 {
-  "about": "Which prop art (manifest.json in this folder) dresses each thing in data/locations, read by world/look/set_dressing.gd (docs/art/set_dressing.md). A location prop or container is looked up by its id in `ids` first, then by its `model` in `models`; with neither it uses the art of the same name as its model, else `container_default` for containers. A value is an art id, or {art, mount, scale} to override how it hangs, or null for an invisible spot (something already drawn, or a view). `on_wall` is the art used when the thing stands on a wall square (shelves against a wall). Doors take the first `doors.rules` entry whose words are in their id or label. `floors` gives a place its own ground texture; `low_cover.<place>` and `<place>_run` dress its '=' squares. An entry with `building: true` stands in for the whole house on its square (a windmill, a bell tower); `fade: true` fades a tall piece like the trees. `scales` sizes a piece wherever it stands (stairs fill their square); `fronts` gives furniture a front view that stands flat against a wall beside it. `rooms` gives a location's areas their own floor and wall by words in the area's name (a bathroom's tiles); `place_looks` overrides a whole place's floor, wall, difficult ground and `rock_walls` (cliffs instead of trees). `feet` is each standing piece's real height (a person is 6 ft; 1 unit = 5 ft): the piece is drawn at that size, and `feet` is the height of its picture at real size (low, deep things such as beds include the top you see from above). A piece wider than `big_width` units at that size (a cottage, a tent, a wagon) keeps its size whatever the room and clears the trees and the board's own scenery around it. `glows` are pieces drawn unshaded, giving light rather than taking it. `double_doors` are exit art drawn once across a doorway two squares wide (outside interiors: the keep's great doors). `rooms` applies to interiors and dungeons only; `outdoor_rooms` are the few rules for outdoor maps (jetties are planks). `runs_along` lists long, thin pieces (a fence) that lie along a run of low cover going up the map instead of facing south. `map_marks` draws a building-sized 3D piece on the minimap over the squares it stands on (fill, rim, stripes of its canvas, round or square, at `scale` of its footprint).",
+  "about": "Which prop art (manifest.json in this folder) dresses each thing in data/locations, read by world/look/set_dressing.gd (docs/art/set_dressing.md). A location prop or container is looked up by its id in `ids` first, then by its `model` in `models`; with neither it uses the art of the same name as its model, else `container_default` for containers. A value is an art id, or {art, mount, scale} to override how it hangs, or null for an invisible spot (something already drawn, or a view). `on_wall` is the art used when the thing stands on a wall square (shelves against a wall). Doors take the first `doors.rules` entry whose words are in their id or label. `floors` gives a place its own ground texture; `low_cover.<place>` and `<place>_run` dress its '=' squares. An entry with `building: true` stands in for the whole house on its square (a windmill, a bell tower); `fade: true` fades a tall piece like the trees. `scales` sizes a piece wherever it stands (stairs fill their square); `fronts` gives furniture a front view that stands flat against a wall beside it. `rooms` gives a location's areas their own floor and wall by words in the area's name (a bathroom's tiles); `place_looks` overrides a whole place's floor, wall, difficult ground and `rock_walls` (cliffs instead of trees). `feet` is each standing piece's real height (a person is 6 ft; 1 unit = 5 ft): the piece is drawn at that size, and `feet` is the height of its picture at real size (low, deep things such as beds include the top you see from above). A piece wider than `big_width` units at that size (a cottage, a tent, a wagon) keeps its size whatever the room and clears the trees and the board's own scenery around it. `glows` are pieces drawn unshaded, giving light rather than taking it. `double_doors` are exit art drawn once across a doorway two squares wide (outside interiors: the keep's great doors). `rooms` applies to interiors and dungeons only; `outdoor_rooms` are the few rules for outdoor maps (jetties are planks). `runs_along` lists long, thin pieces (a fence) that lie along a run of low cover going up the map instead of facing south. `map_marks` draws a building-sized 3D piece on the minimap over the squares it stands on (fill, rim, stripes of its canvas, round or square, at `scale` of its footprint). `theme_rooms` are a board theme's own room styles, checked first (a farmhouse bedroom is plaster and planks); a place_looks entry with `keep` keeps its look in every room (a cave, the Amber Temple). Room words match an area's name before its id. `low_cover_rooms` dress a room's '=' squares by words in its name (`single`, `run`, `wall_run`), unless the place has its own set. `furnish` fills rooms out with what a room of its kind holds (world/look/furnish.gd).",
   "container_default": "chest",
   "models": {
     "hearth": "fireplace",
@@ -3828,5 +3828,729 @@
       "rim": "ivory",
       "scale": 0.85
     }
-  }
+  },
+  "furnish": {
+    "about": "Lived-in rooms (world/look/furnish.gd, docs/art/interiors.md): what a room of its kind holds, besides the things its location names. rooms: [[words in the area's name or id], {wall: [art], floor: [art]}], first match; themes: the board theme's set where no room matches. A wall piece goes on about one free wall face in wall_every, a floor piece on about one free square along a wall in floor_every, never two side by side; never beside doors, exits, spawns or people, nor on a wall square holding the location's own things.",
+    "wall_every": 2,
+    "floor_every": 3,
+    "rooms": [
+      [
+        [
+          "stable",
+          "stall",
+          "byre"
+        ],
+        {
+          "wall": [
+            "tack"
+          ],
+          "floor": [
+            "hay_bale",
+            "sack",
+            "barrel"
+          ]
+        }
+      ],
+      [
+        [
+          "kitchen",
+          "bakery",
+          "scullery",
+          "cookhouse"
+        ],
+        {
+          "wall": [
+            "drying_herbs",
+            "jars",
+            "shelves_wall"
+          ],
+          "floor": [
+            "sack",
+            "basket",
+            "barrel",
+            "tub_wooden",
+            "crate"
+          ]
+        }
+      ],
+      [
+        [
+          "larder",
+          "pantry",
+          "storeroom",
+          "store room",
+          "storage",
+          "cellar",
+          "stores"
+        ],
+        {
+          "wall": [
+            "jars",
+            "shelves_wall"
+          ],
+          "floor": [
+            "barrel",
+            "crate",
+            "sack",
+            "basket"
+          ]
+        }
+      ],
+      [
+        [
+          "library",
+          "study",
+          "office",
+          "reading",
+          "stacks",
+          "scriptorium"
+        ],
+        {
+          "wall": [
+            "painting",
+            "painting_row",
+            "family_portrait"
+          ],
+          "floor": [
+            "book_stack",
+            "candelabra",
+            "book_stack"
+          ]
+        }
+      ],
+      [
+        [
+          "nursery",
+          "children",
+          "playroom"
+        ],
+        {
+          "wall": [
+            "painting"
+          ],
+          "floor": [
+            "doll",
+            "rocking_horse",
+            "toy_chest"
+          ]
+        }
+      ],
+      [
+        [
+          "servant",
+          "quarters",
+          "barracks",
+          "dormitory",
+          "bunk",
+          "guardroom"
+        ],
+        {
+          "wall": [
+            "robe_pegs",
+            "uniforms"
+          ],
+          "floor": [
+            "footlocker",
+            "chest",
+            "sack"
+          ]
+        }
+      ],
+      [
+        [
+          "bedroom",
+          "bedchamber",
+          "'s room",
+          "suite",
+          "guest room",
+          "rooms"
+        ],
+        {
+          "wall": [
+            "painting",
+            "mirror",
+            "portrait_couple",
+            "robe_pegs"
+          ],
+          "floor": [
+            "trunk",
+            "chest",
+            "candle_cluster",
+            "footlocker"
+          ]
+        }
+      ],
+      [
+        [
+          "parlour",
+          "parlor",
+          "sitting",
+          "drawing room",
+          "den"
+        ],
+        {
+          "wall": [
+            "painting",
+            "portrait_couple",
+            "mirror",
+            "family_portrait"
+          ],
+          "floor": [
+            "candelabra",
+            "book_stack",
+            "armchair"
+          ]
+        }
+      ],
+      [
+        [
+          "dining",
+          "tasting room",
+          "feast"
+        ],
+        {
+          "wall": [
+            "painting",
+            "tapestry",
+            "painting_row"
+          ],
+          "floor": [
+            "candelabra",
+            "wine_tray"
+          ]
+        }
+      ],
+      [
+        [
+          "taproom",
+          "common room",
+          "tavern",
+          "bar"
+        ],
+        {
+          "wall": [
+            "stag_head",
+            "painting",
+            "notice_papers",
+            "robe_pegs"
+          ],
+          "floor": [
+            "barrel",
+            "crate",
+            "sack"
+          ]
+        }
+      ],
+      [
+        [
+          "workshop",
+          "workroom",
+          "smithy",
+          "forge",
+          "press"
+        ],
+        {
+          "wall": [
+            "shelves_wall",
+            "robe_pegs"
+          ],
+          "floor": [
+            "crate",
+            "woodpile",
+            "barrel",
+            "sack"
+          ]
+        }
+      ],
+      [
+        [
+          "shop",
+          "store",
+          "mercantile"
+        ],
+        {
+          "wall": [
+            "shelves_wall",
+            "jars"
+          ],
+          "floor": [
+            "crate",
+            "barrel",
+            "sack",
+            "basket"
+          ]
+        }
+      ],
+      [
+        [
+          "chapel",
+          "nave",
+          "shrine",
+          "altar",
+          "vestry",
+          "sacristy",
+          "chancel"
+        ],
+        {
+          "floor": [
+            "candle_cluster",
+            "candelabra"
+          ]
+        }
+      ],
+      [
+        [
+          "crypt",
+          "tomb",
+          "vault",
+          "catacomb",
+          "undercroft",
+          "ossuary",
+          "mausoleum"
+        ],
+        {
+          "wall": [
+            "cobwebs"
+          ],
+          "floor": [
+            "bones",
+            "candle_cluster",
+            "bones"
+          ]
+        }
+      ],
+      [
+        [
+          "cell",
+          "dungeon",
+          "prison",
+          "torture",
+          "oubliette",
+          "gaol"
+        ],
+        {
+          "wall": [
+            "wall_chains",
+            "skeleton_shackles"
+          ],
+          "floor": [
+            "bones",
+            "sack",
+            "bones"
+          ]
+        }
+      ],
+      [
+        [
+          "attic",
+          "loft",
+          "garret"
+        ],
+        {
+          "wall": [
+            "cobwebs"
+          ],
+          "floor": [
+            "crate",
+            "trunk",
+            "sack",
+            "sheeted_furniture"
+          ]
+        }
+      ],
+      [
+        [
+          "hall",
+          "foyer",
+          "entrance",
+          "landing",
+          "gallery",
+          "vestibule"
+        ],
+        {
+          "wall": [
+            "painting",
+            "painting_row",
+            "family_portrait",
+            "tapestry"
+          ],
+          "floor": [
+            "candelabra",
+            "chair_high"
+          ]
+        }
+      ],
+      [
+        [
+          "conservatory",
+          "music"
+        ],
+        {
+          "wall": [
+            "painting",
+            "mirror"
+          ],
+          "floor": [
+            "candelabra"
+          ]
+        }
+      ]
+    ],
+    "themes": {
+      "manor": {
+        "wall": [
+          "painting",
+          "family_portrait",
+          "portrait_couple",
+          "mirror"
+        ],
+        "floor": [
+          "candelabra",
+          "chair_high",
+          "chest"
+        ]
+      },
+      "townhouse": {
+        "wall": [
+          "painting",
+          "portrait_couple",
+          "mirror"
+        ],
+        "floor": [
+          "chest",
+          "candle_cluster",
+          "basket"
+        ]
+      },
+      "house": {
+        "wall": [
+          "drying_herbs",
+          "robe_pegs",
+          "shelves_wall"
+        ],
+        "floor": [
+          "sack",
+          "basket",
+          "barrel",
+          "chest"
+        ]
+      },
+      "tavern": {
+        "wall": [
+          "stag_head",
+          "painting",
+          "robe_pegs"
+        ],
+        "floor": [
+          "barrel",
+          "crate",
+          "sack"
+        ]
+      },
+      "inn": {
+        "wall": [
+          "stag_head",
+          "painting",
+          "robe_pegs"
+        ],
+        "floor": [
+          "barrel",
+          "crate",
+          "sack"
+        ]
+      },
+      "shop": {
+        "wall": [
+          "shelves_wall",
+          "jars"
+        ],
+        "floor": [
+          "crate",
+          "barrel",
+          "sack",
+          "basket"
+        ]
+      },
+      "attic": {
+        "wall": [
+          "cobwebs"
+        ],
+        "floor": [
+          "crate",
+          "trunk",
+          "sack",
+          "sheeted_furniture"
+        ]
+      },
+      "church": {
+        "floor": [
+          "candle_cluster",
+          "candelabra"
+        ]
+      }
+    }
+  },
+  "theme_rooms": {
+    "about": "Room styles for one board theme, checked before the general `rooms`: a farmhouse's bedrooms are plaster and planks, not a manor's carpet and wallpaper.",
+    "house": [
+      [
+        [
+          "bedroom",
+          "'s room",
+          "suite",
+          "guest room",
+          "bedchamber",
+          "parlour",
+          "parlor"
+        ],
+        {
+          "floor": "interior/wood_planks",
+          "wall": "interior/plaster_wall"
+        }
+      ]
+    ],
+    "attic": [
+      [
+        [
+          "landing",
+          "stairhead",
+          "hall",
+          "nest",
+          "corner",
+          "room"
+        ],
+        {
+          "floor": "interior/attic_boards",
+          "wall": "interior/damp_plaster"
+        }
+      ]
+    ]
+  },
+  "low_cover_rooms": [
+    [
+      [
+        "stable",
+        "stall",
+        "byre"
+      ],
+      {
+        "single": [
+          "hay_bale",
+          "trough",
+          "sack"
+        ],
+        "run": [
+          "hay_bale"
+        ]
+      }
+    ],
+    [
+      [
+        "kitchen",
+        "bakery",
+        "scullery",
+        "cookhouse"
+      ],
+      {
+        "single": [
+          "workbench",
+          "barrel",
+          "tub_wooden",
+          "sack"
+        ],
+        "run": [
+          "workbench"
+        ]
+      }
+    ],
+    [
+      [
+        "larder",
+        "pantry",
+        "storeroom",
+        "store room",
+        "storage",
+        "stores"
+      ],
+      {
+        "single": [
+          "barrel",
+          "crate",
+          "sack"
+        ],
+        "run": [
+          "crate"
+        ],
+        "wall_run": [
+          "shelves"
+        ]
+      }
+    ],
+    [
+      [
+        "library",
+        "study",
+        "office",
+        "reading",
+        "stacks",
+        "scriptorium"
+      ],
+      {
+        "single": [
+          "desk",
+          "armchair",
+          "letters_table"
+        ],
+        "run": [
+          "table"
+        ],
+        "wall_run": [
+          "book_shelf"
+        ]
+      }
+    ],
+    [
+      [
+        "nursery",
+        "children",
+        "playroom"
+      ],
+      {
+        "single": [
+          "toy_chest",
+          "rocking_horse",
+          "crib"
+        ]
+      }
+    ],
+    [
+      [
+        "servant",
+        "quarters",
+        "barracks",
+        "dormitory",
+        "bunk",
+        "guardroom"
+      ],
+      {
+        "single": [
+          "bed_small",
+          "footlocker",
+          "table_chairs"
+        ],
+        "run": [
+          "bed_small"
+        ]
+      }
+    ],
+    [
+      [
+        "bedroom",
+        "bedchamber",
+        "'s room",
+        "suite",
+        "guest room"
+      ],
+      {
+        "single": [
+          "chest",
+          "dressing_table",
+          "trunk",
+          "bed_small"
+        ],
+        "wall_run": [
+          "wardrobe",
+          "sideboard"
+        ]
+      }
+    ],
+    [
+      [
+        "dining",
+        "tasting room",
+        "feast"
+      ],
+      {
+        "single": [
+          "table_chairs",
+          "sideboard"
+        ],
+        "run": [
+          "table_set"
+        ]
+      }
+    ],
+    [
+      [
+        "taproom",
+        "common room",
+        "tavern",
+        "bar"
+      ],
+      {
+        "single": [
+          "table_chairs",
+          "barrel",
+          "table_chairs"
+        ],
+        "run": [
+          "bar_counter"
+        ],
+        "wall_run": [
+          "bar_counter"
+        ]
+      }
+    ],
+    [
+      [
+        "workshop",
+        "workroom",
+        "smithy",
+        "forge"
+      ],
+      {
+        "single": [
+          "workbench",
+          "crate",
+          "barrel"
+        ],
+        "run": [
+          "workbench"
+        ]
+      }
+    ],
+    [
+      [
+        "attic",
+        "loft",
+        "garret"
+      ],
+      {
+        "single": [
+          "crate",
+          "trunk",
+          "sheeted_furniture",
+          "sack"
+        ]
+      }
+    ],
+    [
+      [
+        "crypt",
+        "tomb",
+        "ossuary",
+        "catacomb",
+        "mausoleum"
+      ],
+      {
+        "single": [
+          "crypt_small",
+          "coffin"
+        ],
+        "run": [
+          "crypt_small"
+        ]
+      }
+    ]
+  ]
 }

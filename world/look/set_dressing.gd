@@ -104,9 +104,12 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 		return root
 	match mount:
 		"wall":
-			if not _hang(board, root, art, cell, scale_):
-				if board.grid.has_flag(cell, CombatGrid.LOW) or board.grid.has_flag(cell, CombatGrid.DIFFICULT):
-					_take_square(board, root, cell)   # no wall beside it: it stands in place of the board's furniture there
+			var hung := _hang(board, root, art, cell, scale_)
+			if not on_wall_square and (board.grid.has_flag(cell, CombatGrid.LOW) or board.grid.has_flag(cell, CombatGrid.DIFFICULT)):
+				# It is the furniture on its square (a stove on a '=' square by the wall), whether it hangs on the wall
+				# beside it or, with no wall there, stands: the board's own furniture there goes.
+				_take_square(board, root, cell)
+			if not hung:
 				_stand(board, root, art, cell, scale_)
 		"floor":
 			if on_wall_square:
@@ -674,6 +677,20 @@ static func reserve(board: ArenaBoard, loc: Dictionary) -> void:
 			var c := (t as Dictionary).get("cell", []) as Array
 			if c.size() == 2:
 				board.occupied[Vector2i(int(c[0]), int(c[1]))] = key
+
+
+## The value of the first rule in `rules` ([[words], value], as the catalog's "rooms" are) whose words are in the
+## area's name, else in its id; null when none match. The name comes first because an id carries its location's words
+## ("larders_guardroom" is a guardroom, not a larder).
+static func room_rule(rules: Array, area: Dictionary) -> Variant:
+	for text: String in [str(area.get("name", "")).to_lower(), str(area.get("id", "")).replace("_", " ").to_lower()]:
+		if text.strip_edges() == "":
+			continue
+		for rule: Variant in rules:
+			for w: Variant in (rule as Array)[0]:
+				if text.contains(str(w)):
+					return (rule as Array)[1]
+	return null
 
 
 ## The front view of furniture that stands against a wall (catalog "fronts"), or "".

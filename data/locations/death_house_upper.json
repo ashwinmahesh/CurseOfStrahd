@@ -428,6 +428,117 @@
       "label": "something under a servant's bed",
       "model": "broken_boards",
       "item": "gloves_of_missile_snaring"
+    },
+    {
+      "id": "library_drape_south",
+      "cell": [
+        0,
+        5
+      ],
+      "label": "Red velvet drapes",
+      "model": "curtain",
+      "kind": "decor"
+    },
+    {
+      "id": "library_drape_north",
+      "cell": [
+        0,
+        3
+      ],
+      "label": "Red velvet drapes",
+      "model": "curtain",
+      "kind": "decor"
+    },
+    {
+      "id": "library_fireside_chair",
+      "cell": [
+        8,
+        2
+      ],
+      "label": "A deep chair",
+      "model": "armchair",
+      "facing": "north",
+      "kind": "decor"
+    },
+    {
+      "id": "library_book_pile",
+      "cell": [
+        1,
+        6
+      ],
+      "label": "Books piled on the floor",
+      "model": "book_stack",
+      "kind": "decor"
+    },
+    {
+      "id": "study_black_books",
+      "cell": [
+        6,
+        10
+      ],
+      "label": "Black-bound books",
+      "model": "book_stack",
+      "kind": "decor"
+    },
+    {
+      "id": "study_black_books_2",
+      "cell": [
+        8,
+        12
+      ],
+      "label": "Black-bound books",
+      "model": "book_stack",
+      "kind": "decor"
+    },
+    {
+      "id": "servants_footlocker_b",
+      "cell": [
+        20,
+        6
+      ],
+      "label": "A second footlocker",
+      "model": "footlocker",
+      "kind": "decor"
+    },
+    {
+      "id": "conservatory_drape_north",
+      "cell": [
+        27,
+        9
+      ],
+      "label": "Gauzy drapes",
+      "model": "curtain",
+      "kind": "decor"
+    },
+    {
+      "id": "conservatory_drape_south",
+      "cell": [
+        27,
+        13
+      ],
+      "label": "Gauzy drapes",
+      "model": "curtain",
+      "kind": "decor"
+    },
+    {
+      "id": "conservatory_chair_a",
+      "cell": [
+        20,
+        12
+      ],
+      "label": "An upholstered chair",
+      "model": "armchair",
+      "kind": "decor"
+    },
+    {
+      "id": "conservatory_chair_b",
+      "cell": [
+        24,
+        12
+      ],
+      "label": "An upholstered chair",
+      "model": "armchair",
+      "kind": "decor"
     }
   ],
   "containers": [

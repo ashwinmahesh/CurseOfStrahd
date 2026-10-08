@@ -619,6 +619,76 @@
       "label": "a barrel of lamp oil",
       "model": "barrel",
       "object": "oil_barrel"
+    },
+    {
+      "id": "initiates_robes",
+      "cell": [
+        0,
+        7
+      ],
+      "label": "Black robes on pegs",
+      "model": "robe_pegs",
+      "kind": "decor"
+    },
+    {
+      "id": "ghoul_passage_bones_a",
+      "cell": [
+        6,
+        14
+      ],
+      "label": "Bones laid out too neatly",
+      "model": "bone_scatter",
+      "kind": "decor"
+    },
+    {
+      "id": "ghoul_passage_bones_b",
+      "cell": [
+        11,
+        14
+      ],
+      "label": "Bones laid out too neatly",
+      "model": "bone_scatter",
+      "kind": "decor"
+    },
+    {
+      "id": "shrine_shackled_west_a",
+      "cell": [
+        0,
+        17
+      ],
+      "label": "A skeleton in rusty shackles",
+      "model": "skeleton_shackles",
+      "kind": "decor"
+    },
+    {
+      "id": "shrine_shackled_west_b",
+      "cell": [
+        0,
+        19
+      ],
+      "label": "A skeleton in rusty shackles",
+      "model": "skeleton_shackles",
+      "kind": "decor"
+    },
+    {
+      "id": "shrine_shackled_east",
+      "cell": [
+        8,
+        17
+      ],
+      "label": "A skeleton in rusty shackles",
+      "model": "skeleton_shackles",
+      "kind": "decor"
+    },
+    {
+      "id": "larder_carcass",
+      "cell": [
+        24,
+        2
+      ],
+      "label": "Old meat",
+      "model": "carcass",
+      "kind": "decor"
     }
   ],
   "containers": [

@@ -5096,7 +5096,8 @@
       "anchor": "bottom_center",
       "source": "art/generated/props/model_reading_table.png",
       "mount": "stand",
-      "back": "reading_table_back"
+      "back": "reading_table_back",
+      "world_width": 0.722
     },
     "reading_table_back": {
       "file": "art/sprites/props/reading_table_back.png",
@@ -5106,7 +5107,8 @@
       "pixel_size": 0.00122,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_reading_table_back.png",
-      "mount": "stand"
+      "mount": "stand",
+      "world_width": 0.63
     },
     "cushions": {
       "file": "art/sprites/props/cushions.png",
@@ -5117,7 +5119,8 @@
       "anchor": "bottom_center",
       "source": "art/generated/props/model_cushions.png",
       "mount": "stand",
-      "back": "cushions_back"
+      "back": "cushions_back",
+      "world_width": 0.547
     },
     "cushions_back": {
       "file": "art/sprites/props/cushions_back.png",
@@ -5127,7 +5130,8 @@
       "pixel_size": 0.00103,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_cushions_back.png",
-      "mount": "stand"
+      "mount": "stand",
+      "world_width": 0.531
     },
     "lantern_stand": {
       "file": "art/sprites/props/lantern_stand.png",
@@ -5137,7 +5141,8 @@
       "pixel_size": 0.00283,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_lantern_stand.png",
-      "mount": "stand"
+      "mount": "stand",
+      "world_width": 0.464
     },
     "incense_burner": {
       "file": "art/sprites/props/incense_burner.png",
@@ -5147,7 +5152,8 @@
       "pixel_size": 0.001,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_incense_burner.png",
-      "mount": "stand"
+      "mount": "stand",
+      "world_width": 0.276
     },
     "bedroll": {
       "file": "art/sprites/props/bedroll.png",
@@ -5158,7 +5164,8 @@
       "anchor": "bottom_center",
       "source": "art/generated/props/model_bedroll.png",
       "mount": "stand",
-      "back": "bedroll_back"
+      "back": "bedroll_back",
+      "world_width": 0.516
     },
     "bedroll_back": {
       "file": "art/sprites/props/bedroll_back.png",
@@ -5168,7 +5175,8 @@
       "pixel_size": 0.00106,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_bedroll_back.png",
-      "mount": "stand"
+      "mount": "stand",
+      "world_width": 0.547
     },
     "candle_cluster": {
       "file": "art/sprites/props/candle_cluster.png",
@@ -5178,7 +5186,8 @@
       "pixel_size": 0.00066,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_candle_cluster.png",
-      "mount": "stand"
+      "mount": "stand",
+      "world_width": 0.341
     },
     "book_stack": {
       "file": "art/sprites/props/book_stack.png",
@@ -5189,7 +5198,8 @@
       "anchor": "bottom_center",
       "source": "art/generated/props/model_book_stack.png",
       "mount": "stand",
-      "back": "book_stack_back"
+      "back": "book_stack_back",
+      "world_width": 0.624
     },
     "book_stack_back": {
       "file": "art/sprites/props/book_stack_back.png",
@@ -5199,7 +5209,8 @@
       "pixel_size": 0.00108,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_book_stack_back.png",
-      "mount": "stand"
+      "mount": "stand",
+      "world_width": 0.557
     },
     "drying_herbs": {
       "file": "art/sprites/props/drying_herbs.png",
@@ -5209,7 +5220,8 @@
       "pixel_size": 0.00134,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_drying_herbs.png",
-      "mount": "wall"
+      "mount": "wall",
+      "world_width": 0.691
     },
     "cookpot": {
       "file": "art/sprites/props/cookpot.png",
@@ -5220,7 +5232,8 @@
       "anchor": "bottom_center",
       "source": "art/generated/props/model_cookpot.png",
       "mount": "stand",
-      "back": "cookpot_back"
+      "back": "cookpot_back",
+      "world_width": 0.505
     },
     "cookpot_back": {
       "file": "art/sprites/props/cookpot_back.png",
@@ -5230,7 +5243,8 @@
       "pixel_size": 0.00125,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_cookpot_back.png",
-      "mount": "stand"
+      "mount": "stand",
+      "world_width": 0.515
     },
     "basket": {
       "file": "art/sprites/props/basket.png",
@@ -5240,7 +5254,8 @@
       "pixel_size": 0.00085,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_basket.png",
-      "mount": "stand"
+      "mount": "stand",
+      "world_width": 0.439
     },
     "wine_tray": {
       "file": "art/sprites/props/wine_tray.png",
@@ -5250,7 +5265,8 @@
       "pixel_size": 0.00077,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_wine_tray.png",
-      "mount": "stand"
+      "mount": "stand",
+      "world_width": 0.397
     },
     "shawl_line": {
       "file": "art/sprites/props/shawl_line.png",
@@ -5260,7 +5276,8 @@
       "pixel_size": 0.00137,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_shawl_line.png",
-      "mount": "wall"
+      "mount": "wall",
+      "world_width": 0.647
     },
     "stall": {
       "file": "art/sprites/props/stall.png",
@@ -5271,7 +5288,8 @@
       "anchor": "bottom_center",
       "source": "art/generated/props/model_stall.png",
       "mount": "stand",
-      "back": "stall_back"
+      "back": "stall_back",
+      "world_width": 1.378
     },
     "stall_back": {
       "file": "art/sprites/props/stall_back.png",
@@ -5281,7 +5299,8 @@
       "pixel_size": 0.00287,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_stall_back.png",
-      "mount": "stand"
+      "mount": "stand",
+      "world_width": 1.481
     },
     "stall_horse": {
       "file": "art/sprites/props/stall_horse.png",
@@ -5292,7 +5311,8 @@
       "anchor": "bottom_center",
       "source": "art/generated/props/model_stall_horse.png",
       "mount": "stand",
-      "back": "stall_horse_back"
+      "back": "stall_horse_back",
+      "world_width": 1.512
     },
     "stall_horse_back": {
       "file": "art/sprites/props/stall_horse_back.png",
@@ -5302,7 +5322,8 @@
       "pixel_size": 0.00314,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_stall_horse_back.png",
-      "mount": "stand"
+      "mount": "stand",
+      "world_width": 1.62
     },
     "trough": {
       "file": "art/sprites/props/trough.png",
@@ -5313,7 +5334,8 @@
       "anchor": "bottom_center",
       "source": "art/generated/props/model_trough.png",
       "mount": "stand",
-      "back": "trough_back"
+      "back": "trough_back",
+      "world_width": 0.552
     },
     "trough_back": {
       "file": "art/sprites/props/trough_back.png",
@@ -5323,7 +5345,8 @@
       "pixel_size": 0.00107,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_trough_back.png",
-      "mount": "stand"
+      "mount": "stand",
+      "world_width": 0.552
     },
     "tack": {
       "file": "art/sprites/props/tack.png",
@@ -5333,7 +5356,8 @@
       "pixel_size": 0.00156,
       "anchor": "bottom_center",
       "source": "art/generated/props/model_tack.png",
-      "mount": "wall"
+      "mount": "wall",
+      "world_width": 0.761
     }
   }
 }

@@ -96,9 +96,50 @@ its stall, away from it. It was dressed as the taproom: planks, plaster, tavern 
   much room it has, so it only shrinks for things really in its way.
 - The horse in a stall is sculpted from the horse's 2D art inside the stall model (`inflate`), so it's one piece.
 
+## Every interior: the sweep (owner, 2026-10-08)
+
+"We want this upgraded interior pattern and audit rolled out to every other interior we have." The audit of all 55
+interior and underground maps (282 rooms) and the plan, room by room, are in the vault: Interiors Audit and Plan.md
+and Interiors Audit - Room Facts.md. What every room gets:
+
+- **Lived-in rooms** (`world/look/furnish.gd`, catalog `furnish`). Besides what its data names, each room gets what a
+  room of its kind holds, matched on words in its name like the room styles, else by the board theme: kitchens herbs
+  drying, jars, sacks, baskets and barrels; bedrooms pictures, mirrors, pegs, trunks and candles; libraries portraits
+  and book stacks; cells chains, shackled skeletons and bones; attics cobwebs and sheeted furniture; taprooms a stag's
+  head, notices, barrels; chapels and crypts candles and bones. A piece goes on about one free wall face in
+  `wall_every` and on about one free square along a wall in `floor_every`, never two side by side, never in a corner
+  (pieces on two walls would meet), never beside a door, an exit, a spawn, a light or a person, and never on a wall
+  square that holds one of the location's own things or beside a building-sized piece. Every pick comes from the
+  square, so a place is furnished the same way every time; the board places them after its own dressing.
+- **Room styles read the name first.** `SetDressing.room_rule` matches a rule's words in the area's name before its
+  id, so an id's location words don't decide a room ("larders_guardroom" is a guardroom, not a kitchen). A theme can
+  have its own rules first (`theme_rooms`: a farmhouse bedroom is plaster and planks), and a place whose look is its
+  own (`place_looks` `keep`: a cave, the Amber Temple) isn't restyled room by room.
+- **'=' furniture by room** (`low_cover_rooms`): a room's half-cover squares take its own furniture (a kitchen's
+  worktables, a dormitory's bunks, a dining room's laid table), with `run` and `wall_run` sets for runs of three or
+  more; a place's own set still comes first.
+- A wall piece on a '=' square is that square's furniture: the board's own furniture there goes (a stove by the wall
+  used to stand over a sideboard).
+- **What the narration names**, room by room, in the data, with lights where it mentions candles, lamps or fires.
+
+### The Death House
+
+The den has its stag's head over the hearth and two fur-draped chairs facing the fire; the main hall's hearth has the
+longsword over it and a runner on the marble; the entrance a coat stand; the library red velvet drapes, a second deep
+chair and books on the floor; the secret study its black-bound books; the servants their second footlocker; the
+conservatory gauzy drapes and upholstered chairs; the bathroom its little stove; the nursemaid her writing table; the
+nursery a rocking chair and its single candle; the children's room more drawings. Below: black robes on pegs in the
+initiates' quarters, bones laid out along the passage, skeletons in shackles round the Darklord's shrine, old meat in
+the larder, alcoves of relics in the reliquary, shackles and robes in the prison, the winch in the winch room, and
+braziers burning in the antechamber and either side of the altar.
+
 ## Checking it
 
     make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=tser_pool_eva_tent NAME=tent ARGS="--hour=20 --shots=2"
+    INTERIORS_LIT=1 INTERIORS_SPOTS='death_house_ground@4,3|death_house_upper@5,4' make capture SCENE=res://tools/capture/interiors_capture.tscn NAME=dh/after FRAMES=10
+
+`tools/capture/interiors_capture.tscn` shoots every interior from above in one run (or `INTERIORS_LOCS`), plus close
+shots of `INTERIORS_SPOTS`.
 
 `tests/integration/test_interiors.gd`: the tent is canvas with poles and charms and no house walls, its floor is rugs,
 it cuts away toward the camera, Classic keeps it low, and her things are the models the narration names; the inn's
