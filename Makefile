@@ -52,6 +52,17 @@ import:
 test: import
 	python3 tools/run_tests.py --godot $(GODOT) $(if $(JOBS),--jobs $(JOBS),) $(if $(ONLY),--only=$(ONLY),) $(if $(FILES),--files=$(FILES),) 2>&1 | $(LOGCHK)
 
+## Lane folders that cost almost no disk (tools/lane.sh): a worktree whose files and import cache are APFS clones of
+## the main checkout's. make lane NAME=<name> BRANCH=<branch> [BASE=main] · make lane-reclone NAME=<name> (a running
+## lane's unchanged files become clones again) · make lane-done NAME=<name> (once merged)
+.PHONY: lane lane-reclone lane-done
+lane:
+	tools/lane.sh new $(NAME) $(BRANCH) $(or $(BASE),main)
+lane-reclone:
+	tools/lane.sh reclone $(NAME)
+lane-done:
+	tools/lane.sh done $(NAME)
+
 ## Golden saves (P4): the playthrough tests keep a save at the start of each chapter in tests/saves
 ## (v<save version>_<chapter>.json, tests/support/golden_saves.gd); one already there is never made again.
 .PHONY: golden-saves
@@ -85,7 +96,7 @@ ci: validate lint test
 ## The quick check while working (CLAUDE.md says when it is enough): only what covers the files changed since main,
 ## from validate to the tests that use them (tools/check.py). make check [BASE=<branch>] [DEPTH=n|all] [DRY=1]
 check:
-	@$(FRESH)
+	@$(if $(DRY),,$(FRESH))
 	python3 tools/check.py $(if $(BASE),--base $(BASE),) $(if $(DEPTH),--depth $(DEPTH),) $(if $(DRY),--dry-run,)
 
 palette:

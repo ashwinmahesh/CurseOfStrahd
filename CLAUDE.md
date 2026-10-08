@@ -36,9 +36,11 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 - After adding a class_name, `make import` before `make test`.
 - A change to what a save holds bumps `GameState.SAVE_VERSION` and adds a `SaveSystem.upgrade` step; then
   `make golden-saves` adds the new version's saves beside the old ones in tests/saves, which every test run loads.
-- A new git worktree: before its first `make import`, seed the import cache from the main checkout as an APFS clone,
-  which takes almost no disk: `mkdir -p <worktree>/.godot && cp -Rc ~/Documents/CurseOfStrahdGame/.godot/imported
-  <worktree>/.godot/`. Never rsync or plain-copy it (about 8 GB per worktree on a nearly full disk).
+- A lane's folder: `make lane NAME=<name> BRANCH=<branch>` (tools/lane.sh) makes ~/Documents/CurseOfStrahdGame-<name>
+  with its files and import cache as APFS clones of the main checkout's, so it costs only the files you change
+  (owner, 2026-10-08). `make lane-reclone NAME=<name>` turns an older lane's unchanged files back into clones;
+  `make lane-done NAME=<name>` removes the folder once the branch is merged and clean. Never write into the main
+  checkout, and clean up your own folders and scratch files when you finish.
 
 ## Rules engine (ADR 0003, 0005, 0006)
 - Data is read through `Compendium.shared()`; modifiers follow docs/contracts/modifiers.md (add a stat to the contract
