@@ -451,8 +451,8 @@ static func _piece_json(kind: String, id: String) -> Dictionary:
 	return _json[path] as Dictionary
 
 
-## Pieces are read as raw PNG bytes (art/creator/pieces is hidden from the importer, which would compress away the
-## alpha keys).
+## Pieces are read as raw PNG bytes: their .import files keep them as they are (importer "keep"), since importing
+## would compress away the alpha keys, and an exported build ships them unchanged.
 static func _image(path: String) -> Image:
 	if not _images.has(path):
 		var img := Image.new()

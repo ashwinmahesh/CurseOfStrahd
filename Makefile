@@ -35,6 +35,19 @@ run:
 play:
 	@tools/play/play.sh
 
+## Release builds (owner, 2026-10-08): the Windows export (export_presets.cfg) and, from the same pack, the Mac app
+## (tools/release/mac_app.py; Godot's own macOS export wants ETC2/ASTC textures we don't import), zipped for download.
+## Needs the 4.7.2 export templates installed. make release [OUT=<folder>] [VERSION=1.0.0]; OUT defaults to ../strahd-builds.
+RELEASE_OUT = $(abspath $(or $(OUT),../strahd-builds))
+.PHONY: release
+release:
+	@$(FRESH)
+	mkdir -p "$(RELEASE_OUT)/windows" "$(RELEASE_OUT)/macos"
+	$(GODOT) --headless --path . --export-release "Windows" "$(RELEASE_OUT)/windows/CurseOfStrahd.exe"
+	python3 tools/release/mac_app.py --pck "$(RELEASE_OUT)/windows/CurseOfStrahd.pck" --out "$(RELEASE_OUT)/macos" --version $(or $(VERSION),1.0.0)
+	rm -f "$(RELEASE_OUT)/CurseOfStrahd-windows.zip"
+	cd "$(RELEASE_OUT)/windows" && zip -q -6 -r ../CurseOfStrahd-windows.zip CurseOfStrahd.exe CurseOfStrahd.pck
+
 ## Phase 2 exit: the combat arena (party of four level 3 pregens vs wolves and zombies).
 arena:
 	@$(FRESH)
