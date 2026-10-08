@@ -57,7 +57,7 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `spells.cast(c, spell_id, slot, targets, point, direction, opts)` | `point` for spheres, `direction` for cones, cubes and lines from the caster; opts: `word` (Command), `damage_type` |
 | `spells.use_sustained(c, action_id, targets, point, direction)` | a sustained spell action (`spells.sustained_actions(c)`): Spiritual Weapon's strike, Witch Bolt's arc, Flaming Sphere's roll... |
 | `spells.spiritual_weapon_attack(c, t, cell)` | shortcut for the weapon's strike |
-| `ready_spell(c, spell_id, slot)` | Ready a one-action spell: cast now, held with Concentration, released at the first enemy in range |
+| `ready_spell(c, spell_id, slot, trigger)` / `ready_attack(c, option_id, trigger)` | Ready a one-action spell (cast now, held with Concentration) or an attack, released with the Reaction when an enemy sets off `trigger`: `approach` (comes within range or reach; a move pauses for it), `attack` or `spell` (one within range attacks or casts a spell; the reaction queue asks once that's done, kind `readied_attack`) |
 | `features.toggle_rider(c, rider_id)` | arm a rider for this turn's next hit (`features.rider_options(c)`): maneuvers, Cunning Strike, Giant Ancestry, Psionic Strike |
 | `feature_actions.perform(c, id, t, point)` | a class, subclass, feat or species action (`feature_actions.list(c)`); the eight Phase 4 classes' actions are `cf:<id>`, run by combat/class_features.gd |
 | `free_move(c, cell)`, `jump(c, cell)` | movement without Opportunity Attacks from a feature; Jump's 30 ft leap |

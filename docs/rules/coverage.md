@@ -171,7 +171,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Attack rolls: every Advantage/Disadvantage source, cover, long range, ranged attacks in melee, unseen attackers and targets, Heavy | encounter.gd attack_situation | tested | test_combat_encounter |
 | Cover: Half +2, Three-Quarters +5, Total untargetable; creatures give Half; Dex saves add cover | grid.gd cover_between, spell_caster.gd | tested | test_combat_grid, test_combat_encounter |
 | Critical Hits, automatic crits against Paralyzed/Unconscious within 5 ft | encounter.gd | tested | test_combat_encounter |
-| Standard actions: Attack, Dash, Disengage, Dodge, Help (attack), Hide, Search, Study, Ready (attacks), Magic, Utilize (Healer's Kit), Influence | encounter.gd, action_catalog.gd | tested (Influence has no target in the arena; readied spells: deviations) | test_combat_encounter, test_action_catalog |
+| Standard actions: Attack, Dash, Disengage, Dodge, Help (attack), Hide, Search, Study, Ready (attacks and spells, for an enemy coming within reach or range, attacking or casting a spell), Magic, Utilize (Healer's Kit), Influence | encounter.gd, encounter_reactions.gd, action_catalog.gd | tested (Influence has no target in the arena; Ready's triggers: deviations) | test_combat_encounter, test_action_catalog, test_spell_recipes |
 | Grapple and Shove with Unarmed Strike; escape | encounter.gd | tested | test_combat_encounter |
 | Two-weapon fighting (Light) and Nick | encounter.gd offhand_attack | tested | test_combat_encounter |
 | Thrown weapons leave the hand; ammunition used up | encounter.gd | tested | test_combat_encounter |

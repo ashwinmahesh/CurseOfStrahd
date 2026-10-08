@@ -440,6 +440,7 @@ func test_branches_of_the_tree_is_asked_as_a_foe_starts_its_turn() -> void:
 func test_tandem_footwork_is_asked_once_initiative_is_rolled() -> void:
 	var e := TestCombat.open_field(3)
 	var bard := e.add(TestChars.custom("bard", "human", 6, {"bard_subclass": ["college_of_dance"]}), &"party", Vector2i(2, 3))
+	bard.reaction_rules["initiative_swap"] = "never"   # a human's Alert (its Versatile feat) isn't this test's
 	var ally := _hero(e, Vector2i(3, 3), false)
 	TestCombat.punching_bag(e, Vector2i(10, 3))
 	e.start()
@@ -453,47 +454,59 @@ func test_tandem_footwork_is_asked_once_initiative_is_rolled() -> void:
 	assert_eq(e.order[0].initiative, e.order.map(func(c: Combatant) -> int: return c.initiative).max(), "in the new order")
 
 
-## A rogue with Alert (the criminal background's feat) and one ally.
+## A rogue with Alert (the criminal background's feat), two allies and a foe, in a fight started with the rogue at 20,
+## the foe at 10, Ilse at 5 and Silvain at 15; then Initiative's choices are offered again.
 func _alert(e: Encounter) -> Array[Combatant]:
 	var rogue := e.add(TestChars.custom("rogue", "human", 3, {}, "criminal"), &"party", Vector2i(2, 3))
-	var ally := _hero(e, Vector2i(3, 3), false)
-	ally.reaction_rules["initiative_swap"] = "never"
-	TestCombat.punching_bag(e, Vector2i(10, 3))
-	return [rogue, ally]
+	var ilse := _hero(e, Vector2i(3, 3), false)
+	var silvain := TestCombat.hero(e, "silvain_aster", Vector2i(3, 4))
+	var foe := TestCombat.punching_bag(e, Vector2i(10, 3))
+	TestCombat.start_with(e, rogue)
+	for pair: Array in [[rogue, 20], [foe, 10], [ilse, 5], [silvain, 15]]:
+		(pair[0] as Combatant).initiative = int(pair[1])
+	return [rogue, ilse, silvain, foe]
+
+
+func _offer_initiative(e: Encounter) -> CombatResult:
+	return e.reactions.offer(e.class_features.initiative_offers(), func() -> CombatResult: return CombatResult.new(), CombatResult.new())
 
 
 func test_alert_trades_initiative_with_the_ally_picked() -> void:
 	var e := TestCombat.open_field(3)
-	var pair := _alert(e)
-	var rogue := pair[0]
-	var ally := pair[1]
-	e.start()
+	var party := _alert(e)
+	var rogue := party[0]
+	var ilse := party[1]
+	assert_true(_offer_initiative(e).is_paused())
 	assert_eq(_asked(e), "initiative_swap")
 	assert_eq(e.pending.reactor_id, rogue.id)
 	assert_false(e.pending.spends_reaction)
-	assert_eq(e.pending.target_choices.size(), 1, "the one ally")
-	assert_true(str(e.pending.target_choices[0]["label"]).contains("Initiative %d" % ally.initiative))
-	var mine := rogue.initiative
-	var theirs := ally.initiative
-	e.pending.selected_ids.assign([ally.id])
+	assert_eq(e.pending.target_choices.size(), 1, "only Ilse: no enemy acts between the rogue and Silvain")
+	assert_true(str(e.pending.target_choices[0]["label"]).contains("Initiative 5"))
+	e.pending.selected_ids.assign([ilse.id])
 	e.answer_reaction(true)
-	assert_eq(rogue.initiative, theirs)
-	assert_eq(ally.initiative, mine)
-	assert_true(e.current() != null and e.pending == null, "then the first turn begins")
-	assert_eq(e.order[0].initiative, maxi(mine, theirs), "in the new order")
+	assert_eq(rogue.initiative, 5)
+	assert_eq(ilse.initiative, 20)
+	assert_true(e.log.texts().any(func(t: String) -> bool: return t.contains("trades Initiative with %s" % ilse.name())))
 
 
-func test_alert_isnt_asked_with_its_rule_off_or_an_incapacitated_ally() -> void:
+func test_alert_without_a_pick_trades_with_the_ally_furthest_behind() -> void:
 	var e := TestCombat.open_field(3)
-	var pair := _alert(e)
-	pair[0].reaction_rules["initiative_swap"] = "never"
-	e.start()
-	assert_ne(_asked(e), "initiative_swap", "the rule is Off")
-	var e2 := TestCombat.open_field(3)
-	var pair2 := _alert(e2)
-	pair2[1].creature.add_condition(&"incapacitated", "test")
-	e2.start()
-	assert_ne(_asked(e2), "initiative_swap", "nobody able to trade")
+	var party := _alert(e)
+	party[0].reaction_rules["initiative_swap"] = "auto"
+	_offer_initiative(e)
+	assert_eq(e.pending, null, "settled by its rule")
+	assert_eq(party[0].initiative, 5)
+	assert_eq(party[1].initiative, 20)
+
+
+func test_alert_isnt_asked_with_its_rule_off_or_nobody_to_trade_with() -> void:
+	var e := TestCombat.open_field(3)
+	var party := _alert(e)
+	party[0].reaction_rules["initiative_swap"] = "never"
+	assert_false(_offer_initiative(e).is_paused(), "the rule is Off")
+	party[0].reaction_rules.erase("initiative_swap")
+	party[1].creature.add_condition(&"incapacitated", "test")
+	assert_false(_offer_initiative(e).is_paused(), "Ilse is Incapacitated and Silvain acts before the foe too")
 
 
 func test_inspiring_movement_is_asked_when_a_foe_ends_its_turn_beside_the_bard() -> void:

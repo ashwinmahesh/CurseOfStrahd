@@ -1884,7 +1884,8 @@ func initiative_offers() -> Array:
 						a.initiative += roll
 				e.log.add("info", "%s leads the dance: +%d Initiative to nearby allies (Tandem Footwork)" % [bard.name(), roll], bard.id)})
 	# Alert (2024 feat): right after Initiative is rolled, trade Initiative with one willing ally, neither of them
-	# Incapacitated. Asked after Tandem Footwork, so the numbers offered are the final ones.
+	# Incapacitated. Asked after Tandem Footwork, so the numbers offered are the final ones, and only about allies with
+	# an enemy's turn between theirs and the feat holder's: otherwise the trade changes nothing that matters.
 	for a in e.combatants:
 		if not has(a, "initiative_swap") or not a.is_player_controlled():
 			continue
@@ -1892,33 +1893,44 @@ func initiative_offers() -> Array:
 		var partners := func() -> Array[Combatant]:
 			var list: Array[Combatant] = []
 			for o in e.combatants:
-				if o != holder and o.allied_with(holder) and o.is_player_controlled() and not o.is_down() \
-						and not o.creature.has_condition(&"incapacitated") and o.initiative != holder.initiative:
+				if o == holder or not o.allied_with(holder) or not o.is_player_controlled() or o.is_down() \
+						or o.creature.has_condition(&"incapacitated") or o.initiative == holder.initiative:
+					continue
+				var lo := mini(o.initiative, holder.initiative)
+				var hi := maxi(o.initiative, holder.initiative)
+				if e.combatants.any(func(f: Combatant) -> bool: return f.hostile_to(holder) and not f.is_down() and f.initiative > lo and f.initiative < hi):
 					list.append(o)
 			return list
+		# With no pick: the ally furthest behind moves up, or else the feat holder moves up to the ally furthest ahead.
+		var fallback := func() -> Combatant:
+			var best: Combatant = null
+			for o in partners.call() as Array[Combatant]:
+				if best == null or (o.initiative < holder.initiative and (best.initiative > holder.initiative or o.initiative < best.initiative)) \
+						or (o.initiative > holder.initiative and best.initiative > holder.initiative and o.initiative > best.initiative):
+					best = o
+			return best
 		var picked := {"id": ""}
 		out.append({"kind": "initiative_swap", "reactor": a, "title": "Alert: swap Initiative?", "spends_reaction": false,
 			"default": "ask", "cost": "Nothing",
-			"text": func() -> String: return "Initiative is rolled: %s at %d. Trade Initiative with a willing ally?" % [holder.name(), holder.initiative],
+			"text": func() -> String:
+				var mate := fallback.call() as Combatant
+				return "Initiative is rolled: %s at %d. Trade Initiative with a willing ally? Pick one, or use it as it is to trade with %s (%d)." % [
+					holder.name(), holder.initiative, mate.name() if mate != null else "nobody", mate.initiative if mate != null else 0],
 			"target_choices": func() -> Array:
 				var choices: Array = []
 				for o in partners.call() as Array[Combatant]:
 					choices.append({"id": o.id, "label": "%s · Initiative %d" % [o.name(), o.initiative]})
 				return choices,
-			"min_targets": 1, "max_targets": 1,
+			"min_targets": 0, "max_targets": 1,
 			"still": func() -> bool: return not holder.creature.has_condition(&"incapacitated") and not (partners.call() as Array[Combatant]).is_empty(),
 			"select": func(ids: Array) -> void: picked["id"] = str(ids[0]) if not ids.is_empty() else "",
 			"use": func() -> void:
-				var mates := partners.call() as Array[Combatant]
 				var mate: Combatant = null
-				for o in mates:
+				for o in partners.call() as Array[Combatant]:
 					if o.id == str(picked["id"]):
 						mate = o
-				# Without a pick (the rule is Automatic): the ally furthest behind moves up.
 				if mate == null:
-					for o in mates:
-						if o.initiative < holder.initiative and (mate == null or o.initiative < mate.initiative):
-							mate = o
+					mate = fallback.call() as Combatant
 				if mate == null:
 					return
 				var mine := holder.initiative
