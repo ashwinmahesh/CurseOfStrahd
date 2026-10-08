@@ -949,6 +949,19 @@
  "kasimir_velikov": {
   "1fb546cb5e2b42ca": "[weary, haunted, dry]"
  },
+ "khazan": {
+  "0eb5006722199d80": "[proud, wistful, scholarly]",
+  "2299677feb77eb4c": "[prim, offended, dry]",
+  "269a92f74cfb4e2d": "[urgent, lucid, warning]",
+  "2c5a85caec7ed4e5": "[delighted, courteous, lonely]",
+  "3efb8ec9f7396f24": "[pleased, sly, appreciative]",
+  "5cea93d5222c85f7": "[pleasant, matter-of-fact, faintly menacing]",
+  "6e57ba16ff98fd9e": "[quiet, relieved, grateful]",
+  "7a40cb2d3ef3016c": "[cold, quiet, menacing]",
+  "933c15cc79c076bb": "[delighted, chatty, scholarly]",
+  "cea64c4b766f26b8": "[afraid, confused, pleading]",
+  "d0cd1bf768758fcb": "[warm, courteous, wheedling]"
+ },
  "kip_smudgewick": {
   "4707ef060a8091c5": "[panicked, then steadying, fierce]",
   "4d66206db97560d4": "[wry, then grateful]",
@@ -1265,6 +1278,7 @@
  "mordenkainen": {
   "118fa3e7ce0b5eab": "[wry, rueful]",
   "13e98db11da162fd": "[gruff, dry]",
+  "1da8112931c4a8aa": "[dry, knowing]",
   "271c430769a22da9": "[incredulous, exasperated]",
   "30e3fb667d218623": "[dry, troubled]",
   "3135cf3405f63f8b": "[curt, imperious]",
@@ -1289,11 +1303,13 @@
   "7acf851bea72f67c": "[grave, ominous]",
   "87567073b5aca62a": "[curt, imperious]",
   "8cf20a6650bf9565": "[gruff, dry humour]",
+  "92b9a4e4d228ed8a": "[dry, grave, wry]",
   "9b8c61be49a53a21": "[quiet, tender, resolute]",
   "9c17ddd77a421782": "[blunt, impassioned]",
   "9e16897fb3bf9713": "[quiet, shaking, ashamed, building]",
   "9f50816524148bb8": "[firm, warming, wise]",
   "a1212da00ddc2d25": "[bitter, ashamed, rising anger]",
+  "a831a3edb6634711": "[low, uneasy, warning]",
   "aadfb61cb42cdd6a": "[gruff kindness]",
   "dffb877c0f19c47c": "[low, bitter warning]",
   "ea4f69a7cc8b911d": "[brisk, wry]",
@@ -2209,6 +2225,7 @@
  },
  "ratatoille": {
   "1912e5e2be2788e5": "[humiliated, indignant]",
+  "21b0ea0aa5a8c387": "[dry, prim, faintly embarrassed]",
   "6a3bd3711c95c92d": "[firm, practical]",
   "94b1fc0421690a76": "[shaken, bitter]",
   "b2eff5f66061c3c5": "[grim, wry resolve]",
