@@ -570,6 +570,29 @@ func test_a_loading_card() -> void:
 
 
 ## The big d20 over a conversation (G11): a failed check with Advantage, every bonus part and two aids on offer.
+## Busts either side of the box, facing each other, then the one on the right turned away (owner, 2026-10-08).
+func test_a_conversation_with_busts_facing_each_other() -> void:
+	if not await _game(LATE):
+		return
+	DialogueFile.register(DialogueFile.parse("~ a\nIreena [sad]: My father is three days dead.\nNarrator [away]: She turns to the window.\n-> END\n",
+		"test_layout/busts"))
+	for turned: bool in [false, true]:
+		await _check("a conversation with busts%s" % (" turned away" if turned else ""), func() -> Variant:
+			var d := DialogueUI.new()
+			root.add_child(d)
+			await _frames(1)
+			d.play(DialogueRunner.new(GameState.story, DiceRoller.new(2)), "test_layout/busts:a")
+			if turned:
+				d.call("_advance")
+			await _frames(2)
+			assert_true(d.busts.right.visible, "Ireena's bust shows")
+			assert_eq(d.busts.right_away, turned)
+			return d,
+			func() -> void:
+				for d in root.find_children("*", "DialogueUI", false, false):
+					d.queue_free())
+
+
 func test_a_conversation_check_with_the_big_d20() -> void:
 	if not await _game(LATE):
 		return

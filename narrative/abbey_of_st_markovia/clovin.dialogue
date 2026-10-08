@@ -31,7 +31,7 @@ endif
 ~ see_abbot
 Clovin Belview: Chapel. North door, the big one. He's in the chapel or he's over in the wards, with her. He doesn't sleep. I've checked. I've checked a lot.
 if guest:ireena
-Narrator: His hound's ear goes flat as he looks at Ireena. He looks away, and then back, and then away.
+Narrator [away]: His hound's ear goes flat as he looks at Ireena. He looks away, and then back, and then away.
 Clovin Belview [afraid]: Maybe keep your hood up, miss. In the chapel. He likes red. He likes it too much.
 endif
 -> menu

@@ -97,7 +97,7 @@ approve liriel_dawnsong +1 ratatoille +1: You talked Victor out of stepping into
 ~ persuade_fail
 attitude victor_vallakovich hostile
 Victor [angry]: You sound like Mother. Get out of my attic.
-Narrator: He turns his back and starts redrawing a line that didn't need redrawing, pressing so hard the chalk snaps.
+Narrator [away]: He turns his back and starts redrawing a line that didn't need redrawing, pressing so hard the chalk snaps.
 -> menu
 
 ~ encourage

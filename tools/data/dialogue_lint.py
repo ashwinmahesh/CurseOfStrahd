@@ -20,7 +20,9 @@ MOODS = {"neutral", "smile", "angry", "afraid", "sad", "sly", "weary"}
 ID = r"[a-z][a-z0-9_]*"
 
 RE_NODE = re.compile(rf"^~\s+({ID}(?::{ID}(?::{ID})*)?|[a-z]+:[a-z0-9_:]+)$")
-RE_LINE = re.compile(r"^([A-Za-z][A-Za-z_ ]*?)(?:\s*\[([a-z]+)\])?:\s+(.+)$")
+RE_LINE = re.compile(r"^([A-Za-z][A-Za-z_ ]*?)(?:\s*\[([a-z:]+(?:\s*,\s*[a-z:]+)*)\])?:\s+(.+)$")
+## The turn cues a line's bracket may hold beside its mood (docs/ui/busts.md).
+AWAY = {"away", "away:party"}
 RE_OPTION = re.compile(r"^\*\s+(.*?)\s*->\s*([A-Za-z0-9_:/]+|END)(?:\s*\|\s*([A-Za-z0-9_:/]+|END))?\s*$")
 RE_TAG = re.compile(r"^\[([^\]]+)\]\s*")
 RE_CHECK_TAG = re.compile(r"^([A-Za-z][A-Za-z ]*?)\s+DC\s+(\d+)$")
@@ -252,9 +254,13 @@ def parse_file(path):
         m = RE_LINE.match(line)
         if m:
             speaker = m.group(1).strip()
-            mood = m.group(2)
-            if mood and mood not in MOODS:
-                out["errors"].append(f"{where}: unknown mood '{mood}' (use {', '.join(sorted(MOODS))})")
+            tags = [t.strip() for t in (m.group(2) or "").split(",") if t.strip()]
+            moods = [t for t in tags if t not in AWAY]
+            for mood in moods:
+                if mood not in MOODS:
+                    out["errors"].append(f"{where}: unknown mood '{mood}' (use {', '.join(sorted(MOODS))}, and away or away:party to turn)")
+            if len(moods) > 1 or len(tags) - len(moods) > 1:
+                out["errors"].append(f"{where}: one mood and one turn cue at most: [{m.group(2)}]")
             out["speakers"].append((speaker, where))
             if len(m.group(3).split()) > 60:
                 out["errors"].append(f"{where}: line over 60 words (plan §5.7 keeps NPC lines near 40)")
