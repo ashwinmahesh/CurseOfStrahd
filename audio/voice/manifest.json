@@ -53582,6 +53582,13 @@
   "recipe": "dd92281f92",
   "text": "Blue fire leaps from every nail in the floor at once, and the room smells of a lightning-struck tree."
  },
+ "narrator/e9ed25b0c1211bb8": {
+  "chars": 193,
+  "direction": "[hushed, reverent, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A crowd of candles on the stones at the water's edge, the new ones lit from the stubs of the old. The pool's black surface holds every flame, perfectly still, a little warmer than it should be."
+ },
  "narrator/e9fe15eb4852cbec": {
   "chars": 161,
   "model": "eleven_v4",
