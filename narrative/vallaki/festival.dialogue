@@ -183,6 +183,7 @@ endif
 -> sun_smoulders
 
 ~ sun_blazes
+cutscene festival_sun_blazes
 Narrator: Torches go to the straw. You kept it dry through the night, and it shows: the wicker catches with a roar, and for a few heartbeats there is a sun in Vallaki, gold and enormous, and the faces in the square are lit with something very close to joy.
 Baron [smile]: You see? You SEE! All is well!
 if name:liriel_dawnsong
@@ -193,11 +194,13 @@ endif
 -> turn
 
 ~ sun_dies
+cutscene festival_sun_dies
 Narrator: Torches go to the straw. The straw hisses, steams and sulks. Somebody soaked it to the heart in the night, and it shows. The sun sits on its pole, black and dripping, and the cheer dies in a thousand throats.
 Baron [angry]: Light it! Light it, I said! More torches! Why is it WET?
 -> turn
 
 ~ sun_smoulders
+cutscene festival_sun_dies
 Narrator: Torches go to the straw. A drizzle has been falling since dawn; the sun catches at one edge, smokes, goes out, catches, goes out. Somebody in the crowd laughs, and then very badly wishes they hadn't.
 Baron [angry]: Who laughed? Izek! Who laughed?
 -> turn
@@ -213,6 +216,7 @@ endif
 -> crossroads
 
 ~ crossroads
+cutscene festival_square
 Narrator: It happens all at once. The Baron is shouting for the watch. Lady Wachter steps out of the crowd with her chin up and armed men behind her. Father Lucian pushes toward the dais from the other side, hands raised, calling for calm.
 Lady Wachter: Vargas. Enough. Look at them. Look at your happy town.
 Baron [angry]: Treason! At the festival! Izek, seize her!

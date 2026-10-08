@@ -1,0 +1,15 @@
+{
+  "id": "abbot_wings",
+  "title": "The Abbot's Wings",
+  "summary": "The Abbot's wings of light fill the chancel.",
+  "images": [
+    {
+      "image": "abbot_wings",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.35
+  ]
+}

@@ -706,7 +706,8 @@ func close_screen() -> void:
 
 
 ## A place's cutscene (story/cutscenes.gd): its picture over everything with the narrator's line as the caption. It
-## stands in for a full-screen panel until it closes, so nothing in the world moves under it.
+## stands in for a full-screen panel and pauses the game until it closes, so nothing moves under it (a fight that an
+## area starts waits for it too).
 func play_cutscene(id: String, caption: String) -> void:
 	close_screen()
 	var player := CutscenePlayer.new()
@@ -715,10 +716,13 @@ func play_cutscene(id: String, caption: String) -> void:
 		player.queue_free()
 		hud.narrate(caption)
 		return
+	Cutscenes.mark_played(id, st)
 	screen = player
+	get_tree().paused = true
 	player.finished.connect(func() -> void:
 		if screen == player:
 			screen = null
+			get_tree().paused = false
 		_refresh())
 
 

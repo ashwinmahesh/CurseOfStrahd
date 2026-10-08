@@ -220,6 +220,7 @@ Abbot: That was not mercy, children. That was impatience wearing mercy's coat. I
 
 ~ attack
 Narrator: He watches you reach for your weapons, and for the first time something crosses his face that isn't kindness. It looks very like grief.
+cutscene abbot_wings
 Abbot: In my own chapel. Very well. I will not let you undo my work.
 if guest:ezmerelda
 interject guest:ezmerelda: Finally. Silver first, questions never.

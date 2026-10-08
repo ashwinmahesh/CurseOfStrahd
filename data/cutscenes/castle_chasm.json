@@ -1,0 +1,21 @@
+{
+  "id": "castle_chasm",
+  "title": "The Castle Across the Chasm",
+  "summary": "Castle Ravenloft across its bottomless chasm, the drawbridge already down.",
+  "images": [
+    {
+      "image": "castle_chasm_carriage",
+      "when": "flag.strahd_invitation == \"accepted\""
+    },
+    {
+      "image": "castle_chasm",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.55,
+    0.35
+  ],
+  "trigger": "enter:castle_ravenloft_gates",
+  "once": true
+}

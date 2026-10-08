@@ -1,0 +1,15 @@
+{
+  "id": "yester_wintersplinter",
+  "title": "Wintersplinter Walks",
+  "summary": "The effigy splits open and a giant tree blight unfolds out of it.",
+  "images": [
+    {
+      "image": "yester_wintersplinter",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.35
+  ]
+}

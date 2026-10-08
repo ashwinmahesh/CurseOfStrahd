@@ -16,6 +16,7 @@ Narrator: With the chant ended, the tree is only a tree, and somehow that's wors
 
 ~ burn
 set gulthias_tree_burned
+cutscene yester_burn
 Narrator: The ritual fire goes into the roots by the armful. For a long moment the tree won't catch. Then it does, all at once, and it makes a sound as it burns, high and thin, like a kettle, or like something that isn't one.
 Narrator: All down the slope, every blight on the hill folds up where it stands and falls into a heap of dry brush.
 if guest:adrian_martikov

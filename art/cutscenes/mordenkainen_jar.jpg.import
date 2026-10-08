@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxv6h8ij2bocp"
-path.bptc="res://.godot/imported/strahd_watcher.png-9d9da9aeaa728faddb3dc2d7c2fbe7d4.bptc.ctex"
+uid="uid://cc5sudtn7adi0"
+path.bptc="res://.godot/imported/mordenkainen_jar.jpg-b8a567586d2fcb356bc0734817c8958c.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://art/cutscenes/strahd_watcher.png"
-dest_files=["res://.godot/imported/strahd_watcher.png-9d9da9aeaa728faddb3dc2d7c2fbe7d4.bptc.ctex"]
+source_file="res://art/cutscenes/mordenkainen_jar.jpg"
+dest_files=["res://.godot/imported/mordenkainen_jar.jpg-b8a567586d2fcb356bc0734817c8958c.bptc.ctex"]
 
 [params]
 

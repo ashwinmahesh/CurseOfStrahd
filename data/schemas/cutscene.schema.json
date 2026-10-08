@@ -37,7 +37,7 @@
         "properties": {
           "image": {
             "$ref": "common.schema.json#/$defs/id",
-            "description": "art/cutscenes/<image>.png"
+            "description": "art/cutscenes/<image>.jpg"
           },
           "when": {
             "type": "string",
@@ -56,6 +56,10 @@
       "minItems": 2,
       "maxItems": 2,
       "description": "Where the picture's slow push-in closes on, as a share of its width and height (default the centre)."
+    },
+    "once": {
+      "type": "boolean",
+      "description": "A place's cutscene plays only the first time its trigger fires (an area you walk into again and again)."
     },
     "trigger": {
       "type": "string",

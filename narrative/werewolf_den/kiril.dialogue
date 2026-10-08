@@ -47,8 +47,10 @@ combat pack_challenge
 Emil: So. That's how it is.
 leave emil_toranescu
 set emil_dead
+cutscene pack_law
 Narrator: Pack law has rules, and Kiril keeps them to the letter. A ring of wolves; two men stripping off their shirts; then two wolves, one grey and slow from a month in silver, one black and fresh from the hunt.
 Narrator: It is quick, which is the only kind thing about it. Afterwards Kiril stands up a man again, licking his teeth, and nobody in the cave looks at you.
+cutscene end
 approve thistle -2 godrick_pendlebrook -2 liriel_dawnsong -1: You stood back and let Kiril kill Emil
 -> kiril_wins
 

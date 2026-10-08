@@ -111,6 +111,7 @@ set argynvost_beacon_lit
 set order_fate = "rest"
 quest the_dark_beacon lit
 quest the_order_of_the_silver_dragon rest
+cutscene beacon_lit
 Narrator: The flame touches the old ash, and the beacon takes it like a long-held breath let go.
 Narrator: Silver light goes up out of the cradle and over the parapet, over the treetops and the whole dark valley, all the way to the castle on its rock.
 Argynvost: There. There it is. Oh, look at it.

@@ -30,7 +30,7 @@ approve thistle +1 godrick_pendlebrook +1: You stared Strahd down from the road
 -> watcher_gone
 
 ~ watcher_gone
-cutscene end
+cutscene strahd_watcher_gone
 Narrator: A ragged flock of bats lifts off the ridge and beats away south, toward the castle. Nobody is up there now.
 -> END
 
@@ -38,6 +38,7 @@ Narrator: A ragged flock of bats lifts off the ridge and beats away south, towar
 
 ~ night
 appear strahd
+cutscene strahd_camp
 Narrator: You wake in the small hours and know at once you are not alone. Just past the last of the light, a tall man stands watching the others sleep.
 if flag.strahd_met
 Strahd: Do not get up. I only came to see how my guests are sleeping. Badly, I think. The valley does that.

@@ -129,6 +129,7 @@ Narrator: The silver raven flares in your fist, and the tomb fills with morning,
 ~ the_end
 set strahd_destroyed
 quest strahds_lair destroyed
+cutscene strahd_end
 Narrator: He comes apart the way old paper does in a fire: all at once, quietly, edges first. What is left in the coffin is ash, and a smell of dust and cold iron.
 if flag.cat_staked_by == "ireena"
 Narrator: Ireena stays on her knees a long moment. Then she stands, and wipes her hands on her skirt, and doesn't look back at it.

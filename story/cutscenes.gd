@@ -2,14 +2,16 @@ class_name Cutscenes
 extends RefCounted
 ## Story cutscenes (Improvement Ideas G4; docs/ui/cutscenes.md): a full-screen still illustration for a moment the
 ## game's own views can't show faithfully (owner rule, 2026-10-07), such as Strahd on his black horse up on a ridge.
-## Each data/cutscenes/<id>.json names its picture, art/cutscenes/<image>.png, in takes with a `when` (the first that
+## Each data/cutscenes/<id>.json names its picture, art/cutscenes/<image>.jpg, in takes with a `when` (the first that
 ## holds is shown, none holding skips it). A conversation plays one with `cutscene <id>`: its lines then read as
 ## captions over the picture until `cutscene end` or the conversation's end. A cutscene with a `trigger` (a Narrator
 ## key such as examine:bonegrinder_lookout) plays while exploring, with the narrator's line as its caption.
 ## Pure logic, like all of story/: the UI (ui/cutscene/) loads and shows the picture.
 
 const ROOT := "res://data/cutscenes/"
-const ART := "res://art/cutscenes/%s.png"
+const ART := "res://art/cutscenes/%s.jpg"
+## The story flag that remembers a place's cutscene was shown (internal, like the runner's `_approve/` marks).
+const PLAYED := "_cutscene/%s"
 
 static var _table: Dictionary = {}
 static var _loaded := false
@@ -59,12 +61,23 @@ static func focus(id: String) -> Vector2:
 	return Vector2(float(f[0]), float(f[1])) if f.size() == 2 else Vector2(0.5, 0.5)
 
 
-## The cutscene a Narrator key plays while exploring (examine:bonegrinder_lookout), or "" if none fits now.
+## The cutscene a Narrator key plays while exploring (examine:bonegrinder_lookout), or "" if none fits now (or it plays
+## `once` and has).
 static func for_trigger(key: String, st: StoryState) -> String:
 	for c in all():
-		if str(c.get("trigger", "")) == key and image(str(c["id"]), st) != "":
-			return str(c["id"])
+		var id := str(c["id"])
+		if str(c.get("trigger", "")) == key and image(id, st) != "" and not (bool(c.get("once", false)) and played(id, st)):
+			return id
 	return ""
+
+
+## Records that a place's cutscene has played (kept with the story, so a `once` one never comes back).
+static func mark_played(id: String, st: StoryState) -> void:
+	st.flags[PLAYED % id] = true
+
+
+static func played(id: String, st: StoryState) -> bool:
+	return bool(st.flags.get(PLAYED % id, false))
 
 
 static func _load() -> void:

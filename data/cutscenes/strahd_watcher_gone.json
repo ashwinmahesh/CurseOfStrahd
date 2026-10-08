@@ -1,0 +1,15 @@
+{
+  "id": "strahd_watcher_gone",
+  "title": "The Empty Ridge",
+  "summary": "Bats lift off the bare ridge and beat away toward the castle.",
+  "images": [
+    {
+      "image": "strahd_watcher_gone",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.3
+  ]
+}

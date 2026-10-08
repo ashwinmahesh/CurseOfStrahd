@@ -273,6 +273,7 @@ Madam Eva [sad]: You have bloodied my family and driven the rest into the trees.
 
 ~ reading
 tarokka draw
+cutscene madam_eva_reading
 Narrator: She shuffles once, twice, and the cards whisper together like dry leaves. Then she deals five face down in the shape of a cross, and lays her hand flat beside them.
 Madam Eva: Five cards. Three for what was lost, one for who will help you, one for where he waits. Don't touch them. Don't breathe on them. Listen.
 if flag.eva_reading_paid == "forced"

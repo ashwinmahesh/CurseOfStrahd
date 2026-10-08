@@ -46,6 +46,7 @@ Ireena: I'm not made of glass. But I'm not a fool either. I'll be by the well. S
 ~ rite
 Narrator: He doesn't wait for dusk. He says the dark up here is close enough. The Belviews carry her in on a bier, a dozen of them in their best rags, humming something with no words in it.
 Narrator: Vasilka. She is beautiful, the way a thing made very carefully is beautiful, and the seams at her wrists and throat are so fine you could take them for lace. The dress fits her as though it had always been waiting.
+cutscene abbey_bride
 Narrator: The Abbot lays his palms on her brow. The candles go white. When they go yellow again, her eyes are open.
 Vasilka: Good evening. I am Vasilka. I am to be married. Have I kept anyone waiting?
 if name:wren_featherfoot
@@ -210,6 +211,7 @@ approve wren_featherfoot +1: You left the Abbot alone with what he'd done
 ~ kill_kneeling
 set abbot_fate = "slain"
 quest the_abbots_bride slain
+cutscene abbot_kneeling
 Narrator: He doesn't lift a hand. He only turns his face up, the way a flower turns to the window.
 Abbot: Yes. I have wondered for a long time what judgement would feel like.
 Narrator: When the blow falls there's no blood, only light, pouring out of him like water from a cracked jar. Then nothing on the altar step but a brown habit and the smell of a summer long over.
@@ -220,6 +222,7 @@ approve liriel_dawnsong -4 godrick_pendlebrook -3 wren_featherfoot -2 kip_smudge
 -> the_end
 
 ~ kill_now
+cutscene abbot_wings
 Abbot: So. You would rather fight a thing than understand it. Most of the world would. I had hoped you were not most of the world.
 combat abbot_wrath
 

@@ -190,6 +190,7 @@ Vladimir: Fine words. The young lord had fine words too, the night a voice at th
 set order_fate = "ride"
 quest the_order_of_the_silver_dragon ride
 quest the_dark_beacon waiting
+cutscene order_rides
 Narrator: Swords come off the table and go back into scabbards that have not felt them in centuries. Somewhere in the house a door bangs open, and the cold that comes through it smells of horses that aren't there.
 interject name:liriel_dawnsong: Forty knights, riding for the dawn at last. I have prayed for far less, and been grateful.
 -> climax_end

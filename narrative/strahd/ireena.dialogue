@@ -9,6 +9,7 @@
 ~ inn
 appear strahd
 Narrator: Across the dark, one upstairs window of the Blue Water Inn stands wide open to the cold. You run.
+cutscene ireena_window
 Narrator: In Ireena's room the candles are out. She stands at the open window in her nightdress, and outside it, standing on nothing, is Strahd.
 if flag.ismark_guards_ireena
 Narrator: Ismark sits slumped by the door with his sword across his knees, deeply and unnaturally asleep.
@@ -20,6 +21,7 @@ endif
 ~ krezk
 appear strahd
 Narrator: Krezk's wall stands and its gate is barred, and none of it matters: the shutters of the Krezkovs' upper room hang open in the cold.
+cutscene ireena_window
 Narrator: Inside, Ireena holds out her hand at the window, as if to someone helping her down from a carriage. Outside it, standing on nothing, is Strahd.
 if flag.ismark_in_krezk
 Narrator: Ismark lies across the doorway, breathing slow and deep, his spear beside him. Nothing wakes him.
@@ -99,6 +101,7 @@ set strahd_window = "taken"
 set ireena_held_by_strahd
 Narrator: Ireena puts her hand in his. He lifts her over the sill as lightly as a dancer, and she does not look back.
 Strahd: Do come to dinner. She will be there. She has always been there.
+cutscene ireena_window_empty
 Narrator: Then the window is empty and the night is empty, and her shawl lies on the floor where it fell.
 approve godrick_pendlebrook -5 liriel_dawnsong -3 thistle -3 wren_featherfoot -3 kip_smudgewick -3 ratatoille -2: You let Strahd lift Ireena out of the window
 if flag.ireena_in_krezk

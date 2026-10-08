@@ -5,6 +5,7 @@
 
 ~ parley
 appear strahd
+cutscene strahd_waiting
 Narrator: He is waiting for you, as he said he would be, hands folded behind his back like a host at the top of his own stair.
 Strahd: My guests. You came. I did wonder whether you would, and I am so rarely made to wonder.
 if item:sunsword

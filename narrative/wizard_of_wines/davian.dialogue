@@ -151,6 +151,7 @@ endif
 ~ return_cellar
 set winery_stone_returned
 set winery_stones_returned += 1
+cutscene vines_gem
 Narrator: Davian takes the stone in both hands. Green light comes up between his fingers, the way sun comes through a leaf.
 Davian: Hello, old friend. You hid well. Better than I did.
 Narrator: He carries it to the nearest row and presses it into the soil with his thumb. For a moment nothing happens. Then the vine above it makes a small sound, like a cork easing out of a bottle.

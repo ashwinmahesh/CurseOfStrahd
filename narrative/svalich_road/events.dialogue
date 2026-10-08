@@ -8,6 +8,7 @@
 if flag.strahd_road_encounter
 -> END
 endif
+cutscene strahd_rides
 Narrator: Hoofbeats, unhurried, out of the fog ahead. A black horse with eyes like banked coals comes down the road at a walk, and the man riding it does not need to be introduced.
 if flag.strahd_met
 if flag.strahd_first_impression == "defiant"
