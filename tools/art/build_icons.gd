@@ -42,8 +42,10 @@ func _init() -> void:
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--kind="):
 			only = a.get_slice("=", 1)
-	if not "--ui" in OS.get_cmdline_user_args():
-		kinds = KINDS if only == "" else [only] as Array[String]
+	if only != "":
+		kinds.append(only)
+	elif not "--ui" in OS.get_cmdline_user_args():
+		kinds = KINDS
 	for kind in kinds:
 		var keys := catalog.get(kind, {}) as Dictionary
 		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT + kind))
