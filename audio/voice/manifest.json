@@ -55987,8 +55987,9 @@
  },
  "rictavio/06a35e1fc8575f1f": {
   "chars": 47,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[dry, grim]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "It's the only one I've ever seen work. Briefly."
  },
  "rictavio/07ca385a6f16d9a4": {
@@ -55999,26 +56000,30 @@
  },
  "rictavio/0905d1808a1eb359": {
   "chars": 200,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[quiet, grim honesty]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "The same as you, I expect, only for longer. I came to see whether the lord of this valley can be killed. I'm still deciding. I am also, I'm afraid, still deciding whether I care to survive the answer."
  },
  "rictavio/090d2c6471f2f7e8": {
   "chars": 127,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[cold, challenging]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "I told you once what I think of people who help this valley choose its masters. Words are cheap here. What have you done since?"
  },
  "rictavio/0c0cf141bffc4295": {
   "chars": 123,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[grave, weary, generous]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Take what will keep you alive, and pay what you can. I have outlived most of the people I armed. I'd like to outlive fewer."
  },
  "rictavio/132578667bee3dfe": {
   "chars": 37,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[startled, quiet]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Ezmerelda. You went through the ward."
  },
  "rictavio/1470fc1d27cecffe": {
@@ -56029,26 +56034,30 @@
  },
  "rictavio/1724568071ef5a8c": {
   "chars": 151,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[warming, impressed]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Eva's cards again. And I hear five children walked down out of the wolves' hills because of you. That counts for something. It counts for a great deal."
  },
  "rictavio/18c52cdfbd6fb32e": {
   "chars": 164,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[sharp, angry, then relieved]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Someone has been in my wagon. No, don't deny it; I leave a hair across the lock. You're alive, so you didn't open the cage. Good. That was the most important thing."
  },
  "rictavio/1a7edab3ec2e330c": {
   "chars": 168,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[urgent whisper, deadly serious]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Not that name. Not here. Rudolph van Richten made a great many enemies, and some of them have extremely long lives. Rictavio has none. I would like to keep it that way."
  },
  "rictavio/1c811af458c80dc4": {
   "chars": 98,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[urgent, firm]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "And if you can't, bar the church and stand in it. Holy water. Fire. Don't let them get behind you."
  },
  "rictavio/209aeacce5720468": {
@@ -56059,14 +56068,16 @@
  },
  "rictavio/25749d0b0678189a": {
   "chars": 197,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[weary, bitter, wry]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "That town chose its master, and I watched who helped it choose. I came home to think about whether anything in this valley is worth the trouble. I've been thinking for a week. It's gone very badly."
  },
  "rictavio/262619061eaeec97": {
   "chars": 58,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[resigned, dropping the act]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "And you've read my journal, so there's no use in feathers."
  },
  "rictavio/262852986a2603e9": {
@@ -56077,32 +56088,37 @@
  },
  "rictavio/282b1f6c27de0792": {
   "chars": 146,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[startled, then rueful]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "You. How did you... Khazan. Of course. She found the name, and you walked in on it. I taught her to find things. I should have taught her to stop."
  },
  "rictavio/30d8da1fbbdd500f": {
   "chars": 98,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[gruff, resigned warmth]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Very well. I'm too old to hunt alone, and you are much too young to be doing it at all. I'll come."
  },
  "rictavio/3405d4e110a7ef94": {
   "chars": 199,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[gruff, warming, resigned]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Very well. I am too old to keep hunting alone, and you are much too young to be doing it at all. I'll come. The wagon stays; the beast in it is the only creature in Barovia I trust to guard my notes."
  },
  "rictavio/3a1ced185966179b": {
   "chars": 65,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[low, urgent, conspiratorial]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Keep your voice down and your back to the wall. What do you need?"
  },
  "rictavio/3d168f305d47470b": {
   "chars": 60,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[dry, weary humour]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "I know. I can hear her. Everyone within a mile can hear her."
  },
  "rictavio/467601bb062c58f9": {
@@ -56113,26 +56129,30 @@
  },
  "rictavio/46d0bbe2f815ee20": {
   "chars": 86,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[dry, weary]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Then come back when you have. I'll be here. I'm not going anywhere quickly these days."
  },
  "rictavio/518f9a32f1fe99a8": {
   "chars": 140,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[hard, disgusted]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "And don't tell me what Eva's cards say. I know what they say. I won't stand beside people who handed a town to him, whatever the cards want."
  },
  "rictavio/5742e59de32f4d11": {
   "chars": 253,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[brisk, expert, low]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Then he means to send his spawn for the church, and whoever is sheltering in it. They'll be close by, somewhere dark, somewhere nobody looks. Spawn sleep by day like anyone who works nights. Find their beds while the sun is up, and you choose the fight."
  },
  "rictavio/59542027a13df3cf": {
   "chars": 41,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[defensive, a little wounded]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "It's a costume. It's a very good costume."
  },
  "rictavio/5ad08290d8b1fc54": {
@@ -56143,14 +56163,16 @@
  },
  "rictavio/60146b3c8d1d2613": {
   "chars": 163,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[impressed, gruff warmth]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Eva's cards again. And the ravens tell me two children came home from a hags' mill on the Vallaki road, because of you. Hags don't give anything back. That counts."
  },
  "rictavio/634183adca5337c1": {
   "chars": 195,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[blunt, scathing]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Both of them will get people killed. Vargas from fear, Fiona from faith. One of them only wants the town to be quiet. The other wants it quiet for him. I'd want neither in charge of a dog kennel."
  },
  "rictavio/647e2132f89bfcd3": {
@@ -56167,26 +56189,30 @@
  },
  "rictavio/682ac7919ac1e224": {
   "chars": 89,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "The ward upstairs is down too. I'd rather not have to explain how I cooked my own guests."
  },
  "rictavio/694bdd83070b02a3": {
   "chars": 65,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[quiet, gruff kindness]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Take these. I've more than I need, and you, I suspect, have less."
  },
  "rictavio/76702cfc411af5eb": {
   "chars": 135,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[weary, wry, letting go]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "And this. The hat has been a great many people over the years. Let it be one of you for a while; I find I'm tired of being anyone else."
  },
  "rictavio/78c5e6ef7f127522": {
   "chars": 69,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[dry, polite]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Ah. My front door. Stand back, please; it's particular about company."
  },
  "rictavio/834e14eb4f41ca75": {
@@ -56197,8 +56223,9 @@
  },
  "rictavio/85bdf7d3e419d3fd": {
   "chars": 107,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[astonished, shaken]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "I know that face. Thirty years older and wild as a goat, but I know it. Good God. They told me he was dead."
  },
  "rictavio/85efc5a375448c06": {
@@ -56209,14 +56236,16 @@
  },
  "rictavio/8639724b13d1db19": {
   "chars": 173,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[moved, impressed]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Eva's cards again. And there's a silver light on the ridge over Argynvostholt, where there's been none for four hundred years. Somebody lit it. That counts for a great deal."
  },
  "rictavio/869b063e047979ad": {
   "chars": 67,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[quiet, earnest]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Stay in the light where you can. And when you can't, stay together."
  },
  "rictavio/87f684ff6f7259c2": {
@@ -56227,20 +56256,23 @@
  },
  "rictavio/8b856f84b424305c": {
   "chars": 59,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[cold, cutting]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Goodbye. I hope you find a better ally than your judgement."
  },
  "rictavio/8f62deb6f19ebb49": {
   "chars": 122,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[dry, stubborn amusement]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "She has made me promise never to key a ward to anyone again. I have agreed to nothing. She knows I have agreed to nothing."
  },
  "rictavio/934ce88767b17b26": {
   "chars": 171,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[low, expert, measured]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Clever. Patient. Bored, which is the dangerous part. He plays with people the way a cat plays, and like a cat he gets careless when he's amused. Keep him amused, and wait."
  },
  "rictavio/95ea5aff4073a43b": {
@@ -56251,8 +56283,9 @@
  },
  "rictavio/968243c1bd243bf6": {
   "chars": 95,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[low, relieved, wry]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Thank you. People rarely keep secrets in Barovia. It's not malice; it's that he asks so nicely."
  },
  "rictavio/96c86bc7a8a3ef69": {
@@ -56263,56 +56296,65 @@
  },
  "rictavio/986c75af9159c72c": {
   "chars": 275,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[dry, grim, expert]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Forty years of hunting leaves a man with more weapons than hands. Blessed steel, a mace that unmakes the dead, draughts that keep a body breathing, and prayers I can no longer read without my spectacles. Buy what will keep you alive. I'd rather sell it than bury it with you."
  },
  "rictavio/a46ff5184f738ba7": {
   "chars": 133,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[grim, warning]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "And you let it go. I understand. I did that once. It found me again eleven years later, and it remembered my kindness very precisely."
  },
  "rictavio/a9e8b9803955e2fc": {
   "chars": 69,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[dry, grudging respect]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Still here. You've a talent for being where you shouldn't. I used to."
  },
  "rictavio/af5e6687fda271c9": {
   "chars": 181,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[curt, unconvinced]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "I'm going home to think: a tower on the little lake under the mountain, west of Zarovich. If you do something worth hearing about, come and tell me there. Bring proof. Not speeches."
  },
  "rictavio/bb288d78f7331c27": {
   "chars": 97,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[weary, evasive]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Reasons. Old ones. I came home to think. I've been thinking for a week, and it's gone very badly."
  },
  "rictavio/c1d9e833b4cbcc72": {
   "chars": 156,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[quiet, pained]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "I keyed the ward to her because everyone I have ever taught is in the ground, and she is the last. If she can't get in, she can't follow me where I'm going."
  },
  "rictavio/c330f89b47913b54": {
   "chars": 103,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[weary, generous]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "And you've been in my strongbox upstairs. Keep it. Where you're going, you'll need it more than I will."
  },
  "rictavio/c5ebffa90d3a51d3": {
   "chars": 97,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[cold, scornful]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "A bad bargain, and a pretty speech about it. I've had better speeches from vampires. Much better."
  },
  "rictavio/ce2709ef2448e303": {
   "chars": 109,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[grave, tender]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Everyone I have ever taught is in the ground, Ezmerelda. You are the last. I would like you to stay the last."
  },
  "rictavio/d8846064ac542919": {
@@ -56323,8 +56365,9 @@
  },
  "rictavio/dca72d665817cb97": {
   "chars": 167,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[cold, disgusted]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "This town has chosen its master, and I watched who helped it choose. I won't sleep another night under a roof that bows to him. I'll be gone by morning, wagon and all."
  },
  "rictavio/e4e11422151775ac": {
@@ -56341,14 +56384,16 @@
  },
  "rictavio/e8b09842c300913f": {
   "chars": 72,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[dry, rueful]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "Eva's cards. I have spent thirty years refusing to be anybody's fortune."
  },
  "rictavio/ec1e7fd812ba1882": {
   "chars": 94,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[guarded, stern]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "...Words are cheap in this valley. Deeds are what I'll watch. I'll come, and I'll be watching."
  },
  "rictavio/f3c170910a886053": {
@@ -56359,8 +56404,9 @@
  },
  "rictavio/f87e25a2c5cba2b3": {
   "chars": 107,
-  "model": "eleven_v4",
-  "recipe": "3bd70588c7",
+  "direction": "[grave, approving]",
+  "model": "eleven_v3",
+  "recipe": "d445951711",
   "text": "And you put it down. Good. Every one of them was somebody. That's the part the books don't prepare you for."
  },
  "rose/0852c0344261550c": {
