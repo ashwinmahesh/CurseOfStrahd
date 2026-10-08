@@ -54,6 +54,7 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `ready_attack(c, option_id)` | Readied attack, triggers when an enemy comes into reach |
 | `unarmed_special(c, t, "grapple" / "shove_prone" / "shove")`, `escape_grapple(c)`, `release_grapple(c, t)` | a grappler drags what it holds when it moves (1 extra foot per foot); letting go is free |
 | `stand_up(c)`, `drop_prone(c)`, `stabilize(c, t, use_kit)`, `death_save(c)` | |
+| `fly_vertical(c, feet)` | up (+) or down (−) where it stands, 5 ft at a time, 1 ft of movement per foot (a rider flies its mount); `movement.vertical_why(c, feet)` says why not; `Combatant.altitude` is feet off the floor, `Encounter.distance` counts it, and `movement.settle_all()` brings down whoever nothing holds up |
 | `fall(c, feet)` | 1d6 per 10 ft (20d6 at most), Prone unless unharmed; Slow Fall and Feather Fall answer it. `forced_move` calls it for a ledge, and `movement.fall_away` for a map's open drop (`grid.drop_ft`, from the map's `drop_ft`): the creature leaves the grid (`left_fight` meta) |
 | `spells.cast(c, spell_id, slot, targets, point, direction, opts)` | `point` for spheres, `direction` for cones, cubes and lines from the caster; opts: `word` (Command), `damage_type` |
 | `spells.use_sustained(c, action_id, targets, point, direction)` | a sustained spell action (`spells.sustained_actions(c)`): Spiritual Weapon's strike, Witch Bolt's arc, Flaming Sphere's roll... |
@@ -86,6 +87,7 @@ illusory_self, riposte, parry, stones_endurance, interception, protective_field,
 | type | fields |
 |---|---|
 | move | id, from, to, forced, dragged (pulled along by its grappler: it moves with the step before it) |
+| altitude | id, from, to: feet off the floor before and after (flying up or down, Levitate, coming down) |
 | fall | id, feet: a creature falls (off a ledge, into a drop) |
 | attack | attacker, target, hit, critical, action (the attack option's id: `weapon:longsword`, `monster:claw`; `spell:fire_bolt` for a spell attack), from (the token the blow comes from: the attacker, or an Echo Knight's echo) |
 | damage / heal | id, amount (critical) |

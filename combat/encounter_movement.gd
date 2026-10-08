@@ -52,11 +52,11 @@ func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Di
 	# Frightened: no square closer to a source of fear the creature can see (a stricter, per-square reading of
 	# "can't willingly move closer", see deviations.md).
 	for src in fear_sources(c):
-		var now := e.grid.distance_ft(c.cell, c.size_cells, src.cell, src.size_cells)
+		var now := e.grid.distance_ft(c.cell, c.size_cells, src.cell, src.size_cells, c.altitude, src.altitude)
 		for x in e.grid.width:
 			for y in e.grid.depth:
 				var cell := Vector2i(x, y)
-				if e.grid.distance_ft(cell, c.size_cells, src.cell, src.size_cells) < now:
+				if e.grid.distance_ft(cell, c.size_cells, src.cell, src.size_cells, c.altitude, src.altitude) < now:
 					blocked[cell] = true
 	# Forcecage: no stepping out of a cage, or into one; Antilife Shell keeps most creatures out.
 	for cell3: Vector2i in e.spells.specials.high.cage_blocks(c):
@@ -69,7 +69,7 @@ func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Di
 		for x2 in e.grid.width:
 			for y2 in e.grid.depth:
 				var cell2 := Vector2i(x2, y2)
-				if e.grid.distance_ft(cell2, c.size_cells, anchor.cell, anchor.size_cells) > 30:
+				if e.grid.distance_ft(cell2, c.size_cells, anchor.cell, anchor.size_cells, c.altitude, anchor.altitude) > 30:
 					blocked[cell2] = true
 	return e.grid.reachable(c.cell, c.size_cells, feet, _has_fn(blocked),
 		_value_fn(occ["slowed"] as Dictionary), _has_fn(occ["occupied"] as Dictionary), move_mode(c))
@@ -84,11 +84,14 @@ func extra_cost(c: Combatant, standing: bool = false) -> int:
 	return per_foot
 
 
-## How `c` moves: flying (a fly speed at least its walking speed, Fly, Gaseous Form) or climbing (Spider Climb).
+## How `c` moves: flying (a fly speed at least its walking speed, Fly, Gaseous Form, or already off the floor; 5 ft
+## up or more it clears low walls and crates) or climbing (Spider Climb).
 func move_mode(c: Combatant) -> int:
 	var mode := 0
-	if c.creature.speed("fly").total() > 0 and c.creature.speed("fly").total() >= c.creature.speed().total():
+	if c.creature.speed("fly").total() > 0 and (c.altitude > 0 or c.creature.speed("fly").total() >= c.creature.speed().total()):
 		mode |= CombatGrid.MOVE_FLY
+		if c.altitude >= CombatGrid.FEET:
+			mode |= CombatGrid.MOVE_ALOFT
 	if c.creature.has_flag("spider_climb") or c.creature.speed("climb").total() > 0 or CombatFeatures.has_feature(c, "second_story_work"):
 		mode |= CombatGrid.MOVE_CLIMB
 	if c.creature.has_flag("incorporeal_movement"):
@@ -127,7 +130,7 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 	var my_size := Creature.SIZES.find(c.creature.size)
 	var partner := e.mount_of(c) if e.mount_of(c) != null else e.rider_of(c)
 	for o in e.combatants:
-		if o == c or not o.is_alive() or o == partner:
+		if o == c or not o.is_alive() or o == partner or not overlaps_height(c, o):
 			continue
 		var o_size := Creature.SIZES.find(o.creature.size)
 		# Swarms, and elementals made of air, fire or water, can move into (and stay in) other creatures' spaces.
@@ -157,6 +160,12 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 	for wcell: Vector2i in e.spells.specials.mid.blocked_cells():
 		blocked[wcell] = true
 	return {"blocked": blocked, "slowed": slowed, "occupied": occupied}
+
+
+## Whether `a` and `b` share any height off the floor (each as tall as it is wide): a flyer 5 ft up passes over a
+## Medium creature, and a walker passes under it.
+static func overlaps_height(a: Combatant, b: Combatant) -> bool:
+	return a.altitude < b.altitude + b.size_cells * CombatGrid.FEET and b.altitude < a.altitude + a.size_cells * CombatGrid.FEET
 
 
 static func _has_fn(set: Dictionary) -> Callable:
@@ -220,7 +229,7 @@ func march(c: Combatant, dir: Vector2, feet: int, r: CombatResult) -> CombatResu
 ## Moves `c` up to `feet` as far from `away` as it can get (Dissonant Whispers).
 func flee(c: Combatant, away: Combatant, feet: int, r: CombatResult) -> CombatResult:
 	var e := enc()
-	return _move_best(c, feet, r, func(cell: Vector2i) -> float: return float(e.grid.distance_ft(away.cell, away.size_cells, cell, c.size_cells)))
+	return _move_best(c, feet, r, func(cell: Vector2i) -> float: return float(e.grid.distance_ft(away.cell, away.size_cells, cell, c.size_cells, away.altitude, c.altitude)))
 
 
 func _move_best(c: Combatant, feet: int, r: CombatResult, score: Callable) -> CombatResult:
@@ -290,6 +299,7 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 		c.moved = true
 		c.record_step(c.cell, to)
 		c.cell = to
+		c.altitude = mini(c.altitude, e.grid.max_altitude(to, c.size_cells))   # a lower ceiling over a raised floor
 		c.facing = Vector2(to - from).normalized()
 		e.events.append({"type": "move", "id": c.id, "from": from, "to": to})
 		var carried := e.rider_of(c)
@@ -315,7 +325,7 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 			if pole.is_empty():
 				continue
 			var preach := (pole["profile"] as WeaponProfile).reach
-			if e.grid.distance_ft(pm.cell, pm.size_cells, to, c.size_cells) <= preach and e.grid.distance_ft(pm.cell, pm.size_cells, from, c.size_cells) > preach:
+			if e.grid.distance_ft(pm.cell, pm.size_cells, to, c.size_cells, pm.altitude, c.altitude) <= preach and e.grid.distance_ft(pm.cell, pm.size_cells, from, c.size_cells, pm.altitude, c.altitude) > preach:
 				handled[pkey] = true
 				var pdec := e._reaction_decision(pm, "reactive_strike")
 				if pdec == "auto":
@@ -379,6 +389,7 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 					return r
 	if c.hidden:
 		e._check_still_hidden(c)
+	settle_all()
 	return r
 
 
@@ -398,8 +409,8 @@ func _readied_triggers(mover: Combatant, from: Vector2i, to: Vector2i) -> Array[
 				continue
 			var prof := option["profile"] as WeaponProfile
 			reach = prof.reach if bool(option["melee"]) else prof.normal_range
-		var before := e.grid.distance_ft(p.cell, p.size_cells, from, mover.size_cells)
-		var after := e.grid.distance_ft(p.cell, p.size_cells, to, mover.size_cells)
+		var before := e.grid.distance_ft(p.cell, p.size_cells, from, mover.size_cells, p.altitude, mover.altitude)
+		var after := e.grid.distance_ft(p.cell, p.size_cells, to, mover.size_cells, p.altitude, mover.altitude)
 		if after <= reach and before > reach:
 			out.append(p)
 	return out
@@ -413,11 +424,11 @@ func _provokers(mover: Combatant, from: Vector2i, to: Vector2i) -> Array[Combata
 		if not e.spells.can_react(p) or not e.can_see(p, mover) or p.creature.has_flag("no_opportunity_attacks"):
 			continue
 		# Disengage stops Opportunity Attacks, except a Sentinel's against a creature within 5 ft of it.
-		if mover.disengaged and not (e.features.has_feat(p, "sentinel") and e.grid.distance_ft(p.cell, p.size_cells, from, mover.size_cells) <= 5):
+		if mover.disengaged and not (e.features.has_feat(p, "sentinel") and e.grid.distance_ft(p.cell, p.size_cells, from, mover.size_cells, p.altitude, mover.altitude) <= 5):
 			continue
 		var reach := p.reach_ft()
-		var before := e.grid.distance_ft(p.cell, p.size_cells, from, mover.size_cells)
-		var after := e.grid.distance_ft(p.cell, p.size_cells, to, mover.size_cells)
+		var before := e.grid.distance_ft(p.cell, p.size_cells, from, mover.size_cells, p.altitude, mover.altitude)
+		var after := e.grid.distance_ft(p.cell, p.size_cells, to, mover.size_cells, p.altitude, mover.altitude)
 		if before <= reach and after > reach:
 			out.append(p)
 	# An Echo Knight's echo: leaving its 5-ft reach.
@@ -559,7 +570,8 @@ func forced_move(target: Combatant, origin: Vector2, feet: int, toward: bool = f
 		var rise := e.grid.height(nxt) - e.grid.height(target.cell)
 		if not ok or (over == 0 and rise > CombatGrid.FEET):
 			break
-		var falls := over > 0 or rise < -CombatGrid.FEET
+		var aloft := target.altitude > 0 and aloft_by(target) != ""
+		var falls := (over > 0 or rise < -CombatGrid.FEET) and not aloft
 		if falls and catches_itself(target):
 			break
 		e.events.append({"type": "move", "id": target.id, "from": target.cell, "to": nxt, "forced": true})
@@ -567,7 +579,7 @@ func forced_move(target: Combatant, origin: Vector2, feet: int, toward: bool = f
 		target.cell = nxt
 		target.clear_run()
 		moved += 1
-		if over > 0:
+		if over > 0 and not aloft:
 			fall_away(target, over)
 			return moved
 		_after_step(target, was)
@@ -695,3 +707,301 @@ func leave_grid(c: Combatant, how: String) -> void:
 ## The middle of a creature's space, in grid units.
 func center_of(c: Combatant) -> Vector2:
 	return Vector2(c.cell.x + c.size_cells / 2.0, c.cell.y + c.size_cells / 2.0)
+
+
+# --- Flying and coming down ---------------------------------------------------------------------------
+
+## Why `c` can't go `delta` feet up (or down, negative) where it stands now, or "": a Fly Speed it can use (not Prone,
+## not held to Speed 0), or Levitate it cast on itself (20 ft a turn, for no movement); the ceiling, or SKY_FT outdoors,
+## the floor and another creature's space above or below stop it; flying costs 1 ft of movement per foot (more while
+## carrying someone).
+func vertical_why(c: Combatant, delta: int) -> String:
+	if delta == 0:
+		return "Choose up or down"
+	var goal := vertical_goal(c, delta)
+	if goal == c.altitude:
+		if delta < 0 and c.altitude <= 0:
+			return "Already on the floor"
+		if delta > 0 and c.altitude + CombatGrid.FEET > enc().grid.max_altitude(c.cell, c.size_cells):
+			return "The ceiling is in the way" if enc().grid.ceiling_ft > 0 else "Can't fly higher"
+		var other := in_the_way(c, c.altitude + (CombatGrid.FEET if delta > 0 else -CombatGrid.FEET))
+		return "%s is in the way" % other.name() if other != null else "Can't go that way"
+	if self_levitating(c):
+		var moved := int(c.get_meta("levitate_moved", 0)) if int(c.get_meta("levitate_round", -1)) == enc().round_no else 0
+		if moved + absi(goal - c.altitude) > 20:
+			return "Levitate moves you at most 20 ft up or down a turn"
+		return ""
+	if not can_fly(c):
+		return "%s can't fly" % c.name()
+	var cost := absi(goal - c.altitude) * extra_cost(c)
+	if cost > c.movement_left:
+		return "Needs %d ft of movement" % cost
+	return ""
+
+
+## Whether `c` can fly now: a Fly Speed, and it isn't Prone or held to Speed 0 (Grappled, Restrained, Paralyzed,
+## Unconscious...). Incapacitated alone doesn't stop it (2024: moving isn't an action); whether it may act is its turn's
+## check.
+func can_fly(c: Combatant) -> bool:
+	return c.creature.speed("fly").total() > 0 and c.speed() > 0 and not c.creature.has_condition(&"prone")
+
+
+## How far `c` gets toward `delta` feet up (or down) from where it is: 5 ft at a time, up to the ceiling (SKY_FT
+## outdoors) or down to the floor, stopping short of another creature's space above or below it.
+func vertical_goal(c: Combatant, delta: int) -> int:
+	var top := enc().grid.max_altitude(c.cell, c.size_cells)
+	var step := CombatGrid.FEET if delta > 0 else -CombatGrid.FEET
+	var goal := clampi(c.altitude + delta, 0, maxi(top, c.altitude))
+	var at := c.altitude
+	while absi(goal - at) >= CombatGrid.FEET and in_the_way(c, at + step) == null:
+		at += step
+	return at
+
+
+## Another creature whose space `c` would share at `alt` feet off the floor where it stands, or null: its squares
+## overlap and so do their heights (each as tall as it is wide). Its rider or mount don't count.
+func in_the_way(c: Combatant, alt: int) -> Combatant:
+	var e := enc()
+	var mine := c.footprint()
+	for o in e.combatants:
+		if o == c or not o.is_alive() or o.has_meta("left_fight") or o == e.rider_of(c) or o == e.mount_of(c):
+			continue
+		if o.altitude >= alt + c.size_cells * CombatGrid.FEET or alt >= o.altitude + o.size_cells * CombatGrid.FEET:
+			continue
+		for f in o.footprint():
+			if f in mine:
+				return o
+	return null
+
+
+## Levitate the creature cast on itself: it can rise or sink as part of its move (2024).
+func self_levitating(c: Combatant) -> bool:
+	if not c.creature.has_flag("levitating"):
+		return false
+	for fx in c.creature.effects:
+		if fx.source_id == "levitate" and fx.caster_id == c.id:
+			return true
+	return false
+
+
+## Who rises or sinks when `c` flies: its controlled mount (a flying steed carries its rider), else itself.
+func flyer_of(c: Combatant) -> Combatant:
+	var steed := enc().controlled_mount(c)
+	return steed if steed != null else c
+
+
+## Flies `c` (or the mount it rides) `delta` feet up (or down), 5 ft at a time: leaving a hostile creature's reach on
+## the way provokes its Opportunity Attack like any move (a prompt for a player's reaction pauses it). A rider rises
+## with its mount, and whoever it holds in a grapple is carried up or down with it.
+func fly_vertical(c: Combatant, delta: int) -> CombatResult:
+	var e := enc()
+	var flyer := flyer_of(c)
+	var why := e._turn_check(c)
+	if why == "":
+		why = vertical_why(flyer, delta)
+	if why != "":
+		return CombatResult.fail(why)
+	return _fly_to(flyer, vertical_goal(flyer, delta), CombatResult.new(), {"willing": true})
+
+
+func _fly_to(c: Combatant, goal: int, r: CombatResult, handled: Dictionary) -> CombatResult:
+	var e := enc()
+	var free := self_levitating(c)
+	while c.altitude != goal:
+		var to := c.altitude + (CombatGrid.FEET if goal > c.altitude else -CombatGrid.FEET)
+		if not c.disengaged and not c.creature.has_flag("flyby"):
+			for p in _provokers_up(c, c.altitude, to):
+				var key := "%s@up%d" % [p.id, to]
+				if handled.has(key):
+					continue
+				handled[key] = true
+				var decision := e._reaction_decision(p, "opportunity_attack")
+				var resume := func() -> CombatResult:
+					if c.is_down() or e.state != Encounter.State.ACTIVE or not (can_fly(c) or self_levitating(c)):
+						return r
+					return _fly_to(c, goal, r, handled)
+				if decision == "ask":
+					var req := ReactionRequest.new("opportunity_attack", p.id, c.id)
+					req.title = "Opportunity Attack?"
+					req.text = "%s is flying out of %s's reach. %s can spend a Reaction to make one melee attack now." % [c.name(), p.name(), p.name()]
+					req.continuation = func(use: bool) -> CombatResult:
+						if use:
+							return e.then(e._opportunity_attack(p, c), resume)
+						return resume.call() as CombatResult
+					e.pending = req
+					r.pending = req
+					return r
+				elif decision == "auto":
+					var sub := e._opportunity_attack(p, c)
+					if e.pending != null:
+						return e.then(sub, resume)
+					if c.is_down() or e.state != Encounter.State.ACTIVE or not (can_fly(c) or self_levitating(c)):
+						return r
+		var cost := 0 if free else CombatGrid.FEET * extra_cost(c)
+		if cost > c.movement_left:
+			break
+		c.movement_left -= cost
+		c.moved = true
+		var was := c.altitude
+		c.altitude = to
+		if free:
+			c.set_meta("levitate_moved", (int(c.get_meta("levitate_moved", 0)) if int(c.get_meta("levitate_round", -1)) == e.round_no else 0) + CombatGrid.FEET)
+			c.set_meta("levitate_round", e.round_no)
+		e.events.append({"type": "altitude", "id": c.id, "from": was, "to": to})
+		var rider := e.rider_of(c)
+		if rider != null:
+			rider.altitude = c.altitude
+			e.events.append({"type": "altitude", "id": rider.id, "from": was, "to": to})
+		for t in e.grappling.held_by(c):
+			var held_was := t.altitude
+			t.altitude = maxi(0, t.altitude + to - was)
+			if t.altitude != held_was:
+				e.events.append({"type": "altitude", "id": t.id, "from": held_was, "to": t.altitude})
+	if r.pending == null:
+		settle_all()
+	return r
+
+
+## Hostile creatures that can see `c` and have it in reach at `from` feet up but not at `to` (flying up or down).
+func _provokers_up(c: Combatant, from: int, to: int) -> Array[Combatant]:
+	var e := enc()
+	var out: Array[Combatant] = []
+	for p in e.hostiles_of(c):
+		if not e.spells.can_react(p) or not e.can_see(p, c) or p.creature.has_flag("no_opportunity_attacks"):
+			continue
+		var reach := p.reach_ft()
+		var before := e.grid.distance_ft(p.cell, p.size_cells, c.cell, c.size_cells, p.altitude, from)
+		var after := e.grid.distance_ft(p.cell, p.size_cells, c.cell, c.size_cells, p.altitude, to)
+		if before <= reach and after > reach:
+			out.append(p)
+	return out
+
+
+## What keeps `c` up off its floor, or "" if nothing does (2024 Flying): Levitate or another spell that holds it aloft,
+## hovering (a stat block's hover, the Fly spell), being carried by a creature that holds it and is itself up, or
+## flying under its own power (a Fly Speed it can still use).
+func aloft_by(c: Combatant, depth: int = 0) -> String:
+	var e := enc()
+	if c.altitude <= 0:
+		return "the floor"
+	if depth > 3:
+		return ""   # two creatures holding each other up: neither is
+	if c.creature.has_flag("levitating") or c.creature.has_flag("aloft"):
+		return "magic"
+	if c.creature.has_flag("hover") or bool(c.creature.base_speed.get("hover", false)):
+		return "hovering"
+	if e.grapples.has(c.id):
+		var g := e.get_c(str(e.grapples[c.id]))
+		if g != null and g.altitude > 0 and aloft_by(g, depth + 1) != "":
+			return "carried"
+	var steed := e.mount_of(c)
+	if steed != null and steed.altitude > 0 and aloft_by(steed, depth + 1) != "":
+		return "riding"
+	if can_fly(c):
+		return "flying"
+	return ""
+
+
+## Brings down every creature off the floor that nothing holds up any more (a flyer knocked Prone or held to Speed 0,
+## Fly or Levitate ending, let go of in the air): Levitate lets it float down; anything else falls the distance, into a
+## chasm's depth too if it was over one, or into deep water (halved with a DC 15 check, then it swims to the bank).
+## Called after every move and command and at the turn's start and end, so a creature comes down at the end of the
+## action that grounded it. A body drops where it was; one landing in another creature's space is moved to the nearest
+## open square.
+func settle_all() -> void:
+	var e := enc()
+	var again := true
+	while again:
+		again = false
+		for c in e.combatants.duplicate():
+			if c.altitude <= 0 or c.has_meta("left_fight"):
+				continue
+			if not c.is_alive() or aloft_by(c) == "":
+				_come_down(c)
+				again = true
+			elif c.has_meta("levitated") and not c.creature.has_flag("levitating"):
+				c.remove_meta("levitated")   # Levitate ended while it flew: a later fall is a real one
+
+
+func _come_down(c: Combatant) -> void:
+	var e := enc()
+	var feet := c.altitude
+	c.altitude = 0
+	e.events.append({"type": "altitude", "id": c.id, "from": feet, "to": 0})
+	if not c.is_alive():
+		return
+	if c.has_meta("levitated"):
+		c.remove_meta("levitated")
+		e.log.add("move", "%s floats gently down" % c.name(), c.id)
+		_make_room(c)
+		return
+	var drop := 0
+	var water := false
+	for cell in c.footprint():
+		drop = maxi(drop, e.grid.drop_at(cell))
+		water = water or e.grid.has_flag(cell, CombatGrid.WATER)
+	if drop > 0:
+		fall_away(c, drop + feet)
+		return
+	if water:
+		_fall_into_water(c, feet)
+		return
+	fall(c, feet)
+	_make_room(c)
+
+
+## A creature that came down in another creature's space lands in the nearest open square instead.
+func _make_room(c: Combatant) -> void:
+	var e := enc()
+	var under := in_the_way(c, 0) if c.is_alive() and not c.has_meta("left_fight") else null
+	if under == null:
+		return
+	var was := c.cell
+	c.cell = e.spells._free_cell_near(c.cell, c.size_cells)
+	if c.cell != was:
+		e.events.append({"type": "move", "id": c.id, "from": was, "to": c.cell, "forced": true})
+		e.log.add("move", "%s lands beside %s" % [c.name(), under.name()], c.id)
+
+
+## Falling into deep water (2024): a Reaction and a DC 15 Strength (Athletics) or Dexterity (Acrobatics) check to hit
+## the surface feet or head first halves the damage. It then swims to the nearest open square (swimming in a fight
+## isn't built).
+func _fall_into_water(c: Combatant, feet: int) -> void:
+	var e := enc()
+	var halve := false
+	if e.spells.can_react(c) and feet >= 10:
+		var skill := &"athletics" if c.creature.skill_bonus(&"athletics").total() >= c.creature.skill_bonus(&"acrobatics").total() else &"acrobatics"
+		var t := c.creature.roll_check(e.dice, skill, 15)
+		c.reaction_available = false
+		halve = t.success
+		e.log.add("move", "%s %s into the water" % [c.name(), "dives cleanly" if halve else "smacks"], c.id, [t.describe()])
+	if feet >= 10:
+		var rolled := e._roll_damage_dice("%dd6" % mini(20, feet / 10), false, 0, "Falling into water")
+		var amount := int(rolled["total"]) / (2 if halve else 1)
+		if amount > 0:
+			e.deal_damage(null, c, [{"amount": amount, "type": "bludgeoning"}], false, "Falling %d ft into water" % feet, [str(rolled["text"])])
+	if c.is_alive():
+		var was := c.cell
+		c.cell = e.spells._free_cell_near(c.cell, c.size_cells)
+		e.events.append({"type": "move", "id": c.id, "from": was, "to": c.cell, "forced": true})
+		e.log.add("move", "%s swims to the bank" % c.name(), c.id)
+
+
+## Levitate (2024): the creature rises (20 ft, or as high as the ceiling lets it) and hangs there; it floats gently down
+## when the spell ends (settle_all). Called when an effect lands on a creature (Encounter._effect_added).
+func effect_added(cr: Creature, fx: Effect) -> void:
+	var e := enc()
+	if fx.source_id != "levitate":
+		return
+	var c := e.get_c(cr.id)
+	if c == null:
+		return
+	if c.altitude > 0:
+		c.set_meta("levitated", true)   # already up: it hangs where it is, and floats down when the spell ends
+		return
+	var up := vertical_goal(c, 20)
+	if up <= 0:
+		return
+	c.altitude = up
+	c.set_meta("levitated", true)
+	e.events.append({"type": "altitude", "id": c.id, "from": 0, "to": up})

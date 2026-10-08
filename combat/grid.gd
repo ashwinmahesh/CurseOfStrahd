@@ -35,6 +35,10 @@ var occupant: Dictionary = {}
 ## How far the map's open void falls (a chasm, a tower's well), from the map's `drop_ft`: a creature forced over
 ## the edge into a void square falls this far and out of the fight. 0: the void is the map's edge and nothing crosses.
 var drop_ft: int = 0
+## The ceiling's height in feet over a floor at 0 (a room's, a cave's); 0 under the open sky, where flyers go up to
+## SKY_FT.
+var ceiling_ft: int = 0
+const SKY_FT := 60
 ## can_see results by footprints (walls don't move; cleared when the map changes).
 var _sight_cache: Dictionary = {}
 
@@ -147,11 +151,12 @@ static func size_cells_for(size: StringName) -> int:
 
 
 ## Distance in feet between two footprints, counting squares by the shortest route (diagonals 5 ft) and the
-## height difference as extra squares when it's larger (2024 "Ranges" on a grid).
-func distance_ft(a: Vector2i, a_size: int, b: Vector2i, b_size: int) -> int:
+## height difference as extra squares when it's larger (2024 "Ranges" on a grid). A creature is as tall as it is wide
+## (a Large one fills two 5 ft levels); `a_up` and `b_up` are how far each is off its floor (flying, levitating).
+func distance_ft(a: Vector2i, a_size: int, b: Vector2i, b_size: int, a_up: int = 0, b_up: int = 0) -> int:
 	var dx := _axis_gap(a.x, a_size, b.x, b_size)
 	var dz := _axis_gap(a.y, a_size, b.y, b_size)
-	var dy := absi(height(a) - height(b)) / FEET
+	var dy := _axis_gap((height(a) + a_up) / FEET, a_size, (height(b) + b_up) / FEET, b_size)
 	return maxi(maxi(dx, dz), dy) * FEET
 
 
@@ -176,6 +181,8 @@ const MOVE_INCORPOREAL := 4
 const MOVE_UNHINDERED := 8
 ## The map's own Difficult Terrain costs nothing extra (Tramontane Armor: snow, ice, rubble, undergrowth).
 const MOVE_TERRAIN := 16
+## Flying 5 ft or more off the floor: over low walls, crates and furniture (with MOVE_FLY).
+const MOVE_ALOFT := 32
 
 
 func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable, slowed: Callable, mode: int = 0) -> int:
@@ -200,7 +207,7 @@ func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable,
 				elif bool(incorporeal_slow):
 					mult = maxi(mult, 2)
 			continue
-		if is_solid(c) or bool(blocked.call(c)):
+		if (is_solid(c) and not _flies_over(c, mode)) or bool(blocked.call(c)):
 			return -1
 		if (mode & MOVE_UNHINDERED) != 0:
 			continue
@@ -212,14 +219,15 @@ func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable,
 		elif bool(sv):
 			mult = maxi(mult, 2)
 	if d.x != 0 and d.y != 0 and (mode & MOVE_INCORPOREAL) == 0:
-		# Diagonals can't cut the corner of a wall or other square-filling feature.
+		# Diagonals can't cut the corner of a wall or other square-filling feature (a flyer's corners are walls only).
 		for c: Vector2i in [from + Vector2i(d.x, 0), from + Vector2i(0, d.y)]:
 			for fc in footprint(c, size_cells):
-				if (flags(fc) & (WALL | LOW | VOID)) != 0:
+				if (flags(fc) & (WALL | LOW | VOID)) != 0 and not _flies_over(fc, mode):
 					return -1
 	var cost := FEET * mult
 	if (mode & MOVE_FLY) != 0:
-		return cost
+		# Keeping its height over the floor, a flyer rises and sinks with it: a step that also climbs 10 ft costs 10.
+		return maxi(cost, absi(height(to) - height(from)))
 	# Climbing (2024): every foot climbed, up or down, costs 1 extra foot (2 extra in Difficult Terrain), nothing extra
 	# with a Climb Speed. A rise or drop of 5 ft is a step (stairs, a dais) and costs nothing more.
 	var climb := absi(height(to) - height(from))
@@ -231,6 +239,23 @@ func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable,
 ## How far a creature falls going over into `c`: the map's drop for an open void square inside the map, else 0.
 func drop_at(c: Vector2i) -> int:
 	return drop_ft if in_bounds(c) and (flags(c) & (VOID | WATER)) == VOID else 0
+
+
+## Whether a flyer (`mode`) crosses square `c` that walkers can't: a chasm and deep water, and low walls, crates and
+## furniture once it's 5 ft or more off the floor. Walls stop it (they reach the ceiling, or are trees and towers).
+func _flies_over(c: Vector2i, mode: int) -> bool:
+	if (mode & MOVE_FLY) == 0 or has_flag(c, WALL):
+		return false
+	if drop_at(c) > 0 or has_flag(c, WATER):
+		return true
+	return has_flag(c, LOW) and (mode & MOVE_ALOFT) != 0
+
+
+## The highest a creature `size_cells` across can fly over square `c`'s floor: up to the ceiling, or SKY_FT outdoors.
+func max_altitude(c: Vector2i, size_cells: int) -> int:
+	if ceiling_ft <= 0:
+		return SKY_FT
+	return maxi(0, ceiling_ft - height(c) - size_cells * FEET)
 
 
 ## Every square reachable within `budget` feet: {cell: {"cost": int, "prev": Vector2i}}. Squares other creatures
@@ -288,9 +313,12 @@ static func path_to(reach: Dictionary, goal: Vector2i) -> Array[Vector2i]:
 ## other creatures (`creature_cells`) give at most Half Cover. An attacker standing 10+ ft above a low obstacle sees over it.
 ## Returns {cover: Cover, blocked: int, by: String}.
 func cover_between(attacker: Vector2i, a_size: int, target: Vector2i, t_size: int,
-		creature_cells: Dictionary = {}) -> Dictionary:
+		creature_cells: Dictionary = {}, a_up: int = 0, t_up: int = 0) -> Dictionary:
 	var best := {"cover": Cover.TOTAL, "blocked": 4, "by": "walls"}
-	var a_h := height(attacker)
+	# How high the line runs: the attacker's height, or a flying target's when that's higher (over a low wall).
+	var a_h := height(attacker) + a_up
+	if t_up > 0:
+		a_h = maxi(a_h, height(target) + t_up)
 	var a_cells := footprint(attacker, a_size)
 	var t_cells := footprint(target, t_size)
 	for ac in a_cells:

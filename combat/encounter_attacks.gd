@@ -189,7 +189,7 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 	var p := option["profile"] as WeaponProfile
 	var origin_cell: Vector2i = option.get("origin_cell", c.cell)
 	var origin_size := 1 if option.has("origin_cell") else c.size_cells
-	var dist := e.grid.distance_ft(origin_cell, origin_size, target.cell, target.size_cells)
+	var dist := e.grid.distance_ft(origin_cell, origin_size, target.cell, target.size_cells, 0 if option.has("origin_cell") else c.altitude, target.altitude)
 	var melee := bool(option["melee"])
 	var duel := e.spells.specials.duel_disadvantage(c, target)
 	if duel != "":

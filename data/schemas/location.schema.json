@@ -45,6 +45,11 @@
             "pattern": "^[.#=~w 1-4]+$"
           }
         },
+        "ceiling_ft": {
+          "type": "integer",
+          "minimum": 10,
+          "description": "The ceiling's height in feet, which flyers can't rise above. Default: 20 indoors, the open sky outdoors."
+        },
         "drop_ft": {
           "type": "integer",
           "minimum": 10,

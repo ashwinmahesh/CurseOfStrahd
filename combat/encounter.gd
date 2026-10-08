@@ -150,6 +150,7 @@ func add(creature: Creature, side: StringName, cell: Vector2i) -> Combatant:
 func _effect_added(cr: Creature, fx: Effect) -> void:
 	faerun.effect_added(cr, fx)
 	echo_knight.effect_added(cr, fx)
+	movement.effect_added(cr, fx)
 
 
 func get_c(id: String) -> Combatant:
@@ -198,7 +199,7 @@ func occupant_at(cell: Vector2i) -> Combatant:
 
 
 func distance(a: Combatant, b: Combatant) -> int:
-	return grid.distance_ft(a.cell, a.size_cells, b.cell, b.size_cells)
+	return grid.distance_ft(a.cell, a.size_cells, b.cell, b.size_cells, a.altitude, b.altitude)
 
 
 ## Whether this fight is at `place`: its location, or a place inside it.
@@ -431,6 +432,10 @@ func center_of(c: Combatant) -> Vector2:
 
 func fall(c: Combatant, feet: int, why: String = "Falling") -> int:
 	return movement.fall(c, feet, why)
+
+
+func fly_vertical(c: Combatant, delta: int) -> CombatResult:
+	return movement.fly_vertical(c, delta)
 
 
 # --- Mounted combat (EncounterMounts) -------------------------------------------------------------

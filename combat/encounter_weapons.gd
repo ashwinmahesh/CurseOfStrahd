@@ -142,7 +142,7 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 	if c.creature.has_flag("cant_attack"):
 		return "%s can't attack in this form" % c.name()
 	if bool(option["melee"]) and c.creature.has_flag("levitating") != target.creature.has_flag("levitating") \
-			and (option["profile"] as WeaponProfile).reach < 20:
+			and c.altitude == 0 and target.altitude == 0 and (option["profile"] as WeaponProfile).reach < 20:
 		return "Out of reach: one of you is floating 20 ft up (Levitate)"
 	var charm := charm_blocks(c, target)
 	if charm != "":

@@ -14,12 +14,13 @@ func enc() -> Encounter:
 	return _enc.get_ref() as Encounter
 
 
-## Squares other creatures stand in, with their names, for cover (creatures give Half Cover).
-func creature_cells(exclude: Array = []) -> Dictionary:
+## Squares other creatures stand in, with their names, for cover (creatures give Half Cover); a creature no taller than
+## `above` feet off the floor is below a line between two flyers higher than that, and gives none.
+func creature_cells(exclude: Array = [], above: int = 0) -> Dictionary:
 	var e := enc()
 	var out := {}
 	for c in e.combatants:
-		if c.is_alive() and not c in exclude and not c.is_down():
+		if c.is_alive() and not c in exclude and not c.is_down() and c.altitude + c.size_cells * CombatGrid.FEET > above:
 			for cell in c.footprint():
 				out[cell] = c.name()
 	return out
@@ -27,13 +28,14 @@ func creature_cells(exclude: Array = []) -> Dictionary:
 
 func cover(attacker: Combatant, target: Combatant) -> Dictionary:
 	var e := enc()
-	var key := [_layout_hash(), attacker.cell, attacker.size_cells, target.cell, target.size_cells, attacker.id, target.id].hash()
+	var key := [_layout_hash(), attacker.cell, attacker.size_cells, target.cell, target.size_cells, attacker.id, target.id,
+		attacker.altitude, target.altitude].hash()
 	if e._cover_cache.has(key):
 		return e._cover_cache[key] as Dictionary
 	if e._cover_cache.size() > 20000:
 		e._cover_cache.clear()
 	var result := e.grid.cover_between(attacker.cell, attacker.size_cells, target.cell, target.size_cells,
-		creature_cells([attacker, target]))
+		creature_cells([attacker, target], mini(attacker.altitude, target.altitude)), attacker.altitude, target.altitude)
 	e._cover_cache[key] = result
 	return result
 
@@ -46,6 +48,7 @@ func _layout_hash() -> int:
 		if c.is_alive() and not c.is_down():
 			parts.append(c.cell)
 			parts.append(c.size_cells)
+			parts.append(c.altitude)
 	return parts.hash()
 
 

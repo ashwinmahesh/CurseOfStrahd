@@ -164,6 +164,16 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 		out.append(_entry("stand", COMMON, "Stand Up", "%d ft" % (c.speed() / 2), "movement", stand_why, "none"))
 	else:
 		out.append(_entry("drop_prone", COMMON, "Drop Prone", "free", "movement", e._turn_check(c), "none"))
+	# Flying (F4): up or down 5 ft where it stands, at 1 ft of movement per foot; a rider flies its mount.
+	var flyer := e.movement.flyer_of(c)
+	if e.movement.can_fly(flyer) or e.movement.self_levitating(flyer) or flyer.altitude > 0:
+		var here := ("%d ft up" % flyer.altitude) if flyer.altitude > 0 else "on the floor"
+		for step: int in [5, -5]:
+			var fwhy := e._turn_check(c)
+			if fwhy == "":
+				fwhy = e.movement.vertical_why(flyer, step)
+			out.append(_entry("fly:%s" % ("up" if step > 0 else "down"), COMMON, "Fly up 5 ft" if step > 0 else "Fly down 5 ft", here,
+				"movement", fwhy, "none", "Rise or sink where you are: 5 ft of movement for 5 ft. Out of reach of creatures on the floor 10 ft up; leaving a foe's reach this way draws its Opportunity Attack."))
 	out.append(_entry("influence", COMMON, "Influence", "talk", "action", "Wolves and the walking dead can't be reasoned with", "none"))
 	out.append(_entry("utilize", COMMON, "Utilize", "use an object", "action", "Nothing to use here (Healer's Kit is on Items)", "none"))
 
@@ -867,6 +877,7 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 	var mark := e.events.size()
 	e.faerun.before_action(c)
 	var r := _perform(c, action, targets, point, dir, slot, opts)
+	e.movement.settle_all()   # a flyer the action grounded comes down
 	if r.ok:
 		e.faerun.after_action(c, action, targets)
 	# A class feature in use: an `ability` event ahead of what it did, for the view's effect (emit-only).
@@ -948,6 +959,8 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 			return e.use_item(c, id.substr(5), t if t != null else c)
 		"let_go":
 			return e.release_grapple(c, e.get_c(id.get_slice(":", 1)))
+		"fly":
+			return e.fly_vertical(c, CombatGrid.FEET if id == "fly:up" else -CombatGrid.FEET)
 	match id:
 		"grapple":
 			return e.unarmed_special(c, t, "grapple")

@@ -658,6 +658,8 @@ func _chips(c: Combatant) -> String:
 			parts.append(fx.name)
 	if c.hidden:
 		parts.append("Hidden")
+	if c.altitude > 0:
+		parts.append("%d ft up" % c.altitude)
 	if cr is Character and (cr as Character).heroic_inspiration:
 		parts.append("Heroic Inspiration")
 	return ", ".join(parts)
