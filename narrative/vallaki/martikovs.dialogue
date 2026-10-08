@@ -74,6 +74,13 @@ Urwin: Black roses on Pyotr Petrov's step this morning, the chandler's. Ilie the
 elif flag.roses_ring_given
 Urwin: Ilie's put out the lamp outside his own window. The birds say he sleeps at night now. It's been a year.
 endif
+if not quest.hunters_at_the_inn
+set hunters_rumor
+quest hunters_at_the_inn rumored
+Urwin: The two in the corner are Szoldar and his boy. Hunters. They sell wolf ears to the Baron at a copper apiece, and lately they've been asking which of my guests can fight. I'd want to know why, if I were you.
+elif flag.greytooth_paid
+Urwin: The boy, Yevgeni, says you took Old Greytooth. The ravens saw it. They were very pleased; he ate three of them last spring.
+endif
 Urwin: And the coffin maker's had a delivery he won't talk about. Big crates. In the night.
 -> urwin_menu
 

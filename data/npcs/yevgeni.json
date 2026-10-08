@@ -1,0 +1,18 @@
+{
+  "id": "yevgeni",
+  "name": "Yevgeni",
+  "title": "Szoldar's Son",
+  "summary": "Szoldar's son, nineteen, who mends his father's bowstrings and hates the work his father really does.",
+  "portrait": "scout",
+  "sprite": "scout",
+  "attitude": "indifferent",
+  "monster": "scout",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "hunter",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

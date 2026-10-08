@@ -749,6 +749,25 @@
         11,
         22
       ]
+    },
+    {
+      "npc": "szoldar",
+      "cell": [
+        3,
+        3
+      ],
+      "dialogue": "vallaki/hunters_at_the_inn:szoldar",
+      "facing": "east",
+      "when": "not flag.greytooth_beaten or flag.szoldar_turned or flag.szoldar_stays"
+    },
+    {
+      "npc": "yevgeni",
+      "cell": [
+        5,
+        3
+      ],
+      "dialogue": "vallaki/hunters_at_the_inn:yevgeni",
+      "facing": "west"
     }
   ],
   "narration": {
