@@ -1,0 +1,18 @@
+{
+  "id": "zinaida",
+  "name": "Zinaida",
+  "title": "The Bride in the Well",
+  "summary": "A village girl who went down the well forty years ago, the night before her wedding, rather than marry the man the castle sent for her. Nobody ever brought her up. Every week she asks the sexton for a grave.",
+  "portrait": "banshee",
+  "sprite": "banshee",
+  "attitude": "hostile",
+  "monster": "banshee",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "undead",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}

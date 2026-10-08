@@ -78,6 +78,10 @@ elif not quest.polite_caller
 set teodor_rumor
 quest polite_caller rumored
 Arik: Ileana. Shutter. Every night.
+elif not quest.six_feet
+set sixfeet_rumor
+quest six_feet rumored
+Arik: Mihail. Digs early.
 else
 Arik: No.
 endif

@@ -3,12 +3,20 @@
 # firewood in from the west road and Widow Ileana at her husband's grave.
 
 ~ goodwife
-if flag.burgomaster_buried
-Goodwife Petra: They say the old burgomaster's in the ground at last. Good. A man shouldn't lie in his own parlour waiting for the priest.
+if flag.bride_buried
+Goodwife Petra [smile]: My brother filled in a grave this week and dug no new one. First time in forty years. He doesn't know what to do with his hands. I've given him my garden.
 -> END
 endif
+if flag.burgomaster_buried
+Goodwife Petra: They say the old burgomaster's in the ground at last. Good. A man shouldn't lie in his own parlour waiting for the priest.
+-> goodwife_menu
+endif
 Goodwife Petra [afraid]: Strangers. Don't stand so close to the well. Folk will think you've come to poison it, and then they'll think it's my fault for talking to you.
-* Who would poison a well? -> poison
+-> goodwife_menu
+
+~ goodwife_menu
+* [if quest.six_feet and not flag.bride_story_known] Your brother Mihail is worried about you. -> village_of_barovia/six_feet:petra
+* [if not flag.burgomaster_buried] Who would poison a well? -> poison
 * We'll leave you be. -> END
 
 ~ poison
@@ -53,15 +61,21 @@ Widow Ileana: I did. I still don't know if I was right.
 * We're sorry. -> END
 
 ~ gravedigger
+if flag.bride_buried
+Old Mihail: No grave this week. I keep picking up the spade and putting it down again. Petra says I'm to dig her a herb bed instead. Herbs don't need six feet.
+-> END
+endif
 Old Mihail: Mind the edge. It's deeper than it looks. They all are, now. Six feet was enough once. Six feet isn't enough any more.
 * Who is it for? -> gravedigger_who
 * Why so deep? -> gravedigger_deep
+* [if flag.sixfeet_rumor and (not quest.six_feet or quest.six_feet == rumored)] Arik says you dig your graves early. -> village_of_barovia/six_feet:asks
 * [if (flag.teodor_rumor or quest.polite_caller) and not flag.teodor_grave_known] Did you ever dig a grave for Teodor the cooper? -> gravedigger_teodor
 * Goodbye. -> END
 
 ~ gravedigger_who
 Old Mihail: Nobody yet. There's always somebody by the end of the week. I like to be ready. It's rude to keep them waiting.
--> END
+* [if not quest.six_feet or quest.six_feet == rumored] How do you know there'll be somebody? -> village_of_barovia/six_feet:asks
+* Goodbye. -> END
 
 ~ gravedigger_deep
 Old Mihail: So they stay down. Some of them try to come home, see. Not the ones I've buried. Not yet. I dig deep and I pack it hard.

@@ -1,0 +1,48 @@
+{
+  "id": "six_feet",
+  "name": "Six Feet",
+  "summary": "Old Mihail the sexton digs graves before anybody has died. There's always somebody by the end of the week.",
+  "giver": "barovia_gravedigger",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Arik says Old Mihail the sexton digs his graves early. Nobody in the village asks him who they're for, because by the end of the week there's always somebody.",
+      "objectives": [
+        "Ask Old Mihail who his new grave is for; he digs in the churchyard by day"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Every week a woman's voice comes up the village well at night and says a name. Mihail digs, and by the end of the week there is somebody to put in the grave. He has done it for forty years. This week's name is Petra: his sister, Goodwife Petra, who carries water from that well every day.",
+      "objectives": [
+        "Find out who the woman in the well is",
+        "Look into the well"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_bride",
+      "journal": "Forty years ago a girl called Zinaida went down the village well on the night before her wedding rather than marry the man the castle sent for her. Nobody ever brought her up. Nobody ever buried her.",
+      "objectives": [
+        "Bring Zinaida up out of the well"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "raised",
+      "journal": "We brought up what was left of Zinaida from the silt at the bottom of the well, wrapped in her veil. She came up behind us.",
+      "objectives": [
+        "Lay her in the grave Mihail dug this week"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "buried",
+      "journal": "Zinaida is in the grave Old Mihail dug for his sister. It was always for her: every grave he dug for forty years was for her, and nobody ever put her in one. Petra carried water this morning, and came home.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

@@ -84,7 +84,7 @@ func _draw() -> void:
 		var sq := _ground_poly(cam, [Vector2(cell.x, cell.y), Vector2(cell.x + 1, cell.y), Vector2(cell.x + 1, cell.y + 1),
 			Vector2(cell.x, cell.y + 1)], y)
 		if sq.size() == 4:
-			if not stood.has(cell) and not Geometry2D.triangulate_polygon(sq).is_empty():
+			if not stood.has(cell):
 				draw_colored_polygon(sq, Color(glow, (0.2 + 0.18 * pulse) if open else 0.16))
 			var ring := sq.duplicate()
 			ring.append(sq[0])
@@ -100,27 +100,61 @@ func _draw() -> void:
 		_plaque(cam, e, Vector3(cell.x + 0.5, y + 1.7, cell.y + 0.5), Vector3(dir.x, 0, dir.y), glow)
 
 
-## Ground points (world x, z) at height y on the screen; empty if any is behind the camera.
+## Ground points (world x, z) on the screen, lying on the ground (lay_on_ground); empty if any is behind the camera,
+## or the shape is seen edge-on and has nothing to draw.
 func _ground_poly(cam: Camera3D, pts: Array, y: float) -> PackedVector2Array:
 	var out := PackedVector2Array()
-	var slopes := view.board.has_terrain()
-	for p: Vector2 in pts:
-		var w := Vector3(p.x, view.board.ground_y(p) + 0.04 if slopes else y, p.y)   # (natural ground's slopes)
+	for w: Vector3 in lay_on_ground(view.board, pts, y):
 		if cam.is_position_behind(w):
 			return PackedVector2Array()
 		out.append(cam.unproject_position(w))
+	if absf(area(out)) < 1.0:
+		return PackedVector2Array()
 	return out
 
 
+## A flat shape's points (world x, z) laid on the ground, 0.04 above it: on natural ground on the plane of its slope at
+## the shape's middle (ArenaBoard.ground_normal), so the shape stays flat and can't fold over itself on screen the way
+## one with each point at its own height can on a steep slope; elsewhere at height `y`.
+static func lay_on_ground(board: ArenaBoard, pts: Array, y: float) -> Array[Vector3]:
+	var mid := Vector2.ZERO
+	for p: Vector2 in pts:
+		mid += p
+	mid /= float(maxi(pts.size(), 1))
+	var up := Vector3.UP
+	var y0 := y
+	if board.has_terrain():
+		up = board.ground_normal(Vector2i(floori(mid.x), floori(mid.y)))
+		y0 = board.ground_y(mid) + 0.04
+	var out: Array[Vector3] = []
+	for p: Vector2 in pts:
+		var d := p - mid
+		out.append(Vector3(p.x, y0 - (up.x * d.x + up.z * d.y) / up.y, p.y))
+	return out
+
+
+## The signed area of a polygon on the screen (0 when it's seen edge-on).
+static func area(poly: PackedVector2Array) -> float:
+	var a := 0.0
+	for i in poly.size():
+		var q := poly[(i + 1) % poly.size()]
+		a += poly[i].x * q.y - q.x * poly[i].y
+	return a / 2.0
+
+
 func _chevron(cam: Camera3D, centre: Vector2, dir: Vector2, y: float, colour: Color) -> void:
+	var pts := _ground_poly(cam, chevron_points(centre, dir), y)
+	if pts.size() == 6:
+		draw_colored_polygon(pts, colour)
+
+
+## The chevron's outline on the ground (world x, z) round a square's middle, pointing along `dir`.
+static func chevron_points(centre: Vector2, dir: Vector2) -> Array:
 	var side := dir.orthogonal() * 0.27
 	var tip := centre + dir * 0.3
 	var back := centre - dir * 0.2
 	var thick := dir * 0.14
-	var pts := _ground_poly(cam, [back + side, tip, back - side, back - side - thick, tip - thick, back + side - thick], y)
-	# On sloped ground each point takes its own height, so the projected shape can fold over itself: skip that frame.
-	if pts.size() == 6 and not Geometry2D.triangulate_polygon(pts).is_empty():
-		draw_colored_polygon(pts, colour)
+	return [back + side, tip, back - side, back - side - thick, tip - thick, back + side - thick]
 
 
 ## A crimson-black plaque above the way out: where it goes, with an arrow pointing out of the map. When the way out

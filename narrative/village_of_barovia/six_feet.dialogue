@@ -1,0 +1,114 @@
+# Six Feet (side quest, docs/story/side_quests.md): Old Mihail digs a grave every week before anybody dies, because a
+# woman's voice in the village well tells him a name. This week it's his sister, Goodwife Petra. The voice is Zinaida,
+# who went down the well forty years ago rather than marry the man the castle sent for her; nobody ever brought her up
+# or buried her, and every grave Mihail has dug was always for her. Reached from Mihail (townsfolk:gravedigger_who) or
+# Arik's rumour. Every line here is unvoiced for now; Zinaida is a new speaker.
+
+~ asks
+quest six_feet asked
+Old Mihail: How do I know? She tells me.
+Old Mihail: There's a woman in the well. Every week, of a night, her voice comes up the shaft and says a name. I dig. By the end of the week there's somebody to put in it. Forty years, near enough.
+Old Mihail: I tried filling the well with stones, once. My wife died that week. I took the stones out again.
+Old Mihail [sad]: This week she said Petra. My sister. The one who carries the water. I haven't told her. I've dug it, though. I can't help digging it. That's the worst of it.
+* [Insight DC 12] (Does he know who the woman is?) -> knows | knows_not
+* We'll find out who she is. -> END
+
+~ knows
+Narrator: He knows something. He keeps looking at the well, and then at his sister, and his mouth works around a name he can't make himself say.
+Old Mihail: Ask Petra about the bride. Our grandmother told it to her. She tells it better than me.
+-> END
+
+~ knows_not
+Narrator: A big, slow, frightened man leaning on a spade. If he knows more, he's buried it deep.
+-> END
+
+# --- Goodwife Petra (townsfolk:goodwife jumps here) ---
+
+~ petra
+set bride_story_known
+if quest.six_feet == asked
+quest six_feet the_bride
+endif
+Goodwife Petra: Mihail sent you? He worries. He digs when he worries. He's always digging.
+Goodwife Petra: The bride. Our grandmother told it. Forty years back, a girl called Zinaida was promised to a man the castle sent down with a carriage and a ring. The night before the wedding she went down the well instead.
+Goodwife Petra: Nobody brought her up. The man from the castle said leave her, and folk did what the castle said. We still draw water over her, every day.
+interject tag:kind: She's been asking for a grave for forty years.
+Goodwife Petra [afraid]: Don't. Don't say that by the well.
+-> END
+
+# --- The well's lip (prop well_lip) ---
+
+~ well
+if flag.bride_buried
+Narrator: The well is only a well. Down the shaft there's nothing but water, very cold and very clear, and your own face looking up.
+-> END
+endif
+Narrator: Scratched into the stone lip of the well, small and close, are names: forty years of them, one under another, each with a little cross. The newest is PETRA. It hasn't got a cross yet.
+* [if night] (Lean over the shaft and listen.) -> listen
+* [if not flag.bride_bones_raised] [Athletics DC 13] (Climb down the rope to the bottom.) -> climb | climb_fail
+* Leave it. -> END
+
+~ listen
+Narrator: The water at the bottom is very still. Then a voice comes up the shaft, soft, a girl's voice, as close as if she were whispering in your ear.
+Zinaida: Petra. Petra. Petra.
+Zinaida: Bury me.
+-> END
+
+~ climb_fail
+Narrator: The rope is old and slick with green, and halfway down your hands give. You go into the water to the neck, and it is so cold it hurts your teeth, and something down there brushes your ankle. You come up the rope faster than you went down.
+-> END
+
+~ climb
+set bride_bones_raised
+quest six_feet raised
+Narrator: At the bottom, under a foot of black water, the silt gives up a bundle wrapped in what was once a veil. Bones, small and light, and a necklace of little silver coins.
+Narrator: When you come up over the lip with her in your arms, she is already standing behind you.
+appear zinaida at well_lip
+Zinaida [angry]: That's mine. That's mine. Put it back. Don't give me to him. Don't give me to HIM.
+* [if flag.bride_story_known] Zinaida. Nobody's marrying you to anyone. We're taking you to a grave. Your own. -> calmed
+* [Persuasion DC 14] We're not the castle's. We're taking you to a grave, a real one. -> calmed | not_calmed
+* (Stand your ground.) -> fight
+
+~ calmed
+set bride_calmed
+Narrator: She stops. The water stops running off her. She looks at the bundle in your arms for a long time, the way you'd look at a letter you'd waited forty years to get.
+Zinaida: A grave. Mine. With my name on.
+Narrator: She doesn't come with you. She's simply at the churchyard when you get there, standing beside the grave Mihail dug this week, waiting.
+-> END
+
+~ not_calmed
+Zinaida: Liars. You came from the carriage. Everybody comes from the carriage.
+-> fight
+
+~ fight
+Narrator: She screams. Every shutter in the village slams at once.
+combat well_bride
+
+# --- The grave Mihail dug (prop sixfeet_grave) ---
+
+~ grave
+if not flag.bride_calmed and not flag.bride_beaten
+Narrator: A deep grave, square and clean, by the east wall. The board at its head says PETRA, in Mihail's careful capitals.
+-> END
+endif
+Narrator: A deep grave, square and clean, by the east wall. The board at its head says PETRA. Mihail is standing beside it with his hat in his hands.
+if flag.bride_calmed
+Narrator: Zinaida is beside him, waiting. He can see her. He has always been able to see her.
+endif
+* Lay her in it. -> bury
+* Not yet. -> END
+
+~ bury
+set bride_buried
+quest six_feet buried
+Narrator: You lay the bundle in the bottom, and Mihail takes the board with his sister's name on it and turns it over, and on the back, with his knife, he cuts ZINAIDA.
+Old Mihail: Six feet. I dug it right, at least. Forty years, and I dug every one of them right, and none of them was ever for anybody else. They were all for you.
+if flag.bride_calmed
+Narrator: Zinaida looks down at the grave, and then at Mihail, and says nothing at all. Then there's only Mihail, and the hole, and the spade.
+endif
+Narrator: He fills it in himself and packs it hard. When he's done he sits down on the edge of the next grave over and cries for a while, like a man setting down something heavy.
+Old Mihail: Her coins. The silver ones round her neck. She'd want them spent on the living; take them. And the little charm with them: our grandmother said the girl wore it so the castle couldn't find her. It didn't help her at the bottom of a well. It might help you up here.
+gold +60
+give amulet_of_proof_against_detection_and_location
+approve liriel_dawnsong +2 godrick_pendlebrook +2 thistle +1 wren_featherfoot +1: You buried the bride in the well
+-> END
