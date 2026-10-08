@@ -1,0 +1,18 @@
+{
+  "id": "pastry_customer_man",
+  "name": "Iulian",
+  "title": "Waiting at the Mill",
+  "summary": "A hollow-eyed villager who has walked up from the village with his last coins to wait at the mill door, because the dreams are the only place he is happy now.",
+  "portrait": "villager",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}

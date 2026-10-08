@@ -1,0 +1,11 @@
+# Villagers waiting at Old Bonegrinder's door for dream pastries (lane 28, 2026-10-08: "more people walking around and
+# doing things"). They walk up from the village by day while the hags still bake. Unvoiced for now.
+
+~ man
+Iulian: You're waiting too? No? Then step aside. They open when they open. The old woman knows I'm here. She always knows.
+Iulian: One bite and I'm home, and my wife is alive, and the sun is out. Don't look at me like that. You'd come too.
+-> END
+
+~ woman
+Lucia: Just one for my husband. He can't sleep without them any more. Maybe two. Maybe I'll try one. Only to know what he sees.
+-> END
