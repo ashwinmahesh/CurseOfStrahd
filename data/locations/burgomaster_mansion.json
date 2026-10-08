@@ -315,6 +315,18 @@
       "label": "A map of the valley",
       "model": "valley_map",
       "kind": "decor"
+    },
+    {
+      "id": "study_bricks",
+      "cell": [
+        6,
+        5
+      ],
+      "kind": "examine",
+      "label": "The cold corner",
+      "model": "plaster_seam",
+      "dialogue": "village_of_barovia/the_burgomasters_hound:bricks",
+      "when": "quest.the_burgomasters_hound"
     }
   ],
   "containers": [
@@ -508,6 +520,108 @@
       ],
       "surprise": "",
       "flag": "mansion_siege_survived"
+    },
+    {
+      "id": "hound_tenant",
+      "trigger": "dialogue",
+      "when": "level >= 3",
+      "text": "The Tenant comes up the little stair on all fours, and the servants who starved with him come up behind.",
+      "monsters": [
+        {
+          "monster": "ghast",
+          "cell": [
+            3,
+            4
+          ],
+          "name": "The Tenant"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            2,
+            5
+          ],
+          "name": "A Siege-Winter Servant"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            5,
+            3
+          ],
+          "name": "A Siege-Winter Servant"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            1,
+            4
+          ],
+          "name": "A Siege-Winter Servant"
+        }
+      ],
+      "surprise": "",
+      "flag": "tenant_slain"
+    },
+    {
+      "id": "hound_tenant",
+      "trigger": "dialogue",
+      "when": "level >= 2",
+      "text": "The Tenant comes up the little stair on all fours, and the servants who starved with him come up behind.",
+      "monsters": [
+        {
+          "monster": "ghast",
+          "cell": [
+            3,
+            4
+          ],
+          "name": "The Tenant"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            2,
+            5
+          ],
+          "name": "A Siege-Winter Servant"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            5,
+            3
+          ],
+          "name": "A Siege-Winter Servant"
+        }
+      ],
+      "surprise": "",
+      "flag": "tenant_slain"
+    },
+    {
+      "id": "hound_tenant",
+      "trigger": "dialogue",
+      "text": "The Tenant comes up the little stair on all fours, and the servants who starved with him come up behind.",
+      "monsters": [
+        {
+          "monster": "ghast",
+          "cell": [
+            3,
+            4
+          ],
+          "name": "The Tenant",
+          "hp": 24
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            2,
+            5
+          ],
+          "name": "A Siege-Winter Servant"
+        }
+      ],
+      "surprise": "",
+      "flag": "tenant_slain"
     }
   ],
   "narration": {

@@ -76,6 +76,21 @@ grave Mihail dug for Petra (prop `sixfeet_grave`); he cuts her name on the back 
 - Rewards: 60 gp in her silver coins and the charm she wore so the castle couldn't find her, an Amulet of Proof against
   Detection and Location (uncommon).
 
+### The Burgomaster's Hound (`the_burgomasters_hound`, narrative/village_of_barovia/the_burgomasters_hound.dialogue; batch 4, level 2)
+
+Bildrath's news gets a new topic: Kolyan's wolfhound, Lupu (new NPC, by the mansion door), howls every night at the
+mansion's study wall, not at the wolves. Animal Handling DC 12 lets him lead the party to the study's cold corner (prop
+`study_bricks`): new plaster over brick, dried garlic in the cracks, and something scratching on the other side.
+**Twist:** a note in the mortar (Investigation DC 12): Kolyan's first son, Sergiu, let the thing at the window in during
+the siege winter and came back hungry, and his father couldn't end it and walled him up. Lupu was Sergiu's dog.
+**Escalation:** bless the bricks and seal them again (Religion DC 12: 60 gp in the desk, and the howling stops), or
+break them open (Athletics DC 11) and face the Tenant with Lupu, who joins the party for the fight.
+
+- Fight `hound_tenant` in the study: level 2 the Tenant (a ghast) and two starved servants (ghouls), 850 XP; level 3
+  three servants; below 2 the Tenant at 24 HP and one. With Lupu, the autopilot wins 3 of 4 at level 2 and loses two
+  party members a fight. It's the only side quest below level 3.
+- Opened: 60 gp and the shirt of fine rings Kolyan bought his son before the siege, Mithral Armor (uncommon).
+
 ## The Tser Pool camp (level 4)
 
 Talker: Zora ("Heard anything interesting?" is her old road question renamed). Radu's Nicu line now starts
@@ -425,4 +440,6 @@ Wizard of Wines: the_black_row.dialogue in full (Davian, Adrian; companions' int
 picker lines (Andrei) and davian.dialogue's two new menu options. Batch 3, the
 crossroads: the_counts_huntsman.dialogue in full (new speaker the Huntsman; also Old Paraschiva and Gavril). Batch 3, the
 abbey: mothers_ninth_improvement.dialogue in full (new speaker Mother; also Clovin and Wren's interject), Pavel's new
-carver line and the watchman's new news line in Krezk (the roof).
+carver line and the watchman's new news line in Krezk (the roof). Batch 4, the
+Village of Barovia: the_burgomasters_hound.dialogue in full (Bildrath; companions and Ireena's interjects; Lupu
+doesn't speak).

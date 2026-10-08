@@ -660,6 +660,21 @@
       "id": "mother_flown",
       "type": "bool",
       "summary": "Mother flew down the mountain to Krezk (Mother's Ninth Improvement)."
+    },
+    {
+      "id": "lupu_friend",
+      "type": "bool",
+      "summary": "Lupu, the burgomaster's wolfhound, let the party come close and led them to the study wall (The Burgomaster's Hound)."
+    },
+    {
+      "id": "sergiu_known",
+      "type": "bool",
+      "summary": "The party found Kolyan's note in the bricks: his first son Sergiu is walled up behind the study (The Burgomaster's Hound)."
+    },
+    {
+      "id": "tenant_slain",
+      "type": "bool",
+      "summary": "The Tenant behind the study wall, and the servants who starved with him, are dead (The Burgomaster's Hound)."
     }
   ]
 }

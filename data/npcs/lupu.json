@@ -1,0 +1,22 @@
+{
+  "id": "lupu",
+  "name": "Lupu",
+  "title": "The Burgomaster's Wolfhound",
+  "summary": "A big grey wolfhound going white at the muzzle, with a collar too good for a dog. He was Kolyan's elder son's, and since the burgomaster died he howls every night at the mansion's study wall.",
+  "portrait": "mastiff",
+  "sprite": "mastiff",
+  "attitude": "indifferent",
+  "monster": "wolf",
+  "guest": true,
+  "guest_build": {
+    "monster": "wolf",
+    "note": "A wolf's stat block (a big wolfhound). Stands with the party for the one fight in the burgomaster's study (The Burgomaster's Hound) and goes back to the step after."
+  },
+  "tags": [
+    "beast",
+    "dog",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}
