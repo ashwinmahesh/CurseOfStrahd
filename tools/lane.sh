@@ -78,16 +78,20 @@ refresh_seed() {
   if [ ! -d "$source_dir" ]; then
     quiet git -C "$main" worktree add -q --detach "$source_dir" main
     git -C "$main" worktree lock --reason "seed for lanes on the removable SSD" "$source_dir"
-    # main's import cache, and the untracked .import files beside the assets (without them Godot imports every asset
-    # again). Plain copies: clones can't cross volumes.
+    # main's import cache: a plain copy, since clones can't cross volumes.
     mkdir -p "$source_dir/.godot" && cp -Rp "$main/.godot/imported" "$source_dir/.godot/"
-    rsync -a --ignore-existing --exclude=/.git --exclude=/.godot --exclude=/captures --exclude=/builds \
-      --include='*/' --include='*.import' --exclude='*' --prune-empty-dirs "$main/" "$source_dir/"
     say "made the seed at $source_dir"
   else
     # -f: the seed holds nothing of anyone's, and an import stopped part-way can leave project.godot rewritten.
     quiet git -C "$source_dir" checkout -q -f --detach main
   fi
+  # Every refresh: main's untracked .import files that the seed doesn't have yet (the tracked ones came with the
+  # checkout). They hold the import settings of the art beside them: without them Godot imports that art again in the
+  # seed, with default settings for art merged into main since. One the seed already has is kept, since Godot rewrites
+  # it there after importing (its own uid, for one) and copying main's over it would import that art again each time.
+  git -C "$main" ls-files -z --others --ignored --exclude-standard -- '*.import' ':!captures/' ':!builds/' \
+    | rsync --ignore-existing --from0 --files-from=- "$main/" "$source_dir/" \
+    || say "some of main's .import files weren't copied (one changed or went away meanwhile); the seed imports those"
   if [ -z "${LANE_NO_IMPORT:-}" ] && ! make -C "$source_dir" import; then
     say "the seed's import logged errors (make -C $source_dir import); the lane gets them too"
   fi
