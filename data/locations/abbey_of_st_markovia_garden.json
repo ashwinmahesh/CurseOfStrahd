@@ -13,14 +13,14 @@
       "#...........=..........#",
       "#.~~~~~~~~....~~~~~~~~.#",
       "#......................#",
-      "#......................#",
+      "#..=.=.=........=.=.=..#",
       "#.~~~~~~~~....~~~~~~~~.#",
       "#......................#",
       "#......................#",
       "#..####..........=.=.=.#",
       "#..####................#",
       "#..####...........=.=..#",
-      "#......................#",
+      "#........=.............#",
       "#......................#",
       "###########..###########"
     ],
@@ -123,7 +123,8 @@
       ],
       "kind": "examine",
       "label": "A scarecrow with a stitched mouth",
-      "model": "coats"
+      "model": "scarecrow_stitched",
+      "facing": "south"
     },
     {
       "id": "scarecrow_west",
@@ -133,7 +134,8 @@
       ],
       "kind": "decor",
       "label": "Scarecrow",
-      "model": "coats"
+      "model": "scarecrow_stitched",
+      "facing": "south"
     },
     {
       "id": "scarecrow_mid",
@@ -143,7 +145,8 @@
       ],
       "kind": "decor",
       "label": "Scarecrow",
-      "model": "coats"
+      "model": "scarecrow_stitched",
+      "facing": "south"
     },
     {
       "id": "scarecrow_east",
@@ -153,7 +156,8 @@
       ],
       "kind": "decor",
       "label": "Scarecrow",
-      "model": "coats"
+      "model": "scarecrow_stitched",
+      "facing": "south"
     },
     {
       "id": "frost_bed",
@@ -197,6 +201,117 @@
       "label": "a pouch hidden in the tool shed",
       "model": "sack",
       "item": "bag_of_beans"
+    },
+    {
+      "id": "frost_bed_w1",
+      "cell": [
+        3,
+        8
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "frost_bed_w2",
+      "cell": [
+        5,
+        8
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "frost_bed_w3",
+      "cell": [
+        7,
+        8
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "frost_bed_e1",
+      "cell": [
+        16,
+        8
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "frost_bed_e2",
+      "cell": [
+        18,
+        8
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "frost_bed_e3",
+      "cell": [
+        20,
+        8
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "nun_grave_1",
+      "cell": [
+        17,
+        12
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "nun_grave_2",
+      "cell": [
+        21,
+        12
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "nun_grave_3",
+      "cell": [
+        18,
+        14
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "nun_grave_4",
+      "cell": [
+        20,
+        14
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "grave_holy_water",
+      "cell": [
+        22,
+        15
+      ],
+      "kind": "search",
+      "label": "something buried at the foot of the last grave",
+      "model": "rubble",
+      "search_dc": 13,
+      "item": "holy_water"
+    },
+    {
+      "id": "garden_barrow",
+      "cell": [
+        9,
+        15
+      ],
+      "kind": "decor",
+      "model": "barrow"
     }
   ],
   "containers": [

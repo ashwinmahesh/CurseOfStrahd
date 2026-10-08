@@ -234,3 +234,16 @@ once
 ~ search:shed_beans
 | Behind the tool shed's door, in a pouch of heavy cloth, a handful of dry beans. They are warm, and one of them is trying to sprout.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the courtyard and cloister at work.
+
+~ examine:statue_candles
+| Candle stubs crowd the statue's feet, dozens of them, burnt down to puddles. Someone keeps lighting new ones. The wax has run into the shapes of hands.
+
+~ search:feather_bench
+| Under the feathers heaped on the bench, grey and white and some that came from nothing that flies, a fine ink pen with a silver nib. {name} brushes the down off it.
+once
+
+~ search:grave_holy_water
+| At the foot of the last nun's grave, under a sun scratched into the frozen earth, a small stoppered flask of holy water, buried as an offering. {name} digs it free.
+once
