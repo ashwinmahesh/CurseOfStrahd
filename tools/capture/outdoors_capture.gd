@@ -3,7 +3,8 @@ extends Node3D
 ## camera with the party standing in it, the minimap in its corner as the HUD shows it, and the frame's draw calls,
 ## objects and triangles (and, with OUTDOORS_TIME=1, its frame time uncapped). Not part of the game.
 ##   make capture SCENE=res://tools/capture/outdoors_capture.tscn NAME=outdoors/before FRAMES=10
-## Environment: OUTDOORS_SHOTS=tser_road,tser_tent (default: every shot), OUTDOORS_TIME=1.
+## Environment: OUTDOORS_SHOTS=tser_road,tser_tent (default: every shot), OUTDOORS_TIME=1, OUTDOORS_LOCS=krezk,berez
+## (instead: each place from its arrival, near and far, to check it against its descriptions).
 
 ## Each shot: the place, the hour, where the leader stands (the others beside them), the camera's distance, its
 ## quarter turns and how far it tilts toward the horizon (CameraRig.horizon, 0 to 1).
@@ -35,10 +36,16 @@ func _ready() -> void:
 
 func capture_shots(tool: Node, out: String) -> void:
 	var only := OS.get_environment("OUTDOORS_SHOTS").split(",", false)
-	for id: String in SHOTS:
+	var shots := SHOTS.duplicate()
+	if OS.get_environment("OUTDOORS_LOCS") != "":
+		shots.clear()
+		for loc_id: String in OS.get_environment("OUTDOORS_LOCS").split(",", false):
+			shots[loc_id + "_near"] = {"loc": loc_id, "hour": 15, "zoom": 16.0}
+			shots[loc_id + "_far"] = {"loc": loc_id, "hour": 15, "zoom": 30.0, "tilt": 0.6}
+	for id: String in shots:
 		if not only.is_empty() and not id in only:
 			continue
-		_build(SHOTS[id] as Dictionary)
+		_build(shots[id] as Dictionary)
 		await tool.call("wait_frames", 45)
 		var rid := get_viewport().get_viewport_rid()
 		print("outdoors %s: %d draw calls, %d objects, %d primitives" % [id,
@@ -72,12 +79,15 @@ func _build(shot: Dictionary) -> void:
 	var st := GameState.story
 	st.minute_of_day = int(shot.get("hour", 12)) * 60
 	var loc_id := str(shot["loc"])
-	var at := shot["at"] as Array
-	st.location = loc_id
-	st.visited[loc_id] = true
-	for d in BESIDE:
-		st.positions.append(Vector2i(int(at[0]), int(at[1])) + d)
-	view = LocationView.create(loc_id, st, Narrator.new(), Dice.roller, "")
+	var spawn := "default"
+	if shot.has("at"):
+		var at := shot["at"] as Array
+		st.location = loc_id
+		st.visited[loc_id] = true
+		for d in BESIDE:
+			st.positions.append(Vector2i(int(at[0]), int(at[1])) + d)
+		spawn = ""
+	view = LocationView.create(loc_id, st, Narrator.new(), Dice.roller, spawn)
 	add_child(view)
 	view.update_daylight()
 	view.atmosphere.settle()
