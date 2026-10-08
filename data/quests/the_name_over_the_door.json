@@ -1,0 +1,57 @@
+{
+  "id": "the_name_over_the_door",
+  "name": "The Name Over the Door",
+  "summary": "Mordenkainen says the archmage who built the tower on the tarn never died: he moved downstairs, and he's waking.",
+  "giver": "mordenkainen",
+  "region": "van_richtens_tower",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Mordenkainen says Khazan, archmage of the old kings, who built the tower on Lake Baratok, never died. His sort move downstairs. Something under that tower is getting fat on being remembered.",
+      "objectives": [
+        "Look under the hearth in Van Richten's Tower"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "Under the hearthstone in Van Richten's Tower a stair goes down past the level of the lake, and from the bottom of it comes the sound of pages turning.",
+      "objectives": [
+        "Go down under the tower"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "met",
+      "journal": "Khazan is a lich, courteous and very old, in a study under his tower. He keeps a book of the name of everyone who has ever said his own at the door. Ours are in it.",
+      "objectives": [
+        "Find out what keeps him in the world",
+        "Deal with Khazan"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "named",
+      "journal": "We drove Khazan out of his body, and it came apart into dust that went up through the ceiling, toward the tower and its door. While his name stands over that door, he'll only form again.",
+      "objectives": [
+        "Unmake the name over the tower door",
+        "Then go back down and finish him"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "unnamed",
+      "journal": "The name over the tower door is gone. Under the island something let out a very long breath. Whatever forms again in the study below won't have a name to go back to.",
+      "objectives": [
+        "Go down under the tower and finish Khazan"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "unmade",
+      "journal": "Khazan is gone for good. The book of names is blank, every page. Whatever he kept in his study is ours, and nobody has to say his name again.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

@@ -3,11 +3,15 @@
 # apprentice, blown out of the hut by the storm he forgot he'd ordered, are frozen into the mountain. They give her
 # name, Corvina, and the truth he lost: he didn't lose a fight with the count; he ran, while she held the door behind
 # him. The last letter has a postscript in the count's hand. It leads to The Unnamed Crypt in the castle. Reached from
-# Mordenkainen's "Heard anything interesting?" once he is himself. Every line here is unvoiced for now.
+# Mordenkainen's "Heard anything interesting?" once he is himself. Once Corvina's name is back and the party is level
+# 10, his news is Khazan under the tower (The Name Over the Door). Every line here is unvoiced for now.
 
 # --- Mordenkainen (mordenkainen:restored_menu jumps here) ---
 
 ~ news
+if flag.corvina_name_known and level >= 10 and not quest.the_name_over_the_door
+-> van_richtens_tower/the_name_over_the_door:mordenkainen_news
+endif
 if quest.the_unnamed_crypt == done
 Mordenkainen: You found her. (He doesn't ask how it went. He looks at your faces and doesn't need to.) Did she have ink on her fingers still? She always did. Thank you. Now go away for a while. I'd like to be old in private.
 -> mount_baratok/mordenkainen:restored_menu

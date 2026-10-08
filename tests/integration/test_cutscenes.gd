@@ -230,6 +230,23 @@ func test_ireenas_window_shows_ismark_only_when_he_is_there() -> void:
 	assert_eq(Cutscenes.image("ireena_window", st), "", "in Krezk the room and the guard don't match the picture")
 
 
+## UI QA (ART-07, SND-03): no still carries a black band along an edge (vosk_unmasked had one across its top), and the
+## pause card holds the Narrator's voice with the picture.
+func test_stills_have_no_black_bands_and_pausing_holds_the_voice() -> void:
+	var img := Image.load_from_file(ProjectSettings.globalize_path("res://art/cutscenes/vosk_unmasked.jpg"))
+	var top := 0.0
+	for x in range(0, img.get_width(), 16):
+		top = maxf(top, img.get_pixel(x, 2).get_luminance())
+	assert_true(top > 0.05, "Vosk's still starts with the picture, not a black band")
+	var view := CutsceneView.new()
+	add_child(view)
+	view.set_paused(true)
+	assert_true(VoiceOver.is_paused(), "the pause card holds the voice")
+	view.set_paused(false)
+	assert_false(VoiceOver.is_paused(), "and Resume lets it go on")
+	view.queue_free()
+
+
 func test_every_cutscene_statement_names_a_cutscene_with_a_picture() -> void:
 	Cutscenes.clear_cache()
 	var named := {}

@@ -116,6 +116,10 @@
     "lantern_from_below": [
       4,
       26
+    ],
+    "from_undercroft": [
+      4,
+      7
     ]
   },
   "exits": [
@@ -178,6 +182,17 @@
       "to": "van_richtens_tower_interior",
       "spawn": "workroom_from_above",
       "label": "Stairs down to the workroom"
+    },
+    {
+      "id": "vrt_undercroft_stair",
+      "cell": [
+        2,
+        7
+      ],
+      "to": "khazan_undercroft",
+      "spawn": "from_tower",
+      "label": "Down under the hearth",
+      "when": "flag.khazan_stair_open"
     }
   ],
   "props": [
@@ -401,6 +416,18 @@
       "label": "A window",
       "model": "window_tall",
       "kind": "decor"
+    },
+    {
+      "id": "vrt_hearthstone",
+      "cell": [
+        2,
+        6
+      ],
+      "kind": "examine",
+      "label": "The hearthstone",
+      "model": "floor_crack",
+      "when": "level >= 10 or quest.the_name_over_the_door",
+      "dialogue": "van_richtens_tower/the_name_over_the_door:hearthstone"
     }
   ],
   "containers": [

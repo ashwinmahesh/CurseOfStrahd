@@ -626,11 +626,11 @@
     {
       "id": "tser_pen_whistle",
       "cell": [
-        6,
+        4,
         19
       ],
       "kind": "search",
-      "label": "Something trodden into the pen",
+      "label": "Something trodden into the mud by the pen",
       "model": "satchel",
       "search_dc": 13,
       "item": "signal_whistle"

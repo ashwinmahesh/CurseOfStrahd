@@ -52,7 +52,8 @@ Narrator: The road bends under a bare ridge. ...
 - A click, Space or Enter: the next caption (past the last one in a place's cutscene, it closes).
 - Skip (top right): a conversation's captions go by unread up to the next choice, note or the end (they stay in the
   History); a place's cutscene closes.
-- Esc: pauses, with Resume and Skip the scene. Esc again resumes. Nothing else moves on while it's paused.
+- Esc: pauses, with Resume and Skip the scene. Esc again resumes. Nothing else moves on while it's paused, the Narrator's
+  voice included (VoiceOver.set_paused; UI QA SND-03).
 
 ## Endings
 An ending's narration (`narrative/endings/`) can hold `cutscene <id>` too: the ending screen puts the picture behind
@@ -79,7 +80,8 @@ area starts (the gallows field at night) takes the area's `enter:` trigger; the 
 `art/prompts/cutscene_preamble.txt`, 16:9 at 2K (2752x1536, about $0.10 a picture), and the cast's turnarounds from
 `art/generated/characters/` as references so faces and clothes match the sprites. The party is drawn hooded and from
 behind, since the player makes their own heroes. Takes are kept in `art/generated/cutscenes/<image>_<a, b ...>.png`;
-the recipe's `use` take is saved as `art/cutscenes/<image>.jpg` (quality 92, Git LFS: Gemini returns JPEG anyway,
+the recipe's `use` take is saved as `art/cutscenes/<image>.jpg`, any solid black band along an edge trimmed off
+(vosk_unmasked's take had one across its top; UI QA ART-07) (quality 92, Git LFS: Gemini returns JPEG anyway,
 and the game's copies stay about 0.7 MB each) and imported with VRAM compression and mipmaps
 (`tools/art/set_import.py`, force-add its `.import`). `--sheet` draws a contact sheet of the newest takes for review.
 

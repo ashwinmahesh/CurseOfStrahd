@@ -603,6 +603,37 @@ keepers had three ways of going down to her safely, and each one is a lair trick
   (rare); her hoard, 900 gp of real coin from forty years of tithes in among the lead, and the silver's Dragon Scale
   Mail (very rare). Stills: `ghakis_shoulder` (the loading card) and `sq_sarkhaza` (her first meeting).
 
+## Van Richten's Tower (level 10)
+
+### The Name Over the Door (`the_name_over_the_door`, narrative/van_richtens_tower/the_name_over_the_door.dialogue; batch 5, an owner-asked boss)
+
+Mordenkainen's "Heard anything interesting?", once Corvina's name is back and the party is level 10: Khazan, archmage to
+the old kings, who built the tower on the tarn, never died ("his sort move downstairs"), and something under the tower
+is getting fat on being remembered. In the tower hall a cold hearthstone with frost in its cracks (prop
+`vrt_hearthstone`, shown from level 10 or once the quest is known) lifts on a stair (Investigation DC 13, or half an
+hour) down to Khazan's undercroft (data/locations/khazan_undercroft.json): the stair foot, the hall of names, a crypt
+the lake has got into, and his study. **Escalation:** the hall's books open and the people written in them come out;
+in the study Khazan's book of names ends with Ezmerelda's, Van Richten's and, ink still wet, the reader's own.
+**Twist:** he became a lich the cheap way. His phylactery is his name, cut over the tower door, which everyone who
+comes in says to open it; every one of them kept him. He tells the party if they've read the book, or Arcana DC 16
+works it out. **Second twist:** without his name he doesn't know who he is, and asks to hear it once more.
+
+- **Boss: Khazan** (data/monsters/khazan.json, `source.book: custom`, built down from the 2025 Monster Manual's lich,
+  drawn with Exethanter's sprite): Medium undead, AC 18, 190 HP, two Eldritch Bursts (+10, 4d10 force) or a Paralyzing
+  Touch and a burst, Fireball and Lightning Bolt twice a day, Cone of Cold and Hold Monster once, Disrupt Life,
+  Legendary Resistance (3/day), a burst, a step or Disrupt Life between turns, and his undercroft on initiative 20
+  (every name he knows, whispered; the cold of the lake overhead). CR 14.
+- **A phased fight.** While the name stands (`khazan_named`): 250 HP, two Visitors (specters), his lair; he can't be
+  destroyed, and below 60 HP he comes apart into dust that goes up through the ceiling toward the door (`withdraw`,
+  `khazan_withdrawn`). The autopilot drives him off 2 times in 4 at level 10, losing three party members a fight.
+  Unmade at the door (Athletics DC 16, or chisel it out over a day), he forms again in his chair without it
+  (`khazan_unmade`): 210 HP and two Visitors, no lair, no way back; given his name to die with, he starts the fight
+  surprised. The autopilot wins 2 of 4, losing three a fight. A party that works it out first can unmake the name before
+  they ever fight him.
+- The hall of names (`remembered`): a banshee, two ghosts and six specters. The autopilot wins 3 of 4 at level 10.
+- Rewards: Bracers of Defense (rare) in the drowned crypt's silt (Investigation DC 16); his coffer, once he's gone,
+  800 gp and a Wand of the War Mage, +3 (very rare). Still: `sq_khazan` (his first meeting).
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -650,4 +681,5 @@ line in the_mages_lost_pages.dialogue. Batch 5,
 Into the Mists: the_last_traveller.dialogue in full (new speaker Ilarion; also Goodwife Petra) and Old Mihail's new
 gravedigger line in the village townsfolk.dialogue. Batch 5, Mount Ghakis: the_warm_snow.dialogue in full (new speakers
 Sarkhaza, Doina and Petrache; also Sergeant Valcu's new log lines and the companions' interjects) and
-narrator/mount_ghakis.dialogue.
+narrator/mount_ghakis.dialogue. Batch 5, Van Richten's Tower: the_name_over_the_door.dialogue in full (new speaker
+Khazan; also Mordenkainen's news and the companions' interjects) and narrator/khazan_undercroft.dialogue.

@@ -1,0 +1,18 @@
+{
+  "id": "khazan",
+  "name": "Khazan",
+  "title": "Archmage of the Old Kingdom",
+  "summary": "The archmage who built the tower on Lake Baratok before the count was born, and who never quite died. He keeps himself in the world with his own name, cut over his door, and collects the names of everyone who says it.",
+  "portrait": "exethanter",
+  "sprite": "exethanter",
+  "attitude": "indifferent",
+  "monster": "khazan",
+  "guest": false,
+  "tags": [
+    "undead",
+    "lich",
+    "van_richtens_tower"
+  ],
+  "region": "van_richtens_tower",
+  "pronouns": "he/him"
+}

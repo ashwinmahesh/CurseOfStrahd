@@ -120,3 +120,10 @@ The journal shows each reached stage's text in order.
 Types: `bool`, `int`, `string`. Every flag a dialogue file, location or quest reads or sets is registered in one of
 these files. `make validate` fails if a flag is
 read but never set, set but never read, or used but missing.
+
+`make validate` also walks the whole story from a new game (tools/data/story_reach.py): exits and the travel map,
+every conversation from its NPC, prop, road event, Strahd visit, schedule, camp talk, banter, captive, watch and ending,
+taking anything that could be true as true. It fails on a quest stage, conversation node, prop with an item or a
+conversation, or container that no playthrough reaches; on a flag a condition reads that nothing reachable sets; and on
+quest stages only reached on a map that a random road encounter happens to open (give such a place an exit or a
+travel place with a `when`).
