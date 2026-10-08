@@ -749,52 +749,67 @@
   "recipe": "c0fe071a64",
   "text": "Father's by the fire, Stefania's everywhere at once, and I'm here, being useful at a distance. What do you need?"
  },
+ "alenka/158dbb471aa1ec2f": {
+  "chars": 52,
+  "direction": "[teasing, laughing]",
+  "model": "eleven_v3",
+  "recipe": "1747d0c318",
+  "text": "Brave. Very brave. Sit down before you hurt someone."
+ },
  "alenka/2301d275376e9652": {
   "chars": 85,
+  "direction": "[delighted, teasing]",
   "model": "eleven_v3",
-  "recipe": "f8a8703cf3",
+  "recipe": "1747d0c318",
   "text": "Generous! Arik, the good bottle. Yes, he has a good bottle. No, you've never seen it."
  },
  "alenka/874be210525243e6": {
   "chars": 114,
+  "direction": "[bright, teasing, curious]",
   "model": "eleven_v3",
-  "recipe": "f8a8703cf3",
+  "recipe": "1747d0c318",
   "text": "Sit, strangers. You came out of the house at the end of the lane. People don't. So: buy us a cup, and tell us how."
  },
  "alenka/8fd52f62b45bd90b": {
   "chars": 143,
+  "direction": "[playful, then knowing, low]",
   "model": "eleven_v3",
-  "recipe": "f8a8703cf3",
+  "recipe": "1747d0c318",
   "text": "The burgomaster's daughter. Beautiful. Unlucky. The lord of the land has taken an interest. When he takes an interest, it's best to step aside."
  },
  "alenka/a107d4723fe1d897": {
   "chars": 101,
+  "direction": "[bright, flirtatious]",
   "model": "eleven_v3",
-  "recipe": "f8a8703cf3",
+  "recipe": "1747d0c318",
   "text": "Back for more of our company? Sensible. It's the best in the valley, and the wine is still the worst."
  },
  "alenka/a959f6b1841d846d": {
   "chars": 26,
+  "direction": "[teasing, laughing]",
   "model": "eleven_v3",
-  "recipe": "f8a8703cf3",
+  "recipe": "1747d0c318",
   "text": "Be kind, Mirabel. He tips."
  },
  "alenka/cb1a575e228c53cb": {
   "chars": 179,
+  "direction": "[proud, playful]",
   "model": "eleven_v3",
-  "recipe": "f8a8703cf3",
+  "recipe": "1747d0c318",
   "text": "Vistani. Our wagons go where they like; the mists open for us. Our camp is at Tser Pool, west along the road. Madam Eva keeps it. She reads the cards for strangers who ask nicely."
  },
  "alenka/cf31fc830a59b33f": {
   "chars": 115,
+  "direction": "[bright, playful, laughing]",
   "model": "eleven_v3",
-  "recipe": "f8a8703cf3",
+  "recipe": "1747d0c318",
   "text": "Sit, strangers. New faces in Barovia! That happens about as often as sunshine. Buy us a cup and tell us everything."
  },
  "alenka/d9df2229ca21e003": {
   "chars": 67,
+  "direction": "[sobering, quiet]",
   "model": "eleven_v3",
-  "recipe": "f8a8703cf3",
+  "recipe": "1747d0c318",
   "text": "The mists let us pass. Not you. Not anyone he hasn't finished with."
  },
  "amber_sentinel/0a25b9ddcc138304": {
@@ -856,128 +871,156 @@
  },
  "anna_krezkova/01401729de773b46": {
   "chars": 62,
+  "direction": "[quiet, fierce]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "Bring back the Abbot instead. Down this mountain, to this bed."
  },
  "anna_krezkova/0d72c61bb8319347": {
   "chars": 115,
+  "direction": "[surprised, moved]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "You found another. You came back to give this to me, when nobody would have known. Well. Krezk will hear about you."
  },
  "anna_krezkova/1277f90c85232faa": {
   "chars": 188,
+  "direction": "[exhausted, grieving]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "A month. It came with the carter's cough in the autumn and it found him and it won't let go. He burns all night and shivers all day. He's stopped asking for things. That was the worst day."
  },
  "anna_krezkova/14eeef056dd859a2": {
   "chars": 17,
+  "direction": "[overcome, breathless, tearful]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "Oh. Oh, my heart."
  },
  "anna_krezkova/26ef37945c8d952f": {
   "chars": 48,
+  "direction": "[tired, determined]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "He'll live. I can do the rest. I've done harder."
  },
  "anna_krezkova/31f6afe8ae12bce0": {
   "chars": 124,
+  "direction": "[grateful, puzzled]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "You saved my son. You could ask me for the roof and I'd go up and start on the nails. What does he want a wedding dress for?"
  },
  "anna_krezkova/3aedcdd1558edb9f": {
   "chars": 127,
+  "direction": "[tender, grateful]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "He sleeps like a child sleeps now, not like a candle going out. Thin as a reed, but he sleeps. The White Sun did that. And you."
  },
  "anna_krezkova/3baa795f92a4f50e": {
   "chars": 170,
+  "direction": "[cold, hurt]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "Someone has been through my chest. My mother's ring is gone, and the money we kept for the boy's stone. I won't ask who. I don't want to know what kind of guests we keep."
  },
  "anna_krezkova/3e6a910056c4dda1": {
   "chars": 156,
+  "direction": "[weary, desperate]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "Then I won't ask. It's in the chest at the foot of my bed. Take it. If it buys my son a morning, he can make a scarecrow's wedding out of it for all I care."
  },
  "anna_krezkova/5fab191a5a62d1b1": {
   "chars": 146,
+  "direction": "[joyful, laughing]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "Look at him. No, don't, he'll show off. He's eaten three bowls of porridge and asked to see the abbey. I said yes. I said yes to everything today."
+ },
+ "anna_krezkova/7625c192c422830a": {
+  "chars": 168,
+  "direction": "[tender, grateful, tearful]",
+  "model": "eleven_v3",
+  "recipe": "9d6e2b2b80",
+  "text": "And this. My mother's amulet. We hung it on his bed all month and it did nothing for him, because it was never his to wear. It's yours now. Be well, the way he will be."
  },
  "anna_krezkova/87d090dfdd60df27": {
   "chars": 134,
+  "direction": "[quiet, bitter, steady]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "So. He's sewing a girl for the devil, and he wants her married in white. And if I give it, he'll come down and put his hand on my son."
  },
  "anna_krezkova/8b1b87050630052b": {
   "chars": 28,
+  "direction": "[breathless, hopeful]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "His fever. Feel. It's going."
  },
  "anna_krezkova/8c3c1917f07d2b29": {
   "chars": 125,
+  "direction": "[sad, broken, quiet]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "I kept it for a daughter. I had three. They're by the pool. Give it to his poor stitched girl. At least someone will wear it."
  },
  "anna_krezkova/9ed14f8c6b252703": {
   "chars": 83,
+  "direction": "[weary, wry]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "That's what I've been telling Dmitri for a month. It sounds better from a stranger."
  },
  "anna_krezkova/a2188ac94ebf9443": {
   "chars": 54,
+  "direction": "[hushed, weary]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "Come in. Quietly. He's sleeping, or something like it."
  },
  "anna_krezkova/b158ccf5a2a781cd": {
   "chars": 157,
+  "direction": "[bitter, incredulous]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "A dress. That's his price? Not my soul, not my firstborn? He's had five of my firstborns, by now, one way and another. What does he want a wedding dress for?"
  },
  "anna_krezkova/c1aeb7c985bc138c": {
   "chars": 116,
+  "direction": "[tired, dry]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "Back again, and empty-handed, by the look of you. The abbey's matron kept her door locked, then. Or you didn't look."
  },
  "anna_krezkova/cd8a226dc0de0bd1": {
   "chars": 140,
+  "direction": "[bitter, weary]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "The Abbot would come if Dmitri asked. Dmitri won't ask. He thinks there's a price. Of course there's a price. There's a price for breathing."
  },
  "anna_krezkova/d74106e4af53c878": {
   "chars": 184,
+  "direction": "[cold, urgent]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "You'd rather find another? Up in that abbey, perhaps. The nuns left everything behind when they went; they say the matron's room is still locked. Find one there, then. Find it quickly."
  },
  "anna_krezkova/dc45e6379ae91d05": {
   "chars": 72,
+  "direction": "[tearful, insistent]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "Take this. Don't argue. It was for his stone, and he won't need one now."
  },
  "anna_krezkova/e0749c792a26d81a": {
   "chars": 117,
+  "direction": "[tired, flat]",
   "model": "eleven_v3",
-  "recipe": "1a42aa412d",
+  "recipe": "9d6e2b2b80",
   "text": "You're the strangers Dmitri let in. Come and see him, then. Everyone does, and goes away again. I've stopped minding."
  },
  "arabelle/0a17499d26b52d7d": {
@@ -1388,56 +1431,79 @@
  },
  "arik/0cf7d8083b7cbea9": {
   "chars": 5,
+  "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "751b5c2f20",
+  "recipe": "94a1815f36",
   "text": "Wine."
  },
  "arik/3b587007c4f432bf": {
   "chars": 11,
+  "direction": "[flat, curt]",
   "model": "eleven_v3",
-  "recipe": "751b5c2f20",
+  "recipe": "94a1815f36",
   "text": "Locks work."
  },
  "arik/566204264e5a1813": {
   "chars": 53,
+  "direction": "[flat, weary]",
   "model": "eleven_v3",
-  "recipe": "751b5c2f20",
+  "recipe": "94a1815f36",
   "text": "Wizard of Wines. No cask in three weeks. Last barrel."
+ },
+ "arik/669f2e069919cf22": {
+  "chars": 23,
+  "direction": "[flat, toneless]",
+  "model": "eleven_v3",
+  "recipe": "94a1815f36",
+  "text": "Bottles. The cart came."
  },
  "arik/7278adb4c080dcb9": {
   "chars": 11,
+  "direction": "[flat, empty]",
   "model": "eleven_v3",
-  "recipe": "751b5c2f20",
+  "recipe": "94a1815f36",
   "text": "Still none."
  },
  "arik/a5cedc0c5b77d039": {
   "chars": 47,
+  "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "751b5c2f20",
+  "recipe": "94a1815f36",
   "text": "Ismark. Burgomaster's son. Folk say the Lesser."
  },
  "arik/ad9e1b7799e6e5c1": {
   "chars": 24,
+  "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "751b5c2f20",
+  "recipe": "94a1815f36",
   "text": "Your friend. The Lesser."
  },
  "arik/b3ad54b6601098b4": {
   "chars": 27,
+  "direction": "[flat, faintly interested]",
   "model": "eleven_v3",
-  "recipe": "751b5c2f20",
+  "recipe": "94a1815f36",
   "text": "Scholar. You found the bag."
  },
  "arik/d0905c601a72bf1e": {
   "chars": 21,
+  "direction": "[flat, curt]",
   "model": "eleven_v3",
-  "recipe": "751b5c2f20",
+  "recipe": "94a1815f36",
   "text": "Upstairs. Locks work."
+ },
+ "arik/d73b4301a66ff7a9": {
+  "chars": 25,
+  "direction": "[flat, toneless]",
+  "model": "eleven_v3",
+  "recipe": "94a1815f36",
+  "text": "Bottles. While they last."
  },
  "arik/fa796a2f1fd6c62b": {
   "chars": 69,
+  "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "751b5c2f20",
+  "recipe": "94a1815f36",
   "text": "Scholar. Wrote a lot. Went up the castle road. Left a bag. Back room."
  },
  "arrigal/0f917e39d7001e69": {
@@ -10109,74 +10175,93 @@
  },
  "henrik/0c05235fc99de270": {
   "chars": 209,
+  "direction": "[terrified, whispering, rushing]",
   "model": "eleven_v3",
-  "recipe": "5e9e5b31b1",
+  "recipe": "b37cf3c360",
   "text": "They came in crates. A black carriage brought them, no driver I could see. Big crates. Heavy. And then a voice, in my head, at night, telling me what to do. Buy the saint. Keep him in the storeroom. With them."
  },
  "henrik/2f3a5294ae951916": {
   "chars": 136,
+  "direction": "[trembling, pleading]",
   "model": "eleven_v3",
-  "recipe": "5e9e5b31b1",
+  "recipe": "b37cf3c360",
   "text": "The bones are in the small crate, by the back wall. I wrapped him in an altar cloth. It seemed right. Please don't tell them I told you."
  },
  "henrik/3e6cf6adb3df19df": {
   "chars": 99,
+  "direction": "[frightened whisper]",
   "model": "eleven_v3",
-  "recipe": "5e9e5b31b1",
+  "recipe": "b37cf3c360",
   "text": "Please. Please keep your voice down. They can hear through wood. They hear everything through wood."
  },
  "henrik/4cafa8431b0ba5fd": {
   "chars": 71,
+  "direction": "[wondering, relieved]",
   "model": "eleven_v3",
-  "recipe": "5e9e5b31b1",
+  "recipe": "b37cf3c360",
   "text": "They're gone? Really gone? I slept last night. In a bed. Like a person."
  },
  "henrik/60343994a8d4f468": {
   "chars": 115,
+  "direction": "[jittery, flustered]",
   "model": "eleven_v3",
-  "recipe": "5e9e5b31b1",
+  "recipe": "b37cf3c360",
   "text": "We're closed. We're open. What do you need? A coffin? I have coffins. Many sizes. Mostly the small ones, this year."
  },
  "henrik/9768f2aa3573f693": {
   "chars": 145,
+  "direction": "[earnest, awkward]",
   "model": "eleven_v3",
-  "recipe": "5e9e5b31b1",
+  "recipe": "b37cf3c360",
   "text": "If you ever need a coffin, you'll have one for nothing. That's not a threat. I realise it sounds like one. It's the only gift I know how to give."
  },
  "henrik/9a8631343d7ce1ac": {
   "chars": 202,
+  "direction": "[hushed, terrified]",
   "model": "eleven_v3",
-  "recipe": "5e9e5b31b1",
+  "recipe": "b37cf3c360",
   "text": "They sleep in the day. At night they go out. They're waiting for the church to be just a church. Then they'll go in, and they'll take whoever is sheltering there, and they'll bring them up the mountain."
  },
  "henrik/ba64038033867819": {
   "chars": 124,
+  "direction": "[panicked, stammering]",
   "model": "eleven_v3",
-  "recipe": "5e9e5b31b1",
+  "recipe": "b37cf3c360",
   "text": "Milivoj said that? He... I... yes. Yes. Twenty gold. I'll give it back. I'll give it all back. Please don't make me say why."
  },
  "henrik/bfe1b002f704ba30": {
   "chars": 112,
+  "direction": "[nervous, grim humour]",
   "model": "eleven_v3",
-  "recipe": "5e9e5b31b1",
+  "recipe": "b37cf3c360",
   "text": "Business is always good. That's the trouble with my trade, in this valley. Nobody ever has to be talked into it."
+ },
+ "henrik/df1907bd0a39db42": {
+  "chars": 81,
+  "direction": "[relieved, warm, jittery]",
+  "model": "eleven_v3",
+  "recipe": "b37cf3c360",
+  "text": "You again. Good. I mean that. Wood, nails, a box for a friend. Whatever you need."
  },
  "henrik/e26f55ccdb34d6e6": {
   "chars": 104,
+  "direction": "[panicked, evasive]",
   "model": "eleven_v3",
-  "recipe": "5e9e5b31b1",
+  "recipe": "b37cf3c360",
   "text": "Wood. Nails. Shavings. Nothing. Nothing at all. Don't go in there. It's a mess. I'm ashamed of the mess."
  },
  "henrik/e45504fdd4aa1470": {
   "chars": 169,
+  "direction": "[relieved, ashamed]",
   "model": "eleven_v3",
-  "recipe": "5e9e5b31b1",
+  "recipe": "b37cf3c360",
   "text": "And you took the saint back out of my storeroom. Good. I couldn't look at that crate. It was the only thing in there that made me feel better, and I couldn't look at it."
  },
  "henrik/ed1181c3189df87d": {
   "chars": 88,
+  "direction": "[hysterical, whimpering]",
   "model": "eleven_v3",
-  "recipe": "5e9e5b31b1",
+  "recipe": "b37cf3c360",
   "text": "No. No, no. What have I done. They hear through wood. They hear everything through wood."
  },
  "hero_female/005bb1d583daeb1a": {
@@ -21069,122 +21154,149 @@
  },
  "kasha_varo/1069a1943872439c": {
   "chars": 193,
+  "direction": "[elderly, proud, sing-song]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "The shrine of the White Sun. The morning lord, in Vallaki they'd say, but we're older than Vallaki and we call him what our grandmothers did. Krezk was built round this pool, not the other way."
  },
  "kasha_varo/198e5a2ce78711eb": {
   "chars": 208,
+  "direction": "[elderly, indignant, scolding]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "Somebody's been in the pool after the wishes. Sixty years of wishes. I hope it was worth nine gold to be the sort of person who does that. No, don't tell me. The pool knows, and the pool doesn't gossip. I do."
  },
  "kasha_varo/3bd66e5ce5e885e7": {
   "chars": 132,
+  "direction": "[elderly, tender, wistful]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "It remembers, you see. The sun used to come here properly. The water's been holding onto it ever since, the way you'd keep a letter."
  },
  "kasha_varo/408c4f92ceb33d0f": {
   "chars": 169,
+  "direction": "[elderly, dry, kindly]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "Sitting in his chapel, the Belviews say, not speaking. Well. I've sat by this pool not speaking for sixty years, and it's done me no harm. Maybe he'll come to something."
  },
  "kasha_varo/49bdc186920bb7ea": {
   "chars": 208,
+  "direction": "[elderly, wondering, conspiratorial]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "It doesn't freeze. Never has. Snow falls in and stops being snow. And when the sun goes behind the clouds, look in it quick, and you'll see the sun stays in the water a breath longer than it stays in the sky."
  },
  "kasha_varo/4b636f90e25d15b4": {
   "chars": 123,
+  "direction": "[elderly, tart, knowing]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "Fill a flask and find out. It doesn't do anything for people who ask what it does. That's my experience. Sixty years of it."
  },
  "kasha_varo/51b7ab8e574f84a1": {
   "chars": 174,
+  "direction": "[elderly, quavering, wondering]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "A light went up off the mountain at dawn. I stood here and watched it go and I didn't know whether to cheer or cry, so I swept. It's what I do with things I don't understand."
  },
  "kasha_varo/540b312895d3b51c": {
   "chars": 167,
+  "direction": "[elderly, frightened whisper]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "And some of them are lighter than they should be, if you take my meaning. I've found earth turned that I didn't turn. I put it back. I say a prayer. It's all I can do."
  },
  "kasha_varo/7a239d3842320980": {
   "chars": 45,
+  "direction": "[elderly, firm, simple]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "The wall's for the wolves. The pool's for us."
  },
  "kasha_varo/7ce96f75b43a3672": {
   "chars": 129,
+  "direction": "[elderly, uncanny, gentle]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "You've been here before, girl. Long before me. Don't ask me how I know; my knees know things, and I've stopped arguing with them."
  },
  "kasha_varo/a2893c88d797debf": {
   "chars": 85,
+  "direction": "[elderly, warm, chatty]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "Back again. The pool remembers you. It remembers everybody, but it's polite about it."
  },
  "kasha_varo/a5221e710a8d90a2": {
   "chars": 144,
+  "direction": "[elderly, upset, stubborn]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "A cart went by in the night, they say, with a bride in it. I don't want to hear about it. I'll pray for her. She's ours, whatever she's made of."
+ },
+ "kasha_varo/acd4c3b3c73719d7": {
+  "chars": 200,
+  "direction": "[elderly, wry, chatty]",
+  "model": "eleven_v3",
+  "recipe": "5c7e1815d5",
+  "text": "Some. The pool's water goes into the draughts, and the prayers I write out on the long nights. They're not free. The shrine needs a new roof, and I need new knees, and only one of those can be bought."
  },
  "kasha_varo/b9fddd9f01e5ff53": {
   "chars": 142,
+  "direction": "[elderly, wry, chuckling]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "I don't go in after it. My knees are the oldest residents of Krezk and they've earned their rest. You've young knees. Wade in, if you want it."
  },
  "kasha_varo/c7ba3eec38089639": {
   "chars": 130,
+  "direction": "[elderly, fussy, chatty]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "Mind the edge. The pool doesn't like boots. Kasha Varo, if you're asking. You weren't, but people ought to, so I tell them anyway."
  },
  "kasha_varo/c823c9c8a237610a": {
   "chars": 130,
+  "direction": "[elderly, hushed, curious]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "Since the autumn there's something down in the middle that shines when the sun's gone in. Not a coin. Coins don't shine like that."
  },
  "kasha_varo/de02c42e707814cf": {
   "chars": 81,
+  "direction": "[elderly, alarmed, hushed]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "I didn't say that. I'd never say that. Not out loud, where the mountain can hear."
  },
  "kasha_varo/e18662731268debe": {
   "chars": 166,
+  "direction": "[elderly, sad, tender]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "Dead, they say. Something that was sent here to look after us, and went wrong, and you put it right the only way you could. I'll light it a candle. Somebody ought to."
  },
  "kasha_varo/f805efa6144b21b8": {
   "chars": 137,
+  "direction": "[elderly, tender, wondering]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "I thought he was a saint. Now I've seen your red-haired girl look at him, I think he's only someone waiting. Which is holier, in the end."
  },
  "kasha_varo/fbfe00dbb2d52916": {
   "chars": 150,
+  "direction": "[elderly, dreamy, remembering]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "Once. When I was a girl, and once again the winter my husband died. A young man in old clothes, looking up out of the water as if he'd lost something."
  },
  "kasha_varo/fd81f6b941b88dda": {
   "chars": 172,
+  "direction": "[elderly, sing-song, gentle]",
   "model": "eleven_v3",
-  "recipe": "07b5f7335f",
+  "recipe": "5c7e1815d5",
   "text": "Krezk's. All of us end up round the pool, sooner or later. The little stones by the pavilion are the burgomaster's. Five of them. Anna comes and sits with them on Tuesdays."
  },
  "kasimir_velikov/0289a7d97edd718b": {
@@ -23038,254 +23150,303 @@
  },
  "krezk_guard/0046292684ec4004": {
   "chars": 154,
+  "direction": "[weary, guilty]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "The Belviews come down for bread now. They say the Abbot doesn't. Doesn't eat, doesn't speak, just sits. They seem to think that's our fault. Maybe it is."
  },
  "krezk_guard/12c21386ed5b35db": {
   "chars": 101,
+  "direction": "[dry, stubborn]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Back again. The gate's the same as you left it. Shut. Have you found a reason yet, or just more road?"
  },
  "krezk_guard/24db376d4d42af01": {
   "chars": 75,
+  "direction": "[uneasy, curt]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Fine. Go. And if the Abbot asks, I never saw you. I'd rather he didn't ask."
  },
  "krezk_guard/2f134c9582c66ff4": {
   "chars": 111,
+  "direction": "[nervous, gruff]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Gate's barred for the night. If you're inside, stay inside. If you're out here with me, keep talking. It helps."
  },
  "krezk_guard/312c0d5358c752f3": {
   "chars": 69,
+  "direction": "[stern, rough]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "That's far enough. This is Krezk. The road stops here, and so do you."
+ },
+ "krezk_guard/3180b839011852a9": {
+  "chars": 118,
+  "direction": "[angry, stern]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "You put a spell on one of ours. Inside our walls. The Burgomaster will hear of it, and he doesn't like hearing things."
  },
  "krezk_guard/3b04a0d69e133723": {
   "chars": 87,
+  "direction": "[angry, stern]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "You were told that house isn't yours. In Krezk we knock, and we leave when we're asked."
  },
  "krezk_guard/40d5fb78b6ae639d": {
   "chars": 62,
+  "direction": "[flat, stubborn]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Everyone who's ever said that to me wanted to be the door. No."
  },
  "krezk_guard/4f24320a17e7bf62": {
   "chars": 104,
+  "direction": "[stubborn, dry]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "And it's dark, which means I'd not open that gate for my own mother. She knows. She sleeps inside early."
  },
  "krezk_guard/556172d271c5e674": {
   "chars": 185,
+  "direction": "[uneasy, low]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "The Abbot came after the nuns were gone. Looks younger than me. Looked younger than my grandmother, too, when she was alive. Folk go up sick and come down well, or they don't come down."
  },
  "krezk_guard/5aa874c7813fa9ff": {
   "chars": 178,
+  "direction": "[wondering, hushed]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Saw a light go up the mountain at dawn. Not a lamp. Walked off the top of the peak, the Belviews say, and kept going. The burgomaster went up to the shrine and sat there an hour."
  },
  "krezk_guard/5e52aba1a5887ece": {
   "chars": 161,
+  "direction": "[uneasy, low]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Bats. A cloud of them came down off the abbey at dusk and went east, toward the castle, like they were carrying a letter. The burgomaster's had the gate doubled."
  },
  "krezk_guard/61c73a2ea85cdd44": {
   "chars": 125,
+  "direction": "[dry, cold]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "The wall's very good. Thank you for asking. And now nobody up there will believe a sweet word out of you, so don't waste one."
  },
  "krezk_guard/6b0cb1765da87309": {
   "chars": 146,
+  "direction": "[sad, quiet]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "The burgomaster's boy is no better. People go quiet passing that house. You can hear Anna singing through the shutters, and you can hear her stop."
  },
  "krezk_guard/6ba5fd2a6c0b4e77": {
   "chars": 123,
+  "direction": "[stern, angry]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Twice now. Twenty-five gold for the people you took from, or out of the gate, and you can explain yourselves to the wolves."
  },
  "krezk_guard/6d23ae9a735ea27e": {
   "chars": 157,
+  "direction": "[stern, stubborn]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "We don't take strangers. Not for coin, not for pity, not for stories. The burgomaster opens that gate when there's a reason, and he decides what a reason is."
  },
  "krezk_guard/71c3bebc0077d5a9": {
   "chars": 136,
+  "direction": "[wistful, then uneasy]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Up there? Holy house, once. My grandmother went up to the nuns when her chest was bad and came back singing. Nobody goes up singing now."
  },
  "krezk_guard/72d28924a0f1be79": {
   "chars": 127,
+  "direction": "[frightened, hurried]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "All right. All right! I'm fetching the burgomaster. Stand back from the wall and keep your hands where my friends can see them."
  },
  "krezk_guard/76f2a4094ef5624c": {
   "chars": 73,
+  "direction": "[surprised, gruff, polite]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Kolyan's girl? Wait here. Don't move. I mean that in the friendliest way."
  },
  "krezk_guard/770ec8558d2f7a43": {
   "chars": 97,
+  "direction": "[uneasy, quiet]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Ask him about the Belviews. Or don't. I'd rather you didn't, in the end; you might get an answer."
  },
  "krezk_guard/790a150e84d5502b": {
   "chars": 76,
+  "direction": "[glum, plain]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "And the wine's stopped. The Martikovs' cart came every autumn. Not this one."
  },
  "krezk_guard/88724a250762b2a9": {
   "chars": 31,
+  "direction": "[impressed, curt]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "I saw. Half the wall saw. Wait."
  },
  "krezk_guard/89b67e4408457b01": {
   "chars": 132,
+  "direction": "[plain, helpful, rough]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Up the mountain. The Abbey of St. Markovia. The track leaves the road just there, by the cairn, and climbs till your knees complain."
  },
  "krezk_guard/93d7e7048bcda96f": {
   "chars": 96,
+  "direction": "[hard, impatient]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Then whatever's in your purse. Out with it. All of it. Shelter's for Krezk, and so is that, now."
  },
  "krezk_guard/9cb4c892c0e9e88f": {
   "chars": 111,
+  "direction": "[angry, sharp]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "That's far enough. Put it back. We let you in, and this is how you thank us? Krezk is a village. Everybody saw."
  },
  "krezk_guard/9fdc937d7c677a56": {
   "chars": 117,
+  "direction": "[uneasy, wondering]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "The abbey's quiet. First time in my life I've looked up at it and not felt looked back at. I don't know if I like it."
  },
  "krezk_guard/a9d24981f6686000": {
   "chars": 62,
+  "direction": "[stern, warning]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Paid. Next time it's the gate, and the gate doesn't take coin."
  },
  "krezk_guard/b46c0f76c29f40a7": {
   "chars": 52,
+  "direction": "[shouting, angry]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Then I'll do it the hard way. Up on the wall! To me!"
  },
  "krezk_guard/b856a76ea9a6889f": {
   "chars": 141,
+  "direction": "[gentle, relieved]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "The burgomaster's boy is out of bed. Pale as milk, but out of bed. Anna carries him to the well and back every morning so he can see the sky."
  },
  "krezk_guard/b97587fab831f79d": {
   "chars": 42,
+  "direction": "[startled, then curt]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "The Abbot. Of course it's the Abbot. Wait."
  },
  "krezk_guard/bb7080d4b401340a": {
   "chars": 149,
+  "direction": "[blunt, wary]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Shelter's for Krezk. You're not Krezk. There's a ledge under the pines a mile back that keeps the snow off, if you don't mind the wolves minding you."
  },
  "krezk_guard/c2c3ef2936f5158c": {
   "chars": 88,
+  "direction": "[dry, unimpressed]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "No. I know everyone in Krezk by their cough, and none of them would believe that either."
  },
  "krezk_guard/ca4c4bc6b819fb2f": {
   "chars": 135,
+  "direction": "[dry, wary]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Back again. My friend on the wall has kept an arrow out for you. He's sentimental that way. Found a reason yet, or just a louder voice?"
  },
  "krezk_guard/ce324b9005534bed": {
   "chars": 7,
+  "direction": "[surprised, grudging]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "...Huh."
  },
  "krezk_guard/d783f451756534b3": {
   "chars": 134,
+  "direction": "[wary, low]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "The Abbot takes in anyone. That's the trouble with him. But the burgomaster listens to what he says about people, much as he hates to."
  },
  "krezk_guard/e049c7629017bdf9": {
   "chars": 67,
+  "direction": "[gruff, weary]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Good. That's done, then. Don't make me do it again; I've got sheep."
  },
  "krezk_guard/e1ecb5a65768db83": {
   "chars": 157,
+  "direction": "[uneasy, grim]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "There's Belviews on the mountainside. Not the usual ones; worse ones, thin and wild, digging in the snow for roots. The Abbot's let them out, or someone has."
  },
  "krezk_guard/e87ddaac0f580ee2": {
   "chars": 14,
+  "direction": "[startled, quiet]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "...Wait there."
  },
  "krezk_guard/e8efb0274b00db84": {
   "chars": 151,
+  "direction": "[warm, amused]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "The burgomaster's boy is up and about. Running, even. First thing he did was try to climb the wall. We let him. Nobody's had the heart to tell him off."
  },
  "krezk_guard/fc1194403498d28c": {
   "chars": 84,
+  "direction": "[gruff, grudging]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Ten gold, for the trouble. The burgomaster would want more. I'm not the burgomaster."
  },
  "krezk_guard/fedd66bc47971d8f": {
   "chars": 126,
+  "direction": "[uneasy, low]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "A cart went down the road last night, with something in a white dress sitting up very straight in the back. Nobody here waved."
  },
  "krezk_guard/ff0b7e8347c5e710": {
   "chars": 72,
+  "direction": "[excited, urgent]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "The wine? Wait there. Don't go anywhere. Don't let the wine go anywhere."
  },
  "krezk_guard/ff199f2a53589086": {
   "chars": 79,
+  "direction": "[gruff, dry humour]",
   "model": "eleven_v3",
-  "recipe": "2395ca9e23",
+  "recipe": "1d8817fed7",
   "text": "Still in one piece? Good. Krezk likes visitors who stay that way. Fewer graves."
  },
  "krezk_woodcutter/2fef8668149d4fe9": {
@@ -26050,50 +26211,65 @@
  },
  "luvash/64a572c9d3c7ff2b": {
   "chars": 52,
+  "direction": "[gruff, emotional]",
   "model": "eleven_v3",
-  "recipe": "d8b29569c5",
+  "recipe": "2d163e4e93",
   "text": "Take this. It's not enough. Nothing would be enough."
  },
  "luvash/66767035b732cf69": {
   "chars": 184,
+  "direction": "[drunk, roaring, desperate]",
   "model": "eleven_v3",
-  "recipe": "d8b29569c5",
+  "recipe": "2d163e4e93",
   "text": "Go away! Unless you've come to find my girl. Have you come to find my girl? Arabelle. Seven years old. Black hair. Gone from her bed since last night, and my brother says she wandered!"
  },
  "luvash/7c1bc14cb90f215b": {
   "chars": 134,
+  "direction": "[booming, overjoyed]",
   "model": "eleven_v3",
-  "recipe": "d8b29569c5",
+  "recipe": "2d163e4e93",
   "text": "My friends. My friends! Every Vistani wagon in Barovia is your wagon now. Every fire is your fire. I've told them. I've told them all."
  },
  "luvash/9f3fc92e33ce7f3b": {
   "chars": 55,
+  "direction": "[broken, pleading]",
   "model": "eleven_v3",
-  "recipe": "d8b29569c5",
+  "recipe": "2d163e4e93",
   "text": "You tried. They tell me you tried. Go away now. Please."
  },
  "luvash/a0397bb660d3b605": {
   "chars": 194,
+  "direction": "[desperate, hoarse]",
   "model": "eleven_v3",
-  "recipe": "d8b29569c5",
+  "recipe": "2d163e4e93",
   "text": "You will? Strangers? None of my own people will, because Arrigal says not to. Find her and I'll owe you more than I have. Ask at the fire. Somebody saw something. Somebody always sees something."
  },
  "luvash/abf47bbbf26a4f39": {
   "chars": 154,
+  "direction": "[broken, quiet]",
   "model": "eleven_v3",
-  "recipe": "d8b29569c5",
+  "recipe": "2d163e4e93",
   "text": "She was in her bed when I went to sleep. In the morning, the bed was cold and the wagon door was open. She never opens the door. She's afraid of the lake."
  },
  "luvash/aea24ecdab977b7c": {
   "chars": 50,
+  "direction": "[heartbroken, heavy, booming]",
   "model": "eleven_v3",
-  "recipe": "d8b29569c5",
+  "recipe": "2d163e4e93",
   "text": "On your lives. I'll hold you to every one of them."
+ },
+ "luvash/affcdc5968d28e75": {
+  "chars": 165,
+  "direction": "[emotional, booming, tender]",
+  "model": "eleven_v3",
+  "recipe": "2d163e4e93",
+  "text": "And this. My grandmother swam the Luna in it, all the way to the falls and back. In the water it makes you a fish. The lake took my girl once; let it never take you."
  },
  "luvash/b27b96bbd42702f6": {
   "chars": 33,
+  "direction": "[panicked, roaring]",
   "model": "eleven_v3",
-  "recipe": "d8b29569c5",
+  "recipe": "2d163e4e93",
   "text": "No. No! I only just got you back!"
  },
  "lydia_petrovna/09e2cb7a7b005777": {
@@ -27527,38 +27703,51 @@
  },
  "mirabel/38d10f0522dca574": {
   "chars": 7,
+  "direction": "[sharp warning]",
   "model": "eleven_v3",
-  "recipe": "4d9e2a2532",
+  "recipe": "c1f71546fb",
   "text": "Sorvia."
  },
  "mirabel/5a4c2fb5b0ff99da": {
   "chars": 8,
+  "direction": "[sly, deadpan]",
   "model": "eleven_v3",
-  "recipe": "4d9e2a2532",
+  "recipe": "c1f71546fb",
   "text": "Sell it."
  },
  "mirabel/63f028a8ae60818f": {
   "chars": 19,
+  "direction": "[sly, throaty laugh]",
   "model": "eleven_v3",
-  "recipe": "4d9e2a2532",
+  "recipe": "c1f71546fb",
   "text": "Or to sell tickets."
+ },
+ "mirabel/80bf0a9115218bf8": {
+  "chars": 32,
+  "direction": "[sly, proud]",
+  "model": "eleven_v3",
+  "recipe": "c1f71546fb",
+  "text": "Nobody lies better than Mirabel."
  },
  "mirabel/8e103bbfd534c640": {
   "chars": 63,
+  "direction": "[sly, dark humour]",
   "model": "eleven_v3",
-  "recipe": "4d9e2a2532",
+  "recipe": "c1f71546fb",
   "text": "And for strangers who don't, she reads them anyway. It's worse."
  },
  "mirabel/95a7c666688c3342": {
   "chars": 68,
+  "direction": "[sly, laughing]",
   "model": "eleven_v3",
-  "recipe": "4d9e2a2532",
+  "recipe": "c1f71546fb",
   "text": "Or don't. We'll guess. Our guesses are always better than the truth."
  },
  "mirabel/a361ea2735f3f28e": {
   "chars": 121,
+  "direction": "[sly, throaty, knowing]",
   "model": "eleven_v3",
-  "recipe": "4d9e2a2532",
+  "recipe": "c1f71546fb",
   "text": "Ismark the Lesser. His father was loud, and brave, and dead. Ismark is quiet, and brave, and not dead yet. Give him time."
  },
  "mirela/080fafe8c058c8c7": {
@@ -57512,68 +57701,86 @@
  },
  "sorvia/0761c60ad36005ab": {
   "chars": 82,
+  "direction": "[defensive, amused]",
   "model": "eleven_v3",
-  "recipe": "1555358d73",
+  "recipe": "d64ca4ba28",
   "text": "What? They'd work it out. They're not stupid. Look at them; they're nearly clever."
  },
  "sorvia/0d8ea912cc4195c5": {
   "chars": 95,
+  "direction": "[low, tipsy, letting slip]",
   "model": "eleven_v3",
-  "recipe": "1555358d73",
+  "recipe": "d64ca4ba28",
   "text": "He knows you're here, you know. The lord. He knew before you did. He always does, because we..."
  },
  "sorvia/3339c34a6a372e78": {
   "chars": 74,
+  "direction": "[smoky, amused, ominous]",
   "model": "eleven_v3",
-  "recipe": "1555358d73",
+  "recipe": "d64ca4ba28",
   "text": "You'll meet a tall, dark stranger. Everyone here does. Only once, usually."
  },
  "sorvia/52a35ec7daedbe25": {
   "chars": 103,
+  "direction": "[soft, sad, then forced brightness]",
   "model": "eleven_v3",
-  "recipe": "1555358d73",
+  "recipe": "d64ca4ba28",
   "text": "She's nice. She mended my horse's bridle once and wouldn't take a copper. I hope... nothing. More wine?"
  },
  "sorvia/5d1bad293f552b24": {
   "chars": 53,
+  "direction": "[slow, ominous, amused]",
   "model": "eleven_v3",
-  "recipe": "1555358d73",
+  "recipe": "d64ca4ba28",
   "text": "And he hasn't finished with you. He's hardly started."
  },
  "sorvia/6c73533c3182b24a": {
   "chars": 78,
+  "direction": "[teasing, amused]",
   "model": "eleven_v3",
-  "recipe": "1555358d73",
+  "recipe": "d64ca4ba28",
   "text": "So many lines. You've read too much. One day a book is going to read you back."
+ },
+ "sorvia/88240be161c12010": {
+  "chars": 114,
+  "direction": "[warm, approving, amused]",
+  "model": "eleven_v3",
+  "recipe": "d64ca4ba28",
+  "text": "You'll do. Here, take this. Our uncle won it, and lost it, and won it again. The pictures lie better than Mirabel."
  },
  "sorvia/b741e43ad4a77925": {
   "chars": 141,
+  "direction": "[smoky, amused]",
   "model": "eleven_v3",
-  "recipe": "1555358d73",
+  "recipe": "d64ca4ba28",
   "text": "A line of faith straight down the middle, and a crack right across it. Don't worry. Cracks let the light in, Grandmother says. Also the wind."
  },
  "sorvia/bd375fb97ce9012d": {
   "chars": 97,
+  "direction": "[amused, then ominous]",
   "model": "eleven_v3",
-  "recipe": "1555358d73",
+  "recipe": "d64ca4ba28",
   "text": "Your life line is long. It's just that something keeps trying to cut it. There, see? Teeth marks."
  },
  "sorvia/c154b9df358683f5": {
   "chars": 153,
+  "direction": "[sly, amused]",
   "model": "eleven_v3",
-  "recipe": "1555358d73",
+  "recipe": "d64ca4ba28",
   "text": "This hand has been in a great many pockets. One of them belonged to someone very, very old. My advice? Give it back. Mirabel's advice will be to sell it."
  },
  "sorvia/d753fabffbc9ae01": {
   "chars": 88,
+  "direction": "[delighted, teasing]",
   "model": "eleven_v3",
-  "recipe": "1555358d73",
+  "recipe": "d64ca4ba28",
   "text": "Oh, yes! Give it here. Not you, Mirabel, I know yours; it says you'll die of being rude."
  },
  "sorvia/d9de2be2b1d0cd8e": {
   "chars": 89,
+  "direction": "[curious, apologetic]",
   "model": "eleven_v3",
-  "recipe": "1555358d73",
+  "recipe": "d64ca4ba28",
   "text": "Your boots have walked farther than boots should, in this valley. Sorry. I notice things."
  },
  "stanimir/08d8095dca3571c5": {
@@ -57851,98 +58058,121 @@
  },
  "stefania_martikov/1b9bf20ed8e19014": {
   "chars": 133,
+  "direction": "[quiet, firm, wondering]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "I think my brother would have died for Elvir without stopping to think. So something stopped him. I'd give a great deal to know what."
  },
  "stefania_martikov/2e7fd705dadd764a": {
   "chars": 195,
+  "direction": "[brisk, warm, then shouting]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "You're the ones Adrian found. Good. Sit, eat, and don't feed the children; they lie about being hungry. Mirela, out of that tree. I'm Stefania. I keep this family alive, mostly by shouting at it."
  },
  "stefania_martikov/31bdebfa1ec34472": {
   "chars": 102,
+  "direction": "[hurt, then accepting]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "And Adrian told you something, didn't he? He never tells me anything. ...Good. Better you than nobody."
  },
  "stefania_martikov/58d205c0ba965cae": {
   "chars": 164,
+  "direction": "[wry, exasperated, fond]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "Sleeping in beds again, which they're furious about; they'd got used to roosting. Viorel bit his cousin yesterday in raven form. I've told him that's twice as rude."
  },
  "stefania_martikov/660bb8df68c294dc": {
   "chars": 225,
+  "direction": "[sad, quiet]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "No. He won't. Last spring Father sent Elvir and Adrian to watch Yester Hill. The druids' things caught them in the bracken. Adrian came home alone, all blood and feathers, and said \"I flew.\" Nothing else. Not then, not since."
  },
  "stefania_martikov/738e2137fdbecd8f": {
   "chars": 163,
+  "direction": "[wry, weary, fond]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "They think it's an adventure, which is the only mercy in it. Toma has decided he's going to kill a druid. He's seven. I've told him he finishes his porridge first."
  },
  "stefania_martikov/83cf9bd4bb06bac7": {
   "chars": 70,
+  "direction": "[firm, dry]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "If a single coin goes missing in this camp, I'll know who to shout at."
  },
  "stefania_martikov/99c5dbc7d7581fd0": {
   "chars": 140,
+  "direction": "[delighted, brisk]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "A roof! Walls! A floor nobody's growing things through! I've scrubbed the kitchen twice and it still smells of druid. What can I do for you?"
  },
  "stefania_martikov/99fa795956c4b0fa": {
   "chars": 102,
+  "direction": "[scolding, then relieved, choked]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "Home. Get in here. You stink of smoke and you've torn your good coat. ...You're all right? Good. Good."
+ },
+ "stefania_martikov/a9899a90731becbe": {
+  "chars": 216,
+  "direction": "[warm, wry, grateful]",
+  "model": "eleven_v3",
+  "recipe": "93c6b46ab0",
+  "text": "I have. And a floor, and a door that shuts. Here, take this; it was Grandmother's. Press it to a wound and the wound closes, which is more than I can say for my brothers' mouths. You'll need it more than we will now."
  },
  "stefania_martikov/b367fe39c990d358": {
   "chars": 156,
+  "direction": "[firm, practical]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "Bring Father the truth. He can't argue with the truth; he's never had the practice. Elvir was taken up that hill. If anything of him is left, it's up there."
  },
  "stefania_martikov/bf23adc9d151af59": {
   "chars": 164,
+  "direction": "[amused, warm]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "The cart came back from Vallaki empty and the driver came back drunk. Urwin sent a note, three words: \"About time, Father.\" Father laughed until he had to sit down."
  },
  "stefania_martikov/dbe2564f1d08689a": {
   "chars": 100,
+  "direction": "[dry, amused]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "Father's standing right behind you and you're telling me? He'll love that. Go on, then, both of you."
  },
  "stefania_martikov/dc122e1d11cb715d": {
   "chars": 140,
+  "direction": "[sad, bitter]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "Elvir was the youngest. The loud one. Father raised a cairn for him with nothing under it, and he's hardly said a kind word to Adrian since."
  },
  "stefania_martikov/e1036118bf4b256b": {
   "chars": 180,
+  "direction": "[amused, bewildered]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "The cart came back from Krezk. They opened the gate for it, and the burgomaster counted the casks in himself. He sent us back a pear tree. I don't know what to do with a pear tree."
  },
  "stefania_martikov/e818bb5d09d33bb1": {
   "chars": 181,
+  "direction": "[warm, moved]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "The cart came back from the village under the castle. They rang the church bell when it rolled in. The driver says nobody there had heard it ring for anything but a burial in years."
  },
  "stefania_martikov/f6f5166e9cd4a259": {
   "chars": 46,
+  "direction": "[warm, dry]",
   "model": "eleven_v3",
-  "recipe": "b246466ef6",
+  "recipe": "93c6b46ab0",
   "text": "Back again. There's soup. There's always soup."
  },
  "strahd/0100fd8e9f96e190": {
@@ -61661,160 +61891,193 @@
   "recipe": "f1b93c1b98",
   "text": "Talk to the sergeant."
  },
+ "urwin_martikov/001aff385e72021d": {
+  "chars": 238,
+  "direction": "[low, confiding]",
+  "model": "eleven_v3",
+  "recipe": "1fae5c6eba",
+  "text": "Down in the cellar, behind the casks nobody drinks. Draughts that close a wound in a breath, prayers for the bad nights, a silver bird my father carved. For the Keepers' friends, at what it cost us. Nobody else ever hears about this room."
+ },
  "urwin_martikov/110838260fc16742": {
   "chars": 124,
+  "direction": "[low, thoughtful]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "The Vistani headman outside the walls has lost his girl. His brother doesn't seem to mind much. That's worth thinking about."
  },
  "urwin_martikov/13563ae05310b740": {
   "chars": 91,
+  "direction": "[dry, low]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Lady Wachter's cellar lamps burn till dawn. Her book club. Nobody's ever seen a book go in."
  },
  "urwin_martikov/19d18cc8f5b09d71": {
   "chars": 75,
+  "direction": "[low, watchful]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Eyes open. I've seen this festival before. It ends the same way every time."
  },
  "urwin_martikov/1a6a07f2ad5dd4f4": {
   "chars": 114,
+  "direction": "[brisk, plain]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Upstairs. A room with a bed, or the room over the kitchen with the copper bath. Danika heats the water. Pay first."
  },
  "urwin_martikov/30cfe779b6f1534e": {
   "chars": 111,
+  "direction": "[cold, firm]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "We'll still give you a bed. Danika says it's what you do. We won't sell you anything. I say that's what you do."
  },
  "urwin_martikov/453c017501de73cf": {
   "chars": 30,
+  "direction": "[dry, amused]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Probably. Don't encourage him."
  },
  "urwin_martikov/5ca4c68ca07fe3a5": {
   "chars": 84,
+  "direction": "[low, suspicious]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "And the coffin maker's had a delivery he won't talk about. Big crates. In the night."
  },
  "urwin_martikov/5e9023b800b1a436": {
   "chars": 124,
+  "direction": "[warm, low, trusting]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "A friend of ours walked beside you on the road and you fed him. Then you stood by this town. That makes you friends of ours."
  },
  "urwin_martikov/60e2a28383fb3845": {
   "chars": 11,
+  "direction": "[warm, brief]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Back. Good."
  },
  "urwin_martikov/613a6899343301be": {
   "chars": 181,
+  "direction": "[calm, firm, contemptuous]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Mine. The town's. If you mean the Baron or the widow: neither. Vargas puts people in the stocks for frowning. Fiona would put them in the ground for him, and smile while she did it."
  },
  "urwin_martikov/6c1cc126a6848df8": {
   "chars": 129,
+  "direction": "[low, watchful, cold]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Fiona's still in her house, smiling at us through the window. One day she'll make a mistake, and we'll be watching when she does."
  },
  "urwin_martikov/709fa036466c8dbe": {
   "chars": 78,
+  "direction": "[hushed, confiding]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "We're the Keepers of the Feather. We watch. We carry word. Some nights we fly."
  },
  "urwin_martikov/7aa2e1c0336a5b0e": {
   "chars": 121,
+  "direction": "[dry, contented]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Council business. Grain, lamp oil, who mends the palisade. Not a festival in sight. I've never been so happy to be bored."
  },
  "urwin_martikov/7e75921d238ffa4e": {
   "chars": 162,
+  "direction": "[low, steady]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Then talk to Lucian. He's better with words. When it comes to the festival, there'll be more of us in the crowd than you'll think. Keep your eyes on the rooftops."
  },
  "urwin_martikov/814067b8fa3b7f0f": {
   "chars": 182,
+  "direction": "[calm, measured, dry]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "So. Somebody has to keep the gates and the lamps and the grain. Not a baron. A council. Householders. Lucian to talk, because he's good at it. Me to listen, because I'm better at it."
  },
  "urwin_martikov/829088f77fdd1884": {
   "chars": 81,
+  "direction": "[dry, calm]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Bed's upstairs, meal's on the stove. Questions are free. I might not answer them."
  },
  "urwin_martikov/8d522beb70bbb377": {
   "chars": 203,
+  "direction": "[earnest, worried]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "My father keeps a vineyard south of here: the Wizard of Wines. The wine's stopped coming, and so has word from him. When you're on that road, go to him. Tell him Urwin sent you. The ravens will know you."
  },
  "urwin_martikov/9538ea75fea5af15": {
   "chars": 31,
+  "direction": "[firm, quiet, final]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "You heard him. Go home, Vargas."
  },
  "urwin_martikov/9d49ef1fc54c55d8": {
   "chars": 146,
+  "direction": "[plain, dry]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Bread, candles, oil, rope. One potion; a traveller paid his bill with it and then didn't need it. Prices are fair. Fairer than Bildrath's, anyway."
  },
  "urwin_martikov/aaf152705524cb37": {
   "chars": 19,
+  "direction": "[dry, wry]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "It's a strange inn."
  },
  "urwin_martikov/d200bdc3350b4880": {
   "chars": 147,
+  "direction": "[low, gossiping]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Lucian's stripped his altar. Something's gone from the church that shouldn't have. Milivoj the gravedigger is spending more on bread than he earns."
  },
  "urwin_martikov/d28717712de59a10": {
   "chars": 71,
+  "direction": "[calm, plain]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Bed's upstairs. Meal's on the stove. Leave the birds on the roof alone."
  },
  "urwin_martikov/d6ecd9d514407052": {
   "chars": 24,
+  "direction": "[quiet, certain]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "It won't get the chance."
  },
  "urwin_martikov/dce6362d3d0598b4": {
   "chars": 23,
+  "direction": "[quiet, firm]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "Quiet, Vargas. Go home."
  },
  "urwin_martikov/df7a03d811b9cb01": {
   "chars": 78,
+  "direction": "[calm, quietly protective]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "The room over ours. Nothing comes in through our windows that we don't let in."
  },
  "urwin_martikov/ebac9da5dae65691": {
   "chars": 89,
+  "direction": "[warm, low, trusting]",
   "model": "eleven_v3",
-  "recipe": "d962b05d84",
+  "recipe": "1fae5c6eba",
   "text": "You stood between this town and the people who'd sell it. That makes you friends of ours."
  },
  "vadoma/2fdeb7ae6ccd0b97": {
@@ -61947,224 +62210,268 @@
  },
  "vallaki_guard/041bd6507eb7e98a": {
   "chars": 133,
+  "direction": "[forced cheer, deadpan]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Marshals! The Baron says you're to be saluted. Consider yourselves saluted. All is well. It's official now; there was a proclamation."
  },
  "vallaki_guard/120c3b71328fab37": {
   "chars": 49,
+  "direction": "[shouting, angry]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Then it's the stocks, the hard way. Watch! To me!"
  },
  "vallaki_guard/1a2a756f5784d8b7": {
   "chars": 86,
+  "direction": "[flat, dry]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Still here? Good. The Baron counts heads at the festival. More heads, better festival."
  },
  "vallaki_guard/208106dc4068ffb3": {
   "chars": 163,
+  "direction": "[dry, gossiping]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "The Baron, Vargas Vallakovich. Festivals, decrees, happiness. Lives in the big house on the square. Izek Strazni's his right hand. Don't shake it; it isn't a hand."
  },
  "vallaki_guard/2145474fa1718bd9": {
   "chars": 106,
+  "direction": "[flat, wry]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "New ribbons. Black ones. Lady Wachter's orders. Nobody has to smile any more. Funny thing is, nobody does."
  },
  "vallaki_guard/2cb3e48adf55b475": {
   "chars": 96,
+  "direction": "[weary, rote]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "The Baron receives visitors in the great hall. Wipe your boots. Smile on the way in; he notices."
  },
  "vallaki_guard/2db5a60925212325": {
   "chars": 114,
+  "direction": "[weary, dry]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Gate's shut. If you're going out, I didn't see you. If you're coming back, knock twice and say something cheerful."
  },
  "vallaki_guard/3790933d403866dc": {
   "chars": 87,
+  "direction": "[dry, unimpressed]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "No. I've heard that one before, and so has the Baron, and he made it a crime to say it."
  },
  "vallaki_guard/53387ce7f5e02b78": {
   "chars": 42,
+  "direction": "[dry, amused]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "News? You are the news. Has been for days."
  },
  "vallaki_guard/574a5e2ec62e0d5d": {
   "chars": 70,
+  "direction": "[weary, deadpan]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Lovely. Hold it like that until you're out of sight. All will be well."
  },
  "vallaki_guard/59e443e01c93a446": {
   "chars": 49,
+  "direction": "[weary, flat]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "And the festival, of course. Always the festival."
  },
  "vallaki_guard/5e0aebe54ba8d14d": {
   "chars": 134,
+  "direction": "[weary, dry]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Gate shuts at dusk, by rights. But the Baron says travellers are good for morale, and you'd be very bad for it lying dead in the road."
  },
  "vallaki_guard/5f2368190079db15": {
   "chars": 96,
+  "direction": "[weary, official]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Halt. Names, business, and how long you mean to stay. And smile, please. It's the law this week."
  },
  "vallaki_guard/65e264f277aa0f64": {
   "chars": 96,
+  "direction": "[weary, dry]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Oh, it's you. \"Stand aside.\" Pyotr drew your faces on the gatepost. Smiling, mind. It's the law."
  },
  "vallaki_guard/689eb8ae7ab10a1a": {
   "chars": 124,
+  "direction": "[sharp, angry]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "You there. Stop. Hands where I can see them. Stealing, in Vallaki, in festival week. The Baron will want that in the speech."
  },
  "vallaki_guard/7fc1ea9fac2d98fb": {
   "chars": 163,
+  "direction": "[helpful, low]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Roof and meal: the Blue Water Inn, south of the square. Ask for Urwin; don't ask him anything else. Avoid the coffin maker's. He's jumpy lately, and so's his door."
  },
  "vallaki_guard/899db8d7e3d5df82": {
   "chars": 112,
+  "direction": "[impatient, dry]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Then whatever you've got will do. Turn out your pockets. All of it. There. Now go and be poor somewhere quietly."
  },
  "vallaki_guard/8a6616ca65cf4293": {
   "chars": 106,
+  "direction": "[dry, insinuating]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Lady Wachter's book club met again last night. Lamps lit in her cellar till dawn. That's a lot of reading."
  },
  "vallaki_guard/99b9cc15809cd3d7": {
   "chars": 140,
+  "direction": "[weary, mock-cheerful threat]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "I've eleven more like me on that wall and a Baron who enjoys a punishment more than a festival. Let's both be cheerful about this, shall we?"
  },
  "vallaki_guard/9c18b6510f54f4a5": {
   "chars": 76,
+  "direction": "[weary, grudging]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Twenty-five gold for the Baron's coffers, and we'll call it festival spirit."
  },
  "vallaki_guard/ae5031b6bfae9b79": {
   "chars": 135,
+  "direction": "[flustered, grumbling]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Fine. Fine! In you go. But you'll smile when the Baron passes, or it's the stocks, and then I have to stand there watching you all day."
  },
  "vallaki_guard/b3ba83901af0fe3b": {
   "chars": 139,
+  "direction": "[nervous, rambling]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Shouldn't you be in the square? Everyone's in the square. I'm in the square in spirit, and also in a lot of trouble if the sergeant counts."
  },
  "vallaki_guard/b77934edfab10b66": {
   "chars": 112,
+  "direction": "[sheepish, wry]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "The council says I can stop smiling at people. I keep doing it anyway. Habit. Father Lucian says that's allowed."
  },
  "vallaki_guard/b846705275bdfdbf": {
   "chars": 101,
+  "direction": "[flustered, weary]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Fine. Fine! I didn't see anything. I never see anything. It's the only way to stay sane in this town."
  },
  "vallaki_guard/bd9c02f7816b1549": {
   "chars": 99,
+  "direction": "[weary, warning]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Paid in full. Do it a third time and I'll have to remember your faces, and I'd honestly rather not."
  },
  "vallaki_guard/bdb144d0356e2362": {
   "chars": 180,
+  "direction": "[brisk, rattling off]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "The rules, quick. The Festival of the Blazing Sun is in the square; the Baron lights the sun at noon and everyone attends. Lamps out at the second bell. Nobody frowns at the Baron."
  },
  "vallaki_guard/bf228d296e248464": {
   "chars": 149,
+  "direction": "[uneasy, gossiping]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Something's wrong up at St. Andral's. Father Lucian stripped the altar cloth two days back and hasn't put it back. Priests don't do that for nothing."
  },
  "vallaki_guard/c32f0e86589ee3ed": {
   "chars": 118,
+  "direction": "[weary, stern]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Again? Fifty gold for the Baron's coffers, or the stocks. The stocks are full this week, mostly of people who frowned."
  },
  "vallaki_guard/c8f5af26b62a8101": {
   "chars": 160,
+  "direction": "[weary, deadpan]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Nobody comes for the festival. Nobody comes here for anything, these days. Some weeks I'm not sure the Baron comes for the festival. Don't tell him I said that."
  },
  "vallaki_guard/cb6eab1df80be201": {
   "chars": 105,
+  "direction": "[flat, dry]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Lady Wachter receives in the hall now. The Baron's portraits are coming down this afternoon. I'm helping."
  },
  "vallaki_guard/cf03f084ed1a8f24": {
   "chars": 118,
+  "direction": "[angry, stern]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "That's a private house, and you were told to get out of it. In Vallaki that's a fine. The Baron is very fond of fines."
+ },
+ "vallaki_guard/cf5a3f04f5f0d524": {
+  "chars": 153,
+  "direction": "[angry, sardonic]",
+  "model": "eleven_v3",
+  "recipe": "1f2fc26177",
+  "text": "Hexing people in the street, are we? In Vallaki, in festival week? Witchcraft is a fine at best and a bonfire at worst, and the Baron is short of wicker."
  },
  "vallaki_guard/d7067fa049b54ad7": {
   "chars": 164,
+  "direction": "[gossiping, sceptical]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "The Vistani outside the west gate are in an uproar. The headman's little girl's gone missing. Their brother Arrigal says she wandered. Arrigal says a lot of things."
  },
  "vallaki_guard/d73379380cce2eba": {
   "chars": 85,
+  "direction": "[forced cheer]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Lovely. The Baron thanks you for your contribution to the festival. All will be well."
  },
  "vallaki_guard/ed40965f50ef7d51": {
   "chars": 135,
+  "direction": "[delighted, surprised]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "For the festival! You hear that, Pyotr? They came for the festival. On purpose. Write that down; the Baron will want it for the speech."
  },
  "vallaki_guard/ee85b68c202e5f8f": {
   "chars": 168,
+  "direction": "[sympathetic, nervous]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Kolyan's girl? From the village? We heard he'd died. Sorry, miss. The Baron will want to know you're here. He likes visiting dignitaries; they make a crowd look bigger."
  },
  "vallaki_guard/f260a690fade5b18": {
   "chars": 208,
+  "direction": "[dry, rattling off]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "Lady Wachter at Wachterhaus, who the Baron says is plotting, which she probably is. Father Lucian at the church. The Martikovs at the inn. Blinsky the toymaker, who's sad. Henrik the coffin maker, who's busy."
  },
  "vallaki_guard/fa2c7cc943b24e19": {
   "chars": 157,
+  "direction": "[dry, rote]",
   "model": "eleven_v3",
-  "recipe": "fb18fbcbf5",
+  "recipe": "1f2fc26177",
   "text": "If you've a grievance, keep it indoors. If you've a dead relative, Father Lucian at St. Andral's. If you've a live one who frowns, keep them indoors as well."
  },
  "vallaki_herald/17d917b45172baef": {
