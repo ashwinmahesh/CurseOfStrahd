@@ -68,11 +68,115 @@
         "id": "potion_of_healing",
         "qty": 1,
         "price": 75
+      },
+      {
+        "id": "potion_of_healing_greater",
+        "qty": -1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "potion_of_healing_superior",
+        "qty": 2,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "potion_of_heroism",
+        "qty": 2,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "potion_of_resistance_necrotic",
+        "qty": 2,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "figurine_of_wondrous_power_silver_raven",
+        "qty": 1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "elixir_of_health",
+        "qty": 1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "spell_scroll__revivify",
+        "qty": -1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "spell_scroll__daylight",
+        "qty": -1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "spell_scroll__remove_curse",
+        "qty": -1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "spell_scroll__dispel_magic",
+        "qty": -1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "spell_scroll__spirit_guardians",
+        "qty": -1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "spell_scroll__beacon_of_hope",
+        "qty": -1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "spell_scroll__mass_healing_word",
+        "qty": -1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "spell_scroll__death_ward",
+        "qty": -1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "spell_scroll__freedom_of_movement",
+        "qty": -1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "spell_scroll__banishment",
+        "qty": -1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
+      },
+      {
+        "id": "spell_scroll__guardian_of_faith",
+        "qty": -1,
+        "if": "flag.keepers_allied",
+        "markup": 1.0
       }
     ],
     "buys": [
-      "gear",
       "consumable",
+      "gear",
+      "potion",
+      "scroll",
       "treasure"
     ],
     "markup": 1.5,

@@ -117,9 +117,15 @@ endif
 * [name:silvain_aster] [if quest.aurels_last_chapter and not flag.aurel_rictavio_told] Ask about a scholar named Aurel Mirescu. -> companions/aurel:rictavio
 * [if flag.bones_theft_known and not flag.bones_returned] The saint's bones are missing from St. Andral's. -> bones_advice
 * What can you tell us about Strahd? -> strahd
+* You must have tools of the trade to spare, Doctor. -> hunter_wares
 * What should we make of the Baron and Lady Wachter? -> factions
 * [if flag.doru_destroyed or flag.doru_freed] We've met one of his spawn already. -> spawn_talk
 * Goodbye, Doctor. -> bye
+
+~ hunter_wares
+Rictavio: Forty years of hunting leaves a man with more weapons than hands. Blessed steel, a mace that unmakes the dead, draughts that keep a body breathing, and prayers I can no longer read without my spectacles. Buy what will keep you alive. I'd rather sell it than bury it with you.
+shop
+-> hunter_menu
 
 ~ bones_advice
 Rictavio: Then he means to send his spawn for the church, and whoever is sheltering in it. They'll be close by, somewhere dark, somewhere nobody looks. Spawn sleep by day like anyone who works nights. Find their beds while the sun is up, and you choose the fight.

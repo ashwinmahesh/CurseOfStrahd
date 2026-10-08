@@ -150,3 +150,46 @@ func test_krezks_armory_opens_with_the_gate() -> void:
 			["donavich", "village_of_barovia/donavich:church_wares"], ["father_lucian", "vallaki/lucian:church_wares"],
 			["kasimir_velikov", "vallaki/kasimir:scrolls"]]:
 		assert_true(_opens_shop(st, str(pair[0]), str(pair[1])), "%s opens the shop" % pair[1])
+
+
+func test_the_keepers_stores_open_to_their_allies() -> void:
+	var st := _party()
+	assert_false("potion_of_healing_superior" in _ids(st, "urwin_martikov"), "not before the Keepers are allies")
+	st.set_flag("keepers_allied")
+	var ids := _ids(st, "urwin_martikov")
+	for id: String in ["potion_of_healing_superior", "spell_scroll__revivify", "spell_scroll__death_ward", "figurine_of_wondrous_power_silver_raven"]:
+		assert_true(id in ids, "the Keepers sell %s" % id)
+	assert_eq(_price(st, "urwin_martikov", "potion_of_healing_superior"), 2000.0, "at cost, though Urwin marks up his bread")
+	assert_eq(_price(st, "urwin_martikov", "ration"), 0.75, "the inn's goods keep the inn's markup")
+	assert_true(_opens_shop(st, "urwin_martikov", "vallaki/martikovs:keepers_stores"))
+
+
+func test_van_richten_sells_his_arsenal_once_unmasked() -> void:
+	var st := _party()
+	var shop := Compendium.shared().get_entry("npcs", "rictavio")["shop"] as Dictionary
+	assert_true(StoryConditions.check(str(shop["closed"]), st), "a showman has nothing to sell")
+	assert_true(bool(shop["hide_closed"]), "and no Trade in his menu gives him away")
+	st.set_flag("rictavio_unmasked")
+	assert_false(StoryConditions.check(str(shop["closed"]), st))
+	var fresh := _party()
+	fresh.set_flag("van_richten_met_at_tower")
+	assert_false(StoryConditions.check(str(shop["closed"]), fresh), "or once he's found at his tower")
+	for w in st.shop_wares("rictavio"):
+		assert_false(Compendium.shared().item_data(str(w["id"])).is_empty(), "%s is a real item" % w["id"])
+	assert_eq(str(Compendium.shared().item_data("mace_of_disruption__mace").get("name", "")), "Mace of Disruption")
+	assert_eq(_price(st, "rictavio", "spell_scroll__greater_restoration"), 2000.0, "a level 5 scroll is rare")
+	assert_true(_opens_shop(st, "rictavio", "vallaki/rictavio:hunter_wares"))
+	assert_true(_opens_shop(st, "rictavio", "van_richtens_tower/van_richten:arsenal"))
+
+
+func test_the_orders_armory_at_half_price_once_godfrey_remembers() -> void:
+	var st := _party()
+	var shop := Compendium.shared().get_entry("npcs", "sir_godfrey_gwilym")["shop"] as Dictionary
+	assert_true(StoryConditions.check(str(shop["closed"]), st))
+	st.set_flag("godfrey_remembers")
+	assert_false(StoryConditions.check(str(shop["closed"]), st))
+	var cost := float(Compendium.shared().item_data("weapon_plus_2__longsword").get("cost_gp", 0))
+	assert_eq(_price(st, "sir_godfrey_gwilym", "weapon_plus_2__longsword"), Trade.buy_price(st, "sir_godfrey_gwilym", cost * 0.5),
+		"half the price (and his attitude's)")
+	assert_eq(st.shop_offer("sir_godfrey_gwilym", "longsword"), -1.0, "the dead buy nothing")
+	assert_true(_opens_shop(st, "sir_godfrey_gwilym", "argynvostholt/godfrey:armory"))

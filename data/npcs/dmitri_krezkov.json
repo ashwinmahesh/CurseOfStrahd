@@ -239,6 +239,7 @@
     ],
     "markup": 1.0,
     "sell_rate": 0.5,
-    "closed": "not flag.krezk_gate_open"
+    "closed": "not flag.krezk_gate_open",
+    "hide_closed": true
   }
 }

@@ -19,8 +19,14 @@ endif
 * [if not flag.ezmerelda_left_tower and tarokka.ally.npc != ezmerelda and not guest:ezmerelda] Ezmerelda is outside. She's been waiting for days. -> ezm
 * [if guest:ezmerelda] She's right behind us, Doctor. -> ezm_here
 * Why did you leave Vallaki? -> why
+* We could use your arsenal, Doctor. -> arsenal
 * [if tarokka.ally.npc == rictavio and not guest:rictavio] The cards still name you. Hunt with us. -> ally_again
 * Goodbye. -> bye
+
+~ arsenal
+Rictavio: Take what will keep you alive, and pay what you can. I have outlived most of the people I armed. I'd like to outlive fewer.
+shop
+-> menu
 
 ~ why
 if flag.vallaki_backed == "wachter"
