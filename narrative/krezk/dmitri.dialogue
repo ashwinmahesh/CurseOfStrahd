@@ -35,6 +35,7 @@ endif
 * [if guest:ireena and flag.krezk_refuge_offered] Ireena, Dmitri's offered you a place here. -> krezk/ireena:stay_offer
 * [if flag.abbot_fate] About the Abbot. It's done. -> after
 * Can we rest here? -> rest
+* [if flag.krezk_gate_open] Does Krezk have arms or armor to spare? -> armory
 * Goodbye. -> END
 
 ~ wall
@@ -107,6 +108,11 @@ Narrator: He looks at Ireena for a long time. She looks back and doesn't help hi
 Dmitri Krezkov: Our wall, our roof, our bread. It's not much and he'll know where it is within a week. But it's yours, Ireena Kolyana. Your father sent us salt once.
 set krezk_refuge_offered
 -> krezk/ireena:stay_offer
+
+~ armory
+Dmitri Krezkov: The town armory. Every family gave something to it once, when we still thought walls were enough. Blades, bows, mail, a suit of plate that nobody has fitted in thirty years. Pay what it's worth, and use it on the things outside.
+shop
+-> menu
 
 ~ rest
 Dmitri Krezkov: The little room off the hall. It was my eldest's. It's had nobody in it for six years, and it'll be glad of the company. Lock the shutters. Krezk does.

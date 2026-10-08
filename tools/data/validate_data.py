@@ -365,17 +365,20 @@ def campaign_checks(data, errors, pending):
                     errors.append(f"{w} road {r['id']}: unknown place '{end}'")
             if r.get("table") and r["table"] not in tables:
                 errors.append(f"{w} road {r['id']}: unknown random encounter table '{r['table']}'")
+
+    def item_known(iid):
+        # A template item on a base ("spell_scroll__daylight", "weapon_plus_1__longsword") needs both halves.
+        t, _, base = iid.partition("__")
+        return iid in items or iid in data.get("magic_items", {}) or bool(
+            base and t in data.get("magic_items", {}) and (base in items or base in data.get("spells", {})))
+
     for nid, n in npcs.items():
         for e in n.get("shop", {}).get("sells", []):
-            if e["id"] not in items and e["id"] not in data.get("magic_items", {}):
+            if not item_known(e["id"]):
                 errors.append(f"npcs/{nid}: shop sells unknown item '{e['id']}'")
         rot = n.get("shop", {}).get("rotating", {})
         for iid in rot.get("pool", []) + [i for g in rot.get("groups", []) for i in g.get("pool", [])]:
-            # A template item on a base ("spell_scroll__daylight") needs both halves.
-            t, _, base = iid.partition("__")
-            known = iid in items or iid in data.get("magic_items", {}) or (
-                base and t in data.get("magic_items", {}) and (base in items or base in data.get("spells", {})))
-            if not known:
+            if not item_known(iid):
                 errors.append(f"npcs/{nid}: shop's rotating pool has unknown item '{iid}'")
         gb = n.get("guest_build", {})
         if gb.get("monster") and gb["monster"] not in monsters:

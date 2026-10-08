@@ -94,6 +94,11 @@
               "counts": {
                 "$ref": "common.schema.json#/$defs/id",
                 "description": "An int flag that counts the pieces bought (Morgantha's pastries)."
+              },
+              "markup": {
+                "type": "number",
+                "minimum": 0,
+                "description": "This line's markup instead of the shop's."
               }
             }
           }
@@ -204,6 +209,10 @@
               }
             }
           }
+        },
+        "hide_closed": {
+          "type": "boolean",
+          "description": "While closed, the right-click menu shows no Trade (a merchant the story unlocks)."
         }
       }
     },
