@@ -32355,13 +32355,6 @@
   "recipe": "dd92281f92",
   "text": "A spreading slick of rot. Lorghoth the Decayer has decayed."
  },
- "narrator/0a0080d40795921e": {
-  "chars": 129,
-  "direction": "[dry, amused]",
-  "model": "eleven_v3",
-  "recipe": "f60908d226",
-  "text": "The one-horned billy plants his feet in the gap of the pen and lowers his head at you. He does not move. He is not going to move."
- },
  "narrator/0a0528ceed6d0730": {
   "chars": 160,
   "model": "eleven_v4",
