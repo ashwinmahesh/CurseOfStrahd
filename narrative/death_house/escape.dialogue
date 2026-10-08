@@ -8,6 +8,7 @@ if flag.death_house_window_attempted
   -> window_through
 endif
 set death_house_window_attempted
+cutscene death_house_window
 Narrator: Every other window in the house is brick now, and this one is closing, wet brick climbing the glass row by row. At the top there is a gap the width of a person, for now.
 * [Athletics DC 12] Smash the glass and haul everyone up through the gap. Too slow, and the house fights back. -> window_through | window_guard
 * [Acrobatics DC 12] Up the window seat, through the gap, and pull the others after you. Too slow, and the house fights back. -> window_through | window_guard

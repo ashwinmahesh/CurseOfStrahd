@@ -85,6 +85,7 @@ Fen Burley: Still here, lass. Still me. Mostly.
 
 ~ first
 set fen_met
+cutscene fen_chains
 Narrator: In the far corner of the alcove a second prisoner hangs from iron rings, chained by both wrists in silver: something too long in the arm and too heavy in the shoulder to be a man, grey-furred, head down. Its breath steams.
 Narrator: Then it lifts its head, and the face is half an old man's: white stubble, a broken nose, and two fingers missing from the left hand.
 interject name:thistle: ...Grandda?

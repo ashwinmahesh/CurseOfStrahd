@@ -1,0 +1,17 @@
+{
+  "id": "treasure_symbol",
+  "title": "The Holy Symbol of Ravenkind",
+  "summary": "A platinum sunburst with a raven at its heart, glowing like morning.",
+  "images": [
+    {
+      "image": "treasure_symbol",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "trigger": "find:holy_symbol_of_ravenkind",
+  "once": true
+}

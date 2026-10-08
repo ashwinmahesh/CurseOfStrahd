@@ -21,6 +21,7 @@ Abbot: Children. You came back. Sit, if you like. The pews are hard, but they ar
 ~ first
 set abbot_met
 quest the_abbots_bride met
+cutscene abbot_candles
 Narrator: A young monk in a plain brown habit is lighting the candles along the altar rail. He doesn't use a taper. He touches each wick with a fingertip, and each one lights.
 Narrator: He turns. Golden hair, a face like a saint carved by someone who had only heard saints described. For a moment the light in the chapel seems to arrange itself around him, and then it remembers itself.
 Abbot: Welcome. I hoped you would come today. I am the Abbot of this house. You are cold, and tired, and a little afraid of me. All three are sensible. Two of them I can help with.
@@ -220,6 +221,7 @@ Abbot: That was not mercy, children. That was impatience wearing mercy's coat. I
 
 ~ attack
 Narrator: He watches you reach for your weapons, and for the first time something crosses his face that isn't kindness. It looks very like grief.
+cutscene abbot_wings
 Abbot: In my own chapel. Very well. I will not let you undo my work.
 if guest:ezmerelda
 interject guest:ezmerelda: Finally. Silver first, questions never.

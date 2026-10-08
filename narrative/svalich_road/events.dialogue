@@ -8,6 +8,7 @@
 if flag.strahd_road_encounter
 -> END
 endif
+cutscene strahd_rides
 Narrator: Hoofbeats, unhurried, out of the fog ahead. A black horse with eyes like banked coals comes down the road at a walk, and the man riding it does not need to be introduced.
 if flag.strahd_met
 if flag.strahd_first_impression == "defiant"
@@ -170,6 +171,7 @@ if flag.dead_procession_met
 -> END
 endif
 set dead_procession_met
+cutscene dead_procession
 Narrator: Lanterns on the road ahead, swaying in a line: a funeral procession, out at the one hour no living Barovian would walk. Mourners in grey carry an open coffin between them. It is empty.
 Narrator: As they come close, the one at the front lifts his lantern to your faces, one after another, as if measuring.
 interject tag:blunt: Six of them. None of them breathing.

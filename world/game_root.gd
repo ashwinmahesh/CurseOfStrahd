@@ -452,6 +452,15 @@ func _dialogue_ended(combat: String) -> void:
 
 
 func _open_loot(container_id: String, items: Array, gold: float) -> void:
+	# A Tarokka treasure among the spoils shows its picture first (story/cutscenes.gd `find:<item>`), once.
+	for it: Variant in items:
+		var item_id := str((it as Dictionary).get("id", "")) if it is Dictionary else str(it)
+		var cut := Cutscenes.for_trigger("find:" + item_id, st)
+		if cut != "":
+			var player := play_cutscene(cut, Cutscenes.found_line(item_id))
+			if player != null:
+				player.finished.connect(func() -> void: _open_loot.call_deferred(container_id, items, gold), CONNECT_ONE_SHOT)
+				return
 	# Taking from something someone owns is stealing, if anybody sees (F8, LocationCrime).
 	var worth := Crime.value_of(items, gold)
 	if view != null:
@@ -760,20 +769,25 @@ func close_screen() -> void:
 
 
 ## A place's cutscene (story/cutscenes.gd): its picture over everything with the narrator's line as the caption. It
-## stands in for a full-screen panel until it closes, so nothing in the world moves under it.
-func play_cutscene(id: String, caption: String) -> void:
+## stands in for a full-screen panel and pauses the game until it closes, so nothing moves under it (a fight that an
+## area starts waits for it too).
+func play_cutscene(id: String, caption: String) -> CutscenePlayer:
 	close_screen()
 	var player := CutscenePlayer.new()
 	add_child(player)
 	if not player.play(id, [caption] as Array[String], st):
 		player.queue_free()
 		hud.narrate(caption)
-		return
+		return null
+	Cutscenes.mark_played(id, st)
 	screen = player
+	get_tree().paused = true
 	player.finished.connect(func() -> void:
 		if screen == player:
 			screen = null
+			get_tree().paused = false
 		_refresh())
+	return player
 
 
 ## Plays a Narrator trigger here (rests, dreams). Returns the line, or "".

@@ -1,0 +1,15 @@
+{
+  "id": "madam_eva_reading",
+  "title": "Five Cards",
+  "summary": "Madam Eva deals the Tarokka in a cross, and every candle leans at once.",
+  "images": [
+    {
+      "image": "madam_eva_reading",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.45
+  ]
+}

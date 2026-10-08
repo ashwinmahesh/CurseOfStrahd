@@ -6,6 +6,7 @@
 ~ arrival
 set amber_temple_arrived
 quest the_amber_temple arrived
+cutscene amber_sentinels
 Narrator: Two colossi of amber flank the doors, each three times a man's height, robed and hooded like the wardens who carved them. The left one has split from crown to knee, and snow has packed the crack.
 Narrator: The right one has not. As you come within its reach it turns its head toward you, with a sound like a frozen river shifting in its bed.
 amber_sentinel: SPEAK THE WORD.
@@ -45,6 +46,7 @@ Narrator: The lines in the amber run in circles that never quite close. The colo
 -> no_word
 
 ~ attack
+cutscene amber_sentinel_steps
 Narrator: Steel rings off amber. The colossus considers the scratch, and then it considers you.
 combat sentinel_wakes
 
@@ -80,6 +82,7 @@ Narrator: You find the place where the ward turns back on itself and pull. The c
 -> END
 
 ~ departure_ward_fail
+cutscene amber_sentinel_steps
 Narrator: The ward slides through your understanding like meltwater, and the colossus is already stepping down off its plinth.
 combat sentinel_wakes
 

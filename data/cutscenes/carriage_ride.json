@@ -1,0 +1,11 @@
+{
+  "id": "carriage_ride",
+  "title": "Up into the Cloud",
+  "summary": "The black carriage races up the mountain road toward the castle.",
+  "images": [
+    {
+      "image": "carriage_ride",
+      "when": ""
+    }
+  ]
+}

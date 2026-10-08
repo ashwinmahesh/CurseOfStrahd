@@ -1,0 +1,13 @@
+{
+  "id": "abbey_shelf",
+  "title": "The Abbey on Its Shelf",
+  "summary": "The abbey's quiet snowy walls on their shelf above the clouds.",
+  "images": [
+    {
+      "image": "abbey_shelf",
+      "when": "not flag.abbot_fate"
+    }
+  ],
+  "trigger": "enter:abbey_of_st_markovia",
+  "once": true
+}

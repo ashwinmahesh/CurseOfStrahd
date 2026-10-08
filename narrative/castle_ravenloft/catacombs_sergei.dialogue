@@ -58,6 +58,7 @@ endif
 # ---------------------------------------------------------------- Ireena
 
 ~ ireena_arrives
+cutscene sergei_font
 Narrator: Ireena stops in the doorway. She reads the name on the lid, and then she walks past it without a word and kneels by the basin at its foot.
 if flag.ireena_pool_vision
 -> ireena_knows

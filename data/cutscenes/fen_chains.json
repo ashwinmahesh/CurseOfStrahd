@@ -1,0 +1,15 @@
+{
+  "id": "fen_chains",
+  "title": "Grandda",
+  "summary": "Thistle finds her grandfather half a wolf in silver chains.",
+  "images": [
+    {
+      "image": "fen_chains",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

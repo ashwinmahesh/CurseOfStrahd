@@ -7,6 +7,7 @@ Narrator: Then {name} feels it. The thirst that filled him has nowhere left to g
 if guest:ireena
 Ireena: Your eyes. They have gone so dark. Tell me I am wrong.
 endif
+cutscene ending_darklord
 Narrator: The mist does not lift at dawn. It curls around {name}'s boots like a hound greeting its new master.
 Narrator: Somewhere below, a black carriage is being made ready. The castle opens its doors from the inside.
 Narrator: The valley has a new lord. It does not much matter to the valley which name it fears.

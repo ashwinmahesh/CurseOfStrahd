@@ -1,0 +1,13 @@
+{
+  "id": "village_rain",
+  "title": "The Village in the Rain",
+  "summary": "The village of Barovia seen whole for the first time, grey and holding its breath.",
+  "images": [
+    {
+      "image": "village_rain",
+      "when": ""
+    }
+  ],
+  "trigger": "enter:village_of_barovia",
+  "once": true
+}

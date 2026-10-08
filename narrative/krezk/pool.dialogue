@@ -69,6 +69,7 @@ approve kip_smudgewick -2 liriel_dawnsong -2 godrick_pendlebrook -2 wren_feather
 ~ ireena_vision
 set ireena_pool_vision
 quest the_pool_of_the_white_sun seen
+cutscene krezk_reflection
 Narrator: Ireena stops at the edge. She doesn't kneel; her knees simply give, and she's on the stones with her hands flat on them, looking down.
 Narrator: In the water, beside her reflection, there is a second one: a young man in an old-fashioned coat with a sunburst at his breast. You look up. There's nobody beside her. You look down. He's still there.
 if flag.eva_question == "ireena"
