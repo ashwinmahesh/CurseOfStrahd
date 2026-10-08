@@ -8,3 +8,46 @@ Stefan the Woodcutter [smile]: Ilya's up and about. Took a cord of wood off me t
 endif
 Stefan the Woodcutter: The Burgomaster let you in, so I'll say good day. Wood for the winter. It's always winter for the wood.
 -> END
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): Krezk at work inside its wall:
+# the well, the pens, the shrine, the gate and the south row. Lines unvoiced.
+
+~ well_wife
+Goodwife Rodica: One bucket for the Burgomaster, one for the widow at the end of the row, one for me, and a prayer for each. The well's never frozen. Not once. We don't ask why, we just say thank you.
+-> END
+
+~ bucket_wife
+Goodwife Sanda: Water to the south row, a word at the shrine, and back. Thirty times a day. My arms are as strong as Cezar's and my knees are holier than the abbot's.
+-> END
+
+~ gate_boy
+if flag.ilya_fate == "healed"
+Dumitru [smile]: Ilya's out of the house! Everybody says it was you. Is it true you've been past Vallaki? Is it true there's a lake?
+-> END
+endif
+Dumitru: Nobody comes up the road. Except you. Did you see wolves? Did you see the castle? Is it true it has a thousand windows?
+-> END
+
+~ goatherd
+Stelian: That one's Rodica's, and that one's the Burgomaster's, and the one with the horn is nobody's, because nobody's brave enough. Mind your fingers by the rails.
+-> END
+
+~ fence_mender
+Cezar: The billy breaks a rail, I mend a rail. He breaks another. I think he likes the company.
+-> END
+
+~ carver
+Old Pavel: A sun for the shrine. One every day. When the shrine is full, I start on the windows. Somebody has to keep asking for the morning.
+-> END
+
+~ wall_watch
+Watchman Lazar: The gate's watched, the wall's watched, and the road is watched most of all. Walk where you like inside. Just walk where I can see you.
+-> END
+
+~ goat
+Narrator: The goat chews something that was probably part of the fence, and watches you with its strange square eyes until you go away.
+-> END
+
+~ billy
+Narrator: The one-horned billy plants his feet in the gap of the pen and lowers his head at you. He does not move. He is not going to move.
+-> END

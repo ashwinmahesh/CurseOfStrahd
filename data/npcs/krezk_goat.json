@@ -1,0 +1,18 @@
+{
+  "id": "krezk_goat",
+  "name": "A Goat",
+  "title": "Of the Pens",
+  "summary": "One of Krezk's goats, shaggy with winter and chewing on something it shouldn't.",
+  "portrait": "goat",
+  "sprite": "goat",
+  "attitude": "indifferent",
+  "monster": "goat",
+  "guest": false,
+  "tags": [
+    "animal",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "it/its",
+  "pockets": false
+}

@@ -1,0 +1,18 @@
+{
+  "id": "krezk_fence_mender",
+  "name": "Cezar",
+  "title": "Of Krezk",
+  "summary": "A big, slow man mending the split rails of the goat pens, where the billy keeps breaking them.",
+  "portrait": "tough",
+  "sprite": "tough",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}

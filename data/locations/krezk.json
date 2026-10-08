@@ -7,7 +7,7 @@
   "map": {
     "rows": [
       "################.###############     ..     ",
-      "#..............................#     ..     ",
+      "#=............................=#     ..     ",
       "#..########..........####.####.#     ..     ",
       "#..########..........####.####.#     ..     ",
       "#..########..........####.####.#     ..     ",
@@ -18,23 +18,23 @@
       "#....................####.####.#    ..      ",
       "#..#####..................####.#    ..      ",
       "#..#####.......................#   ...      ",
-      "#..#####.......................#   ..       ",
+      "#..#####.............=.........#   ..       ",
       "#.............==...............#   ..       ",
       "#..............................#   ..       ",
       "#.=========....................#   ..       ",
-      "#.=.......=.......=............#   ..       ",
+      "#.=.....=.=.......==...........#   ..       ",
       "#.=.~~....=..................=.#  =..       ",
       "#.=.....~......................#............",
       "#.=............................#........~...",
       "#.=...~~..=.................................",
       "#.=.......=....................#....~~......",
-      "#.=========....................#............",
-      "#............................=.#            ",
+      "#.=========..............==....#............",
+      "#.........=..=...............=.#            ",
       "#..#####....####..####..#####..#            ",
       "#..#####....####..####..#####..#            ",
       "#..#####....####..####..#####..#            ",
       "#..#####....####..####..#####..#            ",
-      "#..............................#            ",
+      "#=............................=#            ",
       "################################            "
     ],
     "elevation": [
@@ -314,7 +314,11 @@
       ],
       "kind": "examine",
       "label": "A frozen trough",
-      "model": "barrel"
+      "model": "trough",
+      "span": [
+        2,
+        1
+      ]
     },
     {
       "id": "goat_pens",
@@ -389,6 +393,170 @@
       "label": "a shield under the watch's woodpile",
       "model": "rubble",
       "item": "sentinel_shield__shield"
+    },
+    {
+      "id": "pen_hay_rick",
+      "cell": [
+        8,
+        16
+      ],
+      "kind": "decor",
+      "label": "A hay rick",
+      "model": "hay_bale"
+    },
+    {
+      "id": "hay_rick_flute",
+      "cell": [
+        9,
+        16
+      ],
+      "kind": "search",
+      "label": "something deep in the hay rick",
+      "model": "hay_bale",
+      "search_dc": 13,
+      "item": "pan_flute"
+    },
+    {
+      "id": "pen_straw",
+      "cell": [
+        9,
+        21
+      ],
+      "kind": "decor",
+      "model": "straw"
+    },
+    {
+      "id": "well_tub",
+      "cell": [
+        19,
+        16
+      ],
+      "kind": "decor",
+      "label": "A tub of well water",
+      "model": "tub_wooden"
+    },
+    {
+      "id": "krezk_wayside_shrine",
+      "cell": [
+        21,
+        12
+      ],
+      "kind": "examine",
+      "label": "A wayside shrine",
+      "model": "shrine_small",
+      "facing": "south"
+    },
+    {
+      "id": "shrine_candles",
+      "cell": [
+        22,
+        12
+      ],
+      "kind": "decor",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "pavel_basket",
+      "cell": [
+        10,
+        23
+      ],
+      "kind": "decor",
+      "model": "basket"
+    },
+    {
+      "id": "goat_cheeses",
+      "cell": [
+        13,
+        23
+      ],
+      "kind": "examine",
+      "label": "Goat cheeses",
+      "model": "cheeses"
+    },
+    {
+      "id": "gate_handcart",
+      "cell": [
+        25,
+        22
+      ],
+      "kind": "decor",
+      "model": "handcart"
+    },
+    {
+      "id": "gate_sacks",
+      "cell": [
+        26,
+        22
+      ],
+      "kind": "decor",
+      "model": "sack"
+    },
+    {
+      "id": "drift_nw",
+      "cell": [
+        1,
+        1
+      ],
+      "kind": "decor",
+      "model": "snowdrift"
+    },
+    {
+      "id": "drift_ne",
+      "cell": [
+        30,
+        1
+      ],
+      "kind": "decor",
+      "model": "snowdrift"
+    },
+    {
+      "id": "drift_sw",
+      "cell": [
+        1,
+        28
+      ],
+      "kind": "decor",
+      "model": "snowdrift"
+    },
+    {
+      "id": "drift_se",
+      "cell": [
+        30,
+        28
+      ],
+      "kind": "decor",
+      "model": "snowdrift"
+    },
+    {
+      "id": "ice_square",
+      "cell": [
+        16,
+        20
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "ice_lane",
+      "cell": [
+        19,
+        8
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "wall_loose_stone",
+      "cell": [
+        1,
+        26
+      ],
+      "kind": "search",
+      "label": "a loose stone low in the wall",
+      "model": "rubble",
+      "search_dc": 14,
+      "item": "sling"
     }
   ],
   "containers": [
@@ -508,6 +676,252 @@
         18
       ],
       "when": "not weather == storm"
+    },
+    {
+      "npc": "krezk_goat",
+      "cell": [
+        3,
+        19
+      ],
+      "dialogue": "krezk/townsfolk:goat",
+      "facing": "east",
+      "path": [
+        [
+          6,
+          18,
+          3
+        ],
+        [
+          3,
+          21,
+          4
+        ]
+      ]
+    },
+    {
+      "npc": "krezk_goat_2",
+      "cell": [
+        7,
+        21
+      ],
+      "dialogue": "krezk/townsfolk:goat",
+      "facing": "west",
+      "path": [
+        [
+          9,
+          19,
+          3
+        ],
+        [
+          8,
+          21,
+          4
+        ]
+      ]
+    },
+    {
+      "npc": "krezk_goat_3",
+      "cell": [
+        5,
+        16
+      ],
+      "dialogue": "krezk/townsfolk:goat",
+      "facing": "east",
+      "path": [
+        [
+          7,
+          16,
+          3
+        ],
+        [
+          4,
+          16,
+          4
+        ]
+      ]
+    },
+    {
+      "npc": "krezk_billy_goat",
+      "cell": [
+        9,
+        18
+      ],
+      "dialogue": "krezk/townsfolk:billy",
+      "facing": "east"
+    },
+    {
+      "npc": "krezk_goatherd",
+      "cell": [
+        6,
+        19
+      ],
+      "dialogue": "krezk/townsfolk:goatherd",
+      "facing": "west",
+      "path": [
+        {
+          "at": [
+            8,
+            17
+          ],
+          "wait": 4,
+          "face": "north",
+          "work": "gesture"
+        },
+        {
+          "at": [
+            5,
+            19
+          ],
+          "wait": 4,
+          "face": "west",
+          "work": "gesture"
+        }
+      ],
+      "hours": [
+        7,
+        17
+      ],
+      "when": "not weather == storm"
+    },
+    {
+      "npc": "krezk_fence_mender",
+      "cell": [
+        11,
+        16
+      ],
+      "dialogue": "krezk/townsfolk:fence_mender",
+      "facing": "west",
+      "work": "swing",
+      "hours": [
+        8,
+        15
+      ],
+      "when": "not weather == storm"
+    },
+    {
+      "npc": "krezk_well_wife",
+      "cell": [
+        17,
+        16
+      ],
+      "dialogue": "krezk/townsfolk:well_wife",
+      "facing": "east",
+      "work": "swing",
+      "hours": [
+        7,
+        17
+      ],
+      "when": "not weather == storm"
+    },
+    {
+      "npc": "krezk_bucket_wife",
+      "cell": [
+        19,
+        14
+      ],
+      "dialogue": "krezk/townsfolk:bucket_wife",
+      "facing": "south",
+      "path": [
+        {
+          "at": [
+            18,
+            15
+          ],
+          "wait": 4,
+          "face": "south",
+          "work": "swing"
+        },
+        {
+          "at": [
+            21,
+            13
+          ],
+          "wait": 5,
+          "face": "north",
+          "work": "gesture"
+        },
+        {
+          "at": [
+            17,
+            23
+          ],
+          "wait": 4,
+          "face": "south"
+        }
+      ],
+      "hours": [
+        7,
+        18
+      ],
+      "when": "not weather == storm"
+    },
+    {
+      "npc": "krezk_gate_boy",
+      "cell": [
+        27,
+        20
+      ],
+      "dialogue": "krezk/townsfolk:gate_boy",
+      "facing": "east",
+      "path": [
+        [
+          27,
+          19,
+          4
+        ],
+        [
+          26,
+          21,
+          3
+        ]
+      ],
+      "hours": [
+        9,
+        17
+      ],
+      "when": "not weather == storm"
+    },
+    {
+      "npc": "krezk_carver",
+      "cell": [
+        9,
+        23
+      ],
+      "dialogue": "krezk/townsfolk:carver",
+      "facing": "south",
+      "work": "gesture",
+      "hours": [
+        9,
+        16
+      ],
+      "when": "not weather == storm"
+    },
+    {
+      "npc": "krezk_wall_watch",
+      "cell": [
+        16,
+        13
+      ],
+      "dialogue": "krezk/townsfolk:wall_watch",
+      "facing": "east",
+      "path": [
+        {
+          "at": [
+            29,
+            13
+          ],
+          "wait": 4,
+          "face": "east"
+        },
+        {
+          "at": [
+            2,
+            13
+          ],
+          "wait": 4,
+          "face": "west"
+        }
+      ]
     }
   ],
   "encounters": [
