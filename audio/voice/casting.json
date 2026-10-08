@@ -2182,6 +2182,16 @@
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "nwnrqcNIaNxeuFmcsLmb",
       "released": true
+    },
+    "khazan": {
+      "voice_id": "wtBAwepN6S9M6fZe3QSk",
+      "name": "Barovia Khazan",
+      "description": "An ancient lich, archmage to the old kings of a Carpathian valley, speaking English with a faint, cultured old-world Eastern European accent. A dry, papery, thin old man's voice with a faint hollow echo, courteous and scholarly, delighted by visitors like a lonely librarian, with something hungry and cold just underneath.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[faint Eastern European accent]",
+      "generated_voice_id": "wtBAwepN6S9M6fZe3QSk",
+      "released": true
     }
   },
   "sfx": {
