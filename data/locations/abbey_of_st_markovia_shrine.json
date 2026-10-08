@@ -67,7 +67,8 @@
           4,
           4
         ]
-      ]
+      ],
+      "furnish": false
     },
     {
       "id": "sacristy",
@@ -153,7 +154,7 @@
       ],
       "kind": "examine",
       "label": "The great sunburst",
-      "model": "crest",
+      "model": "sunburst",
       "dialogue": "abbey_of_st_markovia/shrine:sunburst"
     },
     {
@@ -230,6 +231,59 @@
       "label": "a loose stone under the Abbot's cot",
       "model": "broken_boards",
       "item": "ioun_stone_protection"
+    },
+    {
+      "id": "altar_rail_candles_nw",
+      "cell": [
+        10,
+        1
+      ],
+      "label": "Candles along the altar rail",
+      "model": "candle_cluster",
+      "when": "flag.abbot_fate != \"broken\"",
+      "kind": "decor"
+    },
+    {
+      "id": "altar_rail_candles_w",
+      "cell": [
+        10,
+        2
+      ],
+      "label": "Candles along the altar rail",
+      "model": "candle_cluster",
+      "when": "flag.abbot_fate != \"broken\"",
+      "kind": "decor"
+    },
+    {
+      "id": "altar_rail_candles_ne",
+      "cell": [
+        15,
+        1
+      ],
+      "label": "Candles along the altar rail",
+      "model": "candle_cluster",
+      "when": "flag.abbot_fate != \"broken\"",
+      "kind": "decor"
+    },
+    {
+      "id": "sacristy_vestments",
+      "cell": [
+        22,
+        0
+      ],
+      "label": "Vestments on pegs",
+      "model": "robe_pegs",
+      "kind": "decor"
+    },
+    {
+      "id": "sacristy_surplice",
+      "cell": [
+        25,
+        3
+      ],
+      "label": "A white surplice, freshly pressed, hanging apart",
+      "model": "surplice",
+      "kind": "decor"
     }
   ],
   "containers": [

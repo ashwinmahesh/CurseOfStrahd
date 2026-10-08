@@ -281,7 +281,7 @@ func test_village_buildings_have_people_by_day() -> void:
 ## yard painted red with gold trim and wheels, instead of a dark block of wall.
 func test_vallakis_rooms_have_what_their_text_names() -> void:
 	Look.set_style("modern", false)
-	var want := {"vallaki_blue_water_inn": {"inn_kitchen_cauldron": "cauldron", "rictavio_lute": "lute",
+	var want := {"vallaki_blue_water_inn": {"inn_kitchen_cauldron": "stewpot", "rictavio_lute": "lute",
 			"rictavio_washstand": "washstand"},
 		"vallaki_burgomaster_mansion": {"hall_bunting_a": "bunting", "lydia_cloth_a": "festival_cloth"},
 		"vallaki_blinsky_toys": {"toy_shelf_north": "toy_shelf"},
@@ -330,5 +330,65 @@ func test_vallaki_has_people_indoors() -> void:
 			assert_true(v.npc_tokens.has(str(npc)), "%s is in %s at %d:00" % [npc, at[0], at[1]])
 			var d := Compendium.shared().get_entry("npcs", str(npc))
 			assert_eq(str(d["portrait"]), str(d["sprite"]), "%s wears the face of the figure it walks as" % npc)
+		v.queue_free()
+		await _frames(1)
+
+
+## Krezk and the Abbey (the audit, docs/art/interiors.md): what their text names; the rooms it calls bare, plain or kept
+## clean hold only their own things (an area's `furnish: false`); the orphans' cots are cots, not little tombs; and the
+## cold infirmary has its curtain hooks and no rug or armchair.
+func test_krezk_and_the_abbey_have_what_their_text_names() -> void:
+	Look.set_style("modern", false)
+	var want := {"krezk_burgomaster_house": {"eldest_sword_sill": "sill_sword", "ilya_cups_sill": "sill_cups",
+			"spinning_wheel": "spinning_wheel", "bench_by_door": "bench"},
+		"abbey_of_st_markovia_shrine": {"chapel_sunburst": "sunburst", "sacristy_surplice": "surplice",
+			"sacristy_vestments": "robe_pegs"},
+		"abbey_of_st_markovia_wards": {"corridor_suns_1": "charcoal_suns", "surgery_instruments": "instrument_tray"}}
+	var pots := {"abbey_of_st_markovia_wards": {"belview_pot": "cookpot"}}
+	var bare := {"krezk_burgomaster_house": [Rect2i(1, 1, 6, 4), Rect2i(15, 1, 6, 4)],
+		"abbey_of_st_markovia_shrine": [Rect2i(1, 1, 4, 4)]}
+	for loc_id: String in want:
+		var v := _view(loc_id)
+		await _frames(1)
+		var board := v.board
+		for id: String in want[loc_id]:
+			var node := v.prop_nodes.get(id) as Node
+			var models := node.find_children("Model_*", "Node3D", true, false) if node != null else []
+			assert_true(not models.is_empty() and str(models[0].get_meta("model", "")) == str(want[loc_id][id]),
+				"%s: %s is the %s" % [loc_id, id, want[loc_id][id]])
+		for id: String in pots.get(loc_id, {}):
+			var node := v.container_nodes.get(id) as Node
+			var models := node.find_children("Model_*", "Node3D", true, false) if node != null else []
+			assert_true(not models.is_empty() and str(models[0].get_meta("model", "")) == str(pots[loc_id][id]),
+				"%s: %s is the %s" % [loc_id, id, pots[loc_id][id]])
+		for r: Rect2i in bare.get(loc_id, []):
+			for n in board.get_children():
+				if n.has_meta("furnish"):
+					var c := Vector2i(int(str(n.name).get_slice("_", 2)), int(str(n.name).get_slice("_", 3)))
+					assert_false(r.has_point(c), "%s: nothing furnished in a room its text calls bare (%s)" % [loc_id, c])
+			for rug in board.find_children("FurnishRug*", "MeshInstance3D", true, false):
+				var at := (rug as Node3D).global_position
+				assert_false(Rect2(r).has_point(Vector2(at.x, at.z)), "%s: no rug in a bare room" % loc_id)
+		if loc_id == "abbey_of_st_markovia_wards":
+			var cots := 0
+			for z in range(1, 5):
+				for x in range(1, 13):
+					var c := Vector2i(x, z)
+					if board.grid.has_flag(c, CombatGrid.LOW):
+						assert_eq(BattleScenery.art_at(board, c), "crib", "the foundling ward's %s is a cot" % c)
+						cots += 1
+			assert_true(cots >= 8, "rows of little cots (%d)" % cots)
+			var hooks := 0
+			var infirmary := Rect2(9, 8, 7, 5)
+			for m in board.find_children("Model_*", "Node3D", true, false):
+				var at := (m as Node3D).global_position
+				if not infirmary.has_point(Vector2(at.x, at.z)) or str(m.get_parent().name).begins_with("Model_"):
+					continue
+				hooks += 1 if str(m.get_meta("model", "")) == "curtain_hooks" else 0
+				assert_false(str(m.get_meta("model", "")) in ["armchair", "candelabra", "settee"], "the infirmary is cold and bare")
+			assert_true(hooks >= 4, "curtain hooks on the infirmary's walls (%d)" % hooks)
+			for rug in board.find_children("FurnishRug*", "MeshInstance3D", true, false):
+				var at := (rug as Node3D).global_position
+				assert_false(infirmary.has_point(Vector2(at.x, at.z)), "no rug in the infirmary")
 		v.queue_free()
 		await _frames(1)

@@ -1260,7 +1260,8 @@
     "washstand": 4.6,
     "festival_cloth": 4.7,
     "coffin_lid": 6.5,
-    "lute": 4.2
+    "lute": 4.2,
+    "instrument_tray": 3.3
   },
   "big_width": 1.6,
   "models3d": {
@@ -1631,7 +1632,13 @@
       "toy_shelf": "toy_shelf",
       "coffin_lid": "coffin_lid",
       "crucifix": "crucifix",
-      "lute": "lute"
+      "lute": "lute",
+      "sill_sword": "sill_sword",
+      "sill_cups": "sill_cups",
+      "surplice": "surplice",
+      "curtain_hooks": "curtain_hooks",
+      "charcoal_suns": "charcoal_suns",
+      "instrument_tray": "instrument_tray"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",
@@ -3896,6 +3903,16 @@
     "rooms": [
       [
         [
+          "infirmary"
+        ],
+        {
+          "wall": [
+            "curtain_hooks"
+          ]
+        }
+      ],
+      [
+        [
           "stable",
           "stall",
           "byre"
@@ -4581,6 +4598,20 @@
     ]
   },
   "low_cover_rooms": [
+    [
+      [
+        "foundling",
+        "orphan"
+      ],
+      {
+        "single": [
+          "crib"
+        ],
+        "run": [
+          "crib"
+        ]
+      }
+    ],
     [
       [
         "stable",

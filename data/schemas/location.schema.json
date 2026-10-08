@@ -123,6 +123,10 @@
             "pattern": "^[a-z_]+/[a-z_]+$",
             "description": "The room's walls: a texture surface, theme/surface in art/textures/manifest.json. Optional."
           },
+          "furnish": {
+            "type": "boolean",
+            "description": "false: the furnishing pass (world/look/furnish.gd) leaves this room to its own props, for a room its text calls bare, plain or kept clean. Default true."
+          },
           "private": {
             "$ref": "common.schema.json#/$defs/id",
             "description": "F8: the npc whose private room this is. Seen inside, the party is told to leave; seen again, it's trespass."

@@ -159,7 +159,7 @@ braziers burning in the antechamber and either side of the altar.
 
 ### Vallaki
 
-- **The Blue Water Inn:** a cauldron over the kitchen fire big enough to bathe in, beds on the guest rooms' squares
+- **The Blue Water Inn:** a stew pot over the kitchen fire big enough to bathe in (the witch's cauldron bubbled green), beds on the guest rooms' squares
   (they were tavern tables), Rictavio's costume rack, washstand and lute, two regulars at the taproom's tables of an
   evening (Dragan, Oana), and in the yard Rictavio's carnival wagon: its walls painted red with gold trim and wheels
   (location `wall_styles`), a lantern by its steps, where it was a dark block of wall.
@@ -173,6 +173,21 @@ braziers burning in the antechamber and either side of the altar.
 - **Blinsky's:** shelves of toys on three walls (`toy_shelf`).
 - **The coffin maker's:** coffin lids leaning on the workshop walls (`coffin_lid`) and Henrik's crucifixes, one over
   his bed and one by his door (`crucifix`).
+
+### Krezk and the Abbey
+
+- **The Krezkovs' house:** Anna's spinning wheel and the bench by the door (they were chairs), the eldest son's carved
+  wooden sword on his window sill (`sill_sword`), the willow-bark cups on Ilya's sill (`sill_cups`), and a chair pulled
+  up to the burgomaster's bed. The eldest son's room ("kept clean ... hasn't been slept in") and the burgomaster's
+  ("a plain bedroom") are left to their own things: an area's `furnish: false` (location schema).
+- **The Abbey church:** the great sunburst (it was a heraldic crest), candles along the altar rail until the Abbot is
+  broken, vestments on pegs in the sacristy and one white surplice apart (`surplice`); the Abbot's bare cell stays bare
+  (`furnish: false`).
+- **The wards:** the foundling ward's '=' squares are rows of little cots (catalog `low_cover_rooms` "foundling"; they
+  were small stone tombs), the cold infirmary has iron curtain hooks on its walls and nothing else (furnish
+  "infirmary", where the hall rule had laid a rug and an armchair), charcoal suns at a child's height down the long
+  corridor (`charcoal_suns`), the Belviews' stew pot (`cookpot`), straw and gnawed bones in their kitchen, and the
+  surgeon's instruments on a tray (`instrument_tray`).
 
 Every piece a '=' square can be dressed as names an object kind in data/objects/kinds.json, so fights can shove, wreck
 and hide behind it (tests/unit/test_battle_objects.gd checks the catalog's lists and the interiors' own pieces).

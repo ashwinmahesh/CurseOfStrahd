@@ -5645,6 +5645,72 @@
       "source": "art/generated/props/model_lute.png",
       "mount": "stand",
       "world_width": 0.398
+    },
+    "sill_sword": {
+      "file": "art/sprites/props/sill_sword.png",
+      "width_px": 516,
+      "height_px": 496,
+      "world_height": 0.62,
+      "pixel_size": 0.00126,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_sill_sword.png",
+      "mount": "wall",
+      "world_width": 0.645
+    },
+    "sill_cups": {
+      "file": "art/sprites/props/sill_cups.png",
+      "width_px": 516,
+      "height_px": 496,
+      "world_height": 0.62,
+      "pixel_size": 0.00126,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_sill_cups.png",
+      "mount": "wall",
+      "world_width": 0.645
+    },
+    "surplice": {
+      "file": "art/sprites/props/surplice.png",
+      "width_px": 304,
+      "height_px": 516,
+      "world_height": 0.9,
+      "pixel_size": 0.00176,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_surplice.png",
+      "mount": "wall",
+      "world_width": 0.53
+    },
+    "curtain_hooks": {
+      "file": "art/sprites/props/curtain_hooks.png",
+      "width_px": 516,
+      "height_px": 500,
+      "world_height": 0.55,
+      "pixel_size": 0.00111,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_curtain_hooks.png",
+      "mount": "wall",
+      "world_width": 0.568
+    },
+    "charcoal_suns": {
+      "file": "art/sprites/props/charcoal_suns.png",
+      "width_px": 516,
+      "height_px": 272,
+      "world_height": 0.22,
+      "pixel_size": 0.00083,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_charcoal_suns.png",
+      "mount": "wall",
+      "world_width": 0.417
+    },
+    "instrument_tray": {
+      "file": "art/sprites/props/instrument_tray.png",
+      "width_px": 356,
+      "height_px": 516,
+      "world_height": 0.66,
+      "pixel_size": 0.00129,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_instrument_tray.png",
+      "mount": "stand",
+      "world_width": 0.455
     }
   }
 }
