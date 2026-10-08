@@ -1,0 +1,95 @@
+{
+  "region": "side_quests",
+  "flags": [
+    {
+      "id": "teodor_rumor",
+      "type": "bool",
+      "summary": "Vasile and Petre told the party that Widow Ileana leaves her shutter open a crack every night (The Polite Caller)."
+    },
+    {
+      "id": "teodor_grave_known",
+      "type": "bool",
+      "summary": "Old Mihail told the party he dug a grave for Teodor the cooper three winters ago and nobody ever filled it."
+    },
+    {
+      "id": "teodor_vigil",
+      "type": "bool",
+      "summary": "The party is sitting up with Ileana at her cottage by the churchyard gate; Teodor comes after dark."
+    },
+    {
+      "id": "teodor_met",
+      "type": "bool",
+      "summary": "The party has spoken with Teodor at Ileana's shutter."
+    },
+    {
+      "id": "teodor_starving_seen",
+      "type": "bool",
+      "summary": "Insight showed that Teodor has fed on nothing that talks in a long time; he lives on wolves."
+    },
+    {
+      "id": "teodor_guard_known",
+      "type": "bool",
+      "summary": "Teodor told the party he is why the dead never scratch at Ileana's door."
+    },
+    {
+      "id": "teodor_errand_beaten",
+      "type": "bool",
+      "summary": "The master's coachman and his dead came for Ileana's door and were beaten (encounter teodor_errand)."
+    },
+    {
+      "id": "teodor_fate",
+      "type": "string",
+      "summary": "What became of Teodor: dawn (he watched the sunrise with Ileana), woods (he went into the trees) or ended (the party destroyed him)."
+    },
+    {
+      "id": "teodor_resolved",
+      "type": "bool",
+      "summary": "The dawn after the vigil has been played; The Polite Caller is over."
+    },
+    {
+      "id": "teodor_cache_known",
+      "type": "bool",
+      "summary": "Teodor told the party he filled his own empty grave with what he couldn't give back; the churchyard cache can be opened."
+    },
+    {
+      "id": "luca_rumor",
+      "type": "bool",
+      "summary": "Vasile and Petre (or Bildrath) told the party that Grigore's son Luca came home late with a load of wood and hasn't woken since (Cut After Noon)."
+    },
+    {
+      "id": "seedwood_known",
+      "type": "bool",
+      "summary": "The party worked out that the late wood is blight seedwood and that it wants Luca back."
+    },
+    {
+      "id": "bildrath_wood_taken",
+      "type": "bool",
+      "summary": "Bildrath handed over the load of late wood he bought from Grigore."
+    },
+    {
+      "id": "late_wood_burned",
+      "type": "bool",
+      "summary": "The party burned the late wood by day and finished what crawled out (encounter woodpile_burns)."
+    },
+    {
+      "id": "woodpile_beaten",
+      "type": "bool",
+      "summary": "At dusk the late wood stood up in Grigore's yard as one thing, and the party cut it down (encounter woodpile_wakes)."
+    },
+    {
+      "id": "luca_awake",
+      "type": "bool",
+      "summary": "The splinter is out of Luca's hand and he is awake."
+    },
+    {
+      "id": "grigore_thanked",
+      "type": "bool",
+      "summary": "Grigore has offered the party his forty gold for Luca (taken or refused)."
+    },
+    {
+      "id": "bildrath_hush",
+      "type": "bool",
+      "summary": "Bildrath paid the party to forget he sold walking firewood (the Wraps of Unarmed Power, and his discount)."
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+# Cut After Noon (side quest, docs/story/side_quests.md): the village woodcutters cut what they need by noon and go
+# home. Grigore's son Luca stayed late and brought home a load of blight seedwood, sold on to Bildrath; it wants the boy,
+# and at dusk it walks. Reached from Grigore on the west road (townsfolk:woodcutter), Vasile and Petre's rumour,
+# Bildrath's news or Arik. Every line here is unvoiced for now; Luca is a new speaker for the voice thread.
+
+~ asks
+quest cut_after_noon asked
+Grigore [afraid]: My lad. Luca. Two days back he says one more load, Da, the light's good. I says the light's always good after noon, that's how they get you. He stayed.
+Grigore: Came home after dark with the cart full of pale wood, the prettiest wood you ever saw, white as a peeled egg. Didn't say a word. Lay down and he's not got up since. Breathing. Not waking.
+Grigore: I've put him out in the yard on his pallet. Indoors the wood creaks at night, and I can't stand the sound of it.
+Grigore: I sold the load to Bildrath. Cheap. For the medicine I still can't afford from him. You see how it goes round.
+* We'll look at the wood. -> look_offer
+* Let us see Luca. -> luca_look
+* We can't help. -> END
+
+~ look_offer
+Grigore: What's left of it is on the pile by the road. Bildrath's got the rest in his back room. Don't let him charge you to look at it.
+-> END
+
+# --- The late wood on Grigore's pile (prop late_wood) ---
+
+~ pile
+Narrator: The new logs sit on top of the old: pale, smooth, cut clean. They're warm to the touch, like something that has lain in the sun, in a valley that hasn't seen the sun in years.
+if flag.seedwood_known
+Narrator: One of them has rolled a hand's width toward the yard since you last looked. Nobody has touched it.
+-> END
+endif
+interject class:ranger: I've cut a lot of wood. Wood isn't warm.
+* [Nature DC 13] Split one open and look at the grain. -> pile_ok | pile_fail
+* [Arcana DC 15] Is there magic in it? -> pile_ok | pile_vague
+* Leave it. -> END
+
+~ pile_ok
+set seedwood_known
+if quest.cut_after_noon == asked or quest.cut_after_noon == rumored
+quest cut_after_noon seedwood
+endif
+Narrator: The axe goes in and the log bleeds. The sap is red and slow, and inside, the rings of the grain run the wrong way round, tightening toward the heart instead of growing out of it.
+if name:thistle
+interject name:thistle: That's no' a tree. That's a seed the size of a tree. My gran had a word for wood like that, and she spat after she said it.
+else
+interject class:druid: Blight-wood. It grows legs when it's ready.
+endif
+Narrator: The split halves shift on the block, slowly, toward the yard where the boy is lying.
+-> END
+
+~ pile_fail
+Narrator: The log splits clean and white. Good firewood, by the look of it; better than anything else on the pile. That's what bothers you, and you can't say why.
+-> END
+
+~ pile_vague
+Narrator: Nothing you can name. Only the feeling, as you stand over the pile, that the wood is paying attention to you.
+-> END
+
+# --- Luca on his pallet (asleep in the yard) ---
+
+~ luca_look
+Narrator: The lad on the pallet is nineteen or so, broad in the shoulder, his mouth a little open. His right hand is clenched shut, the knuckles white.
+if flag.seedwood_known
+Narrator: The splinter is still going in. Whatever drew it there has to be dealt with before it can come out.
+-> END
+endif
+* [Medicine DC 13] Open his hand and look. -> splinter_found | splinter_missed
+* Leave him be. -> END
+
+~ splinter_found
+set seedwood_known
+if quest.cut_after_noon == asked or quest.cut_after_noon == rumored
+quest cut_after_noon seedwood
+endif
+Narrator: In the meat of his palm there's a pale splinter, gone in deep and still going: the skin puckers round it as if it's being drawn in on a thread. The logs on the pile have all rolled a little closer to the pallet in the night.
+Grigore [afraid]: It's taking him. Is it taking him?
+interject class:cleric: Not while the wood that sent it is still standing.
+Narrator: Pull it now and the boy wakes screaming, and something in the yard wakes with him. The wood comes first.
+-> END
+
+~ splinter_missed
+Narrator: His fingers won't open. Not stiff: held, from the inside, like a fist around a secret. You don't get them apart without breaking one.
+-> END
+
+# --- Grigore by day once he has asked (townsfolk:woodcutter jumps here) ---
+
+~ grigore
+if flag.luca_awake
+Grigore: Luca's cutting again. By noon. I stand over him with a sundial. He hates it.
+-> END
+endif
+if not flag.seedwood_known
+-> grigore_waiting
+endif
+Grigore: Seedwood. God's teeth. And I sold it to Bildrath and took his money for it.
+* [if flag.bildrath_wood_taken] We've got Bildrath's load. Burn the lot, now, while it's light. -> burn_ask
+* [if not flag.bildrath_wood_taken] (Burning yours isn't enough; the rest is in Bildrath's back room.) -> burn_need
+* Then we sit with Luca till dark, and see what comes for him. -> wait_dusk
+* Not yet. -> END
+
+~ grigore_waiting
+Grigore: Did you look at the wood? Bildrath's got most of it. The rest is on the pile, there.
+* Let us see Luca. -> luca_look
+* Not yet. -> END
+
+~ burn_need
+Grigore: Then get it off him. Good luck. He doesn't give anything back, Bildrath; he says it unbalances the ledger.
+-> END
+
+~ burn_ask
+Grigore: That's the winter. That pile's every warm night between now and spring.
+* [Persuasion DC 12] It's the winter or your son, Grigore. -> burn_ok | burn_refused
+* [if gold >= 10] (Press ten gold into his hand.) Buy some wood that doesn't walk. -> burn_paid
+* Then we wait for dark instead. -> wait_dusk
+
+~ burn_refused
+Grigore: No. No, I'll not burn my winter on a feeling. If it walks, I'll believe you.
+* [if gold >= 10] (Press ten gold into his hand.) Buy some wood that doesn't walk. -> burn_paid
+* Then we wait for dark, and you'll see it walk. -> wait_dusk
+
+~ burn_ok
+Grigore: My son. Aye. God help me, burn it.
+-> burn
+
+~ burn_paid
+gold -10
+Grigore: Ten gold. That's more than the pile's worth, and you know it. Burn it, then. Burn the lot.
+-> burn
+
+~ burn
+Narrator: You stack Bildrath's load on top of Grigore's and set the lot alight. For a moment it burns like any wood. Then the logs begin to scream.
+combat woodpile_burns
+
+~ wait_dusk
+time until 19
+Narrator: You sit with Grigore by the pallet while the light goes. Nobody talks. When the sun is down, a door bangs open along the street on its own: Bildrath's.
+Narrator: Pale logs roll out of his back room and up the road, end over end, like a procession of white dogs coming home. The woodpile in the yard leans, and shifts, and stands up.
+combat woodpile_wakes
+
+# --- After the wood is beaten (Grigore comes to the party) ---
+
+~ splinter
+Grigore [afraid]: Is it done? The wood's done? Then get that thing out of my boy.
+* [Medicine DC 13] Draw the splinter out, slowly, root and all. -> drawn_clean | drawn_rough
+* [knows:lesser_restoration] (Cast Lesser Restoration on him.) -> drawn_clean
+* (Just pull it out.) -> drawn_rough
+
+~ drawn_clean
+set luca_awake
+quest cut_after_noon luca_woke
+Narrator: It comes out whole: a pale thorn as long as a finger, with a little white root on the end of it, still reaching. Luca opens his eyes.
+-> luca_wakes
+
+~ drawn_rough
+set luca_awake
+quest cut_after_noon luca_woke
+Narrator: It comes out in two pieces, and the boy screams himself awake. The second piece you have to dig for. He'll carry a scar like a coin in his palm for the rest of his life.
+-> luca_wakes
+
+~ luca_wakes
+Luca: Da? Da, I cut a bit more. I'm sorry. The light was good.
+Grigore: The light's always good, you great lump. That's how they get you.
+-> luca_tells
+
+~ luca_tells
+Luca: There was a man in the trees, in the spring. A big man in a bear's hide, planting things and singing to them. I hid. He said, to the seeds, not to me: the hill wants the valley back. Grow, and go home, and bring the valley with you.
+if flag.gulthias_tree_burned
+Luca: Somebody burned his hill, they say. Good. I hope he was on it.
+else
+set yester_hill_known
+Luca: He went off west after. Toward the hill past the vineyard, the bald one where nothing grows but what he plants.
+interject class:druid: Druids. Not the kind that tend things.
+endif
+-> grigore_reward
+
+~ grigore_reward
+if flag.grigore_thanked
+-> END
+endif
+set grigore_thanked
+Grigore: Here. Forty gold. It's what Bildrath paid me for that wood, and I'll not keep money for that.
+* (Take it.) -> grigore_take
+* Keep it. Buy Luca a hat for the noon sun. -> grigore_refuse
+
+~ grigore_take
+gold +40
+Grigore: Good. And go and see Bildrath. He'll have priced that wood at ten times what he paid me, and I'd like to hear how his face looked.
+-> END
+
+~ grigore_refuse
+Grigore: You're mad, the lot of you. Thank you. And go and see Bildrath. He'll have priced that wood at ten times what he paid me, and I'd like to hear how his face looked.
+approve godrick_pendlebrook +2 wren_featherfoot +2 liriel_dawnsong +1: You wouldn't take a woodcutter's last forty gold
+-> END
+
+# --- Luca, awake, by day ---
+
+~ luca_after
+Luca: I cut by noon now. Da stands over me with a sundial.
+* The man in the bear's hide. Tell us again. -> luca_again
+* Goodbye. -> END
+
+~ luca_again
+Luca: Big. A bearskin with the head still on it, like a hood. Singing. He wasn't singing to me; he didn't know I was there. If he had, I don't think I'd have woken up at all.
+-> END
+
+# --- Bildrath's back room (bildrath:menu jumps here) ---
+
+~ bildrath_wood
+Narrator: Bildrath takes you through to the storeroom with a candle and an air of grievance. The white logs are stacked by the back door, very neatly. One of them is standing on its end.
+Bildrath: I did not stand it on its end.
+* [if not flag.seedwood_known] [Nature DC 13] (Split one and look at the grain.) -> shop_split_ok | shop_split_fail
+* [if flag.seedwood_known] That's blight-wood. Give it to us, and we'll burn it with the rest. -> bildrath_hand
+* Never mind. -> END
+
+~ shop_split_ok
+set seedwood_known
+if quest.cut_after_noon == asked or quest.cut_after_noon == rumored
+quest cut_after_noon seedwood
+endif
+Narrator: The hatchet goes in and the log bleeds red, slow sap. The grain runs in rings the wrong way round, tightening toward the heart.
+Bildrath [afraid]: That is not a feature of firewood. I would know. I sell firewood.
+* That's blight-wood. Give it to us, and we'll burn it with the rest. -> bildrath_hand
+* Never mind. -> END
+
+~ shop_split_fail
+Narrator: White, clean, dry. Excellent firewood, by every sign you know. Bildrath watches you put it down as if you've insulted his stock.
+-> END
+
+~ bildrath_hand
+set bildrath_wood_taken
+Bildrath: Blight. In my storeroom. I'll have to write it off. Do you know what writing it off does to a ledger? It weeps.
+Bildrath: Take it. Take all of it. Parriwimple! Carry it to Grigore's for these people, and then wash your hands. Twice.
+Parriwimple: I can carry that.
+-> END
+
+# --- Bildrath, afterwards (bildrath:menu jumps here) ---
+
+~ hush
+set bildrath_hush
+Bildrath: Ah. Yes. The firewood. I would consider it a kindness if the village went on believing that this shop sells rope and candles and nothing that walks.
+Bildrath: A monk left these as surety six years ago, against a debt of four silver, and never came back for them. They have been on my books for six years. I am writing them off. Into your hands. Today only.
+give wraps_of_unarmed_power_plus_1
+if not flag.bildrath_discount
+set bildrath_discount
+Bildrath [weary]: And ten percent off, from now on. For discretion. Do not tell Parriwimple why.
+endif
+approve kip_smudgewick +1: You let Bildrath buy your silence
+-> END

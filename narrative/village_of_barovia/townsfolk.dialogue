@@ -16,33 +16,47 @@ Goodwife Petra: Nobody. That's the point. There's nothing left here worth the tr
 -> END
 
 ~ woodcutter
+if quest.cut_after_noon and quest.cut_after_noon != rumored
+-> village_of_barovia/cut_after_noon:grigore
+endif
 Grigore: Out of the road, out of the road. This load won't carry itself, and the light won't wait for it.
 * Why the hurry? -> woodcutter_hurry
+* [if flag.luca_rumor] We heard about your lad. -> village_of_barovia/cut_after_noon:asks
 * Sorry. -> END
 
 ~ woodcutter_hurry
 Grigore: The trees by the west road, you cut what you need by noon and you go. After noon they're not the same trees. Ask anyone who stayed to cut a bit more.
 Grigore: Nobody? No. That's my point.
--> END
+* Somebody stayed, didn't they? -> village_of_barovia/cut_after_noon:asks
+* We'll let you get on. -> END
 
 ~ widow
+if quest.polite_caller and quest.polite_caller != rumored
+-> village_of_barovia/polite_caller:day
+endif
 if flag.burgomaster_buried
 Widow Ileana: The burgomaster has a proper grave now, over there. My Teodor will be glad of the company. He never liked him, mind.
--> END
+-> widow_menu
 endif
 Widow Ileana: I'm telling him the news. There's never any news. He doesn't mind; he was always a good listener, and now he's a better one.
+-> widow_menu
+
+~ widow_menu
 * Who was he? -> widow_who
+* [if flag.teodor_rumor or flag.teodor_grave_known] They say you leave your shutter open at night. -> village_of_barovia/polite_caller:asks
 * We'll leave you to it. -> END
 
 ~ widow_who
 Widow Ileana: Teodor. A cooper. He went to fetch a barrel from the crossroads one evening and came back the next morning, quite well, only very pale and very polite. Father Donavich made me shut the door on him.
 Widow Ileana: I did. I still don't know if I was right.
--> END
+* Has he come back since? -> village_of_barovia/polite_caller:asks
+* We're sorry. -> END
 
 ~ gravedigger
 Old Mihail: Mind the edge. It's deeper than it looks. They all are, now. Six feet was enough once. Six feet isn't enough any more.
 * Who is it for? -> gravedigger_who
 * Why so deep? -> gravedigger_deep
+* [if (flag.teodor_rumor or quest.polite_caller) and not flag.teodor_grave_known] Did you ever dig a grave for Teodor the cooper? -> gravedigger_teodor
 * Goodbye. -> END
 
 ~ gravedigger_who
@@ -51,6 +65,16 @@ Old Mihail: Nobody yet. There's always somebody by the end of the week. I like t
 
 ~ gravedigger_deep
 Old Mihail: So they stay down. Some of them try to come home, see. Not the ones I've buried. Not yet. I dig deep and I pack it hard.
+-> END
+
+~ gravedigger_teodor
+set teodor_grave_known
+if not quest.polite_caller
+quest polite_caller rumored
+endif
+Old Mihail: Teodor Cozma. I dug for him three winters back, the week he went to the crossroads. Good and deep. Nobody ever came to fill it.
+Old Mihail: It's by the east wall, still open. I keep the rain out of it. It seemed rude not to.
+Old Mihail: Somebody's been putting things in it, mind. Of a night. I don't look. A grave's a private place.
 -> END
 
 ~ acolyte
@@ -71,12 +95,48 @@ Anca: I sweep a bit louder when it does.
 Vasile: You heard about the burgomaster? Dead. Heart gave out. The wolves stood round the house all night like mourners.
 Petre: It wasn't his heart.
 Vasile: It was his heart, Petre. Something took it.
--> END
+* Heard anything interesting? -> gossip
+* Goodbye. -> END
 
 ~ petre
 Petre: Strangers. Haven't had strangers since the last strangers. They didn't stay long either. Nobody does, except us.
 Vasile: We'd leave if we could. Road's open. You just come back round to the gate.
 Petre: In the mist. Every time.
+* Heard anything interesting? -> gossip
+* Goodbye. -> END
+
+# "Heard anything interesting?" (docs/story/side_quests.md): the same three rumours, in turns, and how they ended.
+~ gossip
+Vasile: Interesting? In Barovia? We've had the same three rumours since the mist came down. We take turns.
+if not quest.polite_caller
+set teodor_rumor
+quest polite_caller rumored
+Vasile: Widow Ileana leaves her shutter open a crack every night. Says it's for the smoke.
+Petre: It's not for the smoke.
+Vasile: I know it's not for the smoke, Petre. That's what makes it a rumour.
+elif flag.teodor_fate == "dawn"
+Petre: Widow Ileana shuts her shutter at night now. Sleeps, too, she says. First time in three winters.
+elif flag.teodor_fate == "woods"
+Petre: Widow Ileana still leaves her shutter open. Says she sleeps better. Two knocks, now and then, from the woods side.
+elif flag.teodor_fate == "ended"
+Vasile: Widow Ileana's put garlic up. First time ever. She doesn't talk to anyone now.
+endif
+if not quest.cut_after_noon
+set luca_rumor
+quest cut_after_noon rumored
+Petre: Grigore's lad, Luca. Went out for the last load two days back and came home after dark with it. Said nothing. Went to bed. Hasn't got up.
+Vasile: Cut after noon, that's what. You don't cut after noon. Everybody knows you don't cut after noon.
+Petre: Everybody but Luca.
+elif flag.luca_awake
+Vasile: Grigore's lad is up and about. Won't go near the west road after dinner, though. Won't even look at it.
+endif
+if not flag.burgomaster_buried
+Vasile: And the burgomaster. Heart.
+Petre: Wasn't his heart.
+else
+Petre: And they buried the burgomaster. Properly, with the priest.
+Vasile: Took them long enough. He was starting to be a rumour himself.
+endif
 -> END
 
 ~ goat

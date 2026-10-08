@@ -1,0 +1,18 @@
+{
+  "id": "barovia_luca",
+  "name": "Luca",
+  "title": "Grigore's Son",
+  "summary": "Grigore the woodcutter's son, nineteen, who stayed in the woods to cut a bit more after noon and came home with a splinter that wouldn't let him wake.",
+  "portrait": "scout",
+  "sprite": "scout",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}

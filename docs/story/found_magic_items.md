@@ -62,6 +62,8 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Church undercroft | Periapt of Health (uncommon) | Search (Perception DC 14): on an old priest in the burial niches |
 | ✅ | Father Donavich | Gem of Brightness (uncommon) | Gift: if Doru is given rest |
 | ✅ | Mad Mary | Necklace of Prayer Beads (rare) | Gift: when Gertruda comes home (late in the game) |
+| ✅ | Teodor's empty grave, the churchyard | Shield, +1 (uncommon) | Tip: Teodor tells you at dawn (The Polite Caller, docs/story/side_quests.md) |
+| ✅ | Bildrath | Wraps of Unarmed Power, +1 (uncommon) | Gift: his hush money after the walking firewood (Cut After Noon) |
 
 ## Svalich Road (level 4)
 

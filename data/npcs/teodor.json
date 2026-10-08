@@ -1,0 +1,23 @@
+{
+  "id": "teodor",
+  "name": "Teodor",
+  "title": "The Cooper, Three Winters Dead",
+  "summary": "Widow Ileana's husband: a cooper who went to the crossroads for a barrel and came back a vampire spawn, pale and very polite. He has knocked at her shutter every night since and never once asked to come in.",
+  "portrait": "vampire_spawn",
+  "sprite": "vampire_spawn",
+  "attitude": "indifferent",
+  "monster": "vampire_spawn",
+  "guest": true,
+  "guest_build": {
+    "monster": "vampire_spawn",
+    "note": "His own stat block (a vampire spawn). Stands with the party for one fight at Ileana's door (The Polite Caller) and leaves at dawn."
+  },
+  "tags": [
+    "barovian",
+    "undead",
+    "vampire_spawn",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}
