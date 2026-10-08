@@ -17804,3 +17804,8 @@
 {"time": "2026-10-08T04:56:54", "audition": "design", "speaker": "pool_grave_keeper", "chars": 187, "model": "eleven_ttv_v3", "previews": 3}
 {"time": "2026-10-08T04:57:07", "audition": "design", "speaker": "pastry_customer_man", "chars": 196, "model": "eleven_ttv_v3", "previews": 3}
 {"time": "2026-10-08T04:57:18", "audition": "design", "speaker": "pastry_customer_woman", "chars": 170, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T05:05:15", "speaker": "narrator", "key": "83fed7655c11bda7", "chars": 94, "voice_id": "6fBYCfuBa6CZSLGNhKol", "model": "eleven_v3", "format": "mp3_44100_64", "direction": "[dry, ominous]", "usd_est": 0.00752, "billed_chars": "48", "request_id": "5LG47sgp3mpReKFd9cx7"}
+{"time": "2026-10-08T05:05:16", "speaker": "narrator", "key": "80240b0cb305af14", "chars": 211, "voice_id": "6fBYCfuBa6CZSLGNhKol", "model": "eleven_v3", "format": "mp3_44100_64", "direction": "[hushed, cold, chilling]", "usd_est": 0.01688, "billed_chars": "104", "request_id": "WKig0GAI4NGpuqe9MAWi"}
+{"time": "2026-10-08T05:05:22", "speaker": "narrator", "key": "c8286f8e05ff79f8", "chars": 124, "voice_id": "6fBYCfuBa6CZSLGNhKol", "model": "eleven_v3", "format": "mp3_44100_64", "direction": "[quiet, observant]", "usd_est": 0.00992, "billed_chars": "63", "request_id": "N3e7YH9KGOZcJ74MBuSY"}
+{"time": "2026-10-08T05:05:23", "speaker": "narrator", "key": "a392a4658851a287", "chars": 175, "voice_id": "6fBYCfuBa6CZSLGNhKol", "model": "eleven_v3", "format": "mp3_44100_64", "direction": "[quiet, solemn]", "usd_est": 0.014, "billed_chars": "84", "request_id": "JVbdKxnC2LJmV4FMEkh3"}
+{"time": "2026-10-08T05:05:31", "audition": "design", "speaker": "lzt_hunter", "chars": 192, "model": "eleven_ttv_v3", "previews": 3}

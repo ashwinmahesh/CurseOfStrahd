@@ -43166,6 +43166,13 @@
   "recipe": "dd92281f92",
   "text": "You reach for the holy in the room and find it at once, blinding, like the sun through a keyhole. It is in him. It is him. And at the bottom of it, like silt in a well, something has gone sour."
  },
+ "narrator/80240b0cb305af14": {
+  "chars": 211,
+  "direction": "[hushed, cold, chilling]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A traveller sitting against the rock as if he stopped to rest, white with frost from his boots to his eyebrows. He has been here for years. The cairns up the stair have the same shape as he does, under the snow."
+ },
  "narrator/80302f65a26cb3a1": {
   "chars": 104,
   "model": "eleven_v4",
@@ -43607,6 +43614,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "She stops. The water stops running off her. She looks at the bundle in your arms for a long time, the way you'd look at a letter you'd waited forty years to get."
+ },
+ "narrator/83fed7655c11bda7": {
+  "chars": 94,
+  "direction": "[dry, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A signpost snapped off at the height of a man's chest. The arm that's left points at the drop."
  },
  "narrator/8410d2b2ba5bf517": {
   "chars": 119,
@@ -46728,6 +46742,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The chancel, two steps up. The altar is spotless. So is the floor around it, scrubbed pale, the way you'd scrub a floor after something that needed scrubbing."
+ },
+ "narrator/a392a4658851a287": {
+  "chars": 175,
+  "direction": "[quiet, solemn]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A cairn of flat stones at the widest part of the ledge, built up a stone at a time by every traveller who made it this far. A few of the stones have names scratched into them."
  },
  "narrator/a39644a3966c9aba": {
   "chars": 143,
@@ -50286,6 +50307,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She reads the names in the order they signed. After each one, from somewhere inside the walls, a voice she knows says \"Present.\""
+ },
+ "narrator/c8286f8e05ff79f8": {
+  "chars": 124,
+  "direction": "[quiet, observant]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A pine brought down across the clearing by some old storm, its roots in the air like a hand. Moss has had years to climb it."
  },
  "narrator/c82c4434b7055209": {
   "chars": 140,
