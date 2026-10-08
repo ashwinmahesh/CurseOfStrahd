@@ -761,11 +761,13 @@ def story_checks(data, errors, need):
                 flags_set.setdefault(tr["flag"], []).append(w)
         for n in loc.get("npcs", []):
             on_floor(n["cell"], f"npc {n['npc']}")
-            for p in n.get("path", []):
+            # A waypoint is [x, y], [x, y, seconds] or {"at": [x, y], ...} (a stop at work, npc_routes.gd).
+            stops = [(p["at"] if isinstance(p, dict) else p) for p in n.get("path", [])]
+            for p in stops:
                 on_floor([int(p[0]), int(p[1])], f"npc {n['npc']} path waypoint")
             if n.get("path"):
                 walkable = _floor_reach(rows, tuple(n["cell"]))
-                for p in n["path"]:
+                for p in stops:
                     if (int(p[0]), int(p[1])) not in walkable:
                         errors.append(f"{w}: npc {n['npc']} path waypoint {p[:2]} can't be walked to from {n['cell']}")
             if n["npc"] not in npcs:

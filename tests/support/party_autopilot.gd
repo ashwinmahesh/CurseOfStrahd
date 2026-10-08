@@ -193,6 +193,14 @@ func _wizard(c: Combatant) -> CombatResult:
 	var foes := _enemies(c)
 	if foes.is_empty():
 		return _melee_turn(c)
+	# Fireball on a crowd (lane 22, 2026-10-08: the Yester Hill summit's fire-vulnerable twig blights): three foes or
+	# more, or two with a big one, never the wizard; allies only when Sculpt Spells keeps them out (Evoker 6).
+	if ch.slots_left(3) > 0 and not c.cast_slot_spell_this_turn and ch.knows_spell("fireball"):
+		var fb := _fireball_point(c, foes)
+		if fb != Vector2.INF:
+			var f := _cast(c, "fireball", 3, [], fb)
+			if f.ok:
+				return f
 	# Sleep on the biggest cluster of creatures that sleep.
 	if ch.slots_left(1) > 0 and not c.cast_slot_spell_this_turn:
 		var best_point := Vector2.INF
@@ -227,6 +235,36 @@ func _wizard(c: Combatant) -> CombatResult:
 	if r.ok:
 		return r
 	return _melee_turn(c)
+
+
+## The Fireball point catching the most foes within 150 ft: {point} or Vector2.INF when no point is worth it.
+func _fireball_point(c: Combatant, foes: Array[Combatant]) -> Vector2:
+	var sculpts := CombatFeatures.has_feature(c, "sculpt_spells")
+	var best := Vector2.INF
+	var best_score := 0.0
+	for f in foes:
+		var p := e.center_of(f)
+		if e.grid.distance_ft(c.cell, c.size_cells, f.cell, f.size_cells) > 150:
+			continue
+		var n := 0
+		var big := false
+		var allies := 0
+		var hits_me := false
+		for o in e.spells.creatures_in(e.grid.area_cells("sphere", 20, p)):
+			if o == c:
+				hits_me = true
+			elif c.hostile_to(o) and not o.is_down():
+				n += 1
+				big = big or o.creature.hp >= 40
+			elif not c.hostile_to(o) and not o.is_down():
+				allies += 1
+		if hits_me or (allies > 0 and (not sculpts or allies > 4)):
+			continue
+		var score := float(n) + (1.0 if big else 0.0)
+		if (n >= 3 or (n >= 2 and big)) and score > best_score:
+			best_score = score
+			best = p
+	return best
 
 
 func _ranger(c: Combatant) -> CombatResult:

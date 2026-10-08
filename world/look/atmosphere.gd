@@ -199,6 +199,12 @@ func _build() -> void:
 		_flat_floors_cast_no_shadow()
 	if mood.has("water"):
 		_build_water()
+	var lines := mood.get("lines", []) as Array
+	for i in lines.size():
+		# Washing hung out between two posts (a lived-in village): WashingLine.
+		var line := WashingLine.build(lines[i] as Dictionary, _rng)
+		line.name = "WashingLine%d" % i
+		board.add_child(line)
 	for f: Variant in mood.get("falls", []):
 		# A river going over an edge (Tser Falls): a sheet of falling water in the place's water colours.
 		board.add_child(Waterfall.build(f as Dictionary, mood.get("water", {}) as Dictionary))

@@ -61,7 +61,10 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   say so. `path: [[x, y], [x, y, seconds], ...]` walks the NPC from its cell through each waypoint and back, standing
   `pause` seconds (default 3, or a waypoint's own) at each (NpcRoutes): it holds while anyone talks or fights, while
   the leader stands beside it and while its next square is taken, and under turn-based exploring walks only as a
-  round ends; a sleeper never walks. Waypoints must be open floor reachable without opening a door. `hours: [from,
+  round ends; a sleeper never walks. A waypoint may also be `{"at": [x, y], "wait": s, "face": dir, "work": "swing" or "gesture"}`: a stop
+  where the person turns to their work and swings at it (an axe, a spade: the figure's attack) or gestures over it
+  (its spell gesture) every few seconds; an entry's own `work` does the same at its cell, standing or home from its
+  path (lane 28). Waypoints must be open floor reachable without opening a door. `hours: [from,
   to]` keeps the NPC here only between those hours (`[19, 6]` passes midnight), so townsfolk go to work, the tavern
   and home: a person may have an entry in each place. The people re-check who stands where whenever the hour turns
   while the party is in the location (LocationClock).
