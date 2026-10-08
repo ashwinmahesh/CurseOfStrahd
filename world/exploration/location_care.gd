@@ -80,7 +80,12 @@ static func _lay_on_hands_out(view: LocationView, cell: Vector2i, choice: String
 		target.remove_condition(&"poisoned")
 		view.toast.emit("%s lays hands on %s: the poison is gone" % [healer.name.get_slice(" ", 0), who])
 	else:
-		var n := clampi(int(choice), 1, pool)
+		# Never more than the wound: a menu chosen from before someone else healed them spends nothing on a full one.
+		var hurt := target.max_hp() - target.hp
+		if hurt <= 0:
+			view.toast.emit("%s isn't hurt" % who)
+			return
+		var n := clampi(int(choice), 1, mini(pool, hurt))
 		healer.spend_resource("lay_on_hands", n)
 		var healed := target.heal(n, "Lay On Hands")
 		view.toast.emit("%s lays hands on %s: %d Hit Points (%d left in the pool)" % [healer.name.get_slice(" ", 0), who, healed, pool - n])
