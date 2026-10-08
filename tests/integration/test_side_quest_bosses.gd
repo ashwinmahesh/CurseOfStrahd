@@ -127,3 +127,12 @@ func test_the_raven_trap_at_level_6() -> void:
 ## The sim starts at the road gate; in play the party is already by the pens, inside the open gate.
 func test_the_grandsire_at_level_8() -> void:
 	await _series("krezk", 23, 8, "grandsire", [1, 2, 3, 4], ["krezk_gate_open", "den_children_freed"], [], ["krezk_gate"])
+
+
+## The sim boots at the catacombs' gate stair; in play the party is at her crypt, inside the open gate.
+func test_corvina_at_level_10() -> void:
+	await _series("castle_ravenloft_catacombs", 23, 10, "corvina", [1, 2, 3, 4], [], [], ["cat_e3_gate"])
+
+
+func test_corvina_named_at_level_10() -> void:
+	await _series("castle_ravenloft_catacombs", 23, 10, "corvina", [1, 2, 3], ["corvina_named"], [], ["cat_e3_gate"])
