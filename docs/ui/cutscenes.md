@@ -7,8 +7,9 @@ Owner rules (2026-10-07): a cutscene shows, faithfully, anything the game's own 
 any moment a cinematic picture makes more dramatic. The
 map and the fights draw small cartoon figures in a lit diorama; they can't show Strahd sitting his black horse up on a
 ridge, the whole valley from a crag, a reveal on a castle's scale. Those moments get a full-screen still picture that
-shows exactly what is happening. No motion is needed: the picture fades up out of black and closes in very slowly on
-its focus, which is enough to make a still feel alive.
+shows exactly what is happening. No motion is needed: the picture fades up out of black. It is drawn whole, as large as
+the screen allows, with black bars filling whatever is left (owner, 2026-10-08: in fullscreen the old fill-and-crop and
+slow push-in cut off the top of the picture); the caption sits low over the picture or its bottom bar.
 
 ## Data
 `data/cutscenes/<id>.json` (schema `cutscene.schema.json`, read by `story/cutscenes.gd`):
@@ -17,7 +18,8 @@ its focus, which is enough to make a still feel alive.
   a dialogue condition (`guest:ireena`, `flag.x`, empty for always). When no take holds, the cutscene is skipped and
   the scene plays as before. So a picture that shows Ireena carries `"when": "guest:ireena"`, and a second take
   without her can follow it.
-- `focus`: where the slow push-in closes on, as a share of the picture's width and height (default the centre).
+- `focus`: the picture's point of interest, as a share of its width and height (default the centre). Kept for the
+  picture's pivot; the picture no longer zooms (see above).
 - `trigger`: a Narrator key (`examine:bonegrinder_lookout`, `enter:<area>`). Looking at that thing or walking into
   that area shows the picture with the narrator's line as its caption, instead of the line in the HUD's box, and
   pauses the game under it (so a fight the area starts waits for it). A fight's narrator key works too
@@ -63,7 +65,7 @@ area starts (the gallows field at night) takes the area's `enter:` trigger; the 
 
 ## Code
 - `story/cutscenes.gd` (`Cutscenes`): the data, the picture for the story now (`image`), `focus`, `for_trigger`.
-- `ui/cutscene/cutscene_view.gd` (`CutsceneView`): the picture, its fade and push-in, the caption, Skip and the pause
+- `ui/cutscene/cutscene_view.gd` (`CutsceneView`): the picture (whole, letterboxed in black) and its fade, the caption, Skip and the pause
   card. Motion is off in headless runs and still captures (UiMotion).
 - `ui/cutscene/cutscene_player.gd` (`CutscenePlayer`): a place's cutscene while exploring, opened by
   `world/game_root.gd play_cutscene` from `LocationView.cutscene_requested`. It stands in as the open screen, so
