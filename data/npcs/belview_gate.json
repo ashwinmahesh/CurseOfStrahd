@@ -1,0 +1,19 @@
+{
+  "id": "belview_gate",
+  "name": "Belview",
+  "title": "At the Gate",
+  "summary": "A long-necked Belview who hangs about the gate watching the switchback, and greets every visitor in the voice of the last one.",
+  "portrait": "belview",
+  "sprite": "belview",
+  "attitude": "indifferent",
+  "voice": "docs/voice/belview.md",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "mongrelfolk",
+    "belview",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "they/them"
+}

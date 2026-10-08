@@ -1,0 +1,21 @@
+# More of the Belview family about their chores in the courtyard (lane 28, 2026-10-08: "more people walking around and
+# doing things"): one sweeping the snow, one carrying wood to the wards, one sorting feathers in the cloister, and one
+# at the gate. Like the rest of the family they mimic voices (docs/voice/belview.md). Unvoiced for now.
+
+~ sweeper
+Narrator: The Belview sweeps a clean path across the flags, looks at it, and sweeps it again. Snow is already falling on it.
+Belview: Clean for the Abbot. Clean for the Abbot. The bride must not get her feet wet. That's what he says. That's what he says.
+-> END
+
+~ hauler
+Belview: Wood for the wards. Wood for the wards. The cold ones in the cells are always cold. We bring them wood and they eat it.
+-> END
+
+~ feathers
+Narrator: The little Belview holds up a grey feather, then a white one, and offers you the white one very seriously.
+Belview: This one is yours. You're a good one. The grey ones are for the bad ones. I have a lot of grey ones.
+-> END
+
+~ gate
+Belview: Hello, hello, who's there? Who's there? That's what the last one said. They didn't come back down. You'll come back down. Probably.
+-> END

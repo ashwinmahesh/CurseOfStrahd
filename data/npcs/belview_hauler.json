@@ -1,0 +1,19 @@
+{
+  "id": "belview_hauler",
+  "name": "Belview",
+  "title": "Carrying Wood to the Wards",
+  "summary": "A hunched Belview with a bull's shoulders who carries wood from the pile to the wards all day, and hums a hymn in three different voices.",
+  "portrait": "belview",
+  "sprite": "belview",
+  "attitude": "indifferent",
+  "voice": "docs/voice/belview.md",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "mongrelfolk",
+    "belview",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "they/them"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "belview_sweeper",
+  "name": "Belview",
+  "title": "Sweeping the Courtyard",
+  "summary": "A Belview with a dog's muzzle and a woman's hands, sweeping the snow off the courtyard flags in long, careful strokes, and then sweeping them again.",
+  "portrait": "belview",
+  "sprite": "belview",
+  "attitude": "indifferent",
+  "voice": "docs/voice/belview.md",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "mongrelfolk",
+    "belview",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "they/them"
+}

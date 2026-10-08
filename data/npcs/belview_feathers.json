@@ -1,0 +1,19 @@
+{
+  "id": "belview_feathers",
+  "name": "Belview",
+  "title": "In the Cloister",
+  "summary": "A small Belview with a bird's crest who sits by the cloister bench picking through a heap of feathers, sorting them into piles only it understands.",
+  "portrait": "belview",
+  "sprite": "belview",
+  "attitude": "indifferent",
+  "voice": "docs/voice/belview.md",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "mongrelfolk",
+    "belview",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "they/them"
+}

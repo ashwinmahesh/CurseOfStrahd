@@ -388,3 +388,25 @@ func test_houses_stand_on_raised_ground() -> void:
 		assert_true(absf(base - ground) <= 1.01, "the house at %s stands at %.1f, the ground beside it at %.1f" % [r.position, base, ground])
 	assert_true(checked >= 10, "Vallaki's houses checked (%d)" % checked)
 	v.queue_free()
+
+
+## The Abbey lived in (lane 28): the Belviews about their chores, benches in the cloister, the switchback climbing to
+## the gate and the west court a step above the courtyard; in the garden the stitched scarecrows face the gate.
+func test_the_abbey_is_lived_in() -> void:
+	GameState.story.minute_of_day = 11 * 60
+	var v := _view("abbey_of_st_markovia")
+	await _frames(2)
+	var here: Array[String] = []
+	for s: Variant in v.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	for id: String in ["belview_sweeper", "belview_hauler", "belview_feathers", "belview_gate"]:
+		assert_true(id in here, "%s is about" % id)
+	var court := v.grid.height(Vector2i(12, 12))
+	assert_true(v.grid.height(Vector2i(8, 28)) < v.grid.height(Vector2i(8, 23)), "the switchback climbs")
+	assert_true(v.grid.height(Vector2i(8, 23)) < court, "the gate above the switchback")
+	assert_true(v.grid.height(Vector2i(5, 4)) > court, "the west court a step up")
+	v.queue_free()
+	var garden := Compendium.shared().get_entry("locations", "abbey_of_st_markovia_garden") as Dictionary
+	for p: Variant in garden["props"]:
+		if str((p as Dictionary)["id"]).begins_with("scarecrow_"):
+			assert_eq(str((p as Dictionary)["model"]), "scarecrow_stitched", "%s is a stitched scarecrow" % (p as Dictionary)["id"])
