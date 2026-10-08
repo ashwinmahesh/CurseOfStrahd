@@ -325,9 +325,10 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 			e.log.add("spell", "%s moves %s to %s" % [c.name(), s["name"], t.name()], c.id)
 		"maintain":
 			e.log.add("spell", "%s keeps %s going" % [c.name(), s["name"]], c.id)
-			var victim := e.get_c(str(a["target_id"]))
-			if victim != null:
-				victim.set_meta("crown_target", str(d.get("victim_of", "")))
+			# Crown of Madness: the creature the crowned one must attack next, the one picked or no one.
+			var crowned := e.get_c(str(a["target_id"]))
+			if crowned != null:
+				spells.targeting.set_crown_victim(crowned, t.id if t != null else "")
 		"faerun":
 			var fr := e.faerun.sustained(c, a, d, ctx, targets, point, direction, r)
 			if not fr.ok:
@@ -406,6 +407,8 @@ func _sustained_check(c: Combatant, a: Dictionary, d: Dictionary, t: Combatant, 
 				return "The marked creature is still up"
 			if t == null or e.distance(c, t) > int(d.get("range", 90)):
 				return "Choose a creature within %d ft" % int(d.get("range", 90))
+		"maintain":
+			return spells.targeting.crown_victim_why(c, e.get_c(str(a["target_id"])), t)
 	return ""
 
 

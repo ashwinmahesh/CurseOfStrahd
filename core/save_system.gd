@@ -297,6 +297,17 @@ static func _read(path: String) -> Dictionary:
 	return data as Dictionary if data is Dictionary else {}
 
 
+## The player deletes a save (the saves page): it and its picture go, and the game's own slot with it, so the next save
+## makes a new one. False if there was no such save.
+func delete_save(slot: String) -> bool:
+	if not has_slot(slot):
+		return false
+	delete_slot(slot)
+	if slot == current_slot:
+		current_slot = ""
+	return true
+
+
 func delete_slot(slot: String) -> void:
 	if has_slot(slot):
 		DirAccess.remove_absolute(slot_path(slot))

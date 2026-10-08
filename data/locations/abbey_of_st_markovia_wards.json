@@ -253,6 +253,44 @@
       "kind": "decor",
       "label": "The matron's bed",
       "model": "bed_small"
+    },
+    {
+      "id": "foundling_treasure",
+      "cell": [
+        3,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a child's hidden treasure under the cots",
+      "model": "doll",
+      "item": "figurine_of_wondrous_power_golden_lions"
+    },
+    {
+      "id": "matron_trunk_lining",
+      "cell": [
+        6,
+        10
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "skill": "investigation",
+      "label": "something sewn into the trunk's lining",
+      "model": "satchel",
+      "item": "robe_of_useful_items"
+    },
+    {
+      "id": "cabinet_periapt",
+      "cell": [
+        26,
+        9
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "skill": "investigation",
+      "label": "a false back in the instrument cabinet",
+      "model": "scattered_notes",
+      "item": "periapt_of_proof_against_poison"
     }
   ],
   "containers": [

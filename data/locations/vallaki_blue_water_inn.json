@@ -271,6 +271,31 @@
       "codex": "rictavio_journal",
       "flag": "rictavio_journal_read",
       "text": "A hunter's journal, in a small, exact hand. Lists of weaknesses: running water, a threshold not crossed without leave, sunlight, a stake through the heart. A page of notes on 'the lord of this valley' that stops halfway down. Inside the cover, a bookplate: from the library of Dr. R. van Richten. Below it, in fresher ink: Never again by that name. Never again."
+    },
+    {
+      "id": "guest_bed_board",
+      "cell": [
+        14,
+        7
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "a loose board under a guest bed",
+      "model": "broken_boards",
+      "item": "gloves_of_thievery"
+    },
+    {
+      "id": "hearth_loose_brick",
+      "cell": [
+        10,
+        7
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "skill": "investigation",
+      "label": "a loose brick by the hearth",
+      "model": "rubble",
+      "item": "bead_of_force"
     }
   ],
   "containers": [

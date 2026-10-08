@@ -117,11 +117,16 @@ func entries(section: String, id: String) -> Array:
 	return (_data.get(section, {}) as Dictionary).get(id, []) as Array
 
 
-## The mood for a place: its own entry, else its map theme's, else "wilds".
+## The mood for a place: its own entry, else its region's theme (art/audio.json "regions", unless its map theme keeps
+## its own mood there, like a tavern, or the region's theme has no music yet), else its map theme's, else "wilds".
 func mood_for(location_id: String, theme: String) -> String:
 	var places := _data.get("places", {}) as Dictionary
 	if places.has(location_id):
 		return str(places[location_id])
+	var region := str(Compendium.shared().get_entry("locations", location_id).get("region", ""))
+	var own := str((_data.get("regions", {}) as Dictionary).get(region, ""))
+	if own != "" and not (_data.get("region_keeps", []) as Array).has(theme) and not entries("music", own).is_empty():
+		return own
 	return str((_data.get("themes", {}) as Dictionary).get(theme, "wilds"))
 
 

@@ -481,6 +481,18 @@
       "kind": "decor",
       "label": "A woodpile",
       "model": "woodpile"
+    },
+    {
+      "id": "dry_well_rope",
+      "cell": [
+        15,
+        17
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "something tangled at the bottom of the dry well",
+      "model": "rubble",
+      "item": "rope_of_entanglement"
     }
   ],
   "containers": [

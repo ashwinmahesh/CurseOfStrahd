@@ -980,6 +980,18 @@
       "kind": "decor",
       "label": "bones underfoot",
       "model": "bone_scatter"
+    },
+    {
+      "id": "bone_throne_ring",
+      "cell": [
+        37,
+        17
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "label": "a ring set into the throne of bones",
+      "model": "bone_scatter",
+      "item": "ring_of_regeneration"
     }
   ],
   "containers": [

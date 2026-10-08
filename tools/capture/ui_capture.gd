@@ -3,7 +3,7 @@ extends Node
 ## Second Wind and spell slot, Shield of Faith, Poisoned), then the sheet's tabs, party, inventory, level up, rests,
 ## spell preparation (after a rest and after an item's Long Rest), journal, loot, shop, pause menu and character creation,
 ## one shot each, plus sample tooltips, the sheet for a level 7 warlock, monk and druid, and creating a character from the
-## party screen (UI_ONLY=create).
+## party screen (UI_ONLY=create), and Madam Eva's rebuild (UI_ONLY=rebuild).
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -193,6 +193,19 @@ func capture_shots(tool: Node, out: String) -> void:
 			cs.call("_draw")
 			await _shoot(tool, "%s_creation_%d.png" % [out, step])
 		cs.queue_free()
+	if _wants("rebuild"):
+		# Madam Eva's rebuild of a prebuilt hero: every equipment option with its gold, and the look they keep.
+		var rb := CreationScreen.new()
+		add_child(rb)
+		var start: Array[Dictionary] = [CreationScreen.rebuild_start(party[2])]
+		rb.open_with(start, 1)
+		rb.b().set_class("wizard")
+		rb.b().set_background("acolyte")
+		for step: int in [CharacterBuilder.Step.EQUIPMENT, CharacterBuilder.Step.APPEARANCE]:
+			rb.step = step
+			rb.call("_draw")
+			await _shoot(tool, "%s_rebuild_%d.png" % [out, step])
+		rb.queue_free()
 	if _wants("classes"):
 		# Level 7 in other classes: Pact Magic, Focus Points, a druid's long feature list.
 		for extra: Array in [["warlock", "Actions"], ["warlock", "Spells"], ["monk", "Actions"], ["druid", "Features"]]:

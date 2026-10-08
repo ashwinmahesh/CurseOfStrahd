@@ -312,6 +312,44 @@ func test_the_creator() -> void:
 	await _check("the character creator", _screen("create", 0), _close_screen)
 
 
+## Madam Eva's rebuild (owner, 2026-10-08): the creator for one hero, on its Equipment step (every option, with its
+## gold) and its Appearance step (a prebuilt hero keeps their look); and the hero picker with its way back.
+func test_madam_evas_rebuild() -> void:
+	if not await _game(LATE):
+		return
+	var hero := GameState.story.party[0]
+	for step: int in [CharacterBuilder.Step.EQUIPMENT, CharacterBuilder.Step.APPEARANCE]:
+		await _check("the rebuild's %s step" % CharacterBuilder.STEP_NAMES[step], func() -> Variant:
+			var cs := CreationScreen.new()
+			root.add_child(cs)
+			var start: Array[Dictionary] = [CreationScreen.rebuild_start(hero)]
+			cs.open_with(start, 1)
+			cs.b().set_class("wizard")
+			cs.b().set_background("acolyte")
+			cs.step = step
+			cs.call("_draw")
+			await _frames(2)
+			return cs,
+			func() -> void:
+				for cs in root.find_children("*", "CreationScreen", false, false):
+					cs.queue_free())
+	var names: Array[String] = []
+	for ch in GameState.story.party:
+		names.append(ch.name)
+	names.append(str(DialogueRunner.BACK_OUT["respec"]))
+	await _check("the rebuild's hero picker", func() -> Variant:
+		var d := DialogueUI.new()
+		root.add_child(d)
+		await _frames(1)
+		d.call("_show", {"kind": "pick_member", "purpose": "respec", "members": names,
+			"text": "Whose fate will the cards read anew? (They return to level 1 and are built again; they keep their belongings.)"})
+		await _frames(2)
+		return d,
+		func() -> void:
+			for d in root.find_children("*", "DialogueUI", false, false):
+				d.queue_free())
+
+
 func test_the_travel_map() -> void:
 	if not await _game(LATE):
 		return
@@ -449,6 +487,28 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 	await _frames(3)
 
 
+func test_the_boss_plates() -> void:
+	# Three bosses side by side (G3, ui/combat/boss_bar.gd): the longest title and Strahd's Legendary Resistance.
+	var ward := ARENA.duplicate(true)
+	(ward["encounters"] as Array).append({"id": "bosses", "trigger": "manual", "monsters": [
+		{"monster": "strahd_von_zarovich", "cell": [6, 1]},
+		{"monster": "vladimir_horngaard", "cell": [7, 2], "name": "Vladimir Horngaard"},
+		{"monster": "night_hag", "cell": [8, 3], "name": "Offalia Wormwiggle"}]})
+	Compendium.shared().tables["locations"]["test_layout_ward"] = ward
+	if not await _game(LATE):
+		return
+	root.call("enter_location", "test_layout_ward", "default")
+	await _frames(3)
+	var view := root.get("view") as LocationView
+	assert_true(view.start_encounter("bosses"), "the fight starts")
+	await _frames(3)
+	var cv := view.combat_view
+	assert_true(cv.boss_bar != null and cv.boss_bar.bosses.size() == 3, "a plate for each boss")
+	await _check("the boss plates", func() -> Variant: return cv.boss_bar)
+	cv.finished.emit("victory")
+	await _frames(3)
+
+
 func test_the_ending() -> void:
 	if not await _game(FINISHED):
 		return
@@ -458,6 +518,54 @@ func test_the_ending() -> void:
 	if ending != null:
 		ending.set("to_title", false)
 		await _check("the ending", func() -> Variant: return root.get("ending"))
+
+
+## A loading card (G5) with the longest place name and the longest tip.
+func test_a_loading_card() -> void:
+	if not await _game(LATE):
+		return
+	var longest_name := ""
+	for loc: Variant in (Compendium.shared().tables["locations"] as Dictionary).values():
+		var n := str((loc as Dictionary).get("name", ""))
+		if n.length() > longest_name.length():
+			longest_name = n
+	var longest_tip := ""
+	for t: Variant in LoadingCard.tips():
+		if str(t).length() > longest_tip.length():
+			longest_tip = str(t)
+	await _check("a loading card", func() -> Variant:
+		var card := LoadingCard.new()
+		card.location = {"name": longest_name, "region": "castle_ravenloft"}
+		card.tip = longest_tip
+		root.add_child(card)
+		await _frames(2)
+		return card,
+		func() -> void:
+			for c in root.find_children("*", "LoadingCard", false, false):
+				c.queue_free())
+
+
+## The big d20 over a conversation (G11): a failed check with Advantage, every bonus part and two aids on offer.
+func test_a_conversation_check_with_the_big_d20() -> void:
+	if not await _game(LATE):
+		return
+	var beat := {"kind": "check", "who": "Godrick Pendlebrook", "portrait": "godrick_pendlebrook", "skill": "Persuasion",
+		"dc": 18, "total": 13, "success": false, "said": "We mean no harm, and we will pay for the trouble.",
+		"detail": "Persuasion (Godrick Pendlebrook): d20 adv (6, 4) + 7 = 13 vs DC 18, failure", "rolls": [6, 4], "kept": 6,
+		"modifier": 7, "extra": 0, "extra_label": "", "advantage": true, "disadvantage": false, "auto_failed": false,
+		"parts": [{"label": "Charisma", "value": 3}, {"label": "Proficiency", "value": 3}, {"label": "Ring of Persuasive Courtesy", "value": 1}],
+		"aids": [{"id": "heroic_inspiration", "label": "Heroic Inspiration: reroll the d20"},
+			{"id": "tactical_mind", "label": "Tactical Mind: add 1d10 (a Second Wind use, kept if it still fails)"}]}
+	await _check("a conversation check", func() -> Variant:
+		var d := DialogueUI.new()
+		root.add_child(d)
+		await _frames(1)
+		d.call("_show", beat)
+		await _frames(2)
+		return d,
+		func() -> void:
+			for d in root.find_children("*", "DialogueUI", false, false):
+				d.queue_free())
 
 
 ## A story cutscene (docs/ui/cutscenes.md) with the longest caption a line may have (60 words), and its pause card.
@@ -529,6 +637,16 @@ func test_the_saves_pages() -> void:
 		page.call("_confirm", page.slots()[0])
 		await _frames(2)
 		return root.get("screen"), _close_screen)
+	await _check("the saves page (delete?)", func() -> Variant:
+		root.call("open_screen", "menu", 0)
+		await _frames(1)
+		var menu := root.get("screen") as PauseMenu
+		menu.call("_open_saves", SavesScreen.Mode.LOAD)
+		await _frames(1)
+		var page := menu.find_children("*", "SavesScreen", true, false)[0] as SavesScreen
+		page.call("_confirm_delete", page.slots()[0])
+		await _frames(2)
+		return menu, _close_screen)
 	await _check("the saves page (chapters)", func() -> Variant:
 		root.call("open_screen", "menu", 0)
 		await _frames(1)
@@ -552,6 +670,36 @@ func test_the_saves_pages() -> void:
 		SaveSystem._remove_dir(SaveSystem.backups_dir().path_join(b))
 	SaveSystem._remove_dir(SaveSystem.backups_dir())
 	_golden_saves_on_disk(false)
+
+
+## The cheat codes' page over the menu: empty, with the item whose name is longest, and with the Spell Scroll's picker
+## on the spell whose scroll name is longest.
+func test_the_cheat_codes_page() -> void:
+	if not await _game(LATE):
+		return
+	var longest := {}
+	for e in CheatCodes.entries():
+		if longest.is_empty() or str(e["name"]).length() > str(longest["name"]).length():
+			longest = e
+	var scrolls := CheatCodes.choices("spell_scroll")
+	var widest := scrolls[0]
+	for v in scrolls:
+		if CheatCodes.choice_name(v).length() > CheatCodes.choice_name(widest).length():
+			widest = v
+	for typed: Array in [["empty", "", ""], [str(longest["name"]), str(longest["code"]), ""],
+			["a scroll", CheatCodes.code_of("spell_scroll"), widest]]:
+		await _check("the cheat codes page (%s)" % typed[0], func() -> Variant:
+			root.call("open_screen", "menu", 0)
+			await _frames(1)
+			var menu := root.get("screen") as PauseMenu
+			menu.call("_open_cheats")
+			await _frames(1)
+			var page := menu.find_children("*", "CheatCodesPage", true, false)[0] as CheatCodesPage
+			page.type_code(str(typed[1]))
+			if str(typed[2]) != "":
+				page.pick(str(typed[2]))
+			await _frames(2)
+			return menu, _close_screen)
 
 
 func test_the_title_screen() -> void:

@@ -222,6 +222,19 @@
       "model": "dais",
       "when": "name:liriel_dawnsong and quest.carry_the_dawn >= faith_kept and not flag.liriel_dawn_prayed",
       "dialogue": "companions/dawn:chapel"
+    },
+    {
+      "id": "altar_dust_amulet",
+      "cell": [
+        8,
+        1
+      ],
+      "kind": "search",
+      "search_dc": 17,
+      "skill": "investigation",
+      "label": "something under the altar's dust",
+      "model": "gold_spill",
+      "item": "amulet_of_the_devout_plus_3"
     }
   ],
   "containers": [

@@ -434,6 +434,30 @@ func test_frightened_creatures_cannot_move_closer_to_what_they_fear() -> void:
 	assert_true(e.move(ilse, Vector2i(3, 2)).ok, "no longer Frightened")
 
 
+func test_frightened_is_at_disadvantage_only_while_the_source_is_in_line_of_sight() -> void:
+	var e := TestCombat.encounter(["#########", "#.......#", "#.......#", "#...#...#", "#...#...#", "#########"])
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(2, 4))
+	var z := TestCombat.foe(e, "zombie", Vector2i(6, 4))
+	var fx := Effect.new("Frightened", &"spell", "test").with_condition(&"frightened")
+	fx.caster_id = z.id
+	ilse.creature.add_effect(fx)
+	TestCombat.start_with(e, ilse)
+	var attack: Array[String] = ["attack"]
+	var check := ilse.creature.check_keys(&"athletics")
+	var dis := func(keys: Array[String]) -> bool: return "Frightened" in (ilse.creature.d20_sources(keys)["disadvantage"] as Array)
+	assert_false(dis.call(attack), "the wall hides the zombie")
+	assert_false(dis.call(check))
+	z.cell = Vector2i(3, 1)
+	assert_true(dis.call(attack), "in line of sight")
+	assert_true(dis.call(check), "checks too")
+	assert_false(dis.call(ilse.creature.save_keys(&"wis")), "never saves")
+	z.creature.hp = 0
+	z.creature.dead = true
+	assert_false(dis.call(attack), "a dead source frightens no more")
+	fx.caster_id = ""
+	assert_true(dis.call(attack), "a fear with no known source counts as in sight")
+
+
 func test_party_members_move_through_each_other_as_difficult_terrain() -> void:
 	var e := TestCombat.encounter(["#########", "#.......#", "#########"])
 	var a := TestCombat.hero(e, "ilse_varga", Vector2i(1, 1))

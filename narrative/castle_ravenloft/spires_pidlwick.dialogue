@@ -154,6 +154,8 @@ quest the_jesters_key returned
 Narrator: You hold out the brass key. He goes perfectly still, then turns his back to you and waits.
 Narrator: It takes a long time to wind him: forty turns, fifty. With every turn his ticking grows steadier.
 Pidlwick II: (He spins on one toe.) THANK YOU. THANK YOU. THANK YOU.
+Pidlwick II: A PRESENT. I KEPT IT IN MY HAT FOR A HUNDRED YEARS. (He holds out a fly carved of black wood.) IT GROWS. DON'T TELL ANYONE.
+give figurine_of_wondrous_power_ebony_fly
 if guest:pidlwick_ii
 -> companion
 endif

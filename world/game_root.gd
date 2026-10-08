@@ -96,6 +96,10 @@ func enter_location(location_id: String, spawn: String) -> void:
 		view = null
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	view = LocationView.create(location_id, st, narrator, Dice.roller, spawn)
+	# Arriving in a new region: its loading card (G5, ui/screens/loading_card.gd) while the place settles in behind.
+	if str(view.loc.get("region", "")) != _card_region:
+		_card_region = str(view.loc.get("region", ""))
+		LoadingCard.show_for(self, view.loc)
 	Audio.play_music(_place_mood())
 	view.banter_player = banter
 	view.banter.connect(func(lines: Array) -> void:
@@ -379,13 +383,12 @@ func open_services(npc_id: String, from_dialogue: bool = false) -> void:
 ## personality kept), keeps their belongings, and levels back up with the party's milestones.
 func respec(index: int) -> void:
 	var old := st.party[index]
-	var start := {"name": old.name, "identity": (old.build.get("identity", {}) as Dictionary).duplicate(true),
-		"appearance": (old.build.get("appearance", {}) as Dictionary).duplicate(true)}
-	var starting: Array[Dictionary] = [start]
+	var starting: Array[Dictionary] = [CreationScreen.rebuild_start(old)]
 	var cs := CreationScreen.new()
 	add_child(cs)
 	cs.open_with(starting, 1)
 	cs.finished.connect(func(made: Array[Character]) -> void:
+		st.last_check = true   # the conversation goes on knowing someone was rebuilt (`check.last`)
 		st.respec_member(old, made[0])
 		cs.queue_free()
 		view.rebuild_party()
@@ -393,6 +396,7 @@ func respec(index: int) -> void:
 		if dialogue != null:
 			dialogue.resume())
 	cs.cancelled.connect(func() -> void:
+		st.last_check = false   # backed out: nobody was rebuilt
 		cs.queue_free()
 		if dialogue != null:
 			dialogue.resume())
@@ -647,6 +651,7 @@ func _strahd_step(step: Dictionary) -> void:
 var _fade: ColorRect = null
 var _fade_label: Label = null
 var _place_fade: ColorRect = null
+var _card_region := ""   ## the region whose loading card was shown last
 
 
 ## A new place comes up out of black instead of cutting to it (docs/plans/ui_polish.md): the screen goes dark at once

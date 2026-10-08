@@ -167,3 +167,27 @@ cooldown 10
 ~ combat:victory
 | [at:krezk and night] On the wall, somebody bangs a spear on the stones, once, twice. In Krezk, apparently, that's applause.
 cooldown 10
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:track_cairn_ring
+| Under the last stone of the cairn by the track, a plain copper ring. It is warm, the only warm thing on this mountain.
+once
+
+~ search:woodpile_shield
+| Under the watch's woodpile, a round shield painted with an open eye. Whoever stood watch here wanted to be sure they'd never be caught napping.
+once
+
+~ check:perception:woodpile_shield:failure
+| Split logs, frost and a great deal of bark. The watch keeps a tidy woodpile, and nothing else under it.
+
+~ search:eldest_bed_box
+| Under the narrow bed, a little box of carved pine. Inside, on a bed of wool, a dusty rose stone that drifts up out of your palm and circles your head.
+once
+
+~ check:investigation:eldest_bed_box:failure
+| A boy's room, kept as he left it. You don't search it any harder than that.
+
+~ search:candle_box_scroll
+| Under the candle stubs in the offering box, someone left a scroll tied with white ribbon, its words written in a hand that shakes with fear and faith together.
+once

@@ -158,6 +158,11 @@
         "origin_size": {
           "type": "integer",
           "description": "Squares across of what an Emanation at a point spreads from (Conjure Animals' Large pack: 2)."
+        },
+        "ring": {
+          "type": "integer",
+          "minimum": 5,
+          "description": "A wall's ring choice: its radius in feet (10 when left out, as Wall of Fire's 20-ft ring; Blade Barrier's is 30)."
         }
       }
     },
@@ -478,6 +483,10 @@
     "living_only": {
       "type": "boolean",
       "description": "No effect on Undead or Constructs."
+    },
+    "ignites_objects": {
+      "type": "boolean",
+      "description": "A flammable object it hits, or that is in its area, catches fire if nobody wears or carries it (Fire Bolt, Fireball; combat/encounter_objects.gd)."
     },
     "secondary": {
       "type": "object",

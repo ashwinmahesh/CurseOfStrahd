@@ -218,3 +218,23 @@ once
 
 ~ rest:long:castle_ravenloft_gates
 | You sleep in the lee of the gatehouse. The castle's one lit window never goes out.
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:dry_well_rope
+| At the bottom of the dry well, a coil of black rope that moves when nothing touches it. It has caught a rat already, and is in no hurry to let go.
+once
+
+~ search:organ_harp
+| One of the organ's stops doesn't make a sound. Pull it and a panel swings open on a small harp of pale wood, strung with something finer than gut.
+once
+
+~ check:investigation:organ_harp:failure
+| Pipes, pedals and stops, all dusty, all silent. Whatever the organ hides, it keeps to itself.
+
+~ search:altar_dust_amulet
+| Under the grey quilt of dust on the chapel altar lies a holy amulet nobody has touched in centuries. The dawn it shows is still bright.
+once
+
+~ check:investigation:altar_dust_amulet:failure
+| Dust, and dust under the dust. This altar has been forgotten more thoroughly than anything you've seen.

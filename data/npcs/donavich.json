@@ -16,5 +16,83 @@
     "village_of_barovia"
   ],
   "region": "village_of_barovia",
-  "pronouns": "he/him"
+  "pronouns": "he/him",
+  "shop": {
+    "sells": [
+      {
+        "id": "potion_of_healing",
+        "qty": -1
+      },
+      {
+        "id": "potion_of_healing_greater",
+        "qty": 2
+      },
+      {
+        "id": "holy_water",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__bless",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__cure_wounds",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__guiding_bolt",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__healing_word",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__protection_from_evil_and_good",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__sanctuary",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__shield_of_faith",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__detect_evil_and_good",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__aid",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__lesser_restoration",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__prayer_of_healing",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__spiritual_weapon",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__silence",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__warding_bond",
+        "qty": -1
+      }
+    ],
+    "buys": [
+      "potion",
+      "scroll"
+    ],
+    "markup": 1.0,
+    "sell_rate": 0.4
+  }
 }

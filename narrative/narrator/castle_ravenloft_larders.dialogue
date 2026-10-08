@@ -284,3 +284,13 @@ once
 ~ open:larders_bones_door
 | The tall black door swings open without a sound, the way a good servant opens a door for a guest.
 once
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:bone_throne_ring
+| Set into the arm of the throne of bones, where a hand would rest, is a ring of dull gold. Take it, and the scrape on your knuckles closes while you watch.
+once
+
+~ check:perception:bone_throne_ring:failure
+| Bones, polished by use. You try not to think about whose.
+

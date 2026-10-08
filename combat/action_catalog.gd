@@ -7,12 +7,19 @@ extends RefCounted
 ## An action: {id, tab, label, sub, cost: action|attack|bonus|reaction|free|movement, legal, reason, targeting,
 ##   count, repeat, range, spell_id, slot, option_id, kind, help}
 ## targeting: none (at once), enemy, ally, creature, dying (a creature at 0 HP), multi (up to `count` creatures,
-##   repeats allowed when `repeat`), point (a grid point in range), direction (aimed from the caster).
+##   repeats allowed when `repeat`), point (a grid point in range), direction (aimed from the caster), wall (squares
+##   drawn one at a time, sent as opts.path: SpellTargeting).
 
 const COMMON := "Common"
 const SPELLS := "Spells"
 const ITEMS := "Items"
 const PASSIVES := "Passives"
+## The player's own tabs (U2): the actions they starred, gathered from every tab, and the ones they put away.
+const FAVOURITES := "Favourites"
+const HIDDEN := "Hidden"
+## What a Ready action waits for (EncounterActions.READY_TRIGGERS), as the hotbar's right-click choices.
+const READY_CHOICES := [{"value": "approach", "label": "When an enemy comes within reach"},
+	{"value": "attack", "label": "When an enemy within reach attacks"}, {"value": "spell", "label": "When an enemy within reach casts a spell"}]
 
 var e: Encounter
 
@@ -27,7 +34,93 @@ func tabs_for(c: Combatant) -> Array[String]:
 		out.append(SPELLS)
 	out.append(ITEMS)
 	out.append(PASSIVES)
+	var lay := layout(c)
+	if not (lay.get("favourites", []) as Array).is_empty():
+		out.insert(0, FAVOURITES)
+	if not (lay.get("hidden", []) as Array).is_empty():
+		out.append(HIDDEN)
 	return out
+
+
+# --- The player's arrangement (U2) ------------------------------------------------------------------
+
+## The hotbar layout a hero keeps from fight to fight (Character.hotbar): {order: {tab: [ids]}, favourites: [ids],
+## hidden: [ids]}. A creature without one (a monster, a summon) gets a fresh {} that isn't kept.
+static func layout(c: Combatant) -> Dictionary:
+	return (c.creature as Character).hotbar if c.creature is Character else {}
+
+
+## The actions on `tab` as the player arranged them: the order they dragged them into (actions they never moved keep
+## their places after those), without the ones they hid. Favourites gathers the starred actions from every tab, in
+## their own order; Hidden holds the hidden ones. `all`: actions_for(c), when the caller has it already.
+func arranged(c: Combatant, tab: String, all: Array[Dictionary] = []) -> Array[Dictionary]:
+	var acts := all if not all.is_empty() else actions_for(c)
+	var lay := layout(c)
+	var hidden := lay.get("hidden", []) as Array
+	var out: Array[Dictionary] = []
+	if tab == FAVOURITES or tab == HIDDEN:
+		for id: Variant in lay.get("favourites" if tab == FAVOURITES else "hidden", []):
+			for a in acts:
+				if str(a["id"]) == str(id) and not a in out:
+					out.append(a)
+		return out
+	var order := (lay.get("order", {}) as Dictionary).get(tab, []) as Array
+	for id: Variant in order:
+		for a in acts:
+			if str(a["id"]) == str(id) and str(a["tab"]) == tab and not str(id) in hidden and not a in out:
+				out.append(a)
+	for a in acts:
+		if str(a["tab"]) == tab and not str(a["id"]) in hidden and not a in out:
+			out.append(a)
+	return out
+
+
+## Stars an action for the Favourites tab, or takes its star away.
+func set_favourite(c: Combatant, action_id: String, on: bool) -> void:
+	_mark(c, "favourites", action_id, on)
+
+
+func is_favourite(c: Combatant, action_id: String) -> bool:
+	return action_id in (layout(c).get("favourites", []) as Array)
+
+
+## Puts an action away on the Hidden tab (it still works from there), or brings it back.
+func set_hidden(c: Combatant, action_id: String, on: bool) -> void:
+	_mark(c, "hidden", action_id, on)
+
+
+func is_hidden(c: Combatant, action_id: String) -> bool:
+	return action_id in (layout(c).get("hidden", []) as Array)
+
+
+func _mark(c: Combatant, list: String, action_id: String, on: bool) -> void:
+	if not c.creature is Character:
+		return
+	var lay := layout(c)
+	var ids := (lay.get(list, []) as Array).duplicate()
+	ids.erase(action_id)
+	if on:
+		ids.append(action_id)
+	lay[list] = ids
+
+
+## Moves an action to `index` on `tab` (a drag on the hotbar, or "Move earlier/later" from its menu); the slot numbers,
+## and so the hotkeys, follow.
+func move_action(c: Combatant, tab: String, action_id: String, index: int) -> void:
+	if not c.creature is Character:
+		return
+	var lay := layout(c)
+	var ids: Array = arranged(c, tab).map(func(a: Dictionary) -> String: return str(a["id"]))
+	if not action_id in ids:
+		return
+	ids.erase(action_id)
+	ids.insert(clampi(index, 0, ids.size()), action_id)
+	if tab == FAVOURITES or tab == HIDDEN:
+		lay["favourites" if tab == FAVOURITES else "hidden"] = ids
+		return
+	var order := (lay.get("order", {}) as Dictionary).duplicate()
+	order[tab] = ids
+	lay["order"] = order
 
 
 func class_tab(c: Combatant) -> String:
@@ -145,10 +238,13 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 	if ready_why == "" and best.is_empty():
 		ready_why = "No attack to ready"
 	var rd := _entry("ready", COMMON, "Ready", "attack on approach", "action", ready_why, "none",
-		"Hold an attack (%s) for your Reaction when an enemy comes within reach." % (best.get("label", "") if not best.is_empty() else ""))
+		"Hold an attack (%s) for your Reaction when an enemy comes within reach (right-click: or when one within reach attacks or casts a spell)." % (best.get("label", "") if not best.is_empty() else ""))
 	rd["option_id"] = str(best.get("id", ""))
+	rd["choices"] = READY_CHOICES
+	rd["choice_label"] = "Trigger"
+	rd["opts"] = {"choice": "approach"}
 	out.append(rd)
-	var stab := _entry("stabilize", COMMON, "Stabilize", "DC 10 Medicine", "action", why, "dying", "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable.")
+	var stab := _entry("stabilize", COMMON, "Stabilize", "DC 10 Medicine", "action", why, "dying", "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable (or brings round one that was knocked out).")
 	stab["range"] = 5
 	out.append(stab)
 	if e.grapples.has(c.id):
@@ -164,10 +260,21 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 		out.append(_entry("stand", COMMON, "Stand Up", "%d ft" % (c.speed() / 2), "movement", stand_why, "none"))
 	else:
 		out.append(_entry("drop_prone", COMMON, "Drop Prone", "free", "movement", e._turn_check(c), "none"))
+	# Flying (F4): up or down 5 ft where it stands, at 1 ft of movement per foot; a rider flies its mount.
+	var flyer := e.movement.flyer_of(c)
+	if e.movement.can_fly(flyer) or e.movement.self_levitating(flyer) or flyer.altitude > 0:
+		var here := ("%d ft up" % flyer.altitude) if flyer.altitude > 0 else "on the floor"
+		for step: int in [5, -5]:
+			var fwhy := e._turn_check(c)
+			if fwhy == "":
+				fwhy = e.movement.vertical_why(flyer, step)
+			out.append(_entry("fly:%s" % ("up" if step > 0 else "down"), COMMON, "Fly up 5 ft" if step > 0 else "Fly down 5 ft", here,
+				"movement", fwhy, "none", "Rise or sink where you are: 5 ft of movement for 5 ft. Out of reach of creatures on the floor 10 ft up; leaving a foe's reach this way draws its Opportunity Attack."))
 	out.append(_entry("influence", COMMON, "Influence", "talk", "action", "Wolves and the walking dead can't be reasoned with", "none"))
 	out.append(_entry("utilize", COMMON, "Utilize", "use an object", "action", "Nothing to use here (Healer's Kit is on Items)", "none"))
-	# Things lying within reach (GroundItems): picking each up.
+	# Things lying within reach (GroundItems): picking each up. Doors within reach: opening or shutting each.
 	out.append_array(e.ground.entries(c))
+	out.append_array(e.objects.actions.entries(c))
 
 
 ## FeatureActions' entries as hotbar actions.
@@ -225,8 +332,12 @@ func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 		var heal := _entry("divine_spark_heal", tab, "Divine Spark: Heal", "%d left · 1d8+%d" % [n, ch.ability_mod(&"wis")], "action", cw, "ally")
 		heal["range"] = 30
 		out.append(heal)
-		var harm := _entry("divine_spark_harm", tab, "Divine Spark: Harm", "Con DC %d · radiant" % e.features._cleric_dc(c), "action", cw, "enemy")
+		var harm := _entry("divine_spark_harm", tab, "Divine Spark: Harm", "Con DC %d · best for the target" % e.features._cleric_dc(c), "action", cw, "enemy")
 		harm["range"] = 30
+		# Necrotic or Radiant, the cleric's choice (right-click); "best" takes whichever the target resists less.
+		harm["choices"] = [{"value": "best", "label": "Best for the target"}, {"value": "radiant", "label": "Radiant"}, {"value": "necrotic", "label": "Necrotic"}]
+		harm["choice_label"] = "Damage type"
+		harm["opts"] = {"choice": "best"}
 		out.append(harm)
 		var tw := cw
 		if tw == "":
@@ -372,12 +483,26 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 			a["targeting"] = "none"
 			a["sub"] = sub + " · arms your next hit"
 			a["help"] = "Arms it: it's cast on your next hit with a weapon, spending its slot (or free use) only then. Choose it again to disarm."
+			# Divine Smite, the 2014 way: no Bonus Action, and armed it smites every melee hit this turn while slots last.
+			if str(s["id"]) == CombatFeatures.DIVINE_SMITE:
+				var smite_why := e._turn_check(c)
+				if smite_why == "" and not bool(s["free"]) and e.spells._lowest_slot(e.spells.caster_char(c), 1) == 0:
+					smite_why = "No spell slots left"
+				a["legal"] = smite_why == ""
+				a["reason"] = smite_why
+				a["cost"] = "free"
+				a["sub"] = sub + " · arms every hit this turn"
+				a["help"] = "Arms it for this turn: each melee hit smites, spending a spell slot (the free use first). No Bonus Action, and it isn't a spell cast. Choose it again to disarm, or set it to Ask in the class tab to decide after each hit."
 		a["spell_id"] = str(s["id"])
 		a["slot"] = level
 		a["range"] = e.spells.range_ft(data)
 		var t := data.get("targets", {}) as Dictionary
 		a["count"] = int(t.get("count", 1))
 		a["repeat"] = str(s["id"]) in ["magic_missile", "scorching_ray"] or bool(data.get("repeat_targets", false))
+		# Eldritch Blast (2024): a pick for each beam, at the same target or different ones.
+		if str(s["id"]) == "eldritch_blast":
+			a["count"] = e.spells.specials.beams(c)
+			a["repeat"] = true
 		a["concentration"] = bool((data.get("duration", {}) as Dictionary).get("concentration", false))
 		if c.creature is Character:
 			var mm: Array = []
@@ -482,12 +607,13 @@ func _spell_targeting(data: Dictionary) -> String:
 	return spell_targeting(data)
 
 
-## How the hotbar targets a spell: none, direction, point, place, enemy, ally, dying, dead, multi or creature.
+## How the hotbar targets a spell: none, direction, point, wall, place, enemy, ally, dying, dead, multi or creature.
 static func spell_targeting(data: Dictionary) -> String:
 	if data.has("area"):
 		if str((data.get("range", {}) as Dictionary).get("kind", "")) == "self":
 			return "none" if str((data["area"] as Dictionary).get("shape", "")) == "emanation" else "direction"
-		return "point"
+		# A wall drawn square by square (its ring, globe or dome choice is placed at a point instead).
+		return "wall" if SpellTargeting.drawn_wall(data) else "point"
 	var t := data.get("targets", {}) as Dictionary
 	if str(data.get("id", "")) in ["misty_step", "dimension_door"]:
 		return "place"
@@ -519,6 +645,8 @@ static func spell_targeting(data: Dictionary) -> String:
 func _items(c: Combatant, out: Array[Dictionary]) -> void:
 	# Potions, scrolls, oils and every magic item power (combat/combat_items.gd).
 	out.append_array(e.items.list(c))
+	# Oil to throw, pour and light (EncounterObjects).
+	out.append_array(e.objects.item_entries(c))
 	# Goodberries and other heal-only consumables that aren't potions: a Bonus Action to eat one or give it away.
 	if c.creature is Character:
 		var seen := {}
@@ -606,8 +734,8 @@ const ACTION_TEXT := {
 	"hide": "A DC 15 Dexterity (Stealth) check while out of every enemy's sight (Three-Quarters or Total Cover). On a success you're Invisible until you attack, cast a spell aloud, or an enemy finds you.",
 	"search": "A Wisdom (Perception) check to find hidden creatures; it beats their Stealth total to find them.",
 	"study": "An Intelligence check (Arcana, History, Nature or Religion by the creature's type) to recall what a creature is: its defenses and traits.",
-	"ready": "Hold an attack: when an enemy you can see comes within reach, you make it with your Reaction. Lasts until the start of your next turn. To ready a spell, right-click it on the Spells tab: it's cast now (spending the slot) and held with Concentration until it's released.",
-	"stabilize": "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable.",
+	"ready": "Hold an attack: when an enemy you can see comes within reach (or, picked with a right-click, when one within reach attacks or casts a spell), you make it with your Reaction. Lasts until the start of your next turn. To ready a spell, right-click it on the Spells tab: it's cast now (spending the slot) and held with Concentration until it's released.",
+	"stabilize": "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable. The same first aid brings round a creature that was knocked out.",
 	"healers_kit": "Spend one use of the kit to make a dying creature within 5 ft Stable, no check needed.",
 	"grapple": "One of your attacks: the target (no more than one size larger) makes a Strength or Dexterity save against 8 + Str + Proficiency or is Grappled (Speed 0).",
 	"shove_prone": "One of your attacks: the target makes a Strength or Dexterity save or falls Prone.",
@@ -869,6 +997,7 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 	var mark := e.events.size()
 	e.faerun.before_action(c)
 	var r := _perform(c, action, targets, point, dir, slot, opts)
+	e.movement.settle_all()   # a flyer the action grounded comes down
 	if r.ok:
 		e.faerun.after_action(c, action, targets)
 	# A class feature in use: an `ability` event ahead of what it did, for the view's effect (emit-only).
@@ -924,7 +1053,7 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 			all_opts.merge(opts, true)
 			return e.spells.cast(c, str(action["spell_id"]), slot, targets, point, dir, all_opts)
 		"ready_spell":
-			return e.ready_spell(c, str(action["spell_id"]), slot)
+			return e.ready_spell(c, str(action["spell_id"]), slot, str((action.get("opts", {}) as Dictionary).get("trigger", "approach")))
 		"feat":
 			var fchoice := str((action.get("opts", {}) as Dictionary).get("choice", opts.get("choice", "")))
 			return e.feature_actions.perform(c, id.substr(5), t, point if point != Vector2.INF else (Vector2(dir.x, dir.y) + e.center_of(c) if dir != Vector2.ZERO else Vector2.INF), fchoice, targets)
@@ -950,8 +1079,12 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 			return e.use_item(c, id.substr(5), t if t != null else c)
 		"pickup":
 			return e.pick_up(c, id.substr(7))
+		"object":
+			return e.objects.perform(c, action, targets, point)
 		"let_go":
 			return e.release_grapple(c, e.get_c(id.get_slice(":", 1)))
+		"fly":
+			return e.fly_vertical(c, CombatGrid.FEET if id == "fly:up" else -CombatGrid.FEET)
 	match id:
 		"grapple":
 			return e.unarmed_special(c, t, "grapple")
@@ -974,7 +1107,7 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 		"study":
 			return e.study(c, t)
 		"ready":
-			return e.ready_attack(c, str(action["option_id"]))
+			return e.ready_attack(c, str(action["option_id"]), str((action.get("opts", {}) as Dictionary).get("choice", "approach")))
 		"stabilize":
 			return e.stabilize(c, t, false)
 		"healers_kit":
@@ -1002,7 +1135,8 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 		"divine_spark_heal":
 			return e.features.divine_spark(c, t, false)
 		"divine_spark_harm":
-			return e.features.divine_spark(c, t, true, str(opts.get("damage_type", "radiant")))
+			var spark := str((action.get("opts", {}) as Dictionary).get("choice", opts.get("choice", opts.get("damage_type", "best"))))
+			return e.features.divine_spark(c, t, true, spark)
 		"turn_undead":
 			return e.features.turn_undead(c)
 		"preserve_life":
@@ -1046,8 +1180,8 @@ func target_why(c: Combatant, action: Dictionary, t: Combatant) -> String:
 			if c.hostile_to(t):
 				return "Choose an ally"
 		"dying":
-			if t.creature.hp > 0 or t.creature.dead:
-				return "Choose a dying creature"
+			if (t.creature.hp > 0 and not t.creature.has_flag("knocked_out")) or t.creature.dead:
+				return "Choose a dying creature (or one knocked out)"
 		"dead":
 			if not t.creature.dead:
 				return "Choose a creature that died"
@@ -1117,8 +1251,20 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 	var o := e.option_by_id(c, str(action["option_id"]))
 	var p := o["profile"] as WeaponProfile
 	var hc := e.echo_knight.hit_chance(c, t, o, str(action["kind"]) == "attack" or str(action["cost"]) == "free")
-	out["chance"] = float(hc["chance"])
-	lines.append("%s: hit %d%% (needs %d+ on the d20)" % [p.name, roundi(float(hc["chance"]) * 100.0), int(hc["needs"])])
+	var sit := hc["situation"] as Dictionary
+	# The roll also counts the attacker's own Advantage and Disadvantage (Poisoned, a feature's), as
+	# EncounterAttacks._roll_attack does, so the odds and the edge here match the roll.
+	var own := c.creature.d20_sources(EncounterAttacks.roll_keys(o))
+	var adv: Array = (sit["advantage"] as Array) + (own["advantage"] as Array)
+	var dis: Array = (sit["disadvantage"] as Array) + (own["disadvantage"] as Array)
+	var single := (21 - int(hc["needs"])) / 20.0
+	var chance := single
+	if not adv.is_empty() and dis.is_empty():
+		chance = 1.0 - pow(1.0 - single, 2)
+	elif not dis.is_empty() and adv.is_empty():
+		chance = single * single
+	out["chance"] = chance
+	lines.append("%s: hit %d%% (needs %d+ on the d20)" % [p.name, roundi(chance * 100.0), int(hc["needs"])])
 	if hc.has("from"):
 		lines.append("From %s's space" % str(hc["from"]))
 	var bonus := p.damage_bonus.total() if str(action["kind"]) == "attack" else mini(0, p.damage_bonus.total())
@@ -1126,9 +1272,6 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 		p.average_damage() - (p.damage_bonus.total() - bonus), (" · %s" % p.mastery.capitalize()) if p.mastery != "" else ""])
 	if p.mastery == "graze":
 		lines.append("Graze: %d damage even on a miss" % maxi(0, c.creature.ability_mod(p.ability)))
-	var sit := hc["situation"] as Dictionary
-	var adv := sit["advantage"] as Array
-	var dis := sit["disadvantage"] as Array
 	if adv.is_empty() and dis.is_empty():
 		lines.append("No Advantage or Disadvantage")
 	elif not adv.is_empty() and not dis.is_empty():
@@ -1175,7 +1318,8 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 	var data := Compendium.shared().spell_data(str(action["spell_id"]))
 	var cells: Array[Vector2i] = []
 	if data.has("area"):
-		cells = e.spells.area_for(c, data, point, dir)
+		# A wall's ring or globe shows as it's cast (SpellTargeting.wall_cells).
+		cells = e.spells.targeting.wall_cells(data, action.get("opts", {}) as Dictionary, point, e.spells.area_for(c, data, point, dir))
 	var who: Array[Dictionary] = []
 	var warnings: Array[String] = []
 	var level := int(data.get("level", 0))
@@ -1293,13 +1437,14 @@ func square_actions(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Arr
 		if why == "Occupied":
 			why = "You can move through %s's space but not stop in it" % o.name() if o != null and c.allied_with(o) else "Someone is there"
 		out.append({"id": "move", "label": "Move here (%d ft)" % int(mp["cost"]) if bool(mp["ok"]) else "Move here", "enabled": bool(mp["ok"]), "why": why})
-	# Picking up what lies there (GroundItems).
+	# Picking up what lies there (GroundItems); attacking what stands or hangs there, oil on the floor (EncounterObjects).
 	out.append_array(e.ground.square_entries(c, cell))
+	out.append_array(e.objects.square_entries(c, cell))
 	if o == null or o == c:
 		return out
 	var seen := {}
 	for a in actions_for(c):
-		if not bool(a["legal"]) or str(a["targeting"]) in ["none", "self", "point", "direction", "place", "multi"]:
+		if not bool(a["legal"]) or str(a["targeting"]) in ["none", "self", "point", "direction", "place", "multi", "wall"]:
 			continue
 		if seen.has(str(a["label"])) or target_why(c, a, o) != "":
 			continue

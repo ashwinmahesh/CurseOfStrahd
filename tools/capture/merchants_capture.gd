@@ -1,7 +1,7 @@
 extends Node
 ## Lane 23 for captures (U11's trading half, F14): Bildrath's shop with its terms and a haggle won, St. Andral's
 ## services with a hero to raise, the Blue Water Inn's rooms, the Vistani trader and the book's other merchants. The
-## party is four pregens at level 5 with gold to spend. LANE_ONLY=shop,haggle,services,rooms,trader,merchants limits it.
+## party is four pregens at level 5 with gold to spend. LANE_ONLY=shop,haggle,services,rooms,trader,merchants,unlocked limits it.
 ## make capture SCENE=res://tools/capture/merchants_capture.tscn NAME=lane23/after FRAMES=10
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -104,4 +104,12 @@ func capture_shots(tool: Node, out: String) -> void:
 		for npc: String in ["henrik", "arik", "davian_martikov"]:
 			root.call("open_shop", npc)
 			await _shoot(tool, "%s_merchant_%s.png" % [out, npc])
+			_close("ShopScreen")
+	if _wants("unlocked"):
+		st.set_flag("keepers_allied")
+		st.set_flag("rictavio_unmasked")
+		st.set_flag("godfrey_remembers")
+		for npc: String in ["urwin_martikov", "rictavio", "sir_godfrey_gwilym"]:
+			root.call("open_shop", npc)
+			await _shoot(tool, "%s_unlocked_%s.png" % [out, npc])
 			_close("ShopScreen")

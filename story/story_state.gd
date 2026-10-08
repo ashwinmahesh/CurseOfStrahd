@@ -470,7 +470,7 @@ func shop_wares(npc_id: String) -> Array[Dictionary]:
 			qty = int(stock.get(stock_id, qty))
 		if qty == 0:
 			continue
-		var base := float(w["price"]) if w.has("price") else float(data.get("cost_gp", 0)) * float(shop.get("markup", 1.0))
+		var base := float(w["price"]) if w.has("price") else float(data.get("cost_gp", 0)) * float(w.get("markup", shop.get("markup", 1.0)))
 		out.append({"id": id, "name": str(data.get("name", id)), "price": Trade.buy_price(self, npc_id, base), "qty": qty,
 			"stock_id": stock_id, "sets": str(w.get("sets", "")), "counts": str(w.get("counts", ""))})
 	return out
@@ -483,7 +483,8 @@ func shop_offer(npc_id: String, item_id: String) -> float:
 	if data.is_empty() or str(data.get("category", "")) == "quest":
 		return -1.0
 	var buys := shop.get("buys", []) as Array
-	if not buys.is_empty() and not str(data.get("category", "")) in buys:
+	# No `buys`: anything; an empty list: nothing (the Order of the Silver Dragon has no use for coin).
+	if (shop.has("buys") and buys.is_empty()) or (not buys.is_empty() and not str(data.get("category", "")) in buys):
 		return -1.0
 	return Trade.sell_price(self, npc_id, snappedf(float(data.get("cost_gp", 0)) * float(shop.get("sell_rate", 0.5)), 0.01))
 

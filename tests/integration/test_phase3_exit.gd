@@ -16,6 +16,7 @@ func before_each() -> void:
 
 func after_each() -> void:
 	Engine.time_scale = 1.0
+	get_tree().paused = false   # a place's cutscene pauses the game; the next playthrough must not start paused
 	if root != null:
 		root.queue_free()
 		root = null

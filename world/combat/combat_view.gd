@@ -22,6 +22,8 @@ const INTRO_TIME := 1.5
 ## The part of the screen the combat HUD leaves clear, as the opening shot frames the fight: |x| up to .x, and y from
 ## .z (bottom) to .y (top), in -1..1 screen units.
 const CLEAR_VIEW := Vector3(0.5, 0.55, -0.4)
+## The clear part's bottom with boss plates over the hotbar (G3).
+const BOSS_CLEAR_BOTTOM := -0.25
 
 enum Mode { BUSY, IDLE, TARGET, PROMPT, OVER }
 
@@ -32,12 +34,19 @@ var overlay: GridOverlay
 var field: FieldView
 ## What lies on the ground (world/combat/ground_view.gd).
 var ground_view: GroundView
+## The breakable things, fire and oil (world/combat/object_view.gd).
+var objects_view: ObjectView
 ## Spell and ability effects (world/combat/fx/spell_fx.gd).
 var fx: SpellFx
 ## What enemies shout and creatures sound like (world/combat/combat_barks.gd).
 var barks: CombatBarks
 ## Who is concentrating on what (combatant id -> spell id), for the sound when a blow breaks it.
 var _concentrating: Dictionary = {}
+## Heavy hits, crits, killing blows, the last foe and big spells landing with weight (G2, world/combat/combat_impact.gd).
+var impact: CombatImpact
+## Strahd's and the other bosses' name plates and health bars, and their entrance (G3, ui/combat/boss_bar.gd); null
+## in a fight without one.
+var boss_bar: BossBar
 var rig: CameraRig
 var hud: CombatHud
 var tokens: Dictionary = {}
@@ -55,6 +64,9 @@ var _pad_repeat := 0.0
 var selected: Dictionary = {}
 var picked: Array = []
 var picked_points: Array[Vector2] = []
+## Picks after the first: a wall's squares and burning side, Commander's Strike's foe, Crown of Madness's victim,
+## Maneuvering Attack's ally and square (world/combat/target_picker.gd).
+var picker: TargetPicker
 var slot_level := 0
 var _reach: Dictionary = {}
 var _target_cycle := 0
@@ -69,6 +81,8 @@ var _opening := false
 var _zoom_before := 13.0
 ## The view is fading out after the fight (close_softly): nothing more is played.
 var _closed := false
+## A boss's entrance is showing (a click, Space or Escape cuts it short).
+var _entrance_tw: Tween
 
 
 ## Starts showing `encounter` on `board_` with `rig_` and the creatures' `tokens_` (id -> CombatToken). Starts the
@@ -81,16 +95,24 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	rig = rig_
 	tokens = tokens_
 	catalog = ActionCatalog.new(e)
+	picker = TargetPicker.new(e)
 	overlay = GridOverlay.create(board)
 	add_child(overlay)
 	field = FieldView.create(board)
 	add_child(field)
 	ground_view = GroundView.create(board)
 	add_child(ground_view)
+	objects_view = ObjectView.create(board)
+	add_child(objects_view)
+	# The breakable things on the board's '=' squares (a location fight placed its own already).
+	if e.state == Encounter.State.SETUP:
+		BattleScenery.from_board(e, board)
 	fx = SpellFx.new()
 	add_child(fx)
 	barks = CombatBarks.new()
 	add_child(barks)
+	impact = CombatImpact.new(rig)
+	add_child(impact)
 	hud = CombatHud.new()
 	add_child(hud)
 	hud.build(e, catalog)
@@ -106,18 +128,33 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	hud.radial_picked.connect(_radial)
 	hud.cast_at_level.connect(func(action: Dictionary, level: int) -> void: _choose(action, level))
 	hud.square_picked.connect(_square_picked)
-	if e.state == Encounter.State.SETUP:
+	var fresh := e.state == Encounter.State.SETUP
+	if fresh:
 		if e.title != "":
 			e.log.add("turn", e.title, "")
 		if e.intro != "":
 			e.log.add("narr", e.intro, "")
 		e.start(surprised)
+	# Bosses (G3): a name plate and health bar for each above the hotbar, and for a fight that's just starting, an
+	# entrance on the greatest of them before the opening beat.
+	var bosses := BossBar.bosses_in(e)
+	var entered := false
+	if not bosses.is_empty():
+		boss_bar = BossBar.new()
+		add_child(boss_bar)
+		boss_bar.build(e, bosses)
+		if fresh and BossBar.entrance_on():
+			entered = await _boss_entrance(bosses[0])
+			if _closed:
+				return
 	# The opening beat: the camera takes in the field and the HUD fades up while Initiative is rolled; the first turn
 	# waits for it. The rules are already running (round 1 saves itself as usual).
 	var opened := Time.get_ticks_msec()
 	_opening = true
 	_frame_the_fight(rig.follow == null)
 	LayerFade.fade(self, hud, true, 0.4, 0.2).finished.connect(func() -> void: hud.banner("Roll Initiative", INTRO_TIME))
+	if boss_bar != null and not entered:
+		LayerFade.fade(self, boss_bar, true, 0.4, 0.2)
 	for c in e.combatants:
 		if c.surprised:
 			e.log.add("info", "%s is surprised: Disadvantage on Initiative" % c.name(), c.id)
@@ -180,7 +217,7 @@ func _all_in_view(spots: Array[Vector3], at: Vector3, dist: float) -> bool:
 			return false
 		var x := v.x / (-v.z * half_w)
 		var y := v.y / (-v.z * half_h)
-		if absf(x) > CLEAR_VIEW.x or y > CLEAR_VIEW.y or y < CLEAR_VIEW.z:
+		if absf(x) > CLEAR_VIEW.x or y > CLEAR_VIEW.y or y < (CLEAR_VIEW.z if boss_bar == null else BOSS_CLEAR_BOTTOM):
 			return false
 	return true
 
@@ -192,6 +229,30 @@ func _end_opening() -> void:
 	if e.state == Encounter.State.ACTIVE:
 		hud.banner("Round %d" % e.round_no, 1.0)
 	create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE).tween_property(rig, "distance", _zoom_before, 0.9)
+
+
+## A boss's entrance (G3): letterbox bars, the camera close and low on `boss`, its name and title, a sting; then the
+## usual opening shot takes in the whole fight. False (and nothing shown) when the boss can't be seen.
+func _boss_entrance(boss: Combatant) -> bool:
+	var tok := _tok(boss.id)
+	if tok == null or not tok.visible:
+		return false
+	hud.visible = false   # the opening beat fades it up after
+	var was_following := rig.follow != null
+	rig.follow = tok
+	rig.cutaway_focus = tok   # walls between the camera and the boss go down for the shot
+	if not was_following:
+		rig.snap_to_target()   # a scene that opens on the fight (the arena) starts on the boss
+	impact.boss_shot()
+	boss_bar.show_entrance(boss)
+	_entrance_tw = create_tween()
+	_entrance_tw.tween_interval(BossBar.ENTRANCE)
+	await _entrance_tw.finished
+	_entrance_tw = null
+	rig.cutaway_focus = null
+	boss_bar.hide_entrance()
+	impact.boss_shot_done()
+	return true
 
 
 ## Removes the view's overlay and HUD (the board and tokens belong to the caller).
@@ -207,6 +268,8 @@ func close_softly() -> void:
 	mode = Mode.OVER
 	overlay.clear_all()
 	hud.hide_tooltip()
+	if boss_bar != null:
+		LayerFade.fade(self, boss_bar, false, 0.35)
 	LayerFade.fade(self, hud, false, 0.35).finished.connect(queue_free)
 
 
@@ -257,6 +320,10 @@ func _advance() -> void:
 	hud.set_pips([], 0)
 	_reach = catalog.move_reach(c) if c.can_act() else {}
 	cursor_cell = c.cell
+	# Maneuvering Attack just hit: the ally that moves, then its square (TargetPicker).
+	if picker.begin_move(c):
+		selected = picker.action
+		mode = Mode.TARGET
 	_update_hover()
 
 
@@ -270,13 +337,50 @@ func _refresh_all() -> void:
 		t.refresh()
 		t.set_active(cur != null and t.combatant == cur and e.state == Encounter.State.ACTIVE)
 	hud.refresh()
+	if boss_bar != null:
+		boss_bar.refresh()
 	_show_weapons()
+	_show_heights()
+
+
+## A dark disc on the floor under each creature in the air (flying, levitating, carried), so its square reads at a
+## glance, and nothing under the rest.
+var _air_marks: Dictionary = {}
+
+
+func _show_heights() -> void:
+	for id: String in _air_marks.keys():
+		var c := e.get_c(id)
+		if c == null or c.altitude <= 0 or not c.is_alive() or c.has_meta("left_fight"):
+			(_air_marks[id] as Node3D).queue_free()
+			_air_marks.erase(id)
+	for c in e.living():
+		if c.altitude <= 0 or c.has_meta("left_fight"):
+			continue
+		var mark := _air_marks.get(c.id) as MeshInstance3D
+		if mark == null:
+			mark = MeshInstance3D.new()
+			var disc := CylinderMesh.new()
+			disc.height = 0.02
+			disc.top_radius = 0.38 * c.size_cells
+			disc.bottom_radius = 0.38 * c.size_cells
+			mark.mesh = disc
+			var m := StandardMaterial3D.new()
+			m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+			m.albedo_color = Color(Look.color("ink"), 0.45)
+			mark.material_override = m
+			mark.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			board.add_child(mark)
+			_air_marks[c.id] = mark
+		mark.position = board.cell_center(c.cell, c.size_cells) + Vector3(0, 0.03, 0)
 
 
 ## Spell objects and lingering areas on the field (Spiritual Weapon, Flaming Sphere, Spirit Guardians, Web...).
 func _show_weapons() -> void:
 	field.sync(e.spells.zones.objects)
 	ground_view.sync(e.ground.items)
+	objects_view.sync(e.objects)
 
 
 func _player() -> Combatant:
@@ -387,10 +491,11 @@ func _choose(action: Dictionary, level: int = 0) -> void:
 		levels = catalog.level_choices(c, action)
 		if not levels.is_empty():
 			slot_level = level if level in levels else levels[0]
-	if str(action["targeting"]) == "none":
+	if str(action["targeting"]) == "none" and not picker.takes(c, action):
 		_perform(action, [], Vector2.INF, Vector2.ZERO)
 		return
-	selected = action
+	# A wall starts its drawing, Crown of Madness's keep-control its victim (TargetPicker).
+	selected = picker.begin(c, action, slot_level)
 	picked = []
 	picked_points = []
 	mode = Mode.TARGET
@@ -401,6 +506,7 @@ func _choose(action: Dictionary, level: int = 0) -> void:
 
 
 func _cancel_targeting() -> void:
+	picker.cancel()
 	hud.hide_tooltip()
 	selected = {}
 	picked = []
@@ -417,7 +523,7 @@ func _show_target_marks() -> void:
 	var c := _player()
 	var foes: Array = []
 	var friends: Array = []
-	if c == null or selected.is_empty() or str(selected["targeting"]) in ["point", "points", "direction"]:
+	if c == null or selected.is_empty() or picker.active() or str(selected["targeting"]) in ["point", "points", "direction"]:
 		return
 	if str(selected["targeting"]) == "dead":
 		var dead: Array = []
@@ -446,9 +552,64 @@ func _perform(action: Dictionary, targets: Array, point: Vector2, dir: Vector2) 
 	var r := catalog.perform(c, action, targets, point, dir, slot_level)
 	slot_level = 0
 	selected = {}
+	picker.reset()
 	picked = []
 	picked_points = []
 	hud.set_pips([], 0)
+	if not r.ok:
+		hud.banner(r.reason, 1.6)
+	await _play_events()
+	if r.is_paused() or e.pending != null:
+		mode = Mode.PROMPT
+		_refresh_all()
+		hud.show_prompt(e.pending)
+		return
+	_advance()
+
+
+## Does what a pick after the first asked for (TargetPicker): the action with its picks, Maneuvering Attack's move,
+## or a refusal to show; otherwise the picking goes on.
+func _run_pick(cmd: Dictionary) -> void:
+	match str(cmd.get("do", "")):
+		"perform":
+			_perform(cmd["action"] as Dictionary, cmd["targets"] as Array, cmd["point"] as Vector2, cmd["dir"] as Vector2)
+			return
+		"move":
+			_reaction_move(cmd["ally"] as Combatant, cmd["cell"] as Vector2i)
+			return
+		"refuse":
+			hud.banner(str(cmd["why"]), 1.4)
+	_update_hover()
+
+
+## Backspace or right-click while picking: takes back a wall's last square, or a second pick (TargetPicker). False
+## when there was nothing to take back.
+func _undo_pick() -> bool:
+	if mode != Mode.TARGET or not picker.undo():
+		return false
+	if not picker.active():
+		overlay.clear("area")
+		_show_target_marks()
+	_update_hover()
+	return true
+
+
+## The floor marks and the tooltip a pick after the first asks for (TargetPicker.show).
+func _show_pick(view: Dictionary, at: Vector2) -> void:
+	for key: String in ["area", "target", "friendly", "goal", "danger"]:
+		overlay.show_cells(key, view[key] as Array)
+	overlay.show_trail("path", view["trail"] as Array)
+	hud.show_tooltip(str(view["title"]), view["lines"] as Array, view["warnings"] as Array, at)
+
+
+## Maneuvering Attack's move: the ally picked walks to the square picked with its Reaction.
+func _reaction_move(ally: Combatant, cell: Vector2i) -> void:
+	mode = Mode.BUSY
+	overlay.clear_all()
+	hud.hide_tooltip()
+	selected = {}
+	picker.reset()
+	var r := e.reaction_move(ally, cell)
 	if not r.ok:
 		hud.banner(r.reason, 1.6)
 	await _play_events()
@@ -525,7 +686,8 @@ func _open_square_menu(at: Vector2) -> bool:
 	for it in _menu_items:
 		shown.append({"id": it["id"], "label": it["label"], "enabled": it.get("enabled", true), "why": it.get("why", "")})
 	hud.hide_tooltip()
-	hud.open_square_menu(o.name() if o != null else "This square", shown, at)
+	var thing := e.objects.blocking_at(cell)
+	hud.open_square_menu(o.name() if o != null else (thing.title() if thing != null else "This square"), shown, at)
 	return true
 
 
@@ -548,11 +710,20 @@ func _square_picked(id: String) -> void:
 	for it in _menu_items:
 		# Picking something up needs no one standing there.
 		if str(it["id"]) == id and it.has("action") and (o != null or str((it["action"] as Dictionary)["targeting"]) == "none"):
+			# Commander's Strike and Crown of Madness go on to their second pick (TargetPicker).
+			if o != null and picker.second(c, it["action"] as Dictionary, o, 0):
+				selected = it["action"] as Dictionary
+				mode = Mode.TARGET
+				_update_hover()
+				return
 			_perform(it["action"] as Dictionary, [o] if o != null else [], Vector2.INF, Vector2.ZERO)
 			return
 
 
 func _confirm_target(c: Combatant, t: CombatToken) -> void:
+	if picker.active():
+		_run_pick(picker.pick(hover_cell, t.combatant if t != null else null))
+		return
 	var kind := str(selected["targeting"])
 	match kind:
 		"points":
@@ -581,7 +752,7 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 				hud.banner("%d of %d spaces chosen" % [picked_points.size(), need], 1.2)
 				_update_hover()
 		"point":
-			_perform(selected, [], _aim_point(), Vector2.ZERO)
+			_perform(selected, [], _aim_point(), TargetPicker.point_dir(e, c, selected, _aim_point()))
 		"place":
 			# A square for the object (or teleport), or a creature to put it beside.
 			if t != null and t.combatant != c and c.hostile_to(t.combatant):
@@ -602,6 +773,7 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 			else:
 				picked.append(t.combatant)
 			var need := e.spells.target_count(Compendium.shared().spell_data(str(selected["spell_id"])), slot_level + (1 if str((selected.get("opts", {}) as Dictionary).get("slot_boost", "")) != "" else 0)) if str(selected["kind"]) == "spell" else int(selected.get("count", 1))
+			need = maxi(need, int(selected.get("count", 1)))   # Eldritch Blast: one pick per beam
 			if picked.size() >= need:
 				_perform(selected, picked.duplicate(), Vector2.INF, Vector2.ZERO)
 			else:
@@ -609,10 +781,21 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 				_update_hover()
 		_:
 			if t == null:
+				# An object's square (a crate, a door, a chandelier's chain, oil on the floor): aim at it instead.
+				var aimed := e.objects.redirect(c, selected, hover_cell) if hover_cell.x >= 0 else {}
+				if not aimed.is_empty():
+					if not bool(aimed["legal"]):
+						hud.banner(str(aimed["reason"]), 1.4)
+						return
+					_perform(aimed, [], Vector2.INF, Vector2.ZERO)
 				return
 			var why2 := catalog.target_why(c, selected, t.combatant)
 			if why2 != "":
 				hud.banner(why2, 1.4)
+				return
+			# Commander's Strike's ally and Crown of Madness's target take a second pick (TargetPicker).
+			if picker.second(c, selected, t.combatant, slot_level):
+				_update_hover()
 				return
 			_perform(selected, [t.combatant], Vector2.INF, Vector2.ZERO)
 
@@ -680,6 +863,11 @@ func _cycle_inspect() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if input_locked:
 		return
+	if _entrance_tw != null and _entrance_tw.is_valid() and (event.is_action_pressed(&"ui_accept") or event.is_action_pressed(&"ui_cancel")
+			or event is InputEventMouseButton and (event as InputEventMouseButton).pressed):
+		_entrance_tw.custom_step(BossBar.ENTRANCE)   # cuts the boss's entrance short
+		get_viewport().set_input_as_handled()
+		return
 	if event is InputEventKey and (event as InputEventKey).pressed and (event as InputEventKey).physical_keycode == KEY_F1 \
 			or event is InputEventJoypadButton and (event as InputEventJoypadButton).pressed and (event as InputEventJoypadButton).button_index == JOY_BUTTON_START:
 		hud.toggle_controls()
@@ -730,11 +918,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif mb.button_index == MOUSE_BUTTON_RIGHT:
 			if mode == Mode.IDLE and _open_square_menu(mb.position):
 				return
-			_cancel_targeting()
-			_update_hover()
+			if not _undo_pick():
+				_cancel_targeting()
+				_update_hover()
+	elif event is InputEventKey and (event as InputEventKey).pressed and (event as InputEventKey).physical_keycode == KEY_BACKSPACE:
+		_undo_pick()
 	elif event.is_action_pressed(&"combat_confirm"):
 		if mode == Mode.TARGET and str(selected.get("targeting", "")) == "multi" and not picked.is_empty() and not using_pad:
 			_perform(selected, picked.duplicate(), Vector2.INF, Vector2.ZERO)
+		elif mode == Mode.TARGET and picker.active() and not using_pad:
+			_run_pick(picker.confirm())
 		else:
 			_confirm_at()
 	elif event.is_action_pressed(&"combat_cancel"):
@@ -798,7 +991,10 @@ func _next_target() -> void:
 	for o in e.living():
 		if o == c or o.is_down() and str(selected.get("targeting", "")) != "dying":
 			continue
-		if mode == Mode.TARGET and catalog.target_why(c, selected, o) != "":
+		if mode == Mode.TARGET and picker.active():
+			if not picker.candidate(o):
+				continue
+		elif mode == Mode.TARGET and catalog.target_why(c, selected, o) != "":
 			continue
 		if mode != Mode.TARGET and not c.hostile_to(o):
 			continue
@@ -943,16 +1139,22 @@ func _update_hover() -> void:
 				hud.show_tooltip(str(pv0["title"]), pv0["lines"] as Array, ["Out of reach: move closer, or pick a ranged attack"], at)
 			else:
 				var pv := catalog.attack_preview(c, a, o)
-				hud.show_tooltip(str(pv["title"]), pv["lines"] as Array, [], at)
+				hud.show_tooltip(str(pv["title"]), pv["lines"] as Array, [], at, str(pv.get("edge", "")))
 		else:
 			var about: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)]
 			about.append_array(e.ground.describe_at(o.cell))
 			hud.show_tooltip(o.name(), about, [], at)
 		return
-	# What lies on the square (GroundItems) is named under whatever else the tooltip says.
+	# What lies on the square (GroundItems), and what hangs or burns there (EncounterObjects), is named under whatever
+	# else the tooltip says; a door or a crate filling it has a card of its own.
 	var lying: Array = []
 	if hover_cell.x >= 0:
 		lying.append_array(e.ground.describe_at(hover_cell))
+		lying.append_array(e.objects.describe_at(hover_cell))
+		var card := e.objects.tooltip(hover_cell)
+		if not card.is_empty():
+			hud.show_tooltip(str(card["title"]), card["lines"] as Array, [], at)
+			return
 	if hover_cell.x < 0 or hover_cell == c.cell:
 		if lying.is_empty():
 			hud.hide_tooltip()
@@ -974,6 +1176,9 @@ func _update_hover() -> void:
 
 
 func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
+	if picker.active():
+		_show_pick(picker.show(hover_cell, t.combatant if t != null else null), at)
+		return
 	var kind := str(selected["targeting"])
 	if kind == "points" or (kind == "point" and str(selected["kind"]) == "feat"):
 		var cells: Array = []
@@ -985,7 +1190,9 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		hud.show_tooltip(str(selected["label"]), ["Choose a visible space within %d ft" % int(selected.get("range", 0)), "%d of %d spaces chosen" % [picked_points.size(), int(selected.get("count", 2))]] if kind == "points" else ["Choose an empty space or a willing ally to swap with"], [], at)
 		return
 	if kind in ["point", "direction"]:
-		var pv := catalog.spell_preview(c, selected, _aim_point(), _aim_dir(c), slot_level)
+		# A wall at a point (a Tsunami) runs across the line from the caster, as it's cast (TargetPicker.point_dir).
+		var wall_dir := TargetPicker.point_dir(e, c, selected, _aim_point()) if kind == "point" else Vector2.ZERO
+		var pv := catalog.spell_preview(c, selected, _aim_point(), wall_dir if wall_dir != Vector2.ZERO else _aim_dir(c), slot_level)
 		overlay.show_cells("area", pv["cells"] as Array)
 		var lines: Array = []
 		for w: Dictionary in pv["creatures"]:
@@ -1005,6 +1212,14 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		hud.show_tooltip(str(selected["label"]), ["Click a square to place it (or an enemy to put it beside them)" if ok else "Out of range (%d ft)" % rng], [], at)
 		return
 	if t == null:
+		# An object's square: the chosen attack or spell aimed at it (EncounterObjects.redirect).
+		var aimed := e.objects.redirect(c, selected, hover_cell) if hover_cell.x >= 0 else {}
+		if not aimed.is_empty():
+			var thing_lines: Array = []
+			for ob in e.objects.objects_at(hover_cell):
+				thing_lines.append_array(ob.describe())
+			hud.show_tooltip(str(aimed["label"]), thing_lines, [str(aimed["reason"])] if not bool(aimed["legal"]) else [], at)
+			return
 		var hint := "Choose a target"
 		if kind == "multi":
 			hint = "Choose targets (%d chosen) · Enter casts now" % picked.size()
@@ -1013,11 +1228,12 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 	var o := t.combatant
 	if str(selected["kind"]) in ["attack", "offhand"]:
 		var pv2 := catalog.attack_preview(c, selected, o)
-		hud.show_tooltip(str(pv2["title"]), pv2["lines"] as Array, [], at)
+		hud.show_tooltip(str(pv2["title"]), pv2["lines"] as Array, [], at, str(pv2.get("edge", "")))
 		return
 	var why := catalog.target_why(c, selected, o)
 	var lines2: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()]]
 	var tip_title := o.name()
+	var edge := ""   # a spell attack's Advantage or Disadvantage, for the box's outline
 	if str(selected["kind"]) in ["spell", "item_spell"]:
 		var data := Compendium.shared().spell_data(str(selected["spell_id"]))
 		var prev := catalog.cast_preview(c, selected, slot_level)
@@ -1030,15 +1246,19 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [to_hit, ac, needs])
 			if int(sit.get("height_bonus", 0)) != 0:
 				lines2.append(EncounterAttacks.height_line(int(sit.get("height_bonus", 0))))
-			var sa := sit["advantage"] as Array
-			var sd := sit["disadvantage"] as Array
+			# With the caster's own Advantage and Disadvantage (Poisoned...), as the spell attack's roll counts them.
+			var own := c.creature.d20_sources(["attack", "attack:melee" if bool(opt["melee"]) else "attack:ranged", "attack:spell"])
+			var sa: Array = (sit["advantage"] as Array) + (own["advantage"] as Array)
+			var sd: Array = (sit["disadvantage"] as Array) + (own["disadvantage"] as Array)
 			if not sa.is_empty() and sd.is_empty():
 				tip_title = "%s · ADVANTAGE" % o.name()
+				edge = "advantage"
 			elif not sd.is_empty() and sa.is_empty():
 				tip_title = "%s · DISADVANTAGE" % o.name()
-			for s: Variant in sit["advantage"]:
+				edge = "disadvantage"
+			for s: Variant in sa:
 				lines2.append("Advantage: %s" % s)
-			for s: Variant in sit["disadvantage"]:
+			for s: Variant in sd:
 				lines2.append("Disadvantage: %s" % s)
 		if data.has("save") and prev.has("save_dc"):
 			var ab := StringName(str(data["save"]))
@@ -1051,7 +1271,7 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			lines2.append("Heals %s %+d" % [prev["heal_dice"], (prev["heal_bonus"] as Breakdown).total()])
 	if kind == "multi":
 		lines2.append("Chosen: %d" % picked.count(o))
-	hud.show_tooltip(tip_title, lines2, [why] if why != "" else [], at)
+	hud.show_tooltip(tip_title, lines2, [why] if why != "" else [], at, edge)
 
 
 # --- Playing events -------------------------------------------------------------------------------
@@ -1090,14 +1310,15 @@ func _concentration_kept(c: Combatant) -> void:
 	CombatSfx.concentration(false)
 
 
-## Where a token stands: its square's centre, raised onto the mount's back for a rider.
+## Where a token stands: its square's centre, raised onto the mount's back for a rider, and as high off the floor as
+## it flies (1 unit = 5 ft).
 func _token_spot(c: Combatant, cell: Vector2i) -> Vector3:
 	var p := board.cell_center(cell, c.size_cells)
 	var m := e.mount_of(c)
 	if m != null:
 		var h := CombatToken.height_for(CombatToken.art_id(m)) * (m.size_cells if m.size_cells > 1 else 1)
 		p = board.cell_center(m.cell, m.size_cells) + Vector3(0, h * 0.8, 0)
-	return p
+	return p + Vector3(0, c.altitude / float(CombatGrid.FEET), 0)
 
 
 func _play_events() -> void:
@@ -1106,8 +1327,16 @@ func _play_events() -> void:
 	# Who just played their attack as a spell gesture: the spell's own attack rolls that follow don't replay it.
 	var cast_by := ""
 	var ev_at := -1   # where `ev` is in `events`, for what follows it
+	# Where the fight's last foe falls in these events (slow motion on the blow that does it), and whether it played.
+	var final_fall := CombatImpact.last_fall(e, events)
+	var final_played := false
+	# A big spell's camera turn holds until its damage has shown (the next blow, move or turn).
+	var turned_until := -1
 	for ev in events:
 		ev_at += 1
+		if turned_until >= 0 and ev_at >= turned_until:
+			turned_until = -1
+			impact.spell_landed()
 		if _closed:
 			return   # the story took the fight back mid-way: its tokens may be gone
 		var kind := str(ev["type"])
@@ -1130,6 +1359,9 @@ func _play_events() -> void:
 				if bool(ev.get("mounted", false)) or bool(ev.get("dragged", false)):
 					continue   # carried along: it moves with the step after it
 				await tw.finished
+			"object_attack", "object_throw", "object_damage", "object_broken", "object_fall", "object_door", "object_move", "object_topple", "object_burst":
+				_stop_walking(walking)
+				await objects_view.play(ev, e.objects, tokens, fx)
 			"attack":
 				_stop_walking(walking)
 				# An Echo Knight's blow struck from its echo plays on the echo.
@@ -1171,6 +1403,9 @@ func _play_events() -> void:
 						await tw2.finished
 						if not acue.is_empty() and bool(ev["hit"]):
 							fx.on_hit(acue, a, d, bool(ev.get("critical", false)))
+					if bool(ev["hit"]):
+						var struck: Array[CombatToken] = [d]
+						final_played = _impact_on(struck, events, ev_at, final_fall, bool(ev.get("critical", false))) or final_played
 					# A blow sounds by what struck and how hard it landed (CombatSfx); a spell's missile or a magic touch
 					# already sounded as its effect landed.
 					if not bool(ev["hit"]):
@@ -1207,6 +1442,10 @@ func _play_events() -> void:
 					tc.refresh()
 					if kind in ["down", "death"]:
 						_concentration_kept(tc.combatant)
+					if ev_at == final_fall and not final_played:
+						# The last foe fell to something that wasn't a blow played above (an aura, a turn's damage).
+						final_played = true
+						impact.hit(tc, 0, 1, false, true, true)
 					if kind == "down" and tc.combatant.side in [&"party", &"guest"]:
 						# A hero falls (owner ask 2026-10-07): the body drops, a thud and a bell, and their frame cries out.
 						Audio.sfx("fall")
@@ -1239,6 +1478,7 @@ func _play_events() -> void:
 				if caster != null:
 					caster.flash((cue["colours"] as Dictionary)["glow"] if not cue.is_empty() else Look.color("lilac"), 0.3)
 					var aim := _spell_aim(ev, caster)
+					impact.spell_cast(str(ev["spell"]), caster.global_position, _spell_spot(ev, caster))
 					# The drawn spell gesture when the sprite has one (aimed, or facing as it is for a spell on itself);
 					# else casters whose attack is a spell gesture play that.
 					if caster.start_cast(aim):
@@ -1256,11 +1496,14 @@ func _play_events() -> void:
 						var rolls := str(Compendium.shared().spell_data(str(ev["spell"])).get("attack", "")) != ""
 						await fx.cast(cue, caster, at, ev.get("cells", []) as Array, board, rolls)
 				_concentration_begins(caster, str(ev["spell"]))
+				var landed_on: Array[CombatToken] = []
+				final_played = _impact_on(landed_on, events, ev_at, final_fall, false) or final_played
 				var cells := ev.get("cells", []) as Array
 				if not cells.is_empty():
 					overlay.show_cells("area", cells)
 					await get_tree().create_timer(0.45 * GameSettings.combat_pace()).timeout
 					overlay.clear("area")
+				turned_until = CombatImpact.window_end(events, ev_at)
 			"ability":
 				# A class feature or a monster's save action (Second Wind, a breath, a wail): its effect, if it has one.
 				_stop_walking(walking)
@@ -1280,6 +1523,8 @@ func _play_events() -> void:
 						if ab.start_attack(Vector2(to.x, to.z)):
 							await ab.wait_for_strike()
 					await fx.cast(acu, ab, on, ev.get("cells", []) as Array, board, false)
+				var touched: Array[CombatToken] = []
+				final_played = _impact_on(touched, events, ev_at, final_fall, false) or final_played
 			"smite":
 				# A smite spell rides the hit that just landed (Divine Smite, Searing Smite...).
 				var sk := _tok(str(ev["caster"]))
@@ -1356,6 +1601,16 @@ func _play_events() -> void:
 				var ft := _tok(str(ev["id"]))
 				if ft != null:
 					_float(ft, "FALLS %d FT" % int(ev["feet"]), "bone", 34)
+			"altitude":
+				# Rising or sinking where it stands (F4): the token glides to the height the event names.
+				var at := _tok(str(ev["id"]))
+				if at != null:
+					var spot := _token_spot(at.combatant, at.combatant.cell)
+					spot.y += (int(ev["to"]) - at.combatant.altitude) / float(CombatGrid.FEET)
+					var up := create_tween()
+					up.tween_property(at, "position", spot, STEP_TIME * GameSettings.combat_pace())
+					await up.finished
+				_show_heights()
 			"resize":
 				var rt := _tok(str(ev["id"]))
 				if rt != null:
@@ -1381,6 +1636,7 @@ func _play_events() -> void:
 				round_started.emit(int(ev["round"]))
 			"over":
 				_refresh_all()
+	impact.spell_landed()
 	_stop_walking(walking)
 	_refresh_all()
 
@@ -1425,6 +1681,56 @@ func _spell_aim(ev: Dictionary, caster: CombatToken) -> Vector2:
 		mid += board.cell_center(cell as Vector2i)
 	var d2 := mid / float(cells.size()) - caster.position
 	return Vector2(d2.x, d2.z) if Vector2(d2.x, d2.z).length() > 0.1 else Vector2.ZERO
+
+
+## Where a spell lands, on the ground: the middle of its other targets, else of its area; the caster's own spot for a
+## spell on itself.
+func _spell_spot(ev: Dictionary, caster: CombatToken) -> Vector3:
+	var sum := Vector3.ZERO
+	var n := 0
+	for id: Variant in ev.get("targets", []) as Array:
+		var t := _tok(str(id))
+		if t != null and t != caster:
+			sum += t.global_position
+			n += 1
+	if n == 0:
+		for cell: Variant in ev.get("cells", []) as Array:
+			sum += board.cell_center(cell as Vector2i)
+			n += 1
+	return sum / float(n) if n > 0 else caster.global_position
+
+
+## G2: the blow, spell or effect at `at` in `events` has landed on `struck` (for a spell or an effect, empty: its
+## victims are whoever its damage that follows hits). CombatImpact gives the moment its weight: the last foe's fall
+## in slow motion, else the hardest-hit creature's (a kill first, then the most damage) push-in or freeze. A kill
+## pushes in only on a single victim. True if it played the last foe's fall.
+func _impact_on(struck: Array[CombatToken], events: Array, at: int, final_fall: int, critical: bool) -> bool:
+	if not CombatImpact.on():
+		return false
+	var end := CombatImpact.window_end(events, at)
+	if final_fall > at and final_fall < end:
+		var last := _tok(str((events[final_fall] as Dictionary)["id"]))
+		if last != null:
+			impact.hit(last, 0, 1, critical, true, true)
+			return true
+	if struck.is_empty():
+		for i in range(at + 1, end):
+			var dv := events[i] as Dictionary
+			var dt := _tok(str(dv.get("id", ""))) if str(dv["type"]) == "damage" else null
+			if dt != null and not struck.has(dt):
+				struck.append(dt)
+	var best: CombatToken = null
+	var most := -1
+	for t in struck:
+		var score := _damage_after(events, at, t.combatant.id) + (100000 if CombatImpact.fells(events, at, t.combatant.id) else 0)
+		if score > most:
+			best = t
+			most = score
+	if best != null:
+		var id := best.combatant.id
+		impact.hit(best, _damage_after(events, at, id), best.combatant.creature.max_hp(), critical,
+			struck.size() == 1 and CombatImpact.fells(events, at, id), false)
+	return false
 
 
 ## A Narrator line in the combat log (and briefly as a banner), if the story has one for this moment.

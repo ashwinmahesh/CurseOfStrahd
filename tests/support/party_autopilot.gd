@@ -39,7 +39,8 @@ func play(c: Combatant) -> CombatResult:
 func _enemies(c: Combatant) -> Array[Combatant]:
 	var out: Array[Combatant] = []
 	for h in e.hostiles_of(c):
-		if not h.is_down() and e.can_see(c, h):
+		# A foe who surrendered is out of the fight (lane 22's captives), though not down.
+		if not h.is_down() and e.can_see(c, h) and not h.creature.has_flag("surrendered"):
 			out.append(h)
 	return out
 
@@ -266,6 +267,8 @@ func run(max_rounds: int = 30) -> Dictionary:
 	e.default_player_reaction = "auto"
 	if e.state == Encounter.State.SETUP:
 		e.start()
+	while e.pending != null:   # choices as Initiative is rolled (Tandem Footwork, Alert's swap), before the first turn
+		e.answer_reaction(true)
 	var downs := 0
 	var guard := 0
 	while e.state == Encounter.State.ACTIVE and e.round_no <= max_rounds and guard < 2000:

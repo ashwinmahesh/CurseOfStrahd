@@ -200,6 +200,18 @@
       "kind": "examine",
       "label": "Racks of empty bottles",
       "model": "shelves"
+    },
+    {
+      "id": "druids_missed_gem",
+      "cell": [
+        23,
+        9
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "a board the druids didn't lift",
+      "model": "gold_spill",
+      "item": "elemental_gem_emerald"
     }
   ],
   "containers": [

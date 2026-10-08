@@ -23,6 +23,8 @@ signal square_picked(id: String)
 const COST_COLOURS := {"action": "moss", "attack": "moss", "bonus": "gilt", "reaction": "mist_blue", "free": "slate",
 	"movement": "moon_blue"}
 const SLOT_SIZE := Vector2(132, 50)
+## The target box's outline when an attack would roll with Advantage or Disadvantage.
+const EDGE_COLOURS := {"advantage": "bile", "disadvantage": "vampire_red"}
 ## {action} reads as the player's key for it (InputActions.fill, Settings, Keys).
 const CONTROLS: Array[String] = [
 	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
@@ -685,6 +687,8 @@ func _chips(c: Combatant) -> String:
 			parts.append(fx.name)
 	if c.hidden:
 		parts.append("Hidden")
+	if c.altitude > 0:
+		parts.append("%d ft up" % c.altitude)
 	if cr is Character and (cr as Character).heroic_inspiration:
 		parts.append("Heroic Inspiration")
 	return ", ".join(parts)
@@ -756,15 +760,17 @@ func _refresh_hotbar() -> void:
 		ch.queue_free()
 	_slot_buttons.clear()
 	_slot_actions.clear()
-	var acts: Array = []
-	for a in catalog.actions_for(c):
-		if str(a["tab"]) == tab:
-			acts.append(a)
+	# The player's arrangement (U2): their order, their favourites, the actions they hid (ActionCatalog.arranged).
+	var acts: Array = catalog.arranged(c, tab)
 	var groups: Array[Dictionary] = [{"heading": "", "items": acts}]
 	if tab == ActionCatalog.SPELLS:
-		# By spell level, alphabetical within, like every other spell list (SpellGroups).
+		# By spell level, alphabetical within, like every other spell list (SpellGroups), unless the player arranged the
+		# tab: then each level keeps their order.
 		groups = SpellGroups.groups(acts, func(a: Dictionary) -> String: return str(a.get("spell_id", "")),
 			func(a: Dictionary) -> int: return int(a.get("slot", 0)))
+		if ((ActionCatalog.layout(c).get("order", {}) as Dictionary)).has(tab):
+			for g in groups:
+				(g["items"] as Array).sort_custom(func(x: Variant, y: Variant) -> bool: return acts.find(x) < acts.find(y))
 	var i := 0
 	var grid: GridContainer = null
 	for g in groups:
@@ -820,6 +826,20 @@ func _add_slot(grid: GridContainer, a: Dictionary, i: int, c: Combatant, mine: b
 	b.tooltip_text = "%s (%s)%s%s\nRight-click for more%s" % [a["label"], _cost_word(str(a["cost"])), ("\n" + str(a["help"])) if str(a["help"]) != "" else "", ("\nCan't: " + reason) if reason != "" else "", (" (choose the %s)" % str(a.get("choice_label", "")).to_lower()) if a.has("choices") else ""]
 	var act := a
 	b.pressed.connect(func() -> void: action_chosen.emit(act))
+	# Drag a slot onto another on the same tab to put it there (U2).
+	var here_tab := tab
+	b.set_drag_forwarding(func(_at: Vector2) -> Variant:
+			if not c.creature is Character:
+				return null
+			var ghost := _label(str(act["label"]), 13, "gilt_light")
+			b.set_drag_preview(ghost)
+			return {"hotbar_action": str(act["id"]), "tab": here_tab},
+		func(_at: Vector2, data: Variant) -> bool:
+			return data is Dictionary and (data as Dictionary).has("hotbar_action") and str((data as Dictionary)["tab"]) == here_tab,
+		func(_at: Vector2, data: Variant) -> void:
+			var to := catalog.arranged(c, here_tab).map(func(x: Dictionary) -> String: return str(x["id"])).find(str(act["id"]))
+			catalog.move_action(c, here_tab, str((data as Dictionary)["hotbar_action"]), to)
+			_refresh_hotbar())
 	b.gui_input.connect(func(ev: InputEvent) -> void:
 		if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
 			open_slot_menu(act, b.get_screen_position() + (ev as InputEventMouseButton).position))
@@ -923,7 +943,19 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 			items.append({"id": "meta:%s" % (mm as Dictionary)["id"], "label": str((mm as Dictionary)["label"]), "enabled": usable, "why": why})
 	if str(action["kind"]) == "spell" and str(action["cost"]) == "action" and shown != null and str((action.get("opts", {}) as Dictionary).get("resource_cast", "")) == "":
 		items.append({"separator": "Ready"})
-		items.append({"id": "ready", "label": "Ready %s: release it when an enemy comes in range" % action["label"], "enabled": usable, "why": why})
+		for trig: String in ["approach", "attack", "spell"]:
+			var when := {"approach": "an enemy comes within range", "attack": "an enemy within range attacks", "spell": "an enemy within range casts a spell"}[trig] as String
+			items.append({"id": "ready:%s" % trig, "label": "Ready %s: release it when %s" % [action["label"], when], "enabled": usable, "why": why})
+	if shown != null and shown.creature is Character and not bool(action.get("square", false)):
+		# Arranging the hotbar (U2): any time, nothing spent.
+		var aid := str(action.get("id", ""))
+		items.append({"separator": "Hotbar"})
+		items.append({"id": "bar:fav" if not catalog.is_favourite(shown, aid) else "bar:unfav",
+			"label": "Add to Favourites" if not catalog.is_favourite(shown, aid) else "Remove from Favourites"})
+		items.append({"id": "bar:hide" if not catalog.is_hidden(shown, aid) else "bar:show",
+			"label": "Hide it (on the Hidden tab)" if not catalog.is_hidden(shown, aid) else "Show it on its tab again"})
+		items.append({"id": "bar:earlier", "label": "Move earlier"})
+		items.append({"id": "bar:later", "label": "Move later"})
 	if str(action["kind"]) == "item_spell" and shown != null:
 		var ilevels := catalog.level_choices(shown, action)
 		if not ilevels.is_empty():
@@ -968,10 +1000,13 @@ func _on_menu(id: String) -> void:
 		if id.substr(5) == "quickened":
 			shaped["cost"] = "bonus"
 		action_chosen.emit(shaped)
-	elif id == "ready":
+	elif id.begins_with("ready"):
 		var ready := action.duplicate(true)
 		ready["kind"] = "ready_spell"
 		ready["targeting"] = "none"
+		var ro := (ready.get("opts", {}) as Dictionary).duplicate()
+		ro["trigger"] = id.get_slice(":", 1) if id.contains(":") else "approach"
+		ready["opts"] = ro
 		action_chosen.emit(ready)
 	elif id.begins_with("choice:"):
 		var picked := action.duplicate(true)
@@ -983,6 +1018,23 @@ func _on_menu(id: String) -> void:
 		action_chosen.emit(picked)
 	elif id.begins_with("cast:"):
 		cast_at_level.emit(action, int(id.get_slice(":", 1)))
+	elif id.begins_with("bar:"):
+		_arrange(action, id.substr(4))
+
+
+## A hotbar slot's "Hotbar" menu choices (U2): star it, hide it, or move it one place.
+func _arrange(action: Dictionary, what: String) -> void:
+	var aid := str(action["id"])
+	match what:
+		"fav", "unfav":
+			catalog.set_favourite(shown, aid, what == "fav")
+		"hide", "show":
+			catalog.set_hidden(shown, aid, what == "hide")
+		"earlier", "later":
+			var at := catalog.arranged(shown, tab).map(func(x: Dictionary) -> String: return str(x["id"])).find(aid)
+			if at >= 0:
+				catalog.move_action(shown, tab, aid, at + (-1 if what == "earlier" else 1))
+	_refresh_hotbar()
 
 
 func menu_open() -> bool:
@@ -1108,7 +1160,12 @@ func hide_details() -> bool:
 
 # --- Tooltip, prompt, banner ----------------------------------------------------------------------
 
-func show_tooltip(title: String, lines: Array, warnings: Array, at: Vector2) -> void:
+## The box beside the pointer. `edge` outlines it for an attack with "advantage" (green) or "disadvantage" (red), as
+## the roll would be made (both at once cancel and leave the gilt edge).
+func show_tooltip(title: String, lines: Array, warnings: Array, at: Vector2, edge: String = "") -> void:
+	var box := _tooltip.get_theme_stylebox("panel") as StyleBoxFlat
+	box.border_color = Look.color(EDGE_COLOURS.get(edge, "gilt") as String)
+	box.set_border_width_all(3 if EDGE_COLOURS.has(edge) else 2)
 	for ch in _tooltip_box.get_children():
 		ch.free()
 	_tooltip_box.add_child(_label(title, 18, "gilt_light"))
