@@ -232,6 +232,13 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Werewolf caves, the drying herbs | Elixir of Health (rare) | Search (Investigation DC 14) |
 | ✅ | Zuleika | Ring of Free Action (rare) | Gift: once Emil is free of his chains |
 
+## Under Van Richten's Tower (side quest, level 10)
+
+| | Where | Item | How |
+|---|---|---|---|
+| ✅ | Khazan's undercroft, the drowned crypt | Bracers of Defense (rare) | Search (Investigation DC 16): a drowned apprentice's, in the silt |
+| ✅ | Khazan's study, his coffer | Wand of the War Mage, +3 (very rare) | Hoard: once he's gone for good (The Name Over the Door, docs/story/side_quests.md) |
+
 ## Berez, Mount Baratok, the Tsolenka Pass (level 9)
 
 | | Where | Item | How |

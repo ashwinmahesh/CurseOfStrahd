@@ -1,0 +1,53 @@
+# Narrator: Khazan's undercroft under Van Richten's Tower (The Name Over the Door, docs/story/side_quests.md;
+# docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:khazan_undercroft
+| The stair under the hearth goes down past the level of the lake. The walls sweat cold water. Every step down, the silence gets thicker, like the inside of a library nobody has opened in a long time.
+| [flag.khazan_destroyed] The undercroft is only a cellar now: cold, wet, full of old books. Nothing turns a page.
+cooldown 30
+
+~ enter:undercroft_stair
+| The steps are worn in the middle into shallow bowls, by one pair of feet going up and down them for a very long time, and then by none.
+once
+
+~ enter:hall_of_names
+| A long low hall with shelves floor to ceiling, and every shelf full. The books have no titles on their spines. There's a smell of old paper and cold water, and under it, something like breath.
+once
+
+~ enter:drowned_crypt
+| The lake has got in here. Black water stands in the far half of the crypt, perfectly still, and the stone coffins at its edge are wet to the lid.
+once
+
+~ enter:khazan_study
+| A study, warm with candles that give no heat, crowded with reading tables and books. At the far end, on a step, a high-backed chair.
+once
+
+~ examine:undercroft_glyphs
+| Letters cut into every step, small, one word to a step, all the way down. The same word. You don't need to read it to know what it says.
+
+~ examine:names_shelves
+| You take down a book. Names, one to a line, page after page, in a small neat hand, with a date beside each in a reckoning nobody uses any more. You put it back. It seems to settle, the way a cat does.
+
+~ examine:names_wall
+| Names scratched into the wall at shoulder height, by different hands, in different years. Some are prayers. One is a list of a family. The last one just says HELP, and then a name, and stops.
+
+~ examine:names_lectern
+| An open book on a lectern. Every name on the open pages has been crossed out in red ink, carefully, with a ruler. At the bottom: "Read. Kept."
+
+~ examine:names_table
+| Books open on a table, each at a different page, as if someone had been reading them all at once and got up in the middle.
+
+~ examine:crypt_coffin
+| A stone coffin with no name on it. That's the only one down here without a name, and it's the only one with nobody in it.
+
+~ examine:crypt_drip
+| The lake comes through the ceiling in a slow drip, and the drip has worn a hole in the floor as round as a bowl. The water is so cold it smokes.
+
+~ check:investigation:crypt_bracers:failure
+| Silt, and bones, and the cold.
+
+~ examine:khazan_circle
+| A circle drawn on the floor in something that was silver once, with nothing in the middle of it. When you step near, the candles lean away.
+
+~ examine:khazan_mobile
+| A brass orrery, the size of a cartwheel, of a sky that isn't this one: more moons, and one star that's been taken out and its arm left empty.
