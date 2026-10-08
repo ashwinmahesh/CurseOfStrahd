@@ -1386,12 +1386,13 @@
       "released": true
     },
     "barovia_goodwife": {
-      "settings": {},
-      "description": "A worn village woman of Barovia in her forties with a low, tired, frightened voice and a strong, clearly audible Eastern European (Romanian) accent. Keeps her shutters closed.",
-      "model": "eleven_v3",
       "voice_id": "haD60kChENZhuoOFiC80",
       "name": "Barovia barovia_goodwife",
+      "description": "A worn village woman of Barovia in her forties with a low, tired, frightened voice and a strong, clearly audible Eastern European (Romanian) accent. Keeps her shutters closed.",
+      "settings": {},
+      "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "haD60kChENZhuoOFiC80",
       "released": true
     },
     "vadoma": {
@@ -1467,8 +1468,10 @@
       "voice_id": "msk7qjLdTUv4S1ivjDS0",
       "name": "Barovia barovia_gravedigger (2026-10-08)",
       "description": "A big, slow Barovian sexton in his sixties speaking English with a very strong, thick Romanian accent. A deep, gravelly, unhurried voice, matter-of-fact about the dead, oddly courteous.",
+      "settings": {},
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "msk7qjLdTUv4S1ivjDS0",
       "released": true
     },
     "barovia_vasile": {
@@ -2134,6 +2137,16 @@
       "model": "eleven_v3",
       "accent_tag": "[English accent]",
       "generated_voice_id": "rg9y8vYqUtgvP9tOq4vh",
+      "released": true
+    },
+    "ilarion": {
+      "voice_id": "mqWxqCwHqS0VfEYBZCAc",
+      "name": "Barovia Ilarion",
+      "description": "A young Barovian villager in his late twenties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A soft, gentle, hoarse voice, tired from a night in the cold, confused and earnest, polite and anxious, a loving husband and father.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "mqWxqCwHqS0VfEYBZCAc",
       "released": true
     }
   },

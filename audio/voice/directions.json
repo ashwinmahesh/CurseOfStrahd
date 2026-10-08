@@ -306,10 +306,12 @@
   "da0deec65ba9cbae": "[shy, earnest, polite]"
  },
  "barovia_goodwife": {
+  "10ecb6559a8ce9e8": "[tearful, laughing, overwhelmed]",
   "35726aa871192e5e": "[low, bitter, ashamed]",
   "359cf2275eb065c6": "[warm, wry, relieved]",
   "7edb25d7c96bdf27": "[frightened, sharp whisper]",
   "af2855da68222a88": "[hushed, storytelling]",
+  "b60727e8071a7270": "[whispered, disbelieving]",
   "c8bb448db7473da5": "[weary, fond]"
  },
  "barovia_gravedigger": {
@@ -317,6 +319,7 @@
   "493100e31a309f96": "[slow, gentle, courteous]",
   "5fa869f518ff62c6": "[slow, low, haunted]",
   "631b3a70be1e801e": "[slow, bewildered, relieved]",
+  "638c573567d4ab36": "[gruff, bewildered, quietly moved]",
   "6db234a86e7e4090": "[slow, grieving]",
   "78c01b99a1f0e116": "[slow, courteous, eerie]",
   "9d550fcd53c5fafd": "[slow, tender, grieving]",
@@ -1391,6 +1394,7 @@
   "1e8b69b1a280539f": "[quiet, wary]",
   "1e9cac92563db229": "[quiet, sorrowful]",
   "1e9f4f34422fb23d": "[quiet, rueful, faintly ominous]",
+  "1f04f6b93f779b71": "[quiet, observant, wry]",
   "201a2aac0ad0d18c": "[warm, amused]",
   "2070ecd61db082b9": "[quiet, sad]",
   "20d943cfb5e4072c": "[tense, thrilled]",
@@ -1413,6 +1417,7 @@
   "295ae35d11b35316": "[hushed, tense]",
   "2994c3f915872505": "[intrigued, fond]",
   "29e61160f31fddc3": "[grim, quiet, sympathetic]",
+  "2aa3da15e3dde67d": "[tense, sudden, ominous]",
   "2ab1829fd8643fac": "[hushed, grim]",
   "2ac1e4bba0cbcfcc": "[soft, melancholy]",
   "2af3a224fe6c77e7": "[tender, hushed]",
@@ -1636,6 +1641,7 @@
   "6d6dc949951a3a12": "[warm, amused, building]",
   "6dd63524b39bb8b1": "[quiet, tender, sad]",
   "6e02e1c87c0e030e": "[tender, intrigued]",
+  "6e1161ab614f660a": "[quiet, uneasy, gentle]",
   "6eb743726092f3e2": "[quiet, eerie]",
   "6ecf11211253ec21": "[low, ominous]",
   "6f7afe3e43ee725a": "[quiet, horrified]",
@@ -1795,6 +1801,7 @@
   "a50db05cf33c0c01": "[ominous, chilling]",
   "a5718656b60ab76f": "[quiet, warm, earnest]",
   "a5ce0e280f548a7a": "[hushed, eerie, slow]",
+  "a6344a5bc6068807": "[soft, tender, moved]",
   "a69e50e3a1e0acfa": "[hushed, solemn]",
   "a6b044667570be9c": "[quiet, sad]",
   "a6ff0050c0943367": "[wry, amused]",
@@ -1840,6 +1847,7 @@
   "b11d2939ecd24ad2": "[dry, wry]",
   "b19a70d1654b7289": "[wistful, dry]",
   "b1d43d4d9fd31e51": "[quiet, relieved]",
+  "b1e60c01571e2814": "[quiet, sad, gentle]",
   "b1f67221a82b3065": "[dry, wry]",
   "b22a86c5f31eaae3": "[sly, knowing]",
   "b276e77b65b93af6": "[gentle, sad]",
@@ -1982,6 +1990,7 @@
   "deac40691b9b58b6": "[warm, amused]",
   "deec05efa429cf50": "[wry, dry]",
   "df03e3ca9647281a": "[quiet, grim]",
+  "df3e0b41224abc17": "[tense, ominous]",
   "df8c608e5a332940": "[dry, observant]",
   "dfa6a08b57c3d805": "[hushed, wondering, gentle]",
   "dfaf80a4a03c9e00": "[quiet, moved]",
@@ -1994,6 +2003,7 @@
   "e22582be408e4744": "[wry, then grave, quoting]",
   "e249a5cd77865ecd": "[hushed, aching]",
   "e26763eb81d0488f": "[uneasy, dry]",
+  "e2c52883c2f045d0": "[light, wry]",
   "e2d28ae38c1b8d01": "[quiet, observant]",
   "e35d000b1449137a": "[hushed, awed]",
   "e3b800b360b98daa": "[sly, then intrigued]",
@@ -2043,6 +2053,7 @@
   "ee3a471470e65566": "[grim, then warmer]",
   "ee4d5cd3ffd45992": "[cold, dry]",
   "ee5b9b726f388832": "[gentle, wry]",
+  "ee7f8462ef477aa1": "[quiet, eerie]",
   "eeb679fffc6e3908": "[plain, dry]",
   "eeb78aab510f16d9": "[low, measured]",
   "eedad812f8b39f8b": "[quiet, uneasy]",
@@ -2082,7 +2093,8 @@
   "fe7ea43c6b1ed806": "[quiet, tense]",
   "feadac1b6e19e649": "[knowing, low]",
   "febcb29da16304e3": "[dry, wry]",
-  "ff767341d78f5e39": "[hushed, eerie]"
+  "ff767341d78f5e39": "[hushed, eerie]",
+  "4146fc1d92297172": "[quiet, moved, tense]"
  },
  "order_knight": {
   "033e22728e7133ad": "[hollow, almost cheerful]",
@@ -3185,5 +3197,14 @@
  },
  "zuleika_toranescu": {
   "88f4131e2df9a2ab": "[urgent, then grieving, quiet]"
+ },
+ "ilarion": {
+  "5aae8817c0ed24ae": "[confused, gentle, anxious]",
+  "ff6698f3cbccc896": "[afraid, breathless, confused]",
+  "4b97daca8ed378ac": "[nervous, eager, quiet]",
+  "2f3229f4708b2447": "[quiet, bewildered, content]",
+  "f8c4023856bd2092": "[stunned, breaking, tender]",
+  "d06b9e6e5faa2d57": "[quiet, gentle, resigned]",
+  "e355058db0b250b5": "[warm, fond, proud]"
  }
 }
