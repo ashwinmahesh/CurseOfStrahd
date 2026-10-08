@@ -45,6 +45,22 @@ var hold_source: String = ""
 ## Covered in oil (2024 Oil): rounds before it dries; the next Fire damage it takes is 5 more.
 var oil_rounds: int = 0
 var destroyed: bool = false
+## A door: it stands open (its squares no wall while it does), or it's locked (it can't be opened in a fight).
+var open: bool = false
+var locked: bool = false
+## What a creature beside it can do to it (ObjectActions): "shove" (5 ft), "topple" (push it over) or "", and the
+## Strength (Athletics) DC for it; how it falls when pushed over ({dc, damage, type, length, coals}).
+var moves: String = ""
+var move_dc: int = 10
+var topple: Dictionary = {}
+## Small enough to throw as an improvised weapon.
+var throwable: bool = false
+## Fire sets it off (a barrel of lamp oil): {radius, save, dc, damage, type, oil} (ObjectFire.burst).
+var bursts: Dictionary = {}
+## Where its wreckage lies when that isn't its own squares: the squares it fell across, the spot it was flung at.
+var wreck: Array[Vector2i] = []
+## The square it stood on when the fight began, when a shove has moved it since (BattleScenery puts it right after).
+var home: Vector2i = Vector2i(-1, -1)
 
 
 ## A new object of `kind_id` from the kinds table (data/objects/kinds.json).
@@ -65,6 +81,11 @@ static func make(kind_id: String, table: Dictionary) -> BattleObject:
 	o.leaves = str(k.get("leaves", "floor"))
 	o.hangs = bool(k.get("hangs", false))
 	o.fall = (k.get("fall", {}) as Dictionary).duplicate()
+	o.moves = str(k.get("moves", ""))
+	o.move_dc = int(k.get("move_dc", 10))
+	o.topple = (k.get("topple", {}) as Dictionary).duplicate()
+	o.throwable = bool(k.get("throwable", false))
+	o.bursts = (k.get("bursts", {}) as Dictionary).duplicate()
 	o.immune.assign(["poison", "psychic"])
 	for ty: Variant in k.get("immune", []):
 		if not str(ty) in o.immune:
@@ -92,9 +113,22 @@ func live() -> bool:
 	return not destroyed
 
 
+## A door (its kind leaves a doorway when it breaks).
+func is_door() -> bool:
+	return leaves == "doorway"
+
+
 ## "AC 15 · HP 4/4", then what's happening to it.
 func describe() -> Array[String]:
 	var out: Array[String] = ["AC %d · HP %d/%d" % [ac, hp, hp_max]]
+	if is_door():
+		out.append("Open" if open else ("Locked" if locked else "Shut"))
+	if not bursts.is_empty():
+		out.append("Bursts into flame if fire reaches it")
+	if moves == "shove":
+		out.append("Can be shoved (Athletics DC %d)" % move_dc)
+	elif moves == "topple":
+		out.append("Can be pushed over (Athletics DC %d)" % move_dc)
 	if burning:
 		out.append("Burning: 1d4 Fire each round")
 	if oil_rounds > 0:
@@ -111,7 +145,9 @@ func to_dict() -> Dictionary:
 		"substance": substance, "size": size, "resilient": resilient, "ac": ac, "hp": hp, "hp_max": hp_max, "blocks": blocks,
 		"flammable": flammable, "burning": burning, "leaves": leaves, "immune": immune.duplicate(), "resist": resist.duplicate(),
 		"vulnerable": vulnerable.duplicate(), "door_id": door_id, "prop_id": prop_id, "art": art, "fall": fall.duplicate(true),
-		"hangs": hangs, "holds": holds, "hold_source": hold_source, "oil_rounds": oil_rounds, "destroyed": destroyed}
+		"hangs": hangs, "holds": holds, "hold_source": hold_source, "oil_rounds": oil_rounds, "destroyed": destroyed,
+		"open": open, "locked": locked, "moves": moves, "move_dc": move_dc, "topple": topple.duplicate(true), "throwable": throwable,
+		"bursts": bursts.duplicate(true), "wreck": wreck.map(func(c: Vector2i) -> Array: return [c.x, c.y]), "home": [home.x, home.y]}
 
 
 static func from_dict(d: Dictionary) -> BattleObject:
@@ -143,4 +179,15 @@ static func from_dict(d: Dictionary) -> BattleObject:
 	o.hold_source = str(d.get("hold_source", ""))
 	o.oil_rounds = int(d.get("oil_rounds", 0))
 	o.destroyed = bool(d.get("destroyed", false))
+	o.open = bool(d.get("open", false))
+	o.locked = bool(d.get("locked", false))
+	o.moves = str(d.get("moves", ""))
+	o.move_dc = int(d.get("move_dc", 10))
+	o.topple = (d.get("topple", {}) as Dictionary).duplicate(true)
+	o.throwable = bool(d.get("throwable", false))
+	o.bursts = (d.get("bursts", {}) as Dictionary).duplicate(true)
+	for c2: Variant in d.get("wreck", []):
+		o.wreck.append(Vector2i(int((c2 as Array)[0]), int((c2 as Array)[1])))
+	var h := d.get("home", [-1, -1]) as Array
+	o.home = Vector2i(int(h[0]), int(h[1]))
 	return o

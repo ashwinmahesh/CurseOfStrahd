@@ -269,7 +269,7 @@
           },
           "hangs": {
             "type": "object",
-            "description": "A chandelier hanging over `cells` (its piece is drawn up there): in a fight its chain can be broken to drop it on whoever is below (data/objects/kinds.json chandelier; world/combat/battle_scenery.gd). `trap`: the location trap that is this chandelier falling (sprung, it's down); `flag`: set once it has fallen (the prop's `when` reads it).",
+            "description": "A chandelier hanging over `cells` (its piece is drawn up there): in a fight its chain can be broken to drop it on whoever is below (data/objects/kinds.json chandelier; world/combat/battle_scenery.gd). `trap`: the location trap that is this chandelier falling (sprung, it's down); `flag`: set once it has fallen (it's drawn lying on the floor from then on).",
             "required": ["cells"],
             "additionalProperties": false,
             "properties": {
@@ -279,6 +279,10 @@
               "flag": {"type": "string"},
               "lit": {"type": "boolean", "description": "Its candles burn: falling, it sets oil under it alight."}
             }
+          },
+          "object": {
+            "type": "string",
+            "description": "What this prop is in a fight when its art alone doesn't say (a barrel of lamp oil): a kind in data/objects/kinds.json. Only a prop on a '=' square is a battlefield object (world/combat/battle_scenery.gd)."
           }
         }
       }

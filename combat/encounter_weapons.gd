@@ -1,9 +1,10 @@
 class_name EncounterWeapons
 extends RefCounted
 ## What a creature in a fight can attack with (Encounter): its weapon, thrown and unarmed options and stat-block
-## attacks, Soulknife blades, how many attacks an Attack action gives, whether an attack is legal from where it stands
-## (range, reach, sight, charm, a monster's weapon knocked from its hand), and ammunition and thrown weapons leaving the
-## hand (a thrown one lands by its target, GroundItems).
+## attacks, Soulknife blades, improvised weapons within reach (ObjectActions: a thing on the ground, a chair), how many
+## attacks an Attack action gives, whether an attack is legal from where it stands (range, reach, sight, charm, a
+## monster's weapon knocked from its hand), and ammunition and thrown weapons leaving the hand (a thrown one lands by
+## its target, GroundItems).
 
 var _enc: WeakRef
 
@@ -54,6 +55,7 @@ func attack_options(c: Combatant) -> Array[Dictionary]:
 				out.append({"id": ("blade:thrown" if thrown else "blade:melee"), "label": pb.name, "kind": "blade",
 					"profile": pb, "melee": not thrown, "range": [pb.normal_range, pb.long_range], "reach": pb.reach})
 		out.append_array(e.ravenloft.attack_options(c))
+		out.append_array(e.objects.actions.throw_options(c))
 	elif c.creature is Monster:
 		var m := c.creature as Monster
 		for a: Variant in m.data.get("actions", []):
@@ -156,7 +158,11 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 		var needs := ((c.creature as Monster).action(str(option["action_id"])).get("targets", {}) as Dictionary).get("requires", []) as Array
 		if not needs.is_empty() and not needs.any(func(n: Variant) -> bool: return Legendary.meets(c, target, str(n))):
 			return "%s must be %s" % [target.name(), " or ".join(needs.filter(func(n: Variant) -> bool: return str(n) != "willing").map(func(n: Variant) -> String: return str(n).capitalize()))]
-	if c.creature is Character and option["kind"] in ["thrown", "weapon"] and item_count(c, p.item_id) <= 0:
+	if option.has("improvised"):
+		var thrown_why := e.objects.actions.throw_why(c, option)
+		if thrown_why != "":
+			return thrown_why
+	elif c.creature is Character and option["kind"] in ["thrown", "weapon"] and item_count(c, p.item_id) <= 0:
 		return "No %s left" % p.name.replace(" (thrown)", "")
 	if c.creature is Character and option["kind"] in ["thrown", "weapon"] and not bool(option["melee"]):
 		var w := (c.creature as Character).compendium.item_data(p.item_id)

@@ -9,6 +9,10 @@ extends RefCounted
 ## - Fire: a flammable object set alight burns (1d4 Fire at the start of each round); Oil thrown at a creature or an
 ##   object soaks it (its next Fire damage is 5 more), and Oil poured on a square burns once lit (5 Fire to a creature
 ##   entering it or ending its turn there); webs exposed to fire burn away. Burning things shed light.
+## - What creatures do with them (ObjectActions, `actions`): open and shut doors, shove a crate, push a bookcase over,
+##   throw a chair; and fire that spreads and barrels of lamp oil that burst (ObjectFire, `fire`).
+## Only creatures on the floor (altitude 0) are hit by what lands or burns on it: a falling chandelier, a shoved or
+## toppled thing, burning oil and coals (deviations.md).
 ## Commands come through the square menu and the hotbar (`square_entries`, `item_entries`, `perform`). The scene draws
 ## all of it (world/combat/object_view.gd); BattleScenery (world/combat/battle_scenery.gd) places the objects.
 
@@ -33,10 +37,15 @@ var placed: bool = false
 var _next := 1
 var _fires: Array[Vector2i] = []
 var _fires_dirty := true
+## Doors, shoving, toppling and throwing (combat/object_actions.gd); fire spreading and bursting (combat/object_fire.gd).
+var actions: ObjectActions
+var fire: ObjectFire
 
 
 func _init(encounter: Encounter) -> void:
 	_enc = weakref(encounter)
+	actions = ObjectActions.new(encounter)
+	fire = ObjectFire.new(encounter)
 
 
 func enc() -> Encounter:
@@ -60,11 +69,72 @@ func add(kind_id: String, cells: Array[Vector2i], extra: Dictionary = {}) -> Bat
 	for k: String in extra:
 		o.set(k, extra[k])
 	list.append(o)
-	if o.blocks != 0:
-		for cell in o.cells:
-			enc().grid.set_flag(cell, o.blocks, true)
-		enc()._cover_cache.clear()
+	if o.cells.size() == 1:
+		o.home = o.cells[0]
+	fill_squares(o)
 	return o
+
+
+## `o`'s grid flag on its squares (a door standing open has none).
+func fill_squares(o: BattleObject) -> void:
+	if o.blocks == 0 or o.open:
+		return
+	for cell in o.cells:
+		enc().grid.set_flag(cell, o.blocks, true)
+	enc()._cover_cache.clear()
+
+
+## `o` leaves its squares (shoved, toppled, flung, burst): their grid flag goes.
+func clear_squares(o: BattleObject) -> void:
+	if o.blocks == 0:
+		return
+	for cell in o.cells:
+		enc().grid.set_flag(cell, o.blocks, false)
+	enc()._cover_cache.clear()
+
+
+## The fires to light by have changed (something burning moved, broke or went out).
+func fires_changed() -> void:
+	_fires_dirty = true
+
+
+## `o` was shoved onto a new square: a burning one lights the oil there, and fire there sets a flammable one alight.
+func moved(o: BattleObject) -> void:
+	_fires_dirty = true
+	if o.burning:
+		expose_to_fire(o.cells, null)
+		return
+	for cell in o.cells:
+		if bool(square_at(cell).get("lit", false)):
+			ignite(o)
+			return
+
+
+## `o` is broken outright (flung, landed on someone): its squares open, and its wreckage lies there (or at `wreck`),
+## rubble (Difficult Terrain) if its kind leaves rubble. The view shows it broken once the events have played.
+func smash(o: BattleObject, how: String) -> void:
+	var e := enc()
+	if o.destroyed:
+		return
+	clear_squares(o)
+	o.destroyed = true
+	o.hp = 0
+	if o.burning:
+		o.burning = false
+		_fires_dirty = true
+	if o.leaves == "rubble" and o.blocks != 0:
+		for cell in (o.wreck if not o.wreck.is_empty() else o.cells):
+			e.grid.set_flag(cell, CombatGrid.DIFFICULT, true)
+		e._cover_cache.clear()
+	e.log.add("info", "%s breaks to pieces (%s)" % [o.title(), how], "")
+
+
+## The creature standing on the floor of `cell` (not one flying or floating over it), or null.
+func on_floor(cell: Vector2i) -> Combatant:
+	for c in enc().combatants:
+		if c.is_alive() and c.altitude <= 0 and not c.has_meta("left_fight") and cell in c.footprint():
+			return c
+	return null
 
 
 func get_object(oid: String) -> BattleObject:
@@ -92,10 +162,10 @@ func objects_at(cell: Vector2i) -> Array[BattleObject]:
 	return out
 
 
-## The object that fills `cell` (a door, furniture, a crate), or null.
+## The object that fills `cell` (a shut door, furniture, a crate), or null.
 func blocking_at(cell: Vector2i) -> BattleObject:
 	for o in objects_at(cell):
-		if o.blocks != 0:
+		if o.blocks != 0 and not o.open:
 			return o
 	return null
 
@@ -128,7 +198,7 @@ func damage(o: BattleObject, parts: Array, by: Combatant, label: String, details
 	if o.destroyed:
 		return 0
 	var total := 0
-	var fire := false
+	var lit := false
 	var notes: Array = details.duplicate()
 	for p: Variant in parts:
 		var part := p as Dictionary
@@ -146,9 +216,14 @@ func damage(o: BattleObject, parts: Array, by: Combatant, label: String, details
 			amount /= 2
 			notes.append("Resistant to %s: halved" % ty.capitalize())
 		if ty == "fire":
-			fire = true
+			lit = true
 		total += amount
-	if fire and o.oil_rounds > 0:
+	# A barrel of lamp oil that fire reaches bursts (ObjectFire).
+	if lit and total > 0 and not o.bursts.is_empty():
+		e.log.add("hit", "%s takes %d Fire (%s)" % [o.title(), total, label], by.id if by != null else "", notes)
+		fire.burst(o, by)
+		return total
+	if lit and o.oil_rounds > 0:
 		o.oil_rounds = 0
 		total += OIL_FIRE
 		notes.append("The oil on it burns: +%d Fire" % OIL_FIRE)
@@ -169,6 +244,9 @@ func damage(o: BattleObject, parts: Array, by: Combatant, label: String, details
 ## A flammable object that nobody wears or carries catches fire (the Burning condition).
 func ignite(o: BattleObject) -> void:
 	if o.destroyed or not o.flammable or o.burning:
+		return
+	if not o.bursts.is_empty():
+		fire.burst(o, null)
 		return
 	o.burning = true
 	_fires_dirty = true
@@ -194,6 +272,10 @@ func _break(o: BattleObject) -> void:
 			e.grid.set_flag(cell, o.blocks, false)
 		if o.leaves == "rubble" and o.blocks != 0:
 			e.grid.set_flag(cell, CombatGrid.DIFFICULT, true)
+		# A barrel of lamp oil broken open spills its oil there, waiting for a spark.
+		if bool(o.bursts.get("oil", false)) and square_at(cell).is_empty():
+			squares.append({"cell": cell, "oil": true, "lit": false, "hit": {}})
+			e.events.append({"type": "object_fire", "cell": cell, "poured": true})
 	e._cover_cache.clear()
 	var how := {"doorway": "the way through is open", "rubble": "leaving rubble (Difficult Terrain)"}.get(o.leaves, "") as String
 	e.log.add("info", "%s breaks%s" % [o.title(), (", " + how) if how != "" and o.holds == "" else ""], "")
@@ -211,7 +293,7 @@ func _fall(o: BattleObject) -> void:
 	var rolled := e._roll_damage_dice(str(f.get("damage", "2d6")), false, 0, "Falling %s" % o.name)
 	var ab := StringName(str(f.get("save", "dex")))
 	for t in e.living():
-		if not t.footprint().any(func(cell: Vector2i) -> bool: return cell in o.cells) or t.creature.has_flag("ethereal"):
+		if not t.footprint().any(func(cell: Vector2i) -> bool: return cell in o.cells) or t.creature.has_flag("ethereal") or t.altitude > 0:
 			continue
 		var sv := t.creature.roll_save(e.dice, ab, int(f.get("dc", 12)), [], [], "%s save vs the falling %s (%s)" % [Creature.ABILITY_NAMES[ab], o.name, t.name()])
 		var amount := int(rolled["total"]) if not sv.success else int(rolled["total"]) / 2
@@ -237,6 +319,8 @@ func attack_why(c: Combatant, o: BattleObject, option: Dictionary) -> String:
 		return "No such attack"
 	var p := option["profile"] as WeaponProfile
 	var melee := bool(option["melee"])
+	if str(option.get("improvised", "")) == "o:" + o.id:
+		return "Can't throw it at itself"
 	if o.hangs and melee:
 		return "%s hangs out of reach: a ranged attack or a spell" % o.title()
 	if o.holds == c.id and not melee and str(option.get("kind", "")) == "thrown":
@@ -256,7 +340,11 @@ func attack_why(c: Combatant, o: BattleObject, option: Dictionary) -> String:
 		var gone := e.ground.weapon_gone(c, (c.creature as Monster).action(str(option["action_id"])))
 		if gone != "":
 			return gone
-	if c.creature is Character and str(option.get("kind", "")) in ["thrown", "weapon"] and e.item_count(c, p.item_id) <= 0:
+	if option.has("improvised"):
+		var tw := actions.throw_why(c, option)
+		if tw != "":
+			return tw
+	elif c.creature is Character and str(option.get("kind", "")) in ["thrown", "weapon"] and e.item_count(c, p.item_id) <= 0:
 		return "No %s left" % p.name.replace(" (thrown)", "")
 	if not e.has_ammo_for(c, option):
 		return "No ammunition"
@@ -320,7 +408,9 @@ func _strike(c: Combatant, o: BattleObject, option: Dictionary) -> CombatResult:
 		t.add_bonus(height, "High ground" if height > 0 else "Low ground")
 	# The weapon leaves the hand, or the shot is spent.
 	if not melee and c.creature is Character:
-		if str(option.get("kind", "")) == "thrown":
+		if option.has("improvised"):
+			actions.thrown(c, option, null, cells_of(o)[0])
+		elif str(option.get("kind", "")) == "thrown":
 			e.weapons.throw_item(c, p.item_id, null, cells_of(o)[0])
 		elif str(option.get("kind", "")) == "weapon":
 			e.weapons._spend_ammo(c, p)
@@ -580,16 +670,19 @@ func square_at(cell: Vector2i) -> Dictionary:
 
 ## Fire reaches `cells` (a fire spell's area, burning oil, a lit chandelier falling): the oil there lights, and the
 ## webs there burn.
-func expose_to_fire(cells: Array, _by: Combatant) -> void:
+func expose_to_fire(cells: Array, by: Combatant) -> void:
 	for sq: Dictionary in squares.duplicate():
 		if bool(sq.get("oil", false)) and not bool(sq.get("lit", false)) and sq["cell"] in cells:
 			_light(sq)
 	_burn_webs(cells)
+	for o: BattleObject in list.duplicate():
+		if not o.bursts.is_empty() and not o.destroyed and cells_of(o).any(func(cell: Vector2i) -> bool: return cell in cells):
+			fire.burst(o, by)
 
 
 ## Lit oil (2024 Oil): it burns until the end of the turn 2 rounds after it was lit, 5 Fire to a creature that enters
 ## the square or ends its turn there, once a turn.
-func _light(sq: Dictionary) -> void:
+func _light(sq: Dictionary, what: String = "The oil on the floor catches fire") -> void:
 	var e := enc()
 	sq["lit"] = true
 	sq["until_round"] = e.round_no + OIL_BURNS
@@ -598,8 +691,18 @@ func _light(sq: Dictionary) -> void:
 	sq["on"] = ["enter", "end"]
 	sq["hit"] = {}
 	_fires_dirty = true
-	e.log.add("info", "The oil on the floor catches fire", "")
+	e.log.add("info", what, "")
 	e.events.append({"type": "object_fire", "cell": sq["cell"]})
+
+
+## Fire on the open floor of `cell` that burns like lit oil (a burst barrel's oil, a brazier's coals), logged as `what`.
+func burning_square(cell: Vector2i, what: String) -> void:
+	var sq := square_at(cell)
+	if sq.is_empty():
+		sq = {"cell": cell, "oil": true, "lit": false, "hit": {}}
+		squares.append(sq)
+	if not bool(sq.get("lit", false)):
+		_light(sq, what)
 
 
 ## The Web spell (2024): webs are flammable; a 5-ft cube of them exposed to fire burns away in 1 round, 2d4 Fire to a
@@ -658,8 +761,9 @@ func _burn(c: Combatant, sq: Dictionary, label: String) -> void:
 	e.deal_damage(null, c, [{"amount": amount, "type": "fire"}], false, label, ["%s: %s Fire" % [label, text]])
 
 
+## Whether `c` is in burning square `sq`: on its floor (burning oil and coals), or anywhere in it (a burning web).
 func _stands_in(c: Combatant, sq: Dictionary) -> bool:
-	return sq["cell"] in c.footprint()
+	return sq["cell"] in c.footprint() and (bool(sq.get("web", false)) or c.altitude <= 0)
 
 
 ## EncounterTurns, the start of `c`'s turn: a burning web burns whoever starts its turn in it; webs whose prey is gone go.
@@ -704,6 +808,7 @@ func on_moved(c: Combatant, from: Vector2i) -> void:
 ## an object has no turn, so it burns as the round begins), and the oil on objects dries.
 func round_started() -> void:
 	var e := enc()
+	fire.spread()
 	for o: BattleObject in list.duplicate():
 		if o.oil_rounds > 0:
 			o.oil_rounds -= 1
@@ -1022,11 +1127,14 @@ func square_entries(c: Combatant, cell: Vector2i) -> Array[Dictionary]:
 	var e := enc()
 	if e._turn_check(c) != "":
 		return out
+	out.append_array(actions.square_entries(c, cell))
 	for o in objects_at(cell):
+		if o.open:
+			continue
 		var seen := {}
 		var first_why := ""
 		for opt in e.attack_options(c):
-			if str(opt["kind"]) == "blade":
+			if str(opt["kind"]) == "blade" or str(opt.get("improvised", "")) == "o:" + o.id:
 				continue
 			var label := "Attack %s: %s" % [o.the(), str(opt["label"])]
 			if seen.has(label):
@@ -1116,6 +1224,9 @@ func perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2) -
 	var cell := Vector2i(floori(point.x), floori(point.y)) if point != Vector2.INF else Vector2i(-1, -1)
 	if cell.x < 0 and not targets.is_empty() and targets[0] is Combatant:
 		cell = (targets[0] as Combatant).cell   # a square chosen by clicking whoever stands on it
+	var handled := actions.perform(c, id)
+	if handled != null:
+		return handled
 	match id:
 		"oil:throw":
 			var t: Combatant = targets[0] as Combatant if not targets.is_empty() and targets[0] is Combatant else null
@@ -1152,7 +1263,7 @@ func perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2) -
 func describe_at(cell: Vector2i) -> Array[String]:
 	var out: Array[String] = []
 	for o in objects_at(cell):
-		if o.blocks != 0:
+		if o.blocks != 0 and not o.open:
 			continue
 		out.append("%s · %s" % [o.title(), " · ".join(o.describe())])
 	var sq := square_at(cell)
@@ -1172,7 +1283,15 @@ func tooltip(cell: Vector2i) -> Dictionary:
 		return {}
 	var lines: Array = []
 	lines.append_array(o.describe())
-	lines.append("Right-click: attack it")
+	var can: Array[String] = []
+	if o.is_door():
+		can.append("open it")
+	elif o.moves == "shove":
+		can.append("shove it")
+	elif o.moves == "topple":
+		can.append("push it over")
+	can.append("attack it")
+	lines.append("Right-click: %s" % " or ".join(can))
 	return {"title": o.title(), "lines": lines}
 
 

@@ -256,6 +256,24 @@ func land(c: Combatant, item_id: String, state: Dictionary, slot: String, target
 	_put({"item_id": item_id, "name": name, "qty": 1, "owner_id": c.id, "slot": slot, "state": state, "actions": []}, at)
 
 
+## One of pile `gid` is thrown as an improvised weapon (ObjectActions): it comes down in the target's space (for a big
+## target, the square nearest the thrower), or by `cell` (an object it was thrown at), still its owner's.
+func throw_pile(c: Combatant, gid: String, target: Combatant, cell: Vector2i = Vector2i(-1, -1)) -> void:
+	var g := find(gid)
+	if g.is_empty():
+		return
+	var one := g.duplicate(true)
+	one["qty"] = 1
+	one.erase("gid")
+	one.erase("cell")
+	g["qty"] = int(g["qty"]) - 1
+	if int(g["qty"]) <= 0:
+		items.erase(g)
+	else:
+		one["state"] = {}
+	_put(one, cell if cell.x >= 0 else (_nearest_in(target, c) if target != null else c.cell))
+
+
 ## A thrown weapon that returns to its thrower's hand (a Dwarven Thrower) leaves the ground. False if it isn't there.
 func fly_back(c: Combatant, item_id: String) -> bool:
 	var ch := _character_of(c)

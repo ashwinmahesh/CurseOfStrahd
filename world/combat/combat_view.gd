@@ -1171,7 +1171,7 @@ func _play_events() -> void:
 				if bool(ev.get("mounted", false)) or bool(ev.get("dragged", false)):
 					continue   # carried along: it moves with the step after it
 				await tw.finished
-			"object_attack", "object_throw", "object_damage", "object_broken", "object_fall":
+			"object_attack", "object_throw", "object_damage", "object_broken", "object_fall", "object_door", "object_move", "object_topple", "object_burst":
 				_stop_walking(walking)
 				await objects_view.play(ev, e.objects, tokens, fx)
 			"attack":

@@ -584,6 +584,17 @@
       "kind": "examine",
       "label": "the stair down",
       "model": "stair_down"
+    },
+    {
+      "id": "refectory_lamp_oil",
+      "cell": [
+        26,
+        8
+      ],
+      "kind": "decor",
+      "label": "a barrel of lamp oil",
+      "model": "barrel",
+      "object": "oil_barrel"
     }
   ],
   "containers": [

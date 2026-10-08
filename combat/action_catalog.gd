@@ -176,8 +176,9 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 				"movement", fwhy, "none", "Rise or sink where you are: 5 ft of movement for 5 ft. Out of reach of creatures on the floor 10 ft up; leaving a foe's reach this way draws its Opportunity Attack."))
 	out.append(_entry("influence", COMMON, "Influence", "talk", "action", "Wolves and the walking dead can't be reasoned with", "none"))
 	out.append(_entry("utilize", COMMON, "Utilize", "use an object", "action", "Nothing to use here (Healer's Kit is on Items)", "none"))
-	# Things lying within reach (GroundItems): picking each up.
+	# Things lying within reach (GroundItems): picking each up. Doors within reach: opening or shutting each.
 	out.append_array(e.ground.entries(c))
+	out.append_array(e.objects.actions.entries(c))
 
 
 ## FeatureActions' entries as hotbar actions.

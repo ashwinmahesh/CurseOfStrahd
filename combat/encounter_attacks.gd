@@ -442,7 +442,9 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 			e.marks.erase(m)
 			break
 	if not option.get("melee", true) and c.creature is Character and not bool((st["opts"] as Dictionary).get("free_ammo", false)):
-		if str(option.get("kind", "")) == "thrown":
+		if option.has("improvised"):
+			e.objects.actions.thrown(c, option, target)   # picked up and thrown (ObjectActions)
+		elif str(option.get("kind", "")) == "thrown":
 			e.weapons.throw_item(c, p.item_id, target)
 		elif str(option.get("kind", "")) != "blade":
 			e.weapons._spend_ammo(c, p)
