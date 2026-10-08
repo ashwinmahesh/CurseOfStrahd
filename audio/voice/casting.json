@@ -416,6 +416,7 @@
       "description": "A tall, mournful man with a droopy, lugubrious voice and a strong, clearly audible Eastern European (Romanian) accent. Gloomy toymaker's patter, sighing and sad, accidentally funny.",
       "settings": {},
       "model": "eleven_v3",
+      "generated_voice_id": "gJUidXyWRJ48zGxW9FUm",
       "released": true
     },
     "milivoj": {
@@ -1344,11 +1345,12 @@
       "released": true
     },
     "vallaki_goodwife": {
-      "settings": {},
-      "description": "A Vallaki market woman in her fifties with a brisk, chatty, sharp voice and a strong, clearly audible Eastern European (Romanian) accent. Gossipy, nervous under forced festival cheer.",
-      "model": "eleven_v3",
       "voice_id": "aSpUx7k6PhLFfsAer0bj",
       "name": "Barovia vallaki_goodwife",
+      "description": "A Vallaki market woman in her fifties with a brisk, chatty, sharp voice and a strong, clearly audible Eastern European (Romanian) accent. Gossipy, nervous under forced festival cheer.",
+      "settings": {},
+      "model": "eleven_v3",
+      "generated_voice_id": "aSpUx7k6PhLFfsAer0bj",
       "released": true
     },
     "vallaki_carter": {
