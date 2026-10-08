@@ -4232,6 +4232,13 @@
   "recipe": "5074af99d8",
   "text": "Lovely. I'll be on the stair with my feet up. Do be quick; she screams dreadfully when she's losing."
  },
+ "belview/0597e89ea0e3eca2": {
+  "chars": 131,
+  "direction": "[skittish, repeating, eerie]",
+  "model": "eleven_v3",
+  "recipe": "7c64a77153",
+  "text": "Hello, hello, who's there? Who's there? That's what the last one said. They didn't come back down. You'll come back down. Probably."
+ },
  "belview/1900117a70f58aa7": {
   "chars": 80,
   "model": "eleven_v3",
@@ -4244,6 +4251,13 @@
   "recipe": "472bc6b008",
   "text": "Gifts. He gives us gifts. I had my eyes. Before, I couldn't see in the dark. Now I can't see in the light. That's a gift. He said so."
  },
+ "belview/62df06329425d658": {
+  "chars": 119,
+  "direction": "[sing-song, muttering]",
+  "model": "eleven_v3",
+  "recipe": "7c64a77153",
+  "text": "Wood for the wards. Wood for the wards. The cold ones in the cells are always cold. We bring them wood and they eat it."
+ },
  "belview/6e5ae382f4f74c76": {
   "chars": 179,
   "model": "eleven_v3",
@@ -4255,6 +4269,13 @@
   "model": "eleven_v3",
   "recipe": "472bc6b008",
   "text": "Belview. We're all Belview. Mother is Belview, Clovin is Belview, the ones in the cells are Belview, only louder."
+ },
+ "belview/8201ba8ab455b433": {
+  "chars": 120,
+  "direction": "[anxious, repeating, sing-song]",
+  "model": "eleven_v3",
+  "recipe": "7c64a77153",
+  "text": "Clean for the Abbot. Clean for the Abbot. The bride must not get her feet wet. That's what he says. That's what he says."
  },
  "belview/85220df58a9fcaa3": {
   "chars": 61,
@@ -4279,6 +4300,13 @@
   "model": "eleven_v3",
   "recipe": "472bc6b008",
   "text": "Visitors! Visitors! Mother, visitors! Mother doesn't come out. Mother has had nine gifts."
+ },
+ "belview/f4d3c28e6c99f340": {
+  "chars": 100,
+  "direction": "[childlike, serious, sing-song]",
+  "model": "eleven_v3",
+  "recipe": "7c64a77153",
+  "text": "This one is yours. You're a good one. The grey ones are for the bad ones. I have a lot of grey ones."
  },
  "bildrath/00bad157f0730049": {
   "chars": 133,
@@ -34786,6 +34814,13 @@
   "recipe": "dd92281f92",
   "text": "It hops out of reach, plainly offended, and flies off west."
  },
+ "narrator/2d862c708a2837fb": {
+  "chars": 151,
+  "direction": "[hushed, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Candle stubs crowd the statue's feet, dozens of them, burnt down to puddles. Someone keeps lighting new ones. The wax has run into the shapes of hands."
+ },
  "narrator/2dab710622ec3d1f": {
   "chars": 120,
   "model": "eleven_v4",
@@ -47055,6 +47090,13 @@
   "recipe": "f60908d226",
   "text": "One of the histories weighs nothing at all. Its pages have been cut into a hollow, and in the hollow lies a slim wand of black wood."
  },
+ "narrator/a7972d48165362c7": {
+  "chars": 114,
+  "direction": "[quiet, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The Belview sweeps a clean path across the flags, looks at it, and sweeps it again. Snow is already falling on it."
+ },
  "narrator/a79ff67a4660527d": {
   "chars": 143,
   "model": "eleven_v4",
@@ -53973,6 +54015,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A thin figure in the amber has its face tipped up, eyes wide, lips moving, as if reading a sky that isn't there. The amber over its eyes is scratched, from the inside."
+ },
+ "narrator/ee5b9b726f388832": {
+  "chars": 106,
+  "direction": "[gentle, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The little Belview holds up a grey feather, then a white one, and offers you the white one very seriously."
  },
  "narrator/ee7c3e2c9e530e2b": {
   "chars": 163,

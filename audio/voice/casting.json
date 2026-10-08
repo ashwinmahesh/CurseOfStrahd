@@ -620,6 +620,7 @@
       "description": "A rough, slurred, wheezing voice of indeterminate age, with animal snuffles and a rustic accent: one of the mongrelfolk family, speaking for all of them, wary and pitiful, sometimes darkly funny.",
       "settings": {},
       "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
       "released": true
     },
     "luvash": {
