@@ -1,0 +1,14 @@
+{
+  "id": "silver_dust",
+  "name": "Salt and Silver",
+  "source": {
+    "book": "custom"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 25,
+  "stackable": true,
+  "material": "silver_dust",
+  "summary": "Salt and powdered silver worth 25 gp a pouch, used up by Magic Circle.",
+  "text": "A pouch of salt mixed with powdered silver, worth 25 gp."
+}

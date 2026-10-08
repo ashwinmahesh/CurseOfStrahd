@@ -24,6 +24,7 @@
     "v": true,
     "s": true,
     "m": "jade dust worth 10+ GP, consumed by the spell",
+    "m_material": "jade_dust",
     "m_cost_gp": 10,
     "m_consumed": true
   },

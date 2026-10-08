@@ -24,6 +24,7 @@
   "components": {
     "v": true,
     "m": "rare inks worth 50+ GP, which the spell consumes",
+    "m_material": "ink",
     "m_cost_gp": 50,
     "m_consumed": true
   },

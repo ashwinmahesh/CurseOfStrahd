@@ -27,6 +27,7 @@
     "v": true,
     "s": true,
     "m": "powdered diamond worth 200+ GP, which the spell consumes",
+    "m_material": "diamond_dust",
     "m_cost_gp": 200,
     "m_consumed": true
   },

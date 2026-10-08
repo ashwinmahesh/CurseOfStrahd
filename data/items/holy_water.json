@@ -9,6 +9,7 @@
   "weight_lb": 1,
   "cost_gp": 25,
   "stackable": true,
+  "material": "holy_water",
   "effects": [
     {
       "effect": "damage",

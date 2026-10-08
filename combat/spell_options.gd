@@ -112,6 +112,13 @@ func _why_not(c: Combatant, s: Dictionary, entry: Dictionary) -> String:
 	var armor := ch.equipped("armor")
 	if not armor.is_empty() and not ch.trained_for(armor):
 		return "Wearing armor without training"
+	# A costly material component (2024): carried, since no pouch or focus stands in for it; not when a feature casts the
+	# spell without its Material component (Knowledge Domain's Channel Divinity).
+	var feature_cast := entry.get("resource_cast", {}) as Dictionary
+	if not bool((feature_cast.get("resource_cast", {}) as Dictionary).get("omit_material", false)):
+		var need := ch.component_why(s)
+		if need != "":
+			return need
 	var level := int(s.get("level", 0))
 	if level > 0 and not bool(entry["free"]):
 		if c.cast_slot_spell_this_turn:

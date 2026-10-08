@@ -73,6 +73,9 @@ func ready_spell(c: Combatant, spell_id: String, slot: int, trigger: String = "a
 	if level > 0:
 		ch.expend_slot(slot)
 		c.cast_slot_spell_this_turn = true
+	var used := ch.use_component(s)   # a costly component the spell uses up goes as it's cast, held or not
+	if used != "":
+		e.log.add("info", "%s uses up %s (%s)" % [c.name(), used, s["name"]], c.id)
 	var conc := c.creature.begin_concentration("readied:" + spell_id, "a readied %s" % s["name"])
 	if not READY_TRIGGERS.has(trigger):
 		trigger = "approach"

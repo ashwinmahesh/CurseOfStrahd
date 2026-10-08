@@ -22,6 +22,7 @@
     "v": true,
     "s": true,
     "m": "gemstone powder worth 100 GP, consumed, and Artisan’s Tools you are proficient with",
+    "m_material": "diamond_dust",
     "m_cost_gp": 100,
     "m_consumed": true
   },

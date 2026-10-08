@@ -24,6 +24,7 @@
     "v": true,
     "s": true,
     "m": "a flask of Holy Water worth 25+ GP, which the spell consumes",
+    "m_material": "holy_water",
     "m_cost_gp": 25,
     "m_consumed": true
   },

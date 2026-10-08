@@ -732,7 +732,15 @@
     "whelm": "delapouite/3d-hammer@steel",
     "whip": "lorc/whip@leather",
     "woodcarvers_tools": "delapouite/chisel@steel",
-    "wraps": "delapouite/hand-bandage@cloth"
+    "wraps": "delapouite/hand-bandage@cloth",
+    "diamond": "lorc/cut-diamond@glass",
+    "diamond_dust": "lorc/powder@glass",
+    "incense": "lorc/incense@amber",
+    "gold_dust": "delapouite/powder-bag@gold",
+    "ruby_dust": "lorc/powder@red",
+    "jade_dust": "lorc/powder@green",
+    "silver_dust": "delapouite/powder-bag@silver",
+    "onyx": "lorc/gems@shadow"
   },
   "features": {
     "_any": "lorc/rune-stone@arcane",

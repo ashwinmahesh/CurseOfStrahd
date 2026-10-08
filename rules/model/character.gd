@@ -1729,6 +1729,73 @@ func _take_option(options: Array, pick: String) -> void:
 		currency["gp"] = int(currency["gp"]) + int(opt.get("gp", 0))
 
 
+# --- Costly material components (2024: no component pouch or focus stands in for one with a cost) ---------------
+
+## The costly material component `spell` asks for: {material, cost_gp, consumed}, or {} when it has none the game tracks
+## (spells' components.m_material names the item kind; costly foci without one count as part of the caster's focus).
+static func costly_component(spell: Dictionary) -> Dictionary:
+	var comp := spell.get("components", {}) as Dictionary
+	if str(comp.get("m_material", "")) == "":
+		return {}
+	return {"material": str(comp["m_material"]), "cost_gp": float(comp.get("m_cost_gp", 0.0)), "consumed": bool(comp.get("m_consumed", false))}
+
+
+## What this character's items of `material` are worth together (stacks of Diamonds, pinches of Diamond Dust...).
+func material_worth(material: String) -> float:
+	var total := 0.0
+	for e in inventory:
+		var data := compendium.item_data(str(e["id"]))
+		if str(data.get("material", "")) == material:
+			total += float(data.get("cost_gp", 0.0)) * int(e.get("qty", 1))
+	return total
+
+
+## "" when this character carries `spell`'s costly component, else what's missing ("Needs Diamond worth 300 gp (has
+## 100 gp)").
+func component_why(spell: Dictionary) -> String:
+	var cc := costly_component(spell)
+	if cc.is_empty():
+		return ""
+	var has := material_worth(str(cc["material"]))
+	if has >= float(cc["cost_gp"]):
+		return ""
+	var item := compendium.item_data(str(cc["material"]))
+	return "Needs %s worth %s gp%s" % [str(item.get("name", str(cc["material"]).capitalize())), _gp(float(cc["cost_gp"])),
+		" (has %s gp)" % _gp(has) if has > 0.0 else ""]
+
+
+## Uses up `spell`'s costly component when the spell consumes it: the fewest of its items that make up the cost, the
+## dearest first. Returns what went ("3 Diamonds"), or "" when nothing did.
+func use_component(spell: Dictionary) -> String:
+	var cc := costly_component(spell)
+	if cc.is_empty() or not bool(cc["consumed"]):
+		return ""
+	var stacks: Array[Dictionary] = []
+	for e in inventory:
+		if str(compendium.item_data(str(e["id"])).get("material", "")) == str(cc["material"]):
+			stacks.append(e)
+	stacks.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		return float(compendium.item_data(str(a["id"])).get("cost_gp", 0.0)) > float(compendium.item_data(str(b["id"])).get("cost_gp", 0.0)))
+	var left := float(cc["cost_gp"])
+	var used := {}
+	for st in stacks:
+		var each := float(compendium.item_data(str(st["id"])).get("cost_gp", 0.0))
+		var iid := str(st["id"])
+		while left > 0.0 and int(st.get("qty", 0)) > 0 and each > 0.0:
+			remove_one(iid, st)
+			used[iid] = int(used.get(iid, 0)) + 1
+			left -= each
+	var parts: Array[String] = []
+	for iid: String in used:
+		var name_ := str(compendium.item_data(iid).get("name", iid))
+		parts.append("%d %s" % [int(used[iid]), name_] if int(used[iid]) > 1 else name_)
+	return ", ".join(parts)
+
+
+static func _gp(v: float) -> String:
+	return str(int(v)) if is_equal_approx(v, roundf(v)) else "%.2f" % v
+
+
 ## Adds `qty` of an item. `state` carries an item's own state when it moves (charges, uses, a lifted curse, what a
 ## Bag of Holding holds); a new magic item with charges starts with its full count (MagicItems.starting_charges).
 ## The entry is marked `new` until the inventory screen shows it (its New filter); a player's `junk` mark travels with it.
