@@ -412,6 +412,12 @@ func test_the_abbey_is_lived_in() -> void:
 			assert_eq(str((p as Dictionary)["model"]), "scarecrow_stitched", "%s is a stitched scarecrow" % (p as Dictionary)["id"])
 
 
+## The Abbey garden has its raised place too (lane 28): a stone terrace before the nuns' graves.
+func test_the_abbey_garden_has_a_terrace() -> void:
+	var g := LocationView.grid_for(Compendium.shared().get_entry("locations", "abbey_of_st_markovia_garden"))
+	assert_eq(g.height(Vector2i(19, 15)) - g.height(Vector2i(16, 15)), 5, "a terrace a step up before the graves")
+
+
 ## Berez as a drowned village (lane 28): marsh mud and black water, the mound and the witch's stump as real rises of
 ## ground rather than boxes, the hut on its roots, a causeway a step above the marsh, and the scarecrow field.
 func test_berez_is_a_drowned_village() -> void:
