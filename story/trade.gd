@@ -7,9 +7,8 @@ extends RefCounted
 ##
 ## A haggle is one Persuasion check by the hero at the counter against the shop's DC (HAGGLE_DC unless its `haggle`
 ## block says). Won, the merchant treats the party as good customers for good: 10% off what they sell, 10% more for
-## what they buy. Lost, the party can't try that merchant again until a later day; a shop whose `haggle` names a
-## `lost` flag (Bildrath) never haggles again. A shop can name its own `won` and `lost` flags so its dialogue and
-## the screen share one haggle.
+## what they buy. Lost, that merchant never haggles with the party again (the owner's rule: a failed social check is
+## final). A shop can name its own `won` and `lost` flags so its dialogue and the screen share one haggle (Bildrath).
 
 ## [what the party pays, what the merchant pays] as factors on the shop's own prices, by the merchant's attitude.
 const ATTITUDE := {"friendly": [0.9, 1.1], "indifferent": [1.0, 1.0], "hostile": [1.25, 0.75]}
@@ -65,14 +64,14 @@ static func haggle_dc(npc_id: String) -> int:
 	return int((shop(npc_id).get("haggle", {}) as Dictionary).get("dc", HAGGLE_DC))
 
 
-## "won" (good customers for good), "lost" (no more tries: today, or for good where the shop says) or "" (they may try).
+## "won" (good customers for good), "lost" (no more tries, ever) or "" (they may try).
 static func haggle_state(st: StoryState, npc_id: String) -> String:
 	var h := shop(npc_id).get("haggle", {}) as Dictionary
 	if bool(st.get_flag(str(h.get("won", "_haggle_won/" + npc_id)), false)):
 		return "won"
-	if str(h.get("lost", "")) != "" and bool(st.get_flag(str(h["lost"]), false)):
+	if bool(st.get_flag(str(h.get("lost", "_haggle_lost/" + npc_id)), false)):
 		return "lost"
-	return "lost" if int(st.get_flag("_haggle_failed/" + npc_id, 0)) == st.day else ""
+	return ""
 
 
 ## Why the party can't haggle with `npc_id` now ("" if they can).
@@ -82,8 +81,7 @@ static func why_no_haggle(st: StoryState, npc_id: String) -> String:
 		"won":
 			return "%s already gives you the good-customer price" % name_
 		"lost":
-			var h := shop(npc_id).get("haggle", {}) as Dictionary
-			return "%s won't haggle again" % name_ if str(h.get("lost", "")) != "" else "%s won't haggle again today" % name_
+			return "%s won't haggle again" % name_
 	if st.attitude(npc_id) == "hostile":
 		return "%s won't bargain with you" % name_
 	return ""
@@ -97,12 +95,7 @@ static func haggle(st: StoryState, npc_id: String, ch: Character, dice: DiceRoll
 	var dc := haggle_dc(npc_id)
 	var test := ch.roll_check(dice, &"persuasion", dc, CheckAids.before_check(ch, &"persuasion"))
 	var h := shop(npc_id).get("haggle", {}) as Dictionary
-	if test.success:
-		st.set_flag(str(h.get("won", "_haggle_won/" + npc_id)), true)
-	elif str(h.get("lost", "")) != "":
-		st.set_flag(str(h["lost"]), true)
-	else:
-		st.set_flag("_haggle_failed/" + npc_id, st.day)
+	st.set_flag(str(h.get("won" if test.success else "lost", ("_haggle_won/" if test.success else "_haggle_lost/") + npc_id)), true)
 	return test
 
 

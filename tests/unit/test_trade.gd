@@ -70,15 +70,18 @@ func test_a_won_haggle_lasts_and_survives_a_save() -> void:
 	assert_eq(Trade.haggle_state(copy, "test_trader"), "won", "the haggle survives a save")
 
 
-func test_a_lost_haggle_waits_a_day_or_is_final_where_the_shop_says() -> void:
+func test_a_lost_haggle_is_final() -> void:
 	var st := _party()
 	(Compendium.shared().tables["npcs"]["test_trader"]["shop"]["haggle"] as Dictionary)["dc"] = 30
 	var test := Trade.haggle(st, "test_trader", st.party[0], DiceRoller.new(3))
 	assert_true(test != null and not test.success, "DC 30 can't be met at level 1")
 	assert_eq(Trade.haggle_state(st, "test_trader"), "lost")
-	assert_true(Trade.why_no_haggle(st, "test_trader").ends_with("today"))
-	st.advance_minutes(24 * 60)
-	assert_eq(Trade.haggle_state(st, "test_trader"), "", "a later day, another try")
+	assert_ne(Trade.why_no_haggle(st, "test_trader"), "")
+	st.advance_minutes(3 * 24 * 60)
+	assert_eq(Trade.haggle_state(st, "test_trader"), "lost", "days later, still no")
+	assert_true(Trade.haggle(st, "test_trader", st.party[0], DiceRoller.new(4)) == null, "no second try")
+	var copy := StoryState.from_dict(JSON.parse_string(JSON.stringify(st.to_dict())) as Dictionary)
+	assert_eq(Trade.haggle_state(copy, "test_trader"), "lost", "and after a save")
 	assert_eq(Trade.haggle(st, "test_stubborn", st.party[0], DiceRoller.new(3)).success, false)
 	assert_true(bool(st.get_flag("test_lost")), "the shop's own flag records it")
 	st.advance_minutes(24 * 60)

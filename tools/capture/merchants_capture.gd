@@ -11,6 +11,8 @@ var _only: Array[String] = []
 
 
 func _ready() -> void:
+	# Anything the game saves while the capture runs goes to a folder of its own, never over the owner's saves.
+	SaveSystem.save_dir = "user://capture_saves/%d/" % OS.get_process_id()
 	for s in OS.get_environment("LANE_ONLY").split(",", false):
 		_only.append(s.strip_edges())
 	Compendium.shared().tables["locations"]["lane_town"] = {"id": "lane_town", "name": "Vallaki", "region": "test", "summary": "",

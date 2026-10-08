@@ -137,9 +137,8 @@ func _terms_row() -> Control:
 	if why == "" and ch.hp <= 0:
 		why = "%s can't speak for the party now" % ch.name.get_slice(" ", 0)
 	b.disabled = why != ""
-	b.tooltip_text = why if why != "" else "One Persuasion check. Win it, and %s gives the party 10%% off and pays 10%% more from now on; lose it, and %s" % [
-		Compendium.shared().display_name("npcs", npc_id).get_slice(" ", 0),
-		"that's final." if str((Trade.shop(npc_id).get("haggle", {}) as Dictionary).get("lost", "")) != "" else "try again another day."]
+	b.tooltip_text = why if why != "" else "One Persuasion check. Win it, and %s gives the party 10%% off and pays 10%% more from now on; lose it, and that's final." % \
+		Compendium.shared().display_name("npcs", npc_id).get_slice(" ", 0)
 	row.add_child(b)
 	return UiParts.row(row)
 
