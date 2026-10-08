@@ -1,7 +1,8 @@
 extends TestCase
 ## A real location's fight and its breakable things (F5, world/combat/battle_scenery.gd from LocationFights): its
-## closed door, the prop on a '=' square and a chandelier hanging over a trap become objects; what broke stays broken
-## when the fight is over (a door for good, a dropped chandelier's trap sprung), and the next fight there starts so.
+## closed door, the prop on a '=' square and a chandelier hanging over a trap become objects (a door the story watches
+## doesn't); what broke stays broken when the fight is over (a door for good, a dropped chandelier's trap sprung), and
+## the next fight there starts so.
 
 const LOC := {
 	"id": "test_scenery_hall", "name": "Test Hall", "region": "test", "summary": "A fixture.",
@@ -10,10 +11,11 @@ const LOC := {
 		"#....#.....#",
 		"#..=.#..=..#",
 		"#..........#",
-		"#....#.....#",
+		"#..........#",
 		"############"], "light": "dim"},
 	"spawns": {"default": [2, 3]},
-	"doors": [{"id": "hall_door", "cell": [5, 3], "label": "the hall door"}],
+	"doors": [{"id": "hall_door", "cell": [5, 3], "label": "the hall door"},
+		{"id": "vault_door", "cell": [5, 4], "label": "the vault door", "flag": "test_vault_opened"}],
 	"props": [
 		{"id": "hall_table", "cell": [3, 2], "kind": "decor", "label": "the long table", "model": "table", "text": "A table."},
 		{"id": "hall_lamp", "cell": [8, 4], "kind": "decor", "label": "the chandelier", "model": "candelabra", "text": "A wheel of candles.",
@@ -72,6 +74,8 @@ func test_doors_props_and_a_chandelier_break_and_stay_broken() -> void:
 	assert_true(door != null and door.door_id == "hall_door", "the closed door")
 	assert_eq(door.name, "the hall door")
 	assert_true(e.grid.has_flag(Vector2i(5, 3), CombatGrid.WALL))
+	assert_true(e.objects.blocking_at(Vector2i(5, 4)) == null, "the story's door isn't an object")
+	assert_true(e.grid.has_flag(Vector2i(5, 4), CombatGrid.WALL), "it stays shut")
 	var table := e.objects.blocking_at(Vector2i(3, 2))
 	assert_true(table != null and table.prop_id == "hall_table" and table.kind == "table", "the prop standing there")
 	assert_true(e.objects.blocking_at(Vector2i(8, 2)) != null, "a bare '=' square: the place's own piece")

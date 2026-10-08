@@ -3,12 +3,24 @@ extends RefCounted
 ## Where a fight's breakable things come from (F5, combat/encounter_objects.gd), and what they leave behind.
 ## - Any board (the arena, a Skirmish map): each '=' square becomes the piece of furniture, crate, gravestone or
 ##   boulder the board shows there (data/objects/kinds.json `art`), else the theme's default kind.
-## - A location: each closed door is a breakable door (iron or wood by its words), unless it's a secret nobody found or
-##   the story keeps it shut; each '=' square is the prop standing there (the story's own props and containers stay as
-##   they are) or the board's art; a prop that `hangs` is a chandelier over its squares.
+## - A location: each closed door is a breakable door (iron or wood by its words), unless it's a secret nobody found,
+##   the story keeps it shut, or the story watches it (opening it sets a flag or starts a fight); each '=' square is the
+##   prop standing there (the story's own props and containers stay as they are) or the board's art; a prop that
+##   `hangs` is a chandelier over its squares.
 ## After a location fight what broke stays broken for the rest of the visit (the location's grid keeps the squares
 ## open, the board keeps the wreckage), a broken door stays open for good (its door state), and a dropped chandelier's
 ## trap is sprung or its flag set. The board's art for a prop that hangs is drawn up on its chain here too.
+
+
+## Whether the story watches `door` (LocationLocks._use_door): opening it sets a flag, or starts one of the location's
+## fights. Such a door is opened the story's way, never broken or opened in a fight.
+static func watched_door(view: LocationView, door: Dictionary) -> bool:
+	if str(door.get("flag", "")) != "":
+		return true
+	for en: Variant in view.loc.get("encounters", []):
+		if str((en as Dictionary).get("trigger", "")) == "open:%s" % door["id"]:
+			return true
+	return false
 
 
 ## The arena or a Skirmish map: every '=' square not holding something yet. Done once per fight.
@@ -31,7 +43,7 @@ static func for_location(view: LocationView, e: Encounter) -> void:
 	for d: Variant in view.loc.get("doors", []):
 		var door := d as Dictionary
 		var id := str(door["id"])
-		if LocationLocks._door_state(view, id) == LocationView.DOOR_OPEN:
+		if LocationLocks._door_state(view, id) == LocationView.DOOR_OPEN or watched_door(view, door):
 			continue
 		var secret := int(door.get("secret_dc", 0)) > 0 and not bool((states["found"] as Dictionary).get(id, false))
 		if secret or not StoryConditions.check(str(door.get("when", "")), view.st):
