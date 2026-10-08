@@ -7,7 +7,8 @@ Why not Godot's own macOS export: for Apple silicon it refuses unless every text
 which would double the import cache in every checkout. Apple silicon Macs read the BPTC/S3TC textures we already
 import (the editor runs on them), so the Windows export's pack is the Mac's pack too. This puts it in Godot's universal
 macOS template (from the installed 4.7.2 export templates), fills in Info.plist, signs the app ad hoc (Apple silicon
-won't run unsigned code; Gatekeeper still asks on first open, since it isn't notarized) and zips it with ditto.
+won't run unsigned code; Gatekeeper still asks on first open, since it isn't notarized) and zips it. On a Mac that's
+codesign and ditto; elsewhere (the release workflow's Linux runner) rcodesign and zip.
 Writes <out>/Curse of Strahd.app and <out>/CurseOfStrahd-macos.zip.
 """
 import argparse
@@ -19,7 +20,9 @@ from pathlib import Path
 NAME = "Curse of Strahd"
 BUNDLE_ID = "app.curseofstrahd.game"
 COPYRIGHT = "Unofficial fan game. Not affiliated with Wizards of the Coast."
-TEMPLATES = Path.home() / "Library/Application Support/Godot/export_templates/4.7.2.stable/macos.zip"
+# Where Godot keeps export templates on a Mac, and on Linux.
+TEMPLATE_DIRS = [Path.home() / "Library/Application Support/Godot/export_templates/4.7.2.stable",
+	Path.home() / ".local/share/godot/export_templates/4.7.2.stable"]
 
 
 def main() -> None:
@@ -32,7 +35,10 @@ def main() -> None:
 	out.mkdir(parents=True, exist_ok=True)
 	app = out / (NAME + ".app")
 	shutil.rmtree(app, ignore_errors=True)
-	with zipfile.ZipFile(TEMPLATES) as z:
+	templates = next((d / "macos.zip" for d in TEMPLATE_DIRS if (d / "macos.zip").exists()), None)
+	if templates is None:
+		raise SystemExit("mac_app: Godot's 4.7.2 macOS export template isn't installed")
+	with zipfile.ZipFile(templates) as z:
 		for info in z.infolist():
 			if not info.filename.startswith("macos_template.app/") or info.is_dir():
 				continue
@@ -59,11 +65,16 @@ def main() -> None:
 	assert "$" not in plist, "Info.plist still has a placeholder"
 	(app / "Contents/Info.plist").write_text(plist)
 	shutil.copyfile(args.pck, app / "Contents/Resources" / (NAME + ".pck"))
-	subprocess.run(["codesign", "--force", "--deep", "--timestamp=none", "--sign", "-", str(app)], check=True)
-	subprocess.run(["codesign", "--verify", "--deep", "--strict", str(app)], check=True)
 	archive = out / "CurseOfStrahd-macos.zip"
 	archive.unlink(missing_ok=True)
-	subprocess.run(["ditto", "-c", "-k", "--sequesterRsrc", "--keepParent", str(app), str(archive)], check=True)
+	if shutil.which("codesign"):
+		subprocess.run(["codesign", "--force", "--deep", "--timestamp=none", "--sign", "-", str(app)], check=True)
+		subprocess.run(["codesign", "--verify", "--deep", "--strict", str(app)], check=True)
+		subprocess.run(["ditto", "-c", "-k", "--sequesterRsrc", "--keepParent", str(app), str(archive)], check=True)
+	else:
+		# rcodesign with no certificate signs ad hoc, as codesign --sign - does.
+		subprocess.run(["rcodesign", "sign", str(app)], check=True)
+		subprocess.run(["zip", "-q", "-r", "-y", str(archive), app.name], cwd=out, check=True)
 	print("mac_app: %s (%.2f GB zipped)" % (archive, archive.stat().st_size / 1e9))
 
 
