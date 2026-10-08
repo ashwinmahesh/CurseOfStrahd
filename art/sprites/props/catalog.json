@@ -1,5 +1,5 @@
 {
-  "about": "Which prop art (manifest.json in this folder) dresses each thing in data/locations, read by world/look/set_dressing.gd (docs/art/set_dressing.md). A location prop or container is looked up by its id in `ids` first, then by its `model` in `models`; with neither it uses the art of the same name as its model, else `container_default` for containers. A value is an art id, or {art, mount, scale} to override how it hangs, or null for an invisible spot (something already drawn, or a view). `on_wall` is the art used when the thing stands on a wall square (shelves against a wall). Doors take the first `doors.rules` entry whose words are in their id or label. `floors` gives a place its own ground texture; `low_cover.<place>` and `<place>_run` dress its '=' squares. An entry with `building: true` stands in for the whole house on its square (a windmill, a bell tower); `fade: true` fades a tall piece like the trees. `scales` sizes a piece wherever it stands (stairs fill their square); `fronts` gives furniture a front view that stands flat against a wall beside it. `rooms` gives a location's areas their own floor and wall by words in the area's name (a bathroom's tiles); `place_looks` overrides a whole place's floor, wall, difficult ground and `rock_walls` (cliffs instead of trees). `feet` is each standing piece's real height (a person is 6 ft; 1 unit = 5 ft): the piece is drawn at that size, and `feet` is the height of its picture at real size (low, deep things such as beds include the top you see from above). A piece wider than `big_width` units at that size (a cottage, a tent, a wagon) keeps its size whatever the room and clears the trees and the board's own scenery around it. `glows` are pieces drawn unshaded, giving light rather than taking it. `double_doors` are exit art drawn once across a doorway two squares wide (outside interiors: the keep's great doors). `rooms` applies to interiors and dungeons only; `outdoor_rooms` are the few rules for outdoor maps (jetties are planks).",
+  "about": "Which prop art (manifest.json in this folder) dresses each thing in data/locations, read by world/look/set_dressing.gd (docs/art/set_dressing.md). A location prop or container is looked up by its id in `ids` first, then by its `model` in `models`; with neither it uses the art of the same name as its model, else `container_default` for containers. A value is an art id, or {art, mount, scale} to override how it hangs, or null for an invisible spot (something already drawn, or a view). `on_wall` is the art used when the thing stands on a wall square (shelves against a wall). Doors take the first `doors.rules` entry whose words are in their id or label. `floors` gives a place its own ground texture; `low_cover.<place>` and `<place>_run` dress its '=' squares. An entry with `building: true` stands in for the whole house on its square (a windmill, a bell tower); `fade: true` fades a tall piece like the trees. `scales` sizes a piece wherever it stands (stairs fill their square); `fronts` gives furniture a front view that stands flat against a wall beside it. `rooms` gives a location's areas their own floor and wall by words in the area's name (a bathroom's tiles); `place_looks` overrides a whole place's floor, wall, difficult ground and `rock_walls` (cliffs instead of trees). `feet` is each standing piece's real height (a person is 6 ft; 1 unit = 5 ft): the piece is drawn at that size, and `feet` is the height of its picture at real size (low, deep things such as beds include the top you see from above). A piece wider than `big_width` units at that size (a cottage, a tent, a wagon) keeps its size whatever the room and clears the trees and the board's own scenery around it. `glows` are pieces drawn unshaded, giving light rather than taking it. `double_doors` are exit art drawn once across a doorway two squares wide (outside interiors: the keep's great doors). `rooms` applies to interiors and dungeons only; `outdoor_rooms` are the few rules for outdoor maps (jetties are planks). `runs_along` lists long, thin pieces (a fence) that lie along a run of low cover going up the map instead of facing south. `map_marks` draws a building-sized 3D piece on the minimap over the squares it stands on (fill, rim, stripes of its canvas, round or square, at `scale` of its footprint).",
   "container_default": "chest",
   "models": {
     "hearth": "fireplace",
@@ -437,6 +437,12 @@
     ],
     "wizard_of_wines_run": [
       "vines"
+    ],
+    "tser_pool": [
+      "fence"
+    ],
+    "tser_pool_run": [
+      "fence"
     ]
   },
   "difficult": {
@@ -1183,7 +1189,9 @@
     "stone_font": 3.5,
     "throne": 6,
     "cauldron": 3.5,
-    "bat_perch": 6
+    "bat_perch": 6,
+    "great_tent": 22,
+    "stewpot": 5
   },
   "big_width": 1.6,
   "models3d": {
@@ -1502,7 +1510,9 @@
       "great_doors": "great_doors",
       "drawbridge": "drawbridge",
       "roof_hatch": "roof_hatch",
-      "gold_spill": "gold_spill"
+      "gold_spill": "gold_spill",
+      "great_tent": "great_tent",
+      "stewpot": "stewpot"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",
@@ -3698,5 +3708,50 @@
   ],
   "glows": [
     "heart_of_sorrow"
-  ]
+  ],
+  "runs_along": [
+    "fence"
+  ],
+  "map_marks": {
+    "great_tent": {
+      "fill": "crimson",
+      "rim": "candle",
+      "stripes": [
+        "crimson",
+        "plum",
+        "blood",
+        "candle",
+        "bruise",
+        "plum"
+      ],
+      "shape": "round",
+      "scale": 0.82
+    },
+    "tent": {
+      "fill": "plum",
+      "rim": "candle",
+      "stripes": [
+        "plum",
+        "blood",
+        "candle"
+      ],
+      "shape": "round",
+      "scale": 0.8
+    },
+    "vardo": {
+      "fill": "blood",
+      "rim": "candle",
+      "scale": 0.8
+    },
+    "wagon": {
+      "fill": "umber",
+      "rim": "tan",
+      "scale": 0.8
+    },
+    "market_stall": {
+      "fill": "crimson",
+      "rim": "ivory",
+      "scale": 0.85
+    }
+  }
 }

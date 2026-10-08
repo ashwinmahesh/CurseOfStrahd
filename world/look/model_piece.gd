@@ -159,12 +159,14 @@ static func material(name: String) -> Material:
 ## A standing piece on `cell` (SetDressing.stand_piece and exits): a holder on the square, turned to face into the
 ## room, with the model in it. Against-the-wall furniture stands with its back on the wall face. Returns the holder.
 static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, cell: Vector2i,
-		at_override: Variant = null, scale_: float = 1.0) -> Node3D:
+		at_override: Variant = null, scale_: float = 1.0, yaw: Variant = null, centre: Variant = null) -> Node3D:
 	var info := manifest()[id] as Dictionary
 	var mount := str(info.get("mount", "free"))
 	var holder := Node3D.new()
 	holder.name = "Model_" + id
 	holder.position = board.cell_center(cell) if at_override == null else at_override as Vector3
+	if centre != null:
+		holder.position = centre as Vector3   # over the middle of the squares a prop spans (its `span`)
 	holder.set_meta("art", art)
 	holder.set_meta("model", id)
 	parent.add_child(holder)
@@ -185,22 +187,23 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 		return holder
 	var back := backing_side(board, cell)
 	var faces := Vector2i(0, 1) if back == Vector2i.ZERO else -back
-	holder.rotation.y = atan2(float(faces.x), float(faces.y))
+	holder.rotation.y = atan2(float(faces.x), float(faces.y)) if yaw == null else float(yaw)   # a prop's own `facing`
 	if bool(info.get("big", false)) and at_override == null:
 		# Building-sized (a wagon, a market stall): it keeps its size and clears the trees it stands among, as the
 		# 2D big pieces do, but shrinks where it would reach something else standing near it (no overlaps).
 		var size := info.get("size", [1, 1, 1]) as Array
 		var foot := footprint_of(model, holder.rotation.y)
-		var fit := big_fit(board, cell, foot)
+		var mid := Vector2(holder.position.x, holder.position.z)
+		var fit := big_fit(board, cell, foot, mid)
 		model.scale *= fit
-		var mine := [cell, Rect2(Vector2(cell.x + 0.5, cell.y + 0.5) + foot.position * fit, foot.size * fit)]
+		var mine := [cell, Rect2(mid + foot.position * fit, foot.size * fit), id]
 		var feet: Array = board.get_meta("big_feet", [])
 		feet.append(mine)
 		board.set_meta("big_feet", feet)
 		holder.tree_exiting.connect(func() -> void:
 			if is_instance_valid(board):
 				(board.get_meta("big_feet", []) as Array).erase(mine))   # props rebuilt after a talk stand again
-		SetDressing._clear_trees_around(board, parent, cell, maxf(float(size[0]), float(size[2])) * fit)
+		SetDressing._clear_trees_around(board, parent, cell, maxf(float(size[0]), float(size[2])) * fit, mine[1] as Rect2)
 	if mount == "against_wall" or mount == "wall":
 		# A wall piece with no wall face free beside it stands on its square like furniture against a wall.
 		var depth := float((info.get("size", [1, 1, 0.3]) as Array)[2])
@@ -305,8 +308,8 @@ static func tree_mesh(id: String) -> Mesh:
 
 ## How much a building-sized piece must shrink so its footprint (`foot`: its x and z extent about its node, already
 ## turned) keeps clear of the location's other things standing near `cell`: 1 where there's room.
-static func big_fit(board: ArenaBoard, cell: Vector2i, foot: Rect2) -> float:
-	var centre := Vector2(cell.x + 0.5, cell.y + 0.5)
+static func big_fit(board: ArenaBoard, cell: Vector2i, foot: Rect2, mid: Variant = null) -> float:
+	var centre := Vector2(cell.x + 0.5, cell.y + 0.5) if mid == null else mid as Vector2
 	var s := 1.0
 	while s > 0.4:
 		var rect := Rect2(centre + foot.position * s, foot.size * s)

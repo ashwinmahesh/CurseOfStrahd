@@ -1,0 +1,18 @@
+{
+  "id": "tser_petru",
+  "name": "Petru",
+  "title": "Knife-grinder of the Tser Pool Camp",
+  "summary": "A quiet, hooded Vistana who sharpens every blade in the camp at his grinding bench and notices every blade that walks in.",
+  "portrait": "bandit",
+  "sprite": "bandit",
+  "attitude": "indifferent",
+  "voice": "docs/voice/tser_petru.md",
+  "monster": "bandit",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him"
+}

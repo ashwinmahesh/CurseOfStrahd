@@ -261,6 +261,18 @@
           "burning": {
             "type": "string",
             "description": "A condition: while it holds, the prop burns (a big flame and light)."
+          },
+          "facing": {
+            "type": "string",
+            "enum": ["north", "south", "east", "west", "northeast", "northwest", "southeast", "southwest"],
+            "description": "Which way the piece's front looks (north is up the map), instead of away from the wall beside it or south: wagons round a fire, horses in a pen."
+          },
+          "span": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {"type": "integer", "minimum": 1, "maximum": 4},
+            "description": "[across, down]: a piece bigger than its square stands over the middle of this many squares, its own cell the north-west one (a wagon over its two-by-two block of low cover)."
           }
         }
       }
