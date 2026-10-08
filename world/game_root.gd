@@ -123,6 +123,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 		LayerFade.fade(self, hud, false, 0.25)   # the combat HUD fades up in its place
 		Audio.play_music("combat")
 		_boss_music.call_deferred(cv)   # the fight is set up just after this signal
+		Audio.follow_fight.call_deferred(cv)   # the music swells while a boss stands or someone is Bloodied (A2)
 		Achievements.watch(cv, st, hud.toast)   # the run's record for the ending, and achievements (N8)
 		cv.menu_requested.connect(func() -> void:
 			if screen is PauseMenu:
@@ -307,10 +308,14 @@ func world_action(cell: Vector2i, id: String) -> void:
 		"spells":
 			open_screen("sheet", int(parts[1]))
 			(screen as CharacterSheetScreen).show_tab("Spells")
-		"trade":
+		"trade", "services":
 			var thing := view.thing_at(cell)
 			if not thing.is_empty():
-				open_shop(str((thing["spec"] as Dictionary)["npc"]))
+				var npc := str((thing["spec"] as Dictionary)["npc"])
+				if parts[0] == "trade":
+					open_shop(npc)
+				else:
+					open_services(npc)
 		_:
 			view.act(cell, id)
 
@@ -356,6 +361,18 @@ func open_shop(npc_id: String, from_dialogue: bool = false) -> void:
 			dialogue.resume())
 
 
+## Someone's services (a temple's spells, an inn's rooms; F14); `from_dialogue` resumes the conversation when it closes.
+func open_services(npc_id: String, from_dialogue: bool = false) -> void:
+	var sv := ServicesScreen.new()
+	sv.rest_after = not from_dialogue
+	add_child(sv)
+	sv.open_for(self, st, npc_id)
+	sv.closed.connect(func() -> void:
+		_refresh()
+		if from_dialogue and dialogue != null:
+			dialogue.resume())
+
+
 ## Madam Eva's respec (plan §5.6): party member `index` is built again from level 1 in the creator (name, look and
 ## personality kept), keeps their belongings, and levels back up with the party's milestones.
 func respec(index: int) -> void:
@@ -391,6 +408,7 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 	add_child(dialogue)
 	dialogue.ended.connect(_dialogue_ended)
 	dialogue.shop_requested.connect(func(npc: String) -> void: open_shop(npc, true))
+	dialogue.services_requested.connect(func(npc: String) -> void: open_services(npc, true))
 	dialogue.stage_requested.connect(func(what: String, npc: String, at: String) -> void:
 		if view == null:
 			return

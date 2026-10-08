@@ -56,6 +56,11 @@
           },
           "description": "'.' floor, '#' wall, '=' low cover (blocks movement, Half Cover), '~' Difficult Terrain, ' ' void, '1'-'4' floor raised 5 ft per step."
         },
+        "drop_ft": {
+          "type": "integer",
+          "minimum": 10,
+          "description": "How far the open void beside the floor falls (a chasm, a tower's well): a creature forced over the edge falls this far and out of the fight. Without it, the void is the map's edge and nothing crosses it."
+        },
         "theme": {
           "type": "string",
           "description": "Which look the 3D scene dresses the map in."

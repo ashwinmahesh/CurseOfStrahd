@@ -73,9 +73,9 @@
       "model": "eleven_v3"
     },
     "morgantha": {
-      "voice_id": "FWyd13ecWCcLepGfnHfQ",
-      "name": "Barovia morgantha",
-      "description": "An old woman with a sugary, crooning, sing-song voice and a strong, clearly audible Eastern European (Romanian) accent, sweet as syrup with something rotten underneath. Endearments, appraisal, cackling warmth; refers to herself in the third person. Grandmotherly menace.",
+      "voice_id": "wsKtc2AxcXSSvFx8G0FU",
+      "name": "Barovia Morgantha (2026-10-07)",
+      "description": "A night hag disguised as a cheerful old pastry seller, with a thick Eastern European (Romanian) accent. A cracked, wheedling, raspy old voice that purrs and coos, then drops into a low, gleeful, venomous whisper. Wildly emotional, playful and terrifying.",
       "settings": {},
       "model": "eleven_v3"
     },
@@ -215,7 +215,7 @@
       "released": true
     },
     "krezk_guard": {
-      "voice_id": "QP2JCB0glkoqDWmghcn6",
+      "voice_id": "0tbc1gIhNXCyVSqTawpr",
       "name": "Barovia krezk_guard",
       "description": "A middle-aged farmer on watch with a plain, rough, wary voice and a strong, clearly audible Eastern European (Romanian) accent. Stubborn and nervous, repeating his orders, more neighbour than soldier.",
       "settings": {},
@@ -223,7 +223,7 @@
       "released": true
     },
     "vallaki_guard": {
-      "voice_id": "vNlct9dxqAcSNTqaSd84",
+      "voice_id": "olcNCfsv12bIXwWp40VJ",
       "name": "Barovia vallaki_guard",
       "description": "A tired town watchman with an ordinary, flat, weary voice and a strong, clearly audible Eastern European (Romanian) accent. Enforces silly rules with decency; recites 'All will be well' without conviction.",
       "settings": {},
@@ -464,7 +464,7 @@
       "released": true
     },
     "vallaki_herald": {
-      "voice_id": "9sl2m7Dgj9WJewoBpOq1",
+      "voice_id": "wf4N2ylhluwBCGVOuIea",
       "name": "Barovia vallaki_herald",
       "description": "A town crier with a loud, projecting, slightly hoarse voice and a strong, clearly audible Eastern European (Romanian) accent, a good voice with a bad cough; official and over-enthusiastic.",
       "settings": {},
@@ -1237,6 +1237,54 @@
       "sfx": true,
       "name": "Sound effects: claw",
       "description": "Noises for crawling_claw in fights."
+    },
+    "krezk_woodcutter": {
+      "settings": {},
+      "description": "A middle-aged Krezk woodcutter with a gruff, plain, weathered voice and a strong, clearly audible Eastern European (Romanian) accent. Few words, wary and tired.",
+      "model": "eleven_v3",
+      "voice_id": "gRmWLPq8qtBvzhIA2MLl",
+      "name": "Barovia krezk_woodcutter",
+      "released": true
+    },
+    "vallaki_goodwife": {
+      "settings": {},
+      "description": "A Vallaki market woman in her fifties with a brisk, chatty, sharp voice and a strong, clearly audible Eastern European (Romanian) accent. Gossipy, nervous under forced festival cheer.",
+      "model": "eleven_v3",
+      "voice_id": "aSpUx7k6PhLFfsAer0bj",
+      "name": "Barovia vallaki_goodwife",
+      "released": true
+    },
+    "vallaki_carter": {
+      "settings": {},
+      "description": "A burly carter in his forties with a loud, rough, good-natured voice and a strong, clearly audible Eastern European (Romanian) accent. Grumbles about hauling for the Baron's festivals.",
+      "model": "eleven_v3",
+      "voice_id": "sMJ9P6p1YuWLnOkcSFQB",
+      "name": "Barovia vallaki_carter",
+      "released": true
+    },
+    "vallaki_lamplighter": {
+      "settings": {},
+      "description": "An old lamplighter with a thin, quiet, careful voice and a strong, clearly audible Eastern European (Romanian) accent. Superstitious about the dark, speaks softly.",
+      "model": "eleven_v3",
+      "voice_id": "ZrethM59gSbMAYQkl4jR",
+      "name": "Barovia vallaki_lamplighter",
+      "released": true
+    },
+    "vallaki_grumbler": {
+      "settings": {},
+      "description": "A sour man in his fifties locked in the stocks for insufficient cheer, with a sardonic, grumbling, nasal voice and a strong, clearly audible Eastern European (Romanian) accent.",
+      "model": "eleven_v3",
+      "voice_id": "eYjSZ7pQCsZ2trBBhYcN",
+      "name": "Barovia vallaki_grumbler",
+      "released": true
+    },
+    "barovia_goodwife": {
+      "settings": {},
+      "description": "A worn village woman of Barovia in her forties with a low, tired, frightened voice and a strong, clearly audible Eastern European (Romanian) accent. Keeps her shutters closed.",
+      "model": "eleven_v3",
+      "voice_id": "haD60kChENZhuoOFiC80",
+      "name": "Barovia barovia_goodwife",
+      "released": true
     }
   },
   "sfx": {

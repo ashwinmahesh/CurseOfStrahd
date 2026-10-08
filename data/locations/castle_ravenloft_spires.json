@@ -29,7 +29,8 @@
       "########################4#######"
     ],
     "theme": "church",
-    "light": "dark"
+    "light": "dark",
+    "drop_ft": 200
   },
   "areas": [
     {

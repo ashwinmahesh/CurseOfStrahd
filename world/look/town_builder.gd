@@ -21,11 +21,12 @@ const STUB_FLOOR := "interior/wood_planks"
 ## Splits the board's inner walls into houses and yard walls, and builds the houses. Returns the yard-wall squares
 ## (built square by square in ArenaBoard._wall so props can take their place).
 static func plan(board: ArenaBoard) -> Dictionary:
+	CastleBuilder.plan(board)   # Castle Ravenloft's walls, towers and keep (W19): their squares aren't houses
 	var walls := {}
 	for z in board.grid.depth:
 		for x in board.grid.width:
 			var c := Vector2i(x, z)
-			if board.grid.has_flag(c, CombatGrid.WALL) and not _border(board, c):
+			if board.grid.has_flag(c, CombatGrid.WALL) and not _border(board, c) and not board.house_cells.has(c):
 				walls[c] = true
 	var block := {}
 	for c: Vector2i in walls:
@@ -644,6 +645,9 @@ static func cut_away(board: ArenaBoard, camera_pos: Vector3, focus: Vector3, del
 			continue
 		if b.has("interior"):
 			InteriorWalls.cut(board, b, camera_pos, focus, delta)   # an interior's full-height walls (W8)
+			continue
+		if b.has("castle"):
+			CastleBuilder.cut(b, camera_pos, focus, delta)   # Castle Ravenloft's walls and towers (W19)
 			continue
 		var aabb := b["aabb"] as AABB
 		var hides: bool = aabb.intersects_segment(camera_pos, target) != null and not aabb.has_point(target)

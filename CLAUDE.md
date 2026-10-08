@@ -103,4 +103,6 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   with `make test FILES=...` while you work. The build thread runs the full suite once for each batch of hand-offs
   and bisects a failure. `make check DEPTH=1` (or 2, or all) runs the tests that use what changed instead.
 - A new screen or panel goes into tests/integration/test_layout.gd, which fails on text or buttons spilling out.
+- Never push main: push your own branch, if anything (coordinator rule, 2026-10-07; worktrees share refs). Only the
+  build thread pushes main, with STRAHD_PUSH_MAIN=1; the pre-push hook `make hooks` installs refuses anyone else.
 - A capture for anything visual. Never weaken tests to pass. Never mark an owner sign-off as passed.

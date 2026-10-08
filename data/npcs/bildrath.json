@@ -2,7 +2,7 @@
   "id": "bildrath",
   "name": "Bildrath Cantemir",
   "title": "Proprietor, Bildrath's Mercantile",
-  "summary": "The village shopkeeper, who charges ten times the going price because there is no going anywhere else. No haggling, no credit, no returns.",
+  "summary": "The village shopkeeper, who charges ten times the going price because there is no going anywhere else. No credit, no returns, and haggling only once.",
   "portrait": "bildrath",
   "sprite": "bildrath",
   "attitude": "indifferent",
@@ -15,5 +15,141 @@
     "village_of_barovia"
   ],
   "region": "village_of_barovia",
-  "pronouns": "he/him"
+  "pronouns": "he/him",
+  "shop": {
+    "sells": [
+      {
+        "id": "rope",
+        "qty": -1
+      },
+      {
+        "id": "torch",
+        "qty": -1
+      },
+      {
+        "id": "candle",
+        "qty": -1
+      },
+      {
+        "id": "lamp",
+        "qty": -1
+      },
+      {
+        "id": "hooded_lantern",
+        "qty": 2
+      },
+      {
+        "id": "oil",
+        "qty": -1
+      },
+      {
+        "id": "tinderbox",
+        "qty": -1
+      },
+      {
+        "id": "ration",
+        "qty": -1
+      },
+      {
+        "id": "waterskin",
+        "qty": -1
+      },
+      {
+        "id": "backpack",
+        "qty": -1
+      },
+      {
+        "id": "sack",
+        "qty": -1
+      },
+      {
+        "id": "pouch",
+        "qty": -1
+      },
+      {
+        "id": "bedroll",
+        "qty": -1
+      },
+      {
+        "id": "blanket",
+        "qty": -1
+      },
+      {
+        "id": "crowbar",
+        "qty": -1
+      },
+      {
+        "id": "iron_spike",
+        "qty": -1
+      },
+      {
+        "id": "chain",
+        "qty": 1
+      },
+      {
+        "id": "lock",
+        "qty": 2
+      },
+      {
+        "id": "manacles",
+        "qty": 1
+      },
+      {
+        "id": "mirror",
+        "qty": 1
+      },
+      {
+        "id": "shovel",
+        "qty": -1
+      },
+      {
+        "id": "pole",
+        "qty": -1
+      },
+      {
+        "id": "grappling_hook",
+        "qty": 1
+      },
+      {
+        "id": "signal_whistle",
+        "qty": -1
+      },
+      {
+        "id": "healers_kit",
+        "qty": -1
+      },
+      {
+        "id": "potion_of_healing",
+        "qty": 1,
+        "if": "not flag.bildrath_potion_sold",
+        "sets": "bildrath_potion_sold"
+      }
+    ],
+    "buys": [
+      "weapon",
+      "armor",
+      "shield",
+      "gear",
+      "light",
+      "container",
+      "clothing",
+      "tool",
+      "treasure"
+    ],
+    "markup": 10.0,
+    "sell_rate": 0.1,
+    "closed": "flag.bildrath_banned and not flag.bildrath_repaid",
+    "haggle": {
+      "dc": 18,
+      "won": "bildrath_discount",
+      "lost": "bildrath_haggle_failed"
+    },
+    "price_flags": [
+      {
+        "if": "flag.bildrath_surcharge",
+        "buy": 1.1,
+        "min_price": 50
+      }
+    ]
+  }
 }

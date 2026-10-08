@@ -72,8 +72,7 @@
     ],
     "special": [
       "hammer_of_thunderbolts"
-    ],
-    "returns": true
+    ]
   },
   "powers": [
     {
@@ -84,7 +83,7 @@
       "custom": "hammer_hurl",
       "targeting": "enemy",
       "range": 60,
-      "text": "Spend 1 charge and throw it (20/60 ft). On a hit, the target and everything within 30 ft of it make a DC 17 Con save or are Stunned until the end of your next turn. It flies back."
+      "text": "Spend 1 charge and throw it (20/60 ft). On a hit, the target and everything within 30 ft of it make a DC 17 Con save or are Stunned until the end of your next turn. It lands by the target, to be picked up again."
     }
   ],
   "summary": "+1 maul. With a Belt of Giant Strength and Gauntlets of Ogre Power: Strength +4 (to 30), Giant's Bane, and thunderbolt throws.",
