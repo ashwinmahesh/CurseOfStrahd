@@ -44,7 +44,9 @@ Cezar: The billy breaks a rail, I mend a rail. He breaks another. I think he lik
 -> END
 
 ~ carver
-if flag.clovin_family_found
+if flag.mother_flown
+Old Pavel: A sun a day, still. And on Sundays my niece comes down off the mountain and lands on my roof. I've had it mended twice. I'd have it mended every week.
+elif flag.clovin_family_found
 Old Pavel: A sun a day, still. But on Sundays I go up the mountain with soup, so on Saturdays I carve two.
 else
 Old Pavel: A sun for the shrine. One every day. When the shrine is full, I start on the windows. Somebody has to keep asking for the morning.

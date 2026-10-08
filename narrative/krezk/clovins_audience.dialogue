@@ -40,6 +40,7 @@ Clovin Belview: I'm writing new material. It's all about soup now. The cells thi
 * [if flag.clovin_befriended and not quest.clovins_audience] You've gone quiet, Clovin. Something on your mind? -> ask
 * [if quest.clovins_audience == refused] Dmitri won't open the gate for you. -> hood
 * [if flag.clovin_family_found] How's your great-uncle? -> clovin_after
+* Heard anything interesting? -> abbey_of_st_markovia/mothers_ninth_improvement:clovin_news
 * Goodbye, Clovin. -> END
 
 # --- Dmitri (dmitri:menu jumps here) ---
