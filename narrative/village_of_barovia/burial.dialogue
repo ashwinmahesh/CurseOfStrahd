@@ -101,6 +101,7 @@ endif
 ~ strahd_arrives
 set strahd_met
 appear strahd at lych_gate
+cutscene burial_strahd
 Narrator: The air turns cold enough to fog your breath. At the lych-gate, where nobody stood a moment ago, a tall man in a fine black coat waits, hat in hand, like a mourner who came late.
 Strahd: Do not stop on my account. It is so rare that I attend a funeral I did not arrange. Well. Not directly.
 Ireena [angry]: Get out of here.
@@ -210,11 +211,13 @@ endif
 ~ rise
 vanish strahd
 vanish doru
+cutscene burial_graves
 Ismark: Ireena, behind me! Into the church porch, go!
 combat churchyard_dead
 
 ~ doru_messenger
 appear doru at lych_gate
+cutscene burial_doru
 Narrator: Something perches on the churchyard wall like a crow: Doru, his cheeks full now, his lips red, smiling.
 Doru [smile]: Don't stop. I like funerals now. My master sends his regrets; he's dining elsewhere tonight. He says Ireena should leave her window open. It's stuffy, waiting.
 Ireena [afraid]: Doru? Oh, Doru. No.

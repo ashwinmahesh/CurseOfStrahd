@@ -12,6 +12,7 @@ Narrator: You walk into the white, and a dozen steps later you walk out of it fa
 -> END
 
 ~ hooks
+cutscene mists_arrival
 Narrator: Each of you came looking for something. None of you came looking for this.
 interject name:godrick_pendlebrook: A land of mists. This is it. Sir Pellam, I'm here. I've got your sword. I've not dropped it once. Well. Once.
 interject name:liriel_dawnsong: A valley in a ring of mountains, and no sun. I've seen this sky before. I saw it on the morning of my vows.

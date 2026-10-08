@@ -16,6 +16,7 @@ set sarnov_children_met
 if not quest.children_of_the_mill
 quest children_of_the_mill heard
 endif
+cutscene bonegrinder_loft
 Narrator: Two cages hang from the rafters like birdcages for very large birds. In one, a thin girl with a set jaw and scraped knuckles. In the other, a small boy asleep against the bars, with crumbs on his chin.
 Ilka [afraid]: Are you real? Don't wake Toma. He sleeps better than me. She gives him the pastries and he dreams about our sister.
 Toma: Granny's nice. Granny gives me cake.
@@ -121,6 +122,7 @@ Ilinca: The Keepers owe you for this. We pay our debts slowly, in odd coin. Tell
 if guest:ilinca_vrana
 leave ilinca_vrana
 endif
+cutscene ilinca_children
 Narrator: She takes a child by each hand and goes down the stair with them, slowly, talking about soup the whole way.
 if name:thistle
 interject name:thistle: Bye, Toma! Bye, Ilka! Whistle like this if anyone bothers you!

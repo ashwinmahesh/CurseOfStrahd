@@ -1,0 +1,20 @@
+{
+  "id": "bonegrinder_view",
+  "title": "The View from the Crag",
+  "summary": "From Old Bonegrinder's crag the whole valley opens below, the castle far off on its rock.",
+  "images": [
+    {
+      "image": "bonegrinder_view_burned",
+      "when": "flag.bonegrinder_burned"
+    },
+    {
+      "image": "bonegrinder_view",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.55,
+    0.45
+  ],
+  "trigger": "examine:bonegrinder_lookout"
+}

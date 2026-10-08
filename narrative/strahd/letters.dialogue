@@ -8,6 +8,7 @@
 set strahd_letter_read
 Narrator: A rider in Vistani colours reins in beside you, holds out a letter sealed in black wax, and is gone back up the road before anyone can ask who sent it.
 Narrator: The seal is one letter, a Z, pressed deep.
+cutscene strahd_letter
 Strahd: My dear guests. Forgive a host for writing when he might call. The daylight is so inconvenient for me.
 if flag.strahd_watcher_seen
 Strahd: You saw me on the ridge. You looked well. A little thin. Do eat.
@@ -45,6 +46,7 @@ Narrator: You fold it away. For a while it is warm against you. Then, oddly, it 
 # ---------------------------------------------------------------- The invitation and the black carriage (level 9)
 
 ~ invitation
+cutscene black_carriage
 if flag.strahd_invitation == "declined"
 Narrator: The black carriage again, waiting on the road with its door open, as patient as a stone.
 else
@@ -78,6 +80,7 @@ Strahd: No harm will come to you under my roof before the meal is over. You have
 
 ~ accept
 set strahd_invitation = "accepted"
+cutscene carriage_ride
 Narrator: The door shuts behind you on its own. The carriage moves off with no word and no whip, faster than horses should, up into the mountains and the cloud.
 time +90
 approve ratatoille +1: You accepted Strahd's invitation to dinner

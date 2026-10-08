@@ -23,6 +23,7 @@ endif
 ~ first
 set godfrey_met
 quest the_order_of_the_silver_dragon met
+cutscene godfrey_steps
 Narrator: A knight in dented plate waits on the broken front steps with his helmet under his arm. His face is grey and quite plainly dead, and he is doing his best to smile with it.
 Sir Godfrey Gwilym: Welcome to Argynvostholt. Mind the steps. The third one's gone, and the fourth, and honestly most of the house.
 Sir Godfrey Gwilym: Sir Godfrey Gwilym, of the Order of the Silver Dragon, or what's left of it. You'll want the commander. Everyone does, eventually. Then they wish they hadn't.

@@ -37,7 +37,7 @@
         "properties": {
           "image": {
             "$ref": "common.schema.json#/$defs/id",
-            "description": "art/cutscenes/<image>.png"
+            "description": "art/cutscenes/<image>.jpg"
           },
           "when": {
             "type": "string",
@@ -57,10 +57,14 @@
       "maxItems": 2,
       "description": "Where the picture's slow push-in closes on, as a share of its width and height (default the centre)."
     },
+    "once": {
+      "type": "boolean",
+      "description": "A place's cutscene plays only the first time its trigger fires (an area you walk into again and again)."
+    },
     "trigger": {
       "type": "string",
-      "pattern": "^(enter|examine|search):[a-z0-9_]+$",
-      "description": "A Narrator trigger that plays it while exploring (examine:bonegrinder_lookout): the narrator's line becomes its caption. Conversations play cutscenes with the `cutscene <id>` statement instead."
+      "pattern": "^[a-z]+:[a-z0-9_]+$",
+      "description": "A Narrator key that plays it while exploring or in a fight (examine:bonegrinder_lookout, strahd:fled_to_coffin): the narrator's line becomes its caption. find:<magic item> plays it when a Tarokka treasure is found. Conversations play cutscenes with the `cutscene <id>` statement instead."
     }
   }
 }
