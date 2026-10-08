@@ -148,6 +148,9 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 				_take_square(board, root, cell)   # its own art replaces the board's furniture or brambles there
 			var piece := stand_piece(board, root, art, cell, scale_, null, front, bool(look.get("fade", false)) or bool(look.get("big", false)),
 				facing_yaw(spec), span_centre(board, spec))
+			if piece != null and int(spec.get("stand_ft", 0)) > 0:
+				# Stood on (a podium, a tree climbed into: `stand_ft`): its squares are its top, the model rises from the ground.
+				piece.position.y -= float(int(spec["stand_ft"])) / CombatGrid.FEET
 			if bool(look.get("fade", false)) and piece is Sprite3D:
 				_fade_with_trees(board, piece as Sprite3D)
 			elif bool(look.get("fade", false)) and piece != null and piece.has_meta("model"):

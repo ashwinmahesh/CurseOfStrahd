@@ -53,7 +53,7 @@ func _init() -> void:
 
 func show_location(v: LocationView) -> void:
 	view = v
-	_grid = CombatGrid.from_rows(v.loc["map"]["rows"] as Array)
+	_grid = LocationView.grid_for(v.loc)
 	_colours = colours_for(ArenaBoard.theme_for(v.loc["map"] as Dictionary))
 	# A place's own water on the map (its mood's water `map` and `map_edge`): Tser Pool is black, not lake blue
 	# (owner report 2026-10-08).

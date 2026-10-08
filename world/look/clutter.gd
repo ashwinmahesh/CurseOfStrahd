@@ -234,8 +234,11 @@ static func ruts(board: ArenaBoard, roads: Array[PackedVector2Array]) -> int:
 						d.texture_normal = nm
 					var aspect := float(info.get("aspect", 1.0))
 					d.size = Vector3(0.9, 0.5, 0.9 / maxf(aspect, 0.3))
-					d.position = Vector3(p.x, board.floor_y(c), p.y)
+					d.position = Vector3(p.x, board.ground_y(p), p.y)
 					d.rotation.y = atan2(dir.x, dir.y) + (PI if h % 2 == 0 else 0.0)
+					var up := board.ground_normal(c)
+					if up.y < 0.9999:
+						d.basis = Basis(Vector3.UP.cross(up).normalized(), Vector3.UP.angle_to(up)) * d.basis
 					d.upper_fade = 0.3
 					d.lower_fade = 0.3
 					d.modulate = Color(0.78, 0.76, 0.74, 0.7)
@@ -254,15 +257,16 @@ static func _spots(board: ArenaBoard, c: Vector2i, on: String) -> Array:
 	var g := board.grid
 	var out: Array = []
 	var open := not g.has_flag(c, CombatGrid.WALL) and not g.has_flag(c, CombatGrid.VOID) and not g.has_flag(c, CombatGrid.WATER)
-	var y := board.floor_y(c)
+	var y := board.ground_y(Vector2(c.x + 0.5, c.y + 0.5))   # the floor, or natural ground's slope
 	var mid := Vector3(c.x + 0.5, y, c.y + 0.5)
+	var up := board.ground_normal(c)   # tilted on natural ground's slopes
 	match on:
 		"floor":
 			if open and not g.has_flag(c, CombatGrid.DIFFICULT):
-				out.append({"at": mid, "normal": Vector3.UP, "wall": false})
+				out.append({"at": mid, "normal": up, "wall": false})
 		"difficult":
 			if open and g.has_flag(c, CombatGrid.DIFFICULT):
-				out.append({"at": mid, "normal": Vector3.UP, "wall": false})
+				out.append({"at": mid, "normal": up, "wall": false})
 		"edge", "boundary":
 			if not open or g.has_flag(c, CombatGrid.DIFFICULT):
 				return out
@@ -273,7 +277,8 @@ static func _spots(board: ArenaBoard, c: Vector2i, on: String) -> Array:
 				var hit := g.has_flag(n, CombatGrid.WALL) if on == "edge" else g.has_flag(n, CombatGrid.DIFFICULT)
 				if hit:
 					var toward := Vector3(d.x, 0, d.y) * (0.32 if on == "edge" else 0.5)
-					out.append({"at": mid + toward, "normal": Vector3.UP, "wall": false})
+					toward.y = -(up.x * toward.x + up.z * toward.z) / up.y
+					out.append({"at": mid + toward, "normal": up, "wall": false})
 		"wall", "wall_foot":
 			if not g.has_flag(c, CombatGrid.WALL) or board.is_tree(c):
 				return out
@@ -312,9 +317,15 @@ static func _decal(id: String, s: float, spot: Dictionary, h: int) -> Decal:
 		d.position = at + Vector3(0, y0 + tall / 2.0, 0) + x * (float((h / 3) % 50) / 100.0 - 0.25)
 		d.size = Vector3(minf(w, 0.95), DEPTH, tall)
 	else:
-		d.rotation.y = float(h % 360) * PI / 180.0
 		var jitter := Vector3(float((h / 11) % 40) / 100.0 - 0.2, 0, float((h / 13) % 40) / 100.0 - 0.2)
-		d.position = at + jitter + Vector3(0, 0.02, 0)
+		var n := spot["normal"] as Vector3
+		var tilt := Basis.IDENTITY
+		if n.y < 0.9999:
+			# On natural ground's slope: the box lies along it.
+			tilt = Basis(Vector3.UP.cross(n).normalized(), Vector3.UP.angle_to(n))
+			jitter.y = -(n.x * jitter.x + n.z * jitter.z) / n.y
+		d.basis = tilt * Basis(Vector3.UP, float(h % 360) * PI / 180.0)
+		d.position = at + jitter + n * 0.02
 		d.size = Vector3(w, DEPTH, tall)
 	d.upper_fade = 0.25
 	d.lower_fade = 0.25

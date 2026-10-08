@@ -210,7 +210,7 @@ static func pick_cell(view: LocationView, camera: Camera3D, screen: Vector2) -> 
 		if t < best:
 			best = t
 			cell = entry[1] as Vector2i
-	return cell if cell.x >= 0 else GridPick.cell_under(camera, view.grid, screen)
+	return cell if cell.x >= 0 else GridPick.cell_under(camera, view.grid, screen, view.board)
 
 
 ## [node, cell] for everything drawn that the mouse can point at.

@@ -250,10 +250,13 @@ func _paint_zone(zone: Node3D, f: FieldObject) -> void:
 	mm.instance_count = f.cells.size()
 	for i in f.cells.size():
 		var cell := f.cells[i]
-		var y := board.floor_y(cell) + 0.014
+		var y := board.cell_center(cell).y + 0.014
 		if board.grid.has_flag(cell, CombatGrid.LOW):
 			y += ArenaBoard.LOW_H
-		mm.set_instance_transform(i, Transform3D(Basis.IDENTITY, Vector3(cell.x + 0.5, y, cell.y + 0.5)))
+		var tilt := board.ground_basis(cell)   # along natural ground's slope
+		if tilt != Basis.IDENTITY:
+			y += GridOverlay.SLOPE_LIFT
+		mm.set_instance_transform(i, Transform3D(tilt, Vector3(cell.x + 0.5, y, cell.y + 0.5)))
 	var mmi := MultiMeshInstance3D.new()
 	mmi.multimesh = mm
 	var mat := StandardMaterial3D.new()

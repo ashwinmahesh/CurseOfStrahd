@@ -124,7 +124,7 @@ static func create(location_id: String, state: StoryState, narrator_: Narrator, 
 
 func _ready() -> void:
 	assert(not loc.is_empty(), "No location %s" % loc_id)
-	grid = CombatGrid.from_rows(loc["map"]["rows"] as Array)
+	grid = grid_for(loc)
 	board = ArenaBoard.build(grid, ArenaBoard.theme_for(loc["map"] as Dictionary), loc_id)
 	add_child(board)
 	LocationBuilder._build_environment(self)
@@ -194,6 +194,19 @@ func _say(key: String, actor: Character = null, fallback: String = "") -> bool:
 			narration.emit(text)
 		return true
 	return false
+
+
+## A location's grid as authored: its map rows, its natural ground (`elevation`) and the props stood on above the
+## ground (a prop's `stand_ft`: a podium, a platform, a tree climbed into; CombatGrid.raise).
+static func grid_for(loc: Dictionary) -> CombatGrid:
+	var map := loc["map"] as Dictionary
+	var g := CombatGrid.from_rows(map["rows"] as Array, map.get("elevation", []) as Array)
+	for p: Variant in loc.get("props", []):
+		var prop := p as Dictionary
+		if int(prop.get("stand_ft", 0)) > 0:
+			for c in BattleScenery.span_cells(prop):
+				g.raise(c, int(prop["stand_ft"]))
+	return g
 
 
 static func _cell(v: Variant) -> Vector2i:

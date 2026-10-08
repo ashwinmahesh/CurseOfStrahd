@@ -1073,6 +1073,13 @@ func _pick_from_mouse(screen: Vector2) -> void:
 	var dir := cam.project_ray_normal(screen)
 	hover_token = _token_on_ray(origin, dir)
 	hover_cell = Vector2i(-1, -1)
+	if board.shaped():
+		# Natural ground's slopes, raised props' tops (GridPick.ground_hit).
+		var hit: Variant = GridPick.ground_hit(board, origin, dir)
+		if hit != null:
+			hover_world = hit as Vector3
+			hover_cell = Vector2i(floori(hover_world.x), floori(hover_world.z))
+		return
 	for h: int in [4, 3, 2, 1, 0]:
 		if absf(dir.y) < 0.0001:
 			break

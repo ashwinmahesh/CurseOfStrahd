@@ -187,7 +187,7 @@ func _wreckage(cell: Vector2i, substance: String, animate: bool) -> void:
 	var colours := {"wood": ["walnut", "umber", "leather"], "stone": ["stone", "slate", "stone_deep"], "iron": ["pewter", "slate", "rust"],
 		"steel": ["pewter", "silver", "slate"], "cloth": ["bone", "tan", "parchment"], "rope": ["tan", "umber", "bone"],
 		"glass": ["silver", "mist_blue", "pewter"], "crystal": ["silver", "mist_blue", "lilac"]}.get(substance, ["umber", "stone", "slate"]) as Array
-	var y := board.floor_y(cell)
+	var y := board.cell_center(cell).y
 	for i in 6:
 		var size := Vector3(_rng.randf_range(0.12, 0.3), _rng.randf_range(0.05, 0.14), _rng.randf_range(0.08, 0.22))
 		var at := Vector3(cell.x + _rng.randf_range(0.15, 0.85), y + size.y / 2.0, cell.y + _rng.randf_range(0.15, 0.85))

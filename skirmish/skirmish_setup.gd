@@ -255,7 +255,7 @@ func grid() -> CombatGrid:
 	var e := map_entry(map_id)
 	if e.is_empty():
 		return null
-	return CombatGrid.from_rows((e["map"] as Dictionary)["rows"] as Array)
+	return CombatGrid.from_rows((e["map"] as Dictionary)["rows"] as Array, (e["map"] as Dictionary).get("elevation", []) as Array)
 
 
 # --- Where everyone stands ------------------------------------------------------------------------

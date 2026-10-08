@@ -316,6 +316,8 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 			step *= extra_cost(c)   # crawling, dragging someone
 		if c.has_meta("jumping"):
 			step = 0
+		elif c.has_meta("jumping_down") and step >= 0:
+			step = CombatGrid.FEET   # over the edge: the fall is the cost (jump_down)
 		if step < 0 or step > c.movement_left:
 			break
 		var from := c.cell
@@ -678,10 +680,13 @@ func forced_move(target: Combatant, origin: Vector2, feet: int, toward: bool = f
 			elif not e.grid.in_bounds(cell) or e.grid.is_solid(cell) or (o != null and o != target and o != partner):
 				ok = false
 		var rise := e.grid.height(nxt) - e.grid.height(target.cell)
-		if not ok or (over == 0 and rise > CombatGrid.FEET):
+		# A cliff or ledge up stops the push; one down drops it. On natural ground a steep slope is pushed up or down
+		# like any other (CombatGrid.is_cliff).
+		var cliff := e.grid.is_cliff(target.cell, nxt)
+		if not ok or (over == 0 and rise > 0 and cliff):
 			break
 		var aloft := target.altitude > 0 and aloft_by(target) != ""
-		var falls := (over > 0 or rise < -CombatGrid.FEET) and not aloft
+		var falls := (over > 0 or (rise < 0 and cliff)) and not aloft
 		if falls and catches_itself(target):
 			break
 		e.events.append({"type": "move", "id": target.id, "from": target.cell, "to": nxt, "forced": true})
@@ -700,6 +705,48 @@ func forced_move(target: Combatant, origin: Vector2, feet: int, toward: bool = f
 		e.mounts._forced_mount_check(target)
 		e.grappling.check_range(target)
 	return moved
+
+
+# --- Jumping down -----------------------------------------------------------------------------------
+
+## Why `c` can't jump down into `dest` ("" if it can): a square beside it, lower across a cliff or ledge
+## (CombatGrid.is_cliff), with room for it, and 5 ft of movement left.
+func jump_down_why(c: Combatant, dest: Vector2i) -> String:
+	var e := enc()
+	var d := dest - c.cell
+	if c.size_cells != 1 or maxi(absi(d.x), absi(d.y)) != 1:
+		return "Choose the square below, next to you"
+	if e.grid.height(dest) >= e.grid.height(c.cell) or not e.grid.is_cliff(c.cell, dest):
+		return "Not a drop"
+	if e.grid.is_solid(dest) or not space_available(dest, c.size_cells, [c]):
+		return "No room down there"
+	if c.speed() <= 0:
+		return "Speed 0"
+	if c.movement_left < CombatGrid.FEET:
+		return "Needs 5 ft of movement"
+	return ""
+
+
+## Jumping down a cliff or ledge on purpose (owner, 2026-10-08): over the edge into the square below for 5 ft of
+## movement, then the fall (1d6 per 10 ft, 2024; Feather Fall and Slow Fall answer it). Leaving a foe's reach this way
+## provokes like any move.
+func jump_down(c: Combatant, dest: Vector2i) -> CombatResult:
+	var e := enc()
+	var why := e._turn_check(c)
+	if why == "":
+		why = jump_down_why(c, dest)
+	if why != "":
+		return CombatResult.fail(why)
+	var drop := e.grid.height(c.cell) - e.grid.height(dest)
+	c.set_meta("jumping_down", true)
+	var path: Array[Vector2i] = [c.cell, dest]
+	var r := _walk(c, path, 1, CombatResult.new(), {"willing": true})
+	return e.then(r, func() -> CombatResult:
+		c.remove_meta("jumping_down")
+		if c.cell == dest and c.is_alive():
+			e.log.add("move", "%s jumps down %d ft" % [c.name(), drop], c.id)
+			fall(c, drop, "Jumping down")
+		return r)
 
 
 # --- Falling ----------------------------------------------------------------------------------------
