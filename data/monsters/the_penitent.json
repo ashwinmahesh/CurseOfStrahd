@@ -1,0 +1,172 @@
+{
+  "id": "the_penitent",
+  "name": "The Penitent",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Frozen Pilgrims, docs/story/side_quests.md), built from the 2025 Monster Manual's frost giant: two great blows with reach, scaled to a CR 11 undead of fused, frozen pilgrims with a freezing embrace, legendary actions and Legendary Resistance. Drawn with the amber golem's sprite at Huge."
+  },
+  "size": "huge",
+  "type": "undead",
+  "tags": [
+    "boss",
+    "ice"
+  ],
+  "alignment": "neutral evil",
+  "art": "amber_golem",
+  "ac": 16,
+  "initiative": 0,
+  "hp": {
+    "average": 210,
+    "dice": "20d12+80"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 23,
+    "dex": 9,
+    "con": 21,
+    "int": 6,
+    "wis": 12,
+    "cha": 10
+  },
+  "saves": {
+    "con": 10,
+    "wis": 6
+  },
+  "immunities": [
+    "cold",
+    "poison"
+  ],
+  "resistances": [
+    "necrotic"
+  ],
+  "condition_immunities": [
+    "exhaustion",
+    "frightened",
+    "poisoned"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 11,
+  "languages": [],
+  "cr": 11,
+  "xp": 7200,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When the Penitent fails a saving throw, it can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "the_bargain",
+      "name": "The Bargain",
+      "action": "passive",
+      "summary": "Nine pilgrims asked the amber never to be cold again, and became the cold. It wants to be warm, and you are.",
+      "text": "The Penitent is what a vestige of the Amber Temple made of nine pilgrims who asked never to be cold again: their bodies, fused in ice around the one who led them. It goes for whatever is warmest.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "frozen_fist",
+          "count": 2
+        }
+      ],
+      "summary": "Two Frozen Fists.",
+      "text": "The Penitent makes two Frozen Fist attacks."
+    },
+    {
+      "id": "frozen_fist",
+      "name": "Frozen Fist",
+      "kind": "melee",
+      "attack": {
+        "bonus": 10,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 15,
+          "dice": "2d8+6",
+          "type": "bludgeoning"
+        },
+        {
+          "average": 4,
+          "dice": "1d8",
+          "type": "cold"
+        }
+      ],
+      "summary": "A fist of fused hands and ice, reach 10 ft.",
+      "text": "Hit: 15 (2d8 + 6) Bludgeoning damage plus 4 (1d8) Cold damage."
+    },
+    {
+      "id": "winters_embrace",
+      "name": "Winter's Embrace",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "con",
+        "dc": 16,
+        "success": "half"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 20
+      },
+      "targets": {
+        "range": 20
+      },
+      "damage": [
+        {
+          "average": 18,
+          "dice": "4d8",
+          "type": "cold"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "restrained",
+          "until": "source_turn_end"
+        }
+      ],
+      "summary": "Recharge 5-6: everything within 20 ft makes a DC 16 Con save: 4d8 Cold and Restrained (frozen to the ground) until the end of its next turn, half damage on a success.",
+      "text": "Constitution Saving Throw: DC 16, each creature within 20 feet of the Penitent. Failure: 18 (4d8) Cold damage, and the target has the Restrained condition until the end of the Penitent's next turn. Success: Half damage only."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "fist",
+        "name": "Fist",
+        "cost": 2,
+        "action": "frozen_fist",
+        "summary": "Makes one Frozen Fist attack."
+      },
+      {
+        "id": "grinding_step",
+        "name": "Grinding Step",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to its Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regions": [
+    "tsolenka_pass"
+  ],
+  "ai_profile": "brute",
+  "summary": "Nine frozen pilgrims fused into one kneeling giant of ice around the woman who led them, with a lamp still burning somewhere inside it. Its fists reach, its embrace freezes you where you stand, and it wants, more than anything, to be warm."
+}

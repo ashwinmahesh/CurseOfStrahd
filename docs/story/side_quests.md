@@ -392,6 +392,28 @@ down onto Pavel's roof; otherwise she lands in Krezk's goat pens.
 - Her eighth gift, which Clovin brings up to the wall: Boots of Levitation (rare). Afterwards she lands on Pavel's roof
   on Sundays, and Krezk's watchman has decided to be very calm about it.
 
+## The Tsolenka Pass (level 10)
+
+### The Frozen Pilgrims (`the_frozen_pilgrims`, narrative/tsolenka_pass/the_frozen_pilgrims.dialogue; batch 3)
+
+Sergeant Valcu of the dead Tsolenka watch is the pass's rumour-giver ("Heard anything interesting?" at the challenge,
+"Anything to report?" once the party has passed): forty-one years ago nine pilgrims from Vallaki went round his gate by
+the goat path to ask the amber never to be cold again, and their lamp is on the landing, in the ice. The ice of the
+gorge wall (prop `pilgrims_ice`) shows nine kneeling in a row, and Mother Ecaterina (new speaker) at the front with
+the lamp lit, alive. **Twist:** the amber answered them exactly: never to be cold again, by becoming the cold (Arcana
+DC 16: she's the knot the gift is tied to, and the cold has to go somewhere). **Escalation:** the last rites (Religion
+DC 14, or a cleric's) let all nine go quietly; breaking her out wakes the other eight fused into the Penitent.
+
+- **Boss: the Penitent** (data/monsters/the_penitent.json, `source.book: custom`, from the 2025 Monster Manual's frost
+  giant, drawn with the amber golem's sprite at Huge): Huge undead, AC 16, 210 HP, two frozen fists (reach 10), a
+  freezing embrace (recharge 5-6, DC 16, Restrained), Legendary Resistance (2/day), and a fist or a step between turns.
+  CR 11.
+- Fight `the_penitent` on the landing: level 10 the Penitent and 5 pilgrims' shadows (ghasts), 9,450 XP (the
+  autopilot wins 2 of 4 and loses three party members a fight); level 11 eight shadows; level 9 four; below 9 the
+  Penitent at 170 HP and three.
+- The rites: 400 gp of the pilgrims' offerings. Breaking her out: 500 gp, and her frosted lamp-pole with all the cold
+  in it, a Staff of Frost (very rare).
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -425,4 +447,5 @@ Wizard of Wines: the_black_row.dialogue in full (Davian, Adrian; companions' int
 picker lines (Andrei) and davian.dialogue's two new menu options. Batch 3, the
 crossroads: the_counts_huntsman.dialogue in full (new speaker the Huntsman; also Old Paraschiva and Gavril). Batch 3, the
 abbey: mothers_ninth_improvement.dialogue in full (new speaker Mother; also Clovin and Wren's interject), Pavel's new
-carver line and the watchman's new news line in Krezk (the roof).
+carver line and the watchman's new news line in Krezk (the roof). Batch 3, the
+Tsolenka Pass: the_frozen_pilgrims.dialogue in full (new speaker Mother Ecaterina; also Sergeant Valcu).
