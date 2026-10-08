@@ -448,3 +448,22 @@ once
 ~ search:watch_horn
 | Behind the winch, on its hook, the watch horn. Its mouth is cracked from the last time someone blew it too hard.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the drowned village as it is.
+
+~ examine:marina_white_statue
+| A statue of a young woman in white stone, standing on the only dry ground in Berez. The grass around her feet has been cut short, recently and with care. Nothing else here has been cared for in years.
+
+~ examine:berez_ruin_north
+| A house with no roof and half its walls, the black water standing in its doorway. A child's shoe is nailed above the door frame, for luck, the way they do it here. It didn't work.
+
+~ examine:causeway_bones
+| Where the logs of the causeway have rotted through, someone has mended the gaps with bones, laid crosswise and bound with reeds. Most of them are not animal bones.
+
+~ search:reed_mirror
+| Caught among the reed stems, a little hand mirror in a tin frame. {name} wipes the mud off it, and for a moment the face in it is not quite {name}'s own.
+once
+
+~ search:ruin_beam_tools
+| Under a fallen roof beam, a tinker's roll of tools, wrapped in oilcloth and forgotten when the water came up. {name} works it free.
+once

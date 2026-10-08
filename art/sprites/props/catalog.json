@@ -452,6 +452,12 @@
     ],
     "road_ambush_run": [
       "wall_low"
+    ],
+    "berez": [
+      "wall_low"
+    ],
+    "berez_run": [
+      "wall_low"
     ]
   },
   "difficult": {
@@ -965,7 +971,8 @@
       "wall": "dungeon/damp_brick"
     },
     "berez": {
-      "difficult": "marsh/marsh_mud"
+      "difficult": "marsh/marsh_mud",
+      "floor": "marsh/marsh_mud"
     },
     "berez_marsh_track": {
       "difficult": "marsh/marsh_mud"
