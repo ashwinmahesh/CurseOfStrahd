@@ -1,0 +1,86 @@
+{
+  "$id": "schedule.schema.json",
+  "title": "Schedule: things that happen on a day and an hour (F2, story/schedule.gd)",
+  "type": "object",
+  "required": [
+    "id",
+    "region",
+    "events"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "region": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "hour"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "hour": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 23
+          },
+          "minute": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 59
+          },
+          "every_days": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Every this many days from first_day (default every day)."
+          },
+          "first_day": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "location": {
+            "type": "string",
+            "description": "Where it plays; the party sees it only there. Empty: wherever the party is."
+          },
+          "when": {
+            "type": "string"
+          },
+          "once": {
+            "type": "boolean"
+          },
+          "here_only": {
+            "type": "boolean",
+            "description": "It waits for a day the party is at its location to see it."
+          },
+          "set": {
+            "type": "object",
+            "description": "Flags it sets when it happens, wherever the party is."
+          },
+          "narration": {
+            "type": "string",
+            "description": "A Narrator line when it happens where the party is."
+          },
+          "dialogue": {
+            "type": "string",
+            "description": "A conversation that starts when it happens where the party is."
+          }
+        }
+      }
+    }
+  }
+}

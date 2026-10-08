@@ -133,6 +133,18 @@ and drawn again from that on the next visit. `AtmosphereLand.build_ms` says what
     make capture SCENE=res://tools/capture/land_capture.tscn NAME=land/clay FRAMES=10 \
       LAND_SHOTS=crossroads LAND_CLAY=1     # the shaped ground in plain clay; LAND_NO_RELIEF=1 for without
 
+## The sky in the Modern finish
+
+Improvement Ideas W13, the sky half. Where the tilted camera looks out past everything (see Vistas below), the screen
+pass draws Barovia's sky (`strahd_post.gdshader` `sky_colour`, set by `Atmosphere._apply_sky` by the time of day,
+outdoors only): a gradient from the land's haze at the horizon up to the place's sky colour, a low ceiling of cloud
+drifting with the mood's cloud wind (never clear: at least 60% cover), lit from beneath towards the moon or the low
+sun, and the moon on the key light's bearing, low enough to be seen (`MOON_HEIGHT`), a disc glowing through thin cloud
+at night, paler at dusk and dawn, only a brighter patch by day (`MOON_SHOWS`). The mist past everything thins toward
+the horizon instead of painting the gaps between far trees, and as the camera tilts the depth of field and the
+vignette ease off so the sky and the vistas stay clear. Drawn in the screen pass, so it costs nothing in play, where
+the camera never sees above the horizon.
+
 ## Vistas in the Modern finish
 
 Improvement Ideas W13, the vista half (owner pick, 2026-10-07: "tilt up when zoomed out"). At its fixed 40° the play

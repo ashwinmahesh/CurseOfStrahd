@@ -95,7 +95,7 @@ func _vallaki(pledge_place: String, pledge_npc: String, prefer: Array[String], a
 	GoldenSaves.keep("vallaki", "test_phase4_exit")
 	var p: Array[String] = ["This is Ireena"]
 	p.append_array(prefer)
-	p.append_array(["We're ready. Let the festival begin."])
+	p.append_array(["We're ready. Let the festival begin.", "We'll wait for noon."])
 	bot.prefer.assign(p)
 	if not _ok(await bot.go_to(pledge_place), "reached %s" % pledge_place):
 		return {}

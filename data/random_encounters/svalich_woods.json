@@ -297,6 +297,77 @@
         }
       ],
       "text": "Bats pour out of the canopy like smoke, and under them the wolves come running."
+    },
+    {
+      "id": "strahds_eyes",
+      "weight": 2,
+      "when": "day and attention >= watched",
+      "once": true,
+      "dialogue": "strahd/attention:eyes_wolves"
+    },
+    {
+      "id": "strahds_wolves",
+      "weight": 2,
+      "when": "night and attention >= marked",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            23,
+            13
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            3,
+            5
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            13,
+            6
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            27,
+            7
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            15,
+            16
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            3,
+            14
+          ]
+        }
+      ],
+      "text": "Grey shapes come out of the dark in a line, too orderly for a hunting pack. Somebody sent them, and they know whom they were sent for."
     }
   ]
 }
