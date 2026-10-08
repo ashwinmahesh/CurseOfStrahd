@@ -6,6 +6,7 @@
 Narrator: On the only dry ground in Berez stands a young woman in white stone, her hands folded, her face turned toward the castle. Someone has scrubbed the moss from her. At her feet lie fresh black roses, and an iron grave-lamp, unlit.
 if guest:ireena and not flag.ireena_saw_marina
 set ireena_saw_marina
+cutscene marina_statue
 Narrator: Ireena stops at the foot of the mound. The statue has her face. Not a likeness: her face, the set of the jaw, the small frown.
 Ireena: I've never been here. I know I've never been here. So why do I know there are nine steps under that plinth?
 endif
@@ -44,6 +45,7 @@ Narrator: Nothing answers it but the frogs. For a while the statue's face looks 
 -> END
 endif
 Narrator: Out in the east, a shutter bangs. A scream comes across the reeds, thin and rising, the scream of someone who has seen a light where no light should be.
+cutscene lysaga_bowl
 Baba Lysaga [angry]: WHO LIT HER LAMP? Who lit that little cat's lamp? I'll have your eyes for candles!
 set lysaga_lured
 if not quest.the_witch_of_berez
@@ -54,6 +56,7 @@ combat lysaga_at_monument
 # ---------------------------------------------------------------- Marina's bier (prop in the vault)
 
 ~ bier
+cutscene marina_bier
 Narrator: She lies on a bier of white stone under a veil of lace, a girl of perhaps nineteen, with red hair braided over one shoulder. She looks asleep. She has looked asleep for a very long time. There is no smell at all.
 if guest:ireena
 Narrator: Ireena stands at the foot of the bier and doesn't move. The girl on it has her face, too.
@@ -97,6 +100,7 @@ approve liriel_dawnsong +1 godrick_pendlebrook +1: You straightened Marina's vei
 
 ~ strahd
 set berez_strahd_met
+cutscene marina_rose
 Narrator: Someone is standing at the foot of the statue with a black rose in his gloved hand. He lays it down with the others before he turns, so that you know you are less important than the rose.
 if flag.strahd_met
 Strahd: My guests. You do get everywhere. I am not sure I like you being here, of all places.

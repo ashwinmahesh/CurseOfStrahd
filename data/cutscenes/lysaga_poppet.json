@@ -1,0 +1,15 @@
+{
+  "id": "lysaga_poppet",
+  "title": "The Poppet over the Hearth",
+  "summary": "A red-haired rag doll with a thorn through its heart hangs over the witch's fire.",
+  "images": [
+    {
+      "image": "lysaga_poppet",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.45
+  ]
+}

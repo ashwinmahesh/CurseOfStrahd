@@ -1,0 +1,15 @@
+{
+  "id": "abbot_candles",
+  "title": "The Abbot Lights the Candles",
+  "summary": "The Abbot lights the candles with a fingertip and every flame leans toward him.",
+  "images": [
+    {
+      "image": "abbot_candles",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

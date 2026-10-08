@@ -7,6 +7,7 @@
 if flag.castle_dinner
 -> END
 endif
+cutscene dinner_organ
 Narrator: The organ stops in the middle of a phrase. The man at the keys closes the lid, gently, and turns on the bench.
 quest dinner_at_castle_ravenloft seated
 if flag.strahd_first_impression == "defiant"

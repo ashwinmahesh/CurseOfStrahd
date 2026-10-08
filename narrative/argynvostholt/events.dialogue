@@ -33,6 +33,7 @@ Narrator: They step aside, one to each verge, and let you pass. When you look ba
 
 ~ phantom_ride
 set phantom_ride_seen
+cutscene phantom_ride
 Narrator: Hooves on the road behind you, a great many of them, coming fast. You get off the track just in time.
 Narrator: Twenty riders go past in a column, grey as fog, lances up, every face turned toward the ridge. Not one of them looks at you.
 Narrator: They go round the bend, and the sound of them stops all at once, like a door shut on it.
@@ -48,6 +49,7 @@ Dead Knight: The Order marches when you march. Until then we walk the roads. Go 
 
 ~ beacon_light
 set beacon_light_seen
+cutscene beacon_road
 Narrator: The track crests a rise, and there it is on its ridge to the north: the beacon of Argynvostholt, burning silver, laying a pale road of light across the treetops toward the castle.
 Narrator: Somewhere in a farmhouse below the road, a shutter opens, and stays open.
 -> END

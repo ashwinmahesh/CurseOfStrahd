@@ -1,0 +1,16 @@
+{
+  "id": "castle_glimpse",
+  "title": "The Castle on Its Pillar",
+  "summary": "Castle Ravenloft on its pillar of rock above the valley, seen from the village.",
+  "images": [
+    {
+      "image": "castle_glimpse",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.6,
+    0.35
+  ],
+  "trigger": "examine:castle_glimpse"
+}

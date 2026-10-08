@@ -1,0 +1,19 @@
+{
+  "id": "strahd_camp",
+  "title": "Someone Is Watching the Camp",
+  "summary": "Strahd stands at the edge of the firelight, watching the party sleep.",
+  "images": [
+    {
+      "image": "strahd_camp",
+      "when": "guest:ireena"
+    },
+    {
+      "image": "strahd_camp_alone",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "roc_shadow",
+  "title": "The Roc's Shadow",
+  "summary": "A roc banks over the ridge, its shadow covering the road.",
+  "images": [
+    {
+      "image": "roc_shadow",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.35
+  ]
+}

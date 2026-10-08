@@ -10,6 +10,7 @@ Ireena: Then we will not make each other wait any longer.
 if guest:ismark
 Ismark: Go on, little sister. I will tell the village you were happy. It will even be true.
 endif
+cutscene ending_sergei
 Narrator: She steps into the pool, and the water takes the light and her with it. When the ripples settle, the surface shows only sky.
 interject class:cleric: Wherever that light went, it was going home.
 -> endings/strahd_destroyed:sunrise

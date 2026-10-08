@@ -23,6 +23,7 @@ endif
 ~ first
 set vladimir_met
 quest the_order_of_the_silver_dragon commander
+cutscene dead_feast
 Narrator: Dead knights sit along both sides of a long table under rotted banners, armoured and unmoving, as if a feast was called four centuries ago and nobody has been dismissed.
 Narrator: At the head, in a chair carved with a dragon's folded wings, sits the only one who turns his head.
 Vladimir: Living. In this hall. You will forgive me if I do not rise. I have been rising for four hundred years, and I find it overrated.
@@ -190,6 +191,7 @@ Vladimir: Fine words. The young lord had fine words too, the night a voice at th
 set order_fate = "ride"
 quest the_order_of_the_silver_dragon ride
 quest the_dark_beacon waiting
+cutscene order_rides
 Narrator: Swords come off the table and go back into scabbards that have not felt them in centuries. Somewhere in the house a door bangs open, and the cold that comes through it smells of horses that aren't there.
 interject name:liriel_dawnsong: Forty knights, riding for the dawn at last. I have prayed for far less, and been grateful.
 -> climax_end

@@ -1,0 +1,13 @@
+{
+  "id": "vr_tower",
+  "title": "The Tower on Lake Baratok",
+  "summary": "Van Richten's black tower on its rock in a still mountain lake.",
+  "images": [
+    {
+      "image": "vr_tower",
+      "when": "not flag.van_richten_reunited"
+    }
+  ],
+  "trigger": "enter:van_richtens_tower",
+  "once": true
+}

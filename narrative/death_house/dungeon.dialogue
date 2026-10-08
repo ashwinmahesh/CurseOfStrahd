@@ -60,6 +60,7 @@ Narrator: You lay the two small bundles in their two small crypts and slide the 
 if flag.death_house_children_riding
   Narrator: Two cold weights lift out of two of you, like children climbing down from a cart.
 endif
+cutscene death_house_children
 Narrator: Rose and Thorn stand beside their crypts, clearer than you have ever seen them, and very calm.
 Rose [smile]: It's quiet in here. Thank you. Thorn, say thank you.
 Thorn: Thank you. Don't go downstairs.
