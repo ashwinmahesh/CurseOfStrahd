@@ -1,0 +1,18 @@
+{
+  "id": "corvina",
+  "name": "Corvina",
+  "title": "The Doorkeeper",
+  "summary": "Mordenkainen's apprentice, who held the door against the count forty years ago so her master could get away, and was made one of his spawn for it. She keeps a crypt with no name in the castle's catacombs, and his doors.",
+  "portrait": "vampire_spawn",
+  "sprite": "vampire_spawn",
+  "attitude": "hostile",
+  "monster": "corvina",
+  "guest": false,
+  "tags": [
+    "undead",
+    "vampire_spawn",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "she/her"
+}

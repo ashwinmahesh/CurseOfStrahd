@@ -303,3 +303,18 @@ func test_the_grandsire_comes_over_krezks_wall() -> void:
 		root.queue_free()
 		root = null
 		await _frames(2)
+
+
+func test_corvina_stands_up_out_of_the_unnamed_crypt() -> void:
+	for level: int in [9, 10]:
+		for named: bool in [false, true]:
+			var flags: Array[String] = []
+			if named:
+				flags.append("corvina_named")
+			var v := await _boot("castle_ravenloft_catacombs", 23, level, flags)
+			await _fight(v, "corvina", ["Corvina, the Doorkeeper", "A Door-Warden"])
+			await _end(v)
+			assert_true(bool(GameState.story.get_flag("corvina_slain", false)))
+			root.queue_free()
+			root = null
+			await _frames(2)

@@ -1,0 +1,211 @@
+{
+  "id": "corvina",
+  "name": "Corvina, the Doorkeeper",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Unnamed Crypt, docs/story/side_quests.md), built from the 2025 Monster Manual's vampire spawn and mage: claws, an arcane bolt and a thunderous slam of force, scaled to CR 12 with regeneration, legendary actions and Legendary Resistance. Drawn with the vampire spawn's sprite."
+  },
+  "size": "medium",
+  "type": "undead",
+  "tags": [
+    "boss",
+    "vampire",
+    "wizard"
+  ],
+  "alignment": "neutral evil",
+  "art": "vampire_spawn",
+  "ac": 16,
+  "initiative": 4,
+  "hp": {
+    "average": 165,
+    "dice": "22d8+66"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 16,
+    "dex": 18,
+    "con": 16,
+    "int": 20,
+    "wis": 14,
+    "cha": 14
+  },
+  "saves": {
+    "dex": 8,
+    "int": 9,
+    "wis": 6
+  },
+  "skills": {
+    "arcana": 9,
+    "perception": 6,
+    "stealth": 8
+  },
+  "resistances": [
+    "necrotic"
+  ],
+  "condition_immunities": [
+    "charmed"
+  ],
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 16,
+  "languages": [
+    "Common"
+  ],
+  "cr": 12,
+  "xp": 8400,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When Corvina fails a saving throw, she can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "regeneration",
+      "name": "Regeneration",
+      "action": "special",
+      "summary": "Regains 10 HP at the start of her turn unless she took Radiant damage since her last turn.",
+      "text": "Corvina regains 10 Hit Points at the start of each of her turns. If she took Radiant damage since the start of her last turn, this trait doesn't work on that turn.",
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "claw",
+          "count": 1,
+          "or": [
+            "arcane_bolt"
+          ]
+        },
+        {
+          "action": "claw",
+          "count": 1,
+          "or": [
+            "arcane_bolt"
+          ]
+        }
+      ],
+      "summary": "Two attacks with Claw or Arcane Bolt in any mix.",
+      "text": "Corvina makes two attacks, using Claw or Arcane Bolt in any combination."
+    },
+    {
+      "id": "claw",
+      "name": "Claw",
+      "kind": "melee",
+      "attack": {
+        "bonus": 8,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 11,
+          "dice": "2d6+4",
+          "type": "slashing"
+        },
+        {
+          "average": 9,
+          "dice": "2d8",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "Cold fingers that leave the skin grey.",
+      "text": "Hit: 11 (2d6 + 4) Slashing damage plus 9 (2d8) Necrotic damage."
+    },
+    {
+      "id": "arcane_bolt",
+      "name": "Arcane Bolt",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 9,
+        "range": [
+          120,
+          120
+        ]
+      },
+      "damage": [
+        {
+          "average": 13,
+          "dice": "3d8",
+          "type": "force"
+        }
+      ],
+      "summary": "A bolt of force she learned forty years ago from the man who left her.",
+      "text": "Ranged Spell Attack: +9, range 120 ft. Hit: 13 (3d8) Force damage."
+    },
+    {
+      "id": "slam_the_door",
+      "name": "Slam the Door",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "con",
+        "dc": 17,
+        "success": "half"
+      },
+      "area": {
+        "shape": "cone",
+        "size": 30
+      },
+      "targets": {
+        "range": 30
+      },
+      "damage": [
+        {
+          "average": 22,
+          "dice": "5d8",
+          "type": "thunder"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "push",
+          "feet": 15
+        }
+      ],
+      "summary": "Recharge 5-6: a 30-ft cone of force like a door slamming; DC 17 Con save, 5d8 Thunder and pushed 15 ft, half damage on a success.",
+      "text": "Constitution Saving Throw: DC 17, each creature in a 30-foot Cone. Failure: 22 (5d8) Thunder damage, and the target is pushed up to 15 feet away from Corvina. Success: Half damage only."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "bolt",
+        "name": "Bolt",
+        "cost": 2,
+        "action": "arcane_bolt",
+        "summary": "Makes one Arcane Bolt attack."
+      },
+      {
+        "id": "step_through",
+        "name": "Step Through",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to her Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regions": [
+    "castle_ravenloft"
+  ],
+  "ai_profile": "spellcaster",
+  "regenerates": {
+    "hp": 10,
+    "stopped_by": [
+      "radiant"
+    ]
+  },
+  "summary": "Mordenkainen's apprentice, who held a door against the count forty years ago so her master could run, and has held his doors ever since as one of his spawn. Her claws chill, her bolts of force reach across a room, she slams the air shut like a door, and she knits back together unless the light gets into her."
+}
