@@ -208,3 +208,27 @@ func test_the_svalich_road_matches_its_words() -> void:
 	await _frames(1)
 	assert_true((camp.atmosphere.water.get_shader_parameter("deep") as Color).get_luminance() < 0.06, "black water")
 	camp.queue_free()
+
+
+## The Village of Barovia and Old Bonegrinder against their words (lane 28): smoke leaks from the mill on its bare
+## crag; the village has more of its people out by day.
+func test_old_bonegrinder_and_the_village() -> void:
+	var hill := _view("old_bonegrinder_hill")
+	await _frames(1)
+	var smoke := hill.board.find_children("Smoke", "GPUParticles3D", true, false)
+	assert_false(smoke.is_empty(), "smoke leaks from the mill")
+	var mill := hill.board.find_children("Model_windmill", "Node3D", true, false)
+	if not smoke.is_empty() and not mill.is_empty():
+		var a := (smoke[0] as Node3D).global_position
+		var b := (mill[0] as Node3D).global_position
+		print("  smoke at %s, mill at %s" % [a, b])
+		assert_true(Vector2(a.x - b.x, a.z - b.z).length() < 1.5, "at the mill's side")
+	hill.queue_free()
+	var village := _view("village_of_barovia")
+	await _frames(1)
+	var here: Array[String] = []
+	for s: Variant in village.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	for id: String in ["barovia_woodcutter", "barovia_widow"]:
+		assert_true(id in here, "%s is out by day" % id)
+	village.queue_free()

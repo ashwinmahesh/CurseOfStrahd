@@ -1,0 +1,18 @@
+{
+  "id": "barovia_widow",
+  "name": "Widow Ileana",
+  "title": "Mourner in the Churchyard",
+  "summary": "A widow in a grey hood who comes to the churchyard every day to tend her husband's grave, and talks to him more than to the living.",
+  "portrait": "apprentice_wizard",
+  "sprite": "apprentice_wizard",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}

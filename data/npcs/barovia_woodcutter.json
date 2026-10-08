@@ -1,0 +1,18 @@
+{
+  "id": "barovia_woodcutter",
+  "name": "Grigore",
+  "title": "Woodcutter of the Village of Barovia",
+  "summary": "A stooped woodcutter who hauls his firewood in from the edge of the trees before noon every day and is behind a barred door long before the light goes.",
+  "portrait": "commoner",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}

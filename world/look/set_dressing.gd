@@ -109,8 +109,8 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 					_take_square(board, root, cell)   # no wall beside it: it stands in place of the board's furniture there
 				_stand(board, root, art, cell, scale_)
 		"floor":
-			if on_wall_square:
-				_take_square(board, root, cell)
+			if on_wall_square or board.grid.has_flag(cell, CombatGrid.LOW):
+				_take_square(board, root, cell)   # it lies in place of the board's furniture there
 			var model := ModelPiece.for_art(board, art, ModelPiece.hash_cell(cell))
 			if model != "":
 				ModelPiece.stand(board, root, model, art, cell, null, 1.0, facing_yaw(spec))   # a 3D piece (docs/art/models.md)

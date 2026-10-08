@@ -8,7 +8,7 @@
       "################################",
       "#..............................#",
       "#..==..........##.....=........#",
-      "#...............#..............#",
+      "#..........=....#..............#",
       "#..............................#",
       "#.~~~..~~~~~.~~~~~..~~~~~.~~~~.#",
       "#..............................#",
@@ -100,6 +100,39 @@
       "label": "a tin behind the wayside shrine",
       "model": "satchel",
       "item": "restorative_ointment"
+    },
+    {
+      "id": "lane_stopped_handcart",
+      "cell": [
+        11,
+        3
+      ],
+      "kind": "examine",
+      "label": "A handcart with a broken wheel",
+      "model": "cart_broken",
+      "facing": "east"
+    },
+    {
+      "id": "lane_lost_doll",
+      "cell": [
+        17,
+        8
+      ],
+      "kind": "examine",
+      "label": "A doll in the ruts",
+      "model": "doll"
+    },
+    {
+      "id": "lane_ditch_knife",
+      "cell": [
+        27,
+        11
+      ],
+      "kind": "search",
+      "label": "Something in the ditch",
+      "model": "satchel",
+      "search_dc": 13,
+      "item": "dagger"
     }
   ],
   "encounters": [
