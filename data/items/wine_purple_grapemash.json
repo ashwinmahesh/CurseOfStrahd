@@ -1,0 +1,14 @@
+{
+  "id": "wine_purple_grapemash",
+  "name": "Purple Grapemash No. 3",
+  "source": {
+    "book": "CoS",
+    "note": "The Wizard of Wines' cheapest wine; price as the PHB's common wine."
+  },
+  "category": "consumable",
+  "weight_lb": 1.5,
+  "cost_gp": 0.2,
+  "stackable": true,
+  "summary": "A bottle of the Martikovs' everyday red: thin, sour and faintly purple.",
+  "text": "The wine every tavern in Barovia pours, when the carts come. It does nothing for you but warm you, and it barely does that."
+}

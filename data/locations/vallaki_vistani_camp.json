@@ -351,6 +351,14 @@
       "dialogue": "vallaki/vistani_camp:bluto",
       "approach": 6,
       "when": "quest.missing_arabelle == clue or (quest.missing_arabelle == asked and flag.arabelle_tracks_found)"
+    },
+    {
+      "npc": "vadoma",
+      "cell": [
+        20,
+        6
+      ],
+      "dialogue": "vallaki/vadoma:start"
     }
   ],
   "narration": {

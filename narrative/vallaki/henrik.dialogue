@@ -73,9 +73,22 @@ Henrik: The bones are in the small crate, by the back wall. I wrapped him in an 
 -> END
 
 ~ freed
+if flag.henrik_thanked
+Henrik: You again. Good. I mean that. Wood, nails, a box for a friend. Whatever you need.
+-> freed_menu
+endif
+set henrik_thanked
 Henrik: They're gone? Really gone? I slept last night. In a bed. Like a person.
 if flag.bones_recovered
 Henrik: And you took the saint back out of my storeroom. Good. I couldn't look at that crate. It was the only thing in there that made me feel better, and I couldn't look at it.
 endif
 Henrik: If you ever need a coffin, you'll have one for nothing. That's not a threat. I realise it sounds like one. It's the only gift I know how to give.
--> END
+-> freed_menu
+
+~ freed_menu
+* Show us what you've made. -> freed_wares
+* Goodbye. -> END
+
+~ freed_wares
+shop
+-> freed_menu

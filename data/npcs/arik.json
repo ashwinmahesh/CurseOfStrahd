@@ -20,5 +20,29 @@
     {
       "id": "room_modest"
     }
-  ]
+  ],
+  "shop": {
+    "sells": [
+      {
+        "id": "wine_purple_grapemash",
+        "qty": 2,
+        "if": "not flag.winery_wine_flows"
+      },
+      {
+        "id": "wine_purple_grapemash",
+        "qty": -1,
+        "if": "flag.winery_wine_flows"
+      },
+      {
+        "id": "wine_red_dragon_crush",
+        "qty": -1,
+        "if": "flag.winery_wine_flows"
+      }
+    ],
+    "buys": [
+      "consumable"
+    ],
+    "markup": 5.0,
+    "sell_rate": 0.25
+  }
 }
