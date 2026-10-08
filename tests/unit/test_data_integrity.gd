@@ -19,7 +19,7 @@ func test_phase_1_content_counts() -> void:
 	assert_eq(c.all("feats").filter(func(f: Dictionary) -> bool: return str(f["category"]) == "dark_gift").size(), 9, "nine Ravenloft Dark Gifts")
 	assert_eq((phb_only.call(c.all("backgrounds")) as Array).size(), 16)
 	assert_eq((rthw_only.call(c.all("backgrounds")) as Array).size(), 4, "Haunted One, Investigator, Mist Wanderer, Spirit Medium")
-	assert_eq(c.table("monsters").size(), 131, "76 from Phase 1, 36 that magic items summon or become, Death House's mimic, Castle Ravenloft's 12 (P6-02) and the side quests' six bosses: Old Greytooth, the Bone Marshal, the Rag Queen, Granny Ash, the Vine Mother and the Count's Huntsman")
+	assert_eq(c.table("monsters").size(), 132, "76 from Phase 1, 36 that magic items summon or become, Death House's mimic, Castle Ravenloft's 12 (P6-02) and the side quests' bosses: Old Greytooth, the Bone Marshal, the Rag Queen, Granny Ash, the Vine Mother, the Count's Huntsman and the Tinker's Wagon")
 	assert_eq(c.table("pregens").size(), 10, "the six on the roster and the first four, kept for older saves and tests")
 	assert_true(c.table("feats").size() >= 70)
 	assert_true(c.table("spells").size() >= 170)

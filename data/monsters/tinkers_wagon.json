@@ -1,0 +1,197 @@
+{
+  "id": "tinkers_wagon",
+  "name": "The Tinker's Wagon",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Tinker's Wagon, docs/story/side_quests.md), built from the 2025 Monster Manual's mimic: sticky pseudopods and an acid bite, scaled to a Huge mimic of CR 7 with a spray of trinkets and legendary actions. Drawn with the mimic's sprite at Huge."
+  },
+  "size": "huge",
+  "type": "monstrosity",
+  "tags": [
+    "boss",
+    "mimic",
+    "shapechanger"
+  ],
+  "alignment": "neutral",
+  "art": "mimic",
+  "ac": 14,
+  "initiative": 1,
+  "hp": {
+    "average": 171,
+    "dice": "18d12+54"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 20,
+    "dex": 12,
+    "con": 17,
+    "int": 6,
+    "wis": 13,
+    "cha": 8
+  },
+  "saves": {
+    "con": 6
+  },
+  "skills": {
+    "stealth": 7
+  },
+  "immunities": [
+    "acid"
+  ],
+  "condition_immunities": [
+    "prone"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 11,
+  "languages": [],
+  "cr": 7,
+  "xp": 2900,
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (1/Day)",
+      "action": "special",
+      "summary": "Once a day, a failed saving throw becomes a success.",
+      "text": "When the Wagon fails a saving throw, it can choose to succeed instead, once a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "false_appearance",
+      "name": "False Appearance",
+      "action": "passive",
+      "summary": "Until it moves, it looks exactly like a tinker's painted wagon.",
+      "text": "While the Wagon is motionless, it is indistinguishable from an ordinary tinker's wagon, painted green, with pots on the sides and a man at the front selling things.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "pseudopod",
+          "count": 2
+        },
+        {
+          "action": "bite",
+          "count": 1
+        }
+      ],
+      "summary": "Two Pseudopods and a Bite.",
+      "text": "The Wagon makes two Pseudopod attacks and one Bite attack."
+    },
+    {
+      "id": "pseudopod",
+      "name": "Pseudopod",
+      "kind": "melee",
+      "attack": {
+        "bonus": 8,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 12,
+          "dice": "2d6+5",
+          "type": "bludgeoning"
+        },
+        {
+          "average": 4,
+          "dice": "1d8",
+          "type": "acid"
+        }
+      ],
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 15,
+          "max_size": "large",
+          "limit": 2
+        }
+      ],
+      "summary": "A sticky lash, reach 10 ft; a Large or smaller target is Grappled (escape DC 15).",
+      "text": "Hit: 12 (2d6 + 5) Bludgeoning damage plus 4 (1d8) Acid damage. If the target is Large or smaller, it has the Grappled condition (escape DC 15). The Wagon can hold two creatures this way."
+    },
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 8,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 14,
+          "dice": "2d8+5",
+          "type": "piercing"
+        },
+        {
+          "average": 9,
+          "dice": "2d8",
+          "type": "acid"
+        }
+      ],
+      "summary": "The tailboard opens on teeth.",
+      "text": "Hit: 14 (2d8 + 5) Piercing damage plus 9 (2d8) Acid damage."
+    },
+    {
+      "id": "spill",
+      "name": "Spill the Trinkets",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "dex",
+        "dc": 14,
+        "success": "half"
+      },
+      "area": {
+        "shape": "cone",
+        "size": 20
+      },
+      "targets": {
+        "range": 20
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "bludgeoning"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "restrained",
+          "until": "source_turn_end"
+        }
+      ],
+      "summary": "Recharge 5-6: a 20-ft cone of sticky pots, dolls and music boxes; DC 14 Dex save, 3d6 Bludgeoning and Restrained until the end of its next turn, half damage on a success.",
+      "text": "Dexterity Saving Throw: DC 14, each creature in a 20-foot Cone. Failure: 10 (3d6) Bludgeoning damage, and the target has the Restrained condition until the end of the Wagon's next turn. Success: Half damage only."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "lash",
+        "name": "Lash",
+        "cost": 2,
+        "action": "pseudopod",
+        "summary": "Makes one Pseudopod attack."
+      }
+    ]
+  },
+  "legendary_resistance": 1,
+  "regions": [
+    "svalich_road"
+  ],
+  "ai_profile": "brute",
+  "summary": "A tinker's green painted wagon on the Old Svalich Road that is a mimic the size of a wagon, and has been for years. It keeps the tinker alive at the front to sell its bait, and comes for whoever buys. Its lashes stick, its tailboard bites, and it spits its trinkets at you."
+}

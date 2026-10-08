@@ -182,6 +182,26 @@ been turned (Intimidation DC 14) or left at the inn.
   party members on the way. Attention mark `greytooth` (+1).
 - Yevgeni pays the whole bounty, 300 gp, and gives his father's Horn of Valhalla, Silver (rare).
 
+## The River Ivlis crossroads by day (level 5)
+
+### The Tinker's Wagon (`the_tinkers_wagon`, narrative/svalich_road/the_tinkers_wagon.dialogue; batch 4)
+
+Zora's count at the Tser Pool camp gets a new line: Iosif, a tinker who used to be one of theirs, sells pots and Death
+House trinkets from a green wagon at the crossroads, four travellers who bought from him never came past the camp, and
+the wagon gets fatter. Iosif (new NPC, at the crossroads from 8:00 to 18:00) never gets down off the board. **Twist:**
+Insight DC 13 catches him mouthing "don't"; Perception DC 14 sees wheels with no joins, a twitching shaft and a chain
+from his ankle into the boards that isn't iron. The wagon is a mimic the size of a wagon, and Iosif has been its bait
+for seven years. **Escalation:** once something's been seen, go for the chain, and the wagon stands up off its wheels.
+
+- **Boss: the Tinker's Wagon** (data/monsters/tinkers_wagon.json, `source.book: custom`, from the 2025 Monster
+  Manual's mimic, drawn with its sprite at Huge): Huge monstrosity, AC 14, 171 HP, two sticky pseudopods (reach 10,
+  Grappled) and an acid bite, a spray of trinkets (recharge 5-6, Restrained), Legendary Resistance (1/day) and one
+  more lash between turns. CR 7.
+- Fight `tinkers_wagon` at the crossroads: level 5 the Wagon and 2 trinkets (mimics), 3,800 XP (the autopilot wins 2
+  of 4 and loses three party members a fight); level 6 three trinkets; below 5 the Wagon at 110 HP and one.
+- The belly: 300 gp of travellers' money and the gem the thing kept to see with, a Gem of Seeing (rare). Iosif goes
+  back to the Tser Pool camp and sits on the ground.
+
 ## The River Ivlis crossroads at night (level 8)
 
 ### The Count's Huntsman (`the_counts_huntsman`, narrative/svalich_road/the_counts_huntsman.dialogue; batch 3)
@@ -425,4 +445,5 @@ Wizard of Wines: the_black_row.dialogue in full (Davian, Adrian; companions' int
 picker lines (Andrei) and davian.dialogue's two new menu options. Batch 3, the
 crossroads: the_counts_huntsman.dialogue in full (new speaker the Huntsman; also Old Paraschiva and Gavril). Batch 3, the
 abbey: mothers_ninth_improvement.dialogue in full (new speaker Mother; also Clovin and Wren's interject), Pavel's new
-carver line and the watchman's new news line in Krezk (the roof).
+carver line and the watchman's new news line in Krezk (the roof). Batch 4, the
+crossroads by day: the_tinkers_wagon.dialogue in full (new speaker Iosif the Tinker; also Zora's three new lines).

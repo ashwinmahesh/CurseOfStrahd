@@ -1,0 +1,17 @@
+{
+  "id": "tinker_iosif",
+  "name": "Iosif the Tinker",
+  "title": "A Vistani Tinker",
+  "summary": "A thin Vistani tinker with a green painted wagon of pots and trinkets on the Old Svalich Road, who talks very fast and very cheerfully and never steps down from the wagon's board. His left ankle is chained to it with something that isn't iron.",
+  "portrait": "vistana",
+  "sprite": "vistana",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him"
+}

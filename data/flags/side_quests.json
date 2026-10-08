@@ -660,6 +660,26 @@
       "id": "mother_flown",
       "type": "bool",
       "summary": "Mother flew down the mountain to Krezk (Mother's Ninth Improvement)."
+    },
+    {
+      "id": "tinker_met",
+      "type": "bool",
+      "summary": "The party met Iosif the Tinker at his wagon by the crossroads (The Tinker's Wagon)."
+    },
+    {
+      "id": "tinker_seen",
+      "type": "bool",
+      "summary": "The party watched Iosif closely while he sold (The Tinker's Wagon)."
+    },
+    {
+      "id": "wagon_seen",
+      "type": "bool",
+      "summary": "The party looked closely at Iosif's wagon (The Tinker's Wagon)."
+    },
+    {
+      "id": "wagon_slain",
+      "type": "bool",
+      "summary": "The Tinker's Wagon, a mimic the size of a wagon, is dead at the crossroads (The Tinker's Wagon)."
     }
   ]
 }

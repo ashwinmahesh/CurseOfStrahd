@@ -91,6 +91,12 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Big Tobar, Tser Pool | Efficient Quiver (uncommon) | Gift: once his son is home (Called by Name, docs/story/side_quests.md) |
 | ✅ | Radu, Tser Pool | Rod of the Pact Keeper, +1 (uncommon) | Gift: once the carriage's escort is beaten (The Grey Mare, docs/story/side_quests.md) |
 
+## The crossroads by day (side quest, level 5)
+
+| | Where | Item | How |
+|---|---|---|---|
+| ✅ | The River Ivlis crossroads, the Wagon's belly | Gem of Seeing (rare) | Hoard: once the Tinker's Wagon is dead (The Tinker's Wagon, docs/story/side_quests.md) |
+
 ## The crossroads at night (side quest, level 8)
 
 | | Where | Item | How |

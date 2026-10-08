@@ -122,7 +122,7 @@ Zora: And every night after midnight, riders go east along the road toward the g
 elif flag.bone_marshal_beaten
 Zora: No riders, these three nights. Twelve nights in a row I counted none. I miss them, a little. They were very regular.
 endif
--> END
+-> svalich_road/the_tinkers_wagon:zora_news
 
 # Lane 28 (2026-10-08, "more people walking around and doing things"): Lavinia dancing on the plank stage, Iancu
 # throwing knives at a stump, Old Marin skinning a deer by the trees, and the camp dog. Unvoiced for now.
