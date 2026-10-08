@@ -481,9 +481,15 @@ func _footprints() -> void:
 	var members := got_members as Array
 	var tokens := got_tokens as Dictionary
 	for cb: Variant in members:
+		if not is_instance_valid(cb):
+			continue
 		var id := str((cb as Object).get("id"))
-		var tok := tokens.get(id) as Node3D
-		if tok == null or not is_instance_valid(tok) or not tok.is_visible_in_tree():
+		# A fight rebuilds the tokens: one may be freed by now, and a freed one can't be cast.
+		var raw: Variant = tokens.get(id)
+		if not is_instance_valid(raw) or not (raw is Node3D):
+			continue
+		var tok := raw as Node3D
+		if not tok.is_visible_in_tree():
 			continue
 		var at := tok.global_position
 		var last := _last_step.get(id, []) as Array
