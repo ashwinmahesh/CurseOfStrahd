@@ -1,8 +1,9 @@
 class_name CutsceneView
 extends Control
-## A story cutscene's picture (story/cutscenes.gd; docs/ui/cutscenes.md) filling the screen, with a caption under it:
-## the narrator's words in the book's italic, or a speaker's name over their line. The picture fades up out of black
-## and closes in very slowly on its focus, so a still frame feels alive. A Skip button sits at the top right; Esc in the
+## A story cutscene's picture (story/cutscenes.gd; docs/ui/cutscenes.md) as large as the screen allows without cropping
+## any of it, black bars filling the rest (owner, 2026-10-08: fullscreen cut off the top), with a caption under it: the
+## narrator's words in the book's italic, or a speaker's name over their line. The picture fades up out of black and
+## stays whole: no slow push-in, which would crop it again. A Skip button sits at the top right; Esc in the
 ## owner (CutscenePlayer, or DialogueUI during a conversation) pauses it with Resume and Skip. Clicks and keys are the
 ## owner's to handle: the view only reports a click on the picture.
 
@@ -11,9 +12,6 @@ signal skip_requested
 ## A left click on the picture while it isn't paused.
 signal clicked
 
-## The slow push-in: the picture grows by this much over this long.
-const PUSH_SCALE := 1.06
-const PUSH_SECONDS := 28.0
 const FADE_SECONDS := 0.8
 ## The caption's width at most, centred on the screen.
 const CAPTION_WIDTH := 1240.0
@@ -24,7 +22,7 @@ var image_path := ""
 var captioning := false
 var paused := false
 var _focus := Vector2(0.5, 0.5)
-var _push: Tween
+var _fade: Tween
 var _caption: VBoxContainer
 var _name: Label
 var _text: RichTextLabel
@@ -51,7 +49,7 @@ func _ready() -> void:
 	art.name = "Art"
 	art.set_anchors_preset(Control.PRESET_FULL_RECT)
 	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED   # the whole picture, letterboxed or pillarboxed in black
 	art.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	art.resized.connect(func() -> void: art.pivot_offset = art.size * _focus)
@@ -125,7 +123,8 @@ func _build_pause() -> void:
 	add_child(_pause)
 
 
-## Shows `path` (a res:// picture), fading up from black or from the picture before, and starts its slow push-in.
+## Shows `path` (a res:// picture), fading up from black or from the picture before. `focus` (the picture's point of
+## interest, data `focus`) is kept as the pivot.
 func show_image(path: String, focus: Vector2 = Vector2(0.5, 0.5)) -> void:
 	if path == image_path:
 		return
@@ -134,17 +133,15 @@ func show_image(path: String, focus: Vector2 = Vector2(0.5, 0.5)) -> void:
 	art.texture = load(path) as Texture2D if ResourceLoader.exists(path) else null
 	art.pivot_offset = art.size * _focus
 	art.scale = Vector2.ONE
-	if _push != null:
-		_push.kill()
-		_push = null
+	if _fade != null:
+		_fade.kill()
+		_fade = null
 	if not UiMotion.on():
 		art.modulate.a = 1.0
 		return
 	art.modulate.a = 0.0
-	_push = UiMotion.tween_for(art)
-	_push.tween_property(art, "modulate:a", 1.0, FADE_SECONDS).set_ease(Tween.EASE_OUT)
-	_push.parallel().tween_property(art, "scale", Vector2.ONE * PUSH_SCALE, PUSH_SECONDS) \
-		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	_fade = UiMotion.tween_for(art)
+	_fade.tween_property(art, "modulate:a", 1.0, FADE_SECONDS).set_ease(Tween.EASE_OUT)
 
 
 ## The caption under the picture: `speaker` over `bbcode` ("" for the narrator, whose words are already italic).
@@ -167,11 +164,21 @@ func show_caption(on: bool) -> void:
 func set_paused(on: bool) -> void:
 	paused = on
 	_pause.visible = on
-	if _push != null and _push.is_valid():
+	if _fade != null and _fade.is_valid():
 		if on:
-			_push.pause()
+			_fade.pause()
 		else:
-			_push.play()
+			_fade.play()
+
+
+## Where the picture is drawn on the screen: the whole of it, as large as fits (tests and captures).
+func picture_rect() -> Rect2:
+	if art.texture == null:
+		return Rect2()
+	var tex := art.texture.get_size()
+	var k := minf(art.size.x / tex.x, art.size.y / tex.y)
+	var shown := tex * k * art.scale
+	return Rect2(art.global_position + (art.size - shown) / 2.0, shown)
 
 
 ## Fades the whole view out, then calls `done` (at once without motion).
