@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://djhtpxyfjtomk"
-path="res://.godot/imported/abbot_holds_hand.jpg-71b81a87b52a1873d18aa9fb91ed4307.ctex"
+path.bptc="res://.godot/imported/abbot_holds_hand.jpg-71b81a87b52a1873d18aa9fb91ed4307.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/abbot_holds_hand.jpg"
-dest_files=["res://.godot/imported/abbot_holds_hand.jpg-71b81a87b52a1873d18aa9fb91ed4307.ctex"]
+dest_files=["res://.godot/imported/abbot_holds_hand.jpg-71b81a87b52a1873d18aa9fb91ed4307.bptc.ctex"]
 
 [params]
 

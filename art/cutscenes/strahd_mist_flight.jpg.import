@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bupn3g15bdeh"
-path="res://.godot/imported/strahd_mist_flight.jpg-c28a2ae3c00f0e7a9d36882e1ef87978.ctex"
+path.bptc="res://.godot/imported/strahd_mist_flight.jpg-c28a2ae3c00f0e7a9d36882e1ef87978.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/strahd_mist_flight.jpg"
-dest_files=["res://.godot/imported/strahd_mist_flight.jpg-c28a2ae3c00f0e7a9d36882e1ef87978.ctex"]
+dest_files=["res://.godot/imported/strahd_mist_flight.jpg-c28a2ae3c00f0e7a9d36882e1ef87978.bptc.ctex"]
 
 [params]
 

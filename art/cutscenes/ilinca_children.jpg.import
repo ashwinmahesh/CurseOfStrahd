@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bc1vdlnfwq5hk"
-path="res://.godot/imported/ilinca_children.jpg-8ee3182626c6a87efa04a806c9515a19.ctex"
+path.bptc="res://.godot/imported/ilinca_children.jpg-8ee3182626c6a87efa04a806c9515a19.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/ilinca_children.jpg"
-dest_files=["res://.godot/imported/ilinca_children.jpg-8ee3182626c6a87efa04a806c9515a19.ctex"]
+dest_files=["res://.godot/imported/ilinca_children.jpg-8ee3182626c6a87efa04a806c9515a19.bptc.ctex"]
 
 [params]
 

@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cjpu7gsceu5bf"
-path="res://.godot/imported/lysaga_poppet.jpg-b737d89fa61a5fb17db8deb6474b0cc3.ctex"
+path.bptc="res://.godot/imported/lysaga_poppet.jpg-b737d89fa61a5fb17db8deb6474b0cc3.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/lysaga_poppet.jpg"
-dest_files=["res://.godot/imported/lysaga_poppet.jpg-b737d89fa61a5fb17db8deb6474b0cc3.ctex"]
+dest_files=["res://.godot/imported/lysaga_poppet.jpg-b737d89fa61a5fb17db8deb6474b0cc3.bptc.ctex"]
 
 [params]
 

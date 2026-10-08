@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bgtkqvbr4clgr"
-path="res://.godot/imported/strahd_asleep.jpg-7d5b0f23d2ea740ad6d1fc73871337d2.ctex"
+path.bptc="res://.godot/imported/strahd_asleep.jpg-7d5b0f23d2ea740ad6d1fc73871337d2.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/strahd_asleep.jpg"
-dest_files=["res://.godot/imported/strahd_asleep.jpg-7d5b0f23d2ea740ad6d1fc73871337d2.ctex"]
+dest_files=["res://.godot/imported/strahd_asleep.jpg-7d5b0f23d2ea740ad6d1fc73871337d2.bptc.ctex"]
 
 [params]
 

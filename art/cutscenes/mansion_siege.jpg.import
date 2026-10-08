@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bdbanp5s0gmlk"
-path="res://.godot/imported/mansion_siege.jpg-9117df05af20e4dac9e19dd4c933ee1f.ctex"
+path.bptc="res://.godot/imported/mansion_siege.jpg-9117df05af20e4dac9e19dd4c933ee1f.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/mansion_siege.jpg"
-dest_files=["res://.godot/imported/mansion_siege.jpg-9117df05af20e4dac9e19dd4c933ee1f.ctex"]
+dest_files=["res://.godot/imported/mansion_siege.jpg-9117df05af20e4dac9e19dd4c933ee1f.bptc.ctex"]
 
 [params]
 

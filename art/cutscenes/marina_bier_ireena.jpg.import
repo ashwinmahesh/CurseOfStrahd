@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://8ydykfqx8anq"
-path="res://.godot/imported/marina_bier_ireena.jpg-c4a32fbe643bfbdb1281b15ec2a23f30.ctex"
+path.bptc="res://.godot/imported/marina_bier_ireena.jpg-c4a32fbe643bfbdb1281b15ec2a23f30.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/marina_bier_ireena.jpg"
-dest_files=["res://.godot/imported/marina_bier_ireena.jpg-c4a32fbe643bfbdb1281b15ec2a23f30.ctex"]
+dest_files=["res://.godot/imported/marina_bier_ireena.jpg-c4a32fbe643bfbdb1281b15ec2a23f30.bptc.ctex"]
 
 [params]
 

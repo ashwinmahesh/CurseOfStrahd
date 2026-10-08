@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c7y0xb35sgdpg"
-path="res://.godot/imported/krezk_wall.jpg-8d2832cb27530773bc063a3063e10aea.ctex"
+path.bptc="res://.godot/imported/krezk_wall.jpg-8d2832cb27530773bc063a3063e10aea.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/krezk_wall.jpg"
-dest_files=["res://.godot/imported/krezk_wall.jpg-8d2832cb27530773bc063a3063e10aea.ctex"]
+dest_files=["res://.godot/imported/krezk_wall.jpg-8d2832cb27530773bc063a3063e10aea.bptc.ctex"]
 
 [params]
 

@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cm6yjdr0ax24s"
-path="res://.godot/imported/keepers_ravens.jpg-eb5e839ed3026f175df5c8bdc2192eb8.ctex"
+path.bptc="res://.godot/imported/keepers_ravens.jpg-eb5e839ed3026f175df5c8bdc2192eb8.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/keepers_ravens.jpg"
-dest_files=["res://.godot/imported/keepers_ravens.jpg-eb5e839ed3026f175df5c8bdc2192eb8.ctex"]
+dest_files=["res://.godot/imported/keepers_ravens.jpg-eb5e839ed3026f175df5c8bdc2192eb8.bptc.ctex"]
 
 [params]
 

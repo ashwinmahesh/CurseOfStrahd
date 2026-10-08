@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cxg26i18xyrhg"
-path="res://.godot/imported/kiril_eyes.jpg-5a021012c662d1c9d5d4259659966759.ctex"
+path.bptc="res://.godot/imported/kiril_eyes.jpg-5a021012c662d1c9d5d4259659966759.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/kiril_eyes.jpg"
-dest_files=["res://.godot/imported/kiril_eyes.jpg-5a021012c662d1c9d5d4259659966759.ctex"]
+dest_files=["res://.godot/imported/kiril_eyes.jpg-5a021012c662d1c9d5d4259659966759.bptc.ctex"]
 
 [params]
 

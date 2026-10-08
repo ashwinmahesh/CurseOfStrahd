@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://w65ipou0nsvp"
-path="res://.godot/imported/locket_chair.jpg-44f0ab4410b11cce0ebd05549a218b10.ctex"
+path.bptc="res://.godot/imported/locket_chair.jpg-44f0ab4410b11cce0ebd05549a218b10.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/locket_chair.jpg"
-dest_files=["res://.godot/imported/locket_chair.jpg-44f0ab4410b11cce0ebd05549a218b10.ctex"]
+dest_files=["res://.godot/imported/locket_chair.jpg-44f0ab4410b11cce0ebd05549a218b10.bptc.ctex"]
 
 [params]
 

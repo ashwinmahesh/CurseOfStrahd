@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhv3kq04ndl57"
-path="res://.godot/imported/elvir_burial.jpg-e0ca1bbdeb8d995885d3745238b35047.ctex"
+path.bptc="res://.godot/imported/elvir_burial.jpg-e0ca1bbdeb8d995885d3745238b35047.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/elvir_burial.jpg"
-dest_files=["res://.godot/imported/elvir_burial.jpg-e0ca1bbdeb8d995885d3745238b35047.ctex"]
+dest_files=["res://.godot/imported/elvir_burial.jpg-e0ca1bbdeb8d995885d3745238b35047.bptc.ctex"]
 
 [params]
 

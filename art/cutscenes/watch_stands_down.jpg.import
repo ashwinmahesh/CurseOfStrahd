@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://gqlpesui48pg"
-path="res://.godot/imported/watch_stands_down.jpg-baaa00bb2017e7efc83a017946565a7c.ctex"
+path.bptc="res://.godot/imported/watch_stands_down.jpg-baaa00bb2017e7efc83a017946565a7c.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/watch_stands_down.jpg"
-dest_files=["res://.godot/imported/watch_stands_down.jpg-baaa00bb2017e7efc83a017946565a7c.ctex"]
+dest_files=["res://.godot/imported/watch_stands_down.jpg-baaa00bb2017e7efc83a017946565a7c.bptc.ctex"]
 
 [params]
 

@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dr8e854kni3o3"
-path="res://.godot/imported/izek_doll.jpg-a9a62894b1f3003383feab0f96692e6a.ctex"
+path.bptc="res://.godot/imported/izek_doll.jpg-a9a62894b1f3003383feab0f96692e6a.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/izek_doll.jpg"
-dest_files=["res://.godot/imported/izek_doll.jpg-a9a62894b1f3003383feab0f96692e6a.ctex"]
+dest_files=["res://.godot/imported/izek_doll.jpg-a9a62894b1f3003383feab0f96692e6a.bptc.ctex"]
 
 [params]
 

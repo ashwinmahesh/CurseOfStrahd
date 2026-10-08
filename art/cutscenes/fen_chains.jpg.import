@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://5xnk6oeaw15u"
-path="res://.godot/imported/fen_chains.jpg-a86ef569e6a8ddc7d72b93ed37826766.ctex"
+path.bptc="res://.godot/imported/fen_chains.jpg-a86ef569e6a8ddc7d72b93ed37826766.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/fen_chains.jpg"
-dest_files=["res://.godot/imported/fen_chains.jpg-a86ef569e6a8ddc7d72b93ed37826766.ctex"]
+dest_files=["res://.godot/imported/fen_chains.jpg-a86ef569e6a8ddc7d72b93ed37826766.bptc.ctex"]
 
 [params]
 

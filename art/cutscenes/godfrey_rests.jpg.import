@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ce1wgtfvfe4ke"
-path="res://.godot/imported/godfrey_rests.jpg-f374e4c49ec5d46758653820c91e74c7.ctex"
+path.bptc="res://.godot/imported/godfrey_rests.jpg-f374e4c49ec5d46758653820c91e74c7.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/godfrey_rests.jpg"
-dest_files=["res://.godot/imported/godfrey_rests.jpg-f374e4c49ec5d46758653820c91e74c7.ctex"]
+dest_files=["res://.godot/imported/godfrey_rests.jpg-f374e4c49ec5d46758653820c91e74c7.bptc.ctex"]
 
 [params]
 

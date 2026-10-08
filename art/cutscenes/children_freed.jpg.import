@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cc7i3wni2wbi3"
-path="res://.godot/imported/children_freed.jpg-a01f25e24eb57d4e42be568bb66cbdc2.ctex"
+path.bptc="res://.godot/imported/children_freed.jpg-a01f25e24eb57d4e42be568bb66cbdc2.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/children_freed.jpg"
-dest_files=["res://.godot/imported/children_freed.jpg-a01f25e24eb57d4e42be568bb66cbdc2.ctex"]
+dest_files=["res://.godot/imported/children_freed.jpg-a01f25e24eb57d4e42be568bb66cbdc2.bptc.ctex"]
 
 [params]
 

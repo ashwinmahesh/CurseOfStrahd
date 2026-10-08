@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cni1whbkrinwx"
-path="res://.godot/imported/godfrey_steps.jpg-6c6d40fbcf3b81d75b511ed08082d62e.ctex"
+path.bptc="res://.godot/imported/godfrey_steps.jpg-6c6d40fbcf3b81d75b511ed08082d62e.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/godfrey_steps.jpg"
-dest_files=["res://.godot/imported/godfrey_steps.jpg-6c6d40fbcf3b81d75b511ed08082d62e.ctex"]
+dest_files=["res://.godot/imported/godfrey_steps.jpg-6c6d40fbcf3b81d75b511ed08082d62e.bptc.ctex"]
 
 [params]
 

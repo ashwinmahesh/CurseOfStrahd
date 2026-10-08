@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c6go7a5vy6md2"
-path="res://.godot/imported/doru_rest.jpg-4841a2da37939246782fdd9834c806ac.ctex"
+path.bptc="res://.godot/imported/doru_rest.jpg-4841a2da37939246782fdd9834c806ac.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/doru_rest.jpg"
-dest_files=["res://.godot/imported/doru_rest.jpg-4841a2da37939246782fdd9834c806ac.ctex"]
+dest_files=["res://.godot/imported/doru_rest.jpg-4841a2da37939246782fdd9834c806ac.bptc.ctex"]
 
 [params]
 

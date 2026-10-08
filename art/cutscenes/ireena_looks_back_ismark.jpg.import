@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c2pujtii4as8m"
-path="res://.godot/imported/ireena_looks_back_ismark.jpg-751a83fe82bfcc545d17ddbe75cb47b2.ctex"
+path.bptc="res://.godot/imported/ireena_looks_back_ismark.jpg-751a83fe82bfcc545d17ddbe75cb47b2.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/ireena_looks_back_ismark.jpg"
-dest_files=["res://.godot/imported/ireena_looks_back_ismark.jpg-751a83fe82bfcc545d17ddbe75cb47b2.ctex"]
+dest_files=["res://.godot/imported/ireena_looks_back_ismark.jpg-751a83fe82bfcc545d17ddbe75cb47b2.bptc.ctex"]
 
 [params]
 
