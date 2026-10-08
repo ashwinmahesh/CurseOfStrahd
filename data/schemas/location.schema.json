@@ -50,6 +50,14 @@
           "minimum": 10,
           "description": "The ceiling's height in feet, which flyers can't rise above. Default: 20 indoors, the open sky outdoors."
         },
+        "elevation": {
+          "type": "array",
+          "description": "The lie of the land under the rows (natural ground): a string per row, a character per square, '0'-'9' then 'a'-'z' for 0 to 175 ft in 5 ft steps ('.' or a space: no rise). Neighbouring natural squares 5 ft apart are a gentle slope, 10 ft a steep one, 15 ft or more a cliff.",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-z. ]*$"
+          }
+        },
         "drop_ft": {
           "type": "integer",
           "minimum": 10,
@@ -241,6 +249,13 @@
           },
           "model": {
             "type": "string"
+          },
+          "stand_ft": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 60,
+            "multipleOf": 5,
+            "description": "Creatures stand on this prop's squares (its cell, or all its span) this many feet above the ground: a podium, a platform, a tree you climb into. Drawn as its model from the ground up."
           },
           "when": {
             "type": "string"

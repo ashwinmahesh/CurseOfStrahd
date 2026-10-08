@@ -103,8 +103,9 @@ func _draw() -> void:
 ## Ground points (world x, z) at height y on the screen; empty if any is behind the camera.
 func _ground_poly(cam: Camera3D, pts: Array, y: float) -> PackedVector2Array:
 	var out := PackedVector2Array()
+	var slopes := view.board.has_terrain()
 	for p: Vector2 in pts:
-		var w := Vector3(p.x, y, p.y)
+		var w := Vector3(p.x, view.board.ground_y(p) + 0.04 if slopes else y, p.y)   # (natural ground's slopes)
 		if cam.is_position_behind(w):
 			return PackedVector2Array()
 		out.append(cam.unproject_position(w))

@@ -1,6 +1,7 @@
 .godot/
 *.import
-captures/
+captures/*
+!captures/.gdignore
 builds/
 .DS_Store
 art/generated/**/*.tmp

@@ -674,6 +674,10 @@ def story_checks(data, errors, need):
     for lid, loc in locations.items():
         rows = loc["map"]["rows"]
         w = f"locations/{lid}"
+        # The lie of the land (natural elevation) lies square for square under the rows.
+        elevation = loc["map"].get("elevation", [])
+        if elevation and (len(elevation) != len(rows) or any(len(e) > len(r) for e, r in zip(elevation, rows))):
+            errors.append(f"{w}: map elevation must have a row per map row, none longer than its row")
 
         def on_floor(cell, what, allow_wall=False):
             x, z = cell

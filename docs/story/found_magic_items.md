@@ -53,6 +53,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 |---|---|---|---|
 | ✅ | Village, the collapsed barn | Javelin of Lightning (uncommon) | Search (Perception DC 13): a stash under the fallen beams |
 | ✅ | Village, the churchyard | Wand of Secrets (uncommon) | Search (Perception DC 14): a grave dug up and filled in again |
+| ✅ | Village, behind a rain barrel | Oil of Slipperiness (uncommon) | Search (Perception DC 12): a flask kept dry (lane 28's spot) |
 | ✅ | Burgomaster's mansion, study | Brooch of Shielding (uncommon) | Search (Investigation DC 13): behind the study desk |
 | ✅ | Ismark | +1 Longsword (uncommon) | Gift: his father's sword, after the burial |
 | ✅ | Blood of the Vine | Eyes of Minute Seeing (uncommon) | Search (Investigation DC 14): sewn into the lining of the scholar's satchel |
@@ -115,6 +116,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Loft, the little bags on hooks | Portable Hole (rare) | Search (Perception DC 15): a black cloth folded among the bags |
 | ✅ | The crag, the dead oak | Figurine of Wondrous Power, Silver Raven (uncommon) | Search (Perception DC 14): a raven's hoard in the hollow |
 | ✅ | The track, the wayside shrine | Restorative Ointment (uncommon) | Search (Perception DC 13) |
+| ✅ | The track, the ditch | Vicious Dagger (rare) | Search (Perception DC 13): a knife dropped in a hurry (lane 28's spot) |
 
 ## The Wizard of Wines (level 6)
 

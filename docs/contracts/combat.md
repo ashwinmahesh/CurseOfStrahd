@@ -45,6 +45,16 @@ in the helper whose job it is; a function other files call gets a one-line forwa
   `party_level`, `difficulty` (checked against the 2024 XP budget by `make validate`), `surprised`.
 - Or by hand: `Encounter.new(grid, dice)`, `add(creature, side, cell)` (side: party, guest, enemy, neutral), then
   `start(surprised_ids)`.
+- Natural ground (owner, 2026-10-08): a map's `elevation` rows (one character per square, `0`-`9` then `a`-`z`, 5 ft
+  each; `.` or a space leaves the square as built) go to `CombatGrid.from_rows(rows, elevation)` or
+  `grid.apply_elevation(rows)`. Those squares carry `CombatGrid.NATURAL`; `grid.is_cliff(a, b)` says whether a step
+  between neighbours is a cliff (15 ft or more between natural squares, more than 5 ft otherwise), which `step_cost`
+  climbs, `forced_move` falls from and `cover_between` traces the ground over. `grid.elevation_rows()` gives them back
+  (a saved fight's `elevation`). The board draws them (`ArenaBoard.ground_y(p)`, `ground_normal(cell)`,
+  `corner_height(cell, k)`, `has_terrain()`, `rolling(cell)`; `GridPick.ground_hit` finds the square under the mouse).
+  `grid.raise(cell, feet)` lifts a square a prop stands on (a location prop's `stand_ft`): a built height, so a ledge
+  to its neighbours; `grid.raised` keeps how much, for the board to draw the ground under it (`ArenaBoard.floor_y`
+  is the drawn floor, `cell_center` and `ground_y` where creatures stand).
 
 ## Commands (all return `CombatResult`: `ok`, `reason`, `pending`, `hit`, `critical`, `damage`, `killed`)
 
@@ -67,6 +77,7 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `features.toggle_rider(c, rider_id)` | arm a rider for this turn's next hit (`features.rider_options(c)`): maneuvers, Cunning Strike, Giant Ancestry, Psionic Strike |
 | `feature_actions.perform(c, id, t, point, choice, targets)` | a class, subclass, feat or species action (`feature_actions.list(c)`); the eight Phase 4 classes' actions are `cf:<id>`, run by combat/class_features.gd. Commander's Strike: `t` the ally, `targets[1]` the creature it attacks (left out: the best one in its reach) |
 | `free_move(c, cell)`, `jump(c, cell)` | movement without Opportunity Attacks from a feature; Jump's 30 ft leap |
+| `movement.jump_down(c, cell)`, `movement.jump_down_why(c, cell)` | from the top of a cliff (or a built ledge 10 ft or more high) to the square below beside it: 5 ft of movement, then `fall` for the drop; the square menu's `act:jump_down:x:y` |
 | `reaction_move(c, cell)` | the move a hit offers an ally (Maneuvering Attack, `movement.offer_reaction_move`): `c` spends its Reaction and walks up to half its Speed, the creature hit making no Opportunity Attack; `movement.open_reaction_move()` is the open offer (it lapses when the turn moves on), `movement.reaction_mover_why(c)` who can take it, `movement.decline_reaction_move()` passes |
 | `undo_move(c)`, `can_undo_move(c)` | Takes back `c`'s last move (`move`, `free_move`, `jump`, with the mount or rider that went along) while nothing came of it: no die rolled, no reaction offered (even one declined or passed up), nothing queued, no other creature, zone, spell object, mark or grapple changed, no log line but the move's own, and nothing new seen (the mover not spotted, no foe the party couldn't see in sight now). Moves come back one by one, to the last thing that wasn't a move; anything else ends them. Player-controlled creatures on their own turn only; not saved |
 | `escape_effect(c, effect_id)`, `wake(c, t)`, `haste_action_use(c, what, t, option_id)`, `use_item(c, item_id, t)` | breaking free of Web/Entangle, shaking a sleeper awake, Haste's extra action, potions and Goodberries |

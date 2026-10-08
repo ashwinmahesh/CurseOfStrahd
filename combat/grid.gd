@@ -18,6 +18,14 @@ const LOW := 2           ## crate, low wall, rubble heap: blocks movement, gives
 const DIFFICULT := 4     ## rubble, bog, undergrowth: each square costs double
 const VOID := 8          ## outside the map
 const WATER := 16        ## deep water (`w`): with VOID, not walkable (swimming comes later); doesn't block sight
+const NATURAL := 32      ## its height is the lie of the land (the map's `elevation`): slopes to its natural neighbours
+
+## Natural ground (owner, 2026-10-08): between two natural squares a rise or drop of up to 5 ft is a gentle slope, 10 ft
+## a steep one (uphill costs as Difficult Terrain), and CLIFF_FT or more a cliff (climbed, or jumped down with a fall).
+## A built height (a map row's digit: a dais, a ledge, a stair) keeps F4's rule: more than 5 ft is climbing.
+const CLIFF_FT := 15
+## The map's `elevation` rows: a character per square, '0'-'9' then 'a'-'z', each step 5 ft (up to 175 ft).
+const ELEVATION_CHARS := "0123456789abcdefghijklmnopqrstuvwxyz"
 
 const DIRS: Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1),
 	Vector2i(1, 1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(-1, -1)]
@@ -41,6 +49,12 @@ var ceiling_ft: int = 0
 const SKY_FT := 60
 ## can_see results by footprints (walls don't move; cleared when the map changes).
 var _sight_cache: Dictionary = {}
+## Whether any square is raised: sight then checks the lie of the land between (cheap to skip on a flat map).
+var has_relief := false
+var _max_height := 0
+## Squares stood on above the ground by a raised prop (a podium, a platform, a tree climbed into; a location prop's
+## `stand_ft`): cell -> how many feet above the ground. The board draws the ground under it and the prop's model.
+var raised: Dictionary = {}
 
 
 func _init(w: int = 0, d: int = 0) -> void:
@@ -57,8 +71,10 @@ func resize(w: int, d: int) -> void:
 
 
 ## Builds a grid from rows of characters (data/encounters): `.` floor, `#` wall, `=` low cover, `~` difficult,
-## digits 1-4 raise the floor by 5 ft per step (a platform), ` ` void.
-static func from_rows(rows: Array) -> CombatGrid:
+## digits 1-4 raise the floor by 5 ft per step (a platform), ` ` void. `elevation` (a map's `elevation`, the same
+## size) is the lie of the land under it all: a character per square (ELEVATION_CHARS, 5 ft a step), its squares
+## NATURAL unless a digit builds on them.
+static func from_rows(rows: Array, elevation: Array = []) -> CombatGrid:
 	var d := rows.size()
 	var w := 0
 	for r: Variant in rows:
@@ -81,7 +97,66 @@ static func from_rows(rows: Array) -> CombatGrid:
 					g.set_flag(Vector2i(x, z), VOID | WATER)
 				"1", "2", "3", "4":
 					g.set_height(Vector2i(x, z), int(c) * FEET)
+	if not elevation.is_empty():
+		g.apply_elevation(elevation)
 	return g
+
+
+## Lays the map's `elevation` rows under the squares: each square's ground rises by its character's steps (5 ft each),
+## on top of any built height, and a square no digit builds on is NATURAL.
+func apply_elevation(elevation: Array) -> void:
+	for z in mini(depth, elevation.size()):
+		var row := str(elevation[z])
+		for x in mini(width, row.length()):
+			var steps := ELEVATION_CHARS.find(row[x].to_lower())
+			if steps < 0:
+				continue
+			var c := Vector2i(x, z)
+			var built := height(c) > 0
+			set_height(c, height(c) + steps * FEET)
+			if not built:
+				set_flag(c, NATURAL)
+
+
+## The highest floor on the grid (feet), built or natural.
+func highest_ground() -> int:
+	return _max_height
+
+
+## Raises square `c` by `feet` for a prop stood on: a built height over the ground (a ledge to its neighbours, climbed
+## or jumped down from, high ground and cover like one), no longer natural ground.
+func raise(c: Vector2i, feet: int) -> void:
+	if not in_bounds(c) or feet <= 0:
+		return
+	set_height(c, height(c) + feet)
+	set_flag(c, NATURAL, false)
+	raised[c] = int(raised.get(c, 0)) + feet
+
+
+## The `elevation` rows that rebuild this grid's natural ground (a saved fight keeps them), or [] if it has none.
+func elevation_rows() -> Array:
+	var any := false
+	var out: Array = []
+	for z in depth:
+		var row := ""
+		for x in width:
+			var c := Vector2i(x, z)
+			if has_flag(c, NATURAL):
+				any = true
+				row += ELEVATION_CHARS[clampi(height(c) / FEET, 0, ELEVATION_CHARS.length() - 1)]
+			else:
+				row += "."
+		out.append(row)
+	return out if any else []
+
+
+## Whether the step from `a` to its neighbour `b` crosses a cliff or ledge (climbed, or fallen from): between two
+## natural squares CLIFF_FT or more, otherwise more than 5 ft (F4).
+func is_cliff(a: Vector2i, b: Vector2i) -> bool:
+	var dh := absi(height(b) - height(a))
+	if has_flag(a, NATURAL) and has_flag(b, NATURAL):
+		return dh >= CLIFF_FT
+	return dh > FEET
 
 
 func in_bounds(c: Vector2i) -> bool:
@@ -114,6 +189,9 @@ func set_height(c: Vector2i, feet: int) -> void:
 	_sight_cache.clear()
 	if in_bounds(c):
 		_height[_i(c)] = feet
+		if feet > 0:
+			has_relief = true
+			_max_height = maxi(_max_height, feet)
 
 
 ## Squares a creature can never stand in.
@@ -229,10 +307,13 @@ func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable,
 		# A flyer keeps its height over the floor, following it up and down for nothing extra (deviations.md).
 		return cost
 	# Climbing (2024): every foot climbed, up or down, costs 1 extra foot (2 extra in Difficult Terrain), nothing extra
-	# with a Climb Speed. A rise or drop of 5 ft is a step (stairs, a dais) and costs nothing more.
-	var climb := absi(height(to) - height(from))
-	if climb > FEET:
-		cost += climb * (mult if (mode & MOVE_CLIMB) != 0 else mult + 1)
+	# with a Climb Speed. A rise or drop of 5 ft is a step (stairs, a dais) and costs nothing more. Natural ground
+	# (NATURAL) climbs only at a cliff; a steep slope below one costs as Difficult Terrain going up, nothing going down.
+	var rise := height(to) - height(from)
+	if is_cliff(from, to):
+		cost += absi(rise) * (mult if (mode & MOVE_CLIMB) != 0 else mult + 1)
+	elif rise > FEET:
+		cost += FEET * mult
 	return cost
 
 
@@ -321,14 +402,23 @@ func cover_between(attacker: Vector2i, a_size: int, target: Vector2i, t_size: in
 		a_h = maxi(a_h, height(target) + t_up)
 	var a_cells := footprint(attacker, a_size)
 	var t_cells := footprint(target, t_size)
+	# The lie of the land (owner, 2026-10-08): from the top of the attacker (its eyes), each of the four lines runs to a
+	# different height of the target (its head down to its knees), so ground rising between hides the lower part of it
+	# first: a 5 ft rise between two people on the flat leaves only heads in sight (Three-Quarters Cover), 10 ft hides
+	# them.
+	var eye := float(height(attacker) + a_up + a_size * FEET)
+	var foot := float(height(target) + t_up)
 	for ac in a_cells:
 		for corner_a in _corners(ac):
 			for tc in t_cells:
 				var wall_blocked := 0
 				var soft_blocked := 0
 				var soft_by := ""
+				var k := 0
 				for corner_t in _corners(tc):
-					var hit := _line_blockers(corner_a, corner_t, a_cells, t_cells, creature_cells, a_h)
+					var aim := foot + t_size * FEET * TARGET_HEIGHTS[k]
+					k += 1
+					var hit := _line_blockers(corner_a, corner_t, a_cells, t_cells, creature_cells, a_h, eye, aim)
 					if bool(hit["wall"]):
 						wall_blocked += 1
 					elif str(hit["soft"]) != "":
@@ -341,6 +431,10 @@ func cover_between(attacker: Vector2i, a_size: int, target: Vector2i, t_size: in
 				if int(best["cover"]) == Cover.NONE:
 					return best
 	return best
+
+
+## The heights (a fraction of the target's height) the four corner lines aim at: head, chest, waist, knees.
+const TARGET_HEIGHTS: Array[float] = [1.0, 0.7, 0.4, 0.1]
 
 
 ## Degrees don't add: walls decide Three-Quarters and Total; creatures and low obstacles give at most Half. Cover
@@ -363,8 +457,11 @@ static func _corners(c: Vector2i) -> Array[Vector2]:
 ## What blocks the segment a->b: {"wall": bool, "soft": "" or what gave cover}. Squares belonging to the
 ## attacker or target never block. Touching a square's edge or corner doesn't count.
 func _line_blockers(a: Vector2, b: Vector2, a_cells: Array[Vector2i], t_cells: Array[Vector2i],
-		creature_cells: Dictionary, attacker_height: int) -> Dictionary:
+		creature_cells: Dictionary, attacker_height: int, from_h: float = -1.0, to_h: float = -1.0) -> Dictionary:
 	var soft := ""
+	# Ground can only hide what's below the line between the attacker's eyes and the aim point (from_h, to_h feet).
+	if has_relief and from_h >= 0.0 and _terrain_hides(a, b, a_cells, t_cells, from_h, to_h):
+		return {"wall": true, "soft": ""}
 	var minx := floori(minf(a.x, b.x)) - 1
 	var maxx := floori(maxf(a.x, b.x)) + 1
 	var minz := floori(minf(a.y, b.y)) - 1
@@ -401,6 +498,41 @@ func _line_blockers(a: Vector2, b: Vector2, a_cells: Array[Vector2i], t_cells: A
 			elif is_creature and soft == "":
 				soft = str(creature_cells[c])
 	return {"wall": false, "soft": soft}
+
+
+## Whether the ground rises above the line from a (at `from_h` feet) to b (at `to_h`) anywhere between: sampled every
+## half square, a point on a square's edge or corner taking the highest square that touches it, so a ridge has no
+## gaps along the grid lines. The attacker's and target's own squares don't hide anything.
+func _terrain_hides(a: Vector2, b: Vector2, a_cells: Array[Vector2i], t_cells: Array[Vector2i], from_h: float, to_h: float) -> bool:
+	if float(_max_height) <= minf(from_h, to_h):
+		return false
+	var d := b - a
+	var steps := maxi(2, ceili(d.length() * 2.0))
+	for i in range(1, steps):
+		var t := float(i) / steps
+		var p := a + d * t
+		if _ground_at(p, a_cells, t_cells) > from_h + (to_h - from_h) * t:
+			return true
+	return false
+
+
+## The highest ground at world point `p` (x, z): its square's, or on an edge or corner the highest of the squares that
+## touch it, leaving out `skip_a` and `skip_b`.
+func _ground_at(p: Vector2, skip_a: Array[Vector2i], skip_b: Array[Vector2i]) -> float:
+	var xs: Array[int] = [floori(p.x)]
+	var zs: Array[int] = [floori(p.y)]
+	if absf(p.x - roundf(p.x)) < 0.001:
+		xs = [roundi(p.x) - 1, roundi(p.x)]
+	if absf(p.y - roundf(p.y)) < 0.001:
+		zs = [roundi(p.y) - 1, roundi(p.y)]
+	var best := 0.0
+	for x in xs:
+		for z in zs:
+			var c := Vector2i(x, z)
+			if not in_bounds(c) or c in skip_a or c in skip_b:
+				continue
+			best = maxf(best, float(_height[z * width + x]))
+	return best
 
 
 ## True if the open segment a-b passes through the interior of square c (shrunk slightly so grazing an edge
