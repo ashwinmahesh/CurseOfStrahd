@@ -58,7 +58,7 @@ func test_vadomas_curios_change_every_few_days() -> void:
 		assert_eq(ids.filter(func(i: String) -> bool: return i in scrolls).size(), 2, "two scrolls")
 		for w in st.shop_wares("vadoma"):
 			var cost := float(Compendium.shared().item_data(str(w["id"])).get("cost_gp", 0))
-			assert_eq(float(w["price"]), snappedf(cost * 1.25, 0.01), "%s at the book's price and a quarter" % w["id"])
+			assert_eq(float(w["price"]), Trade.whole_gp(cost * 1.25), "%s at the book's price and a quarter" % w["id"])
 			seen[str(w["id"])] = true
 		st.advance_minutes(24 * 60)
 	assert_true(seen.size() >= 15, "four stretches, other stock: %d kinds" % seen.size())
@@ -160,7 +160,7 @@ func test_the_keepers_stores_open_to_their_allies() -> void:
 	for id: String in ["potion_of_healing_superior", "spell_scroll__revivify", "spell_scroll__death_ward", "figurine_of_wondrous_power_silver_raven"]:
 		assert_true(id in ids, "the Keepers sell %s" % id)
 	assert_eq(_price(st, "urwin_martikov", "potion_of_healing_superior"), 2000.0, "at cost, though Urwin marks up his bread")
-	assert_eq(_price(st, "urwin_martikov", "ration"), 0.75, "the inn's goods keep the inn's markup")
+	assert_eq(_price(st, "urwin_martikov", "ration"), 1.0, "the inn's goods keep the inn's markup (75 cp, a whole 1 gp)")
 	assert_true(_opens_shop(st, "urwin_martikov", "vallaki/martikovs:keepers_stores"))
 
 
