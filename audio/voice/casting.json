@@ -2044,6 +2044,16 @@
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "iziiCZD5hx1Ox65VTGmS",
       "released": true
+    },
+    "belview_mother": {
+      "voice_id": "SRrttc9MKhkw7HcNbu4r",
+      "name": "Barovia Mother (Belview)",
+      "description": "A broad, grey-haired Barovian woman of about sixty, born in Krezk, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A low, husky, slow and very calm voice that never rises, with a faint feline purr and rasp in it; motherly, weary, quietly stubborn, strange.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "SRrttc9MKhkw7HcNbu4r",
+      "released": true
     }
   },
   "sfx": {

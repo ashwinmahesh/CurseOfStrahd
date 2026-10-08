@@ -4553,6 +4553,69 @@
   "recipe": "7c64a77153",
   "text": "This one is yours. You're a good one. The grey ones are for the bad ones. I have a lot of grey ones."
  },
+ "belview_mother/252383360a5d1e81": {
+  "chars": 93,
+  "direction": "[hushed, wary, urgent]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "Not while he's improving. Come back when he's done improving. Go on. He listens at the walls."
+ },
+ "belview_mother/45d115d457ecada6": {
+  "chars": 135,
+  "direction": "[quiet, longing, resolute]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "I'm ready now. Only I don't want heaven. I want Krezk. I was born there, two doors down from the burgomaster's. I want to see the door."
+ },
+ "belview_mother/5e469f8b7c044c58": {
+  "chars": 177,
+  "direction": "[sad, quiet, heavy]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "My boys in the cells. They're dead. I heard it. (She is quiet for a long time.) They were never going to get better. I'll still go. There's nothing to stay for now but the fire."
+ },
+ "belview_mother/622b9a76091ef195": {
+  "chars": 72,
+  "direction": "[afraid, dry, defiant]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "He said they'd work if I believed. I've never believed anything he said."
+ },
+ "belview_mother/869e93ab691ef312": {
+  "chars": 175,
+  "direction": "[warm, grateful, wistful]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "My boys in the cells. Somebody let them out, gently, and they ran up the mountain. Was it you? Thank you. They'll come back for the winter, or they won't. That's what boys do."
+ },
+ "belview_mother/956b9885d0137af7": {
+  "chars": 193,
+  "direction": "[calm, low, remembering]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "Nine gifts. The eyes, to see in the dark. The legs, to wade. The wings, to go up to heaven when I'm ready, he said. He'd finish them when I was ready. He sewed them shut so I wouldn't go early."
+ },
+ "belview_mother/bc21cf6defbe58ad": {
+  "chars": 219,
+  "direction": "[firm, protective, low]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "My boys first. The loud ones, in the cells along the corridor. He forgets them. I don't. I won't go and leave them behind bars. Let them out, and gently. They bite when they're frightened, and they're always frightened."
+ },
+ "belview_mother/cb2c2e5e0dd6c6f7": {
+  "chars": 69,
+  "direction": "[pained, fierce, through gritted teeth]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "Never mind. Never mind. They're mine now. They can hurt if they like."
+ },
+ "belview_mother/d314c03feee173fb": {
+  "chars": 118,
+  "direction": "[warm, wondering, wry]",
+  "model": "eleven_v3",
+  "recipe": "8f9033cc5d",
+  "text": "And my uncle Pavel's asked me to Sunday soup. I've never had an uncle. I've never had soup I didn't have to fight for."
+ },
  "bildrath/00bad157f0730049": {
   "chars": 133,
   "direction": "[smug, prim]",
@@ -5456,6 +5519,13 @@
   "recipe": "efd7d52c86",
   "text": "This? Found it under a loose board in the saint's old room, when I was a lad. Pretty writing. Nobody's ever read it to me. The Abbot says it's nothing. He said it very quickly."
  },
+ "clovin_belview/34d21c9fba730902": {
+  "chars": 154,
+  "direction": "[quiet, sad, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Great-uncle Pavel's asked her to Sunday soup. He can't stay up here for ever, and she can't walk down. She sits by the kitchen fire and looks at the door."
+ },
  "clovin_belview/4884c1ea727a848c": {
   "chars": 49,
   "model": "eleven_v3",
@@ -5486,6 +5556,13 @@
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "You again. Gate's open. Everything's open. The Abbot doesn't believe in locks, except on the wards. He believes in those a great deal."
+ },
+ "clovin_belview/4e5faa7f2751b229": {
+  "chars": 261,
+  "direction": "[warm, comic, grateful]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "She said to give you these. Her eighth gift. Before the wings he tried boots. She floated about on the ceiling for a year, and we used her to fetch things off the top shelf. She said you'd know what to do with them. She said you'd been very kind about the wire."
  },
  "clovin_belview/51e891ba54ed660a": {
   "chars": 168,
@@ -5679,6 +5756,27 @@
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "And then the Abbot says..."
+ },
+ "clovin_belview/d4341cc40cc02549": {
+  "chars": 144,
+  "direction": "[hushed, nervous, conspiratorial]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Interesting? Mother's talking about Krezk again. She doesn't talk about Krezk while he's improving. She thinks he listens at the walls. He does."
+ },
+ "clovin_belview/dc8f67107b3130a9": {
+  "chars": 164,
+  "direction": "[delighted, wry, proud]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Mother comes down to Krezk on Sundays now. Lands on Great-uncle Pavel's roof. He's had it mended twice and he says he's never been happier. The roof says otherwise."
+ },
+ "clovin_belview/dce965d1827331b7": {
+  "chars": 223,
+  "direction": "[earnest, rambling, wistful]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Interesting? Mother's been talking about Krezk. She was born there, before she was carried up here in a basket. She says she'll go down if somebody can tell her how, and nobody can, because of the legs. And the other thing."
  },
  "clovin_belview/e5385cd8e8191da1": {
   "chars": 155,
@@ -25483,14 +25581,23 @@
   "recipe": "d64ca4ba28",
   "text": "Water to the south row, a word at the shrine, and back. Thirty times a day. My arms are as strong as Cezar's and my knees are holier than the abbot's."
  },
+ "krezk_carver/1d00eb93b945d51b": {
+  "chars": 150,
+  "direction": "[warm, gruff, happy]",
+  "model": "eleven_v3",
+  "recipe": "0cd2d416e1",
+  "text": "A sun a day, still. And on Sundays my niece comes down off the mountain and lands on my roof. I've had it mended twice. I'd have it mended every week."
+ },
  "krezk_carver/1e56cb8e3a2171fa": {
   "chars": 125,
+  "direction": "[quiet, rueful, tender]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "A sun for the shrine every day since. Sixty years. I thought I was asking for the morning. I think I was asking for the gate."
  },
  "krezk_carver/1ff0e9d6896afbaa": {
   "chars": 95,
+  "direction": "[warm, wry, content]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "A sun a day, still. But on Sundays I go up the mountain with soup, so on Saturdays I carve two."
@@ -25518,30 +25625,35 @@
  },
  "krezk_carver/8c6df0a455cf8315": {
   "chars": 191,
+  "direction": "[warm, gruff, moved]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "And this. It was our father's. He found it in the high pasture the year Floarea was born and swore it butted back if you were rude to it. I kept it for the day the gate opened. You opened it."
  },
  "krezk_carver/8dd8089a19a49b00": {
   "chars": 60,
+  "direction": "[stunned, shaky, laughing through tears]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "That's my father's joke. Where did you get my father's joke?"
  },
  "krezk_carver/9f5b2d2ac721e68b": {
   "chars": 194,
+  "direction": "[quiet, heavy, remembering]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "Floarea was my sister. The whole house took the cough the winter I was twelve, all but me. They went up to the abbey for the cure, and the burgomaster told the watch to bar the gate behind them."
  },
  "krezk_carver/c84af2a3f7a1c606": {
   "chars": 43,
+  "direction": "[gruff, resolute, wry]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "Then I'll go up. I'm old. I don't frighten."
  },
  "krezk_carver/ee07dbb273aab999": {
   "chars": 218,
+  "direction": "[sad, low, ashamed]",
   "model": "eleven_v3",
   "recipe": "0cd2d416e1",
   "text": "I was the boy on the gate that night. I barred it. My mother told me to, through the boards. She said it was a good gate and I should mind it. I went to the neighbours and took their name, and never said Belview again."
@@ -25706,6 +25818,13 @@
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "You were told that house isn't yours. In Krezk we knock, and we leave when we're asked."
+ },
+ "krezk_guard/3c7f29aac052b66b": {
+  "chars": 133,
+  "direction": "[dry, deadpan, bemused]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "And an angel came down off the mountain and landed on Old Pavel's roof. It was a Belview. Krezk has decided to be very calm about it."
  },
  "krezk_guard/40d5fb78b6ae639d": {
   "chars": 62,
@@ -31652,6 +31771,13 @@
   "recipe": "f60908d226",
   "text": "A thin girl of twelve or so sits on an upturned bucket by the lane with a basket of pastries on her knees. She has flour on her nose, and her sleeves pulled down over her hands."
  },
+ "narrator/01a6afbb7d0f2276": {
+  "chars": 175,
+  "direction": "[hushed, awed]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "When the last stitch is out the wings open by themselves, slowly, the way a hand does when you stop making a fist. They fill the kitchen. Every Belview in the room goes quiet."
+ },
  "narrator/01ace6cdc529fe5a": {
   "chars": 106,
   "model": "eleven_v4",
@@ -33864,6 +33990,13 @@
   "recipe": "dd92281f92",
   "text": "On a boulder at the top of the switchback, a woman with a spyglass is watching the abbey roof: a long dark coat, a rapier across her knees, and below her right knee a fitted brace of oak and steel."
  },
+ "narrator/160be6aac5385128": {
+  "chars": 177,
+  "direction": "[gentle, wondering, warm]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She hears you. She tips one wing, and turns, and comes down on the roof of Old Pavel's house as gently as a heron coming down on a pond. Somebody in Krezk rings the shrine bell."
+ },
  "narrator/1629d89fe8f5eca8": {
   "chars": 208,
   "model": "eleven_v4",
@@ -33935,6 +34068,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The yard is swept, the doors stand open on purpose now, and a raven sits on the well-head like a sentry who takes the job seriously."
+ },
+ "narrator/16fc339abc084eb5": {
+  "chars": 232,
+  "direction": "[quiet, sad, wondering]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Under it is a broad grey-haired woman with a cat's eyes and a heron's long thin legs, and on her back, folded and folded again, a pair of great grey wings. They are bound shut with silver wire, stitch after stitch, all the way down."
  },
  "narrator/16fe1a4b89040c47": {
   "chars": 151,
@@ -35984,6 +36124,13 @@
   "recipe": "dd92281f92",
   "text": "North, the mountains, white at the top. Somewhere out there a ruined house on a ridge."
  },
+ "narrator/295ae35d11b35316": {
+  "chars": 136,
+  "direction": "[hushed, tense]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "In the darkest corner of the kitchen something very large sits under a blanket of sewn-together habits. The blanket moves. It comes off."
+ },
  "narrator/2982caf9c96536f4": {
   "chars": 165,
   "model": "eleven_v4",
@@ -36020,6 +36167,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She opens her mouth to answer, and the answer is in her face before she can stop it: pride, and something like devotion. The crowd sees it. A woman spits at her feet. Then another."
+ },
+ "narrator/29e61160f31fddc3": {
+  "chars": 241,
+  "direction": "[grim, quiet, sympathetic]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The wire comes out, but not cleanly; there's blood on the grey feathers, and Mother hisses like a cat through her teeth, and says nothing. When the last stitch is out the wings open by themselves, slowly, and she winces every time they move."
  },
  "narrator/29efe77d89f6fcfb": {
   "chars": 152,
@@ -37314,6 +37468,13 @@
   "recipe": "f60908d226",
   "text": "Clean floors, aired sheets. Danika keeps a good house, and it keeps its secrets."
  },
+ "narrator/35f31d266c38b184": {
+  "chars": 193,
+  "direction": "[wry, comic, warm]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She comes down in Krezk's goat pens, all at once, in a burst of goats. When the shouting stops you can hear Stelian saying that he's seen worse, and that he has, in fact, seen worse, this year."
+ },
  "narrator/362d8a072c7c872f": {
   "chars": 100,
   "model": "eleven_v4",
@@ -37388,6 +37549,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "You walk her home along the churchyard wall. Her cottage is two rooms and a fire, and the shutter by the hearth stands open the width of a hand."
+ },
+ "narrator/3711db4df0ad4147": {
+  "chars": 216,
+  "direction": "[quiet, tense, awed]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Getting her up the stair to the courtyard takes six Belviews and most of the afternoon. At the top of the abbey wall she stands on her long legs with the whole valley under her, the wings half open, and doesn't move."
  },
  "narrator/3719609ecaab5e11": {
   "chars": 199,
@@ -39513,6 +39681,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The man behind the bar has black hair, black eyes and the stillness of somebody who has been listening to the room since before you came into it."
+ },
+ "narrator/4b61f9c95e646bc3": {
+  "chars": 113,
+  "direction": "[quiet, gentle]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Clovin comes up beside you on the wall with a pair of old boots in his hands, soft grey leather, soles worn thin."
  },
  "narrator/4b640d9192060409": {
   "chars": 109,
@@ -48003,6 +48178,13 @@
   "recipe": "dd92281f92",
   "text": "A carved warning, repeated in nine scripts and a set of pictures for those who couldn't read: a hand reaching toward a box, and the same hand without its fingers."
  },
+ "narrator/99bbb2cdbbfba2f0": {
+  "chars": 108,
+  "direction": "[quiet, moved, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Very faintly, from a long way below, comes the sound of a woman laughing who has not laughed in sixty years."
+ },
  "narrator/99bd57f355c5700a": {
   "chars": 116,
   "model": "eleven_v4",
@@ -48267,6 +48449,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A narrow camp cot with the blanket folded square and tucked tight. Under the pillow, a stake. Under the stake, a little bag of lavender."
+ },
+ "narrator/9c02c00253f328ac": {
+  "chars": 178,
+  "direction": "[hushed, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "In the darkest corner of the kitchen something very large sits under a blanket of sewn-together habits, with a pair of long thin bird's legs folded under it, and doesn't look up."
  },
  "narrator/9c2c51b4c6f7cfce": {
   "chars": 157,
@@ -50815,6 +51004,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "The words come out wrong, or the wrong way round, and the column doesn't move. The marshal's hand goes to his blade."
+ },
+ "narrator/b3bf19fc1a626748": {
+  "chars": 266,
+  "direction": "[tense, then soaring, joyful]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She lets go. She drops like a sack of grain, and the Belviews in the courtyard scream, and then the wings catch the air with a crack like a sail, and she is going up, and then along, and then away, very badly, in long lurching swoops, down the mountain toward Krezk."
  },
  "narrator/b3c2c01f4ce1a0c6": {
   "chars": 151,
@@ -57772,6 +57968,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You sleep under the Krezkovs' roof with the shutters barred. Twice in the night you hear Anna singing upstairs, and once you hear Dmitri on the stair, stopping to listen, then going back down."
+ },
+ "narrator/f67eabe9e0bb9875": {
+  "chars": 224,
+  "direction": "[quiet, patient, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "It takes the better part of an hour. The wire comes out stitch by stitch, bright as the day he put it in, and Mother holds very still and tells you about every one of the nine gifts, in order, without once raising her voice."
  },
  "narrator/f6839674bca8711b": {
   "chars": 162,
