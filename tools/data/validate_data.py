@@ -368,6 +368,9 @@ def campaign_checks(data, errors, pending):
         for e in n.get("shop", {}).get("sells", []):
             if e["id"] not in items and e["id"] not in data.get("magic_items", {}):
                 errors.append(f"npcs/{nid}: shop sells unknown item '{e['id']}'")
+        for iid in n.get("shop", {}).get("rotating", {}).get("pool", []):
+            if iid not in items and iid not in data.get("magic_items", {}):
+                errors.append(f"npcs/{nid}: shop's rotating pool has unknown item '{iid}'")
         gb = n.get("guest_build", {})
         if gb.get("monster") and gb["monster"] not in monsters:
             errors.append(f"npcs/{nid}: guest_build monster '{gb['monster']}' unknown")

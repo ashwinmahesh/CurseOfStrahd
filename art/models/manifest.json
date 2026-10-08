@@ -6476,6 +6476,24 @@
         "tex_interior__wood_planks"
       ],
       "triangles": 156
+    },
+    "flame": {
+      "file": "art/models/flame.glb",
+      "mount": "free",
+      "stands_for": [
+        "flame"
+      ],
+      "size": [
+        0.504,
+        1.037,
+        0.505
+      ],
+      "materials": [
+        "glow_candle",
+        "glow_ember",
+        "glow_flame"
+      ],
+      "triangles": 1236
     }
   }
 }

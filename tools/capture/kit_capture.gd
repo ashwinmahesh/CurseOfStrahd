@@ -5,10 +5,11 @@ extends Node
 ##   make capture SCENE=res://tools/capture/kit_capture.tscn NAME=kit/before FRAMES=10
 ## Environment: KIT_SHOTS=village_dusk,vallaki_noon (default: every shot); KIT_OFF=1 builds the towns without the kit
 ## (the plain boxes), for the same shots before and after under the same light; KIT_LOW_WALLS=1 keeps rooms' walls at
-## the cut-away height (before W8); KIT_LIT=1 adds a work light.
+## the cut-away height (before W8); KIT_NO_CASTLE=1 leaves Castle Ravenloft's outside as stone houses (before W19);
+## KIT_FLAT_FIRE=1 keeps fires' flames 2D; KIT_LIT=1 adds a work light.
 
 ## Each shot: the place, the hour, where the party stands (empty: the place's own spawn), and optionally the square
-## the camera looks at, how far it is, and how many 45-degree steps it is turned from the opening heading.
+## the camera looks at, how far it is, and how many 90-degree steps it is turned from the opening heading.
 const SHOTS := {
 	"village_dusk": {"loc": "village_of_barovia", "hour": 18},
 	"village_noon": {"loc": "village_of_barovia", "hour": 12, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]],
@@ -40,12 +41,21 @@ const SHOTS := {
 	"death_house_upper": {"loc": "death_house_upper"},
 	"dungeon": {"loc": "death_house_dungeon_2"},
 	"church": {"loc": "village_church", "cells": [[10, 14], [11, 14], [10, 15], [11, 15]]},
-	"castle_gates": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 27], [20, 27], [19, 28], [20, 28]],
-		"look": [19, 16], "dist": 22.0},
+	"fire_krezk": {"loc": "krezk", "hour": 21, "cells": [[27, 17], [27, 18], [26, 17], [26, 18]], "look": [28, 17], "dist": 8.0},
+	"fire_camp": {"loc": "vallaki_vistani_camp", "hour": 21, "cells": [[13, 12], [13, 13], [12, 12], [12, 13]],
+		"look": [14, 12], "dist": 8.0},
+	"fire_inn": {"loc": "vallaki_blue_water_inn", "cells": [[10, 8], [11, 8], [10, 9], [11, 9]], "look": [11, 6], "dist": 8.0},
+	"fire_hall": {"loc": "castle_ravenloft_main_floor", "cells": [[44, 8], [45, 8], [44, 9], [45, 9]], "look": [46, 6], "dist": 9.0},
+	"castle_gates": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 29], [20, 29], [19, 30], [20, 30]],
+		"dist": 20.0},
+	"castle_court": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 19], [20, 19], [19, 20], [20, 20]],
+		"dist": 16.0, "flags": {"strahd_invitation": "accepted"}},
+	"castle_court_turned": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 19], [20, 19], [19, 20], [20, 20]],
+		"dist": 16.0, "yaw": 2, "flags": {"strahd_invitation": "accepted"}},
+	"castle_keep": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 12], [20, 12], [19, 13], [20, 13]],
+		"dist": 15.0, "flags": {"strahd_invitation": "accepted"}},
 	"castle_bridge": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 26], [20, 26], [19, 27], [20, 27]],
 		"dist": 12.0, "yaw": 1},
-	"castle_yard": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[15, 14], [16, 14], [15, 15], [16, 15]],
-		"look": [18, 8], "dist": 16.0},
 	"castle_overlook": {"loc": "castle_ravenloft_overlook", "hour": 21, "cells": [[10, 3], [11, 3], [10, 4], [11, 4]],
 		"dist": 14.0},
 	"castle_roofs": {"loc": "castle_ravenloft_spires_roofs", "hour": 21, "cells": [[8, 6], [9, 6], [8, 7], [9, 7]],
@@ -62,6 +72,10 @@ func _ready() -> void:
 		SetDressing.catalog().erase("building_kit")
 	elif OS.get_environment("KIT_LOW_WALLS") != "":
 		((SetDressing.catalog()["building_kit"] as Dictionary)["interiors"] as Dictionary)["full_walls"] = false
+	if OS.get_environment("KIT_NO_CASTLE") != "" and SetDressing.catalog().has("building_kit"):
+		(SetDressing.catalog()["building_kit"] as Dictionary).erase("castle")   # the castle as stone houses (before W19)
+	if OS.get_environment("KIT_FLAT_FIRE") != "":
+		ModelPiece.manifest().erase("flame")   # the 2D flame, as before its 3D model
 
 
 func capture_shots(tool: Node, out: String) -> void:
@@ -92,6 +106,9 @@ func _build(shot: Dictionary) -> void:
 		GameState.story.party.append(ch)
 	var st := GameState.story
 	st.minute_of_day = int(shot.get("hour", 12)) * 60
+	var flags := shot.get("flags", {}) as Dictionary
+	for k: String in flags:
+		st.flags[k] = flags[k]   # (a fight that would start on arrival, kept off for the shot)
 	var loc_id := str(shot["loc"])
 	var cells := shot.get("cells", []) as Array
 	if not cells.is_empty():
