@@ -743,7 +743,8 @@
         18
       ],
       "dialogue": "krezk/townsfolk:billy",
-      "facing": "east"
+      "facing": "east",
+      "when": "not flag.dragos_freed"
     },
     {
       "npc": "krezk_goatherd",
@@ -918,6 +919,16 @@
           "face": "west"
         }
       ]
+    },
+    {
+      "npc": "krezk_dragos",
+      "cell": [
+        7,
+        17
+      ],
+      "dialogue": "krezk/one_horned_billy:dragos",
+      "facing": "south",
+      "when": "flag.dragos_freed"
     }
   ],
   "encounters": [

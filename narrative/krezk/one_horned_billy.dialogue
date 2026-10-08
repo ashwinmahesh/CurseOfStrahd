@@ -1,0 +1,121 @@
+# The One-Horned Billy (side quest, docs/story/side_quests.md): the billy goat in Krezk's pens is Dragos, a Berez
+# boatman Baba Lysaga turned into a goat for refusing to row her. He swam the Luna and walked to Krezk with his wife's
+# ring on his horn. His wife Vera didn't get away: Lysaga stitched her into the Rag Queen, the scarecrow she made from
+# the dresses of Berez's drowned brides, and it still walks the scarecrow field. The boss is our own
+# (data/monsters/rag_queen.json). Reached from Stelian the goatherd (townsfolk:goatherd) or the billy himself
+# (townsfolk:billy). Every line here is unvoiced for now; Dragos is a new speaker.
+
+# --- The billy in the pens (townsfolk:billy jumps here once he's been looked at) ---
+
+~ billy
+if flag.dragos_freed
+-> END
+endif
+Narrator: The one-horned billy plants his feet in the gap of the pen and lowers his head at you. On his one horn, jammed down hard against the skull, is a thin silver ring.
+if flag.billy_rumor
+interject tag:curious: Stelian's ring. He wasn't making it up.
+endif
+if not quest.one_horned_billy
+quest one_horned_billy asked
+endif
+* [Animal Handling DC 14] (Get close enough to look at the ring.) -> ring | butted
+* [Insight DC 13] (Look him in the eye.) -> eyes | eyes_missed
+* [knows:speak_with_animals] (Cast Speak with Animals.) -> speaks
+* [if flag.billy_ring_read or flag.billy_eyes_seen] [knows:remove_curse] (Cast Remove Curse on him.) -> freed
+* [if (flag.billy_ring_read or flag.billy_eyes_seen) and item:spell_scroll__remove_curse] (Read a Scroll of Remove Curse over him.) -> freed_scroll
+* Leave him be. -> END
+
+~ butted
+Narrator: He hits you square in the hip, hard enough to sit you down in the straw, and goes back to guarding the gap. Stelian, across the pen, very carefully doesn't laugh.
+-> END
+
+~ ring
+set billy_ring_read
+quest one_horned_billy the_ring
+Narrator: He lets you. He stands very still and lets you turn the ring on his horn. Engraved inside it, worn nearly smooth: D. AND V. BEREZ.
+Narrator: When you let go, he puts his forehead against your chest and leaves it there, the way a man leans on a wall when he can't stand up any more.
+-> billy_after_look
+
+~ eyes
+set billy_eyes_seen
+quest one_horned_billy the_ring
+Narrator: Goats have strange square eyes. These are a man's, behind the square: tired and furious and begging.
+-> billy_after_look
+
+~ eyes_missed
+Narrator: A goat. A large, ill-tempered goat with one horn. It stares back until you look away first.
+-> END
+
+~ speaks
+set billy_eyes_seen
+quest one_horned_billy the_ring
+Narrator: He doesn't speak like a goat. He speaks like a boatman who's been shouting for a year and has stopped expecting anyone to answer.
+Dragos: Berez. The old woman. I wouldn't row her. Vera. Vera's still there. Please.
+-> billy_after_look
+
+~ billy_after_look
+interject class:cleric: A curse. Someone did this to a man. Remove Curse would answer it.
+interject tag:blunt: He's a person. The goat's a person.
+-> END
+
+~ freed_scroll
+take spell_scroll__remove_curse
+-> freed
+
+~ freed
+set dragos_freed
+quest one_horned_billy dragos
+Narrator: The curse comes off him like a wet coat. One moment there's a goat in the gap of the pen; the next there's a big bearded man on his hands and knees in the straw, naked and shaking.
+Narrator: He has a scar on his forehead the shape of a horn, and a silver ring in his fist.
+Narrator: Stelian drops his crook. Somebody in the south row screams, and then laughs, and then can't stop.
+Dragos: Dragos. My name. Dragos, the ferryman of Berez. Somebody give me a blanket and I'll tell you what she did with my wife.
+-> dragos_tale
+
+~ dragos_tale
+Dragos: The old woman came to the landing in her hut and wanted rowing across to the castle side. I said I didn't row her sort. She laughed, and I was a goat. I swam the river. A goat can swim. I didn't know that.
+Dragos: Vera she kept. Lysaga takes the brides of Berez, the ones the river drowned, and she sews them into something. A queen, she calls it. A scarecrow queen in a dress made of every wedding dress in Berez, and my Vera's in it. I saw her face in the stitching, the night I swam.
+Dragos [sad]: It walks the field by the old woman's stump. Whether she's there or not. Burn it. Please. Let my wife out of it.
+-> END
+
+# --- Dragos in Krezk afterwards (by the pens) ---
+
+~ dragos
+if flag.rag_queen_beaten
+-> dragos_after
+endif
+Dragos: The field by the stump, in Berez. It's tall as a house. It hates fire. That's all I know that helps.
+-> END
+
+~ dragos_after
+if flag.rag_queen_paid
+Dragos: Stelian says I'm good with goats. I tell him I have an understanding with them.
+-> END
+endif
+set rag_queen_paid
+quest one_horned_billy vera_freed
+Dragos: You burned it. You let her out. I felt it, here, in the scar, the night you did it, like a hand taking hold of mine and then letting go.
+Dragos: Everything in that thing's stuffing was a bride's. The dowries, the rings, all of it. I've no right to it and neither did she. Take it; she'd want it spent on the living.
+gold +500
+Dragos: And this was in it too. Not a bride's. Something the old woman stole off a knight who rowed across with me once, years back. It moves when you let go of it.
+give dancing_sword
+approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +3 wren_featherfoot +1: You broke Lysaga's curse on Dragos and burned the Rag Queen
+-> END
+
+# --- The scarecrow field at Berez (prop rag_queen_post) ---
+
+~ field
+if flag.rag_queen_beaten
+Narrator: A heap of burned straw and wet silk the size of a haystack, and a ring of black ground around it where nothing will grow back.
+-> END
+endif
+Narrator: At the heart of the scarecrow field stands one that isn't like the others: twice a man's height, its body a heap of rotted silk and lace, white and yellow and grey, with faces in the stitching if you look too long.
+if flag.dragos_freed
+Narrator: One of the faces is a woman's, younger than the others. Her eyes are shut, and her mouth is moving.
+endif
+Narrator: As you come closer, its head turns all the way round to look at you.
+* (Burn it.) -> wakes
+* (Step back out of the field.) -> END
+
+~ wakes
+Narrator: It stands up off its post. It is much taller standing. Across the field, every other scarecrow lifts its head.
+combat rag_queen

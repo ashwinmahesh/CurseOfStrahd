@@ -455,6 +455,36 @@
       "id": "muster_paid",
       "type": "bool",
       "summary": "The party took the Marshal's blade and the vanguard's pay chest."
+    },
+    {
+      "id": "billy_rumor",
+      "type": "bool",
+      "summary": "Stelian the goatherd told the party the one-horned billy turned up with a ring on his horn (The One-Horned Billy)."
+    },
+    {
+      "id": "billy_ring_read",
+      "type": "bool",
+      "summary": "The party read the ring on the billy's horn: D. AND V. BEREZ."
+    },
+    {
+      "id": "billy_eyes_seen",
+      "type": "bool",
+      "summary": "The party saw the man behind the billy's eyes (Insight, or Speak with Animals)."
+    },
+    {
+      "id": "dragos_freed",
+      "type": "bool",
+      "summary": "The curse is off the billy: he's Dragos, the ferryman of Berez."
+    },
+    {
+      "id": "rag_queen_beaten",
+      "type": "bool",
+      "summary": "The Rag Queen was burned in Berez's scarecrow field (encounter rag_queen)."
+    },
+    {
+      "id": "rag_queen_paid",
+      "type": "bool",
+      "summary": "Dragos gave the party the brides' dowries and the dancing sword."
     }
   ]
 }
