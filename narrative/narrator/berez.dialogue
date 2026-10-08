@@ -487,12 +487,12 @@ once
 # ---------------------------------------------------------------- Lane 28 (2026-10-08): Baratok's yard and the Tsolenka shelf.
 
 ~ search:hut_yard_notes
-| A page blown into the snow against the hut's wall, covered edge to edge in a tiny, furious hand: half a spell, half an argument with someone who isn't there. {name} smooths it flat and keeps it.
+| A page blown into the snow against the hut's wall, covered edge to edge in a tiny, furious hand: half argument with someone who isn't there, half a spell of killing cold, finished and humming. {name} smooths it flat and keeps it.
 once
 
 ~ examine:tsolenka_roc_nest
 | A nest the size of a cottage, woven from whole pine trunks stripped of their branches, wedged into the crag above the shelf. Bones stick out of it like straw: goats, horses, and a cart wheel.
 
 ~ search:landing_roc_quill
-| Caught on the rocks of the landing, a single feather as long as a tall man, its quill as thick as a wrist. Someone has already cut a pen from the tip; the rest is too big to carry, but the pen isn't. {name} takes it.
+| Caught on the rocks of the landing, a single feather as long as a tall man, its quill as thick as a wrist. Too big to carry; but tucked in the hollow quill is one small feather that thrums like wings. {name} takes that.
 once

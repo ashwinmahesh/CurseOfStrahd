@@ -17,9 +17,9 @@
       "##########............##########",
       "###############..###############",
       "##..........=.................##",
-      "#.............................##",
+      "#.=...........................##",
       "#..~~.......................~..#",
-      "#...~~~...........~~.......~~..#",
+      "#...~~~...........~~.......~~=.#",
       " ....~...........~~~...........#",
       "  ......................~......#",
       "   ......~~...........~~~......#",
@@ -336,6 +336,36 @@
       "label": "one halberd on the rack that isn't frosted",
       "model": "sword_leaning",
       "item": "weapon_plus_3__halberd"
+    },
+    {
+      "id": "amber_drift_west",
+      "cell": [
+        2,
+        11
+      ],
+      "kind": "decor",
+      "model": "snowdrift"
+    },
+    {
+      "id": "amber_drift_east",
+      "cell": [
+        29,
+        13
+      ],
+      "kind": "decor",
+      "model": "snowdrift"
+    },
+    {
+      "id": "name_cairn_candle",
+      "cell": [
+        7,
+        12
+      ],
+      "kind": "search",
+      "label": "something left at the foot of the cairn",
+      "model": "rubble",
+      "search_dc": 12,
+      "item": "candle"
     }
   ],
   "containers": [

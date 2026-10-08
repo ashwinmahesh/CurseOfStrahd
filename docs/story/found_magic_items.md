@@ -213,10 +213,12 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Marina's monument, the dowry chest | Robe of Scintillating Colors (very rare) | Hoard: Strahd's gift to her |
 | ✅ | Mount Baratok, the ring of glass | Wand of Lightning Bolts (rare) | Search (Perception DC 15): fused into the glass |
 | ✅ | Mount Baratok, the opened cairn | Ioun Stone of Intellect (very rare) | Search (Perception DC 16) |
+| ✅ | Mount Baratok, the hut's yard | Spell Scroll of Cone of Cold (rare) | Search (Perception DC 13): a page blown into the snow (lane 28's spot) |
 | ✅ | The Mad Mage's hut, the dragonchess board | Figurine of Wondrous Power, Serpentine Owl (rare) | Search (Investigation DC 17): one piece isn't a piece |
 | ✅ | The Mad Mage's hut, the shelves of blank books | Tome of Understanding (very rare) | Search (Investigation DC 17) |
 | ✅ | Mordenkainen | Ring of Spell Storing (rare) | Gift: once he remembers who he is |
 | ✅ | Tsolenka Pass, the bones on the shelf | Wings of Flying (rare) | Search (Perception DC 15): a traveller the roc dropped |
+| ✅ | Tsolenka Pass, the landing | Feather Token, Bird (rare) | Search (Perception DC 12): tucked in a roc's quill (lane 28's spot) |
 | ✅ | Tsolenka Pass, the roc's nest | +2 Greatsword (rare) | Hoard |
 | ✅ | Tsolenka guard tower, the rack of old mail | +2 Chain Mail (very rare) | Search (Investigation DC 16): a hauberk that never rusted |
 | ✅ | Tsolenka guard tower | Horn of Blasting (rare) | Search (Perception DC 14): the watch horn behind the winch |
