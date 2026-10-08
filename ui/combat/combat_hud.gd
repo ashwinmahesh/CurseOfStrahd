@@ -12,6 +12,8 @@ signal end_turn_pressed
 signal undo_move_pressed
 signal reaction_answered(use: bool, rule: String)
 signal inspect_requested(combatant_id: String)
+## A click on a party frame's portrait: that hero's character sheet, view only (CombatView.sheet_requested).
+signal sheet_requested(combatant_id: String)
 signal death_save_pressed
 signal slot_level_changed(level: int)
 signal radial_picked(choice: String)
@@ -28,7 +30,7 @@ const EDGE_COLOURS := {"advantage": "bile", "disadvantage": "vampire_red"}
 ## {action} reads as the player's key for it (InputActions.fill, Settings, Keys).
 const CONTROLS: Array[String] = [
 	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
-	"Keyboard: {combat_toggle_log} minimizes or restores the combat log · {combat_slot_1}-{combat_slot_10} use hotbar slots · {combat_tab_prev} / {combat_tab_next} change tab · {combat_confirm} confirms (casts early with fewer targets) · Esc cancels · {combat_end_turn} ends the turn · Ctrl+Z takes back the last move · {combat_slot_level_down} and {combat_slot_level_up} change the spell slot · {combat_next_target} jumps to the next target · {cycle_leader} inspects the next party member · {quick_save} quicksaves and {quick_load} loads the quicksave (outside a fight; in one, the game saves at each round's start).",
+	"Keyboard: {combat_toggle_log} minimizes or restores the combat log · {combat_slot_1}-{combat_slot_10} use hotbar slots · {combat_tab_prev} / {combat_tab_next} change tab · {combat_confirm} confirms (casts early with fewer targets) · Esc cancels · {combat_end_turn} ends the turn · Ctrl+Z takes back the last move · {combat_slot_level_down} and {combat_slot_level_up} change the spell slot · {combat_next_target} jumps to the next target · {cycle_leader} inspects the next party member · C opens the character sheet of the one shown (view only; or click a party portrait) · {quick_save} quicksaves and {quick_load} loads the quicksave (outside a fight; in one, the game saves at each round's start).",
 	"Camera: {walk} pan · {camera_rotate_left} / {camera_rotate_right} rotate · mouse wheel zooms.",
 	"Controller: left stick moves the cursor · A confirms · B cancels · X next target · Y ends the turn · hold LB for the radial menu (right stick picks, release to choose) · LT / RT pick a hotbar slot · RB uses it · d-pad left/right changes the spell slot · View inspects the next party member.",
 	"Reactions always ask unless you set a rule in the prompt (Next time: Ask me / Always use it / Never).",
@@ -649,7 +651,25 @@ func _refresh_party() -> void:
 			btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
 		btn.pressed.connect(func() -> void: inspect_requested.emit(c.id))
 		btn.tooltip_text = "%s · %s\nClick to see their actions" % [c.name(), status]
+		if c.creature is Character:
+			card.add_child(_sheet_button(c))
 		_party_box.add_child(card)
+
+
+## Over a hero's portrait in their frame: opens their character sheet, view only, while the fight waits.
+func _sheet_button(c: Combatant) -> Control:
+	var over := Control.new()
+	over.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var b := Button.new()
+	b.flat = true
+	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	b.size = Vector2(64, 64)
+	for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
+		b.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
+	b.pressed.connect(func() -> void: sheet_requested.emit(c.id))
+	b.tooltip_text = "%s's character sheet (C), view only" % c.name()
+	over.add_child(b)
+	return over
 
 
 ## A party member just fell: their frame flashes red for a moment (and stays marked DOWN while they're down).
