@@ -16,6 +16,8 @@ var fights: Array[Dictionary] = []
 var conversations: Array[String] = []
 var _chosen := {}
 var defeated := false
+## How many times a lost fight is played in all (TRIES); a test that expects the party to lose sets 1.
+var fight_tries := TRIES
 
 
 func _init(test_: Node, root_: Node) -> void:
@@ -97,8 +99,8 @@ func settle(max_frames: int = 4000) -> bool:
 func fight() -> bool:
 	await frames(2)
 	var kept := _keep_fight_start()
-	for attempt in TRIES:
-		var last := attempt == TRIES - 1 or not kept
+	for attempt in fight_tries:
+		var last := attempt == fight_tries - 1 or not kept
 		var outcome := await _play_fight(last)
 		if outcome == "victory":
 			_drop_fight_start()
@@ -107,7 +109,7 @@ func fight() -> bool:
 		if last:
 			_drop_fight_start()
 			return false
-		note("lost; the fight again from its first round with other dice (try %d of %d)" % [attempt + 2, TRIES])
+		note("lost; the fight again from its first round with other dice (try %d of %d)" % [attempt + 2, fight_tries])
 		if not await _reload_fight(attempt + 1):
 			note("couldn't pick the fight up again from its save")
 			defeated = true
