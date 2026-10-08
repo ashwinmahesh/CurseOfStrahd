@@ -87,8 +87,8 @@ Ana: Oh. You're not Mila. Are you Papa's friends? Papa has lots of friends now. 
 
 ~ where
 set ana_grave_known
-Ana: In my bed, silly. Papa put me in the yard at St. Andral's, under the stone with the lamb on it. It's cold, but Irina and Sorina are just next door, so we talk.
-interject tag:blunt: Irina and Sorina. The other two girls.
+Ana: In my bed, silly. Papa put me in the yard at St. Andral's, under the stone with the lamb on it. It's cold, but Irina and Daria are just next door, so we talk.
+interject tag:blunt: Irina and Daria. The other two girls.
 -> ana_menu
 
 ~ persuaded
@@ -98,7 +98,7 @@ Narrator: She drops the roses on the Petrovs' step, one by one, very neatly, and
 -> END
 
 ~ not_persuaded
-Ana [angry]: You're not my papa. You can't tell me when to go to bed. Irina! Sorina! They won't let me play!
+Ana [angry]: You're not my papa. You can't tell me when to go to bed. Irina! Daria! They won't let me play!
 -> attack
 
 ~ attack

@@ -1,0 +1,18 @@
+{
+  "id": "sorin_krezkov",
+  "name": "Sorin",
+  "title": "The First Krezkov",
+  "summary": "Dmitri and Anna Krezkov's first son, carried up to the abbey with the fever at nine and 'improved' there for twenty years: goat-legged, too big, with a boy's eyes and a Belview's gift for other people's voices.",
+  "portrait": "belview",
+  "sprite": "belview",
+  "attitude": "indifferent",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "mongrelfolk",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}

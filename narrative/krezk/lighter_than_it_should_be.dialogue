@@ -1,0 +1,184 @@
+# Lighter Than It Should Be (side quest, docs/story/side_quests.md): somebody leaves carved toys on the five Krezkov
+# graves at the Pool of the White Sun. It's Sorin, the Krezkovs' first son: Anna carried him up the mountain with the
+# fever twenty years ago, the Abbot sent down a nailed coffin full of stones, and he has been "improving" Sorin ever
+# since. Reached from the watchman's rumour (gate:news), Kasha Varo (kasha:graves) or the graves themselves.
+# Every line here is unvoiced for now; Sorin is a new speaker (he speaks in other people's voices).
+
+# --- The toys on the Krezkov stones (prop krezkov_toys) ---
+
+~ toys
+if flag.sorin_fate
+Narrator: Five small stones by the pavilion, and a carved wolf on the eldest, fresh this morning. Some things don't stop.
+-> END
+endif
+if not quest.lighter_than_it_should_be or quest.lighter_than_it_should_be == rumored
+quest lighter_than_it_should_be toys
+endif
+Narrator: Five small stones in a row by the pavilion, the eldest's a hand taller than the others. On them, and in the snow around them: a wooden horse, a wolf, a little sun with far too many rays, a doll with no face. Carved quickly and sharply, as if with teeth.
+Narrator: Most of them are on the eldest's stone. The name on it is SORIN, and the dates make him nine.
+if flag.krezk_toys_rumor
+interject tag:curious: Dmitri smashes them and they come back. Somebody's very patient.
+endif
+* [if not flag.sorin_seen] (Wait here after midnight and see who brings them.) -> wait
+* [if not flag.sorin_grave_opened] [Athletics DC 13] (Dig up the eldest's grave.) -> dig | dig_hard
+* Leave them. -> END
+
+~ wait
+time until 1
+set sorin_vigil
+Narrator: You find what shelter there is among the stones. The pool steams faintly in the cold. Long after midnight, something scrapes on the north wall.
+-> END
+
+~ dig_hard
+time +120
+Narrator: The ground is iron-hard with frost, and it takes two hours and both hands before the spade rings on wood.
+-> dig
+
+~ dig
+set sorin_grave_opened
+Narrator: The coffin is small and nailed shut, and the nails have never been drawn. Inside are stones from the abbey track, wrapped in a child's blanket to make the right shape. There was never anybody in it.
+interject class:cleric: They buried a blanket. For twenty years they've been mourning a blanket.
+Kasha Varo [afraid]: Lighter than it should be. I said. I've always said. Put it back, now. Put it back gently.
+-> END
+
+# --- Old Pavel (townsfolk:carver jumps here) ---
+
+~ pavel
+Old Pavel: The toys on the Krezkov stones? Not mine. Mine are suns, all of them, every one for the shrine. Whoever makes those works fast and doesn't care for his fingers.
+Old Pavel: Or he hasn't got fingers. I've looked at the cuts. That's not a knife. That's a thumbnail, and a hard one.
+-> END
+
+# --- Sorin at the graves after midnight (he notices the party) ---
+
+~ sorin
+set sorin_seen
+if quest.lighter_than_it_should_be != sorin_known
+quest lighter_than_it_should_be seen
+endif
+Narrator: He comes over the north wall the way goats come down a cliff: all at once, without looking. He's very big and very bent, with a goat's legs and a man's shoulders, and a carved wolf held carefully in both hands.
+Narrator: He kneels at the eldest stone, puts the wolf down beside the others, and begins to sing. It is the lullaby you have heard through the Krezkovs' shutters, and it is in Anna Krezkova's voice. Exactly her voice.
+Narrator: Halfway through the second verse he sees you, and stops, and doesn't run.
+* (Stay very still, and let him finish.) -> finish
+* [Insight DC 15] (Who taught him that song?) -> finish | read_missed
+* Who are you? -> who
+
+~ read_missed
+Narrator: His face doesn't work the way faces work. Whatever is going on behind it, you can't read it from here.
+-> who
+
+~ who
+Narrator: He opens his mouth, and a child's voice comes out of it, a small boy's, hoarse with fever.
+Sorin: Mama, it's dark. Mama, I want to go home.
+-> finish
+
+~ finish
+set sorin_known
+quest lighter_than_it_should_be sorin_known
+Narrator: He finishes the song. Then, very carefully, in Anna's voice, he says the line that ends it every night through the shutters:
+Sorin: Sorin. Sorin, come in, it's dark.
+Narrator: He touches his own chest with a thumb like a hoof, and looks at the name on the stone, and back at you.
+interject tag:kind: That's his name. That's him. The first one.
+if flag.sorin_grave_opened
+interject tag:blunt: And that's why there was nobody in the coffin.
+endif
+if not flag.abbot_fate
+Narrator: Lantern light on the abbey track, coming down the switchback fast. Sorin hears it before you do. He doesn't run; he puts himself between the lanterns and the little stones.
+-> pursuers
+endif
+Sorin: Come in. It's dark.
+-> END
+
+~ pursuers
+Narrator: They come over the wall in a bunch: the Abbot's Brutes, hairy and patched, and behind them two tall shapes in rotted wedding white that walk as if they've been stitched to walk. The brides he made before Vasilka. They've come to fetch a stray home.
+combat sorin_pursuers
+
+# --- Sorin afterwards, at the graves (he waits for the party) ---
+
+~ sorin_after
+if flag.sorin_pursuers_beaten
+Narrator: Sorin is crouched among the little stones, putting the scattered toys back where they were, one by one.
+else
+Narrator: Sorin is still by the stones, rocking slightly, humming in his mother's voice.
+endif
+* Come with us, Sorin. We'll take you home. -> bring
+* Not yet. -> END
+
+~ bring
+set sorin_brought
+Narrator: He stands up, and up, and follows you down the lane to the burgomaster's house, stepping very carefully in your footprints so as not to wake anybody.
+-> END
+
+# --- At the Krezkov house (Sorin comes to the party) ---
+
+~ family
+Narrator: Anna opens the door with a candle, and sees what's behind you, and the candle goes out.
+Sorin: Mama.
+Narrator: It's her own voice, from twenty years ago, saying her son's name to him, and then it's a small boy's. Anna doesn't scream. She sits down on the step as if her legs have been taken away, and holds out both arms.
+Anna Krezkova: I carried him up. Myself. Dmitri said no, and I carried him up anyway, and the Abbot sent down a box and told me not to open it, it was better not to see. I never saw.
+Dmitri Krezkov [angry]: That isn't my son. That's one of his... things. Belviews. Get it out of my yard.
+-> family_menu
+
+~ family_menu
+* [Persuasion DC 15] He's yours, Dmitri. The Abbot made him into this. You didn't. -> dmitri_turns | dmitri_refuses
+* [Insight DC 13] (Say what Dmitri's afraid of: that he was right about the Abbot, and that it doesn't matter now.) -> dmitri_turns | dmitri_refuses
+* [if flag.sorin_grave_opened] (Tell him what you found in the coffin.) -> coffin
+* [if flag.ilya_fate == "healed" or flag.ilya_fate == "frail"] Let Ilya meet his brother. -> ilya
+* Kasha needs a groundskeeper at the pool. He could stay there, and you could visit. -> to_pool
+* (Take him back to the stones. This isn't going to happen tonight.) -> to_mountain
+
+~ coffin
+Narrator: You tell him: the nails never drawn, the stones from the abbey track, the child's blanket wrapped round them to make the shape.
+Dmitri Krezkov: Stones. I carried stones. I dug the hole myself, and I carried stones.
+-> dmitri_turns
+
+~ ilya
+Narrator: Ilya comes out past his mother in his nightshirt and looks up, and up, at the goat-legged thing in the yard, with the frank interest of a boy who has met very few new people.
+Ilya Krezkov: Are you my brother? Mama says I had a brother. Can you carve a wolf? A big one?
+Narrator: Sorin crouches, and takes a stick of firewood from the pile, and starts to carve with his thumbnail. Dmitri watches him make a wolf for his son, and the anger goes out of him all at once, like water out of a split cask.
+-> dmitri_turns
+
+~ dmitri_refuses
+Dmitri Krezkov: No. No. I buried my son. I'll not have the Abbot's leavings at my table to remind me how.
+-> family_menu
+
+~ dmitri_turns
+set sorin_fate = "home"
+quest lighter_than_it_should_be home
+Dmitri Krezkov [sad]: Sorin. Sorin. I told her not to take you up there. I was right, and I'd give every year of being right to have been wrong.
+Dmitri Krezkov: Come in. It's dark.
+approve godrick_pendlebrook +3 liriel_dawnsong +3 thistle +2 wren_featherfoot +2 ratatoille +2 kip_smudgewick +2: You brought Sorin Krezkov home
+-> reward
+
+~ to_pool
+set sorin_fate = "pool"
+quest lighter_than_it_should_be pool
+Anna Krezkova: The pool. Kasha will have him. And I'll go every day; Dmitri can come when he's ready. He'll be ready. He's slow, not cruel.
+approve liriel_dawnsong +2 godrick_pendlebrook +1 thistle +1: You found Sorin Krezkov a place by the pool
+-> reward
+
+~ to_mountain
+set sorin_fate = "mountain"
+quest lighter_than_it_should_be mountain
+Narrator: Sorin understands before Anna does. He puts a carved sun on the step by her feet and goes back up the lane, stepping in his own footprints, toward the wall and the mountain.
+Anna Krezkova [sad]: He'll come back. He'll leave things. I'll keep every one.
+approve liriel_dawnsong -2 godrick_pendlebrook -1: You let Sorin go back to the abbey
+-> reward
+
+~ reward
+Anna Krezkova: You found him. Whatever happens now, you found him, after twenty years of me talking to a blanket. Take this. We kept it for a daughter's dowry. We never had a daughter.
+gold +400
+Dmitri Krezkov: And this. My grandfather's mail. I kept it for my eldest son to wear. It seems he'll never fit it now, so you'd better.
+give armor_plus_1
+-> END
+
+# --- Sorin afterwards ---
+
+~ sorin_home
+Narrator: Sorin is sitting in the hall carving, with Ilya leaning against his side giving instructions. There are wooden wolves on every shelf in the house.
+Sorin: Come in. It's dark.
+-> END
+
+~ sorin_pool
+Narrator: Sorin is sweeping snow off the stones around the pool with Kasha's broom, very carefully, round the little graves first.
+Kasha Varo: Best groundskeeper I ever had. Doesn't talk back. Talks in my voice sometimes, which is a bit much, but I've heard worse voices.
+-> END

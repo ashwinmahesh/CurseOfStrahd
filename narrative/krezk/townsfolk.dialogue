@@ -38,7 +38,8 @@ Cezar: The billy breaks a rail, I mend a rail. He breaks another. I think he lik
 
 ~ carver
 Old Pavel: A sun for the shrine. One every day. When the shrine is full, I start on the windows. Somebody has to keep asking for the morning.
--> END
+* [if quest.lighter_than_it_should_be and not flag.sorin_known] The toys on the Krezkov graves. Are they yours? -> krezk/lighter_than_it_should_be:pavel
+* Good day. -> END
 
 ~ wall_watch
 Watchman Lazar: The gate's watched, the wall's watched, and the road is watched most of all. Walk where you like inside. Just walk where I can see you.

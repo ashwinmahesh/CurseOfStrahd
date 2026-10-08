@@ -240,6 +240,46 @@
       "id": "chandler_paid",
       "type": "bool",
       "summary": "Pyotr Petrov paid the party for his daughter's life."
+    },
+    {
+      "id": "krezk_toys_rumor",
+      "type": "bool",
+      "summary": "The Krezk watchman or Kasha told the party about the carved toys on the Krezkov graves (Lighter Than It Should Be)."
+    },
+    {
+      "id": "sorin_vigil",
+      "type": "bool",
+      "summary": "The party waited at the Krezkov graves after midnight."
+    },
+    {
+      "id": "sorin_seen",
+      "type": "bool",
+      "summary": "Sorin came over the pool's north wall with a toy and saw the party."
+    },
+    {
+      "id": "sorin_known",
+      "type": "bool",
+      "summary": "The party knows the toy-bringer is Sorin Krezkov, the Krezkovs' first son, taken up the mountain twenty years ago."
+    },
+    {
+      "id": "sorin_grave_opened",
+      "type": "bool",
+      "summary": "The party dug up the eldest Krezkov's grave: a coffin of stones wrapped in a blanket."
+    },
+    {
+      "id": "sorin_pursuers_beaten",
+      "type": "bool",
+      "summary": "The abbey's Brutes and the brides before Vasilka were beaten at the pool (encounter sorin_pursuers)."
+    },
+    {
+      "id": "sorin_brought",
+      "type": "bool",
+      "summary": "Sorin followed the party to the Krezkovs' house."
+    },
+    {
+      "id": "sorin_fate",
+      "type": "string",
+      "summary": "Where Sorin lives now: home (with the Krezkovs), pool (with Kasha) or mountain (back to the abbey)."
     }
   ]
 }

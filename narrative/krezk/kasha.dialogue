@@ -62,6 +62,13 @@ interject tag:blunt: The Abbot's bride. That's where he got her.
 endif
 Kasha Varo: I didn't say that. I'd never say that. Not out loud, where the mountain can hear.
 endif
+if not quest.lighter_than_it_should_be
+set krezk_toys_rumor
+quest lighter_than_it_should_be rumored
+Kasha Varo: And somebody's been leaving toys on the Krezkov stones. Every morning this month. Carved. I leave them be. Toys aren't my business; graves are.
+elif not flag.sorin_fate
+Kasha Varo: The toys? Still coming. I've stopped sweeping round them. The eldest stone's always had the most. The eldest was always lighter than it should be, if you ask me. Nobody asks me.
+endif
 -> menu
 
 ~ strange

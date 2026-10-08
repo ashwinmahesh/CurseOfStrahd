@@ -354,6 +354,27 @@
       ],
       "dialogue": "krezk/ireena:ismark_at_krezk",
       "when": "flag.ismark_in_krezk and not guest:ismark"
+    },
+    {
+      "npc": "sorin_krezkov",
+      "cell": [
+        9,
+        9
+      ],
+      "dialogue": "krezk/lighter_than_it_should_be:family",
+      "facing": "north",
+      "approach": 8,
+      "when": "flag.sorin_brought and not flag.sorin_fate"
+    },
+    {
+      "npc": "sorin_krezkov",
+      "cell": [
+        9,
+        8
+      ],
+      "dialogue": "krezk/lighter_than_it_should_be:sorin_home",
+      "facing": "east",
+      "when": "flag.sorin_fate == \"home\""
     }
   ],
   "narration": {
