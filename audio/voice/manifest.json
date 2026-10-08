@@ -5789,6 +5789,11 @@
   "recipe": "c4a2ce214c",
   "text": "Whatever happens, they don't reach the altar. Not while I'm breathing."
  },
+ "father_lucian/7ddb4620e63d9f66": {
+  "chars": 225,
+  "recipe": "c4a2ce214c",
+  "text": "I can't work miracles of my own; I was never that kind of priest. But the church keeps scrolls for the days that need them, written by better men than me. I can read them. The church asks a gift in return, so it can buy more."
+ },
  "father_lucian/9070b6e184bb8b01": {
   "chars": 65,
   "recipe": "c4a2ce214c",
@@ -49681,127 +49686,132 @@
  },
  "urwin_martikov/110838260fc16742": {
   "chars": 124,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "The Vistani headman outside the walls has lost his girl. His brother doesn't seem to mind much. That's worth thinking about."
  },
  "urwin_martikov/13563ae05310b740": {
   "chars": 91,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "Lady Wachter's cellar lamps burn till dawn. Her book club. Nobody's ever seen a book go in."
  },
  "urwin_martikov/19d18cc8f5b09d71": {
   "chars": 75,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "Eyes open. I've seen this festival before. It ends the same way every time."
+ },
+ "urwin_martikov/1a6a07f2ad5dd4f4": {
+  "chars": 114,
+  "recipe": "d962b05d84",
+  "text": "Upstairs. A room with a bed, or the room over the kitchen with the copper bath. Danika heats the water. Pay first."
  },
  "urwin_martikov/30cfe779b6f1534e": {
   "chars": 111,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "We'll still give you a bed. Danika says it's what you do. We won't sell you anything. I say that's what you do."
  },
  "urwin_martikov/453c017501de73cf": {
   "chars": 30,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "Probably. Don't encourage him."
  },
  "urwin_martikov/5ca4c68ca07fe3a5": {
   "chars": 84,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "And the coffin maker's had a delivery he won't talk about. Big crates. In the night."
  },
  "urwin_martikov/5e9023b800b1a436": {
   "chars": 124,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "A friend of ours walked beside you on the road and you fed him. Then you stood by this town. That makes you friends of ours."
  },
  "urwin_martikov/60e2a28383fb3845": {
   "chars": 11,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "Back. Good."
  },
  "urwin_martikov/613a6899343301be": {
   "chars": 181,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "Mine. The town's. If you mean the Baron or the widow: neither. Vargas puts people in the stocks for frowning. Fiona would put them in the ground for him, and smile while she did it."
  },
  "urwin_martikov/6c1cc126a6848df8": {
   "chars": 129,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "Fiona's still in her house, smiling at us through the window. One day she'll make a mistake, and we'll be watching when she does."
  },
  "urwin_martikov/709fa036466c8dbe": {
   "chars": 78,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "We're the Keepers of the Feather. We watch. We carry word. Some nights we fly."
  },
  "urwin_martikov/7aa2e1c0336a5b0e": {
   "chars": 121,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "Council business. Grain, lamp oil, who mends the palisade. Not a festival in sight. I've never been so happy to be bored."
  },
  "urwin_martikov/7e75921d238ffa4e": {
   "chars": 162,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "Then talk to Lucian. He's better with words. When it comes to the festival, there'll be more of us in the crowd than you'll think. Keep your eyes on the rooftops."
  },
  "urwin_martikov/814067b8fa3b7f0f": {
   "chars": 182,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "So. Somebody has to keep the gates and the lamps and the grain. Not a baron. A council. Householders. Lucian to talk, because he's good at it. Me to listen, because I'm better at it."
  },
  "urwin_martikov/829088f77fdd1884": {
   "chars": 81,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "Bed's upstairs, meal's on the stove. Questions are free. I might not answer them."
  },
  "urwin_martikov/8d522beb70bbb377": {
   "chars": 203,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "My father keeps a vineyard south of here: the Wizard of Wines. The wine's stopped coming, and so has word from him. When you're on that road, go to him. Tell him Urwin sent you. The ravens will know you."
  },
  "urwin_martikov/9538ea75fea5af15": {
   "chars": 31,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "You heard him. Go home, Vargas."
  },
  "urwin_martikov/9d49ef1fc54c55d8": {
   "chars": 146,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "Bread, candles, oil, rope. One potion; a traveller paid his bill with it and then didn't need it. Prices are fair. Fairer than Bildrath's, anyway."
  },
  "urwin_martikov/aaf152705524cb37": {
   "chars": 19,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "It's a strange inn."
  },
  "urwin_martikov/d200bdc3350b4880": {
   "chars": 147,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "Lucian's stripped his altar. Something's gone from the church that shouldn't have. Milivoj the gravedigger is spending more on bread than he earns."
  },
  "urwin_martikov/d28717712de59a10": {
   "chars": 71,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "Bed's upstairs. Meal's on the stove. Leave the birds on the roof alone."
  },
  "urwin_martikov/d6ecd9d514407052": {
   "chars": 24,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "It won't get the chance."
  },
  "urwin_martikov/dce6362d3d0598b4": {
   "chars": 23,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "Quiet, Vargas. Go home."
  },
  "urwin_martikov/df7a03d811b9cb01": {
   "chars": 78,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "The room over ours. Nothing comes in through our windows that we don't let in."
  },
  "urwin_martikov/ebac9da5dae65691": {
   "chars": 89,
-  "recipe": "a7b44f81c6",
+  "recipe": "d962b05d84",
   "text": "You stood between this town and the people who'd sell it. That makes you friends of ours."
  },
  "vallaki_carter/19d71620653c6935": {
