@@ -1239,7 +1239,7 @@ func _wild_shape(c: Combatant, form_id: String) -> CombatResult:
 		return CombatResult.fail("You don't know that form")
 	ch.spend_resource("wild_shape")
 	c.bonus_available = false
-	var opts := {"temp_hp": _wild_temp(c), "keep_mind": true, "label": "Wild Shape"}
+	var opts := {"temp_hp": _wild_temp(c), "keep_mind": true, "label": "Wild Shape", "temp_hp_stay": true}
 	if has(c, "circle_forms"):
 		opts["ac_floor"] = 13 + c.creature.ability_mod(&"wis")
 	if c.creature.concentration == null:

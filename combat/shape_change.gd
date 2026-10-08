@@ -7,7 +7,8 @@ extends RefCounted
 ## Temporary Hit Points run out (Polymorph), when it drops to 0 Hit Points, or when the spell or feature ends.
 
 var _enc: WeakRef
-## Combatant id -> {creature: Creature, ai_profile, ends_without_temp_hp: bool, label}
+## Combatant id -> {creature: Creature, ai_profile, ends_without_temp_hp: bool, label, kept_temp_hp: bool (the creature's own
+## Temporary Hit Points went into the shape)}
 var originals: Dictionary = {}
 
 
@@ -79,10 +80,14 @@ func transform(c: Combatant, beast: Dictionary, opts: Dictionary = {}) -> Monste
 	# Boon of Fluid Forms: 20 more Temporary Hit Points from any change of shape.
 	if tmp > 0:
 		tmp += FaerunFeatures.shape_temp_bonus(orig)
-	if tmp > 0:
-		m.temp_hp = tmp
+	# Temporary Hit Points don't stack: the larger set stays. The shape's replace the creature's own, or the creature's
+	# own (when they're more) go with it into the shape and come back out with it. Wild Shape's stay after the shape ends
+	# (`temp_hp_stay`); a spell's vanish with it (Polymorph).
+	var kept := orig.temp_hp > tmp or bool(opts.get("temp_hp_stay", false))
+	m.temp_hp = maxi(tmp, orig.temp_hp)
+	orig.temp_hp = 0
 	originals[c.id] = {"creature": orig, "ai_profile": str(c.ai_profile), "ends_without_temp_hp": bool(opts.get("ends_without_temp_hp", false)),
-		"label": str(opts.get("label", "Shape"))}
+		"label": str(opts.get("label", "Shape")), "kept_temp_hp": kept}
 	c.creature = m
 	c.ai_profile = StringName(str(d.get("ai_profile", "brute")))
 	c.size_cells = CombatGrid.size_cells_for(m.size)
@@ -94,7 +99,8 @@ func transform(c: Combatant, beast: Dictionary, opts: Dictionary = {}) -> Monste
 
 
 ## Ends the shape: the real creature returns with the Hit Points the shape had (0 Hit Points: Unconscious for a
-## character, dead for a monster). Leftover Temporary Hit Points vanish.
+## character, dead for a monster). A spell's leftover Temporary Hit Points vanish; the creature's own, carried into
+## the shape, and Wild Shape's come back with it.
 func revert(c: Combatant, why: String) -> void:
 	if not is_shaped(c):
 		return
@@ -104,6 +110,8 @@ func revert(c: Combatant, why: String) -> void:
 	var orig := info["creature"] as Creature
 	var shape := c.creature
 	orig.hp = clampi(shape.hp, 0, orig.max_hp())
+	if bool(info.get("kept_temp_hp", false)):
+		orig.temp_hp = shape.temp_hp
 	if orig.concentration != null and orig.concentration.ended:
 		orig.concentration = null
 	# A spell begun in the shape (Shapechange's caster can cast) keeps its Concentration after the change back.
@@ -139,7 +147,8 @@ func to_dict() -> Dictionary:
 	for id: String in originals:
 		var info := originals[id] as Dictionary
 		var orig := info["creature"] as Creature
-		var cd := {"ai_profile": info["ai_profile"], "ends_without_temp_hp": info["ends_without_temp_hp"], "label": info["label"]}
+		var cd := {"ai_profile": info["ai_profile"], "ends_without_temp_hp": info["ends_without_temp_hp"], "label": info["label"],
+			"kept_temp_hp": bool(info.get("kept_temp_hp", false))}
 		if orig is Character:
 			cd["character"] = (orig as Character).to_dict()
 		else:
@@ -172,4 +181,4 @@ func from_dict(d: Dictionary, party: Dictionary) -> void:
 			orig.d20_after = c.creature.d20_after
 			orig.fear_seen = c.creature.fear_seen
 		originals[id] = {"creature": orig, "ai_profile": str(cd["ai_profile"]), "ends_without_temp_hp": bool(cd["ends_without_temp_hp"]),
-			"label": str(cd["label"])}
+			"label": str(cd["label"]), "kept_temp_hp": bool(cd.get("kept_temp_hp", false))}

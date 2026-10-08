@@ -36,7 +36,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Damage order: bonuses, Resistance, Vulnerability; Immunity | creature.gd take_damage_parts | tested | test_damage |
 | Resistance/Vulnerability don't stack | creature.gd | tested | test_damage |
 | Several damage types in one instance | creature.gd take_damage_parts | tested | test_damage, test_attacks |
-| Temporary Hit Points: absorb first, don't stack | creature.gd | tested (engine keeps the higher; see deviations) | test_damage |
+| Temporary Hit Points: absorb first, don't stack (a change of shape too) | creature.gd, shape_change.gd | tested (engine keeps the larger; see deviations) | test_damage, test_new_spells, test_class_combat |
 | Healing can't exceed maximum | creature.gd heal | tested | test_damage |
 | Monsters die at 0 HP | creature.gd | tested | test_damage |
 | Massive Damage | creature.gd | tested | test_damage |

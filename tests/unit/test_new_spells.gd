@@ -361,6 +361,30 @@ func test_polymorph_ends_with_concentration() -> void:
 	assert_true(a.creature is Character)
 
 
+func test_a_shapes_temporary_hit_points_and_the_creatures_own_dont_stack() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["polymorph"], Vector2i(2, 3))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(3, 3))
+	TestCombat.start_with(e, c)
+	a.creature.temp_hp = 3
+	assert_true(e.spells.cast(c, "polymorph", 4, [a]).ok)
+	var beast := a.creature.temp_hp
+	assert_true(beast > 3, "the beast's are more, so they replace the 3")
+	c.creature.concentration.end("test")
+	assert_eq(a.creature.temp_hp, 0, "the shape's leftovers vanish and the 3 were replaced")
+	var e2 := _field()
+	var c2 := TestCombat.high_caster(e2, ["polymorph"], Vector2i(2, 3))
+	var b := TestCombat.hero(e2, "ilse_varga", Vector2i(3, 3))
+	TestCombat.start_with(e2, c2)
+	b.creature.temp_hp = 500
+	assert_true(e2.spells.cast(c2, "polymorph", 4, [b]).ok)
+	assert_eq(b.creature.temp_hp, 500, "its own are more: they go with it into the shape")
+	b.creature.temp_hp = 450
+	c2.creature.concentration.end("test")
+	assert_true(b.creature is Character)
+	assert_eq(b.creature.temp_hp, 450, "and come back out")
+
+
 func test_banishment_removes_a_foe_until_the_spell_ends() -> void:
 	var e := _field()
 	var c := TestCombat.high_caster(e, ["banishment"], Vector2i(2, 3))
