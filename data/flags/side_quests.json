@@ -280,6 +280,36 @@
       "id": "sorin_fate",
       "type": "string",
       "summary": "Where Sorin lives now: home (with the Krezkovs), pool (with Kasha) or mountain (back to the abbey)."
+    },
+    {
+      "id": "sixfeet_rumor",
+      "type": "bool",
+      "summary": "Arik told the party that Old Mihail digs his graves early (Six Feet)."
+    },
+    {
+      "id": "bride_story_known",
+      "type": "bool",
+      "summary": "Goodwife Petra told the party about Zinaida, the bride who went down the well rather than marry the castle's man."
+    },
+    {
+      "id": "bride_bones_raised",
+      "type": "bool",
+      "summary": "The party brought Zinaida's bones up from the bottom of the village well."
+    },
+    {
+      "id": "bride_calmed",
+      "type": "bool",
+      "summary": "Zinaida was talked down when she rose (her name, or Persuasion), and waits at the grave."
+    },
+    {
+      "id": "bride_beaten",
+      "type": "bool",
+      "summary": "Zinaida rose screaming and was beaten at the well (encounter well_bride)."
+    },
+    {
+      "id": "bride_buried",
+      "type": "bool",
+      "summary": "Zinaida is buried in the grave Mihail dug for his sister; Six Feet is over."
     }
   ]
 }
