@@ -80,6 +80,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Tser Pool, the ribbon tree | Boots of Striding and Springing (uncommon) | Search (Investigation DC 14): a Vistani cache in the roots |
 | ✅ | Tser Pool, in the reeds | Stone of Good Luck (uncommon) | Search (Perception DC 12): a gambler's bag of dice (lane 28's spot) |
 | ✅ | Tser Pool, a hollow stump | Potion of Fire Breath (uncommon) | Search (Perception DC 14): a flask hidden from Stanimir (lane 28's spot) |
+| ✅ | Radu, Tser Pool | Rod of the Pact Keeper, +1 (uncommon) | Gift: once the carriage's escort is beaten (The Grey Mare, docs/story/side_quests.md) |
 
 ## Vallaki (level 5)
 

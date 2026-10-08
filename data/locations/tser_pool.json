@@ -413,7 +413,8 @@
       "span": [
         2,
         1
-      ]
+      ],
+      "when": "not quest.the_grey_mare or flag.mare_saved"
     },
     {
       "id": "tser_horse_bay",

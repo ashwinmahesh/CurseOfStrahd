@@ -551,6 +551,31 @@
       "kind": "decor",
       "model": "grave_open",
       "when": "flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "grey_mare_milestone",
+      "cell": [
+        32,
+        11
+      ],
+      "kind": "examine",
+      "label": "A mare tied to the milestone",
+      "model": "horse",
+      "facing": "west",
+      "dialogue": "svalich_road/grey_mare:mare",
+      "when": "quest.the_grey_mare and not flag.mare_saved and not flag.carriage_came"
+    },
+    {
+      "id": "carriage_crossroads",
+      "cell": [
+        20,
+        19
+      ],
+      "kind": "decor",
+      "label": "The black carriage",
+      "model": "wagon",
+      "facing": "north",
+      "when": "flag.carriage_came and not flag.carriage_beaten"
     }
   ],
   "encounters": [
@@ -679,6 +704,465 @@
       "quest": {
         "id": "kestrel_company",
         "stage": "vell_rests"
+      }
+    },
+    {
+      "id": "carriage_escort",
+      "trigger": "dialogue",
+      "when": "flag.mare_saved and level >= 5",
+      "text": "The black horse in the traces stamps once, and the empty harness beside it swings. Pale shapes slide out of the carriage and up out of the road's old graves, and every one of them turns toward the people who broke a bargain.",
+      "monsters": [
+        {
+          "monster": "nightmare",
+          "cell": [
+            22,
+            16
+          ],
+          "name": "The Lead Horse"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            24,
+            15
+          ],
+          "name": "The Footman"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            19,
+            14
+          ],
+          "name": "The Second Footman"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            27,
+            13
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            30,
+            12
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            26,
+            11
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            18,
+            11
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            20,
+            10
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            16,
+            12
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            21,
+            13
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "carriage_beaten",
+      "quest": {
+        "id": "the_grey_mare",
+        "stage": "carriage_beaten"
+      }
+    },
+    {
+      "id": "carriage_escort",
+      "trigger": "dialogue",
+      "when": "not flag.mare_saved and level >= 5",
+      "text": "The black horse in the traces stamps once, and the empty harness beside it swings. Pale shapes slide out of the carriage and up out of the road's old graves, and every one of them turns toward the people who broke a bargain.",
+      "monsters": [
+        {
+          "monster": "nightmare",
+          "cell": [
+            22,
+            16
+          ],
+          "name": "The Lead Horse"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            24,
+            15
+          ],
+          "name": "The Footman"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            19,
+            14
+          ],
+          "name": "The Second Footman"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            27,
+            13
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            30,
+            12
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            26,
+            11
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            18,
+            11
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            20,
+            10
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            16,
+            12
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            21,
+            13
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            32,
+            12
+          ],
+          "name": "Steaua"
+        }
+      ],
+      "surprise": "",
+      "flag": "carriage_beaten",
+      "quest": {
+        "id": "the_grey_mare",
+        "stage": "carriage_beaten"
+      }
+    },
+    {
+      "id": "carriage_escort",
+      "trigger": "dialogue",
+      "when": "flag.mare_saved and level >= 4",
+      "text": "The black horse in the traces stamps once, and the empty harness beside it swings. Pale shapes slide out of the carriage and up out of the road's old graves, and every one of them turns toward the people who broke a bargain.",
+      "monsters": [
+        {
+          "monster": "nightmare",
+          "cell": [
+            22,
+            16
+          ],
+          "name": "The Lead Horse"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            24,
+            15
+          ],
+          "name": "The Footman"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            27,
+            13
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            30,
+            12
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            18,
+            11
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            20,
+            10
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            16,
+            12
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            21,
+            13
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "carriage_beaten",
+      "quest": {
+        "id": "the_grey_mare",
+        "stage": "carriage_beaten"
+      }
+    },
+    {
+      "id": "carriage_escort",
+      "trigger": "dialogue",
+      "when": "not flag.mare_saved and level >= 4",
+      "text": "The black horse in the traces stamps once, and the empty harness beside it swings. Pale shapes slide out of the carriage and up out of the road's old graves, and every one of them turns toward the people who broke a bargain.",
+      "monsters": [
+        {
+          "monster": "nightmare",
+          "cell": [
+            22,
+            16
+          ],
+          "name": "The Lead Horse"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            24,
+            15
+          ],
+          "name": "The Footman"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            27,
+            13
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            30,
+            12
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            18,
+            11
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            20,
+            10
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            16,
+            12
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            21,
+            13
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            32,
+            12
+          ],
+          "name": "Steaua"
+        }
+      ],
+      "surprise": "",
+      "flag": "carriage_beaten",
+      "quest": {
+        "id": "the_grey_mare",
+        "stage": "carriage_beaten"
+      }
+    },
+    {
+      "id": "carriage_escort",
+      "trigger": "dialogue",
+      "when": "flag.mare_saved",
+      "text": "The black horse in the traces stamps once, and the empty harness beside it swings. Pale shapes slide out of the carriage and up out of the road's old graves, and every one of them turns toward the people who broke a bargain.",
+      "monsters": [
+        {
+          "monster": "nightmare",
+          "cell": [
+            22,
+            16
+          ],
+          "name": "The Lead Horse",
+          "hp": 50
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            27,
+            13
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            30,
+            12
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            18,
+            11
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            20,
+            10
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            16,
+            12
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "carriage_beaten",
+      "quest": {
+        "id": "the_grey_mare",
+        "stage": "carriage_beaten"
+      }
+    },
+    {
+      "id": "carriage_escort",
+      "trigger": "dialogue",
+      "when": "not flag.mare_saved",
+      "text": "The black horse in the traces stamps once, and the empty harness beside it swings. Pale shapes slide out of the carriage and up out of the road's old graves, and every one of them turns toward the people who broke a bargain.",
+      "monsters": [
+        {
+          "monster": "nightmare",
+          "cell": [
+            22,
+            16
+          ],
+          "name": "The Lead Horse",
+          "hp": 50
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            27,
+            13
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            30,
+            12
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            18,
+            11
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            20,
+            10
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            16,
+            12
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            32,
+            12
+          ],
+          "name": "Steaua",
+          "hp": 50
+        }
+      ],
+      "surprise": "",
+      "flag": "carriage_beaten",
+      "quest": {
+        "id": "the_grey_mare",
+        "stage": "carriage_beaten"
       }
     }
   ],

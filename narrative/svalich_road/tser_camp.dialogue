@@ -21,12 +21,19 @@ Old Dorina: Long enough to have buried a husband, two sisters and a horse I like
 -> dorina
 
 ~ radu
+if quest.the_grey_mare and quest.the_grey_mare != rumored
+-> svalich_road/grey_mare:radu
+endif
 Radu: Ah! Travellers with good boots and no horse. Tragic. I have a cure for that.
 * What do you have? -> radu_horses
 * Have you seen anyone on the road? -> radu_road
+* [if flag.mare_rumor] Zora says you walked your grey to the crossroads tonight. -> svalich_road/grey_mare:asks
 * Not today. -> END
 
 ~ radu_horses
+if quest.the_grey_mare
+-> svalich_road/grey_mare:horses_without
+endif
 Radu: Look at them. Plaited, brushed, fed better than the burgomaster of Vallaki. That grey one would carry you to the mountains and back and never complain.
 Radu: Not for sale, of course. None of them are for sale today. But tomorrow, who knows? Come back tomorrow.
 interject class:rogue: He's not selling. He's pricing us.
@@ -36,6 +43,9 @@ interject class:rogue: He's not selling. He's pricing us.
 if flag.nicu_kin_told
 Radu: Nobody on the road worth knowing. Not since Nicu. We tied a ribbon for him, and the fiddle plays slow, and I have nobody to cheat at dice.
 -> END
+endif
+if not quest.the_hanged_vistana and not flag.crossroads_gallows_seen
+quest the_hanged_vistana asked
 endif
 Radu: Young Nicu rode out for Vallaki with a mare to sell, four days gone now. He'll be back with a new song and no money, the way he always is.
 Radu: His sister watches the road for him. Don't tell her I said four days. She counts them herself.
@@ -76,7 +86,7 @@ Big Tobar: Walk in the middle. Don't stop to help anyone who calls from the tree
 ~ zora
 Zora: Strangers off the road. I'll remember your faces, and how many of you there are.
 * Why do you count us? -> zora_count
-* Anything on the road we should know about? -> zora_road
+* Heard anything interesting? -> zora_road
 * Goodbye. -> END
 
 ~ zora_count
@@ -86,6 +96,14 @@ Zora: When they don't, Stanimir wants to know which way the missing ones went.
 
 ~ zora_road
 Zora: A black carriage went by two nights ago with nobody driving it. We all stood very still until it was gone. You'll want to do the same if you see it.
+if not quest.the_grey_mare
+set mare_rumor
+quest the_grey_mare rumored
+Zora: It stopped by Radu's pen. In the morning there was a purse on the gatepost, and Radu took it, and he hasn't looked anyone in the eye since.
+Zora: Tonight he walked his grey down the road toward the crossroads. He came back without her. I counted.
+elif flag.carriage_beaten
+Zora: It went back up the castle road the other night, empty, faster than it came. I counted that too.
+endif
 -> END
 
 # Lane 28 (2026-10-08, "more people walking around and doing things"): Lavinia dancing on the plank stage, Iancu
