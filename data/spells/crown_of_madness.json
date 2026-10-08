@@ -71,7 +71,7 @@
       "upkeep": true,
       "label": "Crown of Madness: keep control",
       "sub": "Magic action",
-      "help": "Each of your later turns needs a Magic action or the spell ends."
+      "help": "Each of your later turns needs a Magic action or the spell ends. Pick the creature the crowned one must attack next (Enter: no one)."
     }
   ]
 }

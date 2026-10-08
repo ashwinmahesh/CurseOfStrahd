@@ -7,7 +7,8 @@ extends RefCounted
 ## An action: {id, tab, label, sub, cost: action|attack|bonus|reaction|free|movement, legal, reason, targeting,
 ##   count, repeat, range, spell_id, slot, option_id, kind, help}
 ## targeting: none (at once), enemy, ally, creature, dying (a creature at 0 HP), multi (up to `count` creatures,
-##   repeats allowed when `repeat`), point (a grid point in range), direction (aimed from the caster).
+##   repeats allowed when `repeat`), point (a grid point in range), direction (aimed from the caster), wall (squares
+##   drawn one at a time, sent as opts.path: SpellTargeting).
 
 const COMMON := "Common"
 const SPELLS := "Spells"
@@ -398,6 +399,10 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 		var t := data.get("targets", {}) as Dictionary
 		a["count"] = int(t.get("count", 1))
 		a["repeat"] = str(s["id"]) in ["magic_missile", "scorching_ray"] or bool(data.get("repeat_targets", false))
+		# Eldritch Blast (2024): a pick for each beam, at the same target or different ones.
+		if str(s["id"]) == "eldritch_blast":
+			a["count"] = e.spells.specials.beams(c)
+			a["repeat"] = true
 		a["concentration"] = bool((data.get("duration", {}) as Dictionary).get("concentration", false))
 		if c.creature is Character:
 			var mm: Array = []
@@ -502,12 +507,13 @@ func _spell_targeting(data: Dictionary) -> String:
 	return spell_targeting(data)
 
 
-## How the hotbar targets a spell: none, direction, point, place, enemy, ally, dying, dead, multi or creature.
+## How the hotbar targets a spell: none, direction, point, wall, place, enemy, ally, dying, dead, multi or creature.
 static func spell_targeting(data: Dictionary) -> String:
 	if data.has("area"):
 		if str((data.get("range", {}) as Dictionary).get("kind", "")) == "self":
 			return "none" if str((data["area"] as Dictionary).get("shape", "")) == "emanation" else "direction"
-		return "point"
+		# A wall drawn square by square (its ring, globe or dome choice is placed at a point instead).
+		return "wall" if SpellTargeting.drawn_wall(data) else "point"
 	var t := data.get("targets", {}) as Dictionary
 	if str(data.get("id", "")) in ["misty_step", "dimension_door"]:
 		return "place"
@@ -1196,7 +1202,8 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 	var data := Compendium.shared().spell_data(str(action["spell_id"]))
 	var cells: Array[Vector2i] = []
 	if data.has("area"):
-		cells = e.spells.area_for(c, data, point, dir)
+		# A wall's ring or globe shows as it's cast (SpellTargeting.wall_cells).
+		cells = e.spells.targeting.wall_cells(data, action.get("opts", {}) as Dictionary, point, e.spells.area_for(c, data, point, dir))
 	var who: Array[Dictionary] = []
 	var warnings: Array[String] = []
 	var level := int(data.get("level", 0))
@@ -1320,7 +1327,7 @@ func square_actions(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Arr
 		return out
 	var seen := {}
 	for a in actions_for(c):
-		if not bool(a["legal"]) or str(a["targeting"]) in ["none", "self", "point", "direction", "place", "multi"]:
+		if not bool(a["legal"]) or str(a["targeting"]) in ["none", "self", "point", "direction", "place", "multi", "wall"]:
 			continue
 		if seen.has(str(a["label"])) or target_why(c, a, o) != "":
 			continue

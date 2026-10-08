@@ -226,6 +226,8 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	# Wall of Fire as a ring 20 ft across.
 	if str((s.get("area", {}) as Dictionary).get("shape", "")) == "wall" and SpellCaster.choice_of(s, opts) in ["ring", "globe"] and point != Vector2.INF:
 		cells = spells._ring(point, 10 if SpellCaster.choice_of(s, opts) == "ring" else 15)
+	# A wall drawn square by square (opts.path) covers those squares; a ring takes its own size.
+	cells = spells.targeting.wall_cells(s, opts, point, cells)
 	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": cells,
 		"targets": tgt.map(func(t: Combatant) -> String: return t.id)})
 	var ctx := {"c": c, "s": s, "slot": slot, "nums": nums, "conc": conc, "opts": opts, "point": point,
@@ -340,6 +342,8 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 		cells = spells.multi_area(c, spell_id, opts["points"] as Array)
 	if str((s.get("area", {}) as Dictionary).get("shape", "")) == "wall" and SpellCaster.choice_of(s, opts) in ["ring", "globe"] and point != Vector2.INF:
 		cells = spells._ring(point, 10 if SpellCaster.choice_of(s, opts) == "ring" else 15)
+	# A wall drawn square by square (opts.path) covers those squares; a ring takes its own size.
+	cells = spells.targeting.wall_cells(s, opts, point, cells)
 	var ctx := {"c": c, "s": s, "slot": level, "nums": nums, "conc": conc, "opts": opts, "point": point, "cells": cells,
 		"choice": SpellCaster.choice_of(s, opts), "direction": opts.get("direction", Vector2.ZERO), "cell": check["cell"]}
 	var r := CombatResult.new()

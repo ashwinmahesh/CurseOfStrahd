@@ -424,7 +424,7 @@ const HIT_MANEUVERS := {
 	"pushing_attack": ["Pushing Attack", "Str save or pushed 15 ft"],
 	"trip_attack": ["Trip Attack", "Str save or Prone"],
 	"sweeping_attack": ["Sweeping Attack", "the die hits a second foe"],
-	"maneuvering_attack": ["Maneuvering Attack", "an ally moves without Opportunity Attacks"],
+	"maneuvering_attack": ["Maneuvering Attack", "an ally moves clear of the target"],
 	"lunging_attack": ["Lunging Attack", "after moving 5 ft: +die"],
 	"feinting_attack": ["Feinting Attack", "+die (after a feint)"],
 }
@@ -888,11 +888,9 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 						e.deal_damage(c, o, [{"amount": int(rolled["total"]), "type": str(p.damage_type)}], false, "Sweeping Attack", [str(rolled["text"])])
 						break
 			"maneuvering_attack":
-				for a in e.allies_of(c):
-					if a.can_act() and e.distance(c, a) <= 30:
-						a.free_move_ft = maxi(a.free_move_ft, a.speed() / 2)
-						e.log.add("info", "%s can move %d ft without Opportunity Attacks from %s (Maneuvering Attack)" % [a.name(), a.free_move_ft, target.name()], a.id)
-						break
+				# An ally who can see or hear you may use its Reaction to move half its Speed, the target getting no
+				# Opportunity Attack: the player picks the ally and its square (EncounterMovement.reaction_move).
+				e.movement.offer_reaction_move(c, target, "Maneuvering Attack")
 		e.events.append({"type": "condition", "id": target.id})
 	# Cunning Strike.
 	var dc_dex := maneuver_dc(c, &"dex")

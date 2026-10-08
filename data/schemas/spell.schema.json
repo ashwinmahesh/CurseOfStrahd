@@ -158,6 +158,11 @@
         "origin_size": {
           "type": "integer",
           "description": "Squares across of what an Emanation at a point spreads from (Conjure Animals' Large pack: 2)."
+        },
+        "ring": {
+          "type": "integer",
+          "minimum": 5,
+          "description": "A wall's ring choice: its radius in feet (10 when left out, as Wall of Fire's 20-ft ring; Blade Barrier's is 30)."
         }
       }
     },

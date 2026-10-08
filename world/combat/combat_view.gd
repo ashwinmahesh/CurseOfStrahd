@@ -55,6 +55,9 @@ var _pad_repeat := 0.0
 var selected: Dictionary = {}
 var picked: Array = []
 var picked_points: Array[Vector2] = []
+## Picks after the first: a wall's squares and burning side, Commander's Strike's foe, Crown of Madness's victim,
+## Maneuvering Attack's ally and square (world/combat/target_picker.gd).
+var picker: TargetPicker
 var slot_level := 0
 var _reach: Dictionary = {}
 var _target_cycle := 0
@@ -81,6 +84,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	rig = rig_
 	tokens = tokens_
 	catalog = ActionCatalog.new(e)
+	picker = TargetPicker.new(e)
 	overlay = GridOverlay.create(board)
 	add_child(overlay)
 	field = FieldView.create(board)
@@ -257,6 +261,10 @@ func _advance() -> void:
 	hud.set_pips([], 0)
 	_reach = catalog.move_reach(c) if c.can_act() else {}
 	cursor_cell = c.cell
+	# Maneuvering Attack just hit: the ally that moves, then its square (TargetPicker).
+	if picker.begin_move(c):
+		selected = picker.action
+		mode = Mode.TARGET
 	_update_hover()
 
 
@@ -387,10 +395,11 @@ func _choose(action: Dictionary, level: int = 0) -> void:
 		levels = catalog.level_choices(c, action)
 		if not levels.is_empty():
 			slot_level = level if level in levels else levels[0]
-	if str(action["targeting"]) == "none":
+	if str(action["targeting"]) == "none" and not picker.takes(c, action):
 		_perform(action, [], Vector2.INF, Vector2.ZERO)
 		return
-	selected = action
+	# A wall starts its drawing, Crown of Madness's keep-control its victim (TargetPicker).
+	selected = picker.begin(c, action, slot_level)
 	picked = []
 	picked_points = []
 	mode = Mode.TARGET
@@ -401,6 +410,7 @@ func _choose(action: Dictionary, level: int = 0) -> void:
 
 
 func _cancel_targeting() -> void:
+	picker.cancel()
 	hud.hide_tooltip()
 	selected = {}
 	picked = []
@@ -417,7 +427,7 @@ func _show_target_marks() -> void:
 	var c := _player()
 	var foes: Array = []
 	var friends: Array = []
-	if c == null or selected.is_empty() or str(selected["targeting"]) in ["point", "points", "direction"]:
+	if c == null or selected.is_empty() or picker.active() or str(selected["targeting"]) in ["point", "points", "direction"]:
 		return
 	if str(selected["targeting"]) == "dead":
 		var dead: Array = []
@@ -446,9 +456,64 @@ func _perform(action: Dictionary, targets: Array, point: Vector2, dir: Vector2) 
 	var r := catalog.perform(c, action, targets, point, dir, slot_level)
 	slot_level = 0
 	selected = {}
+	picker.reset()
 	picked = []
 	picked_points = []
 	hud.set_pips([], 0)
+	if not r.ok:
+		hud.banner(r.reason, 1.6)
+	await _play_events()
+	if r.is_paused() or e.pending != null:
+		mode = Mode.PROMPT
+		_refresh_all()
+		hud.show_prompt(e.pending)
+		return
+	_advance()
+
+
+## Does what a pick after the first asked for (TargetPicker): the action with its picks, Maneuvering Attack's move,
+## or a refusal to show; otherwise the picking goes on.
+func _run_pick(cmd: Dictionary) -> void:
+	match str(cmd.get("do", "")):
+		"perform":
+			_perform(cmd["action"] as Dictionary, cmd["targets"] as Array, cmd["point"] as Vector2, cmd["dir"] as Vector2)
+			return
+		"move":
+			_reaction_move(cmd["ally"] as Combatant, cmd["cell"] as Vector2i)
+			return
+		"refuse":
+			hud.banner(str(cmd["why"]), 1.4)
+	_update_hover()
+
+
+## Backspace or right-click while picking: takes back a wall's last square, or a second pick (TargetPicker). False
+## when there was nothing to take back.
+func _undo_pick() -> bool:
+	if mode != Mode.TARGET or not picker.undo():
+		return false
+	if not picker.active():
+		overlay.clear("area")
+		_show_target_marks()
+	_update_hover()
+	return true
+
+
+## The floor marks and the tooltip a pick after the first asks for (TargetPicker.show).
+func _show_pick(view: Dictionary, at: Vector2) -> void:
+	for key: String in ["area", "target", "friendly", "goal", "danger"]:
+		overlay.show_cells(key, view[key] as Array)
+	overlay.show_trail("path", view["trail"] as Array)
+	hud.show_tooltip(str(view["title"]), view["lines"] as Array, view["warnings"] as Array, at)
+
+
+## Maneuvering Attack's move: the ally picked walks to the square picked with its Reaction.
+func _reaction_move(ally: Combatant, cell: Vector2i) -> void:
+	mode = Mode.BUSY
+	overlay.clear_all()
+	hud.hide_tooltip()
+	selected = {}
+	picker.reset()
+	var r := e.reaction_move(ally, cell)
 	if not r.ok:
 		hud.banner(r.reason, 1.6)
 	await _play_events()
@@ -548,11 +613,20 @@ func _square_picked(id: String) -> void:
 	for it in _menu_items:
 		# Picking something up needs no one standing there.
 		if str(it["id"]) == id and it.has("action") and (o != null or str((it["action"] as Dictionary)["targeting"]) == "none"):
+			# Commander's Strike and Crown of Madness go on to their second pick (TargetPicker).
+			if o != null and picker.second(c, it["action"] as Dictionary, o, 0):
+				selected = it["action"] as Dictionary
+				mode = Mode.TARGET
+				_update_hover()
+				return
 			_perform(it["action"] as Dictionary, [o] if o != null else [], Vector2.INF, Vector2.ZERO)
 			return
 
 
 func _confirm_target(c: Combatant, t: CombatToken) -> void:
+	if picker.active():
+		_run_pick(picker.pick(hover_cell, t.combatant if t != null else null))
+		return
 	var kind := str(selected["targeting"])
 	match kind:
 		"points":
@@ -581,7 +655,7 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 				hud.banner("%d of %d spaces chosen" % [picked_points.size(), need], 1.2)
 				_update_hover()
 		"point":
-			_perform(selected, [], _aim_point(), Vector2.ZERO)
+			_perform(selected, [], _aim_point(), TargetPicker.point_dir(e, c, selected, _aim_point()))
 		"place":
 			# A square for the object (or teleport), or a creature to put it beside.
 			if t != null and t.combatant != c and c.hostile_to(t.combatant):
@@ -602,6 +676,7 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 			else:
 				picked.append(t.combatant)
 			var need := e.spells.target_count(Compendium.shared().spell_data(str(selected["spell_id"])), slot_level + (1 if str((selected.get("opts", {}) as Dictionary).get("slot_boost", "")) != "" else 0)) if str(selected["kind"]) == "spell" else int(selected.get("count", 1))
+			need = maxi(need, int(selected.get("count", 1)))   # Eldritch Blast: one pick per beam
 			if picked.size() >= need:
 				_perform(selected, picked.duplicate(), Vector2.INF, Vector2.ZERO)
 			else:
@@ -613,6 +688,10 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 			var why2 := catalog.target_why(c, selected, t.combatant)
 			if why2 != "":
 				hud.banner(why2, 1.4)
+				return
+			# Commander's Strike's ally and Crown of Madness's target take a second pick (TargetPicker).
+			if picker.second(c, selected, t.combatant, slot_level):
+				_update_hover()
 				return
 			_perform(selected, [t.combatant], Vector2.INF, Vector2.ZERO)
 
@@ -730,11 +809,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif mb.button_index == MOUSE_BUTTON_RIGHT:
 			if mode == Mode.IDLE and _open_square_menu(mb.position):
 				return
-			_cancel_targeting()
-			_update_hover()
+			if not _undo_pick():
+				_cancel_targeting()
+				_update_hover()
+	elif event is InputEventKey and (event as InputEventKey).pressed and (event as InputEventKey).physical_keycode == KEY_BACKSPACE:
+		_undo_pick()
 	elif event.is_action_pressed(&"combat_confirm"):
 		if mode == Mode.TARGET and str(selected.get("targeting", "")) == "multi" and not picked.is_empty() and not using_pad:
 			_perform(selected, picked.duplicate(), Vector2.INF, Vector2.ZERO)
+		elif mode == Mode.TARGET and picker.active() and not using_pad:
+			_run_pick(picker.confirm())
 		else:
 			_confirm_at()
 	elif event.is_action_pressed(&"combat_cancel"):
@@ -798,7 +882,10 @@ func _next_target() -> void:
 	for o in e.living():
 		if o == c or o.is_down() and str(selected.get("targeting", "")) != "dying":
 			continue
-		if mode == Mode.TARGET and catalog.target_why(c, selected, o) != "":
+		if mode == Mode.TARGET and picker.active():
+			if not picker.candidate(o):
+				continue
+		elif mode == Mode.TARGET and catalog.target_why(c, selected, o) != "":
 			continue
 		if mode != Mode.TARGET and not c.hostile_to(o):
 			continue
@@ -974,6 +1061,9 @@ func _update_hover() -> void:
 
 
 func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
+	if picker.active():
+		_show_pick(picker.show(hover_cell, t.combatant if t != null else null), at)
+		return
 	var kind := str(selected["targeting"])
 	if kind == "points" or (kind == "point" and str(selected["kind"]) == "feat"):
 		var cells: Array = []
@@ -985,7 +1075,9 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		hud.show_tooltip(str(selected["label"]), ["Choose a visible space within %d ft" % int(selected.get("range", 0)), "%d of %d spaces chosen" % [picked_points.size(), int(selected.get("count", 2))]] if kind == "points" else ["Choose an empty space or a willing ally to swap with"], [], at)
 		return
 	if kind in ["point", "direction"]:
-		var pv := catalog.spell_preview(c, selected, _aim_point(), _aim_dir(c), slot_level)
+		# A wall at a point (a Tsunami) runs across the line from the caster, as it's cast (TargetPicker.point_dir).
+		var wall_dir := TargetPicker.point_dir(e, c, selected, _aim_point()) if kind == "point" else Vector2.ZERO
+		var pv := catalog.spell_preview(c, selected, _aim_point(), wall_dir if wall_dir != Vector2.ZERO else _aim_dir(c), slot_level)
 		overlay.show_cells("area", pv["cells"] as Array)
 		var lines: Array = []
 		for w: Dictionary in pv["creatures"]:

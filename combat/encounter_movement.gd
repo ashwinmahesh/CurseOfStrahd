@@ -6,6 +6,9 @@ extends RefCounted
 ## feature movement and Jump.
 
 var _enc: WeakRef
+## A move a feature hands an ally right after a hit (Maneuvering Attack): {by, spare, source, round, turn}, open until
+## an ally takes it (reaction_move), the player passes, or the turn moves on.
+var reaction_offer: Dictionary = {}
 
 
 func _init(encounter: Encounter) -> void:
@@ -253,7 +256,8 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 		if not c.creature.has_flag("flyby") and not c.creature.has_flag("agile"):
 			for p in _provokers(c, c.cell, to):
 				var key := "%s@%d" % [p.id, i]
-				if handled.has(key):
+				# A creature the move is spared from (Maneuvering Attack's target) gets no Opportunity Attack.
+				if handled.has(key) or handled.has("spare:" + p.id):
 					continue
 				handled[key] = true
 				var decision := e._reaction_decision(p, "opportunity_attack")
@@ -475,6 +479,86 @@ func free_move(c: Combatant, dest: Vector2i) -> CombatResult:
 	c.movement_left = keep_move
 	c.disengaged = keep_dis
 	return e.undo.after_move(undo, r)
+
+
+## Maneuvering Attack's hit: a willing creature (an ally of `by`) who can see or hear `by` may use its Reaction to move
+## up to half its Speed without provoking an Opportunity Attack from `spare`, the creature hit (others still can). The
+## player picks who and where (reaction_move); the offer lapses when the turn moves on.
+func offer_reaction_move(by: Combatant, spare: Combatant, source: String) -> void:
+	var e := enc()
+	reaction_offer = {"by": by.id, "spare": spare.id, "source": source, "round": e.round_no, "turn": e.turn_index}
+	e.log.add("info", "%s: an ally of %s can use its Reaction to move half its Speed, %s getting no Opportunity Attack" % [source, by.name(), spare.name()], by.id)
+
+
+## The open offer, or {} once it was taken, passed on or has lapsed.
+func open_reaction_move() -> Dictionary:
+	var e := enc()
+	if reaction_offer.is_empty() or e.state != Encounter.State.ACTIVE or int(reaction_offer["round"]) != e.round_no \
+			or int(reaction_offer["turn"]) != e.turn_index:
+		return {}
+	return reaction_offer
+
+
+## The player passes on the offered move.
+func decline_reaction_move() -> void:
+	reaction_offer = {}
+
+
+## Why `ally` can't take the offered move ("" if it can).
+func reaction_mover_why(ally: Combatant) -> String:
+	var e := enc()
+	var offer := open_reaction_move()
+	if offer.is_empty():
+		return "No move is on offer"
+	var by := e.get_c(str(offer["by"]))
+	if by == null or ally == null or ally == by or not by.allied_with(ally) or EchoKnight.is_echo(ally):
+		return "Choose an ally"
+	if not e.spells.can_react(ally):
+		return "%s has no Reaction to use" % ally.name()
+	if not e.spells.can_see_or_hear(ally, by):
+		return "%s can't see or hear %s" % [ally.name(), by.name()]
+	if ally.speed() <= 0:
+		return "%s can't move" % ally.name()
+	if e.mount_of(ally) != null or e.rider_of(ally) != null:
+		return "%s is mounted" % ally.name() if e.mount_of(ally) != null else "%s carries a rider" % ally.name()
+	return ""
+
+
+## The squares the offered move can take `ally` to: up to half its Speed (reachable_for's {cell: {cost, prev, occupied}}).
+func reaction_move_reach(ally: Combatant) -> Dictionary:
+	return reachable_for(ally, ally.speed() / 2)
+
+
+## The creature the offered move doesn't provoke (Maneuvering Attack's target), or null.
+func reaction_move_spared() -> Combatant:
+	var offer := open_reaction_move()
+	return enc().get_c(str(offer["spare"])) if not offer.is_empty() else null
+
+
+## Takes the offered move: `ally` spends its Reaction and walks to `dest`, up to half its Speed, provoking no
+## Opportunity Attack from the creature hit. Leaving another enemy's reach still provokes.
+func reaction_move(ally: Combatant, dest: Vector2i) -> CombatResult:
+	var e := enc()
+	if e.pending != null:
+		return CombatResult.fail("Answer the reaction prompt first")
+	var why := reaction_mover_why(ally)
+	if why != "":
+		return CombatResult.fail(why)
+	var reach := reaction_move_reach(ally)
+	if dest == ally.cell or not reach.has(dest) or bool((reach[dest] as Dictionary)["occupied"]):
+		return CombatResult.fail("Can't get there with %d ft" % (ally.speed() / 2))
+	var offer := reaction_offer
+	reaction_offer = {}
+	ally.reaction_available = false
+	var spare := e.get_c(str(offer["spare"]))
+	e.log.add("reaction", "%s moves with its Reaction (%s)%s" % [ally.name(), offer["source"],
+		": no Opportunity Attack from %s" % spare.name() if spare != null else ""], ally.id)
+	var keep := ally.movement_left
+	ally.movement_left = ally.speed() / 2
+	var r := _walk(ally, CombatGrid.path_to(reach, dest), 1, CombatResult.new(), {"willing": true, "spare:" + str(offer["spare"]): true})
+	return e.then(r, func() -> CombatResult:
+		ally.movement_left = keep
+		return r)
 
 
 ## Jump (the spell): once on each of its turns, a leap of up to 30 ft for 10 ft of movement, over creatures and
