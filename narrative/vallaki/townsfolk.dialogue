@@ -36,3 +36,23 @@ if guest:ireena
 Ilie the Lamplighter: Your friend should keep her hood up. The dark has eyes on this town, and some of them are at the windows.
 endif
 -> END
+
+# --- Evenings at the Blue Water Inn (their `hours`), and the stocks (data/schedule/vallaki.json) ---
+
+~ goodwife_inn
+Goodwife Marta [smile]: One cup of Urwin's red, and then home before the lamps are all lit. The Baron likes us in by dark. So does the dark.
+-> END
+
+~ carter_inn
+Old Kolya: Sit, sit. This is the only chair in Vallaki nobody's ordered me to be cheerful in. I'm not giving it up.
+-> END
+
+~ grumbler
+Anton the Cooper: Don't look at me like that. I smiled. I smiled the whole festival. Apparently it didn't reach my eyes.
+* What happens now? -> grumbler_now
+* Chin up. -> END
+
+~ grumbler_now
+Anton the Cooper: I stand here till the evening bell, then I go home and practise in the mirror. Third time this month. My wife says I've a face built for coopering, not for joy.
+interject tag:kind: For what it's worth, it seems a perfectly good face.
+-> END

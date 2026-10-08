@@ -432,7 +432,6 @@
         12
       ],
       "dialogue": "krezk/townsfolk:woodcutter",
-      "when": "day",
       "path": [
         [
           24,
@@ -447,6 +446,10 @@
           12,
           20
         ]
+      ],
+      "hours": [
+        7,
+        18
       ]
     }
   ],

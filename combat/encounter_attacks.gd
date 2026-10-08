@@ -427,10 +427,13 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 	st["charge"] = e.monster_actions.charge_of(c, target, option)
 	c.clear_run()
 	var label := "%s → %s (%s)" % [c.name(), target.name(), p.name]
+	# What can change the roll once it's made (Bend Luck, a Bardic Inspiration die, a Luck Blade...): asked below.
+	var col := e.d20.collect(c)
 	var t := c.creature.roll_d20(e.dice, D20Test.Kind.ATTACK_ROLL, p.attack, ac, keys, sit["advantage"] as Array[String],
 		sit["disadvantage"] as Array[String], label, p.crit_range, attacked_dice(target))
 	if int(sit.get("height_bonus", 0)) != 0:
 		t.add_bonus(int(sit.get("height_bonus", 0)), "High ground" if int(sit.get("height_bonus", 0)) > 0 else "Low ground")
+	var responses := e.d20.collected(col)
 	target.creature.consume_attacked()
 	# Sundering Blow: the next attack by someone else against the creature gets +5.
 	for m: Dictionary in e.marks.duplicate():
@@ -444,22 +447,32 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 		elif str(option.get("kind", "")) != "blade":
 			e.weapons._spend_ammo(c, p)
 	st["t"] = t
-	if t.success:
-		return _attack_outcome(st)
-	# Heroic Inspiration (2024): reroll a die right after rolling it.
+	return e.reactions.offer(responses, func() -> CombatResult:
+		if t.success:
+			return _attack_outcome(st)
+		return e.reactions.offer(_miss_offers(st), func() -> CombatResult: return _attack_outcome(st), r), r)
+
+
+## The attacker's ways to turn its own miss into a hit: Heroic Inspiration (2024: reroll the d20 and use the new roll),
+## then Precision Attack, Guided Strike and the rest (Reactions.after_miss_attacker).
+func _miss_offers(st: Dictionary) -> Array:
+	var e := enc()
+	var c := st["c"] as Combatant
+	var target := st["target"] as Combatant
+	var t := st["t"] as D20Test
 	var chain: Array = []
 	if c.creature is Character and (c.creature as Character).heroic_inspiration and c.is_player_controlled():
 		chain.append({"kind": "heroic_inspiration", "reactor": c, "trigger": target.id, "title": "Heroic Inspiration?",
-			"text": "%s misses %s: %d vs AC %d. Spend Heroic Inspiration to reroll the d20 and use the new roll?" % [c.name(), target.name(), t.total, ac],
-			"cost": "Heroic Inspiration (regained on a Long Rest)",
+			"text": func() -> String: return "%s misses %s: %d vs AC %d. Spend Heroic Inspiration to reroll the d20 and use the new roll?" % [c.name(), target.name(), t.total, t.target],
+			"cost": "Heroic Inspiration (regained on a Long Rest)", "spends_reaction": false,
+			"still": func() -> bool: return not t.success and (c.creature as Character).heroic_inspiration,
 			"use": func() -> void:
 				(c.creature as Character).heroic_inspiration = false
-				var t2 := c.creature.roll_d20(e.dice, D20Test.Kind.ATTACK_ROLL, p.attack, ac, keys, sit["advantage"] as Array[String],
-					sit["disadvantage"] as Array[String], label + " (Heroic Inspiration reroll)", p.crit_range)
-				e.log.add("roll", "%s spends Heroic Inspiration to reroll: %d" % [c.name(), t2.total], c.id, [(st["t"] as D20Test).describe(), t2.describe()])
-				st["t"] = t2})
+				var before := t.describe()
+				t.reroll_one(e.dice.d20("Heroic Inspiration"), "Heroic Inspiration")
+				e.log.add("roll", "%s spends Heroic Inspiration to reroll: %d" % [c.name(), t.total], c.id, [before, t.describe()])})
 	chain.append_array(e.reactions.after_miss_attacker(st))
-	return e.reactions.offer(chain, func() -> CombatResult: return _attack_outcome(st), r)
+	return chain
 
 
 func _attack_outcome(st: Dictionary) -> CombatResult:
@@ -667,14 +680,15 @@ func _apply_hit(st: Dictionary, parts: Dictionary, details: Array[String], dmg_t
 	r.damage = dr.final
 	if target.is_down():
 		r.killed.append(target.id)
-	_on_hit_effects(c, target, option, dr, r)
-	if bool(option["melee"]):
-		retaliate(c, target)
-		e.spells.specials.high.holy_aura_hit(c, target)
-	e.features.after_hit(c, target, option, dr, st, r)
-	e.items.after_hit(c, target, option, dr, st, r)
-	e.reaction_flow._queue_sentinels(c, target)
-	return e.run_reaction_queue(r)
+	# The hit's riders can call for saves that stop for the choices after their rolls (a ghoul's paralysis).
+	return e.then(_on_hit_effects(c, target, option, dr, r), func() -> CombatResult:
+		if bool(option["melee"]):
+			retaliate(c, target)
+			e.spells.specials.high.holy_aura_hit(c, target)
+		e.features.after_hit(c, target, option, dr, st, r)
+		e.items.after_hit(c, target, option, dr, st, r)
+		e.reaction_flow._queue_sentinels(c, target)
+		return e.run_reaction_queue(r))
 
 
 ## A melee hit on a creature wrapped in Armor of Agathys or Fire Shield: the attacker takes the spell's damage
@@ -712,58 +726,92 @@ func _on_miss(c: Combatant, target: Combatant, option: Dictionary, r: CombatResu
 			e.deal_damage(c, target, [{"amount": mod, "type": str(p.damage_type)}], false, "Graze", [], false)
 
 
-## Mastery properties and stat-block riders after a hit.
-func _on_hit_effects(c: Combatant, target: Combatant, option: Dictionary, dr: DamageResult, r: CombatResult) -> void:
+## Mastery properties and stat-block riders after a hit. Their saves (Topple, a ghoul's paralysis) stop for the
+## choices after each roll, so the caller carries on with Encounter.then.
+func _on_hit_effects(c: Combatant, target: Combatant, option: Dictionary, dr: DamageResult, r: CombatResult) -> CombatResult:
 	var e := enc()
 	var p := option["profile"] as WeaponProfile
-	if target.is_alive() and not target.is_down():
-		match p.mastery:
-			"vex":
-				if dr.final > 0:
-					e.add_mark({"kind": "advantage_against", "target": target.id, "attacker": c.id, "source": "Vex",
-						"expires_owner": c.id, "expires_phase": "end", "skip": e.own_turn_skip(c), "consume": true})
-			"sap":
-				e.add_mark({"kind": "disadvantage_next_attack", "attacker": target.id, "source": "Sapped by %s" % c.name(),
-					"expires_owner": c.id, "expires_phase": "start", "consume": true})
-			"slow":
-				if dr.final > 0 and not target.creature.effects.any(func(x: Effect) -> bool: return x.name == "Slowed (mastery)"):
-					var slowed := Effect.new("Slowed (mastery)", &"effect", "slow").with_modifier("speed", {"value": -10})
-					slowed.ends = Effect.Ends.START_OF_TURN
-					slowed.turn_owner_id = c.id
-					target.creature.add_effect(slowed)
-			"topple":
-				# Hold back Topple or Push (hotbar riders): the mastery is skipped this turn.
-				if not "skip:topple" in c.armed:
-					var dc := 8 + c.creature.ability_mod(p.ability) + c.creature.proficiency_bonus()
-					var s := target.creature.roll_save(e.dice, &"con", dc, [], [], "Topple (%s)" % target.name())
-					if not s.success:
-						target.creature.add_condition(&"prone", "Topple")
-						e.log.add("condition", "Topple: %s falls Prone" % target.name(), target.id, [s.describe()])
-					else:
-						e.log.add("info", "Topple: %s keeps its feet" % target.name(), target.id, [s.describe()])
-			"push":
-				if Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large") and not "skip:push" in c.armed:
-					var moved := e.forced_move(target, e.center_of(c), 10)
-					if moved > 0:
-						e.log.add("info", "Push: %s is shoved %d ft" % [target.name(), moved * 5], target.id)
-	# Stat-block riders (a wolf's bite knocks Prone; size limits are in the action text).
-	if c.creature is Monster and target.is_alive():
-		var act := (c.creature as Monster).action(str(option.get("action_id", "")))
-		for cond: Variant in act.get("conditions", []):
-			if act.has("save"):
-				var sv := act["save"] as Dictionary
-				var s2 := target.creature.roll_save(e.dice, StringName(str(sv["ability"])), int(sv["dc"]), [], [], "%s (%s)" % [act.get("name", ""), target.name()])
-				if s2.success:
-					continue
-			if str(cond) == "prone" and Creature.SIZES.find(target.creature.size) > Creature.SIZES.find(c.creature.size):
-				continue
-			if target.creature.add_condition(StringName(str(cond)), str(act.get("name", ""))):
-				e.log.add("condition", "%s has the %s condition" % [target.name(), str(cond).capitalize()], target.id)
-				e.events.append({"type": "condition", "id": target.id})
+	var steps: Array = [
+		func() -> CombatResult: return _mastery_on_hit(c, target, p, dr, r),
+		func() -> CombatResult: return _stat_block_on_hit(c, target, option, dr, r),
+	]
+	return e.each(steps, func(step: Variant) -> CombatResult: return (step as Callable).call() as CombatResult, func() -> CombatResult: return r)
+
+
+## Vex, Sap, Slow, Topple (a Constitution save or Prone) and Push.
+func _mastery_on_hit(c: Combatant, target: Combatant, p: WeaponProfile, dr: DamageResult, r: CombatResult) -> CombatResult:
+	var e := enc()
+	if not target.is_alive() or target.is_down():
+		return r
+	match p.mastery:
+		"vex":
+			if dr.final > 0:
+				e.add_mark({"kind": "advantage_against", "target": target.id, "attacker": c.id, "source": "Vex",
+					"expires_owner": c.id, "expires_phase": "end", "skip": e.own_turn_skip(c), "consume": true})
+		"sap":
+			e.add_mark({"kind": "disadvantage_next_attack", "attacker": target.id, "source": "Sapped by %s" % c.name(),
+				"expires_owner": c.id, "expires_phase": "start", "consume": true})
+		"slow":
+			if dr.final > 0 and not target.creature.effects.any(func(x: Effect) -> bool: return x.name == "Slowed (mastery)"):
+				var slowed := Effect.new("Slowed (mastery)", &"effect", "slow").with_modifier("speed", {"value": -10})
+				slowed.ends = Effect.Ends.START_OF_TURN
+				slowed.turn_owner_id = c.id
+				target.creature.add_effect(slowed)
+		"topple":
+			# Hold back Topple or Push (hotbar riders): the mastery is skipped this turn.
+			if not "skip:topple" in c.armed:
+				var dc := 8 + c.creature.ability_mod(p.ability) + c.creature.proficiency_bonus()
+				return e.d20.then_after(target, func() -> D20Test: return target.creature.roll_save(e.dice, &"con", dc, [], [], "Topple (%s)" % target.name()),
+					func(sv: D20Test) -> CombatResult:
+						if not sv.success:
+							target.creature.add_condition(&"prone", "Topple")
+							e.log.add("condition", "Topple: %s falls Prone" % target.name(), target.id, [sv.describe()])
+						else:
+							e.log.add("info", "Topple: %s keeps its feet" % target.name(), target.id, [sv.describe()])
+						return r, r)
+		"push":
+			if Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large") and not "skip:push" in c.armed:
+				var moved := e.forced_move(target, e.center_of(c), 10)
+				if moved > 0:
+					e.log.add("info", "Push: %s is shoved %d ft" % [target.name(), moved * 5], target.id)
+	return r
+
+
+## Stat-block riders (a wolf's bite knocks Prone; size limits are in the action text): conditions with their saves,
+## `on_hit` and a charge's riders, a Celestial Spirit's Temporary Hit Points for an ally.
+func _stat_block_on_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageResult, r: CombatResult) -> CombatResult:
+	var e := enc()
+	if not c.creature is Monster or not target.is_alive():
+		return r
+	var p := option["profile"] as WeaponProfile
+	var act := (c.creature as Monster).action(str(option.get("action_id", "")))
+	var land := func(cond: String) -> void:
+		if cond == "prone" and Creature.SIZES.find(target.creature.size) > Creature.SIZES.find(c.creature.size):
+			return
+		if target.creature.add_condition(StringName(cond), str(act.get("name", ""))):
+			e.log.add("condition", "%s has the %s condition" % [target.name(), cond.capitalize()], target.id)
+			e.events.append({"type": "condition", "id": target.id})
+	var conditions := func(raw: Variant) -> CombatResult:
+		var cond := str(raw)
+		if not act.has("save"):
+			land.call(cond)
+			return r
+		var sv := act["save"] as Dictionary
+		return e.d20.then_after(target, func() -> D20Test:
+			return target.creature.roll_save(e.dice, StringName(str(sv["ability"])), int(sv["dc"]), [], [], "%s (%s)" % [act.get("name", ""), target.name()]),
+			func(s2: D20Test) -> CombatResult:
+				if not s2.success:
+					land.call(cond)
+				return r, r)
+	var riders := func() -> CombatResult:
 		if act.has("on_hit"):
-			e.monster_actions.apply_riders(c, target, act["on_hit"] as Array, {str(p.damage_type): dr.final}, str(act.get("name", "")))
+			e.monster_actions.apply_riders(c, target, act["on_hit"] as Array, {str(p.damage_type): dr.final}, str(act.get("name", "")), true)
+		return r
+	var charge := func() -> CombatResult:
 		if str(c.get_meta("charged_vs", "")) == target.id and act.has("charge"):
-			e.monster_actions.apply_riders(c, target, (act["charge"] as Dictionary).get("on_hit", []) as Array, {}, "%s (charge)" % act.get("name", ""))
+			e.monster_actions.apply_riders(c, target, (act["charge"] as Dictionary).get("on_hit", []) as Array, {}, "%s (charge)" % act.get("name", ""), true)
+		return r
+	var temp := func() -> CombatResult:
 		# Celestial Spirit (Defender): a creature within 10 ft gains Temporary Hit Points.
 		if act.has("ally_temp_hp"):
 			var ath := act["ally_temp_hp"] as Dictionary
@@ -776,6 +824,10 @@ func _on_hit_effects(c: Combatant, target: Combatant, option: Dictionary, dr: Da
 			var amt := int(e._roll_damage_dice(str(ath.get("dice", "1d10")), false, 0, "Radiant Mace")["total"])
 			if best.creature.add_temp_hp(amt, str(act.get("name", ""))):
 				e.log.add("heal", "%s gains %d Temporary Hit Points (%s)" % [best.name(), amt, act.get("name", "")], best.id)
+		return r
+	return e.each(act.get("conditions", []) as Array, conditions, func() -> CombatResult:
+		var rest: Array = [riders, charge, temp]
+		return e.each(rest, func(step: Variant) -> CombatResult: return (step as Callable).call() as CombatResult, func() -> CombatResult: return r))
 
 
 ## A monster's stat-block action. Multiattack spends the action and queues its attacks; the AI then calls

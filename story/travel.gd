@@ -2,7 +2,8 @@ class_name Travel
 extends RefCounted
 ## Travelling Barovia (plan §5.2, ADR 0010): places joined by roads on data/travel/barovia.json. A journey follows
 ## the quickest known roads; each road takes its hours off the clock and rolls its random encounter table (the
-## day or night chance, then a weighted entry whose condition holds). Pure logic: the game root moves the party.
+## day or night chance, raised by Strahd's attention, then a weighted entry whose condition holds). Pure logic: the
+## game root moves the party.
 
 const MAP := "barovia"
 
@@ -138,6 +139,9 @@ static func roll(road: Dictionary, st: StoryState, dice: DiceRoller) -> Dictiona
 	if table.is_empty():
 		return {}
 	var chance := float(table["chance_night"]) if st.is_night() else float(table["chance_day"])
+	# Strahd's attention (F9): the more he has noticed the party, the more of his eyes and patrols are on the roads.
+	var watch := StrahdPresence.tier(st)
+	chance = minf(0.95, chance + float(watch.get("road_night" if st.is_night() else "road_day", 0.0)))
 	var d100 := dice.roll_one(100, "Random encounter on %s" % road.get("name", road["id"]))
 	if d100 > roundi(chance * 100.0):
 		return {}

@@ -104,19 +104,23 @@ func after_damage(target: Combatant, parts: Array, dr: DamageResult, was_up: boo
 	return false
 
 
-## Legendary Resistance (after a D20 Test of `c`): a failed saving throw succeeds instead while uses are left.
-func after_d20(c: Combatant, t: D20Test) -> void:
-	if t.kind != D20Test.Kind.SAVING_THROW or t.success or t.target <= 0 or not c.creature is Monster or c.is_player_controlled():
+## Legendary Resistance (after a D20 Test of `c`, D20Responses): a failed saving throw succeeds instead while uses are
+## left. The AI decides for its creatures, as it does their Reactions.
+func d20_offers(c: Combatant, t: D20Test, out: Array) -> void:
+	if t.kind != D20Test.Kind.SAVING_THROW or t.target <= 0 or not c.creature is Monster or c.is_player_controlled():
 		return
 	var n := int(data_of(c).get("legendary_resistance", 0))
-	var used := int(c.get_meta("legendary_resistance_used", 0))
-	if used >= n or not c.is_alive():
+	if n <= 0:
 		return
-	c.set_meta("legendary_resistance_used", used + 1)
-	t.auto_failed = false
-	t.success = true
-	t.reroll_note = ("%s; " % t.reroll_note if t.reroll_note != "" else "") + "Legendary Resistance: succeeds instead (%d left)" % (n - used - 1)
-	_log("info", "%s shrugs it off: Legendary Resistance (%d left)" % [c.name(), n - used - 1], c)
+	out.append({"kind": "legendary_resistance", "reactor": c,
+		"still": func() -> bool: return not t.success and int(c.get_meta("legendary_resistance_used", 0)) < n and c.is_alive(),
+		"use": func() -> void:
+			var used := int(c.get_meta("legendary_resistance_used", 0))
+			c.set_meta("legendary_resistance_used", used + 1)
+			t.auto_failed = false
+			t.success = true
+			t.reroll_note = ("%s; " % t.reroll_note if t.reroll_note != "" else "") + "Legendary Resistance: succeeds instead (%d left)" % (n - used - 1)
+			_log("info", "%s shrugs it off: Legendary Resistance (%d left)" % [c.name(), n - used - 1], c)})
 
 
 ## A new round begins: creatures called earlier arrive.
