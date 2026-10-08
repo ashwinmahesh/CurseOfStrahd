@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """The performance pass (P3): runs tools/perf/perf_probe.tscn in a window that never shows and prints its report.
 
-  python3 tools/perf/perf_run.py [--out DIR] [--frames N] [--warm N] [--passes N] [--only title,newgame,places,saveload,combat]
-                                 [--places id,id] [--profile] [--timeout S]
+  python3 tools/perf/perf_run.py [--out DIR] [--frames N] [--warm N] [--passes N]
+                                 [--only title,newgame,places,saveload,combat,transitions] [--places id,id] [--profile]
+                                 [--headless] [--cover] [--timeout S]
+
+--headless runs without a window or GPU: script and loading costs only (no shader compiles or texture uploads), for
+when the owner may be playing. --cover sends the transitions phase's changes of place through the game's loading cover.
 
 --profile also records GDScript time per function: the game connects to a small debugger server here
 (Godot's --remote-debug protocol) and streams the script profiler's frames, split by the probe's phases.
@@ -297,6 +301,8 @@ def main():
     ap.add_argument("--cycles", type=int, default=0)
     ap.add_argument("--port", type=int, default=0)
     ap.add_argument("--timeout", type=int, default=1800)
+    ap.add_argument("--headless", action="store_true")
+    ap.add_argument("--cover", action="store_true")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
     report = os.path.join(os.path.abspath(args.out), args.name + ".json")
@@ -313,8 +319,12 @@ def main():
         user.append("--pairs=%d" % args.pairs)
     if args.cycles:
         user.append("--cycles=%d" % args.cycles)
+    if args.cover:
+        user.append("--cover=1")
     cmd = [os.path.join(ROOT, "tools", "godot"), "--path", ROOT, "--resolution", "1x1", "--position", "100000,100000",
            "--audio-driver", "Dummy"]
+    if args.headless:
+        cmd = [GODOT, "--headless", "--path", ROOT, "--audio-driver", "Dummy"]
     prof = None
     if args.profile:
         port = args.port or (6100 + os.getpid() % 800)
@@ -361,6 +371,15 @@ def print_report(r):
         hitch = ", ".join("%.0f" % x["hitch_ms"] for x in rows if "hitch_ms" in x)
         print("  %-14s %-34s total %-16s%s%s" % (kind, what, totals, ("  sync " + syncs) if syncs else "",
                                               ("  worst next-second frame " + hitch) if hitch else ""))
+    if r.get("transitions"):
+        print("\nChanges of place (ms from asking: block = the longest frame until the place is ready, first = the next "
+              "frame drawn, ready = the place ready (under a cover: the cover starts to lift), stuck = the end of the last "
+              "frame over 100 ms in the 2 s after; worst = the worst frame in those 2 s)")
+        for t in r["transitions"]:
+            print("  pass %d  %-28s -> %-30s %-5s %-4s block %6.0f  first %6.0f  ready %6.0f  stuck %6.0f  worst %5.0f (%d slow)  load %4.1f" % (
+                t["pass"], t["from"][:28], t["to"][:30], "new" if t["first_visit"] else "again",
+                "out" if t["outdoors"] else "in", t["block_ms"], t["first_frame_ms"], t["ready_ms"], t["stuck_ms"],
+                t["worst_after_ms"], t["slow_after"], t.get("load", 0)))
     print("\nFrames (ms; p10 / p50 / p95 / max; draw p50 = the renderer's CPU side plus waiting on the GPU; draw calls; "
           "video MB; resident MB; load average)")
     for s in r["samples"]:

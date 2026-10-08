@@ -1,0 +1,17 @@
+{
+  "id": "granny_ash",
+  "name": "Granny Ash",
+  "title": "Morgantha's Mother",
+  "summary": "Morgantha's own mother, an old hag of the deep wood twice a man's height, with iron teeth and nails and a basket the size of a cradle. She comes out of the trees for her granddaughters' thirteenth birthdays.",
+  "portrait": "night_hag",
+  "sprite": "night_hag",
+  "attitude": "hostile",
+  "monster": "granny_ash",
+  "guest": false,
+  "tags": [
+    "hag",
+    "old_bonegrinder"
+  ],
+  "region": "old_bonegrinder",
+  "pronouns": "she/her"
+}

@@ -132,6 +132,34 @@ func test_turn_based_exploring_moves_him_only_as_a_round_ends() -> void:
 	LocationPlan.stop(v)
 
 
+## The loading lane: a route's legs are searched with a budget that grows until it reaches the leg's end, not over the
+## whole map; in the two busiest towns every leg comes out square for square the path the whole-map search gives.
+func test_budgeted_legs_match_the_whole_map_search() -> void:
+	var no := func(_c: Vector2i) -> bool: return false
+	var legs := 0
+	for id: String in ["vallaki", "village_of_barovia"]:
+		root.queue_free()
+		await _frames(1)
+		GameState.story.location = id
+		root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+		add_child(root)
+		await _frames(2)
+		var v := _view()
+		for n: Variant in v.loc.get("npcs", []):
+			var spec := n as Dictionary
+			if not spec.has("path"):
+				continue
+			var from := LocationView._cell(spec["cell"])
+			var stops: Array = (spec["path"] as Array) + [[from.x, from.y]]
+			for s: Variant in stops:
+				var to := NpcRoutes._stop(s, spec)["cell"] as Vector2i
+				var whole := CombatGrid.path_to(v.grid.reachable(from, 1, NpcRoutes.LEG_FEET, no, no, no), to)
+				assert_eq(NpcRoutes.leg_path(v.grid, from, to), whole, "%s in %s, %s to %s" % [spec["npc"], id, from, to])
+				legs += 1
+				from = to
+	assert_true(legs >= 10, "enough legs compared (%d)" % legs)
+
+
 func test_every_authored_route_can_be_walked() -> void:
 	var with_paths: Array[String] = []
 	for id: String in Compendium.shared().table("locations"):

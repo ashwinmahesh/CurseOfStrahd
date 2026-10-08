@@ -65,14 +65,16 @@ func _ready() -> void:
 			spawn = "default"
 		elif a.begins_with("--spawn="):
 			spawn = a.get_slice("=", 1)
-	enter_location(where, spawn)
-	# A round-start save puts the party back into its fight.
-	var snap := GameState.combat_snapshot
-	if not snap.is_empty() and str(snap.get("location", "")) == where:
-		view.resume_encounter.call_deferred(snap)
-	# A finished game's save plays its ending again.
-	if Endings.reached(st) != "":
-		show_ending.call_deferred()
+	# The first place (a new game, Continue or a load) behind the loading card.
+	_covered(where, func() -> void:
+		enter_location(where, spawn)
+		# A round-start save puts the party back into its fight.
+		var snap := GameState.combat_snapshot
+		if not snap.is_empty() and str(snap.get("location", "")) == where:
+			view.resume_encounter.call_deferred(snap)
+		# A finished game's save plays its ending again.
+		if Endings.reached(st) != "":
+			show_ending.call_deferred())
 
 
 ## A quick start: four of the six at level 1 travelling, the other two at camp (plan §5.6 Start step). The menu's
@@ -96,8 +98,9 @@ func enter_location(location_id: String, spawn: String) -> void:
 		view = null
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	view = LocationView.create(location_id, st, narrator, Dice.roller, spawn)
-	# Arriving in a new region: its loading card (G5, ui/screens/loading_card.gd) while the place settles in behind.
-	if str(view.loc.get("region", "")) != _card_region:
+	# Arriving in a new region: its loading card (G5, ui/screens/loading_card.gd) while the place settles in behind (a
+	# change made behind a cover put the card up already).
+	if not moving and str(view.loc.get("region", "")) != _card_region:
 		_card_region = str(view.loc.get("region", ""))
 		LoadingCard.show_for(self, view.loc)
 	Audio.play_music(_place_mood())
@@ -113,7 +116,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 		hud.narrate("\n".join(text), str(faces.keys()[0]) if faces.size() == 1 else "")
 		# Each line in its speaker's voice, one after another (ADR 0013); the box stays up until they're done.
 		hud.hold_narration(VoiceOver.say_all(lines)))
-	view.exit_requested.connect(func(to: String, sp: String) -> void: enter_location.call_deferred(to, sp))
+	view.exit_requested.connect(func(to: String, sp: String) -> void: _covered.call_deferred(to, enter_location.bind(to, sp)))
 	view.travel_requested.connect(func() -> void: open_travel.call_deferred(true))
 	view.dialogue_requested.connect(start_dialogue)
 	view.narration.connect(func(t: String) -> void: hud.narrate(t))
@@ -160,7 +163,7 @@ func _refresh() -> void:
 # --- Input ----------------------------------------------------------------------------------------
 
 func _unhandled_input(event: InputEvent) -> void:
-	if view == null or view.in_combat or dialogue != null or ending != null:
+	if moving or view == null or view.in_combat or dialogue != null or ending != null:
 		return
 	if screen != null:
 		if event.is_action_pressed(&"combat_cancel"):
@@ -257,7 +260,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
-	if view == null or view.in_combat or dialogue != null or screen != null or loot != null or ending != null:
+	if moving or view == null or view.in_combat or dialogue != null or screen != null or loot != null or ending != null:
 		return
 	var v := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_back")
 	if v.length() < 0.3:
@@ -332,6 +335,8 @@ func world_action(cell: Vector2i, id: String) -> void:
 
 
 func _command(name_: String) -> void:
+	if moving:
+		return   # the HUD's shortcuts while a change of place is under its cover
 	match name_:
 		"sneak":
 			view.set_sneaking(not view.sneaking)
@@ -561,16 +566,17 @@ func travel(from: String, to: String) -> void:
 		st.travel_resume = {"to": to, "at": str(leg["to"])}
 		var table := ev["table"] as Dictionary
 		var entry := ev["entry"] as Dictionary
-		enter_location(str(table["map"]), "default")
-		if entry.has("monsters"):
-			if str(entry.get("text", "")) != "":
-				hud.narrate(str(entry["text"]))
-			view.start_custom_encounter({"id": "random_%s_%d" % [table["id"], st.total_minutes()], "monsters": entry["monsters"],
-				"surprise": str(entry.get("surprise", ""))})
-		else:
-			start_dialogue(str(entry["dialogue"]), "")
+		_covered(str(table["map"]), func() -> void:
+			enter_location(str(table["map"]), "default")
+			if entry.has("monsters"):
+				if str(entry.get("text", "")) != "":
+					hud.narrate(str(entry["text"]))
+				view.start_custom_encounter({"id": "random_%s_%d" % [table["id"], st.total_minutes()], "monsters": entry["monsters"],
+					"surprise": str(entry.get("surprise", ""))})
+			else:
+				start_dialogue(str(entry["dialogue"]), ""))
 		return
-	_arrive(to)
+	_covered(str(Travel.place(to).get("location", "")).get_slice(":", 0), _arrive.bind(to))
 
 
 func _continue_journey() -> void:
@@ -619,8 +625,10 @@ func _strahd_on_road(leg: Dictionary, to: String) -> bool:
 	if visit.is_empty():
 		return false
 	st.travel_resume = {"to": to, "at": str(leg["to"])}
-	enter_location(StrahdPresence.road_map(visit, leg["road"] as Dictionary), "default")
-	_strahd_step(StrahdPresence.begin(st, visit))
+	var road := StrahdPresence.road_map(visit, leg["road"] as Dictionary)
+	_covered(road, func() -> void:
+		enter_location(road, "default")
+		_strahd_step(StrahdPresence.begin(st, visit)))
 	return true
 
 
@@ -660,13 +668,21 @@ var _card_region := ""   ## the region whose loading card was shown last
 
 
 ## A new place comes up out of black instead of cutting to it (docs/plans/ui_polish.md): the screen goes dark at once
-## and the place fades in. The change itself isn't delayed, so nothing that waits on it notices.
+## and the place fades in. The change itself isn't delayed, so nothing that waits on it notices. Behind a cover
+## (`_covered`) the black stays until the cover lifts it.
 func _fade_from_black() -> void:
 	if not is_inside_tree():
 		return
+	_black_now()
+	if not moving:
+		_fade_in_place(0.12)
+
+
+## The screen black at once (layer 39: over the HUDs, under the time-passing fade, the loading card and the menus).
+func _black_now() -> void:
 	if _place_fade == null:
 		var layer := CanvasLayer.new()
-		layer.layer = 39   # over the HUDs, under the time-passing fade and the menus
+		layer.layer = 39
 		add_child(layer)
 		_place_fade = ColorRect.new()
 		_place_fade.color = Color(Look.color("void"), 0.0)
@@ -678,10 +694,93 @@ func _fade_from_black() -> void:
 		if old != null and old.is_valid():
 			old.kill()
 	_place_fade.color.a = 1.0
+
+
+## The place fades in from black after `delay` seconds.
+func _fade_in_place(delay: float) -> void:
 	var tw := create_tween()
-	tw.tween_interval(0.12)
+	tw.tween_interval(delay)
 	tw.tween_property(_place_fade, "color:a", 0.0, 0.6).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	_place_fade.set_meta(&"tween", tw)
+
+
+# --- Changing place behind a cover (the loading lane) ----------------------------------------------
+
+## A change of place expected to take longer than this (ms: the build and its first two frames) shows the loading
+## card; a quicker one shows a moment of black and fades in, so no card flashes up and away.
+const CARD_MS := 500.0
+## The guess for a place not timed yet this session (headless, 2026-10-08: interiors took 0.1 to 0.45 s to build,
+## towns and the open country 0.5 to 1.65 s, before the GPU's share).
+const GUESS_OUTDOORS_MS := 900.0
+const GUESS_INDOORS_MS := 350.0
+## Seconds a card put up only for the wait (not for a new region) stays at least, so it never flashes.
+const CARD_MIN_HOLD := 1.0
+## Changes of place timed this session: location id -> ms (the build and its first two frames).
+static var took_ms: Dictionary = {}
+## A change of place is under way behind its cover: the game takes no input and the old place stands still.
+var moving := false
+## The sprite sheets being read for the change under way (collected if the game goes before it's done).
+var _preload: PlacePreload = null
+
+
+## How long a change of place to location `to` is expected to take (ms): as long as it took last time this session,
+## else a guess by whether it's out of doors.
+static func expected_ms(to: String) -> float:
+	if took_ms.has(to):
+		return float(took_ms[to])
+	var map: Dictionary = Compendium.shared().get_entry("locations", to).get("map", {}) if Compendium.shared().has("locations", to) else {}
+	return GUESS_OUTDOORS_MS if bool(map.get("outdoors", false)) else GUESS_INDOORS_MS
+
+
+## Makes a change of place (`change`, which ends at location `to`) behind a cover, so the player never sees the old
+## place frozen while the new one is built: the screen goes black at once and, when the change is slow or reaches a
+## new region, the loading card comes up. The sprite sheets the place will show load on worker threads meanwhile
+## (PlacePreload), and only once the cover has been drawn does `change` run (one long frame). The cover stays over the
+## new place's first two frames, while its shaders and textures reach the GPU; then the black fades and the card goes
+## after its hold. Inside a change already covered, and with motion off (tests, captures), it just makes the change.
+func _covered(to: String, change: Callable) -> void:
+	if moving or not UiMotion.on() or not is_inside_tree():
+		change.call()
+		return
+	moving = true
+	glow.clear()
+	var old := view
+	if old != null:
+		old.process_mode = Node.PROCESS_MODE_DISABLED   # the old place stands still under the cover
+	var loc: Dictionary = Compendium.shared().get_entry("locations", to) if Compendium.shared().has("locations", to) else {}
+	var region := str(loc.get("region", ""))
+	var new_region := region != _card_region
+	var card: LoadingCard = null
+	_black_now()
+	_place_fade.mouse_filter = Control.MOUSE_FILTER_STOP   # clicks don't reach the HUD under the black
+	if new_region or expected_ms(to) >= CARD_MS:
+		_card_region = region
+		card = LoadingCard.cover(self, loc, LoadingCard.HOLD_SECONDS if new_region else CARD_MIN_HOLD)
+		await get_tree().create_timer(LoadingCard.FADE_IN).timeout
+	_preload = PlacePreload.start(loc, st)
+	await _preload.wait(self)
+	if is_inside_tree():
+		await get_tree().process_frame   # the frame before this one, with the cover up, has been drawn
+	if not is_inside_tree():
+		return
+	var t := Time.get_ticks_usec()
+	change.call()
+	if is_instance_valid(old) and old == view:
+		old.process_mode = Node.PROCESS_MODE_INHERIT   # the change didn't go anywhere after all
+	for i in 2:
+		if is_inside_tree():
+			await get_tree().process_frame
+	took_ms[to] = (Time.get_ticks_usec() - t) / 1000.0
+	if _preload != null:
+		_preload.release()
+		_preload = null
+	moving = false
+	if not is_inside_tree():
+		return
+	_place_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_fade_in_place(0.0)
+	if is_instance_valid(card):
+		card.lift()
 
 
 ## A fade to black and back when time passes (rests, journeys, waiting for noon), with how long it was.
@@ -718,6 +817,9 @@ func _on_time_passed(minutes: int) -> void:
 
 func _exit_tree() -> void:
 	Cursors.uninstall()
+	if _preload != null:   # left in the middle of a change of place: its threaded loads are collected all the same
+		_preload.release()
+		_preload = null
 	if st != null and st.time_passed.is_connected(_on_time_passed):
 		st.time_passed.disconnect(_on_time_passed)
 
