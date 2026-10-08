@@ -55,7 +55,7 @@ func _process(delta: float) -> void:
 	var vp := get_viewport()
 	if vp == null or hold:
 		return
-	var mouse := vp.get_mouse_position()
+	var mouse := PadNav.pointer(vp)   # the middle of what has focus while the pad is in use
 	var hovered := vp.gui_get_hovered_control()
 	var under := _card_under(hovered, mouse)
 	var src := source_at(hovered)
@@ -185,6 +185,24 @@ func open_card(src: Dictionary, at: Vector2, parent: TipCard = null) -> TipCard:
 	card.resized.connect(func() -> void: _clamp(card))
 	if parent == null:
 		_warm = GRACE + 0.2
+	return card
+
+
+## The pad's Y (PadNav): opens the card of `src` at once beside `at`, already settled; on a card showing, pins it;
+## on a pinned one, closes it. With nothing to explain it closes the newest pinned card, so a pad can clear them.
+func explain(src: Dictionary, at: Vector2) -> TipCard:
+	if src.is_empty():
+		var pins := cards.filter(func(c: TipCard) -> bool: return c.pinned)
+		if not pins.is_empty():
+			toggle_pin(pins[-1] as TipCard)
+		return null
+	for c: TipCard in cards:
+		if c.key == str(src["key"]) and (c.pinned or c.source == src.get("control")):
+			toggle_pin(c)
+			return c
+	var card := open_card(src, at)
+	if card != null:
+		card.settle()
 	return card
 
 
