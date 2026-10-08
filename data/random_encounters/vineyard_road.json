@@ -282,6 +282,63 @@
         }
       ],
       "text": "Green-painted figures step out of the hedgerow on both sides of the road, and at their head walks an old woman you last saw among the roots of a black tree. The tree called her back, as she said it would. You let it keep calling."
+    },
+    {
+      "id": "strahds_eyes",
+      "weight": 2,
+      "when": "day and attention >= watched",
+      "once": true,
+      "dialogue": "strahd/attention:eyes_raven"
+    },
+    {
+      "id": "strahds_wolves",
+      "weight": 2,
+      "when": "night and attention >= marked",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            13,
+            6
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            5,
+            6
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            26,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            24,
+            7
+          ]
+        }
+      ],
+      "text": "Grey shapes come out of the dark in a line, too orderly for a hunting pack. Somebody sent them, and they know whom they were sent for."
     }
   ]
 }

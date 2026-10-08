@@ -993,7 +993,6 @@
         19
       ],
       "dialogue": "vallaki/townsfolk:goodwife",
-      "when": "day",
       "path": [
         [
           16,
@@ -1013,7 +1012,11 @@
           25
         ]
       ],
-      "pause": 2
+      "pause": 2,
+      "hours": [
+        7,
+        18
+      ]
     },
     {
       "npc": "vallaki_carter",
@@ -1022,7 +1025,6 @@
         33
       ],
       "dialogue": "vallaki/townsfolk:carter",
-      "when": "day",
       "path": [
         [
           24,
@@ -1042,6 +1044,10 @@
           25,
           4
         ]
+      ],
+      "hours": [
+        8,
+        19
       ]
     },
     {
@@ -1051,7 +1057,6 @@
         11
       ],
       "dialogue": "vallaki/townsfolk:lamplighter",
-      "when": "night",
       "path": [
         [
           36,
@@ -1068,7 +1073,21 @@
           21,
           4
         ]
+      ],
+      "hours": [
+        19,
+        6
       ]
+    },
+    {
+      "npc": "vallaki_grumbler",
+      "cell": [
+        17,
+        18
+      ],
+      "dialogue": "vallaki/townsfolk:grumbler",
+      "when": "flag.vallaki_stocks_grumbler",
+      "facing": "south"
     }
   ],
   "encounters": [

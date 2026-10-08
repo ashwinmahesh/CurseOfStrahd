@@ -20,7 +20,7 @@ endif
 ~ herald_menu
 * What happens at a festival? -> what
 * How often does the Baron hold these? -> how_often
-* [if flag.baron_met or flag.lady_wachter_met or flag.lucian_met] We're ready. Let the festival begin. -> begin
+* [if flag.baron_met or flag.lady_wachter_met or flag.lucian_met] We're ready. Let the festival begin. -> at_noon
 * [if not flag.baron_met and not flag.lady_wachter_met and not flag.lucian_met] We're ready. Let the festival begin. -> not_yet
 * Not yet. -> END
 
@@ -37,6 +37,20 @@ Festival Herald: Every week, sir, or madam. Last week was the Festival of the Re
 ~ not_yet
 Festival Herald: Ah. You haven't paid your respects to the Baron yet. He'll want to know who's cheering. The big house on the north side of the square; you can't miss it, it has his face on it.
 -> END
+
+# The festival keeps the Baron's clock (F2): it begins at noon, and a party that asks earlier waits for it.
+~ at_noon
+if hour >= 11 and hour < 14
+-> begin
+endif
+Festival Herald: At noon, by order. The sun is at its strongest at noon. You can tell by the clocks.
+* We'll wait for noon. -> wait_noon
+* Later, then. -> END
+
+~ wait_noon
+time until 12
+Narrator: You find a dry doorway and watch Vallaki get ready to be happy. Bunting goes up, the watch counts heads, and somebody tests a bell and finds it loud enough.
+-> begin
 
 ~ begin
 set festival_begun

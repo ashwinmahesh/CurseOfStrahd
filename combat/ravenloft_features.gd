@@ -830,9 +830,10 @@ func before_d20(c: Combatant, _kind: D20Test.Kind, keys: Array[String]) -> Dicti
 	return out
 
 
-## After a D20 Test: the Dark Gifts' natural-1 drawbacks, Knowledge from a Past Life, Survivor, Symbiote's Vigor and
-## Mist Step against Grappled or Restrained.
-func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
+## After a D20 Test (D20Responses): Sharp Eye's use back after a failed check, Survivor's Initiative reroll, Knowledge from
+## a Past Life on a check, Steel Yourself, Symbiote's Vigor and Mist Step on a failed save, and the Dark Gifts' drawbacks
+## on a natural 1 (which simply happen).
+func d20_offers(c: Combatant, t: D20Test, keys: Array[String], out: Array) -> void:
 	var e := enc()
 	var ch := _ch(c)
 	if ch == null or t.auto_failed:
@@ -840,36 +841,58 @@ func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
 	# Sharp Eye: a failed check gives the use back.
 	if c.has_meta("sharp_eye_used"):
 		c.remove_meta("sharp_eye_used")
-		if not t.success and t.target > 0:
-			ch.restore_resource("sharp_eye")
+		out.append({"kind": "sharp_eye", "reactor": c, "forced": true, "use": func() -> void:
+			if not t.success and t.target > 0:
+				ch.restore_resource("sharp_eye")})
 	# Survivor: an Initiative d20 of 9 or lower is rolled again.
-	if feat(c, "survivor") and "initiative" in keys and t.kept <= 9 and _allowed(c, "survivor"):
-		t.set_natural(e.dice.d20("Survivor"), "Survivor")
-	if not t.success and t.target > 0:
+	if feat(c, "survivor") and "initiative" in keys:
+		out.append({"kind": "survivor", "reactor": c, "title": "Survivor?", "spends_reaction": false,
+			"text": func() -> String: return "%s rolls %d for Initiative. Roll the d20 again?" % [c.name(), t.kept], "cost": "Nothing",
+			"still": func() -> bool: return t.kept <= 9,
+			"use": func() -> void: t.set_natural(e.dice.d20("Survivor"), "Survivor")})
+	if t.target > 0:
 		match t.kind:
 			D20Test.Kind.ABILITY_CHECK:
-				if has(c, "knowledge_from_a_past_life") and ch.resource_left("knowledge_from_a_past_life") > 0 and t.total + 6 >= t.target \
-						and _allowed(c, "knowledge_from_a_past_life"):
-					ch.spend_resource("knowledge_from_a_past_life")
-					t.add_bonus(e.dice.roll_one(6, "Knowledge from a Past Life"), "Past Life")
+				if has(c, "knowledge_from_a_past_life"):
+					out.append({"kind": "knowledge_from_a_past_life", "reactor": c, "title": "Knowledge from a Past Life?",
+						"text": func() -> String: return "%s. Add 1d6 from a past life?" % D20Responses.line(c, t),
+						"cost": "A use of Knowledge from a Past Life", "spends_reaction": false,
+						"still": func() -> bool: return not t.success and ch.resource_left("knowledge_from_a_past_life") > 0 and t.total + 6 >= t.target,
+						"use": func() -> void:
+							ch.spend_resource("knowledge_from_a_past_life")
+							t.add_bonus(e.dice.roll_one(6, "Knowledge from a Past Life"), "Past Life")})
 			D20Test.Kind.SAVING_THROW:
-				var vs_mind := "save_vs:charmed" in keys or "save_vs:frightened" in keys
-				if feat(c, "survivor") and vs_mind and ch.resource_left("survivor_resolve") > 0 and e.spells.can_react(c) \
-						and t.total + c.creature.proficiency_bonus() >= t.target and _allowed(c, "survivor_resolve"):
-					ch.spend_resource("survivor_resolve")
-					c.reaction_available = false
-					t.add_bonus(c.creature.proficiency_bonus(), "Steel Yourself")
-				if not t.success and has(c, "symbiote_vigor") and ch.resource_left("symbiote_vigor") > 0 and _allowed(c, "symbiote_vigor"):
-					var die := _largest_free_hit_die(ch)
-					if die > 0 and t.total + die >= t.target:
-						ch.spend_resource("symbiote_vigor")
-						ch.hit_dice_spent[str(die)] = int(ch.hit_dice_spent.get(str(die), 0)) + 1
-						t.add_bonus(e.dice.roll_one(die, "Symbiote's Vigor"), "Symbiote's Vigor")
-				if not t.success and has(c, "mist_step") and ("save_vs:grappled" in keys or "save_vs:restrained" in keys) \
-						and ch.resource_left("mist_step") > 0 and e.spells.can_react(c) and _allowed(c, "mist_step"):
-					mist_step(c)
-	if t.kept == 1 and not _in_drawback:
-		_drawbacks(c)
+				if feat(c, "survivor") and ("save_vs:charmed" in keys or "save_vs:frightened" in keys):
+					out.append({"kind": "survivor_resolve", "reactor": c, "title": "Reaction: Steel Yourself?",
+						"text": func() -> String: return "%s. Add your Proficiency Bonus (+%d)?" % [D20Responses.line(c, t), c.creature.proficiency_bonus()],
+						"cost": "Reaction and a use of Steel Yourself",
+						"still": func() -> bool: return not t.success and ch.resource_left("survivor_resolve") > 0 and e.spells.can_react(c) \
+							and t.total + c.creature.proficiency_bonus() >= t.target,
+						"use": func() -> void:
+							ch.spend_resource("survivor_resolve")
+							c.reaction_available = false
+							t.add_bonus(c.creature.proficiency_bonus(), "Steel Yourself")})
+				if has(c, "symbiote_vigor"):
+					out.append({"kind": "symbiote_vigor", "reactor": c, "title": "Symbiote's Vigor?",
+						"text": func() -> String: return "%s. Spend a Hit Die (d%d) and add it?" % [D20Responses.line(c, t), _largest_free_hit_die(ch)],
+						"cost": "A use of Symbiote's Vigor and a Hit Die", "spends_reaction": false,
+						"still": func() -> bool:
+							var d := _largest_free_hit_die(ch)
+							return not t.success and ch.resource_left("symbiote_vigor") > 0 and d > 0 and t.total + d >= t.target,
+						"use": func() -> void:
+							var die := _largest_free_hit_die(ch)
+							ch.spend_resource("symbiote_vigor")
+							ch.hit_dice_spent[str(die)] = int(ch.hit_dice_spent.get(str(die), 0)) + 1
+							t.add_bonus(e.dice.roll_one(die, "Symbiote's Vigor"), "Symbiote's Vigor")})
+				if has(c, "mist_step") and ("save_vs:grappled" in keys or "save_vs:restrained" in keys):
+					out.append({"kind": "mist_step", "reactor": c, "title": "Reaction: Mist Step?",
+						"text": func() -> String: return "%s. Dissolve into mist and slip up to 15 ft away, free of grapples and bonds?" % D20Responses.line(c, t),
+						"cost": "Reaction and a use of Mist Step",
+						"still": func() -> bool: return not t.success and ch.resource_left("mist_step") > 0 and e.spells.can_react(c),
+						"use": func() -> void: mist_step(c)})
+	if not _in_drawback:
+		out.append({"kind": "dark_gift_drawback", "reactor": c, "forced": true, "still": func() -> bool: return t.kept == 1,
+			"use": func() -> void: _drawbacks(c)})
 
 
 func _largest_free_hit_die(ch: Character) -> int:
