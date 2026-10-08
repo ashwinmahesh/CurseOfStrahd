@@ -39,7 +39,8 @@ func play(c: Combatant) -> CombatResult:
 func _enemies(c: Combatant) -> Array[Combatant]:
 	var out: Array[Combatant] = []
 	for h in e.hostiles_of(c):
-		if not h.is_down() and e.can_see(c, h):
+		# A foe who surrendered is out of the fight (lane 22's captives), though not down.
+		if not h.is_down() and e.can_see(c, h) and not h.creature.has_flag("surrendered"):
 			out.append(h)
 	return out
 

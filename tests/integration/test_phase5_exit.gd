@@ -321,8 +321,8 @@ func test_wizard_of_wines_saved_and_yester_hill_broken() -> void:
 	if not _ok(await bot.go_to("yester_hill_gulthias_tree"), "up Yester Hill", bot):
 		return
 	await bot.settle()
-	await bot.talk("ruxandra")
-	await bot.settle()
+	bot = await _summit(bot)
+	st = GameState.story   # a lost summit loads the save, which makes a new story
 	await bot.use(Vector2i(21, 10))
 	await bot.settle()
 	if not _ok(await bot.go_to("wizard_of_wines"), "home to the winery", bot):
@@ -334,6 +334,38 @@ func test_wizard_of_wines_saved_and_yester_hill_broken() -> void:
 	assert_eq(int(st.get_flag("winery_stones_returned", 0)), 2, "two stones home")
 	assert_true(bool(st.get_flag("keepers_allied", false)), "the Keepers of the Feather are allies")
 	assert_eq(st.quest_stage("wizard_of_wines"), "saved")
+
+
+## The summit is a close fight for the autopilot's party, so one that's lost is played again from just before it with
+## other dice, as a player would reload: any change to how many dice are drawn could flip it (lane 22, 2026-10-08). Up
+## to five tries; the region still has to be won after them.
+func _summit(bot: StoryBot) -> StoryBot:
+	assert_eq(SaveSystem.save("before_the_summit"), OK, "saved before the summit")
+	for attempt in 5:
+		if attempt > 0:
+			print("    the summit was lost; again from the save (try %d)" % (attempt + 1))
+			root.queue_free()
+			await get_tree().process_frame
+			assert_eq(SaveSystem.load_slot("before_the_summit"), OK, "loaded before the summit")
+			Dice.reseed(1000 + attempt)
+			root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+			add_child(root)
+			await get_tree().process_frame
+			await get_tree().process_frame
+			var again := StoryBot.new(self, root)
+			again.prefer.assign(bot.prefer)
+			again.avoid.assign(bot.avoid)
+			again.fights = bot.fights
+			again.trace = bot.trace
+			bot = again
+		await bot.talk("ruxandra")
+		await bot.settle()
+		if not bot.defeated:
+			if attempt > 0:
+				print("    the summit was won on try %d of 5" % (attempt + 1))
+			break
+	SaveSystem.delete_slot("before_the_summit")
+	return bot
 
 
 ## Region 8 (docs/regions/argynvostholt.md): kindle the dragon's fire, climb the dark tower, light the beacon.
