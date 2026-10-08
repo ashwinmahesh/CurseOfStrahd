@@ -1046,6 +1046,203 @@ def kit_scatter_mushrooms(p):
 
 # --- Build and export --------------------------------------------------------------------------------------------
 
+# --- Castle Ravenloft from outside (W19) ---------------------------------------------------------------------------
+# CastleBuilder puts the castle together from the gates' and the overlook's wall squares: curtain walls with a battered
+# foot and a crenellated parapet on machicolations, round towers with conical spires, gate arches over the passages
+# through the walls, the keep's tall lancet windows, and the cliffs of the chasm. Face modules stand on the wall face
+# like the houses' (front -y, origin at the foot of the face, 1 unit wide); the wall's body is CastleBuilder's own box
+# (castle/ashlar), so a face module only adds what stands proud of it. Tower modules are round about the origin at
+# radius 1 (scaled to each tower), the shaft between foot and top being CastleBuilder's cylinder.
+
+CASTLE_WALL = 6.0           # a curtain wall's nominal height (the buttress is stretched from it)
+TALUS = 1.1                 # the battered foot's height
+SPIRE_SLATE = "tex_village__roof_slate"
+IRON = "pal_ink"
+
+
+def _section(p, poly, x0, x1, mat):
+    """A shape drawn in cross-section [(y, z), ...] and run along the face from x0 to x1 (a talus, a moulding)."""
+    import bmesh
+    t = bmesh.new()
+    a = [t.verts.new((x0, y, z)) for y, z in poly]
+    b = [t.verts.new((x1, y, z)) for y, z in poly]
+    t.faces.new(a)
+    t.faces.new(list(reversed(b)))
+    n = len(poly)
+    for k in range(n):
+        t.faces.new([a[k], a[(k + 1) % n], b[(k + 1) % n], b[k]])
+    bmesh.ops.recalc_face_normals(t, faces=t.faces)
+    p._append(t, mat, False)
+
+
+@kit("kit_castle_wall_foot", part="castle_foot")
+def kit_castle_wall_foot(p):
+    """A curtain wall's foot: the wall battered out to its base (a talus) under a roll moulding."""
+    _section(p, [(0.0, 0.0), (-0.4, 0.0), (-0.06, TALUS), (0.0, TALUS)], -0.5, 0.5, ASHLAR)
+    _section(p, [(0.0, TALUS - 0.02), (-0.1, TALUS - 0.02), (-0.15, TALUS + 0.05), (-0.11, TALUS + 0.13), (0.0, TALUS + 0.13)],
+             -0.5, 0.5, DRESSED)
+
+
+def _castle_top(p, loop, corbels=True):
+    """The top of a curtain wall's face, from the wall's top edge (z = 0): three stepped corbels carrying a parapet
+    out over the face (machicolations, dark slots between them), a merlon over the middle of the face with a crenel
+    either side, coped in dressed stone. Without corbels (a wall's inner face, a roof's parapet) the parapet stands
+    flush on a plain string course."""
+    if corbels:
+        for x in (-0.34, 0.0, 0.34):
+            p.box((0.13, 0.16, 0.24), (x, -0.08, -0.6), DRESSED, soft=0.01, segs=1)
+            p.box((0.15, 0.3, 0.26), (x, -0.15, -0.36), DRESSED, soft=0.01, segs=1)
+        for x in (-0.17, 0.17):
+            p.box((0.16, 0.012, 0.18), (x, -0.012, -0.32), "pal_void")
+        p.box((1.0, 0.32, 0.16), (0, -0.16, -0.12), DRESSED)
+    else:
+        p.box((1.0, 0.06, 0.08), (0, -0.03, -0.06), DRESSED)
+    y = -0.15 if corbels else 0.13   # out over the corbels, or standing on the wall's top at its edge
+    p.box((1.0, 0.3, 0.62), (0, y, 0.27), ASHLAR)
+    p.box((1.0, 0.34, 0.05), (0, y, 0.6), DRESSED)
+    p.box((0.5, 0.3, 0.56), (0, y, 0.9), ASHLAR)
+    p.box((0.54, 0.34, 0.06), (0, y, 1.2), DRESSED, soft=0.01, segs=1)
+    if loop:
+        p.box((0.05, 0.012, 0.3), (0, y - 0.152, 0.88), "pal_void")
+        p.box((0.16, 0.012, 0.05), (0, y - 0.152, 0.92), "pal_void")
+
+
+kit("kit_castle_wall_top_a", part="castle_top")(lambda p: _castle_top(p, False))
+kit("kit_castle_wall_top_b", part="castle_top")(lambda p: _castle_top(p, True))
+kit("kit_castle_wall_top_c", part="castle_top")(lambda p: _castle_top(p, False, corbels=False))
+
+
+@kit("kit_castle_slit", part="castle_slit")
+def kit_castle_slit(p):
+    """A crossbow loop in a dressed surround, centred on the origin: a tall slit crossed near its top."""
+    p.box((0.28, 0.06, 1.0), (0, -0.03, 0), DRESSED, soft=0.01, segs=1)
+    p.box((0.07, 0.02, 0.84), (0, -0.065, 0), "pal_void")
+    p.box((0.26, 0.02, 0.06), (0, -0.065, 0.16), "pal_void")
+
+
+@kit("kit_castle_buttress", part="castle_buttress", height=CASTLE_WALL - 0.9)
+def kit_castle_buttress(p):
+    """A stepped buttress against a curtain wall, from the ground to under the machicolations, its two set-backs
+    weathered with sloping dressed stone."""
+    top = CASTLE_WALL - 0.9
+    steps = [(0.0, top * 0.36, 0.64, 0.66), (top * 0.36, top * 0.7, 0.54, 0.46), (top * 0.7, top, 0.46, 0.26)]
+    for z0, z1, w, d in steps:
+        p.box((w, d, z1 - z0), (0, -d / 2, (z0 + z1) / 2), ASHLAR)
+    for (z0, z1, w, d), nxt in zip(steps, steps[1:] + [(top, top, 0.46, 0.0)]):
+        # the weathering: a slope from this step's front back to the next one's face
+        _section(p, [(-d - 0.02, z1), (-nxt[3], z1 + (d - nxt[3]) * 0.9), (-nxt[3], z1)], -w / 2 - 0.01, w / 2 + 0.01, DRESSED)
+
+
+def _keep_window(p, glass):
+    """A lancet of the keep: two lights under a pointed head with a round light over them, in a dressed surround with
+    a sill and a hood mould; origin at the middle of the sill."""
+    W, Hh, rise = 0.5, 1.45, 0.34
+    outer = arch(-W / 2 - 0.1, W / 2 + 0.1, Hh, rise + 0.1, n=12)
+    p.prism([(-W / 2 - 0.1, 0.0), (W / 2 + 0.1, 0.0)] + list(reversed(outer)), 0.07, (0, -0.035, 0), DRESSED)
+    inner = arch(-W / 2, W / 2, Hh, rise, n=12)
+    p.prism([(-W / 2, 0.06), (W / 2, 0.06)] + list(reversed(inner)), 0.02, (0, -0.075, 0), glass)
+    p.box((0.04, 0.03, Hh - 0.02), (0, -0.09, 0.06 + (Hh - 0.02) / 2), DRESSED)
+    p.cyl(0.09, 0.03, (0, -0.09, Hh + 0.12), DRESSED, rot=(90, 0, 0), segs=12)
+    p.cyl(0.06, 0.035, (0, -0.092, Hh + 0.12), glass, rot=(90, 0, 0), segs=12)
+    p.box((W + 0.34, 0.14, 0.07), (0, -0.07, 0.0), DRESSED)
+    hood = arch(-W / 2 - 0.16, W / 2 + 0.16, Hh, rise + 0.16, n=12)
+    p.tube([(x, -0.1, z) for x, z in hood], 0.03, DRESSED, segs=5)
+    p.socket("glass", (0, -0.08, 0.9))
+
+
+kit("kit_castle_window", part="castle_window")(lambda p: _keep_window(p, "pal_void"))
+kit("kit_castle_window_lit", part="castle_window")(lambda p: _keep_window(p, "glow_candle"))
+
+SEGS_T = 20
+
+
+@kit("kit_castle_tower_foot", part="castle_tower")
+def kit_castle_tower_foot(p):
+    """A round tower's battered foot under its roll moulding (radius 1, scaled to the tower)."""
+    p.lathe([(0.0, 0.0), (1.4, 0.0), (1.04, TALUS), (0.0, TALUS)], (0, 0, 0), ASHLAR, segs=SEGS_T)
+    p.lathe([(0.0, TALUS - 0.02), (1.09, TALUS - 0.02), (1.14, TALUS + 0.05), (1.1, TALUS + 0.13), (0.0, TALUS + 0.13)],
+            (0, 0, 0), DRESSED, segs=SEGS_T)
+
+
+@kit("kit_castle_tower_top", part="castle_tower")
+def kit_castle_tower_top(p):
+    """A round tower's top from its shaft's top (z = 0): a ring of stepped corbels, a parapet carried out on them and
+    ten merlons, coped."""
+    n = 14
+    for k in range(n):
+        a = 2 * math.pi * k / n
+        deg = math.degrees(a)
+        for r, w, d, z, h in ((1.06, 0.12, 0.14, -0.6, 0.24), (1.13, 0.14, 0.28, -0.36, 0.26)):
+            p.box((d, w, h), (r * math.cos(a), r * math.sin(a), z), DRESSED, rot=(0, 0, deg), soft=0.01, segs=1)
+    p.lathe([(0.0, -0.2), (1.3, -0.2), (1.3, -0.04), (0.0, -0.04)], (0, 0, 0), DRESSED, segs=SEGS_T)
+    p.lathe([(0.0, -0.04), (1.29, -0.04), (1.29, 0.58), (0.0, 0.58)], (0, 0, 0), ASHLAR, segs=SEGS_T)
+    p.lathe([(0.0, 0.58), (1.32, 0.58), (1.32, 0.63), (0.0, 0.63)], (0, 0, 0), DRESSED, segs=SEGS_T)
+    m = 10
+    for k in range(m):
+        a = 2 * math.pi * (k + 0.5) / m
+        deg = math.degrees(a)
+        p.box((0.3, 0.42, 0.55), (1.15 * math.cos(a), 1.15 * math.sin(a), 0.9), ASHLAR, rot=(0, 0, deg))
+        p.box((0.34, 0.46, 0.06), (1.15 * math.cos(a), 1.15 * math.sin(a), 1.2), DRESSED, rot=(0, 0, deg), soft=0.01, segs=1)
+
+
+def _spire(p, base, h):
+    """A slated conical spire with a bell-cast eave on a tower's top, origin at its base, and an iron finial."""
+    p.lathe([(0.0, 0.0), (base, 0.0), (base, 0.07), (base * 0.85, 0.36), (base * 0.42, h * 0.55), (0.07, h), (0.0, h)],
+            (0, 0, 0), SPIRE_SLATE, segs=SEGS_T)
+    p.lathe([(0.0, h - 0.02), (0.09, h - 0.02), (0.09, h + 0.06), (0.0, h + 0.06)], (0, 0, 0), IRON, segs=8)
+    p.cyl(0.025, 1.0, (0, 0, h), IRON, segs=6)
+    p.lathe([(0.0, h + 0.38), (0.07, h + 0.44), (0.0, h + 0.5)], (0, 0, 0), IRON, segs=8)
+    p.cyl(0.018, 0.3, (0, 0, h + 0.98), IRON, r2=0.0, segs=6)
+
+
+kit("kit_castle_spire", part="castle_spire", height=4.4)(lambda p: _spire(p, 1.12, 4.4))
+kit("kit_castle_spire_needle", part="castle_spire", height=6.2)(lambda p: _spire(p, 1.0, 6.2))
+
+
+def _gate(p, W, D):
+    """The arch over a passage W squares wide through a wall D squares deep, origin at the passage's middle on the
+    floor: a pointed arch of dressed voussoirs on each face on slender jamb shafts, the wall over it to TOP, and the
+    soffit's dark slot where the portcullis rises."""
+    spring, rise = (2.2, 1.15) if W >= 2 else (1.75, 0.62)
+    top = spring + rise + 0.45
+    head = arch(-W / 2, W / 2, spring, rise, n=14)
+    p.prism(head + [(W / 2, top), (-W / 2, top)], D, (0, 0, 0), ASHLAR)
+    ring_o = arch(-W / 2 - 0.22, W / 2 + 0.22, spring, rise + 0.26, n=14)
+    ring_i = arch(-W / 2 + 0.01, W / 2 - 0.01, spring, rise - 0.01, n=14)
+    for side in (-1, 1):
+        y = side * (D / 2 + 0.04)
+        p.prism(ring_o + list(reversed(ring_i)), 0.09, (0, y, 0), DRESSED)
+        for sx in (-1, 1):
+            p.cyl(0.07, spring, (sx * (W / 2 + 0.08), side * (D / 2 + 0.03), 0), DRESSED, segs=8)
+            p.box((0.22, 0.12, 0.1), (sx * (W / 2 + 0.08), side * (D / 2 + 0.03), spring + 0.03), DRESSED)
+    p.box((W - 0.1, 0.12, 0.03), (0, -D / 2 + 0.35, spring + rise - 0.04), "pal_void")
+    p.socket("top", (0, 0, top))
+
+
+for _w, _d in ((1, 1), (2, 1), (2, 2)):
+    kit("kit_castle_gate_w%d_d%d" % (_w, _d), part="castle_gate", span=_w)(lambda p, w=_w, d=_d: _gate(p, w, d))
+
+
+def _cliff(p):
+    """Three units of the chasm's rock face below the edge of the land (the origin, on the face; the rock reaches
+    down to z = -3 and out toward -y), its blocks overlapping the next face's so a cliff of them reads as one."""
+    rng = p.rng
+    rock = "tex_cave__rock_wall"
+    p.box((1.06, 0.3, 3.1), (0, -0.15, -1.55), rock)
+    for k in range(rng.randint(4, 6)):
+        w, d, h = rng.uniform(0.5, 1.0), rng.uniform(0.35, 0.7), rng.uniform(0.7, 1.5)
+        p.rock((rng.uniform(-0.42, 0.42), -0.25 - d * 0.2, rng.uniform(-3.0, -0.2) - h * 0.5), (w, d, h), rock,
+               rough=0.22, rot_z=rng.uniform(0, 360), bury=0.0)
+    for k in range(2):
+        p.box((rng.uniform(0.3, 0.6), rng.uniform(0.25, 0.4), rng.uniform(1.2, 2.2)),
+              (rng.uniform(-0.3, 0.3), -0.3, rng.uniform(-2.6, -0.8)), rock,
+              rot=(rng.uniform(-6, 6), rng.uniform(-6, 6), rng.uniform(-20, 20)), soft=0.05, segs=1)
+
+
+for _i in range(3):
+    kit("kit_cliff_%s" % "abc"[_i], part="cliff")(_cliff)
+
+
 def main():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     ap = argparse.ArgumentParser()

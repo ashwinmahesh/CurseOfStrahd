@@ -6,6 +6,10 @@ extends Node
 ## If the scene has debug_move_leader(), a second shot is taken after walking the leader. A scene with
 ## capture_shots(tool, out) runs its own sequence instead (tool.wait_frames(n), tool._shot(path)).
 
+## Where this capture's saves go (its process id).
+const SAVES := "user://capture_saves/%d/"
+
+
 func _ready() -> void:
 	var args := {}
 	for a in OS.get_cmdline_user_args():
@@ -15,6 +19,7 @@ func _ready() -> void:
 	var out := str(args.get("out", "user://capture"))
 	var frames := int(args.get("frames", "90"))
 	DirAccess.make_dir_recursive_absolute(out.get_base_dir())
+	_own_saves(str(args.get("load", "")))
 	# make capture opens the window small in a corner; off screen it can take the capture size unseen.
 	var win := get_window()
 	win.borderless = true
@@ -56,6 +61,35 @@ func _ready() -> void:
 				await get_tree().process_frame
 			_shot(out + "_3.png")
 	get_tree().quit()
+
+
+## The scene's saves (a fight's round-start save, a quicksave, an autosave) go to a folder of this capture's own, never
+## over the owner's (a capture's fight replaced his round-start save, 2026-10-08). A --load=<slot> is copied there
+## from his saves first, so the game still starts from it. The folder goes when the capture ends.
+func _own_saves(load_slot: String) -> void:
+	var theirs := SaveSystem.save_dir
+	SaveSystem.save_dir = SAVES % OS.get_process_id()
+	DirAccess.make_dir_recursive_absolute(SaveSystem.save_dir)
+	if load_slot == "":
+		return
+	for ext: String in [".json", ".webp"]:
+		var from := theirs.path_join(load_slot + ext)
+		if FileAccess.file_exists(from):
+			DirAccess.copy_absolute(ProjectSettings.globalize_path(from), ProjectSettings.globalize_path(SaveSystem.save_dir.path_join(load_slot + ext)))
+
+
+func _exit_tree() -> void:
+	_remove(SAVES % OS.get_process_id())
+
+
+static func _remove(dir: String) -> void:
+	if not DirAccess.dir_exists_absolute(dir):
+		return
+	for sub in DirAccess.get_directories_at(dir):
+		_remove(dir.path_join(sub))
+	for f in DirAccess.get_files_at(dir):
+		DirAccess.remove_absolute(dir.path_join(f))
+	DirAccess.remove_absolute(dir)
 
 
 ## The render loop skips a window macOS reports as not visible; draw it anyway (before this frame's shots are read).

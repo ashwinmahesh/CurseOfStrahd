@@ -264,6 +264,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	elif dr.dropped_to_zero and not target.creature.dead:
 		e.log.add("death", "%s falls unconscious" % target.name(), target.id)
 		e.events.append({"type": "down", "id": target.id})
+		e.ground.drop_held(target, "Unconscious")
 	if e.grapples.values().has(target.id) and (target.creature.has_flag("no_actions") or target.is_down()):
 		e._release_grapples_by(target)
 	if target.is_down() or target.creature.has_flag("no_actions"):

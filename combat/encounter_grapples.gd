@@ -83,6 +83,110 @@ func escape_grapple(c: Combatant) -> CombatResult:
 	return CombatResult.new()
 
 
+## The creatures `c` holds in a grapple.
+func held_by(c: Combatant) -> Array[Combatant]:
+	var e := enc()
+	var out: Array[Combatant] = []
+	for k: String in e.grapples:
+		var t := e.get_c(k)
+		if str(e.grapples[k]) == c.id and t != null and t.is_alive():
+			out.append(t)
+	return out
+
+
+## 1 when `c` drags someone as it moves: every foot costs it 1 extra foot unless the grappled creature is Tiny or two or
+## more sizes smaller (2024 Grappled), else 0.
+func drag_extra(c: Combatant) -> int:
+	var mine := Creature.SIZES.find(c.creature.size)
+	for t in held_by(c):
+		if t.creature.size != &"tiny" and mine - Creature.SIZES.find(t.creature.size) < 2 and not t.has_meta("engulfed_by"):
+			return 1
+	return 0
+
+
+## The grapple's range: the grappler's reach (5 ft for an Unarmed Strike, more for a long-limbed monster's hold).
+func grapple_range(grappler: Combatant) -> int:
+	return grappler.reach_ft()
+
+
+## After `c` stepped from `from`: each creature it grapples that's now out of the grapple's range comes along, into the
+## open square nearest where it was that's still in range (the square `c` left, as a rule). Being dragged isn't moving
+## on its own (no Opportunity Attacks), but areas it's pulled into affect it. With nowhere to put it, the grapple ends.
+func drag_along(c: Combatant, from: Vector2i) -> void:
+	var e := enc()
+	for t in held_by(c):
+		# An engulfed creature rides inside its engulfer's space.
+		if str(t.get_meta("engulfed_by", "")) == c.id:
+			var inside := t.cell
+			t.cell = c.cell
+			e.events.append({"type": "move", "id": t.id, "from": inside, "to": c.cell, "forced": true, "dragged": true})
+			continue
+		if e.distance(c, t) <= grapple_range(c):
+			continue
+		var spot := _drag_spot(c, t, from)
+		if spot.x < -999:
+			_end(t, "%s loses its hold on %s" % [c.name(), t.name()])
+			continue
+		var was := t.cell
+		t.cell = spot
+		t.clear_run()
+		e.events.append({"type": "move", "id": t.id, "from": was, "to": spot, "forced": true, "dragged": true})
+		e._after_step(t, was)
+
+
+func _drag_spot(c: Combatant, t: Combatant, from: Vector2i) -> Vector2i:
+	var e := enc()
+	var best := Vector2i(-1000, -1000)
+	var best_d := INF
+	var r := grapple_range(c) / CombatGrid.FEET + t.size_cells
+	for dz in range(-r, r + 1):
+		for dx in range(-r, r + 1):
+			var cell := c.cell + Vector2i(dx, dz)
+			if e.grid.distance_ft(c.cell, c.size_cells, cell, t.size_cells) > grapple_range(c) or not e.space_available(cell, t.size_cells, [t]):
+				continue
+			# The square the grappler left first, then the one nearest where it was held.
+			var d := 0.0 if cell == from else 1.0 + Vector2(cell - t.cell).length()
+			if d < best_d:
+				best_d = d
+				best = cell
+	return best
+
+
+## A grapple that no longer reaches ends: after `c` was moved against its will, any grapple it holds or is held in
+## whose two creatures are now farther apart than its range (2024 Grappled).
+func check_range(c: Combatant) -> void:
+	var e := enc()
+	for t in held_by(c):
+		if str(t.get_meta("engulfed_by", "")) == c.id:
+			t.cell = c.cell   # carried inside, wherever its engulfer is thrown
+		elif e.distance(c, t) > grapple_range(c):
+			_end(t, "%s is torn from %s's grip" % [t.name(), c.name()])
+	if e.grapples.has(c.id):
+		var g := e.get_c(str(e.grapples[c.id]))
+		if g != null and e.distance(g, c) > grapple_range(g):
+			_end(c, "%s is torn from %s's grip" % [c.name(), g.name()])
+
+
+## Letting go of a creature you grapple takes no action (2024).
+func release(c: Combatant, target: Combatant) -> CombatResult:
+	var e := enc()
+	if target == null or str(e.grapples.get(target.id, "")) != c.id:
+		return CombatResult.fail("Not holding that creature")
+	_end(target, "%s lets go of %s" % [c.name(), target.name()])
+	return CombatResult.new()
+
+
+func _end(t: Combatant, line: String) -> void:
+	var e := enc()
+	e.grapples.erase(t.id)
+	t.creature.remove_condition(&"grappled")
+	if t.has_meta("escape_dc"):
+		t.remove_meta("escape_dc")
+	e.monster_actions.release_engulf(t)
+	e.log.add("info", line, t.id)
+	e.events.append({"type": "condition", "id": t.id})
+
+
 func _release_grapples_by(grappler: Combatant) -> void:
 	var e := enc()
 	for k: String in e.grapples.keys():
