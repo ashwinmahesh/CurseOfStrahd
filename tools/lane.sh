@@ -16,7 +16,8 @@
 #   tools/lane.sh done <name>                     make lane-done NAME=<name>
 #     removes the lane's folder once its branch is merged into main and it has nothing uncommitted.
 #
-# The main checkout is only ever read: nothing is written into it, and no git command that writes runs there.
+# The main checkout is only ever read: nothing is written into it, and no git command that writes runs there. The
+# play copy (CurseOfStrahdGame-play, make play's) is refused as a lane.
 set -euo pipefail
 main="$(cd "$(git rev-parse --path-format=absolute --git-common-dir)/.." && pwd)"
 
@@ -28,6 +29,7 @@ lane_dir() {
   local dest
   dest="$(dirname "$main")/CurseOfStrahdGame-$1"
   case "$1" in ""|*/*|.*) say "a lane name is one word, like 'stealth'" >&2; exit 2 ;; esac
+  case "$1" in play) say "CurseOfStrahdGame-play is make play's copy; only tools/play/play.sh changes it" >&2; exit 2 ;; esac
   case "$dest/" in "$main"/*) say "$dest is the main checkout; lanes never touch it" >&2; exit 2 ;; esac
   printf '%s' "$dest"
 }
