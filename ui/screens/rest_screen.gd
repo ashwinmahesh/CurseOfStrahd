@@ -132,6 +132,27 @@ func _draw() -> void:
 			row.add_child(b)
 		_box.add_child(UiParts.row(row))
 		_study_row(ch)
+		_rest_cast_row(ch)
+
+
+## Spells the hero casts on itself as each Long Rest ends, if the player wants (story/rest_casts.gd): Mage Armor.
+func _rest_cast_row(ch: Character) -> void:
+	var choices := RestCasts.choices(st.party, ch, Dice.roller)
+	if choices.is_empty():
+		return
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	row.add_child(UiParts.caption("%s, as each Long Rest ends:" % ch.name.get_slice(" ", 0), 12))
+	for choice in choices:
+		var id := str(choice["id"])
+		var check := CheckButton.new()
+		check.text = "Cast %s (%s)" % [choice["name"], "free" if bool(choice["free"]) else "uses a spell slot"]
+		check.button_pressed = bool(choice["on"])
+		check.tooltip_text = "On: %s casts it on themself when the rest is over%s." % [ch.name.get_slice(" ", 0),
+			"" if bool(choice["free"]) else ", with the lowest spell slot left"]
+		check.toggled.connect(func(on: bool) -> void: RestCasts.set_wanted(ch, id, on))
+		row.add_child(check)
+	_box.add_child(UiParts.row(row))
 
 
 ## 2024: a character can spend a Short Rest handling one magic item and learns what it is (Identify without the spell).
@@ -276,6 +297,11 @@ func _long_rest(rule: String) -> void:
 			if not g.dead:
 				g.finish_long_rest()
 		_log.text = "Eight hours pass. Everyone wakes rested, if not refreshed."
+		var room := Services.after_long_rest(st)   # a room booked at the inn (F14)
+		if room != "":
+			_log.text += " " + room
+		for line in RestCasts.after_long_rest(st.party, Dice.roller):
+			_log.text += "\n" + line
 		_narrate("rest:long")
 		var region := str(Compendium.shared().get_entry("locations", st.location).get("region", ""))
 		_narrate("dream:" + region)

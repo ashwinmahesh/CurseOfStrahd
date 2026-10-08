@@ -1016,7 +1016,8 @@
       "hours": [
         7,
         18
-      ]
+      ],
+      "when": "not weather == storm"
     },
     {
       "npc": "vallaki_carter",
@@ -1048,7 +1049,8 @@
       "hours": [
         8,
         19
-      ]
+      ],
+      "when": "not weather == storm"
     },
     {
       "npc": "vallaki_lamplighter",

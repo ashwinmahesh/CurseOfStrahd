@@ -8,6 +8,8 @@ extends CanvasLayer
 
 signal action_chosen(action: Dictionary)
 signal end_turn_pressed
+## Undo move (or Ctrl+Z): take back the current creature's last move (Encounter.undo_move).
+signal undo_move_pressed
 signal reaction_answered(use: bool, rule: String)
 signal inspect_requested(combatant_id: String)
 signal death_save_pressed
@@ -24,7 +26,7 @@ const SLOT_SIZE := Vector2(132, 50)
 ## {action} reads as the player's key for it (InputActions.fill, Settings, Keys).
 const CONTROLS: Array[String] = [
 	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
-	"Keyboard: {combat_toggle_log} minimizes or restores the combat log · {combat_slot_1}-{combat_slot_10} use hotbar slots · {combat_tab_prev} / {combat_tab_next} change tab · {combat_confirm} confirms (casts early with fewer targets) · Esc cancels · {combat_end_turn} ends the turn · {combat_slot_level_down} and {combat_slot_level_up} change the spell slot · {combat_next_target} jumps to the next target · {cycle_leader} inspects the next party member · {quick_save} quicksaves and {quick_load} loads the quicksave (outside a fight; in one, the game saves at each round's start).",
+	"Keyboard: {combat_toggle_log} minimizes or restores the combat log · {combat_slot_1}-{combat_slot_10} use hotbar slots · {combat_tab_prev} / {combat_tab_next} change tab · {combat_confirm} confirms (casts early with fewer targets) · Esc cancels · {combat_end_turn} ends the turn · Ctrl+Z takes back the last move · {combat_slot_level_down} and {combat_slot_level_up} change the spell slot · {combat_next_target} jumps to the next target · {cycle_leader} inspects the next party member · {quick_save} quicksaves and {quick_load} loads the quicksave (outside a fight; in one, the game saves at each round's start).",
 	"Camera: {walk} pan · {camera_rotate_left} / {camera_rotate_right} rotate · mouse wheel zooms.",
 	"Controller: left stick moves the cursor · A confirms · B cancels · X next target · Y ends the turn · hold LB for the radial menu (right stick picks, release to choose) · LT / RT pick a hotbar slot · RB uses it · d-pad left/right changes the spell slot · View inspects the next party member.",
 	"Reactions always ask unless you set a rule in the prompt (Next time: Ask me / Always use it / Never).",
@@ -58,6 +60,7 @@ var _slots: VBoxContainer
 var _slot_buttons: Array[Button] = []
 var _slot_actions: Array[Dictionary] = []
 var _end_turn: Button
+var _undo_move: Button
 var _turn_note: Label
 var _tooltip: PanelContainer
 var _tooltip_box: VBoxContainer
@@ -367,6 +370,22 @@ func _build_hotbar() -> void:
 	_end_turn.offset_top = -196
 	_end_turn.offset_bottom = -88
 	add_child(_end_turn)
+	# Under End Turn, lit while the last move can still be taken back. It never takes focus, so Space and Enter
+	# still end the turn and confirm.
+	_undo_move = Button.new()
+	_undo_move.text = "Undo move"
+	_undo_move.tooltip_text = "Take back the last move (Ctrl+Z) while nothing has come of it"
+	UiKit.button_look(_undo_move)
+	UiParts.compact(_undo_move)
+	_undo_move.add_theme_font_size_override("font_size", 15)
+	_undo_move.focus_mode = Control.FOCUS_NONE
+	_undo_move.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	_undo_move.offset_left = 526
+	_undo_move.offset_right = 654
+	_undo_move.offset_top = -80
+	_undo_move.offset_bottom = -48
+	_undo_move.pressed.connect(func() -> void: undo_move_pressed.emit())
+	add_child(_undo_move)
 	_death_button = Button.new()
 	_death_button.text = "Roll Death Saving Throw"
 	_death_button.visible = false
@@ -698,6 +717,7 @@ func _refresh_hotbar() -> void:
 			_turn_note.text = "%d attack%s left in this Attack action" % [c.attacks_left, "" if c.attacks_left == 1 else "s"]
 	_refresh_slot_pips(c)
 	_end_turn.disabled = not mine or e.pending != null
+	_undo_move.disabled = not mine or not e.can_undo_move(c)
 	# A dying hero has nothing else to do: the Death Saving Throw takes the action slots' place inside the bar (owner
 	# report 2026-10-07: added under them, it pushed the bar past the bottom of the screen).
 	var dying := mine and e.needs_death_save(c)
