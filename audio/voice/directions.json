@@ -839,6 +839,10 @@
   "e24b4b2825773428": "[small, heartbroken]",
   "ec64bc7a6cdca193": "[frightened, quiet, aching]"
  },
+ "lz_old_fisher": {
+  "2e1aa45ebdd58527": "[weary, gruff, wistful]",
+  "f95ce1fe61fdf85c": "[low, uneasy warning]"
+ },
  "mad_mage": {
   "0799847bf1f24e59": "[sly, sniffy]",
   "20f5a4e36bace942": "[quiet wonder]",
@@ -1146,6 +1150,7 @@
   "713d3375ed15f732": "[soft, observant]",
   "71ff3c5a76532a57": "[grim, quiet]",
   "72eb1a771d0da235": "[sly, knowing]",
+  "7317ffc976fb4faa": "[quiet, uneasy]",
   "746e60ffd448266e": "[dry, queasy]",
   "76ae68c7483d7dc0": "[tense, low, chilling]",
   "76aeba777bb1b046": "[dry, flat]",
@@ -1163,6 +1168,7 @@
   "7dbe046c16f80598": "[dry, quiet]",
   "7ebb1be6c2f39baf": "[quiet, sorrowful]",
   "7f1e9b78f892a622": "[hushed, wondering]",
+  "7f7249c752b2c107": "[dry, melancholy]",
   "7f87782bc1750e46": "[dry, knowing]",
   "7f9c4649fb1cc23c": "[sly, knowing]",
   "7fbff5c0f7532e25": "[uneasy, hushed]",
@@ -1189,6 +1195,7 @@
   "92208adab43b7ab2": "[gentle, quiet]",
   "92e1695c84944cf7": "[eerie, low]",
   "94efa484d505b429": "[warm, gently delighted]",
+  "95364a758b84c5a2": "[bleak, dry]",
   "9591de95dac36022": "[dry, wry]",
   "97222a342048351a": "[quiet, dry]",
   "974f7b5e9857db6f": "[grim, queasy]",
