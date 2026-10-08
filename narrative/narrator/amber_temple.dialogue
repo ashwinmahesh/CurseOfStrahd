@@ -261,3 +261,12 @@ once
 ~ search:offerings_staff
 | Under the heap of offerings lies a staff of black wood capped in iron, left by someone who wanted something more than power. The amber took it anyway.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the Ice Stair's cairns.
+
+~ examine:stair_frozen_traveller
+| A traveller sitting against the rock as if he stopped to rest, white with frost from his boots to his eyebrows. He has been here for years. The cairns up the stair have the same shape as he does, under the snow.
+
+~ search:frozen_traveller_rope
+| The frozen traveller's pack opens with a crack of ice. Inside, a coil of climbing rope, stiff but whole. He won't need it. {name} takes it.
+once

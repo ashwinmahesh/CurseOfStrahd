@@ -985,7 +985,8 @@
       "floor": "marsh/marsh_mud"
     },
     "berez_marsh_track": {
-      "difficult": "marsh/marsh_mud"
+      "difficult": "marsh/marsh_mud",
+      "floor": "marsh/marsh_mud"
     },
     "abbey_of_st_markovia_wards": {
       "floor": "church/stone_flags",

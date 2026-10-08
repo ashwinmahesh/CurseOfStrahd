@@ -10,8 +10,8 @@
       "################################",
       "##############....##############",
       "##############....####.......###",
-      "###.......####....####.......###",
-      "###.....~~##.........#...#...###",
+      "###.......####....####=......###",
+      "###.....~~##.........#...#..=###",
       "###...#...##.~.===...#.......###",
       "###.......##.........#.......###",
       "................................",
@@ -139,6 +139,64 @@
       "label": "a hollow in the fallen trunk",
       "model": "leaves",
       "item": "bag_of_tricks_rust"
+    },
+    {
+      "id": "forest_log_2",
+      "cell": [
+        22,
+        5
+      ],
+      "kind": "examine",
+      "label": "A fallen pine across the clearing",
+      "model": "log"
+    },
+    {
+      "id": "forest_cutter_stump",
+      "cell": [
+        26,
+        8
+      ],
+      "kind": "search",
+      "label": "an axe left in a woodcutter's stump",
+      "model": "stump",
+      "search_dc": 12,
+      "item": "handaxe"
+    },
+    {
+      "id": "forest_cutter_wood",
+      "cell": [
+        28,
+        6
+      ],
+      "kind": "decor",
+      "model": "woodpile"
+    },
+    {
+      "id": "forest_leaves_1",
+      "cell": [
+        5,
+        8
+      ],
+      "kind": "decor",
+      "model": "leaves"
+    },
+    {
+      "id": "forest_leaves_2",
+      "cell": [
+        13,
+        12
+      ],
+      "kind": "decor",
+      "model": "leaves"
+    },
+    {
+      "id": "forest_leaves_3",
+      "cell": [
+        24,
+        14
+      ],
+      "kind": "decor",
+      "model": "leaves"
     }
   ],
   "encounters": [

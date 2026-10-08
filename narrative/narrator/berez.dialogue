@@ -467,3 +467,19 @@ once
 ~ search:ruin_beam_tools
 | Under a fallen roof beam, a tinker's roll wrapped in oilcloth and forgotten when the water came up. The tools inside have rusted solid, all but a flat iron rod with a button at one end. {name} presses it, and the rod stays exactly where it is, in midair.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the marsh track and the mountain ledge.
+
+~ search:marsh_rope
+| Caught in the reeds beside the track, a coil of good rope, sodden but sound, dropped from somebody's pack where the logs give way. {name} hauls it out.
+once
+
+~ examine:ledge_cairn
+| A cairn of flat stones at the widest part of the ledge, built up a stone at a time by every traveller who made it this far. A few of the stones have names scratched into them.
+
+~ examine:ledge_signpost
+| A signpost snapped off at the height of a man's chest. The arm that's left points at the drop.
+
+~ search:ledge_blanket
+| Tucked behind the cairn, a rolled wool blanket tied with cord, left for whoever comes up cold. {name} takes it, and feels obliged to leave a stone.
+once

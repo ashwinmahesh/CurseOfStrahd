@@ -109,3 +109,7 @@ once
 ~ search:lz_hut_step_net
 | Under the empty hut's step, a folded fishing net, small and good, the kind you throw from the bank. {name} shakes the woodlice out of it.
 once
+
+~ search:lzt_trapper_cache
+| Under a rotten stump, wrapped in greased leather, a trapper's spare snare: iron jaws and a chain, cached for the winter by someone who never came back for it. {name} takes it.
+once

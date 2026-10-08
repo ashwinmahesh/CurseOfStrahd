@@ -13,10 +13,10 @@
       "#...~~~~~~~~~~ww~~~~~~~~.....~~#",
       "#...~~~~~~#~~~~~~~~~~~~~.....~~#",
       "#...~~~~~~~~~~~~~~~~~~~~~~~~~~~#",
-      "................................",
+      "...=.....=..........=...........",
       "........==......................",
       ".......................==.......",
-      "................................",
+      "..............=.............=...",
       "#~~~~~~~~~~~~~~~~~~~~~~~~~~~...#",
       "#~......~~~~~~~~~.....#~~~~~...#",
       "#~......~~wwww~~~.....~~~~~~~~~#",
@@ -97,5 +97,100 @@
   "narration": {
     "enter": "enter:berez_marsh_track"
   },
-  "rest": "risky"
+  "rest": "risky",
+  "props": [
+    {
+      "id": "track_log_1",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "decor",
+      "model": "log"
+    },
+    {
+      "id": "track_log_2",
+      "cell": [
+        11,
+        10
+      ],
+      "kind": "decor",
+      "model": "log"
+    },
+    {
+      "id": "track_log_3",
+      "cell": [
+        18,
+        9
+      ],
+      "kind": "decor",
+      "model": "log"
+    },
+    {
+      "id": "track_log_4",
+      "cell": [
+        26,
+        10
+      ],
+      "kind": "decor",
+      "model": "log"
+    },
+    {
+      "id": "track_reeds_1",
+      "cell": [
+        3,
+        8
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "track_reeds_2",
+      "cell": [
+        9,
+        8
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "track_reeds_3",
+      "cell": [
+        14,
+        11
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "track_reeds_4",
+      "cell": [
+        20,
+        8
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "track_reeds_5",
+      "cell": [
+        28,
+        11
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "marsh_rope",
+      "cell": [
+        18,
+        13
+      ],
+      "kind": "search",
+      "label": "something caught in the reeds",
+      "model": "reeds",
+      "search_dc": 12,
+      "item": "rope"
+    }
+  ]
 }

@@ -1,0 +1,17 @@
+{
+  "id": "lzt_hunter",
+  "name": "Ilarie",
+  "title": "A Hunter on the Hill Trail",
+  "summary": "A lean hunter from Vallaki who works the hills above the lake for hares and grouse, and keeps one eye on the tree line for the wolves that hunt the same ground.",
+  "portrait": "scout",
+  "sprite": "scout",
+  "attitude": "indifferent",
+  "monster": "scout",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "lake_zarovich"
+  ],
+  "region": "lake_zarovich",
+  "pronouns": "he/him"
+}
