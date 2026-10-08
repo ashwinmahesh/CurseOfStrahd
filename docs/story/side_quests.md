@@ -350,6 +350,23 @@ the sick Belviews sixty years ago, took the neighbours' name, and has carved a s
   Pavel's father's Ring of the Ram (rare).
 - Afterwards Pavel goes up the mountain with soup on Sundays, and the watchman is told to let Clovin in on feast days.
 
+### Mother's Ninth Improvement (`mothers_ninth_improvement`, narrative/abbey_of_st_markovia/mothers_ninth_improvement.dialogue; batch 3)
+
+Clovin gets "Heard anything interesting?" (the abbey's rumour-giver): Mother has been talking about Krezk, and, if
+Pavel is family, he's asked her to Sunday soup. Mother (new NPC, in the darkest corner of the wards kitchen) won't
+talk while the Abbot is improving; once `abbot_fate` is set she takes off her blanket. **Twist:** she is the baby
+carried up the mountain sixty years ago (Pavel's niece), her nine gifts include a heron's legs that won't take the
+mountain, and the ninth is a pair of great grey wings the Abbot stitched shut with silver wire so she wouldn't fly to
+heaven early. She doesn't want heaven; she wants Krezk. **Escalation:** her boys in the cells first (the abbey's own
+cells scene, either way: freed, she's glad; fought, she grieves and goes anyway); then the wire (Sleight of Hand DC 14
+or Medicine DC 13; a failure still gets it out, painfully); then the courtyard wall, where she has to believe the one
+thing the Abbot told her that might be true (Persuasion DC 13, Wren's advice, or a held hand). Nature DC 14 shouts her
+down onto Pavel's roof; otherwise she lands in Krezk's goat pens.
+
+- No fight.
+- Her eighth gift, which Clovin brings up to the wall: Boots of Levitation (rare). Afterwards she lands on Pavel's roof
+  on Sundays, and Krezk's watchman has decided to be very calm about it.
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -380,4 +397,6 @@ gate.dialogue's two new news lines (the bucket, feast days) and townsfolk.dialog
 Bonegrinder: the_fourth_sister.dialogue in full (new speakers Mouse, Granny Ash and Goodwife Sarnov; also Ilinca) and
 the village townsfolk.dialogue's new gossip lines (Vasile and Petre: the Sarnov woman, and three children again). Batch 3, the
 Wizard of Wines: the_black_row.dialogue in full (Davian, Adrian; companions' interjects), hands.dialogue's two new
-picker lines (Andrei) and davian.dialogue's two new menu options.
+picker lines (Andrei) and davian.dialogue's two new menu options. Batch 3, the
+abbey: mothers_ninth_improvement.dialogue in full (new speaker Mother; also Clovin and Wren's interject), Pavel's new
+carver line and the watchman's new news line in Krezk (the roof).

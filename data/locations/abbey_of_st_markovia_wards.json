@@ -580,6 +580,16 @@
       ],
       "dialogue": "abbey_of_st_markovia/vasilka:never_woke",
       "when": "flag.vasilka_fate == \"never_woke\""
+    },
+    {
+      "npc": "belview_mother",
+      "cell": [
+        18,
+        19
+      ],
+      "dialogue": "abbey_of_st_markovia/mothers_ninth_improvement:mother",
+      "when": "not flag.mother_flown",
+      "facing": "west"
     }
   ],
   "encounters": [
