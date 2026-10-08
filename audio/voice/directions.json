@@ -1353,6 +1353,7 @@
   "e798047231f14332": "[hushed, ominous]",
   "e8531ad131570229": "[tense, ominous]",
   "e9cd47aa002da0c2": "[ominous, low]",
+  "e9ed25b0c1211bb8": "[hushed, reverent, eerie]",
   "ea3e59bb33b7aea8": "[wry, amused]",
   "eac47f9d34241359": "[cold, quiet]",
   "eb165de25a6b2005": "[quiet, solemn]",
@@ -1406,6 +1407,13 @@
   "fa328a6e48ee85ee": "[distant, hollow, puzzled]",
   "faa24e037b2ca480": "[hollow, reciting the oath]"
  },
+ "pastry_customer_man": {
+  "0dae0db32326b89b": "[hollow, impatient, twitchy]",
+  "1917a8c01e7c632c": "[longing, desperate, defensive]"
+ },
+ "pastry_customer_woman": {
+  "be985d3814f61184": "[nervous, rationalising, craving]"
+ },
  "phantom_warden": {
   "275fdea9032ac35a": "[stern, hollow challenge]",
   "3cc82a5f8e69eca5": "[weary, fond grumble]",
@@ -1443,6 +1451,13 @@
   "d41fbb862c7f0b1b": "[resigned, small]",
   "df7e321fca450550": "[sorrowful, broken]",
   "ffe85d761306a855": "[sad, deflated]"
+ },
+ "pool_grave_keeper": {
+  "933dafd1fee527ad": "[slow, patient, dry]",
+  "99718dfda231b070": "[gentle, quiet, conspiratorial]"
+ },
+ "pool_mourner": {
+  "b67838152353c70e": "[soft, grieving, devout]"
  },
  "ratatoille": {
   "1912e5e2be2788e5": "[humiliated, indignant]",
