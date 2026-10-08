@@ -37,6 +37,7 @@ var _ask: Control                  ## the overwrite question, while it's up
 var _new: Button                   ## New Save, when saving
 var _back: Button
 var _hidden: CanvasItem            ## what the page hides under it while it's up (the arch, the title's column)
+var _closing := false
 var _tab := "Your Saves"           ## loading: the player's saves or the backups
 var _tabs: Control
 var _hint: Label
@@ -130,9 +131,11 @@ func _build() -> void:
 	_back = back
 	_fill()
 	# A quicksave (F5) while the page is up shows in the list.
+	# Deferred, so a save made from a row's own button never takes that button out of the list while it's still being
+	# pressed, and not at all once the page is closing.
 	EventBus.game_saved.connect(func(_slot: String) -> void:
-		if not is_queued_for_deletion():
-			_fill())
+		if not _closing:
+			_fill.call_deferred())
 	_focus()
 
 
@@ -203,6 +206,8 @@ func _draw_tabs() -> void:
 
 
 func _fill() -> void:
+	if _closing:
+		return
 	_sort.visible = true
 	# Out of the list at once, so the new rows can take their slots' names.
 	for c in _list.get_children():
@@ -563,8 +568,9 @@ func _close_confirm() -> void:
 
 
 func close() -> void:
-	if is_queued_for_deletion():
+	if _closing or is_queued_for_deletion():
 		return
+	_closing = true
 	_close_confirm()
 	if _hidden != null and is_instance_valid(_hidden):
 		_hidden.visible = true

@@ -103,9 +103,12 @@ func test_save_game_writes_over_the_one_save() -> void:
 	assert_false(_button(page, "New Save").visible, "no second save")
 	assert_eq(page.slots().map(func(s: Dictionary) -> String: return str(s["slot"])), [slot], "only the run's own save")
 	(page.find_child(slot, true, false).find_child("Act", true, false) as Button).pressed.emit()
-	await _frames(1)
 	assert_false(page.confirm_open(), "saving over its own one save asks nothing")
 	assert_eq(SaveSystem.current_slot, slot)
+	await _frames(1)
+	# The page closed with the save (and may be freed by now): only the menu is left.
+	assert_true(menu.find_children("*", "SavesScreen", true, false).all(func(p: Node) -> bool:
+		return p.is_queued_for_deletion() or (p as CanvasLayer).process_mode == Node.PROCESS_MODE_DISABLED), "back on the menu")
 	root.call("close_screen")
 
 
