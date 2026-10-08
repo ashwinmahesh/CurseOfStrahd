@@ -118,3 +118,7 @@ func test_the_tenant_at_level_2() -> void:
 
 func test_the_tinkers_wagon_at_level_5() -> void:
 	await _series("svalich_crossroads", 12, 5, "tinkers_wagon", [1, 2, 3, 4])
+
+
+func test_the_raven_trap_at_level_6() -> void:
+	await _series("lake_zarovich_trail", 22, 6, "raven_trap", [1, 2, 3, 4], ["fowlers_ready"])

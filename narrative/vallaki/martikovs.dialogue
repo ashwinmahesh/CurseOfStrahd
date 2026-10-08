@@ -28,6 +28,7 @@ endif
 * We'd like a room for the night. -> room
 * [if flag.keepers_allied] The Keepers' stores, Urwin. What can you spare? -> keepers_stores
 * Heard anything interesting? -> rumors
+* [if quest.the_ravens_ransom == home] About Bray. -> vallaki/the_ravens_ransom:urwin_thanks
 * [if guest:ireena and not flag.bones_returned] Can Ireena stay here for now? -> ireena_room
 * [if flag.vallaki_pledge != "town" and not flag.festival_begun] Whose side are you on, the Baron's or Lady Wachter's? -> sides
 * [Insight DC 15] There's something he's not saying. -> insight_ok | insight_fail
@@ -49,6 +50,9 @@ services
 -> urwin_menu
 
 ~ rumors
+if flag.keepers_of_the_feather_met and not quest.the_ravens_ransom
+-> vallaki/the_ravens_ransom:urwin_news
+endif
 if not flag.bones_returned
 Urwin: Lucian's stripped his altar. Something's gone from the church that shouldn't have. Milivoj the gravedigger is spending more on bread than he earns.
 if not quest.bones_of_st_andral
@@ -171,6 +175,7 @@ set danika_met
 Narrator: A woman with flour to the elbows looks up from a cauldron, takes in your boots and your weapons, and decides you can stay.
 Danika: Guests. Wipe your feet. Brom! Bray! Get away from that window. Sorry. Two boys and an inn. You'd think one would cancel out the other.
 endif
+* [if quest.the_ravens_ransom == asked] About Bray. -> vallaki/the_ravens_ransom:danika_waits
 * What's good to eat? -> eat
 * [if not flag.wizard_of_wines_hook] The wine at the bar is thin. -> wine
 * [if guest:ireena] Will Ireena be safe here? -> ireena_safe
