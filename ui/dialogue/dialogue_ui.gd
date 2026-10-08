@@ -162,6 +162,7 @@ func _ready() -> void:
 	var go := UiParts.small_button("Continue", _advance)
 	go.name = "Continue"
 	go.focus_mode = Control.FOCUS_NONE
+	go.set_meta(&"pad_first", true)   # a pad lands on it, so A goes on as it always has (PadNav)
 	_continue_row.add_child(go)
 	_hint = _label("or click, Space, Enter or Esc", 13, "parchment")
 	_continue_row.add_child(_hint)
