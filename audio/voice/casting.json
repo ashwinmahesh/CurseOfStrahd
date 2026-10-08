@@ -206,6 +206,7 @@
       "description": "An old Eastern European village midwife, about seventy, with a thick Romanian accent in her English. A low, warm, weathered voice with a dry crackle; practical, sharp-tongued and kind underneath, no time for fools.",
       "settings": {},
       "model": "eleven_v3",
+      "generated_voice_id": "LJylQFwR903OigY5UG7p",
       "released": true
     },
     "emil_toranescu": {
@@ -1587,14 +1588,14 @@
       "shared_with": "tser_tobar"
     },
     "lz_old_fisher": {
-      "voice_id": "8nBBDfYxYXmDNaqTCxPH",
-      "name": "Library voice: Serban Popescu - Professional Narrator",
-      "description": "Old Nistor, the last fisherman: a generic townsperson on a shared voice, Serban Popescu - Professional Narrator (also Big Tobar's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "zMjh6m7TYXb96Hz1Ah7t",
+      "name": "Barovia Old Nistor",
+      "description": "An old Barovian fisherman in his seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A rough, weathered, gravelly old voice, weary and wistful.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "tser_tobar"
+      "generated_voice_id": "zMjh6m7TYXb96Hz1Ah7t",
+      "released": true
     },
     "krezk_fence_mender": {
       "voice_id": "8nBBDfYxYXmDNaqTCxPH",
@@ -1912,6 +1913,125 @@
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "JFi5VYSKHgASRUbNFTyF",
+      "released": true
+    },
+    "sorin_krezkov": {
+      "voice_id": "V7mwZf6qtdIL2YL5vdhh",
+      "name": "Barovia Sorin",
+      "description": "A huge, bent, goat-legged man of about thirty, reshaped at an abbey, speaking English with a strong Romanian accent. A soft, hoarse, eerie, gentle voice, slow and halting, uncanny when it mimics others.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "V7mwZf6qtdIL2YL5vdhh",
+      "released": true
+    },
+    "zinaida": {
+      "voice_id": "b3ouZ1TplTSqDGB3eiH6",
+      "name": "Barovia Zinaida",
+      "description": "The ghost of a young Barovian bride of nineteen who drowned herself in a well forty years ago, speaking English with a strong Romanian accent. A cold, echoing, waterlogged voice that rises from a whisper to a wailing scream.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "b3ouZ1TplTSqDGB3eiH6",
+      "released": true
+    },
+    "tser_nelu": {
+      "voice_id": "3iZnViBrLUp8IEWE4g61",
+      "name": "Barovia Nelu",
+      "description": "A Vistani young man of about twenty, slight and wiry, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A light, boyish tenor gone hoarse from shouting, raw and shaky with cold and fear, but stubborn and wry underneath, the sort who jokes to keep from crying.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "3iZnViBrLUp8IEWE4g61",
+      "released": true
+    },
+    "szoldar": {
+      "voice_id": "lAK5Uho9wyIKcfBXsV4C",
+      "name": "Barovia Szoldar",
+      "description": "A Barovian hunter in his fifties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A low, gravelly, weathered voice, gruff and sardonic, a man who sits with his back to the wall; tired, guarded and quietly ashamed underneath.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "lAK5Uho9wyIKcfBXsV4C",
+      "released": true
+    },
+    "yevgeni": {
+      "voice_id": "WCNAAd92GbXRutFv6AYx",
+      "name": "Barovia Yevgeni",
+      "description": "A Barovian young man of nineteen speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A soft, earnest, slightly husky young man's voice, shy and quiet, honest and anxious, braver than he sounds.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "WCNAAd92GbXRutFv6AYx",
+      "released": true
+    },
+    "marshal_dragomir": {
+      "voice_id": "hjesSwSA0uCKaT8iMrpR",
+      "name": "Barovia Marshal Dragomir",
+      "description": "An ancient undead cavalry marshal, a man's skeleton four hundred years dead, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A deep, hollow, dry, rasping voice with a faint echo of an empty helmet; stern, formal and clipped like an officer giving orders, proud and unbending, weary beyond measure.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "hjesSwSA0uCKaT8iMrpR",
+      "released": true
+    },
+    "krezk_dragos": {
+      "voice_id": "6TddC67SOzK5u66IAEaU",
+      "name": "Barovia Dragos",
+      "description": "A big, bearded Barovian ferryman in his forties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A deep, rough, hoarse boatman's voice, worn ragged from a year of shouting; grieving and desperate, but warm, stubborn and wry underneath.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "6TddC67SOzK5u66IAEaU",
+      "released": true
+    },
+    "krezk_carver": {
+      "voice_id": "qOlJ4mDyGxGrbIKwDKI7",
+      "name": "Barovia Old Pavel",
+      "description": "An old hooded Krezk carver in his seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A thin, patient, devout old voice.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "qOlJ4mDyGxGrbIKwDKI7",
+      "released": true
+    },
+    "pool_grave_keeper": {
+      "voice_id": "bibCOmvSPMG5s0GGK2QB",
+      "name": "Barovia Old Simion",
+      "description": "An old Krezk grave-keeper in his seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A slow, dry, kindly, creaking old voice.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "bibCOmvSPMG5s0GGK2QB",
+      "released": true
+    },
+    "bonegrinder_mouse": {
+      "voice_id": "MIl0Flub6Sc9KSkX2A42",
+      "name": "Library voice: Mithi - Moral Kids Stories Character",
+      "description": "Mouse (Zamfira), Morgantha's fourth, a girl of twelve turning into a hag: chosen by Claude on the owner's go-ahead (2026-10-08), library voice Mithi over Yuna and Tilly for the most childlike pitch.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
+    },
+    "granny_ash": {
+      "voice_id": "KeNEQiSLAVTDthkh8EUc",
+      "name": "Barovia Granny Ash",
+      "description": "An enormous, ancient annis hag of the deep Barovian woods, an old woman twice a man's height with iron teeth, speaking English with a strong Romanian accent: rolled r's, hard consonants. A deep, cracked, gravelly old woman's voice, syrupy-sweet like a doting grandmother on top and hungry and monstrous underneath; slow, amused, terribly patient.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "KeNEQiSLAVTDthkh8EUc",
+      "released": true
+    },
+    "goodwife_sarnov": {
+      "voice_id": "57GJuoa2OCxQGWKIS8Qp",
+      "name": "Barovia Goodwife Sarnov",
+      "description": "A worn-out Barovian village mother in her thirties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A tired, hollow, low woman's voice, flat with grief and guilt, plain and unadorned, cracking when hope gets in.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "57GJuoa2OCxQGWKIS8Qp",
       "released": true
     }
   },

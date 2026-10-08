@@ -3696,6 +3696,20 @@
   "recipe": "da279b5d2a",
   "text": "Big. A bearskin with the head still on it, like a hood. Singing. He wasn't singing to me; he didn't know I was there. If he had, I don't think I'd have woken up at all."
  },
+ "barovia_petre/0f3c4f35c7561357": {
+  "chars": 63,
+  "direction": "[hushed, knowing]",
+  "model": "eleven_v3",
+  "recipe": "d8c0f4a9b0",
+  "text": "The Sarnovs have got three children again. Nobody's asking how."
+ },
+ "barovia_petre/103ce4b79bb626c5": {
+  "chars": 34,
+  "direction": "[dry, deadpan]",
+  "model": "eleven_v3",
+  "recipe": "d8c0f4a9b0",
+  "text": "Her husband had the ordinary kind."
+ },
  "barovia_petre/4a7f127600b2977e": {
   "chars": 23,
   "direction": "[dry, knowing]",
@@ -3709,6 +3723,20 @@
   "model": "eleven_v3",
   "recipe": "d8c0f4a9b0",
   "text": "In the mist. Every time."
+ },
+ "barovia_petre/66e876646cbb319e": {
+  "chars": 30,
+  "direction": "[dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "d8c0f4a9b0",
+  "text": "You're not asking her, though."
+ },
+ "barovia_petre/714d992fcbc4beb7": {
+  "chars": 96,
+  "direction": "[hushed, gossiping]",
+  "model": "eleven_v3",
+  "recipe": "d8c0f4a9b0",
+  "text": "The Sarnov woman walks up the miller's lane every morning now. Comes back with one plain pastry."
  },
  "barovia_petre/7b40de119ca169b5": {
   "chars": 96,
@@ -3829,6 +3857,13 @@
   "recipe": "8aaaddd24b",
   "text": "Cut after noon, that's what. You don't cut after noon. Everybody knows you don't cut after noon."
  },
+ "barovia_vasile/34bb3f5daec52dfc": {
+  "chars": 37,
+  "direction": "[dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "8aaaddd24b",
+  "text": "That's what makes it a rumour, Petre."
+ },
  "barovia_vasile/492afb90d857d99f": {
   "chars": 27,
   "direction": "[gossiping, knowing]",
@@ -3850,6 +3885,13 @@
   "recipe": "8aaaddd24b",
   "text": "Widow Ileana leaves her shutter open a crack every night. Says it's for the smoke."
  },
+ "barovia_vasile/6a8cd33839d1fd72": {
+  "chars": 80,
+  "direction": "[low, gossiping]",
+  "model": "eleven_v3",
+  "recipe": "8aaaddd24b",
+  "text": "From a girl who sells them up there. She says the girl's got her husband's eyes."
+ },
  "barovia_vasile/7b049918a46fed67": {
   "chars": 35,
   "direction": "[grumbling, wry]",
@@ -3863,6 +3905,13 @@
   "model": "eleven_v3",
   "recipe": "8aaaddd24b",
   "text": "Interesting? In Barovia? We've had the same three rumours since the mist came down. We take turns."
+ },
+ "barovia_vasile/86687812e67a7155": {
+  "chars": 11,
+  "direction": "[dry, pointed]",
+  "model": "eleven_v3",
+  "recipe": "8aaaddd24b",
+  "text": "I'm asking."
  },
  "barovia_vasile/aa7b186d7cf71d45": {
   "chars": 78,
@@ -5039,6 +5088,125 @@
   "model": "eleven_v3",
   "recipe": "3b7eb68de2",
   "text": "And to you. Keep off the road after dark. Everybody knows that, but people forget."
+ },
+ "bonegrinder_mouse/1aacb402fab44fe3": {
+  "chars": 130,
+  "direction": "[quiet, puzzled, wistful]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "A lady comes up from the village every morning and buys one. I always give her the best in the basket. I don't know why I do that."
+ },
+ "bonegrinder_mouse/22a097c2e51af3e0": {
+  "chars": 153,
+  "direction": "[cheerful, matter-of-fact]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "Mouse. I'm Mother's fourth. Mother Morgantha. You can't be a sister till you're thirteen, so I live in the hut down by the millrace, out from under feet."
+ },
+ "bonegrinder_mouse/38c7ec43d4a8d3c1": {
+  "chars": 104,
+  "direction": "[proud, matter-of-fact, eerie]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "Granny's Mother's mother. She's very old and very big, and her teeth are iron. Mine are coming in. Look."
+ },
+ "bonegrinder_mouse/394f4c79feeeb4f9": {
+  "chars": 110,
+  "direction": "[cheerful, matter-of-fact]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "Bella says I'm her problem now. Bella doesn't like problems. She says I can sell plain ones till Granny comes."
+ },
+ "bonegrinder_mouse/3da5419e533f6192": {
+  "chars": 38,
+  "direction": "[chirpy, sing-song]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "Pastries! Still plain. Still a copper."
+ },
+ "bonegrinder_mouse/4557e2be9ea46dd8": {
+  "chars": 170,
+  "direction": "[flat, sad, eerie]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "Mother's gone. Somebody killed her. (She looks at you, and you can't tell how much she knows.) Granny says that's how it goes with hags. Somebody always does, in the end."
+ },
+ "bonegrinder_mouse/515ff083f9fcf6c6": {
+  "chars": 176,
+  "direction": "[excited, sing-song, cheerful]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "Interesting? Granny's coming! For my birthday. I'm thirteen the next dark night, and Granny comes out of the deep wood to make me a sister, and then I'll never be hungry again."
+ },
+ "bonegrinder_mouse/714e9581a3c94551": {
+  "chars": 126,
+  "direction": "[quiet, resigned, eerie]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "(She takes a step toward the trees, and looks back at you.) It only hurts a bit, Granny says. Then I'll never be hungry again."
+ },
+ "bonegrinder_mouse/7c273985b0bcb30a": {
+  "chars": 8,
+  "direction": "[whispered, wondering]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "Zamfira."
+ },
+ "bonegrinder_mouse/84a43b3b88823626": {
+  "chars": 99,
+  "direction": "[content, wry, shy]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "I make the pastries for Bildrath's now. Plain ones. People buy them. Nobody's dreamed anything yet."
+ },
+ "bonegrinder_mouse/9740a85f5cb81016": {
+  "chars": 111,
+  "direction": "[thoughtful, shy, pleased]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "It's very long. Mouse is shorter. (She pulls the sleeve back down.) It tastes like soup, though. The good kind."
+ },
+ "bonegrinder_mouse/9815dac1ef3120bf": {
+  "chars": 90,
+  "direction": "[shy, hopeful, eager]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "Zamfira. I've been practising. Can I go and see her now? The lady who buys the plain ones?"
+ },
+ "bonegrinder_mouse/9a02594f7ca52121": {
+  "chars": 90,
+  "direction": "[bright, chirpy, sing-song]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "Pastries! Plain ones. A copper. Mother said I mustn't put the dreams in till I'm a sister."
+ },
+ "bonegrinder_mouse/a30608bcd4783cdd": {
+  "chars": 83,
+  "direction": "[excited, breathless, eerie]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "You came! Granny's coming. I can smell her. She smells like the inside of a kettle."
+ },
+ "bonegrinder_mouse/b2ee9049af4fea00": {
+  "chars": 50,
+  "direction": "[quiet, matter-of-fact, sad]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "Granny comes the next dark night. So I sort of do."
+ },
+ "bonegrinder_mouse/c275cfa95cfe4fae": {
+  "chars": 86,
+  "direction": "[small, defiant, trembling]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "(She steps behind you.) My name's Zamfira. My mother kissed my wrist. I'm not a mouse."
+ },
+ "bonegrinder_mouse/f47b06a3914585fc": {
+  "chars": 31,
+  "direction": "[small, wondering, proud]",
+  "model": "eleven_v3",
+  "recipe": "690f16cc6f",
+  "text": "I chose. Didn't I? I chose you."
  },
  "brother_anatol/2a1c8e2cad5a2293": {
   "chars": 95,
@@ -10726,6 +10894,118 @@
   "model": "eleven_v3",
   "recipe": "52840be837",
   "text": "When this is done, if we're alive, you're coming to the manor. All of you. There's more sheep than tenants and the roof leaks in the good bedroom, but there's room. There's always been more room than people."
+ },
+ "goodwife_sarnov/04598ecc522ff691": {
+  "chars": 164,
+  "direction": "[flat, grieving, hollow]",
+  "model": "eleven_v3",
+  "recipe": "de3bb72c0e",
+  "text": "In the morning she was cold in the cradle, already wrapped. Morgantha said not to look; it was a mercy not to look. So I didn't. We buried the bundle by the church."
+ },
+ "goodwife_sarnov/202d3b3bb8d31b14": {
+  "chars": 171,
+  "direction": "[quiet, puzzled, wistful]",
+  "model": "eleven_v3",
+  "recipe": "de3bb72c0e",
+  "text": "The plain ones. Yes. I go up every morning. I stopped buying the other kind, after. But I go up for a plain one, and she gives me the best in the basket. I don't know why."
+ },
+ "goodwife_sarnov/3b3a54e3eeb04cbc": {
+  "chars": 126,
+  "direction": "[bitter, flat, ashamed]",
+  "model": "eleven_v3",
+  "recipe": "de3bb72c0e",
+  "text": "I know who you are. You found my children. They're in Vallaki, at the inn. It's better. I'd sell them again; that's what I am."
+ },
+ "goodwife_sarnov/403ec8ff30e90f4d": {
+  "chars": 96,
+  "direction": "[quiet, emotional, resolute]",
+  "model": "eleven_v3",
+  "recipe": "de3bb72c0e",
+  "text": "Three. I've three again. I don't deserve one of them. I'm going to try to, every day, till I do."
+ },
+ "goodwife_sarnov/8071ac6fd53d2ad7": {
+  "chars": 83,
+  "direction": "[sad, wistful, embarrassed]",
+  "model": "eleven_v3",
+  "recipe": "de3bb72c0e",
+  "text": "She has my husband's eyes. That's a foolish thing to say. He had the ordinary kind."
+ },
+ "goodwife_sarnov/91f60b2194b3c39e": {
+  "chars": 124,
+  "direction": "[quiet, ashamed, grateful]",
+  "model": "eleven_v3",
+  "recipe": "de3bb72c0e",
+  "text": "You're the ones who brought them down. Ilka told me what I did. She said somebody told her the truth. I'm glad somebody did."
+ },
+ "goodwife_sarnov/aac08bc2aab1331f": {
+  "chars": 77,
+  "direction": "[soft, tender, breaking]",
+  "model": "eleven_v3",
+  "recipe": "de3bb72c0e",
+  "text": "She had a mark on her left wrist like a thumbprint of jam. I used to kiss it."
+ },
+ "goodwife_sarnov/e3d012783d6bd2b7": {
+  "chars": 198,
+  "direction": "[quiet, hollow, remembering]",
+  "model": "eleven_v3",
+  "recipe": "de3bb72c0e",
+  "text": "My first. A girl. Zamfira, for my mother. She was eight days old and fretful, and the old pastry woman came down from the mill to sit up with her so I could sleep. Everybody said Morgantha was kind."
+ },
+ "goodwife_sarnov/e4c178526f6250fb": {
+  "chars": 95,
+  "direction": "[desperate, fierce, pleading]",
+  "model": "eleven_v3",
+  "recipe": "de3bb72c0e",
+  "text": "Then you bring her home. Whatever she is by then. Whatever they've made of her. Bring her home."
+ },
+ "goodwife_sarnov/f129f572da0e5547": {
+  "chars": 135,
+  "direction": "[hollow, bitter, brittle]",
+  "model": "eleven_v3",
+  "recipe": "de3bb72c0e",
+  "text": "Nothing. You'll say nothing. (She picks up one bean, and then another.) I've had twelve years of nothing. I can manage a few more days."
+ },
+ "goodwife_sarnov/f5e0fa4791a432b4": {
+  "chars": 40,
+  "direction": "[sharp, frightened, breathless]",
+  "model": "eleven_v3",
+  "recipe": "de3bb72c0e",
+  "text": "Why do you want to know about her wrist?"
+ },
+ "granny_ash/1b84f7b2ca47128b": {
+  "chars": 122,
+  "direction": "[sighing, bored, menacing]",
+  "model": "eleven_v3",
+  "recipe": "6be08d0e22",
+  "text": "(She sighs, like a kettle coming off the boil.) Heroes. Mousie, dear, stand back by the hut. Granny's going to be a while."
+ },
+ "granny_ash/712456e80c728dd9": {
+  "chars": 251,
+  "direction": "[sweet, wheedling, sly]",
+  "model": "eleven_v3",
+  "recipe": "6be08d0e22",
+  "text": "Clever ones. Granny likes clever ones. Here's Granny's offer. The girl comes with Granny, and you have this. (She shakes the basket, and it clinks.) And Granny goes back to the deep wood and never comes to this valley again. Never ever. Granny's word."
+ },
+ "granny_ash/9a99aee5e464f4c9": {
+  "chars": 96,
+  "direction": "[cackling, gleeful, menacing]",
+  "model": "eleven_v3",
+  "recipe": "6be08d0e22",
+  "text": "Names! Names are for eating, dearie. Granny ate that one twelve years ago, and it was delicious."
+ },
+ "granny_ash/9f63707f341749bc": {
+  "chars": 57,
+  "direction": "[sweet, crooning, menacing]",
+  "model": "eleven_v3",
+  "recipe": "6be08d0e22",
+  "text": "Mousie. Mousie, dear. Granny's come to make you a sister."
+ },
+ "granny_ash/a32454bce3c7b124": {
+  "chars": 11,
+  "direction": "[low, disappointed, menacing]",
+  "model": "eleven_v3",
+  "recipe": "6be08d0e22",
+  "text": "Oh, Mousie."
  },
  "grigor/18b1dd4dbcc4d675": {
   "chars": 109,
@@ -19729,6 +20009,13 @@
   "recipe": "9294cd071b",
   "text": "Ilka and Toma Sarnov, ten and six. Their mother bought a basket of pastries every week since the baby died, to dream of her. When the coin ran out, the old woman came for the children. She calls that the custom."
  },
+ "ilinca_vrana/2ea80cde81cc8c1e": {
+  "chars": 142,
+  "direction": "[dry, matter-of-fact, regretful]",
+  "model": "eleven_v3",
+  "recipe": "9294cd071b",
+  "text": "I'll take her. The Keepers have had odder members than a girl with iron teeth. I delivered her, you know. I should have looked in that bundle."
+ },
  "ilinca_vrana/35870f123920e7fb": {
   "chars": 58,
   "model": "eleven_v3",
@@ -24986,6 +25273,139 @@
   "recipe": "d64ca4ba28",
   "text": "Water to the south row, a word at the shrine, and back. Thirty times a day. My arms are as strong as Cezar's and my knees are holier than the abbot's."
  },
+ "krezk_carver/1e56cb8e3a2171fa": {
+  "chars": 125,
+  "model": "eleven_v3",
+  "recipe": "0cd2d416e1",
+  "text": "A sun for the shrine every day since. Sixty years. I thought I was asking for the morning. I think I was asking for the gate."
+ },
+ "krezk_carver/1ff0e9d6896afbaa": {
+  "chars": 95,
+  "model": "eleven_v3",
+  "recipe": "0cd2d416e1",
+  "text": "A sun a day, still. But on Sundays I go up the mountain with soup, so on Saturdays I carve two."
+ },
+ "krezk_carver/62f4a98e13c3b5e6": {
+  "chars": 160,
+  "direction": "[gruff, dismissive, then uneasy]",
+  "model": "eleven_v3",
+  "recipe": "0cd2d416e1",
+  "text": "The toys on the Krezkov stones? Not mine. Mine are suns, all of them, every one for the shrine. Whoever makes those works fast and doesn't care for his fingers."
+ },
+ "krezk_carver/7884d8addfafc106": {
+  "chars": 130,
+  "direction": "[quiet, stubborn, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "0cd2d416e1",
+  "text": "A sun for the shrine. One every day. When the shrine is full, I start on the windows. Somebody has to keep asking for the morning."
+ },
+ "krezk_carver/819966d1c15b3c88": {
+  "chars": 106,
+  "direction": "[low, grim, matter-of-fact]",
+  "model": "eleven_v3",
+  "recipe": "0cd2d416e1",
+  "text": "Or he hasn't got fingers. I've looked at the cuts. That's not a knife. That's a thumbnail, and a hard one."
+ },
+ "krezk_carver/8c6df0a455cf8315": {
+  "chars": 191,
+  "model": "eleven_v3",
+  "recipe": "0cd2d416e1",
+  "text": "And this. It was our father's. He found it in the high pasture the year Floarea was born and swore it butted back if you were rude to it. I kept it for the day the gate opened. You opened it."
+ },
+ "krezk_carver/8dd8089a19a49b00": {
+  "chars": 60,
+  "model": "eleven_v3",
+  "recipe": "0cd2d416e1",
+  "text": "That's my father's joke. Where did you get my father's joke?"
+ },
+ "krezk_carver/9f5b2d2ac721e68b": {
+  "chars": 194,
+  "model": "eleven_v3",
+  "recipe": "0cd2d416e1",
+  "text": "Floarea was my sister. The whole house took the cough the winter I was twelve, all but me. They went up to the abbey for the cure, and the burgomaster told the watch to bar the gate behind them."
+ },
+ "krezk_carver/c84af2a3f7a1c606": {
+  "chars": 43,
+  "model": "eleven_v3",
+  "recipe": "0cd2d416e1",
+  "text": "Then I'll go up. I'm old. I don't frighten."
+ },
+ "krezk_carver/ee07dbb273aab999": {
+  "chars": 218,
+  "model": "eleven_v3",
+  "recipe": "0cd2d416e1",
+  "text": "I was the boy on the gate that night. I barred it. My mother told me to, through the boards. She said it was a good gate and I should mind it. I went to the neighbours and took their name, and never said Belview again."
+ },
+ "krezk_dragos/01c2fc8ad294b1b1": {
+  "chars": 170,
+  "direction": "[quiet, firm, grieving]",
+  "model": "eleven_v3",
+  "recipe": "9ba748158d",
+  "text": "Everything in that thing's stuffing was a bride's. The dowries, the rings, all of it. I've no right to it and neither did she. Take it; she'd want it spent on the living."
+ },
+ "krezk_dragos/4d8bff1582894525": {
+  "chars": 100,
+  "direction": "[low, urgent, earnest]",
+  "model": "eleven_v3",
+  "recipe": "9ba748158d",
+  "text": "The field by the stump, in Berez. It's tall as a house. It hates fire. That's all I know that helps."
+ },
+ "krezk_dragos/58028921baeb6191": {
+  "chars": 79,
+  "direction": "[dry, wry, warm]",
+  "model": "eleven_v3",
+  "recipe": "9ba748158d",
+  "text": "Stelian says I'm good with goats. I tell him I have an understanding with them."
+ },
+ "krezk_dragos/737e5f701796b4d9": {
+  "chars": 136,
+  "direction": "[hushed, emotional, wondering]",
+  "model": "eleven_v3",
+  "recipe": "9ba748158d",
+  "text": "You burned it. You let her out. I felt it, here, in the scar, the night you did it, like a hand taking hold of mine and then letting go."
+ },
+ "krezk_dragos/808e6d485a7a48fb": {
+  "chars": 205,
+  "direction": "[hoarse, bitter, rueful]",
+  "model": "eleven_v3",
+  "recipe": "9ba748158d",
+  "text": "The old woman came to the landing in her hut and wanted rowing across to the castle side. I said I didn't row her sort. She laughed, and I was a goat. I swam the river. A goat can swim. I didn't know that."
+ },
+ "krezk_dragos/b0079f303eaf8547": {
+  "chars": 112,
+  "direction": "[sad, pleading, breaking]",
+  "model": "eleven_v3",
+  "recipe": "9ba748158d",
+  "text": "It walks the field by the old woman's stump. Whether she's there or not. Burn it. Please. Let my wife out of it."
+ },
+ "krezk_dragos/b86a46dce9054d1c": {
+  "chars": 156,
+  "direction": "[gruff, wry]",
+  "model": "eleven_v3",
+  "recipe": "9ba748158d",
+  "text": "And this was in it too. Not a bride's. Something the old woman stole off a knight who rowed across with me once, years back. It moves when you let go of it."
+ },
+ "krezk_dragos/d759f559f16ab67c": {
+  "chars": 272,
+  "direction": "[hoarse, anguished, rising]",
+  "model": "eleven_v3",
+  "recipe": "9ba748158d",
+  "text": "Vera she kept. Lysaga takes the brides of Berez, the ones the river drowned, and she sews them into something. A queen, she calls it. A scarecrow queen in a dress made of every wedding dress in Berez, and my Vera's in it. I saw her face in the stitching, the night I swam."
+ },
+ "krezk_dragos/f73f1631f1ebeffc": {
+  "chars": 75,
+  "direction": "[hoarse, broken, desperate]",
+  "model": "eleven_v3",
+  "recipe": "9ba748158d",
+  "text": "Berez. The old woman. I wouldn't row her. Vera. Vera's still there. Please."
+ },
+ "krezk_dragos/fc1b9bb3ef90b9a1": {
+  "chars": 119,
+  "direction": "[hoarse, shaking, desperate]",
+  "model": "eleven_v3",
+  "recipe": "9ba748158d",
+  "text": "Dragos. My name. Dragos, the ferryman of Berez. Somebody give me a blanket and I'll tell you what she did with my wife."
+ },
  "krezk_fence_mender/f8377c07217d7dc6": {
   "chars": 88,
   "direction": "[slow, good-natured]",
@@ -28464,91 +28884,91 @@
   "chars": 150,
   "direction": "[weary, gruff, wistful]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "9121724bb6",
   "text": "Forty years I fished this water. Then the fish went deep and the men went to Vallaki, and here I am, mending nets for a lake that's stopped answering."
  },
  "lz_old_fisher/30019da825a70812": {
   "chars": 153,
   "direction": "[quiet, moved, grateful]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "9121724bb6",
   "text": "You stood on my step between me and the lake. Forty years I've been waiting for it to come up that shore. I never once thought anybody would stand there."
  },
  "lz_old_fisher/32a7f1aa83a4a971": {
   "chars": 268,
   "direction": "[slow, low, storytelling]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "9121724bb6",
   "text": "Before the count put the dam on the Luna there was a village where the lake is. Pescari. My grandmother was from there. When the water came up, the folk came up the hill, mostly. The ones who wouldn't leave the chapel stayed in the chapel. The bell's still down there."
  },
  "lz_old_fisher/3887869cedad08ec": {
   "chars": 141,
   "direction": "[slow, troubled, thoughtful]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "9121724bb6",
   "text": "You stood on my landing between the lake and a man who'd put a child in a sack. I've been thinking about that. I don't know what I think yet."
  },
  "lz_old_fisher/38fc71ffcb7c1826": {
   "chars": 95,
   "direction": "[surprised, slow, wry]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "9121724bb6",
   "text": "You want to know why the fish went deep? Nobody's asked me that in forty years. Sit down, then."
  },
  "lz_old_fisher/3aa66b6cf38b19b7": {
   "chars": 42,
   "direction": "[calm, resigned, quiet]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "9121724bb6",
   "text": "Well. It was always going to be one of us."
  },
  "lz_old_fisher/424bf74602238405": {
   "chars": 162,
   "direction": "[slow, weary, grim]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "9121724bb6",
   "text": "After moonrise. Stand on the landing and you'll hear it. Then you'll see them. Then you decide what to do about Bluto. I've had forty years and I haven't decided."
  },
  "lz_old_fisher/6baca514721b5024": {
   "chars": 169,
   "direction": "[low, uneasy, storytelling]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "9121724bb6",
   "text": "It rings when they want company. That's what my grandmother said. A sack of something every month and they'd stay down, and the fish would come up to see what was in it."
  },
  "lz_old_fisher/7280b45849958245": {
   "chars": 138,
   "direction": "[quiet, haunted, sad]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "9121724bb6",
   "text": "Bluto's shack is empty. I don't go in. Some nights I think I hear him singing, out on the water, the way he used to when he'd had a catch."
  },
  "lz_old_fisher/d87b59855e04a239": {
   "chars": 125,
   "direction": "[warm, delighted, near tears]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "9121724bb6",
   "text": "A pike this morning. A pike, the length of my arm. First fish in a year that wasn't too small to bother. I nearly wept on it."
  },
  "lz_old_fisher/e9374aa7508b549a": {
   "chars": 106,
   "direction": "[hushed, uneasy, listening]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "9121724bb6",
   "text": "Listen. There. Every night now, after the moon's up. Under the water. You'd think water would stop a bell."
  },
  "lz_old_fisher/eac4d438d7ecfc5c": {
   "chars": 216,
   "direction": "[afraid, bitter, hushed]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "9121724bb6",
   "text": "Bluto's sacks. You know what he put in them. He wasn't mad. That's the worst of it. He was paying the bell. Now he's stopped paying, and it rings every night, and it's coming up the shore a little further every time."
  },
  "lz_old_fisher/f95ce1fe61fdf85c": {
   "chars": 157,
   "direction": "[low, uneasy warning]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "9121724bb6",
   "text": "Keep away from the big fellow in the shack. He drinks, and he cries, and he goes out in his boat at night with something in a sack. I don't ask. Nobody asks."
  },
  "lzt_hunter/04e6d492bc8b9cc0": {
@@ -29727,6 +30147,90 @@
   "model": "eleven_v3",
   "recipe": "0145fab7b8",
   "text": "He has gone down to visit the king who made him. Father and son, both of them stone now."
+ },
+ "marshal_dragomir/05b0c0794c46d275": {
+  "chars": 47,
+  "direction": "[cold, dismissive]",
+  "model": "eleven_v3",
+  "recipe": "090af50390",
+  "text": "Lies are a scout's work. I have heard them all."
+ },
+ "marshal_dragomir/0c03348346e9ecd8": {
+  "chars": 111,
+  "direction": "[quiet, grave, proud]",
+  "model": "eleven_v3",
+  "recipe": "090af50390",
+  "text": "They are relieved. I am not. An officer is relieved by his commander, or by defeat. My commander will not come."
+ },
+ "marshal_dragomir/36c10f1edd82b0eb": {
+  "chars": 122,
+  "direction": "[grave, resolute, weary]",
+  "model": "eleven_v3",
+  "recipe": "090af50390",
+  "text": "So. Beat me. Fairly, at the gate I was told to hold. Then I can tell him, when I see him, that I held it until I couldn't."
+ },
+ "marshal_dragomir/561342017ba7aef2": {
+  "chars": 34,
+  "direction": "[hollow, flat, stern]",
+  "model": "eleven_v3",
+  "recipe": "090af50390",
+  "text": "You again. The gate is still held."
+ },
+ "marshal_dragomir/605cb0162236fd27": {
+  "chars": 100,
+  "direction": "[commanding, hollow, booming]",
+  "model": "eleven_v3",
+  "recipe": "090af50390",
+  "text": "Halt. This gate is held. No one passes in, no one passes out, until the count returns to relieve us."
+ },
+ "marshal_dragomir/66ab199b1b962f26": {
+  "chars": 60,
+  "direction": "[hollow, patient, weary]",
+  "model": "eleven_v3",
+  "recipe": "090af50390",
+  "text": "Tomorrow night, then. We have time. We have had nothing but."
+ },
+ "marshal_dragomir/8ecdb66d33577dd9": {
+  "chars": 89,
+  "direction": "[grim, formal, respectful]",
+  "model": "eleven_v3",
+  "recipe": "090af50390",
+  "text": "You came back. Good. My men are relieved and I am not. On guard, then, when you're ready."
+ },
+ "marshal_dragomir/a202eaae2e204b89": {
+  "chars": 76,
+  "direction": "[stern, unyielding]",
+  "model": "eleven_v3",
+  "recipe": "090af50390",
+  "text": "An order is an order until it is countermanded. Four hundred years. We hold."
+ },
+ "marshal_dragomir/a549b198f8dfbc40": {
+  "chars": 61,
+  "direction": "[stunned, slow, hollow]",
+  "model": "eleven_v3",
+  "recipe": "090af50390",
+  "text": "Done. The war is done. ...Then what have my men been holding?"
+ },
+ "marshal_dragomir/ab413ac7487b3978": {
+  "chars": 94,
+  "direction": "[cold, proud, threatening]",
+  "model": "eleven_v3",
+  "recipe": "090af50390",
+  "text": "My men will stand down when I am relieved, and not one hour before. Who are you to relieve me?"
+ },
+ "marshal_dragomir/de450bb3d934d81d": {
+  "chars": 31,
+  "direction": "[stern, commanding]",
+  "model": "eleven_v3",
+  "recipe": "090af50390",
+  "text": "State your names and your lord."
+ },
+ "marshal_dragomir/e10bea200cc64fee": {
+  "chars": 129,
+  "direction": "[hollow, bitter, quiet]",
+  "model": "eleven_v3",
+  "recipe": "090af50390",
+  "text": "The count is in his castle. Yes. We see its lights from the gate, some nights. He has never once sent a rider down to relieve us."
  },
  "milivoj/030796c029e50baa": {
   "chars": 113,
@@ -30924,6 +31428,13 @@
   "recipe": "dd92281f92",
   "text": "The bar is oak, polished by three generations of elbows. Carved under the lip, where only the bar-keeper would see it, is a tiny raven."
  },
+ "narrator/01962ffc192be00d": {
+  "chars": 177,
+  "direction": "[gentle, observant]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A thin girl of twelve or so sits on an upturned bucket by the lane with a basket of pastries on her knees. She has flour on her nose, and her sleeves pulled down over her hands."
+ },
  "narrator/01ace6cdc529fe5a": {
   "chars": 106,
   "model": "eleven_v4",
@@ -31275,6 +31786,13 @@
   "recipe": "dd92281f92",
   "text": "A lean figure in the amber holds a fistful of chains, and every chain ends in the snarling head of a hound. The amber around the hounds is clouded, like smoke."
  },
+ "narrator/04c7b80a3cfd44d8": {
+  "chars": 50,
+  "direction": "[soft, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She says it again, slowly, as if she's tasting it."
+ },
  "narrator/04d5f948d5c4c7d4": {
   "chars": 205,
   "model": "eleven_v4",
@@ -31364,6 +31882,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The wolves that have been pacing you through the fields all morning stop pretending to be shy."
+ },
+ "narrator/05b7c21606eb4ce5": {
+  "chars": 128,
+  "direction": "[quiet, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She pulls her lip down with one finger. Behind her milk teeth the gums are dark, and something hard and grey is pushing through."
  },
  "narrator/05bc5ee734882029": {
   "chars": 151,
@@ -31849,12 +32374,26 @@
   "recipe": "dd92281f92",
   "text": "The fiddle is playing something slow tonight. When you come into the firelight, a few of the Vistani nod to you as if you were cousins."
  },
+ "narrator/0a42204d72a2b94b": {
+  "chars": 116,
+  "direction": "[warm, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Zamfira sits on the step beside her mother, shelling beans much faster than her mother does, with grey-rooted nails."
+ },
  "narrator/0a46c184b3fb5044": {
   "chars": 184,
   "direction": "[tense, cold, ominous]",
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "The cold takes the breath out of you before you're a body's length down. You come up gasping, and the rope swings, and somewhere under you something patient waits for you to try again."
+ },
+ "narrator/0a4aa550cf3492c0": {
+  "chars": 145,
+  "direction": "[quiet, sad, heavy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Granny takes the girl by the hand. Mouse looks back once, over her shoulder, and doesn't say anything, and then the trees close behind them both."
  },
  "narrator/0a68f7f9efa24ff5": {
   "chars": 153,
@@ -32502,6 +33041,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "One has a journal open on his knee. The last page reads: \"Tomorrow the temple. Petra says she can hear it already. She says it knows our names.\""
+ },
+ "narrator/10dcf96d4719b1e9": {
+  "chars": 124,
+  "direction": "[urgent, moved]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She doesn't have to go far. Goodwife Sarnov is already coming up the lane at a run, in the dark, with her shawl falling off."
  },
  "narrator/10e29798d3dbde65": {
   "chars": 98,
@@ -35124,6 +35670,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Sacks of flour, stacked neatly, each stamped with a little drawing of a smiling old woman. Some are flour. Some are labelled SPECIAL, and you leave those alone."
+ },
+ "narrator/28cf356ead0ff741": {
+  "chars": 87,
+  "direction": "[quiet, tense]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Goodwife Sarnov looks up at you. The bowl tips off her lap, and she doesn't pick it up."
  },
  "narrator/28da292c32a44d1c": {
   "chars": 77,
@@ -39431,6 +39984,13 @@
   "recipe": "f60908d226",
   "text": "Under the narrow bed, a little box of carved pine. Inside, on a bed of wool, a dusty rose stone that drifts up out of your palm and circles your head."
  },
+ "narrator/52fc5e6f1ff123ca": {
+  "chars": 168,
+  "direction": "[quiet, tender, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You walk her down to the village in the grey before morning. Goodwife Sarnov is on her step, waiting for nothing, the way she has waited every morning for twelve years."
+ },
  "narrator/532329786bcad382": {
   "chars": 112,
   "model": "eleven_v4",
@@ -39770,6 +40330,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You sleep in shifts, and whoever has the watch keeps one eye on Ireena's window. Twice in the night something taps on the glass, and nobody answers."
+ },
+ "narrator/5620b2b31ccd220b": {
+  "chars": 188,
+  "direction": "[hushed, menacing, slow]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She comes out of the trees: twice a man's height, blue-grey and bent, with iron teeth and iron nails and a basket on her arm the size of a cradle. Grey dogs as big as ponies come with her."
  },
  "narrator/563345b36109f9e7": {
   "chars": 167,
@@ -41658,6 +42225,13 @@
   "recipe": "dd92281f92",
   "text": "The silver is soft and the lock is stiff and the pick slips. The cuff bites, and Fen's skin smokes where it touches."
  },
+ "narrator/673c46207952a239": {
+  "chars": 141,
+  "direction": "[quiet, wry, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Mouse comes out from behind the hut when it's quiet, and walks all the way round Granny at a distance, the way you'd walk round a dead horse."
+ },
  "narrator/673d75ddee55ab05": {
   "chars": 110,
   "model": "eleven_v4",
@@ -41901,6 +42475,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "Thistle hasn't slept. She's sitting with her back to a tree, chewing the end of her bowstring, watching the dark where he stood."
+ },
+ "narrator/692a8d3f910d80a6": {
+  "chars": 90,
+  "direction": "[quiet, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A raven lands on the roof of the hut, shakes itself, and is an old woman in a black shawl."
  },
  "narrator/6938e4b534de55a9": {
   "chars": 168,
@@ -44310,6 +44891,13 @@
   "recipe": "dd92281f92",
   "text": "The rope hangs empty. What is left of the hanged man lies on the planks, where you put him down the second time."
  },
+ "narrator/7ff8f3e82aeb1183": {
+  "chars": 118,
+  "direction": "[quiet, wry, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "When she smiles at you, her teeth are grey. Not all the way; partway. Granny didn't finish, and nobody else knows how."
+ },
  "narrator/7ff9db20932fd565": {
   "chars": 225,
   "model": "eleven_v4",
@@ -45182,6 +45770,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "Wedged behind the lookout rock, a satchel some watcher left behind. In it, a pair of round lenses that make the far shore look close enough to touch."
+ },
+ "narrator/883854e747732a98": {
+  "chars": 189,
+  "direction": "[quiet, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Granny's basket lies in the lane where she dropped it. Under a cloth that smells of kettle there is a sack of old coins and a robe folded small, sewn all over with eyes. Some of them blink."
  },
  "narrator/8848c210e7760b45": {
   "chars": 133,
@@ -46172,6 +46767,13 @@
   "recipe": "dd92281f92",
   "text": "The cuffs open with Emil's key. Thistle catches him before he hits the straw."
  },
+ "narrator/90c47f576c16839b": {
+  "chars": 128,
+  "direction": "[warm, wry, amused]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Ilka comes to the door and looks at the girl for a long time, and says, \"You've got Toma's ears.\" Toma says he has his own ears."
+ },
  "narrator/90c95506188097f6": {
   "chars": 89,
   "model": "eleven_v4",
@@ -47120,6 +47722,13 @@
   "recipe": "dd92281f92",
   "text": "The hidden stair: up, and up, and out. The steps are slick, as if the house is sweating."
  },
+ "narrator/9a88b285d41d4eec": {
+  "chars": 97,
+  "direction": "[warm, gentle]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Inside, a small boy is singing, badly, and a girl's voice tells him to stop. Ilka and Toma, home."
+ },
  "narrator/9a8b48fd8a746e0c": {
   "chars": 153,
   "direction": "[hushed, disturbing]",
@@ -47364,6 +47973,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "That night the Martikovs broach a cask from before the druids came, and the whole family drinks in the yard under a sky with no stars in it, and for an hour nobody looks up."
+ },
+ "narrator/9ca014c3a9f5038d": {
+  "chars": 89,
+  "direction": "[soft, moved, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Nobody says anything clever. The girl holds out her left wrist, and her mother kisses it."
  },
  "narrator/9ccf654158766883": {
   "chars": 109,
@@ -47879,6 +48495,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "It has hidden him in the trees through forty winters, and he won't need hiding any more. It smells of pine and wet dog and woodsmoke, and she pulls it closed with both fists."
+ },
+ "narrator/a1afd2453be777f2": {
+  "chars": 113,
+  "direction": "[quiet, observant]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A hut of wattle and old millstones by the millrace, with a door the size of a child, and a step swept very clean."
  },
  "narrator/a1b721ffd09669c1": {
   "chars": 140,
@@ -48472,6 +49095,13 @@
   "recipe": "dd92281f92",
   "text": "The gates swing open before anyone touches them, slow and silent on hinges that should be screaming with rust."
  },
+ "narrator/a6b044667570be9c": {
+  "chars": 99,
+  "direction": "[quiet, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A worn woman sits on the step of a narrow house with a bowl of beans in her lap, not shelling them."
+ },
  "narrator/a6b9cfbf5bd53a71": {
   "chars": 121,
   "model": "eleven_v4",
@@ -48770,6 +49400,20 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Stone stairs wind up inside the wall. Every room is tidy in the way of a man who expects to leave in a hurry."
+ },
+ "narrator/a93d59ee74b9b8ab": {
+  "chars": 65,
+  "direction": "[light, plain]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A thin, cheerful girl with flour on her nose. That's all you see."
+ },
+ "narrator/a94651f0c61abe6a": {
+  "chars": 171,
+  "direction": "[quiet, tense, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You tell her. She doesn't cry. She stands up, and the beans go everywhere, and she starts for the lane, and you have to tell her the rest: Granny, and the next dark night."
  },
  "narrator/a94b7e83bdeb00f8": {
   "chars": 156,
@@ -49718,6 +50362,13 @@
   "recipe": "dd92281f92",
   "text": "For a heartbeat something old and very cold looks out of her eyes. Then she laughs, a dry sound like a deck being cut."
  },
+ "narrator/b276e77b65b93af6": {
+  "chars": 168,
+  "direction": "[gentle, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You tell her about the woman who buys a pastry every morning, and a baby who died in its cradle the night the kind old pastry woman sat up with it, and the baby's name."
+ },
  "narrator/b295c1b995b48718": {
   "chars": 171,
   "model": "eleven_v4",
@@ -50566,6 +51217,13 @@
   "recipe": "dd92281f92",
   "text": "A courtyard of worn flags round a well and a statue. Footprints in the snow go in every direction, and some of them aren't any shape that has a name."
  },
+ "narrator/bb7f0786d91e2488": {
+  "chars": 153,
+  "direction": "[gentle, sad, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Mouse has put on a clean apron and combed her hair with her fingers, and there's a candle in a hollowed turnip on the step of the hut. It's her birthday."
+ },
  "narrator/bb89789d3655289d": {
   "chars": 103,
   "direction": "[quiet, ominous]",
@@ -50770,6 +51428,13 @@
   "recipe": "dd92281f92",
   "text": "The Baron reads the letter twice, moving his lips. On the second reading, the colour drains out of him from the forehead down."
  },
+ "narrator/be43b8614450cdce": {
+  "chars": 142,
+  "direction": "[ominous, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Granny Ash comes across the lane with her dogs at her heels, and in the hag garden behind her the blights pull their roots up out of the beds."
+ },
  "narrator/be4aff61ca373aa0": {
   "chars": 88,
   "model": "eleven_v4",
@@ -50873,6 +51538,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The great press fills the middle of the floor, its screw as thick as a man's waist. Beside it stands a vat full to the brim, and the surface of the mash is moving."
+ },
+ "narrator/bf43bde7635c6686": {
+  "chars": 133,
+  "direction": "[quiet, moved]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Mouse stops in the middle of the lane. Then she comes back, slowly, and stands behind you, and holds on to your belt with both hands."
  },
  "narrator/bf4ae9c5caf5947b": {
   "chars": 163,
@@ -51708,6 +52380,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The flagstone tips, and the dark beneath it is ten feet deep and full of spikes."
+ },
+ "narrator/c662bdefa9605ed6": {
+  "chars": 100,
+  "direction": "[warm, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "It's very good. It tastes of butter and apple and nothing else at all, which in Barovia is a luxury."
  },
  "narrator/c6868b69e8454f06": {
   "chars": 87,
@@ -53109,6 +53788,13 @@
   "recipe": "dd92281f92",
   "text": "A young knight with his helmet under his arm, grinning as if he has been told to look solemn and can't. The brass plate on the frame says HORNGAARD."
  },
+ "narrator/d2e6e43ee89077e3": {
+  "chars": 90,
+  "direction": "[hushed, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Across the lane, something big moves in the trees and doesn't bother to be quiet about it."
+ },
  "narrator/d30468df2ba6ad70": {
   "chars": 102,
   "model": "eleven_v3",
@@ -53140,6 +53826,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Two colossi of amber flank the doors, each three times a man's height, robed and hooded like the wardens who carved them. The left one has split from crown to knee, and snow has packed the crack."
+ },
+ "narrator/d372355f3a1b75c3": {
+  "chars": 213,
+  "direction": "[quiet, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "When her sleeve rides up you see why she keeps it down: her nails are grey at the roots, the colour of an old kettle. And every time a cart comes up from the village she looks down the lane, as if somebody's late."
  },
  "narrator/d372882e92e54879": {
   "chars": 102,
@@ -54097,6 +54790,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "You find what shelter there is among the stones. The pool steams faintly in the cold. Long after midnight, something scrapes on the north wall."
+ },
+ "narrator/de2edfea4b92d20e": {
+  "chars": 130,
+  "direction": "[quiet, wondering]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She looks at you for a long moment, then pushes her left sleeve up. On the inside of her wrist is a mark like a thumbprint of jam."
  },
  "narrator/de4eb1c41e807a5c": {
   "chars": 107,
@@ -55964,6 +56664,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "She screams. Every shutter in the village slams at once."
+ },
+ "narrator/efa9ef241a5c5bec": {
+  "chars": 125,
+  "direction": "[quiet, ominous, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "She goes. Granny puts one huge grey hand on her head, gently, the way you'd hold a cup, and Mouse stands very still under it."
  },
  "narrator/efbe84c54584a18e": {
   "chars": 168,
@@ -59214,6 +59921,20 @@
   "model": "eleven_v3",
   "recipe": "f8628ac829",
   "text": "KEY. THE BIRDS TOOK IT. UP UNDER THE ROOF."
+ },
+ "pool_grave_keeper/933dafd1fee527ad": {
+  "chars": 142,
+  "direction": "[slow, patient, dry]",
+  "model": "eleven_v3",
+  "recipe": "8b2b858e4f",
+  "text": "Stone suns, every one, so they face the morning. The snow pushes them crooked. I push them back. Between us we've kept it up for thirty years."
+ },
+ "pool_grave_keeper/99718dfda231b070": {
+  "chars": 120,
+  "direction": "[gentle, quiet, conspiratorial]",
+  "model": "eleven_v3",
+  "recipe": "8b2b858e4f",
+  "text": "The Krezkov boy, at peace in the water at last. I'll keep his stone straighter than all the rest. Don't tell the others."
  },
  "pool_mourner/b67838152353c70e": {
   "chars": 171,
@@ -62973,6 +63694,34 @@
   "recipe": "5821254d72",
   "text": "Something new. I haven't had anything new since... well. Since."
  },
+ "sorin_krezkov/5d9b54022ee9a5ab": {
+  "chars": 33,
+  "direction": "[soft, motherly, eerie mimicry]",
+  "model": "eleven_v3",
+  "recipe": "0608b2fb75",
+  "text": "Sorin. Sorin, come in, it's dark."
+ },
+ "sorin_krezkov/75d7de4a3e84bbbc": {
+  "chars": 41,
+  "direction": "[small, hoarse, feverish, frightened]",
+  "model": "eleven_v3",
+  "recipe": "0608b2fb75",
+  "text": "Mama, it's dark. Mama, I want to go home."
+ },
+ "sorin_krezkov/a15230a1d2c261f8": {
+  "chars": 19,
+  "direction": "[soft, eerie, beckoning]",
+  "model": "eleven_v3",
+  "recipe": "0608b2fb75",
+  "text": "Come in. It's dark."
+ },
+ "sorin_krezkov/f04dedb2955f8ba0": {
+  "chars": 5,
+  "direction": "[small, hoarse, plaintive]",
+  "model": "eleven_v3",
+  "recipe": "0608b2fb75",
+  "text": "Mama."
+ },
  "sorvia/0761c60ad36005ab": {
   "chars": 82,
   "direction": "[defensive, amused]",
@@ -64771,6 +65520,97 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "The house is yours tonight. Do not let me keep you."
+ },
+ "szoldar/0c1e4ef01455c0e1": {
+  "chars": 188,
+  "direction": "[gruff, sardonic, fond]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "Szoldar Szoldarovich. Hunter. That's my boy Yevgeni, who is meant to be mending his bowstring and is instead staring at you. Sit, if you're the strangers everyone's been not talking about."
+ },
+ "szoldar/1167cebc8a21eb0b": {
+  "chars": 134,
+  "direction": "[gruff, grim, ashamed]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "Dusk, at the landing. I'll be on the rise with the bow, pointed the right way. You have my word, which you've already had to buy once."
+ },
+ "szoldar/3eb47df87e8da1fd": {
+  "chars": 87,
+  "direction": "[sullen, bitter]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "Go, then. I'll drink here, where it's warm, and the castle can count its wolves itself."
+ },
+ "szoldar/5bab45feea1f7cbc": {
+  "chars": 41,
+  "direction": "[angry, then bitter]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "Who told you that? ...Yevgeni. Of course."
+ },
+ "szoldar/60d5854027b83f3c": {
+  "chars": 109,
+  "direction": "[gruff, blunt, businesslike]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "I can find him. I can't kill him; not with the boy. You can, by the look of you. We split it down the middle."
+ },
+ "szoldar/68d2d3eddd7d4b47": {
+  "chars": 71,
+  "direction": "[dry, gruff]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "Urwin says a great deal for a man who pours drinks. He's right, though."
+ },
+ "szoldar/776cf5873d9079bd": {
+  "chars": 65,
+  "direction": "[shaken, resigned]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "The wolf, then. God help me. If the castle asks, the wolf ate me."
+ },
+ "szoldar/8619746701fad43c": {
+  "chars": 207,
+  "direction": "[gruff, matter-of-fact, dark humour]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "The landing at Lake Zarovich, where the fisherman's shack is. Dusk, any day you like; he comes down to drink when the light goes. I'll be on the rise with my bow. You stand on the shore and look like dinner."
+ },
+ "szoldar/9fa2932783d5047a": {
+  "chars": 118,
+  "direction": "[scornful, defiant]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "Threaten me in the Baron's town with the Baron? Go and tell him. He'll put you both in the stocks for spreading gloom."
+ },
+ "szoldar/b6755399b75f1974": {
+  "chars": 211,
+  "direction": "[low, grim, measured]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "The Baron pays a copper an ear for wolves. He pays three hundred gold for one wolf in particular. Old Greytooth. Big as a horse, grey to the gums, and he's had two shepherds and the lakeshore goats since spring."
+ },
+ "szoldar/b71dbc2d32729bed": {
+  "chars": 118,
+  "direction": "[gruff, grudging, faintly proud]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "Three hundred gold and an empty purse from Arrigal. The boy says that's a good trade. The boy's soft. He's also right."
+ },
+ "szoldar/bf1e58cf4b907e6d": {
+  "chars": 225,
+  "direction": "[bitter, defensive, rising]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "Yes. Arrigal pays. A purse for every strong stranger I bring to the lake at dusk, and the wolf does the rest, and the castle learns what you're made of. You think I had a choice? You think anybody in this valley has a choice?"
+ },
+ "szoldar/d735fbc1f0bd47ec": {
+  "chars": 74,
+  "direction": "[curt, gruff]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "Dusk. The landing. Don't keep him waiting; he isn't patient, and nor am I."
  },
  "tamsin_tealeaf/02b71c1a4f30a756": {
   "chars": 9,
@@ -67579,6 +68419,34 @@
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "One deer, and I walked half the night for it. The wolves had the rest. They don't share, and nor do I, unless you're hungry. Are you hungry?"
+ },
+ "tser_nelu/1853e21ba7a09605": {
+  "chars": 51,
+  "direction": "[shaky, tearful]",
+  "model": "eleven_v3",
+  "recipe": "567340e26d",
+  "text": "It was her voice, Da. It knew how she said my name."
+ },
+ "tser_nelu/78c1a0f035a4983c": {
+  "chars": 70,
+  "direction": "[hoarse, shaking, disbelieving]",
+  "model": "eleven_v3",
+  "recipe": "567340e26d",
+  "text": "Is it you? Really you? They used everybody's voice. They used my Da's."
+ },
+ "tser_nelu/9e6ad98113ff3daa": {
+  "chars": 67,
+  "direction": "[hoarse, pleading, frightened]",
+  "model": "eleven_v3",
+  "recipe": "567340e26d",
+  "text": "Get me home. Please. And don't let anything say my name on the way."
+ },
+ "tser_nelu/e483881fe4ab3837": {
+  "chars": 145,
+  "direction": "[wry, cheerful, a little haunted]",
+  "model": "eleven_v3",
+  "recipe": "567340e26d",
+  "text": "I sing now, when anything calls from the trees. Badly, on purpose. Things that use your mother's voice can't stand bad singing. That's my theory."
  },
  "tser_petru/b817a063c41f3a61": {
   "chars": 116,
@@ -73103,6 +73971,111 @@
   "model": "eleven_v4",
   "recipe": "a9f72efbd3",
   "text": "Lovely. We've upset the one bird that holds a grudge."
+ },
+ "yevgeni/3951b1f08fc043db": {
+  "chars": 111,
+  "direction": "[sad, quiet]",
+  "model": "eleven_v3",
+  "recipe": "120f0affdd",
+  "text": "Father will be on the rise with his bow. He says he'll shoot the wolf. He's said that before, and he never has."
+ },
+ "yevgeni/3bc8900105b7e808": {
+  "chars": 87,
+  "direction": "[low, urgent, nervous]",
+  "model": "eleven_v3",
+  "recipe": "120f0affdd",
+  "text": "Don't go to the lake at dusk. Or go, but go early, and not where he tells you to stand."
+ },
+ "yevgeni/5913665f5cce6cac": {
+  "chars": 209,
+  "direction": "[sad, resigned, firm]",
+  "model": "eleven_v3",
+  "recipe": "120f0affdd",
+  "text": "He chose his side, up on that rise. I chose mine, too late to help him. This was his horn. He blew it once, in the hills, and men came out of the air to fight beside him. I'd rather you had it than the castle."
+ },
+ "yevgeni/76de579d7223281d": {
+  "chars": 215,
+  "direction": "[sad, quiet, steady]",
+  "model": "eleven_v3",
+  "recipe": "120f0affdd",
+  "text": "Father ran when the wolf went down. Toward the camp, toward Arrigal's fire. He left his horn on the rise. I think he meant to. He blew it once, in the hills, and men came out of the air to fight beside him. Take it."
+ },
+ "yevgeni/7b29e704cf71ee74": {
+  "chars": 122,
+  "direction": "[earnest, pleading]",
+  "model": "eleven_v3",
+  "recipe": "120f0affdd",
+  "text": "Go early. Choose your ground. And if you see my father on the rise with his bow, please don't kill him unless you have to."
+ },
+ "yevgeni/8077811cf3408ef8": {
+  "chars": 238,
+  "direction": "[earnest, proud, quiet]",
+  "model": "eleven_v3",
+  "recipe": "120f0affdd",
+  "text": "And this was Father's horn. He blew it once, in the hills, and men came out of the air to fight beside him. He said it was for the end of the world. He says you've seen more of that than he has. He wants you to have it. He'd never say so."
+ },
+ "yevgeni/a8c2cbdad32f3ca4": {
+  "chars": 163,
+  "direction": "[excited, grateful, shy]",
+  "model": "eleven_v3",
+  "recipe": "120f0affdd",
+  "text": "You did it. The Baron's clerk paid out on the ears without even looking at me. Here: the whole three hundred. Father says half; I say all of it. Father isn't here."
+ },
+ "yevgeni/aea757381f6c705d": {
+  "chars": 43,
+  "direction": "[shy, quiet]",
+  "model": "eleven_v3",
+  "recipe": "120f0affdd",
+  "text": "Father does the talking. I mend the string."
+ },
+ "yevgeni/cb88a207518441ba": {
+  "chars": 121,
+  "direction": "[content, shy, wry]",
+  "model": "eleven_v3",
+  "recipe": "120f0affdd",
+  "text": "I go out with Father again now. We take wolves, ordinary ones, a copper an ear. It's honest. It's very boring. I like it."
+ },
+ "yevgeni/d9a4a143c706c5e7": {
+  "chars": 206,
+  "direction": "[hushed, ashamed, urgent]",
+  "model": "eleven_v3",
+  "recipe": "120f0affdd",
+  "text": "A man from the Vistani camp pays him. Arrigal. A purse for every strong stranger who goes down to the landing at dusk. The wolf isn't ours to hunt; it's the castle's. The castle wants to know how you fight."
+ },
+ "zinaida/3f4ab88bd8e984cc": {
+  "chars": 20,
+  "direction": "[faint, echoing whisper]",
+  "model": "eleven_v3",
+  "recipe": "2274790bb0",
+  "text": "Petra. Petra. Petra."
+ },
+ "zinaida/52c1f4d2e2184d88": {
+  "chars": 31,
+  "direction": "[hushed, wondering, near tears]",
+  "model": "eleven_v3",
+  "recipe": "2274790bb0",
+  "text": "A grave. Mine. With my name on."
+ },
+ "zinaida/5708577da66faf74": {
+  "chars": 8,
+  "direction": "[soft, pleading whisper]",
+  "model": "eleven_v3",
+  "recipe": "2274790bb0",
+  "text": "Bury me."
+ },
+ "zinaida/c41d83332098a595": {
+  "chars": 82,
+  "direction": "[panicked, desperate, rising to a scream]",
+  "model": "eleven_v3",
+  "recipe": "2274790bb0",
+  "text": "That's mine. That's mine. Put it back. Don't give me to him. Don't give me to HIM."
+ },
+ "zinaida/caa66d0d6110621b": {
+  "chars": 69,
+  "direction": "[bitter, cold, hurt]",
+  "model": "eleven_v3",
+  "recipe": "2274790bb0",
+  "text": "Liars. You came from the carriage. Everybody comes from the carriage."
  },
  "zuleika_toranescu/0213b26030ccd87f": {
   "chars": 157,
