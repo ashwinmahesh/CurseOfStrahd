@@ -231,6 +231,72 @@ func test_the_party_screens() -> void:
 		await _check("the %s" % kind, _screen(kind, 0), _close_screen)
 
 
+## Settings' three pages in the pause menu's arch (lane 13: Game, Display and the Keys list).
+func test_the_settings_pages() -> void:
+	if not await _game(LATE):
+		return
+	for page: String in PauseMenu.SETTINGS_PAGES:
+		await _check("the settings (%s)" % page, func() -> Variant:
+			root.call("open_screen", "menu", 0)
+			await _frames(1)
+			root.get("screen").call("_show_settings", page)
+			await _frames(2)
+			return root.get("screen"), _close_screen)
+
+
+## The journal's Bestiary (U8) with every creature in the game met, a third of them felled and a third studied.
+func test_the_bestiary() -> void:
+	if not await _game(LATE):
+		return
+	var i := 0
+	for m: Dictionary in Compendium.shared().all("monsters"):
+		GameState.story.bestiary[str(m["id"])] = {"n": i, "met": 1, "where": "amber_temple_entrance",
+			"defeated": 3 if i % 3 > 0 else 0, "studied": i % 3 == 2}
+		i += 1
+	await _check("the bestiary", func() -> Variant:
+		root.call("open_screen", "journal", 0)
+		await _frames(1)
+		var j := root.get("screen") as JournalScreen
+		j.tab = "Bestiary"
+		j.beast = "strahd_von_zarovich"
+		j.call("_draw")
+		await _frames(2)
+		return j, _close_screen)
+
+
+## The play screen at the biggest interface and text the Settings offer (U4): the exploring HUD with a level 9
+## party's resources, a conversation with the longest options, and the combat HUD.
+func test_the_play_screen_at_the_largest_sizes() -> void:
+	GameSettings.set_ui_scale(GameSettings.UI_SCALES.back())
+	GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+	Compendium.shared().tables["locations"]["test_layout_ward"] = ARENA.duplicate(true)
+	if await _game(LATE):
+		assert_true(is_equal_approx(get_tree().root.content_scale_factor, GameSettings.ui_scale()), "the game takes the size")
+		await _check("the exploring HUD, largest", func() -> Variant: return root.get("hud"))
+		var options := longest_options(6)
+		await _check("a conversation, largest", func() -> Variant:
+			var d := DialogueUI.new()
+			root.add_child(d)
+			await _frames(1)
+			d.call("_show", {"kind": "options", "options": options})
+			await _frames(2)
+			return d,
+			func() -> void:
+				for d in root.find_children("*", "DialogueUI", false, false):
+					d.queue_free())
+		root.call("enter_location", "test_layout_ward", "default")
+		await _frames(3)
+		var view := root.get("view") as LocationView
+		assert_true(view.start_encounter("rat"), "the fight starts")
+		await _frames(3)
+		var cv := view.combat_view
+		await _check("the combat HUD, largest", func() -> Variant: return cv.hud)
+		cv.finished.emit("victory")
+		await _frames(3)
+	GameSettings.set_ui_scale(1.0)
+	GameSettings.set_text_scale(1.0)
+
+
 func test_the_level_up_screen() -> void:
 	if not await _game(LATE):
 		return

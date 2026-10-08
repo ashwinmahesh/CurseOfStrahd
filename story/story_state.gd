@@ -53,6 +53,9 @@ var active_spells: Dictionary = {}
 var approval: Dictionary = {}
 ## The run's record for the ending (RunStats): each hero's kills, crits, natural 20s and 1s and more, and the gold.
 var run_stats: Dictionary = {}
+## What the party has learned about the creatures it has fought (story/bestiary.gd): monster id -> {n, met, where,
+## defeated, studied}.
+var bestiary: Dictionary = {}
 
 
 # --- Flags, quests, attitudes ---------------------------------------------------------------------
@@ -596,7 +599,7 @@ func to_dict() -> Dictionary:
 		"seed": playthrough_seed, "tarokka": tarokka.duplicate(), "guests": _guests_to_dict(), "shops": shops.duplicate(true),
 		"travel_resume": travel_resume.duplicate(), "active_spells": active_spells.duplicate(true),
 		"options": options.duplicate(), "miles_since_long_rest": miles_since_long_rest,
-		"approval": approval.duplicate(true), "run_stats": run_stats.duplicate(true)}
+		"approval": approval.duplicate(true), "run_stats": run_stats.duplicate(true), "bestiary": bestiary.duplicate(true)}
 
 
 ## A pregen loaded from a save wears its look as data/pregens has it now. The six on the roster borrowed other
@@ -668,6 +671,7 @@ static func from_dict(d: Dictionary) -> StoryState:
 	st.run_stats = (d.get("run_stats", {}) as Dictionary).duplicate(true)
 	st.options.merge(d.get("options", {}) as Dictionary, true)
 	st.approval = Approval.from_save(d.get("approval", {}))
+	st.bestiary = (d.get("bestiary", {}) as Dictionary).duplicate(true)
 	for g: Variant in d.get("guests", []):
 		var gd := g as Dictionary
 		var cr := StoryState.make_guest(str(gd["npc"]))

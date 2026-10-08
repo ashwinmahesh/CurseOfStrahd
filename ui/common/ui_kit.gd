@@ -110,6 +110,7 @@ static func divider(width: float = 360.0, colour: String = "gilt") -> TextureRec
 
 ## A full-screen frame for a screen: dimmed backdrop and a centered panel. Returns the panel's content box.
 static func screen_frame(root: CanvasLayer, title_text: String, size: Vector2 = Vector2(1400, 800)) -> VBoxContainer:
+	UiScale.full_screen(root)   # a full screen keeps its design size whatever the interface size (Settings, U4)
 	var dim := ColorRect.new()
 	dim.color = Color(Look.color("void"), 0.78)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)

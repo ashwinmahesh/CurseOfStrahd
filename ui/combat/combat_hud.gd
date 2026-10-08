@@ -23,10 +23,11 @@ signal square_picked(id: String)
 const COST_COLOURS := {"action": "moss", "attack": "moss", "bonus": "gilt", "reaction": "mist_blue", "free": "slate",
 	"movement": "moon_blue"}
 const SLOT_SIZE := Vector2(132, 50)
+## {action} reads as the player's key for it (InputActions.fill, Settings, Keys).
 const CONTROLS: Array[String] = [
 	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
-	"Keyboard: L minimizes or restores the combat log · 1-0 use hotbar slots · Z / X change tab · Enter confirms (casts early with fewer targets) · Esc cancels · Space ends the turn · Ctrl+Z takes back the last move · [ and ] change the spell slot · T jumps to the next target · Tab inspects the next party member · F5 quicksaves and F9 loads the quicksave (outside a fight; in one, the game saves at each round's start).",
-	"Camera: WASD or arrows pan · Q / E rotate · mouse wheel zooms.",
+	"Keyboard: {combat_toggle_log} minimizes or restores the combat log · {combat_slot_1}-{combat_slot_10} use hotbar slots · {combat_tab_prev} / {combat_tab_next} change tab · {combat_confirm} confirms (casts early with fewer targets) · Esc cancels · {combat_end_turn} ends the turn · Ctrl+Z takes back the last move · {combat_slot_level_down} and {combat_slot_level_up} change the spell slot · {combat_next_target} jumps to the next target · {cycle_leader} inspects the next party member · {quick_save} quicksaves and {quick_load} loads the quicksave (outside a fight; in one, the game saves at each round's start).",
+	"Camera: {walk} pan · {camera_rotate_left} / {camera_rotate_right} rotate · mouse wheel zooms.",
 	"Controller: left stick moves the cursor · A confirms · B cancels · X next target · Y ends the turn · hold LB for the radial menu (right stick picks, release to choose) · LT / RT pick a hotbar slot · RB uses it · d-pad left/right changes the spell slot · View inspects the next party member.",
 	"Reactions always ask unless you set a rule in the prompt (Next time: Ask me / Always use it / Never).",
 ]
@@ -142,7 +143,7 @@ func build(encounter: Encounter, catalog_: ActionCatalog) -> void:
 	_controls.add_child(cbox)
 	cbox.add_child(_label("Controls (F1 or Start to close)", 20, "gilt_light"))
 	for line: String in CONTROLS:
-		var l := _label(line, 15, "vellum")
+		var l := _label(InputActions.fill(line), 15, "vellum")
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.custom_minimum_size = Vector2(800, 0)
 		cbox.add_child(l)
@@ -483,7 +484,7 @@ func _build_confirm() -> void:
 	box.add_child(_confirm_text)
 	var row := HBoxContainer.new()
 	var yes := Button.new()
-	yes.text = "End turn (Space / A)"
+	yes.text = "End turn (%s / A)" % InputActions.key_text(&"combat_end_turn")
 	yes.pressed.connect(func() -> void:
 		_confirm.visible = false
 		end_turn_pressed.emit())
@@ -594,15 +595,20 @@ func _refresh_party() -> void:
 			"vampire_red" if alarm or c.is_down() else ("gilt_light" if on else "gilt_dark"), 4 if alarm else (3 if on else 2)))
 		card.custom_minimum_size = Vector2(270, 0)
 		card.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		var btn := Button.new()
+		card.add_child(btn)   # under the content, so the effect icons on top can name themselves on hover
 		var row := HBoxContainer.new()
+		row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row.add_theme_constant_override("separation", 8)
 		card.add_child(row)
 		row.add_child(UiParts.framed_portrait(CombatToken.art_id(c), 64.0, c.is_down(), c.creature.dead))
 		var v := VBoxContainer.new()
+		v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		v.add_theme_constant_override("separation", 3)
 		v.custom_minimum_size = Vector2(180, 0)
 		# The name, then what they are in small pills (a guest, DOWN), so a long name or a fall never widens the frame.
 		var head := HBoxContainer.new()
+		head.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		head.add_theme_constant_override("separation", 5)
 		var nm := _label(c.name(), 17, "vampire_red" if c.is_down() else ("gilt_light" if on else "vellum"))
 		nm.add_theme_font_override("font", UiKit.display_font())
@@ -629,8 +635,11 @@ func _refresh_party() -> void:
 		sl.clip_text = true
 		sl.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		v.add_child(sl)
+		# What's working on them (Rage, Bladesong, the spell they concentrate on...), an icon each.
+		var working := EffectIcons.row(cr, 20.0)
+		if working != null:
+			v.add_child(working)
 		row.add_child(v)
-		var btn := Button.new()
 		btn.flat = true
 		btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		btn.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -638,7 +647,6 @@ func _refresh_party() -> void:
 			btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
 		btn.pressed.connect(func() -> void: inspect_requested.emit(c.id))
 		btn.tooltip_text = "%s · %s\nClick to see their actions" % [c.name(), status]
-		card.add_child(btn)
 		_party_box.add_child(card)
 
 
@@ -855,7 +863,7 @@ func _slot_face(b: Button, a: Dictionary, i: int, usable: bool) -> void:
 		b.mouse_entered.connect(func() -> void: name_.add_theme_color_override("font_color", Look.color("gilt_light")))
 		b.mouse_exited.connect(func() -> void: name_.add_theme_color_override("font_color", Look.color("ivory")))
 	if i < 10:
-		var key := _label(str((i + 1) % 10), 11, "gilt_light" if usable else "gilt_dark")
+		var key := _label(InputActions.key_text(StringName("combat_slot_%d" % (i + 1))), 11, "gilt_light" if usable else "gilt_dark")
 		key.position = Vector2(36, 28) if tex != null else Vector2(5, 15)
 		key.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		b.add_child(key)

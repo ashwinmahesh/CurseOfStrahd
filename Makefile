@@ -197,7 +197,7 @@ ui_art:
 
 ## Spell and item icons (game-icons.net silhouettes framed in the menu colours; keys in art/icons.json): make icons
 icons:
-	$(G) --headless --script res://tools/art/build_icons.gd 2>&1 | $(LOGCHK)
+	$(G) --headless --script res://tools/art/build_icons.gd $(if $(KIND),-- --kind=$(KIND),) 2>&1 | $(LOGCHK)
 	$(MAKE) import
 
 ## Mouse cursors from the game-icons silhouettes (tools/art/build_cursors.gd -> art/ui/cursors).

@@ -132,8 +132,9 @@ func _ready() -> void:
 	_text.bbcode_enabled = true
 	_text.fit_content = true
 	_text.custom_minimum_size = Vector2(980, 60)
-	_text.add_theme_font_size_override("normal_font_size", 20)
-	_text.add_theme_font_size_override("italics_font_size", 20)
+	# The reading text follows the player's text size (Settings, Text: U4).
+	_text.add_theme_font_size_override("normal_font_size", UiScale.text(20))
+	_text.add_theme_font_size_override("italics_font_size", UiScale.text(20))
 	_text.add_theme_color_override("default_color", Look.color("vellum"))
 	_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	right.add_child(_text)
@@ -207,8 +208,8 @@ func _build_history() -> void:
 	_history_text.bbcode_enabled = true
 	_history_text.scroll_following = true
 	_history_text.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	_history_text.add_theme_font_size_override("normal_font_size", 16)
-	_history_text.add_theme_font_size_override("italics_font_size", 16)
+	_history_text.add_theme_font_size_override("normal_font_size", UiScale.text(16))
+	_history_text.add_theme_font_size_override("italics_font_size", UiScale.text(16))
 	_history_text.add_theme_color_override("default_color", Look.color("vellum"))
 	col.add_child(_history_text)
 	add_child(_history_panel)
@@ -418,7 +419,7 @@ func _show_options(options: Array) -> void:
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		# A long option wraps onto more lines inside the box instead of widening it past the screen's edge.
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		b.add_theme_font_size_override("font_size", 17)
+		b.add_theme_font_size_override("font_size", UiScale.text(17))
 		var label := str(opt["label"])
 		var check := opt["check"] as Dictionary
 		var extra := ""
