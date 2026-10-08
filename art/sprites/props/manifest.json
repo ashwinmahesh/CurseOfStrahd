@@ -5086,6 +5086,181 @@
       "pixel_size": 0.00195,
       "anchor": "bottom_center",
       "source": "art/generated/props/stewpot_render.png"
+    },
+    "reading_table": {
+      "file": "art/sprites/props/reading_table.png",
+      "width_px": 516,
+      "height_px": 420,
+      "world_height": 0.58,
+      "pixel_size": 0.0014,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_reading_table.png",
+      "mount": "stand",
+      "back": "reading_table_back"
+    },
+    "reading_table_back": {
+      "file": "art/sprites/props/reading_table_back.png",
+      "width_px": 516,
+      "height_px": 480,
+      "world_height": 0.58,
+      "pixel_size": 0.00122,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_reading_table_back.png",
+      "mount": "stand"
+    },
+    "cushions": {
+      "file": "art/sprites/props/cushions.png",
+      "width_px": 516,
+      "height_px": 412,
+      "world_height": 0.43,
+      "pixel_size": 0.00106,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_cushions.png",
+      "mount": "stand",
+      "back": "cushions_back"
+    },
+    "cushions_back": {
+      "file": "art/sprites/props/cushions_back.png",
+      "width_px": 516,
+      "height_px": 424,
+      "world_height": 0.43,
+      "pixel_size": 0.00103,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_cushions_back.png",
+      "mount": "stand"
+    },
+    "lantern_stand": {
+      "file": "art/sprites/props/lantern_stand.png",
+      "width_px": 164,
+      "height_px": 516,
+      "world_height": 1.45,
+      "pixel_size": 0.00283,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_lantern_stand.png",
+      "mount": "stand"
+    },
+    "incense_burner": {
+      "file": "art/sprites/props/incense_burner.png",
+      "width_px": 276,
+      "height_px": 516,
+      "world_height": 0.51,
+      "pixel_size": 0.001,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_incense_burner.png",
+      "mount": "stand"
+    },
+    "bedroll": {
+      "file": "art/sprites/props/bedroll.png",
+      "width_px": 516,
+      "height_px": 364,
+      "world_height": 0.36,
+      "pixel_size": 0.001,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_bedroll.png",
+      "mount": "stand",
+      "back": "bedroll_back"
+    },
+    "bedroll_back": {
+      "file": "art/sprites/props/bedroll_back.png",
+      "width_px": 516,
+      "height_px": 348,
+      "world_height": 0.36,
+      "pixel_size": 0.00106,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_bedroll_back.png",
+      "mount": "stand"
+    },
+    "candle_cluster": {
+      "file": "art/sprites/props/candle_cluster.png",
+      "width_px": 516,
+      "height_px": 460,
+      "world_height": 0.3,
+      "pixel_size": 0.00066,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_candle_cluster.png",
+      "mount": "stand"
+    },
+    "book_stack": {
+      "file": "art/sprites/props/book_stack.png",
+      "width_px": 516,
+      "height_px": 336,
+      "world_height": 0.4,
+      "pixel_size": 0.00121,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_book_stack.png",
+      "mount": "stand",
+      "back": "book_stack_back"
+    },
+    "book_stack_back": {
+      "file": "art/sprites/props/book_stack_back.png",
+      "width_px": 516,
+      "height_px": 376,
+      "world_height": 0.4,
+      "pixel_size": 0.00108,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_book_stack_back.png",
+      "mount": "stand"
+    },
+    "drying_herbs": {
+      "file": "art/sprites/props/drying_herbs.png",
+      "width_px": 516,
+      "height_px": 440,
+      "world_height": 0.58,
+      "pixel_size": 0.00134,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_drying_herbs.png",
+      "mount": "wall"
+    },
+    "cookpot": {
+      "file": "art/sprites/props/cookpot.png",
+      "width_px": 404,
+      "height_px": 516,
+      "world_height": 0.64,
+      "pixel_size": 0.00125,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_cookpot.png",
+      "mount": "stand",
+      "back": "cookpot_back"
+    },
+    "cookpot_back": {
+      "file": "art/sprites/props/cookpot_back.png",
+      "width_px": 412,
+      "height_px": 516,
+      "world_height": 0.64,
+      "pixel_size": 0.00125,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_cookpot_back.png",
+      "mount": "stand"
+    },
+    "basket": {
+      "file": "art/sprites/props/basket.png",
+      "width_px": 516,
+      "height_px": 496,
+      "world_height": 0.42,
+      "pixel_size": 0.00085,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_basket.png",
+      "mount": "stand"
+    },
+    "wine_tray": {
+      "file": "art/sprites/props/wine_tray.png",
+      "width_px": 516,
+      "height_px": 396,
+      "world_height": 0.3,
+      "pixel_size": 0.00077,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_wine_tray.png",
+      "mount": "stand"
+    },
+    "shawl_line": {
+      "file": "art/sprites/props/shawl_line.png",
+      "width_px": 472,
+      "height_px": 516,
+      "world_height": 0.7,
+      "pixel_size": 0.00137,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_shawl_line.png",
+      "mount": "wall"
     }
   }
 }

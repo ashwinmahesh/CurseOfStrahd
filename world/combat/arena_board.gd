@@ -69,7 +69,7 @@ func _surface_theme() -> String:
 		return "village"
 	if theme in ["inn"]:
 		return "tavern"
-	if theme in ["house", "tent"]:
+	if theme == "house":
 		return "townhouse"
 	if theme == "town":
 		return "vallaki"
@@ -217,6 +217,9 @@ var _faded_for: Array = []           ## fade_occluders' camera, focus and counts
 ## The scenery the board put on each square (a tree, a wall block, furniture on a '=' square, brambles), so a
 ## location's own prop can take the square's place (SetDressing): cell -> Array of nodes. Ground boxes aren't in it.
 var dressing: Dictionary = {}
+## How far in from a wall square's face the wall's surface stands, so pieces hung on it or backed onto it stand off
+## it rather than inside it: 0 for walls, a tent's canvas inset and lean (TentWalls).
+var wall_inset := 0.0
 ## Squares holding a door (SetDressing.door): not wall for hanging pictures or picking a wall's direction.
 var door_cells: Dictionary = {}
 ## Squares a location's things stand on (SetDressing.reserve), and wall faces with a piece hung on them.
@@ -481,7 +484,7 @@ func wall_material() -> Material:
 	if _wall_tex != null and theme not in WILD:
 		return _wall_tex
 	var colour := {"manor": "umber", "tavern": "walnut", "shop": "walnut", "townhouse": "umber", "church": "slate",
-		"attic": "peat", "dungeon": "stone_deep"}.get(theme, "walnut") as String
+		"attic": "peat", "dungeon": "stone_deep", "tent": "bruise"}.get(theme, "walnut") as String
 	return Look.cel(colour)
 
 
@@ -530,7 +533,7 @@ func _wall(c: Vector2i) -> void:
 	if theme in INTERIORS or theme == "dungeon":
 		# Cut-away walls (low enough to see over from the camera), capped with a darker band.
 		var colour := {"manor": "umber", "tavern": "walnut", "shop": "walnut", "townhouse": "umber", "church": "slate",
-			"attic": "peat"}.get(theme, "stone_deep") as String
+			"attic": "peat", "tent": "bruise"}.get(theme, "stone_deep") as String
 		var h := 1.15
 		var room_wall := _wall_room(c)
 		var wall_mat: Material = room_wall["wall"] as Material if room_wall.has("wall") else (_wall_tex if _wall_tex != null else Look.cel(colour))
