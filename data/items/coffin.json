@@ -1,0 +1,14 @@
+{
+  "id": "coffin",
+  "name": "Coffin",
+  "source": {
+    "book": "CoS",
+    "note": "Henrik van der Voort's work in Vallaki; numbers are ours."
+  },
+  "category": "gear",
+  "weight_lb": 70,
+  "cost_gp": 10,
+  "stackable": false,
+  "summary": "A pine coffin, lid and nails included. Heavy, and in this valley never short of a use.",
+  "text": "Henrik builds them to last, which in Barovia is less reassuring than it sounds."
+}

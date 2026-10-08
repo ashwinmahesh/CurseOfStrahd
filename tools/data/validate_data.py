@@ -370,7 +370,11 @@ def campaign_checks(data, errors, pending):
             if e["id"] not in items and e["id"] not in data.get("magic_items", {}):
                 errors.append(f"npcs/{nid}: shop sells unknown item '{e['id']}'")
         for iid in n.get("shop", {}).get("rotating", {}).get("pool", []):
-            if iid not in items and iid not in data.get("magic_items", {}):
+            # A template item on a base ("spell_scroll__daylight") needs both halves.
+            t, _, base = iid.partition("__")
+            known = iid in items or iid in data.get("magic_items", {}) or (
+                base and t in data.get("magic_items", {}) and (base in items or base in data.get("spells", {})))
+            if not known:
                 errors.append(f"npcs/{nid}: shop's rotating pool has unknown item '{iid}'")
         gb = n.get("guest_build", {})
         if gb.get("monster") and gb["monster"] not in monsters:

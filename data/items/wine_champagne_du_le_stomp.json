@@ -1,0 +1,14 @@
+{
+  "id": "wine_champagne_du_le_stomp",
+  "name": "Champagne du le Stomp",
+  "source": {
+    "book": "CoS",
+    "note": "The Wizard of Wines' finest; price as the PHB's fine wine."
+  },
+  "category": "consumable",
+  "weight_lb": 1.5,
+  "cost_gp": 10,
+  "stackable": true,
+  "summary": "A bottle of the Martikovs' best sparkling wine, the kind that ends up on the Baron's table.",
+  "text": "Pressed from the vines nearest the founder's cellar. The Martikovs say a bottle of it has never once been poured for the castle. They say it quietly."
+}

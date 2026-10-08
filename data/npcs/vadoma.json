@@ -1,0 +1,70 @@
+{
+  "id": "vadoma",
+  "name": "Vadoma",
+  "title": "Trader of the painted wagon",
+  "summary": "A Vistani trader who drives a painted wagon between the camps and sells curios no Barovian shop would stock: potions, charms and stranger things, never the same ones twice.",
+  "portrait": "vadoma",
+  "sprite": "vadoma",
+  "attitude": "indifferent",
+  "voice": "docs/voice/vadoma.md",
+  "monster": "scout",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "merchant",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her",
+  "shop": {
+    "sells": [
+      {
+        "id": "potion_of_healing",
+        "qty": 2
+      }
+    ],
+    "rotating": {
+      "pool": [
+        "potion_of_healing_greater",
+        "potion_of_heroism",
+        "potion_of_climbing",
+        "potion_of_resistance_necrotic",
+        "oil_of_slipperiness",
+        "philter_of_love",
+        "dust_of_disappearance",
+        "restorative_ointment",
+        "periapt_of_wound_closure",
+        "stone_of_good_luck",
+        "cloak_of_protection",
+        "goggles_of_night",
+        "lantern_of_revealing",
+        "eyes_of_charming",
+        "hat_of_disguise",
+        "pipes_of_haunting",
+        "deck_of_illusions",
+        "bag_of_holding",
+        "boots_of_elvenkind",
+        "ring_of_mind_shielding",
+        "amulet_of_proof_against_detection_and_location",
+        "figurine_of_wondrous_power_silver_raven",
+        "driftglobe",
+        "sending_stones",
+        "spell_scroll__protection_from_evil_and_good",
+        "spell_scroll__daylight",
+        "spell_scroll__remove_curse"
+      ],
+      "count": 4,
+      "days": 3
+    },
+    "buys": [
+      "treasure",
+      "potion",
+      "scroll"
+    ],
+    "markup": 1.25,
+    "sell_rate": 0.4,
+    "haggle": {
+      "dc": 17
+    }
+  }
+}

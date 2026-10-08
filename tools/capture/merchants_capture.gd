@@ -94,3 +94,14 @@ func capture_shots(tool: Node, out: String) -> void:
 		root.call("open_services", "urwin_martikov")
 		await _shoot(tool, "%s_services_rooms.png" % out)
 		_close("ServicesScreen")
+	if _wants("trader"):
+		root.call("open_shop", "vadoma")
+		await _shoot(tool, "%s_trader_vadoma.png" % out)
+		_close("ShopScreen")
+	if _wants("merchants"):
+		st.set_flag("coffin_spawn_destroyed")
+		st.set_flag("winery_wine_flows")
+		for npc: String in ["henrik", "arik", "davian_martikov"]:
+			root.call("open_shop", npc)
+			await _shoot(tool, "%s_merchant_%s.png" % [out, npc])
+			_close("ShopScreen")
