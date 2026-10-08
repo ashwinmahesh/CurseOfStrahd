@@ -1,0 +1,14 @@
+# Krezk's people at the Pool of the White Sun (lane 28, 2026-10-08: "more people walking around and doing things"):
+# Widow Catrina lighting her candle at the water, and Old Simion keeping the graves. Unvoiced for now.
+
+~ mourner
+Widow Catrina: Every morning I tell him the news. The goats, the weather, who's fallen out with whom. The water never freezes, not even in the deep of winter. That's how I know he hears.
+-> END
+
+~ grave_keeper
+if flag.sorin_fate == "pool"
+Old Simion [sad]: The Krezkov boy, at peace in the water at last. I'll keep his stone straighter than all the rest. Don't tell the others.
+-> END
+endif
+Old Simion: Stone suns, every one, so they face the morning. The snow pushes them crooked. I push them back. Between us we've kept it up for thirty years.
+-> END

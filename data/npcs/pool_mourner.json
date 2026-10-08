@@ -1,0 +1,18 @@
+{
+  "id": "pool_mourner",
+  "name": "Widow Catrina",
+  "title": "At the Pool of the White Sun",
+  "summary": "A Krezk widow who comes to the pool every morning to light a candle at the water and say her husband's name to it, because it is the one place she is sure someone is listening.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "she/her"
+}

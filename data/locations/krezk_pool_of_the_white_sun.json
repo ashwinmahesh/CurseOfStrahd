@@ -19,14 +19,34 @@
       "#......................#",
       "#......................#",
       "#.=..=...........=====.#",
-      "#......................#",
-      "#......................#",
-      "#......................#",
+      "#...=..=...............#",
+      "#........=.....=.=..=..#",
+      "#..=...................#",
       "###########...##########"
     ],
     "theme": "shrine_yard",
     "light": "dim",
-    "outdoors": true
+    "outdoors": true,
+    "elevation": [
+      "222222222222222222222222",
+      "222222222222222222222222",
+      "222222222222222222222222",
+      "111111111111111111111111",
+      "111111100000111111111111",
+      "111111000000011111111111",
+      "111110000000001111111111",
+      "111110000000001111111111",
+      "111110000000001111111111",
+      "111111000000011111111111",
+      "111111100000111111111111",
+      "111111111111111111111111",
+      "111111111111111111111111",
+      "111111111111111111111111",
+      "111111111111111111111111",
+      "111111111111111111111111",
+      "111111111111111111111111",
+      "111111111111111111111111"
+    ]
   },
   "areas": [
     {
@@ -193,6 +213,127 @@
       "model": "toy_chest",
       "dialogue": "krezk/lighter_than_it_should_be:toys",
       "when": "quest.lighter_than_it_should_be"
+    },
+    {
+      "id": "pavilion_candles_w",
+      "cell": [
+        16,
+        6
+      ],
+      "kind": "decor",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "pavilion_candles_s",
+      "cell": [
+        16,
+        8
+      ],
+      "kind": "decor",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "pool_candles",
+      "cell": [
+        12,
+        10
+      ],
+      "kind": "examine",
+      "label": "Candles at the water",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "krezk_grave_1",
+      "cell": [
+        4,
+        14
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "krezk_grave_2",
+      "cell": [
+        7,
+        14
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "krezk_grave_3",
+      "cell": [
+        9,
+        15
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "krezk_grave_4",
+      "cell": [
+        15,
+        15
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "krezk_grave_5",
+      "cell": [
+        17,
+        15
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "krezk_grave_6",
+      "cell": [
+        20,
+        15
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "krezk_grave_7",
+      "cell": [
+        3,
+        16
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "krezk_grave_8",
+      "cell": [
+        21,
+        13
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "grave_keeper_broom",
+      "cell": [
+        6,
+        12
+      ],
+      "kind": "decor",
+      "model": "broom"
+    },
+    {
+      "id": "pool_sun_medallion",
+      "cell": [
+        14,
+        9
+      ],
+      "kind": "search",
+      "label": "something glinting at the pool's edge",
+      "model": "rubble",
+      "search_dc": 13,
+      "item": "holy_symbol_emblem"
     }
   ],
   "lights": [
@@ -263,6 +404,55 @@
       "dialogue": "krezk/lighter_than_it_should_be:sorin_pool",
       "facing": "north",
       "when": "flag.sorin_fate == \"pool\""
+    },
+    {
+      "npc": "pool_mourner",
+      "cell": [
+        11,
+        11
+      ],
+      "dialogue": "krezk/pool_folk:mourner",
+      "facing": "north",
+      "work": "gesture",
+      "hours": [
+        8,
+        17
+      ],
+      "when": "not weather == storm"
+    },
+    {
+      "npc": "pool_grave_keeper",
+      "cell": [
+        5,
+        12
+      ],
+      "dialogue": "krezk/pool_folk:grave_keeper",
+      "facing": "south",
+      "path": [
+        {
+          "at": [
+            5,
+            15
+          ],
+          "wait": 5,
+          "face": "east",
+          "work": "swing"
+        },
+        {
+          "at": [
+            19,
+            15
+          ],
+          "wait": 5,
+          "face": "west",
+          "work": "swing"
+        }
+      ],
+      "hours": [
+        8,
+        16
+      ],
+      "when": "not weather == storm"
     }
   ],
   "narration": {

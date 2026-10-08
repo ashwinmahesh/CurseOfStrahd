@@ -1,0 +1,18 @@
+{
+  "id": "pool_grave_keeper",
+  "name": "Old Simion",
+  "title": "Keeper of the Graves",
+  "summary": "An old man who sweeps the snow from Krezk's graves, straightens the stone suns on them, and knows who lies under every one.",
+  "portrait": "scout",
+  "sprite": "scout",
+  "attitude": "indifferent",
+  "monster": "scout",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}
