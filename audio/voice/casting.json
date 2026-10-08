@@ -918,14 +918,18 @@
       "name": "Lucie - Clear and Professional Actress",
       "library": true,
       "settings": {},
-      "description": "A warm adult woman's voice with a neutral English accent for a custom player hero: clear, grounded and expressive, able to carry any class or temperament."
+      "description": "A warm adult woman's voice with a neutral English accent for a custom player hero: clear, grounded and expressive, able to carry any class or temperament.",
+      "model": "eleven_v4",
+      "model_note": "Coordinator for the owner, 2026-10-08 23:16: new custom-hero lines on eleven_v4, no tags, to match their 642 v4 clips (SND-01)."
     },
     "hero_male": {
       "voice_id": "atEhNo1k29EZslpsboHA",
       "name": "Julian Vale - Resonant and Optimistic",
       "library": true,
       "settings": {},
-      "description": "A warm adult man's voice with a neutral English accent for a custom player hero: resonant, grounded and expressive, able to carry any class or temperament."
+      "description": "A warm adult man's voice with a neutral English accent for a custom player hero: resonant, grounded and expressive, able to carry any class or temperament.",
+      "model": "eleven_v4",
+      "model_note": "Coordinator for the owner, 2026-10-08 23:16: new custom-hero lines on eleven_v4, no tags, to match their 642 v4 clips (SND-01)."
     },
     "rahadin": {
       "settings": {},
