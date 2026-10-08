@@ -1,0 +1,18 @@
+{
+  "id": "ghakis_petrache",
+  "name": "Petrache",
+  "title": "Charcoal-Burner from below Krezk",
+  "summary": "Doina's husband, a charcoal-burner from the woods below Krezk, who listened to everything the count's keepers said on the cart up the mountain.",
+  "portrait": "villager",
+  "sprite": "villager",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "mount_ghakis"
+  ],
+  "region": "mount_ghakis",
+  "pronouns": "he/him",
+  "pockets": false
+}

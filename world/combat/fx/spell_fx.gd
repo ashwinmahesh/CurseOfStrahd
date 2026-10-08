@@ -433,8 +433,8 @@ func jumped(from: Vector3, to: Vector3) -> void:
 # --- Helpers the families share -----------------------------------------------------------------------
 
 static func height_of(t: CombatToken) -> float:
-	var aid := t.art_override if t.art_override != "" else CombatToken.art_id(t.combatant)
-	return CombatToken.height_for(aid) * maxf(1.0, t.scale.y)
+	var h := CombatToken.height_for(t.art_override) if t.art_override != "" else CombatToken.height_of(t.combatant)
+	return h * maxf(1.0, t.scale.y)
 
 
 ## The caster's casting hand, a little toward `toward`.

@@ -1,0 +1,30 @@
+{
+  "id": "mount_ghakis",
+  "name": "Mount Ghakis",
+  "places": [
+    {
+      "id": "ghakis_shoulder",
+      "name": "The North Shoulder of Ghakis",
+      "location": "ghakis_shoulder",
+      "spawn": "from_path",
+      "pos": [
+        0.352,
+        0.118
+      ],
+      "region": "mount_ghakis",
+      "when": "quest.the_warm_snow",
+      "summary": "A shelf of black rock high on the mountain above the Tsolenka gorge, where the snow melts in midwinter and the count's carts go up at the new moon."
+    }
+  ],
+  "roads": [
+    {
+      "id": "tsolenka_pass_to_ghakis_shoulder",
+      "from": "tsolenka_pass",
+      "to": "ghakis_shoulder",
+      "hours": 2,
+      "table": "amber_temple_road",
+      "name": "The goat path round the gorge",
+      "when": "quest.the_warm_snow"
+    }
+  ]
+}

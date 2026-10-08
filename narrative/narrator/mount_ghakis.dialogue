@@ -1,0 +1,118 @@
+# Narrator: the north shoulder of Mount Ghakis and the count's caves under it (The Warm Snow, docs/story/side_quests.md;
+# docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:ghakis_shoulder
+| The goat path comes round the gorge onto the north shoulder of the mountain, and the snow stops being snow: slush, then mud, then bare black rock that steams. At the top, set into the mountain, an iron gate, and warm air breathing out round it.
+| [flag.sarkhaza_slain] The rock on the shoulder is cooling. Snow is settling on it for the first time in forty years, in thin white patches that don't melt.
+cooldown 30
+
+~ enter:ghakis_path
+| Hoofprints in the slush, goats', all going up. None coming down.
+once
+
+~ enter:ghakis_slope
+| The ground is warm through your boots. Meltwater runs down between the stones in little steaming streams, and in the cracks of the rock, in midwinter, there's moss.
+once
+
+~ enter:ghakis_yard
+| A black cart stands before the gate with its shafts down and no horse. A cage on its back, its door open. Somebody has been unloading.
+| [flag.ghakis_keepers_slain] The cart stands where it stood, before the gate, its cage open and empty, and the gate breathing.
+once
+
+~ examine:ghakis_cart
+| A black cart with the count's crest on the side, built heavy, for a long haul up steep ground. The shafts are worn pale. It has made this trip a great many times.
+
+~ examine:ghakis_cage
+| A cage with a sacking cover, big enough for four people sitting knee to knee. There are fingernail marks in the wood of the floor.
+
+~ examine:ghakis_salt_sacks
+| Sacks of coarse grey salt, damp and smelling of the grave. "LARDER" is chalked on each in a careful hand.
+
+~ examine:ghakis_carcasses
+| Goats, gutted, frozen stiff on the way up and thawing now in the warm air off the gate. This month's meat, waiting to go in.
+
+~ examine:ghakis_scorch
+| The rock here is glazed, black and glassy, like the inside of a kiln. Something very hot came out of the mountain once, a long time ago, and touched it.
+
+~ examine:ghakis_drag_marks
+| Ruts in the rock itself, cut by iron wheels going up and down the same line for so long the stone has given in.
+
+~ examine:ghakis_goat_bones
+| Goat bones, picked clean and cracked, and a few that aren't goat. Something dropped these on the way in. Or on the way out.
+
+~ examine:ghakis_cairn
+| A cairn of black stones with a goat's skull on top, its horns painted red. A herdsman's warning, very old: don't bring the flock up here.
+
+~ examine:ghakis_melt
+| Water running downhill out of the slush, warm as a bath. Steam lies on it like breath on a window.
+
+~ examine:ghakis_dead_pine_2
+| A pine that grew up here once when the snow lay. It's been cooked from the roots up, standing, its needles still on it and all of them brown.
+
+~ examine:ghakis_signpost
+| A signpost, snapped off at the height of a man. The arm that's left says only GHAK, and points uphill.
+
+~ check:perception:ghakis_dropped_flask:failure
+| Slush, and stones, and more slush.
+
+~ rest:long:ghakis_shoulder
+| You sleep on warm rock under a cold sky, which is a strange thing. All night, through the stone, something breathes: in, and out, and in.
+
+~ enter:ghakis_lair
+| A tunnel into the mountain, warm as a kitchen and getting warmer. The rock sweats. Every so often the whole floor trembles, very slightly, in and out, like a sleeper's chest.
+| [flag.sarkhaza_slain] The mountain is quiet. The rock still sweats, but the floor has stopped breathing.
+cooldown 30
+
+~ enter:keepers_post
+| Bunks, a table, a stove nobody has needed to light in forty years. Wet hoods hang on pegs. The keepers lived here between new moons, and it smells like it.
+once
+
+~ enter:anchor_room
+| A chamber built round one thing: a great drum of black iron, wound with chain, and a capstan to turn it. The chain runs off the drum into a hole in the north wall. It moves, very slightly, in and out.
+once
+
+~ enter:ghakis_larder
+| Meat on hooks, and the heat, and the flies. Barrels of grey salt. An empty cage hangs in the corner, big enough for people.
+once
+
+~ enter:vent_gallery
+| The floor of this gallery is cracked in long seams that glow dull red, and the air over them shakes. It's hard to breathe in here. It's very hard to think.
+| [flag.ghakis_sluice_open] The cracks in the floor are dark and wet, and steam rises off them. It's hot in here, but only hot.
+once
+
+~ enter:hoard_hall
+| The tunnel opens on a cavern, and the cavern is full of gold. A long slope of it, coins and cups and crowns, and lying across the slope, with a chain at its neck, a dragon.
+once
+
+~ examine:ghakis_stove
+| An iron stove, cold, its door rusted shut. The mountain does the heating here. The keepers used the top of it to dry their socks.
+
+~ examine:ghakis_tally
+| Scratches on the wall in groups of twelve: a year of new moons to a group. You stop counting at thirty groups, and there are more.
+
+~ examine:ghakis_tunnel_ruts
+| The same ruts as on the shoulder outside, worn into the floor by a handcart going down full and coming back empty.
+
+~ examine:ghakis_chain_hole
+| The chain goes into a hole in the rock just big enough for it, polished bright at the lip by forty years of rubbing. Warm air comes up out of the hole with it.
+
+~ examine:ghakis_shackled
+| A skeleton in shackles against the wall, in the remains of a keeper's hood. Whatever he did wrong, the others made sure he went on paying for it.
+
+~ examine:ghakis_salt_barrels
+| Grey salt, coarse as gravel, smelling of the grave. A scoop stands in each barrel, and the scoops are worn.
+
+~ examine:ghakis_pen
+| An empty cage on a hook, at the height where you'd hang a bird. There's straw in the bottom of it, and a child's shoe.
+
+~ examine:ghakis_andrei
+| A keeper, or the soot shape of one, flat on the floor beside the dry channel with his arm out toward the sluice gate. He didn't reach it.
+
+~ examine:ghakis_chain_groove
+| A groove in the rock floor as deep as a hand, worn by forty years of the chain dragging back and forth, back and forth, as far as it goes and no further.
+
+~ examine:ghakis_hall_bones
+| Goat bones, a horse's skull, and a long thin bone that might be a man's. All of it scorched, all of it cracked open.
+
+~ examine:ghakis_hall_shackles
+| Shackles bolted into the rock at the height of a man's wrists. Some new moons, the keepers didn't throw the meat in. They chained it here and left.

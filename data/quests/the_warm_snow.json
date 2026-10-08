@@ -1,0 +1,50 @@
+{
+  "id": "the_warm_snow",
+  "name": "The Warm Snow",
+  "summary": "Sergeant Valcu's log has forty years of smoke on the north shoulder of Mount Ghakis, snow that melts in midwinter, and the count's cart going up every new moon with a cage on the back.",
+  "giver": "tsolenka_sergeant",
+  "region": "mount_ghakis",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "The ghost sergeant at the Tsolenka tower has logged smoke on the north shoulder of Mount Ghakis for forty years, and snow that melts there in midwinter. Every new moon a black cart goes up with a cage on the back and comes down with it empty. There are faces in the cage this month.",
+      "objectives": [
+        "Take the goat path from the Tsolenka Pass up to the north shoulder of Ghakis"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "On the north shoulder of Ghakis there's an iron gate in the mountain with the count's crest on it, and warm air breathing out round it. Whatever the count keeps in there, he feeds it people.",
+      "objectives": [
+        "Find out what the count keeps under the mountain"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "chained",
+      "journal": "The keepers' log says it plainly: a red dragon, chained by the neck under Ghakis for forty years on the gold she came through the mists to take, wings riveted shut, starved on grave-salt. Her name is Sarkhaza. The keepers had their ways of going down to her safely.",
+      "objectives": [
+        "Optional: salt a carcass in the larder the way the keepers did",
+        "Optional: haul her chain in on the great drum",
+        "Optional: open the sluice in the vent gallery",
+        "Deal with the dragon"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "slain",
+      "journal": "Sarkhaza is dead on her heap of gold, forty years after she lay down on it.",
+      "objectives": [
+        "Search the hoard she lay on"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "The hoard was the count's joke: gilt lead by the cartload. Under it, where she lay, was a coat of silver dragon scales, the dead silver's own, put there so she'd lie on her enemy forever and never know. Some jokes are worth spoiling.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

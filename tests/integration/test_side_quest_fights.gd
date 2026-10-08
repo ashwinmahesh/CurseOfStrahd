@@ -332,3 +332,19 @@ func test_the_counts_wolves_come_out_of_the_fog_for_ilarion() -> void:
 		root.queue_free()
 		root = null
 		await _frames(2)
+
+
+## Sarkhaza rises off her gold as big as she should be (the draconic spirit's sprite at her own height), and her death
+## moves The Warm Snow on.
+func test_sarkhaza_rises_on_her_hoard() -> void:
+	var v := await _boot("ghakis_lair", 12, 10, [])
+	GameState.story.set_quest_stage("the_warm_snow", "chained")
+	var e := await _fight(v, "sarkhaza", ["Sarkhaza"])
+	for c in e.combatants:
+		if c.name() == "Sarkhaza":
+			assert_eq(c.size_cells, 3, "Huge")
+			assert_eq(CombatToken.height_of(c), 3.4, "drawn at her own height, not the spirit's")
+	await _end(v)
+	assert_true(bool(GameState.story.get_flag("sarkhaza_slain", false)))
+	assert_eq(GameState.story.quest_stage("the_warm_snow"), "slain")
+

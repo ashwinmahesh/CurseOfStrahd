@@ -1,0 +1,295 @@
+# The Warm Snow (side quest, docs/story/side_quests.md): Sergeant Valcu has logged forty years of smoke on the north
+# shoulder of Mount Ghakis, where the snow melts in midwinter and the count's cart goes up every new moon with a cage
+# on the back. Under the mountain the count keeps Sarkhaza (data/monsters/sarkhaza.json), a red dragon who came
+# through the mists after a dead silver dragon's hoard: chained by the neck, wings riveted shut, starved on grave-salt
+# and lying on the hoard she came for. The keepers had three ways of going down to her safely, and the party can use
+# all of them: salt her meat, haul her chain in, open the sluice that drowns the vents. The hoard is gilt lead; under
+# it lies the silver's own scale coat. Reached from the sergeant's report (the_frozen_pilgrims:sergeant_news) and the
+# travel map's north shoulder of Ghakis. Every line here is unvoiced for now.
+
+# --- Sergeant Valcu's log (the_frozen_pilgrims:sergeant_news jumps here) ---
+
+~ sergeant_log
+if quest.the_warm_snow == done
+tsolenka_sergeant: Log. North shoulder of Ghakis: snow lying white, first time in forty years. No smoke. No cart. Logged it twice, to be sure.
+-> END
+endif
+if quest.the_warm_snow
+if flag.ghakis_prisoners_freed
+tsolenka_sergeant: Log. Two charcoal-burners came down past the tower in their shirts. Said you sent them. Gave them the lads' spare cloaks. Logged.
+endif
+tsolenka_sergeant: Log. The count's cart hasn't come back down off Ghakis. Not our post.
+-> END
+endif
+quest the_warm_snow rumored
+tsolenka_sergeant: Also. North shoulder of Ghakis, above the gorge. Smoke, where nobody lives. Snow that melts in midwinter. Forty years of it. Logged.
+tsolenka_sergeant: Every new moon a black cart goes up the goat path with the count's men and a cage on the back. Comes down with the cage empty. Every new moon.
+tsolenka_sergeant: One went up three nights back. There were faces in the cage. Logged. Not our post. Never was.
+-> END
+
+# --- The north shoulder of Ghakis ---
+
+~ gate
+if quest.the_warm_snow == rumored
+quest the_warm_snow found
+endif
+Narrator: Iron, black and new-looking in a way nothing in Barovia is new-looking, as if it's oiled every month. The count's crest is worked into it, and under the crest, in letters as long as your hand: WHAT I KEEP, I KEEP.
+Narrator: Warm air comes out round the edges of it, slowly, and goes back in. The iron is warm to touch.
+-> END
+
+~ prisoners
+if not flag.ghakis_keepers_slain
+Narrator: A man and a woman are chained by the ankle to the cart's wheel, in their shirts, in slush that steams. They don't call out. They look at the gate, then at you, and shake their heads very slightly: not now, not while they're watching.
+-> END
+endif
+if quest.the_warm_snow == rumored
+quest the_warm_snow found
+endif
+Doina: You killed them. You actually did. Petrache, look.
+Petrache: I'm looking.
+Doina: We burn charcoal below Krezk. We owed the castle a tithe we couldn't pay, so the castle took it in us. They said we were going up the mountain to keep something warm.
+Petrache: Keep it fed, he meant. It breathes in there. All night, through the rock, like a forge's bellows.
+* (Break their chains.) -> free
+* What did the keepers say on the way up? -> overheard
+
+~ overheard
+Petrache: Not much to us. To each other, plenty. One of them said "open the sluice before you go down, or you'll cook like Andrei did." The other said Andrei was an idiot. They both laughed.
+Petrache: And there's salt. Sacks of grey salt, for the meat. "Keeps her slow," he said. Her. Whatever it is, it's a her.
+-> prisoners_menu
+
+~ prisoners_menu
+* (Break their chains.) -> free
+
+~ free
+set ghakis_prisoners_freed
+Narrator: The chains come off. Petrache stands up and sits straight back down in the slush, because his legs have forgotten how.
+Doina: You're going in to it, aren't you. (She looks at your faces.) Then we'll go down slowly and tell the soldiers at the pass you were here, so somebody knows.
+approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +1 wren_featherfoot +1: You freed the count's tithe from the cart on Ghakis
+-> END
+
+# --- The keepers' post: their log (prop ghakis_keepers_log) ---
+
+~ log
+set ghakis_log_read
+if quest.the_warm_snow == rumored or quest.the_warm_snow == found
+quest the_warm_snow chained
+endif
+Narrator: A ledger, swollen with damp heat, kept in three hands over forty years. Most of it is the same line, month after month: Fed her. Salted. Checked the wing-pins.
+Narrator: The first page is in a different hand, black and beautifully formed. She came for the silver's gold. Let her lie on it and never spend a coin. Keep her hungry and keep her hot, and feed her what I send. Her name is Sarkhaza. Don't say it to her face; she likes it too much.
+* (Read the keepers' notes.) -> log_notes
+* (Close it.) -> END
+
+~ log_notes
+Narrator: Grave-salt in every carcass, a scoop to the leg, worked deep. It keeps her slow. Don't skimp it, or she'll be at the chain again like the spring of the bad year.
+Narrator: Haul her in on the drum before you take the meat down. She chokes on the collar for a minute, and a minute is long enough.
+Narrator: Open the sluice before going down and shut it after, or the cracks will cook you where you stand. Andrei didn't. Andrei's still down there, in a way.
+-> END
+
+# --- The larder (prop ghakis_larder_carcass) ---
+
+~ larder
+if flag.ghakis_carcass_salted or flag.ghakis_carcass_crude
+Narrator: The carcasses turn slowly on their hooks in the heat. One hook is empty: you're carrying what was on it.
+-> END
+endif
+Narrator: Goats, mostly, and a pony, on hooks in the heat, and buzzing. Barrels of grey salt stand along the wall with a scoop in each.
+* [Sleight of Hand DC 14] (Work grave-salt deep into a carcass, the way the keepers' log says, and take it with you.) -> salted | salted_badly
+* (Leave them.) -> END
+
+~ salted
+set ghakis_carcass_salted
+Narrator: A scoop to the leg, worked in along the bone where the meat is thickest. When you're done you can't see it or smell it over the goat. You drag the carcass along behind you.
+-> END
+
+~ salted_badly
+set ghakis_carcass_crude
+Narrator: The salt goes in, a lot of it. Too much, maybe. The carcass is grey round the cuts and smells of the grave over the goat. You drag it along anyway.
+-> END
+
+# --- The anchor: the great drum (prop ghakis_winch) ---
+
+~ winch
+if flag.wyrm_chain_drawn
+Narrator: The drum is wound tight and pinned. The chain runs off it as straight as a bar into the hole in the rock, and far down at the other end something is breathing very carefully.
+-> END
+endif
+if flag.wyrm_chain_fought
+Narrator: The chain lies slack off the drum and into the rock, moving very slightly. She knows the sound of that capstan now. She won't let it take her twice.
+-> END
+endif
+Narrator: A drum of black iron as tall as a horse, wound with chain, and a capstan with four bars worn bright by hands. The chain runs off it into a hole in the north wall, slack, moving very slightly, in and out.
+* [Athletics DC 17] (Throw your weight on the capstan bars and haul her in.) -> drawn | not_drawn
+* (Leave it.) -> END
+
+~ drawn
+set wyrm_chain_drawn
+Narrator: The capstan groans, then turns. The chain comes up out of the rock link by link, slowly, then all at once, fighting you, and you hold it, and the pawl drops into its notch with a clang.
+Narrator: Far below, something chokes, and roars, and chokes again, and the floor under your feet shudders, and is still.
+-> END
+
+~ not_drawn
+set wyrm_chain_fought
+Narrator: The capstan turns half a bar. Then the chain is torn out of the drum's grip from below, so hard the bars spin and throw you off them, and runs out again into the rock, rattling, until it's slack.
+Narrator: Far below, something laughs.
+-> END
+
+# --- The vent gallery: the sluice (prop ghakis_sluice) ---
+
+~ sluice
+if flag.ghakis_sluice_open
+Narrator: Meltwater runs down the channel into the cracks, and the cracks hiss and steam and go dark one after another.
+-> END
+endif
+Narrator: A channel cut into the rock, dry, running from a stone gate in the wall to the cracks in the floor. Behind the gate you can hear water: the melt off the whole north face of the mountain, waiting.
+* (Heave the sluice gate up.) -> sluice_open
+* (Leave it shut.) -> END
+
+~ sluice_open
+set ghakis_sluice_open
+time +10
+Narrator: The gate grinds up. Black water comes down the channel in a rush and into the cracks, and the whole mountain hisses. Steam fills the gallery and pours away downhill toward the hoard. When it clears, the floor is dark and wet and only warm.
+Narrator: From the cavern below, a long breath in, like a forge's bellows, held.
+-> END
+
+# --- The hoard (prop ghakis_hoard) ---
+
+~ hoard
+if quest.the_warm_snow == done
+Narrator: A mountain of gilt lead, a fortune to look at and worth nothing, and the long dark shape lying across it.
+-> END
+endif
+if flag.sarkhaza_slain
+-> spoils
+endif
+if flag.ghakis_gilt_seen
+Narrator: The gold she lies on. Lead, under the leaf, all of it.
+-> END
+endif
+if flag.ghakis_gilt_tried
+Narrator: A long slope of gold under her belly: coins, cups, crowns, plate. Enough to buy Vallaki twice.
+-> END
+endif
+Narrator: A long slope of gold under her belly: coins, cups, crowns, plate. Enough to buy Vallaki twice.
+* [Investigation DC 15] (Look hard at the coins at the edge of the heap.) -> gilt | gilt_missed
+* (Leave it.) -> END
+
+~ gilt
+set ghakis_gilt_seen
+Narrator: One coin at the edge of the heap has a scratch across it, from a claw, maybe. Under the gold the scratch is dull grey. The next one too. The cup beside it has a dent, and the dent is grey.
+Narrator: Lead. Gilt lead, a mountain of it. The count spent good gold leaf on this, and it's the only gold he spent.
+interject tag:blunt: She's been guarding a joke for forty years.
+-> END
+
+~ gilt_missed
+set ghakis_gilt_tried
+Narrator: Gold, a great deal of it, more than you've seen in one place. That's what it looks like from here.
+-> END
+
+~ spoils
+quest the_warm_snow done
+Narrator: Up close the hoard is a hoax: gilt lead by the cartload, cups that bend in the hand, crowns of painted tin.
+Narrator: But forty years of the count's tithes left more than bones here. Purses, rings, a soldier's pay, a christening spoon: whatever was in their pockets, real, in the ash and her leavings.
+gold +900
+Narrator: And under the heap, where her belly lay, pressed into the rock by her weight: a coat of armour, every scale a hand across and silver, cold to touch in a cavern that's still warm.
+Narrator: Silver dragon scales, shed and gathered and made into a knight's coat. The silver's own. The count put it under her so she'd lie on her enemy forever and never know it.
+give dragon_scale_mail_silver
+approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +2 wren_featherfoot +2 ratatoille +2: You killed the dragon under Mount Ghakis
+-> END
+
+# --- Sarkhaza (npc sarkhaza, on her hoard) ---
+
+~ wyrm
+if not flag.wyrm_met
+cutscene sq_sarkhaza
+endif
+if flag.wyrm_chain_drawn
+Narrator: The chain runs taut across the cavern to a collar of black iron at the base of a long red neck. The neck strains against it, and the head at the end of it, the size of a cart, is turned toward you.
+else
+Narrator: Something lies across the far end of the cavern on a long slope of gold. It's red where it isn't black with soot, and the size of a barn. It lifts its head off the gold and looks at you with an eye like a lamp.
+endif
+if flag.wyrm_met
+Sarkhaza: Back again, little things. I'm still here. I'm always still here.
+-> wyrm_menu
+endif
+set wyrm_met
+Sarkhaza: Visitors. Not keepers. Keepers come with a carcass and their eyes on the floor. You come with your eyes up. You've killed them, then.
+Sarkhaza: Good. Forty years of salted goat and children and the count's jokes.
+if flag.ghakis_log_read
+Sarkhaza: You've read their book. I can smell the damp of it on your hands. So you know my name. Say it properly; you'll only get the one chance.
+else
+Sarkhaza: My name is Sarkhaza. Say it properly; you'll only get the one chance.
+endif
+if flag.wyrm_chain_fought
+Sarkhaza: And you tried my chain. I felt you on the capstan. Weak little arms. I nearly felt sorry for you.
+endif
+-> wyrm_menu
+
+~ wyrm_menu
+* What are you doing down here? -> wyrm_story
+* [if flag.ghakis_carcass_salted and not flag.wyrm_salted] (Throw her the carcass from the larder.) -> fed
+* [if flag.ghakis_carcass_crude and not flag.wyrm_fed_crude] (Throw her the carcass from the larder.) -> fed_crude
+* [if flag.ghakis_gilt_seen] Your gold is lead. -> told
+* [if flag.wyrm_story_heard and not flag.wyrm_read] [Insight DC 16] (Watch her while she talks about the castle.) -> lie_seen | lie_missed
+* [if flag.wyrm_story_heard] (Pull the pin from her collar.) -> unchain
+* (Draw your weapons.) -> fight
+
+~ wyrm_story
+set wyrm_story_heard
+Sarkhaza: I smelled a dead dragon's hoard through the mists. A silver, killed by a man, his gold lying unguarded in a valley ripe for the taking. Do you know what that smells like to my kind? A feast laid out for nobody.
+Sarkhaza: I came through. He was waiting at the foot of this mountain with his hands behind his back, smiling. I don't remember the next part. I woke with this collar on, and iron through my wings, and the silver's gold under me.
+Sarkhaza: Take the pin out of my collar and I'll go up that valley to his castle and burn him out of it like a wasps' nest. You want him dead. So do I. That's an alliance. Pull the pin.
+-> wyrm_menu
+
+~ lie_seen
+set wyrm_read
+set wyrm_lie_seen
+Narrator: Her wings. The rivets go through the bone, and the bone has grown round them. She can't fly, and she knows it. When she says "castle" her eye slides to the tunnel, and down it, toward the pass and the villages below.
+Narrator: She doesn't want the count. She wants the nearest thing that screams.
+-> wyrm_menu
+
+~ lie_missed
+set wyrm_read
+Narrator: She means it. You think she means it. It's hard to tell with an eye that size.
+-> wyrm_menu
+
+~ fed
+set wyrm_salted
+Narrator: The carcass lands on the gold. Her head comes down on it before it stops rolling, and the bones go like kindling. She swallows, and swallows again.
+Sarkhaza: (Slower, now. Thicker.) That was a keeper's carcass. You salted it. The count's own grave-salt. Clever, clever little...
+Narrator: Her eye half closes and opens again. She's fighting it, and losing a little.
+-> wyrm_menu
+
+~ fed_crude
+set wyrm_fed_crude
+Narrator: The carcass lands on the gold. She lowers her head to it, sniffs once, and laughs, and breathes on it until there's nothing left on the gold but the smell.
+Sarkhaza: Grave-salt, packed in like mortar. Forty years I've eaten it. Did you think I wouldn't know the taste?
+-> wyrm_menu
+
+~ told
+Sarkhaza: (She laughs, a long way down in her chest.) Lead. I've slept on this gold for forty years. I know every coin.
+Narrator: She turns her head and lifts a coin off the heap on the point of one tooth, delicately, and bites. It bends. Under the gold leaf it's grey. She does it again, and again. Then she lies very still, and the cavern gets hotter.
+Sarkhaza: Forty years. On lead. And he knew I'd count it every night.
+Sarkhaza: Then there's nothing here worth keeping, and nothing worth lying down for. Come on, little things. Let's do this standing.
+approve ratatoille +1 wren_featherfoot +1: You told the dragon her hoard was lead
+-> fight
+
+~ unchain
+Narrator: The pin is as long as your arm, through a collar rivet the size of a fist. It would take two of you to work it loose.
+if flag.wyrm_lie_seen
+interject tag:blunt: She can't fly. We saw. Whatever she goes after, it won't be the castle.
+endif
+* (Pull it.) -> unchained
+* (Leave it in.) -> wyrm_menu
+
+~ unchained
+set wyrm_unchained
+Narrator: The pin comes out. The collar opens like a jaw. Sarkhaza lifts her head, all the way, for the first time in forty years, and the roof of the cavern isn't quite high enough for it.
+Sarkhaza: Thank you. Truly. And now, little things, I'm so very hungry.
+approve godrick_pendlebrook -3 liriel_dawnsong -3 thistle -2 wren_featherfoot -2 ratatoille -1: You took the dragon's chain off
+-> fight
+
+~ fight
+if not flag.wyrm_unchained
+Sarkhaza: Then come here. I can't come to you. Not far.
+endif
+combat sarkhaza

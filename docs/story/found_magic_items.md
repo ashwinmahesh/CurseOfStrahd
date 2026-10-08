@@ -257,6 +257,13 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Tsolenka guard tower, the rack of old mail | +2 Chain Mail (very rare) | Search (Investigation DC 16): a hauberk that never rusted |
 | ✅ | Tsolenka guard tower | Horn of Blasting (rare) | Search (Perception DC 14): the watch horn behind the winch |
 
+## Mount Ghakis (side quest, level 10)
+
+| | Where | Item | How |
+|---|---|---|---|
+| ✅ | The keepers' post under Ghakis, the captain's rack | Dragon Slayer (rare) | Hoard: the count's insurance against his own dragon (The Warm Snow, docs/story/side_quests.md) |
+| ✅ | Sarkhaza's cavern, under the hoard | Dragon Scale Mail, silver (very rare) | Gift: the dead silver's own scales, under the red once she's dead (The Warm Snow, docs/story/side_quests.md) |
+
 ## The Amber Temple (level 10)
 
 | | Where | Item | How |

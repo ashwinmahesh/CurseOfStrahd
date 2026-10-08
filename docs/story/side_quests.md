@@ -562,6 +562,47 @@ Lost Pages), made one of the count's spawn for holding the door while her master
 - In her crypt: 500 gp in a currency nobody here has seen, and a Rod of Absorption (very rare). Her name goes on the
   crypt, and Mordenkainen has a line for it.
 
+## Mount Ghakis (level 10)
+
+### The Warm Snow (`the_warm_snow`, narrative/mount_ghakis/the_warm_snow.dialogue; batch 5, an owner-asked boss)
+
+Sergeant Valcu reads the next entry in his log when he's asked for his report again (after The Frozen Pilgrims): smoke
+on the north shoulder of Mount Ghakis, where nobody lives, snow that melts there in midwinter, and the count's black cart
+going up every new moon with a cage on the back. There were faces in the cage this month. That puts the north shoulder
+of Ghakis on the travel map (data/travel/mount_ghakis.json, a new region with its own loading card), two hours round
+the gorge from the pass. **Escalation:** the count's keepers are unloading at an iron gate in the mountain, and the
+cage holds his tithe, Doina and Petrache, charcoal-burners from below Krezk (new speakers); the keepers' log in their
+post names what's inside. **Twist:** a red dragon, Sarkhaza (new speaker), who came through the mists forty years ago
+after a dead silver dragon's gold and found the count waiting: chained by the neck, wings riveted shut, starved on
+grave-salt, lying on the hoard she came for. She offers to burn the count out if the party pulls the pin from her
+collar (Insight DC 16: she can't fly, and she means the villages below). **Second twist:** the hoard is gilt lead
+(Investigation DC 15 before the fight, or after it), and under it, where she lay, is the silver's own coat of scales.
+
+A mini-dungeon in two maps (data/locations/ghakis_shoulder.json, ghakis_lair.json): the shoulder and gate; then the
+keepers' post, the larder, the anchor (the great drum her chain is wound on), the vent gallery and her cavern. The
+keepers had three ways of going down to her safely, and each one is a lair trick that changes her fight:
+
+- **Salt her meat** (the larder, Sleight of Hand DC 14; a bad job and she smells it): fed to her, she fights at 155 HP.
+- **Haul her chain in** (the anchor's capstan, Athletics DC 17; one try): she starts the fight choking on the collar,
+  surprised and 30 HP down.
+- **Open the sluice** (the vent gallery): snowmelt drowns the cracks, and her lair can't act in the fight.
+- Pulling the pin from her collar instead lets her loose at 215 HP, with no chain to haul.
+
+- **Boss: Sarkhaza** (data/monsters/sarkhaza.json, `source.book: custom`, built down from the 2025 Monster Manual's
+  adult red dragon, drawn with the draconic spirit's sprite at her own height, `art_height`): Huge dragon, AC 18,
+  200 HP, Speed 20 and no flight, two Rends (reach 10, slashing and fire), Fire Breath (recharge 5-6, a 60-ft cone,
+  DC 17 Dex, 11d6), Legendary Resistance (3/day), a Rend or a drag of her chain between turns, and her lair on
+  initiative 20 (fire out of the cracks under two foes, or the roof coming down). CR 13. As she is, the autopilot wins
+  1 in 4 at level 10 and loses three or four party members a fight; with all three tricks it wins 4 of 4 and loses one
+  or two; unchained at level 11, 1 in 8.
+- Fights on the way down: the keepers at the gate (`ghakis_keepers`: two wights and a helmed horror, waiting by the
+  cart) and the vent gallery (`vent_fire`: a fire elemental at 150 HP and three flameskulls, the keepers who forgot the
+  sluice). The autopilot wins both at level 10, losing about one party member a fight.
+- Rewards: a Potion of Fire Resistance in the drivers' box and one in the slush by the cart (Perception DC 14); the
+  keepers' strongbox, 300 gp and two more; the captain's rack, the Dragon Slayer the count gave his keepers in case
+  (rare); her hoard, 900 gp of real coin from forty years of tithes in among the lead, and the silver's Dragon Scale
+  Mail (very rare). Stills: `ghakis_shoulder` (the loading card) and `sq_sarkhaza` (her first meeting).
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -607,4 +648,6 @@ Mount Baratok: the_mages_lost_pages.dialogue in full (Mordenkainen; the letters 
 Castle Ravenloft: the_unnamed_crypt.dialogue in full (new speaker Corvina; also Pidlwick II) and Mordenkainen's new
 line in the_mages_lost_pages.dialogue. Batch 5,
 Into the Mists: the_last_traveller.dialogue in full (new speaker Ilarion; also Goodwife Petra) and Old Mihail's new
-gravedigger line in the village townsfolk.dialogue.
+gravedigger line in the village townsfolk.dialogue. Batch 5, Mount Ghakis: the_warm_snow.dialogue in full (new speakers
+Sarkhaza, Doina and Petrache; also Sergeant Valcu's new log lines and the companions' interjects) and
+narrator/mount_ghakis.dialogue.

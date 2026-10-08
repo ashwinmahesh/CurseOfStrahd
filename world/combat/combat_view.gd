@@ -1104,7 +1104,7 @@ func _token_on_ray(origin: Vector3, dir: Vector3) -> CombatToken:
 		if not tok.combatant.is_alive():
 			continue
 		var base := tok.global_position
-		var height := CombatToken.height_for(CombatToken.art_id(tok.combatant))
+		var height := CombatToken.height_of(tok.combatant)
 		var radius := 0.38 * tok.combatant.size_cells
 		# Closest approach between the ray and the token's vertical axis.
 		var steps := 12
@@ -1341,7 +1341,7 @@ func _token_spot(c: Combatant, cell: Vector2i) -> Vector3:
 	var p := board.cell_center(cell, c.size_cells)
 	var m := e.mount_of(c)
 	if m != null:
-		var h := CombatToken.height_for(CombatToken.art_id(m)) * (m.size_cells if m.size_cells > 1 else 1)
+		var h := CombatToken.height_of(m) * (m.size_cells if m.size_cells > 1 else 1)
 		p = board.cell_center(m.cell, m.size_cells) + Vector3(0, h * 0.8, 0)
 	return p + Vector3(0, c.altitude / float(CombatGrid.FEET), 0)
 
@@ -1798,7 +1798,7 @@ func _float(t: CombatToken, text: String, colour: String, size: int = 52) -> voi
 	l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	l.no_depth_test = true
 	l.render_priority = 11
-	l.position = t.position + Vector3(0, CombatToken.height_for(CombatToken.art_id(t.combatant)) + 0.2, 0)
+	l.position = t.position + Vector3(0, CombatToken.height_of(t.combatant) + 0.2, 0)
 	add_child(l)
 	var tw := create_tween()
 	tw.tween_property(l, "position", l.position + Vector3(0, 0.6, 0), FLOAT_TIME).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
