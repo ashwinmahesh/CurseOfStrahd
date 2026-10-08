@@ -15,7 +15,8 @@ model they came from as `earlier_model`, --models counts every speaker's clips b
 `make voice SPEAKER=<id> RECAST=1` re-voices a speaker's older clips on their current model.
 
 Every line is spoken on eleven_v3 (owner, 2026-10-08: "use v3 for voices from now on ... capture the accent and the
-emotional tone of each line"). audio/voice/directions.json gives a line its delivery as v3 audio tags, keyed by
+emotional tone of each line"), except the Narrator, back on eleven_v4 with the voice of his originals (owner,
+2026-10-08 22:21). audio/voice/directions.json gives a line its delivery as v3 audio tags, keyed by
 speaker and clip key ("[gruff, threatening] [low]"): its mood, strength and the moment it's said in. They're sent
 after the speaker's accent tag and aren't spoken or part of the key; the manifest keeps each clip's direction, so
 --recast also redoes clips whose direction changed. A speaker's "keep_keys" are clips the owner chose to keep as they
@@ -84,6 +85,12 @@ def spoken(c, speaker, text, direction=""):
         text = re.sub(r"\bi\b", "I", text)
     tags = " ".join(t for t in (accent_tag(c, speaker), direction) if t)
     return f"{tags} {text}" if tags else text
+
+
+def direction_for(c, speaker, key, lead):
+    """The line's direction tag, on eleven_v3 only: other models read tags aloud, and a speaker kept on eleven_v4
+    (the Narrator, owner 2026-10-08) matches originals that never had them."""
+    return lead.get(speaker, {}).get(key, "") if model_for(c, speaker) == "eleven_v3" else ""
 
 
 def model_for(c, speaker):
@@ -194,7 +201,7 @@ def main():
             continue  # a clip the owner chose to keep as it is (Rictavio the showman's originals)
         made = manifest.get(f"{speaker}/{key}", {})
         stale = a.recast and (made.get("recipe") != recipe(c, speaker)
-                              or made.get("direction", "") != lead.get(speaker, {}).get(key, ""))
+                              or made.get("direction", "") != direction_for(c, speaker, key, lead))
         if not out.exists() or stale:
             todo.append(line)
     if a.limit:
@@ -216,7 +223,7 @@ def main():
     def one(line):
         speaker, key, text = line["speaker"], line["key"], line["text"]
         vid = voice_id(c, speaker)
-        direction = lead.get(speaker, {}).get(key, "")
+        direction = direction_for(c, speaker, key, lead)
         if is_sfx(c, speaker):
             audio, headers = el.sound(text, float(line.get("seconds", 1.0)), c["output_format"], c["sfx"]["prompt_influence"],
                                       model_for(c, speaker))
