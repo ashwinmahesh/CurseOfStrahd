@@ -213,6 +213,7 @@ static func _house(board: ArenaBoard, r: Rect2i, group: int) -> void:
 	var root := Node3D.new()
 	root.name = "Building"
 	board.add_child(root)
+	root.position.y = base_y(board, r)
 	var walls := MeshInstance3D.new()
 	walls.name = "Walls"
 	var bm := BoxMesh.new()
@@ -245,12 +246,22 @@ static func _house(board: ArenaBoard, r: Rect2i, group: int) -> void:
 		upper.add_child(ch)
 	var idx := board.buildings.size()
 	board.buildings.append({"root": root, "walls": walls, "upper": upper, "height": h, "extras": [],
-		"aabb": AABB(Vector3(r.position.x - EAVE, 0, r.position.y - EAVE), Vector3(r.size.x + 2 * EAVE, h + rise + 0.2, r.size.y + 2 * EAVE)),
+		"aabb": AABB(Vector3(r.position.x - EAVE, root.position.y, r.position.y - EAVE), Vector3(r.size.x + 2 * EAVE, h + rise + 0.2, r.size.y + 2 * EAVE)),
 		"cut": false, "rect": r, "group": group})
 	for i in r.size.x:
 		for j in r.size.y:
 			board.house_cells[r.position + Vector2i(i, j)] = idx
 	_windows(board, r, upper, h, seed)
+
+
+## The ground a building stands on (world units): the lowest of its squares, so a town on natural ground (a map's
+## `elevation`) carries its houses up with it instead of burying them to the eaves.
+static func base_y(board: ArenaBoard, r: Rect2i) -> float:
+	var low := INF
+	for i in r.size.x:
+		for j in r.size.y:
+			low = minf(low, board.grid.height(r.position + Vector2i(i, j)) / float(CombatGrid.FEET))
+	return 0.0 if low == INF else low
 
 
 ## Shuttered windows on the walls that face open ground, every few squares (one may show a light).
@@ -301,12 +312,13 @@ static func _house_kit(board: ArenaBoard, r: Rect2i, group: int, style: String) 
 	var root := Node3D.new()
 	root.name = "Building"
 	board.add_child(root)
+	root.position.y = base_y(board, r)
 	var upper := Node3D.new()
 	upper.name = "Upper"
 	root.add_child(upper)
 	var over := maxf(BuildingKit.constant("EAVE"), BuildingKit.constant("VERGE"))
 	var b := {"root": root, "walls": null, "stub": null, "upper": upper, "height": h, "extras": [], "cut": false,
-		"aabb": AABB(Vector3(r.position.x - over, 0, r.position.y - over), Vector3(r.size.x + 2 * over, h + rise + 0.5, r.size.y + 2 * over)),
+		"aabb": AABB(Vector3(r.position.x - over, root.position.y, r.position.y - over), Vector3(r.size.x + 2 * over, h + rise + 0.5, r.size.y + 2 * over)),
 		"rect": r, "group": group, "kit": style, "roof": kind, "rise": rise, "seed": seed,
 		"paint": str(paints[seed % paints.size()]) if style == "clapboard" and not paints.is_empty() else "",
 		"core": str((cfg.get("cores", {}) as Dictionary).get(style, "")), "faces": {}, "markers": []}
