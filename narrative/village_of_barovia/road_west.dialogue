@@ -9,6 +9,9 @@ endif
 if flag.ireena_in_party
 -> with_ireena
 endif
+# The castle on its cliff, the first time the party tries to leave by the west road (owner, 2026-10-08: not on walking
+# toward it; the picture is `once`).
+cutscene castle_road_west
 Narrator: The road leaves the village between two leaning posts and runs west under dead trees toward the crossroads. Above it, on its cliff, the castle waits, patient as a creditor.
 if flag.ireena_met and not flag.ireena_escort
 Narrator: Behind you, a single lamp burns in an upstairs window of the burgomaster's house.

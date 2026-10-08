@@ -293,7 +293,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Dining hall, the organ | Instrument of the Bards, Anstruth Harp (very rare) | Search (Investigation DC 16): a stop that opens a compartment |
 | ✅ | Chapel, under the altar's dust | Amulet of the Devout +3 (very rare) | Search (Investigation DC 17) |
 | ✅ | Court, the count's desk | Crystal Ball (very rare) | Search (Investigation DC 17) |
-| ✅ | Court, the trophy room | Dragon Slayer Longsword (rare) | Search (Perception DC 15): above the dragon's skull |
+| ✅ | Court, the trophy room | Longsword of Sharpness (very rare) | Search (Perception DC 15): the sword that took the dragon's head, above its skull (was a Dragon Slayer; The Warm Snow has that one) |
 | ✅ | Blinsky Toys, Vallaki, once Pidlwick II is brought down from the high tower | Figurine of Wondrous Power, Obsidian Steed (very rare) | Gift: Blinsky's masterwork (The Toymaker's Masterpiece, docs/story/side_quests.md) |
 | ✅ | Treasury | Manual of Gainful Exercise (very rare) | Hoard |
 | ✅ | Count's floor, the tall mirror | Cloak of Displacement (rare) | Search (Investigation DC 17): behind a mirror that shows no one |

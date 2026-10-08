@@ -2149,6 +2149,35 @@
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "mqWxqCwHqS0VfEYBZCAc",
       "released": true
+    },
+    "sarkhaza": {
+      "voice_id": "OI7sy82UrODIkirrlGKB",
+      "name": "Barovia Sarkhaza",
+      "description": "An immense, ancient red dragoness, chained and starved for forty years, speaking English in a deep, smoky, resonant female voice with a crackle of fire in the throat. Regal, sly and amused, every courtesy a hunger; slow, purring menace that can rise to a roar.",
+      "settings": {},
+      "model": "eleven_v3",
+      "generated_voice_id": "OI7sy82UrODIkirrlGKB",
+      "released": true
+    },
+    "ghakis_doina": {
+      "voice_id": "yvzKTpwni1m4P1CwboaX",
+      "name": "Barovia Doina",
+      "description": "A Barovian charcoal-burner woman in her thirties from the woods below Krezk, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A hoarse, practical, steady voice, smoke-roughened, shaken but brave and down-to-earth.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "yvzKTpwni1m4P1CwboaX",
+      "released": true
+    },
+    "ghakis_petrache": {
+      "voice_id": "nwnrqcNIaNxeuFmcsLmb",
+      "name": "Barovia Petrache",
+      "description": "A Barovian charcoal-burner man in his forties from the woods below Krezk, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A slow, low, gravelly, laconic voice, dry and watchful, a man who listens more than he talks.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "nwnrqcNIaNxeuFmcsLmb",
+      "released": true
     }
   },
   "sfx": {

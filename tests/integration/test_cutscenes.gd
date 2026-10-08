@@ -179,6 +179,57 @@ func test_the_rider_on_the_ridge_shows_on_the_first_journey_with_or_without_iree
 		assert_true(shown, "a cutscene in the watcher: %s" % [kinds])
 
 
+## Owner report (2026-10-08): the castle on its cliff played as soon as the party walked toward the village's west side.
+## It belongs to the first try at leaving by the west road: the posts' conversation, once, and walking in shows none.
+func test_the_road_west_castle_waits_for_the_first_try_at_leaving() -> void:
+	Cutscenes.clear_cache()
+	assert_eq(str(Cutscenes.get_cutscene("castle_road_west").get("trigger", "")), "", "no picture on walking into the west road")
+	assert_eq(Cutscenes.for_trigger("enter:village_road_west", _story(false)), "", "nor any other picture")
+	var st := _story(false)
+	var seen: Array[String] = []
+	for attempt in 2:
+		var r := DialogueRunner.new(st, DiceRoller.new(3))
+		assert_true(r.start("village_of_barovia/road_west:start"))
+		for i in 4:
+			var b := r.next()
+			if str(b["kind"]) == "cutscene":
+				seen.append("%d:%s" % [attempt, b["id"]])
+			if str(b["kind"]) == "options":
+				break
+	assert_eq(seen, ["0:castle_road_west"] as Array[String], "the castle shows at the posts the first time only")
+
+
+## Storyline QA (SL-10): talking to Doru again replayed the ceiling picture and the whole first meeting.
+func test_doru_meets_you_once_then_picks_up_where_you_left_him() -> void:
+	var st := _story(false)
+	var first: Array[String] = []
+	var again: Array[String] = []
+	for pass_i in 2:
+		var r := DialogueRunner.new(st, DiceRoller.new(3))
+		assert_true(r.start("village_of_barovia/doru:start"))
+		for i in 6:
+			var b := r.next()
+			var said := "%s:%s" % [b["kind"], b.get("id", str(b.get("text", "")).get_slice(".", 0))]
+			(first if pass_i == 0 else again).append(said)
+			if str(b["kind"]) == "options":
+				break
+	assert_true("cutscene:doru_ceiling" in first, "the first meeting has its picture: %s" % [first])
+	assert_false(again.any(func(x: String) -> bool: return x.begins_with("cutscene")), "no picture the second time: %s" % [again])
+	assert_false(again.any(func(x: String) -> bool: return x.contains("Something crosses the ceiling")), "nor the first meeting's words")
+	assert_true(again.any(func(x: String) -> bool: return x.contains("Doru still clings")), "he's where you left him: %s" % [again])
+
+
+## Storyline QA (SL-11): Ireena's window picture shows Ismark asleep by the door, so it shows only where he is: the inn,
+## with him guarding her. In Krezk, or at the inn without him, the scene plays without the picture.
+func test_ireenas_window_shows_ismark_only_when_he_is_there() -> void:
+	var st := _story(false)
+	assert_eq(Cutscenes.image("ireena_window", st), "", "at the inn without Ismark: no picture of him")
+	st.set_flag("ismark_guards_ireena", true)
+	assert_eq(Cutscenes.image("ireena_window", st), "res://art/cutscenes/ireena_window.jpg", "with him guarding her")
+	st.set_flag("ireena_in_krezk", true)
+	assert_eq(Cutscenes.image("ireena_window", st), "", "in Krezk the room and the guard don't match the picture")
+
+
 func test_every_cutscene_statement_names_a_cutscene_with_a_picture() -> void:
 	Cutscenes.clear_cache()
 	var named := {}

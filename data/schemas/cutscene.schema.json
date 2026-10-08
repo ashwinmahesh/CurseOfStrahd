@@ -59,7 +59,7 @@
     },
     "once": {
       "type": "boolean",
-      "description": "A place's cutscene plays only the first time its trigger fires (an area you walk into again and again)."
+      "description": "The picture plays only the first time: its trigger's first firing (an area you walk into again and again), or the first time a conversation's `cutscene` statement reaches it."
     },
     "trigger": {
       "type": "string",
