@@ -1,0 +1,18 @@
+{
+  "id": "krezk_billy_goat",
+  "name": "The Billy Goat",
+  "title": "Of the Pens",
+  "summary": "The pens' billy goat, one-horned and utterly certain of himself.",
+  "portrait": "goat",
+  "sprite": "goat",
+  "attitude": "indifferent",
+  "monster": "goat",
+  "guest": false,
+  "tags": [
+    "animal",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "it/its",
+  "pockets": false
+}

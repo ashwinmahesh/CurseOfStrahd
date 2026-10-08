@@ -1,0 +1,18 @@
+{
+  "id": "krezk_wall_watch",
+  "name": "Watchman Lazar",
+  "title": "Of the Krezk Watch",
+  "summary": "A watchman walking the inside of the wall with a spear, looking out more than in.",
+  "portrait": "krezk_guard",
+  "sprite": "krezk_guard",
+  "attitude": "indifferent",
+  "monster": "vallaki_guard",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}

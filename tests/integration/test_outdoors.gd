@@ -279,3 +279,25 @@ func test_vallaki_is_lived_in() -> void:
 	assert_true(v.grid.height(Vector2i(40, 9)) > v.grid.height(Vector2i(24, 21)), "St. Andral's stands on its rise")
 	assert_true(v.grid.height(Vector2i(24, 21)) > v.grid.height(Vector2i(24, 30)), "the lower town a step down")
 	v.queue_free()
+
+
+## Krezk lived in (lane 28): walled and pious - goats in the pens, women at the well and the shrine, a boy by the gate,
+## wash on the lines, and snow underfoot even under a clear sky.
+func test_krezk_is_lived_in() -> void:
+	GameState.story.minute_of_day = 10 * 60
+	var was := Look.style()
+	Look.set_style("modern", false)
+	Weather.use({"kinds": {"clear": {}}, "climates": {"valley": {"clear": 1.0}}, "default_climate": "valley"})
+	var v := _view("krezk")
+	await _frames(2)
+	var here: Array[String] = []
+	for s: Variant in v.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	for id: String in ["krezk_goatherd", "krezk_fence_mender", "krezk_well_wife", "krezk_bucket_wife", "krezk_gate_boy",
+			"krezk_carver", "krezk_wall_watch", "krezk_billy_goat", "krezk_goat", "krezk_goat_2", "krezk_goat_3"]:
+		assert_true(id in here, "%s is about" % id)
+	assert_true(v.board.find_children("WashingLine*", "Node3D", true, false).size() >= 4, "wash on the lines")
+	assert_true(v.atmosphere.snow_cover >= 0.4, "snow lies in Krezk under a clear sky (%.2f)" % v.atmosphere.snow_cover)
+	v.queue_free()
+	Weather.use({})
+	Look.set_style(was, false)
