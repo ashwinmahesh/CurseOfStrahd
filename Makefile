@@ -82,6 +82,11 @@ golden-saves:
 lfs-quiet:
 	@sh tools/lfs_quiet.sh
 
+## Cheat Codes.md in the vault: every playable item's cheat code, rebuilt from the item data (tools/data/cheat_codes.py).
+.PHONY: cheat-codes
+cheat-codes:
+	python3 tools/data/cheat_codes.py
+
 validate:
 	python3 tools/data/validate_data.py
 	python3 tools/data/check_implemented.py
