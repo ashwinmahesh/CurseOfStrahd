@@ -1885,7 +1885,8 @@ func initiative_offers() -> Array:
 				e.log.add("info", "%s leads the dance: +%d Initiative to nearby allies (Tandem Footwork)" % [bard.name(), roll], bard.id)})
 	# Alert (2024 feat): right after Initiative is rolled, trade Initiative with one willing ally, neither of them
 	# Incapacitated. Asked after Tandem Footwork, so the numbers offered are the final ones, and only about allies with
-	# an enemy's turn between theirs and the feat holder's: otherwise the trade changes nothing that matters.
+	# an enemy's turn between theirs and the feat holder's: otherwise the trade changes nothing that matters. Off until
+	# the hero's rule is Ask in the class tab, since with a party of six it would come up nearly every fight.
 	for a in e.combatants:
 		if not has(a, "initiative_swap") or not a.is_player_controlled():
 			continue
@@ -1911,7 +1912,7 @@ func initiative_offers() -> Array:
 			return best
 		var picked := {"id": ""}
 		out.append({"kind": "initiative_swap", "reactor": a, "title": "Alert: swap Initiative?", "spends_reaction": false,
-			"default": "ask", "cost": "Nothing",
+			"default": "never", "cost": "Nothing",
 			"text": func() -> String:
 				var mate := fallback.call() as Combatant
 				return "Initiative is rolled: %s at %d. Trade Initiative with a willing ally? Pick one, or use it as it is to trade with %s (%d)." % [

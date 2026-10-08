@@ -23,7 +23,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Saving throw proficiency | character.gd | tested | test_reference_party |
 | Passive scores (+5/−5) | creature.gd passive_score | tested | test_abilities, test_reference_party |
 | Initiative = Dexterity check, Alert adds PB | creature.gd initiative_bonus | tested | test_reference_party |
-| Alert's Initiative Swap (asked once Initiative is rolled: trade with a willing ally, neither Incapacitated; the class tab's rule can turn it off) | class_features.gd initiative_offers | tested | test_save_prompts |
+| Alert's Initiative Swap (once the class tab's rule is Ask, asked as Initiative is rolled: trade with a willing ally, neither Incapacitated, when an enemy acts between them; Off by default) | class_features.gd initiative_offers | tested | test_save_prompts |
 | Heroic Inspiration | character.gd (Resourceful); encounter_attacks.gd, d20_responses.gd reroll | partial: a reroll of the d20 offered on a missed attack roll, after a failed save wherever the fight can pause (spells, monsters' actions and riders, repeated and Death Saving Throws) and after a failed check in conversation (story/check_aids.gd); the saves that can't pause yet use it automatically (deviations) [F6] | test_combat_encounter, test_save_prompts |
 | Bonus/penalty dice on D20 Tests (Bless, Bane) | creature.gd roll_d20 | tested | test_effects |
 | Automatic failure (Paralyzed etc.) | creature.gd roll_d20 | tested | test_conditions |
@@ -44,7 +44,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Death Saving Throws (10+, nat 1, nat 20, 3/3) | creature.gd roll_death_save | tested | test_death_saves |
 | Damage at 0 HP = failure (crit = 2) | creature.gd | tested | test_damage |
 | Stabilizing, Stable creatures | creature.gd stabilize | tested | test_death_saves |
-| Knocking Out a Creature: a melee weapon or Unarmed Strike that would drop a creature to 0 leaves it at 1 and Unconscious until a Short Rest, Hit Points regained or first aid (DC 10 Medicine); the class tab's Knock Out rule (Off by default); a fight whose foes are down or knocked out is won (F13) | encounter_damage.gd knocks_out, knock_out, _first_aid; creature.gd heal | tested (melee spell attacks don't knock out: deviations) | test_knock_out |
+| Knocking Out a Creature: a party member's melee weapon attack or Unarmed Strike that would drop a creature to 0 leaves it at 1 and Unconscious until a Short Rest, Hit Points regained or first aid (DC 10 Medicine); the class tab's Knock Out rule (Off by default); a fight whose foes are down or knocked out is won (F13) | encounter_damage.gd knocks_out, knock_out, _first_aid; creature.gd heal | tested (melee spell attacks don't knock out: deviations) | test_knock_out |
 | Knocking a creature out | — | not started | — (no Improvement Ideas item yet) |
 | Critical Hits: roll damage dice twice | resolution/attack_resolver.gd | tested | test_attacks |
 
