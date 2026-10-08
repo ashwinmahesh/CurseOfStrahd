@@ -12,9 +12,14 @@ signal attack_finished
 
 ## Order matches the rows the Blender script renders.
 const DIRECTIONS: Array[String] = ["s", "se", "e", "ne", "n", "nw", "w", "sw"]
-## One walk cycle (two steps) covers this many squares, so feet don't skate whatever the step time. Four squares give a
-## natural cadence (owner 2026-10-06: three read too fast): about 0.7 s a cycle in exploration, 1 s in combat.
-const CELLS_PER_CYCLE := 4.0
+## How a walk cycle (two steps) is paced against the ground covered. Walkers keep a natural cadence of about one cycle a
+## second, two steps, with a stride as long as their pace makes it, between a square (a stroll: slower walkers step
+## more slowly, feet on the ground) and four (the party's quick pace: longer strides rather than faster legs, owner
+## 2026-10-06: three squares read too fast at 0.18 s a square). Owner 2026-10-08: townsfolk at 0.7 s a square had
+## been held to four squares a cycle too, so their legs alternated at a third of a natural pace.
+const CYCLE_SECONDS := 1.0
+const MIN_CELLS_PER_CYCLE := 1.0
+const MAX_CELLS_PER_CYCLE := 4.0
 
 var facing := Vector3.BACK
 var moving := false
@@ -250,7 +255,12 @@ func set_step_time(seconds: float) -> void:
 	if seconds <= 0.0 or sprite_frames == null or not sprite_frames.has_animation(&"walk_s"):
 		return
 	var cycle := float(sprite_frames.get_frame_count(&"walk_s")) / maxf(1.0, sprite_frames.get_animation_speed(&"walk_s"))
-	walk_speed = clampf(cycle / (CELLS_PER_CYCLE * seconds), 0.3, 2.5)
+	walk_speed = clampf(cycle / (cells_per_cycle(seconds) * seconds), 0.3, 2.5)
+
+
+## How many squares one walk cycle covers at `seconds` a square (CYCLE_SECONDS, within the stride limits).
+static func cells_per_cycle(seconds: float) -> float:
+	return clampf(CYCLE_SECONDS / maxf(seconds, 0.01), MIN_CELLS_PER_CYCLE, MAX_CELLS_PER_CYCLE)
 
 
 ## Plays the attack once toward `facing` (from the saddle when riding and the sheet has it): `struck` fires on the hit
