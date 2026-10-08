@@ -191,3 +191,19 @@ once
 ~ search:candle_box_scroll
 | Under the candle stubs in the offering box, someone left a scroll tied with white ribbon, its words written in a hand that shakes with fear and faith together.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the well square and the pens.
+
+~ examine:krezk_wayside_shrine
+| A little shrine of stone at the top of the square, crowded with wooden suns, each carved by the same patient hand. The candle stubs in front of it are never all out at once.
+
+~ examine:goat_cheeses
+| Round white goat cheeses set out on a board to firm in the cold, each pressed with a little sun on top.
+
+~ search:hay_rick_flute
+| Deep in the hay rick, a set of reed pipes tied with goat hair. A goatherd lost it, or a goat ate its way to it. {name} shakes the hay out of it.
+once
+
+~ search:wall_loose_stone
+| One stone low in the wall comes out in {name}'s hand. Behind it, a boy's treasure: three bright pebbles, a dried beetle, and a good leather sling.
+once

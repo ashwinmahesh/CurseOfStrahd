@@ -1,0 +1,69 @@
+{
+  "id": "the_grey_mare",
+  "name": "The Grey Mare",
+  "summary": "The black carriage that drives itself stopped by Radu's horse pen, and left a purse on the gatepost. Now his best mare is tied at the crossroads, waiting for midnight.",
+  "giver": "tser_radu",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Zora, who counts everyone who passes the Tser Pool camp, says the black carriage that drives itself stopped by Radu's pen two nights ago. In the morning there was a purse on the gatepost. Tonight Radu walked his grey mare down the road toward the crossroads and came back without her.",
+      "objectives": [
+        "Ask Radu the horse-master about his grey mare"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Radu sold his grey mare, Steaua, to the black carriage. She's tied at the old milestone on the east side of the Ivlis crossroads, and the carriage fetches her at midnight. The castle's horses are black all through: it takes a horse and finishes it.",
+      "objectives": [
+        "Find Steaua at the crossroads milestone before the carriage comes"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "bargain",
+      "journal": "It wasn't the money. A voice from the carriage told Radu that if the grey went to the crossroads tonight, Nicu would ride home tomorrow. Nicu went to Vallaki to sell a mare four days ago and hasn't come back.",
+      "objectives": [
+        "Find Steaua at the crossroads milestone before the carriage comes"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "saved",
+      "journal": "We broke the castle's brand on Steaua's flank, and she bolted for home grey all through. The carriage came for her early, as if it knew.",
+      "objectives": [
+        "Deal with the carriage's escort"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "lost",
+      "journal": "Too late. Steaua is black from muzzle to tail now, with coals for eyes, and she waits at the milestone for her new master.",
+      "objectives": [
+        "Wait for the carriage at midnight"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "carriage_beaten",
+      "journal": "The carriage came up the castle road with one black horse in the traces and an empty harness beside it. Its escort is broken, and it went back up the castle road with nothing in the empty harness.",
+      "objectives": [
+        "Go back to Radu at the Tser Pool camp"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "home",
+      "journal": "Steaua is back in the pen at Tser Pool, grey and cross and eating everything. Whoever owns her now, nobody will be selling her to anyone again.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "mourned",
+      "journal": "We told Radu what the castle made of his mare. He tied a black ribbon to the pen gate and would not say anything else.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

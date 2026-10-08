@@ -87,7 +87,7 @@ anyone touching this file.
 - **Washing lines.** A mood's `lines` (world/look/washing_line.gd) strings a line between two posts with the week's
   wash pegged out on it in muted palette colours, swaying: Barovia's back yards (lane 28, "an actual village"). With
   `"kind": "bunting"` it is a high festival string of little pennants with no posts, in Vallaki's yellow by default.
-  Lines are built outdoors only.
+  Lines are built outdoors only. Krezk's yards have washing lines too.
 - **Smoke at a point.** Weather `{"kind": "smoke", "at": [[x, y, z]]}` puts a chimney plume anywhere: Old
   Bonegrinder's pipe.
 - **Waterfalls.** A mood's `falls` (world/look/waterfall.gd) pours a river over an edge: a curved sheet of falling
@@ -104,15 +104,16 @@ anyone touching this file.
   the world has now (`Weather.dress_mood`: its own rain and snow give way to the weather's, fog thickens its mist), and
   when the weather turns during a stay, `Atmosphere.refresh_weather()` (LocationClock calls it) rebuilds the rain and
   snow and resets the mist and the wet or snowy surfaces at once.
-- **Weather on surfaces** (W12, Modern; `shaders/world/weather_surface.gdshaderinc`, the global uniforms
-  `world_wet`, `world_snow`, `world_time` and `world_sky` that Atmosphere sets from the mood's weather outdoors):
-  rain darkens and glosses everything and its colour deepens, puddles gather in the low places of level ground,
-  ringing with drops and holding the sky's light, and the sun and moon leave almost no highlight under rain cloud, so
-  wet stone glistens in the lamps; snow settles on roofs, ledges and wall tops even when light, and lies on the ground
-  in drifts that join up as it gets heavier (Krezk patchy, the Abbey half covered, the mountains white). The party
-  leaves footprints (decals with a dip and, in mud, standing water) where the ground takes them: snow once it lies
-  (`SNOW_GROUND`), mud, marsh and bare earth, grass and roads in the rain; a print every `STRIDE`, the last
-  `MAX_PRINTS` kept. The pathfinder steers round difficult ground, so prints in mud are rarer than in snow.
+- **Weather on surfaces** (W12, Modern; `shaders/world/weather_surface.gdshaderinc`, the global uniforms `world_wet`,
+  `world_snow`, `world_time` and `world_sky` that Atmosphere sets from the mood's weather outdoors): rain darkens and
+  glosses everything and its colour deepens, puddles gather in the low places of level ground, ringing with drops and
+  holding the sky's light, and the sun and moon leave almost no highlight under rain cloud, so wet stone glistens in
+  the lamps; snow settles on roofs, ledges and wall tops even when light, and lies on the ground in drifts that join
+  up as it gets heavier (Krezk patchy, the Abbey half covered, the mountains white). A mood's `lying_snow` (0..1)
+  keeps that much on the ground in any weather: Krezk, its pool and the Abbey keep a patchy cover when the sky is clear (lane
+  28). The party leaves footprints (decals with a dip and, in mud, standing water) where the ground takes them: snow
+  once it lies (`SNOW_GROUND`), mud, marsh and bare earth, grass and roads in the rain; a print every `STRIDE`, the
+  last `MAX_PRINTS` kept. The pathfinder steers round difficult ground, so prints in mud are rarer than in snow.
 - **Grade.** In the Modern finish (W16) the shade takes the place's own cool colour and loses some of its colour while
   lamplight keeps its warm one, so light pools warm against cool, dark shade (the chosen direction: A's effects in
   B's tone): night blue by default, blue-grey on an overcast day, deep night blue indoors; a mood's `tone` gives

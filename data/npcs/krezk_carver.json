@@ -1,0 +1,18 @@
+{
+  "id": "krezk_carver",
+  "name": "Old Pavel",
+  "title": "Of Krezk",
+  "summary": "An old hooded man on his doorstep, carving little wooden suns for the shrine with a knife older than he is.",
+  "portrait": "scout",
+  "sprite": "scout",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}
