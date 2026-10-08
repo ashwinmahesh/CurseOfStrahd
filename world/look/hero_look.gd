@@ -16,11 +16,17 @@ const ALPHA_HAIR := 253
 const VIEWS: Array[String] = ["front", "front34", "side", "back34", "back"]
 ## Appearance keys that change the sprite (the rest, portrait and voice, don't).
 const LOOK_KEYS: Array[String] = ["gender", "build", "head", "skin", "hair", "hair_colour", "beard", "outfit"]
+## How far (in piece pixels) a bit of a head, beard or hairstyle may sit from the rest of it and still belong to it: a
+## braid's loose tip sits 2 to 5 px away, while the keyed colour the art left elsewhere on the figure (magenta on a
+## boot or a hand in the hairstyle's edit) is 48 px or more below the head.
+const STRAY_GAP := 8
 
 static var _catalog: Dictionary = {}
 static var _images: Dictionary = {}
 static var _json: Dictionary = {}
 static var _frames: Dictionary = {}
+## "kind/id/view" -> the piece's view without its stray bits (_piece_view).
+static var _views: Dictionary = {}
 ## Art id -> {appearance, species} for the custom characters met so far (CombatToken.art_for registers them).
 static var _known: Dictionary = {}
 
@@ -328,8 +334,8 @@ static func preview_frames(app: Dictionary, kind: String, dir: String) -> Array[
 	return out
 
 
-## Head, beard and hair for one view, tinted and lined up by the skull: {image, cx, top, skull_w} in the stack's
-## pixels. Mirrored for the west-facing directions.
+## Head, beard and hair for one view, tinted and lined up by the skull: {image, cx, top, skull_w, cut} in the stack's
+## pixels (`cut`: the head's neck line). Mirrored for the west-facing directions.
 static func head_stack(app: Dictionary, view: String, mirror: bool) -> Dictionary:
 	var p := pieces_for(app)
 	var skin := ramp("skins", str(app.get("skin", "fair")))
@@ -338,15 +344,16 @@ static func head_stack(app: Dictionary, view: String, mirror: bool) -> Dictionar
 	for kind: String in ["heads", "beards", "hair"]:
 		if not p.has(kind):
 			continue
-		var meta := ((_piece_json(kind, str(p[kind]))["views"] as Dictionary).get(view, {})) as Dictionary
-		if meta.is_empty() or bool(meta.get("empty", false)):
+		var piece := _piece_view(kind, str(p[kind]), view)
+		if piece.is_empty():
 			continue
-		var rect := meta["rect"] as Array
-		var img := _image(_piece_png(kind, str(p[kind]), "")).get_region(Rect2i(int(rect[0]), int(rect[1]), int(rect[2]), int(rect[3])))
+		var img := (piece["image"] as Image).duplicate() as Image
 		var boxes: Array[Rect2i] = [Rect2i(Vector2i.ZERO, img.get_size())]
 		tint(img, boxes, skin, hair)
-		layers.append({"image": img, "kind": kind, "cx": float(meta["cx"]), "top": float(meta["top"]),
-			"skull_w": float(meta["skull_w"]), "cut": float(meta.get("cut", float(meta["top"]) + float(meta["skull_w"])))})
+		var layer := piece.duplicate()
+		layer["image"] = img
+		layer["kind"] = kind
+		layers.append(layer)
 	var base := layers[0]
 	# Place every layer in the head's frame. Hair sits on the skull: scaled by its width, from its top. A beard hangs
 	# from the jaw: scaled by the head's height and lined up at the neck, so a longer or shorter face still wears it.
@@ -378,7 +385,137 @@ static func head_stack(app: Dictionary, view: String, mirror: bool) -> Dictionar
 	if mirror:
 		out.flip_x()
 		cx = size.x - cx
-	return {"image": out, "cx": cx, "top": float(base["top"]) - lo.y, "skull_w": float(base["skull_w"])}
+	return {"image": out, "cx": cx, "top": float(base["top"]) - lo.y, "skull_w": float(base["skull_w"]),
+		"cut": float(base["cut"]) - lo.y}
+
+
+## The Head tab's picture of a look (appearance_panel.gd): its head, beard and hair in three-quarter view.
+static func head_picture(app: Dictionary) -> Image:
+	return head_stack(app, "front34", false)["image"] as Image
+
+
+## One view of a head, beard or hairstyle piece, cut out of its sheet: {image, cx, top, skull_w, cut} in the image's
+## pixels, or {} for a view the piece has nothing in. Bits not attached to the head are left out (_drop_strays), and
+## the image is trimmed to what's left. Cached: tint a copy.
+static func _piece_view(kind: String, id: String, view: String) -> Dictionary:
+	var key := "%s/%s/%s" % [kind, id, view]
+	if _views.has(key):
+		return _views[key] as Dictionary
+	var meta := ((_piece_json(kind, id)["views"] as Dictionary).get(view, {})) as Dictionary
+	var out := {}
+	if not meta.is_empty() and not bool(meta.get("empty", false)):
+		var rect := meta["rect"] as Array
+		var img := _image(_piece_png(kind, id, "")).get_region(Rect2i(int(rect[0]), int(rect[1]), int(rect[2]), int(rect[3])))
+		var top := float(meta["top"])
+		var cut := float(meta.get("cut", top + float(meta["skull_w"])))
+		var box := _drop_strays(img, floori(cut))
+		if box.size != img.get_size():
+			img = img.get_region(box)
+		out = {"image": img, "cx": float(meta["cx"]) - box.position.x, "top": top - box.position.y,
+			"skull_w": float(meta["skull_w"]), "cut": cut - box.position.y}
+	_views[key] = out
+	return out
+
+
+## Clears the islands of `img` (8-connected opaque pixels) that don't belong to the head: an island belongs if it
+## reaches above the neck (row `cut`) or comes within STRAY_GAP of one that does. Returns the box of what's left.
+static func _drop_strays(img: Image, cut: int) -> Rect2i:
+	var w := img.get_width()
+	var h := img.get_height()
+	var data := img.get_data()
+	var island := PackedInt32Array()
+	island.resize(w * h)
+	island.fill(-1)
+	var members: Array[PackedInt32Array] = []
+	var keep: Array[bool] = []
+	for start in w * h:
+		if data[start * 4 + 3] == 0 or island[start] >= 0:
+			continue
+		var n := members.size()
+		var px := PackedInt32Array([start])
+		island[start] = n
+		var high := false
+		var k := 0
+		while k < px.size():
+			var i := px[k]
+			k += 1
+			var x := i % w
+			var y := i / w
+			high = high or y <= cut
+			for ny in range(maxi(0, y - 1), mini(h, y + 2)):
+				for nx in range(maxi(0, x - 1), mini(w, x + 2)):
+					var j := ny * w + nx
+					if island[j] < 0 and data[j * 4 + 3] > 0:
+						island[j] = n
+						px.append(j)
+		members.append(px)
+		keep.append(high)
+	if not keep.has(false):
+		return Rect2i(Vector2i.ZERO, img.get_size())
+	# An island near the ones kept joins them (a braid's loose tip), and may bring another within reach.
+	var grew := true
+	while grew:
+		grew = false
+		var near := _near_kept(members, keep, w, h)
+		for n in members.size():
+			if keep[n]:
+				continue
+			for i in members[n]:
+				if near[i] != 0:
+					keep[n] = true
+					grew = true
+					break
+	var lo := Vector2i(w, h)
+	var hi := Vector2i(-1, -1)
+	for n in members.size():
+		for i in members[n]:
+			if keep[n]:
+				lo = Vector2i(mini(lo.x, i % w), mini(lo.y, i / w))
+				hi = Vector2i(maxi(hi.x, i % w), maxi(hi.y, i / w))
+			else:
+				for c in 4:
+					data[i * 4 + c] = 0
+	img.set_data(w, h, false, Image.FORMAT_RGBA8, data)
+	if hi.x < 0:
+		return Rect2i(Vector2i.ZERO, img.get_size())
+	return Rect2i(lo, hi - lo + Vector2i.ONE)
+
+
+## 1 for every pixel within STRAY_GAP (across and up or down) of a kept island's pixel: the kept pixels widened along
+## the rows, then down the columns, each with a running count over the window.
+static func _near_kept(members: Array[PackedInt32Array], keep: Array[bool], w: int, h: int) -> PackedByteArray:
+	var on := PackedByteArray()
+	on.resize(w * h)
+	for n in members.size():
+		if keep[n]:
+			for i in members[n]:
+				on[i] = 1
+	var across := PackedByteArray()
+	across.resize(w * h)
+	for y in h:
+		var row := y * w
+		var count := 0
+		for x in mini(STRAY_GAP, w):
+			count += on[row + x]
+		for x in w:
+			if x + STRAY_GAP < w:
+				count += on[row + x + STRAY_GAP]
+			if x - STRAY_GAP - 1 >= 0:
+				count -= on[row + x - STRAY_GAP - 1]
+			across[row + x] = 1 if count > 0 else 0
+	var near := PackedByteArray()
+	near.resize(w * h)
+	for x in w:
+		var count := 0
+		for y in mini(STRAY_GAP, h):
+			count += across[y * w + x]
+		for y in h:
+			if y + STRAY_GAP < h:
+				count += across[(y + STRAY_GAP) * w + x]
+			if y - STRAY_GAP - 1 >= 0:
+				count -= across[(y - STRAY_GAP - 1) * w + x]
+			near[y * w + x] = 1 if count > 0 else 0
+	return near
 
 
 ## Draws a head stack onto `dst` over the bald head at `anchor` ([centre x, skull top, skull width] in `cell`'s

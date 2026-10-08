@@ -172,8 +172,7 @@ func _pictures(box: VBoxContainer, title: String, category: String, key: String,
 		for k: String in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color"]:
 			b.add_theme_color_override(k, Color.WHITE)
 		if HeroLook.has_pieces(trial):
-			var stack := HeroLook.head_stack(trial, "front34", false)
-			b.icon = ImageTexture.create_from_image(stack["image"] as Image)
+			b.icon = ImageTexture.create_from_image(HeroLook.head_picture(trial))
 		if str(appearance.get(key, "")) == id:
 			UiParts.light_up(b)
 		grid.add_child(b)

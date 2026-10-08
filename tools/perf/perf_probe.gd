@@ -584,7 +584,8 @@ func _memory(places: Array) -> void:
 	var caches := [["DirectionalSprite._frames_cache (sprite sheets)", func() -> void: DirectionalSprite._frames_cache.clear()],
 		["HeroLook caches (custom heroes)", func() -> void:
 			HeroLook._frames.clear()
-			HeroLook._images.clear()],
+			HeroLook._images.clear()
+			HeroLook._views.clear()],
 		["Look._textured/_textures/_normals (surface textures)", func() -> void:
 			Look._textured.clear()
 			Look._textures.clear()
