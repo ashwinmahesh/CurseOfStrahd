@@ -90,7 +90,15 @@ fi
 if [ -n "$fresh" ] || [ ! -f "$play/.godot/.last_import" ] || [ ! -f "$play/builds/play_build.json" ]; then
   mkdir -p "$play/builds"
   say "importing what changed (headless; log in builds/import.log)."
-  "$godot" --path "$play" --headless --import > "$play/builds/import.log" 2>&1 || true
+  # The marker comes back only once the import has finished: an import stopped part way (Ctrl-C, a kill) is done again
+  # on the next run instead of the game starting on a half-built cache (2026-10-08: 15 textures missing at 71%).
+  rm -f "$play/.godot/.last_import"
+  status=0
+  "$godot" --path "$play" --headless --import > "$play/builds/import.log" 2>&1 || status=$?
+  if [ "$status" -ge 128 ]; then
+    say "the import was stopped before it finished (exit $status); run make play again to finish it."
+    exit 1
+  fi
   if grep -qE 'SCRIPT ERROR|ERROR:|Parse Error|Failed loading' "$play/builds/import.log"; then
     say "the import logged errors (builds/import.log); starting anyway, since this commit passed make ci."
   fi
