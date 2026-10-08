@@ -168,6 +168,8 @@ func _process(delta: float) -> void:
 		LocationStealth.refresh_waiting(self)   # a door opened, a lamp lit: foes come into view
 	if board != null and rig != null and rig.camera != null and not members.is_empty() and (not board.occluders.is_empty() or not board.mesh_occluders.is_empty() or not board.buildings.is_empty()):
 		var focus := (tokens[leader().id] as Node3D).global_position if tokens.has(leader().id) else Vector3.ZERO
+		if is_instance_valid(rig.cutaway_focus):
+			focus = rig.cutaway_focus.global_position   # a boss's entrance (G3): the walls clear the view to the boss
 		board.fade_occluders(rig.camera.global_position, focus, delta)
 		board.cut_buildings(rig.camera.global_position, focus, delta)
 	LocationWalk._update_glides(self, delta)

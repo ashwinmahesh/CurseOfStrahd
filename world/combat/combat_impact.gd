@@ -34,6 +34,8 @@ const SPELL_LEAN := 0.7
 const SPELL_TURN := 0.35
 const SPELL_BACK := 0.55
 const SPELL_ZOOM_MOST := 1.2
+## A boss's entrance: close and low on the boss (looking up at it a little), coming in and going out over these seconds.
+const BOSS := {"zoom": 0.5, "pitch": 16.0, "in": 1.1, "out": 0.9}
 
 var rig: CameraRig
 ## Engine.time_scale before the first slow or frozen moment (-1 while none is running).
@@ -96,6 +98,23 @@ func spell_landed() -> void:
 		return
 	_turned = false
 	_rest(SPELL_BACK)
+
+
+## A boss's entrance (G3, ui/combat/boss_bar.gd): the camera comes in close and low on whoever it follows, and holds
+## there until boss_shot_done(). Played whenever the boss bar asks, not only where the moments above are on.
+func boss_shot() -> void:
+	if rig == null:
+		return
+	_turned = false
+	var tw := _shot()
+	tw.tween_property(rig, "shot_zoom", float(BOSS["zoom"]), float(BOSS["in"]))
+	tw.tween_property(rig, "shot_pitch", float(BOSS["pitch"]), float(BOSS["in"]))
+	tw.tween_property(rig, "shot_weight", 0.0, float(BOSS["in"]))
+
+
+func boss_shot_done() -> void:
+	if rig != null:
+		_rest(float(BOSS["out"]))
 
 
 ## Whether `spell_id` is big enough to turn the camera: a spell of BIG_SPELL_LEVEL or higher.
@@ -226,3 +245,4 @@ func _exit_tree() -> void:
 		rig.shot_weight = 0.0
 		rig.shot_pitch = 0.0
 		rig.shake = 0.0
+		rig.cutaway_focus = null

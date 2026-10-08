@@ -37,6 +37,9 @@ var shot_pitch := 0.0
 var shot_focus := Vector3.ZERO
 var shot_weight := 0.0
 var shake := 0.0
+## What walls, houses and trees clear the view to while a shot is on it (a boss's entrance), instead of the party's
+## leader; null the rest of the time (LocationView._process).
+var cutaway_focus: Node3D = null
 var _shake_rng := RandomNumberGenerator.new()
 var _far := 120.0
 var _yaw_steps := 0

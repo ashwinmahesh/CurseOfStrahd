@@ -22,6 +22,8 @@ const INTRO_TIME := 1.5
 ## The part of the screen the combat HUD leaves clear, as the opening shot frames the fight: |x| up to .x, and y from
 ## .z (bottom) to .y (top), in -1..1 screen units.
 const CLEAR_VIEW := Vector3(0.5, 0.55, -0.4)
+## The clear part's bottom with boss plates over the hotbar (G3).
+const BOSS_CLEAR_BOTTOM := -0.25
 
 enum Mode { BUSY, IDLE, TARGET, PROMPT, OVER }
 
@@ -36,6 +38,9 @@ var fx: SpellFx
 var barks: CombatBarks
 ## Heavy hits, crits, killing blows, the last foe and big spells landing with weight (G2, world/combat/combat_impact.gd).
 var impact: CombatImpact
+## Strahd's and the other bosses' name plates and health bars, and their entrance (G3, ui/combat/boss_bar.gd); null
+## in a fight without one.
+var boss_bar: BossBar
 var rig: CameraRig
 var hud: CombatHud
 var tokens: Dictionary = {}
@@ -67,6 +72,8 @@ var _opening := false
 var _zoom_before := 13.0
 ## The view is fading out after the fight (close_softly): nothing more is played.
 var _closed := false
+## A boss's entrance is showing (a click, Space or Escape cuts it short).
+var _entrance_tw: Tween
 
 
 ## Starts showing `encounter` on `board_` with `rig_` and the creatures' `tokens_` (id -> CombatToken). Starts the
@@ -103,18 +110,33 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	hud.radial_picked.connect(_radial)
 	hud.cast_at_level.connect(func(action: Dictionary, level: int) -> void: _choose(action, level))
 	hud.square_picked.connect(_square_picked)
-	if e.state == Encounter.State.SETUP:
+	var fresh := e.state == Encounter.State.SETUP
+	if fresh:
 		if e.title != "":
 			e.log.add("turn", e.title, "")
 		if e.intro != "":
 			e.log.add("narr", e.intro, "")
 		e.start(surprised)
+	# Bosses (G3): a name plate and health bar for each above the hotbar, and for a fight that's just starting, an
+	# entrance on the greatest of them before the opening beat.
+	var bosses := BossBar.bosses_in(e)
+	var entered := false
+	if not bosses.is_empty():
+		boss_bar = BossBar.new()
+		add_child(boss_bar)
+		boss_bar.build(e, bosses)
+		if fresh and BossBar.entrance_on():
+			entered = await _boss_entrance(bosses[0])
+			if _closed:
+				return
 	# The opening beat: the camera takes in the field and the HUD fades up while Initiative is rolled; the first turn
 	# waits for it. The rules are already running (round 1 saves itself as usual).
 	var opened := Time.get_ticks_msec()
 	_opening = true
 	_frame_the_fight(rig.follow == null)
 	LayerFade.fade(self, hud, true, 0.4, 0.2).finished.connect(func() -> void: hud.banner("Roll Initiative", INTRO_TIME))
+	if boss_bar != null and not entered:
+		LayerFade.fade(self, boss_bar, true, 0.4, 0.2)
 	for c in e.combatants:
 		if c.surprised:
 			e.log.add("info", "%s is surprised: Disadvantage on Initiative" % c.name(), c.id)
@@ -177,7 +199,7 @@ func _all_in_view(spots: Array[Vector3], at: Vector3, dist: float) -> bool:
 			return false
 		var x := v.x / (-v.z * half_w)
 		var y := v.y / (-v.z * half_h)
-		if absf(x) > CLEAR_VIEW.x or y > CLEAR_VIEW.y or y < CLEAR_VIEW.z:
+		if absf(x) > CLEAR_VIEW.x or y > CLEAR_VIEW.y or y < (CLEAR_VIEW.z if boss_bar == null else BOSS_CLEAR_BOTTOM):
 			return false
 	return true
 
@@ -189,6 +211,30 @@ func _end_opening() -> void:
 	if e.state == Encounter.State.ACTIVE:
 		hud.banner("Round %d" % e.round_no, 1.0)
 	create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE).tween_property(rig, "distance", _zoom_before, 0.9)
+
+
+## A boss's entrance (G3): letterbox bars, the camera close and low on `boss`, its name and title, a sting; then the
+## usual opening shot takes in the whole fight. False (and nothing shown) when the boss can't be seen.
+func _boss_entrance(boss: Combatant) -> bool:
+	var tok := _tok(boss.id)
+	if tok == null or not tok.visible:
+		return false
+	hud.visible = false   # the opening beat fades it up after
+	var was_following := rig.follow != null
+	rig.follow = tok
+	rig.cutaway_focus = tok   # walls between the camera and the boss go down for the shot
+	if not was_following:
+		rig.snap_to_target()   # a scene that opens on the fight (the arena) starts on the boss
+	impact.boss_shot()
+	boss_bar.show_entrance(boss)
+	_entrance_tw = create_tween()
+	_entrance_tw.tween_interval(BossBar.ENTRANCE)
+	await _entrance_tw.finished
+	_entrance_tw = null
+	rig.cutaway_focus = null
+	boss_bar.hide_entrance()
+	impact.boss_shot_done()
+	return true
 
 
 ## Removes the view's overlay and HUD (the board and tokens belong to the caller).
@@ -204,6 +250,8 @@ func close_softly() -> void:
 	mode = Mode.OVER
 	overlay.clear_all()
 	hud.hide_tooltip()
+	if boss_bar != null:
+		LayerFade.fade(self, boss_bar, false, 0.35)
 	LayerFade.fade(self, hud, false, 0.35).finished.connect(queue_free)
 
 
@@ -267,6 +315,8 @@ func _refresh_all() -> void:
 		t.refresh()
 		t.set_active(cur != null and t.combatant == cur and e.state == Encounter.State.ACTIVE)
 	hud.refresh()
+	if boss_bar != null:
+		boss_bar.refresh()
 	_show_weapons()
 
 
@@ -658,6 +708,11 @@ func _cycle_inspect() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if input_locked:
+		return
+	if _entrance_tw != null and _entrance_tw.is_valid() and (event.is_action_pressed(&"ui_accept") or event.is_action_pressed(&"ui_cancel")
+			or event is InputEventMouseButton and (event as InputEventMouseButton).pressed):
+		_entrance_tw.custom_step(BossBar.ENTRANCE)   # cuts the boss's entrance short
+		get_viewport().set_input_as_handled()
 		return
 	if event is InputEventKey and (event as InputEventKey).pressed and (event as InputEventKey).physical_keycode == KEY_F1 \
 			or event is InputEventJoypadButton and (event as InputEventJoypadButton).pressed and (event as InputEventJoypadButton).button_index == JOY_BUTTON_START:

@@ -358,6 +358,28 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 	await _frames(3)
 
 
+func test_the_boss_plates() -> void:
+	# Three bosses side by side (G3, ui/combat/boss_bar.gd): the longest title and Strahd's Legendary Resistance.
+	var ward := ARENA.duplicate(true)
+	(ward["encounters"] as Array).append({"id": "bosses", "trigger": "manual", "monsters": [
+		{"monster": "strahd_von_zarovich", "cell": [6, 1]},
+		{"monster": "vladimir_horngaard", "cell": [7, 2], "name": "Vladimir Horngaard"},
+		{"monster": "night_hag", "cell": [8, 3], "name": "Offalia Wormwiggle"}]})
+	Compendium.shared().tables["locations"]["test_layout_ward"] = ward
+	if not await _game(LATE):
+		return
+	root.call("enter_location", "test_layout_ward", "default")
+	await _frames(3)
+	var view := root.get("view") as LocationView
+	assert_true(view.start_encounter("bosses"), "the fight starts")
+	await _frames(3)
+	var cv := view.combat_view
+	assert_true(cv.boss_bar != null and cv.boss_bar.bosses.size() == 3, "a plate for each boss")
+	await _check("the boss plates", func() -> Variant: return cv.boss_bar)
+	cv.finished.emit("victory")
+	await _frames(3)
+
+
 func test_the_ending() -> void:
 	if not await _game(FINISHED):
 		return
