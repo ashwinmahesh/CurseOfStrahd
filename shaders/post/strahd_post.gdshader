@@ -201,14 +201,18 @@ float wall_amount(vec3 p) {
 
 // How much mist a point holds (0..1+): thick near the ground, patchy by the noise, most where the map's mist mask
 // says (by the trees, in the hollows), solid past the Mists' wall.
-float mist_density(vec3 p) {
-	float ground = 0.0;
-	if (use_ground_height && land_rect.z > land_rect.x) {
-		ground = texture(ground_height, (p.xz - land_rect.xy) / (land_rect.zw - land_rect.xy)).r;
-		vec2 out2 = max(land_rect.xy - p.xz, p.xz - land_rect.zw);
-		ground *= 1.0 - smoothstep(0.0, 8.0, max(max(out2.x, out2.y), 0.0));
+// The ground's height under a point (0 on a level map; ground_height where it isn't, settling to 0 past the edge).
+float ground_at(vec2 xz) {
+	if (!use_ground_height || land_rect.z <= land_rect.x) {
+		return 0.0;
 	}
-	float above = (p.y - ground - mist_floor) / max(mist_height - mist_floor, 0.01);
+	float g = texture(ground_height, (xz - land_rect.xy) / (land_rect.zw - land_rect.xy)).r;
+	vec2 out2 = max(land_rect.xy - xz, xz - land_rect.zw);
+	return g * (1.0 - smoothstep(0.0, 8.0, max(max(out2.x, out2.y), 0.0)));
+}
+
+float mist_density(vec3 p) {
+	float above = (p.y - ground_at(p.xz) - mist_floor) / max(mist_height - mist_floor, 0.01);
 	float wall = wall_amount(p);
 	float top = mix(1.0, mist_wall_height / max(mist_height, 0.01), wall);
 	float h = clamp(1.0 - above / top, 0.0, 1.0);
@@ -363,9 +367,11 @@ void fragment() {
 		// March the part of the view ray inside the mist layer (from where it comes down through the top to the
 		// surface), so the mist floats over the ground and shifts with the camera like a real layer.
 		vec3 dir = wpos - cam;
-		float top = mist_height;
+		// The layer's top over the ground there (raised ground carries its mist up with it).
+		float ground = ground_at(wpos.xz);
+		float top = mist_height + ground;
 		if (mist_wall.w > 0.0) {
-			top = max(top, mist_wall_height);
+			top = max(top, mist_wall_height + ground);
 		}
 		float t0 = clamp((top - cam.y) / min(dir.y, -1e-4), 0.0, 1.0);
 		vec3 a = cam + dir * t0;
