@@ -346,7 +346,10 @@ static func _normal_image(src: Image) -> Image:
 	img.resize(w, h, Image.INTERPOLATE_CUBIC)
 	img.bump_map_to_normal_map(6.0)
 	img.generate_mipmaps()
-	img.compress(Image.COMPRESS_S3TC, Image.COMPRESS_SOURCE_NORMAL)   # two channels (RGTC) for a normal map
+	# Two channels (RGTC) for a normal map. Only the editor's binary can compress at run time: an exported build keeps the
+	# map uncompressed (the same look, more video memory) rather than raise an error the player sees.
+	if OS.has_feature("editor"):
+		img.compress(Image.COMPRESS_S3TC, Image.COMPRESS_SOURCE_NORMAL)
 	return img
 
 
