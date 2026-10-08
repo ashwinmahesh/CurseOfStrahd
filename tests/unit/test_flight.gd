@@ -226,3 +226,17 @@ func test_the_ai_doesnt_plan_a_swing_at_a_flyer_out_of_reach() -> void:
 	assert_ne(str(e.ai.plan_turn(zombie)["kind"]), "attack", "nothing it can reach")
 	var ally := TestCombat.hero(e, "hedda_ironvow", Vector2i(5, 2))
 	assert_eq(e.ai.plan_turn(zombie).get("target"), ally, "it goes for the one on the floor")
+
+
+func test_flying_up_can_be_taken_back() -> void:
+	var e := TestCombat.open_field(3)
+	var c := _flyer(e, Vector2i(2, 2))
+	TestCombat.start_with(e, c)
+	var left := c.movement_left
+	assert_true(e.fly_vertical(c, 10).ok)
+	assert_true(e.can_undo_move(c))
+	var mark := e.events.size()
+	assert_true(e.undo_move(c).ok)
+	assert_eq(c.altitude, 0)
+	assert_eq(c.movement_left, left)
+	assert_true(e.events.slice(mark).any(func(ev: Dictionary) -> bool: return str(ev["type"]) == "altitude"), "the token comes back down")

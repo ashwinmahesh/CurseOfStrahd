@@ -805,7 +805,9 @@ func fly_vertical(c: Combatant, delta: int) -> CombatResult:
 		why = vertical_why(flyer, delta)
 	if why != "":
 		return CombatResult.fail(why)
-	return _fly_to(flyer, vertical_goal(flyer, delta), CombatResult.new(), {"willing": true})
+	# Taken back like a move if nothing comes of it (EncounterUndo).
+	var undo := e.undo.before_move(c)
+	return e.undo.after_move(undo, _fly_to(flyer, vertical_goal(flyer, delta), CombatResult.new(), undo.handled))
 
 
 func _fly_to(c: Combatant, goal: int, r: CombatResult, handled: Dictionary) -> CombatResult:
