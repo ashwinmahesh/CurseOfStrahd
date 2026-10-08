@@ -252,9 +252,9 @@ once
 | A wide wooden vat for treading grapes, stained purple to the brim with a hundred harvests. Something has been nesting in it.
 
 ~ search:cask_bottle
-| Wedged behind the casks, a stoppered glass bottle, empty and clean, as if someone set it aside for something special. {name} keeps it.
+| Wedged behind the casks, a stoppered glass bottle, empty and clean, as if someone set it aside for something special. When {name} tilts it, a thread of grey smoke curls up inside and won't settle.
 once
 
 ~ search:vine_sickle
-| Half buried between two rows, a vine-dresser's sickle, rusted at the edge but sound. {name} knocks the earth off it.
+| Half buried between two rows, a sickle with a pale crescent blade. The earth falls off it, and no rust ever took hold. {name} has the feeling the druids dropped it, and want it back.
 once

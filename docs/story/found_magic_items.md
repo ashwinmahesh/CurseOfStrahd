@@ -129,6 +129,8 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | | Where | Item | How |
 |---|---|---|---|
 | ✅ | The yard well | Rope of Climbing (uncommon) | Search (Perception DC 13): tied off below the lip |
+| ✅ | The yard, behind the casks | Eversmoking Bottle (uncommon) | Search (Perception DC 13): a bottle set aside (lane 28's spot) |
+| ✅ | The vineyard, between the rows | +1 Moon Sickle (uncommon) | Search (Perception DC 12): dropped by a druid (lane 28's spot) |
 | ✅ | The vineyard's dead tree | Ring of Feather Falling (rare) | Search (Perception DC 15): the ravens' hoard |
 | ✅ | Cellar, the founder's cask | Alchemy Jug (uncommon) | Search (Investigation DC 14) |
 | ✅ | Press house, the wizard's casks | Decanter of Endless Water (uncommon) | Search (Perception DC 14) |
