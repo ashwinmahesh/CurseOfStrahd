@@ -4,8 +4,9 @@ extends Control
 ## count on a small plaque and its marks (a gilt spark when new, dimmed with a cross when junk, a moonlight lozenge when
 ## equipped, a flame edge for a quest item, a lilac edge for magic). Empty, it names what its slot takes ("Ring") in faint
 ## engraved capitals. Drag it onto anything that takes it (another slot, a party chip, the stash, the pack); hover for
-## its card, click to pick it, right-click for its menu, double-click for its first action. The screen gives it what a
-## drag carries and what it takes; the tile only draws and passes events on.
+## its card, click to pick it, right-click for its menu, double-click for its first action. On a pad (PadNav) focus
+## picks it, A is the double-click and X the right-click. The screen gives it what a drag carries and what it takes;
+## the tile only draws and passes events on.
 
 signal picked
 signal activated
@@ -42,6 +43,9 @@ static func make(side: Vector2) -> ItemTile:
 
 
 func _ready() -> void:
+	focus_entered.connect(func() -> void:
+		if PadNav.active():
+			picked.emit())
 	mouse_entered.connect(func() -> void:
 		_hover = true
 		queue_redraw())
@@ -61,6 +65,17 @@ func _notification(what: int) -> void:
 
 func _make_custom_tooltip(_for_text: String) -> Object:
 	return tip.call() as Control if tip.is_valid() else null
+
+
+## The pad's A (PadNav): the double-click's first action.
+func pad_accept() -> void:
+	if not payload.is_empty():
+		activated.emit()
+
+
+## What the pad's X opens here, for the prompt bar ("" for an empty slot).
+func pad_menu_name() -> String:
+	return "" if payload.is_empty() else "Item menu"
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -227,6 +242,9 @@ class Row extends PanelContainer:
 
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_STOP
+		focus_entered.connect(func() -> void:
+			if PadNav.active():
+				picked.emit())
 		mouse_entered.connect(func() -> void:
 			_hover = true
 			_restyle())
@@ -256,6 +274,13 @@ class Row extends PanelContainer:
 
 	func _make_custom_tooltip(_for_text: String) -> Object:
 		return tip.call() as Control if tip.is_valid() else null
+
+	func pad_accept() -> void:
+		if not payload.is_empty():
+			activated.emit()
+
+	func pad_menu_name() -> String:
+		return "" if payload.is_empty() else "Item menu"
 
 	func _gui_input(event: InputEvent) -> void:
 		var mb := event as InputEventMouseButton

@@ -335,3 +335,49 @@ func test_the_pause_menu_on_a_pad() -> void:
 	assert_eq(closed, 1, "B closes it")
 	menu.queue_free()
 	await _frames(1)
+
+
+func test_typing_with_the_on_screen_keyboard() -> void:
+	var field := LineEdit.new()
+	field.position = Vector2(400, 600)
+	field.size = Vector2(300, 40)
+	field.placeholder_text = "Name"
+	screen.add_child(field)
+	var submitted: Array[String] = []
+	field.text_submitted.connect(func(t: String) -> void: submitted.append(t))
+	await _frames(1)
+	await _press(JOY_BUTTON_DPAD_DOWN)
+	nav.focus_on(field)
+	await _frames(1)
+	await _press(JOY_BUTTON_A)
+	await _frames(1)
+	var boards := get_tree().root.find_children("*", "PadKeyboard", false, false)
+	assert_eq(boards.size(), 1, "A on a text field opens the keyboard")
+	if boards.size() != 1:
+		return
+	var board := boards[0] as PadKeyboard
+	assert_eq(nav.scope_now(), board, "in front, with focus")
+	assert_eq(str(_focus().get_meta(&"letter", "")), "q", "on the letters")
+	await _press(JOY_BUTTON_A)
+	await _press(JOY_BUTTON_DPAD_RIGHT)
+	await _press(JOY_BUTTON_A)
+	await _press(JOY_BUTTON_Y)
+	await _press(JOY_BUTTON_X)
+	await _press(JOY_BUTTON_X)
+	assert_eq(board.text, "Q", "A types (a capital first), Y a space, X deletes")
+	await _press(JOY_BUTTON_START)
+	await _frames(1)
+	assert_eq(field.text, "Q", "Start puts it in the field")
+	assert_eq(submitted, ["Q"], "as if Enter were pressed there")
+	assert_false(is_instance_valid(board) and board.is_inside_tree(), "and the keyboard goes")
+	await _press(JOY_BUTTON_A)
+	await _frames(1)
+	boards = get_tree().root.find_children("*", "PadKeyboard", false, false)
+	assert_eq(boards.size(), 1, "again")
+	await _press(JOY_BUTTON_A)
+	await _press(JOY_BUTTON_B)
+	await _frames(1)
+	assert_eq(field.text, "Q", "B leaves the field as it was")
+	assert_true(get_tree().root.find_children("*", "PadKeyboard", false, false).filter(
+		func(n: Node) -> bool: return not n.is_queued_for_deletion()).is_empty(), "and closes it")
+	assert_eq(closed, 0, "without closing the screen under it")

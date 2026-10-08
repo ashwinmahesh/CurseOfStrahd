@@ -76,6 +76,32 @@ func _gui_input(event: InputEvent) -> void:
 				cell_clicked.emit(c, mb.button_index)
 
 
+## The pad (PadNav): on an editable map the D-pad moves a square cursor (leaving the map at its edge), A clicks the
+## square and X right-clicks it.
+func pad_move(dir: Vector2i) -> bool:
+	if not editable or grid == null:
+		return false
+	var c := hover if hover.x >= 0 else Vector2i(grid.width / 2, grid.depth / 2)
+	if hover.x >= 0:
+		c += dir
+	if not grid.in_bounds(c):
+		return false
+	hover = c
+	cell_hovered.emit(c)
+	queue_redraw()
+	return true
+
+
+func pad_accept() -> void:
+	if editable and hover.x >= 0:
+		cell_clicked.emit(hover, MOUSE_BUTTON_LEFT)
+
+
+func pad_context() -> void:
+	if editable and hover.x >= 0:
+		cell_clicked.emit(hover, MOUSE_BUTTON_RIGHT)
+
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_MOUSE_EXIT and hover.x >= 0:
 		hover = Vector2i(-1, -1)

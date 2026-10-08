@@ -739,6 +739,8 @@ static func party_chips(party: Array[Character], index: int, on_pick: Callable) 
 	strip.add_theme_constant_override("separation", 8)
 	for i in party.size():
 		strip.add_child(chip(party[i], i == index, func() -> void: on_pick.call(i)))
+	# The pad's LT/RT pick the previous or next (PadNav).
+	strip.set_meta(&"pad_characters", func(step: int) -> void: on_pick.call(posmod(index + step, party.size())))
 	return strip
 
 
@@ -761,6 +763,9 @@ static func tab_strip(names: Array[String], current: String, on_pick: Callable, 
 			s.bg_color = Color(Look.color("ui_black"), 0.95)
 		b.add_theme_stylebox_override("normal", s)
 		strip.add_child(b)
+	# The pad's LB/RB step to the previous or next tab (PadNav).
+	strip.set_meta(&"pad_tabs", func(step: int) -> void:
+		on_pick.call(names[posmod(names.find(current) + step, names.size())]))
 	return strip
 
 
