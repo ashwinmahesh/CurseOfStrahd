@@ -1,0 +1,67 @@
+{
+  "id": "lighter_than_it_should_be",
+  "name": "Lighter Than It Should Be",
+  "summary": "Somebody leaves carved toys on the five Krezkov graves at the Pool of the White Sun every night. Nobody in Krezk carves like that.",
+  "giver": "anna_krezkova",
+  "region": "krezk",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Krezk's watchman says there are carved toys on the Krezkov children's graves at the Pool of the White Sun every morning. Dmitri calls it mockery and smashes them. Anna keeps them.",
+      "objectives": [
+        "Look at the Krezkov graves by the pool"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "toys",
+      "journal": "A wooden horse, a wolf, a little sun with too many rays: carved crude and sharp, as if with teeth. Most of them are on the eldest child's stone. Old Pavel, who carves suns for the shrine, swears they aren't his.",
+      "objectives": [
+        "Watch the Krezkov graves after midnight"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "seen",
+      "journal": "After midnight a hunched figure came over the north wall from the abbey road with a carved wolf in his hand: goat-legged, too big, with a boy's eyes. He knelt at the eldest Krezkov's stone and sang the lullaby Anna sings through her shutters, in Anna's own voice.",
+      "objectives": [
+        "Find out who he is"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "sorin_known",
+      "journal": "He is Sorin Krezkov, Dmitri and Anna's first son. Twenty years ago Anna carried him up the mountain with the fever, against Dmitri's wishes, and the Abbot sent down a nailed coffin. It was lighter than it should have been. He has been improving Sorin ever since. Dmitri calls Ilya his last son.",
+      "objectives": [
+        "Bring Sorin home to the Krezkovs"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "pursued",
+      "journal": "The abbey came for its stray: Belview Brutes, and two brides the Abbot made before Vasilka, down the switchback with lanterns. We stopped them among the graves.",
+      "objectives": [
+        "Bring Sorin home to the Krezkovs"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "home",
+      "journal": "Sorin Krezkov is home. Anna knew him before he'd finished his first word. Dmitri needed longer, and then he didn't need any time at all. Ilya has a brother who carves wolves.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "pool",
+      "journal": "Sorin stays at the Pool of the White Sun with Kasha Varo, who says she's needed a groundskeeper for forty years. Anna visits on Tuesdays, and on every other day too.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "mountain",
+      "journal": "Sorin went back up the mountain. Dmitri couldn't look at him, and Sorin understood that better than we did. The toys still come, some mornings.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

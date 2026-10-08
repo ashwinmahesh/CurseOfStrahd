@@ -181,6 +181,18 @@
       "label": "a scroll under the candle stubs",
       "model": "scattered_notes",
       "item": "scroll_of_protection_undead"
+    },
+    {
+      "id": "krezkov_toys",
+      "cell": [
+        16,
+        12
+      ],
+      "kind": "examine",
+      "label": "Carved toys on the Krezkov stones",
+      "model": "toy_chest",
+      "dialogue": "krezk/lighter_than_it_should_be:toys",
+      "when": "quest.lighter_than_it_should_be"
     }
   ],
   "lights": [
@@ -220,6 +232,37 @@
         12
       ],
       "dialogue": "krezk/kasha:start"
+    },
+    {
+      "npc": "sorin_krezkov",
+      "cell": [
+        19,
+        12
+      ],
+      "dialogue": "krezk/lighter_than_it_should_be:sorin",
+      "facing": "south",
+      "approach": 7,
+      "when": "night and flag.sorin_vigil and not flag.sorin_seen"
+    },
+    {
+      "npc": "sorin_krezkov",
+      "cell": [
+        19,
+        12
+      ],
+      "dialogue": "krezk/lighter_than_it_should_be:sorin_after",
+      "facing": "south",
+      "when": "flag.sorin_known and not flag.sorin_brought and (flag.sorin_pursuers_beaten or flag.abbot_fate)"
+    },
+    {
+      "npc": "sorin_krezkov",
+      "cell": [
+        11,
+        13
+      ],
+      "dialogue": "krezk/lighter_than_it_should_be:sorin_pool",
+      "facing": "north",
+      "when": "flag.sorin_fate == \"pool\""
     }
   ],
   "narration": {
@@ -230,5 +273,245 @@
     "krezk_pool_of_the_white_sun": {
       "dialogue": "krezk/pool:the_pool"
     }
-  }
+  },
+  "encounters": [
+    {
+      "id": "sorin_pursuers",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "They come over the north wall in a bunch, lanterns swinging: the Abbot's Brutes, hairy and patched, and behind them tall shapes in rotted wedding white, stitched to walk. They have come to fetch a stray home.",
+      "monsters": [
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            6,
+            1
+          ],
+          "name": "A Bride Before Vasilka"
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            18,
+            1
+          ],
+          "name": "A Bride Before Vasilka"
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            12,
+            1
+          ],
+          "name": "A Bride Before Vasilka"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            3,
+            3
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            20,
+            3
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            16,
+            3
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            9,
+            2
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            13,
+            2
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            21,
+            10
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            1,
+            11
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "sorin_pursuers_beaten",
+      "quest": {
+        "id": "lighter_than_it_should_be",
+        "stage": "pursued"
+      }
+    },
+    {
+      "id": "sorin_pursuers",
+      "trigger": "dialogue",
+      "when": "level >= 7",
+      "text": "They come over the north wall in a bunch, lanterns swinging: the Abbot's Brutes, hairy and patched, and behind them tall shapes in rotted wedding white, stitched to walk. They have come to fetch a stray home.",
+      "monsters": [
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            6,
+            1
+          ],
+          "name": "A Bride Before Vasilka"
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            18,
+            1
+          ],
+          "name": "A Bride Before Vasilka"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            3,
+            3
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            20,
+            3
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            16,
+            3
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            9,
+            2
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            13,
+            2
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            21,
+            10
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            1,
+            11
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "sorin_pursuers_beaten",
+      "quest": {
+        "id": "lighter_than_it_should_be",
+        "stage": "pursued"
+      }
+    },
+    {
+      "id": "sorin_pursuers",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "They come over the north wall in a bunch, lanterns swinging: the Abbot's Brutes, hairy and patched, and behind them tall shapes in rotted wedding white, stitched to walk. They have come to fetch a stray home.",
+      "monsters": [
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            12,
+            1
+          ],
+          "name": "A Bride Before Vasilka"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            3,
+            3
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            20,
+            3
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            9,
+            2
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            13,
+            2
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            21,
+            10
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            1,
+            11
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "sorin_pursuers_beaten",
+      "quest": {
+        "id": "lighter_than_it_should_be",
+        "stage": "pursued"
+      }
+    }
+  ]
 }
