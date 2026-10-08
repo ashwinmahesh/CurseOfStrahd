@@ -50,7 +50,7 @@ static func offered(st: StoryState, npc_id: String) -> Array[Dictionary]:
 		line["scroll"] = bool(s.get("scroll", false))
 		if kind.has("each"):
 			line["each"] = Trade.buy_price(st, npc_id, float(s.get("price", kind["each"])))
-			line["price"] = snappedf(float(line["each"]) * st.party.size(), 0.01)
+			line["price"] = float(line["each"]) * st.party.size()
 		else:
 			line["price"] = Trade.buy_price(st, npc_id, float(s.get("price", kind["price"])))
 		line["material"] = float(kind.get("material", 0.0))

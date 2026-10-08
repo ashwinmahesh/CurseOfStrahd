@@ -12,28 +12,28 @@ cutscene strahd_rides
 Narrator: Hoofbeats, unhurried, out of the fog ahead. A black horse with eyes like banked coals comes down the road at a walk, and the man riding it does not need to be introduced.
 if flag.strahd_met
 if flag.strahd_first_impression == "defiant"
-Strahd [smile]: My guests, on my road. The ones who told me no across a graveside. I have thought about it often. It was refreshing.
+Strahd [smile]: My guests, on my road. The ones who told me no across a graveside. I have thought about it every night since. I think about very little else.
 elif flag.strahd_first_impression == "courteous"
-Strahd: My guests, on my road, and still so well mannered. I did hope the village would not cure you of it.
+Strahd: My guests, on my road, and still so well mannered. Good. Polite guests are the easiest to keep.
 elif flag.strahd_first_impression == "violent"
-Strahd [smile]: Ah. The ones who drew steel at a funeral. I keep the memory the way one keeps a pressed flower.
+Strahd [smile]: Ah. The ones who drew steel at a funeral. I keep the memory the way one keeps a pressed flower, or a debt.
 else
 Strahd: My quiet guests. You said nothing at the graveside. Let us see whether the road has loosened your tongues.
 endif
 else
-Strahd: Good evening. You will be the guests my wolves keep telling me about. I am Strahd von Zarovich. This is my road. I do hope you are enjoying it.
+Strahd: Good evening. You will be the guests my wolves keep telling me about. I am Strahd von Zarovich. This is my road, those are my wolves in the trees, and the mist behind you is mine as well. Do enjoy the walk.
 endif
 set strahd_met
 if guest:ireena
-Strahd: Ireena. The road suits you; the cold puts colour in your face. Are they treating you well?
-Ireena [angry]: Better than you would.
-Strahd [smile]: That is not a high bar, I grant you. I am working on it.
+Strahd: Ireena. They have you walking in the mud like a pedlar's wife. Let them. Every road in this valley ends at my door. I had them laid that way.
+Ireena [angry]: I'd sooner walk off a cliff.
+Strahd: You did, once. It changed nothing.
 endif
 if tarokka.drawn
-Strahd: You have been to see the old woman at the pool. She always did love an audience. Did she tell you where to dig?
+Strahd: You have been to see the old woman at the pool. Did she tell you where to dig? Dig, by all means. I have outlived everyone who found something.
 endif
 if flag.doru_freed
-Strahd: And my thanks for the boy from under the church. He arrived hungry and grateful. Such a rare combination.
+Strahd: And my thanks for the boy from under the church. He came home to me starving, so I let him have the first family he passed on the road. He was very grateful.
 endif
 if flag.tser_pool_brawl_won
 Strahd: You quarrelled with the Vistani. A pity. They are so useful, and so easily frightened.
@@ -49,21 +49,21 @@ endif
 
 ~ s_defiant
 set strahd_road_encounter = "defiant"
-Strahd [smile]: Off my road. In my land. Under my sky. You have a gift for comedy. Good evening.
-Narrator: He rides on through the middle of you. The black horse never breaks its walk, and you find you have stepped aside without meaning to.
+Strahd [smile]: Off my road. In my land. Under my sky. Let me show you whose road it is.
+Narrator: He rides on through the middle of you. The black horse never breaks its walk, and you find you have stepped aside without meaning to. The one who spoke has a thin cut across one cheek, neat as a quill stroke, and never saw the hand.
 approve thistle +2 godrick_pendlebrook +1 kip_smudgewick -1: You told Strahd to get off the road
 -> END
 
 ~ s_courteous
 set strahd_road_encounter = "courteous"
-Strahd: There. You see? Civilisation survives, even here. We will dine together, one evening. I insist.
+Strahd: There. Civilised. We will dine together, one evening. I insist, and I am not used to being refused.
 Narrator: He touches two fingers to his brow and rides on into the fog, and the fog closes behind him like a curtain.
 approve liriel_dawnsong +1 kip_smudgewick +1 thistle -1 wren_featherfoot -1: You returned Strahd's courtesy on the road
 -> END
 
 ~ s_shield
 set strahd_road_encounter = "shield"
-Strahd: How gallant. She hardly needs you there; she can refuse me perfectly well on her own. She has been doing it for centuries.
+Strahd: How gallant. She hardly needs you; she has been refusing me on her own for centuries. It has never once saved anyone who stood where you are standing.
 Ireena: What does that mean?
 Strahd [smile]: Ask the old woman at the pool. Or ask me, over dinner. Good evening, Ireena.
 approve godrick_pendlebrook +3 liriel_dawnsong +1 thistle +1 wren_featherfoot +1: You stepped between Strahd and Ireena
@@ -79,7 +79,7 @@ approve thistle +1 kip_smudgewick -2 ratatoille -1: You drew on Strahd on the op
 
 ~ s_silent
 set strahd_road_encounter = "silent"
-Strahd: Silence. How restful. Keep it; I have a great deal of my own.
+Strahd: Silence. Keep it. It will be all you have left, in the end.
 Narrator: He rides on. Long after the hoofbeats fade, nobody wants to be the first to speak.
 -> END
 
