@@ -309,3 +309,31 @@ func test_any_party_member_can_cast_a_spell_into_a_ring_of_spell_storing() -> vo
 	for o2 in full:
 		if str(o2["power_id"]) == "store":
 			assert_false(bool(o2["legal"]), "a full ring takes nothing more")
+
+
+## An item power that changes its user's shape is still paid for (QA FN-08): a wizard who reads a Spell Scroll of
+## Polymorph on herself is a beast by the time the scroll is used up, and the scroll stayed (with a SCRIPT ERROR); a
+## Wand of Polymorph's charge comes off the same way.
+func test_an_item_that_polymorphs_its_user_is_still_used_up() -> void:
+	var e := TestCombat.open_field()
+	var c := TestCombat.high_caster(e, [], Vector2i(2, 2))
+	TestCombat.punching_bag(e, Vector2i(8, 2))
+	var ch := c.creature as Character
+	ch.add_item("spell_scroll__polymorph")
+	TestCombat.start_with(e, c)
+	var r := e.items.use(c, "spell_scroll__polymorph", "read", [c])
+	assert_true(r.ok, r.reason)
+	assert_true(e.shapes.is_shaped(c), "a beast now")
+	assert_true(ch.entry_of("spell_scroll__polymorph").is_empty(), "the scroll is used up")
+	var e2 := TestCombat.open_field()
+	var c2 := TestCombat.high_caster(e2, [], Vector2i(2, 2))
+	TestCombat.punching_bag(e2, Vector2i(8, 2))
+	var ch2 := c2.creature as Character
+	ch2.add_item("wand_of_polymorph")
+	ch2.attune("wand_of_polymorph")
+	ch2.equip("wand_of_polymorph", "main_hand")
+	var charges := int(ch2.entry_of("wand_of_polymorph").get("charges", 0))
+	TestCombat.start_with(e2, c2)
+	var r2 := e2.items.use(c2, "wand_of_polymorph", "polymorph", [c2])
+	assert_true(r2.ok, r2.reason)
+	assert_eq(int(ch2.entry_of("wand_of_polymorph").get("charges", 0)), charges - 1, "a charge spent")
