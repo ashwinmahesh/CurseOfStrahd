@@ -1,0 +1,18 @@
+{
+  "id": "wine_washer",
+  "name": "Tereza",
+  "title": "Of the Martikov Camp",
+  "summary": "A winery hand from Vallaki who followed the Martikovs into the woods rather than go home, and keeps the camp's washing and the camp's tempers in order.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "wizard_of_wines"
+  ],
+  "region": "wizard_of_wines",
+  "pronouns": "she/her"
+}

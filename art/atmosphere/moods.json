@@ -22,7 +22,8 @@
     "castle_ravenloft_chapel": "ravenloft_chapel",
     "village_of_barovia": "barovia_village_lived",
     "vallaki": "vallaki_festival",
-    "krezk": "krezk_town"
+    "krezk": "krezk_town",
+    "wizard_of_wines": "winery_grounds"
   },
   "prefixes": {
     "castle_ravenloft_court": "ravenloft_court",
@@ -1481,6 +1482,31 @@
           "to": [
             15.4,
             28.5
+          ]
+        }
+      ]
+    },
+    "winery_grounds": {
+      "like": "wizard_of_wines",
+      "lines": [
+        {
+          "from": [
+            1.4,
+            26.3
+          ],
+          "to": [
+            4.6,
+            26.3
+          ]
+        },
+        {
+          "from": [
+            1.4,
+            31.0
+          ],
+          "to": [
+            11.6,
+            31.0
           ]
         }
       ]

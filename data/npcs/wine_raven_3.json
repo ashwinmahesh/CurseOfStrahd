@@ -1,0 +1,18 @@
+{
+  "id": "wine_raven_3",
+  "name": "A Raven",
+  "title": "Of the Wizard of Wines",
+  "summary": "A big raven that watches everything you do with one eye and then the other.",
+  "portrait": "raven",
+  "sprite": "raven",
+  "attitude": "indifferent",
+  "monster": "raven",
+  "guest": false,
+  "tags": [
+    "animal",
+    "wizard_of_wines"
+  ],
+  "region": "wizard_of_wines",
+  "pronouns": "it/its",
+  "pockets": false
+}

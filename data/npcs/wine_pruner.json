@@ -1,0 +1,18 @@
+{
+  "id": "wine_pruner",
+  "name": "Ovidiu",
+  "title": "Vine-Dresser of the Wizard of Wines",
+  "summary": "A vine-dresser cutting the dead wood out of the withered rows, one vine at a time, and talking to the ones that might live.",
+  "portrait": "villager",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "wizard_of_wines"
+  ],
+  "region": "wizard_of_wines",
+  "pronouns": "he/him"
+}

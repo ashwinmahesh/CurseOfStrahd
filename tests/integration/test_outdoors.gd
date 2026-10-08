@@ -334,6 +334,37 @@ func test_the_vistani_camps_are_lived_in() -> void:
 	c.queue_free()
 
 
+## The Wizard of Wines lived in (lane 28): while the winery is lost the Martikovs' camp keeps a watch on a platform, a
+## washerwoman and a woodsplitter; once it is theirs again, hands work the vines and the casks. Ravens watch either way,
+## and the vineyard climbs in terraces from the camp to the yard.
+func test_the_wizard_of_wines_is_lived_in() -> void:
+	GameState.story.minute_of_day = 11 * 60
+	GameState.story.set_flag("vineyard_cleared")
+	var v := _view("wizard_of_wines")
+	await _frames(2)
+	var here: Array[String] = []
+	for s: Variant in v.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	for id: String in ["wine_watch", "wine_washer", "wine_woodsplitter", "wine_raven_1", "wine_raven_2", "wine_raven_3"]:
+		assert_true(id in here, "%s is about while the family is in the woods" % id)
+	assert_false("wine_cooper" in here, "the cooper waits until the winery is theirs")
+	var yard := v.grid.height(Vector2i(22, 10))
+	var rows := v.grid.height(Vector2i(22, 20))
+	var foot := v.grid.height(Vector2i(22, 29))
+	assert_true(yard > rows and rows > foot, "the vineyard climbs from the lane's foot to the yard")
+	assert_true(v.grid.height(Vector2i(13, 29)) > v.grid.height(Vector2i(12, 29)), "the camp's watch platform")
+	v.queue_free()
+	await _frames(1)
+	GameState.story.set_flag("winery_reclaimed")
+	var h := _view("wizard_of_wines")
+	await _frames(2)
+	here.clear()
+	for s: Variant in h.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	for id: String in ["wine_pruner", "wine_picker", "wine_cooper"]:
+		assert_true(id in here, "%s is at work once the family is home" % id)
+	assert_false("wine_watch" in here, "no watch needed at home")
+	h.queue_free()
 ## Houses stand on the town's ground (lane 28, 2026-10-08: on natural ground Vallaki's houses and St. Andral's were
 ## buried to the eaves): each building's base is within a step of the open ground at its walls.
 func test_houses_stand_on_raised_ground() -> void:

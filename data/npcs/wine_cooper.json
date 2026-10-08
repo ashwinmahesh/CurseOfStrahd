@@ -1,0 +1,18 @@
+{
+  "id": "wine_cooper",
+  "name": "Old Silviu",
+  "title": "Cooper of the Wizard of Wines",
+  "summary": "The winery's old cooper, back at his casks in the yard, tightening hoops that nobody has tightened since the druids came.",
+  "portrait": "scout",
+  "sprite": "scout",
+  "attitude": "indifferent",
+  "monster": "scout",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "wizard_of_wines"
+  ],
+  "region": "wizard_of_wines",
+  "pronouns": "he/him"
+}
