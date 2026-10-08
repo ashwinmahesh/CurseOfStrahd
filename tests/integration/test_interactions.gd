@@ -191,6 +191,38 @@ func test_a_locked_chest_says_locked_too() -> void:
 	assert_true("pick" in ids, str(ids))
 
 
+## The church's undercroft door (owner report 2026-10-08): barred, with no key. Until Father Donavich lifts the bar it
+## can be picked or forced like any lock; once he has, it opens at a click (it used to say it wouldn't budge, with no
+## way in at all).
+func test_the_church_undercroft_door_opens_once_the_bar_is_lifted() -> void:
+	root.queue_free()
+	await _frames(1)
+	GameState.story.location = "village_church"
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	await _frames(3)
+	for i in 20:   # past the church's opening narration
+		var d := root.get("dialogue") as DialogueUI
+		if d == null:
+			break
+		d.call("_advance")
+		await _frames(1)
+	var v := _view()
+	var cell := Vector2i(18, 4)
+	var ids := _ids(v.actions_at(cell)["actions"] as Array)
+	assert_true("pick" in ids and "force" in ids, "barred, it can be picked or forced: %s" % [ids])
+	GameState.story.set_flag("undercroft_unbarred")
+	var menu := v.actions_at(cell)["actions"] as Array
+	assert_eq(_ids(menu), ["open", "look"] as Array[String], "with the bar lifted it's a door")
+	assert_true(bool((menu[0] as Dictionary).get("enabled", true)), "that opens")
+	# What a click does on reaching it (the walk across the nave is left out).
+	v.interact(v.thing_at(cell))
+	await _frames(1)
+	assert_eq(str((GameState.story.loc_state("village_church")["doors"] as Dictionary).get("undercroft_door", "")),
+		LocationView.DOOR_OPEN, "using it opens it")
+	assert_false(v.grid.has_flag(cell, CombatGrid.WALL), "and the way down is clear")
+
+
 # --- Popups ---------------------------------------------------------------------------------------
 
 func _open_portrait() -> DialogueUI:
