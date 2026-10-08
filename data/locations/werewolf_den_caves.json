@@ -53,7 +53,8 @@
           24,
           28
         ]
-      ]
+      ],
+      "furnish": "den"
     },
     {
       "id": "den_passage",
@@ -82,7 +83,8 @@
           18
         ]
       ],
-      "light": "dim"
+      "light": "dim",
+      "furnish": "den"
     },
     {
       "id": "den_emil_alcove",
@@ -328,6 +330,116 @@
       "label": "a flask in the drying herbs",
       "model": "satchel",
       "item": "elixir_of_health"
+    },
+    {
+      "id": "kiril_fur_bed",
+      "cell": [
+        16,
+        2
+      ],
+      "label": "A bed of good furs",
+      "model": "bedroll",
+      "kind": "decor"
+    },
+    {
+      "id": "emil_chains_north",
+      "cell": [
+        1,
+        11
+      ],
+      "label": "Chains bolted to the rock",
+      "model": "wall_chains",
+      "kind": "decor"
+    },
+    {
+      "id": "emil_chains_south",
+      "cell": [
+        1,
+        15
+      ],
+      "label": "Chains bolted to the rock",
+      "model": "wall_chains",
+      "kind": "decor"
+    },
+    {
+      "id": "zuleika_bed",
+      "cell": [
+        31,
+        2
+      ],
+      "label": "A real bed",
+      "model": "bed_small",
+      "kind": "decor"
+    },
+    {
+      "id": "shrine_candles_1",
+      "cell": [
+        37,
+        11
+      ],
+      "label": "Candle stubs",
+      "model": "candle_cluster",
+      "kind": "decor"
+    },
+    {
+      "id": "shrine_candles_2",
+      "cell": [
+        37,
+        15
+      ],
+      "label": "Candle stubs",
+      "model": "candle_cluster",
+      "kind": "decor"
+    },
+    {
+      "id": "shrine_candles_3",
+      "cell": [
+        34,
+        15
+      ],
+      "label": "Candle stubs",
+      "model": "candle_cluster",
+      "kind": "decor"
+    },
+    {
+      "id": "pen_straw_1",
+      "cell": [
+        3,
+        5
+      ],
+      "label": "Straw",
+      "model": "straw",
+      "kind": "decor"
+    },
+    {
+      "id": "pen_straw_2",
+      "cell": [
+        7,
+        3
+      ],
+      "label": "Straw",
+      "model": "straw",
+      "kind": "decor"
+    },
+    {
+      "id": "den_tally_1",
+      "cell": [
+        31,
+        10
+      ],
+      "label": "A long scratched tally on the rock",
+      "model": "claw_marks",
+      "kind": "decor"
+    },
+    {
+      "id": "den_tally_2",
+      "cell": [
+        31,
+        15
+      ],
+      "label": "A long scratched tally on the rock",
+      "model": "claw_marks",
+      "kind": "decor"
     }
   ],
   "containers": [

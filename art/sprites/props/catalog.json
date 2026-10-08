@@ -969,7 +969,8 @@
     },
     "werewolf_den_caves": {
       "floor": "cave/rock_floor",
-      "wall": "cave/rock_wall"
+      "wall": "cave/rock_wall",
+      "keep": true
     },
     "wizard_of_wines_cellar": {
       "wall": "dungeon/damp_brick"
@@ -993,7 +994,9 @@
       "floor": "interior/kitchen_flags"
     },
     "mount_baratok_hut": {
-      "wall": "interior/wood_panel"
+      "wall": "dungeon/stone_wall",
+      "floor": "dungeon/stone_floor",
+      "keep": true
     },
     "castle_ravenloft_main_floor": {
       "floor": "castle/flagstones",
@@ -1264,7 +1267,9 @@
     "weapon_rack": 9.0,
     "holy_water_crate": 2.3,
     "stake_bundle": 3.5,
-    "map_table": 4.0
+    "map_table": 4.0,
+    "charred_furniture": 2.2,
+    "slate_stack": 1.5
   },
   "big_width": 1.6,
   "models3d": {
@@ -1654,7 +1659,12 @@
       "holy_water_crate": "holy_water_crate",
       "stake_bundle": "stake_bundle",
       "map_table": "map_table",
-      "nail_spiral": "nail_spiral"
+      "nail_spiral": "nail_spiral",
+      "fallen_beam": "fallen_beam",
+      "charred_furniture": "charred_furniture",
+      "ash_heap": "ash_heap",
+      "slate_stack": "slate_stack",
+      "cloak_pegs": "cloak_pegs"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",
@@ -3954,7 +3964,7 @@
     }
   },
   "furnish": {
-    "about": "Lived-in rooms (world/look/furnish.gd, docs/art/interiors.md): what a room of its kind holds, besides the things its location names. rooms: [[words in the area's name, else its id], {wall, floor, centre: [art], rug: surface}], first match; themes: the board theme's set where no room matches. A wall piece goes on about `wall_fill` of the free wall faces, a floor piece on about `floor_fill` of the free squares along a wall (never in a passage one square wide), a low thing on about `centre_fill` of the open floor (never two side by side), a rug under the middle of a room whose rule names one; never beside doors, exits, spawns, lights or people, nor on a wall square holding the location's own things. Pieces in `lit` (lanterns, candles) give a little light, at most `lights_per_room` in a room.",
+    "about": "Lived-in rooms (world/look/furnish.gd, docs/art/interiors.md): what a room of its kind holds, besides the things its location names. rooms: [[words in the area's name, else its id], {wall, floor, centre: [art], rug: surface}], first match; themes: the board theme's set where no room matches. A wall piece goes on about `wall_fill` of the free wall faces, a floor piece on about `floor_fill` of the free squares along a wall (never in a passage one square wide), a low thing on about `centre_fill` of the open floor (never two side by side), a rug under the middle of a room whose rule names one; never beside doors, exits, spawns, lights or people, nor on a wall square holding the location's own things. Pieces in `lit` (lanterns, candles) give a little light, at most `lights_per_room` in a room. sets: named sets an area picks with `furnish: \"<set>\"` instead of its kind (a burned hall's debris); a rule or set may give its own wall_fill, floor_fill and centre_fill.",
     "rooms": [
       [
         [
@@ -4644,7 +4654,91 @@
       "candle_cluster",
       "lantern_stand",
       "candelabra"
-    ]
+    ],
+    "sets": {
+      "burned": {
+        "floor": [
+          "fallen_beam",
+          "charred_furniture",
+          "ash_heap",
+          "rubble",
+          "fallen_beam",
+          "ash_heap"
+        ],
+        "centre": [
+          "ash_heap",
+          "fallen_beam",
+          "charred_furniture",
+          "rubble"
+        ],
+        "floor_fill": 0.75,
+        "centre_fill": 0.5
+      },
+      "burned_gallery": {
+        "floor": [
+          "fallen_frames",
+          "fallen_beam",
+          "ash_heap",
+          "fallen_frames",
+          "rubble"
+        ],
+        "centre": [
+          "fallen_frames",
+          "ash_heap",
+          "fallen_beam"
+        ],
+        "floor_fill": 0.75,
+        "centre_fill": 0.5
+      },
+      "den": {
+        "floor": [
+          "straw",
+          "straw_pallet",
+          "bones",
+          "rug_wolf",
+          "straw"
+        ],
+        "centre": [
+          "straw",
+          "bones"
+        ],
+        "floor_fill": 0.7,
+        "centre_fill": 0.35
+      },
+      "library_bare": {
+        "wall": [
+          "painting",
+          "painting_row",
+          "family_portrait",
+          "lantern_bracket"
+        ],
+        "floor": [
+          "book_stack",
+          "table_books",
+          "candelabra",
+          "book_stack"
+        ],
+        "centre": [
+          "table_books",
+          "floor_books",
+          "armchair"
+        ]
+      },
+      "tended_vault": {
+        "floor": [
+          "candle_cluster",
+          "leaves",
+          "candelabra",
+          "leaves"
+        ],
+        "centre": [
+          "leaves",
+          "candle_cluster"
+        ],
+        "floor_fill": 0.6,
+        "centre_fill": 0.35
+      }
+    }
   },
   "theme_rooms": {
     "about": "Room styles for one board theme, checked before the general `rooms`: a farmhouse's bedrooms are plaster and planks, not a manor's carpet and wallpaper.",
@@ -5004,6 +5098,20 @@
         ],
         "run": [
           "wine_vat"
+        ]
+      }
+    ],
+    [
+      [
+        "the pen",
+        "den children"
+      ],
+      {
+        "single": [
+          "straw_pallet"
+        ],
+        "run": [
+          "straw_pallet"
         ]
       }
     ]

@@ -7817,6 +7817,100 @@
       ],
       "triangles": 3120,
       "big": true
+    },
+    "fallen_beam": {
+      "file": "art/models/fallen_beam.glb",
+      "mount": "free",
+      "stands_for": [
+        "fallen_beam"
+      ],
+      "size": [
+        1.031,
+        0.214,
+        0.926
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_night_deep",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 176,
+      "turns": true
+    },
+    "charred_furniture": {
+      "file": "art/models/charred_furniture.glb",
+      "mount": "free",
+      "stands_for": [
+        "charred_furniture"
+      ],
+      "size": [
+        0.82,
+        0.33,
+        0.994
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_ink",
+        "pal_night_deep"
+      ],
+      "triangles": 192,
+      "turns": true
+    },
+    "ash_heap": {
+      "file": "art/models/ash_heap.glb",
+      "mount": "free",
+      "stands_for": [
+        "ash_heap"
+      ],
+      "size": [
+        0.665,
+        0.134,
+        0.681
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_ink"
+      ],
+      "triangles": 228,
+      "turns": true
+    },
+    "slate_stack": {
+      "file": "art/models/slate_stack.glb",
+      "mount": "free",
+      "stands_for": [
+        "slate_stack"
+      ],
+      "size": [
+        0.511,
+        0.27,
+        0.548
+      ],
+      "materials": [
+        "pal_ivory",
+        "pal_pewter",
+        "pal_slate",
+        "pal_umber"
+      ],
+      "triangles": 272
+    },
+    "cloak_pegs": {
+      "file": "art/models/cloak_pegs.glb",
+      "mount": "wall",
+      "stands_for": [
+        "cloak_pegs"
+      ],
+      "size": [
+        0.86,
+        0.73,
+        0.098
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_slate",
+        "pal_walnut"
+      ],
+      "triangles": 132
     }
   }
 }

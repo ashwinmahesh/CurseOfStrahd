@@ -5854,6 +5854,61 @@
       "source": "art/generated/props/model_nail_spiral.png",
       "mount": "floor",
       "world_width": 2.846
+    },
+    "fallen_beam": {
+      "file": "art/sprites/props/fallen_beam.png",
+      "width_px": 516,
+      "height_px": 328,
+      "world_height": 0.5,
+      "pixel_size": 0.00155,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_fallen_beam.png",
+      "mount": "floor",
+      "world_width": 0.787
+    },
+    "charred_furniture": {
+      "file": "art/sprites/props/charred_furniture.png",
+      "width_px": 516,
+      "height_px": 316,
+      "world_height": 0.45,
+      "pixel_size": 0.00146,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_charred_furniture.png",
+      "mount": "stand",
+      "world_width": 0.735
+    },
+    "ash_heap": {
+      "file": "art/sprites/props/ash_heap.png",
+      "width_px": 516,
+      "height_px": 284,
+      "world_height": 0.3,
+      "pixel_size": 0.00108,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_ash_heap.png",
+      "mount": "floor",
+      "world_width": 0.545
+    },
+    "slate_stack": {
+      "file": "art/sprites/props/slate_stack.png",
+      "width_px": 500,
+      "height_px": 516,
+      "world_height": 0.3,
+      "pixel_size": 0.00059,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_slate_stack.png",
+      "mount": "stand",
+      "world_width": 0.291
+    },
+    "cloak_pegs": {
+      "file": "art/sprites/props/cloak_pegs.png",
+      "width_px": 420,
+      "height_px": 516,
+      "world_height": 0.75,
+      "pixel_size": 0.00146,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_cloak_pegs.png",
+      "mount": "wall",
+      "world_width": 0.61
     }
   }
 }
