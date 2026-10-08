@@ -19,20 +19,26 @@ project: *Curse of Strahd* and *Dungeons & Dragons* belong to Wizards of the Coa
 
 | | |
 |---|---|
-| ![Choosing the party: four pregenerated heroes or build your own](docs/screenshots/new_game.jpg) | ![Character creation, class step](docs/screenshots/creation_class.jpg) |
-| Pick the four pregenerated heroes, edit them, or build all four from scratch. | Character creation walks each hero through class, origin, scores and gear, with a live sheet beside it. |
-| ![The Village of Barovia with a right-click menu on Morgantha](docs/screenshots/explore_village_of_barovia.jpg) | ![Main street in Vallaki](docs/screenshots/explore_vallaki.jpg) |
-| The Village of Barovia. Right-click anyone or anything for what you can do with it. | Vallaki's main street, with the Narrator setting the scene. |
-| ![The road past the Tser Pool camp](docs/screenshots/explore_tser_pool.jpg) | ![The ground floor of the Death House](docs/screenshots/explore_death_house.jpg) |
-| The road past the Tser Pool camp, with signs for each way out. | The Death House, the campaign's opening dungeon. |
-| ![A fight with the dead in the village churchyard](docs/screenshots/combat_village.jpg) | ![Aiming Thunderwave, with a friendly fire warning](docs/screenshots/combat_spell.jpg) |
-| Fights start on the map you're exploring: turn order, party, hotbar and a log of every roll. | Area spells show who they'll catch, each target's chance to fail the save, and any ally in the blast. |
-| ![Hit odds on a wolf before the attack](docs/screenshots/combat_attack.jpg) | ![Hedda's character sheet, Spells tab](docs/screenshots/character_sheet.jpg) |
-| Hover an enemy to see the odds and the damage before you swing. | The character sheet. Hover any number to see how it was worked out. |
-| ![Madam Eva's Tarokka reading](docs/screenshots/dialogue_tarokka.jpg) | ![The Festival Herald in Vallaki](docs/screenshots/dialogue_vallaki.jpg) |
-| Madam Eva's Tarokka reading decides where the treasures, the ally and Strahd will be. | Conversations with portraits, voiced lines and skill checks that show who rolls and their chance. |
-| ![The travel map of Barovia](docs/screenshots/travel_map.jpg) | ![The pause menu](docs/screenshots/pause_menu.jpg) |
-| The travel map: hours on the road, the arrival time, and a warning when you'd travel after dark. | The pause menu: volume, quicksave, save slots and loading. |
+| ![The Village of Barovia at night](docs/screenshots/explore_village_of_barovia.jpg) | ![Vallaki's square on a festival day](docs/screenshots/explore_vallaki.jpg) |
+| The Village of Barovia at night, in the mist. | Vallaki's square on a festival day, its townsfolk about their routines. |
+| ![Rain over Vallaki at dusk](docs/screenshots/explore_vallaki_rain.jpg) | ![Snow in Krezk](docs/screenshots/explore_krezk.jpg) |
+| Rain over Vallaki at dusk: wet stone and lamplight. | Snow in Krezk, with footprints where the party has walked. |
+| ![The Vistani camp at Tser Pool](docs/screenshots/explore_tser_pool.jpg) | ![A candlelit hall in the Death House](docs/screenshots/explore_death_house.jpg) |
+| The Vistani camp at Tser Pool by firelight. | The Death House, its near walls cut away toward the camera. |
+| ![The gates of Castle Ravenloft in a storm](docs/screenshots/castle_gates.jpg) | ![Choosing four of the six companions](docs/screenshots/new_game.jpg) |
+| The gates of Castle Ravenloft in a storm. | A new game: four of the six companions travel, or make a hero of your own. |
+| ![A Fireball in the village square](docs/screenshots/combat_fireball.jpg) | ![Aiming a Fireball, with a friendly fire warning](docs/screenshots/combat_spell.jpg) |
+| A Fireball among the village's dead: fights start where you stand. | Area spells show who they'll catch, each target's chance to fail the save, and any ally in the blast. |
+| ![Hit odds before the attack](docs/screenshots/combat_attack.jpg) | ![Strahd's name plate and health bar](docs/screenshots/combat_boss.jpg) |
+| Hover a foe to see the odds, the damage and any Advantage before you swing. | Bosses get a name plate and a health bar over the hotbar. |
+| ![A Performance check in Blinsky's toy shop](docs/screenshots/dialogue_check.jpg) | ![The d20 rolling for the check](docs/screenshots/dialogue_d20.jpg) |
+| Conversations show who will roll each check and their chance. | Then the d20 rolls with the DC and every bonus. |
+| ![Sneaking in the Blue Water Inn](docs/screenshots/stealth.jpg) | ![The character sheet](docs/screenshots/character_sheet.jpg) |
+| Sneaking: the ground each person can see, before you step into it. | The character sheet. Hover any number to see how it was worked out. |
+| ![The inventory's paper doll](docs/screenshots/inventory.jpg) | ![The travel map of Barovia](docs/screenshots/travel_map.jpg) |
+| The inventory: a paper doll, weapon sets and quick slots. | The travel map: hours on the road, the arrival time, and a warning before travelling after dark. |
+| ![Skirmish and the Character Lab](docs/screenshots/skirmish.jpg) | |
+| Skirmish and the Character Lab: any party at any level against any stat blocks. | |
 
 ## Running the game
 
@@ -115,8 +121,9 @@ Godot). All three must pass with a clean log.
 | `make standin` | Renders a stand-in villager so the sprite pipeline runs without generated art. |
 | `make wireframes` | Redraws the UI flow wireframes in `docs/ui/wireframes/`. |
 
-The screenshots in this README came from `make capture` with the scenes in `tools/capture/` and
-`scenes/main_menu.tscn`, then shrunk to 1280 px JPEGs.
+The screenshots in this README were taken off screen from the game at 1920x1080 on the High preset, by capture scenes
+kept with the showcase site (`~/Documents/CurseOfStrahdSite/tools/godot`) run through `tools/capture/capture.tscn` as
+`make capture` does, then shrunk to 1280 px JPEGs.
 
 ## Controls
 
