@@ -67,7 +67,8 @@
           27,
           6
         ]
-      ]
+      ],
+      "furnish": "offerings"
     },
     {
       "id": "hall_of_vestiges",
@@ -81,7 +82,8 @@
           39,
           16
         ]
-      ]
+      ],
+      "furnish": "amber_hall"
     },
     {
       "id": "sanctum",
@@ -95,7 +97,8 @@
           29,
           28
         ]
-      ]
+      ],
+      "furnish": "cold_sanctum"
     }
   ],
   "spawns": {
@@ -303,7 +306,7 @@
       ],
       "kind": "decor",
       "label": "Cold braziers",
-      "model": "brazier"
+      "model": "brazier_cold"
     },
     {
       "id": "offerings_staff",

@@ -108,6 +108,7 @@ static func _build_props(view: LocationView) -> void:
 static func _prop_node(view: LocationView, prop: Dictionary) -> Node3D:
 	var node: Node3D = SetDressing.place(view.board, prop)
 	if node != null:
+		SetDressing.tint_flames(node, str(prop.get("flame", "")))   # its own fire's colour (a green hearth)
 		return node
 	var sprite := _prop_art(prop)
 	if sprite != "":
@@ -134,7 +135,7 @@ static func _build_lights(view: LocationView) -> void:
 	for l: Variant in view.loc.get("lights", []):
 		var li := l as Dictionary
 		var omni := CandleFlicker.new()
-		omni.light_color = Look.color("candle")
+		omni.light_color = SetDressing.light_colour(li)
 		var dim := float(li.get("dim_ft", 20)) / 5.0
 		omni.omni_range = maxf(2.0, dim)
 		omni.base_energy = 1.4 if str(li["kind"]) in ["candle", "lamp"] else 2.2
@@ -149,16 +150,16 @@ static func _build_lights(view: LocationView) -> void:
 		elif str(li.get("kind", "")) in ["fire", "bonfire", "brazier", "torch"] \
 				and not ModelPiece.fire_near(view.board, view.board.cell_center(LocationView._cell(li["cell"]))):
 			# (a hearth, brazier or campfire beside the light burns with its own flame: not a second one on the ground)
-			_flame(view, LocationView._cell(li["cell"]), 0.6 if str(li["kind"]) != "torch" else 0.35)
+			_flame(view, LocationView._cell(li["cell"]), 0.6 if str(li["kind"]) != "torch" else 0.35, str(li.get("color", "")))
 
 
 ## A flame with a flicker of its own (watch fires, braziers, the burning wicker sun): the flame billboard where the
 ## art exists (SetDressing.flame), else a small emissive cone.
-static func _flame(view: LocationView, cell: Vector2i, size: float) -> Node3D:
+static func _flame(view: LocationView, cell: Vector2i, size: float, colour: String = "") -> Node3D:
 	var root := Node3D.new()
 	root.position = view.board.cell_center(cell)
 	view.add_child(root)
-	var art := SetDressing.flame(size)
+	var art := SetDressing.flame(size, colour if SetDressing.FLAME_TINTS.has(colour) else "")
 	if art != null:
 		root.add_child(art)
 	for i in (0 if art != null else 3):
@@ -177,7 +178,7 @@ static func _flame(view: LocationView, cell: Vector2i, size: float) -> Node3D:
 		mi.material_override = mat
 		root.add_child(mi)
 	var light := CandleFlicker.new()
-	light.light_color = Look.color("flame")
+	light.light_color = Look.color(colour if colour != "" else "flame")
 	light.omni_range = 4.0 + size * 4.0
 	light.base_energy = 1.8 + size
 	light.position = Vector3(0, size, 0)

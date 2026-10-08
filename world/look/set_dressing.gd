@@ -479,6 +479,27 @@ const FLAME_TINTS := {"": {"glow_flame": "candle", "glow_ember": "vampire_red", 
 	"bile": {"glow_flame": "bile", "glow_ember": "moss", "glow_candle": "frost"}}
 
 
+## A location light's colour: its data `color` (a palette colour: a witch's green hearth), else candlelight.
+static func light_colour(li: Dictionary) -> Color:
+	return Look.color(str(li.get("color", "candle")))
+
+
+## Recolours the 3D flames in a piece (a hearth's fire, at its "flame" socket) as FLAME_TINTS[`tint`] has them: a
+## location prop's `flame` ("bile": Baba Lysaga's green fire).
+static func tint_flames(root: Node, tint: String) -> void:
+	if not FLAME_TINTS.has(tint):
+		return
+	var swap := FLAME_TINTS[tint] as Dictionary
+	for f: Node in root.find_children("Flame", "Node3D", true, false):
+		for n: Node in f.find_children("*", "MeshInstance3D", true, false):
+			var mi := n as MeshInstance3D
+			for i in mi.mesh.get_surface_count():
+				var src := mi.mesh.surface_get_material(i)
+				var name := src.resource_name if src != null else ""
+				if name.begins_with("glow_"):
+					mi.set_surface_override_material(i, _flame_material(str(swap.get(name, name.trim_prefix("glow_")))))
+
+
 static func _flame_3d(size: float, tint: String) -> Node3D:
 	var m := ModelPiece.instance("flame")
 	m.name = "Flame"

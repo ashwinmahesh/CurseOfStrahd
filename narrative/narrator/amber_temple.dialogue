@@ -70,7 +70,7 @@ cooldown 30
 | A gallery of pillars at the head of the stair. Every sound you make comes back to you a moment later, slightly changed, as if repeated by someone who didn't quite catch it.
 once
 
-~ enter:great_hall
+~ enter:amber_great_hall
 | The faceless god looks down on the hall with nothing. You find yourself not standing directly in front of it.
 once
 

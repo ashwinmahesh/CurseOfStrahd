@@ -239,7 +239,8 @@
         "table_meal",
         "washstand",
         "reading_table",
-        "map_table"
+        "map_table",
+        "lectern"
       ],
       "summary": "Tables, counters and the heavier furniture, a 5-ft section at a time.",
       "moves": "shove",
@@ -520,7 +521,8 @@
         "lift_cage",
         "lantern_post",
         "stewpot",
-        "cookpot"
+        "cookpot",
+        "brazier_cold"
       ],
       "summary": "Cages, cauldrons, braziers and other ironwork."
     },

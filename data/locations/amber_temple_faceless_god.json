@@ -52,10 +52,11 @@
           30,
           28
         ]
-      ]
+      ],
+      "furnish": "amber_hall"
     },
     {
-      "id": "great_hall",
+      "id": "amber_great_hall",
       "name": "The great hall",
       "cells": [
         [
@@ -66,7 +67,8 @@
           30,
           21
         ]
-      ]
+      ],
+      "furnish": "amber_hall"
     },
     {
       "id": "ring_of_amber",
@@ -80,7 +82,8 @@
           39,
           21
         ]
-      ]
+      ],
+      "furnish": "amber_hall"
     },
     {
       "id": "hall_of_echoes",
@@ -94,7 +97,8 @@
           10,
           21
         ]
-      ]
+      ],
+      "furnish": "frozen_reading"
     },
     {
       "id": "wardens_cells",
@@ -108,7 +112,8 @@
           39,
           5
         ]
-      ]
+      ],
+      "furnish": "wardens_cells"
     }
   ],
   "spawns": {

@@ -224,8 +224,8 @@ braziers burning in the antechamber and either side of the altar.
 ### The west
 
 - **Baba Lysaga's hut:** drawings of the same boy on every wall, strings of onions and mushrooms in the kitchen, a
-  mobile of little bones over the cradle, and the table laid for more guests than she ever has. (Her hearth's green
-  fire needs a light colour the location lights don't have yet.)
+  mobile of little bones over the cradle, and the table laid for more guests than she ever has. Her hearth burns
+  green: the location light's `color` ("bile") and the hearth prop's `flame` ("bile", SetDressing.FLAME_TINTS).
 - **Marina's vault:** candles and rose petals (furnish set `tended_vault`), where the crypt rule had strewn bones: it's
   kept "the way you keep a promise".
 - **Mount Baratok:** the hut and study are stone (place_looks `keep`), not parquet and panelling; the bed of furs is in
@@ -236,6 +236,19 @@ braziers burning in the antechamber and either side of the altar.
   bed of furs, chains in Emil's alcove, Zuleika's real bed, candle stubs at the shrine, the scratched tally.
 - **Tsolenka's tower:** a grey cloak on every peg in the vestibule (`cloak_pegs`), and the captain's room is stone with
   a narrow bed and the watch log on a desk.
+
+### The Amber Temple
+
+- Every room keeps the temple's black stone and amber (place_looks `keep`): the room words had given the library
+  parquet and panelling, the guardrooms brick and the halls marble.
+- The great hall has its own area id and line (`amber_great_hall`): it shared `great_hall` with the Vallaki mansion
+  and played its bunting and the Baron's chair.
+- The halls hold rubble, broken stone heads, drifted snow, bones and pilgrims' candles (set `amber_hall`) where the hall
+  rule had laid rugs and red armchairs; the hall of echoes and the reading room are frozen desks, lecterns and books
+  (low_cover_rooms "hall of echoes" and "reading room", set `frozen_reading`); the stacks are books chained to their
+  shelves (`chained_bookcase`); the warden's study is buried in pinned notes (set `buried_study`); the wardens' cells
+  each hold a cot; the vault of offerings is heaped with coins, crowns, swords and toys (`offering_pile`, set
+  `offerings`); the guardroom and the sanctum have cold braziers (`brazier_cold`; the sanctum's had been lit green).
 
 Rooms are never left barren (coordinator, 2026-10-08): a room its text calls bare keeps only its own things, but a
 ruined or wrecked one is furnished from a set of its own debris (`furnish: "<set>"` names one of the catalog's furnish

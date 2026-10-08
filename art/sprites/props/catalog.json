@@ -249,7 +249,7 @@
     "reliquary_niches": "wall_alcoves",
     "den_mother_night": "statue_mother_night",
     "frozen_pilgrim": "frozen_traveller",
-    "sanctum_braziers": "brazier_green",
+    "sanctum_braziers": "brazier_cold",
     "marina_bier": "bier",
     "lysaga_poppet": "poppet",
     "bonegrinder_receipt_book": "receipt_table",
@@ -932,20 +932,24 @@
   "place_looks": {
     "amber_temple_faceless_god": {
       "floor": "amber/black_stone",
-      "wall": "amber/amber_wall"
+      "wall": "amber/amber_wall",
+      "keep": true
     },
     "amber_temple_library": {
       "floor": "amber/black_stone",
-      "wall": "amber/amber_wall"
+      "wall": "amber/amber_wall",
+      "keep": true
     },
     "amber_temple_vault": {
       "floor": "amber/black_stone",
-      "wall": "amber/amber_wall"
+      "wall": "amber/amber_wall",
+      "keep": true
     },
     "amber_temple_entrance": {
       "floor": "amber/black_stone",
       "wall": "amber/amber_wall",
-      "difficult": "mountain/snow"
+      "difficult": "mountain/snow",
+      "keep": true
     },
     "amber_temple_road": {
       "floor": "mountain/snow",
@@ -1271,7 +1275,9 @@
     "charred_furniture": 2.2,
     "slate_stack": 1.5,
     "hunters_tree_stand": 20.4,
-    "broad_oak_bough": 23.7
+    "broad_oak_bough": 23.7,
+    "brazier_cold": 3.0,
+    "offering_pile": 1.0
   },
   "big_width": 1.6,
   "models3d": {
@@ -1668,7 +1674,10 @@
       "slate_stack": "slate_stack",
       "cloak_pegs": "cloak_pegs",
       "hunters_tree_stand": "hunters_tree_stand",
-      "broad_oak_bough": "broad_oak_bough"
+      "broad_oak_bough": "broad_oak_bough",
+      "brazier_cold": "brazier_cold",
+      "offering_pile": "offering_pile",
+      "chained_bookcase": "chained_bookcase"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",
@@ -4741,6 +4750,107 @@
         ],
         "floor_fill": 0.6,
         "centre_fill": 0.35
+      },
+      "amber_hall": {
+        "floor": [
+          "rubble",
+          "statue_head",
+          "snowdrift",
+          "bones",
+          "candle_cluster",
+          "rubble"
+        ],
+        "centre": [
+          "rubble",
+          "snowdrift",
+          "bones",
+          "statue_head"
+        ],
+        "floor_fill": 0.65,
+        "centre_fill": 0.4
+      },
+      "frozen_reading": {
+        "wall": [
+          "chained_bookcase"
+        ],
+        "floor": [
+          "book_stack",
+          "floor_books",
+          "lectern",
+          "book_stack"
+        ],
+        "centre": [
+          "floor_books",
+          "book_stack"
+        ],
+        "floor_fill": 0.7,
+        "centre_fill": 0.35
+      },
+      "library_stacks": {
+        "floor": [
+          "book_stack",
+          "floor_books"
+        ],
+        "centre": [
+          "floor_books",
+          "book_stack"
+        ],
+        "floor_fill": 0.6,
+        "centre_fill": 0.3
+      },
+      "buried_study": {
+        "wall": [
+          "drawings",
+          "notice_papers"
+        ],
+        "floor": [
+          "book_stack",
+          "floor_books",
+          "letters_table",
+          "book_stack"
+        ],
+        "centre": [
+          "floor_books",
+          "book_stack"
+        ],
+        "wall_fill": 1.0,
+        "floor_fill": 0.8,
+        "centre_fill": 0.45
+      },
+      "offerings": {
+        "floor": [
+          "offering_pile",
+          "gold_heap",
+          "offering_pile"
+        ],
+        "centre": [
+          "offering_pile",
+          "gold_heap"
+        ],
+        "floor_fill": 0.75,
+        "centre_fill": 0.5
+      },
+      "wardens_cells": {
+        "floor": [
+          "bed_small",
+          "footlocker",
+          "candle_cluster",
+          "bed_small"
+        ],
+        "floor_fill": 0.7
+      },
+      "cold_sanctum": {
+        "floor": [
+          "brazier_cold",
+          "statue_head",
+          "rubble"
+        ],
+        "centre": [
+          "rubble",
+          "bones"
+        ],
+        "floor_fill": 0.45,
+        "centre_fill": 0.2
       }
     }
   },
@@ -4781,6 +4891,46 @@
     ]
   },
   "low_cover_rooms": [
+    [
+      [
+        "sanctum"
+      ],
+      {
+        "single": [
+          "brazier_cold"
+        ],
+        "run": [
+          "brazier_cold"
+        ]
+      }
+    ],
+    [
+      [
+        "hall of echoes",
+        "reading hall"
+      ],
+      {
+        "single": [
+          "desk"
+        ],
+        "run": [
+          "desk"
+        ]
+      }
+    ],
+    [
+      [
+        "reading room"
+      ],
+      {
+        "single": [
+          "lectern"
+        ],
+        "run": [
+          "lectern"
+        ]
+      }
+    ],
     [
       [
         "servants' hall",
