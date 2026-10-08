@@ -552,6 +552,10 @@
           ],
           "description": "data = fully expressed by modifiers/choices; engine = bespoke code reads the id; text = shown to the player only until its system exists."
         },
+        "repeatable": {
+          "type": "boolean",
+          "description": "An inline option the same choice can take more than once (Agonizing Blast, Lessons of the First Ones): each later copy is picked as <id>#2, <id>#3 and makes its own choice, which can't repeat another copy's."
+        },
         "at_level": {
           "type": "integer",
           "minimum": 1,
