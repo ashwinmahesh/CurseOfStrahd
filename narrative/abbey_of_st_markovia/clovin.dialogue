@@ -30,6 +30,7 @@ endif
 * [if flag.clovin_befriended and not quest.clovins_audience] You've gone quiet, Clovin. Something on your mind? -> krezk/clovins_audience:ask
 * [if quest.clovins_audience == refused] Dmitri won't open the gate for you. -> krezk/clovins_audience:hood
 * [if flag.clovin_family_found] How's your great-uncle? -> krezk/clovins_audience:clovin_after
+* Heard anything interesting? -> abbey_of_st_markovia/mothers_ninth_improvement:clovin_news
 * Goodbye, Clovin. -> END
 
 ~ see_abbot
@@ -104,7 +105,7 @@ endif
 if flag.markovia_letter_read
 Clovin Belview: I've still got the letter. I've learned three of the words. "Light", "candle" and "go". They're good words.
 endif
-if quest.clovins_audience == rumored or (flag.clovin_befriended and not quest.clovins_audience) or quest.clovins_audience == refused or flag.clovin_family_found
+if quest.clovins_audience == rumored or (flag.clovin_befriended and not quest.clovins_audience) or quest.clovins_audience == refused or flag.clovin_family_found or not quest.mothers_ninth_improvement or quest.mothers_ninth_improvement == done
 -> krezk/clovins_audience:abbey_menu
 endif
 -> END

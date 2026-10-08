@@ -112,6 +112,7 @@ func test_clovin_still_asks_once_the_abbot_is_dealt_with() -> void:
 	var quiet := _krezk(NO_WREN)
 	quiet.location = "abbey_of_st_markovia"
 	quiet.set_flag("abbot_fate", "slain")
+	quiet.set_quest_stage("mothers_ninth_improvement", "rumored")
 	beats = SideQuestPlay.play(quiet, "abbey_of_st_markovia/clovin:start")
 	assert_eq(str(beats[-1]["kind"]), "end")
 	assert_false(beats.any(func(b: Dictionary) -> bool: return str(b["kind"]) == "options"), "no menu after his news")

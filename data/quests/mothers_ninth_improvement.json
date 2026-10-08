@@ -1,0 +1,33 @@
+{
+  "id": "mothers_ninth_improvement",
+  "name": "Mother's Ninth Improvement",
+  "summary": "Mother, the Belviews' matriarch, hasn't left the abbey since she was carried up the mountain as a baby. Now that the Abbot is done improving, she wants to go down to Krezk.",
+  "giver": "belview_mother",
+  "region": "abbey_of_st_markovia",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Clovin says Mother has been talking about Krezk, where she was born. She says she'll go down if somebody can tell her how.",
+      "objectives": [
+        "Talk to Mother, in the wards kitchen of the Abbey of St. Markovia, once the Abbot is done improving"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Mother's ninth gift is a pair of great grey wings, stitched shut with silver wire so she wouldn't fly to heaven early. She doesn't want heaven. She wants Krezk, and her heron's legs won't take the mountain.",
+      "objectives": [
+        "See to her boys in the cells first",
+        "Take the wire out of her wings",
+        "Help her up to the courtyard wall"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Mother flew down the mountain to Krezk, very badly, laughing the whole way. She gave us her eighth gift, a pair of boots she once floated about the ceiling in for a year.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
