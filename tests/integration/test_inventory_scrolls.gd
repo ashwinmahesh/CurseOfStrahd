@@ -69,3 +69,22 @@ func test_a_fighter_sees_why_not() -> void:
 	assert_false(cast.is_empty(), "offered, greyed")
 	assert_true(bool(cast.get("disabled", false)))
 	assert_eq(str(cast.get("tooltip", "")), "Not on your class's spell list")
+
+
+## The scroll's spell reaches the place the party stands in, as a cast from the character sheet does
+## (LocationView.apply_spell_effect): Detect Magic names what's near, Find Familiar shows the familiar.
+func test_a_scroll_cast_from_the_inventory_reaches_the_world() -> void:
+	var wiz := GameState.story.party[0]
+	wiz.add_item("spell_scroll__detect_magic")
+	var view := root.get("view") as LocationView
+	var said: Array[String] = []
+	view.narration.connect(func(text: String) -> void: said.append(text))
+	var inv := await _open(0)
+	var cast: Dictionary = {}
+	for a in inv.actions_for(wiz.entry_of("spell_scroll__detect_magic")):
+		if str(a["label"]) == "Cast Detect Magic":
+			cast = a
+	assert_false(cast.is_empty(), "Cast Detect Magic is offered")
+	(cast["call"] as Callable).call()
+	await _frames(1)
+	assert_true(said.any(func(s: String) -> bool: return s.begins_with("Magic within 30 ft")), str(said))
