@@ -4,8 +4,19 @@ extends TestCase
 ## kind count together toward the cost. Hands stay free.
 
 
+## A pregen wizard knowing `spells`, without the starter kit's components (each test gives its own).
 func _wizard(e: Encounter, spells: Array) -> Combatant:
-	return TestCombat.caster_with(e, spells, Vector2i(2, 3))
+	var c := TestCombat.caster_with(e, spells, Vector2i(2, 3))
+	_empty(c.creature as Character)
+	return c
+
+
+func _empty(ch: Character) -> void:
+	for material: String in ["diamond", "pearl", "incense"]:
+		while ch.material_worth(material) > 0.0:
+			for e: Dictionary in ch.inventory.duplicate():
+				if str(e["id"]) == material:
+					ch.remove_one(material, e)
 
 
 func test_a_spell_waits_for_its_material_and_keeps_one_it_doesnt_use_up() -> void:
@@ -43,6 +54,7 @@ func test_a_consumed_component_is_used_up_by_worth() -> void:
 func test_a_ritual_while_exploring_still_burns_its_incense() -> void:
 	var ch := TestChars.pregen("silvain_aster", 3)
 	assert_true(ch.knows_spell("find_familiar"))
+	_empty(ch)
 	var st := StoryState.new()
 	st.party.append(ch)
 	var res := FieldCasting.cast_utility(st, ch, "find_familiar", true)
@@ -74,3 +86,12 @@ func test_the_materials_are_sold_and_every_kind_has_an_item() -> void:
 		var item := Compendium.shared().item_data(str(cc["material"]))
 		assert_false(item.is_empty(), "%s: an item for %s" % [f, cc["material"]])
 		assert_eq(str(item.get("material", "")), str(cc["material"]), "%s: its item counts as %s" % [f, cc["material"]])
+
+
+func test_pregens_start_with_what_their_spells_keep_and_incense_for_a_familiar() -> void:
+	var silvain := Pregens.build("silvain_aster", 9)
+	assert_eq(silvain.component_why(Compendium.shared().spell_data("chromatic_orb")), "", "a diamond for Chromatic Orb")
+	assert_eq(silvain.material_worth("incense"), 20.0, "two blocks of incense for Find Familiar")
+	var liriel := Pregens.build("liriel_dawnsong", 9)
+	assert_true(liriel.knows_spell("revivify"))
+	assert_ne(liriel.component_why(Compendium.shared().spell_data("revivify")), "", "Revivify's diamonds are bought")
