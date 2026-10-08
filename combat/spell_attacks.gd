@@ -242,7 +242,7 @@ func _orb_leap(ctx: Dictionary, last: Combatant, rolled: Dictionary, r: CombatRe
 	var next: Combatant = null
 	var best := 1 << 30
 	for o in e.hostiles_of(c):
-		if o.id in hitlist or o.is_down() or e.grid.distance_ft(last.cell, last.size_cells, o.cell, o.size_cells) > 30:
+		if o.id in hitlist or o.is_down() or e.distance(last, o) > 30:
 			continue
 		var d := e.distance(c, o)
 		if d < best:

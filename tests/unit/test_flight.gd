@@ -215,3 +215,14 @@ func test_gaseous_form_still_flies() -> void:
 	assert_true(r.ok, r.reason)
 	assert_eq(c.creature.speed().total(), 0, "no walking")
 	assert_eq(c.creature.speed("fly").total(), 10, "a Fly Speed of 10 ft")
+
+
+func test_the_ai_doesnt_plan_a_swing_at_a_flyer_out_of_reach() -> void:
+	var e := TestCombat.open_field(3)
+	var c := _flyer(e, Vector2i(2, 2))
+	var zombie := TestCombat.foe(e, "zombie", Vector2i(3, 2))
+	TestCombat.start_with(e, c)
+	c.altitude = 15
+	assert_ne(str(e.ai.plan_turn(zombie)["kind"]), "attack", "nothing it can reach")
+	var ally := TestCombat.hero(e, "hedda_ironvow", Vector2i(5, 2))
+	assert_eq(e.ai.plan_turn(zombie).get("target"), ally, "it goes for the one on the floor")
