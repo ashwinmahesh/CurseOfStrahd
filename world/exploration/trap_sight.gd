@@ -67,10 +67,12 @@ static func notice(view: LocationView, trap: Dictionary) -> bool:
 	var cells: Array[Vector2i] = []
 	for c: Variant in trap["cells"]:
 		cells.append(Vector2i(int((c as Array)[0]), int((c as Array)[1])))
+	# Fog, a storm or a blizzard in the open (Weather, F12): Disadvantage on sight, so -5 to passive Perception.
+	var murk := -5 if not Weather.sight_penalty(view.st, view.loc_id).is_empty() else 0
 	for m in view.members:
 		if m.creature.hp <= 0:
 			continue
-		var passive := m.creature.passive_score(&"perception").total()
+		var passive := m.creature.passive_score(&"perception").total() + murk
 		if passive >= int(trap["detect_dc"]) and in_sight(view, m, cells):
 			var id := str(trap["id"])
 			(view.st.loc_state(view.loc_id)["traps"] as Dictionary)[id] = "found"
