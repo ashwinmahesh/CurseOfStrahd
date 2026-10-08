@@ -9,6 +9,8 @@ extends RefCounted
 ## How far a Search reaches (feet), and how long its reach shows on the ground (seconds).
 const SEARCH_FT := 15
 const REACH_SHOWN := 1.6
+## How strong the Search's tint is on the ground (owner, 2026-10-08: about a quarter, so the ground shows through).
+const REACH_ALPHA := 0.25
 
 
 static func _mark_found_traps(view: LocationView) -> void:
@@ -272,6 +274,7 @@ static func show_reach(view: LocationView, center: Vector2i, feet: int) -> void:
 	reach.show_cells("area", cells)
 	var layer := reach.get_node("Layer_area") as MultiMeshInstance3D
 	var mat := layer.material_override as StandardMaterial3D
+	mat.albedo_color.a = REACH_ALPHA
 	var tw := reach.create_tween()
 	tw.tween_interval(REACH_SHOWN * 0.4)
 	tw.tween_property(mat, "albedo_color:a", 0.0, REACH_SHOWN * 0.6)
