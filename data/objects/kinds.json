@@ -508,7 +508,9 @@
         "iron_maiden",
         "cauldron",
         "lift_cage",
-        "lantern_post"
+        "lantern_post",
+        "stewpot",
+        "cookpot"
       ],
       "summary": "Cages, cauldrons, braziers and other ironwork."
     },

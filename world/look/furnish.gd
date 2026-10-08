@@ -296,6 +296,8 @@ static func _area_of(areas: Array, c: Vector2i) -> int:
 ## The furnishing rule for a room: the first `rooms` rule whose words are in its name (else its id), else the board
 ## theme's.
 static func _rule(cfg: Dictionary, board: ArenaBoard, area: Dictionary) -> Dictionary:
+	if not bool(area.get("furnish", true)):
+		return {}   # a room its text calls bare or kept clean: only its own props (an area's `furnish: false`)
 	var own: Variant = SetDressing.room_rule(cfg.get("rooms", []) as Array, area) if not area.is_empty() else null
 	if own != null:
 		return own as Dictionary

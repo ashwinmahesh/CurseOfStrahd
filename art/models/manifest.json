@@ -7450,6 +7450,120 @@
         "pal_walnut"
       ],
       "triangles": 220
+    },
+    "sill_sword": {
+      "file": "art/models/sill_sword.glb",
+      "mount": "wall",
+      "stands_for": [
+        "sill_sword"
+      ],
+      "size": [
+        0.89,
+        0.56,
+        0.17
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_night_deep",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 192
+    },
+    "sill_cups": {
+      "file": "art/models/sill_cups.glb",
+      "mount": "wall",
+      "stands_for": [
+        "sill_cups"
+      ],
+      "size": [
+        0.89,
+        0.56,
+        0.17
+      ],
+      "materials": [
+        "pal_bog",
+        "pal_ink",
+        "pal_night_deep",
+        "pal_peat",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 712
+    },
+    "surplice": {
+      "file": "art/models/surplice.glb",
+      "mount": "wall",
+      "stands_for": [
+        "surplice"
+      ],
+      "size": [
+        0.58,
+        0.863,
+        0.105
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_ivory",
+        "pal_walnut"
+      ],
+      "triangles": 158
+    },
+    "curtain_hooks": {
+      "file": "art/models/curtain_hooks.glb",
+      "mount": "wall",
+      "stands_for": [
+        "curtain_hooks"
+      ],
+      "size": [
+        0.675,
+        0.537,
+        0.104
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_pewter"
+      ],
+      "triangles": 262
+    },
+    "charcoal_suns": {
+      "file": "art/models/charcoal_suns.glb",
+      "mount": "wall",
+      "stands_for": [
+        "charcoal_suns"
+      ],
+      "size": [
+        0.81,
+        0.23,
+        0.01
+      ],
+      "materials": [
+        "pal_ink"
+      ],
+      "triangles": 588
+    },
+    "instrument_tray": {
+      "file": "art/models/instrument_tray.glb",
+      "mount": "free",
+      "stands_for": [
+        "instrument_tray"
+      ],
+      "size": [
+        0.432,
+        0.672,
+        0.317
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_ink",
+        "pal_ivory",
+        "pal_pewter",
+        "pal_silver",
+        "pal_walnut"
+      ],
+      "triangles": 272
     }
   }
 }

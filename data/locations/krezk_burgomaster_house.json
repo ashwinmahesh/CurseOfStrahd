@@ -49,7 +49,8 @@
           6,
           4
         ]
-      ]
+      ],
+      "furnish": false
     },
     {
       "id": "ilya_room",
@@ -78,7 +79,8 @@
           4
         ]
       ],
-      "private": "dmitri_krezkov"
+      "private": "dmitri_krezkov",
+      "furnish": false
     }
   ],
   "spawns": {
@@ -176,7 +178,7 @@
       ],
       "kind": "examine",
       "label": "Anna's spinning wheel",
-      "model": "chair"
+      "model": "spinning_wheel"
     },
     {
       "id": "eldest_bed",
@@ -216,7 +218,7 @@
       ],
       "kind": "decor",
       "label": "Bench",
-      "model": "chair"
+      "model": "bench"
     },
     {
       "id": "eldest_bed_box",
@@ -230,6 +232,37 @@
       "label": "a box under the eldest son's bed",
       "model": "jewel_box",
       "item": "ioun_stone_awareness"
+    },
+    {
+      "id": "eldest_sword_sill",
+      "cell": [
+        4,
+        0
+      ],
+      "label": "A carved wooden sword on the sill",
+      "model": "sill_sword",
+      "kind": "decor"
+    },
+    {
+      "id": "ilya_cups_sill",
+      "cell": [
+        11,
+        0
+      ],
+      "label": "Willow-bark cups on the sill, all of them full",
+      "model": "sill_cups",
+      "kind": "decor"
+    },
+    {
+      "id": "krezkov_bedside_chair",
+      "cell": [
+        19,
+        2
+      ],
+      "label": "A chair pulled up to the bed, facing the door",
+      "model": "chair_high",
+      "facing": "southwest",
+      "kind": "decor"
     }
   ],
   "containers": [

@@ -4958,6 +4958,102 @@ def tack(p):
     p.tube(pts, 0.012, "pal_stone", segs=5)
 
 
+# --- Interiors: Krezk and the Abbey (docs/art/interiors.md) -----------------------------------------------------
+
+
+def _sill_window(p):
+    """A small house window, its shutters folded back on the wall and a deep sill: the sill's top, for what stands on it."""
+    W, H, z0 = 0.4, 0.46, 0.62
+    p.box((W, 0.02, H), (0, -0.01, z0 + H / 2), "pal_night_deep")   # the dark outside
+    for s in (-1, 1):
+        p.box((0.05, 0.07, H + 0.1), (s * (W / 2 + 0.025), -0.035, z0 + H / 2), "pal_umber")
+        p.box((W / 2 - 0.01, 0.025, H), (s * (W / 2 + 0.05 + W / 4), -0.0125, z0 + H / 2), WOOD)   # a shutter, open
+        p.box((W / 2 - 0.06, 0.008, 0.025), (s * (W / 2 + 0.05 + W / 4), -0.029, z0 + H * 0.75), "pal_ink")
+    p.box((W + 0.1, 0.07, 0.05), (0, -0.035, z0 + H + 0.025), "pal_umber")
+    p.box((0.014, 0.03, H), (0, -0.025, z0 + H / 2), "pal_umber")   # the mullion and transom
+    p.box((W, 0.03, 0.014), (0, -0.025, z0 + H * 0.55), "pal_umber")
+    p.box((W + 0.18, 0.17, 0.04), (0, -0.085, z0 - 0.02), "pal_umber")   # the sill
+    return z0
+
+
+@model("sill_sword", "wall", ["sill_sword"])
+def sill_sword(p):
+    """A window with a boy's carved wooden sword on its sill, dusted, and put back exactly where it lay."""
+    z = _sill_window(p)
+    p.box((0.26, 0.032, 0.012), (0.04, -0.1, z + 0.006), "pal_tan", rot=(0, 0, 6))   # the blade, whittled
+    p.box((0.024, 0.024, 0.012), (0.18, -0.085, z + 0.006), "pal_tan", rot=(0, 0, 51))   # its point
+    p.box((0.016, 0.11, 0.02), (-0.095, -0.113, z + 0.01), "pal_walnut", rot=(0, 0, 6))   # the crossguard
+    p.box((0.08, 0.024, 0.024), (-0.145, -0.118, z + 0.012), "pal_umber", rot=(0, 0, 6))   # the grip, bound
+    p.box((0.03, 0.034, 0.03), (-0.195, -0.123, z + 0.015), "pal_walnut", rot=(0, 0, 6))
+
+
+@model("sill_cups", "wall", ["sill_cups"])
+def sill_cups(p):
+    """A window with a row of willow-bark cups on its sill, every one of them full and none of them drunk."""
+    z = _sill_window(p)
+    for k in range(5):
+        x = -0.2 + k * 0.1
+        p.lathe([(0.0, 0.0), (0.03, 0.0), (0.036, 0.07), (0.03, 0.07), (0.025, 0.01), (0.0, 0.01)], (x, -0.09, z),
+                "pal_peat" if k % 2 else "pal_umber", segs=10)
+        p.cyl(0.031, 0.004, (x, -0.09, z + 0.052), "pal_bog", segs=10)
+
+
+@model("surplice", "wall", ["surplice"])
+def surplice(p):
+    """One white surplice on a peg of its own, apart from the other vestments, freshly pressed as if for an occasion."""
+    p.cyl(0.015, 0.1, (0, 0.0, 1.62), "pal_walnut", rot=(90, 0, 0), segs=8)   # the peg
+    p.tube([(-0.16, -0.07, 1.56), (0.0, -0.07, 1.63), (0.16, -0.07, 1.56)], 0.008, "pal_walnut", segs=5)   # the hanger
+    p.prism([(-0.16, 1.57), (0.16, 1.57), (0.25, 0.78), (-0.25, 0.78)], 0.05, (0, -0.075, 0), "pal_ivory")
+    for s in (-1, 1):   # the sleeves, hanging
+        p.prism([(s * 0.15, 1.57), (s * 0.29, 1.27), (s * 0.22, 1.24), (s * 0.12, 1.47)], 0.045, (0, -0.075, 0), "pal_ivory")
+    for x in (-0.12, -0.04, 0.04, 0.12):   # pressed pleats
+        p.box((0.008, 0.006, 0.66), (x, -0.102, 1.12), "pal_bone", rot=(0, x * 40, 0))
+    p.box((0.5, 0.056, 0.05), (0, -0.075, 0.8), "pal_bone")   # the lace hem
+    p.prism([(-0.06, 1.57), (0.06, 1.57), (0.0, 1.47)], 0.056, (0, -0.077, 0), "pal_bone")   # the neck
+
+
+@model("curtain_hooks", "wall", ["curtain_hooks"])
+def curtain_hooks(p):
+    """Iron hooks high on the wall where a bed's curtain used to hang, a rag of grey curtain still caught on one."""
+    for x in (-0.32, 0.0, 0.32):
+        p.box((0.035, 0.02, 0.06), (x, -0.01, 1.9), "pal_ink")
+        p.tube([(x, -0.01, 1.9), (x, -0.07, 1.9), (x, -0.095, 1.86), (x, -0.075, 1.82), (x, -0.055, 1.845)], 0.009, "pal_ink",
+               segs=5)
+    p.box((0.13, 0.012, 0.36), (0.03, -0.078, 1.66), "pal_pewter", rot=(0, 8, 0), soft=0.004, segs=1)   # the rag
+    p.box((0.08, 0.012, 0.1), (0.07, -0.08, 1.45), "pal_pewter", rot=(0, -14, 0), soft=0.004, segs=1)
+
+
+@model("charcoal_suns", "wall", ["charcoal_suns"])
+def charcoal_suns(p):
+    """Little suns drawn in charcoal along the wall at a child's height, one after another, as if to light the way."""
+    for k, x in enumerate((-0.3, 0.02, 0.32)):
+        z = 0.55 + (0.04 if k % 2 else 0.0)
+        ring = [(x + 0.045 * math.cos(2 * math.pi * i / 12), -0.004, z + 0.045 * math.sin(2 * math.pi * i / 12)) for i in range(13)]
+        p.tube(ring, 0.005, "pal_ink", segs=4)
+        for i in range(8):
+            a = 2 * math.pi * i / 8
+            p.box((0.04, 0.004, 0.008), (x + 0.075 * math.cos(a), -0.004, z + 0.075 * math.sin(a)), "pal_ink",
+                  rot=(0, -math.degrees(a), 0))
+
+
+@model("instrument_tray", "free", ["instrument_tray"])
+def instrument_tray(p):
+    """A little iron stand with a tray of surgeon's instruments laid out in shining rows, and a folded white cloth."""
+    for a in (90, 210, 330):
+        r = math.radians(a)
+        p.tube([(0.15 * math.cos(r), 0.15 * math.sin(r), 0.0), (0.06 * math.cos(r), 0.06 * math.sin(r), 0.62)], 0.012, "pal_ink",
+               segs=5)
+    p.box((0.42, 0.3, 0.02), (0, 0, 0.63), "pal_pewter")
+    for s in (-1, 1):
+        p.box((0.42, 0.012, 0.03), (0, s * 0.15, 0.645), "pal_pewter")
+        p.box((0.012, 0.3, 0.03), (s * 0.21, 0, 0.645), "pal_pewter")
+    for k in range(5):
+        x = -0.17 + k * 0.05
+        p.box((0.012, 0.17, 0.008), (x, 0.04, 0.644), "pal_silver")
+        p.box((0.022, 0.07, 0.014), (x, -0.08, 0.647), "pal_walnut" if k % 2 else "pal_bone")
+    p.box((0.12, 0.2, 0.03), (0.13, 0.0, 0.655), "pal_ivory", soft=0.01, segs=1)   # the folded cloth
+
+
 # --- Export and preview ----------------------------------------------------------------------------------------
 
 def bounds(ob):

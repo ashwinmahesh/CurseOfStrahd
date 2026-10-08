@@ -291,6 +291,146 @@
       "label": "a false back in the instrument cabinet",
       "model": "scattered_notes",
       "item": "periapt_of_proof_against_poison"
+    },
+    {
+      "id": "corridor_suns_1",
+      "cell": [
+        2,
+        7
+      ],
+      "label": "Little suns drawn in charcoal at a child's height",
+      "model": "charcoal_suns",
+      "kind": "decor"
+    },
+    {
+      "id": "corridor_suns_2",
+      "cell": [
+        6,
+        7
+      ],
+      "label": "Little suns drawn in charcoal at a child's height",
+      "model": "charcoal_suns",
+      "kind": "decor"
+    },
+    {
+      "id": "corridor_suns_3",
+      "cell": [
+        9,
+        7
+      ],
+      "label": "Little suns drawn in charcoal at a child's height",
+      "model": "charcoal_suns",
+      "kind": "decor"
+    },
+    {
+      "id": "corridor_suns_4",
+      "cell": [
+        14,
+        7
+      ],
+      "label": "Little suns drawn in charcoal at a child's height",
+      "model": "charcoal_suns",
+      "kind": "decor"
+    },
+    {
+      "id": "corridor_suns_5",
+      "cell": [
+        17,
+        7
+      ],
+      "label": "Little suns drawn in charcoal at a child's height",
+      "model": "charcoal_suns",
+      "kind": "decor"
+    },
+    {
+      "id": "corridor_suns_6",
+      "cell": [
+        23,
+        7
+      ],
+      "label": "Little suns drawn in charcoal at a child's height",
+      "model": "charcoal_suns",
+      "kind": "decor"
+    },
+    {
+      "id": "corridor_suns_7",
+      "cell": [
+        26,
+        7
+      ],
+      "label": "Little suns drawn in charcoal at a child's height",
+      "model": "charcoal_suns",
+      "kind": "decor"
+    },
+    {
+      "id": "kitchen_straw_1",
+      "cell": [
+        2,
+        17
+      ],
+      "label": "Straw",
+      "model": "straw",
+      "kind": "decor"
+    },
+    {
+      "id": "kitchen_straw_2",
+      "cell": [
+        5,
+        19
+      ],
+      "label": "Straw",
+      "model": "straw",
+      "kind": "decor"
+    },
+    {
+      "id": "kitchen_straw_3",
+      "cell": [
+        15,
+        17
+      ],
+      "label": "Straw",
+      "model": "straw",
+      "kind": "decor"
+    },
+    {
+      "id": "kitchen_straw_4",
+      "cell": [
+        18,
+        20
+      ],
+      "label": "Straw",
+      "model": "straw",
+      "kind": "decor"
+    },
+    {
+      "id": "kitchen_bones_1",
+      "cell": [
+        13,
+        15
+      ],
+      "label": "Gnawed bones",
+      "model": "bones",
+      "kind": "decor"
+    },
+    {
+      "id": "kitchen_bones_2",
+      "cell": [
+        4,
+        20
+      ],
+      "label": "Gnawed bones",
+      "model": "bones",
+      "kind": "decor"
+    },
+    {
+      "id": "surgery_instruments",
+      "cell": [
+        18,
+        10
+      ],
+      "label": "Instruments laid out on a tray",
+      "model": "instrument_tray",
+      "kind": "decor"
     }
   ],
   "containers": [
@@ -372,7 +512,8 @@
           "qty": 2
         }
       ],
-      "gold": 2
+      "gold": 2,
+      "model": "cookpot"
     }
   ],
   "lights": [
