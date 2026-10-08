@@ -284,6 +284,106 @@
       "label": "a relic in the niches that isn't bone",
       "model": "wall_alcoves",
       "item": "pipes_of_haunting"
+    },
+    {
+      "id": "reliquary_alcoves_west",
+      "cell": [
+        0,
+        3
+      ],
+      "label": "Alcoves of strange relics",
+      "model": "wall_alcoves",
+      "kind": "decor"
+    },
+    {
+      "id": "reliquary_alcoves_east",
+      "cell": [
+        7,
+        2
+      ],
+      "label": "Alcoves of strange relics",
+      "model": "wall_alcoves",
+      "kind": "decor"
+    },
+    {
+      "id": "prison_shackles",
+      "cell": [
+        0,
+        9
+      ],
+      "label": "Rusty shackles",
+      "model": "wall_chains",
+      "kind": "decor"
+    },
+    {
+      "id": "prison_robes",
+      "cell": [
+        7,
+        9
+      ],
+      "label": "Black robes on hooks",
+      "model": "robe_pegs",
+      "kind": "decor"
+    },
+    {
+      "id": "winch_room_winch",
+      "cell": [
+        23,
+        9
+      ],
+      "label": "An iron winch",
+      "model": "winch",
+      "kind": "decor"
+    },
+    {
+      "id": "antechamber_brazier_west",
+      "cell": [
+        25,
+        3
+      ],
+      "label": "A brazier",
+      "model": "brazier",
+      "kind": "decor"
+    },
+    {
+      "id": "antechamber_brazier_east",
+      "cell": [
+        27,
+        3
+      ],
+      "label": "A brazier",
+      "model": "brazier",
+      "kind": "decor"
+    },
+    {
+      "id": "ritual_brazier_west",
+      "cell": [
+        19,
+        13
+      ],
+      "label": "A brazier",
+      "model": "brazier",
+      "kind": "decor"
+    },
+    {
+      "id": "ritual_brazier_east",
+      "cell": [
+        24,
+        13
+      ],
+      "label": "A brazier",
+      "model": "brazier",
+      "kind": "decor"
+    },
+    {
+      "id": "reliquary_relics",
+      "cell": [
+        2,
+        2
+      ],
+      "label": "A dried hand, a bone knife, a hag's finger",
+      "model": "relics",
+      "kind": "decor"
     }
   ],
   "containers": [
@@ -339,6 +439,42 @@
       "kind": "fire",
       "bright_ft": 10,
       "dim_ft": 20
+    },
+    {
+      "cell": [
+        25,
+        3
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        27,
+        3
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        19,
+        13
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 25
+    },
+    {
+      "cell": [
+        24,
+        13
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 25
     }
   ],
   "npcs": [

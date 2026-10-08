@@ -221,6 +221,8 @@ func _build() -> void:
 			_dress(c, dressed)
 	if theme == "shrine_yard" and place == "":
 		_lanterns()   # the arena's lit pillars
+	if place != "" and (theme in INTERIORS or theme == "dungeon") and Compendium.shared().has("locations", place):
+		Furnish.dress(self, Compendium.shared().get_entry("locations", place))   # lived-in rooms (docs/art/interiors.md)
 	Clutter.dress(self)   # decals: cracks, stains, moss, mud fringes ... (docs/art/decals.md)
 
 
@@ -246,8 +248,9 @@ var _floor_mat: Material = null
 var _look: Dictionary = {}
 var _rooms: Array[Dictionary] = []     ## [{rect: Rect2i, floor: Material, wall: Material}]
 var _rock_tex: Material = null
-## The location's areas as rectangles (a wall piece hangs on the side facing its own area).
+## The location's areas as rectangles (a wall piece hangs on the side facing its own area), and their data.
 var areas: Array[Rect2i] = []
+var area_specs: Array[Dictionary] = []
 ## Towns (TownBuilder): the houses ({root, walls, upper, aabb ...}), which house each square belongs to, the window
 ## pieces by "x,y,dx,dy" (a door hung there hides its window), and the squares of low yard wall.
 var buildings: Array[Dictionary] = []
@@ -302,42 +305,47 @@ func _on_border(c: Vector2i) -> bool:
 	return c.x == 0 or c.y == 0 or c.x == grid.width - 1 or c.y == grid.depth - 1
 
 
-## Matches each of the location's areas to a room style (catalog "rooms": words in its name -> floor and wall).
+## Matches each of the location's areas to a room style: the area's own `floor` and `walls`, else the catalog's
+## rules by words in its name (its theme's own rules first, "theme_rooms": a farmhouse bedroom is plaster and planks,
+## not a manor's carpet), unless the place keeps its own look (place_looks "keep": a cave, the Amber Temple).
 func _plan_rooms(loc: Dictionary) -> void:
-	var rules: Array = []
+	# Room rules are for rooms; an outdoor map has its own few (a jetty is planks), so a fishing "landing" isn't
+	# floored like a manor's.
+	var key := "rooms" if theme in INTERIORS or theme == "dungeon" else "outdoor_rooms"
+	var rules := SetDressing.catalog().get(key, []) as Array
+	if key == "rooms":
+		rules = ((SetDressing.catalog().get("theme_rooms", {}) as Dictionary).get(theme, []) as Array) + rules
+	var keep := bool(_look.get("keep", false))
 	for a: Variant in loc.get("areas", []):
 		var area := a as Dictionary
-		var name_ := ("%s %s" % [str(area.get("name", "")), str(area.get("id", "")).replace("_", " ")]).to_lower()
-		var cells0 := area.get("cells", []) as Array
-		var q0 := Vector2i(int(cells0[0][0]), int(cells0[0][1]))
-		var q1 := Vector2i(int(cells0[1][0]), int(cells0[1][1]))
-		areas.append(Rect2i(Vector2i(mini(q0.x, q1.x), mini(q0.y, q1.y)), (q1 - q0).abs() + Vector2i.ONE))
-		# Room rules are for rooms; an outdoor map has its own few (a jetty is planks), so a fishing "landing" isn't
-		# floored like a manor's.
-		var key := "rooms" if theme in INTERIORS or theme == "dungeon" else "outdoor_rooms"
+		var cells := area.get("cells", []) as Array
+		var p0 := Vector2i(int(cells[0][0]), int(cells[0][1]))
+		var p1 := Vector2i(int(cells[1][0]), int(cells[1][1]))
+		var r := Rect2i(Vector2i(mini(p0.x, p1.x), mini(p0.y, p1.y)), (p1 - p0).abs() + Vector2i.ONE)
+		areas.append(r)
+		area_specs.append(area)
+		var style: Variant = null
 		if area.has("floor") or area.has("walls"):
-			# The data names this room's own surfaces (an area's `floor` and `walls`).
-			rules = [[[name_], {"floor": area.get("floor", ""), "wall": area.get("walls", "")}]] + (SetDressing.catalog().get(key, []) as Array)
-		else:
-			rules = SetDressing.catalog().get(key, []) as Array
-		for rule: Variant in rules:
-			var hit := false
-			for w: String in (rule as Array)[0]:
-				hit = hit or name_.contains(w)
-			if not hit:
-				continue
-			var style := (rule as Array)[1] as Dictionary
-			var cells := area.get("cells", []) as Array
-			var p0 := Vector2i(int(cells[0][0]), int(cells[0][1]))
-			var p1 := Vector2i(int(cells[1][0]), int(cells[1][1]))
-			var r := Rect2i(Vector2i(mini(p0.x, p1.x), mini(p0.y, p1.y)), (p1 - p0).abs() + Vector2i.ONE)
-			var room := {"rect": r}
-			if str(style.get("floor", "")) != "" and Look.cel_textured(str(style["floor"]), 0.22) != null:
-				room["floor"] = Look.cel_textured(str(style["floor"]), 0.22)
-			if str(style.get("wall", "")) != "" and Look.cel_textured(str(style["wall"])) != null:
-				room["wall"] = Look.cel_textured(str(style["wall"]))
-			_rooms.append(room)
-			break
+			style = {"floor": area.get("floor", ""), "wall": area.get("walls", "")}   # the data names its own surfaces
+		elif not keep:
+			style = SetDressing.room_rule(rules, area)
+		if style == null:
+			continue
+		var room := {"rect": r}
+		if str((style as Dictionary).get("floor", "")) != "" and Look.cel_textured(str(style["floor"]), 0.22) != null:
+			room["floor"] = Look.cel_textured(str(style["floor"]), 0.22)
+		if str((style as Dictionary).get("wall", "")) != "" and Look.cel_textured(str(style["wall"])) != null:
+			room["wall"] = Look.cel_textured(str(style["wall"]))
+		_rooms.append(room)
+
+
+## The location's area holding `c` ({} if none); the smallest where areas overlap.
+func area_at(c: Vector2i) -> Dictionary:
+	var best := -1
+	for i in areas.size():
+		if areas[i].has_point(c) and (best < 0 or areas[i].get_area() < areas[best].get_area()):
+			best = i
+	return area_specs[best] if best >= 0 else {}
 
 
 ## The styled room a square is in ({} if none). Smaller rooms win where areas overlap.
@@ -710,10 +718,21 @@ func _low_cover(c: Vector2i) -> void:
 	var sets := SetDressing.catalog().get("low_cover", {}) as Dictionary
 	var key := place if place != "" and sets.has(place) else _dressing_key()
 	var choices := sets.get(key, []) as Array
+	# The room's own furniture (catalog "low_cover_rooms", by words in its name): a kitchen's worktables, a
+	# dormitory's bunks. A place's own set comes first.
+	var own: Variant = null
+	if key != place and (theme in INTERIORS or theme == "dungeon"):
+		own = SetDressing.room_rule(SetDressing.catalog().get("low_cover_rooms", []) as Array, area_at(c))
+	if own != null:
+		choices = (own as Dictionary).get("single", choices) as Array
 	if theme in INTERIORS or theme == "dungeon" or key == place:
 		var run := _low_run(c)
 		if int(run["size"]) >= 3:
-			choices = sets.get(key + ("_wall_run" if bool(run["by_wall"]) and sets.has(key + "_wall_run") else "_run"), choices) as Array
+			var wall_run := bool(run["by_wall"])
+			if own != null and (own as Dictionary).has("run"):
+				choices = (own as Dictionary).get("wall_run" if wall_run and (own as Dictionary).has("wall_run") else "run") as Array
+			else:
+				choices = sets.get(key + ("_wall_run" if wall_run and sets.has(key + "_wall_run") else "_run"), choices) as Array
 	if not choices.is_empty():
 		# Crates and carts in town, stumps and boulders in the woods, a room's furniture indoors.
 		# The first choice (from the square's position) that fits the room around it: a wagon only where there's

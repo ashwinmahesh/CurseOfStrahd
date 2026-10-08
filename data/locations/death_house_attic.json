@@ -370,6 +370,16 @@
       "label": "a secret drawer in the toy chest",
       "model": "sack",
       "item": "bag_of_tricks_gray"
+    },
+    {
+      "id": "childrens_drawings_west",
+      "cell": [
+        13,
+        9
+      ],
+      "label": "Drawings pinned to the wall",
+      "model": "drawings",
+      "kind": "decor"
     }
   ],
   "containers": [

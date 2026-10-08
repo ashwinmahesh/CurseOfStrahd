@@ -171,3 +171,88 @@ func test_the_blue_water_inns_stable_is_a_stable() -> void:
 				"no tavern furniture in the yard (%s at %s)" % [m.get_meta("model", ""), board.grid.cell_at(at)])
 	v.queue_free()
 	await _frames(1)
+
+
+## Room styles and furnishing go by the room's name before its id: a guardroom in the castle's larders is a guardroom,
+## not a larder (the audit found the larders' cells and guardrooms in kitchen tiles).
+func test_room_rules_read_the_name_first() -> void:
+	var rules := SetDressing.catalog().get("rooms", []) as Array
+	var style: Variant = SetDressing.room_rule(rules, {"name": "The guardroom", "id": "larders_guardroom"})
+	assert_true(style != null and str((style as Dictionary).get("floor", "")) == "dungeon/stone_floor", "a guardroom's stone")
+	style = SetDressing.room_rule(rules, {"name": "The north cells", "id": "larders_north_cells"})
+	assert_true(style != null and str((style as Dictionary).get("wall", "")) == "interior/kitchen_wall" == false, "cells aren't a kitchen")
+	style = SetDressing.room_rule(rules, {"name": "", "id": "dh_kitchen"})
+	assert_true(style != null and str((style as Dictionary).get("floor", "")) == "interior/kitchen_flags", "an id still counts")
+
+
+## A farmhouse bedroom is plaster and planks (the board theme's own rooms), not a manor's carpet and wallpaper.
+func test_a_farmhouse_bedroom_is_plain() -> void:
+	Look.set_style("modern", false)
+	var v := _view("krezk_burgomaster_house")
+	await _frames(2)
+	var area := {}
+	for a: Variant in v.loc["areas"]:
+		if str((a as Dictionary)["id"]) == "guest_room":
+			area = a as Dictionary
+	var c := Vector2i(int(area["cells"][0][0]), int(area["cells"][0][1]))
+	var floor := v.board.floor_box(c)
+	assert_true(floor != null and _surface(floor) == "interior/wood_planks", "planks, not carpet")
+	v.queue_free()
+	await _frames(1)
+
+
+## Lived-in rooms (world/look/furnish.gd): the Death House's rooms get what rooms of their kind hold, on free wall faces
+## and along the walls, never on a square something stands on or beside a door, an exit or the spawn.
+func test_rooms_are_furnished() -> void:
+	Look.set_style("modern", false)
+	var v := _view("death_house_ground")
+	await _frames(2)
+	var board := v.board
+	var pieces := 0
+	var kitchen := 0
+	var clear := {}
+	for key: String in ["doors", "exits"]:
+		for t: Variant in v.loc.get(key, []):
+			var c := Vector2i(int((t as Dictionary)["cell"][0]), int((t as Dictionary)["cell"][1]))
+			for dz: int in [-1, 0, 1]:
+				for dx: int in [-1, 0, 1]:
+					clear[c + Vector2i(dx, dz)] = true
+	var taken := {}
+	for key: String in ["props", "containers", "npcs"]:
+		for t: Variant in v.loc.get(key, []):
+			taken[Vector2i(int((t as Dictionary)["cell"][0]), int((t as Dictionary)["cell"][1]))] = true
+	for n in board.get_children():
+		if not n.has_meta("furnish"):
+			continue
+		pieces += 1
+		var c := Vector2i(int(str(n.name).get_slice("_", 2)), int(str(n.name).get_slice("_", 3)))
+		assert_false(clear.has(c), "nothing furnished beside a door or exit (%s)" % c)
+		assert_false(taken.has(c), "nothing furnished on a square something stands on (%s)" % c)
+		if Rect2i(19, 1, 4, 5).has_point(c):
+			kitchen += 1
+	assert_true(pieces >= 12, "the house is furnished (%d pieces)" % pieces)
+	assert_true(kitchen >= 1, "the kitchen has kitchen things (%d)" % kitchen)
+	v.queue_free()
+	await _frames(1)
+
+
+## The Death House holds what its text names (the audit's list): the sword over the hall hearth, the stag's head over
+## the den's, pots hung by size, cheeses under cloth, an umbrella stand, the broom in the storeroom, skeletons in
+## shackles round the shrine, the reliquary's relics.
+func test_the_death_house_has_what_its_text_names() -> void:
+	Look.set_style("modern", false)
+	var want := {"death_house_ground": {"hall_hearth": "fireplace_sword", "den_stag_head": "stag_head",
+			"kitchen_pots": "pot_rack", "pantry_cheeses": "cheeses", "foyer_umbrella": "umbrella_stand"},
+		"death_house_third": {"storage_broom": "broom"},
+		"death_house_dungeon_1": {"shrine_shackled_east": "skeleton_shackles"},
+		"death_house_dungeon_2": {"reliquary_relics": "relics", "ritual_brazier_west": "brazier"}}
+	for loc_id: String in want:
+		var v := _view(loc_id)
+		await _frames(1)
+		for id: String in want[loc_id]:
+			var node := v.prop_nodes.get(id) as Node
+			var models := node.find_children("Model_*", "Node3D", true, false) if node != null else []
+			assert_true(not models.is_empty() and str(models[0].get_meta("model", "")) == str(want[loc_id][id]),
+				"%s: %s is the %s" % [loc_id, id, want[loc_id][id]])
+		v.queue_free()
+		await _frames(1)
