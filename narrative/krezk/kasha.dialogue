@@ -27,7 +27,13 @@ endif
 * [if treasure_at:krezk_pool_of_the_white_sun] Have you seen anything strange in the water lately? -> strange
 * [if flag.ireena_pool_vision] Have you ever seen a young man in the water? -> young_man
 * [if flag.abbot_fate] The Abbot. Have you heard? -> abbot_after
+* Do you keep any healing here? Potions, or prayers? -> wares
 * Goodbye, Kasha. -> END
+
+~ wares
+Kasha Varo: Some. The pool's water goes into the draughts, and the prayers I write out on the long nights. They're not free. The shrine needs a new roof, and I need new knees, and only one of those can be bought.
+shop
+-> menu
 
 ~ place
 Kasha Varo: The shrine of the White Sun. The morning lord, in Vallaki they'd say, but we're older than Vallaki and we call him what our grandmothers did. Krezk was built round this pool, not the other way.

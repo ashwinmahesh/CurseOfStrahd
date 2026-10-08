@@ -19,5 +19,82 @@
     "vallaki"
   ],
   "region": "vallaki",
-  "pronouns": "he/him"
+  "pronouns": "he/him",
+  "shop": {
+    "sells": [
+      {
+        "id": "spell_scroll__detect_magic",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__identify",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__mage_armor",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__magic_missile",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__shield",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__sleep",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__burning_hands",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__thunderwave",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__feather_fall",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__find_familiar",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__misty_step",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__scorching_ray",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__invisibility",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__web",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__hold_person",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__knock",
+        "qty": -1
+      },
+      {
+        "id": "spell_scroll__see_invisibility",
+        "qty": -1
+      }
+    ],
+    "buys": [
+      "scroll"
+    ],
+    "markup": 1.0,
+    "sell_rate": 0.4
+  }
 }

@@ -51,6 +51,7 @@ endif
 * [if not flag.holy_symbol_rumor] Is any relic of the Morninglord left in this valley? -> raven
 * [Cleric] Kneel and pray with him. -> pray
 * Is there anything you need? Anything you can spare? -> needs
+* Does the church have potions or scrolls to sell? -> church_wares
 * Goodbye. -> END
 
 ~ screaming
@@ -186,6 +187,11 @@ attitude donavich friendly
 Narrator: You kneel beside him and pray aloud. For a few breaths the voice under the floor stops, as if it's listening too.
 Donavich [sad]: You still feel Him? Here? I haven't, not for a year. I say "Dawn will come" every night, to keep my mouth from saying other things.
 approve liriel_dawnsong +1: You prayed with a priest who couldn't feel his god
+-> menu
+
+~ church_wares
+Donavich [weary]: The church sold healing once, when there were people to heal. There's a little left in the vestry: draughts the sisters brewed, prayers written out on good paper. Take what you need. Leave what you can. I'll buy bread with it, and candles.
+shop
 -> menu
 
 ~ needs
