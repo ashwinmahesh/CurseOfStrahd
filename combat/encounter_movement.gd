@@ -445,6 +445,7 @@ func _after_step(c: Combatant, from: Vector2i) -> void:
 	e.monster_actions.entered_space(c)
 	e.spells.on_enter_cell(c, from)
 	e.objects.on_moved(c, from)
+	e.traps.stepped(c)   # a trap under it goes off (EncounterTraps)
 
 
 func stand_up(c: Combatant) -> CombatResult:

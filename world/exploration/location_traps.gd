@@ -232,3 +232,43 @@ static func show_reach(view: LocationView, center: Vector2i, feet: int) -> void:
 	tw.tween_interval(REACH_SHOWN * 0.4)
 	tw.tween_property(mat, "albedo_color:a", 0.0, REACH_SHOWN * 0.6)
 	tw.tween_callback(reach.queue_free)
+
+
+# --- Traps in a fight (EncounterTraps) ---------------------------------------------------------------
+
+## A fight here (LocationFights): every trap that hasn't gone off is armed in it, found or not.
+static func into_fight(view: LocationView, e: Encounter) -> void:
+	var states := view.st.loc_state(view.loc_id)["traps"] as Dictionary
+	for t: Variant in view.loc.get("traps", []):
+		var trap := t as Dictionary
+		var state := str(states.get(str(trap["id"]), ""))
+		if state in ["disarmed", "triggered"] or not StoryConditions.check(str(trap.get("when", "")), view.st):
+			continue
+		if _hangs(view, str(trap["id"])):
+			continue   # a chandelier that is a trap is a thing in the fight (BattleScenery): break its chain to drop it
+		e.traps.add(trap, state == "found")
+
+
+## Whether a hanging prop (a chandelier) is this trap.
+static func _hangs(view: LocationView, id: String) -> bool:
+	for p: Variant in view.loc.get("props", []):
+		if str(((p as Dictionary).get("hangs", {}) as Dictionary).get("trap", "")) == id:
+			return true
+	return false
+
+
+## After a fight here: the traps that went off in it are spent, as if sprung outside one (a pit stays open).
+static func after_fight(view: LocationView, e: Encounter) -> void:
+	var states := view.st.loc_state(view.loc_id)["traps"] as Dictionary
+	for id in e.traps.sprung_ids():
+		states[id] = "triggered"
+		BattleScenery.trap_sprung(view, id)
+		_clear_marks(view, id)
+		for t: Variant in view.loc.get("traps", []):
+			var trap := t as Dictionary
+			if str(trap["id"]) != id:
+				continue
+			if trap.has("flag"):
+				view.st.set_flag(str(trap["flag"]))
+			if PitFall.is_pit(trap):
+				PitFall._redress(view, trap)

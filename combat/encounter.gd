@@ -104,6 +104,8 @@ var ground: GroundItems
 var objects: EncounterObjects
 ## Taking back a move (combat/encounter_undo.gd).
 var undo: EncounterUndo
+## The location's traps, which go off under whoever moves onto them (combat/encounter_traps.gd).
+var traps: EncounterTraps
 
 
 func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
@@ -121,6 +123,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	actions = EncounterActions.new(self)
 	ground = GroundItems.new(self)
 	objects = EncounterObjects.new(self)
+	traps = EncounterTraps.new(self)
 	spells = SpellCaster.new(self)
 	features = CombatFeatures.new(self)
 	reactions = Reactions.new(self)
