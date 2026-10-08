@@ -42,21 +42,28 @@ func _opens_shop(st: StoryState, npc: String, ref: String) -> bool:
 
 func test_vadomas_curios_change_every_few_days() -> void:
 	var st := _party()
-	var pool: Array = ((Compendium.shared().get_entry("npcs", "vadoma")["shop"] as Dictionary)["rotating"] as Dictionary)["pool"]
-	for id: Variant in pool:
-		assert_false(Compendium.shared().item_data(str(id)).is_empty(), "%s is a real item" % id)
-	var first := _ids(st, "vadoma")
-	assert_eq(first.size(), 5, "a potion of healing and four curios: %s" % str(first))
-	assert_true("potion_of_healing" in first)
-	for w in st.shop_wares("vadoma"):
-		var cost := float(Compendium.shared().item_data(str(w["id"])).get("cost_gp", 0))
-		assert_eq(float(w["price"]), snappedf(cost * 1.25, 0.01), "%s at the book's price and a quarter" % w["id"])
+	var groups: Array = ((Compendium.shared().get_entry("npcs", "vadoma")["shop"] as Dictionary)["rotating"] as Dictionary)["groups"]
+	for g: Variant in groups:
+		for id: Variant in (g as Dictionary)["pool"]:
+			var data := Compendium.shared().item_data(str(id))
+			assert_false(data.is_empty(), "%s is a real item" % id)
+			assert_true(float(data.get("cost_gp", 0)) > 0.0, "%s has a price" % id)
+	var arms: Array = (groups[1] as Dictionary)["pool"]
+	var scrolls: Array = (groups[2] as Dictionary)["pool"]
 	var seen := {}
-	for d in 9:
+	for d in 12:
+		var ids := _ids(st, "vadoma")
+		assert_eq(ids.size(), 7, "a potion of healing, three curios, a weapon or armor, two scrolls: %s" % str(ids))
+		assert_eq(ids.filter(func(i: String) -> bool: return i in arms).size(), 1, "one enchanted weapon or armor")
+		assert_eq(ids.filter(func(i: String) -> bool: return i in scrolls).size(), 2, "two scrolls")
+		for w in st.shop_wares("vadoma"):
+			var cost := float(Compendium.shared().item_data(str(w["id"])).get("cost_gp", 0))
+			assert_eq(float(w["price"]), snappedf(cost * 1.25, 0.01), "%s at the book's price and a quarter" % w["id"])
+			seen[str(w["id"])] = true
 		st.advance_minutes(24 * 60)
-		for id in _ids(st, "vadoma"):
-			seen[id] = true
-	assert_true(seen.size() >= 9, "three more stretches, other curios: %d kinds" % seen.size())
+	assert_true(seen.size() >= 15, "four stretches, other stock: %d kinds" % seen.size())
+	var plus := Compendium.shared().item_data("weapon_plus_1__longsword")
+	assert_eq(str(plus.get("name", "")), "+1 Longsword")
 	assert_eq(Trade.haggle_dc("vadoma"), 17)
 	assert_true(_opens_shop(_party(), "vadoma", "vallaki/vadoma:start") == false, "first she talks (the menu)")
 	assert_true(_opens_shop(_party(), "vadoma", "vallaki/vadoma:wares"))
