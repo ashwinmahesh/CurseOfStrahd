@@ -99,8 +99,8 @@ func play_turn(c: Combatant) -> CombatResult:
 	if c.has_meta("berserk") and c.can_act():
 		return _berserk_turn(c)
 	if c.creature.has_flag("command_drop"):
+		e.ground.drop_held(c, "Command: Drop")
 		e.log.add("info", "%s drops what it holds and ends its turn (Command: Drop)" % c.name(), c.id)
-		c.set_meta("dropped_weapon", true)
 		last_plan = {"kind": "wait", "why": "Command: Drop"}
 		return CombatResult.new()
 	if c.creature.has_flag("command_approach"):
@@ -126,6 +126,8 @@ func play_turn(c: Combatant) -> CombatResult:
 	if not c.can_act():
 		return CombatResult.new()
 	_finishing = null
+	# A weapon it dropped lying within reach: back in hand with its free object interaction.
+	e.ground.ai_pick_up(c)
 	# The difficulty's kit and morale: a Bloodied foe drinks its potion; a broken side flees (combat/ai/ai_tactics.gd).
 	if c.side == &"enemy":
 		var drank: Variant = tactics.potion_turn(c)

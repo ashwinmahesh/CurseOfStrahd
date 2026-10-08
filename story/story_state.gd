@@ -16,7 +16,7 @@ var leader: int = 0
 var gold: float = 0.0
 var stash: Array[Dictionary] = []          ## [{id, qty}] at safe places
 var flags: Dictionary = {}
-var quests: Dictionary = {}                ## quest id -> {stage, history: [stage ids]}
+var quests: Dictionary = {}                ## quest id -> {stage, history: [stage ids], at: game minute it last moved}
 var attitudes: Dictionary = {}             ## npc id -> hostile | indifferent | friendly
 var visited: Dictionary = {}               ## location or area id -> true
 var codex: Array[String] = []              ## lore read (book props, letters)
@@ -89,6 +89,7 @@ func set_quest_stage(quest_id: String, stage: String) -> bool:
 	if not stage in hist:
 		hist.append(stage)
 	entry["history"] = hist
+	entry["at"] = total_minutes()   # when it last moved: the recap's road ahead names the newest first (Q3, lane 16)
 	quests[quest_id] = entry
 	return true
 
@@ -364,6 +365,7 @@ func advance_minutes(minutes: int) -> void:
 	if minutes >= 30:
 		time_passed.emit(minutes)
 	var start := total_minutes()
+	Services.note_deaths(self, start)   # when each fallen hero died, for Raise Dead's 10 days
 	minute_of_day += minutes
 	while minute_of_day >= 24 * 60:
 		minute_of_day -= 24 * 60
@@ -447,28 +449,34 @@ func lose_member(ch: Character, how: String) -> void:
 
 # --- Shops (ADR 0010) -----------------------------------------------------------------------------
 
-## What `npc_id` sells now: [{id, name, price, qty (-1 = always)}].
+## What `npc_id` sells now: [{id, name, price, qty (-1 = always), stock_id, sets, counts}], at the prices the
+## merchant's attitude and a haggle make (Trade), with any stock that changes with the days.
 func shop_wares(npc_id: String) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var shop := Compendium.shared().get_entry("npcs", npc_id).get("shop", {}) as Dictionary
 	var stock := shops.get(npc_id, {}) as Dictionary
-	for e: Variant in shop.get("sells", []):
+	var lines: Array = (shop.get("sells", []) as Array).duplicate()
+	lines.append_array(Trade.rotation(self, npc_id))
+	for e: Variant in lines:
 		var w := e as Dictionary
-		var stock_id := str(w["id"])
+		if not StoryConditions.check(str(w.get("if", "")), self):
+			continue
+		var stock_id := str(w.get("stock_id", w["id"]))
 		# A shop's "level 1 spell scroll" is a particular spell, the same one each visit this playthrough.
-		var id := MagicItems.specific_scroll(stock_id, "%d:shop:%s" % [playthrough_seed, npc_id], Compendium.shared())
+		var id := MagicItems.specific_scroll(str(w["id"]), "%d:shop:%s" % [playthrough_seed, npc_id], Compendium.shared())
 		var data := Compendium.shared().item_data(id)
 		var qty := int(w.get("qty", -1))
 		if qty >= 0:
 			qty = int(stock.get(stock_id, qty))
 		if qty == 0:
 			continue
-		var price := float(w["price"]) if w.has("price") else float(data.get("cost_gp", 0)) * float(shop.get("markup", 1.0))
-		out.append({"id": id, "name": str(data.get("name", id)), "price": price, "qty": qty, "stock_id": stock_id})
+		var base := float(w["price"]) if w.has("price") else float(data.get("cost_gp", 0)) * float(shop.get("markup", 1.0))
+		out.append({"id": id, "name": str(data.get("name", id)), "price": Trade.buy_price(self, npc_id, base), "qty": qty,
+			"stock_id": stock_id, "sets": str(w.get("sets", "")), "counts": str(w.get("counts", ""))})
 	return out
 
 
-## What `npc_id` pays for one `item_id`, or -1 if they don't buy that kind of thing.
+## What `npc_id` pays for one `item_id` (after their attitude and a haggle), or -1 if they don't buy that kind of thing.
 func shop_offer(npc_id: String, item_id: String) -> float:
 	var shop := Compendium.shared().get_entry("npcs", npc_id).get("shop", {}) as Dictionary
 	var data := Compendium.shared().item_data(item_id)
@@ -477,7 +485,7 @@ func shop_offer(npc_id: String, item_id: String) -> float:
 	var buys := shop.get("buys", []) as Array
 	if not buys.is_empty() and not str(data.get("category", "")) in buys:
 		return -1.0
-	return snappedf(float(data.get("cost_gp", 0)) * float(shop.get("sell_rate", 0.5)), 0.01)
+	return Trade.sell_price(self, npc_id, snappedf(float(data.get("cost_gp", 0)) * float(shop.get("sell_rate", 0.5)), 0.01))
 
 
 ## Buys one `item_id` from `npc_id` for `ch`. Returns "" or why not.
@@ -493,6 +501,11 @@ func shop_buy(npc_id: String, item_id: String, ch: Character) -> String:
 			if not shops.has(npc_id):
 				shops[npc_id] = {}
 			(shops[npc_id] as Dictionary)[str(w.get("stock_id", item_id))] = int(w["qty"]) - 1
+		# A purchase the story remembers: Bildrath's one potion, Morgantha's pastries.
+		if str(w["sets"]) != "":
+			set_flag(str(w["sets"]), true)
+		if str(w["counts"]) != "":
+			set_flag(str(w["counts"]), int(get_flag(str(w["counts"]), 0)) + 1)
 		return ""
 	return "Not for sale"
 

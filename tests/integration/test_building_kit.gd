@@ -251,3 +251,54 @@ func test_interiors_have_full_walls_that_cut_away() -> void:
 
 func _open(board: ArenaBoard, c: Vector2i) -> bool:
 	return board.grid.in_bounds(c) and not board.grid.has_flag(c, CombatGrid.WALL) and not board.grid.has_flag(c, CombatGrid.VOID)
+
+
+## W19: Castle Ravenloft from outside. The gates' walls are the castle's: curtain walls six high with their
+## battlements, the keep taller, round towers under spires, an arch over the gatehouse with the portcullis in it and
+## no frame of its own, cliffs falling into the chasm, and timbers under the drawbridge. A wall in the way of the party
+## in the courtyard cuts down to its foot; turned the other way, the keep does. Classic keeps the stone houses.
+func test_castle_ravenloft_from_outside() -> void:
+	var v := _view("castle_ravenloft_gates")
+	await _frames(2)
+	var board := v.board
+	var parts := {}
+	for b: Dictionary in board.buildings:
+		if b.has("castle"):
+			parts[str(b["part"])] = int(parts.get(str(b["part"]), 0)) + 1
+	assert_true(int(parts.get("wall", 0)) >= 20 and int(parts.get("tower", 0)) >= 10 and int(parts.get("gate", 0)) >= 4,
+		"the castle's walls, towers and gates (%s)" % str(parts))
+	var south := board.buildings[int(board.house_cells.get(Vector2i(10, 22), -1))] as Dictionary
+	var keep := board.buildings[int(board.house_cells.get(Vector2i(20, 4), -1))] as Dictionary
+	assert_true(south.has("castle") and float(south["height"]) >= 6.0, "the curtain wall stands six high")
+	assert_true(keep.has("castle") and float(keep["height"]) >= 10.0, "the keep stands taller")
+	assert_true(board.find_children("Spire", "MeshInstance3D", true, false).size() >= 10, "the towers have their spires")
+	assert_true(CastleBuilder.frames(board, Vector2i(19, 22)), "the gatehouse is an arch")
+	var chasm := board.get_node_or_null("Chasm") as MeshInstance3D
+	assert_true(chasm != null and chasm.get_aabb().position.y < -15.0, "cliffs fall into the chasm")
+	# The party in the courtyard, the camera to the south: the south wall in the way goes down, the keep stands.
+	var focus := board.cell_center(Vector2i(19, 18))
+	var gate_wall := board.buildings[int(board.house_cells[Vector2i(18, 22)])] as Dictionary
+	for i in 2:
+		board.cut_buildings(focus + Vector3(0, 12, 12), focus, 1.0)
+	assert_true((gate_wall["stub"] as Node3D).visible and not (gate_wall["walls"] as Node3D).visible,
+		"the wall in the way cuts down to its foot")
+	assert_true((keep["walls"] as Node3D).visible, "the keep behind the party stands")
+	for i in 2:
+		board.cut_buildings(focus + Vector3(0, 12, -12), focus, 1.0)
+	assert_true((gate_wall["walls"] as Node3D).visible and not (keep["walls"] as Node3D).visible,
+		"turned round, the gate wall stands and the keep goes down")
+	v.queue_free()
+	await _frames(1)
+	# The roofs among the spires: the castle's parapets instead of an interior's walls, towers rising out of the drop.
+	var r := _view("castle_ravenloft_spires_roofs")
+	await _frames(2)
+	assert_true(r.board.house_cells.has(Vector2i(0, 1)) and not r.board.has_meta("interior_walls"), "the roof's parapets")
+	assert_true(r.board.find_children("Spire", "MeshInstance3D", true, false).size() >= 4, "spires all round")
+	r.queue_free()
+	await _frames(1)
+	Look.set_style("classic", false)
+	var c := _view("castle_ravenloft_gates")
+	await _frames(2)
+	for b: Dictionary in c.board.buildings:
+		assert_false(b.has("castle"), "Classic keeps the stone houses")
+	c.queue_free()
