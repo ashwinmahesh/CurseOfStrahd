@@ -232,3 +232,28 @@ func test_old_bonegrinder_and_the_village() -> void:
 	for id: String in ["barovia_woodcutter", "barovia_widow"]:
 		assert_true(id in here, "%s is out by day" % id)
 	village.queue_free()
+
+
+## The Village of Barovia lived in (lane 28, owner request 2026-10-08: "make them look more lively, like an actual
+## village"; "more people walking around and doing things"): washing hung out, more people out by day, and the
+## sexton swinging his spade at the grave he's digging.
+func test_barovia_is_lived_in() -> void:
+	GameState.story.minute_of_day = 11 * 60
+	var v := _view("village_of_barovia")
+	await _frames(2)
+	assert_true(v.board.find_children("WashingLine*", "Node3D", true, false).size() >= 3, "washing on the lines")
+	var here: Array[String] = []
+	for s: Variant in v.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	for id: String in ["barovia_gravedigger", "barovia_acolyte", "barovia_vasile", "barovia_petre", "barovia_goat",
+			"barovia_woodcutter", "barovia_widow", "barovia_goodwife"]:
+		assert_true(id in here, "%s is about" % id)
+	var mihail := v.npc_tokens["barovia_gravedigger"] as CombatToken
+	var routes := NpcRoutes.of(v)
+	var swung := false
+	for i in 30:
+		routes._process(0.1)
+		swung = swung or bool(mihail.sprite.get("_attacking"))
+	assert_true(swung, "the sexton digs")
+	assert_true(mihail.sprite.facing.x > 0.7, "facing his grave, east (%s)" % mihail.sprite.facing)
+	v.queue_free()

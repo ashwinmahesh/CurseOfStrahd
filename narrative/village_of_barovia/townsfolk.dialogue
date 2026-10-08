@@ -38,3 +38,48 @@ Widow Ileana: I'm telling him the news. There's never any news. He doesn't mind;
 Widow Ileana: Teodor. A cooper. He went to fetch a barrel from the crossroads one evening and came back the next morning, quite well, only very pale and very polite. Father Donavich made me shut the door on him.
 Widow Ileana: I did. I still don't know if I was right.
 -> END
+
+~ gravedigger
+Old Mihail: Mind the edge. It's deeper than it looks. They all are, now. Six feet was enough once. Six feet isn't enough any more.
+* Who is it for? -> gravedigger_who
+* Why so deep? -> gravedigger_deep
+* Goodbye. -> END
+
+~ gravedigger_who
+Old Mihail: Nobody yet. There's always somebody by the end of the week. I like to be ready. It's rude to keep them waiting.
+-> END
+
+~ gravedigger_deep
+Old Mihail: So they stay down. Some of them try to come home, see. Not the ones I've buried. Not yet. I dig deep and I pack it hard.
+-> END
+
+~ acolyte
+Anca: Good morning. Father Donavich says a swept path is a prayer you can walk on. I sweep it twice, to be sure.
+if flag.burgomaster_buried
+Anca: It's quieter under the floor since the burial. I sleep better. Father doesn't.
+-> END
+endif
+* What's under the floor? -> acolyte_floor
+* Goodbye. -> END
+
+~ acolyte_floor
+Anca: Nothing. The cellar. Father says it's the wind in the cellar. The wind says his name, sometimes, and asks for him.
+Anca: I sweep a bit louder when it does.
+-> END
+
+~ vasile
+Vasile: You heard about the burgomaster? Dead. Heart gave out. The wolves stood round the house all night like mourners.
+Petre: It wasn't his heart.
+Vasile: It was his heart, Petre. Something took it.
+-> END
+
+~ petre
+Petre: Strangers. Haven't had strangers since the last strangers. They didn't stay long either. Nobody does, except us.
+Vasile: We'd leave if we could. Road's open. You just come back round to the gate.
+Petre: In the mist. Every time.
+-> END
+
+~ goat
+Narrator: The goat looks up from the fence it is eating, considers you, and goes back to the fence. It has seen worse than you, and it has eaten better fences.
+-> END
+

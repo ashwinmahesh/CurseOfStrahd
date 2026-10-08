@@ -7,22 +7,22 @@
   "map": {
     "rows": [
       "########################################",
-      "##..########..#.####.###.#....#######..#",
+      "##==########..#.####.###.#....#######..#",
       "##=.########.=#.####.###.#.=.=#######=.#",
       "##.=########..#.####.###.#=...#######..#",
       "##..########..#.####.....#.=..#######=.#",
       "##.=########=.#..........#=............#",
       "##............#.###..==..#.=...~.....=.#",
       "##=~........~=#.###......#...=...=.==..#",
-      "##............#..........#............=#",
+      "##............#..........#...........==#",
       "########.######..........###.###########",
       "#......................................#",
-      "#...~~............................~~...#",
-      ".....~.....................~~......~....",
-      "#..........~...........................#",
-      "#...................==.................#",
+      "#...~~....=...............=.......~~...#",
+      ".....~==...................~~......~....",
+      "#..........~.......=...................#",
+      "#............=......==.................#",
       "######.######..............#######.....#",
-      "######.######..............#######=....#",
+      "######.######..............#######===..#",
       "######.######..............#######=....#",
       "######.######..########....#######.....#",
       "#......######..########................#",
@@ -728,6 +728,121 @@
       ],
       "kind": "decor",
       "model": "hay_bale"
+    },
+    {
+      "id": "grigore_block",
+      "cell": [
+        6,
+        12
+      ],
+      "kind": "decor",
+      "model": "stump"
+    },
+    {
+      "id": "grigore_woodpile",
+      "cell": [
+        7,
+        12
+      ],
+      "kind": "decor",
+      "model": "woodpile"
+    },
+    {
+      "id": "west_road_woodpile",
+      "cell": [
+        10,
+        11
+      ],
+      "kind": "decor",
+      "model": "woodpile"
+    },
+    {
+      "id": "churchyard_open_grave",
+      "cell": [
+        37,
+        8
+      ],
+      "kind": "examine",
+      "label": "A grave being dug",
+      "model": "grave_open"
+    },
+    {
+      "id": "mercantile_crate",
+      "cell": [
+        35,
+        16
+      ],
+      "kind": "decor",
+      "model": "crate"
+    },
+    {
+      "id": "mercantile_barrel",
+      "cell": [
+        36,
+        16
+      ],
+      "kind": "decor",
+      "model": "barrel"
+    },
+    {
+      "id": "garlic_over_doors",
+      "cell": [
+        13,
+        14
+      ],
+      "kind": "examine",
+      "label": "Garlic over a door",
+      "model": "charms"
+    },
+    {
+      "id": "morninglord_shrine",
+      "cell": [
+        26,
+        11
+      ],
+      "kind": "examine",
+      "label": "A roadside shrine",
+      "model": "shrine_small",
+      "facing": "south"
+    },
+    {
+      "id": "well_trough",
+      "cell": [
+        19,
+        13
+      ],
+      "kind": "decor",
+      "model": "tub_wooden"
+    },
+    {
+      "id": "mansion_frost_bed_1",
+      "cell": [
+        2,
+        1
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "mansion_frost_bed_2",
+      "cell": [
+        3,
+        1
+      ],
+      "kind": "decor",
+      "model": "garden_bed"
+    },
+    {
+      "id": "door_mirror",
+      "cell": [
+        12,
+        14
+      ],
+      "kind": "search",
+      "label": "Something hung low on a door",
+      "model": "satchel",
+      "search_dc": 13,
+      "item": "mirror"
     }
   ],
   "lights": [
@@ -885,7 +1000,7 @@
         11
       ],
       "dialogue": "village_of_barovia/townsfolk:woodcutter",
-      "facing": "east",
+      "facing": "south",
       "path": [
         [
           13,
@@ -902,7 +1017,8 @@
         8,
         17
       ],
-      "when": "not weather == storm"
+      "when": "not weather == storm",
+      "work": "swing"
     },
     {
       "npc": "barovia_widow",
@@ -915,6 +1031,104 @@
       "hours": [
         9,
         16
+      ]
+    },
+    {
+      "npc": "barovia_gravedigger",
+      "cell": [
+        36,
+        8
+      ],
+      "dialogue": "village_of_barovia/townsfolk:gravedigger",
+      "facing": "east",
+      "work": "swing",
+      "hours": [
+        8,
+        16
+      ],
+      "when": "not weather == storm"
+    },
+    {
+      "npc": "barovia_acolyte",
+      "cell": [
+        31,
+        8
+      ],
+      "dialogue": "village_of_barovia/townsfolk:acolyte",
+      "facing": "south",
+      "path": [
+        {
+          "at": [
+            29,
+            8
+          ],
+          "wait": 6,
+          "face": "south",
+          "work": "swing"
+        },
+        {
+          "at": [
+            33,
+            8
+          ],
+          "wait": 6,
+          "face": "south",
+          "work": "swing"
+        }
+      ],
+      "hours": [
+        9,
+        15
+      ],
+      "when": "not flag.burial_procession and not weather == storm"
+    },
+    {
+      "npc": "barovia_vasile",
+      "cell": [
+        20,
+        16
+      ],
+      "dialogue": "village_of_barovia/townsfolk:vasile",
+      "facing": "east",
+      "hours": [
+        10,
+        17
+      ],
+      "when": "not weather == storm"
+    },
+    {
+      "npc": "barovia_petre",
+      "cell": [
+        21,
+        16
+      ],
+      "dialogue": "village_of_barovia/townsfolk:petre",
+      "facing": "west",
+      "hours": [
+        10,
+        17
+      ],
+      "when": "not weather == storm"
+    },
+    {
+      "npc": "barovia_goat",
+      "cell": [
+        16,
+        25
+      ],
+      "dialogue": "village_of_barovia/townsfolk:goat",
+      "facing": "west",
+      "path": [
+        [
+          15,
+          24,
+          5
+        ],
+        [
+          18,
+          24,
+          4
+        ]
       ]
     }
   ],

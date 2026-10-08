@@ -1,0 +1,18 @@
+{
+  "id": "barovia_vasile",
+  "name": "Vasile",
+  "title": "Villager of Barovia",
+  "summary": "A thin, hooded villager who spends the day outside the tavern with his friend Petre, trading the same three rumours.",
+  "portrait": "bandit",
+  "sprite": "bandit",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}
