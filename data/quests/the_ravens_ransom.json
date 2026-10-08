@@ -1,0 +1,32 @@
+{
+  "id": "the_ravens_ransom",
+  "name": "The Ravens' Ransom",
+  "summary": "Urwin and Danika Martikov's younger boy flew out of the inn's window after dark to look at the castle, and didn't come home.",
+  "giver": "urwin_martikov",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Bray, Urwin and Danika's younger boy, flew out after dark to look at the castle and was caught. A silver cage hangs in a dead pine on the hill trail above Lake Zarovich with a raven in it that won't change back. It's a trap for whoever comes, and the Keepers can't be seen to.",
+      "objectives": [
+        "Find the cage on the hill trail above Lake Zarovich and bring Bray home"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "home",
+      "journal": "Bray is home at the Blue Water Inn.",
+      "objectives": [
+        "Make sure nothing is listening through him",
+        "Tell Urwin"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Bray is home and himself, and the castle still doesn't know about the Martikovs' cellar. Urwin gave us the mail his grandfather flew in, and money Danika told him not to argue about.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

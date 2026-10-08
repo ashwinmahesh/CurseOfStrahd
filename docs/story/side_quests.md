@@ -197,6 +197,24 @@ been turned (Intimidation DC 14) or left at the inn.
   party members on the way. Attention mark `greytooth` (+1).
 - Yevgeni pays the whole bounty, 300 gp, and gives his father's Horn of Valhalla, Silver (rare).
 
+### The Ravens' Ransom (`the_ravens_ransom`, narrative/vallaki/the_ravens_ransom.dialogue; batch 4, level 6)
+
+Once the party knows what the Martikovs are (`keepers_of_the_feather_met`), Urwin's "Heard anything interesting?"
+opens low across the bar: his younger boy, Bray (new NPC), flew out after dark on a dare to look at the castle, and a
+silver cage hangs in a dead pine on the hill trail above Lake Zarovich (prop `raven_cage`) with a raven in it that
+won't change back. It's a trap for whoever comes, and the Keepers can't be seen to. **Escalation:** the count's fowlers
+wait in the branches. Perception DC 13 sees them first; Stealth DC 15 opens the cage before they move; walking up, or a
+failed creep, gives them the surprise (`fowlers_ready`). **Twist:** they didn't want the boy, they wanted to send him
+home: two small marks on his wrist (Insight DC 14) and his eyes on the castle. Remove Curse or a day of daylight and
+prayer (Religion DC 14) clears it on the trail or later at the inn (Bray sits at the kitchen window and listens at
+the cellar door until it's done); Urwin won't pay until he's himself.
+
+- Fight `raven_trap` under the pine: level 6 the Count's Fowler (a vampire spawn at 120 HP), a second fowler and 3
+  swarms of bats, 3,750 XP; level 7 four swarms; below 6 the Fowler at 90 HP and two swarms. Surprised, the autopilot
+  wins 2 of 4 at level 6 and loses two party members a fight. Killing them is a mark on Strahd's attention
+  (`fowlers`, 1 point).
+- Urwin's thanks, once: 200 gp and the mail his grandfather flew in, Elven Chain (rare).
+
 ## The River Ivlis crossroads by day (level 5)
 
 ### The Tinker's Wagon (`the_tinkers_wagon`, narrative/svalich_road/the_tinkers_wagon.dialogue; batch 4)
@@ -529,4 +547,5 @@ Tsolenka Pass: the_frozen_pilgrims.dialogue in full (new speaker Mother Ecaterin
 Village of Barovia: the_burgomasters_hound.dialogue in full (Bildrath; companions and Ireena's interjects; Lupu
 doesn't speak). Batch 4, the
 crossroads by day: the_tinkers_wagon.dialogue in full (new speaker Iosif the Tinker; also Zora's three new lines). Batch 4,
+Vallaki: the_ravens_ransom.dialogue in full (new speakers Bray and the Fowler; also Urwin and Danika). Batch 4,
 Krezk: the_packs_runt.dialogue in full (new speakers Petru and the Grandsire; also the Krezk watchman).

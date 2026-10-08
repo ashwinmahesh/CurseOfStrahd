@@ -97,6 +97,12 @@
       "summary": "His huntsman of four hundred years, beaten at the crossroads by the count's own rule (The Count's Huntsman)."
     },
     {
+      "id": "fowlers",
+      "when": "flag.fowlers_slain",
+      "points": 1,
+      "summary": "His fowlers on the hill trail above Lake Zarovich, killed by the strangers who came for the raven in their cage (The Ravens' Ransom)."
+    },
+    {
       "id": "gulthias_tree",
       "when": "flag.gulthias_tree_burned",
       "points": 2,

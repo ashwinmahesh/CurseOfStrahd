@@ -1,0 +1,19 @@
+{
+  "id": "bray_martikov",
+  "name": "Bray",
+  "title": "Urwin and Danika's Younger Boy",
+  "summary": "Urwin and Danika Martikov's younger son, ten years old and a wereraven like the rest of the family, who flew out of the inn's window after dark on his brother's dare to look at the castle.",
+  "portrait": "toma_sarnov",
+  "sprite": "toma_sarnov",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "wereraven",
+    "keepers_of_the_feather",
+    "vallaki",
+    "child"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

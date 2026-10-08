@@ -768,6 +768,16 @@
       ],
       "dialogue": "vallaki/hunters_at_the_inn:yevgeni",
       "facing": "west"
+    },
+    {
+      "npc": "bray_martikov",
+      "cell": [
+        21,
+        3
+      ],
+      "dialogue": "vallaki/the_ravens_ransom:bray",
+      "when": "quest.the_ravens_ransom == home or quest.the_ravens_ransom == done",
+      "facing": "south"
     }
   ],
   "narration": {
