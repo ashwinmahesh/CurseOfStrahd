@@ -296,15 +296,22 @@ static func backup_title(folder: String) -> String:
 
 ## The keyboard starts on New Save when saving, else on the newest save's Load (Back if there's none).
 func _focus() -> void:
-	var target: Button = _new
+	_grab_focus.call_deferred()
+
+
+## Picked once the list has settled (a delete or a tab rebuilds it), so it's never a row on its way out.
+func _grab_focus() -> void:
+	if _closing or not is_inside_tree():
+		return
+	var target: Button = _new if _new != null and _new.visible else null
 	if target == null:
 		for b in _list.find_children("Act", "Button", true, false):
-			if not b.is_queued_for_deletion():
+			if not b.is_queued_for_deletion() and (b as Button).is_inside_tree():
 				target = b as Button
 				break
 	if target == null:
 		target = _back
-	target.grab_focus.call_deferred()
+	target.grab_focus()
 
 
 ## One save: its picture, its place, what kind of save it is with the day and when, the party, the player's note, and
@@ -343,6 +350,12 @@ func _row(s: Dictionary) -> Control:
 	act.tooltip_text = "Save over this one (you'll be asked first)." if mode == Mode.SAVE else "Load this save."
 	act.custom_minimum_size = Vector2(124, 0)
 	line.add_child(act)
+	# Any of the player's saves can be deleted, after a question; never a backup's copy, nor a live Honour run's save.
+	if home and not _live_honour(slot):
+		var gone := UiParts.small_button("Delete", func() -> void: _confirm_delete(s))
+		gone.name = "Delete"
+		gone.tooltip_text = "Delete this save (you'll be asked first)."
+		line.add_child(gone)
 	var tip := "%s · Day %d · %s\n%s%s\n%s" % [s["location"], int(s["day"]), when(s), s["party"],
 		"\n“%s”" % note if note != "" else "", slot]
 	var row := UiParts.row(line, func() -> Control: return UiParts.rules_tip(kind_of(s), "", tip),
@@ -496,6 +509,37 @@ func _begin(chapter: Dictionary) -> void:
 
 ## The question before a save is written over another: the save it replaces, and Overwrite or Cancel.
 func _confirm(s: Dictionary) -> void:
+	var keeps: Variant = _typed_note()
+	var slot := str(s["slot"])
+	_question(s, "Overwrite this save?", str(keeps) if keeps != null else str(s.get("note", "")),
+		"It's replaced by the game as it is now. Every other save stays as it is.", "Overwrite", func() -> void: _save(slot))
+
+
+## The question before a save is deleted (owner, 2026-10-08: "We should be able to delete save files from the UI"):
+## the save, and Delete or Cancel.
+func _confirm_delete(s: Dictionary) -> void:
+	_question(s, "Delete this save?", str(s.get("note", "")), "It's gone for good, with its picture. Every other save stays as it is.",
+		"Delete", func() -> void: _delete(s))
+
+
+## A live Honour run's one save, which can't be deleted from inside that run (from the title it can).
+func _live_honour(slot: String) -> bool:
+	return get_parent() is PauseMenu and SaveSystem.honour() and slot == SaveSystem.current_slot
+
+
+func _delete(s: Dictionary) -> void:
+	if SaveSystem.delete_save(str(s["slot"])):
+		Audio.sfx("page")
+		_status.text = "Deleted."
+	else:
+		_status.text = "That save is already gone."
+	_fill()
+	_focus()
+
+
+## A question about one save: `title`, the save's place, kind, day and party, its note, `warn`, and `yes_text` (which
+## runs `on_yes`) or Cancel. Escape cancels.
+func _question(s: Dictionary, title: String, note: String, warn_text: String, yes_text: String, on_yes: Callable) -> void:
 	_close_confirm()
 	_ask = Control.new()
 	_ask.name = "Confirm"
@@ -520,7 +564,7 @@ func _confirm(s: Dictionary) -> void:
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 12)
 	p.add_child(col)
-	var q := UiKit.title("Overwrite this save?")
+	var q := UiKit.title(title)
 	q.add_theme_font_size_override("font_size", 26)
 	q.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(q)
@@ -530,23 +574,20 @@ func _confirm(s: Dictionary) -> void:
 		var l := _fit(str(t[0]), int(t[1]), str(t[2]))
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		col.add_child(l)
-	var keeps: Variant = _typed_note()
-	var note := str(keeps) if keeps != null else str(s.get("note", ""))
 	if note != "":
 		var n := _fit("“%s”" % note, 15, "gilt")
 		n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		col.add_child(n)
-	var warn := UiKit.label("It's replaced by the game as it is now. Every other save stays as it is.", 15, "parchment", 500)
+	var warn := UiKit.label(warn_text, 15, "parchment", 500)
 	warn.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(warn)
 	var buttons := HBoxContainer.new()
 	buttons.add_theme_constant_override("separation", 18)
 	buttons.alignment = BoxContainer.ALIGNMENT_CENTER
-	var slot := str(s["slot"])
-	var yes := UiParts.primary_button("Overwrite", func() -> void:
+	var yes := UiParts.primary_button(yes_text, func() -> void:
 		_close_confirm()
-		_save(slot))
-	yes.name = "Overwrite"
+		on_yes.call())
+	yes.name = yes_text
 	buttons.add_child(yes)
 	var no := UiKit.button("Cancel", _close_confirm, 18)
 	no.name = "Cancel"

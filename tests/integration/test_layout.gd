@@ -529,6 +529,16 @@ func test_the_saves_pages() -> void:
 		page.call("_confirm", page.slots()[0])
 		await _frames(2)
 		return root.get("screen"), _close_screen)
+	await _check("the saves page (delete?)", func() -> Variant:
+		root.call("open_screen", "menu", 0)
+		await _frames(1)
+		var menu := root.get("screen") as PauseMenu
+		menu.call("_open_saves", SavesScreen.Mode.LOAD)
+		await _frames(1)
+		var page := menu.find_children("*", "SavesScreen", true, false)[0] as SavesScreen
+		page.call("_confirm_delete", page.slots()[0])
+		await _frames(2)
+		return menu, _close_screen)
 	await _check("the saves page (chapters)", func() -> Variant:
 		root.call("open_screen", "menu", 0)
 		await _frames(1)

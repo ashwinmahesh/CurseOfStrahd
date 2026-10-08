@@ -37,6 +37,11 @@ and the full text is in the row's tooltip.
 - **Backups (Q9)**: loading's third tab, Backups: each update's copies under a heading saying when they were
   kept. A game loaded from a backup has no slot of its own, so its first save makes a new one and the backup stays
   as it was.
+- **Delete** (owner, 2026-10-08: "We should be able to delete save files from the UI"): every one of the player's
+  saves, on either page, has a Delete button that asks "Delete this save?" first; the save and its picture go, and if
+  it was the game's own slot the next save makes a new one. A backup's copies and a chapter can't be deleted, and
+  neither can a live Honour run's one save from inside that run (from the title it can). Back on the title, the
+  column redraws, so Continue never points at a deleted save.
 - **Ways back**: Back, or Escape. Escape closes the overwrite question first, then the page, then (in the game) the
   pause menu. The page hides what opened it (the pause menu's arch, the title's column) until it closes.
 
