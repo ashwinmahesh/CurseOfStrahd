@@ -12530,6 +12530,12 @@
   "recipe": "956cd23797",
   "text": "You want the last light out. I carry one. We have nothing to discuss."
  },
+ "hero_female/05d24a9eb70fb196": {
+  "chars": 27,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Is there anything you want?"
+ },
  "hero_female/062744b993b2b4ae": {
   "chars": 174,
   "model": "eleven_v4",
@@ -12710,6 +12716,12 @@
   "recipe": "956cd23797",
   "text": "Then we leave town before Thursday."
  },
+ "hero_female/11ed3898c1300e81": {
+  "chars": 68,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Petra and Mihail. Isn't the old sexton in the village called Mihail?"
+ },
  "hero_female/12220c0d7ff279e2": {
   "chars": 76,
   "model": "eleven_v4",
@@ -12763,6 +12775,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "And the angel kept the letter under a floorboard."
+ },
+ "hero_female/15e34f0075b71eca": {
+  "chars": 39,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "He didn't lose. He ran. And she stayed."
  },
  "hero_female/166b8dc2fc9ced73": {
   "chars": 73,
@@ -12835,6 +12853,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "I know that page's kind. One reads it to understand, and it reads you back."
+ },
+ "hero_female/1d13665d6268a0bf": {
+  "chars": 71,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "She can't fly. We saw. Whatever she goes after, it won't be the castle."
  },
  "hero_female/1d4de962e0c91f56": {
   "chars": 90,
@@ -12979,6 +13003,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "We took the old man's strongbox in a war he was losing. I'd like that remembered when we're being proud of ourselves."
+ },
+ "hero_female/27dc277991695aa4": {
+  "chars": 65,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "A curse. Someone did this to a man. Remove Curse would answer it."
  },
  "hero_female/27e859764aa4dbec": {
   "chars": 66,
@@ -13221,6 +13251,12 @@
   "recipe": "956cd23797",
   "text": "Someone put the truth in a toy, where only a child would look. That's a confession."
  },
+ "hero_female/3486b1c7bb32f389": {
+  "chars": 43,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "The tree on the hill burned. We watched it."
+ },
  "hero_female/353a3303d4d112f6": {
   "chars": 60,
   "model": "eleven_v4",
@@ -13305,6 +13341,12 @@
   "recipe": "956cd23797",
   "text": "There's a law older than both of yours about children."
  },
+ "hero_female/38f198e1bf21f8f1": {
+  "chars": 31,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "She never looked in the bundle."
+ },
  "hero_female/393cdab6c012b306": {
   "chars": 70,
   "model": "eleven_v4",
@@ -13388,6 +13430,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "I'll keep that one. A tune like that is a key to someone."
+ },
+ "hero_female/3f44f1671b4ad5fa": {
+  "chars": 78,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Arrigal. The castle's man at the camp. The castle buys lists of who's unhappy."
  },
  "hero_female/400f4cd67ec81a98": {
   "chars": 107,
@@ -13641,6 +13689,12 @@
   "model": "eleven_v3",
   "recipe": "8fecc463c3",
   "text": "Not while the wood that sent it is still standing."
+ },
+ "hero_female/4e6438fb2e031b11": {
+  "chars": 51,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Bones on horses, every night. The rumour was right."
  },
  "hero_female/4e7d914467284a55": {
   "chars": 43,
@@ -14164,11 +14218,23 @@
   "recipe": "956cd23797",
   "text": "A furnace that feeds a lamp. Someone built a machine down there."
  },
+ "hero_female/6cb1afddd172b72f": {
+  "chars": 37,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Then we'll get you through that gate."
+ },
  "hero_female/6cc089657a470ec8": {
   "chars": 24,
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "Both. It's usually both."
+ },
+ "hero_female/6ddd75b921190d92": {
+  "chars": 36,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Pidlwick. Look at me. Not the stair."
  },
  "hero_female/6e64621c455cbf45": {
   "chars": 45,
@@ -14187,6 +14253,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "How long ago was this painted? And how are they still that age outside?"
+ },
+ "hero_female/6f34489bb3cdc77b": {
+  "chars": 65,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "She's a child. Whatever they've made of her, she's still a child."
  },
  "hero_female/6f383582a9767567": {
   "chars": 68,
@@ -14357,6 +14429,12 @@
   "recipe": "956cd23797",
   "text": "Old soldiers and their sergeants. You don't shout at people you've stopped caring about."
  },
+ "hero_female/7a7bad5c188602c2": {
+  "chars": 39,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Stelian's ring. He wasn't making it up."
+ },
  "hero_female/7a84780e0bcdd418": {
   "chars": 55,
   "model": "eleven_v4",
@@ -14453,6 +14531,12 @@
   "recipe": "956cd23797",
   "text": "Good. That's good."
  },
+ "hero_female/7f8f2bad77f57877": {
+  "chars": 71,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "That's no vine. That's a blight, and a big one, and it's all one plant."
+ },
  "hero_female/7fe7d1aa7182141e": {
   "chars": 61,
   "model": "eleven_v4",
@@ -14548,6 +14632,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "That's what every dog says about the man with the leash."
+ },
+ "hero_female/832d5a373598dbc0": {
+  "chars": 60,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Urwin says you've been asking which of his guests can fight."
  },
  "hero_female/835124060a9cd105": {
   "chars": 177,
@@ -14681,6 +14771,12 @@
   "recipe": "956cd23797",
   "text": "\"Some sicknesses are cured by tenderness. Others only grow fat on it. Keep this house open to the hurt and shut to him. If I do not come back, don't come looking. Light a candle and go on.\""
  },
+ "hero_female/8b9e0817b1931a15": {
+  "chars": 31,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "You don't have to choose today."
+ },
  "hero_female/8c0e02f669f41595": {
   "chars": 36,
   "model": "eleven_v4",
@@ -14752,6 +14848,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "I said I'd fit. I didn't say I'd go. ...I might go."
+ },
+ "hero_female/9161a24af730f48e": {
+  "chars": 55,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "A toy that walks. In that castle. I'd like to know too."
  },
  "hero_female/91d69a2ae21332f6": {
   "chars": 90,
@@ -14854,6 +14956,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "Small bones. The small ones always weigh the most."
+ },
+ "hero_female/9862e8db5b715cd7": {
+  "chars": 54,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Somebody up at the house will know. Godfrey was there."
  },
  "hero_female/988e5f901f570be6": {
   "chars": 98,
@@ -15151,6 +15259,12 @@
   "recipe": "956cd23797",
   "text": "In the only coin they want. Him."
  },
+ "hero_female/a9645f0ccf992c6f": {
+  "chars": 93,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Pescari's priest. He stayed with the ones who wouldn't leave. That's a hard sort of faithful."
+ },
  "hero_female/a9b0874d94de6807": {
   "chars": 89,
   "model": "eleven_v4",
@@ -15242,6 +15356,12 @@
   "recipe": "956cd23797",
   "text": "d'Avenir. Van Richten's student. You're in his second monograph, on the hunting of werewolves."
  },
+ "hero_female/ad9e77c224980571": {
+  "chars": 82,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "He'll be thrilled. You'll be the best thing that's walked into that shop in years."
+ },
  "hero_female/aeb8eb3d67f4e4ff": {
   "chars": 73,
   "model": "eleven_v4",
@@ -15278,6 +15398,18 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "Then we tell them. Loudly. Twice."
+ },
+ "hero_female/b074463342baac34": {
+  "chars": 28,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "You'd want to take it apart."
+ },
+ "hero_female/b0dbb85da0c2518d": {
+  "chars": 43,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "She's been guarding a joke for forty years."
  },
  "hero_female/b14e522260157662": {
   "chars": 45,
@@ -15401,6 +15533,12 @@
   "recipe": "956cd23797",
   "text": "Do you think their mother will buy pastries again?"
  },
+ "hero_female/b79c161e8429fee8": {
+  "chars": 28,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "And when somebody does look?"
+ },
  "hero_female/b8226219116dc2fc": {
   "chars": 54,
   "model": "eleven_v4",
@@ -15473,6 +15611,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "We heard. Every word of it."
+ },
+ "hero_female/bc0e3b0bdd65f8e2": {
+  "chars": 46,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "We should say them. Out loud. Somebody should."
  },
  "hero_female/bcbe266a474e9d75": {
   "chars": 47,
@@ -15624,6 +15768,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "Every night, testing the doors. They're looking for the weak one."
+ },
+ "hero_female/c587a0cb86be10b3": {
+  "chars": 18,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Till Granny comes?"
  },
  "hero_female/c5ae8336905f9547": {
   "chars": 108,
@@ -15782,6 +15932,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "The Belviews repeat everything you say. Everything. I said \"hello\" and got it back in my own voice from six directions."
+ },
+ "hero_female/d078b56bb2f7c33e": {
+  "chars": 51,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "They didn't want him. They wanted to send him home."
  },
  "hero_female/d08d835564c9b8d4": {
   "chars": 61,
@@ -15971,6 +16127,12 @@
   "recipe": "956cd23797",
   "text": "Every time we crest a hill, there it is. Somebody left a lamp in the window for us, long ago. We only lit it."
  },
+ "hero_female/d8b808feda3d18de": {
+  "chars": 35,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "He's a person. The goat's a person."
+ },
  "hero_female/d8c1770f65e95844": {
   "chars": 52,
   "model": "eleven_v4",
@@ -16121,6 +16283,12 @@
   "recipe": "956cd23797",
   "text": "Eat something first. That's not advice, it's an order."
  },
+ "hero_female/e2d748db8af12605": {
+  "chars": 19,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "That's not a wagon."
+ },
  "hero_female/e30aaa62af6b27d5": {
   "chars": 95,
   "model": "eleven_v4",
@@ -16253,6 +16421,12 @@
   "recipe": "956cd23797",
   "text": "Hold the line here. Nobody gets past to the crowd."
  },
+ "hero_female/edabc44d6779bd78": {
+  "chars": 25,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Then we'll get you there."
+ },
  "hero_female/ee1ae75c11ea3b0c": {
   "chars": 29,
   "model": "eleven_v4",
@@ -16276,6 +16450,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "I like Sir Godfrey. He's the only dead person in Barovia who's apologised to me."
+ },
+ "hero_female/f0040468bdb9981b": {
+  "chars": 49,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Someone comes here as a bird and leaves as a man."
  },
  "hero_female/f0371e5008bf3269": {
   "chars": 27,
@@ -16550,6 +16730,12 @@
   "recipe": "66638cecb8",
   "text": "You want the last light out. I carry one. We have nothing to discuss."
  },
+ "hero_male/05d24a9eb70fb196": {
+  "chars": 27,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Is there anything you want?"
+ },
  "hero_male/062744b993b2b4ae": {
   "chars": 174,
   "model": "eleven_v4",
@@ -16730,6 +16916,12 @@
   "recipe": "66638cecb8",
   "text": "Then we leave town before Thursday."
  },
+ "hero_male/11ed3898c1300e81": {
+  "chars": 68,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Petra and Mihail. Isn't the old sexton in the village called Mihail?"
+ },
  "hero_male/12220c0d7ff279e2": {
   "chars": 76,
   "model": "eleven_v4",
@@ -16783,6 +16975,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "And the angel kept the letter under a floorboard."
+ },
+ "hero_male/15e34f0075b71eca": {
+  "chars": 39,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "He didn't lose. He ran. And she stayed."
  },
  "hero_male/166b8dc2fc9ced73": {
   "chars": 73,
@@ -16855,6 +17053,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "I know that page's kind. One reads it to understand, and it reads you back."
+ },
+ "hero_male/1d13665d6268a0bf": {
+  "chars": 71,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "She can't fly. We saw. Whatever she goes after, it won't be the castle."
  },
  "hero_male/1d4de962e0c91f56": {
   "chars": 90,
@@ -16999,6 +17203,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "We took the old man's strongbox in a war he was losing. I'd like that remembered when we're being proud of ourselves."
+ },
+ "hero_male/27dc277991695aa4": {
+  "chars": 65,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "A curse. Someone did this to a man. Remove Curse would answer it."
  },
  "hero_male/27e859764aa4dbec": {
   "chars": 66,
@@ -17241,6 +17451,12 @@
   "recipe": "66638cecb8",
   "text": "Someone put the truth in a toy, where only a child would look. That's a confession."
  },
+ "hero_male/3486b1c7bb32f389": {
+  "chars": 43,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "The tree on the hill burned. We watched it."
+ },
  "hero_male/353a3303d4d112f6": {
   "chars": 60,
   "model": "eleven_v4",
@@ -17325,6 +17541,12 @@
   "recipe": "66638cecb8",
   "text": "There's a law older than both of yours about children."
  },
+ "hero_male/38f198e1bf21f8f1": {
+  "chars": 31,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "She never looked in the bundle."
+ },
  "hero_male/393cdab6c012b306": {
   "chars": 70,
   "model": "eleven_v4",
@@ -17408,6 +17630,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "I'll keep that one. A tune like that is a key to someone."
+ },
+ "hero_male/3f44f1671b4ad5fa": {
+  "chars": 78,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Arrigal. The castle's man at the camp. The castle buys lists of who's unhappy."
  },
  "hero_male/400f4cd67ec81a98": {
   "chars": 107,
@@ -17661,6 +17889,12 @@
   "model": "eleven_v3",
   "recipe": "b19ebda604",
   "text": "Not while the wood that sent it is still standing."
+ },
+ "hero_male/4e6438fb2e031b11": {
+  "chars": 51,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Bones on horses, every night. The rumour was right."
  },
  "hero_male/4e7d914467284a55": {
   "chars": 43,
@@ -18184,11 +18418,23 @@
   "recipe": "66638cecb8",
   "text": "A furnace that feeds a lamp. Someone built a machine down there."
  },
+ "hero_male/6cb1afddd172b72f": {
+  "chars": 37,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Then we'll get you through that gate."
+ },
  "hero_male/6cc089657a470ec8": {
   "chars": 24,
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "Both. It's usually both."
+ },
+ "hero_male/6ddd75b921190d92": {
+  "chars": 36,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Pidlwick. Look at me. Not the stair."
  },
  "hero_male/6e64621c455cbf45": {
   "chars": 45,
@@ -18207,6 +18453,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "How long ago was this painted? And how are they still that age outside?"
+ },
+ "hero_male/6f34489bb3cdc77b": {
+  "chars": 65,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "She's a child. Whatever they've made of her, she's still a child."
  },
  "hero_male/6f383582a9767567": {
   "chars": 68,
@@ -18377,6 +18629,12 @@
   "recipe": "66638cecb8",
   "text": "Old soldiers and their sergeants. You don't shout at people you've stopped caring about."
  },
+ "hero_male/7a7bad5c188602c2": {
+  "chars": 39,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Stelian's ring. He wasn't making it up."
+ },
  "hero_male/7a84780e0bcdd418": {
   "chars": 55,
   "model": "eleven_v4",
@@ -18473,6 +18731,12 @@
   "recipe": "66638cecb8",
   "text": "Good. That's good."
  },
+ "hero_male/7f8f2bad77f57877": {
+  "chars": 71,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "That's no vine. That's a blight, and a big one, and it's all one plant."
+ },
  "hero_male/7fe7d1aa7182141e": {
   "chars": 61,
   "model": "eleven_v4",
@@ -18568,6 +18832,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "That's what every dog says about the man with the leash."
+ },
+ "hero_male/832d5a373598dbc0": {
+  "chars": 60,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Urwin says you've been asking which of his guests can fight."
  },
  "hero_male/835124060a9cd105": {
   "chars": 177,
@@ -18701,6 +18971,12 @@
   "recipe": "66638cecb8",
   "text": "\"Some sicknesses are cured by tenderness. Others only grow fat on it. Keep this house open to the hurt and shut to him. If I do not come back, don't come looking. Light a candle and go on.\""
  },
+ "hero_male/8b9e0817b1931a15": {
+  "chars": 31,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "You don't have to choose today."
+ },
  "hero_male/8c0e02f669f41595": {
   "chars": 36,
   "model": "eleven_v4",
@@ -18772,6 +19048,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "I said I'd fit. I didn't say I'd go. ...I might go."
+ },
+ "hero_male/9161a24af730f48e": {
+  "chars": 55,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "A toy that walks. In that castle. I'd like to know too."
  },
  "hero_male/91d69a2ae21332f6": {
   "chars": 90,
@@ -18874,6 +19156,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "Small bones. The small ones always weigh the most."
+ },
+ "hero_male/9862e8db5b715cd7": {
+  "chars": 54,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Somebody up at the house will know. Godfrey was there."
  },
  "hero_male/988e5f901f570be6": {
   "chars": 98,
@@ -19171,6 +19459,12 @@
   "recipe": "66638cecb8",
   "text": "In the only coin they want. Him."
  },
+ "hero_male/a9645f0ccf992c6f": {
+  "chars": 93,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Pescari's priest. He stayed with the ones who wouldn't leave. That's a hard sort of faithful."
+ },
  "hero_male/a9b0874d94de6807": {
   "chars": 89,
   "model": "eleven_v4",
@@ -19262,6 +19556,12 @@
   "recipe": "66638cecb8",
   "text": "d'Avenir. Van Richten's student. You're in his second monograph, on the hunting of werewolves."
  },
+ "hero_male/ad9e77c224980571": {
+  "chars": 82,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "He'll be thrilled. You'll be the best thing that's walked into that shop in years."
+ },
  "hero_male/aeb8eb3d67f4e4ff": {
   "chars": 73,
   "model": "eleven_v4",
@@ -19298,6 +19598,18 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "Then we tell them. Loudly. Twice."
+ },
+ "hero_male/b074463342baac34": {
+  "chars": 28,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "You'd want to take it apart."
+ },
+ "hero_male/b0dbb85da0c2518d": {
+  "chars": 43,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "She's been guarding a joke for forty years."
  },
  "hero_male/b14e522260157662": {
   "chars": 45,
@@ -19421,6 +19733,12 @@
   "recipe": "66638cecb8",
   "text": "Do you think their mother will buy pastries again?"
  },
+ "hero_male/b79c161e8429fee8": {
+  "chars": 28,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "And when somebody does look?"
+ },
  "hero_male/b8226219116dc2fc": {
   "chars": 54,
   "model": "eleven_v4",
@@ -19493,6 +19811,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "We heard. Every word of it."
+ },
+ "hero_male/bc0e3b0bdd65f8e2": {
+  "chars": 46,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "We should say them. Out loud. Somebody should."
  },
  "hero_male/bcbe266a474e9d75": {
   "chars": 47,
@@ -19644,6 +19968,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "Every night, testing the doors. They're looking for the weak one."
+ },
+ "hero_male/c587a0cb86be10b3": {
+  "chars": 18,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Till Granny comes?"
  },
  "hero_male/c5ae8336905f9547": {
   "chars": 108,
@@ -19802,6 +20132,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "The Belviews repeat everything you say. Everything. I said \"hello\" and got it back in my own voice from six directions."
+ },
+ "hero_male/d078b56bb2f7c33e": {
+  "chars": 51,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "They didn't want him. They wanted to send him home."
  },
  "hero_male/d08d835564c9b8d4": {
   "chars": 61,
@@ -19991,6 +20327,12 @@
   "recipe": "66638cecb8",
   "text": "Every time we crest a hill, there it is. Somebody left a lamp in the window for us, long ago. We only lit it."
  },
+ "hero_male/d8b808feda3d18de": {
+  "chars": 35,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "He's a person. The goat's a person."
+ },
  "hero_male/d8c1770f65e95844": {
   "chars": 52,
   "model": "eleven_v4",
@@ -20141,6 +20483,12 @@
   "recipe": "66638cecb8",
   "text": "Eat something first. That's not advice, it's an order."
  },
+ "hero_male/e2d748db8af12605": {
+  "chars": 19,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "That's not a wagon."
+ },
  "hero_male/e30aaa62af6b27d5": {
   "chars": 95,
   "model": "eleven_v4",
@@ -20273,6 +20621,12 @@
   "recipe": "66638cecb8",
   "text": "Hold the line here. Nobody gets past to the crowd."
  },
+ "hero_male/edabc44d6779bd78": {
+  "chars": 25,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Then we'll get you there."
+ },
  "hero_male/ee1ae75c11ea3b0c": {
   "chars": 29,
   "model": "eleven_v4",
@@ -20296,6 +20650,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "I like Sir Godfrey. He's the only dead person in Barovia who's apologised to me."
+ },
+ "hero_male/f0040468bdb9981b": {
+  "chars": 49,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Someone comes here as a bird and leaves as a man."
  },
  "hero_male/f0371e5008bf3269": {
   "chars": 27,
