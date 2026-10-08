@@ -60,19 +60,43 @@ func _readied_attack(p: Combatant, target: Combatant) -> CombatResult:
 	return _resolve_attack(p, target, option, {"reaction": true})
 
 
-func _opportunity_attack(p: Combatant, target: Combatant) -> CombatResult:
+## War Caster's Reactive Spell (2024): the spells `p` could cast at `target` instead of an Opportunity Attack: a casting
+## time of an action, aimed at creatures (no area), reaching it, with a slot left if it needs one. [{id, name, level}]
+func reactive_spells(p: Combatant, target: Combatant) -> Array[Dictionary]:
+	var e := enc()
+	var out: Array[Dictionary] = []
+	if not e.features.has_feat(p, "war_caster"):
+		return out
+	var ch := e.spells.caster_char(p)
+	for sp in e.spells.castable(p):
+		var data := Compendium.shared().spell_data(str(sp["id"]))
+		if str(sp["casting"]) != "action" or data.has("area") or bool(data.get("on_hit_spell", false)):
+			continue
+		if not str((data.get("targets", {}) as Dictionary).get("kind", "")) in ["creature", "creature_or_object"]:
+			continue
+		var level := int(sp["level"])
+		if level > 0 and (ch == null or e.spells._lowest_slot(ch, level) == 0):
+			continue
+		if e.spells.range_ft(data, p) < e.distance(p, target):
+			continue
+		out.append({"id": str(sp["id"]), "name": str(data["name"]), "level": level})
+	return out
+
+
+## An Opportunity Attack, or War Caster's spell instead: `choice` "spell:<id>" casts that spell at the creature; with no
+## choice, a War Caster with no melee attack (or whose rule for it is Automatic) answers with its first damaging
+## cantrip.
+func _opportunity_attack(p: Combatant, target: Combatant, choice: String = "") -> CombatResult:
 	var e := enc()
 	var option := e.best_melee_option(p, target)
-	# War Caster's Reactive Spell: a one-action spell at the creature instead (when it has no melee attack, or the
-	# player's rule for it is "auto").
-	if e.features.has_feat(p, "war_caster") and (option.is_empty() or str(p.reaction_rules.get("reactive_spell", "never")) == "auto"):
-		for sp in e.spells.castable(p):
+	var spells := reactive_spells(p, target)
+	if choice.begins_with("spell:") and spells.any(func(x: Dictionary) -> bool: return str(x["id"]) == choice.substr(6)):
+		return e.spells.cast_reactive_spell(p, choice.substr(6), target)
+	if choice == "" and (option.is_empty() or str(p.reaction_rules.get("reactive_spell", "never")) == "auto"):
+		for sp in spells:
 			var data := Compendium.shared().spell_data(str(sp["id"]))
-			if int(sp["level"]) == 0 and str(sp["casting"]) == "action" and (data.has("attack") or data.has("save")) and not data.has("area") \
-					and e.spells.range_ft(data, p) >= e.distance(p, target):
-				p.reaction_available = false
-				e.log.add("reaction", "%s answers with %s (War Caster)" % [p.name(), data["name"]], p.id)
-				return e.spells.cast_free(p, str(sp["id"]), [target], Vector2.INF, {})
+			if int(sp["level"]) == 0 and (data.has("attack") or data.has("save")):
+				return e.spells.cast_reactive_spell(p, str(sp["id"]), target)
 	if option.is_empty():
 		return CombatResult.new()
 	var echo := e.echo_knight.oa_origin(p, target)
