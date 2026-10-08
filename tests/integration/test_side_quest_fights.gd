@@ -320,15 +320,15 @@ func test_corvina_stands_up_out_of_the_unnamed_crypt() -> void:
 			await _frames(2)
 
 
-func test_the_counts_wolves_come_out_of_the_fog_for_costin() -> void:
+func test_the_counts_wolves_come_out_of_the_fog_for_ilarion() -> void:
 	for level: int in [1, 2, 3]:
 		var v := await _boot("into_the_mists_road", 9, level, ["mists_wolves_resolved"])
 		var named: Array[String] = ["Wolf 1"]
 		if level >= 3:
 			named = ["The Grey Leader"]
-		await _fight(v, "costin_wolves", named)
+		await _fight(v, "ilarion_wolves", named)
 		await _end(v)
-		assert_true(bool(GameState.story.get_flag("costin_wolves_beaten", false)))
+		assert_true(bool(GameState.story.get_flag("ilarion_wolves_beaten", false)))
 		root.queue_free()
 		root = null
 		await _frames(2)

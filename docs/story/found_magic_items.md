@@ -28,7 +28,7 @@ Status: ✅ built · ○ planned
 | ✅ | Old Svalich Road, by the headless statues | Longsword of Warning (uncommon) | Search (Perception DC 13): a gate guard's sword in the weeds |
 | ✅ | Old Svalich Road, the wayside shrine | Ring of Mind Shielding (uncommon) | Search (Investigation DC 12): a loose board at the back of the shrine |
 | ✅ | Svalich Woods, the torn carcass | Boots of the Winterlands (uncommon) | Search (Perception DC 12): a traveller's pack under the carcass |
-| ✅ | Costin, at the village well | Winged Boots (uncommon) | Gift: once he's home with his children (The Last Traveller, docs/story/side_quests.md) |
+| ✅ | Ilarion, at the village well | Winged Boots (uncommon) | Gift: once he's home with his children (The Last Traveller, docs/story/side_quests.md) |
 
 ## The Gates of Barovia (side quest, levels 6 and up)
 
