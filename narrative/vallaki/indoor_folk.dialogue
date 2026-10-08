@@ -1,0 +1,24 @@
+# Vallaki's people indoors (lane 29, the interiors sweep, owner 2026-10-08: "some buildings could use a few more
+# random people to make more lively"): two of the Blue Water Inn's regulars, and a woman praying at St. Andral's.
+# Unvoiced until the voice thread casts them.
+
+~ dragan
+Dragan: Sit, sit. Not there, that's Old Kolya's stool, and he'll come back for it if he has to crawl. You're not from here. Good for you. Don't tell the Baron you were happy anywhere else.
+* What's wrong with the Baron? -> dragan_baron
+* Good night. -> END
+
+~ dragan_baron
+Dragan: Nothing. Nothing at all is wrong with the Baron. All will be well. That's the motto. You say it with a smile, or you say it in the stocks.
+-> END
+
+~ oana
+Oana: One cup, once a week, and I make it last the evening. Urwin pours it the same every time. You can set a clock by the man, if anyone in Vallaki still had a clock that worked.
+-> END
+
+~ varvara
+if flag.bones_returned
+Old Varvara: The bones are home. I felt it in the floor this morning, like a stove being lit. Thank the Morninglord. And thank you, if it was you.
+-> END
+endif
+Old Varvara: Somebody took the saint's bones. Father Lucian won't say so, but his face says so. I pray they come home before the dark finds out the door's unlocked.
+-> END

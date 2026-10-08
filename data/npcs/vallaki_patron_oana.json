@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_patron_oana",
+  "name": "Oana",
+  "title": "A drinker at the Blue Water Inn",
+  "summary": "A Vallakian seamstress having her one cup of wine of the week, and making it last.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

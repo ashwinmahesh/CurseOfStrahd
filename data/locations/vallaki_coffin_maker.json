@@ -161,6 +161,56 @@
       "label": "a coffin with a false bottom",
       "model": "broken_boards",
       "item": "slippers_of_spider_climbing"
+    },
+    {
+      "id": "coffin_lid_north",
+      "cell": [
+        5,
+        1
+      ],
+      "label": "A coffin lid against the wall",
+      "model": "coffin_lid",
+      "kind": "decor"
+    },
+    {
+      "id": "coffin_lid_west",
+      "cell": [
+        1,
+        7
+      ],
+      "label": "A coffin lid against the wall",
+      "model": "coffin_lid",
+      "kind": "decor"
+    },
+    {
+      "id": "coffin_lid_east",
+      "cell": [
+        11,
+        7
+      ],
+      "label": "A coffin lid against the wall",
+      "model": "coffin_lid",
+      "kind": "decor"
+    },
+    {
+      "id": "henrik_crucifix_bed",
+      "cell": [
+        17,
+        0
+      ],
+      "label": "A crucifix over the bed",
+      "model": "crucifix",
+      "kind": "decor"
+    },
+    {
+      "id": "henrik_crucifix_door",
+      "cell": [
+        13,
+        2
+      ],
+      "label": "A crucifix nailed up by the door",
+      "model": "crucifix",
+      "kind": "decor"
     }
   ],
   "containers": [

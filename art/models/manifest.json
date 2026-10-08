@@ -7316,6 +7316,140 @@
         "pal_walnut"
       ],
       "triangles": 716
+    },
+    "washstand": {
+      "file": "art/models/washstand.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "washstand"
+      ],
+      "size": [
+        0.5,
+        0.93,
+        0.386
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_ivory",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 328
+    },
+    "bunting": {
+      "file": "art/models/bunting.glb",
+      "mount": "wall",
+      "stands_for": [
+        "bunting"
+      ],
+      "size": [
+        0.926,
+        0.519,
+        0.036
+      ],
+      "materials": [
+        "pal_flame",
+        "pal_tan",
+        "pal_wick"
+      ],
+      "triangles": 354
+    },
+    "festival_cloth": {
+      "file": "art/models/festival_cloth.glb",
+      "mount": "free",
+      "stands_for": [
+        "festival_cloth"
+      ],
+      "size": [
+        0.545,
+        0.94,
+        0.72
+      ],
+      "materials": [
+        "pal_candle",
+        "pal_flame",
+        "pal_walnut",
+        "pal_wick"
+      ],
+      "triangles": 756
+    },
+    "toy_shelf": {
+      "file": "art/models/toy_shelf.glb",
+      "mount": "wall",
+      "stands_for": [
+        "toy_shelf"
+      ],
+      "size": [
+        0.89,
+        0.81,
+        0.2
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_candle",
+        "pal_crimson",
+        "pal_ink",
+        "pal_moon_blue",
+        "pal_moss",
+        "pal_rose",
+        "pal_skin",
+        "pal_umber",
+        "pal_vellum"
+      ],
+      "triangles": 1048
+    },
+    "coffin_lid": {
+      "file": "art/models/coffin_lid.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "coffin_lid"
+      ],
+      "size": [
+        0.54,
+        1.314,
+        0.233
+      ],
+      "materials": [
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 40
+    },
+    "crucifix": {
+      "file": "art/models/crucifix.glb",
+      "mount": "wall",
+      "stands_for": [
+        "crucifix"
+      ],
+      "size": [
+        0.26,
+        0.42,
+        0.045
+      ],
+      "materials": [
+        "pal_walnut",
+        "pal_wick"
+      ],
+      "triangles": 68
+    },
+    "lute": {
+      "file": "art/models/lute.glb",
+      "mount": "free",
+      "stands_for": [
+        "lute"
+      ],
+      "size": [
+        0.3,
+        0.798,
+        0.374
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 220
     }
   }
 }
