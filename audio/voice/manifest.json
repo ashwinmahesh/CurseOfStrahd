@@ -24699,6 +24699,20 @@
   "recipe": "9e6aefb001",
   "text": "Ilya's out of the house! Everybody says it was you. Is it true you've been past Vallaki? Is it true there's a lake?"
  },
+ "krezk_goatherd/9f6b06a40bc831cf": {
+  "chars": 120,
+  "direction": "[dry, wry, amused]",
+  "model": "eleven_v3",
+  "recipe": "1fae5c6eba",
+  "text": "My best billy turned into a ferryman. I've lost a goat and gained a man who's very good with goats. I'm calling it even."
+ },
+ "krezk_goatherd/a9b199ce4228f24a": {
+  "chars": 178,
+  "direction": "[dry, puzzled, wry]",
+  "model": "eleven_v3",
+  "recipe": "1fae5c6eba",
+  "text": "Turned up last spring, already grown, with a woman's ring jammed down on his horn. Nobody's been brave enough to take it off him. He looks at you like he's waiting for something."
+ },
  "krezk_goatherd/db5e1700b5f7edc6": {
   "chars": 156,
   "direction": "[dry, fond]",
@@ -32232,6 +32246,13 @@
   "recipe": "dd92281f92",
   "text": "The wheel shrieks, the sluice opens, and black water floods the firebox. The green fire screams like a kettle and goes out. All through the dungeon, the green lamps go out with it."
  },
+ "narrator/11c6536744901780": {
+  "chars": 140,
+  "direction": "[quiet, moved]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "When you let go, he puts his forehead against your chest and leaves it there, the way a man leans on a wall when he can't stand up any more."
+ },
  "narrator/11f74107c02174eb": {
   "chars": 81,
   "model": "eleven_v4",
@@ -36730,6 +36751,13 @@
   "recipe": "f60908d226",
   "text": "Behind the winch, on its hook, the watch horn. Its mouth is cracked from the last time someone blew it too hard."
  },
+ "narrator/3b94633aefc752f6": {
+  "chars": 126,
+  "direction": "[quiet, grim]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A heap of burned straw and wet silk the size of a haystack, and a ring of black ground around it where nothing will grow back."
+ },
  "narrator/3ba12255bf0a36f4": {
   "chars": 79,
   "model": "eleven_v4",
@@ -40615,6 +40643,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You leave it for whoever comes looking. You suspect nobody will."
+ },
+ "narrator/61796f27eabbb2c3": {
+  "chars": 81,
+  "direction": "[quiet, gentle]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He has a scar on his forehead the shape of a horn, and a silver ring in his fist."
  },
  "narrator/617fc4419a7b9058": {
   "chars": 94,
@@ -45005,6 +45040,13 @@
   "recipe": "dd92281f92",
   "text": "Names scratched in the plaster by the door, at a child's height. Dozens of them. Beside the last one, someone has drawn a sun with a smiling face."
  },
+ "narrator/8ba52da1373083a5": {
+  "chars": 100,
+  "direction": "[quiet, uneasy, moved]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Goats have strange square eyes. These are a man's, behind the square: tired and furious and begging."
+ },
  "narrator/8bc0f0c534f69bd6": {
   "chars": 104,
   "model": "eleven_v4",
@@ -45090,6 +45132,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "On her flank, burned in fresh, is a mark you have seen before: the arms over the gates of the castle on its rock."
+ },
+ "narrator/8c5439ce614ca073": {
+  "chars": 129,
+  "direction": "[quiet, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He doesn't speak like a goat. He speaks like a boatman who's been shouting for a year and has stopped expecting anyone to answer."
  },
  "narrator/8c570b676df2bf8f": {
   "chars": 215,
@@ -45522,6 +45571,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The Baron's watch closes ranks around the dais, spears levelled at the crowd, and at you."
+ },
+ "narrator/8fd0d28cc8c15a57": {
+  "chars": 214,
+  "direction": "[hushed, eerie, slow]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "At the heart of the scarecrow field stands one that isn't like the others: twice a man's height, its body a heap of rotted silk and lace, white and yellow and grey, with faces in the stitching if you look too long."
  },
  "narrator/8fee80e7d4987494": {
   "chars": 176,
@@ -47010,6 +47066,13 @@
   "recipe": "dd92281f92",
   "text": "Wooden soldiers with hollow eyes. Rag dolls with button smiles. A carved wolf that, when you press its back, opens its mouth and keeps it open."
  },
+ "narrator/9f5462d97e8d4bc0": {
+  "chars": 99,
+  "direction": "[hushed, eerie, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "One of the faces is a woman's, younger than the others. Her eyes are shut, and her mouth is moving."
+ },
  "narrator/9f649d03b26f79c7": {
   "chars": 168,
   "model": "eleven_v4",
@@ -48409,11 +48472,25 @@
   "recipe": "dd92281f92",
   "text": "The great stair arrives at a landing hung with smoke-stained hangings. Every door on the floor is shut except the one to the study, which stands a little open, the way a door does when someone left in a hurry."
  },
+ "narrator/ac1d08a060d609fe": {
+  "chars": 91,
+  "direction": "[dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A goat. A large, ill-tempered goat with one horn. It stares back until you look away first."
+ },
  "narrator/ac23378b38092f9c": {
   "chars": 162,
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The last entry is scratched into the copper in two hands. The first is a warden's. The second is very fine and very sure, and you have seen it before, on letters."
+ },
+ "narrator/ac379c14e8b5cac1": {
+  "chars": 110,
+  "direction": "[hushed, ominous, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "It stands up off its post. It is much taller standing. Across the field, every other scarecrow lifts its head."
  },
  "narrator/ac3e64b9228f4f14": {
   "chars": 132,
@@ -48567,6 +48644,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "His eyes find Ireena, and every candle in the chapel leans toward her, all at once, as if a door had opened behind her. Then they straighten."
+ },
+ "narrator/ad8571fccbd704b3": {
+  "chars": 180,
+  "direction": "[tense, then moved]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The curse comes off him like a wet coat. One moment there's a goat in the gap of the pen; the next there's a big bearded man on his hands and knees in the straw, naked and shaking."
  },
  "narrator/ad9c5ef372669b84": {
   "chars": 101,
@@ -51962,6 +52046,13 @@
   "recipe": "f60908d226",
   "text": "He ties a black ribbon to the gate, and doesn't say anything for a long time."
  },
+ "narrator/cef1a91b3506196e": {
+  "chars": 130,
+  "direction": "[quiet, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He lets you. He stands very still and lets you turn the ring on his horn. Engraved inside it, worn nearly smooth: D. AND V. BEREZ."
+ },
  "narrator/cf0056375b972cbc": {
   "chars": 140,
   "model": "eleven_v4",
@@ -52642,6 +52733,13 @@
   "recipe": "dd92281f92",
   "text": "The book on the desk is closed now. It hasn't crumbled."
  },
+ "narrator/d5c827da4c93acb0": {
+  "chars": 212,
+  "direction": "[ominous, urgent, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The Rag Queen steps down off her post, twice the height of a man, all rotten silk and lace and faces in the stitching. Two of the faces tear free of her and come screaming across the field in their wedding veils."
+ },
  "narrator/d5d06b74d50a2e9c": {
   "chars": 166,
   "model": "eleven_v4",
@@ -52728,6 +52826,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The bunting is gone, and the portraits are stacked face to the wall. The house smells of someone else's tea."
+ },
+ "narrator/d68b30802831dcc2": {
+  "chars": 162,
+  "direction": "[wry, amused]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He hits you square in the hip, hard enough to sit you down in the straw, and goes back to guarding the gap. Stelian, across the pen, very carefully doesn't laugh."
  },
  "narrator/d6aa939eaf70d64d": {
   "chars": 108,
@@ -55568,6 +55673,13 @@
   "recipe": "dd92281f92",
   "text": "A long table scarred by knives, with three stools pulled up to it: one tall and narrow, one wide and sagging, one with a cushion on it."
  },
+ "narrator/f31dc3a990ab5cc4": {
+  "chars": 68,
+  "direction": "[hushed, chilling]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "As you come closer, its head turns all the way round to look at you."
+ },
  "narrator/f320ad25dffe543d": {
   "chars": 119,
   "model": "eleven_v4",
@@ -55610,6 +55722,13 @@
   "recipe": "dd92281f92",
   "text": "At the back of the cellar, a dark gap in the brickwork where a wine merchant sits among his bottles."
  },
+ "narrator/f3d19a90d82813f7": {
+  "chars": 97,
+  "direction": "[wry, astonished]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Stelian drops his crook. Somebody in the south row screams, and then laughs, and then can't stop."
+ },
  "narrator/f3e3090fa8f9f6bc": {
   "chars": 97,
   "direction": "[dry, unsettled]",
@@ -55628,6 +55747,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A dozen goats in a pen of split rails, and a billy with one horn who stands between you and the nannies and stares with absolute conviction."
+ },
+ "narrator/f3ec691a50417f1f": {
+  "chars": 162,
+  "direction": "[wry, observant]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The one-horned billy plants his feet in the gap of the pen and lowers his head at you. On his one horn, jammed down hard against the skull, is a thin silver ring."
  },
  "narrator/f4031d4b4c6686b6": {
   "chars": 115,
