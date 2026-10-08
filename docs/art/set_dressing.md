@@ -214,7 +214,7 @@ things to find, more people to talk to", and "the great tent... should be wayyy 
 - **Big pieces clear what's under them.** A building-sized 3D piece hides the trees and the board's own furniture on
   every square its footprint covers, however big (it was two squares each way at most).
 - **Fences run along their rails** (catalog `runs_along`): a pen's east and west rails go up the map. A place's
-  `low_cover.<place>` makes its '=' squares fences (Tser Pool's horse pen).
+  `low_cover.<place>` makes its '=' squares fences (Tser Pool's horse pen) or tumbled field walls (the open road).
 - **On the map.** Catalog `map_marks` draws building-sized pieces on the minimap over their squares: the great tent a
   striped round of its canvas colours, tents smaller rounds, wagons in their paint.
 - **Madam Eva's great tent** is its own model (`great_tent`, blender/models_3d.py): patched canvas on two poles, seven

@@ -199,6 +199,9 @@ func _build() -> void:
 		_flat_floors_cast_no_shadow()
 	if mood.has("water"):
 		_build_water()
+	for f: Variant in mood.get("falls", []):
+		# A river going over an edge (Tser Falls): a sheet of falling water in the place's water colours.
+		board.add_child(Waterfall.build(f as Dictionary, mood.get("water", {}) as Dictionary))
 	if outdoors and not (mood.get("surround", {}) as Dictionary).is_empty():
 		land = AtmosphereLand.build(board, mood, _rng, water)
 		add_child(land.root)

@@ -189,3 +189,22 @@ func test_a_wagon_is_one_cart_in_a_fight() -> void:
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	root.queue_free()
 	await _frames(2)
+
+
+## The Svalich Road against its descriptions (lane 28): Tser Falls has its falls, the Ivlis runs under the crossroads
+## bridge the colour of strong tea, and Lake Zarovich behind the Vistani camp is black.
+func test_the_svalich_road_matches_its_words() -> void:
+	var falls := _view("tser_falls")
+	await _frames(1)
+	assert_false(falls.board.find_children("Waterfall", "MeshInstance3D", true, false).is_empty(), "the river goes over the edge")
+	falls.queue_free()
+	var cross := _view("svalich_crossroads")
+	await _frames(1)
+	assert_true(cross.grid.has_flag(Vector2i(8, 5), CombatGrid.WATER), "the Ivlis is water under the bridge")
+	var tea := cross.atmosphere.water.get_shader_parameter("shallow") as Color
+	assert_true(tea.r > tea.b, "the colour of strong tea, not lake blue: %s" % tea)
+	cross.queue_free()
+	var camp := _view("vallaki_vistani_camp")
+	await _frames(1)
+	assert_true((camp.atmosphere.water.get_shader_parameter("deep") as Color).get_luminance() < 0.06, "black water")
+	camp.queue_free()

@@ -6,32 +6,32 @@
   "text": "A stone bridge carries the road over the Ivlis. East lies the village of Barovia, west Tser Pool and Vallaki, north the river track to the falls; south, a steeper road climbs toward the castle on its cliff. A gallows stands beside the signpost, and behind it a field of unmarked mounds.",
   "map": {
     "rows": [
-      "########  ##############..##############",
-      "########  ##############..##############",
-      "####...~  ~##.......................####",
-      "####...~  ~#.=.~..~........##.......####",
-      "######.~  ~..~..............#....##.####",
-      "#####..~  ~......~.=..............#.####",
-      "####...~  ~.~...=.............#.....####",
-      "####...~  ~...~.....222........~....####",
-      "####..#~  ~.=...~...222.............####",
-      "####...~  ~.........222.............####",
-      "####...~  ~..........1.......===....####",
+      "########ww##############..##############",
+      "########ww##############..##############",
+      "####...~ww~##.......................####",
+      "####...~ww~#.=.~..~........##.......####",
+      "######.~ww~..~..............#....##.####",
+      "#####..~ww~......~.=..............#.####",
+      "####...~ww~.~...=.............#.....####",
+      "####...~ww~...~.....222........~....####",
+      "####..#~ww~.=...~...222.............####",
+      "####...~ww~.........222.............####",
+      "####...~ww~..........1.......===....####",
       "####....==..........................####",
       "........................................",
       "........................................",
       "####....==..........................####",
-      "####...~  ~..~...............==.....####",
-      "####...~  ~.~.............~~........####",
-      "####.#.~  ~.........~...#~..........####",
-      "####...~  ~...#....~.............##.####",
-      "####...~  ~................##.....#.####",
-      "#####..~  ~#.........##.....#.......####",
-      "######.~  ~##.........#............#####",
-      "####...~  ~..#..................#...####",
-      "####...~  ~.........................####",
-      "########  ######..######################",
-      "########  ######..######################"
+      "####...~ww~..~...............==.....####",
+      "####...~ww~.~.............~~........####",
+      "####.#.~ww~.........~...#~..........####",
+      "####...~ww~...#....~.............##.####",
+      "####...~ww~................##.....#.####",
+      "#####..~ww~#.........##.....#.......####",
+      "######.~ww~##.........#............#####",
+      "####...~ww~..#..................#...####",
+      "####...~ww~.........................####",
+      "########ww######..######################",
+      "########ww######..######################"
     ],
     "theme": "svalich_road",
     "light": "dim",
@@ -316,6 +316,213 @@
       "label": "a hollow behind the milestone",
       "model": "rubble",
       "item": "wand_of_web"
+    },
+    {
+      "id": "ivlis_parapet_1",
+      "cell": [
+        8,
+        11
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet"
+    },
+    {
+      "id": "ivlis_parapet_2",
+      "cell": [
+        8,
+        14
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet"
+    },
+    {
+      "id": "ivlis_parapet_3",
+      "cell": [
+        9,
+        14
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet"
+    },
+    {
+      "id": "gallows_mound_1",
+      "cell": [
+        17,
+        3
+      ],
+      "kind": "decor",
+      "model": "grave_mound",
+      "when": "not flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_open_1",
+      "cell": [
+        17,
+        3
+      ],
+      "kind": "decor",
+      "model": "grave_open",
+      "when": "flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_2",
+      "cell": [
+        19,
+        3
+      ],
+      "kind": "decor",
+      "model": "grave_mound",
+      "when": "not flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_open_2",
+      "cell": [
+        19,
+        3
+      ],
+      "kind": "decor",
+      "model": "grave_open",
+      "when": "flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_3",
+      "cell": [
+        12,
+        5
+      ],
+      "kind": "decor",
+      "model": "grave_mound",
+      "when": "not flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_open_3",
+      "cell": [
+        12,
+        5
+      ],
+      "kind": "decor",
+      "model": "grave_open",
+      "when": "flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_4",
+      "cell": [
+        17,
+        7
+      ],
+      "kind": "decor",
+      "model": "grave_mound",
+      "when": "not flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_open_4",
+      "cell": [
+        17,
+        7
+      ],
+      "kind": "decor",
+      "model": "grave_open",
+      "when": "flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_5",
+      "cell": [
+        19,
+        7
+      ],
+      "kind": "decor",
+      "model": "grave_mound",
+      "when": "not flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_open_5",
+      "cell": [
+        19,
+        7
+      ],
+      "kind": "decor",
+      "model": "grave_open",
+      "when": "flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_6",
+      "cell": [
+        12,
+        9
+      ],
+      "kind": "decor",
+      "model": "grave_mound",
+      "when": "not flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_open_6",
+      "cell": [
+        12,
+        9
+      ],
+      "kind": "decor",
+      "model": "grave_open",
+      "when": "flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_7",
+      "cell": [
+        14,
+        9
+      ],
+      "kind": "decor",
+      "model": "grave_mound",
+      "when": "not flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_open_7",
+      "cell": [
+        14,
+        9
+      ],
+      "kind": "decor",
+      "model": "grave_open",
+      "when": "flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_8",
+      "cell": [
+        16,
+        9
+      ],
+      "kind": "decor",
+      "model": "grave_mound",
+      "when": "not flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_open_8",
+      "cell": [
+        16,
+        9
+      ],
+      "kind": "decor",
+      "model": "grave_open",
+      "when": "flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_9",
+      "cell": [
+        18,
+        9
+      ],
+      "kind": "decor",
+      "model": "grave_mound",
+      "when": "not flag.crossroads_dead_cleared"
+    },
+    {
+      "id": "gallows_mound_open_9",
+      "cell": [
+        18,
+        9
+      ],
+      "kind": "decor",
+      "model": "grave_open",
+      "when": "flag.crossroads_dead_cleared"
     }
   ],
   "encounters": [

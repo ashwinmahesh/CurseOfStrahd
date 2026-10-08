@@ -82,7 +82,11 @@ anyone touching this file.
   turns the colour of the road. A row of the map's frame trees standing across a lake becomes open water (the rules
   still wall the edge off). A mood's water can be still and dark (lane 28, owner report 2026-10-08: "Tser Pool is
   black and perfectly still"): `ripples` (0 for none), `texture` (how much of the water texture's colour shows),
-  `reflect` (how much of the sky it shows), and `map` / `map_edge` for its colour on the minimap.
+  `reflect` (how much of the sky it shows), and `map` / `map_edge` for its colour on the minimap. The crossroads'
+  Ivlis is the colour of strong tea, Lake Zarovich behind the Vistani camp black.
+- **Waterfalls.** A mood's `falls` (world/look/waterfall.gd) pours a river over an edge: a curved sheet of falling
+  water in the place's water colours, white streaks racing down it, foam at the lip and spray at the foot where the
+  mist swallows it. Tser Falls has one over its gorge (its empty squares are a drop, `surround.void`).
 - **Cloud shadows** drift over the ground; broad light and dark patches break up the ground texture so it doesn't
   read as tiles.
 - **Contact shadows** (Godot's SSAO) ground props, walls and houses.

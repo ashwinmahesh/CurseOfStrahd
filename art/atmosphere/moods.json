@@ -211,7 +211,21 @@
           "kind": "crows",
           "amount": 6
         }
-      ]
+      ],
+      "water": {
+        "deep": "peat",
+        "shallow": "umber",
+        "foam": "bone_dark",
+        "glint": "candle",
+        "flow": [
+          0.0,
+          0.35
+        ],
+        "texture": 0.25,
+        "reflect": 0.6,
+        "map": "peat",
+        "map_edge": "umber"
+      }
     },
     "tser_falls": {
       "like": "svalich_woods",
@@ -223,14 +237,28 @@
       },
       "surround": {
         "rise": 6.0,
-        "hills": 2.5
+        "hills": 2.5,
+        "void": "drop"
       },
       "water": {
         "flow": [
           0.0,
           0.45
         ]
-      }
+      },
+      "falls": [
+        {
+          "at": [
+            17.5,
+            2.0
+          ],
+          "width": 3.2,
+          "drop": 7.0,
+          "lean": 0.6,
+          "facing": "south",
+          "speed": 1.8
+        }
+      ]
     },
     "tser_pool": {
       "like": "svalich_woods",
@@ -459,7 +487,22 @@
           "rim": "flame",
           "size": 0.08
         }
-      ]
+      ],
+      "water": {
+        "deep": "void",
+        "shallow": "night_deep",
+        "foam": "slate",
+        "glint": "moonlight",
+        "flow": [
+          0.03,
+          0.01
+        ],
+        "ripples": 0.15,
+        "texture": 0.1,
+        "reflect": 0.5,
+        "map": "void",
+        "map_edge": "slate"
+      }
     },
     "wizard_of_wines": {
       "like": "barovia_village",
