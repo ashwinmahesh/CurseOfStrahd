@@ -5129,11 +5129,53 @@
   "recipe": "db24af9d10",
   "text": "Keep to the fire, stranger. I watch the road so you don't have to. And so I see who comes down it."
  },
+ "clovin_belview/0bc6d48454990d53": {
+  "chars": 144,
+  "direction": "[sly, conspiratorial]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "A hood, then. Monks go down sometimes, to the shrine. Nobody looks under a monk's hood. They're afraid of what's under there, and they're right."
+ },
+ "clovin_belview/180f71f838d74a6c": {
+  "chars": 199,
+  "direction": "[quiet, moved, tender]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Great-uncle Pavel comes up on Sundays with soup. Mother came out to meet him. She hasn't come out in eleven years. They sat on the step and didn't say much, and he held the hand with the claws on it."
+ },
  "clovin_belview/1e969f09f8611c9b": {
   "chars": 161,
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "Well. Well, now. Clovin Belview, of the Abbey of St. Markovia, up over Krezk. If you're ever that way, I'll pour you something. If there's ever anything to pour."
+ },
+ "clovin_belview/1f574cba44ff7bcb": {
+  "chars": 74,
+  "direction": "[bright, comic, wry]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Krezk! Lovely town. Big wall. I've seen a great deal of the outside of it."
+ },
+ "clovin_belview/1f60daef828efe21": {
+  "chars": 80,
+  "direction": "[panicky, nervous, comic]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "I've changed my mind. I'd like to go home. Which way's home? Up? It's always up."
+ },
+ "clovin_belview/2b3631f392cdc037": {
+  "chars": 120,
+  "direction": "[nervous, polite, comic]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Good evening. I've come down from the abbey. Yes. That one. I won't keep you. I know you've all got gates to get behind."
+ },
+ "clovin_belview/2fd819bc408a8355": {
+  "chars": 127,
+  "direction": "[nervous, deadpan, comic]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Good evening. I'm Clovin. I'm a Belview. I know. You can tell by the ear. If you can't tell by the ear, I'll show you the hand."
  },
  "clovin_belview/30d45580d951e101": {
   "chars": 176,
@@ -5158,6 +5200,13 @@
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "Keep it. No. Read it to him. Read it to him when he's happy. I want to see his face."
+ },
+ "clovin_belview/4ae5d321e8dc7c52": {
+  "chars": 105,
+  "direction": "[grateful, wry, warm]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "There's money in the hat. Not a lot. More than the Abbot ever paid. Take it. You got me through the gate."
  },
  "clovin_belview/4db6bbd001e48e3c": {
   "chars": 134,
@@ -5189,6 +5238,13 @@
   "recipe": "efd7d52c86",
   "text": "She went to kill him. The saint. She didn't go to make friends with him. He told us she went to make friends."
  },
+ "clovin_belview/6c5e062754e1ec05": {
+  "chars": 131,
+  "direction": "[whispered, nervous]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "(From somewhere in the hood, very quietly.) If this goes badly, I was never here. I'm a rumour. Nobody throws a bucket at a rumour."
+ },
  "clovin_belview/6e125eacb85807e1": {
   "chars": 11,
   "model": "eleven_v3",
@@ -5200,6 +5256,20 @@
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "I drove her down to the castle. Vasilka. She sat up straight the whole way and asked me what the weather was like at weddings. I said lovely. I'm a liar now. I'm a lot of things."
+ },
+ "clovin_belview/76a89fd5977a8189": {
+  "chars": 122,
+  "direction": "[cheerful, wry]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "I'm writing new material. It's all about soup now. The cells think it's hilarious. The cells think everything's hilarious."
+ },
+ "clovin_belview/773e7c937d224d89": {
+  "chars": 135,
+  "direction": "[overjoyed, amazed, emotional]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "There's money in the hat. Real money. Krezk paid to laugh. Nobody up there's going to believe me. Take it. You got me through the gate."
  },
  "clovin_belview/77ad4dcb526f4cdb": {
   "chars": 40,
@@ -5213,11 +5283,32 @@
   "recipe": "efd7d52c86",
   "text": "A dress? Up here? The nuns left in a hurry; they left everything. The matron's room, in the wards, past the cots. It's locked. He locked it. He locks the things he doesn't want to think about."
  },
+ "clovin_belview/7e30703ba181e347": {
+  "chars": 126,
+  "direction": "[humble, quiet, pleading]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "I will, sir. I'll go back up. Only I've got one joke left, and it's yours. It's a Krezk joke. Let me give it back and I'll go."
+ },
+ "clovin_belview/7f1bc4a01bcec43c": {
+  "chars": 108,
+  "direction": "[sheepish, earnest, comic]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "The bucket. Yes. That was me. It was a very good bucket. Krezk has excellent buckets. I said so at the time."
+ },
  "clovin_belview/82ff0234057edd10": {
   "chars": 41,
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "No. But he says it with such a kind face."
+ },
+ "clovin_belview/8731475a223d44c6": {
+  "chars": 145,
+  "direction": "[earnest, hopeful, quiet]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Forty years I've written jokes on the backs of his letters. I want to tell them once to people who could choose not to laugh. Real people. Krezk."
  },
  "clovin_belview/89736f91e28848e4": {
   "chars": 107,
@@ -5237,6 +5328,13 @@
   "recipe": "efd7d52c86",
   "text": "The Abbot will be disappointed. He doesn't shout when he's disappointed. He just gets very kind. You don't want him kind."
  },
+ "clovin_belview/9354c21a27e41118": {
+  "chars": 97,
+  "direction": "[hopeful, then wry]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Would you? The burgomaster's the one who says yes. He's never said yes to anything. I've watched."
+ },
  "clovin_belview/939f3fdf6903e73c": {
   "chars": 155,
   "model": "eleven_v3",
@@ -5248,6 +5346,20 @@
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "Vasilka. That's her name; he picked it. I carried half of her up the mountain myself, in a sack, at night, from the graves by the pool. Don't ask which half."
+ },
+ "clovin_belview/b86b499f834f9a1e": {
+  "chars": 124,
+  "direction": "[stunned, delighted, emotional]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "A great-uncle. I've got a great-uncle. Mother will want to meet you. She doesn't come out much. She's had nine improvements."
+ },
+ "clovin_belview/b9d2b2764186ef8d": {
+  "chars": 82,
+  "direction": "[deflated, wry]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "No? No. Well. That's the burgomaster. He's very consistent. It's his best quality."
  },
  "clovin_belview/bc12232840d1eb40": {
   "chars": 160,
@@ -5267,11 +5379,67 @@
   "recipe": "efd7d52c86",
   "text": "I've had three improvements. You can see two of them. Don't ask about the third. Mother's had nine. She doesn't come out much."
  },
+ "clovin_belview/c9c8c270ab155600": {
+  "chars": 38,
+  "direction": "[deadpan, punchline]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "And they're both still standing there."
+ },
+ "clovin_belview/cab451551e305eeb": {
+  "chars": 138,
+  "direction": "[comic timing, nervous]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "So the Abbot says to me, Clovin, every creature can be improved. And I say, Father, what about the wine? And he says: especially the wine."
+ },
+ "clovin_belview/cb825d340665a1db": {
+  "chars": 51,
+  "direction": "[wry, resigned]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Then it's a very short show, and you carry me home."
+ },
+ "clovin_belview/d10e717489051d00": {
+  "chars": 26,
+  "direction": "[nervous, trailing off]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "And then the Abbot says..."
+ },
+ "clovin_belview/e5385cd8e8191da1": {
+  "chars": 155,
+  "direction": "[quiet, tender]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "My grandmother taught me this one. Floarea. She said it was a Krezk joke. She said it was the only thing she brought up the mountain, apart from the cough."
+ },
  "clovin_belview/e7df1386885592f1": {
   "chars": 191,
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "Trouble, they said. Didn't open the gate, didn't sell me a drop. Somebody shouted from a window to go home, there was trouble, and to tell everyone. So. I'm telling everyone. You're everyone."
+ },
+ "clovin_belview/e91f9cd722ba4597": {
+  "chars": 135,
+  "direction": "[storytelling, comic timing]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "A Krezker dies and goes up to the gate of the morning. The saint on the gate says, \"Who's there?\" And the Krezker says, \"Who's asking?\""
+ },
+ "clovin_belview/e9f3c89cfdccb524": {
+  "chars": 207,
+  "direction": "[earnest, shy, rambling]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Can I tell you something? I'm funny. I think I'm funny. Mother laughs at everything, but that's the improvements. The loud ones in the cells laugh at nothing. The Abbot says I'm not funny. He says it kindly."
+ },
+ "clovin_belview/eb5c2a167a4e37ac": {
+  "chars": 132,
+  "direction": "[quiet, hopeful, shaky]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "My grandmother. Floarea Belview, two doors down from the burgomaster's. She went up the mountain with the cough when she was a girl."
  },
  "clovin_belview/f279f463e2ca0b33": {
   "chars": 129,
@@ -5279,11 +5447,25 @@
   "recipe": "efd7d52c86",
   "text": "You! The people from the road. With the wheel. Well. Well, now. Come in out of the wind; it gets up here before anyone else does."
  },
+ "clovin_belview/f714489ff17b29b8": {
+  "chars": 152,
+  "direction": "[sad, wistful]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Krezk won't open its gate for a Belview. We were Krezk folk once, Grandmother said. She taught me a Krezk joke. I've never told it to anyone from Krezk."
+ },
  "clovin_belview/fa22b8e2f634799f": {
   "chars": 163,
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "You killed him. In his own chapel. I swept up after. There wasn't much; it went to light. Mother says we'll go down to Krezk. Krezk won't have us. We'll go anyway."
+ },
+ "clovin_belview/fc28a315c1b1a159": {
+  "chars": 198,
+  "direction": "[deadpan, self-deprecating, comic timing]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "I've had three improvements. You can see two of them. The third, I'll be honest, I'm not sure about either. Some mornings I wake up and I bark. Mother says that isn't an improvement. That's just me."
  },
  "clovin_belview/fd677d41fd2748a5": {
   "chars": 126,
@@ -6181,11 +6363,25 @@
   "recipe": "0b290f8aaa",
   "text": "Dmitri Krezkov, burgomaster. You bled on our doorstep for us. That's a reason. Open it."
  },
+ "dmitri_krezkov/21600fa05176489b": {
+  "chars": 70,
+  "direction": "[incredulous, weary]",
+  "model": "eleven_v3",
+  "recipe": "0b290f8aaa",
+  "text": "Jokes. A Belview wants to come down the mountain and tell Krezk jokes."
+ },
  "dmitri_krezkov/21dc533ccc1b0be3": {
   "chars": 128,
   "model": "eleven_v3",
   "recipe": "0b290f8aaa",
   "text": "Might. He might. And then I'd owe him my son, and he'd come down for the debt one day with that kind face of his, asking nicely."
+ },
+ "dmitri_krezkov/2466c58c24dc6ee8": {
+  "chars": 113,
+  "direction": "[firm, regretful]",
+  "model": "eleven_v3",
+  "recipe": "0b290f8aaa",
+  "text": "No. I'm sorry. If I open the gate for one Belview, I open it for the Abbot's errands, and then for the Abbot. No."
  },
  "dmitri_krezkov/2b33d6a6ea5b5810": {
   "chars": 175,
@@ -6228,6 +6424,13 @@
   "model": "eleven_v3",
   "recipe": "0b290f8aaa",
   "text": "You came to my gate with threats, and now you want me to take in the one woman in the valley he'd burn a village to reach? No. Find her another wall."
+ },
+ "dmitri_krezkov/47bef3e5bcdce1a0": {
+  "chars": 63,
+  "direction": "[grudging, wry]",
+  "model": "eleven_v3",
+  "recipe": "0b290f8aaa",
+  "text": "Two doors down. Yes. I said that. I hate it when people listen."
  },
  "dmitri_krezkov/4965ea1543af43bf": {
   "chars": 73,
@@ -6279,6 +6482,20 @@
   "model": "eleven_v3",
   "recipe": "0b290f8aaa",
   "text": "No. No. I buried my son. I'll not have the Abbot's leavings at my table to remind me how."
+ },
+ "dmitri_krezkov/692b5f67242f6aeb": {
+  "chars": 155,
+  "direction": "[gruff, grudging, firm]",
+  "model": "eleven_v3",
+  "recipe": "0b290f8aaa",
+  "text": "One evening. Dusk, in the square by the shrine, and he's back up the mountain before the gate's barred. And if anyone throws a bucket, it isn't on my word."
+ },
+ "dmitri_krezkov/6ccc3b719fd38d6f": {
+  "chars": 66,
+  "direction": "[quiet, grudging, moved]",
+  "model": "eleven_v3",
+  "recipe": "0b290f8aaa",
+  "text": "You gave me back a son. I suppose I can give a Belview an evening."
  },
  "dmitri_krezkov/78fa5c2941ac8e2e": {
   "chars": 162,
@@ -24972,6 +25189,13 @@
   "recipe": "1d8817fed7",
   "text": "The burgomaster's boy is sick. A fever since the spring. His last son, Dmitri says. You can hear Anna singing to him through the shutters every night, and you can hear her stop."
  },
+ "krezk_guard/86c969cffdc4570b": {
+  "chars": 107,
+  "direction": "[dry, deadpan, wry]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "I'm told the Belview comedian's to be let in on feast days now. I'm told to laugh, as well. I'm practising."
+ },
  "krezk_guard/88724a250762b2a9": {
   "chars": 31,
   "direction": "[impressed, curt]",
@@ -25063,6 +25287,13 @@
   "recipe": "1d8817fed7",
   "text": "...Huh."
  },
+ "krezk_guard/d5f881730427ba2b": {
+  "chars": 234,
+  "direction": "[dry, amused, gossiping]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "And a Belview came down from the abbey at midsummer with a bell sewn on his hood, and asked could he tell us a joke. Lazar threw a bucket of water over him from the wall. He said thank you, it was a very good bucket, and went back up."
+ },
  "krezk_guard/d783f451756534b3": {
   "chars": 134,
   "direction": "[wary, low]",
@@ -25139,6 +25370,20 @@
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "Still in one piece? Good. Krezk likes visitors who stay that way. Fewer graves."
+ },
+ "krezk_wall_watch/8463bf04b51b8772": {
+  "chars": 59,
+  "direction": "[angry, accusing, loud]",
+  "model": "eleven_v3",
+  "recipe": "9f4f8d6957",
+  "text": "A Belview. In the square. Who opened the gate to a Belview?"
+ },
+ "krezk_wall_watch/fc2bb6c8050a1ad4": {
+  "chars": 104,
+  "direction": "[hostile, jeering, loud]",
+  "model": "eleven_v3",
+  "recipe": "9f4f8d6957",
+  "text": "(From the back, by the wall.) Go back up your mountain, dog-ear. We've had enough of what comes down it."
  },
  "krezk_wall_watch/fc57aa45ff2a308d": {
   "chars": 135,
@@ -35805,6 +36050,13 @@
   "recipe": "dd92281f92",
   "text": "For a moment he leans toward the amber. You see exactly how much he wants it."
  },
+ "narrator/31bdaeb459d766d9": {
+  "chars": 120,
+  "direction": "[dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Lazar has an answer, and it's better than yours. Nobody laughs. Nobody leaves, either, which in Krezk counts as manners."
+ },
  "narrator/31cb71233ca93311": {
   "chars": 141,
   "model": "eleven_v4",
@@ -36348,6 +36600,13 @@
   "recipe": "dd92281f92",
   "text": "Polished floors, good candles, and the particular hush of a house whose servants have been trained not to hear things. Somewhere upstairs, slow and patient, something is scratching at a door."
  },
+ "narrator/379aa3424bc51c2d": {
+  "chars": 207,
+  "direction": "[quiet, wry, observant]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Krezk lets one more monk through the gate at dusk without much interest: a stooped one in a deep hood, carrying a bell. A few dozen people drift into the square to see what a monk could possibly have to say."
+ },
  "narrator/37a2a43930682f25": {
   "chars": 222,
   "model": "eleven_v4",
@@ -36699,6 +36958,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Somebody's hand closes on his collar and pulls, and he comes away from the amber blinking, as if out of a warm bath into the cold."
+ },
+ "narrator/3a46f5aa29c2057a": {
+  "chars": 107,
+  "direction": "[dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You make your case, and Krezk listens to it with its arms folded, which is how Krezk listens to everything."
  },
  "narrator/3a4f545be9beb37b": {
   "chars": 127,
@@ -37358,6 +37624,13 @@
   "recipe": "dd92281f92",
   "text": "The woman at the bricked-up window doesn't turn round. Her reflection would, if she had one."
  },
+ "narrator/40d11d57ef5df46e": {
+  "chars": 239,
+  "direction": "[wry, amused, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You ask Lazar whether he guards the wall from the outside or the inside, and whether the wall knows. It's not much, but Krezk has been waiting years for somebody to say something to Lazar, and the square laughs at him instead of at Clovin."
+ },
  "narrator/40e0b7b1d129296a": {
   "chars": 106,
   "model": "eleven_v4",
@@ -37441,6 +37714,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The straw in the open cell lies too flat and too fresh, and the satchel on it was put there to be seen."
+ },
+ "narrator/41b38fdaa4450b05": {
+  "chars": 50,
+  "direction": "[quiet, weary]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He rubs his face with both hands, for a long time."
  },
  "narrator/41d6a84977d7b96f": {
   "chars": 158,
@@ -38557,6 +38837,13 @@
   "recipe": "dd92281f92",
   "text": "A rotten jetty with half its planks gone. At the end, a mooring post, and a fresh rope tied to it with nothing on the other end."
  },
+ "narrator/4c7a909fd79cecac": {
+  "chars": 167,
+  "direction": "[joyful, warm, amused]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Krezk laughs. Properly, the whole square, the kind of laugh that has been kept in a cellar for years. Children laugh because their parents are laughing. A goat leaves."
+ },
  "narrator/4cb718e19cd7ab3d": {
   "chars": 143,
   "model": "eleven_v4",
@@ -38891,6 +39178,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The quiet lasts a breath; then the hasty grave shifts, and every old grave around it answers. Unblessed earth, it seems, is an open door."
+ },
+ "narrator/4ff03eb8e61e6ed2": {
+  "chars": 175,
+  "direction": "[warm, gentle]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "It isn't your finest work, but it's warm, and Krezk hasn't had warm in a long time. By the end two children are sitting at the front, and their mother hasn't pulled them back."
  },
  "narrator/50625ad13e169daf": {
   "chars": 165,
@@ -39253,6 +39547,13 @@
   "recipe": "dd92281f92",
   "text": "The cabinet glass is clean enough to show your face. The crossbows inside are oiled, as if the hunt is tomorrow."
  },
+ "narrator/53b4b2491e05ae8e": {
+  "chars": 196,
+  "direction": "[warm, amused, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Wren does five minutes on Krezk's gate, and the goats, and the watchman's hat, and by the end someone at the back has laughed and been elbowed for it, and someone else has laughed at the elbowing."
+ },
  "narrator/53cd6950ddd86143": {
   "chars": 172,
   "model": "eleven_v4",
@@ -39371,6 +39672,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "Strahd turns his eyes on Ismark. Nothing more. Ismark's hand flies to his throat, and he goes down on his knees in the grave dirt, mouth working, blood running from his nose into his beard."
+ },
+ "narrator/550aa93d1b5e8502": {
+  "chars": 189,
+  "direction": "[quiet, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He keeps going. Three more about the Abbot. The square gets smaller somehow, people drawing in on themselves, and a woman near the shrine makes the sign against the evil eye, not at Clovin."
  },
  "narrator/550f9e74e7c82617": {
   "chars": 77,
@@ -39646,6 +39954,13 @@
   "recipe": "dd92281f92",
   "text": "He steps back into the wall and is gone, and the doorway is only a doorway."
  },
+ "narrator/579c4b18b881659a": {
+  "chars": 151,
+  "direction": "[warm, moved]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "There's nothing in the hat but a goat's tooth, until Pavel empties his own pockets into it, and then Rodica from the well does, and then her neighbour."
+ },
  "narrator/57b2f7882a142a27": {
   "chars": 104,
   "model": "eleven_v4",
@@ -39749,6 +40064,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Kasimir has stopped walking. He stands in the archway with his hands at his sides, as if he has forgotten what they are for."
+ },
+ "narrator/58e5a3e34c48f48f": {
+  "chars": 25,
+  "direction": "[quiet, sudden]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Old Pavel stops laughing."
  },
  "narrator/58f0607f9b42aeaa": {
   "chars": 184,
@@ -40744,6 +41066,13 @@
   "recipe": "f60908d226",
   "text": "Tucked up under the wagon's step on a nail: a deck of playing cards. Run a thumb along the edges and some of them are a little rougher than the rest."
  },
+ "narrator/612be3e7d181a18e": {
+  "chars": 87,
+  "direction": "[quiet, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Silence. Clovin nods to himself, as if he'd expected it, and steps down off the trough."
+ },
  "narrator/6142fe4a7956444b": {
   "chars": 132,
   "model": "eleven_v4",
@@ -40786,6 +41115,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Four wicker cages hang from a frame of poles, each big enough for a man to crouch in. Three are open and empty. The fourth has had its door torn off, and its post is scored all over."
+ },
+ "narrator/61a3d04b0b321c08": {
+  "chars": 133,
+  "direction": "[tense, awkward, quiet]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Nothing. Not a breath. He tries another, about the Abbot and a hymn, and it goes the same way. His ear goes flatter. He looks at you."
  },
  "narrator/61a91a2e9b49fdb6": {
   "chars": 179,
@@ -41770,6 +42106,13 @@
   "recipe": "dd92281f92",
   "text": "She unlocks the iron-bound chest behind her with a key she keeps on a cord round her neck, lifts out a bundle of oilcloth, and sets it on the table between the cards."
  },
+ "narrator/6af3e365927fcaec": {
+  "chars": 88,
+  "direction": "[hushed, tense]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You tell Krezk his name and step back. It is the quietest square you have ever stood in."
+ },
  "narrator/6b1d0b297a4cc270": {
   "chars": 152,
   "model": "eleven_v4",
@@ -42082,6 +42425,13 @@
   "model": "eleven_v3",
   "recipe": "f60908d226",
   "text": "Kip doesn't offer anyone an apricot tonight. That has never happened before. He sits with his hat in his lap and talks slowly, politely and very clearly, like a man reading out terms."
+ },
+ "narrator/6d6dc949951a3a12": {
+  "chars": 172,
+  "direction": "[warm, amused, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Somebody snorts. Then somebody else does, and is ashamed, and does it again. A child asks, loudly, which morning, and Clovin barks for her, and that's the first real laugh."
  },
  "narrator/6d6defff1b7bd44e": {
   "chars": 159,
@@ -42564,6 +42914,13 @@
   "recipe": "dd92281f92",
   "text": "A doll with red hair, a green dress and a painted face carved with unusual care. A card reads NOT FOR SALE in a gloomy hand."
  },
+ "narrator/715ed8873a74482a": {
+  "chars": 129,
+  "direction": "[dry, wry, comic]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Your best story dies somewhere in the middle. A goat bleats into the silence. Somebody coughs, in a way that is clearly a review."
+ },
  "narrator/716ded291e969f79": {
   "chars": 112,
   "model": "eleven_v4",
@@ -42820,6 +43177,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The voice in the armour stops, and the wounds stop closing, and the armour is only armour."
+ },
+ "narrator/74a07985779398b9": {
+  "chars": 166,
+  "direction": "[wry, warm]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Half of Krezk is in the square by the shrine, because the burgomaster said they could come, and the other half is at the windows, because he didn't say they couldn't."
  },
  "narrator/74d7b5bd9336d7a1": {
   "chars": 155,
@@ -45084,6 +45448,13 @@
   "recipe": "dd92281f92",
   "text": "Long parallel gouges climb the walls of the mansion as high as the upstairs sills. Whatever made them could stand on its hind legs and reach the windows."
  },
+ "narrator/8af50d2368fe850b": {
+  "chars": 187,
+  "direction": "[tense, sudden, grim]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Watchman Lazar pushes through from the wall with his spear, frowning at the hood, and before anyone can stop him he flips it back. The ear. The hand. The whole square takes one step away."
+ },
  "narrator/8afd0c6cde3d41f2": {
   "chars": 105,
   "model": "eleven_v4",
@@ -45740,6 +46111,13 @@
   "recipe": "dd92281f92",
   "text": "Lanterns on the road ahead, swaying in a line: a funeral procession, out at the one hour no living Barovian would walk. Mourners in grey carry an open coffin between them. It is empty."
  },
+ "narrator/90299703a92d97e6": {
+  "chars": 164,
+  "direction": "[warm, moved, tender]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "And at the back, on the carver's doorstep, one old man is laughing so hard he has to hold the doorpost. Old Pavel, with tears running into his beard. He can't stop."
+ },
  "narrator/902f6f0170f7a631": {
   "chars": 126,
   "model": "eleven_v4",
@@ -45941,6 +46319,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A crowded little shop: puppets, dolls, music boxes and wind-up creatures on every shelf, every one of them looking at the door. A curtained doorway leads back to the workshop."
+ },
+ "narrator/92737cfd4b0dbfab": {
+  "chars": 96,
+  "direction": "[quiet, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Clovin stands on his trough with his hat in his feathered hand, and doesn't say anything at all."
  },
  "narrator/9279970ec80c4ec6": {
   "chars": 164,
@@ -46257,6 +46642,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The coffin is empty. A bed of dark earth lies in it, pressed into the shape of a tall man, and cold."
+ },
+ "narrator/958144646b9b2e94": {
+  "chars": 234,
+  "direction": "[quiet, knowing, measured]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "They aren't frightened of him. They're frightened of the abbey. Every one of those jokes is about the man who has their dead. Nobody in this square is going to laugh at the Abbot. They might laugh at a man who's had a hard time of it."
  },
  "narrator/95817c4706e0ca3d": {
   "chars": 97,
@@ -47083,6 +47475,13 @@
   "recipe": "dd92281f92",
   "text": "Strings of onions, strings of mushrooms, strings of things that aren't either. Jars on every shelf, and some of the jars are humming."
  },
+ "narrator/9dfb606da7ea2933": {
+  "chars": 149,
+  "direction": "[quiet, tense, observant]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Clovin stands on an upturned water trough with his hat in his feathered hand. His hound's ear is flat to his head. Nobody is standing near the front."
+ },
  "narrator/9e0d8ea63b03d907": {
   "chars": 112,
   "model": "eleven_v4",
@@ -47425,6 +47824,13 @@
   "recipe": "dd92281f92",
   "text": "The top of the switchback: a ledge of rock and snow with Krezk laid out far below, small as a toy behind its wall. The wind up here has opinions about everything."
  },
+ "narrator/a0fa302bc89f33bc": {
+  "chars": 164,
+  "direction": "[quiet, tender, moved]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Nobody in the square says anything. Then Dumitru, the gate boy, who is twelve, fetches a stool and puts it next to Pavel's, and looks at Clovin until he sits on it."
+ },
  "narrator/a10096409434a85d": {
   "chars": 107,
   "model": "eleven_v4",
@@ -47728,6 +48134,13 @@
   "recipe": "dd92281f92",
   "text": "The words are still there. They'll be there a long while."
  },
+ "narrator/a3d436967593e3de": {
+  "chars": 117,
+  "direction": "[warm, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "There's a laugh, a real one, from half the square, and the other half are smiling as if they'd rather not be seen to."
+ },
  "narrator/a3f49fa1a14c2595": {
   "chars": 97,
   "model": "eleven_v4",
@@ -47899,6 +48312,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The hunger turns over in all three of them at once, and they come down the road the way wolves do, without a word."
+ },
+ "narrator/a5718656b60ab76f": {
+  "chars": 239,
+  "direction": "[quiet, warm, earnest]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You don't say much. That he's the same man. That he came down a mountain for this. That nobody here has laughed in a long time, and he's the first person who's tried to make them. Rodica from the well tells Lazar to hush, and Lazar hushes."
  },
  "narrator/a592ce2781b64b67": {
   "chars": 136,
@@ -51385,6 +51805,13 @@
   "recipe": "dd92281f92",
   "text": "Cut into the lintel, in letters taller than your hand: HE KEPT THE WATCH. Below it, smaller and newer and much less tidy: WE KEEP IT NOW."
  },
+ "narrator/c7e3986e01114059": {
+  "chars": 123,
+  "direction": "[dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A few faces close like shutters. A Belview making fun of the wall is a Belview at the wall, and that's what the wall's for."
+ },
  "narrator/c7f64c802f81e108": {
   "chars": 101,
   "model": "eleven_v4",
@@ -53028,6 +53455,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "From under the floor a young man's voice cries out, hoarse and eager: Father, who's there? I can smell them!"
+ },
+ "narrator/d6ac252011c31971": {
+  "chars": 79,
+  "direction": "[dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "They look bored, mostly. Or cold. It's hard to tell in Krezk; it might be both."
  },
  "narrator/d6be21e2c64659e3": {
   "chars": 170,
