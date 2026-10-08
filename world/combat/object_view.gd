@@ -77,7 +77,7 @@ func play(ev: Dictionary, objects: EncounterObjects, tokens: Dictionary, fx: Spe
 	match str(ev["type"]):
 		"object_attack", "object_throw":
 			var by := tokens.get(str(ev.get("by", ""))) as CombatToken
-			var at := _centre(objects.cells_of(o)) if o != null else board.cell_center(ev.get("cell", Vector2i.ZERO) as Vector2i)
+			var at := _spot(o, objects) if o != null else board.cell_center(ev.get("cell", Vector2i.ZERO) as Vector2i)
 			if by != null and is_instance_valid(by):
 				var dir := at - by.position
 				var action := str(ev.get("action", ""))
@@ -97,11 +97,19 @@ func play(ev: Dictionary, objects: EncounterObjects, tokens: Dictionary, fx: Spe
 				_float(at + Vector3(0, 0.35, 0), "Critical!", "candle")
 		"object_damage":
 			if o != null:
-				_float(_centre(objects.cells_of(o)), "-%d" % int(ev.get("amount", 0)), "rose")
+				_float(_spot(o, objects) + Vector3(0, -0.3, 0), "-%d" % int(ev.get("amount", 0)), "rose")
 		"object_broken", "object_fall":
 			if o != null and not _broken.has(o.id):
 				_show_broken(o, objects, true)
 				await get_tree().create_timer(0.35).timeout
+
+
+## Where `o` is for a missile or a number: up on its chain while a chandelier still hangs, else on its squares.
+func _spot(o: BattleObject, objects: EncounterObjects) -> Vector3:
+	var at := _centre(objects.cells_of(o))
+	if o.hangs and not _broken.has(o.id):
+		at.y += HANG_Y
+	return at
 
 
 func _centre(cells: Array[Vector2i]) -> Vector3:

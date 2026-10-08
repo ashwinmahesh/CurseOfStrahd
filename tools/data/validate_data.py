@@ -305,15 +305,21 @@ def object_checks(data, errors):
             errors.append(f"{w}: kind {kid} needs hp, or a size from hit_points and a resilience")
         if k.get("hangs") and "fall" not in k:
             errors.append(f"{w}: kind {kid} hangs but has no fall")
+        if k.get("moves") and "move_dc" not in k:
+            errors.append(f"{w}: kind {kid} can be moved but has no move_dc")
+        if k.get("moves") == "topple" and "topple" not in k:
+            errors.append(f"{w}: kind {kid} topples but says nothing of how it falls (topple)")
+        if k.get("throwable") and k.get("size") not in ("tiny", "small"):
+            errors.append(f"{w}: kind {kid} is throwable but bigger than Small")
+        for art in k.get("art", []):
+            if art in seen:
+                errors.append(f"{w}: art '{art}' is both {seen[art]} and {kid}")
+            seen[art] = kid
     for mid, m in data["monsters"].items():
         for a in m.get("actions", []) + m.get("bonus_actions", []):
             for rd in a.get("on_fail", []) + a.get("on_hit", []):
                 if rd.get("object") and rd["object"] not in kinds:
                     errors.append(f"monsters/{mid}: {a['id']} holds its target with unknown object kind '{rd['object']}'")
-        for art in k.get("art", []):
-            if art in seen:
-                errors.append(f"{w}: art '{art}' is both {seen[art]} and {kid}")
-            seen[art] = kid
 
 
 # Regions later phases build (plan §6). References into them are pending, not errors.
