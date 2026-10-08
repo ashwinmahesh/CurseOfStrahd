@@ -5568,6 +5568,83 @@
       "source": "art/generated/props/model_shelf_goods.png",
       "mount": "wall",
       "world_width": 0.578
+    },
+    "washstand": {
+      "file": "art/sprites/props/washstand.png",
+      "width_px": 320,
+      "height_px": 516,
+      "world_height": 0.95,
+      "pixel_size": 0.00186,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_washstand.png",
+      "mount": "stand",
+      "world_width": 0.595
+    },
+    "bunting": {
+      "file": "art/sprites/props/bunting.png",
+      "width_px": 516,
+      "height_px": 404,
+      "world_height": 0.5,
+      "pixel_size": 0.00125,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_bunting.png",
+      "mount": "wall",
+      "world_width": 0.645
+    },
+    "festival_cloth": {
+      "file": "art/sprites/props/festival_cloth.png",
+      "width_px": 356,
+      "height_px": 516,
+      "world_height": 0.95,
+      "pixel_size": 0.00186,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_festival_cloth.png",
+      "mount": "stand",
+      "world_width": 0.662
+    },
+    "toy_shelf": {
+      "file": "art/sprites/props/toy_shelf.png",
+      "width_px": 444,
+      "height_px": 516,
+      "world_height": 0.82,
+      "pixel_size": 0.0016,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_toy_shelf.png",
+      "mount": "wall",
+      "world_width": 0.71
+    },
+    "coffin_lid": {
+      "file": "art/sprites/props/coffin_lid.png",
+      "width_px": 200,
+      "height_px": 516,
+      "world_height": 1.3,
+      "pixel_size": 0.00254,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_coffin_lid.png",
+      "mount": "stand",
+      "world_width": 0.508
+    },
+    "crucifix": {
+      "file": "art/sprites/props/crucifix.png",
+      "width_px": 308,
+      "height_px": 516,
+      "world_height": 0.42,
+      "pixel_size": 0.00082,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_crucifix.png",
+      "mount": "wall",
+      "world_width": 0.253
+    },
+    "lute": {
+      "file": "art/sprites/props/lute.png",
+      "width_px": 240,
+      "height_px": 516,
+      "world_height": 0.85,
+      "pixel_size": 0.00166,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_lute.png",
+      "mount": "stand",
+      "world_width": 0.398
     }
   }
 }

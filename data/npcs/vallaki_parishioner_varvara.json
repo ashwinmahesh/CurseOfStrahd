@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_parishioner_varvara",
+  "name": "Old Varvara",
+  "title": "Praying at St. Andral's",
+  "summary": "An old Vallakian woman who prays in St. Andral's every day, lately for the bones to come home.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

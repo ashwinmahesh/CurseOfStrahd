@@ -7,7 +7,7 @@
   "map": {
     "rows": [
       "##############################",
-      "#1...........#...............#",
+      "#1....1......#...............#",
       "#............#...............#",
       "#...............===========..#",
       "#...=....=...#...............#",
@@ -365,6 +365,147 @@
       "label": "something behind the festival ledger",
       "model": "scattered_notes",
       "item": "necklace_of_fireballs"
+    },
+    {
+      "id": "hall_bunting_a",
+      "cell": [
+        4,
+        0
+      ],
+      "label": "Yellow bunting",
+      "model": "bunting",
+      "kind": "decor"
+    },
+    {
+      "id": "hall_bunting_b",
+      "cell": [
+        9,
+        0
+      ],
+      "label": "Yellow bunting",
+      "model": "bunting",
+      "kind": "decor"
+    },
+    {
+      "id": "hall_bunting_c",
+      "cell": [
+        0,
+        5
+      ],
+      "label": "Yellow bunting",
+      "model": "bunting",
+      "kind": "decor"
+    },
+    {
+      "id": "baron_chair",
+      "cell": [
+        6,
+        1
+      ],
+      "label": "The Baron's chair, on its own little platform",
+      "model": "chair_high",
+      "facing": "south",
+      "kind": "decor"
+    },
+    {
+      "id": "foyer_coat_stand",
+      "cell": [
+        12,
+        9
+      ],
+      "label": "A coat stand",
+      "model": "coats",
+      "kind": "decor"
+    },
+    {
+      "id": "foyer_smile_sign",
+      "cell": [
+        12,
+        10
+      ],
+      "label": "SMILE, YOU ARE A GUEST",
+      "model": "hanging_sign",
+      "kind": "decor"
+    },
+    {
+      "id": "izek_washstand",
+      "cell": [
+        1,
+        10
+      ],
+      "label": "A basin",
+      "model": "washstand",
+      "kind": "decor"
+    },
+    {
+      "id": "izek_sword",
+      "cell": [
+        5,
+        13
+      ],
+      "label": "A sword",
+      "model": "sword_leaning",
+      "kind": "decor"
+    },
+    {
+      "id": "lydia_cloth_a",
+      "cell": [
+        23,
+        9
+      ],
+      "label": "A chair drowned in yellow cloth",
+      "model": "festival_cloth",
+      "kind": "decor"
+    },
+    {
+      "id": "lydia_cloth_b",
+      "cell": [
+        27,
+        12
+      ],
+      "label": "A chair drowned in yellow cloth",
+      "model": "festival_cloth",
+      "kind": "decor"
+    },
+    {
+      "id": "lydia_bunting",
+      "cell": [
+        24,
+        7
+      ],
+      "label": "Half-sewn bunting",
+      "model": "bunting",
+      "kind": "decor"
+    },
+    {
+      "id": "attic_candles_a",
+      "cell": [
+        3,
+        18
+      ],
+      "label": "Candles",
+      "model": "candle_cluster",
+      "kind": "decor"
+    },
+    {
+      "id": "attic_candles_b",
+      "cell": [
+        25,
+        22
+      ],
+      "label": "Candles",
+      "model": "candle_cluster",
+      "kind": "decor"
+    },
+    {
+      "id": "lydia_cloth_c",
+      "cell": [
+        27,
+        9
+      ],
+      "label": "A chair drowned in yellow cloth",
+      "model": "festival_cloth",
+      "kind": "decor"
     }
   ],
   "containers": [
@@ -535,6 +676,24 @@
       "kind": "magic",
       "bright_ft": 0,
       "dim_ft": 10
+    },
+    {
+      "cell": [
+        3,
+        18
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        25,
+        22
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
     }
   ],
   "npcs": [

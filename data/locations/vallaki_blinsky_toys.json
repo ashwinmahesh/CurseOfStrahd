@@ -153,6 +153,36 @@
       "kind": "examine",
       "label": "Workbench",
       "model": "workbench"
+    },
+    {
+      "id": "toy_shelf_north",
+      "cell": [
+        4,
+        4
+      ],
+      "label": "Shelves of toys turned to the door",
+      "model": "toy_shelf",
+      "kind": "decor"
+    },
+    {
+      "id": "toy_shelf_west",
+      "cell": [
+        0,
+        9
+      ],
+      "label": "Shelves of toys turned to the door",
+      "model": "toy_shelf",
+      "kind": "decor"
+    },
+    {
+      "id": "toy_shelf_east",
+      "cell": [
+        15,
+        9
+      ],
+      "label": "Shelves of toys turned to the door",
+      "model": "toy_shelf",
+      "kind": "decor"
     }
   ],
   "lights": [

@@ -229,6 +229,8 @@ func _build() -> void:
 			_dress(c, dressed)
 	if theme == "shrine_yard" and place == "":
 		_lanterns()   # the arena's lit pillars
+	if not wall_styles.is_empty():
+		_dress_wall_styles()
 	if place != "" and (theme in INTERIORS or theme == "dungeon") and Compendium.shared().has("locations", place):
 		Furnish.dress(self, Compendium.shared().get_entry("locations", place))   # lived-in rooms (docs/art/interiors.md)
 	Clutter.dress(self)   # decals: cracks, stains, moss, mud fringes ... (docs/art/decals.md)
@@ -259,6 +261,8 @@ var _rock_tex: Material = null
 ## The location's areas as rectangles (a wall piece hangs on the side facing its own area), and their data.
 var areas: Array[Rect2i] = []
 var area_specs: Array[Dictionary] = []
+## The location's `wall_styles` ({rect, paint, trim, wheels}): wall squares built in a style of their own.
+var wall_styles: Array[Dictionary] = []
 ## Towns (TownBuilder): the houses ({root, walls, upper, aabb ...}), which house each square belongs to, the window
 ## pieces by "x,y,dx,dy" (a door hung there hides its window), and the squares of low yard wall.
 var buildings: Array[Dictionary] = []
@@ -324,6 +328,12 @@ func _plan_rooms(loc: Dictionary) -> void:
 	if key == "rooms":
 		rules = ((SetDressing.catalog().get("theme_rooms", {}) as Dictionary).get(theme, []) as Array) + rules
 	var keep := bool(_look.get("keep", false))
+	for w: Variant in loc.get("wall_styles", []):
+		var spec := (w as Dictionary).duplicate()
+		var q0 := Vector2i(int(spec["cells"][0][0]), int(spec["cells"][0][1]))
+		var q1 := Vector2i(int(spec["cells"][1][0]), int(spec["cells"][1][1]))
+		spec["rect"] = Rect2i(Vector2i(mini(q0.x, q1.x), mini(q0.y, q1.y)), (q1 - q0).abs() + Vector2i.ONE)
+		wall_styles.append(spec)
 	for a: Variant in loc.get("areas", []):
 		var area := a as Dictionary
 		var cells := area.get("cells", []) as Array
@@ -345,6 +355,75 @@ func _plan_rooms(loc: Dictionary) -> void:
 		if str((style as Dictionary).get("wall", "")) != "" and Look.cel_textured(str(style["wall"])) != null:
 			room["wall"] = Look.cel_textured(str(style["wall"]))
 		_rooms.append(room)
+
+
+## The location's `wall_styles` entry whose cells hold wall square `c` ({} if none): a carnival wagon's painted sides.
+func wall_style_at(c: Vector2i) -> Dictionary:
+	for st: Dictionary in wall_styles:
+		if (st["rect"] as Rect2i).has_point(c):
+			return st
+	return {}
+
+
+## The trim and wheels of the location's `wall_styles` (docs/art/interiors.md): a band of the trim colour along every
+## face that looks out of the styled block, and with `wheels`, two cart wheels on each long side. They stand below the
+## cut-away height, so they show whichever way the walls are cut.
+func _dress_wall_styles() -> void:
+	for st: Dictionary in wall_styles:
+		var rect := st["rect"] as Rect2i
+		var root := Node3D.new()
+		root.name = "WallStyle"
+		add_child(root)
+		var trim := Look.cel(str(st.get("trim", "candle")))
+		for z in range(rect.position.y, rect.end.y):
+			for x in range(rect.position.x, rect.end.x):
+				var c := Vector2i(x, z)
+				if not grid.has_flag(c, CombatGrid.WALL):
+					continue
+				for d in SetDressing.FACES:
+					var n := c + d
+					if rect.has_point(n) or not grid.in_bounds(n) or grid.has_flag(n, CombatGrid.WALL):
+						continue
+					var dv := Vector3(d.x, 0, d.y)
+					var at := cell_center(c) + dv * 0.51
+					for y: float in [0.12, 0.95]:
+						var band := MeshInstance3D.new()
+						var bm := BoxMesh.new()
+						bm.size = Vector3(1.0, 0.07, 0.03) if d.y != 0 else Vector3(0.03, 0.07, 1.0)
+						band.mesh = bm
+						band.material_override = trim
+						band.position = at + Vector3(0, y, 0)
+						root.add_child(band)
+		if not bool(st.get("wheels", false)):
+			continue
+		# Two wheels on each long side, a quarter of the way in from each end.
+		var long_x := rect.size.x >= rect.size.y
+		var length := rect.size.x if long_x else rect.size.y
+		for side: int in [-1, 1]:
+			for f: float in [0.22, 0.78]:
+				var along := (rect.position.x if long_x else rect.position.y) + length * f
+				var at := Vector3(along, 0.42, rect.position.y - 0.04 if side < 0 else rect.end.y + 0.04) if long_x else \
+					Vector3(rect.position.x - 0.04 if side < 0 else rect.end.x + 0.04, 0.42, along)
+				var wheel := MeshInstance3D.new()
+				var cm := CylinderMesh.new()
+				cm.top_radius = 0.42
+				cm.bottom_radius = 0.42
+				cm.height = 0.07
+				cm.radial_segments = 16
+				wheel.mesh = cm
+				wheel.material_override = Look.cel("umber")
+				wheel.rotation = Vector3(PI / 2.0, 0, 0) if long_x else Vector3(0, 0, PI / 2.0)
+				wheel.position = at
+				root.add_child(wheel)
+				var rim := MeshInstance3D.new()
+				var tm := TorusMesh.new()
+				tm.inner_radius = 0.38
+				tm.outer_radius = 0.44
+				rim.mesh = tm
+				rim.material_override = Look.cel(str(st.get("trim", "candle")))
+				rim.rotation = wheel.rotation
+				rim.position = at + (Vector3(0, 0, -0.01 * side) if long_x else Vector3(-0.01 * side, 0, 0))
+				root.add_child(rim)
 
 
 ## The location's area holding `c` ({} if none); the smallest where areas overlap.
@@ -574,6 +653,9 @@ func _wall(c: Vector2i) -> void:
 		var h := 1.15
 		var room_wall := _wall_room(c)
 		var wall_mat: Material = room_wall["wall"] as Material if room_wall.has("wall") else (_wall_tex if _wall_tex != null else Look.cel(colour))
+		var own_style := wall_style_at(c)
+		if not own_style.is_empty():
+			wall_mat = BuildingKit.painted(str(own_style.get("paint", "crimson")))   # the location's own (a painted wagon)
 		# The building kit's interiors: pillars, and full-height walls that cut away (docs/art/building_kit.md).
 		if BuildingKit.interior_wall(self, c, wall_mat):
 			return

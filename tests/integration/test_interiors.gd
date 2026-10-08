@@ -275,3 +275,60 @@ func test_village_buildings_have_people_by_day() -> void:
 	for npc: String in ["barovia_shopper", "barovia_worshipper_mihai", "barovia_worshipper_sorina"]:
 		var d := Compendium.shared().get_entry("npcs", npc)
 		assert_eq(str(d["portrait"]), str(d["sprite"]), "%s wears the face of the figure it walks as" % npc)
+
+
+## Vallaki (the audit, docs/art/interiors.md): what each room's text names, and Rictavio's carnival wagon in the inn's
+## yard painted red with gold trim and wheels, instead of a dark block of wall.
+func test_vallakis_rooms_have_what_their_text_names() -> void:
+	Look.set_style("modern", false)
+	var want := {"vallaki_blue_water_inn": {"inn_kitchen_cauldron": "cauldron", "rictavio_lute": "lute",
+			"rictavio_washstand": "washstand"},
+		"vallaki_burgomaster_mansion": {"hall_bunting_a": "bunting", "lydia_cloth_a": "festival_cloth"},
+		"vallaki_blinsky_toys": {"toy_shelf_north": "toy_shelf"},
+		"vallaki_coffin_maker": {"coffin_lid_north": "coffin_lid", "henrik_crucifix_bed": "crucifix"},
+		"vallaki_wachter_house": {"cellar_bench_1": "bench"}}
+	for loc_id: String in want:
+		var v := _view(loc_id)
+		await _frames(1)
+		for id: String in want[loc_id]:
+			var node := v.prop_nodes.get(id) as Node
+			var models := node.find_children("Model_*", "Node3D", true, false) if node != null else []
+			assert_true(not models.is_empty() and str(models[0].get_meta("model", "")) == str(want[loc_id][id]),
+				"%s: %s is the %s" % [loc_id, id, want[loc_id][id]])
+		v.queue_free()
+		await _frames(1)
+	var inn := _view("vallaki_blue_water_inn")
+	await _frames(2)
+	var wagon := inn.board.get_node_or_null("WallStyle")
+	assert_true(wagon != null, "the wagon has its own look")
+	var wheels := 0
+	for mi in (wagon.find_children("*", "MeshInstance3D", true, false) if wagon != null else []):
+		if (mi as MeshInstance3D).mesh is CylinderMesh:
+			wheels += 1
+	assert_eq(wheels, 4, "two wheels a side")
+	var red := 0
+	var paint := BuildingKit.painted("crimson")
+	for w: Dictionary in (inn.board.get_meta("interior_walls", {}) as Dictionary).get("walls", []):
+		if Rect2i(15, 13, 7, 3).has_point(w["cell"] as Vector2i):
+			for mi in (w["full"] as Node).find_children("*", "MeshInstance3D", true, false):
+				if (mi as MeshInstance3D).material_override == paint:
+					red += 1
+					break
+	assert_true(red >= 10, "its sides are painted red (%d)" % red)
+	inn.queue_free()
+	await _frames(1)
+
+
+## Vallaki's inn has two more regulars of an evening, and St. Andral's a woman praying by day.
+func test_vallaki_has_people_indoors() -> void:
+	for at: Array in [["vallaki_blue_water_inn", 19, ["vallaki_patron_dragan", "vallaki_patron_oana"]],
+			["vallaki_st_andrals", 10, ["vallaki_parishioner_varvara"]]]:
+		GameState.story.minute_of_day = int(at[1]) * 60
+		var v := _view(str(at[0]))
+		await _frames(1)
+		for npc: Variant in at[2]:
+			assert_true(v.npc_tokens.has(str(npc)), "%s is in %s at %d:00" % [npc, at[0], at[1]])
+			var d := Compendium.shared().get_entry("npcs", str(npc))
+			assert_eq(str(d["portrait"]), str(d["sprite"]), "%s wears the face of the figure it walks as" % npc)
+		v.queue_free()
+		await _frames(1)

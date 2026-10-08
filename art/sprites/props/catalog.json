@@ -917,6 +917,16 @@
       {
         "floor": "interior/workshop_boards"
       }
+    ],
+    [
+      [
+        "attic",
+        "garret"
+      ],
+      {
+        "floor": "interior/attic_boards",
+        "wall": "interior/damp_plaster"
+      }
     ]
   ],
   "place_looks": {
@@ -1239,7 +1249,11 @@
     "table_books": 2.9,
     "bench": 2.1,
     "floor_books": 0.6,
-    "bucket_brush": 1.6
+    "bucket_brush": 1.6,
+    "washstand": 4.6,
+    "festival_cloth": 4.7,
+    "coffin_lid": 6.5,
+    "lute": 4.2
   },
   "big_width": 1.6,
   "models3d": {
@@ -1603,7 +1617,14 @@
       "floor_books": "floor_books",
       "bucket_brush": "bucket_brush",
       "shelf_goods": "shelf_goods",
-      "bench_back": "bench"
+      "bench_back": "bench",
+      "washstand": "washstand",
+      "bunting": "bunting",
+      "festival_cloth": "festival_cloth",
+      "toy_shelf": "toy_shelf",
+      "coffin_lid": "coffin_lid",
+      "crucifix": "crucifix",
+      "lute": "lute"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",
@@ -4024,7 +4045,8 @@
             "footlocker",
             "chest",
             "sack",
-            "bench"
+            "bench",
+            "washstand"
           ],
           "centre": [
             "bench",
@@ -4055,7 +4077,8 @@
             "chest",
             "candle_cluster",
             "footlocker",
-            "bench"
+            "bench",
+            "washstand"
           ],
           "centre": [
             "floor_books",
