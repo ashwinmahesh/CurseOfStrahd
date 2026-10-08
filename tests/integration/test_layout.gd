@@ -488,6 +488,36 @@ func test_the_saves_pages() -> void:
 	_golden_saves_on_disk(false)
 
 
+## The cheat codes' page over the menu: empty, with the item whose name is longest, and with the Spell Scroll's picker
+## on the spell whose scroll name is longest.
+func test_the_cheat_codes_page() -> void:
+	if not await _game(LATE):
+		return
+	var longest := {}
+	for e in CheatCodes.entries():
+		if longest.is_empty() or str(e["name"]).length() > str(longest["name"]).length():
+			longest = e
+	var scrolls := CheatCodes.choices("spell_scroll")
+	var widest := scrolls[0]
+	for v in scrolls:
+		if CheatCodes.choice_name(v).length() > CheatCodes.choice_name(widest).length():
+			widest = v
+	for typed: Array in [["empty", "", ""], [str(longest["name"]), str(longest["code"]), ""],
+			["a scroll", CheatCodes.code_of("spell_scroll"), widest]]:
+		await _check("the cheat codes page (%s)" % typed[0], func() -> Variant:
+			root.call("open_screen", "menu", 0)
+			await _frames(1)
+			var menu := root.get("screen") as PauseMenu
+			menu.call("_open_cheats")
+			await _frames(1)
+			var page := menu.find_children("*", "CheatCodesPage", true, false)[0] as CheatCodesPage
+			page.type_code(str(typed[1]))
+			if str(typed[2]) != "":
+				page.pick(str(typed[2]))
+			await _frames(2)
+			return menu, _close_screen)
+
+
 func test_the_title_screen() -> void:
 	_golden_saves_on_disk(true)
 	var menu: Node = null

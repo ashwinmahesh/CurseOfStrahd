@@ -214,9 +214,20 @@ func _show_menu() -> void:
 		Audio.set_volumes(Audio.music_volume, v)
 		Audio.sfx("click"))
 	_slider_row(SLIDER_Y[2], "Voices", VoiceOver.volume(), VoiceOver.set_volume)
-	# The rest of the player's settings (the look, the window, fight speed, the respec) are a page of their own.
-	var more := _link("◆  Settings  ◆", _show_settings)
-	more.position = Vector2((_u(W_U, 0).x - more.size.x) / 2.0, _u(0, RESPEC_Y).y - more.size.y / 2.0)
+	# The rest of the player's settings (the look, the window, fight speed, the respec) are a page of their own, and the
+	# cheat codes (CheatCodesPage) another beside it while there's a party to give items to.
+	var links: Array[Button] = [_link("◆  Settings  ◆", _show_settings)]
+	if CheatCodesPage.can_open(st):
+		links.append(_link("◆  Cheat codes  ◆", _open_cheats))
+		links[1].name = "CheatCodes"
+	var gap := 16.0 * K
+	var x := _u(W_U, 0).x + gap
+	for b in links:
+		x -= b.size.x + gap
+	x /= 2.0
+	for b in links:
+		b.position = Vector2(x, _u(0, RESPEC_Y).y - b.size.y / 2.0)
+		x += b.size.x + gap
 	var can := SaveSystem.can_save()
 	var why := "In a fight the game saves itself at the start of each round; load that save to retry the round."
 	_button(0, "Resume", func() -> void: root.call("close_screen"))
@@ -405,6 +416,13 @@ func _show_saves() -> void:
 			"Back to where the game last saved itself: arriving somewhere, a rest or a won fight."
 	_button(4, "Quit to Title", func() -> void: leave_to(TITLE_SCENE))
 	_buttons[0].grab_focus.call_deferred()
+
+
+## The cheat codes' page over the arch, which hides the arch until it closes.
+func _open_cheats() -> void:
+	CheatCodesPage.open_on(self, st, _frame).closed.connect(func() -> void:
+		if not _buttons.is_empty():
+			_buttons[0].grab_focus.call_deferred())
 
 
 ## The saves' page over the arch (lane 16's), which hides the arch until it closes. A save comes back to "Saved.".
