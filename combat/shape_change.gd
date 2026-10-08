@@ -90,12 +90,43 @@ func transform(c: Combatant, beast: Dictionary, opts: Dictionary = {}) -> Monste
 		"label": str(opts.get("label", "Shape")), "kept_temp_hp": kept}
 	c.creature = m
 	c.ai_profile = StringName(str(d.get("ai_profile", "brute")))
-	c.size_cells = CombatGrid.size_cells_for(m.size)
+	var grown := CombatGrid.size_cells_for(m.size)
+	c.cell = room_to_grow(c, grown)
+	c.size_cells = grown
 	c.movement_left = mini(c.movement_left, c.speed())
 	e.events.append({"type": "resize", "id": c.id})
 	e.events.append({"type": "condition", "id": c.id})
 	e.log.add("condition", "%s becomes a %s (%s)" % [orig.name, str(beast.get("name", "Beast")), opts.get("label", "Shape")], c.id)
 	return m
+
+
+## Where `c` stands once it is `cells` squares across (QA FN-06: a bigger shape spread over its neighbours and into
+## walls): where it is if the new footprint is free there, else the nearest corner that keeps it on a square it held,
+## else the nearest free spot within 35 ft; where it is if there's none.
+func room_to_grow(c: Combatant, cells: int) -> Vector2i:
+	var e := enc()
+	var fits := func(at: Vector2i) -> bool:
+		for f in CombatGrid.footprint(at, cells):
+			var o := e.occupant_at(f)
+			if not e.grid.in_bounds(f) or e.grid.is_solid(f) or (o != null and o != c):
+				return false
+		return true
+	if cells <= c.size_cells or fits.call(c.cell):
+		return c.cell
+	for dz in cells:
+		for dx in cells:
+			if fits.call(c.cell - Vector2i(dx, dz)):
+				return c.cell - Vector2i(dx, dz)
+	for radius in range(1, 8):
+		var best := Vector2i(-1, -1)
+		for dz in range(-radius, radius + 1):
+			for dx in range(-radius, radius + 1):
+				var at := c.cell + Vector2i(dx, dz)
+				if maxi(absi(dx), absi(dz)) == radius and fits.call(at) and (best.x < 0 or at.distance_squared_to(c.cell) < best.distance_squared_to(c.cell)):
+					best = at
+		if best.x >= 0:
+			return best
+	return c.cell
 
 
 ## Ends the shape: the real creature returns with the Hit Points the shape had (0 Hit Points: Unconscious for a
