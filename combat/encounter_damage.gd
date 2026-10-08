@@ -54,11 +54,12 @@ func needs_death_save(c: Combatant) -> bool:
 
 
 ## Whether `source`'s blow knocks `target` out rather than dropping it to 0 (Knocking Out a Creature, 2024): a melee
-## attack by a creature whose rule for it ("knock_out") is Automatic, against anything but an object.
+## attack by a player's creature whose rule for it ("knock_out") is Automatic, against anything but an object. Foes
+## the AI plays never knock anyone out.
 func knocks_out(source: Combatant, target: Combatant) -> bool:
 	var e := enc()
-	if source == null or source == target or not bool(e.hit_context.get("melee", false)) or str(e.hit_context.get("attacker", "")) != source.id \
-			or str(e.hit_context.get("target", "")) != target.id:
+	if source == null or source == target or not source.is_player_controlled() or not bool(e.hit_context.get("melee", false)) \
+			or str(e.hit_context.get("attacker", "")) != source.id or str(e.hit_context.get("target", "")) != target.id:
 		return false
 	if target.creature.has_flag("spell_object") or target.creature.creature_type == &"object":
 		return false
