@@ -1,5 +1,5 @@
 {
-  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB; track_levels: one recording's own offset on top of its mood's, so the pieces a mood picks between sound about as loud as each other. rises: at full fight intensity (a boss, or someone in the party Bloodied) the music crossfades to this mood's music; a music entry that is itself a list holds one piece's intensity versions, calmest first, played in step (A2). boss_music: a foe whose fight has its own mood (Strahd's). steps, loops, water, containers: the world sounds (WorldSounds, A3).",
+  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB; track_levels: one recording's own offset on top of its mood's, so the pieces a mood picks between sound about as loud as each other. rises: at full fight intensity (a boss, or someone in the party Bloodied) the music crossfades to this mood's music; a music entry that is itself a list holds one piece's intensity versions, calmest first, played in step (A2). regions: a region's own theme for its places (region_keeps: map themes that keep their own mood there, like taverns). boss_music: a foe whose fight has its own mood (Strahd's). steps, loops, water, containers: the world sounds (WorldSounds, A3).",
   "themes": {
     "svalich_road": "wilds",
     "forest": "wilds",
@@ -47,7 +47,8 @@
     "castle_ravenloft_spires_heart": "castle",
     "castle_ravenloft_spires_roofs": "castle",
     "castle_ravenloft_spires_rooms": "castle",
-    "castle_ravenloft_spires_roost": "castle"
+    "castle_ravenloft_spires_roost": "castle",
+    "vallaki_st_andrals": "church"
   },
   "levels": {
     "title": -2.0,
@@ -1085,5 +1086,25 @@
     "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg": 4.4,
     "res://art/sourced/wikimedia_commons/Modest_Mussorgsky_-_night_on_bald_mountain.ogg": 2.1,
     "res://art/sourced/oga_isao/dova_mary_only_knows.mp3": -2.6
-  }
+  },
+  "regions": {
+    "vallaki": "town",
+    "krezk": "krezk",
+    "abbey_of_st_markovia": "abbey",
+    "argynvostholt": "argynvostholt",
+    "amber_temple": "amber_temple",
+    "tsolenka_pass": "amber_temple",
+    "berez": "berez",
+    "wizard_of_wines": "vineyard",
+    "yester_hill": "wildlands",
+    "werewolf_den": "wildlands",
+    "mount_baratok": "wildlands",
+    "old_bonegrinder": "bonegrinder"
+  },
+  "region_keeps": [
+    "tavern",
+    "inn",
+    "camp",
+    "tent"
+  ]
 }

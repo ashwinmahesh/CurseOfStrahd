@@ -104,3 +104,22 @@ func test_every_track_level_names_a_listed_recording() -> void:
 			listed[path] = true
 	for path: String in (Audio._data.get("track_levels", {}) as Dictionary):
 		assert_true(listed.has(path), "track_levels names %s, which no mood plays" % path)
+
+
+## Region themes (A1, lane 11): a region's places play its theme, but taverns and the like keep their own mood.
+func test_regions_play_their_theme() -> void:
+	var c := Compendium.shared()
+	var regions := Audio._data.get("regions", {}) as Dictionary
+	var checked := 0
+	for id: String in c.table("locations"):
+		var loc := c.get_entry("locations", id)
+		var own := str(regions.get(str(loc.get("region", "")), ""))
+		var theme := ArenaBoard.theme_for(loc.get("map", {}) as Dictionary)
+		if own == "" or (Audio._data["places"] as Dictionary).has(id) or (Audio._data.get("region_keeps", []) as Array).has(theme) \
+				or Audio.files("music", own).is_empty():
+			continue
+		assert_eq(Audio.mood_for(id, theme), own, "%s plays its region's theme" % id)
+		checked += 1
+	assert_true(checked > 0, "some region has a theme")
+	assert_eq(Audio.mood_for("vallaki_blue_water_inn", "tavern"), "tavern", "an inn keeps its tavern music")
+	assert_eq(Audio.mood_for("vallaki_st_andrals", "church"), "church", "St. Andral's keeps the church's")
