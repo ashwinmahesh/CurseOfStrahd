@@ -153,6 +153,9 @@ func show_prompts(list: Array) -> void:
 			icon.texture = tex
 			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			# Smoothed from its mipmaps: the project's nearest filter shrank the 64 px pictures' letters to noise, the
+			# bumpers' "LB" reading as "IR" in a 1280x720 window (UI QA UI-09).
+			icon.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 			icon.custom_minimum_size = Vector2(ICON, ICON)
 			icon.modulate = Look.color("vellum")
 			item.add_child(icon)

@@ -87,6 +87,10 @@ func _ready() -> void:
 
 func _key(label: String, on_press: Callable, wide: float = 1.0) -> Button:
 	var b := UiKit.button(label, on_press, 18)
+	if label.length() == 1:
+		# A letter key in the plain face the typed text uses: in the book hand h and b, d and dl looked alike (UI QA UI-21).
+		b.remove_theme_font_override("font")
+		b.add_theme_font_size_override("font_size", 20)
 	b.custom_minimum_size = Vector2(KEY.x * wide, KEY.y)
 	b.focus_mode = Control.FOCUS_NONE
 	b.set_meta(&"letter", label)

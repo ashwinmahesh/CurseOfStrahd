@@ -701,7 +701,10 @@ func _pack(ch: Character) -> Control:
 	inner.add_child(_search_row(ch))
 	var sorts := HBoxContainer.new()
 	sorts.add_theme_constant_override("separation", 4)
-	sorts.add_child(UiParts.caption("Sort", 11))
+	var sort_cap := UiParts.caption("Sort", 11)
+	# Room for the lit chip's glow, which covered the caption's last letter (UI QA UI-13).
+	sort_cap.custom_minimum_size.x = sort_cap.get_minimum_size().x + 6.0
+	sorts.add_child(sort_cap)
 	for s: String in SORTS:
 		var sb := UiParts.small_button(s.capitalize(), func() -> void:
 			sort_by = s

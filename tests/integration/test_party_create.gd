@@ -265,6 +265,9 @@ func test_portraits_and_names_the_company_has_are_taken() -> void:
 	var app := cs.b().build["appearance"] as Dictionary
 	assert_ne(str(app["portrait"]), "hero_01", "a new face by default")
 	assert_eq(str(app["art"]), str(app["portrait"]))
+	# The new character starts as a woman, so the face put in place of the taken one is a woman's (UI QA UI-01).
+	assert_eq(str(app["gender"]), "female")
+	assert_eq(str(HeroLook.option("portraits", str(app["portrait"])).get("gender", "")), "female", "a woman's face: %s" % app["portrait"])
 	assert_eq(str(cs.taken_portraits.get("hero_01", "")), "Vasha Dunmere")
 	_fill(cs.b(), "Vasha Dunmere")
 	assert_false(cs.b().errors().is_empty(), "Vasha's name is taken")

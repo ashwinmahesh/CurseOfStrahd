@@ -122,6 +122,9 @@ static func screen_frame(root: CanvasLayer, title_text: String, size: Vector2 = 
 	ps0.content_margin_top = 40
 	ps0.content_margin_bottom = 28
 	_centre(p, Vector2(-size.x / 2.0, -size.y / 2.0), Vector2(size.x / 2.0, size.y / 2.0))
+	# Content wider or taller than this grows the frame to the right and down, over its own corners and off the screen;
+	# tests/support/layout_check.gd fails a frame that grew.
+	p.set_meta(&"design_size", size)
 	trim(p, 104.0)
 	root.add_child(p)
 	# The title sits on a crimson plaque astride the top border, with gilt scrollwork spreading out behind it.
@@ -259,6 +262,12 @@ static func install_theme() -> void:
 			var flat := StyleBoxEmpty.new()
 			flat.set_content_margin_all(4)
 			t.set_stylebox(state, type, flat)
+	# A gilt box, filled when ticked: Godot's own unticked box is dark grey and vanished on the crimson panels (UI QA
+	# UI-11, the creator's personality tags).
+	t.set_icon("unchecked", "CheckBox", _tick_box(false, Look.color("gilt")))
+	t.set_icon("checked", "CheckBox", _tick_box(true, Look.color("gilt_light")))
+	t.set_icon("unchecked_disabled", "CheckBox", _tick_box(false, Look.color("gilt_dark")))
+	t.set_icon("checked_disabled", "CheckBox", _tick_box(true, Look.color("gilt_dark")))
 	t.set_color("font_color", "Label", Look.color("vellum"))
 	t.set_color("font_outline_color", "Label", Look.color("void"))
 	t.set_constant("outline_size", "Label", 3)
@@ -331,6 +340,9 @@ static func install_theme() -> void:
 	# Sliders: a dark rounded track, the gilt fill and a lozenge grabber.
 	var groove := StyleBoxFlat.new()
 	groove.bg_color = Look.color("void")
+	# A fine dark-gilt edge, so the track's unfilled part shows on the near-black panels (UI QA UI-17, Wait).
+	groove.border_color = Look.color("gilt_dark")
+	groove.set_border_width_all(1)
 	groove.set_corner_radius_all(3)
 	groove.set_content_margin_all(2)
 	var filled := StyleBoxFlat.new()
@@ -360,6 +372,20 @@ static func _lozenge(side: int, colour: Color) -> ImageTexture:
 				img.set_pixel(x, y, colour)
 			elif d <= c:
 				img.set_pixel(x, y, Look.color("void"))
+	return ImageTexture.create_from_image(img)
+
+
+## A check box's box, drawn once: a `colour` edge on a dark ground, with a square of it inside when ticked.
+static func _tick_box(on: bool, colour: Color) -> ImageTexture:
+	var side := 18
+	var img := Image.create(side, side, false, Image.FORMAT_RGBA8)
+	for y in side:
+		for x in side:
+			var edge := mini(mini(x, y), mini(side - 1 - x, side - 1 - y))
+			if edge < 2 or (on and edge >= 4):
+				img.set_pixel(x, y, colour)
+			else:
+				img.set_pixel(x, y, Color(Look.color("void"), 0.6))
 	return ImageTexture.create_from_image(img)
 
 

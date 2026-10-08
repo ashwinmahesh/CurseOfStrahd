@@ -40,7 +40,9 @@ func _build() -> void:
 	add_child(head)
 	var note := ChoiceOptions.swap_note(choice)
 	if note != "":
-		add_child(UiKit.label(note, 14, "moonlight", 1100))
+		# It wraps at whatever width the screen gives the choice: a fixed 1100 was wider than Level Up's list, and pushed
+		# the whole frame off the right of the screen (UI QA UI-03).
+		add_child(UiKit.label(note, 14, "moonlight", 600))
 	if choice.kind == "ability_increase":
 		_ability_rows()
 		return

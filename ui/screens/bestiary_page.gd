@@ -79,12 +79,12 @@ static func entry(st: StoryState, id: String) -> Control:
 	who.add_child(UiKit.title(str(d.get("name", id))))
 	who.add_child(UiParts.caption("%s %s" % [str(d.get("size", "")).capitalize(), str(d.get("type", "")).capitalize()], 12))
 	if str(d.get("summary", "")) != "":
-		who.add_child(TermText.make(str(d["summary"]), UiScale.text(15), "vellum", 640))
+		who.add_child(TermText.make(str(d["summary"]), UiScale.text(15), "vellum", 630))
 	var place := str(Compendium.shared().get_entry("locations", str(e.get("where", ""))).get("name", ""))
 	var met := "First fought on day %d" % int(e.get("met", 1)) + (" in %s" % place if place != "" else "")
 	var felled := int(e.get("defeated", 0))
 	met += " · felled: %d" % felled if felled > 0 else " · none felled yet"
-	who.add_child(UiKit.label(met + ".", UiScale.text(13), "parchment", 640))
+	who.add_child(UiKit.label(met + ".", UiScale.text(13), "parchment", 630))
 	head.add_child(who)
 	col.add_child(head)
 	col.add_child(UiParts.section("From fighting it"))

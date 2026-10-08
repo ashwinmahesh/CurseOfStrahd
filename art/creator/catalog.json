@@ -108,16 +108,16 @@
     "strike": "{they} chops the axe down and across in front with full force, stepping forward onto the front foot"}}
  ],
  "portraits": [
-  {"id": "hero_01", "prompt": "a weathered human woman sellsword in her thirties with close-cropped dark hair, a pale scar through one eyebrow and steady grey eyes, wearing a dark travelling coat with a high collar over chain mail", "expression": "wary, determined"},
-  {"id": "hero_02", "prompt": "a young human man in his twenties with tousled chestnut hair, stubble and a crooked grin, wearing a worn dark leather jerkin with a dagger hilt over his shoulder", "expression": "sly, amused"},
-  {"id": "hero_03", "prompt": "a cool, poised elven woman with long silver-white hair, long pointed ears and violet eyes, wearing deep blue-violet scholar's robes with a pale crystal pendant", "expression": "calm, appraising"},
-  {"id": "hero_04", "prompt": "a broad dwarven man with a long red beard worked into two braids, a bald scalp with faded blue tattoos and a heavy grey wolf-fur mantle", "expression": "gruff, unimpressed"},
-  {"id": "hero_05", "prompt": "a tiefling woman with dark ridged horns curving back from her temples, deep red skin, gold eyes and black hair in a high knot, wearing a dark crimson duelist's doublet", "expression": "proud, faintly mocking"},
-  {"id": "hero_06", "prompt": "a human man in his fifties with grey hair, a lined, kind face and a short grey beard, a travelling priest in a bone-white surcoat with a silver sun symbol on a chain", "expression": "kind, tired"},
-  {"id": "hero_07", "prompt": "a half-orc woman with grey-green skin, two short tusks, a crest of black hair along her shaved head and a grey wolf-fur mantle over her shoulders", "expression": "fierce"},
-  {"id": "hero_08", "prompt": "a halfling woman with a mop of bright auburn curls, freckles and a gap-toothed smile, wearing a dark leather jerkin with a half-cape", "expression": "cheeky, delighted"},
-  {"id": "hero_09", "prompt": "a dark-skinned human man in his forties with close-cropped black hair and a neat black beard, a scholar-mage in deep blue-violet robes with a satchel strap across his chest", "expression": "thoughtful, calm"},
-  {"id": "hero_10", "prompt": "a pale young noblewoman with long black hair in a single braid over her shoulder, sharp features and dark eyes, wearing a black and crimson doublet with a rapier hilt rising behind her shoulder", "expression": "cold, proud"}
+  {"id": "hero_01", "gender": "female", "prompt": "a weathered human woman sellsword in her thirties with close-cropped dark hair, a pale scar through one eyebrow and steady grey eyes, wearing a dark travelling coat with a high collar over chain mail", "expression": "wary, determined"},
+  {"id": "hero_02", "gender": "male", "prompt": "a young human man in his twenties with tousled chestnut hair, stubble and a crooked grin, wearing a worn dark leather jerkin with a dagger hilt over his shoulder", "expression": "sly, amused"},
+  {"id": "hero_03", "gender": "female", "prompt": "a cool, poised elven woman with long silver-white hair, long pointed ears and violet eyes, wearing deep blue-violet scholar's robes with a pale crystal pendant", "expression": "calm, appraising"},
+  {"id": "hero_04", "gender": "male", "prompt": "a broad dwarven man with a long red beard worked into two braids, a bald scalp with faded blue tattoos and a heavy grey wolf-fur mantle", "expression": "gruff, unimpressed"},
+  {"id": "hero_05", "gender": "female", "prompt": "a tiefling woman with dark ridged horns curving back from her temples, deep red skin, gold eyes and black hair in a high knot, wearing a dark crimson duelist's doublet", "expression": "proud, faintly mocking"},
+  {"id": "hero_06", "gender": "male", "prompt": "a human man in his fifties with grey hair, a lined, kind face and a short grey beard, a travelling priest in a bone-white surcoat with a silver sun symbol on a chain", "expression": "kind, tired"},
+  {"id": "hero_07", "gender": "female", "prompt": "a half-orc woman with grey-green skin, two short tusks, a crest of black hair along her shaved head and a grey wolf-fur mantle over her shoulders", "expression": "fierce"},
+  {"id": "hero_08", "gender": "female", "prompt": "a halfling woman with a mop of bright auburn curls, freckles and a gap-toothed smile, wearing a dark leather jerkin with a half-cape", "expression": "cheeky, delighted"},
+  {"id": "hero_09", "gender": "male", "prompt": "a dark-skinned human man in his forties with close-cropped black hair and a neat black beard, a scholar-mage in deep blue-violet robes with a satchel strap across his chest", "expression": "thoughtful, calm"},
+  {"id": "hero_10", "gender": "female", "prompt": "a pale young noblewoman with long black hair in a single braid over her shoulder, sharp features and dark eyes, wearing a black and crimson doublet with a rapier hilt rising behind her shoulder", "expression": "cold, proud"}
  ],
  "voice_sample": "I came into this valley by my own road. I mean to leave it by the same one.",
  "voices": [

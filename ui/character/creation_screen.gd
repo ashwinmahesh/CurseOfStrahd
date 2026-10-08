@@ -141,16 +141,20 @@ func _joining_note() -> String:
 	return text
 
 
-## The look moved off a portrait another custom character in the company wears, onto the first free one.
+## The look moved off a portrait another custom character in the company wears, onto the first free one of the look's
+## own gender (art/creator/catalog.json gives each portrait's), or any free one if none is: a woman no longer starts
+## with a man's face because the first portrait was taken (UI QA UI-01).
 func _free_portrait(app: Dictionary) -> Dictionary:
 	if not taken_portraits.has(str(app.get("portrait", ""))):
 		return app
 	var out := app.duplicate()
-	for id in HeroLook.offered_ids(app, "portraits"):
-		if not taken_portraits.has(id):
-			out["portrait"] = id
-			out["art"] = id
-			break
+	var free := HeroLook.offered_ids(app, "portraits").filter(func(id: String) -> bool: return not taken_portraits.has(id))
+	var same := free.filter(func(id: String) -> bool:
+		return str(HeroLook.option("portraits", id).get("gender", "")) == str(app.get("gender", "")))
+	var pick := same if not same.is_empty() else free
+	if not pick.is_empty():
+		out["portrait"] = pick[0]
+		out["art"] = pick[0]
 	return out
 
 
