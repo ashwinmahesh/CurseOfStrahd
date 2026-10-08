@@ -109,17 +109,21 @@ the top right of the HUD that moves with the party, and the ways out of an area 
 
 - Owner playtest (2026-10-06): a found trap showed as a red box hiding whatever was there, and traps were only noticed
   within 10 ft.
-- A noticed trap shows its own piece on each of its squares (art/sprites/props, sheets `trap_floor_a` and
+- A found trap shows its own piece on each of its squares (art/sprites/props, sheets `trap_floor_a` and
   `trap_floor_b`: wolf_trap, broken_boards, spiked_pit, tripwire, floor_glyphs, floor_crack, soot_patch,
   blade_slits; plus the existing ice_patch and snowdrift), picked by a word in the trap's id or label, or by an
   optional `model`. A square that already has a prop (Victor's rune circle) keeps it. Round the squares runs a red
   dashed border just inside their edges, so nothing is covered; the minimap rings noticed traps in red. A trap with no
-  piece that fits (a statue's gaze, a chandelier overhead) gets the border alone. Disarming takes it all away.
-- Passive Perception: every living party member's passive Perception is checked against every unnoticed trap square
-  they can see (walls and closed doors block the view), when the party arrives and after every step; meeting the DC
-  is enough (2024). An unnoticed trap shows nothing at all. Anything above everyone's passive Perception stays hidden
-  until a Search (the leader's Wisdom (Perception) check, 15 ft), Find Traps or a Wand of Secrets finds it. Stepping
-  on an unnoticed trap still springs it.
+  piece that fits (a statue's gaze, a chandelier overhead) gets the border alone. Disarming or springing it takes it all
+  away.
+- Owner playtest (2026-10-08): traps fire when walked onto and nothing disarms them on its own; they stay hidden
+  without an explicit Perception check; the party doesn't walk round them; a right-click sets one off, from within
+  5 ft. So: nothing is noticed passively. A trap shows nothing at all until a Search (the leader's Wisdom (Perception)
+  check, 15 ft; the squares it reached tint the ground for a moment and fade), Find Traps or a Wand of Secrets finds it.
+  Paths go straight over a found trap, and stepping on a trap springs it, found or not. Right-click a found trap for
+  Set it off (enabled within 5 ft of it, or standing in it: whoever stands in its squares takes it, else it goes off
+  on nothing) and Disarm (thieves' tools, the player's choice). A spent trap loses its marks; an open pit stays shown
+  and is walked round.
 - A noticed trap's border also shows through a wall in front of it as red hatching (shaders/world/xray_mark.gdshader),
   so a trap in a one-square passage still reads from the diagonal camera.
 

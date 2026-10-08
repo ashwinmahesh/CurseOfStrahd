@@ -316,9 +316,9 @@ func _check_over() -> void:
 	var enemies_up := false
 	for c in e.combatants:
 		# A creature that fell out of the fight (EncounterMovement.leave_grid) no longer counts for either side, nor one
-		# knocked out (it's out until a Short Rest is over).
+		# knocked out (it's out until a Short Rest is over), nor a foe that surrendered (F13).
 		if not c.is_alive() or c.creature.hp <= 0 or c.creature.has_flag("spell_object") or c.has_meta("left_fight") \
-				or c.creature.has_flag("knocked_out"):
+				or c.creature.has_flag("knocked_out") or c.creature.has_flag("surrendered"):
 			continue
 		if c.side in [&"party", &"guest"]:
 			party_up = true

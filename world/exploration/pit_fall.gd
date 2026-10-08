@@ -8,7 +8,8 @@ extends RefCounted
 ## lands Prone and stays at the bottom until they climb out. With a rope in the party
 ## the climb needs no check; without one it's a DC 15 Strength (Athletics) check (2024: climbing a sheer surface), a
 ## minute a try. While someone is down there the party doesn't drag them along, and clicking to walk with them leading
-## tries the climb first. An open pit is walked round where there's room, and jumped where it fills a passage.
+## tries the climb first. An open pit is walked round where there's room, and jumped where it fills a passage; a found
+## pit that hasn't opened is walked over like any trap (it springs).
 
 const CLIMB_DC := 15
 ## How high the walls right beside a shown pit stay (world units), so the camera can see into it.
@@ -53,10 +54,17 @@ static func open_hole(trap: Dictionary, state: String) -> bool:
 
 # --- Springing and climbing ------------------------------------------------------------------------
 
-## The pit opens under `victim`: the save to catch the edge, else the fall. Replaces the generic trap springing.
+## The pit opens under `victim`: the save to catch the edge, else the fall. Replaces the generic trap springing. Set off
+## on purpose with nobody on it (`victim` null), it just opens.
 static func spring(view: LocationView, trap: Dictionary, victim: Combatant) -> void:
 	var id := str(trap["id"])
 	(view.st.loc_state(view.loc_id)["traps"] as Dictionary)[id] = "triggered"
+	if victim == null:
+		if trap.has("flag"):
+			view.st.set_flag(str(trap["flag"]))
+		_redress(view, trap)
+		view.narration.emit("%s tips open with nobody on it." % str(trap.get("label", "The pit")).capitalize())
+		return
 	var lines: Array[String] = []
 	var save := trap.get("save", {}) as Dictionary
 	var caught := false

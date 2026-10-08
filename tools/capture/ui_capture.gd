@@ -3,7 +3,8 @@ extends Node
 ## Second Wind and spell slot, Shield of Faith, Poisoned), then the sheet's tabs, party, inventory, level up, rests,
 ## spell preparation (after a rest and after an item's Long Rest), journal, loot, shop, pause menu and character creation,
 ## one shot each, plus sample tooltips, the sheet for a level 7 warlock, monk and druid, and creating a character from the
-## party screen (UI_ONLY=create), Madam Eva's rebuild (UI_ONLY=rebuild) and a sheet opened in a fight (UI_ONLY=fight_sheet).
+## party screen (UI_ONLY=create), Madam Eva's rebuild (UI_ONLY=rebuild), a sheet opened in a fight (UI_ONLY=fight_sheet)
+## and a cutscene still (UI_ONLY=cutscene).
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -233,6 +234,14 @@ func capture_shots(tool: Node, out: String) -> void:
 			await tool.call("wait_frames", 2)
 	if _wants("create"):
 		await _create_shots(tool, out)
+	if _wants("cutscene"):
+		# A cutscene still is drawn whole with black bars (owner, 2026-10-08); run with ARGS="--size=1512x982" (a Mac
+		# laptop's full screen) or "--size=2150x900" (ultrawide) to see the bars.
+		var cp := CutscenePlayer.new()
+		add_child(cp)
+		cp.play("strahd_watcher", ["High on the ridge a rider in black sits a black horse, and does not move, and watches you go."] as Array[String], GameState.story)
+		await _shoot(tool, "%s_cutscene.png" % out)
+		cp.queue_free()
 	if _wants("fight_sheet"):
 		await _fight_sheet_shots(tool, out)
 	# Last: the Long Rest fades to black for a while.

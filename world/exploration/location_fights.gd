@@ -41,6 +41,7 @@ static func _begin_final_battle(view: LocationView, encounter_id: String) -> boo
 
 ## Fights triggered by a flag (set by dialogue or a lever): checked after conversations and interactions.
 static func check_flag_encounters(view: LocationView) -> bool:
+	_after_captives(view)
 	# The parley before a final battle has ended: the fight, unless Strahd's price was paid.
 	if view._pending_final != "":
 		var waiting := view._pending_final
@@ -129,6 +130,7 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 	EncounterSetup.bring_familiars(e, party_cbs)
 	_light_the_fight(view, e)
 	BattleScenery.for_location(view, e)   # doors, furniture and chandeliers that can be broken (F5)
+	LocationTraps.into_fight(view, e)   # traps that haven't gone off go off under whoever steps on them
 	var surprised: Array[String] = []
 	var who := str(spec.get("surprise", ""))
 	for c in e.combatants:
@@ -384,6 +386,7 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 			m.creature.remove_condition(&"prone")
 	LocationStealth.after_fight(view, e)
 	BattleScenery.after_fight(view, e)   # broken doors stay open; what else broke stays broken this visit
+	LocationTraps.after_fight(view, e)   # traps sprung in the fight are spent
 	LocationPlan.resume(view)
 	for m: Combatant in view.members + view.guest_members:
 		var tok := view.tokens[m.id] as CombatToken
@@ -414,14 +417,51 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 		view.st.set_flag(f, e.legendary.story_flags[f])
 	for qid: String in e.legendary.story_quests:
 		view.st.set_quest_stage(qid, str(e.legendary.story_quests[qid]))
+	# F13: cutting down a foe that surrendered costs the companions' regard (story/captives.gd).
+	if Captives.slain_after_surrender(e) > 0:
+		var said := Approval.react(view.st, Captives.CRUELTY, Captives.CRUELTY_WHY)
+		if said != "":
+			view.toast.emit(said)
+	# Captives are dealt with in a conversation first; the spoils (and a journey that was under way) wait for it.
+	var captives := Captives.taken(e)
+	var talk := Captives.conversation(captives, encounter_id)
+	if talk != "":
+		_after_talk = {"view": view.get_instance_id(), "id": encounter_id, "spec": spec, "loot": not e.legendary.no_loot(),
+			"carried": _left_behind(e), "journey": view.st.travel_resume}
+		view.st.travel_resume = {}
 	view._save_positions()
 	view.combat_ended.emit(outcome)
 	# A foe that withdrew or fled as mist leaves nothing behind (a Tarokka treasure here is still found).
-	if outcome == "victory":
-		# What the fallen foes still carried, and their weapons left lying on the ground (GroundItems).
-		var left := AiTactics.leftovers(e)
-		left.append_array(e.ground.spoils)
-		_spoils(view, encounter_id, spec, not e.legendary.no_loot(), left)
+	if talk != "":
+		Captives.forget_spent(view.st)
+		view.dialogue_requested.emit(talk, "")
+	elif outcome == "victory":
+		_spoils(view, encounter_id, spec, not e.legendary.no_loot(), _left_behind(e))
+
+
+## What the fallen foes still carried, and their weapons left lying on the ground (GroundItems).
+static func _left_behind(e: Encounter) -> Array[Dictionary]:
+	var left := AiTactics.leftovers(e)
+	left.append_array(e.ground.spoils)
+	return left
+
+
+## A won fight's spoils and journey, held while its captives are dealt with (F13): {view (instance id), id, spec,
+## loot, carried, journey}. check_flag_encounters, which runs as a conversation ends, hands them on.
+static var _after_talk: Dictionary = {}
+
+
+## After the captives' conversation: the fight's spoils, and the journey picks up again.
+static func _after_captives(view: LocationView) -> void:
+	if _after_talk.is_empty() or int(_after_talk["view"]) != view.get_instance_id():
+		return
+	var t := _after_talk
+	_after_talk = {}
+	if not (t["journey"] as Dictionary).is_empty():
+		view.st.travel_resume = t["journey"] as Dictionary
+	var carried: Array[Dictionary] = []
+	carried.assign(t["carried"] as Array)
+	_spoils(view, str(t["id"]), t["spec"] as Dictionary, bool(t["loot"]), carried)
 
 
 ## What a won fight leaves (the encounter's `loot`, what the fallen foes still carried, and a Tarokka treasure if this

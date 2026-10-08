@@ -3,7 +3,7 @@
   "name": "Bogdan",
   "title": "A Farmer on the Road",
   "summary": "A Barovian farmer from a steading off the Old Svalich Road, carrying his mother's coffin to the village church with his son because he will not put her in the ground unblessed.",
-  "portrait": "commoner",
+  "portrait": "villager",
   "sprite": "villager",
   "attitude": "indifferent",
   "voice": "docs/voice/road_folk.md",

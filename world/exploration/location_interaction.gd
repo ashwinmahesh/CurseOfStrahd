@@ -70,13 +70,15 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 			out.append({"id": "use", "label": str(thing["label"]).get_slice(" ", 0)})
 		"trap":
 			title = str(spec.get("label", "a trap")).capitalize()
+			# Set it off on purpose, from within 5 ft or standing in it (owner, 2026-10-08); disarming is the player's choice.
+			var why := LocationTraps.activate_why(view, spec)
+			out.append({"id": "activate", "label": "Set it off", "enabled": why == "", "why": why})
 			var who := LocationLocks._lock_picker(view)
 			if who != null:
 				var adv2: Array[String] = []
 				out.append({"id": "disarm", "label": "Disarm (%s, %s)" % [who.name.get_slice(" ", 0), LocationView._pick_bonus(who, adv2).signed()]})
 			else:
 				out.append({"id": "disarm", "label": "Disarm", "enabled": false, "why": "Nobody has thieves' tools"})
-			out.append({"id": "avoid", "label": "Walk around it (the party already does)", "enabled": false})
 		"foe":
 			# A foe waiting in plain view (LocationStealth): the party can open the fight from where it stands.
 			title = str(thing["name"])
@@ -133,6 +135,10 @@ static func act(view: LocationView, cell: Vector2i, action_id: String) -> void:
 		"strike":
 			if not thing.is_empty() and str(thing["kind"]) == "foe":
 				view.strike(str(thing["id"]))
+			return
+		"activate":
+			if not thing.is_empty() and str(thing["kind"]) == "trap":
+				LocationTraps.activate(view, thing["spec"] as Dictionary)
 			return
 	if thing.is_empty():
 		return
@@ -267,7 +273,7 @@ static func thing_at(view: LocationView, cell: Vector2i) -> Dictionary:
 		if str((view.st.loc_state(view.loc_id)["traps"] as Dictionary).get(str(trap["id"]), "")) == "found":
 			for tc: Variant in trap["cells"]:
 				if LocationView._cell(tc) == cell:
-					return {"kind": "trap", "id": str(trap["id"]), "label": "Disarm %s" % trap.get("label", "the trap"), "spec": trap}
+					return {"kind": "trap", "id": str(trap["id"]), "label": str(trap.get("label", "a trap")).capitalize(), "spec": trap}
 	for ex: Variant in view.loc.get("exits", []):
 		var exit := ex as Dictionary
 		if LocationView._cell(exit["cell"]) == cell:
@@ -280,7 +286,8 @@ static func click(view: LocationView, cell: Vector2i) -> void:
 	if view.busy or view.in_combat or view.members.is_empty():
 		return
 	var thing := thing_at(view, cell)
-	if thing.is_empty() or str(thing["kind"]) == "exit":
+	# A way out, or a trap: walk onto it (a trap isn't walked round or disarmed by a click; owner, 2026-10-08).
+	if thing.is_empty() or str(thing["kind"]) in ["exit", "trap"]:
 		view.walk_to(cell)
 		return
 	if str(thing["kind"]) == "foe" and view.planning:
@@ -330,7 +337,7 @@ static func interact(view: LocationView, thing: Dictionary) -> void:
 		"prop":
 			_use_prop(view, spec)
 		"trap":
-			LocationTraps._disarm(view, spec)
+			LocationTraps.activate(view, spec)   # only from within 5 ft; disarming is a menu choice
 		"foe":
 			view.strike(str(thing["id"]))
 

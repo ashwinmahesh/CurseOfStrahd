@@ -22,6 +22,11 @@ const ARENA := {
 	"encounters": [{"id": "rat", "trigger": "manual", "monsters": [{"monster": "rat", "cell": [8, 3]}]}],
 }
 
+## Full-screen sizes beyond LayoutCheck.SIZES, for the cutscene stills: Mac laptops are taller than 16:9, an ultrawide
+## much wider.
+const FULL_SCREENS := {"a MacBook Pro full screen": Vector2i(3024, 1964), "a MacBook Air full screen": Vector2i(2560, 1664),
+	"a 4K full screen": Vector2i(3840, 2160), "an ultrawide full screen": Vector2i(3440, 1440)}
+
 ## Spills found when these checks arrived, each waiting on the lane that owns the screen: [what was opened (its start),
 ## words in the problem, why]. They print as known instead of failing, and an entry fails once its spill is gone, so
 ## the list only shrinks.
@@ -613,6 +618,40 @@ func test_a_cutscene_with_the_longest_caption() -> void:
 			func() -> void:
 				for p in root.find_children("*", "CutscenePlayer", false, false):
 					p.queue_free())
+	Cutscenes.clear_cache()
+
+
+## Cutscene stills in a window and full screen (owner, 2026-10-08: full screen cut off the top of the picture): at every
+## size the whole picture shows, as large as fits, with black around it, and the caption (the longest a line may be)
+## sits on the picture or its bar, never clipped.
+func test_a_cutscene_picture_is_whole_in_a_window_and_full_screen() -> void:
+	if not await _game(LATE):
+		return
+	Cutscenes.register({"id": "test_layout_cut", "title": "Test", "summary": "A fixture.", "focus": [0.5, 0.9],
+		"images": [{"image": "strahd_watcher", "when": ""}]})
+	var words: Array[String] = []
+	for i in 60:
+		words.append(["ridge", "lantern", "Barovia", "unhurried", "watching"][i % 5])
+	var caption := " ".join(words) + "."
+	var sizes := LayoutCheck.SIZES.duplicate()
+	sizes.merge(FULL_SCREENS)
+	for size_name: String in sizes:
+		get_tree().root.size = sizes[size_name] as Vector2i
+		await _frames(2)
+		var p := CutscenePlayer.new()
+		root.add_child(p)
+		p.play("test_layout_cut", [caption] as Array[String], GameState.story)
+		await _frames(3)
+		var screen := get_tree().root.get_visible_rect()
+		var pic := p.view.picture_rect()
+		assert_true(pic.size.x > 0.0, "%s: the picture shows" % size_name)
+		assert_true(screen.grow(LayoutCheck.SLACK).encloses(pic), "%s: the picture %s spills out of the screen %s" % [size_name, pic, screen])
+		assert_true(absf(pic.size.x - screen.size.x) <= LayoutCheck.SLACK or absf(pic.size.y - screen.size.y) <= LayoutCheck.SLACK,
+			"%s: the picture %s is as large as fits in %s" % [size_name, pic, screen])
+		for problem in LayoutCheck.problems(p, screen):
+			fail("a cutscene at %s: %s" % [size_name, problem])
+		p.queue_free()
+		await _frames(1)
 	Cutscenes.clear_cache()
 
 

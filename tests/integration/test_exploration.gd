@@ -1,6 +1,6 @@
 extends TestCase
 ## Exploration (plan §5.2, ADR 0009) on a fixture location: the party is placed and follows the leader, doors and
-## locks, containers and loot, examine and codex, traps found by passive Perception and searching, conversations,
+## locks, containers and loot, examine and codex, traps found by searching, conversations,
 ## fights started in place and ended back in exploration, rests, and saving the story.
 
 const LOC := {

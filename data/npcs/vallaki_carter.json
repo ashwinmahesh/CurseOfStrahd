@@ -3,7 +3,7 @@
   "name": "Old Kolya",
   "title": "Carter to the Baron's Festivals",
   "summary": "A bent old carter who hauls wicker and firewood from the lower town to the square for every festival, and has hauled it for more of them than he cares to count.",
-  "portrait": "commoner",
+  "portrait": "vallaki_carter",
   "sprite": "villager",
   "attitude": "indifferent",
   "monster": "commoner",
