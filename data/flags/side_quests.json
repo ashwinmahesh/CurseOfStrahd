@@ -90,6 +90,66 @@
       "id": "bildrath_hush",
       "type": "bool",
       "summary": "Bildrath paid the party to forget he sold walking firewood (the Wraps of Unarmed Power, and his discount)."
+    },
+    {
+      "id": "mare_rumor",
+      "type": "bool",
+      "summary": "Zora told the party the black carriage stopped by Radu's pen and that he walked his grey mare to the crossroads (The Grey Mare)."
+    },
+    {
+      "id": "radu_bargain_known",
+      "type": "bool",
+      "summary": "Radu admitted he sold Steaua because the voice in the carriage promised Nicu would ride home."
+    },
+    {
+      "id": "radu_knows_nicu",
+      "type": "bool",
+      "summary": "The party told Radu that Nicu hangs at the crossroads, so the castle's promise was a lie."
+    },
+    {
+      "id": "mare_calmed",
+      "type": "bool",
+      "summary": "Steaua, tied at the crossroads milestone, has been calmed enough to touch."
+    },
+    {
+      "id": "mare_calm_tried",
+      "type": "bool",
+      "summary": "The one Animal Handling try to calm Steaua failed (and the brand took her)."
+    },
+    {
+      "id": "mare_rite_tried",
+      "type": "bool",
+      "summary": "The one Religion try at Steaua's brand failed (and the brand took her)."
+    },
+    {
+      "id": "mare_saved",
+      "type": "bool",
+      "summary": "The castle's brand on Steaua was broken and she ran home grey."
+    },
+    {
+      "id": "mare_lost",
+      "type": "bool",
+      "summary": "Steaua was finished into one of the castle's black horses; she fights for the carriage."
+    },
+    {
+      "id": "carriage_came",
+      "type": "bool",
+      "summary": "The black carriage came to the crossroads for Steaua (its props show until the fight is won)."
+    },
+    {
+      "id": "carriage_beaten",
+      "type": "bool",
+      "summary": "The black carriage's escort was beaten at the crossroads (encounter carriage_escort)."
+    },
+    {
+      "id": "mare_owner",
+      "type": "string",
+      "summary": "Who keeps Steaua after she comes home: radu or luminita."
+    },
+    {
+      "id": "mare_resolved",
+      "type": "bool",
+      "summary": "Radu has paid the party and The Grey Mare is over."
     }
   ]
 }

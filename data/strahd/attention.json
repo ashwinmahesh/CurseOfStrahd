@@ -55,6 +55,12 @@
       "summary": "The coachman he sent to open a door in the Village of Barovia, destroyed at a widow's step (The Polite Caller)."
     },
     {
+      "id": "black_carriage",
+      "when": "flag.carriage_beaten",
+      "points": 1,
+      "summary": "His carriage's escort broken at the Ivlis crossroads, and a horse he had paid for taken back (The Grey Mare)."
+    },
+    {
       "id": "gulthias_tree",
       "when": "flag.gulthias_tree_burned",
       "points": 2,
