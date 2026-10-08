@@ -26,6 +26,10 @@ endif
 * [if flag.abbot_bride_revealed] Tell us about the bride. -> bride
 * [if flag.abbot_dress_asked and not flag.wedding_dress_found and not flag.wards_dress_found] Where would anyone find a wedding dress up here? -> dress_hint
 * [if not flag.clovin_befriended] You look like a man who could use a drink. -> drink
+* [if quest.clovins_audience == rumored] The Krezk watch says a Belview came down to their gate to tell a joke. -> krezk/clovins_audience:bucket
+* [if flag.clovin_befriended and not quest.clovins_audience] You've gone quiet, Clovin. Something on your mind? -> krezk/clovins_audience:ask
+* [if quest.clovins_audience == refused] Dmitri won't open the gate for you. -> krezk/clovins_audience:hood
+* [if flag.clovin_family_found] How's your great-uncle? -> krezk/clovins_audience:clovin_after
 * Goodbye, Clovin. -> END
 
 ~ see_abbot
@@ -99,5 +103,8 @@ Clovin Belview [sad]: I drove her down to the castle. Vasilka. She sat up straig
 endif
 if flag.markovia_letter_read
 Clovin Belview: I've still got the letter. I've learned three of the words. "Light", "candle" and "go". They're good words.
+endif
+if quest.clovins_audience == rumored or (flag.clovin_befriended and not quest.clovins_audience) or quest.clovins_audience == refused or flag.clovin_family_found
+-> krezk/clovins_audience:abbey_menu
 endif
 -> END

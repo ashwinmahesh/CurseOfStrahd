@@ -34,6 +34,7 @@ endif
 * [if guest:ireena and not flag.krezk_refuge_offered] Could Ireena find refuge in Krezk? -> refuge
 * [if guest:ireena and flag.krezk_refuge_offered] Ireena, Dmitri's offered you a place here. -> krezk/ireena:stay_offer
 * [if flag.abbot_fate] About the Abbot. It's done. -> after
+* [if quest.clovins_audience == asked] Clovin Belview wants one evening in Krezk, to tell jokes. -> krezk/clovins_audience:dmitri
 * Can we rest here? -> rest
 * [if flag.krezk_gate_open] Does Krezk have arms or armor to spare? -> armory
 * Goodbye. -> END

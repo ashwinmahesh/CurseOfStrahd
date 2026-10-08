@@ -215,6 +215,12 @@ Krezk Watchman: And there are toys on the Krezkov graves at the pool every morni
 elif flag.sorin_fate == "home"
 Krezk Watchman: The burgomaster's got a son home who went up the mountain twenty years ago. I don't understand it and I'm not asking. Anna's singing again. All day.
 endif
+if not quest.clovins_audience
+quest clovins_audience rumored
+Krezk Watchman: And a Belview came down from the abbey at midsummer with a bell sewn on his hood, and asked could he tell us a joke. Lazar threw a bucket of water over him from the wall. He said thank you, it was a very good bucket, and went back up.
+elif quest.clovins_audience == done
+Krezk Watchman: I'm told the Belview comedian's to be let in on feast days now. I'm told to laugh, as well. I'm practising.
+endif
 -> END
 
 ~ about_abbey

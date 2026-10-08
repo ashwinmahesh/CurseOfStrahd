@@ -1,0 +1,47 @@
+{
+  "id": "clovins_audience",
+  "name": "Clovin's Audience",
+  "summary": "Clovin Belview, the abbey's errand-runner, has written jokes for forty years and wants to tell them once to people who could choose not to laugh. Krezk won't open its gate to a Belview.",
+  "giver": "clovin_belview",
+  "region": "krezk",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Krezk's watchman says a Belview came down from the abbey at midsummer and asked to tell them a joke. Lazar threw a bucket of water over him from the wall.",
+      "objectives": [
+        "Ask Clovin Belview about it, at the Abbey of St. Markovia"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Clovin Belview thinks he's funny, and wants one audience that isn't the abbey: real people, in Krezk. Krezk won't open its gate to a Belview unless the burgomaster says so.",
+      "objectives": [
+        "Ask Dmitri Krezkov to let Clovin into Krezk for one evening"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "refused",
+      "journal": "Dmitri won't open Krezk's gate to a Belview, not for one evening.",
+      "objectives": [
+        "Tell Clovin, at the abbey"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "booked",
+      "journal": "Clovin is coming down to Krezk to tell jokes in the square by the shrine, one evening at dusk.",
+      "objectives": [
+        "Be in the square by Krezk's shrine at dusk, and see Clovin through it"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Clovin told Krezk his grandmother's joke, and Old Pavel the carver laughed: it was his father's joke. Pavel is Clovin's great-uncle, the boy who barred Krezk's gate behind the Belviews sixty years ago. He's going up the mountain on Sundays now, with soup.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

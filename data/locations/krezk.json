@@ -929,6 +929,20 @@
       "dialogue": "krezk/one_horned_billy:dragos",
       "facing": "south",
       "when": "flag.dragos_freed"
+    },
+    {
+      "npc": "clovin_belview",
+      "cell": [
+        22,
+        14
+      ],
+      "dialogue": "krezk/clovins_audience:show",
+      "when": "quest.clovins_audience == booked",
+      "hours": [
+        17,
+        21
+      ],
+      "facing": "south"
     }
   ],
   "encounters": [

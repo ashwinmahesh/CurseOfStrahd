@@ -510,6 +510,26 @@
       "id": "pidlwick_shop_seen",
       "type": "bool",
       "summary": "The party has seen Pidlwick II juggling in Blinsky's window once (The Toymaker's Masterpiece)."
+    },
+    {
+      "id": "clovin_hooded",
+      "type": "bool",
+      "summary": "Dmitri refused, so Clovin comes down to Krezk's show in a monk's hood (Clovin's Audience)."
+    },
+    {
+      "id": "clovin_laughs",
+      "type": "int",
+      "summary": "How well Clovin's show in Krezk is going: one for each beat that lands (the warm-up, the advice, the heckler) (Clovin's Audience)."
+    },
+    {
+      "id": "clovin_crowd_tried",
+      "type": "bool",
+      "summary": "The party has tried to read the Krezk crowd at Clovin's show (Clovin's Audience)."
+    },
+    {
+      "id": "clovin_family_found",
+      "type": "bool",
+      "summary": "Old Pavel the carver turned out to be Clovin's great-uncle, after Clovin's show in Krezk (Clovin's Audience)."
     }
   ]
 }
