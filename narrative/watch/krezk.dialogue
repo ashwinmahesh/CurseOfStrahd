@@ -1,6 +1,7 @@
 # Krezk's watch answers a crime somebody saw inside the wall (F8 and F2's town watch; docs/rules/stealth.md,
 # docs/voice/krezk_guard.md). story/crime.gd counts the offence in crime_krezk and stages a Krezk Watchman beside the
-# party, then plays theft or trespass. Every way out clears the count: a fine, a word that works, or a fight.
+# party, then plays theft, trespass or spell (a spell cast at someone; world/exploration/location_npcs.gd). Every way
+# out clears the count: a fine, a word that works, or a fight.
 
 ~ theft
 Krezk Watchman [angry]: That's far enough. Put it back. We let you in, and this is how you thank us? Krezk is a village. Everybody saw.
@@ -8,6 +9,10 @@ Krezk Watchman [angry]: That's far enough. Put it back. We let you in, and this 
 
 ~ trespass
 Krezk Watchman [angry]: You were told that house isn't yours. In Krezk we knock, and we leave when we're asked.
+-> charge
+
+~ spell
+Krezk Watchman [angry]: You put a spell on one of ours. Inside our walls. The Burgomaster will hear of it, and he doesn't like hearing things.
 -> charge
 
 ~ charge

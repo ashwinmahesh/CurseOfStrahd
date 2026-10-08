@@ -15,7 +15,7 @@ spell, so it needs no saving and a reload never changes it. Strahd's attention (
 | valley | everywhere else | 4 | 3 | 3 | 1 | | |
 | highland | Krezk, the Abbey | 4 | 2 | 1 | 1 | 3 | |
 | mountain | Tsolenka Pass, Mount Baratok, the Amber Temple | 2 | 2 | | | 4 | 2 |
-| castle | Castle Ravenloft | 2 | 3 | 3 | 3 | | |
+| castle | Castle Ravenloft (Strahd's storm: rain or storm most of the time) | 1 | 2 | 3 | 5 | | |
 
 ## What it does
 
