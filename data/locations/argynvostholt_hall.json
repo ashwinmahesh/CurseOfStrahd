@@ -64,7 +64,7 @@
           11
         ]
       ],
-      "furnish": false
+      "furnish": "burned"
     },
     {
       "id": "holt_armory",
@@ -93,7 +93,7 @@
           23
         ]
       ],
-      "furnish": false
+      "furnish": "burned_gallery"
     },
     {
       "id": "holt_entry_hall",
@@ -108,7 +108,7 @@
           23
         ]
       ],
-      "furnish": false
+      "furnish": "burned"
     },
     {
       "id": "holt_servants_hall",
@@ -123,7 +123,7 @@
           23
         ]
       ],
-      "furnish": false
+      "furnish": "burned"
     }
   ],
   "spawns": {

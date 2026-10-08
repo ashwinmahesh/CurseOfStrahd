@@ -92,7 +92,10 @@
           18,
           5
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall",
+      "furnish": false
     }
   ],
   "spawns": {
@@ -157,7 +160,7 @@
       ],
       "kind": "book",
       "label": "The watch log",
-      "model": "ledger",
+      "model": "desk",
       "codex": "tsolenka_watch_log",
       "text": "The watch log of the Tsolenka tower, in a dozen hands, the last of them steady and square. Each entry is the same: date, weather, the watchword, and the words NOTHING CAME DOWN. Near the end: Two of the lads went up the road at night without orders. They came back talking about voices in the amber. Sent them down to the valley. Gate shut. Watchword unchanged: cold hearth, shut door. After that the dates stop, and the entries do not."
     },
@@ -225,6 +228,56 @@
       "label": "the watch horn behind the winch",
       "model": "satchel",
       "item": "horn_of_blasting"
+    },
+    {
+      "id": "captain_bed",
+      "cell": [
+        14,
+        1
+      ],
+      "label": "A narrow bed",
+      "model": "bed_small",
+      "kind": "decor"
+    },
+    {
+      "id": "vestibule_cloaks_1",
+      "cell": [
+        8,
+        10
+      ],
+      "label": "A grey cloak on every peg, not quite there",
+      "model": "cloak_pegs",
+      "kind": "decor"
+    },
+    {
+      "id": "vestibule_cloaks_2",
+      "cell": [
+        12,
+        10
+      ],
+      "label": "A grey cloak on every peg, not quite there",
+      "model": "cloak_pegs",
+      "kind": "decor"
+    },
+    {
+      "id": "vestibule_cloaks_3",
+      "cell": [
+        8,
+        11
+      ],
+      "label": "A grey cloak on every peg, not quite there",
+      "model": "cloak_pegs",
+      "kind": "decor"
+    },
+    {
+      "id": "vestibule_cloaks_4",
+      "cell": [
+        12,
+        11
+      ],
+      "label": "A grey cloak on every peg, not quite there",
+      "model": "cloak_pegs",
+      "kind": "decor"
     }
   ],
   "containers": [

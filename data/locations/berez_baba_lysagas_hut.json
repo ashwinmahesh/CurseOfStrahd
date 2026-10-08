@@ -218,6 +218,126 @@
       "label": "the one jar that doesn't hum",
       "model": "glass_vessels",
       "item": "potion_of_speed"
+    },
+    {
+      "id": "lysaga_drawings_2",
+      "cell": [
+        8,
+        0
+      ],
+      "label": "Drawings of the same handsome boy at every age",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "lysaga_drawings_3",
+      "cell": [
+        13,
+        0
+      ],
+      "label": "Drawings of the same handsome boy at every age",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "lysaga_drawings_4",
+      "cell": [
+        15,
+        3
+      ],
+      "label": "Drawings of the same handsome boy at every age",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "lysaga_drawings_5",
+      "cell": [
+        15,
+        7
+      ],
+      "label": "Drawings of the same handsome boy at every age",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "lysaga_drawings_6",
+      "cell": [
+        10,
+        11
+      ],
+      "label": "Drawings of the same handsome boy at every age",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "lysaga_drawings_7",
+      "cell": [
+        1,
+        0
+      ],
+      "label": "Drawings of the same handsome boy at every age",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "lysaga_drawings_8",
+      "cell": [
+        4,
+        0
+      ],
+      "label": "Drawings of the same handsome boy at every age",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "lysaga_strings_1",
+      "cell": [
+        0,
+        1
+      ],
+      "label": "Strings of onions, strings of mushrooms, strings of things that aren't either",
+      "model": "drying_herbs",
+      "kind": "decor"
+    },
+    {
+      "id": "lysaga_strings_2",
+      "cell": [
+        0,
+        4
+      ],
+      "label": "Strings of onions, strings of mushrooms, strings of things that aren't either",
+      "model": "drying_herbs",
+      "kind": "decor"
+    },
+    {
+      "id": "lysaga_bone_mobile",
+      "cell": [
+        6,
+        8
+      ],
+      "label": "A mobile of little bones over the cradle",
+      "model": "mobile",
+      "kind": "decor"
+    },
+    {
+      "id": "lysaga_table_a",
+      "cell": [
+        10,
+        3
+      ],
+      "label": "A table laid for more guests than she ever has",
+      "model": "table_set",
+      "kind": "decor"
+    },
+    {
+      "id": "lysaga_table_b",
+      "cell": [
+        11,
+        3
+      ],
+      "label": "A table laid for more guests than she ever has",
+      "model": "table_set",
+      "kind": "decor"
     }
   ],
   "containers": [

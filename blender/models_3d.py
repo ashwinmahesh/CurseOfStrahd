@@ -5284,6 +5284,85 @@ def nail_spiral(p):
         k += 1
 
 
+# --- Ruins: what a burned or wrecked room is full of (docs/art/interiors.md) ---------------------------------------
+
+
+@model("fallen_beam", "free", ["fallen_beam"], turns=True)
+def fallen_beam(p):
+    """A roof beam come down in the fire: charred black along its length, one end split, a few planks fallen with it."""
+    p.box((0.95, 0.16, 0.15), (0.0, 0.0, 0.075), "pal_night_deep", rot=(0, 4, 28), soft=0.012, segs=1)
+    for k in range(5):   # the char: cracked blocks along its top
+        p.box((0.12, 0.13, 0.03), (-0.34 + k * 0.16, -0.18 + k * 0.095, 0.155), "pal_ink", rot=(0, 0, 28 + (k % 2) * 6))
+    p.box((0.22, 0.06, 0.08), (0.48, 0.21, 0.05), "pal_umber", rot=(0, 10, 50))   # the split end
+    p.box((0.18, 0.05, 0.06), (0.46, 0.33, 0.035), "pal_umber", rot=(0, -8, 12))
+    for x, y, a in ((-0.2, 0.22, -20), (0.1, -0.3, 70)):   # planks that came down with it
+        p.box((0.5, 0.1, 0.025), (x, y, 0.014), WOOD, rot=(0, 0, a))
+        p.box((0.16, 0.1, 0.027), (x + 0.12, y + 0.04, 0.015), "pal_ink", rot=(0, 0, a))
+
+
+@model("charred_furniture", "free", ["charred_furniture"], turns=True)
+def charred_furniture(p):
+    """What the fire left of a table and a chair: the table tipped onto one edge on its last leg, the chair on its side
+    with its legs in the air, all of it black, in a skin of ash."""
+    p.cyl(0.4, 0.012, (0.0, 0.0, 0.0), "pal_bone_dark", segs=16, smooth=False)   # the ash under it
+    p.box((0.44, 0.42, 0.04), (-0.14, 0.12, 0.17), "pal_night_deep", rot=(0, -38, 0))   # the table top, tipped
+    p.box((0.045, 0.045, 0.3), (0.05, 0.0, 0.15), "pal_ink")   # its last leg
+    p.box((0.045, 0.045, 0.3), (0.05, 0.25, 0.15), "pal_ink")
+    for x, y, a in ((-0.3, -0.18, 20), (-0.05, 0.36, -60)):   # legs burnt off, lying where they fell
+        p.box((0.24, 0.04, 0.04), (x, y, 0.02), "pal_ink", rot=(0, 0, a))
+    p.box((0.32, 0.04, 0.32), (0.2, -0.2, 0.17), "pal_night_deep")   # the chair's seat, standing on its edge
+    p.box((0.32, 0.3, 0.04), (0.2, -0.37, 0.02), "pal_night_deep")   # its back, flat on the floor
+    for x in (0.06, 0.34):   # its legs, sticking out sideways
+        for z in (0.03, 0.31):
+            p.box((0.035, 0.24, 0.035), (x, -0.06, z), "pal_ink")
+
+
+@model("ash_heap", "free", ["ash_heap"], turns=True)
+def ash_heap(p):
+    """A heap of grey ash and charcoal swept up against nothing, half-burnt sticks poking out of it."""
+    p.lathe([(0.0, 0.0), (0.3, 0.0), (0.24, 0.05), (0.12, 0.1), (0.0, 0.12)], (0.0, 0.0, 0.0), "pal_bone_dark", segs=16)
+    rng = p.rng
+    for _ in range(6):
+        a = rng.uniform(0, 2 * math.pi)
+        r = rng.uniform(0.04, 0.2)
+        p.box((rng.uniform(0.12, 0.24), 0.03, 0.03), (r * math.cos(a), r * math.sin(a), 0.08), "pal_ink",
+              rot=(0, rng.uniform(-30, 30), math.degrees(a)))
+    for _ in range(5):
+        a = rng.uniform(0, 2 * math.pi)
+        p.box((0.05, 0.04, 0.03), (0.32 * math.cos(a), 0.32 * math.sin(a), 0.015), "pal_ink", rot=(0, 0, rng.uniform(0, 90)))
+
+
+# --- Interiors: the west (docs/art/interiors.md) -------------------------------------------------------------
+
+
+@model("slate_stack", "free", ["slate_stack"])
+def slate_stack(p):
+    """A stack of writing slates in the corner, each with one word chalked on it and rubbed out again, and a stub of chalk."""
+    rng = p.rng
+    z = 0.0
+    for k in range(9):
+        t = 0.025
+        p.box((0.36, 0.26, t), (rng.uniform(-0.02, 0.02), rng.uniform(-0.02, 0.02), z + t / 2), "pal_slate",
+              rot=(0, 0, rng.uniform(-10, 10)))
+        p.box((0.38, 0.28, t - 0.008), (0.0, 0.0, z + t / 2), "pal_umber", rot=(0, 0, rng.uniform(-10, 10)))   # its frame
+        z += t
+    p.box((0.2, 0.06, 0.002), (0.0, 0.0, z + 0.001), "pal_pewter")   # the rubbed-out word on the top one
+    p.box((0.32, 0.25, 0.02), (0.06, 0.3, 0.14), "pal_slate", rot=(70, 0, 8))   # one leaning on the stack
+    p.box((0.1, 0.008, 0.02), (0.06, 0.2, 0.25), "pal_ivory", rot=(70, 0, 8))
+    p.cyl(0.01, 0.06, (0.24, -0.16, 0.0), "pal_ivory", rot=(0, 90, 30), segs=6)   # the chalk
+
+
+@model("cloak_pegs", "wall", ["cloak_pegs"])
+def cloak_pegs(p):
+    """Pegs for cloaks, and on every peg a grey watch cloak that isn't quite there."""
+    p.box((0.86, 0.03, 0.06), (0, -0.015, 1.62), "pal_walnut")
+    for k in range(3):
+        x = -0.28 + k * 0.28
+        p.cyl(0.012, 0.08, (x, 0.0, 1.62), "pal_walnut", rot=(90, 0, 0), segs=6)
+        p.prism([(x - 0.07, 1.6), (x + 0.07, 1.6), (x + 0.13, 0.92), (x - 0.13, 0.92)], 0.04, (0, -0.07, 0), "pal_pewter")
+        p.prism([(x - 0.06, 1.6), (x + 0.06, 1.6), (x, 1.5)], 0.045, (0, -0.075, 0), "pal_slate")   # the hood, folded
+
+
 # --- Export and preview ----------------------------------------------------------------------------------------
 
 def bounds(ob):

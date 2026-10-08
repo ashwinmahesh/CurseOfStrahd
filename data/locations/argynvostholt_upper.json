@@ -437,6 +437,116 @@
       "model": "throne",
       "facing": "south",
       "kind": "decor"
+    },
+    {
+      "id": "holt_godfrey_writing_2",
+      "cell": [
+        0,
+        14
+      ],
+      "label": "Charcoal writing, floor to as high as a big man can reach",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_godfrey_writing_3",
+      "cell": [
+        0,
+        15
+      ],
+      "label": "Charcoal writing, floor to as high as a big man can reach",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_godfrey_writing_4",
+      "cell": [
+        0,
+        17
+      ],
+      "label": "Charcoal writing, floor to as high as a big man can reach",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_godfrey_writing_5",
+      "cell": [
+        0,
+        18
+      ],
+      "label": "Charcoal writing, floor to as high as a big man can reach",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_godfrey_writing_6",
+      "cell": [
+        0,
+        19
+      ],
+      "label": "Charcoal writing, floor to as high as a big man can reach",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_hero_portraits_2",
+      "cell": [
+        26,
+        11
+      ],
+      "label": "Portraits of knights",
+      "model": "painting_row",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_hero_portraits_3",
+      "cell": [
+        31,
+        11
+      ],
+      "label": "Portraits of knights",
+      "model": "painting_row",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_hero_armour_1",
+      "cell": [
+        25,
+        5
+      ],
+      "label": "A dead knight's armour on its stand",
+      "model": "armor_stand",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_hero_armour_2",
+      "cell": [
+        25,
+        7
+      ],
+      "label": "A dead knight's armour on its stand",
+      "model": "armor_stand",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_hero_armour_3",
+      "cell": [
+        34,
+        4
+      ],
+      "label": "A dead knight's armour on its stand",
+      "model": "armor_stand",
+      "kind": "decor"
+    },
+    {
+      "id": "holt_hero_armour_4",
+      "cell": [
+        34,
+        8
+      ],
+      "label": "A dead knight's armour on its stand",
+      "model": "armor_stand",
+      "kind": "decor"
     }
   ],
   "containers": [

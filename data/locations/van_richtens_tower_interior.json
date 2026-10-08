@@ -371,6 +371,36 @@
         3
       ],
       "kind": "decor"
+    },
+    {
+      "id": "vrt_lantern_window_2",
+      "cell": [
+        6,
+        24
+      ],
+      "label": "A window",
+      "model": "window_tall",
+      "kind": "decor"
+    },
+    {
+      "id": "vrt_lantern_window_3",
+      "cell": [
+        1,
+        29
+      ],
+      "label": "A window",
+      "model": "window_tall",
+      "kind": "decor"
+    },
+    {
+      "id": "vrt_lantern_window_4",
+      "cell": [
+        7,
+        34
+      ],
+      "label": "A window",
+      "model": "window_tall",
+      "kind": "decor"
     }
   ],
   "containers": [

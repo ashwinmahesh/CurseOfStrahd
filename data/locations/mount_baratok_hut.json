@@ -47,7 +47,8 @@
           12,
           8
         ]
-      ]
+      ],
+      "furnish": "library_bare"
     }
   ],
   "spawns": {
@@ -126,8 +127,8 @@
     {
       "id": "baratok_bed",
       "cell": [
-        10,
-        6
+        2,
+        2
       ],
       "kind": "examine",
       "label": "A bed of furs",
@@ -158,6 +159,66 @@
       "label": "one book on the shelf that isn't blank",
       "model": "scattered_notes",
       "item": "tome_of_understanding"
+    },
+    {
+      "id": "baratok_slates",
+      "cell": [
+        10,
+        6
+      ],
+      "label": "A stack of slates, each with one word written on it and rubbed out",
+      "model": "slate_stack",
+      "kind": "decor"
+    },
+    {
+      "id": "baratok_chalk_2",
+      "cell": [
+        13,
+        2
+      ],
+      "label": "Chalk, all over the wall",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "baratok_chalk_3",
+      "cell": [
+        13,
+        4
+      ],
+      "label": "Chalk, all over the wall",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "baratok_chalk_4",
+      "cell": [
+        13,
+        5
+      ],
+      "label": "Chalk, all over the wall",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "baratok_chalk_5",
+      "cell": [
+        13,
+        6
+      ],
+      "label": "Chalk, all over the wall",
+      "model": "drawings",
+      "kind": "decor"
+    },
+    {
+      "id": "baratok_chalk_6",
+      "cell": [
+        13,
+        7
+      ],
+      "label": "Chalk, all over the wall",
+      "model": "drawings",
+      "kind": "decor"
     }
   ],
   "containers": [

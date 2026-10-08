@@ -131,7 +131,8 @@
         "crate_stack",
         "chest",
         "chest_iron",
-        "holy_water_crate"
+        "holy_water_crate",
+        "slate_stack"
       ],
       "summary": "Slatted crates, trunks and stalls: they splinter at a blow.",
       "moves": "shove",
