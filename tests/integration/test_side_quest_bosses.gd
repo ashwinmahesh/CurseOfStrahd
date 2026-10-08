@@ -83,3 +83,5 @@ func test_the_rag_queen_at_level_9() -> void:
 
 func test_the_vine_mother_at_level_6() -> void:
 	await _series("wizard_of_wines", 1, 6, "vine_mother", [1, 2, 3, 4], ["winery_reclaimed"])
+func test_granny_ash_at_level_6() -> void:
+	await _series("old_bonegrinder_track", 23, 6, "granny_ash", [1, 2, 3, 4], ["morgantha_slain"])

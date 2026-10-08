@@ -532,6 +532,56 @@
       "summary": "Old Pavel the carver turned out to be Clovin's great-uncle, after Clovin's show in Krezk (Clovin's Audience)."
     },
     {
+      "id": "mouse_met",
+      "type": "bool",
+      "summary": "The party has met Mouse, the girl selling plain pastries on the miller's lane (The Fourth Sister)."
+    },
+    {
+      "id": "mouse_iron_seen",
+      "type": "bool",
+      "summary": "The party has seen the iron coming in at Mouse's gums and nails (The Fourth Sister)."
+    },
+    {
+      "id": "mouse_name_known",
+      "type": "bool",
+      "summary": "Goodwife Sarnov told the party about her first baby, Zamfira, and the mark on her wrist (The Fourth Sister)."
+    },
+    {
+      "id": "mouse_named",
+      "type": "bool",
+      "summary": "The party told Mouse her name, Zamfira (The Fourth Sister)."
+    },
+    {
+      "id": "mouse_called",
+      "type": "bool",
+      "summary": "The party tried to call Mouse away from Granny Ash on her birthday night (The Fourth Sister)."
+    },
+    {
+      "id": "mouse_stayed",
+      "type": "bool",
+      "summary": "Unnamed, Mouse chose the party over Granny Ash on her birthday night (The Fourth Sister)."
+    },
+    {
+      "id": "mouse_fate",
+      "type": "string",
+      "summary": "Where Mouse ended up: home (Zamfira, with the Sarnovs), keepers (with Ilinca Vrana) or given (to Granny Ash) (The Fourth Sister)."
+    },
+    {
+      "id": "sarnov_mother_met",
+      "type": "bool",
+      "summary": "The party has met Goodwife Sarnov on her step in the village (The Fourth Sister)."
+    },
+    {
+      "id": "sarnov_told",
+      "type": "bool",
+      "summary": "The party told Goodwife Sarnov that the girl on the lane is her daughter (The Fourth Sister)."
+    },
+    {
+      "id": "granny_ash_slain",
+      "type": "bool",
+      "summary": "Granny Ash, Morgantha's mother, is dead in the miller's lane (The Fourth Sister)."
+    },
+    {
       "id": "black_row_nature",
       "type": "bool",
       "summary": "The party saw that the Seventh Row's vines are all one blight grown up into the rootstock (The Black Row)."

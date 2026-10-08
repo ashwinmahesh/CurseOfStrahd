@@ -219,6 +219,33 @@ marshal still wants to be beaten, fairly, because only a lost battle can relieve
   level 6 and 1 of 3 against the marshal and three lieutenants at level 8, losing three party members a fight.
 - The pay chest: 200 gp and the marshal's blade, a +2 longsword (rare).
 
+## Old Bonegrinder's lane (level 6)
+
+### The Fourth Sister (`the_fourth_sister`, narrative/old_bonegrinder/the_fourth_sister.dialogue; batch 3)
+
+Once the Sarnov children are out of the mill and Morgantha is dead, Vasile and Petre's gossip says Goodwife Sarnov
+walks up the miller's lane every morning for one plain pastry from a girl who sells them there, and that the girl has
+her husband's eyes. The girl, Mouse (new NPC, on the lane from 7:00 to 19:00), is Old Bonegrinder's rumour-giver:
+"Heard anything interesting?" gets Granny's coming for her thirteenth birthday, and the iron coming in at her gums.
+**Twist:** she is Morgantha's fourth, a stolen girl raised to be a hag, and the Sarnovs' first baby, Zamfira, who
+"died" in her cradle the night Morgantha sat up with her (Ilinca's "since the baby died" in the mill is the clue).
+Goodwife Sarnov (new NPC, on her step in the village once the children are out) gives the name and the mark on her
+wrist; Mouse's wrist confirms it (`mouse_named`). **Escalation:** on the next night at her hut (prop `mouse_hut`),
+Morgantha's mother, Granny Ash, comes out of the trees. Named, the girl stands behind the party; unnamed, Persuasion
+DC 15 holds her (`mouse_stayed`). Granny offers the girl for a basket of coins and her word never to come back.
+
+- **Boss: Granny Ash** (data/monsters/granny_ash.json, `source.book: custom`, from the 2025 Monster Manual's annis
+  hag, drawn with the night hag's sprite): Large fey, AC 17, 184 HP, two iron claws (reach 10) and a bite, a Crushing
+  Hug (recharge 5-6) that restrains and crushes, Legendary Resistance (2/day) and a rake between turns. CR 8.
+- Fight `granny_ash` on the lane: level 6 Granny, 3 dire wolves ("Granny's Dog") and 4 needle blights (4,700 XP; the
+  autopilot wins 2 of 4 and loses three party members a fight); level 7 adds 2 needle and 2 vine blights; level 8
+  six needle blights and the hag garden's elm (a tree blight), 7,700 XP; below 6 Granny at 130 HP, one dog and 3
+  needle blights.
+- Endings (`mouse_fate`): `home` (named: Zamfira back with her mother, Ilka and Toma, on the step in the village),
+  `keepers` (unnamed: Ilinca takes the girl with half-iron teeth) or `given` (the basket; the quest fails and the
+  companions disapprove).
+- Granny's basket: 300 gp and a Robe of Eyes (rare). The basket alone pays the 300 gp.
+
 ## Vallaki and Castle Ravenloft (level 10)
 
 ### The Toymaker's Masterpiece (`toymakers_masterpiece`, narrative/vallaki/toymakers_masterpiece.dialogue; batch 2, the book's Blinsky and the jester)
@@ -325,4 +352,6 @@ lines (Stelian: the ring, and the ferryman). Batch 2, Vallaki
 and the castle: toymakers_masterpiece.dialogue in full (Blinsky, Pidlwick II) and townsfolk.dialogue's new
 marta_rumor node (Goodwife Marta: the jester). Batch 2, Krezk and
 the abbey: clovins_audience.dialogue in full (Clovin Belview, Dmitri, Old Pavel, Watchman Lazar; Wren's interject),
-gate.dialogue's two new news lines (the bucket, feast days) and townsfolk.dialogue's new carver line (Old Pavel: soup).
+gate.dialogue's two new news lines (the bucket, feast days) and townsfolk.dialogue's new carver line (Old Pavel: soup). Batch 3, Old
+Bonegrinder: the_fourth_sister.dialogue in full (new speakers Mouse, Granny Ash and Goodwife Sarnov; also Ilinca) and
+the village townsfolk.dialogue's new gossip lines (Vasile and Petre: the Sarnov woman, and three children again).

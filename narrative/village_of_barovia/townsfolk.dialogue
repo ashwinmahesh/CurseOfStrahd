@@ -155,6 +155,17 @@ Vasile: No riders at the gates any more. The wind's quiet. I don't like it.
 Petre: You didn't like the riders.
 Vasile: I knew where I was with the riders.
 endif
+if flag.children_rescued and flag.morgantha_slain and not quest.the_fourth_sister
+quest the_fourth_sister rumored
+Petre: The Sarnov woman walks up the miller's lane every morning now. Comes back with one plain pastry.
+Vasile: From a girl who sells them up there. She says the girl's got her husband's eyes.
+Petre: Her husband had the ordinary kind.
+Vasile: That's what makes it a rumour, Petre.
+elif flag.mouse_fate == "home"
+Petre: The Sarnovs have got three children again. Nobody's asking how.
+Vasile: I'm asking.
+Petre: You're not asking her, though.
+endif
 if not flag.burgomaster_buried
 Vasile: And the burgomaster. Heart.
 Petre: Wasn't his heart.

@@ -1,0 +1,182 @@
+{
+  "id": "granny_ash",
+  "name": "Granny Ash",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Fourth Sister, docs/story/side_quests.md), built from the 2025 Monster Manual's annis hag: iron claws and teeth and a crushing hug, scaled to CR 8 with legendary actions. Drawn with the night hag's sprite at Large."
+  },
+  "size": "large",
+  "type": "fey",
+  "tags": [
+    "hag",
+    "boss"
+  ],
+  "alignment": "chaotic evil",
+  "art": "night_hag",
+  "ac": 17,
+  "initiative": 2,
+  "hp": {
+    "average": 184,
+    "dice": "19d10+80"
+  },
+  "speed": {
+    "walk": 40
+  },
+  "abilities": {
+    "str": 21,
+    "dex": 12,
+    "con": 18,
+    "int": 13,
+    "wis": 14,
+    "cha": 15
+  },
+  "saves": {
+    "con": 7,
+    "wis": 5
+  },
+  "skills": {
+    "deception": 5,
+    "perception": 5,
+    "stealth": 4
+  },
+  "resistances": [
+    "cold"
+  ],
+  "condition_immunities": [
+    "charmed"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 15,
+  "languages": [
+    "Common",
+    "Sylvan"
+  ],
+  "cr": 8,
+  "xp": 3900,
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When Granny Ash fails a saving throw, she can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "iron_teeth",
+      "name": "Iron Teeth",
+      "action": "passive",
+      "summary": "Her teeth and nails are iron, grown in over centuries; the iron is how she knows her own.",
+      "text": "Granny Ash's teeth and nails are iron. A girl she has raised grows the same iron in at the gums before her thirteenth birthday, and Granny can smell it a valley away.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "iron_claw",
+          "count": 2
+        },
+        {
+          "action": "bite",
+          "count": 1
+        }
+      ],
+      "summary": "Two Iron Claws and a Bite.",
+      "text": "Granny Ash makes two Iron Claw attacks and one Bite attack."
+    },
+    {
+      "id": "iron_claw",
+      "name": "Iron Claw",
+      "kind": "melee",
+      "attack": {
+        "bonus": 8,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 12,
+          "dice": "2d6+5",
+          "type": "slashing"
+        }
+      ],
+      "summary": "A rake of iron nails, reach 10 ft.",
+      "text": "Hit: 12 (2d6 + 5) Slashing damage."
+    },
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 8,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "1d10+5",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Iron teeth.",
+      "text": "Hit: 10 (1d10 + 5) Piercing damage."
+    },
+    {
+      "id": "crushing_hug",
+      "name": "Crushing Hug",
+      "kind": "melee",
+      "recharge": "5-6",
+      "attack": {
+        "bonus": 8,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 16,
+          "dice": "2d10+5",
+          "type": "bludgeoning"
+        }
+      ],
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 15,
+          "max_size": "medium",
+          "limit": 1,
+          "restrain": true,
+          "hold_damage": {
+            "dice": "2d10+5",
+            "type": "bludgeoning"
+          }
+        }
+      ],
+      "summary": "Recharge 5-6: a hug that holds a Medium or smaller target (escape DC 15), Restrained and crushed for 2d10 + 5 each turn.",
+      "text": "Hit: 16 (2d10 + 5) Bludgeoning damage. A Medium or smaller target is Grappled (escape DC 15); until it gets free it is also Restrained and takes 16 (2d10 + 5) Bludgeoning damage at the start of each of its turns. Granny can hug only one creature at a time."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 3,
+    "options": [
+      {
+        "id": "rake",
+        "name": "Rake",
+        "cost": 2,
+        "action": "iron_claw",
+        "summary": "Makes one Iron Claw attack."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regions": [
+    "old_bonegrinder"
+  ],
+  "ai_profile": "brute",
+  "summary": "Morgantha's own mother: a blue-grey hag twice a man's height out of the deep wood, with iron teeth, iron nails and a basket the size of a cradle. Her claws reach, her hug holds and crushes, and she rakes again whenever you think you've stepped clear."
+}

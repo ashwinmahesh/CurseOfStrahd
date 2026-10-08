@@ -1281,6 +1281,34 @@
         17
       ],
       "when": "flag.luca_awake and not weather == storm"
+    },
+    {
+      "npc": "goodwife_sarnov",
+      "cell": [
+        5,
+        19
+      ],
+      "dialogue": "old_bonegrinder/the_fourth_sister:mother",
+      "when": "flag.children_rescued and not weather == storm",
+      "hours": [
+        8,
+        18
+      ],
+      "facing": "east"
+    },
+    {
+      "npc": "bonegrinder_mouse",
+      "cell": [
+        6,
+        19
+      ],
+      "dialogue": "old_bonegrinder/the_fourth_sister:zamfira",
+      "when": "flag.mouse_fate == \"home\" and not weather == storm",
+      "hours": [
+        8,
+        18
+      ],
+      "facing": "east"
     }
   ],
   "encounters": [
