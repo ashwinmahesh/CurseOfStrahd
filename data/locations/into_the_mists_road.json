@@ -417,6 +417,16 @@
       "facing": "west",
       "approach": 8,
       "when": "night and quest.last_muster and not flag.bone_marshal_beaten"
+    },
+    {
+      "npc": "costin",
+      "cell": [
+        28,
+        13
+      ],
+      "dialogue": "into_the_mists/the_last_traveller:costin",
+      "when": "quest.the_last_traveller != home and quest.the_last_traveller != done",
+      "facing": "west"
     }
   ],
   "encounters": [
@@ -832,6 +842,148 @@
         "id": "last_muster",
         "stage": "released"
       }
+    },
+    {
+      "id": "costin_wolves",
+      "trigger": "dialogue",
+      "when": "level >= 3",
+      "text": "The fog behind you opens like a mouth, and the count's wolves come out of it low and quick, for the man who walked out of the mists.",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            29,
+            15
+          ],
+          "name": "The Grey Leader"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            27,
+            16
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            25,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            29,
+            17
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            24,
+            16
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "costin_wolves_beaten"
+    },
+    {
+      "id": "costin_wolves",
+      "trigger": "dialogue",
+      "when": "level >= 2",
+      "text": "The fog behind you opens like a mouth, and the count's wolves come out of it low and quick, for the man who walked out of the mists.",
+      "monsters": [
+        {
+          "monster": "wolf",
+          "cell": [
+            27,
+            16
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            25,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            29,
+            17
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            24,
+            16
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            26,
+            17
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            23,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "costin_wolves_beaten"
+    },
+    {
+      "id": "costin_wolves",
+      "trigger": "dialogue",
+      "text": "The fog behind you opens like a mouth, and the count's wolves come out of it low and quick, for the man who walked out of the mists.",
+      "monsters": [
+        {
+          "monster": "wolf",
+          "cell": [
+            27,
+            16
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            25,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            29,
+            17
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            24,
+            16
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            26,
+            17
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "costin_wolves_beaten"
     }
   ],
   "narration": {

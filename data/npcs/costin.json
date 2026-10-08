@@ -1,0 +1,19 @@
+{
+  "id": "costin",
+  "name": "Costin",
+  "title": "Of the Village of Barovia, Fifty Years Gone",
+  "summary": "A young man of the village who went into the mists one night, fifty years ago, to fetch a doctor over the mountains for his wife's fever. The mists turned him round till morning. For him it was one night. His children, Goodwife Petra and Old Mihail the sexton, are old now.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "village_of_barovia",
+    "into_the_mists"
+  ],
+  "region": "into_the_mists",
+  "pronouns": "he/him"
+}

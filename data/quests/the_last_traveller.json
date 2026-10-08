@@ -1,0 +1,39 @@
+{
+  "id": "the_last_traveller",
+  "name": "The Last Traveller",
+  "summary": "A young man in rags and beautiful boots sits at the edge of the mists on the Old Svalich Road, asking what day it is.",
+  "giver": "costin",
+  "region": "into_the_mists",
+  "stages": [
+    {
+      "id": "met",
+      "journal": "Costin, from the village under the castle, went into the fog last night to fetch a doctor for his wife's fever, and the fog turned him round. His clothes are rags many years old. His boots aren't.",
+      "objectives": [
+        "Walk him down to the village"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "walking",
+      "journal": "The count's wolves came out of the fog for Costin as soon as he set off.",
+      "objectives": [
+        "Get him down the road"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "home",
+      "journal": "Costin is walking home to the village. Everything there is wrong, and he keeps starting his sentences again.",
+      "objectives": [
+        "Take him to the well in the Village of Barovia"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Costin's night in the mists was fifty years. His daughter is Goodwife Petra, who carries the water, and his son is Old Mihail, who dug him a grave. He's home, younger than both of them.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

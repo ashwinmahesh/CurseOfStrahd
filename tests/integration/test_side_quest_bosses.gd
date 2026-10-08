@@ -136,3 +136,7 @@ func test_corvina_at_level_10() -> void:
 
 func test_corvina_named_at_level_10() -> void:
 	await _series("castle_ravenloft_catacombs", 23, 10, "corvina", [1, 2, 3], ["corvina_named"], [], ["cat_e3_gate"])
+
+
+func test_costins_wolves_at_level_1() -> void:
+	await _series("into_the_mists_road", 9, 1, "costin_wolves", [1, 2, 3, 4], ["mists_wolves_resolved"])

@@ -820,6 +820,26 @@
       "id": "corvina_slain",
       "type": "bool",
       "summary": "Corvina, the Doorkeeper, is at rest in the castle's catacombs (The Unnamed Crypt)."
+    },
+    {
+      "id": "costin_met",
+      "type": "bool",
+      "summary": "The party met Costin at the edge of the mists on the Old Svalich Road (The Last Traveller)."
+    },
+    {
+      "id": "costin_seen",
+      "type": "bool",
+      "summary": "The party looked properly at Costin's rags (The Last Traveller)."
+    },
+    {
+      "id": "costin_wolves_beaten",
+      "type": "bool",
+      "summary": "The count's wolves that came out of the fog for Costin are dead (The Last Traveller)."
+    },
+    {
+      "id": "costin_home",
+      "type": "bool",
+      "summary": "Costin is home in the village with his children, Petra and Mihail (The Last Traveller)."
     }
   ]
 }
