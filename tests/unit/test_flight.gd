@@ -223,8 +223,9 @@ func test_the_ai_doesnt_plan_a_swing_at_a_flyer_out_of_reach() -> void:
 	var zombie := TestCombat.foe(e, "zombie", Vector2i(3, 2))
 	TestCombat.start_with(e, c)
 	c.altitude = 15
+	zombie.movement_left = zombie.speed()
 	assert_ne(str(e.ai.plan_turn(zombie)["kind"]), "attack", "nothing it can reach")
-	var ally := TestCombat.hero(e, "hedda_ironvow", Vector2i(5, 2))
+	var ally := TestCombat.hero(e, "hedda_ironvow", Vector2i(4, 3))
 	assert_eq(e.ai.plan_turn(zombie).get("target"), ally, "it goes for the one on the floor")
 
 
