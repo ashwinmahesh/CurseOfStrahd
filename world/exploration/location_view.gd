@@ -153,6 +153,7 @@ func _ready() -> void:
 		narration.emit(str(loc["text"]))
 	add_child(HiddenAreas.create(self))   # rooms behind undiscovered secret doors stay out of sight
 	add_child(SightOverlay.create(self))   # who can see the party while it sneaks or plans (U10)
+	add_child(WorldSounds.create(self))   # footsteps, fires and running water heard from where they are (A3)
 	LocationWalk._check_areas(self)
 	if LocationPlan.wanted() and not in_combat:
 		LocationPlan.start(self)
