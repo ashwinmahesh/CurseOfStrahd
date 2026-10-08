@@ -28,7 +28,9 @@ static func options(party: Array[Character], ch: Character, item_id: String, dic
 		if not spell.is_empty():
 			var kind := str((spell.get("targets", {}) as Dictionary).get("kind", "self"))
 			targeting = "ally" if kind in ["creature", "ally"] else "self"
-		var o := {"power_id": str(power.get("id", "")), "label": str(power.get("name", "Use")), "legal": why == "", "reason": why,
+		# A Spell Scroll is cast, not used: "Cast Find Familiar".
+		var label := "Cast %s" % spell.get("name", spell_id) if bool(power.get("scroll", false)) and not spell.is_empty() else str(power.get("name", "Use"))
+		var o := {"power_id": str(power.get("id", "")), "label": label, "legal": why == "", "reason": why,
 			"targeting": targeting, "spell_id": spell_id, "text": str(power.get("text", "")), "choices": (power.get("choice", {}) as Dictionary).get("from", [])}
 		# Universal Pantograph: what it could copy.
 		if str(power.get("custom", "")) == "fr_duplicate":
@@ -126,6 +128,18 @@ static func use(st: StoryState, ch: Character, item_id: String, power_id: String
 		return fres
 	var spell_id := CombatItems.power_spell(item_id, power)
 	var spell := Compendium.shared().spell_data(spell_id) if spell_id != "" else {}
+	# A Spell Scroll of an exploring spell (Find Familiar, Detect Magic, Light) is cast as when exploring, in the spell's
+	# own time; one above the reader's levels needs its check first (2024 DMG), and the scroll is used up either way.
+	if bool(power.get("scroll", false)) and not spell.is_empty() \
+			and (not e.spells.has_combat_rules(spell) or FieldCasting.EXPLORING_TOO.has(spell_id)):
+		var fail := e.items.scroll_check(c, spell)
+		e.items._after_use(c, p, spell, int(spell.get("level", 0)))
+		if fail != "":
+			st.advance_minutes(1)
+			return {"ok": false, "text": fail, "lines": [], "spent": true}
+		var cast := FieldCasting.cast_from_scroll(st, ch, spell_id)
+		cast["lines"] = []
+		return cast
 	# An exploring spell (no effect in a fight): recorded for its duration, as FieldCasting does.
 	if not spell.is_empty() and not e.spells.has_combat_rules(spell) and not FieldCasting.EXPLORING_TOO.has(spell_id):
 		var dur := spell.get("duration", {}) as Dictionary
