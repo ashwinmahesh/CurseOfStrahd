@@ -61,6 +61,10 @@ anyone touching this file.
   roads and over water (a mask built from the map), drifts with the wind in streaks and thin wisps, and comes out in
   three or four flat bands like the rest of the cel look. Lanterns, fires and lit windows light the mist around them.
   Indoors a thin, slow mist lies on dungeon and crypt floors, and the dark around the rooms stays clear.
+  Owner report (2026-10-08, lane 28): the mist was there but too thin to see, so the outdoor base now lies lower
+  (under head height) and thicker, plain to see by day and in drifting wisps; it lies thick on the roads out of a
+  place (mist `roads`), lighter in a town's streets (mist `strength`, Barovia's village and the towns like it), and
+  the world's weather scales it (data/weather: fog half as heavy again, rain and storms a little).
 - **The Mists.** On the opening road the wall of the Mists stands at the east edge, where the party came in: a flat
   pale wall with an inked, slowly billowing edge, kept a square clear of the map.
 - **The land beyond the map.** Ground runs on past the edge and rises into hills, forest thins into the distance

@@ -713,7 +713,8 @@ func _apply_static() -> void:
 	_post.set_shader_parameter("mist_wisps", float(mist.get("wisps", 0.9)))
 	_post.set_shader_parameter("mist_beyond", outdoors)
 	if board != null:
-		_post.set_shader_parameter("mist_mask", mist_mask(board.grid, float(mist.get("open", 0.35))))
+		_post.set_shader_parameter("mist_mask", mist_mask(board.grid, float(mist.get("open", 0.35)), roads_out(),
+			float(mist.get("roads", 0.0))))
 		_post.set_shader_parameter("use_mist_mask", true)
 	var clouds := mood.get("clouds", {}) as Dictionary
 	_post.set_shader_parameter("cloud_cover", float(clouds.get("cover", 0.5)))
@@ -738,9 +739,31 @@ func _apply_static() -> void:
 		_post.set_shader_parameter("mist_wall", wall)
 
 
+## How strong this place's mist is against its time of day's (the mood's mist `strength`: a town's streets lighter
+## than the woods; the world's weather scales it, Weather.dress_mood: fog heavier).
+func mist_scale() -> float:
+	return float((mood.get("mist", {}) as Dictionary).get("strength", 1.0))
+
+
+## The squares where roads leave the map (ways out on its edge): the mist lies thick on the roads out of a place
+## (lane 28, owner request 2026-10-08).
+func roads_out() -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	if board == null:
+		return out
+	for e: Variant in loc.get("exits", []):
+		var cell := (e as Dictionary).get("cell", []) as Array
+		if cell.size() == 2:
+			var c := Vector2i(int(cell[0]), int(cell[1]))
+			if board._on_border(c):
+				out.append(c)
+	return out
+
+
 ## Where the mist gathers on a map, one texel per square: thickest among the trees (wall squares), over water and
-## empty ground and in brambles and mud, thinning to `open` in the middle of clearings and roads.
-static func mist_mask(grid: CombatGrid, open: float) -> ImageTexture:
+## empty ground and in brambles and mud, thinning to `open` in the middle of clearings and roads; at least `roads` on
+## the roads out (`ways_out`), fading over five squares into the map.
+static func mist_mask(grid: CombatGrid, open: float, ways_out: Array[Vector2i] = [], roads: float = 0.0) -> ImageTexture:
 	var img := Image.create(grid.width, grid.depth, false, Image.FORMAT_R8)
 	var dist := {}
 	var todo: Array[Vector2i] = []
@@ -767,6 +790,8 @@ static func mist_mask(grid: CombatGrid, open: float) -> ImageTexture:
 				w = minf(1.0, w + 0.25)
 			elif grid.has_flag(c, CombatGrid.WATER):
 				w = minf(w, 0.45)   # a lake keeps its face
+			for road in ways_out:
+				w = maxf(w, roads * clampf(1.0 - Vector2(c - road).length() / 5.0, 0.0, 1.0))
 			img.set_pixel(x, z, Color(w, w, w))
 	return ImageTexture.create_from_image(img)
 
@@ -902,7 +927,7 @@ func _apply(k: float) -> void:
 	_post.set_shader_parameter("land_color", v["fog"] as Color)
 	_post.set_shader_parameter("mist_color", v["mist"] as Color)
 	_post.set_shader_parameter("mist_wall_color", v["mists"] as Color)
-	_post.set_shader_parameter("mist_strength", float(v["mist_strength"]))
+	_post.set_shader_parameter("mist_strength", minf(1.0, float(v["mist_strength"]) * mist_scale()))
 	_post.set_shader_parameter("cloud_strength", float(v["clouds"]))
 	_post.set_shader_parameter("exposure", float(v["exposure"]))
 	_post.set_shader_parameter("saturation", float(v["saturation"]))
