@@ -8,27 +8,27 @@
     "rows": [
       "#######ww###################################",
       "#######ww###################################",
-      "##....~ww~.......##..##...................##",
-      "##....~ww~...................=======#.##..##",
-      "##....~~~~~~.................=======...#..##",
-      "##...~wwwwww~........===.....=======....#.##",
-      "##..~~wwwwww~~...............=======......##",
-      "##..~wwwwwwww~...===.........=======......##",
-      "##.~~wwwwwwww~~..............=======......##",
-      "##.~~wwwwwwww~~...........................##",
+      "##....~ww~.=...==##..##..==..#######......##",
+      "##....~ww~..=..==........==..#######..##..##",
+      "##....~~~~~~.........==......#######...#..##",
+      "##...~wwwwww~........==......#######....#.##",
+      "##..~~wwwwww~~...==..........#######......##",
+      "##..~wwwwwwww~...==.......................##",
+      "##.~~wwwwwwww~~.....................==..=.##",
+      "##.~~wwwwwwww~~.....................==....##",
       "##.~~wwwwwwww~~.......................#...##",
-      "##..~wwwwwwww~.=.......................##.##",
-      "##..~~wwwwww~~.=.......==.......==........##",
-      "##...~wwwwww~..=.......==.......=.........##",
-      "##....~~~~~~............................#.##",
-      "##......~~................................##",
-      "##.......~~...#....................~~.....##",
-      "####..............................~....#..##",
-      "##...=========...===.......===..........#.##",
-      "##...=....................................##",
-      "##...=.......=............................##",
+      "##..~wwwwwwww~..==...........==........##.##",
+      "##..~~wwwwww~~..==...=.==.=..==.===.......##",
+      "##...~wwwwww~...................=...==....##",
+      "##....~~~~~~=............=..........==..#.##",
+      "##.=....~~........................=.......##",
+      "##.......~~...#....................~~...=.##",
+      "####..............................~.=..#..##",
+      "##...=========....==.......==...........#.##",
+      "##...=.=.==.=....===.......==.............##",
+      "##...=.==.==.=....................==......##",
       "##...=========......~....~.........#..#...##",
-      "####........#...#.........##........#..#..##",
+      "####........#...#...=.....##........#..#..##",
       "#####################...####################",
       "#####################...####################",
       "............................................",
@@ -148,27 +148,33 @@
       ],
       "kind": "examine",
       "label": "The bonfire",
-      "model": "campfire"
+      "model": "campfire",
+      "burning": "not flag.tser_pool_brawl_won"
     },
     {
       "id": "eva_tent_outside",
       "cell": [
-        31,
-        8
+        32,
+        4
       ],
       "kind": "examine",
       "label": "The great tent",
-      "model": "tent"
+      "model": "great_tent"
     },
     {
       "id": "vistani_wagons",
       "cell": [
-        18,
-        7
+        17,
+        6
       ],
       "kind": "examine",
       "label": "Painted wagons",
-      "model": "wagon"
+      "model": "wagon",
+      "facing": "south",
+      "span": [
+        2,
+        2
+      ]
     },
     {
       "id": "tser_pool_water",
@@ -183,38 +189,32 @@
     {
       "id": "vistani_horses",
       "cell": [
-        8,
+        9,
         19
       ],
       "kind": "examine",
       "label": "Horses",
-      "model": "horse"
+      "model": "horse",
+      "facing": "south",
+      "span": [
+        2,
+        1
+      ]
     },
     {
       "id": "wine_casks",
       "cell": [
-        27,
-        18
+        32,
+        12
       ],
       "kind": "examine",
       "label": "Wine casks",
       "model": "barrel"
     },
     {
-      "id": "tser_lamp_oil",
-      "cell": [
-        28,
-        18
-      ],
-      "kind": "decor",
-      "label": "a barrel of lamp oil",
-      "model": "barrel",
-      "object": "oil_barrel"
-    },
-    {
       "id": "ribbon_tree",
       "cell": [
-        36,
+        38,
         3
       ],
       "kind": "examine",
@@ -244,6 +244,399 @@
       "dialogue": "companions/kestrel:tally_tser"
     },
     {
+      "id": "tser_wagon_east_road",
+      "cell": [
+        21,
+        4
+      ],
+      "kind": "decor",
+      "model": "vardo",
+      "facing": "south",
+      "span": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "tser_wagon_by_the_pool",
+      "cell": [
+        16,
+        11
+      ],
+      "kind": "decor",
+      "model": "vardo",
+      "facing": "east",
+      "span": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "tser_wagon_by_the_casks",
+      "cell": [
+        29,
+        11
+      ],
+      "kind": "decor",
+      "model": "vardo",
+      "facing": "west",
+      "span": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "tser_wagon_strongbox",
+      "cell": [
+        18,
+        18
+      ],
+      "kind": "decor",
+      "model": "vardo",
+      "facing": "north",
+      "span": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "tser_wagon_south",
+      "cell": [
+        27,
+        18
+      ],
+      "kind": "decor",
+      "model": "vardo",
+      "facing": "north",
+      "span": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "tser_tent_east",
+      "cell": [
+        36,
+        8
+      ],
+      "kind": "decor",
+      "model": "tent",
+      "facing": "west",
+      "span": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "tser_tent_southeast",
+      "cell": [
+        36,
+        13
+      ],
+      "kind": "decor",
+      "model": "tent",
+      "facing": "west",
+      "span": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "tser_tent_north",
+      "cell": [
+        25,
+        2
+      ],
+      "kind": "decor",
+      "model": "tent",
+      "facing": "south",
+      "span": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "tser_tent_by_the_pool",
+      "cell": [
+        15,
+        2
+      ],
+      "kind": "decor",
+      "model": "tent",
+      "facing": "south",
+      "span": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "tser_horse_grey",
+      "cell": [
+        10,
+        20
+      ],
+      "kind": "decor",
+      "model": "horse",
+      "facing": "south",
+      "span": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "tser_horse_bay",
+      "cell": [
+        7,
+        20
+      ],
+      "kind": "decor",
+      "model": "horse",
+      "facing": "south",
+      "span": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "tser_hay",
+      "cell": [
+        7,
+        19
+      ],
+      "kind": "decor",
+      "model": "hay_bale"
+    },
+    {
+      "id": "tser_trough",
+      "cell": [
+        12,
+        19
+      ],
+      "kind": "examine",
+      "label": "The horse trough",
+      "model": "tub_wooden"
+    },
+    {
+      "id": "tser_bench_west",
+      "cell": [
+        21,
+        12
+      ],
+      "kind": "decor",
+      "model": "log"
+    },
+    {
+      "id": "tser_bench_east",
+      "cell": [
+        26,
+        12
+      ],
+      "kind": "decor",
+      "model": "log"
+    },
+    {
+      "id": "tser_firewood",
+      "cell": [
+        24,
+        12
+      ],
+      "kind": "decor",
+      "model": "woodpile"
+    },
+    {
+      "id": "tser_stewpot",
+      "cell": [
+        25,
+        14
+      ],
+      "kind": "examine",
+      "label": "A pot over the coals",
+      "model": "stewpot"
+    },
+    {
+      "id": "tser_cask_spare",
+      "cell": [
+        33,
+        12
+      ],
+      "kind": "decor",
+      "model": "barrel"
+    },
+    {
+      "id": "tser_cask_crate",
+      "cell": [
+        32,
+        13
+      ],
+      "kind": "decor",
+      "model": "crate"
+    },
+    {
+      "id": "tser_grindstone",
+      "cell": [
+        34,
+        15
+      ],
+      "kind": "examine",
+      "label": "A knife-grinder's bench",
+      "model": "workbench",
+      "facing": "west"
+    },
+    {
+      "id": "tser_broken_cart",
+      "cell": [
+        36,
+        17
+      ],
+      "kind": "examine",
+      "label": "A cart with a cracked wheel",
+      "model": "cart_broken"
+    },
+    {
+      "id": "tser_woodpile",
+      "cell": [
+        35,
+        20
+      ],
+      "kind": "decor",
+      "model": "woodpile"
+    },
+    {
+      "id": "tser_chopping_block",
+      "cell": [
+        34,
+        20
+      ],
+      "kind": "decor",
+      "model": "stump"
+    },
+    {
+      "id": "tser_charms",
+      "cell": [
+        20,
+        22
+      ],
+      "kind": "examine",
+      "label": "Charms on a cord",
+      "model": "charms"
+    },
+    {
+      "id": "tser_cairn",
+      "cell": [
+        12,
+        14
+      ],
+      "kind": "examine",
+      "label": "A cairn by the water",
+      "model": "cairn"
+    },
+    {
+      "id": "tser_shrine",
+      "cell": [
+        3,
+        15
+      ],
+      "kind": "examine",
+      "label": "A little shrine by the water",
+      "model": "shrine_small",
+      "facing": "east"
+    },
+    {
+      "id": "tser_rocks_stream",
+      "cell": [
+        11,
+        2
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "tser_rocks_stream_low",
+      "cell": [
+        12,
+        3
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "tser_rocks_east",
+      "cell": [
+        40,
+        8
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "tser_rocks_southeast",
+      "cell": [
+        40,
+        16
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "tser_reed_dice",
+      "cell": [
+        4,
+        11
+      ],
+      "kind": "search",
+      "label": "Something in the reeds",
+      "model": "satchel",
+      "search_dc": 12,
+      "item": "stone_of_good_luck"
+    },
+    {
+      "id": "tser_pen_whistle",
+      "cell": [
+        6,
+        19
+      ],
+      "kind": "search",
+      "label": "Something trodden into the pen",
+      "model": "satchel",
+      "search_dc": 13,
+      "item": "signal_whistle"
+    },
+    {
+      "id": "tser_stump_flask",
+      "cell": [
+        40,
+        20
+      ],
+      "kind": "search",
+      "label": "A hollow stump",
+      "model": "stump",
+      "search_dc": 14,
+      "item": "potion_of_fire_breath"
+    },
+    {
+      "id": "tser_wagon_cards",
+      "cell": [
+        19,
+        7
+      ],
+      "kind": "search",
+      "label": "Something under the wagon's step",
+      "model": "satchel",
+      "search_dc": 15,
+      "item": "playing_card_set"
+    },
+    {
+      "id": "tser_lamp_oil",
+      "cell": [
+        34,
+        12
+      ],
+      "kind": "decor",
+      "label": "a barrel of lamp oil",
+      "model": "barrel",
+      "object": "oil_barrel"
+    },
+    {
       "id": "ribbon_tree_cache",
       "cell": [
         37,
@@ -262,7 +655,7 @@
       "id": "stanimir_strongbox",
       "cell": [
         17,
-        18
+        19
       ],
       "label": "A strongbox under a wagon",
       "model": "chest",
@@ -290,7 +683,7 @@
     {
       "cell": [
         32,
-        9
+        7
       ],
       "kind": "lamp",
       "bright_ft": 10,
@@ -327,6 +720,75 @@
       "dialogue": "svalich_road/luminita:start",
       "when": "not flag.tser_pool_brawl_won",
       "facing": "east"
+    },
+    {
+      "npc": "tser_dorina",
+      "cell": [
+        25,
+        15
+      ],
+      "dialogue": "svalich_road/tser_camp:dorina",
+      "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile",
+      "facing": "north"
+    },
+    {
+      "npc": "tser_radu",
+      "cell": [
+        14,
+        19
+      ],
+      "dialogue": "svalich_road/tser_camp:radu",
+      "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile",
+      "facing": "west",
+      "path": [
+        [
+          14,
+          21,
+          4
+        ],
+        [
+          15,
+          17,
+          4
+        ]
+      ]
+    },
+    {
+      "npc": "tser_petru",
+      "cell": [
+        33,
+        15
+      ],
+      "dialogue": "svalich_road/tser_camp:petru",
+      "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile",
+      "facing": "east"
+    },
+    {
+      "npc": "tser_tobar",
+      "cell": [
+        36,
+        18
+      ],
+      "dialogue": "svalich_road/tser_camp:tobar",
+      "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile",
+      "facing": "north"
+    },
+    {
+      "npc": "tser_zora",
+      "cell": [
+        24,
+        21
+      ],
+      "dialogue": "svalich_road/tser_camp:zora",
+      "when": "not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile",
+      "facing": "south",
+      "path": [
+        [
+          19,
+          21,
+          5
+        ]
+      ]
     }
   ],
   "encounters": [

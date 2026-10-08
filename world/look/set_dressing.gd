@@ -21,6 +21,10 @@ const INTERIOR_DOOR_H := 1.15
 const OUTDOOR_DOOR_H := 1.9
 ## Open sides of a wall square in order of preference: the faces the default camera looks at come first.
 const FACES: Array[Vector2i] = [Vector2i(0, 1), Vector2i(-1, 0), Vector2i(1, 0), Vector2i(0, -1)]
+## A prop's `facing` in the location data (north is up the map): the way its front looks (lane 28, 2026-10-08: a ring
+## of wagons facing their fire, horses side on in a pen).
+const FACINGS := {"north": Vector2(0, -1), "south": Vector2(0, 1), "east": Vector2(1, 0), "west": Vector2(-1, 0),
+	"northeast": Vector2(1, -1), "northwest": Vector2(-1, -1), "southeast": Vector2(1, 1), "southwest": Vector2(-1, 1)}
 
 static var _catalog: Dictionary = {}
 static var _manifest: Dictionary = {}
@@ -109,7 +113,7 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 				_take_square(board, root, cell)
 			var model := ModelPiece.for_art(board, art, ModelPiece.hash_cell(cell))
 			if model != "":
-				ModelPiece.stand(board, root, model, art, cell)   # a 3D piece (docs/art/models.md)
+				ModelPiece.stand(board, root, model, art, cell, null, 1.0, facing_yaw(spec))   # a 3D piece (docs/art/models.md)
 			else:
 				_lay(board, root, art, cell, scale_)
 		_:
@@ -142,12 +146,29 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 				_take_square(board, root, cell)
 			elif board.grid.has_flag(cell, CombatGrid.LOW) or board.grid.has_flag(cell, CombatGrid.DIFFICULT):
 				_take_square(board, root, cell)   # its own art replaces the board's furniture or brambles there
-			var piece := stand_piece(board, root, art, cell, scale_, null, front, bool(look.get("fade", false)) or bool(look.get("big", false)))
+			var piece := stand_piece(board, root, art, cell, scale_, null, front, bool(look.get("fade", false)) or bool(look.get("big", false)),
+				facing_yaw(spec), span_centre(board, spec))
 			if bool(look.get("fade", false)) and piece is Sprite3D:
 				_fade_with_trees(board, piece as Sprite3D)
 			elif bool(look.get("fade", false)) and piece != null and piece.has_meta("model"):
 				ModelPiece.fade_with_trees(board, piece)
 	return root
+
+
+## The heading (rotation about y) of a prop's `facing`, or null when it has none: its front looks that way.
+static func facing_yaw(spec: Dictionary) -> Variant:
+	var dir := FACINGS.get(str(spec.get("facing", "")), Vector2.ZERO) as Vector2
+	return null if dir == Vector2.ZERO else atan2(dir.x, dir.y)
+
+
+## Where a prop that spans several squares (its `span`, [across, down], its own square the north-west one) stands:
+## the middle of them, so a wagon two squares by two sits over its block of low cover. Null for one square.
+static func span_centre(board: ArenaBoard, spec: Dictionary) -> Variant:
+	var span := spec.get("span", []) as Array
+	if span.size() != 2:
+		return null
+	var cell := Vector2i(int((spec["cell"] as Array)[0]), int((spec["cell"] as Array)[1]))
+	return board.cell_center(cell) + Vector3((float(span[0]) - 1.0) / 2.0, 0.0, (float(span[1]) - 1.0) / 2.0)
 
 
 ## A tall piece (the Gulthias Tree, a windmill) fades like the trees when it stands between the camera and the party.
@@ -514,11 +535,14 @@ static func _stand(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i,
 ## beside it; a piece drawn from the front and from behind is a PropView facing away from that wall (or south, toward
 ## the opening camera); anything else looks the same from every side (a barrel, a tree) and is a plain billboard.
 ## Added to `parent`; returns the piece.
+## `yaw` (a prop's `facing`, facing_yaw) turns a piece that would otherwise face away from its wall or south;
+## `centre` (span_centre) stands it over the middle of the squares it spans.
 static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Vector2i, scale_: float = 1.0,
-		at_override: Variant = null, front_override: String = "", big: bool = false) -> Node3D:
+		at_override: Variant = null, front_override: String = "", big: bool = false, yaw: Variant = null,
+		centre: Variant = null) -> Node3D:
 	var model := ModelPiece.for_art(board, art, ModelPiece.hash_cell(cell))
 	if model != "":
-		return ModelPiece.stand(board, parent, model, art, cell, at_override)   # a 3D piece (docs/art/models.md)
+		return ModelPiece.stand(board, parent, model, art, cell, at_override, 1.0, yaw, centre)   # a 3D piece (docs/art/models.md)
 	if art == "flame" and Look.modern():
 		var fire := flame(float((manifest().get("flame", {}) as Dictionary).get("world_height", 0.9)) * scale_)
 		if fire != null:
@@ -527,6 +551,8 @@ static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Ve
 			return fire   # a fire standing by itself (an oven's): the 3D flame, swaying
 	scale_ *= float((catalog().get("scales", {}) as Dictionary).get(art, 1.0))
 	var at: Vector3 = board.cell_center(cell) if at_override == null else at_override as Vector3
+	if centre != null and at_override == null:
+		at = centre as Vector3
 	var wall := wall_side(board, cell)
 	var front := front_override if front_override != "" else front_of(art)
 	if front != "" and at_override == null:
@@ -554,6 +580,8 @@ static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Ve
 	if back != "" and has_art(back):
 		var binfo := manifest()[back] as Dictionary
 		var faces := Vector3(-wall.x, 0, -wall.y) if wall != Vector2i.ZERO else Vector3(0, 0, 1)
+		if yaw != null:
+			faces = Vector3(sin(float(yaw)), 0, cos(float(yaw)))
 		piece = PropView.create(load("res://" + str(info["file"])) as Texture2D, float(info.get("pixel_size", 0.01)) * scale_,
 			load("res://" + str(binfo["file"])) as Texture2D, float(binfo.get("pixel_size", 0.01)) * scale_, faces)
 	else:
@@ -593,13 +621,21 @@ static func is_big(art: String) -> bool:
 ## Hides the trees (and rock) on the squares a big piece covers, plus one more row on the sides the opening camera
 ## looks from (west and south), so the forest neither cuts through it nor hides it, and the board's own scenery (a
 ## stump, brambles) on the open squares it covers. They come back if it goes.
-static func _clear_trees_around(board: ArenaBoard, parent: Node3D, cell: Vector2i, width: float) -> void:
+## `foot` (a 3D piece's footprint on the ground, world x and z) clears every square under it instead, however big:
+## Madam Eva's great tent covers seven squares by five (owner report 2026-10-08).
+static func _clear_trees_around(board: ArenaBoard, parent: Node3D, cell: Vector2i, width: float, foot := Rect2()) -> void:
 	var k := clampi(int(round(width / 2.0 - 0.5)), 1, 2)
+	var lo := Vector2i(-k, -k)
+	var hi := Vector2i(k, k)
+	if foot.has_area():
+		lo = Vector2i(floori(foot.position.x + 0.15), floori(foot.position.y + 0.15)) - cell
+		hi = Vector2i(floori(foot.end.x - 0.15), floori(foot.end.y - 0.15)) - cell
 	var cleared: Array[Vector2i] = []
-	for dx: int in range(-k - 1, k + 1):
-		for dy: int in range(-k, k + 2):
+	for dx: int in range(lo.x - 1, hi.x + 1):
+		for dy: int in range(lo.y, hi.y + 2):
 			var c := cell + Vector2i(dx, dy)
-			var furnished := not board.grid.has_flag(c, CombatGrid.WALL) and board.dressing.has(c) and absi(dx) <= k and dy <= k
+			var furnished := not board.grid.has_flag(c, CombatGrid.WALL) and board.dressing.has(c) and dx >= lo.x and dx <= hi.x \
+				and dy <= hi.y
 			if c == cell or not (board.is_tree(c) or furnished):
 				continue
 			board.clear_cell(c)

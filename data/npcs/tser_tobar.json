@@ -1,0 +1,18 @@
+{
+  "id": "tser_tobar",
+  "name": "Big Tobar",
+  "title": "Wheelwright of the Tser Pool Camp",
+  "summary": "A huge, gentle Vistana who mends the camp's wheels and splits its firewood, and talks to both while he works.",
+  "portrait": "tough",
+  "sprite": "tough",
+  "attitude": "indifferent",
+  "voice": "docs/voice/tser_tobar.md",
+  "monster": "tough",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him"
+}

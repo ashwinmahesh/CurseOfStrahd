@@ -43,14 +43,14 @@ func test_prices_follow_the_merchants_attitude() -> void:
 	var offer := st.shop_offer("test_trader", sword)
 	assert_eq(_price(st, "test_trader", "rope"), rope, "indifferent: the shop's own price")
 	st.attitudes["test_trader"] = "friendly"
-	assert_eq(_price(st, "test_trader", "rope"), snappedf(rope * 0.9, 0.01), "friendly: 10% off")
-	assert_eq(st.shop_offer("test_trader", sword), snappedf(offer * 1.1, 0.01), "friendly: 10% more for what they buy")
+	assert_eq(_price(st, "test_trader", "rope"), Trade.whole_gp(rope * 0.9), "friendly: 10% off")
+	assert_eq(st.shop_offer("test_trader", sword), Trade.whole_gp(offer * 1.1), "friendly: 10% more for what they buy")
 	assert_eq(_price(st, "test_trader", "potion_of_healing"), 90.0, "a set price follows attitude too")
 	st.attitudes["test_trader"] = "hostile"
-	assert_eq(_price(st, "test_trader", "rope"), snappedf(rope * 1.25, 0.01), "hostile: a quarter more")
-	assert_eq(st.shop_offer("test_trader", sword), snappedf(offer * 0.75, 0.01), "hostile: a quarter less")
+	assert_eq(_price(st, "test_trader", "rope"), Trade.whole_gp(rope * 1.25), "hostile: a quarter more")
+	assert_eq(st.shop_offer("test_trader", sword), Trade.whole_gp(offer * 0.75), "hostile: a quarter less")
 	assert_eq(st.shop_buy("test_trader", "rope", st.party[0]), "")
-	assert_eq(st.gold, 1000.0 - snappedf(rope * 1.25, 0.01), "the purse pays the hostile price")
+	assert_eq(st.gold, 1000.0 - Trade.whole_gp(rope * 1.25), "the purse pays the hostile price")
 	assert_ne(Trade.why_no_haggle(st, "test_trader"), "", "a hostile merchant won't haggle")
 
 
@@ -131,12 +131,35 @@ func test_rotating_stock_changes_with_the_days() -> void:
 	assert_eq(Trade.stretch_of(st, "test_wanderer"), 4)
 
 
+## Owner request (2026-10-08): no fractions of gold in shops. Prices and offers round up to whole gold pieces after the
+## attitude and the haggle, so a candle or an offer worth coppers is 1 gp; free things stay free.
+func test_prices_are_whole_gold_pieces() -> void:
+	assert_eq(Trade.whole_gp(0.5), 1.0)
+	assert_eq(Trade.whole_gp(1.01), 2.0)
+	assert_eq(Trade.whole_gp(9.000001), 9.0, "float dust isn't a copper")
+	assert_eq(Trade.whole_gp(0.0), 0.0, "free stays free")
+	var st := _party()
+	for attitude: String in ["indifferent", "friendly", "hostile"]:
+		st.attitudes["test_trader"] = attitude
+		for w in st.shop_wares("test_trader"):
+			var price := float(w["price"])
+			assert_eq(price, roundf(price), "%s: %s costs a whole number of gp (%s)" % [attitude, w["id"], price])
+		for item: String in ["candle", "sickle", "dagger", "longsword"]:
+			var offer := st.shop_offer("test_trader", item)
+			assert_eq(offer, roundf(offer), "%s: an offer for %s is whole (%s)" % [attitude, item, offer])
+			if offer >= 0.0:
+				assert_true(offer >= 1.0, "%s: nothing sells for less than 1 gp (%s)" % [item, offer])
+	st.attitudes["test_trader"] = "hostile"
+	assert_eq(st.shop_offer("test_trader", "sickle"), 1.0, "a sickle's 5 sp offer, cut by a hostile trader, is still 1 gp")
+	assert_eq(ServicesScreen.coins(0.5), "1 gp")
+
+
 func test_bildrath_sells_from_the_shop_screen() -> void:
 	var st := _party()
 	assert_eq(_price(st, "bildrath", "rope"), float(Compendium.shared().item_data("rope")["cost_gp"]) * 10.0, "ten times the PHB")
 	assert_eq(_price(st, "bildrath", "potion_of_healing"), 500.0)
-	assert_eq(st.shop_offer("bildrath", "longsword"), snappedf(float(Compendium.shared().item_data("longsword")["cost_gp"]) * 0.1, 0.01),
-		"a tenth back")
+	assert_eq(st.shop_offer("bildrath", "longsword"), Trade.whole_gp(float(Compendium.shared().item_data("longsword")["cost_gp"]) * 0.1),
+		"a tenth back, rounded up")
 	st.set_flag("bildrath_discount")
 	assert_eq(_price(st, "bildrath", "potion_of_healing"), 450.0, "the dialogue's haggle: nine times")
 	assert_eq(Trade.haggle_state(st, "bildrath"), "won")

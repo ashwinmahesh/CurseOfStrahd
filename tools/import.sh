@@ -12,6 +12,12 @@
 # .godot (the owner's make run and the build's make ci in the main folder, 2026-10-08). Ctrl-C stops the import at
 # once: the windowed editor otherwise finishes importing before it notices. A Godot stopped from outside (kill, or
 # Ctrl-C in another terminal) isn't imported again, headless or as a second pass: the import ends there.
+# A folder with no import cache yet (a plain git worktree add) starts from an APFS clone of the main checkout's cache
+# and .import files, when the two are on the same volume, so only what differs is imported. A full import (no cache
+# to start from) writes about 8 GB, and one that fills the disk part-way leaves a broken cache: it's refused, exit 75,
+# with under IMPORT_MIN_FREE_GB (20) free. This script's own notes go to stderr, which make shows; a refused or
+# stopped import also prints an ERROR: line on stdout, so tools/logcheck.sh fails it and make import doesn't mark it
+# done.
 set -uo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
 godot="${GODOT:-/Applications/Godot.app/Contents/MacOS/Godot}"
@@ -68,12 +74,37 @@ until mkdir "$lock" 2> /dev/null; do
     rmdir "$lock" 2> /dev/null || true
     continue
   fi
-  [ -n "$said" ] || echo "make import: another import is running in this folder (PID ${holder:-?}); waiting for it"
+  [ -n "$said" ] || echo "make import: another import is running in this folder (PID ${holder:-?}); waiting for it" >&2
   said=1
   sleep 2
 done
 owned=1
 echo $$ > "$lock/pid"
+
+## No import cache here yet: a clone of the main checkout's when it's on this volume (seconds, almost no disk), with
+## main's untracked .import files beside the assets; else a full import, refused when the disk is nearly full.
+cache_empty() { [ -z "$(ls -A .godot/imported 2> /dev/null | head -1)" ]; }
+if cache_empty; then
+  main="$(cd "$(git rev-parse --path-format=absolute --git-common-dir)/.." && pwd -P)"
+  if [ "$main" != "$here" ] && [ -d "$main/.godot/imported" ] && [ "$(stat -f %d "$main")" = "$(stat -f %d .)" ]; then
+    echo "make import: no import cache here yet; starting from a clone of $main's (almost no disk)" >&2
+    rm -rf .godot/imported
+    cp -Rc "$main/.godot/imported" .godot/
+    git -C "$main" ls-files -z --others --ignored --exclude-standard -- '*.import' ':!captures/' ':!builds/' \
+      | rsync --ignore-existing --from0 --files-from=- "$main/" ./ \
+      || echo "make import: some of main's .import files weren't copied; Godot imports those assets afresh" >&2
+  fi
+fi
+if cache_empty; then
+  free="$(df -Pk . | awk 'NR == 2 { print int($4 / 1048576) }')"
+  if [ "$free" -lt "${IMPORT_MIN_FREE_GB:-20}" ]; then
+    echo "make import: no import cache here, and a full import writes about 8 GB; only $free GB free on this disk" \
+      "(${IMPORT_MIN_FREE_GB:-20} needed; IMPORT_MIN_FREE_GB sets it). make disk shows where the space went; a lane" \
+      "made with make lane starts from a clone instead." >&2
+    echo "ERROR: make import refused: $free GB free"
+    exit 75
+  fi
+fi
 # Put aside only once it's this import's turn: taken while another import's editor had rewritten it, the rewrite is
 # what would be put back (seen 2026-10-08, the owner's make run waiting on the build's make ci).
 keep="$(mktemp -t strahd_project)"
@@ -109,7 +140,8 @@ import_once
 status=$?
 if stopped $status; then
   cat "$log"
-  echo "make import: Godot was stopped (signal $((status - 128))) before the import finished; run make import again"
+  echo "make import: Godot was stopped (signal $((status - 128))) before the import finished; run make import again" >&2
+  echo "ERROR: make import stopped"
   exit $status
 fi
 if [ $status -ne 0 ] || grep -qE "$ERRORS" "$log"; then

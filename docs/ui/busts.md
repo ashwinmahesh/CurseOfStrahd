@@ -5,7 +5,9 @@ Ireena) and the cast on 2026-10-08.
 
 ## What the player sees
 In a conversation, large half-body busts stand either side of the dialogue box, behind it: the hero speaking for the
-party on the left, facing right, and whoever they're talking to on the right, facing left. The one talking is lit and
+party on the left, facing right, and whoever they're talking to on the right, facing left. The two always face each other
+(owner, 2026-10-08): a bust drawn facing the other way is mirrored, unless a line's `[away]` cue turns someone away
+(below). The one talking is lit and
 the other dims; the Narrator dims both. Each bust breathes slowly (a 1.2% swell from its feet over 2.8 s, the two sides
 out of step; off in headless runs and still captures, like all UiMotion). A new speaker's bust fades in. The small
 portrait in the box stays as it was, so anyone without a bust still has a face. A cutscene's picture covers the busts.
@@ -32,3 +34,39 @@ force-add the `.import`).
   neutral one), lighting and breathing.
 - `ui/dialogue/dialogue_ui.gd`: adds it under the box and feeds it each line, with the party's speaker
   (`DialogueRunner.portrait_of(runner.speaker)`) for the left side.
+
+## Facing each other
+`data/busts/facing.json` records which way each person's bust was drawn (`left` or `right`, judged from the art on
+2026-10-08; a mood's bust faces as its person's unless listed by its own file name). `DialogueBusts.mirrored` flips a
+bust (`flip_h`) when its side wants the other way: the left side faces right, the right side faces left. As drawn, the
+NPCs face right (the prompt's `{SIDE}` asked for it) and eight of the ten heroes face left, so nearly every bust is
+mirrored; Godrick, Hedda and Argynvost face their side's way as drawn. A new bust needs its facing in the file
+(tests/integration/test_bust_facing.gd checks every one). Mirroring puts Izek's fiendish right arm on his left; a
+redraw facing left would fix it.
+
+## Turning away
+A line's bracket can hold a turn cue beside its mood (docs/contracts/dialogue.md): `Ireena [sad, away]: ...` turns the
+speaker's back on the other side for that line; `Narrator [away]: ...` turns the one being spoken to (the right side),
+and `Narrator [away:party]: ...` the party's speaker. A Narrator line's turn holds through more Narrator lines until
+that side speaks again; a line without the cue turns the speaker back, and someone new on a side faces the other side.
+The bust dips for a moment as it turns (motion on).
+
+Lines cued on 2026-10-08, from a scan of every `.dialogue` file for turning away, backs to the party, looking away and
+out of windows:
+- abbey_of_st_markovia/abbot.dialogue:93 (the Abbot doesn't look at you), clovin.dialogue:34 (Clovin looks away),
+  unveiling.dialogue:169-170 (the Abbot turns to Vasilka and speaks to her)
+- argynvostholt/beacon.dialogue:75 (Vladimir turns and goes down the stair)
+- strahd/ireena.dialogue:49 (Strahd turns his face from the symbol's light)
+- companions/lesson.dialogue:72 (Wren turns his back on Rahadin: away:party)
+- castle_ravenloft/spires_pidlwick.dialogue:14, 86, 154 (Pidlwick's back to you; turning to show the keyhole; turning
+  to be wound)
+- vallaki/victor.dialogue:100 (Victor turns his back), tsolenka_pass/watch.dialogue:104-105 (the watchman never looks
+  at you), mount_baratok/mordenkainen.dialogue:64 (his eyes go out of the window), yester_hill/approach.dialogue:81
+  (Kostin walks away), lake_zarovich/landing.dialogue:55 (Bluto walks off the jetty)
+
+Left without a cue: camp/thistle.dialogue:14, camp/godrick.dialogue:42 and camp/liriel.dialogue:39 (a hero turns away
+in a party-only camp talk; their words come as interjections, which take no cue, and the left bust at that moment may be
+someone else), vallaki/aftermath.dialogue:62 (Izek turns away, but the Baron is the bust on screen),
+van_richtens_tower/van_richten.dialogue:41 (he looks away from Ezmerelda, not the party) and companions/dawn.dialogue:55
+(Liriel turns from the sun to face the windows).
+

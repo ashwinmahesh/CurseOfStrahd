@@ -121,7 +121,8 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 			continue
 		party_cbs.append(e.add(m.creature, &"party", m.cell))
 	for g in view.guest_members:
-		if not g.creature.dead:
+		# A familiar following the party joins as its caster's summon (EncounterSetup.bring_familiars below).
+		if not g.creature.dead and not g.has_meta("familiar_of"):
 			e.add(g.creature, &"guest", g.cell).controller = &"player"
 	for mo: Dictionary in monsters_for(view, spec):
 		e.add(mo["creature"] as Monster, mo["side"] as StringName, mo["cell"] as Vector2i)
@@ -397,6 +398,8 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 		tok.visible = true
 		tok.refresh()
 		view.create_tween().tween_property(tok, "position", view.board.cell_center(m.cell), 0.25)
+	# A familiar lost in the fight (or sent away) leaves the line; one still with its caster walks on.
+	LocationParty.refresh_familiars(view)
 	if outcome == "victory":
 		(view.st.loc_state(view.loc_id)["encounters"] as Dictionary)[encounter_id] = true
 		if spec.has("flag"):

@@ -810,6 +810,12 @@ func fits_slot(d: Dictionary, slot: String) -> bool:
 	return InventoryScreen.slot_takes(slot, Compendium.shared().item_data(str(d.get("id", ""))))
 
 
+## A field power's button and menu label: "Cast Find Familiar" for a scroll, "Drink", else "Use: <power>".
+static func power_label(opt: Dictionary) -> String:
+	var label := str(opt["label"])
+	return label if label == "Drink" or label.begins_with("Cast ") else "Use: %s" % label
+
+
 static func slot_takes(slot: String, data: Dictionary) -> bool:
 	match slot:
 		"armor":
@@ -1001,15 +1007,18 @@ func _pick(e: Dictionary) -> void:
 	_draw_card()
 
 
-## Double-click: wear or hold it (into the first slot that takes it), take it off if worn.
+## Double-click: wear or hold it (into the first slot that takes it), take it off if worn. Never uses it up: a scroll's
+## Cast or a potion's Drink is only on the right-click menu and the item card.
 func _activate(e: Dictionary) -> void:
 	_pick(e)
-	var acts := actions_for(e)
-	if not acts.is_empty():
-		(acts[0]["call"] as Callable).call()
+	for act in actions_for(e):
+		if not bool(act.get("use", false)):
+			(act["call"] as Callable).call()
+			return
 
 
-## What a right-click offers for entry `e`, first the likeliest: [{label, call}].
+## What a right-click offers for entry `e`, first the likeliest: [{label, call}], plus `use` (it uses the item: Cast,
+## Drink) and `disabled` with a `tooltip` saying why.
 func actions_for(e: Dictionary) -> Array[Dictionary]:
 	var ch := _ch()
 	var id := str(e["id"])
@@ -1031,6 +1040,16 @@ func actions_for(e: Dictionary) -> Array[Dictionary]:
 		for s2: String in ["main_hand", "off_hand"]:
 			if InventoryScreen.slot_takes(s2, data) and MagicItems.worn_slot(data) == "":
 				out.append({"label": "Set II (%s)" % slot_name(s2).to_lower(), "call": redraw.call(func() -> void: _set_weapon_2(ch, id, s2))})
+	# Using it here and now: a scroll's Cast, a potion's Drink, a wand's power (story/field_items.gd); one that can't be
+	# used now shows greyed with why.
+	for opt in FieldItems.options(st.party, ch, id, Dice.roller):
+		if opt.has("store") or not (opt.get("choices", []) as Array).is_empty():
+			continue   # a pick to make first: the item card's buttons
+		var pid := str(opt["power_id"])
+		out.append({"label": InventoryScreen.power_label(opt), "use": true, "disabled": not bool(opt["legal"]), "tooltip": str(opt["reason"]),
+			"call": func() -> void:
+				_pick(e)
+				_use_power(pid, {})})
 	if str(data.get("category", "")) in QUICK_CATEGORIES:
 		if id in ch.quick_slots:
 			out.append({"label": "Off the quick slots", "call": redraw.call(func() -> void: ch.quick_slots.erase(id))})
@@ -1078,6 +1097,9 @@ func _open_menu(acts: Array[Dictionary], at: Vector2) -> void:
 	var m := PopupMenu.new()
 	for i in acts.size():
 		m.add_item(str(acts[i]["label"]), i)
+		if bool(acts[i].get("disabled", false)):
+			m.set_item_disabled(i, true)
+			m.set_item_tooltip(i, str(acts[i].get("tooltip", "")))
 	m.id_pressed.connect(func(i: int) -> void:
 		Audio.sfx("click")
 		(acts[i]["call"] as Callable).call())
@@ -1411,7 +1433,7 @@ func _draw_card() -> void:
 	# Using it outside a fight: a potion's drink, a wand's Detect Magic, a manual's study (story/field_items.gd).
 	var disguised := MagicItems.is_disguised(data, entry)
 	for opt in FieldItems.options(st.party, ch, selected, Dice.roller):
-		var label := "Use: %s" % str(opt["label"]) if str(opt["label"]) != "Drink" else "Drink"
+		var label := InventoryScreen.power_label(opt)
 		var choices := opt.get("choices", []) as Array
 		var pid := str(opt["power_id"])
 		if disguised:

@@ -35,6 +35,7 @@ var light_level := "dim"
 var land: AtmosphereLand = null
 var weather: AtmosphereWeather = null
 var water: ShaderMaterial = null
+var _water_reflect := 1.0          ## how much of the sky the water shows (the mood's water `reflect`)
 
 var _post: ShaderMaterial = null
 var _rig: CameraRig = null
@@ -364,11 +365,11 @@ func _flat_floors_cast_no_shadow() -> void:
 ## that distance), how far it takes to come in, and whether anything near the lens blurs.
 const DOF_STRENGTHS := {
 	"old": {"amount": 0.14, "start": 1.0, "per_zoom": 0.12, "transition": 3.5, "transition_per_zoom": 0.25, "near": true},
-	"light": {"amount": 0.092, "start": 3.0, "per_zoom": 0.15, "transition": 6.0, "transition_per_zoom": 0.3, "near": false},
+	"light": {"amount": 0.129, "start": 3.0, "per_zoom": 0.15, "transition": 6.0, "transition_per_zoom": 0.3, "near": false},
 	"lighter": {"amount": 0.05, "start": 6.0, "per_zoom": 0.2, "transition": 10.0, "transition_per_zoom": 0.0, "near": false},
 }
 ## Light unless the owner picks another (2026-10-07: "old" read as a smear at the top of the screen). Its blur went up
-## 15% (0.08 to 0.092, owner request 2026-10-08); where the blur starts is unchanged.
+## 15% (0.08 to 0.092) and then 40% more (0.129), owner requests 2026-10-08; where the blur starts is unchanged.
 static var dof_strength := "light"
 var _dof: CameraAttributesPractical = null
 
@@ -655,6 +656,13 @@ func _build_water() -> void:
 	water.set_shader_parameter("foam", Look.color(str(spec.get("foam", "frost"))))
 	water.set_shader_parameter("glint", Look.color(str(spec.get("glint", "moonlight"))))
 	water.set_shader_parameter("flow", _vec2(spec.get("flow", [0.12, 0.05])))
+	# A still, dark water (Tser Pool, "black and perfectly still"): no ripples, little of the texture's colour, and a
+	# dimmer sky in it. Unset, the shaders' own defaults.
+	if spec.has("ripples"):
+		water.set_shader_parameter("ripple_strength", float(spec["ripples"]))
+	if spec.has("texture"):
+		water.set_shader_parameter("tex_amount", float(spec["texture"]))
+	_water_reflect = float(spec.get("reflect", 1.0))
 	water.set_shader_parameter("water_mask", AtmosphereLand.water_mask(board.grid))
 	water.set_shader_parameter("map_rect", Vector4(0, 0, board.grid.width, board.grid.depth))
 	water.set_shader_parameter("use_mask", true)
@@ -735,7 +743,8 @@ func _apply_static() -> void:
 	_post.set_shader_parameter("mist_wisps", float(mist.get("wisps", 0.9)))
 	_post.set_shader_parameter("mist_beyond", outdoors)
 	if board != null:
-		_post.set_shader_parameter("mist_mask", mist_mask(board.grid, float(mist.get("open", 0.35))))
+		_post.set_shader_parameter("mist_mask", mist_mask(board.grid, float(mist.get("open", 0.35)), roads_out(),
+			float(mist.get("roads", 0.0))))
 		_post.set_shader_parameter("use_mist_mask", true)
 	var clouds := mood.get("clouds", {}) as Dictionary
 	_post.set_shader_parameter("cloud_cover", float(clouds.get("cover", 0.5)))
@@ -760,9 +769,31 @@ func _apply_static() -> void:
 		_post.set_shader_parameter("mist_wall", wall)
 
 
+## How strong this place's mist is against its time of day's (the mood's mist `strength`: a town's streets lighter
+## than the woods; the world's weather scales it, Weather.dress_mood: fog heavier).
+func mist_scale() -> float:
+	return float((mood.get("mist", {}) as Dictionary).get("strength", 1.0))
+
+
+## The squares where roads leave the map (ways out on its edge): the mist lies thick on the roads out of a place
+## (lane 28, owner request 2026-10-08).
+func roads_out() -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	if board == null:
+		return out
+	for e: Variant in loc.get("exits", []):
+		var cell := (e as Dictionary).get("cell", []) as Array
+		if cell.size() == 2:
+			var c := Vector2i(int(cell[0]), int(cell[1]))
+			if board._on_border(c):
+				out.append(c)
+	return out
+
+
 ## Where the mist gathers on a map, one texel per square: thickest among the trees (wall squares), over water and
-## empty ground and in brambles and mud, thinning to `open` in the middle of clearings and roads.
-static func mist_mask(grid: CombatGrid, open: float) -> ImageTexture:
+## empty ground and in brambles and mud, thinning to `open` in the middle of clearings and roads; at least `roads` on
+## the roads out (`ways_out`), fading over five squares into the map.
+static func mist_mask(grid: CombatGrid, open: float, ways_out: Array[Vector2i] = [], roads: float = 0.0) -> ImageTexture:
 	var img := Image.create(grid.width, grid.depth, false, Image.FORMAT_R8)
 	var dist := {}
 	var todo: Array[Vector2i] = []
@@ -789,6 +820,8 @@ static func mist_mask(grid: CombatGrid, open: float) -> ImageTexture:
 				w = minf(1.0, w + 0.25)
 			elif grid.has_flag(c, CombatGrid.WATER):
 				w = minf(w, 0.45)   # a lake keeps its face
+			for road in ways_out:
+				w = maxf(w, roads * clampf(1.0 - Vector2(c - road).length() / 5.0, 0.0, 1.0))
 			img.set_pixel(x, z, Color(w, w, w))
 	return ImageTexture.create_from_image(img)
 
@@ -918,13 +951,13 @@ func _apply(k: float) -> void:
 	var sky_light := (v["sky"] as Color).lerp(Look.color("moon_blue"), 0.5)
 	RenderingServer.global_shader_parameter_set(&"world_sky", sky_light)
 	if water != null:
-		water.set_shader_parameter("reflection", sky_light)
+		water.set_shader_parameter("reflection", sky_light * _water_reflect)
 	if _post == null:
 		return
 	_post.set_shader_parameter("land_color", v["fog"] as Color)
 	_post.set_shader_parameter("mist_color", v["mist"] as Color)
 	_post.set_shader_parameter("mist_wall_color", v["mists"] as Color)
-	_post.set_shader_parameter("mist_strength", float(v["mist_strength"]))
+	_post.set_shader_parameter("mist_strength", minf(1.0, float(v["mist_strength"]) * mist_scale()))
 	_post.set_shader_parameter("cloud_strength", float(v["clouds"]))
 	_post.set_shader_parameter("exposure", float(v["exposure"]))
 	_post.set_shader_parameter("saturation", float(v["saturation"]))

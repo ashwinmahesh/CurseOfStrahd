@@ -3,8 +3,8 @@ extends Node
 ## Second Wind and spell slot, Shield of Faith, Poisoned), then the sheet's tabs, party, inventory, level up, rests,
 ## spell preparation (after a rest and after an item's Long Rest), journal, loot, shop, pause menu and character creation,
 ## one shot each, plus sample tooltips, the sheet for a level 7 warlock, monk and druid, and creating a character from the
-## party screen (UI_ONLY=create), Madam Eva's rebuild (UI_ONLY=rebuild), a sheet opened in a fight (UI_ONLY=fight_sheet)
-## and a cutscene still (UI_ONLY=cutscene).
+## party screen (UI_ONLY=create), Madam Eva's rebuild (UI_ONLY=rebuild), a sheet opened in a fight (UI_ONLY=fight_sheet),
+## a cutscene still (UI_ONLY=cutscene) and busts before and after they face each other (UI_ONLY=busts).
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -244,6 +244,8 @@ func capture_shots(tool: Node, out: String) -> void:
 		cp.queue_free()
 	if _wants("fight_sheet"):
 		await _fight_sheet_shots(tool, out)
+	if _wants("busts"):
+		await _bust_shots(tool, out)
 	# Last: the Long Rest fades to black for a while.
 	if _wants("rest"):
 		root.call("open_screen", "rest", 0)
@@ -273,6 +275,32 @@ func _fight_sheet_shots(tool: Node, out: String) -> void:
 	root.call("close_screen")
 	cv.finished.emit("victory")
 	await tool.call("wait_frames", 4)
+
+
+## Busts facing each other (owner, 2026-10-08): Thistle (drawn facing left) speaking with Ireena (drawn facing right),
+## first as drawn (before), then mirrored to face each other (after), then Ireena turned away by a Narrator cue.
+func _bust_shots(tool: Node, out: String) -> void:
+	var st := GameState.story
+	var thistle := st.party[2]
+	st.party.erase(thistle)
+	st.party.insert(0, thistle)   # she leads, so she speaks for the party on the left
+	DialogueFile.register(DialogueFile.parse("~ cap\nIreena [sad]: My father is three days dead, and the ground is too hard to bury him.\n"
+		+ "Narrator [away]: She turns to the window, where the mist presses against the glass.\n-> END\n", "capture/busts"))
+	for shot: Array in [[false, "1_before"], [true, "2_after"]]:
+		DialogueBusts.mirror = bool(shot[0])
+		var d := DialogueUI.new()
+		add_child(d)
+		await tool.call("wait_frames", 2)
+		d.play(DialogueRunner.new(st, DiceRoller.new(2)), "capture/busts:cap")
+		await _shoot(tool, "%s_busts_%s.png" % [out, shot[1]])
+		if bool(shot[0]):
+			d.call("_advance")
+			await _shoot(tool, "%s_busts_3_away.png" % out)
+		d.queue_free()
+		await tool.call("wait_frames", 2)
+	DialogueBusts.mirror = true
+	st.party.erase(thistle)
+	st.party.insert(2, thistle)
 
 
 ## Creating a character from the party screen (owner, 2026-10-07): the party at level 5 with Ratatoille and the

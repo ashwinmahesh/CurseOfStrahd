@@ -90,7 +90,7 @@ else
 interject tag:blunt: That's not what her letter says.
 endif
 Abbot: Letters say many things, child. Clovin keeps a great deal of paper. It comforts him.
-Narrator: He says it gently, and a little too quickly, and doesn't look at you while he does.
+Narrator [away]: He says it gently, and a little too quickly, and doesn't look at you while he does.
 endif
 -> menu
 

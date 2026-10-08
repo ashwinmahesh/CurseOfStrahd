@@ -11,14 +11,15 @@ NOFOCUS := env __CFBundleIdentifier=org.godotengine.godot $(G)
 UNSEEN  := GODOT=$(GODOT) tools/godot --path . --resolution 1x1 --position 100000,100000 --max-fps 60 --audio-driver Dummy
 LOGCHK  := tools/logcheck.sh
 ## Imports with the editor's window kept off screen, so textures import several at once (tools/import.sh: about twice
-## as fast; headless outside a desktop session or with IMPORT_HEADLESS=1).
+## as fast; headless outside a desktop session or with IMPORT_HEADLESS=1). Its own notes go to stderr, shown here; a
+## refused import (exit 75: a full one with under 20 GB free) or a stopped one stops FRESH without marking it done.
 IMPORT  := GODOT=$(GODOT) tools/import.sh
 STAMP   := .godot/.last_import
 FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./captures -o -path ./builds \) -prune -o \
              \( -name '*.gd' -o -name '*.tscn' -o -name '*.tres' -o -name '*.png' -o -name '*.ogg' -o -name '*.wav' \
              -o -name '*.mp3' -o -name '*.glb' \) -newer $(STAMP) -print -quit)" ]; then \
-             echo "Files changed since the last import: importing first."; $(IMPORT) > /dev/null 2>&1; \
-             touch $(STAMP); fi
+             echo "Files changed since the last import: importing first."; $(IMPORT) > /dev/null; s=$$?; \
+             case $$s in 75|129|130|137|143) exit $$s ;; esac; touch $(STAMP); fi
 
 .PHONY: run arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons cursors voice creator pregens plants vistas
 
@@ -45,7 +46,7 @@ smoke:
 	$(G) --headless --quit-after $(or $(FRAMES),600) $(SCENE) 2>&1 | $(LOGCHK)
 
 import:
-	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) | $(LOGCHK) > /dev/null
 	@touch $(STAMP)
 
 ## The test files share several headless Godot processes (tools/run_tests.py); JOBS=n sets how many, JOBS=1 is one.
@@ -131,7 +132,7 @@ art-spend:
 ## make voice [SPEAKER="narrator madam_eva"] [LIMIT=n] [DRY=1] [MAX_USD=5] [RECAST=1] [PRUNE=1]
 voice:
 	python3 tools/audio/generate_voice.py $(if $(SPEAKER),--speaker $(SPEAKER),) $(if $(LIMIT),--limit $(LIMIT),) $(if $(DRY),--dry-run,) $(if $(MAX_USD),--max-usd $(MAX_USD),) $(if $(RECAST),--recast,) $(if $(PRUNE),--prune,)
-	$(if $(DRY),,$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null)
+	$(if $(DRY),,$(IMPORT) | $(LOGCHK) > /dev/null)
 
 ## Writes screenshots to captures/ from a window that never takes focus or shows: it opens 1 px wide in a corner, moves
 ## off screen and is drawn by tools/capture (silent, 60 fps). LOCATION=<id> starts the story game there.
@@ -154,16 +155,16 @@ sprite:
 anims:
 	$(if $(GENERATE),python3 tools/art/anim_keyframes.py --retry 2 $(if $(ONLY),--only $(ONLY),) && python3 tools/art/anim_keyframes.py --kind walk $(if $(ONLY),--only $(ONLY),),true)
 	python3 tools/art/build_anims.py $(if $(ONLY),--only $(ONLY),)
-	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) | $(LOGCHK) > /dev/null
 	python3 tools/art/set_import.py --sheets $(foreach id,$(or $(ONLY),*),$(wildcard art/sprites/$(id)/walk.png) $(wildcard art/sprites/$(id)/attack.png))
-	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) | $(LOGCHK) > /dev/null
 
 ## The six heroes' HD animation sheets (set v2) from their strips: make keys [ONLY="id ..."] [KINDS="walk8 ..."]
 keys:
 	python3 tools/art/build_keys.py $(if $(ONLY),--only $(ONLY),) $(if $(KINDS),--kinds $(KINDS),)
-	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) | $(LOGCHK) > /dev/null
 	python3 tools/art/set_import.py --sheets $(foreach id,$(or $(ONLY),godrick_pendlebrook kip_smudgewick liriel_dawnsong ratatoille thistle wren_featherfoot),$(wildcard art/sprites/$(id)/*.png))
-	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) | $(LOGCHK) > /dev/null
 
 ## Re-render every character walk sheet from its turnaround with the current cutter and its recorded flags
 ## (art/manifest.json sprite_flags): make sprites [ONLY="id ..."]
@@ -202,14 +203,14 @@ props:
 ## [PREVIEW=captures/models.png] writes art/models/*.glb and manifest.json, then imports them.
 models:
 	$(BLENDER) -b --python blender/models_3d.py -- $(if $(ONLY),--only $(ONLY),) $(if $(PREVIEW),--preview $(abspath $(PREVIEW)),)
-	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) | $(LOGCHK) > /dev/null
 
 ## The Modern look's trees and plants (docs/art/plants.md): paints the leaf cards, builds art/plants/*.glb and
 ## manifest.json, then imports them. make plants [ONLY="spruce_a fern_a"] (rebuilds only those models).
 plants:
 	python3 tools/art/plant_cards.py
 	$(BLENDER) -b --python blender/plants_3d.py -- $(if $(ONLY),--only $(ONLY),)
-	$(IMPORT) 2>&1 | $(LOGCHK) > /dev/null
+	$(IMPORT) | $(LOGCHK) > /dev/null
 
 ## The painted backdrops past a map's edge (docs/art/atmosphere.md "Vistas"): cuts art/generated/vistas into
 ## art/vistas, then imports them.

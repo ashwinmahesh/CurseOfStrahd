@@ -1386,6 +1386,51 @@
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
       "released": true
+    },
+    "tser_radu": {
+      "voice_id": "AEPS4amQpAYS3CULyGRe",
+      "name": "Library voice: Doru",
+      "description": "A charming Vistani horse trader with a rhythmic, sweet-talking Romanian storyteller's voice.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
+    },
+    "tser_tobar": {
+      "voice_id": "8nBBDfYxYXmDNaqTCxPH",
+      "name": "Library voice: Serban Popescu - Professional Narrator",
+      "description": "A huge, gentle Vistani wheelwright; a warm, deep Romanian voice.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
+    },
+    "tser_zora": {
+      "voice_id": "7J0saxKdSMiecCwLywpu",
+      "name": "Library voice: Elena - Textured, warm, and expressive",
+      "description": "A watchful young Vistani lookout; a textured, slightly raspy voice with an Eastern European cadence.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
+    },
+    "tser_dorina": {
+      "name": "Barovia tser_dorina",
+      "description": "An old Vistani woman in her seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A warm, crackly, bossy grandmother's voice, dry and wry, who feeds everyone at the camp's stewpot.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "voice_id": "oBXs98GUf3oHsSdPIKdZ",
+      "released": true
+    },
+    "tser_petru": {
+      "voice_id": "5BZv9Z02hAMUmkkcd5Hj",
+      "name": "Library voice: Paul - Engaging, Friendly and Mysterious",
+      "description": "A terse Vistani knife-sharpener and camp guard; a low, mysterious Transylvanian voice.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     }
   },
   "sfx": {
