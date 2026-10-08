@@ -29,6 +29,7 @@ FOLDERS = {
     "cutscenes": "cutscene",
     "strahd": {"visits": "strahd_visits", "attention": "strahd_attention"},
     "schedule": "schedule",
+    "weather": "weather",
 }
 
 TYPES = {
@@ -773,6 +774,22 @@ def story_checks(data, errors, need):
         if re.search(r"\battention\b", m["when"]):
             errors.append(f"strahd/attention.json {m['id']}: a mark can't read attention itself")
     tier_ids = [t["id"] for t in attention.get("tiers", [])]
+    for wid, w in data.get("weather", {}).items():
+        where = f"weather/{wid}.json"
+        for cid, weights in w["climates"].items():
+            for k in weights:
+                if k not in w["kinds"]:
+                    errors.append(f"{where}: climate {cid} weighs unknown kind '{k}'")
+        if w["default_climate"] not in w["climates"]:
+            errors.append(f"{where}: default_climate '{w['default_climate']}' isn't a climate")
+        for region, cid in w["regions"].items():
+            if cid not in w["climates"]:
+                errors.append(f"{where}: region {region} has unknown climate '{cid}'")
+            if region not in {l.get("region") for l in data["locations"].values()}:
+                errors.append(f"{where}: no location is in region '{region}'")
+        for tier in w.get("storm_by_attention", {}):
+            if tier not in tier_ids:
+                errors.append(f"{where}: storm_by_attention names '{tier}', which isn't an attention tier")
     if attention and sorted(t["min"] for t in attention["tiers"]) != [t["min"] for t in attention["tiers"]]:
         errors.append("strahd/attention.json: tiers go from the lowest min to the highest")
     for ref, w in dialogue_refs:

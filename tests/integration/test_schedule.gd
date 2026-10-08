@@ -9,6 +9,11 @@ var root: Node
 
 func before_each() -> void:
 	Schedule.use([] as Array[Dictionary])
+	# Overcast everywhere, so a storm never sends the townsfolk in (Weather, F12).
+	var calm := Weather.data().duplicate(true)
+	for c: String in calm["climates"]:
+		calm["climates"][c] = {"overcast": 1}
+	Weather.use(calm)
 	GameState.reset()
 	for id: String in ["ilse_varga", "tamsin_tealeaf"]:
 		var ch := Pregens.build(id, 4)
@@ -20,6 +25,7 @@ func after_each() -> void:
 	if root != null and is_instance_valid(root):
 		root.queue_free()
 	Schedule.use([] as Array[Dictionary])
+	Weather.use({})
 
 
 func _frames(n: int) -> void:
