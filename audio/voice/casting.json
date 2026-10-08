@@ -688,6 +688,7 @@
       "settings": {},
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "JmEsJ3zlTWU8eVXGmWfk",
       "released": true
     },
     "vestige_drizlash": {
@@ -2085,6 +2086,26 @@
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "uJxx86hCsTD1uvkpNR4B",
       "released": true
+    },
+    "bray_martikov": {
+      "voice_id": "tJHJUEHzOkMoPmJJ5jo2",
+      "name": "Library voice: Ryan Quin",
+      "description": "Bray Martikov, ten, a wereraven boy of the Blue Water Inn: a child's library voice (also Ilya Krezkov's, in Krezk), chosen by Claude on the owner's go-ahead while credits were short (2026-10-08).",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "ilya_krezkov"
+    },
+    "count_fowler": {
+      "voice_id": "kwajW3Xh5svCeKU5ky2S",
+      "name": "Library voice: Dmitry - Clear and Energetic",
+      "description": "The Fowler, a vampire spawn of the castle with one line: a shared library voice (also Escher's, another of the count's spawn), chosen by Claude while credits were short (2026-10-08).",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "escher"
     }
   },
   "sfx": {
