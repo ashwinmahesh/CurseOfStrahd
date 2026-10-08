@@ -144,6 +144,8 @@ func test_the_map_shows_the_tents() -> void:
 	assert_true(hit, "the great tent's canvas on the map at %s: %s" % [at, px])
 	var wagon := img.get_pixelv(Vector2i(int(18.0 * Minimap.PX), int(7.0 * Minimap.PX)))
 	assert_true(wagon.is_equal_approx(Look.color("blood")), "a wagon on the map: %s" % wagon)
+	var pool := img.get_pixelv(Vector2i(int(9.5 * Minimap.PX), int(9.5 * Minimap.PX)))
+	assert_true(pool.is_equal_approx(Look.color("void")), "the pool is black on the map too: %s" % pool)
 	mm.queue_free()
 	v.queue_free()
 

@@ -55,6 +55,13 @@ func show_location(v: LocationView) -> void:
 	view = v
 	_grid = CombatGrid.from_rows(v.loc["map"]["rows"] as Array)
 	_colours = colours_for(ArenaBoard.theme_for(v.loc["map"] as Dictionary))
+	# A place's own water on the map (its mood's water `map` and `map_edge`): Tser Pool is black, not lake blue
+	# (owner report 2026-10-08).
+	var water := (v.atmosphere.mood.get("water", {}) as Dictionary) if v.atmosphere != null else {}
+	if water.has("map"):
+		_colours["water"] = Look.color(str(water["map"]))
+	if water.has("map_edge"):
+		_colours["water_edge"] = Look.color(str(water["map_edge"]))
 	_redo_hidden()
 	_centre = _leader_ground()
 	tooltip_text = "%s\nWheel: zoom · Click: walk there" % str(v.loc.get("name", ""))

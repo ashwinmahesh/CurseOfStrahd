@@ -243,7 +243,9 @@
         ],
         "ripples": 0.0,
         "texture": 0.06,
-        "reflect": 0.3
+        "reflect": 0.3,
+        "map": "void",
+        "map_edge": "slate"
       },
       "mist": {
         "open": 0.45
