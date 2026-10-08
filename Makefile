@@ -65,6 +65,13 @@ lane-reclone:
 lane-done:
 	$(LANE) done $(NAME)
 
+## Where the disk goes (tools/disk/disk.py report, read-only): free space on each volume with a worktree (the SSD
+## lanes' image too), each worktree's branch, whether it's merged, and the bytes it holds on its own (what removing
+## it frees), then git's packs, LFS objects and leftovers. FAST=1 skips measuring each worktree.
+.PHONY: disk
+disk:
+	python3 tools/disk/disk.py report $(if $(FAST),--fast)
+
 ## The repo's git hooks (tools/git/), into the hooks folder every worktree shares: pre-push refuses a push of main
 ## unless STRAHD_PUSH_MAIN=1 (the build thread's), then runs Git LFS's own pre-push.
 .PHONY: hooks

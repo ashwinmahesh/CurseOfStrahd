@@ -7,8 +7,9 @@ until one side changes, so a worktree made or seeded from the main checkout by c
 `git worktree add` checkout, a fresh `make import`, rsync or a plain copy each write a full private copy. macOS files
 all of it under "System Data", and du counts clones in full, so neither shows what deleting a folder would free.
 
-  python3 tools/disk/disk.py report [--fast]
-      Free space; then each worktree: branch, merged into origin/main or not, uncommitted files, and the bytes its
+  python3 tools/disk/disk.py report [--fast]          (make disk [FAST=1])
+      Free space on each volume that holds a worktree (for a disk image, such as the SSD lanes' StrahdLanes, also on
+      the drive it grows into); then each worktree: branch, merged into origin/main or not, uncommitted files, and the bytes its
       files and its .godot hold on their own (APFS private size: what removing it frees; --fast skips this walk);
       then the git store: packs, LFS objects, and tmp_pack_* left by a repack or fetch that died (disk full).
       Read-only: git runs with --no-optional-locks, so not even an index is rewritten.
@@ -32,6 +33,7 @@ import concurrent.futures
 import ctypes
 import ctypes.util
 import os
+import plistlib
 import shutil
 import struct
 import subprocess
@@ -128,10 +130,40 @@ def worktrees(main: Path) -> list[tuple[Path, str]]:
     return out
 
 
+def volume_of(path: Path) -> Path:
+    """The mount point of the volume that holds path."""
+    p = path.resolve()
+    dev = os.stat(p).st_dev
+    while p != p.parent and os.stat(p.parent).st_dev == dev:
+        p = p.parent
+    return p
+
+
+def image_files() -> dict[str, str]:
+    """Mount point -> the disk image file mounted there, for every attached image (hdiutil info)."""
+    out = subprocess.run(["hdiutil", "info", "-plist"], capture_output=True)
+    if out.returncode != 0:
+        return {}
+    images: dict[str, str] = {}
+    for image in plistlib.loads(out.stdout).get("images", []):
+        for entity in image.get("system-entities", []):
+            if entity.get("mount-point"):
+                images[entity["mount-point"]] = image.get("image-path", "")
+    return images
+
+
 def report(main: Path, fast: bool) -> None:
-    print(f"free: {free_gb(main):.1f} GB")
-    rows = []
     trees = [(p, b) for p, b in worktrees(main) if p.is_dir()]
+    here = volume_of(main)
+    images = image_files()
+    for vol in [here] + sorted({volume_of(p) for p, _ in trees} - {here}):
+        line = f"free: {free_gb(vol):.1f} GB" + ("" if vol == here else f" in {vol}")
+        image = images.get(str(vol))
+        if image and Path(image).exists():
+            # A sparse image grows into the drive it's on, so that drive's free space is the real limit.
+            line += f" (a disk image on {volume_of(Path(image))}: {free_gb(Path(image)):.1f} GB free there)"
+        print(line)
+    rows = []
 
     def one(item: tuple[Path, str]) -> tuple:
         path, branch = item
@@ -152,14 +184,15 @@ def report(main: Path, fast: bool) -> None:
     with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
         rows = list(pool.map(one, trees))
     rows.sort(key=lambda r: -(r[4][1] + r[5][1]))
-    print(f"\n{'worktree':34} {'branch':26} {'main?':9} {'changed':>7} {'files own':>10} {'.godot own':>11}")
+    print(f"\n{'worktree':44} {'branch':26} {'main?':9} {'changed':>7} {'files own':>10} {'.godot own':>11}")
     total = 0
     for path, branch, merged, dirty, files, godot in rows:
         total += files[1] + godot[1]
         own = "" if fast else f"{files[1] / GB:7.1f} GB {godot[1] / GB:8.1f} GB"
-        print(f"{path.name:34} {branch[:26]:26} {merged:9} {dirty:7} {own}")
+        name = path.name if volume_of(path) == here else f"{path.name} (on {volume_of(path).name})"
+        print(f"{name[:44]:44} {branch[:26]:26} {merged:9} {dirty:7} {own}")
     if not fast:
-        print(f"{'':80}{total / GB:.1f} GB own in all (plus what they share, once)")
+        print(f"{'':90}{total / GB:.1f} GB own in all (plus what they share, once)")
 
     common = Path(git(main, "rev-parse", "--path-format=absolute", "--git-common-dir").strip())
     packs = list((common / "objects" / "pack").glob("*.pack"))
