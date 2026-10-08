@@ -145,6 +145,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | The hill, a cairn of bones | Bracers of Archery (uncommon) | Search (Perception DC 15) |
 | ✅ | The hill, the wicker cages | Sword of Life Stealing (rare) | Search (Perception DC 15): a prisoner's sword under the cage floor |
 | ✅ | The back gully | Wand of Paralysis (rare) | Search (Investigation DC 15): a druid's cache |
+| ✅ | The hill, a barrow mound | Amulet of the Devout +2 (rare) | Search (Perception DC 14): buried with a believer (lane 28's spot) |
 | ✅ | Gulthias Tree, the splintered heartwood | Staff of Withering (rare) | Search (Investigation DC 16) |
 | ✅ | The wardens' hoard | Berserker Axe (rare, cursed) | Hoard |
 
