@@ -950,5 +950,9 @@
   "vadoma": {"who": "Vadoma, a Vistani trader woman",
     "attack": "knife slash",
     "windup": "a short curved knife drawn back beside her hip in one hand, weight on her back foot, coat swinging",
-    "strike": "the knife slashed forward across her body at the enemy, leaning in"}
+    "strike": "the knife slashed forward across her body at the enemy, leaning in"},
+  "beholder": {"who": "a beholder, a floating many-eyed orb",
+    "attack": "eye rays",
+    "windup": "the great body drawn back and tilted up, all ten eyestalks rearing and its central eye opening wide",
+    "strike": "lunging forward with its jagged mouth open and three eyestalks thrust straight at the enemy, each shooting a thin coloured ray"}
 }
