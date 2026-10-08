@@ -47,6 +47,7 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 				out.append({"id": "trade", "label": "Trade", "enabled": open, "why": "" if open else "Closed for now"})
 			out.append(LocationCrime.pickpocket_action(view, str(spec["npc"])))   # F8
 			out.append({"id": "walk", "label": "Walk over"})
+			out.append_array(LocationNpcs.cast_actions(view, spec))   # Sleep, Charm Person ... at them, outside a fight
 		"door", "container":
 			title = str(spec.get("label", "the door" if str(thing["kind"]) == "door" else "the chest")).capitalize()
 			var verb := "Open" if str(thing["kind"]) == "door" else "Open and look inside" + LocationCrime.owned_note(spec)
@@ -90,6 +91,9 @@ static func act(view: LocationView, cell: Vector2i, action_id: String) -> void:
 		return
 	if action_id in ["stabilize", "kit"] or action_id.begins_with("potion:"):
 		LocationCare._tend(view, cell, action_id)
+		return
+	if action_id.begins_with("cast_at:"):
+		LocationNpcs.cast_from_menu(view, cell, action_id)
 		return
 	if action_id.begins_with("loh:"):
 		LocationCare._lay_on_hands_out(view, cell, action_id.substr(4))
@@ -303,6 +307,10 @@ static func interact(view: LocationView, thing: Dictionary) -> void:
 	(view.tokens[who.id] as CombatToken).face(Vector2(LocationView._cell(spec.get("cell", [who.cell.x, who.cell.y])) - who.cell), false)
 	match str(thing["kind"]):
 		"npc":
+			if not LocationNpcs.can_talk(view, spec):
+				var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
+				view.narration.emit("%s can't answer (%s)." % [str(npc.get("name", spec["npc"])), LocationNpcs.state_words(view, str(spec["npc"]))])
+				return
 			view.dialogue_requested.emit(str(spec.get("dialogue", "")), str(spec["npc"]))
 		"door":
 			LocationLocks._use_door(view, spec)

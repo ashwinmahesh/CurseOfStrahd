@@ -92,16 +92,19 @@ static func _slots(caster: Character, level: int) -> Array[int]:
 	return out
 
 
-## A 5x5 open board with the caster in the middle and everyone else in the squares around them (all within touch),
-## the caster's turn already begun.
-static func _board(party: Array[Character], caster: Character, dice: DiceRoller) -> Encounter:
+## A 5x5 open board (or `size` x `size`) with the caster in the middle and everyone else in the squares around them
+## (all within touch), the caster's turn already begun.
+static func _board(party: Array[Character], caster: Character, dice: DiceRoller, size: int = 5) -> Encounter:
 	var rows: Array = []
-	for i in 5:
-		rows.append(".....")
+	for i in size:
+		rows.append(".".repeat(size))
 	var e := Encounter.new(CombatGrid.from_rows(rows), dice)
-	e.add(caster, &"party", Vector2i(2, 2)).controller = &"player"
-	var spots: Array[Vector2i] = [Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1), Vector2i(1, 2), Vector2i(3, 2),
-		Vector2i(1, 3), Vector2i(2, 3), Vector2i(3, 3)]
+	var mid := floori(size / 2.0)
+	e.add(caster, &"party", Vector2i(mid, mid)).controller = &"player"
+	var spots: Array[Vector2i] = []
+	for d: Vector2i in [Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0), Vector2i(1, 0),
+			Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)]:
+		spots.append(Vector2i(mid, mid) + d)
 	var n := 0
 	for ch in party:
 		if ch == caster or n >= MAX_TARGETS:
@@ -113,6 +116,87 @@ static func _board(party: Array[Character], caster: Character, dice: DiceRoller)
 	e.round_no = 1
 	e.state = Encounter.State.ACTIVE
 	return e
+
+
+# --- Spells at someone on the map, outside a fight -------------------------------------------------
+
+## Spells that put something on another creature outside a fight (owner, 2026-10-07: "if we cast sleep in the
+## overworld, or anything that gives any enemy or NPC an effect, that should show"): those with a save and a lasting
+## effect that neither deal damage, heal nor summon (Sleep, Charm Person, Hold Person, Hideous Laughter, Bane, Faerie
+## Fire ...). Healing and help for the party are helpful(); anything that hurts waits for a fight.
+static func at_creature(data: Dictionary) -> bool:
+	for k: String in ["damage", "heal", "summon", "on_hit_spell"]:
+		if data.has(k):
+			return false   # (an on-hit spell, Ensnaring Strike, rides on a weapon's hit in a fight)
+	if (data.get("casting_time", {}) as Dictionary).has("trigger"):
+		return false
+	var kind := str((data.get("targets", {}) as Dictionary).get("kind", ""))
+	return kind in ["creature", "area"] and data.has("save") and data.has("effects")
+
+
+## What `caster` can cast at someone on the map now: castable() entries for at_creature() spells, with `range` (feet)
+## and their slots, the same shape as options().
+static func options_at(party: Array[Character], caster: Character, dice: DiceRoller) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var e := _board(party, caster, dice)
+	var c := e.get_c(caster.id)
+	if c == null:
+		return out
+	for s in e.spells.castable(c):
+		var data := Compendium.shared().spell_data(str(s["id"]))
+		if not at_creature(data):
+			continue
+		var entry := {"id": str(s["id"]), "name": str(s["name"]), "level": int(s["level"]), "free": bool(s["free"]),
+			"range": e.spells.range_ft(data, c), "legal": bool(s["legal"]), "reason": str(s["reason"]).replace("in this fight", "outside a fight"),
+			"slots": _slots(caster, int(s["level"]))}
+		if bool(entry["legal"]) and int(s["level"]) > 0 and not bool(s["free"]) and (entry["slots"] as Array).is_empty():
+			entry["legal"] = false
+			entry["reason"] = "No spell slots left"
+		if not c.can_act():
+			entry["legal"] = false
+			entry["reason"] = "%s can't act" % caster.name
+		out.append(entry)
+	return out
+
+
+## Casts an at_creature() spell from `caster` at `target` (someone on the map, its own creature, so what the spell
+## leaves on it stays there) on a peaceful board, then lets one round go by there, so what changes at the end of the
+## target's turn does as in a fight (Sleep's drowsiness deepening into sleep on a failed second save). Returns
+## {ok, text, lines}. The caller checks range and sight on the real map.
+static func cast_at(party: Array[Character], caster: Character, spell_id: String, slot: int, target: Creature,
+		dice: DiceRoller) -> Dictionary:
+	var data := Compendium.shared().spell_data(spell_id)
+	if not at_creature(data):
+		return {"ok": false, "text": "Only in a fight", "lines": []}
+	var e := _board(party, caster, dice, 9)
+	var c := e.get_c(caster.id)
+	if c == null:
+		return {"ok": false, "text": "%s isn't in the party" % caster.name, "lines": []}
+	var tc := e.add(target, &"enemy", Vector2i(4, 7))   # 15 ft off, beyond any 5-ft burst round the party
+	e.order.append(tc)
+	var level := int(data.get("level", 0))
+	if slot <= 0 and level > 0:
+		var slots := _slots(caster, level)
+		slot = slots[0] if not slots.is_empty() else level
+	var point := Vector2(4.5, 7.5) if str((data.get("targets", {}) as Dictionary).get("kind", "")) == "area" else Vector2.INF
+	var before := e.log.entries.size()
+	var res := e.spells.cast(c, spell_id, slot, [tc], point)
+	if res.ok:
+		for i in e.order.size() + 1:
+			if e.state != Encounter.State.ACTIVE or e.pending != null:
+				break
+			var whose := e.current()
+			e.end_turn()
+			if whose == tc:
+				break
+	var lines: Array[String] = []
+	for i in range(before, e.log.entries.size()):
+		var entry := e.log.entries[i]
+		if str(entry["kind"]) != "turn":
+			lines.append(str(entry["text"]))
+	if not res.ok:
+		return {"ok": false, "text": res.reason, "lines": lines}
+	return {"ok": true, "text": "\n".join(lines), "lines": lines}
 
 
 # --- Spells for exploring (no effect in a fight) ----------------------------------------------------

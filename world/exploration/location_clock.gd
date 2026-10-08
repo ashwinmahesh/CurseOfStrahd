@@ -37,6 +37,8 @@ func _process(_delta: float) -> void:
 	if now == _minute:
 		return
 	var turned := _minute >= 0 and floori(now / 60.0) != floori(_minute / 60.0)
+	if _minute >= 0 and now > _minute:
+		LocationNpcs.pass_minutes(view, now - _minute)   # spells on the people run down (Sleep's minute)
 	_minute = now
 	var before := str(Schedule.memory(view.st)["fired"])
 	var plays := Schedule.catch_up(view.st, view.loc_id)
