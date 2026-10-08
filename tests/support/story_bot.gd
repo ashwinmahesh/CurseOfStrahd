@@ -95,21 +95,27 @@ func settle(max_frames: int = 4000) -> bool:
 ## Plays the current fight to its end with the autopilot. True on victory. A fight the party loses is played again from
 ## the start of its first round with other dice, as a player would reload, up to TRIES times in all (lane 22,
 ## 2026-10-08, folding in lane 15's Yester Hill retry): any change to how many dice a run draws can flip a close fight.
-## Only a loss acts, so a run that wins never moves.
+## A fight won with a hero killed is played again the same way, as a player would reload rather than walk on without
+## them. Only a loss or a death acts, so a run that wins cleanly never moves.
 func fight() -> bool:
 	await frames(2)
 	var kept := _keep_fight_start()
 	for attempt in fight_tries:
 		var last := attempt == fight_tries - 1 or not kept
+		var alive := st().party.filter(func(ch: Character) -> bool: return not ch.dead).map(func(ch: Character) -> String: return ch.id)
 		var outcome := await _play_fight(last)
-		if outcome == "victory":
+		var killed := st().party.filter(func(ch: Character) -> bool: return ch.dead and ch.id in alive).map(func(ch: Character) -> String: return ch.name)
+		if outcome == "victory" and (killed.is_empty() or last):
 			_drop_fight_start()
 			await recover()
 			return true
 		if last:
 			_drop_fight_start()
 			return false
-		note("lost; the fight again from its first round with other dice (try %d of %d)" % [attempt + 2, fight_tries])
+		if outcome == "victory":
+			note("won, but %s died; the fight again from its first round with other dice (try %d of %d)" % [", ".join(killed), attempt + 2, fight_tries])
+		else:
+			note("lost; the fight again from its first round with other dice (try %d of %d)" % [attempt + 2, fight_tries])
 		if not await _reload_fight(attempt + 1):
 			note("couldn't pick the fight up again from its save")
 			defeated = true

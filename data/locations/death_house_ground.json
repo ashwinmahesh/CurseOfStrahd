@@ -263,7 +263,7 @@
       ],
       "kind": "examine",
       "label": "the marble hearth",
-      "model": "fireplace"
+      "model": "fireplace_sword"
     },
     {
       "id": "hall_carvings",
@@ -319,7 +319,7 @@
       ],
       "kind": "examine",
       "label": "a stag's head",
-      "model": "trophy_wolf"
+      "model": "stag_head"
     },
     {
       "id": "den_stuffed_wolf_c",
@@ -500,6 +500,78 @@
       "label": "something in the soot under the dumbwaiter",
       "model": "soot_patch",
       "item": "driftglobe"
+    },
+    {
+      "id": "foyer_coat_stand",
+      "cell": [
+        16,
+        16
+      ],
+      "label": "A coat stand",
+      "model": "coats",
+      "kind": "decor"
+    },
+    {
+      "id": "hall_runner",
+      "cell": [
+        13,
+        9
+      ],
+      "label": "A runner on the marble",
+      "model": "rug_runner",
+      "kind": "decor"
+    },
+    {
+      "id": "den_fireside_chair_west",
+      "cell": [
+        4,
+        2
+      ],
+      "label": "A fur-draped chair",
+      "model": "armchair",
+      "facing": "north",
+      "kind": "decor"
+    },
+    {
+      "id": "den_fireside_chair_east",
+      "cell": [
+        6,
+        2
+      ],
+      "label": "A fur-draped chair",
+      "model": "armchair",
+      "facing": "north",
+      "kind": "decor"
+    },
+    {
+      "id": "kitchen_pots",
+      "cell": [
+        18,
+        2
+      ],
+      "label": "Pots hung by size",
+      "model": "pot_rack",
+      "kind": "decor"
+    },
+    {
+      "id": "pantry_cheeses",
+      "cell": [
+        25,
+        4
+      ],
+      "label": "Cheeses under cloth",
+      "model": "cheeses",
+      "kind": "decor"
+    },
+    {
+      "id": "foyer_umbrella",
+      "cell": [
+        11,
+        14
+      ],
+      "label": "An umbrella with nothing to keep off",
+      "model": "umbrella_stand",
+      "kind": "decor"
     }
   ],
   "containers": [

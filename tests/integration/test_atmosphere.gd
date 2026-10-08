@@ -211,7 +211,7 @@ func test_sun_shadows_follow_the_zoom() -> void:
 	var was := Look.style()
 	Look.set_style("modern", false)
 	Graphics.set_preset("high", false)
-	var v := _view("village_of_barovia")
+	var v := _view("vallaki")   # level ground (the village has heights since village-barovia)
 	v.rig.distance = 10.0
 	v.atmosphere.call("_fit_sun_shadows")
 	var close := v.atmosphere.sun.directional_shadow_max_distance

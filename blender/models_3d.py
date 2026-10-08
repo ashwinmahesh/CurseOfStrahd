@@ -4243,6 +4243,74 @@ def _card(p, at, yaw, face_up=False):
         p.box((0.03, 0.03, 0.004), tuple(m @ Vector((0, 0, 0.0045))), "pal_candle", rot=(0, 0, yaw + 45))
 
 
+@model("pot_rack", "wall", ["pot_rack"])
+def pot_rack(p):
+    """Pots hung by size from an iron rail on the kitchen wall: pans, a kettle, ladles and a sieve."""
+    p.box((0.9, 0.03, 0.03), (0, -0.12, 1.32), "pal_ink")
+    for s in (-1, 1):
+        p.box((0.03, 0.12, 0.03), (s * 0.42, -0.06, 1.32), "pal_ink")
+    x = -0.36
+    for k, r in enumerate((0.11, 0.095, 0.08, 0.065)):
+        p.tube([(x, -0.12, 1.32), (x, -0.12, 1.24)], 0.005, "pal_ink", segs=4)
+        p.lathe([(0.0, 0.0), (r, 0.0), (r * 1.05, r * 0.7), (r * 1.1, r * 0.75), (0.0, r * 0.75)],
+                (x, -0.12 - r * 0.2, 1.24 - r * 0.75), "pal_rust" if k % 2 else "pal_stone", rot=(90, 0, 0), segs=14)
+        x += r * 2 + 0.05
+    for x2 in (0.2, 0.26):
+        p.tube([(x2, -0.12, 1.32), (x2, -0.12, 1.05)], 0.008, "pal_pewter", segs=5)
+        p.lathe([(0.0, 0.0), (0.03, 0.005), (0.032, 0.025), (0.0, 0.03)], (x2, -0.12, 1.02), "pal_pewter", segs=8)
+    p.cyl(0.07, 0.03, (0.37, -0.12, 1.12), "pal_umber", rot=(90, 0, 0), segs=14)
+
+
+@model("cheeses", "free", ["cheeses"])
+def cheeses(p):
+    """Cheeses on a board, a wheel cut open, the rest under a cloth so nothing settles on them."""
+    p.box((0.62, 0.42, 0.05), (0, 0, 0.32), "pal_walnut")
+    for s in (-1, 1):
+        p.box((0.05, 0.38, 0.3), (s * 0.27, 0, 0.15), "pal_umber")
+    for x, y, r in ((-0.15, -0.06, 0.12), (0.12, 0.08, 0.1)):
+        p.cyl(r, 0.08, (x, y, 0.345), "pal_candle", segs=18)
+    p.cyl(0.09, 0.07, (0.14, -0.1, 0.345), "pal_vellum", segs=18)
+    p.box((0.05, 0.05, 0.07), (0.2, -0.16, 0.38), "pal_parchment", rot=(0, 0, 30))
+    p.box((0.36, 0.3, 0.1), (-0.08, 0.02, 0.4), "pal_ivory", rot=(0, 0, 8), soft=0.04, segs=2)   # the cloth over two of them
+
+
+@model("umbrella_stand", "free", ["umbrella_stand"])
+def umbrella_stand(p):
+    """An umbrella stand by the door: a brass pot with an umbrella furled in it and two walking sticks."""
+    p.lathe([(0.0, 0.0), (0.09, 0.0), (0.1, 0.05), (0.085, 0.38), (0.095, 0.4), (0.0, 0.4)], (0, 0, 0), "pal_tan", segs=16)
+    p.lathe([(0.0, 0.0), (0.045, 0.02), (0.035, 0.42), (0.0, 0.46)], (0.02, 0.0, 0.25), "pal_ink", segs=10)
+    p.cyl(0.008, 0.25, (0.02, 0.0, 0.7), "pal_ink", segs=6)
+    p.tube(curve((0.02, 0.0, 0.94), (0.06, 0.0, 1.02), (0.1, 0.0, 0.95), n=6), 0.011, "pal_walnut", segs=5)
+    for x in (-0.04, 0.05):
+        p.cyl(0.012, 0.85, (x, -0.03, 0.1), "pal_walnut", segs=6, rot=(0, -6 if x < 0 else 6, 0))
+
+
+@model("broom", "against_wall", ["broom"])
+def broom(p):
+    """A broom leaning in the corner, with the air of a servant pretending not to listen."""
+    p.cyl(0.016, 1.0, (0.0, -0.2, 0.28), "pal_walnut", segs=8, rot=(-12, 0, 0))
+    p.lathe([(0.0, 0.0), (0.11, 0.0), (0.09, 0.14), (0.04, 0.28), (0.0, 0.3)], (0.0, -0.24, 0.0), "pal_tan", segs=14)
+    for z in (0.18, 0.24):
+        p.cyl(0.075 - (z - 0.18) * 0.5, 0.02, (0.0, -0.235, z), "pal_umber", segs=12)
+
+
+@model("relics", "wall", ["relics"])
+def relics(p):
+    """A shelf of the cult's relics on a strip of black cloth: a dried hand, a bone knife and a hag's finger in a jar."""
+    p.box((0.7, 0.18, 0.04), (0, -0.09, 1.0), "pal_umber")
+    p.box((0.6, 0.16, 0.004), (0, -0.09, 1.022), "pal_void")
+    for s in (-1, 1):
+        p.box((0.04, 0.12, 0.08), (s * 0.3, -0.06, 0.95), "pal_umber")
+    for k in range(4):   # the dried hand: a palm and fingers, grey-brown
+        p.box((0.014, 0.06, 0.012), (-0.2 + k * 0.018, -0.12, 1.03), "pal_bone_dark", rot=(0, 0, (k - 1.5) * 8))
+    p.box((0.07, 0.06, 0.02), (-0.18, -0.07, 1.03), "pal_bone_dark")
+    p.box((0.18, 0.02, 0.008), (0.0, -0.09, 1.03), "pal_bone", rot=(0, 0, 20))   # the bone knife
+    p.box((0.05, 0.025, 0.02), (-0.08, -0.06, 1.03), "pal_umber", rot=(0, 0, 20))
+    p.lathe([(0.0, 0.0), (0.04, 0.0), (0.042, 0.1), (0.025, 0.11), (0.025, 0.13), (0.0, 0.13)], (0.18, -0.09, 1.024),
+            "pal_frost", segs=10)
+    p.cyl(0.006, 0.07, (0.18, -0.09, 1.04), "pal_sickly", segs=6)
+
+
 @model("bedroll", "against_wall", ["bedroll", "bedroll_back"])
 def bedroll(p):
     """Madam Eva's bed: quilts folded thick on the floor, a fur over them, pillows at the wall and a shawl thrown down."""
