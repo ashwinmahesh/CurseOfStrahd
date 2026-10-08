@@ -33195,6 +33195,13 @@
   "recipe": "dd92281f92",
   "text": "A scarecrow on a pole, in a sacking smock with a face sewn on in red wool. Up close the stuffing isn't all straw. Some of it is hair."
  },
+ "narrator/1e81de29619786c6": {
+  "chars": 169,
+  "direction": "[observant, practical]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A pine with a hunter's stand lashed into it ten feet up: a few planks and a ladder of nailed rungs. From up there you'd see the lake, and anything coming along the path."
+ },
  "narrator/1e8b24530102d841": {
   "chars": 153,
   "model": "eleven_v4",
@@ -35297,13 +35304,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The ground floor waits exactly as you left it, every chair squared to its table. Houses are not supposed to be this patient."
- },
- "narrator/3296c47fa020f5f3": {
-  "chars": 137,
-  "direction": "[low, wary]",
-  "model": "eleven_v3",
-  "recipe": "f60908d226",
-  "text": "A dead tree beside the road, its bark worn smooth in places by hands and boots. Someone has sat up in it before, watching for travellers."
  },
  "narrator/32b1fb6ac53304e6": {
   "chars": 81,
@@ -37761,13 +37761,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A kitchen with a cauldron big enough to bathe in, and two small boys underfoot who vanish the moment you look straight at them."
- },
- "narrator/4b74765e24ed2050": {
-  "chars": 137,
-  "direction": "[observant, practical]",
-  "model": "eleven_v3",
-  "recipe": "f60908d226",
-  "text": "A dead tree leaning out over the trail with branches like a ladder. From up there you'd see the lake, and anything coming along the path."
  },
  "narrator/4b7e2d9902804659": {
   "chars": 142,
@@ -41227,13 +41220,6 @@
   "recipe": "f60908d226",
   "text": "She stops fighting the cord and stands, shivering all over, and lets you put a hand on her neck. Under your palm the hide is hot as a kettle."
  },
- "narrator/6c5478a2b0dc2546": {
-  "chars": 133,
-  "direction": "[quiet, uneasy]",
-  "model": "eleven_v3",
-  "recipe": "f60908d226",
-  "text": "An old dead tree by the road with low, broad branches. Climb it and you'd see the road both ways, and how close the Mists really are."
- },
  "narrator/6c55fa8b7d413a5f": {
   "chars": 118,
   "model": "eleven_v4",
@@ -43857,6 +43843,13 @@
   "recipe": "dd92281f92",
   "text": "The bars bang open all down the row. They come out low and fast, in every shape the Abbot ever tried, and every one of them is screaming in somebody else's voice."
  },
+ "narrator/85eb800317089eb7": {
+  "chars": 177,
+  "direction": "[quiet, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "An old oak by the road with one broad bough grown out level, ten feet up, wide enough to walk along. From there you'd see the road both ways, and how close the Mists really are."
+ },
  "narrator/861eb1967a82a91d": {
   "chars": 81,
   "model": "eleven_v3",
@@ -44199,6 +44192,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The tune goes thin and strange in the stone gallery, and nothing answers. You decide that is the right answer."
+ },
+ "narrator/8a7103836cb15fe1": {
+  "chars": 184,
+  "direction": "[wry, amused]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "An old oak at the foot of the lane with one great bough grown out level ten feet up, wide enough to walk along. Ravens crowd the upper branches and watch you climb with great interest."
  },
  "narrator/8a7dd6a948f06b78": {
   "chars": 203,
@@ -53589,6 +53589,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A woman carved from the cave's own rock, cloaked and hooded, with no face under the hood at all and her hands held open at her sides. At her feet: bones, teeth, coins, a child's shoe, a heel of bread still soft from someone's pocket."
+ },
+ "narrator/e8ae4215bbdb4f18": {
+  "chars": 175,
+  "direction": "[low, wary]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A pine beside the road with planks lashed into it ten feet up, the rungs up the trunk worn smooth by hands and boots. Someone has sat up there before, watching for travellers."
  },
  "narrator/e8ca48796e83a0f9": {
   "chars": 184,
