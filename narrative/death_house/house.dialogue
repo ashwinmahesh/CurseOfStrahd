@@ -30,8 +30,10 @@ Narrator: Old, says the brushwork. How old, it won't say.
 
 ~ strahd_letter
 narrate examine:strahd_letter
-Narrator: A short letter in an elegant, unhurried hand. It notes Gustav Durst's devotion and declines it, mocks the cult's candles, and promises nothing.
-Narrator: It suggests the writer may come to dinner one day. It is signed with a single ornate S.
+Narrator: A short letter in an elegant, unhurried hand, signed with a single ornate S.
+Strahd: Gustav. You write again to offer me your devotion, as if it were a coin I had dropped. I did not ask for it, and I do not owe you for it.
+Strahd: Your friends may keep their candles in the cellar. I find them touching, the way a dog is touching when it brings home something dead.
+Strahd: I promise you nothing. Perhaps one evening I will come to dinner. Do not trouble to set a place for me. I will choose my own.
 if not flag.death_house_read_strahd_letter
   set death_house_read_strahd_letter
   set death_house_lore += 1

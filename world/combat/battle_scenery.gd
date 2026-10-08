@@ -63,11 +63,15 @@ static func for_location(view: LocationView, e: Encounter) -> void:
 	# conversation or holds an item) and every container stay whole.
 	var props := {}
 	var kept := {}
+	var spanned := {}   # the other squares a prop that spans several stands over (its `span`): one object with it
 	for p: Variant in view.loc.get("props", []):
 		var prop := p as Dictionary
 		var cell := LocationView._cell(prop["cell"])
 		if prop.has("hangs") or not StoryConditions.check(str(prop.get("when", "")), view.st):
 			continue
+		for c in span_cells(prop):
+			if c != cell:
+				spanned[c] = cell
 		if str(prop["kind"]) in ["book", "search", "lever"] or prop.has("dialogue") or prop.has("item") or prop.has("flag") \
 				or prop.has("codex") or prop.has("burning"):
 			kept[cell] = true
@@ -87,7 +91,7 @@ static func for_location(view: LocationView, e: Encounter) -> void:
 				e.grid.set_flag(cell, CombatGrid.LOW, false)
 				e.grid.set_flag(cell, CombatGrid.DIFFICULT, view.grid.has_flag(cell, CombatGrid.DIFFICULT))
 				continue
-			if kept.has(cell) or e.objects.blocking_at(cell) != null:
+			if kept.has(cell) or spanned.has(cell) or e.objects.blocking_at(cell) != null:
 				continue
 			if props.has(cell):
 				var prop2 := props[cell] as Dictionary
@@ -97,8 +101,11 @@ static func for_location(view: LocationView, e: Encounter) -> void:
 					var extra2 := {"prop_id": str(prop2["id"]), "art": art}
 					if str(prop2.get("label", "")) != "":
 						extra2["name"] = str(prop2["label"])
-					var one: Array[Vector2i] = [cell]
-					e.objects.add(kind, one, extra2)
+					var under: Array[Vector2i] = []
+					for c in span_cells(prop2):
+						if view.grid.has_flag(c, CombatGrid.LOW):
+							under.append(c)   # a wagon is one cart over its two squares by two
+					e.objects.add(kind, under, extra2)
 				continue
 			_place(e, cell, art_at(view.board, cell), view.board.theme)
 	# What a shove left somewhere else in an earlier fight of this visit (its art carries where it went, ObjectView).
@@ -134,6 +141,18 @@ static func for_location(view: LocationView, e: Encounter) -> void:
 				if str(trap.get("damage", "")) != "":
 					o.fall["damage"] = str(trap["damage"])
 					o.fall["type"] = str(trap.get("damage_type", "bludgeoning"))
+
+
+## The squares a prop stands on: its own, or all of those its `span` covers ([across, down], its cell the north-west
+## one: a wagon over two squares by two, SetDressing.span_centre).
+static func span_cells(prop: Dictionary) -> Array[Vector2i]:
+	var cell := LocationView._cell(prop["cell"])
+	var out: Array[Vector2i] = []
+	var span := prop.get("span", [1, 1]) as Array
+	for dz in int(span[1]) if span.size() == 2 else 1:
+		for dx in int(span[0]) if span.size() == 2 else 1:
+			out.append(cell + Vector2i(dx, dz))
+	return out
 
 
 ## One '=' square: the kind of the art standing there, else (no art to go by) the board theme's default. Art no kind

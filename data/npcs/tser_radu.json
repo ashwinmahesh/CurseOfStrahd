@@ -1,0 +1,18 @@
+{
+  "id": "tser_radu",
+  "name": "Radu",
+  "title": "Horse-master of the Tser Pool Camp",
+  "summary": "A swaggering horse-trader in a red coat who keeps the camp's string and will sell you any horse in it at twice its worth, with a story thrown in.",
+  "portrait": "bandit_captain",
+  "sprite": "bandit_captain",
+  "attitude": "indifferent",
+  "voice": "docs/voice/tser_radu.md",
+  "monster": "bandit_captain",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him"
+}

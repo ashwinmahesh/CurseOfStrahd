@@ -52,7 +52,7 @@ Narrator: Black water, weed and cold, and nothing in your hands. When you come u
 -> drowned
 
 ~ let_go
-Narrator: Bluto looks back once, as if he'd expected someone to argue. Then he walks off the end of the jetty, and the stones take him straight down.
+Narrator [away]: Bluto looks back once, as if he'd expected someone to argue. Then he walks off the end of the jetty, and the stones take him straight down.
 approve liriel_dawnsong -3 godrick_pendlebrook -3 kip_smudgewick -2 wren_featherfoot -1: You let Bluto walk off the jetty
 -> drowned
 

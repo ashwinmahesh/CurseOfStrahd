@@ -703,8 +703,9 @@ func _low_cover(c: Vector2i) -> void:
 				pick = cand
 				break
 		if SetDressing.has_art(pick):
-			# Fixed in place and turned like the location's own props (against a wall, or facing south).
-			SetDressing.stand_piece(self, self, pick, c)
+			# Fixed in place and turned like the location's own props (against a wall, or facing south); a fence
+			# (catalog "runs_along") lies along its run, so a pen's rails go round the pen.
+			SetDressing.stand_piece(self, self, pick, c, 1.0, null, "", false, _along_run(c, pick))
 			return
 	if theme in INTERIORS:
 		# Furniture: a table, a bed, a pew.
@@ -734,6 +735,18 @@ func _low_cover(c: Vector2i) -> void:
 		_box("Plinth", Vector3(0.8, 0.18, 0.5), Vector3(c.x + 0.5, base + 0.09, c.y + 0.5), Look.cel("stone"))
 		var stone := _box("Gravestone", Vector3(0.6, 0.85, 0.18), Vector3(c.x + 0.5, base + 0.6, c.y + 0.5), Look.cel("pewter"))
 		stone.rotation.z = _rng.randf_range(-0.12, 0.12)
+
+
+## A heading that lays a long, thin piece (a fence: catalog "runs_along") along a run of low cover that goes up and
+## down the map; null to leave it facing as it would (along a run across the map, or a piece that isn't long).
+func _along_run(c: Vector2i, art: String) -> Variant:
+	if not art in (SetDressing.catalog().get("runs_along", []) as Array):
+		return null
+	if grid.has_flag(c + Vector2i(-1, 0), CombatGrid.LOW) or grid.has_flag(c + Vector2i(1, 0), CombatGrid.LOW):
+		return null
+	if grid.has_flag(c + Vector2i(0, -1), CombatGrid.LOW) or grid.has_flag(c + Vector2i(0, 1), CombatGrid.LOW):
+		return PI / 2.0
+	return null
 
 
 ## Difficult terrain: brambles in the woods, rubble underground and indoors (catalog "difficult"); a town's mud

@@ -116,6 +116,8 @@ static func dress_mood(st: StoryState, location_id: String, mood: Dictionary, ou
 	out["weather"] = pieces
 	if look.has("mist"):
 		var mist := (out.get("mist", {}) as Dictionary).duplicate()
+		var strength := float(mist.get("strength", 1.0)) * float((look["mist"] as Dictionary).get("strength", 1.0))
 		mist.merge(look["mist"] as Dictionary, true)
+		mist["strength"] = strength   # the weather scales the place's own (a town's fog lighter than the woods')
 		out["mist"] = mist
 	return out

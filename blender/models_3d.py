@@ -3360,6 +3360,208 @@ def tent(p):
     p.lathe([(0.0, 0.0), (0.06, 0.0), (0.0, 0.12)], (0, 0, H + 0.4), "pal_candle", segs=6)
 
 
+def _ring_rounded_rect(a, b, r, n_side=4, n_arc=4):
+    """Points round a rounded rectangle (half-length a along x, half-width b along y, corner radius r), counter-
+    clockwise from the middle of the front (-y) side."""
+    pts = []
+    corners = [(a - r, -b + r, -90.0), (a - r, b - r, 0.0), (-a + r, b - r, 90.0), (-a + r, -b + r, 180.0)]
+    sides = [((0.0, -b), (a - r, -b)), ((a, -b + r), (a, b - r)), ((a - r, b), (-a + r, b)), ((-a, b - r), (-a, -b + r))]
+    for k in range(4):
+        (x0, y0), (x1, y1) = sides[k]
+        steps = n_side if k else n_side // 2
+        for i in range(steps):
+            s = i / steps
+            pts.append((x0 + (x1 - x0) * s, y0 + (y1 - y0) * s))
+        cx, cy, start = corners[k]
+        for i in range(n_arc):
+            ang = math.radians(start + 90.0 * i / n_arc)
+            pts.append((cx + r * math.cos(ang), cy + r * math.sin(ang)))
+    (x0, y0) = (-a + r, -b)
+    for i in range(n_side // 2):
+        s = i / (n_side // 2)
+        pts.append((x0 + (0.0 - x0) * s, -b))
+    return pts
+
+
+def _emblem(p, poly, centre, tangent, normal, mat, lift=0.012, thick=0.012):
+    """A flat painted shape `poly` [(u, v), ...] (u along `tangent`, v up) laid on a surface at `centre`, standing
+    `lift` off it along `normal`."""
+    t = bmesh.new()
+    c = Vector(centre) + Vector(normal).normalized() * lift
+    tu = Vector(tangent).normalized()
+    up = Vector(normal).normalized().cross(tu).normalized()
+    if up.z < 0:
+        up = -up
+    nrm = Vector(normal).normalized()
+    front = [t.verts.new(c + tu * u + up * v) for u, v in poly]
+    back = [t.verts.new(c + tu * u + up * v - nrm * thick) for u, v in poly]
+    t.faces.new(front)
+    t.faces.new(list(reversed(back)))
+    n = len(poly)
+    for k in range(n):
+        t.faces.new([front[k], front[(k + 1) % n], back[(k + 1) % n], back[k]])
+    bmesh.ops.recalc_face_normals(t, faces=t.faces)
+    p._append(t, mat, False)
+
+
+def _disc(r, n=14):
+    return [(r * math.cos(2 * math.pi * k / n), r * math.sin(2 * math.pi * k / n)) for k in range(n)]
+
+
+def _sun(p, centre, tangent, normal, r):
+    """A painted sun: a gold disc with eight rays."""
+    rays = []
+    for k in range(16):
+        a = 2 * math.pi * k / 16
+        rr = r * (1.55 if k % 2 == 0 else 1.0)
+        rays.append((rr * math.cos(a), rr * math.sin(a)))
+    _emblem(p, rays, centre, tangent, normal, "pal_candle")
+    _emblem(p, _disc(r * 0.62), centre, tangent, normal, "pal_flame", lift=0.02)
+
+
+def _moon(p, centre, tangent, normal, r):
+    """A painted crescent moon."""
+    outer = [(r * math.cos(a), r * math.sin(a)) for a in (math.radians(60 + 240 * k / 12) for k in range(13))]
+    inner = [(r * 0.45 + r * 0.8 * math.cos(a), r * 0.8 * math.sin(a))
+             for a in (math.radians(240 - 240 * k / 10 + 60) for k in range(1, 10))]
+    _emblem(p, outer + inner, centre, tangent, normal, "pal_bone")
+
+
+def _eye(p, centre, tangent, normal, w, fresh=False):
+    """A painted eye: an almond of bone with a dark iris; the freshly painted ones are brighter."""
+    lid = [(w * math.cos(a), w * 0.42 * math.sin(a) * (1.0 if a < math.pi else 0.8)) for a in
+           (2 * math.pi * k / 16 for k in range(16))]
+    _emblem(p, lid, centre, tangent, normal, "pal_ivory" if fresh else "pal_bone_dark")
+    _emblem(p, _disc(w * 0.3, 10), centre, tangent, normal, "pal_night" if fresh else "pal_ink", lift=0.02)
+
+
+@model("great_tent", "free", ["great_tent"], big=True)
+def great_tent(p):
+    """Madam Eva's great tent at Tser Pool (owner report 2026-10-08: the tent was tiny): a long pavilion of patched
+    canvas the size of a cottage on two tall poles, painted with suns, moons and eyes, glowing at its open flap between
+    two lanterns, guyed out to stakes, pennants on the poles."""
+    A, B, R = 3.0, 2.0, 1.1          # half-length, half-width, corner radius
+    HW, HR, RX = 1.45, 3.75, 1.45     # wall height, ridge height, ridge half-length
+    rng = p.rng
+    ring = _ring_rounded_rect(A, B, R)
+    n = len(ring)
+    patches = ["pal_bruise", "pal_blood", "pal_plum", "pal_crimson", "pal_bruise_deep", "pal_blood", "pal_plum",
+               "pal_candle", "pal_rust"]
+    t = bmesh.new()
+    low = [t.verts.new((x, y, 0.0)) for x, y in ring]
+    top = [t.verts.new((x, y, HW)) for x, y in ring]
+    ridge = {}
+
+    def ridge_v(x):
+        key = round(max(-RX, min(RX, x)), 3)
+        if key not in ridge:
+            ridge[key] = t.verts.new((key, 0.0, HR))
+        return ridge[key]
+    mid = []
+    for x, y in ring:
+        rx = max(-RX, min(RX, x))
+        mid.append(t.verts.new((x + (rx - x) * 0.5, y * 0.5, HW + (HR - HW) * 0.5 - 0.16)))
+    faces = []
+    for i in range(n):
+        j = (i + 1) % n
+        wall = t.faces.new([low[i], low[j], top[j], top[i]])
+        lower = t.faces.new([top[i], top[j], mid[j], mid[i]])
+        ri, rj = ridge_v(ring[i][0]), ridge_v(ring[j][0])
+        upper = t.faces.new([mid[i], mid[j], rj, ri] if ri is not rj else [mid[i], mid[j], ri])
+        faces.append((wall, rng.choice(patches)))
+        faces.append((lower, rng.choice(patches)))
+        faces.append((upper, rng.choice(patches)))
+    bmesh.ops.recalc_face_normals(t, faces=t.faces)
+    colour = {f: c for f, c in faces}
+    p._append_faces(t, lambda f: colour.get(f, "pal_bruise"))
+    # A muddy skirt round the foot and a scalloped valance of gold and red under the eaves.
+    for i in range(n):
+        (x0, y0), (x1, y1) = ring[i], ring[(i + 1) % n]
+        nx, ny = (y1 - y0), -(x1 - x0)
+        ln = math.hypot(nx, ny) or 1.0
+        nx, ny = nx / ln, ny / ln
+        sk = bmesh.new()
+        v = [sk.verts.new((x0 + nx * 0.01, y0 + ny * 0.01, 0.0)), sk.verts.new((x1 + nx * 0.01, y1 + ny * 0.01, 0.0)),
+             sk.verts.new((x1 + nx * 0.01, y1 + ny * 0.01, 0.2)), sk.verts.new((x0 + nx * 0.01, y0 + ny * 0.01, 0.2))]
+        sk.faces.new(v)
+        p._append(sk, "pal_peat", False)
+        va = bmesh.new()
+        e = 0.03
+        w = [va.verts.new((x0 + nx * e, y0 + ny * e, HW + 0.02)), va.verts.new((x1 + nx * e, y1 + ny * e, HW + 0.02)),
+             va.verts.new(((x0 + x1) / 2 + nx * e, (y0 + y1) / 2 + ny * e, HW - 0.24))]
+        va.faces.new(w)
+        p._append(va, "pal_candle" if i % 2 else "pal_crimson", False)
+    # Poles through the ridge, gold finials and pennants.
+    for sx in (-1, 1):
+        p.cyl(0.06, HR + 0.6, (sx * RX, 0, 0), "pal_umber", segs=8)
+        p.lathe([(0.0, 0.0), (0.09, 0.05), (0.05, 0.16), (0.0, 0.26)], (sx * RX, 0, HR + 0.6), "pal_candle", segs=8)
+        p.prism([(0.0, 0.0), (0.0, 0.32), (sx * 0.75, 0.16)], 0.015, (sx * RX, 0, HR + 0.2),
+                "pal_crimson" if sx > 0 else "pal_candle")
+    # The flap: candlelight inside, the canvas tied back on either side, painted eyes beside it.
+    p.box((0.84, 0.02, 1.22), (0, -B - 0.012, 0.61), "glow_candle")
+    for sx in (-1, 1):
+        p.prism([(sx * 0.42, 0.0), (sx * 0.42, 1.3), (sx * 0.72, 0.25)], 0.03, (0, -B - 0.035, 0), "pal_crimson")
+        p.cyl(0.035, 0.1, (sx * 0.62, -B - 0.06, 0.55), "pal_candle", segs=6, rot=(90, 0, 0))
+    # A lantern on a pole either side of the flap.
+    for sx in (-1, 1):
+        p.cyl(0.04, 1.55, (sx * 0.95, -B - 0.45, 0), "pal_umber", segs=6)
+        p.box((0.2, 0.04, 0.04), (sx * 0.95 - sx * 0.08, -B - 0.45, 1.5), "pal_umber")
+        p.box((0.13, 0.13, 0.18), (sx * 0.95 - sx * 0.16, -B - 0.45, 1.36), "glow_candle")
+        p.box((0.17, 0.17, 0.04), (sx * 0.95 - sx * 0.16, -B - 0.45, 1.47), "pal_ink")
+    # Painted suns, moons and eyes on the long sides and the ends.
+    fn = (0.0, -1.0, 0.0)
+    for x, kind in ((-2.2, "sun"), (-1.35, "moon"), (1.35, "moon"), (2.2, "sun")):
+        (_sun if kind == "sun" else _moon)(p, (x, -B, 0.82), (1, 0, 0), fn, 0.24 if kind == "sun" else 0.3)
+    for sx in (-1, 1):
+        _eye(p, (sx * 0.66, -B, 1.12), (1, 0, 0), fn, 0.17, fresh=True)
+    bn = (0.0, 1.0, 0.0)
+    for x, kind in ((-1.9, "moon"), (-0.6, "sun"), (0.6, "moon"), (1.9, "sun")):
+        (_sun if kind == "sun" else _moon)(p, (x, B, 0.82), (-1, 0, 0), bn, 0.24 if kind == "sun" else 0.3)
+    for sx in (-1, 1):
+        _eye(p, (sx * A, 0.0, 0.85), (0, sx, 0), (sx, 0, 0), 0.24)
+    # On the roof's front slope, a great eye between two moons.
+    slope = Vector((0.0, B * 0.5, (HR - HW) * 0.5 - 0.16)).normalized()
+    rn = Vector((1, 0, 0)).cross(slope)
+    if rn.y > 0:
+        rn = -rn
+    for x, kind in ((-1.1, "moon"), (0.0, "eye"), (1.1, "moon")):
+        at = (x, -B * 0.62, HW + (HR - HW) * 0.38 - 0.1)
+        if kind == "eye":
+            _eye(p, at, (1, 0, 0), tuple(rn), 0.34, fresh=True)
+        else:
+            _moon(p, at, (1, 0, 0), tuple(rn), 0.26)
+    # Guy ropes out to stakes.
+    for i in range(0, n, 3):
+        x, y = ring[i]
+        d = math.hypot(x, y) or 1.0
+        sx, sy = x + x / d * 0.55, y + y / d * 0.55
+        if abs(x) < 1.1 and y < 0:
+            continue   # clear of the flap and its awning
+        p.tube([(x, y, HW + 0.05), (sx, sy, 0.05)], 0.008, "pal_bone_dark", segs=4, smooth=False)
+        p.box((0.05, 0.05, 0.16), (sx, sy, 0.06), "pal_umber")
+
+
+@model("stewpot", "free", ["stewpot"])
+def stewpot(p):
+    """A camp's stew pot (Tser Pool, 2026-10-08): a black iron pot of stew on a chain from a tripod of poles, over a
+    ring of stones and glowing coals."""
+    rng = p.rng
+    for k in range(9):
+        a = 2 * math.pi * k / 9
+        p.rock((0.3 * math.cos(a), 0.3 * math.sin(a), 0.0), (0.13, 0.11, 0.08), "pal_slate", rough=0.2, rot_z=rng.uniform(0, 90))
+    p.cyl(0.24, 0.04, (0, 0, 0), "glow_ember", segs=10)
+    apex = (0.0, 0.0, 1.0)
+    for k in range(3):
+        a = 2 * math.pi * k / 3 + 0.4
+        p.tube([(0.42 * math.cos(a), 0.42 * math.sin(a), 0.0), apex], 0.02, "pal_umber", segs=5, smooth=False)
+    p.tube([apex, (0.0, 0.0, 0.62)], 0.006, "pal_ink", segs=4, smooth=False)
+    p.lathe([(0.0, 0.24), (0.15, 0.25), (0.23, 0.33), (0.25, 0.45), (0.23, 0.56), (0.235, 0.6), (0.2, 0.6), (0.2, 0.5),
+             (0.0, 0.5)], (0, 0, 0), "pal_ink", segs=14)
+    p.cyl(0.205, 0.04, (0, 0, 0.5), "pal_rust", segs=14)
+    p.tube([(-0.22, 0.0, 0.6), (-0.12, 0.0, 0.66), (0.0, 0.0, 0.68), (0.12, 0.0, 0.66), (0.22, 0.0, 0.6)], 0.008, "pal_ink",
+           segs=4, smooth=False)
+
+
 @model("barn_collapsed", "free", ["barn_collapsed", "barn_collapsed_back"], big=True)
 def barn_collapsed(p):
     """The 2D collapsed barn: red plank walls, one end fallen in, the roof broken and sagging, beams jutting."""

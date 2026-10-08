@@ -4,7 +4,7 @@ extends RefCounted
 ## tools/data/dialogue_lint.py, which validates the same files in `make validate`.
 ##
 ## Statement dictionaries ({"t": type, ...}):
-##   line {speaker, mood, text} · option {text, ok, fail, cond, check: {skill, dc}, selector} · jump {to}
+##   line {speaker, mood, away, text} (away: "" | "speaker" | "party", the `[away]` cue) · option {text, ok, fail, cond, check: {skill, dc}, selector} · jump {to}
 ##   if {cond} · elif {cond} · else · endif · set {flag, op, value} · quest {id, stage} · give/take {item, qty, to}
 ##   gold {amount} · attitude {npc, value} · xp · check {skill, dc, ok, fail} · interject {selector, text}
 ##   combat {encounter} · narrate {key} · variant {cond, text} · cooldown {n} · once · end_game (ADR 0014)
@@ -47,7 +47,7 @@ static func parse(text: String, file_key: String = "") -> DialogueFile:
 	var f := DialogueFile.new()
 	f.key = file_key
 	var node := ""
-	var re_line := RegEx.create_from_string("^([A-Za-z][A-Za-z_ ]*?)(?:\\s*\\[([a-z]+)\\])?:\\s+(.+)$")
+	var re_line := RegEx.create_from_string("^([A-Za-z][A-Za-z_ ]*?)(?:\\s*\\[([a-z:]+(?:\\s*,\\s*[a-z:]+)*)\\])?:\\s+(.+)$")
 	var re_option := RegEx.create_from_string("^\\*\\s+(.*?)\\s*->\\s*([A-Za-z0-9_:/]+|END)(?:\\s*\\|\\s*([A-Za-z0-9_:/]+|END))?\\s*$")
 	var re_tag := RegEx.create_from_string("^\\[([^\\]]+)\\]\\s*")
 	var re_check_tag := RegEx.create_from_string("^([A-Za-z][A-Za-z ]*?)\\s+DC\\s+(\\d+)$")
@@ -230,5 +230,16 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 		return {"t": "interject", "selector": mi.get_string(1), "text": mi.get_string(2)}
 	var ml := re_line.search(line)
 	if ml != null:
-		return {"t": "line", "speaker": ml.get_string(1).strip_edges(), "mood": ml.get_string(2), "text": ml.get_string(3)}
+		# The bracket holds a mood and/or a turn cue: [sad], [away], [sad, away], [away:party] (docs/contracts/dialogue.md).
+		var mood := ""
+		var away := ""
+		for tag in ml.get_string(2).split(",", false):
+			var t := tag.strip_edges()
+			if t == "away":
+				away = "speaker"
+			elif t == "away:party":
+				away = "party"
+			else:
+				mood = t
+		return {"t": "line", "speaker": ml.get_string(1).strip_edges(), "mood": mood, "away": away, "text": ml.get_string(3)}
 	return {}

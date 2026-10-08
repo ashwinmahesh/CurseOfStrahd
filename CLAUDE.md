@@ -21,7 +21,8 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
   path: it loads tools/macos/nofocus.m so Godot can't activate itself (owner decision 2026-10-06).
 - `make import` (and every target that imports) runs the editor through tools/import.sh with its window never on
   screen (NOFOCUS_HIDE=1 in tools/godot): textures import about twice as fast as headless, and the project.godot the
-  editor rewrites is put back. IMPORT_HEADLESS=1 imports headless.
+  editor rewrites is put back. IMPORT_HEADLESS=1 imports headless. A folder with no import cache yet starts from an
+  APFS clone of the main checkout's (same volume only); a full import with under 20 GB free is refused (exit 75).
 - `make run` and `make arena` are for the owner to play: run them only when asked. `make play` is his stable copy
   (~/Documents/CurseOfStrahdGame-play, tools/play/play.sh): it only moves to a main the build thread marked after a
   clean `make ci` (refs/play/green). Never edit or check out anything in it; PLAY_NO_RUN=1 updates it without a window.

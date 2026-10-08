@@ -133,8 +133,8 @@ func test_rooms_comfort_the_next_long_rest_there() -> void:
 	var st := _party()
 	st.location = "vallaki_blue_water_inn"
 	var modest := _line(st, "urwin_martikov", "room_modest")
-	assert_eq(float(modest["each"]), 0.5)
-	assert_eq(float(modest["price"]), 1.0, "5 sp a head for two")
+	assert_eq(float(modest["each"]), 1.0, "5 sp a head, rounded up to a whole gold piece")
+	assert_eq(float(modest["price"]), 2.0, "1 gp a head for two")
 	assert_eq(Services.buy(st, "urwin_martikov", modest, st.party[0], DiceRoller.new(1)).contains("yours for the night"), true)
 	assert_eq(Services.why_not(st, modest, st.party[0]), "Already yours for tonight")
 	for ch in st.party:

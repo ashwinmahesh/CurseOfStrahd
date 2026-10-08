@@ -1,7 +1,7 @@
 # Strahd on the road and at rest (docs/regions/strahd_presence.md; data/strahd/visits.json): the watcher on the
 # ridge, the night visit at a Long Rest, and the test of strength on a night road. The test's fight is the visit's
 # `then` (it starts when strahd_test is "fought"); he leaves it by the encounter's `withdraw`, then test_after plays.
-# Voice: docs/voice/strahd.md. Courteous, patient, amused; every kindness a threat.
+# Voice: docs/voice/strahd.md. Courteous, patient, possessive; every kindness a threat, and every meeting leaves a mark.
 
 # ---------------------------------------------------------------- The watcher (the first journey after the burial)
 
@@ -20,7 +20,7 @@ interject class:rogue: He isn't hiding. That's the part I don't like.
 * Keep walking. -> watcher_gone
 
 ~ watcher_wave
-Narrator: After a moment the rider lifts a gloved hand in return, slow and correct, like a host seeing guests off from his door.
+Narrator: After a moment the rider lifts a gloved hand in return. Then he closes it, one finger at a time, as if around something small.
 approve wren_featherfoot +1: You waved at Strahd on the ridge
 -> watcher_gone
 
@@ -41,13 +41,13 @@ appear strahd
 cutscene strahd_camp
 Narrator: You wake in the small hours and know at once you are not alone. Just past the last of the light, a tall man stands watching the others sleep.
 if flag.strahd_met
-Strahd: Do not get up. I only came to see how my guests are sleeping. Badly, I think. The valley does that.
+Strahd: Do not get up. I only came to see how my guests are sleeping. Badly, I see. I have taken some trouble over that.
 else
 set strahd_met
 Strahd: Do not get up. We have not been introduced. I am Strahd von Zarovich, and you are sleeping in my house. All of this is my house.
 endif
 if flag.strahd_letter_read
-Strahd: You had my letter, I trust. I write so few now. Nobody writes back.
+Strahd: You had my letter, I trust. You read it twice. You thought I would not know.
 endif
 if guest:ireena
 Narrator: Ireena is sitting up, quite still, her eyes on him. Her hand is on her sword, and the hand isn't moving.
@@ -66,7 +66,7 @@ endif
 * Attack him. -> night_attack
 
 ~ night_want
-Strahd: Tonight? Only to look at you. A man may admire his guests. Tomorrow, who can say. I have had a very long time to collect whims.
+Strahd: Tonight? To learn you. Which of you sleeps lightly. Which sleeps with a hand on a knife. Which one the others would die for. I will need to know that, later.
 -> night_menu
 
 ~ night_read
@@ -87,7 +87,7 @@ approve kip_smudgewick +1: You woke the camp when Strahd came
 
 ~ night_shield
 set strahd_night_visit = "shield"
-Strahd [smile]: Gallant. Do you know how many gallant men have stood exactly there? I kept count, for a while.
+Strahd [smile]: Gallant. Do you know how many gallant men have stood exactly there? I stopped counting them. I did not stop killing them.
 Narrator: He bows to Ireena, not to you, and the dark he stood in is only dark.
 approve godrick_pendlebrook +3 thistle +1: You got up and stood between Strahd and Ireena
 -> END
@@ -95,14 +95,14 @@ approve godrick_pendlebrook +3 thistle +1: You got up and stood between Strahd a
 ~ night_ward
 set strahd_night_visit = "warded"
 Narrator: The symbol catches the last of the firelight. He doesn't flinch. He looks at it the way one looks at a candle in a neighbour's window.
-Strahd: Keep it lit. It will be dark a long while yet. Good night.
+Strahd: Keep it lit. It is the only light for a mile, and every hungry thing in my woods can see it. Good night.
 approve liriel_dawnsong +1: You held up your holy symbol to Strahd in the dark
 -> END
 
 ~ night_attack
 set strahd_night_visit = "attacked"
 Narrator: Your blade goes through him like a hand through fog, and the fog is cold enough to ache.
-Strahd: Rude, in a man's own house. Sleep, then. If you can.
+Strahd: In a man's own house. I will remember that. Sleep, if you can. I will be watching to see which of you does.
 approve thistle +1 kip_smudgewick -1: You swung at Strahd by the campfire
 -> END
 
@@ -136,7 +136,7 @@ Strahd [smile]: Beneath me? Everything here is beneath me. That is the point of 
 
 ~ test_talked
 set strahd_test = "talked"
-Strahd: Hm. You are right, and I dislike it. Another night, then, with better light. Do keep improving.
+Strahd: Beneath me. Yes. You are learning how I think, and that is the first step to being mine. Another night, then, with better light.
 Narrator: He whistles once, as a man calls a dog, and the wolves go back into the trees with him.
 approve wren_featherfoot +1 liriel_dawnsong +1 ratatoille +1: You talked Strahd out of a brawl in the mud
 -> END

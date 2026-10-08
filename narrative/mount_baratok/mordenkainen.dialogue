@@ -61,7 +61,7 @@ endif
 
 ~ eyes_ok
 set mordenkainen_eyes_read
-Narrator: Each time a word slips away from him, his eyes go up and to the left, out of the window, to the summit where a cairn of stones stands against the sky. As if he left something there and can't remember why he keeps checking on it.
+Narrator [away]: Each time a word slips away from him, his eyes go up and to the left, out of the window, to the summit where a cairn of stones stands against the sky. As if he left something there and can't remember why he keeps checking on it.
 -> mad_menu
 
 ~ eyes_fail

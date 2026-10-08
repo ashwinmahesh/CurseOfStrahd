@@ -72,7 +72,7 @@ interject class:wizard: Fire and radiance stop them knitting! Everything else is
 combat beacon_stand
 
 ~ back_down
-Narrator: You lower the flame. Vladimir watches it all the way down, then turns and goes back down the stair without a word, and his knights go with him.
+Narrator [away]: You lower the flame. Vladimir watches it all the way down, then turns and goes back down the stair without a word, and his knights go with him.
 approve godrick_pendlebrook -2 liriel_dawnsong -1: You left the Order's beacon dark
 -> END
 

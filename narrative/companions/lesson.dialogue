@@ -69,7 +69,7 @@ interject name:wren_featherfoot: So that's what I'm doing. I'm feeling sorry for
 Narrator: For a heartbeat, every voice around Rahadin goes silent. The hall is so quiet you can hear the candles. The chamberlain's face doesn't change at all, but his hand has gone to his sword and stopped there, and stays.
 Rahadin: Leave my sight.
 interject name:wren_featherfoot: Already going. Master Sorrel says the leaf doesn't fight the wind. Turns out the leaf just has to decide it isn't the wind's problem.
-Narrator: Wren turns his back on the chamberlain and walks away on his own two feet, not fast. It's the bravest thing you've seen anyone do in this house.
+Narrator [away:party]: Wren turns his back on the chamberlain and walks away on his own two feet, not fast. It's the bravest thing you've seen anyone do in this house.
 if approval.wren_featherfoot >= close
 Narrator: Out on the landing, where Rahadin can't see, he stops and leans on the wall and lets out a long, shaking breath. Then he looks at the rest of you.
 interject name:wren_featherfoot: I worked it out. The last lesson. It was never in the letter. He only said it was, so I'd have to come all this way to find out.
