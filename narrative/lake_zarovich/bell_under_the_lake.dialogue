@@ -1,0 +1,128 @@
+# The Bell Under the Lake (side quest, docs/story/side_quests.md): the fish of Lake Zarovich went deep because there's
+# a drowned hamlet, Pescari, under the water, and its chapel bell rings when its dead want company. Bluto's sacks were
+# what kept them away from the landing; now the sacks have stopped, the bell rings every night, and the drowned are
+# coming up the shore for him (or for Old Nistor, if Bluto is gone). Reached from Old Nistor (old_fisher:start).
+# Every line here is unvoiced for now.
+
+# --- Old Nistor (lake_zarovich/old_fisher:start jumps here) ---
+
+~ nistor
+if flag.bell_silenced
+-> nistor_after
+endif
+if quest.bell_under_the_lake
+Old Nistor: Listen. There. Every night now, after the moon's up. Under the water. You'd think water would stop a bell.
+-> END
+endif
+quest bell_under_the_lake asked
+Old Nistor: You want to know why the fish went deep? Nobody's asked me that in forty years. Sit down, then.
+Old Nistor: Before the count put the dam on the Luna there was a village where the lake is. Pescari. My grandmother was from there. When the water came up, the folk came up the hill, mostly. The ones who wouldn't leave the chapel stayed in the chapel. The bell's still down there.
+Old Nistor: It rings when they want company. That's what my grandmother said. A sack of something every month and they'd stay down, and the fish would come up to see what was in it.
+Old Nistor [afraid]: Bluto's sacks. You know what he put in them. He wasn't mad. That's the worst of it. He was paying the bell. Now he's stopped paying, and it rings every night, and it's coming up the shore a little further every time.
+* [Insight DC 13] (Is he afraid for Bluto, or for himself?) -> both | unread
+* We'll be here when it comes. -> agree
+* Not tonight. -> END
+
+~ both
+Narrator: Both. Bluto is a monster and a neighbour, and he is the only other person who still lives on this shore.
+-> agree
+
+~ unread
+Narrator: An old man with a net in his lap, mending a hole he's already mended twice.
+-> agree
+
+~ agree
+Old Nistor: After moonrise. Stand on the landing and you'll hear it. Then you'll see them. Then you decide what to do about Bluto. I've had forty years and I haven't decided.
+-> END
+
+~ nistor_after
+if flag.bluto_given
+Old Nistor: Bluto's shack is empty. I don't go in. Some nights I think I hear him singing, out on the water, the way he used to when he'd had a catch.
+endif
+if flag.drowned_defended and (flag.bluto_fate == "saved" or flag.bluto_fate == "left")
+Old Nistor: You stood on my landing between the lake and a man who'd put a child in a sack. I've been thinking about that. I don't know what I think yet.
+elif flag.drowned_defended
+Old Nistor: You stood on my step between me and the lake. Forty years I've been waiting for it to come up that shore. I never once thought anybody would stand there.
+endif
+Old Nistor [smile]: A pike this morning. A pike, the length of my arm. First fish in a year that wasn't too small to bother. I nearly wept on it.
+-> END
+
+# --- The landing after moonrise (prop bell_water) ---
+
+~ water
+if flag.bell_silenced
+Narrator: Black water, flat and quiet. Somewhere far out, a fish jumps.
+-> END
+endif
+if flag.drowned_beaten
+-> bell
+endif
+if not night
+Narrator: Flat grey water. From the jetty's end you can see, far down, the pale square of a roof that isn't a rock.
+-> END
+endif
+quest bell_under_the_lake the_bell
+Narrator: Out on the black water, a long way under it, a bell rings. Once. Again. Each time a little louder, as if it were coming up the slope of the lakebed toward you.
+Narrator: Then the water along the shore starts to stand up in the shape of people.
+if flag.bluto_fate == "saved" or flag.bluto_fate == "left"
+Narrator: Bluto comes out of his shack with a lantern and sees them, and drops it, and runs for the jetty, for the boat, for anywhere. They turn toward him all together, the way a field of grass turns in the wind.
+Bluto [afraid]: No. No, no, I paid. I paid you. I paid you every month!
+* Stand in front of him. -> defend
+* (Stand aside. Let them have what they came for.) -> aside
+else
+Narrator: Old Nistor comes out with his net still in his hands and sees them, and sees which way they're turning, and sits down on his step.
+Old Nistor: Well. It was always going to be one of us.
+* Stand in front of him. -> defend
+endif
+
+~ defend
+set drowned_defended
+Narrator: You put yourselves between the shore and the shack, and the drowned keep coming, slow and dripping, and behind them something taller in a priest's sodden black lifts a hand like it's ringing a bell.
+approve godrick_pendlebrook +2 liriel_dawnsong +2: You stood between the drowned and the man they came for
+combat drowned_landing
+
+~ aside
+set bluto_given
+set bluto_fate = "drowned"
+Narrator: You step back. The drowned walk past you as if you were posts. They take Bluto at the end of the jetty; he doesn't fight them, in the end. They go down into the black water together, all of them, and the bell rings once, very loud.
+Narrator: And then it rings again, and the water stands up a second time. They were never coming for just one.
+approve thistle +1 kip_smudgewick +1 godrick_pendlebrook -2 liriel_dawnsong -3: You let the drowned take Bluto
+combat drowned_landing
+
+# --- After the drowned (the same prop): the bell itself ---
+
+~ bell
+Narrator: The shore is quiet except for the water running back off the stones. Far out and far down, the bell still swings. It isn't ringing. It's waiting.
+* [Athletics DC 15] (Swim down the bell rope from the jetty's end and cut the bell loose.) -> cut | cut_fail
+* [knows:water_breathing] (Cast Water Breathing and go down for it properly.) -> cut
+* [if item:potion_of_water_breathing] (Drink a Potion of Water Breathing and go down.) -> cut_potion
+* [Religion DC 14] (Ring it once, from the jetty, for every one of them, the way it should have been rung for the dead.) -> rung | rung_fail
+* Not now. -> END
+
+~ cut_fail
+time +30
+Narrator: The cold takes the breath out of you before you're a body's length down. You come up gasping, and the rope swings, and somewhere under you something patient waits for you to try again.
+-> END
+
+~ cut_potion
+take potion_of_water_breathing
+-> cut
+
+~ cut
+-> silenced
+
+~ rung_fail
+Narrator: You pull the rope, and the note that comes up out of the water is wrong: flat, angry. The water along the shore twitches. Better try something else, before it remembers what it was doing.
+-> END
+
+~ rung
+-> silenced
+
+~ silenced
+set bell_silenced
+quest bell_under_the_lake silenced
+Narrator: The bell goes quiet, and stays quiet. In the chapel's drowned doorway, caught on the bell's broken rope, is a priest's staff of pale wood with a sun carved at its head, and a little iron box of chapel silver nobody ever carried up the hill.
+gold +200
+give staff_of_healing
+interject class:cleric: Pescari's priest. He stayed with the ones who wouldn't leave. That's a hard sort of faithful.
+-> END

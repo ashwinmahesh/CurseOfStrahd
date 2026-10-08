@@ -2,6 +2,10 @@
 # The others left; he mends nets nobody casts. Unvoiced for now.
 
 ~ start
+if quest.bell_under_the_lake
+-> lake_zarovich/bell_under_the_lake:nistor
+endif
 Old Nistor: Forty years I fished this water. Then the fish went deep and the men went to Vallaki, and here I am, mending nets for a lake that's stopped answering.
 Old Nistor: Keep away from the big fellow in the shack. He drinks, and he cries, and he goes out in his boat at night with something in a sack. I don't ask. Nobody asks.
--> END
+* [if flag.arabelle_rescued or flag.arabelle_lost] Why did the fish go deep? -> lake_zarovich/bell_under_the_lake:nistor
+* Goodbye. -> END

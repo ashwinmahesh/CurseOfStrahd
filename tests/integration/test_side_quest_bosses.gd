@@ -63,3 +63,7 @@ func _series(location: String, hour: int, level: int, encounter: String, seeds: 
 
 func test_old_greytooth_at_level_6() -> void:
 	await _series("lake_zarovich", 19, 6, "greytooth_hunt", [1, 2, 3, 4])
+
+
+func test_the_drowned_of_pescari_at_level_8() -> void:
+	await _series("lake_zarovich", 23, 8, "drowned_landing", [1, 2, 3])
