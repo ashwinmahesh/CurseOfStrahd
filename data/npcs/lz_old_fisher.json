@@ -1,0 +1,18 @@
+{
+  "id": "lz_old_fisher",
+  "name": "Old Nistor",
+  "title": "The Last Fisherman",
+  "summary": "The one fisherman who didn't leave the landing when the others did: too old to start again anywhere else, he mends nets nobody will cast and talks to the lake like an old enemy.",
+  "portrait": "villager",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "lake_zarovich"
+  ],
+  "region": "lake_zarovich",
+  "pronouns": "he/him"
+}
