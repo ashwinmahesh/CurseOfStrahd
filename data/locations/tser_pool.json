@@ -587,7 +587,7 @@
       "label": "Something in the reeds",
       "model": "satchel",
       "search_dc": 12,
-      "item": "dice_set"
+      "item": "stone_of_good_luck"
     },
     {
       "id": "tser_pen_whistle",
@@ -611,7 +611,7 @@
       "label": "A hollow stump",
       "model": "stump",
       "search_dc": 14,
-      "item": "flask"
+      "item": "potion_of_fire_breath"
     },
     {
       "id": "tser_wagon_cards",
