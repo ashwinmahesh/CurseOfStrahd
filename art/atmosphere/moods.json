@@ -23,7 +23,8 @@
     "village_of_barovia": "barovia_village_lived",
     "vallaki": "vallaki_festival",
     "krezk": "krezk_town",
-    "wizard_of_wines": "winery_grounds"
+    "wizard_of_wines": "winery_grounds",
+    "yester_hill": "yester_slope"
   },
   "prefixes": {
     "castle_ravenloft_court": "ravenloft_court",
@@ -365,6 +366,21 @@
         "height": 1.8,
         "cover": 0.68,
         "thickness": 3.4
+      },
+      "water": {
+        "deep": "void",
+        "shallow": "night_deep",
+        "foam": "slate",
+        "glint": "moonlight",
+        "flow": [
+          0.0,
+          0.0
+        ],
+        "ripples": 0.02,
+        "texture": 0.05,
+        "reflect": 0.5,
+        "map": "void",
+        "map_edge": "slate"
       }
     },
     "barovia_village": {
@@ -1535,6 +1551,27 @@
           "to": [
             11.6,
             31.0
+          ]
+        }
+      ]
+    },
+    "yester_slope": {
+      "like": "yester_hill",
+      "weather": [
+        {
+          "kind": "crows",
+          "amount": 9,
+          "radius": 8.0
+        },
+        "leaves",
+        {
+          "kind": "smoke",
+          "at": [
+            [
+              12.5,
+              4.6,
+              17.5
+            ]
           ]
         }
       ]

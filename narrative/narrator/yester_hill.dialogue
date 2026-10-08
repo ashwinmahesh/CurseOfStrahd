@@ -120,3 +120,16 @@ once
 
 ~ check:investigation:gully_cache:failure
 | Scree, roots and old fire-scars. If the druids hid anything up here, they hid it from you too.
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the druids' camp on the shoulder.
+
+~ examine:yester_tent_1
+| Bedrolls of stitched hides laid round the fire, smelling of smoke and old blood. Bundles of twigs tied in the shape of men are stuck in the earth at their heads, like guards.
+
+~ search:yester_druid_sickle
+| Rolled into a bedroll, a druid's sickle with a bone handle, its blade honed thin and bright. {name} takes it.
+once
+
+~ search:yester_barrow_amulet
+| Pushed into the side of the barrow mound, a tarnished sun on a thong, buried with someone who believed in the morning. {name} brushes the earth off it.
+once

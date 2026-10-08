@@ -14,14 +14,14 @@
       "#.##..........................#..#",
       "#.#................=...........#.#",
       "#......#.........................#",
-      "#................................#",
+      "#.....=..........................#",
       "#....#......#....................#",
       "#................................#",
       "#................................#",
       "#........#..........==......#.#..#",
-      "#.~..........................#...#",
+      "#.~.........................=#...#",
       "#..~~............................#",
-      "#....~~....=.....................#",
+      "#....~~....=.......==............#",
       "#......~~................=.......#",
       "#.....=..~.....................#.#",
       "#.........~~..................#..#",
@@ -240,6 +240,85 @@
       "label": "a hunter's boots in the mud",
       "model": "leaves",
       "item": "boots_of_speed"
+    },
+    {
+      "id": "den_clay_pot",
+      "cell": [
+        19,
+        15
+      ],
+      "kind": "examine",
+      "label": "A clay pot, a knife and a basket",
+      "model": "jars"
+    },
+    {
+      "id": "den_basket",
+      "cell": [
+        20,
+        15
+      ],
+      "kind": "decor",
+      "model": "basket"
+    },
+    {
+      "id": "den_bones_2",
+      "cell": [
+        22,
+        10
+      ],
+      "kind": "decor",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "den_bones_3",
+      "cell": [
+        20,
+        8
+      ],
+      "kind": "decor",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "den_claw_pine_2",
+      "cell": [
+        6,
+        8
+      ],
+      "kind": "decor",
+      "model": "pine_clawed"
+    },
+    {
+      "id": "den_claw_pine_3",
+      "cell": [
+        28,
+        13
+      ],
+      "kind": "decor",
+      "model": "pine_clawed"
+    },
+    {
+      "id": "den_stream_scent",
+      "cell": [
+        11,
+        17
+      ],
+      "kind": "search",
+      "label": "something in the mud by the stream",
+      "model": "leaves",
+      "search_dc": 13,
+      "item": "perfume"
+    },
+    {
+      "id": "den_pot_snare",
+      "cell": [
+        21,
+        15
+      ],
+      "kind": "search",
+      "label": "something under the basket",
+      "model": "rubble",
+      "search_dc": 14,
+      "item": "hunting_trap"
     }
   ],
   "containers": [
