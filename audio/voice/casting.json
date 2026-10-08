@@ -1433,6 +1433,55 @@
       "model": "eleven_v3",
       "library": true,
       "accent_tag": "[strong Romanian accent]"
+    },
+    "barovia_woodcutter": {
+      "voice_id": "FL3b9X97SVcZ5cKBdNzM",
+      "name": "Barovia barovia_woodcutter (2026-10-08)",
+      "description": "A weathered Barovian woodcutter in his fifties speaking English with a very strong, thick Romanian accent. A gruff, rough, breathy working man's voice, hurried and superstitious.",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
+    },
+    "barovia_widow": {
+      "voice_id": "PEdmeSfgivOOnj0TPTei",
+      "name": "Barovia barovia_widow (2026-10-08)",
+      "description": "An old Barovian widow in her sixties speaking English with a very strong, thick Romanian accent. A soft, dry, wry voice with a tremor of grief, gentle and plain-spoken.",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
+    },
+    "barovia_gravedigger": {
+      "voice_id": "msk7qjLdTUv4S1ivjDS0",
+      "name": "Barovia barovia_gravedigger (2026-10-08)",
+      "description": "A big, slow Barovian sexton in his sixties speaking English with a very strong, thick Romanian accent. A deep, gravelly, unhurried voice, matter-of-fact about the dead, oddly courteous.",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
+    },
+    "barovia_vasile": {
+      "voice_id": "UfHihqapkic3hrQMcWhO",
+      "name": "Barovia barovia_vasile (2026-10-08)",
+      "description": "A thin, hooded Barovian villager in his forties speaking English with a very strong, thick Romanian accent. A reedy, hushed gossip's voice, eager to tell the worst news.",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
+    },
+    "barovia_petre": {
+      "voice_id": "P8R5T80nbcVKX08iVC5C",
+      "name": "Barovia barovia_petre (2026-10-08)",
+      "description": "A threadbare Barovian man in his fifties speaking English with a very strong, thick Romanian accent. A low, gloomy, dry voice, contrary and fatalistic.",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
+    },
+    "barovia_acolyte": {
+      "voice_id": "3HlY0mcOyFbkSbYQHDGZ",
+      "name": "Library voice: Maria - Calm & Friendly",
+      "description": "Anca, the church's girl (15): a young adult library voice, the owner's pick (2026-10-08).",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     }
   },
   "sfx": {
