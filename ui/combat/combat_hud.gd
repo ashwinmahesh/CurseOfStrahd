@@ -23,6 +23,8 @@ signal square_picked(id: String)
 const COST_COLOURS := {"action": "moss", "attack": "moss", "bonus": "gilt", "reaction": "mist_blue", "free": "slate",
 	"movement": "moon_blue"}
 const SLOT_SIZE := Vector2(132, 50)
+## The target box's outline when an attack would roll with Advantage or Disadvantage.
+const EDGE_COLOURS := {"advantage": "bile", "disadvantage": "vampire_red"}
 ## {action} reads as the player's key for it (InputActions.fill, Settings, Keys).
 const CONTROLS: Array[String] = [
 	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
@@ -1115,7 +1117,12 @@ func hide_details() -> bool:
 
 # --- Tooltip, prompt, banner ----------------------------------------------------------------------
 
-func show_tooltip(title: String, lines: Array, warnings: Array, at: Vector2) -> void:
+## The box beside the pointer. `edge` outlines it for an attack with "advantage" (green) or "disadvantage" (red), as
+## the roll would be made (both at once cancel and leave the gilt edge).
+func show_tooltip(title: String, lines: Array, warnings: Array, at: Vector2, edge: String = "") -> void:
+	var box := _tooltip.get_theme_stylebox("panel") as StyleBoxFlat
+	box.border_color = Look.color(EDGE_COLOURS.get(edge, "gilt") as String)
+	box.set_border_width_all(3 if EDGE_COLOURS.has(edge) else 2)
 	for ch in _tooltip_box.get_children():
 		ch.free()
 	_tooltip_box.add_child(_label(title, 18, "gilt_light"))

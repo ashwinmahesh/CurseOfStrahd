@@ -354,6 +354,13 @@ func _consume_marks(c: Combatant, target: Combatant) -> void:
 
 
 ## Chance to hit with the d20 needed, for tooltips and the AI: {chance, needs, advantage, disadvantage}.
+## The keys an attack roll with `option` is made under: the attacker's own Advantage and Disadvantage name them
+## (Poisoned, a feature's Advantage), so the roll and its preview read them alike.
+static func roll_keys(option: Dictionary) -> Array[String]:
+	var p := option["profile"] as WeaponProfile
+	return ["attack", "attack:melee" if bool(option["melee"]) else "attack:ranged", "attack:%s" % p.ability]
+
+
 func hit_chance(c: Combatant, target: Combatant, option: Dictionary) -> Dictionary:
 	var p := option["profile"] as WeaponProfile
 	var sit := attack_situation(c, target, option)
@@ -426,7 +433,7 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 	var r := st["r"] as CombatResult
 	var p := option["profile"] as WeaponProfile
 	var ac := int(st["ac"])
-	var keys: Array[String] = ["attack", "attack:melee" if bool(option["melee"]) else "attack:ranged", "attack:%s" % p.ability]
+	var keys := roll_keys(option)
 	st["charge"] = e.monster_actions.charge_of(c, target, option)
 	c.clear_run()
 	var label := "%s → %s (%s)" % [c.name(), target.name(), p.name]
