@@ -472,10 +472,13 @@ func _footprints() -> void:
 	var view := get_parent()
 	if board == null or view == null or not Look.modern():
 		return
-	var members := view.get("members") as Array
-	var tokens := view.get("tokens") as Dictionary
-	if members == null or tokens == null:
+	# Only an exploring view has a party walking about (a Skirmish field's parent has no such list).
+	var got_members: Variant = view.get("members")
+	var got_tokens: Variant = view.get("tokens")
+	if not (got_members is Array) or not (got_tokens is Dictionary):
 		return
+	var members := got_members as Array
+	var tokens := got_tokens as Dictionary
 	for cb: Variant in members:
 		var id := str((cb as Object).get("id"))
 		var tok := tokens.get(id) as Node3D
@@ -1135,7 +1138,11 @@ func _light_kind(l: OmniLight3D) -> String:
 	return "spell"
 
 
-func _dress_light(l: OmniLight3D) -> void:
+func _dress_light(light: Variant) -> void:
+	# Called deferred: the light may have gone with its place by now (a typed parameter would refuse the freed one).
+	if not is_instance_valid(light):
+		return
+	var l := light as OmniLight3D
 	var kind := str(l.get_meta("light_kind")) if l.has_meta("light_kind") else _light_kind(l)
 	var spec := LIGHT_KINDS[kind] as Dictionary
 	l.set_meta("light_kind", kind)
