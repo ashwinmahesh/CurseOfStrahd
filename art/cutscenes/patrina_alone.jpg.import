@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dapkvk57sd4jg"
-path="res://.godot/imported/patrina_alone.jpg-03c851cb002cc0fd199ac779ba4c3fe2.ctex"
+path.bptc="res://.godot/imported/patrina_alone.jpg-03c851cb002cc0fd199ac779ba4c3fe2.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/patrina_alone.jpg"
-dest_files=["res://.godot/imported/patrina_alone.jpg-03c851cb002cc0fd199ac779ba4c3fe2.ctex"]
+dest_files=["res://.godot/imported/patrina_alone.jpg-03c851cb002cc0fd199ac779ba4c3fe2.bptc.ctex"]
 
 [params]
 

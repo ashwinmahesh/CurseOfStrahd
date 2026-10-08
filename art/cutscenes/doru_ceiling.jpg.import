@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dubyx8f0i4pps"
-path="res://.godot/imported/doru_ceiling.jpg-31ad464b1f5a29df1c64a67fe344ef7e.ctex"
+path.bptc="res://.godot/imported/doru_ceiling.jpg-31ad464b1f5a29df1c64a67fe344ef7e.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/doru_ceiling.jpg"
-dest_files=["res://.godot/imported/doru_ceiling.jpg-31ad464b1f5a29df1c64a67fe344ef7e.ctex"]
+dest_files=["res://.godot/imported/doru_ceiling.jpg-31ad464b1f5a29df1c64a67fe344ef7e.bptc.ctex"]
 
 [params]
 

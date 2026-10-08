@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ddopfl6rkit5s"
-path="res://.godot/imported/church_gate.jpg-6d14a496d1026b509de4c177d3fa86e8.ctex"
+path.bptc="res://.godot/imported/church_gate.jpg-6d14a496d1026b509de4c177d3fa86e8.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/church_gate.jpg"
-dest_files=["res://.godot/imported/church_gate.jpg-6d14a496d1026b509de4c177d3fa86e8.ctex"]
+dest_files=["res://.godot/imported/church_gate.jpg-6d14a496d1026b509de4c177d3fa86e8.bptc.ctex"]
 
 [params]
 

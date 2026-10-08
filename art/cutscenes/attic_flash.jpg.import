@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://pxti3itcg8j0"
-path="res://.godot/imported/attic_flash.jpg-e80bf120dc76cf59af1765db8138d96f.ctex"
+path.bptc="res://.godot/imported/attic_flash.jpg-e80bf120dc76cf59af1765db8138d96f.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/attic_flash.jpg"
-dest_files=["res://.godot/imported/attic_flash.jpg-e80bf120dc76cf59af1765db8138d96f.ctex"]
+dest_files=["res://.godot/imported/attic_flash.jpg-e80bf120dc76cf59af1765db8138d96f.bptc.ctex"]
 
 [params]
 

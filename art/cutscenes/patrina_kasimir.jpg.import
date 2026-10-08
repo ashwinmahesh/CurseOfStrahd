@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c8j5jxkdi760d"
-path="res://.godot/imported/patrina_kasimir.jpg-35161e990537db0e02c1297517de83f8.ctex"
+path.bptc="res://.godot/imported/patrina_kasimir.jpg-35161e990537db0e02c1297517de83f8.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/patrina_kasimir.jpg"
-dest_files=["res://.godot/imported/patrina_kasimir.jpg-35161e990537db0e02c1297517de83f8.ctex"]
+dest_files=["res://.godot/imported/patrina_kasimir.jpg-35161e990537db0e02c1297517de83f8.bptc.ctex"]
 
 [params]
 

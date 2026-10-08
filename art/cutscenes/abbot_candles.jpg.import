@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://3itm5kcm47oq"
-path="res://.godot/imported/abbot_candles.jpg-353d712720378eeafa8c2d862f3ccf6c.ctex"
+path.bptc="res://.godot/imported/abbot_candles.jpg-353d712720378eeafa8c2d862f3ccf6c.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/abbot_candles.jpg"
-dest_files=["res://.godot/imported/abbot_candles.jpg-353d712720378eeafa8c2d862f3ccf6c.ctex"]
+dest_files=["res://.godot/imported/abbot_candles.jpg-353d712720378eeafa8c2d862f3ccf6c.bptc.ctex"]
 
 [params]
 

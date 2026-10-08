@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ctjjjatuog8u1"
-path="res://.godot/imported/vosk_unmasked.jpg-8ccf19720f6135e6ecbcee5b6a7c2070.ctex"
+path.bptc="res://.godot/imported/vosk_unmasked.jpg-8ccf19720f6135e6ecbcee5b6a7c2070.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/vosk_unmasked.jpg"
-dest_files=["res://.godot/imported/vosk_unmasked.jpg-8ccf19720f6135e6ecbcee5b6a7c2070.ctex"]
+dest_files=["res://.godot/imported/vosk_unmasked.jpg-8ccf19720f6135e6ecbcee5b6a7c2070.bptc.ctex"]
 
 [params]
 

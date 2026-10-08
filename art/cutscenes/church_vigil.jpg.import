@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdgei4reh46ki"
-path="res://.godot/imported/church_vigil.jpg-a43def54dbf2bb2523f0cdd3bdc60e58.ctex"
+path.bptc="res://.godot/imported/church_vigil.jpg-a43def54dbf2bb2523f0cdd3bdc60e58.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/church_vigil.jpg"
-dest_files=["res://.godot/imported/church_vigil.jpg-a43def54dbf2bb2523f0cdd3bdc60e58.ctex"]
+dest_files=["res://.godot/imported/church_vigil.jpg-a43def54dbf2bb2523f0cdd3bdc60e58.bptc.ctex"]
 
 [params]
 

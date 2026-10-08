@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bqdikp8qyqksd"
-path="res://.godot/imported/ireena_looks_back.jpg-1307e943ecb0321d729f49714e527032.ctex"
+path.bptc="res://.godot/imported/ireena_looks_back.jpg-1307e943ecb0321d729f49714e527032.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/ireena_looks_back.jpg"
-dest_files=["res://.godot/imported/ireena_looks_back.jpg-1307e943ecb0321d729f49714e527032.ctex"]
+dest_files=["res://.godot/imported/ireena_looks_back.jpg-1307e943ecb0321d729f49714e527032.bptc.ctex"]
 
 [params]
 

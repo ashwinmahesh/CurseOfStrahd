@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dw38q2hfm0gow"
-path="res://.godot/imported/quillon_fire.jpg-9bf638126441b5dc327897bb894c6254.ctex"
+path.bptc="res://.godot/imported/quillon_fire.jpg-9bf638126441b5dc327897bb894c6254.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/quillon_fire.jpg"
-dest_files=["res://.godot/imported/quillon_fire.jpg-9bf638126441b5dc327897bb894c6254.ctex"]
+dest_files=["res://.godot/imported/quillon_fire.jpg-9bf638126441b5dc327897bb894c6254.bptc.ctex"]
 
 [params]
 

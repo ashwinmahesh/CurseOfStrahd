@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bjd5xarbuua2s"
-path="res://.godot/imported/rahadin_voices.jpg-bd277fe76f54fff1c9fb271ac7f5db17.ctex"
+path.bptc="res://.godot/imported/rahadin_voices.jpg-bd277fe76f54fff1c9fb271ac7f5db17.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/rahadin_voices.jpg"
-dest_files=["res://.godot/imported/rahadin_voices.jpg-bd277fe76f54fff1c9fb271ac7f5db17.ctex"]
+dest_files=["res://.godot/imported/rahadin_voices.jpg-bd277fe76f54fff1c9fb271ac7f5db17.bptc.ctex"]
 
 [params]
 

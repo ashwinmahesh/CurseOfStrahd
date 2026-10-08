@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b1k0xomq8tya3"
-path="res://.godot/imported/dead_feast.jpg-ce93db8f4a9215fb3ad2d1a05cd533cb.ctex"
+path.bptc="res://.godot/imported/dead_feast.jpg-ce93db8f4a9215fb3ad2d1a05cd533cb.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/dead_feast.jpg"
-dest_files=["res://.godot/imported/dead_feast.jpg-ce93db8f4a9215fb3ad2d1a05cd533cb.ctex"]
+dest_files=["res://.godot/imported/dead_feast.jpg-ce93db8f4a9215fb3ad2d1a05cd533cb.bptc.ctex"]
 
 [params]
 

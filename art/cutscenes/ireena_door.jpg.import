@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://fqopdk16fpcl"
-path="res://.godot/imported/ireena_door.jpg-77ae399bcc019722f4fa9b70b3fcd7da.ctex"
+path.bptc="res://.godot/imported/ireena_door.jpg-77ae399bcc019722f4fa9b70b3fcd7da.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/ireena_door.jpg"
-dest_files=["res://.godot/imported/ireena_door.jpg-77ae399bcc019722f4fa9b70b3fcd7da.ctex"]
+dest_files=["res://.godot/imported/ireena_door.jpg-77ae399bcc019722f4fa9b70b3fcd7da.bptc.ctex"]
 
 [params]
 

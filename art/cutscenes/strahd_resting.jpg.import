@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dfbytou3wovo4"
-path="res://.godot/imported/strahd_resting.jpg-351a5805b9f911b563d06944fb5de40d.ctex"
+path.bptc="res://.godot/imported/strahd_resting.jpg-351a5805b9f911b563d06944fb5de40d.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/cutscenes/strahd_resting.jpg"
-dest_files=["res://.godot/imported/strahd_resting.jpg-351a5805b9f911b563d06944fb5de40d.ctex"]
+dest_files=["res://.godot/imported/strahd_resting.jpg-351a5805b9f911b563d06944fb5de40d.bptc.ctex"]
 
 [params]
 
