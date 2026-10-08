@@ -365,15 +365,24 @@ func _flat_floors_cast_no_shadow() -> void:
 
 ## The Modern finish's depth of field, as a strength the owner picks from (docs/plans/ui_polish.md): how soft
 ## (Godot's 0..1), where the far blur starts (the camera's distance to the party plus `start` plus `per_zoom` of
-## that distance), how far it takes to come in, and whether anything near the lens blurs.
+## that distance), how far it takes to come in, and whether anything near the lens blurs. The tilt-shift strengths
+## (owner request 2026-10-08: "a little noticeable, like in Octopath Traveler 2") blur the near ground too, from
+## `near_at` of the camera's distance in (less `near_gap`), coming in over `near_transition`: a sharp band where the
+## party stands, the bottom and top of the screen soft, so the place reads as a miniature.
 const DOF_STRENGTHS := {
 	"old": {"amount": 0.14, "start": 1.0, "per_zoom": 0.12, "transition": 3.5, "transition_per_zoom": 0.25, "near": true},
 	"light": {"amount": 0.129, "start": 3.0, "per_zoom": 0.15, "transition": 6.0, "transition_per_zoom": 0.3, "near": false},
 	"lighter": {"amount": 0.05, "start": 6.0, "per_zoom": 0.2, "transition": 10.0, "transition_per_zoom": 0.0, "near": false},
+	"tilt_soft": {"amount": 0.17, "start": 1.5, "per_zoom": 0.08, "transition": 4.0, "transition_per_zoom": 0.2, "near": true,
+		"near_at": 0.86, "near_gap": 0.0, "near_transition": 2.0},
+	"tilt": {"amount": 0.22, "start": 1.0, "per_zoom": 0.05, "transition": 3.0, "transition_per_zoom": 0.15, "near": true,
+		"near_at": 0.89, "near_gap": 0.0, "near_transition": 1.6},
+	"tilt_strong": {"amount": 0.3, "start": 0.5, "per_zoom": 0.03, "transition": 2.5, "transition_per_zoom": 0.1, "near": true,
+		"near_at": 0.92, "near_gap": 0.0, "near_transition": 1.2},
 }
-## Light unless the owner picks another (2026-10-07: "old" read as a smear at the top of the screen). Its blur went up
-## 15% (0.08 to 0.092) and then 40% more (0.129), owner requests 2026-10-08; where the blur starts is unchanged.
-static var dof_strength := "light"
+## Tilt-shift (owner pick 2026-10-08, of soft, tilt-shift and strong): before it, "light" (2026-10-07: "old" read as a
+## smear at the top of the screen), whose blur went up 15% and then 40% more the same morning.
+static var dof_strength := "tilt"
 var _dof: CameraAttributesPractical = null
 
 
@@ -388,8 +397,8 @@ func _focus_dof() -> void:
 	_dof.dof_blur_near_enabled = bool(k["near"])
 	_dof.dof_blur_far_distance = d + float(k["start"]) + d * float(k["per_zoom"])
 	_dof.dof_blur_far_transition = float(k["transition"]) + d * float(k["transition_per_zoom"])
-	_dof.dof_blur_near_distance = maxf(1.0, d - 2.0 - d * 0.08)
-	_dof.dof_blur_near_transition = 2.0
+	_dof.dof_blur_near_distance = maxf(1.0, d * float(k.get("near_at", 0.92)) - float(k.get("near_gap", 2.0)))
+	_dof.dof_blur_near_transition = float(k.get("near_transition", 2.0))
 
 
 const MODERN_TONEMAP := Environment.TONE_MAPPER_AGX
