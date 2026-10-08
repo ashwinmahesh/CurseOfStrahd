@@ -103,6 +103,34 @@ func test_spirit_guardians_lingers_spares_allies_and_hurts_enemies_ending_turns_
 	assert_true(far.creature.hp < hp_far, "the aura moved into its space")
 
 
+## Owner's playtest (2026-10-08): foes already inside when Spirit Guardians is cast take its damage then (the spirits
+## appearing count as the Emanation entering their space); after that a foe saves when it enters, when the aura moves
+## onto it and when it ends its turn inside, at most once a turn.
+func test_spirit_guardians_hurts_foes_inside_as_it_appears_and_once_a_turn_after() -> void:
+	var e := _setup(["spirit_guardians"], 4)
+	var c := _caster(e)
+	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(3, 3))
+	var near := TestCombat.punching_bag(e, Vector2i(4, 3))
+	var far := TestCombat.punching_bag(e, Vector2i(9, 3))
+	TestCombat.start_with(e, c)
+	var hp_ally := ally.creature.hp
+	var hp_near := near.creature.hp
+	var hp_far := far.creature.hp
+	assert_true(e.spells.cast(c, "spirit_guardians", 3).ok)
+	assert_true(near.creature.hp < hp_near, "the foe inside takes the damage as the spirits appear")
+	assert_eq(far.creature.hp, hp_far, "not the foe outside")
+	assert_eq(ally.creature.hp, hp_ally, "the ally is spared")
+	e.end_turn()
+	while e.current() != far:
+		e.end_turn()
+	far.movement_left = 30
+	e.move(far, Vector2i(5, 4))
+	var entered := far.creature.hp
+	assert_true(entered < hp_far, "entering the aura")
+	e.end_turn()
+	assert_eq(far.creature.hp, entered, "ending the same turn inside: no second save that turn")
+
+
 func test_spirit_guardians_counts_as_difficult_terrain_for_enemies_only() -> void:
 	var e := _setup(["spirit_guardians"])
 	var c := _caster(e)
