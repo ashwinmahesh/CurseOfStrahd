@@ -833,6 +833,41 @@
   "recipe": "238059d52c",
   "text": "ALL MAY ENTER."
  },
+ "ana/51575c562fe42460": {
+  "chars": 94,
+  "direction": "[petulant, shrill, angry]",
+  "model": "eleven_v3",
+  "recipe": "895bf15afd",
+  "text": "You're not my papa. You can't tell me when to go to bed. Irina! Daria! They won't let me play!"
+ },
+ "ana/75f21c5b90aa2d90": {
+  "chars": 158,
+  "direction": "[matter-of-fact, sweet, eerie]",
+  "model": "eleven_v3",
+  "recipe": "895bf15afd",
+  "text": "In my bed, silly. Papa put me in the yard at St. Andral's, under the stone with the lamb on it. It's cold, but Irina and Daria are just next door, so we talk."
+ },
+ "ana/a3d5c3f499c1248c": {
+  "chars": 48,
+  "direction": "[sulky, dismissive]",
+  "model": "eleven_v3",
+  "recipe": "895bf15afd",
+  "text": "Mila's boring anyway. She cries. I'll go to bed."
+ },
+ "ana/bb58d4d636a31c81": {
+  "chars": 103,
+  "direction": "[sing-song, cheerful, eerie]",
+  "model": "eleven_v3",
+  "recipe": "895bf15afd",
+  "text": "Mila? Mila, it's me. Open the shutter, silly. I've brought roses, like the gentleman does. It's polite."
+ },
+ "ana/bea43eedc41a38ff": {
+  "chars": 107,
+  "direction": "[sweet, chatty, eerie]",
+  "model": "eleven_v3",
+  "recipe": "895bf15afd",
+  "text": "Oh. You're not Mila. Are you Papa's friends? Papa has lots of friends now. He lights lamps for all of them."
+ },
  "anastrasya_karelova/13c01aaf0232a38e": {
   "chars": 77,
   "model": "eleven_v3",
@@ -3619,6 +3654,48 @@
   "recipe": "33c3142235",
   "text": "This week she said Petra. My sister. The one who carries the water. I haven't told her. I've dug it, though. I can't help digging it. That's the worst of it."
  },
+ "barovia_luca/4053c87b6c0a2e75": {
+  "chars": 56,
+  "direction": "[hoarse, sheepish, waking]",
+  "model": "eleven_v3",
+  "recipe": "da279b5d2a",
+  "text": "Da? Da, I cut a bit more. I'm sorry. The light was good."
+ },
+ "barovia_luca/63af69b3de8e21bc": {
+  "chars": 52,
+  "direction": "[wry, sheepish]",
+  "model": "eleven_v3",
+  "recipe": "da279b5d2a",
+  "text": "I cut by noon now. Da stands over me with a sundial."
+ },
+ "barovia_luca/6f2020cf8aafceb6": {
+  "chars": 232,
+  "direction": "[hushed, frightened, remembering]",
+  "model": "eleven_v3",
+  "recipe": "da279b5d2a",
+  "text": "There was a man in the trees, in the spring. A big man in a bear's hide, planting things and singing to them. I hid. He said, to the seeds, not to me: the hill wants the valley back. Grow, and go home, and bring the valley with you."
+ },
+ "barovia_luca/d625aa8c33953df2": {
+  "chars": 111,
+  "direction": "[low, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "da279b5d2a",
+  "text": "He went off west after. Toward the hill past the vineyard, the bald one where nothing grows but what he plants."
+ },
+ "barovia_luca/dfae30e70da804f8": {
+  "chars": 62,
+  "direction": "[fierce, satisfied]",
+  "model": "eleven_v3",
+  "recipe": "da279b5d2a",
+  "text": "Somebody burned his hill, they say. Good. I hope he was on it."
+ },
+ "barovia_luca/f676c7d195198de1": {
+  "chars": 168,
+  "direction": "[hushed, frightened]",
+  "model": "eleven_v3",
+  "recipe": "da279b5d2a",
+  "text": "Big. A bearskin with the head still on it, like a hood. Singing. He wasn't singing to me; he didn't know I was there. If he had, I don't think I'd have woken up at all."
+ },
  "barovia_petre/4a7f127600b2977e": {
   "chars": 23,
   "direction": "[dry, knowing]",
@@ -3688,6 +3765,20 @@
   "model": "eleven_v3",
   "recipe": "d8c0f4a9b0",
   "text": "Everybody but Luca."
+ },
+ "barovia_shopper/83b6d049bbe296fc": {
+  "chars": 132,
+  "direction": "[low, wary]",
+  "model": "eleven_v3",
+  "recipe": "7225af8f61",
+  "text": "Help? No. Nobody's ever helped by being seen helping in this village. Buy something, if you're buying. He watches who talks to whom."
+ },
+ "barovia_shopper/bea3382c1de5e808": {
+  "chars": 118,
+  "direction": "[anxious, complaining]",
+  "model": "eleven_v3",
+  "recipe": "7225af8f61",
+  "text": "Three coppers for a candle. Three. It was one, last spring. He says the roads are bad. The roads have always been bad."
  },
  "barovia_vasile/136218eb148bd01a": {
   "chars": 74,
@@ -4087,6 +4178,41 @@
   "model": "eleven_v3",
   "recipe": "a103c32407",
   "text": "Did you look at the wood? Bildrath's got most of it. The rest is on the pile, there."
+ },
+ "barovia_worshipper_mihai/19b174a6a70e70c6": {
+  "chars": 110,
+  "direction": "[dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "d0bf62d7f6",
+  "text": "The roof keeps the rain off and the Morninglord keeps His opinions to Himself. That's more than I get at home."
+ },
+ "barovia_worshipper_mihai/1b98cb2eeabfeabe": {
+  "chars": 132,
+  "direction": "[old, dry, sad]",
+  "model": "eleven_v3",
+  "recipe": "d0bf62d7f6",
+  "text": "My grandson went up the road to the castle to ask for work. That was two winters ago. I don't pray he comes back. I pray he doesn't."
+ },
+ "barovia_worshipper_mihai/3b21e844ba9a7a44": {
+  "chars": 140,
+  "direction": "[old, wry, gentle]",
+  "model": "eleven_v3",
+  "recipe": "d0bf62d7f6",
+  "text": "They buried Kolyan properly. I prayed for him too. I'd not have, a year ago. You find the list gets longer as you get older, and less fussy."
+ },
+ "barovia_worshipper_sorina/534d7d27c1d467b8": {
+  "chars": 123,
+  "direction": "[quiet, relieved, wary]",
+  "model": "eleven_v3",
+  "recipe": "2971970e6c",
+  "text": "It's quiet under the floor now. Father Donavich says to give thanks. I'm giving them. I'm also keeping one eye on the door."
+ },
+ "barovia_worshipper_sorina/9485aec2a055c17c": {
+  "chars": 135,
+  "direction": "[hushed, nervous]",
+  "model": "eleven_v3",
+  "recipe": "2971970e6c",
+  "text": "Shh. Father Donavich is praying, and when he stops the noise starts again from under the floor. Pray if you're staying. Or go, quietly."
  },
  "bella_sunbane/098ef8a373570503": {
   "chars": 40,
@@ -4827,6 +4953,41 @@
   "model": "eleven_v3",
   "recipe": "f6d71b65ad",
   "text": "Bless you. Truly. Now hold still."
+ },
+ "camp_cook/f9f779412d12e717": {
+  "chars": 121,
+  "direction": "[tart, bossy, sly]",
+  "model": "eleven_v3",
+  "recipe": "d64ca4ba28",
+  "text": "Sit if you want to eat, stand if you want to be looked at. Luvash's wine is for Luvash, and for me when he isn't looking."
+ },
+ "camp_fisher/68c99771b2d4663c": {
+  "chars": 110,
+  "direction": "[slow, low warning]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "Don't wade in past your knees. The bottom drops away, and nothing that goes down there comes back up the same."
+ },
+ "camp_fisher/ef9b2336e0db18da": {
+  "chars": 90,
+  "direction": "[slow, calm, weathered]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "Nets tear. You mend them. The lake's the same. It takes a little and you mend what's left."
+ },
+ "camp_groom/1cfd2dbddc144d32": {
+  "chars": 179,
+  "direction": "[gentle, dry]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "This one bites, that one kicks, and the black one is Arrigal's, so don't touch it at all. The others are good horses. They know the way out of the valley. They just can't take it."
+ },
+ "camp_lookout/d6565abd9726a895": {
+  "chars": 98,
+  "direction": "[tense, watchful, low]",
+  "model": "eleven_v3",
+  "recipe": "db24af9d10",
+  "text": "Keep to the fire, stranger. I watch the road so you don't have to. And so I see who comes down it."
  },
  "clovin_belview/1e969f09f8611c9b": {
   "chars": 161,
@@ -24461,6 +24622,41 @@
   "recipe": "ef36332f2b",
   "text": "...She says the land and the lord are one. She says if I listen I'll hear his heart in the roots. I've listened. I never heard anything but roots."
  },
+ "krezk_bucket_wife/cb9f4b0d23280019": {
+  "chars": 150,
+  "direction": "[brisk, wry]",
+  "model": "eleven_v3",
+  "recipe": "d64ca4ba28",
+  "text": "Water to the south row, a word at the shrine, and back. Thirty times a day. My arms are as strong as Cezar's and my knees are holier than the abbot's."
+ },
+ "krezk_fence_mender/f8377c07217d7dc6": {
+  "chars": 88,
+  "direction": "[slow, good-natured]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "The billy breaks a rail, I mend a rail. He breaks another. I think he likes the company."
+ },
+ "krezk_gate_boy/14a08375f3880984": {
+  "chars": 119,
+  "direction": "[excited, breathless, curious]",
+  "model": "eleven_v3",
+  "recipe": "9e6aefb001",
+  "text": "Nobody comes up the road. Except you. Did you see wolves? Did you see the castle? Is it true it has a thousand windows?"
+ },
+ "krezk_gate_boy/ebac213a6861ca7d": {
+  "chars": 115,
+  "direction": "[excited, breathless]",
+  "model": "eleven_v3",
+  "recipe": "9e6aefb001",
+  "text": "Ilya's out of the house! Everybody says it was you. Is it true you've been past Vallaki? Is it true there's a lake?"
+ },
+ "krezk_goatherd/db5e1700b5f7edc6": {
+  "chars": 156,
+  "direction": "[dry, fond]",
+  "model": "eleven_v3",
+  "recipe": "1fae5c6eba",
+  "text": "That one's Rodica's, and that one's the Burgomaster's, and the one with the horn is nobody's, because nobody's brave enough. Mind your fingers by the rails."
+ },
  "krezk_guard/0046292684ec4004": {
   "chars": 154,
   "direction": "[weary, guilty]",
@@ -24789,6 +24985,20 @@
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "Still in one piece? Good. Krezk likes visitors who stay that way. Fewer graves."
+ },
+ "krezk_wall_watch/fc57aa45ff2a308d": {
+  "chars": 135,
+  "direction": "[steady, wary]",
+  "model": "eleven_v3",
+  "recipe": "9f4f8d6957",
+  "text": "The gate's watched, the wall's watched, and the road is watched most of all. Walk where you like inside. Just walk where I can see you."
+ },
+ "krezk_well_wife/cfdd4758f012793f": {
+  "chars": 183,
+  "direction": "[warm, devout, practical]",
+  "model": "eleven_v3",
+  "recipe": "93c6b46ab0",
+  "text": "One bucket for the Burgomaster, one for the widow at the end of the row, one for me, and a prayer for each. The well's never frozen. Not once. We don't ask why, we just say thank you."
  },
  "krezk_woodcutter/2fef8668149d4fe9": {
   "chars": 106,
@@ -27850,6 +28060,34 @@
   "model": "eleven_v3",
   "recipe": "57e379445e",
   "text": "And Victor's gone. There was a light in the attic, and then there wasn't any Victor. I keep laying a place for him."
+ },
+ "lz_old_fisher/2e1aa45ebdd58527": {
+  "chars": 150,
+  "direction": "[weary, gruff, wistful]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "Forty years I fished this water. Then the fish went deep and the men went to Vallaki, and here I am, mending nets for a lake that's stopped answering."
+ },
+ "lz_old_fisher/f95ce1fe61fdf85c": {
+  "chars": 157,
+  "direction": "[low, uneasy warning]",
+  "model": "eleven_v3",
+  "recipe": "f30946e8ec",
+  "text": "Keep away from the big fellow in the shack. He drinks, and he cries, and he goes out in his boat at night with something in a sack. I don't ask. Nobody asks."
+ },
+ "lzt_hunter/04e6d492bc8b9cc0": {
+  "chars": 155,
+  "direction": "[low, wary, plain]",
+  "model": "eleven_v3",
+  "recipe": "9f4f8d6957",
+  "text": "Hares, grouse, the odd fox. The wolves take the deer before I get near them. They're bold this year, bold as dogs. They watch the trail in the daytime now."
+ },
+ "lzt_hunter/d9c6bddd15bc02a0": {
+  "chars": 105,
+  "direction": "[dry, practical warning]",
+  "model": "eleven_v3",
+  "recipe": "9f4f8d6957",
+  "text": "The lake's below, if that's where you're going. Don't drink from the near shore. Bluto's been sick in it."
  },
  "mad_mage/0799847bf1f24e59": {
   "chars": 62,
@@ -57021,6 +57259,27 @@
   "recipe": "f2004ca8b2",
   "text": "Uncle says I'm not to leave the shop. Uncle says a lot. I can carry your packs. I can carry you, if you fall down. I'll count the days we're gone so he knows."
  },
+ "pastry_customer_man/0dae0db32326b89b": {
+  "chars": 114,
+  "direction": "[hollow, impatient, twitchy]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "You're waiting too? No? Then step aside. They open when they open. The old woman knows I'm here. She always knows."
+ },
+ "pastry_customer_man/1917a8c01e7c632c": {
+  "chars": 108,
+  "direction": "[longing, desperate, defensive]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "One bite and I'm home, and my wife is alive, and the sun is out. Don't look at me like that. You'd come too."
+ },
+ "pastry_customer_woman/be985d3814f61184": {
+  "chars": 120,
+  "direction": "[nervous, rationalising, craving]",
+  "model": "eleven_v3",
+  "recipe": "93c6b46ab0",
+  "text": "Just one for my husband. He can't sleep without them any more. Maybe two. Maybe I'll try one. Only to know what he sees."
+ },
  "patrina_velikovna/235ec244fd8e9dc9": {
   "chars": 107,
   "model": "eleven_v3",
@@ -57408,6 +57667,13 @@
   "model": "eleven_v3",
   "recipe": "f8628ac829",
   "text": "KEY. THE BIRDS TOOK IT. UP UNDER THE ROOF."
+ },
+ "pool_mourner/b67838152353c70e": {
+  "chars": 171,
+  "direction": "[soft, grieving, devout]",
+  "model": "eleven_v3",
+  "recipe": "c1f71546fb",
+  "text": "Every morning I tell him the news. The goats, the weather, who's fallen out with whom. The water never freezes, not even in the deep of winter. That's how I know he hears."
  },
  "rahadin/03f9451a0bdddf90": {
   "chars": 108,
@@ -61636,6 +61902,90 @@
   "recipe": "93c6b46ab0",
   "text": "Back again. There's soup. There's always soup."
  },
+ "stella_wachter/083c19cdfec9337f": {
+  "chars": 74,
+  "direction": "[quiet, wry, defiant]",
+  "model": "eleven_v3",
+  "recipe": "3c0173db4e",
+  "text": "I sleep with the shutters open now. Father Lucian thinks it's for the air."
+ },
+ "stella_wachter/15db90dec32632b9": {
+  "chars": 83,
+  "direction": "[angry, betrayed]",
+  "model": "eleven_v3",
+  "recipe": "3c0173db4e",
+  "text": "And Mother knew. Mother tied the bow every morning and told callers I was delicate."
+ },
+ "stella_wachter/1e5e22f172318d4a": {
+  "chars": 133,
+  "direction": "[dry, then furious]",
+  "model": "eleven_v3",
+  "recipe": "3c0173db4e",
+  "text": "Father Lucian has given me a cot behind the vestry and a great many blankets. He keeps asking if I'm cold. I'm not cold. I'm furious."
+ },
+ "stella_wachter/25439494ce90a20e": {
+  "chars": 175,
+  "direction": "[low, urgent, conspiratorial]",
+  "model": "eleven_v3",
+  "recipe": "3c0173db4e",
+  "text": "Mother's book club meets in the cellar, under the study. The way down is a panel behind the bookcase: push the third shelf, not the second. They don't read. They pray. To him."
+ },
+ "stella_wachter/2612bb0681c1462d": {
+  "chars": 79,
+  "direction": "[shaky, grateful, wry]",
+  "model": "eleven_v3",
+  "recipe": "3c0173db4e",
+  "text": "Come and find me there. I'll have something for you, when I've stopped shaking."
+ },
+ "stella_wachter/322b3eb3c296f25d": {
+  "chars": 125,
+  "direction": "[terrified, desperate, rising]",
+  "model": "eleven_v3",
+  "recipe": "3c0173db4e",
+  "text": "He looks out of my eyes. Every day. Mother ties the bow fresh every morning, so it's neat for him. Get it off. Get it off me."
+ },
+ "stella_wachter/62cff71bf07997bc": {
+  "chars": 139,
+  "direction": "[steadying, resolute]",
+  "model": "eleven_v3",
+  "recipe": "3c0173db4e",
+  "text": "I'm free of him. I'm not free of her. I'm going to Father Lucian. I know the way; I've watched it from that window every day for two years."
+ },
+ "stella_wachter/70a108f5c6748ddd": {
+  "chars": 166,
+  "direction": "[quiet, defiant]",
+  "model": "eleven_v3",
+  "recipe": "3c0173db4e",
+  "text": "And this. He sent it for my sixteenth birthday, with a card that said \"for flying\". I never put it on. You should. Let him see it on somebody who isn't afraid of him."
+ },
+ "stella_wachter/a5a63518041dd189": {
+  "chars": 66,
+  "direction": "[cold, bitter, resolute]",
+  "model": "eleven_v3",
+  "recipe": "3c0173db4e",
+  "text": "And this was my dowry. Mother would only spend it on him. Take it."
+ },
+ "stella_wachter/c2fd0f2d8f771edb": {
+  "chars": 111,
+  "direction": "[frightened, trembling, remembering]",
+  "model": "eleven_v3",
+  "recipe": "3c0173db4e",
+  "text": "I told him I'd follow him like a cat follows cream. At Mother's party. I was laughing. He said: then you shall."
+ },
+ "stella_wachter/cf547801361efa3d": {
+  "chars": 104,
+  "direction": "[nervous, hushed]",
+  "model": "eleven_v3",
+  "recipe": "3c0173db4e",
+  "text": "The third shelf, not the second. Did you look? Don't tell me what's down there. I've heard them singing."
+ },
+ "stella_wachter/e3db437f2ce4e95e": {
+  "chars": 138,
+  "direction": "[shaken, bitter, breathless]",
+  "model": "eleven_v3",
+  "recipe": "3c0173db4e",
+  "text": "Two years. Two years I've sat at that window and watched the square for him. Who went into the Baron's. Who went to church. Who looked up."
+ },
  "strahd/0100fd8e9f96e190": {
   "chars": 103,
   "model": "eleven_v3",
@@ -63709,6 +64059,181 @@
   "recipe": "439bc9ae80",
   "text": "We're just going to leave the coffin there? In the road? All right."
  },
+ "teodor/028dc4837d57ab3e": {
+  "chars": 55,
+  "direction": "[tender, soft, farewell]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "I'll knock, now and then. You needn't answer, my heart."
+ },
+ "teodor/0a7577f15cb28990": {
+  "chars": 203,
+  "direction": "[gentle, weary, earnest]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "Before I forget, and I have been forgetting things: the grave Mihail dug for me, by the east wall. I filled it with what I couldn't give back. Purses off the road, mostly, from people I reached too late."
+ },
+ "teodor/0cd67ae371a93130": {
+  "chars": 213,
+  "direction": "[low, grave, measured]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "My master wants a door in this village. Not broken: opened, from the inside, by somebody who asks him in. One door in, and he can walk to any door he likes. The burgomaster's, for instance, and the girl behind it."
+ },
+ "teodor/0e942643d1cab24d": {
+  "chars": 107,
+  "direction": "[gentle, rueful]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "And a shield. A traveller carried it all the way from the mists, and it didn't help him. It might help you."
+ },
+ "teodor/133de77b10aee055": {
+  "chars": 109,
+  "direction": "[courtly, polite, wistful]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "Teodor Cozma, cooper, of this village, formerly. Forgive me for not coming in. It isn't that I don't want to."
+ },
+ "teodor/27cef8b276a2c9ed": {
+  "chars": 150,
+  "direction": "[quiet, rueful]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "I went to the crossroads for a barrel, and a gentleman in a carriage offered me a lift home. I said yes. That's all it takes, in this valley: one yes."
+ },
+ "teodor/3070341980d9fa8e": {
+  "chars": 124,
+  "direction": "[calm, courteous, weary]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "Yes. I thought one of you might. You've the look of people who've walked a long way and would like something to show for it."
+ },
+ "teodor/327be77e4f1e1c93": {
+  "chars": 40,
+  "direction": "[simple, quiet]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "To tell her the news. And to stand here."
+ },
+ "teodor/457576c75f7e2b1c": {
+  "chars": 81,
+  "direction": "[cold, bitter, quiet]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "He did. And he keeps me, the way you keep a dog you haven't decided to drown yet."
+ },
+ "teodor/561c02d371f7cc4a": {
+  "chars": 54,
+  "direction": "[quiet, wistful, aching]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "It's coming up. I can feel it in my teeth, like frost."
+ },
+ "teodor/567b8b47de407d02": {
+  "chars": 81,
+  "direction": "[dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "They're very rude, wolves, and nobody misses them. I can't recommend the flavour."
+ },
+ "teodor/6414cdaa02c62bb9": {
+  "chars": 198,
+  "direction": "[low, quietly menacing]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "You'll have noticed the dead walk this village after the second bell. Perhaps you noticed they never scratch at this shutter. They know whose door it is. So does everything else that walks at night."
+ },
+ "teodor/827142fa63c3df44": {
+  "chars": 84,
+  "direction": "[soft, dying, gentle]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "The grave Mihail dug for me. Look in it. I filled it with what I couldn't give back."
+ },
+ "teodor/8fcc74d0c66e17b6": {
+  "chars": 104,
+  "direction": "[dry, courteous, deadpan]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "Dead. Hungry. Polite. In that order, most nights, though I work hard to keep the third one at the front."
+ },
+ "teodor/9386a6ff00bf934a": {
+  "chars": 98,
+  "direction": "[wry, resigned, faint smile]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "At your backs? I've stood politely at the back for three winters. Very well. One more night of it."
+ },
+ "teodor/afabfaf3d66aa6c0": {
+  "chars": 71,
+  "direction": "[courtly, gentle, tender]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "Good evening, my heart. You have company. Good evening to your company."
+ },
+ "teodor/b08be85393a6981e": {
+  "chars": 78,
+  "direction": "[tender, sad, resigned]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "He'll know I failed, my heart. That's rather the point. I came to say goodbye."
+ },
+ "teodor/b65a79ff034fc2d9": {
+  "chars": 38,
+  "direction": "[tender, peaceful]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "I'll be warm. It's been three winters."
+ },
+ "teodor/c956985c40ad9290": {
+  "chars": 96,
+  "direction": "[dry, self-deprecating]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "As you like. I'll be at the churchyard wall, being no help at all. I've become quite good at it."
+ },
+ "teodor/e4e1e588b274377e": {
+  "chars": 87,
+  "direction": "[tender, soft, resigned]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "Ileana. The sun's coming. I'd like to see one more, if you'll stand with me while I do."
+ },
+ "teodor/ecab052bafb1370d": {
+  "chars": 197,
+  "direction": "[warm, resolute, wry]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "I haven't had anyone at my back since the cooperage. Mind the bats; they bite low. And if I go for a throat tonight, it will be one of theirs. You have my word, for what a dead man's word is worth."
+ },
+ "teodor/f39fd24305e037a7": {
+  "chars": 61,
+  "direction": "[tender, wry]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "It was never the garlic, my heart. You never once hung it up."
+ },
+ "teodor/f6abc76ed358dcda": {
+  "chars": 114,
+  "direction": "[quiet, courteous, urgent]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "I won't fight you in front of her. But hear me first, because there isn't much night left, and none of it is mine."
+ },
+ "teodor/fee1c59e0538c0fe": {
+  "chars": 63,
+  "direction": "[wry, light, sad]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "The woods, then. The wolves will be pleased; they've missed me."
+ },
+ "teodor/ff83ef19908b28ec": {
+  "chars": 169,
+  "direction": "[low, grim]",
+  "model": "eleven_v3",
+  "recipe": "4d71c8957c",
+  "text": "He gave me three winters to get Ileana to ask. Tonight he sent word that he's done waiting. If I don't bring him a door by morning, he'll send someone who doesn't knock."
+ },
  "thistle/01e81a8f5565a344": {
   "chars": 33,
   "model": "eleven_v3",
@@ -65487,6 +66012,27 @@
   "recipe": "4573470183",
   "text": "Long enough to have buried a husband, two sisters and a horse I liked better than the husband. The road takes and the road gives. Mostly it takes."
  },
+ "tser_iancu/173f511537681926": {
+  "chars": 120,
+  "direction": "[cool, intense]",
+  "model": "eleven_v3",
+  "recipe": "4e283164ff",
+  "text": "Ten paces. I hit the knot nine times in ten. Stanimir says that tenth one is the one that kills you. So I keep throwing."
+ },
+ "tser_lavinia/43e590bcd021318e": {
+  "chars": 138,
+  "direction": "[teasing, breathless]",
+  "model": "eleven_v3",
+  "recipe": "39247df308",
+  "text": "Clap or don't, the steps are the same. My grandmother danced this for a prince once. He was dead by morning, but she said he'd enjoyed it."
+ },
+ "tser_marin/6806d8661786bcc2": {
+  "chars": 140,
+  "direction": "[gruff, grumbling, kindly]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "One deer, and I walked half the night for it. The wolves had the rest. They don't share, and nor do I, unless you're hungry. Are you hungry?"
+ },
  "tser_petru/b817a063c41f3a61": {
   "chars": 116,
   "direction": "[flat, guarded]",
@@ -66220,6 +66766,41 @@
   "recipe": "42d052c1a5",
   "text": "Sit, sit. This is the only chair in Vallaki nobody's ordered me to be cheerful in. I'm not giving it up."
  },
+ "vallaki_chandler/199ebfe1b0181f28": {
+  "chars": 79,
+  "direction": "[warm, heartfelt]",
+  "model": "eleven_v3",
+  "recipe": "b12b47e2c9",
+  "text": "Mila's alive. I know who to thank for it, even if nobody will tell me what for."
+ },
+ "vallaki_chandler/38b62e3c10f92aaf": {
+  "chars": 105,
+  "direction": "[firm, wry, grateful]",
+  "model": "eleven_v3",
+  "recipe": "b12b47e2c9",
+  "text": "Two hundred gold. It's every candle I've sold since spring. Don't argue; I'd only spend it on more nails."
+ },
+ "vallaki_chandler/7652c4c5fdb86f0f": {
+  "chars": 78,
+  "direction": "[emotional, grateful, near tears]",
+  "model": "eleven_v3",
+  "recipe": "b12b47e2c9",
+  "text": "Mila's out at the market today. In daylight. Laughing at something. Thank you."
+ },
+ "vallaki_chandler/faf10e9a9d0cc8ac": {
+  "chars": 138,
+  "direction": "[frightened, hushed, haggard]",
+  "model": "eleven_v3",
+  "recipe": "b12b47e2c9",
+  "text": "Black roses on my step. Ilie said not to throw them out, it makes her angry. Who is \"her\"? He won't say. I've nailed Mila's shutters shut."
+ },
+ "vallaki_cloth_merchant/f89226a54aa3fccc": {
+  "chars": 193,
+  "direction": "[booming salesman, then nervous]",
+  "model": "eleven_v3",
+  "recipe": "6493a063de",
+  "text": "Bunting! Festival bunting, by the yard or the bolt! I have sold yellow to every house in Vallaki and three of them twice. Business has never been better, which worries me more than you'd think."
+ },
  "vallaki_goodwife/15626119a742114b": {
   "chars": 124,
   "model": "eleven_v3",
@@ -66620,6 +67201,27 @@
   "recipe": "43fd34e107",
   "text": "Not now, obviously. Noon. It's very dark to be announcing things in. Come back when there's a sky."
  },
+ "vallaki_herbwife/53859389cb194f0b": {
+  "chars": 137,
+  "direction": "[sweet, conspiratorial, low]",
+  "model": "eleven_v3",
+  "recipe": "d368fcc7a8",
+  "text": "Sage for sleep, garlic for the door, wolfsbane for the window. And a ribbon, dear, yellow, for your coat. They're watching who wears one."
+ },
+ "vallaki_herbwife/714ceec5f03b6ae9": {
+  "chars": 123,
+  "direction": "[dry, relieved]",
+  "model": "eleven_v3",
+  "recipe": "d368fcc7a8",
+  "text": "Sage, garlic, wolfsbane. Same as always. The festival's done, so I can stop selling yellow ribbons too. Never liked yellow."
+ },
+ "vallaki_herbwife/7d70e99306b5ff3f": {
+  "chars": 109,
+  "direction": "[sweet, pointed irony]",
+  "model": "eleven_v3",
+  "recipe": "d368fcc7a8",
+  "text": "Because the Baron says there's nothing to fear, and the Baron is always right. Garlic is two coppers a braid."
+ },
  "vallaki_jailer/1f9d1530b4cce0d7": {
   "chars": 134,
   "model": "eleven_v3",
@@ -66812,6 +67414,97 @@
   "model": "eleven_v3",
   "recipe": "5c319ee602",
   "text": "I've counted. Three girls this year. Every one of them had roses on her step the day before. Before, not after. The card on Ana's said \"with sympathy\". It was a joke. It's always a joke, with him."
+ },
+ "vallaki_parishioner_varvara/a6c8f35e03eb612f": {
+  "chars": 151,
+  "direction": "[trembling, fearful, prayerful]",
+  "model": "eleven_v3",
+  "recipe": "5c7e1815d5",
+  "text": "Somebody took the saint's bones. Father Lucian won't say so, but his face says so. I pray they come home before the dark finds out the door's unlocked."
+ },
+ "vallaki_parishioner_varvara/cfd8c92f801af1fc": {
+  "chars": 133,
+  "direction": "[warm, relieved, grateful]",
+  "model": "eleven_v3",
+  "recipe": "5c7e1815d5",
+  "text": "The bones are home. I felt it in the floor this morning, like a stove being lit. Thank the Morninglord. And thank you, if it was you."
+ },
+ "vallaki_patrol/8ee5097e9d7065f5": {
+  "chars": 71,
+  "direction": "[brusque, officious]",
+  "model": "eleven_v3",
+  "recipe": "9e1b5aa3a3",
+  "text": "Keep moving, strangers. And smile. It's not a request. It's a festival."
+ },
+ "vallaki_patron_dragan/437578082c0f3b9d": {
+  "chars": 180,
+  "direction": "[hearty, tipsy]",
+  "model": "eleven_v3",
+  "recipe": "4c6943b7e3",
+  "text": "Sit, sit. Not there, that's Old Kolya's stool, and he'll come back for it if he has to crawl. You're not from here. Good for you. Don't tell the Baron you were happy anywhere else."
+ },
+ "vallaki_patron_dragan/82251c3197a0ba9e": {
+  "chars": 138,
+  "direction": "[bitter, sarcastic]",
+  "model": "eleven_v3",
+  "recipe": "4c6943b7e3",
+  "text": "Nothing. Nothing at all is wrong with the Baron. All will be well. That's the motto. You say it with a smile, or you say it in the stocks."
+ },
+ "vallaki_patron_oana/911e0d200e653679": {
+  "chars": 173,
+  "direction": "[dry, wry, measured]",
+  "model": "eleven_v3",
+  "recipe": "c1f71546fb",
+  "text": "One cup, once a week, and I make it last the evening. Urwin pours it the same every time. You can set a clock by the man, if anyone in Vallaki still had a clock that worked."
+ },
+ "vallaki_porter/2cff144da15dd520": {
+  "chars": 55,
+  "direction": "[warm, cheerful]",
+  "model": "eleven_v3",
+  "recipe": "0cbd2c8d43",
+  "text": "Heavy days are good days. You don't have time to think."
+ },
+ "vallaki_porter/c1239e8554182968": {
+  "chars": 130,
+  "direction": "[cheerful, breathless]",
+  "model": "eleven_v3",
+  "recipe": "0cbd2c8d43",
+  "text": "Mind your feet! Sacks for Urwin, wine for the square, wicker for the sun. Everything in this town goes on my back sooner or later."
+ },
+ "vallaki_raker/75a30eed73200d93": {
+  "chars": 154,
+  "direction": "[flat, weary, deadpan]",
+  "model": "eleven_v3",
+  "recipe": "d0595add75",
+  "text": "Every morning I rake it smooth. Every afternoon the carts churn it up. Every morning I rake it smooth again. The Baron says this is what order looks like."
+ },
+ "vallaki_ribbon_girl/645554274285f975": {
+  "chars": 82,
+  "direction": "[flustered, apologetic]",
+  "model": "eleven_v3",
+  "recipe": "895bf15afd",
+  "text": "Oh. That's... I have to write that down. I'm sorry. It's not me who wants to know."
+ },
+ "vallaki_ribbon_girl/742bc3bc1e87bf04": {
+  "chars": 83,
+  "direction": "[lost, quiet]",
+  "model": "eleven_v3",
+  "recipe": "895bf15afd",
+  "text": "No more ribbons. Nobody's counting any more. I don't know what to do with my hands."
+ },
+ "vallaki_ribbon_girl/b1464f9083b37b1b": {
+  "chars": 76,
+  "direction": "[bright, eager]",
+  "model": "eleven_v3",
+  "recipe": "895bf15afd",
+  "text": "A ribbon for the festival! It's free. It's for the sun. Everybody wears one."
+ },
+ "vallaki_sun_painter/fd4c4a2771f63ac2": {
+  "chars": 128,
+  "direction": "[dry, sardonic, tired]",
+  "model": "eleven_v3",
+  "recipe": "e7502a06a3",
+  "text": "Third coat. The Baron says the sun must be brighter than the last one. The last one was very bright, and look where that got us."
  },
  "vasilka/03e96dd870a44093": {
   "chars": 75,
@@ -69044,6 +69737,55 @@
   "model": "eleven_v3",
   "recipe": "ffe2f7008c",
   "text": "Never? That is a very long word for a mortal to use. ...Agreed. Bound and agreed."
+ },
+ "wine_cooper/bfbea76f42269f23": {
+  "chars": 120,
+  "direction": "[grumbling, sad]",
+  "model": "eleven_v3",
+  "recipe": "b37cf3c360",
+  "text": "Every hoop loose, every stave dry. The druids didn't touch the casks. They just let them die of neglect, which is worse."
+ },
+ "wine_cooper/ea8af2332d77a79e": {
+  "chars": 107,
+  "direction": "[proud, emotional]",
+  "model": "eleven_v3",
+  "recipe": "b37cf3c360",
+  "text": "Hear that? That's a cask that holds. Davian's wine is going down the road again, in my casks. I could weep."
+ },
+ "wine_picker/a1771a643dea3fc0": {
+  "chars": 110,
+  "direction": "[slow, gentle, amused]",
+  "model": "eleven_v3",
+  "recipe": "62f49b2835",
+  "text": "These are the last good rows. Taste one. Sour, yes? The wine will be sweet. Don't ask me how. Ask the old man."
+ },
+ "wine_pruner/5e3279419c0670af": {
+  "chars": 156,
+  "direction": "[soft, patient, murmuring]",
+  "model": "eleven_v3",
+  "recipe": "1fae5c6eba",
+  "text": "Dead, dead, dead, and this one's thinking about it. You cut away what won't come back, and you wait. That's all a vine-dresser is. Somebody good at waiting."
+ },
+ "wine_washer/ee357894302ecded": {
+  "chars": 116,
+  "direction": "[brisk, wry]",
+  "model": "eleven_v3",
+  "recipe": "d64ca4ba28",
+  "text": "I came out from Vallaki to pick grapes for one season. That was four years ago. Hand me that peg. No, the other one."
+ },
+ "wine_watch/8e0314cb7ccf717b": {
+  "chars": 179,
+  "direction": "[low, wary, exhausted]",
+  "model": "eleven_v3",
+  "recipe": "9f4f8d6957",
+  "text": "Keep your voice down. They come up the rows at dusk, the twig things, and I'd like to hear them before they hear me. If you're going up to the winery, go now, while there's light."
+ },
+ "wine_woodsplitter/16556fa3b6575ce7": {
+  "chars": 141,
+  "direction": "[hearty, earnest]",
+  "model": "eleven_v3",
+  "recipe": "4c6943b7e3",
+  "text": "I used to split staves for the casks. Now it's firewood. Same axe, same arms, worse smell. When we're home I'll make you a cask, if you like."
  },
  "wren_featherfoot/0037f89bf8c69b91": {
   "chars": 149,

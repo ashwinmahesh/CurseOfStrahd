@@ -95,6 +95,13 @@
   "6d6ce17f1403d9d2": "[booming, slow, grinding stone]",
   "f771c2ddfcf4f62b": "[booming, slow, grinding stone]"
  },
+ "ana": {
+  "51575c562fe42460": "[petulant, shrill, angry]",
+  "75f21c5b90aa2d90": "[matter-of-fact, sweet, eerie]",
+  "a3d5c3f499c1248c": "[sulky, dismissive]",
+  "bb58d4d636a31c81": "[sing-song, cheerful, eerie]",
+  "bea43eedc41a38ff": "[sweet, chatty, eerie]"
+ },
  "anna_krezkova": {
   "01401729de773b46": "[quiet, fierce]",
   "0c5418d5997e6653": "[tender, steady]",
@@ -305,6 +312,14 @@
   "ef5ac4a817716257": "[slow, confiding, grim]",
   "fab13d0872097b02": "[breaking, slow, anguished]"
  },
+ "barovia_luca": {
+  "4053c87b6c0a2e75": "[hoarse, sheepish, waking]",
+  "63af69b3de8e21bc": "[wry, sheepish]",
+  "6f2020cf8aafceb6": "[hushed, frightened, remembering]",
+  "d625aa8c33953df2": "[low, uneasy]",
+  "dfae30e70da804f8": "[fierce, satisfied]",
+  "f676c7d195198de1": "[hushed, frightened]"
+ },
  "barovia_petre": {
   "4a7f127600b2977e": "[dry, knowing]",
   "5f70de2189a9467f": "[gloomy, flat]",
@@ -316,6 +331,10 @@
   "aaa9ed70cadc18db": "[contrary, gloomy]",
   "e2d3e4c43b218984": "[contrary, gloomy]",
   "f799770d6863a3ce": "[gloomy, dry]"
+ },
+ "barovia_shopper": {
+  "83b6d049bbe296fc": "[low, wary]",
+  "bea3382c1de5e808": "[anxious, complaining]"
  },
  "barovia_vasile": {
   "136218eb148bd01a": "[resigned, wry]",
@@ -380,6 +399,15 @@
   "dd7451958b55a92b": "[gruff, moved, grudging]",
   "fbf6e01514f900d5": "[anxious, gruff]"
  },
+ "barovia_worshipper_mihai": {
+  "19b174a6a70e70c6": "[dry, wry]",
+  "1b98cb2eeabfeabe": "[old, dry, sad]",
+  "3b21e844ba9a7a44": "[old, wry, gentle]"
+ },
+ "barovia_worshipper_sorina": {
+  "534d7d27c1d467b8": "[quiet, relieved, wary]",
+  "9485aec2a055c17c": "[hushed, nervous]"
+ },
  "belview": {
   "0597e89ea0e3eca2": "[skittish, repeating, eerie]",
   "62df06329425d658": "[sing-song, muttering]",
@@ -397,6 +425,19 @@
   "d0f206ecba2867b7": "[aggrieved, dramatic]",
   "d50e85db289b00d4": "[prim, dismissive]",
   "e8ae16a1bde86483": "[shaken, prim]"
+ },
+ "camp_cook": {
+  "f9f779412d12e717": "[tart, bossy, sly]"
+ },
+ "camp_fisher": {
+  "68c99771b2d4663c": "[slow, low warning]",
+  "ef9b2336e0db18da": "[slow, calm, weathered]"
+ },
+ "camp_groom": {
+  "1cfd2dbddc144d32": "[gentle, dry]"
+ },
+ "camp_lookout": {
+  "d6565abd9726a895": "[tense, watchful, low]"
  },
  "cyrus_belview": {
   "43ca20635558b657": "[slow, simple, proud, mumbling]"
@@ -701,6 +742,24 @@
   "c5d1f53fad2faedd": "[flustered, grateful]",
   "f14d331047bb4e4b": "[hurt, quiet]"
  },
+ "krezk_bucket_wife": {
+  "cb9f4b0d23280019": "[brisk, wry]"
+ },
+ "krezk_carver": {
+  "62f4a98e13c3b5e6": "[gruff, dismissive, then uneasy]",
+  "7884d8addfafc106": "[quiet, stubborn, hopeful]",
+  "819966d1c15b3c88": "[low, grim, matter-of-fact]"
+ },
+ "krezk_fence_mender": {
+  "f8377c07217d7dc6": "[slow, good-natured]"
+ },
+ "krezk_gate_boy": {
+  "14a08375f3880984": "[excited, breathless, curious]",
+  "ebac213a6861ca7d": "[excited, breathless]"
+ },
+ "krezk_goatherd": {
+  "db5e1700b5f7edc6": "[dry, fond]"
+ },
  "krezk_guard": {
   "0046292684ec4004": "[weary, guilty]",
   "12c21386ed5b35db": "[dry, stubborn]",
@@ -749,6 +808,12 @@
   "fedd66bc47971d8f": "[uneasy, low]",
   "ff0b7e8347c5e710": "[excited, urgent]",
   "ff199f2a53589086": "[gruff, dry humour]"
+ },
+ "krezk_wall_watch": {
+  "fc57aa45ff2a308d": "[steady, wary]"
+ },
+ "krezk_well_wife": {
+  "cfdd4758f012793f": "[warm, devout, practical]"
  },
  "lief_lipsiege": {
   "02933f601699be1e": "[prim, formal]",
@@ -1572,6 +1637,12 @@
   "b8dfbcc5bd698daa": "[solemn, hollow, gentle]",
   "d5498737744e9e15": "[moved, proud, warm]"
  },
+ "sorin_krezkov": {
+  "5d9b54022ee9a5ab": "[soft, motherly, eerie mimicry]",
+  "75d7de4a3e84bbbc": "[small, hoarse, feverish, frightened]",
+  "a15230a1d2c261f8": "[soft, eerie, beckoning]",
+  "f04dedb2955f8ba0": "[small, hoarse, plaintive]"
+ },
  "sorvia": {
   "0761c60ad36005ab": "[defensive, amused]",
   "0d8ea912cc4195c5": "[low, tipsy, letting slip]",
@@ -1646,6 +1717,20 @@
   "e818bb5d09d33bb1": "[warm, moved]",
   "f6f5166e9cd4a259": "[warm, dry]"
  },
+ "stella_wachter": {
+  "083c19cdfec9337f": "[quiet, wry, defiant]",
+  "15db90dec32632b9": "[angry, betrayed]",
+  "1e5e22f172318d4a": "[dry, then furious]",
+  "25439494ce90a20e": "[low, urgent, conspiratorial]",
+  "2612bb0681c1462d": "[shaky, grateful, wry]",
+  "322b3eb3c296f25d": "[terrified, desperate, rising]",
+  "62cff71bf07997bc": "[steadying, resolute]",
+  "70a108f5c6748ddd": "[quiet, defiant]",
+  "a5a63518041dd189": "[cold, bitter, resolute]",
+  "c2fd0f2d8f771edb": "[frightened, trembling, remembering]",
+  "cf547801361efa3d": "[nervous, hushed]",
+  "e3db437f2ce4e95e": "[shaken, bitter, breathless]"
+ },
  "strahd": {
   "02c747913bd13643": "[cold fury, the courtesy dropping, low and sharp]",
   "0ac66905aabf4ae2": "[cold courtesy]",
@@ -1705,6 +1790,33 @@
   "f3de91d181fca112": "[soft, indifferent command]",
   "fcbfb8ec0b6b9baf": "[calm, quiet certainty]"
  },
+ "teodor": {
+  "028dc4837d57ab3e": "[tender, soft, farewell]",
+  "0a7577f15cb28990": "[gentle, weary, earnest]",
+  "0cd67ae371a93130": "[low, grave, measured]",
+  "0e942643d1cab24d": "[gentle, rueful]",
+  "133de77b10aee055": "[courtly, polite, wistful]",
+  "27cef8b276a2c9ed": "[quiet, rueful]",
+  "3070341980d9fa8e": "[calm, courteous, weary]",
+  "327be77e4f1e1c93": "[simple, quiet]",
+  "457576c75f7e2b1c": "[cold, bitter, quiet]",
+  "561c02d371f7cc4a": "[quiet, wistful, aching]",
+  "567b8b47de407d02": "[dry, wry]",
+  "6414cdaa02c62bb9": "[low, quietly menacing]",
+  "827142fa63c3df44": "[soft, dying, gentle]",
+  "8fcc74d0c66e17b6": "[dry, courteous, deadpan]",
+  "9386a6ff00bf934a": "[wry, resigned, faint smile]",
+  "afabfaf3d66aa6c0": "[courtly, gentle, tender]",
+  "b08be85393a6981e": "[tender, sad, resigned]",
+  "b65a79ff034fc2d9": "[tender, peaceful]",
+  "c956985c40ad9290": "[dry, self-deprecating]",
+  "e4e1e588b274377e": "[tender, soft, resigned]",
+  "ecab052bafb1370d": "[warm, resolute, wry]",
+  "f39fd24305e037a7": "[tender, wry]",
+  "f6abc76ed358dcda": "[quiet, courteous, urgent]",
+  "fee1c59e0538c0fe": "[wry, light, sad]",
+  "ff83ef19908b28ec": "[low, grim]"
+ },
  "thistle": {
   "032a1e85fd9e4b1d": "[ashamed, quiet]",
   "3ba7d22e9bbf0232": "[fierce, defiant]",
@@ -1744,6 +1856,15 @@
   "710981b659f3c21e": "[elderly, satisfied, knowing]",
   "b025e9c23c27ea10": "[elderly, warm, bossy]",
   "bfd42d61db631dff": "[elderly, dry, wry]"
+ },
+ "tser_iancu": {
+  "173f511537681926": "[cool, intense]"
+ },
+ "tser_lavinia": {
+  "43e590bcd021318e": "[teasing, breathless]"
+ },
+ "tser_marin": {
+  "6806d8661786bcc2": "[gruff, grumbling, kindly]"
  },
  "tser_petru": {
   "b817a063c41f3a61": "[flat, guarded]",
@@ -1842,6 +1963,15 @@
   "d49ef11874e18841": "[sly, knowing smile]",
   "f312966eb4465920": "[brisk merchant's patter, teasing]"
  },
+ "vallaki_chandler": {
+  "199ebfe1b0181f28": "[warm, heartfelt]",
+  "38b62e3c10f92aaf": "[firm, wry, grateful]",
+  "7652c4c5fdb86f0f": "[emotional, grateful, near tears]",
+  "faf10e9a9d0cc8ac": "[frightened, hushed, haggard]"
+ },
+ "vallaki_cloth_merchant": {
+  "f89226a54aa3fccc": "[booming salesman, then nervous]"
+ },
  "vallaki_guard": {
   "041bd6507eb7e98a": "[forced cheer, deadpan]",
   "120c3b71328fab37": "[shouting, angry]",
@@ -1884,6 +2014,11 @@
   "f260a690fade5b18": "[dry, rattling off]",
   "fa2c7cc943b24e19": "[dry, rote]"
  },
+ "vallaki_herbwife": {
+  "53859389cb194f0b": "[sweet, conspiratorial, low]",
+  "714ceec5f03b6ae9": "[dry, relieved]",
+  "7d70e99306b5ff3f": "[sweet, pointed irony]"
+ },
  "vallaki_lamplighter": {
   "0040ceb3e03d27ee": "[haunted, ashamed, low]",
   "0843bbad3ecaf937": "[tender, grieving]",
@@ -1904,6 +2039,35 @@
   "f851e906f49a524c": "[low, uneasy warning]",
   "f8dce1d944f978f0": "[hollow, sad]",
   "fa5e4eabfb162c4c": "[bitter, shaking]"
+ },
+ "vallaki_parishioner_varvara": {
+  "a6c8f35e03eb612f": "[trembling, fearful, prayerful]",
+  "cfd8c92f801af1fc": "[warm, relieved, grateful]"
+ },
+ "vallaki_patrol": {
+  "8ee5097e9d7065f5": "[brusque, officious]"
+ },
+ "vallaki_patron_dragan": {
+  "437578082c0f3b9d": "[hearty, tipsy]",
+  "82251c3197a0ba9e": "[bitter, sarcastic]"
+ },
+ "vallaki_patron_oana": {
+  "911e0d200e653679": "[dry, wry, measured]"
+ },
+ "vallaki_porter": {
+  "2cff144da15dd520": "[warm, cheerful]",
+  "c1239e8554182968": "[cheerful, breathless]"
+ },
+ "vallaki_raker": {
+  "75a30eed73200d93": "[flat, weary, deadpan]"
+ },
+ "vallaki_ribbon_girl": {
+  "645554274285f975": "[flustered, apologetic]",
+  "742bc3bc1e87bf04": "[lost, quiet]",
+  "b1464f9083b37b1b": "[bright, eager]"
+ },
+ "vallaki_sun_painter": {
+  "fd4c4a2771f63ac2": "[dry, sardonic, tired]"
  },
  "vestige_dahlver_nar": {
   "1f6f946c9c80e480": "[many voices, sing-song, eerie]",
@@ -2243,11 +2407,37 @@
   "fe57306a6a880fe2": "[amused, smug]",
   "fec6f1d9fce07f21": "[displeased, clipped, then formal]"
  },
+ "wine_cooper": {
+  "bfbea76f42269f23": "[grumbling, sad]",
+  "ea8af2332d77a79e": "[proud, emotional]"
+ },
+ "wine_picker": {
+  "a1771a643dea3fc0": "[slow, gentle, amused]"
+ },
+ "wine_pruner": {
+  "5e3279419c0670af": "[soft, patient, murmuring]"
+ },
+ "wine_washer": {
+  "ee357894302ecded": "[brisk, wry]"
+ },
+ "wine_watch": {
+  "8e0314cb7ccf717b": "[low, wary, exhausted]"
+ },
+ "wine_woodsplitter": {
+  "16556fa3b6575ce7": "[hearty, earnest]"
+ },
  "wren_featherfoot": {
   "208b3e2df888474d": "[quiet, tired]",
   "64205f8e076fc813": "[flat, shaken, wry]",
   "ca7e7b7b783bfcca": "[quiet, haunted]",
   "f28c02cbcf8e77a6": "[weak attempt at humour]"
+ },
+ "zinaida": {
+  "3f4ab88bd8e984cc": "[faint, echoing whisper]",
+  "52c1f4d2e2184d88": "[hushed, wondering, near tears]",
+  "5708577da66faf74": "[soft, pleading whisper]",
+  "c41d83332098a595": "[panicked, desperate, rising to a scream]",
+  "caa66d0d6110621b": "[bitter, cold, hurt]"
  },
  "zuleika_toranescu": {
   "88f4131e2df9a2ab": "[urgent, then grieving, quiet]"
