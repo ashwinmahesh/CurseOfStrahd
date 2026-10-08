@@ -329,6 +329,7 @@ static func _light_the_fight(view: LocationView, e: Encounter) -> void:
 static func _combat_grid(view: LocationView) -> CombatGrid:
 	var g := CombatGrid.from_rows(view.loc["map"]["rows"] as Array)
 	g.drop_ft = int(view.loc["map"].get("drop_ft", 0))
+	g.ceiling_ft = int(view.loc["map"].get("ceiling_ft", 0 if bool(view.loc["map"].get("outdoors", false)) else 20))
 	for d: Variant in view.loc.get("doors", []):
 		var door := d as Dictionary
 		g.set_flag(LocationView._cell(door["cell"]), CombatGrid.WALL, LocationLocks._door_state(view, str(door["id"])) != LocationView.DOOR_OPEN)

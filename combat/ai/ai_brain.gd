@@ -504,7 +504,7 @@ func _attack_cells(c: Combatant, t: Combatant, o: Dictionary, reach: Dictionary)
 	var out: Array[Vector2i] = []
 	var melee := bool(o["melee"])
 	var max_d := p.reach if melee else (p.long_range if p.long_range > 0 else p.normal_range)
-	if e.grid.distance_ft(c.cell, c.size_cells, t.cell, t.size_cells) <= max_d:
+	if e.grid.distance_ft(c.cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) <= max_d:
 		out.append(c.cell)
 	if not c.can_act() or c.movement_left <= 0:
 		return out
@@ -512,7 +512,7 @@ func _attack_cells(c: Combatant, t: Combatant, o: Dictionary, reach: Dictionary)
 	for cell: Vector2i in reach:
 		if cell == c.cell or bool((reach[cell] as Dictionary)["occupied"]):
 			continue
-		if e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells) > max_d:
+		if e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) > max_d:
 			continue
 		if not melee:
 			ranged_tries += 1
@@ -528,7 +528,7 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 	var e := enc()
 	var p := o["profile"] as WeaponProfile
 	if bool(prof["nearest"]):
-		return 100.0 - cost - e.grid.distance_ft(c.cell, c.size_cells, t.cell, t.size_cells) * 0.1
+		return 100.0 - cost - e.grid.distance_ft(c.cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) * 0.1
 	var keep := c.cell
 	c.cell = cell
 	var hc := e.hit_chance(c, t, o)
@@ -643,7 +643,7 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	var walk := e.grid.reachable(target.cell, 1, 4000, func(_x: Vector2i) -> bool: return false,
 		func(_x: Vector2i) -> bool: return false, func(_x: Vector2i) -> bool: return false)
 	var dist := func(cell: Vector2i) -> int:
-		var straight := e.grid.distance_ft(cell, c.size_cells, target.cell, target.size_cells)
+		var straight := e.grid.distance_ft(cell, c.size_cells, target.cell, target.size_cells, c.altitude, target.altitude)
 		if straight <= 5 or not walk.has(cell):
 			return straight if walk.has(cell) or straight <= 5 else straight + 1000
 		return int((walk[cell] as Dictionary)["cost"])

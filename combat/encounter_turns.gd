@@ -104,6 +104,7 @@ func _begin_turn() -> void:
 		o.cast_slot_spell_this_turn = false
 		o.creature.on_turn_start(c.id)
 	e._expire_marks(c.id, "start")
+	e.movement.settle_all()   # a flyer whose flight ended comes down (F4)
 	if c.readied.has("conc"):
 		var held := c.readied["conc"] as Concentration
 		if held != null and not held.ended:
@@ -177,6 +178,7 @@ func _turn_end_effects(c: Combatant) -> CombatResult:
 	return e.then(e.spells.turn_end(c), func() -> CombatResult:
 		e.objects.turn_end(c)
 		e.spells.zones.prune()
+		e.movement.settle_all()   # a flyer whose flight ended comes down (F4)
 		_check_over()
 		if e.state != Encounter.State.ACTIVE:
 			return CombatResult.new()
