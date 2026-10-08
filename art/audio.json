@@ -143,18 +143,27 @@
     ],
     "wilds": [
       "res://art/sourced/kevin_macleod/Ossuary 6 - Air.mp3",
-      "res://art/sourced/kevin_macleod/Lightless Dawn.mp3"
+      "res://art/sourced/kevin_macleod/Lightless Dawn.mp3",
+      "res://art/sourced/kevin_macleod/Ossuary 2 - Turn.mp3",
+      "res://art/sourced/scott_buckley/sb_nightfall.mp3"
     ],
     "village": [
       "res://art/sourced/kevin_macleod/Oppressive Gloom.mp3",
-      "res://art/sourced/scott_buckley/MemoriesOfStone.mp3"
+      "res://art/sourced/scott_buckley/MemoriesOfStone.mp3",
+      "res://art/sourced/kevin_macleod/Gloom Horizon.mp3",
+      "res://art/sourced/kevin_macleod/Dark Walk.mp3"
     ],
     "town": [
-      "res://art/sourced/kevin_macleod/Folk Round.mp3"
+      "res://art/sourced/kevin_macleod/Folk Round.mp3",
+      "res://art/sourced/kevin_macleod/Thatched Villagers.mp3",
+      "res://art/sourced/kevin_macleod/Pippin the Hunchback.mp3",
+      "res://art/sourced/kevin_macleod/Lord of the Land.mp3"
     ],
     "tavern": [
       "res://art/sourced/kevin_macleod/Folk Round.mp3",
-      "res://art/sourced/kevin_macleod/Minstrel Guild.mp3"
+      "res://art/sourced/kevin_macleod/Minstrel Guild.mp3",
+      "res://art/sourced/kevin_macleod/The Britons.mp3",
+      "res://art/sourced/kevin_macleod/Midnight Tale.mp3"
     ],
     "camp": [
       "res://art/sourced/wikimedia_commons/USAFB_Czardas.ogg",
@@ -162,7 +171,10 @@
       "res://art/sourced/kevin_macleod/Gypsy Shoegazer.mp3"
     ],
     "tarokka": [
-      "res://art/sourced/kevin_macleod/Duet Musette.mp3"
+      "res://art/sourced/kevin_macleod/Duet Musette.mp3",
+      "res://art/sourced/kevin_macleod/Dama-May.mp3",
+      "res://art/sourced/kevin_macleod/Tenebrous Brothers Carnival - Snake Lady.mp3",
+      "res://art/sourced/kevin_macleod/Mystery Bazaar.mp3"
     ],
     "haunted": [
       "res://art/sourced/kevin_macleod/Darkest Child.mp3",
@@ -171,7 +183,9 @@
     ],
     "combat": [
       "res://art/sourced/kevin_macleod/Darkling.mp3",
-      "res://art/sourced/kevin_macleod/Nightmare Machine.mp3"
+      "res://art/sourced/kevin_macleod/Nightmare Machine.mp3",
+      "res://art/sourced/kevin_macleod/Malicious.mp3",
+      "res://art/sourced/kevin_macleod/Grim Idol.mp3"
     ],
     "boss": [
       "res://art/sourced/kevin_macleod/Unholy Knight.mp3",
@@ -186,14 +200,58 @@
     ],
     "ending": [
       "res://art/sourced/kevin_macleod/Ossuary 6 - Air.mp3",
-      "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg"
+      "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg",
+      "res://art/sourced/kevin_macleod/Relent.mp3",
+      "res://art/sourced/scott_buckley/Unraveling.mp3"
     ],
     "combat_hard": [
-      "res://art/sourced/kevin_macleod/Clash Defiant.mp3"
+      "res://art/sourced/kevin_macleod/Clash Defiant.mp3",
+      "res://art/sourced/kevin_macleod/Black Vortex.mp3",
+      "res://art/sourced/kevin_macleod/Death and Axes.mp3",
+      "res://art/sourced/kevin_macleod/Volatile Reaction.mp3"
     ],
     "strahd": [
       "res://art/sourced/wikimedia_commons/Modest_Mussorgsky_-_night_on_bald_mountain.ogg",
       "res://art/sourced/oga_isao/dova_mary_only_knows.mp3"
+    ],
+    "krezk": [
+      "res://art/sourced/kevin_macleod/Virtutes Instrumenti.mp3",
+      "res://art/sourced/kevin_macleod/Ancient Rite.mp3",
+      "res://art/sourced/kevin_macleod/Gregorian Chant.mp3"
+    ],
+    "abbey": [
+      "res://art/sourced/kevin_macleod/Agnus Dei X.mp3",
+      "res://art/sourced/kevin_macleod/Rites.mp3",
+      "res://art/sourced/kevin_macleod/Land of the Dead.mp3"
+    ],
+    "argynvostholt": [
+      "res://art/sourced/kevin_macleod/Long Road Ahead.mp3",
+      "res://art/sourced/kevin_macleod/Lost Frontier.mp3",
+      "res://art/sourced/scott_buckley/Penumbra.mp3"
+    ],
+    "amber_temple": [
+      "res://art/sourced/kevin_macleod/Inner Sanctum.mp3",
+      "res://art/sourced/kevin_macleod/Ice Demon.mp3",
+      "res://art/sourced/kevin_macleod/Echoes of Time.mp3"
+    ],
+    "berez": [
+      "res://art/sourced/kevin_macleod/Baba Yaga.mp3",
+      "res://art/sourced/kevin_macleod/Mirage.mp3",
+      "res://art/sourced/kevin_macleod/Shadowlands 1 - Horizon.mp3"
+    ],
+    "vineyard": [
+      "res://art/sourced/kevin_macleod/Teller of the Tales.mp3",
+      "res://art/sourced/kevin_macleod/Celtic Impulse.mp3",
+      "res://art/sourced/kevin_macleod/Achaidh Cheide.mp3"
+    ],
+    "wildlands": [
+      "res://art/sourced/kevin_macleod/Bump in the Night.mp3",
+      "res://art/sourced/kevin_macleod/Willow and the Light.mp3",
+      "res://art/sourced/kevin_macleod/Moorland.mp3"
+    ],
+    "bonegrinder": [
+      "res://art/sourced/kevin_macleod/Come Play with Me.mp3",
+      "res://art/sourced/kevin_macleod/Childrens Theme.mp3"
     ]
   },
   "sfx": {
@@ -1085,7 +1143,38 @@
     "res://art/sourced/oga_isao/short_The Enchanting Haunted Ballroom_0.mp3": -7.5,
     "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg": 4.4,
     "res://art/sourced/wikimedia_commons/Modest_Mussorgsky_-_night_on_bald_mountain.ogg": 2.1,
-    "res://art/sourced/oga_isao/dova_mary_only_knows.mp3": -2.6
+    "res://art/sourced/oga_isao/dova_mary_only_knows.mp3": -2.6,
+    "res://art/sourced/kevin_macleod/Thatched Villagers.mp3": -7.2,
+    "res://art/sourced/kevin_macleod/Pippin the Hunchback.mp3": -3.0,
+    "res://art/sourced/kevin_macleod/Lord of the Land.mp3": 2.2,
+    "res://art/sourced/kevin_macleod/Ancient Rite.mp3": -1.6,
+    "res://art/sourced/kevin_macleod/Agnus Dei X.mp3": -1.7,
+    "res://art/sourced/kevin_macleod/Rites.mp3": 6.8,
+    "res://art/sourced/kevin_macleod/Land of the Dead.mp3": -3.0,
+    "res://art/sourced/kevin_macleod/Long Road Ahead.mp3": -1.6,
+    "res://art/sourced/kevin_macleod/Lost Frontier.mp3": 8.0,
+    "res://art/sourced/kevin_macleod/Echoes of Time.mp3": -2.5,
+    "res://art/sourced/kevin_macleod/Baba Yaga.mp3": -6.4,
+    "res://art/sourced/kevin_macleod/Mirage.mp3": -2.4,
+    "res://art/sourced/kevin_macleod/Shadowlands 1 - Horizon.mp3": -1.0,
+    "res://art/sourced/kevin_macleod/Teller of the Tales.mp3": 2.3,
+    "res://art/sourced/kevin_macleod/Bump in the Night.mp3": -5.7,
+    "res://art/sourced/kevin_macleod/Willow and the Light.mp3": -5.3,
+    "res://art/sourced/kevin_macleod/Come Play with Me.mp3": 8.0,
+    "res://art/sourced/kevin_macleod/Childrens Theme.mp3": 2.2,
+    "res://art/sourced/kevin_macleod/Dama-May.mp3": -7.9,
+    "res://art/sourced/kevin_macleod/Tenebrous Brothers Carnival - Snake Lady.mp3": -7.6,
+    "res://art/sourced/kevin_macleod/Mystery Bazaar.mp3": 1.4,
+    "res://art/sourced/kevin_macleod/The Britons.mp3": -7.6,
+    "res://art/sourced/kevin_macleod/Midnight Tale.mp3": -1.9,
+    "res://art/sourced/kevin_macleod/Malicious.mp3": 2.5,
+    "res://art/sourced/kevin_macleod/Black Vortex.mp3": 4.0,
+    "res://art/sourced/kevin_macleod/Volatile Reaction.mp3": -3.2,
+    "res://art/sourced/kevin_macleod/Gloom Horizon.mp3": -1.2,
+    "res://art/sourced/kevin_macleod/Ossuary 2 - Turn.mp3": -6.1,
+    "res://art/sourced/scott_buckley/sb_nightfall.mp3": -7.7,
+    "res://art/sourced/kevin_macleod/Relent.mp3": -1.3,
+    "res://art/sourced/scott_buckley/Unraveling.mp3": -4.5
   },
   "regions": {
     "vallaki": "town",
