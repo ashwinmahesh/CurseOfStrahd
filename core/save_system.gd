@@ -3,6 +3,7 @@ extends Node
 ## (plan §10 Phase 3); the mode check lives here so every caller gets it.
 ## Beside each save (Q9, docs/ui/saves.md): a thumbnail of the game as it was (<slot>.webp), and the player's own note
 ## on it (the save's "note"). A new build of the play copy copies every save into backups/ before it touches any.
+## Loading a game saved a while ago opens with the Narrator's recap (Q3, ui/exploration/recap.gd).
 
 var save_dir := "user://saves/"
 ## The game's own save slot: the one it was last loaded from or saved to. Quicksave (F5) writes here; a new game
@@ -23,14 +24,22 @@ const THUMB_DELAY := 0.8
 const BUILD_FILE := "res://builds/play_build.json"
 const BACKUPS := "backups"
 const BACKUPS_KEPT := 8
+## "Previously in Barovia" (Q3): a game saved at least this many minutes ago opens with the Narrator's recap.
+const RECAP_AFTER := 30.0
 
 ## The world as the pause menu opened over it (hold_view), for the thumbnail of a save made from its pages.
 var _held: Image = null
 var _held_by: WeakRef = null
+## The game just loaded was saved a while ago: the story game shows the recap when it arrives (take_recap).
+var _recap_due := false
 
 
 func _ready() -> void:
 	back_up_for_build(build_commit())
+	get_tree().scene_changed.connect(func() -> void:
+		var scene := get_tree().current_scene
+		if _recap_due and scene != null:
+			(func() -> void: Recap.show_on(scene)).call_deferred())
 
 
 func can_save() -> bool:
@@ -166,6 +175,8 @@ func load_from(dir: String, slot: String) -> Error:
 		return ERR_FILE_UNRECOGNIZED
 	dict = upgrade(dict)
 	GameState.from_dict(dict)
+	# A fight's round start is a retry, not a return: no recap.
+	_recap_due = slot != ROUND_START and minutes_since(str(dict.get("saved_at", ""))) >= RECAP_AFTER
 	if dir.simplify_path() != save_dir.simplify_path():
 		current_slot = ""
 	elif is_beside(slot):
@@ -193,6 +204,21 @@ static func upgrade(data: Dictionary) -> Dictionary:
 		v += 1
 		out["version"] = v
 	return out
+
+
+## Whether a recap is due (Q3), once: the first call after such a load says so, and the next says no.
+func take_recap() -> bool:
+	var due := _recap_due
+	_recap_due = false
+	return due
+
+
+## Real minutes since a save's `saved_at` (the computer's clock, as saves write it); a save without one is long ago.
+static func minutes_since(saved_at: String) -> float:
+	if saved_at == "":
+		return INF
+	var now := Time.get_unix_time_from_datetime_string(Time.get_datetime_string_from_system())
+	return float(now - Time.get_unix_time_from_datetime_string(saved_at)) / 60.0
 
 
 func has_slot(slot: String) -> bool:
