@@ -1808,6 +1808,8 @@ static func _gp(v: float) -> String:
 ## Bag of Holding holds); a new magic item with charges starts with its full count (MagicItems.starting_charges).
 ## The entry is marked `new` until the inventory screen shows it (its New filter); a player's `junk` mark travels with it.
 func add_item(item_id: String, qty: int = 1, state: Dictionary = {}) -> void:
+	# A reward that names only a template ("dragon_slayer") is that template on its default base.
+	item_id = MagicItems.concrete(item_id, compendium)
 	# A scroll that only says its level becomes a particular spell (each one picked on its own).
 	if MagicItems.GENERIC_SCROLLS.has(item_id):
 		for i in qty:
@@ -2165,8 +2167,10 @@ func take_out(container_id: String, index: int) -> bool:
 	return true
 
 
-## Whether the character carries `item_id`, in the pack or inside a container.
+## Whether the character carries `item_id`, in the pack or inside a container. A bare template asks for the item a
+## reward of it becomes ("dragon_slayer": the Longsword Dragon Slayer; MagicItems.concrete).
 func carries(item_id: String) -> bool:
+	item_id = MagicItems.concrete(item_id, compendium)
 	if not entry_of(item_id).is_empty():
 		return true
 	for e in inventory:
