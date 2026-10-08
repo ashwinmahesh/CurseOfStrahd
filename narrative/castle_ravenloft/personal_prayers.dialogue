@@ -26,6 +26,7 @@ Narrator: You stand at the doors with your back to her and watch the dark passag
 ~ prayer
 interject name:hedda_ironvow: Morninglord. It's Hedda. I'm a long way from the mountain, in a bad man's house, and I've been cold a long time.
 interject name:hedda_ironvow: I'm not asking for the sun. Just the morning. Just for as long as I'm talking. I'll talk slowly.
+cutscene chapel_dawn
 Narrator: The raven in her hands grows warm, then hot, then too bright to look at. The black window over the altar turns grey, and then gold.
 Narrator: Dawn comes through the coloured glass. Real dawn, with real warmth in it, laid in red and gold squares across the dust and the broken pews and your faces.
 if flag.strahd_in_coffin

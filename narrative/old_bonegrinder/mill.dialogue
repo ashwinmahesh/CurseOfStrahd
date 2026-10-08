@@ -36,6 +36,7 @@ Narrator: Lamp oil, kindling, and a mill that has dried in its own oven's heat f
 
 ~ burn_it
 set bonegrinder_burned
+cutscene bonegrinder_burns
 Narrator: It goes up faster than you would believe: the stair, the loft, the straw, the sails last of all, turning at last as the fire takes them. The ravens lift off the oak in one black sheet and circle it, shouting.
 interject tag:blunt: Good.
 interject class:wizard: The millstone will come through it. Stone always does. Nobody will ever grind anything on it again.

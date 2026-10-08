@@ -84,6 +84,7 @@ inspire class:cleric: prayed at the foot of a dead dragon's bier
 ~ kindle
 set dragon_fire_kindled
 quest the_dark_beacon kindled
+cutscene argynvost_flame
 Narrator: {name} holds a torch to the frost on the ribs. For a moment, nothing. Then the flame turns silver from the wick up and stops giving any heat at all. It casts no shadow. It burns as if it has been waiting.
 interject class:wizard: Cold fire. Technically impossible. I'll want notes. I'll want so many notes.
 interject tag:pious: It feels like dawn in my hands. I haven't felt that since the mists.

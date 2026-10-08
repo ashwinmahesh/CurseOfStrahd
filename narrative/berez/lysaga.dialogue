@@ -89,6 +89,7 @@ Baba Lysaga: Who's been telling stories in my marsh? Come up. We'll talk about i
 
 ~ challenge
 Baba Lysaga [angry]: Come down? COME DOWN? Nobody gives orders on my stump but me and my boy!
+cutscene lysaga_hut
 Narrator: She slams the shutter. The stump heaves under the hut, and the hut stands up.
 combat lysaga_and_hut
 
@@ -277,6 +278,7 @@ Baba Lysaga [angry]: You again. You've had what you came for. Go away, before I 
 * [if not at:berez_baba_lysagas_hut] We never said we'd leave you alive. -> betrayal_outside
 
 ~ betrayal_outside
+cutscene lysaga_hut
 Baba Lysaga [angry]: Oath-breakers! I knew it! The hut knew it!
 approve godrick_pendlebrook -2 kip_smudgewick -2: You broke your bargain with Baba Lysaga
 combat lysaga_and_hut

@@ -8,6 +8,7 @@ Rahadin: You are still here. Good. The master dislikes guests who leave early.
 -> menu
 endif
 set rahadin_met
+cutscene rahadin_voices
 Narrator: A small, straight-backed man in black waits in the middle of the long hall with his hands folded. Around him, faint as a draught under a door, many voices are screaming.
 Rahadin: You came up the grand stair, so you are the master's guests. I am Rahadin. I keep this house.
 Rahadin: There are three rules. Go where you like. Take nothing that is not offered. Do not touch the girl.

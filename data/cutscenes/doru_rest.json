@@ -1,0 +1,11 @@
+{
+  "id": "doru_rest",
+  "title": "Doru at Rest",
+  "summary": "Doru, given his rest, comes apart into dust in the chains.",
+  "images": [
+    {
+      "image": "doru_rest",
+      "when": ""
+    }
+  ]
+}

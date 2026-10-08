@@ -1,0 +1,15 @@
+{
+  "id": "ireena_looks_back",
+  "title": "Ireena Looks Back",
+  "summary": "At the village's last post Ireena turns to look back at her home.",
+  "images": [
+    {
+      "image": "ireena_looks_back_ismark",
+      "when": "flag.ismark_joins_escort"
+    },
+    {
+      "image": "ireena_looks_back",
+      "when": ""
+    }
+  ]
+}

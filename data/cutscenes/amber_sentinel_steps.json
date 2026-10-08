@@ -1,0 +1,15 @@
+{
+  "id": "amber_sentinel_steps",
+  "title": "The Sentinel Steps Down",
+  "summary": "An amber colossus steps down off its plinth.",
+  "images": [
+    {
+      "image": "amber_sentinel_steps",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.35
+  ]
+}

@@ -23,6 +23,7 @@ Strahd: Then I will send my carriage for her tonight. Go home, if you can still 
 if guest:ismark
 Ismark: You gave her to him. After everything. Get out of my sight, and out of my village.
 endif
+cutscene ending_bride
 Narrator: That night every window in the castle is lit, and music drifts down into the valley. Nobody in Barovia sleeps.
 Narrator: The mist does not lift. You have bought your lives, and you will spend them here, under a lord who wants nothing more from you.
 -> END

@@ -1,0 +1,15 @@
+{
+  "id": "death_house_lorghoth",
+  "title": "The Heap That Stands Up",
+  "summary": "Lorghoth the Decayer rises until its top scrapes the crypt's vault.",
+  "images": [
+    {
+      "image": "death_house_lorghoth",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}
