@@ -183,6 +183,8 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 				return {"t": "dark_gift", "gift": parts[1]}
 		"shop":
 			return {"t": "shop"}
+		"services":
+			return {"t": "services"}
 		"respec":
 			return {"t": "respec"}
 		"end_game":

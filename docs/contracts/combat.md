@@ -20,6 +20,8 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | Damage and healing dice, dealing damage, Death Saving Throws, stabilizing | `encounter_damage.gd` (`damage`) |
 | Reaction decisions and answers, the queued reactions | `encounter_reactions.gd` (`reaction_flow`) |
 | Standard actions, hiding, effects' actions (escape, douse, wake), Haste's action | `encounter_actions.gd` (`actions`) |
+| Things lying on the battlefield: dropped and thrown weapons, picking them up, gathering them after the fight | `ground_items.gd` (`ground`) |
+| Taking back a move | `encounter_undo.gd` (`undo`) |
 | Casting: paying, checking targets, resolving the recipe | `spell_casting.gd` (`casting`) |
 | What can be cast, casting numbers, Metamagic | `spell_options.gd` (`options`) |
 | Reaction spells, releasing a readied spell | `spell_reactions.gd` (`reaction_spells`) |
@@ -52,8 +54,9 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `monster_attack(c, target, action_id)`, `begin_multiattack(c)` | Stat-block attacks |
 | `dash/disengage(c, use_bonus)`, `dodge`, `help_attack(c, enemy)`, `hide(c, use_bonus)`, `search`, `study(c, t)` | Standard actions; `use_bonus` needs Cunning Action |
 | `ready_attack(c, option_id)` | Readied attack, triggers when an enemy comes into reach |
-| `unarmed_special(c, t, "grapple" / "shove_prone" / "shove")`, `escape_grapple(c)` | |
+| `unarmed_special(c, t, "grapple" / "shove_prone" / "shove")`, `escape_grapple(c)`, `release_grapple(c, t)` | a grappler drags what it holds when it moves (1 extra foot per foot); letting go is free |
 | `stand_up(c)`, `drop_prone(c)`, `stabilize(c, t, use_kit)`, `death_save(c)` | |
+| `fall(c, feet)` | 1d6 per 10 ft (20d6 at most), Prone unless unharmed; Slow Fall and Feather Fall answer it. `forced_move` calls it for a ledge, and `movement.fall_away` for a map's open drop (`grid.drop_ft`, from the map's `drop_ft`): the creature leaves the grid (`left_fight` meta) |
 | `spells.cast(c, spell_id, slot, targets, point, direction, opts)` | `point` for spheres, `direction` for cones, cubes and lines from the caster; opts: `word` (Command), `damage_type` |
 | `spells.use_sustained(c, action_id, targets, point, direction)` | a sustained spell action (`spells.sustained_actions(c)`): Spiritual Weapon's strike, Witch Bolt's arc, Flaming Sphere's roll... |
 | `spells.spiritual_weapon_attack(c, t, cell)` | shortcut for the weapon's strike |
@@ -61,7 +64,9 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `features.toggle_rider(c, rider_id)` | arm a rider for this turn's next hit (`features.rider_options(c)`): maneuvers, Cunning Strike, Giant Ancestry, Psionic Strike |
 | `feature_actions.perform(c, id, t, point)` | a class, subclass, feat or species action (`feature_actions.list(c)`); the eight Phase 4 classes' actions are `cf:<id>`, run by combat/class_features.gd |
 | `free_move(c, cell)`, `jump(c, cell)` | movement without Opportunity Attacks from a feature; Jump's 30 ft leap |
+| `undo_move(c)`, `can_undo_move(c)` | Takes back `c`'s last move (`move`, `free_move`, `jump`, with the mount or rider that went along) while nothing came of it: no die rolled, no reaction offered (even one declined or passed up), nothing queued, no other creature, zone, spell object, mark or grapple changed, no log line but the move's own, and nothing new seen (the mover not spotted, no foe the party couldn't see in sight now). Moves come back one by one, to the last thing that wasn't a move; anything else ends them. Player-controlled creatures on their own turn only; not saved |
 | `escape_effect(c, effect_id)`, `wake(c, t)`, `haste_action_use(c, what, t, option_id)`, `use_item(c, item_id, t)` | breaking free of Web/Entangle, shaking a sleeper awake, Haste's extra action, potions and Goodberries |
+| `pick_up(c, gid)` | picks up the pile `gid` (`ground.items`) from within 5 ft: the free object interaction, else a Bonus Action (Fast Hands) or the Utilize action |
 | `items.use(c, item_id, power_id, targets, point, direction, level, opts)` | a magic item's power (ADR 0012, docs/contracts/magic_items.md): a wand's spell at a level paid in charges, a potion, a toggle, a custom power; `items.list(c)` is the Items tab |
 | `features.second_wind / action_surge / steady_aim / turn_undead / divine_spark / preserve_life` | |
 | `end_turn()` | Rolls a pending Death Saving Throw, end-of-turn effects and repeated saves, next creature |
@@ -127,7 +132,8 @@ that Dictionary, so an Automatic or Off chosen in one fight holds in the next.
 
 | type | fields |
 |---|---|
-| move | id, from, to, forced |
+| move | id, from, to, forced, mounted (a rider carried along), dragged (pulled along by its grappler: it moves with the step before it), undo (a move taken back: the token goes back to `to`) |
+| fall | id, feet: a creature falls (off a ledge, into a drop) |
 | attack | attacker, target, hit, critical, action (the attack option's id: `weapon:longsword`, `monster:claw`; `spell:fire_bolt` for a spell attack), from (the token the blow comes from: the attacker, or an Echo Knight's echo) |
 | damage / heal | id, amount (critical) |
 | condition / down / death | id |
@@ -138,7 +144,7 @@ that Dictionary, so an Automatic or Off chosen in one fight holds in the next.
 | summon | caster, cell (Spiritual Weapon) |
 | object / object_gone | id, kind, cell: a spell object or lingering area appeared, moved or ended (`spells.zones.objects`) |
 | teleport | id, from, to (Misty Step, Bait and Switch, Engulf) |
-| summon_creature / vanish | id: a summoned creature (Summon Undead, a severed limb) joined; a creature vanished |
+| summon_creature / vanish | id: a summoned creature (Summon Undead, a severed limb) joined; a creature vanished (left: "fell" when it went into a drop) |
 | resize | id: Enlarge/Reduce or Large Form changed its size |
 | turn | id, round |
 | round | round |
@@ -147,10 +153,30 @@ that Dictionary, so an Automatic or Off chosen in one fight holds in the next.
 `action`, `ability`, `smite` and a `lair` event's `targets` are for the view's effects only (world/combat/fx/spell_fx.gd, docs/art/spell_effects.md):
 nothing in the rules reads them, and emitting them changes no roll, order or state.
 
+## Things on the ground (`GroundItems`, `e.ground`)
+
+`items`: piles `{gid, cell, item_id, name, qty, owner_id, slot, state, actions}`: `item_id` is "" for a monster's
+weapon that isn't an item, `slot` the hand it left, `state` the inventory entry a weapon that doesn't stack left (its
+charges travel with it), `actions` the stat-block attacks a monster makes with it. What puts things there:
+`disarm(t, by, why)` (Disarming Attack, Heat Metal: one held object), `drop_held(c, why)` (falling Unconscious from
+`deal_damage` or an Unconscious effect through `Encounter._effect_added`, Command's "Drop"),
+`weapons.throw_item(c, item_id, target)` (a thrown weapon's attack roll; `fly_back(c, item_id)` brings a `returns`
+weapon back). `held(c)` is what a creature holds: a character's two hands (not a donned Shield), a monster's weapon in
+hand (`monster_weapons(m)`, `weapon_item(m, act)` map its weapon attacks to items). `weapon_gone(c, act)` says why a
+monster can't make a weapon attack (MonsterActions.why_not, attack_legal, best_melee_option); `empty_handed(c)` stops
+Parry. Picking up: `pick_up_why(c, g)`, `cost_of(c)`, `pick_up(c, gid)`; the AI calls `ai_pick_up(c)` as its turn
+starts. `fight_over()` runs from `_check_over`: the party gets its things back (a weapon to the hand it left when
+free) and half the mundane ammunition it shot (`ammo_spent`); the foes' weapons go to `spoils` ([{id, qty}]), which
+LocationFights adds to the fight's loot. A round's save keeps it all (`EncounterSnapshot` key `ground`). The scene draws
+the piles with `GroundView.sync(e.ground.items)` (world/combat/ground_view.gd) and names them on hover
+(`describe_at(cell)`).
+
 ## The hotbar (`ActionCatalog`)
 
 `actions_for(c)` returns entries `{id, tab, label, sub, cost, legal, reason, targeting, count, repeat, range,
 spell_id, slot, option_id, kind, help, opts}`; `perform(c, action, targets, point, direction, slot)` carries one out.
+Picking up a pile within reach is kind `pickup` (`pickup:<gid>`, targeting none, `item_id` for its icon), and the
+square menu lists `act:pickup:<gid>` for what lies on a square.
 Previews: `attack_preview(c, action, t)`, `spell_preview(c, action, point, direction, slot)`,
 `move_preview(c, cell, move_reach(c))`, `slot_choices(c, spell_id)`, `target_why(c, action, t)`.
 

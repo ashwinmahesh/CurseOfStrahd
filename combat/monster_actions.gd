@@ -44,8 +44,9 @@ func why_not(c: Combatant, act: Dictionary) -> String:
 		return "Not in this form"
 	if act.has("forms") and not enc().legendary.form(c) in (act["forms"] as Array):
 		return "Not in this form"
-	if c.has_meta("disarmed") and bool(act.get("weapon", false)):
-		return "Disarmed"
+	var gone := enc().ground.weapon_gone(c, act)
+	if gone != "":
+		return gone
 	# A vine blight can't lash out again while its vine holds someone.
 	if bool(act.get("not_while_grappling", false)) and enc().grapples.values().has(c.id):
 		return "Its vine is holding someone"
@@ -1233,7 +1234,7 @@ func parry_offer(st: Dictionary, miss: Callable) -> Array:
 	var c := st["c"] as Combatant
 	var target := st["target"] as Combatant
 	var out: Array = []
-	if not target.creature is Monster or not bool((st["option"] as Dictionary)["melee"]) or target.has_meta("disarmed"):
+	if not target.creature is Monster or not bool((st["option"] as Dictionary)["melee"]) or e.ground.empty_handed(target):
 		return out
 	var t := st["t"] as D20Test
 	for raw: Variant in data_of(target).get("reactions", []):

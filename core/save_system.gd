@@ -3,7 +3,8 @@ extends Node
 ## (plan §10 Phase 3); the mode check lives here so every caller gets it.
 ## Beside each save (Q9, docs/ui/saves.md): a thumbnail of the game as it was (<slot>.webp), and the player's own note
 ## on it (the save's "note"). A new build of the play copy copies every save into backups/ before it touches any.
-## Loading a game saved a while ago opens with the Narrator's recap (Q3, ui/exploration/recap.gd).
+## Loading a game saved a while ago opens with the Narrator's recap (Q3, ui/exploration/recap.gd). An Honour run keeps one
+## save (F1's one-save rule, below).
 
 var save_dir := "user://saves/"
 ## The game's own save slot: the one it was last loaded from or saved to. Quicksave (F5) writes here; a new game
@@ -58,6 +59,11 @@ func thumb_path(slot: String, dir: String = "") -> String:
 func save(slot: String, note: Variant = null) -> Error:
 	if not can_save():
 		return ERR_UNAVAILABLE
+	return _save(slot, note, false)
+
+
+## Writes the game to `slot`, the game's own from now on; its picture now, or (`later`) once the place is showing.
+func _save(slot: String, note: Variant, later: bool) -> Error:
 	var data := GameState.to_dict()
 	var keep := str(note) if note != null else str(_read(slot_path(slot)).get("note", ""))
 	if keep != "":
@@ -65,7 +71,10 @@ func save(slot: String, note: Variant = null) -> Error:
 	var err := _write(slot, data)
 	if err != OK:
 		return err
-	_write_thumb(slot, _view())
+	if later:
+		_thumb_later(slot)
+	else:
+		_write_thumb(slot, _view())
 	current_slot = slot
 	EventBus.game_saved.emit(slot)
 	return OK
@@ -91,6 +100,11 @@ func new_slot_name() -> String:
 ## a round, when GameState.combat_snapshot holds the fight. It has no thumbnail (a picture every round would cost a
 ## frame each round).
 func save_round(slot: String = ROUND_START) -> Error:
+	if honour():
+		# One save: a fight is kept as it starts, so leaving it comes back to its start, never past it.
+		if int((GameState.combat_snapshot.get("data", {}) as Dictionary).get("round", 1)) > 1:
+			return OK
+		return _save(honour_slot(), null, true)
 	return _write_beside(slot)
 
 
@@ -99,6 +113,8 @@ func save_round(slot: String = ROUND_START) -> Error:
 func autosave() -> Error:
 	if not can_save():
 		return ERR_UNAVAILABLE
+	if honour():
+		return _save(honour_slot(), null, true)
 	delete_slot(autosave_slot(AUTOSAVES))
 	for n in range(AUTOSAVES - 1, 0, -1):
 		_move(autosave_slot(n), autosave_slot(n + 1))
@@ -245,8 +261,8 @@ func list_slots(dir: String = "") -> Array[Dictionary]:
 
 ## What a save says about itself for the lists, or {} when `slot` isn't a save: {slot, dir, saved_at, location (its
 ## name), location_id, level (the party's highest), day, party, finished: the ending's title or "", kind: "autosave", "round" (a fight's round start) or "" for a save
-## the player made, note: the player's own, thumb: its picture's path or ""}. Other files kept beside the saves
-## (achievements.json, N8) aren't saves: every save says its version.
+## the player made, note: the player's own, thumb: its picture's path or "", mode: the difficulty's name, "" for
+## Balanced}. Other files kept beside the saves (achievements.json, N8) aren't saves: every save says its version.
 func describe(slot: String, dir: String = "") -> Dictionary:
 	var from := save_dir if dir == "" else dir
 	var raw := _read(from.path_join(slot + ".json"))
@@ -264,11 +280,13 @@ func describe(slot: String, dir: String = "") -> Dictionary:
 	var ended := str((d.get("finished", {}) as Dictionary).get("title", ""))
 	var place := str(loc.get("name", story.get("location", ""))) if ended == "" else "The End: %s" % ended
 	var thumb := thumb_path(slot, from)
+	var mode := str((story.get("options", {}) as Dictionary).get("difficulty", Difficulty.DEFAULT))
 	return {"slot": slot, "dir": from, "saved_at": str(d.get("saved_at", "")), "location": place,
 		"location_id": str(story.get("location", "")), "level": level,
 		"day": int(story.get("day", 1)), "party": ", ".join(names), "finished": ended,
 		"kind": "autosave" if is_autosave(slot) else ("round" if slot == ROUND_START else ""),
-		"note": str(d.get("note", "")), "thumb": thumb if FileAccess.file_exists(thumb) else ""}
+		"note": str(d.get("note", "")), "thumb": thumb if FileAccess.file_exists(thumb) else "",
+		"mode": Difficulty.named(mode).name if mode != Difficulty.DEFAULT else ""}
 
 
 ## A save file as a dictionary ({} when it's missing or not JSON).
@@ -294,6 +312,38 @@ func _move(from: String, to: String) -> void:
 	DirAccess.rename_absolute(slot_path(from), slot_path(to))
 	if FileAccess.file_exists(thumb_path(from)):
 		DirAccess.rename_absolute(thumb_path(from), thumb_path(to))
+
+
+# --- Honour's one save (F1) -----------------------------------------------------------------------
+
+## Whether this playthrough is an Honour run (combat/difficulty.gd's one_save): it keeps one save, its own slot, which
+## the game keeps up to date. The autosaves and the start of each fight write to it instead of saves beside it (so a
+## fight left mid-way comes back to its start, never past it), and Save Game and F5 write over it. Saves of other games
+## load as ever.
+func honour() -> bool:
+	return Difficulty.of_options(GameState.story.options).one_save
+
+
+## The Honour run's one slot: the game's own, made the first time the game saves.
+func honour_slot() -> String:
+	if current_slot == "" or is_beside(current_slot):
+		current_slot = new_slot_name()
+	return current_slot
+
+
+## A wipe ends an Honour run (lane 22's pick, docs/plans/difficulty.md): the game and its save carry on in Tactician,
+## for good. Called as the party falls, before anything else can load or save.
+func end_honour() -> void:
+	GameState.story.options["difficulty"] = "tactician"
+	if current_slot == "" or not has_slot(current_slot):
+		return
+	var data := _read(slot_path(current_slot))
+	var story := data.get("story", {}) as Dictionary
+	var options := story.get("options", {}) as Dictionary
+	options["difficulty"] = "tactician"
+	story["options"] = options
+	data["story"] = story
+	_write(current_slot, data)
 
 
 # --- Chapters (Q12) -------------------------------------------------------------------------------

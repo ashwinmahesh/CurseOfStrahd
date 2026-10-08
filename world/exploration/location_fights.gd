@@ -327,6 +327,7 @@ static func _light_the_fight(view: LocationView, e: Encounter) -> void:
 ## The location's grid as it stands now (closed doors are walls; NPC squares are blocked).
 static func _combat_grid(view: LocationView) -> CombatGrid:
 	var g := CombatGrid.from_rows(view.loc["map"]["rows"] as Array)
+	g.drop_ft = int(view.loc["map"].get("drop_ft", 0))
 	for d: Variant in view.loc.get("doors", []):
 		var door := d as Dictionary
 		g.set_flag(LocationView._cell(door["cell"]), CombatGrid.WALL, LocationLocks._door_state(view, str(door["id"])) != LocationView.DOOR_OPEN)
@@ -341,7 +342,8 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 	for c in e.combatants:
 		if c.side in [&"party", &"guest"]:
 			for m: Combatant in view.members + view.guest_members:
-				if m.creature == c.creature:
+				# One that fell out of the fight (a chasm) climbs back to where it stood before it.
+				if m.creature == c.creature and not c.has_meta("left_fight"):
 					m.cell = c.cell
 		elif c.creature.dead and not e.legendary.departed.has(c.id):
 			var stain := LocationBuilder._box(view, Vector3(0.6, 0.02, 0.4), view.board.cell_center(c.cell, c.size_cells) + Vector3(0, 0.015, 0), "blood_deep")
@@ -406,7 +408,10 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 	view.combat_ended.emit(outcome)
 	# A foe that withdrew or fled as mist leaves nothing behind (a Tarokka treasure here is still found).
 	if outcome == "victory":
-		_spoils(view, encounter_id, spec, not e.legendary.no_loot(), AiTactics.leftovers(e))
+		# What the fallen foes still carried, and their weapons left lying on the ground (GroundItems).
+		var left := AiTactics.leftovers(e)
+		left.append_array(e.ground.spoils)
+		_spoils(view, encounter_id, spec, not e.legendary.no_loot(), left)
 
 
 ## What a won fight leaves (the encounter's `loot`, what the fallen foes still carried, and a Tarokka treasure if this

@@ -314,6 +314,8 @@ static func _pillar(board: ArenaBoard, cell: Vector2i, h: float, statue: String)
 
 
 static func _frame(board: ArenaBoard, base: Vector3, along_x: bool, h: float, span: float = 1.0) -> void:
+	if CastleBuilder.frames(board, board.grid.cell_at(base)):
+		return   # a gate in a passage through the castle's walls stands in the passage's arch (W19)
 	if board.theme in ArenaBoard.TOWNS and BuildingKit.style_for(board) != "" and span <= 1.0:
 		# A gate in a kit town's yard wall hangs between the piers the wall puts at its ends (TownBuilder._kit_yard).
 		var c := board.grid.cell_at(base)

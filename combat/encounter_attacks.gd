@@ -303,7 +303,12 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 		degree = CombatGrid.Cover.NONE
 		by = ""
 	return {"advantage": adv, "disadvantage": dis, "cover": degree, "cover_bonus": CombatGrid.COVER_BONUS[degree],
-		"cover_by": by}
+		"cover_by": by, "height_bonus": e.sight.height_edge(c, target, option)}
+
+
+## The tooltip and log line for the high-ground house rule's bonus (EncounterSight.height_edge).
+static func height_line(bonus: int) -> String:
+	return "High ground: +%d to hit" % bonus if bonus > 0 else "Low ground: %d to hit" % bonus
 
 
 ## Dice the target's effects add to attack rolls against it (Blade Ward: −1d4).
@@ -353,7 +358,7 @@ func hit_chance(c: Combatant, target: Combatant, option: Dictionary) -> Dictiona
 	var p := option["profile"] as WeaponProfile
 	var sit := attack_situation(c, target, option)
 	var ac := target.creature.ac_value() + int(sit["cover_bonus"])
-	var bonus := p.attack.total()
+	var bonus := p.attack.total() + int(sit.get("height_bonus", 0))
 	var needs := clampi(ac - bonus, 2, 20)
 	var crit := mini(p.crit_range, 20)
 	needs = mini(needs, crit)
@@ -429,6 +434,8 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 	var col := e.d20.collect(c)
 	var t := c.creature.roll_d20(e.dice, D20Test.Kind.ATTACK_ROLL, p.attack, ac, keys, sit["advantage"] as Array[String],
 		sit["disadvantage"] as Array[String], label, p.crit_range, attacked_dice(target))
+	if int(sit.get("height_bonus", 0)) != 0:
+		t.add_bonus(int(sit.get("height_bonus", 0)), "High ground" if int(sit.get("height_bonus", 0)) > 0 else "Low ground")
 	var responses := e.d20.collected(col)
 	target.creature.consume_attacked()
 	# Sundering Blow: the next attack by someone else against the creature gets +5.
@@ -439,7 +446,7 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 			break
 	if not option.get("melee", true) and c.creature is Character and not bool((st["opts"] as Dictionary).get("free_ammo", false)):
 		if str(option.get("kind", "")) == "thrown":
-			e.weapons._spend_item(c, p.item_id)
+			e.weapons.throw_item(c, p.item_id, target)
 		elif str(option.get("kind", "")) != "blade":
 			e.weapons._spend_ammo(c, p)
 	st["t"] = t

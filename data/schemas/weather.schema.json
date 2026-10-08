@@ -1,0 +1,90 @@
+{
+  "$id": "weather.schema.json",
+  "title": "Weather (F12; story/weather.gd)",
+  "type": "object",
+  "required": [
+    "id",
+    "kinds",
+    "climates",
+    "default_climate",
+    "regions"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "const": "barovia"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "kinds": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "label",
+          "travel"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "travel": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "road_day": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 0.5
+          },
+          "road_night": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 0.5
+          },
+          "obscures": {
+            "type": "boolean"
+          },
+          "flames_out": {
+            "type": "boolean"
+          },
+          "look": {
+            "type": "object"
+          },
+          "line": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "climates": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "default_climate": {
+      "type": "string"
+    },
+    "regions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "storm_by_attention": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0
+      }
+    }
+  }
+}

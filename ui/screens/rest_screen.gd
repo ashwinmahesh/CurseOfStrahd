@@ -297,6 +297,9 @@ func _long_rest(rule: String) -> void:
 			if not g.dead:
 				g.finish_long_rest()
 		_log.text = "Eight hours pass. Everyone wakes rested, if not refreshed."
+		var room := Services.after_long_rest(st)   # a room booked at the inn (F14)
+		if room != "":
+			_log.text += " " + room
 		for line in RestCasts.after_long_rest(st.party, Dice.roller):
 			_log.text += "\n" + line
 		_narrate("rest:long")

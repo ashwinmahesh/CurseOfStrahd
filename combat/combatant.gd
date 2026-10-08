@@ -10,6 +10,9 @@ var side: StringName = &"enemy"        ## party, guest, enemy, neutral
 var controller: StringName = &"ai"     ## player or ai
 var cell: Vector2i = Vector2i.ZERO
 var size_cells: int = 1
+## How far off the floor of its square it is, in feet: 0 standing; more flying, levitating or carried aloft
+## (EncounterMovement keeps it in reach of what it can do and drops it when it can't stay up).
+var altitude: int = 0
 var facing: Vector2 = Vector2(0, 1)
 var initiative: int = 0
 var initiative_test: D20Test = null

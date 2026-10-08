@@ -450,7 +450,8 @@
       "hours": [
         7,
         18
-      ]
+      ],
+      "when": "not weather == storm"
     }
   ],
   "encounters": [
