@@ -166,3 +166,26 @@ func test_the_camp_has_people() -> void:
 	for s: Variant in after.get("_npc_shown") as Array:
 		assert_false(str((s as Dictionary)["spec"]["npc"]).begins_with("tser_"), "the camp is empty after the brawl")
 	after.queue_free()
+
+
+## In a fight a wagon is one cart over its two squares by two (its `span`), not a cart and three bits of fence.
+func test_a_wagon_is_one_cart_in_a_fight() -> void:
+	GameState.story.location = "tser_pool"
+	for c: Dictionary in Cutscenes.all():
+		Cutscenes.mark_played(str(c["id"]), GameState.story)
+	Dice.reseed(11)
+	var root := (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	await _frames(3)
+	var v := root.get("view") as LocationView
+	assert_true(v.start_encounter("tser_pool_brawl"), "the brawl starts")
+	await _frames(3)
+	var e := v.combat_view.e
+	var cart := e.objects.blocking_at(Vector2i(17, 6))
+	assert_true(cart != null and cart.kind == "cart" and cart.prop_id == "vistani_wagons", "the wagon is a cart")
+	if cart != null:
+		assert_eq(cart.cells.size(), 4, "over all four of its squares")
+		assert_true(e.objects.blocking_at(Vector2i(18, 7)) == cart, "one object")
+	ModeController.force(ModeController.Mode.EXPLORATION)
+	root.queue_free()
+	await _frames(2)
