@@ -1,0 +1,18 @@
+{
+  "id": "krezk_goatherd",
+  "name": "Stelian",
+  "title": "Goatherd of Krezk",
+  "summary": "A lean goatherd who knows every goat in the pens by name and talks to them more kindly than to people.",
+  "portrait": "villager",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}

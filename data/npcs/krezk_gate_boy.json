@@ -1,0 +1,18 @@
+{
+  "id": "krezk_gate_boy",
+  "name": "Dumitru",
+  "title": "A Boy of Krezk",
+  "summary": "A boy of twelve who hangs about inside the gate to see who comes up the road, because nobody ever does.",
+  "portrait": "priest_acolyte",
+  "sprite": "priest_acolyte",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}

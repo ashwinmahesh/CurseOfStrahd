@@ -21,7 +21,8 @@
     "castle_ravenloft_spires_roofs": "ravenloft_roofs",
     "castle_ravenloft_chapel": "ravenloft_chapel",
     "village_of_barovia": "barovia_village_lived",
-    "vallaki": "vallaki_festival"
+    "vallaki": "vallaki_festival",
+    "krezk": "krezk_town"
   },
   "prefixes": {
     "castle_ravenloft_court": "ravenloft_court",
@@ -393,7 +394,8 @@
             "amount": 0.3
           }
         }
-      }
+      },
+      "lying_snow": 0.4
     },
     "white_sun": {
       "like": "krezk",
@@ -1390,6 +1392,51 @@
           "to": [
             14.5,
             12.4
+          ]
+        }
+      ]
+    },
+    "krezk_town": {
+      "like": "krezk",
+      "lines": [
+        {
+          "from": [
+            11.5,
+            2.3
+          ],
+          "to": [
+            11.5,
+            6.7
+          ]
+        },
+        {
+          "from": [
+            25.5,
+            2.3
+          ],
+          "to": [
+            25.5,
+            6.7
+          ]
+        },
+        {
+          "from": [
+            2.6,
+            28.5
+          ],
+          "to": [
+            7.4,
+            28.5
+          ]
+        },
+        {
+          "from": [
+            11.6,
+            28.5
+          ],
+          "to": [
+            15.4,
+            28.5
           ]
         }
       ]

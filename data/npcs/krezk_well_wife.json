@@ -1,0 +1,18 @@
+{
+  "id": "krezk_well_wife",
+  "name": "Goodwife Rodica",
+  "title": "Of Krezk",
+  "summary": "A broad-armed Krezker drawing water at the well for half the street, who says a prayer over every bucket.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "she/her"
+}

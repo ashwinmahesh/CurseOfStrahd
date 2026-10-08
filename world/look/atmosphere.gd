@@ -495,6 +495,8 @@ func _set_weather_on_surfaces() -> void:
 		var flakes := weather_spec("snow")
 		if not flakes.is_empty():
 			snow = clampf(float(flakes.get("amount", SNOWED_AT)) / SNOWED_AT, 0.25, 1.0)
+		# Snow that lies whatever the sky is doing (a mood's `lying_snow`): high places keep last week's.
+		snow = maxf(snow, float(mood.get("lying_snow", 0.0)))
 	wetness = wet
 	snow_cover = snow
 	RenderingServer.global_shader_parameter_set(&"world_wet", wet)
