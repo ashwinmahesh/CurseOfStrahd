@@ -206,12 +206,13 @@ func test_lamps_nearest_the_party_cast_shadows() -> void:
 	Look.set_style(was, false)
 
 
-## The Modern sun's shadows reach only as far as the camera sees, so they follow the zoom, in the preset's splits.
+## The Modern sun's shadows reach only as far as the camera sees, so they follow the zoom, in the preset's splits; ground
+## level with all round it casts none (lane 3: checked on a hill's own level squares, slopes and cliffs).
 func test_sun_shadows_follow_the_zoom() -> void:
 	var was := Look.style()
 	Look.set_style("modern", false)
 	Graphics.set_preset("high", false)
-	var v := _view("vallaki")   # level ground (the village has heights since village-barovia)
+	var v := _view("yester_hill")   # natural ground with level squares, slopes and cliffs (lane 3's pilot)
 	v.rig.distance = 10.0
 	v.atmosphere.call("_fit_sun_shadows")
 	var close := v.atmosphere.sun.directional_shadow_max_distance
@@ -221,12 +222,23 @@ func test_sun_shadows_follow_the_zoom() -> void:
 	var splits := DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS if Graphics.sun_splits() == 4 \
 		else DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
 	assert_eq(v.atmosphere.sun.directional_shadow_mode, splits, "the preset's splits")
-	var flat := 0
+	# Ground level with every square round it shadows nothing, so it casts none; a slope or a cliff keeps its shadow.
+	var level := 0
+	var shaped := 0
 	for n in v.board.get_children():
-		if n is MeshInstance3D and str(n.name).begins_with("Floor") and (n as MeshInstance3D).position.y < 0.0 \
-				and (n as MeshInstance3D).cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF:
-			flat += 1
-	assert_true(flat > 0, "level floor squares cast no shadow")
+		if not (n is MeshInstance3D and n.has_meta("terrain")):
+			continue
+		var c := n.get_meta("terrain") as Vector2i
+		var off := (n as MeshInstance3D).cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		if v.board.level_ground(c):
+			level += 1
+			assert_true(off, "level ground at %s casts no shadow" % c)
+		else:
+			shaped += 1
+			assert_false(off, "a slope or a cliff at %s keeps its shadow" % c)
+	assert_true(level > 0 and shaped > 0, "the hill has both (%d level squares, %d not)" % [level, shaped])
+	assert_true(v.board.level_ground(Vector2i(10, 17)), "the wardens' shelf is level")
+	assert_false(v.board.level_ground(Vector2i(10, 12)), "the crag over it isn't")
 	v.queue_free()
 	Look.set_style(was, false)
 

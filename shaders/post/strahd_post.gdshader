@@ -64,6 +64,11 @@ uniform float mist_wisps = 0.9;
 // Where on the map the mist gathers (one texel per square, 0..1 in red): by the trees and in the hollows.
 uniform sampler2D mist_mask : filter_linear, repeat_disable;
 uniform bool use_mist_mask = false;
+// The ground under the mist where a map isn't level (natural elevation, raised props): its height at each square's
+// middle in world units, one texel per square like the mask. The mist lies over raised ground as over level ground,
+// and past the map's edge it settles back toward the land's level.
+uniform sampler2D ground_height : filter_linear, repeat_disable;
+uniform bool use_ground_height = false;
 // The wall of the Mists: thick fog past a line on the ground (xz direction pointing out of the map, the distance of
 // the line from the origin along it, how far it takes to thicken).
 uniform vec4 mist_wall = vec4(0.0, 0.0, 0.0, 0.0);
@@ -197,7 +202,13 @@ float wall_amount(vec3 p) {
 // How much mist a point holds (0..1+): thick near the ground, patchy by the noise, most where the map's mist mask
 // says (by the trees, in the hollows), solid past the Mists' wall.
 float mist_density(vec3 p) {
-	float above = (p.y - mist_floor) / max(mist_height - mist_floor, 0.01);
+	float ground = 0.0;
+	if (use_ground_height && land_rect.z > land_rect.x) {
+		ground = texture(ground_height, (p.xz - land_rect.xy) / (land_rect.zw - land_rect.xy)).r;
+		vec2 out2 = max(land_rect.xy - p.xz, p.xz - land_rect.zw);
+		ground *= 1.0 - smoothstep(0.0, 8.0, max(max(out2.x, out2.y), 0.0));
+	}
+	float above = (p.y - ground - mist_floor) / max(mist_height - mist_floor, 0.01);
 	float wall = wall_amount(p);
 	float top = mix(1.0, mist_wall_height / max(mist_height, 0.01), wall);
 	float h = clamp(1.0 - above / top, 0.0, 1.0);

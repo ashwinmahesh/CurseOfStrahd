@@ -915,7 +915,7 @@ func _terrain_column(n: String, c: Vector2i, mat: Material) -> MeshInstance3D:
 	mi.mesh = st.commit()
 	mi.position = Vector3(c.x, 0.0, c.y)
 	mi.material_override = mat
-	mi.set_meta("terrain", true)   # already at its height (_lift passes it by)
+	mi.set_meta("terrain", c)   # its square; already at its height (_lift passes it by)
 	add_child(mi)
 	if faces > 0:
 		var face := MeshInstance3D.new()
@@ -1070,6 +1070,21 @@ func ground_basis(c: Vector2i) -> Basis:
 ## Whether the map has natural ground (its `elevation` rows).
 func has_terrain() -> bool:
 	return not _corner_h.is_empty()
+
+
+## Natural square `c` level with every square round it: its top flat and none of its sides showing, so it can shadow
+## nothing (Atmosphere turns its shadow off, as for a level floor box).
+func level_ground(c: Vector2i) -> bool:
+	if _corner_h.is_empty() or not grid.has_flag(c, CombatGrid.NATURAL):
+		return false
+	var h := grid.height(c)
+	for dz in range(-1, 2):
+		for dx in range(-1, 2):
+			var o := c + Vector2i(dx, dz)
+			if grid.in_bounds(o) and (not grid.has_flag(o, CombatGrid.NATURAL) or grid.has_flag(o, CombatGrid.VOID)
+					or grid.height(o) != h):
+				return false
+	return true
 
 
 ## Whether the ground under the mouse needs following (GridPick.ground_hit): natural ground, or props stood on above it.
