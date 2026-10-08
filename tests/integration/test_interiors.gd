@@ -234,3 +234,25 @@ func test_rooms_are_furnished() -> void:
 	assert_true(kitchen >= 1, "the kitchen has kitchen things (%d)" % kitchen)
 	v.queue_free()
 	await _frames(1)
+
+
+## The Death House holds what its text names (the audit's list): the sword over the hall hearth, the stag's head over
+## the den's, pots hung by size, cheeses under cloth, an umbrella stand, the broom in the storeroom, skeletons in
+## shackles round the shrine, the reliquary's relics.
+func test_the_death_house_has_what_its_text_names() -> void:
+	Look.set_style("modern", false)
+	var want := {"death_house_ground": {"hall_hearth": "fireplace_sword", "den_stag_head": "stag_head",
+			"kitchen_pots": "pot_rack", "pantry_cheeses": "cheeses", "foyer_umbrella": "umbrella_stand"},
+		"death_house_third": {"storage_broom": "broom"},
+		"death_house_dungeon_1": {"shrine_shackled_east": "skeleton_shackles"},
+		"death_house_dungeon_2": {"reliquary_relics": "relics", "ritual_brazier_west": "brazier"}}
+	for loc_id: String in want:
+		var v := _view(loc_id)
+		await _frames(1)
+		for id: String in want[loc_id]:
+			var node := v.prop_nodes.get(id) as Node
+			var models := node.find_children("Model_*", "Node3D", true, false) if node != null else []
+			assert_true(not models.is_empty() and str(models[0].get_meta("model", "")) == str(want[loc_id][id]),
+				"%s: %s is the %s" % [loc_id, id, want[loc_id][id]])
+		v.queue_free()
+		await _frames(1)

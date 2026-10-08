@@ -1224,7 +1224,10 @@
     "stall": 6.3,
     "stall_horse": 7.1,
     "trough": 2.15,
-    "tack": 4.0
+    "tack": 4.0,
+    "cheeses": 2.5,
+    "umbrella_stand": 5.0,
+    "broom": 6.0
   },
   "big_width": 1.6,
   "models3d": {
@@ -1569,7 +1572,12 @@
       "stall_horse_back": "stall_horse",
       "trough": "trough",
       "trough_back": "trough",
-      "tack": "tack"
+      "tack": "tack",
+      "pot_rack": "pot_rack",
+      "cheeses": "cheeses",
+      "umbrella_stand": "umbrella_stand",
+      "broom": "broom",
+      "relics": "relics"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",

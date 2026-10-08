@@ -374,6 +374,16 @@
       "label": "A brazier",
       "model": "brazier",
       "kind": "decor"
+    },
+    {
+      "id": "reliquary_relics",
+      "cell": [
+        2,
+        2
+      ],
+      "label": "A dried hand, a bone knife, a hag's finger",
+      "model": "relics",
+      "kind": "decor"
     }
   ],
   "containers": [

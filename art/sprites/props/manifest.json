@@ -5358,6 +5358,61 @@
       "source": "art/generated/props/model_tack.png",
       "mount": "wall",
       "world_width": 0.761
+    },
+    "pot_rack": {
+      "file": "art/sprites/props/pot_rack.png",
+      "width_px": 516,
+      "height_px": 372,
+      "world_height": 0.45,
+      "pixel_size": 0.00123,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_pot_rack.png",
+      "mount": "wall",
+      "world_width": 0.635
+    },
+    "cheeses": {
+      "file": "art/sprites/props/cheeses.png",
+      "width_px": 516,
+      "height_px": 448,
+      "world_height": 0.5,
+      "pixel_size": 0.00113,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_cheeses.png",
+      "mount": "stand",
+      "world_width": 0.583
+    },
+    "umbrella_stand": {
+      "file": "art/sprites/props/umbrella_stand.png",
+      "width_px": 140,
+      "height_px": 516,
+      "world_height": 1.0,
+      "pixel_size": 0.00195,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_umbrella_stand.png",
+      "mount": "stand",
+      "world_width": 0.273
+    },
+    "broom": {
+      "file": "art/sprites/props/broom.png",
+      "width_px": 116,
+      "height_px": 516,
+      "world_height": 1.2,
+      "pixel_size": 0.00234,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_broom.png",
+      "mount": "stand",
+      "world_width": 0.271
+    },
+    "relics": {
+      "file": "art/sprites/props/relics.png",
+      "width_px": 516,
+      "height_px": 292,
+      "world_height": 0.16,
+      "pixel_size": 0.00056,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_relics.png",
+      "mount": "wall",
+      "world_width": 0.289
     }
   }
 }

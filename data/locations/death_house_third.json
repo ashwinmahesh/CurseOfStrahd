@@ -483,6 +483,16 @@
       "label": "A rocking chair",
       "model": "rocking_chair",
       "kind": "decor"
+    },
+    {
+      "id": "storage_broom",
+      "cell": [
+        13,
+        14
+      ],
+      "label": "A broom in the corner",
+      "model": "broom",
+      "kind": "decor"
     }
   ],
   "containers": [

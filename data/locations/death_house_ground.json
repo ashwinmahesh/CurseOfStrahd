@@ -542,6 +542,36 @@
       "model": "armchair",
       "facing": "north",
       "kind": "decor"
+    },
+    {
+      "id": "kitchen_pots",
+      "cell": [
+        18,
+        2
+      ],
+      "label": "Pots hung by size",
+      "model": "pot_rack",
+      "kind": "decor"
+    },
+    {
+      "id": "pantry_cheeses",
+      "cell": [
+        25,
+        4
+      ],
+      "label": "Cheeses under cloth",
+      "model": "cheeses",
+      "kind": "decor"
+    },
+    {
+      "id": "foyer_umbrella",
+      "cell": [
+        11,
+        14
+      ],
+      "label": "An umbrella with nothing to keep off",
+      "model": "umbrella_stand",
+      "kind": "decor"
     }
   ],
   "containers": [
