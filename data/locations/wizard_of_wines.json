@@ -547,7 +547,7 @@
       ],
       "kind": "examine",
       "label": "The Seventh Row",
-      "model": "grape_basket",
+      "model": "basket",
       "dialogue": "wizard_of_wines/the_black_row:row",
       "when": "flag.winery_reclaimed"
     }
