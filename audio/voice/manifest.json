@@ -7643,6 +7643,13 @@
   "recipe": "65742bd6e8",
   "text": "Bring him to the grave behind the church; I'll meet you there. And if my boy cries out during the rites, keep singing. Please. Keep singing."
  },
+ "doru/186b2e0d5dcaaabb": {
+  "chars": 77,
+  "direction": "[sly, hungry, hissing]",
+  "model": "eleven_v3",
+  "recipe": "aefb995146",
+  "text": "You came back. Nobody comes back. Did you bring Father, or just your throats?"
+ },
  "doru/2633bf933b768a92": {
   "chars": 168,
   "model": "eleven_v3",
@@ -35656,6 +35663,12 @@
   "recipe": "dd92281f92",
   "text": "The great nest is a hoard of bright odds and ends, and in the middle of it, tucked in carefully, something that is no odd or end at all."
  },
+ "narrator/1f9c423bed0a04a2": {
+  "chars": 145,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Above the dragon's skull, as if to remind it, hangs the sword that took its head. The edge is so fine it seems to cut the light that falls on it."
+ },
  "narrator/1fa0a68d74ba5fdb": {
   "chars": 131,
   "model": "eleven_v4",
@@ -40725,12 +40738,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The buckets go down. The servants go back the way they came, a good deal faster. The sun sleeps dry."
- },
- "narrator/4dff8bbf38fc9e82": {
-  "chars": 147,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Above the dragon's skull, as if to remind it, hangs the sword that killed it. Its blade is dull blue and runs cold when you hold it near the bones."
  },
  "narrator/4e06536ca42b5043": {
   "chars": 138,
@@ -48279,6 +48286,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The first page is in a different hand, black and beautifully formed. She came for the silver's gold. Let her lie on it and never spend a coin. Keep her hungry and keep her hot, and feed her what I send. Her name is Sarkhaza. Don't say it to her face; she likes it too much."
+ },
+ "narrator/917fbd76237cc056": {
+  "chars": 103,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Doru still clings to the ceiling above the cells, exactly where you left him. Only his eyes have moved."
  },
  "narrator/91b163cf069677f1": {
   "chars": 180,

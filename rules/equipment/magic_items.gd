@@ -114,6 +114,28 @@ static func is_template(item: Dictionary) -> bool:
 	return item.has("template")
 
 
+## A template given or found on its own ("dragon_slayer", "weapon_plus_1" in a reward) as the item it stands for:
+## "<template>__<base>" on its `default` base, its only base, or a plain shield. Any other id comes back unchanged
+## (a Spell Scroll's template, an id that already names its base, one with no base to choose).
+static func concrete(item_id: String, comp: Compendium) -> String:
+	if item_id.contains(SEP):
+		return item_id
+	var data := comp.get_entry("magic_items", item_id)
+	if not is_template(data):
+		return item_id
+	var t := data["template"] as Dictionary
+	var on := str(t.get("on", ""))
+	var base := str(t.get("default", ""))
+	if base == "" and (t.get("items", []) as Array).size() == 1:
+		base = str((t["items"] as Array)[0])
+	if base == "" and on == "shield":
+		base = "shield"
+	if on == "spell" or base == "":
+		return item_id
+	var id := "%s%s%s" % [item_id, SEP, base]
+	return id if not comp.item_data(id).is_empty() else item_id
+
+
 ## Whether `base` (a mundane weapon, armor, shield or ammunition) can carry the template `t`.
 static func template_fits(t: Dictionary, base: Dictionary) -> bool:
 	var spec := t.get("template", {}) as Dictionary

@@ -133,7 +133,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | death_house_lorghoth | The Heap That Stands Up | `death_house/altar` | 1 |
 | death_house_window | The House Shuts Its Mouth | `death_house/escape` | 1 |
 | dinner_organ | Dinner at the Organ | `castle_ravenloft/gates_dinner` | 2 |
-| doru_ceiling | The Face on the Ceiling | `village_of_barovia/doru` | 1 |
+| doru_ceiling | The Face on the Ceiling | `village_of_barovia/doru` (the first meeting only) | 1 |
 | doru_rest | Doru at Rest | `castle_ravenloft/larders_cells` | 1 |
 | durst_supper | Supper with the Dursts | `death_house/dursts` | 1 |
 | elvir_burial | Elvir Comes Home | `wizard_of_wines/davian` | 1 |
@@ -157,7 +157,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | ilinca_raven | The Raven Who Is a Woman | `old_bonegrinder/ilinca` | 1 |
 | ireena_door | Three Bolts Slide Back | `village_of_barovia/ireena` | 1 |
 | ireena_looks_back | Ireena Looks Back | `village_of_barovia/road_west` | 2 |
-| ireena_window | At Ireena's Window | `strahd/ireena` | 1 |
+| ireena_window | At Ireena's Window | `strahd/ireena` (at the inn, only while Ismark guards her: he is in the picture) | 1 |
 | ireena_window_empty | The Empty Window | `strahd/ireena` | 1 |
 | izek_doll | Izek and the Doll | `vallaki/izek` | 1 |
 | keepers_ravens | Ravens on Every Beam | `vallaki/martikovs` | 1 |
