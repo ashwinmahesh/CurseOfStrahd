@@ -195,6 +195,50 @@ func cast_reaction_spell(c: Combatant, spell_id: String, trigger: Combatant) -> 
 		return r)
 
 
+## War Caster's Reactive Spell (2024): with the Reaction, instead of an Opportunity Attack, a spell with a casting time
+## of an action aimed at `target` alone (every dart or ray of a spell that has several), spending its lowest slot.
+func cast_reactive_spell(c: Combatant, spell_id: String, target: Combatant) -> CombatResult:
+	var spells := sp()
+	var e := enc()
+	var s := _comp().spell_data(spell_id)
+	var level := int(s.get("level", 0))
+	var ch := spells.caster_char(c)
+	var slot := 0
+	if level > 0:
+		slot = _lowest_slot(ch, level) if ch != null else 0
+		if slot == 0:
+			return CombatResult.new()
+	if not can_react(c):
+		return CombatResult.new()
+	c.reaction_available = false
+	if not spells.casting_gate(c):
+		return CombatResult.new()
+	if slot > 0:
+		ch.expend_slot(slot)
+		c.cast_slot_spell_this_turn = true
+	var conc: Concentration = null
+	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
+		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
+	var entry := spells._entry_any(c, spell_id)
+	e.log.add("spell", "%s answers with %s (War Caster%s)" % [c.name(), s["name"], ", level %d slot" % slot if slot > 0 else ""], c.id)
+	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": [], "targets": [target.id]})
+	spells.trigger_ends(c, "cast_spell")
+	var ctx := {"c": c, "s": s, "slot": maxi(slot, level), "nums": spells.numbers(c, entry), "conc": conc, "opts": {}, "point": e.center_of(target),
+		"cells": [], "choice": SpellCaster.choice_of(s, {}), "direction": (e.center_of(target) - e.center_of(c)).normalized(), "cell": target.cell}
+	var r := CombatResult.new()
+	var tgt: Array[Combatant] = [target]
+	var count := int((s.get("targets", {}) as Dictionary).get("count", 1))
+	if count > 1 and (spell_id in ["magic_missile", "scorching_ray"] or bool(s.get("repeat_targets", false))):
+		for i in count - 1:
+			tgt.append(target)
+	return e.then(spells._resolve(ctx, tgt, [], r, true), func() -> CombatResult:
+		spells.check_tethers()
+		spells._finish_concentration(ctx)
+		spells.zones.prune()
+		e._check_over()
+		return r)
+
+
 ## Releases a readied spell at `target` (the creature that triggered it) with the Reaction: its slot was spent when
 ## it was readied. Areas are centred on (or aimed at) the target.
 func release_readied(c: Combatant, held: Dictionary, target: Combatant) -> CombatResult:
