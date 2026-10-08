@@ -17,6 +17,8 @@ var _out := ""
 
 
 func _ready() -> void:
+	# The fight's round-start save goes to a folder of the capture's own, never over the owner's saves.
+	SaveSystem.save_dir = "user://capture_saves/%d/" % OS.get_process_id()
 	game = (load("res://scenes/game.tscn") as PackedScene).instantiate()
 	add_child(game)
 
