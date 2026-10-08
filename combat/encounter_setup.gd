@@ -67,6 +67,17 @@ static func bring_familiars(e: Encounter, party: Array[Combatant]) -> void:
 			e.faerun.pocket_familiar(c)
 
 
+## The familiar Find Familiar gives `c` (the form a fight's casting makes): an imp for a Pact of the Chain warlock, a
+## skeleton for a Necromancy Familiar, else an owl. Monster data, for the familiar that follows the party around.
+static func familiar_data(c: Combatant) -> Dictionary:
+	var form := ""
+	if ClassFeatures.knows_invocation(c, "pact_of_the_chain"):
+		form = "imp"
+	if CombatFeatures.has_feature(c, "necromancy_familiar"):
+		form = "skeleton"
+	return SummonBlocks.for_spell("find_familiar", 1, form, {})
+
+
 ## Creature ids the encounter data marks as surprised.
 static func surprised_ids(entry: Dictionary, e: Encounter) -> Array[String]:
 	var out: Array[String] = []

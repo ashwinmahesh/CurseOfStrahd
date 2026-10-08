@@ -103,3 +103,54 @@ func test_no_familiar_joins_until_one_is_summoned() -> void:
 	assert_eq(v.combat_view.e.combatants.filter(func(c: Combatant) -> bool: return c.side != &"enemy").size(), 2,
 		"just the two heroes")
 	await _end_fight(v)
+
+
+func _walk_until_idle() -> void:
+	for i in 400:
+		if (_view().get("_queue") as Array).is_empty():
+			return
+		await get_tree().process_frame
+
+
+func _world_familiars(v: LocationView) -> Array[Combatant]:
+	var out: Array[Combatant] = []
+	for g in v.guest_members:
+		if g.has_meta("familiar_of"):
+			out.append(g)
+	return out
+
+
+## Owner's playtest (2026-10-08): Find Familiar cast while exploring left no familiar in the world.
+func test_a_familiar_cast_while_exploring_appears_and_follows_the_party() -> void:
+	var v := _view()
+	var wizard := GameState.story.party[0]
+	wizard.familiar = ""
+	assert_eq(_world_familiars(v).size(), 0)
+	var res := FieldCasting.cast_utility(GameState.story, wizard, "find_familiar", true)
+	assert_true(bool(res["ok"]), str(res["text"]))
+	v.apply_spell_effect("find_familiar")
+	await _frames(2)
+	var fams := _world_familiars(v)
+	assert_eq(fams.size(), 1, "the familiar is in the world")
+	var owl := fams[0]
+	assert_true(v.tokens.has(owl.id) and (v.tokens[owl.id] as Node3D).is_inside_tree(), "drawn on the map")
+	var lead := v.leader().cell
+	assert_true(maxi(absi(owl.cell.x - lead.x), absi(owl.cell.y - lead.y)) <= 3, "beside the party: %s and %s" % [owl.cell, lead])
+	var before := owl.cell
+	assert_true(v.walk_to(Vector2i(7, 3)))
+	await _walk_until_idle()
+	assert_ne(owl.cell, before, "it follows the party")
+	FieldCasting.cast_utility(GameState.story, wizard, "find_familiar", true)
+	v.apply_spell_effect("find_familiar")
+	await _frames(2)
+	assert_eq(_world_familiars(v).size(), 1, "casting it again keeps one familiar")
+	assert_true(v.start_encounter("rat"), "a fight starts")
+	await _frames(3)
+	var e := v.combat_view.e
+	assert_eq(_familiars(e, wizard.id).size(), 1, "it joins the fight as the wizard's familiar")
+	assert_eq(e.combatants.filter(func(c: Combatant) -> bool: return c.side != &"enemy").size(), 3, "two heroes and one familiar, not a second one as a guest")
+	await _end_fight(v)
+	assert_eq(_world_familiars(v).size(), 1, "back in the line after the fight")
+	wizard.familiar = ""
+	LocationParty.refresh_familiars(v)
+	assert_eq(_world_familiars(v).size(), 0, "a familiar that's gone leaves the line")

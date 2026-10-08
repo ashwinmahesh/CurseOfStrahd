@@ -106,33 +106,64 @@ static func _fit_party_size(view: LocationView) -> void:
 	place_guests(view)
 
 
-## Puts the party's guests behind the last member (called again when someone joins or leaves).
+## Puts the party's guests behind the last member (called again when someone joins or leaves), and after them each
+## Find Familiar familiar that's with its caster (not in its pocket dimension): it follows at the back of the line and
+## is marked `familiar_of` its caster, whose fights summon it themselves (EncounterSetup.bring_familiars).
 static func place_guests(view: LocationView) -> void:
 	for g in view.guest_members:
 		if view.tokens.has(g.id):
 			(view.tokens[g.id] as Node).queue_free()
 			view.tokens.erase(g.id)
 	view.guest_members.clear()
-	if view.st.guests.is_empty() or view.members.is_empty():
+	var keepers: Array[Combatant] = []
+	for m in view.members:
+		if m.creature is Character and (m.creature as Character).familiar == "here" and not m.creature.dead:
+			keepers.append(m)
+	if (view.st.guests.is_empty() and keepers.is_empty()) or view.members.is_empty():
 		return
 	var tail := view.members[view.members.size() - 1].cell
 	var taken := {}
 	for m in view.members:
 		taken[m.cell] = true
-	var spots := _cells_around(view, tail, view.members.size() + view.st.guests.size() + 4)
+	var spots := _cells_around(view, tail, view.members.size() + view.st.guests.size() + keepers.size() + 4)
 	var k := 0
-	for i in view.st.guests.size():
+	for i in view.st.guests.size() + keepers.size():
 		while k < spots.size() and taken.has(spots[k]):
 			k += 1
 		var cell := spots[k] if k < spots.size() else tail
 		taken[cell] = true
-		var cb := Combatant.new(view.st.guests[i], &"guest", cell)
+		var cb: Combatant
+		var art := ""
+		if i < view.st.guests.size():
+			cb = Combatant.new(view.st.guests[i], &"guest", cell)
+			art = str(Compendium.shared().get_entry("npcs", view.st.guest_ids[i]).get("sprite", view.st.guest_ids[i]))
+		else:
+			var keeper := keepers[i - view.st.guests.size()]
+			var fam := Monster.from_data(EncounterSetup.familiar_data(keeper))
+			fam.id = "familiar_%s" % keeper.id
+			cb = Combatant.new(fam, &"guest", cell)
+			cb.id = fam.id
+			cb.set_meta("familiar_of", keeper.id)
 		view.guest_members.append(cb)
-		var npc := Compendium.shared().get_entry("npcs", view.st.guest_ids[i])
-		var tok := CombatToken.create(cb, str(npc.get("sprite", view.st.guest_ids[i])))
+		var tok := CombatToken.create(cb, art)
 		tok.position = view.board.cell_center(cell)
 		view.add_child(tok)
 		view.tokens[cb.id] = tok
+
+
+## Brings the familiars at the back of the line up to date with their casters: one cast just now, lost in a fight,
+## dismissed or sent to its pocket dimension. Re-places the guests only when something changed.
+static func refresh_familiars(view: LocationView) -> void:
+	var want := {}
+	for m in view.members:
+		if m.creature is Character and (m.creature as Character).familiar == "here" and not m.creature.dead:
+			want[m.id] = true
+	var have := {}
+	for g in view.guest_members:
+		if g.has_meta("familiar_of"):
+			have[str(g.get_meta("familiar_of"))] = true
+	if want != have:
+		place_guests(view)
 
 
 static func _cells_around(view: LocationView, start: Vector2i, n: int) -> Array[Vector2i]:
