@@ -166,7 +166,7 @@ outdoors only): a gradient from the land's haze at the horizon up to the place's
 drifting with the mood's cloud wind (never clear: at least 60% cover), lit from beneath towards the moon or the low
 sun, and the moon on the key light's bearing, low enough to be seen (`MOON_HEIGHT`), a disc glowing through thin cloud
 at night, paler at dusk and dawn, only a brighter patch by day (`MOON_SHOWS`). The mist past everything thins toward
-the horizon instead of painting the gaps between far trees, and as the camera tilts the depth of field and the
+the horizon instead of painting the gaps between far trees, and as the camera tilts the depth blur and the
 vignette ease off so the sky and the vistas stay clear. Drawn in the screen pass, so it costs nothing in play, where
 the camera never sees above the horizon.
 
@@ -198,10 +198,9 @@ camera's far plane and cost nothing; the far plane opens out as the camera tilts
 `near_fade` units of the camera thin away (`foliage.gdshader`, `bark.gdshader`).
 
     make capture SCENE=res://tools/capture/land_capture.tscn NAME=land/tilt FRAMES=10 \
-      LAND_SHOTS=village_tilt,road_tilt,crossroads_tilt,vallaki_tilt,krezk_tilt   # LAND_NO_DOF=1: without the far blur
+      LAND_SHOTS=village_tilt,road_tilt,crossroads_tilt,vallaki_tilt,krezk_tilt   # LAND_NO_DOF=1: without the depth blur
 
-Not done: the sky above the ridges is the screen pass's haze until the sky half of W13 (lane 6); the far blur of the
-depth of field softens the vistas when tilted.
+Not done: the sky above the ridges is the screen pass's haze until the sky half of W13 (lane 6).
 
 ## Edges, shadows and the graphics presets in the Modern finish
 
@@ -225,7 +224,6 @@ Mini (Apple M6) on High.
 | Characters cast shadows (W6) | no | yes | yes |
 | Light bounced off walls (SSIL) | off | off | medium |
 | Volumetric haze (light shafts, lamp glow in the air) | off (window cones stay) | 48 cells | 64 cells |
-| Depth of field blur | very low | low | medium |
 
 A spatial upscaler on Low, not a temporal one (MetalFX temporal, FSR 2): those work over time like TAA and would
 blur and smear the sprites.
@@ -235,7 +233,7 @@ Mac under heavy load, so the sizes are rough and the order holds): the sun's sha
 since each split draws the scene's shadow casters again (forest roads most of all: their trees); a level floor square
 casting a shadow was a third of the village's frame (they no longer do: nothing stands under one); then the lamps and
 their shadows, the screen pass (its mist noise now comes from a texture, 1 to 2 ms cheaper outdoors), MSAA, light
-bounced off walls and the depth of field. Contact shadows, reflections, glow, haze and SMAA are cheap.
+bounced off walls. Contact shadows, reflections, glow, haze and SMAA are cheap.
 
 **Bounce light outdoors (W18, tried and left off).** Godot's real-time global illumination (SDFGI, the only kind that
 needs no baking) was tried in place of the screen-space bounce (SSIL) on outdoor maps, 2026-10-07: in the village it

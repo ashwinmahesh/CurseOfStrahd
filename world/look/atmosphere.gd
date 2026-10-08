@@ -375,42 +375,47 @@ func _flat_floors_cast_no_shadow() -> void:
 			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
-## The Modern finish's depth of field, as a strength the owner picks from (docs/plans/ui_polish.md): how soft
-## (Godot's 0..1), where the far blur starts (the camera's distance to the party plus `start` plus `per_zoom` of
-## that distance), how far it takes to come in, and whether anything near the lens blurs. The tilt-shift strengths
-## (owner request 2026-10-08: "a little noticeable, like in Octopath Traveler 2") blur the near ground too, from
-## `near_at` of the camera's distance in (less `near_gap`), coming in over `near_transition`: a sharp band where the
-## party stands, the bottom and top of the screen soft, so the place reads as a miniature.
-const DOF_STRENGTHS := {
-	"old": {"amount": 0.14, "start": 1.0, "per_zoom": 0.12, "transition": 3.5, "transition_per_zoom": 0.25, "near": true},
-	"light": {"amount": 0.129, "start": 3.0, "per_zoom": 0.15, "transition": 6.0, "transition_per_zoom": 0.3, "near": false},
-	"lighter": {"amount": 0.05, "start": 6.0, "per_zoom": 0.2, "transition": 10.0, "transition_per_zoom": 0.0, "near": false},
-	"tilt_soft": {"amount": 0.17, "start": 1.5, "per_zoom": 0.08, "transition": 4.0, "transition_per_zoom": 0.2, "near": true,
-		"near_at": 0.86, "near_gap": 0.0, "near_transition": 2.0},
-	"tilt": {"amount": 0.22, "start": 1.0, "per_zoom": 0.05, "transition": 3.0, "transition_per_zoom": 0.15, "near": true,
-		"near_at": 0.89, "near_gap": 0.0, "near_transition": 1.6},
-	"tilt_strong": {"amount": 0.3, "start": 0.5, "per_zoom": 0.03, "transition": 2.5, "transition_per_zoom": 0.1, "near": true,
-		"near_at": 0.92, "near_gap": 0.0, "near_transition": 1.2},
+## The Modern finish's depth blur, drawn by the screen pass (strahd_post.gdshader's edge blur): the middle of the
+## screen stays sharp and the world softens toward the edges, most in the corners. Settings > Display > Depth blur
+## picks how far in it reaches (`name`): `start` is how far out from the middle it begins (1 = the middle of each side,
+## the corners are 1.41), `lod` how soft the corners get (the screen copy's mip level at 1080 lines). Owner request
+## 2026-10-08: Godot's depth of field (the tilt-shift pick, "like in Octopath Traveler 2") began too close to the
+## middle and blurred the gate markers, names and rings drawn over the world; those draw after the screen pass, so the
+## edge blur never reaches them.
+const EDGE_BLURS := {
+	"corners": {"name": "Corners", "start": 0.8, "lod": 4.0},
+	"edges": {"name": "Edges", "start": 0.7, "lod": 4.0},
+	"wide": {"name": "Wide", "start": 0.6, "lod": 4.0},
 }
-## Tilt-shift (owner pick 2026-10-08, of soft, tilt-shift and strong): before it, "light" (2026-10-07: "old" read as a
-## smear at the top of the screen), whose blur went up 15% and then 40% more the same morning.
-static var dof_strength := "tilt"
-var _dof: CameraAttributesPractical = null
+## 70% of the way out (2026-10-08: shipped as the middle of the three for the owner to pick from).
+const EDGE_BLUR_DEFAULT := "edges"
+var _blur_shown := -1.0
+var _blur_setting := ""
 
 
-## The sharp band follows the camera's zoom. Tilted toward the horizon (W13), the far blur eases off so the sky and
-## the vistas past the map stay clear.
-func _focus_dof() -> void:
-	if _dof == null or _rig == null:
+## The reach Settings picked (GameSettings.blur_reach), or the default.
+static func edge_blur() -> String:
+	var id := GameSettings.blur_reach()
+	return id if EDGE_BLURS.has(id) else EDGE_BLUR_DEFAULT
+
+
+## Off in Classic and with Settings > Depth blur off (read each frame, so a change in Settings shows at once). Tilted
+## toward the horizon (W13), the blur eases off so the sky and the vistas past the map stay clear.
+func _focus_blur() -> void:
+	if _post == null or _rig == null:
 		return
-	var d := _rig.distance
-	var k := DOF_STRENGTHS[dof_strength] as Dictionary
-	_dof.dof_blur_amount = float(k["amount"]) * (1.0 - smoothstep(0.0, 0.6, _rig.horizon_shown))
-	_dof.dof_blur_near_enabled = bool(k["near"])
-	_dof.dof_blur_far_distance = d + float(k["start"]) + d * float(k["per_zoom"])
-	_dof.dof_blur_far_transition = float(k["transition"]) + d * float(k["transition_per_zoom"])
-	_dof.dof_blur_near_distance = maxf(1.0, d * float(k.get("near_at", 0.92)) - float(k.get("near_gap", 2.0)))
-	_dof.dof_blur_near_transition = float(k.get("near_transition", 2.0))
+	var amount := 0.0
+	if Look.modern() and GameSettings.depth_blur():
+		amount = 1.0 - smoothstep(0.0, 0.6, _rig.horizon_shown)
+	var setting := edge_blur()
+	if is_equal_approx(amount, _blur_shown) and setting == _blur_setting:
+		return
+	_blur_shown = amount
+	_blur_setting = setting
+	var k := EDGE_BLURS[setting] as Dictionary
+	_post.set_shader_parameter("edge_blur", amount)
+	_post.set_shader_parameter("edge_blur_start", float(k["start"]))
+	_post.set_shader_parameter("edge_blur_lod", float(k["lod"]))
 
 
 const MODERN_TONEMAP := Environment.TONE_MAPPER_AGX
@@ -733,13 +738,8 @@ func _open_the_lake() -> void:
 func attach(rig: CameraRig, post: MeshInstance3D) -> void:
 	_rig = rig
 	_post = (post.mesh as QuadMesh).material as ShaderMaterial if post != null and post.mesh is QuadMesh else null
-	if Look.modern() and GameSettings.depth_blur() and rig != null and rig.camera != null:
-		# A light depth of field behind the party (DOF_STRENGTHS): the far edge of the screen softens while the party,
-		# foes and anything that can be clicked stay crisp. Settings > Depth blur turns it off.
-		_dof = CameraAttributesPractical.new()
-		_dof.dof_blur_far_enabled = true
-		rig.camera.attributes = _dof
-		_focus_dof()
+	_blur_shown = -1.0   # a new screen pass starts with the blur off
+	_focus_blur()
 	_apply_static()
 	weather = AtmosphereWeather.build(self, board, mood, outdoors, get_parent())
 	_show_night_pieces()
@@ -1038,7 +1038,7 @@ func _process(delta: float) -> void:
 				wx.set_meta("offset", Vector3(wx.position.x, 0.0, wx.position.z))
 			var off := wx.get_meta("offset") as Vector3
 			wx.global_position = Vector3(_rig.global_position.x + off.x, wx.global_position.y, _rig.global_position.z + off.z)
-	_focus_dof()
+	_focus_blur()
 	_fit_sun_shadows()
 	_shadow_scan -= delta
 	if _shadow_scan <= 0.0:

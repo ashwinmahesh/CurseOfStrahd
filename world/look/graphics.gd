@@ -2,7 +2,7 @@ class_name Graphics
 extends RefCounted
 ## How much work the renderer does for the Modern finish (Improvement Ideas W2, W17): anti-aliasing, the resolution
 ## the 3D world is drawn at, how sharp and soft the shadows are and how many lamps cast them, reflections, contact
-## shadows and bounced light, the haze that catches light and the depth of field, by a preset the player picks (Low,
+## shadows and bounced light and the haze that catches light, by a preset the player picks (Low,
 ## Medium or High; GameSettings "graphics"; Settings shows LABELS). The bar is 60 frames a second at 1080p on the
 ## owner's Mac Mini (Apple M6) on High (docs/art/atmosphere.md "Graphics presets"). The Classic finish keeps the
 ## renderer as it was when the owner froze it (2026-10-07), whatever the preset.
@@ -36,34 +36,30 @@ const LABELS := {"low": "Low", "medium": "Medium", "high": "High"}
 ## - ao: contact shadows' quality and whether they're worked out at half resolution; bounce: light bounced off walls
 ##   (SSIL), off (-1) or its quality.
 ## - haze: the volumetric haze's grid (cells across and deep; 0 = no haze: the window shafts' cones still show).
-## - dof: the depth of field's blur quality (RenderingServer.DOFBlurQuality).
 ## - sprite_shadows: the characters cast shadows from the lights (W6, the animations thread reads it).
 const SPECS := {
 	"low": {"msaa": Viewport.MSAA_DISABLED, "edge_aa": Viewport.SCREEN_SPACE_AA_FXAA, "scale": 0.75,
 		"sun_map": 2048, "sun_splits": 2, "sun_soft": false, "lamp_atlas": 2048, "lamp_shadows": 2,
 		"lamp_soft": false, "filter": RenderingServer.SHADOW_QUALITY_SOFT_LOW, "reflections": 0, "swaying": 0,
-		"ao": RenderingServer.ENV_SSAO_QUALITY_LOW, "ao_half": true, "bounce": -1, "haze": 0,
-		"dof": RenderingServer.DOF_BLUR_QUALITY_VERY_LOW, "sprite_shadows": false},
+		"ao": RenderingServer.ENV_SSAO_QUALITY_LOW, "ao_half": true, "bounce": -1, "haze": 0, "sprite_shadows": false},
 	"medium": {"msaa": Viewport.MSAA_DISABLED, "edge_aa": Viewport.SCREEN_SPACE_AA_SMAA, "scale": 1.0,
 		"sun_map": 4096, "sun_splits": 2, "sun_soft": true, "lamp_atlas": 4096, "lamp_shadows": 6,
 		"lamp_soft": true, "filter": RenderingServer.SHADOW_QUALITY_SOFT_MEDIUM, "reflections": 32, "swaying": 2,
-		"ao": RenderingServer.ENV_SSAO_QUALITY_MEDIUM, "ao_half": true, "bounce": -1, "haze": 48,
-		"dof": RenderingServer.DOF_BLUR_QUALITY_LOW, "sprite_shadows": true},
+		"ao": RenderingServer.ENV_SSAO_QUALITY_MEDIUM, "ao_half": true, "bounce": -1, "haze": 48, "sprite_shadows": true},
 	"high": {"msaa": Viewport.MSAA_2X, "edge_aa": Viewport.SCREEN_SPACE_AA_SMAA, "scale": 1.0,
 		"sun_map": 4096, "sun_splits": 2, "sun_soft": true, "lamp_atlas": 8192, "lamp_shadows": 8,
 		"lamp_soft": true, "filter": RenderingServer.SHADOW_QUALITY_SOFT_HIGH, "reflections": 56, "swaying": 2,
 		"ao": RenderingServer.ENV_SSAO_QUALITY_HIGH, "ao_half": true,
-		"bounce": RenderingServer.ENV_SSIL_QUALITY_MEDIUM, "haze": 64, "dof": RenderingServer.DOF_BLUR_QUALITY_MEDIUM,
+		"bounce": RenderingServer.ENV_SSIL_QUALITY_MEDIUM, "haze": 64,
 		"sprite_shadows": true},
 }
 ## The renderer as Classic was frozen with: no anti-aliasing, full resolution, the sun's 4096 map in two splits, no
-## lamp shadows, Godot's default filtering, contact shadows and depth of field, no reflections, bounce or haze.
+## lamp shadows, Godot's default filtering, contact shadows, no reflections, bounce or haze.
 ## (project.godot holds High's settings for scenes that open without a place.)
 const CLASSIC := {"msaa": Viewport.MSAA_DISABLED, "edge_aa": Viewport.SCREEN_SPACE_AA_DISABLED, "scale": 1.0,
 	"sun_map": 4096, "sun_splits": 2, "sun_soft": false, "lamp_atlas": 4096, "lamp_shadows": 0, "lamp_soft": false,
 	"filter": RenderingServer.SHADOW_QUALITY_SOFT_LOW, "reflections": 0, "swaying": 0,
-	"ao": RenderingServer.ENV_SSAO_QUALITY_MEDIUM, "ao_half": true, "bounce": -1, "haze": 0,
-	"dof": RenderingServer.DOF_BLUR_QUALITY_MEDIUM, "sprite_shadows": false}
+	"ao": RenderingServer.ENV_SSAO_QUALITY_MEDIUM, "ao_half": true, "bounce": -1, "haze": 0, "sprite_shadows": false}
 
 
 static func preset() -> String:
@@ -121,7 +117,6 @@ static func apply(vp: Viewport) -> void:
 			50.0, 300.0)
 	if int(s["haze"]) > 0:
 		RenderingServer.environment_set_volumetric_fog_volume_size(int(s["haze"]), int(s["haze"]))
-	RenderingServer.camera_attributes_set_dof_blur_quality(s["dof"] as RenderingServer.DOFBlurQuality, true)
 	if vp is Window and not vp.has_meta(FrameMeter.NODE_NAME):
 		vp.set_meta(FrameMeter.NODE_NAME, true)   # once, though the meter only joins at the end of the frame
 		vp.add_child.call_deferred(FrameMeter.new())
