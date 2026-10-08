@@ -151,7 +151,8 @@ func _wreckage(cell: Vector2i, substance: String, animate: bool) -> void:
 	for i in 6:
 		var size := Vector3(_rng.randf_range(0.12, 0.3), _rng.randf_range(0.05, 0.14), _rng.randf_range(0.08, 0.22))
 		var at := Vector3(cell.x + _rng.randf_range(0.15, 0.85), y + size.y / 2.0, cell.y + _rng.randf_range(0.15, 0.85))
-		var bit := board.add_box("Wreckage", size, at, Look.cel(str(colours[i % colours.size()])))
+		# A name of its own: a second "Wreckage" beside the first would be renamed to an unreadable one.
+		var bit := board.add_box("Wreckage_%d_%d_%d" % [cell.x, cell.y, i], size, at, Look.cel(str(colours[i % colours.size()])))
 		bit.rotation.y = _rng.randf_range(0.0, TAU)
 		bit.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		if animate:

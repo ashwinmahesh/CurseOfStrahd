@@ -315,6 +315,9 @@ func _strike(c: Combatant, o: BattleObject, option: Dictionary) -> CombatResult:
 	var ac := o.ac + CombatGrid.COVER_BONUS[cov]
 	var keys: Array[String] = ["attack", "attack:melee" if melee else "attack:ranged", "attack:%s" % p.ability]
 	var t := c.creature.roll_d20(e.dice, D20Test.Kind.ATTACK_ROLL, p.attack, ac, keys, adv, dis, "%s → %s (%s)" % [c.name(), o.the(), p.name], p.crit_range)
+	var height := height_edge(c, o, option)
+	if height != 0:
+		t.add_bonus(height, "High ground" if height > 0 else "Low ground")
 	# The weapon leaves the hand, or the shot is spent.
 	if not melee and c.creature is Character:
 		if str(option.get("kind", "")) == "thrown":
@@ -365,6 +368,25 @@ func _situation(c: Combatant, o: BattleObject, melee: bool, p: WeaponProfile, ki
 			dis.append("Heavy weapon with %s under 13" % Creature.ABILITY_NAMES[need])
 	if not cells_of(o).any(func(cell: Vector2i) -> bool: return e.can_see_space(c, cell)):
 		dis.append("you can't see it")
+
+
+## High ground (the owner's house rule, EncounterSight.height_edge) for a ranged attack at an object: the floor under
+## it counts (a chandelier is aimed at from the floor below without a penalty).
+func height_edge(c: Combatant, o: BattleObject, option: Dictionary) -> int:
+	var e := enc()
+	if bool(option.get("melee", true)):
+		return 0
+	var from: Vector2i = option.get("origin_cell", c.cell)
+	var up := 0 if option.has("origin_cell") else c.altitude
+	var low := 1 << 20
+	for cell in cells_of(o):
+		low = mini(low, e.grid.height(cell))
+	var rise := e.grid.height(from) + up - low
+	if rise > CombatGrid.FEET:
+		return EncounterSight.HIGH_GROUND
+	if rise < -CombatGrid.FEET:
+		return -EncounterSight.HIGH_GROUND
+	return 0
 
 
 ## Adamantine Weapon (2024 DMG): its hit on an object is a Critical Hit.
@@ -480,6 +502,9 @@ func _spell_shot(ctx: Dictionary, o: BattleObject, r: CombatResult) -> void:
 	var keys: Array[String] = ["attack", "attack:melee" if melee else "attack:ranged", "attack:spell"]
 	var t := c.creature.roll_d20(e.dice, D20Test.Kind.ATTACK_ROLL, atk, ac, keys, adv, dis, "%s → %s (%s)" % [c.name(), o.the(), s["name"]],
 		int(s.get("crit_range", 20)))
+	var height := height_edge(c, o, {"melee": melee})
+	if height != 0:
+		t.add_bonus(height, "High ground" if height > 0 else "Low ground")
 	e.events.append({"type": "object_attack", "by": c.id, "id": o.id, "hit": t.success, "critical": t.critical and t.success, "action": "spell:" + str(s["id"])})
 	if not t.success:
 		r.lines.append(e.log.add("miss", "%s's %s misses %s (%d vs AC %d)" % [c.name(), s["name"], o.the(), t.total, ac], c.id, [t.describe(), atk.describe()]))
