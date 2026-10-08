@@ -1,0 +1,154 @@
+{
+  "id": "rag_queen",
+  "name": "The Rag Queen",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The One-Horned Billy, docs/story/side_quests.md), built from the 2025 Monster Manual's scarecrow (Fearsome Claw, Terrifying Glare, its immunities and fire vulnerability), scaled to a Huge construct of CR 10 with legendary actions."
+  },
+  "size": "huge",
+  "type": "construct",
+  "tags": [
+    "boss",
+    "scarecrow"
+  ],
+  "alignment": "chaotic evil",
+  "art": "scarecrow",
+  "ac": 15,
+  "initiative": 3,
+  "hp": {
+    "average": 190,
+    "dice": "20d12+60"
+  },
+  "speed": {
+    "walk": 40
+  },
+  "abilities": {
+    "str": 20,
+    "dex": 16,
+    "con": 16,
+    "int": 10,
+    "wis": 14,
+    "cha": 18
+  },
+  "saves": {
+    "dex": 7,
+    "wis": 6
+  },
+  "vulnerabilities": [
+    "fire"
+  ],
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "unconscious"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 12,
+  "languages": [],
+  "cr": 10,
+  "xp": 5900,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When the Rag Queen fails a saving throw, she can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "fearsome_claw",
+          "count": 2
+        }
+      ],
+      "summary": "Two Fearsome Claws.",
+      "text": "The Rag Queen makes two Fearsome Claw attacks."
+    },
+    {
+      "id": "fearsome_claw",
+      "name": "Fearsome Claw",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 14,
+          "dice": "2d8+5",
+          "type": "slashing"
+        }
+      ],
+      "on_hit": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "source_turn_end"
+        }
+      ],
+      "summary": "A long raking claw of sewn bones that leaves the target Frightened until the end of her next turn.",
+      "text": "Hit: 14 (2d8 + 5) Slashing damage, and the target has the Frightened condition until the end of the Rag Queen's next turn."
+    },
+    {
+      "id": "terrifying_glare",
+      "name": "Terrifying Glare",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "wis",
+        "dc": 15,
+        "success": "none"
+      },
+      "targets": {
+        "range": 30
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "source_turn_end",
+          "conditions": [
+            "paralyzed"
+          ]
+        }
+      ],
+      "summary": "Recharge 5-6: a creature within 30 ft makes a DC 15 Wis save or is Frightened and Paralyzed until the end of her next turn.",
+      "text": "One creature the Rag Queen can see within 30 feet makes a DC 15 Wisdom saving throw. Failure: the target has the Frightened and Paralyzed conditions until the end of the Rag Queen's next turn."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 3,
+    "options": [
+      {
+        "id": "rake",
+        "name": "Rake",
+        "cost": 2,
+        "action": "fearsome_claw",
+        "summary": "Makes one Fearsome Claw attack."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regions": [
+    "berez"
+  ],
+  "ai_profile": "brute",
+  "summary": "Baba Lysaga's masterpiece: a scarecrow twice the height of a man, stitched from the wedding dresses of every drowned bride of Berez, with a mouth full of their rings. Her claws frighten, her glare freezes, and fire is the one thing she fears."
+}

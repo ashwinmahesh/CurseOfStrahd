@@ -30,6 +30,13 @@ Dumitru: Nobody comes up the road. Except you. Did you see wolves? Did you see t
 
 ~ goatherd
 Stelian: That one's Rodica's, and that one's the Burgomaster's, and the one with the horn is nobody's, because nobody's brave enough. Mind your fingers by the rails.
+if not quest.one_horned_billy
+set billy_rumor
+quest one_horned_billy rumored
+Stelian: Turned up last spring, already grown, with a woman's ring jammed down on his horn. Nobody's been brave enough to take it off him. He looks at you like he's waiting for something.
+elif flag.dragos_freed
+Stelian: My best billy turned into a ferryman. I've lost a goat and gained a man who's very good with goats. I'm calling it even.
+endif
 -> END
 
 ~ fence_mender
@@ -50,5 +57,4 @@ Narrator: The goat chews something that was probably part of the fence, and watc
 -> END
 
 ~ billy
-Narrator: The one-horned billy plants his feet in the gap of the pen and lowers his head at you. He does not move. He is not going to move.
--> END
+-> krezk/one_horned_billy:billy

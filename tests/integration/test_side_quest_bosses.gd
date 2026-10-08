@@ -75,3 +75,7 @@ func test_the_bone_marshal_and_his_column_at_level_6() -> void:
 
 func test_the_bone_marshal_duel_at_level_8() -> void:
 	await _series("into_the_mists_road", 23, 8, "bone_marshal", [1, 2, 3], ["riders_stood_down"])
+
+
+func test_the_rag_queen_at_level_9() -> void:
+	await _series("berez", 14, 9, "rag_queen", [1, 2, 3], ["lysaga_guests"])
