@@ -415,9 +415,9 @@ func search(c: Combatant) -> CombatResult:
 	# in a Lightly Obscured spot (dim light the searcher's Darkvision doesn't reach, fog or a storm over the field).
 	var t_hard: D20Test = null
 	for h0 in e.hostiles_of(c):
-		var why := _hard_to_spot(c, h0)
-		if h0.hidden and why != "" and t_hard == null:
-			t_hard = c.creature.roll_check(e.dice, &"perception", 0, [], [why])
+		var hard := _hard_to_spot(c, h0)
+		if h0.hidden and hard != "" and t_hard == null:
+			t_hard = c.creature.roll_check(e.dice, &"perception", 0, [], [hard])
 	for h in e.hostiles_of(c):
 		var total := t.total if not (_hard_to_spot(c, h) != "" and t_hard != null) else mini(t.total, t_hard.total)
 		if h.hidden and total >= h.stealth_total:
