@@ -561,6 +561,18 @@
       "label": "a stash under the fallen beams",
       "model": "rubble",
       "item": "javelin_of_lightning__javelin"
+    },
+    {
+      "id": "refilled_grave",
+      "cell": [
+        28,
+        3
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a grave dug up and filled in again",
+      "model": "rubble",
+      "item": "wand_of_secrets"
     }
   ],
   "lights": [

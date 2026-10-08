@@ -256,6 +256,18 @@
       "label": "a hidden drawer in Lady Wachter's desk",
       "model": "scattered_notes",
       "item": "eyes_of_charming"
+    },
+    {
+      "id": "shrine_tithe",
+      "cell": [
+        13,
+        16
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "the cult's tithe under the shrine",
+      "model": "gold_spill",
+      "item": "rod_of_rulership"
     }
   ],
   "containers": [

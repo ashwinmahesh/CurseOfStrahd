@@ -440,7 +440,7 @@
       "skill": "investigation",
       "label": "a false bottom in the dressing-table drawer",
       "model": "scattered_notes",
-      "item": "perfume_of_bewitching"
+      "item": "circlet_of_blasting"
     },
     {
       "id": "nursemaid_mattress",
@@ -452,7 +452,7 @@
       "search_dc": 14,
       "label": "a bundle under the nursemaid's mattress",
       "model": "satchel",
-      "item": "cloak_of_many_fashions"
+      "item": "cloak_of_elvenkind"
     }
   ],
   "containers": [

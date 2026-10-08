@@ -597,9 +597,21 @@
       ],
       "kind": "search",
       "search_dc": 12,
-      "label": "something trodden into the mud by the stocks",
+      "label": "a ring trodden into the mud by the stocks",
       "model": "straw",
-      "item": "wand_of_smiles"
+      "item": "ring_of_protection"
+    },
+    {
+      "id": "hovel_step_sack",
+      "cell": [
+        13,
+        28
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a sack under the hovel's step",
+      "model": "sack",
+      "item": "handy_haversack"
     }
   ],
   "lights": [

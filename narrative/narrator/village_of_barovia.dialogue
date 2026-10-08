@@ -443,3 +443,17 @@ once
 
 ~ check:perception:undercroft_priest:failure
 | The niches go back further than your light does. Someone with sharper eyes might see more.
+
+~ search:refilled_grave
+| One grave has been dug up and filled in again, badly. A little way down, a slim wand of grey wood, dropped by whoever did the digging.
+once
+
+~ check:perception:refilled_grave:failure
+| Old graves and older names. If one of them has been disturbed, it's hiding it well.
+
+~ search:pew_loose_stone
+| The stone under the front pew rocks when you press it. Beneath it, a small silver sunburst on a chain, hidden from someone a long time ago.
+once
+
+~ check:investigation:pew_loose_stone:failure
+| Cold stone floors, cold pews. The church keeps its secrets, if it has any left.

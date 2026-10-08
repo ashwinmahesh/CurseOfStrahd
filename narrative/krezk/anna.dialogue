@@ -65,6 +65,8 @@ set ilya_fate = "healed"
 quest the_burgomasters_son healed
 gold +40
 Anna Krezkova: Take this. Don't argue. It was for his stone, and he won't need one now.
+Anna Krezkova: And this. My mother's amulet. We hung it on his bed all month and it did nothing for him, because it was never his to wear. It's yours now. Be well, the way he will be.
+give amulet_of_health
 inspire class:cleric: prayed a dying boy back to his mother
 approve liriel_dawnsong +3 kip_smudgewick +2 godrick_pendlebrook +2 thistle +1 wren_featherfoot +1 ratatoille +1: You healed Ilya Krezkov
 -> END

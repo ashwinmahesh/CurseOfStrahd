@@ -143,6 +143,8 @@ set godfrey_remembers
 quest the_order_of_the_silver_dragon remembering
 attitude sir_godfrey_gwilym friendly
 Sir Godfrey Gwilym: Ask the commander to call the muster. All of us at the table, the way it was. Say your piece to the Order, not to him. I'll stand up when you do. I promise, and I'll remember promising.
+Sir Godfrey Gwilym: And take my armour. Not the rust I'm wearing: the good plate, in my chest upstairs, that I kept polished for a war that ended four hundred years ago. A knight of the Order should wear it, and you said the oath better than I did.
+give armor_plus_1__plate_armor
 approve godrick_pendlebrook +4 liriel_dawnsong +1: You gave Sir Godfrey back the Order's oath
 -> menu
 

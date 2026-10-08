@@ -352,6 +352,19 @@
       "label": "a loose board under the chalk circle",
       "model": "broken_boards",
       "item": "wand_of_the_war_mage_plus_1"
+    },
+    {
+      "id": "ledger_fireworks",
+      "cell": [
+        15,
+        10
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "skill": "investigation",
+      "label": "something behind the festival ledger",
+      "model": "scattered_notes",
+      "item": "necklace_of_fireballs"
     }
   ],
   "containers": [

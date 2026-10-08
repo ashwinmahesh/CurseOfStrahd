@@ -225,6 +225,19 @@
       "model": "book",
       "when": "name:silvain_aster",
       "dialogue": "companions/aurel:margins"
+    },
+    {
+      "id": "chained_tome",
+      "cell": [
+        16,
+        5
+      ],
+      "kind": "search",
+      "search_dc": 18,
+      "skill": "investigation",
+      "label": "a chained book that isn't what its spine says",
+      "model": "scattered_notes",
+      "item": "tome_of_clear_thought"
     }
   ],
   "containers": [

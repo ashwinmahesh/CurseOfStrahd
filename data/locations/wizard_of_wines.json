@@ -302,6 +302,30 @@
       "kind": "examine",
       "label": "A dead tree full of ravens",
       "model": "dead_tree"
+    },
+    {
+      "id": "winery_well_rope",
+      "cell": [
+        13,
+        9
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "a rope tied off below the well's lip",
+      "model": "rubble",
+      "item": "rope_of_climbing"
+    },
+    {
+      "id": "roost_hoard",
+      "cell": [
+        40,
+        29
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "the ravens' hoard in the dead tree",
+      "model": "gold_spill",
+      "item": "ring_of_feather_falling"
     }
   ],
   "lights": [

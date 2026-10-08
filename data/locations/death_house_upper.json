@@ -403,6 +403,31 @@
       "label": "a hollow book among the histories",
       "model": "scattered_notes",
       "item": "wand_of_magic_missiles"
+    },
+    {
+      "id": "harp_lute_case",
+      "cell": [
+        26,
+        9
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "skill": "investigation",
+      "label": "a lute case behind the harp",
+      "model": "satchel",
+      "item": "instrument_of_the_bards_doss_lute"
+    },
+    {
+      "id": "servant_bed_gloves",
+      "cell": [
+        24,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "something under a servant's bed",
+      "model": "broken_boards",
+      "item": "gloves_of_missile_snaring"
     }
   ],
   "containers": [

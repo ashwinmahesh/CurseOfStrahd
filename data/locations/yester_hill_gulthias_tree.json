@@ -157,6 +157,19 @@
       "kind": "examine",
       "label": "A standing stone",
       "model": "statue_headless"
+    },
+    {
+      "id": "heartwood_staff",
+      "cell": [
+        20,
+        10
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "skill": "investigation",
+      "label": "a staff grown into the heartwood",
+      "model": "leaves",
+      "item": "staff_of_withering__quarterstaff"
     }
   ],
   "containers": [
