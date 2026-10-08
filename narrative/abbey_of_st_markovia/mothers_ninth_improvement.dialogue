@@ -1,0 +1,121 @@
+# Mother's Ninth Improvement (side quest, docs/story/side_quests.md): Mother, the Belviews' matriarch, was the baby
+# carried up the mountain with the coughing sickness sixty years ago, and has had nine of the Abbot's gifts. The ninth
+# is a pair of great grey wings, stitched shut with silver wire so she wouldn't fly off before they were finished. Once
+# the Abbot is done improving, she wants to go down to Krezk, where she was born, and her heron's legs won't take the
+# mountain. Her boys in the cells come first; then the wire; then the courtyard wall. A sequel to Clovin's Audience
+# when Pavel is family. Reached from Clovin's "Heard anything interesting?" and Mother in the wards kitchen.
+# Every line here is unvoiced for now.
+
+# --- Clovin's news (clovin:menu and clovins_audience:abbey_menu jump here) ---
+
+~ clovin_news
+if quest.mothers_ninth_improvement == done
+Clovin Belview: Mother comes down to Krezk on Sundays now. Lands on Great-uncle Pavel's roof. He's had it mended twice and he says he's never been happier. The roof says otherwise.
+-> END
+endif
+if not quest.mothers_ninth_improvement
+quest mothers_ninth_improvement rumored
+endif
+if flag.abbot_fate
+Clovin Belview: Interesting? Mother's been talking about Krezk. She was born there, before she was carried up here in a basket. She says she'll go down if somebody can tell her how, and nobody can, because of the legs. And the other thing.
+if flag.clovin_family_found
+Clovin Belview: Great-uncle Pavel's asked her to Sunday soup. He can't stay up here for ever, and she can't walk down. She sits by the kitchen fire and looks at the door.
+endif
+else
+Clovin Belview: Interesting? Mother's talking about Krezk again. She doesn't talk about Krezk while he's improving. She thinks he listens at the walls. He does.
+endif
+-> END
+
+# --- Mother, in the corner of the wards kitchen ---
+
+~ mother
+if quest.mothers_ninth_improvement == done
+-> END
+endif
+if not flag.abbot_fate
+Narrator: In the darkest corner of the kitchen something very large sits under a blanket of sewn-together habits, with a pair of long thin bird's legs folded under it, and doesn't look up.
+Mother: Not while he's improving. Come back when he's done improving. Go on. He listens at the walls.
+-> END
+endif
+if not flag.mother_met
+set mother_met
+if not quest.mothers_ninth_improvement or quest.mothers_ninth_improvement == rumored
+quest mothers_ninth_improvement asked
+endif
+Narrator: In the darkest corner of the kitchen something very large sits under a blanket of sewn-together habits. The blanket moves. It comes off.
+Narrator: Under it is a broad grey-haired woman with a cat's eyes and a heron's long thin legs, and on her back, folded and folded again, a pair of great grey wings. They are bound shut with silver wire, stitch after stitch, all the way down.
+Mother: Nine gifts. The eyes, to see in the dark. The legs, to wade. The wings, to go up to heaven when I'm ready, he said. He'd finish them when I was ready. He sewed them shut so I wouldn't go early.
+Mother: I'm ready now. Only I don't want heaven. I want Krezk. I was born there, two doors down from the burgomaster's. I want to see the door.
+if flag.clovin_family_found
+Mother: And my uncle Pavel's asked me to Sunday soup. I've never had an uncle. I've never had soup I didn't have to fight for.
+endif
+interject tag:kind: Then we'll get you there.
+endif
+-> menu
+
+~ menu
+* [if not flag.cells_seen_to] What do you need first? -> boys
+* [if flag.cells_seen_to and not flag.mother_unstitched] [Sleight of Hand DC 14] (Cut the silver wire, a stitch at a time, without cutting her.) -> unstitched | unstitched_rough
+* [if flag.cells_seen_to and not flag.mother_unstitched] [Medicine DC 13] (Take the stitches out the way a surgeon would.) -> unstitched | unstitched_rough
+* [if flag.mother_unstitched] (Help her up to the courtyard wall.) -> wall
+* Goodbye. -> END
+
+~ boys
+if flag.wards_cells_freed
+Mother: My boys in the cells. Somebody let them out, gently, and they ran up the mountain. Was it you? Thank you. They'll come back for the winter, or they won't. That's what boys do.
+set cells_seen_to
+-> menu
+endif
+if flag.wards_cells_fought
+Mother [sad]: My boys in the cells. They're dead. I heard it. (She is quiet for a long time.) They were never going to get better. I'll still go. There's nothing to stay for now but the fire.
+set cells_seen_to
+-> menu
+endif
+Mother: My boys first. The loud ones, in the cells along the corridor. He forgets them. I don't. I won't go and leave them behind bars. Let them out, and gently. They bite when they're frightened, and they're always frightened.
+-> END
+
+~ unstitched
+set mother_unstitched
+Narrator: It takes the better part of an hour. The wire comes out stitch by stitch, bright as the day he put it in, and Mother holds very still and tells you about every one of the nine gifts, in order, without once raising her voice.
+Narrator: When the last stitch is out the wings open by themselves, slowly, the way a hand does when you stop making a fist. They fill the kitchen. Every Belview in the room goes quiet.
+-> menu
+
+~ unstitched_rough
+set mother_unstitched
+Narrator: The wire comes out, but not cleanly; there's blood on the grey feathers, and Mother hisses like a cat through her teeth, and says nothing. When the last stitch is out the wings open by themselves, slowly, and she winces every time they move.
+Mother: Never mind. Never mind. They're mine now. They can hurt if they like.
+-> menu
+
+~ wall
+Narrator: Getting her up the stair to the courtyard takes six Belviews and most of the afternoon. At the top of the abbey wall she stands on her long legs with the whole valley under her, the wings half open, and doesn't move.
+Mother [afraid]: He said they'd work if I believed. I've never believed anything he said.
+* [Persuasion DC 13] He was wrong about everything else. He might have been right about this. -> leap
+* [if name:wren_featherfoot] (Let Wren tell her how to fall.) -> wren
+* (Hold her hand, and don't say anything.) -> leap
+
+~ wren
+interject name:wren_featherfoot: Nobody flies the first time. You fall, very well, in the right direction. Lean in. Don't look down; look at Krezk. Krezk isn't going anywhere.
+-> leap
+
+~ leap
+set mother_flown
+quest mothers_ninth_improvement done
+Narrator: She lets go. She drops like a sack of grain, and the Belviews in the courtyard scream, and then the wings catch the air with a crack like a sail, and she is going up, and then along, and then away, very badly, in long lurching swoops, down the mountain toward Krezk.
+Narrator: Very faintly, from a long way below, comes the sound of a woman laughing who has not laughed in sixty years.
+* [Nature DC 14] (Shout down which way the wind is going.) -> soft | pens
+* (Watch her go.) -> pens
+
+~ soft
+Narrator: She hears you. She tips one wing, and turns, and comes down on the roof of Old Pavel's house as gently as a heron coming down on a pond. Somebody in Krezk rings the shrine bell.
+-> gift
+
+~ pens
+Narrator: She comes down in Krezk's goat pens, all at once, in a burst of goats. When the shouting stops you can hear Stelian saying that he's seen worse, and that he has, in fact, seen worse, this year.
+-> gift
+
+~ gift
+Narrator: Clovin comes up beside you on the wall with a pair of old boots in his hands, soft grey leather, soles worn thin.
+Clovin Belview: She said to give you these. Her eighth gift. Before the wings he tried boots. She floated about on the ceiling for a year, and we used her to fetch things off the top shelf. She said you'd know what to do with them. She said you'd been very kind about the wire.
+give boots_of_levitation
+approve wren_featherfoot +2 liriel_dawnsong +2 godrick_pendlebrook +2 ratatoille +2 thistle +1 kip_smudgewick +1: You helped Mother fly down to Krezk
+-> END

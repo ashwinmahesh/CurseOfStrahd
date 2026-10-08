@@ -221,6 +221,9 @@ Krezk Watchman: And a Belview came down from the abbey at midsummer with a bell 
 elif quest.clovins_audience == done
 Krezk Watchman: I'm told the Belview comedian's to be let in on feast days now. I'm told to laugh, as well. I'm practising.
 endif
+if flag.mother_flown
+Krezk Watchman: And an angel came down off the mountain and landed on Old Pavel's roof. It was a Belview. Krezk has decided to be very calm about it.
+endif
 -> END
 
 ~ about_abbey

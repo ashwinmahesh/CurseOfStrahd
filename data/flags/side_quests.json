@@ -640,6 +640,26 @@
       "id": "hunt_paid",
       "type": "bool",
       "summary": "The party took the Huntsman's saddlebag and the hounds walked free (The Count's Huntsman)."
+    },
+    {
+      "id": "mother_met",
+      "type": "bool",
+      "summary": "The party has met Mother, the Belviews' matriarch, in the wards kitchen (Mother's Ninth Improvement)."
+    },
+    {
+      "id": "cells_seen_to",
+      "type": "bool",
+      "summary": "Mother knows her boys in the cells have been let out or are dead (Mother's Ninth Improvement)."
+    },
+    {
+      "id": "mother_unstitched",
+      "type": "bool",
+      "summary": "The party took the silver wire out of Mother's wings (Mother's Ninth Improvement)."
+    },
+    {
+      "id": "mother_flown",
+      "type": "bool",
+      "summary": "Mother flew down the mountain to Krezk (Mother's Ninth Improvement)."
     }
   ]
 }
