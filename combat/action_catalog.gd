@@ -154,7 +154,7 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 	rd["choice_label"] = "Trigger"
 	rd["opts"] = {"choice": "approach"}
 	out.append(rd)
-	var stab := _entry("stabilize", COMMON, "Stabilize", "DC 10 Medicine", "action", why, "dying", "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable.")
+	var stab := _entry("stabilize", COMMON, "Stabilize", "DC 10 Medicine", "action", why, "dying", "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable (or brings round one that was knocked out).")
 	stab["range"] = 5
 	out.append(stab)
 	if e.grapples.has(c.id):
@@ -617,7 +617,7 @@ const ACTION_TEXT := {
 	"search": "A Wisdom (Perception) check to find hidden creatures; it beats their Stealth total to find them.",
 	"study": "An Intelligence check (Arcana, History, Nature or Religion by the creature's type) to recall what a creature is: its defenses and traits.",
 	"ready": "Hold an attack: when an enemy you can see comes within reach (or, picked with a right-click, when one within reach attacks or casts a spell), you make it with your Reaction. Lasts until the start of your next turn. To ready a spell, right-click it on the Spells tab: it's cast now (spending the slot) and held with Concentration until it's released.",
-	"stabilize": "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable.",
+	"stabilize": "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable. The same first aid brings round a creature that was knocked out.",
 	"healers_kit": "Spend one use of the kit to make a dying creature within 5 ft Stable, no check needed.",
 	"grapple": "One of your attacks: the target (no more than one size larger) makes a Strength or Dexterity save against 8 + Str + Proficiency or is Grappled (Speed 0).",
 	"shove_prone": "One of your attacks: the target makes a Strength or Dexterity save or falls Prone.",
@@ -1057,8 +1057,8 @@ func target_why(c: Combatant, action: Dictionary, t: Combatant) -> String:
 			if c.hostile_to(t):
 				return "Choose an ally"
 		"dying":
-			if t.creature.hp > 0 or t.creature.dead:
-				return "Choose a dying creature"
+			if (t.creature.hp > 0 and not t.creature.has_flag("knocked_out")) or t.creature.dead:
+				return "Choose a dying creature (or one knocked out)"
 		"dead":
 			if not t.creature.dead:
 				return "Choose a creature that died"

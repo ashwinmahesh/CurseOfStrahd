@@ -792,11 +792,16 @@ func heal(amount: int, source: String = "") -> int:
 	hp = maxi(before, mini(cap, hp + amount))
 	if before == 0 and hp > 0:
 		_wake_from_zero()
+	# Knocked out (2024): any Hit Points regained bring the creature round.
+	if hp > before:
+		for fx: Effect in effects.duplicate():
+			if bool(fx.data.get("ends_on_heal", false)):
+				remove_effect(fx)
 	log_event({"type": "healed", "creature": id, "amount": hp - before, "source": source})
 	return hp - before
 
 
-## Temporary Hit Points don't stack: the higher amount is kept (the player may choose in the UI).
+## Temporary Hit Points don't stack: the higher amount is kept (deviations.md: nothing makes the lower one better).
 func add_temp_hp(amount: int, source: String = "") -> bool:
 	if amount <= 0:
 		return false

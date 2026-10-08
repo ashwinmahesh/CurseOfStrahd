@@ -44,6 +44,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Death Saving Throws (10+, nat 1, nat 20, 3/3) | creature.gd roll_death_save | tested | test_death_saves |
 | Damage at 0 HP = failure (crit = 2) | creature.gd | tested | test_damage |
 | Stabilizing, Stable creatures | creature.gd stabilize | tested | test_death_saves |
+| Knocking Out a Creature: a melee weapon or Unarmed Strike that would drop a creature to 0 leaves it at 1 and Unconscious until a Short Rest, Hit Points regained or first aid (DC 10 Medicine); the class tab's Knock Out rule (Off by default); a fight whose foes are down or knocked out is won (F13) | encounter_damage.gd knocks_out, knock_out, _first_aid; creature.gd heal | tested (melee spell attacks don't knock out: deviations) | test_knock_out |
 | Knocking a creature out | — | not started | — (no Improvement Ideas item yet) |
 | Critical Hits: roll damage dice twice | resolution/attack_resolver.gd | tested | test_attacks |
 

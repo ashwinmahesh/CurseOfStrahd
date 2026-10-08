@@ -53,13 +53,50 @@ func needs_death_save(c: Combatant) -> bool:
 	return c.is_alive() and c.creature.hp <= 0 and c.creature.uses_death_saves and not c.creature.stable and not c.death_save_rolled
 
 
+## Whether `source`'s blow knocks `target` out rather than dropping it to 0 (Knocking Out a Creature, 2024): a melee
+## attack by a creature whose rule for it ("knock_out") is Automatic, against anything but an object.
+func knocks_out(source: Combatant, target: Combatant) -> bool:
+	var e := enc()
+	if source == null or source == target or not bool(e.hit_context.get("melee", false)) or str(e.hit_context.get("attacker", "")) != source.id \
+			or str(e.hit_context.get("target", "")) != target.id:
+		return false
+	if target.creature.has_flag("spell_object") or target.creature.creature_type == &"object":
+		return false
+	return e._reaction_decision(source, "knock_out", "never") == "auto"
+
+
+## Knocks `target` out: 1 Hit Point and Unconscious (falling Prone) until it finishes a Short Rest, regains any Hit
+## Points, or someone's first aid (a DC 10 Wisdom (Medicine) check) brings it round. The effect's id and flag are
+## "knocked_out" (the captives after a fight read it).
+func knock_out(target: Combatant, by: Combatant) -> void:
+	var e := enc()
+	var cr := target.creature
+	cr.dead = false
+	cr.hp = 1
+	cr.remove_condition(&"unconscious", "0 Hit Points")
+	cr.death_successes = 0
+	cr.death_failures = 0
+	var fx := Effect.new("Knocked Out", &"feature", "knocked_out").with_condition(&"unconscious").with_modifier("flag", {"value": "knocked_out"})
+	fx.caster_id = by.id if by != null else ""
+	fx.ends = Effect.Ends.SHORT_REST
+	fx.data["ends_on_heal"] = true
+	cr.add_effect(fx)
+	cr.add_condition(&"prone", "Knocked out")
+	e.log.add("death", "%s knocks %s out (1 Hit Point, Unconscious until a Short Rest)" % [by.name() if by != null else "A blow", target.name()], target.id)
+	e.events.append({"type": "down", "id": target.id})
+	e.ground.drop_held(target, "Unconscious")
+
+
 ## Stabilizing a dying creature within 5 ft (2024): the Help action with a DC 10 Wisdom (Medicine) check, or a
-## Utilize action spending a use of a Healer's Kit (no check).
+## Utilize action spending a use of a Healer's Kit (no check). The check also brings round a creature that was
+## knocked out (first aid).
 func stabilize(c: Combatant, target: Combatant, use_kit: bool) -> CombatResult:
 	var e := enc()
 	var why := e._action_check(c)
 	if why != "":
 		return CombatResult.fail(why)
+	if target != null and target.creature.has_flag("knocked_out") and not target.creature.dead:
+		return _first_aid(c, target, use_kit)
 	if target == null or target.creature.hp > 0 or target.creature.dead or target.creature.stable:
 		return CombatResult.fail("Choose a dying creature")
 	if e.distance(c, target) > 5:
@@ -78,6 +115,27 @@ func stabilize(c: Combatant, target: Combatant, use_kit: bool) -> CombatResult:
 		e.faerun.after_stabilize(c)
 	else:
 		e.log.add("info", "%s can't stop %s's bleeding" % [c.name(), target.name()], c.id, [t.describe()])
+	return CombatResult.new()
+
+
+## First aid for a creature that was knocked out: a DC 10 Wisdom (Medicine) check (a Healer's Kit only stabilizes the
+## dying) ends its Unconscious condition.
+func _first_aid(c: Combatant, target: Combatant, use_kit: bool) -> CombatResult:
+	var e := enc()
+	if use_kit:
+		return CombatResult.fail("A Healer's Kit stabilizes the dying; bringing round a knocked-out creature takes a Medicine check")
+	if e.distance(c, target) > 5:
+		return CombatResult.fail("Must be within 5 ft")
+	e.spend_action(c)
+	var t := c.creature.roll_check(e.dice, &"medicine", 10)
+	if not t.success:
+		e.log.add("info", "%s can't bring %s round" % [c.name(), target.name()], c.id, [t.describe()])
+		return CombatResult.new()
+	for fx: Effect in target.creature.effects.duplicate():
+		if fx.source_id == "knocked_out":
+			target.creature.remove_effect(fx)
+	e.log.add("heal", "%s brings %s round" % [c.name(), target.name()], c.id, [t.describe()])
+	e.events.append({"type": "condition", "id": target.id})
 	return CombatResult.new()
 
 
@@ -238,6 +296,13 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		dr.died = false
 		dr.instant_death = false
 		e.log.add("info", "Death Ward holds: %s stays up with 1 Hit Point" % target.name(), target.id)
+	# Knocking Out a Creature (2024): a melee attack that would drop a creature to 0 Hit Points leaves it at 1 and
+	# Unconscious instead, when the attacker's rule says so (the class tab's Knock Out).
+	if was_up and (dr.dropped_to_zero or target.creature.dead) and knocks_out(source, target):
+		knock_out(target, source)
+		dr.dropped_to_zero = false
+		dr.died = false
+		dr.instant_death = false
 	# Armor of Agathys ends once its Temporary Hit Points are gone.
 	if target.creature.temp_hp <= 0:
 		for fxa: Effect in target.creature.effects.duplicate():

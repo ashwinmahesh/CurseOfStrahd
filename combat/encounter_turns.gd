@@ -310,8 +310,10 @@ func _check_over() -> void:
 	var party_up := false
 	var enemies_up := false
 	for c in e.combatants:
-		# A creature that fell out of the fight (EncounterMovement.leave_grid) no longer counts for either side.
-		if not c.is_alive() or c.creature.hp <= 0 or c.creature.has_flag("spell_object") or c.has_meta("left_fight"):
+		# A creature that fell out of the fight (EncounterMovement.leave_grid) no longer counts for either side, nor one
+		# knocked out (it's out until a Short Rest is over).
+		if not c.is_alive() or c.creature.hp <= 0 or c.creature.has_flag("spell_object") or c.has_meta("left_fight") \
+				or c.creature.has_flag("knocked_out"):
 			continue
 		if c.side in [&"party", &"guest"]:
 			party_up = true

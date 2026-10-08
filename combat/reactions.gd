@@ -471,6 +471,10 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 			continue
 		seen[str(f["id"])] = true
 		out.append({"id": str(f["id"]), "name": str(f["name"]), "cost": "Reaction and a feature use"})
+	# Knocking Out a Creature (2024): anyone's melee blow can leave a creature Unconscious at 1 Hit Point instead of 0.
+	out.append({"id": "knock_out", "name": "Knock Out", "cost": "Nothing", "modes": ["auto", "never"], "default": "never",
+		"help": "Automatic: a melee attack that would drop a creature to 0 Hit Points leaves it at 1 and Unconscious instead, until it finishes a Short Rest, regains Hit Points or gets first aid; a foe knocked out can be taken captive once the fight is won. Off: blows land as usual."})
+	seen["knock_out"] = true
 	# The choices after a D20 Test this creature can make (Indomitable, Heroic Inspiration, Bend Luck...).
 	for policy in enc().d20.policies(c):
 		if not seen.has(str(policy["id"])):
