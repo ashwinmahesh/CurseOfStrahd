@@ -438,10 +438,19 @@
     "white_sun": {
       "like": "krezk",
       "water": {
-        "deep": "moon_blue",
-        "shallow": "mist_blue",
+        "deep": "void",
+        "shallow": "night_deep",
         "foam": "ivory",
-        "glint": "wick"
+        "glint": "wick",
+        "flow": [
+          0.0,
+          0.0
+        ],
+        "ripples": 0.0,
+        "texture": 0.05,
+        "reflect": 0.4,
+        "map": "void",
+        "map_edge": "wick"
       },
       "weather": [
         {

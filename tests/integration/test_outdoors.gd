@@ -448,3 +448,24 @@ func test_the_fishers_landing() -> void:
 	assert_eq(str(v.atmosphere.mood["water"]["deep"]), "void", "black water")
 	assert_true(v.grid.height(Vector2i(17, 20)) > v.grid.height(Vector2i(17, 10)), "the shingle slopes down to the water")
 	v.queue_free()
+
+
+## The Pool of the White Sun (lane 28): black water with a warm glint, Krezk's mourners at the water and the graves,
+## and the pool in a hollow below the graveyard; the side-quest lane's toys and Sorin's watchers stay where they are.
+func test_the_pool_of_the_white_sun() -> void:
+	GameState.story.minute_of_day = 11 * 60
+	var v := _view("krezk_pool_of_the_white_sun")
+	await _frames(2)
+	var here: Array[String] = []
+	for s: Variant in v.get("_npc_shown") as Array:
+		here.append(str((s as Dictionary)["spec"]["npc"]))
+	for id: String in ["pool_mourner", "pool_grave_keeper"]:
+		assert_true(id in here, "%s is about" % id)
+	assert_eq(str(v.atmosphere.mood["water"]["deep"]), "void", "black water")
+	assert_true(v.grid.height(Vector2i(4, 1)) > v.grid.height(Vector2i(4, 12)), "the north graves on their bank")
+	var loc := Compendium.shared().get_entry("locations", "krezk_pool_of_the_white_sun") as Dictionary
+	var ids: Array[String] = []
+	for p: Variant in loc["props"]:
+		ids.append(str((p as Dictionary)["id"]))
+	assert_true("krezkov_toys" in ids, "the side quest's toys are kept")
+	v.queue_free()
