@@ -3717,12 +3717,26 @@
   "recipe": "d8c0f4a9b0",
   "text": "Widow Ileana shuts her shutter at night now. Sleeps, too, she says. First time in three winters."
  },
+ "barovia_petre/7d41ed367d9ca326": {
+  "chars": 27,
+  "direction": "[dry, teasing]",
+  "model": "eleven_v3",
+  "recipe": "d8c0f4a9b0",
+  "text": "You didn't like the riders."
+ },
  "barovia_petre/842a0a1ea0d96bec": {
   "chars": 114,
   "direction": "[hushed, knowing]",
   "model": "eleven_v3",
   "recipe": "d8c0f4a9b0",
   "text": "Widow Ileana still leaves her shutter open. Says she sleeps better. Two knocks, now and then, from the woods side."
+ },
+ "barovia_petre/85c55be3075aca4a": {
+  "chars": 65,
+  "direction": "[dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "d8c0f4a9b0",
+  "text": "Nobody goes to see. That's the one rumour we don't take turns on."
  },
  "barovia_petre/907be1949201fba4": {
   "chars": 137,
@@ -3752,6 +3766,13 @@
   "recipe": "d8c0f4a9b0",
   "text": "Wasn't his heart."
  },
+ "barovia_petre/ce3064d3a4d3a572": {
+  "chars": 79,
+  "direction": "[hushed, gossiping, relishing]",
+  "model": "eleven_v3",
+  "recipe": "d8c0f4a9b0",
+  "text": "And the riders. Every night, out at the gates, after midnight. Bones on horses."
+ },
  "barovia_petre/e2d3e4c43b218984": {
   "chars": 20,
   "direction": "[contrary, gloomy]",
@@ -3779,6 +3800,20 @@
   "model": "eleven_v3",
   "recipe": "7225af8f61",
   "text": "Three coppers for a candle. Three. It was one, last spring. He says the roads are bad. The roads have always been bad."
+ },
+ "barovia_vasile/003a2267e96ddf88": {
+  "chars": 67,
+  "direction": "[low, uneasy, grumbling]",
+  "model": "eleven_v3",
+  "recipe": "8aaaddd24b",
+  "text": "No riders at the gates any more. The wind's quiet. I don't like it."
+ },
+ "barovia_vasile/070d2ad5748a5f04": {
+  "chars": 98,
+  "direction": "[low, gossiping, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "8aaaddd24b",
+  "text": "You can hear them from the east road if the wind's right. Lances knocking. Somebody giving orders."
  },
  "barovia_vasile/136218eb148bd01a": {
   "chars": 74,
@@ -3814,6 +3849,13 @@
   "model": "eleven_v3",
   "recipe": "8aaaddd24b",
   "text": "Widow Ileana leaves her shutter open a crack every night. Says it's for the smoke."
+ },
+ "barovia_vasile/7b049918a46fed67": {
+  "chars": 35,
+  "direction": "[grumbling, wry]",
+  "model": "eleven_v3",
+  "recipe": "8aaaddd24b",
+  "text": "I knew where I was with the riders."
  },
  "barovia_vasile/86078beac1d9c525": {
   "chars": 98,
@@ -31328,6 +31370,13 @@
   "recipe": "f60908d226",
   "text": "Thistle comes up out of sleep on all fours and goes to him low and quick, the way a dog goes to its master. Her eyes are open and empty."
  },
+ "narrator/08c0a9e1a8acf984": {
+  "chars": 170,
+  "direction": "[grave, slow, solemn]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "When the marshal falls, the column falls with him: every rider, every horse, a long rattle of bones going down together in the mud, and then nothing but harness and rust."
+ },
  "narrator/08d7b9237af81a68": {
   "chars": 117,
   "model": "eleven_v4",
@@ -36386,6 +36435,13 @@
   "recipe": "dd92281f92",
   "text": "The screaming around the chamberlain rises, all at once, as if every voice in it has turned to look. One of them, very clearly, is a woman calling a name. It is Sorrel's name."
  },
+ "narrator/392fd42860d5f1b2": {
+  "chars": 115,
+  "direction": "[low, solemn]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The column forms up across the gate again, as it has every night for four hundred years. The marshal rides forward."
+ },
  "narrator/3936157775a39da1": {
   "chars": 144,
   "model": "eleven_v4",
@@ -37855,6 +37911,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A dollhouse taller than a child, painted in the same colors as the house around you."
+ },
+ "narrator/47f22877639e9c29": {
+  "chars": 133,
+  "direction": "[hushed, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Their marshal rides forward alone. His horse's ribs and his own have grown together over the years, so you can't tell where one ends."
  },
  "narrator/47f5674bc9b1e528": {
   "chars": 176,
@@ -40897,6 +40960,13 @@
   "recipe": "dd92281f92",
   "text": "The Luna slides past to the north, wide and brown and in no hurry, as if it never did anything to anybody."
  },
+ "narrator/650e5b951f58d73d": {
+  "chars": 182,
+  "direction": "[quiet, wondering]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "His blade is still bright under the rust. And behind the statues, where the gatehouse was, there's an iron pay chest that four hundred years of vanguard never got around to spending."
+ },
  "narrator/6511ae317c67fd04": {
   "chars": 158,
   "model": "eleven_v4",
@@ -42873,6 +42943,13 @@
   "recipe": "dd92281f92",
   "text": "The first pin comes out, and the whole row erupts. Starved things are not grateful. Starved things are fast."
  },
+ "narrator/7779ee026bcbff4f": {
+  "chars": 88,
+  "direction": "[tense, building]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The whole column lowers its lances at once, and the gate is full of bones riding at you."
+ },
  "narrator/777a1403b17bacbe": {
   "chars": 75,
   "model": "eleven_v4",
@@ -42927,6 +43004,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Somewhere far below, the thing you killed is already rotting back into its heap. The house will grow another; it can wait."
+ },
+ "narrator/7867a17a95c326c8": {
+  "chars": 211,
+  "direction": "[quiet, grave, sad]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You tell him: the kingdom his count came from has no name any more, the war that brought him here is four centuries done, and there's nobody left on either side of it but the count, and the valley, and the dead."
  },
  "narrator/78a0f152d283b54d": {
   "chars": 80,
@@ -47667,6 +47751,13 @@
   "recipe": "dd92281f92",
   "text": "Zuleika comes out of the dark at a run, and stops just short of Emil, and then doesn't."
  },
+ "narrator/a5ce0e280f548a7a": {
+  "chars": 255,
+  "direction": "[hushed, eerie, slow]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "They come out of the mist on the east road in a column of twos: horses that are only bones and harness, riders that are only bones and rust, a pennant on a lance that is only a pole and a few threads. They don't make a sound. They form up across the gate."
+ },
  "narrator/a5e0545c55b5071f": {
   "chars": 150,
   "model": "eleven_v4",
@@ -49066,6 +49157,13 @@
   "recipe": "dd92281f92",
   "text": "Krezk inside its wall: low stone cottages with turf on the roofs, smoke going straight up, and people who stop what they're doing to watch you pass and don't start again until you've gone."
  },
+ "narrator/b3997c1132110f0a": {
+  "chars": 116,
+  "direction": "[tense, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The words come out wrong, or the wrong way round, and the column doesn't move. The marshal's hand goes to his blade."
+ },
  "narrator/b3e2a01be8435d82": {
   "chars": 85,
   "model": "eleven_v4",
@@ -49223,6 +49321,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The shackle opens. She rubs her ankle, stands, sits down again, and stands up properly the second time."
+ },
+ "narrator/b5788e0c7b06f8fb": {
+  "chars": 153,
+  "direction": "[solemn, tense]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "He salutes you with his blade, the old cavalry salute, and his two lieutenants walk their bone horses out of the column to his flanks. Nobody else moves."
  },
  "narrator/b58fce678edef634": {
   "chars": 154,
@@ -51295,6 +51400,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A shuttered window with a candle burning behind the slats. The weeping comes from just inside, and it doesn't stop when you stop to listen."
+ },
+ "narrator/ca33052a4734ccf2": {
+  "chars": 78,
+  "direction": "[quiet, calm]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The Gates of Barovia, and the mist, and nothing on the east road but the road."
  },
  "narrator/ca360b30aea466c9": {
   "chars": 127,
@@ -54113,6 +54225,13 @@
   "recipe": "dd92281f92",
   "text": "She steps into another of you, apologizing as she goes. Now someone in the party is humming a nursery tune that none of you started."
  },
+ "narrator/e5d25c2f24162d8c": {
+  "chars": 190,
+  "direction": "[solemn, gentle, moved]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "You say the old words, the ones soldiers say over the ones who don't march out with them in the morning. Down the column, one skull and then another bows forward over the pommel of a saddle."
+ },
  "narrator/e5d6c551e05fd481": {
   "chars": 139,
   "model": "eleven_v4",
@@ -54502,6 +54621,13 @@
   "recipe": "dd92281f92",
   "text": "The cuffs are good work, but old, and the locks give to a patient hand. One, then the other."
  },
+ "narrator/ea550f82127f0c59": {
+  "chars": 210,
+  "direction": "[solemn, slow, moved]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The marshal turns his horse and looks at his column for a long time. Then he lifts his blade, and the riders dismount, all at once, the way they were drilled to, and stand by their horses' heads, and are still."
+ },
  "narrator/ea55847a3d731964": {
   "chars": 187,
   "model": "eleven_v4",
@@ -54519,6 +54645,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The marsh south of the Luna river, where Berez used to be. The track from the road comes in from the south-east along an old causeway. Marina's monument stands on its mound in the west; Baba Lysaga's hut squats on its giant stump in the east, ringed by scarecrows."
+ },
+ "narrator/ea7a7396d4b3f7a4": {
+  "chars": 123,
+  "direction": "[tense, building, urgent]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The marshal lowers his blade, and the whole column lowers its lances with him, and the gate is full of bones coming at you."
  },
  "narrator/ea8056acb4fa878c": {
   "chars": 173,
@@ -56515,6 +56648,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Morgantha stands, and keeps standing, taller than the rafters should allow. In the corner Bella lays down her mirror; on the stair, Offalia's heavy tread. Three voices begin to hum the same tune."
+ },
+ "narrator/fde5895fae06d562": {
+  "chars": 134,
+  "direction": "[solemn, tense]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The marshal salutes with his blade, and his two lieutenants walk their bone horses out of the column to his flanks. Nobody else moves."
  },
  "narrator/fdfbe929160bea90": {
   "chars": 99,
@@ -66985,12 +67125,26 @@
   "recipe": "1f1ddb32d1",
   "text": "Tonight he walked his grey down the road toward the crossroads. He came back without her. I counted."
  },
+ "tser_zora/a6c9599aa82e2766": {
+  "chars": 116,
+  "direction": "[dry, wistful]",
+  "model": "eleven_v3",
+  "recipe": "1f1ddb32d1",
+  "text": "No riders, these three nights. Twelve nights in a row I counted none. I miss them, a little. They were very regular."
+ },
  "tser_zora/ad5e69275762b84a": {
   "chars": 72,
   "direction": "[cool, ominous]",
   "model": "eleven_v3",
   "recipe": "1f1ddb32d1",
   "text": "When they don't, Stanimir wants to know which way the missing ones went."
+ },
+ "tser_zora/d065405df74730ef": {
+  "chars": 247,
+  "direction": "[flat, watchful, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "1f1ddb32d1",
+  "text": "And every night after midnight, riders go east along the road toward the gates. Twelve of them. Bones on bones, horses and men. None of them ever comes back, and the next night there are twelve again. I've stopped counting them. They don't change."
  },
  "tser_zora/d982619061417eac": {
   "chars": 148,

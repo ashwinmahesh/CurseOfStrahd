@@ -1468,16 +1468,20 @@
       "voice_id": "UfHihqapkic3hrQMcWhO",
       "name": "Barovia barovia_vasile (2026-10-08)",
       "description": "A thin, hooded Barovian villager in his forties speaking English with a very strong, thick Romanian accent. A reedy, hushed gossip's voice, eager to tell the worst news.",
+      "settings": {},
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "UfHihqapkic3hrQMcWhO",
       "released": true
     },
     "barovia_petre": {
       "voice_id": "P8R5T80nbcVKX08iVC5C",
       "name": "Barovia barovia_petre (2026-10-08)",
       "description": "A threadbare Barovian man in his fifties speaking English with a very strong, thick Romanian accent. A low, gloomy, dry voice, contrary and fatalistic.",
+      "settings": {},
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "P8R5T80nbcVKX08iVC5C",
       "released": true
     },
     "barovia_acolyte": {
