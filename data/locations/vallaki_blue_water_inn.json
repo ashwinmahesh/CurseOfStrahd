@@ -388,6 +388,30 @@
       ],
       "dialogue": "vallaki/ireena:ismark_at_inn",
       "when": "flag.ismark_guards_ireena and flag.ireena_sanctuary == \"inn\" and not guest:ismark"
+    },
+    {
+      "npc": "vallaki_goodwife",
+      "cell": [
+        6,
+        4
+      ],
+      "dialogue": "vallaki/townsfolk:goodwife_inn",
+      "hours": [
+        18,
+        22
+      ]
+    },
+    {
+      "npc": "vallaki_carter",
+      "cell": [
+        9,
+        9
+      ],
+      "dialogue": "vallaki/townsfolk:carter_inn",
+      "hours": [
+        19,
+        23
+      ]
     }
   ],
   "narration": {

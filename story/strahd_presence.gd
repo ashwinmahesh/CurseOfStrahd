@@ -6,7 +6,8 @@ extends RefCounted
 ## days in Barovia; night, outdoors, which places), a condition, `once` or a cooldown, and its steps (a Narrator line,
 ## a conversation, a fight with a `withdraw` block, the carriage to a location), then the first `then` entry whose
 ## condition holds once the conversation is over. Pure logic: the game root asks due() at its hooks and plays the
-## steps; what happened is kept in StoryState.flags["_strahd"], so it survives saves.
+## steps; what happened is kept in StoryState.flags["_strahd"], so it survives saves. His attention (F9, below)
+## shortens the wait between visits and gates the visits, road events and patrols that ask for it.
 
 const PATH := "res://data/strahd/visits.json"
 ## Where the visits' memory lives in StoryState.flags: {fired: {visit id: {n, last}}, last: minute, pending: {}}.
@@ -16,6 +17,12 @@ const EVENTS: Array[String] = ["arrive", "rest", "travel"]
 const OPEN_FLOOR := ".~1234"
 
 static var _data: Dictionary = {}
+## Strahd's attention (F9, data/strahd/attention.json): what he has noticed about the party, worked out from the story
+## as it stands (his servants killed, his treasures carried, the times they defied him), so it needs no saving and
+## is never shown. Its tier brings his visits closer together and his eyes and patrols onto the roads, and any
+## condition can read it (`attention >= marked`).
+const ATTENTION_PATH := "res://data/strahd/attention.json"
+static var _attention: Dictionary = {}
 
 
 ## The visits file (loaded once).
@@ -29,6 +36,48 @@ static func data() -> Dictionary:
 ## Tests swap in their own visits; use({}) goes back to the file.
 static func use(d: Dictionary) -> void:
 	_data = d
+
+
+# --- Attention (F9) -------------------------------------------------------------------------------
+
+## The attention file (loaded once); use_attention({}) goes back to it after a test swaps one in.
+static func attention_data() -> Dictionary:
+	if _attention.is_empty():
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(ATTENTION_PATH))
+		_attention = parsed as Dictionary if parsed is Dictionary else {"marks": [], "tiers": []}
+	return _attention
+
+
+static func use_attention(d: Dictionary) -> void:
+	_attention = d
+
+
+## How much he has noticed the party: the points of every mark whose condition holds now.
+static func attention(st: StoryState) -> int:
+	var total := 0
+	for m: Variant in attention_data().get("marks", []):
+		var mark := m as Dictionary
+		if StoryConditions.check(str(mark["when"]), st):
+			total += int(mark["points"])
+	return total
+
+
+## The tier his attention has reached: {id, min, gap, road_day, road_night} (the highest whose `min` it meets).
+static func tier(st: StoryState) -> Dictionary:
+	var points := attention(st)
+	var best := {"id": "", "min": 0}
+	for t: Variant in attention_data().get("tiers", []):
+		if points >= int((t as Dictionary)["min"]) and int((t as Dictionary)["min"]) >= int(best["min"]):
+			best = t as Dictionary
+	return best
+
+
+## A tier's least attention by name (`attention >= marked` in conditions), or -1 for a name that isn't a tier.
+static func tier_min(id: String) -> int:
+	for t: Variant in attention_data().get("tiers", []):
+		if str((t as Dictionary)["id"]) == id:
+			return int((t as Dictionary)["min"])
+	return -1
 
 
 static func visit(id: String) -> Dictionary:
@@ -67,7 +116,8 @@ static func due(st: StoryState, on: String, ctx: Dictionary = {}) -> Dictionary:
 		return {}
 	var mem := memory(st)
 	var now := st.total_minutes()
-	var gap := roundi(float(d.get("gap_hours", 0)) * 60.0)
+	# The more he has noticed, the sooner he comes again (the attention tier's `gap`, a share of the usual wait).
+	var gap := roundi(float(d.get("gap_hours", 0)) * 60.0 * float(tier(st).get("gap", 1.0)))
 	for v: Variant in d.get("visits", []):
 		var vis := v as Dictionary
 		if not bool(vis.get("urgent", false)) and now - int(mem["last"]) < gap:

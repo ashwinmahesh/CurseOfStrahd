@@ -82,6 +82,29 @@ illusory_self, riposte, parry, stones_endurance, interception, protective_field,
 `title`, `text` (the trigger with its numbers), `cost`. A player-controlled creature's
 `reaction_rules[kind]` = ask (default) / auto / never decides whether it's asked.
 
+### Choices after a D20 Test (F6, `D20Responses`, `e.d20`)
+
+Everything that can change a roll once its die is rolled is an offer in the shape `Reactions.offer` takes, built by
+`D20Responses.offers_for` in the order the rules apply them: Restore Balance, Reliable Talent, feature `roll_response`
+recipes, Cosmic Omen, Dark One's Own Luck, Bend Luck, the Ravenloft and Faerûn responses, items (Ring of Evasion, a
+Luck Blade...), Legendary Resistance, Countercharm, Fanatical Focus, a Bardic Inspiration die, Tactical Mind,
+Indomitable, Guarded Mind, Stroke of Luck, Heroic Inspiration, and Reaction spells that answer a roll (Reweave Fate).
+Each module adds its own with `d20_offers(c, t, keys, out)`. Offer fields beyond a reaction offer's: `forced` (not a
+choice: it happens when reached), `ask: false` (never asked; its rule settles it), `default` (the rule until one is
+set), `helps` (asked only when it could change the result), `sync` (how it's settled where the roll can't wait: `auto`
+unless Off, `explicit` only on Automatic, `decision` when `_reaction_decision` says auto), and `text`/`cost` as
+Callables so the prompt shows the roll as it stands.
+
+A roll that can pause goes through `e.d20.then_after(c, roll, after, r)` (or `collect`/`collected` around a roll with
+steps of its own, as attacks do): the offers are asked one by one and `after(test)` carries on once they're answered.
+These pause today: spells' saves (`SpellSaves._save_spell(..., pausable)` from `cast`, `cast_with_numbers`,
+`cast_free`, item spells, readied spells and reaction spells; `_resolve`/`_generic` return a CombatResult and take
+`pausable`), monsters' save actions (`MonsterActions.save_action`, which returns `r` and takes `pausable`, true by
+default), the riders on a monster's hit and their saves (`apply_riders(..., pausable)`), Topple, repeated saves at the
+end of a turn (`end_turn` carries on with `Encounter.then`), Death Saving Throws (`death_save(c, pausable)`) and attack
+rolls. Any other roll settles its offers at once (`run_now`). `Encounter.each(list, body, done)` runs a loop whose
+steps can pause. `run_reaction_queue` called while a prompt is open waits for its answer.
+
 ## Events (`Encounter.drain_events()`)
 
 | type | fields |

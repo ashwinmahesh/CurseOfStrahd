@@ -19,6 +19,8 @@ static func capture(e: Encounter) -> Dictionary:
 			cd["monster"] = str(m.data.get("id", ""))
 			cd["name"] = m.name
 			cd["state"] = m.state_to_dict()
+			# A fight can set a monster's Hit Point maximum apart from its stat block (a tougher spawn).
+			cd["hp_max_base"] = m.hp_max_base
 			# Summoned creatures' stat blocks are built when they're cast (Summon Fey), so they travel with the save.
 			if Compendium.shared().monster_data(str(m.data.get("id", ""))).is_empty() or m.data.has("shape_of"):
 				cd["monster_data"] = m.data.duplicate(true)
@@ -91,6 +93,7 @@ static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [
 			var mdata := cd["monster_data"] as Dictionary if cd.has("monster_data") else Compendium.shared().monster_data(str(cd["monster"]))
 			var m := Monster.from_data(mdata)
 			m.name = str(cd["name"])
+			m.hp_max_base = int(cd.get("hp_max_base", m.hp_max_base))
 			m.state_from_dict(cd["state"] as Dictionary)
 			creature = m
 		var a := cd["cell"] as Array

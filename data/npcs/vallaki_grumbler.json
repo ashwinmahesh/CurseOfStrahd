@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_grumbler",
+  "name": "Anton the Cooper",
+  "title": "In the Stocks for Insufficient Cheer",
+  "summary": "A Vallakian cooper the watch puts in the stocks every few days for not smiling enough at the Baron's festivals. He has stopped arguing about it.",
+  "portrait": "commoner",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}
