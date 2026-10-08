@@ -95,6 +95,10 @@ func enter_location(location_id: String, spawn: String) -> void:
 		view = null
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	view = LocationView.create(location_id, st, narrator, Dice.roller, spawn)
+	# Arriving in a new region: its loading card (G5, ui/screens/loading_card.gd) while the place settles in behind.
+	if str(view.loc.get("region", "")) != _card_region:
+		_card_region = str(view.loc.get("region", ""))
+		LoadingCard.show_for(self, view.loc)
 	Audio.play_music(_place_mood())
 	view.banter_player = banter
 	view.banter.connect(func(lines: Array) -> void:
@@ -645,6 +649,7 @@ func _strahd_step(step: Dictionary) -> void:
 var _fade: ColorRect = null
 var _fade_label: Label = null
 var _place_fade: ColorRect = null
+var _card_region := ""   ## the region whose loading card was shown last
 
 
 ## A new place comes up out of black instead of cutting to it (docs/plans/ui_polish.md): the screen goes dark at once

@@ -394,6 +394,31 @@ func test_the_ending() -> void:
 		await _check("the ending", func() -> Variant: return root.get("ending"))
 
 
+## A loading card (G5) with the longest place name and the longest tip.
+func test_a_loading_card() -> void:
+	if not await _game(LATE):
+		return
+	var longest_name := ""
+	for loc: Variant in (Compendium.shared().tables["locations"] as Dictionary).values():
+		var n := str((loc as Dictionary).get("name", ""))
+		if n.length() > longest_name.length():
+			longest_name = n
+	var longest_tip := ""
+	for t: Variant in LoadingCard.tips():
+		if str(t).length() > longest_tip.length():
+			longest_tip = str(t)
+	await _check("a loading card", func() -> Variant:
+		var card := LoadingCard.new()
+		card.location = {"name": longest_name, "region": "castle_ravenloft"}
+		card.tip = longest_tip
+		root.add_child(card)
+		await _frames(2)
+		return card,
+		func() -> void:
+			for c in root.find_children("*", "LoadingCard", false, false):
+				c.queue_free())
+
+
 ## The big d20 over a conversation (G11): a failed check with Advantage, every bonus part and two aids on offer.
 func test_a_conversation_check_with_the_big_d20() -> void:
 	if not await _game(LATE):
