@@ -127,7 +127,9 @@
         "dollhouse",
         "puppet_theatre",
         "market_stall",
-        "chest_painted"
+        "chest_painted",
+        "crate_stack",
+        "chest"
       ],
       "summary": "Slatted crates, trunks and stalls: they splinter at a blow.",
       "moves": "shove",
@@ -148,7 +150,8 @@
         "tub_wooden",
         "wine_vat",
         "cask_rack",
-        "bathtub"
+        "bathtub",
+        "trough"
       ],
       "summary": "Hooped barrels, casks and vats.",
       "moves": "shove",
@@ -188,7 +191,9 @@
         "hay_bale",
         "fishing_nets",
         "coats",
-        "straw"
+        "straw",
+        "sack_pile",
+        "cushions"
       ],
       "summary": "Sacks, nets and straw: cloth that tears and burns.",
       "moves": "shove",
@@ -222,7 +227,9 @@
         "spinning_wheel",
         "harpsichord",
         "bier",
-        "Furniture"
+        "Furniture",
+        "table_books",
+        "table_meal"
       ],
       "summary": "Tables, counters and the heavier furniture, a 5-ft section at a time.",
       "moves": "shove",

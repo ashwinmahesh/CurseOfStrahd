@@ -5457,6 +5457,117 @@
       "source": "art/generated/props/model_valley_map.png",
       "mount": "wall",
       "world_width": 0.523
+    },
+    "crate_stack": {
+      "file": "art/sprites/props/crate_stack.png",
+      "width_px": 516,
+      "height_px": 464,
+      "world_height": 0.68,
+      "pixel_size": 0.00148,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_crate_stack.png",
+      "mount": "stand",
+      "world_width": 0.764
+    },
+    "sack_pile": {
+      "file": "art/sprites/props/sack_pile.png",
+      "width_px": 516,
+      "height_px": 376,
+      "world_height": 0.4,
+      "pixel_size": 0.00108,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_sack_pile.png",
+      "mount": "stand",
+      "world_width": 0.557
+    },
+    "table_meal": {
+      "file": "art/sprites/props/table_meal.png",
+      "width_px": 516,
+      "height_px": 508,
+      "world_height": 0.6,
+      "pixel_size": 0.00119,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_table_meal.png",
+      "mount": "stand",
+      "world_width": 0.614
+    },
+    "table_books": {
+      "file": "art/sprites/props/table_books.png",
+      "width_px": 508,
+      "height_px": 516,
+      "world_height": 0.58,
+      "pixel_size": 0.00113,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_table_books.png",
+      "mount": "stand",
+      "world_width": 0.574
+    },
+    "bench": {
+      "file": "art/sprites/props/bench.png",
+      "width_px": 516,
+      "height_px": 380,
+      "world_height": 0.42,
+      "pixel_size": 0.00112,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_bench.png",
+      "mount": "stand",
+      "world_width": 0.578,
+      "back": "bench_back"
+    },
+    "bench_back": {
+      "file": "art/sprites/props/bench_back.png",
+      "width_px": 516,
+      "height_px": 372,
+      "world_height": 0.42,
+      "pixel_size": 0.00115,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_bench_back.png",
+      "mount": "stand",
+      "world_width": 0.593
+    },
+    "lantern_bracket": {
+      "file": "art/sprites/props/lantern_bracket.png",
+      "width_px": 324,
+      "height_px": 516,
+      "world_height": 0.5,
+      "pixel_size": 0.00098,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_lantern_bracket.png",
+      "mount": "wall",
+      "world_width": 0.318
+    },
+    "floor_books": {
+      "file": "art/sprites/props/floor_books.png",
+      "width_px": 516,
+      "height_px": 208,
+      "world_height": 0.12,
+      "pixel_size": 0.00059,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_floor_books.png",
+      "mount": "stand",
+      "world_width": 0.304
+    },
+    "bucket_brush": {
+      "file": "art/sprites/props/bucket_brush.png",
+      "width_px": 436,
+      "height_px": 516,
+      "world_height": 0.32,
+      "pixel_size": 0.00063,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_bucket_brush.png",
+      "mount": "stand",
+      "world_width": 0.275
+    },
+    "shelf_goods": {
+      "file": "art/sprites/props/shelf_goods.png",
+      "width_px": 516,
+      "height_px": 452,
+      "world_height": 0.5,
+      "pixel_size": 0.00112,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_shelf_goods.png",
+      "mount": "wall",
+      "world_width": 0.578
     }
   }
 }

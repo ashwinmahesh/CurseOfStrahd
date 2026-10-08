@@ -331,3 +331,21 @@ func test_doors_and_art_name_their_kinds() -> void:
 	for theme: String in ["shrine_yard", "manor", "church", "village", "forest", "dungeon"]:
 		var k := str((table["themes"] as Dictionary).get(theme, ""))
 		assert_true((table["kinds"] as Dictionary).has(k), "%s's '=' squares: %s" % [theme, k])
+
+
+## Every piece a board stands on a '=' square (catalog "low_cover" and the rooms' own "low_cover_rooms") names an
+## object kind, so a fight can shove it, wreck it or hide behind it whatever the room dresses it as.
+func test_every_low_cover_piece_is_a_fight_object() -> void:
+	var table := EncounterObjects.kinds()
+	var cat := SetDressing.catalog()
+	var arts: Array[String] = []
+	for list: Variant in (cat["low_cover"] as Dictionary).values():
+		for a: Variant in list:
+			arts.append(str(a))
+	for rule: Variant in cat.get("low_cover_rooms", []):
+		for list: Variant in ((rule as Array)[1] as Dictionary).values():
+			for a: Variant in list:
+				arts.append(str(a))
+	assert_true(arts.size() > 20)
+	for a in arts:
+		assert_ne(BattleScenery.kind_for_art(a, table), "", "a '=' square's %s is something a fight can use" % a)

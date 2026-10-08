@@ -111,6 +111,16 @@ and Interiors Audit - Room Facts.md. What every room gets:
   (pieces on two walls would meet), never beside a door, an exit, a spawn, a light or a person, and never on a wall
   square that holds one of the location's own things or beside a building-sized piece. Every pick comes from the
   square, so a place is furnished the same way every time; the board places them after its own dressing.
+- **Density** (owner, 2026-10-08: "Can we add more props? For that really lived in feeling. These interiors still look
+  really barren"): a piece on about nine in ten free wall faces (`wall_fill`), on about four in five free squares along
+  the walls (`floor_fill`, side by side allowed, never in a passage one square wide), and in about a quarter of the open
+  middle (`centre_fill`) in small clusters (never on a square with two furnished neighbours), never on the shortest
+  ways from the spawn to the doors, exits and people (`Furnish._paths`), so the routes stay clear. A room whose rule
+  names a `rug` gets one under its middle (up to 4 by 3 squares, the surface world-mapped over a dark border, flat,
+  blocking nothing). Lanterns and candles it puts out (`lit`) give a little light, at most two a room. New pieces for
+  it: crate_stack, sack_pile, table_meal and table_books (tables with things on them, also on '=' squares of taverns,
+  houses, manors and kitchens), bench, lantern_bracket, floor_books, bucket_brush, shelf_goods. Nothing changes the
+  rules grid: a fight's squares are as they were.
 - **Room styles read the name first.** `SetDressing.room_rule` matches a rule's words in the area's name before its
   id, so an id's location words don't decide a room ("larders_guardroom" is a guardroom, not a kitchen). A theme can
   have its own rules first (`theme_rooms`: a farmhouse bedroom is plaster and planks), and a place whose look is its
