@@ -147,7 +147,8 @@ static func search(view: LocationView) -> void:
 	show_reach(view, c, SEARCH_FT)
 	for tr: Variant in view.loc.get("traps", []):
 		var trap := tr as Dictionary
-		if str((states["traps"] as Dictionary).get(str(trap["id"]), "")) != "":
+		# Not one that isn't set yet (its `when` doesn't hold: Death House's blades before the party refuses).
+		if str((states["traps"] as Dictionary).get(str(trap["id"]), "")) != "" or not StoryConditions.check(str(trap.get("when", "")), view.st):
 			continue
 		for tc: Variant in trap["cells"]:
 			if view.grid.distance_ft(c, 1, LocationView._cell(tc), 1) <= SEARCH_FT and t.total >= int(trap["detect_dc"]):
