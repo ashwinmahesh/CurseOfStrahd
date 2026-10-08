@@ -5,7 +5,7 @@
     "book": "MM2025",
     "checked_against": "SRD5.2",
     "edition": "2024",
-    "note": "Web: the Restrained target (or anyone) frees it with an action and a DC 13 Strength (Athletics) check; the book has the web destroyed instead (AC 10, HP 5). See deviations.md."
+    "note": "Web: the Restrained target stays held until the webbing is destroyed (AC 10, 5 Hit Points, Vulnerability to Fire, Immunity to Bludgeoning, Poison and Psychic): an object on the battlefield (data/objects/kinds.json spider_web)."
   },
   "size": "large",
   "type": "beast",
@@ -90,7 +90,7 @@
       "name": "Web",
       "kind": "save",
       "summary": "Recharge 5-6. DC 13 Dex save by a creature within 60 ft or Restrained by webbing until it is broken.",
-      "text": "The webbing has AC 10 and 5 Hit Points, is vulnerable to Fire and immune to Bludgeoning, Poison and Psychic damage. Text only for the engine.",
+      "text": "The webbing is an object on the battlefield: AC 10, 5 Hit Points, Vulnerability to Fire, Immunity to Bludgeoning, Poison and Psychic damage. Breaking it frees the creature.",
       "recharge": "5-6",
       "save": {
         "ability": "dex",
@@ -105,10 +105,7 @@
           "do": "condition",
           "condition": "restrained",
           "until": "permanent",
-          "escape": {
-            "skill": "athletics",
-            "dc": 13
-          }
+          "object": "spider_web"
         }
       ]
     }

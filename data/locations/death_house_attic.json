@@ -357,6 +357,19 @@
       "kind": "decor",
       "label": "a child's bed",
       "model": "bed_small"
+    },
+    {
+      "id": "toy_chest_drawer",
+      "cell": [
+        15,
+        14
+      ],
+      "kind": "search",
+      "search_dc": 12,
+      "skill": "investigation",
+      "label": "a secret drawer in the toy chest",
+      "model": "sack",
+      "item": "bag_of_tricks_gray"
     }
   ],
   "containers": [

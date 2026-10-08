@@ -19,7 +19,6 @@ signal cancelled
 
 const TAGS: Array[String] = ["blunt", "loyal", "veteran", "pious", "curious", "sly", "kind", "haunted", "brave",
 	"cautious", "scholarly", "cynical", "cheerful", "proud", "greedy", "gentle"]
-const LOOKS: Array[String] = ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]
 ## Text width inside the step panel.
 const BODY_W := 820.0
 
@@ -44,6 +43,8 @@ var st: StoryState = null
 var mates: Array[Character] = []
 ## Portraits the company's other custom characters wear: portrait id -> name (AppearancePanel.taken).
 var taken_portraits: Dictionary = {}
+## Rebuilding one character (Madam Eva's respec): they keep their belongings, and a prebuilt hero keeps their look.
+var rebuilding := false
 
 
 func _init() -> void:
@@ -54,6 +55,7 @@ func _init() -> void:
 ## `starting` builds (from pregens being edited) or empty builds for the four slots. `count` 1 rebuilds a single
 ## character (Madam Eva's respec).
 func open_with(starting: Array[Dictionary], count: int = 4) -> void:
+	rebuilding = count == 1
 	for i in count:
 		var b := CharacterBuilder.new(null, starting[i] if i < starting.size() else {})
 		builders.append(b)
@@ -508,6 +510,8 @@ func _choices_step(which: int) -> void:
 func _equipment_step() -> void:
 	var opts := b().equipment_options()
 	var chosen := b().build.get("equipment", {}) as Dictionary
+	if rebuilding:
+		_body.add_child(UiKit.label("A rebuilt character keeps everything they carry, so the choice here adds no gear or gold. It still shows what this class and background start with.", 14, "parchment", BODY_W))
 	for source: String in ["class", "background"]:
 		_body.add_child(UiParts.section("%s equipment" % source.capitalize()))
 		for o: Variant in opts[source]:
@@ -516,8 +520,10 @@ func _equipment_step() -> void:
 			for it: Variant in opt.get("items", []):
 				var itd := it as Dictionary
 				names.append("%s%s" % [Compendium.shared().display_name("items", str(itd["id"])), " ×%d" % int(itd.get("qty", 1)) if int(itd.get("qty", 1)) > 1 else ""])
-			if opt.has("gold"):
-				names.append("%s gp" % str(opt["gold"]))
+			# The data names the coins `gp` (some older files `gold`); an option of coins alone is the gold to buy gear with.
+			var coins := int(opt.get("gp", opt.get("gold", 0)))
+			if coins > 0:
+				names.append(("%d gp" if not names.is_empty() else "%d gp to buy your own gear") % coins)
 			var oid := str(opt.get("id", ""))
 			var picked := str(chosen.get(source, "")) == oid
 			var row := HBoxContainer.new()
@@ -577,15 +583,21 @@ func _appearance_step() -> void:
 				_draw_strip())
 		_body.add_child(panel)
 		return
+	if rebuilding and str(app.get("art", "")) != "":
+		# A prebuilt hero rebuilt at Madam Eva's keeps their own look (owner, 2026-10-08).
+		_body.add_child(UiParts.section("Appearance"))
+		_body.add_child(UiKit.label("%s's look stays as it is." % str(b().build.get("name", "This hero")), 16, "vellum", BODY_W))
+		_body.add_child(UiParts.framed_portrait(str(app.get("art", "")), 170.0))
+		return
 	_body.add_child(UiParts.section("Appearance"))
-	_body.add_child(UiKit.label("Pick a look from the generated sprite library (more looks and palette swaps arrive with the art pass).", 14, "parchment", BODY_W))
+	_body.add_child(UiKit.label("Pick a look from the company's heroes.", 14, "parchment", BODY_W))
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 16)
-	for look in LOOKS:
+	row.add_theme_constant_override("separation", 14)
+	for look in looks():
 		var col := VBoxContainer.new()
 		col.add_theme_constant_override("separation", 6)
-		col.add_child(UiParts.framed_portrait(look, 170.0))
-		var btn := UiKit.button(look.replace("_", " ").capitalize(), func() -> void:
+		col.add_child(UiParts.framed_portrait(look, 118.0))
+		var btn := UiKit.button(look.get_slice("_", 0).capitalize(), func() -> void:
 			var a := (b().build.get("appearance", {}) as Dictionary).duplicate()
 			a["art"] = look
 			b().set_appearance(a)
@@ -595,6 +607,20 @@ func _appearance_step() -> void:
 		col.add_child(btn)
 		row.add_child(col)
 	_body.add_child(row)
+
+
+## Where Madam Eva's rebuild of `old` starts (open_with(.., 1)): their name, identity and look. A prebuilt hero's look
+## is their own portrait, kept (owner, 2026-10-08); a custom hero's paper doll stays theirs to change.
+static func rebuild_start(old: Character) -> Dictionary:
+	var look := (old.build.get("appearance", {}) as Dictionary).duplicate(true)
+	if not bool(look.get("custom", false)) and str(look.get("art", "")) == "":
+		look["art"] = DialogueRunner.portrait_of(old)
+	return {"name": old.name, "identity": (old.build.get("identity", {}) as Dictionary).duplicate(true), "appearance": look}
+
+
+## The prebuilt looks on offer: the roster's heroes (data/pregens with `roster`), never the four retired ones.
+static func looks() -> Array[String]:
+	return Pregens.roster_ids()
 
 
 ## A hero whose pronouns are still the old gender's usual ones gets the new gender's.

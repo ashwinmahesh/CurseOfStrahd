@@ -137,7 +137,12 @@
       ],
       "label": "An iron strongbox",
       "model": "strongbox",
-      "items": [],
+      "items": [
+        {
+          "id": "manual_of_gainful_exercise",
+          "qty": 1
+        }
+      ],
       "gold": 600,
       "lock_dc": 18
     },

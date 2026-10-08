@@ -7,7 +7,8 @@ For each character: its walk sheet through tools/art/rerender_sprites.py (the fl
 e.g. BODY=quadruped or SAT=1.3: the same as make sprites), then blender/render_attack.py from the attack strips
 (tools/art/anim_keyframes.py).
 Blender runs in parallel, one process per character. Prints each script's warnings and lists what failed; then
-`make import` and tools/art/set_import.py give new sheets their VRAM + mipmap import settings (make anims does both).
+`make import` and tools/art/set_import.py --sheets give new sheets their import settings, VRAM without mipmaps
+(make anims does both).
 """
 import argparse
 import json

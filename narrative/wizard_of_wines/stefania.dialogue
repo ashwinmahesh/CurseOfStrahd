@@ -19,6 +19,7 @@ endif
 * [if guest:davian_martikov] We have news for the family. -> news
 * [if guest:adrian_martikov and flag.yester_hill_resolved] Adrian's home. -> adrian_home
 * [if flag.winery_first_cart and flag.wizard_of_wines_milestone_reached] Any word from the first cart? -> cart_news
+* [if flag.winery_reclaimed and not flag.stefania_gift_given] You've got your kitchen back. -> kitchen_back
 * How are the children holding up? -> children
 * Goodbye. -> END
 
@@ -70,4 +71,10 @@ else
 interject tag:cheerful: I could teach them a coin trick. Purely for morale.
 endif
 Stefania: If a single coin goes missing in this camp, I'll know who to shout at.
+-> menu
+
+~ kitchen_back
+set stefania_gift_given
+Stefania [smile]: I have. And a floor, and a door that shuts. Here, take this; it was Grandmother's. Press it to a wound and the wound closes, which is more than I can say for my brothers' mouths. You'll need it more than we will now.
+give periapt_of_wound_closure
 -> menu

@@ -635,8 +635,9 @@
         15
       ],
       "kind": "decor",
-      "label": "a cask on its side",
-      "model": "barrel"
+      "label": "a cask of lamp oil",
+      "model": "barrel",
+      "object": "oil_barrel"
     },
     {
       "id": "larders_cask_rack_9",
@@ -715,8 +716,9 @@
         18
       ],
       "kind": "decor",
-      "label": "a cask on its side",
-      "model": "barrel"
+      "label": "a cask of lamp oil",
+      "model": "barrel",
+      "object": "oil_barrel"
     },
     {
       "id": "larders_wall_racks",

@@ -19,11 +19,15 @@ var initiative_test: D20Test = null
 var initiative_group: String = ""
 var surprised: bool = false
 var ai_profile: StringName = &"brute"
-## Per-reaction choice the player set: reaction id -> "ask", "auto" or "never" (plan §5.3).
+## Per-reaction choice the player set: reaction id -> "ask", "auto" or "never" (plan §5.3). A character's own
+## Dictionary (Character.reaction_rules), so the choice carries on into its next fight.
 var reaction_rules: Dictionary = {}
 
 # --- Turn state (reset at the start of each of its turns) ---
 var movement_left: int = 0
+## The Speed this turn began with (reset_turn): a faster Fly Speed gained later in the turn adds the difference
+## (switching speeds, EncounterMovement.effect_added).
+var turn_speed: int = 0
 var action_available: bool = true
 var bonus_available: bool = true
 var reaction_available: bool = true
@@ -75,6 +79,8 @@ func _init(creature_: Creature, side_: StringName, cell_: Vector2i) -> void:
 	controller = &"player" if side_ in [&"party", &"guest"] else &"ai"
 	var data := (creature_ as Monster).data if creature_ is Monster else {}
 	ai_profile = StringName(str(data.get("ai_profile", "brute")))
+	if creature_ is Character:
+		reaction_rules = (creature_ as Character).reaction_rules
 
 
 func name() -> String:
@@ -160,6 +166,7 @@ func reset_turn() -> void:
 	remove_meta("attack_cantrip_used")
 	remove_meta("sequence_attacks")
 	movement_left = speed()
+	turn_speed = movement_left
 	turn_start_cell = cell
 	clear_run()
 	action_available = true

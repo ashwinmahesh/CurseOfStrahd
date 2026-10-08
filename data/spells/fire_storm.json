@@ -45,6 +45,7 @@
   "tags": [
     "damage"
   ],
+  "ignites_objects": true,
   "summary": "Up to ten connected 10-foot Cubes of fire: Dex save, 7d10 Fire damage, half on a success.",
   "text": "You fill up to ten 10-foot Cubes in range with fire, arranged as you like as long as each touches another. Each creature in them makes a Dexterity save, taking 7d10 Fire damage on a failure or half on a success; unattended flammable objects ignite."
 }

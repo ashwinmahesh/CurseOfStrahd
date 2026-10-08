@@ -505,7 +505,11 @@ Madam Eva: The cards don't change. Only the people carrying them.
 ~ personal
 Madam Eva: One of you is walking a road that doesn't fit their feet. I can read them another. It costs nothing you will miss; not today. Choose who sits.
 respec
-Madam Eva: There. You are who you are now. Try not to waste it.
+if check.last
+  Madam Eva: There. You are who you are now. Try not to waste it.
+else
+  Madam Eva [sly]: No? Keep the road you have, then. The cards are patient.
+endif
 -> again_menu
 
 ~ herself

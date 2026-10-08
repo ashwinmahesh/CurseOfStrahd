@@ -51,6 +51,7 @@ endif
 * [if not flag.holy_symbol_rumor] Is any relic of the Morninglord left in this valley? -> raven
 * [Cleric] Kneel and pray with him. -> pray
 * Is there anything you need? Anything you can spare? -> needs
+* Does the church have potions or scrolls to sell? -> church_wares
 * Goodbye. -> END
 
 ~ screaming
@@ -188,6 +189,11 @@ Donavich [sad]: You still feel Him? Here? I haven't, not for a year. I say "Dawn
 approve liriel_dawnsong +1: You prayed with a priest who couldn't feel his god
 -> menu
 
+~ church_wares
+Donavich [weary]: The church sold healing once, when there were people to heal. There's a little left in the vestry: draughts the sisters brewed, prayers written out on good paper. Take what you need. Leave what you can. I'll buy bread with it, and candles.
+shop
+-> menu
+
 ~ needs
 Donavich: Need? Food. Sleep. My son back. You can't give me those, children. Holy water is all I have left to give, and precious little of that.
 if flag.vestry_chest_opened
@@ -210,6 +216,8 @@ if flag.donavich_mercy_blessing
 Donavich [sad]: It's quiet. For the first time in weeks, it's quiet below. Thank you. I think. Ask me again in a year.
 interject class:cleric: He's at rest, Father. Truly at rest. I'd stake my faith on it.
 Donavich: Then he's farther from the castle than any of us. Go. Bury your dead. I'll bury mine.
+Donavich [sad]: Wait. Take this. A shard of the old dawn window, from before it cracked. It still holds a little of the morning. I can't look at it anymore.
+give gem_of_brightness
 -> END
 endif
 attitude donavich hostile

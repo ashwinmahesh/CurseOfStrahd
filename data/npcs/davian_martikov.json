@@ -22,5 +22,27 @@
   "guest_build": {
     "monster": "wereraven",
     "note": "The wereraven block (shortbow, scratch, beak; flies in raven and hybrid form). Joins as the Tarokka's Raven ally once the druids are out of his winery."
+  },
+  "shop": {
+    "sells": [
+      {
+        "id": "wine_purple_grapemash",
+        "qty": -1
+      },
+      {
+        "id": "wine_red_dragon_crush",
+        "qty": -1
+      },
+      {
+        "id": "wine_champagne_du_le_stomp",
+        "qty": -1
+      }
+    ],
+    "buys": [
+      "consumable"
+    ],
+    "markup": 1.0,
+    "sell_rate": 0.3,
+    "closed": "not flag.winery_wine_flows"
   }
 }

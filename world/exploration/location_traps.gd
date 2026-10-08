@@ -50,6 +50,7 @@ static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant
 		return
 	var id := str(trap["id"])
 	(view.st.loc_state(view.loc_id)["traps"] as Dictionary)[id] = "triggered"
+	BattleScenery.trap_sprung(view, id)   # a chandelier that is this trap comes down
 	var lines: Array[String] = []
 	var save := trap.get("save", {}) as Dictionary
 	var success := false
@@ -76,11 +77,16 @@ static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant
 
 
 ## Searching (out of combat): a Wisdom (Perception) check by the leader finds traps and hidden things within 15 ft
-## (search props, secret doors) whose DC it meets. Takes a minute.
+## (search props, secret doors) whose DC it meets. A hidden compartment (a search prop with `skill: investigation`)
+## takes an Intelligence (Investigation) check instead, rolled as well when one is near. A hidden find that holds an
+## item gets one look from each character: whoever misses it has missed it for good (the owner's rule that failed
+## checks are final), though someone else in the party can still try. Takes a minute.
 static func search(view: LocationView) -> void:
 	if view.busy or view.in_combat:
 		return
 	var who := view.leader().creature as Character
+	var c := view.leader().cell
+	var states := view.st.loc_state(view.loc_id)
 	# Sharp Eye (Ravenloft: The Horrors Within): Advantage on a Search, Proficiency Bonus times per Long Rest.
 	var adv: Array[String] = []
 	if who.feats_taken.any(func(f: Dictionary) -> bool: return str(f["id"]) == "sharp_eye") and who.resource_left("sharp_eye") > 0:
@@ -90,11 +96,14 @@ static func search(view: LocationView) -> void:
 	adv.append_array(CheckAids.before_check(who, &"perception"))
 	var t := who.roll_check(view.dice, &"perception", 0, adv, Weather.sight_penalty(view.st, view.loc_id), "%s searches" % who.name, ["search"])
 	view.check_rolled.emit(t.describe())
+	var study: D20Test = null
+	if hidden_within(view, c, 15, who).any(func(p: Dictionary) -> bool: return search_skill(p) == &"investigation"):
+		study = who.roll_check(view.dice, &"investigation", 0, CheckAids.before_check(who, &"investigation"), [], "%s looks for hidden compartments" % who.name, ["search"])
+		view.check_rolled.emit(study.describe())
 	view.st.advance_minutes(1)
 	var found: Array[String] = []
 	var found_ids: Array[String] = []
-	var c := view.leader().cell
-	var states := view.st.loc_state(view.loc_id)
+	var missed_ids: Array[String] = []   # their own failure lines' keys
 	for tr: Variant in view.loc.get("traps", []):
 		var trap := tr as Dictionary
 		if str((states["traps"] as Dictionary).get(str(trap["id"]), "")) != "":
@@ -105,15 +114,16 @@ static func search(view: LocationView) -> void:
 				_show_trap(view, trap)
 				found.append(str(trap.get("label", "a trap")))
 				break
-	for p: Variant in view.loc.get("props", []):
-		var prop := p as Dictionary
-		if str(prop["kind"]) != "search" or bool((states["found"] as Dictionary).get(str(prop["id"]), false)):
-			continue
-		if view.grid.distance_ft(c, 1, LocationView._cell(prop["cell"]), 1) <= 15 and t.total >= int(prop.get("search_dc", 10)):
+	for prop in hidden_within(view, c, 15, who):
+		var roll := study if search_skill(prop) == &"investigation" else t
+		if roll.total >= int(prop.get("search_dc", 10)):
 			(states["found"] as Dictionary)[str(prop["id"])] = true
 			view.prop_nodes[str(prop["id"])] = LocationBuilder._prop_node(view, prop)
 			found.append(str(prop.get("label", "something")))
 			found_ids.append(str(prop["id"]))
+		elif prop.has("item"):
+			(states["found"] as Dictionary)[_missed_key(prop, who)] = true
+			missed_ids.append("check:%s:%s:failure" % [search_skill(prop), prop["id"]])
 	for d: Variant in view.loc.get("doors", []):
 		var door := d as Dictionary
 		if int(door.get("secret_dc", 0)) <= 0 or bool((states["found"] as Dictionary).get(str(door["id"]), false)):
@@ -126,7 +136,13 @@ static func search(view: LocationView) -> void:
 	if found.is_empty() and sharp_eye:
 		who.restore_resource("sharp_eye")
 	if found.is_empty():
-		view._say("check:perception:failure", who, "Nothing you can find.")
+		# A missed find's own line, if it has one (a hint that someone else might do better), before the generic one.
+		var said_miss := false
+		for key in missed_ids:
+			if not said_miss:
+				said_miss = view._say(key, who)
+		if not said_miss:
+			view._say("check:perception:failure", who, "Nothing you can find.")
 	else:
 		# A found thing's own line (search:<prop> or check:perception:<prop>:success) before the generic one.
 		var said := false
@@ -136,6 +152,34 @@ static func search(view: LocationView) -> void:
 		if not said:
 			view._say("check:perception:success", who, "")
 		view.toast.emit("Found: " + ", ".join(found))
+
+
+## The hidden things (search props) within `ft` of `cell` that a search could still turn up: not found yet, their
+## `when` holds, and, for a find holding an item, `who` hasn't already missed it (null: anyone).
+static func hidden_within(view: LocationView, cell: Vector2i, ft: int, who: Character = null) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var found := view.st.loc_state(view.loc_id)["found"] as Dictionary
+	for p: Variant in view.loc.get("props", []):
+		var prop := p as Dictionary
+		if str(prop["kind"]) != "search" or bool(found.get(str(prop["id"]), false)):
+			continue
+		if not StoryConditions.check(str(prop.get("when", "")), view.st):
+			continue
+		if who != null and prop.has("item") and bool(found.get(_missed_key(prop, who), false)):
+			continue
+		if view.grid.distance_ft(cell, 1, LocationView._cell(prop["cell"]), 1) <= ft:
+			out.append(prop)
+	return out
+
+
+## The skill that finds a hidden thing: Perception, or Investigation for a compartment you have to work out.
+static func search_skill(prop: Dictionary) -> StringName:
+	return &"investigation" if str(prop.get("skill", "")) == "investigation" else &"perception"
+
+
+## Kept in the location's `found` states: this character looked for this find and missed it.
+static func _missed_key(prop: Dictionary, who: Character) -> String:
+	return "missed:%s:%s" % [prop["id"], who.id if who.id != "" else who.name]
 
 
 static func _disarm(view: LocationView, trap: Dictionary) -> void:

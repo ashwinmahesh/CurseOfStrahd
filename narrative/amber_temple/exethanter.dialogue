@@ -119,6 +119,8 @@ quest something_with_a_lid returned
 attitude exethanter friendly
 Narrator: He takes the jar in both hands, carefully, the way you'd hold a bird. Then he looks around for somewhere to put it, opens his mouth, shuts it again, and tucks the jar inside his robe.
 Exethanter: Thank you. Truly. I'd give you something, if I could remember what I own.
+Exethanter: Oh! The robe. I remember this robe. I sewed the stars on it myself, the year I could still see them. Take it; I appear to be wearing another.
+give robe_of_stars
 Exethanter: The word for the doors, at least, you shall have, written out large. And there's a note about the jackal somewhere. Ask me about him; I'll find it now. I feel much less distracted.
 set warden_word_known
 approve wren_featherfoot +1 kip_smudgewick +1 liriel_dawnsong -1: You gave a forgetful lich his phylactery back

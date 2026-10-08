@@ -231,3 +231,16 @@ cooldown 0
 ~ trap:cat_conjurer_glyph:triggered
 | The sigil under your boot wakes with a crack, and blue light jumps up your legs.
 cooldown 0
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:conjurer_wand
+| The conjurer's bier has a hollow at its head. In it lies a wand of black wood capped in silver, the last thing he would have let go of.
+once
+
+~ search:jester_cape
+| The jester's sarcophagus has a false bottom. Under it, folded small, a red cape that smells faintly of brimstone and greasepaint.
+once
+
+~ check:investigation:jester_cape:failure
+| A jester's grave: bells, a painted mask and a joke nobody remembers. Nothing else.

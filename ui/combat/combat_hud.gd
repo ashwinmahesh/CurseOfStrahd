@@ -12,6 +12,8 @@ signal end_turn_pressed
 signal undo_move_pressed
 signal reaction_answered(use: bool, rule: String)
 signal inspect_requested(combatant_id: String)
+## A click on a party frame's portrait: that hero's character sheet, view only (CombatView.sheet_requested).
+signal sheet_requested(combatant_id: String)
 signal death_save_pressed
 signal slot_level_changed(level: int)
 signal radial_picked(choice: String)
@@ -23,10 +25,13 @@ signal square_picked(id: String)
 const COST_COLOURS := {"action": "moss", "attack": "moss", "bonus": "gilt", "reaction": "mist_blue", "free": "slate",
 	"movement": "moon_blue"}
 const SLOT_SIZE := Vector2(132, 50)
+## The target box's outline when an attack would roll with Advantage or Disadvantage.
+const EDGE_COLOURS := {"advantage": "bile", "disadvantage": "vampire_red"}
+## {action} reads as the player's key for it (InputActions.fill, Settings, Keys).
 const CONTROLS: Array[String] = [
 	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
-	"Keyboard: L minimizes or restores the combat log · 1-0 use hotbar slots · Z / X change tab · Enter confirms (casts early with fewer targets) · Esc cancels · Space ends the turn · Ctrl+Z takes back the last move · [ and ] change the spell slot · T jumps to the next target · Tab inspects the next party member · F5 quicksaves and F9 loads the quicksave (outside a fight; in one, the game saves at each round's start).",
-	"Camera: WASD or arrows pan · Q / E rotate · mouse wheel zooms.",
+	"Keyboard: {combat_toggle_log} minimizes or restores the combat log · {combat_slot_1}-{combat_slot_10} use hotbar slots · {combat_tab_prev} / {combat_tab_next} change tab · {combat_confirm} confirms (casts early with fewer targets) · Esc cancels · {combat_end_turn} ends the turn · Ctrl+Z takes back the last move · {combat_slot_level_down} and {combat_slot_level_up} change the spell slot · {combat_next_target} jumps to the next target · {cycle_leader} inspects the next party member · C opens the character sheet of the one shown (view only; or click a party portrait) · {quick_save} quicksaves and {quick_load} loads the quicksave (outside a fight; in one, the game saves at each round's start).",
+	"Camera: {walk} pan · {camera_rotate_left} / {camera_rotate_right} rotate · mouse wheel zooms.",
 	"Controller: left stick moves the cursor · A confirms · B cancels · X next target · Y ends the turn · hold LB for the radial menu (right stick picks, release to choose) · LT / RT pick a hotbar slot · RB uses it · d-pad left/right changes the spell slot · View inspects the next party member.",
 	"Reactions always ask unless you set a rule in the prompt (Next time: Ask me / Always use it / Never).",
 ]
@@ -142,7 +147,7 @@ func build(encounter: Encounter, catalog_: ActionCatalog) -> void:
 	_controls.add_child(cbox)
 	cbox.add_child(_label("Controls (F1 or Start to close)", 20, "gilt_light"))
 	for line: String in CONTROLS:
-		var l := _label(line, 15, "vellum")
+		var l := _label(InputActions.fill(line), 15, "vellum")
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.custom_minimum_size = Vector2(800, 0)
 		cbox.add_child(l)
@@ -483,7 +488,7 @@ func _build_confirm() -> void:
 	box.add_child(_confirm_text)
 	var row := HBoxContainer.new()
 	var yes := Button.new()
-	yes.text = "End turn (Space / A)"
+	yes.text = "End turn (%s / A)" % InputActions.key_text(&"combat_end_turn")
 	yes.pressed.connect(func() -> void:
 		_confirm.visible = false
 		end_turn_pressed.emit())
@@ -594,15 +599,20 @@ func _refresh_party() -> void:
 			"vampire_red" if alarm or c.is_down() else ("gilt_light" if on else "gilt_dark"), 4 if alarm else (3 if on else 2)))
 		card.custom_minimum_size = Vector2(270, 0)
 		card.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		var btn := Button.new()
+		card.add_child(btn)   # under the content, so the effect icons on top can name themselves on hover
 		var row := HBoxContainer.new()
+		row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row.add_theme_constant_override("separation", 8)
 		card.add_child(row)
 		row.add_child(UiParts.framed_portrait(CombatToken.art_id(c), 64.0, c.is_down(), c.creature.dead))
 		var v := VBoxContainer.new()
+		v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		v.add_theme_constant_override("separation", 3)
 		v.custom_minimum_size = Vector2(180, 0)
 		# The name, then what they are in small pills (a guest, DOWN), so a long name or a fall never widens the frame.
 		var head := HBoxContainer.new()
+		head.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		head.add_theme_constant_override("separation", 5)
 		var nm := _label(c.name(), 17, "vampire_red" if c.is_down() else ("gilt_light" if on else "vellum"))
 		nm.add_theme_font_override("font", UiKit.display_font())
@@ -629,8 +639,11 @@ func _refresh_party() -> void:
 		sl.clip_text = true
 		sl.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		v.add_child(sl)
+		# What's working on them (Rage, Bladesong, the spell they concentrate on...), an icon each.
+		var working := EffectIcons.row(cr, 20.0)
+		if working != null:
+			v.add_child(working)
 		row.add_child(v)
-		var btn := Button.new()
 		btn.flat = true
 		btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		btn.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -638,8 +651,25 @@ func _refresh_party() -> void:
 			btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
 		btn.pressed.connect(func() -> void: inspect_requested.emit(c.id))
 		btn.tooltip_text = "%s · %s\nClick to see their actions" % [c.name(), status]
-		card.add_child(btn)
+		if c.creature is Character:
+			card.add_child(_sheet_button(c))
 		_party_box.add_child(card)
+
+
+## Over a hero's portrait in their frame: opens their character sheet, view only, while the fight waits.
+func _sheet_button(c: Combatant) -> Control:
+	var over := Control.new()
+	over.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var b := Button.new()
+	b.flat = true
+	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	b.size = Vector2(64, 64)
+	for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
+		b.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
+	b.pressed.connect(func() -> void: sheet_requested.emit(c.id))
+	b.tooltip_text = "%s's character sheet (C), view only" % c.name()
+	over.add_child(b)
+	return over
 
 
 ## A party member just fell: their frame flashes red for a moment (and stays marked DOWN while they're down).
@@ -677,6 +707,8 @@ func _chips(c: Combatant) -> String:
 			parts.append(fx.name)
 	if c.hidden:
 		parts.append("Hidden")
+	if c.altitude > 0:
+		parts.append("%d ft up" % c.altitude)
 	if cr is Character and (cr as Character).heroic_inspiration:
 		parts.append("Heroic Inspiration")
 	return ", ".join(parts)
@@ -748,15 +780,17 @@ func _refresh_hotbar() -> void:
 		ch.queue_free()
 	_slot_buttons.clear()
 	_slot_actions.clear()
-	var acts: Array = []
-	for a in catalog.actions_for(c):
-		if str(a["tab"]) == tab:
-			acts.append(a)
+	# The player's arrangement (U2): their order, their favourites, the actions they hid (ActionCatalog.arranged).
+	var acts: Array = catalog.arranged(c, tab)
 	var groups: Array[Dictionary] = [{"heading": "", "items": acts}]
 	if tab == ActionCatalog.SPELLS:
-		# By spell level, alphabetical within, like every other spell list (SpellGroups).
+		# By spell level, alphabetical within, like every other spell list (SpellGroups), unless the player arranged the
+		# tab: then each level keeps their order.
 		groups = SpellGroups.groups(acts, func(a: Dictionary) -> String: return str(a.get("spell_id", "")),
 			func(a: Dictionary) -> int: return int(a.get("slot", 0)))
+		if ((ActionCatalog.layout(c).get("order", {}) as Dictionary)).has(tab):
+			for g in groups:
+				(g["items"] as Array).sort_custom(func(x: Variant, y: Variant) -> bool: return acts.find(x) < acts.find(y))
 	var i := 0
 	var grid: GridContainer = null
 	for g in groups:
@@ -812,6 +846,20 @@ func _add_slot(grid: GridContainer, a: Dictionary, i: int, c: Combatant, mine: b
 	b.tooltip_text = "%s (%s)%s%s\nRight-click for more%s" % [a["label"], _cost_word(str(a["cost"])), ("\n" + str(a["help"])) if str(a["help"]) != "" else "", ("\nCan't: " + reason) if reason != "" else "", (" (choose the %s)" % str(a.get("choice_label", "")).to_lower()) if a.has("choices") else ""]
 	var act := a
 	b.pressed.connect(func() -> void: action_chosen.emit(act))
+	# Drag a slot onto another on the same tab to put it there (U2).
+	var here_tab := tab
+	b.set_drag_forwarding(func(_at: Vector2) -> Variant:
+			if not c.creature is Character:
+				return null
+			var ghost := _label(str(act["label"]), 13, "gilt_light")
+			b.set_drag_preview(ghost)
+			return {"hotbar_action": str(act["id"]), "tab": here_tab},
+		func(_at: Vector2, data: Variant) -> bool:
+			return data is Dictionary and (data as Dictionary).has("hotbar_action") and str((data as Dictionary)["tab"]) == here_tab,
+		func(_at: Vector2, data: Variant) -> void:
+			var to := catalog.arranged(c, here_tab).map(func(x: Dictionary) -> String: return str(x["id"])).find(str(act["id"]))
+			catalog.move_action(c, here_tab, str((data as Dictionary)["hotbar_action"]), to)
+			_refresh_hotbar())
 	b.gui_input.connect(func(ev: InputEvent) -> void:
 		if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
 			open_slot_menu(act, b.get_screen_position() + (ev as InputEventMouseButton).position))
@@ -855,7 +903,7 @@ func _slot_face(b: Button, a: Dictionary, i: int, usable: bool) -> void:
 		b.mouse_entered.connect(func() -> void: name_.add_theme_color_override("font_color", Look.color("gilt_light")))
 		b.mouse_exited.connect(func() -> void: name_.add_theme_color_override("font_color", Look.color("ivory")))
 	if i < 10:
-		var key := _label(str((i + 1) % 10), 11, "gilt_light" if usable else "gilt_dark")
+		var key := _label(InputActions.key_text(StringName("combat_slot_%d" % (i + 1))), 11, "gilt_light" if usable else "gilt_dark")
 		key.position = Vector2(36, 28) if tex != null else Vector2(5, 15)
 		key.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		b.add_child(key)
@@ -915,7 +963,19 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 			items.append({"id": "meta:%s" % (mm as Dictionary)["id"], "label": str((mm as Dictionary)["label"]), "enabled": usable, "why": why})
 	if str(action["kind"]) == "spell" and str(action["cost"]) == "action" and shown != null and str((action.get("opts", {}) as Dictionary).get("resource_cast", "")) == "":
 		items.append({"separator": "Ready"})
-		items.append({"id": "ready", "label": "Ready %s: release it when an enemy comes in range" % action["label"], "enabled": usable, "why": why})
+		for trig: String in ["approach", "attack", "spell"]:
+			var when := {"approach": "an enemy comes within range", "attack": "an enemy within range attacks", "spell": "an enemy within range casts a spell"}[trig] as String
+			items.append({"id": "ready:%s" % trig, "label": "Ready %s: release it when %s" % [action["label"], when], "enabled": usable, "why": why})
+	if shown != null and shown.creature is Character and not bool(action.get("square", false)):
+		# Arranging the hotbar (U2): any time, nothing spent.
+		var aid := str(action.get("id", ""))
+		items.append({"separator": "Hotbar"})
+		items.append({"id": "bar:fav" if not catalog.is_favourite(shown, aid) else "bar:unfav",
+			"label": "Add to Favourites" if not catalog.is_favourite(shown, aid) else "Remove from Favourites"})
+		items.append({"id": "bar:hide" if not catalog.is_hidden(shown, aid) else "bar:show",
+			"label": "Hide it (on the Hidden tab)" if not catalog.is_hidden(shown, aid) else "Show it on its tab again"})
+		items.append({"id": "bar:earlier", "label": "Move earlier"})
+		items.append({"id": "bar:later", "label": "Move later"})
 	if str(action["kind"]) == "item_spell" and shown != null:
 		var ilevels := catalog.level_choices(shown, action)
 		if not ilevels.is_empty():
@@ -960,10 +1020,13 @@ func _on_menu(id: String) -> void:
 		if id.substr(5) == "quickened":
 			shaped["cost"] = "bonus"
 		action_chosen.emit(shaped)
-	elif id == "ready":
+	elif id.begins_with("ready"):
 		var ready := action.duplicate(true)
 		ready["kind"] = "ready_spell"
 		ready["targeting"] = "none"
+		var ro := (ready.get("opts", {}) as Dictionary).duplicate()
+		ro["trigger"] = id.get_slice(":", 1) if id.contains(":") else "approach"
+		ready["opts"] = ro
 		action_chosen.emit(ready)
 	elif id.begins_with("choice:"):
 		var picked := action.duplicate(true)
@@ -975,6 +1038,23 @@ func _on_menu(id: String) -> void:
 		action_chosen.emit(picked)
 	elif id.begins_with("cast:"):
 		cast_at_level.emit(action, int(id.get_slice(":", 1)))
+	elif id.begins_with("bar:"):
+		_arrange(action, id.substr(4))
+
+
+## A hotbar slot's "Hotbar" menu choices (U2): star it, hide it, or move it one place.
+func _arrange(action: Dictionary, what: String) -> void:
+	var aid := str(action["id"])
+	match what:
+		"fav", "unfav":
+			catalog.set_favourite(shown, aid, what == "fav")
+		"hide", "show":
+			catalog.set_hidden(shown, aid, what == "hide")
+		"earlier", "later":
+			var at := catalog.arranged(shown, tab).map(func(x: Dictionary) -> String: return str(x["id"])).find(aid)
+			if at >= 0:
+				catalog.move_action(shown, tab, aid, at + (-1 if what == "earlier" else 1))
+	_refresh_hotbar()
 
 
 func menu_open() -> bool:
@@ -1100,7 +1180,12 @@ func hide_details() -> bool:
 
 # --- Tooltip, prompt, banner ----------------------------------------------------------------------
 
-func show_tooltip(title: String, lines: Array, warnings: Array, at: Vector2) -> void:
+## The box beside the pointer. `edge` outlines it for an attack with "advantage" (green) or "disadvantage" (red), as
+## the roll would be made (both at once cancel and leave the gilt edge).
+func show_tooltip(title: String, lines: Array, warnings: Array, at: Vector2, edge: String = "") -> void:
+	var box := _tooltip.get_theme_stylebox("panel") as StyleBoxFlat
+	box.border_color = Look.color(EDGE_COLOURS.get(edge, "gilt") as String)
+	box.set_border_width_all(3 if EDGE_COLOURS.has(edge) else 2)
 	for ch in _tooltip_box.get_children():
 		ch.free()
 	_tooltip_box.add_child(_label(title, 18, "gilt_light"))

@@ -5,11 +5,10 @@ extends CanvasLayer
 ## An arched frame (wine to black, a gilt line and a fainter inset one), the crest at the apex, scrolls at the
 ## shoulders, the title over a lozenge rule, Music, Effects and Voices sliders with their icons, the choices as long
 ## hexagons (the selected one wine with lozenges outside its points), and a footer wave between corner brackets. The
-## concept had two sliders and three buttons; this menu has three, five and a way to Settings (the look, the window,
-## fight speed, narration and the respec option, docs/plans/ui_polish.md), so the arch is taller, with the concept's
-## spacing kept. The saves are a page of their own (ui/screens/saves_screen.gd). As the game-over screen it offers only
-## loading.
-## Quicksave (and F5, here and exploring) saves over the game's current slot (SaveSystem.current_slot).
+## concept had two sliders and three buttons; this menu has three, five and a way to Settings (docs/plans/ui_polish.md),
+## so the arch is taller, with the concept's spacing kept. Settings' three pages (Game, Display, Keys) open in the same
+## arch; the saves are a page of their own (ui/screens/saves_screen.gd). As the game-over screen it offers only loading.
+## Quicksave (and its key, F5 unless the player moved it, here and exploring) saves over the game's current slot.
 
 ## Concept units to pixels.
 const K := 1.5
@@ -34,6 +33,8 @@ var _items: Array[Control] = []    ## everything placed on the frame for the cur
 var _buttons: Array[Button] = []
 var _note: Label                   ## "Saved." under the buttons
 var _on_settings := false
+var _settings_page := "Game"
+var _confirm: Button                ## "Leave Honour for ...", while that switch waits for its second click
 static var _serif: Font
 
 
@@ -63,6 +64,7 @@ static func _c(name: String) -> Color:
 func open(root_: Node, state: StoryState, _index: int) -> void:
 	root = root_
 	st = state
+	UiScale.full_screen(self)   # the arch fills the screen at its design size, whatever the interface size
 	# The world as the menu opens over it: the picture for a save made from its pages (lane 16, Q9).
 	SaveSystem.hold_view(self)
 	var dim := ColorRect.new()
@@ -162,10 +164,14 @@ static func _lozenge(c: CanvasItem, at: Vector2, r: float, fill: Color, stroke: 
 func _clear() -> void:
 	_on_settings = false
 	for n in _items:
+		# Out of the frame at once, so the next page's rows and tabs keep their names.
+		if n.get_parent() == _frame:
+			_frame.remove_child(n)
 		n.queue_free()
 	_items.clear()
 	_buttons.clear()
 	_note = null
+	_confirm = null
 
 
 func _place(c: Control) -> Control:
@@ -214,15 +220,28 @@ func _show_menu() -> void:
 		Audio.set_volumes(Audio.music_volume, v)
 		Audio.sfx("click"))
 	_slider_row(SLIDER_Y[2], "Voices", VoiceOver.volume(), VoiceOver.set_volume)
-	# The rest of the player's settings (the look, the window, fight speed, the respec) are a page of their own.
-	var more := _link("◆  Settings  ◆", _show_settings)
-	more.position = Vector2((_u(W_U, 0).x - more.size.x) / 2.0, _u(0, RESPEC_Y).y - more.size.y / 2.0)
+	# The rest of the player's settings (the look, the window, fight speed, the respec) are a page of their own, and the
+	# cheat codes (CheatCodesPage) another beside it while there's a party to give items to.
+	var links: Array[Button] = [_link("◆  Settings  ◆", _show_settings)]
+	if CheatCodesPage.can_open(st):
+		links.append(_link("◆  Cheat codes  ◆", _open_cheats))
+		links[1].name = "CheatCodes"
+	var gap := 16.0 * K
+	var x := _u(W_U, 0).x + gap
+	for b in links:
+		x -= b.size.x + gap
+	x /= 2.0
+	for b in links:
+		b.position = Vector2(x, _u(0, RESPEC_Y).y - b.size.y / 2.0)
+		x += b.size.x + gap
 	var can := SaveSystem.can_save()
 	var why := "In a fight the game saves itself at the start of each round; load that save to retry the round."
 	_button(0, "Resume", func() -> void: root.call("close_screen"))
-	var quick := _button(1, "Quicksave  (F5)", _quick_save)
+	var qs := InputActions.key_text(&"quick_save")
+	var quick := _button(1, "Quicksave  (%s)" % qs if qs != "" else "Quicksave", _quick_save)
 	quick.disabled = not can
-	quick.tooltip_text = why if not can else ("Saves over this game's slot; F9 loads it." if SaveSystem.current_slot != "" else "Saves this game in a new slot; F5 and F9 use it from then on.")
+	quick.tooltip_text = why if not can else InputActions.fill("Saves over this game's slot; {quick_load} loads it." \
+		if SaveSystem.current_slot != "" else "Saves this game in a new slot; {quick_save} and {quick_load} use it from then on.")
 	var save := _button(2, "Save Game", func() -> void: _open_saves(SavesScreen.Mode.SAVE))
 	save.disabled = not can
 	save.tooltip_text = why if not can else "Save in a new slot, or over one of your saves."
@@ -237,30 +256,89 @@ func _show_menu() -> void:
 	_buttons[0].grab_focus.call_deferred()
 
 
-## Settings (docs/plans/ui_polish.md): the world's look, the window, how fast fights play, how long the Narrator's box
-## stays up, the Modern look's depth blur, turn-based exploring, and the respec option, each a choice the player flips
-## with a click; kept in user://settings.cfg.
-func _show_settings() -> void:
+## Settings (docs/plans/ui_polish.md), three pages under the title: Game (the difficulty, how fights and the Narrator
+## play, turn-based exploring, the respec option), Display (the look, graphics, the window, depth blur, the interface and text sizes) and Keys (KeysPage).
+## Each row is a choice the player steps through with a click; kept in user://settings.cfg.
+const SETTINGS_PAGES: Array[String] = ["Game", "Display", "Keys"]
+## Concept y of the first row and the pitch between rows.
+const ROW_Y := 158.0
+const ROW_PITCH := 34.0
+
+
+func _show_settings(page: String = "Game") -> void:
 	_clear()
 	_on_settings = true
+	_settings_page = page
 	_title("Settings")
-	_choice_row(150.0, "Look", ["Modern", "Classic"], 0 if Look.modern() else 1, func(i: int) -> void:
-		_set_look("modern" if i == 0 else "classic"),
-		"Modern: smooth light, relief and glow. Classic: the 1990s cartoon, every colour from the palette.")
-	_choice_row(184.0, "Window", ["Windowed", "Fullscreen"], 1 if GameSettings.fullscreen() else 0, func(i: int) -> void:
-		GameSettings.set_fullscreen(i == 1), "Play in a window or fill the screen.")
-	_choice_row(218.0, "Fights", ["Normal", "Fast"], 1 if GameSettings.fast_combat() else 0, func(i: int) -> void:
+	_page_tabs(page)
+	_note = _text("", 9.5, _c("arch_gold_light"))
+	_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_note.position = _u(24, 380)
+	_note.size = _u(W_U - 48.0, 30)
+	match page:
+		"Display":
+			_display_rows()
+		"Keys":
+			var keys := KeysPage.new()
+			keys.noted.connect(func(t: String) -> void: _note.text = t)
+			keys.position = _u(26, 138)
+			keys.size = _u(W_U - 52.0, 240)
+			_place(keys)
+			_note.position = _u(24, 381)
+			_note.size = _u(W_U - 48.0, 22)
+			var reset := _link("Every key back to the start", func() -> void:
+				InputActions.reset()
+				_show_settings("Keys")
+				_note.text = "Every key is back where it started.")
+			reset.position = Vector2((_u(W_U, 0).x - reset.size.x) / 2.0, _u(0, 409).y - reset.size.y / 2.0)
+		_:
+			_game_rows()
+	_place(_note)
+	_button(3, "Back", _show_menu)
+	_button(4, "Resume", func() -> void: root.call("close_screen"))
+	_buttons[0].grab_focus.call_deferred()
+
+
+## The three page names under the title, the open one lit over a gilt rule with a lozenge.
+func _page_tabs(page: String) -> void:
+	var xs: Array[float] = [86.0, 140.0, 194.0]   # clear of the shoulder scrolls
+	for i in SETTINGS_PAGES.size():
+		var name_ := SETTINGS_PAGES[i]
+		var on := name_ == page
+		var tab := _link(name_, func() -> void: _show_settings(name_))
+		tab.name = "Page" + name_
+		tab.add_theme_font_size_override("font_size", roundi(12.5 * K))
+		for k: String in ["font_color", "font_pressed_color", "font_focus_color"]:
+			tab.add_theme_color_override(k, _c("arch_gold_light") if on else Color(_c("arch_gold"), 0.75))
+		tab.reset_size()
+		tab.position = Vector2(_u(xs[i], 0).x - tab.size.x / 2.0, _u(0, 124).y - tab.size.y / 2.0)
+		if on:
+			var mark := UiParts.drawn(Vector2(tab.size.x, 6.0 * K), func(c: Control) -> void:
+				var y := c.size.y / 2.0
+				c.draw_line(Vector2(0, y), Vector2(c.size.x, y), Color(_c("arch_gold"), 0.8), 1.0, true)
+				_lozenge(c, Vector2(c.size.x / 2.0, y), 2.5, _c("arch_gold_light")))
+			mark.position = Vector2(tab.position.x, tab.position.y + tab.size.y - 2.0 * K)
+			_place(mark)
+
+
+## Game: the playthrough's difficulty, how fights and the Narrator play, turn-based exploring, and the respec option.
+func _game_rows() -> void:
+	var y := ROW_Y
+	if st != null:
+		_difficulty_row(y)
+		y += ROW_PITCH
+	_choice_row(y, "Fights", ["Normal", "Fast"], 1 if GameSettings.fast_combat() else 0, func(i: int) -> void:
 		GameSettings.set_fast_combat(i == 1), "Fast plays moves and the pauses between turns at twice the speed.")
-	_choice_row(252.0, "Narration", ["Fades", "Stays"], 1 if GameSettings.narration_stays() else 0, func(i: int) -> void:
+	y += ROW_PITCH
+	_choice_row(y, "Narration", ["Fades", "Stays"], 1 if GameSettings.narration_stays() else 0, func(i: int) -> void:
 		GameSettings.set_narration_stays(i == 1), "Whether the Narrator's box fades on its own or stays until you close it.")
-	_choice_row(286.0, "Depth blur", ["On", "Off"], 0 if GameSettings.depth_blur() else 1, func(i: int) -> void:
-		GameSettings.set_depth_blur(i == 0)
-		_note.text = "From the next place you go.",
-		"Modern look: the far distance softens a little. People and things you can click always stay sharp.")
-	# Turn-based exploring (F7): the same switch as T and the hotbar's Turn-based button.
-	_choice_row(320.0, "Exploring", ["Real time", "Turn-based"], 1 if GameSettings.turn_based() else 0, func(i: int) -> void:
+	y += ROW_PITCH
+	# Turn-based exploring (F7): the same switch as its key and the hotbar's Turn-based button.
+	_choice_row(y, "Exploring", ["Real time", "Turn-based"], 1 if GameSettings.turn_based() else 0, func(i: int) -> void:
 		_set_turn_based(i == 1),
-		"Turn-based: outside fights the party moves in rounds, one of you at a time, to set up an ambush. T switches it too.")
+		InputActions.fill("Turn-based: outside fights the party moves in rounds, one of you at a time, to set up an ambush. {plan_mode} switches it too."))
+	y += ROW_PITCH
 	var respec := CheckBox.new()
 	respec.text = "Allow rebuilding a character at Madam Eva"
 	respec.add_theme_font_override("font", serif())
@@ -275,16 +353,98 @@ func _show_settings() -> void:
 	respec.focus_mode = Control.FOCUS_NONE
 	_place(respec)
 	respec.reset_size()
-	respec.position = Vector2((_u(W_U, 0).x - respec.size.x) / 2.0, _u(0, 352.0).y - respec.size.y / 2.0)
-	_note = _text("", 9.5, _c("arch_gold_light"))
-	_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_note.position = _u(24, 368)
-	_note.size = _u(W_U - 48.0, 30)
-	_place(_note)
-	_button(3, "Back", _show_menu)
-	_button(4, "Resume", func() -> void: root.call("close_screen"))
-	_buttons[0].grab_focus.call_deferred()
+	respec.position = Vector2((_u(W_U, 0).x - respec.size.x) / 2.0, _u(0, y).y - respec.size.y / 2.0)
+
+
+## The playthrough's difficulty (F1, combat/difficulty.gd, kept in its options): Story, Balanced and Tactician switch
+## any time; Honour is only chosen for a new game, so it's listed only while it's the mode, and leaving it, which is for
+## good, waits for a second click on the link that appears.
+func _difficulty_row(y: float) -> void:
+	var now := Difficulty.of_options(st.options).id
+	var ids: Array[String] = []
+	var names: Array[String] = []
+	var tip: Array[String] = []
+	for id in Difficulty.IDS:
+		var d := Difficulty.named(id)
+		if id == now or Difficulty.can_switch(now, id):
+			ids.append(id)
+			names.append(d.name)
+		if d.switchable:
+			tip.append("%s: %s" % [d.name, d.summary])
+	tip.append("Honour (one life, one save) is chosen when a new game begins.")
+	_choice_row(y, "Difficulty", names, ids.find(now), func(i: int) -> void: _pick_difficulty(ids[i]), "\n".join(tip))
+
+
+## A difficulty picked on the row: at once, unless it leaves Honour, which asks first.
+func _pick_difficulty(to: String) -> void:
+	var from := Difficulty.of_options(st.options).id
+	if _confirm != null and is_instance_valid(_confirm):
+		_items.erase(_confirm)
+		_frame.remove_child(_confirm)
+		_confirm.queue_free()
+	_confirm = null
+	if to == from:
+		_note.text = ""
+		return
+	var warning := Difficulty.switch_warning(from, to)
+	if warning == "":
+		_set_difficulty(to)
+		return
+	_note.text = warning
+	_confirm = _link("Leave Honour for %s" % Difficulty.named(to).name, func() -> void:
+		_set_difficulty(to)
+		_show_settings("Game")   # Honour is no longer offered
+		_note.text = "Now %s. Enemies change from the next fight." % Difficulty.named(to).name)
+	_confirm.name = "LeaveHonour"
+	_confirm.position = Vector2((_u(W_U, 0).x - _confirm.size.x) / 2.0, _u(0, 336).y - _confirm.size.y / 2.0)
+
+
+## The playthrough's mode: kept in its options, and the party's bonus (Story's +2) put on or taken off at once.
+func _set_difficulty(to: String) -> void:
+	st.options["difficulty"] = to
+	var d := Difficulty.named(to)
+	for ch in st.roster():
+		d.fit_party(ch)
+	_note.text = "%s: %s. Enemies change from the next fight." % [d.name, d.tagline.to_lower()]
+
+
+## Display: the world's look and how hard the renderer works, the window, depth blur, and the interface and text sizes.
+func _display_rows() -> void:
+	var y := ROW_Y
+	_choice_row(y, "Look", ["Modern", "Classic"], 0 if Look.modern() else 1, func(i: int) -> void:
+		_set_look("modern" if i == 0 else "classic"),
+		"Modern: smooth light, relief and glow. Classic: the 1990s cartoon, every colour from the palette.")
+	y += ROW_PITCH
+	var presets := Graphics.PRESETS
+	_choice_row(y, "Graphics", ["Low", "Medium", "High"], presets.find(Graphics.preset()), func(i: int) -> void:
+		Graphics.set_preset(presets[i])
+		_note.text = "Edges change now, shadows and lamps from the next place you go." if Look.modern() \
+			else "The Classic look always draws the same; this is for Modern.",
+		"How hard the Modern look works: smooth edges, shadow detail, how many lamps cast shadows, and reflections. Lower it if the game stutters.")
+	y += ROW_PITCH
+	_choice_row(y, "Window", ["Windowed", "Fullscreen"], 1 if GameSettings.fullscreen() else 0, func(i: int) -> void:
+		GameSettings.set_fullscreen(i == 1), "Play in a window or fill the screen.")
+	y += ROW_PITCH
+	_choice_row(y, "Depth blur", ["On", "Off"], 0 if GameSettings.depth_blur() else 1, func(i: int) -> void:
+		GameSettings.set_depth_blur(i == 0)
+		_note.text = "From the next place you go.",
+		"Modern look: the far distance softens a little. People and things you can click always stay sharp.")
+	y += ROW_PITCH
+	var sizes := GameSettings.UI_SCALES
+	var percents: Array[String] = []
+	for v in sizes:
+		percents.append("%d%%" % roundi(v * 100.0))
+	_choice_row(y, "Interface", percents, sizes.find(GameSettings.ui_scale()), func(i: int) -> void:
+		GameSettings.set_ui_scale(sizes[i])
+		UiScale.apply()
+		_note.text = "The game's interface takes this size when you close the menu.",
+		"How big the interface is while you play: the party, the bar, fights, conversations and rules cards. Menus like this one keep their size.")
+	y += ROW_PITCH
+	var texts := GameSettings.TEXT_SCALES
+	_choice_row(y, "Text", ["Normal", "Large", "Larger"], texts.find(GameSettings.text_scale()), func(i: int) -> void:
+		GameSettings.set_text_scale(texts[i])
+		_note.text = "Conversations, the Narrator and the journal read larger." if i > 0 else "",
+		"The size of what you read: conversations, the Narrator's box and the journal.")
 
 
 ## Turn-based exploring on or off: the place the party is in switches at once (in a fight, once it's over).
@@ -310,7 +470,7 @@ func _set_look(style: String) -> void:
 
 
 ## A row of the settings page at concept y: the label at x 30 (Georgia 14) and, where the sliders' tracks are, the
-## current choice between gilt arrows; a click moves to the next choice.
+## current choice between gilt arrows; a click moves to the next choice, or back one on the left arrow.
 func _choice_row(y: float, text: String, options: Array[String], current: int, on_change: Callable, tip: String) -> void:
 	var l := _text(text, 14.0, _c("arch_text"))
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -328,11 +488,16 @@ func _choice_row(y: float, text: String, options: Array[String], current: int, o
 	b.add_theme_color_override("font_hover_color", _c("arch_text"))
 	for state: String in ["normal", "hover", "pressed", "focus", "disabled", "hover_pressed"]:
 		b.add_theme_stylebox_override(state, StyleBoxEmpty.new())
-	var at := [current]
+	var at := [current, false]   # the choice showing, and whether the click came on the left arrow
 	b.text = "‹  %s  ›" % options[current]
+	b.gui_input.connect(func(ev: InputEvent) -> void:
+		var mb := ev as InputEventMouseButton
+		if mb != null and mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
+			at[1] = mb.position.x < b.size.x * 0.3)
 	b.pressed.connect(func() -> void:
 		Audio.sfx("click")
-		at[0] = (int(at[0]) + 1) % options.size()
+		at[0] = posmod(int(at[0]) + (-1 if bool(at[1]) else 1), options.size())
+		at[1] = false
 		b.text = "‹  %s  ›" % options[int(at[0])]
 		on_change.call(int(at[0])))
 	b.position = _u(130, y - 11.0)
@@ -405,6 +570,13 @@ func _show_saves() -> void:
 			"Back to where the game last saved itself: arriving somewhere, a rest or a won fight."
 	_button(4, "Quit to Title", func() -> void: leave_to(TITLE_SCENE))
 	_buttons[0].grab_focus.call_deferred()
+
+
+## The cheat codes' page over the arch, which hides the arch until it closes.
+func _open_cheats() -> void:
+	CheatCodesPage.open_on(self, st, _frame).closed.connect(func() -> void:
+		if not _buttons.is_empty():
+			_buttons[0].grab_focus.call_deferred())
 
 
 ## The saves' page over the arch (lane 16's), which hides the arch until it closes. A save comes back to "Saved.".
@@ -618,8 +790,7 @@ func leave_to(path: String) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if game_over:
 		return
-	if event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo \
-			and (event as InputEventKey).physical_keycode == KEY_F5:
+	if event.is_action_pressed(&"quick_save") and not event.is_echo():
 		get_viewport().set_input_as_handled()
 		if SaveSystem.can_save():
 			_quick_save()

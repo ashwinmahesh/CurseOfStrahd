@@ -1239,7 +1239,7 @@ func _wild_shape(c: Combatant, form_id: String) -> CombatResult:
 		return CombatResult.fail("You don't know that form")
 	ch.spend_resource("wild_shape")
 	c.bonus_available = false
-	var opts := {"temp_hp": _wild_temp(c), "keep_mind": true, "label": "Wild Shape"}
+	var opts := {"temp_hp": _wild_temp(c), "keep_mind": true, "label": "Wild Shape", "temp_hp_stay": true}
 	if has(c, "circle_forms"):
 		opts["ac_floor"] = 13 + c.creature.ability_mod(&"wis")
 	if c.creature.concentration == null:
@@ -1857,19 +1857,88 @@ func _in_aura(p: Combatant, t: Combatant) -> bool:
 
 # --- Turns --------------------------------------------------------------------------------------------
 
-## Initiative was just rolled: Tandem Footwork (College of Dance 6) spends Bardic Inspiration to add the die to the
-## bard's and nearby allies' Initiative.
+## Initiative was just rolled.
 func initiative_rolled() -> void:
+	pass
+
+
+## Choices once Initiative is rolled, before the first turn (EncounterTurns.start): Tandem Footwork (College of Dance 6)
+## spends a Bardic Inspiration to add its die to the bard's and nearby allies' Initiative.
+func initiative_offers() -> Array:
 	var e := enc()
+	var out: Array = []
 	for b in e.combatants:
-		if not has(b, "tandem_footwork") or _ch(b).resource_left("bardic_inspiration") <= 0 or str(b.reaction_rules.get("tandem_footwork", "auto")) == "never":
+		if not has(b, "tandem_footwork") or _ch(b) == null:
 			continue
-		_ch(b).spend_resource("bardic_inspiration")
-		var roll := e.dice.roll_one(bardic_die(b), "Tandem Footwork")
-		for a in e.combatants:
-			if a == b or (a.allied_with(b) and e.distance(a, b) <= 30):
-				a.initiative += roll
-		e.log.add("info", "%s leads the dance: +%d Initiative to nearby allies (Tandem Footwork)" % [b.name(), roll], b.id)
+		var bard := b
+		out.append({"kind": "tandem_footwork", "reactor": b, "title": "Tandem Footwork?", "spends_reaction": false,
+			"text": "Initiative is rolled: %s at %d. Spend a Bardic Inspiration to add its die (d%d) to %s's Initiative and every ally's within 30 ft?" % [
+				b.name(), b.initiative, bardic_die(b), b.name()],
+			"cost": func() -> String: return "A Bardic Inspiration (%d left)" % _ch(bard).resource_left("bardic_inspiration"),
+			"still": func() -> bool: return _ch(bard).resource_left("bardic_inspiration") > 0 and not bard.creature.has_condition(&"incapacitated"),
+			"use": func() -> void:
+				_ch(bard).spend_resource("bardic_inspiration")
+				var roll := e.dice.roll_one(bardic_die(bard), "Tandem Footwork")
+				for a in e.combatants:
+					if a == bard or (a.allied_with(bard) and e.distance(a, bard) <= 30):
+						a.initiative += roll
+				e.log.add("info", "%s leads the dance: +%d Initiative to nearby allies (Tandem Footwork)" % [bard.name(), roll], bard.id)})
+	# Alert (2024 feat): right after Initiative is rolled, trade Initiative with one willing ally, neither of them
+	# Incapacitated. Asked after Tandem Footwork, so the numbers offered are the final ones, and only about allies with
+	# an enemy's turn between theirs and the feat holder's: otherwise the trade changes nothing that matters. Off until
+	# the hero's rule is Ask in the class tab, since with a party of six it would come up nearly every fight.
+	for a in e.combatants:
+		if not has(a, "initiative_swap") or not a.is_player_controlled():
+			continue
+		var holder := a
+		var partners := func() -> Array[Combatant]:
+			var list: Array[Combatant] = []
+			for o in e.combatants:
+				if o == holder or not o.allied_with(holder) or not o.is_player_controlled() or o.is_down() \
+						or o.creature.has_condition(&"incapacitated") or o.initiative == holder.initiative:
+					continue
+				var lo := mini(o.initiative, holder.initiative)
+				var hi := maxi(o.initiative, holder.initiative)
+				if e.combatants.any(func(f: Combatant) -> bool: return f.hostile_to(holder) and not f.is_down() and f.initiative > lo and f.initiative < hi):
+					list.append(o)
+			return list
+		# With no pick: the ally furthest behind moves up, or else the feat holder moves up to the ally furthest ahead.
+		var fallback := func() -> Combatant:
+			var best: Combatant = null
+			for o in partners.call() as Array[Combatant]:
+				if best == null or (o.initiative < holder.initiative and (best.initiative > holder.initiative or o.initiative < best.initiative)) \
+						or (o.initiative > holder.initiative and best.initiative > holder.initiative and o.initiative > best.initiative):
+					best = o
+			return best
+		var picked := {"id": ""}
+		out.append({"kind": "initiative_swap", "reactor": a, "title": "Alert: swap Initiative?", "spends_reaction": false,
+			"default": "never", "cost": "Nothing",
+			"text": func() -> String:
+				var mate := fallback.call() as Combatant
+				return "Initiative is rolled: %s at %d. Trade Initiative with a willing ally? Pick one, or use it as it is to trade with %s (%d)." % [
+					holder.name(), holder.initiative, mate.name() if mate != null else "nobody", mate.initiative if mate != null else 0],
+			"target_choices": func() -> Array:
+				var choices: Array = []
+				for o in partners.call() as Array[Combatant]:
+					choices.append({"id": o.id, "label": "%s · Initiative %d" % [o.name(), o.initiative]})
+				return choices,
+			"min_targets": 0, "max_targets": 1,
+			"still": func() -> bool: return not holder.creature.has_condition(&"incapacitated") and not (partners.call() as Array[Combatant]).is_empty(),
+			"select": func(ids: Array) -> void: picked["id"] = str(ids[0]) if not ids.is_empty() else "",
+			"use": func() -> void:
+				var mate: Combatant = null
+				for o in partners.call() as Array[Combatant]:
+					if o.id == str(picked["id"]):
+						mate = o
+				if mate == null:
+					mate = fallback.call() as Combatant
+				if mate == null:
+					return
+				var mine := holder.initiative
+				holder.initiative = mate.initiative
+				mate.initiative = mine
+				e.log.add("info", "%s trades Initiative with %s: %d and %d (Alert)" % [holder.name(), mate.name(), holder.initiative, mate.initiative], holder.id)})
+	return out
 
 
 ## When a fight starts: the always-on benefits are in place before anyone acts.
@@ -1883,7 +1952,9 @@ func prepare(c: Combatant) -> void:
 		enc().log.add("info", "%s reads the stars: %s" % [c.name(), str(c.get_meta("omen")).capitalize()], c.id)
 
 
-func turn_start(c: Combatant) -> void:
+## The start of `c`'s turn: mounts, Branches of the Tree (a barbarian's Reaction, asked when the fight can pause), then
+## the turn's class features (_turn_start_features).
+func turn_start(c: Combatant) -> CombatResult:
 	var e := enc()
 	# Mounted combat: a controlled mount moves on its rider's turn (its Speed refreshes then) and spends its own turn
 	# only on Dash, Disengage or Dodge.
@@ -1894,20 +1965,39 @@ func turn_start(c: Combatant) -> void:
 		c.movement_left = 0
 		e.log.add("info", "%s carries %s (a controlled mount moves on its rider's turn)" % [c.name(), e.rider_of(c).name()], c.id)
 	# Branches of the Tree (World Tree 6): a creature starting its turn within 30 ft of a raging barbarian makes a
-	# Strength save or is pulled beside it with Speed 0 for the turn.
+	# Strength save or is pulled beside it with Speed 0 for the turn. One barbarian's branches at most.
+	var offers: Array = []
+	var pulled := {"done": false}
 	for b in e.hostiles_of(c):
-		if raging(b) and has(b, "branches_of_the_tree") and e.spells.can_react(b) and e.distance(b, c) <= 30 and e.distance(b, c) > 5 \
-				and e.can_see(b, c) and str(b.reaction_rules.get("branches_of_the_tree", "auto")) != "never":
-			b.reaction_available = false
-			var dc := 8 + b.creature.proficiency_bonus() + b.creature.ability_mod(&"str")
-			if not _save(c, &"str", dc, "Branches of the Tree"):
-				var spot := e.spells._free_cell_near(b.cell, c.size_cells)
-				if e.grid.distance_ft(b.cell, b.size_cells, spot, c.size_cells) <= 5:
-					e.spells._teleport(c, spot, CombatResult.new())
-				var root := _timed(b, "Rooted (Branches of the Tree)", "branches_of_the_tree", Effect.Ends.END_OF_TURN, c).with_modifier("speed_set", {"value": 0})
-				c.creature.add_effect(root)
-				c.movement_left = 0
-			break
+		if not has(b, "branches_of_the_tree"):
+			continue
+		var barb := b
+		offers.append({"kind": "branches_of_the_tree", "reactor": b, "trigger": c.id, "title": "Reaction: Branches of the Tree?",
+			"text": func() -> String: return "%s starts its turn %d ft from %s. Spectral branches pull it beside %s unless it makes a Strength save (DC %d), and hold it in place this turn." % [
+				c.name(), e.distance(barb, c), barb.name(), barb.name(), 8 + barb.creature.proficiency_bonus() + barb.creature.ability_mod(&"str")],
+			"cost": "Reaction",
+			"still": func() -> bool: return not bool(pulled["done"]) and c.is_alive() and raging(barb) and e.spells.can_react(barb) \
+				and e.distance(barb, c) <= 30 and e.distance(barb, c) > 5 and e.can_see(barb, c),
+			"use": func() -> void:
+				pulled["done"] = true
+				barb.reaction_available = false
+				var dc := 8 + barb.creature.proficiency_bonus() + barb.creature.ability_mod(&"str")
+				if not _save(c, &"str", dc, "Branches of the Tree"):
+					var spot := e.spells._free_cell_near(barb.cell, c.size_cells)
+					if e.grid.distance_ft(barb.cell, barb.size_cells, spot, c.size_cells) <= 5:
+						e.spells._teleport(c, spot, CombatResult.new())
+					var root := _timed(barb, "Rooted (Branches of the Tree)", "branches_of_the_tree", Effect.Ends.END_OF_TURN, c).with_modifier("speed_set", {"value": 0})
+					c.creature.add_effect(root)
+					c.movement_left = 0})
+	return e.reactions.offer(offers, func() -> CombatResult:
+		_turn_start_features(c)
+		return CombatResult.new(), CombatResult.new())
+
+
+## The rest of the start of `c`'s turn: a companion's fresh orders, the always-on effects, Rage ending, Vitality of
+## the Tree, Uncanny Metabolism, Guarded Mind, Dread Ambusher's speed.
+func _turn_start_features(c: Combatant) -> void:
+	var e := enc()
 	# Primal companion: a fresh order each round.
 	if c.creature is Monster and c.has_meta("commanded"):
 		c.remove_meta("commanded")
@@ -1995,21 +2085,37 @@ func _standing_effects(c: Combatant, ch: Character) -> void:
 		c.creature.add_effect(fx2)
 
 
-func turn_end(c: Combatant) -> void:
-	# Inspiring Movement (College of Dance 6): an enemy ends its turn beside the bard: a Bardic Inspiration lets the
-	# bard slip away half its Speed without provoking.
+## The end of `c`'s turn: Inspiring Movement (College of Dance 6: an enemy ends its turn beside the bard, who can spend a
+## Bardic Inspiration and its Reaction to slip away half its Speed without provoking; asked when the fight can pause),
+## then Rage ending and Self-Restoration.
+func turn_end(c: Combatant) -> CombatResult:
 	var e := enc()
+	var offers: Array = []
+	var danced := {"done": false}
 	for b in e.hostiles_of(c):
-		if has(b, "inspiring_movement") and e.distance(b, c) <= 5 and e.spells.can_react(b) and _ch(b).resource_left("bardic_inspiration") > 0 \
-				and str(b.reaction_rules.get("inspiring_movement", "auto")) != "never":
-			b.reaction_available = false
-			_ch(b).spend_resource("bardic_inspiration")
-			var was := b.disengaged
-			b.disengaged = true
-			e.log.add("reaction", "%s dances away (Inspiring Movement)" % b.name(), b.id)
-			e.flee(b, c, b.speed() / 2, CombatResult.new())
-			b.disengaged = was
-			break
+		if not has(b, "inspiring_movement") or _ch(b) == null:
+			continue
+		var bard := b
+		offers.append({"kind": "inspiring_movement", "reactor": b, "trigger": c.id, "title": "Reaction: Inspiring Movement?",
+			"text": "%s ends its turn beside %s. Spend a Bardic Inspiration to dance away up to half %s's Speed without provoking?" % [c.name(), b.name(), b.name()],
+			"cost": func() -> String: return "Reaction and a Bardic Inspiration (%d left)" % _ch(bard).resource_left("bardic_inspiration"),
+			"still": func() -> bool: return not bool(danced["done"]) and e.distance(bard, c) <= 5 and e.spells.can_react(bard) \
+				and _ch(bard).resource_left("bardic_inspiration") > 0 and e.can_see(bard, c),
+			"use": func() -> void:
+				danced["done"] = true
+				bard.reaction_available = false
+				_ch(bard).spend_resource("bardic_inspiration")
+				var was := bard.disengaged
+				bard.disengaged = true
+				e.log.add("reaction", "%s dances away (Inspiring Movement)" % bard.name(), bard.id)
+				e.flee(bard, c, bard.speed() / 2, CombatResult.new())
+				bard.disengaged = was})
+	return e.reactions.offer(offers, func() -> CombatResult:
+		_turn_end_features(c)
+		return CombatResult.new(), CombatResult.new())
+
+
+func _turn_end_features(c: Combatant) -> void:
 	if raging(c) and not has(c, "persistent_rage") and str(c.get_meta("rage_kept", "")) != _turn_key():
 		end_rage(c, "no attack, forced save or Bonus Action to keep it")
 	if has(c, "self_restoration"):

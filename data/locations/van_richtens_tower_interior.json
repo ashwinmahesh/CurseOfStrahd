@@ -278,6 +278,32 @@
       "kind": "examine",
       "label": "The lantern-room window",
       "model": "window"
+    },
+    {
+      "id": "trophy_wand",
+      "cell": [
+        11,
+        4
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "skill": "investigation",
+      "label": "a clip behind one of the trophies",
+      "model": "jewel_box",
+      "item": "wand_of_binding"
+    },
+    {
+      "id": "jars_oil",
+      "cell": [
+        3,
+        19
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "skill": "investigation",
+      "label": "a flask among the jars that isn't labelled",
+      "model": "glass_vessels",
+      "item": "oil_of_etherealness"
     }
   ],
   "containers": [

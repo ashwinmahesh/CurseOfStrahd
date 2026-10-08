@@ -225,16 +225,19 @@ func _cleric_dc(c: Combatant) -> int:
 	return (c.creature as Character).spell_save_dc("cleric").total()
 
 
-## Divine Spark (Cleric 2): a creature within 30 ft regains 1d8 + Wisdom modifier Hit Points, or makes a
-## Constitution save against Necrotic or Radiant damage of that amount (half on a success).
-func divine_spark(c: Combatant, target: Combatant, harm: bool, damage_type: String = "radiant") -> CombatResult:
+## Divine Spark (Cleric 2): another creature the cleric sees within 30 ft regains 1d8 + Wisdom modifier Hit Points, or
+## makes a Constitution save against Necrotic or Radiant damage of that amount (half on a success), the cleric's choice
+## of type: `damage_type` "radiant", "necrotic" or "best" (whichever the target takes more of; Radiant when even).
+func divine_spark(c: Combatant, target: Combatant, harm: bool, damage_type: String = "best") -> CombatResult:
 	var e := enc()
 	var why := _channel_check(c)
 	if why != "":
 		return CombatResult.fail(why)
 	if not has_feature(c, "channel_divinity"):
 		return CombatResult.fail("%s can't Channel Divinity" % c.name())
-	if target == null or e.distance(c, target) > 30 or (target != c and int(e.cover(c, target)["cover"]) == CombatGrid.Cover.TOTAL):
+	if target == c:
+		return CombatResult.fail("Divine Spark reaches another creature, not the cleric")
+	if target == null or e.distance(c, target) > 30 or not e.can_see(c, target) or int(e.cover(c, target)["cover"]) == CombatGrid.Cover.TOTAL:
 		return CombatResult.fail("Choose a creature within 30 ft that you can see")
 	_spend_channel(c)
 	var level := c.creature.class_level_of("cleric")
@@ -254,10 +257,18 @@ func divine_spark(c: Combatant, target: Combatant, harm: bool, damage_type: Stri
 	var s := target.creature.roll_save(e.dice, &"con", dc, [], [], "Constitution save vs Divine Spark (%s)" % target.name())
 	if s.success:
 		amount /= 2
-	var ty := damage_type if damage_type in ["radiant", "necrotic"] else "radiant"
+	var ty := damage_type if damage_type in ["radiant", "necrotic"] else spark_type(target)
 	e.events.append({"type": "spell", "caster": c.id, "spell": "divine_spark", "cells": [], "targets": [target.id]})
 	e.deal_damage(c, target, [{"amount": amount, "type": ty}], false, "Divine Spark", [s.describe(), text])
 	return r
+
+
+## Divine Spark's better damage type against `target`: the one it takes more of (Immunity, Resistance and
+## Vulnerability weighed on a test amount), Radiant when they're even.
+static func spark_type(target: Combatant) -> String:
+	var radiant := target.creature.preview_damage_parts([{"amount": 20, "type": "radiant"}]).final
+	var necrotic := target.creature.preview_damage_parts([{"amount": 20, "type": "necrotic"}]).final
+	return "necrotic" if necrotic > radiant else "radiant"
 
 
 ## Turn Undead (Cleric 2): each Undead enemy within 30 ft makes a Wisdom save or is Frightened and Incapacitated for
@@ -402,6 +413,9 @@ func preserve_life_room(c: Combatant) -> Dictionary:
 ## trigger on a hit (one per hit, a Superiority Die each), Cunning Strike effects (paid with Sneak Attack dice),
 ## the Goliath's Giant Ancestry boons, the Psi Warrior's Psionic Strike, Tactical Master's mastery swap, and toggles
 ## for optional masteries (Push, Topple).
+## Divine Smite works the 2014 way (owner decision 2026-10-08; deviations.md).
+const DIVINE_SMITE := "divine_smite"
+
 const HIT_MANEUVERS := {
 	"disarming_attack": ["Disarming Attack", "Str save or drop what it holds"],
 	"distracting_strike": ["Distracting Strike", "next ally attack has Advantage"],
@@ -410,7 +424,7 @@ const HIT_MANEUVERS := {
 	"pushing_attack": ["Pushing Attack", "Str save or pushed 15 ft"],
 	"trip_attack": ["Trip Attack", "Str save or Prone"],
 	"sweeping_attack": ["Sweeping Attack", "the die hits a second foe"],
-	"maneuvering_attack": ["Maneuvering Attack", "an ally moves without Opportunity Attacks"],
+	"maneuvering_attack": ["Maneuvering Attack", "an ally moves clear of the target"],
 	"lunging_attack": ["Lunging Attack", "after moving 5 ft: +die"],
 	"feinting_attack": ["Feinting Attack", "+die (after a feint)"],
 }
@@ -468,19 +482,21 @@ func rider_options(c: Combatant) -> Array[Dictionary]:
 	if has_feature(c, "rend_mind"):
 		var rw := "" if ch.resource_left("rend_mind") > 0 or ch.resource_left("psionic_energy") >= 3 else "No uses left"
 		out.append({"id": "rend_mind", "label": "Rend Mind", "sub": "Sneak Attack with a blade: Wis save or Stunned", "why": rw})
-	# Smite spells (Divine Smite, Searing Smite...): cast as a Bonus Action right after a hit.
+	# Smite spells (Divine Smite, Searing Smite...): cast as a Bonus Action right after a hit. Divine Smite works the 2014
+	# way (owner decision 2026-10-08): no Bonus Action, not a spell cast, on every hit while it's armed and slots last.
 	for sp in enc().spells.castable(c):
 		var sd := Compendium.shared().spell_data(str(sp["id"]))
 		if not bool(sd.get("on_hit_spell", false)):
 			continue
+		var five_e := str(sp["id"]) == DIVINE_SMITE
 		var sw := ""
-		if not c.bonus_available:
+		if not c.bonus_available and not five_e:
 			sw = "Bonus Action already used"
-		elif c.cast_slot_spell_this_turn and int(sd.get("level", 0)) > 0 and not bool(sp["free"]):
+		elif c.cast_slot_spell_this_turn and int(sd.get("level", 0)) > 0 and not bool(sp["free"]) and not five_e:
 			sw = "Already cast a spell with a slot this turn"
 		elif int(sd.get("level", 0)) > 0 and not bool(sp["free"]) and enc().spells._lowest_slot(ch, int(sd.get("level", 1))) == 0:
 			sw = "No spell slots left"
-		out.append({"id": "smite:" + str(sp["id"]), "label": str(sd["name"]), "sub": "on your next hit", "why": sw})
+		out.append({"id": "smite:" + str(sp["id"]), "label": str(sd["name"]), "sub": "on each hit this turn" if five_e else "on your next hit", "why": sw})
 	if has_feature(c, "overchannel"):
 		var uses := int(c.get_meta("overchannel_uses", 0))
 		out.append({"id": "overchannel", "label": "Overchannel", "sub": "max damage on the next level 1-5 spell%s" % ("" if uses == 0 else " · costs Necrotic damage"), "why": ""})
@@ -644,31 +660,74 @@ func cast_armed_smite(c: Combatant, melee: bool, missed: bool) -> Dictionary:
 			continue
 		if missed and not bool(sd.get("on_miss_too", false)):
 			continue
-		if not c.bonus_available:
+		# Divine Smite, the 2014 way: no Bonus Action, not a spell (the one spell slot a turn doesn't count it), and it
+		# stays armed for every hit this turn while slots last.
+		var five_e := sid == DIVINE_SMITE
+		if not c.bonus_available and not five_e:
 			return {}
+		# Asked after this hit (smite_offers): armed for this one hit only.
+		if five_e and c.has_meta("smite_asked"):
+			c.remove_meta("smite_asked")
+			c.armed.erase(a)
 		var lvl := int(sd.get("level", 1))
 		var free := false
 		for k in e.spells.castable(c):
 			if str(k["id"]) == sid and bool(k["free"]):
 				free = true
 		var slot := lvl if free else e.spells._lowest_slot(ch, lvl)
-		if slot == 0 or (c.cast_slot_spell_this_turn and not free):
+		if slot == 0 or (c.cast_slot_spell_this_turn and not free and not five_e):
 			return {}
-		c.armed.erase(a)
-		c.bonus_available = false
+		if not five_e:
+			c.armed.erase(a)
+			c.bonus_available = false
 		if free:
 			ch.spend_resource("spell:%s" % sid)
 		else:
 			ch.expend_slot(slot)
-			c.cast_slot_spell_this_turn = true
+			if not five_e:
+				c.cast_slot_spell_this_turn = true
 		var conc: Concentration = null
 		if bool((sd.get("duration", {}) as Dictionary).get("concentration", false)):
 			conc = c.creature.begin_concentration(sid, str(sd["name"]))
-		e.spells.trigger_ends(c, "cast_spell")
-		e.log.add("spell", "%s casts %s on the %s (level %d)" % [c.name(), sd["name"], "miss" if missed else "hit", slot], c.id)
+		if five_e:
+			e.log.add("spell", "%s smites (%s)" % [c.name(), "the free use" if free else "a level %d spell slot" % slot], c.id)
+		else:
+			e.spells.trigger_ends(c, "cast_spell")
+			e.log.add("spell", "%s casts %s on the %s (level %d)" % [c.name(), sd["name"], "miss" if missed else "hit", slot], c.id)
 		return {"c": c, "s": sd, "slot": slot, "nums": e.spells.numbers(c, e.spells._entry_any(c, sid)), "conc": conc, "opts": {},
 			"choice": SpellCaster.choice_of(sd, {})}
 	return {}
+
+
+## Divine Smite offered once an attack hits (the 2014 way: the paladin decides after the hit, a Critical Hit included),
+## when it isn't armed for the turn already. Its creature's rule ("divine_smite") is Off until the class tab sets Ask
+## or Automatic.
+func smite_offers(c: Combatant, target: Combatant, option: Dictionary, st: Dictionary) -> Array:
+	var e := enc()
+	if not c.creature is Character or not bool(option.get("melee", false)) or ("smite:" + DIVINE_SMITE) in c.armed:
+		return []
+	var entry := {}
+	for k in e.spells.castable(c):
+		if str(k["id"]) == DIVINE_SMITE:
+			entry = k
+	if entry.is_empty():
+		return []
+	var free := bool(entry["free"])
+	var slot := 1 if free else e.spells._lowest_slot(c.creature as Character, 1)
+	if slot == 0:
+		return []
+	var dice := mini(5, 1 + slot)
+	var extra := " (1d8 more against %s)" % ("a Fiend" if str(target.creature.creature_type) == "fiend" else "the Undead") \
+		if str(target.creature.creature_type) in ["fiend", "undead"] else ""
+	return [{"kind": DIVINE_SMITE, "reactor": c, "trigger": target.id, "title": "Divine Smite?", "spends_reaction": false,
+		"default": "never",
+		"text": "%s hits %s%s. Smite for %dd8 more Radiant damage%s?" % [c.name(), target.name(),
+			" with a Critical Hit, so the smite's dice double too" if bool(st.get("critical", false)) else "", dice, extra],
+		"cost": "Its free use (Paladin's Smite)" if free else "A level %d spell slot" % slot,
+		"use": func() -> void:
+			if not ("smite:" + DIVINE_SMITE) in c.armed:
+				c.armed.append("smite:" + DIVINE_SMITE)
+				c.set_meta("smite_asked", true)}]
 
 
 ## The extra dice a smite spell adds to the hit: its damage with the slot's extra dice, plus Divine Smite's die
@@ -685,6 +744,9 @@ func smite_dice(sctx: Dictionary, target: Combatant) -> Array[Dictionary]:
 		var up := str((sd.get("upcast", {}) as Dictionary).get("damage", ""))
 		if up != "" and slot > lvl:
 			n += int(DiceRoller.parse_expr(up)["count"]) * (slot - lvl)
+		# Divine Smite (2014): at most 5d8 from the slot.
+		if str(sd.get("id", "")) == DIVINE_SMITE:
+			n = mini(n, 5)
 		out.append({"dice": "%dd%d" % [n, int(base["sides"])], "type": str(pd.get("type", enc().spells._damage_type(sctx, pd))), "label": str(sd["name"])})
 	var vs := sd.get("damage_bonus_vs", {}) as Dictionary
 	if not vs.is_empty() and str(target.creature.creature_type) in (vs.get("types", []) as Array):
@@ -704,6 +766,9 @@ func smite_follow_up(sctx: Dictionary, target: Combatant, alive: bool, r: Combat
 			e.spells.specials.banish(sctx, target, r)
 		e.spells._finish_concentration(sctx)
 		return
+	# Divine Smite's own followers (Inspiring Smite, Smite of Protection) come after it as after a cast.
+	if str(sd.get("id", "")) == DIVINE_SMITE:
+		e.class_features.after_cast(sctx["c"] as Combatant, sd, int(sctx["slot"]))
 	if sd.has("secondary"):
 		e.spells._secondary(sctx, target, r)
 	elif alive and sd.has("save"):
@@ -823,11 +888,9 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 						e.deal_damage(c, o, [{"amount": int(rolled["total"]), "type": str(p.damage_type)}], false, "Sweeping Attack", [str(rolled["text"])])
 						break
 			"maneuvering_attack":
-				for a in e.allies_of(c):
-					if a.can_act() and e.distance(c, a) <= 30:
-						a.free_move_ft = maxi(a.free_move_ft, a.speed() / 2)
-						e.log.add("info", "%s can move %d ft without Opportunity Attacks from %s (Maneuvering Attack)" % [a.name(), a.free_move_ft, target.name()], a.id)
-						break
+				# An ally who can see or hear you may use its Reaction to move half its Speed, the target getting no
+				# Opportunity Attack: the player picks the ally and its square (EncounterMovement.reaction_move).
+				e.movement.offer_reaction_move(c, target, "Maneuvering Attack")
 		e.events.append({"type": "condition", "id": target.id})
 	# Cunning Strike.
 	var dc_dex := maneuver_dc(c, &"dex")

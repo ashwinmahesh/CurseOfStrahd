@@ -42,9 +42,11 @@ func then_after(c: Combatant, roll: Callable, after: Callable, r: CombatResult) 
 
 
 ## For a roll with its own steps between the roll and the offers (an attack): `collect(c)` before rolling, then
-## `collected(col)` hands back the offers that follow it, to run with Reactions.offer.
-func collect(c: Combatant) -> Dictionary:
-	var col := {"id": c.id, "offers": [], "claimed": false}
+## `collected(col)` hands back the offers that follow it, to run with Reactions.offer. `hold`: the roll is made where
+## nothing can stop (a Concentration save inside the damage), so when a choice needs asking the roll is marked
+## `awaiting` and its offers wait in the collector to be asked later (EncounterDamage); otherwise they're settled now.
+func collect(c: Combatant, hold: bool = false) -> Dictionary:
+	var col := {"id": c.id, "offers": [], "claimed": false, "hold": hold}
 	_open.append(col)
 	return col
 
@@ -65,7 +67,19 @@ func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
 		var top := _open.back() as Dictionary
 		if str(top["id"]) == c.id and not bool(top["claimed"]):
 			top["claimed"] = true
-			(top["offers"] as Array).append_array(offers)
+			if not bool(top.get("hold", false)):
+				(top["offers"] as Array).append_array(offers)
+				return
+			var reactions := enc().reactions
+			if offers.any(func(o: Dictionary) -> bool: return (not o.has("still") or (o["still"] as Callable).call()) and reactions.decide(o) == "ask"):
+				t.awaiting = true
+				(top["offers"] as Array).append_array(offers)
+				return
+			# Nothing to ask: each is settled now as its rule says.
+			for raw: Variant in offers:
+				var o := raw as Dictionary
+				if (not o.has("still") or (o["still"] as Callable).call()) and reactions.decide(o) == "auto":
+					(o["use"] as Callable).call()
 			return
 	run_now(offers)
 

@@ -301,7 +301,9 @@ func _start(party: Array[Character], bench: Array[Character] = []) -> void:
 
 ## Load: the saves on a page of their own over the title, since the column has no room for a list (lane 16).
 func _show_loads() -> void:
-	SavesScreen.open_on(self, SavesScreen.Mode.LOAD, func() -> void: get_tree().change_scene_to_file(GAME_SCENE), _box)
+	# Back to the title redraws it: a save deleted on the page may have been Continue's.
+	SavesScreen.open_on(self, SavesScreen.Mode.LOAD, func() -> void: get_tree().change_scene_to_file(GAME_SCENE), _box) \
+		.closed.connect(_title)
 
 
 func _exit_tree() -> void:

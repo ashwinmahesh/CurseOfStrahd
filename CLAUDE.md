@@ -10,6 +10,7 @@ make run | arena | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.g
 make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | keys [ONLY="id …"] [KINDS=…] | creator [GENERATE=1] | pregens [ONLY="id …"] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
+make cheat-codes (rewrites Cheat Codes.md in the vault from the item data; story/cheat_codes.gd makes the codes)
 make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines, ADR 0013)
 
 ## Godot windows (the owner works on this Mac)
@@ -36,9 +37,13 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 - After adding a class_name, `make import` before `make test`.
 - A change to what a save holds bumps `GameState.SAVE_VERSION` and adds a `SaveSystem.upgrade` step; then
   `make golden-saves` adds the new version's saves beside the old ones in tests/saves, which every test run loads.
-- A new git worktree: before its first `make import`, seed the import cache from the main checkout as an APFS clone,
-  which takes almost no disk: `mkdir -p <worktree>/.godot && cp -Rc ~/Documents/CurseOfStrahdGame/.godot/imported
-  <worktree>/.godot/`. Never rsync or plain-copy it (about 8 GB per worktree on a nearly full disk).
+- A lane's folder: `make lane NAME=<name> BRANCH=<branch>` (tools/lane.sh) makes ~/Documents/CurseOfStrahdGame-<name>
+  with its files and import cache as APFS clones of the main checkout's, so it costs only the files you change
+  (owner, 2026-10-08). `make lane-reclone NAME=<name>` turns an older lane's unchanged files back into clones;
+  `make lane-done NAME=<name>` removes the folder once the branch is merged and clean. `SSD=1` on any of the three puts
+  the lane on the external SSD's disk image (/Volumes/StrahdLanes, attached when it isn't), cloned from a seed there
+  that `make lane` brings up to main and imports first. Never write into the main checkout, and clean up your own
+  folders and scratch files when you finish.
 
 ## Rules engine (ADR 0003, 0005, 0006)
 - Data is read through `Compendium.shared()`; modifiers follow docs/contracts/modifiers.md (add a stat to the contract
@@ -87,9 +92,9 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   `git lfs install` (art/generated isn't used at run time, so `lfs.fetchexclude` can skip it).
 
 ## Voice (ADR 0013)
-- Spoken lines: ElevenLabs (eleven_v4, owner decision 2026-10-06) via `make voice` only; model, format and each
-  speaker's voice pinned in audio/voice/casting.json. Barovians, Vistani and the castle's people name `eleven_v3`
-  there, which keeps their accents (owner, 2026-10-07). Key: ELEVENLABS_API_KEY, sent as a header. A clip is
+- Spoken lines: ElevenLabs via `make voice` only; model, format and each speaker's voice pinned in
+  audio/voice/casting.json. Every line is on `eleven_v3` with the speaker's accent tag and its own delivery in
+  audio/voice/directions.json (owner, 2026-10-08). Key: ELEVENLABS_API_KEY, sent as a header. A clip is
   audio/voice/<speaker>/<sha1(text)[:16]>.mp3, so editing a line leaves it silent until `make voice` runs again;
   `VoiceOver.say` plays it (party lines in the speaker's voice: `VoiceOver.beat_voice`). Lines with {name},
   options and books are never voiced.

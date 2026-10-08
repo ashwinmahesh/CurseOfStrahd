@@ -19,6 +19,9 @@ var follow: Array[Node3D] = []
 var night_lights: Array[OmniLight3D] = []
 ## Pieces seen only after dark (wisps, fireflies).
 var night_only: Array[Node3D] = []
+## The rain (and its splashes) and snow, which the world's weather can change while the party is here
+## (rebuild_falling).
+var falling: Array[Node3D] = []
 var _parent: Node
 var _board: ArenaBoard
 var _wind := Vector2(0.3, 0.1)
@@ -107,6 +110,25 @@ func _leaves(spec: Dictionary) -> void:
 	p.draw_pass_1 = quad
 
 
+## The world's weather turned (Atmosphere.refresh_weather): the rain and snow go and the dressed mood's come, outdoors;
+## everything else (leaves, crows, smoke, embers, lit windows) stays as it is.
+func rebuild_falling(mood: Dictionary, outdoors: bool) -> void:
+	for n in falling:
+		if is_instance_valid(n):
+			follow.erase(n)
+			n.queue_free()
+	falling.clear()
+	if not outdoors:
+		return
+	for k: Variant in mood.get("weather", []):
+		var spec := {"kind": str(k)} if not (k is Dictionary) else (k as Dictionary)
+		match str(spec["kind"]):
+			"rain":
+				_rain(spec)
+			"snow":
+				_snow(spec)
+
+
 ## Rain slanting down on the wind, and rings where it lands.
 func _rain(spec: Dictionary) -> void:
 	var fall := Vector3(_wind.x * 0.6, -7.0, _wind.y * 0.6)
@@ -140,6 +162,8 @@ func _rain(spec: Dictionary) -> void:
 	rm.set_shader_parameter("colour", Look.color(str(spec.get("splash_colour", "moonlight"))))
 	plane.material = rm
 	s.draw_pass_1 = plane
+	falling.append(p)
+	falling.append(s)
 
 
 ## Snow drifting down on the wind; a higher `wind` drives it nearly sideways. The wind is the flakes' starting
@@ -172,6 +196,7 @@ func _snow(spec: Dictionary) -> void:
 	mat.set_shader_parameter("glow", true)
 	quad.material = mat
 	p.draw_pass_1 = quad
+	falling.append(p)
 
 
 ## Will-o'-wisps or fireflies wandering low over the ground after dark, pulsing in and out of sight.

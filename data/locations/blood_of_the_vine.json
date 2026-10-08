@@ -97,6 +97,16 @@
       "codex": "aurel_last_note",
       "flag": "scholar_notes_found",
       "text": "Third night in the village. The barkeep has said eleven words to me, four of them 'wine'. I have the castle's outline drawn from three sides now, and a list of the windows that are lit. One is lit every night: high in the east tower, a library or I am no judge of shelving. Tomorrow I go up the road. If anyone finds this, send it to the college at Mirabar, where they still have my good pen. Tell them I was right. Tell them he knows I am reading. A. M."
+    },
+    {
+      "id": "satchel_lining",
+      "cell": [1, 2],
+      "kind": "search",
+      "search_dc": 14,
+      "skill": "investigation",
+      "label": "a slit in the satchel's lining",
+      "model": "scattered_notes",
+      "item": "eyes_of_minute_seeing"
     }
   ],
   "containers": [

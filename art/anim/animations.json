@@ -946,5 +946,9 @@
   "strahd_mist": {"who": "Strahd in mist form, a drifting column of grey-violet fog",
     "attack": "chilling engulf",
     "windup": "the mist rising and drawing back, the faint face snarling, tendrils of fog curling up",
-    "strike": "the mist surging forward and wrapping tendrils around the enemy"}
+    "strike": "the mist surging forward and wrapping tendrils around the enemy"},
+  "vadoma": {"who": "Vadoma, a Vistani trader woman",
+    "attack": "knife slash",
+    "windup": "a short curved knife drawn back beside her hip in one hand, weight on her back foot, coat swinging",
+    "strike": "the knife slashed forward across her body at the enemy, leaning in"}
 }

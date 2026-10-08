@@ -1,0 +1,14 @@
+{
+  "id": "wine_red_dragon_crush",
+  "name": "Red Dragon Crush",
+  "source": {
+    "book": "CoS",
+    "note": "The Wizard of Wines' middle wine; numbers are ours."
+  },
+  "category": "consumable",
+  "weight_lb": 1.5,
+  "cost_gp": 1,
+  "stackable": true,
+  "summary": "A bottle of dark, peppery red from the Wizard of Wines, kept for feast days.",
+  "text": "Strong enough that the Martikovs water it for guests they don't know."
+}

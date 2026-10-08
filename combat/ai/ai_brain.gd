@@ -354,21 +354,27 @@ func _effect_of(c: Combatant, source_id: String) -> Effect:
 
 
 ## Crown of Madness: before moving, the creature uses its action to make a melee attack against a creature the
-## caster picks (here: the nearest creature other than itself and the caster that it can reach).
+## caster picks: a player's caster names it when casting and keeping control (SpellTargeting.crown_attack: no one, or
+## no one in reach, and it acts normally); an AI caster picks the first creature it can reach, its foes first.
 func _crown_turn(c: Combatant) -> CombatResult:
 	var e := enc()
 	var caster := e.get_c(str(c.get_meta("crowned_by", "")))
 	var best: Combatant = null
 	var opt := {}
-	for o in e.living():
-		if o == c or o == caster or o.is_down():
-			continue
-		var mo := e.best_melee_option(c, o)
-		if mo.is_empty() or e.distance(c, o) > (mo["profile"] as WeaponProfile).reach:
-			continue
-		if best == null or (caster != null and caster.hostile_to(o) and not caster.hostile_to(best)):
-			best = o
-			opt = mo
+	if caster != null and caster.is_player_controlled():
+		var pick := e.spells.targeting.crown_attack(c)
+		best = pick.get("target") as Combatant
+		opt = pick.get("option", {}) as Dictionary
+	else:
+		for o in e.living():
+			if o == c or o == caster or o.is_down():
+				continue
+			var mo := e.best_melee_option(c, o)
+			if mo.is_empty() or e.distance(c, o) > (mo["profile"] as WeaponProfile).reach:
+				continue
+			if best == null or (caster != null and caster.hostile_to(o) and not caster.hostile_to(best)):
+				best = o
+				opt = mo
 	if best == null:
 		return null
 	e.log.add("info", "%s lashes out at %s (Crown of Madness)" % [c.name(), best.name()], c.id)
@@ -504,7 +510,7 @@ func _attack_cells(c: Combatant, t: Combatant, o: Dictionary, reach: Dictionary)
 	var out: Array[Vector2i] = []
 	var melee := bool(o["melee"])
 	var max_d := p.reach if melee else (p.long_range if p.long_range > 0 else p.normal_range)
-	if e.grid.distance_ft(c.cell, c.size_cells, t.cell, t.size_cells) <= max_d:
+	if e.grid.distance_ft(c.cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) <= max_d:
 		out.append(c.cell)
 	if not c.can_act() or c.movement_left <= 0:
 		return out
@@ -512,7 +518,7 @@ func _attack_cells(c: Combatant, t: Combatant, o: Dictionary, reach: Dictionary)
 	for cell: Vector2i in reach:
 		if cell == c.cell or bool((reach[cell] as Dictionary)["occupied"]):
 			continue
-		if e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells) > max_d:
+		if e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) > max_d:
 			continue
 		if not melee:
 			ranged_tries += 1
@@ -528,7 +534,7 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 	var e := enc()
 	var p := o["profile"] as WeaponProfile
 	if bool(prof["nearest"]):
-		return 100.0 - cost - e.grid.distance_ft(c.cell, c.size_cells, t.cell, t.size_cells) * 0.1
+		return 100.0 - cost - e.grid.distance_ft(c.cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) * 0.1
 	var keep := c.cell
 	c.cell = cell
 	var hc := e.hit_chance(c, t, o)
@@ -643,7 +649,7 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	var walk := e.grid.reachable(target.cell, 1, 4000, func(_x: Vector2i) -> bool: return false,
 		func(_x: Vector2i) -> bool: return false, func(_x: Vector2i) -> bool: return false)
 	var dist := func(cell: Vector2i) -> int:
-		var straight := e.grid.distance_ft(cell, c.size_cells, target.cell, target.size_cells)
+		var straight := e.grid.distance_ft(cell, c.size_cells, target.cell, target.size_cells, c.altitude, target.altitude)
 		if straight <= 5 or not walk.has(cell):
 			return straight if walk.has(cell) or straight <= 5 else straight + 1000
 		return int((walk[cell] as Dictionary)["cost"])

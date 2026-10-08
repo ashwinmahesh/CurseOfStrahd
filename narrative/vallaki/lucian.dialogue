@@ -89,6 +89,7 @@ Father Lucian: He was a holy man, and he died here, and his bones kept the dead 
 * [if flag.vallaki_pledge == "town" and not flag.festival_begun] What should we do at the festival? -> festival_plan
 * [if gold >= 25] Might we have holy water? We'll make a donation. -> holy_water
 * We need the church's help. Healing, or worse. -> church_help
+* Does the church sell potions or scrolls? -> church_wares
 * Goodbye, Father. -> bye
 
 ~ danger
@@ -234,6 +235,11 @@ Father Lucian: The town should hear this, from my mouth, in the square. Not as a
 gold -25
 give holy_water 2
 Father Lucian: Blessed this morning. Throw it, don't drink it, and don't miss.
+-> menu
+
+~ church_wares
+Father Lucian: The sisters brew healing draughts, and I copy out prayers onto scrolls in the evenings, when the lamps are lit and the town is quiet. What we sell keeps the roof on. What the roof keeps out, you know as well as I do.
+shop
 -> menu
 
 ~ church_help
