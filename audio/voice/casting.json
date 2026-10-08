@@ -546,6 +546,7 @@
       "description": "A broad man in his forties with a blunt, hearty, loud voice and a strong, clearly audible Eastern European (Romanian) accent. An honest trader, frank about his prices, full of road news.",
       "settings": {},
       "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
       "released": true
     },
     "vestige_shami_amourae": {
