@@ -74,6 +74,16 @@ line that hasn't changed, and the game must work with any mix of voiced and unvo
 - **Children and teens:** ElevenLabs will not design voices for anyone under 18. The children use ready-made library
   voices (`"library": true`); Luminita (17) and Victor (16) have young adult voices.
 
+## Every line on v3, directed (owner, 2026-10-08)
+
+- "Use v3 for voices from now on (v4 is just awful). Make sure you capture the accent and the emotional tone of each
+  line." casting.json's default model is `eleven_v3`. Older `eleven_v4` clips are re-recorded as the owner approves
+  the credits (the 38 supporting characters first).
+- Each line's delivery is written down in `audio/voice/directions.json` as v3 audio tags ("[cold, menacing, quiet]"):
+  the mood of the moment, how hard it's pushed and the speaker's vibe, read from the scene and the voice bible. A
+  speaker's accent tag (`accent_tag`, "[strong Romanian accent]") goes before it. Neither is spoken or part of the
+  clip's key; the manifest records each clip's direction, so `--recast` redoes a line whose direction changed.
+
 ## Consequences
 
 - Writers keep writing text; a line is voiced by running `make voice` after it lands, and costs only its own

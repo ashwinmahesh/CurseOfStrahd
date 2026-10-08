@@ -14,6 +14,12 @@ Each clip's model is recorded in the manifest. A speaker who moved to a new mode
 model they came from as `earlier_model`, --models counts every speaker's clips by model, and
 `make voice SPEAKER=<id> RECAST=1` re-voices a speaker's older clips on their current model.
 
+Every line is spoken on eleven_v3 (owner, 2026-10-08: "use v3 for voices from now on ... capture the accent and the
+emotional tone of each line"). audio/voice/directions.json gives a line its delivery as v3 audio tags, keyed by
+speaker and clip key ("[gruff, threatening] [low]"): its mood, strength and the moment it's said in. They're sent
+after the speaker's accent tag and aren't spoken or part of the key; the manifest keeps each clip's direction, so
+--recast also redoes clips whose direction changed.
+
 A speaker cast with "sfx": true (a creature's noises in fights, noise_<kind>) has no voice: each of its lines is a
 prompt for ElevenLabs' sound effects, made at the line's length in seconds and billed by the second (casting.json
 "sfx" holds the model and rates).
@@ -31,6 +37,12 @@ import elevenlabs as el  # noqa: E402
 import voice_lines  # noqa: E402
 
 MANIFEST = el.VOICE_DIR / "manifest.json"
+DIRECTIONS = el.VOICE_DIR / "directions.json"
+
+
+def directions():
+    """{speaker: {key: "[tags]"}}: each line's delivery (see the module docstring)."""
+    return json.loads(DIRECTIONS.read_text()) if DIRECTIONS.exists() else {}
 
 
 def settings_for(c, speaker):
@@ -59,9 +71,9 @@ def accent_tag(c, speaker):
     return accent_tag(c, v["shares"]) if v.get("shares") else v.get("accent_tag", "")
 
 
-def spoken(c, speaker, text):
-    tag = accent_tag(c, speaker)
-    return f"{tag} {text}" if tag else text
+def spoken(c, speaker, text, direction=""):
+    tags = " ".join(t for t in (accent_tag(c, speaker), direction) if t)
+    return f"{tags} {text}" if tags else text
 
 
 def model_for(c, speaker):
@@ -142,6 +154,7 @@ def main():
     c = el.casting()
     manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
     every = voice_lines.lines()
+    lead = directions()
 
     if a.models:
         report_models(c, manifest, a.speaker)
@@ -167,7 +180,9 @@ def main():
             uncast.add(speaker)
             continue
         out = el.VOICE_DIR / speaker / f"{key}.mp3"
-        stale = a.recast and manifest.get(f"{speaker}/{key}", {}).get("recipe") != recipe(c, speaker)
+        made = manifest.get(f"{speaker}/{key}", {})
+        stale = a.recast and (made.get("recipe") != recipe(c, speaker)
+                              or made.get("direction", "") != lead.get(speaker, {}).get(key, ""))
         if not out.exists() or stale:
             todo.append(line)
     if a.limit:
@@ -189,11 +204,13 @@ def main():
     def one(line):
         speaker, key, text = line["speaker"], line["key"], line["text"]
         vid = voice_id(c, speaker)
+        direction = lead.get(speaker, {}).get(key, "")
         if is_sfx(c, speaker):
             audio, headers = el.sound(text, float(line.get("seconds", 1.0)), c["output_format"], c["sfx"]["prompt_influence"],
                                       model_for(c, speaker))
         else:
-            audio, headers = el.tts(vid, spoken(c, speaker, text), model_for(c, speaker), c["output_format"], settings_for(c, speaker))
+            audio, headers = el.tts(vid, spoken(c, speaker, text, direction), model_for(c, speaker), c["output_format"],
+                                    settings_for(c, speaker))
         out = el.VOICE_DIR / speaker / f"{key}.mp3"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_bytes(audio)
@@ -201,9 +218,11 @@ def main():
         with lock:
             manifest[f"{speaker}/{key}"] = {"text": text, "recipe": recipe(c, speaker), "chars": len(text),
                                              "model": model_for(c, speaker),
+                                             **({"direction": direction} if direction else {}),
                                              **({"seconds": float(line["seconds"])} if is_sfx(c, speaker) else {})}
             el.log({"speaker": speaker, "key": key, "chars": len(text), "voice_id": vid, "model": model_for(c, speaker),
                     "format": c["output_format"], **({"accent_tag": accent_tag(c, speaker)} if accent_tag(c, speaker) else {}),
+                    **({"direction": direction} if direction else {}),
                     **({"seconds": float(line["seconds"])} if is_sfx(c, speaker) else {}),
                     "usd_est": round(cost(c, line), 5),
                     **({"billed_chars": billed} if billed else {}), "request_id": headers.get("request-id", "")})

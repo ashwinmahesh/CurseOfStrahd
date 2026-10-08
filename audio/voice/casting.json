@@ -1,8 +1,8 @@
 {
   "provider": "elevenlabs",
-  "model": "eleven_v4",
+  "model": "eleven_v3",
   "output_format": "mp3_44100_64",
-  "price_per_1k_usd": 0.022,
+  "price_per_1k_usd": 0.08,
   "price_note": "eleven_v4 API list price is $0.08 per 1K characters; 72% off ($0.022) until 2026-10-12 (elevenlabs.io/pricing/api, read 2026-10-06). Set this back to 0.08 after the sale.",
   "default_settings": {
     "stability": 0.5,
@@ -185,11 +185,12 @@
       "model": "eleven_v3"
     },
     "stanimir": {
-      "voice_id": "Z9PoGEiEEL23Z08FAwzB",
-      "name": "Barovia stanimir",
-      "description": "A huge, grey-bearded man in his sixties with a big, warm, jovial bass voice and a strong, clearly audible Eastern European (Romanian) accent. Hearty and welcoming, laughing easily, a fiddler and storyteller; a shrewd merchant under the warmth.",
+      "voice_id": "ygr7cyu4bi4NLKu5k2az",
+      "name": "Barovia Stanimir (2026-10-08)",
+      "description": "An old Vistani man in his sixties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A deep, rich, warm bass voice, booming and jovial; a fiddler and storyteller who laughs from the belly, theatrical and sweeping, a shrewd merchant underneath.",
       "settings": {},
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]"
     },
     "adrian_martikov": {
       "voice_id": "DjU0AczwuXPRF9hmf8i3",
@@ -1285,6 +1286,13 @@
       "voice_id": "haD60kChENZhuoOFiC80",
       "name": "Barovia barovia_goodwife",
       "released": true
+    },
+    "vadoma": {
+      "voice_id": "dZSe33sPffmACziRpFlg",
+      "name": "Barovia Vadoma (2026-10-08)",
+      "description": "A Vistani trader woman in her forties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A warm, low, slightly husky voice; dry, quick and amused, a merchant's patter with a knife inside it.",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]"
     }
   },
   "sfx": {
