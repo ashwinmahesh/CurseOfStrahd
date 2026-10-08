@@ -44,6 +44,7 @@ static func _check_traps(view: LocationView) -> bool:
 
 
 static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant) -> void:
+	Audio.sfx("trap")
 	if PitFall.is_pit(trap):
 		PitFall.spring(view, trap, victim)   # a real drop: catch the edge or fall in (and climb out later)
 		return

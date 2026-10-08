@@ -33,6 +33,8 @@ top, party on the left, hotbar and End Turn at the bottom, log on the right), dr
    Attack action".
 5. **End Turn**: a large round button (Space, or hold Y). If the character still has their Action, the first press
    shows "End turn with your Action unused?". Leftover movement doesn't ask (owner feedback 2026-10-06).
+   **Undo move** under it (Ctrl+Z) takes back the last move while nothing came of it (no dice, no reaction, nothing
+   new seen), one move at a time back to the last thing that wasn't a move (`Encounter.undo_move`).
 
 On the field: nothing is lit until the pointer asks (owner 2026-10-06: the always-on blue squares of where a creature
 could move were noise). Hovering the floor shows the walk as a dotted trail to a ring where the creature would stop,

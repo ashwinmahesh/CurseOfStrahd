@@ -789,8 +789,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 		match id:
 			"disarming_attack":
 				if alive and not _save(target, &"str", dc, "Disarming Attack"):
-					target.set_meta("disarmed", true)
-					e.log.add("condition", "%s drops what it's holding" % target.name(), target.id)
+					e.ground.disarm(target, c, "Disarming Attack")
 			"distracting_strike":
 				e.add_mark({"kind": "advantage_against", "target": target.id, "not_attacker": c.id, "source": "Distracting Strike",
 					"expires_owner": c.id, "expires_phase": "start", "consume": true})
