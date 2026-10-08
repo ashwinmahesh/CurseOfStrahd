@@ -1,7 +1,8 @@
 extends Node
 ## The controller on screens (U6, ui/common/pad_nav.gd) over a late party, driven by synthetic pad presses: the pause
 ## menu with the focus frame on its second button and the prompt bar, the Game settings with focus on a row, the
-## character sheet with a row's rules card opened by Y, and the inventory after a few D-pad steps. The game is loaded
+## character sheet with a row's rules card opened by Y, the inventory after a few D-pad steps and an item's menu (X),
+## the travel map with a place picked, and the on-screen keyboard on the cheat code's field. The game is loaded
 ## in the capture's own save folder (tools/capture/capture.gd), and its settings go to a file of its own, so a row the
 ## pad touches never changes the owner's.
 ## make capture SCENE=res://tools/capture/pad_capture.tscn NAME=pad FRAMES=30
@@ -22,12 +23,14 @@ func _ready() -> void:
 	add_child(root)
 
 
+## A press through the engine's Input, as a pad sends it.
 func _press(tool: Node, button: JoyButton) -> void:
 	for down: bool in [true, false]:
 		var ev := InputEventJoypadButton.new()
 		ev.button_index = button
 		ev.pressed = down
-		get_viewport().push_input(ev)
+		Input.parse_input_event(ev)
+		Input.flush_buffered_events()
 	await tool.call("wait_frames", 2)
 
 
@@ -64,4 +67,26 @@ func capture_shots(tool: Node, out: String) -> void:
 	for b: JoyButton in [JOY_BUTTON_DPAD_DOWN, JOY_BUTTON_DPAD_DOWN, JOY_BUTTON_DPAD_RIGHT, JOY_BUTTON_DPAD_RIGHT]:
 		await _press(tool, b)
 	await _shoot(tool, out + "_2_inventory.png", 20)
+	await _press(tool, JOY_BUTTON_X)
+	await _press(tool, JOY_BUTTON_DPAD_DOWN)
+	await _shoot(tool, out + "_4_item_menu.png", 10)
+	await _press(tool, JOY_BUTTON_B)
+	root.call("close_screen")
+	await tool.call("wait_frames", 10)
+	root.call("open_travel", false)
+	await tool.call("wait_frames", 10)
+	for b: JoyButton in [JOY_BUTTON_DPAD_DOWN, JOY_BUTTON_DPAD_LEFT, JOY_BUTTON_DPAD_UP, JOY_BUTTON_A]:
+		await _press(tool, b)
+	await _shoot(tool, out + "_5_map.png", 20)
+	root.call("close_screen")
+	await tool.call("wait_frames", 10)
+	root.call("open_screen", "menu", 0)
+	await tool.call("wait_frames", 6)
+	(root.get("screen") as PauseMenu).call("_open_cheats")
+	await tool.call("wait_frames", 6)
+	await _press(tool, JOY_BUTTON_A)
+	for b: JoyButton in [JOY_BUTTON_A, JOY_BUTTON_DPAD_RIGHT, JOY_BUTTON_DPAD_DOWN, JOY_BUTTON_A]:
+		await _press(tool, b)
+	await _shoot(tool, out + "_6_keyboard.png", 10)
+	await _press(tool, JOY_BUTTON_B)
 	root.call("close_screen")

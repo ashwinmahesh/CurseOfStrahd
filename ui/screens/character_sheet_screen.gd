@@ -118,8 +118,13 @@ func _party_strip(ch: Character) -> HBoxContainer:
 		up.add_theme_color_override("font_color", Look.color("gilt_light"))
 		strip.add_child(up)
 	strip.add_child(UiParts.gap())
-	var hint := UiKit.label("← →  character   ·   Q  E  tab   ·   hover a number to see where it comes from", 13, "bone") \
-		if not in_fight else UiKit.label("View only in a fight   ·   ← →  character   ·   Q  E  tab   ·   Esc or C: back", 13, "bone")
+	var hint := UiKit.label("", 13, "bone")
+	if in_fight:
+		PadGlyphs.hint(hint, "View only in a fight   ·   ← →  character   ·   Q  E  tab   ·   Esc or C: back",
+			"View only in a fight   ·   {lt} {rt}  character   ·   {lb} {rb}  tab   ·   {b}: back")
+	else:
+		PadGlyphs.hint(hint, "← →  character   ·   Q  E  tab   ·   hover a number to see where it comes from",
+			"{lt} {rt}  character   ·   {lb} {rb}  tab   ·   {y} on a number: where it comes from")
 	hint.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	strip.add_child(hint)
 	if in_fight:

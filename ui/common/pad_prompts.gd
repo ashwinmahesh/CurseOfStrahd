@@ -2,8 +2,10 @@ class_name PadPrompts
 extends CanvasLayer
 ## The pad's prompt bar (U6, docs/ui/controller.md): along the bottom right while the pad is in use on a screen, the
 ## buttons that do something there with their pictures: A to choose, B to go back, Y to explain when what has focus
-## has a rules card, X for its menu when it has one ("pad_menu" meta, the menu's name), LB/RB when the screen has tabs
-## and LT/RT when it has characters. A screen can add its own with pad_prompts() -> Array of [place, text].
+## has a rules card, X for its menu when it has one (its pad_menu_name() or "pad_menu" meta: the menu's name), LB/RB
+## when the screen has tabs
+## and LT/RT when it has characters. A screen can add its own with pad_prompts() -> Array of [place, text], which
+## replace the general ones for the same buttons.
 ## PadNav makes it; it redraws only when the screen, focus or pad family changes.
 
 const ICON := 26
@@ -40,19 +42,26 @@ func _ready() -> void:
 
 ## What the bar shows for `scope` with `focus`: [[place or places joined by "+", text], ...].
 static func prompts_for(scope: Node, focus: Control) -> Array:
-	var out: Array = [["a", "Choose"], ["b", "Back"]]
+	var extra: Array = scope.call(&"pad_prompts") as Array if scope != null and scope.has_method(&"pad_prompts") else []
+	var out: Array = [["a", "Type" if focus is LineEdit or focus is TextEdit else "Choose"], ["b", "Back"]]
 	if focus != null:
-		if focus.has_meta(&"pad_menu"):
-			out.append(["x", str(focus.get_meta(&"pad_menu"))])
+		var menu := str(focus.call(&"pad_menu_name")) if focus.has_method(&"pad_menu_name") \
+			else str(focus.get_meta(&"pad_menu", ""))
+		if menu != "":
+			out.append(["x", menu])
 		if not TipCards.source_at(focus).is_empty():
 			out.append(["y", "Explain"])
 	if scope != null:
 		if scope.has_method(&"pad_tab") or _has_tabs(scope):
 			out.append(["lb+rb", "Tabs"])
-		if scope.has_method(&"pad_character"):
+		if scope.has_method(&"pad_character") or _has_marked(scope, &"pad_characters"):
 			out.append(["lt+rt", "Character"])
-		if scope.has_method(&"pad_prompts"):
-			out.append_array(scope.call(&"pad_prompts") as Array)
+	# The screen's own come last and replace any general one for the same buttons ("Steps" for "Tabs").
+	var own := {}
+	for p: Array in extra:
+		own[str(p[0])] = true
+	out = out.filter(func(p: Array) -> bool: return not own.has(str(p[0])))
+	out.append_array(extra)
 	return out
 
 
@@ -61,7 +70,14 @@ static func _has_tabs(root: Node) -> bool:
 		var ci := n as CanvasItem
 		if ci == null or not ci.is_visible_in_tree():
 			continue
-		if n is TabContainer or n is TabBar:
+		if n is TabContainer or n is TabBar or n.has_meta(&"pad_tabs"):
+			return true
+	return false
+
+
+static func _has_marked(root: Node, key: StringName) -> bool:
+	for n: Node in root.find_children("*", "Control", true, false):
+		if n.has_meta(key) and (n as Control).is_visible_in_tree():
 			return true
 	return false
 

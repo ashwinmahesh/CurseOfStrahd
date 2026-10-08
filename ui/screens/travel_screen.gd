@@ -78,6 +78,10 @@ func open_map(state: StoryState, from_place: String, can_travel: bool) -> void:
 	_map.mouse_exited.connect(func() -> void:
 		_hover = ""
 		_redraw())
+	# The pad (PadNav): the map is a choice of its own that it opens on, and A plans the way to the place lit.
+	_map.set_meta(&"pad_target", true)
+	_map.set_meta(&"pad_first", true)
+	_map.set_meta(&"pad_accept", _pad_pick)
 	holder.add_child(_map)
 	_fog = ColorRect.new()
 	_fog.name = "Fog"
@@ -452,10 +456,72 @@ func _process(delta: float) -> void:
 	_redraw()
 
 
+# --- The pad (PadNav, U6) --------------------------------------------------------------------------
+
+## On the map, the D-pad goes from place to place: the nearest known one that way. With none that way it leaves the
+## map for the side panel.
+func pad_step(f: Control, dir: Vector2i) -> bool:
+	if f != _map:
+		return false
+	var now := _hover if _hover != "" else (_target if _target != "" else _at)
+	var from := _pos(Travel.place(now)) if now != "" else MAP_SIZE / 2.0
+	var best := ""
+	var best_s := INF
+	for p in Travel.known(st):
+		var id := str(p["id"])
+		if id == now:
+			continue
+		var v := _pos(p) - from
+		var along := v.dot(Vector2(dir))
+		var side := absf(v.dot(Vector2(dir.y, dir.x)))
+		if along <= 4.0 or side > along * 2.0:
+			continue   # only within about 60 degrees of the way pressed
+		if along + side * 1.5 < best_s:
+			best_s = along + side * 1.5
+			best = id
+	if best == "":
+		return false
+	_hover = best
+	var at := _pos(Travel.place(best))
+	if not Rect2(Vector2(60, 60), MAP_SIZE - Vector2(120, 120)).has_point(at):
+		pan += MAP_SIZE / 2.0 - at
+		_clamp()
+	Audio.sfx("hover", 0.08)
+	_redraw()
+	return true
+
+
+## A on the map: the way to the place lit, and focus on Set out when the party can.
+func _pad_pick() -> void:
+	if _hover == "":
+		return
+	select(_hover)
+	var go := _info.find_child("SetOut", true, false) as Button
+	if go != null and not go.disabled and PadNav.current != null:
+		PadNav.current.focus_on(go)
+
+
+## LT/RT: zoom out or in on the place lit.
+func pad_trigger(step: int) -> void:
+	zoom_at(_pos(Travel.place(_hover)) if _hover != "" else MAP_SIZE / 2.0, 1.15 if step > 0 else 1.0 / 1.15)
+
+
+## The right stick pans the map.
+func pad_scroll(by: Vector2) -> void:
+	pan -= by
+	_clamp()
+	_redraw()
+
+
+func pad_prompts() -> Array:
+	return [["dpad", "Places"], ["lt+rt", "Zoom"], ["stick_r", "Pan"]]
+
+
 # --- The side panel --------------------------------------------------------------------------------
 
 func _show_info() -> void:
 	for c in _info.get_children():
+		_info.remove_child(c)   # so the new Set out is the only one by that name
 		c.queue_free()
 	var cur := Travel.place(_at)
 	_info.add_child(UiKit.label("You are at" if here != "" else ("You are in" if _at != "" else "You are"), 14, "parchment"))
@@ -509,7 +575,10 @@ func _show_info() -> void:
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_info.add_child(spacer)
 	_info.add_child(_legend())
-	_info.add_child(UiKit.label("Click a place to plan a journey. Wheel: zoom · Drag: pan", 13, "parchment", 290))
+	var how := UiKit.label("", 13, "parchment", 290)
+	PadGlyphs.hint(how, "Click a place to plan a journey. Wheel: zoom · Drag: pan",
+		"D-pad: a place · {a} plans a journey · {lt} {rt}: zoom · right stick: pan")
+	_info.add_child(how)
 	_info.add_child(UiKit.button("Close", func() -> void:
 		closed.emit()
 		queue_free(), 15))

@@ -31,8 +31,40 @@ only), controls with a rules card, and clickable widgets (a script `_gui_input`,
 `pad_skip` leaves a control and its children out. The pointer follows focus with a mouse move the tracker ignores,
 so hover cards and tooltips work, and hides while the pad is in use; moving the mouse hands control back.
 
-A screen can add `pad_tab(step)` (LB/RB) and `pad_character(step)` (LT/RT) methods; without `pad_tab`, a
-TabContainer, TabBar or group of toggle buttons is stepped instead.
+LB/RB step the screen's tabs: its `pad_tab(step)`, else the strip of tabs nearest focus (`UiParts.tab_strip` marks
+its strips), else a TabContainer, TabBar or group of toggle buttons. LT/RT step its character: its
+`pad_character(step)`, else the row of party chips nearest focus (`UiParts.party_chips` marks them). So the sheet,
+inventory, journal, saves, shop, services, creator and Skirmish all step without code of their own.
+
+A screen or control can take over any part (the hooks are listed at the top of `pad_nav.gd`):
+
+| Hook | Used by |
+|---|---|
+| `pad_accept()` on a control, or a `pad_accept` Callable meta | Item tiles and rows (A wears or uses, as a double-click), the travel map (plans the way to the place lit) |
+| `pad_menu_name()` on a control, or a `pad_menu` meta | Item tiles: the prompt bar's X ("Item menu") |
+| `pad_adjust(dir)` on a control, or a `pad_adjust` Callable meta | Settings rows and the volume sliders (left and right turn them) |
+| `pad_move(dir)` and `pad_context()` on a control | The Skirmish map sketch: a square cursor, A and X click the square |
+| `pad_step(focus, dir)`, `pad_trigger(step)`, `pad_scroll(by)` on the screen | The travel map: the D-pad goes place to place, LT/RT zoom, the right stick pans |
+| `pad_confirm()` on the screen (Start) | Character creation: the step's Next, then Confirm and the finish |
+| `pad_button(button)` on the screen | The on-screen keyboard's X, Y, LB and Start |
+| `pad_prompts()` on the screen | Extra prompt-bar entries, replacing the general ones for the same buttons |
+| `pad_first` meta | Where a screen opens: the conversation's and ending's Continue, the travel map |
+
+Item tiles are picked when focus lands on them (their card shows), A is their double-click and X their menu, so the
+pack never needs a drag: the menu gives, stashes and wears.
+
+## Typing (`ui/common/pad_keyboard.gd`)
+
+A on a text field (a name, a save's note, a cheat code, the pack's search, the sheet's notes) opens an on-screen
+keyboard over the screen: the D-pad moves over the keys and A types, X deletes, Y puts a space, LB switches capitals,
+Start or Done puts the text in the field as if Enter were pressed there, and B leaves it as it was.
+
+## Every screen
+
+`tests/integration/test_pad_screens.gd` opens every screen (the title screen, the party screens and every sheet tab,
+the inventory in both views, settings, saves, cheat codes, the travel map, a shop, a temple, a loot window, a
+conversation and a check, the creator's every step, the ending and Skirmish's tabs), checks that one press puts focus
+on it, that the D-pad reaches every choice from there (by PadNav's own rule), and that B goes back.
 
 ## Button pictures, the prompt bar and hints (`ui/common/pad_glyphs.gd`, `pad_prompts.gd`)
 

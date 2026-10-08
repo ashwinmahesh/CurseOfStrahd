@@ -134,6 +134,7 @@ const PAD_BUTTONS := {
 	&"pad_explain": [JOY_BUTTON_Y],
 	&"pad_tab_prev": [JOY_BUTTON_LEFT_SHOULDER],
 	&"pad_tab_next": [JOY_BUTTON_RIGHT_SHOULDER],
+	&"pad_confirm": [JOY_BUTTON_START],
 }
 
 ## Controller triggers and sticks: action -> [axis, direction].

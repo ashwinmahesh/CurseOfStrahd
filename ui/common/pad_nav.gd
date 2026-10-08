@@ -4,7 +4,8 @@ extends Node
 ## is it. It notes whether the last input came from a pad or from the mouse and keyboard (`pad`, and the pad's
 ## `family` for its button pictures), and while the pad is in use it drives the screen in front:
 ## - The scope is the topmost visible screen layer (CanvasLayers LAYER_MIN to LAYER_MAX, or any layer whose
-##   "pad_scope" meta is true; false leaves one out) with something to choose. Focus lands on its first choice when it
+##   "pad_scope" meta is true; false leaves one out) with something to choose, else a scene that is itself a menu (a
+##   Control at the top of the tree: the title screen, Skirmish). Focus lands on its first choice when it
 ##   comes up (a control with the "pad_first" meta, else the first in reading order) and goes back to where it was
 ##   when a page over it closes, or to the nearest choice when a screen rebuilds under it.
 ## - The D-pad and left stick move focus to the nearest choice that way inside the scope only, repeating while held,
@@ -15,6 +16,9 @@ extends Node
 ##   its rules card, then pins it, then closes it; LB/RB step the screen's tabs (its pad_tab(step), else a TabContainer,
 ##   TabBar or group of toggle buttons); LT/RT its character (pad_character(step)); the right stick scrolls. B is
 ##   each screen's own Escape (combat_cancel and ui_cancel are on it), so every screen keeps its way back.
+## - A screen can take any of it over: pad_step(focus, dir) -> bool, pad_trigger(step), pad_scroll(by),
+##   pad_button(button) -> bool, pad_confirm() (Start); a control can have pad_move(dir) -> bool, pad_accept() (or a
+##   "pad_accept" Callable) and pad_context().
 ## - The pointer follows focus (a mouse move to its middle that this tracker ignores), so hover cards, tooltips and
 ##   hover looks show as they do for the mouse; the system pointer hides while the pad is in use. FocusRing draws
 ##   the candle frame.
@@ -53,9 +57,11 @@ var family := "xbox"
 var ring: FocusRing
 var prompts: PadPrompts
 ## The scope this frame (null when nothing is in front).
-var scope: CanvasLayer = null
+var scope: Node = null
 
 var _layers: Array[CanvasLayer] = []
+## Pop-up menus as they're made (item menus, the world's right-click menu), for driving the one that's open.
+var _popups: Array[PopupMenu] = []
 ## Scope instance id -> WeakRef of the control that had focus there.
 var _remember: Dictionary = {}
 ## Where focus last was (viewport coordinates), for landing near it when a screen rebuilds.
@@ -69,6 +75,8 @@ var _stick := Vector2.ZERO
 var _stick_dir := Vector2i.ZERO
 ## Triggers and other axes bound to actions: action -> whether it's down, so a lean presses once.
 var _axis_down: Dictionary = {}
+## The trigger action the event being handled leaned past halfway (_leans), or &"".
+var _lean := &""
 var _mouse_travel := 0.0
 
 
@@ -99,6 +107,8 @@ func _ready() -> void:
 func _on_node_added(n: Node) -> void:
 	if n is CanvasLayer and n != ring:
 		_layers.append(n as CanvasLayer)
+	elif n is PopupMenu:
+		_popups.append(n as PopupMenu)
 
 
 ## Back to the mouse and keyboard with nothing held (tests call it between cases).
@@ -171,6 +181,12 @@ func _input(event: InputEvent) -> void:
 		return
 	if not InputMap.has_action(&"pad_context"):
 		InputActions.ensure()
+	_lean = _leans(event)   # kept whatever happens next, so a trigger let go anywhere counts as let go
+	var menu := popup_open()
+	if menu != null:
+		_drive_popup(menu, event)
+		get_viewport().set_input_as_handled()   # a menu that's open takes the pad, over a screen or the world
+		return
 	scope = scope_now()
 	if scope == null:
 		_held = Vector2i.ZERO
@@ -181,6 +197,9 @@ func _input(event: InputEvent) -> void:
 
 ## What a pad event does on the screen in front; true when it's used up here.
 func _drive(event: InputEvent) -> bool:
+	var jb := event as InputEventJoypadButton
+	if jb != null and jb.pressed and scope.has_method(&"pad_button") and bool(scope.call(&"pad_button", jb.button_index)):
+		return true   # the screen's own use of a button (the on-screen keyboard's X, Y, LB and Start)
 	var dir := _direction(event)
 	var f := focus_in(scope)
 	if f == null:
@@ -197,13 +216,25 @@ func _drive(event: InputEvent) -> bool:
 	if event is InputEventJoypadMotion and _is_direction_axis(event as InputEventJoypadMotion):
 		return true   # a stick resting or easing back: used up, so nothing else reads it as a press
 	if event.is_action_pressed(&"ui_accept"):
-		if f is BaseButton or f is LineEdit or f is TextEdit:
-			return false   # the engine presses buttons and lets fields take it
+		if f.has_method(&"pad_accept"):
+			f.call(&"pad_accept")   # the widget's own choice (an item tile wears its item)
+			return true
+		if f.has_meta(&"pad_accept"):
+			(f.get_meta(&"pad_accept") as Callable).call()   # the travel map plans the way to the place lit
+			return true
+		if (f is LineEdit and (f as LineEdit).editable) or (f is TextEdit and (f as TextEdit).editable):
+			PadKeyboard.open_for(f)   # typing on a pad
+			return true
+		if f is BaseButton:
+			return false   # the engine presses buttons
 		if not f.has_method(&"pad_adjust"):
 			click(f, MOUSE_BUTTON_LEFT)   # a drawn slider isn't clicked in its middle
 		return true
 	if _pressed(event, &"pad_context"):
-		click(f, MOUSE_BUTTON_RIGHT)
+		if f.has_method(&"pad_context"):
+			f.call(&"pad_context")   # the widget's own right-click (a map's square)
+		else:
+			click(f, MOUSE_BUTTON_RIGHT)
 		return true
 	if _pressed(event, &"pad_explain"):
 		explain(f)
@@ -211,9 +242,14 @@ func _drive(event: InputEvent) -> bool:
 	if _pressed(event, &"pad_tab_prev") or _pressed(event, &"pad_tab_next"):
 		return tab(scope, -1 if event.is_action(&"pad_tab_prev") else 1)
 	if _pressed(event, &"pad_char_prev") or _pressed(event, &"pad_char_next"):
-		if scope.has_method(&"pad_character"):
-			scope.call(&"pad_character", -1 if event.is_action(&"pad_char_prev") else 1)
+		var step_ := -1 if event.is_action(&"pad_char_prev") else 1
+		if scope.has_method(&"pad_trigger"):
+			scope.call(&"pad_trigger", step_)   # the screen's own use of the triggers (the map zooms)
 			return true
+		return character(scope, step_)
+	if _pressed(event, &"pad_confirm") and scope.has_method(&"pad_confirm"):
+		scope.call(&"pad_confirm")   # Start: the step's Next (character creation)
+		return true
 	return false
 
 
@@ -250,21 +286,39 @@ static func _is_direction_axis(jm: InputEventJoypadMotion) -> bool:
 	return jm.axis == JOY_AXIS_LEFT_X or jm.axis == JOY_AXIS_LEFT_Y
 
 
-## A button press of `action`, or a trigger's lean past halfway (once, until it comes back).
+## A button press of `action`, or a trigger's lean past halfway (once, until it comes back; _leans).
 func _pressed(event: InputEvent, action: StringName) -> bool:
-	if not event.is_action(action):
-		return false
 	if event is InputEventJoypadMotion:
-		var down := event.get_action_strength(action) >= 0.5
-		var was := bool(_axis_down.get(action, false))
-		_axis_down[action] = down
-		return down and not was
+		return _lean == action
 	return event.is_action_pressed(action)
+
+
+## The action a trigger's motion `event` leans past halfway, if it wasn't already, else &"". Keeps each trigger
+## action's state, so one lean is one press.
+func _leans(event: InputEvent) -> StringName:
+	if not event is InputEventJoypadMotion:
+		return &""
+	var out := &""
+	for action: StringName in _axis_down.keys() + [&"pad_char_prev", &"pad_char_next"]:
+		if not InputMap.has_action(action) or not event.is_action(action):
+			continue
+		var down := event.get_action_strength(action) >= 0.5
+		if down and not bool(_axis_down.get(action, false)):
+			out = action
+		_axis_down[action] = down
+	return out
 
 
 func _process(delta: float) -> void:
 	if not pad:
 		ring.hide_ring()
+		return
+	var menu := popup_open()
+	if menu != null:
+		ring.hide_ring()   # the menu lights its own line
+		if menu.get_focused_item() < 0:
+			_popup_step(menu, 1)
+		_repeat(delta)
 		return
 	scope = scope_now()
 	var vp := get_viewport()
@@ -302,7 +356,53 @@ func _repeat(delta: float) -> void:
 	_held_t -= delta
 	if _held_t <= 0.0:
 		_held_t = REPEAT_EVERY
-		step(_held)
+		var menu := popup_open()
+		if menu != null:
+			_popup_step(menu, _held.y)
+		else:
+			step(_held)
+
+
+# --- Pop-up menus ---------------------------------------------------------------------------------
+
+## The pop-up menu that's open (the newest), or null.
+func popup_open() -> PopupMenu:
+	for i in range(_popups.size() - 1, -1, -1):
+		var m := _popups[i]
+		if not is_instance_valid(m) or not m.is_inside_tree():
+			_popups.remove_at(i)
+			continue
+		if m.visible:
+			return m
+	return null
+
+
+## A pad event on an open menu: up and down light a line, A does it, B closes the menu; nothing else gets through.
+func _drive_popup(m: PopupMenu, event: InputEvent) -> void:
+	var dir := _direction(event)
+	if dir.y != 0:
+		_held = dir
+		_held_t = REPEAT_DELAY
+		_popup_step(m, dir.y)
+	elif event.is_action_pressed(&"ui_accept"):
+		var i := m.get_focused_item()
+		if i >= 0 and not m.is_item_disabled(i) and not m.is_item_separator(i):
+			m.id_pressed.emit(m.get_item_id(i))
+			m.index_pressed.emit(i)
+			m.hide()
+	elif event.is_action_pressed(&"ui_cancel"):
+		m.hide()
+
+
+## Lights the next line of `m` that can be chosen, `step` down (or up).
+static func _popup_step(m: PopupMenu, step_: int) -> void:
+	var n := m.item_count
+	var i := m.get_focused_item()
+	for k in n:
+		i = posmod(i + step_, n) if i >= 0 else (0 if step_ > 0 else n - 1)
+		if not m.is_item_disabled(i) and not m.is_item_separator(i):
+			m.set_focused_item(i)
+			return
 
 
 ## The right stick scrolls the list that holds focus (else the screen's biggest).
@@ -311,6 +411,9 @@ func _scroll(delta: float) -> void:
 		return
 	var v := Input.get_vector(&"pad_scroll_left", &"pad_scroll_right", &"pad_scroll_up", &"pad_scroll_down")
 	if v.length() < 0.2:
+		return
+	if scope.has_method(&"pad_scroll"):
+		scope.call(&"pad_scroll", v * SCROLL_SPEED * delta)   # the screen's own (the travel map pans)
 		return
 	var sc := scroller(scope)
 	if sc == null:
@@ -322,7 +425,7 @@ func _scroll(delta: float) -> void:
 # --- The screen in front --------------------------------------------------------------------------
 
 ## The topmost visible screen layer with something to choose, or null.
-func scope_now() -> CanvasLayer:
+func scope_now() -> Node:
 	var open: Array[CanvasLayer] = []
 	for i in range(_layers.size() - 1, -1, -1):
 		var l := _layers[i]
@@ -336,6 +439,9 @@ func scope_now() -> CanvasLayer:
 	for l in open:
 		if not choices(l).is_empty():
 			return l
+	var scene := get_tree().current_scene as Control
+	if scene != null and scene.is_visible_in_tree() and not choices(scene).is_empty():
+		return scene
 	return null
 
 
@@ -370,8 +476,8 @@ static func choices(root: Node) -> Array[Control]:
 
 static func _collect(n: Node, out: Array[Control], backdrop: float) -> void:
 	for ch: Node in n.get_children():
-		if ch is Window or ch.has_meta(&"pad_skip"):
-			continue
+		if ch is Window or ch.has_meta(&"pad_skip") or ch is CanvasLayer and is_scope(ch as CanvasLayer):
+			continue   # a layer of screens inside is a scope of its own
 		var ci := ch as CanvasItem
 		if ci != null and not ci.visible:
 			continue
@@ -385,15 +491,22 @@ static func is_choice(c: Control, backdrop: float = INF) -> bool:
 	if c is ScrollBar or c is ScrollContainer or c is TermText:
 		return false
 	var r := rect_of(c)
-	if r.size.x < 2.0 or r.size.y < 2.0 or r.size.x * r.size.y > backdrop:
+	if r.size.x < 2.0 or r.size.y < 2.0:
 		return false
 	if c.has_meta(&"pad_target"):
-		return bool(c.get_meta(&"pad_target"))
-	if c.focus_mode != Control.FOCUS_NONE or c is BaseButton:
+		return bool(c.get_meta(&"pad_target"))   # a big one too (the travel map)
+	if r.size.x * r.size.y > backdrop:
+		return false
+	if takes_focus(c) or c is BaseButton:
 		return true
 	if TipCards.tip_of(c).is_valid():
 		return true
 	return c.mouse_filter == Control.MOUSE_FILTER_STOP and c.get_script() != null and c.has_method(&"_gui_input")
+
+
+## Whether `c` takes focus by itself (a screen reader's focus only doesn't count).
+static func takes_focus(c: Control) -> bool:
+	return c.focus_mode == Control.FOCUS_ALL or c.focus_mode == Control.FOCUS_CLICK
 
 
 ## A control's rectangle on the screen (viewport coordinates, through its CanvasLayer).
@@ -406,7 +519,7 @@ static func rect_of(c: Control) -> Rect2:
 
 ## Puts focus on `root`'s remembered choice, else the one it names ("pad_first"), else the one nearest where focus
 ## just was (a screen that rebuilt), else its first in reading order.
-func land(root: CanvasLayer) -> void:
+func land(root: Node) -> void:
 	var list := choices(root)
 	if list.is_empty():
 		return
@@ -459,6 +572,10 @@ func step(dir: Vector2i) -> void:
 	if f == null:
 		land(scope)
 		return
+	if scope.has_method(&"pad_step") and bool(scope.call(&"pad_step", f, dir)):
+		return   # the screen moves within a widget of its own (the travel map's places)
+	if f.has_method(&"pad_move") and bool(f.call(&"pad_move", dir)):
+		return   # the widget moves within itself (a map's square cursor)
 	if dir.y == 0 and f.has_method(&"pad_adjust"):
 		f.call(&"pad_adjust", dir.x)
 		return
@@ -482,8 +599,8 @@ static func neighbour(from: Control, dir: Vector2i, list: Array[Control]) -> Con
 	var best: Control = null
 	var best_score := INF
 	for c in list:
-		if c == from or from.is_ancestor_of(c) or c.is_ancestor_of(from):
-			continue
+		if c == from:
+			continue   # a row and the button inside it reach each other by their middles, like any two choices
 		var b := rect_of(c)
 		var bc := b.get_center()
 		if (bc - ac).dot(Vector2(dir)) <= 1.0:
@@ -507,8 +624,8 @@ static func neighbour(from: Control, dir: Vector2i, list: Array[Control]) -> Con
 ## Gives `c` focus (one that takes none from the mouse gets it until it loses it), brings it into view and moves the
 ## pointer onto it.
 func focus_on(c: Control) -> void:
-	if c.focus_mode == Control.FOCUS_NONE:
-		c.set_meta(&"pad_was_none", true)
+	if not takes_focus(c):
+		c.set_meta(&"pad_was_none", c.focus_mode)
 		c.focus_mode = Control.FOCUS_ALL
 		c.focus_exited.connect(_restore_focus_mode.bind(c), CONNECT_ONE_SHOT)
 	c.grab_focus()
@@ -523,8 +640,9 @@ func focus_on(c: Control) -> void:
 
 static func _restore_focus_mode(c: Control) -> void:
 	if is_instance_valid(c) and c.has_meta(&"pad_was_none"):
+		var was := int(c.get_meta(&"pad_was_none")) as Control.FocusMode
 		c.remove_meta(&"pad_was_none")
-		c.focus_mode = Control.FOCUS_NONE
+		c.focus_mode = was
 
 
 static func _ancestors(c: Node) -> Array[Node]:
@@ -600,10 +718,16 @@ func explain(c: Control) -> void:
 	cards.explain(src, rect_of(c).get_center())
 
 
-## LB/RB: the screen's next or previous tab. True when it had tabs to step through.
+## LB/RB: the screen's next or previous tab: its pad_tab(step), else the strip of tabs nearest focus (UiParts'
+## tab_strip marks its strips with a "pad_tabs" Callable), else a TabContainer, TabBar or group of toggle buttons.
+## True when it had tabs to step through.
 func tab(root: Node, step_: int) -> bool:
 	if root.has_method(&"pad_tab"):
 		root.call(&"pad_tab", step_)
+		return true
+	var strip := _nearest_marked(root, &"pad_tabs")
+	if strip != null:
+		(strip.get_meta(&"pad_tabs") as Callable).call(step_)
 		return true
 	for n: Node in root.find_children("*", "", true, false):
 		var ci := n as CanvasItem
@@ -627,6 +751,35 @@ func tab(root: Node, step_: int) -> bool:
 				click(group[wrapi(group.find(n) + step_, 0, group.size())] as BaseButton, MOUSE_BUTTON_LEFT)
 				return true
 	return false
+
+
+## LT/RT: the screen's previous or next character: its pad_character(step), else the row of party chips nearest
+## focus (UiParts.party_chips marks them with a "pad_characters" Callable). True when it had characters.
+func character(root: Node, step_: int) -> bool:
+	if root.has_method(&"pad_character"):
+		root.call(&"pad_character", step_)
+		return true
+	var chips := _nearest_marked(root, &"pad_characters")
+	if chips == null:
+		return false
+	(chips.get_meta(&"pad_characters") as Callable).call(step_)
+	return true
+
+
+## The visible control on `root` with meta `key` nearest the focus, or null.
+func _nearest_marked(root: Node, key: StringName) -> Control:
+	var f := focus_in(root)
+	var at := rect_of(f).get_center() if f != null else Vector2.ZERO
+	var best: Control = null
+	var d := INF
+	for n: Node in root.find_children("*", "Control", true, false):
+		var c := n as Control
+		if c.has_meta(key) and c.is_visible_in_tree():
+			var dc := rect_of(c).get_center().distance_squared_to(at)
+			if dc < d:
+				d = dc
+				best = c
+	return best
 
 
 ## The list the right stick scrolls: the one holding focus, else the biggest on the screen.
