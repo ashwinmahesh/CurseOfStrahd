@@ -93,6 +93,15 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 	var art := str(look.get("art", ""))
 	if art == "":
 		return root   # an invisible spot: still clickable, nothing drawn
+	if art == "fog_bank":
+		# The Mists standing on the map: soft puffs, not a drawn cloud (MistBank).
+		var size := manifest()[art] as Dictionary
+		var sc := float(look.get("scale", 1.0))
+		var bank := MistBank.build(float(size.get("world_width", 8.0)) * sc, float(size.get("world_height", 4.5)) * sc,
+			ModelPiece.hash_cell(cell), Look.color("pewter").lerp(Color.WHITE, 0.3))
+		bank.position = board.cell_center(cell)
+		root.add_child(bank)
+		return root
 	var on_wall_square := _wall_at(board, cell)
 	if on_wall_square and has_art(str(look.get("on_wall", ""))):
 		art = str(look["on_wall"])
