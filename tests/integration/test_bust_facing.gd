@@ -5,14 +5,14 @@ extends TestCase
 
 const DIALOGUE := """
 ~ start
-Ireena: Who's there?
-Narrator [away]: She turns to the window.
+Ismark: Who's there?
+Narrator [away]: He turns to the window.
 Narrator: The rain goes on.
-Ireena [sad, away]: I can't look at you and say it.
-Ireena: There. I've said it.
+Ismark [sad, away]: I can't look at you and say it.
+Ismark: There. I've said it.
 Player: We heard.
-Narrator [away:party]: You turn your back on her.
-Ireena: Don't.
+Narrator [away:party]: You turn your back on him.
+Ismark: Don't.
 -> END
 """
 
@@ -50,15 +50,19 @@ func test_every_bust_says_which_way_it_was_drawn() -> void:
 
 
 func test_each_side_faces_the_other() -> void:
-	# Ireena was drawn facing right, so on the right she is mirrored; Thistle was drawn facing left, so on the left she is
+	# Ismark was drawn facing right, so on the right he is mirrored; Thistle was drawn facing left, so on the left she is
 	# mirrored; Godrick faces right as drawn and Argynvost left, so neither is.
-	assert_eq(DialogueBusts.native_facing("res://art/busts/ireena.webp"), "right")
-	assert_eq(DialogueBusts.native_facing("res://art/busts/ireena_sad.webp"), "right", "a mood faces as its person")
-	assert_true(DialogueBusts.mirrored("res://art/busts/ireena.webp", false, false))
+	assert_eq(DialogueBusts.native_facing("res://art/busts/ismark.webp"), "right")
+	assert_eq(DialogueBusts.native_facing("res://art/busts/ismark_sad.webp"), "right", "a mood faces as its person")
+	assert_true(DialogueBusts.mirrored("res://art/busts/ismark.webp", false, false))
+	# UI QA ART-02 (2026-10-08): Ireena's body turns right but her face looks left, and the face decides; on the right
+	# she already faces the party, so she isn't mirrored.
+	assert_eq(DialogueBusts.native_facing("res://art/busts/ireena_angry.webp"), "left")
+	assert_false(DialogueBusts.mirrored("res://art/busts/ireena.webp", false, false), "Ireena looks at the party as drawn")
 	assert_true(DialogueBusts.mirrored("res://art/busts/thistle.webp", true, false))
 	assert_false(DialogueBusts.mirrored("res://art/busts/godrick_pendlebrook.webp", true, false))
 	assert_false(DialogueBusts.mirrored("res://art/busts/argynvost.webp", false, false))
-	assert_false(DialogueBusts.mirrored("res://art/busts/ireena.webp", false, true), "turned away she faces right, as drawn")
+	assert_false(DialogueBusts.mirrored("res://art/busts/ismark.webp", false, true), "turned away he faces right, as drawn")
 	assert_false(DialogueBusts.mirrored("", true, false), "no bust, nothing to mirror")
 
 
@@ -85,22 +89,22 @@ func test_a_conversation_turns_and_turns_back() -> void:
 	assert_true(d.play(DialogueRunner.new(GameState.story, DiceRoller.new(2)), "test/facing:start"))
 	await get_tree().process_frame
 	var b := d.busts
-	assert_true(b.right.flip_h, "Ireena faces left, towards Thistle")
-	assert_true(b.left.flip_h, "Thistle faces right, towards Ireena")
+	assert_true(b.right.flip_h, "Ismark faces left, towards Thistle")
+	assert_true(b.left.flip_h, "Thistle faces right, towards Ismark")
 	d.call("_advance")
-	assert_true(b.right_away and not b.right.flip_h, "the Narrator turns her to the window")
+	assert_true(b.right_away and not b.right.flip_h, "the Narrator turns him to the window")
 	d.call("_advance")
-	assert_true(b.right_away, "and she stays turned through the Narrator's next line")
+	assert_true(b.right_away, "and he stays turned through the Narrator's next line")
 	d.call("_advance")
-	assert_eq(b.right_id, "res://art/busts/ireena_sad.webp")
-	assert_true(b.right_away and not b.right.flip_h, "her own line can keep her turned away")
+	assert_eq(b.right_id, "res://art/busts/ismark_sad.webp")
+	assert_true(b.right_away and not b.right.flip_h, "his own line can keep him turned away")
 	d.call("_advance")
-	assert_false(b.right_away, "a line with no cue turns her back")
+	assert_false(b.right_away, "a line with no cue turns him back")
 	assert_true(b.right.flip_h)
 	d.call("_advance")
-	assert_true(b.left.flip_h and not b.left_away, "the party answers, facing her")
+	assert_true(b.left.flip_h and not b.left_away, "the party answers, facing him")
 	d.call("_advance")
 	assert_true(b.left_away and not b.left.flip_h, "away:party turns the party's speaker")
-	assert_true(b.right.flip_h, "she still faces them")
+	assert_true(b.right.flip_h, "he still faces them")
 	d.call("_advance")
-	assert_true(b.left_away, "the party's turn holds while she speaks")
+	assert_true(b.left_away, "the party's turn holds while he speaks")

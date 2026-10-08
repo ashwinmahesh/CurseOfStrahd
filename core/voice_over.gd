@@ -20,6 +20,9 @@ static var _player: AudioStreamPlayer
 static var _volume := -1.0
 static var _queue: Array[Dictionary] = []
 static var _seq := 0   ## bumped by stop(), so a finished clip's pause can't start a newer sequence early
+## Held mid-line (a cutscene's pause card, UI QA SND-03): the player keeps running while the game is paused, so a pause
+## that should stop the voice says so here.
+static var _paused := false
 
 
 ## The clip key for a line's text: the first 16 hex digits of its SHA-1 (tools/audio/voice_lines.py computes the same).
@@ -110,8 +113,21 @@ static func _next() -> void:
 static func stop() -> void:
 	_seq += 1
 	_queue.clear()
+	_paused = false
 	if _player != null and is_instance_valid(_player) and _player.is_inside_tree():
+		_player.stream_paused = false
 		_player.stop()
+
+
+## Holds the line being spoken where it is (on) or lets it go on from there (off).
+static func set_paused(on: bool) -> void:
+	_paused = on
+	if _player != null and is_instance_valid(_player):
+		_player.stream_paused = on
+
+
+static func is_paused() -> bool:
+	return _paused
 
 
 static func is_speaking() -> bool:
