@@ -59,6 +59,8 @@ def main() -> None:
 			dest.parent.mkdir(parents=True, exist_ok=True)
 			dest.write_bytes(z.read(info))
 	(app / "Contents/MacOS" / NAME).chmod(0o755)
+	# Our icon (tools/release/make_icon.py) in place of Godot's.
+	shutil.copyfile(Path(__file__).resolve().parent / "app_icon.icns", app / "Contents/Resources/icon.icns")
 	plist = (app / "Contents/Info.plist").read_text()
 	fill = {
 		"$binary": NAME, "$name": NAME, "$bundle_identifier": BUNDLE_ID, "$short_version": args.version,
