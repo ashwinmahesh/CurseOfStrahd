@@ -284,6 +284,18 @@
         2,
         1
       ]
+    },
+    {
+      "id": "muster_field",
+      "cell": [
+        19,
+        14
+      ],
+      "kind": "examine",
+      "label": "Bones and rusted harness across the road",
+      "model": "bones",
+      "dialogue": "into_the_mists/last_muster:after",
+      "when": "flag.bone_marshal_beaten"
     }
   ],
   "containers": [
@@ -394,6 +406,17 @@
       "dialogue": "death_house/rose_thorn:return",
       "when": "flag.death_house_completed and not flag.death_house_children_at_rest",
       "facing": "east"
+    },
+    {
+      "npc": "marshal_dragomir",
+      "cell": [
+        19,
+        15
+      ],
+      "dialogue": "into_the_mists/last_muster:marshal",
+      "facing": "west",
+      "approach": 8,
+      "when": "night and quest.last_muster and not flag.bone_marshal_beaten"
     }
   ],
   "encounters": [
@@ -425,6 +448,390 @@
         }
       ],
       "text": "The pack stops pretending."
+    },
+    {
+      "id": "bone_marshal",
+      "trigger": "dialogue",
+      "when": "flag.riders_stood_down and level >= 8",
+      "text": "The marshal salutes with his blade, and his two lieutenants walk their bone horses out of the column to his flanks. Nobody else moves.",
+      "monsters": [
+        {
+          "monster": "bone_marshal",
+          "cell": [
+            22,
+            15
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            23,
+            14
+          ],
+          "name": "Lieutenant of the Vanguard"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            23,
+            16
+          ],
+          "name": "Lieutenant of the Vanguard"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            24,
+            15
+          ],
+          "name": "Lieutenant of the Vanguard"
+        }
+      ],
+      "surprise": "",
+      "flag": "bone_marshal_beaten",
+      "quest": {
+        "id": "last_muster",
+        "stage": "released"
+      }
+    },
+    {
+      "id": "bone_marshal",
+      "trigger": "dialogue",
+      "when": "flag.riders_stood_down and level >= 6",
+      "text": "The marshal salutes with his blade, and his two lieutenants walk their bone horses out of the column to his flanks. Nobody else moves.",
+      "monsters": [
+        {
+          "monster": "bone_marshal",
+          "cell": [
+            22,
+            15
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            23,
+            14
+          ],
+          "name": "Lieutenant of the Vanguard"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            23,
+            16
+          ],
+          "name": "Lieutenant of the Vanguard"
+        }
+      ],
+      "surprise": "",
+      "flag": "bone_marshal_beaten",
+      "quest": {
+        "id": "last_muster",
+        "stage": "released"
+      }
+    },
+    {
+      "id": "bone_marshal",
+      "trigger": "dialogue",
+      "when": "flag.riders_stood_down",
+      "text": "The marshal salutes with his blade, and his two lieutenants walk their bone horses out of the column to his flanks. Nobody else moves.",
+      "monsters": [
+        {
+          "monster": "bone_marshal",
+          "cell": [
+            22,
+            15
+          ],
+          "hp": 110
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            23,
+            14
+          ],
+          "name": "Lieutenant of the Vanguard"
+        }
+      ],
+      "surprise": "",
+      "flag": "bone_marshal_beaten",
+      "quest": {
+        "id": "last_muster",
+        "stage": "released"
+      }
+    },
+    {
+      "id": "bone_marshal",
+      "trigger": "dialogue",
+      "when": "not flag.riders_stood_down and level >= 8",
+      "text": "The whole column lowers its lances at once, and the gate is full of bones riding at you.",
+      "monsters": [
+        {
+          "monster": "bone_marshal",
+          "cell": [
+            22,
+            15
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            23,
+            14
+          ],
+          "name": "Lieutenant of the Vanguard"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            23,
+            16
+          ],
+          "name": "Lieutenant of the Vanguard"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            24,
+            15
+          ],
+          "name": "Lieutenant of the Vanguard"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            25,
+            13
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            26,
+            15
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            27,
+            17
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            25,
+            17
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            28,
+            14
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            29,
+            16
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            27,
+            13
+          ],
+          "name": "Banner of the Vanguard"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            28,
+            17
+          ],
+          "name": "Banner of the Vanguard"
+        }
+      ],
+      "surprise": "",
+      "flag": "bone_marshal_beaten",
+      "quest": {
+        "id": "last_muster",
+        "stage": "released"
+      }
+    },
+    {
+      "id": "bone_marshal",
+      "trigger": "dialogue",
+      "when": "not flag.riders_stood_down and level >= 6",
+      "text": "The whole column lowers its lances at once, and the gate is full of bones riding at you.",
+      "monsters": [
+        {
+          "monster": "bone_marshal",
+          "cell": [
+            22,
+            15
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            23,
+            14
+          ],
+          "name": "Lieutenant of the Vanguard"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            23,
+            16
+          ],
+          "name": "Lieutenant of the Vanguard"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            25,
+            13
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            26,
+            15
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            27,
+            17
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            25,
+            17
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            28,
+            14
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            29,
+            16
+          ],
+          "name": "Rider of the Last Muster"
+        }
+      ],
+      "surprise": "",
+      "flag": "bone_marshal_beaten",
+      "quest": {
+        "id": "last_muster",
+        "stage": "released"
+      }
+    },
+    {
+      "id": "bone_marshal",
+      "trigger": "dialogue",
+      "when": "not flag.riders_stood_down",
+      "text": "The whole column lowers its lances at once, and the gate is full of bones riding at you.",
+      "monsters": [
+        {
+          "monster": "bone_marshal",
+          "cell": [
+            22,
+            15
+          ],
+          "hp": 110
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            23,
+            14
+          ],
+          "name": "Lieutenant of the Vanguard"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            25,
+            13
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            26,
+            15
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            27,
+            17
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            25,
+            17
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            28,
+            14
+          ],
+          "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            29,
+            16
+          ],
+          "name": "Rider of the Last Muster"
+        }
+      ],
+      "surprise": "",
+      "flag": "bone_marshal_beaten",
+      "quest": {
+        "id": "last_muster",
+        "stage": "released"
+      }
     }
   ],
   "narration": {

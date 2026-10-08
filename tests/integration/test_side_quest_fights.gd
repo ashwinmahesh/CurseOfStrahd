@@ -169,3 +169,10 @@ func test_the_drowned_come_up_the_landing() -> void:
 	await _fight(v, "drowned_landing", ["The Bellringer of Pescari", "The Lake's Undertow"])
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("bell_under_the_lake"), "risen")
+
+
+func test_the_last_muster_at_the_gates() -> void:
+	var v := await _boot("into_the_mists_road", 23, 6, ["muster_met"])
+	await _fight(v, "bone_marshal", ["The Bone Marshal", "Rider of the Last Muster"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("last_muster"), "released")

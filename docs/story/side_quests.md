@@ -199,6 +199,26 @@ either way.
 - Then cut the bell loose (Athletics DC 15, Water Breathing or the potion) or ring it once for the dead (Religion DC 14):
   200 gp of chapel silver and the drowned priest's Staff of Healing (rare).
 
+## The Gates of Barovia (levels 6 and up)
+
+### The Last Muster (`last_muster`, narrative/into_the_mists/last_muster.dialogue; batch 2, the book's skeletal riders)
+
+Zora counts twelve riders going east every night after midnight, and none coming back; Vasile and Petre (once the
+village's other two rumours are taken) hear lances knocking at the gates. **Twist:** they're the count's vanguard,
+who took the valley's gate the night he conquered it, on the order "hold the gate until I come back", and he never
+came back for them. **Escalation:** at the Gates after dark Marshal Dragomir (new NPC, the phantom warrior's sprite)
+holds the gate. History DC 14, the soldier's rite (Religion DC 15) or Persuasion DC 15 stands the riders down; the
+marshal still wants to be beaten, fairly, because only a lost battle can relieve him.
+
+- **Boss: the Bone Marshal** (data/monsters/bone_marshal.json, `source.book: custom`, drawn with the phantom warrior's
+  sprite): Large undead, AC 18, 150 HP, two grave-blade strokes (1d12+6 slashing and 1d8 necrotic, reach 10), Parry,
+  Legendary Resistance (2/day) and a charge (one more stroke) between turns. CR 8.
+- Fight `bone_marshal` at the gate: the whole column (level 6 the marshal, 2 lieutenants as wights and 6 skeleton riders,
+  5,600 XP; level 8 a third wight and 2 phantom warriors; below 6 the marshal at 110 HP, one wight, six riders), or
+  only the marshal and his lieutenants once the riders stand down. The autopilot wins 2 of 3 against the column at
+  level 6 and 1 of 3 against the marshal and three lieutenants at level 8, losing three party members a fight.
+- The pay chest: 200 gp and the marshal's blade, a +2 longsword (rare).
+
 ## Krezk (level 7)
 
 Talker: the watchman (gate:news, renamed). Wiring: Ilya's sickness starts `the_burgomasters_son` at `heard` (if
@@ -232,7 +252,9 @@ called_by_name.dialogue in full (new speaker Nelu; also Big Tobar), tser_camp.di
 nelu node. Batch 2, Vallaki: ribbons.dialogue and hunters_at_the_inn.dialogue in full (new speakers Szoldar and
 Yevgeni; also Daciana, Watchman Dobre), townsfolk.dialogue's grumbler_who node and the added ribbon_refuse lines, and
 martikovs.dialogue's new rumours lines (the hunters). Batch 2, Lake
-Zarovich: bell_under_the_lake.dialogue in full (Old Nistor, Bluto) and old_fisher.dialogue's added option. Vallaki:
+Zarovich: bell_under_the_lake.dialogue in full (Old Nistor, Bluto) and old_fisher.dialogue's added option. The Gates:
+last_muster.dialogue in full (new speaker Marshal Dragomir), tser_camp.dialogue's new zora_road lines (the riders) and
+townsfolk.dialogue's new gossip lines (the riders). Vallaki:
 cat_in_the_window.dialogue and black_roses.dialogue in full (new speakers Stella Wachter, Ana and Pyotr Petrov; also
 Ilie and Father Lucian), the new lines in gate.dialogue (news: Stella), martikovs.dialogue (rumors: the roses),
 arasek.dialogue (roads: the windmill) and the polite_caller.dialogue sunrise line rewritten as a break in the mist. Krezk:
