@@ -7,15 +7,20 @@ const LATE := "v2_amber_temple.json"
 
 var root: Node
 var nav: PadNav
+## The inventory view before the test: test_the_party_screens flips it, and the setting outlives the test, so a later
+## test in the process (test_inventory_junk_stash drags stash tiles, which only the doll view has) would meet the list.
+var _view_was := ""
 
 
 func before_each() -> void:
+	_view_was = str(GameSettings.value("inventory_view", "doll"))
 	InputActions.ensure()
 	nav = PadNav.current
 	nav.reset()
 
 
 func after_each() -> void:
+	GameSettings.set_value("inventory_view", _view_was)
 	nav.reset()
 	get_tree().paused = false
 	if root != null:
