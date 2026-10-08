@@ -12,8 +12,11 @@ uniform vec3 furrow : source_color = vec3(0.12, 0.10, 0.12);
 uniform vec3 lichen : source_color = vec3(0.32, 0.36, 0.30);
 uniform float lichen_amount : hint_range(0.0, 1.0) = 0.15;
 uniform float shade_floor : hint_range(0.0, 1.0) = 0.5;
+// Wood this close to the camera is cut away (world units), with the leaves round it (foliage.gdshader).
+uniform float near_fade = 5.0;
 
 varying vec3 world_n;
+varying vec3 wpos;
 
 float hash(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
@@ -30,9 +33,12 @@ void vertex() {
 	vec3 root = MODEL_MATRIX[3].xyz;
 	VERTEX += wind_offset(root, VERTEX - root, UV2.x, UV2.y, TIME);
 	world_n = NORMAL;
+	wpos = VERTEX;
 }
 
 void fragment() {
+	ALPHA = step(near_fade * 0.75, distance(wpos, CAMERA_POSITION_WORLD));
+	ALPHA_SCISSOR_THRESHOLD = 0.5;
 	// Furrows: stretched noise along the wood, sharpened into ridges.
 	vec2 p = vec2(UV.x * 9.0, UV.y * 2.2);
 	float n = vnoise(p) * 0.65 + vnoise(p * 2.7 + 3.1) * 0.35;

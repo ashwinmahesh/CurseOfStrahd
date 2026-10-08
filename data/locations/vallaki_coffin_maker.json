@@ -51,7 +51,8 @@
           18,
           5
         ]
-      ]
+      ],
+      "private": "henrik"
     },
     {
       "id": "storeroom",
@@ -177,7 +178,8 @@
       "model": "strongbox",
       "lock_dc": 12,
       "gold": 20,
-      "items": []
+      "items": [],
+      "owner": "henrik"
     }
   ],
   "lights": [

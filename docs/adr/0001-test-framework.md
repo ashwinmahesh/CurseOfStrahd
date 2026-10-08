@@ -10,10 +10,12 @@ The plan asked Phase 0 to pick GUT or gdUnit4. We use a ~60 line runner (`tests/
 - `tools/logcheck.sh` fails the run on any SCRIPT ERROR, so a script that fails to compile can't hide behind a green count.
 - `make test` runs the files in several headless processes at once (`tools/run_tests.py`, 2026-10-07): each takes the
   next file nobody has claimed, longest first, so one slow file never holds up a fixed share. A file's output stays
-  together, and the run also fails when a process stops part-way or a file never ran. `JOBS=n` sets how many
+  together, and the run also fails when a process stops part-way or a file never ran. A file longer than half a
+  process's share goes out a test at a time (the runner's --split), so the long tests run side by side. `JOBS=n` sets how many
   processes; `JOBS=1` is the single process, and a failing run prints each troubled process's files in order so
   `make test JOBS=1 FILES=...` replays it. Tests in one process still share autoloads, so a test leaves no state
-  another needs; the runner takes out of the Compendium whatever a file added to it (fixture places and the like).
+  another needs; the runner takes out of the Compendium whatever a file added to it (fixture places and the like), and puts
+  ModeController, the pause, the time scale, the save slot and GameState back as a fresh process has them.
 - Golden saves (P4, 2026-10-07): `tests/saves` keeps saves written by older builds (each chapter's start, kept by the
   playthrough tests under `make golden-saves`, and some of the owner's own), and `test_golden_saves` loads them all in
   every run through `SaveSystem.upgrade`. A change to the save format bumps `GameState.SAVE_VERSION` and adds an

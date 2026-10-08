@@ -2,13 +2,14 @@ class_name SightOverlay
 extends Node3D
 ## Who can see you (U10, lane 25; docs/rules/stealth.md), after Baldur's Gate 3's sight cones: while the party sneaks or
 ## explores turn-based, or while the player holds L (show_sight), each foe waiting in plain view shows the squares it
-## can see, and wears an eye that says how likely it is to notice the party there.
+## can see, and wears an eye that says how likely it is to notice the party there. While the party sneaks or L is
+## held, so do the people standing here, who would see a theft or a trespass (F8, LocationCrime).
 ##
-## The eye and its squares are red when the foe would notice one of the party who stepped into its sight even in dim
-## light (always, when the party isn't sneaking), amber when only bright light would give them away (dim light lowers
-## its passive Perception by 5), and gold when the party's Stealth beats it either way. Its squares are those within
-## LocationStealth.NOTICE_FT it has a line of sight to and less than Three-Quarters Cover from. Foes see all around
-## them (the 2024 rules have no facing), so these are circles cut by walls rather than cones.
+## The eye and its squares are red when the watcher would notice one of the party who stepped into its sight even in
+## dim light (always, when the party isn't sneaking), amber when only bright light would give them away (dim light
+## lowers its passive Perception by 5), and gold when the party's Stealth beats it either way. Its squares are its sight
+## cone (LocationStealth.CONE_DEG the way its figure faces, out to NOTICE_FT, in its line of sight and with less than
+## Three-Quarters Cover) and the ring it hears all round (HEAR_FT, not through walls).
 
 const EYE_HEIGHT := 1.8
 const EYE_PIXEL := 0.0058
@@ -70,32 +71,50 @@ func _process(_delta: float) -> void:
 	refresh(on)
 
 
-## What the marks depend on: whether they show, the foes in sight, the party's Stealth, and what the foes can see.
+## Whether the people here show what they can see too: only while the party sneaks or L is held, when a theft or a
+## trespass is on the player's mind (in turn-based mode alone they'd crowd a town with red).
+func people_shown() -> bool:
+	return (view.sneaking or held()) and not view.in_combat
+
+
+## What the marks depend on: whether they show, the foes in sight, the people here, the party's Stealth, and what the
+## watchers can see.
 func _state_key(on: bool) -> String:
 	if not on:
 		return "off"
 	var shown: Array = []
 	for w in view.waiting:
 		if LocationStealth.is_shown(w):
-			shown.append(str((w["foe"] as Combatant).id))
-	return str([shown, view.sneaking, view.sneak_totals.values(), view._waiting_key, view.st.loc_state(view.loc_id)["doors"]])
+			shown.append([str((w["foe"] as Combatant).id), LocationStealth.cone_of(w).snapped(Vector2(0.05, 0.05))])
+	var people: Array = []
+	if people_shown():
+		for npc_id: String in LocationCrime.people(view):
+			var tok := LocationCrime.token(view, npc_id)
+			people.append([npc_id, tok.combatant.cell, LocationStealth.token_facing(tok).snapped(Vector2(0.05, 0.05))])
+	return str([shown, people, view.sneaking, view.sneak_totals.values(), view._waiting_key, view.st.loc_state(view.loc_id)["doors"]])
 
 
-## Redraws the eyes and the squares each foe can see.
+## Redraws the eyes and the squares each watcher can see.
 func refresh(on: bool = true) -> void:
-	var worst := {}   ## cell -> mood, the most dangerous foe watching it
+	var worst := {}   ## cell -> mood, the most dangerous watcher seeing it
 	var keep := {}
 	if on:
 		var e := LocationStealth.watch(view)
 		var lowest := _lowest_total()
+		var watchers: Array = []   ## [Combatant, its figure]
 		for w in view.waiting:
-			if not LocationStealth.is_shown(w):
-				continue
-			var foe := w["foe"] as Combatant
-			keep[foe.id] = true
-			var mood := eye_mood(foe, lowest, view.sneaking)
-			_eye(foe, w["token"] as Node3D, mood)
-			for c in reach_of(e, foe):
+			if LocationStealth.is_shown(w):
+				watchers.append([w["foe"], w["token"]])
+		if people_shown():
+			for npc_id: String in LocationCrime.people(view):
+				if not npc_id in view.st.guest_ids:
+					watchers.append([LocationCrime.person(view, npc_id), LocationCrime.token(view, npc_id)])
+		for pair: Array in watchers:
+			var who := pair[0] as Combatant
+			keep[who.id] = true
+			var mood := eye_mood(who, lowest, view.sneaking)
+			_eye(who, pair[1] as Node3D, mood)
+			for c in reach_of(e, who):
 				if not worst.has(c) or MOODS.keys().find(mood) < MOODS.keys().find(str(worst[c])):
 					worst[c] = mood
 	for id: String in _eyes.keys():
@@ -137,10 +156,12 @@ static func eye_mood(foe: Combatant, lowest: int, sneaking: bool) -> String:
 	return "bright" if score >= lowest else "beaten"
 
 
-## The squares within the notice reach that `foe` has a line of sight to and less than Three-Quarters Cover from
-## (cached until what it can see changes).
+## The squares `foe` watches: those it hears all round (within HEAR_FT, not through walls) and its sight cone out to
+## NOTICE_FT (in its line of sight, with less than Three-Quarters Cover). Cached until it moves or turns, or a door or
+## a secret room changes what it can see.
 func reach_of(e: Encounter, foe: Combatant) -> Array[Vector2i]:
-	var key := str([foe.cell, view.st.loc_state(view.loc_id)["doors"], HiddenAreas.signature(view)])
+	var facing := foe.get_meta("watch_facing", Vector2.ZERO) as Vector2
+	var key := str([foe.cell, facing.snapped(Vector2(0.05, 0.05)), view.st.loc_state(view.loc_id)["doors"], HiddenAreas.signature(view)])
 	var cached := _reach_cells.get(foe.id, []) as Array
 	if not cached.is_empty() and str(cached[0]) == key:
 		return cached[1] as Array[Vector2i]
@@ -151,11 +172,12 @@ func reach_of(e: Encounter, foe: Combatant) -> Array[Vector2i]:
 			var c := foe.cell + Vector2i(dx, dy)
 			if not e.grid.in_bounds(c) or e.grid.is_solid(c) or c in foe.footprint() or HiddenAreas.hides(view, c):
 				continue
-			if e.grid.distance_ft(foe.cell, foe.size_cells, c, 1) > LocationStealth.NOTICE_FT:
+			var d := e.grid.distance_ft(foe.cell, foe.size_cells, c, 1)
+			if d > LocationStealth.NOTICE_FT or (d > LocationStealth.HEAR_FT and not LocationStealth.in_cone(foe, c)):
 				continue
 			if not e.grid.can_see(foe.cell, foe.size_cells, c, 1):
 				continue
-			if int(e.grid.cover_between(foe.cell, foe.size_cells, c, 1)["cover"]) >= CombatGrid.Cover.THREE_QUARTERS:
+			if d > LocationStealth.HEAR_FT and int(e.grid.cover_between(foe.cell, foe.size_cells, c, 1)["cover"]) >= CombatGrid.Cover.THREE_QUARTERS:
 				continue
 			out.append(c)
 	_reach_cells[foe.id] = [key, out]

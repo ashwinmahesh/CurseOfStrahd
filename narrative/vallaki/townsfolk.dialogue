@@ -1,0 +1,58 @@
+# Vallaki's townsfolk about their day (lane 4, F2): Goodwife Marta on her morning round of the market row and the main
+# street, Old Kolya hauling festival wicker from the lower town, and Ilie lighting the lamps after dark. They walk
+# their routes (the location's `path`) and stop when someone comes up to them.
+
+~ goodwife
+if flag.festival_over and flag.vallaki_backed == "neither"
+Goodwife Marta [smile]: No festival this week. Nobody's said we may stop smiling, but nobody's checking either. I'd forgotten what my own face does.
+-> END
+endif
+if flag.festival_begun and not flag.festival_over
+Goodwife Marta: Off to the square with you. They count the faces, you know. Mine's been counted. I'm only fetching bread.
+-> END
+endif
+Goodwife Marta [smile]: Good morning! It is a good morning. The Baron says so, and the Baron's men are standing right over there, so it is.
+* How is the market? -> market
+* Good morning to you. -> END
+
+~ market
+Goodwife Marta: Turnips, mostly. Turnips and Blinsky's toys, which nobody buys, and the Baron's festival bunting, which everybody buys, because it's noticed who doesn't.
+interject tag:blunt: So the bunting's a tax.
+Goodwife Marta: Hush. It's a celebration.
+-> END
+
+~ carter
+if flag.festival_over
+Old Kolya: No more wicker to haul. My back thanks you, whoever you are. My purse doesn't.
+-> END
+endif
+Old Kolya: Mind the cart. That's a sun, that is. Will be. Every week I bring the wicker up, every week they burn it, every week the sky stays grey.
+Old Kolya: Don't tell the Baron I said "grey".
+-> END
+
+~ lamplighter
+Ilie the Lamplighter: Evening. Every lamp lit by the last bell, or I answer for it. The Baron says a lit street is a happy street.
+if guest:ireena
+Ilie the Lamplighter: Your friend should keep her hood up. The dark has eyes on this town, and some of them are at the windows.
+endif
+-> END
+
+# --- Evenings at the Blue Water Inn (their `hours`), and the stocks (data/schedule/vallaki.json) ---
+
+~ goodwife_inn
+Goodwife Marta [smile]: One cup of Urwin's red, and then home before the lamps are all lit. The Baron likes us in by dark. So does the dark.
+-> END
+
+~ carter_inn
+Old Kolya: Sit, sit. This is the only chair in Vallaki nobody's ordered me to be cheerful in. I'm not giving it up.
+-> END
+
+~ grumbler
+Anton the Cooper: Don't look at me like that. I smiled. I smiled the whole festival. Apparently it didn't reach my eyes.
+* What happens now? -> grumbler_now
+* Chin up. -> END
+
+~ grumbler_now
+Anton the Cooper: I stand here till the evening bell, then I go home and practise in the mirror. Third time this month. My wife says I've a face built for coopering, not for joy.
+interject tag:kind: For what it's worth, it seems a perfectly good face.
+-> END

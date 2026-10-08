@@ -279,7 +279,8 @@
           "qty": 6
         }
       ],
-      "gold": 0
+      "gold": 0,
+      "owner": "father_lucian"
     }
   ],
   "lights": [

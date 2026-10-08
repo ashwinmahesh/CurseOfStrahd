@@ -351,13 +351,14 @@ static var dof_strength := "light"
 var _dof: CameraAttributesPractical = null
 
 
-## The sharp band follows the camera's zoom.
+## The sharp band follows the camera's zoom. Tilted toward the horizon (W13), the far blur eases off so the sky and
+## the vistas past the map stay clear.
 func _focus_dof() -> void:
 	if _dof == null or _rig == null:
 		return
 	var d := _rig.distance
 	var k := DOF_STRENGTHS[dof_strength] as Dictionary
-	_dof.dof_blur_amount = float(k["amount"])
+	_dof.dof_blur_amount = float(k["amount"]) * (1.0 - smoothstep(0.0, 0.6, _rig.horizon_shown))
 	_dof.dof_blur_near_enabled = bool(k["near"])
 	_dof.dof_blur_far_distance = d + float(k["start"]) + d * float(k["per_zoom"])
 	_dof.dof_blur_far_transition = float(k["transition"]) + d * float(k["transition_per_zoom"])
@@ -379,8 +380,11 @@ const MODERN_TONE := {"shade": "night", "amount": 0.55, "shade_saturation": 0.6,
 ## An overcast day is still day: blue-grey shade, more of the ground counts as lit, the shade keeps more colour and
 ## all its fill.
 const DAY_TONE := {"shade": "slate", "amount": 0.45, "pivot": 0.24, "shade_saturation": 0.8, "ambient": 1.0}
-## Indoors the shade is the deep night blue of a dark house.
-const INDOOR_TONE := {"shade": "night_deep"}
+## Indoors the shade is the deep night blue of a dark house, and moonlight from unseen windows fills it a little, cool
+## and readable (the target frames' blue-grey floors away from the lamps): the ambient light leans to `ambient_tint`
+## by `ambient_mix` and is `ambient` times as strong, and the moon key light `key` times.
+const INDOOR_TONE := {"shade": "night_deep", "ambient": 1.1, "ambient_tint": "moon_blue", "ambient_mix": 0.5,
+	"key": 1.4}
 
 
 ## The Modern grade for a time of day: MODERN_TONE, a day's DAY_TONE or an indoor INDOOR_TONE, then the mood's own
@@ -469,10 +473,13 @@ func _footprints() -> void:
 	var view := get_parent()
 	if board == null or view == null or not Look.modern():
 		return
-	var members := view.get("members") as Array
-	var tokens := view.get("tokens") as Dictionary
-	if members == null or tokens == null:
+	# Only an exploring view has a party walking about (a Skirmish field's parent has no such list).
+	var got_members: Variant = view.get("members")
+	var got_tokens: Variant = view.get("tokens")
+	if not (got_members is Array) or not (got_tokens is Dictionary):
 		return
+	var members := got_members as Array
+	var tokens := got_tokens as Dictionary
 	for cb: Variant in members:
 		var id := str((cb as Object).get("id"))
 		var tok := tokens.get(id) as Node3D
@@ -568,6 +575,44 @@ static func _footprint_textures() -> Array[Texture2D]:
 	return _print_tex
 
 
+# --- The sky (W13) -------------------------------------------------------------------------------------
+
+## How plainly the moon (or the low sun) shows in the sky by the time of day: a disc glowing through the cloud at
+## night, a paler glow at dusk and dawn, only a brighter patch in the cloud by day.
+const MOON_SHOWS := {"night": 1.0, "dusk": 0.45, "dawn": 0.45, "day": 0.12}
+## The moon hangs low enough to be seen when the camera looks out to the horizon (degrees above it), on the bearing
+## the key light comes from.
+const MOON_HEIGHT := 14.0
+## Barovia is never clear: the cloud covers at least this much of the sky.
+const MIN_COVER := 0.6
+var _tilt_shown := 0.0
+
+
+## Barovia's sky in the screen pass (strahd_post.gdshader sky_on): outdoors in the Modern finish, coloured by the time
+## of day; seen when the camera tilts toward the horizon (CameraRig.horizon).
+func _apply_sky(v: Dictionary) -> void:
+	var on := Look.modern() and outdoors
+	_post.set_shader_parameter("sky_on", on)
+	if not on:
+		return
+	var sky := v["sky"] as Color
+	var key := v["key"] as Color
+	_post.set_shader_parameter("sky_zenith", sky.darkened(0.25))
+	_post.set_shader_parameter("sky_cloud_lit", sky.lerp(key, 0.45))
+	_post.set_shader_parameter("sky_cloud_shade", sky.lerp(Look.color("void"), 0.45))
+	_post.set_shader_parameter("sky_moon_colour", key.lightened(0.2))
+	_post.set_shader_parameter("sky_moon", float(v["moon"]))
+	# Towards the light, brought down to where a camera looking out can see it.
+	var towards := sun.global_transform.basis.z if sun.is_inside_tree() else Vector3(0.3, 0.6, -0.7)
+	var flat := Vector2(towards.x, towards.z).normalized()
+	var up := sin(deg_to_rad(MOON_HEIGHT))
+	_post.set_shader_parameter("sky_moon_dir", Vector3(flat.x * cos(deg_to_rad(MOON_HEIGHT)), up,
+		flat.y * cos(deg_to_rad(MOON_HEIGHT))))
+	var clouds := mood.get("clouds", {}) as Dictionary
+	_post.set_shader_parameter("sky_cover", maxf(float(clouds.get("cover", 0.5)) + 0.15, MIN_COVER))
+	_post.set_shader_parameter("sky_wind", _vec2(clouds.get("wind", [0.6, 0.25])))
+
+
 ## The board's water squares get the moving water (one material for the whole place, the land's lakes included).
 func _build_water() -> void:
 	var spec := mood.get("water", {}) as Dictionary
@@ -637,6 +682,8 @@ func attach(rig: CameraRig, post: MeshInstance3D) -> void:
 	weather = AtmosphereWeather.build(self, board, mood, outdoors, get_parent())
 	_show_night_pieces()
 	_set_weather_on_surfaces()
+	_light_kit_flames()
+	_light_model_flames()
 	_scan_lights()
 	# Lights added later (a lantern lit, a spell's light, a fire) join as they enter the tree, instead of the whole
 	# place being searched for them every second (P3).
@@ -806,6 +853,10 @@ func _target(p: String) -> Dictionary:
 		"tone_black": float(tone["black"]),
 		"tone_pivot": float(tone["pivot"]),
 		"tone_ambient": float(tone["ambient"]),
+		"tone_tint": Look.color(str(tone.get("ambient_tint", "void"))),
+		"tone_tint_mix": float(tone.get("ambient_mix", 0.0)),
+		"tone_key": float(tone.get("key", 1.0)),
+		"moon": float(MOON_SHOWS.get(p, 0.0)),
 	}
 
 
@@ -826,11 +877,15 @@ func _apply(k: float) -> void:
 	env.fog_light_color = v["fog"] as Color
 	if env.volumetric_fog_enabled:
 		env.volumetric_fog_albedo = v["fog"] as Color
-	env.ambient_light_color = v["ambient"] as Color
-	var fill := float(v["tone_ambient"]) if Look.modern() else 1.0
+	var modern := Look.modern()
+	var ambient := v["ambient"] as Color
+	if modern:
+		ambient = ambient.lerp(v["tone_tint"] as Color, float(v["tone_tint_mix"]))
+	env.ambient_light_color = ambient
+	var fill := float(v["tone_ambient"]) if modern else 1.0
 	env.ambient_light_energy = float(v["ambient_energy"]) * fill * (1.0 + _flash * 2.5)
 	sun.light_color = (v["key"] as Color).lerp(Look.color("frost"), _flash)
-	sun.light_energy = float(v["key_energy"]) * (1.0 + _flash * 3.0)
+	sun.light_energy = float(v["key_energy"]) * (float(v["tone_key"]) if modern else 1.0) * (1.0 + _flash * 3.0)
 	sun.rotation_degrees = v["key_angle"] as Vector3
 	var sky_light := (v["sky"] as Color).lerp(Look.color("moon_blue"), 0.5)
 	RenderingServer.global_shader_parameter_set(&"world_sky", sky_light)
@@ -849,6 +904,7 @@ func _apply(k: float) -> void:
 	_post.set_shader_parameter("grade_lights", v["grade_lights"] as Color)
 	# The Modern finish tints only the shade (tone_split), by MODERN_TONE's share of the mood's amount.
 	_post.set_shader_parameter("grade_amount", float(v["grade_amount"]))
+	_apply_sky(v)
 	if Look.modern():
 		_post.set_shader_parameter("tone_shade", v["tone_shade"] as Color)
 		_post.set_shader_parameter("tone_amount", float(v["tone_amount"]))
@@ -890,6 +946,11 @@ func _process(delta: float) -> void:
 	if _post == null:
 		return
 	_post.set_shader_parameter("atmo_time", _time)
+	# Looking out to the horizon, the vignette lets the sky band be (W13).
+	var tilt := _rig.horizon_shown
+	if not is_equal_approx(tilt, _tilt_shown):
+		_tilt_shown = tilt
+		_post.set_shader_parameter("vignette", float(mood.get("vignette", 0.0)) * (1.0 - 0.6 * tilt))
 	_light_scan -= delta
 	if _light_scan <= 0.0:
 		_light_scan = 1.0
@@ -908,6 +969,139 @@ func _lightning(delta: float) -> bool:
 		_next_flash = _rng.randf_range(0.12, 0.2) if _rng.randf() < 0.5 and was < 0.5 else _rng.randf_range(7.0, 16.0)
 	_flash = maxf(0.0, _flash - delta * 6.0)
 	return _flash > 0.0 or was > 0.0
+
+
+## Candles and flames modelled into the building kit's pieces (lane 7's castle piers carry an iron sconce of candles on
+## two faces; town pieces may have lanterns) light the room around them in the Modern finish, as the target frames'
+## glowing piers do: the flames are found in the piece's own mesh (its glow_flame surface), each cluster of them gets
+## a candle light just outside the piece, hung on it so it hides and fades with it. Flames within a square of one of
+## the location's own lights are left to that light.
+const FLAME_CLUSTER := 0.3
+const FLAME_OUT := 0.14
+const LOW_FLAME := 0.6
+
+
+func _light_kit_flames() -> void:
+	if board == null or not Look.modern():
+		return
+	var flame := ModelPiece.material("glow_flame")
+	var taken: Array[Vector3] = []
+	for l: Variant in loc.get("lights", []):
+		var cell := (l as Dictionary).get("cell", []) as Array
+		if cell.size() == 2:
+			taken.append(board.cell_center(Vector2i(int(cell[0]), int(cell[1]))))
+	for n in board.get_children():
+		var piece := n as MeshInstance3D
+		var am := piece.mesh as ArrayMesh if piece != null else null
+		if am == null:
+			continue
+		for i in am.get_surface_count():
+			if am.surface_get_material(i) != flame:
+				continue
+			var centre := piece.global_position
+			for at: Vector3 in _flame_clusters(am.surface_get_arrays(i)[Mesh.ARRAY_VERTEX] as PackedVector3Array):
+				var world := piece.global_transform * at
+				# A candle stub standing on the floor (clutter) glows on its own; a light that low only burns a spot.
+				if world.y - board.floor_y(Vector2i(floori(world.x), floori(world.z))) < LOW_FLAME:
+					continue
+				var near := false
+				for t in taken:
+					if Vector2(t.x - world.x, t.z - world.z).length() < 1.0:
+						near = true
+						break
+				if near:
+					continue
+				var out := Vector3(world.x - centre.x, 0.0, world.z - centre.z)
+				var l := CandleFlicker.new()
+				l.name = "FlameLight"
+				l.light_color = Look.color("candle")
+				l.omni_range = 3.2
+				l.base_energy = 1.1
+				l.light_energy = 1.1
+				l.flicker = 0.25
+				l.set_meta("light_kind", "candle")
+				piece.add_child(l)
+				l.global_position = world + (out.normalized() * FLAME_OUT if out.length() > 0.01 else Vector3.ZERO) \
+					+ Vector3(0, 0.05, 0)
+				_dress_light(l)
+
+
+## Fires and candles modelled into the location's 3D props (a hearth, a brazier, a campfire, a torch, a candelabra:
+## their "flame" and "candle" sockets in art/models/manifest.json) light the room around them in the Modern finish,
+## unless one of the location's own lights already stands within a square: the target frames' hearths glow across the
+## hall. A fire's light hangs a little in front of and above its flame, so the firebox doesn't swallow its shadows.
+func _light_model_flames() -> void:
+	var view := get_parent()
+	if board == null or view == null or not Look.modern():
+		return
+	var taken: Array[Vector3] = []
+	for l in view.find_children("*", "OmniLight3D", true, false):
+		taken.append((l as OmniLight3D).global_position)
+	var models := ModelPiece.manifest()
+	for n in view.find_children("Model_*", "Node3D", true, false):
+		var model := n as Node3D
+		var info := models.get(str(model.get_meta("model", "")), {}) as Dictionary
+		var sockets := info.get("sockets", {}) as Dictionary
+		var fire: Array[Vector3] = []
+		var candles: Array[Vector3] = []
+		for key: String in sockets:
+			var a := sockets[key] as Array
+			var at := Vector3(float(a[0]), float(a[1]), float(a[2]))
+			if key.begins_with("flame"):
+				fire.append(at)
+			elif key.begins_with("candle"):
+				candles.append(at)
+		var lights: Array[Array] = []   # [local position, kind]
+		for at in fire:
+			lights.append([at + Vector3(0, 0.35, 0.3 if str(info.get("mount", "")) == "wall" else 0.0), "fire"])
+		if not candles.is_empty():
+			var mid := Vector3.ZERO
+			for at in candles:
+				mid += at
+			lights.append([mid / candles.size() + Vector3(0, 0.12, 0), "candle"])
+		for entry in lights:
+			var world := model.global_transform * (entry[0] as Vector3)
+			var near := false
+			for t in taken:
+				if t.distance_to(world) < 1.2:
+					near = true
+					break
+			if near:
+				continue
+			var kind := str(entry[1])
+			var l := CandleFlicker.new()
+			l.name = "PropLight"
+			l.light_color = Look.color("flame" if kind == "fire" else "candle")
+			l.omni_range = 4.5 if kind == "fire" else 3.2
+			l.base_energy = 1.9 if kind == "fire" else 1.2
+			l.light_energy = l.base_energy
+			l.set_meta("light_kind", kind)
+			model.add_child(l)
+			l.global_position = world
+			taken.append(world)
+			_dress_light(l)
+
+
+## The middles of the groups of flame vertices (each candle's, or each sconce's few candles together).
+static func _flame_clusters(verts: PackedVector3Array) -> Array[Vector3]:
+	var sums: Array[Vector3] = []
+	var counts: Array[int] = []
+	for v in verts:
+		var found := -1
+		for k in sums.size():
+			if (sums[k] / float(counts[k])).distance_to(v) < FLAME_CLUSTER:
+				found = k
+				break
+		if found < 0:
+			sums.append(v)
+			counts.append(1)
+		else:
+			sums[found] += v
+			counts[found] += 1
+	var out: Array[Vector3] = []
+	for k in sums.size():
+		out.append(sums[k] / float(counts[k]))
+	return out
 
 
 ## A light entering the place (Atmosphere listens to the tree while it's on screen).
@@ -950,12 +1144,14 @@ func _scan_lights() -> void:
 ## (Godot's light_size: a candle's crisp, a hearth's soft), `fog` how strongly it lights the haze around it, `steady`
 ## that it doesn't flicker. A window indoors is the moon or the day coming in: cold, steady, with a shaft of light
 ## through the haze (_window_shaft).
+## `energy` and `reach` scale its strength and range in the Modern finish (the target frames: hearths and candelabras
+## throw warm pools across a room; the party's own lantern is gentler, so a room's lights lead).
 const LIGHT_KINDS := {
-	"candle": {"size": 0.03, "fog": 1.0},
-	"lamp": {"size": 0.06, "fog": 1.2},
-	"lantern": {"size": 0.08, "fog": 1.2},
-	"torch": {"size": 0.12, "fog": 1.8},
-	"fire": {"size": 0.25, "fog": 2.0},
+	"candle": {"size": 0.03, "fog": 1.0, "energy": 1.3, "reach": 1.15},
+	"lamp": {"size": 0.06, "fog": 1.2, "energy": 1.25, "reach": 1.15},
+	"lantern": {"size": 0.08, "fog": 1.2, "energy": 0.85, "reach": 0.9},
+	"torch": {"size": 0.12, "fog": 1.8, "energy": 1.3, "reach": 1.2},
+	"fire": {"size": 0.25, "fog": 2.0, "energy": 1.6, "reach": 1.4},
 	"magic": {"size": 0.12, "fog": 1.6, "steady": true},
 	"window": {"size": 0.4, "fog": 0.5, "steady": true},
 	"lit_window": {"size": 0.3, "fog": 1.0},
@@ -988,12 +1184,22 @@ func _light_kind(l: OmniLight3D) -> String:
 	return "spell"
 
 
-func _dress_light(l: OmniLight3D) -> void:
-	var kind := _light_kind(l)
+func _dress_light(light: Variant) -> void:
+	# Called deferred: the light may have gone with its place by now (a typed parameter would refuse the freed one).
+	if not is_instance_valid(light):
+		return
+	var l := light as OmniLight3D
+	var kind := str(l.get_meta("light_kind")) if l.has_meta("light_kind") else _light_kind(l)
 	var spec := LIGHT_KINDS[kind] as Dictionary
 	l.set_meta("light_kind", kind)
 	l.light_size = float(spec["size"]) if Graphics.lamp_soft() else 0.0
 	l.light_volumetric_fog_energy = float(spec["fog"])
+	l.omni_range *= float(spec.get("reach", 1.0))
+	var gain := float(spec.get("energy", 1.0))
+	if l is CandleFlicker:
+		(l as CandleFlicker).base_energy *= gain
+	else:
+		l.light_energy *= gain
 	if bool(spec.get("steady", false)) and l is CandleFlicker:
 		(l as CandleFlicker).flicker = 0.0
 	if kind == "window" and not outdoors:
