@@ -514,3 +514,23 @@ func test_the_empty_paths_are_dressed() -> void:
 		here.append(str((s as Dictionary)["spec"]["npc"]))
 	assert_true("lzt_hunter" in here, "a hunter on the hill trail")
 	v.queue_free()
+
+
+## The tarn, the den and Yester Hill's slope dressed (lane 28, on lane 3's ground): still black water at Van Richten's
+## tower with a horse in the reeds, the den's household by the stream, and the druids' bedrolls, cages and skull cairns
+## with smoke from their fire.
+func test_the_tarn_the_den_and_the_hill() -> void:
+	var v := _view("van_richtens_tower")
+	await _frames(1)
+	assert_eq(str(v.atmosphere.mood["water"]["deep"]), "void", "the tarn is black")
+	v.queue_free()
+	for loc: String in ["van_richtens_tower", "werewolf_den", "yester_hill"]:
+		var finds := 0
+		for p: Variant in (Compendium.shared().get_entry("locations", loc) as Dictionary)["props"]:
+			if str((p as Dictionary)["kind"]) == "search":
+				finds += 1
+		assert_true(finds >= 2, "%s has things to find (%d)" % [loc, finds])
+	var h := _view("yester_hill")
+	await _frames(2)
+	assert_true(h.board.find_children("Smoke*", "GPUParticles3D", true, false).size() > 0, "smoke from the druids' fire")
+	h.queue_free()

@@ -111,3 +111,12 @@ once
 ~ search:jars_oil
 | Among the jars and bottles, one flask has no label. The oil inside is grey, and your hand looks faintly see-through behind the glass.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the tarn's shore.
+
+~ examine:vrt_hobbled_horse
+| A shaggy draft horse hobbled in the reeds, cropping the thin grass with the patience of an animal that has pulled a wagon a long way. It watches the tower more than it watches you.
+
+~ search:vrt_path_caltrops
+| Beside the path, a small leather pouch spilling iron caltrops, the points still sharp. Someone careful scattered a few here and kept the rest. {name} takes what's left.
+once

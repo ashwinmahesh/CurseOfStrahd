@@ -143,3 +143,16 @@ once
 ~ search:herb_elixir
 | Tucked into the bundles of drying herbs, a flask of something clear and faintly gold. It smells of spring, which is strange in these caves.
 once
+
+# ---------------------------------------------------------------- Lane 28 (2026-10-08): the slope before the den.
+
+~ examine:den_clay_pot
+| A clay pot of rendered fat, a skinning knife beside it and a basket of rags. Somebody here keeps a household, of a kind. The knife has been sharpened very recently.
+
+~ search:den_stream_scent
+| Pressed into the mud of the stream bank, a little glass bottle of scent with a silver stopper, a lady's, carried a long way from wherever it was taken. {name} rinses the mud off it.
+once
+
+~ search:den_pot_snare
+| Under the basket, an iron snare, oiled and ready: the den keeps traps for the things it doesn't hunt by running. {name} springs it carefully and takes it.
+once

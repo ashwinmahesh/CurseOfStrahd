@@ -9,15 +9,15 @@
       "################################",
       "#wwwwwwwwwwwwwwwwwwwwwwwwwwwwww#",
       "#wwwwwwwwwwwwwwwwwwwwwwwwwwwwww#",
-      "#wwwwwwwwww..........wwwwwwwwww#",
-      "#wwwwwwwwww..........wwwwwwwwww#",
+      "#wwwwwwwwww.........=wwwwwwwwww#",
+      "#wwwwwwwwww=.........wwwwwwwwww#",
       "#wwwwwwwww...######...wwwwwwwww#",
       "#wwwwwwww....######.=..wwwwwwww#",
       "#wwwwwwww....######....wwwwwwww#",
+      "#wwwwwwww....######..=.wwwwwwww#",
       "#wwwwwwww....######....wwwwwwww#",
       "#wwwwwwww....######....wwwwwwww#",
-      "#wwwwwwww....######....wwwwwwww#",
-      "#wwwwwwwww............wwwwwwwww#",
+      "#wwwwwwwww=...........wwwwwwwww#",
       "#wwwwwwwww.=.......=..wwwwwwwww#",
       "#wwwwwwwwww..........wwwwwwwwww#",
       "#wwwwwwwwwwwwww..wwwwwwwwwwwwww#",
@@ -27,12 +27,12 @@
       "#wwwwwwwwwwwwww.~wwwwwwwwwwwwww#",
       "#wwwwwwwwwwwwww..wwwwwwwwwwwwww#",
       "#wwwwwwwwwwwwww..wwwwwwwwwwwwww#",
-      "#~~~........................~~~#",
+      "#~~~=...............=......=~~~#",
       "#.......................=......#",
       "#.....#........................#",
       "#..............................#",
       "#..............................#",
-      "#............................=.#",
+      "#..=.........................=.#",
       "#=............................=#",
       "#.=.........................=..#",
       "###############..###############"
@@ -255,6 +255,96 @@
       "label": "a satchel wedged behind the lookout rock",
       "model": "satchel",
       "item": "eyes_of_the_eagle"
+    },
+    {
+      "id": "vrt_hobbled_horse",
+      "cell": [
+        3,
+        26
+      ],
+      "kind": "examine",
+      "label": "A hobbled horse",
+      "model": "horse",
+      "span": [
+        2,
+        1
+      ],
+      "facing": "east"
+    },
+    {
+      "id": "vrt_reeds_1",
+      "cell": [
+        4,
+        21
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "vrt_reeds_2",
+      "cell": [
+        20,
+        21
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "vrt_reeds_3",
+      "cell": [
+        27,
+        21
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "vrt_island_rock_1",
+      "cell": [
+        11,
+        4
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "vrt_island_rock_2",
+      "cell": [
+        20,
+        3
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "vrt_island_rock_3",
+      "cell": [
+        10,
+        11
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "vrt_island_tree",
+      "cell": [
+        21,
+        8
+      ],
+      "kind": "decor",
+      "model": "dead_tree"
+    },
+    {
+      "id": "vrt_path_caltrops",
+      "cell": [
+        26,
+        26
+      ],
+      "kind": "search",
+      "label": "something dropped beside the path",
+      "model": "satchel",
+      "search_dc": 13,
+      "item": "caltrops"
     }
   ],
   "containers": [
