@@ -4360,6 +4360,153 @@ def valley_map(p):
     p.box((0.07, 0.004, 0.07), (0.22, -0.04, 1.5), "pal_ink")
     for x, z in ((-0.34, 1.57), (0.34, 1.57), (-0.34, 1.13), (0.34, 1.13)):
         p.cyl(0.01, 0.01, (x, -0.04, z), "pal_crimson", rot=(90, 0, 0), segs=6)
+# --- Lived-in clutter (the density pass, owner 2026-10-08: "add more props, for that really lived in feeling") ------
+
+def _crate(p, at, size, rot=0.0):
+    x, y, z = at
+    w, d, h = size
+    p.box((w, d, h), (x, y, z + h / 2), WOOD, rot=(0, 0, rot))
+    m = Matrix.Translation((x, y, z)) @ _rot((0, 0, rot))
+    for s in (-1, 1):
+        p.box((w + 0.01, 0.03, 0.03), tuple(m @ Vector((0, s * (d / 2 - 0.02), h - 0.02))), "pal_umber", rot=(0, 0, rot))
+        p.box((0.03, d + 0.01, h), tuple(m @ Vector((s * (w / 2 - 0.02), 0, h / 2))), "pal_umber", rot=(0, 0, rot))
+
+
+def _sack(p, at, h, col="pal_bone", rot=0.0):
+    x, y, z = at
+    p.lathe([(0.0, 0.0), (0.11, 0.01), (0.13, h * 0.45), (0.1, h * 0.85), (0.04, h * 0.95), (0.05, h), (0.0, h)], (x, y, z),
+            col, segs=12, rot=(0, 0, rot))
+    p.cyl(0.045, 0.02, (x, y, z + h * 0.88), "pal_tan", segs=10)
+
+
+@model("crate_stack", "free", ["crate_stack"])
+def crate_stack(p):
+    """Crates stacked two high with a third beside them, and a sack leaning on the pile."""
+    _crate(p, (-0.12, 0.05, 0.0), (0.46, 0.42, 0.36), 4)
+    _crate(p, (-0.1, 0.06, 0.36), (0.4, 0.36, 0.3), -8)
+    _crate(p, (0.27, -0.12, 0.0), (0.34, 0.32, 0.28), 15)
+    _sack(p, (0.28, 0.2, 0.0), 0.36, "pal_tan", 20)
+
+
+@model("sack_pile", "free", ["sack_pile"])
+def sack_pile(p):
+    """Sacks of meal heaped against each other, one slumped open and spilling."""
+    for (x, y, h, col) in ((-0.15, 0.05, 0.4, "pal_bone"), (0.12, 0.1, 0.36, "pal_tan"), (0.0, -0.14, 0.32, "pal_bone_dark"),
+                           (0.2, -0.16, 0.26, "pal_parchment")):
+        _sack(p, (x, y, 0.0), h, col)
+    for k in range(9):
+        p.rock((0.3 + p.rng.uniform(-0.05, 0.08), -0.28 + p.rng.uniform(-0.06, 0.06), 0.0), (0.05, 0.05, 0.02), "pal_vellum", rough=0.3)
+
+
+def _small_table(p, H=0.42, W=0.62, D=0.5):
+    p.box((W, D, 0.04), (0, 0, H - 0.02), WOOD)
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((0.05, 0.05, H - 0.04), (sx * (W / 2 - 0.06), sy * (D / 2 - 0.06), (H - 0.04) / 2), "pal_walnut")
+    return H
+
+
+@model("table_meal", "free", ["table_meal"])
+def table_meal(p):
+    """A table with a meal left on it: a loaf and a knife on a board, a jug, two mugs, a bowl and a candle."""
+    H = _small_table(p)
+    p.box((0.24, 0.16, 0.02), (-0.12, 0.02, H + 0.01), "pal_umber")
+    p.box((0.16, 0.09, 0.07), (-0.14, 0.02, H + 0.055), "pal_tan", soft=0.03, segs=2)
+    p.box((0.1, 0.012, 0.004), (-0.04, -0.04, H + 0.022), "pal_silver", rot=(0, 0, 25))
+    p.lathe([(0.0, 0.0), (0.05, 0.0), (0.06, 0.08), (0.035, 0.15), (0.04, 0.17), (0.0, 0.17)], (0.15, 0.1, H), "pal_rust", segs=12)
+    for x, y in ((0.18, -0.1), (0.05, 0.16)):
+        p.lathe([(0.0, 0.0), (0.03, 0.0), (0.033, 0.08), (0.0, 0.08)], (x, y, H), "pal_pewter", segs=10)
+    p.lathe([(0.0, 0.0), (0.04, 0.0), (0.07, 0.04), (0.0, 0.04)], (-0.02, -0.15, H), "pal_bone_dark", segs=14)
+    _candle(p, (0.24, 0.16, H), 0.08)
+
+
+@model("table_books", "free", ["table_books"])
+def table_books(p):
+    """A table piled with work: open books, loose papers, an inkpot and quill, and a candle burned low."""
+    H = _small_table(p)
+    rng = p.rng
+    z = H
+    for k in range(3):
+        t = rng.uniform(0.03, 0.05)
+        p.box((0.2, 0.15, t), (-0.15, 0.08, z + t / 2), _book_colour(rng), rot=(0, 0, rng.uniform(-12, 12)), soft=0.005, segs=1)
+        z += t
+    p.box((0.26, 0.18, 0.012), (0.08, -0.04, H + 0.006), "pal_vellum", rot=(0, 0, -8))
+    for k in range(3):
+        p.box((0.14, 0.18, 0.003), (rng.uniform(-0.2, 0.2), rng.uniform(-0.15, 0.15), H + 0.014 + k * 0.003), "pal_parchment",
+              rot=(0, 0, rng.uniform(0, 180)))
+    p.cyl(0.025, 0.04, (0.2, 0.14, H), "pal_ink", segs=10)
+    p.tube([(0.2, 0.14, H + 0.04), (0.24, 0.17, H + 0.16)], 0.004, "pal_ivory", segs=4)
+    _candle(p, (-0.2, -0.16, H), 0.05)
+
+
+@model("bench", "free", ["bench", "bench_back"])
+def bench(p):
+    """A plank bench, worn pale where people sit, with a folded blanket at one end."""
+    p.box((0.86, 0.26, 0.05), (0, 0, 0.3), WOOD)
+    for s in (-1, 1):
+        p.box((0.06, 0.22, 0.28), (s * 0.34, 0, 0.14), "pal_walnut")
+    p.box((0.7, 0.04, 0.04), (0, 0, 0.1), "pal_umber")
+    p.box((0.24, 0.22, 0.06), (0.26, 0, 0.355), "pal_rust", soft=0.02, segs=2)
+
+
+@model("lantern_bracket", "wall", ["lantern_bracket"])
+def lantern_bracket(p):
+    """A lantern on an iron bracket on the wall, candlelight behind its glass."""
+    p.box((0.08, 0.02, 0.16), (0, -0.01, 1.25), "pal_ink")
+    p.tube([(0.0, -0.02, 1.3), (0.0, -0.2, 1.32), (0.0, -0.22, 1.24)], 0.01, "pal_ink", segs=5)
+    x, y, z0, w, h = 0.0, -0.22, 1.02, 0.12, 0.16
+    p.box((w + 0.03, w + 0.03, 0.02), (x, y, z0), "pal_tan")
+    p.box((w - 0.02, w - 0.02, h - 0.02), (x, y, z0 + 0.01 + h / 2), "glow_candle")
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((0.014, 0.014, h), (x + sx * w / 2, y + sy * w / 2, z0 + 0.01 + h / 2), "pal_umber")
+    p.cyl(w * 0.75, 0.06, (x, y, z0 + h + 0.01), "pal_tan", r2=0.01, segs=4, rot=(0, 0, 45), smooth=False)
+    p.socket("candle", (0.0, -0.22, 1.12))
+
+
+@model("floor_books", "free", ["floor_books"])
+def floor_books(p):
+    """Books left on the floor, one open face down, papers slid out from under them, a candle stub."""
+    rng = p.rng
+    for k in range(4):
+        t = rng.uniform(0.03, 0.05)
+        p.box((0.2, 0.15, t), (rng.uniform(-0.2, 0.15), rng.uniform(-0.18, 0.18), t / 2), _book_colour(rng),
+              rot=(0, 0, rng.uniform(0, 180)), soft=0.005, segs=1)
+    p.box((0.24, 0.17, 0.035), (0.18, 0.1, 0.035), _book_colour(rng), rot=(0, 18, 30))
+    for k in range(5):
+        p.box((0.14, 0.18, 0.003), (rng.uniform(-0.3, 0.3), rng.uniform(-0.3, 0.3), 0.003 + k * 0.001), "pal_vellum",
+              rot=(0, 0, rng.uniform(0, 180)))
+    _candle(p, (-0.25, 0.22, 0.0), 0.05)
+
+
+@model("bucket_brush", "free", ["bucket_brush"])
+def bucket_brush(p):
+    """A wooden bucket of water with a scrubbing brush across it and a rag over the rim."""
+    p.lathe([(0.0, 0.0), (0.11, 0.0), (0.13, 0.26), (0.0, 0.26)], (0, 0, 0), "pal_walnut", segs=14)
+    for z in (0.05, 0.2):
+        p.cyl(0.115 + z * 0.08, 0.016, (0, 0, z), "pal_stone_deep", segs=14)
+    p.cyl(0.12, 0.004, (0, 0, 0.24), "pal_moon_blue", segs=14)
+    p.box((0.22, 0.06, 0.04), (0.02, 0.0, 0.28), "pal_umber", rot=(0, 0, 20))
+    p.box((0.1, 0.12, 0.02), (-0.1, 0.06, 0.25), "pal_bone", rot=(30, 0, 0), soft=0.01, segs=1)
+
+
+@model("shelf_goods", "wall", ["shelf_goods"])
+def shelf_goods(p):
+    """A shelf on the wall with a household's things: jugs and pots, a stack of bowls, folded cloth and a basket."""
+    for z in (1.0, 1.34):
+        p.box((0.86, 0.22, 0.03), (0, -0.11, z), "pal_walnut")
+        for s in (-1, 1):
+            p.box((0.03, 0.18, 0.08), (s * 0.38, -0.08, z - 0.05), "pal_umber")
+    rng = p.rng
+    for k, x in enumerate((-0.32, -0.18, -0.04)):
+        p.lathe([(0.0, 0.0), (0.05, 0.0), (0.06, 0.09), (0.03, 0.14), (0.0, 0.14)], (x, -0.11, 1.015),
+                rng.choice(["pal_rust", "pal_bone_dark", "pal_umber"]), segs=10)
+    for k in range(4):
+        p.lathe([(0.0, 0.0), (0.04, 0.0), (0.07, 0.025), (0.0, 0.025)], (0.14, -0.11, 1.015 + k * 0.022), "pal_bone", segs=12)
+    p.box((0.18, 0.14, 0.08), (0.3, -0.11, 1.055), "pal_crimson", soft=0.015, segs=1)
+    p.lathe([(0.0, 0.0), (0.08, 0.0), (0.1, 0.1), (0.0, 0.1)], (-0.22, -0.11, 1.355), "pal_tan", segs=12)
+    for x in (0.0, 0.12, 0.26):
+        p.lathe([(0.0, 0.0), (0.035, 0.0), (0.04, 0.1), (0.015, 0.14), (0.0, 0.14)], (x, -0.11, 1.355), "pal_moss" if x else "pal_night", segs=10)
 
 
 @model("bedroll", "against_wall", ["bedroll", "bedroll_back"])

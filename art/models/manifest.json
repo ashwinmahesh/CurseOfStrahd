@@ -7113,6 +7113,209 @@
         "pal_umber"
       ],
       "triangles": 176
+    },
+    "crate_stack": {
+      "file": "art/models/crate_stack.glb",
+      "mount": "free",
+      "stands_for": [
+        "crate_stack"
+      ],
+      "size": [
+        0.848,
+        0.66,
+        0.65
+      ],
+      "materials": [
+        "pal_tan",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 336
+    },
+    "sack_pile": {
+      "file": "art/models/sack_pile.glb",
+      "mount": "free",
+      "stands_for": [
+        "sack_pile"
+      ],
+      "size": [
+        0.671,
+        0.402,
+        0.585
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_bone_dark",
+        "pal_parchment",
+        "pal_tan",
+        "pal_vellum"
+      ],
+      "triangles": 804
+    },
+    "table_meal": {
+      "file": "art/models/table_meal.glb",
+      "mount": "free",
+      "stands_for": [
+        "table_meal"
+      ],
+      "size": [
+        0.62,
+        0.59,
+        0.5
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_bone_dark",
+        "pal_ivory",
+        "pal_pewter",
+        "pal_rust",
+        "pal_silver",
+        "pal_tan",
+        "pal_umber",
+        "pal_vellum",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 684
+    },
+    "table_books": {
+      "file": "art/models/table_books.glb",
+      "mount": "free",
+      "stands_for": [
+        "table_books"
+      ],
+      "size": [
+        0.62,
+        0.582,
+        0.5
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_bone_dark",
+        "pal_ink",
+        "pal_ivory",
+        "pal_leather",
+        "pal_parchment",
+        "pal_tan",
+        "pal_vellum",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 548
+    },
+    "bench": {
+      "file": "art/models/bench.glb",
+      "mount": "free",
+      "stands_for": [
+        "bench",
+        "bench_back"
+      ],
+      "size": [
+        0.86,
+        0.385,
+        0.26
+      ],
+      "materials": [
+        "pal_rust",
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 156
+    },
+    "lantern_bracket": {
+      "file": "art/models/lantern_bracket.glb",
+      "mount": "wall",
+      "stands_for": [
+        "lantern_bracket"
+      ],
+      "size": [
+        0.15,
+        0.32,
+        0.295
+      ],
+      "materials": [
+        "glow_candle",
+        "pal_ink",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 122,
+      "sockets": {
+        "candle": [
+          0.0,
+          1.12,
+          0.22
+        ]
+      }
+    },
+    "floor_books": {
+      "file": "art/models/floor_books.glb",
+      "mount": "free",
+      "stands_for": [
+        "floor_books"
+      ],
+      "size": [
+        0.661,
+        0.127,
+        0.622
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_blood",
+        "pal_bog",
+        "pal_bone_dark",
+        "pal_ivory",
+        "pal_leather",
+        "pal_tan",
+        "pal_umber",
+        "pal_vellum"
+      ],
+      "triangles": 508
+    },
+    "bucket_brush": {
+      "file": "art/models/bucket_brush.glb",
+      "mount": "free",
+      "stands_for": [
+        "bucket_brush"
+      ],
+      "size": [
+        0.284,
+        0.3,
+        0.262
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_moon_blue",
+        "pal_stone_deep",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 268
+    },
+    "shelf_goods": {
+      "file": "art/models/shelf_goods.glb",
+      "mount": "wall",
+      "stands_for": [
+        "shelf_goods"
+      ],
+      "size": [
+        0.86,
+        0.585,
+        0.23
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_bone_dark",
+        "pal_crimson",
+        "pal_moss",
+        "pal_night",
+        "pal_rust",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 716
     }
   }
 }
