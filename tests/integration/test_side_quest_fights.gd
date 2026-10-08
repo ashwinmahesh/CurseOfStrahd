@@ -138,3 +138,27 @@ func test_the_lights_come_up_out_of_the_gorge() -> void:
 	assert_eq(e.combatants.filter(func(c: Combatant) -> bool: return c.side == &"enemy").size(), 4, "four will-o'-wisps")
 	await _end(v)
 	assert_true(bool(GameState.story.get_flag("wisps_beaten", false)))
+
+
+func test_dobres_lads_at_the_lamp_and_the_rider_at_the_gate() -> void:
+	var v := await _boot("vallaki", 21, 5, ["ribbons_list_known"])
+	await _fight(v, "ribbons_street", ["Watchman Dobre", "Dobre's lad"])
+	await _end(v)
+	assert_true(bool(GameState.story.get_flag("dobre_beaten", false)))
+	root.queue_free()
+	root = null
+	v = await _boot("vallaki", 21, 5, ["ribbons_list_known"])
+	await _fight(v, "ribbons_gate", ["Watchman Dobre", "The Rider on the Black Horse"])
+	await _end(v)
+
+
+func test_old_greytooth_comes_down_to_the_landing() -> void:
+	var v := await _boot("lake_zarovich", 19, 7, [])
+	var e := await _fight(v, "greytooth_hunt", ["Old Greytooth", "Szoldar"])
+	var boss: Combatant = null
+	for c in e.combatants:
+		if c.name() == "Old Greytooth":
+			boss = c
+	assert_true(boss != null and boss.creature.max_hp() >= 150, "the boss at full size")
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("hunters_at_the_inn"), "hunted")

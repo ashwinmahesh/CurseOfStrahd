@@ -431,6 +431,18 @@
       "model": "rubble",
       "search_dc": 13,
       "item": "net"
+    },
+    {
+      "id": "greytooth_shore",
+      "cell": [
+        18,
+        15
+      ],
+      "kind": "examine",
+      "label": "Pawprints as wide as a plate",
+      "model": "bones",
+      "dialogue": "vallaki/hunters_at_the_inn:shore",
+      "when": "quest.hunters_at_the_inn and quest.hunters_at_the_inn != rumored"
     }
   ],
   "containers": [
@@ -550,5 +562,330 @@
   "narration": {
     "enter": "enter:lake_zarovich"
   },
-  "rest": "risky"
+  "rest": "risky",
+  "encounters": [
+    {
+      "id": "greytooth_hunt",
+      "trigger": "dialogue",
+      "when": "not flag.szoldar_turned and not flag.szoldar_stays and level >= 8",
+      "text": "Old Greytooth comes down off the hill trail with his pack fanned out behind him, and the howl goes up from every throat at once.",
+      "monsters": [
+        {
+          "monster": "old_greytooth",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            14,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            10,
+            19
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            12,
+            22
+          ],
+          "name": "Castle Wolf"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            31,
+            16
+          ],
+          "name": "Szoldar"
+        }
+      ],
+      "surprise": "",
+      "flag": "greytooth_beaten",
+      "quest": {
+        "id": "hunters_at_the_inn",
+        "stage": "hunted"
+      },
+      "withdraw": {
+        "who": "bandit_captain",
+        "at_hp_below": 25,
+        "flag": "szoldar_fled"
+      }
+    },
+    {
+      "id": "greytooth_hunt",
+      "trigger": "dialogue",
+      "when": "not (not flag.szoldar_turned and not flag.szoldar_stays) and level >= 8",
+      "text": "Old Greytooth comes down off the hill trail with his pack fanned out behind him, and the howl goes up from every throat at once.",
+      "monsters": [
+        {
+          "monster": "old_greytooth",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            14,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            10,
+            19
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            12,
+            22
+          ],
+          "name": "Castle Wolf"
+        }
+      ],
+      "surprise": "",
+      "flag": "greytooth_beaten",
+      "quest": {
+        "id": "hunters_at_the_inn",
+        "stage": "hunted"
+      }
+    },
+    {
+      "id": "greytooth_hunt",
+      "trigger": "dialogue",
+      "when": "not flag.szoldar_turned and not flag.szoldar_stays and level >= 7",
+      "text": "Old Greytooth comes down off the hill trail with his pack fanned out behind him, and the howl goes up from every throat at once.",
+      "monsters": [
+        {
+          "monster": "old_greytooth",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            14,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            10,
+            19
+          ]
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            31,
+            16
+          ],
+          "name": "Szoldar"
+        }
+      ],
+      "surprise": "",
+      "flag": "greytooth_beaten",
+      "quest": {
+        "id": "hunters_at_the_inn",
+        "stage": "hunted"
+      },
+      "withdraw": {
+        "who": "bandit_captain",
+        "at_hp_below": 25,
+        "flag": "szoldar_fled"
+      }
+    },
+    {
+      "id": "greytooth_hunt",
+      "trigger": "dialogue",
+      "when": "not (not flag.szoldar_turned and not flag.szoldar_stays) and level >= 7",
+      "text": "Old Greytooth comes down off the hill trail with his pack fanned out behind him, and the howl goes up from every throat at once.",
+      "monsters": [
+        {
+          "monster": "old_greytooth",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            14,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            10,
+            19
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "greytooth_beaten",
+      "quest": {
+        "id": "hunters_at_the_inn",
+        "stage": "hunted"
+      }
+    },
+    {
+      "id": "greytooth_hunt",
+      "trigger": "dialogue",
+      "when": "not flag.szoldar_turned and not flag.szoldar_stays",
+      "text": "Old Greytooth comes down off the hill trail with his pack fanned out behind him, and the howl goes up from every throat at once.",
+      "monsters": [
+        {
+          "monster": "old_greytooth",
+          "cell": [
+            18,
+            21
+          ],
+          "hp": 150
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            14,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            20
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            16,
+            22
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            20,
+            22
+          ]
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            31,
+            16
+          ],
+          "name": "Szoldar"
+        }
+      ],
+      "surprise": "",
+      "flag": "greytooth_beaten",
+      "quest": {
+        "id": "hunters_at_the_inn",
+        "stage": "hunted"
+      },
+      "withdraw": {
+        "who": "bandit_captain",
+        "at_hp_below": 25,
+        "flag": "szoldar_fled"
+      }
+    },
+    {
+      "id": "greytooth_hunt",
+      "trigger": "dialogue",
+      "when": "not (not flag.szoldar_turned and not flag.szoldar_stays)",
+      "text": "Old Greytooth comes down off the hill trail with his pack fanned out behind him, and the howl goes up from every throat at once.",
+      "monsters": [
+        {
+          "monster": "old_greytooth",
+          "cell": [
+            18,
+            21
+          ],
+          "hp": 150
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            14,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            20
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            16,
+            22
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            20,
+            22
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "greytooth_beaten",
+      "quest": {
+        "id": "hunters_at_the_inn",
+        "stage": "hunted"
+      }
+    }
+  ]
 }

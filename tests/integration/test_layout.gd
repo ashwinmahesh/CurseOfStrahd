@@ -247,6 +247,19 @@ func test_the_settings_pages() -> void:
 			root.get("screen").call("_show_settings", page)
 			await _frames(2)
 			return root.get("screen"), _close_screen)
+	# Display with the Depth blur row at its longest choice (owner 2026-10-08: Off, Corners, Edges, Wide).
+	var longest := ""
+	for id: String in Atmosphere.EDGE_BLURS:
+		if longest == "" or str(Atmosphere.EDGE_BLURS[id]["name"]).length() > str(Atmosphere.EDGE_BLURS[longest]["name"]).length():
+			longest = id
+	GameSettings.set_blur_reach(longest)
+	await _check("the settings (Display, depth blur %s)" % Atmosphere.EDGE_BLURS[longest]["name"], func() -> Variant:
+		root.call("open_screen", "menu", 0)
+		await _frames(1)
+		root.get("screen").call("_show_settings", "Display")
+		await _frames(2)
+		return root.get("screen"), _close_screen)
+	GameSettings.set_blur_reach("")
 
 
 ## The journal's Bestiary (U8) with every creature in the game met, a third of them felled and a third studied.

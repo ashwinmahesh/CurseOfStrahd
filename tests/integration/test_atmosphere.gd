@@ -492,3 +492,37 @@ func test_the_mists_show_outdoors() -> void:
 	assert_eq(float(inside_post.get_shader_parameter("mist_strength")), 0.0, "none indoors")
 	for v: LocationView in [woods, town, inside]:
 		v.queue_free()
+
+
+## The depth blur is the screen pass's edge blur (owner 2026-10-08): in the Modern look at the reach Settings picked
+## (Edges with none saved), off at once with Settings > Depth blur off, easing off as the camera tilts to the horizon.
+## The camera has no depth of field of its own, so the names, rings and markers drawn after the pass stay sharp.
+func test_the_depth_blur_is_the_screen_pass_edge_blur() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	GameSettings.set_value("depth_blur", true, false)
+	GameSettings.set_value("blur_reach", "", false)
+	var v := _view("vallaki")
+	await get_tree().process_frame
+	var post := (v.post.mesh as QuadMesh).material as ShaderMaterial
+	assert_eq(float(post.get_shader_parameter("edge_blur")), 1.0, "on")
+	assert_eq(float(post.get_shader_parameter("edge_blur_start")), float(Atmosphere.EDGE_BLURS["edges"]["start"]),
+		"Edges with no reach saved")
+	assert_true(v.rig.camera.attributes == null, "no depth of field on the camera")
+	GameSettings.set_value("blur_reach", "corners", false)
+	await get_tree().process_frame
+	assert_eq(float(post.get_shader_parameter("edge_blur_start")), float(Atmosphere.EDGE_BLURS["corners"]["start"]),
+		"Corners")
+	v.rig.horizon = 1.0
+	v.rig.snap_to_target()
+	await get_tree().process_frame
+	assert_eq(float(post.get_shader_parameter("edge_blur")), 0.0, "looking out to the horizon")
+	v.rig.horizon = 0.0
+	v.rig.snap_to_target()
+	GameSettings.set_value("depth_blur", false, false)
+	await get_tree().process_frame
+	assert_eq(float(post.get_shader_parameter("edge_blur")), 0.0, "off at once")
+	GameSettings.set_value("depth_blur", true, false)
+	GameSettings.set_value("blur_reach", "", false)
+	v.queue_free()
+	Look.set_style(was, false)

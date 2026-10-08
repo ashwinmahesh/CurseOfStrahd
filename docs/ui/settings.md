@@ -10,7 +10,7 @@ Three pages in the pause menu's arch, picked by the names under the title:
 | Page | Rows |
 |---|---|
 | Game | Difficulty (Story, Balanced, Tactician; lane 22's `Difficulty`), Fights (Normal, Fast), Narration (Fades, Stays), Exploring (Real time, Turn-based; lane 25's F7), the respec box |
-| Display | Look (Modern, Classic), Graphics (Low, Medium, High: lane 6's `Graphics` presets), Window, Depth blur, Interface (85% to 120%), Text (Normal, Large, Larger) |
+| Display | Look (Modern, Classic), Graphics (Low, Medium, High: lane 6's `Graphics` presets), Window, Depth blur (Off, Corners, Edges, Wide: how far in from the screen's edges the Modern look's blur reaches, `Atmosphere.EDGE_BLURS`), Interface (85% to 120%), Text (Normal, Large, Larger) |
 | Keys | every command's key and alternate (`KeysPage`) |
 
 Difficulty lives in the playthrough's options, not the settings file. Honour is only listed while it's the mode (it's

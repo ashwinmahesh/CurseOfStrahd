@@ -778,6 +778,18 @@
       "model": "grave_mound",
       "dialogue": "vallaki/black_roses:grave",
       "when": "flag.ana_grave_known or flag.roses_spawn_destroyed"
+    },
+    {
+      "id": "ribbon_lamp",
+      "cell": [
+        21,
+        20
+      ],
+      "kind": "examine",
+      "label": "A loose stone at the lamp post",
+      "model": "rubble",
+      "dialogue": "vallaki/ribbons:lamp",
+      "when": "quest.ribbons"
     }
   ],
   "lights": [
@@ -1349,6 +1361,17 @@
     {
       "npc": "vallaki_ribbon_girl",
       "cell": [
+        22,
+        21
+      ],
+      "dialogue": "vallaki/ribbons:after",
+      "facing": "west",
+      "approach": 8,
+      "when": "flag.dobre_beaten and not flag.ribbons_resolved"
+    },
+    {
+      "npc": "vallaki_ribbon_girl",
+      "cell": [
         28,
         14
       ],
@@ -1420,7 +1443,8 @@
           "wait": 4,
           "face": "east"
         }
-      ]
+      ],
+      "when": "not flag.dobre_beaten"
     },
     {
       "npc": "vallaki_raker",
@@ -2926,6 +2950,306 @@
       ],
       "surprise": "",
       "flag": "roses_spawn_destroyed"
+    },
+    {
+      "id": "ribbons_street",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "Two of Dobre's lads come round the corner at a run, and two more out of the guardhouse, and none of them are smiling now.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            23,
+            22
+          ],
+          "name": "Watchman Dobre"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            18,
+            23
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            25,
+            21
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            16,
+            21
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            26,
+            23
+          ],
+          "name": "Dobre's lad"
+        }
+      ],
+      "surprise": "",
+      "flag": "dobre_beaten"
+    },
+    {
+      "id": "ribbons_gate",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "The rider wheels his black horse in the gateway and comes back in, drawing a sabre, while Dobre's lads come running up the street.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            4,
+            22
+          ],
+          "name": "Watchman Dobre"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            2,
+            20
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            5,
+            23
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            3,
+            24
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            6,
+            22
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            1,
+            22
+          ],
+          "name": "The Rider on the Black Horse"
+        },
+        {
+          "monster": "scout",
+          "cell": [
+            6,
+            20
+          ],
+          "name": "Rider's Man"
+        }
+      ],
+      "surprise": "",
+      "flag": "dobre_beaten"
+    },
+    {
+      "id": "ribbons_street",
+      "trigger": "dialogue",
+      "when": "level >= 5",
+      "text": "Two of Dobre's lads come round the corner at a run, and two more out of the guardhouse, and none of them are smiling now.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            23,
+            22
+          ],
+          "name": "Watchman Dobre"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            18,
+            23
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            25,
+            21
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            16,
+            21
+          ],
+          "name": "Dobre's lad"
+        }
+      ],
+      "surprise": "",
+      "flag": "dobre_beaten"
+    },
+    {
+      "id": "ribbons_gate",
+      "trigger": "dialogue",
+      "when": "level >= 5",
+      "text": "The rider wheels his black horse in the gateway and comes back in, drawing a sabre, while Dobre's lads come running up the street.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            4,
+            22
+          ],
+          "name": "Watchman Dobre"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            2,
+            20
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            5,
+            23
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            3,
+            24
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            1,
+            22
+          ],
+          "name": "The Rider on the Black Horse"
+        },
+        {
+          "monster": "scout",
+          "cell": [
+            6,
+            20
+          ],
+          "name": "Rider's Man"
+        }
+      ],
+      "surprise": "",
+      "flag": "dobre_beaten"
+    },
+    {
+      "id": "ribbons_street",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "Two of Dobre's lads come round the corner at a run, and two more out of the guardhouse, and none of them are smiling now.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            23,
+            22
+          ],
+          "name": "Watchman Dobre"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            18,
+            23
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            25,
+            21
+          ],
+          "name": "Dobre's lad"
+        }
+      ],
+      "surprise": "",
+      "flag": "dobre_beaten"
+    },
+    {
+      "id": "ribbons_gate",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "The rider wheels his black horse in the gateway and comes back in, drawing a sabre, while Dobre's lads come running up the street.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            4,
+            22
+          ],
+          "name": "Watchman Dobre"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            2,
+            20
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            5,
+            23
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            1,
+            22
+          ],
+          "name": "The Rider on the Black Horse"
+        },
+        {
+          "monster": "scout",
+          "cell": [
+            6,
+            20
+          ],
+          "name": "Rider's Man"
+        }
+      ],
+      "surprise": "",
+      "flag": "dobre_beaten"
     }
   ],
   "narration": {

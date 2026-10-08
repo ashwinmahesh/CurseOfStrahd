@@ -1,8 +1,8 @@
 extends TestCase
 ## The pause menu's Settings pages (docs/plans/ui_polish.md): each choice flips with a click and is kept in the
 ## player's settings file (the test runner's own here), the look switch publishes to the cel shaders, a fast fight
-## halves the pace, Escape goes back to the menu, the Display page sets graphics and the interface and text sizes
-## (U4, W17), and the Keys page takes a new key (U5).
+## halves the pace, Escape goes back to the menu, the Display page sets graphics, the depth blur's reach and the
+## interface and text sizes (U4, W17), and the Keys page takes a new key (U5).
 
 const SCENE := preload("res://scenes/combat/arena.tscn")
 
@@ -22,6 +22,8 @@ func after_each() -> void:
 	GameSettings.set_narration_stays(false)
 	GameSettings.set_ui_scale(1.0)
 	GameSettings.set_text_scale(1.0)
+	GameSettings.set_depth_blur(true)
+	GameSettings.set_blur_reach("")
 	Graphics.set_preset(Graphics.DEFAULT_PRESET)
 	InputActions.reset()
 	GameState.story.options.erase("difficulty")
@@ -126,6 +128,30 @@ func test_the_left_arrow_steps_back() -> void:
 	b.pressed.emit()
 	assert_eq(GameSettings.ui_scale(), 0.85, "100% steps back to 85%")
 	assert_true(b.text.contains("85%"))
+
+
+## Depth blur (owner request 2026-10-08): off, or how far in from the screen's edges it reaches (Atmosphere.EDGE_BLURS),
+## kept in the settings file; a file without the reach reads as the default, Edges.
+func test_depth_blur_steps_through_its_reaches() -> void:
+	var menu := await _menu("Display")
+	var b := _choice(menu, "Depth blur")
+	assert_eq(GameSettings.blur_reach(), "", "no reach saved")
+	assert_eq(Atmosphere.edge_blur(), "edges", "reads as Edges")
+	assert_true(b.text.contains("Edges"), "on by default, at Edges")
+	b.pressed.emit()
+	assert_eq(Atmosphere.edge_blur(), "wide", "Edges steps to Wide")
+	b.pressed.emit()
+	assert_false(GameSettings.depth_blur(), "Wide steps round to Off")
+	assert_true(b.text.contains("Off"))
+	b.pressed.emit()
+	assert_true(GameSettings.depth_blur(), "Off steps to Corners")
+	assert_eq(Atmosphere.edge_blur(), "corners")
+	var cfg := ConfigFile.new()
+	assert_eq(cfg.load(GameSettings.path), OK)
+	assert_eq(str(cfg.get_value(GameSettings.SECTION, "blur_reach", "")), "corners")
+	assert_true(bool(cfg.get_value(GameSettings.SECTION, "depth_blur", false)))
+	GameSettings.set_blur_reach("sideways")
+	assert_eq(Atmosphere.edge_blur(), "edges", "a reach the game doesn't know reads as Edges")
 
 
 func test_the_interface_size_applies_only_to_the_play_screen() -> void:
