@@ -36,6 +36,8 @@ var ground_view: GroundView
 var fx: SpellFx
 ## What enemies shout and creatures sound like (world/combat/combat_barks.gd).
 var barks: CombatBarks
+## Who is concentrating on what (combatant id -> spell id), for the sound when a blow breaks it.
+var _concentrating: Dictionary = {}
 var rig: CameraRig
 var hud: CombatHud
 var tokens: Dictionary = {}
@@ -1066,6 +1068,28 @@ static func _damage_after(events: Array, at: int, id: String) -> int:
 	return -1
 
 
+## A spell `caster` just cast that it now concentrates on: a soft cue after the spell's own sound.
+func _concentration_begins(caster: CombatToken, spell_id: String) -> void:
+	if caster == null:
+		return
+	var conc := caster.combatant.creature.concentration
+	if conc == null or conc.ended or conc.source_id != spell_id:
+		return
+	_concentrating[caster.combatant.id] = spell_id
+	get_tree().create_timer(0.4 * GameSettings.combat_pace()).timeout.connect(func() -> void: CombatSfx.concentration(true))
+
+
+## `c` was hit or fell: if that ended the spell it was concentrating on, the sound of it breaking.
+func _concentration_kept(c: Combatant) -> void:
+	if not _concentrating.has(c.id):
+		return
+	var conc := c.creature.concentration
+	if conc != null and not conc.ended and conc.source_id == str(_concentrating[c.id]):
+		return
+	_concentrating.erase(c.id)
+	CombatSfx.concentration(false)
+
+
 ## Where a token stands: its square's centre, raised onto the mount's back for a rider.
 func _token_spot(c: Combatant, cell: Vector2i) -> Vector3:
 	var p := board.cell_center(cell, c.size_cells)
@@ -1169,6 +1193,7 @@ func _play_events() -> void:
 					t.refresh()
 					if t.combatant.creature.hp > 0 and CombatSfx.heavy(int(ev["amount"]), t.combatant.creature.max_hp()):
 						barks.bark(t.combatant, "hurt")
+					_concentration_kept(t.combatant)
 					await get_tree().create_timer(0.35 * GameSettings.combat_pace()).timeout
 			"heal":
 				var th := _tok(str(ev["id"]))
@@ -1180,6 +1205,8 @@ func _play_events() -> void:
 				var tc := _tok(str(ev["id"]))
 				if tc != null:
 					tc.refresh()
+					if kind in ["down", "death"]:
+						_concentration_kept(tc.combatant)
 					if kind == "down" and tc.combatant.side in [&"party", &"guest"]:
 						# A hero falls (owner ask 2026-10-07): the body drops, a thud and a bell, and their frame cries out.
 						Audio.sfx("fall")
@@ -1228,6 +1255,7 @@ func _play_events() -> void:
 								at.append(tt0)
 						var rolls := str(Compendium.shared().spell_data(str(ev["spell"])).get("attack", "")) != ""
 						await fx.cast(cue, caster, at, ev.get("cells", []) as Array, board, rolls)
+				_concentration_begins(caster, str(ev["spell"]))
 				var cells := ev.get("cells", []) as Array
 				if not cells.is_empty():
 					overlay.show_cells("area", cells)
@@ -1238,6 +1266,8 @@ func _play_events() -> void:
 				_stop_walking(walking)
 				var ab := _tok(str(ev["by"]))
 				var acu := SpellFx.ability_cue(str(ev.get("source", "")), str(ev["key"]), ab.combatant) if SpellFx.enabled and ab != null else {}
+				if acu.is_empty() and str(ev.get("source", "")) == "feature":
+					CombatSfx.feature(str(ev["key"]))   # Bladesong, Vow of Enmity: a sound as it switches on
 				if not acu.is_empty():
 					ab.flash((acu["colours"] as Dictionary)["glow"], 0.3)
 					var on: Array[CombatToken] = []
@@ -1341,6 +1371,10 @@ func _play_events() -> void:
 				var tn := _tok(str(ev["id"]))
 				if tn != null:
 					barks.bark(tn.combatant, "battle")   # a kind of enemy cries out the first time one acts
+				for cid: Variant in _concentrating.keys():
+					var cc := e.get_c(str(cid))
+					if cc == null or cc.creature.concentration == null or cc.creature.concentration.ended:
+						_concentrating.erase(cid)   # it ran out or was let go: nothing breaks
 			"round":
 				if not _opening:   # the opening beat shows "Roll Initiative", then round 1
 					hud.banner("Round %d" % int(ev["round"]), 1.0)

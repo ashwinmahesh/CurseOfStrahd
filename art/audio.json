@@ -129,7 +129,29 @@
     "river": -6.0,
     "waterfall": -6.0,
     "combat_hard": -4.0,
-    "strahd": -2.0
+    "strahd": -2.0,
+    "rage_1": -5.3,
+    "rage_2": -1.1,
+    "rage_3": -6.3,
+    "bladesong_1": -4.9,
+    "bladesong_2": -8.0,
+    "bladesong_3": -6.0,
+    "wild_shape_1": -2.0,
+    "wild_shape_2": -8.0,
+    "sacred_weapon_1": -2.0,
+    "sacred_weapon_2": -4.0,
+    "innate_sorcery_1": -2.0,
+    "innate_sorcery_2": -8.0,
+    "hunters_mark_1": -1.5,
+    "hunters_mark_2": -10.0,
+    "divine_favor_1": 7.9,
+    "divine_favor_2": -10.1,
+    "concentration_start_1": -10.0,
+    "concentration_break_1": -4.0,
+    "concentration_break_2": -10.0,
+    "vow_of_enmity_1": -2.0,
+    "vow_of_enmity_2": -6.1,
+    "vow_of_enmity_3": 1.9
   },
   "music": {
     "title": [
@@ -645,6 +667,137 @@
     ],
     "trap": [
       "res://art/sourced/oga_mechanical_bmaczero/clank1.wav"
+    ],
+    "rage_1": [
+      "res://art/sourced/oga_boom_pack_dklon/boom1.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom2.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom3.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom4.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom5.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom6.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom7.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom8.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom9.wav"
+    ],
+    "rage_2": [
+      "res://art/sourced/oga_fleshy_fight_leamon/punch_alt-2a.wav",
+      "res://art/sourced/oga_fleshy_fight_leamon/punch_alt-2b.wav"
+    ],
+    "rage_3": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_02.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Launch_03.wav"
+    ],
+    "bladesong_1": [
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-1.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-2.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-3.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-4.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-5.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-6.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-7.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-8.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-9.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-10.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-11.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-12.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-13.wav"
+    ],
+    "bladesong_2": [
+      "res://art/sourced/oga_swords_starninjas/sword_clash.1.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.2.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.3.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.4.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.5.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.6.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.7.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.8.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.9.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.10.ogg"
+    ],
+    "bladesong_3": [
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_3.ogg"
+    ],
+    "wild_shape_1": [
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_7_0.ogg"
+    ],
+    "wild_shape_2": [
+      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_roar_01.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_roar_02.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/creature_roar_03.ogg"
+    ],
+    "sacred_weapon_1": [
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_4.ogg"
+    ],
+    "sacred_weapon_2": [
+      "res://art/sourced/oga_swords_starninjas/sword_clash.1.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.2.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.3.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.4.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.5.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.6.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.7.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.8.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.9.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword_clash.10.ogg"
+    ],
+    "innate_sorcery_1": [
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_6_0.ogg"
+    ],
+    "innate_sorcery_2": [
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_01.ogg",
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_02.ogg",
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_03.ogg"
+    ],
+    "hunters_mark_1": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Teleport_In.wav"
+    ],
+    "hunters_mark_2": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_004.ogg"
+    ],
+    "divine_favor_1": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_02.wav"
+    ],
+    "divine_favor_2": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_02.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_03.wav"
+    ],
+    "concentration_start_1": [
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_2.ogg"
+    ],
+    "concentration_break_1": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_medium_004.ogg"
+    ],
+    "concentration_break_2": [
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_01.ogg",
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_02.ogg",
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_air_03.ogg"
+    ],
+    "vow_of_enmity_1": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactPunch_heavy_004.ogg"
+    ],
+    "vow_of_enmity_2": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_02.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Fireball Impact_03.wav"
+    ],
+    "vow_of_enmity_3": [
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_01.wav",
+      "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_02.wav"
     ]
   },
   "ambient": {
@@ -916,6 +1069,63 @@
           "hold_chains",
           "mind_shimmer"
         ]
+      },
+      "rage": {
+        "cast": [
+          "rage_1",
+          "rage_2",
+          "rage_3@0.05"
+        ]
+      },
+      "bladesong": {
+        "cast": [
+          "bladesong_1",
+          "bladesong_2@0.1",
+          "bladesong_3@0.1"
+        ]
+      },
+      "wild_shape": {
+        "cast": [
+          "wild_shape_1",
+          "wild_shape_2@0.25"
+        ]
+      },
+      "sacred_weapon": {
+        "cast": [
+          "sacred_weapon_1",
+          "sacred_weapon_2@0.1"
+        ]
+      },
+      "innate_sorcery": {
+        "cast": [
+          "innate_sorcery_1",
+          "innate_sorcery_2"
+        ]
+      },
+      "hunters_mark": {
+        "cast": [
+          "hunters_mark_1",
+          "hunters_mark_2@0.1"
+        ]
+      },
+      "divine_favor": {
+        "cast": [
+          "divine_favor_1",
+          "divine_favor_2@0.1"
+        ]
+      },
+      "vow_of_enmity": {
+        "cast": [
+          "vow_of_enmity_1",
+          "vow_of_enmity_2@0.05",
+          "vow_of_enmity_3@0.05"
+        ]
+      },
+      "hex": {
+        "cast": [
+          "hunters_mark_1",
+          "hunters_mark_2@0.1"
+        ]
       }
     },
     "hits": {
@@ -979,6 +1189,15 @@
           "bone_snap"
         ]
       }
+    },
+    "concentration": {
+      "start": [
+        "concentration_start_1"
+      ],
+      "break": [
+        "concentration_break_1",
+        "concentration_break_2@0.05"
+      ]
     }
   },
   "rises": {

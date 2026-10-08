@@ -17,6 +17,8 @@ func _named_ids() -> Array[String]:
 				for id in CombatSfx._list(((d[table] as Dictionary)[k] as Dictionary)[moment]):
 					if not id.begins_with("@"):
 						out.append(id)
+	for moment: String in d.get("concentration", {}) as Dictionary:
+		out.append_array(CombatSfx._list((d["concentration"] as Dictionary)[moment]))
 	for table: String in ["flavours", "hits"]:
 		for k: String in d.get(table, {}) as Dictionary:
 			for moment: String in (d[table] as Dictionary)[k] as Dictionary:
@@ -24,8 +26,18 @@ func _named_ids() -> Array[String]:
 	return out
 
 
+## A class or subclass feature's id, anywhere in data/classes or data/subclasses (Bladesong, Vow of Enmity, Wild Shape).
+func _is_class_feature(key: String) -> bool:
+	for dir: String in ["res://data/classes/", "res://data/subclasses/"]:
+		for f in DirAccess.get_files_at(dir):
+			if f.ends_with(".json") and FileAccess.get_file_as_string(dir + f).contains('"id": "%s"' % key):
+				return true
+	return false
+
+
 func test_every_sound_named_has_a_recording() -> void:
-	for id in _named_ids():
+	for entry in _named_ids():
+		var id := entry.get_slice("@", 0)
 		assert_false(Audio.files("sfx", id).is_empty(), "art/audio.json combat names %s, which has no recording in sfx" % id)
 
 
@@ -40,7 +52,7 @@ func test_picks_name_real_families_flavours_and_keys() -> void:
 		var known := false
 		for table: String in ["spells", "features", "monsters"]:
 			known = known or (looks.get(table, {}) as Dictionary).has(key)
-		known = known or not Compendium.shared().spell_data(key).is_empty()
+		known = known or not Compendium.shared().spell_data(key).is_empty() or _is_class_feature(key)
 		assert_true(known, "combat sounds for %s, which is no spell, feature or monster action" % key)
 	for kind: String in ["blade", "point", "blunt", "shot"]:
 		for tier: String in ["light", "heavy", "critical"]:
@@ -77,3 +89,15 @@ func test_a_blow_sounds_by_what_struck_and_how_hard() -> void:
 	assert_eq(CombatSfx.hit_kind(null, "weapon:spear"), "point")
 	assert_eq(CombatSfx.hit_kind(null, "weapon:longbow@arrow"), "shot")
 	assert_eq(CombatSfx.hit_kind(null, "thrown:handaxe"), "shot")
+
+
+func test_class_abilities_and_concentration_have_their_own_sounds() -> void:
+	for key: String in ["rage", "bladesong", "wild_shape", "vow_of_enmity", "sacred_weapon", "innate_sorcery", "hunters_mark", "hex",
+			"divine_favor"]:
+		assert_false(CombatSfx._list(CombatSfx.own(key).get("cast", [])).is_empty(), "%s sounds as it switches on" % key)
+	assert_eq(CombatSfx.own("wild_shape:wolf"), CombatSfx.own("wild_shape"), "a Wild Shape form sounds like Wild Shape")
+	assert_eq(CombatSfx.ids_for({"key": "hunters_mark", "family": "debuff", "flavour": "nature"}, "cast"),
+		CombatSfx._list(CombatSfx.own("hunters_mark")["cast"]), "a spell's own sound wins over its look's family")
+	for moment: String in ["start", "break"]:
+		assert_false(CombatSfx._list((CombatSfx.data().get("concentration", {}) as Dictionary).get(moment, [])).is_empty(),
+			"Concentration has a sound when it %ss" % moment)
