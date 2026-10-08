@@ -263,6 +263,7 @@ func test_ice_knife_bursts_around_its_target() -> void:
 func test_chromatic_orb_uses_the_chosen_damage_type() -> void:
 	var e := _setup(["chromatic_orb"], 4)
 	var c := _caster(e)
+	TestCombat.give_components(c.creature as Character, ["chromatic_orb"])
 	var t := TestCombat.punching_bag(e, Vector2i(6, 3))
 	t.creature.base_immunities.append("acid")
 	TestCombat.start_with(e, c)

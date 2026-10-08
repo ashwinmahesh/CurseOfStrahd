@@ -29,6 +29,7 @@ func _try(spell_id: String, seed_value: int) -> Dictionary:
 	var e := TestCombat.open_field(seed_value)
 	var data0 := Compendium.shared().spell_data(spell_id)
 	var c := TestCombat.caster_with(e, [spell_id], Vector2i(2, 3))
+	TestCombat.give_components(c.creature as Character, [spell_id])   # its costly material component, carried
 	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(2, 4))
 	var kind := str((data0.get("targets", {}) as Dictionary).get("creature_type", "humanoid"))
 	var f1 := TestCombat.punching_bag(e, Vector2i(3, 3), 80, kind)

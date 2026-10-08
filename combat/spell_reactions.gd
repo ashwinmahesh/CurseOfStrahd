@@ -216,6 +216,9 @@ func cast_reactive_spell(c: Combatant, spell_id: String, target: Combatant) -> C
 	if slot > 0:
 		ch.expend_slot(slot)
 		c.cast_slot_spell_this_turn = true
+	var used := ch.use_component(s) if ch != null else ""
+	if used != "":
+		e.log.add("info", "%s uses up %s (%s)" % [c.name(), used, s["name"]], c.id)
 	var conc: Concentration = null
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
 		conc = c.creature.begin_concentration(spell_id, str(s["name"]))

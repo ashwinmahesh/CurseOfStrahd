@@ -56,6 +56,7 @@ func test_familiar_friend_casts_free_and_fortifies_the_familiar() -> void:
 
 func test_a_familiar_called_as_a_ritual_stays_until_lost() -> void:
 	var ch := TestChars.custom("wizard", "human", 3, {}, "familiar_trainer")
+	TestCombat.give_components(ch, ["find_familiar"])   # the incense a Ritual still burns
 	var st := StoryState.new()
 	st.party.append(ch)
 	var e := TestCombat.open_field(3)
