@@ -34,6 +34,8 @@ var field: FieldView
 var fx: SpellFx
 ## What enemies shout and creatures sound like (world/combat/combat_barks.gd).
 var barks: CombatBarks
+## Heavy hits, crits, killing blows, the last foe and big spells landing with weight (G2, world/combat/combat_impact.gd).
+var impact: CombatImpact
 var rig: CameraRig
 var hud: CombatHud
 var tokens: Dictionary = {}
@@ -85,6 +87,8 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	add_child(fx)
 	barks = CombatBarks.new()
 	add_child(barks)
+	impact = CombatImpact.new(rig)
+	add_child(impact)
 	hud = CombatHud.new()
 	add_child(hud)
 	hud.build(e, catalog)
@@ -1039,8 +1043,16 @@ func _play_events() -> void:
 	# Who just played their attack as a spell gesture: the spell's own attack rolls that follow don't replay it.
 	var cast_by := ""
 	var ev_at := -1   # where `ev` is in `events`, for what follows it
+	# Where the fight's last foe falls in these events (slow motion on the blow that does it), and whether it played.
+	var final_fall := CombatImpact.last_fall(e, events)
+	var final_played := false
+	# A big spell's camera turn holds until its damage has shown (the next blow, move or turn).
+	var turned_until := -1
 	for ev in events:
 		ev_at += 1
+		if turned_until >= 0 and ev_at >= turned_until:
+			turned_until = -1
+			impact.spell_landed()
 		if _closed:
 			return   # the story took the fight back mid-way: its tokens may be gone
 		var kind := str(ev["type"])
@@ -1102,6 +1114,9 @@ func _play_events() -> void:
 						await tw2.finished
 						if not acue.is_empty() and bool(ev["hit"]):
 							fx.on_hit(acue, a, d, bool(ev.get("critical", false)))
+					if bool(ev["hit"]):
+						var struck: Array[CombatToken] = [d]
+						final_played = _impact_on(struck, events, ev_at, final_fall, bool(ev.get("critical", false))) or final_played
 					# A blow sounds by what struck and how hard it landed (CombatSfx); a spell's missile or a magic touch
 					# already sounded as its effect landed.
 					if not bool(ev["hit"]):
@@ -1135,6 +1150,10 @@ func _play_events() -> void:
 				var tc := _tok(str(ev["id"]))
 				if tc != null:
 					tc.refresh()
+					if ev_at == final_fall and not final_played:
+						# The last foe fell to something that wasn't a blow played above (an aura, a turn's damage).
+						final_played = true
+						impact.hit(tc, 0, 1, false, true, true)
 					if kind == "down" and tc.combatant.side in [&"party", &"guest"]:
 						# A hero falls (owner ask 2026-10-07): the body drops, a thud and a bell, and their frame cries out.
 						Audio.sfx("fall")
@@ -1167,6 +1186,7 @@ func _play_events() -> void:
 				if caster != null:
 					caster.flash((cue["colours"] as Dictionary)["glow"] if not cue.is_empty() else Look.color("lilac"), 0.3)
 					var aim := _spell_aim(ev, caster)
+					impact.spell_cast(str(ev["spell"]), caster.global_position, _spell_spot(ev, caster))
 					# The drawn spell gesture when the sprite has one (aimed, or facing as it is for a spell on itself);
 					# else casters whose attack is a spell gesture play that.
 					if caster.start_cast(aim):
@@ -1183,11 +1203,14 @@ func _play_events() -> void:
 								at.append(tt0)
 						var rolls := str(Compendium.shared().spell_data(str(ev["spell"])).get("attack", "")) != ""
 						await fx.cast(cue, caster, at, ev.get("cells", []) as Array, board, rolls)
+				var landed_on: Array[CombatToken] = []
+				final_played = _impact_on(landed_on, events, ev_at, final_fall, false) or final_played
 				var cells := ev.get("cells", []) as Array
 				if not cells.is_empty():
 					overlay.show_cells("area", cells)
 					await get_tree().create_timer(0.45 * GameSettings.combat_pace()).timeout
 					overlay.clear("area")
+				turned_until = CombatImpact.window_end(events, ev_at)
 			"ability":
 				# A class feature or a monster's save action (Second Wind, a breath, a wail): its effect, if it has one.
 				_stop_walking(walking)
@@ -1205,6 +1228,8 @@ func _play_events() -> void:
 						if ab.start_attack(Vector2(to.x, to.z)):
 							await ab.wait_for_strike()
 					await fx.cast(acu, ab, on, ev.get("cells", []) as Array, board, false)
+				var touched: Array[CombatToken] = []
+				final_played = _impact_on(touched, events, ev_at, final_fall, false) or final_played
 			"smite":
 				# A smite spell rides the hit that just landed (Divine Smite, Searing Smite...).
 				var sk := _tok(str(ev["caster"]))
@@ -1292,6 +1317,7 @@ func _play_events() -> void:
 				round_started.emit(int(ev["round"]))
 			"over":
 				_refresh_all()
+	impact.spell_landed()
 	_stop_walking(walking)
 	_refresh_all()
 
@@ -1336,6 +1362,56 @@ func _spell_aim(ev: Dictionary, caster: CombatToken) -> Vector2:
 		mid += board.cell_center(cell as Vector2i)
 	var d2 := mid / float(cells.size()) - caster.position
 	return Vector2(d2.x, d2.z) if Vector2(d2.x, d2.z).length() > 0.1 else Vector2.ZERO
+
+
+## Where a spell lands, on the ground: the middle of its other targets, else of its area; the caster's own spot for a
+## spell on itself.
+func _spell_spot(ev: Dictionary, caster: CombatToken) -> Vector3:
+	var sum := Vector3.ZERO
+	var n := 0
+	for id: Variant in ev.get("targets", []) as Array:
+		var t := _tok(str(id))
+		if t != null and t != caster:
+			sum += t.global_position
+			n += 1
+	if n == 0:
+		for cell: Variant in ev.get("cells", []) as Array:
+			sum += board.cell_center(cell as Vector2i)
+			n += 1
+	return sum / float(n) if n > 0 else caster.global_position
+
+
+## G2: the blow, spell or effect at `at` in `events` has landed on `struck` (for a spell or an effect, empty: its
+## victims are whoever its damage that follows hits). CombatImpact gives the moment its weight: the last foe's fall
+## in slow motion, else the hardest-hit creature's (a kill first, then the most damage) push-in or freeze. A kill
+## pushes in only on a single victim. True if it played the last foe's fall.
+func _impact_on(struck: Array[CombatToken], events: Array, at: int, final_fall: int, critical: bool) -> bool:
+	if not CombatImpact.on():
+		return false
+	var end := CombatImpact.window_end(events, at)
+	if final_fall > at and final_fall < end:
+		var last := _tok(str((events[final_fall] as Dictionary)["id"]))
+		if last != null:
+			impact.hit(last, 0, 1, critical, true, true)
+			return true
+	if struck.is_empty():
+		for i in range(at + 1, end):
+			var dv := events[i] as Dictionary
+			var dt := _tok(str(dv.get("id", ""))) if str(dv["type"]) == "damage" else null
+			if dt != null and not struck.has(dt):
+				struck.append(dt)
+	var best: CombatToken = null
+	var most := -1
+	for t in struck:
+		var score := _damage_after(events, at, t.combatant.id) + (100000 if CombatImpact.fells(events, at, t.combatant.id) else 0)
+		if score > most:
+			best = t
+			most = score
+	if best != null:
+		var id := best.combatant.id
+		impact.hit(best, _damage_after(events, at, id), best.combatant.creature.max_hp(), critical,
+			struck.size() == 1 and CombatImpact.fells(events, at, id), false)
+	return false
 
 
 ## A Narrator line in the combat log (and briefly as a banner), if the story has one for this moment.

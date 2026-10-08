@@ -16,6 +16,9 @@ const HORIZON_PITCH_DEG := -8.0
 const HORIZON_HEIGHT := 9.0
 const HORIZON_BACK := 25.0
 const HORIZON_FAR := 900.0
+## How far a full shake (shake = 1) jolts the view, in world units, and how fast it dies away (shake per second).
+const SHAKE_MAX := 0.16
+const SHAKE_FADE := 3.0
 
 var follow: Node3D
 var camera: Camera3D
@@ -25,6 +28,16 @@ var zoom_max := ZOOM_MAX
 ## How far toward the horizon the wheel has taken the camera (0 in play, 1 fully tilted), and how far it shows now.
 var horizon := 0.0
 var horizon_shown := 0.0
+## A shot over the play view for a fight's big moments (G2 combat impact, G3 a boss's entrance; lane 21), tweened by
+## CombatImpact and put back when the moment ends: shot_zoom under 1 pushes in, shot_pitch raises the camera's pitch
+## by that many degrees (looking flatter, up at a boss), and the view leans toward shot_focus by shot_weight (0 the
+## rig's own point, 1 centred on it). shake jolts the view and dies away by itself.
+var shot_zoom := 1.0
+var shot_pitch := 0.0
+var shot_focus := Vector3.ZERO
+var shot_weight := 0.0
+var shake := 0.0
+var _shake_rng := RandomNumberGenerator.new()
 var _far := 120.0
 var _yaw_steps := 0
 var _yaw := 0.0
@@ -87,16 +100,33 @@ func _process(delta: float) -> void:
 	var goal := deg_to_rad(45.0) + _yaw_steps * PI / 2.0
 	_yaw = lerp_angle(_yaw, goal, clampf(delta * 9.0, 0.0, 1.0))
 	horizon_shown = move_toward(horizon_shown, horizon, delta * 1.6)
+	_shake(delta)
 	_apply()
+
+
+## The shake's jolt for this frame, on the camera's own offsets so the rig's point and the shot stay put.
+func _shake(delta: float) -> void:
+	if shake <= 0.0:
+		if camera.h_offset != 0.0 or camera.v_offset != 0.0:
+			camera.h_offset = 0.0
+			camera.v_offset = 0.0
+		return
+	shake = maxf(shake - delta * SHAKE_FADE, 0.0)
+	var reach := shake * shake * SHAKE_MAX
+	camera.h_offset = _shake_rng.randf_range(-reach, reach)
+	camera.v_offset = _shake_rng.randf_range(-reach, reach)
 
 
 func _apply() -> void:
 	rotation = Vector3(0, _yaw, 0)
 	var k := smoothstep(0.0, 1.0, horizon_shown)
-	var play := deg_to_rad(PITCH_DEG)
-	var at := Vector3(0, -sin(play) * distance, cos(play) * distance) + Vector3(0, 0.6, 0)
+	var play := deg_to_rad(PITCH_DEG + shot_pitch)
+	var d := distance * shot_zoom
+	var at := Vector3(0, -sin(play) * d, cos(play) * d) + Vector3(0, 0.6, 0)
+	if shot_weight > 0.0:
+		at += Basis(Vector3.UP, -_yaw) * ((shot_focus - global_position) * shot_weight)
 	camera.position = at.lerp(Vector3(0, HORIZON_HEIGHT, HORIZON_BACK), k)
-	camera.rotation = Vector3(deg_to_rad(lerpf(PITCH_DEG, HORIZON_PITCH_DEG, k)), 0, 0)
+	camera.rotation = Vector3(deg_to_rad(lerpf(PITCH_DEG + shot_pitch, HORIZON_PITCH_DEG, k)), 0, 0)
 	var far := lerpf(_far, HORIZON_FAR, k)
 	if not is_equal_approx(camera.far, far):
 		camera.far = far
