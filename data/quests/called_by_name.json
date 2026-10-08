@@ -1,0 +1,48 @@
+{
+  "id": "called_by_name",
+  "name": "Called by Name",
+  "summary": "Big Tobar's son went into the trees after his dead mother's voice. Every night since, a voice from the gorge under Tser Falls has called his father in the boy's.",
+  "giver": "tser_tobar",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Zora says Big Tobar's son Nelu stood up from the fire three nights ago, said \"that's Mama\", and walked off toward the falls track. His mother has been dead six years.",
+      "objectives": [
+        "Ask Big Tobar about his son; he mends wheels at the Tser Pool camp"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Tobar went after Nelu and heard him calling out of the gorge under Tser Falls: \"Da, I'm down here, come down.\" Nobody at the camp will go to the falls at night. Tobar asked us to.",
+      "objectives": [
+        "Go to Tser Falls after dark"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "voices",
+      "journal": "At the falls after dark there are lights in the gorge, and voices. They called each of us by name, in the voice of someone we've lost. Will-o'-wisps: they feed on grief, and they speak in whatever voice will bring you to the edge.",
+      "objectives": [
+        "Put out the lights",
+        "Find Nelu"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "nelu_found",
+      "journal": "Nelu is alive, on a shelf of wet rock in the gorge, three days hungry. The lights had been calling his father in his voice.",
+      "objectives": [
+        "Bring Nelu home to the Tser Pool camp"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "home",
+      "journal": "Nelu is home. Big Tobar dropped a wheel on his own foot and didn't notice. Nelu sits with his back to the falls now, and sings over anything that calls.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

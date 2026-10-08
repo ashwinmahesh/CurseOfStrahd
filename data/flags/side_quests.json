@@ -310,6 +310,31 @@
       "id": "bride_buried",
       "type": "bool",
       "summary": "Zinaida is buried in the grave Mihail dug for his sister; Six Feet is over."
+    },
+    {
+      "id": "nelu_rumor",
+      "type": "bool",
+      "summary": "Zora told the party Big Tobar's son followed his dead mother's voice toward the falls (Called by Name)."
+    },
+    {
+      "id": "wisps_lured",
+      "type": "bool",
+      "summary": "At Tser Falls the voices drew someone toward the gorge's edge before the fight (the party starts it surprised)."
+    },
+    {
+      "id": "wisps_beaten",
+      "type": "bool",
+      "summary": "The will-o'-wisps in the gorge under Tser Falls were put out (encounter falls_wisps)."
+    },
+    {
+      "id": "nelu_saved",
+      "type": "bool",
+      "summary": "The party brought Nelu up from his ledge in the gorge."
+    },
+    {
+      "id": "nelu_home",
+      "type": "bool",
+      "summary": "Nelu is back at the Tser Pool camp and Tobar has paid the party."
     }
   ]
 }

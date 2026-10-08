@@ -198,6 +198,18 @@
       "label": "a necklace among the names on the cairn",
       "model": "gold_spill",
       "item": "necklace_of_adaptation"
+    },
+    {
+      "id": "gorge_voices",
+      "cell": [
+        6,
+        10
+      ],
+      "kind": "examine",
+      "label": "The edge of the gorge",
+      "model": "ledge",
+      "dialogue": "svalich_road/called_by_name:falls",
+      "when": "quest.called_by_name and quest.called_by_name != rumored and not flag.nelu_saved"
     }
   ],
   "containers": [
@@ -265,6 +277,258 @@
       "surprise": "party",
       "flag": "falls_werewolf_slain",
       "text": "Something has been sitting at the edge of the trees, listening to the water with you. It stands up on two legs."
+    },
+    {
+      "id": "falls_wisps",
+      "trigger": "dialogue",
+      "when": "flag.wisps_lured and level >= 5",
+      "text": "The lights come up out of the gorge like lanterns climbing a stair, and every one of them is still talking in somebody's voice.",
+      "monsters": [
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            7,
+            11
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            9,
+            12
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            6,
+            15
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            9,
+            16
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            10,
+            10
+          ]
+        }
+      ],
+      "surprise": "party",
+      "flag": "wisps_beaten",
+      "quest": {
+        "id": "called_by_name",
+        "stage": "voices"
+      }
+    },
+    {
+      "id": "falls_wisps",
+      "trigger": "dialogue",
+      "when": "not flag.wisps_lured and level >= 5",
+      "text": "The lights come up out of the gorge like lanterns climbing a stair, and every one of them is still talking in somebody's voice.",
+      "monsters": [
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            7,
+            11
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            9,
+            12
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            6,
+            15
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            9,
+            16
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            10,
+            10
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "wisps_beaten",
+      "quest": {
+        "id": "called_by_name",
+        "stage": "voices"
+      }
+    },
+    {
+      "id": "falls_wisps",
+      "trigger": "dialogue",
+      "when": "flag.wisps_lured and level >= 4",
+      "text": "The lights come up out of the gorge like lanterns climbing a stair, and every one of them is still talking in somebody's voice.",
+      "monsters": [
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            7,
+            11
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            9,
+            12
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            6,
+            15
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            9,
+            16
+          ]
+        }
+      ],
+      "surprise": "party",
+      "flag": "wisps_beaten",
+      "quest": {
+        "id": "called_by_name",
+        "stage": "voices"
+      }
+    },
+    {
+      "id": "falls_wisps",
+      "trigger": "dialogue",
+      "when": "not flag.wisps_lured and level >= 4",
+      "text": "The lights come up out of the gorge like lanterns climbing a stair, and every one of them is still talking in somebody's voice.",
+      "monsters": [
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            7,
+            11
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            9,
+            12
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            6,
+            15
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            9,
+            16
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "wisps_beaten",
+      "quest": {
+        "id": "called_by_name",
+        "stage": "voices"
+      }
+    },
+    {
+      "id": "falls_wisps",
+      "trigger": "dialogue",
+      "when": "flag.wisps_lured",
+      "text": "The lights come up out of the gorge like lanterns climbing a stair, and every one of them is still talking in somebody's voice.",
+      "monsters": [
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            7,
+            11
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            9,
+            12
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            6,
+            15
+          ]
+        }
+      ],
+      "surprise": "party",
+      "flag": "wisps_beaten",
+      "quest": {
+        "id": "called_by_name",
+        "stage": "voices"
+      }
+    },
+    {
+      "id": "falls_wisps",
+      "trigger": "dialogue",
+      "when": "not flag.wisps_lured",
+      "text": "The lights come up out of the gorge like lanterns climbing a stair, and every one of them is still talking in somebody's voice.",
+      "monsters": [
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            7,
+            11
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            9,
+            12
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            6,
+            15
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "wisps_beaten",
+      "quest": {
+        "id": "called_by_name",
+        "stage": "voices"
+      }
     }
   ],
   "narration": {

@@ -1,0 +1,17 @@
+{
+  "id": "tser_nelu",
+  "name": "Nelu",
+  "title": "Big Tobar's Son",
+  "summary": "Big Tobar's son, sixteen, who followed his dead mother's voice to the gorge under Tser Falls and spent three nights on a ledge listening to it use his own.",
+  "portrait": "vistana",
+  "sprite": "vistana",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him"
+}
