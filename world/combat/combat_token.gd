@@ -58,7 +58,8 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 	"venomous_snake_familiar": 0.3,
 	"rahadin": 1.2, "ludmilla_vilisevic": 1.22, "anastrasya_karelova": 1.18, "volenta_popofsky": 1.12,
 	"escher": 1.3, "pidlwick_ii": 0.85, "cyrus_belview": 1.35, "gertruda": 1.15, "brother_anatol": 1.25,
-	"lief_lipsiege": 1.12, "nadia_boteanu": 1.15, "strahd_mist": 1.4}
+	"lief_lipsiege": 1.12, "nadia_boteanu": 1.15, "strahd_mist": 1.4,
+	"beholder": 1.9}
 
 ## Stat blocks that wear another creature's sprite: a named villain's block and the person drawn for them, or a
 ## familiar and the animal it looks like.
