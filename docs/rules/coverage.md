@@ -236,6 +236,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Item powers outside fights: potions, scrolls, exploring spells, manuals, containers, Robe of Useful Items, Deck of Many Things | story/field_items.gd, deck_of_many_things.gd, inventory_screen.gd | implemented | test_magic_items |
 | Random treasure by the party's level, seeded per playthrough and saved; Spell Scrolls name their spell | story/treasure.gd, data/treasure/levels.json | tested | test_magic_items |
 | Buying and selling (shop markup, sell rate, stock) | story_state.gd shop_*, shop_screen.gd | tested | test_campaign |
+| Services (F14): temple spells (Cure Wounds, Lesser Restoration, Remove Curse, Raise Dead within 10 days of death), inn rooms whose comforts come with the next Long Rest there | story/services.gd, ui/screens/services_screen.gd, rest_screen.gd | tested | test_services |
 | Merchants' prices by attitude, the Persuasion haggle, price changes while a flag holds, wares the story remembers, stock that changes with the days (U11, F14) | story/trade.gd, story_state.gd shop_*, shop_screen.gd | tested | test_trade |
 | Travel (hours on the road), random encounters (day and night chances), day and night | story/travel.gd, game_root.gd travel | tested | test_travel |
 | Guests fighting under the player's control | location_view.gd guest_members, combat side guest | tested | test_exploration |
