@@ -52,6 +52,9 @@ once
 ~ examine:ghakis_signpost
 | A signpost, snapped off at the height of a man. The arm that's left says only GHAK, and points uphill.
 
+~ search:ghakis_dropped_flask
+| Half sunk in the slush by the cart's wheel, a keeper's flask, stoppered and full. It's cold to touch in all this warmth, and the stopper is stamped with a little flame crossed out.
+
 ~ check:perception:ghakis_dropped_flask:failure
 | Slush, and stones, and more slush.
 

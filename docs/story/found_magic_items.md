@@ -285,6 +285,12 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Vault, the heap of offerings | Staff of Power (very rare) | Search (Perception DC 16) |
 | ✅ | Exethanter | Robe of Stars (very rare) | Gift: if you help him remember |
 
+## Under the Amber Temple's vaults (side quest, level 10)
+
+| | Where | Item | How |
+|---|---|---|---|
+| ✅ | The chamber of the Eye, its hoard | Spellguard Shield (very rare) | Hoard: once the Eye Below is dead (The Amber Debt, docs/story/side_quests.md) |
+
 ## Castle Ravenloft (level 10)
 
 | | Where | Item | How |

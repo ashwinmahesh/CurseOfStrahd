@@ -356,3 +356,14 @@ func test_khazan_stands_up_out_of_his_chair() -> void:
 	assert_true(e.lair, "his undercroft acts on initiative 20")
 	await _end(v)
 
+
+## The Eye Below rises out of its broken amber with a dreamed eye beside it, its lair awake.
+func test_the_eye_below_rises_out_of_the_amber() -> void:
+	var v := await _boot("amber_deep", 12, 10, ["deep_stair_open", "eye_met"])
+	LocationNpcs.hide_npcs_of(v, "amber_temple/the_amber_debt:eye")   # as its conversation does when it ends in the fight
+	var e := await _fight(v, "the_eye_below", ["The Eye Below", "Dream-Gazer"])
+	assert_true(e.lair)
+	await _end(v)
+	assert_true(bool(GameState.story.get_flag("eye_below_slain", false)))
+	assert_eq(GameState.story.quest_stage("the_amber_debt"), "slain")
+

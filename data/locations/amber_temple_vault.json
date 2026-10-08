@@ -109,6 +109,10 @@
     "from_upper": [
       4,
       2
+    ],
+    "from_deep": [
+      35,
+      12
     ]
   },
   "exits": [
@@ -121,6 +125,17 @@
       "to": "amber_temple_faceless_god",
       "spawn": "from_vaults",
       "label": "Stairs up to the great hall"
+    },
+    {
+      "id": "vault_deep_stair",
+      "cell": [
+        37,
+        13
+      ],
+      "to": "amber_deep",
+      "spawn": "from_vault",
+      "label": "Down under the vault floor",
+      "when": "flag.deep_stair_open"
     }
   ],
   "doors": [
@@ -319,6 +334,18 @@
       "label": "a staff under the heap of offerings",
       "model": "gold_spill",
       "item": "staff_of_power__quarterstaff"
+    },
+    {
+      "id": "vault_weeping_crack",
+      "cell": [
+        36,
+        14
+      ],
+      "kind": "examine",
+      "label": "A crack weeping amber",
+      "model": "floor_crack",
+      "when": "level >= 10 or quest.the_amber_debt",
+      "dialogue": "amber_temple/the_amber_debt:crack"
     }
   ],
   "containers": [

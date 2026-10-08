@@ -995,6 +995,61 @@
       "id": "khazan_destroyed",
       "type": "bool",
       "summary": "Khazan is destroyed for good (The Name Over the Door)."
+    },
+    {
+      "id": "deep_stair_open",
+      "type": "bool",
+      "summary": "The slab over the weeping crack in the Amber Temple's vault is up, and the stair under it is open (The Amber Debt)."
+    },
+    {
+      "id": "deep_mirrors_known",
+      "type": "bool",
+      "summary": "The party read in the wardens' book why they turned the hall's mirrors on the Eye Below (The Amber Debt)."
+    },
+    {
+      "id": "deep_lullaby_known",
+      "type": "bool",
+      "summary": "The party has the wardens' lullaby from their book (The Amber Debt)."
+    },
+    {
+      "id": "deep_mirrors_turned",
+      "type": "bool",
+      "summary": "The party turned the hall's mirrors toward the Eye's chamber: its dreamed eyes fight the glass, and its lair can't act (The Amber Debt)."
+    },
+    {
+      "id": "deep_lullaby_tried",
+      "type": "bool",
+      "summary": "The party sang the wardens' lullaby to the Eye Below, well or badly (The Amber Debt)."
+    },
+    {
+      "id": "deep_lullaby_sung",
+      "type": "bool",
+      "summary": "The party sang the Eye Below half back into its amber: it starts the fight surprised and hurt (The Amber Debt)."
+    },
+    {
+      "id": "dreamed_eyes_beaten",
+      "type": "bool",
+      "summary": "The dreamed eyes and the sleeper in the hall of sleepers are destroyed (The Amber Debt)."
+    },
+    {
+      "id": "eye_met",
+      "type": "bool",
+      "summary": "The party has spoken with the Eye Below (The Amber Debt)."
+    },
+    {
+      "id": "eye_below_slain",
+      "type": "bool",
+      "summary": "The Eye Below is dead (The Amber Debt)."
+    },
+    {
+      "id": "exethanter_eye_told",
+      "type": "bool",
+      "summary": "The party told Exethanter the thing he sealed is dead (The Amber Debt)."
+    },
+    {
+      "id": "corvina_thanks_given",
+      "type": "bool",
+      "summary": "Mordenkainen has thanked the party for finding Corvina (The Unnamed Crypt); his next news is Khazan (The Name Over the Door)."
     }
   ]
 }

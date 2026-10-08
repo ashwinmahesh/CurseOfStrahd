@@ -1,0 +1,168 @@
+# The Amber Debt (side quest, docs/story/side_quests.md): under the Amber Temple's vaults the wardens sealed a
+# beholder, the Eye Below (data/monsters/the_eye_below.json), in amber, and put it to sleep with the only thing strong
+# enough: the last warden's own memory. So long as Exethanter forgets it, it can't remember itself. Everyone who has
+# helped him remember anything has been paying the debt down, and now it's waking. Its dreams come out of the walls
+# (dream-gazers, data/monsters/dream_gazer.json). The wardens' archive gives two ways of meeting it on better terms:
+# the mirrors they turned on it, and the lullaby they sang it to sleep with. Reached from the old note pinned under
+# Exethanter's sleeve (amber_temple/exethanter:menu) and the weeping crack in the vault floor (prop vault_weeping_crack).
+# Every line here is unvoiced for now.
+
+# --- Exethanter's old note (amber_temple/exethanter:menu jumps here) ---
+
+~ old_note
+if not quest.the_amber_debt
+quest the_amber_debt rumored
+endif
+Narrator: Under all the newer notes on his sleeve there's one much older, the ink gone brown, the pin rusted into the cloth. It's in his own hand.
+Narrator: DO NOT GO BELOW THE VAULT. YOU SEALED IT. YOU DO NOT REMEMBER WHY. THAT IS WHY.
+Exethanter: Is that mine? (He reads it, upside down, twice.) It is. How very firm I was. I wonder what I meant.
+Exethanter: The vault floor has been warm lately, now that I think of it. And sticky. I've been meaning to mention it to someone. Possibly you.
+-> amber_temple/exethanter:menu
+
+~ eye_told
+set exethanter_eye_told
+Exethanter: Dead? The thing under the vault. (He finds the old note on his sleeve and reads it again.) I don't remember it. I'm told that was rather the point.
+Narrator: He unpins the old note, carefully, and holds it over a candle until it's gone. For a moment his sparks are brighter, as though something has come back to him and he isn't sure yet what.
+Exethanter: There was a spell. A sort of wall, out of light. It had a lovely name. No. Nearly. Thank you, anyway. I think I owe you for something.
+approve ratatoille +1 liriel_dawnsong +1: You told Exethanter the thing he sealed is dead
+-> amber_temple/exethanter:menu
+
+# --- The weeping crack in the vault floor (prop vault_weeping_crack) ---
+
+~ crack
+if flag.deep_stair_open
+Narrator: The broken slab stands on edge, and the stair under it goes down into a warm golden dark that smells of honey.
+-> END
+endif
+Narrator: A crack across the vault floor, an arm's length, weeping amber like resin from a cut pine. It's warm to the touch. Deep down in it, under the gold, something closes, and opens again.
+interject tag:blunt: That blinked.
+* [Athletics DC 15] (Lever the slab up.) -> opened | opened_slow
+* (Leave it.) -> END
+
+~ opened_slow
+time +30
+Narrator: The slab won't come at first. Half an hour with a pry bar and bad language, and it does.
+-> opened
+
+~ opened
+set deep_stair_open
+if not quest.the_amber_debt or quest.the_amber_debt == rumored
+quest the_amber_debt found
+endif
+Narrator: The slab comes up and over with a sucking sound. Under it a stair goes down through amber that isn't set, warm and slow and golden, into the dark.
+-> END
+
+# --- The wardens' archive: their book (prop wardens_notes) ---
+
+~ notes
+if quest.the_amber_debt == found or quest.the_amber_debt == rumored or not quest.the_amber_debt
+quest the_amber_debt read
+endif
+Narrator: The wardens' day-book, in many hands, the last pages in one: a careful hand you've seen pinned to a sleeve. Most of it is the same entry. It sleeps. It dreamed. We sang.
+Narrator: Early on: It came up from under the mountain while we were building, a thing all eyes, and looked at our vestiges, and they were afraid of it. We could not kill it. We could make it sleep.
+-> notes_menu
+
+~ notes_menu
+* (Read about the mirrors.) -> notes_mirrors
+* (Read about the singing.) -> notes_song
+* (Read the last entry.) -> notes_last
+* (Close the book.) -> END
+
+~ notes_mirrors
+set deep_mirrors_known
+Narrator: Its dreams come out of the walls as small eyes. They hate their own kind. We turned the great mirrors in the hall to face its chamber, and the little eyes go mad at their reflections and fight the glass and not us. Turn them back to the wall after, or the hall is no good for sleeping.
+-> notes_menu
+
+~ notes_song
+set deep_lullaby_known
+Narrator: A song, written out with the notes over the words: four lines in the old tongue, simple as a cradle song. Under it: It still knows this. Sing it to the end and it goes back down into the amber to its middle, a little while. Don't stop in the middle.
+-> notes_menu
+
+~ notes_last
+Narrator: The last entry, in the careful hand: The song no longer holds it. There is one thing left strong enough. I shall give it my memory, and while I do not remember it, it cannot remember itself. If I ever start to remember, run.
+Narrator: Under it, later, smaller: What was I writing about?
+interject tag:scholarly: Every time anyone's helped him remember something, they've been waking it.
+-> notes_menu
+
+# --- The mirrors in the hall of sleepers (prop deep_mirror) ---
+
+~ mirrors
+if flag.deep_mirrors_turned
+Narrator: The three great mirrors in the hall stand turned toward the throat of the Eye's chamber, their glass dusty and gold with reflected amber.
+-> END
+endif
+Narrator: Three great mirrors on iron stands along the hall, each one turned to face the wall, as if someone didn't want them to see something. Or be seen.
+* (Turn the mirrors round to face the chamber.) -> mirrors_turned
+* (Leave them.) -> END
+
+~ mirrors_turned
+set deep_mirrors_turned
+time +10
+Narrator: They're heavy and they shriek on their stands. When the last one comes round to face the throat of the chamber, every little eye in the hall's amber slides toward the glass at once, and stares.
+if flag.deep_mirrors_known
+interject tag:scholarly: The book said they'd fight their own reflections. Let's hope it's right.
+endif
+-> END
+
+# --- The Eye Below (npc the_eye_below, in its chamber) ---
+
+~ eye
+if not flag.eye_met
+set eye_met
+cutscene sq_eye_below
+Narrator: The amber block in the middle of the chamber has split like an egg. Above it, as wide as a cart, a round body of mottled hide hangs in the air with nothing holding it, and ten small eyes on stalks turn toward you one after another.
+Narrator: The great eye in the middle is still filmed with amber, dull and clouded. It looks at you anyway.
+The Eye Below: More dreams. I dreamed you in the stair. I dream you very badly; you're all the wrong shape. Stand still while I dream you better.
+else
+The Eye Below: Still here, little dreams. I haven't woken you yet. Wait.
+endif
+-> eye_menu
+
+~ eye_menu
+* What are you? -> eye_what
+* [if flag.deep_lullaby_known and not flag.deep_lullaby_tried] [Performance DC 15] (Sing the wardens' lullaby, all the way to the end.) -> sung | not_sung
+* (Draw your weapons.) -> fight
+
+~ eye_what
+The Eye Below: The only thing in this temple that sees. The dead gods in their little boxes lie; I watched them lie for a thousand years, until the wardens put me to sleep for seeing it. I was a debt they paid with sleep.
+The Eye Below: The warden paid the last of it with his memory. And someone has been giving it back to him, a little at a time. Thank you for that. I've so looked forward to looking at things again.
+-> eye_menu
+
+~ sung
+set deep_lullaby_tried
+set deep_lullaby_sung
+Narrator: The old words are strange in your mouth, and the tune is a cradle song. At the second line the small eyes droop. At the third the great body sinks, slowly, into the open amber to its middle.
+Narrator: You sing the fourth line to the end, and it's held. Just. Something in the dark of its throat is laughing, very low, and the amber is already softening.
+-> fight
+
+~ not_sung
+set deep_lullaby_tried
+Narrator: The tune goes wrong in the third line. The small eyes, half drooped, come wide open, every one.
+The Eye Below: You stopped in the middle. They always told each other: never stop in the middle.
+-> fight
+
+~ fight
+combat the_eye_below
+
+# --- The broken block, and the hoard (props eye_block, eye_hoard) ---
+
+~ block
+Narrator: A block of amber the size of a cottage, split from the inside like an egg, its walls a hand thick. The inside is a smooth round hollow, exactly the shape of what was in it.
+-> END
+
+~ hoard
+if quest.the_amber_debt == done
+Narrator: The things it collected, picked over: a heap of the wardens' belongings and older ones, and nothing else worth carrying.
+-> END
+endif
+if not flag.eye_below_slain
+Narrator: Behind the broken block, a heap of things the dreamed eyes have brought it: lamps, buckles, a warden's crook, coins, a shield. A beholder collects what it looks at.
+-> END
+endif
+quest the_amber_debt done
+Narrator: A beholder collects what it looks at, and this one has had its dreams fetch for a thousand years: the wardens' rings and crooks, travellers' purses, a mirror's frame with no glass in it.
+gold +700
+Narrator: And at the bottom, face down, a round shield whose face is a single great eye worked in silver, shut. The wardens must have made it to stand against the thing. It's warm. When you turn it over the eye stays shut, as though it's sleeping, and as though it would rather not be woken.
+give spellguard_shield
+approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +2 wren_featherfoot +1 ratatoille +2: You put out the Eye Below
+-> END
