@@ -1,0 +1,18 @@
+{
+  "id": "barovia_petre",
+  "name": "Petre",
+  "title": "Villager of Barovia",
+  "summary": "A threadbare man in a good coat that used to belong to someone else, who agrees with Vasile about everything except the weather.",
+  "portrait": "noble",
+  "sprite": "noble",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}

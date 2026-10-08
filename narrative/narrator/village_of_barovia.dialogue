@@ -471,3 +471,16 @@ once
 
 ~ examine:barn_beam_heap
 | The barn's roof came down in one piece and lies in the lane like a ramp, beams and rotten thatch packed hard. Children have worn a path up it. From the top you can see over the back fences to the square.
+
+~ examine:churchyard_open_grave
+| A fresh grave, half dug, the earth heaped neatly on a sack so the grass isn't spoiled. Nobody has died yet that you know of. The sexton digs ahead.
+
+~ examine:garlic_over_doors
+| Garlic braided with wolfsbane, nailed over a door, and a little mirror hung under it facing the street. Every door on this lane has the same, as if they all agreed on it one bad night.
+
+~ examine:morninglord_shrine
+| A wooden shrine to the Morninglord at the crossing of two lanes: a carved sun, worn smooth by hands, and a ring of candle stubs that someone keeps lighting though they never burn for long.
+
+~ search:door_mirror
+| Hung low on a door where a child would see it first: a small steel mirror on a nail, to show the dead their own faces. {name} takes it down; the door has another.
+

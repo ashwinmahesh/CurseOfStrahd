@@ -535,16 +535,36 @@
           "path": {
             "type": "array",
             "minItems": 1,
-            "description": "Waypoints the NPC walks from its cell, in order and back again: [x, y] or [x, y, seconds to stand there].",
+            "description": "Waypoints the NPC walks from its cell, in order and back again: [x, y], [x, y, seconds to stand there], or {\"at\": [x, y], \"wait\": seconds, \"face\": direction, \"work\": \"swing\" or \"gesture\"} (a stop where they turn to their work: world/exploration/npc_routes.gd).",
             "items": {
-              "type": "array",
-              "minItems": 2,
-              "maxItems": 3,
-              "items": {
-                "type": "number",
-                "minimum": 0
-              }
+              "anyOf": [
+                {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 3,
+                  "items": {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": ["at"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "at": {"$ref": "#/$defs/cell"},
+                    "wait": {"type": "number", "minimum": 0},
+                    "face": {"type": "string", "enum": ["north", "south", "east", "west", "northeast", "northwest", "southeast", "southwest"]},
+                    "work": {"type": "string", "enum": ["swing", "gesture"]}
+                  }
+                }
+              ]
             }
+          },
+          "work": {
+            "type": "string",
+            "enum": ["swing", "gesture"],
+            "description": "Standing in their place (or back home from their path), the NPC works at what they face: swings at it (an axe, a spade) or gestures over it (a stall, a sermon) every few seconds."
           },
           "pause": {
             "type": "number",

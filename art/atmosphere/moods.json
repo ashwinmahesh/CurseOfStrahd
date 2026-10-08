@@ -19,7 +19,8 @@
     "death_house_dungeon_1": "death_house_crypt",
     "death_house_dungeon_2": "death_house_crypt",
     "castle_ravenloft_spires_roofs": "ravenloft_roofs",
-    "castle_ravenloft_chapel": "ravenloft_chapel"
+    "castle_ravenloft_chapel": "ravenloft_chapel",
+    "village_of_barovia": "barovia_village_lived"
   },
   "prefixes": {
     "castle_ravenloft_court": "ravenloft_court",
@@ -1247,6 +1248,53 @@
           "amount": 10,
           "height": 5.5,
           "radius": 6.0
+        }
+      ]
+    },
+    "barovia_village_lived": {
+      "like": "barovia_village",
+      "lines": [
+        {
+          "from": [
+            7.5,
+            21.5
+          ],
+          "to": [
+            12.5,
+            21.5
+          ]
+        },
+        {
+          "from": [
+            19.5,
+            5.3
+          ],
+          "to": [
+            23.5,
+            5.3
+          ],
+          "colours": [
+            "bone",
+            "slate",
+            "pewter",
+            "rust"
+          ]
+        },
+        {
+          "from": [
+            34.5,
+            19.5
+          ],
+          "to": [
+            38.5,
+            19.5
+          ],
+          "colours": [
+            "parchment",
+            "moss",
+            "bone",
+            "leather"
+          ]
         }
       ]
     }

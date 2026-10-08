@@ -1,0 +1,18 @@
+{
+  "id": "barovia_gravedigger",
+  "name": "Old Mihail",
+  "title": "Sexton of the Village of Barovia",
+  "summary": "The village sexton: a big, slow, grey-stubbled man who digs every grave in the churchyard and takes great care to dig them deep.",
+  "portrait": "tough",
+  "sprite": "tough",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}
