@@ -88,6 +88,10 @@ anyone touching this file.
   wash pegged out on it in muted palette colours, swaying: Barovia's back yards (lane 28, "an actual village"). With
   `"kind": "bunting"` it is a high festival string of little pennants with no posts, in Vallaki's yellow by default.
   Lines are built outdoors only. Krezk's yards have washing lines too.
+- **The Mists on the map.** A `fog_bank` prop (the road out of the Mists, the road east of the village) is a bank
+  of soft, camera-facing puffs (world/look/mist_bank.gd, shaders/world/mist_puff.gdshader) in the Mists' grey, not a
+  drawn cloud; the screen pass's Mists wall (a mood's `mists_edge`) has a soft, billowing edge with slow puffs of light
+  and shade in it and only a faint ink line (lane 28: it read as a flat slab from far out).
 - **Smoke at a point.** Weather `{"kind": "smoke", "at": [[x, y, z]]}` puts a chimney plume anywhere: Old
   Bonegrinder's pipe.
 - **Waterfalls.** A mood's `falls` (world/look/waterfall.gd) pours a river over an edge: a curved sheet of falling

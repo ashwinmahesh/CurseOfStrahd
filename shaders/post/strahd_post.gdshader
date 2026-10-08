@@ -395,12 +395,14 @@ void fragment() {
 		if (!soft_bands) {
 			m = floor(m * mist_bands + 0.35) / mist_bands;
 		}
-		// The Mists themselves are a flat pale wall nothing is seen through, inked along its billowing edge like the
-		// cartoon clouds it stands for.
+		// The Mists themselves: a pale wall nothing is seen through, its edge soft and billowing (lane 28: it had been
+		// a hard, inked edge that read as a flat slab from far out), with slow puffs of lighter and darker mist in it.
 		float wa = wall_amount(wpos);
-		float in_wall = step(0.5, wa);
+		float billow = fbm(wpos.xz * 0.16 + vec2(atmo_time * 0.012, -atmo_time * 0.008));
+		float in_wall = smoothstep(0.3, 0.75, wa + (billow - 0.5) * 0.5);
 		m = max(m, in_wall);
-		vec3 mc = mix(to_srgb(mist_color) + glow / float(STEPS), to_srgb(mist_wall_color), in_wall);
+		float puff = soft_bands ? mix(0.84, 1.06, billow) : mix(0.86, 1.04, floor(billow * 3.0 + 0.5) / 3.0);
+		vec3 mc = mix(to_srgb(mist_color) + glow / float(STEPS), to_srgb(mist_wall_color) * puff, in_wall);
 		// Over water the mist thins so the lake keeps its face.
 		// Under an open sky, the mist past everything thins out toward the horizon instead of painting the gaps
 		// between the far trees.
@@ -408,8 +410,9 @@ void fragment() {
 		float strength = mix(mist_strength * (1.0 - own_colour * 0.55), 1.0, in_wall) * (1.0 - sky_amount) * out_there;
 		col = mix(col, mc, clamp(m * strength, 0.0, 1.0));
 		if (mist_wall.w > 0.0) {
+			// A faint ink line along the billows, so the wall still sits in the cel look without reading as a cut-out.
 			float fw = max(fwidth(wa), 1e-4);
-			col = mix(col, to_srgb(outline_color), 1.0 - smoothstep(fw * 0.8, fw * 1.8, abs(wa - 0.5)));
+			col = mix(col, to_srgb(outline_color), 0.25 * (1.0 - smoothstep(fw * 0.8, fw * 1.8, abs(wa - 0.5))));
 		}
 	}
 

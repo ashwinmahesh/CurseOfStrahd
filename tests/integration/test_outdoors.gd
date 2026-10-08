@@ -549,3 +549,17 @@ func test_baratok_argynvostholt_and_tsolenka() -> void:
 			ids.append(str((p as Dictionary)["id"]))
 		for id: String in want[loc]:
 			assert_true(id in ids, "%s has %s" % [loc, id])
+
+
+## The Mists standing on the map are soft (lane 28): the fog bank on the road out is a crowd of soft puffs, not a drawn
+## cartoon cloud.
+func test_the_mists_bank_is_soft() -> void:
+	var v := _view("into_the_mists_road")
+	await _frames(1)
+	var banks := v.board.find_children("MistBank", "Node3D", true, false)
+	assert_true(banks.size() >= 1, "a bank of the Mists on the road")
+	if not banks.is_empty():
+		assert_true((banks[0] as Node3D).get_child_count() >= 8, "made of many soft puffs")
+	for d: Node in v.board.find_children("Dressing_mists_wall", "Node3D", true, false):
+		assert_eq(d.find_children("*", "Sprite3D", true, false).size(), 0, "no drawn cloud")
+	v.queue_free()
