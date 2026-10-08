@@ -4464,6 +4464,123 @@ def incense_burner(p):
         p.box((0.022, 0.006, 0.022), (0.09 * math.cos(a), 0.09 * math.sin(a), 0.405), "glow_ember", rot=(0, 0, math.degrees(a) + 90))
 
 
+# --- Interiors: the Blue Water Inn's stable (docs/art/interiors.md) ---------------------------------------------
+
+def _straw(p, x0, x1, y0, y1, n, z=0.0):
+    """Straw bedding: `n` loose strands strewn over the floor between x0..x1 and y0..y1, in a low drift."""
+    rng = p.rng
+    for _ in range(n):
+        x, y = rng.uniform(x0, x1), rng.uniform(y0, y1)
+        p.box((rng.uniform(0.12, 0.26), 0.012, 0.006), (x, y, z + rng.uniform(0.004, 0.03)),
+              rng.choice(["pal_tan", "pal_tan", "pal_parchment", "pal_bone"]),
+              rot=(rng.uniform(-8, 8), rng.uniform(-8, 8), rng.uniform(0, 180)))
+
+
+def _stall(p, horse):
+    """A box stall two squares wide against a wall (its back on the wall face, open to the front): plank partitions on
+    both sides with posts at their front ends, a manger and a hay rack on the back wall, straw on the floor and a
+    bucket; with `horse`, a horse standing in it side on, at the far end of the stall."""
+    W, D, Hp = 1.9, 0.95, 0.78
+    for s in (-1, 1):
+        x = s * (W / 2 - 0.03)
+        for k in range(4):
+            p.box((0.04, D - 0.06, Hp / 4 - 0.01), (x, -D / 2 - 0.02, (k + 0.5) * Hp / 4), WOOD)
+        p.box((0.07, D - 0.04, 0.05), (x, -D / 2 - 0.02, Hp + 0.02), "pal_peat")
+        p.box((0.09, 0.09, Hp + 0.26), (x, -D + 0.02, (Hp + 0.26) / 2), "pal_umber")
+        p.box((0.11, 0.11, 0.04), (x, -D + 0.02, Hp + 0.28), "pal_peat")
+        for k in range(3):
+            p.cyl(0.012, 0.22, (x, -0.2 - k * 0.25, Hp + 0.04), "pal_ink", segs=6)   # iron bars above the boards
+    # The stall's own back boards on the wall face, and the manger and hay rack on them.
+    for k in range(7):
+        p.box((W / 7 - 0.006, 0.025, 1.25), (-W / 2 + (k + 0.5) * W / 7, -0.0125, 0.625), WOOD)
+    mx = 0.55
+    p.box((0.5, 0.3, 0.06), (mx, -0.15, 0.5), "pal_umber")
+    for s in (-1, 1):
+        p.box((0.5, 0.04, 0.22), (mx, -0.15 + s * 0.13, 0.62), "pal_walnut")
+        p.box((0.04, 0.3, 0.22), (mx + s * 0.23, -0.15, 0.62), "pal_walnut")
+    p.box((0.42, 0.22, 0.05), (mx, -0.15, 0.7), "pal_tan")
+    for k in range(6):
+        x = mx - 0.22 + k * 0.088
+        p.tube([(x, -0.02, 0.86), (x, -0.2, 1.18)], 0.01, "pal_ink", segs=5)
+    p.box((0.48, 0.03, 0.03), (mx, -0.2, 1.18), "pal_ink")
+    for _ in range(9):
+        p.rock((mx + p.rng.uniform(-0.18, 0.18), -0.1, 0.9 + p.rng.uniform(0.0, 0.18)), (0.14, 0.12, 0.1),
+               p.rng.choice(["pal_tan", "pal_parchment"]), rough=0.3)
+    for _ in range(7):
+        p.box((p.rng.uniform(0.35, 0.6), p.rng.uniform(0.25, 0.4), 0.012), (p.rng.uniform(-0.6, 0.6), p.rng.uniform(-0.75, -0.25), 0.006),
+              p.rng.choice(["pal_tan", "pal_bone"]), rot=(0, 0, p.rng.uniform(0, 180)), soft=0.005, segs=1)
+    _straw(p, -W / 2 + 0.08, W / 2 - 0.08, -D + 0.05, -0.05, 220)
+    # A bucket in the corner by the door.
+    p.lathe([(0.0, 0.0), (0.085, 0.0), (0.1, 0.2), (0.0, 0.2)], (-W / 2 + 0.2, -D + 0.22, 0.0), "pal_walnut", segs=12)
+    for z in (0.04, 0.16):
+        p.cyl(0.092 + z * 0.07, 0.014, (-W / 2 + 0.2, -D + 0.22, z), "pal_stone_deep", segs=12)
+    p.cyl(0.085, 0.004, (-W / 2 + 0.2, -D + 0.22, 0.17), "pal_moon_blue", segs=12)
+    if horse:
+        info = PROPS["horse"]
+        aspect = float(info.get("world_width", 1.0)) / float(info.get("world_height", 1.0))
+        inflate(p, "horse", 1.4, depth=0.35 * 1.4 * aspect * 0.8, rows=52, back=info.get("back"), at=(-0.12, -D / 2 - 0.02, 0.0))
+
+
+@model("stall", "against_wall", ["stall", "stall_back"], big=True)
+def stall(p):
+    """An empty box stall: plank partitions, posts, a manger, a hay rack, straw and a bucket."""
+    _stall(p, False)
+
+
+@model("stall_horse", "against_wall", ["stall_horse", "stall_horse_back"], big=True)
+def stall_horse(p):
+    """A box stall with a horse in it, standing side on at the far end of the stall."""
+    _stall(p, True)
+
+
+@model("trough", "free", ["trough", "trough_back"])
+def trough(p):
+    """A water trough of thick planks on two trestles, iron-banded, full nearly to the brim."""
+    L, Wd, H = 0.92, 0.42, 0.42
+    for s in (-1, 1):
+        p.box((L, 0.05, 0.26), (0, s * (Wd / 2 - 0.025), H - 0.13), WOOD)
+        p.box((0.05, Wd, 0.26), (s * (L / 2 - 0.025), 0, H - 0.13), WOOD)
+        for k in (-1, 1):
+            p.box((0.05, 0.05, H - 0.26), (s * (L / 2 - 0.12), k * (Wd / 2 - 0.06), (H - 0.26) / 2), "pal_umber",
+                  rot=(k * 6, 0, 0))
+        p.box((0.03, Wd + 0.012, 0.27), (s * (L / 2 - 0.16), 0, H - 0.13), "pal_stone_deep")
+    p.box((L - 0.1, Wd - 0.1, 0.03), (0, 0, H - 0.25), "pal_umber")
+    p.box((L - 0.1, Wd - 0.1, 0.006), (0, 0, H - 0.05), "pal_moon_blue")
+
+
+@model("tack", "wall", ["tack"])
+def tack(p):
+    """Tack on the stable wall: a saddle on its bracket with the stirrups hanging, bridles and a halter on pegs, a coil
+    of rope and a horseshoe nailed up for luck."""
+    p.box((0.9, 0.04, 0.09), (0, -0.02, 1.1), "pal_umber")                         # the peg rail
+    for x in (-0.36, -0.18, 0.2, 0.38):
+        p.cyl(0.014, 0.08, (x, -0.04, 1.1), "pal_peat", rot=(90, 0, 0), segs=6)
+    # The saddle on a bracket, in the middle.
+    p.box((0.06, 0.26, 0.05), (0.0, -0.13, 0.82), "pal_peat")
+    p.box((0.34, 0.3, 0.12), (0.0, -0.17, 0.89), "pal_leather", soft=0.05, segs=3)
+    p.box((0.12, 0.2, 0.08), (0.12, -0.17, 0.97), "pal_leather", soft=0.03, segs=2)   # the cantle
+    p.box((0.08, 0.16, 0.07), (-0.14, -0.17, 0.95), "pal_rust", soft=0.025, segs=2)  # the pommel
+    p.box((0.36, 0.34, 0.03), (0.0, -0.17, 0.82), "pal_blood", soft=0.01)             # the blanket under it
+    for s in (-1, 1):
+        y = -0.17 + s * 0.17
+        p.box((0.03, 0.006, 0.26), (0.02, y, 0.7), "pal_umber")
+        p.tube([(0.0, y, 0.57), (-0.02, y, 0.53), (0.0, y, 0.51), (0.06, y, 0.51), (0.08, y, 0.53), (0.06, y, 0.57)],
+               0.008, "pal_stone", segs=5)
+    # Bridles and a halter hanging from pegs: leather straps in loops, an iron bit.
+    for x, col in ((-0.36, "pal_leather"), (-0.18, "pal_rust"), (0.38, "pal_umber")):
+        pts = [(x + 0.06 * math.sin(a), -0.08, 1.08 - 0.32 * (1 - math.cos(a)) / 2) for a in
+               (2 * math.pi * k / 10 for k in range(11))]
+        p.tube(pts, 0.009, col, segs=5)
+        p.cyl(0.006, 0.08, (x - 0.04, -0.08, 0.77), "pal_silver", rot=(0, 90, 0), segs=6)
+    # A coil of rope on the fourth peg and a horseshoe above the rail.
+    for r in (0.07, 0.085, 0.1):
+        pts = [(0.2 + r * math.cos(a), -0.08, 0.98 + r * math.sin(a)) for a in (2 * math.pi * k / 14 for k in range(15))]
+        p.tube(pts, 0.012, "pal_tan", segs=5)
+    pts = [(0.07 * math.cos(a), -0.03, 1.32 + 0.07 * math.sin(a)) for a in
+           (math.radians(200 + k * 14) for k in range(11))]
+    p.tube(pts, 0.012, "pal_stone", segs=5)
+
+
 # --- Export and preview ----------------------------------------------------------------------------------------
 
 def bounds(ob):

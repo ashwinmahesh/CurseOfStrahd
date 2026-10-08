@@ -70,6 +70,10 @@ static func dress(board: ArenaBoard) -> int:
 		var ids := ids_for(rule.get("decals", []) as Array)
 		if ids.is_empty():
 			continue
+		# A rule for some rooms only (its "rooms": words in an area's name or id), such as straw in a stable.
+		var only := _room_rects(board, rule.get("rooms", []) as Array)
+		if rule.has("rooms") and only.is_empty():
+			continue
 		var chance := float(rule.get("chance", 0.05))
 		var cap := int(rule.get("max", 60))
 		var size := rule.get("size", [0.7, 1.3]) as Array
@@ -81,6 +85,8 @@ static func dress(board: ArenaBoard) -> int:
 				var c := Vector2i(x, z)
 				var h := _hash(board.place, c, ri)
 				if float(h % 10007) / 10007.0 >= chance:
+					continue
+				if not only.is_empty() and not _in_rects(only, c):
 					continue
 				var spots := _spots(board, c, str(rule.get("on", "floor")))
 				if spots.is_empty():
@@ -111,6 +117,33 @@ static func dress(board: ArenaBoard) -> int:
 			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			root.add_child(mi)
 	return placed
+
+
+## The location's areas whose name or id holds one of `words`, as rectangles of squares (none for no words).
+static func _room_rects(board: ArenaBoard, words: Array) -> Array[Rect2i]:
+	var out: Array[Rect2i] = []
+	if words.is_empty() or board.place == "" or not Compendium.shared().has("locations", board.place):
+		return out
+	for a: Variant in Compendium.shared().get_entry("locations", board.place).get("areas", []):
+		var area := a as Dictionary
+		var name_ := ("%s %s" % [str(area.get("name", "")), str(area.get("id", "")).replace("_", " ")]).to_lower()
+		var hit := false
+		for w: Variant in words:
+			hit = hit or name_.contains(str(w))
+		if not hit:
+			continue
+		var cells := area.get("cells", []) as Array
+		var p0 := Vector2i(int(cells[0][0]), int(cells[0][1]))
+		var p1 := Vector2i(int(cells[1][0]), int(cells[1][1]))
+		out.append(Rect2i(Vector2i(mini(p0.x, p1.x), mini(p0.y, p1.y)), (p1 - p0).abs() + Vector2i.ONE))
+	return out
+
+
+static func _in_rects(rects: Array[Rect2i], c: Vector2i) -> bool:
+	for r in rects:
+		if r.has_point(c):
+			return true
+	return false
 
 
 static var _scatter_meshes: Dictionary = {}

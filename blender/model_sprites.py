@@ -31,6 +31,16 @@ def render(ob, out, yaw_deg):
     shading = scene.display.shading
     shading.light = "STUDIO"
     shading.color_type = "MATERIAL"
+    sprites = [m for m in bpy.data.materials if m.name.startswith("spr_")]
+    for m in sprites:
+        # A piece with a sculpted part (a horse in a stall) shows it painted with its 2D art, as models_3d's preview does.
+        if not any(n.type == "TEX_IMAGE" for n in m.node_tree.nodes):
+            node = m.node_tree.nodes.new("ShaderNodeTexImage")
+            node.image = bpy.data.images.load(str(m3.ROOT / m3.PROPS[m.name[4:]]["file"]))
+            m.node_tree.nodes.active = node
+            m.node_tree.links.new(node.outputs["Color"], m.node_tree.nodes["Principled BSDF"].inputs["Base Color"])
+    if sprites:
+        shading.color_type = "TEXTURE"
     shading.show_object_outline = True
     shading.object_outline_color = (0.1, 0.07, 0.12)
     shading.show_cavity = True

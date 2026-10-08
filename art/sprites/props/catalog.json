@@ -704,6 +704,17 @@
   "rooms": [
     [
       [
+        "stable",
+        "stall",
+        "byre"
+      ],
+      {
+        "floor": "dungeon/packed_earth",
+        "wall": "interior/attic_boards"
+      }
+    ],
+    [
+      [
         "audience hall",
         "throne",
         "king's hall"
@@ -1209,7 +1220,11 @@
     "cookpot": 3.15,
     "basket": 1.5,
     "wine_tray": 1.45,
-    "shawl_line": 3.75
+    "shawl_line": 3.75,
+    "stall": 6.3,
+    "stall_horse": 7.1,
+    "trough": 2.15,
+    "tack": 4.0
   },
   "big_width": 1.6,
   "models3d": {
@@ -1547,7 +1562,14 @@
       "cookpot_back": "cookpot",
       "basket": "basket",
       "wine_tray": "wine_tray",
-      "shawl_line": "shawl_line"
+      "shawl_line": "shawl_line",
+      "stall": "stall",
+      "stall_back": "stall",
+      "stall_horse": "stall_horse",
+      "stall_horse_back": "stall_horse",
+      "trough": "trough",
+      "trough_back": "trough",
+      "tack": "tack"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",
@@ -2047,7 +2069,7 @@
     }
   },
   "clutter": {
-    "about": "Decals laid over floors and walls by rule (world/look/clutter.gd, docs/art/decals.md): per board theme, or per place by the start of its id. decals: decal ids or sheet names (art/textures/decals/manifest.json); on: floor, edge (beside a wall), difficult, boundary (beside rough ground: mud fringes where cobbles meet mud), wall or wall_foot (an open face of a wall); chance per square; size in world units; max per board; tint darkens or colours a mark; gloss makes it wet (puddles glint). A rule with scatter instead names kit models (blender/building_kit.py kit_scatter_*) strewn on the ground the same way.",
+    "about": "Decals laid over floors and walls by rule (world/look/clutter.gd, docs/art/decals.md): per board theme, or per place by the start of its id. decals: decal ids or sheet names (art/textures/decals/manifest.json); on: floor, edge (beside a wall), difficult, boundary (beside rough ground: mud fringes where cobbles meet mud), wall or wall_foot (an open face of a wall); chance per square; size in world units; max per board; tint darkens or colours a mark; gloss makes it wet (puddles glint). A rule with scatter instead names kit models (blender/building_kit.py kit_scatter_*) strewn on the ground the same way. rooms: words in an area's name or id that a rule is kept to (straw only in a stable).",
     "themes": {
       "village": [
         {
@@ -3018,6 +3040,21 @@
             1.0
           ],
           "max": 8
+        },
+        {
+          "decals": [
+            "floor_straw"
+          ],
+          "on": "floor",
+          "rooms": [
+            "stable"
+          ],
+          "chance": 0.6,
+          "size": [
+            0.8,
+            1.4
+          ],
+          "max": 70
         }
       ],
       "shop": [
