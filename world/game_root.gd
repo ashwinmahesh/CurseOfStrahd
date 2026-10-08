@@ -672,9 +672,11 @@ func _black_now() -> void:
 	_place_fade.color.a = 1.0
 
 
-## The place fades in from black after `delay` seconds.
+## The place fades in from black after `delay` seconds, paused game or not: a place's arrival picture pauses the game
+## as it opens, and a fade that waited for it left the screen black over the picture until a click closed it (Ashwin,
+## first walk into the Village of Barovia, 2026-10-08).
 func _fade_in_place(delay: float) -> void:
-	var tw := create_tween()
+	var tw := create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tw.tween_interval(delay)
 	tw.tween_property(_place_fade, "color:a", 0.0, 0.6).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	_place_fade.set_meta(&"tween", tw)
@@ -756,6 +758,8 @@ func _covered(to: String, change: Callable) -> void:
 	_place_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fade_in_place(0.0)
 	if is_instance_valid(card):
+		if screen != null or dialogue != null:
+			card.hold = 0.0   # an arrival picture or conversation opened: the card makes way for it at once
 		card.lift()
 
 
