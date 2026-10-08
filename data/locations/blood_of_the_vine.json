@@ -107,6 +107,34 @@
       "label": "a slit in the satchel's lining",
       "model": "scattered_notes",
       "item": "eyes_of_minute_seeing"
+    },
+    {
+      "id": "tavern_cask_rack_a",
+      "cell": [17, 1],
+      "label": "Casks stacked three high",
+      "model": "cask_rack",
+      "kind": "decor"
+    },
+    {
+      "id": "tavern_cask_rack_b",
+      "cell": [18, 1],
+      "label": "Casks stacked three high",
+      "model": "cask_rack",
+      "kind": "decor"
+    },
+    {
+      "id": "tavern_cask_c",
+      "cell": [17, 2],
+      "label": "A cask that rings hollow",
+      "model": "barrel",
+      "kind": "decor"
+    },
+    {
+      "id": "tavern_cask_d",
+      "cell": [18, 2],
+      "label": "A cask that rings hollow",
+      "model": "barrel",
+      "kind": "decor"
     }
   ],
   "containers": [

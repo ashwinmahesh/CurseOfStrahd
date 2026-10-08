@@ -5413,6 +5413,50 @@
       "source": "art/generated/props/model_relics.png",
       "mount": "wall",
       "world_width": 0.289
+    },
+    "rope_coils": {
+      "file": "art/sprites/props/rope_coils.png",
+      "width_px": 516,
+      "height_px": 464,
+      "world_height": 0.5,
+      "pixel_size": 0.00109,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_rope_coils.png",
+      "mount": "stand",
+      "world_width": 0.562
+    },
+    "oil_shelf": {
+      "file": "art/sprites/props/oil_shelf.png",
+      "width_px": 516,
+      "height_px": 460,
+      "world_height": 0.5,
+      "pixel_size": 0.0011,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_oil_shelf.png",
+      "mount": "wall",
+      "world_width": 0.568
+    },
+    "sewing_basket": {
+      "file": "art/sprites/props/sewing_basket.png",
+      "width_px": 516,
+      "height_px": 264,
+      "world_height": 0.2,
+      "pixel_size": 0.00077,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_sewing_basket.png",
+      "mount": "stand",
+      "world_width": 0.397
+    },
+    "valley_map": {
+      "file": "art/sprites/props/valley_map.png",
+      "width_px": 480,
+      "height_px": 516,
+      "world_height": 0.56,
+      "pixel_size": 0.00109,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_valley_map.png",
+      "mount": "wall",
+      "world_width": 0.523
     }
   }
 }

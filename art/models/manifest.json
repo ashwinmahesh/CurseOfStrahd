@@ -7032,6 +7032,87 @@
         "pal_void"
       ],
       "triangles": 232
+    },
+    "rope_coils": {
+      "file": "art/models/rope_coils.glb",
+      "mount": "free",
+      "stands_for": [
+        "rope_coils"
+      ],
+      "size": [
+        0.516,
+        0.415,
+        0.42
+      ],
+      "materials": [
+        "pal_tan",
+        "pal_vellum",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 2064
+    },
+    "oil_shelf": {
+      "file": "art/models/oil_shelf.glb",
+      "mount": "wall",
+      "stands_for": [
+        "oil_shelf"
+      ],
+      "size": [
+        0.89,
+        0.545,
+        0.2
+      ],
+      "materials": [
+        "pal_bog",
+        "pal_ivory",
+        "pal_moon_blue",
+        "pal_umber",
+        "pal_vellum"
+      ],
+      "triangles": 972
+    },
+    "sewing_basket": {
+      "file": "art/models/sewing_basket.glb",
+      "mount": "free",
+      "stands_for": [
+        "sewing_basket"
+      ],
+      "size": [
+        0.57,
+        0.165,
+        0.32
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_crimson",
+        "pal_ivory",
+        "pal_moon_blue",
+        "pal_moss",
+        "pal_parchment",
+        "pal_tan"
+      ],
+      "triangles": 408
+    },
+    "valley_map": {
+      "file": "art/models/valley_map.glb",
+      "mount": "wall",
+      "stands_for": [
+        "valley_map"
+      ],
+      "size": [
+        0.8,
+        0.56,
+        0.05
+      ],
+      "materials": [
+        "pal_crimson",
+        "pal_ink",
+        "pal_moon_blue",
+        "pal_parchment",
+        "pal_rust",
+        "pal_umber"
+      ],
+      "triangles": 176
     }
   }
 }

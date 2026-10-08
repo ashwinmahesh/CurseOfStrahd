@@ -291,6 +291,46 @@
       "label": "a loose stone under the front pew",
       "model": "floor_crack",
       "item": "amulet_of_the_devout_plus_1"
+    },
+    {
+      "id": "church_sunburst",
+      "cell": [
+        9,
+        0
+      ],
+      "label": "A sunburst gone grey with soot",
+      "model": "sunburst",
+      "kind": "decor"
+    },
+    {
+      "id": "church_candles_west",
+      "cell": [
+        8,
+        1
+      ],
+      "label": "Cold candles",
+      "model": "candelabra",
+      "kind": "decor"
+    },
+    {
+      "id": "church_candles_east",
+      "cell": [
+        13,
+        1
+      ],
+      "label": "Cold candles",
+      "model": "candelabra",
+      "kind": "decor"
+    },
+    {
+      "id": "vestry_vestments",
+      "cell": [
+        0,
+        2
+      ],
+      "label": "Vestments on pegs",
+      "model": "robe_pegs",
+      "kind": "decor"
     }
   ],
   "containers": [
@@ -385,6 +425,32 @@
       ],
       "dialogue": "village_of_barovia/doru:start",
       "when": "not flag.doru_destroyed and not flag.doru_freed"
+    },
+    {
+      "npc": "barovia_worshipper_mihai",
+      "cell": [
+        4,
+        7
+      ],
+      "dialogue": "village_of_barovia/indoor_folk:mihai",
+      "facing": "north",
+      "hours": [
+        7,
+        18
+      ]
+    },
+    {
+      "npc": "barovia_worshipper_sorina",
+      "cell": [
+        15,
+        9
+      ],
+      "dialogue": "village_of_barovia/indoor_folk:sorina",
+      "facing": "north",
+      "hours": [
+        8,
+        17
+      ]
     }
   ],
   "encounters": [

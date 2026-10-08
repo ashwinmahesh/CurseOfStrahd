@@ -1,0 +1,18 @@
+{
+  "id": "barovia_worshipper_sorina",
+  "name": "Goodwife Sorina",
+  "title": "Praying in the village church",
+  "summary": "A village woman who prays in the empty church because it is the one place the priest still keeps the doors open.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}

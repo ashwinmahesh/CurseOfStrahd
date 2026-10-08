@@ -179,7 +179,8 @@
         10
       ],
       "kind": "examine",
-      "label": "Boarded windows"
+      "label": "Boarded windows",
+      "model": "boarded_window"
     },
     {
       "id": "clawed_front_door",
@@ -197,7 +198,8 @@
         13
       ],
       "kind": "examine",
-      "label": "Sword by the fire"
+      "label": "Sword by the fire",
+      "model": "sword_leaning"
     },
     {
       "id": "burgomaster_letter",
@@ -223,6 +225,96 @@
       "label": "a loose panel behind the study desk",
       "model": "plaster_seam",
       "item": "brooch_of_shielding"
+    },
+    {
+      "id": "mansion_boards_study",
+      "cell": [
+        0,
+        3
+      ],
+      "label": "A boarded window",
+      "model": "boarded_window",
+      "kind": "decor"
+    },
+    {
+      "id": "mansion_boards_study_north",
+      "cell": [
+        5,
+        0
+      ],
+      "label": "A boarded window",
+      "model": "boarded_window",
+      "kind": "decor"
+    },
+    {
+      "id": "mansion_boards_kitchen",
+      "cell": [
+        23,
+        2
+      ],
+      "label": "A boarded window",
+      "model": "boarded_window",
+      "kind": "decor"
+    },
+    {
+      "id": "mansion_boards_parlor",
+      "cell": [
+        0,
+        13
+      ],
+      "label": "A boarded window",
+      "model": "boarded_window",
+      "kind": "decor"
+    },
+    {
+      "id": "mansion_boards_wake",
+      "cell": [
+        23,
+        12
+      ],
+      "label": "A boarded window",
+      "model": "boarded_window",
+      "kind": "decor"
+    },
+    {
+      "id": "parlor_hearth",
+      "cell": [
+        0,
+        12
+      ],
+      "label": "A small fire",
+      "model": "fireplace",
+      "kind": "decor"
+    },
+    {
+      "id": "wake_candles_west",
+      "cell": [
+        17,
+        10
+      ],
+      "label": "A new candle",
+      "model": "candelabra",
+      "kind": "decor"
+    },
+    {
+      "id": "wake_candles_east",
+      "cell": [
+        21,
+        10
+      ],
+      "label": "A new candle",
+      "model": "candelabra",
+      "kind": "decor"
+    },
+    {
+      "id": "study_valley_map",
+      "cell": [
+        2,
+        0
+      ],
+      "label": "A map of the valley",
+      "model": "valley_map",
+      "kind": "decor"
     }
   ],
   "containers": [

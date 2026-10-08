@@ -1,0 +1,18 @@
+{
+  "id": "barovia_shopper",
+  "name": "Goodwife Anca",
+  "title": "A customer at Bildrath's",
+  "summary": "A thin village woman counting the same few coppers over and over at Bildrath's counter, as if they might become more.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}
