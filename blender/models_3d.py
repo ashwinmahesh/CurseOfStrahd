@@ -4041,6 +4041,146 @@ def _card(p, at, yaw, face_up=False):
         p.box((0.03, 0.03, 0.004), tuple(m @ Vector((0, 0, 0.0045))), "pal_candle", rot=(0, 0, yaw + 45))
 
 
+@model("bedroll", "against_wall", ["bedroll", "bedroll_back"])
+def bedroll(p):
+    """Madam Eva's bed: quilts folded thick on the floor, a fur over them, pillows at the wall and a shawl thrown down."""
+    rng = p.rng
+    for k, (col, w, d) in enumerate((("pal_umber", 0.8, 0.94), ("pal_moon_blue", 0.77, 0.9), ("pal_plum", 0.75, 0.86),
+                                     ("pal_crimson", 0.73, 0.84))):
+        p.box((w + rng.uniform(-0.02, 0.02), d, 0.055), (rng.uniform(-0.015, 0.015), -0.48 + rng.uniform(-0.01, 0.01),
+              0.028 + k * 0.05), col, rot=(0, 0, rng.uniform(-2.5, 2.5)), soft=0.022, segs=2)
+    p.box((0.76, 0.6, 0.035), (0.0, -0.58, 0.225), "pal_bone_dark", rot=(0, 0, 3), soft=0.016, segs=2)   # the fur
+    for k in range(8):
+        p.box((0.08, 0.05, 0.02), (-0.35 + k * 0.1, -0.9 + rng.uniform(-0.02, 0.02), 0.22), "pal_bone_dark", rot=(0, 0, rng.uniform(-30, 30)))
+    for x, col in ((-0.2, "pal_ivory"), (0.2, "pal_rose")):
+        p.box((0.36, 0.2, 0.11), (x, -0.15, 0.27), col, rot=(-12, 0, rng.uniform(-6, 6)), soft=0.05, segs=3)
+    p.box((0.4, 0.06, 0.25), (0.18, -0.7, 0.18), "pal_candle", rot=(80, 0, 15), soft=0.02, segs=2)       # a shawl
+    for k in range(5):
+        p.box((0.006, 0.006, 0.06), (0.04 + k * 0.07, -0.86, 0.16), "pal_candle")
+
+
+@model("candle_cluster", "free", ["candle_cluster"])
+def candle_cluster(p):
+    """Candles burning on the floor, some new and some burnt to stubs, standing in pools of their own wax."""
+    rng = p.rng
+    for x, y, r in ((-0.06, 0.02, 0.17), (0.1, 0.03, 0.12)):
+        p.cyl(r, 0.01, (x, y, 0), "pal_bone", segs=16, smooth=False)   # spilt wax
+    spots = [(-0.12, 0.06, 0.2), (0.05, 0.12, 0.13), (0.14, -0.04, 0.17), (-0.03, -0.1, 0.08), (-0.17, -0.11, 0.05),
+             (0.18, 0.13, 0.06), (0.0, 0.0, 0.24)]
+    for x, y, h in spots:
+        _candle(p, (x, y, 0.012), h, wax=rng.choice(["pal_ivory", "pal_vellum", "pal_bone"]))
+
+
+@model("book_stack", "free", ["book_stack", "book_stack_back"])
+def book_stack(p):
+    """Her old books and papers on the floor: worn volumes in three stacks, scrolls, loose leaves and a candle stub."""
+    rng = p.rng
+    tops = []
+    for sx, sy, n in ((-0.18, 0.05, 6), (0.12, 0.1, 4), (0.02, -0.16, 3)):
+        z = 0.0
+        for _ in range(n):
+            w, d, t = rng.uniform(0.18, 0.26), rng.uniform(0.13, 0.19), rng.uniform(0.03, 0.06)
+            p.box((w, d, t), (sx + rng.uniform(-0.02, 0.02), sy + rng.uniform(-0.02, 0.02), z + t / 2), _book_colour(rng),
+                  rot=(0, 0, rng.uniform(-14, 14)), soft=0.006, segs=1)
+            p.box((w - 0.02, d + 0.004, t - 0.012), (sx, sy, z + t / 2), "pal_parchment", rot=(0, 0, rng.uniform(-3, 3)))
+            z += t
+        tops.append(z)
+    for k in range(3):
+        p.cyl(0.022, 0.24, (0.22 - k * 0.05, -0.05 + k * 0.03, 0.022), "pal_parchment", rot=(0, 90, 20 + k * 25), segs=10)
+    for k in range(4):
+        p.box((0.14, 0.18, 0.003), (rng.uniform(-0.3, 0.3), rng.uniform(-0.3, 0.3), 0.003), "pal_vellum", rot=(0, 0, rng.uniform(0, 180)))
+    _candle(p, (-0.18, 0.05, tops[0]), 0.05)
+
+
+@model("drying_herbs", "wall", ["drying_herbs"])
+def drying_herbs(p):
+    """Herbs drying on a rail on the wall, hung head down in tied bundles, with a string of garlic and one of red peppers."""
+    rng = p.rng
+    p.box((0.9, 0.05, 0.05), (0, -0.08, 1.25), "pal_umber")
+    for s in (-1, 1):
+        p.box((0.04, 0.08, 0.04), (s * 0.4, -0.04, 1.25), "pal_peat")
+    xs = [-0.36, -0.22, -0.09, 0.2, 0.33]
+    for x in xs:
+        drop = rng.uniform(0.12, 0.2)
+        p.cyl(0.005, drop, (x, -0.08, 1.25 - drop), "pal_tan", segs=4)
+        col = rng.choice(["pal_bog", "pal_moss", "pal_sickly", "pal_tan", "pal_bog_deep"])
+        p.cyl(0.05, 0.22, (x, -0.08, 1.25 - drop - 0.22), col, r2=0.012, segs=7, rot=(0, 0, rng.uniform(0, 60)))
+        p.cyl(0.014, 0.02, (x, -0.08, 1.25 - drop - 0.005), "pal_tan", segs=6)
+    for k in range(6):   # the garlic
+        p.lathe([(0.0, 0.0), (0.03, 0.012), (0.034, 0.03), (0.016, 0.05), (0.0, 0.065)], (0.04 + (k % 2) * 0.03, -0.09,
+                1.12 - k * 0.055), "pal_ivory", segs=8)
+    for k in range(7):   # the peppers
+        p.cyl(0.014, 0.07, (-0.0 - (k % 2) * 0.025, -0.07, 1.2 - k * 0.05), "pal_crimson", r2=0.002, segs=6, rot=(180, 0, 0))
+
+
+@model("cookpot", "free", ["cookpot", "cookpot_back"])
+def cookpot(p):
+    """Her cooking fire: a ring of stones, coals, an iron pot on a chain under a tripod, a ladle across the rim."""
+    rng = p.rng
+    for k in range(9):
+        a = 2 * math.pi * k / 9
+        p.rock((0.2 * math.cos(a), 0.2 * math.sin(a), 0.0), (0.09, 0.08, 0.07), "pal_stone", rough=0.25)
+    p.cyl(0.15, 0.03, (0, 0, 0), "pal_ash_violet", segs=12)
+    for k in range(6):
+        p.rock((rng.uniform(-0.08, 0.08), rng.uniform(-0.08, 0.08), 0.02), (0.06, 0.05, 0.04), "glow_ember", rough=0.3)
+    for k in range(3):
+        a = math.radians(90 + k * 120)
+        p.tube([(0.28 * math.cos(a), 0.28 * math.sin(a), 0.0), (0.0, 0.0, 0.62)], 0.014, "pal_ink", segs=5)
+    p.cyl(0.004, 0.18, (0, 0, 0.42), "pal_stone_deep", segs=4)
+    p.lathe([(0.0, 0.0), (0.09, 0.01), (0.12, 0.07), (0.11, 0.16), (0.12, 0.17), (0.0, 0.17)], (0, 0, 0.24), "pal_ink",
+            segs=14)
+    p.cyl(0.1, 0.006, (0, 0, 0.405), "pal_rust", segs=14)
+    p.tube([(-0.12, 0.0, 0.41), (0.05, 0.0, 0.45), (0.18, 0.0, 0.47)], 0.008, "pal_walnut", segs=5)
+
+
+@model("basket", "free", ["basket"])
+def basket(p):
+    """A wicker basket of apples and a loaf."""
+    rng = p.rng
+    p.lathe([(0.0, 0.0), (0.13, 0.0), (0.17, 0.14), (0.18, 0.16), (0.16, 0.16), (0.15, 0.03), (0.0, 0.03)], (0, 0, 0),
+            "pal_tan", segs=16)
+    for k in range(8):
+        a = 2 * math.pi * k / 8
+        p.box((0.012, 0.012, 0.15), (0.155 * math.cos(a), 0.155 * math.sin(a), 0.08), "pal_leather", rot=(0, 0, math.degrees(a)))
+    p.tube(curve((-0.15, 0.0, 0.16), (0.0, 0.0, 0.42), (0.15, 0.0, 0.16), n=10), 0.012, "pal_leather", segs=5)
+    for k in range(7):
+        a = 2 * math.pi * k / 7
+        r = 0.08 if k else 0.0
+        p.lathe([(0.0, 0.0), (0.03, 0.008), (0.042, 0.035), (0.032, 0.065), (0.0, 0.07)], (r * math.cos(a), r * math.sin(a), 0.11),
+                rng.choice(["pal_crimson", "pal_blood", "pal_sickly"]), segs=10)
+    p.box((0.2, 0.09, 0.07), (0.03, -0.04, 0.2), "pal_tan", rot=(10, 0, 30), soft=0.03, segs=2)
+
+
+@model("wine_tray", "free", ["wine_tray"])
+def wine_tray(p):
+    """Plum wine set out on a brass tray: a dark bottle, two cups, bread and a round of cheese."""
+    p.cyl(0.24, 0.015, (0, 0, 0), "pal_tan", segs=24, smooth=False)
+    p.cyl(0.25, 0.01, (0, 0, 0.015), "pal_candle", r2=0.25, segs=24)
+    p.lathe([(0.0, 0.0), (0.045, 0.0), (0.048, 0.15), (0.02, 0.2), (0.014, 0.26), (0.018, 0.27), (0.0, 0.27)], (-0.08, 0.06, 0.02),
+            "pal_bruise_deep", segs=12)
+    for x, y in ((0.08, 0.1), (0.12, -0.05)):
+        p.lathe([(0.0, 0.0), (0.03, 0.0), (0.012, 0.01), (0.012, 0.04), (0.04, 0.06), (0.045, 0.1), (0.0, 0.1)], (x, y, 0.02),
+                "pal_pewter", segs=12)
+        p.cyl(0.035, 0.004, (x, y, 0.105), "pal_blood", segs=12)
+    p.box((0.16, 0.07, 0.06), (-0.06, -0.12, 0.05), "pal_tan", rot=(0, 0, 15), soft=0.025, segs=2)
+    p.cyl(0.06, 0.05, (0.05, -0.16, 0.02), "pal_parchment", segs=14)
+
+
+@model("shawl_line", "wall", ["shawl_line"])
+def shawl_line(p):
+    """Her shawls and scarves hung on a cord along the wall: fringed, in the camp's reds, golds, violets and blues."""
+    p.tube(curve((-0.46, -0.06, 1.38), (0.0, -0.06, 1.3), (0.46, -0.06, 1.38), n=12), 0.008, "pal_tan", segs=5)
+    for x, col, w, h in ((-0.32, "pal_crimson", 0.24, 0.5), (-0.08, "pal_candle", 0.2, 0.62), (0.14, "pal_plum", 0.22, 0.46),
+                         (0.34, "pal_moon_blue", 0.18, 0.56)):
+        top = 1.3 + 0.08 * (abs(x) / 0.46) ** 2
+        n = 10
+        wave = [(x - w / 2 + i * w / n, 0.012 * math.sin(i * 1.7)) for i in range(n + 1)]
+        band = wave + [(px, py + 0.012) for px, py in reversed(wave)]
+        p.prism(band, h, (0, -0.07, top - h / 2), col, rot=(90, 0, 0))
+        for k in range(8):
+            p.box((0.004, 0.004, 0.05), (x - w / 2 + (k + 0.5) * w / 8, -0.07, top - h - 0.02), col)
+
+
 @model("reading_table", "free", ["reading_table", "reading_table_back"])
 def reading_table(p):
     """Madam Eva's low round table, as in her reading (art/cutscenes/madam_eva_reading.jpg): a deep red cloth to the

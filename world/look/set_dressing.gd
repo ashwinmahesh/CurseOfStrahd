@@ -772,7 +772,7 @@ static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, 
 	var bottom := 0.0 if h >= 0.85 else maxf(0.0, 0.7 - h / 2.0)
 	var n := Vector3(normal.x, 0, normal.y)
 	var c := board.cell_center(wall)
-	sp.position = Vector3(c.x, board.floor_y(cell if not _wall_at(board, cell) else cell + normal) + bottom, c.z) + n * (0.5 + WALL_GAP)
+	sp.position = Vector3(c.x, board.floor_y(cell if not _wall_at(board, cell) else cell + normal) + bottom, c.z) + n * (0.5 + WALL_GAP + board.wall_inset)
 	sp.rotation.y = atan2(n.x, n.z)
 	root.add_child(sp)
 	board.attach_to_building(wall, root)

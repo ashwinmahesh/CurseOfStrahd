@@ -20,6 +20,7 @@ to the floor, a brass lantern, dripping candles.
 | A bar counter across the middle, the reading table a plain wooden table | Her low round table under a red cloth, the five cards of a reading laid in a cross, the deck, three candles; floor cushions either side for querents |
 | Barrels, a bench, two plain chests | An iron-bound chest, her painted chest, heaped cushions and a trunk in the corners, two lanterns on iron crooks, a brass censer, the brazier and the charm frame |
 | Nothing on the walls | A rope along the top of every side with two to four charms per square: painted eyes, bells, bones, little mirrors, a bird's foot, beads, a tooth |
+| Nothing to say anyone lives there | Her home around the reading (owner, 2026-10-08: "really make it look like the place where she lives and does her readings"): her bed of quilts and a fur with her shawls on a cord above it and a little mirror, keepsakes, apples; a cooking fire under an iron pot with herbs drying on the wall and a sack of meal; old books and papers either side of her painted chest; candles burning on the floor either side of her; plum wine and bread set out for querents; a travelling trunk |
 
 ### The tent style (`world/look/tent_walls.gd`, `world/look/charm.gd`)
 
@@ -35,6 +36,9 @@ A board whose interior style is `tent` (catalog `building_kit.interiors.themes.t
 - **Rope and charms.** A rope along each side's top; charms hang from it on threads, half as big again as life so they
   read from the camera. They turn slowly; the eyes and mirrors turn, very slowly, toward the camera.
 - **Behind the canvas** is the camp's ground (`building_kit.interiors.ground.tent`, grass).
+- **Pieces stand off the canvas.** The board's `wall_inset` (set by `TentWalls`) is how far in from the wall square's
+  face the canvas stands at about chest height; pieces hung on the wall or backed onto it are set that far forward
+  (a deep piece is squeezed to stay in its square), so nothing disappears into the leaning canvas.
 - **Cut-away.** In the Modern look each side has a full and a cut-away version and joins the room walls' cut-away
   (`InteriorWalls.cut`): the canvas toward the camera drops to 1.15, the far sides stand. Classic builds the cut-away
   version only, with no charms or roof.
@@ -54,6 +58,14 @@ surface set like the painted ones (`surface_recipes.json` entry with `new: true`
 | cushions | three velvet floor cushions heaped (blood, plum, crimson) with gold tassels | 2.1 ft |
 | lantern_stand | brass lantern with glowing glass hanging from an iron crook on three feet | 7.25 ft |
 | incense_burner | brass censer on three legs, pierced domed lid, coals glowing | 2.55 ft |
+| bedroll | folded quilts, a fur, two pillows and a fringed shawl, its head at the wall | 1.7 ft |
+| candle_cluster | seven candles of different heights burning on the floor in pools of wax | 1.55 ft |
+| book_stack | three stacks of worn books, scrolls, loose leaves and a candle stub | 1.7 ft |
+| cookpot | a ring of stones, glowing coals, an iron pot on a chain under a tripod, a ladle | 3.15 ft |
+| basket | a wicker basket of apples and a loaf | 1.5 ft |
+| wine_tray | a brass tray with a bottle of plum wine, two cups, bread and cheese | 1.45 ft |
+| drying_herbs (wall) | a rail of herb bundles hung head down, a string of garlic, a string of red peppers | 2.25 ft |
+| shawl_line (wall) | fringed shawls and scarves on a cord, red, gold, violet and blue | 3.75 ft |
 
 These were modelled first, so their 2D sprites (for Classic and every 2D path) are rendered from the models:
 `blender/model_sprites.py` draws each on flat white from the front (and from behind, for pieces with a back), the

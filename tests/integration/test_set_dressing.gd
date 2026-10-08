@@ -379,7 +379,8 @@ func test_wall_pieces_sit_flush_with_their_wall() -> void:
 					problems.append("%s: %s turned %.0f degrees off its wall" % [loc_id, node.name, rad_to_deg(yaw)])
 					continue
 				var facing := node.global_basis.z
-				var behind := node.global_position - Vector3(facing.x, 0, facing.z).normalized() * (0.55 if against else 0.05)
+				# (A tent's pieces stand off its canvas, which stands in from the wall square's face: ArenaBoard.wall_inset.)
+				var behind := node.global_position - Vector3(facing.x, 0, facing.z).normalized() * ((0.55 if against else 0.05) + board.wall_inset)
 				var c := board.grid.cell_at(behind)
 				var backed := board.grid.has_flag(c, CombatGrid.WALL) or board.door_cells.has(c)
 				if against and SetDressing.backing_side(board, board.grid.cell_at(node.global_position)) == Vector2i.ZERO:

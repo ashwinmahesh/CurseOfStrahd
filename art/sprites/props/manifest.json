@@ -5130,6 +5130,119 @@
       "anchor": "bottom_center",
       "source": "art/generated/props/model_incense_burner.png",
       "mount": "stand"
+    },
+    "bedroll": {
+      "file": "art/sprites/props/bedroll.png",
+      "width_px": 516,
+      "height_px": 364,
+      "world_height": 0.36,
+      "pixel_size": 0.001,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_bedroll.png",
+      "mount": "stand",
+      "back": "bedroll_back"
+    },
+    "bedroll_back": {
+      "file": "art/sprites/props/bedroll_back.png",
+      "width_px": 516,
+      "height_px": 348,
+      "world_height": 0.36,
+      "pixel_size": 0.00106,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_bedroll_back.png",
+      "mount": "stand"
+    },
+    "candle_cluster": {
+      "file": "art/sprites/props/candle_cluster.png",
+      "width_px": 516,
+      "height_px": 460,
+      "world_height": 0.3,
+      "pixel_size": 0.00066,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_candle_cluster.png",
+      "mount": "stand"
+    },
+    "book_stack": {
+      "file": "art/sprites/props/book_stack.png",
+      "width_px": 516,
+      "height_px": 336,
+      "world_height": 0.4,
+      "pixel_size": 0.00121,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_book_stack.png",
+      "mount": "stand",
+      "back": "book_stack_back"
+    },
+    "book_stack_back": {
+      "file": "art/sprites/props/book_stack_back.png",
+      "width_px": 516,
+      "height_px": 376,
+      "world_height": 0.4,
+      "pixel_size": 0.00108,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_book_stack_back.png",
+      "mount": "stand"
+    },
+    "drying_herbs": {
+      "file": "art/sprites/props/drying_herbs.png",
+      "width_px": 516,
+      "height_px": 440,
+      "world_height": 0.58,
+      "pixel_size": 0.00134,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_drying_herbs.png",
+      "mount": "wall"
+    },
+    "cookpot": {
+      "file": "art/sprites/props/cookpot.png",
+      "width_px": 404,
+      "height_px": 516,
+      "world_height": 0.64,
+      "pixel_size": 0.00125,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_cookpot.png",
+      "mount": "stand",
+      "back": "cookpot_back"
+    },
+    "cookpot_back": {
+      "file": "art/sprites/props/cookpot_back.png",
+      "width_px": 412,
+      "height_px": 516,
+      "world_height": 0.64,
+      "pixel_size": 0.00125,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_cookpot_back.png",
+      "mount": "stand"
+    },
+    "basket": {
+      "file": "art/sprites/props/basket.png",
+      "width_px": 516,
+      "height_px": 496,
+      "world_height": 0.42,
+      "pixel_size": 0.00085,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_basket.png",
+      "mount": "stand"
+    },
+    "wine_tray": {
+      "file": "art/sprites/props/wine_tray.png",
+      "width_px": 516,
+      "height_px": 396,
+      "world_height": 0.3,
+      "pixel_size": 0.00077,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_wine_tray.png",
+      "mount": "stand"
+    },
+    "shawl_line": {
+      "file": "art/sprites/props/shawl_line.png",
+      "width_px": 472,
+      "height_px": 516,
+      "world_height": 0.7,
+      "pixel_size": 0.00137,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_shawl_line.png",
+      "mount": "wall"
     }
   }
 }

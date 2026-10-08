@@ -42,6 +42,8 @@ static func is_tent(board: ArenaBoard) -> bool:
 ## walls' cut-away in `st`, InteriorWalls' state; empty in Classic), always on the camp's ground. Always true: a tent
 ## never falls back to a wall block.
 static func build(board: ArenaBoard, c: Vector2i, wall_mat: Material, st: Dictionary) -> bool:
+	# Pieces hung on the canvas or backed onto it stand off it: past the inset and the lean at about chest height.
+	board.wall_inset = INSET + FOLD_DEPTH + LEAN * (float(st["height"]) if not st.is_empty() else InteriorWalls.CUT) / 2.5 * 0.6
 	_ground(board, c, st)
 	var faces := _faces(board, c)
 	var canvas: Material = Look.cel_textured(CANVAS)

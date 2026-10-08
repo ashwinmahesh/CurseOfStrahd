@@ -107,13 +107,17 @@ func test_classic_keeps_the_tent_low() -> void:
 
 
 ## Her things are what the narration names: the reading table with its cloth and cards, an iron-bound chest, her
-## painted chest, cushions for those who sit across from her, lanterns and incense.
+## painted chest, cushions for those who sit across from her, lanterns and incense; and it's her home (owner, 2026-10-08:
+## "really make it look like the place where she lives and does her readings"): her bed, her cooking fire, books and
+## papers, candles, wine and bread, apples, herbs drying, her shawls.
 func test_madam_evas_things() -> void:
 	Look.set_style("modern", false)
 	var v := _view("tser_pool_eva_tent")
 	await _frames(2)
 	var want := {"tarokka_table": "reading_table", "eva_chest": "chest_iron", "querent_cushions_west": "cushions",
-		"querent_cushions_east": "cushions", "tent_incense": "incense_burner", "tent_lantern_east": "lantern_stand"}
+		"querent_cushions_east": "cushions", "tent_incense": "incense_burner", "tent_lantern_east": "lantern_stand",
+		"eva_bed": "bedroll", "eva_cookfire": "cookpot", "eva_books_west": "book_stack", "eva_candles_west": "candle_cluster",
+		"eva_wine": "wine_tray", "eva_apples": "basket", "eva_herbs_west": "drying_herbs", "eva_shawls": "shawl_line"}
 	for id: String in want:
 		var node := v.prop_nodes.get(id) as Node
 		assert_true(node != null, "%s is there" % id)

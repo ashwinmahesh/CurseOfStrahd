@@ -217,6 +217,9 @@ var _faded_for: Array = []           ## fade_occluders' camera, focus and counts
 ## The scenery the board put on each square (a tree, a wall block, furniture on a '=' square, brambles), so a
 ## location's own prop can take the square's place (SetDressing): cell -> Array of nodes. Ground boxes aren't in it.
 var dressing: Dictionary = {}
+## How far in from a wall square's face the wall's surface stands, so pieces hung on it or backed onto it stand off
+## it rather than inside it: 0 for walls, a tent's canvas inset and lean (TentWalls).
+var wall_inset := 0.0
 ## Squares holding a door (SetDressing.door): not wall for hanging pictures or picking a wall's direction.
 var door_cells: Dictionary = {}
 ## Squares a location's things stand on (SetDressing.reserve), and wall faces with a piece hung on them.

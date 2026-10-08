@@ -6603,6 +6603,186 @@
         "pal_tan"
       ],
       "triangles": 570
+    },
+    "bedroll": {
+      "file": "art/models/bedroll.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "bedroll",
+        "bedroll_back"
+      ],
+      "size": [
+        0.826,
+        0.336,
+        0.965
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_candle",
+        "pal_crimson",
+        "pal_ivory",
+        "pal_moon_blue",
+        "pal_plum",
+        "pal_rose",
+        "pal_umber"
+      ],
+      "triangles": 1180
+    },
+    "candle_cluster": {
+      "file": "art/models/candle_cluster.glb",
+      "mount": "free",
+      "stands_for": [
+        "candle_cluster"
+      ],
+      "size": [
+        0.45,
+        0.31,
+        0.34
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_bone",
+        "pal_ivory",
+        "pal_tan",
+        "pal_vellum"
+      ],
+      "triangles": 1940
+    },
+    "book_stack": {
+      "file": "art/models/book_stack.glb",
+      "mount": "free",
+      "stands_for": [
+        "book_stack",
+        "book_stack_back"
+      ],
+      "size": [
+        0.803,
+        0.336,
+        0.636
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_blood",
+        "pal_bog",
+        "pal_bone_dark",
+        "pal_ivory",
+        "pal_leather",
+        "pal_moon_blue",
+        "pal_parchment",
+        "pal_rust",
+        "pal_tan",
+        "pal_umber",
+        "pal_vellum",
+        "pal_walnut"
+      ],
+      "triangles": 1144
+    },
+    "drying_herbs": {
+      "file": "art/models/drying_herbs.glb",
+      "mount": "wall",
+      "stands_for": [
+        "drying_herbs"
+      ],
+      "size": [
+        0.9,
+        0.445,
+        0.13
+      ],
+      "materials": [
+        "pal_bog",
+        "pal_crimson",
+        "pal_ivory",
+        "pal_moss",
+        "pal_peat",
+        "pal_sickly",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 744
+    },
+    "cookpot": {
+      "file": "art/models/cookpot.glb",
+      "mount": "free",
+      "stands_for": [
+        "cookpot",
+        "cookpot_back"
+      ],
+      "size": [
+        0.51,
+        0.631,
+        0.53
+      ],
+      "materials": [
+        "glow_ember",
+        "pal_ash_violet",
+        "pal_ink",
+        "pal_rust",
+        "pal_stone",
+        "pal_stone_deep",
+        "pal_walnut"
+      ],
+      "triangles": 594
+    },
+    "basket": {
+      "file": "art/models/basket.glb",
+      "mount": "free",
+      "stands_for": [
+        "basket"
+      ],
+      "size": [
+        0.36,
+        0.301,
+        0.36
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_crimson",
+        "pal_leather",
+        "pal_sickly",
+        "pal_tan"
+      ],
+      "triangles": 890
+    },
+    "wine_tray": {
+      "file": "art/models/wine_tray.glb",
+      "mount": "free",
+      "stands_for": [
+        "wine_tray"
+      ],
+      "size": [
+        0.5,
+        0.29,
+        0.5
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_bruise_deep",
+        "pal_candle",
+        "pal_parchment",
+        "pal_pewter",
+        "pal_tan"
+      ],
+      "triangles": 792
+    },
+    "shawl_line": {
+      "file": "art/models/shawl_line.glb",
+      "mount": "wall",
+      "stands_for": [
+        "shawl_line"
+      ],
+      "size": [
+        0.922,
+        0.75,
+        0.04
+      ],
+      "materials": [
+        "pal_candle",
+        "pal_crimson",
+        "pal_moon_blue",
+        "pal_plum",
+        "pal_tan"
+      ],
+      "triangles": 846
     }
   }
 }
