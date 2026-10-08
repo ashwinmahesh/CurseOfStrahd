@@ -962,6 +962,16 @@
       "dialogue": "svalich_road/tser_camp:nelu",
       "facing": "west",
       "when": "flag.nelu_home and not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile"
+    },
+    {
+      "npc": "tinker_iosif",
+      "cell": [
+        23,
+        22
+      ],
+      "dialogue": "svalich_road/the_tinkers_wagon:at_camp",
+      "when": "quest.the_tinkers_wagon == done",
+      "facing": "south"
     }
   ],
   "encounters": [

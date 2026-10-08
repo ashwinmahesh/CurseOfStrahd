@@ -1,0 +1,104 @@
+# The Tinker's Wagon (side quest, docs/story/side_quests.md): a Vistani tinker sells trinkets from a green wagon at
+# the crossroads by day, Death House souvenirs among them, and the travellers who buy from him go missing. The wagon is
+# a mimic the size of a wagon (data/monsters/tinkers_wagon.json); Iosif is its prisoner, chained by the ankle with
+# something that isn't iron, kept alive to sell its bait. Reached from Zora's news at the Tser Pool camp and Iosif at
+# the crossroads. Every line here is unvoiced for now.
+
+# --- Zora's count (tser_camp:zora_road jumps here) ---
+
+~ zora_news
+if quest.the_tinkers_wagon == done
+Zora: Iosif's back in the camp. He sits by the fire and won't sit on anything with wheels. One came back that I'd stopped counting. That's never happened.
+-> END
+endif
+if not quest.the_tinkers_wagon
+quest the_tinkers_wagon rumored
+Zora: And there's a tinker on the road with a green wagon, Iosif, who used to be ours. He sells pots and pretty things at the crossroads. Dolls. Music boxes. Things from that house in the village nobody goes into.
+Zora: Four travellers bought from him this summer and didn't come past here after. I counted. The wagon was fatter every time I saw it. Wagons don't get fatter.
+endif
+-> END
+
+# --- Iosif and his wagon, at the crossroads by day ---
+
+~ iosif
+if quest.the_tinkers_wagon == done
+-> END
+endif
+if flag.wagon_slain
+-> freed
+endif
+if not flag.tinker_met
+set tinker_met
+if not quest.the_tinkers_wagon or quest.the_tinkers_wagon == rumored
+quest the_tinkers_wagon met
+endif
+Narrator: A green painted wagon stands by the signpost, hung all over with pots and ladles and strings of little bells, with no horse in the shafts. On the board at the front sits a thin Vistani man with a big smile and a blanket over his knees.
+Iosif the Tinker: Customers! Pots, ladles, needles, nails. And for the discerning, rarities: a doll from the Durst house, a music box that plays by itself, a tin soldier who has seen things. Everything must go!
+else
+Iosif the Tinker: Back again! Everything must go. Everything always must go.
+endif
+-> menu
+
+~ menu
+* What are you selling, exactly? -> wares
+* [if not flag.tinker_seen] [Insight DC 13] (Watch him while he talks.) -> seen | unseen
+* [if not flag.wagon_seen] [Perception DC 14] (Look at the wagon, not the man.) -> wagon | no_wagon
+* Why don't you ever get down off the board? -> board
+* [if flag.tinker_seen or flag.wagon_seen] (Go for the chain at his ankle.) -> chain
+* Goodbye. -> END
+
+~ wares
+Iosif the Tinker: The doll. Very fine. Porcelain face, a little cracked, and she looks at you whichever way you hold her. The music box, which you wind once and it never stops. Five gold, either one. A bargain. You'll want to come back for more.
+Narrator: He holds the doll up and smiles. His eyes, over the top of it, don't smile at all.
+-> menu
+
+~ seen
+set tinker_seen
+Narrator: Every few words his eyes go down to his left foot, under the blanket, and away again. When he laughs, he laughs a beat late, like a man waiting for permission. And twice, in the middle of selling you the music box, his lips make a word without any sound: don't.
+-> menu
+
+~ unseen
+set tinker_seen
+Narrator: A cheerful tinker who'd sell you your own boots. That's all you get from him.
+-> menu
+
+~ wagon
+set wagon_seen
+Narrator: The paint is too wet. The wheels have no nails and no joins; they're all one piece with the axle, like a knee. The shafts at the front twitch, once, the way a sleeping dog's leg does.
+Narrator: And the blanket over the tinker's knees hides a chain from his ankle into the boards, grey and glistening, that isn't iron.
+interject tag:blunt: That's not a wagon.
+-> menu
+
+~ no_wagon
+set wagon_seen
+Narrator: Green paint, pots, a lot of bells. A wagon.
+-> menu
+
+~ board
+Iosif the Tinker: Get down? Ha! And leave all this? The wagon's my life. The wagon's my whole life. (He pats the board beside him, and something under the paint shivers.) Ask anyone. I'll never leave it.
+-> menu
+
+~ chain
+Narrator: You pull the blanket off his knees. The chain runs from his ankle into the wagon's board, grey and wet, and where it goes into his skin, it has grown there.
+Iosif the Tinker: (The smile goes out like a lamp.) Oh, no. No, no. Don't. It'll know. It always knows.
+Narrator: Every pot on the wagon turns toward you at once. The tailboard opens, and there are teeth in it, and the painted sides bulge, and the wagon stands up off its wheels.
+combat tinkers_wagon
+
+# --- After (talk to Iosif at the crossroads again) ---
+
+~ freed
+quest the_tinkers_wagon done
+Narrator: When it's dead the wagon is just a heap of grey flesh and green paint in the road, already going soft. The chain lets go of Iosif's ankle by itself and lies in the mud like a dead eel.
+Iosif the Tinker: (He sits down in the road and holds his ankle with both hands.) Seven years. Seven years at the front of that thing, smiling. It let me eat what the customers didn't need.
+Iosif the Tinker: Don't open the belly. No. Open it. Somebody should. Their names are on their things, some of them. Take what helps. Give the Vistani the rest; they'll know whose families.
+Narrator: In the belly of the wagon, among four years of pots and boots and bones, there's a purse heavy with travellers' money, and a gem the size of an eye, cold and clear, that the thing seems to have kept to see with.
+gold +300
+give gem_of_seeing
+approve thistle +2 godrick_pendlebrook +2 liriel_dawnsong +1 kip_smudgewick +1: You cut Iosif the Tinker loose from his wagon
+-> END
+
+# --- Iosif back at the Tser Pool camp ---
+
+~ at_camp
+Iosif the Tinker: I sit on the ground now. Chairs have legs. I'll get over it. Zora says I'm the first one she ever had to count back in.
+-> END

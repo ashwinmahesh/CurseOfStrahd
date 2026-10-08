@@ -1,0 +1,105 @@
+# The Squire (side quest, docs/story/side_quests.md): Cosmin, a cooper's boy from Vallaki, has run away to
+# Argynvostholt to swear the dead Order's oath and clear his family's name: the chronicle lists his ancestor Ioan, the
+# Order's last squire, as fled. The Order doesn't take the living, so he means to wait on the squires' graves until
+# he's dead. Ioan didn't flee: he cut his fellow squires' headstones, then rode with the dragon's last words for the
+# valley. A squire's vigil at the graves, against the men-at-arms still fighting the last battle, wins Cosmin his
+# place. Reached from the Vallaki gate's news, Sir Godfrey's "Heard anything interesting?" and Cosmin on the graves.
+# Every line here is unvoiced for now.
+
+# --- Sir Godfrey's news (godfrey:menu jumps here) ---
+
+~ godfrey_news
+if quest.the_squire == done
+Sir Godfrey Gwilym: Our squire's out at the gate. Living, would you believe. He talks to the men-at-arms as if they could hear him. I think some of them can.
+-> argynvostholt/godfrey:menu
+endif
+if not quest.the_squire
+quest the_squire rumored
+endif
+Sir Godfrey Gwilym: Interesting. Yes. There's a boy out on the squires' graves. Living. Came up the ridge a week ago and asked to swear the oath. Vladimir told him the Order doesn't take the living.
+Sir Godfrey Gwilym [sad]: So he said he'd wait until he wasn't. He sleeps out there on the stones. It's very cold. He means it, I think. I'd have meant it, at his age.
+-> argynvostholt/godfrey:menu
+
+~ godfrey_ioan
+Sir Godfrey Gwilym: Ioan. Ioan. (He shuts his eyes, which doesn't seem to help him much.) A thin lad with big hands. He cut stone for his father before he came to us.
+if flag.vladimir_last_words_known or flag.ioan_stone_read
+Sir Godfrey Gwilym: Let them go home. That was the word. My lord said it in the courtyard with his last breath, and somebody had to carry it down to the valley, because the knights wouldn't. I sent him. I sent Ioan. On my horse.
+Sir Godfrey Gwilym: And when the house had fallen Vladimir wrote "fled" against his name, and I let him. I forgot. Four hundred years I let a boy be a coward in our book because I forgot.
+set ioan_cleared
+quest the_squire truth
+-> vigil_offer
+else
+Sir Godfrey Gwilym: He went. That night. I'm sure of that and nothing else. Whether he ran or rode, I can't find it. It's in here somewhere. (He taps the side of his helmet.) Most things are.
+endif
+-> argynvostholt/godfrey:menu
+
+~ vigil_offer
+Sir Godfrey Gwilym: He wants the oath. Vladimir won't give the living the oath, and he's right, in his way. But the oath was never the first thing a squire swore. First was the vigil.
+Sir Godfrey Gwilym: A night at the squires' graves, standing, with the banner. If the squires stand up for him, the Order can't say no. Not even Vladimir. The men-at-arms will come out of the courtyard for the living, though. They always do. He'll need people standing with him.
+-> argynvostholt/godfrey:menu
+
+# --- Cosmin, on the squires' graves ---
+
+~ cosmin
+if quest.the_squire == done
+Cosmin: Squire Cosmin, of the Order of the Silver Dragon. The first living one in four hundred years, Sir Godfrey says. I've written to my mother. She's written back. Most of it was underlined.
+-> END
+endif
+if flag.squires_vigil_won
+-> after_vigil
+endif
+if not flag.cosmin_met
+set cosmin_met
+if not quest.the_squire or quest.the_squire == rumored
+quest the_squire met
+endif
+Narrator: A boy of fourteen or so sits wrapped in a horse blanket on the last of the squires' small graves, with a wooden sword across his knees and frost in his eyebrows. He gets up when he sees you, because a squire stands.
+Cosmin: Cosmin. Of Vallaki. Cooper's son. I'm here for the oath. They won't give it to me, so I'm waiting. It doesn't take long, in this cold, they say.
+endif
+* Why do you want it so badly? -> why
+* [Persuasion DC 17] Come home. Your mother's at the north gate every night. -> home | stays
+* [if not flag.ioan_stone_read] [Investigation DC 13] (Look at the last headstone, the one he's sitting on.) -> stone | stone_missed
+* [if night and quest.the_squire == truth] (Stand the vigil with him.) -> vigil
+* Goodbye. -> END
+
+~ why
+Cosmin: My grandfather's grandfather's grandfather's, something, was Ioan, the Order's last squire. The chronicle up there says "Ioan: fled." That's what my family's been for four hundred years. The ones who fled.
+Cosmin: If I swear the oath, there's a Vallaki boy in the book who didn't run. One will do.
+-> cosmin
+
+~ home
+Cosmin: (He looks south, toward Vallaki, for a long time.) She's at the gate. Every night. (He sits back down on the grave.) Not yet. When his name's clean. Not before.
+-> cosmin
+
+~ stays
+Cosmin: No. I'm sorry. I'm not going home a coward's grandson. I'll go home a squire or I won't.
+-> cosmin
+
+~ stone
+set ioan_stone_read
+Narrator: The last stone is cut more carefully than any of the others. On its back, low down where the frost doesn't reach, small letters, chiselled in a hurry by someone who knew how:
+Narrator: I cut these for my brothers. I ride tonight with my lord's last word for the valley. Forgive me the haste. Ioan.
+Cosmin: He didn't run. (He reads it again with his finger.) He didn't run. He was sent. Who sent him?
+interject tag:curious: Somebody up at the house will know. Godfrey was there.
+-> cosmin
+
+~ stone_missed
+Narrator: A small stone with a name on it, like the rest, and frost in the letters.
+-> cosmin
+
+~ vigil
+Narrator: Cosmin plants an old banner of the Order, a silver dragon on black gone grey, in the frozen ground at the head of the graves, and stands beside it with his wooden sword. The cold comes down off the ridge.
+Narrator: At the darkest hour the small graves give up their squires: boys, most of them, grey and quiet, standing at the foot of their stones in a row, watching. And out of the courtyard, as Godfrey said, come the men-at-arms, still fighting the last battle, turning toward the only living things on the ridge.
+Cosmin [afraid]: Stand. Stand. That's all it is. Standing.
+combat squires_vigil
+
+~ after_vigil
+quest the_squire done
+Narrator: When the last man-at-arms goes down into the frost, the squires come forward from their stones, one by one, and each of them touches the banner and goes back.
+Narrator: Sir Godfrey comes down from the house with the Order's book under his arm, and a shield, and a pen that's been dry for centuries, and he writes for a long time.
+Sir Godfrey Gwilym: Ioan: rode with my lord's last word, on my horse, on my order. And under it, Cosmin: stood the vigil. Squire. (He blows on the page.) Vladimir can argue with the squires if he likes. I wouldn't.
+Sir Godfrey Gwilym: This was Ioan's. He left it at the gate the night he rode, because a shield slows a horse. It's caught every arrow that's come at the Order's gate for four hundred years. Take it. Our squire has a wooden sword and the right idea, and that'll do him for now.
+give arrow_catching_shield
+gold +150
+approve godrick_pendlebrook +3 thistle +1 liriel_dawnsong +2 wren_featherfoot +1 ratatoille +1: You stood the squire's vigil with Cosmin
+-> END

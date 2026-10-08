@@ -76,6 +76,21 @@ grave Mihail dug for Petra (prop `sixfeet_grave`); he cuts her name on the back 
 - Rewards: 60 gp in her silver coins and the charm she wore so the castle couldn't find her, an Amulet of Proof against
   Detection and Location (uncommon).
 
+### The Burgomaster's Hound (`the_burgomasters_hound`, narrative/village_of_barovia/the_burgomasters_hound.dialogue; batch 4, level 2)
+
+Bildrath's news gets a new topic: Kolyan's wolfhound, Lupu (new NPC, by the mansion door), howls every night at the
+mansion's study wall, not at the wolves. Animal Handling DC 12 lets him lead the party to the study's cold corner (prop
+`study_bricks`): new plaster over brick, dried garlic in the cracks, and something scratching on the other side.
+**Twist:** a note in the mortar (Investigation DC 12): Kolyan's first son, Sergiu, let the thing at the window in during
+the siege winter and came back hungry, and his father couldn't end it and walled him up. Lupu was Sergiu's dog.
+**Escalation:** bless the bricks and seal them again (Religion DC 12: 60 gp in the desk, and the howling stops), or
+break them open (Athletics DC 11) and face the Tenant with Lupu, who joins the party for the fight.
+
+- Fight `hound_tenant` in the study: level 2 the Tenant (a ghast) and two starved servants (ghouls), 850 XP; level 3
+  three servants; below 2 the Tenant at 24 HP and one. With Lupu, the autopilot wins 3 of 4 at level 2 and loses two
+  party members a fight. It's the only side quest below level 3.
+- Opened: 60 gp and the shirt of fine rings Kolyan bought his son before the siege, Mithral Armor (uncommon).
+
 ## The Tser Pool camp (level 4)
 
 Talker: Zora ("Heard anything interesting?" is her old road question renamed). Radu's Nicu line now starts
@@ -200,6 +215,26 @@ the cellar door until it's done); Urwin won't pay until he's himself.
   (`fowlers`, 1 point).
 - Urwin's thanks, once: 200 gp and the mail his grandfather flew in, Elven Chain (rare).
 
+## The River Ivlis crossroads by day (level 5)
+
+### The Tinker's Wagon (`the_tinkers_wagon`, narrative/svalich_road/the_tinkers_wagon.dialogue; batch 4)
+
+Zora's count at the Tser Pool camp gets a new line: Iosif, a tinker who used to be one of theirs, sells pots and Death
+House trinkets from a green wagon at the crossroads, four travellers who bought from him never came past the camp, and
+the wagon gets fatter. Iosif (new NPC, at the crossroads from 8:00 to 18:00) never gets down off the board. **Twist:**
+Insight DC 13 catches him mouthing "don't"; Perception DC 14 sees wheels with no joins, a twitching shaft and a chain
+from his ankle into the boards that isn't iron. The wagon is a mimic the size of a wagon, and Iosif has been its bait
+for seven years. **Escalation:** once something's been seen, go for the chain, and the wagon stands up off its wheels.
+
+- **Boss: the Tinker's Wagon** (data/monsters/tinkers_wagon.json, `source.book: custom`, from the 2025 Monster
+  Manual's mimic, drawn with its sprite at Huge): Huge monstrosity, AC 14, 171 HP, two sticky pseudopods (reach 10,
+  Grappled) and an acid bite, a spray of trinkets (recharge 5-6, Restrained), Legendary Resistance (1/day) and one
+  more lash between turns. CR 7.
+- Fight `tinkers_wagon` at the crossroads: level 5 the Wagon and 2 trinkets (mimics), 3,800 XP (the autopilot wins 2
+  of 4 and loses three party members a fight); level 6 three trinkets; below 5 the Wagon at 110 HP and one.
+- The belly: 300 gp of travellers' money and the gem the thing kept to see with, a Gem of Seeing (rare). Iosif goes
+  back to the Tser Pool camp and sits on the ground.
+
 ## The River Ivlis crossroads at night (level 8)
 
 ### The Count's Huntsman (`the_counts_huntsman`, narrative/svalich_road/the_counts_huntsman.dialogue; batch 3)
@@ -224,6 +259,27 @@ hounds by name, and most of the pack lies down (`hounds_called`).
   level 9 six hounds (three called); level 10 eight (four called); below 8 the Huntsman at 130 HP with 3 hounds (1).
 - Beating him is a mark on Strahd's attention (`huntsman`, 1 point).
 - His saddlebag: 300 gp of quarry's purses and the iron ring he called the pack with, a Ring of Animal Influence (rare).
+
+## Argynvostholt (level 8)
+
+### The Squire (`the_squire`, narrative/argynvostholt/the_squire.dialogue; batch 3)
+
+The Vallaki gate's news: Cosmin, a cooper's boy, ran north with a wooden sword to join the dead knights, and his
+mother waits at the north gate every night. Sir Godfrey gets "Heard anything interesting?" (Argynvostholt's
+rumour-giver): the boy sleeps on the squires' graves, because Vladimir told him the Order doesn't take the living,
+and he said he'd wait until he wasn't. Cosmin (new NPC, on the last grave until the quest is done; at the gatehouse
+after) wants the oath to clear his ancestor Ioan, written "fled" in the Order's chronicle. **Twist:** on the back of the
+last headstone (Investigation DC 13) Ioan cut his own words: he made his brothers' stones, then rode with the dragon's
+last word for the valley. Shown that, or once the party knows the dragon's last words, Godfrey remembers: he sent
+Ioan on his own horse, and Vladimir wrote "fled". **Escalation:** the oath was never a squire's first; the vigil was. A
+night at the graves with the banner, while the dead squires stand at their stones, and the men-at-arms of the last
+battle come out of the courtyard for the only living things on the ridge.
+
+- Fight `squires_vigil` at the graves: level 8 the Gate Warden and two Knights Who Forgot (revenants) with 4
+  men-at-arms (phantom warriors), 8,200 XP (the autopilot wins 2 of 4 and loses three party members a fight); level 9
+  eight men-at-arms; level 7 one knight and five; below 7 the Warden at 90 HP and four.
+- Godfrey writes Ioan's name right and Cosmin's under it, and gives the party Ioan's shield, left at the gate the night
+  he rode: an Arrow-Catching Shield (rare), and 150 gp from the Order's chest. Not offered once the Order rests.
 
 ## Lake Zarovich (level 8)
 
@@ -410,6 +466,28 @@ down onto Pavel's roof; otherwise she lands in Krezk's goat pens.
 - Her eighth gift, which Clovin brings up to the wall: Boots of Levitation (rare). Afterwards she lands on Pavel's roof
   on Sundays, and Krezk's watchman has decided to be very calm about it.
 
+## The Tsolenka Pass (level 10)
+
+### The Frozen Pilgrims (`the_frozen_pilgrims`, narrative/tsolenka_pass/the_frozen_pilgrims.dialogue; batch 3)
+
+Sergeant Valcu of the dead Tsolenka watch is the pass's rumour-giver ("Heard anything interesting?" at the challenge,
+"Anything to report?" once the party has passed): forty-one years ago nine pilgrims from Vallaki went round his gate by
+the goat path to ask the amber never to be cold again, and their lamp is on the landing, in the ice. The ice of the
+gorge wall (prop `pilgrims_ice`) shows nine kneeling in a row, and Mother Ecaterina (new speaker) at the front with
+the lamp lit, alive. **Twist:** the amber answered them exactly: never to be cold again, by becoming the cold (Arcana
+DC 16: she's the knot the gift is tied to, and the cold has to go somewhere). **Escalation:** the last rites (Religion
+DC 14, or a cleric's) let all nine go quietly; breaking her out wakes the other eight fused into the Penitent.
+
+- **Boss: the Penitent** (data/monsters/the_penitent.json, `source.book: custom`, from the 2025 Monster Manual's frost
+  giant, drawn with the amber golem's sprite at Huge): Huge undead, AC 16, 210 HP, two frozen fists (reach 10), a
+  freezing embrace (recharge 5-6, DC 16, Restrained), Legendary Resistance (2/day), and a fist or a step between turns.
+  CR 11.
+- Fight `the_penitent` on the landing: level 10 the Penitent and 5 pilgrims' shadows (ghasts), 9,450 XP (the
+  autopilot wins 2 of 4 and loses three party members a fight); level 11 eight shadows; level 9 four; below 9 the
+  Penitent at 170 HP and three.
+- The rites: 400 gp of the pilgrims' offerings. Breaking her out: 500 gp, and her frosted lamp-pole with all the cold
+  in it, a Staff of Frost (very rare).
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -443,5 +521,10 @@ Wizard of Wines: the_black_row.dialogue in full (Davian, Adrian; companions' int
 picker lines (Andrei) and davian.dialogue's two new menu options. Batch 3, the
 crossroads: the_counts_huntsman.dialogue in full (new speaker the Huntsman; also Old Paraschiva and Gavril). Batch 3, the
 abbey: mothers_ninth_improvement.dialogue in full (new speaker Mother; also Clovin and Wren's interject), Pavel's new
-carver line and the watchman's new news line in Krezk (the roof). Batch 4,
+carver line and the watchman's new news line in Krezk (the roof). Batch 3,
+Argynvostholt: the_squire.dialogue in full (new speaker Cosmin; also Sir Godfrey) and the Vallaki gate's new news line. Batch 3, the
+Tsolenka Pass: the_frozen_pilgrims.dialogue in full (new speaker Mother Ecaterina; also Sergeant Valcu). Batch 4, the
+Village of Barovia: the_burgomasters_hound.dialogue in full (Bildrath; companions and Ireena's interjects; Lupu
+doesn't speak). Batch 4, the
+crossroads by day: the_tinkers_wagon.dialogue in full (new speaker Iosif the Tinker; also Zora's three new lines). Batch 4,
 Vallaki: the_ravens_ransom.dialogue in full (new speakers Bray and the Fowler; also Urwin and Danika).

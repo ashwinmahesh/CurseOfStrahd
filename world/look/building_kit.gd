@@ -11,6 +11,8 @@ const PAINTED_WOOD := "kit/painted_wood"
 static var _manifest: Dictionary = {}
 static var _constants: Dictionary = {}
 static var _meshes: Dictionary = {}
+## Each module's surfaces as arrays in memory (Arrays), read from its mesh once: see `merge`.
+static var _arrays: Dictionary = {}
 
 
 ## Every module: id -> {file, part, size, materials, span, rise, paint}.
@@ -95,12 +97,15 @@ static func merge(parts: Array, paint: String = "") -> MeshInstance3D:
 		var m: Mesh = null
 		var own := ""
 		var repaint := ""
+		var from: Mesh = null
 		if part[0] is Mesh:
 			m = part[0] as Mesh
 			own = str(part[2])
+			from = _primitive_arrays(m as PrimitiveMesh) if m is PrimitiveMesh else m
 		else:
 			m = mesh(str(part[0]))
 			repaint = str((manifest().get(str(part[0]), {}) as Dictionary).get("paint", ""))
+			from = _module_arrays(str(part[0]), m)
 		if m == null:
 			continue
 		var xf := part[1] as Transform3D
@@ -116,7 +121,7 @@ static func merge(parts: Array, paint: String = "") -> MeshInstance3D:
 				st.begin(Mesh.PRIMITIVE_TRIANGLES)
 				tools[name] = st
 				order.append(name)
-			(tools[name] as SurfaceTool).append_from(m, i, xf)
+			(tools[name] as SurfaceTool).append_from(from, i, xf)
 	if order.is_empty():
 		return null
 	var am := ArrayMesh.new()
@@ -126,6 +131,83 @@ static func merge(parts: Array, paint: String = "") -> MeshInstance3D:
 	var mi := MeshInstance3D.new()
 	mi.mesh = am
 	return mi
+
+
+## Module `id`'s mesh `m` with its surfaces held in memory, read once a session.
+static func _module_arrays(id: String, m: Mesh) -> Mesh:
+	if m == null:
+		return null
+	if not _arrays.has(id):
+		_arrays[id] = Arrays.of(m)
+	return _arrays[id] as Mesh
+
+
+## A box, cylinder or other primitive made in code with its surface held in memory, read once a session for each shape
+## (a town's footings and copings come in a few hundred, mostly the same sizes).
+static func _primitive_arrays(m: PrimitiveMesh) -> Mesh:
+	var key := var_to_str(m)
+	if not _arrays.has(key):
+		_arrays[key] = Arrays.of(m)
+	return _arrays[key] as Mesh
+
+
+## A mesh whose surfaces are arrays held in memory, for SurfaceTool.append_from. Appending from a loaded mesh reads its
+## arrays back from the GPU every time, a wait on the GPU per module of every house: 3.2 s of building the village,
+## 4.2 s of Vallaki and 1 s of the castle's main floor in a window (the loading lane, 2026-10-08; headless keeps meshes
+## in memory, so it never showed there).
+class Arrays extends Mesh:
+	var surfaces: Array[Array] = []
+	var primitives: Array[int] = []
+
+	static func of(m: Mesh) -> Arrays:
+		var a := Arrays.new()
+		for i in m.get_surface_count():
+			a.surfaces.append(m.surface_get_arrays(i))
+			a.primitives.append((m as ArrayMesh).surface_get_primitive_type(i) if m is ArrayMesh else Mesh.PRIMITIVE_TRIANGLES)
+		return a
+
+	func _get_surface_count() -> int:
+		return surfaces.size()
+
+	func _surface_get_arrays(index: int) -> Array:
+		return surfaces[index]
+
+	func _surface_get_primitive_type(index: int) -> int:
+		return primitives[index]
+
+	func _surface_get_array_len(index: int) -> int:
+		return (surfaces[index][Mesh.ARRAY_VERTEX] as PackedVector3Array).size()
+
+	func _surface_get_array_index_len(index: int) -> int:
+		var ix: Variant = surfaces[index][Mesh.ARRAY_INDEX]
+		return (ix as PackedInt32Array).size() if ix is PackedInt32Array else 0
+
+	func _surface_get_format(_index: int) -> int:
+		return 0
+
+	func _surface_get_blend_shape_arrays(_index: int) -> Array[Array]:
+		return [] as Array[Array]
+
+	func _surface_get_lods(_index: int) -> Dictionary:
+		return {}
+
+	func _surface_get_material(_index: int) -> Material:
+		return null
+
+	func _surface_set_material(_index: int, _material: Material) -> void:
+		pass
+
+	func _get_blend_shape_count() -> int:
+		return 0
+
+	func _get_blend_shape_name(_index: int) -> StringName:
+		return &""
+
+	func _set_blend_shape_name(_index: int, _name: StringName) -> void:
+		pass
+
+	func _get_aabb() -> AABB:
+		return AABB()
 
 
 ## The game's material for a module surface (ModelPiece's names: pal_, glow_, tex_), or a texture set by its own path

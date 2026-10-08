@@ -27,6 +27,7 @@ endif
 * [if not flag.tsolenka_release_tried] [Religion DC 13] Let us say the words for your lads, and stand the watch while they rest. -> release | release_fail
 * [Cleric] (Offer the rites of the dead.) -> release
 * What are you guarding? -> guarding
+* Heard anything interesting? -> tsolenka_pass/the_frozen_pilgrims:sergeant_news
 * [if treasure_at:tsolenka_pass_guard_tower] What's in the captain's room? -> captains_room
 * Stand aside, sergeant, or be made to. -> fight
 * We'll go. -> leave
@@ -96,7 +97,8 @@ tsolenka_sergeant: Go back down. Go home. That's the best advice this tower has.
 
 ~ passed_again
 tsolenka_sergeant: Travellers. You've passed. The winch is in the gatehouse. Nothing came down. Nobody went up. Well, you did. I've logged it.
--> END
+* Anything to report, sergeant? -> tsolenka_pass/the_frozen_pilgrims:sergeant_news
+* Goodbye, sergeant. -> END
 
 # ---------------------------------------------------------------- The watchman at his post
 

@@ -1,0 +1,39 @@
+{
+  "id": "the_squire",
+  "name": "The Squire",
+  "summary": "A Vallaki boy has run away to Argynvostholt to swear the dead Order's oath, and since the Order won't take the living, he means to wait on the squires' graves until he's dead.",
+  "giver": "argynvostholt_cosmin",
+  "region": "argynvostholt",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "A cooper's boy from Vallaki, Cosmin, has gone to Argynvostholt to join the dead knights, and Sir Godfrey says he sleeps on the squires' graves in the cold until the Order will take him.",
+      "objectives": [
+        "Find Cosmin on the squires' graves at Argynvostholt"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "met",
+      "journal": "Cosmin wants the Order's oath to clear his ancestor Ioan, the Order's last squire, whom the chronicle calls fled. He won't go home a coward's grandson.",
+      "objectives": [
+        "Find out what really happened to Ioan"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "truth",
+      "journal": "Ioan didn't flee. Sir Godfrey sent him on his own horse with the dragon's last words for the valley, after Ioan had cut his brothers' headstones. A squire's first oath was the vigil: a night at the squires' graves with the banner, and the men-at-arms will come out of the courtyard for the living.",
+      "objectives": [
+        "Stand the vigil with Cosmin at the squires' graves, after dark"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Cosmin stood the vigil, the dead squires touched his banner, and Sir Godfrey wrote him into the Order's book under Ioan's corrected name. The first living squire of the Order in four hundred years.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

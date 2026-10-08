@@ -649,6 +649,26 @@
         ]
       ],
       "pause": 4
+    },
+    {
+      "npc": "argynvostholt_cosmin",
+      "cell": [
+        5,
+        23
+      ],
+      "dialogue": "argynvostholt/the_squire:cosmin",
+      "when": "flag.order_fate != \"rest\" and quest.the_squire != done",
+      "facing": "north"
+    },
+    {
+      "npc": "argynvostholt_cosmin",
+      "cell": [
+        20,
+        20
+      ],
+      "dialogue": "argynvostholt/the_squire:cosmin",
+      "when": "quest.the_squire == done",
+      "facing": "south"
     }
   ],
   "encounters": [
@@ -744,6 +764,286 @@
           ]
         }
       ]
+    },
+    {
+      "id": "squires_vigil",
+      "trigger": "dialogue",
+      "when": "level >= 9",
+      "text": "The men-at-arms come out of the courtyard in their grey ranks, still fighting the last battle, and turn toward the only living things on the ridge.",
+      "monsters": [
+        {
+          "monster": "revenant",
+          "cell": [
+            15,
+            21
+          ],
+          "name": "The Gate Warden"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            16,
+            26
+          ],
+          "name": "A Knight Who Forgot"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            11,
+            22
+          ],
+          "name": "A Knight Who Forgot"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            20
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            22
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            24
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            26
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            11,
+            28
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            13,
+            21
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            13,
+            29
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            16,
+            24
+          ],
+          "name": "Man-at-Arms"
+        }
+      ],
+      "surprise": "",
+      "flag": "squires_vigil_won"
+    },
+    {
+      "id": "squires_vigil",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "The men-at-arms come out of the courtyard in their grey ranks, still fighting the last battle, and turn toward the only living things on the ridge.",
+      "monsters": [
+        {
+          "monster": "revenant",
+          "cell": [
+            15,
+            21
+          ],
+          "name": "The Gate Warden"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            16,
+            26
+          ],
+          "name": "A Knight Who Forgot"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            11,
+            22
+          ],
+          "name": "A Knight Who Forgot"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            20
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            22
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            24
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            26
+          ],
+          "name": "Man-at-Arms"
+        }
+      ],
+      "surprise": "",
+      "flag": "squires_vigil_won"
+    },
+    {
+      "id": "squires_vigil",
+      "trigger": "dialogue",
+      "when": "level >= 7",
+      "text": "The men-at-arms come out of the courtyard in their grey ranks, still fighting the last battle, and turn toward the only living things on the ridge.",
+      "monsters": [
+        {
+          "monster": "revenant",
+          "cell": [
+            15,
+            21
+          ],
+          "name": "The Gate Warden"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            16,
+            26
+          ],
+          "name": "A Knight Who Forgot"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            20
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            22
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            24
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            26
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            11,
+            28
+          ],
+          "name": "Man-at-Arms"
+        }
+      ],
+      "surprise": "",
+      "flag": "squires_vigil_won"
+    },
+    {
+      "id": "squires_vigil",
+      "trigger": "dialogue",
+      "text": "The men-at-arms come out of the courtyard in their grey ranks, still fighting the last battle, and turn toward the only living things on the ridge.",
+      "monsters": [
+        {
+          "monster": "revenant",
+          "cell": [
+            15,
+            21
+          ],
+          "name": "The Gate Warden",
+          "hp": 90
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            20
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            22
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            24
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            26
+          ],
+          "name": "Man-at-Arms"
+        }
+      ],
+      "surprise": "",
+      "flag": "squires_vigil_won"
     }
   ],
   "narration": {

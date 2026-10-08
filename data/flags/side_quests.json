@@ -662,6 +662,81 @@
       "summary": "Mother flew down the mountain to Krezk (Mother's Ninth Improvement)."
     },
     {
+      "id": "cosmin_met",
+      "type": "bool",
+      "summary": "The party met Cosmin on the squires' graves at Argynvostholt (The Squire)."
+    },
+    {
+      "id": "ioan_stone_read",
+      "type": "bool",
+      "summary": "The party read Ioan's words on the back of the last squire's headstone (The Squire)."
+    },
+    {
+      "id": "ioan_cleared",
+      "type": "bool",
+      "summary": "Sir Godfrey remembered sending Ioan with the dragon's last words; Ioan didn't flee (The Squire)."
+    },
+    {
+      "id": "squires_vigil_won",
+      "type": "bool",
+      "summary": "The party stood the squire's vigil with Cosmin against the men-at-arms (The Squire)."
+    },
+    {
+      "id": "pilgrims_found",
+      "type": "bool",
+      "summary": "The party found the nine pilgrims frozen in the gorge wall at the Tsolenka landing (The Frozen Pilgrims)."
+    },
+    {
+      "id": "pilgrims_read",
+      "type": "bool",
+      "summary": "The party tried to work out what holds the frozen pilgrims (The Frozen Pilgrims)."
+    },
+    {
+      "id": "pilgrims_spoke",
+      "type": "bool",
+      "summary": "Mother Ecaterina spoke to the party through the ice (The Frozen Pilgrims)."
+    },
+    {
+      "id": "penitent_slain",
+      "type": "bool",
+      "summary": "The Penitent, the eight pilgrims fused in ice, is meltwater at the Tsolenka landing (The Frozen Pilgrims)."
+    },
+    {
+      "id": "lupu_friend",
+      "type": "bool",
+      "summary": "Lupu, the burgomaster's wolfhound, let the party come close and led them to the study wall (The Burgomaster's Hound)."
+    },
+    {
+      "id": "sergiu_known",
+      "type": "bool",
+      "summary": "The party found Kolyan's note in the bricks: his first son Sergiu is walled up behind the study (The Burgomaster's Hound)."
+    },
+    {
+      "id": "tenant_slain",
+      "type": "bool",
+      "summary": "The Tenant behind the study wall, and the servants who starved with him, are dead (The Burgomaster's Hound)."
+    },
+    {
+      "id": "tinker_met",
+      "type": "bool",
+      "summary": "The party met Iosif the Tinker at his wagon by the crossroads (The Tinker's Wagon)."
+    },
+    {
+      "id": "tinker_seen",
+      "type": "bool",
+      "summary": "The party watched Iosif closely while he sold (The Tinker's Wagon)."
+    },
+    {
+      "id": "wagon_seen",
+      "type": "bool",
+      "summary": "The party looked closely at Iosif's wagon (The Tinker's Wagon)."
+    },
+    {
+      "id": "wagon_slain",
+      "type": "bool",
+      "summary": "The Tinker's Wagon, a mimic the size of a wagon, is dead at the crossroads (The Tinker's Wagon)."
+    },
+    {
       "id": "cage_branches_seen",
       "type": "bool",
       "summary": "The party looked at the dead pine's branches above the raven cage (The Ravens' Ransom)."

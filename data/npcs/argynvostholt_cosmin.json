@@ -1,0 +1,18 @@
+{
+  "id": "argynvostholt_cosmin",
+  "name": "Cosmin",
+  "title": "A Cooper's Boy from Vallaki",
+  "summary": "A boy of fourteen from Vallaki with a horse blanket and a wooden sword, sleeping on the squires' graves at Argynvostholt until the dead Order will take his oath, to clear the name of his ancestor Ioan, written down in the Order's chronicle as fled.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "vallaki",
+    "argynvostholt"
+  ],
+  "region": "argynvostholt",
+  "pronouns": "he/him"
+}
