@@ -101,6 +101,41 @@ def default_jobs() -> int:
     return max(2, min(MAX_JOBS, jobs))
 
 
+def user_dir() -> str:
+    """The game's user:// folder on this Mac (named by project.godot's config/name)."""
+    with open(os.path.join(ROOT, "project.godot"), encoding="utf-8") as f:
+        m = re.search(r'^config/name="([^"]+)"', f.read(), re.M)
+    return os.path.expanduser("~/Library/Application Support/Godot/app_userdata/" + (m.group(1) if m else "Curse of Strahd"))
+
+
+def _alive(pid: int) -> bool:
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def clean_leftovers(own: list[int]) -> None:
+    """Each run cleans up after itself (owner, 2026-10-07): the save folders of this run's processes
+    (user://test_saves/<pid>, which a stopped process never removes), and any test's per-process folder
+    (user://test_saves/<pid>, user://test_<what>_<pid>) whose process has ended."""
+    base = user_dir()
+    saves = os.path.join(base, "test_saves")
+    gone = []
+    for name in (os.listdir(saves) if os.path.isdir(saves) else []):
+        if name.isdigit() and (int(name) in own or not _alive(int(name))):
+            gone.append(os.path.join(saves, name))
+    for name in (os.listdir(base) if os.path.isdir(base) else []):
+        m = re.match(r"test_\w+?_(\d+)$", name)
+        if m and not _alive(int(m.group(1))):
+            gone.append(os.path.join(base, name))
+    for path in gone:
+        shutil.rmtree(path, ignore_errors=True)
+
+
 class Output:
     """Prints whole blocks under one lock, so two processes' lines never interleave, and keeps what failed."""
 
@@ -196,10 +231,17 @@ def main() -> int:
     a = ap.parse_args()
 
     files = test_files()
-    missing = []
     if a.files:
-        wanted = [f for f in a.files.split(",") if f]
+        # Names or paths (tests/unit/test_x.gd), with or without .gd. One that matches nothing stops the run: an empty
+        # list used to mean every file, and a mistyped name ran the whole suite (lane 23, 2026-10-07).
+        wanted = [os.path.basename(f.strip()) for f in a.files.split(",") if f.strip()]
+        wanted = [f if f.endswith(".gd") else f + ".gd" for f in wanted]
         missing = [f for f in wanted if f not in files]
+        if missing or not wanted:
+            # A FAIL line, since tools/logcheck.sh is what fails make: macOS's make 3.81 ignores .SHELLFLAGS' pipefail.
+            print("  FAIL  no test file named %s, so nothing ran. FILES takes names like test_dice.gd or paths like "
+                  "tests/unit/test_dice.gd." % ", ".join(missing or [a.files]))
+            return 1
         files = [f for f in wanted if f in files]
     wanted = a.jobs or default_jobs()
     jobs = max(1, min(wanted, len(files) or 1))
@@ -244,6 +286,7 @@ def main() -> int:
     finally:
         shutil.rmtree(claim, ignore_errors=True)
     elapsed = time.monotonic() - started
+    clean_leftovers([w.proc.pid for w in workers])
 
     ran: dict[str, int] = {}
     for w in workers:
@@ -252,7 +295,7 @@ def main() -> int:
     save_times(ran)
     passed = sum(w.passed for w in workers)
     failed = sum(len(w.failed) for w in workers)
-    problems = ["  FAIL  no test file named %s" % f for f in missing]
+    problems = []
     for w in workers:
         if not w.finished or w.proc.returncode not in (0, 1):
             w.troubled = True
