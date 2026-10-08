@@ -314,11 +314,7 @@
       ],
       "kind": "examine",
       "label": "A frozen trough",
-      "model": "trough",
-      "span": [
-        2,
-        1
-      ]
+      "model": "trough"
     },
     {
       "id": "goat_pens",
