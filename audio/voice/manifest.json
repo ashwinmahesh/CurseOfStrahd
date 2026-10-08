@@ -41895,6 +41895,13 @@
   "recipe": "f60908d226",
   "text": "One board under the card cabinet lifts at a touch. Beneath it, a silver medallion on a chain. Gustav Durst never lost at cards, and now you know why."
  },
+ "narrator/7317ffc976fb4faa": {
+  "chars": 147,
+  "direction": "[quiet, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A ring of blackened stones where the fishers cooked their catch. The ashes are cold and wet, and something has dug through them looking for scraps."
+ },
  "narrator/732fd62c9d08fa3b": {
   "chars": 160,
   "model": "eleven_v3",
@@ -43051,6 +43058,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Smoke rises from the Martikov chimney again. The vines are still brown, but somebody has swept the yard, which in Barovia is a declaration of war."
+ },
+ "narrator/7f7249c752b2c107": {
+  "chars": 172,
+  "direction": "[dry, melancholy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A boat turned keel-up on the shingle to keep the rain out of it, a long time ago. The planks have sprung, and there is a hole in the bottom you could put your fist through."
  },
  "narrator/7f749d1660335345": {
   "chars": 45,
@@ -45285,6 +45299,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The furnace is black and dripping, and the sluice wheel is turned as far as it goes."
+ },
+ "narrator/95364a758b84c5a2": {
+  "chars": 159,
+  "direction": "[bleak, dry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Drying racks for fish, the poles grey with age and the nets on them stiff and empty. A few dried heads still hang from the top rail, picked clean by the crows."
  },
  "narrator/9536f25c4b02639a": {
   "chars": 128,
