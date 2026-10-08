@@ -42,6 +42,7 @@ interject class:cleric: It won't keep him from coming home. It will make sure he
 # ---------------------------------------------------------------- He sleeps by day
 
 ~ asleep
+cutscene strahd_asleep
 Narrator: He is here. He lies in the coffin with his hands folded on his chest, as neat as a body laid out by good servants. His eyes are shut. He does not breathe; he has never needed to.
 if guest:ireena
 interject guest:ireena: Don't talk. Don't wake him. Just do it.
@@ -68,6 +69,7 @@ combat cat_daylight_waking
 if flag.vladimir_pact and not flag.vladimir_pact_broken and not flag.cat_vladimir_stood_aside
 -> vladimir
 endif
+cutscene strahd_resting
 Narrator: The mist has gone back into him. He lies in the coffin grey and still, and only his eyes move. They are perfectly clear.
 if flag.cat_coffin_hallowed
 Narrator: The earth you blessed smokes under him. He came home to a bed that burns and lay down in it anyway, because there was nowhere else to go.
@@ -129,6 +131,7 @@ Narrator: The silver raven flares in your fist, and the tomb fills with morning,
 ~ the_end
 set strahd_destroyed
 quest strahds_lair destroyed
+cutscene strahd_end
 Narrator: He comes apart the way old paper does in a fire: all at once, quietly, edges first. What is left in the coffin is ash, and a smell of dust and cold iron.
 if flag.cat_staked_by == "ireena"
 Narrator: Ireena stays on her knees a long moment. Then she stands, and wipes her hands on her skirt, and doesn't look back at it.

@@ -1,0 +1,15 @@
+{
+  "id": "mordenkainen_jar",
+  "title": "Mordenkainen Remembers",
+  "summary": "Silver smoke pours out of the jar and into the old wizard's eyes.",
+  "images": [
+    {
+      "image": "mordenkainen_jar",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.45
+  ]
+}

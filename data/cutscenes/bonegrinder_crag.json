@@ -1,0 +1,21 @@
+{
+  "id": "bonegrinder_crag",
+  "title": "The View from the Crag",
+  "summary": "The same view the first time the party steps onto the crag's edge.",
+  "images": [
+    {
+      "image": "bonegrinder_view_burned",
+      "when": "flag.bonegrinder_burned"
+    },
+    {
+      "image": "bonegrinder_view",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.55,
+    0.45
+  ],
+  "trigger": "enter:hill_lookout",
+  "once": true
+}

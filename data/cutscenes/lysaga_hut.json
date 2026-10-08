@@ -1,0 +1,15 @@
+{
+  "id": "lysaga_hut",
+  "title": "The Hut Stands Up",
+  "summary": "Baba Lysaga's hut tears itself up on giant root legs.",
+  "images": [
+    {
+      "image": "lysaga_hut",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

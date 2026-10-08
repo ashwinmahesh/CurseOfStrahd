@@ -1,0 +1,11 @@
+{
+  "id": "church_gate",
+  "title": "At the Churchyard Gate",
+  "summary": "Strahd stops at St. Andral's gate, one hand on the post, while Ireena waits in the door.",
+  "images": [
+    {
+      "image": "church_gate",
+      "when": ""
+    }
+  ]
+}

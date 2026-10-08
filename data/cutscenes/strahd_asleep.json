@@ -1,0 +1,15 @@
+{
+  "id": "strahd_asleep",
+  "title": "Strahd Asleep",
+  "summary": "Strahd in his coffin by day, hands folded, eyes shut.",
+  "images": [
+    {
+      "image": "strahd_asleep",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "heart_breaks",
+  "title": "The Heart Breaks",
+  "summary": "The Heart of Sorrow bursts into red glass and light.",
+  "images": [
+    {
+      "image": "heart_breaks",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

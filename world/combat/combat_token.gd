@@ -100,9 +100,14 @@ static func art_id(c: Combatant) -> String:
 	return art_for(c.creature)
 
 
-## The sprite and portrait id for a creature: a monster's stat block id, a character's chosen look (creation's
-## Appearance step), or its name.
+## The sprite and portrait id for a creature: a story ally's own look, a monster's stat block id, a character's chosen
+## look (creation's Appearance step), or its name.
 static func art_for(cr: Creature) -> String:
+	# A story ally (StoryState.make_guest) wears their own look, not their stat block's: Ireena fights as a noble.
+	if cr.id.begins_with("guest_"):
+		var npc := Compendium.shared().get_entry("npcs", cr.id.trim_prefix("guest_"))
+		if str(npc.get("sprite", "")) != "":
+			return str(npc["sprite"])
 	if cr is Monster:
 		var data := (cr as Monster).data
 		var id := str(data.get("id", ""))

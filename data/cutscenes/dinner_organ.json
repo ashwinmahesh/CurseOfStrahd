@@ -1,0 +1,19 @@
+{
+  "id": "dinner_organ",
+  "title": "Dinner at the Organ",
+  "summary": "Strahd closes the organ's lid and turns on the bench toward his guests.",
+  "images": [
+    {
+      "image": "dinner_organ_ireena",
+      "when": "guest:ireena"
+    },
+    {
+      "image": "dinner_organ",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.35
+  ]
+}

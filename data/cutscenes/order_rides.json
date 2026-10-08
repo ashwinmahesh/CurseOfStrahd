@@ -1,0 +1,11 @@
+{
+  "id": "order_rides",
+  "title": "The Order Rides",
+  "summary": "The dead knights rise from the long table and file out to ride on the castle.",
+  "images": [
+    {
+      "image": "order_rides",
+      "when": ""
+    }
+  ]
+}

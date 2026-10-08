@@ -78,6 +78,7 @@ approve ratatoille +2: You named Mordenkainen's own spell to him
 -> mad_menu
 
 ~ jar
+cutscene mordenkainen_jar
 Narrator: The wax comes away. Something silver pours up out of the jar like smoke going the wrong way, hangs in the cold air between you, and then goes into him through the eyes.
 -> restored
 
@@ -136,6 +137,7 @@ mad_mage: Goodbye! Mind the birds. Don't believe a word they say.
 # ---------------------------------------------------------------- Restored
 
 ~ restored
+cutscene end
 set mordenkainen_restored
 quest the_mad_mage restored
 Narrator: He sits very still. The snow stops. Something comes back into his face, one piece at a time, like furniture being carried into an empty house: a hard mouth, a scholar's frown, an old and specific anger.

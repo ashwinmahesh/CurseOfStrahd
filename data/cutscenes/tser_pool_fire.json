@@ -1,0 +1,13 @@
+{
+  "id": "tser_pool_fire",
+  "title": "Firelight at Tser Pool",
+  "summary": "The Vistani camp's bonfire, fiddle and glowing tent: the first warmth in the valley.",
+  "images": [
+    {
+      "image": "tser_pool_fire",
+      "when": "not flag.tser_pool_brawl_won"
+    }
+  ],
+  "trigger": "enter:tser_pool",
+  "once": true
+}
