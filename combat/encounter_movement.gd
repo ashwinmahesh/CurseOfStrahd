@@ -261,6 +261,10 @@ func _move_best(c: Combatant, feet: int, r: CombatResult, score: Callable) -> Co
 func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled: Dictionary) -> CombatResult:
 	var e := enc()
 	while i < path.size():
+		# Held to Speed 0 along the way (Restrained by a Web it walked into, Grappled): it stops where it is.
+		if c.speed() <= 0:
+			e.log.add("move", "%s can't move any farther (Speed 0)" % c.name(), c.id)
+			break
 		var to := path[i]
 		if not c.creature.has_flag("flyby") and not c.creature.has_flag("agile"):
 			for p in _provokers(c, c.cell, to):
