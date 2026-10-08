@@ -3639,6 +3639,11 @@
   "recipe": "6eeb2cd7e9",
   "text": "To Urwin, then. He'll pretend he isn't pleased. He gets that from me."
  },
+ "davian_martikov/3777b0e2913650af": {
+  "chars": 149,
+  "recipe": "6eeb2cd7e9",
+  "text": "The first bottles of a free harvest. You'll pay what they cost me to make and not a copper more, and you'll drink the Champagne slowly, or I'll know."
+ },
  "davian_martikov/3b8479070333e8b1": {
   "chars": 122,
   "recipe": "6eeb2cd7e9",
@@ -6344,6 +6349,11 @@
   "recipe": "ef2f9464fb",
   "text": "Right. So we break the heart. Then we hit him. Then it hurts. Is that it?"
  },
+ "godrick_pendlebrook/353a3303d4d112f6": {
+  "chars": 60,
+  "recipe": "52840be837",
+  "text": "Things taken from the dead should go back to their families."
+ },
  "godrick_pendlebrook/35830421e27dac29": {
   "chars": 56,
   "recipe": "ef2f9464fb",
@@ -8804,6 +8814,11 @@
   "recipe": "956cd23797",
   "text": "Someone put the truth in a toy, where only a child would look. That's a confession."
  },
+ "hero_female/353a3303d4d112f6": {
+  "chars": 60,
+  "recipe": "956cd23797",
+  "text": "Things taken from the dead should go back to their families."
+ },
  "hero_female/355bf457d3b439d4": {
   "chars": 81,
   "recipe": "956cd23797",
@@ -8898,6 +8913,11 @@
   "chars": 67,
   "recipe": "956cd23797",
   "text": "That is not a choice I will carry for her. Remember that I said so."
+ },
+ "hero_female/3c448fdd296d2070": {
+  "chars": 62,
+  "recipe": "956cd23797",
+  "text": "Where does a wagon find all this, in a valley with no way out?"
  },
  "hero_female/3d117712126b90e8": {
   "chars": 73,
@@ -12004,6 +12024,11 @@
   "recipe": "66638cecb8",
   "text": "Someone put the truth in a toy, where only a child would look. That's a confession."
  },
+ "hero_male/353a3303d4d112f6": {
+  "chars": 60,
+  "recipe": "66638cecb8",
+  "text": "Things taken from the dead should go back to their families."
+ },
  "hero_male/355bf457d3b439d4": {
   "chars": 81,
   "recipe": "66638cecb8",
@@ -12098,6 +12123,11 @@
   "chars": 67,
   "recipe": "66638cecb8",
   "text": "That is not a choice I will carry for her. Remember that I said so."
+ },
+ "hero_male/3c448fdd296d2070": {
+  "chars": 62,
+  "recipe": "66638cecb8",
+  "text": "Where does a wagon find all this, in a valley with no way out?"
  },
  "hero_male/3d117712126b90e8": {
   "chars": 73,
@@ -35308,6 +35338,11 @@
   "chars": 119,
   "recipe": "dd92281f92",
   "text": "She has fallen at the foot of the white statue, her bone bowl cracked beside her, one hand still clawing at the plinth."
+ },
+ "narrator/a17fe6d90f329e04": {
+  "chars": 212,
+  "recipe": "f60908d226",
+  "text": "A wagon painted with suns and eyes stands apart from the others, its side let down into a counter. Bottles, bundles and little boxes crowd the shelves behind a woman who is counting coins without looking at them."
  },
  "narrator/a1a371935980775e": {
   "chars": 72,
